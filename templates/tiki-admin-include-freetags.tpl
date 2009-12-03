@@ -7,105 +7,39 @@
 				<fieldset>
 					<legend>{tr}Freetags{/tr}{if $prefs.feature_help eq 'y'} {help url="Tags"}{/if}</legend>
 					<input type="hidden" name="freetagsfeatures" />
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" onclick="flip('showcloud');" id="freetags_browse_show_cloud" name="freetags_browse_show_cloud" {if $prefs.freetags_browse_show_cloud eq 'y'}checked="checked"{/if} />
-						</div>
-						<div class="adminoptionlabel">
-							<label for="freetags_browse_show_cloud">{tr}Show tag cloud{/tr}</label>
-							<div class="adminoptionboxchild" id="showcloud" style="display:{if $prefs.freetags_browse_show_cloud eq 'y'}block{else}none{/if};">
-								<div class="adminoptionlabel">
-									<label for="freetags_browse_amount_tags_in_cloud">{tr}Maximum number of tags in cloud{/tr}:</label>
-									<input type="text" id="freetags_browse_amount_tags_in_cloud" name="freetags_browse_amount_tags_in_cloud" value="{$prefs.freetags_browse_amount_tags_in_cloud|escape}" size="3" />
-								</div>
-							</div>
-						</div>
+					{preference name=freetags_browse_show_cloud}
+
+					<div class="adminoptionboxchild" id="freetags_browse_show_cloud_childcontainer">
+						{preference name=freetags_browse_amount_tags_in_cloud}
 					</div>
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="freetags_show_middle" name="freetags_show_middle"{if $prefs.freetags_show_middle eq 'y'} checked="checked"{/if} />
-						</div>
-						<div class="adminoptionlabel">
-							<label for="freetags_show_middle">{tr}Show freetags in middle column{/tr}.</label>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="freetags_preload_random" name="freetags_preload_random search" {if $prefs.freetags_preload_random_search eq 'y'}checked="checked"{/if} />
-						</div>
-						<div class="adminoptionlabel">
-							<label for="freetags_preload_random">{tr}Preload freetag random tag{/tr}.</label>
-							<br />
-							<em>{tr}When arriving on <a href="tiki-browse_freetags.php">freetag search page</a>{/tr}.</em>
-						</div>
-					</div>
+
+					{preference name=freetags_show_middle}
+					{preference name=freetags_preload_random_search}
+					<em>{tr}When arriving on <a href="tiki-browse_freetags.php">freetag search page</a>{/tr}.</em>
+
 
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">
 							<label for="freetags_cloud_colors">{tr}Random tag cloud colors{/tr}:</label>
-							<input type="text" name="freetags_cloud_colors" id="freetags_cloud_colors" value="{foreach from=$prefs.freetags_cloud_colors item=color naem=colors}{$color}{if !$smarty.foreach.colors.last},{/if}{/foreach}" />
+							<input type="text" name="freetags_cloud_colors" id="freetags_cloud_colors" value="{foreach from=$prefs.freetags_cloud_colors item=color name=colors}{$color}{if !$smarty.foreach.colors.last},{/if}{/foreach}" />
 							<br />
 							<em>{tr}Separate colors with a comma (,){/tr}.</em>
 						</div>
 					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="freetags_browse_amount_tags_suggestion">{tr}Number of Tags to show in Tag Suggestions{/tr}:</label>
-							<input type="text" name="freetags_browse_amount_tags_suggestion" id="freetags_browse_amount_tags_suggestion" value="{$prefs.freetags_browse_amount_tags_suggestion|escape}" size="3" />
-						</div>
+
+					{preference name=freetags_browse_amount_tags_suggestion}
+					{preference name=freetags_normalized_valid_chars}
+					<div class="adminoptionboxchild">
+						<a class="button" href='#Browsing' onclick="document.getElementById('freetags_normalized_valid_chars').value='a-zA-Z0-9';">{tr}Alphanumeric ASCII characters only{/tr}</a>
+						({tr}No accents or special characters{/tr}.)
+						<br />
+						<a class="button" href='#Browsing' onclick="document.getElementById('freetags_normalized_valid_chars').value='';">{tr}Accept all charactrs{/tr}</a>
 					</div>
-					<div class="adminoptionbox">
-							<div class="adminoptionlabel">
-								<label for="freetags_normalized_valid_chars">{tr}Valid characters pattern{/tr}:</label>
-								<input type="text" id="freetags_normalized_valid_chars" name="freetags_normalized_valid_chars" value="{$prefs.freetags_normalized_valid_chars}" />
-								<div class="adminoptionboxchild">
-									<a class="button" href='#Browsing' onclick="document.getElementById('freetags_normalized_valid_chars').value='a-zA-Z0-9';">{tr}Alphanumeric ASCII characters only{/tr}</a>
-									({tr}No accents or special characters{/tr}.)
-									<br />
-									<a class="button" href='#Browsing' onclick="document.getElementById('freetags_normalized_valid_chars').value='';">{tr}Accept all charactrs{/tr}</a>
-								</div>
-							</div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoption">
-								<input type="checkbox" id="freetags_lowercase_only" name="freetags_lowercase_only" {if $prefs.freetags_lowercase_only eq 'y'}checked="checked"{/if} />
-							</div>
-							<div class="adminoptionlabel">
-								<label for="freetags_lowercase_only">{tr}Lowercase tags only{/tr}</label>
-							</div>
-						</div>
-
-							<div class="adminoptionbox">
-								{preference name=freetags_multilingual}
-							</div>
-
-							<div class="adminoptionbox">
-								<input type="hidden" name="morelikethisoptions" />
-								<div class="adminoptionlabel">
-									<label for="morelikethis_algorithm">{tr}&quot;More Like This&quot; algorithm{/tr}:</label>
-									<select name="morelikethis_algorithm" id="morelikethis_algorithm" onchange="flip('basicalgorithm');">			
-										<option value="basic"{if $prefs.morelikethis_algorithm eq 'basic' or ! $prefs.morelikethis_algorithm} selected="selected"{/if}>{tr}basic{/tr}</option>
-										<option value="weighted"{if $prefs.morelikethis_algorithm eq 'weighted'} selected="selected"{/if}>{tr}weighted{/tr}</option>
-									</select>
-								</div>
-							</div>
-							<div class="adminoptionboxchild" id="basicalgorithm" style="display:{if $prefs.morelikethis_algorithm eq 'basic' or ! $prefs.morelikethis_algorithm}block{else}none{/if};">
-								<div class="adminoptionlabel">
-									<label for="morelikethis_basic_mincommon">{tr}Minimum amount of tags in common{/tr}: </label>
-									<select name="morelikethis_basic_mincommon" id="morelikethis_basic_mincommon">
-										<option value="1"{if $prefs.morelikethis_basic_mincommon eq '1'} selected="selected"{/if}>1</option>
-										<option value="2"{if $prefs.morelikethis_basic_mincommon eq '2' or ! $prefs.morelikethis_basic_mincommon} selected="selected"{/if}>2</option>
-										<option value="3"{if $prefs.morelikethis_basic_mincommon eq '3'} selected="selected"{/if}>3</option>
-										<option value="4"{if $prefs.morelikethis_basic_mincommon eq '4'} selected="selected"{/if}>4</option>
-										<option value="5"{if $prefs.morelikethis_basic_mincommon eq '5'} selected="selected"{/if}>5</option>
-										<option value="6"{if $prefs.morelikethis_basic_mincommon eq '6'} selected="selected"{/if}>6</option>
-										<option value="7"{if $prefs.morelikethis_basic_mincommon eq '7'} selected="selected"{/if}>7</option>
-										<option value="8"{if $prefs.morelikethis_basic_mincommon eq '8'} selected="selected"{/if}>8</option>
-										<option value="9"{if $prefs.morelikethis_basic_mincommon eq '9'} selected="selected"{/if}>9</option>
-									</select>	
-								</div>
-							</div>
-						</fieldset>
+					{preference name=freetags_lowercase_only}
+					{preference name=freetags_multilingual}
+					{preference name=morelikethis_algorithm}
+					{preference name=morelikethis_basic_mincommon}
+				</fieldset>
 
 				<fieldset>
 					<legend>{tr}Tag Management{/tr}</legend>
