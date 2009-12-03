@@ -45,7 +45,7 @@ function wikiplugin_category_info() {
 				'required' => false,
 				'name' => tra('Sort Order'),
 				'description' => tra('fieldName_asc|fieldName_desc, valid fields: type, created, name, hits, shuffle'),
-				'filter' => 'alpha'
+				'filter' => 'text'
 			),
 			'split' => array(
 				'required' => false,
@@ -120,7 +120,14 @@ function wikiplugin_category($data, $params) {
 	} else {
 		$and = false;
 	}
-	$sort = (isset($sort)) ? $sort : "";
+	if (isset($sort)) {
+		if (!in_array($sort, array('name_asc', 'name_desc', 'hits_asc', 'hits_desc', 'type_asc', 'type_desc', 'created_asc', 'created_desc'))) {
+				return tra('Incorrect param:').' sort';
+		}
+	} else {
+		$sort = '';
+	}
+
 	$types = (isset($types)) ? strtolower($types) : "*";
 	
 	$id = (isset($id)) ? $id : 'current'; // use current category if none is given
