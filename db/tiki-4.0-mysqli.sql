@@ -552,6 +552,7 @@ CREATE TABLE `tiki_content` (
 DROP TABLE IF EXISTS `tiki_content_templates`;
 CREATE TABLE `tiki_content_templates` (
   `templateId` int(10) NOT NULL auto_increment,
+  `template_type` VARCHAR( 20 ) NOT NULL DEFAULT 'static',
   `content` longblob,
   `name` varchar(200) default NULL,
   `created` int(14) default NULL,

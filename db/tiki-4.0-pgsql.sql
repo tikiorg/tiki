@@ -618,6 +618,7 @@ DROP TABLE IF EXISTS "tiki_content_templates";
 
 CREATE TABLE "tiki_content_templates" (
   "templateId" bigserial,
+  "template_type" VARCHAR( 20 ) NOT NULL DEFAULT 'static',
   "content" bytea,
   "name" varchar(200) default NULL,
   "created" bigint default NULL,
