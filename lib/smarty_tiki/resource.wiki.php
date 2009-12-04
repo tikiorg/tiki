@@ -16,7 +16,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_resource_wiki_source($page, &$tpl_source, &$smarty) {
 	global $tikilib, $user;
 
-	 if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_use_as_template')) {
+	$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $page ) );
+	if ( ! $perms->use_as_template ) {
 		$tpl_source= tra('Permission denied: the specified wiki page cannot be used as Smarty template resource').'<br />';
 		// TODO: do not cache ! and return the message only once should be enough...
 		return true;
