@@ -484,15 +484,17 @@ $jq("#genepass").keyup(function () {
 {/tab}
 
 {* ---------------------- tab with upload -------------------- *}
-{tab name="{tr}Import/Export{/tr}"}
+{tab name="{tr}Import{/tr}"}
 	<h2>{tr}Batch upload (CSV file):{/tr}</h2>
 
 	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 		<table class="normal">
 			<tr class="formcolor">
 				<td>
-					<label for="csvlist">{tr}CSV File:{/tr} </label>
-					<a {popup text='login,password,email,groups&lt;br /&gt;user1,password1,email1,&quot;group1,group2&quot;&lt;br /&gt;user2, password2,email2'}>{icon _id='help'}</a>
+					<label for="csvlist">
+						{tr}CSV File:{/tr}
+						{if $prefs.feature_help eq 'y'}{help url="Users+Management#Adding_new_users_in_bulk" desc="{tr}CSV file layout{/tr}: {tr}login,password,email<br />user1,pass1,email1<br />user2,pass2,email2{/tr}"}{/if}
+					</label>
 				</td>
 				<td>
 					<input type="file" id="csvlist" name="csvlist"/>
@@ -516,7 +518,9 @@ $jq("#genepass").keyup(function () {
 			</tr>
 		</table>
 	</form>
-	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group in <a href="tiki-admingroups.php">admin->groups->a_group</a>{/tr}{/remarksbox}
+	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
+		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group in <a href="tiki-admingroups.php">admin->groups->a_group</a>{/tr}{/remarksbox}
+	{/if}
 {/tab}
 
 {/tabset}
