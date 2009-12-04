@@ -54,20 +54,22 @@
 
 {****  Display warnings about incorrect values and missing mandatory fields ***}
 {if count($err_mandatory) > 0}
-<div class="simplebox highlight">
-{tr}Following mandatory fields are missing{/tr}&nbsp;:<br/>
+{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+<div class="highlight"><em class='mandatory_note'>
+{tr}Following mandatory fields are missing{/tr}</em>&nbsp;:<br/>
 	{section name=ix loop=$err_mandatory}
 {$err_mandatory[ix].name|escape}{if !$smarty.section.ix.last},&nbsp;{/if}
 	{/section}
-</div><br />
+</div>	{/remarksbox}<br />
 {/if}
 {if count($err_value) > 0}
-<div class="simplebox highlight">
-{tr}Following fields are incorrect{/tr}&nbsp;:<br/>
+{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+<div class="highlight"><em class='mandatory_note'>
+{tr}Following fields are incorrect{/tr}</em>&nbsp;:<br/>
 	{section name=ix loop=$err_value}
 {$err_value[ix].name|escape}{if !$smarty.section.ix.last},&nbsp;{/if}
 	{/section}
-</div><br />
+</div>	{/remarksbox}<br />
 {/if}
 
 {tabset name='tabs_view_tracker_item'}
@@ -262,11 +264,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table class="normal">
 {else}
 {if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td >
+<tr class="formcolor"><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td><td >
 {elseif $stick eq 'y'}
-<td class="formlabel right" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td >
+<td class="formlabel right" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}
+<tr class="formcolor"><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}
 </td><td colspan="3" class="formcontent" >
 {/if}
 {/if}
