@@ -153,7 +153,8 @@ function decode_subject_utf8($string){
  */
 function format_email_reply(&$text, $from, $date) {
 	$lines = preg_split('/[\n\r]+/',wordwrap($text));
-	for ($i = 0; $i < count($lines); $i++) {
+
+	for ($i = 0i, $icount_lines = count($lines); $i < $icount_lines; $i++) {
 		$lines[$i] = '> '.$lines[$i]."\n";
 	}
 	$str = !empty($from) ? $from.' wrote' : '';

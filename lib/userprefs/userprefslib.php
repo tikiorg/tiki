@@ -49,17 +49,17 @@ class UserPrefsLib extends TikiLib
 		$user1=$this->get_userprefs($usersrc);
 		$user2=$this->get_userprefs($userdst);
 
-		for ($i=0;$i<count($user1);$i++) {
-			if ($user1[$i]["prefName"]=="lat") $u1lat=$user1[$i]["value"];
-			if ($user1[$i]["prefName"]=="lon") $u1lon=$user1[$i]["value"];
+		for ($i=0, $icount_user1 = count($user1); $i < $icount_user1; $i++) {
+			if ($user1[$i]["prefName"] == "lat") $u1lat = $user1[$i]["value"];
+			if ($user1[$i]["prefName"] == "lon") $u1lon = $user1[$i]["value"];
 		}
-		for ($i=0;$i<count($user2);$i++) {
-			if ($user2[$i]["prefName"]=="lat") $u2lat=$user2[$i]["value"];
-			if ($user2[$i]["prefName"]=="lon") $u2lon=$user2[$i]["value"];
+		for ($i=0, $icount_user2 = count($user2); $i < $icount_user2; $i++) {
+			if ($user2[$i]["prefName"] == "lat") $u2lat = $user2[$i]["value"];
+			if ($user2[$i]["prefName"] == "lon") $u2lon = $user2[$i]["value"];
 		}
 		if (isset($u1lat) && isset($u1lon) &&isset($u2lat) && isset($u2lon) ) {
-			$distance=$this->distance($u1lat,$u1lon,$u2lat,$u2lon);
-		  return (round($distance,3));
+			$distance=$this->distance($u1lat, $u1lon, $u2lat, $u2lon);
+		  return (round($distance, 3));
 		} else {
 			return(NULL);
 		}

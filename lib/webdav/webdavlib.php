@@ -2,7 +2,8 @@
 
 require_once("lib/pear/HTTP/WebDAV/Client.php");
 
-class WebDavLib extends HTTP_WebDAV_Client_Stream {
+class WebDavLib extends HTTP_WebDAV_Client_Stream
+{
 
 	/**
 	 * Constructor

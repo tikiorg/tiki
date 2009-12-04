@@ -21,7 +21,6 @@ class UserMenuLib extends TikiLib
 				$this->replace_usermenu($user, 0, $res['name'], $res['url'], $start, 'w');
 
 				$start++;
-			} else {
 			}
 		}
 
@@ -35,7 +34,6 @@ class UserMenuLib extends TikiLib
 				$this->replace_usermenu($user, 0, $res['name'], $res['url'], $start, 'w');
 
 				$start++;
-			} else {
 			}
 		}
 	}

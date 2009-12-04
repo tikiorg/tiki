@@ -43,10 +43,14 @@ function smarty_function_rss($params, &$smarty)
 	}
 
 	print('<ul class="rsslist">');
-	for($i=0;$i<count($items) && $i<$max;$i++) {
+	for ($i=0, $icount_items=count($items); $i<$icount_items && $i<$max; $i++) {
 		if (empty($skip[$i+1]) || !$skip[$i+1]) {
-			if ($items[$i]["title"] <> '') print('<li class="rssitem"><a target="_blank" href="'.$items[$i]["link"].'" class="rsslink">'.$items[$i]["title"].'</a>');
-			if ($items[$i]["pubDate"] <> '') print(' <span class="rssdate">('.$items[$i]["pubDate"].')</span>');
+			if ($items[$i]["title"] <> '') {
+				print('<li class="rssitem"><a target="_blank" href="'.$items[$i]["link"].'" class="rsslink">'.$items[$i]["title"].'</a>');
+			}
+			if ($items[$i]["pubDate"] <> '') {
+				print(' <span class="rssdate">('.$items[$i]["pubDate"].')</span>');
+			}
 			print('</li>');
 		}
 	}

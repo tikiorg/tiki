@@ -27,7 +27,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // Class Made By Mukul Sabharwal [mukulsabharwal@yahoo.com]
 // http://www.devhome.net/php/
 // On October 21, 2000
-class rc4crypt {
+class rc4crypt
+{
 	function endecrypt($pwd, $data, $case) {
 		if ($case == 'de') {
 			$data = urldecode($data);
@@ -62,7 +63,7 @@ class rc4crypt {
 		$a = 0;
 		$j = 0;
 
-		for ($i = 0; $i < strlen($data); $i++) {
+		for ($i = 0, $istrlen_data = strlen($data); $i < $istrlen_data; $i++) {
 			$a = ($a + 1) % 256;
 
 			$j = ($j + $box[$a]) % 256;

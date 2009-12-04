@@ -167,11 +167,13 @@ function smarty_function_treetable($params, &$smarty) {
 	}
 	
 	$class = empty($class) ? 'treeTable' : $class;	// treetable
-	
+
+/*	
 	if ($prefs['feature_jquery_tablesorter'] == 'y' && strpos($class, 'sortable') === false) {
 		 //$class .= ' sortable';
 	}
-	
+*/
+
 	if ($_listFilter == 'y' && count($_data) > $_filterMinRows) {
 		require_once($smarty->_get_plugin_filepath('function', 'listfilter'));
 		$html .= smarty_function_listfilter(
@@ -220,7 +222,7 @@ $jq("#'.$id.'_openall").click( function () {
 	$html .= '<thead><tr>';
 	if (!empty($_checkbox)) {
 		include_once('lib/smarty_tiki/function.select_all.php');
-		for ($i = 0; $i < count($_checkbox); $i++) {
+		for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 			$html .= '<th class="checkBoxHeader">';
 			$html .= smarty_function_select_all(
 						array('checkbox_names'=>$_checkbox[$i].'[]',
@@ -248,7 +250,7 @@ $jq("#'.$id.'_openall").click( function () {
 			$childRowClass = '';
 			if (!empty($_sortColumnDelimiter)) {	// nested
 				$parts = array_reverse(explode($_sortColumnDelimiter, $treeType));
-				for ($i = 0; $i < count($parts); $i++) {
+				for ($i = 0, $icount_parts = count($parts); $i < $icount_parts; $i++) {
 					$part = preg_replace('/\s+/', '_', $parts[$i]);
 					if (in_array($part, $treeSectionsAdded) && $i > 0) {
 						$treeParentId = preg_replace('/\s+/', '_', $parts[$i]);
@@ -278,7 +280,7 @@ $jq("#'.$id.'_openall").click( function () {
 					// write a sub-header
 					$html .= '<tr class="subHeader'.$childRowClass.'">';
 					if (!empty($_checkbox)) {
-						for ($i = 0; $i < count($_checkbox); $i++) {
+						for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 							$html .= '<td class="checkBoxHeader">';
 							$html .= empty($_checkboxTitles) ? '' : $_checkboxTitles[$i];
 							$html .= '</td>';
@@ -309,7 +311,7 @@ $jq("#'.$id.'_openall").click( function () {
 		$html .= '<tr class="'.$rowClass.'"'.$rowId.'>';
 		// add the checkbox
 		if (!empty($_checkbox)) {
-			for ($i = 0; $i < count($_checkbox); $i++) {
+			for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 				// get checkbox's "value"
 				$cbxVal = htmlspecialchars($row[$_checkboxColumnIndex[$i]]);
 				$rowVal = htmlspecialchars($row[$_valueColumnIndex]);

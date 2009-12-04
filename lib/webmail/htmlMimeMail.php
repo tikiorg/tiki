@@ -15,7 +15,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 */
 
 //require_once(dirname(__FILE__) . '/mimePart.php');
-class htmlMimeMail {
+class htmlMimeMail
+{
 	/**
 	* The html part of the message
 	* @var string

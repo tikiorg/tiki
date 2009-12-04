@@ -350,8 +350,7 @@ abstract class Toolbar
 		if (strpos($class, 'qt-plugin') !== false && !empty($title)) {
 			$params['_menu_text'] = 'y';
 			$params['_menu_icon'] = 'y';
-		} else {
-		}
+		
 		return smarty_block_self_link($params, $content, $smarty);
 	} // }}}
 
@@ -678,11 +677,13 @@ class ToolbarPicker extends Toolbar
 			$icon = tra('pics/icons/palette.png');
 			$rawList = array();
 			
-			$hex = array("0", "3", "6", "9", "c", "f");
-			for ($r = 0; $r < count($hex); $r++){ // red
-				for ($g = 0; $g < count($hex); $g++){ // green
-					for ($b = 0; $b < count($hex); $b++){ // blue
-						$color = $hex[$r].$hex[$g].$hex[$b];
+			$hex = array('0', '3', '6', '9', 'c', 'f');
+			$count_hex = count($hex);
+
+			for ($r = 0; $r < $count_hex; $r++){ // red
+				for ($g = 0; $g < $count_hex; $g++){ // green
+					for ($b = 0; $b < $count_hex; $b++){ // blue
+						$color = $hex[$r] . $hex[$g] . $hex[$b];
 						$rawList[] = $color;
 					}
 				}
@@ -699,10 +700,12 @@ class ToolbarPicker extends Toolbar
 			$icon = tra('pics/icons/palette_bg.png');
 			$wysiwyg = 'BGColor';
 
-			$hex = array("0", "3", "6", "9", "c", "f");
-			for ($r = 0; $r < count($hex); $r++){ // red
-				for ($g = 0; $g < count($hex); $g++){ // green
-					for ($b = 0; $b < count($hex); $b++){ // blue
+			$hex = array('0', '3', '6', '9', 'c', 'f');
+			$count_hex = count($hex);
+
+			for ($r = 0; $r < $count_hex; $r++){ // red
+				for ($g = 0; $g < $count_hex; $g++){ // green
+					for ($b = 0; $b < $count_hex; $b++){ // blue
 						$color = $hex[$r].$hex[$g].$hex[$b];
 						$rawList[] = $color;
 					}
@@ -1695,7 +1698,7 @@ class ToolbarsList
 			}
 			
 			// $line[0] is left part, $line[1] right floated section
-			for ($bitx = 0; $bitx < count($line); $bitx++ ) {
+			for ($bitx = 0, $bitxcount_line = count($line); $bitx < $bitxcount_line; $bitx++ ) {
 				$lineBit = '';
 				
 				if ($c == 0 && $bitx == 1 && ($tiki_p_admin == 'y' or $tiki_p_admin_toolbars == 'y')) {
