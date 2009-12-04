@@ -1015,6 +1015,8 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	    $res["age"] = $this->now - $res["registrationDate"];
             $res['user_information'] = $this->get_user_preference($user, 'user_information', 'public');
 
+		$res['editable'] = $this->user_can_be_edited($user);
+
 	    $ret[] = $res;
 	}
 
@@ -1023,6 +1025,29 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	$retval["cant"] = $cant;
 	return $retval;
 }
+
+	/**
+	 * @param string $edited_user : username (login) of the user that might be edited
+	 * @param string $editing_user : username of user doing the editing (or logged in user if omitted)
+	 * @return bool : true if $editing_user can edit $edited_user
+	 */
+	function user_can_be_edited($edited_user, $editing_user = '') {
+		global $user;
+		
+		if (empty($editing_user)) {
+			$editing_user = $user;
+		}
+		
+        $editable = false;
+		if ($this->user_has_permission($editing_user, 'tiki_p_admin')) {
+			$editable = true;
+		} else if ($this->user_has_permission($editing_user, 'tiki_p_admin_users') && !$this->user_has_permission($edited_user, 'tiki_p_admin')) {
+			$editable = true;
+		} else if ($editing_user == $res['user']) {
+			$editable = true;
+		}
+		return $editable;
+	}
 
     function group_inclusion($group, $include) {
 	$query = "insert into `tiki_group_inclusion`(`groupName`,`includeGroup`)
@@ -1500,7 +1525,9 @@ function get_included_groups($group, $recur=true) {
 	$res['groups'] = ( $inclusion ) ? $this->get_user_groups_inclusion($res['login']) : $this->get_user_groups($res['login']);
 	$res['age'] = ( ! isset($res['registrationDate']) ) ? 0 : $this->now - $res['registrationDate'];
 	if ( $prefs['login_is_email'] == 'y' && isset($res['login']) && $res['login'] != 'admin' ) $res['email'] = $res['login'];
-
+	
+	$res['editable'] = $this->user_can_be_edited($res['login']);
+	
 	return $res;
     }
 
