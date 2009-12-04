@@ -366,8 +366,8 @@
 					<tr class="formcolor">
 						<td><label for="pass1">{tr}Password:{/tr}</label></td>
 						<td>
-							<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');" />
-							<div style="float:right;width:150px;margin-left:5px;">
+							<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
+							<div style="float:right;margin-left:5px;">
 								<div id="mypassword_text"></div>
 								<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 							</div>
@@ -378,20 +378,30 @@
 							{if $prefs.pass_chr_num eq 'y'}
 								<em>{tr}Password must contain both letters and numbers{/tr}</em>.
 							{/if}
-							{if ! ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' ) }
-								<p>
-									<div>
-										{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');return false;" _text="{tr}Generate a password{/tr}"}
-										<input id='genepass' name="genpass" type="text" />
-									</div>
-								</p>
-							{/if}
 						</td>
 					</tr>
 					<tr class="formcolor">
 						<td><label for="pass2">{tr}Repeat Password:{/tr}</label></td>
-						<td><input type="password" name="pass2" id="pass2" /></td>
+						<td>
+							<input type="password" name="pass2" id="pass2" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
+							<div style="float:right;margin-left:5px;">
+								<div id="mypassword2_text"></div>
+							</div>
+						</td>
 					</tr>
+					{if ! ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' ) }
+						<tr><td>&nbsp;</td><td>
+							<input id='genepass' name="genpass" type="text" />
+							{jq}
+$jq("#genepass").keyup(function () {
+  $jq('#pass1').val($jq(this).val());
+  $jq('#pass2').val($jq(this).val());
+  runPassword($jq(this).val(), 'mypassword');
+  checkPasswordsMatch("#pass2", "#pass1", "#mypassword2_text");
+});{/jq}
+							{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');return false;" _text="{tr}Generate a password{/tr}"}
+						</td></tr>
+					{/if}
 					{if $userinfo.login neq 'admin' and empty($userinfo.userId)}
 						<tr class="formcolor">
 							<td>&nbsp;</td>
