@@ -25,11 +25,14 @@ if ( $prefs['javascript_enabled'] != 'y' ) {
 	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers) - duration: approx. 1 year
 	$headerlib->add_js("var jsedate = new Date();\njsedate.setTime(" . ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) . ");\nsetCookieBrowser('javascript_enabled', 'y', null, jsedate);");
 
-	//   If it's the first visit the cookie cannot have been set,
-	if ( count($_COOKIE) == 0) {
-		// so if there are no cookies at all _assume_ for the first page that javascript_enabled=y
+	// the first and second time, we should not trust the absence of javascript_enabled cookie yet, as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run, assuming that js is on before then
+	if ( !isset($_COOKIE['runs_before_js_detect']) ) {
 		$prefs['javascript_enabled'] = 'y';
-	} else {
+		setcookie( 'runs_before_js_detect', '2', ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) );
+	} elseif ( $_COOKIE['runs_before_js_detect'] > 0 ) {
+		$prefs['javascript_enabled'] = 'y';
+		setcookie( 'runs_before_js_detect', $_COOKIE['runs_before_js_detect'] - 1, ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) );
+     	} else {
 		// disable js dependant features
 		$prefs['feature_tabs'] = 'n';
 		$prefs['feature_jquery'] = 'n';
