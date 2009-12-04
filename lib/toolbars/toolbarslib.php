@@ -350,7 +350,7 @@ abstract class Toolbar
 		if (strpos($class, 'qt-plugin') !== false && !empty($title)) {
 			$params['_menu_text'] = 'y';
 			$params['_menu_icon'] = 'y';
-		
+		}
 		return smarty_block_self_link($params, $content, $smarty);
 	} // }}}
 
