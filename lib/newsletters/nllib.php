@@ -582,7 +582,7 @@ class NlLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			if ($nlId) {
-				if ($perm && $$perm == 'n')
+				if ($tiki_p_admin_newsletters != 'y' && $perm && $$perm == 'n')
 					continue;
 				$res['tiki_p_admin_newsletters'] = $tiki_p_admin_newsletters;
 				$res['tiki_p_send_newsletters'] = $tiki_p_send_newsletters;
