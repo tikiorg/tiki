@@ -444,4 +444,5 @@ html[dir=ltr]>body {
 	display: block;
 	font-style: italic;
 	margin-top: 10px;
+	color: red;	
 }
