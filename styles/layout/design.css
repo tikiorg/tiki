@@ -1081,4 +1081,11 @@ table.treeTable .parent td {
 	width: 100%;
 }
 
+ /* wikiplugin_tracker */
+.mandatory_note {
+	display: block;
+	font-style: italic;
+	color: red;
+	margin-top: 10px;
+}
 /* End of file */

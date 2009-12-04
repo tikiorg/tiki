@@ -212,7 +212,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {/section}
 {if $cant}<input type="hidden" name="cant" value="{$cant}" />{/if}
 
-{remarksbox type="note"}{tr}Fields marked with a * are mandatory.{/tr}{/remarksbox}
+{remarksbox type="note"}<em class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</em>{/remarksbox}
 <table class="normal">
 <tr class="formcolor">
 <td class="formcontent">&nbsp;</td>
