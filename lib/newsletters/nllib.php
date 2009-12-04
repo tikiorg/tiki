@@ -502,7 +502,7 @@ class NlLib extends TikiLib
 		}
 
 		$mid2 = ( empty( $mid ) ? ' WHERE ' : $mid . ' AND ' ) . ' tn.`nlId` = tsn.`nlId`';
-		$query = "select tn.*, max(tsn.`sent`) as lastSent from `tiki_newsletters` as tn, `tiki_sent_newsletters` as tsn $mid2 group by tn.`nlId` order by ".$this->convert_sortmode("$sort_mode");
+		$query = "select tn.*, max(tsn.`sent`) as lastSent from `tiki_newsletters` as tn, `tiki_sent_newsletters` as tsn $mid2 group by tn.`nlId` order by ".$this->convertSortmode("$sort_mode");
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$query_cant = "select count(*) from  `tiki_newsletters` as tn $mid";
 		$cant = $this->getOne($query_cant,$bindvars);
