@@ -511,6 +511,7 @@ class TrackerLib extends TikiLib {
 			return false;
 		}
 	}
+	// allfields == false will not check the perm on categ
 	function get_all_items($trackerId,$fieldId,$status='o', $allfields='') {
 		global $cachelib, $prefs;
 
@@ -886,7 +887,12 @@ class TrackerLib extends TikiLib {
 	}
 	function filter_categ_items($ret) {
 		//this is an approxomation - the perm should be function of the status
-		return Perms::filter(array('type' => 'trackeritem'), 'object', $ret, array('object' => 'itemId'), 'view_trackers');
+		global $categlib; include_once('lib/categories/categlib.php');
+		if ($categlib->is_categorized('trackeritem', $ret['itemId'])) {
+			return Perms::filter(array('type' => 'trackeritem'), 'object', $ret, array('object' => 'itemId'), 'view_trackers');
+		} else {
+			return $ret;
+		}
 	}
 	/* listfields fieldId=>ooptions */
 	function get_item_fields($trackerId, $itemId, $listfields, &$itemUser) {
