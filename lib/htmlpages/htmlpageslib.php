@@ -66,14 +66,14 @@ class HtmlPagesLib extends TikiLib
 		//The data is needed because we may be previewing a page...
 		preg_match_all("/\{t?ed id=([^\}]+)\}/", $data, $eds);
 
-		for ($i = 0; $i < count($eds[0]); $i++) {
+		for ($i = 0, $icount_eds = count($eds[0]); $i < $icount_eds; $i++) {
 			$cosa = $this->get_html_page_content($pageName, $eds[1][$i]);
 			$data = str_replace($eds[0][$i], '<span id="' . $eds[1][$i] . '">' . $cosa["content"] . '</span>', $data);
 		}
 
 		// match and parse text in <wiki>...</wiki> tags
 		preg_match_all('/<wiki>(.*?)<\/wiki>/si', $data, $wikis); // ? for ungreedy and /s to include \n in .
-		for ($i = 0; $i < count($wikis[0]); $i++) {
+		for ($i = 0, $icount_wikis = count($wikis[0]); $i < $icount_wikis; $i++) {
 			$parsed = substr($tikilib->parse_data($wikis[1][$i]), 0, -7); // remove <br /> appended by parser
 			$data = str_replace($wikis[0][$i], $parsed , $data);
 		}
@@ -101,7 +101,7 @@ class HtmlPagesLib extends TikiLib
 			}
 		}
 
-		for ($i = 0; $i < count($eds[0]); $i++) {
+		for ($i = 0, $icount_eds = count($eds[0]); $i < $icount_eds; $i++) {
 			if (!$this->getOne( "select count(*) from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and `zone`=?",array($pageName,$eds[1][$i]))) {
 				$this->query("delete from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and `zone`=?",array($pageName,$eds[1][$i]));
 				$query = "insert into `tiki_html_pages_dynamic_zones`(`pageName`,`zone`,`type`) values(?,?,?)";
@@ -109,7 +109,7 @@ class HtmlPagesLib extends TikiLib
 			}
 		}
 
-		for ($i = 0; $i < count($teds[0]); $i++) {
+		for ($i = 0, $icount_teds = count($teds[0]); $i < $icount_teds; $i++) {
 			if (!$this->getOne( "select count(*) from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and zone=?",array($pageName,$teds[1][$i]))) {
 				$this->query("delete from `tiki_html_pages_dynamic_zones` where ".$this->convertBinary()." `pageName`=? and `zone`=?",array($pageName,$teds[1][$i]));
 				$query = "insert into `tiki_html_pages_dynamic_zones`(`pageName`,`zone`,`type`) values(?,?,?)";

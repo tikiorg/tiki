@@ -42,8 +42,8 @@
  *  @package iCal
  *  @abstract
  */
-abstract class File_iCal_Component {
-
+abstract class File_iCal_Component
+{
     /**
      * The name for this component
      *
@@ -117,7 +117,7 @@ abstract class File_iCal_Component {
                 $this->_name = $s[0]->value();
 
                 //go through and create the properties
-                for ($i = 1; $i < count($s) - 1; $i++) {
+                for ($i = 1, $icount_s = count($s); $i < $icount_s - 1; $i++) {
                     $name = strtoupper($s[$i]->name());
 
                     if (in_array($name, $this->_properties_possible)) {
@@ -151,35 +151,32 @@ abstract class File_iCal_Component {
                                     self::addProperty($s[$i]->getProperty(), false);
                                 }
 
-                            }
-                            else {
+                            } else {
                                 $prop = $s[$i]->getProperty();
                                 self::addProperty($prop, false);
 
                             }
-                        }
-                        else {
+                        } else {
                             trigger_error("Not sure what to do with property", E_USER_WARNING);
                         }
 
                     }
-                    else {
+/*                    else {
                         //trigger_error("Unexpected property in component.  Found $name", E_USER_WARNING);
                     }
-
+*/
                 }
 
-            }
-            else {
+            } else {
                 trigger_error("Component array must start and end with BEGIN and END tags", E_USER_ERROR);
             }
 
 
         }
-        else {
+/*        else {
             //trigger_error("Component constructor expects an array", E_USER_ERROR);
         }
-
+*/
     }
 
     /**
@@ -197,17 +194,14 @@ abstract class File_iCal_Component {
                 $this->_properties[$name] = array();
                 $this->_properties[$name][] = $property;
                 return;
-            }
-            else {
+            } else {
                 $this->_properties[$name] = $property;
                 return;
             }
-        }
-        else if ($multiple) {
+        } else if ($multiple) {
             $this->_properties[$name][] = $property;
             return;
-        }
-        else {
+        } else {
             //the logic before addProperty should have prevented this from happening...
             trigger_error("Trying to insert a property (".$name.") that already exists.  This function should never have been called", E_USER_ERROR);
         }
@@ -231,8 +225,7 @@ abstract class File_iCal_Component {
                 foreach ($prop as $propv) {
                     $r[] = $propv;
                 }
-            }
-            else {
+            } else {
                 $r[] = $prop;
             }
         }
@@ -263,8 +256,7 @@ abstract class File_iCal_Component {
                             $r[] = new File_iCal_ContentLine($propv);
                         }
                     }
-                }
-                else {
+                } else {
                     if (is_a($prop, "File_iCal_Property")) {
                         //$r[] = $prop->getName().':'.$prop->getValue();
                         $r[] = new File_iCal_ContentLine($prop);
@@ -302,8 +294,7 @@ abstract class File_iCal_Component {
 
         if (count($keys) == 1) {
             $key = $keys[0];
-        }
-        else {
+        } else {
             $key = $keys;
         }
 
@@ -343,8 +334,7 @@ abstract class File_iCal_Component {
                     }
                 }
             }
-        }
-        else {
+        } else {
             trigger_error("The property $name is not allowed for component ".$this->_name, E_USER_WARNING);
         }
     }
@@ -398,7 +388,7 @@ abstract class File_iCal_Component {
         $props[] = File_iCal_Property::getProperty("BEGIN", array(), $component_name);
 
         //attachment is defined in the basecomponent class, so method_exists is always true
-        if (is_subclass_of($e, "File_iCal_BaseComponent_EJT") || is_a($e, "File_iCal_Alarm")) {
+/*        if (is_subclass_of($e, "File_iCal_BaseComponent_EJT") || is_a($e, "File_iCal_Alarm")) {
 
         }
 
@@ -407,7 +397,7 @@ abstract class File_iCal_Component {
                 foreach ($e->getComments() as $c) {
 
                 }
-
+*/
         }
 
         //this method is defined in the BaseComponent class, so it always exists
@@ -448,7 +438,7 @@ abstract class File_iCal_Component {
         }
 
                 //should be changed
-        if (method_exists($e, "getAttendees")) {
+/*        if (method_exists($e, "getAttendees")) {
 
         }
 
@@ -459,7 +449,7 @@ abstract class File_iCal_Component {
         if (method_exists($e, "getContacts")) {
 
         }
-
+*/
         if (method_exists($e, "getOrganizer")) {
                         if ($o = $e->getOrganizer()) {
                                 $props[] = File_iCal_Property::getProperty("ORGANIZER", array(), $o);
@@ -483,7 +473,7 @@ abstract class File_iCal_Component {
                                 $props[] = File_iCal_Property::getProperty("DTSTAMP", array(), $uid);
                         }
         }
-
+/*
         if (method_exists($e, "getRequestStatus")) {
 
         }
@@ -511,14 +501,14 @@ abstract class File_iCal_Component {
         if (method_exists($e, "getCreated")) {
 
         }
-
+*/
         if (method_exists($e, "getSequence")) {
             if ($sequence = $e->getSequence()) {
                 $props[] = File_iCal_Property::getProperty("SEQUENCE", array(), $sequence);
             }
 
         }
-
+/*
         if (method_exists($e, "getLatitude")) {
 
         }
@@ -526,13 +516,13 @@ abstract class File_iCal_Component {
         if (method_exists($e, "getLongitude")) {
 
         }
-
+*/
         if (method_exists($e, "getLocation")) {
             if ($location = $e->getLocation()) {
                 $props[] = File_iCal_Property::getLocation("LOCATION", array(), $location);
             }
         }
-
+/*
         if (method_exists($e, "getPriority")) {
 
         }
@@ -544,7 +534,7 @@ abstract class File_iCal_Component {
         if (method_exists($e, "getTransparency")) {
 
         }
-
+*/
         $props[] = File_iCal_Property::getProperty("END", array(), $component_name);
 
 
@@ -553,7 +543,6 @@ abstract class File_iCal_Component {
         foreach ($props as $k=>$p) {
             $props[$k] = new File_iCal_ContentLine($p);
         }
-        //echo '<PRE>';print_R(array($e, $component_name,$props));
         
         switch ($component_name) {
             case "VEVENT":
@@ -640,8 +629,7 @@ abstract class File_iCal_Component {
                                 foreach ($p as $p2) {
                                         self::addPropertyToUserComponent($c, $p2);
                                 }
-                        }
-                        else {
+                        } else {
                                 self::addPropertyToUserComponent($c, $p);
                         }
         }

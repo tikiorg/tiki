@@ -5,7 +5,7 @@ require 'tikiversion.php';
 if(!isset($_GET['version'])) {
 	echo "version not given. Using default $tikiversion.<br />";
 } else {
-	if(preg_match('/\d\.\d/',$_GET['version'])) {
+	if (preg_match('/\d\.\d/',$_GET['version'])) {
 		$tikiversion=$_GET['version'];
 	}
 }
@@ -14,14 +14,13 @@ if(!isset($_GET['version'])) {
 // read file
 $file="../tiki.sql";
 @$fp = fopen($file,"r");
-if(!$fp)
-{
+if (!$fp) {
 	echo "Error opening $file";
 	exit();
 }
 $data = '';
 echo "reading $file: ";
-while(!feof($fp)) {
+while (!feof($fp)) {
 	$data .= fread($fp,4096);
 	echo ".";
 }
@@ -34,8 +33,7 @@ $statements = preg_split("#(;\n)|(;\r\n)#", $data);
 
 // step though statements
 $fp=fopen($tikiversion.".to_pgsql.sql","w");
-foreach ($statements as $statement)
-{
+foreach ($statements as $statement) {
 	$parsed = parse($statement);
 	fwrite($fp, $parsed);
 }
@@ -192,8 +190,7 @@ function add_quotation($pre, $str, $post)
 	foreach($cols AS $col)
 	{
 		$col = trim($col);
-		if(substr($col, 0, 1) != '"')
-		{
+		if(substr($col, 0, 1) != '"') {
 			$col = '"'.$col.'"';
 		}
 		$str .= $col;
@@ -253,11 +250,9 @@ function create_index($name, $columnlist, $type='')
 	$cols = split(',', $columnlist);
 	
 	// if the index has no name, give it one – based on columns
-	if(empty($name))
-	{
+	if (empty($name)) {
 		$name = $table_name;
-		for($i=0; $i<count($cols); $i++)
-		{
+		for($i = 0, $icount_cols = count($cols); $i < $icount_cols; $i++) {
 			$name .= '_' . $cols[$i];
 		}
 	}
@@ -269,8 +264,7 @@ function create_index($name, $columnlist, $type='')
 		$col = trim($col);
 		
 		// add quotes if column is not quoted
-		if(substr($col, 0, 1) != '"')
-		{
+		if (substr($col, 0, 1) != '"') {
 			//$col = preg_replace('/\"?([a-zA-Z0-9_]+)\"?/', '"$1"', $col);
 			$col = '"'.$col.'"';
 		}
@@ -361,14 +355,14 @@ function convert_enums($colname, $values)
 		if (!is_int($val)) {
 			$isnum = false;
 		}
-		if (strlen($val) > $maxlength){
+		if (strlen($val) > $maxlength) {
 			$maxlength = strlen($val);
 		}
 	}
 	if ($isnum) {
-		if ($maxlength < 4){
+		if ($maxlength < 4) {
 			$ret .= 'smallint ';
-		} elseif ($maxlength < 9){
+		} elseif ($maxlength < 9) {
 			$ret .= 'integer ';
 		} else {
 			$ret .= 'bigint ';

@@ -35,6 +35,7 @@
  * @category File
  * @package iCal
  */
-class File_iCal_ExceptionRule {
+class File_iCal_ExceptionRule 
+{
 
 }

@@ -147,7 +147,7 @@ class LatexRender
             }
 
             // security filter: try to match against LaTeX-Tags Blacklist
-            for ($i=0;$i<sizeof($this->_latex_tags_blacklist);$i++) {
+            for ($i=0, $isizeof_latex = sizeof($this->_latex_tags_blacklist); $i < $isizeof_latex; $i++) {
                 if (stristr($latex_formula,$this->_latex_tags_blacklist[$i])) {
                 	$this->_errorcode = 2;
                     return false;

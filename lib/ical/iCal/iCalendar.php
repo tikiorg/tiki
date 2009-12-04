@@ -38,7 +38,8 @@
  * @package iCal
  * @category File
  */
-class File_iCal_iCalendar {
+class File_iCal_iCalendar
+{
         protected $_properties = array();   //an array of Properties
         protected $_components = array();   //an array of Components
 
@@ -66,8 +67,7 @@ class File_iCal_iCalendar {
             $contentlines = array();
             require_once 'ContentLine.php';
             //assemble into contentlines
-            foreach ($lines as $line)
-            {
+            foreach ($lines as $line) {
                     $contentlines[] = new File_iCal_ContentLine($line);
             }
             //verify the validity of the structure
@@ -77,20 +77,16 @@ class File_iCal_iCalendar {
                     $begin = 0;
 
                     //search for the first component (the end of the header)
-                    for ($i = 1; $i < count($contentlines); $i++)
-                    {
-                            if ($contentlines[$i]->name() == "BEGIN")
-                            {
+                    for ($i = 1, $icount_contentlines = count($contentlines); $i < $icount_contentlines; $i++) {
+                            if ($contentlines[$i]->name() == "BEGIN") {
                                     $begin = $i;
                                     break;
                             }
                     }
 
                     //$begin is where the first component starts, so [1] to [$begin-1] are calprops
-                    for ($i = 1; $i < $begin; $i++)
-                    {
-                            switch ($contentlines[$i]->name())
-                            {
+                    for ($i = 1; $i < $begin; $i++) {
+                            switch ($contentlines[$i]->name()) {
                                     case "PRODID":
                                     case "VERSION":
                                     case "CALSCALE":
@@ -104,14 +100,11 @@ class File_iCal_iCalendar {
                     }
 
                     //now go through and find whole components
-                    for ($i = $begin; $i < count($contentlines) - 1; $i++)
-                    {
+                    for ($i = $begin, $icount_contentlines = count($contentlines); $i < $icount_contentlines - 1; $i++) {
                             $component = $contentlines[$i]->value();
 
-                            for ($j = $i + 1; $j < count($contentlines) -1; $j++)
-                            {
-                                    if (($contentlines[$j]->name() == "END") && ($contentlines[$j]->value() == $component))
-                                    {
+                            for ($j = $i + 1, $jcount_contentlines = count($contentlines); $j < $jcount_contentlines -1; $j++) {
+                                    if (($contentlines[$j]->name() == "END") && ($contentlines[$j]->value() == $component)) {
                                             //found the end of the component
                                             // $i is the beginning index
                                             // $j is the end index
@@ -124,9 +117,7 @@ class File_iCal_iCalendar {
 
                     }
 
-            }
-            else
-            {
+            } else {
                     trigger_error("Process error:  The first and last lines in an iCalendar string are not formatted properly", E_USER_ERROR);
             }
         }
@@ -196,8 +187,7 @@ class File_iCal_iCalendar {
             }
             //echo '<PRE>'; print_r($this->_components);
             //add on all calendar components
-            foreach ($this->_components as $v)
-            {
+            foreach ($this->_components as $v) {
                     $r = array_merge($r, $v->getPropertyArray());
             }
 
@@ -206,16 +196,14 @@ class File_iCal_iCalendar {
 
             $s = "";
 
-            foreach ($r as $prop)
-            {
+            foreach ($r as $prop) {
                 if (!is_a($prop, "File_iCal_Property")) {
                     //print_r($prop);
-                }
-                else {
+                } else {
                     $line = $prop->getLine();
                     if ($fold) {
                         $arr = array();
-                        for ($i = 0; $i <= strlen($line) / $wrap_length; $i++) {
+                        for ($i = 0, $istrlen_line = strlen($line); $i <= $istrlen_line / $wrap_length; $i++) {
                             $arr[] = substr($line, ($i)*$wrap_length, $wrap_length);
                         }
 
@@ -225,8 +213,7 @@ class File_iCal_iCalendar {
 
                         $s .= $arr[count($arr)-1]."\x0D\x0A";
 
-                    }
-                    else {
+                    } else {
                         $s .= $line;
                     }
                 }
@@ -245,8 +232,7 @@ class File_iCal_iCalendar {
         public function getComponent($key) {
             if (isset($this->_components[$key])) {
                 return $this->_components[$key];
-            }
-            else {
+            } else {
                 return false;
             }
         }
@@ -301,8 +287,7 @@ class File_iCal_iCalendar {
         public function deleteComponent($key) {
             if (isset($this->_components[$key])) {
                 unset($this->_components[$key]);
-            }
-            else {
+            } else {
                 trigger_error("Attempting to delete a component with key $key that doesn't exist", E_USER_WARNING);
             }
         }
@@ -323,6 +308,4 @@ class File_iCal_iCalendar {
             $type = substr(get_class($obj),strlen('File_iCal_'));
             return $this->{'add' . $type}($obj);
         }
-            
-        
 }

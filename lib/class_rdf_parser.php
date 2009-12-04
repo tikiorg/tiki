@@ -758,10 +758,11 @@ function _handle_property_attributes($subject_type, $subject, $attributes, $xml_
                     '' );
             }
         }
-        else if( XML_NAMESPACE_URI == $attribute_namespace_uri )
+/*        else if( XML_NAMESPACE_URI == $attribute_namespace_uri )
         {
             //do nothing
         }
+*/
         else if( $attribute_namespace_uri )
         {
             // is it required that property attributes be in an explicit namespace?
@@ -972,11 +973,12 @@ function _handle_resource_element( $namespace_uri, $local_name, $attributes, $pa
         // now remove the trailing '#'
 
         $len = strlen( $this->rdf_parser["top"]["subject"]);
-
+/*
         if( $len > 0 )
         {
             //$rdf_parser["top"]["subject"][" len - 1 "] = 0;
         }
+*/
     }
 
     if( $bag_id )
@@ -1498,14 +1500,12 @@ function _character_data_handler( $parser,$s)
             $this->rdf_parser["top"]["data"]=$s;
         }
 
-        if( $this->rdf_parser["top"]["state"] == IN_PROPERTY_UNKNOWN_OBJECT )
-        {
+        if( $this->rdf_parser["top"]["state"] == IN_PROPERTY_UNKNOWN_OBJECT ) {
             /* look for non-whitespace */
             for( $i = 0; (( $i < $len ) && (  ereg(" |\n|\t",$s{ $i }) )); $i++ );
             $i++;
             /* if we found non-whitespace, this is a literal */
-            if( $i < $len )
-            {
+            if( $i < $len ) {
                 $this->rdf_parser["top"]["state"] = IN_PROPERTY_LITERAL;
             }
         }

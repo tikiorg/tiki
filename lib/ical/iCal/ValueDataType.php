@@ -125,8 +125,7 @@ class File_iCal_ValueDataType_Date extends File_iCal_ValueDataType
     {
         if (strlen($date) != 8) {
             //throw new Exception("Date data type must be 8 characters in length");
-        }
-        else {
+        } else {
             $this->_year = substr($date, 0, 4);
             $this->_month = substr($date, 4, 2);
             $this->_day = substr($date, 6, 2);
@@ -147,8 +146,7 @@ class File_iCal_ValueDataType_Date extends File_iCal_ValueDataType
     {
         if ($y > 0) {
             $this->_year = $y;
-        }
-        else {
+        } else {
             trigger_error("Year must be greater than 0", E_USER_WARNING);
         }
     }
@@ -157,8 +155,7 @@ class File_iCal_ValueDataType_Date extends File_iCal_ValueDataType
     {
         if ($m > 0) {
             $this->_month = $m;
-        }
-        else {
+        } else {
             trigger_error("Month must be greater than 0", E_USER_WARNING);
         }
     }
@@ -167,8 +164,7 @@ class File_iCal_ValueDataType_Date extends File_iCal_ValueDataType
     {
         if ($d > 0) {
             $this->_day = $d;
-        }
-        else {
+        } else {
             trigger_error("Day must be greater than 0", E_USER_WARNING);
         }
 
@@ -191,8 +187,7 @@ class File_iCal_ValueDataType_DateTime extends File_iCal_ValueDataType
         if (strlen($dt) == 15 || strlen($dt) == 16) {
             $this->_date = new File_iCal_ValueDataType_Date(substr($dt, 0, 8));
             $this->_time = new File_iCal_ValueDataType_Time(substr($dt, 9));
-        }
-        else {
+        } else {
             $this->_date = new File_iCal_ValueDataType_Date(date("Ymd", $dt));
             $this->_time = new File_iCal_ValueDataType_Time(date("His", $dt));
         }
@@ -221,12 +216,9 @@ class File_iCal_ValueDataType_Duration extends File_iCal_ValueDataType
 
     public function __construct($d)
     {
-        if ($d{0} == '+')
-        {
+        if ($d{0} == '+') {
             $this->_plusminus = '+';
-        }
-        else if ($d{0} == '-')
-        {
+        } else if ($d{0} == '-') {
             $this->_plusminus = '-';
         }
         else//if we have a week identifier
@@ -235,8 +227,7 @@ class File_iCal_ValueDataType_Duration extends File_iCal_ValueDataType
             $d = '+'.$d;
         }
 
-        if ($d{1} != 'P')
-        {
+        if ($d{1} != 'P') {
             trigger_error("Second character of duration value must be a 'P'.  Found a '".$d{1}."'.", E_USER_ERROR);
         }
 
@@ -250,64 +241,45 @@ class File_iCal_ValueDataType_Duration extends File_iCal_ValueDataType
         //if we have a week identifier
         if ($w = strpos($dur, 'W'))
         {
-            if ($i = preg_match('/^.*?(\d+)D/', $dur, $match))
-            {
+            if ($i = preg_match('/^.*?(\d+)D/', $dur, $match)) {
                 $this->_length += 7*24*60*60*$match[1];
-            }
-            else
-            {
+            } else {
                 trigger_error("At least one character before 'W' must be a digit", E_USER_ERROR);
             }
         }
 
         //if we have a day identifier
-        if ($dee = strpos($dur, 'D'))
-        {
-            if ($i = preg_match('/^.*?(\d+)D/', $dur, $match))
-            {
+        if ($dee = strpos($dur, 'D')) {
+            if ($i = preg_match('/^.*?(\d+)D/', $dur, $match)) {
                 $this->_length += 24*60*60*$match[1];
-            }
-            else
-            {
+            } else {
                 trigger_error("At least one character before 'D' must be a digit", E_USER_ERROR);
             }
         }
 
         //if we have a hour identifier
-        if (strpos($dur, 'H'))
-        {
-            if ($i = preg_match('/^.*?(\d+)H/', $dur, $match))
-            {
+        if (strpos($dur, 'H')) {
+            if ($i = preg_match('/^.*?(\d+)H/', $dur, $match)) {
                 $this->_length += 60*60*$match[1];
-            }
-            else
-            {
+            } else {
                 trigger_error("At least one character before 'H' must be a digit", E_USER_ERROR);
             }
         }
 
         //if we have a minute identifier
-        if (strpos($dur, 'M'))
-        {
-            if ($i = preg_match('/^.*?(\d+)M/', $dur, $match))
-            {
+        if (strpos($dur, 'M')) {
+            if ($i = preg_match('/^.*?(\d+)M/', $dur, $match)) {
                 $this->_length += 60*$match[1];
-            }
-            else
-            {
+            } else {
                 trigger_error("At least one character before 'M' must be a digit", E_USER_ERROR);
             }
         }
 
         //if we have a second identifier
-        if (strpos($dur, 'S'))
-        {
-            if ($i = preg_match('/^.*?(\d+)S/', $dur, $match))
-            {
+        if (strpos($dur, 'S')) {
+            if ($i = preg_match('/^.*?(\d+)S/', $dur, $match)) {
                 $this->_length += $match[1];
-            }
-            else
-            {
+            } else {
                 trigger_error("At least one character before 'S' must be a digit", E_USER_ERROR);
             }
         }
@@ -380,28 +352,20 @@ class File_iCal_ValueDataType_Integer extends File_iCal_ValueDataType
 
     public function __construct($s)
     {
-        if ($s{0} == '-')
-        {
+        if ($s{0} == '-') {
             $this->_plusminus = '-';
-        }
-        else if ($s{0} == '+')
-        {
+        } else if ($s{0} == '+') {
             $this->_plusminus = '+';
-        }
-        else
-        {
+        } else {
 //            $this->_plusminus = '+';
             $s = '+'.$s;
         }
 
         $num = substr($s, 1);
 
-        if (ctype_digit($num))
-        {
+        if (ctype_digit($num)) {
             $this->_value = $num;
-        }
-        else
-        {
+        } else {
             trigger_error("Integer value must consist of all digits", E_USER_ERROR);
         }
 
@@ -455,8 +419,7 @@ class File_iCal_ValueDataType_RecurrenceRule extends File_iCal_ValueDataType
     public function __construct($s) {
         if (substr($s, 0, 5) != "FREQ=") {
             trigger_error("Recurrence rule must begin with \"FREQ\"", E_USER_WARNING);
-        }
-        else {
+        } else {
            $sc = strpos($s, ';', 5);
 
             if (self::isValidFrequency(substr($s, 5, $sc - 5))) {
@@ -473,14 +436,12 @@ class File_iCal_ValueDataType_RecurrenceRule extends File_iCal_ValueDataType
                 foreach ($kv as $v) {
                     if (!is_array($v)) {
                         trigger_error("RRULE value not formatted properly");
-                    }
-                    else {
+                    } else {
                         switch ($v[0]) {
                             case "UNTIL":
                                 if ($this->_count) {
                                     trigger_error("RRULE value UNTIL cannot occur with COUNT value", E_USER_ERROR);
-                                }
-                                else {
+                                } else {
                                     $this->_until = $v[1];
                                 }
 
@@ -489,8 +450,7 @@ class File_iCal_ValueDataType_RecurrenceRule extends File_iCal_ValueDataType
                             case "COUNT":
                                 if ($this->_until) {
                                     trigger_error("RRULE value COUNT cannot occur with UNTIL value", E_USER_ERROR);
-                                }
-                                else {
+                                } else {
                                     $this->_count = $v[1];
                                 }
                                 break;
@@ -553,8 +513,7 @@ class File_iCal_ValueDataType_RecurrenceRule extends File_iCal_ValueDataType
                 }
 
 
-            }
-            else {
+            } else {
                 trigger_error("Bad frequency descriptor provided for RRULE", E_USER_ERROR);
             }
 
@@ -709,8 +668,7 @@ class File_iCal_ValueDataType_URI extends File_iCal_ValueDataType
     public function __construct($v) {
         if (preg_match(self::$regexp, $v)) {
             $this->_value = $v;
-        }
-        else {
+        } else {
             trigger_error("URI $v does not appear to be a valid uri", E_USER_WARNING);
         }
     }

@@ -114,5 +114,3 @@ $GLOBALS['_DATE_TIMEZONE_DATA_WINDOWS'] = array(
     'Fiji Standard Time'                => 'Pacific/Fiji',              # (GMT+12:00) Fiji, Kamchatka, Marshall Is. Fiji Daylight Time
     'Tonga Standard Time'               => 'Pacific/Tongatapu',         # (GMT+13:00) Nuku'alofa    Tonga Daylight Time
 );
-
-?>

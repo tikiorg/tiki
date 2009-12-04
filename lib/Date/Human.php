@@ -191,4 +191,3 @@ class Date_Human
     }
 
 }
-?>

@@ -44,7 +44,8 @@
  * @package iCal
  * @category File
  */
-class File_iCal_Attendee {
+class File_iCal_Attendee
+{
     /**
      * @access protected
      */

@@ -856,7 +856,7 @@ class PodCastCreator10 extends FeedCreator
 			<itunes:category text="TV &amp; Film"/>
 		*/
 
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i<$icount_items; $i++) {
 			$feed.="<item>\n";
 			$feed.= "<title>".htmlspecialchars(strip_tags(strtr($this->items[$i]->title,"\n\r","  ")))."</title>\n";
 			if ($this->items[$i]->author!="") {
@@ -922,7 +922,7 @@ class RSSCreator10 extends FeedCreator
 		$feed.= "       <dc:date>".htmlspecialchars($now->iso8601())."</dc:date>\n";
 		$feed.= "        <items>\n";
 		$feed.= "            <rdf:Seq>\n";
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i < $icount_items; $i++) {
 			$feed.= "                <rdf:li rdf:resource=\"".htmlspecialchars($this->items[$i]->link)."\"/>\n";
 		}
 		$feed.= "            </rdf:Seq>\n";
@@ -937,7 +937,7 @@ class RSSCreator10 extends FeedCreator
 		}
 		$feed.= $this->_createAdditionalElements($this->additionalElements, "    ");
 		
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i < $icount_items; $i++) {
 			$feed.= "    <item rdf:about=\"".htmlspecialchars($this->items[$i]->link)."\">\n";
 			//$feed.= "        <dc:type>Posting</dc:type>\n";
 			$feed.= "        <dc:format>text/html</dc:format>\n";
@@ -1064,7 +1064,7 @@ class RSSCreator091 extends FeedCreator
 		}
 		$feed.= $this->_createAdditionalElements($this->additionalElements, "    ");
 
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i < $icount_items; $i++) {
 			$feed.= "        <item>\n";
 			$feed.= "            <title>".FeedCreator::iTrunc(htmlspecialchars(strip_tags($this->items[$i]->title)),100)."</title>\n";
 			$feed.= "            <link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
@@ -1149,7 +1149,7 @@ class RSSCreator09 extends FeedCreator
 //		$feed.= "        <lastBuildDate>".htmlspecialchars($now->rfc822())."</lastBuildDate>\n";
 //		$feed.= "        <generator>".FEEDCREATOR_VERSION."</generator>\n";
 		$feed.= "</channel>\n";
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i < $icount_items; $i++) {
 			$feed.= "<item>\n";
 			$feed.= "<title>".FeedCreator::iTrunc(htmlspecialchars(strip_tags($this->items[$i]->title)),100)."</title>\n";
 			$feed.= "<link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
@@ -1200,7 +1200,7 @@ class PIECreator01 extends FeedCreator
 		$this->truncSize = 500;
 		$feed.= "    <subtitle>".$this->getDescription()."</subtitle>\n";
 		$feed.= "    <link>".$this->link."</link>\n";
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i < $icount_items; $i++) {
 			$feed.= "    <entry>\n";
 			$feed.= "        <title>".FeedCreator::iTrunc(htmlspecialchars(strip_tags($this->items[$i]->title)),100)."</title>\n";
 			$feed.= "        <link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
@@ -1277,7 +1277,7 @@ class AtomCreator03 extends FeedCreator
 		}
 		$feed.= "    <generator>".FEEDCREATOR_VERSION."</generator>\n";
 		$feed.= $this->_createAdditionalElements($this->additionalElements, "    ");
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i < $icount_items; $i++) {
 			$feed.= "    <entry>\n";
 			$feed.= "        <title>".htmlspecialchars(strip_tags($this->items[$i]->title))."</title>\n";
 			$feed.= "        <link rel=\"alternate\" type=\"text/html\" href=\"".htmlspecialchars($this->items[$i]->link)."\"/>\n";
@@ -1358,7 +1358,7 @@ class MBOXCreator extends FeedCreator
 	 */
 	function createFeed() {
 		if (!isset($feed)) $feed="";
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i < $icount_items; $i++) {
 			if ($this->items[$i]->author!="") {
 				$from = $this->items[$i]->author;
 			} else {
@@ -1432,7 +1432,7 @@ class OPMLCreator extends FeedCreator
 		}
 		$feed.= "    </head>\n";
 		$feed.= "    <body>\n";
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i < $icount_items; $i++) {
 			$feed.= "    <outline type=\"rss\" ";
 			$title = htmlspecialchars(strip_tags(strtr($this->items[$i]->title,"\n\r","  ")));
 			$feed.= " title=\"".$title."\"";
@@ -1554,7 +1554,7 @@ class HTMLCreator extends FeedCreator
 			$feedArray[] = "<div class='".$this->stylePrefix."header'>".$this->header."</div>";
 		}
 		
-		for ($i=0;$i<count($this->items);$i++) {
+		for ($i=0, $icount_items = count($this->items); $i < $icount_items; $i++) {
 			if ($this->separator and $i > 0) {
 				$feedArray[] = "<div class='".$this->stylePrefix."separator'>".$this->separator."</div>";
 			}

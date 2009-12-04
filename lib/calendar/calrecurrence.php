@@ -523,11 +523,14 @@ class CalRecurrence extends TikiLib
 								$tmp[] = "start='" . TikiLib::make_time($newStartHour, $newStartMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0] + $offsetYear) . "'";
 								$tmp[] = "end='" . TikiLib::make_time($newEndHour, $newEndMin, 0, substr($thisdate,0,2),substr($thisdate,-2), $anEvtStart[0] + $offsetYear) . "'";
 							}
-						} elseif ($aField == "_start") {
+						}
+						
+/*						 elseif ($aField == "_start") {
 							// on fera la modif si les trois précédents n'ont pas été concernés
 						} elseif ($aField == "_end") {
 								// on fera la modif si les trois précédents n'ont pas été concernés
 						}
+*/
 					}
 				}
 				if (in_array("_start",$changedFields) && $doWeChangeTimeIfNeeded) {

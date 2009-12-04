@@ -40,7 +40,8 @@ require_once('BaseComponent.php');
  * @category File
  * @package iCal
  */
-class File_iCal_FreeBusy extends File_iCal_BaseComponent_EFJT {
+class File_iCal_FreeBusy extends File_iCal_BaseComponent_EFJT
+{
     public function setDateEnd($dt) {
         File_iCal_BaseComponent::setDateEnd($dt);
     }

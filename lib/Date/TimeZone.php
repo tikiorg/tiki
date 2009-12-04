@@ -109,12 +109,12 @@ class Date_TimeZone
     function Date_TimeZone($id)
     {
         global $_DATE_TIMEZONE_DATA;
-        if(Date_TimeZone::isValidID($id)) {
+        if (Date_TimeZone::isValidID($id)) {
             $this->id = $id;
             $this->longname = $_DATE_TIMEZONE_DATA[$id]['longname'];
             $this->shortname = $_DATE_TIMEZONE_DATA[$id]['shortname'];
             $this->offset = $_DATE_TIMEZONE_DATA[$id]['offset'];
-            if($_DATE_TIMEZONE_DATA[$id]['hasdst']) {
+            if ($_DATE_TIMEZONE_DATA[$id]['hasdst']) {
                 $this->hasdst = true;
                 $this->dstlongname = $_DATE_TIMEZONE_DATA[$id]['dstlongname'];
                 $this->dstshortname = $_DATE_TIMEZONE_DATA[$id]['dstshortname'];
@@ -158,7 +158,7 @@ class Date_TimeZone
     function setDefault($id)
     {
         global $default;
-        if(Date_TimeZone::isValidID($id)) {
+        if (Date_TimeZone::isValidID($id)) {
             $default = $id;
         }
     }
@@ -175,7 +175,7 @@ class Date_TimeZone
     static function isValidID($id)
     {
         global $_DATE_TIMEZONE_DATA;
-        if(isset($_DATE_TIMEZONE_DATA[$id])) {
+        if (isset($_DATE_TIMEZONE_DATA[$id])) {
             return true;
         } else {
             return false;
@@ -194,7 +194,7 @@ class Date_TimeZone
      */
     function isEqual($tz)
     {
-        if(strcasecmp($this->id, $tz->id) == 0) {
+        if (strcasecmp($this->id, $tz->id) == 0) {
             return true;
         } else {
             return false;
@@ -218,7 +218,7 @@ class Date_TimeZone
      */
     function isEquivalent($tz)
     {
-        if($this->offset == $tz->offset && $this->hasdst == $tz->hasdst) {
+        if ($this->offset == $tz->offset && $this->hasdst == $tz->hasdst) {
             return true;
         } else {
             return false;
@@ -256,7 +256,7 @@ class Date_TimeZone
     function inDaylightTime($date)
     {
         $env_tz = "";
-        if(getenv("TZ")) {
+        if (getenv("TZ")) {
             $env_tz = getenv("TZ");
         }
         putenv("TZ=".$this->id);
@@ -277,7 +277,7 @@ class Date_TimeZone
      */
     function getDSTSavings()
     {
-        if($this->hasdst) {
+        if ($this->hasdst) {
             return 3600000;
         } else {
             return 0;
@@ -298,7 +298,7 @@ class Date_TimeZone
      */
     function getOffset($date)
     {
-        if($this->inDaylightTime($date)) {
+        if ($this->inDaylightTime($date)) {
             return $this->offset + $this->getDSTSavings();
         } else {
             return $this->offset;
@@ -3637,7 +3637,7 @@ $GLOBALS['_DATE_TIMEZONE_DATA'] = array(
 //  First try _DATE_TIMEZONE_DEFAULT global,
 //  then PHP_TZ environment var, then TZ environment var
 //
-if(isset($_DATE_TIMEZONE_DEFAULT) 
+if (isset($_DATE_TIMEZONE_DEFAULT) 
     && Date_TimeZone::isValidID($_DATE_TIMEZONE_DEFAULT)
 ) {
     Date_TimeZone::setDefault($_DATE_TIMEZONE_DEFAULT);
@@ -3657,6 +3657,3 @@ if(isset($_DATE_TIMEZONE_DEFAULT)
 } else {
     Date_TimeZone::setDefault('UTC');
 }
-//
-// END
-?>

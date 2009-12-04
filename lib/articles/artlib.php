@@ -143,7 +143,7 @@ class ArtLib extends TikiLib
       if ($expireDate < $publishDate) {
          $expireDate = $publishDate;
       }
-		if(empty($imgdata)) $imgdata='';
+		if (empty($imgdata)) $imgdata='';
 		global $notificationlib;
 		if (!is_object($notificationlib)) {
 			require_once('lib/notifications/notificationlib.php');
@@ -246,7 +246,7 @@ class ArtLib extends TikiLib
 		    $expireDate = $publishDate;
 		}
 		$hash = md5($title . $heading . $body);
-		if(empty($imgdata)) $imgdata='';
+		if (empty($imgdata)) $imgdata='';
 		// Fixed query. -rlpowell
 		$query = "select `name`  from `tiki_topics` where `topicId` = ?";
 		$topicName = $this->getOne($query, array($topicId) );
@@ -606,7 +606,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 			$msgs[] = tra('The file is not a CSV file or has not a correct syntax');
 			return false;
 		}
-		for ($i = 0; $i < count($fds); $i++) {
+		for ($i = 0, $icount_fds = count($fds); $i < $icount_fds; $i++) {
 			$fields[trim($fds[$i])] = $i;
 		}
 		if (!isset($fields['title'])) $fields['title'] = $i++;
@@ -672,7 +672,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 	function delete_image_cache($image_type,$imageId) {
 		global $prefs;
 		// Input validation: imageId must be a number, and not 0 
-		if(!ctype_digit("$imageId") || !($imageId>0)) {
+		if (!ctype_digit("$imageId") || !($imageId>0)) {
 			return false;
 		}
 		switch ($image_type) {
