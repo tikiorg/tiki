@@ -6,7 +6,7 @@
 <tr>
 <td class="formcolor">
 {popup_init src="lib/overlib.js"}
-{if $contribution_needed eq 'y'}<span class="mandatory_note highlight">{/if}<label for="contributions">{tr}Type of contribution:</label>{/tr}{if $contribution_needed eq 'y'}</span>{/if}</td>
+{if $contribution_needed eq 'y'}<span class="mandatory_note highlight">{/if}<label for="contributions">{tr}Type of contribution:{/tr}</label>{if $prefs.feature_contribution_mandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}{if $contribution_needed eq 'y'}</span>{/if}</td>
 <td class="formcolor">
    <select id="contributions" name="contributions[]" multiple="multiple" size="5">
    {section name=ix loop=$contributions}

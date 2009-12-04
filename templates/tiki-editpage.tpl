@@ -7,6 +7,9 @@
 {if $page|lower neq 'sandbox'}
 	{remarksbox type='tip' title='{tr}Tip{/tr}'}
 	{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
+	{if $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_mandatory eq 'y'}
+		<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>
+	{/if}
 	{/remarksbox}
 {/if}
 	
@@ -139,8 +142,16 @@
 								{if $show_watch eq 'y'}
 									<label for="watch">{tr}Monitor this page{/tr}:</label>
 									<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} />
-								{/if}						
+								{/if}
 							</fieldset>
+							{if $prefs.feature_contribution eq 'y'}
+								<fieldset>
+									<legend>{tr}Contributions{/tr}</legend>
+									<table>
+										{include file='contribution.tpl'}
+									</table>
+								</fieldset>
+							{/if}
 							{if $wysiwyg neq 'y' and $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $prefs.feature_filegals_manager neq 'y'}
 								<fieldset>
 									<legend>{tr}Upload picture{/tr}:</legend>
@@ -388,14 +399,6 @@
 										    <option value="3600" {if $prefs.wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
 										    <option value="7200" {if $prefs.wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
 									    </select> 
-									</fieldset>
-								{/if}
-								{if $prefs.feature_contribution eq 'y'}
-									<fieldset>
-										<legend>{tr}Contributions{/tr}</legend>
-										<table>
-											{include file='contribution.tpl'}
-										</table>
 									</fieldset>
 								{/if}
 								{if $prefs.feature_wiki_structure eq 'y'}
