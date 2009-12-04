@@ -54,10 +54,14 @@
 	{/remarksbox}
 {/if}
 {if $category_needed eq 'y'}
-	<div class="simplebox highlight">{tr}A category is mandatory{/tr}</div>
+	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	<div class="highlight"><em class='mandatory_note'>{tr}A category is mandatory{/tr}</em></div>
+	{/remarksbox}
 {/if}
 {if $contribution_needed eq 'y'}
-	<div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
+	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
+	{/remarksbox}
 {/if}
 {if $likepages}
 	<div>

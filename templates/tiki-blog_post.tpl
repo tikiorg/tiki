@@ -15,7 +15,9 @@
 </div>
 
 {if $contribution_needed eq 'y'}
-	<div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
+	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
+	{/remarksbox}
 {/if}
 {if $preview eq 'y'}
 	{include file='tiki-preview_post.tpl'}
