@@ -822,6 +822,7 @@ CREATE TABLE "tiki_file_galleries" (
   "default_view" varchar(20) default NULL,
   "quota" integer default 0,
   "size" bigint default NULL,
+  "wiki_syntax" varchar(200) default NULL,
   PRIMARY KEY ("galleryId")
 ) ;
 
