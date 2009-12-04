@@ -253,7 +253,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 
 <h2>{tr}Insert New Item{/tr}</h2>
-{remarksbox type="note"}{tr}Fields marked with a * are mandatory.{/tr}{/remarksbox}
+{remarksbox type="note"}<strong class='mandatory_star'>{tr}Fields marked with a * are mandatory.{/tr}</strong>{/remarksbox}
 <table class="normal">
 
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
@@ -279,11 +279,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table class="normal">
 {else}
 {if ($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n') and $field_value.options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'} *{/if}</td><td class="formcontent">
+<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td class="formcontent">
 {elseif $stick eq 'y'}
-<td class="formlabel right">{$field_value.name|escape}{if $field_value.isMandatory eq 'y'} *{/if}</td><td >
+<td class="formlabel right">{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'} *{/if}
+<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *<strong>{/if}
 </td><td colspan="3" class="formcontent" >
 {/if}
 {/if}
