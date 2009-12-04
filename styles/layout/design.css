@@ -1055,4 +1055,11 @@ table.treeTable .parent td {
 	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset.png);
 }
 
+ /* wikiplugin_tracker */
+.mandatory_note {
+	display: block;
+	font-style: italic;
+	color: red;
+	margin-top: 10px;
+}
 /* End of file */
