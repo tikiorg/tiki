@@ -12,6 +12,11 @@ function prefs_wiki_list() {
 				'strict' => tra('English'),
 			),
 		),
+		'wiki_dft_list_pages_lang_to_current' => array(
+			'name' => tra('Display by default only pages in current language'),
+			'description' => tra('Display by default only pages in current language'),
+			'type' => 'flag',
+		),
 		'wiki_show_version' => array(
 			'name' => tra('Display page version'),
 			'description' => tra('Display the page version information when viewing the page.'),

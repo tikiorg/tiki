@@ -105,6 +105,7 @@ function get_default_prefs() {
 		'wikiSubmitNotice' => '',
 		'wiki_authors_style' => 'none',
 		'wiki_authors_style_by_page' => 'n',
+		'wiki_dft_list_pages_lang_to_current' => 'y',
 		'wiki_show_version' => 'n',
 		'wiki_bot_bar' => 'n',
 		'wiki_cache' => 0,

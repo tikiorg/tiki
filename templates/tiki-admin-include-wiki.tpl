@@ -604,6 +604,7 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	{preference name=feature_listPages}
 	{preference name=feature_lastChanges}
 	{preference name=feature_listorphanPages}
+	{preference name='wiki_dft_list_pages_lang_to_current'}
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id='feature_listorphanStructure' name="feature_listorphanStructure" {if $prefs.feature_listorphanStructure eq 'y'}checked="checked"{/if}/></div>
