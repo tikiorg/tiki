@@ -1,7 +1,7 @@
 <?php
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -15,7 +15,9 @@ class XmlLib extends TikiLib
 	var $zip = '';
 	var $config = array('comments'=>true, 'attachments'=>true, 'history'=>true, 'images'=>true, 'debug'=>false);
 	var $structureStack = array();
-	function get_error() {
+
+	function get_error()
+	{
 		$str = '';
 		foreach ($this->errors as $i=>$error) {
 			$str = $error;
@@ -29,7 +31,8 @@ class XmlLib extends TikiLib
 	}
 
 	/* Export a list of pages or a structure */
-	function export_pages($pages=null, $structure=null, $zipFile='dump/xml.zip', $config=null) {
+	function export_pages($pages=null, $structure=null, $zipFile='dump/xml.zip', $config=null)
+	{
 		if (!($this->zip = new ZipArchive())) {
 			$this->errors[] = 'Problem zip initialisation';
 			$this->errorsArgs[] = '';
@@ -88,7 +91,8 @@ class XmlLib extends TikiLib
 	}
 
 	/* export one page */
-	function export_page($page) {
+	function export_page($page)
+	{
 		global $tikilib, $prefs, $smarty;
 		
 		$info = $tikilib->get_page_info($page);
@@ -192,7 +196,7 @@ class XmlLib extends TikiLib
 		}
 		if ($prefs['feature_history'] == 'y' && $this->config['history']) {
 			global $histlib; include_once ('lib/wiki/histlib.php');
-			$history = $histlib->get_page_history($page,false);
+			$history = $histlib->get_page_history($page, false);
 			foreach ($history as $key=>$hist) {
 				$all = $histlib->get_version($page, $hist['version']); // can be optimised if returned in the list
 				//$history[$key]['data'] = $all['data'];
@@ -210,9 +214,11 @@ class XmlLib extends TikiLib
 		$this->xml .=  $smarty->fetch('tiki-export_page_xml.tpl');
 		return true;
 	}
+
 	/* import pages or structure */
-	function import_pages($zipFile='dump/xml.zip', $config=null) {
-		global $tikilib, $wikilib, $prefs, $tiki_p_wiki_attach_files, $user, $tiki_p_edit_comments,$dbTiki, $tikidomain;
+	function import_pages($zipFile='dump/xml.zip', $config=null)
+	{
+		global $tikilib, $wikilib, $prefs, $tiki_p_wiki_attach_files, $user, $tiki_p_edit_comments, $dbTiki, $tikidomain;
 		if (!empty($config)) {
 			$this->config = array_merge($this->config, $config);
 		}
@@ -253,9 +259,11 @@ class XmlLib extends TikiLib
 		$this->zip->close();
 		return true;
 	}
+
 	/* create a page from an xml parsing result */
-	function create_page($info) {
-		global $tikilib, $wikilib, $prefs, $tiki_p_wiki_attach_files, $user, $tiki_p_edit_comments,$dbTiki, $tikidomain;
+	function create_page($info)
+	{
+		global $tikilib, $wikilib, $prefs, $tiki_p_wiki_attach_files, $user, $tiki_p_edit_comments, $dbTiki, $tikidomain;
 
 		$dir = $info['name'];
 		if (!($info['data'] = $this->zip->getFromName($info['zip']))) {
@@ -344,7 +352,7 @@ class XmlLib extends TikiLib
 					return false;	
 				}
 				$query = 'insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)';
-				$this->query($query,array($info['name'], $version['version']+$maxVersion, $tikilib->now, $version['user'], $version['ip'], $version['comment'], $version['data'], $version['description']));
+				$this->query($query, array($info['name'], $version['version']+$maxVersion, $tikilib->now, $version['user'], $version['ip'], $version['comment'], $version['data'], $version['description']));
 			}
 		}
 		if ($prefs['feature_wiki_structure'] == 'y' && !empty($info['structure'])) {
@@ -377,7 +385,9 @@ class page_Parser extends XML_Parser
 	var $commentsStack = array();
 	var $commentId = 0;
 	var $iStructure = 0;
-	function startHandler($parser, $name, $attribs) {
+
+	function startHandler($parser, $name, $attribs)
+	{
 		switch ($name) {
 		case 'page':
 			$this->context = null;
@@ -431,7 +441,9 @@ class page_Parser extends XML_Parser
 			break;
 		}
 	}
-	function endHandler($parser, $name) {
+
+	function endHandler($parser, $name)
+	{
 		$this->currentTag = null;
 		switch ($name) {
 		case 'comments':
@@ -451,7 +463,9 @@ class page_Parser extends XML_Parser
 			break;
 		}
 	}
-	function cdataHandler($parser, $data) {
+
+	function cdataHandler($parser, $data)
+	{
 		$data = trim($data);
 		if (empty($data)) {
 			return true;
@@ -462,7 +476,9 @@ class page_Parser extends XML_Parser
 			$this->page[$this->context][$this->i][$this->currentTag] = $data;
 		}
 	}
-	function getPages() {
+
+	function getPages()
+	{
 		return $this->pages;
 	}
 }

@@ -47,7 +47,6 @@ $scalesize = 0;
 if (isset($_REQUEST["scalesize"])) {
 	if (is_numeric($_REQUEST["scalesize"]) && $_REQUEST["scalesize"] > 0) {
 		$scalesize = $_REQUEST["scalesize"];
-	} else {
 	}
 } elseif ($gal_info['defaultscale'] !== 'o') {
 	$scalesize = $gal_info['defaultscale'];

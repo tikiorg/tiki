@@ -467,7 +467,7 @@ END;
 	$smarty->assign('start', $_REQUEST['start']);
 	$webmail_list_page = array();
 
-	for ($i = $upperlimit; $i > 0 && count($webmail_list_page) < $numshow; $i--) {
+	for ($i = $upperlimit, $icount_wlp = count($webmail_list_page); $i > 0 && $icount_wlp < $numshow; $i--) {
 		if (!empty($_REQUEST['filter'])) {
 			$aux = $filtered[$i];
 		} else {

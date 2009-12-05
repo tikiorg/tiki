@@ -96,7 +96,7 @@ if (count($emails)) {
 	$emails = array_unique($emails);
 	foreach ($emails as $k => $email) {
 		$emailUser = $userlib->get_user_by_email($email);
-		$emails[$k] = array($email,$emailUser);
+		$emails[$k] = array($email, $emailUser);
 	}
 	$smarty->assign('mail_reviewer', $user);
 	$mail_articleurl =  mb_ereg_replace(' ', '+', $page);
@@ -202,10 +202,10 @@ if ($prefs['feature_categories'] == 'y') {
 
 	$cat_type='wiki page';
 	$cat_objid = $page;
-	$cat_desc = ($prefs['feature_wiki_description'] == 'y') ? substr($info["description"],0,200) : '';
+	$cat_desc = ($prefs['feature_wiki_description'] == 'y') ? substr($info["description"], 0, 200) : '';
 	$cat_name = $page;
 	$cat_href="tiki-index.php?page=".urlencode($cat_objid);
-	$s_cat_desc = ($prefs['feature_wiki_description'] == 'y') ? substr($staging_info["description"],0,200) : '';
+	$s_cat_desc = ($prefs['feature_wiki_description'] == 'y') ? substr($staging_info["description"], 0, 200) : '';
 	$s_cat_objid = $staging_page;
 	$s_cat_name = $staging_page;
 	$s_cat_href="tiki-index.php?page=".urlencode($s_cat_objid);
@@ -217,13 +217,13 @@ if ($prefs['feature_categories'] == 'y') {
 		$cats = $staging_cats;	
 	}
 	if ($prefs['wikiapproval_staging_category'] > 0 && in_array($prefs['wikiapproval_staging_category'], $cats)) {	
-		$cats = array_diff($cats,Array($prefs['wikiapproval_staging_category']));	
+		$cats = array_diff($cats, Array($prefs['wikiapproval_staging_category']));	
 	}
 	if ($prefs['wikiapproval_approved_category'] > 0 && !in_array($prefs['wikiapproval_approved_category'], $cats)) {
 		$cats[] = $prefs['wikiapproval_approved_category'];	
 	}
 	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {	
-		$cats = array_diff($cats,Array($prefs['wikiapproval_outofsync_category']));	
+		$cats = array_diff($cats, Array($prefs['wikiapproval_outofsync_category']));	
 	}
 	/* Bug 487598 -  Localized articles should inherit en-us page categories */
 	$categlib->inherit_object_categories_sync($prefs, $staging_info['lang'], $cat_type, $cat_objid, $info['page_id'], $cats);
@@ -232,7 +232,7 @@ if ($prefs['feature_categories'] == 'y') {
 	
 	// now to remove out of sync from staging page
 	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $staging_cats)) {
-		$staging_cats = array_diff($staging_cats,Array($prefs['wikiapproval_outofsync_category']));
+		$staging_cats = array_diff($staging_cats, Array($prefs['wikiapproval_outofsync_category']));
 		$categlib->update_object_categories($staging_cats, $s_cat_objid, $cat_type, $s_cat_desc, $s_cat_name, $s_cat_href);	
 	}
 }
@@ -243,7 +243,7 @@ if ($prefs['feature_freetags'] == 'y' && ($prefs['wikiapproval_update_freetags']
 	
 	$tags = $freetaglib->get_tags_on_object($staging_page, 'wiki page');
 	$taglist = '';		
-	for ($i=0; $i<sizeof($tags['data']); $i++) {
+	for ($i=0, $isizeof_tags = sizeof($tags['data']); $i < $isizeof_tags; $i++) {
     	$taglist .= $tags['data'][$i]['tag'] . ' ';
 	}
 	
