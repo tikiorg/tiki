@@ -2695,6 +2695,9 @@ class Comments extends TikiLib {
 		if (!empty($errors)) {
 			return 0;
 		} else {
+			if ($prefs['feature_comments_moderation'] == 'y') {
+				$feedbacks[] = tra('Your message has been queued for approval and will be posted after a moderator approves it.');
+			}
 			return $threadId;
 		}
 	}

@@ -41,7 +41,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{/remarksbox}
 {/if}
 {if !empty($feedbacks)}
-	{remarksbox type="feddback"}
+	{remarksbox type="feedback"}
 		{foreach from=$feedbacks item=feedback name=feedback}
 			{$feedback|escape}
 			{if !$smarty.foreach.feedback.first}<br />{/if}
@@ -282,7 +282,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 {*	<br class="clear" />*}
 	{/if}
 
-	<form enctype="multipart/form-data" method="post" action="{$comments_father}" id='editpostform'>
+	<form enctype="multipart/form-data" method="post" action="{$comments_father}#comments" id='editpostform'>
 	<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
 	<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
 	<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
