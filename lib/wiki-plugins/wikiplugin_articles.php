@@ -5,7 +5,8 @@
 // {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
 //
 
-function wikiplugin_articles_help() {
+function wikiplugin_articles_help()
+{
         $help = tra("Includes articles listing into a wiki page");
         $help .= "<br />";
         $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc), quiet=>y|n, titleonly=>y|n}{ARTICLES}~/np~");
@@ -13,7 +14,8 @@ function wikiplugin_articles_help() {
         return $help;
 }
 
-function wikiplugin_articles_info() {
+function wikiplugin_articles_info()
+{
 	return array(
 		'name' => tra('Article List'),
 		'documentation' => 'PluginArticles',
@@ -73,10 +75,11 @@ function wikiplugin_articles_info() {
 	);
 }
 
-function wikiplugin_articles($data,$params) {
+function wikiplugin_articles($data, $params)
+{
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 
-	extract($params,EXTR_SKIP);
+	extract($params, EXTR_SKIP);
 	if (($prefs['feature_articles'] !=  'y') || (($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y'))) {
 		//	the feature is disabled or the user can't read articles, not even article headings
 		return("");
@@ -116,7 +119,7 @@ function wikiplugin_articles($data,$params) {
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);
 	}
 
-	for ($i = 0; $i < count($listpages["data"]); $i++) {
+	for ($i = 0, $icount_listpages = count($listpages["data"]); $i < $icount_listpages; $i++) {
 		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
 		$comments_prefix_var='article:';
 		$comments_object_var=$listpages["data"][$i]["articleId"];

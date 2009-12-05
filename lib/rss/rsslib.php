@@ -2,7 +2,7 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -23,7 +23,8 @@ class RSSLib extends TikiLib
 	// functions for rss feeds we syndicate
 	// ------------------------------------
 
-	function get_rss_version($ver) {
+	function get_rss_version($ver)
+	{
 		global $prefs;
 		if ($ver=='') {
 			// get default rss feed version from database or set to 0.91 if none in there
@@ -72,7 +73,8 @@ class RSSLib extends TikiLib
 		return $rss_version;
 	}
 
-	function get_rss_version_name($ver) {
+	function get_rss_version_name($ver)
+	{
 		global $prefs;
 		if ($ver=='') {
 			// get default rss feed version from database or set to 0.91 if none in there
@@ -122,7 +124,8 @@ class RSSLib extends TikiLib
 	}
 
 	/* return the rss version we currently have to use (user param or default value) */
-	function get_current_rss_version() {
+	function get_current_rss_version()
+	{
 		global $rss_version;
 		if ($rss_version=='') {
 			// override version if set as request parameter
@@ -137,7 +140,8 @@ class RSSLib extends TikiLib
 	}
 
 	/* check for cached rss feed data */
-	function get_from_cache($uniqueid, $rss_version="9") {
+	function get_from_cache($uniqueid, $rss_version="9")
+	{
 		global $user;
 		global $rss_cache_time;
 
@@ -174,7 +178,8 @@ class RSSLib extends TikiLib
 	}
 
 	/* put to cache */
-	function put_to_cache($uniqueid, $rss_version="9", $output) {
+	function put_to_cache($uniqueid, $rss_version="9", $output)
+	{
 		global $user;
 		// caching rss data for anonymous users only		
 		if (isset($user) && $user<>"") return;
@@ -186,10 +191,13 @@ class RSSLib extends TikiLib
 
 		$query = "update `tiki_rss_feeds` set `cache`=?, `lastUpdated`=? where `name`=? and `rssVer`=?";
 		$bindvars = array($output, (int) $this->now, $uniqueid, $rss_version);
-		$result = $this->query($query,$bindvars);
+		$result = $this->query($query, $bindvars);
 	}
 
-	function generate_feed($feed, $uniqueid, $rss_version, $changes, $itemurl, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId, $fromcache=false) {
+	function generate_feed($feed, $uniqueid, $rss_version, $changes, $itemurl
+		, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId
+		, $fromcache=false
+	) {
 		global $prefs, $userslib, $rss_cache_time;
 		
 		$rss_version=$this->get_current_rss_version();
@@ -315,7 +323,9 @@ class RSSLib extends TikiLib
 		$rss->image = $image; 
 
 		global $dbTiki;
-        if (!isset($userslib)) $userslib = new Userslib($dbTiki);
+		if (!isset($userslib)) 
+			$userslib = new Userslib($dbTiki);
+		
 		foreach ($changes["data"] as $data)  {
 			$item = new FeedItem(); 
 			$item->title = $data["$titleId"]; 
@@ -390,12 +400,13 @@ class RSSLib extends TikiLib
 	// --------------------------------------------
 	
 	/* get (a part of) the list of existing rss feeds from db */
-	function list_rss_modules($offset, $maxRecords, $sort_mode, $find) {
+	function list_rss_modules($offset, $maxRecords, $sort_mode, $find)
+	{
 
 		if ($find) {
 			$findesc="%" . $find . "%";
 			$mid = " where (`name` like ? or `description` like ?)";
-			$bindvars=array($findesc,$findesc);
+			$bindvars=array($findesc, $findesc);
 		} else {
 			$mid = "";
 			$bindvars=array();
@@ -403,8 +414,8 @@ class RSSLib extends TikiLib
 
 		$query = "select * from `tiki_rss_modules` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_rss_modules` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -420,37 +431,40 @@ class RSSLib extends TikiLib
 	}
 
 	/* replace rss feed in db */
-	function replace_rss_module($rssId, $name, $description, $url, $refresh, $showTitle, $showPubDate) {
+	function replace_rss_module($rssId, $name, $description, $url, $refresh, $showTitle, $showPubDate)
+	{
 		//if($this->rss_module_name_exists($name)) return false; // TODO: Check the name
 		$refresh = 60 * $refresh;
 
 		if ($rssId) {
 			$query = "update `tiki_rss_modules` set `name`=?,`description`=?,`refresh`=?,`url`=?,`showTitle`=?,`showPubDate`=? where `rssId`=?";
-			$bindvars=array($name,$description,$refresh,$url,$showTitle,$showPubDate,(int)$rssId);
+			$bindvars=array($name, $description, $refresh, $url, $showTitle, $showPubDate, (int)$rssId);
 		} else {
 			// was: replace into, no clue why.
 			$query = "insert into `tiki_rss_modules`(`name`,`description`,`url`,`refresh`,`content`,`lastUpdated`,`showTitle`,`showPubDate`)
                 values(?,?,?,?,?,?,?,?)";
-			$bindvars=array($name,$description,$url,$refresh,'',1000000,$showTitle,$showPubDate);
+			$bindvars=array($name, $description, $url, $refresh, '', 1000000, $showTitle, $showPubDate);
 		}
 
-		$result = $this->query($query,$bindvars);
+		$result = $this->query($query, $bindvars);
 		return true;
 	}
 
 	/* remove rss feed from db */
-	function remove_rss_module($rssId) {
+	function remove_rss_module($rssId)
+	{
 		$query = "delete from `tiki_rss_modules` where `rssId`=?";
 
-		$result = $this->query($query,array((int)$rssId));
+		$result = $this->query($query, array((int)$rssId));
 		return true;
 	}
 
 	/* read rss feed data from db */
-	function get_rss_module($rssId) {
+	function get_rss_module($rssId)
+	{
 		$query = "select * from `tiki_rss_modules` where `rssId`=?";
 
-		$result = $this->query($query,array((int)$rssId));
+		$result = $this->query($query, array((int)$rssId));
 
 		if (!$result->numRows())
 			return false;
@@ -460,7 +474,8 @@ class RSSLib extends TikiLib
 	}
 
 	/* parse xml data and return it in an array */
-	function parse_rss_data($data, $rssId) {
+	function parse_rss_data($data, $rssId)
+	{
 		$showPubDate = $this->get_rss_showPubDate($rssId);
 		$showTitle = $this->get_rss_showTitle($rssId);
 
@@ -486,7 +501,7 @@ class RSSLib extends TikiLib
 		if (count($items[1])<1)				
 			preg_match_all("/<entry.*?>(.*?)<\/entry>/msi", $data, $items);
 
-		for ($it = 0; $it < count($items[1]); $it++) {
+		for ($it = 0, $icount_items = count($items[1]); $it < $icount_items; $it++) {
 			// extract all the data we need:
 			preg_match_all("/<title[^>]*>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/title>/msi", $items[0][$it], $titles);
 	 		preg_match_all("/<link>(.*?)<\/link>/msi", $items[0][$it], $links);
@@ -544,7 +559,8 @@ class RSSLib extends TikiLib
 	}
 
 	/* refresh content of a certain rss feed */
-	function refresh_rss_module($rssId, $info='') {
+	function refresh_rss_module($rssId, $info='')
+	{
 		if (empty($info)) {
 			$info = $this->get_rss_module($rssId);
 		}
@@ -555,7 +571,7 @@ class RSSLib extends TikiLib
 				return false;
 			}
 			$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
-			$result = $this->query($query,array((string)$data,(int) $this->now, (int)$rssId));
+			$result = $this->query($query, array((string)$data, (int) $this->now, (int)$rssId));
 			return $data;
 		} else {
 			return false;
@@ -563,39 +579,44 @@ class RSSLib extends TikiLib
 	}
 
 	/* check if an rss feed name already exists */
-	function rss_module_name_exists($name) {
+	function rss_module_name_exists($name)
+	{
 		$query = "select `name` from `tiki_rss_modules` where `name`=?";
 
-		$result = $this->query($query,array($name));
+		$result = $this->query($query, array($name));
 		return $result->numRows();
 	}
 
 	/* get rss feed id by name */
-	function get_rss_module_id($name) {
+	function get_rss_module_id($name)
+	{
 		$query = "select `rssId` from `tiki_rss_modules` where `name`=?";
 
-		$id = $this->getOne($query,array($name));
+		$id = $this->getOne($query, array($name));
 		return $id;
 	}
 
 	/* check if 'showTitle' for an rss feed is enabled */
-	function get_rss_showTitle($rssId) {
+	function get_rss_showTitle($rssId)
+	{
 		$query = "select `showTitle` from `tiki_rss_modules` where `rssId`=?";
 
-		$showTitle = $this->getOne($query,array((int)$rssId));
+		$showTitle = $this->getOne($query, array((int)$rssId));
 		return $showTitle;
 	}
 
 	/* check if 'showPubdate' for an rss feed is enabled */
-	function get_rss_showPubDate($rssId) {
+	function get_rss_showPubDate($rssId)
+	{
 		$query = "select `showPubDate` from `tiki_rss_modules` where `rssId`=?";
 
-		$showPubDate = $this->getOne($query,array((int)$rssId));
+		$showPubDate = $this->getOne($query, array((int)$rssId));
 		return $showPubDate;
 	}
 
 	/* retrieve the content of an rss feed, first try cache, then http request (may be forced) */
-	function get_rss_module_content($rssId, $refresh=false) {
+	function get_rss_module_content($rssId, $refresh=false)
+	{
 		$info = $this->get_rss_module($rssId);
 
 		// cache too old, get data from feed and update cache
@@ -609,7 +630,8 @@ class RSSLib extends TikiLib
 	}
 
 	/* encode rss feed content */
-	function rss_iconv($xmlstr, $tencod = "UTF-8") {
+	function rss_iconv($xmlstr, $tencod = "UTF-8")
+	{
 		if (preg_match("/<\?xml.*encoding=\"(.*)\".*\?>/", $xmlstr, $xml_head)) {
 			$sencod = strtoupper($xml_head[1]);
 
@@ -655,10 +677,12 @@ class RSSLib extends TikiLib
 				} elseif (function_exists('recode_string')) {
 					// I don't have recode support could somebody test it?
 					$xmlstr = @recode_string("$sencod..$tencod", $xmlstr);
-				} else {
+				} 
+/*				else {
 				// This PHP intallation don't have any EncodConvFunc...
 				// somebody could create tiki_iconv(...)?
 				}
+*/
 			}
 
 			// Replace header, put the new encoding

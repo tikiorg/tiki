@@ -9,13 +9,15 @@
  * show_bar : optionnal to show a bar(length 100 pixels)
  * status : optionnal to filter on the status ( a combinaison of letters c:close, o:open, p:pending)
  */
-function wikiplugin_trackerstat_help() {
+function wikiplugin_trackerstat_help()
+{
 	$help = tra("Displays some stat of a tracker content, fields are indicated with numeric ids.").":\n";
 	$help.= "~np~{TRACKERSTAT(trackerId=>1,fields=>2:4:5,show_percent=>y,show_bar=>n,status=>o|c|p|op|oc|pc|opc,show_link=n)}Title{TRACKERSTAT}~/np~";
 	return $help;
 }
 
-function wikiplugin_trackerstat_info() {
+function wikiplugin_trackerstat_info()
+{
 	return array(
 		'name' => tra('Tracker Stats'),
 		'documentation' => 'PluginTrackerStat',
@@ -58,7 +60,8 @@ function wikiplugin_trackerstat_info() {
 	);
 }
 
-function wikiplugin_trackerstat($data, $params) {
+function wikiplugin_trackerstat($data, $params)
+{
 	global $smarty, $prefs, $tiki_p_admin_trackers, $trklib, $tikilib;
 	include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
@@ -140,7 +143,7 @@ function wikiplugin_trackerstat($data, $params) {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$listCategs = $categlib->get_child_categories($allFields["data"][$i]['options']);
 			$itemId = $trklib->get_user_item($trackerId, $tracker_info);
-			for ($j = 0; $j < count($listCategs); ++$j) {
+			for ($j = 0, $jcount_listcategs = count($listCategs); $j < $jcount_listcategs; ++$j) {
 				$objects = $categlib->get_category_objects($listCategs[$j]['categId'], "tracker $trackerId");
 				if ($status == 'opc' || $tracker_info['showStatus'] == 'n') {
 					$v[$j]['count'] = count($objects);

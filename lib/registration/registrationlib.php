@@ -12,7 +12,7 @@
  */
 
 //this script may only be included - so it's better to die if called directly
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   die;
 }
@@ -27,7 +27,7 @@ class RegistrationLib extends TikiLib
 {
 
     // Validate emails...
-  function SnowCheckMail($Email,$sender_email,$novalidation,$Debug=false)
+  function SnowCheckMail($Email, $sender_email, $novalidation, $Debug=false)
   {
 	global $prefs;
 	if (!isset($_SERVER["SERVER_NAME"])) {
@@ -55,7 +55,7 @@ class RegistrationLib extends TikiLib
     // $Domain : ebeecomm.com
     // list function reference : http://www.php.net/manual/en/function.list.php
     // split function reference : http://www.php.net/manual/en/function.split.php
-    list ( $Username, $Domain ) = split ("@",$Email);
+    list ($Username, $Domain) = split ("@", $Email);
 	
 	if($prefs['validateEmail'] == 'n') {
 		$Return[0]=true;
@@ -70,18 +70,17 @@ class RegistrationLib extends TikiLib
         // If MX record exists, save MX record address.
         // getmxrr function reference : http://www.php.net/manual/en/function.getmxrr.php
         if ( getmxrr ($Domain, $MXHost))  {
-      if($Debug) {
-                echo "Confirmation : Is confirming address by MX LOOKUP.<br>";
-              for ( $i = 0,$j = 1; $i < count ( $MXHost ); $i++,$j++ ) {
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Result($j) - $MXHost[$i]<BR>";
-        }
-            }
+					if($Debug) {
+						echo "Confirmation : Is confirming address by MX LOOKUP.<br>";
+						for ($i = 0, $j = 1; $i < count ($MXHost); $i++, $j++) {
+							echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Result($j) - $MXHost[$i]<BR>";
+						}
+					}
         }
         // Getmxrr function does to store MX record address about $Domain in arrangement form to $MXHost.
         // $ConnectAddress socket connection address.
         $ConnectAddress = $MXHost[0];
-    }
-    else {
+    } else {
         // If there is no MX record simply @ to next time address socket connection do .
         $ConnectAddress = $Domain;
         if ($Debug) echo "Confirmation : MX record about {$Domain} does not exist.<br>";
@@ -97,13 +96,12 @@ class RegistrationLib extends TikiLib
 	    @$Connect = fsockopen ( $ConnectAddress, 25 );
 
 	    // Success in socket connection
-	    if ($Connect)
-	    {
-	        if ($Debug) echo "Connection succeeded to {$ConnectAddress} SMTP.<br>";
+	    if ($Connect) {
+	        if ($Debug) 
+						echo "Connection succeeded to {$ConnectAddress} SMTP.<br>";
 	        // Judgment is that service is preparing though begin by 220 getting string after connection .
 	        // fgets function reference : http://www.php.net/manual/en/function.fgets.php
-	        if ( ereg ( "^220", $Out = fgets ( $Connect, 1024 ) ) ) {
-
+	        if ( ereg ("^220", $Out = fgets ($Connect, 1024 ))) {
 	            // Inform client's reaching to server who connect.
 	            fputs ( $Connect, "HELO $HTTP_HOST\r\n" );
                 if ($Debug) echo "Run : HELO $HTTP_HOST<br>";
@@ -128,9 +126,9 @@ class RegistrationLib extends TikiLib
                 // Server's answering cord about MAIL and TO command checks.
                 // Server about listener's address reacts to 550 codes if there does not exist
                 // checking that mailbox is in own E-Mail account.
-                if ( !ereg ( "^250", $From ) || !ereg ( "^250", $To )) {
-                    $Return[0]=false;
-                    $Return[1]='not_recognized';
+                if (!ereg ("^250", $From ) || !ereg ( "^250", $To)) {
+                    $Return[0] = false;
+                    $Return[1] = 'not_recognized';
                     if ($Debug) echo "{$Email} is not recognized by the mail server.<br>";
                     return $Return;
                 }
@@ -138,8 +136,8 @@ class RegistrationLib extends TikiLib
 	    }
 	    // Failure in socket connection
 	    else {
-	        $Return[0]=false;
-	        $Return[1]="Cannot connect to mail server ({$ConnectAddress}).";
+	        $Return[0] = false;
+	        $Return[1] = "Cannot connect to mail server ({$ConnectAddress}).";
 	        if ($Debug) echo "Cannot connect to mail server ({$ConnectAddress}).<br>";
 	        return $Return;
 	    }
@@ -203,20 +201,20 @@ class RegistrationLib extends TikiLib
 
   check_ticket('register');
   if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"])) {
-    $smarty->assign('msg',tra("The passwords do not match"));
+    $smarty->assign('msg', tra("The passwords do not match"));
     $smarty->display("error.tpl");
     die;
   }
   list($cant, $u) = $userlib->other_user_exists_case_insensitive($_REQUEST["name"]);
   if($cant > 0) {
-    $smarty->assign('msg',tra("User already exists").": ".$u);
+    $smarty->assign('msg', tra("User already exists").": ".$u);
     $smarty->display("error.tpl");
     die;
   }
 
   if($prefs['rnd_num_reg'] == 'y') {
         if($novalidation != 'yes' and(!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['regcode'])) {
-    $smarty->assign('msg',tra("Wrong registration code"));
+    $smarty->assign('msg', tra("Wrong registration code"));
     $smarty->display("error.tpl");
     die;
         }
@@ -227,7 +225,7 @@ class RegistrationLib extends TikiLib
   // for historical reasons, this data is stored in the user_preferences table and so the string is not available for
   // use as a username
   if(strtolower($_REQUEST["name"])=='admin' || strtolower($_REQUEST["name"])=='customfields') {
-    $smarty->assign('msg',tra("Invalid username"));
+    $smarty->assign('msg', tra("Invalid username"));
     $smarty->display("error.tpl");
     die;
   }
@@ -238,21 +236,21 @@ class RegistrationLib extends TikiLib
     die;
   }
 
-  if(strstr($_REQUEST["name"],' ')) {
-    $smarty->assign('msg',tra("Username cannot contain whitespace"));
+  if(strstr($_REQUEST["name"], ' ')) {
+    $smarty->assign('msg', tra("Username cannot contain whitespace"));
     $smarty->display("error.tpl");
     die;
   }
 
   $polerr = $userlib->check_password_policy($_REQUEST["pass"]);
   if ( strlen($polerr)>0 ) {
-    $smarty->assign('msg',$polerr);
+    $smarty->assign('msg', $polerr);
     $smarty->display("error.tpl");
     die;
   }
 
-  if(!preg_match_all("/[A-Z0-9a-z\_\-]+/",$_REQUEST["name"],$matches)) {
-    $smarty->assign('msg',tra("Invalid username"));
+  if(!preg_match_all("/[A-Z0-9a-z\_\-]+/", $_REQUEST["name"], $matches)) {
+    $smarty->assign('msg', tra("Invalid username"));
     $smarty->display("error.tpl");
     die;
   }
@@ -261,7 +259,7 @@ class RegistrationLib extends TikiLib
   if($prefs['useRegisterPasscode'] == 'y') {
     if($_REQUEST["passcode"]!=$prefs['registerPasscode'])
     {
-      $smarty->assign('msg',tra("Wrong passcode. You need to know the passcode to register at this site"));
+      $smarty->assign('msg', tra("Wrong passcode. You need to know the passcode to register at this site"));
       $smarty->display("error.tpl");
       die;
     }
@@ -269,18 +267,18 @@ class RegistrationLib extends TikiLib
 
     $email_valid = 'yes';
     if($prefs['validateUsers']=='y') {
-      $ret = $this->SnowCheckMail($_REQUEST["email"],$prefs['sender_email'],$novalidation, $Debug);
+      $ret = $this->SnowCheckMail($_REQUEST["email"], $prefs['sender_email'], $novalidation, $Debug);
       if(!$ret[0]) {
         if($ret[1] == 'not_recognized') {
-                        $smarty->assign('notrecognized','y');
-                        $smarty->assign('email',$_REQUEST['email']);
-                        $smarty->assign('login',$_REQUEST['name']);
-                        $smarty->assign('password',$_REQUEST['pass']);
-                        $smarty->assign('regcode',$_REQUEST['regcode']);
+                        $smarty->assign('notrecognized', 'y');
+                        $smarty->assign('email', $_REQUEST['email']);
+                        $smarty->assign('login', $_REQUEST['name']);
+                        $smarty->assign('password', $_REQUEST['pass']);
+                        $smarty->assign('regcode', $_REQUEST['regcode']);
                         $email_valid = 'no';
         } else {
-//                      $smarty->assign('msg',"$ret[1]");
-                $smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
+//                      $smarty->assign('msg', "$ret[1]");
+                $smarty->assign('msg', tra("Invalid email address. You must enter a valid email address"));
                 $smarty->display("error.tpl");
                 $email_valid = 'no';
                 die;
@@ -300,29 +298,32 @@ class RegistrationLib extends TikiLib
    *  @returns true on success, false to halt event proporgation
    */
   function create_user() {
-        global $_REQUEST, $_SERVER, $email_valid, $prefs, $registrationlib_apass, $customfields, $userlib, $tikilib, $Debug;
+		global $_REQUEST, $_SERVER, $email_valid, $prefs
+			, $registrationlib_apass, $customfields, $userlib, $tikilib, $Debug
+			;
 
-	if ($Debug) print "::create_user";
+		if ($Debug) 
+			print "::create_user";
 
-	if($email_valid != 'no') {
-                if($prefs['validateUsers'] == 'y') {
-			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
-                        $apass = addslashes(md5($tikilib->genPass()));
-			$registrationlib_apass = $apass;
+		if ($email_valid != 'no') {
+			if ($prefs['validateUsers'] == 'y') {
+				//$apass = addslashes(substr(md5($tikilib->genPass()), 0, 25));
+        $apass = addslashes(md5($tikilib->genPass()));
+				$registrationlib_apass = $apass;
+				$userlib->add_user($_REQUEST["name"], $apass, $_REQUEST["email"], $_REQUEST["pass"]);
+			} else {
+				$userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"], '');
+			}
 
-                        $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
-		} else {
-                        $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
+			// Custom fields
+			foreach ($customfields as $custpref=>$prefvalue ) {
+				if ($customfields[$custpref]['show']) {
+					//print $_REQUEST[$customfields[$custpref]['prefName']];
+					$tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+				}
+			}
 		}
-                // Custom fields
-                foreach ($customfields as $custpref=>$prefvalue ) {
-                    if( $customfields[$custpref]['show'] ) {
-                        //print $_REQUEST[$customfields[$custpref]['prefName']];
-                        $tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
-                    }
-                }
-	}
-	return true;
+		return true;
   }
 
 
@@ -332,9 +333,9 @@ class RegistrationLib extends TikiLib
    *  @returns true on success, false to halt event proporgation
    */
   function callback_logslib_user_registers($raisedBy, $data) {
-	global $logslib;
-	$logslib->add_log('register','created account '.$data['user']);
-	return true;
+		global $logslib;
+		$logslib->add_log('register', 'created account ' . $data['user']);
+		return true;
   }
 
   /**
@@ -344,100 +345,106 @@ class RegistrationLib extends TikiLib
    * TODO: CLEANUP duplicates code in userslib.php?
    */
   function callback_tikiwiki_send_email($raisedBy, $data) {
-	global $_REQUEST, $_SESSION, $_SERVER, $prefs, $registrationlib_apass, $email_valid, $smarty, $tikilib, $userlib, $Debug;
+		global $_REQUEST, $_SESSION, $_SERVER, $prefs, $registrationlib_apass, $email_valid, $smarty, $tikilib, $userlib, $Debug;
 
-	if ($Debug) print "::send_email";
+		if ($Debug) 
+			print "::send_email";
 
-	$sender_email = $prefs['sender_email'];
-	$mail_user = $data['user'];
-	$mail_site = $data['mail_site'];
+		$sender_email = $prefs['sender_email'];
+		$mail_user = $data['user'];
+		$mail_site = $data['mail_site'];
 
-	if($email_valid != 'no') {
-                if($prefs['validateUsers'] == 'y') {
-			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
-			$apass = $registrationlib_apass;
-			$foo = parse_url($_SERVER["REQUEST_URI"]);
-                        $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
-                       	$foo2=str_replace("tiki-register","tiki-assignuser",$foo["path"]); 
+		if($email_valid != 'no') {
+			if($prefs['validateUsers'] == 'y') {
+				//$apass = addslashes(substr(md5($tikilib->genPass()), 0, 25));
+				$apass = $registrationlib_apass;
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$foo1=str_replace("tiki-register", "tiki-login_validate", $foo["path"]);
+				$foo2=str_replace("tiki-register", "tiki-assignuser", $foo["path"]); 
 
-			$machine =$tikilib->httpPrefix( true ).$foo1;
-			$machine_assignuser = $tikilib->httpPrefix( true ).$foo2;
+				$machine =$tikilib->httpPrefix( true ).$foo1;
+				$machine_assignuser = $tikilib->httpPrefix( true ).$foo2;
 
-                        $smarty->assign('mail_machine_assignuser',$machine_assignuser);
-			$smarty->assign('mail_machine',$machine);
-                        $smarty->assign('mail_site',$mail_site);
-                        $smarty->assign('mail_user',$mail_user);
-                        $smarty->assign('mail_apass',$apass);
-			$registrationlib_apass = "";
-                        $smarty->assign('mail_email',$_REQUEST['email']);
-                        include_once("lib/notifications/notificationemaillib.php");
-                        if (isset($prefs['validateRegistration']) and $prefs['validateRegistration'] == 'y') {
-                                $smarty->assign('msg',$smarty->fetch('mail/user_validation_waiting_msg.tpl'));
-                                if ($sender_email == NULL or !$sender_email) {
-                                        include_once('lib/messu/messulib.php');
-                                        $mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
-                                        $mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
-                                        $messulib->post_message($prefs['contact_user'],$prefs['contact_user'],$prefs['contact_user'],'',$mail_subject,$mail_data,5);
-                                } else {
-                                        $mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
-                                        $mail = new TikiMail();
-                                        $mail->setText($mail_data);
-                                        $mail_data = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
-                                        $mail->setSubject($mail_data);
-                                        if (!$mail->send(array($sender_email)))
-                                                $smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
-                                }
-                        } else {
-                                $mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
-                                $mail = new TikiMail();
-                                $mail->setText($mail_data);
-                                $mail_data = $smarty->fetch('mail/user_validation_mail_subject.tpl');
-                                $mail->setSubject($mail_data);
-                                if (!$mail->send(array($_REQUEST["email"])))
-                                        $smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
-                                else
-                                        $smarty->assign('msg',$smarty->fetch('mail/user_validation_msg.tpl'));
-                        }
-                        $smarty->assign('showmsg','y');
-                } else {
-                        $smarty->assign('msg',$smarty->fetch('mail/user_welcome_msg.tpl'));
-                        $smarty->assign('showmsg','y');
-                }
+				$smarty->assign('mail_machine_assignuser', $machine_assignuser);
+				$smarty->assign('mail_machine', $machine);
+				$smarty->assign('mail_site', $mail_site);
+				$smarty->assign('mail_user', $mail_user);
+				$smarty->assign('mail_apass', $apass);
+				$registrationlib_apass = "";
+				$smarty->assign('mail_email', $_REQUEST['email']);
+				include_once("lib/notifications/notificationemaillib.php");
+				if (isset($prefs['validateRegistration']) and $prefs['validateRegistration'] == 'y') {
+					$smarty->assign('msg', $smarty->fetch('mail/user_validation_waiting_msg.tpl'));
+					if ($sender_email == NULL or !$sender_email) {
+						include_once('lib/messu/messulib.php');
+						$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
+						$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
+						$messulib->post_message($prefs['contact_user'], $prefs['contact_user'], $prefs['contact_user'], '', $mail_subject, $mail_data, 5);
+					} else {
+						$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
+						$mail = new TikiMail();
+						$mail->setText($mail_data);
+						$mail_data = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
+						$mail->setSubject($mail_data);
+						if (!$mail->send(array($sender_email)))
+							$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
+					}
+				} else {
+					$mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
+					$mail = new TikiMail();
+					$mail->setText($mail_data);
+					$mail_data = $smarty->fetch('mail/user_validation_mail_subject.tpl');
+					$mail->setSubject($mail_data);
+					if (!$mail->send(array($_REQUEST["email"])))
+						$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
+					else
+						$smarty->assign('msg', $smarty->fetch('mail/user_validation_msg.tpl'));
+				}
+				$smarty->assign('showmsg', 'y');
+			} else {
+				$smarty->assign('msg', $smarty->fetch('mail/user_welcome_msg.tpl'));
+				$smarty->assign('showmsg', 'y');
+			}
+		}
+		return true;
 	}
-	return true;
-    }
 
 
 	/**
-         *  A callback that performs email notifications when a new user registers
-	 *  @access private
-	 *  @returns true on success, false to halt event proporgation
+	 * callback_tikimail_user_registers 
+	 * A callback that performs email notifications when a new user registers
+	 *
+	 * @param mixed $raisedBy 
+	 * @param mixed $data 
+	 * @access private
+	 * @return boolean true on success, false to halt event proporgation
 	 */
-	function callback_tikimail_user_registers($raisedBy, $data) {
+	function callback_tikimail_user_registers($raisedBy, $data)
+	{
 		global $notificationlib, $smarty;
 		include_once("lib/notifications/notificationlib.php");
-                $emails = $notificationlib->get_mail_events('user_registers','*');
-                if (count($emails)) {
-                        $smarty->assign('mail_user',$data['user']);
-                        $smarty->assign('mail_date',$this->now);
-                        $smarty->assign('mail_site',$data['mail_site']);
-                        sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
-                }
-		return true;
-        }
-
-
-    /**
-     *  Display the registration form
-     */
-    function registration_form() {
-        global $prefs, $smarty;
-        if($prefs['allowRegister'] != 'y') {
-            header("location: index.php");
-            die;
-        }
-
-        ask_ticket('register');
+		$emails = $notificationlib->get_mail_events('user_registers', '*');
+    if (count($emails)) {
+			$smarty->assign('mail_user', $data['user']);
+      $smarty->assign('mail_date', $this->now);
+      $smarty->assign('mail_site', $data['mail_site']);
+      sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
     }
+		return true;
+  }
+
+
+  /**
+   *  Display the registration form
+   */
+	function registration_form()
+	{
+		global $prefs, $smarty;
+		if ($prefs['allowRegister'] != 'y') {
+			header("location: index.php");
+    die;
+		}
+		ask_ticket('register');
+  }
 }
-$registrationlib= new RegistrationLib;
+$registrationlib = new RegistrationLib;

@@ -10,12 +10,13 @@
 */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-function scrambleEmail($email, $method='unicode') {
+function scrambleEmail($email, $method='unicode')
+{
 	switch ($method) {
 	case 'strtr':
 		$trans = array(	"@" => tra("(AT)"),
@@ -24,14 +25,14 @@ function scrambleEmail($email, $method='unicode') {
 		return strtr($email, $trans);
 	case 'x' :
 		$encoded = $email;
-		for ($i = strpos($email, "@") + 1; $i < strlen($email); $i++) {
+		for ($i = strpos($email, "@") + 1, $istrlen_email = strlen($email); $i < $istrlen_email; $i++) {
 			if ($encoded[$i]  != ".") $encoded[$i] = 'x';
 		}
 		return $encoded;
 	case 'unicode':
 	case 'y':// for previous compatibility
 		$encoded = '';
-		for ($i = 0; $i < strlen($email); $i++) {
+		for ($i = 0, $istrlen_email = strlen($email); $i < $istrlen_email; $i++) {
 			$encoded .= '&#' . ord($email[$i]). ';';
 		}
 		return $encoded;

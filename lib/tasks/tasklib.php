@@ -1,7 +1,7 @@
 <?php
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
@@ -13,13 +13,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class TaskLib extends TikiLib
 {
 	
-	function get_task($user, $taskId, $task_version = null, $admin_mode = false) { 
-		if($admin_mode){
+	function get_task($user, $taskId, $task_version = null, $admin_mode = false)
+	{
+		if ($admin_mode) {
 			$query  = "select distinct `t_head`.*, `t_history`.* FROM ";
 			$query .= "`tiki_user_tasks_history` AS `t_history`, `tiki_user_tasks` AS `t_head` ";
 			$query .= "WHERE ";
 			$query .= "`t_head`.`taskId` = `t_history`.`belongs_to` AND";
-			if($task_version == null){
+			if ($task_version == null) {
 				$query .= "`t_history`.`task_version` = `t_head`.`last_version` AND ";
 			} else {
 				$query .= "`t_history`.`task_version` = $task_version AND ";
@@ -32,7 +33,7 @@ class TaskLib extends TikiLib
 			$query .= "`users_users`, `users_usergroups` "; 
 			$query .= "WHERE ";
 			$query .= "`t_head`.`taskId` = `t_history`.`belongs_to` AND";
-			if($task_version == null){
+			if ($task_version == null) {
 				$query .= "`t_history`.`task_version` = `t_head`.`last_version` AND ";
 			} else {
 				$query .= "`t_history`.`task_version` = $task_version AND ";
@@ -46,18 +47,22 @@ class TaskLib extends TikiLib
 		} 
 		
 		$result = $this->query($query,$value); 
-		if($res = $result->fetchRow()){
-			if(($res['user'] == $user and  $res['rights_by_creator'] == NULL) or ($res['creator'] == $user)){
+		if ($res = $result->fetchRow()) {
+			if( ($res['user'] == $user and  $res['rights_by_creator'] == NULL) or ($res['creator'] == $user)) {
 				$res['disabled'] = false;
 			} else {
 				$res['disabled'] = true;
 			}
-			if($res['percentage'] == NULL) $res['percentage_null'] = true; else $res['percentage_null'] = false;
+			if ($res['percentage'] == NULL)
+				$res['percentage_null'] = true; 
+			else 
+				$res['percentage_null'] = false;
 		}
 		return $res; 
     }
 
-	function get_default_new_task($user) {
+	function get_default_new_task($user)
+	{
 		$task = array();
 		$task['taskId'] = 0;
 		$task['task_version'] = 0;
@@ -87,10 +92,9 @@ class TaskLib extends TikiLib
 		
 		return $task;
 	}
-	
-
-	
-	function accept_task($user, $taskId, $value) {
+		
+	function accept_task($user, $taskId, $value)
+	{
 		$query = "update `tiki_user_tasks` set accepted_user = ? where `user`=? and `taskId`=?";
 		$this->query($query, array($value,$user,(int)$taskId));
 		$query = "update `tiki_user_tasks` set accepted_creator = ? where `creator`=? and `taskId`=?";
@@ -98,7 +102,8 @@ class TaskLib extends TikiLib
 	}
 	
 	
-	function new_task($task_user, $creator, $public_for_group, $rights_by_creator, $created, $values){
+	function new_task($task_user, $creator, $public_for_group, $rights_by_creator, $created, $values)
+	{
 		$query  = "INSERT INTO `tiki_user_tasks` ( ";
 		$query .= "`last_version`, `user`, `creator`, ";
 		$query .= "`public_for_group`, `rights_by_creator`, `created`) ";
@@ -110,7 +115,8 @@ class TaskLib extends TikiLib
 		$values['lasteditor'] = $creator;
 		$values['lastchanges'] = $created;
 		$values['task_version'] = (int) 0;
-		if($task_user != $creator) $values['accepted_creator'] = 'y';
+		if ($task_user != $creator)
+			$values['accepted_creator'] = 'y';
 		$query  = "INSERT INTO `tiki_user_tasks_history` ( ";
 		$comma = '';
 		$query_values = "";
@@ -124,14 +130,15 @@ class TaskLib extends TikiLib
 		return $taskId;
 	}
 	
-	function update_task($taskId, $user, $values, $values_head = null, $admin_mode = false){
+	function update_task($taskId, $user, $values, $values_head = null, $admin_mode = false)
+	{
 		$query  = "SELECT `tiki_user_tasks_history`.* ";
 		$query .= "FROM `tiki_user_tasks`, `tiki_user_tasks_history` WHERE ";
 		$query .= "`tiki_user_tasks`.`taskId` = ? AND ";
 		$query .= "`tiki_user_tasks`.`taskId` = `tiki_user_tasks_history`.`belongs_to` AND ";
 		$query .= "`tiki_user_tasks`.`last_version` = `tiki_user_tasks_history`.`task_version` ";
 		$values_select = array((int) $taskId);
-		if(!$admin_mode){
+		if (!$admin_mode) {
 			$values_select[] = $user;
 			$values_select[] = $user;
 			$query .= " AND (`user` = ?  OR `creator` = ?) ";
@@ -163,7 +170,7 @@ class TaskLib extends TikiLib
 		}
 		
 		
-		if($count_values > 0){
+		if ($count_values > 0) {
 			$count_entries = 0;
 			$entries['task_version'] = $entries['task_version'] + 1;
 			$entries['lasteditor'] = $user;
@@ -185,7 +192,7 @@ class TaskLib extends TikiLib
         $query  = "UPDATE `tiki_user_tasks` SET `last_version`= ? ";
 		$insert_values['last_version'] = (int)$entries['task_version'];
 		$count_values_head = 0;
-		if($values_head != null) {
+		if ($values_head != null) {
 			foreach ($values_head as $key => $value) {
 				$query .= ", `$key` = ? ";
 				$insert_values[$key] =  $value;
@@ -194,51 +201,59 @@ class TaskLib extends TikiLib
 		}
 		$insert_values['taskId'] = (int)$taskId;
 		$query .= "WHERE `taskId`=? ";
-		if($count_values > 0 or $count_values_head > 0) $this->query($query,array_values($insert_values));
+		if ($count_values > 0 or $count_values_head > 0)
+			$this->query($query,array_values($insert_values));
 		return $taskId;
 	}
 
-    function mark_task_as_trash($taskId, $user, $admin_mode = false) {
+	function mark_task_as_trash($taskId, $user, $admin_mode = false)
+	{
 		$result = $this->query("SELECT * FROM `tiki_user_tasks` WHERE taskId = ?",array($taskId)); 
 		$res = $result->fetchRow(); 
-		if($user == $res['creator'] or  ($user == $res['user'] and $res['rights_by_creator'] == null) or $admin_mode){
+		if ($user == $res['creator'] or  ($user == $res['user'] and $res['rights_by_creator'] == null) or $admin_mode) {
 			$values = array('deleted' => (int)$this->now);
 			$this->update_task($taskId, $user, $values, null, $admin_mode);
 		}
-    }
+	}
 	
-    function unmark_task_as_trash($taskId, $user, $admin_mode = false) {
+	function unmark_task_as_trash($taskId, $user, $admin_mode = false)
+	{
 		$result = $this->query("SELECT * FROM `tiki_user_tasks` WHERE taskId = ?",array($taskId)); 
 		$res = $result->fetchRow(); 
-		if($user == $res['creator'] or  ($user == $res['user'] and $res['rights_by_creator'] == NULL) or $admin_mode){
+		if ($user == $res['creator'] or  ($user == $res['user'] and $res['rights_by_creator'] == NULL) or $admin_mode) {
 			$values = array('deleted' => NULL);
 			$this->update_task($taskId, $user, $values, null, $admin_mode);
 		}
-    }
+	}
 	
-	function open_task($taskId, $user) {
+	function open_task($taskId, $user)
+	{
 		$values = array('percentage' => (int) 0, 'status' => 'o', 'completed' => NULL);
 		$this->update_task($taskId, $user, $values);
 	}
 	
-	function waiting_task($taskId, $user) {
+	function waiting_task($taskId, $user)
+	{
 		$values = array('percentage' => NULL, 'status' => NULL, 'completed' => NULL);
 		$this->update_task($taskId, $user, $values);
 	}
 	
-	function mark_complete_task($taskId, $user) {
+	function mark_complete_task($taskId, $user)
+	{
 		$values = array('percentage' => (int) 100, 'status' => 'c', 'completed' => (int)$this->now);
 		$this->update_task($taskId, $user, $values);
 	}
 	
-	function update_task_percentage($taskId, $user, $percentage){
+	function update_task_percentage($taskId, $user, $percentage)
+	{
 		$values = array('percentage' => $percentage);
 		$this->update_task($taskId, $user, $values);
 	}
 	
-	function emty_trash($user) {
+	function emty_trash($user)
+	{
 		$query  = "SELECT  `tiki_user_tasks`.`taskId` FROM `tiki_user_tasks`, `tiki_user_tasks_history` ";
-		$query  .= "WHERE `tiki_user_tasks`.`creator` = ? AND ";
+		$query .= "WHERE `tiki_user_tasks`.`creator` = ? AND ";
 		$query .= "`tiki_user_tasks`.`taskId` = `tiki_user_tasks_history`.`belongs_to` AND ";
 		$query .= "`tiki_user_tasks`.`last_version` = `tiki_user_tasks_history`.`task_version` AND ";
 		$query .= "`tiki_user_tasks_history`.`deleted` IS NOT NULL";
@@ -252,7 +267,7 @@ class TaskLib extends TikiLib
 	}
 
     /**
-	* Retruns the tasklist for a user
+	* Returns the tasklist for a user
 	* $user 
 	* $offset			
 	* $maxRecords 		lenth of the returned list if it is -1 it returns the full list
@@ -276,22 +291,23 @@ class TaskLib extends TikiLib
 	* $show_completed	if on true it shows also the as completed marked tasks	
 	* $use_admin_mode	shows all shard tasks also if the user is not in the group to view the task
 	**/
-    function list_tasks($user, $offset = 0, $maxRecords = -1, $find = null, $sort_mode = 'priority_asc',
-						$show_private = true, $show_submitted = true, $show_received = true, $show_shared = true, 
-						$use_show_shared_for_group = false, $show_shared_for_group = null, 
-						$show_trash = false, $show_completed = false,
-						$use_admin_mode = false) {
-	
+  function list_tasks($user, $offset = 0, $maxRecords = -1, $find = null
+		, $sort_mode = 'priority_asc', $show_private = true
+		, $show_submitted = true, $show_received = true
+		, $show_shared = true, $use_show_shared_for_group = false
+		, $show_shared_for_group = null, $show_trash = false
+		, $show_completed = false, $use_admin_mode = false
+	) {
 		$list_tasks_start = microtime();
 		$values = array();
-		if($use_admin_mode){
+		if ($use_admin_mode) {
 			$query  = "FROM `tiki_user_tasks_history` AS `t_history`, `tiki_user_tasks` AS `t_head` ";
 			$query .= "WHERE `t_head`.`public_for_group` IS NOT NULL ";
 			$query .= "AND `t_head`.`taskId` = `t_history`.`belongs_to` ";
 			$query .= "AND `t_head`.`last_version` = `t_history`.`task_version` ";
 		} else { 
 			$query  = "FROM `tiki_user_tasks_history` AS `t_history`, `tiki_user_tasks` AS `t_head` ";
-			if($show_shared or $use_show_shared_for_group) {
+			if ($show_shared or $use_show_shared_for_group) {
 				$userid = $this->get_user_id($user);
 				$query .= ", `users_usergroups` ";
 			}
@@ -300,40 +316,40 @@ class TaskLib extends TikiLib
 			$query .= "`t_head`.`last_version` = `t_history`.`task_version` AND ";
 			$query .= "( ";
 			$query .= "( 1 = 0 ) "; //Dummy
-			if($use_show_shared_for_group){
+			if ($use_show_shared_for_group) {
 					$query .= " OR ";
 					$query .= "(`users_usergroups`.`userId` = ?"; 
 					$query .= "AND `users_usergroups`.`groupName` = `t_head`.`public_for_group` ";
 					$values[] = $userid;
-				if($show_shared_for_group){
+				if ($show_shared_for_group) {
 					$query .= "AND `t_head`.`public_for_group` = ? ";
 					$values[] = $show_shared_for_group;
 					$query .= ") ";
 				}
 			} else {
 				//private
-				if($show_private){
+				if ($show_private) {
 					$query .= " OR ";
 					$query .= "(`t_head`.`user` = ? AND `t_head`.`creator` = ? ) "; 
 					$values[] = $user;
 					$values[] = $user;
 				}
 				//submitted
-				if($show_submitted){
+				if ($show_submitted) {
 					$query .= " OR ";
 					$query .= "(`t_head`.`user` != ? AND `t_head`.`creator` = ? ) "; 
 					$values[] = $user;
 					$values[] = $user;
 				}
 				//received
-				if($show_received){
+				if ($show_received) {
 					$query .= " OR ";
 					$query .= "(`t_head`.`user` = ? AND `t_head`.`creator` != ? ) "; 
 					$values[] = $user;
 					$values[] = $user;
 				}
 				//shared
-				if($show_shared){
+				if ($show_shared) {
 					$query .= " OR ";
 					$query .= "(`t_head`.`user` != ? AND `t_head`.`creator` != ? "; 
 					$query .= "AND `users_usergroups`.`userId` = ? "; 
@@ -344,7 +360,7 @@ class TaskLib extends TikiLib
 				}
 			}
 			$query .= ") ";
-			if($find){
+			if ($find) {
 				$query .= " AND ";
 				$query .= "( ";
 				$query .= "`t_history`.`title` like ? or ";
@@ -357,17 +373,17 @@ class TaskLib extends TikiLib
 				$values[] = "%" . $find . "%";
 				$values[] = "%" . $find . "%";
 			}
-			if($show_trash == false){
+			if ($show_trash == false) {
 				$query .= " AND ";
 				$query .= "( `t_history`.`deleted` IS NULL) ";
 			}
-			if($show_completed == false){
+			if ($show_completed == false) {
 				$query .= " AND ";
 				$query .= "( `t_history`.`completed` IS NULL) ";
 			}
 			
 		}
-		if(isset($sort_mode) and strlen($sort_mode) > 1){
+		if (isset($sort_mode) and strlen($sort_mode) > 1) {
 			$order_str = "`t_history`.".$this->convertSortMode($sort_mode) . ", ";
 		}
 		else $order_str = '';
@@ -385,12 +401,15 @@ class TaskLib extends TikiLib
 		$result = $this->query($query_tasklist, $values, $maxRecords, $offset);
 		//echo("$query_tasklist<br />");
 		while ($res = $result->fetchRow()) {
-			if(($res['user'] == $user) or ($res['creator'] == $user)){
+			if (($res['user'] == $user) or ($res['creator'] == $user)) {
 				$res['disabled'] = false;
 			} else {
 				$res['disabled'] = true;
 			}
-			if($res['percentage'] == NULL) $res['percentage_null'] = true; else $res['percentage_null'] = false;
+			if ($res['percentage'] == NULL)
+				$res['percentage_null'] = true; 
+			else 
+				$res['percentage_null'] = false;
 			$tasklist[] = $res;
 		}
 		$retval = array();
@@ -399,22 +418,11 @@ class TaskLib extends TikiLib
 		
 		$list_tasks_end = microtime();
 		$list_tasks_time = $list_tasks_end - $list_tasks_start;
-		//echo("list_task in $list_tasks_time seconds<br />");
 		return $retval;
 	}
-
 	
-	
-	function get_user_with_permissions($perm) {
-		/*
-		$query = "SELECT DISTINCT `users_users`.`login` AS `login` ";
-		$query.= "FROM  `users_grouppermissions`, `users_usergroups`, `users_users` ";
-		$query.= "WHERE `users_usergroups`.`userId` = `users_users`.`userId` AND ";
-		$query.= "`users_grouppermissions`.`groupName` = `users_usergroups`.`groupName` AND ";
-		$query.= "`users_grouppermissions`.`permName` = ? ";
-		$query.= "ORDER BY `login`";
-		$result = $this->query($query, array($perm));
-		*/
+	function get_user_with_permissions($perm)
+	{
 		$query = "SELECT DISTINCT `users_users`.`login` AS `login` FROM `users_users` ORDER BY `login`";
 		$result = $this->query($query, array());
 		$ret = array();
