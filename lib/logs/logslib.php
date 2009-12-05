@@ -10,7 +10,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class LogsLib extends TikiLib
 {
 
-	function add_log($type,$message,$who='',$ip='',$client='',$time='') {
+	function add_log($type, $message, $who='', $ip='', $client='', $time='')
+	{
 		global $user;
 		if (!$who) {
 			if ($user) {
@@ -36,7 +37,8 @@ class LogsLib extends TikiLib
 		$result = $this->query($query,array($type,$message,$who,$ip,$client,(int)$time));
 	}
 
-	function list_logs($type='',$user='',$offset=0,$maxRecords=-1,$sort_mode='logtime_desc',$find='',$min=0,$max=0) {
+	function list_logs($type='', $user='', $offset=0, $maxRecords=-1, $sort_mode='logtime_desc', $find='', $min=0, $max=0)
+	{
 		$bindvars = array();
 		$amid = array();
 		$mid = '';
@@ -87,7 +89,8 @@ class LogsLib extends TikiLib
 		$retval["cant"] = $cant;
 		return $retval;
 	}
-	function clean_logs($date) {
+	function clean_logs($date)
+	{
 		$query = "delete from `tiki_logs` where `logtime`<=?";
 		$this->query($query, array((int)$date));
 	}
@@ -96,7 +99,8 @@ class LogsLib extends TikiLib
 	 * type = 'wiki page', 'category', 'article', 'image gallery', 'tracker', 'forum thread'
 	 * TODO: merge $param and $contributions together into a hash and but everything in actionlog_params
 	*/
-	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='', $contributions='', $hash='') {
+	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='', $contributions='', $hash='')
+	{
 		global $user, $prefs;
 		if ($objectType == 'wiki page' && $action != 'Viewed')
 			$logObject = true; // to have the tiki_my_edit, history and mod-last_modif_pages
@@ -161,7 +165,9 @@ class LogsLib extends TikiLib
 		}
 		return  isset($actions[0])? $actions[0]: 0;
 	}
-	function action_must_be_logged($action, $objectType) {
+
+	function action_must_be_logged($action, $objectType)
+	{
 		global $prefs;
 		if ($prefs['feature_actionlog'] != 'y')
 			return true; // for previous compatibility - the new action are added with a if ($feature..)
@@ -172,7 +178,9 @@ class LogsLib extends TikiLib
 		}
 		return false;
 	}
-	function action_is_viewed($action, $objectType) {
+
+	function action_is_viewed($action, $objectType)
+	{
 		global $prefs;
 		if ($prefs['feature_actionlog'] != 'y')
 			return true; // for previous compatibility - the new action are added with a if ($feature..)
@@ -183,18 +191,24 @@ class LogsLib extends TikiLib
 		}
 		return false;
 	}
-	function set_actionlog_conf($action, $objectType, $status) {
+
+	function set_actionlog_conf($action, $objectType, $status)
+	{
 		global $actionlogConf;
 		$this->delete_actionlog_conf($action, $objectType);
 		$query = "insert into `tiki_actionlog_conf` (`action`, `objectType`, `status`) values(?, ?, ?)";
 		$this->query($query, array($action, $objectType, $status));
 		unset($actionlogConf);
 	}
-	function delete_actionlog_conf($action, $objectType) {
+
+	function delete_actionlog_conf($action, $objectType)
+	{
 		$query = "delete from `tiki_actionlog_conf` where `action`=? and `objectType`= ?";
 		$this->query($query, array($action, $objectType));
 	}
-	function get_all_actionlog_conf() {
+
+	function get_all_actionlog_conf()
+	{
 		global $actionlogConf;
 		if (!isset($actionlogConf)) {
 			$actionlogConf = array();
@@ -207,13 +221,21 @@ class LogsLib extends TikiLib
 		}
 		return $actionlogConf;
 	}
-	function encode_actionlog_conf($action, $objectType) {
+
+	function encode_actionlog_conf($action, $objectType)
+	{
 		return str_replace(' ', '0', $action.'_'.$objectType);
 	}
-	function decode_actionlog_conf($string) {
+
+	function decode_actionlog_conf($string)
+	{
 		return split('_', str_replace('0', ' ', $conf));
 	}
-	function list_actions($action='', $objectType='',$user='',$offset=0,$maxRecords=-1,$sort_mode='lastModif_desc',$find='',$start=0,$end=0, $categId='') {
+
+	function list_actions($action='', $objectType='', $user='', $offset=0
+		, $maxRecords=-1, $sort_mode='lastModif_desc', $find='', $start=0
+		, $end=0, $categId=''
+	)	{
 		global $prefs, $section, $tikilib, $contributionlib;
 		include_once('lib/contribution/contributionlib.php');
 
@@ -321,10 +343,14 @@ class LogsLib extends TikiLib
 		}
 		return $ret;
 	}
-	function sort_by_date($action1, $action2) {
+
+	function sort_by_date($action1, $action2)
+	{
 		return ($action1['lastModif'] -  $action2['lastModif']);
 	}
-	function get_login_time($logins, $startDate, $endDate, $actions) {
+
+	function get_login_time($logins, $startDate, $endDate, $actions)
+	{
 		if ($endDate > $this->now)
 			$endDate = $this->now;
 		$logTimes = array();
@@ -367,7 +393,9 @@ class LogsLib extends TikiLib
 		}
 	return $logTimes;
 	}
-	function get_volume_action($action) {
+
+	function get_volume_action($action)
+	{
 		$bytes = array();
 		if (preg_match('/bytes=([0-9\-+]+)/', $action['comment'], $matches)) {//old syntax
 			if (preg_match('/\+([0-9]+)/', $matches[1], $m))
@@ -382,7 +410,9 @@ class LogsLib extends TikiLib
 		}
 		return $bytes;
 	}
-	function get_comment_action($action) {
+
+	function get_comment_action($action)
+	{
 		if (preg_match('/comments_parentId=([0-9\-+]+)/', $action['comment'], $matches))
 			return $matches[1];
 		elseif (preg_match('/#threadId([0-9\-+]+)/', $action['comment'], $matches))
@@ -394,11 +424,15 @@ class LogsLib extends TikiLib
 		else
 			return '';
 	}
-	function get_stat_actions_per_user($actions) {
+
+	function get_stat_actions_per_user($actions)
+	{
 		$stats = $this->get_stat_actions_per_field($actions, 'user');
 		return $stats;
 	}
-	function get_stat_actions_per_field($actions, $field='user') {
+
+	function get_stat_actions_per_field($actions, $field='user')
+	{
 		$stats = array();
 		$actions2 = array();
 		
@@ -423,7 +457,9 @@ class LogsLib extends TikiLib
 		sort($stats); // will sort on the first field
 		return $stats;
 	}
-	function get_stat_contributions_per_group($actions, $selectedGroups) {
+
+	function get_stat_contributions_per_group($actions, $selectedGroups)
+	{
 		global $tikilib;
 		$statGroups = array();
 		foreach ($actions as $action) {
@@ -456,7 +492,9 @@ class LogsLib extends TikiLib
 		ksort($statGroups);
 		return $statGroups;
 	}
-	function get_action_stat_categ($actions, $categNames) {
+
+	function get_action_stat_categ($actions, $categNames)
+	{
 		$stats = array();
 		$actionlogConf = $this->get_all_actionlog_conf();
 		foreach ($actions as $action) {
@@ -475,7 +513,9 @@ class LogsLib extends TikiLib
 		sort($stats); //sort on the first field category
 		return $stats;
 	}
-	function get_action_vol_categ($actions, $categNames) {
+
+	function get_action_vol_categ($actions, $categNames)
+	{
 		$stats = array();
 		$actionlogConf = $this->get_all_actionlog_conf();
 		foreach ($actions as $action) {
@@ -505,7 +545,9 @@ class LogsLib extends TikiLib
 		sort($stats); //sort on the first field category
 		return $stats;
 	}
-	function get_action_vol_user_categ($actions, $categNames) {
+
+	function get_action_vol_user_categ($actions, $categNames)
+	{
 		$stats = array();
 		$actionlogConf = $this->get_all_actionlog_conf();
 		foreach ($actions as $action) {
@@ -537,7 +579,9 @@ class LogsLib extends TikiLib
 		sort($stats); //sort on the first field category
 		return $stats;
 	}
-	function get_action_vol_type($vols) {
+
+	function get_action_vol_type($vols)
+	{
 		$types = array();
 		foreach ($vols as $vol) {
 			foreach ($vol as $key=>$value) {
@@ -547,7 +591,8 @@ class LogsLib extends TikiLib
 		}
 		return $types;
 	}
-	function get_actions_per_user_categ($actions, $categNames) {
+	function get_actions_per_user_categ($actions, $categNames)
+	{
 		$stats = array();
 		$actionlogConf = $this->get_all_actionlog_conf();
 		foreach ($actions as $action) {
@@ -567,7 +612,9 @@ class LogsLib extends TikiLib
 		sort($stats); // sort on the first fields categ , then user
 		return $stats;
 	}
-	function in_kb($vol) {
+
+	function in_kb($vol)
+	{
 		for ($i = count($vol) -1; $i >= 0; --$i) {
 			foreach ($vol[$i] as $k=>$v) {
 				if ($k != 'category' && $k != 'user') {
@@ -579,7 +626,9 @@ class LogsLib extends TikiLib
 		}
 		return $vol;
 	}
-	function export($actionlogs, $unit = 'b') {
+
+	function export($actionlogs, $unit = 'b')
+	{
 	$csv = "user,date,time,action,type,object,category,unit,+,-,contribution<br />";
 	foreach ($actionlogs as $action) {
 		if (!isset($action['object']))
@@ -591,8 +640,18 @@ class LogsLib extends TikiLib
 		if (!isset($action['del']))
 			$action['del'] = '';
 
-		$csv.= '"'.$action['user'].'","'.$this->date_format("%y%m%d",$action['lastModif']).'","'.$this->date_format("%H:%M",$action['lastModif']).'","'.$action['action'].'","'.$action['objectType'].'","'.$action['object'].'","'
-			.$action['category'].'","'.$unit.'","'.$action['add'].'","'.$action['del'].'","';
+		$csv.= '"' . $action['user']
+				 . '","' . $this->date_format("%y%m%d", $action['lastModif'])
+				 . '","' . $this->date_format("%H:%M", $action['lastModif'])
+				 . '","' . $action['action']
+				 . '","' . $action['objectType']
+				 . '","' . $action['object']
+				 . '","' . $action['category']
+				 . '","' . $unit
+				 . '","' . $action['add']
+				 . '","' . $action['del']
+				 .'","'
+				 ;
 		if (isset($action['contributions'])) {
 			$i = 0;
 			foreach ($action['contributions'] as $contribution) {
@@ -605,7 +664,9 @@ class LogsLib extends TikiLib
 	}
 	return $csv;
 	}
-	function get_action_params($actionId, $name='') {
+
+	function get_action_params($actionId, $name='')
+	{
 		if (empty($name)) {
 			$query = "select * from `tiki_actionlog_params` where `actionId`=?";
 			$result = $this->query($query, array($actionId));
@@ -623,7 +684,9 @@ class LogsLib extends TikiLib
 		}
 		return $ret;
 	}
-	function get_action_contributions($actionId) {
+
+	function get_action_contributions($actionId)
+	{
 		$query = "select tc.* from `tiki_contributions` tc, `tiki_actionlog_params` tp where tp.`actionId`=? and tp.`name`=? and tp.`value`=tc.`contributionId`";
 		$result = $this->query($query, array($actionId, 'contribution'));
 		$ret = array();
@@ -632,17 +695,22 @@ class LogsLib extends TikiLib
 		}
 		return $ret;
 	}
-	function rename($objectType, $oldName, $newName) {
+
+	function rename($objectType, $oldName, $newName)
+	{
 		$query = "update `tiki_actionlog`set `comment`= concat(?, `comment`) where `object`=? and (`objectType`=? or `objectType`= ?) and `comment` not like ?";
 		$this->query($query, array("old=$oldName&amp;", $oldName, $objectType, 'comment' , '%old=%'));
 		$query = "update `tiki_actionlog`set `object`=? where `object`=? and (`objectType`=? or `objectType`= ?)";
 		$this->query($query, array($newName, $oldName, $objectType, 'comment'));
 	}
-	function update_category($actionId, $categId) {
+
+	function update_category($actionId, $categId)
+	{
 		$query = "update `tiki_actionlog` set `categId`=? where `actionId`=?";
 		$this->query($query, array($categId, $actionId));
 	}
-	function get_info_action($actionId) {
+	function get_info_action($actionId)
+	{
 		$query = "select * from `tiki_actionlog`where `actionId`= ?";
 		$result = $this->query($query, array($actionId));
 		if ($res = $result->fetchRow())
@@ -650,7 +718,9 @@ class LogsLib extends TikiLib
 		else
 			return NULL;
 	}
-	function delete_params($actionId, $name='') {
+
+	function delete_params($actionId, $name='')
+	{
 		$bindvars = array($actionId);
 		if (!empty($name)) {
 			$mid = 'and `name`= ?';
@@ -659,13 +729,17 @@ class LogsLib extends TikiLib
 		$query = "delete from `tiki_actionlog_params` where `actionId`=?";
 		$this->query($query, $bindvars);
 	}
-	function insert_params($actionId, $param, $values) {
+
+	function insert_params($actionId, $param, $values)
+	{
 		$query = "insert into `tiki_actionlog_params` (`actionId`, `name`, `value`) values(?,?,?)";
 		foreach ($values as $val) {
 			$this->query($query, array($actionId, $param, $val));
 		}
 	}
-	function get_stat_contribution($actions, $startDate, $endDate, $unit='w') {
+
+	function get_stat_contribution($actions, $startDate, $endDate, $unit='w')
+	{
 		$contributions = array();
 		$nbCols = ceil(($endDate - $startDate) / (60*60*24));
 		if ($unit != 'd') {
@@ -673,7 +747,12 @@ class LogsLib extends TikiLib
 		}
 		foreach ($actions as $action) {
 			if (isset($action['contributions'])) {
-				if (!empty($previousAction) && $action['lastModif'] == $previousAction['lastModif'] && $action['user'] == $previousAction['user'] && $action['object'] == $previousAction['object'] && $action['objectType'] == $previousAction['objectType'])
+				if (!empty($previousAction) 
+						&& $action['lastModif'] == $previousAction['lastModif'] 
+						&& $action['user'] == $previousAction['user'] 
+						&& $action['object'] == $previousAction['object'] 
+						&& $action['objectType'] == $previousAction['objectType']
+						)
 					continue;	// differ only by the categories
 				$previousAction = $action;
 				foreach ($action['contributions'] as $contrib) {
@@ -707,11 +786,18 @@ class LogsLib extends TikiLib
 		}
 		return (array('nbCols'=>$nbCols, 'data'=>$contributions));
 	}
-	function get_stat_contributions_per_user($actions) {
+
+	function get_stat_contributions_per_user($actions)
+	{
 		$tab = array();
 		foreach ($actions as $action) {
 			if (isset($action['contributions'])) {
-				if (!empty($previousAction) && $action['lastModif'] == $previousAction['lastModif'] && $action['object'] == $previousAction['object'] && $action['objectType'] == $previousAction['objectType'] && $action['categId'] != $previousAction['categId'])
+				if (!empty($previousAction) 
+						&& $action['lastModif'] == $previousAction['lastModif']
+						&& $action['object'] == $previousAction['object'] 
+						&& $action['objectType'] == $previousAction['objectType'] 
+						&& $action['categId'] != $previousAction['categId']
+					)
 					continue;	// differ only by the categories
 				$previousAction = $action;
 				foreach ($action['contributions'] as $contrib) {
@@ -741,7 +827,9 @@ class LogsLib extends TikiLib
 		ksort($tab);
 		return array('data'=>$tab, 'nbCols'=>sizeof($tab));;
 	}
-	function get_colors($nb) {
+
+	function get_colors($nb)
+	{
 		$colors[] = 'red';	if (!--$nb) return $colors;
 		$colors[] = 'yellow';	if (!--$nb) return $colors;
 		$colors[] = 'blue';	if (!--$nb) return $colors;
@@ -759,7 +847,9 @@ class LogsLib extends TikiLib
 			$colors[] = rand(1, 999999);
 		} 
 	}
-	function draw_contribution_vol($contributionStat, $type='add', $contributions) {
+
+	function draw_contribution_vol($contributionStat, $type='add', $contributions)
+	{
 		$ret = array();
 		$ret['totalVol'] = 0;
 		$ret['x'][] = tra('Contributions');
@@ -779,7 +869,9 @@ class LogsLib extends TikiLib
 		}
 		return $ret;
 	}
-	function draw_week_contribution_vol($contributionStat, $type='add', $contributions) {
+
+	function draw_week_contribution_vol($contributionStat, $type='add', $contributions)
+	{
 		$ret = array();
 		$ret['totalVol'] = 0;
 		for ($i = 1, $nb = $contributionStat['nbCols']; $nb; --$nb)
@@ -800,7 +892,9 @@ class LogsLib extends TikiLib
 		}
 		return $ret;
 	}
-	function draw_contribution_user($userStat, $type='add', $contributions) {
+
+	function draw_contribution_user($userStat, $type='add', $contributions)
+	{
 		$ret = array();
 		$ret['totalVol'] = 0;
 		foreach ($userStat['data'] as $user=>$stats) {
@@ -822,7 +916,9 @@ class LogsLib extends TikiLib
 		}
 		return $ret;
 	}
-	function draw_contribution_group($groupContributions, $type='add', $contributions) {
+
+	function draw_contribution_group($groupContributions, $type='add', $contributions)
+	{
 		$ret = array();
 		$ret['totalVol'] = 0;
 		foreach ($groupContributions as $group=>$stats) {
@@ -844,7 +940,9 @@ class LogsLib extends TikiLib
 		}
 		return $ret;
 	}
-	function get_contributors($actionId) {
+
+	function get_contributors($actionId)
+	{
 		$query = 'select uu.`login` from `tiki_actionlog_params` tap, `users_users` uu where tap.`actionId`=? and tap.`name`=? and uu.`userId`=tap.`value`';
 		$result = $this->query($query, array($actionId, 'contributor'));
 		$ret = array();
@@ -855,8 +953,18 @@ class LogsLib extends TikiLib
 	}
 
 	// get the contributors of the last update of a wiki page
-	function get_wiki_contributors($page_info) {
-		$query = 'select distinct(uu.`login`), uu.`userId` from `tiki_actionlog_params` tap, `users_users` uu , `tiki_actionlog` ta where tap.`actionId`= ta.`actionId` and tap.`name`=? and uu.`userId`=tap.`value` and ta.`object`=? and ta.`objectType`=? and ta.`lastModif`=? order by `login` asc';
+	function get_wiki_contributors($page_info) 
+	{
+		$query = 'select distinct(uu.`login`), uu.`userId` 
+							from `tiki_actionlog_params` tap, `users_users` uu , `tiki_actionlog` ta 
+							where tap.`actionId`= ta.`actionId` 
+										and tap.`name`=? 
+										and uu.`userId`=tap.`value` 
+										and ta.`object`=? 
+										and ta.`objectType`=? 
+										and ta.`lastModif`=? 
+							order by `login` asc'
+							;
 		$result = $this->query($query, array('contributor', $page_info['pageName'], 'wiki page', $page_info['lastModif'])); 
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -865,7 +973,8 @@ class LogsLib extends TikiLib
 		return $ret;
 	}
    
-	function split_actions_per_contributors($actions, $users) {
+	function split_actions_per_contributors($actions, $users)
+	{
 		$contributorActions = array();
 		foreach ($actions as $action) {
 			$bytes = $this->get_volume_action($action);
@@ -898,7 +1007,9 @@ class LogsLib extends TikiLib
 		}
 		return $contributorActions;
 	}
-	function list_logsql($sort_mode='created_desc', $offset=0, $maxRecords=-1, $find='') {
+
+	function list_logsql($sort_mode='created_desc', $offset=0, $maxRecords=-1, $find='')
+	{
 		global $prefs;
 		$bindvars = array();
 		if (!empty($find)) {
@@ -919,11 +1030,15 @@ class LogsLib extends TikiLib
 		$retval['cant'] = $cant;
 		return $retval;
 	}
-	function clean_logsql() {
+
+	function clean_logsql()
+	{
 		$query = 'delete from  `adodb_logsql`';
 		$this->query($query, array());
 	}
-	function graph_to_jpgraph(&$jpgraph, $series, $accumulated = false, $color='whitesmoke', $colorLegend='white') {
+
+	function graph_to_jpgraph(&$jpgraph, $series, $accumulated = false, $color='whitesmoke', $colorLegend='white')
+	{
 		$jpgraph->SetScale('textlin');
 		$jpgraph->setMarginColor($color);
 		$jpgraph->xaxis->SetTickLabels($series['x']);
@@ -942,7 +1057,9 @@ class LogsLib extends TikiLib
 		$jpgraph->legend->SetFillColor($colorLegend);
 		$jpgraph->Add( $gbplot);
 	}
-	function insert_image($galleryId, $graph, $ext, $title, $period) {
+
+	function insert_image($galleryId, $graph, $ext, $title, $period)
+	{
 		global $prefs, $user;
 		global $imagegallib; include_once('lib/imagegals/imagegallib.php');
 		$filename = $prefs['tmpDir'].'/'.md5(rand().time()).'.'.$ext;
@@ -955,9 +1072,10 @@ class LogsLib extends TikiLib
 		$imagegallib->insert_image($_REQUEST['galleryId'], $title.$period, '', $title.$period.'.'.$ext, 'image/'.$ext, $data, $size, $info[0], $info[1], $user, '', '');
 	}
 
-	function get_more_info($actions, $categNames) {
+	function get_more_info($actions, $categNames)
+	{
 		global $tikilib, $prefs;
-	for ($i = 0; $i < sizeof($actions); ++$i) {
+	for ($i = 0, $isizeof_actions = sizeof($actions); $i < $isizeof_actions; ++$i) {
 		if ($actions[$i]['categId'])
 			$actions[$i]['categName'] = $categNames[$actions[$i]['categId']];
 		if ($bytes = $this->get_volume_action($actions[$i])) {
@@ -1069,7 +1187,9 @@ class LogsLib extends TikiLib
 	}
 	return $actions;
 	} // end of get_more_info($actions)
-	function remove_action($actionId) {
+
+	function remove_action($actionId)
+	{
 		$query = 'delete from `tiki_actionlog` where `actionId`=?';
 		$this->query($query, array($actionId));
 		$query = 'delete from `tiki_actionlog_params` where `actionId`=?';

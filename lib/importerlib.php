@@ -219,7 +219,7 @@ class Importer extends Comments
 					// represents an SQL record or row.
 					$records = split('\),\(', $c);
 					if (count($records) < 1) { $records[0] = $c; }
-					for ($count = 0; $count < count($records); $count++) {
+					for ($count = 0, $count_records = count($records); $count < $count_records; $count++) {
 						// Each proper record should begin with a numeric value
 						// (at least as far as the tables we will be using).
 						// Check the following record from the current one to see
@@ -249,7 +249,7 @@ class Importer extends Comments
 								// Do nothing... NEXT!
 								continue;
 							} else {
-								for ($z = 0; $z < count($fields); $z++) {
+								for ($z = 0, $zcount_fields = count($fields); $z < $zcount_fields; $z++) {
 									$rec[$headings[$z]] = $fields[$z];
 								}
 								array_push($thash, $rec);

@@ -79,7 +79,7 @@ class mime
 				$input = trim(substr($input, $pos + 1));
 				if (strlen($input) > 0) {
 					preg_match_all('/(([[:alnum:]]+)="?([^"]*)"?\s?;?)+/i', $input, $matches);
-					for ($i = 0; $i < count($matches[2]); $i++) {
+					for ($i = 0, $icount_matches = count($matches[2]); $i < $icount_matches; $i++) {
 						$it['other'][strtolower($matches[2][$i])] = $matches[3][$i];
 					}
 				}
@@ -142,10 +142,10 @@ class mime
 			case 'multipart/mixed':
 				$default_ctype = (strtolower($content_type['value']) === 'multipart/digest') ? 'message/rfc822' : 'text/plain';
 				$tmp = explode('--' . $content_type['other']['boundary'], $body);
-				for ($i = 1; $i < count($tmp) - 1; $i++) {
+				for ($i = 1, $icount_tmp = count($tmp); $i < $icount_tmp - 1; $i++) {
 					$parts[] = $tmp[$i];
 				}
-				for ($i = 0; $i < count($parts); $i++) {
+				for ($i = 0, $icount_parts = count($parts); $i < $icount_parts; $i++) {
 					$back['parts'][] = mime::decode($parts[$i], $default_ctype);
 				}
 				break;
@@ -215,7 +215,7 @@ class mime
 			return $attachments;
 		}
 		$att = array();
-		for ($it = 0; $it < count($output["parts"]); $it++) {
+		for ($it = 0, $itcount_output = count($output['parts']); $it < $itcount_output; $it++) {
 			if (isset($output["parts"][$it]["d_parameters"]["filename"])) {
 				$attachmentPart = $output["parts"][$it];
 				$att['part'] = $it;

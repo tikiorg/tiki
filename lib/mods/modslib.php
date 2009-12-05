@@ -804,12 +804,16 @@ class ModsLib
 								// it is not compatible
 								$moddep->errors[]="revision failure";
 								$deps['unavailable'][]=$moddep;								
-							} else {
+							}
+/*							 else {
 								// it is compatible, let it.
 							}
-						} else {
+*/
+						}
+/*						 else {
 							// not newer, let it
 						}
+*/
 					} else {
 						$deps['toinstall'][$mod->modname]=$mod;
 						$this->_find_deps($repos, $mod, $deps);
