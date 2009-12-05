@@ -381,14 +381,14 @@ div.help_section {
 .tip .rbox-title,
 .tip .rbox-data {}
 
-.warning .rbox-title {
+.errors .rbox-title, .warning .rbox-title {
 	background: #ffc;
 	color: #000;
 	border-color: #f00;
 	border-bottom-color: #ffc;
 }
 
-.warning .rbox-data {
+.errors .rbox-data, .warning .rbox-data {
 	background: #ffc;
 	color: #000;
 	border-color: #f00;
