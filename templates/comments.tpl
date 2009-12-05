@@ -273,7 +273,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			<div class="postbody-title"><div class="title">{$comments_preview_title|escape}</div></div>
 			<div class="content">
 				<div class="author"><span class="author_info"><span class="author_post_info">
-				{tr}by{/tr} <span class="author_post_info_by">{$user|userlink}</span>
+				{tr}by{/tr} <span class="author_post_info_by">{if $user}{$user|userlink}{else}{$comments_preview_anonymous_name}{/if}</span>
 	  			</span></span></div>
 				{$comments_preview_data}
 	  		</div>
@@ -385,7 +385,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 
 		{if !$user}
 			<tr>
-				<td class="formcolor"><label for="anonymus_name">{tr}Enter your name{/tr} ({tr}optional{/tr})</span></label></td>
+				<td class="formcolor"><label for="anonymous_name">{tr}Enter your name{/tr} ({tr}optional{/tr})</span></label></td>
 				<td class="formcolor"><input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" /></td>
 			</tr>
 			{if $forum_mode eq 'y'}
