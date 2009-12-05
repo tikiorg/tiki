@@ -109,7 +109,7 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 	$fp = fopen($style, "w");
 	if (!$fp) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("You do not have permission to write the style sheet"));
+		$smarty->assign('msg', tra("You do not have permission to write the style sheet")." $style");
 
 		$smarty->display("error.tpl");
 		die;

@@ -14,7 +14,9 @@
 </div>
 
 {if $category_needed eq 'y'}
-  <div class="simplebox highlight">{tr}A category is mandatory{/tr}</div>
+	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	<div class="highlight"><em class='mandatory_note'>{tr}A category is mandatory{/tr}</em></div>
+	{/remarksbox}
 {/if}
 
 <h2>{tr}Current heading{/tr}</h2>

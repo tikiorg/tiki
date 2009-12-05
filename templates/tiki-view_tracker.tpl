@@ -65,24 +65,27 @@
 {/if}
 
 {if count($err_mandatory) > 0}
-	<div class="simplebox highlight">
-		{tr}Following mandatory fields are missing{/tr}&nbsp;:
+	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	<div class="highlight"><em class='mandatory_note'>{tr}Following mandatory fields are missing{/tr}&nbsp;</em>:
 		<br/>
 		{section name=ix loop=$err_mandatory}
 			{$err_mandatory[ix].name}
 			{if !$smarty.section.ix.last},&nbsp;{/if}
 		{/section}
 	</div>
+	{/remarksbox}
 	<br />
 {/if}
 
 {if count($err_value) > 0}
-	<div class="simplebox highlight">
-		{tr}Following fields are incorrect{/tr}&nbsp;:<br/>
+	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	<div class="highlight"><em class='mandatory_note'>
+		{tr}Following fields are incorrect{/tr}</em>&nbsp;:<br/>
 		{section name=ix loop=$err_value}
 			{$err_value[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
 		{/section}
 	</div>
+	{/remarksbox}
 	<br />
 {/if}
 

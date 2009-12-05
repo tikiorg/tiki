@@ -8,7 +8,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/blogs/bloglib.php');
 require_once ('lib/rss/rsslib.php');
-if ($prefs['rss_blogs'] != 'y') {
+if ($prefs['rss_blogs'] != 'y' && $prefs['rss_blog'] != 'y') {
 	$errmsg = tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
