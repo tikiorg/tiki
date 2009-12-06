@@ -352,7 +352,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {assign var=fca value=$field_value.options}
 {if $field_value.options_array[1] eq 'm' or $field_value.options_array[1] eq 'd'}
 	<select name="ins_cat_{$field_value.fieldId}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>
-	{if $field_value.options_array[1] eq 'm' and !$field_value.isMandatory}<option value=""></option>{/if}
+	{if $field_value.options_array[1] eq 'd'  and (empty($field_value.value[0]) or $field_value.isMandatory ne 'y')}
+		<option value=""></option>
+	{/if}
 	{foreach key=ku item=iu from=$field_value.categories name=foreache}
 	{assign var=fcat value=$iu.categId }
 	<option value="{$iu.categId}"{if $field_value.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.name|escape}</option>

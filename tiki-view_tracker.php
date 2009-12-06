@@ -499,8 +499,10 @@ if (isset($_REQUEST['import'])) {
 		$ins_categs = array();
 		$categorized_fields = array();
 		while (list($postVar, $postVal) = each($_REQUEST)) {
-			if (preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
-				foreach($postVal as $v) $ins_categs[] = $v;
+			if (!empty($postVal[0]) && preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
+				foreach($postVal as $v) {
+					$ins_categs[] = $v;
+				}
 				$categorized_fields[] = $m[1];
 			}
 		}
