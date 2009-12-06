@@ -85,7 +85,7 @@
 	{/if}
 	{if $field_value.options_array[1] eq 'd' || $field_value.options_array[1] eq 'm'}
 		<select name="{$field_value.ins_id}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>
-		{if $field_value.options_array[1] eq 'd' and $field_value.isMandatory ne 'y'}
+		{if $field_value.options_array[1] eq 'd' and (empty($field_value.value[0]) or $field_value.isMandatory ne 'y')}
 	   		<option value=""></option>
 		{/if}
 		{foreach key=ku item=cat from=$field_value.list}
