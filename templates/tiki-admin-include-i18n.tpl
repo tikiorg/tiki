@@ -50,6 +50,7 @@
 	{preference name=quantify_changes}
 	{preference name=feature_multilingual_structures}
 	{preference name=freetags_multilingual}
+	{preference name=wiki_dft_list_pages_lang_to_current}
 </div>
 
 {preference name=lang_use_db}

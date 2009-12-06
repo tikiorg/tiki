@@ -149,7 +149,7 @@ if (!empty($multiprint_pages)) {
 	}
 	$smarty->assign('find', $find);
 	$filter = '';
-	if ($prefs['feature_multilingual'] == 'y' && !(isset($_REQUEST['lang']) && $_REQUEST['lang'] == '')) {
+	if ($prefs['feature_multilingual'] == 'y' && ((!isset($_REQUEST['lang']) && $prefs['wiki_dft_list_pages_lang_to_current'] == 'y') || (isset($_REQUEST['lang']) && $_REQUEST['lang'] != ''))) {
 		$filter = setLangFilter($filter);
 	}
 	if (!empty($_REQUEST['langOrphan'])) {

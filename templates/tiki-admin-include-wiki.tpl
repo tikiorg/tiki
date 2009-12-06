@@ -283,6 +283,7 @@
 		{preference name=feature_lastChanges}
 		{preference name=feature_listorphanPages}
 		{preference name=feature_listorphanStructure}
+		{preference name='wiki_dft_list_pages_lang_to_current'}
 
 		<div class="adminoptionbox">
 			<fieldset>
