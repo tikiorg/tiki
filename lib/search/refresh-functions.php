@@ -147,16 +147,33 @@ function refresh_index($object_type, $object_id = null) {
 	} elseif ( ( is_integer($object_id) && $object_id != 0 ) || is_string($object_id) ) {
 		// Index one object identified by its id
 		$query_vars[] = $object_id;
-		$query_where .= (($query_where == '') ? ' where `' : ' and `' ).(is_array($f_id) ? $f_id['id1'] : $f_id).'` = ?';
+		$v = is_array($f_id) ? $f_id['id1'] : $f_id;
+		$query_where .= (($query_where == '') ? ' where ' : ' and ' );
+		$query_where .= (strstr($v, '`')? $v: "`$v`");
+		$query_where .= ' = ?';
 	}
 
 	if ( !empty($f_id) && !empty($f_content) ) {
 
-		if ( !is_array($f_id) ) $f_id = array($f_id);
-		if ( !is_array($f_content) ) $f_content = array($f_content);
-		foreach ( $f_id as $k_id => $v_id ) $query_fields .= (($query_fields!='')?', ':''). '`' . $v_id . '`' .(is_string($k_id)?' as '.$k_id:'');
-		foreach ( $f_content as $k_content => $v_content ) $query_fields .= ', `'.$v_content. '`' . (is_string($k_content)?' as '.$k_content:'');
-		if ( !empty($f_other) ) $query_fields .= ', `'.( is_array($f_other) ? implode('`, `', $f_other) : $f_other ) . '`';
+		if ( !is_array($f_id) ) {
+			$f_id = array($f_id);
+		}
+		if ( !is_array($f_content) ) {
+			$f_content = array($f_content);
+		}
+		foreach ( $f_id as $k_id => $v_id ) {
+			$query_fields .= (($query_fields!='')?', ':'');
+			$query_fields .= (strstr($v_id, '`')? $v_id: "`$v_id`");
+			$query_fields .= (is_string($k_id)?' as '.$k_id:'');
+		}
+		foreach ( $f_content as $k_content => $v_content ) {
+			$query_fields .= ', ';
+			$query_fields .= (strstr($v_content, '`') ?$v_content: "`$v_content`");
+			$query_fields .= (is_string($k_content)?' as '.$k_content:'');
+		}
+		if ( !empty($f_other) ) {
+			$query_fields .= ', `'.( is_array($f_other) ? implode('`, `', $f_other) : $f_other ) . '`';
+		}
 
 		$result = $tikilib->query('select '.$query_fields.$wiki_html.$query_from.$query_where, $query_vars, $query_limit, $query_offset);
 
