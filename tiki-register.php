@@ -134,9 +134,9 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');
 		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 			include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
+			$_SESSION['in_tracker'] = true;
 			$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n'));
 			$smarty->assign('userTrackerData', $userTrackerData);
-			$_SESSION['in_tracker'] = true;
 			if (!isset($_REQUEST['trackit']) || (isset($_REQUEST['error']) && $_REQUEST['error'] == 'y')) {
 				$email_valid = 'n'; // first pass or error
 				
