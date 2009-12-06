@@ -126,6 +126,16 @@ function wikiplugin_tracker_info()
 				'name' => tra('Width of first column '),
 				'description' => '## or ##% '. ' '.tra('Specify the width in pixels or percentage of the first column in the tracker form.'),
 			),
+			'autosavefields' => array(
+				'required' => false,
+				'name' => tra('Autosave fields'),
+				'description' => tra('Colon-separated list of field IDs to be automaitcally filled with values'),
+			),
+			'autosavevalues' => array(
+				'required' => false,
+				'name' => tra('Autosavevalue'),
+				'description' => tra('Colon-separated values corresponding to autosavefields'),
+			),
 		),
 	);
 }
@@ -307,6 +317,13 @@ function wikiplugin_tracker($data, $params)
 
 			if ($thisIsThePlugin) {
 				/* ------------------------------------- Recup all values from REQUEST -------------- */
+				if (!empty($autosavefields)) {
+					$autosavefieldsarray = explode(':', $autosavefields);
+					$autosavevaluesarray = explode(':', $autosavevalues);
+					foreach ($autosavefieldsarray as $i=>$f) {
+						$_REQUEST["ins_cat_$f"][0] = $_REQUEST["$ins_id_$f"] = $autosavevaluesarray[$i];
+					}
+				}
 				$cpt = 0;
 				if (isset($fields)) {
 					$fields_plugin = split(':', $fields);
