@@ -341,6 +341,7 @@ $smarty->assign('daystart', $daystart);
 $smarty->assign('dayend', $dayend);
 
 $daysnames = array();
+$daysnames_abr = array();
 if ($firstDayofWeek == 0) {
 	$daysnames[] = tra("Sunday");
 }
@@ -352,6 +353,15 @@ array_push($daysnames,
 	tra("Thursday"),
 	tra("Friday"),
 	tra("Saturday")
+);
+array_push($daysnames_abr, 
+	tra("Mo"),
+	tra("Tu"),
+	tra("We"),
+	tra("Th"),
+	tra("Fr"),
+	tra("Sa"),
+	tra("Su")
 );
 if ($firstDayofWeek != 0) {
 	$daysnames[] = tra("Sunday");
