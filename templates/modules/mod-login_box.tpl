@@ -142,7 +142,8 @@ function capLock(e){
                 <div><label for="login-stayssl">{tr}Stay in ssl Mode{/tr}:</label>?
                 <input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} /></div>
           {/if}
-
+	{* This is needed as unchecked checkboxes are not sent. The other way of setting hidden field with same name is potentially non-standard *}
+	<input type="hidden" name="stay_in_ssl_mode_present" value="y" />
       {if $prefs.feature_show_stay_in_ssl_mode neq 'y' || $show_stay_in_ssl_mode neq 'y'}
         <input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode|escape}" />
       {/if}
