@@ -7,6 +7,14 @@
 {/if}
 {section name=ix loop=$listpages}
 {if $listpages[ix].disp_article eq 'y'}
+{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $listpages[ix].freetags.data|@count >0}
+	<div class="freetaglist">
+		{foreach from=$listpages[ix].freetags.data item=taginfo}
+		{capture name=tagurl}{if (strstr($taginfo.tag, ' '))}"{$taginfo.tag}"{else}{$taginfo.tag}{/if}{/capture}
+		<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$taginfo.tag}</a>
+		{/foreach}
+	</div>
+{/if} 
 <div class="article">
 {if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline|escape}</div>{/if}
 <div class="articletitle">

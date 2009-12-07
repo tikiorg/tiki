@@ -8,6 +8,9 @@ $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
 include_once ("lib/commentslib.php");
+if ($prefs['feature_freetags'] == 'y') {
+	include_once ('lib/freetag/freetaglib.php');
+}
 if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 }
@@ -122,6 +125,9 @@ for ($i = 0; $i < $temp_max; $i++) {
 	$comments_object_var = $listpages["data"][$i]["articleId"];
 	$comments_objectId = $comments_prefix_var . $comments_object_var;
 	$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
+	if ($prefs['feature_freetags'] == 'y') { // And get the Tags for the posts
+		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["articleId"], "article");
+	}
 }
 if (!empty($topicName) && !strstr($topicName, '!') && !strstr($topicName, '+')) {
 	$smarty->assign_by_ref('topic', $topicName);
