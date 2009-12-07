@@ -14,6 +14,9 @@
 	{/if}
 	<div class="postbody">
 	<div class="clearfix postbody-title">
+	    {if $blog_data.show_avatar eq 'y'}
+			{$post_info.avatar}
+		{/if}
 		<div class="title">		
 				<h2>{$post_info.title|escape}</h2>
 		</div>
