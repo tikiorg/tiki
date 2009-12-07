@@ -58,4 +58,4 @@ if ( isset($_REQUEST['stay_in_ssl_mode']) ) {
 }
 
 // Show the 'Stay in SSL mode' checkbox only if we are already in HTTPS
-$show_stay_in_ssl_mode = $https_mode ? 'y' : 'n';
+$show_stay_in_ssl_mode = $https_mode || $prefs['https_login'] == 'required' ? 'y' : 'n';
