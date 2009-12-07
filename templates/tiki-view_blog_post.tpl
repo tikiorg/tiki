@@ -16,6 +16,10 @@
 {/if}
 			</div>
 		<div class="author_info">
+		     {if $blog_data.show_avatar eq 'y'}
+					{$post_info.avatar}
+			{/if}
+			
 			{if $blog_data.use_title eq 'y'}
 				{tr}By{/tr} {$post_info.user|userlink} {tr}on{/tr} {$post_info.created|tiki_short_datetime}
 			{else}
