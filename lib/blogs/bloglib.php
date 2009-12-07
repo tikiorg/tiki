@@ -499,6 +499,7 @@ class BlogLib extends TikiLib
 		$result = $this->query($query, array((int) $postId));
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
+			$res['avatar'] = $this->get_user_avatar($res['user']);		
 		} else {
 			return false;
 		}
