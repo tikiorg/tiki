@@ -572,6 +572,12 @@ function wikiplugin_trackerlist($data, $params) {
 								} else {
 									$exactvalue[] = array('not'=>$l);
 								}
+							} elseif (preg_match('/(not)?preference\((.*)\)/', $evs[$i], $matches)) {
+								if (empty($matches[1])) {
+									$exactvalue[] = $prefs[$matches[2]];
+								} else {
+									$exactvalue[] = array('not'=>$prefs[$matches[2]]);
+								}							
 							} else {
 								$exactvalue[] = $evs[$i];
 							}

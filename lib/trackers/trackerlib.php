@@ -781,7 +781,7 @@ class TrackerLib extends TikiLib
 						$value = array($value);
 						$not = '';
 					} elseif (is_array($value) && array_key_exists('not', $value)) {
-						$value = $value['not'];
+						$value = array($value['not']);
 						$not = 'not';
 					}
 					if (empty($not)) {

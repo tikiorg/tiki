@@ -301,8 +301,11 @@ function wikiplugin_tracker($data, $params)
 					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl');
 				}
 				$ret = array();
+				if (!empty($autosavefields)) {
+					$autosavefieldsarray = explode(':', $autosavefields);
+				}
 				foreach($flds['data'] as $field) {
-					if ($field['type'] == 'q' || $field['type'] == 'k' || $field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf)) {
+					if ($field['type'] == 'q' || $field['type'] == 'k' || $field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf) || (!empty($autosavefields) && in_array($field['fieldId'], $autosavefieldsarray))) {
 						$ret[] = $field;
 					}
 				}
@@ -325,6 +328,8 @@ function wikiplugin_tracker($data, $params)
 							global $categlib; include_once('lib/categories/categlib.php');
 							$categs = $categlib->list_categs($matches[1]);
 							$_REQUEST["ins_cat_$f"][0] = $categs[0]['categId'];
+						} elseif (preg_match('/preference\((.*)\)/', $autosavevaluesarray[$i], $matches)) {
+							$_REQUEST["ins_cat_$f"][0] = $_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
 						} else {
 							$_REQUEST["ins_cat_$f"][0] = $_REQUEST["$ins_id_$f"] = $autosavevaluesarray[$i];
 						}
@@ -489,7 +494,6 @@ function wikiplugin_tracker($data, $params)
 					} else {
 						$status = '';
 					}
-
 					$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
 					if (isset($newItemRate)) {
