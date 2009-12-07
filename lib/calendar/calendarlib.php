@@ -834,6 +834,7 @@ class CalendarLib extends TikiLib {
 			'weeks' => $weeks,
 			'weekdays' => $weekdays,
 			'daysnames' => $daysnames,
+			'daysnames_abr' => $daysnames_abr,
 			'trunc' => $trunc
 		);
 	}
