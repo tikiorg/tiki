@@ -368,12 +368,15 @@ if ($isvalid) {
 		$url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
 	}
 	// Force HTTP mode if needed
-	if ( $stay_in_ssl_mode != 'y' || !$https_mode ) {
-		 $url = str_replace('https://', 'http://', $url);
+	if ($stay_in_ssl_mode != 'y' || !$https_mode) {
+		$url = str_replace('https://', 'http://', $url);
 	}
-	if ( defined('SID') && SID != '') {
+	// Force Redirection to HTTPS mode of original URL if needed
+	if ($stay_in_ssl_mode == 'y' && $https_mode) {
+		$url = str_replace('http://', 'https://', $url);
+	}
+	if (defined('SID') && SID != '')
 		$url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
-	}
 	header('Location: ' . $url);
 	exit;
 	

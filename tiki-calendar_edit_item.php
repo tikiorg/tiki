@@ -24,8 +24,10 @@ if ($prefs['feature_ajax'] == "y") {
 }
 
 $daysnames = array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satursday");
+$daysnames_abr = array("Su","Mo","Tu","We","Th","Fr","Sa");
 $monthnames = array("","January","February","March","April","May","June","July","August","September","October","November","December");
 $smarty->assign('daysnames',$daysnames);
+$smarty->assign('daysnames_abr',$daysnames_abr);
 $smarty->assign('monthnames',$monthnames);
 
 $smarty->assign('edit',false);

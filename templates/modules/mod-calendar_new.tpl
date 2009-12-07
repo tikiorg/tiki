@@ -8,8 +8,8 @@
 
 	<table cellpadding="0" cellspacing="0" border="0" class="caltable" style="text-align:center;">
 		<tr>
-			{section name=dn loop=$daysnames}
-				<th class="days" width="14%">{$daysnames[dn][0]|ucfirst}</th>
+			{section name=dn loop=$daysnames_abr}
+				<th class="days" width="14%">{$daysnames_abr[dn]|ucfirst}</th>
 			{/section}
 		</tr>
 		{cycle values="odd,even" print=false}

@@ -665,6 +665,7 @@ $smarty->assign('weekdays', $weekdays);
 $smarty->assign('weeks', $weeks);
 $smarty->assign_by_ref('weekNumbers', $weekNumbers);
 $smarty->assign('daysnames', $daysnames);
+$smarty->assign('daysnames_abr', $daysnames_abr);
 foreach($cell as $a=>$x) {
 	foreach($x as $b=>$y) {
 		if (!array_key_exists('items',$y) || !is_array($y['items']))

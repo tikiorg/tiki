@@ -114,7 +114,7 @@ $smarty->assign_by_ref('types', $types);
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
-	$categories = $categlib->get_all_categories_ext();
+	$categories = $categlib->get_all_categories_respect_perms(null, 'view_category');
 	$smarty->assign_by_ref('categories', $categories);
 }
 if ($prefs['feature_multilingual'] == 'y') {

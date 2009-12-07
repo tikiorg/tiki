@@ -49,7 +49,7 @@ $base_url_https = 'https://'.$url_host.(($prefs['https_port']!='')?':'.$prefs['h
 
 // SSL options
 
-if ( isset($_REQUEST['stay_in_ssl_mode']) ) {
+if ( isset($_REQUEST['stay_in_ssl_mode_present']) || isset($_REQUEST['stay_in_ssl_mode']) ) {
 	// We stay in HTTPS / SSL mode if 'stay_in_ssl_mode' has an 'y' or 'on' value
 	$stay_in_ssl_mode = ( $_REQUEST['stay_in_ssl_mode'] == 'y' || $_REQUEST['stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
 } else {
@@ -58,4 +58,4 @@ if ( isset($_REQUEST['stay_in_ssl_mode']) ) {
 }
 
 // Show the 'Stay in SSL mode' checkbox only if we are already in HTTPS
-$show_stay_in_ssl_mode = $https_mode ? 'y' : 'n';
+$show_stay_in_ssl_mode = $https_mode || $prefs['https_login'] == 'required' ? 'y' : 'n';
