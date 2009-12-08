@@ -215,7 +215,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		}
 	}
 	$smarty->assign('selectedUsers', $selectedUsers);
-	if (isset($_REQUEST['selectedGroups']) && !(sizeof($_REQUEST['selectedGroups']) == 1 && $_REQUEST['selectedGroups'][0] == '')) {
+	if (isset($_REQUEST['selectedGroups']) && !(count($_REQUEST['selectedGroups']) == 1 && $_REQUEST['selectedGroups'][0] == '')) {
 		$selectedGroups = array();
 		foreach($groups as $key => $g) {
 			if (in_array($g, $_REQUEST['selectedGroups'])) {
@@ -231,7 +231,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		}
 		$smarty->assign_by_ref('selectedGroups', $selectedGroups);
 	}
-	if (!isset($_REQUEST['selectedUsers']) || (sizeof($_REQUEST['selectedUsers']) == 1 && $_REQUEST['selectedUsers'][0] == '')) $_REQUEST['selectedUsers'] = '';
+	if (!isset($_REQUEST['selectedUsers']) || (count($_REQUEST['selectedUsers']) == 1 && $_REQUEST['selectedUsers'][0] == '')) $_REQUEST['selectedUsers'] = '';
 	if (!isset($_REQUEST['categId']) || $_REQUEST['categId'] == 0) $_REQUEST['categId'] = '';
 	else {
 		$url.= '&amp;categId=' . $_REQUEST['categId'];

@@ -61,7 +61,7 @@ if ($output["data"]=="EMPTY") {
 	foreach ($allCalendars['data'] as $cal) {
 
 	    $visible = false;
-	    if (sizeof($calendarIds) == 0 || in_array($cal['calendarId'],$calendarIds)) {
+	    if (count($calendarIds) == 0 || in_array($cal['calendarId'],$calendarIds)) {
 			if ($cal["personal"] == "y") {
 			    if ($user) {
 					$visible = true;
@@ -89,15 +89,16 @@ if ($output["data"]=="EMPTY") {
 	require_once("lib/smarty_tiki/modifier.tiki_long_datetime.php");
 	require_once("lib/smarty_tiki/modifier.compactisodate.php");
 
-	for ($i = 0; $i < sizeof($items); $i++) {
-		$start_d = smarty_modifier_compactisodate($items[$i]["start"]);
-		$end_d = smarty_modifier_compactisodate($items[$i]["end"]);
+	foreach($items as &$item) {
+		$start_d = smarty_modifier_compactisodate($item["start"]);
+		$end_d = smarty_modifier_compactisodate($item["end"]);
 	
-		$items[$i]["body"] = "<div class=\"vevent\"> <span class=\"summary\">" . $items[$i]["name"] . "</span>"."<br />\n";
- 	    $items[$i]["body"] .=  "<abbr class=\"dtstart\" title=\"" .$start_d ."\">" .tra("Start:") . " " .smarty_modifier_tiki_long_datetime($items[$i]["start"]) . "</abbr>" ."<br />\n";
-	    $items[$i]["body"] .=  "<abbr class=\"dtend\" title=\""  .$end_d ."\">" . tra("End:") . " " .smarty_modifier_tiki_long_datetime($items[$i]["end"]). "</abbr>"."<br />\n";
-	    $items[$i]["body"] .=  "<span class=\"descprition\">".($items[$i]["description"]) . "</span>". "</div>";
+		$item["body"] = "<div class=\"vevent\"> <span class=\"summary\">" . $item["name"] . "</span>"."<br />\n";
+ 	    $item["body"] .=  "<abbr class=\"dtstart\" title=\"" .$start_d ."\">" .tra("Start:") . " " .smarty_modifier_tiki_long_datetime($item["start"]) . "</abbr>" ."<br />\n";
+	    $item["body"] .=  "<abbr class=\"dtend\" title=\""  .$end_d ."\">" . tra("End:") . " " .smarty_modifier_tiki_long_datetime($item["end"]). "</abbr>"."<br />\n";
+	    $item["body"] .=  "<span class=\"descprition\">".($item["description"]) . "</span>". "</div>";
 	}
+	unset($item);
 
 	$changes = array('data' => $items);
 	unset($items);

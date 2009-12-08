@@ -243,8 +243,8 @@ if ($prefs['feature_freetags'] == 'y' && ($prefs['wikiapproval_update_freetags']
 	
 	$tags = $freetaglib->get_tags_on_object($staging_page, 'wiki page');
 	$taglist = '';		
-	for ($i=0, $isizeof_tags = sizeof($tags['data']); $i < $isizeof_tags; $i++) {
-    	$taglist .= $tags['data'][$i]['tag'] . ' ';
+	foreach($tags['data'] as $tag) {
+    	$taglist .= $tag['tag'] . ' ';
 	}
 	
 	$freetaglib->update_tags($user, $page, 'wiki page', $taglist);

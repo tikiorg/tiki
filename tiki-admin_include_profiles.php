@@ -159,9 +159,9 @@ foreach($sources as $key => $source)
 		$openSources++;
 }
 
-if($openSources == sizeof($sources))
+if($openSources == count($sources))
 	$smarty->assign('openSources', 'all');
-elseif (($openSources > 0) &&($openSources < sizeof($sources)))
+elseif (($openSources > 0) &&($openSources < count($sources)))
 	$smarty->assign('openSources', 'some');
 else
 	$smarty->assign('openSources', 'none');

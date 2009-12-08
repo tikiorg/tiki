@@ -120,8 +120,8 @@ if (isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription']) && $tik
 		die;
 	}
 	
-	for ($i = 0, $sizeof_emails = sizeof($emails); $i < $sizeof_emails; $i++) {
-		$email = trim($emails[$i]);
+	foreach($emails as $email) {
+		$email = trim($email);
 		if (empty($email)) continue;
 		if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $email, 'n', '', 'y')) {
 			$ok[] = $email;
