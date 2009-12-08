@@ -4,7 +4,7 @@
 {if $viewlist eq 'list'}
 	{include file='tiki-calendar_listmode.tpl'}
 {else}
-	{include file='tiki-calendar_nav.tpl'}
+	{include file='tiki-calendar_nav.tpl' ajax='n' module='y'}
 
 	<table cellpadding="0" cellspacing="0" border="0" class="caltable" style="text-align:center;">
 		<tr>
