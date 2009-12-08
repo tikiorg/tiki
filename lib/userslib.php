@@ -217,8 +217,8 @@ class UsersLib extends TikiLib {
 	 * @return void : redirects to suitable homepage or redir param if not remote 
 	 */
 	function user_logout($user, $remote = false, $redir = '') {
-		global $prefs, $logslib, $userlib;
-		
+		global $prefs, $logslib, $lslib, $user_cookie_site, $cookie_path, $phpcas_enabled;
+
 		$logslib->add_log('login', 'logged out');
 		
 		$this->delete_user_cookie();
@@ -262,13 +262,14 @@ class UsersLib extends TikiLib {
 		/* change group home page or deactivate if no page is set */
 		if (!empty($redir)) {
 			$url = $redir;
-		} else if (($groupHome = $userlib->get_group_home('Anonymous')) != '') {
+		} else if (($groupHome = $this->get_group_home('Anonymous')) != '') {
 			$url = (preg_match('/^(\/|https?:)/', $groupHome)) ? $groupHome : 'tiki-index.php?page=' . $groupHome;
 		} else {
 			$url = $prefs['site_tikiIndex'];
 		}
 		// RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
 		if (!eregi('^https?\:', $url)) {
+			global $url_scheme, $url_host, $url_port, $base_url;
 			$url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
 		}
 		if (SID) $url.= '?' . SID;
