@@ -33,10 +33,20 @@
 		</div>
 
 		{if $calendar_type neq "tiki_actions"}
-			{button _ajax=$ajax href="?viewmode=day" _title="{tr}Day{/tr}" _text="{tr}Day{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'day'"}
+			{if $module neq 'y'}
+				{button _ajax=$ajax href="?viewmode=day" _title="{tr}Day{/tr}" _text="{tr}Day{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'day'"}
+			{else}
+				{button _ajax=$ajax href="?viewmode=day" _title="{tr}Day{/tr}" _text="{tr}D{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'day'"}
+			{/if}
 		{/if}
-		{button _ajax=$ajax href="?viewmode=week" _title="{tr}Week{/tr}" _text="{tr}Week{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'week'"}
-		{button _ajax=$ajax href="?viewmode=month" _title="{tr}Month{/tr}" _text="{tr}Month{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'month'"}
+		{if $module neq 'y'}
+			{button _ajax=$ajax href="?viewmode=week" _title="{tr}Week{/tr}" _text="{tr}Week{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'week'"}
+			{button _ajax=$ajax href="?viewmode=month" _title="{tr}Month{/tr}" _text="{tr}Month{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'month'"}
+		{else}
+			{button _ajax=$ajax href="?viewmode=week" _title="{tr}Week{/tr}" _text="{tr}W{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'week'"}
+			{button _ajax=$ajax href="?viewmode=month" _title="{tr}Month{/tr}" _text="{tr}M{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'month'"}
+		{/if}
+
 		{if $module neq 'y'}
 			{button _ajax=$ajax href="?viewmode=quarter" _title="{tr}Quarter{/tr}" _text="{tr}Quarter{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'quarter'"}
 			{button href="?viewmode=semester" _title="{tr}Semester{/tr}" _text="{tr}Semester{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'semester'"}
