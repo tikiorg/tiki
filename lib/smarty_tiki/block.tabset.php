@@ -65,7 +65,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		$ret .= '<div class="tabs">
 			';
 		$max = $smarty_tabset_i_tab - 1;
-		$ini = $smarty_tabset_i_tab - sizeof($smarty_tabset);
+		$ini = $smarty_tabset_i_tab - count($smarty_tabset);
 		$focus = $ini;
 		foreach ($smarty_tabset as $value) {
 			$ret .= '	<span id="tab'.$focus.'" class="tabmark tabinactive"><a href="#content'.$focus.'" onclick="javascript:tikitabs('.$focus.','.$max.','.$ini.'); return false;">'.$value.'</a></span>

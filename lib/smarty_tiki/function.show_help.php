@@ -15,7 +15,7 @@ function smarty_function_show_help($params, &$smarty)
 {
 	global $help_sections;
 
-	if (sizeof($help_sections)) {
+	if (count($help_sections)) {
 		$smarty->assign_by_ref('help_sections',$help_sections);
 		return $smarty->fetch('tiki-show_help.tpl');
 	}

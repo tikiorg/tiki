@@ -23,7 +23,7 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 	if (isset($params['id'])) {
 		$section['id'] = $params['id'];
 	} else {
-		$section['id'] = $params['id'] = 'help_section_'.sizeof($help_sections);
+		$section['id'] = $params['id'] = 'help_section_'.count($help_sections);
 	}
 	$section['content'] = $content;
 
