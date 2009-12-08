@@ -163,5 +163,5 @@ function smarty_function_button($params, &$smarty) {
 	}
 
 	$auto_query_args = $auto_query_args_orig;
-	return '<span class="button'.(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
+	return '<span class="'.($params['_noborder'] ? '' : 'button').(!empty($class)?" $class":'').'"'.$id.'>'.$html.'</span>';
 }
