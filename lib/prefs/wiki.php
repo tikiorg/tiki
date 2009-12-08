@@ -6,6 +6,7 @@ function prefs_wiki_list() {
 	$wiki_forums = array();
 
 	if ($prefs['feature_forums'] == 'y') {
+		global $dbTiki;
 		include_once ('lib/commentslib.php');
 		$commentslib = new Comments($dbTiki);
 		$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
