@@ -250,16 +250,6 @@ class UsersLib extends TikiLib
 			}
 		}
 		setcookie($user_cookie_site, '', -3600, $cookie_path, $prefs['cookie_domain']);
-
-		if ($phpcas_enabled == 'y' && $prefs['auth_method'] == 'cas' && $user != 'admin' && $user != '') {
-			require_once ('lib/phpcas/source/CAS/CAS.php');
-			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path']);
-			phpCAS::logout();
-		}
-		session_unregister('user');
-		unset($_SESSION[$user_cookie_site]);
-		session_destroy();
-		
 		/* change group home page or deactivate if no page is set */
 		if (!empty($redir)) {
 			$url = $redir;
@@ -273,6 +263,16 @@ class UsersLib extends TikiLib
 			$url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
 		}
 		if (SID) $url.= '?' . SID;
+
+		if ($phpcas_enabled == 'y' && $prefs['auth_method'] == 'cas' && $user != 'admin' && $user != '') {
+			require_once ('lib/phpcas/source/CAS/CAS.php');
+			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path']);
+			phpCAS::logoutWithRedirectServiceAndUrl($url,$url);
+		}
+		session_unregister('user');
+		unset($_SESSION[$user_cookie_site]);
+		session_destroy();
+		
 		header('Location: ' . $url);
 		return;
 	}
@@ -761,27 +761,48 @@ class UsersLib extends TikiLib
 			// import phpCAS lib
 			require_once('lib/phpcas/CAS.php');
 
-			//phpCAS::setDebug();
-
 			// initialize phpCAS
 			if ( !isset($GLOBALS['PHPCAS_CLIENT']) ) {
 				phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path'], false);
+				//phpCAS::setPGTStorageFile('xml',session_save_path());
+				//phpCAS::setPGTStorageFile('plain','/tmp/phpcas_tickets');
 			}
 			// Redirect to this URL after authentication
+
 			if ( !empty($prefs['cas_extra_param']) ) {
 				phpCAS::setFixedServiceURL( $base_url . 'tiki-login.php?cas=y&' . $prefs['cas_extra_param'] );
 			}
+
 			// check CAS authentication
 			phpCAS::setNoCasServerValidation();
-			phpCAS::forceAuthentication();
+			if ( isset($_SESSION['cas_redirect']) ) {
+				unset($_SESSION['phpCAS']['auth_checked']);
+				$auth = phpCAS::checkAuthentication();
+			} else {
+				$auth = phpCAS::forceAuthentication();
+			}
 			$_SESSION['cas_validation_time'] = time();
 
 			// at this step, the user has been authenticated by the CAS server
 			// and the user's login name can be read with phpCAS::getUser().
 
-			$user = phpCAS::getUser();
+			if ( $auth ) {
+				$user = phpCAS::getUser();
+			} elseif ( isset($_SESSION['cas_redirect']) ) {
+				// If the user has logged out from the CAS server
+				// continue as Anonymous
+				$user = null;
+				$cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $prefs['cookie_name']);
+				$user_cookie_site = 'tiki-user-' . $cookie_site;
+				$_SESSION[$user_cookie_site] = null;
+				header('Location: '.$_SESSION['cas_redirect']);
+				unset($_SESSION['cas_redirect']);
+				die();
+			} else {
+				$user = null;
+			}
 
-			if (isset($user)) {
+			if ( isset($user) ) {
 				return USER_VALID;
 			} else {
 				return PASSWORD_INCORRECT;

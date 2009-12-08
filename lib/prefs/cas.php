@@ -58,9 +58,18 @@ function prefs_cas_list() {
 			'cas_authentication_timeout' => array(
 					'name' => tra('CAS Authentication Verification Timeout'),
 					'description' => tra('Verify authentication with the CAS server every N seconds. Null value means never reverify.'),
-					'type' => 'text',
-					'size' => 10,
+					'type' => 'list',
 					'filter' => 'digits',
+					'options' => array (
+						'0' => tra('Never'),
+						'60' => tra('1 minute'),
+						'120' => tra('2 minutes'),
+						'300' => tra('5 minutes'),
+						'600' => tra('10 minutes'),
+						'900' => tra('15 minutes'),
+						'1800' => tra('30 minutes'),
+						'3600' => tra('1 hour'),
+						),
 					),
 		);
 }

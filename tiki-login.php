@@ -377,6 +377,12 @@ if ($isvalid) {
 	}
 	if (defined('SID') && SID != '')
 		$url.= ((strpos($url, '?') === false) ? '?' : '&') . SID;
+	if ( isset($_SESSION['cas_redirect']) ) {
+		$url = $_SESSION['cas_redirect'];
+		unset($_SESSION['cas_redirect']);
+		$_SESSION[$user_cookie_site] = $user;
+	} 
+
 	header('Location: ' . $url);
 	exit;
 	

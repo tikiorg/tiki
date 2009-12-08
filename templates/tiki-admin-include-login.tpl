@@ -595,7 +595,7 @@
 							{preference name='cas_port' label="{tr}CAS Server Port{/tr}"}
 							{preference name='cas_path' label="{tr}CAS Server Path{/tr}"}
 							{preference name='cas_extra_param' label="{tr}CAS Extra Parameter{/tr}"}
-							{*{preference name='cas_authentication_timeout'}*}
+							{preference name='cas_authentication_timeout'}
 						</fieldset>
 				</fieldset>	 
 			{/tab}
