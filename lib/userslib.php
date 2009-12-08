@@ -2738,7 +2738,7 @@ function get_included_groups($group, $recur=true) {
 	    }
     }
 
-	if (sizeof($q) > 0) {
+	if (count($q) > 0) {
 	    $query = "update `users_users` set " . implode(",", $q). " where " .
 		$this->convertBinary(). " `login` = ?";
 	    $bindvars[] = $u['login'];
