@@ -372,7 +372,7 @@ class ToolbarSeparator extends Toolbar
 }
 
 class ToolbarFckOnly extends Toolbar
-{ 
+{
 	private function __construct( $token, $icon = '' ) // {{{
 	{
 		$fck_icon_path = 'lib/fckeditor_tiki/fckeditor-icons/';
@@ -1428,10 +1428,12 @@ class ToolbarHelptool extends Toolbar
 		
 	} // }}}
 
+/* Useless
 	function isAccessible() // {{{
 	{
 		return parent::isAccessible();
 	} // }}}
+*/
 }
 
 class ToolbarFileGallery extends Toolbar
@@ -1602,7 +1604,7 @@ class ToolbarsList
 		if ( $unique && $this->contains($name) ) {
 			return false;
 		}
-		$this->lines[sizeof($this->lines)-1][0][0][] = Toolbar::getTag( $name );
+		$this->lines[count($this->lines)-1][0][0][] = Toolbar::getTag( $name );
 		return true;
 	}
 
