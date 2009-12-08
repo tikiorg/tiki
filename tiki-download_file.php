@@ -1,7 +1,6 @@
 <?php
 // CVS: $Id: tiki-download_file.php,v 1.33.2.4 2008-03-13 20:12:44 nyloth Exp $
 // Initialization
-
 $force_no_compression = true;
 $skip = false;
 
@@ -113,6 +112,12 @@ if (!$skip) {
 		$smarty->display('error.tpl');
 		die;
 	}
+	if ($info['backlinkPerms'] == 'y' && $filegallib->hasOnlyPrivateBacklinks($info['fileId'])) {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
+	}		
 }
 
 // Add hits ( if download or display only ) + lock if set

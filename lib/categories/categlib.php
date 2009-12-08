@@ -402,6 +402,7 @@ class CategLib extends ObjectLib
 			 // by now they're not showing, list_category_objects needs support for ignoring permissions
 			 // for a type.
 			 'article' => 'tiki_p_read_article',
+			 'submission' => 'tiki_p_approve_submission',
 			 'image' => 'tiki_p_view_image_gallery',
 			 'calendar' => 'tiki_p_view_calendar',
 			 'file' => 'tiki_p_download_files',

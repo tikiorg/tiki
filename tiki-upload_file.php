@@ -90,6 +90,12 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+	if ($gal_info['backlinkPerms'] == 'y' && $filegallib->hasOnlyPrivateBacklinks($_REQUEST['fileId'])) {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("Permission denied you can edit this file"));
+		$smarty->display('error.tpl');
+		die;
+	}		
 	if (isset($_REQUEST['lockedby']) && $fileInfo['lockedby'] != $_REQUEST['lockedby']) {
 		if (empty($fileInfo['lockedby'])) {
 			$smarty->assign('msg', tra(sprintf('The file has been unlocked meanwhile')));

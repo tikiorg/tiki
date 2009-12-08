@@ -2197,7 +2197,7 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function get_file($id) {
-		$query = "select * from `tiki_files` where `fileId`=?";
+		$query = "select tf.*, tfg.`backlinkPerms` from `tiki_files` tf left join `tiki_file_galleries` tfg on (tfg.`galleryId`=tf.`galleryId`) where `fileId`=? ";
 		$result = $this->query($query, array((int)$id));
 		return $result ? $result->fetchRow() : array();
 	}
@@ -2437,8 +2437,16 @@ class TikiLib extends TikiDb_Bridge
 			//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
 			if ( $res['perms']['tiki_p_view_file_gallery'] != 'y'
 					&& ( $res['isgal'] == 0 || $res['perms']['tiki_p_list_file_gallery'] != 'y' )
-			   ) continue;
-
+				 ) {
+				continue;
+			}
+			if (empty($backlinkPerms[$res['galleryId']])) {
+				$info = $filegallib->get_file_gallery_info($res['galleryId']);
+				$backlinkPerms[$res['galleryId']] = $info['backlinkPerms'];
+			}
+			if ($backlinkPerms[$res['galleryId']] == 'y' && $filegallib->hasOnlyPrivateBacklinks($res['id'])) {
+				continue;
+			}
 			$n++;
 			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
 

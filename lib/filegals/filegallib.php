@@ -197,6 +197,7 @@ class FileGalLib extends TikiLib
 		if (!isset($fgal_info['show_creator']))  $fgal_info['show_creator'] = 'n';
 		if (!isset($fgal_info['show_author']))  $fgal_info['show_author'] = 'n';
 		if (!isset($fgal_info['quota']))  $fgal_info['quota'] = 0;
+		if (!isset($fgal_info['backlinkPerms'])) $fgal_info['backlinkPerms'] = 'n';
 
 		// if the user is admin or the user is the same user and the gallery exists
 		// then replace if not then create the gallary if the name is unused.
@@ -215,7 +216,7 @@ class FileGalLib extends TikiLib
 			`user`=?, `lockable`=?, `show_lockedby`=?, `archives`=?, `sort_mode`=?,
 			`show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=?,
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
-			`show_path`=?, `show_slideshow`=?, `default_view`=?, `quota`=? where `galleryId`=?";
+			`show_path`=?, `show_slideshow`=?, `default_view`=?, `quota`=?, `backlinkPerms`=? where `galleryId`=?";
 
 			$bindvars=array(trim($fgal_info['name']), (int) $fgal_info['maxRows'],
 			$fgal_info['description'], (int) $this->now, $fgal_info['public'],
@@ -231,7 +232,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['show_last_user'], $fgal_info['show_comment'],
 			$fgal_info['show_files'], $fgal_info['show_explorer'],
 			$fgal_info['show_path'], $fgal_info['show_slideshow'],
-			$fgal_info['default_view'], $fgal_info['quota'], (int)$fgal_info['galleryId']);
+							$fgal_info['default_view'], $fgal_info['quota'], $fgal_info['backlinkPerms'], (int)$fgal_info['galleryId']);
 
 			$result = $this->query($query,$bindvars);
 
@@ -249,8 +250,8 @@ class FileGalLib extends TikiLib
 			`show_hits`, `max_desc`, `type`, `parentId`, `lockable`, `show_lockedby`,
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
-			`show_explorer`, `show_path`, `show_slideshow`, `default_view`, `quota`)
-			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			`show_explorer`, `show_path`, `show_slideshow`, `default_view`, `quota`, `backlinkPerms`)
+			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$bindvars=array($fgal_info['name'], $fgal_info['description'], (int)
 			$this->now, $fgal_info['user'], (int) $this->now, (int)
@@ -265,7 +266,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['subgal_conf'], $fgal_info['show_last_user'],
 			$fgal_info['show_comment'], $fgal_info['show_files'],
 			$fgal_info['show_explorer'], $fgal_info['show_path'],
-			$fgal_info['show_slideshow'], $fgal_info['default_view'], $fgal_info['quota']);
+			$fgal_info['show_slideshow'], $fgal_info['default_view'], $fgal_info['quota'], $fgal_info['backlinkPerms']);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from
@@ -1124,9 +1125,46 @@ class FileGalLib extends TikiLib
 		}
 	}
 	// get the backlinks of an object
-	function getFileBacklinks($fileId) {
+	function getFileBacklinks($fileId, $sort='type_asc') {
 		$query = 'select tob.* from `tiki_file_backlinks` tfb left join `tiki_objects` tob on (tob.`objectId`=tfb.`objectId`) where `fileId`=? ';
 		return $this->fetchAll($query, array((int)$fileId));
+	}
+	// can not see a file if all its backlinks are not viewable
+	function hasOnlyPrivateBacklinks($fileId) {
+		$objects = $this->getFileBacklinks($fileId);
+		if (empty($objects)) {
+			return false;
+		}
+		foreach ($objects as $object) {
+			$pobjects[$object['type']][] = $object;
+		}
+		global $categlib; include_once('lib/categories/categlib.php');
+		$map = CategLib::map_object_type_to_permission();
+		foreach ($pobjects as $type=>$list) {
+			if ($type == 'blog post') {
+				$this->parentObjects($list, 'tiki_blog_posts', 'postId', 'blogId');
+				$f = Perms::filter(array('type'=>'blog'), 'object', $list, array('object' => 'blogId'), str_replace('tiki_p_', '', $map['blog']));
+			} elseif (strstr($type, 'comment')) {
+				$this->parentObjects($list, 'tiki_comments', 'threadId', 'object');
+				$t = str_replace(' comment', '', $type);
+				$f = Perms::filter(array('type'=>$t), 'object', $list, array('object' => 'object'), str_replace('tiki_p_', '', $map[$t]));
+			} elseif ($type == 'forum post') {
+				$this->parentObjects($list, 'tiki_comments', 'threadId', 'object');
+				$f = Perms::filter(array('type'=>'forum'), 'object', $list, array('object' => 'object'), str_replace('tiki_p_', '', $map['forum']));
+			} else {
+				$f = Perms::filter(array('type'=>$type), 'object', $list, array('object' => 'itemId'), str_replace('tiki_p_', '', $map[$type]));
+			}
+			//$debug=1;
+			if (!empty($debug)) {
+				echo "<br />FILE$fileId";
+				if (!empty($f)) echo 'OK-';else echo 'NO-';
+				foreach ($list as $l) echo $l['type'].': '.$l['itemId'].',';
+			}
+			if (!empty($f)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	// sync the backlinks used by a text of an object
 	function syncFileBacklinks($data, $context) {

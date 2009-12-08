@@ -824,6 +824,7 @@ CREATE TABLE "tiki_file_galleries" (
   "quota" integer default 0,
   "size" bigint default NULL,
   "wiki_syntax" varchar(200) default NULL,
+  "backlinkPerms" char(1) default 'n',
   PRIMARY KEY ("galleryId")
 ) ;
 
@@ -3357,6 +3358,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","f
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_subscribe_email', 'Can subscribe any email to newsletters', 'editors', 'newsletters', NULL, 'feature_newsletters');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_subscribe_newsletters', 'Can subscribe to newsletters', 'basic', 'newsletters', NULL, 'feature_newsletters');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_view_newsletter', 'Can view the archive of a newsletters', 'basic', 'newsletters', NULL, 'feature_newsletters');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_list_newsletters', 'Can list newsletters', 'basic', 'newsletters', NULL, 'feature_newsletters');
 

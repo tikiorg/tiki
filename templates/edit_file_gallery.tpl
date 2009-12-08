@@ -38,6 +38,7 @@
         <tr><td class="formcolor"><label for="visible">{tr}Gallery is visible to non-admin users{/tr}.<label></td><td class="formcolor"><input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} /></td></tr>
 
         <tr><td class="formcolor"><label for="public">{tr}Gallery is public{/tr}.</label></td><td class="formcolor"><input type="checkbox" id="public" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/><br /><em>{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</em></td></tr>
+        <tr><td class="formcolor"><label for="backlinkPerms">{tr}Perms of the backlinks are checked to view a file{/tr}</label></td><td class="formcolor"><input type="checkbox" id="backlinkPerms" name="backlinkPerms" {if $gal_info.backlinkPerms eq 'y'}checked="checked"{/if}/></td></tr>
         <tr><td class="formcolor"><label for="lockable">{tr}Files can be locked at download{/tr}.</label> </td><td class="formcolor"><input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/></td></tr>
         <tr><td class="formcolor"><label for="archives">{tr}Maximum number of archives for each file{/tr}:</label> </td><td class="formcolor"><input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" /><br /><em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
 	{if ! isset($smarty.request.parentId) and $galleryId neq $prefs.fgal_root_id}
