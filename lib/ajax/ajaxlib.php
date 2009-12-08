@@ -255,7 +255,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 
 	$js_files[] = 'tiki-jsplugin.php';
 
-	if (sizeof($js_files)) {
+	if (count($js_files)) {
 		foreach($js_files as $f) {
 			if (trim($f) != '') {
 				$objResponse->includeScript($f);
@@ -264,7 +264,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	}
 
 	$objResponse->script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
-	if (sizeof($js_script)) {
+	if (count($js_script)) {
 		foreach($js_script as $s) {
 			if (trim($s) != '') {
 				$objResponse->script($s);
