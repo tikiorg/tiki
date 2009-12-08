@@ -61,7 +61,7 @@ if (isset($_REQUEST['action'])) {
 chdir('tiki_tests/tests');
 $files = glob('*.xml');
 chdir('../..');
-$files_number = sizeof($files);
+$files_number = count($files);
 $files = array_slice($files,$offset,$files_per_page);
 
 $smarty->assign_by_ref("files",$files);
