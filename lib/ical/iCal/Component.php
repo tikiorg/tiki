@@ -397,8 +397,8 @@ abstract class File_iCal_Component
                 foreach ($e->getComments() as $c) {
 
                 }
-*/
         }
+*/
 
         //this method is defined in the BaseComponent class, so it always exists
         //method should only be public for AEJT
