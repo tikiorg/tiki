@@ -121,7 +121,7 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 			$replacement_end = '';
 		}
 
-		for ($i = 0, $isizeof_ra = sizeof($ra); $i < $isizeof_ra; $i++) {
+		for ($i = 0, $isizeof_ra = count($ra); $i < $isizeof_ra; $i++) {
 			$pattern = $pattern_start;
 			for ($j = 0, $jstrlen_rai = strlen($ra[$i]); $j < $jstrlen_rai; $j++) {
 				if ($j > 0) {

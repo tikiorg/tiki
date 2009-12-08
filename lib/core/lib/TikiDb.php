@@ -127,7 +127,7 @@ abstract class TikiDb
 				$qe = explode("?", $query);
 				$query = '';
 
-				$temp_max = sizeof($qe) - 1;
+				$temp_max = count($qe) - 1;
 				for ($i = 0; $i < $temp_max; $i++) {
 					$query .= $qe[$i] . ":" . $i;
 				}
