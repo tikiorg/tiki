@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.6 2008-02-27 15:18:36 nyloth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/groupalert/groupalertlib.php');
@@ -18,6 +18,8 @@ if ($tiki_p_admin_trackers != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+$auto_query_args = array();
+
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
 }
