@@ -23,6 +23,7 @@ $arrayFilterfield = explode(',', $_GET["filterfield"]);
 $arrayStatus = explode(',', $_GET["status"]);
 $sort_mode = 'f_' . $arrayFieldlist[0] . '_asc';
 header('Cache-Control: no-cache');
+header('content-type: application/x-javascript');
 Perms::bulk( array( 'type' => 'tracker' ), 'object', $arrayTrackerId );
 
 
@@ -30,7 +31,7 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 	$tikilib->get_perm_object( $arrayTrackerId[$index], 'tracker' );
 
 	if ($arrayMandatory[$index] == 'y') {
-		echo "sel[$index][0] = new Option('','');\n";
+		echo "tracker_dynamic_options[$index][0] = new Option('','');\n";
 	}
 	// behaviour differ between smarty encoding and javascript encoding
 	if (!isset($_GET['selected'])) {
@@ -67,10 +68,10 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 			} else {
 				$selbool = "false,false";
 			}
-			echo "sel[$index][$i+1]= new Option('" . str_replace("'", "\\'", $items["data"][$i]['field_values'][0]['value']) . "','" . str_replace("'", "\\'", $items["data"][$i]['field_values'][0]['value']) . "'," . $selbool . ");\n";
+			echo "tracker_dynamic_options[$index][$i+1]= new Option('" . str_replace("'", "\\'", $items["data"][$i]['field_values'][0]['value']) . "','" . str_replace("'", "\\'", $items["data"][$i]['field_values'][0]['value']) . "'," . $selbool . ");\n";
 		}
 		if ($isSelected == false && $selected != '') {
-			echo "sel[$index][$i+1]= new Option('" . $selected . "','" . $selected . "',true,true);\n";
+			echo "tracker_dynamic_options[$index][$i+1]= new Option('" . $selected . "','" . $selected . "',true,true);\n";
 		}
 	}
 }
