@@ -44,8 +44,8 @@ class _WikiDiffEngine
 
   function _WikiDiffEngine ($from_lines, $to_lines)
       {
-	$n_from = sizeof($from_lines);
-	$n_to = sizeof($to_lines);
+	$n_from = count($from_lines);
+	$n_to = count($to_lines);
 	$endskip = 0;
 
         // Ignore differences in line endings
@@ -100,7 +100,7 @@ class _WikiDiffEngine
 	  }
 
 	// Find the LCS.
-	$this->_compareseq(0, sizeof($this->xv), 0, sizeof($this->yv));
+	$this->_compareseq(0, count($this->xv), 0, count($this->yv));
 
 	// Merge edits when possible
 	$this->_shift_boundaries($xlines, $this->xchanged, $this->ychanged);
@@ -362,9 +362,9 @@ class _WikiDiffEngine
 	$i = 0;
 	$j = 0;
 
-	USE_ASSERTS && assert('sizeof($lines) == sizeof($changed)');
-	$len = sizeof($lines);
-	$other_len = sizeof($other_changed);
+	USE_ASSERTS && assert('count($lines) == count($changed)');
+	$len = count($lines);
+	$other_len = count($other_changed);
 
 	while (1)
 	  {
@@ -521,7 +521,7 @@ class WikiDiff
 
 	for (reset($this->edits), $currentedits = current($this->edits); $edit = $currentedits; next($this->edits)) {
 	    if (is_array($edit)) { // Was an add, turn it into a delete.
-		$nadd = sizeof($edit);
+		$nadd = count($edit);
 		USE_ASSERTS && assert ($nadd > 0);
 		$edit = -$nadd;
 	      }
@@ -600,7 +600,7 @@ class WikiDiff
 	    else
 	      { // Left op is an add.
 		if (!is_array($left)) die('assertion error');
-		$nleft = sizeof($left);
+		$nleft = count($left);
 		if ($nleft <= abs($right))
 		  {
 		    if ($right > 0)
@@ -642,7 +642,7 @@ class WikiDiff
 	    if (is_array($op) && is_array($newop))
 	      {
 		// Both $op and $newop are adds.
-		for ($i = 0, $sizeof_newop = sizeof($newop); $i < $sizeof_newop; $i++)
+		for ($i = 0, $sizeof_newop = count($newop); $i < $sizeof_newop; $i++)
 		    $op[] = $newop[$i];
 	      }
 	    else if (($op > 0 && $newop > 0) || ($op < 0 && $newop < 0))
@@ -701,7 +701,7 @@ class WikiDiff
   function apply ($from_lines)
       {
 	$x = 0;
-	$xlim = sizeof($from_lines);
+	$xlim = count($from_lines);
 
 	for ( reset($this->edits);
 	      $edit = current($this->edits);
@@ -745,9 +745,9 @@ class WikiDiff
    */
   function isEmpty ()
       {
-	if (sizeof($this->edits) > 1)
+	if (count($this->edits) > 1)
 	    return false;
-	if (sizeof($this->edits) == 0)
+	if (count($this->edits) == 0)
 	    return true;
 	// Test for: only edit is a copy.
 	return !is_array($this->edits[0]) && $this->edits[0] > 0;
@@ -840,7 +840,7 @@ class WikiDiffFormatter
       {
 	$html = '';
 	$x = 0; $y = 0;
-	$xlim = sizeof($from_lines);
+	$xlim = count($from_lines);
 
 	reset($edits);
 	while ($edit = current($edits))
@@ -868,7 +868,7 @@ class WikiDiffFormatter
 		  }
 		if (is_array($edit))
 		  { // Edit op is an add.
-		    $y += sizeof($edit);
+		    $y += count($edit);
 		    $hunk[$this->do_reverse_diff ? 'd' : 'a'] = $edit;
 		  }
 		else

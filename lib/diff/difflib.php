@@ -102,7 +102,7 @@ function diff2($page1, $page2, $type='sidediff') {
 		if (strstr($type,"-")) {
 			list($type,$opt) = explode("-", $type, 2);
 			if (strstr($opt,"full")) {
-				$context=sizeof($page1);
+				$context=count($page1);
 			}
 			if (strstr($opt,"char")) {
 				$words=0;
@@ -123,7 +123,7 @@ function diff2($page1, $page2, $type='sidediff') {
 			$renderer = new Text_Diff_Renderer_bytes();
 		} else if ($type == 'htmldiff') {
 			require_once('renderer_htmldiff.php');
-			$renderer = new Text_Diff_Renderer_htmldiff(sizeof($page1));
+			$renderer = new Text_Diff_Renderer_htmldiff(count($page1));
 		} else {
 			return "";
 		}
@@ -151,7 +151,7 @@ function diffChar($orig, $final, $words=0, $function='character') {
 //echo "<pre>";print_r($z);echo "</pre>";
 	require_once("renderer_$function.php");
       $new = "Text_Diff_Renderer_$function";
-	$renderer = new $new(sizeof($line1));
+	$renderer = new $new(count($line1));
 	return $renderer->render($z);
 }
 
