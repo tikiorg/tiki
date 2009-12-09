@@ -116,6 +116,14 @@ else
 		$smarty->assign( 'setlang', $_REQUEST['setlang'] );
 }
 
+$freetags_per_page = $prefs['maxRecords'];
+$offset = intval($_GET['offset']);
+if ($offset < 0) {
+	$offset = 0;
+}
+$smarty->assign('freetags_offset', $offset);
+$smarty->assign('freetags_per_page', $freetags_per_page);
+
 $languages = $multilinguallib->preferredLangs();
 $used_languages = array();
 foreach ($languages as $l)
@@ -139,7 +147,7 @@ foreach ($allLanguages as $al) {
 }
 $used_languages = $t_used_languages;
 
-$tagList = $freetaglib->get_object_tags_multilingual( $cat_type, $cat_objId, $used_languages );
+$tagList = $freetaglib->get_object_tags_multilingual( $cat_type, $cat_objId, $used_languages, $offset, $freetags_per_page );
 
 $rootlangs = array();
 foreach( $tagList as $tagGroup ) {
@@ -149,6 +157,22 @@ foreach( $tagList as $tagGroup ) {
 		if( $tag['tagset'] == $tag['tagId'] )
 			$rootlangs[$tag['tagset']] = $tag['lang'];
 	}
+}
+
+$baseArgs = array(
+	'type' => $cat_type,
+	'objId' => $cat_objId,
+	'additional_languages' => $used_languages,
+);
+
+$prev = http_build_query( array_merge( $baseArgs, array( 'offset' => $offset - $freetags_per_page ) ), '', '&' );
+$next = http_build_query( array_merge( $baseArgs, array( 'offset' => $offset + $freetags_per_page ) ), '', '&' );
+
+$smarty->assign( 'next', 'tiki-freetag_translate.php?' . $next );
+if( $offset ) {
+	$smarty->assign( 'previous', 'tiki-freetag_translate.php?' . $prev );
+} else {
+	$smarty->assign( 'previous', '' );
 }
 	
 $smarty->assign( 'tagList', $tagList );

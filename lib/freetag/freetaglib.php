@@ -1214,7 +1214,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 	    return true;
 	 }
 
-	function get_object_tags_multilingual( $type, $objectId, $accept_languages )
+	function get_object_tags_multilingual( $type, $objectId, $accept_languages, $offset, $maxRecords )
 	{
 		$mid = "";
 		$bindvars = array();
@@ -1246,7 +1246,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 				AND tag.tagId IS NOT NULL
 				";
 
-		$result = $this->query( $query, array_merge( $bindvars, $accept_languages ) );
+		$result = $this->query( $query, array_merge( $bindvars, $accept_languages ), $maxRecords, $offset );
 
 		$ret = array();
 		$encountered = array();

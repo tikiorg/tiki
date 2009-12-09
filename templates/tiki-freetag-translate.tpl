@@ -33,6 +33,11 @@
 		
 {button _onclick="javascript:show_cleartra_checkboxes()" id="scblink" _text="{tr}Show checkboxes to clear language information on tags{/tr}"}
 
+<div class="resultspagelinks">
+	{if $previous}<a class="neatlink" href="{$previous|escape}">&laquo; {tr}Previous{/tr}</a>{/if}
+	<a class="neatlink" href="{$next|escape}">{tr}Next{/tr} &raquo;</a>
+</div>
+
 <table id="tagtranslationtable">
 	<thead>
 		<tr>
