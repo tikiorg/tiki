@@ -241,6 +241,10 @@ class PreferencesLib
 			return '';
 		}
 	}
+
+	private function _getMulticheckboxValue( $info, $data ) {
+		return $this->_getMultilistValue( $info, $data );
+	}
 }
 
 global $prefslib;

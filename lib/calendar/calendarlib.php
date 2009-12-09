@@ -76,6 +76,7 @@ class CalendarLib extends TikiLib
 	}
 
 	function set_calendar($calendarId, $user, $name, $description, $customflags=array(),$options=array()) {
+		global $prefs;
 		$name = strip_tags($name);
 		$description = strip_tags($description);
 		$now = time();
@@ -110,6 +111,11 @@ class CalendarLib extends TikiLib
 		}
 		$this->query('delete from `tiki_calendar_options` where `calendarId`=?',array((int)$calendarId));
 		if (count($options)) {
+			if ( isset($options['viewdays']) ) {
+				$options['viewdays'] = serialize($options['viewdays']);
+			} else {
+				$options['viewdays'] = serialize($prefs['calendar_view_days']);
+			}
 			foreach ($options as $name=>$value) {
 				$name = preg_replace('/[^-_a-zA-Z0-9]/','',$name);
 				$this->query('insert into `tiki_calendar_options` (`calendarId`,`optionName`,`value`) values (?,?,?)',array((int)$calendarId,$name,$value));
@@ -119,6 +125,7 @@ class CalendarLib extends TikiLib
 	}
 
 	function get_calendar($calendarId) {
+		global $prefs;
 		$res = $this->query("select * from `tiki_calendars` where `calendarId`=?",array((int)$calendarId));
 		$cal = $res->fetchRow();
 		$res2 = $this->query("select `optionName`,`value` from `tiki_calendar_options` where `calendarId`=?",array((int)$calendarId));
@@ -128,6 +135,11 @@ class CalendarLib extends TikiLib
 		if (!isset($cal['startday']) and !isset($cal['endday'])) {
 			$cal['startday'] = 0;
 			$cal['endday'] = 23*60*60;
+		}
+		if ( isset($cal['viewdays']) ) {
+			$cal['viewdays'] = unserialize($cal['viewdays']);
+		} else {
+			$cal['viewdays'] = $prefs['calendar_view_days'];
 		}
 		return $cal;
 	}
@@ -689,7 +701,7 @@ class CalendarLib extends TikiLib
 
 		// Global vars used by tiki-calendar_setup.php (this has to be changed)
 		global $tikilib, $calendarViewMode, $request_day, $request_month, $request_year, $dayend, $myurl;
-		include('tiki-calendar_setup.php');
+		include_once('tiki-calendar_setup.php');
 
 		//FIXME : maxrecords = 50
 		$listtikievents = $this->list_items_by_day($calIds, $user, $viewstart, $viewend, 0, 50);

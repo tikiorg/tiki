@@ -94,6 +94,7 @@ if (isset($_REQUEST["save"])) {
 			$options["show_$ex"] = 'n';
 		}
 	}
+	$options['viewdays'] = $_REQUEST['viewdays'];
 	$_REQUEST["calendarId"] = $calendarlib->set_calendar($_REQUEST["calendarId"], $user, $_REQUEST["name"], $_REQUEST["description"], $customflags, $options);
 	if ($prefs['feature_groupalert'] == 'y') {
 		$groupalertlib->AddGroup('calendar', $_REQUEST["calendarId"], $_REQUEST['groupforAlert'], !empty($_REQUEST['showeachuser']) ? $_REQUEST['showeachuser'] : 'n');
@@ -110,7 +111,7 @@ if (isset($_REQUEST["save"])) {
 		$cat_desc = $_REQUEST["description"];
 		$cat_name = $_REQUEST["name"];
 		$cat_href = "tiki-calendar.php?calIds[]=" . $_REQUEST["calendarId"];
-		include_once ("categorize.php");
+		include_once("categorize.php");
 	}
 }
 if (isset($_REQUEST['clean']) && isset($_REQUEST['days'])) {
@@ -159,6 +160,7 @@ if ($_REQUEST["calendarId"]) {
 	$info["startday"] = '25200';
 	$info["endday"] = '72000';
 	$info["defaulteventstatus"] = 0;
+	$info['viedays'] = $prefs['calendar_view_days'];
 	if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 		$cookietab = '2';
 	} else {
@@ -262,6 +264,17 @@ foreach(array_keys($calendars["data"]) as $i) {
 }
 $smarty->assign_by_ref('cant', $calendars['cant']);
 $smarty->assign_by_ref('calendars', $calendars["data"]);
+$days_names = array(
+	tra("Sunday"),
+	tra("Monday"),
+	tra("Tuesday"),
+	tra("Wednesday"),
+	tra("Thursday"),
+	tra("Friday"),
+	tra("Saturday")
+);
+$smarty->assign('days_names',$days_names);
+;
 // $cat_type = 'calendar';
 // $cat_objid = $_REQUEST["calendarId"];
 // include_once ("categorize_list.php");

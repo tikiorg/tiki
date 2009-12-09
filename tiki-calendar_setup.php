@@ -370,6 +370,16 @@ if ($firstDayofWeek != 0) {
 $weeks = array();
 $cell = array();
 
+function correct_start_day($d) {
+	global $prefs;
+	
+	$tmp = $d - $prefs['calendar_firstDayofWeek'];
+	if ($tmp < 0 ) {
+		$tmp += 7;
+	}
+	return $tmp;
+}
+
 if (empty($myurl))
 	$myurl = 'tiki-calendar.php';
 $jscal_url = "$myurl?todate=%s";

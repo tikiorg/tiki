@@ -157,6 +157,11 @@
 <tr class="formcolor"><td>{tr}End of day{/tr}:</td><td>
 <select name="endday_Hour">{foreach item=h from=$hours}<option value="{$h}"{if $h eq $endday} selected="selected"{/if}>{$h}</option>{/foreach}</select>{tr}h{/tr}
 </td></tr>
+<tr class="formcolor"><td>{tr}Days to display{/tr}:</td><td>
+{section name="viewdays" start=0 loop=7}
+{$days_names[$smarty.section.viewdays.index]}&nbsp;<input type="checkbox" name="viewdays[]" value="{$smarty.section.viewdays.index}" {if in_array($smarty.section.viewdays.index,$info.viewdays)} checked="checked" {/if} />
+{/section}
+</td></tr>
 <tr class="formcolor"><td>{tr}Standard Colors{/tr}:</td><td>
 	<select name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
 	  <option value="" />

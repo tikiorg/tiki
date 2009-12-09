@@ -875,6 +875,7 @@ function get_default_prefs() {
 		'calendar_end_year' => '+3',
 		'calendar_list_begins_focus' => 'n',
 		'feature_cal_manual_time' => '',
+		'calendar_view_days' => array(0,1,2,3,4,5,6),
 
 		// dates
 		'server_timezone' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',

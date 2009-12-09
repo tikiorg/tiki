@@ -3,7 +3,9 @@
   <tr valign="middle" style="height:36px">
 <td width="1%" class="weeks"></td>
 {section name=dn loop=$daysnames}
-    <td id="top_{$smarty.section.dn.index}" class="calHeading" width="14%">{$daysnames[dn]}</td>
+		{if in_array($smarty.section.dn.index,$viewdays) }
+    	<td id="top_{$smarty.section.dn.index}" class="calHeading" width="14%">{$daysnames[dn]}</td>
+		{/if}
 {/section}
   </tr>
 {cycle values="odd,even" print=false}
@@ -11,11 +13,12 @@
   <tr id="row_{$smarty.section.w.index}" style="height:80px">
   <td width="1%" class="weeks"><a href="{$url}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td>
   {section name=d loop=$weekdays}
-	{if $cell[w][d].focus}
-	{cycle values="calodd,caleven" print=false advance=false}
-	{else}
-	{cycle values="caldark" print=false advance=false}
-	{/if}
+	{if in_array($smarty.section.d.index,$viewdays) }
+		{if $cell[w][d].focus}
+			{cycle values="calodd,caleven" print=false advance=false}
+		{else}
+			{cycle values="caldark" print=false advance=false}
+		{/if}
 	<td id="row_{$smarty.section.w.index}_{$smarty.section.d.index}" class="{cycle}" style="padding:0px">
 	  <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
 		<tr valign="top">
@@ -82,6 +85,7 @@
 {/section}
 {/if}
 	</td>
+{/if}
 {/section}
   </tr>
 {/section}

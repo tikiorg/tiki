@@ -64,7 +64,7 @@
 			<div class="adminoptionlabel">
 				<label for="calendar_firstDayofWeek">{tr}First day of the week{/tr}:</label>
 				<select name="calendar_firstDayofWeek" id="calendar_firstDayofWeek">
-					<option value="6"{if $prefs.calendar_firstDayofWeek eq "6"} selected="selected"{/if}>{tr}Saturday{/tr}</option>
+					{*<option value="6"{if $prefs.calendar_firstDayofWeek eq "6"} selected="selected"{/if}>{tr}Saturday{/tr}</option>*} {* this is doesn't work *}
 					<option value="0"{if $prefs.calendar_firstDayofWeek eq "0"} selected="selected"{/if}>{tr}Sunday{/tr}</option>
 					<option value="1"{if $prefs.calendar_firstDayofWeek eq "1"} selected="selected"{/if}>{tr}Monday{/tr}</option>
 					<option value="user"{if $prefs.calendar_firstDayofWeek eq "user"} selected="selected"{/if}>{tr}Depends user language{/tr}</option>
@@ -136,6 +136,7 @@
 				<label for="calendar_view_tab">{tr}Item view tab{/tr}</label>
 			</div>
 		</div>
+		{preference type='multicheckbox' name='calendar_view_days'}
 	</fieldset>
 	<div class="input_submit_container clear" style="text-align: center;">
 		<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
