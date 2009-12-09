@@ -658,14 +658,14 @@ class ModLib extends TikiLib {
 		$expanded = array();
 
 		foreach( $info['params'] as $name => $def ) {
-			if( isset( $def['filter'] )  && strstr($def['separator'], $params[$name]) ) {
+			if( isset( $def['filter'] ) ) {
 				$filter = TikiFilter::get( $def['filter'] );
 			} else {
 				$filter = null;
 			}
 
 			if( isset( $params[$name] ) && ! empty( $params[$name] ) ) {
-				if( isset( $def['separator'] ) ) {
+				if( isset( $def['separator'] )  && strstr($def['separator'], $params[$name]) ) {
 					$parts = explode( $def['separator'], $params[$name] );
 					
 					if( $filter ) {
