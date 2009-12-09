@@ -518,6 +518,7 @@ descriptionIsParsed = {$descriptionIsParsed}
 useExplicitNames = {$useExplicitNames}
 showStatus = {$showStatus}
 defaultStatus = {foreach key=st item=stdata from=$status_types}{if $defaultStatusList.$st}{$st}{/if}{/foreach}
+
 showStatusAdminOnly = {$showStatusAdminOnly}
 outboundEmail = {$outboundEmail|escape}
 simpleEmail = {$simpleEmail}
