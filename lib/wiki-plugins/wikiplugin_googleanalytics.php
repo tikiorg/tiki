@@ -11,7 +11,7 @@ function wikiplugin_googleanalytics_info() {
 			'account' => array(
 				'required' => true,
 				'name' => tra('Account number'),
-				'description' => tra('The account number for the site. Your account number from google looks like HA-XXXXXXX-YY. All you need to enter is XXXXXXX-YY'),
+				'description' => tra('The account number for the site. Your account number from google looks like UA-XXXXXXX-YY. All you need to enter is XXXXXXX-YY'),
 			),
 		),
 	);
