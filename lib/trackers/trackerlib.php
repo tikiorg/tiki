@@ -1412,27 +1412,28 @@ class TrackerLib extends TikiLib
 					}
 				} elseif ((isset($ins_fields['data'][$i]['isMultilingual']) && $ins_fields['data'][$i]['isMultilingual'] == 'y') && ($ins_fields['data'][$i]['type'] =='a' || $ins_fields['data'][$i]['type']=='t')){
 
-                                if (!isset($multi_languages))
-									$multi_languages=$prefs['available_languages'];
-                                if (empty($ins_fields["data"][$i]['lingualvalue'])) {
-									$ins_fields["data"][$i]['lingualvalue'][] = array('lang'=>$prefs['language'], 'value'=>$ins_fields["data"][$i]['value']);
-                                }
+					if (!isset($multi_languages))
+						$multi_languages=$prefs['available_languages'];
+					if (empty($ins_fields["data"][$i]['lingualvalue'])) {
+						$ins_fields["data"][$i]['lingualvalue'][] = array('lang'=>$prefs['language'], 'value'=>$ins_fields["data"][$i]['value']);
+					}
 
-				  foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue)
-	                                if ($itemId) {
-	                                        $result = $this->query('select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=? and `lang`=?',array((int) $itemId,(int) $fieldId,(string)$linvalue['lang']));
-						if ($row = $result->fetchRow()){
-                                                        $query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=? and `lang`=?";
-                                                        $result=$this->query($query,array($linvalue['value'],(int) $itemId,(int) $fieldId,(string)$linvalue['lang']));
-                                                        }else{
-                                                            $query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`,`lang`) values(?,?,?,?)";
-                                                            $result=$this->query($query,array((int) $itemId,(int) $fieldId,(string)$linvalue['value'],(string)$linvalue['lang']));
-                                                        }
-                                                        } else {
-                                                        //echo "error in this insert";
-                                                                $query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`,`lang`) values(?,?,?,?)";
-                                                                $this->query($query,array((int) $new_itemId,(int) $fieldId,(string)$linvalue['value'],(string)$linvalue['lang']));
-                                                        }
+					foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue) {
+						if ($itemId) {
+							$result = $this->query('select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=? and `lang`=?',array((int) $itemId,(int) $fieldId,(string)$linvalue['lang']));
+							if ($row = $result->fetchRow()){
+								$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=? and `lang`=?";
+								$result=$this->query($query,array($linvalue['value'],(int) $itemId,(int) $fieldId,(string)$linvalue['lang']));
+							}else{
+								$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`,`lang`) values(?,?,?,?)";
+								$result=$this->query($query,array((int) $itemId,(int) $fieldId,(string)$linvalue['value'],(string)$linvalue['lang']));
+							}
+						} else {
+							//echo "error in this insert";
+							$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`,`lang`) values(?,?,?,?)";
+							$this->query($query,array((int) $new_itemId,(int) $fieldId,(string)$linvalue['value'],(string)$linvalue['lang']));
+						}
+					}
 				} elseif ($ins_fields['data'][$i]['type']=='p') {
 					if ($ins_fields['data'][$i]['options_array'][0] == 'password') {
 						if (!empty($ins_fields['data'][$i]['value']) && $prefs['change_password'] == 'y' && ($e = $userlib->check_password_policy($ins_fields['data'][$i]['value'])) == '') {
@@ -1507,6 +1508,7 @@ class TrackerLib extends TikiLib
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 						$this->query($query,array((int) $new_itemId,(int) $fieldId,(string)$value));
 					}
+					
 					$fil[$fieldId] = $value;
 					$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
 					$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
