@@ -434,7 +434,7 @@ class ModLib extends TikiLib {
 				'description' => 'y|n '. tra('Show module decorations'),
 			),
 			'notitle' => array(
-				'name' => tra('No tile'),
+				'name' => tra('No title'),
 				'description' => 'y|n '.tra('Show module title'),
 				'filter' => 'alpha',
 			),
