@@ -31,7 +31,7 @@ function wikiplugin_fancytable_info() {
 			'head' => array(
 				'required' => false,
 				'name' => tra('Heading row'),
-				'description' => tra('Heading row of the table.'),
+				'description' => tra('Header rows of the table. Use >> to separate multiple rows.'),
 			),
 			'headclass' => array(
 				'required' => false,
@@ -200,16 +200,15 @@ function wikiplugin_fancytable($data, $params) {
 					}
 				}
 				if (isset($widths) || isset($aligns) || isset($valigns)) {
-//					$reali = $i;
 					if (($i == $keepi) && ($rnum > 0) && ($l > $keepl)) $i++;	//skip column number is still under rowspan
 					$colstyle = ' style="';
 					$colstyle .= !empty($widths) ? ' width: ' . $widths[$i] . ';' : '';
 					$colstyle .= !empty($aligns) ? ' text-align: ' . $aligns[$i] . ';' : '';
 					$colstyle .= !empty($valigns) ? ' vertical-align: ' . $valigns[$i] : '';
-					$colstyle .= '">';
+					$colstyle .= '"';
 					$i++;   //increment column number
 				}
-				$row .= $cellbeg . $colspan . $rowspan . $colstyle . $column . $cellend;
+				$row .= $cellbeg . $colspan . $rowspan . $colstyle . '>' . $column . $cellend;
 			}
 			$wret .= $trbeg . $row . $trend;
 		}
