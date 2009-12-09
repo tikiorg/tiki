@@ -1230,27 +1230,29 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 		$query = "
 			SELECT DISTINCT
 				fo.tagId tagset,
-				(SELECT lang FROM tiki_freetags WHERE tagId = tagset) rootlang,
 				tag.tagId,
 				tag.lang,
-				tag.tag
+				tag.tag,
+				traId
 			FROM
 				tiki_objects o
 				INNER JOIN tiki_freetagged_objects fo ON o.objectId = fo.objectId
-				LEFT JOIN tiki_translated_objects to_a ON to_a.type = 'freetag' AND to_a.objId = fo.tagId
-				LEFT JOIN tiki_translated_objects to_b ON to_b.type = 'freetag' AND to_a.traId = to_b.traId
-				LEFT JOIN tiki_freetags tag ON to_b.objId = tag.tagId OR tag.tagId = fo.tagId
+				INNER JOIN tiki_freetags tag ON fo.tagId = tag.tagId
+				LEFT JOIN tiki_translated_objects `to` ON to.type = 'freetag' AND to.objId = fo.tagId
 			WHERE
 				$mid
 				AND (tag.lang IS NULL OR tag.lang IN(" . implode(',', array_fill(0,count($accept_languages),'?')) . ") )
-				AND tag.tagId IS NOT NULL
 				";
 
-		$result = $this->query( $query, array_merge( $bindvars, $accept_languages ), $maxRecords, $offset );
+		$result = $this->fetchAll( $query, array_merge( $bindvars, $accept_languages ), $maxRecords, $offset );
+		$translationSets = array_map( 'end', $result );
+		$translationSets = array_filter( $translationSets );
+
+		$tags = $this->get_tag_translations( $translationSets, $accept_languages );
 
 		$ret = array();
 		$encountered = array();
-		while( $row = $result->fetchRow() ) {
+		foreach( $result as $row ) {
 			$group = $row['tagset'];
 			$lang = $row['lang'];
 
@@ -1262,6 +1264,33 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 
 			$ret[$group][$lang] = $row;
 			$encountered[ $row['tagId'] ] = true;
+
+			if( $row['traId'] ) {
+				foreach( $tags[ $row['traId'] ] as $tag ) {
+					$ret[$group][$tag['lang']] = $tag;
+					$encountered[ $tag['tagId'] ] = true;
+				}
+			}
+		}
+
+		return $ret;
+	}
+
+	private function get_tag_translations( $sets, $languages ) {
+		if( count( $sets ) == 0 ) {
+			return array();
+		}
+
+		$result = $this->fetchAll( 'SELECT tag.tagId, tag.lang, tag.tag, traId 
+			FROM tiki_freetags tag
+			INNER JOIN tiki_translated_objects `to` ON to.type = \'freetag\' AND tag.tagId = to.objId
+			WHERE
+				to.traId IN(' . implode( ', ', $sets ) . ') 
+				AND tag.lang IN(' . implode(',', array_fill(0,count($languages),'?')) . ')', $languages );
+
+		$ret = array_fill_keys( $sets, array() );
+		foreach( $result as $row ) {
+			$ret[ $row['traId'] ][] = $row;
 		}
 
 		return $ret;

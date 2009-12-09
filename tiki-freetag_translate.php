@@ -117,7 +117,7 @@ else
 }
 
 $freetags_per_page = $prefs['maxRecords'];
-$offset = intval($_GET['offset']);
+$offset = intval($_REQUEST['offset']);
 if ($offset < 0) {
 	$offset = 0;
 }

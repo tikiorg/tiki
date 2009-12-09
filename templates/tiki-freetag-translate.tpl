@@ -10,8 +10,9 @@
 	universal (i.e. is the same tag in all languages) until a language has been set for the tag.{/tr}
 	{tr}Until then, they cannot be translated.{/tr}</p>
 <form method="post" action="tiki-freetag_translate.php">
-	<input type="hidden" name="type" value="{$type}"/>
-	<input type="hidden" name="objId" value="{$objId}"/>
+	<input type="hidden" name="type" value="{$type|escape}"/>
+	<input type="hidden" name="objId" value="{$objId|escape}"/>
+	<input type="hidden" name="offset" value="{$freetags_offset|escape}"/>
 	<script type="text/javascript">
 	<!--//--><![CDATA[//><!--
 	{literal}
