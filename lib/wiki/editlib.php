@@ -65,7 +65,7 @@ class EditLib {
 		global $tikilib, $tikiroot;
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
-		$parsed = $tikilib->parse_data($parsed,array('absolute_links'=>true, 'parseimgonly'=>true,'noheaderinc'=>true));
+		$parsed = $tikilib->parse_data($parsed,array('absolute_links'=>true, 'parseimgonly'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 		$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
 		$parsed = str_replace( 
