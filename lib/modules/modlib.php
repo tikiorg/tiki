@@ -427,11 +427,16 @@ class ModLib extends TikiLib {
 			),
 			'nobox' => array(
 				'name' => tra('No box'),
-				'description' => tra('?'),
+				'description' => 'y|n '.tra('Show only the content'),
 			),
 			'decorations' => array(
 				'name' => tra('Decorations'),
-				'description' => tra('?'),
+				'description' => 'y|n '. tra('Show module decorations'),
+			),
+			'notitle' => array(
+				'name' => tra('No tile'),
+				'description' => 'y|n '.tra('Show module title'),
+				'filter' => 'alpha',
 			),
 			'perspective' => array(
 				'name' => tra('Perspective'),
