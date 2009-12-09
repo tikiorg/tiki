@@ -45,126 +45,108 @@ function prefs_freetags_list() {
 			'name' => tra('Lowercase tags only'),
 			'type' => 'flag',
 		),
-	
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_cloud_colors' => array(
-			'name' => tra('Random tag cloud colors'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
 		'freetags_feature_3d' => array(
 			'name' => tra('Enable freetags 3D browser'),
-			'type' => '',
+			'type' => 'flag',
 		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
+		'freetags_3d_autoload' => array(
+			'name' => tra(''),
+			'type' => 'flag',
+		),
 		'freetags_3d_width' => array(
 			'name' => tra('Browser width'),
-			'type' => '',
+			'type' => 'text',
+			'size' => '5',
+			'filter' => 'digits',
 		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
 		'freetags_3d_height' => array(
 			'name' => tra('Browser height'),
-			'type' => '',
+			'type' => 'text',
+			'size' => '5',
+			'filter' => 'digits',
 		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
 		'freetags_3d_navigation_depth' => array(
 			'name' => tra('Navigation depth'),
-			'type' => '',
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
 		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_feed_animation_interval' => array(
-			'name' => tra('Feed animation interval (milisecs)'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_existing_page_color' => array(
-			'name' => tra('Node color'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_missing_page_color' => array(
-			'name' => '',
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_autoload' => array(
-			'name' => '',
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_camera_distance' => array(
-			'name' => tra('Camera distance'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_elastic_constant' => array(
-			'name' => tra('Elastic constant'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_eletrostatic_constant' => array(
-			'name' => tra('Eletrostatic constant'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_fov' => array(
-			'name' => tra('Field of view'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_friction_constant' => array(
-			'name' => tra('Friction constant'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_node_charge' => array(
-			'name' => tra('Node charge'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_node_mass' => array(
-			'name' => tra('Node mass'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
 		'freetags_3d_node_size' => array(
 			'name' => tra('Node size'),
-			'type' => '',
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
 		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
-		'freetags_3d_spring_size' => array(
-			'name' => tra('Spring (connection) size'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
 		'freetags_3d_text_size' => array(
 			'name' => tra('Text size'),
-			'type' => '',
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
 		),
-	
-		// Used in templates/tiki-admin-include-freetags.tpl
+		'freetags_3d_spring_size' => array(
+			'name' => tra('Spring (connection) size'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+		),
+		'freetags_3d_existing_page_color' => array(
+			'name' => tra('Existing page node color'),
+			'type' => 'text',
+			'size' => '10',
+		),
+		'freetags_3d_missing_page_color' => array(
+			'name' => tra('Missing page node color'),
+			'type' => 'text',
+			'size' => '10',
+		),
 		'freetags_3d_adjust_camera' => array(
 			'name' => tra('Camera distance adjusted relative to nearest node'),
-			'type' => '',
+			'type' => 'flag',
+		),
+		'freetags_3d_camera_distance' => array(
+			'name' => tra('Camera distance'),
+			'type' => 'text',
+			'size' => '5',
+			'filter' => 'digits',
+		),
+		'freetags_3d_fov' => array(
+			'name' => tra('Field of view'),
+			'type' => 'text',
+			'size' => '5',
+			'filter' => 'digits',
+		),
+		'freetags_3d_feed_animation_interval' => array(
+			'name' => tra('Feed animation interval (milisecs)'),
+			'type' => 'text',
+			'size' => '5',
+			'filter' => 'digits',
+		),
+		'freetags_3d_friction_constant' => array(
+			'name' => tra('Friction constant'),
+			'type' => 'text',
+			'size' => '5',
+		),
+		'freetags_3d_elastic_constant' => array(
+			'name' => tra('Elastic constant'),
+			'type' => 'text',
+			'size' => '5',
+		),
+		'freetags_3d_eletrostatic_constant' => array(
+			'name' => tra('Eletrostatic constant'),
+			'type' => 'text',
+			'size' => '5',
+		),
+		'freetags_3d_node_mass' => array(
+			'name' => tra('Node mass'),
+			'type' => 'text',
+			'size' => '5',
+			'filter' => 'digits',
+		),
+		'freetags_3d_node_charge' => array(
+			'name' => tra('Node charge'),
+			'type' => 'text',
+			'size' => '5',
+			'filter' => 'digits',
 		),
 	);
 }
