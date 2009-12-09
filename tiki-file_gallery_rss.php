@@ -33,7 +33,7 @@ if (empty($galleryIds)) {
 }
 
 $feed = 'filegal';
-$uniqueid = "$feed.id=".implode('_', $galleryIds);
+$uniqueid = "$feed.id=".md5(implode('_', $galleryIds));
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {

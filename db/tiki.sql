@@ -1824,7 +1824,7 @@ CREATE TABLE `tiki_rss_modules` (
 
 DROP TABLE IF EXISTS `tiki_rss_feeds`;
 CREATE TABLE `tiki_rss_feeds` (
-  `name` varchar(30) NOT NULL default '',
+  `name` varchar(60) NOT NULL default '',
   `rssVer` char(1) NOT NULL default '1',
   `refresh` int(8) default '300',
   `lastUpdated` int(14) default NULL,
