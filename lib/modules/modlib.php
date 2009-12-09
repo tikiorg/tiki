@@ -658,7 +658,7 @@ class ModLib extends TikiLib {
 		$expanded = array();
 
 		foreach( $info['params'] as $name => $def ) {
-			if( isset( $def['filter'] ) ) {
+			if( isset( $def['filter'] )  && strstr($def['separator'], $params[$name]) ) {
 				$filter = TikiFilter::get( $def['filter'] );
 			} else {
 				$filter = null;
