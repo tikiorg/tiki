@@ -236,7 +236,7 @@
 			<label for="pass">{tr}Password:{/tr}</label> <input type="password" id="pass" name="pass" />
 		</div>
 		</fieldset>
-		<input type="hidden" name="resetdb" value="{$resetdb}" />
+		<input type="hidden" name="resetdb" value="y" />
 		<div align="center" style="margin-top:1em;"><input type="submit" name="dbinfo" value=" {tr}Continue{/tr} " /></div>	 
 	</form>
 </div>
