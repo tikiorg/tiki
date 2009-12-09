@@ -1829,6 +1829,9 @@ class TrackerLib extends TikiLib {
 				$this->query($query,array((int)$trackerId, (int)$created,(int)$lastModif, $status));
 				$query = "select max(`itemId`) from `tiki_tracker_items` where `trackerId`=? and `created`=? and `lastModif`=? and `status`=?";
 				$itemId = $this->getOne($query, array((int)$trackerId, (int)$created,(int)$lastModif, $status));
+				if (empty($itemId) || $itemId < 1) {
+					return "Problem inserting tracker item: trackerId=$trackerId, created=$created, lastModif=$lastModif, status=$status";
+				}
 				$replace = false;
 			}
 			$need_reindex[] = $itemId;
