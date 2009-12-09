@@ -51,7 +51,6 @@ function module_calendar_new( $mod_reference, $module_params ) {
 
 	if (isset($module_params['month_delta'])) {
 		$calendarViewMode = 'month';
-		include('tiki-calendar_setup.php');
 		list($focus_day, $focus_month, $focus_year) = array(
 			TikiLib::date_format("%d", $focusdate),
 			TikiLib::date_format("%m", $focusdate),
@@ -68,19 +67,18 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		if (!empty($_SESSION['CalendarViewGroups'])) {
 			$calIds = $_SESSION['CalendarViewGroups'];
 		} elseif ( $prefs['feature_default_calendars'] == 'n' ) {
-			$calIds = $calendarlib->list_calendars();
-			$calIds = array_keys($module_params['calIds']['data']);
+			if (!empty($module_params['calIds']['data'])) {
+				$calIds = array_keys($module_params['calIds']['data']);
+			} else {
+				$calIds = $calendarlib->list_calendars();
+			}
 		} elseif ( ! empty($prefs['default_calendars']) ) {
 			$calIds = $_SESSION['CalendarViewGroups'] = is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']);
 		} else {
 			$calIds = array();
 		}
 	}
-	foreach ($calIds as $i=>$cal_id) {
-		if ($tiki_p_admin_calendars != 'y' && !$userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
-			unset($calIds[$i]);
-		}
-	}
+
 	$_REQUEST['gbi'] = 'y';
 	if ( !empty($module_params['viewlist']) ) {
 		$_REQUEST['viewlist'] = $module_params['viewlist'];
@@ -88,31 +86,37 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		$_REQUEST['viewlist'] = 'table';
 	}
 
-	include('tiki-calendar_setup.php');
-
-	$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day');
-	if ($viewlist == 'list') {
-		foreach ($tc_infos['listevents'] as $i=>$e) {
-			$tc_infos['listevents'][$i]['head'] = '';
-			$tc_infos['listevents'][$i]['group_description'] ='';
+	if ( is_array($calIds) ) {
+		foreach ($calIds as $i=>$cal_id) {
+			if ($tiki_p_admin_calendars != 'y' && !$userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
+				unset($calIds[$i]);
+			}
 		}
-		$tc_infos['listevents'] = array_unique($tc_infos['listevents']);	
-	}
 
-	foreach ( $tc_infos as $tc_key => $tc_val ) {
-		$smarty->assign($tc_key, $tc_val);
-	}
+		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day');
+		if ($viewlist == 'list') {
+			foreach ($tc_infos['listevents'] as $i=>$e) {
+				$tc_infos['listevents'][$i]['head'] = '';
+				$tc_infos['listevents'][$i]['group_description'] ='';
+			}
+			$tc_infos['listevents'] = array_unique($tc_infos['listevents']);	
+		}
 
-	$smarty->assign('name', 'calendar');
+		foreach ( $tc_infos as $tc_key => $tc_val ) {
+			$smarty->assign($tc_key, $tc_val);
+		}
 
-	$smarty->assign('daformat2', $tikilib->get_long_date_format());
-	$smarty->assign('var', '');
-	$smarty->assign('myurl', 'tiki-calendar.php');
-	$smarty->assign('show_calendar_module', 'y');
+		$smarty->assign('name', 'calendar');
 
-	if ( isset($save_todate) ) {
-		$_REQUEST['todate'] = $save_todate;
-	} else {
-		unset($_REQUEST['todate']);
+		$smarty->assign('daformat2', $tikilib->get_long_date_format());
+		$smarty->assign('var', '');
+		$smarty->assign('myurl', 'tiki-calendar.php');
+		$smarty->assign('show_calendar_module', 'y');
+
+		if ( isset($save_todate) ) {
+			$_REQUEST['todate'] = $save_todate;
+		} else {
+			unset($_REQUEST['todate']);
+		}
 	}
 }

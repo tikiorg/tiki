@@ -700,7 +700,9 @@ class CalendarLib extends TikiLib
 		global $user, $prefs, $smarty;
 
 		// Global vars used by tiki-calendar_setup.php (this has to be changed)
-		global $tikilib, $calendarViewMode, $request_day, $request_month, $request_year, $dayend, $myurl;
+		global $tikilib, $calendarViewMode, $request_day, $request_month,
+$request_year, $dayend, $myurl;
+		global $weekdays, $daysnames, $daysnames_abr;
 		include_once('tiki-calendar_setup.php');
 
 		//FIXME : maxrecords = 50
@@ -840,7 +842,7 @@ class CalendarLib extends TikiLib
 				}
 			}
 		}
-
+	
 		return array(
 			'cell' => $cell,
 			'listevents' => $listevents,
