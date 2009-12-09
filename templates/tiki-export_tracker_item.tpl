@@ -25,8 +25,7 @@
 		{/if}
 		{assign var='comma' value='n'}
 	{/if}
-{/strip}
-{foreach from=$items item=item}
+{/strip}{foreach from=$items item=item}
 {strip}{* DO NOT ident this strip - the line must not begin with space *}
 		{assign var='comma' value='n'}
 		{if $showItemId ne 'n'}
