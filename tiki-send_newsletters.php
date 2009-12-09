@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.41.2.2 2007-12-23 23:18:49 sylvieg Exp $
+// $Id$
 $section = 'newsletters';
 require_once ('tiki-setup.php');
 @ini_set('max_execution_time', 0); //will not work if safe_mode is on
@@ -122,7 +122,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_R
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["data"] = $template_data["content"];
 	if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
-		$_REQUEST['data'] = $tikilib->parse_data($_REQUEST['data'], array('is_html'=>true));
+		$_REQUEST['data'] = $tikilib->parse_data($_REQUEST['data'], array('is_html'=>true, 'absolute_links' => true, 'suppress_icons' => true));
 	}
 	$_REQUEST["preview"] = 1;
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
@@ -192,7 +192,7 @@ if (isset($_REQUEST["preview"])) {
 		$info["datatxt"] = '';
 	}
 	if (!empty($_REQUEST["usedTpl"])) {
-		$smarty->assign('dataparsed', (($info['wikiparse'] == 'y') ? $tikilib->parse_data($info["data"], array('absolute_links' => true)) : $info['data']));
+		$smarty->assign('dataparsed', (($info['wikiparse'] == 'y') ? $tikilib->parse_data($info["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $info['data']));
 		$smarty->assign('subject', $info["subject"]);
 		$info["dataparsed"] = $smarty->fetch("newsletters/" . $_REQUEST["usedTpl"]);
 		if (stristr($info['dataparsed'], "<body") === false) {
@@ -200,7 +200,7 @@ if (isset($_REQUEST["preview"])) {
 		}
 		$smarty->assign("usedTpl", $_REQUEST["usedTpl"]);
 	} else {
-		$info["dataparsed"] = "<html><body>" . (($info['wikiparse'] == 'y') ? $tikilib->parse_data($info["data"], array('absolute_links' => true)) : $info['data']) . "</body></html>";
+		$info["dataparsed"] = "<html><body>" . (($info['wikiparse'] == 'y') ? $tikilib->parse_data($info["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $info['data']) . "</body></html>";
 	}
 	if (!empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
@@ -225,11 +225,11 @@ if (isset($_REQUEST["save"])) {
 		$wikiparse = 'n';
 	}
 	if (!empty($_REQUEST["usedTpl"])) {
-		$smarty->assign('dataparsed', (($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true)) : $_REQUEST['data']));
+		$smarty->assign('dataparsed', (($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data']));
 		$smarty->assign('subject', $_REQUEST["subject"]);
 		$parsed = $smarty->fetch("newsletters/" . $_REQUEST["usedTpl"]);
 	} else {
-		$parsed = ($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true)) : $_REQUEST['data'];
+		$parsed = ($wikiparse == 'y') ? $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true, 'suppress_icons' => true)) : $_REQUEST['data'];
 	}
 	if (empty($parsed) && !empty($_REQUEST['datatxt'])) {
 		$parsed = $_REQUEST['datatxt'];
@@ -276,7 +276,7 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
 
 	$mail = new TikiMail();
 	if (stristr($_REQUEST["dataparsed"], "<body") === false) {
-		$html = "<html><body>" . $tikilib->parse_data($_REQUEST["dataparsed"], array('absolute_links' => true)) . "</body></html>";
+		$html = "<html><body>" . $tikilib->parse_data($_REQUEST["dataparsed"], array('absolute_links' => true, 'suppress_icons' => true)) . "</body></html>";
 	} else {
 		$html = $_REQUEST["dataparsed"];
 	}

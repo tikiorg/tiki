@@ -39,4 +39,7 @@
 		{/if}
 	{/section}
 	</table>
+{if $tiki_p_add_events eq 'y' }
+	<p><a href="tiki-calendar_edit_item.php"><img src=pics/icons/add.png link="tiki-calendar_edit_item.php"> {tr}Add event{/tr}</a></p>
+{/if}
 {/tikimodule}
