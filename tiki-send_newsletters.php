@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.41.2.2 2007-12-23 23:18:49 sylvieg Exp $
+// $Id$
 $section = 'newsletters';
 require_once ('tiki-setup.php');
 @ini_set('max_execution_time', 0); //will not work if safe_mode is on
