@@ -5350,7 +5350,7 @@ class TikiLib extends TikiDb_Bridge {
 							//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 							global $headerlib;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php', 'dynamic' );
-							if( $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) ) {
+							if( $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) && !$options['suppress_icons'] ) {
 								include_once('lib/smarty_tiki/function.icon.php');
 								global $page;
 								$id = 'plugin-edit-' . $plugin_name . $current_index;
@@ -6092,6 +6092,7 @@ class TikiLib extends TikiDb_Bridge {
 		$options['print'] = isset($options['print']) ? $options['print'] : false;
 		$options['parseimgonly'] = isset($options['parseimgonly']) ? $options['parseimgonly'] : false;
 		$options['preview_mode'] = isset($options['preview_mode']) ? (bool)$options['preview_mode'] : false;
+		$options['suppress_icons'] = isset($options['suppress_icons']) ? (bool)$options['suppress_icons'] : false;
 		
 		
 		// if simple_wiki is true, disable some wiki syntax
@@ -6413,7 +6414,7 @@ class TikiLib extends TikiDb_Bridge {
 				$target = '';
 		} else {
 			$class = 'class="wiki external"';
-			if ($prefs['feature_wiki_ext_icon'] == 'y') {
+			if ($prefs['feature_wiki_ext_icon'] == 'y' && !$options['suppress_icons']) {
 				$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
 			}
 			$rel='external';
@@ -6934,7 +6935,7 @@ class TikiLib extends TikiDb_Bridge {
 										);
 						//}
 						global $tiki_p_edit, $section;
-						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) && (empty($options['print']) || !$options['print']) ){
+						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) && (empty($options['print']) || !$options['print']) && !$options['suppress_icons'] ){
 							global $smarty;
 							include_once('lib/smarty_tiki/function.icon.php');
 							$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
@@ -7159,7 +7160,7 @@ class TikiLib extends TikiDb_Bridge {
 		}
 		$data = $new_data.$data;
 		// Add icon to edit the text before the first section (if there is some)
-		if ($prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' && (empty($options['print']) || !$options['print'])  && strpos($data, '<div class="icon_edit_section">') != 0){
+		if ($prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' && (empty($options['print']) || !$options['print'])  && strpos($data, '<div class="icon_edit_section">') != 0 && !$options['suppress_icons']){
 			global $smarty;
 			include_once('lib/smarty_tiki/function.icon.php');
 			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
