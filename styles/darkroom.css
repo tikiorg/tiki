@@ -1350,15 +1350,15 @@ div.posthead {
 	border-bottom: 1px solid #b0b0b0;
 }
 
-body.tiki_blogs .post {
+body.blogs .post {
 	margin-bottom: 20px;
 }
 
-body.tiki_blogs .post .title {
+body.blogs .post .title {
 	width: 100%;
 }
 
-body.tiki_blogs .post .title h2 {
+body.blogs .post .title h2 {
 	background: #343434 url(darkroom/button.png) repeat-x;
 	color: #d8d8d8;
 	text-align: left;
@@ -1368,24 +1368,24 @@ body.tiki_blogs .post .title h2 {
 	font-size: 1.1em;
 }
 
-body.tiki_blogs .post .postbody {
+body.blogs .post .postbody {
 	margin-right: 8px;
 	padding: 6px 0;
 }
 
-body.tiki_blogs div.author_actions {
+body.blogs div.author_actions {
 	float: none;
 	background: none;
 	border: 0;
 	width: 100%;
 }
 
-body.tiki_blogs .actions {
+body.blogs .actions {
 	background: none;
 	text-align: right;
 }
 
-body.tiki_blogs .author_info {
+body.blogs .author_info {
 	background: none;
 }
 
@@ -1394,18 +1394,18 @@ body.tiki_blogs .author_info {
 	border: 0;
 }
 
-body.tiki_blogs .postbody-title {
+body.blogs .postbody-title {
 	float: none;
 	width: 100%;
 	background: none;
 	border: 0;
 }
 
-body.tiki_blogs .postfooter {
+body.blogs .postfooter {
 	width: 100%;
 }
 	
-body.tiki_blogs .postfooter .actions {
+body.blogs .postfooter .actions {
 	float: left;
 }
 

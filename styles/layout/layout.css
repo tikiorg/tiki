@@ -1095,13 +1095,13 @@ span.posthead {
 	display: block;
 }
 
-body.tiki_blogs .post .postfooter {
+body.blogs .post .postfooter {
 	clear: both;
 	float: right;
 }
 
 /***** Forums *****/
-body.tiki_forums table.normal {
+body.forums table.normal {
 	margin: auto;
 }
 
@@ -1295,7 +1295,7 @@ table.galtable {
 	width: 100%;
 }
 
-body.tiki_galleries table.findtable {
+body.galleries table.findtable {
 	display: inline;
 }
 
