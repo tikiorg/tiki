@@ -127,7 +127,7 @@ class TikiPhplayers extends TikiLib {
 				$res .= smarty_function_icon(array(
 					'_id' => $cd['icon'],
 					'_notag' => 'y',
-					'_defaultdir' => 'pics/large'
+					'_defaultdir' => $prefs['menus_items_icons_path']
 				), $smarty);
 			}
 			if (empty($curOption) && $cd['type'] != 'o' && $cd['type'] != '-') {

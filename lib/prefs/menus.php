@@ -6,5 +6,9 @@ function prefs_menus_list() {
 			'name' => tra('Allow users to define icons for menus entries'),
 			'type' => 'flag',
 		),
+		'menus_items_icons_path' => array(
+			'name' => tra('Default path for the icons'),
+			'type' => 'text',
+		),
 	);
 }

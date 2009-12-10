@@ -194,6 +194,9 @@
 				{preference name=feature_featuredLinks}
 				{preference name=feature_menusfolderstyle}
 				{preference name=menus_items_icons}
+				<div id="menus_items_icons_childcontainer">
+					{preference name='menus_items_icons_path'}
+				</div>
 			</div>
 		</fieldset>	
 	
