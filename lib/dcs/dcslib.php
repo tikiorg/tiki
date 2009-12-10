@@ -8,18 +8,29 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class DCSLib extends TikiLib
 {
+	private function convert_results( $result ) {
+		return $result;
+	}
+
+	private function first_data( $result ) {
+		$result = $this->convert_results( $result );
+		if( $first = reset( $result ) ) {
+			return $first['data'];
+		}
+	}
+
 	function get_actual_content($fieldvalue) {
-		$query = 'SELECT `data` FROM `tiki_programmed_content` WHERE `contentId`=? AND `publishDate`<=? ORDER BY `publishDate` DESC';
-		$data = $this->getOne($query, array((int)$fieldvalue, $this->now));
-		return $data;
+		$query = 'SELECT * FROM `tiki_programmed_content` WHERE `contentId`=? AND `publishDate`<=? ORDER BY `publishDate` DESC';
+		$result = $this->fetchAll($query, array((int)$fieldvalue, $this->now));
+		return $this->first_data( $result );
 	}
 
 	function get_actual_content_by_label($fieldvalue) {
-		$query = 'SELECT tpc.`data`'
+		$query = 'SELECT tpc.*'
 			.' FROM `tiki_programmed_content` AS tpc, `tiki_content` AS tc'
 			.' WHERE tpc.`contentId` = tc.`contentId` AND tc.`contentLabel`=? AND `publishDate`<=? ORDER BY `publishDate` DESC';
-		$data = $this->getOne($query, array($fieldvalue, $this->now));
-		return $data;
+		$result = $this->fetchAll($query, array($fieldvalue, $this->now));
+		return $this->first_data( $result );
 	}
 
 	function remove_contents($contentId) {
@@ -94,11 +105,10 @@ class DCSLib extends TikiLib
 		}
 
 		$x = rand(0, $cant - 1);
-		$query = 'SELECT `data` FROM `tiki_programmed_content`'.$where;
-		$result = $this->query($query, $bindvars, 1, $x);
-		$res = $result->fetchRow();
+		$query = 'SELECT * FROM `tiki_programmed_content`'.$where;
+		$result = $this->fetchAll($query, $bindvars, 1, $x);
 
-		return $res['data'];
+		return $this->first_data( $result );
 	}
 
 	function get_next_content($contentId) {
@@ -122,16 +132,12 @@ class DCSLib extends TikiLib
 
 		$query = "select * from `tiki_programmed_content` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_programmed_content` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$result = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-
 		$retval = array();
-		$retval["data"] = $ret;
+		$retval["data"] = $result->convert_results( $result );
 		$retval["cant"] = $cant;
 		return $retval;
 	}
@@ -167,18 +173,18 @@ class DCSLib extends TikiLib
 		if ( $fieldname != 'contentId' && $fieldname != 'contentLabel' ) return false;
 
 		$query = 'select * from `tiki_content` where `'.$fieldname.'`=?';
-		$result = $this->query($query, array($fieldvalue));
-		$res = $result->fetchRow();
+		$result = $this->fetchAll($query, array($fieldvalue));
+		$result = $this->convert_results( $result );
 
-		return $res;
+		return reset( $result );
 	}
 
 	function get_programmed_content($id) {
 		$query = "select * from `tiki_programmed_content` where `pId`=?";
 
 		$result = $this->query($query,array($id));
-		$res = $result->fetchRow();
-		return $res;
+		$result = $this->convert_results( $result );
+		return reset( $result );
 	}
 
 	function replace_content($contentId, $description, $label = null) {
