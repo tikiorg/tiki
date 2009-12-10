@@ -137,7 +137,7 @@ class DCSLib extends TikiLib
 		$ret = array();
 
 		$retval = array();
-		$retval["data"] = $result->convert_results( $result );
+		$retval["data"] = $this->convert_results( $result );
 		$retval["cant"] = $cant;
 		return $retval;
 	}
