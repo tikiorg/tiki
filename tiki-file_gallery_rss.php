@@ -30,8 +30,9 @@ $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
 	$tmp = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
-	$title = tra("Tiki RSS feed for the file gallery: ").$tmp["name"];
-	$desc = $tmp["description"];
+	$title = empty($prefs['title_rss_file_gallery'])? tra("Tiki RSS feed for the file gallery: "): $prefs['title_rss_file_gallery'];
+	$title .= $tmp['name'];
+	$desc = empty($tmp['description'])? $prefs['desc_rss_file_gallery']: $tmp['description'];
 	$id = "fileId";
 	$descId = "description";
 	$dateId = "lastModif";
