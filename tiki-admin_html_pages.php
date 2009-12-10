@@ -42,7 +42,8 @@ if (isset($_REQUEST["remove"])) {
 	}
 }
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
-	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
+	global $templateslib; require_once 'lib/templates/templateslib.php';
+	$template_data = $templateslib->get_template($_REQUEST["templateId"]);
 	$_REQUEST["content"] = $template_data["content"];
 	$_REQUEST["preview"] = 1;
 }
@@ -90,7 +91,8 @@ $channels = $htmlpageslib->list_html_pages($offset, $maxRecords, $sort_mode, $fi
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
 if ($tiki_p_use_content_templates == 'y') {
-	$templates = $tikilib->list_templates('html', 0, -1, 'name_asc', '');
+	global $templateslib; require_once 'lib/templates/templateslib.php';
+	$templates = $templateslib->list_templates('html', 0, -1, 'name_asc', '');
 }
 $smarty->assign_by_ref('templates', $templates["data"]);
 ask_ticket('admin-html-pages');

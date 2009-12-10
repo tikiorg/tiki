@@ -519,8 +519,9 @@ if ($prefs['feature_wiki_footnotes'] == 'y') {
 	}
 }
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
+	global $templateslib; require_once 'lib/templates/templateslib.php';
 	$templateLang = isset( $_REQUEST['lang'] ) ? $_REQUEST['lang'] : null;
-	$template_data = $tikilib->get_template($_REQUEST["templateId"], $templateLang);
+	$template_data = $templateslib->get_template($_REQUEST["templateId"], $templateLang);
 	$_REQUEST["edit"] = $template_data["content"]."\n".$_REQUEST["edit"];
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
 }
@@ -1085,7 +1086,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 } //save
 $smarty->assign('pageAlias',$pageAlias);
 if ($prefs['feature_wiki_templates'] == 'y' && $tiki_p_use_content_templates == 'y') {
-	$templates = $tikilib->list_templates('wiki', 0, -1, 'name_asc', '');
+	global $templateslib; require_once 'lib/templates/templateslib.php';
+	$templates = $templateslib->list_templates('wiki', 0, -1, 'name_asc', '');
 	$smarty->assign_by_ref('templates', $templates["data"]);
 }
 if ($prefs['feature_polls'] =='y' and $prefs['feature_wiki_ratings'] == 'y' && $tiki_p_wiki_admin_ratings == 'y') {

@@ -8,6 +8,81 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class TemplatesLib extends TikiLib
 {
+	function list_templates($section, $offset, $maxRecords, $sort_mode, $find) {
+		$bindvars = array($section);
+		if ($find) {
+			$findesc = '%'.$find.'%';
+			$mid = " and (`content` like ?)";
+			$bindvars[] = $findesc;
+		} else {
+			$mid = "";
+		}
+		$query = "select `name` ,`created`,tcts.`templateId` from `tiki_content_templates` tct, `tiki_content_templates_sections` tcts ";
+		$query.= " where tcts.`templateId`=tct.`templateId` and `section`=? $mid order by ".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_content_templates` tct, `tiki_content_templates_sections` tcts ";
+		$query_cant.= "where tcts.`templateId`=tct.`templateId` and `section`=? $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$query2 = "select `section`  from `tiki_content_templates_sections` where `templateId`=?";
+
+			$result2 = $this->query($query2,array((int)$res["templateId"]));
+			$sections = array();
+			while ($res2 = $result2->fetchRow()) {
+				$sections[] = $res2["section"];
+			}
+			$res["sections"] = $sections;
+			$ret[] = $res;
+		}
+
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
+	}
+
+	function get_template($templateId, $lang = null) {
+		$query = "select * from `tiki_content_templates` where `templateId`=?";
+		$result = $this->query($query,array((int)$templateId));
+		if (!$result->numRows()) return false;
+		$res = $result->fetchRow();
+
+
+		if( $res['template_type'] == 'page' ) {
+			if( substr( $res['content'], 0, 5 ) == 'page:' ) {
+				$res['page_name'] = substr( $res['content'], 5 );
+				$res['content'] = $this->get_template_from_page( $res['page_name'], $lang );
+			}
+		} else {
+			$res['page_name'] = '';
+		}
+
+
+		return $res;
+	}
+
+	private function get_template_from_page( $page, $lang ) {
+		global $prefs;
+		$info = $this->get_page_info( $page );
+
+		if( $prefs['feature_multilingual'] == 'y' ) {
+			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
+
+			if( $lang && $info['lang'] && $lang != $info['lang'] ) {
+				$bestLangPageId = $multilinguallib->selectLangObj( 'wiki page', $info['page_id'], $lang );
+
+				if ($info['page_id'] != $bestLangPageId) {
+					$info = $this->get_page_info_from_id($bestLangPageId);
+				}
+			}
+		}
+
+		if( $info ) {
+			return TikiLib::htmldecode( $info['data'] );
+		}
+	}
+
 	function list_all_templates($offset, $maxRecords, $sort_mode, $find) {
 		$bindvars = array();
 		if ($find) {

@@ -22,7 +22,7 @@ if (!isset($_REQUEST["templateId"])) {
 }
 $smarty->assign('templateId', $_REQUEST["templateId"]);
 if ($_REQUEST["templateId"]) {
-	$info = $tikilib->get_template($_REQUEST["templateId"]);
+	$info = $templateslib->get_template($_REQUEST["templateId"]);
 	if ($templateslib->template_is_in_section($_REQUEST["templateId"], 'html')) {
 		$info["section_html"] = 'y';
 	} else {
