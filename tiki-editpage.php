@@ -1076,7 +1076,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	$_SESSION['saved_msg'] = $_REQUEST["page"];
 
 	if (!empty($_REQUEST['hdr'])) {
-//		$tmp = $tikilib->parse_data($edit);
+		$tmp = $tikilib->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited
 		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
 	}
 	header("location: $url");
