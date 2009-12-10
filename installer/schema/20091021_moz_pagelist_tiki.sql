@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `tiki_page_lists` (
   `page_name` varchar(160) NOT NULL,
   `score` float default NULL,
   PRIMARY KEY  (`list_type_id`,`page_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `tiki_page_list_types` (
   `id` int(8) unsigned NOT NULL auto_increment,
@@ -15,5 +15,5 @@ CREATE TABLE IF NOT EXISTS `tiki_page_list_types` (
   `description` varchar(200) default NULL,
   PRIMARY KEY  (`name`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
