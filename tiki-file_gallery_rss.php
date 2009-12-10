@@ -37,13 +37,15 @@ $uniqueid = "$feed.id=".md5(implode('_', $galleryIds));
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
+<<<<<<< .working
 	if (count($galleryIds) == 1) {
 		$tmp = $tikilib->get_file_gallery($galleryIds[0]);
-		$title = tra("Tiki RSS feed for the file gallery: ").$tmp["name"];
-		$desc = $tmp['description'];
+		$title = empty($prefs['title_rss_file_gallery'])? tra("Tiki RSS feed for the file gallery: "): $prefs['title_rss_file_gallery'];
+		$title .= $tmp['name'];
+        	$desc = empty($tmp['description'])? $prefs['desc_rss_file_gallery']: $tmp['description'];
 	} else {
-		$title = tra('Tiki RSS feed for file galleries');
-		$desc = tra('Last files uploaded to the file galleries.');
+		$title = (!empty($title_rss_file_galleries)) ? $title_rss_file_galleries : tra("Tiki RSS feed for file galleries");
+		$desc = (!empty($desc_rss_file_galleries)) ? $desc_rss_file_galleries : tra("Last files uploaded to the file galleries.");
 	}
 	$descId = "description";
 	$dateId = "lastModif";
