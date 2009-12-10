@@ -25,7 +25,7 @@ function module_since_last_visit_new_info() {
 				'description' => tra('Unless set to "ignore", the module changes the reference point in time from the user\'s last login date and time to a day where users browse to using the calendar.')
 			),
 		),
-		'common_params' => array('nonums')
+		'common_params' => array( 'nonums', 'rows' ),
 	);
 }
 
@@ -33,6 +33,8 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 	global $smarty, $user;
 	include_once('tiki-sefurl.php');
 	if (!$user) return false;
+
+	$resultCount = $mod_reference['rows'];
 
 	global $tikilib, $userlib, $prefs;
 	$ret = array();
@@ -56,7 +58,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 	$ret["items"]["comments"]["label"] = tra('new comments');
 	$ret["items"]["comments"]["cname"] = "slvn_comments_menu";
 	$query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? and `objectType` != 'forum' order by `commentDate` desc";
-	$result = $tikilib->query($query, array((int)$last));
+	$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 	$count = 0;
 	while ($res = $result->fetchRow())
@@ -126,7 +128,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["posts"]["label"] = tra('new posts');
 		$ret["items"]["posts"]["cname"] = "slvn_posts_menu";
 		$query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? and `objectType` = 'forum' order by `commentDate` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -153,7 +155,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["pages"]["label"] = tra('wiki pages changed');
 		$ret["items"]["pages"]["cname"] = "slvn_pages_menu";
 		$query = "select `pageName`, `user`, `lastModif`  from `tiki_pages` where `lastModif`>? order by `lastModif` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -181,7 +183,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 			$query = "select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `publishDate`>? and `publishDate`<=? and `expireDate`>?";
 			$bindvars = array((int)$last,time(),time());
 		}
-		$result = $tikilib->query($query, $bindvars);
+		$result = $tikilib->query($query, $bindvars, $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -203,7 +205,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["faqs"]["cname"] = "slvn_faqs_menu";
 
 		$query = "select `faqId`, `title`, `created`  from `tiki_faqs` where `created`>? order by `created` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -225,7 +227,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["blogs"]["cname"] = "slvn_blogs_menu";
 
 		$query = "select `blogId`, `title`, `user`, `created`  from `tiki_blogs` where `created`>? order by `created` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -243,7 +245,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["blogPosts"]["cname"] = "slvn_blogPosts_menu";
 
 		$query = "select `postId`, `blogId`, `title`, `user`, `created`  from `tiki_blog_posts` where `created`>? order by `created` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -265,7 +267,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["imageGalleries"]["label"] = tra('new image galleries');
 		$ret["items"]["imageGalleries"]["cname"] = "slvn_imageGalleries_menu";
 		$query = "select `galleryId`,`name`,`created`,`user` from `tiki_galleries` where `created`>? order by `created` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -282,7 +284,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["images"]["label"] = tra('new images');
 		$ret["items"]["images"]["cname"] = "slvn_images_menu";
 		$query = "select `imageId`,`galleryId`,`name`,`created`,`user` from `tiki_images` where `created`>? order by `created` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -304,7 +306,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["fileGalleries"]["label"] = tra('new file galleries');
 		$ret["items"]["fileGalleries"]["cname"] = "slvn_fileGalleries_menu";
 		$query = "select `galleryId`,`name`,`created`,`user` from `tiki_file_galleries` where `created`>? order by `created` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -321,7 +323,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["files"]["label"] = tra('new files');//get_strings tra("new files");
 		$ret["items"]["files"]["cname"] = "slvn_files_menu";
 		$query = "select `galleryId`,`name`,`filename`,`created`,`user` from `tiki_files` where `created`>? order by `created` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -343,7 +345,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["polls"]["cname"] = "slvn_polls_menu";
 
 		$query = "select `pollId`, `title`, `publishDate` from `tiki_polls` where `publishDate`>? order by `publishDate` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		while ($res = $result->fetchRow()) {
@@ -362,7 +364,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["users"]["label"] = tra('new users');
 		$ret["items"]["users"]["cname"] = "slvn_users_menu";
 		$query = "select `login`, `registrationDate` from `users_users` where `registrationDate`>? and `provpass`=?";
-		$result = $tikilib->query($query, array((int)$last, ''));
+		$result = $tikilib->query($query, array((int)$last, ''), $resultCount);
 
 		$count = 0;
 		$slvn_tmp_href = $userlib->user_has_permission($user, "tiki_p_admin") ? "tiki-assignuser.php?assign_user=" : "tiki-user_information.php?view_user=";
@@ -384,7 +386,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["trackers"]["cname"] = "slvn_trackers_menu";
 
 		$query = "select `itemId`, `trackerId`, `created`, `lastModif`  from `tiki_tracker_items` where `created`>? order by `created` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		$counta = array();
@@ -439,7 +441,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 		$ret["items"]["utrackers"]["cname"] = "slvn_utrackers_menu";
 
 		$query = "select `itemId`, `trackerId`, `created`, `lastModif`  from `tiki_tracker_items` where `lastModif`>? and `lastModif`!=`created` order by `lastModif` desc";
-		$result = $tikilib->query($query, array((int)$last));
+		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
 		$countb = array();
