@@ -106,11 +106,12 @@
 					<textarea id='editwiki' class="wikiedit" name="content" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$info.content|escape}</textarea>
 					<input type="hidden" name="rows" value="{$rows}"/>
 					<input type="hidden" name="cols" value="{$cols}"/>
+				</td>
 			{else}
 				<td colspan="2">
 					{editform Meat=$info.content InstanceName='content' ToolbarSet="Tiki"}
+				</td>
 			{/if}
-			</td>
 		</tr>
 
 		<tr>
