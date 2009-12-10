@@ -276,6 +276,9 @@ ul.jumplinks a:active {
 body.tiki_wiki_page #c1c2 #wrapper #col1 > .content {position: relative}
 body.tiki_cms #c1c2 #wrapper #col1 #tiki-center,
 body.tiki_wiki_page #c1c2 #wrapper #col1 #tiki-center {background: none !important}
+body.manage #c1c2 #wrapper #col1 #tiki-center {
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x !important;
+}
 
 #c1c2 #col2 {
 	width: 230px;
@@ -1583,12 +1586,12 @@ ul.toc {
 	border-bottom: 1px dotted #a9a9a9;
 	margin-bottom: 4px;
 	margin-left: 0px;
-	}
+}
 
 ul.toc * {
 	border: none;
 	list-style: none;
-	}
+}
 
 /* Wiki diff styles */
 .diff td {border: 1px solid #696969}
