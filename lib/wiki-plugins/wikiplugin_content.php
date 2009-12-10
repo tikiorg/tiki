@@ -18,10 +18,15 @@ function wikiplugin_content_info() {
 	);
 }
 
-function wikiplugin_content( $data, $params) {
+function wikiplugin_content( $data, $params, $offset, $parseOptions) {
 
 	global $dcslib; require_once 'lib/dcs/dcslib.php';
 
+	$lang = null;
+	if( isset( $parseOptions['language'] ) ) {
+		$lang = $parseOptions['language'];
+	}
+
 	if( $params['id'] )
-		return $dcslib->get_actual_content((int) $params['id']);
+		return $dcslib->get_actual_content((int) $params['id'], $lang);
 }

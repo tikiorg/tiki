@@ -8,31 +8,51 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class DCSLib extends TikiLib
 {
-	private function convert_results( $result ) {
+	private function convert_results( $result, $lang = null ) {
 		foreach( $result as &$row ) {
 			$row['page_name'] = '';
 
 			if( $row['content_type'] == 'page' && substr( $row['data'], 0, 5 ) == 'page:' ) {
 				$row['page_name'] = substr( $row['data'], 5 );
 
-				$info = $this->get_page_info( $row['page_name'] );
-				$row['data'] = $info['data'];
+				$row['data'] = $this->get_content_from_page( $row['page_name'], $lang );
 			}
 		}
 		return $result;
 	}
 
-	private function first_data( $result ) {
-		$result = $this->convert_results( $result );
+	private function get_content_from_page( $page, $lang = null ) {
+		global $prefs;
+		$info = $this->get_page_info( $page );
+
+		if( $prefs['feature_multilingual'] == 'y' ) {
+			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
+
+			if( $lang && $info['lang'] && $lang != $info['lang'] ) {
+				$bestLangPageId = $multilinguallib->selectLangObj( 'wiki page', $info['page_id'], $lang );
+
+				if ($info['page_id'] != $bestLangPageId) {
+					$info = $this->get_page_info_from_id($bestLangPageId);
+				}
+			}
+		}
+
+		if( $info ) {
+			return TikiLib::htmldecode( $info['data'] );
+		}
+	}
+
+	private function first_data( $result, $lang = null ) {
+		$result = $this->convert_results( $result, $lang );
 		if( $first = reset( $result ) ) {
 			return $first['data'];
 		}
 	}
 
-	function get_actual_content($fieldvalue) {
+	function get_actual_content($fieldvalue, $lang = null) {
 		$query = 'SELECT * FROM `tiki_programmed_content` WHERE `contentId`=? AND `publishDate`<=? ORDER BY `publishDate` DESC';
 		$result = $this->fetchAll($query, array((int)$fieldvalue, $this->now));
-		return $this->first_data( $result );
+		return $this->first_data( $result, $lang );
 	}
 
 	function get_actual_content_by_label($fieldvalue) {
@@ -97,7 +117,7 @@ class DCSLib extends TikiLib
 		return $res;
 	}
 
-	function get_random_content($contentId = 0) {
+	function get_random_content($contentId = 0, $lang = null) {
 
 		$where = ' WHERE `publishDate`<=?';
 		$bindvars = array($this->now);
@@ -118,7 +138,7 @@ class DCSLib extends TikiLib
 		$query = 'SELECT * FROM `tiki_programmed_content`'.$where;
 		$result = $this->fetchAll($query, $bindvars, 1, $x);
 
-		return $this->first_data( $result );
+		return $this->first_data( $result, $lang );
 	}
 
 	function get_next_content($contentId) {
