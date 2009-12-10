@@ -58,19 +58,29 @@ $smarty->assign('actual', '');
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-programmed-content');
+
+	if( $_REQUEST['content_type'] == 'page' ) {
+		$content = 'page:' . $_REQUEST['page_name'];
+	} else {
+		$content = $_REQUEST['data'];
+	}
+
 	$publishDate = TikiLib::make_time($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 																   0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
 
-	$id = $dcslib->replace_programmed_content($_REQUEST["pId"], $_REQUEST["contentId"], $publishDate, $_REQUEST["data"]);
+	$id = $dcslib->replace_programmed_content($_REQUEST["pId"], $_REQUEST["contentId"], $publishDate, $content, $_REQUEST['content_type']);
 	$smarty->assign('data', $_REQUEST["data"]);
 	$smarty->assign('publishDate', $publishDate);
 	$smarty->assign('pId', $id);
+
+	$_REQUEST['edit'] = $id;
 }
 
 if (isset($_REQUEST["edit"])) {
 	$info = $dcslib->get_programmed_content($_REQUEST["edit"]);
 
 	$actual = $dcslib->get_actual_content_date($_REQUEST["contentId"]);
+	$smarty->assign('info', $info);
 	$smarty->assign('actual', $actual);
 	$smarty->assign('data', $info["data"]);
 	$smarty->assign('publishDate', $info["publishDate"]);

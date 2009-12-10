@@ -9,6 +9,16 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class DCSLib extends TikiLib
 {
 	private function convert_results( $result ) {
+		foreach( $result as &$row ) {
+			$row['page_name'] = '';
+
+			if( $row['content_type'] == 'page' && substr( $row['data'], 0, 5 ) == 'page:' ) {
+				$row['page_name'] = substr( $row['data'], 5 );
+
+				$info = $this->get_page_info( $row['page_name'] );
+				$row['data'] = $info['data'];
+			}
+		}
 		return $result;
 	}
 
@@ -142,20 +152,20 @@ class DCSLib extends TikiLib
 		return $retval;
 	}
 
-	function replace_programmed_content($pId, $contentId, $publishDate, $data) {
+	function replace_programmed_content($pId, $contentId, $publishDate, $data, $content_type = 'static') {
 
 		if (!$pId) {
 			// was replace into ...
-			$query = "insert into `tiki_programmed_content`(`contentId`,`publishDate`,`data`) values(?,?,?)";
+			$query = "insert into `tiki_programmed_content`(`contentId`,`publishDate`,`data`,`content_type`) values(?,?,?,?)";
 
-			$result = $this->query($query,array($contentId,$publishDate, $data));
+			$result = $this->query($query,array($contentId,$publishDate, $data, $content_type));
 			$query = "select max(`pId`) from `tiki_programmed_content` where `publishDate`=? and `data`=?";
 			$id = $this->getOne($query,array($publishDate,$data));
 		} else {
 			$query
-				= "update `tiki_programmed_content` set `contentId`=?, `publishDate`=?, `data`=? where `pId`=?";
+				= "update `tiki_programmed_content` set `contentId`=?, `publishDate`=?, `data`=?, `content_type`=? where `pId`=?";
 
-			$result = $this->query($query,array($contentId,$publishDate,$data,$pId));
+			$result = $this->query($query,array($contentId,$publishDate,$data,$content_type,$pId));
 			$id = $pId;
 		}
 
@@ -182,7 +192,7 @@ class DCSLib extends TikiLib
 	function get_programmed_content($id) {
 		$query = "select * from `tiki_programmed_content` where `pId`=?";
 
-		$result = $this->query($query,array($id));
+		$result = $this->fetchAll($query,array($id));
 		$result = $this->convert_results( $result );
 		return reset( $result );
 	}

@@ -1647,6 +1647,7 @@ DROP TABLE IF EXISTS `tiki_programmed_content`;
 CREATE TABLE `tiki_programmed_content` (
   `pId` int(8) NOT NULL auto_increment,
   `contentId` int(8) NOT NULL default '0',
+  `content_type` VARCHAR( 20 ) NOT NULL DEFAULT 'static',
   `publishDate` int(14) NOT NULL default '0',
   `data` text,
   PRIMARY KEY (`pId`)

@@ -2024,6 +2024,7 @@ DROP TABLE IF EXISTS "tiki_programmed_content";
 CREATE TABLE "tiki_programmed_content" (
   "pId" serial,
   "contentId" integer NOT NULL default '0',
+  "content_type" VARCHAR( 20 ) NOT NULL DEFAULT 'static',
   "publishDate" bigint NOT NULL default '0',
   "data" text,
   PRIMARY KEY ("pId")
@@ -2225,7 +2226,7 @@ CREATE INDEX "tiki_rss_modules_tiki_rss_modules_name" ON "tiki_rss_modules" ("na
 DROP TABLE IF EXISTS "tiki_rss_feeds";
 
 CREATE TABLE "tiki_rss_feeds" (
-  "name" varchar(30) NOT NULL default '',
+  "name" varchar(60) NOT NULL default '',
   "rssVer" char(1) NOT NULL default '1',
   "refresh" integer default '300',
   "lastUpdated" bigint default NULL,
