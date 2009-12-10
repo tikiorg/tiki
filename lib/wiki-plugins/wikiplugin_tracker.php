@@ -327,11 +327,11 @@ function wikiplugin_tracker($data, $params)
 						if (preg_match('/categories\(([0-9]+)\)/', $autosavevaluesarray[$i], $matches)) {
 							global $categlib; include_once('lib/categories/categlib.php');
 							$categs = $categlib->list_categs($matches[1]);
-							$_REQUEST["ins_cat_$f"][0] = $categs[0]['categId'];
+							$_REQUEST["ins_cat_$f"][] = $categs[0]['categId'];
 						} elseif (preg_match('/preference\((.*)\)/', $autosavevaluesarray[$i], $matches)) {
-							$_REQUEST["ins_cat_$f"][0] = $_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
+							$_REQUEST["ins_cat_$f"][] = $_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
 						} else {
-							$_REQUEST["ins_cat_$f"][0] = $_REQUEST["$ins_id_$f"] = $autosavevaluesarray[$i];
+							$_REQUEST["ins_cat_$f"][] = $_REQUEST["$ins_id_$f"] = $autosavevaluesarray[$i];
 						}
 					}
 				}
