@@ -518,7 +518,7 @@ if ($prefs['feature_contribution'] == 'y') {
 }
 // see if comments are allowed on this specific wiki page
 global $section;
-if ($section = 'wiki page') {
+if ($section == 'wiki page') {
 	if ($prefs['wiki_comments_allow_per_page'] != 'n') {
 		global $info;
 		if (!empty($info['comments_enabled'])) {
