@@ -37,7 +37,6 @@ $uniqueid = "$feed.id=".md5(implode('_', $galleryIds));
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-<<<<<<< .working
 	if (count($galleryIds) == 1) {
 		$tmp = $tikilib->get_file_gallery($galleryIds[0]);
 		$title = empty($prefs['title_rss_file_gallery'])? tra("Tiki RSS feed for the file gallery: "): $prefs['title_rss_file_gallery'];
