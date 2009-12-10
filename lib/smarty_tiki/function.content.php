@@ -8,12 +8,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // Param: 'id' or 'label'
 function smarty_function_content($params, &$smarty) {
-  global $tikilib;
+  global $dcslib; require_once 'lib/dcs/dcslib.php';
 
   if ( isset($params['id']) ) {
-    $data = $tikilib->get_actual_content($params['id']);
+    $data = $dcslib->get_actual_content($params['id']);
   } elseif ( isset($params['label']) ) {
-    $data = $tikilib->get_actual_content_by_label($params['label']);
+    $data = $dcslib->get_actual_content_by_label($params['label']);
   } else {
     $smarty->trigger_error("assign: missing 'id' or 'label' parameter");
     return false;

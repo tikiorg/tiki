@@ -20,8 +20,8 @@ function wikiplugin_content_info() {
 
 function wikiplugin_content( $data, $params) {
 
-	global $tikilib;
+	global $dcslib; require_once 'lib/dcs/dcslib.php';
 
 	if( $params['id'] )
-		return $tikilib->get_actual_content((int) $params['id']);
+		return $dcslib->get_actual_content((int) $params['id']);
 }

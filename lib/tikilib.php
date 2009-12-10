@@ -720,21 +720,6 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/*shared*/
-	function get_actual_content($fieldvalue) {
-		$query = 'SELECT `data` FROM `tiki_programmed_content` WHERE `contentId`=? AND `publishDate`<=? ORDER BY `publishDate` DESC';
-		$data = $this->getOne($query, array((int)$fieldvalue, $this->now));
-		return $data;
-	}
-
-	function get_actual_content_by_label($fieldvalue) {
-		$query = 'SELECT tpc.`data`'
-			.' FROM `tiki_programmed_content` AS tpc, `tiki_content` AS tc'
-			.' WHERE tpc.`contentId` = tc.`contentId` AND tc.`contentLabel`=? AND `publishDate`<=? ORDER BY `publishDate` DESC';
-		$data = $this->getOne($query, array($fieldvalue, $this->now));
-		return $data;
-	}
-
-	/*shared*/
 	function get_quiz($quizId) {
 		$query = "select * from `tiki_quizzes` where `quizId`=?";
 
