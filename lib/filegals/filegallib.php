@@ -1151,14 +1151,18 @@ class FileGalLib extends TikiLib
 			} elseif ($type == 'forum post') {
 				$this->parentObjects($list, 'tiki_comments', 'threadId', 'object');
 				$f = Perms::filter(array('type'=>'forum'), 'object', $list, array('object' => 'object'), str_replace('tiki_p_', '', $map['forum']));
+			} elseif ($type == 'trackeritem') {
+				$this->parentObjects($list, 'tiki_tracker_items', 'itemId', 'trackerId');
+				$f = Perms::filter(array('type'=>'tracker'), 'object', $list, array('object' => 'trackerId'), str_replace('tiki_p_', '', $map['tracker']));
+				//NEED to check item perm
 			} else {
 				$f = Perms::filter(array('type'=>$type), 'object', $list, array('object' => 'itemId'), str_replace('tiki_p_', '', $map[$type]));
 			}
-			//$debug=1;
+			$debug=1;
 			if (!empty($debug)) {
 				echo "<br />FILE$fileId";
 				if (!empty($f)) echo 'OK-';else echo 'NO-';
-				foreach ($list as $l) echo $l['type'].': '.$l['itemId'].',';
+				foreach ($list as $l) echo $l['type'].': '.$l['itemId'].'('.$l['href'].')'.',';
 			}
 			if (!empty($f)) {
 				return false;
@@ -1194,7 +1198,8 @@ class FileGalLib extends TikiLib
 			}
 		}
 		$fileIds = array_unique($fileIds);
-		$this->replaceBacklinks($context, $fileIds);
+		if (!empty($fileIds)) {echo '<pre>'; print_r($context); print_r($fileIds); echo '</pre>';}
+		//$this->replaceBacklinks($context, $fileIds);
 		return $fileIds;
 	}
 	function getLinkFileId($url) {
@@ -1203,6 +1208,61 @@ class FileGalLib extends TikiLib
 		}
 		if (preg_match('/^(dl|preview|thumbnail|thumb||display)([0-9]+)/', $url, $matches)) {
 			return $matches[2];
+		}
+	}
+	function refreshBacklinks() {
+		$query = 'select `data`, `description`, `pageName` from `tiki_pages`';
+		$result = $this->query($query, array());
+		while ($res = $result->fetchRow()) {
+			$this->syncParsedText($res['data'], array('type'=> 'wiki page', 'object'=> $res['pageName'], 'description'=> $res['description'], 'name'=>$res['pageName'], 'href'=>'tiki-index.php?page='.$res['pageName']));
+		}
+
+		$query = 'select `heading`, `body`, `articleId`, `title` from `tiki_articles`';
+		$ret = $this->query($query, array());
+		while ($res = $ret->fetchRow()) {
+			$this->syncParsedText($res['body'].' '.$res['heading'], array('type'=>'article', 'object'=>$res['articleId'], 'description'=>substr($res['heading'], 0, 200), 'name'=>$res['title'], 'href'=>'tiki-read_article.php?articleId='.$res['articleId']));
+		}
+		$query = 'select `heading`, `body`, `subId`, `title` from `tiki_submissions`';
+		$result = $this->query($query, array());
+		while ($res = $result->fetchRow()) {
+			$this->syncParsedText($res['heading'].' '.$res['body'], array('type'=>'submission', 'object'=>$res['subId'], 'description'=>substr($res['heading'], 0, 200), 'name'=>$res['title'], 'href'=>'tiki-edit_submission.php?subId='.$res['subId']));
+		}
+		/* history are ignored in the backlinks process */
+
+		$query = 'select `blogId`, `heading`, `description`, `title` from `tiki_blogs`';
+		$result = $this->query($query, array());
+		while ($res = $result->fetchRow()) {
+			$this->syncParsedText($res['heading'], array('type'=>'blog', 'object'=>$res['blogId'], 'description'=>$res['description'], 'name'=>$res['title'], 'href'=>'tiki-view_blog.php?blogId='.$res['blogId']));
+		}
+		$query = 'select `blogId`, `data`, `postId`, `title`  from `tiki_blog_posts`';
+		$result = $this->query($query, array());
+		while ($res = $result->fetchRow()) {
+			$this->syncParsedText($res['data'], array('type'=>'blog post', 'object'=>$res['postId'], 'description'=>substr($res['data'], 0, 200), 'name'=>$res['title'], 'href'=>'tiki-view_blog_post.php?postId='.$res['postId']));
+		}
+
+		$query = 'select `objectType`, `object`, `threadId`,`title`, `data` from `tiki_comments`';
+		$result = $this->query($query, array());
+		include_once ('lib/commentslib.php');global $dbTiki; $commentslib = new Comments($dbTiki);
+		while ($res = $result->fetchRow()) {
+			if ($res['objectType'] == 'forum') {
+				$type = 'forum post';
+			} else {
+				$type = $res['objectType'].' comment';
+			}
+			$this->syncParsedText($res['data'], array('type'=>$type, 'object'=>$res['threadId'], 'description'=>'', 'name'=>$res['title'], 'href'=>$commentslib->getHref($res['objectType'], $res['object'], $res['threadId'])));
+		}
+
+		$query = 'select `description`, `name`, `trackerId` from `tiki_trackers` where `descriptionIsParsed`=?';
+		$result = $this->query($query, array('y'));
+		while ($res = $result->fetchRow()) {
+			$this->syncParsedText($res['description'], array('type'=>'tracker', 'object'=>$res['trackerId'], 'description'=>$res['description'], 'name'=>$res['name'], 'href'=>'tiki-view_tracker.php?trackerId='.$res['trackerId']));
+		}
+		//TODO field description
+		$query = 'select `value`, `itemId` from `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.`fieldId`=ttf.`fieldId`) where ttf.`type`=?';
+		$result = $this->query($query, array('a'));
+		while ($res = $result->fetchRow()) {
+			//TODO: get the name of the item
+			$this->syncParsedText($res['value'], array('type'=>'trackeritem', 'object'=>$res['itemId'], 'description'=>'', 'name'=>'', 'href'=>'tiki-view_tracker_item.php?itemId='.$res['itemId']));
 		}
 	}
 }

@@ -1953,21 +1953,28 @@ class Comments extends TikiLib
 		$cant = $this->getOne($query, array_merge( $bindvars, $jail_bind ));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			switch ($res['objectType']) {
-				case 'wiki page': $res['href'] = 'tiki-index.php?page='; break;
-				case 'article': $res['href'] = 'tiki-read_article.php?articleId='; break;
-				case 'faq': $res['href'] = 'tiki-view_faq.php?faqId='; break;
-				case 'blog': $res['href'] = 'tiki-view_blog.php?blogId='; break;
-				case 'post': $res['href'] = 'tiki-view_blog_post.php?postId='; break;
-				case 'forum': $res['href'] = 'tiki-view_forum_thread.php?forumId='; break;
-				case 'file gallery': $res['href'] = 'tiki-list_file_gallery.php?galleryId='; break;
-				case 'image gallery': $res['href'] = 'tiki-browse_gallery.php?galleryId='; break;
-			}
-			if ( isset($res['href']) ) $res['href'] .= $res['object'].'&amp;comzone=show';
+			$res['href'] = $this->getHref($res['objectType'], $res['object'], $res['threadId']);
 			$res['parsed'] = $this->parse_comment_data($res['data']);
 			$ret[] = $res;
 		}
 		return array('cant'=>$cant, 'data'=>$ret);
+	}
+	function getHref($type, $object, $threadId) {
+		switch ($type) {
+			case 'wiki page': $href = 'tiki-index.php?page='; break;
+			case 'article': $href = 'tiki-read_article.php?articleId='; break;
+			case 'faq': $href = 'tiki-view_faq.php?faqId='; break;
+			case 'blog': $href = 'tiki-view_blog.php?blogId='; break;
+			case 'post': $href = 'tiki-view_blog_post.php?postId='; break;
+			case 'forum': $href = 'tiki-view_forum_thread.php?forumId='; break;
+			case 'file gallery': $href = 'tiki-list_file_gallery.php?galleryId='; break;
+			case 'image gallery': $href = 'tiki-browse_gallery.php?galleryId='; break;
+		}
+		if (empty($href)) {
+			return;
+		}
+		$href .= $object."&amp;threadId=$threadId&amp;comzone=show#threadId$threadId";
+		return $href;
 	}
 
 	/* @brief: gets the comments of the thread and of all its fathers (ex cept first one for forum)
@@ -2125,11 +2132,10 @@ class Comments extends TikiLib
 	}
 	if ($object[0] == 'forum') {
 		$type = 'forum post';
-		$href = "tiki-view_forum_thread.php?comments_parentId=$threadId";
 	} else {
 		$type = $object[0].' comment';
-		$href = 'tiki-index.php?page='.$object[1]."#threadId$threadId";
 	}
+	$href = $this->getHref($object[0], $object[1], $threadId);
 	$this->syncParsedText($data, array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title));
 	$this->update_comment_links($data, $object[0], $threadId);
 	} // end hash check
@@ -2294,11 +2300,10 @@ class Comments extends TikiLib
 	}
 	if ($object[0] == 'forum') {
 		$type = 'forum post';
-		$href = "tiki-view_forum_thread.php?comments_parentId=$threadId";
 	} else {
 		$type = $object[0].' comment';
-		$href = 'tiki-index.php?page='.$object[1]."#threadId$threadId";
 	}
+	$href = $this->getHref($object[0], $object[1], $threadId);
 	$this->syncParsedText($data, array('type'=>$type, 'object'=>$threadId, 'description'=>'', 'href'=>$href, 'name'=>$title));
 	$this->update_comment_links($data, $object[0], $threadId);
 
