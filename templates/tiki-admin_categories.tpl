@@ -97,13 +97,6 @@
 					<td class="form">{tr}Description{/tr}:</td>
 					<td class="form"><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td>
 				</tr>
-				{if $categId > 0}
-					<tr class="formcolor">
-						<td class="form" colspan="2">
-							<a href="tiki-categpermissions.php?categId={$categId}">{tr}Edit permissions for this category{/tr}</a>
-						</td>
-					</tr>
-				{/if}
 				<tr class="formcolor">
 					<td class="form" align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 				</tr>
