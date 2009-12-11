@@ -72,8 +72,9 @@ class RegistrationLib extends TikiLib
         if ( getmxrr ($Domain, $MXHost))  {
 					if($Debug) {
 						echo "Confirmation : Is confirming address by MX LOOKUP.<br>";
-						for ($i = 0, $j = 1; $i < count ($MXHost); $i++, $j++) {
-							echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Result($j) - $MXHost[$i]<BR>";
+						$j=0;
+						foreach($MXHost as $mxh) {
+							echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Result(".++$j.") - $mxh<BR>";
 						}
 					}
         }
