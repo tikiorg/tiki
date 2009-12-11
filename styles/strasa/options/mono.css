@@ -59,7 +59,8 @@ button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.calbuttonBox {
+.calbuttonBox,
+#siteloginbar input.wikiaction {
 	color: #fff;
 	background: #565656;
 	border-color: #878787 #343434 #343434 #878787;
@@ -76,7 +77,8 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.calbuttonBox:hover {
+.calbuttonBox:hover,
+#siteloginbar input.wikiaction:hover {
 	background-color: #333333;
 	color: #fff;
 }
