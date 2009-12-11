@@ -570,8 +570,7 @@ if ($calendarViewMode == 'day') {
 		foreach($tmpRes as $val) {
 			$maxConcurrency = max($maxConcurrency,count($val));
 		}
-		for($i = 0 ; $i < min($maxSimultaneousWeekViewEvents,$maxConcurrency) ; $i++)
-			$slots[$i] = -1;
+		$slots = array_fill(0,min($maxSimultaneousWeekViewEvents,$maxConcurrency), -1);
 		foreach($tmpRes as $val) {
 			foreach($val as $index=>$evtId) {
 				$concurrencies[$wd][$evtId]['value'] = $maxConcurrency;
