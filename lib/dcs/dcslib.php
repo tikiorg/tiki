@@ -55,12 +55,12 @@ class DCSLib extends TikiLib
 		return $this->first_data( $result, $lang );
 	}
 
-	function get_actual_content_by_label($fieldvalue) {
+	function get_actual_content_by_label($fieldvalue, $lang = null) {
 		$query = 'SELECT tpc.*'
 			.' FROM `tiki_programmed_content` AS tpc, `tiki_content` AS tc'
 			.' WHERE tpc.`contentId` = tc.`contentId` AND tc.`contentLabel`=? AND `publishDate`<=? ORDER BY `publishDate` DESC';
 		$result = $this->fetchAll($query, array($fieldvalue, $this->now));
-		return $this->first_data( $result );
+		return $this->first_data( $result, $lang );
 	}
 
 	function remove_contents($contentId) {
