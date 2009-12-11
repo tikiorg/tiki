@@ -777,7 +777,7 @@ div.articletitle h2 a:visited {
 	color: #006699;
 }
 
-body.tiki_blogs .author_actions .actions {
+body.blogs .author_actions .actions {
 	background: url(cool/login.jpg) no-repeat 100% 0;
 }
 
@@ -796,7 +796,7 @@ body.tiki_blogs .author_actions .actions {
 	background: #fff !important;
 }
 
-body.tiki_blogs .postbody-title,
+body.blogs .postbody-title,
 .post .postbody-title {
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 	

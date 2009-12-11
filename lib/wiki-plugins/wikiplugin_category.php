@@ -33,7 +33,8 @@ function wikiplugin_category_info() {
 				'required' => false,
 				'name' => tra('Category IDs'),
 				'description' => tra('List of category IDs separated by + signs. ex: 1+2+3. Default will use category of the current page.'),
-				'filter' => 'digits'
+				'filter' => 'digits',
+				'separator' => '+'
 			),
 			'types' => array(
 				'required' => false,
@@ -130,17 +131,15 @@ function wikiplugin_category($data, $params) {
 
 	$types = (isset($types)) ? strtolower($types) : "*";
 	
-	$id = (isset($id)) ? $id : 'current'; // use current category if none is given
+	$id = (!empty($id)) ? $id : 'current'; // use current category if none is given
 	if (isset($one) && $one == 'y')
 		$smarty->assign('one', $one);
 
 	if ($id == 'current') {
 		$objId = urldecode($_REQUEST['page']);
-		$catids = $categlib->get_object_categories('wiki page', $objId);
-	} else {
-		$catids = explode("+", $id);
+		$id = $categlib->get_object_categories('wiki page', $objId);
 	}
 	$smarty->assign('params', $params);
 
-	return "~np~". $categlib->get_categoryobjects($catids,$types,$sort,$split,$sub,$and)."~/np~";
+	return "~np~". $categlib->get_categoryobjects($id,$types,$sort,$split,$sub,$and)."~/np~";
 }

@@ -16,7 +16,7 @@ $inputConfiguration = array(
 );
 
 $section = "wiki page";
-$section_class = "admin $section";	// This will be body class instead of $section
+$section_class = "wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/structures/structlib.php');
@@ -1078,7 +1078,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	$_SESSION['saved_msg'] = $_REQUEST["page"];
 
 	if (!empty($_REQUEST['hdr'])) {
-//		$tmp = $tikilib->parse_data($edit);
+		$tmp = $tikilib->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited
 		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
 	}
 	header("location: $url");

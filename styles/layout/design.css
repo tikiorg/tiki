@@ -458,7 +458,7 @@ td.form {
 	font-size: small;
 }
 
-body.tiki_wiki #comments {
+body.wiki #comments {
 	padding: 1em;
 }
 
@@ -609,11 +609,11 @@ small.description {
 	display: block;
 }
 
-body.tiki_blogs .post .title {
+body.blogs .post .title {
 	margin-top: 0;
 }
 
-body.tiki_blogs .post .postfooter {
+body.blogs .post .postfooter {
 	margin-bottom: 2em;
 }
 

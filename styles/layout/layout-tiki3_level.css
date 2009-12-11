@@ -977,7 +977,7 @@ div.description {
 	white-space: nowrap !important;
 }
 
-body.tiki_wiki #comments {
+body.wiki #comments {
 	padding: 1em;
 }
 
@@ -1299,18 +1299,18 @@ span.posthead {
 	display: block;
 }
 
-body.tiki_blogs .post .title {
+body.blogs .post .title {
 	margin-top: 0;
 }
 
-body.tiki_blogs .post .postfooter {
+body.blogs .post .postfooter {
 	clear: both;
 	float: right;
 	margin-bottom: 2em;
 }
 
 /***** Forums *****/
-body.tiki_forums table.normal {
+body.forums table.normal {
 	margin: auto;
 }
 
@@ -1503,7 +1503,7 @@ table.galtable {
 	width: 100%;
 }
 
-body.tiki_galleries table.findtable {
+body.galleries table.findtable {
 	display: inline;
 }
 

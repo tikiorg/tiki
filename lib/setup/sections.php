@@ -190,5 +190,5 @@ if ( ! empty($section) ) $smarty->assign('section', $section);
 if ( ! empty($section_class) ) {
 	$smarty->assign('section_class', $section_class);
 }elseif ( ! empty($section) ) {
-	$smarty->assign('section_class', $section);
+	$smarty->assign('section_class', str_replace(' ','_',$section));
 }

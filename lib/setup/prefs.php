@@ -1430,6 +1430,7 @@ function get_default_prefs() {
 		'feature_comments_locking' => 'n',
 		'feature_template_zoom' => 'y',
 		'menus_items_icons' => 'n',
+		'menus_items_icons_path' => 'pics/large',
 		'feature_iepngfix' => 'n',
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
