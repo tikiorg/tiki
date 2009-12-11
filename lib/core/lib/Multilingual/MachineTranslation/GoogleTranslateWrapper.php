@@ -146,7 +146,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
    		} else {
    			$chunks = $this->splitInLogicalChunksOf450CharsMax($text);
    			$ii = 0;
-   			while ($ii < sizeof($chunks)) {
+   			while ($ii < count($chunks)) {
    		  		$textToTranslate = $chunks[$ii];
 				$chunkTranslation = $this->getTranslationFromGoogle(urlencode($textToTranslate), urlencode($langpair))." ";
 				$result .= $chunkTranslation;
@@ -164,7 +164,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
    		$sentences = $segmentor->segment($text); 
    		$ii = 0;
    		$result = "";
-   		while ($ii < sizeof($sentences)) {
+   		while ($ii < count($sentences)) {
    		  $textToTranslate = $sentences[$ii];	
    		  $result .= $this->getTranslationFromGoogle(urlencode($textToTranslate), urlencode($langpair));
           $ii++;
@@ -188,7 +188,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper
    		$sentences = $segmentor->segment($text); 
    		$ii = 0;
    		$chunk = $sentences[$ii];
-   		while ($ii < (sizeof($sentences)-1)) {
+   		while ($ii < (count($sentences)-1)) {
    			$ii++;
    			if (strlen (urlencode($chunk)) < 450) {
    				$chunk = $chunk.$sentences[$ii];

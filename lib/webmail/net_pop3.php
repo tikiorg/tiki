@@ -55,7 +55,8 @@ define('NET_POP3_STATE_DISCONNECTED',  1, true);
 define('NET_POP3_STATE_AUTHORISATION', 2, true);
 define('NET_POP3_STATE_TRANSACTION',   4, true);
 
-class Net_POP3 {
+class Net_POP3
+{
 
     /*
     * Some basic information about the mail drop

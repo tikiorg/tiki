@@ -345,7 +345,7 @@ function _get_attributes($string) {
 function _output_tag_with_attributes($tag,$attributes,$newline = False,
                                      $terminate_tag = False) {
         $output = "<".$tag;
-        if (sizeof($attributes)) {
+        if (count($attributes)) {
             foreach($attributes as $key=>$value) {
               $output .= " ".$key."=\"".$value."\"";
             }

@@ -1377,21 +1377,21 @@ class TrackerLib extends TikiLib
 					$my_del_categs = array_intersect($del_categs, $my_categs);
 					$my_remain_categs = array_intersect($remain_categs, $my_categs);
 
-					if (sizeof($my_new_categs) + sizeof($my_del_categs) == 0) {
+					if (count($my_new_categs) + count($my_del_categs) == 0) {
 							$the_data .= "$name -[(unchanged)]-:\n";
 					} else {
 							$the_data .= "$name :\n";
 					}
 
-					if (sizeof($my_new_categs) > 0) {
+					if (count($my_new_categs) > 0) {
 							$the_data .= "  -[Added]-:\n";
 							$the_data .= $this->_describe_category_list($my_new_categs);
 					}
-					if (sizeof($my_del_categs) > 0) {
+					if (count($my_del_categs) > 0) {
 							$the_data .= "  -[Removed]-:\n";
 							$the_data .= $this->_describe_category_list($my_del_categs);
 					}
-					if (sizeof($my_remain_categs) > 0) {
+					if (count($my_remain_categs) > 0) {
 							$the_data .= "  -[Remaining]-:\n";
 							$the_data .= $this->_describe_category_list($my_remain_categs);
 					}
@@ -3218,10 +3218,10 @@ class TrackerLib extends TikiLib
 	}
 	// look for default value: a default value is 2 consecutive same value
 	function set_default_dropdown_option($field) {
-		for ($io = 0; $io < sizeof($field['options_array']); ++$io) {
+		for ($io = 0; $io < count($field['options_array']); ++$io) {
 			if ($io > 0 && $field['options_array'][$io] == $field['options_array'][$io - 1]) {
 				$field['defaultvalue'] = $field['options_array'][$io];
-				for (; $io < sizeof($field['options_array']) - 1; ++$io) {
+				for (; $io < count($field['options_array']) - 1; ++$io) {
 					$field['options_array'][$io] = $field['options_array'][$io + 1];
 				}
 				unset($field['options_array'][$io]);
@@ -3285,7 +3285,7 @@ class TrackerLib extends TikiLib
 			}
 		}
 		$allFields['data'] = $tmp;
-		$allFields['cant'] = sizeof($tmp);
+		$allFields['cant'] = count($tmp);
 		return $allFields;
 	}
 	/* return all the values+field options  of an item for a type field (ex: return all the user selector value for an item) */

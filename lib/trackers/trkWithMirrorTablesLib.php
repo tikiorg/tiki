@@ -460,7 +460,7 @@ class TrkWithMirrorTablesLib extends TrackerLib
 		$bindvars = array((int) $trackerId);
 		
 		if ($status) {
-			if (sizeof($status > 1)) {
+			if (count($status > 1)) {
 				if ($tiki_p_view_trackers_pending != 'y') $status = str_replace('p','',$status);
 				if ($tiki_p_view_trackers_closed != 'y') $status = str_replace('c','',$status);
 				$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);

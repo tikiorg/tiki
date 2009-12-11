@@ -180,7 +180,7 @@ class CalendarLib extends TikiLib
 	/* tsart ans tstop are in user time - the data base is in server time */
 	function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array()) {
 
-		if (sizeOf($calIds) == 0) {
+		if (count($calIds) == 0) {
 		    return array();
 		}
 

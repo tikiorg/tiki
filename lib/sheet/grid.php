@@ -1262,7 +1262,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		$updates[] = $sheet->getRowCount();
 		$updates[] = $sheet->getColumnCount();
 
-		$conditions = str_repeat( "( rowIndex = ? AND columnIndex = ? ) OR ", ( sizeof($updates) - 4 ) / 2 );
+		$conditions = str_repeat( "( rowIndex = ? AND columnIndex = ? ) OR ", ( count($updates) - 4 ) / 2 );
 		if ($prefs['feature_actionlog'] == 'y') { // must keep the previous value to do the difference
 			$query = "SELECT `rowIndex`, `columnIndex`, `value` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND  `end` IS NULL";
 			$result = $tikilib->query($query, array($this->sheetId));
@@ -1274,7 +1274,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			
 		$tikilib->query( "UPDATE `tiki_sheet_values` SET `end` = ?  WHERE `sheetId` = ? AND `end` IS NULL AND ( {$conditions}`rowIndex` >= ? OR `columnIndex` >= ? )", $updates );
 
-		if( sizeof( $inserts ) > 0 )
+		if( count( $inserts ) > 0 )
 			foreach( $inserts as $values )
 			{
 				$tikilib->query( "INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )", $values );

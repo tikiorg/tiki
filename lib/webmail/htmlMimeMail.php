@@ -899,7 +899,8 @@ class htmlMimeMail
 * @version $Revision: 1.19 $
 * @package Mail
 */
-class Mail_mimePart {
+class Mail_mimePart
+{
 
 	/**
  * The encoding type of this part
@@ -1189,7 +1190,8 @@ class Mail_mimePart {
 * @version $Revision: 1.19 $
 * @package Mail
 */
-class Mail_RFC822 {
+class Mail_RFC822
+{
 	/**
  * The address being parsed by the RFC822 object.
  * @var string $address
@@ -2084,7 +2086,8 @@ class Mail_RFC822 {
 define('SMTP_STATUS_NOT_CONNECTED', 1, TRUE);
 define('SMTP_STATUS_CONNECTED', 2, TRUE);
 
-class smtp {
+class smtp
+{
 	var $authenticated;
 
 	var $connection;

@@ -1985,14 +1985,14 @@ class TikiLib extends TikiDb_Bridge
 		$cant = $channels['cant'];
 		$channels = $channels['data'];
 
-		$temp_max = sizeof($channels);
+		$temp_max = count($channels);
 		for ($i=0; $i < $temp_max; $i++) {
 			$sorted_channels[$i] = $channels[$i];
 			if ($sorted_channels[$i]['type'] == 'r') { // sorted section
 				$sorted_channels[$i]['type'] = 's'; // common section, let's make it transparent
 				$i++;
 				$section = array();
-				while ($i < sizeof($channels) && $channels[$i]['type'] == 'o') {
+				while ($i < count($channels) && $channels[$i]['type'] == 'o') {
 					$section[] = $channels[$i];
 					$i++;
 				}

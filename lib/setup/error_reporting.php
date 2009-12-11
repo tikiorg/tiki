@@ -40,3 +40,4 @@ TikiSetup::check($tikidomain);
 
 if ( ! isset($phpErrors) ) $phpErrors = array();
 $smarty->assign_by_ref('phpErrors', $phpErrors);
+error_reporting(E_ALL);

@@ -279,6 +279,6 @@ function breadcrumb_getDescription($crumbs, $loc) {
 
 /* private */
 function _is_assoc($var) {
-   return is_array($var) && array_keys($var)!==range(0,sizeof($var)-1);
+   return is_array($var) && array_keys($var)!==range(0,count($var)-1);
 }
 		

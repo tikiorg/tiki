@@ -964,7 +964,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 
 	$tags = array();
 	$index = array();
-	while (sizeof($tags) < $max && $row = $result->fetchRow()) {
+	while (count($tags) < $max && $row = $result->fetchRow()) {
 	    $tag = $row['tag'];
 	    if (!isset($index[$tag]) && !preg_match("/$tag/",$exclude)) {
 		$tags[] = $tag;

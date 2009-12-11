@@ -129,7 +129,7 @@ class LogsLib extends TikiLib
 			$query = "insert into `tiki_actionlog` (`action`,`object`,`lastModif`,`user`,`ip`,`comment`, `objectType`) values(?,?,?,?,?,?,?)";
 			$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType));
 		} elseif ($logObject) {
-			if (sizeof($categs) > 0) {
+			if (count($categs) > 0) {
 				foreach ($categs as $categ) {
 					$query = "insert into `tiki_actionlog` (`action`,`object`,`lastModif`,`user`,`ip`,`comment`, `objectType`, `categId`) values(?,?,?,?,?,?,?,?)";
 					$this->query($query, array($action, $object, (int)$date, $who, $ip, $param, $objectType, $categ));
@@ -325,7 +325,7 @@ class LogsLib extends TikiLib
 				}
 				if ($prefs['feature_contributor_wiki'] == 'y' && $res['objectType'] == 'wiki page') {
 					$res['contributors'] = $this->get_contributors($res['actionId']);
-					$res['nbContributors'] = 1 + sizeof($res['contributors']);
+					$res['nbContributors'] = 1 + count($res['contributors']);
 				}
 				if ($res['objectType'] == 'comment' && empty($res['categId'])) { // patch for xavi
 					global $categlib; include_once('lib/categories/categlib.php');
@@ -825,7 +825,7 @@ class LogsLib extends TikiLib
 			}
 		}
 		ksort($tab);
-		return array('data'=>$tab, 'nbCols'=>sizeof($tab));;
+		return array('data'=>$tab, 'nbCols'=>count($tab));;
 	}
 
 	function get_colors($nb)
@@ -1075,7 +1075,7 @@ class LogsLib extends TikiLib
 	function get_more_info($actions, $categNames)
 	{
 		global $tikilib, $prefs;
-	for ($i = 0, $isizeof_actions = sizeof($actions); $i < $isizeof_actions; ++$i) {
+	for ($i = 0, $isizeof_actions = count($actions); $i < $isizeof_actions; ++$i) {
 		if ($actions[$i]['categId'])
 			$actions[$i]['categName'] = $categNames[$actions[$i]['categId']];
 		if ($bytes = $this->get_volume_action($actions[$i])) {

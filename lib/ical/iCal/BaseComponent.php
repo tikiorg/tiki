@@ -533,8 +533,8 @@ abstract class File_iCal_BaseComponent_EFJT extends File_iCal_BaseComponent
  *  @package iCal
  *  @abstract
  */
- abstract class File_iCal_BaseComponent_EJT extends File_iCal_BaseComponent_EFJT
- {
+abstract class File_iCal_BaseComponent_EJT extends File_iCal_BaseComponent_EFJT
+{
     //make some methods public
     public function addAttachment($a) {
         File_iCal_BaseComponent::addAttachment($a);

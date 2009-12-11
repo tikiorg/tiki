@@ -309,7 +309,7 @@ function wikiplugin_tracker($data, $params)
 						$ret[] = $field;
 					}
 				}
-				$flds['cant'] = sizeof($ret);
+				$flds['cant'] = count($ret);
 				$flds['data'] = $ret;
 			}
 			$bad = array();
