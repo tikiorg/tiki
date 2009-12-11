@@ -2,10 +2,13 @@
 
 <div class="navbar">
 {button href="tiki-objectpermissions.php" _text="{tr}Manage Permissions{/tr}"}
+{foreach from=$res key=type item=content}
+	{button href="#$type" _text="{tr}$type{/tr}"}	 
+{/foreach}
 </div>
 
 {foreach from=$res key=type item=content}
-	<h2>{tr}{$type}{/tr}</h2>
+	<h2 id="{$type}">{tr}{$type}{/tr}</h2>
 
 	<h3>{tr}{$type}{/tr}:{tr}Default{/tr}</h3>
 {remarksbox}{tr}If an object is not in the special section, then only the default perms are on{/tr}{/remarksbox}

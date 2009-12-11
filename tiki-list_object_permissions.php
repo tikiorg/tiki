@@ -39,7 +39,8 @@ function list_perms($objectId, $objectType) {
 	}
 	return array('objectId' => $objectId, 'special' => $ret);
 }
-$types = array('wiki page', 'file gallery');
+$types = array('wiki page', 'file gallery', 'tracker', 'forum');
+include_once ("lib/commentslib.php"); global $commentslib; $commentslib = new Comments($dbTiki);
 $all_groups = $userlib->list_all_groups();
 $res = array();
 foreach($types as $type) {
@@ -55,17 +56,33 @@ foreach($types as $type) {
 	switch ($type) {
 		case 'wiki page':
 		case 'wiki':
-			$pages = $tikilib->list_pageNames();
-			foreach($pages['data'] as $page) {
-				$res[$type]['objects'][] = list_perms($page['pageName'], $type);
+			$objects = $tikilib->list_pageNames();
+			foreach($objects['data'] as $object) {
+				$res[$type]['objects'][] = list_perms($object['pageName'], $type);
 			}
 			break;
 
 		case 'file galleries':
 		case 'file gallery':
-			$files = $tikilib->list_file_galleries( 0, -1, 'name_desc', '', '', $prefs['fgal_root_id'] );
-			foreach($files['data'] as $file) {
-				$res[$type]['objects'][] = list_perms($file['id'], $type);
+			$objects = $tikilib->list_file_galleries( 0, -1, 'name_desc', '', '', $prefs['fgal_root_id'] );
+			foreach($objects['data'] as $object) {
+				$res[$type]['objects'][] = list_perms($object['id'], $type);
+			}
+			break;
+
+		case 'tracker':
+		case 'trackers':
+			$objects = $tikilib->list_trackers();
+			foreach($objects['data'] as $object) {
+				$res[$type]['objects'][] = list_perms($object['trackerId'], $type);
+			}
+			break;
+
+		case 'forum':
+		case 'forums':
+			$objects = $commentslib->list_forums();
+			foreach($objects['data'] as $object) {
+				$res[$type]['objects'][] = list_perms($object['forumId'], $type);
 			}
 			break;
 
