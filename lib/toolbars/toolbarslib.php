@@ -896,7 +896,7 @@ if (m && m.length > 4) {
 	}
 } else {
 	$jq("#tbWLinkDesc").val(s);
-	if ($jq("#tbWLinkAnchor")) { $jq("#tbWLinkAnchor").val("#"); }
+	if ($jq("#tbWLinkAnchor")) { $jq("#tbWLinkAnchor").val(""); }
 }
 						},
 						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
@@ -904,7 +904,7 @@ if (m && m.length > 4) {
 var s = "(";
 if ($jq("#tbWLinkRel") && $jq("#tbWLinkRel").val()) { s += $jq("#tbWLinkRel").val(); }
 s += "(" + $jq("#tbWLinkPage").val();
-if ($jq("#tbWLinkAnchor") && $jq("#tbWLinkAnchor").val()) { s += "|" + $jq("#tbWLinkAnchor").val(); }
+if ($jq("#tbWLinkAnchor") && $jq("#tbWLinkAnchor").val()) { s += "|" + ($jq("#tbWLinkAnchor").val().indexOf("#") != 0 ? "#" : "") + $jq("#tbWLinkAnchor").val(); }
 if ($jq("#tbWLinkDesc").val()) { s += "|" + $jq("#tbWLinkDesc").val(); }
 s += "))";
 insertAt(areaname, s, false, false, true); 
