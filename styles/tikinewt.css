@@ -1505,11 +1505,11 @@ span.posthead small {
 	font-weight: normal;
 }
 
-body.blogs .post {
+body.tiki_blogs .post {
 	margin-bottom: 20px;
 }
 
-body.blogs .post .postbody {
+body.tiki_blogs .post .postbody {
 	border: 1px solid #AEAEAE;
 	border-bottom: 1px solid #AEAEAE;
 	font-size: .95em;
@@ -1517,7 +1517,7 @@ body.blogs .post .postbody {
 	padding: 10px;
 }
 
-body.blogs .post .postbody {
+body.tiki_blogs .post .postbody {
 	background: #f9fcff;
 	border: 1px solid #8cacbb;
 	color: #000;
@@ -1527,7 +1527,7 @@ body.blogs .post .postbody {
 }
 
 	
-body.blogs div.author_actions {
+body.tiki_blogs div.author_actions {
 	float: none;
 	background: none;
 	border: 0;
@@ -1535,12 +1535,12 @@ body.blogs div.author_actions {
 }
 
 	
-body.blogs .actions {
+body.tiki_blogs .actions {
 	background: none;
 	text-align: right;
 }
 
-body.blogs .author_info {
+body.tiki_blogs .author_info {
 	text-align: right;
 }
 
@@ -1549,20 +1549,20 @@ body.blogs .author_info {
 	border: 0;
 }
 
-body.blogs .postbody-title {
+body.tiki_blogs .postbody-title {
 	float: none;
 	width: 100%;
 	background: none;
 	border: 0;
 }
 
-body.blogs div.postfooter {
+body.tiki_blogs div.postfooter {
 	float: none;
 	width: 100%;
 	margin-top: 4px;
 }
 
-body.blogs .postfooter .actions {
+body.tiki_blogs .postfooter .actions {
 	float: left;
 }
 

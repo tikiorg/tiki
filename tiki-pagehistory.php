@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.45.2.5 2008-01-28 19:03:04 lphuberdeau Exp $
 $section = 'wiki page';
-$section_class = "wiki_page manage";	// This will be body class instead of $section
+$section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/histlib.php');
 if ($prefs['feature_wiki'] != 'y') {

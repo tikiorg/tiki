@@ -854,8 +854,8 @@ table.normalnoborder {
 	width: 100%;
 }
 
-body.mytiki #tiki-center form table.normal,
-body.mytiki #tiki-center .normal form {
+body.tiki_mytiki #tiki-center form table.normal,
+body.tiki_mytiki #tiki-center .normal form {
 	border: none;
 }
 
@@ -1238,34 +1238,34 @@ span.posthead span.link {
 	margin-left: 0;
 }
 
-body.blogs .post .title h2 {
+body.tiki_blogs .post .title h2 {
 	font-size: 1.7em;
 	margin-top: 0;
 }
 
-body.blogs .post .postbody {
+body.tiki_blogs .post .postbody {
 	margin-right: 8px;
 	line-height: 1.4em;
 	margin-bottom: 1em;
 }
 
-body.blogs .post .postbody {
+body.tiki_blogs .post .postbody {
 	background: none;
 	border: 0;
 }
 
-body.blogs div.author_actions {
+body.tiki_blogs div.author_actions {
 	float: none;
 	background: none;
 	border: 0;
 	width: 100%;
 }
 
-body.blogs .actions {
+body.tiki_blogs .actions {
 	background: none;
 }
 
-body.blogs .author_info {
+body.tiki_blogs .author_info {
 }
 
 .postbody-title {
@@ -1273,19 +1273,19 @@ body.blogs .author_info {
 	border: 0;
 }
 
-body.blogs .postbody-title {
+body.tiki_blogs .postbody-title {
 	float: none;
 	width: 100%;
 	background: none;
 	border: 0;
 }
 
-body.blogs .postfooter {
+body.tiki_blogs .postfooter {
 	width: 100%;
 	float: none;
 }
 
-body.blogs .postfooter .actions {
+body.tiki_blogs .postfooter .actions {
 	float: left;
 }
 
@@ -1780,7 +1780,7 @@ a.admbox.off:active {
 	border: 1px solid #9f9f9f;
 }
 
-body.mytiki #tiki-center form {
+body.tiki_mytiki #tiki-center form {
 	border: 1px solid #aaa;
 	padding: 10px;
 }

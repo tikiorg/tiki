@@ -807,7 +807,7 @@ span.titleb {
 	color: #666666;
 }
 
-body.blogs .author_actions .actions {
+body.tiki_blogs .author_actions .actions {
 	background: url('mono/login.jpg') no-repeat 100% 0;
 }
 
@@ -826,7 +826,7 @@ body.blogs .author_actions .actions {
 	background: #fff !important;
 }
 
-body.blogs .postbody-title,
+body.tiki_blogs .postbody-title,
 .post .postbody-title {
 	background: #111111 url('mono/headerbg.jpg') repeat-x 0 100%;
 }

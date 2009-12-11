@@ -229,13 +229,16 @@ label {
 	margin-right: 30px;
 }
 
-body.wiki_page #c1c2 #wrapper #col1 > .content {
+body.tiki_wiki_page #c1c2 #wrapper #col1 > .content {
 	position: relative;
 }
 
-body.cms #c1c2 #wrapper #col1 #tiki-center,
-body.wiki_page #c1c2 #wrapper #col1 #tiki-center {
-	background: none !important;
+body.tiki_cms #c1c2 #wrapper #col1 #tiki-center,
+body.tiki_wiki_page #c1c2 #wrapper #col1 #tiki-center {
+	background: none;
+}
+body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 }
 
 #c1c2 #col2 {
@@ -980,7 +983,7 @@ margin: 10px 2px -18px 2px; /* override layout */
 
 /*** Feature-specific selectors ***/
 /***** Wiki *****/
-body.wiki_page #comments {
+body.tiki_wiki_page #comments {
 	padding: 1em;
 }
 
@@ -1257,7 +1260,7 @@ div.blogtitle {
 	line-height: 80%;
 }
 
-body.blogs div.description {
+body.tiki_blogs div.description {
 	margin-top: 8px;
 	margin-left: 14px;
 }
@@ -1461,7 +1464,7 @@ a.blogt:hover {
 	padding: 0 2px;
 }
 
-body.blogs .post .avatar {
+body.tiki_blogs .post .avatar {
 	float: right;
 	margin-bottom: 5px;
 	margin-left: 4px;

@@ -8,7 +8,7 @@
 
 /***** XHTML Elements *****/
 
-body.fullscreen {
+body.tiki_fullscreen {
 	text-align: left;
 	background: #fff;
 }
@@ -462,7 +462,7 @@ td.form {
 	font-size: small;
 }
 
-body.wiki #comments {
+body.tiki_wiki #comments {
 	padding: 1em;
 }
 
@@ -606,11 +606,11 @@ small.description {
 	display: block;
 }
 
-body.blogs .post .title {
+body.tiki_blogs .post .title {
 	margin-top: 0;
 }
 
-body.blogs .post .postfooter {
+body.tiki_blogs .post .postfooter {
 	margin-bottom: 2em;
 }
 

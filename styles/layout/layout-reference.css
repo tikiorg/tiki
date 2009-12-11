@@ -29,7 +29,7 @@ html[dir=ltr]>body {
 	padding: 1em .5em;
 }
 
-body.fullscreen {
+body.tiki_fullscreen {
 	text-align: left;
 	background: #fff;
 }
@@ -1375,7 +1375,7 @@ div.description {
 .wikiactions form {/*display: inline-block*/}
 
 .wikitext {}
-body.wiki #comments {
+body.tiki_wiki #comments {
 	padding: 1em;
 }
 
@@ -1708,7 +1708,7 @@ div.blogheading {
 }
 
 div.blogtitle {}
-body.blogs div.description {}
+body.tiki_blogs div.description {}
 	
 div.blogdesc {
 	display: block;
@@ -1767,26 +1767,26 @@ span.posthead {
 	display: block;
 }
 
-body.blogs .post .title {
+body.tiki_blogs .post .title {
 	margin-top: 0;
 }
 
-body.blogs .post .title h2 {}
+body.tiki_blogs .post .title h2 {}
 
-body.blogs div.postbody {}
-body.blogs div.author_actions { }
-body.blogs .actions {}
-body.blogs .author_info {}
-body.blogs .postbody-title {}
+body.tiki_blogs div.postbody {}
+body.tiki_blogs div.author_actions { }
+body.tiki_blogs .actions {}
+body.tiki_blogs .author_info {}
+body.tiki_blogs .postbody-title {}
 
-body.blogs .post .postfooter {
+body.tiki_blogs .post .postfooter {
 	clear: both;
 	float: right;
 	margin-bottom: 2em;
 }
 
 /***** Forums *****/
-body.forums table.normal {
+body.tiki_forums table.normal {
 	margin: auto;
 }
 
@@ -2008,7 +2008,7 @@ table.galtable {
 }
 
 
-body.galleries table.findtable {
+body.tiki_galleries table.findtable {
 	display: inline;
 }
 

@@ -100,11 +100,11 @@ td {
 	font-size: 11px;
 }
 
-body.blogs .postbody-title {
+body.tiki_blogs .postbody-title {
 	height: 46px;
 }
 
-body.blogs .author_info {
+body.tiki_blogs .author_info {
 	height: 24px;
 }
 
