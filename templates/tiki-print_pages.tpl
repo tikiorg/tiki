@@ -77,8 +77,8 @@
     </select>
     <br />
     <input type="submit" name="addstructurepages" value="{tr}Add Structure Pages{/tr}"/>
-  </form>
 {/if}
+  </form>
 		</td>
 		<td>&nbsp;</td>
 		<td width="45%">
