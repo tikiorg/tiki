@@ -184,7 +184,7 @@ class MenuLib extends TikiLib
 				'3' => 'section level 3',
 			   "-" => "separator");
 
-		foreach($channels as &$channel)
+		foreach($channels as &$channel) {
 			$channel["type_description"] = tra($types[$channel["type"]]);
 	  }
 
