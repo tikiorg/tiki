@@ -55,6 +55,15 @@ function wikiplugin_fancytable_info() {
 function wikiplugin_fancytable($data, $params) {
 	global $tikilib, $prefs;
 	static $iFancytable = 0;
+	//Patterns to keep | within external and internal links from being treated as column separators
+	$patterns[0] = '/(\[[^(~|~)]+)\~\|\~([^(~|~)]+\])/';
+	$patterns[1] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/';
+	$patterns[2] = '/(\[[^(~|~)]+)\~\|\~([^(~|~)]+)\~\|\~([^(~|~)]+\])/';
+	$patterns[3] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/';
+	$replace[0] = '$1|$2';
+	$replace[1] = '$1|$2';
+	$replace[2] = '$1|$2|$3';
+	$replace[3] = '$1|$2|$3';
 	++$iFancytable;
 	extract ($params,EXTR_SKIP);
 	if (empty($sortable)) $sortable = 'n';
@@ -74,14 +83,13 @@ function wikiplugin_fancytable($data, $params) {
 	}
 
 	if (isset($head)) {
-		if (strpos($head, '~|~') !== FALSE) {
-			$separator = '~|~'; 
-		} elseif (strpos($head, '|') !== FALSE) {
-			$separator = '|';
-		}
-		
-		$parts = explode($separator, $head);
-
+		//Although user can set | as column separators, program uses only ~|~
+		//If | is being used, first replace all | with ~|~, then revert back to | for those (up to 2) inside links
+		if (strpos($head, '~|~') == FALSE) {
+			$head = str_replace('|', '~|~', $head);
+			$head = preg_replace($patterns, $replace , $head);	
+		}	
+		$parts = explode('~|~', $head);
 		$row = '';
 
 		foreach ($parts as $column) {
@@ -104,15 +112,15 @@ function wikiplugin_fancytable($data, $params) {
 
 		$wret .= '<thead>'.$trbeg . $row . $trend.'</thead><tbody>';
 	}
-
+	//Although user can set | as column separators, program uses only ~|~
+	//If | is being used, first replace all | with ~|~, then revert back to | for those (up to 2) inside links
+	if (strpos($data, '~|~') == FALSE) {
+		$data = str_replace('|', '~|~', $data);
+		$data = preg_replace($patterns, $replace , $data);
+	}	
 	// Each line of the data is a row, the first line is the header
 	$row_is_odd = true;
 	$lines = split("\n", $data);
-	if (strpos($data, '~|~') !== FALSE) {
-		$separator = '~|~'; 
-	} elseif (strpos($data, '|') !== FALSE) {
-		$separator = '|';
-	}
 
 	foreach ($lines as $line) {
 		$line = trim($line);
@@ -128,7 +136,7 @@ function wikiplugin_fancytable($data, $params) {
 				$row_is_odd = true;
 			}
 			
-			$parts = explode($separator, $line);
+			$parts = explode('~|~', $line);
 			$row = '';
 
 			foreach ($parts as $column) {
