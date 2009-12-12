@@ -130,11 +130,15 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Autosave fields'),
 				'description' => tra('Colon-separated list of field IDs to be automaitcally filled with values'),
+				'filter' => 'digits',
+				'separator' => ':'
 			),
 			'autosavevalues' => array(
 				'required' => false,
 				'name' => tra('Autosavevalue'),
 				'description' => tra('Colon-separated values corresponding to autosavefields'),
+				'filter' => 'digits',
+				'separator' => ':'
 			),
 		),
 	);
@@ -301,11 +305,8 @@ function wikiplugin_tracker($data, $params)
 					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl');
 				}
 				$ret = array();
-				if (!empty($autosavefields)) {
-					$autosavefieldsarray = explode(':', $autosavefields);
-				}
 				foreach($flds['data'] as $field) {
-					if ($field['type'] == 'q' || $field['type'] == 'k' || $field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf) || (!empty($autosavefields) && in_array($field['fieldId'], $autosavefieldsarray))) {
+					if ($field['type'] == 'q' || $field['type'] == 'k' || $field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf) || (!empty($autosavefields) && in_array($field['fieldId'], $autosavefields))) {
 						$ret[] = $field;
 					}
 				}
@@ -321,17 +322,15 @@ function wikiplugin_tracker($data, $params)
 			if ($thisIsThePlugin) {
 				/* ------------------------------------- Recup all values from REQUEST -------------- */
 				if (!empty($autosavefields)) {
-					$autosavefieldsarray = explode(':', $autosavefields);
-					$autosavevaluesarray = explode(':', $autosavevalues);
-					foreach ($autosavefieldsarray as $i=>$f) {
-						if (preg_match('/categories\(([0-9]+)\)/', $autosavevaluesarray[$i], $matches)) {
+					foreach ($autosavefields as $i=>$f) {
+						if (preg_match('/categories\(([0-9]+)\)/', $autosavevalues[$i], $matches)) {
 							global $categlib; include_once('lib/categories/categlib.php');
 							$categs = $categlib->list_categs($matches[1]);
 							$_REQUEST["ins_cat_$f"][] = $categs[0]['categId'];
-						} elseif (preg_match('/preference\((.*)\)/', $autosavevaluesarray[$i], $matches)) {
+						} elseif (preg_match('/preference\((.*)\)/', $autosavevalues[$i], $matches)) {
 							$_REQUEST["ins_cat_$f"][] = $_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
 						} else {
-							$_REQUEST["ins_cat_$f"][] = $_REQUEST["$ins_id_$f"] = $autosavevaluesarray[$i];
+							$_REQUEST["ins_cat_$f"][] = $_REQUEST["$ins_id_$f"] = $autosavevalues[$i];
 						}
 					}
 				}
