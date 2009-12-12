@@ -753,16 +753,15 @@ span.moduleflip,
 	float: left !important;
 	clear: none;
 	width: 48%;
-	margin-right: 2%;
- 
-}
+	margin: 0 2% 0 0;
+ }
 
 .thirdfloat div.box,
 .wikitext .thirdfloat div.box {
 	float: left !important;
 	clear: none;
 	width: 31%;
-	margin-right: 2%
+	margin: 0 2% 0 0;
 }
 
 .quarterfloat div.box,
@@ -770,7 +769,7 @@ span.moduleflip,
 	float: left !important; 
 	clear: none; 
 	width: 22%;
-	margin-right: 2%;
+	margin: 0 2% 0 0;
 }
 
 /***** Tables, Tabs ****/

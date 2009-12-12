@@ -63,8 +63,6 @@ span.button a:visited,
 button,
 span.button input,
 .calbuttonBox a {
-	padding: 1px 4px;
-	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
@@ -73,8 +71,6 @@ span.button input,
 /* Definitions below are the same as above, but are separated to make those above work in IE6 */
 input[type=reset],
 input[type=submit] {
-	padding: 1px 4px;
-	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
@@ -111,13 +107,16 @@ select[multiple] {
 	height: 10em;
 }
 
-label {
-	cursor: pointer;
+#col2 select,
+#col3 select,
+#col3 input[type="text"],
+#col2 input[type="text"] {
+	width: 95%;
 }
 
-input[type=checkbox],
-input[type=radio] {
-	border: 0;
+label {
+	cursor: pointer;
+	vertical-align: middle;
 }
 
 form {
@@ -125,13 +124,15 @@ form {
 	padding: 0;
 }
 
+input, legend {
+	vertical-align: middle;
+}
+
 hr {
 	width: 100%;
 	height: 1px;
-/*	background: red; */
 	border-width: 0;
 	padding: 0;
-/*	color: red; */
 }
 	
 img {
@@ -139,31 +140,19 @@ img {
 }
 
 /***** Site Header & Identity *****/
-#header-top {
-	position: relative;
-}
-
 #siteheader {
-	text-align: left;
-	background: transparent;
+/*	text-align: left;*/
 	vertical-align: middle;
 	padding: 0;
-	/*padding-top: 6px;*/
 	margin: 0;
 }
 
-#customcode {  }
-#customcodewith_ad {
-	/*position: absolute;
-	width: 964px;
-	margin: auto;*/
-	width: 400px;
-}
-
-div#sioptions {/*padding: 1em*/}
-
 #sioptionscentered {
 	text-align: center;
+}
+
+#sioptionscentered #logo img {
+	margin: auto;
 }
 
 div.floatright {
@@ -174,11 +163,6 @@ div.floatright {
 div.floatleft {
 	float: left;
 	clear: none;
-}
-
-div#sitelogo {
-	margin: auto;
-	padding: 1em;
 }
 
 div#sitead {
@@ -272,7 +256,7 @@ div#sitead {
 
 #sitesearchbar {
 	float: right;
-	clear: none;
+	clear: left;
 	padding-right: 4px;
 	text-align: right;
 	display: block;
@@ -678,15 +662,14 @@ div#edithelpzone {
 	display: none
 }
 
-#edithelpzone code {
-	font-size: 1.2em;
-}
+#edithelpzone code {}
 
 #rules-copy-panel {
 	display: none;
 }
 
-.clear, #clear {
+.clear,
+#clear {
 	clear: both;
 }
 
@@ -813,7 +796,11 @@ img.icon {
   margin-bottom: 10px;
  }
  
-.findtitle {
+.findtitle,
+.findexactmatch,
+.findnumrows,
+.findtypes,
+.findlang {
 	display: inline; 
 	vertical-align: middle;
 	margin: 0 1px;
@@ -965,16 +952,11 @@ div.help_sections > div {
 	top: 5%;
 	max-height: 90%;
 	overflow: auto;
-	background: white;
-	color: black;
-	padding: 10px;
-	border: solid 2px black;
 	z-index: 1000;
 }
 
 .icon_edit_section {
 	float: right;
-	margin-top: 1em;
 }
 
 /***** Boxes *****/
@@ -1047,17 +1029,17 @@ h3.box-title {
 }
 	
 /* MiniChat  */
-div.box-minichat {
+.box-minichat {
 	width: 100%;
 }
 
-div.minichatdiv {
+.minichatdiv {
 	font-size: .9em;
 }
 
-div.minichat,
-div.minichatdiv,
-div.minichatchan {
+.minichat,
+.minichatdiv,
+.minichatchan {
 	overflow: auto;
 }
 
@@ -1154,16 +1136,15 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 	float: left !important;
 	clear: none;
 	width: 48%;
-	margin-right: 2%;
- 
-}
+	margin: 0 2% 0 0;
+ }
 
 .thirdfloat div.box,
 .wikitext .thirdfloat div.box {
 	float: left !important;
 	clear: none;
 	width: 31%;
-	margin-right: 2%
+	margin: 0 2% 0 0;
 }
 
 .quarterfloat div.box,
@@ -1171,7 +1152,7 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 	float: left !important; 
 	clear: none; 
 	width: 22%;
-	margin-right: 2%;
+	margin: 0 2% 0 0;
 }
 
 /***** Tables, Tabs ****/
@@ -2901,6 +2882,7 @@ div#column_switches_div {
 	border: 1px solid gray;
 	background-color: #eee;
 	width: 12em;
+	padding: .2em .4em;
 }
 ul.column_switcher {
 	margin: 0;
@@ -2923,6 +2905,7 @@ ul.column_switcher {
 .column_switcher li:hover {
 	background-color: #ccc;
 }
+.thumbnailcontener { border: solid 1px lightgrey; margin: 1px; padding: 2px; text-align: center;}
 
 /* jquery-ui doalogs help */
 
@@ -2930,6 +2913,214 @@ ul.column_switcher {
 	display: block;
 }
 
-/***** End New (unsorted) *****/
+.screencast-thumbnail {
+	padding: 8px;
+	display: block;
+	height: 120px;
+	width: 160px;
+	float: left;
+	margin-bottom: 10px;
+}
 
+.screencast-input-wrapper {
+	float: left;
+}
+
+.screencast-input-label {
+	display: block;
+}
+
+.screencast-player-close {
+	background:transparent url(img/screencast-player-close.png) no-repeat scroll top right;
+	text-align: right;
+	margin: 28px 42px -15px 0;
+	height: 33px;
+	color: #0489B7;
+	cursor: pointer;
+	padding: 8px 33px 0 0;
+}	
+
+.screencast-player-msg {
+	width: 100%;
+	text-align: center;
+	color: #0489B7;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+.screencast-player-msg:hover {
+	text-decoration: underline;
+}
+
+.screencast-no-alt {
+	padding-top: 15px;
+}
+
+.screencast-no-preview {
+	background: transparent url(img/screencast-no-video.png) no-repeat scroll 0 0;
+	width: 160px;
+	height: 120px;
+}
+
+.screencast-thumb-text {
+	display: block;
+	width: 100%;
+	text-align: center;
+  color: #0489B7;
+	cursor: pointer;
+	margin-top: 3px;
+}
+
+.screencast-thumb-text:hover {
+	text-decoration: underline;
+}
+
+.screencast-no-preview > .screencast-thumb-text {
+	padding-top: 120px;
+}
+
+.screencast-no-preview-text {
+	display: block;
+	width: 100%;
+	text-align: center;
+ color: #FFFFFF;
+	margin-top: -35px;
+	margin-bottom: 25px;
+}
+
+#screencast-loader {
+	width: 1px;
+	height: 1px;
+	display: none;
+	left: 1500px;
+}
+
+#screencast-upload-now {
+	margin-top: 18px;
+}
+
+#screencast-add-another {
+	display: block;
+	margin: 10px;
+	float: left;
+}
+
+#screencast-player-overlay {
+	background:#FFFFFF none repeat scroll 0 0;
+	left:0;
+	opacity:0.6;
+	position:absolute;
+	top:0;
+	width:100%;
+	height: 100%;
+	z-index:500;
+}
+
+#screencast-player-window {
+	background:transparent url(img/screencast-player-frame.png) no-repeat scroll 0 0;
+	height:630px;
+	left:50%;
+	margin-left:-417px;
+	position:absolute;
+	top:0;
+	width:858px;
+	z-index:1000;
+	opacity:1;
+}
+
+.screencast-content {
+	background:transparent url(img/screencast-bar.png) no-repeat scroll 0 0;
+	font-size: 130%;
+	cursor: pointer;
+	height: 56px;
+	margin: .5em 0;
+}
+
+.screencast-content-msg {
+	padding-left: 75px;
+	padding-top: 20px;
+	color: #0489B7;
+}
+
+.pagelist-wrapper {
+  width: 100%;
+}
+
+.pagelist-table {
+  font-size: .9em;
+  width: 100%;
+  font-weight: bold;
+  display: inline-table;
+}
+
+.pagelist-title {
+  background: none !important;
+  margin-top: 0px !important; 
+}
+
+.pagelist-table tr {
+  padding: 2px;
+}
+
+.pagelist-table td {
+  padding: 5px;
+}
+.pagelist-table .odd {
+  background: #F0F0F0 none repeat scroll 0 0;
+}
+
+.pagelist-status {
+  width: 25%; 
+}
+
+.pagelist-needs-review,.pagelist-draft,.pagelist-needs-updating {
+  background: #ffff81;
+  border: 1px solid #FFFFFF; 
+}
+
+.pagelist-translated {
+  background: #00f382;
+  border: 1px solid #FFFFFF; 
+}
+
+.pagelist-needs-translation,.pagelist-unknown {
+  background: #ffacac;
+  border: 1px solid #FFFFFF; 
+}
+
+.pagelist-page {
+  width: 62%;
+}
+
+.listprogress-progress {
+  height:19px;
+  position:relative;
+  width:253px;
+  border: 2px ridge #CCCCCC;
+  display: inline-table;
+}
+
+.listprogress-progress span {
+  background:transparent url(img/listprogress-bar.png) no-repeat scroll 0 0;
+  display:block;
+  height:21px;
+  overflow:hidden;
+  position:absolute;
+  width:253px;
+}
+
+.listprogress-progress em {
+  background:transparent url(img/listprogress-slider.png) repeat-x scroll 0 0;
+  display:block;
+  height:19px;
+  position:absolute;
+  top:-1;
+  width:253px;
+}
+
+.listprogress-status {
+  margin: 0 10px;
+  position: absolute;
+  font-weight: bold;
+}
 /* End of File */

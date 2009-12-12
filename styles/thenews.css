@@ -702,7 +702,8 @@ div.menuSection div.separator {
 
 /***** Boxes *****/
 /** Modules **/
-div.box {
+#col2 div.box,
+#col3 div.box {
 	margin: 9px;
 }
 

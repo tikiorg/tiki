@@ -19,27 +19,31 @@ body.wikitext {
 	color: #000;
 }
 
-
 fieldset {
 	margin-bottom: 2px;
 	padding: 0.3em;
 }
 
 /* margin and padding for span surrounding the "button" links, same definition for button form element */
-span.button, button {
+button,
+span.button,
+span.button.highlight {
 	margin: 1px 2px;
 	padding: 2px;
 }
 
 span.button a,
 span.button a:visited,
+span.button a:hover,
 span.button input,
 .calbuttonBox a {
 	padding: 1px 4px;
 }
 
 input[type=reset],
-input[type=submit] {
+input[type=submit],
+input[type=reset]:hover,
+input[type=submit]:hover {
 	padding: 1px 4px;
 	margin-right: 1px;
 }
@@ -54,7 +58,6 @@ span.button.highlight a {
 
 /* Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state . */
 span.button.highlight {
-	padding: 0;
 	background: inherit;
 }
 
@@ -260,8 +263,6 @@ ul.categories li {
 	color: #000;
 }
 
-
-
 /* New Help section */
 
 .help_fullscreen_icon {
@@ -300,6 +301,10 @@ div.help_section {
 	font-size: smaller;
 }
 
+/* default look for editplugin icon links */
+.editplugin {
+	/*background: #fff; color: #000;*/
+}
 .plugin-desc {
 	padding: 5px;
 }
@@ -347,6 +352,17 @@ div.help_section {
 	padding: 0 1em;
 }
 
+/* To display content without module-style background and border. */
+.halffloat > div.box,
+.wikitext .halffloat > div.box,
+.thirdfloat > div.box,
+.wikitext .thirdfloat > div.box,
+.quarterfloat > div.box,
+.wikitext .quarterfloat > div.box {
+	background: none;
+	border: none;
+}
+
 .cbox-title {
 	padding: 3px 3px 0 3px;
 }
@@ -379,28 +395,29 @@ div.help_section {
 .comment .rbox-title,
 .comment .rbox-data {}
 
-.note .rbox-title {}
+.note .rbox-title,
 .note .rbox-data {}
 
 .tip .rbox-title,
 .tip .rbox-data {}
 
-.warning .rbox-title, .warning span {
-	background: #ff4;
+.errors .rbox-title, .warning .rbox-title {
+	background: #ffc;
 	color: #000;
 	border-color: #f00;
-	border-bottom-color: #ff4;
+	border-bottom-color: #ffc;
 }
 
-.warning .rbox-data {
-	background: #ff4;
+.errors .rbox-data, .warning .rbox-data {
+	background: #ffc;
 	color: #000;
 	border-color: #f00;
 }
 
-.warning a {
-	color: #333 !important;
-	background: #ff4;
+.warning a,
+.warning a:link,
+.warning a:visited {
+	color: #b93c2e;
 }
 
 .simplebox {
@@ -429,8 +446,8 @@ table.admin {
 td.normal,
 .normal td,
 .wikitable td,
-td.odd,
-td.even,
+.odd,
+.even,
 td.form,
 .formcolor td,
 .editblogform td {
@@ -453,7 +470,7 @@ td.form {
 /** Tabs **/
 
 .tabactive {
-	border: solid 1px /*#696969*/ !important;
+	border: solid 1px;
 }
 
 /***** Wiki *****/
@@ -498,6 +515,13 @@ p.editdate {
 
 [class].wikitext .fancylist li p {
 	margin-left: -3px;
+}
+
+/* wikiplugin remarksbox */
+.wikitext .rbox-data ul {
+	list-style-type: disc;
+	margin-left: 15px;
+	padding-left: 15px;	
 }
 
 /* wikiplugin tracker */
@@ -1042,4 +1066,22 @@ table.treeTable .parent td {
 	font-style: italic;
 }
 
+/* jq tablesorter */
+.fancysort th.headerSortUp {
+	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset_up.png) !important;
+}
+.fancysort th.headerSortDown {
+	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset_down.png) !important;
+}
+.fancysort th.header {
+	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset.png);
+}
+
+ /* wikiplugin_tracker */
+.mandatory_note {
+	display: block;
+	font-style: italic;
+	color: red;
+	margin-top: 10px;
+}
 /* End of file */

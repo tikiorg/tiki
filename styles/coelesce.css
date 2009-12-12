@@ -848,6 +848,14 @@ div.simplebox {
 	padding: 1em;
 }
 
+.halffloat div.box,
+.wikitext .halffloat div.box {
+	width: 47%;
+	margin-right: 2%;
+ 
+}
+
+
 /***** Tables, Tabs and Lists ****/
 /** Tables **/
 table {

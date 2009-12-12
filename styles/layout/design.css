@@ -292,7 +292,6 @@ div.help_section {
 	font-size: smaller;
 }
 
-/* default look for editplugin icon links */
 .editplugin {
 	/*background: #fff; color: #000;*/
 }
@@ -341,6 +340,16 @@ div.help_section {
 
 .box-switch_lang ul {
 	padding: 0 1em;
+}
+
+.halffloat > div.box,
+.wikitext .halffloat > div.box,
+.thirdfloat > div.box,
+.wikitext .thirdfloat > div.box,
+.quarterfloat > div.box,
+.wikitext .quarterfloat > div.box {
+	background: none;
+	border: none;
 }
 
 .cbox-title {
@@ -937,9 +946,6 @@ td.mods_update {
 	color: #000;
 }
 
-/* Cluetip - JQuery tooltips
-   =cluetipClass: 'default' */
-
 .cluetip-default {
 	background: #bed8f1;
 	color: #000;
@@ -971,8 +977,6 @@ div#cluetip-close {
 	margin: 0;
 	padding: 0;
 }
-
-/* webmail & groupmail */
 
 .webmail_item {
 	font-size: .9em;
@@ -1030,8 +1034,6 @@ table.webmail_message_headers th {
 	background: transparent;
 }
 
-/* treeTable definitions - used in object-perms so far */
-
 table.treeTable .checkBoxHeader {
 	font-size: .8em;
 }
@@ -1044,7 +1046,6 @@ table.treeTable .parent td {
 	font-style: italic;
 }
 
-/* jq tablesorter */
 .fancysort th.headerSortUp {
 	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset_up.png) !important;
 }
@@ -1055,7 +1056,6 @@ table.treeTable .parent td {
 	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset.png);
 }
 
- /* wikiplugin_tracker */
 .mandatory_note {
 	display: block;
 	font-style: italic;
