@@ -29,7 +29,7 @@ html[dir=ltr]>body {
 	padding: 1em .5em;
 }
 
-body.tiki_fullscreen {
+body.fullscreen {
 	text-align: left;
 	background: #fff;
 }

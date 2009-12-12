@@ -20,7 +20,7 @@ html[dir=ltr]>body {
 	margin: 1em .5em;
 }
 
-body.tiki_fullscreen {
+body.fullscreen {
 	text-align: left;
 	background: #fff;
 }
