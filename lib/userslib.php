@@ -243,7 +243,7 @@ class UsersLib extends TikiLib {
 		
 		// go offline in Live Support
 		if ($prefs['feature_live_support'] == 'y') {
-			include_once ('lib/live_support/lslib.php');
+			global $access; include_once ('lib/live_support/lslib.php');
 			if ($lslib->get_operator_status($user) != 'offline') {
 				$lslib->set_operator_status($user, 'offline');
 			}
