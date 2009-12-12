@@ -1014,6 +1014,17 @@ function get_default_prefs() {
 		'auth_ldap_syncuserattr' => 'uid',
 		'auth_ldap_syncgroupattr' => 'cn',
 		
+		'auth_phpbb_version' => 3,
+		'auth_phpbb_skip_admin' => 'y',
+		'auth_phpbb_create_tiki' => 'n',
+		'auth_phpbb_dbhost' => '',
+		'auth_phpbb_dbport' => '',
+		'auth_phpbb_disable_tikionly' => 'n',
+		'auth_phpbb_dbuser' => '',
+		'auth_phpbb_dbpasswd' => '',
+		'auth_phpbb_dbname' => '',
+		'auth_phpbb_table_prefix' => 'phpbb_',
+
 		'https_login' => 'allowed',
 		'https_external_links_for_users' => 'n',
 		'feature_show_stay_in_ssl_mode' => 'y',

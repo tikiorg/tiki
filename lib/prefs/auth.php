@@ -15,6 +15,7 @@ function prefs_auth_list() {
 				'cas' => tra('CAS (Central Authentication Service)'),
 				'shib' => tra('Shibboleth'),
 				'ws' => tra('Web Server'),
+				'phpbb' => tra('phpBB'),
 			),
 		),
 		'auth_token_access' => array(

@@ -344,6 +344,12 @@ class UsersLib extends TikiLib
 	$cas_create_tiki_ldap = ($prefs['cas_create_user_tiki_ldap'] == 'y');
 	$cas_skip_admin = ($prefs['cas_skip_admin'] == 'y');
 
+	// read basic phpbb options
+	$auth_phpbb = ($prefs['auth_method'] == 'phpbb');
+	$phpbb_create_tiki = ($prefs['auth_phpbb_create_tiki'] == 'y');
+	$phpbb_skip_admin = ($prefs['auth_phpbb_skip_admin'] == 'y');
+	$phpbb_disable_tikionly = ($prefs['auth_phpbb_disable_tikionly'] == 'y');
+
 	// see if we are to use Shibboleth
 	$auth_shib = ($prefs['auth_method'] == 'shib');
 	$shib_create_tiki = ($prefs['shib_create_user_tiki'] == 'y');
@@ -375,9 +381,9 @@ class UsersLib extends TikiLib
 
 	// if we aren't using LDAP this will be quick
 	// if we are using tiki auth or if we're using an alternative auth except for admin
-	if ((!$auth_ldap && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_ldap && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin") || ($auth_ldap && ($prefs['auth_ldap_permit_tiki_users']=='y' && $userTiki))) { // todo: bad hack. better search for a more general solution here
-	    // if the user verified ok, log them in
-	    if ($userTiki)  //user validated in tiki, update lastlogin and be done
+	if ((!$auth_ldap && !$auth_pam && !$auth_cas && !$auth_shib && !$auth_phpbb) || ((($auth_ldap && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin) || ($auth_phpbb && $phpbb_skip_admin)) && $user == "admin") || ($auth_ldap && ($prefs['auth_ldap_permit_tiki_users']=='y' && $userTiki))) { // todo: bad hack. better search for a more general solution here
+			// if the user verified ok, log them in
+			if ($userTiki)  //user validated in tiki, update lastlogin and be done
 		return array($this->update_lastlogin($user), $user, $result);
 	    // if the user password was incorrect but the account was there, give an error
 	    elseif ($userTikiPresent)  //user ixists in tiki but bad password
@@ -726,6 +732,68 @@ class UsersLib extends TikiLib
 		return array($this->update_lastlogin($user), $user, $result);
 	}
 
+		elseif ($auth_phpbb) {
+				$result = $this->validate_user_phpbb($user, $pass);
+				switch ($result) {
+				case USER_VALID:
+						$userPhpbb = true;
+						break;
+				case PASSWORD_INCORRECT:
+						$userPhpbb = false;
+						break;
+				}
+
+		// start off easy
+			// if the user verified in Tiki and phpBB, log in
+			if ($userPhpbb && $userTiki) {
+						return array($this->update_lastlogin($user), $user, $result);
+			}
+			// if the user wasn't found in either system, just fail
+			elseif (!$userTikiPresent && !$userPhpbb) {
+						return array(false, $user, USER_UNKNOWN);
+			}
+			// if the user was logged into phpBB but not found in Tiki
+			elseif ($userPhpbb && !$userTikiPresent) {
+						// see if we can create a new account
+						if ($phpbb_create_tiki) {
+								// get the user email and then add the user to Tiki
+								$the_email = $this->phpbbauth->grabEmail($user);
+								$result = $this->add_user($user, $pass, $the_email);
+
+							// if it worked ok, just log in
+							if ($result == USER_VALID)
+										// before we log in, update the login counter
+										return array($this->update_lastlogin($user), $user, $result);
+							// if the server didn't work, do something!
+							elseif ($result == SERVER_ERROR) {
+										// check the notification status for this type of error
+										return array(false, $user, $result);
+							}
+							// otherwise don't log in.
+							else
+										return array(false, $user, $result);
+						}
+						// otherwise
+						else
+							// just say no!
+							return array(false, $user, $result);
+			}
+			// if the user was found in Tiki, but not found in phpBB, we should probably disable the user
+			elseif ($userTikiPresent && !$userPhpbb) {
+				if($phpbb_disable_tikionly) {
+					// would probably be better do flag the user as not active? How do you do that?
+					// and it also would be better to check if the user is active first.. :)
+					$this->invalidate_account($user);
+					global $logslib;
+					$logslib->add_log('auth_phpbb','NOTICE: Invalidated user ' . $user . ' due to missing phpBB account.');
+				}
+				return array(false, $user, ACCOUNT_DISABLED);
+			}
+			// if the user was logged into phpBB and found in Tiki (no password in Tiki user table necessary)
+			elseif ($userPhpbb && $userTikiPresent)
+						return array($this->update_lastlogin($user), $user, $result);
+		}
+
 	// we will never get here
 	return array(false, $user, $result);
     }
@@ -874,6 +942,28 @@ class UsersLib extends TikiLib
 			die('Assertion failed '.__FILE__.':'.__LINE__);
 		}
 
+	// validate the user from a phpBB database
+	function validate_user_phpbb($user, $pass) {
+		require_once('auth/phpbb.php');
+		$this->phpbbauth = new TikiPhpBBLib();
+		switch($this->phpbbauth->check($user, $pass)) {
+			case PHPBB_INVALID_CREDENTIALS:
+				return PASSWORD_INCORRECT;
+				break;
+			case PHPBB_INVALID_SYNTAX:
+			case PHPBB_NO_SUCH_USER:
+				return USER_NOT_FOUND;
+				break;
+			case PHPBB_SUCCESS:
+				//$logslib->add_log('phpbb','PhpBB user validation successful.');
+				return USER_VALID;
+				break;
+			default:
+				return SERVER_ERROR;
+		}
+		// this should never happen
+		die('Assertion failed '.__FILE__.':'.__LINE__);
+	}
 
     // Help function to disable the user password. Used, whenever the user password 
     // shall not be hold in the tiki db but in LDAP or somewhere else

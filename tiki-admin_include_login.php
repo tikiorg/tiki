@@ -121,6 +121,19 @@ if (isset($_REQUEST['auth_shib'])) {
 	simple_set_toggle('shib_usegroup');
 	simple_set_value('shib_group');
 }
+if (isset($_REQUEST['auth_phpbb'])) {
+	check_ticket('admin-inc-login');
+	simple_set_toggle('auth_phpbb_create_tiki');
+	simple_set_toggle('auth_phpbb_skip_admin');
+	simple_set_toggle('auth_phpbb_disable_tikionly');
+	simple_set_value('auth_phpbb_dbhost');
+	simple_set_value('auth_phpbb_dbuser');
+	simple_set_value('auth_phpbb_dbpasswd');
+	simple_set_value('auth_phpbb_dbname');
+	simple_set_value('auth_phpbb_table_prefix');
+	simple_set_value('auth_phpbb_version');
+	simple_set_value('auth_phpbb_dbport');
+}
 $smarty->assign('gd_lib_found', function_exists('gd_info') ? 'y' : 'n');
 // Get list of available languages
 $languages = array();
