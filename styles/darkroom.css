@@ -959,7 +959,7 @@ th,
 td.heading,
 tr.diffheader {
 	padding: 0 2px;
-	background: #292929 !important;
+	background: #292929;
 	text-align: center;
 	color: #f5f5f5;
 }
