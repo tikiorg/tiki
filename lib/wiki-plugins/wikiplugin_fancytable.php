@@ -26,7 +26,7 @@ function wikiplugin_fancytable_info() {
 		'documentation' => 'PluginFancyTable',
 		'description' => tra("Displays the data using the Tikiwiki odd/even table style"),
 		'prefs' => array('wikiplugin_fancytable'),
-		'body' => tra('One row per line, cells separated by |.'),
+		'body' => tra('Rows separated by >> in the header; for the table body, one row per line. Cells separated by | in both cases.'),
 		'params' => array(
 			'head' => array(
 				'required' => false,
@@ -65,7 +65,7 @@ function wikiplugin_fancytable_info() {
 			'colwidths' => array(
 				'required' => false,
 				'name' => tra('Column widths'),
-				'description' => tra('Column widths in pixels or percentages separated by |.'),
+				'description' => tra('Column widths followed by px for pixels or % for percentages. Each column separated by |.'),
 			),
 			'colaligns' => array(
 				'required' => false,
@@ -85,6 +85,15 @@ function wikiplugin_fancytable($data, $params) {
 	global $tikilib, $prefs;
 	static $iFancytable = 0;
 	++$iFancytable;
+	//Patterns to keep | within external and internal links from being treated as column separators
+	$patterns[0] = '/(\[[^(~|~)]+)\~\|\~([^(~|~)]+\])/'; //for [ | ]
+	$patterns[1] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/'; // for (( | ))
+	$patterns[2] = '/(\[[^(~|~)]+)\~\|\~([^(~|~)]+)\~\|\~([^(~|~)]+\])/'; // for [ | | ]
+	$patterns[3] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/'; // for (( | | ))
+	$replace[0] = '$1|$2';
+	$replace[1] = '$1|$2';
+	$replace[2] = '$1|$2|$3';
+	$replace[3] = '$1|$2|$3';
 	extract ($params,EXTR_SKIP);
 	if (empty($sortable)) $sortable = 'n';
 	$tdend = '</td>';
@@ -96,11 +105,12 @@ function wikiplugin_fancytable($data, $params) {
 	
 	//header rows
   	if (isset($head)) {
-		if (strpos($head, '~|~') !== FALSE) {
-			$separator = '~|~'; 
-		} elseif (strpos($head, '|') !== FALSE) {
-			$separator = '|';
-		}
+  		//Although user can set | as column separators, program uses only ~|~
+		//If | is being used, first replace all | with ~|~, then revert back to | for those (up to 2) inside links
+		if (strpos($head, '~|~') == FALSE) {
+			$head = str_replace('|', '~|~', $head);
+			$head = preg_replace($patterns, $replace , $head);	
+		}	
 		if (isset($headclass)) {
 			if (strpos($headclass,'"')) {
 				$headclass = str_replace('"',"'",$class);
@@ -115,24 +125,24 @@ function wikiplugin_fancytable($data, $params) {
 			$hvaligns = isset($headvaligns)?  explode('|', $headvaligns) : '';
 		}
 		$hlines = explode('>>', $head);
-		$rowheads = process_lines($hlines, $separator, 'h', $tdhdr, '</th>', $colsw, $haligns, $hvaligns);
+		$rowheads = process_lines($hlines, '~|~', 'h', $tdhdr, '</th>', $colsw, $haligns, $hvaligns);
 		$wret .= '<thead>' . $rowheads . "\r\t" . '</thead>' . "\r\t" . '<tbody>' ;
 	} 
 	
 	//table body rows
+	//Although user can set | as column separators, program uses only ~|~
+	//If | is being used, first replace all | with ~|~, then revert back to | for those (up to 2) inside links
+	if (strpos($data, '~|~') == FALSE) {
+		$data = str_replace('|', '~|~', $data);
+		$data = preg_replace($patterns, $replace , $data);
+	}	
 	$lines = split("\n", $data);
-	if (strpos($data, '~|~') !== FALSE) {
-		$separator = '~|~'; 
-	} elseif (strpos($data, '|') !== FALSE) {
-		$separator = '|';
-	}
-
 	if (isset($colwidths) || isset($colaligns) || isset($colvaligns)) {
 		$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
 		$caligns = isset($colaligns) ?  explode('|', $colaligns) : '';
 		$cvaligns = isset($colvaligns)?  explode('|', $colvaligns) : '';
 	}
-	$wret .= process_lines($lines, $separator, 'r', '', '</td>', $colsw, $caligns, $cvaligns);
+	$wret .= process_lines($lines, '~|~', 'r', '', '</td>', $colsw, $caligns, $cvaligns);
 
 	// End the table
 	if (isset($head)) {
@@ -191,9 +201,7 @@ function wikiplugin_fancytable($data, $params) {
 					}
 					//create rowspan if there are \ characters at beginning of cell
 					if ($matches[1][0] || $matches[3][0]) {
-						if (!empty($matches[1][0])) $rnum = substr_count($matches[0][0], $matches[1][0]);
-						if (!empty($matches[3][0])) $rnum .= substr_count($matches[0][0], $matches[3][0]);
-						$rowspan = ' rowspan="' . $rnum . '"';
+						$rowspan = ' rowspan="' . (substr_count($matches[0][0], $matches[1][0]) + substr_count($matches[0][0], $matches[3][0])) . '"';
 						//Note the row and column number when rowspan is set so subsequent rows and columns can be processed properly
 						$keepi = $i;
 						$keepl = $l;
