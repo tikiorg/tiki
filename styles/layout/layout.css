@@ -753,16 +753,15 @@ span.moduleflip,
 	float: left !important;
 	clear: none;
 	width: 48%;
-	margin-right: 2%;
- 
-}
+	margin: 0 2% 0 0;
+ }
 
 .thirdfloat div.box,
 .wikitext .thirdfloat div.box {
 	float: left !important;
 	clear: none;
 	width: 31%;
-	margin-right: 2%
+	margin: 0 2% 0 0;
 }
 
 .quarterfloat div.box,
@@ -770,7 +769,7 @@ span.moduleflip,
 	float: left !important; 
 	clear: none; 
 	width: 22%;
-	margin-right: 2%;
+	margin: 0 2% 0 0;
 }
 
 /***** Tables, Tabs ****/
@@ -1095,13 +1094,13 @@ span.posthead {
 	display: block;
 }
 
-body.blogs .post .postfooter {
+body.tiki_blogs .post .postfooter {
 	clear: both;
 	float: right;
 }
 
 /***** Forums *****/
-body.forums table.normal {
+body.tiki_forums table.normal {
 	margin: auto;
 }
 
@@ -1295,7 +1294,7 @@ table.galtable {
 	width: 100%;
 }
 
-body.galleries table.findtable {
+body.tiki_galleries table.findtable {
 	display: inline;
 }
 

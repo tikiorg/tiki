@@ -1183,7 +1183,7 @@ table.admin div#content1 div.tabcontent div.cbox {
 
 /*** Feature-specific selectors ***/
 /***** Wiki *****/
-body.wiki #comments {
+body.tiki_wiki #comments {
 	padding: 1em;
 }
 
@@ -1437,7 +1437,7 @@ span.posthead {
 	letter-spacing: .4pt;
 }
 
-body.blogs .postbody-title {
+body.tiki_blogs .postbody-title {
 	background: #1B3C54 url(strasa/headerbg.jpg);
 	float: none;
 	width: 100%;
@@ -1446,55 +1446,55 @@ body.blogs .postbody-title {
 	border: 0;
 }
 
-body.blogs .postbody-title img {
+body.tiki_blogs .postbody-title img {
 	float: right;
 }
 
-body.blogs .post .title h2 {
+body.tiki_blogs .post .title h2 {
 	font-size: 1.2em;
 }
 
-body.blogs .post .postbody {
+body.tiki_blogs .post .postbody {
 	margin-right: 8px;
 	line-height: 1.2em;
 	margin-bottom: 1em;
 }
 
-body.blogs div.author_actions {
+body.tiki_blogs div.author_actions {
 	float: none;
 	border: 0;
 	width: 100%;
 }
 
-body.blogs .author_actions .actions {
+body.tiki_blogs .author_actions .actions {
 	float: right;
 	background: url(strasa/login.jpg) no-repeat 100% 0;
 	text-align: right;
 	min-height: 24px;
 }
 
-body.blogs .actions img.icon {
+body.tiki_blogs .actions img.icon {
 	padding: 4px 0;
 }
 
-body.blogs .author_info {
+body.tiki_blogs .author_info {
 	min-height: 24px;
 }
 
-body.blogs .author_info img {
+body.tiki_blogs .author_info img {
 	vertical-align: top;
 }
 
-body.blogs .postbody-title {
+body.tiki_blogs .postbody-title {
 	border: 0;
 }
 	
-body.blogs .postbody .postfooter {
+body.tiki_blogs .postbody .postfooter {
 	width: 100%;
 	margin-bottom: 2em;
 }
 
-body.blogs .post .postfooter .actions {
+body.tiki_blogs .post .postfooter .actions {
 	float: left;
 }
 

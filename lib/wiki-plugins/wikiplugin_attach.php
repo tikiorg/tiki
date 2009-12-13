@@ -255,14 +255,14 @@ function wikiplugin_attach($data, $params) {
 					require("lib/mime/mimeextensions.php");
 				}
 				$ext = $atts['data'][$n]['filetype'];
-				if (isset($mimeextensions["$ext"]) and (is_file("img/icn/".$mimeextensions["$ext"].".gif"))) {
-					$link.= '<img src="img/icn/'.$mimeextensions["$ext"].'.gif" border="0" />&nbsp;';
+				if (isset($mimeextensions["$ext"]) and (is_file("pics/icons/mime/".$mimeextensions["$ext"].".png"))) {
+					$link.= '<img src="pics/icons/mime/'.$mimeextensions["$ext"].'.png" />&nbsp;';
 				} else {
 					$string = strtolower(substr($atts['data'][$n]['filename'], strlen($atts['data'][$n]['filename'])-3));
-					if (is_file("img/icn/".$string.".gif"))
-						$link.= '<img src="img/icn/'.$string.'.gif" border="0" />&nbsp;';
+					if (is_file("pics/icons/mime/".$string.".png"))
+						$link.= '<img src="pics/icons/mime/'.$string.'.png" />&nbsp;';
 					else
-						$link.= '<img src="img/icn/else.gif" border="0" />&nbsp;';
+						$link.= '<img src="pics/icons/mime/default.png" />&nbsp;';
 				}
 			}
 

@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
-$section_class="wiki_page print";
+$section_class="tiki_wiki_page print";
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
 if ($prefs['feature_wiki'] != 'y') {

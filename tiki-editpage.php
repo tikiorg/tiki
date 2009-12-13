@@ -16,7 +16,7 @@ $inputConfiguration = array(
 );
 
 $section = "wiki page";
-$section_class = "wiki_page manage";	// This will be body class instead of $section
+$section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/structures/structlib.php');

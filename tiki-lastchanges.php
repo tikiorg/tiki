@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-lastchanges.php,v 1.19.2.1 2007-11-08 21:31:12 ricks99 Exp $
 $section = 'wiki page';
-$section_class = "wiki_page manage";	// This will be body class instead of $section
+$section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/histlib.php');
 $auto_query_args = array('sort_mode', 'offset', 'find', 'days');
