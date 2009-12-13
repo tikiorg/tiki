@@ -38,6 +38,11 @@ function wikiplugin_toc_info()
 				'description' => tra('plain|fancy'),
 				'required' => false,
 			),
+			'pagename' => array(
+				'name' => tra('Page Name'),
+				'description' => tra('By default, toc for current page will be displayed. Alternate page may be provided.'),
+				'required' => false,
+			),
 		),
 	);
 }
@@ -52,6 +57,7 @@ function wikiplugin_toc( $data, $params )
 		'structId' => '',
 		'maxdepth' => 0,
 		'numberPrefix' => '',
+		'pagename' => '',
 	);
 
 	$params = array_merge( $defaults, $params );
@@ -61,10 +67,16 @@ function wikiplugin_toc( $data, $params )
 	include_once ("lib/structures/structlib.php");
 	if (empty($structId)) {
 		if (!empty($page_ref_id)) {	//And we are currently viewing a structure
-			$page_info = $structlib->s_get_page_info($page_ref_id);
-			$structure_info = $structlib->s_get_structure_info($page_ref_id);
+			$pageName_ref_id = null;
+			if(!empty($pagename)) {
+				$pageName_ref_id = $structlib->get_struct_ref_id($pagename);
+			} else {
+				$pageName_ref_id = $page_ref_id;
+			}
+			$page_info = $structlib->s_get_page_info($pageName_ref_id);
+			$structure_info = $structlib->s_get_structure_info($pageName_ref_id);
 			if (isset($page_info)) {
-				$html = $structlib->get_toc($page_ref_id, $order, $showdesc, $shownum, $numberPrefix, $type, '', $maxdepth, $structure_info['pageName']);
+				$html = $structlib->get_toc($pageName_ref_id, $order, $showdesc, $shownum, $numberPrefix, $type, '', $maxdepth, $structure_info['pageName']);
 				return "~np~$html~/np~";
 			}
 		}

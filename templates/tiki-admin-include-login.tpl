@@ -23,6 +23,7 @@
 							<option value="cas" {if $prefs.auth_method eq 'cas'} selected="selected"{/if}>{tr}CAS (Central Authentication Service){/tr}</option>
 							<option value="shib" {if $prefs.auth_method eq 'shib'} selected="selected"{/if}>{tr}Shibboleth{/tr}</option>
 							<option value="ws" {if $prefs.auth_method eq 'ws'} selected="selected"{/if}>{tr}Web Server{/tr}</option>
+							<option value="phpbb" {if $prefs.auth_method eq 'phpbb'} selected="selected"{/if}>{tr}phpBB{/tr}</option>
 						</select> {if $prefs.feature_help eq 'y'} {help url="Login+Authentication+Methods"}{/if}
 					</div>
 				</div>	
@@ -598,6 +599,70 @@
 							{preference name='cas_authentication_timeout'}
 						</fieldset>
 				</fieldset>	 
+			{/tab}
+			{tab name="{tr}phpBB{/tr}"}
+				<fieldset><legend>{tr}phpBB{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthphpBB" desc="{tr}phpBB User Database Authentication {/tr}"}{/if}</legend>
+					<input type="hidden" name="auth_phpbb" />
+					{if $prefs.auth_method ne 'phpbb'}
+						<div style="padding:0.5em;clear:both" class="simplebox">
+							<div>{icon _id=information} {tr}You must change the Authentication Method to phpBB for these changes to take effect{/tr}.</div>
+						</div>
+					{/if}
+
+					<div class="adminoptionbox">
+						<div class="adminoption"><input id="auth_phpbb_create_tiki" type="checkbox" name="auth_phpbb_create_tiki" {if $prefs.auth_phpbb_create_tiki eq 'y'}checked="checked"{/if} /></div>
+						<div class="adminoptionlabel"><label for="auth_phpbb_create_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
+					</div>
+					<div class="adminoptionbox">
+						<div class="adminoption"><input id="auth_phpbb_skip_admin" type="checkbox" name="auth_phpbb_skip_admin" {if $prefs.auth_phpbb_skip_admin eq 'y'}checked="checked"{/if} /></div>
+						<div class="adminoptionlabel"><label for="auth_phpbb_skip_admin">{tr}Skip admin user{/tr}.</label></div>
+					</div>
+					<div class="adminoptionbox">
+						<div class="adminoption"><input id="auth_phpbb_disable_tikionly" type="checkbox" name="auth_phpbb_disable_tikionly" {if $prefs.auth_phpbb_disable_tikionly eq 'y'}checked="checked"{/if} /></div>
+						<div class="adminoptionlabel"><label for="auth_phpbb_disable_tikionly">{tr}Disable Tiki users who doesn't have a phpBB login. (They could have been deleted).{/tr}.</label></div>
+					</div>
+					<div class="adminoptionbox">
+					<div class="adminoptionlabel"><label for="auth_phpbb_version">{tr}phpBB Version:{/tr}</label>
+						<select name="auth_phpbb_version" id="auth_phpbb_version">
+							<option value="3" {if $prefs.auth_phpbb_version eq '3'} selected="selected"{/if}>{tr}3{/tr}</option>
+						</select>
+					</div>
+					</div>
+					<div style="padding:0.5em;clear:both" class="simplebox">
+						<div>{icon _id=information} {tr}MySql only (for now){/tr}.</div>
+					</div>
+					<div class="adminoptionbox">
+						<div class="adminoptionlabel"><label for="auth_phpbb_dbhost">{tr}phpBB Database Hostname:{/tr}</label>
+						<input type="text" id="auth_phpbb_dbhost" name="auth_phpbb_dbhost" value="{$prefs.auth_phpbb_dbhost}" size="50" />
+						</div>
+					</div>
+					<!-- // commented out - will we use a db port?
+					<div class="adminoptionbox">
+						<div class="adminoptionlabel"><label for="auth_phpbb_dbport">{tr}phpBB Database Port:{/tr}</label>
+						<input type="text" id="auth_phpbb_dbport" name="auth_phpbb_dbport" value="{$prefs.auth_phpbb_dbport}" size="50" />
+						</div>
+					</div> /-->
+					<div class="adminoptionbox">
+						<div class="adminoptionlabel"><label for="auth_phpbb_dbuser">{tr}phpBB Database Username:{/tr}</label>
+						<input type="text" id="auth_phpbb_dbuser" name="auth_phpbb_dbuser" value="{$prefs.auth_phpbb_dbuser}" size="50" />
+						</div>
+					</div>
+					<div class="adminoptionbox">
+						<div class="adminoptionlabel"><label for="auth_phpbb_dbpasswd">{tr}phpBB Database Password:{/tr}</label>
+						<input type="password" id="auth_phpbb_dbpasswd" name="auth_phpbb_dbpasswd" value="{$prefs.auth_phpbb_dbpasswd}" size="50" />
+						</div>
+					</div>
+					<div class="adminoptionbox">
+						<div class="adminoptionlabel"><label for="auth_phpbb_dbname">{tr}phpBB Database Name:{/tr}</label>
+						<input type="text" id="auth_phpbb_dbname" name="auth_phpbb_dbname" value="{$prefs.auth_phpbb_dbname}" size="50" />
+						</div>
+					</div>
+					<div class="adminoptionbox">
+						<div class="adminoptionlabel"><label for="auth_phpbb_table_prefix">{tr}phpBB Table Prefix:{/tr}</label>
+						<input type="text" id="auth_phpbb_table_prefix" name="auth_phpbb_table_prefix" value="{$prefs.auth_phpbb_table_prefix}" size="50" />
+						</div>
+					</div>
+				</fieldset>
 			{/tab}
 		{/tabset}
 		<div class="heading input_submit_container" style="text-align: center">

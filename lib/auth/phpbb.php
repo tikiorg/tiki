@@ -1,11 +1,12 @@
 <?php
-// Tikiwiki authentication backend for phpBB3 with mysql4
-// By Jacob Moen 10 Dec 2009
+// Tikiwiki authentication backend for phpBB3 with adodb
+// By Jacob 'jacmoe2' Moen 10 Dec 2009
 // Based on:
 // Mediawiki authentication plugin for phpBB3 with mysql4
 // By Steve Streeting 26 Dec 2008
 
-require_once ("lib/auth/PasswordHash.php");
+require_once('lib/adodb/adodb.inc.php');
+require_once ('lib/auth/PasswordHash.php');
 
 // some definitions for helping with authentication
 // Er, what about definition clashes ?
@@ -19,6 +20,8 @@ define("SERVER_ERROR", -1);
 //TODO: support other database types
 
 class TikiPhpBBLib {
+
+	var $db;
 
 	function check($user, $pass) {
 
@@ -44,15 +47,12 @@ class TikiPhpBBLib {
 		$dbuser = $prefs['auth_phpbb_dbuser'];
 		$dbpasswd = $prefs['auth_phpbb_dbpasswd'];
 		$dbname = $prefs['auth_phpbb_dbname'];
-		// not really used - will it be used?
-		//$dbport = $prefs['auth_phpbb_dbport'];
+		$dbtype = 'mysql';//$prefs['auth_phpbb_dbtype'];
 
-		//$dbconnection = mysql_connect($dbhost.':'.$dbport, $dbuser, $dbpasswd)
-		$dbconnection = mysql_connect($dbhost, $dbuser, $dbpasswd)
-			or die('AuthPhpBB : Could not connect: ' . mysql_error());
+		$dbconnection = NewADOConnection($dbtype);
+		$dbconnection->Connect($dbhost, $dbuser, $dbpasswd, $dbname);
 
 		if($dbconnection) {
-			mysql_select_db($dbname, $dbconnection);
 			return $dbconnection;
 		}
 		return false;
@@ -72,15 +72,12 @@ class TikiPhpBBLib {
 
 		// MySQL queries are case insensitive anyway
 		$query = "select username from ".$prefs['auth_phpbb_table_prefix']."users where lcase(username) = lcase('". $username ."')";
-		$result = mysql_query($query, $dbconnection)
-			or die('AuthPhpBB : Query failed: ' . mysql_error());
+		$result = $dbconnection->Execute($query);
+		if ($result === false) die('AuthPhpBB : Query failed: ' . $dbconnection->ErrorMsg());
 
 		$numrows = mysql_num_rows($result);
 
-		// Free resultset
-		mysql_free_result($result);
-
-		return $numrows > 0;
+		return $result->RecordCount() > 0;
 
 	}
 
@@ -98,10 +95,10 @@ class TikiPhpBBLib {
 		$dbconnection = $this->connectdb();
 
 		$query = "select user_password from ".$prefs['auth_phpbb_table_prefix']."users where lcase(username) = lcase('". $username ."')";
-		$result = mysql_query($query, $dbconnection)
-			or die('AuthPhpBB : Query failed: ' . mysql_error());
+		$result = $dbconnection->Execute($query);
+		if ($result === false) die('AuthPhpBB : Query failed: ' . $dbconnection->ErrorMsg());
 
-		if (mysql_num_rows($result) == 0) {
+		if ($result->RecordCount() == 0) {
 			return false;
 		}
 		else {
@@ -109,8 +106,7 @@ class TikiPhpBBLib {
 		// This one is hardcoded for phpbb3
 			$PasswordHasher = new PasswordHash(8, TRUE);
 
-			$row = mysql_fetch_row($result);
-			if ($PasswordHasher->CheckPassword($password, $row[0])) {
+			if ($PasswordHasher->CheckPassword($password, $result->fields[0])) {
 				return true;
 			}
 			else {
@@ -132,12 +128,11 @@ class TikiPhpBBLib {
 
 		// Just add email
 		$query = "select user_email from ".$prefs['auth_phpbb_table_prefix'] . "users where lcase(username) = lcase('". $username ."')";
-		$result = mysql_query($query, $dbconnection)
-			or die('AuthPhpBB : Query failed: ' . mysql_error());
+		$result = $dbconnection->Execute($query);
+		if ($result === false) die('AuthPhpBB : Query failed: ' . $dbconnection->ErrorMsg());
 
-		if (mysql_num_rows($result) > 0) {
-			$row = mysql_fetch_row($result);
-			return $row[0];
+		if ($result->RecordCount() > 0) {
+			return $result->field[0];
 		}
 
 		return 0;

@@ -1023,6 +1023,7 @@ function get_default_prefs() {
 		'auth_phpbb_dbuser' => '',
 		'auth_phpbb_dbpasswd' => '',
 		'auth_phpbb_dbname' => '',
+		'auth_phpbb_dbtype' => 'mysql',
 		'auth_phpbb_table_prefix' => 'phpbb_',
 
 		'https_login' => 'allowed',
