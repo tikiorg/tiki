@@ -119,11 +119,9 @@ function wikiplugin_fancytable($data, $params) {
 		} else {
 			$tdhdr = "\r\t\t\t<th";
 		}
-		if (isset($colwidths) || isset($headaligns) || isset($headvaligns)) {
-			$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
-			$haligns = isset($headaligns) ?  explode('|', $headaligns) : '';
-			$hvaligns = isset($headvaligns)?  explode('|', $headvaligns) : '';
-		}
+		$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
+		$haligns = isset($headaligns) ?  explode('|', $headaligns) : '';
+		$hvaligns = isset($headvaligns)?  explode('|', $headvaligns) : '';
 		$hlines = explode('>>', $head);
 		$rowheads = process_lines($hlines, '~|~', 'h', $tdhdr, '</th>', $colsw, $haligns, $hvaligns);
 		$wret .= '<thead>' . $rowheads . "\r\t" . '</thead>' . "\r\t" . '<tbody>' ;
@@ -137,11 +135,9 @@ function wikiplugin_fancytable($data, $params) {
 		$data = preg_replace($patterns, $replace , $data);
 	}	
 	$lines = split("\n", $data);
-	if (isset($colwidths) || isset($colaligns) || isset($colvaligns)) {
-		$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
-		$caligns = isset($colaligns) ?  explode('|', $colaligns) : '';
-		$cvaligns = isset($colvaligns)?  explode('|', $colvaligns) : '';
-	}
+	$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
+	$caligns = isset($colaligns) ?  explode('|', $colaligns) : '';
+	$cvaligns = isset($colvaligns)?  explode('|', $colvaligns) : '';
 	$wret .= process_lines($lines, '~|~', 'r', '', '</td>', $colsw, $caligns, $cvaligns);
 
 	// End the table
