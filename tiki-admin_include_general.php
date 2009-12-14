@@ -92,7 +92,7 @@ if (isset($_REQUEST["newadminpass"])) {
 	$smarty->assign('pagetop_msg', tra('Your admin password has been changed'));
 }
 // Get list of time zones
-$smarty->assign_by_ref("timezones", TikiDate::getTimeZoneList());
+$smarty->assign("timezones", TikiDate::getTimeZoneList());
 // Get information for alternate homes
 $smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $prefs['home_forum']);
 $smarty->assign("home_blog_url", "tiki-view_blog.php?blogId=" . $prefs['home_blog']);
