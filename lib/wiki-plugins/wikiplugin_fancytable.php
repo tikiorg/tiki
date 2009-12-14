@@ -1,18 +1,15 @@
 <?php
-
 // Displays the data using the Tikiwiki odd/even table style
 //
-// Parameters:
-//   head -- the column header row
-//   headclass -- css class to apply on head row
-//
 // Usage:
-//   - The data (and the head paramter) is given one row per line, with columns
+//	- The data is given one row per line, with columns
 //   separated by |. (~|~ was used as a separator before 4.0 and is also accepted)
-//   - In any cell, indicate number of columns to span with forward slashes at the beginning, number of rows to span with backslashes.	
+//	- Head rows separated by >> 
+//  - In any cell, indicate number of columns to span with forward slashes at the beginning, number of rows to span with backslashes.	
 //
 // Example:
-// {FANCYTABLE( head=" header column 1 | header column 2 | header column 3", headclass=xx, headaligns= , headvaligns= , colwidths= , colaligns= , colvaligns= )}
+// {FANCYTABLE( head=" head r1c1 | head r1c2 | head r1c3>>head r2c1 | head r2c2 | head r2c3", headclass=xx, 
+// 				headaligns= , headvaligns= , colwidths= , colaligns= , colvaligns= , sortable= , sortList= )}
 // row 1 column 1 | row 1 column 2 | row 1 column 3
 // row 2 column 1 | row 2 column 2 | row 2 column 3
 // {FANCYTABLE}
@@ -160,11 +157,12 @@ function wikiplugin_fancytable($data, $params) {
 	$trbeg = "\r\t\t<tr>";
 	$trend = "\r\t\t</tr>";
 	$l = 0;
-	$keepi = '';
+	$keepc = '';
 	$keepl = '';
 	$rnum = '';
+	$rnum1 = '';
+	$rnum2 = '';
 	$wret = '';
-	if ($type == 'h') $h = 1; //note which are header rows
 	$row_is_odd = true;
 	//Each row
 	foreach ($lines as $line) {
@@ -179,11 +177,12 @@ function wikiplugin_fancytable($data, $params) {
 					$row_is_odd = true;
 				}
 			}	
-			$i = 0;
+			$c = 0;
 			$row = '';
 			$parts = explode($separator, $line);
 			//Each column within a row
 			foreach ($parts as $column) {
+				$colnum = 'col' . $c;				
 				$colspan = '';
 				$rowspan = '';
 				/*Match / (colspan) or \ (rowspan) characters in whichever order at the beginning of the cell
@@ -197,27 +196,37 @@ function wikiplugin_fancytable($data, $params) {
 					}
 					//create rowspan if there are \ characters at beginning of cell
 					if ($matches[1][0] || $matches[3][0]) {
-						$rowspan = ' rowspan="' . (substr_count($matches[0][0], $matches[1][0]) + substr_count($matches[0][0], $matches[3][0])) . '"';
-						//Note the row and column number when rowspan is set so subsequent rows and columns can be processed properly
-						$keepi = $i;
-						$keepl = $l;
+						if ($matches[1][0]) $rnum1 = substr_count($matches[0][0], $matches[1][0]);
+						if ($matches[3][0]) $rnum2 = substr_count($matches[0][0], $matches[3][0]);
+						$rnum = $rnum1+ $rnum2;
+						$rowspan = ' rowspan="' . $rnum . '"';
+						//If there's another rowspan still in force, bump up the column number
+						if (isset(${$colnum}['col']) && ${$colnum}['col'] == $c) {
+							if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) $c++;
+						}
+						//Note the info for this new rowspan
+						${$colnum}['col'] = $c;
+						${$colnum}['line'] = $l;
+						${$colnum}['span'] = $rnum;
 					}
 				}
 				if (isset($widths) || isset($aligns) || isset($valigns)) {
-					if (($i == $keepi) && ($rnum > 0) && ($l > $keepl)) $i++;	//skip column number is still under rowspan
+					//If there's another rowspan still in force, bump up the column number
+					if (isset(${$colnum}['col']) && ${$colnum}['col'] == $c && ($l > ${$colnum}['line'])) {
+						if ((${$colnum}['span'] - ($l - ${$colnum}['line'])) > 0) $c++;
+					}
 					$colstyle = ' style="';
-					$colstyle .= !empty($widths) ? ' width: ' . $widths[$i] . ';' : '';
-					$colstyle .= !empty($aligns) ? ' text-align: ' . $aligns[$i] . ';' : '';
-					$colstyle .= !empty($valigns) ? ' vertical-align: ' . $valigns[$i] : '';
+					$colstyle .= !empty($widths) ? ' width: ' . $widths[$c] . ';' : '';
+					$colstyle .= !empty($aligns) ? ' text-align: ' . $aligns[$c] . ';' : '';
+					$colstyle .= !empty($valigns) ? ' vertical-align: ' . $valigns[$c] : '';
 					$colstyle .= '"';
-					$i++;   //increment column number
+					$c++;   //increment column number
 				}
 				$row .= $cellbeg . $colspan . $rowspan . $colstyle . '>' . $column . $cellend;
 			}
 			$wret .= $trbeg . $row . $trend;
 		}
 		$l++;   //increment row number
-		$rnum--;  //decrement to represent how many rowspan rows are left
 	}
 	return $wret;
 }  
