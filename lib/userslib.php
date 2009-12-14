@@ -2846,7 +2846,7 @@ function get_included_groups($group, $recur=true) {
 		$result = $this->query($query, array($user));
 
 		$requests = array();
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow('DB_FETCHMODE_ASSOC')) {
 		    $requests[$res['userFrom']] = $res['tstamp'];
 		}
 
@@ -2859,7 +2859,7 @@ function get_included_groups($group, $recur=true) {
 		$result = $this->query($query, array($user));
 
 		$requests = array();
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow('DB_FETCHMODE_ASSOC')) {
 		    $requests[$res['userTo']] = $res['tstamp'];
 		}
 
