@@ -901,9 +901,8 @@ form.admin fieldset {
 form.admin legend.heading {
 	background: transparent;
 	border: none;
-	line-height: 2em;
-	padding-left: 0;
-	padding-right: 0;
+	line-height: 1em;
+	padding-right: 0 5px;
 }
 
 form.admin legend.heading a {
@@ -935,6 +934,14 @@ form.admin legend.heading a:hover span {
 	border-left: solid 1px #8cacbb;
 	border-right: solid 1px #8cacbb;
 }
+
+form.admin legend.heading .icon {
+	margin: 0 2px 0 0;
+}
+form.admin legend.heading span {
+	margin: 0 2px 0 0;
+	vertical-align: middle;
+	}
 
 div.heading {
 	margin: 3px 2px;
