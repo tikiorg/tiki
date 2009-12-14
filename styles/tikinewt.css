@@ -805,6 +805,10 @@ div.simplebox {
 	border: 1px solid #000;
 }
 
+.rbox-title span {
+	vertical-align: middle;
+	}
+
 .note .rbox-title {
 	background: #ccccdd;
 	border: 1px solid #ccccdd;
