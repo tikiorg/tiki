@@ -17,6 +17,7 @@
  *  - highlight	"y|n" default=n
  *  - icon		Override default icons. See function.icon.php for more info
  *  - close		"y|n" default=y (close button)
+ *  - width		e.g. "50%", "200px" default=""
  */
 
 //this script may only be included - so its better to die if called directly.
@@ -31,6 +32,7 @@ function smarty_block_remarksbox($params, $content, &$smarty) {
 	if (!isset($type))  $type = 'tip';
 	if (!isset($title)) $title = '';
 	if (!isset($close)) $close = 'y';
+	if (!isset($width)) $width = '';
 	
 	if (isset($highlight) && $highlight == 'y') {
 		$highlightClass = ' highlight';
@@ -59,6 +61,7 @@ function smarty_block_remarksbox($params, $content, &$smarty) {
 	$smarty->assign('remarksbox_highlight', $highlightClass);
 	$smarty->assign('remarksbox_icon', $icon);
 	$smarty->assign('remarksbox_close', $close);
+	$smarty->assign('remarksbox_width', $width);
 	$smarty->assign_by_ref('remarksbox_content', $content);
 	return $smarty->fetch('remarksbox.tpl');
 }
