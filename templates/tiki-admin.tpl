@@ -132,6 +132,7 @@ Add a value in first check when you create a new admin page. *}
 
 	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br />
 	<a href="tiki-admin_notifications.php">{tr}Mail Notifications{/tr}</a> 
+	{if $prefs.feature_perspective eq 'y'}<a href="tiki-edit_perspective.php">{tr}Perspectives{/tr}</a>{/if}
 	<hr />
 
 	{tr}Navigation features{/tr}:<br />

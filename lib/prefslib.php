@@ -95,7 +95,7 @@ class PreferencesLib
 			if( isset( $info['separator'] ) ) {
 				$out[ $name ] = $filter->asArray( $name, $info['separator'] );
 			} else {
-				$out[ $name ] = $filter->$name;
+				$out[ $name ] = $filter[$name];
 			}
 		}
 

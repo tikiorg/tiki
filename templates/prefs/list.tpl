@@ -1,4 +1,4 @@
-<div style="text-align: left;">
+<div class="adminoptionbox" style="text-align: left;">
 	<label for="{$p.id|escape}">{$p.name|escape}:</label>
 	<select name="{$p.preference|escape}" id="{$p.id|escape}">
 		{foreach from=$p.options key=value item=label}
