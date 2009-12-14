@@ -70,6 +70,14 @@ close();
 						{/if}
 					{/if}
 				{/if}
+				{if $required_preferences && $prefs.feature_search_preferences eq 'y'}
+					<form method="post" action="tiki-admin.php">
+						{foreach from=$required_preferences item=pref}
+							{preference name=$pref}
+						{/foreach}
+						<input type="submit" value="{tr}Set{/tr}"/>
+					</form>
+				{/if}
 				{if isset($extraButton)}
 					<div>
 					{$extraButton.comment}
