@@ -239,6 +239,7 @@ class HistLib extends TikiLib {
 
 		$bindvars = array();
 		$categories = $this->get_jail();
+		if (!isset($categjoin)) $categjoin = '';
 		if ($categories) {
 			$categjoin .= "inner join `tiki_objects` as tob on (tob.`itemId`= ta.`object` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, count($categories), '?')) . ")) ";
 			$bindvars = array_merge(array('wiki page'), $categories);
