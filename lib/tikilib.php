@@ -925,7 +925,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 		$csort_mode = '';
 		if (substr($sort_mode,0,2) == "f_") {
-			list($a,$csort_mode,$corder) = split('_',$sort_mode);
+			list($a,$csort_mode,$corder) = explode('_',$sort_mode, 3);
 		}
 		$trackerId = (int) $trackerId;
 		if ($trackerId == -1) {
@@ -1430,7 +1430,7 @@ class TikiLib extends TikiDb_Bridge
 			$user = substr($user,0,strpos($user,'@'));
 			if (isset($prefs['interlist'][$realm])) {
 				$groups = $prefs['interlist'][$realm]['groups'].',Anonymous';
-				return split(',',$prefs['interlist'][$realm]['groups']);
+				return explode(',',$prefs['interlist'][$realm]['groups']);
 			}
 		}
 		if (!isset($this->usergroups_cache[$user])) {
@@ -3098,7 +3098,7 @@ class TikiLib extends TikiDb_Bridge
 				$topic = substr($topic,1);
 				$invert = "!";
 			}
-			$rest = split("\+", $topic);
+			$rest = explode("\+", $topic);
 			if ($mid) { $mid .= " and "; } else { $mid = " where "; }
 			$add = $this->in("tiki_articles.topicName", $rest, $bindvars);
 			if ($add <> "") {
@@ -5913,7 +5913,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		$result = split($splitter, $repl_string);
+		$result = explode($splitter, $repl_string);
 
 		if( $matches ) {
 			// Loop through the result sections
@@ -6013,7 +6013,7 @@ class TikiLib extends TikiDb_Bridge
 
 	// split string into a list of
 	function split_tag( $string, $cleanup = TRUE ) {
-		$_splts = split('&quot;', $string);
+		$_splts = explode('&quot;', $string);
 		$inside = FALSE;
 		$parts = array();
 		$index=0;
@@ -6035,7 +6035,7 @@ class TikiLib extends TikiDb_Bridge
 					$parts[] = $i;
 				}
 			} else {        //
-				$_spl = split(" ", $i);
+				$_spl = explode(" ", $i);
 				foreach($_spl as $j) {
 					$parts[$index++] = $j;
 				}
@@ -6519,7 +6519,7 @@ class TikiLib extends TikiDb_Bridge
 					$cols = array();
 					$temp_max5 = count($tables[0]);
 					for ($i = 0; $i < $temp_max5; $i++) {
-						$rows = split("\n|\<br\/\>", $tables[0][$i]);
+						$rows = explode("\n|\<br\/\>", $tables[0][$i]);
 						$col[$i] = array();
 						$temp_max6 = count($rows);
 						for ($j = 0; $j < $temp_max6; $j++) {
@@ -7936,7 +7936,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @return string - style passed in up to - | or . char (e.g. "thenews")
 	 */
 	function get_style_base($stl) {
-		$parts = split("-|\.", $stl);
+		$parts = explode("-|\.", $stl);
 		if (count($parts) > 0) {
 			return $parts[0];
 		} else {
@@ -8095,7 +8095,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function read_raw($text) {
-		$file = split("\n",$text);
+		$file = explode("\n",$text);
 		$back = '';
 		foreach ($file as $line) {
 			$r = $s = '';
@@ -8509,7 +8509,7 @@ JS;
 	function isValidIP($ip, $ver = 4) {
 		$result = false;
 	
-		$octets = split("\.", $ip);
+		$octets = explode("\.", $ip);
 		if (count($octets) == 4) {
 			for ($c = 0; $c < 4; $c++) {
 				if ($octets[$c] < 0 || $octets[$c] > 255) {
