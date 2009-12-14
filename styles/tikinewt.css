@@ -795,16 +795,19 @@ div.simplebox {
 	line-height: 1em;
 	font-weight: bold;
 	background: #eeee99;
+	border: 1px solid #000;
+	border-bottom: none;
 }
 
 .rbox-data, 
 .warning .rbox-data {
 	background: #eeee99;
-	border: 1px solid #ddddcc;
+	border: 1px solid #000;
 }
 
 .note .rbox-title {
 	background: #ccccdd;
+	border: 1px solid #ccccdd;
 }
 
 .note .rbox-data {
@@ -816,6 +819,7 @@ div.simplebox {
 .tip .rbox-title, 
 .rbox-title.tip {
 	background: #ccccdd;
+	border: 1px solid #ccddcc;
 }
 
 .comment .rbox-data,
