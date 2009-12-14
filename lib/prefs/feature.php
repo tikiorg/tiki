@@ -346,6 +346,7 @@ function prefs_feature_list() {
 			'name' => tra('Intertiki'),
 			'description' => tra('Intertiki'),
 			'help' => 'Intertiki',
+			'perspective' => false,
 			'type' => 'flag',
 		),
 		'feature_mailin' => array(
@@ -370,6 +371,7 @@ function prefs_feature_list() {
 			'name' => tra('Search engine friendly url'),
 			'description' => tra('Search engine friendly url'),
 			'help' => 'Rewrite+Rules',
+			'perspective' => false,
 			'type' => 'flag',
 		),
 		'feature_sheet' => array(
@@ -588,21 +590,25 @@ function prefs_feature_list() {
 			'name' => tra('Check for updates automatically'),
 			'description' => tra('TikiWiki will check for updates when you access the main Administration page'),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_pear_date' => array(
 			'name' => tra('Use PEAR::Date library'),
 			'description' => tra('Use PEAR::Date library'),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_ticketlib' => array(
 			'name' => tra('Require confirmation if possible CSRF detected'),
 			'description' => tra('Require confirmation if possible CSRF detected'),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_ticketlib2' => array(
 			'name' => tra('Protect against CSRF with a ticket'),
 			'description' => tra('Protect against CSRF with a ticket'),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_detect_language' => array(
 			'name' => tra('Detect browser language'),
@@ -655,6 +661,7 @@ function prefs_feature_list() {
 			'description' => tra('GZip output'),
 			'help' => 'Compression',
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_help' => array(
 			'name' => tra('Help System'),
@@ -758,19 +765,23 @@ function prefs_feature_list() {
 			'name' => tra('Search engine friendly url'),
 			'help' => 'Rewrite+Rules',
 			'type' => 'flag',
+			'perspective' => false,
 		),	
 		'feature_sefurl_filter' => array(
 			'name' => tra('Search engine friendly url Postfilter'),
 			'help' => 'Rewrite+Rules',
 			'type' => 'flag',
+			'perspective' => false,
 		),	
 		'feature_sefurl_title_article' => array(
 			'name' => tra('Display article title in the sefurl'),
 			'type' => 'flag',
+			'perspective' => false,
 		),	
 		'feature_sefurl_title_blog' => array(
 			'name' => tra('Display blog title in the sefurl'),
 			'type' => 'flag',
+			'perspective' => false,
 		),	
 		'feature_modulecontrols' => array(
 			'name' => tra('Show module controls'),
@@ -782,6 +793,7 @@ function prefs_feature_list() {
 			'description' => tra('Permits to override preferences.'),
 			'help' => 'Perspectives',
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_wiki_replace' => array(
 			'name' => tra('Search and replace'),
@@ -839,6 +851,7 @@ function prefs_feature_list() {
 		'feature_category_reinforce' => array(
 			'name' => tra("Permission to all (not just any) of an object's categories is required for access"),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_wiki_screencasts' => array(
 			'name' => tra('Screencasts'),
@@ -1053,6 +1066,7 @@ function prefs_feature_list() {
 		'feature_clear_passwords' => array(
 			'name' => tra('Store password as plain text'),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 
 		'feature_search_preferences' => array(
@@ -1067,6 +1081,7 @@ function prefs_feature_list() {
 				'crypt-des' => 'crypt-des',
 				'tikihash' => tra('tikihash (old)'),
 			),
+			'perspective' => false,
 		),
 		'feature_bot_bar_power_by_tw' => array(
 			'name' => tra("Add a Powered by Tiki link on your site's footer"),
@@ -1079,6 +1094,7 @@ function prefs_feature_list() {
 			'name' => tra('Edit CSS'),
 			'type' => 'flag',
 			'help' => 'Edit+CSS',
+			'perspective' => false,
 		),
 		'feature_theme_control' => array(
 			'name' => tra('Theme Control'),
@@ -1088,11 +1104,13 @@ function prefs_feature_list() {
 			'name' => tra('Tiki Template Viewing'),
 			'type' => 'flag',
 			'help' => 'View+Templates',
+			'perspective' => false,
 		),
 		'feature_edit_templates' => array(
 			'name' => tra('Edit Templates'),
 			'type' => 'flag',
 			'help' => 'Edit+Templates',
+			'perspective' => false,
 		),
 		'feature_custom_html_head_content' => array(
 			'name' => tra('Custom HTML <head> Content'),
@@ -1487,6 +1505,7 @@ function prefs_feature_list() {
 			'name' => tra('Use wiki page staging and approval'),
 			'type' => 'flag',
 			'help' => 'Wiki+Page+Staging+and+Approval',
+			'perspective' => false,
 		),
 		'feature_listorphanStructure' => array(
 			'name' => tra('Pages not in structure'),

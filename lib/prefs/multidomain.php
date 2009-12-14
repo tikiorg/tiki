@@ -4,6 +4,7 @@ function prefs_multidomain_list() {
 	return array(
 		'multidomain_active' => array(
 			'name' => tra('Multi-domain'),
+			'perspective' => false,
 			'description' => tra('Allows to map domain names to perspectives and simulate multiple domains hosted on the same instance.'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -12,6 +13,7 @@ function prefs_multidomain_list() {
 		),
 		'multidomain_config' => array(
 			'name' => tra('Multi-domain Configuration'),
+			'perspective' => false,
 			'description' => tra('Comma-separated values mapping the domain name to the perspective ID.'),
 			'type' => 'textarea',
 			'size' => 10,

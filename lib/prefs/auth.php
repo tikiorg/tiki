@@ -7,6 +7,7 @@ function prefs_auth_list() {
 			'description' => tra('Multiple authentication backends are supported by Tikiwiki. The default value is to use the internal user database.'),
 			'type' => 'list',
 			'help' => 'Login+Authentication+Method',
+			'perspective' => false,
 			'options' => array(
 				'tiki' => tra('Tiki'),
 				'openid' => tra('Tiki and OpenID'),
@@ -21,6 +22,7 @@ function prefs_auth_list() {
 		'auth_token_access' => array(
 			'name' => tra('Token Access'),
 			'description' => tra('Allow to access the content with superior rights with the presentation of a token. The primary use of this authentication method is to grant temporary access to content to an external service.'),
+			'perspective' => false,
 			'type' => 'flag',
 		),
 		'auth_token_access_maxtimeout' => array(
@@ -28,6 +30,7 @@ function prefs_auth_list() {
 			'description' => tra('The maximum duration for which the generated tokens will be valid.'),
 			'type' => 'text',
 			'size' => 5,
+			'perspective' => false,
 			'filter' => 'digits',
 		),
 	);

@@ -4,22 +4,26 @@ class PreferencesLib
 {
 	private $data = array();
 
-	function getPreference( $name, $deps = true ) {
+	function getPreference( $name, $deps = true, $source = null ) {
+		global $prefs;
 		static $id = 0;
 		$data = $this->loadData( $name );
 
 		if( isset( $data[$name] ) ) {
 			$info = $data[$name];
 
-			global $prefs;
+			if( $source == null ) {
+				$source = $prefs;
+			}
+
 			$info['preference'] = $name;
 			if( isset( $info['serialize'] ) ) {
 				$fnc = $info['serialize'];
-				$info['value'] = $fnc( $prefs[$name] );
+				$info['value'] = $fnc( $source[$name] );
 			} else {
-				$info['value'] = $prefs[$name];
+				$info['value'] = $source[$name];
 			}
-			$info['raw'] = $prefs[$name];
+			$info['raw'] = $source[$name];
 			$info['id'] = 'pref-' . ++$id;
 			if( isset( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
 				
@@ -72,6 +76,30 @@ class PreferencesLib
 		}
 
 		return $changes;
+	}
+
+	function getInput( JitFilter $filter, $preferences = array(), $environment ) {
+		$out = array();
+
+		foreach( $preferences as $name ) {
+			$info = $this->getPreference( $name );
+
+			if( $environment == 'perspective' && isset( $info['perspective'] ) && $info['perspective'] === false ) {
+				continue;
+			}
+			
+			if( isset( $info['filter'] ) ) {
+				$filter->replaceFilter( $name, $info['filter'] );
+			}
+
+			if( isset( $info['separator'] ) ) {
+				$out[ $name ] = $filter->asArray( $name, $info['separator'] );
+			} else {
+				$out[ $name ] = $filter->$name;
+			}
+		}
+
+		return $out;
 	}
 
 	private function loadData( $name ) {

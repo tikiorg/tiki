@@ -12,6 +12,7 @@ function prefs_smarty_list() {
 			'description' => tra('Smarty Security'),
 			'warning' => tra('Do not allow php code in smarty templates.'),
 			'type' => 'flag',
+			'perspective' => false,
 			'help' => tra(''),
 		),
 	);

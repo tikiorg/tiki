@@ -45,10 +45,30 @@ class PerspectiveLib
 		$out = array();
 
 		while( $row = $result->fetchRow() ) {
-			$out[ $row['pref'] ] = $row['value'];
+			$out[ $row['pref'] ] = unserialize( $row['value'] );
 		}
 
 		return $out;
+	}
+
+	function get_perspective( $perspectiveId ) {
+		$result = TikiDb::get()->query( "SELECT perspectiveId, name FROM tiki_perspectives WHERE perspectiveId = ?", array( $perspectiveId ) );
+
+		if( $info = $result->fetchRow() ) {
+			$perms = Perms::get( array( 'type' => 'perspective', 'object' => $perspectiveId ) );
+			if( $perms->view_perspective ) {
+				$info['preferences'] = $this->get_preferences( $perspectiveId );
+				$this->write_permissions( $info, $perms );
+
+				return $info;
+			}
+		}
+	}
+
+	private function write_permissions( & $info, $perms ) {
+		$info['can_edit'] = $perms->perspective_edit;
+		$info['can_remove'] = $perms->perspective_admin;
+		$info['can_perms'] = $perms->perspective_admin;
 	}
 
 	// Adds or renames a perspective. If $perspectiveId exists, rename it to $name. Otherwise, create a new perspective with id $perspectiveId named $name.
@@ -97,7 +117,7 @@ class PerspectiveLib
 	function replace_preference ( $preference, $value, $newValue ) {
 		$db = TikiDb::get();
 		$db->query( 'UPDATE tiki_perspective_preferences SET value = ? WHERE pref = ? and value = ?',
-			array( $newValue, $preference, $value ) );
+			array( serialize( $newValue ), $preference, serialize( $value ) ) );
 	}
 
 	// Sets $preference's value for $perspectiveId to $value.
@@ -107,7 +127,7 @@ class PerspectiveLib
 		$db->query( 'DELETE FROM tiki_perspective_preferences WHERE perspectiveId = ? AND pref = ?',
 			array( $perspectiveId, $preference ) );
 		$db->query( 'INSERT INTO tiki_perspective_preferences ( perspectiveId, pref, value ) VALUES( ?, ?, ? )',
-			array( $perspectiveId, $preference, $value ) );
+			array( $perspectiveId, $preference, serialize( $value ) ) );
 	}
 
 	// Returns true if and only if a perspective with the given $perspectiveId exists.
@@ -120,12 +140,18 @@ class PerspectiveLib
 		return ! empty( $id );
 	}
 
-	function list_perspectives() {
+	function list_perspectives( $offset = 0, $maxRecords = -1 ) {
 		$db = TikiDb::get();
 
-		$list = $db->fetchAll( "SELECT perspectiveId, name FROM tiki_perspectives" );
+		$list = $db->fetchAll( "SELECT perspectiveId, name FROM tiki_perspectives", array(), $maxRecords, $offset );
 
 		$list = Perms::filter( array( 'type' => 'perspective' ), 'object', $list, array( 'object' => 'perspectiveId' ), 'perspective_view' );
+
+		foreach( $list as & $info ) {
+			$perms = Perms::get( array( 'type' => 'perspective', 'object' => $info['perspectiveId'] ) );
+			$this->write_permissions( $info, $perms );
+		}
+
 		return $list;
 	}
 

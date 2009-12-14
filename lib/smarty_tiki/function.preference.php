@@ -1,12 +1,17 @@
 <?php
 
 function smarty_function_preference( $params, $smarty ) {
-	global $prefslib; require_once 'lib/prefslib.php';
+	global $prefslib, $prefs; require_once 'lib/prefslib.php';
 	if( ! isset( $params['name'] ) ) {
 		return tra( 'Preference name not specified.' );
 	}
 
-	if( $info = $prefslib->getPreference( $params['name'] ) ) {
+	$source = null;
+	if( isset( $params['source'] ) ) {
+		$source = $params['source'];
+	}
+
+	if( $info = $prefslib->getPreference( $params['name'], true, $source ) ) {
 		if( isset($params['label']) ) {
 			$info['name'] = $params['label'];
 		}

@@ -5,22 +5,27 @@ function prefs_cas_list() {
 			'cas_create_user_tiki' => array(
 				'name' => tra('Create user if not in Tiki'),
 				'type' => 'flag',
+				'perspective' => false,
 				),
 			'cas_create_user_tiki_ldap' => array(
 				'name' => tra('Use LDAP information when creating user in Tiki'),
 				'type' => 'flag',
+				'perspective' => false,
 				),
 			'cas_skip_admin' => array(
 				'name' => tra('Use Tiki authentication for Admin login'),
 				'type' => 'flag',
+				'perspective' => false,
 				),
 			'cas_show_alternate_login' => array(
 				'name' => tra('Show Alternate Login Method in Header'),
 				'type' => 'flag',
+				'perspective' => false,
 				),
 			'cas_version' => array(
 				'name' => tra('CAS server version'),
 				'type' => 'list',
+				'perspective' => false,
 				'options' => array(
 					'none' => tra('none'),
 					'1.0'  => tra('Version 1.0'),
@@ -33,6 +38,7 @@ function prefs_cas_list() {
 				'type' => 'text',
 				'size' => 50,
 				'filter' => 'striptags',
+				'perspective' => false,
 				),
 			'cas_port' => array(
 					'name' => tra('Port'),
@@ -40,6 +46,7 @@ function prefs_cas_list() {
 					'type' => 'text',
 					'size' => 5,
 					'filter' => 'digits',
+					'perspective' => false,
 					),
 			'cas_path' => array(
 					'name' => tra('Path'),
@@ -47,6 +54,7 @@ function prefs_cas_list() {
 					'type' => 'text',
 					'size' => 50,
 					'filter' => 'striptags',
+					'perspective' => false,
 					),
 			'cas_extra_param' => array(
 					'name' => tra('CAS Extra Parameter'),
@@ -54,12 +62,14 @@ function prefs_cas_list() {
 					'type' => 'text',
 					'size' => 100,
 					'filter' => 'striptags',
+					'perspective' => false,
 					),
 			'cas_authentication_timeout' => array(
 					'name' => tra('CAS Authentication Verification Timeout'),
 					'description' => tra('Verify authentication with the CAS server every N seconds. Null value means never reverify.'),
 					'type' => 'list',
 					'filter' => 'digits',
+					'perspective' => false,
 					'options' => array (
 						'0' => tra('Never'),
 						'60' => tra('1 minute'),
