@@ -921,13 +921,14 @@ class UsersLib extends TikiLib
 
 			$this->init_ldap($user);
 
-			switch($this->ldap->bind()) {
+			switch($err=$this->ldap->bind()) {
 				case LDAP_INVALID_CREDENTIALS:
 					return PASSWORD_INCORRECT;
 					break;
 				case LDAP_INVALID_SYNTAX:
 				case LDAP_NO_SUCH_OBJECT:
 				case LDAP_INVALID_DN_SYNTAX:
+					if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Error'.$err);
 					return USER_NOT_FOUND;
 					break;
 				case LDAP_SUCCESS:
@@ -935,6 +936,7 @@ class UsersLib extends TikiLib
 					return USER_VALID;
 					break;
 				default:
+					if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Error'.$err);
 					return SERVER_ERROR;
 			}
 
