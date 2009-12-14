@@ -1059,11 +1059,11 @@ td.third {
 	border-bottom: none !important;
 	border-top-width: 2px !important;
 	position: relative;
-	top: -2px;
+	top: -1px;
 }
 
 [class].tabactive {
-	top: 1px;
+	top: 2px;
 }
 
 .tabactive a {
@@ -1074,11 +1074,11 @@ td.third {
 	border: solid 1px #666 !important;
 	border-bottom: none !important;
 	position: relative !important;
-	top: -3px !important;
+	top: -2px !important;
 }
 
 [class].tabinactive {
-	top: 0px !important;
+	top: 1px !important;
 }
 
 .tabcontent {
