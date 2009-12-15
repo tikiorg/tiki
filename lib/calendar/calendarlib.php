@@ -703,7 +703,7 @@ class CalendarLib extends TikiLib
 		global $tikilib, $calendarViewMode, $request_day, $request_month,
 $request_year, $dayend, $myurl;
 		global $weekdays, $daysnames, $daysnames_abr;
-		include_once('tiki-calendar_setup.php');
+		include('tiki-calendar_setup.php');
 
 		//FIXME : maxrecords = 50
 		$listtikievents = $this->list_items_by_day($calIds, $user, $viewstart, $viewend, 0, 50);
