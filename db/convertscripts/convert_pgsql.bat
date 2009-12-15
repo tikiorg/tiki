@@ -1,6 +1,6 @@
 
 @echo off
-set VERSION="4.0"
+set VERSION="4.1"
 
 echo Local run of php ...
 php -f mysql_to_pgsql.php > pgsql.sql.tmp
