@@ -10,7 +10,7 @@ if ($prefs['feature_ajax'] == "y") {
 }
 if (empty($prefs['feature_jpgraph'])) {
 	$prefs['feature_jpgraph'] = 'n'; //optional package does not go througp prefs
-	
+
 }
 include_once ('lib/logs/logslib.php');
 include_once ('lib/userslib.php');
@@ -30,15 +30,15 @@ if (empty($user) || ($tiki_p_view_actionlog != 'y' && $tiki_p_view_actionlog_own
 	die;
 }
 $auto_query_args = array(
-	'actionId',
-	'startDate',
-	'endDate',
-	'selectedUsers',
-	'selectedGroups',
-	'list',
-	'sort_mode',
-	'categId'
-);
+		'actionId',
+		'startDate',
+		'endDate',
+		'selectedUsers',
+		'selectedGroups',
+		'list',
+		'sort_mode',
+		'categId'
+		);
 $categories = $categlib->list_categs();
 $confs = $logslib->get_all_actionlog_conf();
 $nbViewedConfs = 0;
@@ -153,7 +153,7 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 			$contributions = $logslib->get_action_contributions($action['actionId']);
 		} else {
 			$contributions = $contributionlib->get_assigned_contributions($action['object'], $action['objectType']); // todo: do a left join
-			
+
 		}
 		$cont = array();
 		foreach($contributions as $contribution) {
@@ -162,9 +162,9 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 		$_REQUEST['contributions'] = $cont;
 		include ('contribution.php');
 		$contributions['data'][] = array(
-			'contributionId' => 0,
-			'name' => ''
-		);
+				'contributionId' => 0,
+				'name' => ''
+				);
 		if (!empty($_REQUEST['startDate'])) $smarty->assign('startDate', $_REQUEST['startDate']);
 		if (!empty($_REQUEST['endDate'])) $smarty->assign('endDate', $_REQUEST['endDate']);
 		if (!empty($action['categId'])) {
@@ -181,15 +181,15 @@ if ($tiki_p_admin == 'y') {
 	$groups = $userlib->list_all_groups();
 } else {
 	$users = array(
-		$userlib->get_user_id($user) => $user
-	);
+			$userlib->get_user_id($user) => $user
+			);
 	$groups = $tikilib->get_user_groups($user);
 	$groups = array_diff($groups, array(
-		'Anonymous'
-	));
+				'Anonymous'
+				));
 	$_REQUEST['selectedUsers'] = array(
-		$user
-	);
+			$user
+			);
 }
 $selectedGroups = array();
 foreach($groups as $g) {
@@ -298,16 +298,16 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 			elseif (strstr($log['logmessage'], "logged out")) $action = "Logout";
 			else $action = ucfirst($log['logmessage']);
 			$actions[] = array(
-				'lastModif' => $log['logtime'],
-				'user' => $log['loguser'],
-				'action' => $action,
-				'objectType' => 'login'
-			);
+					'lastModif' => $log['logtime'],
+					'user' => $log['loguser'],
+					'action' => $action,
+					'objectType' => 'login'
+					);
 		}
 		usort($actions, array(
-			$logslib,
-			'sort_by_date'
-		));
+					$logslib,
+					'sort_by_date'
+					));
 	}
 	if (isset($_REQUEST['unit']) && $_REQUEST['unit'] == 'kb') {
 		for ($i = count($actions) - 1; $i >= 0; --$i) {
@@ -389,302 +389,299 @@ if (isset($_REQUEST['graph'])) {
 		require_once ('lib/graph-engine/graph.bar.php');
 		require_once ('lib/graph-engine/graph.multiline.php');
 		$graphType = 'BarStackGraphic';
-		$background = & new GD_GRenderer(max($widthUser, $widthWeek) , 8 * $height, $ext);
 		$ext = 'jpg';
+		$background = & new GD_GRenderer(max($widthUser, $widthWeek) , 8 * $height, $ext);
 		$legendWidth = 300;
 	}
 	include_once ('lib/smarty_tiki/modifier.tiki_short_date.php');
 	$period = ' (' . smarty_modifier_tiki_short_date($startDate);
-	$s = smarty_modifier_tiki_short_date($startDate);
-	$e = smarty_modifier_tiki_short_date($endDate);
-	$period = ($s != $e) ? " ($s-$e)" : " ($s)";
-	$accumulated = (isset($_REQUEST['barPlot']) && $_REQUEST['barPlot'] == 'acc') ? true : false;
-	$series = $logslib->draw_contribution_user($userContributions, 'add', $contributions);
-	if ($series['totalVol']) {
-		if ($tiki_p_admin == 'y') {
-			$title = tra('Users Contributions: Addition');
-		} else {
-			$title = sprintf(tra('%s Contributions: Addition') , $user);
-		}
-		//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
-		if ($prefs['feature_jpgraph'] == 'y') {
-			$graph = new Graph($widthUser, $height + $xUserTickWidth);
-			$graph->img->SetImgFormat($ext);
-			$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
-			$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40 + $xUserTickWidth);
-			$graph->title->Set($title);
-			$graph->subtitle->Set($period);
-			if ($tiki_p_admin == 'y') {
-				$graph->xaxis->SetTitle(tra('Users') , 'center');
-				$graph->xaxis->SetTitleMargin($xUserTickWidth);
+			$s = smarty_modifier_tiki_short_date($startDate);
+			$e = smarty_modifier_tiki_short_date($endDate);
+			$period = ($s != $e) ? " ($s-$e)" : " ($s)";
+			$accumulated = (isset($_REQUEST['barPlot']) && $_REQUEST['barPlot'] == 'acc') ? true : false;
+			$series = $logslib->draw_contribution_user($userContributions, 'add', $contributions);
+			if ($series['totalVol']) {
+				if ($tiki_p_admin == 'y') {
+					$title = tra('Users Contributions: Addition');
+				} else {
+					$title = sprintf(tra('%s Contributions: Addition') , $user);
+				}
+			//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
+				if ($prefs['feature_jpgraph'] == 'y') {
+					$graph = new Graph($widthUser, $height + $xUserTickWidth);
+					$graph->img->SetImgFormat($ext);
+					$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
+					$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40 + $xUserTickWidth);
+					$graph->title->Set($title);
+					$graph->subtitle->Set($period);
+					if ($tiki_p_admin == 'y') {
+						$graph->xaxis->SetTitle(tra('Users') , 'center');
+						$graph->xaxis->SetTitleMargin($xUserTickWidth);
+					}
+					$graph->xaxis->SetLabelAngle(90);
+					$graph->yaxis->title->Set(tra($_REQUEST['unit']));
+					$graph->yaxis->SetTitleMargin($yTickWidth);
+					$graph->setFrame(true, 'darkgreen', 2);
+					$background->Add($graph, 0, 0);
+					if (!empty($_REQUEST['galleryId'])) {
+						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+					}
+				} else {
+					$renderer = & new GD_GRenderer($widthUser, $height, $ext);
+					$graph = new $graphType;
+					$graph->setData($series);
+					$graph->setTitle($title);
+					$graph->draw($renderer);
+					imagecopy($background->gd, $renderer->gd, 0, 0, 0, 0, $renderer->width, $renderer->height);
+				}
 			}
-			$graph->xaxis->SetLabelAngle(90);
-			$graph->yaxis->title->Set(tra($_REQUEST['unit']));
-			$graph->yaxis->SetTitleMargin($yTickWidth);
-			$graph->setFrame(true, 'darkgreen', 2);
-			$background->Add($graph, 0, 0);
-			if (!empty($_REQUEST['galleryId'])) {
-				$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+			$series = $logslib->draw_contribution_user($userContributions, 'del', $contributions);
+			if ($series['totalVol']) {
+				if ($tiki_p_admin == 'y') {
+					$title = tra('Users Contributions: Suppression');
+				} else {
+					$title = sprintf(tra('%s Contributions: Suppression') , $user);
+				}
+				//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
+				if ($prefs['feature_jpgraph'] == 'y') {
+					$graph = new Graph($widthUser, $height + $xUserTickWidth);
+					$graph->img->SetImgFormat($ext);
+					$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
+					$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40 + $xUserTickWidth);
+					$graph->title->Set($title);
+					$graph->subtitle->Set($period);
+					if ($tiki_p_admin == 'y') {
+						$graph->xaxis->SetTitle(tra('Users') , 'center');
+						$graph->xaxis->SetTitleMargin($xUserTickWidth);
+					}
+					$graph->xaxis->SetLabelAngle(90);
+					$graph->yaxis->title->Set(tra($_REQUEST['unit']));
+					$graph->yaxis->SetTitleMargin($yTickWidth);
+					$graph->setFrame(true, 'red', 2);
+					$background->Add($graph, 0, ($height + $space + $xUserTickWidth));
+					if (!empty($_REQUEST['galleryId'])) {
+						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+					}
+				} else {
+					$renderer = & new GD_GRenderer($widthUser, $height, $ext);
+					$graph = new $graphType;
+					$graph->setData($series);
+					$graph->setTitle($title);
+					$graph->draw($renderer);
+					imagecopy($background->gd, $renderer->gd, 0, ($height + $space) , 0, 0, $renderer->width, $renderer->height);
+				}
 			}
-		} else {
-			$renderer = & new GD_GRenderer($widthUser, $height, $ext);
-			$graph = new $graphType;
-			$graph->setData($series);
-			$graph->setTitle($title);
-			$graph->draw($renderer);
-			imagecopy($background->gd, $renderer->gd, 0, 0, 0, 0, $renderer->width, $renderer->height);
-		}
-	}
-	$series = $logslib->draw_contribution_user($userContributions, 'del', $contributions);
-	if ($series['totalVol']) {
-		if ($tiki_p_admin == 'y') {
-			$title = tra('Users Contributions: Suppression');
-		} else {
-			$title = sprintf(tra('%s Contributions: Suppression') , $user);
-		}
-		//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
-		if ($prefs['feature_jpgraph'] == 'y') {
-			$graph = new Graph($widthUser, $height + $xUserTickWidth);
-			$graph->img->SetImgFormat($ext);
-			$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
-			$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40 + $xUserTickWidth);
-			$graph->title->Set($title);
-			$graph->subtitle->Set($period);
-			if ($tiki_p_admin == 'y') {
-				$graph->xaxis->SetTitle(tra('Users') , 'center');
-				$graph->xaxis->SetTitleMargin($xUserTickWidth);
+			$series = $logslib->draw_week_contribution_vol($contributionStat, 'add', $contributions);
+			if ($series['totalVol']) {
+				if ($_REQUEST['contribTime'] == 'd') {
+					$title = tra('Total Contributions Addition per Day');
+					$title2 = tra('Days');
+				} else {
+					$title = tra('Total Contributions Addition per Week');
+					$title2 = tra('Weeks');
+				}
+				//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
+				if ($prefs['feature_jpgraph'] == 'y') {
+					$graph = new Graph($widthWeek, $height);
+					$graph->img->SetImgFormat($ext);
+					$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
+					$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40);
+					$graph->title->Set($title);
+					$graph->xaxis->SetTitle($title2, 'center');
+					$graph->yaxis->title->Set(tra($_REQUEST['unit']));
+					$graph->subtitle->Set($period);
+					$graph->yaxis->SetTitleMargin($yTickWidth);
+					$graph->setFrame(true, 'darkgreen', 2);
+					$background->Add($graph, 0, 2 * ($height + $space) + 2 * $xUserTickWidth);
+					if (!empty($_REQUEST['galleryId'])) {
+						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+					}
+				} else {
+					$renderer = & new GD_GRenderer($widthWeek, $height, $ext);
+					$graph = new $graphType;
+					unset($series['totalVol']);
+					$graph->setData($series);
+					$graph->setTitle($title);
+					$graph->draw($renderer);
+					imagecopy($background->gd, $renderer->gd, 0, 2 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
+				}
 			}
-			$graph->xaxis->SetLabelAngle(90);
-			$graph->yaxis->title->Set(tra($_REQUEST['unit']));
-			$graph->yaxis->SetTitleMargin($yTickWidth);
-			$graph->setFrame(true, 'red', 2);
-			$background->Add($graph, 0, ($height + $space + $xUserTickWidth));
-			if (!empty($_REQUEST['galleryId'])) {
-				$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+			$series = $logslib->draw_week_contribution_vol($contributionStat, 'del', $contributions);
+			if ($series['totalVol']) {
+				if ($_REQUEST['contribTime'] == 'd') {
+					$title = tra('Total Contributions Suppression per Day');
+					$title2 = tra('Days');
+				} else {
+					$title = tra('Total Contributions Suppression per Week');
+					$title2 = tra('Weeks');
+				}
+				//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
+				if ($prefs['feature_jpgraph'] == 'y') {
+					$graph = new Graph($widthWeek, $height);
+					$graph->img->SetImgFormat($ext);
+					$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
+					$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40);
+					$graph->title->Set($title);
+					$graph->xaxis->SetTitle($title2, 'center');
+					$graph->subtitle->Set($period);
+					$graph->yaxis->title->Set(tra($_REQUEST['unit']));
+					$graph->yaxis->SetTitleMargin($yTickWidth);
+					$graph->setFrame(true, 'red', 2);
+					$background->Add($graph, 0, 3 * ($height + $space) + 2 * $xUserTickWidth);
+					if (!empty($_REQUEST['galleryId'])) {
+						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+					}
+				} else {
+					$renderer = & new GD_GRenderer($widthWeek, $height, $ext);
+					$graph = new $graphType;
+					unset($series['totalVol']);
+					$graph->setData($series);
+					$graph->setTitle($title);
+					$graph->draw($renderer);
+					imagecopy($background->gd, $renderer->gd, 0, 3 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
+				}
 			}
-		} else {
-			$renderer = & new GD_GRenderer($widthUser, $height, $ext);
-			$graph = new $graphType;
-			$graph->setData($series);
-			$graph->setTitle($title);
-			$graph->draw($renderer);
-			imagecopy($background->gd, $renderer->gd, 0, ($height + $space) , 0, 0, $renderer->width, $renderer->height);
-		}
-	}
-	$series = $logslib->draw_week_contribution_vol($contributionStat, 'add', $contributions);
-	if ($series['totalVol']) {
-		if ($_REQUEST['contribTime'] == 'd') {
-			$title = tra('Total Contributions Addition per Day');
-			$title2 = tra('Days');
-		} else {
-			$title = tra('Total Contributions Addition per Week');
-			$title2 = tra('Weeks');
-		}
-		//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
-		if ($prefs['feature_jpgraph'] == 'y') {
-			$graph = new Graph($widthWeek, $height);
-			$graph->img->SetImgFormat($ext);
-			$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
-			$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40);
-			$graph->title->Set($title);
-			$graph->xaxis->SetTitle($title2, 'center');
-			$graph->yaxis->title->Set(tra($_REQUEST['unit']));
-			$graph->subtitle->Set($period);
-			$graph->yaxis->SetTitleMargin($yTickWidth);
-			$graph->setFrame(true, 'darkgreen', 2);
-			$background->Add($graph, 0, 2 * ($height + $space) + 2 * $xUserTickWidth);
-			if (!empty($_REQUEST['galleryId'])) {
-				$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+			$series = $logslib->draw_contribution_vol($contributionStat, 'add', $contributions);
+			if ($series['totalVol']) {
+				$title = tra('Total Contributions: Addition');
+				//echo "<pre>";print_r($contributionStat);print_r($series);die;
+				if ($prefs['feature_jpgraph'] == 'y') {
+					$graph = new Graph($widthTotal, $height);
+					$graph->img->SetImgFormat($ext);
+					$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
+					$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40);
+					$graph->title->Set($title);
+					$graph->subtitle->Set($period);
+					$graph->yaxis->title->Set(tra($_REQUEST['unit']));
+					$graph->yaxis->SetTitleMargin($yTickWidth);
+					$graph->setFrame(true, 'darkgreen', 2);
+					$background->Add($graph, 0, 4 * ($height + $space) + 2 * $xUserTickWidth);
+					if (!empty($_REQUEST['galleryId'])) {
+						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+					}
+				} else {
+					$renderer = & new GD_GRenderer($widthTotal, $height, $ext);
+					$graph = new $graphType;
+					$graph->setData($series);
+					$graph->setTitle($title);
+					$graph->draw($renderer);
+					imagecopy($background->gd, $renderer->gd, 0, 4 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
+				}
 			}
-		} else {
-			$renderer = & new GD_GRenderer($widthWeek, $height, $ext);
-			$graph = new $graphType;
-			unset($series['totalVol']);
-			$graph->setData($series);
-			$graph->setTitle($title);
-			$graph->draw($renderer);
-			imagecopy($background->gd, $renderer->gd, 0, 2 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
-		}
-	}
-	$series = $logslib->draw_week_contribution_vol($contributionStat, 'del', $contributions);
-	if ($series['totalVol']) {
-		if ($_REQUEST['contribTime'] == 'd') {
-			$title = tra('Total Contributions Suppression per Day');
-			$title2 = tra('Days');
-		} else {
-			$title = tra('Total Contributions Suppression per Week');
-			$title2 = tra('Weeks');
-		}
-		//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
-		if ($prefs['feature_jpgraph'] == 'y') {
-			$graph = new Graph($widthWeek, $height);
-			$graph->img->SetImgFormat($ext);
-			$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
-			$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40);
-			$graph->title->Set($title);
-			$graph->xaxis->SetTitle($title2, 'center');
-			$graph->subtitle->Set($period);
-			$graph->yaxis->title->Set(tra($_REQUEST['unit']));
-			$graph->yaxis->SetTitleMargin($yTickWidth);
-			$graph->setFrame(true, 'red', 2);
-			$background->Add($graph, 0, 3 * ($height + $space) + 2 * $xUserTickWidth);
-			if (!empty($_REQUEST['galleryId'])) {
-				$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+			$series = $logslib->draw_contribution_vol($contributionStat, 'del', $contributions);
+			if ($series['totalVol']) {
+				$title = tra('Total Contributions: Suppression');
+				//echo "<pre>";print_r($contributionStat);print_r($series);die;
+				if ($prefs['feature_jpgraph'] == 'y') {
+					$graph = new Graph($widthTotal, $height);
+					$graph->img->SetImgFormat($ext);
+					$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
+					$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40);
+					$graph->title->Set($title);
+					$graph->subtitle->Set($period);
+					$graph->yaxis->title->Set(tra($_REQUEST['unit']));
+					$graph->yaxis->SetTitleMargin($yTickWidth);
+					$graph->setFrame(true, 'red', 2);
+					$background->Add($graph, 0, 5 * ($height + $space) + 2 * $xUserTickWidth);
+					if (!empty($_REQUEST['galleryId'])) {
+						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+					}
+				} else {
+					$renderer = & new GD_GRenderer($widthTotal, $height, $ext);
+					$graph = new $graphType;
+					$graph->setData($series);
+					$graph->setTitle($title);
+					$graph->draw($renderer);
+					imagecopy($background->gd, $renderer->gd, 0, 5 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
+				}
 			}
-		} else {
-			$renderer = & new GD_GRenderer($widthWeek, $height, $ext);
-			$graph = new $graphType;
-			unset($series['totalVol']);
-			$graph->setData($series);
-			$graph->setTitle($title);
-			$graph->draw($renderer);
-			imagecopy($background->gd, $renderer->gd, 0, 3 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
-		}
-	}
-	$series = $logslib->draw_contribution_vol($contributionStat, 'add', $contributions);
-	if ($series['totalVol']) {
-		$title = tra('Total Contributions: Addition');
-		//echo "<pre>";print_r($contributionStat);print_r($series);die;
-		if ($prefs['feature_jpgraph'] == 'y') {
-			$graph = new Graph($widthTotal, $height);
-			$graph->img->SetImgFormat($ext);
-			$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
-			$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40);
-			$graph->title->Set($title);
-			$graph->subtitle->Set($period);
-			$graph->yaxis->title->Set(tra($_REQUEST['unit']));
-			$graph->yaxis->SetTitleMargin($yTickWidth);
-			$graph->setFrame(true, 'darkgreen', 2);
-			$background->Add($graph, 0, 4 * ($height + $space) + 2 * $xUserTickWidth);
-			if (!empty($_REQUEST['galleryId'])) {
-				$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+			$series = $logslib->draw_contribution_group($groupContributions, 'add', $contributions);
+			if ($series['totalVol']) {
+				$title = tra('Groups Contributions: Addition');
+				//echo "<pre>";print_r($groupContributions);print_r($series);die;
+				if ($prefs['feature_jpgraph'] == 'y') {
+					$graph = new Graph($widthGroup, $height + $xGroupTickWidth);
+					$graph->img->SetImgFormat($ext);
+					$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
+					$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40 + $xGroupTickWidth);
+					$graph->title->Set($title);
+					$graph->subtitle->Set($period);
+					$graph->xaxis->SetTitle(tra('Groups') , 'center');
+					$graph->xaxis->SetLabelAngle(90);
+					$graph->xaxis->SetTitleMargin($xGroupTickWidth);
+					$graph->yaxis->title->Set(tra($_REQUEST['unit']));
+					$graph->yaxis->SetTitleMargin($yTickWidth);
+					$graph->setFrame(true, 'darkgreen', 2);
+					$background->Add($graph, 0, 6 * ($height + $space) + 2 * $xUserTickWidth);
+					if (!empty($_REQUEST['galleryId'])) {
+						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+					}
+				} else {
+					$renderer = & new GD_GRenderer($widthGroup, $height, $ext);
+					$graph = new $graphType;
+					$graph->setData($series);
+					$graph->setTitle($title);
+					$graph->draw($renderer);
+					imagecopy($background->gd, $renderer->gd, 0, 6 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
+				}
 			}
-		} else {
-			$renderer = & new GD_GRenderer($widthTotal, $height, $ext);
-			$graph = new $graphType;
-			$graph->setData($series);
-			$graph->setTitle($title);
-			$graph->draw($renderer);
-			imagecopy($background->gd, $renderer->gd, 0, 4 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
-		}
-	}
-	$series = $logslib->draw_contribution_vol($contributionStat, 'del', $contributions);
-	if ($series['totalVol']) {
-		$title = tra('Total Contributions: Suppression');
-		//echo "<pre>";print_r($contributionStat);print_r($series);die;
-		if ($prefs['feature_jpgraph'] == 'y') {
-			$graph = new Graph($widthTotal, $height);
-			$graph->img->SetImgFormat($ext);
-			$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
-			$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40);
-			$graph->title->Set($title);
-			$graph->subtitle->Set($period);
-			$graph->yaxis->title->Set(tra($_REQUEST['unit']));
-			$graph->yaxis->SetTitleMargin($yTickWidth);
-			$graph->setFrame(true, 'red', 2);
-			$background->Add($graph, 0, 5 * ($height + $space) + 2 * $xUserTickWidth);
-			if (!empty($_REQUEST['galleryId'])) {
-				$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+			$series = $logslib->draw_contribution_group($groupContributions, 'del', $contributions);
+			if ($series['totalVol']) {
+				$title = tra('Groups Contributions: Suppression');
+				//echo "<pre>";print_r($groupContributions);print_r($series);die;
+				if ($prefs['feature_jpgraph'] == 'y') {
+					$graph = new Graph($widthGroup, $height + $xGroupTickWidth);
+					$graph->img->SetImgFormat($ext);
+					$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
+					$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40 + $xGroupTickWidth);
+					$graph->title->Set($title);
+					$graph->subtitle->Set($period);
+					$graph->xaxis->SetLabelAngle(90);
+					$graph->xaxis->SetTitle(tra('Groups') , 'center');
+					$graph->xaxis->SetTitleMargin($xGroupTickWidth);
+					$graph->yaxis->title->Set(tra($_REQUEST['unit']));
+					$graph->yaxis->SetTitleMargin($yTickWidth);
+					$graph->setFrame(true, 'red', 2);
+					$background->Add($graph, 0, 7 * ($height + $space) + 2 * $xUserTickWidth + $xGroupTickWidth);
+					if (!empty($_REQUEST['galleryId'])) {
+						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+					}
+				} else {
+					$renderer = & new GD_GRenderer($widthGroup, $height, $ext);
+					$graph = new $graphType;
+					$graph->setData($series);
+					$graph->setTitle($title);
+					$graph->draw($renderer);
+					imagecopy($background->gd, $renderer->gd, 0, 7 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
+				}
 			}
-		} else {
-			$renderer = & new GD_GRenderer($widthTotal, $height, $ext);
-			$graph = new $graphType;
-			$graph->setData($series);
-			$graph->setTitle($title);
-			$graph->draw($renderer);
-			imagecopy($background->gd, $renderer->gd, 0, 5 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
-		}
-	}
-	$series = $logslib->draw_contribution_group($groupContributions, 'add', $contributions);
-	if ($series['totalVol']) {
-		$title = tra('Groups Contributions: Addition');
-		//echo "<pre>";print_r($groupContributions);print_r($series);die;
-		if ($prefs['feature_jpgraph'] == 'y') {
-			$graph = new Graph($widthGroup, $height + $xGroupTickWidth);
-			$graph->img->SetImgFormat($ext);
-			$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
-			$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40 + $xGroupTickWidth);
-			$graph->title->Set($title);
-			$graph->subtitle->Set($period);
-			$graph->xaxis->SetTitle(tra('Groups') , 'center');
-			$graph->xaxis->SetLabelAngle(90);
-			$graph->xaxis->SetTitleMargin($xGroupTickWidth);
-			$graph->yaxis->title->Set(tra($_REQUEST['unit']));
-			$graph->yaxis->SetTitleMargin($yTickWidth);
-			$graph->setFrame(true, 'darkgreen', 2);
-			$background->Add($graph, 0, 6 * ($height + $space) + 2 * $xUserTickWidth);
-			if (!empty($_REQUEST['galleryId'])) {
-				$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
+			if ($prefs['feature_jpgraph'] == 'y') {
+				$background->Stroke();
+			} else {
+				ob_start();
+				$background->httpOutput("graph.$ext");
+				$content = ob_get_contents();
+				ob_end_flush();
 			}
-		} else {
-			$renderer = & new GD_GRenderer($widthGroup, $height, $ext);
-			$graph = new $graphType;
-			$graph->setData($series);
-			$graph->setTitle($title);
-			$graph->draw($renderer);
-			imagecopy($background->gd, $renderer->gd, 0, 6 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
-		}
-	}
-	$series = $logslib->draw_contribution_group($groupContributions, 'del', $contributions);
-	if ($series['totalVol']) {
-		$title = tra('Groups Contributions: Suppression');
-		//echo "<pre>";print_r($groupContributions);print_r($series);die;
-		if ($prefs['feature_jpgraph'] == 'y') {
-			$graph = new Graph($widthGroup, $height + $xGroupTickWidth);
-			$graph->img->SetImgFormat($ext);
-			$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'], $_REQUEST['legendBgcolor']);
-			$graph->img->SetMargin(40 + $yTickWidth, 40 + $legendWidth, 50, 40 + $xGroupTickWidth);
-			$graph->title->Set($title);
-			$graph->subtitle->Set($period);
-			$graph->xaxis->SetLabelAngle(90);
-			$graph->xaxis->SetTitle(tra('Groups') , 'center');
-			$graph->xaxis->SetTitleMargin($xGroupTickWidth);
-			$graph->yaxis->title->Set(tra($_REQUEST['unit']));
-			$graph->yaxis->SetTitleMargin($yTickWidth);
-			$graph->setFrame(true, 'red', 2);
-			$background->Add($graph, 0, 7 * ($height + $space) + 2 * $xUserTickWidth + $xGroupTickWidth);
-			if (!empty($_REQUEST['galleryId'])) {
-				$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
-			}
-		} else {
-			$renderer = & new GD_GRenderer($widthGroup, $height, $ext);
-			$graph = new $graphType;
-			$graph->setData($series);
-			$graph->setTitle($title);
-			$graph->draw($renderer);
-			imagecopy($background->gd, $renderer->gd, 0, 7 * ($height + $space) , 0, 0, $renderer->width, $renderer->height);
-		}
-	}
-	if ($prefs['feature_jpgraph'] == 'y') {
-		$background->Stroke();
-	} else {
-		ob_start();
-		$background->httpOutput("graph.$ext");
-		$content = ob_get_contents();
-		ob_end_flush();
-	}
-	die;
+			die;
 } elseif ($prefs['feature_jpgraph'] == 'y') {
 	$smarty->assign('bgcolors', array(
-		'white',
-		'gray',
-		'silver',
-		'ivory',
-		'whitesmoke',
-		'beige',
-		'darkgrey'
-	));
+				'white',
+				'gray',
+				'silver',
+				'ivory',
+				'whitesmoke',
+				'beige',
+				'darkgrey'
+				));
 	//get_strings tra('white'), tra('gray'), tra('silver'), tra('ivory'), tra('whitesmoke'), tra('beige'),tra('darkgrey')
 	$smarty->assign('defaultBgcolor', 'whitesmoke');
 	$smarty->assign('defaultLegendBgcolor', 'white');
-	global $imagegallib;
-	include_once ('lib/imagegals/imagegallib.php');
+	global $imagegallib; include_once ('lib/imagegals/imagegallib.php');
 	$galleries = $imagegallib->list_galleries(0, -1, 'name_asc', $user, '');
 	$smarty->assign('galleries', $galleries['data']);
 }
-if (!isset($cookietab)) { $cookietab = '1'; }
-setcookie('tab', $cookietab);
-$smarty->assign('cookietab', $cookietab);
+
 if (isset($_REQUEST['time'])) $smarty->assign('time', $_REQUEST['time']);
 if (isset($_REQUEST['unit'])) $smarty->assign('unit', $_REQUEST['unit']);
 if ($prefs['feature_ajax'] == "y") {
