@@ -843,9 +843,11 @@ class LogsLib extends TikiLib
 		$colors[] = 'purple';	if (!--$nb) return $colors;
 		$colors[] = 'silver';	if (!--$nb) return $colors;
 		$colors[] = 'teal';	if (!--$nb) return $colors;
-		while (--$nb) {
-			$colors[] = rand(1, 999999);
-		} 
+		if ( $nb > 0 ) {
+			while (--$nb) {
+				$colors[] = rand(1, 999999);
+			} 
+		}
 	}
 
 	function draw_contribution_vol($contributionStat, $type='add', $contributions)
