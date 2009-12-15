@@ -2137,7 +2137,7 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false) {
 		global $user, $tiki_p_admin_file_galleries;
-		global $filegallib; require_once 'lib/filegals/filegallib.php';
+		global $filegallib; require_once('lib/filegals/filegallib.php');
 
 		$f_jail_bind = array();
 		$g_jail_bind = array();
