@@ -1627,25 +1627,30 @@ table.pollresults {
 /***** Ajax *****/
 div#ajaxLoading {
 	z-index: 10000;
+	color: #fff;
 	display: none;
-	position: absolute;
-	top: 50px;
-	right: 50%;
+	position: fixed;
+	top: 50% !important;
+	left: 50% !important;
 	padding: 3px;
 	color: #333;
 	text-align: center;
 	vertical-align: top;
-	background: transparent url(../../img/loading-light.gif) no-repeat 50% 100%;
-	height: 43px;
-	width: 50px;
-	padding-top: 32px;
+	background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
+	height: 80px;
+	width: 100px;
+	margin-left: -50px;
+	margin-top: -40px;
 }
 
 div#ajaxLoadingBG {
 	z-index: 9999;
 	display: none;
-	position: absolute;
+	position: fixed;
+	left: 0 !important; top: 0 !important;
 	background: transparent url(../../img/overlay-light.png);
+	width: 100% !important;
+	height: 100% !important;
 }
 
 #shadowbox_title {

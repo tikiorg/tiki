@@ -36,17 +36,16 @@ if ( $post_max_size > 0 && ( $post_max_size < $max_upload_size || $max_upload_si
 	$max_upload_size_comment = sprintf($max_upload_size_comment, 'upload_max_filesize');	
 }
 
+// Get memory limit
+@$memory_limit_ini = ini_get('memory_limit');
+$memory_limit = return_bytes($memory_limit_ini);
+
+// Try to detect current memory usage or set it arbitrary to 10MB
+@$current_memory_usage = function_exists('memory_get_usage') ? (int)memory_get_usage(true) : 10 * 1024 * 1024;
+
 if ( $prefs['fgal_use_db'] == 'y' && ! $podCastGallery ) {
-	
-	// Get memory limit
-	@$memory_limit_ini = ini_get('memory_limit');
-	$memory_limit = return_bytes($memory_limit_ini);
 
 	if ( $memory_limit > 0 ) {
-
-		// Try to detect current memory usage or set it arbitrary to 10MB
-		//
-		@$current_memory_usage = function_exists('memory_get_usage') ? (int)memory_get_usage(true) : 10 * 1024 * 1024;
 
 		// Estimate available memory for file upload.
 		// The result is divided by 3, because the file has to be stored twice in memory :

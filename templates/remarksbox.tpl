@@ -13,7 +13,7 @@
 		<span>{$remarksbox_title}</span>
 	</div>
 {/if}
-	<div class="rbox-data{$remarksbox_highlight}">
+	<div class="rbox-data{$remarksbox_highlight}"{if !empty($remarksbox_width)} style="width:{$remarksbox_width}{/if}">
 		{$remarksbox_content}
 	</div>
 </div>

@@ -54,7 +54,7 @@ if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 } elseif (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
 } elseif (empty($_REQUEST['cookietab'])) {
-	if ($tracker_info['writerCanModify'] == 'y' && $user) $cookietab = '1';
+	if (isset($tracker_info['writerCanModify']) && $tracker_info['writerCanModify'] == 'y' && $user) $cookietab = '1';
 	elseif (!($tiki_p_view_trackers == 'y' || $tiki_p_admin == 'y' || $tiki_p_admin_trackers == 'y') && $tiki_p_create_tracker_items == 'y') $cookietab = "2";
 	else if (!isset($cookietab)) { $cookietab = '1'; }
 } else {
@@ -642,7 +642,7 @@ if (is_array($filtervalue)) {
 	$urlquery["filtervalue[" . $filterfield . "]"] = $filtervalue;
 }
 $smarty->assign_by_ref('urlquery', $urlquery);
-if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y' || $tracker_info['showLastComment'] == 'y')) {
+if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y' || isset($tracker_info['showLastComment']) && $tracker_info['showLastComment'] == 'y')) {
 	foreach($items['data'] as $itkey => $oneitem) {
 		if ($tracker_info['showComments'] == 'y') {
 			$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);

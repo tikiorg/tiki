@@ -795,16 +795,23 @@ div.simplebox {
 	line-height: 1em;
 	font-weight: bold;
 	background: #eeee99;
+	border: 1px solid #000;
+	border-bottom: none;
 }
 
 .rbox-data, 
 .warning .rbox-data {
 	background: #eeee99;
-	border: 1px solid #ddddcc;
+	border: 1px solid #000;
 }
+
+.rbox-title span {
+	vertical-align: middle;
+	}
 
 .note .rbox-title {
 	background: #ccccdd;
+	border: 1px solid #ccccdd;
 }
 
 .note .rbox-data {
@@ -816,6 +823,7 @@ div.simplebox {
 .tip .rbox-title, 
 .rbox-title.tip {
 	background: #ccccdd;
+	border: 1px solid #ccddcc;
 }
 
 .comment .rbox-data,
@@ -901,9 +909,8 @@ form.admin fieldset {
 form.admin legend.heading {
 	background: transparent;
 	border: none;
-	line-height: 2em;
-	padding-left: 0;
-	padding-right: 0;
+	line-height: 1em;
+	padding-right: 0 5px;
 }
 
 form.admin legend.heading a {
@@ -935,6 +942,14 @@ form.admin legend.heading a:hover span {
 	border-left: solid 1px #8cacbb;
 	border-right: solid 1px #8cacbb;
 }
+
+form.admin legend.heading .icon {
+	margin: 0 2px 0 0;
+}
+form.admin legend.heading span {
+	margin: 0 2px 0 0;
+	vertical-align: middle;
+	}
 
 div.heading {
 	margin: 3px 2px;
@@ -1059,11 +1074,11 @@ td.third {
 	border-bottom: none !important;
 	border-top-width: 2px !important;
 	position: relative;
-	top: -2px;
+	top: -1px;
 }
 
 [class].tabactive {
-	top: 1px;
+	top: 2px;
 }
 
 .tabactive a {
@@ -1074,11 +1089,11 @@ td.third {
 	border: solid 1px #666 !important;
 	border-bottom: none !important;
 	position: relative !important;
-	top: -3px !important;
+	top: -2px !important;
 }
 
 [class].tabinactive {
-	top: 0px !important;
+	top: 1px !important;
 }
 
 .tabcontent {

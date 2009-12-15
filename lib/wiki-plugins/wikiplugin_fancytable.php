@@ -83,9 +83,9 @@ function wikiplugin_fancytable($data, $params) {
 	static $iFancytable = 0;
 	++$iFancytable;
 	//Patterns to keep | within external and internal links from being treated as column separators
-	$patterns[0] = '/(\[[^(~|~)]+)\~\|\~([^(~|~)]+\])/'; //for [ | ]
+	$patterns[0] = '/(\[[^\](~|~)]+)\~\|\~([^\[(~|~)]+\])/'; //for [ | ]
 	$patterns[1] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/'; // for (( | ))
-	$patterns[2] = '/(\[[^(~|~)]+)\~\|\~([^(~|~)]+)\~\|\~([^(~|~)]+\])/'; // for [ | | ]
+	$patterns[2] = '/(\[[^\](~|~)]+)\~\|\~([^\[(~|~)]+)\~\|\~([^(~|~)]+\])/'; // for [ | | ]
 	$patterns[3] = '/(\(\([^(~|~)]+)\~\|\~([^(~|~)]+)\~\|\~([^(~|~)]+\)\))/'; // for (( | | ))
 	$replace[0] = '$1|$2';
 	$replace[1] = '$1|$2';

@@ -25,7 +25,7 @@ if (!$user) {
 	die;
 }
 // Make sure user preferences uses https if set
-if (!$https_mode && $https_login == 'required') {
+if (!$https_mode && isset($https_login) && $https_login == 'required') {
 	header('Location: ' . $base_url_https . 'tiki-user_preferences.php');
 	die;
 }
@@ -326,7 +326,9 @@ $tikilib->get_user_preference($userwatch, 'lon', '');
 $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $prefs['site_userbreadCrumb']);
 $tikilib->get_user_preference($userwatch, 'homePage', '');
 $tikilib->get_user_preference($userwatch, 'email is public', 'n');
-$user_preferences[$userwatch]['email_isPublic'] = $user_preferences[$userwatch]['email is public'];
+if (isset($user_preferences[$userwatch]['email is public'])) {
+	$user_preferences[$userwatch]['email_isPublic'] = $user_preferences[$userwatch]['email is public'];
+}
 $tikilib->get_user_preference($userwatch, 'mailCharset', $prefs['default_mail_charset']);
 $tikilib->get_user_preference($userwatch, 'user_dbl', 'y');
 $userinfo = $userlib->get_user_info($userwatch);
@@ -380,7 +382,7 @@ if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 	$unread = $tikilib->user_unread_messages($userwatch);
 	$smarty->assign('unread', $unread);
 }
-$smarty->assign_by_ref("timezones", TikiDate::getTimeZoneList());
+$smarty->assign('timezones', TikiDate::getTimeZoneList());
 $smarty->assign('userPageExists', 'n');
 if ($prefs['feature_wiki'] == 'y' and $prefs['feature_wiki_userpage'] == 'y') {
 	if ($tikilib->page_exists($prefs['feature_wiki_userpage_prefix'] . $user)) $smarty->assign('userPageExists', 'y');

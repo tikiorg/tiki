@@ -1,9 +1,9 @@
 <?php
-// CVS: $Id$
-//this script may only be included - so its better to die if called directly.
+// $Id$
+// This script may only be included - so it's better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
-	exit;
+	die;
 }
 
 global $prefs;
@@ -146,7 +146,7 @@ class TikiAjax extends xajax
 	class TikiAjax
 {
 		function TikiAjax() {}
-		function __construct() {}
+#		function __construct() {} // commented out because it causes PHP notice "constructor already defined for class TikiAjax" (no idea, where and why it even goes through this file when ajax feature is not enabled)
 		function registerFunction() {}
 		function registerTemplate() {}
 		function templateIsRegistered() { return false; }
