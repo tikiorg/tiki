@@ -100,7 +100,7 @@ class Smarty_Tikiwiki extends Smarty
 			// Enable AJAX
 			if ( $prefs['feature_ajax'] == 'y' && $_smarty_display ) {
 				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
-				$ajaxlib->registerTemplate('tiki-site_header.tpl');
+				$ajaxlib->registerTemplate('tiki-site_header_login.tpl');
 				$ajaxlib->registerTemplate($tpl);
 			}
 
@@ -121,7 +121,7 @@ class Smarty_Tikiwiki extends Smarty
 			if ( $prefs['feature_ajax'] == 'y' && $_smarty_display ) {
 				$_POST['xajaxargs'][0] = $_smarty_tpl_file;
 				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
-				$ajaxlib->registerTemplate('tiki-site_header.tpl');
+				$ajaxlib->registerTemplate('tiki-site_header_login.tpl');
 				$ajaxlib->registerTemplate($_smarty_tpl_file);
 				$ajaxlib->processRequests();
 			}
