@@ -5913,7 +5913,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		$result = explode($splitter, $repl_string);
+		$result = split($splitter, $repl_string);
 
 		if( $matches ) {
 			// Loop through the result sections
@@ -6519,7 +6519,7 @@ class TikiLib extends TikiDb_Bridge
 					$cols = array();
 					$temp_max5 = count($tables[0]);
 					for ($i = 0; $i < $temp_max5; $i++) {
-						$rows = explode("\n|\<br\/\>", $tables[0][$i]);
+						$rows = split("\n|\<br\/\>", $tables[0][$i]);
 						$col[$i] = array();
 						$temp_max6 = count($rows);
 						for ($j = 0; $j < $temp_max6; $j++) {
@@ -7936,7 +7936,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @return string - style passed in up to - | or . char (e.g. "thenews")
 	 */
 	function get_style_base($stl) {
-		$parts = explode("-|\.", $stl);
+		$parts = split("-|\.", $stl);
 		if (count($parts) > 0) {
 			return $parts[0];
 		} else {
