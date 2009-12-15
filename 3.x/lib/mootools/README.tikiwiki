@@ -1,0 +1,57 @@
+RELEASE: 1.11
+mootools.js is build using make-js.php in this directory
+all components where checked, here is the list (you can see it in make-js.php)
+
+.-- Class
+|   |-- Class.Extras.js
+|   `-- Class.js
+|-- Core
+|   `-- Core.js
+|-- Drag
+|   |-- Drag.Base.js
+|   `-- Drag.Move.js
+|-- Effects
+|   |-- Fx.Base.js
+|   |-- Fx.CSS.js
+|   |-- Fx.Elements.js
+|   |-- Fx.Scroll.js
+|   |-- Fx.Slide.js
+|   |-- Fx.Style.js
+|   |-- Fx.Styles.js
+|   `-- Fx.Transitions.js
+|-- Element
+|   |-- Element.Dimensions.js
+|   |-- Element.Event.js
+|   |-- Element.Filters.js
+|   |-- Element.Form.js
+|   `-- Element.Selectors.js
+|-- Misc
+|   |-- Debugger.js
+|   `-- Physics.js
+|-- Native
+|   |-- Array.js
+|   |-- Element.js
+|   |-- Function.js
+|   |-- Number.js
+|   `-- String.js
+|-- Plugins
+|   |-- Accordion.js
+|   |-- Color.js
+|   |-- Group.js
+|   |-- Hash.Cookie.js
+|   |-- Hash.js
+|   |-- Scroller.js
+|   |-- Slider.js
+|   |-- SmoothScroll.js
+|   |-- Sortables.js
+|   `-- Tips.js
+|-- Remote
+|   |-- Ajax.js
+|   |-- Assets.js
+|   |-- Cookie.js
+|   |-- Json.Remote.js
+|   |-- Json.js
+|   `-- XHR.js
+`-- Window
+    |-- Window.DomReady.js
+    `-- Window.Size.js

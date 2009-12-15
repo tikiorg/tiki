@@ -1,0 +1,156 @@
+
+
+div.windoo-alphacube div.windoo-body {
+	margin:22px 10px 0;
+	background:#efebe7;
+	border:none;
+}
+div.windoo-alphacube-ie .windoo-body {
+	top:22px;
+}
+div.windoo-alphacube-ghost {
+	border:dotted #0e0 2px;
+}
+
+div.windoo-alphacube div.windoo-frame .top-left {
+	padding:0 0 0 10px;
+	background:transparent url(windoo.alphacube/north.gif) no-repeat scroll left -22px;
+}
+div.windoo-alphacube div.windoo-frame .top-right {
+	padding:0 10px 0 0;
+	background:transparent url(windoo.alphacube/north.gif) no-repeat scroll right 0;
+}
+div.windoo-alphacube div.windoo-frame .title {
+	background:#f2efec url(windoo.alphacube/north.gif) repeat-x scroll 0 -44px;
+	color:#555;
+	height:22px;
+	padding:0 40px 0 40px;
+	font:bold 13px "Sans Serif", Tahoma, Verdana, Helvetica;
+}
+div.windoo-alphacube div.windoo-frame .title-text {
+	padding-top:4px;
+	line-height:13px;
+	height:13px;
+	text-align:center;
+}
+div.windoo-alphacube div.windoo-frame .bot-left {
+	padding:0 0 0 7px;
+	background:transparent url(windoo.alphacube/west.gif) no-repeat scroll left bottom;
+}
+div.windoo-alphacube div.windoo-frame .bot-right {
+	padding:0 7px 0 0;
+	background:transparent url(windoo.alphacube/east.gif) no-repeat scroll right bottom;
+}
+div.windoo-alphacube div.windoo-frame .strut {
+	background:transparent url(windoo.alphacube/south.gif) repeat-x scroll center bottom;
+	text-align:left;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+
+
+div.windoo-alphacube a.windoo-button {
+	width:23px;
+	height:19px;
+	line-height:19px;
+	font-size:9pt;
+	background-color:transparent;
+	background:url('windoo.alphacube/buttons.gif') no-repeat scroll 0 0;
+}
+div.windoo-alphacube a.windoo-close {
+	top:0px;
+	right:15px;
+	background-position:-92px 0;
+}
+div.windoo-alphacube a.windoo-close:hover {
+	background-position:-92px -38px;
+}
+div.windoo-alphacube a.windoo-close-disabled, div.windoo-alphacube a.windoo-close-disabled:hover {
+	background-position:-92px -57px;
+}
+div.windoo-alphacube a.windoo-maximize {
+	top:0px;
+	right:38px;
+	background-position:-46px 0;
+}
+div.windoo-alphacube a.windoo-maximize:hover {
+	background-position:-46px -38px;
+}
+div.windoo-alphacube a.windoo-maximize-disabled, div.windoo-alphacube a.windoo-maximize-disabled:hover {
+	background-position:-46px -57px;
+}
+div.windoo-alphacube a.windoo-minimize {
+	top:0px;
+	right:61px;
+	background-position:0 0;
+}
+div.windoo-alphacube a.windoo-minimize:hover {
+	background-position:0 -38px;
+}
+div.windoo-alphacube a.windoo-minimize-disabled, div.windoo-alphacube a.windoo-minimize-disabled:hover {
+	background-position:0 -57px;
+}
+div.windoo-alphacube a.windoo-restore {
+	display:none;
+	top:0px;
+	right:15px;
+	background-position:-46px 0;
+}
+div.windoo-alphacube a.windoo-restore:hover {
+	background-position:-46px -38px;
+}
+div.windoo-alphacube a.windoo-restore-disabled, div.windoo-alphacube a.windoo-restore-disabled:hover {
+	background-position:-46px -57px;
+}
+div.windoo-alphacube a.windoo-menu {
+	top:0px;
+	left:5px;
+	background-position:-115px 0;
+}
+div.windoo-alphacube a.windoo-menu:hover {
+	background-position:-115px -38px;
+}
+div.windoo-alphacube a.windoo-menu-disabled, div.windoo-alphacube a.windoo-menu-disabled:hover {
+	background-position:-115px -57px;
+}
+
+
+div.windoo-alphacube-maximized a.windoo-maximize {
+	background-position:-69px 0;
+}
+div.windoo-alphacube-maximized a.windoo-maximize:hover {
+	background-position:-69px -38px;
+}
+
+div.windoo-alphacube-minimized {
+	width:165px !important;
+}
+div.windoo-alphacube-minimized div.windoo-frame .title {
+	padding:0 40px 0 5px;
+}
+div.windoo-alphacube-minimized div.windoo-frame .title-text {
+	text-align:left;
+}
+
+div.window-shadow-alphacube-simple div.c {
+	-moz-border-radius:12px;
+	-khtml-border-radius:12px;
+	-webkit-border-radius:12px;
+	border-radius:12px;
+}
+div.windoo-shadow-alphacube-maximized {
+	display:none !important;
+}
+
+div.windoo-alphacube-alert-message {
+}
+div.windoo-alphacube-confirm-message {
+}
+div.windoo-alphacube-alert-pane, div.windoo-alphacube-confirm-pane {
+	text-align:center;
+}
+div.windoo-alphacube-alert-pane input, div.windoo-alphacube-confirm-pane input {
+	margin:0 .5em;
+	width:6em;
+}
