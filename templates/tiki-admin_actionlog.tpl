@@ -197,65 +197,65 @@
 				</tr>
 				
 				{cycle values="even,odd" print=false}
-				{section name=ix loop=$actionlogs}
+				{foreach from=$actionlogs item=actionlog}
 					<tr>
 						<td class="{cycle advance=false}">
-							{if $actionlogs[ix].user}{$actionlogs[ix].user}{else}{tr}Anonymous{/tr}{/if}
+							{if $actionlog.user}{$actionlog.user}{else}{tr}Anonymous{/tr}{/if}
 						</td>
 						<td class="{cycle advance=false}">
-							{$actionlogs[ix].lastModif|tiki_short_datetime}
+							{$actionlog.lastModif|tiki_short_datetime}
 						</td>
 						<td class="{cycle advance=false}">
-							{tr}{$actionlogs[ix].action}{/tr}
+							{tr}{$actionlog.action}{/tr}
 						</td>
 						<td class="{cycle advance=false}">
-							{tr}{$actionlogs[ix].objectType}{/tr}
+							{tr}{$actionlog.objectType}{/tr}
 						</td>
 						<td class="{cycle advance=false}">
-							{if $actionlogs[ix].link}
-								<a href="{$actionlogs[ix].link}" target="_blank" title="{tr}View{/tr}">{$actionlogs[ix].object|escape}</a>
+							{if $actionlog.link}
+								<a href="{$actionlog.link}" target="_blank" title="{tr}View{/tr}">{$actionlog.object|escape}</a>
 							{else}
-								{$actionlogs[ix].object|escape}
+								{$actionlog.object|escape}
 							{/if}
 						</td>
 						{if !$reportCateg and $showCateg eq 'y'}
 							<td class="{cycle advance=false}">
-								{assign var=ic value=$actionlogs[ix].categId}{$categNames[$ic]|escape}
+								{assign var=ic value=$actionlog.categId}{$categNames[$ic]|escape}
 							</td>
 						{/if}
-						<td class="{cycle advance=false}{if $actionlogs[ix].add} diffadded{/if}">
-							{if $actionlogs[ix].add or $actionlogs[ix].add eq '0'}{$actionlogs[ix].add}{else}&nbsp;{/if}
+						<td class="{cycle advance=false}{if $actionlog.add} diffadded{/if}">
+							{if $actionlog.add or $actionlog.add eq '0'}{$actionlog.add}{else}&nbsp;{/if}
 						</td>
-						<td class="{cycle advance=false}{if $actionlogs[ix].del} diffdeleted{/if}">
-							{if $actionlogs[ix].del or $actionlogs[ix].del eq '0'}{$actionlogs[ix].del}{else}&nbsp;{/if}
+						<td class="{cycle advance=false}{if $actionlog.del} diffdeleted{/if}">
+							{if $actionlog.del or $actionlog.del eq '0'}{$actionlog.del}{else}&nbsp;{/if}
 						</td>
 						{if $prefs.feature_contribution eq 'y'}
 							<td class="{cycle advance=false}">
-								{section name=iy loop=$actionlogs[ix].contributions}
-									{if !$smarty.section.iy.first}, {/if}
-									{$actionlogs[ix].contributions[iy].name}
-								{/section}
+								{foreach name=contribution from=$actionlog.contributions item=contribution}
+									{if !$smarty.foreach.contribution.first}, {/if}
+									{$contribution.name}
+								{/foreach}
 							</td>
 							{if $prefs.feature_contributor_wiki eq 'y'}
 								<td class="{cycle advance=false}">
-									{section name=iy loop=$actionlogs[ix].contributors}
-										{if !$smarty.section.iy.first}, {/if}
-										{$actionlogs[ix].contributors[iy].login}
-									{/section}
+									{foreach name=contributor from=$actionlog.contributors item=contributor}
+										{if !$smarty.foreach.contributor.first}, {/if}
+										{$contributor.login}
+									{/foreach}
 								</td>
 							{/if}
 							{if $tiki_p_admin eq 'y' and ($prefs.feature_contribution eq 'y' or $prefs.feature_categories eq 'y')}
 								<td class="{cycle advance=false}">
-									{if $actionlogs[ix].actionId}
-										<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-										{self_link _class='link' remove='y' actionId=$actionlogs[ix].actionId _icon='cross' _title="{tr}Remove{/tr}"}{/self_link}
+									{if $actionlog.actionId}
+										<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlog.actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+										{self_link _class='link' remove='y' actionId=$actionlog.actionId _icon='cross' _title="{tr}Remove{/tr}"}{/self_link}
 									{/if}
 								</td>
 							{/if}
 						{/if}
 						<!-- {cycle} -->
 					</tr>
-				{/section}
+				{/foreach}
 			</table>
 		{/if}
 
@@ -353,7 +353,7 @@
 				{foreach key=categId item=vol from=$volCateg}
 					<tr>
 						<td class="{cycle advance=false}">{$vol.category}</td>
-						{foreach item=type from=$typeVol} {* math equation="round(a/b)" a=$vol[$type].del b=1024 *}
+						{foreach item=type from=$typeVol} 
 							<td class="{cycle advance=false}{if $vol[$type].add} diffadded{/if}">{if $vol[$type].add}{$vol[$type].add}{else}0{/if}</td>
 							<td class="{cycle advance=false}{if $vol[$type].del} diffdeleted{/if}">{if $vol[$type].del}{$vol[$type].del}{else}0{/if}</td>
 							<td class="{cycle advance=false}{if $vol[$type].dif > 0} diffadded{elseif $vol[$type].dif < 0} diffdeleted{/if}">{if $vol[$type].dif}{$vol[$type].dif}{else}0{/if}</td>
@@ -380,7 +380,7 @@
 					<tr>
 						<td class="{cycle advance=false}">{$vol.category}</td>
 						<td class="{cycle advance=false}">{$vol.user}</td>
-						{foreach item=type from=$typeVol} {* math equation="round(a/b)" a=$vol[$type].del b=1024 *}
+						{foreach item=type from=$typeVol} 
 							<td class="{cycle advance=false}{if $vol[$type].add} diffadded{/if}">{if $vol[$type].add}{$vol[$type].add}{else}0{/if}</td>
 							<td class="{cycle advance=false}{if $vol[$type].del} diffdeleted{/if}">{if $vol[$type].del}{$vol[$type].del}{else}0{/if}</td>
 							<td class="{cycle advance=false}{if $vol[$type].dif > 0} diffadded{elseif $vol[$type].dif < 0} diffdeleted{/if}">{if $vol[$type].dif}{$vol[$type].dif}{else}0{/if}</td>
