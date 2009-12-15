@@ -85,10 +85,11 @@ function collect_perms_desc($file)
     // Used when called in $script_mode if no DB has been found
     $matches = array();
     preg_match_all(
-      '/insert\s+into\s+\`?users_permissions\s*\([^\)]+\)\s*values\s*\(\'(tiki_p_[^\'"]+)\',\s*\'(.*)\',/Uim',
+      '/insert\s+into\s+\`?users_permissions\`?\s*\([^\)]+\)\s*values\s*\(\'(tiki_p_[^\'"]+)\',\s*\'(.*)\',/Uim',
       file_get_contents('db/tiki.sql'),
       $matches
     );
+
     foreach ( $matches[2] as $permDesc ) {
       $perm_strings[] = str_replace("\'", "'", $permDesc);
     }
