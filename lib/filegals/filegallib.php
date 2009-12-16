@@ -1198,8 +1198,8 @@ class FileGalLib extends TikiLib
 			}
 		}
 		$fileIds = array_unique($fileIds);
-		if (!empty($fileIds)) {echo '<pre>'; print_r($context); print_r($fileIds); echo '</pre>';}
-		//$this->replaceBacklinks($context, $fileIds);
+		//if (!empty($fileIds)) {echo '<pre>'; print_r($context); print_r($fileIds); echo '</pre>';}
+		$this->replaceBacklinks($context, $fileIds);
 		return $fileIds;
 	}
 	function getLinkFileId($url) {
