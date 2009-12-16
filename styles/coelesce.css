@@ -1177,6 +1177,12 @@ div.quotebody {
 	background: #f5f5f5;
 }
 
+/* fancytable (sortable) plugin */
+
+.fancysort .header:hover {
+	color: #82AC78;
+}
+
 /** Wiki tocs **/
 div.tocnav {
 	background: #ebebeb;

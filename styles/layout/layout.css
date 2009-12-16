@@ -961,6 +961,12 @@ ul.floatleft li {
 	padding: .4em;
 }
 
+/* fancytable (sortable) plugin */
+
+.fancysort .header {
+	cursor: pointer;
+}
+
 /** Wiki tocs **/
 div.tocnav {
 	margin-bottom: 4px;
