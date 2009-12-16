@@ -24,24 +24,9 @@ if (!isset($_REQUEST["nlId"])) {
 	$_REQUEST["nlId"] = 0;
 }
 $smarty->assign('nlId', $_REQUEST["nlId"]);
-$smarty->assign('individual', 'n');
-if ($userlib->object_has_one_permission($_REQUEST["nlId"], 'newsletter')) {
-	$smarty->assign('individual', 'y');
-	if ($tiki_p_admin != 'y') {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'newsletters');
-		foreach($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-			if ($userlib->object_has_permission($user, $_REQUEST["nlId"], 'newsletter', $permName)) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
-if ($tiki_p_admin_newsletters != 'y') {
+$perms = Perms::get(array('type'=>'newsletter', 'object'=>$_REQUEST['nlId']));
+
+if ($perms->admin_newsletters != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
