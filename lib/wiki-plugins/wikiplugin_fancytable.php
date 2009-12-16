@@ -143,6 +143,9 @@ function wikiplugin_fancytable($data, $params) {
 	}
 	$wret .= "\r" . '</table>' . "\r";
 	if ($sortable == 'y' && $prefs['javascript_enabled'] == 'y') {
+		if ($prefs['feature_jquery_tablesorter'] != 'y') {
+			$wret .= tra('The feature must be activated:').' feature_jquery_tablesorter';
+		}
 		if (empty($sortList)) {
 			$js = '$jq("#fancytable_'.$iFancytable.'").tablesorter();';
 		} else {
