@@ -7,6 +7,7 @@
 // details.
 
 //this script may only be included - so its better to die if called directly.
+global $access;
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 if ( $prefs['error_reporting_level'] == 2047 && $prefs['error_reporting_adminonly'] == 'y' ) {

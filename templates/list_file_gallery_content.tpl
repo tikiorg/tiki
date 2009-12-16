@@ -140,6 +140,8 @@
             {assign var=propval value=$propval|username}
           {elseif $propname eq 'size'}
             {assign var=propval value=$propval|kbsize:true}
+          {elseif $propname eq 'backlinks'}
+            {assign var=propval value=$files[changes].nbBacklinks}
           {/if}
     
           {if isset($gal_info.$propkey) and $propval neq '' and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o' ) }
@@ -243,8 +245,10 @@
         {else}
           {assign var=propval value=$propval|userlink}
         {/if}
+      {elseif $propname eq 'backlinks'}
+          {assign var=propval value=$files[changes].nbBacklinks}
       {/if}
-  
+
       {if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
         <td class="{cycle advance=false}">
           {if $link neq ''}<a class='fgalname' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}

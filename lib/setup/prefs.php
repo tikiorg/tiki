@@ -532,6 +532,7 @@ function get_default_prefs() {
 		'fgal_quota_per_fgal' => 'n',
 		'fgal_quota_default' => 0,
 		'fgal_quota_show' => 'y',
+		'fgal_list_backlinks' => 'n',
 
 		// imagegals
 		'feature_galleries' => 'n',

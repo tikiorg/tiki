@@ -736,6 +736,7 @@ CREATE TABLE `tiki_file_galleries` (
   `size` int(14) default NULL,
   `wiki_syntax` varchar(200) default NULL,
   `backlinkPerms` char(1) default 'n',
+  `show_backlinks` char(1) default NULL,
   PRIMARY KEY (`galleryId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

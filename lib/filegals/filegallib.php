@@ -198,6 +198,7 @@ class FileGalLib extends TikiLib
 		if (!isset($fgal_info['show_author']))  $fgal_info['show_author'] = 'n';
 		if (!isset($fgal_info['quota']))  $fgal_info['quota'] = 0;
 		if (!isset($fgal_info['backlinkPerms'])) $fgal_info['backlinkPerms'] = 'n';
+		if (!isset($fgal_info['show_backlinks'])) $fgal_info['show_backlinks'] = 'n';
 
 		// if the user is admin or the user is the same user and the gallery exists
 		// then replace if not then create the gallary if the name is unused.
@@ -216,7 +217,7 @@ class FileGalLib extends TikiLib
 			`user`=?, `lockable`=?, `show_lockedby`=?, `archives`=?, `sort_mode`=?,
 			`show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=?,
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
-			`show_path`=?, `show_slideshow`=?, `default_view`=?, `quota`=?, `backlinkPerms`=? where `galleryId`=?";
+			`show_path`=?, `show_slideshow`=?, `default_view`=?, `quota`=?, `backlinkPerms`=?, `show_backlinks`=? where `galleryId`=?";
 
 			$bindvars=array(trim($fgal_info['name']), (int) $fgal_info['maxRows'],
 			$fgal_info['description'], (int) $this->now, $fgal_info['public'],
@@ -232,7 +233,8 @@ class FileGalLib extends TikiLib
 			$fgal_info['show_last_user'], $fgal_info['show_comment'],
 			$fgal_info['show_files'], $fgal_info['show_explorer'],
 			$fgal_info['show_path'], $fgal_info['show_slideshow'],
-							$fgal_info['default_view'], $fgal_info['quota'], $fgal_info['backlinkPerms'], (int)$fgal_info['galleryId']);
+			$fgal_info['default_view'], $fgal_info['quota'], 
+			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], (int)$fgal_info['galleryId']);
 
 			$result = $this->query($query,$bindvars);
 
@@ -250,8 +252,8 @@ class FileGalLib extends TikiLib
 			`show_hits`, `max_desc`, `type`, `parentId`, `lockable`, `show_lockedby`,
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
-			`show_explorer`, `show_path`, `show_slideshow`, `default_view`, `quota`, `backlinkPerms`)
-			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			`show_explorer`, `show_path`, `show_slideshow`, `default_view`, `quota`, `backlinkPerms`, `show_backlinks`)
+			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$bindvars=array($fgal_info['name'], $fgal_info['description'], (int)
 			$this->now, $fgal_info['user'], (int) $this->now, (int)
@@ -266,7 +268,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['subgal_conf'], $fgal_info['show_last_user'],
 			$fgal_info['show_comment'], $fgal_info['show_files'],
 			$fgal_info['show_explorer'], $fgal_info['show_path'],
-			$fgal_info['show_slideshow'], $fgal_info['default_view'], $fgal_info['quota'], $fgal_info['backlinkPerms']);
+			$fgal_info['show_slideshow'], $fgal_info['default_view'], $fgal_info['quota'], $fgal_info['backlinkPerms'], $fgal_info['show_backlinks']);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from

@@ -57,6 +57,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_toggle('fgal_show_path');
 	simple_set_toggle('fgal_show_slideshow');
 	simple_set_value('fgal_default_view');
+	simple_set_value('fgal_list_backlinks');
 }
 
 $usedSize = $filegallib->getUsedSize();

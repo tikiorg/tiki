@@ -357,7 +357,7 @@ if (isset($_REQUEST['edit'])) {
 			die;
 		}
 		$old_gal_info = $filegallib->get_file_gallery_info($galleryId);
-		$gal_info = array('galleryId' => $galleryId, 'name' => $_REQUEST['name'], 'description' => $_REQUEST['description'], 'user' => $_REQUEST['user'], 'maxRows' => $_REQUEST['maxRows'], 'public' => $public, 'visible' => $visible, 'show_id' => $_REQUEST['fgal_list_id'], 'show_icon' => $_REQUEST['fgal_list_type'], 'show_name' => $_REQUEST['fgal_list_name'], 'show_size' => $_REQUEST['fgal_list_size'], 'show_description' => $_REQUEST['fgal_list_description'], 'show_created' => $_REQUEST['fgal_list_created'], 'show_hits' => $_REQUEST['fgal_list_hits'], 'max_desc' => $_REQUEST['max_desc'], 'type' => $_REQUEST['fgal_type'], 'parentId' => $_REQUEST['parentId'], 'lockable' => $lockable, 'show_lockedby' => $_REQUEST['fgal_list_lockedby'], 'archives' => $_REQUEST['archives'], 'sort_mode' => $_REQUEST['sortorder'] . '_' . $_REQUEST['sortdirection'], 'show_modified' => $_REQUEST['fgal_list_lastModif'], 'show_creator' => $_REQUEST['fgal_list_creator'], 'show_author' => $_REQUEST['fgal_list_author'], 'subgal_conf' => $_REQUEST['subgal_conf'], 'show_last_user' => $_REQUEST['fgal_list_last_user'], 'show_comment' => $_REQUEST['fgal_list_comment'], 'show_files' => $_REQUEST['fgal_list_files'], 'show_explorer' => (isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n'), 'show_path' => (isset($_REQUEST['fgal_show_path']) ? 'y' : 'n'), 'show_slideshow' => (isset($_REQUEST['fgal_show_slideshow']) ? 'y' : 'n'), 'default_view' => $_REQUEST['fgal_default_view'], 'quota' => $_REQUEST['quota'], 'backlinkPerms' => isset($_REQUEST['backlinkPerms'])? 'y': 'n');
+		$gal_info = array('galleryId' => $galleryId, 'name' => $_REQUEST['name'], 'description' => $_REQUEST['description'], 'user' => $_REQUEST['user'], 'maxRows' => $_REQUEST['maxRows'], 'public' => $public, 'visible' => $visible, 'show_id' => $_REQUEST['fgal_list_id'], 'show_icon' => $_REQUEST['fgal_list_type'], 'show_name' => $_REQUEST['fgal_list_name'], 'show_size' => $_REQUEST['fgal_list_size'], 'show_description' => $_REQUEST['fgal_list_description'], 'show_created' => $_REQUEST['fgal_list_created'], 'show_hits' => $_REQUEST['fgal_list_hits'], 'max_desc' => $_REQUEST['max_desc'], 'type' => $_REQUEST['fgal_type'], 'parentId' => $_REQUEST['parentId'], 'lockable' => $lockable, 'show_lockedby' => $_REQUEST['fgal_list_lockedby'], 'archives' => $_REQUEST['archives'], 'sort_mode' => $_REQUEST['sortorder'] . '_' . $_REQUEST['sortdirection'], 'show_modified' => $_REQUEST['fgal_list_lastModif'], 'show_creator' => $_REQUEST['fgal_list_creator'], 'show_author' => $_REQUEST['fgal_list_author'], 'subgal_conf' => $_REQUEST['subgal_conf'], 'show_last_user' => $_REQUEST['fgal_list_last_user'], 'show_comment' => $_REQUEST['fgal_list_comment'], 'show_files' => $_REQUEST['fgal_list_files'], 'show_explorer' => (isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n'), 'show_path' => (isset($_REQUEST['fgal_show_path']) ? 'y' : 'n'), 'show_slideshow' => (isset($_REQUEST['fgal_show_slideshow']) ? 'y' : 'n'), 'default_view' => $_REQUEST['fgal_default_view'], 'quota' => $_REQUEST['quota'], 'backlinkPerms' => isset($_REQUEST['backlinkPerms'])? 'y': 'n', 'show_backlinks'=> $_REQUEST['fgal_list_backlinks']);
 		if ($prefs['fgal_show_slideshow'] != 'y') {
 			$gal_info['show_slideshow'] = $old_gal_info['show_slideshow'];
 		}
@@ -374,6 +374,7 @@ if (isset($_REQUEST['edit'])) {
 		unset($fgal_diff['points']);
 		unset($fgal_diff['hits']);
 		$smarty->assign('fgal_diff', $fgal_diff);
+
 		$fgid = $filegallib->replace_file_gallery($gal_info);
 		if ($prefs['feature_groupalert'] == 'y') {
 			$groupalertlib->AddGroup('file gallery', $galleryId, $_REQUEST['groupforAlert'], $_REQUEST['showeachuser']);
@@ -598,7 +599,7 @@ if (isset($_GET['slideshow'])) {
 } else {
 	if (!isset($_REQUEST["edit_mode"]) && !isset($_REQUEST["edit"])) {
 		// Get list of files in the gallery
-		$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
+		$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true,true,true,false,false,true,false,'',true,false,($gal_info['show_backlinks']!='n'));
 		$smarty->assign_by_ref('files', $files['data']);
 		$smarty->assign('cant', $files['cant']);
 	}
