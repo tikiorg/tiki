@@ -148,6 +148,7 @@ function wikiplugin_fancytable($data, $params) {
 		} else {
 			$js = '$jq("#fancytable_'.$iFancytable.'").tablesorter({sortList:['.$sortList.']});';
 		}
+		$js .= '$jq("#fancytable_'.$iFancytable.'").tablesorter({widgets: ["zebra"]});';
 		global $headerlib;
 		$headerlib->add_jq_onready($js);
 	}
