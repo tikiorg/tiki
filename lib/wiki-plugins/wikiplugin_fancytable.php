@@ -144,10 +144,12 @@ function wikiplugin_fancytable($data, $params) {
 	$wret .= "\r" . '</table>' . "\r";
 	if ($sortable == 'y' && $prefs['javascript_enabled'] == 'y') {
 		if (empty($sortList)) {
-			$wret .= '{JQ(notonready=false)}$jq("#fancytable_'.$iFancytable.'").tablesorter();{JQ}';
+			$js = '$jq("#fancytable_'.$iFancytable.'").tablesorter();';
 		} else {
-			$wret .= '{JQ(notonready=false)}$jq("#fancytable_'.$iFancytable.'").tablesorter({sortList:['.$sortList.']});{JQ}';
+			$js = '$jq("#fancytable_'.$iFancytable.'").tablesorter({sortList:['.$sortList.']});';
 		}
+		global $headerlib;
+		$headerlib->add_jq_onready($js);
 	}
 	return $wret;
 }
