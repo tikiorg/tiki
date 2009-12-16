@@ -1252,7 +1252,7 @@ $lang=Array(
 "You need to create one calendar" => "Vous devez créer un calendrier",
 "you or someone registered this email address at" => "Vous (ou quelqu'un d'autre) a inscrit cette adresse électronique à",
 "Your account request have been stored and will be activated by the admin as soon as possible." => "Votre demande de compte a été enregistrée et va être traitée dès que possible par un administrateur.",
-"Your comment will have to be approved by the moderator before it is displayed" => "Votre commentaire doit être approuvé par le modérateur avant d'être afficher",
+"Your comment will have to be approved by the moderator before it is displayed" => "Votre commentaire doit être approuvé par le modérateur avant d'être affiché",
 "Your database has been configured and Tiki is ready to run" => "Votre connexion à la base de données fonctionne et Tiki est prêt",
 "Your database requires an update to match the current TikiWiki version. Please proceed to <a href=\"tiki-install.php\">the installer</a>. Using TikiWiki with an incorrect database version usually causes errors" => "Votre base de données a besoin d'une mise à niveau pour correspondre à la version actuelle de Tiki. Merci d'utiliser <a href=\"tiki-install.php\">l'installeur</a>. L'utilisation de Tiki avec une mauvaise base de données peut provoquer des erreurs",
 "Your help is needed! Please visit <a href=\"http://dev.tikiwiki.org/tiki-index.php?page=Mods\">dev.tikiwiki.org</a> to find out more" => "Votre aide est requise! Merci de visiter<a href=\"http://dev.tikiwiki.org/tiki-index.php?page=Mods\">dev.tikiwiki.org</a> pour en savoir plus",
