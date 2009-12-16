@@ -4,7 +4,7 @@
 
 {self_link page="features" _class="icon tips" _title="{tr}Features{/tr}|{tr}Switches for major features{/tr}"}{icon _id="pics/large/boot.png" alt="{tr}Features{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
-{self_link page="login" _class="icon tips" _title="{tr}Log in{/tr}|{tr}User resistration, remember me cookie settings and authentication methods{/tr}"}{icon _id="pics/large/stock_quit.png" alt="{tr}Log in{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="login" _class="icon tips" _title="{tr}Log in{/tr}|{tr}User registration, remember me cookie settings and authentication methods{/tr}"}{icon _id="pics/large/stock_quit.png" alt="{tr}Log in{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {self_link page="community" _class="icon tips" _title="{tr}Community{/tr}|{tr}User specific features and settings{/tr}"}{icon _id="pics/large/users.png" alt="{tr}Community{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
