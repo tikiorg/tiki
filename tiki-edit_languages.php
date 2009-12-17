@@ -97,11 +97,13 @@ if (isset($_REQUEST["add_tran"])) {
 	if (strlen($add_tran_source) != 0 && strlen($add_tran_tran) != 0) {
 		$add_tran_source = htmlentities(strip_tags($add_tran_source), ENT_NOQUOTES, "UTF-8");
 		$add_tran_tran = htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES, "UTF-8");
+		$query = "delete from `tiki_language` where `source` = ? and `lang` = ?";
+		$tikilib->query($query,array($add_tran_source,$edit_language));
 		$query = "insert into `tiki_language` values (?,?,?)";
-		$result = $tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran));
+		$tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran));
 		// remove from untranslated Table
 		$query = "delete from `tiki_untranslated` where `source`=? and `lang`=?";
-		$result = $tikilib->query($query,array($add_tran_source,$edit_language));
+		$tikilib->query($query,array($add_tran_source,$edit_language));
 	}
 }
 
