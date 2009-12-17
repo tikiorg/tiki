@@ -48,6 +48,8 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 	$langpage = $info['lang'];
 	$fullLangName = $langmapping[$langpage][0];
 	$smarty->assign( 'languageName', $fullLangName );
+	$cat_type = 'wiki page';
+	$cat_objid = $name;
 
 	$edit_data = $info['data'];
 	$smarty->assign('pagedata', TikiLib::htmldecode($edit_data));
@@ -78,6 +80,8 @@ else if ($_REQUEST['id']) {
 		$type = "wiki page";
 		$objId = $info['page_id'];
 		$langpage = $info['lang'];
+		$cat_type = 'wiki page';
+		$cat_objid = $name;
 	}
 	else if ($_REQUEST['type'] == "article") {
 		$info = $tikilib->get_article($_REQUEST["id"]);
@@ -92,12 +96,16 @@ else if ($_REQUEST['id']) {
 		$langpage = $info['lang'];
 		$articles = $tikilib->list_articles(0, -1, 'title_asc', '', '', '', $user);
 		$smarty->assign_by_ref('articles', $articles["data"]);
+		$cat_type = 'article';
+		$cat_objid = $objId;
 	}
 }
 
 $smarty->assign('name', $name);
 $smarty->assign('type', $type);
 $smarty->assign('id', $objId);
+
+include_once 'categorize_list.php';
 
 if (isset($_REQUEST['langpage']) && !empty($_REQUEST['langpage']) && $_REQUEST['langpage'] != "NULL"
 				&& $langpage != $_REQUEST['langpage']) { // update the language
