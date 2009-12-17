@@ -122,7 +122,7 @@ function tr_replace( $content, $args ) {
 function record_string( $original, $printed ) {
 	global $interactive_collected_strings;
 	if( interactive_enabled() ) {
-		$interactive_collected_strings[ md5( $original . '___' . $printed ) ] = array( $original, $printed );
+		$interactive_collected_strings[ md5( $original . '___' . $printed ) ] = array( $original, html_entity_decode( $printed ) );
 	}
 }
 
