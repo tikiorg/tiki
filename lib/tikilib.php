@@ -6150,37 +6150,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		if( $prefs['feature_wiki_argvariable'] == 'y' ) {
-			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]+))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
-				$needles = array();
-				$replacements = array();
-
-				foreach( $args as $arg ) {
-					$value = $arg[4];
-					$name = $arg[2];
-
-					switch( $name ) {
-					case 'user':
-						$value = $user;
-						break;
-					case 'page':
-						$value = $options['page'];
-						break;
-					default:
-						if( isset($_GET[$name]) )
-							$value = $_GET[$name];
-						break;
-					}
-
-					if( ! empty( $value ) ) {
-						$needles[] = $arg[0];
-						$replacements[] = $value;
-					}
-				}
-
-				$data = str_replace( $needles, $replacements, $data );
-			}
-		}
+		$this->parse_wiki_argvariable($data);
 
 		/* <x> XSS Sanitization handling */
 
@@ -6205,6 +6175,7 @@ class TikiLib extends TikiDb_Bridge
 		$noparsed = array('data'=>array(),'key'=>array());
 		if (!$noparseplugins) {
 			$this->parse_first($data, $preparsed, $noparsed, $options);
+			$this->parse_wiki_argvariable($data);
 		}
 
 		// Handle |# anchor links by turning them into ALINK module calls.
@@ -6583,6 +6554,39 @@ class TikiLib extends TikiDb_Bridge
 		return $data;
 	}
 
+	function parse_wiki_argvariable(&$data) {
+		global $prefs;
+		if( $prefs['feature_wiki_argvariable'] == 'y' ) {
+			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]+))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
+				$needles = array();
+				$replacements = array();
+
+				foreach( $args as $arg ) {
+					$value = $arg[4];
+					$name = $arg[2];
+
+					switch( $name ) {
+					case 'user':
+						$value = $user;
+						break;
+					case 'page':
+						$value = $options['page'];
+						break;
+					default:
+						if( isset($_GET[$name]) )
+							$value = $_GET[$name];
+						break;
+					}
+
+					if( ! empty( $value ) ) {
+						$needles[] = $arg[0];
+						$replacements[] = $value;
+					}
+				}
+				$data = str_replace( $needles, $replacements, $data );
+			}
+		}
+	}
 	private function parse_data_dynamic_variables( $data, $lang = null ) {
 		global $tiki_p_edit_dynvar, $prefs;
 
