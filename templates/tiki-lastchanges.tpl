@@ -31,7 +31,7 @@
 <br />
 
 {if $findwhat!=""}
-{tr}Found{/tr} "<b>{$findwhat}</b>" {tr}in{/tr} {$cant_records} {tr}LastChanges{/tr} 
+{tr}Found{/tr} "<b>{$findwhat|escape}</b>" {tr}in{/tr} {$cant_records|escape} {tr}LastChanges{/tr} 
 {/if}
 <table class="normal">
 <tr>
@@ -49,7 +49,7 @@
 {section name=changes loop=$lastchanges}
 <tr class="{cycle}">
 <td>{$lastchanges[changes].lastModif|tiki_short_datetime}</td>
-<td><a href="{$lastchanges[changes].pageName|sefurl}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}</a> 
+<td><a href="{$lastchanges[changes].pageName|sefurl}" class="tablename" title="{$lastchanges[changes].pageName|escape}">{$lastchanges[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}</a> 
 </td>
 
 <td>{tr}{$lastchanges[changes].action|escape}{/tr}</td>
@@ -62,14 +62,14 @@
 {if $tiki_p_wiki_view_history eq 'y'} 
 {if $lastchanges[changes].version}
 <a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt='{tr}History{/tr}'}</a>{tr}v{/tr}{$lastchanges[changes].version}
-&nbsp;<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version}' title="{tr}View{/tr}">v</a>&nbsp;
+&nbsp;<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version|escape:"url"}' title="{tr}View{/tr}">v</a>&nbsp;
 {if $tiki_p_rollback eq 'y'}
-<a class="link" href='tiki-rollback.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;version={$lastchanges[changes].version}' title="{tr}Rollback{/tr}">b</a>&nbsp;
+<a class="link" href='tiki-rollback.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;version={$lastchanges[changes].version|escape:"url"}' title="{tr}Rollback{/tr}">b</a>&nbsp;
 {/if}
-<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff={$lastchanges[changes].version}' title="{tr}Compare{/tr}">c</a>&nbsp;
-<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff2={$lastchanges[changes].version}' title="{tr}Diff{/tr}">d</a>&nbsp;
+<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff={$lastchanges[changes].version|escape:"url"}' title="{tr}Compare{/tr}">c</a>&nbsp;
+<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff2={$lastchanges[changes].version|escape:"url"}' title="{tr}Diff{/tr}">d</a>&nbsp;
 {if $tiki_p_wiki_view_source eq 'y'}
-<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;source={$lastchanges[changes].version}' title="{tr}Source{/tr}">s</a>{/if}
+<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;source={$lastchanges[changes].version|escape:"url"}' title="{tr}Source{/tr}">s</a>{/if}
 {elseif $lastchanges[changes].versionlast}
 <a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt='{tr}History{/tr}'}</a>
 {/if}
