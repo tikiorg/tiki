@@ -49,6 +49,7 @@
     </select>
 	</div>
 </div>
+{preference name=feature_wiki_argvariable}
 
 </fieldset>
 
