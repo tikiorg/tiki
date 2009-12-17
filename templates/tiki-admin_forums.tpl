@@ -170,23 +170,15 @@
 			<tr>
 				<td class="formcolor">{tr}Moderator user:{/tr}</td>
 				<td class="formcolor">
-					<select name="moderator">
-						<option value="" {if $moderator eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
-						{foreach key=id item=one from=$users}
-							<option value="{$one|escape}" {if $moderator eq $one}selected="selected"{/if}>{$one|username}</option>
-							{/foreach}
-					</select>
+					<input id="moderator_user" type="text" name="moderator" value="{$moderator|escape}"/>
+					{jq}$jq('#moderator_user').tiki('autocomplete', 'username');{/jq}
 				</td>
 			</tr>
 			<tr>
 				<td class="formcolor">{tr}Moderator group:{/tr}</td>
 				<td class="formcolor">
-					<select name="moderator_group">
-						<option value="" {if $moderator_group eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
-							{section name=ix loop=$groups}
-						<option value="{$groups[ix]|escape}" {if $moderator_group eq $groups[ix]}selected="selected"{/if}>{$groups[ix]}</option>
-						{/section}
-					</select>
+					<input id="moderator_group" type="text" name="moderator_group" value="{$moderator_group|escape}"/>
+					{jq}$jq('#moderator_group').tiki('autocomplete', 'groupname');{/jq}
 				</td>
 			</tr>
 			<tr>
