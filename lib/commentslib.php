@@ -700,9 +700,6 @@ class Comments extends TikiLib
 		$time_cond .= implode(",", $user_thread_ids);
 		$time_cond .= ") ";
 	}
-	if ($reply_state == 'none') {
-		$time_cond .= ' and  (SELECT count(b.`threadId`) as replies from `tiki_comments` b where `parentId`=a.`threadId`) =0  ';
-	}
 	if (!empty($type)) {
 		$time_cond .= ' and a.`type` = ? ';
 		$bind_time[] = $type;
@@ -734,6 +731,9 @@ class Comments extends TikiLib
 		
 
 	$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`,a.`archived` ";
+	if ($reply_state == 'none') {
+		$query .= ' HAVING `replies` = 0 ';
+	}
 	$query .="order by `sticky` desc, ".$this->convertSortMode($sort_mode).", `threadId`";
 
 	if( $forumId ) {
