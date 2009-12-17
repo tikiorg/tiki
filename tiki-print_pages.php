@@ -50,6 +50,13 @@ if (isset($_REQUEST["addpage"])) {
 	}
 	$cookietab = 2;
 }
+if (isset($_REQUEST["removepage"])) {
+		foreach($_REQUEST['selectedpages'] as $value) {
+			unset($printpages[$value]);
+		}
+		$printpages = array_merge($printpages);
+	$cookietab = 2;
+}
 if (isset($_REQUEST["clearpages"])) {
 	$printpages = array();
 	$cookietab = 2;
