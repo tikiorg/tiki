@@ -1099,6 +1099,7 @@ function get_default_prefs() {
 		'feature_best_language' => 'n',
 		'feature_translation' => 'n',
 		'feature_urgent_translation' => 'n',
+		'feature_urgent_translation_master_only' => 'n',
 		'feature_translation_incomplete_notice' => 'y',
 		'lang_use_db' => 'n',
 		'language' => 'en',

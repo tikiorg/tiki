@@ -638,6 +638,11 @@ function prefs_feature_list() {
 			'description' => tra('Allow to flag changes as urgent, leading translations to be marked with a notice visible to all users.'),
 			'type' => 'flag',
 		),
+		'feature_urgent_translation_master_only' => array(
+			'name' => tra('Only allow urgent translation from site language'),
+			'description' => tra('Use the site language as a master language and prevent translations from sending critical updates.'),
+			'type' => 'flag',
+		),
 		'feature_translation_incomplete_notice' => array(
 			'name' => tra('Incomplete translation notice'),
 			'description' => tra('When a page is translated to a new language, a notice will be automatically be inserted into the page to indicate that the translation is not yet complete.'),

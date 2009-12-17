@@ -674,6 +674,13 @@ if (isset($_REQUEST["lang"])) {
 }
 
 $smarty->assign('lang', $pageLang);
+if( $prefs['feature_urgent_translation'] == 'y' ) {
+	$urgent_allowed = true;
+	if( $prefs['feature_urgent_translation_master_only'] == 'y' && $pageLang != $prefs['site_language'] ) {
+		$urgent_allowed = false;
+	}
+	$smarty->assign( 'urgent_allowed', $urgent_allowed );
+}
 if( isset( $_REQUEST['translation_critical'] ) ) {
 	$smarty->assign( 'translation_critical', 1 );
 } else {

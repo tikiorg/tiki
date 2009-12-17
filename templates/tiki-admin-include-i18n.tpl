@@ -45,6 +45,9 @@
 	{preference name=feature_sync_language}
 	{preference name=feature_translation}
 	{preference name=feature_urgent_translation}
+	<div class="adminoptionboxchild" id="feature_urgent_translation_childcontainer">
+		{preference name=feature_urgent_translation_master_only}
+	</div>
 	{preference name=feature_translation_incomplete_notice}
 	{preference name=feature_multilingual_one_page}
 	{preference name=quantify_changes}

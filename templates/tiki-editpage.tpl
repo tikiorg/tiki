@@ -517,7 +517,7 @@
 										<input type="hidden" name="translationOf" value="{$translationOf|escape}"/>
 									{/if}
 								</fieldset>
-								{if $trads|@count > 1}
+								{if $trads|@count > 1 and $urgent_allowed}
 									<fieldset {if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
 										<legend>{tr}Translation request{/tr}:</legend>
 										<input type="hidden" name="lang" value="{$lang|escape}"/>
