@@ -31,7 +31,7 @@
 	{if $prefs.feature_search_show_search_box eq 'y'}
 		<form action="tiki-searchresults.php" method="get" id="search-form" class="findtable">
 			<label class="findtitle">
-				{tr}Find{/tr} <input name="highlight" size="14" type="text" accesskey="s" value="{$words}" />
+				{tr}Find{/tr} <input name="highlight" size="14" type="text" accesskey="s" value="{$words|escape}" />
 			</label>
 			{if !( $searchStyle eq "menu" )}
 				<label class="searchboolean" for="boolean">
@@ -44,11 +44,11 @@
 					{tr}Date Search:{/tr}
 					<select id="date" name="date" onchange="javascript:submit()">
 						{section name=date start=0 loop=12 step=1}	
-							<option value="{$smarty.section.date.index}" {if $smarty.section.date.index eq $date}selected="selected"{/if}>
+							<option value="{$smarty.section.date.index|escape}" {if $smarty.section.date.index eq $date}selected="selected"{/if}>
 								{if $smarty.section.date.index eq 0}
 									{tr}All dates{/tr}
 								{else}
-									{$smarty.section.date.index} {tr}Month{/tr}
+									{$smarty.section.date.index|escape} {tr}Month{/tr}
 								{/if}
 							</option>
 						{/section}
@@ -97,14 +97,14 @@
 								{/if}
 							{else}
 								{foreach item=name key=k from=$where_list}
-									<option value="{$k}">{$name}</option>
+									<option value="{$k|escape}">{$name|escape}</option>
 								{/foreach}
 							{/if}
 						</select>
 					</span>
 				{else}
 					<input type="hidden" name="where" value="{$where|escape}" />
-					{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
+					{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}" />{/if}
 				{/if}
 			{/if}
 			<label class="findsubmit">
@@ -120,11 +120,11 @@
 
 {if $searchStyle ne 'menu' and ! $searchNoResults }
 	<div class="nohighlight simplebox">
-		 {tr}Found{/tr} "{$words}" {tr}in{/tr} 
+		 {tr}Found{/tr} "{$words|escape}" {tr}in{/tr} 
 			{if $where_forum}
-				{tr}{$where}{/tr}: {$where_forum}
+				{tr}{$where|escape}{/tr}: {$where_forum|escape}
 			{else}
-				{$cant} {tr}{$where}{/tr}
+				{$cant} {tr}{$where|escape}{/tr}
 			{/if}
 	</div><!--nohighlight-->
 {/if}
@@ -134,14 +134,14 @@
 		{section name=search loop=$results}
 		<li>
 			{if $prefs.feature_search_show_object_type eq 'y' &&  $results[search].type > ''}
-				<span class="objecttype">{tr}{$results[search].type}{/tr}</span>
+				<span class="objecttype">{tr}{$results[search].type|escape}{/tr}</span>
 			{/if}
 			{if !empty($results[search].parentName)}
 					<a href="{$results[search].parentHref}" class="parentname">{$results[search].parentName|escape}</a>
 				{/if}
-			<a href="{$results[search].href}&amp;highlight={$words}" class="objectname">{$results[search].pageName|strip_tags}</a>
+			<a href="{$results[search].href}&amp;highlight={$words}" class="objectname">{$results[search].pageName|escape}</a>
 			{if $prefs.feature_search_show_visit_count eq 'y'}
-				<span class="itemhits">({tr}Hits{/tr}: {$results[search].hits})</span>
+				<span class="itemhits">({tr}Hits{/tr}: {$results[search].hits|escape})</span>
 			{/if}
 
 			{if $prefs.feature_search_show_pertinence eq 'y' && $prefs.feature_search_fulltext eq 'y'}
@@ -154,7 +154,7 @@
 				</span>
 			{/if}
 
-			<div class="searchdesc">{$results[search].data|strip_tags|truncate:250:'...'}</div>
+			<div class="searchdesc">{$results[search].data|strip_tags|truncate:250:'...'|escape}</div>
 			{if $prefs.feature_search_show_last_modification eq 'y'}
 				<div class="searchdate">{tr}Last modification{/tr}: {$results[search].lastModif|tiki_long_datetime}</div>
 			{/if}
