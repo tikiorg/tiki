@@ -652,6 +652,45 @@ class Comments extends TikiLib
 	}
 
 	function get_forum_topics($forumId, $offset = 0, $max = -1, $sort_mode = 'commentDate_asc', $include_archived = false, $who = '', $type = '', $reply_state = '') {
+		$info = $this->build_forum_query( $forumId, $offset, $max, $sort_mode, $include_archived, $who, $type, $reply_state );
+
+		$query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
+			a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
+			a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,
+			a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`, ";
+		$query .= $info['query'];
+
+		$result = $this->query($query, $info['bindvars'], $max, $offset);
+
+		while ($res = $result->fetchRow()) {
+			$tid = $res['threadId'];
+			if ($res["lastPost"]!=$res["commentDate"]) {
+				// last post data is for tiki-view_forum.php. 
+				// you can see the title and author of last post
+				$query = "select * from `tiki_comments`
+					where `parentId` = ? and `commentDate` = ?
+					order by `threadId` desc";
+				$r2 = $this->query($query, array($tid, $res['lastPost']));
+				$res['lastPostData'] = $r2->fetchRow();
+			}
+
+			// Has the user read it?
+			$res['is_marked'] = $this->is_marked($tid);
+			$ret[] = $res;
+		}
+
+		return $ret;
+	}
+
+	function count_forum_topics($forumId, $offset = 0, $max = -1, $sort_mode = 'commentDate_asc', $include_archived = false, $who = '', $type = '', $reply_state = '') {
+		$info = $this->build_forum_query( $forumId, $offset, $max, $sort_mode, $include_archived, $who, $type, $reply_state );
+
+		$query = "SELECT COUNT(*) FROM (SELECT `a`.`threadId`, {$info['query']}) a";
+
+		return $this->getOne( $query, $info['bindvars'] );
+	}
+
+	private function build_forum_query($forumId, $offset, $max, $sort_mode, $include_archived, $who, $type, $reply_state) {
 		if ($sort_mode == 'points_asc') {
 			$sort_mode = 'average_asc';
 		}
@@ -695,14 +734,10 @@ class Comments extends TikiLib
 		}
 
 		$ret = array();
-		$query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
-			a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
-			a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,
-			a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`, ".
-				$this->ifNull("a.`archived`", "'n'")." as `archived`,".
-				$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
-				$this->ifNull("a.`type`='s'", 'false')." as `sticky`,
-			count(b.`threadId`) as `replies`
+		$query = 
+			$this->ifNull("a.`archived`", "'n'")." as `archived`,".
+			$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
+			$this->ifNull("a.`type`='s'", 'false')." as `sticky`, count(b.`threadId`) as `replies` 
 				from `tiki_comments` a left join `tiki_comments` b 
 				on b.`parentId`=a.`threadId` $join
 				where 1 = 1 $where" . ( $forumId ? 'AND a.`object`=?' : '' )
@@ -723,26 +758,10 @@ class Comments extends TikiLib
 		if ( ! $include_archived ) $bind_vars[] = 'n';
 		$bind_vars[] = 0;
 
-		$result = $this->query($query, array_merge($bind_vars, $bind_time), $max, $offset);
-
-		while ($res = $result->fetchRow()) {
-			$tid = $res['threadId'];
-			if ($res["lastPost"]!=$res["commentDate"]) {
-				// last post data is for tiki-view_forum.php. 
-				// you can see the title and author of last post
-				$query = "select * from `tiki_comments`
-					where `parentId` = ? and `commentDate` = ?
-					order by `threadId` desc";
-				$r2 = $this->query($query, array($tid, $res['lastPost']));
-				$res['lastPostData'] = $r2->fetchRow();
-			}
-
-			// Has the user read it?
-			$res['is_marked'] = $this->is_marked($tid);
-			$ret[] = $res;
-		}
-
-		return $ret;
+		return array(
+			'query' => $query,
+			'bindvars' => array_merge($bind_vars, $bind_time),
+		);
 	}
 
 	function get_last_forum_posts($forumId, $maxRecords = -1){
