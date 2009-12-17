@@ -127,7 +127,7 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 	if ($prefs['feature_forums'] == 'y') {
 		$ret["items"]["posts"]["label"] = tra('new posts');
 		$ret["items"]["posts"]["cname"] = "slvn_posts_menu";
-		$query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? and `objectType` = 'forum' order by `commentDate` desc";
+		$query = "select `posts`.`object`,`posts`.`objectType`,`posts`.`title`,`posts`.`commentDate`,`posts`.`userName`,`posts`.`threadId`, `posts`.`parentId`,`topics`.`title` `topic_title` from `tiki_comments` `posts` left join `tiki_comments` `topics` ON `posts`.`parentId` = `topics`.`threadId` where `posts`.`commentDate`>? and `posts`.`objectType` = 'forum' order by `posts`.`commentDate` desc";
 		$result = $tikilib->query($query, array((int)$last), $resultCount);
 
 		$count = 0;
@@ -141,7 +141,11 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 					$ret["items"]["posts"]["list"][$count]["href"].=$res["threadId"];
 				}
 				$ret["items"]["posts"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
-				$ret["items"]["posts"]["list"][$count]["label"] = $res["title"]; 
+				if ($res["parentId"] == 0 || $prefs['forum_reply_notitle'] != 'y') {
+					$ret["items"]["posts"]["list"][$count]["label"] = $res["title"]; 
+				} else {
+					$ret["items"]["posts"]["list"][$count]["label"] = $res["topic_title"]; 
+				}
 				++$count;	
 			}
 		}
