@@ -14,53 +14,53 @@ if( !defined( 'PLUGINS_DIR' ) ) {
 class WikiLib extends TikiLib
 {
 
-    //Special parsing for multipage articles
-    function get_number_of_pages($data) {
-	global $prefs;
-	// Temporary remove <PRE></PRE> secions to protect
-	// from broke <PRE> tags and leave well known <PRE>
-	// behaviour (i.e. type all text inside AS IS w/o
-	// any interpretation)
-	$preparsed = array();
+	//Special parsing for multipage articles
+	function get_number_of_pages($data) {
+		global $prefs;
+		// Temporary remove <PRE></PRE> secions to protect
+		// from broke <PRE> tags and leave well known <PRE>
+		// behaviour (i.e. type all text inside AS IS w/o
+		// any interpretation)
+		$preparsed = array();
 
-	preg_match_all("/(<[Pp][Rr][Ee]>)(.*?)(<\/[Pp][Rr][Ee]>)/s", $data, $preparse);
-	$idx = 0;
+		preg_match_all("/(<[Pp][Rr][Ee]>)(.*?)(<\/[Pp][Rr][Ee]>)/s", $data, $preparse);
+		$idx = 0;
 
-	foreach (array_unique($preparse[2])as $pp) {
-	    $key = md5($this->genPass());
+		foreach (array_unique($preparse[2])as $pp) {
+			$key = md5($this->genPass());
 
-	    $aux["key"] = $key;
-	    $aux["data"] = $pp;
-	    $preparsed[] = $aux;
-	    $data = str_replace($preparse[1][$idx] . $pp . $preparse[3][$idx], $key, $data);
-	    $idx = $idx + 1;
+			$aux["key"] = $key;
+			$aux["data"] = $pp;
+			$preparsed[] = $aux;
+			$data = str_replace($preparse[1][$idx] . $pp . $preparse[3][$idx], $key, $data);
+			$idx = $idx + 1;
+		}
+
+		$parts = explode($prefs['wiki_page_separator'], $data);
+		return count($parts);
 	}
 
-	$parts = explode($prefs['wiki_page_separator'], $data);
-	return count($parts);
-    }
+	function get_page($data, $i) {
+		// Get slides
+		global $prefs;
+		$parts = explode($prefs['wiki_page_separator'], $data);
+		$ret = $parts[$i - 1];
 
-    function get_page($data, $i) {
-	// Get slides
-	global $prefs;
-	$parts = explode($prefs['wiki_page_separator'], $data);
-	$ret = $parts[$i - 1];
+		if (substr($parts[$i - 1], 1, 5) == "<br/>") $ret = substr($parts[$i - 1], 6);
+		if (substr($parts[$i - 1], 1, 6) == "<br />") $ret = substr($parts[$i - 1], 7);
 
-	if (substr($parts[$i - 1], 1, 5) == "<br/>") $ret = substr($parts[$i - 1], 6);
-	if (substr($parts[$i - 1], 1, 6) == "<br />") $ret = substr($parts[$i - 1], 7);
+		return $ret;
+	}
 
-	return $ret;
-    }
+	function get_creator($name) {
+		return $this->getOne("select `creator` from `tiki_pages` where `pageName`=?", array($name));
+	}
 
-    function get_creator($name) {
-	return $this->getOne("select `creator` from `tiki_pages` where `pageName`=?", array($name));
-    }
-
-    /**
-     *  Get the contributors for page
-     *  the returned array does not contain the user $last (usually the current or last user)
-     */
-    function get_contributors($page, $last='', $versions=true) {
+	/**
+	 *  Get the contributors for page
+	 *  the returned array does not contain the user $last (usually the current or last user)
+	 */
+	function get_contributors($page, $last='', $versions=true) {
 		static $cache_page_contributors;
 		if ($cache_page_contributors['page'] == $page) {
 			if (empty($last)) {
@@ -95,35 +95,35 @@ class WikiLib extends TikiLib
 		}
 		$cache_page_contributors['page'] = $page;
 		return $ret;
-    }
+	}
 
-    // Returns all pages that links from here or to here, without distinction
-    // This is used by wiki3d, to make the graph
-    function wiki_get_neighbours($page) {
+	// Returns all pages that links from here or to here, without distinction
+	// This is used by wiki3d, to make the graph
+	function wiki_get_neighbours($page) {
 
-	   $neighbours = array();
-	   $already = array();
+		$neighbours = array();
+		$already = array();
 
-           $query = "select `toPage` from `tiki_links` where `fromPage`=? and `fromPage` not like 'objectlink:%'";
-	   $result = $this->query($query,array($page));
-	   while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-	       $neighbour = $row['toPage'];
-	       $neighbours[] = $neighbour;
-	       $already[$neighbour] = 1;
-	   }
+		$query = "select `toPage` from `tiki_links` where `fromPage`=? and `fromPage` not like 'objectlink:%'";
+		$result = $this->query($query,array($page));
+		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$neighbour = $row['toPage'];
+			$neighbours[] = $neighbour;
+			$already[$neighbour] = 1;
+		}
 
-           $query = "select `fromPage` from `tiki_links` where `toPage`=? and `fromPage` not like 'objectlink:%'";
-	   $result = $this->query($query,array($page));
-	   while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-	       $neighbour = $row['fromPage'];
-	       if (!isset($already[$neighbour])) {
-		   $neighbours[] = $neighbour;
-	       }
-	   }
+		$query = "select `fromPage` from `tiki_links` where `toPage`=? and `fromPage` not like 'objectlink:%'";
+		$result = $this->query($query,array($page));
+		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+			$neighbour = $row['fromPage'];
+			if (!isset($already[$neighbour])) {
+				$neighbours[] = $neighbour;
+			}
+		}
 
-	   return $neighbours;
+		return $neighbours;
 
-    }
+	}
 
 
 	// This method renames a wiki page
@@ -161,7 +161,7 @@ class WikiLib extends TikiLib
 
 		$linksToOld=array();
 		while ($res = $result->fetchRow()) {			
-		    $page = $res['fromPage'];
+			$page = $res['fromPage'];
 			$types = $res['reltype'];
 
 			$semantics = array();
@@ -169,26 +169,26 @@ class WikiLib extends TikiLib
 				$semantics = explode(',', $types );
 			}
 
-		    $is_wiki_page = true;
-		    if (substr($page,0,11) == 'objectlink:') {
-		    	$is_wiki_page = false;
-		    	$objectlinkparts = split(':', $page);
-		    	$type = $objectlinkparts[1];
-		    	$objectId = $objectlinkparts[2];
-		    }
-		    $linksToOld[] = $res['fromPage'];
-		    if ($is_wiki_page) {
-		    	$info = $this->get_page_info($page);
-			    //$data=addslashes(str_replace($oldName,$newName,$info['data']));
-			    $data = $info['data'];
-		    } elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
-		    	include_once ("lib/commentslib.php");
-		    	global $dbTiki;
+			$is_wiki_page = true;
+			if (substr($page,0,11) == 'objectlink:') {
+				$is_wiki_page = false;
+				$objectlinkparts = split(':', $page);
+				$type = $objectlinkparts[1];
+				$objectId = $objectlinkparts[2];
+			}
+			$linksToOld[] = $res['fromPage'];
+			if ($is_wiki_page) {
+				$info = $this->get_page_info($page);
+				//$data=addslashes(str_replace($oldName,$newName,$info['data']));
+				$data = $info['data'];
+			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
+				include_once ("lib/commentslib.php");
+				global $dbTiki;
 				$commentslib = new Comments($dbTiki);
 				$comment_info = $commentslib->get_comment($objectId);
 				$data = $comment_info['data'];
-		    }
-		    $quotedOldName = preg_quote( $oldName );
+			}
+			$quotedOldName = preg_quote( $oldName );
 			foreach( $semantics as $sem ) {
 				$data = str_replace( "($sem($oldName", "($sem($newName", $data );
 			}
@@ -199,14 +199,14 @@ class WikiLib extends TikiLib
 				$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
 			$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/", $newName, $data);
 
-		    if ($is_wiki_page) {
-		    	$query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
-		    	$this->query($query, array( $data,(int) strlen($data), $page));
-		    } elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
-		    	$query = "update `tiki_comments` set `data`=? where `threadId`=?";
-		    	$this->query($query, array( $data, $objectId));
-		    }
-		    $this->invalidate_cache($page);
+			if ($is_wiki_page) {
+				$query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
+				$this->query($query, array( $data,(int) strlen($data), $page));
+			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
+				$query = "update `tiki_comments` set `data`=? where `threadId`=?";
+				$this->query($query, array( $data, $objectId));
+			}
+			$this->invalidate_cache($page);
 		}
 
 		// correct toPage and fromPage in tiki_links
@@ -238,7 +238,7 @@ class WikiLib extends TikiLib
 
 		// old code that doesn't seem to be working
 		//	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
-		//    $this->query($query);
+		//  $this->query($query);
 
 		// in tiki_comments update object
 		$query = "update `tiki_comments` set `object`=? where `object`=?";
@@ -276,7 +276,7 @@ class WikiLib extends TikiLib
 			$query = "update `tiki_polls` tp inner join `tiki_poll_objects` tpo on tp.`pollId` = tpo.`pollId` inner join `tiki_objects` tob on tpo.`catObjectId` = tob.`objectId` set tp.`title`=? where tp.`title`=? and tob.`type` = 'wiki page'";
 			$this->query($query, array( $newName, $oldName ) );
 		}
-					 	  	 
+
 		// Move custom permissions
 		$oldId = md5('wiki page' . strtolower($oldName));
 		$newId = md5('wiki page' . strtolower($newName));
@@ -452,29 +452,29 @@ class WikiLib extends TikiLib
 
 	function list_wiki_attachments($page, $offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
 
-	if ($find) {
-	    $mid = " where `page`=? and (`filename` like ?)"; // why braces?
-	    $bindvars=array($page,"%".$find."%");
-	} else {
-	    $mid = " where `page`=? ";
-	    $bindvars=array($page);
+		if ($find) {
+			$mid = " where `page`=? and (`filename` like ?)"; // why braces?
+			$bindvars=array($page,"%".$find."%");
+		} else {
+			$mid = " where `page`=? ";
+			$bindvars=array($page);
+		}
+
+		$query = "select `user`,`attId`,`page`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment` from `tiki_wiki_attachments` $mid order by ".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_wiki_attachments` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
 	}
-
-	$query = "select `user`,`attId`,`page`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment` from `tiki_wiki_attachments` $mid order by ".$this->convertSortMode($sort_mode);
-	$query_cant = "select count(*) from `tiki_wiki_attachments` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
 	function list_all_attachements($offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -543,92 +543,92 @@ class WikiLib extends TikiLib
 	}
 
 
-    // Functions for wiki page footnotes
-    function get_footnote($user, $page) {
+	// Functions for wiki page footnotes
+	function get_footnote($user, $page) {
 
-	$count = $this->getOne("select count(*) from `tiki_page_footnotes` where `user`=? and `pageName`=?",array($user,$page));
+		$count = $this->getOne("select count(*) from `tiki_page_footnotes` where `user`=? and `pageName`=?",array($user,$page));
 
-	if (!$count) {
-	    return '';
-	} else {
-	    return $this->getOne("select `data` from `tiki_page_footnotes` where `user`=? and `pageName`=?",array($user,$page));
-	}
-    }
-
-    function replace_footnote($user, $page, $data) {
-	$querydel = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
-	$this->query($querydel,array($user, $page),-1,-1,false);
-	$query = "insert into `tiki_page_footnotes`(`user`,`pageName`,`data`) values(?,?,?)";
-	$this->query($query,array($user,$page,$data));
-    }
-
-    function remove_footnote($user, $page) {
-	if (empty($user)) {
-		$query = "delete from `tiki_page_footnotes` where `pageName`=?";
-		$this->query($query,array($page));
-	} else {
-		$query = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
-		$this->query($query,array($user,$page));
-	}
-    }
-
-    function wiki_link_structure() {
-	$query = "select `pageName` from `tiki_pages` order by ".$this->convertSortMode("pageName_asc");
-
-	$result = $this->query($query);
-
-	while ($res = $result->fetchRow()) {
-	    print ($res["pageName"] . " ");
-
-	    $page = $res["pageName"];
-	    $query2 = "select `toPage` from `tiki_links` where `fromPage`=?";
-	    $result2 = $this->query($query2, array( $page ) );
-	    $pages = array();
-
-	    while ($res2 = $result2->fetchRow()) {
-		if (($res2["toPage"] <> $res["pageName"]) && (!in_array($res2["toPage"], $pages))) {
-		    $pages[] = $res2["toPage"];
-		    print ($res2["toPage"] . " ");
+		if (!$count) {
+			return '';
+		} else {
+			return $this->getOne("select `data` from `tiki_page_footnotes` where `user`=? and `pageName`=?",array($user,$page));
 		}
-	    }
-
-	    print ("\n");
 	}
-    }
 
-    // Removes last version of the page (from pages) if theres some
-    // version in the tiki_history then the last version becomes the actual version
-    function remove_last_version($page, $comment = '') {
+	function replace_footnote($user, $page, $data) {
+		$querydel = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
+		$this->query($querydel,array($user, $page),-1,-1,false);
+		$query = "insert into `tiki_page_footnotes`(`user`,`pageName`,`data`) values(?,?,?)";
+		$this->query($query,array($user,$page,$data));
+	}
 
-	$this->invalidate_cache($page);
-	$query = "select * from `tiki_history` where `pageName`=? order by ".$this->convertSortMode("lastModif_desc");
-	$result = $this->query($query, array( $page ) );
-
-	if ($result->numRows()) {
-	    // We have a version
-	    $res = $result->fetchRow();
-
-		global $histlib;
-		if (!is_object($histlib)) {
-			include_once('lib/wiki/histlib.php');
+	function remove_footnote($user, $page) {
+		if (empty($user)) {
+			$query = "delete from `tiki_page_footnotes` where `pageName`=?";
+			$this->query($query,array($page));
+		} else {
+			$query = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
+			$this->query($query,array($user,$page));
 		}
-
-	    $histlib->use_version($res["pageName"], $res["version"]);
-	    if ($prefs['feature_contribution'] == 'y') {
-		global $contributionlib; include_once('lib/contribution/contributionlib.php');
-		$info = $tikilib->get_page_info($res['pageName']);
-		$contributionlib->change_assigned_contributions($res['historyId'], 'history', $res['pageName'], 'wiki page', $info['description'], $res['pageName'], "tiki-index.php?page".urlencode($res['pageName']));
-	    }
-	    $histlib->remove_version($res['pageName'], $res['version']);
-	} else {
-	    $this->remove_all_versions($page);
 	}
-	global  $logslib; include_once('lib/logs/logslib.php');
-	$logslib->add_action('Removed last version', $page, 'wiki page', $comment);
-	//get_strings tra("Removed last version");
-    }
 
-    // Like pages are pages that share a word in common with the current page
+	function wiki_link_structure() {
+		$query = "select `pageName` from `tiki_pages` order by ".$this->convertSortMode("pageName_asc");
+
+		$result = $this->query($query);
+
+		while ($res = $result->fetchRow()) {
+			print ($res["pageName"] . " ");
+
+			$page = $res["pageName"];
+			$query2 = "select `toPage` from `tiki_links` where `fromPage`=?";
+			$result2 = $this->query($query2, array( $page ) );
+			$pages = array();
+
+			while ($res2 = $result2->fetchRow()) {
+				if (($res2["toPage"] <> $res["pageName"]) && (!in_array($res2["toPage"], $pages))) {
+					$pages[] = $res2["toPage"];
+					print ($res2["toPage"] . " ");
+				}
+			}
+
+			print ("\n");
+		}
+	}
+
+	// Removes last version of the page (from pages) if theres some
+	// version in the tiki_history then the last version becomes the actual version
+	function remove_last_version($page, $comment = '') {
+
+		$this->invalidate_cache($page);
+		$query = "select * from `tiki_history` where `pageName`=? order by ".$this->convertSortMode("lastModif_desc");
+		$result = $this->query($query, array( $page ) );
+
+		if ($result->numRows()) {
+			// We have a version
+			$res = $result->fetchRow();
+
+			global $histlib;
+			if (!is_object($histlib)) {
+				include_once('lib/wiki/histlib.php');
+			}
+
+			$histlib->use_version($res["pageName"], $res["version"]);
+			if ($prefs['feature_contribution'] == 'y') {
+				global $contributionlib; include_once('lib/contribution/contributionlib.php');
+				$info = $tikilib->get_page_info($res['pageName']);
+				$contributionlib->change_assigned_contributions($res['historyId'], 'history', $res['pageName'], 'wiki page', $info['description'], $res['pageName'], "tiki-index.php?page".urlencode($res['pageName']));
+			}
+			$histlib->remove_version($res['pageName'], $res['version']);
+		} else {
+			$this->remove_all_versions($page);
+		}
+		global  $logslib; include_once('lib/logs/logslib.php');
+		$logslib->add_action('Removed last version', $page, 'wiki page', $comment);
+		//get_strings tra("Removed last version");
+	}
+
+	// Like pages are pages that share a word in common with the current page
 	function get_like_pages($page) {
 		global $user, $tikilib, $prefs, $semanticlib;
 
@@ -678,14 +678,14 @@ class WikiLib extends TikiLib
 		}
 	}
 
-    function is_locked($page, $info=null) {
-	if (!$info) {
-		$query = "select `flag`, `user` from `tiki_pages` where `pageName`=?";
-		$result = $this->query($query, array( $page ) );
-		$info = $result->fetchRow();
+	function is_locked($page, $info=null) {
+		if (!$info) {
+			$query = "select `flag`, `user` from `tiki_pages` where `pageName`=?";
+			$result = $this->query($query, array( $page ) );
+			$info = $result->fetchRow();
+		}
+		return ($info["flag"] == 'L')? $info["user"] : null;
 	}
-	return ($info["flag"] == 'L')? $info["user"] : null;
-    }
 	function is_editable($page, $user, $info=null) {
 		global $prefs;
 		$perms = Perms::get( array( 'type' => 'wiki page', 'object' => $page ) );
@@ -700,61 +700,61 @@ class WikiLib extends TikiLib
 		return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;
 	}
 
-    function lock_page($page) {
-	global $user, $tikilib;
+	function lock_page($page) {
+		global $user, $tikilib;
 
-	$query = "update `tiki_pages` set `flag`=?, `lockedby`=? where `pageName`=?";
-	$result = $this->query($query, array( "L", $user, $page ) );
+		$query = "update `tiki_pages` set `flag`=?, `lockedby`=? where `pageName`=?";
+		$result = $this->query($query, array( "L", $user, $page ) );
 
-	if (!empty($user)) {
-	    $info = $tikilib->get_page_info($page);
-	    
-	    $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
-	    $result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
-	    
-	    $query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
-	    $result = $this->query($query, array($user, tra('Page locked'), $info['version'] + 1, $page));
-	}
+		if (!empty($user)) {
+			$info = $tikilib->get_page_info($page);
 
-	return true;
-    }
+			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
+			$result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
 
-    function unlock_page($page) {
-	global $user, $tikilib;
-	
-	$query = "update `tiki_pages` set `flag`='' where `pageName`=?";
-	$result = $this->query($query, array($page));
-	
-	if (isset($user)) {
-	    $info = $tikilib->get_page_info($page);
-	    
-	    $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
-	    $result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
-	    
-	    $query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
-	    $result = $this->query($query, array($user, tra('Page unlocked'), $info['version'] + 1, $page));
-	}
-	
-	return true;
-    }
-
-    // Returns backlinks for a given page
-    function get_backlinks($page) {
-	global $user;
-	$query = "select `fromPage` from `tiki_links` where `toPage` = ? and `fromPage` not like 'objectlink:%'";
-	// backlinks do not include links from non-page objects TODO: full feature allowing this with options
-	$result = $this->query($query, array( $page ));
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	 	if ($this->user_has_perm_on_object($user, $res['fromPage'], 'wiki page', 'tiki_p_view')) {
-			$aux["fromPage"] = $res["fromPage"];
-			$ret[] = $aux;
+			$query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
+			$result = $this->query($query, array($user, tra('Page locked'), $info['version'] + 1, $page));
 		}
+
+		return true;
 	}
 
-	return $ret;
-    }
+	function unlock_page($page) {
+		global $user, $tikilib;
+
+		$query = "update `tiki_pages` set `flag`='' where `pageName`=?";
+		$result = $this->query($query, array($page));
+
+		if (isset($user)) {
+			$info = $tikilib->get_page_info($page);
+
+			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
+			$result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
+
+			$query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
+			$result = $this->query($query, array($user, tra('Page unlocked'), $info['version'] + 1, $page));
+		}
+
+		return true;
+	}
+
+	// Returns backlinks for a given page
+	function get_backlinks($page) {
+		global $user;
+		$query = "select `fromPage` from `tiki_links` where `toPage` = ? and `fromPage` not like 'objectlink:%'";
+		// backlinks do not include links from non-page objects TODO: full feature allowing this with options
+		$result = $this->query($query, array( $page ));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			if ($this->user_has_perm_on_object($user, $res['fromPage'], 'wiki page', 'tiki_p_view')) {
+				$aux["fromPage"] = $res["fromPage"];
+				$ret[] = $aux;
+			}
+		}
+
+		return $ret;
+	}
 
 	function list_plugins($with_help = false, $area_name = 'wikiedit') {
 		if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
@@ -800,12 +800,12 @@ class WikiLib extends TikiLib
 		}
 	}
 
-    //
-    // Call 'wikiplugin_.*_description()' from given file
-    //
-    function get_plugin_description($name, &$enabled, $area_name = 'wikiedit') {
-    	global $tikilib;
-        $data = '';
+	//
+	// Call 'wikiplugin_.*_description()' from given file
+	//
+	function get_plugin_description($name, &$enabled, $area_name = 'wikiedit') {
+		global $tikilib;
+		$data = '';
 
 		if( ( ! $info = $this->plugin_info( $name ) ) && $this->plugin_exists( $name, true ) )
 		{
@@ -841,13 +841,13 @@ class WikiLib extends TikiLib
 			if( isset( $ret['documentation'] ) && ctype_alnum( $ret['documentation'] ) ) {
 				$ret['documentation'] = "http://doc.tikiwiki.org/{$ret['documentation']}";
 			}
-			
+
 			$smarty->assign( 'area_name', $area_name );
 			$smarty->assign( 'plugin', $ret );
 			$smarty->assign( 'plugin_name', strtoupper( $name ) );
 			return $smarty->fetch( 'tiki-plugin_help.tpl' );
 		}
-    }
+	}
 
 	// get all modified pages for a user (if actionlog is not clean)
 	function get_user_all_pages($user, $sort_mode) {
@@ -864,29 +864,29 @@ class WikiLib extends TikiLib
 
 	function get_default_wiki_page() {
 		global $user, $prefs;
-	 	if ($prefs['useGroupHome'] == 'y') {
+		if ($prefs['useGroupHome'] == 'y') {
 			global $user;
 			global $userlib; include_once('lib/userslib.php');
 			if ($groupHome = $userlib->get_user_default_homepage($user))
 				return $groupHome;
 			else
- 				return $prefs['wikiHomePage'];
+				return $prefs['wikiHomePage'];
 		}
 		return $prefs['wikiHomePage'];
 	}
 
 	function save_draft($pageName, $pageDesc, $pageData, $pageComment) {
-	    global $user;
+		global $user;
 
-	    if (!$user) return false;
+		if (!$user) return false;
 
-	    $query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
-	    $this->query($query, array($user, $pageName));
+		$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
+		$this->query($query, array($user, $pageName));
 
-	    $query = "insert into `tiki_page_drafts` (`user`,`pageName`,`data`,`description`,`comment`,`lastModif`) values (?,?,?,?,?,?)";
-	    $bindvals = array($user, $pageName, $pageData, $pageDesc, $pageComment, time());
+		$query = "insert into `tiki_page_drafts` (`user`,`pageName`,`data`,`description`,`comment`,`lastModif`) values (?,?,?,?,?,?)";
+		$bindvals = array($user, $pageName, $pageData, $pageDesc, $pageComment, time());
 
-	    return $this->query($query, $bindvals) ? true : false;
+		return $this->query($query, $bindvals) ? true : false;
 	}
 	function sefurl($page, $with_next='', $all_langs='') {
 		global $prefs, $smarty;
@@ -894,10 +894,10 @@ class WikiLib extends TikiLib
 			return 'tiki-all_languages.php?page='.urlencode($page);
 		}
 
-        $script_name = 'tiki-index.php';
-        if ($all_langs == 'y') {
-           $script_name = 'tiki-all_languages.php';
-        }
+		$script_name = 'tiki-index.php';
+		if ($all_langs == 'y') {
+			$script_name = 'tiki-all_languages.php';
+		}
 
 		$href = "$script_name?page=".urlencode($page);
 		if ($with_next) {
