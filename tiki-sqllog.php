@@ -29,7 +29,6 @@ if (!$result->numRows()) {
 //	$smarty->display('error.tpl');
 //	die;
 //}
-include_once ('lib/logs/logslib.php');
 if (isset($_REQUEST['clean'])) {
 	$area = 'cleanlogs';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {

@@ -179,8 +179,6 @@ ask_ticket('article-read');
 //add a hit
 $statslib->stats_hit($article_data["title"], "article", $article_data['articleId']);
 if ($prefs['feature_actionlog'] == 'y') {
-	global $logslib;
-	include_once ('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $_REQUEST['articleId'], 'article');
 }
 // Display the Index Template

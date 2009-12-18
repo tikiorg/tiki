@@ -291,7 +291,6 @@ ask_ticket('browse-gallery');
 //add a hit
 $statslib->stats_hit($gal_info["name"], "image gallery", $_REQUEST["galleryId"]);
 if ($prefs['feature_actionlog'] == 'y') {
-	include_once ('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'image gallery');
 }
 // Display the template

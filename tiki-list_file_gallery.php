@@ -409,8 +409,6 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 		}
 	}
 	if (isset($_REQUEST['dupPerms']) && $_REQUEST['dupPerms'] == 'on') {
-		global $userlib;
-		include_once ('lib/userslib.php');
 		$userlib->copy_object_permissions($galleryId, $newGalleryId, 'file gallery');
 	}
 	$_REQUEST['galleryId'] = $newGalleryId;
@@ -692,7 +690,6 @@ if ($_REQUEST['galleryId'] == 0) {
 	// Add a file hit
 	$statslib->stats_hit($gal_info['name'], 'file gallery', $galleryId);
 	if ($prefs['feature_actionlog'] == 'y') {
-		include_once ('lib/logs/logslib.php');
 		$logslib->add_action('Viewed', $galleryId, 'file gallery');
 	}
 } else {

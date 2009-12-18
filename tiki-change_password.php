@@ -72,7 +72,6 @@ if (isset($_REQUEST["change"])) {
 	$userlib->change_user_password($_REQUEST["user"], $_REQUEST["pass"]);
 	// Login the user and display Home page
 	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
-	global $logslib; include_once("lib/logs/logslib.php");
 	$logslib->add_log('login', 'logged from change_password', $_REQUEST['user'], '', '', $tikilib->now);
 	header ('Location: '.$prefs['tikiIndex']);
 }

@@ -78,7 +78,6 @@ if ($messulib->get_user_preference($user, 'mess_sendReadStatus', 'n') == 'y') {
 	$messulib->flag_message($msg['user_from'], $_REQUEST['msgId'], 'isRead', 'y', 'sent');
 }
 if ($prefs['feature_actionlog'] == 'y') {
-	include_once ('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', '', 'message');
 }
 ask_ticket('messu-read');

@@ -70,8 +70,6 @@ if ($prefs['feature_contribution'] == 'y') {
 	$contributions = $contributionlib->get_assigned_contributions($page, 'wiki page');
 	$smarty->assign_by_ref('contributions', $contributions);
 	if ($prefs['feature_contributor_wiki'] == 'y') {
-		global $logslib;
-		include_once ('lib/logs/logslib.php');
 		$contributors = $logslib->get_wiki_contributors($info);
 		$smarty->assign_by_ref('contributors', $contributors);
 	}

@@ -177,9 +177,11 @@ if (isset($_REQUEST['send'])) {
 	$messulib->save_sent_message($user, $user, $_REQUEST['to'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], $_REQUEST['replyto_hash']);
 	$smarty->assign('message', $message);
 	if ($prefs['feature_actionlog'] == 'y') {
-		include_once ('lib/logs/logslib.php');
-		if (isset($_REQUEST['reply']) && $_REQUEST['reply'] == 'y') $logslib->add_action('Replied', '', 'message', 'add=' . $tikilib->strlen_quoted($_REQUEST['body']));
-		else $logslib->add_action('Posted', '', 'message', 'add=' . strlen($_REQUEST['body']));
+		if (isset($_REQUEST['reply']) && $_REQUEST['reply'] == 'y') {
+			$logslib->add_action('Replied', '', 'message', 'add=' . $tikilib->strlen_quoted($_REQUEST['body']));
+		} else {
+			$logslib->add_action('Posted', '', 'message', 'add=' . strlen($_REQUEST['body']));
+		}
 	}
 }
 $allowMsgs = $prefs['allowmsg_is_optional'] != 'y' || $tikilib->get_user_preference($user, 'allowMsgs', 'y');

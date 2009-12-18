@@ -189,7 +189,6 @@ if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mo
 	HAWTIKI_view_blog($listpages, $blog_data);
 }
 if ($prefs['feature_actionlog'] == 'y') {
-	include_once ('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $_REQUEST['blogId'], 'blog', '');
 }
 ask_ticket('blog');

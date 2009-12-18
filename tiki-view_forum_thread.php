@@ -315,7 +315,6 @@ if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mo
 	HAWTIKI_view_forum_thread($forum_info['name'], $thread_info, $tiki_p_forum_read);
 }
 if ($prefs['feature_actionlog'] == 'y') {
-	include_once ('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $_REQUEST['forumId'], 'forum', 'comments_parentId=' . $comments_parentId);
 }
 ask_ticket('view-forum');

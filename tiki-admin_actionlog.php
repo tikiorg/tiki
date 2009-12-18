@@ -12,8 +12,6 @@ if (empty($prefs['feature_jpgraph'])) {
 	$prefs['feature_jpgraph'] = 'n'; //optional package does not go througp prefs
 
 }
-include_once ('lib/logs/logslib.php');
-include_once ('lib/userslib.php');
 include_once ('lib/commentslib.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/contribution/contributionlib.php');

@@ -161,7 +161,6 @@ $cat_objid = $_REQUEST["galleryId"];
 include_once ('tiki-section_options.php');
 ask_ticket('list-gal');
 if ($prefs['feature_actionlog'] == 'y') {
-	include_once ('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'image gallery');
 }
 // Display the template

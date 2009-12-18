@@ -202,7 +202,6 @@ ask_ticket('browse-image');
 //add a hit
 $statslib->stats_hit($info["name"], "image", $imageId);
 if ($prefs['feature_actionlog'] == 'y') {
-	include_once ('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $galleryId, 'image gallery');
 }
 // Display the template

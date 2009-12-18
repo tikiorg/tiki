@@ -132,7 +132,7 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 	$statslib->stats_hit($info['filename'], 'file', $info['fileId']);
 
 	if ( $prefs['feature_actionlog'] == 'y' ) {
-		require_once('lib/logs/logslib.php');
+		global $logslib; require_once('lib/logs/logslib.php');
 		$logslib->add_action('Downloaded', $info['galleryId'], 'file gallery', 'fileId='.$info['fileId']);
 	}
 
