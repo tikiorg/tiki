@@ -31,6 +31,7 @@ $monitor_filename = $prefs['tmpDir'].'/tracker_'.$_REQUEST['trackerId'].'_monito
 if (is_file($monitor_filename)) {
 	$stat_array = unserialize(file_get_contents($monitor_filename));
 } else {
+	$stat_array = array();
 	saveStatus(array('user' => $user, 'status' => 'init', 'msg' => 'Starting...'));
 }
 
