@@ -171,7 +171,7 @@ $logger = new Zend_Log($writer);
 
 $logger->info('------------- start mem used: ' . round(memory_get_usage(true)/1024, 3));
 
-saveStatus(array('status' => 'header', 'msg' => ''));
+saveStatus(array('status' => 'header', 'msg' => '', 'current' => 0));
 
 function write_export_header() {
 	header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
@@ -276,9 +276,14 @@ function calc_chunkSize ($keepFree = 1) {
 	if ($memory_limit < 0) {
 		$chunkSize = 5000;	// unlimited memory?
 	} else {
-		$chunkSize = (int)(($memory_limit - memory_get_usage(true)  - $keepFree * 1048576 ) / ((count($fields['data']) * 4096 * 2) + (($recordsMax + $recordsOffset - $offset) * 2)));	// combination of possible record size and number of records
+		$freeMem = $memory_limit - memory_get_usage(true); 
+		if ($freeMem < $keepFree * 1048576) {
+			$keepFree = $freeMem / (1048576 * 4);	// leave 25% free in low memory conditions
+		}
+		$chunkSize = (int)(($freeMem - $keepFree * 1048576 ) / ((count($fields['data']) * 4096 * 6) + (($recordsMax + $recordsOffset - $offset) * 2)));	// combination of possible record size and number of records
 	}
 	if ($chunkSize < 10) { $chunkSize = 10; }
+	if ($chunkSize > 200) { $chunkSize = 200; }
 	if ($chunkSize > $recordsMax) { $chunkSize = $recordsMax; } // limit to request or cant
 }
 
