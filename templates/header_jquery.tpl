@@ -13,6 +13,7 @@ jqueryTiki.tablesorter = {if $prefs.feature_jquery_tablesorter eq 'y'}true{else}
 jqueryTiki.cycle = {if $prefs.feature_jquery_cycle eq 'y'}true{else}false{/if};
 jqueryTiki.colorbox = {if $prefs.feature_shadowbox eq 'y'}true{else}false{/if};
 jqueryTiki.cboxCurrent = "{literal}{{/literal}current{literal}} / {{/literal}total{literal}}{/literal}";
+jqueryTiki.sheet = {if $prefs.feature_jquery_sheet eq 'y'}true{else}false{/if};
 
 jqueryTiki.effect = "{$prefs.jquery_effect}";				// Default effect
 jqueryTiki.effect_direction = "{$prefs.jquery_effect_direction}";	// 'horizontal' | 'vertical' etc
