@@ -18,7 +18,7 @@
 </tr>
 </table>
 </form>
-<form action="tiki-export_tracker.php" method="post">
+<form action="tiki-export_tracker{if $prefs.feature_ajax.php eq 'y'}_ajax{/if}.php" method="post" id="export_form">
 <table class="normal">
 <tr class="formcolor">
 	<td>{tr}File{/tr}</td>
@@ -74,8 +74,80 @@
 <tr class="formcolor">
 	<td>{tr}Filter{/tr}</td>
 	<td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y" inForm="y"}</td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}Export{/tr}" /></td>
+{if $prefs.feature_ajax.php eq 'y'}
+	<tr class="formcolor">
+		<td><label for="recordsMax">{tr}Number of records{/tr}</label></td>
+		<td>
+			<input type="text" name="recordsMax" id="recordsMax" value="{$recordsMax}" />
+			<label for="recordsOffset">{tr}Start record{/tr}</label>
+			<input type="text" name="recordsOffset" id="recordsOffset" value="{$recordsOffset}" />
+		</td>
+	</tr>
+{/if}
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" id="export_button" value="{tr}Export{/tr}" /></td>
 </tr>
 </table>
 </form>
+{if $prefs.feature_ajax.php eq 'y'}{jq}
+$jq("#export_form").submit( function () { return exportStart(this); });
 
+exportStart = function (el) {
+	$jq("#ajaxLoading").show();	// TODO find the right function
+	
+	var fm = el;
+	//$jq(fm).attr('target', 'dl_frame');
+
+	var $dl_frame = $jq('<iframe id="dl_frame" name="dl_frame"></iframe>');
+	
+	$dl_frame.append($jq(fm).clone().attr('target', 'dl_frame'));
+
+	$dl_frame.css({position:'absolute',top:'50px',left:'50px'}).appendTo('body');
+
+	$dl_frame.load(function() {
+		alert("iframe done");
+	});
+	
+	$dl_frame.find("form").submit();
+	
+//	$jq.post("tiki-export_tracker_ajax.php", $jq(fm).serialize(), function (data) {
+//		//alert("done the post");
+//	});
+
+	setTimeout(function () { exportProgress(); }, 1000);
+	return false;
+}
+exportProgress = function () {
+	console.debug("exportProgress");
+	$jq.getJSON("tiki-export_tracker_monitor.php", { trackerId: {{$trackerId}}, xuser: "{{$user}}" }, function (res) {
+		console.debug(res);
+		if (res) {
+			if (res.status == "finish") {
+				$jq("#ajaxLoading").hide();
+				$jq("#dl_frame").remove();
+				alert("Exported: " + res.current + " records");
+			} else {
+				if (res.current) {
+					alert(res.current);
+				}
+				alert(res.msg);
+				setTimeout(function () { exportProgress(); }, 1000);
+			}
+		}
+	});
+	
+//	$jq.ajax({
+//		url:"tiki-export_tracker_ajax.php",
+//		data: ({ trackerId: {{$trackerId}}, xuser: "{{$user}}" }),
+//		type: "POST",
+//		dataType: "json",
+//		cache: false,
+//		success: function (msg) {
+//			alert(this);
+//		}
+//	});
+	
+	$jq("#ajaxLoading").hide();
+}
+{/jq}
+{remarksbox type="note" title="Warning"}Please note: Using experimental AJAX export function - work in progress!{/remarksbox}
+{/if}

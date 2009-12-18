@@ -728,6 +728,8 @@ if ($tiki_p_export_tracker == 'y') {
 			$smarty->assign_by_ref('displayedFields', $_REQUEST['displayedFields']);
 		}
 	}
+	$smarty->assign('recordsMax', $items['cant']);
+	$smarty->assign('recordsOffset', 0);
 }
 include_once ('tiki-section_options.php');
 $smarty->assign('uses_tabs', 'y');
