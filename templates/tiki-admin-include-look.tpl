@@ -107,7 +107,6 @@
 					{preference name=sitesubtitle}
 				</fieldset>
 			</div>
-			{preference name=feature_sitesearch}
 			{preference name=feature_site_login}
 			{preference name=feature_top_bar}
 			<div class="adminoptionboxchild" id="feature_top_bar_childcontainer">
@@ -117,6 +116,7 @@
 				</div>
 				{preference name=feature_topbar_version}
 				{preference name=feature_topbar_debug}
+				{preference name=feature_sitesearch}
 				{preference name=feature_topbar_custom_code}
 			</div>
 		
