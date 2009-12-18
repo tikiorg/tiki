@@ -1547,8 +1547,9 @@ function prefs_feature_list() {
 		),
 		'feature_wiki_argvariable' => array(
 			'name' => tra('Wiki argument variables'),
-			'description' => tra('Allow to write request variables inside wiki content using {{paramname}}'),
+			'description' => tra('Allow to write request variables inside wiki content using {{paramname}} or {{paramname|default}} - special case {{page}} {{user}}'),
 			'type' => 'flag',
+			'help' => 'Advanced+Wiki+Syntax+usage+examples'
 		),
 	);
 }
