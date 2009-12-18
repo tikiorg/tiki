@@ -64,6 +64,10 @@ function wikiplugin_trackeritemfield($data, $params) {
 
 	extract ($params, EXTR_SKIP);
 
+	if (empty($itemId) && !empty($_REQUEST['itemId'])) {
+		$itemId = $_REQUEST['itemId'];
+	}
+
 	if (empty($itemId) && !empty($trackerId) && ($tracker_info = $trklib->get_tracker($trackerId))) {
 		if ($t = $trklib->get_tracker_options($trackerId)) {
 			$tracker_info = array_merge($tracker_info, $t);
@@ -79,9 +83,6 @@ function wikiplugin_trackeritemfield($data, $params) {
 		}
 		$trackerId = $memoTrackerId;
 	} else {
-		if (empty($itemId) && !empty($_REQUEST['itemId'])) {
-			$itemId = $_REQUEST['itemId'];
-		}
 		if (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
 			$itemId = $trklib->get_user_item($trackerId, $tracker_info, $_REQUEST['view_user']);
 		}
