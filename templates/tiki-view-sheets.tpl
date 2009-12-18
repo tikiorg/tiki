@@ -17,14 +17,14 @@
 		</script>
 	{/if}
 	<div class="navbar">
-			{button href="#" _onclick="insertRowClick()" _text="{tr}Insert Row{/tr}"}
-			{button href="#" _onclick="insertColumnClick()" _text="{tr}Insert Column{/tr}"}
-			{button href="#" _onclick="removeRowClick()" _text="{tr}Remove Row{/tr}"}
-			{button href="#" _onclick="removeColumnClick()" _text="{tr}Remove Column{/tr}"}
-			{button href="#" _onclick="mergeCellClick()" _text="{tr}Merge Cells{/tr}"}
-			{button href="#" _onclick="restoreCellClick()" _text="{tr}Restore Cells{/tr}"}
-			{button href="#" _onclick="copyCalculationClick()" _text="{tr}Copy Calculation{/tr}"}
-			{button href="#" _onclick="formatCellClick()" _text="{tr}Format Cell{/tr}"}
+			{button href="#" _onclick="insertRowClick();return false;" _text="{tr}Insert Row{/tr}"}
+			{button href="#" _onclick="insertColumnClick();return false;" _text="{tr}Insert Column{/tr}"}
+			{button href="#" _onclick="removeRowClick();return false;" _text="{tr}Remove Row{/tr}"}
+			{button href="#" _onclick="removeColumnClick();return false;" _text="{tr}Remove Column{/tr}"}
+			{button href="#" _onclick="mergeCellClick();return false;" _text="{tr}Merge Cells{/tr}"}
+			{button href="#" _onclick="restoreCellClick();return false;" _text="{tr}Restore Cells{/tr}"}
+			{button href="#" _onclick="copyCalculationClick();return false;" _text="{tr}Copy Calculation{/tr}"}
+			{button href="#" _onclick="formatCellClick();return false;" _text="{tr}Format Cell{/tr}"}
 		<div id="detail"></div>
 	</div>
 	<form method="post" action="tiki-view_sheets.php?mode=edit&sheetId={$sheetId}" id="Grid"></form>
