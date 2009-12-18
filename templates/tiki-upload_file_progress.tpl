@@ -7,7 +7,7 @@
 	{assign var=seturl value=$fileId|sefurl:display}
 	{capture name=alink assign=alink}href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); if (typeof checkClose != 'undefined') checkClose(); else window.close();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}" class="tips"{/capture}
 {else}
-{assign var=alink value''}
+{assign var=alink value=''}
 {/if}
 {capture name=msg assign=msg}
 <table border="0" cellspacing="4" cellpadding="4">

@@ -18,6 +18,657 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 4.1
+<http://tikiwiki.org/ReleaseNotes41>
+------------------
+
+----------------------------------------------
+r23896 | pkdille | 2009-12-15 22:19:25 +0100 (mar., 15 déc. 2009) | 1 line
+
+[FIX] get_strings: fix the regexp when there are some backticks in sql insert
+----------------------------------------------
+r23892 | jonnybradley | 2009-12-15 18:39:26 +0100 (mar., 15 déc. 2009) | 1 line
+
+[MOD] Slight change to filegals/max_upload_size.php for reuse elsewhere (coming later)
+----------------------------------------------
+r23882 | marclaporte | 2009-12-14 21:00:22 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] Clearer description of Language inclusion threshold
+----------------------------------------------
+r23881 | marclaporte | 2009-12-14 20:59:29 +0100 (lun., 14 déc. 2009) | 1 line
+
+[MOD] change __Language inclusion threshold__ to a more sensible default of 3 languages.
+----------------------------------------------
+r23879 | jonnybradley | 2009-12-14 19:13:36 +0100 (lun., 14 déc. 2009) | 1 line
+
+[SVN] Ignore tracker_* (r23813 in trunk)
+----------------------------------------------
+r23878 | jonnybradley | 2009-12-14 19:10:58 +0100 (lun., 14 déc. 2009) | 1 line
+
+[ENH] Width param for remarksbox
+----------------------------------------------
+r23875 | luciash | 2009-12-14 16:59:32 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tiki-friends.php: some PHP notices (Use of undefined constant DB_FETCHMODE_ASSOC)
+----------------------------------------------
+r23874 | luciash | 2009-12-14 16:44:11 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tiki-admin.php?page=general: PHP notice (Only variables should be passed by reference)
+----------------------------------------------
+r23873 | luciash | 2009-12-14 16:33:36 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tiki-user_preferences.php: some PHP notices
+----------------------------------------------
+r23872 | luciash | 2009-12-14 16:05:06 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tiki-view_tracker.php: PHP notice: Undefined index: showLastComment
+----------------------------------------------
+r23871 | luciash | 2009-12-14 16:00:54 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tiki-view_tracker.php: PHP notice: Undefined index: writerCanModify
+----------------------------------------------
+r23868 | luciash | 2009-12-14 15:12:38 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] ajax: better 'fullscreen' overlay look for /home/luci/Development/tikibranch4/styles/layout/design.cssajaxLoading
+----------------------------------------------
+r23865 | luciash | 2009-12-14 14:37:20 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tiki-listpages.php: PHP notice constructor already defined for class TikiAjax
+----------------------------------------------
+r23864 | luciash | 2009-12-14 14:16:03 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tiki-lastchanges.php: PHP notice
+----------------------------------------------
+r23863 | luciash | 2009-12-14 14:01:36 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tikinewt theme: vertical-align: middle for rbox-title text in spans
+----------------------------------------------
+r23862 | luciash | 2009-12-14 13:52:26 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tikinewt theme: rbox-title border color should be the same as rbox-data border
+----------------------------------------------
+r23861 | luciash | 2009-12-14 13:40:56 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tikinewt theme: nicer alignment and spacing for admin panels legend icons and spans
+----------------------------------------------
+r23860 | lindonb | 2009-12-14 06:06:56 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] Refining pattern to keep | inside of links from being interpreted as column separators.
+----------------------------------------------
+r23859 | lindonb | 2009-12-14 05:25:55 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] Port trunk version (as of revision 23858) to 4x to avoid merging issues with moving to 4.1.
+----------------------------------------------
+r23857 | luciash | 2009-12-14 01:26:08 +0100 (lun., 14 déc. 2009) | 1 line
+
+[FIX] tikinewt theme: better alignment of tabs with the tab content
+----------------------------------------------
+r23851 | chibaguy | 2009-12-13 09:46:39 +0100 (dim., 13 déc. 2009) | 1 line
+
+[FIX] The parentheses around ))HomePage(( were displaying, but anyway there's no need for the word to be camelcase or uppercase.
+----------------------------------------------
+r23850 | lindonb | 2009-12-13 03:53:41 +0100 (dim., 13 déc. 2009) | 1 line
+
+[FIX] Update mime icons from img/icn/*.gif to use pics/icons/mime/*. png
+----------------------------------------------
+r23848 | ohertel | 2009-12-13 00:57:59 +0100 (dim., 13 déc. 2009) | 1 line
+
+[fix] changed umlauts (&entity;) back to utf-8 encoded characters
+----------------------------------------------
+r23846 | Jyhem | 2009-12-12 23:28:26 +0100 (sam., 12 déc. 2009) | 1 line
+
+[FIX] fix 23804 changed some references to body.fullscreen into body.tiki_fullscreen in error. fixed
+----------------------------------------------
+r23844 | sylvieg | 2009-12-12 20:52:34 +0100 (sam., 12 déc. 2009) | 1 line
+
+[FIX]de: a lot of synta errors
+----------------------------------------------
+r23843 | jonnybradley | 2009-12-12 20:13:39 +0100 (sam., 12 déc. 2009) | 1 line
+
+[FIX] Move admin message inside table structure and smarty logic (why is it admin only?)
+----------------------------------------------
+r23842 | jonnybradley | 2009-12-12 19:59:10 +0100 (sam., 12 déc. 2009) | 1 line
+
+[MOD] Indentation
+----------------------------------------------
+r23841 | lindonb | 2009-12-12 19:31:46 +0100 (sam., 12 déc. 2009) | 1 line
+
+[FIX] Fix regression from commit 21293. Fix keeps | inside of links from being interpreted as column separators.
+----------------------------------------------
+r23840 | jonnybradley | 2009-12-12 19:26:53 +0100 (sam., 12 déc. 2009) | 1 line
+
+[FIX] Unexpected global needed (thanks marc)
+----------------------------------------------
+r23836 | chibaguy | 2009-12-12 04:31:14 +0100 (sam., 12 déc. 2009) | 2 lines
+
+[ENH] Adjustments in floated divs for content columns (see http://themes.tikiwiki.org/Floated box demo). Also some *.reference.css updating.
+
+----------------------------------------------
+r23833 | Jyhem | 2009-12-11 18:34:59 +0100 (ven., 11 déc. 2009) | 1 line
+
+[FIX] Commit 23804 caused class name conflict with the CSS files of jscalendar. So we keep class names prefixed with 'tiki_'
+----------------------------------------------
+r23824 | jonnybradley | 2009-12-11 13:10:28 +0100 (ven., 11 déc. 2009) | 1 line
+
+[FIX] Only prepend # to anchors in wikipage links if anchor is set.
+----------------------------------------------
+r23820 | chibaguy | 2009-12-11 06:32:42 +0100 (ven., 11 déc. 2009) | 1 line
+
+[FIX] Log-in button wasn't monochrome. Thanks to Eric Kelner for reporting.
+----------------------------------------------
+r23814 | marclaporte | 2009-12-10 21:49:00 +0100 (jeu., 10 déc. 2009) | 1 line
+
+[KIL] Remove some leftovers of tiki-categpermissions.php  Thanks to rg for reporting on IRC
+----------------------------------------------
+r23812 | sylvieg | 2009-12-10 20:07:02 +0100 (jeu., 10 déc. 2009) | 1 line
+
+[MOD]menu: put the default menu icon path in a pref
+----------------------------------------------
+r23805 | sylvieg | 2009-12-10 18:39:50 +0100 (jeu., 10 déc. 2009) | 1 line
+
+[FIX]CATEGORY: fix id=1+2 broken with the filtering
+----------------------------------------------
+r23804 | Jyhem | 2009-12-10 18:28:02 +0100 (jeu., 10 déc. 2009) | 1 line
+
+[ENH] Reorganize body class for logic and versatility
+----------------------------------------------
+r23799 | jonnybradley | 2009-12-10 17:38:57 +0100 (jeu., 10 déc. 2009) | 1 line
+
+[FIX] Rollback r23408 - call to parse_data() not superflous after all. Added comment (thanks marclaporte)
+----------------------------------------------
+r23798 | sylvieg | 2009-12-10 17:27:41 +0100 (jeu., 10 déc. 2009) | 1 line
+
+[FIX]rss: use title and desc from admin panel
+----------------------------------------------
+r23789 | sylvieg | 2009-12-10 11:00:19 +0100 (jeu., 10 déc. 2009) | 1 line
+
+[FIX]section: typo that was overwritting the global section
+----------------------------------------------
+r23788 | alenaernst | 2009-12-10 09:27:52 +0100 (jeu., 10 déc. 2009) | 1 line
+
+Translation of all expressions in file 'untranslated.php' and added to language.php. Umlauts fixed
+----------------------------------------------
+r23787 | ricks99 | 2009-12-10 00:42:36 +0100 (jeu., 10 déc. 2009) | 1 line
+
+[FIX] improperly placed {/if} caused invalid XHTML.
+----------------------------------------------
+r23785 | sylvieg | 2009-12-10 00:12:17 +0100 (jeu., 10 déc. 2009) | 1 line
+
+[FIX]oops wrong backport
+----------------------------------------------
+r23781 | sylvieg | 2009-12-09 22:03:26 +0100 (mer., 09 déc. 2009) | 1 line
+
+[FIX]modules: to have section=blogs working (do a table only if separator is in param string)
+----------------------------------------------
+r23778 | jonnybradley | 2009-12-09 20:30:27 +0100 (mer., 09 déc. 2009) | 1 line
+
+[FIX] Reset database connection wasn't resetting
+----------------------------------------------
+r23776 | sylvieg | 2009-12-09 19:26:52 +0100 (mer., 09 déc. 2009) | 1 line
+
+[FIX]module: missing param notitle
+----------------------------------------------
+r23774 | jonnybradley | 2009-12-09 17:54:14 +0100 (mer., 09 déc. 2009) | 1 line
+
+[MOD] Use suppress_icons in switch to wysiwyg mode
+----------------------------------------------
+r23773 | jonnybradley | 2009-12-09 17:49:37 +0100 (mer., 09 déc. 2009) | 1 line
+
+[FIX] Don't show external link icons in newsletters
+----------------------------------------------
+r23772 | jonnybradley | 2009-12-09 17:47:08 +0100 (mer., 09 déc. 2009) | 2 lines
+
+[MOD] 'suppress_icons' option for parse_data() to allow hiding of edit section, plugins and external link icons
+Implementation to come.
+----------------------------------------------
+r23770 | jonnybradley | 2009-12-09 17:10:21 +0100 (mer., 09 déc. 2009) | 1 line
+
+[SVN] svn:keyword Id fixes
+----------------------------------------------
+r23766 | jonnybradley | 2009-12-09 15:59:28 +0100 (mer., 09 déc. 2009) | 1 line
+
+[FIX] Don't leave a blank line between chunks of exported data
+----------------------------------------------
+r23765 | jonnybradley | 2009-12-09 15:58:39 +0100 (mer., 09 déc. 2009) | 1 line
+
+[FIX] {foreach} doesn't seem to create a new line after it (causing tracker config error if used)
+----------------------------------------------
+r23764 | jonnybradley | 2009-12-09 15:57:49 +0100 (mer., 09 déc. 2009) | 1 line
+
+[MOD] Return with an error if there's a problem inserting a new item.
+----------------------------------------------
+r23757 | xavidp | 2009-12-08 20:33:36 +0100 (mar., 08 déc. 2009) | 1 line
+
+[ENH]A few strings added related to module calendar
+----------------------------------------------
+r23756 | xavidp | 2009-12-08 20:29:53 +0100 (mar., 08 déc. 2009) | 1 line
+
+[FIX]Make the display of navigation buttons fit in one line when inside the calendar module
+----------------------------------------------
+r23755 | xavidp | 2009-12-08 19:47:46 +0100 (mar., 08 déc. 2009) | 1 line
+
+[ENH]Link to add new events shown from module calendar and upcoming events, if user has the appropiate perm (forgot to include in previous commits; but already in proposed)
+----------------------------------------------
+r23754 | xavidp | 2009-12-08 19:32:24 +0100 (mar., 08 déc. 2009) | 1 line
+
+[bp/r23734 & r23743][FIX]Backport from sept_7 to avoid issues with module calendar and ajax, as well as improving navigation. Still WSOD when no calendar is created yet and somebody attemps to assign the calendar module
+----------------------------------------------
+r23752 | jonnybradley | 2009-12-08 19:00:00 +0100 (mar., 08 déc. 2009) | 1 line
+
+[FIX] Make dynamic list options reference global as some browsers eval() (e.g. Safari/Chrome) doesn't inherit the function's scope.
+----------------------------------------------
+r23751 | jonnybradley | 2009-12-08 18:58:12 +0100 (mar., 08 déc. 2009) | 1 line
+
+[FIX] Empty auto_query_args (& correct svn:keyword)
+----------------------------------------------
+r23750 | jonnybradley | 2009-12-08 18:15:04 +0100 (mar., 08 déc. 2009) | 1 line
+
+[FIX] Dynamic tracker items JS error fix for empty nodes
+----------------------------------------------
+r23746 | luciash | 2009-12-08 16:22:01 +0100 (mar., 08 déc. 2009) | 1 line
+
+[bp/r23745][FIX] czech language: use proper utf-8 characters instead of html entities
+----------------------------------------------
+r23735 | jonnybradley | 2009-12-08 14:37:05 +0100 (mar., 08 déc. 2009) | 1 line
+
+[FIX] Quite a few missing globals
+----------------------------------------------
+r23733 | sylvieg | 2009-12-08 14:05:07 +0100 (mar., 08 déc. 2009) | 1 line
+
+[FIX]banner: preselect the saved time
+----------------------------------------------
+r23726 | ricks99 | 2009-12-08 00:05:07 +0100 (mar., 08 déc. 2009) | 1 line
+
+[FIX]proper xhtml validation requires a space: <.. /> not <../>
+----------------------------------------------
+r23724 | sylvieg | 2009-12-07 23:16:30 +0100 (lun., 07 déc. 2009) | 1 line
+
+[FIX]tracker: only admin can change the userId - other must be ignored
+----------------------------------------------
+r23722 | nkoth | 2009-12-07 21:59:49 +0100 (lun., 07 déc. 2009) | 1 line
+
+[FIX] list of categories not respecting perms
+----------------------------------------------
+r23719 | xavidp | 2009-12-07 17:32:20 +0100 (lun., 07 déc. 2009) | 1 line
+
+[MOD]Added the 2 letters for the days of the week. Thanks chibaguy and luciash for the tips and feedback on this issue! (forgot to thank in the previous commit)
+----------------------------------------------
+r23716 | xavidp | 2009-12-07 17:24:27 +0100 (lun., 07 déc. 2009) | 1 line
+
+[ENH]Allow 2 letters as abreviated names from days of the week in the module calendar, since in some languages, more than one letter is needd. By default 2 letters shown from now onwards, and overridable at language.php level. In addition, button to add new events shown in module calendar and upcoming_events for users with the appropriate perm.
+----------------------------------------------
+r23710 | nkoth | 2009-12-07 03:19:43 +0100 (lun., 07 déc. 2009) | 1 line
+
+[FIX] Not staying in SSL mode not working because unchecked checkboxes are not sent
+----------------------------------------------
+r23709 | nkoth | 2009-12-07 03:01:14 +0100 (lun., 07 déc. 2009) | 1 line
+
+[FIX] Show Stay in SSL mode even if not currently in SSL if SSL is set to required
+----------------------------------------------
+r23708 | nkoth | 2009-12-07 02:21:28 +0100 (lun., 07 déc. 2009) | 1 line
+
+[FIX] If user comes from a non-https URL and logs in with SSL, there is a possibility that he will be redirected to non-SSL, e.g. in the case where SSL is required
+----------------------------------------------
+r23707 | nkoth | 2009-12-07 01:34:40 +0100 (lun., 07 déc. 2009) | 1 line
+
+[FIX] login box in site header not working with force https login setting
+----------------------------------------------
+r23706 | nkoth | 2009-12-07 00:25:26 +0100 (lun., 07 déc. 2009) | 1 line
+
+[FIX] on registration the preventing of antibot from appearing again on filling in user tracker info was not working before
+----------------------------------------------
+r23701 | sylvieg | 2009-12-06 23:27:19 +0100 (dim., 06 déc. 2009) | 1 line
+
+[FIX]tracker: mandatory category drop down field must display an empty line to be sure the user saves without checking a categ
+----------------------------------------------
+r23699 | sylvieg | 2009-12-06 17:42:11 +0100 (dim., 06 déc. 2009) | 1 line
+
+[FIX]search: too many back quotes when searching on tracker
+----------------------------------------------
+r23694 | marclaporte | 2009-12-05 17:01:50 +0100 (sam., 05 déc. 2009) | 1 line
+
+[MOD] Add this new setting to i18n admin panel, where people look when configuring multilingual site.
+----------------------------------------------
+r23693 | sylvieg | 2009-12-05 16:01:36 +0100 (sam., 05 déc. 2009) | 1 line
+
+[MOD]listpages: new option Display by default only pages in current language - a lot of people do not see that the filter is preselected
+----------------------------------------------
+r23690 | sylvieg | 2009-12-05 14:22:59 +0100 (sam., 05 déc. 2009) | 1 line
+
+[MOD]remarksbox: new type error that can not be closed
+----------------------------------------------
+r23685 | nkoth | 2009-12-05 03:27:11 +0100 (sam., 05 déc. 2009) | 1 line
+
+[FIX] Scroll to comments area after comments posting. Also, show proper feedback message if comment is not to appear immediately but is to be moderated so it looks ok.
+----------------------------------------------
+r23684 | nkoth | 2009-12-05 03:14:42 +0100 (sam., 05 déc. 2009) | 1 line
+
+[FIX] show anonymous provided name in the preview of comment
+----------------------------------------------
+r23683 | nkoth | 2009-12-05 02:37:47 +0100 (sam., 05 déc. 2009) | 1 line
+
+[FIX] Make sure on clicking on comments link that it scrolls down to the comments area
+----------------------------------------------
+r23681 | nkoth | 2009-12-05 02:15:38 +0100 (sam., 05 déc. 2009) | 1 line
+
+[FIX] Allow access to individual RSS feeds even if main Blog RSS feature is unchecked so long as individual blog RSS is enabled
+----------------------------------------------
+r23680 | sylvieg | 2009-12-05 00:36:10 +0100 (sam., 05 déc. 2009) | 1 line
+
+[FIX]tracker: get item link working both the same with view_tracker and TRACKER + fix the categ perm check
+----------------------------------------------
+r23679 | nkoth | 2009-12-04 23:24:38 +0100 (ven., 04 déc. 2009) | 1 line
+
+the first and second time, we should not trust the absence of javascript_enabled cookie yet, as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run, assuming that js is on before then. Absence of cookies in general is not a good test when redirected
+----------------------------------------------
+r23677 | sylvieg | 2009-12-04 22:18:13 +0100 (ven., 04 déc. 2009) | 1 line
+
+[FIX]coelesce: check top_bar prefs
+----------------------------------------------
+r23672 | xavidp | 2009-12-04 18:03:08 +0100 (ven., 04 déc. 2009) | 1 line
+
+[FIX]Contribution moved back to the main tab and mandatory_note and mandatory_star classes and info added when  and where needed
+----------------------------------------------
+r23671 | sylvieg | 2009-12-04 17:36:34 +0100 (ven., 04 déc. 2009) | 1 line
+
+[FIX]css: more meaningful error message
+----------------------------------------------
+r23670 | xavidp | 2009-12-04 17:22:47 +0100 (ven., 04 déc. 2009) | 1 line
+
+[MOD]Mandatory-related information inside a remarksbox and with mandatory_note or _star asociated to it
+----------------------------------------------
+r23668 | xavidp | 2009-12-04 17:05:38 +0100 (ven., 04 déc. 2009) | 1 line
+
+[FIX]Mandatory note class added inside warning remarksbox for mandatory texts
+----------------------------------------------
+r23661 | sylvieg | 2009-12-04 14:37:58 +0100 (ven., 04 déc. 2009) | 1 line
+
+[FIX]newsletter: admin perm gives all perms
+----------------------------------------------
+r23660 | xavidp | 2009-12-04 14:04:52 +0100 (ven., 04 déc. 2009) | 1 line
+
+[FIX]Adding of fixing missing mandatory_note class to the related text 
+----------------------------------------------
+r23659 | xavidp | 2009-12-04 13:53:09 +0100 (ven., 04 déc. 2009) | 1 line
+
+[FIX]Added missing mandatory_note class for wikiplugin_tracker to all themes through design.css
+----------------------------------------------
+r23657 | xavidp | 2009-12-04 13:20:22 +0100 (ven., 04 déc. 2009) | 1 line
+
+[MOD]added missing .mandatory_star class
+----------------------------------------------
+r23656 | jonnybradley | 2009-12-04 12:27:18 +0100 (ven., 04 déc. 2009) | 1 line
+
+[SQL] Column to allow different wiki syntax for each filegal (implementation to come)
+----------------------------------------------
+r23655 | jonnybradley | 2009-12-04 11:20:44 +0100 (ven., 04 déc. 2009) | 4 lines
+
+[MOD] More small fixes to admin users.
+Tab renamed as there is no export function.
+Don't show link to group admin if only tiki_p_admin_users.
+Better help icon/tip.
+----------------------------------------------
+r23654 | jonnybradley | 2009-12-04 11:02:14 +0100 (ven., 04 déc. 2009) | 4 lines
+
+[ENH] Changes to the change password section of admin users (to be refactored and implemented in register and change password soon).
+Corrected the order of pass1, genpass and pass2 so pass1 and pass2 are adjacent.
+Added "passwords match" notice and icon.
+Now copies changes to the generated password field to both pass inputs.
+----------------------------------------------
+r23653 | Jyhem | 2009-12-04 10:38:10 +0100 (ven., 04 déc. 2009) | 1 line
+
+[ENH] Better consistency in translating 'report', like in 3.x
+----------------------------------------------
+r23651 | campbe13 | 2009-12-03 23:38:43 +0100 (jeu., 03 déc. 2009) | 1 line
+
+[FIX] if email validation selected add check for non blank email
+----------------------------------------------
+r23649 | sylvieg | 2009-12-03 21:22:08 +0100 (jeu., 03 déc. 2009) | 1 line
+
+missing feature
+----------------------------------------------
+r23647 | sylvieg | 2009-12-03 18:50:39 +0100 (jeu., 03 déc. 2009) | 1 line
+
+[FIX]Argument 1 passed to TikiDb::setErrorHandler() must implement interface TikiDb_ErrorHandler
+----------------------------------------------
+r23645 | sylvieg | 2009-12-03 18:33:33 +0100 (jeu., 03 déc. 2009) | 1 line
+
+[FIX]CATEGORY: appropriate filter for sort + error message is sort is incorrect
+----------------------------------------------
+r23643 | jonnybradley | 2009-12-03 11:28:35 +0100 (jeu., 03 déc. 2009) | 1 line
+
+[FIX] More WYSIWYCA approach to user admin
+----------------------------------------------
+r23641 | alain_desilets | 2009-12-03 03:14:26 +0100 (jeu., 03 déc. 2009) | 1 line
+
+- Translated pop up messages for the new watch icons.
+----------------------------------------------
+r23636 | sylvieg | 2009-12-02 21:54:06 +0100 (mer., 02 déc. 2009) | 1 line
+
+backport also sefurl - partiel 23363
+----------------------------------------------
+r23632 | sylvieg | 2009-12-02 19:20:22 +0100 (mer., 02 déc. 2009) | 1 line
+
+oops - forgot the global
+----------------------------------------------
+r23630 | sylvieg | 2009-12-02 18:21:16 +0100 (mer., 02 déc. 2009) | 1 line
+
+[FIX]language: browser langauge must be limited to available language(ex: en_uk can be the browser language and not selected)
+----------------------------------------------
+r23624 | sylvieg | 2009-12-02 16:03:18 +0100 (mer., 02 déc. 2009) | 1 line
+
+[FIX]xml import: if page already exists: cumulate on history + error if structure already exists
+----------------------------------------------
+r23618 | jonnybradley | 2009-12-02 14:00:54 +0100 (mer., 02 déc. 2009) | 2 lines
+
+[FIX] Use logout function in userlib instead of including tiki-loghout.php - suspected of causing the installer to loop back to the start on some configurations.
+Also keep track of install_type and send to change password form if a 'scratch' (i.e. clean) install.
+----------------------------------------------
+r23617 | sylvieg | 2009-12-02 13:59:15 +0100 (mer., 02 déc. 2009) | 1 line
+
+[FIX]tracker: a little bit more about page selector
+----------------------------------------------
+r23616 | jonnybradley | 2009-12-02 13:56:08 +0100 (mer., 02 déc. 2009) | 1 line
+
+[MOD] Refactoring of logout code (use in installer to come next)
+----------------------------------------------
+r23615 | sylvieg | 2009-12-02 13:52:37 +0100 (mer., 02 déc. 2009) | 1 line
+
+[bp/r 23357][MOD]CATEGORY: 3 params showname, showdescription, showtype
+----------------------------------------------
+r23613 | sylvieg | 2009-12-02 13:20:56 +0100 (mer., 02 déc. 2009) | 1 line
+
+[FIX]modules: to avoid db error params can not be NULL. http_build_query can return NULL or empty strind depending on system: TODO: fix why params column can not accept NULL
+----------------------------------------------
+r23611 | jonnybradley | 2009-12-02 12:19:52 +0100 (mer., 02 déc. 2009) | 1 line
+
+[FIX] Only display edit buttons for users you can actually edit
+----------------------------------------------
+r23605 | sylvieg | 2009-12-02 00:41:38 +0100 (mer., 02 déc. 2009) | 1 line
+
+[FIX]rollback : rollbacj 23603 - too much contreversial
+----------------------------------------------
+r23604 | sylvieg | 2009-12-01 23:57:36 +0100 (mar., 01 déc. 2009) | 1 line
+
+[FIX]tracker: some more configuration for page selector field
+----------------------------------------------
+r23603 | alain_desilets | 2009-12-01 22:54:51 +0100 (mar., 01 déc. 2009) | 1 line
+
+- Modified watch icon and popup message.
+----------------------------------------------
+r23602 | jonnybradley | 2009-12-01 20:53:49 +0100 (mar., 01 déc. 2009) | 1 line
+
+[FIX] Stop "Generate Password" button causing postback.
+----------------------------------------------
+r23593 | sylvieg | 2009-12-01 15:47:30 +0100 (mar., 01 déc. 2009) | 1 line
+
+[FIX]tracker: fix export when sort field is not the default one for a tracker
+----------------------------------------------
+r23592 | ricks99 | 2009-12-01 04:59:44 +0100 (mar., 01 déc. 2009) | 1 line
+
+[ENH] working on the webhelp feature, in progress. Updating to use standard Tiki icons. Will now correctly generate content for the content.html page (based on browser title, site title, and site subtitle.
+----------------------------------------------
+r23591 | chibaguy | 2009-12-01 04:37:10 +0100 (mar., 01 déc. 2009) | 1 line
+
+[FIX] Floated divs for content columns (see http://themes.tikiwiki.org/Floated box demo) need !important to override general wikitext .box no float.
+----------------------------------------------
+r23590 | ricks99 | 2009-12-01 03:19:21 +0100 (mar., 01 déc. 2009) | 1 line
+
+[FIX]column name should be DOMAIN not WORDS
+----------------------------------------------
+r23587 | alain_desilets | 2009-11-30 22:36:42 +0100 (lun., 30 nov. 2009) | 1 line
+
+- Updated translated strings after changes to clarify group inclusion UI.
+----------------------------------------------
+r23584 | sylvieg | 2009-11-30 19:17:24 +0100 (lun., 30 nov. 2009) | 1 line
+
+[FIX]comment: malformed object
+----------------------------------------------
+r23581 | chibaguy | 2009-11-28 16:05:30 +0100 (sam., 28 nov. 2009) | 1 line
+
+[FIX] Topbar pref filter missing since site header template reorganizing.
+----------------------------------------------
+r23580 | chibaguy | 2009-11-28 16:03:06 +0100 (sam., 28 nov. 2009) | 1 line
+
+[FIX] Strasa's site header login pref filter was missing, so no response to L&F Login Bar checkbox. Thanks to luci for noticing.
+----------------------------------------------
+r23578 | sylvieg | 2009-11-28 15:54:06 +0100 (sam., 28 nov. 2009) | 1 line
+
+[FIX]actionlog: tmpDir by default has not /
+----------------------------------------------
+r23576 | sylvieg | 2009-11-28 15:31:12 +0100 (sam., 28 nov. 2009) | 1 line
+
+[FIX]contribution: a little message when no contribition have been defined
+----------------------------------------------
+r23575 | sylvieg | 2009-11-28 14:56:31 +0100 (sam., 28 nov. 2009) | 1 line
+
+[FIX]wiki: userpage are editable by admin
+----------------------------------------------
+r23570 | sylvieg | 2009-11-27 20:50:35 +0100 (ven., 27 nov. 2009) | 1 line
+
+[FIX]actionlog: see all the visible galleries not only the public one
+----------------------------------------------
+r23557 | sylvieg | 2009-11-27 14:26:08 +0100 (ven., 27 nov. 2009) | 1 line
+
+[FIX]tracker: item link when editing an item
+----------------------------------------------
+r23534 | sylvieg | 2009-11-26 17:24:46 +0100 (jeu., 26 nov. 2009) | 1 line
+
+[FIX]notif: smarty syntax error - perhaps explaining the attachment?attId=0
+----------------------------------------------
+r23523 | alain_desilets | 2009-11-26 08:55:02 +0100 (jeu., 26 nov. 2009) | 1 line
+
+- Improved clarity of the group inclusion part of the group admin dialog.
+----------------------------------------------
+r23521 | sylvieg | 2009-11-26 01:08:33 +0100 (jeu., 26 nov. 2009) | 1 line
+
+[FIX]wiki: do the antiwikiwords only when wikiwords is enabled - allow to have page like ((a)),((b))
+----------------------------------------------
+r23520 | sylvieg | 2009-11-26 00:48:26 +0100 (jeu., 26 nov. 2009) | 1 line
+
+sorry missed up with my 5 tiki4
+----------------------------------------------
+r23517 | jonnybradley | 2009-11-25 21:30:22 +0100 (mer., 25 nov. 2009) | 2 lines
+
+[FIX] upgrade_categperm_2 installer script was failing when run from shell.
+Removed reliance on installer/tiki-installer.php.
+----------------------------------------------
+r23516 | jonnybradley | 2009-11-25 21:09:14 +0100 (mer., 25 nov. 2009) | 1 line
+
+[FIX] Missing bracket typo (corrected already in trunk)
+----------------------------------------------
+r23514 | sylvieg | 2009-11-25 20:27:51 +0100 (mer., 25 nov. 2009) | 1 line
+
+[FIX]registration: clean the code: users_users.hash is the encoded real password, users_users.valid is the send random password, users_uusers.waiting is the reason (user or admin) why the account is disabled + fix enable in admin->users 'sedn email' on if not direct registration
+----------------------------------------------
+r23513 | jonnybradley | 2009-11-25 20:25:46 +0100 (mer., 25 nov. 2009) | 3 lines
+
+[NEW] Minor feature (wiki_comments_allow_per_page) implementation (commit 3 of 3).
+Preserves previous behaviour by default, when enabled allows default to On or Off for new pages and those without 'comments_enabled' set.
+
+----------------------------------------------
+r23512 | jonnybradley | 2009-11-25 20:20:05 +0100 (mer., 25 nov. 2009) | 3 lines
+
+[NEW] Minor feature (wiki_comments_allow_per_page) to allow control of comments for each wiki page.
+Prefs admin only - implementation coming next.
+
+----------------------------------------------
+r23511 | jonnybradley | 2009-11-25 20:15:39 +0100 (mer., 25 nov. 2009) | 1 line
+
+[SQL] New column for tiki_pages (comments_enabled) for per page comment control (wiki_comments_allow_per_page - code to come)
+----------------------------------------------
+r23509 | jonnybradley | 2009-11-25 16:16:41 +0100 (mer., 25 nov. 2009) | 1 line
+
+[FIX] Correct logic on caching the right icons for theme options
+----------------------------------------------
+r23508 | jonnybradley | 2009-11-25 16:15:56 +0100 (mer., 25 nov. 2009) | 1 line
+
+[FIX] If user has been subscribed but not validated don't just blow up on an SQL error, but update code and 'subscribed' timestamp for that user, then resend the validation mail.
+----------------------------------------------
+r23507 | jonnybradley | 2009-11-25 15:16:25 +0100 (mer., 25 nov. 2009) | 1 line
+
+[SQL] A couple of SQL scripts that might be handy after upgrading to Tiki 4.x. Adding them here for safe-keeping - one day it would be nice to offer upgraders some additional (and heavily warned about) optional processes after the automatic update has happened.
+----------------------------------------------
+r23506 | jonnybradley | 2009-11-25 15:12:47 +0100 (mer., 25 nov. 2009) | 1 line
+
+[FIX] Move duplicate file gallery button into section where filegal has been set (galleryId > 0) so it appears.
+----------------------------------------------
+r23505 | jonnybradley | 2009-11-25 15:09:01 +0100 (mer., 25 nov. 2009) | 2 lines
+
+[FIX] Use new simple param for {textarea} to stop irrelevant warnings.
+Also set $auto_query_args (to none)
+----------------------------------------------
+r23504 | jonnybradley | 2009-11-25 15:07:20 +0100 (mer., 25 nov. 2009) | 1 line
+
+[ENH] New 'simple' param for {textarea}. Switches off wysiwyg, auto_save, lost edit warning etc (e.g. for contact form)
+----------------------------------------------
+r23503 | jonnybradley | 2009-11-25 14:45:35 +0100 (mer., 25 nov. 2009) | 4 lines
+
+[FIX] Part 2 of upgrade_categperm script.
+This one assigns tiki_p_modify_object_categories wherever a group had general "edit" perms (modify_tracker_items, edit, edit_article, blog_post etc, but a smaller list than in part 1).
+It also adds the collection of view perms (as seen in part 1) wherever tiki_p_search_categorized was, and then renames the description ("Obsolete tw>=4 ...")
+
+----------------------------------------------
+r23502 | jonnybradley | 2009-11-25 14:35:17 +0100 (mer., 25 nov. 2009) | 1 line
+
+[CSS] Better colours for headings in My Tiki page
+----------------------------------------------
+r23501 | chibaguy | 2009-11-25 05:46:47 +0100 (mer., 25 nov. 2009) | 1 line
+
+[FIX] Better styling for when logo, etc. isn't positioned left.
+----------------------------------------------
+r23500 | chibaguy | 2009-11-25 04:59:38 +0100 (mer., 25 nov. 2009) | 1 line
+
+[FIX] Removed em {vertical-align: middle}, which was causing italic text to be below baseline. Thanks to lindon bringing this up.
+----------------------------------------------
+r23499 | pascalstjean | 2009-11-25 01:37:27 +0100 (mer., 25 nov. 2009) | 1 line
+
+[ENH] moved the Anti-Bot from the Top of the Contact Us to the bottom just above the Send button. This is the typical position for an Anti-Bot feature in most common web applications today
+----------------------------------------------
+r23498 | pascalstjean | 2009-11-25 01:33:26 +0100 (mer., 25 nov. 2009) | 1 line
+
+[MOD] added logic to verify that the FROM field is filled before sending an anonymous message. Also added code to make sure FROM, SUBJECT and BODY do not get erased if a field is missing or wrong Anti-Bot code is inserted
+----------------------------------------------
+r23497 | pascalstjean | 2009-11-25 01:25:52 +0100 (mer., 25 nov. 2009) | 1 line
+
+[NEW] Added FROM Field for anonymous users inside the Contact Us Feature. Previously there was no way for the reciever to reply to a message unless that person left contact information inside the Body
+----------------------------------------------
+r23496 | sylvieg | 2009-11-25 00:44:51 +0100 (mer., 25 nov. 2009) | 1 line
+
+[FIX]wiki: protected word must not to be empty- allow to have ((xx|aa))((yy)) on the same line
+----------------------------------------------
+r23495 | pkdille | 2009-11-24 22:52:08 +0100 (mar., 24 nov. 2009) | 1 line
+
+[bp/23493][MOD] lesser magic: restoring all prefs for wiki 3d (morcego)
+----------------------------------------------
+r23488 | Jyhem | 2009-11-24 18:34:52 +0100 (mar., 24 nov. 2009) | 1 line
+
+[ENH] more meaningful section names for use in CSS styles (complements #23484)
+----------------------------------------------
+r23484 | Jyhem | 2009-11-24 16:55:40 +0100 (mar., 24 nov. 2009) | 1 line
+
+[ENH] more meaningful section names for use in CSS styles
+----------------------------------------------
 Version 4.0
 <http://tikiwiki.org/ReleaseNotes40>
 ------------------
