@@ -189,6 +189,7 @@ function write_export_header() {
 	header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
 	header("Pragma: public");
 }
+session_write_close();
 
 if (empty($fp)) {
 	write_export_header();
@@ -248,6 +249,7 @@ if (!empty($fp)) {
 $str = '';
 
 $logger->info('header done: ' . round($mem/1024, 4));
+saveStatus(array('status' => 'header', 'msg' => ''));
 
 include_once 'lib/filegals/max_upload_size.php';	// sets $memory_limit and $current_memory_usage
 $mem = $mem2 = memory_get_usage(true);
@@ -286,7 +288,7 @@ calc_chunkSize(10);
 $logger->info('$chunkSize: ' . $chunkSize . '    cant: '. $cant . '     fields: ' . count($fields['data']) . '      memlimit: ' . $memory_limit);
 $starttime = microtime(true);
 $export_cant = 0; $chunks = 0;
-saveStatus(array('status' => 'start', 'total' => $recordsMax + $offset, 'current' => $export_cant, 'msg' => ''));
+saveStatus(array('status' => 'waiting', 'total' => $recordsMax + $offset, 'current' => $export_cant, 'msg' => ''));
 
 while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues)) && !empty($items['data'])) {
 	
