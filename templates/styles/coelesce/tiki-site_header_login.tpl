@@ -15,12 +15,12 @@
 	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
 		<b><a href="tiki-login.php?cas=y">{tr}Login SSO{/tr}</a></b>
 		{if $prefs.cas_skip_admin eq 'y' && $prefs.cas_show_alternate_login eq 'y'}
-			&nbsp;|&nbsp;{self_link _template='tiki-site_header.tpl' _title="{tr}Login as admin{/tr}" _icon='user_red' _htmlelement='siteheader' user='admin'}{tr}Login as admin{/tr}{/self_link}
+			&nbsp;|&nbsp;{self_link _template='tiki-site_header_login.tpl' _title="{tr}Log in as admin{/tr}" _icon='user_red' _htmlelement='siteloginbar' user='admin'}{tr}Log in as admin{/tr}{/self_link}
 		{/if}
  	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'shib' && $showloginboxes neq 'y'}
 		<b><a href="tiki-login.php">{tr}Login SSO{/tr}</a></b>
 		{if $prefs.shib_skip_admin eq 'y'}
-			&nbsp;|&nbsp;{self_link _template='tiki-site_header.tpl' _title="{tr}Login as admin{/tr}" _icon='user_red' _htmlelement='siteheader' user='admin'}{tr}Login as admin{/tr}{/self_link}
+			&nbsp;|&nbsp;{self_link _template='tiki-site_header_login.tpl' _title="{tr}Log in as admin{/tr}" _icon='user_red' _htmlelement='siteloginbar' user='admin'}{tr}Log in as admin{/tr}{/self_link}
 		{/if}
 	{else}
 		<form class="forms" name="loginbox" action="tiki-login.php" method="post">
