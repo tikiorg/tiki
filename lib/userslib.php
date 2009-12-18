@@ -274,7 +274,11 @@ class UsersLib extends TikiLib
 		unset($_SESSION[$user_cookie_site]);
 		session_destroy();
 		
-		header('Location: ' . $url);
+		if ($prefs['auth_method'] == 'ws') {
+			header('Location: '.str_replace('//', '//admin:@', $url)); // simulate a fake login to logout the user
+		} else {
+			header('Location: ' . $url);
+		}
 		return;
 	}
 
