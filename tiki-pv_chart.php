@@ -17,8 +17,10 @@ if ($tiki_p_view_stats != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-require_once ("graph-engine/graph.multiline.php");
-require_once ("graph-engine/gd.php");
+
+require_once ("lib/graph-engine/gd.php");
+require_once ("lib/graph-engine/graph.multiline.php");
+
 //Define the object
 $renderer = & new GD_GRenderer(450, 300);
 $graph = & new MultilineGraphic;
@@ -26,7 +28,9 @@ $graph->setTitle(tra('Pageviews'));
 //Set some data
 if (!isset($_REQUEST["days"])) $_REQUEST["days"] = 7;
 $data = $tikilib->get_pv_chart_data($_REQUEST["days"]);
-foreach($data['xdata'] as $key => $date) $data['xdata'][$key] = strtotime($date) / 24 / 3600;
+foreach($data['xdata'] as $key => $date) {
+	 $data['xdata'][$key] = strtotime($date) / 24 / 3600;
+}
 $graph->setData(array('x' => $data['xdata'], 'y0' => $data['ydata']));
 $graph->setParam('grid-independant-major-font', false);
 $graph->setParam('grid-independant-major-guide', false);
