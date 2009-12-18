@@ -2054,11 +2054,11 @@ class TikiLib extends TikiDb_Bridge {
 			if ($prefs['ip_can_be_checked'] == 'y') {
 				$query = 'delete from `tiki_user_votings` where `ip`=? and `id`=?';
 				$result = $this->query($query, array($ip, $id));
-				if ( $optionId !== false ) {
+				if ( $optionId !== false && $optionId != 'NULL' ) {
 					$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
 					$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));
 				}
-			} elseif ($optionId !== false) {
+			} elseif ($optionId !== false && $optionId != 'NULL' ) {
 				$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
 				$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));
 			}
@@ -2070,7 +2070,7 @@ class TikiLib extends TikiDb_Bridge {
 				$query = 'delete from `tiki_user_votings` where `user`=? and `id`=?';
 				$this->query($query, array($user, (string)$id));
 			}
-			if ( $optionId !== false ) {
+			if ( $optionId !== false  && $optionId != 'NULL' ) {
 				$query = 'insert into `tiki_user_votings` (`user`,`ip`, `id`,`optionId`, `time`) values(?,?,?,?,?)';
 				$result = $this->query($query, array($user, $ip, (string)$id, (int)$optionId, (int)$this->now));
 			}
