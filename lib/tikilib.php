@@ -6150,7 +6150,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		$this->parse_wiki_argvariable($data);
+		$this->parse_wiki_argvariable($data, $options);
 
 		/* <x> XSS Sanitization handling */
 
@@ -6175,7 +6175,7 @@ class TikiLib extends TikiDb_Bridge
 		$noparsed = array('data'=>array(),'key'=>array());
 		if (!$noparseplugins) {
 			$this->parse_first($data, $preparsed, $noparsed, $options);
-			$this->parse_wiki_argvariable($data);
+			$this->parse_wiki_argvariable($data, $options);
 		}
 
 		// Handle |# anchor links by turning them into ALINK module calls.
@@ -6554,7 +6554,7 @@ class TikiLib extends TikiDb_Bridge
 		return $data;
 	}
 
-	function parse_wiki_argvariable(&$data) {
+	function parse_wiki_argvariable(&$data, $options=null) {
 		global $prefs;
 		if( $prefs['feature_wiki_argvariable'] == 'y' ) {
 			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]+))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
