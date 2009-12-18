@@ -112,9 +112,15 @@ exportStart = function (el) {
 	}
 	$jq("#export_button").hide();
 	
-	$jq.post("tiki-export_tracker_ajax.php", $jq(el).serialize(), function (data) {
-		//alert("done the post");
-	});
+	var fm = el;
+	$jq(fm).attr('target', 'dl_frame');
+	var $dl_frame = $jq('<iframe id="dl_frame" name="dl_frame"></iframe>');
+	$dl_frame.css({position:'absolute',top:'50px',left:'50px'}).appendTo('body');
+	fm.submit();
+	
+//	$jq.post("tiki-export_tracker_ajax.php", $jq(el).serialize(), function (data) {
+//		//alert("done the post");
+//	});
 
 	$jq("#export_msg").text("Starting export...");
 	setTimeout(function () { exportProgress(); }, 2000);

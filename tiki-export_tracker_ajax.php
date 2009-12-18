@@ -322,8 +322,8 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 			$str .= needs_separator($str) ? '' : $separator;
 			$str .= $delimitorL.$item['lastModif'].$delimitorL;
 		}
-		if (count($listfields) > 0) {
-			foreach ($listfields as $field_value) {
+		if (count($item['field_values']) > 0) {
+			foreach ($item['field_values'] as $field_value) {
 				$data = '';
 				if ($field_value['isHidden'] != 'c' || ($field_value['isHidden'] != 'c' && ($item['itemUser'] == $user || $tiki_p_admin_trackers == 'y'))) {
 					
