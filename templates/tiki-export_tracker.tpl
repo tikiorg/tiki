@@ -83,37 +83,52 @@
 			<input type="text" name="recordsOffset" id="recordsOffset" value="{$recordsOffset}" />
 		</td>
 	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>
+			<p id="export_msg"></p>
+			<div id="export_prog"></div>
+		</td>
+	</tr>
 {/if}
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" id="export_button" value="{tr}Export{/tr}" /></td>
 </tr>
 </table>
 </form>
+<style type="text/css">
+	.ui-progressbar-value {ldelim} background-image: url(lib/jquery/jquery-ui/themes/{$prefs.feature_jquery_ui_theme}/images/pbar-ani.gif); {rdelim}
+</style>
 {if $prefs.feature_ajax.php eq 'y'}{jq}
+
+// setup for AJAX export
 $jq("#export_form").submit( function () { return exportStart(this); });
 
+if (!$jq.ui) { $jq("#export_prog").hide(); }
+
 exportStart = function (el) {
-	$jq("#ajaxLoading").show();	// TODO find the right function
+	//$jq("#ajaxLoading").show();	// TODO find the right function
 	
-	var fm = el;
-	//$jq(fm).attr('target', 'dl_frame');
-
-	var $dl_frame = $jq('<iframe id="dl_frame" name="dl_frame"></iframe>');
+	if ($jq.ui) {
+		$jq("#export_prog").progressbar("destroy").progressbar({ value: 1 });
+	}
+	$jq("#export_button").hide();
 	
-	$dl_frame.append($jq(fm).clone().attr('target', 'dl_frame'));
-
-	$dl_frame.css({position:'absolute',top:'50px',left:'50px'}).appendTo('body');
-
-	$dl_frame.load(function() {
-		alert("iframe done");
-	});
-	
-	$dl_frame.find("form").submit();
-	
-//	$jq.post("tiki-export_tracker_ajax.php", $jq(fm).serialize(), function (data) {
-//		//alert("done the post");
+//	var fm = el;
+//$jq(fm).attr('target', 'dl_frame');
+//	var $dl_frame = $jq('<iframe id="dl_frame" name="dl_frame"></iframe>');
+//	$dl_frame.append($jq(fm).clone().attr('target', 'dl_frame'));
+//	$dl_frame.css({position:'absolute',top:'50px',left:'50px'}).appendTo('body');
+//	$dl_frame.load(function() {
+//		alert("iframe done");
 //	});
+//	$dl_frame.find("form").submit();
+	
+	$jq.post("tiki-export_tracker_ajax.php", $jq(el).serialize(), function (data) {
+		//alert("done the post");
+	});
 
-	setTimeout(function () { exportProgress(); }, 1000);
+	$jq("#export_msg").text("Starting export...");
+	setTimeout(function () { exportProgress(); }, 2000);
 	return false;
 }
 exportProgress = function () {
@@ -122,14 +137,24 @@ exportProgress = function () {
 		console.debug(res);
 		if (res) {
 			if (res.status == "finish") {
-				$jq("#ajaxLoading").hide();
+				//$jq("#ajaxLoading").hide();
 				$jq("#dl_frame").remove();
-				alert("Exported: " + res.current + " records");
+				$jq("#export_msg").text("Exported: " + res.current + " records");
+				if ($jq.ui) { $jq("#export_prog").progressbar('option', 'value', 100); }
+				$jq("#export_button").show();
 			} else {
-				if (res.current) {
-					alert(res.current);
+				if (res.msg) {
+					$jq("#export_msg").text("Message: " + res.msg);
+				} else if (res.current) {
+					var pc = parseInt((res.current / res.total) * 100, 10);
+					$jq("#export_msg").text("Exported: " + res.current + "/" + res.total + " (" + pc + "%)");
+					if ($jq.ui) {
+						$jq("#export_prog").progressbar('option', 'value', pc);
+					}
+				} else if (res.status) {
+					$jq("#export_msg").text("Status: " + res.status);
 				}
-				alert(res.msg);
+				//alert(res.msg);
 				setTimeout(function () { exportProgress(); }, 1000);
 			}
 		}
@@ -146,7 +171,7 @@ exportProgress = function () {
 //		}
 //	});
 	
-	$jq("#ajaxLoading").hide();
+	//$jq("#ajaxLoading").hide();
 }
 {/jq}
 {remarksbox type="note" title="Warning"}Please note: Using experimental AJAX export function - work in progress!{/remarksbox}
