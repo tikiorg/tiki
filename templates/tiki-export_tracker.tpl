@@ -106,22 +106,11 @@ $jq("#export_form").submit( function () { return exportStart(this); });
 if (!$jq.ui) { $jq("#export_prog").hide(); }
 
 exportStart = function (el) {
-	//$jq("#ajaxLoading").show();	// TODO find the right function
 	
 	if ($jq.ui) {
 		$jq("#export_prog").progressbar("destroy").progressbar({ value: 1 });
 	}
 	$jq("#export_button").hide();
-	
-//	var fm = el;
-//$jq(fm).attr('target', 'dl_frame');
-//	var $dl_frame = $jq('<iframe id="dl_frame" name="dl_frame"></iframe>');
-//	$dl_frame.append($jq(fm).clone().attr('target', 'dl_frame'));
-//	$dl_frame.css({position:'absolute',top:'50px',left:'50px'}).appendTo('body');
-//	$dl_frame.load(function() {
-//		alert("iframe done");
-//	});
-//	$dl_frame.find("form").submit();
 	
 	$jq.post("tiki-export_tracker_ajax.php", $jq(el).serialize(), function (data) {
 		//alert("done the post");
@@ -132,12 +121,11 @@ exportStart = function (el) {
 	return false;
 }
 exportProgress = function () {
-	console.debug("exportProgress");
+	//console.debug("exportProgress");
 	$jq.getJSON("tiki-export_tracker_monitor.php", { trackerId: {{$trackerId}}, xuser: "{{$user}}" }, function (res) {
-		console.debug(res);
+		//console.debug(res);
 		if (res) {
 			if (res.status == "finish") {
-				//$jq("#ajaxLoading").hide();
 				$jq("#dl_frame").remove();
 				$jq("#export_msg").text("Exported: " + res.current + " records");
 				if ($jq.ui) { $jq("#export_prog").progressbar('option', 'value', 100); }
@@ -154,24 +142,10 @@ exportProgress = function () {
 				} else if (res.status) {
 					$jq("#export_msg").text("Status: " + res.status);
 				}
-				//alert(res.msg);
 				setTimeout(function () { exportProgress(); }, 1000);
 			}
 		}
 	});
-	
-//	$jq.ajax({
-//		url:"tiki-export_tracker_ajax.php",
-//		data: ({ trackerId: {{$trackerId}}, xuser: "{{$user}}" }),
-//		type: "POST",
-//		dataType: "json",
-//		cache: false,
-//		success: function (msg) {
-//			alert(this);
-//		}
-//	});
-	
-	//$jq("#ajaxLoading").hide();
 }
 {/jq}
 {remarksbox type="note" title="Warning"}Please note: Using experimental AJAX export function - work in progress!{/remarksbox}
