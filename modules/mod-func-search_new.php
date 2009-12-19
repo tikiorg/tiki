@@ -8,8 +8,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_search_new_info() {
 	return array(
-		'name' => tra('Search Box (new)'),
-		'description' => tra('Advanced search (for wiki, articles, blogs etc).'),
+		'name' => tra('Search Box(Tiki)'),
+		'description' => tra('Tiki search (for wiki, articles, blogs etc).'),
 		'prefs' => array('feature_search'),
 	);
 }

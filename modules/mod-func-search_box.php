@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_search_box_info() {
 	return array(
 		'name' => tra('Search Box'),
-		'description' => tra('Advanced search (for wiki, articles, blogs etc).'),
+		'description' => tra('Mysql Advanced search (for wiki, articles, blogs etc).'),
 		'prefs' => array('feature_search'),
 	);
 }

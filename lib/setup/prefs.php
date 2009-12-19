@@ -815,7 +815,7 @@ function get_default_prefs() {
 		'search_refresh_index_mode' => 'normal',
 		'search_parsed_snippet' => 'y',
 		'feature_search_preferences' => 'n',
-		
+		'search_default_where' => '',
 
 		// webmail
 		'feature_webmail' => 'n',

@@ -83,6 +83,7 @@
 			{tr}Select the items to display on the search results page{/tr}:
 			{preference name=feature_search_show_object_filter}
 			{preference name=feature_search_show_search_box}
+			{preference name=search_default_where}
 			{tr}Select the information to display for each result{/tr}:
 			{preference name=feature_search_show_visit_count}
 			{preference name=feature_search_show_pertinence}

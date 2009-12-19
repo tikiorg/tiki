@@ -62,6 +62,9 @@
 					<input type="hidden" name="where" value="{$where|escape}" />
 					{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
 				{/if}
+			{elseif !empty($where)}
+				<input type="hidden" name="where" value="{$where|escape}" />
+				{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}" />{/if}	
 			{/if}
 			<label class="findsubmit">
 				<input type="submit" name="search" value="{tr}Go{/tr}"/>

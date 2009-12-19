@@ -42,6 +42,8 @@
     {/if}
     </select>
 	
+	{elseif !empty($prefs.search_default_where)}
+		<input type="hidden" name="where" value="{$where|escape}" />
     {/if}
 	
     <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/> 
