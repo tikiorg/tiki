@@ -552,6 +552,7 @@ CREATE TABLE `tiki_content` (
 DROP TABLE IF EXISTS `tiki_content_templates`;
 CREATE TABLE `tiki_content_templates` (
   `templateId` int(10) NOT NULL auto_increment,
+  `template_type` VARCHAR( 20 ) NOT NULL DEFAULT 'static',
   `content` longblob,
   `name` varchar(200) default NULL,
   `created` int(14) default NULL,
@@ -638,7 +639,7 @@ DROP TABLE IF EXISTS `tiki_dynamic_variables`;
 CREATE TABLE `tiki_dynamic_variables` (
   `name` varchar(40) NOT NULL,
   `data` text,
-  PRIMARY KEY (`name`)
+  `lang` VARCHAR(16) NULL
 );
 
 DROP TABLE IF EXISTS `tiki_extwiki`;
@@ -734,6 +735,8 @@ CREATE TABLE `tiki_file_galleries` (
   `quota` int(8) default 0,
   `size` int(14) default NULL,
   `wiki_syntax` varchar(200) default NULL,
+  `backlinkPerms` char(1) default 'n',
+  `show_backlinks` char(1) default NULL,
   PRIMARY KEY (`galleryId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -1619,6 +1622,7 @@ CREATE TABLE `tiki_polls` (
   `voteConsiderationSpan` int(4) default 0,
   PRIMARY KEY (`pollId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+ALTER TABLE tiki_polls ADD INDEX tiki_poll_lookup ( active , title );
 
 DROP TABLE IF EXISTS `tiki_preferences`;
 CREATE TABLE `tiki_preferences` (
@@ -1644,6 +1648,7 @@ DROP TABLE IF EXISTS `tiki_programmed_content`;
 CREATE TABLE `tiki_programmed_content` (
   `pId` int(8) NOT NULL auto_increment,
   `contentId` int(8) NOT NULL default '0',
+  `content_type` VARCHAR( 20 ) NOT NULL DEFAULT 'static',
   `publishDate` int(14) NOT NULL default '0',
   `data` text,
   PRIMARY KEY (`pId`)
@@ -1821,7 +1826,7 @@ CREATE TABLE `tiki_rss_modules` (
 
 DROP TABLE IF EXISTS `tiki_rss_feeds`;
 CREATE TABLE `tiki_rss_feeds` (
-  `name` varchar(30) NOT NULL default '',
+  `name` varchar(60) NOT NULL default '',
   `rssVer` char(1) NOT NULL default '1',
   `refresh` int(8) default '300',
   `lastUpdated` int(14) default NULL,
@@ -2721,6 +2726,7 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_send_newsletters', 'Can send newsletters', 'editors', 'newsletters', NULL, 'feature_newsletters');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_subscribe_email', 'Can subscribe any email to newsletters', 'editors', 'newsletters', NULL, 'feature_newsletters');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_subscribe_newsletters', 'Can subscribe to newsletters', 'basic', 'newsletters', NULL, 'feature_newsletters');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_view_newsletter', 'Can view the archive of a newsletters', 'basic', 'newsletters', NULL, 'feature_newsletters');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_list_newsletters', 'Can list newsletters', 'basic', 'newsletters', NULL, 'feature_newsletters');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_admin_polls', 'Can admin polls', 'admin', 'polls', 'y', 'feature_polls');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_view_poll_results', 'Can view poll results', 'basic', 'polls', NULL, 'feature_polls');
@@ -2846,6 +2852,9 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_remove_object', 'Can remove objects from the category', 'editors', 'category', NULL, 'feature_categories');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_create_category', 'Can create new categories', 'admin', 'category', NULL, 'feature_categories');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_perspective_view', 'Can view the perspective', 'basic', 'perspective', NULL, 'feature_perspective');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_perspective_edit', 'Can edit the perspective', 'basic', 'perspective', NULL, 'feature_perspective');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_perspective_create', 'Can create a perspective', 'basic', 'perspective', NULL, 'feature_perspective');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_perspective_admin', 'Can admin perspectives', 'admin', 'perspective', 'y', 'feature_perspective');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_group_view', 'Can view the group', 'basic', 'group', NULL, NULL);
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_group_view_members', 'Can view the group members', 'basic', 'group', NULL, NULL);
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_group_add_member', 'Can add group members', 'admin', 'group', NULL, NULL);
@@ -2863,6 +2872,7 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_list_videos', 'Can list kaltura entries', 'basic', 'kaltura', NULL, 'feature_kaltura');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_view_videos', 'Can view kaltura entry', 'basic', 'kaltura', NULL, 'feature_kaltura');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_upload_screencast', 'Can upload screencasts to wiki pages', 'basic', 'registered', NULL, 'feature_wiki_screencasts');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_dsn_query', 'Can execute arbitrary queries on a given DSN', 'admin', 'dsn', NULL, NULL);
 
 
 DROP TABLE IF EXISTS `users_usergroups`;
@@ -2952,7 +2962,7 @@ CREATE TABLE `tiki_integrator_rules` (
 
 INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <body> and </body> tags');
 INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix image paths');
-INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Replace internal links to integrator. Don\'t touch an external link.');
+INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Replace internal links to integrator. Don not touch an external link.');
 
 -- Translated objects table
 DROP TABLE IF EXISTS `tiki_translated_objects`;
@@ -3327,7 +3337,6 @@ INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES(
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-browse_image.php\\?imageId=(\\d+)', 'browseimage$1', 'image', 'feature_galleries');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-directory_browse.php\\?parent=(\\d+)', 'directory$1', 'directory', 'feature_directory');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-view_faq.php\\?faqId=(\\d+)', 'faq$1', 'faq', 'feature_faqs');
-INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-list_file_gallery.php\\?galleryId=(\\d+)', 'file$1', 'file', 'feature_file_galleries');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-download_file.php\\?fileId=(\\d+)', 'dl$1', 'file', 'feature_file_galleries');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-download_file.php\\?fileId=(\\d+)&amp;thumbnail', 'thumbnail$1', 'thumbnail', 'feature_file_galleries');
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-download_file.php\\?fileId=(\\d+)&amp;display', 'display$1', 'display', 'feature_file_galleries');
@@ -3370,6 +3379,8 @@ INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-mobile.php', 'mobile', '', 'feature_mobile', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-sheets.php', 'sheets', '', 'feature_sheet', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-view_tracker_item.php\\?trackerId=(\\d+)\\&itemId=(\\d+)', 'item$2', 'trackeritem', 'feature_trackers', 200);
+INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-view_tracker_item.php\\?itemId=(\\d+)', 'item$1', 'trackeritem', 'feature_trackers', 200);
+INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-list_file_gallery.php\\?galleryId=(\\d+)', 'file$1', 'file gallery', 'feature_file_galleries', 200);
  
 UPDATE tiki_menu_options SET icon = 'icon-configuration48x48' WHERE name = 'Admin';
 UPDATE tiki_menu_options SET icon = 'xfce4-appfinder48x48' WHERE name = 'Search';
@@ -3456,14 +3467,16 @@ CREATE TABLE `tiki_transitions` (
 	KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_page_lists`;
 CREATE TABLE IF NOT EXISTS `tiki_page_lists` (
   `list_type_id` int(8) unsigned NOT NULL,
   `priority` int(8) unsigned NOT NULL,
   `page_name` varchar(160) NOT NULL,
   `score` float default NULL,
   PRIMARY KEY  (`list_type_id`,`page_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_page_list_types`;
 CREATE TABLE IF NOT EXISTS `tiki_page_list_types` (
   `id` int(8) unsigned NOT NULL auto_increment,
   `name` varchar(40) NOT NULL,
@@ -3471,5 +3484,60 @@ CREATE TABLE IF NOT EXISTS `tiki_page_list_types` (
   `description` varchar(200) default NULL,
   PRIMARY KEY  (`name`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `tiki_auth_tokens`;
+CREATE TABLE `tiki_auth_tokens` (
+	`tokenId` INT NOT NULL AUTO_INCREMENT,
+	`creation` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`timeout` INT NOT NULL DEFAULT 0,
+	`token` CHAR(32),
+	`entry` VARCHAR(50),
+	`parameters` VARCHAR(255),
+	`groups` VARCHAR(255),
+	PRIMARY KEY( `tokenId` ),
+	KEY `tiki_auth_tokens_token` (`token`)
+);
+
+DROP TABLE IF EXISTS `metrics_assigned`;
+CREATE TABLE `metrics_assigned` (
+	`assigned_id` int(11) NOT NULL AUTO_INCREMENT,
+	`metric_id` int(11) NOT NULL,
+	`tab_id` int(11) NOT NULL,
+	PRIMARY KEY (`assigned_id`),
+	KEY `metric_id` (`metric_id`),
+	KEY `tab_id` (`tab_id`)
+);
+
+DROP TABLE IF EXISTS `metrics_metric`;
+CREATE TABLE `metrics_metric` (
+	`metric_id` int(11) NOT NULL AUTO_INCREMENT,
+	`metric_name` varchar(255) NOT NULL,
+	`metric_range` varchar(1) NOT NULL DEFAULT '+' COMMENT 'values: + (daily), @ (monthly&weekly), - (weekly)',
+	`metric_datatype` varchar(1) NOT NULL DEFAULT 'i' COMMENT 'values: i(nteger), %(percentage), f(loat), L(ist)',
+	`metric_lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`metric_query` text,
+	`metric_dsn` VARCHAR(200) NOT NULL DEFAULT 'local',
+	PRIMARY KEY (`metric_id`),
+	UNIQUE KEY `metric_name` (`metric_name`)
+);
+
+DROP TABLE IF EXISTS `metrics_tab`;
+CREATE TABLE `metrics_tab` (
+	`tab_id` int(11) NOT NULL AUTO_INCREMENT,
+	`tab_name` varchar(255) NOT NULL,
+	`tab_order` int(11) NOT NULL DEFAULT '0',
+	`tab_content` longtext NOT NULL,
+	PRIMARY KEY (`tab_id`),
+	UNIQUE KEY `tab_name` (`tab_name`)
+);
+
+DROP TABLE IF EXISTS `tiki_file_backlinks`;
+CREATE TABLE `tiki_file_backlinks` (
+	   `fileId` int(14) NOT NULL,
+	   `objectId` int(12) NOT NULL,
+	   KEY `objectId` (`objectId`),
+	   KEY `fileId` (`fileId`)
+);
+
 
