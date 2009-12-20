@@ -226,7 +226,7 @@ function get_default_prefs() {
 		'wikiplugin_footnotearea' => 'n',
 		'wikiplugin_ftp' => 'n',
 		'wikiplugin_gauge' => 'n',
-		'wikiplugin_googleanalytics' => 'n',
+		'wikiplugin_googleanalytics' => 'y',
 		'wikiplugin_googledoc' => 'n',
 		'wikiplugin_group' => 'y',
 		'wikiplugin_groupmailcore' => 'n',
