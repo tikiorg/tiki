@@ -9,30 +9,41 @@
 		const STATEMENT_TYPE_INSERT_INTO='INSERT INTO';
 		const STATEMENT_TYPE_INSERT_IGNORE_INTO='INSERT IGNORE INTO';
 		const STATEMENT_TYPE_UPDATE='UPDATE';
+		const STATEMENT_TYPE_CREATE_INDEX='CREATE INDEX';
+		const STATEMENT_TYPE_ALTER_TABLE='ALTER TABLE';
 		
 		private $statements;
 		
 		public function convertMysqlToSqlite($filename)
 		{
 			$data = file_get_contents($filename);
-			$this->statements = split(';', $data);
-			foreach ($this->statements as $statement) {
-				$this->convertStatement(trim($statement));
+			$data = preg_replace('/\-\-.*\n/', '', $data);
+			$this->statements = preg_split('/;\n/', $data);
+			echo count($this->statements)." statements\n";
+			foreach ($this->statements as $key=>$statement) {
+				$this->statements[$key] = $this->convertStatement(trim($statement));
 			}
+			return implode(";\n", $this->statements);
 		}
 		
 		private function convertStatement($statement)
 		{
-			if (substr($statement, 0, strlen(self::STATEMENT_TYPE_CREATE_TABLE))==self::STATEMENT_TYPE_CREATE_TABLE) {
-				$this->convertStatementDropTable($statement);
+			if (substr($statement, 0, 2)=='--') {
+				// comment, do nothing
+			} else if (substr($statement, 0, strlen(self::STATEMENT_TYPE_CREATE_TABLE))==self::STATEMENT_TYPE_CREATE_TABLE) {
+				return $this->convertStatementCreateTable($statement);
 			} else if (substr($statement, 0, strlen(self::STATEMENT_TYPE_DROP_TABLE))==self::STATEMENT_TYPE_DROP_TABLE) {
-				$this->convertStatementCreateTable($statement);
+				return $this->convertStatementDropTable($statement);
 			} else if (substr($statement, 0, strlen(self::STATEMENT_TYPE_INSERT_INTO))==self::STATEMENT_TYPE_INSERT_INTO) {
-				$this->convertStatementInsertInto($statement);
+				return $this->convertStatementInsertInto($statement);
 			} else if (substr($statement, 0, strlen(self::STATEMENT_TYPE_INSERT_IGNORE_INTO))==self::STATEMENT_TYPE_INSERT_IGNORE_INTO) {
-				$this->convertStatementInsertIgnoreInto($statement);
+				return $this->convertStatementInsertIgnoreInto($statement);
 			} else if (substr($statement, 0, strlen(self::STATEMENT_TYPE_UPDATE))==self::STATEMENT_TYPE_UPDATE) {
-				$this->convertStatementUpdate($statement);
+				return $this->convertStatementUpdate($statement);
+			} else if (substr($statement, 0, strlen(self::STATEMENT_TYPE_CREATE_INDEX))==self::STATEMENT_TYPE_CREATE_INDEX) {
+				return $this->convertStatementUpdate($statement);
+			} else if (substr($statement, 0, strlen(self::STATEMENT_TYPE_ALTER_TABLE))==self::STATEMENT_TYPE_ALTER_TABLE) {
+				return $this->convertStatementUpdate($statement);
 			} else {
 				echo 'Unknown statement type: '.$statement."\n";
 			}
@@ -58,6 +69,10 @@
 			$statement = preg_replace('/(,)?\n([ \t]*)(FULLTEXT )?KEY [a-zA-Z0-9`]* \([a-zA-Z0-9`\(\), ]*\),?/', "\n$2\n", $statement);
 			// remove column types unsigned
 			$statement = preg_replace('/(,)?\n(.*)unsigned(.)*(,)?\n/', "$1\n$2$3$4\n", $statement);
+			
+			// UNIQUE KEY `catname` (`calendarId`, `name`(16)) --> CONSTRAINT name UNIQUE ( index col, icol )
+			//FIXME does not work, drops it entirely
+			$statement = preg_replace('/UNIQUE KEY ([a-zA-Z0-9`]+) \((.*)\)/e', '$this->convertColumnDefinition("$2", "CONSTRAINT $1 UNIQUE ( ", " )");', $statement); 
 
 			return $statement;
 		}
@@ -75,6 +90,15 @@
 		{
 			//TODO implement
 			return $statement;
+		}
+		
+		private function convertColumnDefinition($colDef)
+		{
+			
+		}
+		private function convertColumnList($str, $pre='', $post='')
+		{
+			return $pre.preg_replace('/([a-zA-Z0-9`]+)\(.*\)( ?, ?[a-zA-Z0-9`]+\(.*\))*/', '$1$2', $str).$post;
 		}
 		
 	}

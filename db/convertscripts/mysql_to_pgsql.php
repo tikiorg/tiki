@@ -18,7 +18,7 @@ echo "<br />\n";
 
 
 // split into statements
-$statements = preg_split("#(;\n)|(;\r\n)#", $data);
+$statements = preg_split('/;\n/', $data);
 
 // step though statements
 $fp=fopen($tikiversion.".to_pgsql.sql","w");
