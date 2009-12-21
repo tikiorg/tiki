@@ -1075,7 +1075,7 @@ class TrackerLib extends TikiLib {
 						$fopt['options_array'][3]
 					);
 					$fopt = $this->set_default_dropdown_option($fopt);
-				} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' ) {
+				} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' || $fopt['type'] == 'R' ) {
 					$fopt = $this->set_default_dropdown_option($fopt);
 				}
 			}
