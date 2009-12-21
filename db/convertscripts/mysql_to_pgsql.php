@@ -12,19 +12,8 @@ if(!isset($_GET['version'])) {
 
 
 // read file
-$file="../tiki.sql";
-@$fp = fopen($file,"r");
-if (!$fp) {
-	echo "Error opening $file";
-	exit();
-}
-$data = '';
-echo "reading $file: ";
-while (!feof($fp)) {
-	$data .= fread($fp,4096);
-	echo ".";
-}
-fclose($fp);
+$data = file_get_contents('../tiki.sql');
+
 echo "<br />\n";
 
 
