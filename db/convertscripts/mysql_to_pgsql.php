@@ -1,8 +1,8 @@
 <?php
 
 // Set tikiversion variable
-require 'tikiversion.php';
 if(!isset($_GET['version'])) {
+	require 'tikiversion.php';
 	echo "version not given. Using default $tikiversion.<br />";
 } else {
 	if (preg_match('/\d\.\d/',$_GET['version'])) {
