@@ -145,11 +145,11 @@ function parse($stmt)
 	$stmt = preg_replace("/INSERT (IGNORE )?INTO \"?([a-zA-Z0-9_]*)\"? ?\((.*)\) ?VALUES ?\((.*)\)/ie", "do_inserts('$2', \"$3\", '$4')", $stmt);
 	
 	// convert updates
-	$stmt=preg_replace("/update ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
-	$stmt=preg_replace("/UPDATE ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
+	$stmt=preg_replace("/update ([a-zA-Z0-9_]+) set (.*)/e", "do_updates('$1','$2')", $stmt);
+	$stmt=preg_replace("/UPDATE ([a-zA-Z0-9_]+) set (.*)/e", "do_updates('$1','$2')", $stmt);
 	
 	// clean cases where UNIQUE was alone at the end: remove commas at the end of table definition
-	$stmt=preg_replace("/,( *)\)/","$1)",$stmt);
+	$stmt=preg_replace("/,( *)\)/", '$1)', $stmt);
 	
 	$poststmt .= "\n";
 	return $stmt.";".$poststmt;
