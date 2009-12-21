@@ -129,7 +129,7 @@ function wikiplugin_tracker_info()
 			'autosavefields' => array(
 				'required' => false,
 				'name' => tra('Autosave fields'),
-				'description' => tra('Colon-separated list of field IDs to be automaitcally filled with values'),
+				'description' => tra('Colon-separated list of field IDs to be automatically filled with values'),
 				'filter' => 'digits',
 				'separator' => ':'
 			),
