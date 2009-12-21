@@ -248,6 +248,7 @@ class SearchLib extends TikiLib
 		$sql = $sqlFields . $sqlFrom . $sqlJoin . $sqlWhere . $sqlGroup . $sqlHaving . ' ORDER BY ' . $orderby;
 
 		$result = $this->query($sql, $bindVars);
+		//echo $sql; print_r($bindvars);
 
 		$cant = $result->numRows();
 
@@ -680,11 +681,19 @@ class SearchLib extends TikiLib
 		if ($tiki_p_view_trackers_pending != 'y')
 			$search_trackers['filter'] .= " AND tti.`status` != 'p'";
 		$ret = $this->_find($search_trackers, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Tracker item'), $searchDate);
+		$retFinal = array();
+		$itemFinal = array();
 		foreach ($ret['data'] as $i=>$res) {
-			$ret['data'][$i]['pageName'] = '(#'.$res['pageName'].') '.$trklib->get_isMain_value($res['hits'], $res['pageName']);
-			$ret['data'][$i]['hits'] = 'Unknown'; 
+			if (($j = array_search($res['name'], $itemFinal)) === false) {
+				$res['pageName'] = '(#'.$res['pageName'].') '.$trklib->get_isMain_value($res['hits'], $res['pageName']);
+				$res['hits'] = 'Unknown'; 
+				$itemFinal[] = $res['name'];
+				$retFinal[] = $res;
+			} else {
+				$retFinal[$j]['relevance'] += $res['relevance'];
+			}
 		}
-		return $ret;
+		return array('cant'=> sizeof($retFinal), 'data'=> $retFinal);
 	}
 
 	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
