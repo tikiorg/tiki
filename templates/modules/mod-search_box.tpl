@@ -55,7 +55,7 @@
     </select>
 	
 	{elseif !empty($prefs.search_default_where)}
-		<input type="hidden" name="where" value="{$where|escape}" />
+		<input type="hidden" name="where" value="{$prefs.search_default_where|escape}" />
     {/if}
 		<br/><label for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if $boolean ne 'n'} checked="checked"{/if} /></label>
 		{add_help show='y' title="{tr}Advanced Search Help{/tr}" id="advanced_search_help"}
