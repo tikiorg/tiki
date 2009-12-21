@@ -133,7 +133,7 @@
 		{/if}
 		<table class="normal">
 			<tr>
-				<td class="formcolor"><label for="{tr}assign_name">Module Name{/tr}</label></td>
+				<td class="formcolor"><label for="assign_name">{tr}Module Name{/tr}</label></td>
 				<td class="formcolor">
 					<select id="assign_name" name="assign_name" onchange="needToConfirm=false;this.form.preview.click()">
 						<option value=""></option>
@@ -143,6 +143,9 @@
 					</select>
 				</td>
 			</tr>
+
+{if !empty($assign_name)}
+{* because changeing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
 			<tr>
 				<td class="formcolor"><label for="assign_position">{tr}Position{/tr}</label></td>
 				<td class="formcolor">
@@ -247,6 +250,15 @@
 					<input type="submit" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;" />
 				</td>
 			</tr>
+{else}
+			<tr>
+				<td class="formcolor">&nbsp;</td>
+				<td class="formcolor">
+					<input type="submit" name="preview" value="{tr}Module Options{/tr}" onclick="needToConfirm=false;" />
+				</td>
+			</tr>
+
+{/if}
 		</table>
 	</form>
 {/tab}
