@@ -270,16 +270,16 @@ function create_index($name, $columnlist, $type='')
 	$poststmt .= $allvals . ");\n";
 }
 
-function do_updates($tab,$content)
+function do_updates($tab, $content)
 {
-	$ret="UPDATE \"".$tab."\" SET ";
-	$cols=split(",",$content);
+	$ret = 'UPDATE "'.$tab.'" SET ';
+	$cols = split(',', $content);
 	foreach ($cols as $vals) {
-		$vals=preg_replace("/([a-zA-Z0-9_]+)=([a-zA-Z0-9_]+)/", "\"$1\"=\"$2\"", $vals);
-		$ret.=$vals;
+		$vals = preg_replace('/([a-zA-Z0-9_]+)=([a-zA-Z0-9_]+)/', '"$1"="$2"', $vals);
+		$ret .= $vals;
 	}
-	$ret=preg_replace("/\" *\"/","\",\"",$ret);
-	return($ret);
+	$ret = preg_replace('/" *"/', '","', $ret);
+	return $ret;
 }
 
 function do_inserts($tablename, $columnlist, $values)
