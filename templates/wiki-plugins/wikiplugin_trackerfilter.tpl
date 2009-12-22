@@ -36,6 +36,14 @@
 				{initials_filter_links _initial=$smarty.capture.i_f}
 			{/if}
 			<input id="f_{$filters[if].fieldId}" type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
+{*------rating *}
+		{elseif $filters[if].format eq '*'}
+			<select id="f_{$filters[if].fieldId}" name="f_{$filters[if].fieldId}">
+			<option value="" />
+			{foreach from=$filters[if].opts item=option}
+				<option value="{$option.id|escape}"{if $option.selected eq 'y'} selected="selected"{/if}>{$option.name|escape}</option>
+			{/foreach}
+			</select>
 {*------checkbox, radio *}
 		{else}
 			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}" value=""{if !$filters[if].selected} checked="checked"{/if} /> {tr}Any{/tr}</input>{if $line ne 'y'}<br />{/if}
