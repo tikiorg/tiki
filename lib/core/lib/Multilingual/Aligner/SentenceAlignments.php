@@ -7,11 +7,13 @@
  */
 include_once "SentenceSegmentor.php";
 
-class Multilingual_Aligner_SentenceAlignments {
+class Multilingual_Aligner_SentenceAlignments
+{
 	protected $alignment_table=array();
 	protected $l1="en";
 	protected $l2="fr";
-	public function addSentencePair($lng1_sentence, $lng1, $lng2_sentence, $lng2) {
+	public function addSentencePair($lng1_sentence, $lng1, $lng2_sentence, $lng2)
+	{
 		if($lng1==$this->l1)
 		{
 		$this->alignment_table[$lng1_sentence]=$lng2_sentence;
@@ -19,8 +21,10 @@ class Multilingual_Aligner_SentenceAlignments {
 		else if($lng2==$this->l1)
 		{	$this->alignment_table[$lng2_sentence]=$lng1_sentence;
         }	
-         }
-	public function getSentenceInOtherLanguage($source_lng_sentence, $source_lng,$key_value,$sentence_array,$index) {
+  }
+
+	public function getSentenceInOtherLanguage($source_lng_sentence, $source_lng,$key_value,$sentence_array,$index) 
+	{
 		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
 					
 		if($source_lng==$this->l1)
@@ -362,13 +366,12 @@ class Multilingual_Aligner_SentenceAlignments {
 	
 	public function display_alignment_table()
 	{
-	echo "in func display<br/>";
-	foreach($this->alignment_table as $key=>$val)
-	{
-	echo "<-->".$key."<--->".$val."<--><br/>";
+		echo "in func display<br/>";
+		foreach($this->alignment_table as $key=>$val) {
+			echo "<-->".$key."<--->".$val."<--><br/>";
+		}
 	}
 	
-	}
 	public function strpos_function($string,$pat)
 	{ 
 		if(strlen($string)==0 && strlen($pat)==0)
@@ -391,4 +394,3 @@ class Multilingual_Aligner_SentenceAlignments {
 		return -1;
 	}//function
 }
-?>

@@ -12,7 +12,8 @@
  * Class used to update the modifications done in one version of page to the other version of same page.
  */
 
-class Multilingual_Aligner_UpdateSentences1 {
+class Multilingual_Aligner_UpdateSentences1
+{
 	
 	//$translation is 1 in case of source modification(H) and 0 in case of target modification(T"), final_diff is carrying end result
 	public function DifferencebetweenOriginalFileandModifiedFile($unchangedSource_array,$changedSource_array,$alignments,$translator,$source_lng,$target_lng,$translation)
@@ -185,8 +186,8 @@ class Multilingual_Aligner_UpdateSentences1 {
 	////
 
 
-	public function changedSourceFileTranslatedIntoTargetLanguage($changed_diff_unchanged,$alignments,$translator,$source_lng,$target_lng)
-	{
+	public function changedSourceFileTranslatedIntoTargetLanguage($changed_diff_unchanged,$alignments,$translator,$source_lng,$target_lng) {
+
 	$segmentor = new Multilingual_Aligner_SentenceSegmentor();
 	
 	$num=0;
@@ -610,7 +611,8 @@ class Multilingual_Aligner_UpdateSentences1 {
 	}//function ends
 	
 	public function array_search_function($temp,$array)
-	{$i=0;
+	{
+		$i=0;
 	foreach($array as $val)
 	{
 	if(strcmp($temp,$val)==0)
@@ -647,4 +649,3 @@ class Multilingual_Aligner_UpdateSentences1 {
 	
 }
 
-?>
