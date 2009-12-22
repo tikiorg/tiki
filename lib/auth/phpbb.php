@@ -19,11 +19,13 @@ define("SERVER_ERROR", -1);
 
 //TODO: support other database types
 
-class TikiPhpBBLib {
+class TikiPhpBBLib
+{
 
 	var $db;
 
-	function check($user, $pass) {
+	function check($user, $pass)
+	{
 
 	// no need to progress further if the user doesn't even exist
 		if(!$this->userExists($user)) {
@@ -41,7 +43,8 @@ class TikiPhpBBLib {
 		return PHPBB_INVALID_SYNTAX;
 	}
 
-	function connectdb() {
+	function connectdb()
+	{
 		global $prefs;
 		$dbhost = $prefs['auth_phpbb_dbhost'];
 		$dbuser = $prefs['auth_phpbb_dbuser'];
@@ -65,7 +68,8 @@ class TikiPhpBBLib {
 	* @return bool
 	* @access public
 	*/
-	function userExists( $username ) {
+	function userExists( $username )
+	{
 		global $prefs;
 
 		$dbconnection = $this->connectdb();
@@ -89,7 +93,8 @@ class TikiPhpBBLib {
 	* @return bool
 	* @access public
 	*/
-	function authenticate( $username, $password ) {
+	function authenticate( $username, $password )
+	{
 		global $prefs;
 
 		$dbconnection = $this->connectdb();
@@ -100,16 +105,14 @@ class TikiPhpBBLib {
 
 		if ($result->RecordCount() == 0) {
 			return false;
-		}
-		else {
+		} else {
 		// TODO: check for phpBB version here, and select a different hasher, if needed.
 		// This one is hardcoded for phpbb3
 			$PasswordHasher = new PasswordHash(8, TRUE);
 
 			if ($PasswordHasher->CheckPassword($password, $result->fields[0])) {
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
 
@@ -122,7 +125,8 @@ class TikiPhpBBLib {
 	* @access public
 	* @return email or 0
 	*/
-	function grabEmail( &$username ) {
+	function grabEmail( &$username )
+	{
 		global $prefs;
 		$dbconnection = $this->connectdb();
 
