@@ -12,7 +12,9 @@ $auto_query_args = array('initial', 'maxRecords', 'sort_mode', 'find', 'lang', '
 if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['lang']) && isset($_REQUEST['create_new_pages_using_template_name'])) {
 	global $multilinguallib;
 	include_once ('lib/multilingual/multilinguallib.php');
-	$multilinguallib->storeCurrentSearchLanguageInSession($_REQUEST['lang']);
+	if (isset($_REQUEST['term_srch'])) {
+		$multilinguallib->storeCurrentTermSearchLanguageInSession($_REQUEST['lang']);
+	}	
 	$template_id_for_new_pages = $multilinguallib->getTemplateIDInLanguage('wiki', $_REQUEST['create_new_pages_using_template_name'], $_REQUEST['lang']);
 	$smarty->assign('template_id', $template_id_for_new_pages);
 }
@@ -149,7 +151,7 @@ if (!empty($multiprint_pages)) {
 	}
 	$smarty->assign('find', $find);
 	$filter = '';
-	if ($prefs['feature_multilingual'] == 'y' && ((!isset($_REQUEST['lang']) && $prefs['wiki_dft_list_pages_lang_to_current'] == 'y') || (isset($_REQUEST['lang']) && $_REQUEST['lang'] != ''))) {
+	if ($prefs['feature_multilingual'] == 'y' && ((!isset($_REQUEST['lang']) ) || (isset($_REQUEST['lang']) && $_REQUEST['lang'] != ''))) {
 		$filter = setLangFilter($filter);
 	}
 	if (!empty($_REQUEST['langOrphan'])) {
@@ -296,8 +298,8 @@ if (!empty($multiprint_pages)) {
 }
 function setLangFilter($filter) {
 	global $smarty, $prefs, $multilinguallib;
-	include_once ('lib/multilingual/multilinguallib.php');
-	$lang = $multilinguallib->currentSearchLanguage(false);
+	include_once ('lib/multilingual/multilinguallib.php');	
+	$lang = $multilinguallib->currentPageSearchLanguage();
 	if (isset($_REQUEST['listonly']) && $prefs['feature_jquery_autocomplete'] == 'y' && strlen($lang) > 2) {
 		$lang = substr($lang, 0, 2);		// for autocomplete - use only language filter, not culture as well
 	}

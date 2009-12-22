@@ -7,8 +7,10 @@
         <input type="hidden" name="exact_match" value="On"/>
         <input type="hidden" name="hits_link_to_all_languages" value="On"/>
         <input type="hidden" name="create_new_pages_using_template_name" value="{$create_new_pages_using_template_name}"/>
+        <input type="hidden" name="term_srch" value="y"/>
         <label class="findlang">
           <select name="lang" class="in">
+            <option value=''{if $search_terms_in_lang eq ''} selected="selected"{/if}>{tr}any language{/tr}</option>
             {section name=ix loop=$user_languages}
 			<option value="{$user_languages[ix].value}"{if $user_languages[ix].value eq $search_terms_in_lang} selected="selected"{/if}>{tr}{$user_languages[ix].name}{/tr}</option>
 		    {/section}

@@ -746,43 +746,43 @@ class MultilingualLib extends TikiLib
 		return $lang;
 	}
 
-    function currentSearchLanguage($searchingOnSecondLanguage) {
+    function currentPageSearchLanguage() {
        /*
-        * Set $searchingOnSecondLanguage to true in cases where 
-        * a translator may be searching terms or text in his second language,
-        * in order to find its translation into his first language.
+        * Returns the language to be used for a normal page find.
         */
        global $_REQUEST, $_SESSION;
        $lang = '';
+       // First look in HTTP 'lang' argument
 	   if (isset($_REQUEST['lang'])) { //lang='' means all languages
-		   return $_REQUEST['lang'];
+		   $lang = $_REQUEST['lang'];
 	   }
-       if (array_key_exists('find_page_last_done_in_lang', $_SESSION)) {
-          $lang = $_SESSION['find_page_last_done_in_lang'];
-       } 
-       if ($lang == '') {
-          $userPreferredLangs = $this->preferredLangs();
-          if ($searchingOnSecondLanguage &&
-              array_key_exists(1, $userPreferredLangs)) {
-              //
-              // Translators typically need to search for terms
-              // in their second language, not their first, because
-              // they are interetsed in how to translate them from
-              // second language to their first.
-              //
-              $lang = $userPreferredLangs[1];
-          } else {
-              $lang = $userPreferredLangs[0];
-          }
-       }
-       $this->storeCurrentSearchLanguageInSession($lang);
-
        return $lang;   
     }
+
+	function currentTermSearchLanguage() {
+		/*
+		* Returns the language to be used for a Term search (terminology module).
+		* 
+		*/
+		global $_REQUEST, $_SESSION;
+		
+		$lang = '';
+		if (isset($_REQUEST['term_src']) && isset($_REQUEST['lang'])) {
+			$lang = $_REQUEST['lang'];
+		} 
+		if ($lang == '' && array_key_exists('find_term_last_done_in_lang', $_SESSION)) {
+			$lang = $_SESSION['find_term_last_done_in_lang'];
+		}
+		// Remember language of this term search.
+		$this->storeCurrentTermSearchLanguageInSession($lang);
+
+ 		return $lang;   
+    }
+
     
-    function storeCurrentSearchLanguageInSession($lang) {
+    function storeCurrentTermSearchLanguageInSession($lang) {
        global $_SESSION;
-       $_SESSION['find_page_last_done_in_lang'] = $lang;
+       $_SESSION['find_term_last_done_in_lang'] = $lang;
     }
 
     function preferredLangsInfo() {
@@ -814,20 +814,23 @@ class MultilingualLib extends TikiLib
        
        return $userLangsInfo;  
     }
-    
-    
-    function getTemplateIDInLanguage($section, $template_name, $language) {
-       global $templateslib; require_once 'lib/templates/templateslib.php';
-       $all_templates = $templateslib->list_templates($section, 0, -1, 'name_asc', '');
-       $looking_for_template_named = "$template_name-$language";
-       foreach ($all_templates['data'] as $a_template) {
-          $a_template_name = $a_template['name'];
-          if ($a_template_name == $looking_for_template_named) {
-             return $a_template['templateId'];
-          }
-       }
-       return null;
-   }
+        
+	function getTemplateIDInLanguage($section, $template_name, $language) {
+		global $templateslib; require_once 'lib/templates/templateslib.php';
+		$all_templates = $templateslib->list_templates($section, 0, -1, 'name_asc', '');
+		$looking_for_templates_named = array("$template_name-$language");
+		foreach ($looking_for_templates_named as $looking_for_this_template) {
+			$looking_for_this_template = "$template_name-$language";
+			foreach ($all_templates['data'] as $a_template) {
+				$a_template_name = $a_template['name'];
+				if ($a_template_name == $looking_for_this_template) {
+					return $a_template['templateId'];
+				}
+			}
+		}
+		return null;
+	}
+
 
 	function setMachineTranslationFeatureTo($on_or_off) {
 		$this->mtEnabled = $on_or_off;

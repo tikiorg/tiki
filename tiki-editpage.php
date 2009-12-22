@@ -55,6 +55,14 @@ $info = $tikilib->get_page_info($page);
 
 $editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
 
+if ($editlib->user_needs_to_specify_language_of_page_to_be_created($page, $info)) {
+	$languages = $tikilib->list_languages(false, true);
+	$smarty->assign('languages', $languages);
+	$smarty->assign('default_lang', $prefs['language']);
+	$smarty->assign('need_lang', 'y');
+	$smarty->assign('_REQUEST', $_REQUEST);
+}
+
 // wysiwyg decision
 include 'lib/setup/editmode.php';
 
