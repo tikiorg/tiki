@@ -35,11 +35,11 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 		$cats = $categlib->get_default_categories();
 	}
 	
-	if ($prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_sync_categories'] == 'y' && !$cats
-	 && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']
+	if ($prefs['wikiapproval_sync_categories'] == 'y' && !$cats
+	 && $cat_type == 'wiki page' && ( $approved = $tikilib->get_approved_page($cat_objid) )
 	 && !$tikilib->page_exists($cat_objid) ) {
 	 	// to pre-populate categories of original page if this is the first creation of a staging page
-		$approvedPageName = substr($cat_objid, strlen($prefs['wikiapproval_prefix']));
+		$approvedPageName = $approved;
 		$cats = $categlib->get_object_categories($cat_type, $approvedPageName);
 		$cats = array_diff($cats,Array($prefs['wikiapproval_approved_category']));		
 	}

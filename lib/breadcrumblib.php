@@ -216,7 +216,7 @@ function breadcrumb_getTitle($crumbs, $loc) {
  */
 /* static */
 function _breadcrumb_getTitle($crumbs, $loc) {
-    global $prefs, $print_page, $info, $structure, $structure_path;
+    global $prefs, $print_page, $info, $structure, $structure_path, $tikilib;
 
     if ( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
         $ret = '<strong><a title="';
@@ -238,8 +238,8 @@ function _breadcrumb_getTitle($crumbs, $loc) {
     $ret .= '" href="'.$crumbs[$len-1]->url.'">';
     if ($prefs['feature_breadcrumbs'] == 'n' && $loc == "admin")
         $ret .= tra("Administration:")." ";
-        if ($prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_hideprefix'] == 'y' && substr($crumbs[$len-1]->title, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) { 
-        	$crumbs[$len-1]->title = substr($crumbs[$len-1]->title, strlen($prefs['wikiapproval_prefix']));            	
+        if ($prefs['wikiapproval_hideprefix'] == 'y' && $approved = $tikilib->get_approved_page( $crumbs[$len-1]->title ) ) { 
+        	$crumbs[$len-1]->title = $approved;
 		}
     			if (!empty($prefs['wiki_pagename_strip'])) {
     				include_once('lib/smarty_tiki/modifier.pagename.php');

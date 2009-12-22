@@ -1553,8 +1553,7 @@ class CategLib extends ObjectLib
      */
 	function inherit_object_categories_sync($prefs, $cat_lang, $cat_type, $pageName, $pageId, $cat_categories) {
 		if ( //not a staging copy:
-			!($prefs['feature_wikiapproval'] == 'y' && 
-			substr($pageName, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'])
+			! $this->get_approved_page($pageName)
 			&& //english article
 			($cat_lang == 'en' && $prefs['feature_category_inherit'] == 'y')
 		)

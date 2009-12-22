@@ -25,10 +25,9 @@ class MultilingualLib extends TikiLib
 		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {
 			$srcPageName = $this->get_page_name_from_id($srcId);
 			$objPageName = $this->get_page_name_from_id($objId);
-			if (substr($srcPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']
-				&& substr($objPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
-				$srcStagingPageName = $prefs['wikiapproval_prefix'] . $srcPageName;
-				$objStagingPageName = $prefs['wikiapproval_prefix'] . $objPageName;
+			if ( ($stagingSrc = $this->get_staging_page( $srcPageName )) && ($stagingObj = $this->get_staging_page( $objPageName )) ) {
+				$srcStagingPageName = $stagingSrc;
+				$objStagingPageName = $stagingObj;
 				if ($this->page_exists($srcStagingPageName) && $this->page_exists($objStagingPageName)) {
 					$this->insertTranslation($type, $this->get_page_id_from_name($srcStagingPageName), $srcLang, $this->get_page_id_from_name($objStagingPageName), $objLang);
 				}
@@ -84,10 +83,9 @@ class MultilingualLib extends TikiLib
 		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {
 			$srcPageName = $this->get_page_name_from_id($srcId);
 			$objPageName = $this->get_page_name_from_id($objId);
-			if (substr($srcPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']
-				&& substr($objPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
-				$srcStagingPageName = $prefs['wikiapproval_prefix'] . $srcPageName;
-				$objStagingPageName = $prefs['wikiapproval_prefix'] . $objPageName;
+			if ( ($stagingSrc = $this->get_staging_page( $srcPageName )) && ($stagingObj = $this->get_staging_page( $objPageName )) ) {
+				$srcStagingPageName = $stagingSrc;
+				$objStagingPageName = $stagingObj;
 				if ($this->page_exists($srcStagingPageName) && $this->page_exists($objStagingPageName)) {
 					$this->updateTranslation($type, $this->get_page_id_from_name($srcStagingPageName), $this->get_page_id_from_name($objStagingPageName), $objLang);
 				}
@@ -186,8 +184,8 @@ class MultilingualLib extends TikiLib
 		global $prefs;
 		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {			
 			$objPageName = $this->get_page_name_from_id($objId);
-			if (substr($objPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {				
-				$objStagingPageName = $prefs['wikiapproval_prefix'] . $objPageName;
+			if ( $stagingObj = $this->get_staging_page( $objPageName ) ) {
+				$objStagingPageName = $stagingObj;
 				if ($this->page_exists($objStagingPageName)) {
 					$this->detachTranslation($type, $this->get_page_id_from_name($objStagingPageName));
 				}
@@ -553,8 +551,8 @@ class MultilingualLib extends TikiLib
 		global $prefs;			
 		while( $row = $result->fetchRow() ) {
 			// add pagename of approved page if it is a staging page
-			if ( $prefs['feature_wikiapproval'] == 'y' && substr($row['page'], 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'] ) {
-				$row['approvedPage'] = substr($row['page'], strlen($prefs['wikiapproval_prefix']));
+			if ( $approved = $this->get_approved_page( $row['page'] ) ) {
+				$row['approvedPage'] = $approved;
 			}
 			
 			if( $prefs['feature_urgent_translation_master_only'] != 'y' || $row['lang'] == $prefs['site_language'] ) {

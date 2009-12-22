@@ -46,8 +46,8 @@ if (empty($_REQUEST["page"])) {
 	die;
 }
 
-if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && ($prefs['wikiapproval_master_group'] != '-1') && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
-	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
+if ( ( $stagingPage = $tikilib->get_staging_page( $_REQUEST['page'] ) ) && ($prefs['wikiapproval_master_group'] != '-1') && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
+	$_REQUEST['page'] = $stagingPage;
 }
 
 $page = $_REQUEST["page"];
@@ -126,8 +126,8 @@ function compare_import_versions($a1, $a2) {
 }
 
 if (isset($_REQUEST['cancel_edit'])) {
-	if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'] && !$tikilib->page_exists($page)) {
-		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));
+	if ( ($approved = $tikilib->get_approved_page($page) ) && !$tikilib->page_exists($page)) {
+		$approvedPageName = $approved;
 		$page = $approvedPageName;
 	}
 
@@ -321,8 +321,8 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 						include_once("lib/multilingual/multilinguallib.php");
 						unset( $tikilib->cache_page_info );
 
-						if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
-							$oldpage = substr($page, strlen($prefs['wikiapproval_prefix']));
+						if ( $approved = $this->get_approved_page($page) ) {
+							$oldpage = $approved;
 							$oldpageid = $tikilib->get_page_id_from_name($oldpage);
 							$oldtrads = $multilinguallib->getTrads('wiki page', $oldpageid);
 							foreach ($oldtrads as $ot) {
@@ -564,9 +564,9 @@ if(isset($_REQUEST["edit"])) {
 		} else {
 			$edit_data = $info['data'];
 		}
-	} elseif ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'] && !$tikilib->page_exists($page)) {
+	} elseif ( ($approved = $tikilib->get_approved_page($page)) && !$tikilib->page_exists($page)) {
 	// Handle first creation of staging copy 
-	$oldpage = substr($page, strlen($prefs['wikiapproval_prefix']));	
+	$oldpage = $approved;
 	// Get page data
 		if ($tikilib->page_exists($oldpage)) {
 			$oldinfo = $tikilib->get_page_info($oldpage);
@@ -700,7 +700,7 @@ if (($prefs['feature_wiki_screencasts'] == 'y') && (isset($tiki_p_upload_screenc
 		require_once("lib/cache/cachelib");
 
 	// Get a page hash identical to what images are assigned
-	$pageHash = md5( $pageLang . '/' . ( (strpos($page,$prefs['wikiapproval_prefix'])===0) ? substr($page,1) : $page) );
+	$pageHash = md5( $pageLang . '/' . $this->get_approved_page_or_self( $page ) );
 	$hashedFileName = join('-', array($pageHash, time(), rand(1,1000)));
 
 	$screencastErrors = array();
@@ -916,8 +916,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	// apply the optional page edit filters before data storage
 	$edit = $tikilib->apply_postedit_handlers($edit);
 	$exist = $tikilib->page_exists($_REQUEST['page']);
-	if (!$exist && $prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_delete_staging'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) { //needs to create the first history = initial page for history
-		$approvedPageName = substr($_REQUEST['page'], strlen($prefs['wikiapproval_prefix']));
+	if( ! $exist && $prefs['wikiapproval_delete_staging'] == 'y' 
+		&& $approvedPageName = $tikilib->get_approved_page( $_REQUEST['page'] ) ) { //needs to create the first history = initial page for history
 		if ($tikilib->page_exists($approvedPageName)) {
 			$wikilib->duplicate_page($approvedPageName, $_REQUEST['page']);
 			$exist = true;
@@ -951,8 +951,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		if ($prefs['feature_multilingual'] == 'y') {
 			include_once("lib/multilingual/multilinguallib.php");
 
-			if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
-				$oldpage = substr($page, strlen($prefs['wikiapproval_prefix']));
+			if ( $oldpage = $tikilib->get_approved_page( $page ) ) {
 				$oldpageid = $tikilib->get_page_id_from_name($oldpage);
 				$oldtrads = $multilinguallib->getTrads('wiki page', $oldpageid);
 				foreach ($oldtrads as $ot) {
@@ -1197,8 +1196,8 @@ if ($prefs['feature_categories'] == 'y') {
 $is_staging_article = ($prefs['wikiapproval_staging_category'] > 0) && (in_array($prefs['wikiapproval_staging_category'], $cats));
 $page_badchars_display = ":/?#[]@!$&'()*+,;=<>";
 $page_badchars = "/[:\/?#\[\]@!$&'()*+,;=<>]/";
-if ($is_staging_article && (mb_substr($page, 0, 1) == $prefs['wikiapproval_prefix'])) {
-	$page_name = mb_substr($page, 1);
+if ($is_staging_article && $approved = $tikilib->get_approved_page($page) ) {
+	$page_name = $approved;
 }
 else {
 	$page_name = $page;
@@ -1244,8 +1243,7 @@ if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');
 }
 if ($prefs['feature_wikiapproval'] == 'y') {
-	if (substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
-		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));	
+	if ( $approvedPageName = $tikilib->get_approved_page( $page ) ) {
 		$smarty->assign('beingStaged', 'y');
 		$smarty->assign('approvedPageName', $approvedPageName);
 		$approvedPageExists = $tikilib->page_exists($approvedPageName);

@@ -485,8 +485,8 @@ class WikiRenderer
 			$canApproveStaging = 'y';
 			$this->smartyassign('canApproveStaging', $canApproveStaging);
 		}		
-		if (substr($this->page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
-			$approvedPageName = substr($this->page, strlen($prefs['wikiapproval_prefix']));	
+		if ( $approved = $tikilib->get_approved_page( $this->page ) ) {
+			$approvedPageName = $approved;
 			$this->smartyassign('beingStaged', 'y');
 			$this->smartyassign('approvedPageName', $approvedPageName);	
 			$approvedPageExists = $tikilib->page_exists($approvedPageName);

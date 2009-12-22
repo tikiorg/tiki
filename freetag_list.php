@@ -36,9 +36,9 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_view_freetags == 'y') {
 	}
 
     if ($prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_combine_freetags'] == 'y'
-	 && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
+	 && $cat_type == 'wiki page' && $approved = $tikilib->get_approved_page($cat_objid)) {
 	 	// to combine tags from approved page 
-		$approvedPageName = substr($cat_objid, strlen($prefs['wikiapproval_prefix']));
+		$approvedPageName = $approved;
 		$approvedTags = $freetaglib->get_tags_on_object($approvedPageName, $cat_type);
 		foreach($approvedTags['data'] as $approvedTag) {
 	    	if (!in_array($approvedTag['tag'],$tagarray)) {

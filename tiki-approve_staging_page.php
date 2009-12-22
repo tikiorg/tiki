@@ -43,7 +43,7 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $page);
 }
 
-if (substr($page, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
+if ($tikilib->get_staging_page($page)) {
 	$smarty->assign('msg', tra("This function is only for staging pages"));
 
 	$smarty->display("error.tpl");
@@ -60,7 +60,7 @@ if ($prefs['wikiapproval_approved_category'] == 0 && $tiki_p_edit != 'y' || $pre
 
 // switch page to be edited to approved page and store info of old page here. 
 $staging_page = $page;
-$page = substr($staging_page, strlen($prefs['wikiapproval_prefix']));
+$page = $tikilib->get_approved_page($page);
 
 // If either page doesn't exist then display an error
 if (!$tikilib->page_exists($page) || !$tikilib->page_exists($staging_page)) { 

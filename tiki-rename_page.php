@@ -22,7 +22,7 @@ if (!isset($_REQUEST["page"])) {
 	$page = $_REQUEST["page"];
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
-if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
+if ( $tikilib->get_approved_page( $page ) ) {
 	$smarty->assign('msg', tra("You cannot rename staging pages. Please rename the approved page instead."));
 	$smarty->display("error.tpl");
 	die;

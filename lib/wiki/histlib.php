@@ -430,9 +430,9 @@ function rollback_page_to_version($page, $version, $check_key = true, $keep_last
 		if ($check_key) key_check($area);
 		$histlib->use_version($page, $version, '', $keep_lastModif);
 		
-		if ( $prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'] && $prefs['wikiapproval_outofsync_category'] > 0) {
+		if ( ($approved = $tikilib->get_approved_page($page)) && $prefs['wikiapproval_outofsync_category'] > 0) {
 			
-			$approved_page = $histlib->get_page_from_history(substr($page, strlen($prefs['wikiapproval_prefix'])), 0, true);
+			$approved_page = $histlib->get_page_from_history($approved, 0, true);
 			$staging_page = $histlib->get_page_from_history($page, $version, true);
 			$cat_type='wiki page';	
 			$staging_cats = $categlib->get_object_categories($cat_type, $page);

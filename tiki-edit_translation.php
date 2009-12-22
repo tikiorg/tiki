@@ -31,7 +31,7 @@ if (!(isset($_REQUEST['page']) && $_REQUEST['page']) && !(isset($_REQUEST['id'])
 include_once("lang/langmapping.php");
 
 if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST['type'] == 'wiki') && isset($_REQUEST['page']) && $_REQUEST['page']) {
-	if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {		
+	if ( $tikilib->get_approved_page($_REQUEST['page']) ) {		
 		$smarty->assign('msg',tra("Page is a staging copy. Translation must begin from the approved copy."));
 		$smarty->display("error.tpl");
 		die;
@@ -146,7 +146,7 @@ if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId']) && $tiki_p_detach_tr
 }
  else if (isset($_REQUEST['set']) && !empty($_REQUEST['srcName'])) { // attach to a translation set
 	check_ticket('edit-translation');
-	if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['srcName'], 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
+	if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->get_approved_page($_REQUEST['srcName']) ) {
 		$smarty->assign('msg',tra("Page is a staging copy. Translation must begin from the approved copy."));
 		$smarty->display("error.tpl");
 		die;
@@ -247,7 +247,7 @@ if ($type == "wiki page") {
   	// staging pages should be excluded from list as translation always happens only from the approved pages
   	$pages_data = array();
   	foreach($pages["data"] as $p) {
-  		if (substr($p["pageName"], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
+  		if ( $tikilib->get_staging_page($p['pageName']) ) {
 			$t_pages_data[] = $p;
   		}
   	}

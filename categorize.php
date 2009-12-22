@@ -31,7 +31,7 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
 	} else {
 		$_REQUEST['cat_categories'] = NULL;
 	}
-	if ($prefs["feature_wikiapproval"] == 'y' && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {		
+	if ( $cat_type == 'wiki page' && $tikilib->get_approved_page($cat_objid) ) {		
 		if ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $_REQUEST['cat_categories'])) {
 			$_REQUEST['cat_categories'] = array_diff($_REQUEST['cat_categories'],Array($prefs['wikiapproval_approved_category']));
 		}
@@ -42,7 +42,7 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
 			$_REQUEST['cat_categories'][] = $prefs['wikiapproval_outofsync_category'];	
 		}
 	}
-	if ($prefs["feature_wikiapproval"] == 'y' && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && in_array($prefs['wikiapproval_staging_category'], $_REQUEST['cat_categories']) && in_array($prefs['wikiapproval_approved_category'], $_REQUEST['cat_categories'])) {
+	if ($cat_type == 'wiki page' && $tikilib->get_staging_page($cat_objid) && in_array($prefs['wikiapproval_staging_category'], $_REQUEST['cat_categories']) && in_array($prefs['wikiapproval_approved_category'], $_REQUEST['cat_categories'])) {
 		// Drop the staging category if page without staging prefix is attempted to be categorized in both staging category and approved category
 		$_REQUEST['cat_categories'] = array_diff($_REQUEST['cat_categories'],Array($prefs['wikiapproval_staging_category']));
 	}

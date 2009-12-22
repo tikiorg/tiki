@@ -59,12 +59,11 @@ if (isset($_REQUEST["remove"])) {
 		if ($version == "last") {
 			$wikilib->remove_last_version($_REQUEST["page"]);
 
-			if( $prefs['feature_wikiapproval'] == 'y'
-				&& substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'] 
+			if( ( $approved = $tikilib->get_approved_page($page) ) 
 				&& $prefs['wikiapproval_outofsync_category'] > 0 ) {
 				global $categlib; require_once('lib/categories/categlib.php');
 
-				$approved_page = $histlib->get_page_from_history(substr($page, strlen($prefs['wikiapproval_prefix'])), 0, true);
+				$approved_page = $histlib->get_page_from_history($approved, 0, true);
 				$staging_page = $histlib->get_page_from_history($page, $_REQUEST["version"], true);
 				$cat_type='wiki page';		
 				$staging_cats = $categlib->get_object_categories($cat_type, $page);
