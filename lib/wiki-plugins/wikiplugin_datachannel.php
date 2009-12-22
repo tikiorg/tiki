@@ -57,7 +57,8 @@ function wikiplugin_datachannel( $data, $params )
 
 			Tiki_Profile::useUnicityPrefix(uniqid());
 			$installer = new Tiki_Profile_Installer;
-			$installer->limitGlobalPreferences( array() );
+			//TODO: What is the following line for? Future feature to limit capabilities of data channels?
+			//$installer->limitGlobalPreferences( array() );
 
 			$profiles = $config->getProfiles( array( $params['channel'] ) );
 			$profile = reset($profiles);
