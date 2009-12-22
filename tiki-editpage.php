@@ -1195,8 +1195,8 @@ if ($prefs['feature_categories'] == 'y') {
 }
 
 $is_staging_article = ($prefs['wikiapproval_staging_category'] > 0) && (in_array($prefs['wikiapproval_staging_category'], $cats));
-$page_badchars_display = ":/?#[]@!$&'()*+,;=";
-$page_badchars = "/[:\/?#\[\]@!$&'()*+,;=]/";
+$page_badchars_display = ":/?#[]@!$&'()*+,;=<>";
+$page_badchars = "/[:\/?#\[\]@!$&'()*+,;=<>]/";
 if ($is_staging_article && (mb_substr($page, 0, 1) == $prefs['wikiapproval_prefix'])) {
 	$page_name = mb_substr($page, 1);
 }
