@@ -48,6 +48,11 @@ if (!isset($_SESSION['loginfrom'])) {
 }
 if ($tiki_p_admin == 'y') {
 	if (isset($_REQUEST['su'])) {
+		if( empty( $_REQUEST['username'] ) ) {
+			$smarty->assign('msg', tra('Username field cannot be empty. Please go back and try again.'));
+			$smarty->display('error.tpl');
+			exit;
+		}
 		if ($userlib->user_exists($_REQUEST['username'])) {
 			$_SESSION[$user_cookie_site] = $_REQUEST['username'];
 			$smarty->assign_by_ref('user', $_REQUEST['username']);
