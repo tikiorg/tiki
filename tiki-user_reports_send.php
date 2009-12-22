@@ -5,7 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 include_once ('tiki-setup.php');
-if ($_SERVER['REMOTE_ADDR'] != "127.0.0.1" AND !empty($_SERVER['REMOTE_ADDR'])) die("This script can only be called by the server!");
+if ( '127.0.0.1' != $tikilib->get_ip_address() ) {
+	die("This script can only be called by the server!");
+}
 if ($prefs['feature_daily_report_watches'] != 'y') {
 	die("This feature is disabled");
 }

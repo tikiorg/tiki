@@ -166,18 +166,15 @@ class TikiLib extends TikiDb_Bridge
   // Returns IP address or if 127.0.0.1 looks for a proxy address
 	function get_ip_address() {
 		$ip = "127.0.0.1";  // assume localhost
-    if (isset($_SERVER["REMOTE_ADDR"])) {
-      $ip = $_SERVER["REMOTE_ADDR"];
-    }
-    if ($ip == "127.0.0.1") {
-      if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-        $fwips = explode(',', $_SERVER["HTTP_X_FORWARDED_FOR"]);
-        $ip = $fwips[0];  // There may be several but using first IP
-        // This might need improvement for configurations with multiple proxies.
-      }
-    }
-    return $ip;
-  }
+		if (isset($_SERVER["REMOTE_ADDR"])) {
+			$ip = $_SERVER["REMOTE_ADDR"];
+		}
+		if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+			$fwips = explode(',', $_SERVER["HTTP_X_FORWARDED_FOR"]);
+			$ip = $fwips[0];
+		}
+		return $ip;
+	}
 
 	/*shared*/
 	function check_rules($user, $section) {

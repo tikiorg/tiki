@@ -129,8 +129,6 @@ closedir ($h);
 // record that the user wanted to download some files
 // to be fixed by adding the tiki_download table definitively
 $userid = $userlib->get_user_id($user);
-//$query = "insert into tiki_download (object,userid,type,date,IP) values ('$file_name',$userid,'maps',".date("U").",'".$_SERVER["REMOTE_ADDR"]."')";
-//$result = $userlib->query($query);
 
 $smarty->assign('nodownload', $nodownload);
 $smarty->assign_by_ref('files',$files);

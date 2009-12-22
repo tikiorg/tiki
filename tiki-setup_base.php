@@ -107,7 +107,7 @@ session_name( $prefs['session_cookie_name'] );
 
 // Only accept PHP's session ID in URL when the request comes from the tiki server itself
 // This is used by features that need to query the server to retrieve tiki's generated html and images (e.g. pdf export)
-if (isset($_GET[session_name()]) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
+if (isset($_GET[session_name()]) && $tikilib->get_ip_address() == '127.0.0.1') {
 	$_COOKIE[session_name()] = $_GET[session_name()];
 	session_id($_GET[session_name()]);
 }
