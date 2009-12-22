@@ -122,8 +122,11 @@ function wikiplugin_category($data, $params) {
 		$and = false;
 	}
 	if (isset($sort)) {
-		if (!in_array($sort, array('name_asc', 'name_desc', 'hits_asc', 'hits_desc', 'type_asc', 'type_desc', 'created_asc', 'created_desc'))) {
+		$list = explode(',', $sort);
+		foreach ($list as $l) {
+			if (!in_array($l, array('name_asc', 'name_desc', 'hits_asc', 'hits_desc', 'type_asc', 'type_desc', 'created_asc', 'created_desc', 'itemId_asc', 'itemId_desc'))) {
 				return tra('Incorrect param:').' sort';
+			}
 		}
 	} else {
 		$sort = '';
