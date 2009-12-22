@@ -352,10 +352,34 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 			$smarty->assign_by_ref('new', $new);
 		}
 	}
+
+	$oldver_mod = $oldver;
+	if ($oldver == 0) {
+		$oldver_mod = 1;
+	}
+
+	$query = "SELECT `comment`, `version` from `tiki_history` WHERE `pageName`=? and `version` BETWEEN ? AND ? ORDER BY `version` DESC";
+	$result = $histlib->query($query,array($page,$oldver_mod,$newver));
+	$diff_summaries = array();
+
+	if ($oldver == 0) {
+		$diff_summaries[] = $old['comment'];
+	}
+
+	while ($res = $result->fetchRow()) {
+		$aux = array();
+
+		$aux["comment"] = $res["comment"];
+		$aux["version"] = $res["version"];
+		$diff_summaries[] = $aux;
+	}
+
+	$smarty->assign('diff_summaries', $diff_summaries);
 	
 	if (!isset($_REQUEST["diff_style"]) || $_REQUEST["diff_style"] == "old") {
 		$_REQUEST["diff_style"] = 'unidiff';
 	}
+
 	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
 	if ($_REQUEST["diff_style"] == "sideview") {
 		$old["data"] = $tikilib->parse_data($old["data"], array('preview_mode' => true));
