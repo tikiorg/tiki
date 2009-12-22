@@ -683,10 +683,12 @@ if ($_REQUEST['galleryId'] == 0) {
 include_once ('fgal_listing_conf.php');
 
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
+$other = (isset($_REQUEST['view'])&&$_REQUEST['view']=='browse'?'list':'browse');
+$smarty->assign('altmode', $_SERVER['PHP_SELF']."?view=".$other."&filegals_manager=edit");
 // Display the template
-if (!empty($_REQUEST['filegals_manager'])) {
+if (!empty($_REQUEST['filegals_manager']) || !empty($_REQUEST["edit_mode"])) {
 	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
-	$smarty->display('tiki_full.tpl');
+	$smarty->display('tiki-empty.tpl');
 } else {
 	$smarty->display('tiki.tpl');
 }

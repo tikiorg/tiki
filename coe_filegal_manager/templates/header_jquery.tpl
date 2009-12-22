@@ -15,6 +15,10 @@
 <script type="text/javascript" src="lib/jquery/jquery-ui/ui/{$minidir}/jquery-ui{$minified}.js"></script>
 <link rel="stylesheet" href="lib/jquery/jquery-ui/themes/{$prefs.feature_jquery_ui_theme}/jquery-ui.css" />
 {/if}
+<script type="text/javascript" src="lib/jquery/jquery-ui/ui/ui.core.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery-ui/ui/ui.draggable.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery-ui/ui/ui.resizable.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery-ui/ui/ui.dialog.js"></script>
 {if $prefs.feature_jquery_tooltips eq 'y'}
 <script type="text/javascript" src="lib/jquery/cluetip/lib/jquery.hoverIntent.js"></script>
 <script type="text/javascript" src="lib/jquery/cluetip/lib/jquery.bgiframe.min.js"></script>

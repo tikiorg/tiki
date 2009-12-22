@@ -1,5 +1,6 @@
 {* $Id$ *}
 
+<script type="text/javascript" src="lib/filegals/file_gallery.js"></script>
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -113,7 +114,7 @@
 	{if isset($pos)}<input type="hidden" name="pos" value="{$pos}" />{/if}
 	{if $current_page_id}<input type="hidden" name="current_page_id" value="{$current_page_id}" />{/if}
 	{if $add_child}<input type="hidden" name="add_child" value="true" />{/if}
-	
+
 	{if ( $preview && $staging_preview neq 'y' ) or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 		<div class='top_actions'>
 			{include file='wiki_edit_actions.tpl'}
@@ -248,6 +249,7 @@ function searchrep() {
 									<legend>{tr}Upload picture{/tr}:</legend>
 									{if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
 										<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" name="uploadpicture" />
+										<div id="fg-jquery-dialog"></div>
 									{else}
 										<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 										<input type="hidden" name="hasAlreadyInserted" value="" />
