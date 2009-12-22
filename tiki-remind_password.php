@@ -50,6 +50,7 @@ if (isset($_REQUEST["remind"])) {
 		}
 	} else {
 		$showmsg = 'e';
+		$smarty->assign('msg', tra('Please provide a username or email.'));
 	}
 	if (isset($showmsg) && $showmsg == 'e') {
 		$smarty->assign('showmsg', 'e');
