@@ -404,7 +404,6 @@ class TrackerLib extends TikiLib
 			$id = $res2["fieldId"];
 			$res["$id".$res2["lang"].""] = $res2["value"];
 		}
-
 		return $res;
 	}
 
@@ -869,6 +868,7 @@ class TrackerLib extends TikiLib
 			.$mid
 			.' GROUP BY tti.`itemId`'
 			.' ORDER BY '.$this->convertSortMode('sortvalue_'.$corder);
+		//echo $query; print_r($binvars);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
@@ -2448,7 +2448,7 @@ class TrackerLib extends TikiLib
 		} elseif ($field['type'] == '*') { // field rating - value is the average of the votes
 			$key = "tracker.$trackerId.$itemId.".$field['fieldId'];
 			$field['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
-			$field['voteavg'] = round($field['value']);
+			$field['voteavg'] = isset($field['value'])? round($field['value']):'';
 		}
 		// be careful optionId is the value - not the optionId
 		$field['my_rate'] = $this->getOne('select `optionId` from `tiki_user_votings` where `id`=? and `user` = ?', array($key, $user));

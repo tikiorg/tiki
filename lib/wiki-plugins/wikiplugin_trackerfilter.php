@@ -183,6 +183,9 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 			case 'R': // radio
 				$formats[$fieldId] = 'r';
 				break;
+			case '*': //rating
+				$formats[$fieldId] = '*';
+				break;
 			default:
 				$formats[$fieldId] = 't';
 				break;
@@ -219,9 +222,15 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				break;
 			case 'd': // drop down list
 			case 'R': // radio buttons
+			case '*': // stars
+				$cumul = '';
 				foreach ($field['options_array'] as $val) {
 					$opt['id'] = $val;
-					$opt['name'] = $val;
+					if ($field['type'] == '*') {
+						$cumul = $opt['name'] = "$cumul*";
+					} else {
+						$opt['name'] = $val;
+					}
 					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
 						$opt['selected'] = 'y';
 						$selected = true;
