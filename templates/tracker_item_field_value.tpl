@@ -88,7 +88,7 @@
 	{/if}
 
 {* -------------------- empty field -------------------- *}
-{elseif empty($field_value.value) and $field_value.value != '0' and $field_value.type ne 'U' and $field_value.type ne 's' and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
+{elseif empty($field_value.value) and $field_value.value != '0' and $field_value.type ne 'U' and $field_value.type ne '*' and $field_value.type ne 's' and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
 	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
@@ -284,7 +284,7 @@
 	{/if}
 
 {* -------------------- rating -------------------- *}
-{elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_view_ratings eq 'y'}
+{elseif ($field_value.type eq '*' or ($field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")))) and $tiki_p_tracker_view_ratings eq 'y'}
 	{if $list_mode eq 'csv'}
 		{$field_value.value}/{$field_value.voteavg}
 	{else}
@@ -292,19 +292,19 @@
 			{if empty($field_value.numvotes)}
 				{tr}Number of votes{/tr}: 0
 			{else}
-				{tr}Number of votes{/tr}: {$field_value.numvotes|default:"0"}, {tr}Average{/tr}: {$field_value.voteavg|default:"0"},
+				{tr}Number of votes{/tr}: {$field_value.numvotes|default:"0"}, {tr}Average{/tr}: {$field_value.voteavg|default:"0"}
 				{if $tiki_p_tracker_vote_ratings eq 'y'}
-					{if $item.my_rate}{tr}Your rating{/tr}: {$item.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
+					, {if isset($field_value.my_rate)}{tr}Your rating{/tr}: {$field_value.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
 				{/if}
 			{/if}
 		{/capture}
 		{capture name=myvote}
-			{tr}My rating:{/tr} {$item.my_rate}
+			{tr}My rating:{/tr} {$field_value.my_rate}
 		{/capture}
 		<span class="rating">
 		<span style="white-space:nowrap">
 		{section name=i loop=$field_value.options_array}
-			{if $tiki_p_tracker_vote_ratings eq 'y' and isset($item.my_rate) and $field_value.options_array[i] === $item.my_rate}
+			{if $tiki_p_tracker_vote_ratings eq 'y' and isset($field_value.my_rate) and $field_value.options_array[i] === $field_value.my_rate}
 				<b class="highlight">
 					{if $field_value.voteavg >= $field_value.options_array[i]}
 				   		{icon _id='star' alt=$field_value.options_array[i] title=$smarty.capture.myvote}
@@ -315,7 +315,7 @@
 			{else}
 				{if $tiki_p_tracker_vote_ratings eq 'y'}
 					{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field_value.options_array[i]}{/capture}
-					<a href="{$smarty.server.PHP_SELF}?trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}{if $page}&amp;page={$page|escape:url}{/if}">
+					<a href="{$smarty.server.PHP_SELF}?trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}&amp;vote=y{if $page}&amp;page={$page|escape:url}{/if}">
 				{/if}
 				{if $field_value.voteavg >= $field_value.options_array[i]}
 					{icon _id='star' alt=$field_value.options_array[i] title=$smarty.capture.thisvote}
@@ -335,8 +335,8 @@
 			</small>
 			{icon _id='help' title=$smarty.capture.stat}
 		{/if}
-		{if $tiki_p_tracker_vote_ratings eq 'y' and  isset($item.my_rate) and in_array($item.my_rate, $field_value.options_array)}
-			<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}=NULL{if $page}&amp;page={$page|escape:url}{/if}" title="{tr}Clik to delete your vote{/tr}">x</a>
+		{if $tiki_p_tracker_vote_ratings eq 'y' and  isset($field_value.my_rate) and in_array($field_value.my_rate, $field_value.options_array)}
+			<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}=NULL&amp;vote=y{if $page}&amp;page={$page|escape:url}{/if}" title="{tr}Clik to delete your vote{/tr}">x</a>
 		{/if}
 		<span>
 	{/if}

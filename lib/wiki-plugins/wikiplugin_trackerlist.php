@@ -296,20 +296,23 @@ function wikiplugin_trackerlist($data, $params) {
 		global $trklib; require_once("lib/trackers/trackerlib.php");
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 
-		if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' && $user and $tiki_p_tracker_vote_ratings == 'y' && isset($_REQUEST['itemId']) ) {
+		if (!empty($_REQUEST['itemId']) && $tiki_p_tracker_vote_ratings == 'y' && $user) {
 			foreach ($allfields['data'] as $f) {
-				if ($f['type'] == 's' && $f['name'] == 'Rating') {
+				if ($f['type'] == 's' && isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' && ($f['name'] == 'Rating' || $f['name'] = tra('Rating'))) {
 					$i = $f['fieldId'];
 					if (isset($_REQUEST["ins_$i"]) && ($_REQUEST["ins_$i"] == 'NULL' || in_array($_REQUEST["ins_$i"], split(',',$tracker_info['ratingOptions'])))) {
-						$trklib->replace_rating($trackerId, $_REQUEST['itemId'], $f['fieldId'], $user, $_REQUEST["ins_$i"]);
-						header('Location: tiki-index.php?page='.urlencode($page));
-						die;
+						$trklib->replace_rating($trackerId, $_REQUEST['itemId'], $i, $user, $_REQUEST["ins_$i"]);
 					}
-					break;
+				} elseif ($f['type'] == '*') {
+					$i = $f['fieldId'];
+					if (isset($_REQUEST["ins_$i"])) {
+						$trklib->replace_star($_REQUEST["ins_$i"], $trackerId, $_REQUEST['itemId'], $f, $user);
+					}
 				}
 			}
+			header('Location: tiki-index.php?page='.urlencode($page));
+			die;
 		}
-		
 
 		if (!empty($fields)) {
 			$listfields = $fields;

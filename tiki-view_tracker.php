@@ -185,6 +185,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$creatorSelector = false;
 	}
 	if (($xfields["data"][$i]['isTblVisible'] == 'y' or in_array($fid, $popupFields)) and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))) {
+		$listfields[$fid]['fieldId'] = $xfields['data'][$i]['fieldId'];
 		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
 		$listfields[$fid]['name'] = $xfields["data"][$i]["name"];
 		$listfields[$fid]['options'] = $xfields["data"][$i]["options"];
@@ -201,7 +202,12 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$parentId = $listfields[$fid]['options_array'][0];
 			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId);
 		}
-		if (isset($xfields['data'][$i]['otherField'])) $listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
+		if (isset($xfields['data'][$i]['otherField'])) {
+			$listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
+		}
+		if ($listfields[$fid]['type'] == '*' && $tiki_p_tracker_vote_ratings == 'y' && !empty($_REQUEST['vote']) && !empty($ratedItemId) && isset($_REQUEST['ins_'.$listfields[$fid]['fieldId']])) { // star
+			$trklib->replace_star($_REQUEST['ins_'.$listfields[$fid]['fieldId']], $_REQUEST['trackerId'], $ratedItemId, $listfields[$fid], $user, true);
+		}
 	}
 	if ($creatorSelector or $xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'c' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')) {
 		$ins_fields["data"][$i] = $xfields["data"][$i];

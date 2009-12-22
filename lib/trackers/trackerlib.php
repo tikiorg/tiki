@@ -733,7 +733,8 @@ class TrackerLib extends TikiLib
 				// Do we need a numerical sort on the field ?
 				$field = $this->get_tracker_field($asort_mode);
 				switch ($field['type']) {
-				case 'C':
+					case 'C':
+					case '*':
 					case 'q':
 					case 'n': $numsort = true;
 						break;
@@ -989,9 +990,8 @@ class TrackerLib extends TikiLib
 				}
 				break;
 			case 's':
-				$key = 'tracker.'.$trackerId.'.'.$itemId;
-				$fopt['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
-				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? round(($fopt['value'] / $fopt['numvotes'])) : '';
+			case '*':
+				$this->update_star_field($trackerId, $itemId, $fopt);
 				break;
 			case 'e':
 				global $categlib;
@@ -1361,6 +1361,9 @@ class TrackerLib extends TikiLib
 							$value += 1;
 						}
 					}
+				}
+				if ($ins_fields['data'][$i]['type']=='*') {
+					$this->replace_star($ins_fields['data'][$i]['value'], $trackerId, $itemId, $ins_fields['data'][$i], $user, false);
 				}
 
 				if ($ins_fields["data"][$i]["type"] == 'e' && $prefs['feature_categories'] == 'y') {
@@ -2413,6 +2416,43 @@ class TrackerLib extends TikiLib
 		$this->register_user_vote($user, "tracker.$trackerId.$itemId", $new_rate);
 		return $newval;
 	}
+	function replace_star($userValue, $trackerId, $itemId, &$field, $user, $updateField=true) {
+		if ($field['type'] != '*') {
+			return;
+		}
+		if ($userValue != 'NULL' && !in_array($userValue, $field['options_array'])) {
+			return;
+		}
+		$result = $this->query("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$field['fieldId']));
+		$key = "tracker.$trackerId.$itemId.".$field['fieldId'];
+		$this->register_user_vote($user, $key, $userValue);
+		$field['my_rate'] = $userValue;
+		if (!$result->numRows()) {
+			$field['voteavg'] = $field['value'] = $userValue;
+			$field['numvotes'] = 1;
+			$query = 'insert into `tiki_tracker_item_fields`(`value`,`itemId`,`fieldId`) values (?,?,?)';
+		} else {
+			$field['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
+			$sumvotes = $this->getOne('select sum(`optionId`) from `tiki_user_votings` where `id` = ?', array($key));
+			$field['voteavg'] = $field['value'] = $sumvotes/$field['numvotes'];
+			$query = 'update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?';
+		}
+		$this->query($query, array((int)$field['value'], (int)$itemId, (int)$field['fieldId']));
+	}
+	function update_star_field($trackerId, $itemId, &$field) {
+		global $user;
+		if ($field['type'] == 's' && $field['name'] == 'Rating') { // global rating to an item - value is the sum of the votes
+			$key = 'tracker.'.$trackerId.'.'.$itemId;
+			$field['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
+			$field['voteavg'] = ( $field['numvotes'] > 0 ) ? round(($field['value'] / $field['numvotes'])) : '';
+		} elseif ($field['type'] == '*') { // field rating - value is the average of the votes
+			$key = "tracker.$trackerId.$itemId.".$field['fieldId'];
+			$field['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
+			$field['voteavg'] = round($field['value']);
+		}
+		// be careful optionId is the value - not the optionId
+		$field['my_rate'] = $this->getOne('select `optionId` from `tiki_user_votings` where `id`=? and `user` = ?', array($key, $user));
+	}
 
 	function remove_tracker($trackerId) {
 
@@ -3033,6 +3073,17 @@ class TrackerLib extends TikiLib
 				<dt>Example: Members,date
 				<dt>Description:
 				<dd><strong>GroupName</strong> Group to test. <strong>date</strong> displays the date the user was assigned in the group (if known), otherwise will display yes/no.
+				<dd>
+				</dl>'));
+		$type['*'] = array(
+			'label'=>tra('stars'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Display stars
+				<dt>Usage: <strong>list options (positive increasing numbers</strong>
+				<dt>Example: 1,2,3,4
+				<dt>Description:
+				<dd>Like the rating
 				<dd>
 				</dl>'));
 

@@ -682,7 +682,6 @@ if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' an
 		header('Location: tiki-view_tracker_item.php?trackerId=' . $_REQUEST['trackerId'] . '&itemId=' . $_REQUEST['itemId']);
 		die;
 	}
-	$item_info['my_rate'] = $tikilib->get_user_vote("tracker." . $_REQUEST['trackerId'] . '.' . $_REQUEST['itemId'], $user);
 }
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
@@ -912,11 +911,13 @@ if ($_REQUEST["itemId"]) {
 				if (!empty($ins_fields['data'][$i]['value'])) {
 					$ins_fields['data'][$i]['info'] = $trklib->get_item_attachment($ins_fields['data'][$i]['value']);
 				}
-			} elseif ($fields['data'][$i]['type'] == 's' && $fields['data'][$i]['name'] == 'Rating') {
-				$ins_fields['data'][$i]['numvotes'] = $tikilib->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array(
-					'tracker.' . $_REQUEST['trackerId'] . '.' . $_REQUEST['itemId']
-				));
-				$ins_fields['data'][$i]['voteavg'] = ($ins_fields['data'][$i]['numvotes'] > 0) ? round(($ins_fields['data'][$i]['value'] / $ins_fields['data'][$i]['numvotes'])) : '';
+			} elseif (($fields['data'][$i]['type'] == 's' && $fields['data'][$i]['name'] == 'Rating') || $fields['data'][$i]['type'] == '*') {
+				$fields['data'][$i]['value'] = $info[$fid];
+				if ($fields['data'][$i]['type'] == '*' && $tiki_p_tracker_vote_ratings == 'y' && !empty($_REQUEST['vote']) && !empty($_REQUEST['itemId']) && isset($_REQUEST['ins_'.$fields['data'][$i]['fieldId']])) {
+					$trklib->replace_star($_REQUEST['ins_'.$fields['data'][$i]['fieldId']], $_REQUEST['trackerId'], $_REQUEST['itemId'], $ins_fields['data'][$i], $user, true);
+				} else {
+					$trklib->update_star_field($_REQUEST['trackerId'], $_REQUEST['itemId'], $ins_fields['data'][$i]);
+				}
 			}
 			if ($fields['data'][$i]['isMain'] == 'y') $smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);
 		}
@@ -948,6 +949,7 @@ foreach($ins_fields['data'] as $sid => $onefield) {
 		$ins_fields['data'][$sid]['filter_value'] = $ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['value'];
 	}
 }
+
 
 // Pull realname for user.
 $info["createdByReal"] = $tikilib->get_user_preference($info["createdBy"], 'realName', '');
