@@ -1,5 +1,5 @@
 {capture name=msg assign=msg}
-<table border="0" cellspacing="4" cellpadding="4">
+<!--table border="0" cellspacing="4" cellpadding="4">
 	<tr>
 		<td style="text-align: center">
 			<img src="{$fileId|sefurl:thumbnail}" />
@@ -30,13 +30,17 @@
 			</div>
 		</td>
 	</tr>
-</table>
+</table-->
 {/capture}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-	parent.progress('{$FormId}','{$msg|escape:"javascript"}');
+	parent.FileGallery.upload.progress('{$FormId}','{$msg|escape:"javascript"}');
 //--><!]]>
 </script>
 
 
 
+{assign var=seturl value=$fileId|sefurl:display}
+<script>
+parent.FileGallery.upload.insert('{$fileId}');
+</script>

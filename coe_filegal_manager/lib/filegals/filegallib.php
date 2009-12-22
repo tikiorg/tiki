@@ -888,7 +888,8 @@ class FileGalLib extends TikiLib {
 
 		$galleryPath = array();
 		$expanded = array('1');
-		$this->_buildTreePhplayers($tree['data'], $allGalleries['data'], $currentGalleryId, $galleryPath, $expanded, $script, $rootGalleryId);
+		$onclick = "FileGallery.open('".$script."?#');return false;";
+		$this->_buildTreePhplayers($tree['data'], $allGalleries['data'], $currentGalleryId, $galleryPath, $expanded, $script, $rootGalleryId, $onclick);
 		array_unshift($galleryPath, array($rootGalleryId, $tree['name']));
 
 		$galleryPathHtml = '';
@@ -905,7 +906,7 @@ class FileGalLib extends TikiLib {
 		);
 	}
 
-	function _buildTreePhplayers( &$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link = "", $cur_id = -1 ) {
+	function _buildTreePhplayers( &$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $link = "", $cur_id = -1, $onclick='' ) {
 		static $total = 1;
 		static $nb_galleries = 0;
 
@@ -920,8 +921,9 @@ class FileGalLib extends TikiLib {
 				$tree[$i]['link_var'] = 'galleryId';
 				$tree[$i]['link_id'] = $gv['id'];
 				$tree[$i]['link'] = $link."?".$tree[$i]['link_var']."=".$tree[$i]['link_id'];
+				$tree[$i]['onclick'] = str_replace("#", $tree[$i]['link_var']."=".$tree[$i]['link_id'], $onclick);
 				$tree[$i]['pos'] = $total++;
-				$this->_buildTreePhplayers($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $link, $gv['id']);
+				$this->_buildTreePhplayers($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $link, $gv['id'], $onclick);
 				if (!$path_found && $gv['id'] == $gallery_id) {
 					if ($_REQUEST['galleryId'] == $gv['id']) $tree[$i]['current'] = 1;
 					array_unshift($gallery_path, array($gallery_id, $gv['name']));

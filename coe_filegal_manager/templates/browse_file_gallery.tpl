@@ -7,7 +7,7 @@
 		<tr>
 		{assign var=colcnt value='0'}
 	{/if}
-	{assign var=colcnt value='$colcnt+1'}
+	{assign var=colcnt value=$colcnt+1}
 	{if $files[changes].isgal eq 1}
 		{assign var=checkname value=$subgal_checkbox_name|default:'subgal'}
 	{else}
@@ -26,7 +26,7 @@
 			{if $filegals_manager neq ''}
 				{assign var=seturl value=$files[changes].id|sefurl:display}
 				{* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
-				href="javascript:if (typeof SetMyUrl != 'undefined') SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else SetUrl('{$tikiroot}{$seturl}'); void($('#fg-jquery-dialog').dialog('close'));" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
+				onclick="javascript:FileGallery.upload.insert('{$files[changes].id}');return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
 			{elseif $tiki_p_download_files eq 'y'}
 				{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
 					href="{$prefs.fgal_podcast_dir}{$files[changes].path}"
@@ -37,7 +37,7 @@
 		{/if}
 	{/strip}{/capture}
 	{math equation="x + 6" x=$thumbnail_size assign=thumbnailcontener_size}
-	<td>
+	<td id="colid-{$colcnt}">
 		<div class="fg-gallery-view-tools">
 			<input type="checkbox"/><br/>
 			<img src="img/icon-file-tools.gif" border="0"/>
