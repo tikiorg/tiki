@@ -21,7 +21,7 @@
 
 <div class="fg-upload">
 	<h2>Upload file</h2>
-	<a class="fg-upload-close"><img src="images/file_gallery/close.gif" border="0"/></a>
+	<a class="fg-upload-close" onclick="FileGallery.upload.close()"><img src="images/file_gallery/close.gif" border="0"/></a>
 
 	{if count($errors) > 0}
 		<div class="simplebox highlight">

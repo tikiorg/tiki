@@ -1,6 +1,7 @@
 {* $Id$ *}
 
-<form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
+<iframe src="about:blank" width="1" height="1" frameborder="0" style="visibility:hidden;position:absolute;" name="fgiframe"></iframe>
+<form target="fgiframe" name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
 	<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
 	<input type="hidden" name="find" value="{$find|escape}" />
 	{if $prefs.fgal_asynchronous_indexing eq 'y'}<input type="hidden" name="fast" value="y" />{/if} 
@@ -18,49 +19,46 @@
 			{assign var=show_infos value='y'}
 			{include file='browse_file_gallery.tpl'}
 		{else}
-		{assign var=show_infos value='n'}
+			{assign var=show_infos value='n'}
 			{include file='list_file_gallery_content.tpl'}
 		{/if}
 
 		<div class="fg-pager">
-			{if $maxRecords > 20 and $cant > $maxRecords}
-				<div class="clearboth" style="margin-bottom: 3px;">
-				{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-				</div>
+			<!-- if $maxRecords > 20 and $cant>$maxRecords -->
+			{if $cant>$maxRecords}
+				<span style="float:left;display:block;padding-right:5px">page</span>
+				{pagination_links cant=$cant step=$maxRecords offset=$offset next='n' prev='n' template='tiki-empty.tpl' htmlelement='fg-jquery-dialog'}{/pagination_links}
 			{/if}
-			<span>page</span>
-			<a>1</a>
-			<a>2</a>
-			<a class="fg-pager-current">3</a>
-			<a>4</a>
-			<a>5</a>
 		</div>
 		
         {if $files and $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')}
-		<div class="fg-actions">
-			<div id="sel">
-				<div>
-					{tr}Perform action with checked:{/tr}
-					{if !isset($file_info)}
-						{if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
-						{if $tiki_p_admin_file_galleries eq 'y'}{icon _id='arrow_right' _tag='input_image' name='movesel' alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' style='vertical-align: middle;'}{/if}
+			<div class="fg-actions">
+				<span>{tr}Perform action with checked:{/tr}</span>
+				{if !isset($file_info)}
+					{if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
+					{if $tiki_p_admin_file_galleries eq 'y'}
+						<a class="fg-actions-icon">{icon _id='arrow_right' _tag='input_image' name='movesel' alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' style='vertical-align: middle;'}</a>
 					{/if}
-					{if $tiki_p_admin_file_galleries eq 'y'}{icon _id='cross' _tag='input_image' _confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;'}{/if}
-					{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt='{tr}Download the zip{/tr}' style='vertical-align: middle;'}
-					{if $tiki_p_assign_perm_file_gallery eq 'y'}{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign Permissions{/tr}" title="{tr}Assign Permissions{/tr}" style='vertical-align: middle;'}{/if}
-				</div>
-				{if $smarty.request.movesel_x and !isset($file_info)}
-					<div>
-						{tr}Move to{/tr}:
-						<select name="moveto">
-						{section name=ix loop=$all_galleries}
-						<option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>
-						{/section}
-						</select>
-						<input type='submit' name='movesel' value='{tr}Move{/tr}' />
-					</div>
+				{/if}
+				{if $tiki_p_admin_file_galleries eq 'y'}
+					<a class="fg-actions-icon">{icon _id='cross' _tag='input_image' _confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;'}</a>
+				{/if}
+				<a class="fg-actions-icon">{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt='{tr}Download the zip{/tr}' style='vertical-align: middle;'}</a>
+				{if $tiki_p_assign_perm_file_gallery eq 'y'}
+					<a class="fg-actions-icon">{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign Permissions{/tr}" title="{tr}Assign Permissions{/tr}" style='vertical-align: middle;'}</a>
 				{/if}
 			</div>
+			{if $smarty.request.movesel_x and !isset($file_info)}
+				<div>
+					{tr}Move to{/tr}:
+					<select name="moveto">
+					{section name=ix loop=$all_galleries}
+					<option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>
+					{/section}
+					</select>
+					<input type='submit' name='movesel' value='{tr}Move{/tr}' />
+				</div>
+			{/if}
 			{if $perms}
 				<div>
 					{tr}Assign Permissions{/tr}
@@ -77,7 +75,6 @@
 					<input type="submit" name="permsel" value="{tr}Assign{/tr}" />
 				</div>
 			{/if}
-		</div>
 		{/if}
 	</div>
 </form>

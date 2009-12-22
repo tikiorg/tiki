@@ -19,9 +19,10 @@
 		{assign var=is_checked value='n'}
 	{/if}
 <!--href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"-->
+<!--href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}&amp;view=browse"-->
 	{capture assign=link}{strip}
 		{if $files[changes].isgal eq 1}
-			href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}&amp;view=browse"
+			onclick="javascript:FileGallery.open('tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}&amp;view=browse')"
 		{else}
 			{if $filegals_manager neq ''}
 				{assign var=seturl value=$files[changes].id|sefurl:display}
@@ -39,8 +40,8 @@
 	{math equation="x + 6" x=$thumbnail_size assign=thumbnailcontener_size}
 	<td id="colid-{$colcnt}">
 		<div class="fg-gallery-view-tools">
-			<input type="checkbox"/><br/>
-			<img src="img/icon-file-tools.gif" border="0"/>
+			<input type="checkbox" name="{$checkname}[]" value="{$files[changes].id}"/><br/>
+			<img src="images/file_gallery/icon-file-tools.gif" border="0"/>
 		</div>
 		<div class="fg-gallery-view-entry">
 			<div class="fg-gallery-view-image" onmouseover="this.className='fg-gallery-view-image fg-hover'" onmouseout="this.className='fg-gallery-view-image'">

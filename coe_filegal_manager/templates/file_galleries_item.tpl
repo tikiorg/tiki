@@ -1,4 +1,4 @@
-<a class="fg-gallery" onclick="FileGallery.open('tiki-list_file_gallery.php?galleryId={$x.id}&filegals_manager=edit')">{$x.name}</a>
+<a class="fg-gallery" onclick="FileGallery.open('tiki-list_file_gallery.php?galleryId={$x.id}&filegals_manager=edit&view={$view}')">{$x.name}</a>
 <div class="fg-gallery-kids">
 	{foreach from=$x.data item=x}
 		{include file='file_galleries_item.tpl'}

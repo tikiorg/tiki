@@ -13,6 +13,7 @@ var FileGallery = {
 //			$('.ui-dialog-titlebar').remove();
 			$('#fg-jquery-dialog').dialog('option','height','auto');
 			$('#fg-jquery-dialog').dialog('open');
+			$('.fg-pager a').bind('click', function(e) { FileGallery.open(this.href); return false; });
 		})
 	},
 	loadmid: function(url) {
@@ -26,6 +27,24 @@ var FileGallery = {
 			$(".fg-galleries").addClass("fg-galleries-hidden");
 			$(".fg-files").addClass("fg-files-wide");
 		}
+	},
+	limit: function(event, count, view, galleryId) {
+		if (!event)
+			event = window.event;
+		if (event.keyCode==13) {
+			count = parseInt(count);
+			if (count>0)
+				this.open("tiki-list_file_gallery.php?view="+view+"&filegals_manager=edit&galleryId="+galleryId+"&maxRecords="+count);
+		}
+	},
+	search: function(event, start, view) {
+		if (!start) {
+			if (!event)
+				event = window.event;
+			if (event.keyCode!=13)
+				return;
+		}
+		FileGallery.open('tiki-list_file_gallery.php?filegals_manager=1&view='+view+'&find='+$('.fg-toolbar-search-input').val());
 	}
 }
 
@@ -40,10 +59,13 @@ FileGallery.upload = {
 	},
 	show: function(gallery) {
 		this.dialog();
-		$("#fg-jquery-upload-dialog").load("tiki-upload_file.php?galleryId=1&filegals_manager=edit", function() {
+		$("#fg-jquery-upload-dialog").load("tiki-upload_file.php?galleryId="+gallery+"&filegals_manager=edit", function() {
 			$("#fg-jquery-upload-dialog").dialog("option", "height", "auto");
 			$("#fg-jquery-upload-dialog").dialog("open")
 		});
+	},
+	close: function() {
+		$("#fg-jquery-upload-dialog").dialog("close");
 	},
 	progress: function(id,msg) {
 //			alert ('progress_'+id);
@@ -52,7 +74,7 @@ FileGallery.upload = {
 	do_submit: function(n) {
 //				alert(document.getElementById('file_'+n).name);
 		if (document.forms['file_'+n].elements['userfile[]'].value != '') {
-			this.progress(n,"<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
+			this.progress(n,"<img src='img/spinner.gif'>Uploading file...");
 			document.getElementById('file_'+n).submit();
 			document.getElementById('file_'+n).reset();
 		}
