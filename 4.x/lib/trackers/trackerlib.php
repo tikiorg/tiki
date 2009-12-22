@@ -2264,7 +2264,7 @@ class TrackerLib extends TikiLib {
 				$showratings = $opt;
 			}
 		}
-		$ratingId = $this->get_field_id($trackerId,'Rating');
+		$ratingId = $this->get_field_id_from_type($trackerId, 's', 'Rating');
 		if ($rating) {
 			if (!$ratingId) $ratingId = 0;
 			if (!isset($ratingoptions)) $ratingoptions = '';
