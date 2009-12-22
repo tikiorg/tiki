@@ -23,7 +23,7 @@ function module_terminology( $mod_reference, $module_params ) {
 	}
 	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
 	
-	$search_terms_in_lang = $multilinguallib->currentSearchLanguage(true);
+	$search_terms_in_lang = $multilinguallib->currentTermSearchLanguage(true);
 	$smarty->assign('search_terms_in_lang', $search_terms_in_lang);
 
 	$userLanguagesInfo = $multilinguallib->preferredLangsInfo();

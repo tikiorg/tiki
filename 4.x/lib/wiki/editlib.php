@@ -36,6 +36,26 @@ class EditLib {
 		}	
 	}	
 	
+	function user_needs_to_specify_language_of_page_to_be_created($page, $page_info) {
+		global $_REQUEST, $multilinguallib, $prefs;
+		
+		if (isset($_REQUEST['need_lang']) && $_REQUEST['need_lang'] == 'n') {
+			return false;
+		}
+		
+		if ($prefs['feature_multilingual'] == 'n') {
+			return false;
+		} 
+		if ($page_info && isset($page_info['lang']) && $page_info['lang'] != '') {
+			return false;
+		}
+		if (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '') { 
+			return false;
+		}
+
+		return true;
+	}			
+	
 	// translation functions
 	
 	function isNewTranslationMode() {
