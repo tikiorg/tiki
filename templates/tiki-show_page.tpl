@@ -12,27 +12,53 @@
 	{/if}
 
 {if $beingStaged eq 'y'}
-<div class="tocnav">
-{if $approvedPageExists}
-	{tr}This is the staging copy of{/tr} <a class="link" href="{$approvedPageName|sefurl}">{tr}the approved version of this page.{/tr}</a>
-{else}
-	{tr}This is a new staging page that has not been approved before.{/tr}
-{/if}
-{if $outOfSync eq 'y'}
-	{if $canApproveStaging == 'y'}
-	{if $lastSyncVersion}<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}">{tr}View changes since last approval.{/tr}</a>
-	{else}{tr}Viewing of changes since last approval is possible only after first approval.{/tr}{/if}
-	<a class="link" href="tiki-approve_staging_page.php?page={$page|escape:'url'}">{tr}Approve changes.{/tr}</a>
-	{elseif $approvedPageExists}
-	{tr}Latest changes will be synchronized after approval.{/tr}
-	{/if}
-{/if}
-</div>
+	<div class="tocnav">
+		{tr}This is the staging copy of{/tr} <a class="link" href="tiki-index.php?page={$approvedPageName|escape:'url'}">{tr}the approved version of this page.{/tr}</a>
+		{if $outOfSync eq 'y'}
+			{if $canApproveStaging == 'y'}
+				<div class="notif-pad">
+					{if $lastSyncVersion}
+						<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}&amp;diff_style=sidediff">{tr}View changes since last approval.{/tr}</a>
+					{else}
+						{tr}Viewing of changes since last approval is possible only after first approval.{/tr}
+					{/if}
+					<form action="/tiki-approve_staging_page.php" method="post">
+						<input type="hidden" name="page" value="{$page|escape}" />
+						<div class="notif-pad-2">
+						<div class="notif-row">
+							<input type="radio" name="action" value="approve" id="staging_approve" />&nbsp;<label for="staging_approve">{tr}Approve changes{/tr}</label>
+							<div class="notif-pad-3" id="staging_approve_details">
+							{if empty($pageLang) || ($pageLang == 'en') || ($pageLang =='en-US')}
+								<input type="checkbox" name="outofdate" value="1" id="staging_outofdate">&nbsp;<label for="staging_outofdate">{tr}Mark other translations as out of date{/tr}</label>
+								{if !empty($outofdate_desc)}
+									<div class="notif-highlight" id="staging_outofdate_details">{$outofdate_desc|escape}</div>
+								{/if}
+							{/if}
+							<div class="notif-pad-2">
+								<label for="approve_summary">{tr}Feedback to the author (optional):{/tr}</label><br/>
+								<textarea id="approve_summary" name="approve_comment" rows="3" cols="50"></textarea>
+							</div>
+						</div>
+						<div class="notif-row">
+							<input type="radio" name="action" value="reject" id="staging_reject" />&nbsp;<label for="staging_reject">{tr}Reject changes{/tr}</label>
+							<div class="notif-pad-3" id="staging_reject_details">
+								<label for="reject_summary">{tr}Reason for rejecting (will be e-mailed to editor):{/tr}</label><br/>
+								<textarea id="reject_summary" name="reject_comment" rows="3" cols="50"></textarea>
+							</div>
+						</div>
+						<input type="submit" name="staging_action" value="{tr}Submit{/tr}"/>
+					</form>
+				</div>
+			{else}
+				{tr}Latest changes will be synchronized after approval.{/tr}
+			{/if}
+		{/if}
+	</div>
 {/if}
 {if $needsFirstApproval == 'y' and $canApproveStaging == 'y'}
-<div class="tocnav">
-{tr}This is a new staging page that has not been approved before. Edit and manually move it to the category for approved pages to approve it for the first time.{/tr}
-</div>
+	<div class="tocnav">
+		{tr}This is a new staging page that has not been approved before. Edit and manually move it to the category for approved pages to approve it for the first time.{/tr}
+	</div>
 {/if}
 {/if} {*hide_page_header*}
 
