@@ -550,13 +550,16 @@ class MultilingualLib extends TikiLib
 		", array( $pageIdToUpdate, $translationBit, $translationBit ) );
 
 		$pages = array();
+		global $prefs;			
 		while( $row = $result->fetchRow() ) {
 			// add pagename of approved page if it is a staging page
-			global $prefs;			
 			if ( $prefs['feature_wikiapproval'] == 'y' && substr($row['page'], 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'] ) {
 				$row['approvedPage'] = substr($row['page'], strlen($prefs['wikiapproval_prefix']));
 			}
-			$pages[] = $row;
+			
+			if( $prefs['feature_urgent_translation_master_only'] != 'y' || $row['lang'] == $prefs['site_language'] ) {
+				$pages[] = $row;
+			}
 		}
 
 		return $pages;
