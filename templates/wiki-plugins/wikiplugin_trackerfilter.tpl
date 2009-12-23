@@ -38,8 +38,11 @@
 			<input id="f_{$filters[if].fieldId}" type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
 {*------sqlsearch *}
 		{elseif $filters[if].format eq 'sqlsearch'}
+			{capture name=tpl_advanced_search_help}
+				{include file='advanced_search_help.tpl'}
+			{/capture}
 			<input id="f_{$filters[if].fieldId}" type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
-			{add_help show='y' title="{tr}Help{/tr}" id="advanced_search_help"}
+			{add_help show='y' title="{tr}Help{/tr}" id="advanced_search_help_filter"}
 				{$smarty.capture.advanced_search_help}
 			{/add_help}
 {*------rating *}
