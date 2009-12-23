@@ -244,7 +244,7 @@ class TikiAccessLib extends TikiLib
 	 */
 
 	function authorize_rss($rssrights) {
-		global $tikilib, $userlib, $user, $smarty;
+		global $tikilib, $userlib, $user, $smarty, $prefs;
 		$perms = Perms::get();
 		$result=array('msg' => tra("Permission denied. You cannot view this section"), 'header' => 'n');
 

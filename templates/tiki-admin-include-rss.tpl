@@ -280,6 +280,7 @@
 	<div class="adminoptionlabel"><label for="rss_cache_time">{tr}Caching time:{/tr}</label> <input type="text" name="rss_cache_time" id="rss_cache_time" size="4" value="{$prefs.rss_cache_time}" /> {tr}seconds{/tr}<br /><em>{tr}Use <strong>0</strong> for no caching{/tr}.</em></div>
 	{remarksbox type="Note" title="{tr}Note{/tr}"}{tr}Enabling caching will override existing permissions - all content will be public. Enable this option <strong>only</strong> if your syndicated content should be public.{/tr}{/remarksbox}	
 </div>
+	{preference name='rss_basic_auth'}
 </fieldset>
 
 
