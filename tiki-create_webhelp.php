@@ -51,7 +51,6 @@ function deldirfiles($dir){
 
 if ($prefs['feature_create_webhelp'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_create_webhelp");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -72,18 +71,19 @@ if (!$tikilib->user_has_perm_on_object($user,$struct_info["pageName"],'wiki page
 	$smarty->display("error.tpl");
 	die;
 }
-	
-$smarty->assign('generated','y');
+
 if(isset($_REQUEST['create'])) {
+  $smarty->assign('generated','y');
   $name=$_REQUEST['name'];
   $dir=$_REQUEST['dir'];
   $smarty->assign('dir',$_REQUEST['dir']);
   $struct=$_REQUEST['struct'];
   $top=$_REQUEST['top'];
-  $top='foo1';
+//  $top='foo1';
   $output='';
-  $output.="TikiHelp WebHelp generation engine<br />";
-  $output.="Generating WebHelp using <b>$name</b> as index. Directory: $name<br />";
+  $output.=tra("TikiHelp WebHelp generation engine. Generating WebHelp using:");
+  $output.=tra("<ul><li>Index: <strong>$name</strong></li>");
+  $output.=tra("<li>Directory: <strong>$dir</strong></li></ul>");
   $base = "whelp/$dir";
   
   // added 2003-12-19 Checking the permission to write. epolidor
@@ -94,7 +94,7 @@ if(isset($_REQUEST['create'])) {
   }
   
   if(!is_dir("whelp/$dir")) { 
-    $output.="Creating directory structure in $base<br />";
+    $output.= tra("<p>Creating directory structure in <strong>$base</strong>.</p>");
     mkdir("whelp/$dir");
     mkdir("$base/js");
     mkdir("$base/css");
@@ -104,7 +104,7 @@ if(isset($_REQUEST['create'])) {
     mkdir("$base/pages/img");
     mkdir("$base/pages/img/wiki_up");
   }
-  $output.="Eliminating previous files<br />";
+  $output.=tra("<p>Eliminating previous files.</p>");
   deldirfiles("$base/js");
   deldirfiles("$base/css");
   deldirfiles("$base/icons");
@@ -117,6 +117,9 @@ if(isset($_REQUEST['create'])) {
   $structlib->structure_to_webhelp($struct,$dir,$top);
   $smarty->assign('generated','y');
 }  
+
+$smarty->assign('output', $output);
+
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
