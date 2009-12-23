@@ -33,7 +33,7 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 		global $headerlib;
 		$headerlib->include_jquery_ui();
 		require_once $smarty->_get_plugin_filepath('block', 'self_link');
-		$self_link_params['alt'] = $params['title'];
+		$self_link_params['_alt'] = tra('Click for Help');
 		$self_link_params['_icon'] = 'help';
 		$self_link_params['_ajax'] = 'n';
 		
