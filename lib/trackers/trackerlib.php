@@ -670,7 +670,7 @@ class TrackerLib extends TikiLib
 	}
 	/* to filter filterfield is an array of fieldIds
 	 * and the value of each field is either filtervalue or exactvalue
-	 * ex: filterfield=array('1','2', '3'), filtervalue=array(array('this', '*that'), ''), exactvalue('', array('there', 'those'), 'these')
+	 * ex: filterfield=array('1','2', 'sqlsearch'=>array('3', '4')), filtervalue=array(array('this', '*that'), ''), exactvalue('', array('there', 'those'), 'these', 'xxx')
 	 * will filter items with fielId 1 with a value %this% or %that, and fieldId with the value there or those, and fieldId 3 with a value these
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 * allfields is only for performance issue - check if one field is a category
@@ -769,7 +769,10 @@ class TrackerLib extends TikiLib
 				$j = ( $i > 0 ) ? '0' : '';
 				$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON (ttif$i.`itemId` = ttif$j.`itemId`)";
 
-				if ( $ff ) {
+				if (is_array($ff['sqlsearch'])) {
+					$mid .= " AND ttif$i.`fieldId` in (".implode(',', array_fill(0,count($ff['sqlsearch']),'?')).')';
+					$bindvars = array_merge($bindvars, $ff['sqlsearch']);
+				} elseif ( $ff ) {
 					$mid .= " AND ttif$i.`fieldId`=? ";
 					$bindvars[] = $ff;
 				}
@@ -811,6 +814,9 @@ class TrackerLib extends TikiLib
 					if (is_array($ev)) {
 						$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($ev),'?')).")";
 						$bindvars = array_merge($bindvars, $ev);
+					} elseif (is_array($ff['sqlsearch'])) {
+						$mid .= " AND MATCH(ttif$i.`value`) AGAINST(? IN BOOLEAN MODE)";
+						$bindvars[] = $ev;
 					} else {
 						$mid.= " AND ttif$i.`value`=? ";
 						$bindvars[] = $ev;
@@ -870,6 +876,7 @@ class TrackerLib extends TikiLib
 			.' ORDER BY '.$this->convertSortMode('sortvalue_'.$corder);
 		//echo $query; print_r($binvars);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
+		echo $query; print_r($bindvars);
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);

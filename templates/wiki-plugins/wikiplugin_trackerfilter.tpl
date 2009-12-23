@@ -36,6 +36,12 @@
 				{initials_filter_links _initial=$smarty.capture.i_f}
 			{/if}
 			<input id="f_{$filters[if].fieldId}" type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
+{*------sqlsearch *}
+		{elseif $filters[if].format eq 'sqlsearch'}
+			<input id="f_{$filters[if].fieldId}" type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
+			{add_help show='y' title="{tr}Help{/tr}" id="advanced_search_help"}
+				{$smarty.capture.advanced_search_help}
+			{/add_help}
 {*------rating *}
 		{elseif $filters[if].format eq '*'}
 			<select id="f_{$filters[if].fieldId}" name="f_{$filters[if].fieldId}">

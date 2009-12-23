@@ -593,10 +593,15 @@ function wikiplugin_trackerlist($data, $params) {
 			if (is_array($filterfield)) {
 				foreach ($filterfield as $ff) {
 					unset($filterfieldok);
-					foreach ($allfields['data'] as $f) {
-						if ($f['fieldId'] == $ff) {
-							$filterfieldok=true;
-							break;
+					if (is_array($ff)) {// already checked in trackerfilter
+						$filterfieldok=true;
+						break;
+					} else {
+						foreach ($allfields['data'] as $f) {
+							if ($f['fieldId'] == $ff) {
+								$filterfieldok=true;
+								break;
+							}
 						}
 					}
 					if (!isset($filterfieldok))
