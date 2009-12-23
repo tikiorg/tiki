@@ -876,7 +876,6 @@ class TrackerLib extends TikiLib
 			.' ORDER BY '.$this->convertSortMode('sortvalue_'.$corder);
 		//echo $query; print_r($binvars);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
-		echo $query; print_r($bindvars);
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
