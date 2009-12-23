@@ -855,8 +855,9 @@ function display_howto() {
    HOWTO release Tiki
 --------------------------
 
-0/ When branching for 4.x, call it branches/4 or branches/4.x (to be discussed) to be clearer than 
-   branches/3.0, because branches/4.x is indeed 4.1, 4.2, etc.
+0/ When branching for 5.x, name it branches/5.x to be 
+   clearer than branches/3.0, because branches/5.x is 
+   indeed 5.1, 5.2, etc.
    http://dev.tikiwiki.org/SVNTips#Handling_branches
    
 1/ Preliminary manual tasks
