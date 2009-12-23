@@ -50,7 +50,7 @@ function wikiplugin_div_info() {
 				'description' => tra('left|right|center|justify'),
 				'filter' => 'alpha',
 				'options' => array(
-					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('None'), 'value' => 'left'), 
 					array('text' => tra('Right'), 'value' => 'right'), 
 					array('text' => tra('Center'), 'value' => 'center'), 
 					array('text' => tra('Justify'), 'value' => 'justify'), 
@@ -62,7 +62,7 @@ function wikiplugin_div_info() {
 				'description' => tra('left|right, for box with width less than 100%, make text wrap around the box.'),
 				'filter' => 'alpha',
 				'options' => array(
-					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('None'), 'value' => 'none'), 
 					array('text' => tra('Right'), 'value' => 'right'), 
 					array('text' => tra('Left'), 'value' => 'left'), 
 				),
@@ -73,7 +73,7 @@ function wikiplugin_div_info() {
 				'description' => tra('Determine how other elements can wrap around the element.'),
 				'filter' => 'text',
 				'options' => array(
-					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('None'), 'value' => 'none'), 
 					array('text' => tra('Right'), 'value' => 'right'), 
 					array('text' => tra('Left'), 'value' => 'left'), 
 					array('text' => tra('Both'), 'value' => 'both'), 
@@ -103,11 +103,16 @@ function wikiplugin_div($data, $params) {
 	$id    = (isset($id)) ? " id='$id'"  : "";
 	$w    = (isset($width)) ? " width: $width;"  : "";
 	$bg   = (isset($bg))    ? " background: $bg;" : "";
-	$al   = (isset($align) && ($align == 'right' || $align == "center" || $align == "justify")) ? " text-align: $align;" : " text-align: left;";
-	$fl   = (isset($float) && ($float == 'left' || $float == 'right')) ? " float: $float;"  : " float: none;";
-	$cl   = (isset($clear) && ($clear == 'left' || $clear == 'right' || $clear == 'both')) ? " clear: $clear;"  : " clear: none;";
+	$al   = (isset($align) && ($align == 'right' || $align == "center" || $align == "justify" || $align == 'left')) ? " text-align: $align;" : '';
+	$fl   = (isset($float) && ($float == 'left' || $float == 'right' || $float == 'none')) ? " float: $float;"  : '';
+	$cl   = (isset($clear) && ($clear == 'left' || $clear == 'right' || $clear == 'both' || $clear == 'none')) ? " clear: $clear;"  : '';
 
-	$begin  = "<$t style=\"$bg$al$w$fl$cl\"$c $id>";
+	$begin  = "<$t";
+	$style = "$bg$al$w$fl$cl";
+	if (!empty($style)) {
+		$begin .= " style=\"$style\"";
+	}
+	$begin .= " $c $id>";
 	$end = "</$t>";
 	return $begin . $data . $end;
 }
