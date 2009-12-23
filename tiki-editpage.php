@@ -708,7 +708,7 @@ if (($prefs['feature_wiki_screencasts'] == 'y') && (isset($tiki_p_upload_screenc
 		require_once("lib/cache/cachelib");
 
 	// Get a page hash identical to what images are assigned
-	$pageHash = md5( $pageLang . '/' . $this->get_approved_page_or_self( $page ) );
+	$pageHash = md5( $pageLang . '/' . $tikilib->get_approved_page_or_self( $page ) );
 	$hashedFileName = join('-', array($pageHash, time(), rand(1,1000)));
 
 	$screencastErrors = array();
