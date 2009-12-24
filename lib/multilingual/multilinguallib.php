@@ -817,6 +817,7 @@ class MultilingualLib extends TikiLib
         
 	function getTemplateIDInLanguage($section, $template_name, $language) {
 		global $templateslib; require_once 'lib/templates/templateslib.php';
+		// echo "<pre>-- multilinguallib.getTemplateIDInLanguage: \$template_name='$template_name', \$language='$language'</pre>\n";
 		$all_templates = $templateslib->list_templates($section, 0, -1, 'name_asc', '');
 		$looking_for_templates_named = array("$template_name-$language");
 		foreach ($looking_for_templates_named as $looking_for_this_template) {
@@ -824,10 +825,13 @@ class MultilingualLib extends TikiLib
 			foreach ($all_templates['data'] as $a_template) {
 				$a_template_name = $a_template['name'];
 				if ($a_template_name == $looking_for_this_template) {
+					// echo "<pre>-- multilinguallib.getTemplateIDInLanguage: returning '".$a_template['templateId']."'</pre>\n";
 					return $a_template['templateId'];
 				}
 			}
 		}
+		// echo "<pre>-- multilinguallib.getTemplateIDInLanguage: returning null</pre>\n";
+
 		return null;
 	}
 

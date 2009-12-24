@@ -40,20 +40,27 @@ class EditLib
 	function user_needs_to_specify_language_of_page_to_be_created($page, $page_info) {
 		global $_REQUEST, $multilinguallib, $prefs;
 		
+		// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: invoked</pre>\n";
+		
 		if (isset($_REQUEST['need_lang']) && $_REQUEST['need_lang'] == 'n') {
+			// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: need_lang already set to 'n'. Returning false.</pre>\n";
 			return false;
 		}
 		
 		if ($prefs['feature_multilingual'] == 'n') {
+			// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: Multilingual features are off. Returning false.</pre>\n";
 			return false;
 		} 
 		if ($page_info && isset($page_info['lang']) && $page_info['lang'] != '') {
+			// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: Page exists, and its language is set. Returning false.</pre>\n";
 			return false;
 		}
 		if (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '') { 
+			// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: _REQUEST has a language set. Returning false.</pre>\n";
 			return false;
 		}
 
+		// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: No language whatsover. Returning true.</pre>\n";
 		return true;
 	}			
 	

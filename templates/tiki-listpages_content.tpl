@@ -371,7 +371,7 @@
 
 {if $find and $tiki_p_edit eq 'y' and $pagefound eq 'n' and $alias_found eq 'n'}
 	<div class="navbar">
-		 {button _text="{tr}Create Page{/tr}: $find" href="tiki-editpage.php?page=$find&lang=$find_lang&templateId=$template_id" _title="{tr}Create{/tr}"}
+		 {button _text="{tr}Create Page{/tr}: $find" href="tiki-editpage.php?page=$find&lang=$find_lang&templateId=$template_id&template_name=$template_name" _title="{tr}Create{/tr}"}
 	</div>
 {/if}
 {if $checkboxes_on eq 'y'}

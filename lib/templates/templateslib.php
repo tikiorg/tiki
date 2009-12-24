@@ -43,7 +43,9 @@ class TemplatesLib extends TikiLib
 	}
 
 	function get_template($templateId, $lang = null) {
+		// echo "<pre>-- templateslib.get_template: \$templateId='$templateId', \$lang='$lang'</pre>\n";
 		$query = "select * from `tiki_content_templates` where `templateId`=?";
+		// echo "<pre>-- templateslib.get_template: \$query='$query', \$lang='$lang'</pre>\n";		
 		$result = $this->query($query,array((int)$templateId));
 		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();

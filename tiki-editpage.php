@@ -526,12 +526,19 @@ if ($prefs['feature_wiki_footnotes'] == 'y') {
 		}
 	}
 }
-if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
+if ((isset($_REQUEST["template_name"]) || isset($_REQUEST["template_id"])) && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
 	$templateLang = isset( $_REQUEST['lang'] ) ? $_REQUEST['lang'] : null;
-	$template_data = $templateslib->get_template($_REQUEST["templateId"], $templateLang);
+
+	if (isset($_REQUEST["template_id"]))  {
+		$template_id = $_REQUEST["template_id"];
+	} else {
+		include_once ('lib/multilingual/multilinguallib.php');
+		$template_id = $multilinguallib->getTemplateIDInLanguage('wiki', $_REQUEST["template_name"], $templateLang);
+	}
+	$template_data = $templateslib->get_template($template_id, $templateLang);
 	$_REQUEST["edit"] = $template_data["content"]."\n".$_REQUEST["edit"];
-	$smarty->assign("templateId", $_REQUEST["templateId"]);
+	$smarty->assign("templateId", $template_id);
 }
 
 if (isset($_REQUEST["categId"]) && $_REQUEST["categId"] > 0) {
