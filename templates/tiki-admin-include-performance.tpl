@@ -39,6 +39,14 @@
 			{/remarksbox}
 		</fieldset>
 
+			<fieldset>
+				<legend>{tr}Database{/tr}</legend>
+				{preference name=log_sql}
+				<div class="adminoptionboxchild" id="log_sql_childcontainer">
+					{preference name=log_sql_perf_min}
+				</div>
+			</fieldset>		
+		
 		<fieldset>
 			<legend>{tr}Memcache{/tr}</legend>
 			{preference name=memcache_enabled}
