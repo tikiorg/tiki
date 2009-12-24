@@ -5,7 +5,10 @@
 {if $prefs.feature_search_preferences eq 'y'}
 <form method="post" action="">
 	{remarksbox type="note" title="{tr}Development Notice{/tr}"}
-		{tr}Unless a significant amount of preferences are documented and use dynamic preferences before the 4.0 release, this search feature will become disabled by default.{/tr}
+		{tr}Unless a significant amount of preferences are documented and use dynamic preferences before the 5.0 release, this search feature 
+will become disabled by default.{/tr} {tr}More than half the job is done, please help{/tr}: <a 
+href="http://dev.tikiwiki.org/Dynamic+Preferences">http://dev.tikiwiki.org/Dynamic+Preferences</a>.{tr}Also, Dynamic preferences are essential for 
+the <a href="tiki-edit_perspective.php">perspectives GUI</a> to work.{/tr}
 	{/remarksbox}
 	<p>
 		<label>Configuration search: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>

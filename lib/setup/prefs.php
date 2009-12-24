@@ -813,7 +813,7 @@ function get_default_prefs() {
 		'feature_search_show_last_modification' => 'y',
 		'search_refresh_index_mode' => 'normal',
 		'search_parsed_snippet' => 'y',
-		'feature_search_preferences' => 'n',
+		'feature_search_preferences' => 'y',
 		'search_default_where' => '',
 
 		// webmail
