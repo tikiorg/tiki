@@ -30,11 +30,9 @@
 			
 				<fieldset><legend>{tr}Registration{/tr} &amp; {tr}Log in{/tr}</legend>
 					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input type="checkbox" id="allowRegister" name="allowRegister" {if $prefs.allowRegister eq 'y'}checked="checked"{/if} onclick="flip('userscanregister');" />
-						</div>
-						<div class="adminoptionlabel"><label for="allowRegister">{tr}Users can register{/tr}.</label></div>
-						<div id="userscanregister" style="clear:both;display:{if $prefs.allowRegister eq 'y'}block{else}none{/if};margin-left:2.5em;">
+							{preference name=allowRegister}
+
+						<div class="adminoptionboxchild" id="allowRegister_childcontainer">
 							<div class="adminoptionbox">
 								<div class="adminoption"><input type="checkbox" id="validateUsers" name="validateUsers" {if $prefs.validateUsers eq 'y'}checked="checked"{/if} /></div>
 								<div class="adminoptionlabel"><label for="validateUsers">{tr}Validate by email{/tr}.</label>
@@ -63,7 +61,7 @@
 											<div class="adminoptionlabel">{tr}Passcode:{/tr} <input type="text" name="registerPasscode" value="{$prefs.registerPasscode|escape}" size="20" /><br /><em>{tr}Users must enter this code to register{/tr}.</em></div>
 										</div>
 									</div>
-								</div>
+							</div>
 			
 								<div class="adminoptionbox">
 									<div class="adminoption"><input type="checkbox" id="rnd_num_reg" name="rnd_num_reg"{if $gd_lib_found neq 'y'} disabled="disabled"{/if}{if $prefs.rnd_num_reg eq 'y'} checked="checked"{/if} /></div>
@@ -96,7 +94,7 @@
 									</div>
 
 								</div>
-							</div>
+						</div>
 
 			
 							<div class="adminoptionbox">
