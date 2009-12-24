@@ -240,6 +240,9 @@
 							<br />
 							{preference name=permission_denied_url}
 						</div>
+
+					{preference name='url_after_validation'}	
+
 					</div>
 				</div>
 			</fieldset>

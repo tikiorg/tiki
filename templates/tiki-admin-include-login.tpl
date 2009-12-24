@@ -92,7 +92,7 @@
 									</div>
 
 									<div class="adminoptionbox">
-										<div class="adminoptionlabel"><label for="url_after_validation">{tr}Url a user is redirected after account validation:{/tr}</label> <input type="text" id="url_after_validation" name="url_after_validation" value="{$prefs.url_after_validation|escape}" /><br /><em>{tr}Default:{/tr} tiki-information.php?msg={tr}Account validated successfully.{/tr}</em></div>
+										{preference name='url_after_validation'}
 									</div>
 
 								</div>

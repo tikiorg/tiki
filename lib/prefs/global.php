@@ -171,5 +171,9 @@ function prefs_global_list() {
 			'size' => '5',
 			'hint' => tra('0 for unlimited versions'),
 		),
+		'allowRegister' => array(
+			'name' => tra('Users can register'),
+			'type' => 'flag',
+		),
 	);
 }
