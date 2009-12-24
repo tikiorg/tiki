@@ -1,4 +1,4 @@
-{title}{tr}Perspectives{/tr}{/title}
+{title help="Perspectives"}{tr}Perspectives{/tr}{/title}
 {tabset}
 	{tab name="{tr}List{/tr}"}
 		<a href="tiki-switch_perspective.php">{tr}Return to default perspective{/tr}</a>
