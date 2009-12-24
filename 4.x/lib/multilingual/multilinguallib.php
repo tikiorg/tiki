@@ -813,7 +813,7 @@ class MultilingualLib extends TikiLib {
        
        return $userLangsInfo;  
     }
-    
+   
     
 	function getTemplateIDInLanguage($section, $template_name, $language) {
 		global $tikilib;
