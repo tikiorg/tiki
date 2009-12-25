@@ -1,5 +1,6 @@
 # These are suggested Rewrite Rules for use with TikiWiki.
 # They enhance security and permit short URLS. 
+# In your Tiki instance, visit tiki-admin.php?page=sefurl
 #
 # To use
 # 1- rename _htaccess to .htaccess
