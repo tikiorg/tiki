@@ -20,6 +20,7 @@
 # It's possible you may need to update your permissions with "sh setup.sh". 
 # This is an interactive script so you need to set groups, etc to have in cron.
 #
+# If _htaccess is updated, you need to rename to .htaccess as well (or run sh htaccess.sh)
 #
 # To fully automate, you may also want to check the 
 # Tiki Remote Instance Manage (TRIM), a combination 
