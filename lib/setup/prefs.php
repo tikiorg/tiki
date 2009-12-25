@@ -230,7 +230,7 @@ function get_default_prefs() {
 		'wikiplugin_group' => 'y',
 		'wikiplugin_groupmailcore' => 'n',
 		'wikiplugin_groupstat' => 'n',
-		'wikiplugin_html' => 'n',
+		'wikiplugin_html' => 'y',
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_img' => 'y',
 		'wikiplugin_image' => 'n',    // Experimental, intended to be phased out with new img
