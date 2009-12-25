@@ -8,6 +8,7 @@
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}	
 		{tr}SEFURL will not work unless Tiki specific directives are deployed to the .htaccess file.{/tr}	
 		{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}
+		{tr}If you need to keep an existing (non Tiki) .htaccess file, just add Tiki directives to it.{/tr}
 		{tr}When you upgrade (ex.: from Tiki4 to Tiki5), make sure to use the new _htaccess file.{/tr}
 
 		{/remarksbox}
