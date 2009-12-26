@@ -7,15 +7,16 @@ function prefs_https_list() {
 			'description' => tra('When building notification emails, RSS feeds or other externally available links, use HTTPS when the content applies to a specific user. HTTPS must be configured on the server.'),
 			'type' => 'flag',
 		),
-		// Used in templates/tiki-admin-include-login.tpl
-		'https_login' => array(
-			'name' => tra('Use HTTPS login:'),
-			'type' => '',
+		'https_port' => array(
+			'name' => tra('HTTPS port'),
+			'type' => 'text',
+			'size' => 5,
+			'filter' => 'digits',
 		),
 	
 		// Used in templates/tiki-admin-include-login.tpl
-		'https_port' => array(
-			'name' => tra('HTTPS port:'),
+		'https_login' => array(
+			'name' => tra('Use HTTPS login:'),
 			'type' => '',
 		),
 	

@@ -175,47 +175,84 @@ function prefs_global_list() {
 			'name' => tra('Users can register'),
 			'type' => 'flag',
 		),
-		// Used in templates/tiki-admin-include-login.tpl
-		'groupTracker' => array(
-			'name' => tra('Use tracker to collect more group information'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
-		'userTracker' => array(
-			'name' => tra('Use tracker to collect more user information'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
 		'validateEmail' => array(
 			'name' => tra("Validate user's email server"),
-			'type' => '',
+			'type' => 'flag',
 		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
 		'validateRegistration' => array(
 			'name' => tra('Require validation by Admin'),
-			'type' => '',
+			'type' => 'flag',
+			'dependencies' => array(
+				'sender_email',
+			),
 		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
-		'eponymousGroups' => array(
-			'name' => tra('Create a new group for each user'),
-			'type' => '',
+		'validateRegistrationOptions' => array(
+			'name' => tra('Validator emails (separated by comma) if different than the sender email'),
+			'type' => 'text',
+			'size' => 20,
 		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
 		'useRegisterPasscode' => array(
 			'name' => tra('Require passcode to register'),
-			'type' => '',
+			'type' => 'flag',
+		),
+		'registerPasscode' => array(
+			'name' => tra('Passcode'),
+			'type' => 'password',
+			'size' => 15,
+			'hint' =>  tra('Users must enter this code to register'),
+		),
+		'userTracker' => array(
+			'name' => tra('Use tracker to collect more user information'),
+			'type' => 'flag',
+			'help' => 'User+Tracker',
+			'dependencies' => array(
+				'feature_trackers',
+			),
+			'hint' => tra('Use the "Admin Groups" page to select which tracker and fields to display'),
+		),
+		'groupTracker' => array(
+			'name' => tra('Use tracker to collect more group information'),
+			'type' => 'flag',
+			'help' => 'User+Tracker',
+			'dependencies' => array(
+				'feature_trackers',
+			),
+			'hint' => tra('Use the "Admin Groups" page to select which tracker and fields to display'),
+		),
+		'eponymousGroups' => array(
+			'name' => tra('Create a new group for each user'),
+			'type' => 'flag',
+			'hint' => tra("The group will be named identical to the user's username"),
+			'help' => 'Groups',
+		),
+		'remembermethod' => array(
+			'name' => tra('Method'),
+			'type' => 'list',
+			'options' => array(
+				'' => tra('Standard'),
+				'simple' => tra('Simple'),
+			),
+			'hint' => tra('"Standard" uses the client\'s IP and is more secure. "Simple" uses a unique ID and is more reliable'),
+		),
+		'remembertime' => array(
+			'name' => tra('Duration'),
+			'type' => 'list',
+			'options' => array(
+				'300'				=> tra('5') . tra('minutes'),
+				'900'				=> tra('15') . tra('minutes'),
+				'1800'			=> tra('30') . tra('minutes'),
+				'3600'			=> tra('1') . tra('hour'),
+				'7200'			=> tra('2') . tra('hours'),
+				'36000'			=> tra('10') . tra('hours'),
+				'72000'			=> tra('20') . tra('hours'),
+				'86400'			=> tra('1') .  tra('day'),
+				'604800'		=> tra('1') .  tra('week'),
+				'2629743'		=> tra('1') .  tra('month'),
+				'31556926'	=> tra('1') .  tra('year'),
+			),
 		),
 	
-		// Used in templates/tiki-admin-include-login.tpl
-		'registerPasscode' => array(
-			'name' => tra('Passcode:') . ' (' . tra('Users must enter this code to register') . ')',
-			'type' => 'text',
-		),
+	
 	
 		// Used in templates/tiki-admin-include-login.tpl
 		'rememberme' => array(
@@ -224,22 +261,9 @@ function prefs_global_list() {
 		),
 	
 		// Used in templates/tiki-admin-include-login.tpl
-		'remembertime' => array(
-			'name' => tra('Duration:'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
-		'remembermethod' => array(
-			'name' => tra('Method:'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
 		'webserverauth' => array(
 			'name' => '',
 			'type' => '',
 		),
-	
 	);
 }

@@ -2,16 +2,17 @@
 
 function prefs_pass_list() {
 	return array(
-
-		// Used in templates/tiki-admin-include-login.tpl
 		'pass_chr_num' => array(
 			'name' => tra('Require characters and numerals'),
-			'type' => '',
+			'type' => 'flag',
 		),
-		// Used in templates/tiki-admin-include-login.tpl
 		'pass_due' => array(
 			'name' => tra('Password expires after'),
-			'type' => '',
+			'type' => 'text',
+			'size' => 5,
+			'filter' => 'digits',
+			'shorthint' => tra('days'),
+			'hint' => tra('Use "-1" for never'),
 		),
 	);	
 }

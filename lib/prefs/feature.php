@@ -1079,7 +1079,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_crypt_passwords' => array(
-			'name' => tra('Encryption method:'),
+			'name' => tra('Encryption method'),
 			'type' => 'list',
 			'options' => array(
 				'crypt-md5' => 'crypt-md5',
@@ -1551,23 +1551,18 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Advanced+Wiki+Syntax+usage+examples'
 		),
-		
-		// Used in templates/tiki-admin-include-login.tpl
 		'feature_challenge' => array(
 			'name' => tra('Use challenge/response authentication'),
-			'type' => '',
+			'type' => 'flag',
+			'hint' => tra('Confirm that the Admin account has a valid email address or you will not be permitted to login'),
 		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
 		'feature_show_stay_in_ssl_mode' => array(
 			'name' => tra('Users can choose to stay in SSL mode after an HTTPS login'),
-			'type' => '',
+			'type' => 'flag',
 		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
 		'feature_switch_ssl_mode' => array(
 			'name' => tra('Users can switch between secured or standard mode at login'),
-			'type' => '',
+			'type' => 'flag',
 		),
 	);
 }

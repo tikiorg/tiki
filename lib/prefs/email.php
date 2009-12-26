@@ -2,11 +2,13 @@
 
 function prefs_email_list() {
 	return array(
-
-		// Used in templates/tiki-admin-include-login.tpl
 		'email_due' => array(
 			'name' => tra('Re-validate user by email after'),
-			'type' => '',
+			'type' => 'text',
+			'size' => 5,
+			'filter' => 'digits',
+			'shorthint' => tra('days'),
+			'hint' => tra('Use "-1" for never'),
 		),
 	);
 }

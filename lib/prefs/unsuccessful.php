@@ -2,11 +2,13 @@
 
 function prefs_unsuccessful_list() {
 	return array(
-
-		// Used in templates/tiki-admin-include-login.tpl
 		'unsuccessful_logins' => array(
 			'name' => tra('Re-validate user by email after'),
-			'type' => '',
+			'type' => 'text',
+			'size' => 5,
+			'filter' => 'digits',
+			'shorthint' => tra('unsuccessful login attempts'),
+			'hint' => tra('Use "-1" for never'),
 		),
 	);	
 }
