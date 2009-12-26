@@ -11,5 +11,10 @@ function prefs_change_list() {
 			'name' => tra('Users can change theme'),
 			'type' => 'flag',
 		),
+		// Used in templates/tiki-admin-include-login.tpl
+		'change_password' => array(
+			'name' => tra('Users can change their password'),
+			'type' => '',
+		),
 	);
 }

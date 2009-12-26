@@ -175,5 +175,71 @@ function prefs_global_list() {
 			'name' => tra('Users can register'),
 			'type' => 'flag',
 		),
+		// Used in templates/tiki-admin-include-login.tpl
+		'groupTracker' => array(
+			'name' => tra('Use tracker to collect more group information'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'userTracker' => array(
+			'name' => tra('Use tracker to collect more user information'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'validateEmail' => array(
+			'name' => tra("Validate user's email server"),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'validateRegistration' => array(
+			'name' => tra('Require validation by Admin'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'eponymousGroups' => array(
+			'name' => tra('Create a new group for each user'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'useRegisterPasscode' => array(
+			'name' => tra('Require passcode to register'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'registerPasscode' => array(
+			'name' => tra('Passcode:') . ' (' . tra('Users must enter this code to register') . ')',
+			'type' => 'text',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'rememberme' => array(
+			'name' => tra('Remember me:'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'remembertime' => array(
+			'name' => tra('Duration:'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'remembermethod' => array(
+			'name' => tra('Method:'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'webserverauth' => array(
+			'name' => '',
+			'type' => '',
+		),
+	
 	);
 }

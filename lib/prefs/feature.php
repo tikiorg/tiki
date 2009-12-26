@@ -1551,5 +1551,23 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Advanced+Wiki+Syntax+usage+examples'
 		),
+		
+		// Used in templates/tiki-admin-include-login.tpl
+		'feature_challenge' => array(
+			'name' => tra('Use challenge/response authentication'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'feature_show_stay_in_ssl_mode' => array(
+			'name' => tra('Users can choose to stay in SSL mode after an HTTPS login'),
+			'type' => '',
+		),
+	
+		// Used in templates/tiki-admin-include-login.tpl
+		'feature_switch_ssl_mode' => array(
+			'name' => tra('Users can switch between secured or standard mode at login'),
+			'type' => '',
+		),
 	);
 }

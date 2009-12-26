@@ -325,14 +325,6 @@
 				</fieldset>
 
 				<fieldset><legend>{tr}LDAP Bind settings{/tr} {if $prefs.feature_help eq 'y'} {help url="LDAP+Authentication"}{/if}</legend>
-					<!--
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_url">{tr}URL:{/tr}</label>
-							<input type="text" id="auth_ldap_url" name="auth_ldap_url" value="{$prefs.auth_ldap_url|escape}" size="50" />
-							<br /><em>{tr}Will override the Host and Port settings{/tr}.</em>
-						</div>
-					</div>
-					-->
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel"><label for="auth_ldap_host">{tr}Host:{/tr}</label>
 							<input type="text" id="auth_ldap_host" name="auth_ldap_host" value="{$prefs.auth_ldap_host|escape}" />
@@ -424,25 +416,9 @@
                                                 	        <input type="text" id="auth_ldap_emailattr" name="auth_ldap_emailattr" value="{$prefs.auth_ldap_emailattr|escape}" />
                                       	          </div>
                                        		 </div>
-<!--
-	                                        <div class="adminoptionbox">
-       	                                         <div class="adminoptionlabel"><label for="auth_ldap_syncuserattr">{tr}Synchronize user attributes to tiki everytime the user logs in:{/tr}</label>
-                                                        <input type="checkbox" id="auth_ldap_syncuserattr" name="auth_ldap_syncuserattr" {if $prefs.auth_ldap_syncuserattr eq 'y'}checked="checked"{/if} />
-       	                                         </div>
-        	                                </div>
--->
-
 					</fieldset>
 
 				<fieldset><legend>{tr}LDAP Group{/tr}</legend>
-<!--
-                                                <div class="adminoptionbox">
-                                                 <div class="adminoptionlabel"><label for="auth_ldap_syncgroupattr">{tr}Synchronize group attributes to tiki everytime the user logs in:{/tr}</label>
-                                                        <input type="checkbox" id="auth_ldap_syncgroupattr" name="auth_ldap_syncgroupattr" {if $prefs.auth_ldap_syncgroupattr eq 'y'}checked="checked"{/if} />
-							{tr}Note: this enables the usage of LDAP groups{/tr}
-                                                 </div>
-                                                </div>
--->
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel"><label for="auth_ldap_groupdn">{tr}Group DN:{/tr}</label>
 							<input type="text" name="auth_ldap_groupdn" id="auth_ldap_groupdn" value="{$prefs.auth_ldap_groupdn|escape}" />
@@ -574,98 +550,60 @@
 				</fieldset>
 			{/tab}
 
-			{tab name="{tr}CAS{/tr}"}
-				<input type="hidden" name="auth_cas" />
-				<fieldset><legend>{tr}CAS (Central Authentication Service){/tr} {if $prefs.feature_help eq 'y'} {help url="CAS+Authentication"}{/if}</legend>
-					{if $prefs.auth_method ne 'cas'}
-						<div style="padding:0.5em;clear:both" class="simplebox">
-							<div>{icon _id=information} {tr}You must change the Authentication Method to CAS for these changes to take effect{/tr}.</div>
-						</div>
-					{/if}
-
-							{preference name='cas_create_user_tiki'}
-							{preference name='cas_create_user_tiki_ldap'}
-							{preference name='cas_skip_admin'}
-							{preference name='cas_show_alternate_login'}
-							{preference name='cas_version'}
-
-						<fieldset><legend>{tr}CAS Server{/tr}</legend>
-							{preference name='cas_hostname' label="{tr}CAS Server Name{/tr}"}
-							{preference name='cas_port' label="{tr}CAS Server Port{/tr}"}
-							{preference name='cas_path' label="{tr}CAS Server Path{/tr}"}
-							{preference name='cas_extra_param' label="{tr}CAS Extra Parameter{/tr}"}
-							{preference name='cas_authentication_timeout'}
-						</fieldset>
-				</fieldset>	 
-			{/tab}
-			{tab name="{tr}phpBB{/tr}"}
-				<fieldset><legend>{tr}phpBB{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthphpBB" desc="{tr}phpBB User Database Authentication {/tr}"}{/if}</legend>
-					<input type="hidden" name="auth_phpbb" />
-					{if $prefs.auth_method ne 'phpbb'}
-						<div style="padding:0.5em;clear:both" class="simplebox">
-							<div>{icon _id=information} {tr}You must change the Authentication Method to phpBB for these changes to take effect{/tr}.</div>
-						</div>
-					{/if}
-
-					<div class="adminoptionbox">
-						<div class="adminoption"><input id="auth_phpbb_create_tiki" type="checkbox" name="auth_phpbb_create_tiki" {if $prefs.auth_phpbb_create_tiki eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="auth_phpbb_create_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoption"><input id="auth_phpbb_skip_admin" type="checkbox" name="auth_phpbb_skip_admin" {if $prefs.auth_phpbb_skip_admin eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="auth_phpbb_skip_admin">{tr}Skip admin user{/tr}.</label></div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoption"><input id="auth_phpbb_disable_tikionly" type="checkbox" name="auth_phpbb_disable_tikionly" {if $prefs.auth_phpbb_disable_tikionly eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="auth_phpbb_disable_tikionly">{tr}Disable Tiki users who doesn't have a phpBB login. (They could have been deleted).{/tr}.</label></div>
-					</div>
-					<div class="adminoptionbox">
-					<div class="adminoptionlabel"><label for="auth_phpbb_version">{tr}phpBB Version:{/tr}</label>
-						<select name="auth_phpbb_version" id="auth_phpbb_version">
-							<option value="3" {if $prefs.auth_phpbb_version eq '3'} selected="selected"{/if}>{tr}3{/tr}</option>
-						</select>
-					</div>
-					</div>
+		{tab name="{tr}CAS{/tr}"}
+			<input type="hidden" name="auth_cas" />
+			<fieldset>
+				<legend>{tr}CAS (Central Authentication Service){/tr} {if $prefs.feature_help eq 'y'} {help url="CAS+Authentication"}{/if}</legend>
+				{if $prefs.auth_method ne 'cas'}
 					<div style="padding:0.5em;clear:both" class="simplebox">
-						<div>{icon _id=information} {tr}MySql only (for now){/tr}.</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_phpbb_dbhost">{tr}phpBB Database Hostname:{/tr}</label>
-						<input type="text" id="auth_phpbb_dbhost" name="auth_phpbb_dbhost" value="{$prefs.auth_phpbb_dbhost}" size="50" />
+						<div>
+							{icon _id=information} {tr}You must change the Authentication Method to CAS for these changes to take effect{/tr}.
 						</div>
 					</div>
-					<!-- // commented out - will we use a db port?
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_phpbb_dbport">{tr}phpBB Database Port:{/tr}</label>
-						<input type="text" id="auth_phpbb_dbport" name="auth_phpbb_dbport" value="{$prefs.auth_phpbb_dbport}" size="50" />
-						</div>
-					</div> /-->
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_phpbb_dbuser">{tr}phpBB Database Username:{/tr}</label>
-						<input type="text" id="auth_phpbb_dbuser" name="auth_phpbb_dbuser" value="{$prefs.auth_phpbb_dbuser}" size="50" />
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_phpbb_dbpasswd">{tr}phpBB Database Password:{/tr}</label>
-						<input type="password" id="auth_phpbb_dbpasswd" name="auth_phpbb_dbpasswd" value="{$prefs.auth_phpbb_dbpasswd}" size="50" />
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_phpbb_dbname">{tr}phpBB Database Name:{/tr}</label>
-						<input type="text" id="auth_phpbb_dbname" name="auth_phpbb_dbname" value="{$prefs.auth_phpbb_dbname}" size="50" />
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_phpbb_table_prefix">{tr}phpBB Table Prefix:{/tr}</label>
-						<input type="text" id="auth_phpbb_table_prefix" name="auth_phpbb_table_prefix" value="{$prefs.auth_phpbb_table_prefix}" size="50" />
-						</div>
-					</div>
+				{/if}
+
+				{preference name='cas_create_user_tiki'}
+				{preference name='cas_create_user_tiki_ldap'}
+				{preference name='cas_skip_admin'}
+				{preference name='cas_show_alternate_login'}
+				{preference name='cas_version'}
+
+				<fieldset>
+					<legend>{tr}CAS Server{/tr}</legend>
+					{preference name='cas_hostname' label="{tr}CAS Server Name{/tr}"}
+					{preference name='cas_port' label="{tr}CAS Server Port{/tr}"}
+					{preference name='cas_path' label="{tr}CAS Server Path{/tr}"}
+					{preference name='cas_extra_param' label="{tr}CAS Extra Parameter{/tr}"}
+					{preference name='cas_authentication_timeout'}
 				</fieldset>
-			{/tab}
-		{/tabset}
-		<div class="heading input_submit_container" style="text-align: center">
-			<input type="submit" value="{tr}Change preferences{/tr}" />
-		</div>
-	</form>
+			</fieldset>	 
+		{/tab}
+		{tab name="{tr}phpBB{/tr}"}
+			<fieldset>
+				<legend>{tr}phpBB{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthphpBB" desc="{tr}phpBB User Database Authentication {/tr}"}{/if}</legend>
+				<input type="hidden" name="auth_phpbb" />
+				{if $prefs.auth_method ne 'phpbb'}
+					<div style="padding:0.5em;clear:both" class="simplebox">
+						<div>{icon _id=information} {tr}You must change the Authentication Method to phpBB for these changes to take effect{/tr}.</div>
+					</div>
+				{/if}
+				{preference name=auth_phpbb_create_tiki}
+				{preference name=auth_phpbb_skip_admin}
+				{preference name=auth_phpbb_disable_tikionly}
+				{preference name=auth_phpbb_version}
 
-
+				<div style="padding:0.5em;clear:both" class="simplebox">
+					<div>{icon _id=information} {tr}MySql only (for now){/tr}.</div>
+				</div>
+				{preference name=auth_phpbb_dbhost}
+				{preference name=auth_phpbb_dbuser}
+				{preference name=auth_phpbb_dbpasswd}
+				{preference name=auth_phpbb_dbname}
+				{preference name=auth_phpbb_table_prefix}
+			</fieldset>
+		{/tab}
+	{/tabset}
+	<div class="heading input_submit_container" style="text-align: center">
+		<input type="submit" value="{tr}Change preferences{/tr}" />
+	</div>
+</form>
