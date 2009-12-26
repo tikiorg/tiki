@@ -295,260 +295,111 @@
 				</fieldset>
 			{/tab}
 
-			{tab name="{tr}LDAP{/tr}"}
-				<input type="hidden" name="auth_ldap" />
-				<fieldset><legend>LDAP {help url="Login+Authentication+Methods"}</legend>
-					{if $prefs.auth_method ne 'ldap'}
-						<div style="padding:0.5em;clear:both" class="simplebox">
-							<div>{icon _id=information} {tr}You must change the Authentication Method to LDAP for these changes to take effect{/tr}.</div>
-						</div>
-					{/if}
+		{tab name="{tr}LDAP{/tr}"}
+			<input type="hidden" name="auth_ldap" />
+			<fieldset>
+				<legend>LDAP {help url="Login+Authentication+Methods"}</legend>
+				{if $prefs.auth_method ne 'ldap'}
+					<div style="padding:0.5em;clear:both" class="simplebox">
+						<div>{icon _id=information} {tr}You must change the Authentication Method to LDAP for these changes to take effect{/tr}.</div>
+					</div>
+				{/if}
+					
+				{preference name=ldap_create_user_tiki}
+				{preference name=ldap_create_user_ldap}
+				{preference name=ldap_skip_admin}
+				{preference name=auth_ldap_permit_tiki_users}
+			</fieldset>
 
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" id="ldap_create_user_tiki" name="ldap_create_user_tiki" {if $prefs.ldap_create_user_tiki eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="ldap_create_user_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
-					</div>
+			<fieldset>
+				<legend>{tr}LDAP Bind settings{/tr} {if $prefs.feature_help eq 'y'} {help url="LDAP+Authentication"}{/if}</legend>
+				{preference name=auth_ldap_host}
+				{preference name=auth_ldap_port}
+				{preference name=auth_ldap_debug}
+				{preference name=auth_ldap_ssl}
+				{preference name=auth_ldap_starttls}
+				{preference name=auth_ldap_type}
+				{preference name=auth_ldap_scope}
+				{preference name=auth_ldap_version}
+				{preference name=auth_ldap_basedn}
+			</fieldset>
 
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" id="ldap_create_user_ldap" name="ldap_create_user_ldap" {if $prefs.ldap_create_user_ldap eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="ldap_create_user_ldap">{tr}Create user if not in LDAP{/tr}.</label></div>
-					</div>
+			<fieldset>
+				<legend>{tr}LDAP User{/tr}</legend>
+				{preference name=auth_ldap_userdn}
+				{preference name=auth_ldap_userattr}
+				{preference name=auth_ldap_useroc}
+				{preference name=auth_ldap_nameattr}
+				{preference name=auth_ldap_countryattr}
+				{preference name=auth_ldap_emailattr}
+			</fieldset>
 
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" id="ldap_skip_admin" name="ldap_skip_admin" {if $prefs.ldap_skip_admin eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="ldap_skip_admin">{tr}Use Tiki authentication for Admin login{/tr}.</label></div>
-					</div>
-                                        <div class="adminoptionbox">
-                                                <div class="adminoption"><input type="checkbox" id="auth_ldap_permit_tiki_users" name="auth_ldap_permit_tiki_users" {if $prefs.auth_ldap_permit_tiki_users eq 'y'}checked="checked"{/if} /></div>
-                                                <div class="adminoptionlabel"><label for="auth_ldap_permit_tiki_users">{tr}Use Tiki authentication for users created in tiki{/tr}.</label></div>
-                                        </div>
-				</fieldset>
+			<fieldset>
+				<legend>{tr}LDAP Group{/tr}</legend>
+				{preference name=auth_ldap_groupdn}
+				{preference name=auth_ldap_groupattr}
+				{preference name=auth_ldap_groupdescattr}
+				{preference name=auth_ldap_groupoc}
+			</fieldset>
 
-				<fieldset><legend>{tr}LDAP Bind settings{/tr} {if $prefs.feature_help eq 'y'} {help url="LDAP+Authentication"}{/if}</legend>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_host">{tr}Host:{/tr}</label>
-							<input type="text" id="auth_ldap_host" name="auth_ldap_host" value="{$prefs.auth_ldap_host|escape}" />
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_port">{tr}Port:{/tr}</label>
-							<input type="text" name="auth_ldap_port" id="auth_ldap_port" value="{$prefs.auth_ldap_port|escape}" size="5" />
-						</div>
-					</div>
-                                        <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_debug">{tr}Write LDAP debug Information in Tiki Logs:{/tr}</label>
-                                                        <input id="auth_ldap_debug" type="checkbox" name="auth_ldap_debug" {if $prefs.auth_ldap_debug eq 'y'}checked="checked"{/if} />
-                                                </div>
-                                        </div>
-                                        <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_ssl">{tr}Use SSL (ldaps):{/tr}</label>
-							<input id="auth_ldap_ssl" type="checkbox" name="auth_ldap_ssl" {if $prefs.auth_ldap_ssl eq 'y'}checked="checked"{/if} />
-						</div>
-                                        </div>
-					<div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_starttls">{tr}Use TLS:{/tr}</label>
-                                                	<input id="auth_ldap_starttls" type="checkbox" name="auth_ldap_starttls" {if $prefs.auth_ldap_starttls eq 'y'}checked="checked"{/if} />
-						</div>
-                                        </div>
-                                        <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_type">{tr}LDAP Bind Type:{/tr}</label>
-                                                        <select name="auth_ldap_type" id="auth_ldap_type">
-                                                                <option value="default" {if $prefs.auth_ldap_type eq "default"} selected="selected"{/if}>{tr}Default: Anonymous Bind{/tr}</option>
-                                                                <option value="full" {if $prefs.auth_ldap_type eq "full"} selected="selected"{/if}>{tr}Full: userattr=username,UserDN,BaseDN{/tr}</option>
-                                                                <option value="ol" {if $prefs.auth_ldap_type eq "ol"} selected="selected"{/if}>{tr}OpenLDAP: userattr=username,BaseDN{/tr}</option>
-                                                                <option value="ad" {if $prefs.auth_ldap_type eq "ad"} selected="selected"{/if}>{tr}Active Directory (username@domain){/tr}</option>
-                                                                <option value="plain" {if $prefs.auth_ldap_type eq "plain"} selected="selected"{/if}>{tr}Plain Username{/tr}</option>
-                                                        </select>
-                                                </div>
-                                        </div>
+			<fieldset>
+				<legend>{tr}LDAP Group Member - if group membership can be found in group attributes{/tr}</legend>
+				{preference name=auth_ldap_memberattr}
+				{preference name=auth_ldap_memberisdn}
+			</fieldset>
 
+			<fieldset>
+				<legend>{tr}LDAP User Group - if group membership can be found in user attributes{/tr}</legend>
+				{preference name=auth_ldap_usergroupattr}
+				{preference name=auth_ldap_groupgroupattr}
+			</fieldset>
 
+			<fieldset>
+				<legend>{tr}LDAP Admin{/tr}</legend>
+				{preference name=auth_ldap_adminuser}
+				{preference name=auth_ldap_adminpass}
+			</fieldset>
+		{/tab}
 
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_scope">{tr}Search scope:{/tr}</label>
-							<select name="auth_ldap_scope" id="auth_ldap_scope">
-								<option value="sub" {if $prefs.auth_ldap_scope eq "sub"} selected="selected"{/if}>{tr}Subtree{/tr}</option>
-								<option value="one" {if $prefs.auth_ldap_scope eq "one"} selected="selected"{/if}>{tr}One level{/tr}</option>
-								<option value="base" {if $prefs.auth_ldap_scope eq "base"} selected="selected"{/if}>{tr}Base object{/tr}</option>
-							</select>
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_version">{tr}LDAP version:{/tr}</label>
-							<input type="text" id="auth_ldap_version" name="auth_ldap_version" value="{$prefs.auth_ldap_version|escape}" />
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_basedn">{tr}Base DN:{/tr}</label>
-							<input type="text" name="auth_ldap_basedn" id="auth_ldap_basedn" value="{$prefs.auth_ldap_basedn|escape}" />
-						</div>
-					</div>
-					</fieldset>
-
-					<fieldset><legend>{tr}LDAP User{/tr}</legend>
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="auth_ldap_userdn">{tr}User DN:{/tr}</label>
-								<input type="text" id="auth_ldap_userdn" name="auth_ldap_userdn" value="{$prefs.auth_ldap_userdn|escape}" />
-							</div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="auth_ldap_userattr">{tr}User attribute:{/tr}</label>
-								<input type="text" name="auth_ldap_userattr" id="auth_ldap_userattr" value="{$prefs.auth_ldap_userattr|escape}" />
-							</div>
-						</div>
-						<div class="adminoptionbox">
-							<div class="adminoptionlabel"><label for="auth_ldap_useroc">{tr}User OC:{/tr}</label>
-								<input type="text" name="auth_ldap_useroc" id="auth_ldap_useroc" value="{$prefs.auth_ldap_useroc|escape}" />
-							</div>
-						</div>
-	                                        <div class="adminoptionbox">
-        	                                        <div class="adminoptionlabel"><label for="auth_ldap_nameattr">{tr}Realname attribute:{/tr}</label>
-                	                                        <input type="text" id="auth_ldap_nameattr" name="auth_ldap_nameattr" value="{$prefs.auth_ldap_nameattr|escape}" />
-                        	                        </div>
-                                	        </div>
-                                        	<div class="adminoptionbox">
-                                                	<div class="adminoptionlabel"><label for="auth_ldap_countryattr">{tr}Country attribute:{/tr}</label>
-                                                        	<input type="text" id="auth_ldap_countryattr" name="auth_ldap_countryattr" value="{$prefs.auth_ldap_countryattr|escape}" />
-                      	                          </div>
-                        	                </div>
-                                	        <div class="adminoptionbox">
-                                        	        <div class="adminoptionlabel"><label for="auth_ldap_emailattr">{tr}E-mail attribute:{/tr}</label>
-                                                	        <input type="text" id="auth_ldap_emailattr" name="auth_ldap_emailattr" value="{$prefs.auth_ldap_emailattr|escape}" />
-                                      	          </div>
-                                       		 </div>
-					</fieldset>
-
-				<fieldset><legend>{tr}LDAP Group{/tr}</legend>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_groupdn">{tr}Group DN:{/tr}</label>
-							<input type="text" name="auth_ldap_groupdn" id="auth_ldap_groupdn" value="{$prefs.auth_ldap_groupdn|escape}" />
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_groupattr">{tr}Group attribute:{/tr}</label>
-							<input type="text" name="auth_ldap_groupattr" id="auth_ldap_groupattr" value="{$prefs.auth_ldap_groupattr|escape}" />
-						</div>
-					</div>
-               <div class="adminoptionbox">
-                  <div class="adminoptionlabel"><label for="auth_ldap_groupdescattr">{tr}Group description attribute:{/tr}</label>
-                     <input type="text" name="auth_ldap_groupdescattr" id="auth_ldap_groupdescattr" value="{$prefs.auth_ldap_groupdescattr|escape}" />
-                  </div>                                
-               </div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_groupoc">{tr}Group OC:{/tr}</label>
-							<input id="auth_ldap_groupoc" type="text" name="auth_ldap_groupoc" value="{$prefs.auth_ldap_groupoc|escape}" />
-						</div>
-					</div>
-				</fieldset>
-
-				<fieldset><legend>{tr}LDAP Group Member - if group membership can be found in group attributes{/tr}</legend>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_memberattr">{tr}Member attribute:{/tr}</label>
-							<input type="text" id="auth_ldap_memberattr" name="auth_ldap_memberattr" value="{$prefs.auth_ldap_memberattr|escape}" />
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_memberisdn">{tr}Member is DN:{/tr}</label>
-							<input type="checkbox" id="auth_ldap_memberisdn" name="auth_ldap_memberisdn" {if $prefs.auth_ldap_memberisdn eq 'y'}checked="checked"{/if} />
-						</div>
-					</div>
-				</fieldset>
-				<fieldset><legend>{tr}LDAP User Group - if group membership can be found in user attributes{/tr}</legend>
-                                        <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_usergroupattr">{tr}Group attribute:{/tr}</label>
-                                                        <input type="text" id="auth_ldap_usergroupattr" name="auth_ldap_usergroupattr" value="{$prefs.auth_ldap_usergroupattr|escape}" />
-                                                </div>
-                                        </div>
-                                        <div class="adminoptionbox">
-                                                <div class="adminoptionlabel"><label for="auth_ldap_groupgroupattr">{tr}Group attribute in group entry:{/tr}</label>
-                                                        <input type="text" id="auth_ldap_groupgroupattr" name="auth_ldap_groupgroupattr" value="{$prefs.auth_ldap_groupgroupattr|escape}" />
-							(Leave this empty if the group name is already given in the user attribute)
-                                                </div>
-                                        </div>
-                                </fieldset>
-				<fieldset><legend>{tr}LDAP Admin{/tr}</legend>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_adminuser">{tr}Admin user:{/tr}</label>
-							<input type="text" id="auth_ldap_adminuser" name="auth_ldap_adminuser" value="{$prefs.auth_ldap_adminuser|escape}" />
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="auth_ldap_adminpass">{tr}Admin password:{/tr}</label>
-							<input type="password" id="auth_ldap_adminpass" name="auth_ldap_adminpass" value="{$prefs.auth_ldap_adminpass|escape}" />
-						</div>
-					</div>
-				</fieldset>
-			{/tab}
-
-			{tab name="{tr}PAM{/tr}"}
-				<input type="hidden" name="auth_pam" />
-				<fieldset><legend>{tr}PAM{/tr} {help url="AuthPAM" desc="{tr}PAM{/tr}"}</legend>
+		{tab name="{tr}PAM{/tr}"}
+			<input type="hidden" name="auth_pam" />
+			<fieldset>
+				<legend>{tr}PAM{/tr} {help url="AuthPAM" desc="{tr}PAM{/tr}"}</legend>
 	
-					{if $prefs.auth_method ne 'pam'}
-						<div style="padding:0.5em;clear:both" class="simplebox">
-							<div>{icon _id=information} {tr}You must change the Authentication Method to PAM for these changes to take effect{/tr}.</div>
-						</div>
-					{/if}
-
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" name="pam_create_user_tiki" {if $prefs.pam_create_user_tiki eq 'y'}checked="checked"{/if} id="pam_create_user_tiki" /></div>
-						<div class="adminoptionlabel"><label for="pam_create_user_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
-					</div>
-
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" id="pam_skip_admin" name="pam_skip_admin" {if $prefs.pam_skip_admin eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="pam_skip_admin">{tr}Use Tiki authentication for Admin login{/tr}.</label></div>
-					</div>
-
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="pam_service">{tr}PAM service:{/tr}</label>
-							<input type="text" id="pam_service" name="pam_service" value="{$prefs.pam_service|escape}" />
-							<br /><em>{tr}Currently unused{/tr}.</em>
+				{if $prefs.auth_method ne 'pam'}
+					<div style="padding:0.5em;clear:both" class="simplebox">
+						<div>
+							{icon _id=information} {tr}You must change the Authentication Method to PAM for these changes to take effect{/tr}.
 						</div>
 					</div>
-				</fieldset>
-			{/tab}
+				{/if}
+					
+				{preference name=pam_create_user_tiki}
+				{preference name=pam_skip_admin}
+				{preference name=pam_service}
+			</fieldset>
+		{/tab}
 
-			{tab name="{tr}Shibboleth{/tr}"}
-				<fieldset><legend>{tr}Shibboleth{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}{/if}</legend>
-					<input type="hidden" name="auth_shib" />	  
-					{if $prefs.auth_method ne 'shib'}
-						<div style="padding:0.5em;clear:both" class="simplebox">
-							<div>{icon _id=information} {tr}You must change the Authentication Method to Shibboleth for these changes to take effect{/tr}.</div>
-						</div>
-					{/if}
-
-					<div class="adminoptionbox">
-						<div class="adminoption"><input id="shib_create_user_tiki" type="checkbox" name="shib_create_user_tiki" {if $prefs.shib_create_user_tiki eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="shib_create_user_tiki">{tr}Create user if not in Tiki{/tr}.</label></div>
+		{tab name="{tr}Shibboleth{/tr}"}
+			<fieldset>
+				<legend>{tr}Shibboleth{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}{/if}</legend>
+				<input type="hidden" name="auth_shib" />	  
+				{if $prefs.auth_method ne 'shib'}
+					<div style="padding:0.5em;clear:both" class="simplebox">
+						<div>{icon _id=information} {tr}You must change the Authentication Method to Shibboleth for these changes to take effect{/tr}.</div>
 					</div>
+				{/if}
 
-					<div class="adminoptionbox">
-						<div class="adminoption"><input id="shib_skip_admin" type="checkbox" name="shib_skip_admin" {if $prefs.shib_skip_admin eq 'y'}checked="checked"{/if} /></div>
-						<div class="adminoptionlabel"><label for="shib_skip_admin">{tr}Use Tiki authentication for Admin login{/tr}.</label></div>
-					</div>
+				{preference name=shib_create_user_tiki}
+				{preference name=shib_skip_admin}
+				{preference name=shib_affiliation}
 
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel"><label for="shib_affiliation">{tr}Valid affiliations:{/tr}</label>
-							<input type="text" id="shib_affiliation" name="shib_affiliation" value="{$prefs.shib_affiliation}" size="50" />
-							<br /><em>{tr}Separate multiple affiliations with commas{/tr}.</em>
-						</div>
-					</div>
-
-					<div class="adminoptionbox">
-						<div class="adminoption"><input type="checkbox" id='shib_usegroup' name="shib_usegroup" {if $prefs.shib_usegroup eq 'y'}checked="checked"{/if} onclick="flip('defaultgroup');" /></div>
-						<div class="adminoptionlabel"><label for="shib_usegroup">{tr}Create with default group{/tr}.</label></div>
-
-						<div id="defaultgroup" style="margin-left:2.5em;display:{if $prefs.shib_usegroup eq 'y'}block{else}none{/if};">
-							<div class="adminoptionbox">
-								<div class="adminoptionlabel"><label for="shib_group">{tr}Default group:{/tr}</label>
-									<input type="text" id="shib_group" name="shib_group" value="{$prefs.shib_group}" size="50"/>
-								</div>
-							</div>
-						</div>
-					</div>
-				</fieldset>
-			{/tab}
+				{preference name=shib_usegroup}
+				<div class="adminoptionboxchild" id="shib_usegroup_childcontainer">
+					{preference name=shib_group}
+				</div>
+			</fieldset>
+		{/tab}
 
 		{tab name="{tr}CAS{/tr}"}
 			<input type="hidden" name="auth_cas" />
