@@ -6,7 +6,8 @@ function prefs_username_list() {
 		// Used in templates/tiki-admin-include-login.tpl
 		'username_pattern' => array(
 			'name' => tra('Username pattern:'),
-			'type' => '',
+			'type' => 'text',
+			'perspective' => false,
 		),
 	);	
 }
