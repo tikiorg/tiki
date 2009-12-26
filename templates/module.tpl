@@ -1,7 +1,7 @@
 {* $Id$ *}
 {* Module layout with controls *}
 {if $module_nobox neq 'y'}
-{if $prefs.feature_layoutshadows}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
+{if $prefs.feature_layoutshadows eq 'y'}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
 	<div class="box box-{$module_name|escape}{if $module_type eq 'cssmenu'} cssmenubox{/if}"{if $module_params.overflow == 'y'} style="overflow:visible !important"{/if}>
 	{if $module_decorations ne 'n'}
 		<h3 class="box-title clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
@@ -80,5 +80,5 @@
 
 		</div>
 	</div>
-{if $prefs.feature_layoutshadows}{$prefs.box_shadow_end}</div>{/if}
+{if $prefs.feature_layoutshadows eq 'y'}{$prefs.box_shadow_end}</div>{/if}
 {/if}
