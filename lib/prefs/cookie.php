@@ -6,18 +6,21 @@ function prefs_cookie_list() {
 		// Used in templates/tiki-admin-include-login.tpl
 		'cookie_path' => array(
 			'name' => tra('Path:'),
-			'type' => '',
+			'type' => 'text',
+			'perspective' => false,
 		),
 		// Used in templates/tiki-admin-include-login.tpl
 		'cookie_domain' => array(
 			'name' => tra('Domain:'),
-			'type' => '',
+			'type' => 'text',
+			'perspective' => false,
 		),
 	
 		// Used in templates/tiki-admin-include-login.tpl
 		'cookie_name' => array(
 			'name' => tra('Cookie name:'),
-			'type' => '',
+			'type' => 'text',
+			'perspective' => false,
 		),
 	);
 }
