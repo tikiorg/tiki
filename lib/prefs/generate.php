@@ -6,7 +6,7 @@ function prefs_generate_list() {
 		// Used in templates/tiki-admin-include-login.tpl
 		'generate_password' => array(
 			'name' => tra('Include &quot;Generate Password&quot; option on registration form'),
-			'type' => '',
+			'type' => 'flag',
 		),
 	);	
 }
