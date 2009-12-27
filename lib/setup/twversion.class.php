@@ -23,12 +23,12 @@ class TWVersion
 		// Set the development branch.  Valid are:
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
-		//   head     : Represents next generation development version.
-		$this->branch 	= 'stable';
+		//   trunk     : Represents next generation development version.
+		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= '4.1';
-		$this->star	= 'Aldebaran';
+		$this->version 	= 'trunk -future Tiki 5.x-';
+		$this->star	= '';
 		$this->releases	= array();
 
 		// Check for Subversion or not
