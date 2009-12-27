@@ -22,7 +22,7 @@
 					{preference name=validateEmail}
 					{preference name=validateRegistration}
 					<div class="adminoptionboxchild" id="validateRegistration_childcontainer">
-						{preference name=validateRegistrationOptions}
+						{preference name=validator_emails}
 					</div>
 
 					{preference name=useRegisterPasscode}

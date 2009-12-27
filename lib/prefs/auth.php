@@ -214,24 +214,5 @@ function prefs_auth_list() {
 			'type' => 'password',
 			'size' => 15,
 		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
-		'auth_ldap_syncuserattr' => array(
-			'name' => '',
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
-		'auth_ldap_syncgroupattr' => array(
-			'name' => '',
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
-		'auth_phpbb_dbport' => array(
-			'name' => '',
-			'type' => '',
-		),
-	
 	);
 }

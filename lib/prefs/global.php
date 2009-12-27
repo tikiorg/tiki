@@ -186,11 +186,6 @@ function prefs_global_list() {
 				'sender_email',
 			),
 		),
-		'validateRegistrationOptions' => array(
-			'name' => tra('Validator emails (separated by comma) if different than the sender email'),
-			'type' => 'text',
-			'size' => 20,
-		),
 		'useRegisterPasscode' => array(
 			'name' => tra('Require passcode to register'),
 			'type' => 'flag',
@@ -250,20 +245,6 @@ function prefs_global_list() {
 				'2629743'		=> tra('1') .  tra('month'),
 				'31556926'	=> tra('1') .  tra('year'),
 			),
-		),
-	
-	
-	
-		// Used in templates/tiki-admin-include-login.tpl
-		'rememberme' => array(
-			'name' => tra('Remember me:'),
-			'type' => '',
-		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
-		'webserverauth' => array(
-			'name' => '',
-			'type' => '',
 		),
 	);
 }

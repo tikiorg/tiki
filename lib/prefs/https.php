@@ -13,12 +13,5 @@ function prefs_https_list() {
 			'size' => 5,
 			'filter' => 'digits',
 		),
-	
-		// Used in templates/tiki-admin-include-login.tpl
-		'https_login' => array(
-			'name' => tra('Use HTTPS login:'),
-			'type' => '',
-		),
-	
 	);
 }
