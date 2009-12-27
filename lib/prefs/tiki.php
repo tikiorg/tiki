@@ -5,6 +5,7 @@ function prefs_tiki_list() {
 		'tiki_version_check_frequency' => array(
 			'name' => tra('Check frequency'),
 			'type' => 'list',
+			'perspective' => false,
 			'options' => array(
 				'86400' => tra('Each day'),
 				'604800' => tra('Each week'),
@@ -18,6 +19,7 @@ function prefs_tiki_list() {
 			'name' => tra('Minify javascript'),
 			'description' => tra('Compress javascript files used in the page into a single file to be distributed statically. Changes to javascript files will require cache to be cleared.'),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'tiki_same_day_time_only' => array(
 			'name' => tra('Skip date for same day'),

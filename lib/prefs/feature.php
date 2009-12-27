@@ -43,7 +43,7 @@ function prefs_feature_list() {
 		'feature_machine_translation' => array(
 			'name' => tra('Machine Translation (by Google Translate)'),
 			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),
-			'help' => 'Translating+Content',
+			'help' => 'Machine+Translation',
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
 		),	
@@ -287,6 +287,7 @@ function prefs_feature_list() {
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'perspective' => false,
 		),
 		'feature_fullscreen' => array(
 			'name' => tra('Full Screen'),
@@ -317,6 +318,7 @@ function prefs_feature_list() {
 			'description' => tra('HTML Purifier'),
 			'help' => 'Purifier',
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_ajax' => array(
 			'name' => tra('Ajax'),
@@ -573,6 +575,7 @@ function prefs_feature_list() {
 			'description' => tra('Debugger Console'),
 			'help' => 'Debugger+Console',
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_tikitests' => array(
 			'name' => tra('TikiTests'),
@@ -585,6 +588,7 @@ function prefs_feature_list() {
 			'description' => tra('These JavaScript files have been previously minified and are stable. They make pages quicker to load than their non-minified versions.'),
 			'help' => 'MinifiedScripts',
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_version_checks' => array(
 			'name' => tra('Check for updates automatically'),
@@ -731,7 +735,7 @@ function prefs_feature_list() {
 		),
 		'feature_breadcrumbs' => array(
 			'name' => tra('Breadcrumbs'),
-			'description' => tra('Uses Google Translate to translate the content of wiki pages to other languages.'),
+			'description' => tra('Attempts to show you where you are'),
 			'help' => 'Breadcrumbs',
 			'warning' => tra('Neglected feature'),
 			'type' => 'flag',
@@ -947,6 +951,7 @@ function prefs_feature_list() {
 		'feature_search_show_forbidden_obj' => array(
 			'name' => tra('Ignore individual object permissions'),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'feature_search_show_object_filter' => array(
 			'name' => tra('Object filter'),

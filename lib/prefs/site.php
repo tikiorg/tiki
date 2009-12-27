@@ -21,11 +21,13 @@ function prefs_site_list() {
 			'name' => tra('Close site (except for those with permission)'),
 			'description' => tra('Close site (except for those with permission)'),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'site_closed_msg' => array(
 			'name' => tra('Message to display'),
 			'description' => tra('Message to display'),
 			'type' => 'text',
+			'perspective' => false,
 			'dependencies' => array(
 				'site_closed',
 			),
@@ -34,6 +36,7 @@ function prefs_site_list() {
 			'name' => tra('Message to display'),
 			'description' => tra('Message to display'),
 			'type' => 'text',
+			'perspective' => false,
 			'dependencies' => array(
 				'use_load_threshold',
 			),

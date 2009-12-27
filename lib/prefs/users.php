@@ -6,6 +6,7 @@ function prefs_users_list() {
 			'name' => tra('Serve avatar images statically'),
 			'description' => tra('When enabled, feature checks and permission checks will be skipped.'),
 			'type' => 'flag',
+			'perspective' => false,
 		),
 		'users_prefs_display_timezone' => array(
 			'type' => 'radio',

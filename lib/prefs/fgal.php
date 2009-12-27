@@ -8,11 +8,13 @@ function prefs_fgal_list() {
 			'help' => 'File+Gallery+Config',
 			'size' => 50,
 			'hint' => tra('The server must be able to read/write the directory.').' '.tra('Required for podcasts.'),
+			'perspective' => false,
 		),
 		'fgal_use_dir' => array(
 			'name' => tra('Path'),
 			'type' => 'text',
 			'help' => 'File+Gallery',
+			'perspective' => false,
 		),
 		'fgal_batch_dir' => array(
 			'name' => tra('Path'),
@@ -20,6 +22,7 @@ function prefs_fgal_list() {
 			'help' => 'File+Gallery+config',
 			'size' => 50,
 			'hint' => tra('If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload files in that dir, either by scp, ftp, or other protocols').' '.tra('The server must be able to read the directory.').' '. tra('The directory can be outside the web space.'),
+			'perspective' => false,
 		),
 		'fgal_prevent_negative_score' => array(
 			'name' => tra('Prevent download if score becomes negative'),
@@ -41,11 +44,12 @@ function prefs_fgal_list() {
 			'name' => tra('Allow same file to be uploaded more than once'),
 			'type' => 'list',
 			'help' => 'File+Gallery+Config',
+			'perspective' => false,
 			'options' => array(
 							  'n' => tra('Never'),
 							  'y' => tra('Yes, even in the same gallery'),
 							  'different_galleries' => tra('Only in different galleries')
-							  ),
+			),
 		),
 		'fgal_match_regex' => array(
 			'name' => tra('Must match'),
@@ -59,7 +63,7 @@ function prefs_fgal_list() {
 		),
 		'fgal_quota' => array (
 			'name' => tra('Quota for all the files and archives'),
-			'shorthint' => tra('Mb').' '.tra('(0 for illimitted)'),
+			'shorthint' => tra('Mb').' '.tra('(0 for unlimited)'),
 			'type' => 'text',
 			'size' => 7,
 		),
@@ -69,7 +73,7 @@ function prefs_fgal_list() {
 		),
 		'fgal_quota_default' => array (
 			'name' => tra('Default quota for each new gallery'),
-			'shorthint' => tra('Mb').' '.tra('(0 for illimitted)'),
+			'shorthint' => tra('Mb').' '.tra('(0 for unlimited)'),
 			'type' => 'text',
 			'size' => 7,
 		),
@@ -79,6 +83,7 @@ function prefs_fgal_list() {
 		),
 		'fgal_use_db' => array(
 			'type' => 'radio',
+			'perspective' => false,
 			'options' => array(
 				'y' => tra('Store in database'),
 				'n' => tra('Store in directory'),
@@ -88,6 +93,7 @@ function prefs_fgal_list() {
 			'name' => tra('Path'),
 			'type' => 'text',
 			'size' => 50,
+			'perspective' => false,
 		),
 	);
 }
