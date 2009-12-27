@@ -904,6 +904,7 @@ function display_howto() {
 post/
    Update appropriate http://tikiwiki.org/stable.version file with new release version
    (or ask the TAG to do this)
+   Increment/update lib/setup/twversion.class.php accordingly (depending if major or minor release)
 
 All that process has to be relayed on live irc channel : 
 irc://irc.freenode.net/#tikiwiki
