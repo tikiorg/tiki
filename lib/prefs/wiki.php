@@ -480,5 +480,11 @@ function prefs_wiki_list() {
 			'description' => tra('Allow to manage keywords on a per-page basis.'),
 			'type' => 'flag',
 		),
+		'wiki_likepages_samelang_only' => array(
+			'name' => tra('Similar pages only listed in same language'),
+			'description' => tra('When listing similar pages, such as in missing page 404, only display pages in the same language as the request.'),
+			'type' => 'flag',
+			'dependencies' => array( 'feature_multilingual' ),
+		),
 	);
 }

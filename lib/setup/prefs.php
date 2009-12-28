@@ -182,6 +182,7 @@ function get_default_prefs() {
 		'wiki_dynvar_style' => 'single',
 		'wiki_dynvar_multilingual' => 'n',
 		'wiki_keywords' => 'n',
+		'wiki_likepages_samelang_only' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',

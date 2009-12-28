@@ -192,6 +192,9 @@
 
 		{preference name=feature_semantic}
 		{preference name=feature_likePages}
+		<div class="adminoptionboxchild" id="wiki_likepages_samelang_only">
+			{preference name=wiki_likepages_samelang_only}
+		</div>
 		{preference name=feature_wiki_rankings}
 
 		{preference name=feature_wiki_structure}

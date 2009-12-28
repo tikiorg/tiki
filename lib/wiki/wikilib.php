@@ -663,13 +663,24 @@ class WikiLib extends TikiLib
 
 		$exp = implode(" or ", $exps);
 		if ($exp) {
-			$query = "select `pageName` from `tiki_pages` where $exp";
+			$query = "select `pageName`, `lang` from `tiki_pages` where ($exp)";
+
+			if( $prefs['feature_multilingual'] == 'y' ) {
+				$query .= ' ORDER BY CASE WHEN `lang` = ? THEN 0 WHEN `lang` IS NULL OR `lang` = \'\' THEN 1 ELSE 2 END';
+				$bindvars[] = $prefs['language'];
+			}
+
 			$result = $this->query($query,$bindvars);
 			$ret = array();
 
 			while ($res = $result->fetchRow()) {
-				if ($tikilib->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view'))
+				if( $prefs['wiki_likepages_samelang_only'] == 'y' && ! empty( $res['lang'] ) && $res['lang'] != $prefs['language'] ) {
+					continue;
+				}
+
+				if ($tikilib->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view')) {
 					$ret[] = $res["pageName"];
+				}
 			}
 
 			return $ret;
