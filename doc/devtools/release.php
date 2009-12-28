@@ -904,7 +904,9 @@ function display_howto() {
 post/
    Update appropriate http://tikiwiki.org/stable.version file with new release version
    (or ask the TAG to do this)
-   Increment/update lib/setup/twversion.class.php accordingly (depending if major or minor release)
+   Increment/update lib/setup/twversion.class.php and db/convertscripts/convertsqls.sh accordingly (depending if major or minor release)
+   Delete trunk/db/*.sql for old versions
+   Regenerate new database files with db/convertscripts/convertsqls.sh
 
 All that process has to be relayed on live irc channel : 
 irc://irc.freenode.net/#tikiwiki
