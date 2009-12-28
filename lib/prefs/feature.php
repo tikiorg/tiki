@@ -1611,5 +1611,89 @@ function prefs_feature_list() {
 				'wikiplugin_quote',
 			),
 		),
+		'feature_community_gender' => array(
+			'name' => tra('Users can choose to show their gender'),
+			'type' => 'flag',
+			'help' => 'User+Preferences',
+			'dependencies' => array(
+				'feature_userPreferences',
+			),
+		),
+		'feature_community_mouseover' => array(
+			'name' => tra("Show user's information on mouseover"),
+			'type' => 'flag',
+			'help' => 'User+Preferences',
+			'hint' => tra("Requires user's information to be public"),
+		),
+		'feature_community_mouseover_name' => array(
+			'name' => tra('Real name'),
+			'type' => 'flag',
+		),
+		'feature_community_mouseover_gender' => array(
+			'name' => tra('Gender'),
+			'type' => 'flag',
+		),
+		'feature_community_mouseover_picture' => array(
+			'name' => tra('Picture (avatar)'),
+			'type' => 'flag',
+		),
+		'feature_community_mouseover_friends' => array(
+			'name' => tra('Number of friends'),
+			'type' => 'flag',
+			'help' => 'Friendship+Network',
+			'dependencies' => array(
+				'feature_friends',
+			),
+		),
+		'feature_community_mouseover_score' => array(
+			'name' => tra('Score'),
+			'type' => 'flag',
+			'help' => 'Score',
+		),
+		'feature_community_mouseover_country' => array(
+			'name' => tra('Country'),
+			'type' => 'flag',
+		),
+		'feature_community_mouseover_email' => array(
+			'name' => tra('E-mail'),
+			'type' => 'flag',
+		),
+		'feature_community_mouseover_lastlogin' => array(
+			'name' => tra('Last login'),
+			'type' => 'flag',
+		),
+		'feature_community_mouseover_distance' => array(
+			'name' => tra('Distance'),
+			'type' => 'flag',
+		),
+		'feature_community_list_name' => array(
+			'name' => tra('Name'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_friends',
+			),
+		),
+		'feature_community_list_score' => array(
+			'name' => tra('Score'),
+			'type' => 'flag',
+			'help' => 'Score',
+			'dependencies' => array(
+				'feature_friends',
+			),
+		),
+		'feature_community_list_country' => array(
+			'name' => tra('Country'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_friends',
+			),
+		),
+		'feature_community_list_distance' => array(
+			'name' => tra('Distance'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_friends',
+			),
+		),
 	);
 }

@@ -35,4 +35,3 @@ function prefs_user_list() {
 		),
 	);
 }
-
