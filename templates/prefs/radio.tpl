@@ -1,4 +1,8 @@
 <div class="adminoptionbox">
+	{if $p.name}
+		<label for="{$p.id|escape}">{$p.name|escape}:</label>
+	{/if}
+
 	{foreach from=$p.options key=value item=label name=loop}
 		<div class="adminoptionlabel">
 			 <input id="{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}" type="radio" name="{$p.preference|escape}" value="{$value}"{if $p.value eq $value} checked="checked"{/if} />
