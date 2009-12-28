@@ -7,33 +7,18 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>
+
 	<fieldset>
 		<legend>{tr}{$crumbs[$crumb]->title}{/tr}{if $prefs.feature_help eq 'y'}{help crumb=$crumbs[$crumb]}{/if}</legend>
 
-		<div class="adminoptionbox">
-			<div class="adminoption">
-				<input type="checkbox" id="rss_articles" name="rss_articles" onclick="flip('articlesrss');"{if $prefs.rss_articles eq 'y'} checked="checked"{/if}{if $prefs.feature_articles ne 'y'} disabled="disabled"{/if} />
-			</div>
-			<div class="adminoptionlabel">
-				<label for="rss_articles">
-					{tr}Articles{/tr}{if $prefs.rss_articles eq 'y'}<a href="tiki-articles_rss.php" title="{tr}Feed for articles{/tr}."> {icon _id=feed}</a>{/if} {if $prefs.feature_articles ne 'y'}&nbsp;({tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.){/if}
-				</label>
-	
-				<div id="articlesrss" class="adminoptionboxchild" style="display:{if ($prefs.rss_articles eq 'y') and ($prefs.feature_articles eq 'y')}block{else}none{/if};">
-					<div class="adminoptionbox">
-						{tr}Title:{/tr} <input type="text" name="title_rss_articles" size="20" maxlength="255" style="width:95%" value='{$prefs.title_rss_articles|escape}' />
-						{preference name="desc_rss_articles" label="{tr}Description{/tr}"}
-						<br />
-						{tr}Maximum number of items to display:{/tr}<input type="text" name="max_rss_articles" size="5" value="{$prefs.max_rss_articles|escape}" />
-						<br />
-						{tr}Show Author:{/tr}<input type="checkbox" name="showAuthor_rss_articles" {if $prefs.showAuthor_rss_articles eq 'y'} checked="checked"{/if}/>
-						<br />
-						{tr}Homepage URL:{/tr}
-						<br />
-						<input type="text" name="index_rss_articles" size="20" style="width: 95%" value="{$prefs.index_rss_articles|escape}" />
-					</div>
-				</div>
-			</div>
+		{preference name=rss_articles}
+		<div class="adminoptionboxchild" id="rss_articles_childcontainer">
+			<a href="tiki-articles_rss.php" title="{tr}Feed for articles{/tr}."> {icon _id=feed}</a>
+			{preference name=title_rss_articles}
+			{preference name=desc_rss_articles}
+			{preference name=max_rss_articles}
+			{preference name=showAuthor_rss_articles}
+			{preference name=index_rss_articles}
 		</div>
 
 		<div class="adminoptionbox">

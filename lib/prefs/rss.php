@@ -7,7 +7,13 @@ function prefs_rss_list() {
 			'description' => tra('Propose basic http authentication if the user has no permission to see the feed'),
 			'type' => 'flag',
 			),
-
+		'rss_articles' => array(
+			'name' => tra('Articles'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_articles',
+			),
+		),
 	);
 }
 
