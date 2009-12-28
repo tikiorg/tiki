@@ -8,15 +8,15 @@
 	<head>
 {if $base_url and $dir_level gt 0}		<base href="{$base_url}" />{/if}
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-{if $prefs.metatag_keywords ne ''}<meta name="keywords" content="{$prefs.metatag_keywords}" />
+{if $prefs.metatag_keywords ne '' or $metatag_local_keywords ne ''}<meta name="keywords" content="{$prefs.metatag_keywords|escape} {$metatag_local_keywords|escape}" />
 {/if}
-{if $prefs.metatag_author ne ''}<meta name="author" content="{$prefs.metatag_author}" />
+{if $prefs.metatag_author ne ''}<meta name="author" content="{$prefs.metatag_author|escape}" />
 {/if}
-{if $prefs.metatag_description ne ''}<meta name="description" content="{$prefs.metatag_description}" />
+{if $prefs.metatag_description ne ''}<meta name="description" content="{$prefs.metatag_description|escape}" />
 {/if}
-{if $prefs.metatag_robots ne ''}<meta name="robots" content="{$prefs.metatag_robots}" />
+{if $prefs.metatag_robots ne ''}<meta name="robots" content="{$prefs.metatag_robots|escape}" />
 {/if}
-{if $prefs.metatag_revisitafter ne ''}<meta name="revisit-after" content="{$prefs.metatag_revisitafter}" />
+{if $prefs.metatag_revisitafter ne ''}<meta name="revisit-after" content="{$prefs.metatag_revisitafter|escape}" />
 {/if}
 
 {* --- tikiwiki block --- *}
