@@ -1569,5 +1569,47 @@ function prefs_feature_list() {
 			'name' => tra('Users can switch between secured or standard mode at login'),
 			'type' => 'flag',
 		),
+		'feature_wiki_paragraph_formatting' => array(
+			'name' => tra('Wiki paragraph formatting'),
+			'type' => 'flag',
+		),
+		'feature_wiki_paragraph_formatting_add_br' => array(
+			'name' => tra('...but still create line breaks within paragraphs'),
+			'type' => 'flag',
+		),
+		'feature_wiki_monosp' => array(
+			'name' => tra('Automonospaced text'),
+			'type' => 'flag',
+		),
+		'feature_wiki_tables' => array(
+			'name' => tra('Tables syntax'),
+			'type' => 'list',
+			'options' => array(
+				'old' => tra('|| for rows'),
+				'new' => tra('<return> for rows'),
+			),
+		),
+		'feature_autolinks' => array(
+			'name' => tra('AutoLinks'),
+			'type' => 'flag',
+			'help' => 'AutoLinks',
+		),
+		'feature_hotwords' => array(
+			'name' => tra('Hotwords'),
+			'type' => 'flag',
+			'help' => 'Hotwords',
+		),
+		'feature_hotwords_nw' => array(
+			'name' => tra('Open Hotwords in new window'),
+			'type' => 'flag',
+		),
+		'feature_use_quoteplugin' => array(
+			'name' => tra('Use Quote plugin rather than ">" for quoting'),
+			'type' => 'flag',
+			'help' => 'PluginQuote',
+			'dependencies' => array(
+				'wikiplugin_quote',
+			),
+		),
 	);
 }

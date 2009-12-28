@@ -3,156 +3,104 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=textarea" method="post">
-<div class="heading input_submit_container" style="text-align: right">
-	<input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" />
-</div>
+	<div class="heading input_submit_container" style="text-align: right">
+		<input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" />
+	</div>
+	
 	{tabset name="admin_textarea"}
 		{tab name="{tr}General Settings{/tr}"}
-<fieldset><legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Text+Area"}{/if}</legend>
+			<fieldset>
+				<legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Text+Area"}{/if}</legend>
+				{preference name=feature_filegals_manager}
+				{preference name=feature_dynamic_content}
+				{preference name=feature_wiki_replace}
+			</fieldset>
 
-{preference name=feature_filegals_manager}
-{preference name=feature_dynamic_content}
-{preference name=feature_wiki_replace}
+			<fieldset>
+				<legend>{tr}Wiki syntax{/tr}{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}</legend>
+				{preference name=feature_smileys}
+				{preference name=feature_wiki_paragraph_formatting}
+				<div class="adminoptionboxchild" id="feature_wiki_paragraph_formatting_childcontainer">
+					{preference name=feature_wiki_paragraph_formatting_add_br}
+				</div>
+				{preference name=section_comments_parse}
+				{preference name=feature_wiki_monosp}
+				{preference name=feature_wiki_tables}
+				{preference name=feature_wiki_argvariable}
+			</fieldset>
 
-</fieldset>
+			<fieldset>
+				<legend>{tr}Miscellaneous{/tr}</legend>
+				{preference name=feature_autolinks}
+				{preference name=feature_hotwords}
+				<div class="adminoptionboxchild" id="feature_hotwords_childcontainer">
+					{preference name=feature_hotwords_nw}
+				</div>
+				{preference name=feature_use_quoteplugin}
+			</fieldset>
 
-<fieldset><legend>{tr}Wiki syntax{/tr}{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}</legend>
+			<fieldset>
+				<legend>{tr}Default size{/tr}</legend>
+				{preference name=default_rows_textarea_wiki}
+				{preference name=default_rows_textarea_comment}
+				{preference name=default_rows_textarea_forum}
+				{preference name=default_rows_textarea_forumthread}
+			</fieldset>
 
-{preference name=feature_smileys}
-
-	<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_paragraph_formatting" name="feature_wiki_paragraph_formatting" {if $prefs.feature_wiki_paragraph_formatting eq 'y'}checked="checked" {/if}onclick="flip('usewikiparaformat');" /></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_paragraph_formatting">{tr}Wiki paragraph formatting{/tr}</label></div>
-<div class="adminoptionboxchild" id="usewikiparaformat" style="display:{if $prefs.feature_wiki_paragraph_formatting eq 'y'}block{else}none{/if};">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_paragraph_formatting_add_br" name="feature_wiki_paragraph_formatting_add_br" {if $prefs.feature_wiki_paragraph_formatting_add_br eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_paragraph_formatting_add_br">{tr}...but still create line breaks within paragraphs{/tr}.</label></div>
-</div>
-</div>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="section_comments_parse" name="section_comments_parse" {if $prefs.section_comments_parse eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel">
-		<label for="section_comments_parse">{tr}Parse wiki syntax in comments in all sections apart from Forums{/tr}</label>{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}
-		{remarksbox type='tip' title='Tip'}Use 'Accept wiki syntax' for forums, currently <em>{if $prefs.feature_forum_parse eq 'y'}on{else}off{/if}</em> {icon _id="arrow_right" href="tiki-admin.php?page=forums"}{/remarksbox}
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_monosp" name="feature_wiki_monosp" {if $prefs.feature_wiki_monosp eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_monosp">{tr}Automonospaced text{/tr}</label></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="feature_wiki_tables">{tr}Tables syntax{/tr}:</label>
-	<select name="feature_wiki_tables" id="feature_wiki_tables">
-    <option value="old" {if $prefs.feature_wiki_tables eq 'old'}selected="selected"{/if}>{tr}|| for rows{/tr}</option>
-    <option value="new" {if $prefs.feature_wiki_tables eq 'new'}selected="selected"{/if}>{tr}&lt;return&gt; for rows{/tr}</option>
-    </select>
-	</div>
-</div>
-{preference name=feature_wiki_argvariable}
-
-</fieldset>
-
-<fieldset><legend>{tr}Miscellaneous{/tr}</legend>
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id='feature_autolinks' name="feature_autolinks" {if $prefs.feature_autolinks eq 'y'}checked="checked"{/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_autolinks">{tr}AutoLinks{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="AutoLinks"}{/if}</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input onclick="flip('hotwords_nw');" type="checkbox" name="feature_hotwords" id="feature_hotwords" {if $prefs.feature_hotwords eq 'y'}checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_hotwords">{tr}Hotwords{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Hotwords"}{/if}</div>
-	
-	<div class="adminoptionboxchild" id="hotwords_nw" style="display:{if $prefs.feature_hotwords eq 'y'}block{else}none{/if};">
-		<div class="adminoption"><input type="checkbox" name="feature_hotwords_nw" id="feature_hotwords_nw" {if $prefs.feature_hotwords_nw eq 'y'}checked="checked"{/if}/> </div>
-		<div class="adminoptionlabel"><label for="feature_hotwords_nw">{tr}Open Hotwords in new window{/tr}.</label></div>	
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_use_quoteplugin" id="feature_use_quoteplugin"{if $prefs.feature_use_quoteplugin eq 'y'}checked="checked" {/if}/> </div>
-	<div class="adminoptionlabel"><label for="feature_use_quoteplugin"> {tr}Use Quote plugin rather than &ldquo;&gt;&rdquo; for quoting{/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="PluginQuote"}{/if}
-{if $prefs.wikiplugin_quote ne 'y'}<br />{icon _id=information} {tr}Plugin disabled{/tr}. {/if}
-	</div>
-</div>
-</fieldset>
-
-<fieldset><legend>{tr}Default size{/tr}</legend>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="default_rows_textarea_wiki">{tr}Wiki{/tr}:</label> <input type="text" name="default_rows_textarea_wiki" id="default_rows_textarea_wiki" value="{$prefs.default_rows_textarea_wiki}" size="4" /> {tr}rows{/tr}</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="default_rows_textarea_comment">{tr}Comments {/tr}:</label><input type="text" name="default_rows_textarea_comment" id="default_rows_textarea_comment" value="{$prefs.default_rows_textarea_comment}" size="4" />{tr}rows{/tr}</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="default_rows_textarea_forum">{tr}Forum{/tr}:</label><input type="text" name="default_rows_textarea_forum" id="default_rows_textarea_forum" value="{$prefs.default_rows_textarea_forum}" size="4" />{tr}rows{/tr}</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="default_rows_textarea_forumthread">{tr}Forum reply{/tr}: </label><input type="text" name="default_rows_textarea_forumthread" id="default_rows_textarea_forumthread" value="{$prefs.default_rows_textarea_forumthread}" size="4" />{tr}rows{/tr}</div>
-</div>
-</fieldset>
-
-<fieldset><legend>{tr}External links and images{/tr}</legend>
-
-			{preference name=cachepages}
-			{preference name=cacheimages}
-			{preference name=feature_wiki_ext_icon}
-			{preference name=popupLinks}
-			<em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
-	
-			
-			
-</fieldset>
-
+			<fieldset>
+				<legend>{tr}External links and images{/tr}</legend>
+				{preference name=cachepages}
+				{preference name=cacheimages}
+				{preference name=feature_wiki_ext_icon}
+				{preference name=popupLinks}
+				{remarksbox type='tip' title='{tr}Tip{/tr}'}
+					<em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
+				{/remarksbox}
+			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}
+			{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles and blogs etc. You can enable and disable them below.{/tr}
+			{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
+			{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
+			{/remarksbox}
 
-	<!-- *** plugins *** -->
-		{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles and blogs etc. You can enable and disable them below.{/tr}
-		{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
-		{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
-		{/remarksbox}
-
-		<fieldset class="admin">
-		<legend>{tr}Edit plugin icons{/tr}</legend>
-
-			{preference name=wiki_edit_plugin}
-
-		</fieldset>
-		<fieldset class="admin">
-                <legend>{tr}Plugins{/tr}</legend>
+			<fieldset class="admin">
+				<legend>{tr}Edit plugin icons{/tr}</legend>
+				{preference name=wiki_edit_plugin}
+			</fieldset>
+			
+			<fieldset class="admin">
+				<legend>{tr}Plugins{/tr}</legend>
 				<fieldset class="admin donthide">
 					{listfilter selectors='#content2 .admin fieldset' exclude=".donthide"}
 				</fieldset>
-		{foreach from=$plugins key=plugin item=info}
-			<fieldset class="admin">
-                	<legend>{$info.name|escape}</legend>
-			<div class="adminoptionbox">	 
-			<strong>{$plugin|escape}</strong>: {$info.description|escape}{assign var=pref value=wikiplugin_$plugin} {if $prefs.feature_help eq 'y'} {help url="Plugin$plugin"}{/if}
-			</div>
-			{if in_array( $pref, $info.prefs)}
-				{assign var=pref value=wikiplugin_$plugin}
-				{assign var=pref_inline value=wikiplugininline_$plugin}	
-				{preference name=$pref label="{tr}Enable{/tr}"}
-				{preference name=$pref_inline label="{tr}Disable edit plugin icon (make plugin inline){/tr}"}
-			{/if} 
+				{foreach from=$plugins key=plugin item=info}
+					<fieldset class="admin">
+						<legend>{$info.name|escape}</legend>
+						<div class="adminoptionbox">
+							<strong>{$plugin|escape}</strong>: {$info.description|escape}{assign var=pref value=wikiplugin_$plugin} {if $prefs.feature_help eq 'y'} {help url="Plugin$plugin"}{/if}
+						</div>
+						{if in_array( $pref, $info.prefs)}
+							{assign var=pref value=wikiplugin_$plugin}
+							{assign var=pref_inline value=wikiplugininline_$plugin}	
+							{preference name=$pref label="{tr}Enable{/tr}"}
+							{preference name=$pref_inline label="{tr}Disable edit plugin icon (make plugin inline){/tr}"}
+						{/if}
+					</fieldset>
+				{/foreach}
 			</fieldset>
-		{/foreach}
-		</fieldset>
 		{/tab}
 
 		{tab name="{tr}Plugin Aliases{/tr}"}
-
-	<!-- *** plugin aliases *** -->
-		{remarksbox type="note" title="{tr}About plugin aliases{/tr}"}{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins.<br />Find out more here: {help url="Plugin+Alias"}{/tr}{/remarksbox}
-		{if $prefs.feature_jquery neq 'y'}
-			{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}This page is designed to work with JQuery {icon _id="arrow_right" href="tiki-admin.php?page=features"}{/tr}{/remarksbox}
-		{/if}
+			{remarksbox type="note" title="{tr}About plugin aliases{/tr}"}
+				{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins.<br />Find out more here: {help url="Plugin+Alias"}{/tr}
+			{/remarksbox}
+			{if $prefs.feature_jquery neq 'y'}
+				{remarksbox type="tip" title="{tr}Tip{/tr}"}
+					{tr}This page is designed to work with JQuery {icon _id="arrow_right" href="tiki-admin.php?page=features"}{/tr}
+				{/remarksbox}
+			{/if}
 
 		{* JQuery JS to set up page *}{jq}
 $jq('#content3 legend').click(function(event, hidefirst) {
@@ -271,7 +219,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					<label for="filter">{tr}Filter{/tr}:</label> <input type="text" id="filter" name="filter" value="{$plugin_admin.description.filter|default:'xss'|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="validate">{tr}Validation{/tr}:</label> 
+					<label for="validate">{tr}Validation{/tr}:</label>
 					<select name="validate" id="validate">
 						{foreach from=','|explode:'none,all,body,arguments' item=val}
 							<option value="{$val|escape}" {if $plugin_admin.description.validate eq $val}selected="selected"{/if}>{$val|escape}</option>
@@ -365,7 +313,7 @@ $jq('#pluginalias_simple_new').hide();
 								</div>
 								<div class="q234">
 									<div class="adminoptionlabel">
-										<label for="bodyparam[{$token|escape}][encoding]">{tr}Encoding{/tr}:</label> 
+										<label for="bodyparam[{$token|escape}][encoding]">{tr}Encoding{/tr}:</label>
 										<select name="bodyparam[{$token|escape}][encoding]">
 											{foreach from=','|explode:'none,html,url' item=val}
 												<option value="{$val|escape}" {if $detail.encoding eq $val}selected="selected"{/if}>{$val|escape}</option>
@@ -435,9 +383,9 @@ $jq('#pluginalias_simple_new').hide();
 		</fieldset>
 		{/tab}
 	{/tabset}
-<div class="heading input_submit_container" style="text-align: right">
-	<input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" />
-</div>
+	<div class="heading input_submit_container" style="text-align: right">
+		<input type="submit" name="textareasetup" value="{tr}Change preferences{/tr}" />
+	</div>
 </form>
 
 

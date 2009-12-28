@@ -1,54 +1,33 @@
 <?php
 // (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-	header("location: index.php");
+//
+// This script may only be included - so its better to die if called directly.
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
 	exit;
 }
+
 $plugins = array();
 foreach($tikilib->plugin_get_list() as $name) {
 	$info = $tikilib->plugin_info($name);
 	if (isset($info['prefs']) && is_array($info['prefs']) && count($info['prefs']) > 0) $plugins[$name] = $info;
 }
 $smarty->assign('plugins', $plugins);
-if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['tab'] != 3)) { // tab=3 is plugins alias tab (TODO improve)
+if (isset($_REQUEST['textareasetup']) && (!isset($_COOKIE['tab']) || $_COOKIE['tab'] != 3)) { // tab=3 is plugins alias tab (TODO improve)
 	ask_ticket('admin-inc-textarea');
-	$pref_toggles = array(
-		"feature_hotwords",
-		"feature_hotwords_nw",
-		"feature_use_quoteplugin",
-		"feature_autolinks",
-		"feature_wiki_paragraph_formatting",
-		"feature_wiki_paragraph_formatting_add_br",
-		"feature_wiki_monosp",
-		"wiki_edit_plugin",
-		'section_comments_parse',
-	);
-	foreach($pref_toggles as $toggle) {
-		simple_set_toggle($toggle);
-	}
-	$pref_simple_values = array(
-		"default_rows_textarea_wiki",
-		"default_rows_textarea_comment",
-		"default_rows_textarea_forum",
-		"default_rows_textarea_forumthread",
-		"feature_wiki_tables",
-	);
-	foreach($pref_simple_values as $svitem) {
-		simple_set_value($svitem);
-	}
 	foreach(glob('temp/cache/wikiplugin_*') as $file) unlink($file);
 }
+
 // from tiki-admin_include_textarea.php
 global $tikilib;
 $pluginsAlias = $tikilib->plugin_get_list(false, true);
 $pluginsReal = $tikilib->plugin_get_list(true, false);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	global $cachelib;
-	require_once ("lib/cache/cachelib.php");
+	require_once ('lib/cache/cachelib.php');
 	$areanames = array(
 		'editwiki',
 		'editpost',

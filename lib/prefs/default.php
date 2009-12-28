@@ -34,5 +34,33 @@ function prefs_default_list() {
 				'sideview' => tra('Side-by-side view'),
 			),
 		),
+		'default_rows_textarea_wiki' => array(
+			'name' => tra('Wiki'),
+			'type' => 'text',
+			'size' => '3',
+			'shorthint' => tra('rows'),
+			'filter' => 'digits',
+		),
+		'default_rows_textarea_comment' => array(
+			'name' => tra('Comments '),
+			'type' => 'text',
+			'size' => '3',
+			'shorthint' => tra('rows'),
+			'filter' => 'digits',
+		),
+		'default_rows_textarea_forum' => array(
+			'name' => tra('Forum'),
+			'type' => 'text',
+			'size' => '3',
+			'shorthint' => tra('rows'),
+			'filter' => 'digits',
+		),
+		'default_rows_textarea_forumthread' => array(
+			'name' => tra('Forum reply'),
+			'type' => 'text',
+			'size' => '3',
+			'shorthint' => tra('rows'),
+			'filter' => 'digits',
+		),
 	);
 }
