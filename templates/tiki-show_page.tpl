@@ -22,7 +22,7 @@
 					{else}
 						{tr}Viewing of changes since last approval is possible only after first approval.{/tr}
 					{/if}
-					<form action="/tiki-approve_staging_page.php" method="post">
+					<form action="tiki-approve_staging_page.php" method="post">
 						<input type="hidden" name="page" value="{$page|escape}" />
 						<div class="notif-pad-2">
 						<div class="notif-row">

@@ -27,6 +27,39 @@ if ($prefs['feature_ajax'] == 'y') {
 }
 require_once ("lib/wiki/editlib.php");
 
+function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user) {
+	global $tikilib, $multilinguallib, $categlib, $prefs;
+
+	// need to automatically create actual staging page on first approval of staging 
+	if ($prefs["feature_wikiapproval"] == 'y' && $cat_type == 'wiki page'		
+		&& $prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $_REQUEST['cat_categories'])
+		&& !$tikilib->page_exists($prefs['wikiapproval_prefix'].$cat_objid) ) {
+		$tikilib->create_page($prefs['wikiapproval_prefix'].$_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description, $pageLang, $is_html, $hash);
+		$newstaging_cats = $cats;
+		$newstaging_cat_name = $prefs['wikiapproval_prefix'].$cat_name;
+		$newstaging_cat_objid = $prefs['wikiapproval_prefix'].$cat_objid;
+		$newstaging_cat_href="tiki-index.php?page=".urlencode($prefs['wikiapproval_prefix'].$cat_objid);
+		if ($prefs['wikiapproval_staging_category'] > 0) $newstaging_cats[] = $prefs['wikiapproval_staging_category'];
+		if ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $newstaging_cats)) {	
+			$newstaging_cats = array_diff($newstaging_cats,Array($prefs['wikiapproval_approved_category']));	
+		}
+		$categlib->update_object_categories($newstaging_cats, $newstaging_cat_objid, $cat_type, $cat_desc, $newstaging_cat_name, $newstaging_cat_href);
+		//now to link in translations if any
+		if ($prefs['feature_multilingual'] == 'y') {
+			include_once("lib/multilingual/multilinguallib.php");
+			$oldstaging_pageid = $tikilib->get_page_id_from_name($page);
+			$oldstaging_trads = $multilinguallib->getTrads('wiki page', $oldstaging_pageid);
+			foreach ($oldstaging_trads as $ost) {
+				$oldstaging_tradname = $prefs['wikiapproval_prefix'] . $tikilib->get_page_name_from_id($ost["objId"]);
+				if ($ost["lang"] != $pageLang && $tikilib->page_exists($oldstaging_tradname)) {
+					$multilinguallib->insertTranslation('wiki page', $tikilib->get_page_id_from_name($prefs['wikiapproval_prefix'].$page), $pageLang, $tikilib->get_page_id_from_name($oldstaging_tradname), $ost["lang"]);
+					break;
+				}
+			}
+		}	
+	}
+}
+
 // Define all templates files that may be used with the 'zoom' feature
 $zoom_templates = array('wiki_edit');
 
@@ -963,6 +996,9 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 				die;
 			}
 		}
+
+		create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user);
+
 		if ($prefs['feature_multilingual'] == 'y') {
 			include_once("lib/multilingual/multilinguallib.php");
 
@@ -1025,11 +1061,12 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 			$edit = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $edit);
 		}
 		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg'], $wiki_authors_style);
+		create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user);
 		$info_new = $tikilib->get_page_info($page);
 
 		// Handle translation bits
 		if ($prefs['feature_multilingual'] == 'y' && !$minor) {
-			include_once("lib/multilingual/multilinguallib.php");
+			global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
 			unset( $tikilib->cache_page_info );
 
 			if( $editlib->isUpdateTranslationMode() ) {
@@ -1142,7 +1179,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 			die;
 		}
 
-		include_once("lib/multilingual/multilinguallib.php");
+		global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
 		$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
 		if( $multilinguallib->getTranslation('wiki page', $sourceInfo['page_id'], $_REQUEST['lang'] ) ) {
 			// Display an error if the page already exists
@@ -1294,8 +1331,7 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 }
 
 if( $prefs['feature_multilingual'] == 'y' ) {
-	global $multilinguallib;
-	include_once('lib/multilingual/multilinguallib.php');
+	global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
 	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
 	$smarty->assign('trads', $trads);
 }
