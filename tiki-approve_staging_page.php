@@ -225,9 +225,7 @@ if ($prefs['feature_categories'] == 'y') {
 	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {	
 		$cats = array_diff($cats, Array($prefs['wikiapproval_outofsync_category']));	
 	}
-	/* Bug 487598 -  Localized articles should inherit en-us page categories */
-	$categlib->inherit_object_categories_sync($prefs, $staging_info['lang'], $cat_type, $cat_objid, $info['page_id'], $cats);
-	/* END Bug 487598 -  Localized articles should inherit en-us page categories */
+
 	$categlib->update_object_categories($cats, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	
 	// now to remove out of sync from staging page
