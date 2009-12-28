@@ -47,7 +47,7 @@ function prefs_global_list() {
 			'name' => tra('Default language'),
 			'description' => tra('Site language used when no other language is specified by the user.'),
 			'filter' => 'lang',
-			'help' => 'Internationalization',
+			'help' => 'I18n',
 			'type' => 'list',
 			'options' => $map,
 		),
@@ -67,6 +67,7 @@ function prefs_global_list() {
 			'type' => 'text',
 			'size' => 30,
 			'default' => TikiSetup::tempdir(),
+			'perspective' => false,
 		),
 		'helpurl' => array(
 			'name' => tra('Help URL'),
@@ -96,15 +97,20 @@ function prefs_global_list() {
 			'name' => tra('Full path to gdaltindex'),
 			'type' => 'text',
 			'size' => '50',
+			'help' => 'Maps',
+			'perspective' => false,
 		),
 		'ogr2ogr' => array(
 			'name' => tra('Full path to ogr2ogr'),
 			'type' => 'text',
 			'size' => '50',
+			'help' => 'Maps',
+			'perspective' => false,
 		),
 		'mapzone' => array(
 			'name' => tra('Map Zone'),
 			'type' => 'list',
+			'help' => 'Maps',
 			'options' => array(
 				'180' => tra('[-180 180]'),
 				'360' => tra('[0 360]'),
@@ -144,11 +150,11 @@ function prefs_global_list() {
 			'name' => tra('Each group can have its theme'),
 			'type' => 'flag',
 		),
-	'sitemycode' => array(
-		'name' => tra('Content'),
-		'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as{/tr}: {\$user}</div>{/if}",
-		'type' => 'textarea',
-		'size' => '6',
+		'sitemycode' => array(
+			'name' => tra('Content'),
+			'hint' => tra ('Example:') . ' ' .  "{if \$user neq ''}<div align=\"right\" style=\"float: right; font-size: 10px\">{tr}logged as{/tr}: {\$user}</div>{/if}",
+			'type' => 'textarea',
+			'size' => '6',
 		),
 		'sitetitle' => array(
 			'name' => tra('Site title'),
