@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= 'trunk -future Tiki 5.x-';
+		$this->version 	= '5.0';
 		$this->star	= '';
 		$this->releases	= array();
 
