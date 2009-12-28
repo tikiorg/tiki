@@ -1076,6 +1076,7 @@ function get_default_prefs() {
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',
 		'category_jail' => '',
+		'category_defaults' => false,
 		'expanded_category_jail' => '',
 		'expanded_category_jail_key' => '',
 

@@ -21,6 +21,8 @@
 		{preference name=feature_categoryobjects}
 		{preference name=feature_category_use_phplayers}
 		{preference name=categories_used_in_tpl}
+		{preference name=category_jail}
+		{preference name=category_defaults}
 	</fieldset>
 
 	<fieldset>

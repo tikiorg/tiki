@@ -9,6 +9,53 @@ function prefs_category_list() {
 			'type' => 'text',
 			'filter' => 'int',
 		),
+		'category_defaults' => array(
+			'name' => tra('Category Defaults'),
+			'description' => tra('Force certain categories to be present. If none of the categories in a given set are provided, assign a category by default.'),
+			'type' => 'textarea',
+			'filter' => 'striptags',
+			'hint' => tra('One per line. ex:1,4,6,7/4'),
+			'size' => 5,
+			'serialize' => 'prefs_category_serialize_defaults',
+			'unserialize' => 'prefs_category_unserialize_defaults',
+		),
 	);
+}
+
+function prefs_category_serialize_defaults( $data ) {
+	if( ! is_array( $data ) ) {
+		$data = unserialize( $data );
+	}
+
+	$out = '';
+	foreach( $data as $row ) {
+		$out .= implode( ',', $row['categories'] ) . '/' . $row['default'] . "\n";
+	}
+
+	return trim( $out );
+}
+
+function prefs_category_unserialize_defaults( $string ) {
+	$data = array();
+	
+	foreach( explode( "\n", $string ) as $row ) {
+		if( preg_match('/^\s*(\d+\s*(,\s*\d+\s*)*)\/\s*(\d+)\s*$/', $row, $parts ) ) {
+			$categories = explode( ',', $parts[1] );
+			$categories = array_map( 'trim', $categories );
+			$categories = array_filter( $categories );
+			$default = $parts[3];
+
+			$data[] = array(
+				'categories' => $categories,
+				'default' => $default,
+			);
+		}
+	}
+
+	if( count( $data ) ) {
+		return $data;
+	} else {
+		return false;
+	}
 }
 

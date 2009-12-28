@@ -1606,6 +1606,12 @@ class CategLib extends ObjectLib
 			$manip->setManagedCategories( $managedCategories );
 		}
 
+		if( $default = unserialize( $prefs['category_defaults'] ) ) {
+			foreach( $default as $constraint ) {
+				$manip->addRequiredSet( $constraint['categories'], $constraint['default'] );
+			}
+		}
+
 		$new_categories = $manip->getAddedCategories();
 		$removed_categories = $manip->getRemovedCategories();
 
