@@ -199,10 +199,20 @@ class PreferencesLib
 	private function _getTextValue( $info, $data ) {
 		$name = $info['preference'];
 
-		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
-			return $filter->filter( $data[$name] );
+		if( isset($info['separator']) ) {
+			$value = explode( $info['separator'], $data[$name] );
 		} else {
-			return $data[$name];
+			$value = $data[$name];
+		}
+
+		if( isset($info['filter']) && $filter = TikiFilter::get( $info['filter'] ) ) {
+			if( is_array( $value ) ) {
+				return array_map( array( $filter, 'filter' ), $value );
+			} else {
+				return $filter->filter( $value );
+			}
+		} else {
+			return $value;
 		}
 	}
 

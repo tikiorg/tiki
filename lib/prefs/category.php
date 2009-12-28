@@ -19,6 +19,24 @@ function prefs_category_list() {
 			'serialize' => 'prefs_category_serialize_defaults',
 			'unserialize' => 'prefs_category_unserialize_defaults',
 		),
+		'category_i18n_sync' => array(
+			'name' => tra('Syncronize multilingual categories'),
+			'description' => tra('Make sure that the categories on the translations are synchronized when modified on any version.'),
+			'type' => 'list',
+			'dependencies' => array( 'feature_multilingual' ),
+			'options' => array(
+				'' => tra('None'),
+				'whitelist' => tra('Only those specified'),
+				'blacklist' => tra('All but those specified'),
+			),
+		),
+		'category_i18n_synced' => array(
+			'name' => tra('Synchronized categories'),
+			'description' => tra('List of categories affected by the multilingual synchronization. Depending on the parent feature, this list will be used as a white list (only categories allows) or as a black list (all except thoses specified)'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'separator' => ',',
+		),
 	);
 }
 

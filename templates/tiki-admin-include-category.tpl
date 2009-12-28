@@ -23,6 +23,11 @@
 		{preference name=categories_used_in_tpl}
 		{preference name=category_jail}
 		{preference name=category_defaults}
+
+		{preference name=category_i18n_sync}
+		<div class="adminoptionboxchild">
+			{preference name=category_i18n_synced}
+		</div>
 	</fieldset>
 
 	<fieldset>

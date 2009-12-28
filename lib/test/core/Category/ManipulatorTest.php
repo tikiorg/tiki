@@ -154,4 +154,39 @@ class Category_ManipulatorTest extends TikiTestCase
 		$this->assertEquals( array( 4, 10 ), $manip->getAddedCategories() );
 		$this->assertEquals( array( 3, 7 ), $manip->getRemovedCategories() );
 	}
+
+	function testUnmanagedFilter() {
+		$perms = new Perms;
+		$perms->setResolverFactories( array(
+			new Perms_ResolverFactory_StaticFactory( 'root', new Perms_Resolver_Default( true ) ),
+		) );
+		Perms::set( $perms );
+
+		$manip = new Category_Manipulator( 'wiki page', 'Hello World' );
+		$manip->setCurrentCategories( array( 1, 2, 3, 7 ) );
+		$manip->setUnmanagedCategories( range( 1, 5 ) );
+
+		$manip->setNewCategories( array( 1, 2, 4, 6 ) );
+
+		$this->assertEquals( array( 6 ), $manip->getAddedCategories() );
+		$this->assertEquals( array( 7 ), $manip->getRemovedCategories() );
+	}
+
+	function testSkipPermissionChecks() {
+		$perms = new Perms;
+		$perms->setResolverFactories( array(
+			new Perms_ResolverFactory_StaticFactory( 'root', new Perms_Resolver_Default( false ) ),
+		) );
+		Perms::set( $perms );
+
+		$manip = new Category_Manipulator( 'wiki page', 'Hello World' );
+		$manip->overrideChecks();
+		$manip->setCurrentCategories( array( 1, 2, 3, 7 ) );
+		$manip->setUnmanagedCategories( range( 1, 5 ) );
+
+		$manip->setNewCategories( array( 1, 2, 4, 6 ) );
+
+		$this->assertEquals( array( 6 ), $manip->getAddedCategories() );
+		$this->assertEquals( array( 7 ), $manip->getRemovedCategories() );
+	}
 }

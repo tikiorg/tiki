@@ -532,7 +532,7 @@ class CategLib extends ObjectLib
 	}
 
 	// get the parent categories of an object
-	function get_object_categories($type, $itemId,$parentId=-1) {
+	function get_object_categories($type, $itemId,$parentId=-1, $jailed = true) {
 		$ret = array();
 		if (!$itemId)
 			return $ret;
@@ -550,7 +550,12 @@ class CategLib extends ObjectLib
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["categId"];
 		}
-		return $this->get_jailed( $ret );
+
+		if( $jailed ) {
+			return $this->get_jailed( $ret );
+		} else {
+			return $ret;
+		}
 	}
 
 	// Get all the objects in a category
@@ -1580,7 +1585,6 @@ class CategLib extends ObjectLib
 
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='', $managedCategories = null) {
 		global $prefs, $user, $userlib;
-		$old_categories = $this->get_object_categories($objType, $objId);
 		
 		//Dirty hack to remove the Slash at the end of the ID (Why is there a slash?! Bug is reportet.)
 		if (!empty($categories)) {
@@ -1599,7 +1603,6 @@ class CategLib extends ObjectLib
 
 		require_once 'lib/core/lib/Category/Manipulator.php';
 		$manip = new Category_Manipulator( $objType, $objId );
-		$manip->setCurrentCategories( $old_categories );
 		$manip->setNewCategories( $categories ? $categories : array() );
 
 		if( is_array( $managedCategories ) ) {
@@ -1612,26 +1615,36 @@ class CategLib extends ObjectLib
 			}
 		}
 
-		$new_categories = $manip->getAddedCategories();
-		$removed_categories = $manip->getRemovedCategories();
+		$this->applyManipulator( $manip, $objType, $objId, $desc, $name, $href );
 
-		$this->add_object($objType, $objId, $desc, $name, $href);
-		if (empty($new_categories) and empty($removed_categories)) { //nothing changed
-			return;
-		}
+		if( $prefs['category_i18n_sync'] != '' && $prefs['feature_multilingual'] == 'y' ) {
+			global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
+			$targetCategories = $this->get_object_categories( $objType, $objId, -1, false );
 
-		foreach ($new_categories as $category) {
-			if (!($catObjectId = $this->is_categorized($objType, $objId))) {
-				$catObjectId = $this->add_categorized_object($objType, $objId, $desc, $name, $href);
+			if( $objType == 'wiki page' ) {
+				$translations = $multilinguallib->getTranslations( $objType, $this->get_page_id_from_name( $objId ) );
+			} else {
+				$translations = $multilinguallib->getTranslations( $objType, $objId );
 			}
-			$this->categorize($catObjectId, $category);
-		}
-
-		foreach ($removed_categories as $category) {
-			if (!($catObjectId = $this->is_categorized($objType, $objId))) {
-				continue;
+			
+			$subset = $prefs['category_i18n_synced'];
+			if( is_string( $subset ) ) {
+				$subset = unserialize( $subset );
 			}
-			$this->uncategorize($catObjectId, $category);
+
+			foreach( $translations as $tr ) {
+				$manip = new Category_Manipulator( $objType, $tr['objName'] );
+				$manip->setNewCategories( $targetCategories );
+				$manip->overrideChecks();
+
+				if( $prefs['category_i18n_sync'] == 'whitelist' ) {
+					$manip->setManagedCategories( $subset );
+				} elseif( $prefs['category_i18n_sync'] == 'blacklist' ) {
+					$manip->setUnmanagedCategories( $subset );
+				}
+
+				$this->applyManipulator( $manip, $objType, $tr['objName'] );
+			}
 		}
 
 		if ($prefs['feature_user_watches'] == 'y') {
@@ -1649,6 +1662,31 @@ class CategLib extends ObjectLib
 				 	'action'=>'object leaved category', 'objectName'=>$name, 'objectType'=>$objType, 'objectUrl'=>$href);
 				$this->notify($values);								
 			}
+		}
+	}
+
+	private function applyManipulator( $manip, $objType, $objId, $desc, $name, $href ) {
+		$old_categories = $this->get_object_categories($objType, $objId, -1, false);
+		$manip->setCurrentCategories( $old_categories );
+
+		$new_categories = $manip->getAddedCategories();
+		$removed_categories = $manip->getRemovedCategories();
+
+		$this->add_object($objType, $objId, $desc, $name, $href);
+		if (empty($new_categories) and empty($removed_categories)) { //nothing changed
+			return;
+		}
+
+		if (! $catObjectId = $this->is_categorized($objType, $objId) ) {
+			$catObjectId = $this->add_categorized_object($objType, $objId, $desc, $name, $href);
+		}
+
+		foreach ($new_categories as $category) {
+			$this->categorize($catObjectId, $category);
+		}
+
+		foreach ($removed_categories as $category) {
+			$this->uncategorize($catObjectId, $category);
 		}
 	}
 

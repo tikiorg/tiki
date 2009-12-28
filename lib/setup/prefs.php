@@ -1079,6 +1079,9 @@ function get_default_prefs() {
 		'categories_used_in_tpl' => 'n',
 		'category_jail' => '',
 		'category_defaults' => false,
+		'category_i18n_sync' => 'n',
+		'category_i18n_synced' => array(),
+		'category_i18n_unsynced' => array(),
 		'expanded_category_jail' => '',
 		'expanded_category_jail_key' => '',
 
