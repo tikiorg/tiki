@@ -1695,5 +1695,9 @@ function prefs_feature_list() {
 				'feature_friends',
 			),
 		),
+		'feature_cal_manual_time' => array(
+			'name' => tra('Manual selection of time/date'),
+			'type' => 'flag',
+		),
 	);
 }
