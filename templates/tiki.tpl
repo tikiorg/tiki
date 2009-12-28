@@ -72,7 +72,9 @@
 							{if $prefs.feature_custom_center_column_header}{* Content comes from Look and Feel admin  *}
 								{eval var=$prefs.feature_custom_center_column_header}
 							{/if}
+<div role="main">
 {$mid_data}
+</div>
 {show_help}
 							</div>{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
 						</div>
