@@ -475,5 +475,10 @@ function prefs_wiki_list() {
 			'type' => 'list',
 			'options' => $wiki_forums,
 		),
+		'wiki_keywords' => array(
+			'name' => tra('Keywords'),
+			'description' => tra('Allow to manage keywords on a per-page basis.'),
+			'type' => 'flag',
+		),
 	);
 }

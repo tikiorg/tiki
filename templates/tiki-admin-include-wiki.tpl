@@ -239,6 +239,7 @@
 				{/if}
 			</fieldset>
 		</div>
+		{preference name=wiki_keywords}
 	{/tab}
 
 	{tab name="{tr}Staging &amp; Approval{/tr}"}

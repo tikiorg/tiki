@@ -147,6 +147,10 @@
 					{button href="tiki-edit_translation.php?page=$thispage" _text="{tr}Translate{/tr}"}
 				{/if}
 			{/if}
+
+			{if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_keywords eq 'y'}
+				{button href="tiki-admin_keywords.php" page=$page _text="{tr}Keywords{/tr}"}
+			{/if}
 		{/if}
 	{/if}
 </div>

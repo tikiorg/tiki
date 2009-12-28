@@ -181,6 +181,7 @@ function get_default_prefs() {
 		'wiki_timeout_warning' => 'y',
 		'wiki_dynvar_style' => 'single',
 		'wiki_dynvar_multilingual' => 'n',
+		'wiki_keywords' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',
