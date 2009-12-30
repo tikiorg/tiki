@@ -8,7 +8,7 @@
 	{include file='advanced_search_help.tpl'}
 {/capture}
 
-    <form class="forms" id="search-module-form" method="get" action="tiki-searchresults.php">
+    <form class="forms" id="search-module-form" method="get" action="tiki-searchresults.php" role="search">
     <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> 
 	
  	{if $prefs.feature_search_show_object_filter eq 'y'}

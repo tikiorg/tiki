@@ -20,7 +20,7 @@
 	{/if}
 
 	{if $prefs.feature_search_show_search_box eq 'y'}
-		<form action="tiki-searchresults.php" method="get" id="search-form" class="findtable">
+		<form action="tiki-searchresults.php" method="get" id="search-form" class="findtable" role="search">
 			<label class="findtitle">
 				{tr}Find{/tr} <input name="highlight" size="14" type="text" accesskey="s" value="{$words|escape}" />
 			</label>
