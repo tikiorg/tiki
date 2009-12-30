@@ -10,7 +10,7 @@
 							<li>
 								{if $groupData.can_remove}
 									<input type="checkbox" name="remove[{$groupName|escape}][]" value="{$memberName|escape}" id="{$groupName|escape}-{$memberName|escape}"/>
-									<label for="{$groupName|escape}-{$memberName|escape}">{$memberName|escape}</label>
+									<label for="{$groupName|escape}-{$memberName|escape}">{$memberName|userlink}</label>
 								{else}
 									{$memberName|escape}
 								{/if}
@@ -28,7 +28,7 @@
 					</ul>
 				{/if}
 				{if $groupData.can_add}
-					<p>Add: <input type="text" name="add[{$groupName|escape}]"/> (comma separated)</p>
+					<p>Add: <input type="text" name="add[{$groupName|escape}]" class="username-input"/> (comma separated)</p>
 				{/if}
 				{if $groupData.can_join}
 					<p>
@@ -49,3 +49,6 @@
 		<input type="submit" value="{tr}Apply{/tr}"/>
 	{/if}
 </form>
+{jq}
+$jq('.username-input').tiki('autocomplete','username');
+{/jq}
