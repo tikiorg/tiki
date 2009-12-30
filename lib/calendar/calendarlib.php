@@ -626,7 +626,6 @@ class CalendarLib extends TikiLib
 				}
 			}
 			if (isset($d['end date'])) {
-				echo 'fff';
 				if (isset($d['end time'])) {
 					$d['end'] = strtotime($d['end time'], strtotime($d['end date']));
 				} else {
