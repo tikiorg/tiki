@@ -83,6 +83,7 @@ function displayRegisatrationForms($data, $messages) // {{{
 	// Display
 	$smarty->assign('mid', 'tiki-openid_register.tpl');
 	$smarty->display('tiki.tpl');
+	exit;
 } // }}}
 function displaySelectionList($data, $messages) // {{{
 {
@@ -90,6 +91,7 @@ function displaySelectionList($data, $messages) // {{{
 	// Display
 	$smarty->assign('mid', 'tiki-openid_select.tpl');
 	$smarty->display('tiki.tpl');
+	exit;
 } // }}}
 function displayError($message) { // {{{
 	global $smarty;
