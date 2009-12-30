@@ -123,9 +123,9 @@
 				{if $prefs.login_is_email neq 'y'}
 					<th>{self_link _sort_arg='sort_mode' _sort_field='email}{tr}Email{/tr}{/self_link}</th>
 				{/if}
-{if $prefs.auth_method eq 'openid'}
-				<th>{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
-{/if}
+				{if $prefs.auth_method eq 'openid'}
+					<th>{self_link _sort_arg='sort_mode' _sort_field='openID'}{tr}OpenID{/tr}{/self_link}</th>
+				{/if}
 				<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
 				<th colspan="2">{tr}Groups{/tr}</th>
 				<th>{tr}Action{/tr}</th>
@@ -148,9 +148,9 @@
 						{if $prefs.login_is_email ne 'y'}
 							<td>{$users[user].email}</td>
 						{/if}
-{if $prefs.auth_method eq 'openid'}
-						<td>{$users[user].openid_url|default:'{tr}N{/tr}'}</td>
-{/if}	
+						{if $prefs.auth_method eq 'openid'}
+							<td>{$users[user].openid_url|default:'{tr}N{/tr}'}</td>
+						{/if}	
 						<td>
 							{if $users[user].currentLogin eq ''}
 								{tr}Never{/tr} <em>({tr}Registered{/tr} {$users[user].age|duration_short} {tr}ago{/tr})</em>
