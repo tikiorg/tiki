@@ -612,7 +612,7 @@ class CalendarLib extends TikiLib
 		$nb = 0;
 		while (($data = fgetcsv($fhandle, 1000)) !== FALSE) {
 			$d = array("calendarId"=>$calendarId, "calitemId"=>"0", "name"=>"", "description" =>"", "locationId"=>"", 
-					   "organizers"=>"", "participants"=>"","status"=>"0","priority"=>"5","categoryId"=>"0","newloc"=>"0","newcat"=>"","nlId"=>"","lang"=>"", 'start'=>'', 'end'=>'');
+					   "organizers"=>"", "participants"=>"","status"=>"1","priority"=>"5","categoryId"=>"0","newloc"=>"0","newcat"=>"","nlId"=>"","lang"=>"", 'start'=>'', 'end'=>'');
 			foreach ($fields as $field) {
 				$d[$field] = $data[array_search($field, $fields)];
 			}
