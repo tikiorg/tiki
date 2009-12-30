@@ -93,9 +93,13 @@ function wikiplugin_memberlist_get_members( $groupName ) {
 }
 
 function wikiplugin_memberlist_get_group_details( $groups ) {
-	global $user, $prefs;
+	global $user, $prefs, $userlib;
 	$validGroups = array();
 	foreach( $groups as $groupName ) {
+		if( ! $userlib->group_exists( $groupName ) ) {
+			continue;
+		}
+		
 		$perms = Perms::get( array( 'type' => 'group', 'object' => $groupName ) );
 
 		if( $perms->group_view ) {
