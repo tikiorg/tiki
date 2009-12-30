@@ -159,7 +159,7 @@ if ($_REQUEST["calendarId"]) {
 	$info["personal"] = 'n';
 	$info["startday"] = '25200';
 	$info["endday"] = '72000';
-	$info["defaulteventstatus"] = 0;
+	$info["defaulteventstatus"] = 1;
 	$info['viedays'] = $prefs['calendar_view_days'];
 	if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 		$cookietab = '2';
