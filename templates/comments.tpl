@@ -418,7 +418,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			</td>
 
 			<td class="formcolor">
-				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',$jq('#anonymous_name').val());"{/if} />
 				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
 				{/if}
@@ -427,10 +427,10 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					{assign var='file_preview_warning' value='{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}'}
 					onclick="
 					{if empty($user)}
-						setCookie('anonymous_name',document.getElementById('anonymous_name').value);
+						setCookie('anonymous_name',$jq('#anonymous_name').val());
 					{/if}
 					{if isset($can_attach_file) && $can_attach_file eq 'y'}
-						if (document.getElementById('userfile1').value) alert('{$file_preview_warning|escape:"javascript"}');
+						if ($jq('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
 					{/if}
 					"
 				{/strip}{/if} />
@@ -465,10 +465,8 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 {if $forum_mode neq 'y'}</div><!-- comzone end -->{/if}
 {*</div>  now this tag causes problems instead of fixing (was added earlier to prevent side columns in *litecss themes from not appearing *}
 {if empty($user) and $prefs.javascript_enabled eq "y"}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-var js_anonymous_name = getCookie('anonymous_name');
-if (js_anonymous_name) document.getElementById('anonymous_name').value = js_anonymous_name;
-//--><!]]>
-</script>
+	{jq}
+		var js_anonymous_name = getCookie('anonymous_name');
+		if (js_anonymous_name) $jq('#anonymous_name').val( js_anonymous_name );
+	{/jq}
 {/if}
