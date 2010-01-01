@@ -550,7 +550,7 @@ class ModLib extends TikiLib
 				$function = 'module_' . $mod_reference['name'];
 
 				if( function_exists( $function ) ) {
-					$function( $mod_reference, $module_params );
+					$function( $mod_reference, &$module_params );
 				}
 			}
 
