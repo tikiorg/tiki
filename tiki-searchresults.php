@@ -12,7 +12,7 @@ $auto_query_args = array('highlight', 'where', 'initial', 'maxRecords', 'sort_mo
 $searchlib = new SearchLib;
 $smarty->assign('headtitle', tra('Search'));
 if ($prefs['feature_search_fulltext'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_search");
+	$smarty->assign('msg', tra("This feature is disabled") . ": feature_search_fulltext");
 	$smarty->display("error.tpl");
 	die;
 }
