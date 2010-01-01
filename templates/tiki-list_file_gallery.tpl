@@ -160,7 +160,7 @@ if (getCookie("fgalKeepOpen")) {
 {/if}
 
 {if $user and $prefs.feature_user_watches eq 'y'}
-<div class="navbar" align="right">
+<div class="categbar" align="right">
   {if $category_watched eq 'y'}
     {tr}Watched by categories{/tr}:
     {section name=i loop=$watching_categories}
