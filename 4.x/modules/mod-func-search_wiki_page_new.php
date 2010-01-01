@@ -15,5 +15,6 @@ function module_search_wiki_page_new_info() {
 }
 
 function module_search_wiki_page_new( $mod_reference, $module_params ) {
-	
+	global $smarty;
+	$smarty->clear_assign('tpl_module_title');
 }
