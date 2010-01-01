@@ -1,6 +1,6 @@
 <?php
 
-require_once 'lib/core/lib/Zend/Filter/Interface.php';
+require_once 'Zend/Filter/Interface.php';
 
 /**
  * Declarative filters are to be defined prior to filtering. Various rules can
