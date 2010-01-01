@@ -2770,4 +2770,13 @@ div.minichatdiv {
 	font-size: .9em;
 	overflow: auto}
 
+#siteloginbar .register {
+  padding-left: 20px;
+}
+
+#siteloginbar .pass {
+  float: right;
+  padding-left: 20px;
+}
+
 /* end of file */
