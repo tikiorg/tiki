@@ -59,7 +59,7 @@
 	</script>
 
 {else}
-	{$grid_content}
+	<div class="tiki_sheet">{$grid_content}</div>
 	<div class="navbar">
 		{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-sheets.php" _text="{tr}List Sheets{/tr}"}

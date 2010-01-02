@@ -11,7 +11,6 @@ require_once ('lib/sheet/grid.php');
 $auto_query_args = array(
 	'sheetId',
 	'readdate',
-	'mode'
 );
 if ($prefs['feature_sheet'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_sheet");
@@ -95,7 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$grid->export($handler);
 		$smarty->assign('grid_content', ob_get_contents());
 		ob_end_clean();
+		if ($prefs['feature_jquery_sheet']) {
+			$headerlib->add_jq_onready('$jq("div.tiki_sheet").tiki("sheet", "", {title: "'.$info['title'].'"});');
+		}
 	}
+	
 }
 if ($prefs['feature_warn_on_edit'] == 'y') {
 	if ($tikilib->semaphore_is_set($_REQUEST['sheetId'], $prefs['warn_on_edit_time'] * 60, 'sheet') && ($semUser = $tikilib->get_semaphore_user($_REQUEST['sheetId'], 'sheet')) != $user) {
