@@ -5,6 +5,7 @@
 {* Object to hold prefs for jq *}
 var jqueryTiki = new Object();
 jqueryTiki.ui = {if $prefs.feature_jquery_ui eq 'y'}true{else}false{/if};
+jqueryTiki.ui_theme = "{$prefs.feature_jquery_ui_theme}";
 jqueryTiki.tooltips = {if $prefs.feature_jquery_tooltips eq 'y'}true{else}false{/if};
 jqueryTiki.autocomplete = {if $prefs.feature_jquery_autocomplete eq 'y'}true{else}false{/if};
 jqueryTiki.superfish = {if $prefs.feature_jquery_superfish eq 'y'}true{else}false{/if};
