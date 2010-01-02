@@ -283,7 +283,7 @@
 		{wiki line='1'}{$field_value.value}{/wiki}
 	{/if}
 
-{* -------------------- rating -------------------- *}
+{* -------------------- rating, star -------------------- *}
 {elseif ($field_value.type eq '*' or ($field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")))) and $tiki_p_tracker_view_ratings eq 'y'}
 	{if $list_mode eq 'csv'}
 		{$field_value.value}/{$field_value.voteavg}
@@ -294,7 +294,7 @@
 			{else}
 				{tr}Number of votes{/tr}: {$field_value.numvotes|default:"0"}, {tr}Average{/tr}: {$field_value.voteavg|default:"0"}
 				{if $tiki_p_tracker_vote_ratings eq 'y'}
-					, {if isset($field_value.my_rate)}{tr}Your rating{/tr}: {$field_value.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
+					, {if isset($field_value.my_rate) && $field_value.my_rate !== false}{tr}Your rating{/tr}: {$field_value.my_rate}{else}{tr}You did not vote yet{/tr}{/if}
 				{/if}
 			{/if}
 		{/capture}
