@@ -146,11 +146,11 @@
 
 <tr class="formcolor"><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
-<tr class="formcolor"><td>{tr}Is column visible when listing tracker items?{/tr}</td><td><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
-<tr class="formcolor"><td>{tr}Column links to edit/view item?{/tr}</td><td><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td>{tr}Is column visible when listing tracker items?{/tr}</td><td><input type="checkbox" name="isTblVisible" {if empty($fieldId) || $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td>{tr}Column links to edit/view item?{/tr}</td><td><input type="checkbox" name="isMain" {if empty($fieldId) ||$isMain eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor" id='multilabelRow'{if $type neq 'a' && $type neq 't' && $type neq 'o' && $type neq '' && $type neq 'C'} style="display:none;"{/if}><td>{tr}Multilingual content{/tr}:</td><td><input type="checkbox" name="isMultilingual" {if $isMultilingual eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Column is searchable?{/tr}</td><td><input type="checkbox" name="isSearchable" {if $isSearchable eq 'y'}checked="checked"{/if} /></td></tr>
-<tr class="formcolor"><td>{tr}Field is public? (viewed in trackerlist plugin){/tr}</td><td><input type="checkbox" name="isPublic" {if $isPublic eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td>{tr}Field is public? (viewed in trackerlist plugin){/tr}</td><td><input type="checkbox" name="isPublic" {if empty($fieldId) || $isPublic eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Field is hidden?{/tr}</td><td>
 <select name="isHidden">
 <option value="n"{if $isHidden eq 'n'} selected="selected"{/if}>{tr}not hidden{/tr}</option>
