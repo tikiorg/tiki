@@ -647,30 +647,30 @@ function wikiplugin_img_info() {
 		if (empty($imgdata['src'])) {
 			switch ($sourcetype) {
 				case 'imagegal':
-					$imgdata['src'] = $imagegalpath . $imgdata['id'];
+					$src = $imagegalpath . $imgdata['id'];
 					if (!empty($imgdata['thumb'])) {
 						$thumbstring = '&thumb=1';
 					}
 					break;
 				case 'filegal':				
-					$imgdata['src'] = $filegalpath . $imgdata['fileId']; 
+					$src = $filegalpath . $imgdata['fileId']; 
 					if (!empty($imgdata['thumb'])) {
 						$thumbstring = '&thumbnail';
 					}
 					break;
 				case 'attach':
-					$imgdata['src'] = $attachpath . $imgdata['attId']; 
+					$src = $attachpath . $imgdata['attId']; 
 					if (!empty($imgdata['thumb'])) {
 					}
 					break;
 				}
 		} elseif ( (!empty($imgdata['src'])) && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
 			global $base_host, $url_path;
-			$imgdata['src'] = $base_host.( $imgdata['src'][0] == '/' ? '' : $url_path ) . $imgdata['src'];
+			$src = $base_host.( $imgdata['src'][0] == '/' ? '' : $url_path ) . $imgdata['src'];
 		} elseif (!empty($imgdata['src']) && $tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
-			$imgdata['src'] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata['src']);
+			$src = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata['src']);
 		} elseif (!empty($imgdata['src'])) {
-			$imgdata['src'] = $imgdata['src'];
+			$src = $imgdata['src'];
 		}
 		
 		//Now get height, width, iptc data from actual image
@@ -684,7 +684,7 @@ function wikiplugin_img_info() {
 			if (!empty($dbinfo['path'])) {
 				$imagesize = getimagesize(($basepath . $dbinfo['path']), $otherinfo);  //images in tiki directories
 			} else {
-				$imagesize = getimagesize($imgdata['src'], $otherinfo);  //wiki_up and external images
+				$imagesize = getimagesize($src, $otherinfo);  //wiki_up and external images
 			}
 			if (isset($otherinfo['APP13'])) { $iptc = iptcparse($otherinfo['APP13']); }
 		}
@@ -697,13 +697,13 @@ function wikiplugin_img_info() {
 			
 
 		// URL of original full size image
-		$pos = strpos($imgdata['src'], '&thumb');
+		$pos = strpos($src, '&thumb');
 		if ($pos > 0) {
 			//Strip off any thumbnail parameter
-			$len = strlen($imgdata['src']);
-			$browse_full_image = substr_replace($imgdata['src'], '', $pos, $len-($len-$pos));
+			$len = strlen($src);
+			$browse_full_image = substr_replace($src, '', $pos, $len-($len-$pos));
 		} else {
-			$browse_full_image = $imgdata['src']; 
+			$browse_full_image = $src; 
 		}
 		
 	/////////////////////////////////////Add image dimensions to src string////////////////////////////////////////////////////////////////
@@ -765,8 +765,8 @@ function wikiplugin_img_info() {
 		
 	////////////////////////////////////////// Create the HTML img tag ///////////////////////////////////////////////////////////////////
 		//Start tag with src and dimensions
-		$imgdata['src'] = filter_out_sefurl(htmlentities($imgdata['src']. $thumbstring), $smarty);
-		$replimg = "\r\t" . '<img src="' . $imgdata['src'] . '"';
+		$src = filter_out_sefurl(htmlentities($src . $thumbstring), $smarty);
+		$replimg = "\r\t" . '<img src="' . $src . '"';
 		$replimg .= $imgdata_dim;
 		
 		//Create style attribute allowing for shortcut inputs 
@@ -1035,7 +1035,7 @@ function wikiplugin_img_info() {
 		} 
 		// Mobile
 		if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
-			$repl = '{img src=' . $imgdata['src'] . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
+			$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 		}
 		return '~np~'.$repl.'~/np~';
 	}
