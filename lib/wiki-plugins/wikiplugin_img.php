@@ -621,7 +621,7 @@ function wikiplugin_img_info() {
 					$basepath = $prefs['w_use_dir'];
 			}		
 			//Give error messages if it doesn't exist or isn't an image
-			if (empty($imgdata['src'])) {
+			if (!empty($imgdata['id']) || !empty($imgdata['fileId']) || !empty($imgdata['attId'])) {
 				if( ! $dbinfo ) {
 					return '^' . tra('File not found.') . '^';
 				} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' ) {
