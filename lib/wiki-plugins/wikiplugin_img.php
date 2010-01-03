@@ -599,7 +599,7 @@ function wikiplugin_img_info() {
 		}
 		
 		//Deal with images in tiki databases (file and image galleries and attachments)
-		if (empty($imgdata['src'])) {
+		if (!empty($imgdata['id']) || !empty($imgdata['fileId']) || !empty($imgdata['attId'])) {
 			//Try to get image from database
 			if (!empty($imgdata['id'])) {
 					global $imagegallib; 
@@ -667,7 +667,7 @@ function wikiplugin_img_info() {
 		
 	/////////////////////////////////////Add image dimensions to src string////////////////////////////////////////////////////////////////
 		// Adjust for max setting, keeping aspect ratio
-		if (!empty($imgdata['max']) || (!empty($imgdata['height']) Xor !empty($imgdata['width'])) 
+		if (!empty($imgdata['max']) || !empty($imgdata['height']) || !empty($imgdata['width']) 
 			|| !empty($imgdata['thumb'])
 		) {
 			if ((!empty($imgdata['max'])) && (ctype_digit($imgdata['max']))) {
