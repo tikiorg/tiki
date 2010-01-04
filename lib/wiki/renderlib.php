@@ -341,7 +341,9 @@ class WikiRenderer
 		$this->smartyassign('description',$this->info['description']);
 
 		$this->smartyassign('parsed',$pdata);
-		$this->smartyassign('metatag_local_keywords', $this->info['keywords']);
+		if (!empty($this->info['keywords'])) {
+			$this->smartyassign('metatag_local_keywords', $this->info['keywords']);
+		}
 	} // }}}
 
 	private function setupAttachments() // {{{
