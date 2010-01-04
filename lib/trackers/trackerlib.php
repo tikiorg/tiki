@@ -2414,7 +2414,7 @@ class TrackerLib extends TikiLib
 			return;
 		}
 		$key = "tracker.$trackerId.$itemId";
-		if ($tiki_p_tracker_revote_ratings != 'y' && $this->get_user_vote($key, $user) !== null) {
+		if ($tiki_p_tracker_revote_ratings != 'y' && (($v = $this->get_user_vote($key, $user)) !== null && $v !== false)) {
 			return;
 		}
 		$val = $this->getOne("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$fieldId));
@@ -2449,7 +2449,7 @@ class TrackerLib extends TikiLib
 			return;
 		}
 		$key = "tracker.$trackerId.$itemId.".$field['fieldId'];
-		if ($tiki_p_tracker_revote_ratings != 'y' && $this->get_user_vote($key, $user) !== null) {
+		if ($tiki_p_tracker_revote_ratings != 'y' && (($v = $this->get_user_vote($key, $user)) !== null && $v !== false)) {
 			return;
 		}
 		$result = $this->query("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$field['fieldId']));
