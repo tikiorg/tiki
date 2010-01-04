@@ -313,7 +313,8 @@
 					{/if}
 				</b>
 			{else}
-				{if $tiki_p_tracker_vote_ratings eq 'y'}
+				{if ($tiki_p_tracker_vote_ratings eq 'y' && (!isset($field_value.my_rate) || $field_value.my_rate === false)) ||
+					($tiki_p_tracker_revote_ratings eq 'y' && isset($field_value.my_rate) && $field_value.my_rate !== false)}
 					{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field_value.options_array[i]}{/capture}
 					<a href="{$smarty.server.PHP_SELF}?trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}&amp;vote=y{if $page}&amp;page={$page|escape:url}{/if}">
 				{/if}
@@ -322,7 +323,8 @@
 				{else}
 					{icon _id='star_grey' alt=$field_value.options_array[i] title=$smarty.capture.thisvote}
 				{/if}
-				{if $tiki_p_tracker_vote_ratings eq 'y'}
+				{if ($tiki_p_tracker_vote_ratings eq 'y' && (!isset($field_value.my_rate) || $field_value.my_rate === false)) ||
+					($tiki_p_tracker_revote_ratings eq 'y' && isset($field_value.my_rate) && $field_value.my_rate !== false)}
 					</a>
 				{/if}	
 			{/if}
@@ -335,7 +337,7 @@
 			</small>
 			{icon _id='help' title=$smarty.capture.stat}
 		{/if}
-		{if $tiki_p_tracker_vote_ratings eq 'y' and  isset($field_value.my_rate) and in_array($field_value.my_rate, $field_value.options_array)}
+		{if $tiki_p_tracker_revote_ratings eq 'y' and  isset($field_value.my_rate) and in_array($field_value.my_rate, $field_value.options_array)}
 			<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}trackerId={$item.trackerId}&amp;itemId={$item.itemId}&amp;ins_{$field_value.fieldId}=NULL&amp;vote=y{if $page}&amp;page={$page|escape:url}{/if}" title="{tr}Clik to delete your vote{/tr}">x</a>
 		{/if}
 		<span>

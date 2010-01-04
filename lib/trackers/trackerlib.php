@@ -1966,6 +1966,13 @@ class TrackerLib extends TikiLib
 				if (isset($f['type']) &&  $f['type'] == 'e') {
 					if (!in_array($f['fieldId'], $categorized_fields))
 						$mandatory_fields[] = $f;
+					if ($f['fieldId'] == 6) {
+						$l = array_count_values($categorized_fields);
+						print_r($categorized_fields);print_r($l);
+						if ($l[$f['fieldId']] < 2) {
+							$mandatory_fields[] = $f;
+						}
+					}
 				} elseif (isset($f['type']) &&  ($f['type'] == 'a' || $f['type'] == 't') && ($this->is_multilingual($f['fieldId']) == 'y')) {
                                   if (!isset($multi_languages))
                                   $multi_languages=$prefs['available_languages'];
@@ -2402,6 +2409,14 @@ class TrackerLib extends TikiLib
 	}
 
 	function replace_rating($trackerId,$itemId,$fieldId,$user,$new_rate) {
+		global $tiki_p_tracker_vote_ratings, $tiki_p_tracker_revote_ratings;
+		if ($tiki_p_tracker_vote_ratings != 'y') {
+			return;
+		}
+		$key = "tracker.$trackerId.$itemId";
+		if ($tiki_p_tracker_revote_ratings != 'y' && $this->get_user_vote($key, $user) !== null) {
+			return;
+		}
 		$val = $this->getOne("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$fieldId));
 		if ($val === NULL || $val === false) {
 			$query = "insert into `tiki_tracker_item_fields`(`value`,`itemId`,`fieldId`) values (?,?,?)";
@@ -2419,18 +2434,25 @@ class TrackerLib extends TikiLib
 			//echo "$val - $olrate + $new_rate = $newval";die;
 		}
 		$this->query($query,array((int)$newval,(int)$itemId,(int)$fieldId));
-		$this->register_user_vote($user, "tracker.$trackerId.$itemId", $new_rate);
+		$this->register_user_vote($user, $key, $new_rate);
 		return $newval;
 	}
 	function replace_star($userValue, $trackerId, $itemId, &$field, $user, $updateField=true) {
+		global $tiki_p_tracker_vote_ratings, $tiki_p_tracker_revote_ratings; 
 		if ($field['type'] != '*') {
 			return;
 		}
 		if ($userValue != 'NULL' && !in_array($userValue, $field['options_array'])) {
 			return;
 		}
-		$result = $this->query("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$field['fieldId']));
+		if ($tiki_p_tracker_vote_ratings != 'y') {
+			return;
+		}
 		$key = "tracker.$trackerId.$itemId.".$field['fieldId'];
+		if ($tiki_p_tracker_revote_ratings != 'y' && $this->get_user_vote($key, $user) !== null) {
+			return;
+		}
+		$result = $this->query("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$field['fieldId']));
 		$this->register_user_vote($user, $key, $userValue);
 		$field['my_rate'] = $userValue;
 		if (!$result->numRows()) {
