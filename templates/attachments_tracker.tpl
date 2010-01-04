@@ -66,7 +66,7 @@
 			{/if}
 		{/foreach}
 		<td>
-		{if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
+		{if $tiki_p_admin_trackers eq 'y' or ($user and ($atts[ix].user eq $user))}
 			<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}Delete{/tr}">
 				{icon _id='cross' alt="{tr}Delete{/tr}"}
 			</a>

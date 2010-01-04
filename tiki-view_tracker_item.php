@@ -1044,7 +1044,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 	if (isset($_REQUEST["removeattach"])) {
 		check_ticket('view-trackers-items');
 		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
-		if (($user && ($owner == $user)) || ($tiki_p_wiki_admin_attachments == 'y')) {
+		if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
 			$area = 'deltrackerattach';
 			if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 				key_check($area);
