@@ -427,6 +427,7 @@
 							<td>{tr}Version{/tr}</td>
 							<td>{tr}Filetype{/tr}</td>
 							<td>{tr}LongDesc{/tr}</td>
+							<td>{tr}User{/tr}</td>
 						</tr>
 						<tr>
 							<td><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
@@ -437,6 +438,7 @@
 							<td><input type="text" size="2" name="ui[version]" value="{$ui.version}" /></td>
 							<td><input type="text" size="2" name="ui[filetype]" value="{$ui.filetype}" /></td>
 							<td><input type="text" size="2" name="ui[longdesc]" value="{$ui.longdesc}" /></td>
+							<td><input type="text" size="2" name="ui[user]" value="{$ui.user}" /></td>
 						</tr>
 					</table>
 				</td>
