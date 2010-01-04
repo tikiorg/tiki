@@ -1966,13 +1966,6 @@ class TrackerLib extends TikiLib
 				if (isset($f['type']) &&  $f['type'] == 'e') {
 					if (!in_array($f['fieldId'], $categorized_fields))
 						$mandatory_fields[] = $f;
-					if ($f['fieldId'] == 6) {
-						$l = array_count_values($categorized_fields);
-						print_r($categorized_fields);print_r($l);
-						if ($l[$f['fieldId']] < 2) {
-							$mandatory_fields[] = $f;
-						}
-					}
 				} elseif (isset($f['type']) &&  ($f['type'] == 'a' || $f['type'] == 't') && ($this->is_multilingual($f['fieldId']) == 'y')) {
                                   if (!isset($multi_languages))
                                   $multi_languages=$prefs['available_languages'];
