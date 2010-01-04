@@ -175,7 +175,7 @@
 	{else}
 		<table>
     	{foreach from=$field_value.lingualvalue item=ling}
-    		<tr><td>{$ling.lang}</td><td>
+    		<tr><td>{$ling.lang|langname}</td><td>
             {*prepend*}{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
         	<input type="text" id="{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" value="{$ling.value|escape}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} /> {*@@ missing value*}
         	{*append*}{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
@@ -263,7 +263,7 @@
 		<table>
 		{foreach from=$field_value.lingualvalue item=ling}
     	<tr>
-			<td>{$ling.lang}</td>
+			<td>{$ling.lang|langname}</td>
       		<td>
 				{if $field_value.options_array[0] eq 1}
         			{toolbars qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
