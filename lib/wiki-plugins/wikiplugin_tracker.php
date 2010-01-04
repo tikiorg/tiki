@@ -230,7 +230,7 @@ function wikiplugin_tracker($data, $params)
 	if (!isset($showmandatory)) {
 		$showmandatory = 'y';
 	}
-	$smarty->assign('showmandatory', $showmandatory); 
+	$smarty->assign('showmandatory',  empty($wiki) && empty($tpl)? 'n': $showmandatory); 
 	if (!empty($wiki)) $wiki = trim($wiki);
 
 	if (isset($values)) {
