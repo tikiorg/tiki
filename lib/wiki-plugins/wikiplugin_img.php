@@ -560,12 +560,14 @@ function wikiplugin_img_info() {
 			} elseif (!empty($imgdata['fileId'])) {		
 				$src = $filegalpath . $imgdata['fileId']; 
 				if (!empty($imgdata['thumb'])) {
-					$thumbstring = '&thumbnail';
+					if (empty($imgdata['height']) && empty($imgdata['width']) 
+						&& empty($imgdata['max'])
+					) {
+						$thumbstring = '&thumbnail';
+					}
 				}
 			} else {					//only attachments left
 				$src = $attachpath . $imgdata['attId']; 
-				if (!empty($imgdata['thumb'])) {
-				}
 			}
 		} elseif ( (!empty($imgdata['src'])) && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
 			global $base_host, $url_path;
@@ -607,6 +609,9 @@ function wikiplugin_img_info() {
 					$dbinfo = $imagegallib->get_image_info($imgdata['id'], 'o');
 					$dbinfo2 = $imagegallib->get_image($imgdata['id'], 'o');
 					$dbinfo = array_merge($dbinfo, $dbinfo2);
+//					$dbinfot = $imagegallib->get_image_info($imgdata['id'], 't');
+//					$dbinfot2 = $imagegallib->get_image($imgdata['id'], 't');
+//					$dbinfot = array_merge($dbinfot, $dbinfot2);
 					$basepath = $prefs['gal_use_dir'];
 			} elseif (!empty($imgdata['fileId'])) {
 					global $filegallib; 
@@ -658,26 +663,70 @@ function wikiplugin_img_info() {
 			}
 			if (isset($otherinfo['APP13'])) { $iptc = iptcparse($otherinfo['APP13']); }
 		}
+		//handle image gallery thumbs
+/*		if (!empty($dbinfot['data']) || !empty($dbinfot['path'])) {
+			if (!empty($dbinfot['data'])) {
+				$imagesizet = getimagesize_raw($dbinfot['data']);  
+			} else {
+				$imagesizet = getimagesize($basepath . $dbinfot['path']);
+			}
+		}*/
 				
-			//Set variables for height, width and iptc data from image data
-			$fwidth = $imagesize[0];
-			$fheight = $imagesize[1];
-			$idesc = isset($iptc['2#120'][0]) ? trim($iptc['2#120'][0]) : '';		//description from image iptc
-			$ititle = isset($iptc['2#005'][0]) ? trim($iptc['2#005'][0]) : '';		//title from image iptc
+		//Set variables for height, width and iptc data from image data
+//		$fwidtht = $imagesizet[0]; //image gal thumbs
+//		$fheightt = $imagesizet[1];  //image gal thumbs
+		$fwidth = $imagesize[0];
+		$fheight = $imagesize[1];
+		$idesc = isset($iptc['2#120'][0]) ? trim($iptc['2#120'][0]) : '';		//description from image iptc
+		$ititle = isset($iptc['2#005'][0]) ? trim($iptc['2#005'][0]) : '';		//title from image iptc
 		
 	/////////////////////////////////////Add image dimensions to src string////////////////////////////////////////////////////////////////
-		// Adjust for max setting, keeping aspect ratio
+		//Use url resizing parameters for file gallery images to set $height and $width
+		//since they can affect other elements, overrides plugin parameters
+		if (!empty($imgdata['fileId']))  {
+			preg_match('/(?<=\&thumbnail)[0-9]+(?=.*)/', $src, $urlthumb);
+			preg_match('/(?<=\&preview)[0-9]+(?=.*)/', $src, $urlprev); 
+			preg_match('/(?<=\&max=)[0-9]+(?=.*)/', $src, $urlmax);
+			preg_match('/(?<=\&x=)[0-9]+(?=.*)/', $src, $urlx);
+			preg_match('/(?<=\&y=)[0-9]+(?=.*)/', $src, $urly);
+			preg_match('/(?<=\&scale=)[0-9]+(?=.*)/', $src, $urlscale);
+			if (!empty($urlthumb[0]) && $urlthumb[0] > 0) $imgdata['max'] = 120;
+			if (!empty($urlprev[0]) && $urlprev[0] > 0) $imgdata['max'] = 800;
+			if (!empty($urlmax[0]) && $urlmax[0] > 0) $imgdata['max'] = $urlmax[0];
+			if (!empty($urlx[0]) && $urlx[0] > 0) $imgdata['width'] = $urlx[0];
+			if (!empty($urly[0]) && $urly[0] > 0) $imgdata['height'] = $urly[0];
+			if (!empty($urlscale[0]) && $urlscale[0] > 0) {
+				$height = $urlscale[0] * $fheight;
+				$width = $urlscale[0] * $fwidth;
+			}	
+		}
+		//Handle image gal thumbs
+/*		$imgalthumb = false;
+		if (!empty($imgdata['id']))  {
+			preg_match('/(?<=\&thumb=1)[0-9]+(?=.*)/', $src, $urlimthumb);
+			if (!empty($urlimthumb[0]) && $urlimthumb[0] > 0) $imgalthumb = true;
+		}*/
+		//Now set dimensions based on plugin parameter settings
 		if (!empty($imgdata['max']) || !empty($imgdata['height']) || !empty($imgdata['width']) 
 			|| !empty($imgdata['thumb'])
 		) {
+			// Adjust for max setting, keeping aspect ratio
 			if ((!empty($imgdata['max'])) && (ctype_digit($imgdata['max']))) {
 				if (($fwidth > $imgdata['max']) || ($fheight > $imgdata['max'])) {
+					//use image gal thumbs when possible
+/*					if ((!empty($imgdata['id']) && $imgalthumb == false) 
+						&& ($imgdata['max'] < $fwidtht || $imgdata['max'] < $fheightt)
+					) {
+						$src .= '&thumb=1';
+						$here = 'yes'; //debug
+						$imgalthumb == true;
+					}*/
 					if ($fwidth > $fheight) {
 						$width = $imgdata['max'];
-						$height = floor($width * $fheight / $fwidth);
+						$height = ($width * $fheight / $fwidth);
 					} else {
 						$height = $imgdata['max'];
-						$width = floor($height * $fwidth / $fheight);	
+						$width = ($height * $fwidth / $fheight);	
 					}
 				} else {                             //cases where max is set but image is smaller than max 
 					$height = $fheight;
@@ -685,16 +734,30 @@ function wikiplugin_img_info() {
 				}
 			// Adjust for user settings for height and width if max isn't set.	
 			} elseif (!empty($imgdata['height']) && ctype_digit($imgdata['height']))  {
+				//use image gal thumbs when possible
+				/*if ((!empty($imgdata['id']) && $imgalthumb == false) 
+					&& ($imgdata['height'] < $fheightt)
+				) {
+					$src .= '&thumb=1';
+					$imgalthumb == true;
+				}*/
 				$height = $imgdata['height'];
 				if (empty($imgdata['width'])) {
-					$width = floor($height * $fwidth / $fheight);
+					$width = ($height * $fwidth / $fheight);
 				} else {
 					$width = $imgdata['width'];
 				}
 			} elseif (!empty($imgdata['width']) && ctype_digit($imgdata['width']))  {
+			//use image gal thumbs when possible
+/*				if ((!empty($imgdata['id']) && $imgalthumb == false) 
+					&& ($imgdata['width'] < $widtht)
+				) {
+					$src .= '&thumb=1';
+					$imgalthumb == true;
+				}*/
 				$width =  $imgdata['width'];
 				if (empty($imgdata['height'])) {
-					$height = floor($width * $fheight / $fwidth);
+					$height = ($width * $fheight / $fwidth);
 				} else {
 					$height = $imgdata['height'];
 				}
@@ -704,37 +767,61 @@ function wikiplugin_img_info() {
 				if (!empty($imgdata['fileId'])) {
 					$thumbdef = 120;	// filegals thumbnails size is hard-coded in lib/images/abstract.php
 				}
-				if (($fwidth > $thumbdef) || ($fheight > $thumbdef)) {
-					if ($fwidth > $fheight) {
-						$width = $thumbdef;
-						$height = floor($width * $fheight / $fwidth);
-					} else {
-						$height = $thumbdef;
-						$width = floor($height * $fwidth / $fheight);	
+/*				if (!empty($imgdata['id']) && $imagegalthumb == true) {
+					$width = $fwidtht;
+					$height = $fheightt;
+				} else {*/
+					if (($fwidth > $thumbdef) || ($fheight > $thumbdef)) {
+						if ($fwidth > $fheight) {
+							$width = $thumbdef;
+							$height = ($width * $fheight / $fwidth);
+						} else {
+							$height = $thumbdef;
+							$width = ($height * $fwidth / $fheight);	
+						}
 					}
-				}
+//				}
 			}
 		}
 		
 		//Set final height and width dimension string
-		if (!empty($height)) {
-			$imgdata_dim = ' height="' . $height . '"';
+		//handle file gallery images separately to use server-side resizing capabilities
+		if (!empty($imgdata['fileId'])) {
+			if (!empty($imgdata['max']) && $imgdata['thumb'] != 'download') {
+				$src .= '&display&max=' . $imgdata['max'];
+			} elseif (!empty($width) || !empty($height)) {
+				if (!empty($width) && !empty($height)) {
+					$src .= '&display&x=' . $width . '&y=' . $height;
+				} elseif (!empty($width)) {
+					$src .= '&display&x=' . $width; 
+					$imgdata_dim = '';
+					$height = $fheight;
+				} else {
+					$src .= '&display&y=' . $height;
+					$imgdata_dim = '';
+					$width = $fwidth;
+				}			
+			}
 		} else {
-			$imgdata_dim = '';
-			$height = $fheight;
-		}
-		if (!empty($width)) {
-			$imgdata_dim .= ' width="' . $width . '"';
-		} else {
-			$imgdata_dim = '';
-			$width = $fwidth;
+			if (!empty($height)) {
+				$imgdata_dim = ' height="' . $height . '"';
+			} else {
+				$imgdata_dim = '';
+				$height = $fheight;
+			}
+			if (!empty($width)) {
+				$imgdata_dim .= ' width="' . $width . '"';
+			} else {
+				$imgdata_dim = '';
+				$width = $fwidth;
+			}
 		}
 		
 	////////////////////////////////////////// Create the HTML img tag ///////////////////////////////////////////////////////////////////
 		//Start tag with src and dimensions
 		$src = filter_out_sefurl(htmlentities($src . $thumbstring), $smarty);
 		$replimg = "\r\t" . '<img src="' . $src . '"';
-		$replimg .= $imgdata_dim;
+		if (!empty($imgdata_dim)) $replimg .= $imgdata_dim;
 		
 		//Create style attribute allowing for shortcut inputs 
 		//First set alignment string
@@ -918,8 +1005,10 @@ function wikiplugin_img_info() {
 					if ((($imgdata['button'] == 'browse') || ($imgdata['button'] == 'browsepopup')) && !empty($imgdata['id']))  {
 						$link_button = 'tiki-browse_image.php?imageId=' . $imgdata['id'];
 					} else {
-						if ($sourcetype == 'filegal' && $imgdata['button'] != 'download') {
+						if (!empty($imgdata['fileId']) && $imgdata['button'] != 'download') {
 							$link_button = $browse_full_image . '&display';
+						} elseif (!empty($imgdata['attId']) && $imgdata['thumb'] == 'download'){
+							$link = $browse_full_image . '&download=y';
 						} else {
 							$link_button = $browse_full_image;
 						}
@@ -960,6 +1049,8 @@ function wikiplugin_img_info() {
 		//Need a box if either button, desc or stylebox is set
 		if (!empty($imgdata['button']) || !empty($imgdata['desc']) || !empty($imgdata['stylebox']) || !empty($imgdata['align'])) {
 			//Make the div surrounding the image 2 pixels bigger than the image
+			if (empty($height)) $height = '';
+			if (empty($width)) $width = '';
 			$boxwidth = $width + 2;
 			$boxheight = $height + 2;
 			$alignbox = '';
