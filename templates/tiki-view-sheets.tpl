@@ -1,6 +1,4 @@
 {* $Id$ *}
-<link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />{* this shouldn't be here; links to CSS only allowed in head html tag !!! (luci) *}
-{* here is missing body tag when above link to CSS remains!!! (luci) *}
 
 {title help="Spreadsheet"}{$title}{/title}
 
@@ -27,7 +25,7 @@
 			{button href="#" _onclick="formatCellClick();return false;" _text="{tr}Format Cell{/tr}"}
 		<div id="detail"></div>
 	</div>
-	<form method="post" action="tiki-view_sheets.php?mode=edit&sheetId={$sheetId}" id="Grid"></form>
+	<form method="post" action="tiki-view_sheets.php?sheetId={$sheetId}" id="Grid"></form>
 	<div class='submit'>
 		<input type="submit" onclick='g.target.style.visibility = "hidden"; g.prepareSubmit(); g.target.submit();' value="{tr}Save{/tr}" />
 		{button sheetId="$sheetId" _text="{tr}Cancel{/tr}" _ajax="n"}
@@ -70,6 +68,15 @@
 				{button sheetId="$sheetId" readdate="$read_date" mode="edit" _title="$semUser" _text="{tr}Edit{/tr}" _ajax="n"}
 			{else}
 				{button sheetId="$sheetId" readdate="$read_date" mode="edit" _text="{tr}Edit{/tr}" _ajax="n"}
+			{/if}
+			{if $prefs.feature_jquery_sheet}
+				{if $editconflict eq 'y'}
+					{button _id="edit_button" _text="{tr}jQuery Edit{/tr}" _ajax="n" _class="tips" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}&lt;br /&gt;{tr}Already being edited by{/tr} $semUser"}
+				{else}
+					{button _id="edit_button" _text="{tr}jQuery Edit{/tr}" _ajax="n" _class="tips" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"}
+				{/if}
+				{jq}
+{/jq}
 			{/if}
 		{/if}
 

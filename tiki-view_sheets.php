@@ -11,6 +11,7 @@ require_once ('lib/sheet/grid.php');
 $auto_query_args = array(
 	'sheetId',
 	'readdate',
+	'mode'
 );
 if ($prefs['feature_sheet'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_sheet");
@@ -94,12 +95,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$grid->export($handler);
 		$smarty->assign('grid_content', ob_get_contents());
 		ob_end_clean();
-		if ($prefs['feature_jquery_sheet']) {
-			$headerlib->add_jq_onready('$jq("div.tiki_sheet").tiki("sheet", "", {title: "'.$info['title'].'"});');
-		}
 	}
-	
 }
+if ($prefs['feature_jquery_sheet']) {
+	$headerlib->add_jq_onready('
+$jq("#edit_button").click( function () {
+	var $a = $jq(this).find("a");
+	if ($a.text() != "Cancel") {
+		$jq("div.tiki_sheet").tiki("sheet", "", {title: "'.$info['title'].'"});
+		$a.attr("temp", $a.text());
+		$a.text("Cancel");
+	} else {
+		//$jq("div.tiki_sheet").sheet("destroy");
+		//$a.text($a.attr("temp"));
+		window.location.replace(window.location.href);
+	}
+	return false;
+});');
+}
+	
+
 if ($prefs['feature_warn_on_edit'] == 'y') {
 	if ($tikilib->semaphore_is_set($_REQUEST['sheetId'], $prefs['warn_on_edit_time'] * 60, 'sheet') && ($semUser = $tikilib->get_semaphore_user($_REQUEST['sheetId'], 'sheet')) != $user) {
 		$editconflict = 'y';
@@ -115,6 +130,7 @@ if ($prefs['feature_warn_on_edit'] == 'y') {
 		unset($_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']]);
 	}
 }
+$headerlib->add_cssfile('lib/sheet/style.css', 10);
 $cat_type = 'sheet';
 $cat_objid = $_REQUEST["sheetId"];
 include_once ("categorize_list.php");
