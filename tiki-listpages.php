@@ -10,7 +10,6 @@ require_once ('tiki-setup.php');
 require_once ('lib/ajax/ajaxlib.php');
 $auto_query_args = array('initial', 'maxRecords', 'sort_mode', 'find', 'lang', 'langOrphan', 'findfilter_orphan', 'categId', 'category', 'page_orphans', 'structure_orphans', 'exact_match', 'hits_link_to_all_languages', 'create_new_pages_using_template_name');
 
-// echo "<pre>-- tiki-listpages: \$_REQUEST="; var_dump($_REQUEST); echo "</pre>\n";
 
 if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['lang']) && isset($_REQUEST['term_srch'])) {
 	global $multilinguallib;
@@ -18,9 +17,6 @@ if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['lang']) && isset($
 	if (isset($_REQUEST['term_srch'])) {
 		$multilinguallib->storeCurrentTermSearchLanguageInSession($_REQUEST['lang']);
 	}	
-//	$template_id_for_new_pages = $multilinguallib->getTemplateIDInLanguage('wiki', $_REQUEST['create_new_pages_using_template_name'], $_REQUEST['lang']);
-//	$smarty->assign('template_id', $template_id_for_new_pages);
-	
 	$smarty->assign('template_name', $_REQUEST['create_new_pages_using_template_name']);
 }
 
