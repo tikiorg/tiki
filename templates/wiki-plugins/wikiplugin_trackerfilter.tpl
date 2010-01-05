@@ -48,7 +48,7 @@
 {*------rating *}
 		{elseif $filters[if].format eq '*'}
 			<select id="f_{$filters[if].fieldId}" name="f_{$filters[if].fieldId}">
-			<option value="" />
+			<option value="">{tr}Any{/tr}</option>
 			{foreach from=$filters[if].opts item=option}
 				<option value="{$option.id|escape}"{if $option.selected eq 'y'} selected="selected"{/if}>{$option.name|escape}</option>
 			{/foreach}
