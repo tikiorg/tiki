@@ -807,9 +807,15 @@ class TrackerLib extends TikiLib
 					}
 					$mid .= " ) ";
 					if (!empty($not)) {
-						$mid .= "OR tco$ff.`categId` IS NULL ";
+						$mid .= " OR tco$ff.`categId` IS NULL ";
 					}
-
+				} elseif ( $filter['type'] == '*') { // star
+					$mid .= " AND ttif$i.`value`*1>=? ";
+					$bindvars[] = $ev;
+					if (($j = array_search($ev, $filter['options_array'])) !== false && $j+1 < count($filter['options_array'])) {
+						$mid .= " AND ttif$i.`value`*1<? ";
+						$bindvars[] = $filter['options_array'][$j+1];
+					}
 				} elseif ($ev) {
 					if (is_array($ev)) {
 						$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($ev),'?')).")";
@@ -874,7 +880,7 @@ class TrackerLib extends TikiLib
 			.$mid
 			.' GROUP BY tti.`itemId`'
 			.' ORDER BY '.$this->convertSortMode('sortvalue_'.$corder);
-		//echo $query; print_r($binvars);
+		// echo htmlentities($query); print_r($bindvars);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
@@ -2458,7 +2464,7 @@ class TrackerLib extends TikiLib
 			$field['voteavg'] = $field['value'] = $sumvotes/$field['numvotes'];
 			$query = 'update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?';
 		}
-		$this->query($query, array((int)$field['value'], (int)$itemId, (int)$field['fieldId']));
+		$this->query($query, array($field['value'], (int)$itemId, (int)$field['fieldId']));
 	}
 	function update_star_field($trackerId, $itemId, &$field) {
 		global $user;
