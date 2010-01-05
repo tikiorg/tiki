@@ -3985,6 +3985,11 @@ class TikiLib extends TikiDb_Bridge {
 		if( ! isset( $filter['categId'] ) && ! empty( $category_jails ) ) {
 			$filter['categId'] = $category_jails;
 		}
+		
+		// If language is set to '', assume that no language filtering should be done.
+		if (isset($filter['lang']) && $filter['lang'] == '') {
+			unset($filter['lang']);
+		}
 
 		$distinct = '';
 		if (!empty($filter)) {
