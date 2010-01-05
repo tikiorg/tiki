@@ -38,7 +38,7 @@ function module_categories_info() {
 	);
 }
 
-function module_categories( $mod_reference, $module_params ) {
+function module_categories( $mod_reference, &$module_params ) {
 	global $smarty, $prefs;
 	global $user;
 	global $categlib; include_once ('lib/categories/categlib.php');
