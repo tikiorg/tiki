@@ -8040,7 +8040,7 @@ class TikiLib extends TikiDb_Bridge
 		// The list of available languages so far with both English and
 		// translated names.
 		global $langmapping, $prefs;
-		include_once("lang/langmapping.php");
+		include("lang/langmapping.php");
 		$formatted = array();
 
 		// run through all the language codes:
