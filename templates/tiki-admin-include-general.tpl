@@ -15,7 +15,17 @@
 		{tab name="{tr}General Preferences{/tr}"}
 			<fieldset>
 				<legend>{tr}Release Check{/tr}</legend>
-				<div class="adminoptionbox">{tr}Tiki version:{/tr} <strong>{$tiki_version}</strong>
+				<div class="adminoptionbox">{tr}Tiki version:{/tr} 
+					<strong>
+						{if $lastup}
+							{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
+								{if $svnrev}
+									- REV {$svnrev}
+								{/if}
+						{else} 
+							{$tiki_version}
+						{/if}
+					</strong>
 					{button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
 				</div>
 	
