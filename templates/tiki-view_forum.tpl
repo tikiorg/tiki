@@ -381,6 +381,9 @@
 			{if $forum_info.topics_list_author eq 'y'}
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
 			{/if}
+			{if $forum_info.att_list_nb eq 'y'}
+				<th>{tr}Atts{/tr}</th>
+			{/if}
 				
 			<th>{tr}Actions{/tr}</th>
 		</tr>
@@ -460,6 +463,9 @@
 					<td class="{cycle advance=false}">{$comments_coms[ix].userName|userlink}</td>
 				{/if}
 				
+				{if $forum_info.att_list_nb eq 'y'}
+					<td style="text-align:center;" class="{cycle advance=false}">{$comments_coms[ix].nb_attachments}</td>
+				{/if}
 				<td style="text-align:right;" nowrap="nowrap" class="{cycle}">
 					{if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}
 						{if count($comments_coms[ix].attachments)}

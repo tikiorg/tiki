@@ -651,8 +651,8 @@ class Comments extends TikiLib
 		return $threadId;
 	}
 
-	function get_forum_topics($forumId, $offset = 0, $max = -1, $sort_mode = 'commentDate_asc', $include_archived = false, $who = '', $type = '', $reply_state = '') {
-		$info = $this->build_forum_query( $forumId, $offset, $max, $sort_mode, $include_archived, $who, $type, $reply_state );
+	function get_forum_topics($forumId, $offset = 0, $max = -1, $sort_mode = 'commentDate_asc', $include_archived = false, $who = '', $type = '', $reply_state = '', $forum_info='') {
+		$info = $this->build_forum_query( $forumId, $offset, $max, $sort_mode, $include_archived, $who, $type, $reply_state, $forum_info );
 
 		$query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
 			a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
@@ -662,6 +662,7 @@ class Comments extends TikiLib
 
 		$result = $this->query($query, $info['bindvars'], $max, $offset);
 
+		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$tid = $res['threadId'];
 			if ($res["lastPost"]!=$res["commentDate"]) {
@@ -690,7 +691,7 @@ class Comments extends TikiLib
 		return $this->getOne( $query, $info['bindvars'] );
 	}
 
-	private function build_forum_query($forumId, $offset, $max, $sort_mode, $include_archived, $who, $type, $reply_state) {
+	private function build_forum_query($forumId, $offset, $max, $sort_mode, $include_archived, $who, $type, $reply_state, $forum_info='') {
 		if ($sort_mode == 'points_asc') {
 			$sort_mode = 'average_asc';
 		}
@@ -732,12 +733,17 @@ class Comments extends TikiLib
 			$join = '';
 			$where = '';
 		}
+		$select = '';
+		if (!empty($forum_info['att_list_nb']) && $forum_info['att_list_nb'] == 'y') {
+			$select = ', count(distinct(tfa.`attId`)) as nb_attachments ';
+			$join .= 'left join `tiki_comments` tca on (tca.`parentId`=a.`threadId`)left join `tiki_forum_attachments` tfa on (tfa.`threadId`=tca.`threadId`)';
+		}
 
 		$ret = array();
 		$query = 
 			$this->ifNull("a.`archived`", "'n'")." as `archived`,".
 			$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
-			$this->ifNull("a.`type`='s'", 'false')." as `sticky`, count(b.`threadId`) as `replies` 
+			$this->ifNull("a.`type`='s'", 'false')." as `sticky`, count(b.`threadId`) as `replies` $select
 				from `tiki_comments` a left join `tiki_comments` b 
 				on b.`parentId`=a.`threadId` $join
 				where 1 = 1 $where" . ( $forumId ? 'AND a.`object`=?' : '' )
@@ -795,7 +801,7 @@ class Comments extends TikiLib
 			$approval_type='all_posted', $moderator_group='', $forum_password='',
 			$forum_use_password='n', $att='att_no', $att_store='db', $att_store_dir='',
 			$att_max_size=1000000, $forum_last_n=0, $commentsPerPage='', $threadStyle='',
-			$is_flat='n') {
+			$is_flat='n', $att_list_nb='n') {
 
 		if ($forumId)
 		{
@@ -849,7 +855,8 @@ class Comments extends TikiLib
 			`forum_last_n` = ?,
 			`commentsPerPage` = ?,
 			`threadStyle` = ?,
-			`is_flat` = ?
+			`is_flat` = ?,
+			`att_list_nb` = ?
 				where `forumId` = ?";
 			$result = $this->query(
 					$query,
@@ -904,6 +911,7 @@ class Comments extends TikiLib
 						$commentsPerPage,
 						$threadStyle,
 						$is_flat,
+						$att_list_nb,
 						(int) $forumId
 							)
 							);
@@ -925,12 +933,12 @@ class Comments extends TikiLib
 				`ui_online`, `approval_type`, `moderator_group`,
 				`forum_password`, `forum_use_password`, `att`, `att_store`,
 				`att_store_dir`, `att_max_size`,`forum_last_n`, `commentsPerPage`, `threadStyle`,
-				`is_flat`) 
+				`is_flat`, `att_list_nb`) 
 					values (?,?,?,?,?,?,?,?,?,?,
 							?,?,?,?,?,?,?,?,?,?,
 							?,?,?,?,?,?,?,?,?,?,
 							?,?,?,?,?,?,?,?,?,?,
-							?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+							?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name, $description, (int) $this->now, (int) $this->now, 0,
 					$controlFlood, (int) $floodInterval, $moderator, 0, $mail,
 					$useMail, $usePruneUnreplied, (int) $pruneUnrepliedAge,
@@ -947,7 +955,7 @@ class Comments extends TikiLib
 					$approval_type, $moderator_group, $forum_password,
 					$forum_use_password, $att, $att_store, $att_store_dir,
 					(int) $att_max_size,(int) $forum_last_n, $commentsPerPage, $threadStyle,
-					$is_flat);
+					$is_flat, $att_list_nb);
 
 			$result = $this->query($query, $bindvars);
 			$forumId = $this->getOne("select max(`forumId`)
@@ -2374,7 +2382,7 @@ class Comments extends TikiLib
 			$forum_info['approval_type'], $forum_info['moderator_group'], $forum_info['forum_password'],
 			$forum_info['forum_use_password'], $forum_info['att'], $forum_info['att_store'], $forum_info['att_store_dir'],
 			$forum_info['att_max_size'], $forum_info['forum_last_n'], $forum_info['commentsPerPage'], $forum_info['threadStyle'],
-			$forum_info['is_flat']);
+			$forum_info['is_flat'], $forum_info['att_list_nb']);
 
 		return $newForumId;		
 	}

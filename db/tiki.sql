@@ -832,6 +832,7 @@ CREATE TABLE `tiki_forums` (
   `att_store` varchar(4) default NULL,
   `att_store_dir` varchar(250) default NULL,
   `att_max_size` int(12) default NULL,
+  `att_list_nb` char(1) default NULL,
   `ui_level` char(1) default NULL,
   `forum_password` varchar(32) default NULL,
   `forum_use_password` char(1) default NULL,

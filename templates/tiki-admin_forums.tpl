@@ -395,6 +395,11 @@
 								{tr}Max attachment size (bytes):{/tr} <input type="text" name="att_max_size" value="{$att_max_size|escape}" /><br /><i>{tr}Max:{/tr} {$maxAttachSize|escape} ({$maxAttachSize|kbsize})</i>
 							</td>
 						</tr>
+						<tr>
+							<td class="formcolor">
+								<input type="checkbox" name="att_list_nb"{if $att_list_nb eq 'y'} checked="checked"{/if} id="att_list_nb" /><label for="att_list_nb">{tr}Shows number of attachments of the all thread in forum list{/tr}</label>
+							</td>
+						</tr>
 					</table>
 				</td>
 			</tr>

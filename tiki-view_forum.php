@@ -340,7 +340,7 @@ if (!isset($_REQUEST['filter_type'])) $type_param = '';
 else $type_param = $_REQUEST['filter_type'];
 if (!isset($_REQUEST['reply_state'])) $reply_state = '';
 else $reply_state = $_REQUEST['reply_state'];
-$comments_coms = $commentslib->get_forum_topics($_REQUEST['forumId'], $comments_offset, $_REQUEST['comments_per_page'], $_REQUEST['thread_sort_mode'], $view_archived_topics, $user_param, $type_param, $reply_state);
+$comments_coms = $commentslib->get_forum_topics($_REQUEST['forumId'], $comments_offset, $_REQUEST['comments_per_page'], $_REQUEST['thread_sort_mode'], $view_archived_topics, $user_param, $type_param, $reply_state, $forum_info);
 $comments_cant = $commentslib->count_forum_topics($_REQUEST['forumId'], $comments_offset, $_REQUEST['comments_per_page'], $_REQUEST['thread_sort_mode'], $view_archived_topics, $user_param, $type_param, $reply_state);
 $last_comments = $commentslib->get_last_forum_posts($_REQUEST['forumId'], $forum_info['forum_last_n']);
 $smarty->assign_by_ref('last_comments', $last_comments);
