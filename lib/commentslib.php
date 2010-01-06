@@ -736,7 +736,7 @@ class Comments extends TikiLib
 		$select = '';
 		if (!empty($forum_info['att_list_nb']) && $forum_info['att_list_nb'] == 'y') {
 			$select = ', count(distinct(tfa.`attId`)) as nb_attachments ';
-			$join .= 'left join `tiki_comments` tca on (tca.`parentId`=a.`threadId`)left join `tiki_forum_attachments` tfa on (tfa.`threadId`=tca.`threadId`)';
+			$join .= 'left join `tiki_comments` tca on (tca.`parentId`=a.`threadId` or (tca.`parentId`=0 and tca.`threadId`=a.`threadId`))left join `tiki_forum_attachments` tfa on (tfa.`threadId`=tca.`threadId`)';
 		}
 
 		$ret = array();
