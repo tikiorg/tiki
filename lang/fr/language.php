@@ -10134,6 +10134,7 @@ $lang=Array(
 "Manage existing translations of this page" => "Gérer les traductions existantes de cette page",
 "detach" => "détacher",
 "Change language for this page" => "Changer la langue pour cette page",
+"Please choose the language for this page:" => "Veuillez choisir la langue pour cette page:";
 "Change Language" => "Changer de Langue",
 "Set Current Page's Language" => "Définir la langue de la page en cours",
 "View object" => "Voir l'objet",

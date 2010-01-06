@@ -767,6 +767,15 @@ class WikiLib extends TikiLib
 		return $ret;
 	}
 
+	function get_parent_pages($child_page) {
+		$parent_pages = array();
+		$backlinks_info = $this->get_backlinks($child_page);
+		foreach ($backlinks_info as $index => $backlink) {
+			$parent_pages[] = $backlink['fromPage'];
+		}
+		return $parent_pages;
+	}
+
 	function list_plugins($with_help = false, $area_name = 'wikiedit') {
 		if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
 			// disable all plugin insert help functions

@@ -60,6 +60,37 @@ function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $descrip
 	}
 }
 
+function guess_new_page_attributes_from_parent_pages($page, $page_info) {
+	global $editlib, $smarty, $_REQUEST, $tikilib;
+	if (!$page_info) {
+		//
+		// This is a new page being created. See if we can guess some of its attributes
+		// (ex: language) based on those of its parent pages.
+		//
+		$new_page_inherited_attributes = 
+			$editlib->get_new_page_attributes_from_parent_pages($page, $page_info);
+		if ($editlib->user_needs_to_specify_language_of_page_to_be_created($page, $page_info)
+		    && isset($new_page_inherited_attributes['lang'])) {
+		    // 
+		    // Language is not set yet, but it COULD be guessed from parent pages.
+		    // So, set it.
+		    //
+		    $_REQUEST['lang'] = $new_page_inherited_attributes['lang'];
+		} 
+		if ($editlib->user_needs_to_specify_language_of_page_to_be_created($page, $page_info, $new_page_inherited_attributes)) {
+			// 
+			// Language of new page was not defined, and could not be guessed from the
+			// parent pages. User will have to specify it explicitly.
+			//
+			$languages = $tikilib->list_languages(false, true);
+			$smarty->assign('languages', $languages);
+			$smarty->assign('default_lang', $prefs['language']);
+			$smarty->assign('need_lang', 'y');
+			$smarty->assign('_REQUEST', $_REQUEST);
+		}
+	}
+}
+
 // Define all templates files that may be used with the 'zoom' feature
 $zoom_templates = array('wiki_edit');
 
@@ -87,14 +118,7 @@ $page = $_REQUEST["page"];
 $info = $tikilib->get_page_info($page);
 
 $editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
-
-if ($editlib->user_needs_to_specify_language_of_page_to_be_created($page, $info)) {
-	$languages = $tikilib->list_languages(false, true);
-	$smarty->assign('languages', $languages);
-	$smarty->assign('default_lang', $prefs['language']);
-	$smarty->assign('need_lang', 'y');
-	$smarty->assign('_REQUEST', $_REQUEST);
-}
+guess_new_page_attributes_from_parent_pages($page, $info); 
 
 // wysiwyg decision
 include 'lib/setup/editmode.php';

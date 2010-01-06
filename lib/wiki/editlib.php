@@ -37,30 +37,26 @@ class EditLib
 		}	
 	}	
 	
-	function user_needs_to_specify_language_of_page_to_be_created($page, $page_info) {
+	function user_needs_to_specify_language_of_page_to_be_created($page, $page_info, $new_page_inherited_attributes = null) {
 		global $_REQUEST, $multilinguallib, $prefs;
-		
-		// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: invoked</pre>\n";
-		
 		if (isset($_REQUEST['need_lang']) && $_REQUEST['need_lang'] == 'n') {
-			// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: need_lang already set to 'n'. Returning false.</pre>\n";
 			return false;
 		}
-		
 		if ($prefs['feature_multilingual'] == 'n') {
-			// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: Multilingual features are off. Returning false.</pre>\n";
 			return false;
 		} 
 		if ($page_info && isset($page_info['lang']) && $page_info['lang'] != '') {
-			// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: Page exists, and its language is set. Returning false.</pre>\n";
 			return false;
 		}
 		if (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '') { 
-			// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: _REQUEST has a language set. Returning false.</pre>\n";
+			return false;
+		}
+		if ($new_page_inherited_attributes != null && 
+			isset($new_page_inherited_attributes['lang']) && 
+			$new_page_inherited_attributes['lang'] != '') {
 			return false;
 		}
 
-		// echo "<pre>-- editlib.user_needs_to_specify_language_of_page_to_be_created: No language whatsover. Returning true.</pre>\n";
 		return true;
 	}			
 	
@@ -330,7 +326,44 @@ class EditLib
 		
 		return $out_data;
 	}	// end parse_html
-	
+
+	function get_new_page_attributes_from_parent_pages($page, $page_info) {
+		global $wikilib, $tikilib;
+		$new_page_attrs = array();
+		$parent_pages = $wikilib->get_parent_pages($page);
+		$parent_pages_info = array();
+		foreach ($parent_pages as $a_parent_page_name) {
+			$this_parent_page_info = $tikilib->get_page_info($a_parent_page_name);
+			$parent_pages_info[] = $this_parent_page_info;
+		}
+		$new_page_attrs = $this->get_newpage_language_from_parent_page($page, $page_info, $parent_pages_info, $new_page_attrs);
+		// Note: in the future, may add some methods below to guess things like
+		//       categories, workspaces, etc...
+		
+		return $new_page_attrs;
+	}
+
+	function get_newpage_language_from_parent_page($page, $page_info, $parent_pages_info, $new_page_attrs) {
+		if (!isset($page_info['lang'])) {
+			$lang = null;
+			foreach ($parent_pages_info as $this_parent_page_info) {
+				if (isset($this_parent_page_info['lang'])) {
+					if ($lang != null and $lang != $this_parent_page_info['lang']) {
+						// If more than one parent pages and they have different languages
+						// then we can't guess which  is the right one.
+						$lang = null;
+						break;
+					} else {
+						$lang = $this_parent_page_info['lang'];
+					}
+				}
+			}
+			if ($lang != null) {
+				$new_page_attrs['lang'] = $lang;
+			}
+		}	
+		return $new_page_attrs;
+	}
 }
 
 
