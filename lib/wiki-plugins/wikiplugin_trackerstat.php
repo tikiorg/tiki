@@ -144,7 +144,7 @@ function wikiplugin_trackerstat($data, $params)
 			$listCategs = $categlib->get_child_categories($allFields["data"][$i]['options']);
 			$itemId = $trklib->get_user_item($trackerId, $tracker_info);
 			for ($j = 0, $jcount_listcategs = count($listCategs); $j < $jcount_listcategs; ++$j) {
-				$objects = $categlib->get_category_objects($listCategs[$j]['categId'], "tracker $trackerId");
+				$objects = $categlib->get_category_objects($listCategs[$j]['categId'], 'trackeritem', array('table'=>'tiki_tracker_items', 'join'=>'itemId', 'filter'=>'trackerId', 'bindvars'=>$trackerId));
 				if ($status == 'opc' || $tracker_info['showStatus'] == 'n') {
 					$v[$j]['count'] = count($objects);
 				} else {
