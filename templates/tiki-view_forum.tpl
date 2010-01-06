@@ -23,7 +23,7 @@
 					{button href="tiki-forums.php" _text="{tr}Forum List{/tr}"}
 				{/if}
 				{if $tiki_p_admin_forum eq 'y'}
-					{button href="tiki-admin_forums.php?forumId=$thisforum_info" _text="{tr}Edit Forum{/tr}"}
+					{button href="tiki-admin_forums.php?forumId=$thisforum_info&amp;cookietab=2" _text="{tr}Edit Forum{/tr}"}
 				{/if}
 
 				{if $queued > 0}
