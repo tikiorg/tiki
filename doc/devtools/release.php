@@ -785,7 +785,7 @@ Version $releaseVersion
 
 DOCUMENTATION
 
-* The documentation for $mainVersion version is under construction on http://doc.tikiwiki.org.
+* The documentation for $mainVersion version is ever evolving at http://doc.tikiwiki.org.
   You're encouraged to contribute.
 
 * It is highly recommended that you refer to the online documentation:
