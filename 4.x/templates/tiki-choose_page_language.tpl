@@ -1,4 +1,4 @@
-<H1>{tr}Please choose the language for this new page:{/tr}</H1>
+<H1>{tr}Please choose the language for this page:{/tr}</H1>
 
 
 <b>Page: {$page}</b>
