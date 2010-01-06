@@ -1516,8 +1516,6 @@ function get_default_prefs() {
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
 
-		'magic_last_load' => 0,
-
 		//groupalert
 		'feature_groupalert' => 'n',
 
