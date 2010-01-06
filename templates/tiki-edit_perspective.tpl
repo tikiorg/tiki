@@ -13,7 +13,7 @@
 					<td>
 						<a href="tiki-switch_perspective.php?perspective={$persp.perspectiveId|escape:url}">{icon _id=arrow_right}</a>
 						{if $persp.can_edit}
-							{self_link action=edit id=$persp.perspectiveId}{icon _id=page_edit}{/self_link}
+							{self_link action=edit id=$persp.perspectiveId cookietab=3}{icon _id=page_edit}{/self_link}
 						{/if}
 						{if $persp.can_remove}
 							{self_link action=remove id=$persp.perspectiveId}{icon _id=cross}{/self_link}
