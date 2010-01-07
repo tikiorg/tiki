@@ -11,15 +11,12 @@
 	</div>
 	{include file=prefs/shared-dependencies.tpl}
 	{jq}
-if( ! $jq('#{{$p.id|escape}}').attr('checked') || $jq('#{{$p.id|escape}}').attr('disabled') ) {
-	$jq('#{{$p.preference|escape}}_childcontainer').hide();
-}
 $jq('#{{$p.id|escape}}').change( function() {
-	if( $jq('#{{$p.id|escape}}').attr('checked') ) {
+	if( $jq('#{{$p.id|escape}}').attr('checked') || $jq('#{{$p.id|escape}}').attr('disabled') ) {
 		show('{{$p.preference|escape}}_childcontainer');
 	} else {
 		hide('{{$p.preference|escape}}_childcontainer');
 	}
-} );
+} ).change();
 {/jq}
 </div>

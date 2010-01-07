@@ -63,20 +63,9 @@
 				{preference name=desactive_login_autocomplete}
 				{preference name=feature_challenge}
 
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="https_login">{tr}Use HTTPS login:{/tr}</label>
-						<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
-							<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
-							<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
-							<option value="encouraged"{if $prefs.https_login eq 'encouraged'} selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
-							<option value="force_nocheck"{if $prefs.https_login eq 'force_nocheck'} selected="selected"{/if}>{tr}Consider we are always in HTTPS, but do not check{/tr}</option>
-							<option value="required"{if $prefs.https_login eq 'required'} selected="selected"{/if}>{tr}Require secure (https) login{/tr}</option>
-						</select>
-					</div>
-				</div>
+				{preference name=https_login}
 
-				<div id="httpsoptions" style="clear:both;margin-left:2.5em;display:{if $prefs.https_login eq 'disabled'}none{else}block{/if}">
+				<div class="adminoptionboxchild https_login_childcontainer allowed encoraged force_nocheck required">
 					{preference name=feature_show_stay_in_ssl_mode}
 					{preference name=feature_switch_ssl_mode}
 					{preference name=http_port}

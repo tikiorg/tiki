@@ -13,4 +13,10 @@
 		<br/><em>{$p.hint|escape}</em>
 	{/if}
 	{include file=prefs/shared-dependencies.tpl}
+	{jq}
+		$jq('#{{$p.id|escape}}').change( function( e ) {
+			$jq('.{{$p.preference|escape}}_childcontainer').hide();
+			$jq('.{{$p.preference|escape}}_childcontainer.' + $jq(this).val()).show();
+		} ).change();
+	{/jq}
 </div>
