@@ -26,7 +26,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Features{/tr}{if $prefs.feature_help eq 'y'}  {help url="Articles+Config"}{/if}
+					{tr}Features{/tr}{if $prefs.feature_help eq 'y'}  {help url="Articles"}{/if}
 				</legend>
 
 				{preference name=feature_submissions}
@@ -66,6 +66,7 @@
 		{tab name="{tr}Articles Listing{/tr}"}
 			<div class="adminoptionbox">
 				{tr}Select which items to display when listing articles{/tr}: 	  
+				<a class="rbox-link" href="tiki-list_articles.php">tiki-list_articles.php</a>
 			</div>
 			<input type="hidden" name="artlist" />
 
