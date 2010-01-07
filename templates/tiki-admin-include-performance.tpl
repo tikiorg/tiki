@@ -50,7 +50,7 @@
 		<fieldset>
 			<legend>{tr}Memcache{/tr}</legend>
 			{preference name=memcache_enabled}
-			<div class="adminoptionchild" id="memcache_enabled_childcontainer">
+			<div class="adminoptionboxchild" id="memcache_enabled_childcontainer">
 				{preference name=memcache_compress}
 				{preference name=memcache_prefix}
 				{preference name=memcache_expiration}
