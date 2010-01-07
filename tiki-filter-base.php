@@ -72,6 +72,9 @@ if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
 // Add global filter for xajax and cookie
 global $inputConfiguration;
+if ( empty($inputConfiguration) ) {
+	$inputConfiguration = array();
+}
 array_unshift($inputConfiguration,array(
   'staticKeyFilters' => array(
 		'cookietab'	=>	'int',
