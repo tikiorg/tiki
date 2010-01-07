@@ -55,9 +55,9 @@ function getCookie($name, $section=null, $default=null) {
 
 global $cookietab;
 if ($prefs['feature_tabs'] == 'y') {
-	if( isset($_GET['cookietab'])) {
-		$smarty->assign('cookietab',$_GET['cookietab']);
-		$cookietab = $_GET['cookietab'];
+	if( isset($_REQUEST['cookietab'])) {
+		$smarty->assign('cookietab',$_REQUEST['cookietab']);
+		$cookietab = $_REQUEST['cookietab'];
 	} else if (count($_POST) > 0 and preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
 		// AJAX call (probably) and same URI, reset cookietab if changed "page"
 		if ($prefs['feature_ajax'] == 'y' && isset($_POST['xjxfun'])) {
