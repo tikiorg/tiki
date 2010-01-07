@@ -65,7 +65,7 @@
 
 				{preference name=https_login}
 
-				<div class="adminoptionboxchild https_login_childcontainer allowed encoraged force_nocheck required">
+				<div class="adminoptionboxchild https_login_childcontainer allowed encouraged force_nocheck required">
 					{preference name=feature_show_stay_in_ssl_mode}
 					{preference name=feature_switch_ssl_mode}
 					{preference name=http_port}
