@@ -100,7 +100,15 @@ class Perms
 	 * Provides a new accessor configured with the global settings and
 	 * a resolver appropriate to the context requested.
 	 */
-	public static function get( array $context = array() ) {
+	public static function get( $context = array() ) {
+		if( ! is_array( $context ) ) {
+			$args = func_get_args();
+			$context = array(
+				'type' => $args[0],
+				'object' => $args[1],
+			);
+		}
+
 		if( self::$instance ) {
 			return self::$instance->getAccessor( $context );
 		} else {

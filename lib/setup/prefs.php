@@ -1560,6 +1560,12 @@ function get_default_prefs() {
 		'metrics_metric_name_length' => 255,
 		'metrics_tab_name_length' => 255,
 		'metrics_cache_output' => 'y',
+
+		// Payment
+		'payment_feature' => 'n',
+		'payment_currency' => 'USD',
+		'payment_default_delay' => 30,
+		'payment_paypal_business' => '',
 	);
 
 	// spellcheck
