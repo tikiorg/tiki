@@ -20,6 +20,13 @@ function smarty_function_preference( $params, $smarty ) {
 		}
 
 		$smarty->assign( 'p', $info );
+
+		if( isset( $params['mode'] ) && $params['mode'] == 'invert' ) {
+			$smarty->assign( 'mode', 'invert' );
+		} else {
+			$smarty->assign( 'mode', 'normal' );
+		}
+
 		return $smarty->fetch( 'prefs/' . $info['type'] . '.tpl' );
 	} else {
 		return tr( 'Preference %0 is not defined.', $params['name'] );

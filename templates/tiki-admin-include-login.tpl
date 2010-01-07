@@ -101,15 +101,8 @@
 	
 			<fieldset>
 				<legend>{tr}Username{/tr}</legend>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="login_is_email" name="login_is_email" {if $prefs.login_is_email eq 'y'}checked="checked"{/if} onclick="flip('useemailaslogin');" />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="login_is_email">{tr}Use email as username{/tr}.</label>
-					</div>
-				</div>
-				<div id="useemailaslogin" style="display:{if $prefs.login_is_email eq 'y'}none{else}block{/if};">
+				{preference name=login_is_email mode=invert}
+				<div class="adminoptionboxchild" id="login_is_email_childcontainer">
 					{preference name=min_username_length}
 					{preference name=max_username_length}
 					{preference name=lowercase_username}
