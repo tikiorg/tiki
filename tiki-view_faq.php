@@ -24,6 +24,7 @@ if (!isset($_REQUEST["faqId"])) {
 	die;
 }
 
+$smarty->assign('headtitle', tra('FAQs'));
 $tikilib->get_perm_object( $_REQUEST['faqId'], 'faq' );
 
 if ($tiki_p_view_faqs != 'y') {
