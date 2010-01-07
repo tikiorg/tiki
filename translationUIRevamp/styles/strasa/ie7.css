@@ -1,0 +1,22 @@
+/* 
+	Strasa theme selectors for IE7.
+*/
+
+#siteloginbar {
+	background: #fff url(loginlong.jpg) 0 0 no-repeat;
+	text-align: right;
+	padding-left: 150px;
+}
+
+#header {
+	background: #fff;
+}
+
+#header-top .logged-in {
+	background: #fff url(login.jpg) 0 0 no-repeat;
+}
+
+#topbar_custom_code {
+	display: block !important;
+	clear: both;
+}

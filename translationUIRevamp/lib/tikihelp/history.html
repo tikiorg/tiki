@@ -1,0 +1,15 @@
+<head>
+<link rel="StyleSheet" href="css/menu.css" type="text/css" />
+</head>
+<body>
+<script>
+
+document.write(parent.his.length + ' pages visited<br />');
+for(i=parent.his.length-1;i>=0;i--) {
+  var st = parent.his[i];
+  var parts = st.split('|');
+  document.write("<a id='"+parts[1]+"' class='result' target='content' href='"+ parts[1]+"'>" + parts[0] + "</a><br />");	
+  
+}
+</script>
+</body>
