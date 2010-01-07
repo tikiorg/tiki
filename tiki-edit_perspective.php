@@ -21,9 +21,10 @@ $inputConfiguration = array( array(
 ) );
 
 $auto_query_args = array( 'offset', 'id', 'cookietab' );
+$section='admin';
 
-require_once 'tiki-setup.php';
-require_once 'lib/perspectivelib.php';
+require_once('tiki-setup.php');
+require_once('lib/perspectivelib.php');
 
 $access->check_feature( array('feature_perspective', 'feature_jquery_ui') );
 
