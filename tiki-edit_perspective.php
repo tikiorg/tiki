@@ -20,7 +20,7 @@ $inputConfiguration = array( array(
 	'catchAllUnset' => null,
 ) );
 
-$auto_query_args = array( 'offset', 'id' );
+$auto_query_args = array( 'offset', 'id', 'cookietab' );
 
 require_once 'tiki-setup.php';
 require_once 'lib/perspectivelib.php';
