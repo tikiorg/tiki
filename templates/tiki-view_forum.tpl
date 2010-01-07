@@ -382,7 +382,7 @@
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
 			{/if}
 			{if $forum_info.att_list_nb eq 'y'}
-				<th>{tr}Atts{/tr}</th>
+				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='nb_attachments'}{tr}Atts{/tr}{/self_link}</th>
 			{/if}
 				
 			<th>{tr}Actions{/tr}</th>
@@ -464,7 +464,11 @@
 				{/if}
 				
 				{if $forum_info.att_list_nb eq 'y'}
-					<td style="text-align:center;" class="{cycle advance=false}">{$comments_coms[ix].nb_attachments}</td>
+					<td style="text-align:center;" class="{cycle advance=false}">
+						{if !empty($comments_coms[ix].nb_attachments)}<a href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;view_atts=y#attachments" title="{tr}Attachments{/tr}">{/if}
+						{$comments_coms[ix].nb_attachments}
+						{if !empty($comments_coms[ix].nb_attachments)}</a>{/if}
+					</td>
 				{/if}
 				<td style="text-align:right;" nowrap="nowrap" class="{cycle}">
 					{if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}

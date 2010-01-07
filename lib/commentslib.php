@@ -2697,6 +2697,18 @@ class Comments extends TikiLib
 			return $threadId;
 		}
 	}
+	function get_all_thread_attachments($threadId, $offset=0, $maxRecords=-1, $sort_mode='created_desc') {
+		$query = 'select tfa.* from `tiki_forum_attachments` tfa, `tiki_comments` tc where tc.`threadId`=tfa.`threadId` and ((tc.`threadId`=? and tc.`parentId`=?) or tc.`parentId`=?) order by '.$this->convertSortMode($sort_mode);
+		$bindvars = array($threadId, 0, $threadId);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		$query = 'select count(*) from `tiki_forum_attachments` tfa, `tiki_comments` tc where tc.`threadId`=tfa.`threadId` and ((tc.`threadId`=? and tc.`parentId`=?) or tc.`parentId`=?)';
+		$cant = $this->getOne($query, $bindvars);
+		return array('cant' => $cant, 'data' => $ret);
+	}
 }
 
 function compare_replies($ar1, $ar2)
