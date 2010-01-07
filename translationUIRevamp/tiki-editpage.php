@@ -92,7 +92,7 @@ function guess_new_page_attributes_from_parent_pages($page, $page_info) {
 }
 
 // Define all templates files that may be used with the 'zoom' feature
-$zoom_templates = array('wiki_edit');
+$zoom_templates = array('wiki_edit', 'tiki-editpage');
 
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
@@ -1214,11 +1214,13 @@ if ($prefs['feature_multilingual'] == 'y') {
 	}
 
 	if( $editlib->isUpdateTranslationMode() ) {
+		$_REQUEST['diff_style'] = 'inlinediff-full';  
 		include_once('lib/wiki/histlib.php');
 		histlib_helper_setup_diff( $_REQUEST['source_page'], $_REQUEST['oldver'], $_REQUEST['newver'] );
 		$smarty->assign( 'diff_oldver', (int) $_REQUEST['oldver'] );
 		$smarty->assign( 'diff_newver', (int) $_REQUEST['newver'] );
 		$smarty->assign( 'source_page', $_REQUEST['source_page'] );
+		
 		/* 
 		   Use Full Screen mode when translating an update, because 
 		   user needs to see both diffs that have happened in the source language
@@ -1229,8 +1231,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 		   screwed up. Will reactivate as soon as I get the CSS right for
 		   that.
 		 */
-//		$_REQUEST['zoom'] = 'wiki_edit';
-		$smarty->assign('update_translation', 'y');
+		$_REQUEST['zoom'] = 'tiki-editpage';
 	}
 }
 $cat_type = 'wiki page';
