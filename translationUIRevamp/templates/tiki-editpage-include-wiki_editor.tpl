@@ -1,5 +1,5 @@
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
-	{if $diff_style}
+	{if $diff_style and $translation_mode != 'y'}
 		<select name="diff_style">
 		
 			{if $diff_style eq "htmldiff"}
