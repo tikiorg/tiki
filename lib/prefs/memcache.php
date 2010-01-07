@@ -7,13 +7,12 @@ function prefs_memcache_list() {
 			'description' => tra('Enable connection to memcached servers to store temporary information.'),
 			'type' => 'flag',
 			'hint' => tra('Requires the PHP memcache extension.'),
+			'extensions' => array( 'memcache' ),
 		),
-		'memcache_flags' => array(
-			'name' => tra('Memcache flags'),
-			'description' => tra('Configuration switches for memcache connection.'),
-			'type' => 'text',
-			'filter' => 'digits',
-			'size' => 10,
+		'memcache_compress' => array(
+			'name' => tra('Memcache compression'),
+			'description' => tra('Enable compression for memcache storage.'),
+			'type' => 'flag',
 		),
 		'memcache_servers' => array(
 			'name' => tra('Memcache servers'),
@@ -70,11 +69,11 @@ function prefs_memcache_unserialize_servers( $string ) {
 	$data = array();
 
 	foreach( explode( "\n", $string ) as $row ) {
-		if( preg_match( "/^\s*([^:]+):(\d+)\s*\((\d+)\)\s*$/", $row, $parts ) ) {
+		if( preg_match( "/^\s*([^:]+):(\d+)\s*(\((\d+)\))?\s*$/", $row, $parts ) ) {
 			$data[] = array(
 				'host' => $parts[1],
 				'port' => $parts[2],
-				'weight' => $parts[3],
+				'weight' => isset( $parts[4] ) ? $parts[4] : 1,
 			);
 		}
 	}

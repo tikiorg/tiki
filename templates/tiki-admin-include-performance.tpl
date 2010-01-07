@@ -50,13 +50,15 @@
 		<fieldset>
 			<legend>{tr}Memcache{/tr}</legend>
 			{preference name=memcache_enabled}
-			{preference name=memcache_flags}
-			{preference name=memcache_prefix}
-			{preference name=memcache_expiration}
-			{preference name=memcache_servers}
-			{preference name=memcache_wiki_data}
-			{preference name=memcache_wiki_output}
-			{preference name=memcache_forum_output}
+			<div class="adminoptionchild" id="memcache_enabled_childcontainer">
+				{preference name=memcache_compress}
+				{preference name=memcache_prefix}
+				{preference name=memcache_expiration}
+				{preference name=memcache_servers}
+				{preference name=memcache_wiki_data}
+				{preference name=memcache_wiki_output}
+				{preference name=memcache_forum_output}
+			</div>
 		</fieldset>
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">

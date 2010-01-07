@@ -37,10 +37,28 @@ class PreferencesLib
 				$info['dependencies'] = $this->getDependencies( $info['dependencies'] );
 			}
 
+			$info['available'] = true;
+
+			if( isset( $info['extensions'] ) ) {
+				$info['available'] = $this->checkExtensions( $info['extensions'] );
+			}
+
 			return $info;
 		}
 
 		return false;
+	}
+
+	private function checkExtensions( $extensions ) {
+		$installed = get_loaded_extensions();
+
+		foreach( $extensions as $ext ) {
+			if( ! in_array( $ext, $installed ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	function getMatchingPreferences( $criteria ) {

@@ -58,7 +58,7 @@ $needed_prefs = array(
 	'memcache_enabled' => 'n',
 	'memcache_expiration' => 3600,
 	'memcache_prefix' => 'tiki_',
-	'memcache_flags' => MEMCACHE_COMPRESSED,
+	'memcache_compress' => 'y',
 	'memcache_servers' => false,
 );
 $tikilib->get_preferences($needed_prefs, true, true);
@@ -78,7 +78,7 @@ if( $prefs['memcache_enabled'] == 'y' ) {
 		'enabled' => true,
 		'expiration' => (int) $prefs['memcache_expiration'],
 		'key_prefix' => $prefs['memcache_prefix'],
-		'flags' => $prefs['memcache_flags'],
+		'compress' => $prefs['memcache_compress'],
 	) );
 }
 

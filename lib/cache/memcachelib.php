@@ -33,6 +33,13 @@ class Memcachelib
             $this->memcache = FALSE;
             $this->options  = array( 'enabled' => FALSE );
         } else {
+			if( $memcached_options['compress'] == 'y' ) {
+				$memcached_options['flags'] = MEMCACHE_COMPRESS;
+				unset( $memcached_options['compress'] );
+			} else {
+				$memcached_options['flags'] = 0;
+			}
+
             $this->options  = $memcached_options;
             $this->memcache = new Memcache();
             foreach ($memcached_servers as $server) {

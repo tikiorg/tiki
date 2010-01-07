@@ -1502,7 +1502,7 @@ function get_default_prefs() {
 
 		// Memcache
 		'memcache_enabled' => 'n',
-		'memcache_flags' => MEMCACHE_COMPRESSED,
+		'memcache_compress' => 'y',
 		'memcache_servers' => false,
 		'memcache_expiration' => 3600,
 		'memcache_prefix' => 'tiki_',
