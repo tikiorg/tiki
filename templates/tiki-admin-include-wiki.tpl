@@ -228,7 +228,7 @@
 
 		<div class="adminoptionbox">
 			<fieldset>
-				<legend>{tr}Wiki watch{/tr}{if $prefs.feature_help eq 'y'} {help url="Watch"}{/if}</legend>
+				<legend>{tr}Wiki watch{/tr}{help url="Watch"}</legend>
 				{if $prefs.feature_user_watches ne 'y'}
 					<div class="adminoptionbox">
 						{icon _id=information} {tr}Feature disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.

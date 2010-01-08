@@ -81,7 +81,7 @@
 							<option value="all" {if $prefs.rememberme eq 'all'} selected="selected"{/if}>{tr}User's choice{/tr}</option>
 							<option value="always" {if $prefs.rememberme eq 'always'} selected="selected"{/if}>{tr}Always{/tr}</option>
 						</select>
-				 	{if $prefs.feature_help eq 'y'}{help url="Login+Config#Remember_Me"}{/if}
+				 	{help url="Login+Config#Remember_Me"}
 					</div>
 				</div>
 	
@@ -145,7 +145,7 @@
 			</fieldset>
 
 			<fieldset>
-				<legend>{tr}LDAP Bind settings{/tr} {if $prefs.feature_help eq 'y'} {help url="LDAP+Authentication"}{/if}</legend>
+				<legend>{tr}LDAP Bind settings{/tr}{help url="LDAP+Authentication"}</legend>
 				{preference name=auth_ldap_host}
 				{preference name=auth_ldap_port}
 				{preference name=auth_ldap_debug}
@@ -215,7 +215,7 @@
 
 		{tab name="{tr}Shibboleth{/tr}"}
 			<fieldset>
-				<legend>{tr}Shibboleth{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}{/if}</legend>
+				<legend>{tr}Shibboleth{/tr}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_shib" />
 				{if $prefs.auth_method ne 'shib'}
 					<div style="padding:0.5em;clear:both" class="simplebox">
@@ -237,7 +237,7 @@
 		{tab name="{tr}CAS{/tr}"}
 			<input type="hidden" name="auth_cas" />
 			<fieldset>
-				<legend>{tr}CAS (Central Authentication Service){/tr} {if $prefs.feature_help eq 'y'} {help url="CAS+Authentication"}{/if}</legend>
+				<legend>{tr}CAS (Central Authentication Service){/tr}{help url="CAS+Authentication"}</legend>
 				{if $prefs.auth_method ne 'cas'}
 					<div style="padding:0.5em;clear:both" class="simplebox">
 						<div>
@@ -264,7 +264,7 @@
 		{/tab}
 		{tab name="{tr}phpBB{/tr}"}
 			<fieldset>
-				<legend>{tr}phpBB{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthphpBB" desc="{tr}phpBB User Database Authentication {/tr}"}{/if}</legend>
+				<legend>{tr}phpBB{/tr}{help url="AuthphpBB" desc="{tr}phpBB User Database Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_phpbb" />
 				{if $prefs.auth_method ne 'phpbb'}
 					<div style="padding:0.5em;clear:both" class="simplebox">

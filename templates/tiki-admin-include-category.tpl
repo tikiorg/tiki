@@ -12,7 +12,7 @@
 
 	<fieldset>
 		<legend>
-			{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Category"}{/if}
+			{tr}Features{/tr}{help url="Category"}
 		</legend>
 		{preference name=feature_categorypath}
 		<div class="adminoptionboxchild" id="feature_categorypath_childcontainer">

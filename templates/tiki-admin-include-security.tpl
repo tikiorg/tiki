@@ -17,7 +17,7 @@
 			{preference name=feature_purifier}
 			{preference name=feature_htmlpurifier_output}
 		<fieldset>
-			<legend>{tr}CSRF Security{/tr} {if $prefs.feature_help eq 'y'} {help url="Security"}{/if}</legend>
+			<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
 			<div class="adminoptionbox">
 				{tr}Use these options to protect against cross-site request forgeries (CSRF){/tr}.
 			</div>

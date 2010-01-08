@@ -26,7 +26,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Features{/tr}{if $prefs.feature_help eq 'y'}  {help url="Articles"}{/if}
+					{tr}Features{/tr}{help url="Articles"}
 				</legend>
 
 				{preference name=feature_submissions}

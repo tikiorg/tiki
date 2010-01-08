@@ -42,7 +42,7 @@
 <input type="hidden" name="filegalfeatures" />
 
 <fieldset>
-	<legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config"}{/if}</legend>
+	<legend>{tr}Features{/tr}{help url="File+Gallery+Config"}</legend>
 
 	{preference name='feature_file_galleries_rankings'}
 
@@ -70,7 +70,7 @@
 </fieldset>
 
 <fieldset>
-	<legend>{tr}Quota{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config#Quota"}{/if}</legend>
+	<legend>{tr}Quota{/tr}{help url="File+Gallery+Config#Quota"}</legend>
 	{preference name='fgal_quota'}{tr}Used:{/tr} {$usedSize|kbsize}
 	<div class="adminoptionboxchild" id="fgal_quota_childcontainer">
 		{if !empty($prefs.fgal_quota)}
@@ -85,7 +85,7 @@
 </fieldset>
 
 <fieldset>
-	<legend>{tr}Upload Regex{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config#Filename_must_match:"}{/if}</legend>
+	<legend>{tr}Upload Regex{/tr}{help url="File+Gallery+Config#Filename_must_match:"}</legend>
 	{preference name='fgal_match_regex'}
 	{preference name='fgal_nmatch_regex'}
 </fieldset>
@@ -128,7 +128,7 @@
 
 <input name="filegalhandlers" type="hidden" />
 <div class="adminoptionbox">
-<fieldset><legend>{tr}Handlers{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config#File_galleries_search_indexing"}{/if}</legend>
+<fieldset><legend>{tr}Handlers{/tr}{help url="File+Gallery+Config#File_galleries_search_indexing"}</legend>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Add custom handlers to make your files &quot;searchable&quot; content{/tr}.
     <ul>

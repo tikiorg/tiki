@@ -31,7 +31,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Blog+Config"}{/if}
+					{tr}Features{/tr}{help url="Blog+Config"}
 				</legend>
 				<input type="hidden" name="blogfeatures" />
 				{preference name=feature_blog_rankings}
@@ -65,7 +65,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Trackback pings{/tr}{if $prefs.feature_help eq 'y'} {help url="Blog#About_Trackback"}{/if}
+					{tr}Trackback pings{/tr}{help url="Blog#About_Trackback"}
 				</legend>
 				{preference name=feature_trackbackpings}
 				{preference name=feature_blogposts_pings}

@@ -43,7 +43,7 @@
 							<option value="{$gr.groupName|escape}" {if $gr.groupName eq $prefs.highlight_group} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
 						{/foreach}
 					</select>
-					{if $prefs.feature_help eq 'y'} {help url="Groups"}{/if}
+					{help url="Groups"}
 				</div>
 			</div>
 			{preference name=feature_display_my_to_others}
@@ -52,7 +52,7 @@
 
 			<input type="hidden" name="userfeatures" />
 			<fieldset>
-				<legend>{tr}Community{/tr}{if $prefs.feature_help eq 'y'} {help url="Community"}{/if}</legend>
+				<legend>{tr}Community{/tr}{help url="Community"}</legend>
 				{preference name=feature_community_gender}
 				{preference name=feature_community_mouseover}
 				<div class="adminoptionboxchild" id="feature_community_mouseover_childcontainer">
@@ -73,9 +73,7 @@
 			<fieldset>
 				<legend>
 					{tr}Default user preferences{/tr}
-					{if $prefs.feature_help eq 'y'}
-						{help url="UsersDefaultPrefs" desc="{tr}Users Default Preferences{/tr}"}
-					{/if}
+					{help url="UsersDefaultPrefs" desc="{tr}Users Default Preferences{/tr}"}
 				</legend>
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
@@ -138,9 +136,7 @@
 		<fieldset>
 			<legend>
 				{tr}User messages{/tr}
-				{if $prefs.feature_help eq 'y'}
-					{help url="Inter-User+Messages"}
-				{/if}
+				{help url="Inter-User+Messages"}
 			</legend>
 
 			{preference name=feature_messages}

@@ -311,7 +311,7 @@
 		
 			<div class="adminoptionbox">	
 				{assign var="fcnlink" value="http://www.php.net/manual/en/function.strftime.php"}
-				<a class="link" target="strftime" href="{$fcnlink}">{tr}Date and Time Format Help{/tr}</a>{if $prefs.feature_help eq 'y'} {help url="Date+and+Time"}{/if}
+				<a class="link" target="strftime" href="{$fcnlink}">{tr}Date and Time Format Help{/tr}</a>{help url="Date+and+Time"}
 			</div>
 		{/tab}
 

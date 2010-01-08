@@ -10,14 +10,14 @@
 	{tabset name="admin_textarea"}
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
-				<legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Text+Area"}{/if}</legend>
+				<legend>{tr}Features{/tr}{help url="Text+Area"}</legend>
 				{preference name=feature_filegals_manager}
 				{preference name=feature_dynamic_content}
 				{preference name=feature_wiki_replace}
 			</fieldset>
 
 			<fieldset>
-				<legend>{tr}Wiki syntax{/tr}{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}</legend>
+				<legend>{tr}Wiki syntax{/tr}{help url="Wiki+Syntax"}</legend>
 				{preference name=feature_smileys}
 				{preference name=feature_wiki_paragraph_formatting}
 				<div class="adminoptionboxchild" id="feature_wiki_paragraph_formatting_childcontainer">
@@ -79,7 +79,7 @@
 					<fieldset class="admin">
 						<legend>{$info.name|escape}</legend>
 						<div class="adminoptionbox">
-							<strong>{$plugin|escape}</strong>: {$info.description|escape}{assign var=pref value=wikiplugin_$plugin} {if $prefs.feature_help eq 'y'} {help url="Plugin$plugin"}{/if}
+							<strong>{$plugin|escape}</strong>: {$info.description|escape}{assign var=pref value=wikiplugin_$plugin}{help url="Plugin$plugin"}
 						</div>
 						{if in_array( $pref, $info.prefs)}
 							{assign var=pref value=wikiplugin_$plugin}

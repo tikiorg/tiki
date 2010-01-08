@@ -156,7 +156,7 @@
 						{textarea}{$pagedata}{/textarea}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
-								<label for="comment">{tr}Describe the change you made{/tr}: {if $prefs.feature_help eq 'y'}{help url='Editing+Wiki+Pages' desc='{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}'}{/if}</label>
+								<label for="comment">{tr}Describe the change you made{/tr}: {help url='Editing+Wiki+Pages' desc='{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}'}</label>
 								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" />
 								{if $show_watch eq 'y'}
 									<label for="watch">{tr}Monitor this page{/tr}:</label>
