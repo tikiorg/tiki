@@ -48,12 +48,21 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	function get_payment( $id ) {
+		global $tikilib, $prefs;
 		$info = reset( $this->fetchAll( 'SELECT * FROM `tiki_payment_requests` WHERE `paymentRequestId` = ?', array( $id ) ) );
 
 		if( $info ) {
 			$info['state'] = $this->find_state( $info );
 			$info['amount_original'] = number_format( $info['amount'], 2, '.', ',' );
-			$info['amount_remaining'] = number_format( $info['amount'] - $info['amount_paid'], 2, '.', ',' );
+			$info['amount_remaining_raw'] = $info['amount'] - $info['amount_paid'];
+			$info['amount_remaining'] = number_format( $info['amount_remaining_raw'], 2, '.', ',' );
+			$info['url'] = $tikilib->tikiUrl( 'tiki-payment.php', array(
+				'invoice' => $info['paymentRequestId'],
+			) );
+			$info['paypal_ipn'] = $tikilib->tikiUrl( 'tiki-payment.php', array(
+				'ipn' => 1,
+				'invoice' => $info['paymentRequestId'],
+			) );
 
 			$info['payments'] = array();
 			$payments = $this->fetchAll( 'SELECT * FROM `tiki_payment_received` WHERE `paymentRequestId` = ? ORDER BY `payment_date` DESC', array( $id ) );

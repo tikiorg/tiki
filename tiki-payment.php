@@ -1,4 +1,10 @@
 <?php
+
+// Data sent by the IPN must be left unharmed
+if( isset( $_GET['ipn'] ) ) {
+	$ipn_data = $_POST;
+}
+
 $inputConfiguration = array( array(
 	'staticKeyFilters' => array(
 		'amount' => 'text',
@@ -27,6 +33,22 @@ $auto_query_args = array(
 	'offset_past',
 	'offset_canceled',
 );
+
+if( isset( $ipnData ) ) {
+	$access->check_feature( 'payment_paypal_ipn' );
+	require_once 'lib/payment/paypallib.php';
+
+	$invoice = $paypallib->get_invoice( $ipnData );
+	$info = $paymentlib->get_payment( $invoice );
+
+	// Important to check with paypal first
+	if( $paypallib->is_valid( $ipnData, $info ) && $info ) {
+		$amount = $paypallib->get_amount( $ipnData );
+		$paymentlib->enter_payment( $invoice, $amount, 'paypal', $ipnData );
+	}
+
+	exit;
+}
 
 if( isset( $_POST['manual_amount'], $_POST['invoice'] ) && preg_match( '/^\d+(\.\d{2})?$/', $_POST['manual_amount'] ) ) {
 	$objectperms = Perms::get( 'payment', $_REQUEST['invoice'] );
@@ -69,6 +91,7 @@ if( isset( $_REQUEST['cancel'] ) ) {
 	if( $objectperms->payment_admin ) {
 		ask_ticket( 'cancel_payment' );
 		$paymentlib->cancel_payment( $_REQUEST['cancel'] );
+		$access->redirect( 'tiki-payment.php?invoice=' . $_REQUEST['cancel'], tra('Payment canceled.') );
 	}
 }
 

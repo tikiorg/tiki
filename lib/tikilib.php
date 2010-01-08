@@ -8139,6 +8139,19 @@ class TikiLib extends TikiDb_Bridge
 		return $scheme.'://'.$url_host.(($url_port!='')?":$url_port":'');    
 	}
 
+	function tikiUrl( $relative, $args = array() ) {
+		global $tikiroot;
+
+		$base = $this->httpPrefix() . $tikiroot . $relative;
+
+		if( count( $args ) ) {
+			$base .= '?';
+			$base .= http_build_query( $args, '', '&' );
+		}
+
+		return $base;
+	}
+
 	function distance($lat1,$lon1,$lat2,$lon2) {
 		// This function uses a pure spherical model
 		// it could be improved to use the WGS84 Datum

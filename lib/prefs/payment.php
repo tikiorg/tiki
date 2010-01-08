@@ -15,6 +15,21 @@ function prefs_payment_list() {
 			'filter' => 'email',
 			'dependencies' => array( 'payment_feature' ),
 		),
+		'payment_paypal_environment' => array(
+			'name' => tra('Paypal Environment'),
+			'description' => tra('Used to switch between the paypal sandbox, used for testing and development and the live environment.'),
+			'type' => 'list',
+			'options' => array(
+				'https://www.paypal.com/cgi-bin/webscr' => tra('Production'),
+				'https://www.sandbox.paypal.com/cgi-bin/webscr' => tra('Sandbox'),
+			),
+			'dependencies' => array( 'payment_feature' ),
+		),
+		'payment_paypal_ipn' => array(
+			'name' => tra('Paypal Instant Payment Notification (IPN)'),
+			'description' => tra('Enable IPN for automatic payment completion. When enabled, Paypal will ping back the site when a payment is confirmed. The payment will then be entered automatically. This may not be possible if the server is not on a public server.'),
+			'type' => 'flag',
+		),
 		'payment_currency' => array(
 			'name' => tra('Currency'),
 			'description' => tra('Currency used when entering payments.'),
