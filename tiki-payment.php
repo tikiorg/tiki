@@ -120,15 +120,7 @@ if( $prefs['feature_categories'] == 'y' && $globalperms->payment_request ) {
 }
 
 if( isset( $_REQUEST['invoice'] ) ) {
-	$objectperms = Perms::get( 'payment', $_REQUEST['invoice'] );
-	$info = $paymentlib->get_payment( $_REQUEST['invoice'] );
-
-	// Unpaid payments can be seen by anyone as long as they no the number
-	// Just like your bank account, anyone can drop money in it.
-	if( $info['state'] == 'outstanding' || $info['state'] == 'overdue' || $objectperms->payment_view ) {
-		$info['fullview'] = $objectperms->payment_view;
-		$smarty->assign( 'payment_info', $info );
-	}
+	$smarty->assign( 'invoice', $_REQUEST['invoice'] );
 }
 
 fetch_payment_list( 'outstanding' );
