@@ -6,6 +6,7 @@ function prefs_payment_list() {
 			'name' => tra('Payment'),
 			'description' => tra('Feature to manage and track payment requests.'),
 			'type' => 'flag',
+			'help' => 'Payment',
 		),
 		'payment_paypal_business' => array(
 			'name' => tra('Paypal Business ID'),
@@ -14,6 +15,7 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'filter' => 'email',
 			'dependencies' => array( 'payment_feature' ),
+			'size' => 50,
 		),
 		'payment_paypal_environment' => array(
 			'name' => tra('Paypal Environment'),
@@ -39,10 +41,11 @@ function prefs_payment_list() {
 		),
 		'payment_default_delay' => array(
 			'name' => tra('Default acceptable payment delay'),
-			'hint' => tra('in days'),
+			'shorthint' => tra('days'),
 			'description' => tra('Amount of days before the payment requests becomes overdue. This can be changed per payment request.'),
 			'type' => 'text',
 			'filter' => 'digits',
+			'size' => 3,
 		),
 	);
 }
