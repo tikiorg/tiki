@@ -34,17 +34,17 @@ $auto_query_args = array(
 	'offset_canceled',
 );
 
-if( isset( $ipnData ) ) {
+if( isset( $ipn_data ) ) {
 	$access->check_feature( 'payment_paypal_ipn' );
 	require_once 'lib/payment/paypallib.php';
 
-	$invoice = $paypallib->get_invoice( $ipnData );
+	$invoice = $paypallib->get_invoice( $ipn_data );
 	$info = $paymentlib->get_payment( $invoice );
 
 	// Important to check with paypal first
-	if( $paypallib->is_valid( $ipnData, $info ) && $info ) {
-		$amount = $paypallib->get_amount( $ipnData );
-		$paymentlib->enter_payment( $invoice, $amount, 'paypal', $ipnData );
+	if( $paypallib->is_valid( $ipn_data, $info ) && $info ) {
+		$amount = $paypallib->get_amount( $ipn_data );
+		$paymentlib->enter_payment( $invoice, $amount, 'paypal', $ipn_data );
 	}
 
 	exit;

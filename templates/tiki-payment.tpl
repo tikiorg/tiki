@@ -33,6 +33,8 @@
 					<li>
 						{if $payment.type eq 'user'}
 							{include file=tiki-payment-user.tpl payment=$payment currency=$payment_info.currency}
+						{elseif $payment.type eq 'paypal'}
+							{include file=tiki-payment-paypal.tpl payment=$payment}
 						{/if}
 					</li>
 				{/foreach}

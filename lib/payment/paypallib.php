@@ -13,8 +13,12 @@ class PaypalLib extends TikiDb_Bridge
 	function is_valid( $ipn_data, $payment_info ) {
 		global $prefs;
 
-		// Make sure this is not a fake
+		// Make sure this is not a fake, must be verified even if discarded, otherwise will be resent
 		if( ! $this->confirmed_by_paypal( $ipn_data ) ) {
+			return false;
+		}
+
+		if( ! is_array( $payment_info ) ) {
 			return false;
 		}
 
@@ -25,6 +29,11 @@ class PaypalLib extends TikiDb_Bridge
 
 		// Make sure it is addressed to the right account
 		if( $ipn_data['receiver_email'] != $prefs['payment_paypal_business'] ) {
+			return false;
+		}
+
+		// Require same currency
+		if( $ipn_data['mc_currency'] != $payment_info['currency'] ) {
 			return false;
 		}
 
@@ -48,7 +57,7 @@ class PaypalLib extends TikiDb_Bridge
 
 		$base = array( 'cmd' => '_notify-validate' );  
 
-		$client->setParameterPost( array_merge( $base, $this->data ) );
+		$client->setParameterPost( array_merge( $base, $ipn_data ) );
 		$response = $client->request( 'POST' );
 
 		$body = $response->getBody();
