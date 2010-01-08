@@ -44,6 +44,12 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	function cancel_payment( $id ) {
+		if( $info = $this->get_payment( $id ) ) {
+			if( $info['state'] != 'canceled' ) {
+				$this->run_behaviors( $info, 'cancel' );
+			}
+		}
+
 		$this->query( 'UPDATE `tiki_payment_requests` SET `cancel_date` = NOW() WHERE `paymentRequestId` = ?', array( $id ) );
 	}
 
@@ -73,6 +79,8 @@ class PaymentLib extends TikiDb_Bridge
 				$info['payments'][] = $payment;
 			}
 
+			$info['actions'] = $this->extract_actions( $info['actions'] );
+
 			return $info;
 		}
 	}
@@ -93,13 +101,69 @@ class PaymentLib extends TikiDb_Bridge
 		return 'outstanding';
 	}
 
-	function enter_payment( $invoice, $amount, $type, array $data ) {
-		$data = json_encode( $data );
+	private function extract_actions( $actions ) {
+		if( empty( $actions ) ) {
+			return array(
+				'complete' => array(),
+				'cancel' => array(),
+			);
+		}
 
-		$this->query( 'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details` ) VALUES( ?, NOW(), ?, ?, ? )', array(
-			$invoice, $amount, $type, $data
-		) );
-		$this->query( 'UPDATE `tiki_payment_requests` SET `amount_paid` = `amount_paid` + ? WHERE `paymentRequestId` = ?', array( $amount, $invoice ) );
+		return json_decode( $actions, true );
+	}
+
+	function enter_payment( $invoice, $amount, $type, array $data ) {
+		if( $info = $this->get_payment( $invoice ) ) {
+			if( $info['state'] != 'past' && $info['state'] != 'canceled' && $info['amount_remaining_raw'] - $amount <= 0 ) {
+				$this->run_behaviors( $info, 'complete' );
+			}
+
+			$data = json_encode( $data );
+			$this->query( 'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details` ) VALUES( ?, NOW(), ?, ?, ? )', array(
+				$invoice, $amount, $type, $data
+			) );
+			$this->query( 'UPDATE `tiki_payment_requests` SET `amount_paid` = `amount_paid` + ? WHERE `paymentRequestId` = ?', array( $amount, $invoice ) );
+		}
+	}
+
+	function register_behavior( $invoice, $event, $behavior, array $arguments ) {
+		if( ! in_array( $event, array( 'complete', 'cancel' ) ) ) {
+			return false;
+		}
+
+		if( ! $callback = $this->get_behavior( $behavior ) ) {
+			return false;
+		}
+
+		if( $info = $this->get_payment( $invoice ) ) {
+			$actions = $info['actions'];
+
+			$actions[$event][] = array( 'behavior' => $behavior, 'arguments' => $arguments );
+			$this->query( 'UPDATE `tiki_payment_requests` SET `actions` = ? WHERE `paymentRequestId` = ?', array( json_encode( $actions ), $invoice ) );
+		} else {
+			return false;
+		}
+	}
+
+	private function run_behaviors( $info, $event ) {
+		$behaviors = $info['actions'][$event];
+
+		foreach( $behaviors as $b ) {
+			if( $callback = $this->get_behavior( $b['behavior'] ) ) {
+				call_user_func_array( $callback, $b['arguments'] );
+			}
+		}
+	}
+
+	private function get_behavior( $name ) {
+		$file = "lib/payment/behavior/$name.php";
+		$function = 'payment_behavior_' . $name;
+		if( is_readable( $file ) ) {
+			require_once $file;
+			if( is_callable( $function ) ) {
+				return $function;
+			}
+		}
 	}
 }
 
