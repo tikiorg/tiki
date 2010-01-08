@@ -441,6 +441,7 @@ array_unshift( $inputConfiguration, array(
 		'cat_clearall' => 'alpha',
 		'tab' => 'digits',
 		'javascript_enabled' => 'alpha',
+		'msg' => 'striptags',
 	),
 	'staticKeyFiltersForArrays' => array(
 		'cat_managed' => 'digits',

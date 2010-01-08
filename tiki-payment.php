@@ -36,6 +36,10 @@ if( isset( $_POST['manual_amount'], $_POST['invoice'] ) && preg_match( '/^\d+(\.
 			'user' => $user,
 			'note' => $_POST['note'],
 		) );
+
+		$access->redirect( 'tiki-payment.php?invoice=' . $_POST['invoice'], tra('Manual payment entered.') );
+	} else {
+		$access->redirect( 'tiki-payment.php?invoice=' . $_POST['invoice'], tra('Permission denied to enter payment.') );
 	}
 }
 
@@ -54,6 +58,8 @@ if( isset( $_POST['request'] ) && $globalperms->request_payment ) {
 			$cat_href = 'tiki-payment.php?invoice=' . $id;
 			require 'categorize.php';
 		}
+
+		$access->redirect( 'tiki-payment.php?invoice=' . $id, tra('New payment requested.') );
 	}
 }
 

@@ -39,8 +39,10 @@
 
 {tabset}
 	{tab name="{tr}Outstanding{/tr}"}
-		<p>{tr}Overdue{/tr}</p>
-		{include file=tiki-payment-list.tpl payments=$overdue cancel=1}
+		{if $overdue.cant > 0}
+			<p>{tr}Overdue{/tr}</p>
+			{include file=tiki-payment-list.tpl payments=$overdue cancel=1}
+		{/if}
 
 		<p>{tr}Outstanding{/tr}</p>
 		{include file=tiki-payment-list.tpl payments=$outstanding cancel=1}
