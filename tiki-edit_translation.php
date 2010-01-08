@@ -15,6 +15,9 @@
 require_once('tiki-setup.php');
 
 include_once('lib/multilingual/multilinguallib.php');
+include_once('modules/mod-func-translation.php');
+
+execute_module_translation();
 
 if ($prefs['feature_multilingual'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_multilingual");
@@ -22,6 +25,10 @@ if ($prefs['feature_multilingual'] != 'y') {
 	die;
 }
 
+if (isset($_REQUEST['page'])) {
+	$smarty->assign('page', $_REQUEST['page']);
+}
+	
 if (!(isset($_REQUEST['page']) && $_REQUEST['page']) && !(isset($_REQUEST['id']) && $_REQUEST['id'])) {
 	$smarty->assign('msg',tra("No object indicated"));
 	$smarty->display("error.tpl");
@@ -289,3 +296,17 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-edit_translation.tpl');
 $smarty->display("tiki.tpl");
+
+function execute_module_translation() { 
+
+	$module_reference = array(
+		'moduleId' => null,
+		'name' => 'translation',
+		'params' => array(),
+		'position' => null,
+		'ord' => null,
+	);
+
+	global $modlib; require_once 'lib/modules/modlib.php';	
+	$out = $modlib->execute_module( $module_reference );
+}

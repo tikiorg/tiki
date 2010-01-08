@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_translation_info() {
 	return array(
-		'name' => tra('Page translation'),
+		'name' => tra('Translate Updates'),
 		'description' => tra('Links to versions of the wiki page being viewed in other languages, distinguishing between better, equivalent or worse translations. Optionally displays the up-to-dateness of the translation being viewed.'),
 		'prefs' => array("feature_translation"),
 		'params' => array(
@@ -31,9 +31,13 @@ function filter_languages_from_pivot( $langInfo ) {
 }
 
 function module_translation( $mod_reference, $module_params ) {
-	global $pivotLanguage, $tikilib, $smarty, $prefs, $page;
-
+	global $pivotLanguage, $tikilib, $smarty, $prefs, $page, $_REQUEST;
+	
+	if ((!$page or $page == '') and isset($_REQUEST['page'])) {
+		$page = $_REQUEST['page'];
+	}
 	$smarty->assign( 'show_translation_module', false);
+
 	if( ! empty( $page ) && is_string($page) ) {
 	
 		global $multilinguallib;
@@ -67,7 +71,7 @@ function module_translation( $mod_reference, $module_params ) {
 		}
 	
 		unset( $completeList[$transinfo['page_id']] );
-	
+		
 		$smarty->assign( 'show_translation_module', ! empty( $completeList ) );
 		if (empty( $completeList )) {
 			return;
