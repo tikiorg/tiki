@@ -95,6 +95,12 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 		$smarty->assign('tiki_p_create_tracker_items', 'n');
 	}
 }
+if ($tiki_p_view_trackers != 'y' && $tiki_p_create_tracker_items != 'y') {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}
 if ($tiki_p_view_trackers != 'y') {
 	$userCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
 	$groupCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'g', '1%');
@@ -102,11 +108,6 @@ if ($tiki_p_view_trackers != 'y') {
 		$my = $user;
 	} elseif ($user && !$ours and isset($tracker_info['writerGroupCanModify']) and $tracker_info['writerGroupCanModify'] == 'y' and !empty($groupCreatorFieldId)) {
 		$ours = $group;
-	} elseif ($tiki_p_create_tracker_items != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("You do not have permission to use this feature"));
-		$smarty->display("error.tpl");
-		die;
 	}
 }
 $smarty->assign('my', $my);
