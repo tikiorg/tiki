@@ -31,13 +31,12 @@ function prefs_global_list() {
 		),
 		'useGroupHome' => array(
 			'name' => tra('Use group homepages'),
-			'description' => tra('Use group homepages'),
+			'description' => tra('Users can be sent to different pages upon login, depending on their default group.'),
 			'type' => 'flag',
 			'help' => 'Group',
 		),
 		'limitedGoGroupHome' => array(
 			'name' => tra('Go to group homepage only if login from default homepage'),
-			'description' => tra('Go to group homepage only if login from default homepage'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'useGroupHome',
@@ -53,17 +52,14 @@ function prefs_global_list() {
 		),
 		'cachepages' => array(
 			'name' => tra('Cache external pages'),
-			'description' => tra('Cache external pages'),
 			'type' => 'flag',
 		),
 		'cacheimages' => array(
 			'name' => tra('Cache external images'),
-			'description' => tra('Cache external images'),
 			'type' => 'flag',
 		),
 		'tmpDir' => array(
 			'name' => tra('Temporary directory'),
-			'description' => tra('Temporary directory'),
 			'type' => 'text',
 			'size' => 30,
 			'default' => TikiSetup::tempdir(),
