@@ -25,7 +25,7 @@ function prefs_category_list() {
 			'type' => 'list',
 			'dependencies' => array( 'feature_multilingual' ),
 			'options' => array(
-				'' => tra('None'),
+				'n' => tra('None'),
 				'whitelist' => tra('Only those specified'),
 				'blacklist' => tra('All but those specified'),
 			),
