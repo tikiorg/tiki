@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		ob_end_clean();
 	}
 }
-if ($prefs['feature_jquery_sheet']) {
+if ($prefs['feature_jquery_sheet'] == 'y') {
 	$headerlib->add_jq_onready('
 $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
@@ -124,7 +124,8 @@ $jq("#edit_button").click( function () {
 	return false;
 });
 $jq("#save_button").click( function () {
-	//$jq("div.tiki_sheet").saveSheet();	TODO
+	$jq("div.tiki_sheet").saveSheet();	TODO
+	return false;
 }).hide();
 ');
 }

@@ -64,19 +64,20 @@
 		{/if}
 	
 		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-			{if $editconflict eq 'y'}
-				{button sheetId="$sheetId" readdate="$read_date" mode="edit" _title="$semUser" _text="{tr}Edit{/tr}" _ajax="n"}
-			{else}
-				{button sheetId="$sheetId" readdate="$read_date" mode="edit" _text="{tr}Edit{/tr}" _ajax="n"}
-			{/if}
-			{if $prefs.feature_jquery_sheet}
+			{if $prefs.feature_jquery_sheet eq "y"}
 				{if $editconflict eq 'y'}
 					{assign var="uWarning" value="&lt;br /&gt;{tr}Already being edited by{/tr} $semUser"}
 				{else}
 					{assign var="uWarning" value=""}
 				{/if}
 				{button _id="save_button" _text="{tr}Save{/tr}" _ajax="n" _class="titletips" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
-				{button _id="edit_button" _text="{tr}jQuery Edit{/tr}" _ajax="n" _class="titletips" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
+				{button _id="edit_button" _text="{tr}Edit{/tr}" _ajax="n" _class="titletips" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
+			{else}
+				{if $editconflict eq 'y'}
+					{button sheetId="$sheetId" readdate="$read_date" mode="edit" _title="$semUser" _text="{tr}Edit{/tr}" _ajax="n"}
+				{else}
+					{button sheetId="$sheetId" readdate="$read_date" mode="edit" _text="{tr}Edit{/tr}" _ajax="n"}
+				{/if}
 			{/if}
 		{/if}
 
@@ -95,5 +96,17 @@
 		{if $chart_enabled eq 'y'}
 			{button href="tiki-graph_sheet.php?sheetId=$sheetId" _text="{tr}Graph{/tr}"}
 		{/if}
+
+		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+			{if $prefs.feature_jquery_sheet eq "y"}{* temporary button to edit the previous way *}
+				<br /><br /><br />Temporary "edit the old way" during jQuery.sheet development<br />
+				{if $editconflict eq 'y'}
+					{button sheetId="$sheetId" readdate="$read_date" mode="edit" _title="$semUser" _text="{tr}Tiki-Sheet Edit{/tr}" _ajax="n"}
+				{else}
+					{button sheetId="$sheetId" readdate="$read_date" mode="edit" _text="{tr}Tiki-Sheet Edit{/tr}" _ajax="n"}
+				{/if}
+			{/if}
+		{/if}
+
 	</div>
 {/if}
