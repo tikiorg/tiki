@@ -13,7 +13,7 @@ function prefs_users_list() {
 			'type' => 'radio',
 			'options' => array(
 				'Site' => tra('Use site default to show times'),
-				'' => tra('Detect user timezone (if browser allows). Otherwise use site default.'),
+				'Local' => tra('Detect user timezone (if browser allows). Otherwise use site default.'),
 			),
 		),
 		'users_prefs_userbreadCrumb' => array(

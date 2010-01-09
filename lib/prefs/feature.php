@@ -579,7 +579,7 @@ function prefs_feature_list() {
 		),
 		'feature_tikitests' => array(
 			'name' => tra('TikiTests'),
-			'description' => tra('TikiTests'),
+			'description' => tra('Permits recording and playback of functional tests'),
 			'help' => 'TikiTests',
 			'type' => 'flag',
 		),
