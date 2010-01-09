@@ -25,6 +25,14 @@
 			{preference name=feature_ticketlib2}
 		</fieldset>
 	
+		<fieldset>
+			<legend>{tr}Spam protection{/tr}</legend>
+			{preference name=feature_antibot}
+			{preference name=feature_wiki_protect_email}
+		</fieldset>		
+	
+	
+	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 		<input type="submit" name="security" value="{tr}Apply{/tr}" />
 	</div>
