@@ -11,15 +11,15 @@
 				<tr>
 					<td>{$persp.name|escape}</td>
 					<td>
-						<a href="tiki-switch_perspective.php?perspective={$persp.perspectiveId|escape:url}">{icon _id=arrow_right}</a>
+						<a href="tiki-switch_perspective.php?perspective={$persp.perspectiveId|escape:url}">{icon _id=arrow_right alt='{tr}Switch to{/tr}'}</a>
 						{if $persp.can_edit}
-							{self_link _icon=page_edit action=edit _ajax='y' id=$persp.perspectiveId cookietab=3}{tr}edit{/tr}{/self_link}
+							{self_link _icon=page_edit action=edit _ajax='y' id=$persp.perspectiveId cookietab=3}{tr}Edit{/tr}{/self_link}
 						{/if}
 						{if $persp.can_remove}
-							{self_link action=remove id=$persp.perspectiveId}{icon _id=cross}{/self_link}
+							{self_link action=remove id=$persp.perspectiveId}{icon _id=cross alt='{tr}Delete{/tr}'}{/self_link}
 						{/if}
 						{if $persp.can_perms}
-							<a href="tiki-objectpermissions.php?objectName={$persp.name|escape:"url"}&objectType=perspective&permType=perspective&objectId={$persp.perspectiveId|escape:"url"}">{icon _id=key}</a>
+							<a href="tiki-objectpermissions.php?objectName={$persp.name|escape:"url"}&objectType=perspective&permType=perspective&objectId={$persp.perspectiveId|escape:"url"}">{icon _id=key alt='{tr}Permissions{/tr}'}</a>
 						{/if}
 					</td>
 				</tr>
@@ -49,7 +49,7 @@
 					{/foreach}
 				</fieldset>
 				<p>
-					<input type="submit" name="edit" value="{tr}Edit{/tr}"/>
+					<input type="submit" name="save" value="{tr}Save{/tr}"/>
 				</p>
 			</form>
 			<form method="post" id="searchform" action="tiki-edit_perspective.php">
