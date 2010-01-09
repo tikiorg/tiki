@@ -14,6 +14,7 @@
 		<legend>
 			{tr}Features{/tr}{help url="Category"}
 		</legend>
+		{preference name=feature_categories}
 		{preference name=feature_categorypath}
 		<div class="adminoptionboxchild" id="feature_categorypath_childcontainer">
 			{preference name=categorypath_excluded}
