@@ -20,7 +20,7 @@ function prefs_category_list() {
 			'unserialize' => 'prefs_category_unserialize_defaults',
 		),
 		'category_i18n_sync' => array(
-			'name' => tra('Syncronize multilingual categories'),
+			'name' => tra('Synchronize multilingual categories'),
 			'description' => tra('Make sure that the categories on the translations are synchronized when modified on any version.'),
 			'type' => 'list',
 			'dependencies' => array( 'feature_multilingual' ),

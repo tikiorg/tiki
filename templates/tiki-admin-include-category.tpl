@@ -25,7 +25,7 @@
 		{preference name=category_defaults}
 
 		{preference name=category_i18n_sync}
-		<div class="adminoptionboxchild">
+		<div class="adminoptionboxchild category_i18n_sync_childcontainer blacklist whitelist required">
 			{preference name=category_i18n_synced}
 		</div>
 	</fieldset>
