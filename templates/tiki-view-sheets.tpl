@@ -71,12 +71,12 @@
 			{/if}
 			{if $prefs.feature_jquery_sheet}
 				{if $editconflict eq 'y'}
-					{button _id="edit_button" _text="{tr}jQuery Edit{/tr}" _ajax="n" _class="tips" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}&lt;br /&gt;{tr}Already being edited by{/tr} $semUser"}
+					{assign var="uWarning" value="&lt;br /&gt;{tr}Already being edited by{/tr} $semUser"}
 				{else}
-					{button _id="edit_button" _text="{tr}jQuery Edit{/tr}" _ajax="n" _class="tips" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"}
+					{assign var="uWarning" value=""}
 				{/if}
-				{jq}
-{/jq}
+				{button _id="save_button" _text="{tr}Save{/tr}" _ajax="n" _class="titletips" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
+				{button _id="edit_button" _text="{tr}jQuery Edit{/tr}" _ajax="n" _class="titletips" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
 			{/if}
 		{/if}
 
