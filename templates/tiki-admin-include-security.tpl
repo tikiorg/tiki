@@ -31,6 +31,11 @@
 			{preference name=feature_wiki_protect_email}
 		</fieldset>		
 	
+		<fieldset>
+			<legend>{tr}Category{/tr}</legend>
+				{preference name=feature_search_show_forbidden_cat}
+				{preference name=feature_category_reinforce}
+		</fieldset>		
 	
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">

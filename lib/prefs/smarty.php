@@ -9,8 +9,8 @@ function prefs_smarty_list() {
 		),
 		'smarty_security' => array(
 			'name' => tra('Smarty Security'),
-			'description' => tra('Smarty Security'),
-			'warning' => tra('Do not allow php code in smarty templates.'),
+			'description' => tra('Do not allow php code in smarty templates.'),
+			'warning' => tra('You should leave this on unless you know what you are doing.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'help' => tra(''),
