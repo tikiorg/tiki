@@ -1,4 +1,11 @@
 {* $Id$ *}
+{if !empty($errors)}
+	{remarksbox type="errors" title="{tr}Errors{/tr}"}
+	{foreach from=$errors item=error}
+		{$error|escape}<br />
+	{/foreach}
+	{/remarksbox}
+{/if}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 {tr}To create or remove file galleries, select{/tr} <a class="rbox-link" href="tiki-list_file_gallery.php">{tr}File Galleries{/tr}</a> {tr}from the application menu{/tr}.
@@ -38,6 +45,7 @@
 		 {preference name='fgal_use_dir'}
 	</div>
 *}
+	{button href="tiki-admin.php?page=fgal&amp;move=to_fs" _text="{tr}Move files from database to directory{/tr}"}
 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><input type="radio" id="fgal_use_db1" name="fgal_use_db" value="y"
