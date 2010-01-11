@@ -241,7 +241,10 @@ function switchEditor(mode, form) {
 	form.submit();
 }';
 		}
-	
+		if ($prefs['feature_jquery_ui'] == 'y') {
+			$js_editconfirm .= "\n\$jq('#$as_id').resizable( { minWidth: \$jq('#$as_id').width(), minHeight: 50 });";
+		}
+		
 		if( $prefs['wiki_timeout_warning'] == 'y' ) {
 			$headerlib->add_js($js_editlock);
 		}

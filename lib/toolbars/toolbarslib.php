@@ -1402,7 +1402,8 @@ class ToolbarTextareaResize extends Toolbar
 
 	function isAccessible() // {{{
 	{
-		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
+		global $prefs;
+		return parent::isAccessible() && ! isset($_REQUEST['zoom']) && $prefs['feature_jquery_ui'] != 'y';
 	} // }}}
 }
 
