@@ -1110,16 +1110,20 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
      * as tagging is human-technology.
      */ 
     
-	function get_similar( $type, $objectId, $maxResults = 10 ) {
+	function get_similar( $type, $objectId, $maxResults = 10, $targetType = null ) {
 
 		$algorithm = $this->get_preference('morelikethis_algorithm', 'basic');
+
+		if( is_null( $targetType ) ) {
+			$targetType = $type;
+		}
 
 		$maxResults = (int) $maxResults;
 		if( $maxResults <= 0 )
 			$maxResults = 10;
 
 		$mid = " oa.objectId <> ob.objectId	AND ob.type = ? AND oa.type = ? AND oa.itemId = ?";
-		$bindvals = array($type, $type, $objectId);
+		$bindvals = array($targetType, $type, $objectId);
 			
 		global $prefs;
 		if ($prefs['feature_wikiapproval'] == 'y') {
@@ -1127,7 +1131,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
 		}
 		
-		if ($this->multilingual) {
+		if ($this->multilingual && $type == 'wiki page' && $targetType == 'wiki page') {
 			// make sure only same lang pages are selected
 			$mid .= " AND pb.`lang` = pa.`lang`";
 			$join_tiki_pages = "INNER JOIN tiki_pages pa ON pa.pageName = oa.itemId
@@ -1143,7 +1147,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 				
 			$query = "
 				SELECT
-					ob.itemId pageName, COUNT(DISTINCT fb.tagId) cnt
+					ob.name, ob.href, COUNT(DISTINCT fb.tagId) cnt
 				FROM
 					tiki_objects oa
 					INNER JOIN tiki_freetagged_objects fa ON oa.objectId = fa.objectId
@@ -1166,7 +1170,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 
 			$query = "
 				SELECT
-					ob.itemId pageName, COUNT(DISTINCT fc.objectId) sort_cnt, COUNT(DISTINCT fb.tagId) having_cnt
+					ob.name, ob.href, COUNT(DISTINCT fc.objectId) sort_cnt, COUNT(DISTINCT fb.tagId) having_cnt
 				FROM
 					tiki_objects oa
 					INNER JOIN tiki_freetagged_objects fa ON oa.objectId = fa.objectId

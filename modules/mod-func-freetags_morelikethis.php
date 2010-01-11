@@ -8,25 +8,36 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function module_freetags_morelikethis_info() {
 	return array(
-		'name' => tra('Similar freetags'),
-		'description' => tra('Shows wiki pages with similar freetags.') . ' Warning: the determination of similarity may not behave as you would expect.',
-		'prefs' => array( 'feature_freetags', 'feature_wiki' ),
-		'params' => array(),
+		'name' => tra('Freetags similar content'),
+		'description' => tra('Shows content with multiple freetags in common.'),
+		'prefs' => array( 'feature_freetags' ),
+		'params' => array(
+			'type' => array(
+				'required' => false,
+				'name' => tra('Type'),
+				'description' => tra('Type of objects to extract.'),
+				'filter' => 'text',
+			),
+		),
 		'common_params' => array('nonums', 'rows')
 	);
 }
 
 function module_freetags_morelikethis( $mod_reference, $module_params ) {
-	global $page;
+	global $cat_type, $cat_objid;
 	global $smarty;
-	global $freetaglib;
-	include_once 'lib/freetag/freetaglib.php';
+	global $freetaglib; include_once 'lib/freetag/freetaglib.php';
+
+	$out = null;
+	if( isset( $module_params['type'] ) ) {
+		$out = $module_params['type'];
+	}
 	
-	$globalperms = Perms::get();
-	if( ! empty( $page ) && $globalperms->view ) {
-		$morelikethis = $freetaglib->get_similar( 'wiki page', $page, $mod_reference["rows"] );
+	if( $cat_type && $cat_objid ) {
+		$morelikethis = $freetaglib->get_similar( $cat_type, $cat_objid, $mod_reference["rows"], $out );
 		$smarty->assign('modMoreLikeThis', $morelikethis);
 		$smarty->assign('module_rows', $mod_reference["rows"]);
 	}
+
 	$smarty->assign('tpl_module_title', tra("Similar pages"));
 }
