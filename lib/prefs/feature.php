@@ -441,7 +441,7 @@ function prefs_feature_list() {
 		),
 		'feature_redirect_on_error' => array(
 			'name' => tra('Redirect On Error'),
-			'description' => tra('Redirect to a similar wiki page if an exact match is not found.'),
+			'description' => tra('On error, goto the HomePage as configured in Admin->General.'),
 			'help' => 'Redirect+On+Error',
 			'type' => 'flag',
 		),
@@ -1356,8 +1356,10 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_wiki_1like_redirection' => array(
-			'name' => tra("If a requested page doesn't exist, redirect to a similarly named page"),
+			'name' => tra("Redirect to similar wiki page"),
 			'type' => 'flag',
+			'description' => tra("If a requested page doesn't exist, redirect to a similarly named page"),
+			'help' => 'Redirect+to+similar+wiki+page',
 		),
 		'feature_wiki_templates' => array(
 			'name' => tra('Content templates'),
