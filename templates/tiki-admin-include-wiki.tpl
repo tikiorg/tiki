@@ -12,7 +12,6 @@
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
 			{preference name=wikiHomePage}
-			{preference name=wiki_page_regex}
 
 			<fieldset>
 				<legend>{tr}Page display{/tr}</legend>
@@ -20,8 +19,6 @@
 				{preference name=feature_page_title label="{tr}Title{/tr}"}
 				{preference name=feature_wiki_pageid label="{tr}Page ID{/tr}"}
 				{preference name=wiki_show_version label="{tr}Page version{/tr}"}
-				{preference name=wiki_pagename_strip}
-				{preference name=wiki_badchar_prevent}
 				{preference name=wiki_authors_style label="{tr}List authors{/tr}"}
 
 				<div class="adminoptionboxchild">
@@ -38,6 +35,14 @@
 				{preference name=wiki_dynvar_multilingual}
 			</fieldset>
 
+			<fieldset>
+				<legend>{tr}Page name{/tr}</legend>
+
+				{preference name=wiki_page_regex}
+				{preference name=wiki_badchar_prevent}
+				{preference name=wiki_pagename_strip}
+			</fieldset>
+			
 			<fieldset>
 				<legend>{tr}Edit{/tr}</legend>
 
