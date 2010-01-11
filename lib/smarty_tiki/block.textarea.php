@@ -226,7 +226,7 @@ window.needToConfirm = true;
 window.editorDirty = ".(isset($_REQUEST["preview"]) && $params['previewConfirmExit'] == 'y' ? 'true' : 'false').";
 ";
 
-		if ($prefs['feature_wysiwyg'] && $prefs['wysiwyg_optional']) {
+		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y') {
 			$js_editconfirm .= '
 function switchEditor(mode, form) {
 	window.needToConfirm=false;
