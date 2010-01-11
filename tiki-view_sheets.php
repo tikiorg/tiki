@@ -54,12 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		die;
 	}
 	if (!empty($_REQUEST['s'])) {	// ajax save request from jQuery.sheet
-		$handler = new TikiSheetHTMLTableHandler($_REQUEST['s']);
+		$handler = & new TikiSheetHTMLTableHandler($_REQUEST['s']);
 		$res = $grid->import($handler);
 		// Save the changes
-		$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
+		$handler = & new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 		$grid->export($handler);
-		die($res ? 'saved' : 'failed');
+		die($res ? 'saved ' . $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' grid' : 'failed');
 	}
 	
 	// Load data from the form
@@ -111,11 +111,14 @@ if ($prefs['feature_jquery_sheet'] == 'y') {
 $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != "Done") {
+		if ($jq("div.tiki_sheet").children().length == 0)  {	// new sheet
+			$jq("div.tiki_sheet").append($jq("<table><tbody><tr><td>&nbsp;</td><tr></tbody></table>"));
+		}
 		$jq("div.tiki_sheet").tiki("sheet", "", {title: "'.$info['title'].'", urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"});
 		$a.attr("temp", $a.text());
 		$a.text("Done");
 		$jq("#edit_button").parent().find(".button:not(#edit_button)").hide();
-		//$jq("#save_button").show();
+		$jq("#save_button").show();
 	} else {
 		//$jq("div.tiki_sheet").sheet("destroy");
 		//$a.text($a.attr("temp"));
@@ -124,7 +127,8 @@ $jq("#edit_button").click( function () {
 	return false;
 });
 $jq("#save_button").click( function () {
-	$jq("div.tiki_sheet").saveSheet();	TODO
+	$jq.sheet.cellEditDone();
+	$jq.sheet.saveSheet();
 	return false;
 }).hide();
 ');

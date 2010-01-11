@@ -1834,11 +1834,11 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 //		$parser->parse('<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>'.$this->data.'</body>/head>');
 //		$res = $parser->getData();
 		
-		preg_match_all('/<TD.*\/TD>/i', $this->data, $cells);
+		preg_match_all('/<TD.*\/TD>/Umis', $this->data, $cells);
 		
 		foreach( $cells[0] as $cell ) {
-			preg_match('/id="(.*)"/i', $cell, $id);
-			preg_match('/formula="(.*)"/i', $cell, $formula);
+			preg_match('/id="(.*?)"/i', $cell, $id);
+			preg_match('/formula="(.*?)"/i', $cell, $formula);
 			preg_match('/<TD.*>(.*)<\/TD>/i', $cell, $val);
 			
 			if (count($id) > 1) {
@@ -1859,7 +1859,9 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 					if (substr($formula[1], 0, 1) == '=') {
 						$formula[1] = substr($formula[1], 1, strlen($formula[1])-1);
 					}
-					$sheet->setCalculation($formula[1]);
+					if (!empty($formula[1])) {
+						$sheet->setCalculation($formula[1]);
+					}
 				}
 			}
 		}
