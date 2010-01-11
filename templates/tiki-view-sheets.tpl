@@ -70,8 +70,8 @@
 				{else}
 					{assign var="uWarning" value=""}
 				{/if}
-				{button _id="save_button" _text="{tr}Save{/tr}" _ajax="n" _class="titletips" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
-				{button _id="edit_button" _text="{tr}Edit{/tr}" _ajax="n" _class="titletips" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
+				{button _id="save_button" _text="{tr}Save{/tr}" _ajax="n" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
+				{button _id="edit_button" _text="{tr}Edit{/tr}" _ajax="n" _class="" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
 			{else}
 				{if $editconflict eq 'y'}
 					{button sheetId="$sheetId" readdate="$read_date" mode="edit" _title="$semUser" _text="{tr}Edit{/tr}" _ajax="n"}
