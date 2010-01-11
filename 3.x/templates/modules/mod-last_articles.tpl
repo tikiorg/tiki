@@ -33,7 +33,7 @@
 		  {/if}
 		  {if isset($showHeading)}
 		  <div class="heading">
-		  	   {if $showHeading > 0 and $showHeading ne 'y'}{$modLastArticles[ix].parsedHeading|truncate:$showHeading}{else}{$modLastArticles[ix].parsedHeading}{/if}
+		  	   {wiki}{if $showHeading > 0 and $showHeading ne 'y'}{$modLastArticles[ix].heading|truncate:$showHeading}{else}{$modLastArticles[ix].heading}{/if}{/wiki}
 		  </div>
 		  {/if}
         </li>
