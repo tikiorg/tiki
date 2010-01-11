@@ -99,12 +99,15 @@
 
 		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 			{if $prefs.feature_jquery_sheet eq "y"}{* temporary button to edit the previous way *}
-				<br /><br /><br />Temporary "edit the old way" during jQuery.sheet development<br />
-				{if $editconflict eq 'y'}
-					{button sheetId="$sheetId" readdate="$read_date" mode="edit" _title="$semUser" _text="{tr}Tiki-Sheet Edit{/tr}" _ajax="n"}
-				{else}
-					{button sheetId="$sheetId" readdate="$read_date" mode="edit" _text="{tr}Tiki-Sheet Edit{/tr}" _ajax="n"}
-				{/if}
+				<br /><br /><br />
+				{remarksbox type="note" icon="bricks" title="jQuery.sheet under development"}
+					Temporary "edit the old way" during jQuery.sheet development<br />
+					{if $editconflict eq 'y'}
+						{button sheetId="$sheetId" readdate="$read_date" mode="edit" _title="$semUser" _text="{tr}Tiki-Sheet Edit{/tr}" _ajax="n"}
+					{else}
+						{button sheetId="$sheetId" readdate="$read_date" mode="edit" _text="{tr}Tiki-Sheet Edit{/tr}" _ajax="n"}
+					{/if}
+				{/remarksbox}
 			{/if}
 		{/if}
 
