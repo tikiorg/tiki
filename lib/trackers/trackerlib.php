@@ -916,7 +916,7 @@ class TrackerLib extends TikiLib
 	function filter_categ_items($ret) {
 		//this is an approxomation - the perm should be function of the status
 		global $categlib; include_once('lib/categories/categlib.php');
-		if ($categlib->is_categorized('trackeritem', $ret['itemId'])) {
+		if (empty($ret['itemId']) || $categlib->is_categorized('trackeritem', $ret['itemId'])) {
 			return Perms::filter(array('type' => 'trackeritem'), 'object', $ret, array('object' => 'itemId'), 'view_trackers');
 		} else {
 			return $ret;
@@ -1970,23 +1970,25 @@ class TrackerLib extends TikiLib
 			if ($f['type'] != 'q' and isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
 
 				if (isset($f['type']) &&  $f['type'] == 'e') {
-					if (!in_array($f['fieldId'], $categorized_fields))
+					if (!in_array($f['fieldId'], $categorized_fields)) {
 						$mandatory_fields[] = $f;
+					}
 				} elseif (isset($f['type']) &&  ($f['type'] == 'a' || $f['type'] == 't') && ($this->is_multilingual($f['fieldId']) == 'y')) {
-                                  if (!isset($multi_languages))
-                                  $multi_languages=$prefs['available_languages'];
-				    //Check recipient
-				    if (isset($f['lingualvalue']) ) {
-				        foreach ($f['lingualvalue'] as $val)
-				        foreach ($multi_languages as $num=>$tmplang)
-				            //Check if trad is empty
-				            if (!isset($val['lang']) ||!isset($val['value']) ||(($val['lang']==$tmplang) && strlen($val['value'])==0))
-				            $mandatory_fields[] = $f;
-
-				    }else
-				    {
-				       $mandatory_fields[] = $f;
-				    }
+					if (!isset($multi_languages)) {
+						$multi_languages=$prefs['available_languages'];
+					}
+					//Check recipient
+					if (isset($f['lingualvalue']) ) {
+						foreach ($f['lingualvalue'] as $val) {
+							foreach ($multi_languages as $num=>$tmplang) {	//Check if trad is empty
+								if (!isset($val['lang']) ||!isset($val['value']) ||(($val['lang']==$tmplang) && strlen($val['value'])==0)) {
+									$mandatory_fields[] = $f;
+								}
+							}
+						}
+					} else {
+						$mandatory_fields[] = $f;
+					}
 				} elseif (isset($f['type']) &&  ($f['type'] == 'u' || $f['type'] == 'g') && $f['options_array'][0] == 1) {
 					;
 				} elseif ($f['type'] == 'c' && (empty($f['value']) || $f['value'] == 'n')) {
