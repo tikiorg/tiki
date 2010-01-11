@@ -1336,8 +1336,6 @@ class UsersLib extends TikiLib
 			$editable = true;
 		} else if ($this->user_has_permission($editing_user, 'tiki_p_admin_users') && !$this->user_has_permission($edited_user, 'tiki_p_admin')) {
 			$editable = true;
-		} else if ($editing_user == $res['user']) {
-			$editable = true;
 		}
 		return $editable;
 	}
@@ -1842,15 +1840,15 @@ class UsersLib extends TikiLib
 		elseif ( $field != 'login' ) return false;
 
 		$result = $this->query("select * from `users_users` where `$field`=?", array($user));
-		$res = $result->fetchRow();
+		if( $res = $result->fetchRow() ) {
+			$res['groups'] = ( $inclusion ) ? $this->get_user_groups_inclusion($res['login']) : $this->get_user_groups($res['login']);
+			$res['age'] = ( ! isset($res['registrationDate']) ) ? 0 : $this->now - $res['registrationDate'];
+			if ( $prefs['login_is_email'] == 'y' && isset($res['login']) && $res['login'] != 'admin' ) $res['email'] = $res['login'];
 
-		$res['groups'] = ( $inclusion ) ? $this->get_user_groups_inclusion($res['login']) : $this->get_user_groups($res['login']);
-		$res['age'] = ( ! isset($res['registrationDate']) ) ? 0 : $this->now - $res['registrationDate'];
-		if ( $prefs['login_is_email'] == 'y' && isset($res['login']) && $res['login'] != 'admin' ) $res['email'] = $res['login'];
+			$res['editable'] = $this->user_can_be_edited($res['login']);
 
-		$res['editable'] = $this->user_can_be_edited($res['login']);
-
-		return $res;
+			return $res;
+		}
 	}
 
 	function get_userid_info($user, $inclusion = false) {
@@ -2048,18 +2046,19 @@ class UsersLib extends TikiLib
 
 
 	function get_usertracker($uid) {
-		$utr = $this->get_userid_info($uid);
-		$utr["usersTrackerId"] = '';
-		foreach ($utr['groups'] as $gr) {
-			$utrid = $this->get_usertrackerid($gr);
-			if ($utrid['usersTrackerId'] and $utrid['usersFieldId']) {
-				$utrid['group'] = $gr;
-				$utrid['user'] = $utr['login'];
-				$utr = $utrid;
-				break;
+		if( $utr = $this->get_userid_info($uid) ) {
+			$utr["usersTrackerId"] = '';
+			foreach ($utr['groups'] as $gr) {
+				$utrid = $this->get_usertrackerid($gr);
+				if ($utrid['usersTrackerId'] and $utrid['usersFieldId']) {
+					$utrid['group'] = $gr;
+					$utrid['user'] = $utr['login'];
+					$utr = $utrid;
+					break;
+				}
 			}
+			return $utr;
 		}
-		return $utr;
 	}
 
 	function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {
@@ -3332,6 +3331,24 @@ class UsersLib extends TikiLib
 			$this->query($query, array($res['groupName'], $res['userId']));
 		}
 	}
+
+	function extend_membership( $user, $group, $periods = 1 ) {
+		$this->update_expired_groups();
+
+		if( ! $this->user_is_in_group( $user, $group ) ) {
+			$this->assign_user_to_group( $user, $group );
+		}
+
+		$info = $this->get_group_info( $group );
+		$userId = $this->get_user_id( $user );
+
+		$this->query( 'UPDATE `users_usergroups` SET `created` = `created` + ? WHERE `userId` = ? AND `groupName` = ?', array(
+			( $periods - 1 ) * $info['expireAfter'] * 24 * 3600,
+			$userId,
+			$group,
+		) );
+	}
+
 	function get_users_created_group($group, $user=null) {
 		if (!empty($user)) {
 			$query = 'SELECT `users_usergroups`.`created` FROM `users_usergroups` LEFT JOIN `users_users` on (`users_users`.`userId`=`users_usergroups`.`userId`) WHERE `groupName`=? AND `user`=?';
