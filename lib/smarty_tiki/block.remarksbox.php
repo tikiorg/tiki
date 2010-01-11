@@ -6,7 +6,7 @@
  * To make a module it is enough to place smth like following
  * into corresponding mod-name.tpl file:
  * \code
- *  {remarksbox type="tip|comment|note|warning" title="Remark title" highlight="y|n" icon="id"}
+ *  {remarksbox type="tip|comment|note|warning|errors" title="Remark title" highlight="y|n" icon="id"}
  *    <!-- module Smarty/HTML/Text here -->
  *  {/remarksbox}
  * \endcode
