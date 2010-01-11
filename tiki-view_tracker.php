@@ -736,7 +736,7 @@ if ($tiki_p_export_tracker == 'y') {
 		}
 	}
 	$smarty->assign('recordsMax', $items['cant']);
-	$smarty->assign('recordsOffset', 0);
+	$smarty->assign('recordsOffset', 1);
 }
 include_once ('tiki-section_options.php');
 $smarty->assign('uses_tabs', 'y');

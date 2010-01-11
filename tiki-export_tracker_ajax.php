@@ -259,7 +259,7 @@ $items = $trklib->list_items($_REQUEST['trackerId'], 0, 0, $sort_mode, $listfiel
 $cant = $items['cant'];
 
 if (!empty($_REQUEST['recordsOffset'])) {
-	$offset = $recordsOffset = (int) $_REQUEST['recordsOffset'];
+	$offset = $recordsOffset = ((int) $_REQUEST['recordsOffset']) - 1;
 } else {
 	$offset = $recordsOffset = 0;
 }
