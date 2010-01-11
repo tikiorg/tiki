@@ -66,14 +66,21 @@ class SearchLib extends TikiLib
 		$words = trim($words);
 
 		$sqlJoin = '';
+		$sqlCategJoin = '';
+		$sqlCategWhere = '';
 		$sqlGroup = '';
 		$sqlHaving = '';
 
 		$bindFields = array();
+		$bindCateg = array();
 		$bindJoin = array();
 		$bindHaving = array();
 
-		$sqlFields = sprintf('SELECT %s AS name, '.(isset($h['parsed'])? '%s':'LEFT(%s, 240) AS data').', %s AS hits, %s AS lastModif, %s AS pageName',
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin( $jail, $h['objectType'], $h['objectKey'], $sqlCategJoin, $sqlCategWhere, $bindCateg );
+		}
+
+		$sqlFields = sprintf('SELECT DISTINCT %s AS name, '.(isset($h['parsed'])? '%s':'LEFT(%s, 240) AS data').', %s AS hits, %s AS lastModif, %s AS pageName',
 					$h['name'], $h['data'], $h['hits'], $h['lastModif'], $h['pageName']);
 		if (isset($h['is_html'])) {
 			$sqlFields .= ', `is_html`';
@@ -129,71 +136,6 @@ class SearchLib extends TikiLib
 		    $objKeyCat = $objKey;
 		}
 		    
-/*
- * Commented out for 4.0 - see below (line 292 onwards) new Perms accessor method (partially finished)
- * 
-		$chkObjPerm = $prefs['feature_search_show_forbidden_obj'] != 'y' && $tiki_p_admin != 'y' && (!empty($permName) || (!empty($permNameGlobal) && !empty($permNameObj))) && !empty($objType) && !empty($objKeyPerm) && !empty($objKeyGroup);
-
-		if ($chkObjPerm) {
-
-		    $sqlJoin .= " JOIN `users_objectpermissions` u ON u.`objectId` = md5(" . $this->concat("'$objType'", "lower($objKeyPerm)") . ") AND u.`objectType`= ? ";
-		    $bindJoin[] = $objType;
-		      
-			$sqlJoin = ' LEFT ' . $sqlJoin;
-			$sqlFields .= ", count(u.`objectId`) as perms, max(u.`permName`=? and u.`groupName` IN ($groupStr)) as allow ";
-			$bindFields[] = $permNameObj;
-			$bindFields = array_merge($bindFields, $groupList);
-
-			$sqlGroup = " GROUP BY $objKeyGroup ";
-			$sqlHaving = " HAVING perms=?";
-			if ($globalPerm == 'y') {
-				$sqlHaving .= " or ";
-			} else {
-				$sqlHaving .= " and ";
-			}
-			$sqlHaving .= "allow=? ";
-
-			$bindHaving = array(0, 1);
-	 	}
-
-		$chkCatPerm = $prefs['feature_search_show_forbidden_cat'] != 'y' && $tiki_p_admin != 'y' && !empty($objType) && !empty($objKeyCat) && !empty($objKeyGroup) && $prefs['feature_categories'] == 'y';
-
-		if ($chkCatPerm) {
-
-		    $sqlJoin .= " LEFT JOIN `tiki_objects` o ON o.`type`=? AND o.`itemId`=$objKeyCat ";
-		    $sqlJoin .= " LEFT JOIN `tiki_categorized_objects` co ON co.`catObjectId`=o.`objectId` ";
-		    $sqlJoin .= " LEFT JOIN `tiki_category_objects` cat ON co.`catObjectId`=cat.`catObjectId` ";
-
-		    $bindJoin[] = $objType;
-
-		    $forbiddenCatList = $categlib->list_forbidden_categories(0, '', 'tiki_p_search_categorized');
-
-		    $forbiddenCatStr = '';
-		    if (count($forbiddenCatList) > 0) {
-			$forbiddenCatStr = '?' . str_repeat(',?', count($forbiddenCatList)-1);
-		    }
-                    if ( $forbiddenCatStr == "" ) $forbiddenCatStr = '\'\'';
-
-		    $sqlFields .= ', o.`itemId` IS NOT NULL as categorized, MAX(cat.`categId` IN ('.$forbiddenCatStr.')) as forbidden ';
-		    $bindFields = array_merge($bindFields, $forbiddenCatList);
-
-		    $sqlGroup = " GROUP BY $objKeyGroup ";
-
-		    if ($chkObjPerm) {
-			$sqlHaving = " HAVING (perms=? AND (NOT categorized OR NOT forbidden OR forbidden IS NULL))";
-			if ($globalPerm == 'y') {
-				$sqlHaving .= " or ";
-			} else {
-				$sqlHaving .= " and ";
-			}
-			$sqlHaving .= "allow=? ";
-			$bindHaving = array(0, 1);
-		    } else {
-			$sqlHaving = " HAVING NOT categorized OR NOT forbidden OR forbidden IS NULL ";
-			$bindHaving = array();
-		    }
-		}
-*/
 		if (!empty($h['parentJoin']))
 			$sqlJoin .= ' '.$h['parentJoin'];
 		    
@@ -243,9 +185,9 @@ class SearchLib extends TikiLib
 			$sqlFields .= ', -1 AS relevance';
 		}
 
-		$bindVars = array_merge($bindFields, $bindJoin, $bindHaving);
+		$bindVars = array_merge($bindFields, $bindJoin, $bindCateg, $bindHaving);
 
-		$sql = $sqlFields . $sqlFrom . $sqlJoin . $sqlWhere . $sqlGroup . $sqlHaving . ' ORDER BY ' . $orderby;
+		$sql = $sqlFields . $sqlFrom . $sqlJoin . $sqlCategJoin . $sqlWhere . $sqlCategWhere . $sqlGroup . $sqlHaving . ' ORDER BY ' . $orderby;
 
 		$result = $this->query($sql, $bindVars);
 		//echo $sql; print_r($bindvars);
