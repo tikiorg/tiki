@@ -27,6 +27,9 @@
 				{preference name=feature_wiki_monosp}
 				{preference name=feature_wiki_tables}
 				{preference name=feature_wiki_argvariable}
+				{preference name=wiki_dynvar_style}
+				{preference name=wiki_dynvar_multilingual}
+
 			</fieldset>
 
 			<fieldset>

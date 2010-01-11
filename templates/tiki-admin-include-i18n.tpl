@@ -57,6 +57,7 @@
 	<div class="adminoptionboxchild category_i18n_sync_childcontainer blacklist whitelist required">
 		{preference name=category_i18n_synced}
 	</div>
+	{preference name=wiki_dynvar_multilingual}
 </div>
 
 {preference name=lang_use_db}
