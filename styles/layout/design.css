@@ -1057,7 +1057,6 @@ table.treeTable .parent td {
 }
 
 .mandatory_note {
-	display: block;
 	font-style: italic;
 	color: red;
 	margin-top: 10px;

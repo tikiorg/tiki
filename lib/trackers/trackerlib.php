@@ -1960,7 +1960,7 @@ class TrackerLib extends TikiLib
 
 	// check the validity of each field values of a tracker item
 	// and the presence of mandatory fields
-	function check_field_values($ins_fields, $categorized_fields='') {
+	function check_field_values($ins_fields, $categorized_fields='', $trackerId='', $itemId='') {
 		global $prefs;
 		$mandatory_fields = array();
 		$erroneous_values = array();
@@ -2078,6 +2078,12 @@ class TrackerLib extends TikiLib
 							$erroneous_values[] = $f;
 						}
 					}
+					if (isset($f['options_array'][6]) &&  $f['options_array'][6] == 'y') {
+						if (in_array($f['value'], $this->list_tracker_field_values($trackerId, $f['fieldId'], 'opc', 'y', '', $itemId))) {
+							$erroneous_values[] = $f;
+						}
+					}
+					break;
 				}
 			}
 		}
@@ -2723,7 +2729,7 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
-				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax</strong>
+				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax,distinct</strong>
 				<dt>Example: 0,80,5,30,200
 				<dt>Description:
 				<dd><strong>[toolbars]</strong> enables toolbars if a 1 is specified;
@@ -2732,6 +2738,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[max]</strong> is the maximum number of characters that can be saved;
 				<dd><strong>[listmax]</strong> is the maximum number of characters that are displayed in list mode;
 				<dd><strong>[wordmax]</strong> will alert if word count exceeded with a positive number (1+) or display a word count with a negative number (-1);
+				<dd><strong>[distinct]</strong> is y or n. y = all values of the field must be different
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['c'] = array(
@@ -3161,7 +3168,7 @@ class TrackerLib extends TikiLib
 	}
 	/* list all the values of a field
 	 */
-	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y', $lang='') {
+	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y', $lang='', $exceptItemId='') {
 		$mid = '';
 		$bindvars[] = (int)$fieldId;
 		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId)) {
@@ -3169,9 +3176,13 @@ class TrackerLib extends TikiLib
 		}
 		$sort_mode = "value_asc";
 		$distinct = $distinct == 'y'?'distinct': '';
-		if ($lang) {
+		if (!empty($lang)) {
 			$mid .= ' and `lang`=? ';
 			$bindvars[] = $lang;
+		}
+		if (!empty($exceptItemId)) {
+			$mid .= ' and ttif.`itemId` != ? ';
+			$bindvars[] = $exceptItemId;
 		}
 		$query = "select $distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query( $query, $bindvars);

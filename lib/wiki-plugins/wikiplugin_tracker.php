@@ -137,7 +137,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Autosavevalue'),
 				'description' => tra('Colon-separated values corresponding to autosavefields'),
-				'filter' => 'digits',
+				'filter' => 'text',
 				'separator' => ':'
 			),
 		),
@@ -463,15 +463,16 @@ function wikiplugin_tracker($data, $params)
 				$categorized_fields = array();
 				while (list($postVar, $postVal) = each($_REQUEST)) {
 					if(preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
-						foreach ($postVal as $v)
+						foreach ($postVal as $v) {
  	   						$ins_categs[] = $v;
-						$categorized_fields[] = $m[1];
+							$categorized_fields[] = $m[1];
+						}
 					}
 		 		}
 				/* ------------------------------------- End recup all values from REQUEST -------------- */
 
 				/* ------------------------------------- Check field values for each type and presence of mandatory ones ------------------- */
-				$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields);
+				$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $trackerId, empty($itemId)?'':$itemId);
 
 				if (empty($user) && $prefs['feature_antibot'] == 'y' && !$_SESSION['in_tracker']) {
 					// in_tracker session var checking is for tiki-register.php
@@ -660,34 +661,15 @@ function wikiplugin_tracker($data, $params)
 			}
 
 			// Display warnings when needed
+			
 			if(count($field_errors['err_mandatory']) > 0) {
-				$back.= '<div class="simplebox highlight"><img src="pics/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
-				$back.= tra('Following mandatory fields are missing').'&nbsp;:<br/>';
-				$coma_cpt = count($field_errors['err_mandatory']);
-				foreach($field_errors['err_mandatory'] as $f) {
-					$back.= $f['name'];
-					$back.= --$coma_cpt > 0 ? ',&nbsp;' : '';
-				}
-				$back.= '</div><br />';
-				$_REQUEST['error'] = 'y';
+				$smarty->assign_by_ref('err_mandatory', $field_errors['err_mandatory']);
 			}
-
 			if(count($field_errors['err_value']) > 0) {
-				$back.= '<div class="simplebox highlight">';
-				$b = '';
-				foreach($field_errors['err_value'] as $f) {
-					if (!empty($f['errorMsg'])) {
-						$back .= tra($f['errorMsg']).'<br>';
-					} else {
-						if (!empty($b))
-							$b .= ' : ';
-						$b .= $f['name'];
-					}
-				}
-				if (!empty($b)) {
-					$back.= tra('Following fields are incorrect').'&nbsp;:<br/>'.$b;
-				}
-				$back.= '</div><br />';
+				$smarty->assign_by_ref('err_value', $field_errors['err_value']);
+			}
+			if(count($field_errors['err_mandatory']) > 0 || count($field_errors['err_value']) > 0) {
+				$back .= $smarty->fetch('tracker_error.tpl');
 				$_REQUEST['error'] = 'y';
 			}
 			if (isset($field_errors['err_antibot'])) {
@@ -861,7 +843,6 @@ function wikiplugin_tracker($data, $params)
 					}
 					if (!empty($tpl) || !empty($wiki)) {
 						$smarty->assign_by_ref('field_value', $f);
-						$smarty->assign('showmandatory', $showmandatory);
 						if (isset($item)) {
 							$smarty->assign_by_ref('item', $item);
 						}

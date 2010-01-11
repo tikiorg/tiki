@@ -513,7 +513,7 @@ if (isset($_REQUEST['import'])) {
 				$categorized_fields[] = $m[1];
 			}
 		}
-		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields);
+		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $_REQUEST['trackerId'], empty($_REQUEST['itemId'])?'':$_REQUEST['itemId']);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
 		$smarty->assign('err_value', $field_errors['err_value']);
 		// values are OK, then lets add a new item
