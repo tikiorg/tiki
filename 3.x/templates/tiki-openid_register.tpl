@@ -20,11 +20,11 @@
 					{/if}
 					{if $prefs.rnd_num_reg eq 'y'}
 					<div>
-						{tr}Your registration code:{/tr}
+						{tr}Anti-Bot verification code:{/tr}
 						<img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/>
 						<br />
-						<label="openid_registration_code">{tr}Registration code{/tr}</label>
-						<input type="text" maxlength="8" size="8" name="regcode" id="openid_registration_code" />
+						<label="antibotcode">{tr}Enter the code you see above:{/tr}</label>
+						<input type="text" maxlength="8" size="8" name="antibotcode" id="antibotcode" />
 					</div>
 					{/if}
 
