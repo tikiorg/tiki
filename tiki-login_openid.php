@@ -69,7 +69,7 @@ function filterExistingInformation(&$data, &$messages) // {{{
 } // }}}
 function displayRegisatrationForms($data, $messages) // {{{
 {
-	global $smarty;
+	global $smarty, $userlib;
 	// Default values for the registration form
 	$smarty->assign('username', $data['nickname']);
 	$smarty->assign('email', $data['email']);
@@ -80,6 +80,24 @@ function displayRegisatrationForms($data, $messages) // {{{
 	$smarty->assign('change_password', 'n');
 	$smarty->assign('auth_method', 'tiki');
 	$smarty->assign('feature_switch_ssl_mode', 'n');
+
+	$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+	$nbChoiceGroups = 0;
+	$mandatoryChoiceGroups = true;
+	foreach($listgroups['data'] as $gr) {
+		if ($gr['registrationChoice'] == 'y') {
+			++$nbChoiceGroups;
+			$theChoiceGroup = $gr['groupName'];
+			if ($gr['groupName'] == 'Registered') $mandatoryChoiceGroups = false;
+		}
+	}
+	if ($nbChoiceGroups) {
+		$smarty->assign('listgroups', $listgroups['data']);
+		if ($nbChoiceGroups == 1) {
+			$smarty->assign_by_ref('theChoiceGroup', $theChoiceGroup);
+		}
+	}
+
 	// Display
 	$smarty->assign('mid', 'tiki-openid_register.tpl');
 	$smarty->display('tiki.tpl');
