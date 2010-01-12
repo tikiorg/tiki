@@ -293,6 +293,8 @@ calc_chunkSize(10);
 
 $logger->info('$chunkSize: ' . $chunkSize . '    cant: '. $cant . '     fields: ' . count($fields['data']) . '      memlimit: ' . $memory_limit);
 $starttime = microtime(true);
+$lasttime = $starttime;
+
 $export_cant = 0; $chunks = 0;
 saveStatus(array('status' => 'waiting', 'total' => $recordsMax + $offset, 'current' => $export_cant, 'msg' => ''));
 
@@ -363,12 +365,9 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 	} else {
 		echo $str;
 	}
-	$mem2 = memory_get_usage(true);
-	$leak = $mem2 - $mem;
-	$logger->info('done chunk: '.$export_cant.' records - (current chunkSize='.$chunkSize.') - lost mem: '.round(($leak)/1024, 3).' - usage total: '.round($mem2/1024, 3));
-	
 	saveStatus(array('status' => 'export', 'current' => $export_cant, 'msg' => ''));
-		
+	$mem2 = memory_get_usage(true);
+	
 	if ($offset + $chunkSize < $recordsMax + $recordsOffset) {
 		$offset += $chunkSize;
 	} else {
@@ -383,7 +382,11 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 		$chunkSize = $recordsMax + $recordsOffset - $offset;
 	}
 
+	$leak = $mem2 - $mem;
+	$logger->info('done: '.$export_cant.' records - (current chunkSize='.$chunkSize.') - lost mem: '.round(($leak)/1024, 3).' kB - usage total: '.round($mem2/1048576, 3).' MB - time ' . round(microtime(true) - $lasttime,2).' secs');
 	$mem = memory_get_usage(true);
+	$lasttime = microtime(true);
+	
 	if ($leak + $mem > $memory_limit - 1024 && $chunks > 1) {	// unlikely to work, so fail safely if got past first chunk
 		$str = 'Export incomplete, memory limit reached. Exported: '.$export_cant.' out of '.$cant.' records.';
 		$logger->info('failed '.$export_cant.' records in ' . round(microtime(true) - $starttime,2).' secs');
@@ -397,7 +400,7 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $chunkSize
 		//break;
 	}
 
-	time_nanosleep(0, 300);	 // AJAX time!? please?
+	//time_nanosleep(0, 300);	 // AJAX time!? please?
 	if (0 && $chunks > 1) {	// debugging
 		break;
 	}
