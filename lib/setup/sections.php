@@ -140,7 +140,7 @@ $sections = array(
 	'calendar' => array(
 		'feature' => 'feature_calendar',
 		'key' => 'calendarId',
-		'itemkey' => 'calitmId',
+		'itemkey' => 'viewcalitemId',
 		'objectType' => 'calendar',
 	),
 	// tra('Map')
