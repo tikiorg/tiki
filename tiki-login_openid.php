@@ -52,6 +52,7 @@ function getAccountsMatchingIdentifier($identifier) // {{{
 function loginUser($identifier) // {{{
 {
 	global $user_cookie_site, $userlib;
+	$userlib->update_lastlogin($identifier);
 	$userlib->update_expired_groups();
 	$_SESSION[$user_cookie_site] = $identifier;
 	header('location: ' . $_SESSION['loginfrom']);
