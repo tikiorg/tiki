@@ -1,3 +1,4 @@
+{strip}
 {* $Id: tiki-view_tracker_item.tpl 23988 2009-12-22 13:55:35Z sylvieg $ *}
 {****  Display warnings about incorrect values and missing mandatory fields ***}
 {if count($err_mandatory) > 0}
@@ -7,7 +8,6 @@
 		{$err_mandatory[ix].name|escape}{if !$smarty.section.ix.last},&nbsp;{/if}
 	{/section}
 {/remarksbox}
-<br />
 {/if}
 
 {if count($err_value) > 0}
@@ -17,5 +17,5 @@
 		{$err_value[ix].name|escape}{if !$smarty.section.ix.last},&nbsp;{/if}
 	{/section}
 {/remarksbox}
-<br />
 {/if}
+{/strip}
