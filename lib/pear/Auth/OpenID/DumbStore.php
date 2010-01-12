@@ -18,7 +18,7 @@
  * Import the interface for creating a new store class.
  */
 require_once 'Auth/OpenID/Interface.php';
-require_once 'Auth/OpenID/HMACSHA1.php';
+require_once 'Auth/OpenID/HMAC.php';
 
 /**
  * This is a store for use in the worst case, when you have no way of
@@ -96,3 +96,5 @@ class Auth_OpenID_DumbStore extends Auth_OpenID_OpenIDStore {
         return $this->auth_key;
     }
 }
+
+?>
