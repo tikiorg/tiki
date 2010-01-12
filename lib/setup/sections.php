@@ -54,7 +54,7 @@ $sections = array(
 	'forums' => array(
 		'feature' => 'feature_forums',
 		'key' => 'forumId',
-		'itemkey' => 'postId',
+		'itemkey' => 'comments_parentId',
 		'objectType' =>'forum',
 		'itemObjectType' => 'forum post',
 	),
