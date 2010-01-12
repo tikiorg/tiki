@@ -100,14 +100,14 @@ select {
 
 input[type=text],
 input[type=password] {
-	background: #f3fcfe;
+	background-color: #f3fcfe;
 	border: 1px solid;
 	border-color: #223845 #4d7b9b #4d7b9b #223845;
 }
 
 .box-login_box input[type=text],
 .box-login_box input[type=password] {
-	background: #E7F8FD;
+	background-color: #E7F8FD;
 	border: 1px solid #33CCFF;
 	color: #517298;
 	font-size: 1em;
