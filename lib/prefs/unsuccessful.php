@@ -6,7 +6,7 @@ function prefs_unsuccessful_list() {
 			'name' => tra('Re-validate user by email after'),
 			'type' => 'text',
 			'size' => 5,
-			'filter' => 'digits',
+			'filter' => 'int',
 			'shorthint' => tra('unsuccessful login attempts'),
 			'hint' => tra('Use "-1" for never'),
 		),
