@@ -24,7 +24,6 @@ function module_freetags_morelikethis_info() {
 }
 
 function module_freetags_morelikethis( $mod_reference, $module_params ) {
-	global $cat_type, $cat_objid;
 	global $smarty;
 	global $freetaglib; include_once 'lib/freetag/freetaglib.php';
 
@@ -33,8 +32,8 @@ function module_freetags_morelikethis( $mod_reference, $module_params ) {
 		$out = $module_params['type'];
 	}
 	
-	if( $cat_type && $cat_objid ) {
-		$morelikethis = $freetaglib->get_similar( $cat_type, $cat_objid, $mod_reference["rows"], $out );
+	if( $object = current_object() ) {
+		$morelikethis = $freetaglib->get_similar( $object['type'], $object['object'], $mod_reference["rows"], $out );
 		$smarty->assign('modMoreLikeThis', $morelikethis);
 		$smarty->assign('module_rows', $mod_reference["rows"]);
 	}

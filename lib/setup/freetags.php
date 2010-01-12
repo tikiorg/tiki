@@ -20,26 +20,20 @@ if ( isset($section) and isset($sections[$section])) {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 			$smarty->assign('freetag_error', tra('You have mistyped the anti-bot verification code; please try again.'));
 			$smarty->assign_by_ref('freetag_msg', $_POST['addtags']);
-		} elseif (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
-			$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], sprintf($here['itemObjectType'], $_REQUEST[$here['key']]), $_POST['addtags']);
-		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
-			$freetaglib->tag_object($userid, $_REQUEST[$here['key']], $here['objectType'], $_POST['addtags']);
+		} elseif ( $object = current_object() ) {
+			$freetaglib->tag_object($userid, $object['object'], $object['type'], $_POST['addtags']);
 		}
 	}
 	if (($tiki_p_admin == 'y' || $tiki_p_unassign_freetags == 'y') && isset($_REQUEST['delTag'])) {
-		if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
-			$freetaglib->delete_object_tag($_REQUEST[$here['itemkey']], sprintf($here['itemObjectType'], $_REQUEST[$here['key']]), $_REQUEST['delTag']);
-		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
-			$freetaglib->delete_object_tag($_REQUEST[$here['key']], $here['objectType'], $_REQUEST['delTag']);
+		if ( $object = current_object() ) {
+			$freetaglib->delete_object_tag($object['object'], $object['type'], $_REQUEST['delTag']);
 		}
 		$url = $tikilib->httpPrefix().str_replace('&delTag='.urlencode($_REQUEST['delTag']), '', $_SERVER['REQUEST_URI']);
 		header("Location: $url");
 		die;
 	}
-	if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']]) and !is_array($_REQUEST[$here['itemkey']])) {
-		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['itemkey']], sprintf($here['itemObjectType'], $_REQUEST[$here['key']]));
-	} elseif (isset($here['key']) and isset($_REQUEST[$here['key']]) and !is_array($_REQUEST[$here['key']])) {
-		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['key']], $here['objectType']);
+	if ( $object = current_object() ) {
+		$tags = $freetaglib->get_tags_on_object($object['object'], $object['type']);
 	} else {
 		$tags = array();
 	}
@@ -63,7 +57,8 @@ if ( isset($section) and isset($sections[$section])) {
 			}
 		}
 
-		if( $ft_multi )
-			$smarty->assign( 'freetags_mixed_lang', "tiki-freetag_translate.php?objId={$_REQUEST[$here['key']]}" );
+		if( $ft_multi && $object = current_object() ) {
+			$smarty->assign( 'freetags_mixed_lang', "tiki-freetag_translate.php?objType=" . urlencode($object['type']) . '&objId=' . urlencode($object['object']) );
+		}
 	}
 }

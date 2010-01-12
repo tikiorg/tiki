@@ -570,8 +570,7 @@ class FreetagLib extends ObjectLib
 	function safe_tag($user, $itemId, $type, $tag, $lang = null) {
 		if (!isset($itemId) || !isset($type) || !isset($tag) ||
 				empty($itemId) || empty($type) || empty($tag)) {
-			die("safe_tag argument missing");
-			return false;
+			throw new Exception('Missing safe_tag argument.');
 		}
 
 		$normalized_tag = $this->normalize_tag($tag);
