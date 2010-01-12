@@ -66,6 +66,11 @@
 	<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
+{if $summary_needed eq 'y'}
+	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	<div class="highlight"><em class='mandatory_note'>{tr}An edit summary is mandatory{/tr}</em></div>
+	{/remarksbox}
+{/if}
 {if $likepages}
 	<div>
 		{tr}Perhaps you are looking for:{/tr}

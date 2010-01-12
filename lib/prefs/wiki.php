@@ -487,5 +487,10 @@ function prefs_wiki_list() {
 			'type' => 'flag',
 			'dependencies' => array( 'feature_multilingual' ),
 		),
+		'wiki_mandatory_edit_summary' => array(
+			'name' => tra('Mandatory edit summary on wiki pages'),
+			'description' => tra('Reject save attempts not providing an edit summary to describe the changes made.'),
+			'type' => 'flag',
+		),
 	);
 }
