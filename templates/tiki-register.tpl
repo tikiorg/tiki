@@ -66,7 +66,7 @@
 
 	{if $prefs.useRegisterPasscode eq 'y'}
 				<tr>
-					<td class="formcolor"><label for="passcode">{tr}Passcode to register{/tr}:</label></td>
+					<td class="formcolor"><label for="passcode">{tr}Passcode to register:{/tr}</label></td>
 					<td class="formcolor">
 						<input type="password" name="passcode" id="passcode" onkeypress="regCapsLock(event)" />
 						<em>{tr}Not your password.{/tr} {tr}To request a passcode, {if $prefs.feature_contact eq 'y'}<a href="tiki-contact.php">{/if}
@@ -76,7 +76,7 @@
 	{/if}
  
 				<tr>
-					<td class="formcolor"><label for="pass1">{tr}Password{/tr}:</label></td>
+					<td class="formcolor"><label for="pass1">{tr}Password:{/tr}</label></td>
 					<td class="formcolor">
 						<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
 						<span id="mypassword_text"></span>
@@ -89,7 +89,7 @@
 				</tr>
 
 				<tr>
-					<td class="formcolor" style="vertical-align:top"><label for="pass2">{tr}Repeat password{/tr}:</label></td>
+					<td class="formcolor" style="vertical-align:top"><label for="pass2">{tr}Repeat password:{/tr}</label></td>
 					<td class="formcolor">
 						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" {if $prefs.feature_ajax eq'y'}onkeyup="check_pass()"{/if}/>
 						{if $prefs.feature_ajax eq'y'}<span id="checkpass"></span>{/if}
@@ -108,7 +108,7 @@
 
 	{if $prefs.login_is_email ne 'y'}
 				<tr>
-					<td class="formcolor"><label for="email">{tr}Email{/tr}:</label></td>
+					<td class="formcolor"><label for="email">{tr}Email:{/tr}</label></td>
 					<td class="formcolor"><input type="text" id="email" name="email" {if $prefs.feature_ajax eq 'y'}onkeyup="return check_mail()" onblur="return check_mail()"{/if}/>
 						{if $prefs.feature_ajax eq 'y'}<span id="ajax_msg_mail" style="vertical-align: middle;"></span>{/if}
 						{if $prefs.validateUsers eq 'y' and $prefs.validateEmail ne 'y'}
@@ -121,7 +121,7 @@
 	{section name=ir loop=$customfields}
 		{if $customfields[ir].show}
 				<tr>
-					<td class="form"><label for="{$customfields[ir].prefName}">{tr}{$customfields[ir].label}{/tr}:</label></td>
+					<td class="form"><label for="{$customfields[ir].prefName}">{tr}{$customfields[ir].label}:{/tr}</label></td>
 					<td class="form"><input type="{$customfields[ir].type}" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" size="{$customfields[ir].size}" id="{$customfields[ir].prefName}" /></td>
 				</tr>
 		{/if}
@@ -132,7 +132,7 @@
 				<input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
 	{elseif $listgroups}
 				<tr>
-					<td class="formcolor">{tr}Select your group{/tr}:</td>
+					<td class="formcolor">{tr}Select your group:{/tr}</td>
 					<td class="formcolor">
 		{foreach item=gr from=$listgroups}
 			{if $gr.registrationChoice eq 'y'}
@@ -140,9 +140,9 @@
 					 <input type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> 
 					 <label for="gr_{$gr.groupName}">
 					 	{if $gr.groupDesc}
-					 		{tr}{$gr.groupDesc}{/tr}
+					 		{tr}{$gr.groupDesc|escape}{/tr}
 						{else}
-							{$gr.groupName}
+							{$gr.groupName|escape}
 						{/if}
 					</label>
 				</div>
