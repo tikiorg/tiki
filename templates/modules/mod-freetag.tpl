@@ -15,6 +15,9 @@
 <input type="submit" name="Add" value="Add" />
 {help url="Tags" desc='{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes{/tr}'}
 </form>
+{jq}
+	$jq(':text[name=addtags]').tiki('autocomplete', 'tag', {multiple: true, multipleSeparator: " "} );
+{/jq}
 {/if}
 {/tikimodule}
 {/if}

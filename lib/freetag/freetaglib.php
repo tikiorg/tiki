@@ -1370,5 +1370,22 @@ class FreetagLib extends ObjectLib
 		$this->query( "DELETE FROM tiki_translated_objects WHERE type = 'freetag' AND objId = ?", array( $tagId ) );
 		$this->cleanup_tags();
 	}
+
+	function get_tags_containing( $tag ) {
+		$tag = $this->normalize_tag($tag);
+
+		if( empty( $tag ) ) {
+			return array();
+		}
+
+		$result = $this->fetchAll( "SELECT `tag` FROM `tiki_freetags` WHERE `tag` LIKE ?", array( "$tag%" ), 10 );
+
+		$tags = array();
+		foreach( $result as $row ) {
+			$tags[] = $row['tag'];
+		}
+
+		return $tags;
+	}
 }
 $freetaglib = new FreetagLib;
