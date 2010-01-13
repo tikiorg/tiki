@@ -55,7 +55,7 @@ if ( $showHeading != 'n') {
 
 foreach ( $urlParams as $p => $v ) $smarty->assign($p, $$p);
 
-$ranking = $tikilib->list_articles($offset, $module_rows, 'publishDate_desc', '', date("U"), '', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
+$ranking = $tikilib->list_articles($offset, $module_rows, 'publishDate_desc', '', '', '', false, $type, $topicId, 'y', $topic, $categId, '', '', $lang);
 
 
 $module_rows = count($ranking['data']);
