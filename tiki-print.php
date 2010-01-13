@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section_class="wiki page";
 require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/wikilib.php');
@@ -115,6 +116,7 @@ $smarty->assign('creator', $creator);
 $smarty->assign('print_page', 'y');
 $smarty->assign('urlprefix', $base_url); // Obsolete, use base_url instead. This is for compatibility purposes only.
 $smarty->assign('mid', 'tiki-show_page.tpl');
+$smarty->assign('section_class', $section_class);
 
 $smarty->assign('display', isset($_REQUEST['display'])?$_REQUEST['display']: '');
 // Allow PDF export by installing a Mod that define an appropriate function

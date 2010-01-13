@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 # $Id: /cvsroot/tikiwiki/tiki/tiki-login_scr.php,v 1.16.2.2 2008-03-11 20:06:32 nkoth Exp $
+$section_class = 'login page';	// This will be body class instead of $section
 include_once ("tiki-setup.php");
 
 if ( isset($_REQUEST['user']) ) {
