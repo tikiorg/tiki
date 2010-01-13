@@ -1733,17 +1733,6 @@ div.adminanchors {background: #e9ecef !important}
 
 /***** New (unsorted) *****/
 
-/* wikiplugin tracker */
-.mandatory_star {
-	font-weight: bold;
-	color: red;	
-}
-.mandatory_note{
-	display: block;
-	font-style: italic;
-	margin-top: 10px;
-	color: red;	
-}
 /* end of file */
 
 

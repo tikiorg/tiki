@@ -2595,16 +2595,4 @@ div.multiselect li.even {background: #3F3F3F; color: white;}
 .button .iconmenu {display:inline;}
 .categflipper { float:right;}
 .box-data .selected {font-style: italic;}
-
-/* wikiplugin tracker */
-.mandatory_star {
-	font-weight: bold;
-	color: red;	
-}
-.mandatory_note{
-	display: block;
-	font-style: italic;
-	margin-top: 10px;
-	color: red;	
-}
 /* end of css file */

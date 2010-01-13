@@ -1216,8 +1216,7 @@ div.simplebox {
 	background: #fff;
 	padding: 1em}
 
-/* .highlight {
-} */
+.highlight {}
 
 /***** Tables, Tabs and Lists ****/
 /** Tables **/
@@ -2810,15 +2809,4 @@ div.minichatdiv {
 	padding: 1px;
 }
 
-/* wikiplugin tracker */
-.mandatory_star {
-	font-weight: bold;
-	color: red;	
-}
-.mandatory_note{
-	display: block;
-	font-style: italic;
-	margin-top: 10px;
-	color: red;	
-}
 /* end of file */
