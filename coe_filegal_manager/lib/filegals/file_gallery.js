@@ -51,6 +51,20 @@ var FileGallery = {
 				return;
 		}
 		FileGallery.open('tiki-list_file_gallery.php?filegals_manager='+fm+'&view='+view+'&find='+$('.fg-toolbar-search-input').val());
+	},
+	tab: function(name) {
+		$(".fg-tabheads > li").removeClass("fg-tabheads-active");
+		$("#fg-tabheads-"+name).addClass("fg-tabheads-active");
+		$(".fg-tab").hide();
+		$("#fg-tab-"+name).show();
+	},
+	saveGallery: function() {
+		var params = $("#fg-folder-form").serialize();
+		var url = $("#fg-folder-form").attr("action");
+		url += (url.indexOf("?") ? "&" : "?")+params;
+		$.post(url, null, function(data) {
+			$("#fg-jquery-dialog").html(data);
+		});
 	}
 }
 

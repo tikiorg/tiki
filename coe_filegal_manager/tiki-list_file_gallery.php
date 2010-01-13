@@ -382,6 +382,9 @@ if (isset($_REQUEST['edit'])) {
 		if (isset($_REQUEST['viewitem'])) {
 			header('Location: tiki-list_file_gallery.php?galleryId=' . $fgid.(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
 			die;
+		} else {
+			header('Location: tiki-list_file_gallery.php?'.($_REQUEST["galleryId"]? 'galleryId=' . $_REQUEST["galleryId"] : ($_REQUEST["parentId"]? 'galleryId='.$_REQUEST["parentId"] : "")).(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
+			die;
 		}
 		$smarty->assign('edit_mode', 'y');
 	}
@@ -711,7 +714,7 @@ include_once ('fgal_listing_conf.php');
 
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
 $other = (isset($_REQUEST['view'])&&$_REQUEST['view']=='browse'?'list':'browse');
-$smarty->assign('altmode', $_SERVER['PHP_SELF']."?view=".$other."&filegals_manager=edit".(isset($_REQUEST["galleryId"])?"&galleryId=".$_REQUEST["galleryId"]:""));
+$smarty->assign('altmode', $_SERVER['PHP_SELF']."?view=".$other."&filegals_manager=".$_REQUEST["filegals_manager"].(isset($_REQUEST["galleryId"])?"&galleryId=".$_REQUEST["galleryId"]:""));
 // Display the template
 if (!empty($_REQUEST['filegals_manager']) || !empty($_REQUEST["edit_mode"])) {
 	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);

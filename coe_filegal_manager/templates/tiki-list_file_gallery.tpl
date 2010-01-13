@@ -31,7 +31,7 @@
     {/if}
   {/strip}
   </h1>
-  <a class="fg-quick-insert-button" onclick="FileGallery.upload.extra('{$galleryId}','{$filegals_manager}')">Quick and insert button</a>
+  <a class="fg-quick-insert-button" onclick="FileGallery.upload.extra('{$galleryId}','{$filegals_manager}')">Quick upload and insert button</a>
   <a class="fg-settings-icon"><img src="images/file_gallery/icon-tools.gif" border="0"/></a>
   <a class="fg-tip-icon" target="wikihelp" href="http://doc.tikiwiki.org/File+Galleries" onmouseover="$('.fg-tip').show()" onmouseout="$('.fg-tip').hide()"><img src="images/file_gallery/icon-help.gif" border="0"/></a>
   {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
@@ -71,9 +71,9 @@
 			<div class="fg-toolbar-left">
 				<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?filegals_manager={$filegals_manager}&view={$view}')"><img src="images/file_gallery/icon-home.gif" border="0"/></a>
 				{if $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y'}
-					<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId=0')"><img src="images/file_gallery/icon-edit-folder.gif" border="0"/></a>
-					<a class="fg-toolbar-icon"><img src="images/file_gallery/icon-delete-folder.gif" border="0"/></a>
-					<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId=0')"><img src="images/file_gallery/icon-create-folder.gif" border="0"/></a>
+					<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId={$galleryId}&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-edit-folder.gif" border="0"/></a>
+					<!--a class="fg-toolbar-icon"><img src="images/file_gallery/icon-delete-folder.gif" border="0"/></a-->
+					<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId=0&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-create-folder.gif" border="0"/></a>
 				{/if}
 			</div>
 			<div class="fg-toolbar-right">
