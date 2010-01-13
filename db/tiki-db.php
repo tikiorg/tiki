@@ -81,8 +81,12 @@ if (is_file('db/virtuals.inc')) {
 			$multi = $_SERVER['TIKI_VIRTUAL'];
 		} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
 			$multi = $_SERVER['SERVER_NAME'];
-		} elseif (isset($_SERVER['HTTP_HOST']) and is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
-			$multi = $_SERVER['HTTP_HOST'];
+		} elseif (isset($_SERVER['HTTP_HOST'])) {
+			if (is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
+				$multi = $_SERVER['HTTP_HOST'];
+			} else if (is_file('db/'.preg_replace('/^www\./','',$_SERVER['HTTP_HOST']).'/local.php')) {
+				$multi = preg_replace('/^www\./','',$_SERVER['HTTP_HOST']);
+			}
 		}
 	}
 	if (isset($multi)) {
