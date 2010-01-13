@@ -1003,6 +1003,10 @@ div#page-bar {
 
 #page-bar > span {float: left}
 
+.hrwikibottom {
+	visibility: hidden;
+}
+
 div.cache {}
 div.cachedpage {}
 .wikicache, .wikicache:visited {}
