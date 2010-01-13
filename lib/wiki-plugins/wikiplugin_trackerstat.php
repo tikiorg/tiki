@@ -142,7 +142,9 @@ function wikiplugin_trackerstat($data, $params)
 		if ($allFields["data"][$i]['type'] == 'e') {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$listCategs = $categlib->get_child_categories($allFields["data"][$i]['options']);
-			$itemId = $trklib->get_user_item($trackerId, $tracker_info);
+			if ($tracker_info['oneUserItem'] == 'y') {
+				$itemId = $trklib->get_user_item($trackerId, $tracker_info);
+			}
 			for ($j = 0, $jcount_listcategs = count($listCategs); $j < $jcount_listcategs; ++$j) {
 				$objects = $categlib->get_category_objects($listCategs[$j]['categId'], 'trackeritem', array('table'=>'tiki_tracker_items', 'join'=>'itemId', 'filter'=>'trackerId', 'bindvars'=>$trackerId));
 				if ($status == 'opc' || $tracker_info['showStatus'] == 'n') {
@@ -156,10 +158,12 @@ function wikiplugin_trackerstat($data, $params)
 					}
 				}
 				$v[$j]['value'] = $listCategs[$j]['name'];
-				foreach($objects as $o) {
-					if ($o['itemId'] == $itemId) {
-						$v[$j]['me'] = 'y';
-						break;
+				if ($tracker_info['oneUserItem'] == 'y') {
+					foreach($objects as $o) {
+						if ($o['itemId'] == $itemId) {
+							$v[$j]['me'] = 'y';
+							break;
+						}
 					}
 				}
 				$v[$j]['href'] = "trackerId=$trackerId&amp;filterfield=$fieldId&amp;filtervalue[$fieldId][]=".$listCategs[$j]['categId'];
