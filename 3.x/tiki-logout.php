@@ -34,9 +34,20 @@ session_unregister ('user');
 unset ($_SESSION[$user_cookie_site]);
 session_destroy();
 
-/* change group home page or desactivate if no page is set */
-if ( ($groupHome = $userlib->get_group_home('Anonymous')) != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
-else $url = $prefs['site_tikiIndex'];
+if (!empty($_REQUEST['page'])) {
+	$url =  $_REQUEST['page'];
+	if ($tikilib->page_exists($url)) {
+		global $wikilib; include_once( 'lib/wiki/wikilib.php');
+		$url = $wikilib->sefurl($url);
+	} else {
+		$url = '';
+	}
+}
+if (empty($url)) {
+	/* change group home page or desactivate if no page is set */
+	if ( ($groupHome = $userlib->get_group_home('Anonymous')) != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
+	else $url = $prefs['site_tikiIndex'];
+}
 
 // RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
 if ( ! eregi('^https?\:', $url) ) {
