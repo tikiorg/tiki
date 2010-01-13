@@ -2782,4 +2782,19 @@ div.minichatdiv {
   padding-left: 20px;
 }
 
+#wikifootnote {
+	background: #EFEFFF;
+	font-size: 11px;
+}
+
+#wikifootnote p {
+	padding: 4px;
+}
+
+p.editdate {
+	border-top: 1px solid #8CACBB;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
 /* end of file */
