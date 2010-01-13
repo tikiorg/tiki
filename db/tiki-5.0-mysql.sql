@@ -858,6 +858,8 @@ CREATE TABLE `tiki_forums` (
   `topics_list_reads` char(1) default NULL,
   `topics_list_pts` char(1) default NULL,
   `topics_list_lastpost` char(1) default NULL,
+  `topics_list_lastpost_title` char(1) default NULL,
+  `topics_list_lastpost_avatar` char(1) default NULL,
   `topics_list_author` char(1) default NULL,
   `vote_threads` char(1) default NULL,
   `forum_last_n` int(2) default 0,
