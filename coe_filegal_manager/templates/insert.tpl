@@ -26,7 +26,7 @@
 				<td><input type="text" class="fg-insert-size" id="fg-insert-size-width"/> x <input type="text" class="fg-insert-size" id="fg-insert-size-height"/></td>
 			</tr>
 			</table>
-			<input value="Insert" type="submit" class="fg-insert-submit" onclick="FileGallery.upload.insertImage('{$file}',document.getElementById('fg-insert-link-x1').checked,$('#fg-insert-size-width').val(),$('fg-insert-size-height').val())"/>
+			<input value="Insert" type="submit" class="fg-insert-submit" onclick="FileGallery.upload.insertImage('{$file}',document.getElementById('fg-insert-link-x1').checked,$('#fg-insert-size-width').val(),$('#fg-insert-size-height').val())"/>
 		</div>
 		<div id="fg-insert-as-link"{if $as=image} style="display:none"{/if}>
 			<table border="0" cellspacing="0" cellpadding="0">

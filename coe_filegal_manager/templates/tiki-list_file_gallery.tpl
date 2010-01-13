@@ -4,7 +4,11 @@
 
 <link rel="stylesheet" type="text/css" href="/css/file_gallery.css"/>
 
-<div class="fg-dialog">
+{if $filegals_manager eq ''}
+	<script> FileGallery.dialogmode = false;; </script>
+	<div id="fg-jquery-upload-dialog"></div>
+{/if}
+<div class="fg-dialog"{if $filegals_manager eq ''} id="fg-jquery-dialog"{/if}>
   <h1>
   {strip}
     {if $edit_mode eq 'y'}
@@ -27,7 +31,7 @@
     {/if}
   {/strip}
   </h1>
-  <a class="fg-quick-insert-button">Quick and insert button</a>
+  <a class="fg-quick-insert-button" onclick="FileGallery.upload.extra('{$galleryId}','{$filegals_manager}')">Quick and insert button</a>
   <a class="fg-settings-icon"><img src="images/file_gallery/icon-tools.gif" border="0"/></a>
   <a class="fg-tip-icon" target="wikihelp" href="http://doc.tikiwiki.org/File+Galleries" onmouseover="$('.fg-tip').show()" onmouseout="$('.fg-tip').hide()"><img src="images/file_gallery/icon-help.gif" border="0"/></a>
   {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
@@ -65,7 +69,7 @@
 		<div class="fg-pane">Galleries</div>
 		<div class="fg-toolbar">
 			<div class="fg-toolbar-left">
-				<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?filegals_manager=1&view={$view}')"><img src="images/file_gallery/icon-home.gif" border="0"/></a>
+				<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?filegals_manager={$filegals_manager}&view={$view}')"><img src="images/file_gallery/icon-home.gif" border="0"/></a>
 				{if $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y'}
 					<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId=0')"><img src="images/file_gallery/icon-edit-folder.gif" border="0"/></a>
 					<a class="fg-toolbar-icon"><img src="images/file_gallery/icon-delete-folder.gif" border="0"/></a>
@@ -93,7 +97,7 @@
 				<h2>{$name}</h2>
 			</div>
 			<div class="fg-toolbar-right">
-				<input class="fg-toolbar-search-input" type="text" onkeypress="FileGallery.search(event,false,'{$view}')" value="{$find}"/>
+				<input class="fg-toolbar-search-input" type="text" onkeypress="FileGallery.search(event,false,'{$view}','{$filegals_manager}')" value="{$find}"/>
 				<a class="fg-toolbar-search-submit" onclick="FileGallery.search(null,true,'{$view}')"><img src="images/file_gallery/icon-search.gif" border="0"/></a>
 			</div>
 		</div>
@@ -101,7 +105,7 @@
 			<div class="fg-files-stats">{$countgalleries} folders, {$countfiles} files</div>
 			<div class="fg-files-count">
 				Number of displayed rows
-				<input id="fg-files-count-input" type="text" value="{$maxRecords}" onkeypress="FileGallery.limit(event,this.value,'{$view}','{$galleryId}')"/>
+				<input id="fg-files-count-input" type="text" value="{$maxRecords}" onkeypress="FileGallery.limit(event,this.value,'{$view}','{$galleryId}','{$filegal_manager}')"/>
 			</div>
 		</div>
 		<div class="fg-files-buttons">
@@ -112,7 +116,7 @@
 					Browse by image
 				{/if}
 			</a>
-			<a class="fg-files-button-upload" onclick="FileGallery.upload.show('{$galleryId}')">Upload files</a>
+			<a class="fg-files-button-upload" onclick="FileGallery.upload.show('{$galleryId}','{$filegals_manager}')">Upload files</a>
 		</div>
 		<div id="fg-files-content">
 		{if $edit_mode eq 'y'}

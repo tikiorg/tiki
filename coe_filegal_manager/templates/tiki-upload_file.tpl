@@ -1,5 +1,7 @@
 {* $Id$ *}
 
+<!-- FileGallery.upload.insertImage('{$file}',document.getElementById('fg-insert-link-x1').checked,$('#fg-insert-size-width').val(),$('fg-insert-size-height').val()) -->
+
 <form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 <input type="hidden" name="formId" value="0"/>
 {if $filegals_manager neq ''}
@@ -19,7 +21,7 @@
 <input type="hidden" name="upload" />
 {/if}
 
-<div class="fg-upload">
+<div class="fg-upload{if $extra eq '1'} fg-upload-extra{/if}">
 	<h2>Upload file</h2>
 	<a class="fg-upload-close" onclick="FileGallery.upload.close()"><img src="images/file_gallery/close.gif" border="0"/></a>
 
@@ -138,6 +140,39 @@
 	{/if}
 	</table>
 	
+	{if $extra eq '1'}
+	<div class="fg-insert-choose">
+		<a id="fg-insert-mode-image" onclick="FileGallery.upload.switchto('image')"{if $as='image'} class="fg-insert-active"{/if}>Insert as an image</a>
+		<a id="fg-insert-mode-link" onclick="FileGallery.upload.switchto('link')"{if $as<>'image'} class="fg-insert-active"{/if}>Insert as a link</a>
+	</div>
+	<div class="fg-insert-form">
+		<div id="fg-insert-as-image">
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td><input type="radio" name="x" id="fg-insert-link-x1"/></td>
+				<td><label for="fg-insert-link-x1">Original size</label></td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="x" id="fg-insert-link-x2"/></td>
+				<td><label for="fg-insert-link-x2">Thumbnail</label></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="text" class="fg-insert-size" id="fg-insert-size-width"/> x <input type="text" class="fg-insert-size" id="fg-insert-size-height"/></td>
+			</tr>
+			</table>
+		</div>
+		<div id="fg-insert-as-link" style="display:none">
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td><label for="fg-insert-title">Link title</label></td>
+				<td><input type="text" id="fg-insert-title"/></td>
+			</tr>
+			</table>
+		</div>
+	</div>
+	{/if}
+
 	{if $prefs.javascript_enabled neq 'y' and !$editFileId}
 		<input id="fg-upload-submit" type="submit" value="{tr}Upload{/tr}"/>
 	{/if}

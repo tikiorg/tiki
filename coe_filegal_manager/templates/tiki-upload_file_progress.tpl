@@ -42,5 +42,17 @@
 
 {assign var=seturl value=$fileId|sefurl:display}
 <script>
-parent.FileGallery.upload.insert('{$fileId}');
+{if $filegals_manager neq ''}
+	if (parent.FileGallery.upload.asimage)
+		parent.FileGallery.upload.insertImage('{$fileId}',parent.FileGallery.upload.dimoriginal,parent.FileGallery.upload.dimwidth,parent.FileGallery.upload.dimheight);
+	else if (parent.FileGallery.upload.aslink)
+		parent.FileGallery.upload.insertLink('{$fileId}',parent.FileGallery.upload.linktitle);
+	else
+		parent.FileGallery.upload.insert('{$fileId}');
+	if (!parent.document.getElementById("fg-insert-as-image"))
+		parent.FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&filegals_manager={$filegals_manager}');
+{else}
+	parent.FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&filegals_manager={$filegals_manager}');
+	parent.FileGallery.upload.close();
+{/if}
 </script>
