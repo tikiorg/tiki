@@ -17,14 +17,14 @@
 		</script>
 	{/if}
 	<div class="navbar">
-			{button href="#" _onclick="insertRowClick()" _text="{tr}Insert Row{/tr}"}
-			{button href="#" _onclick="insertColumnClick()" _text="{tr}Insert Column{/tr}"}
-			{button href="#" _onclick="removeRowClick()" _text="{tr}Remove Row{/tr}"}
-			{button href="#" _onclick="removeColumnClick()" _text="{tr}Remove Column{/tr}"}
-			{button href="#" _onclick="mergeCellClick()" _text="{tr}Merge Cells{/tr}"}
-			{button href="#" _onclick="restoreCellClick()" _text="{tr}Restore Cells{/tr}"}
-			{button href="#" _onclick="copyCalculationClick()" _text="{tr}Copy Calculation{/tr}"}
-			{button href="#" _onclick="formatCellClick()" _text="{tr}Format Cell{/tr}"}
+			{button href="#" _onclick="insertRowClick();return false;" _text="{tr}Insert Row{/tr}"}
+			{button href="#" _onclick="insertColumnClick();return false;" _text="{tr}Insert Column{/tr}"}
+			{button href="#" _onclick="removeRowClick();return false;" _text="{tr}Remove Row{/tr}"}
+			{button href="#" _onclick="removeColumnClick();return false;" _text="{tr}Remove Column{/tr}"}
+			{button href="#" _onclick="mergeCellClick();return false;" _text="{tr}Merge Cells{/tr}"}
+			{button href="#" _onclick="restoreCellClick();return false;" _text="{tr}Restore Cells{/tr}"}
+			{button href="#" _onclick="copyCalculationClick();return false;" _text="{tr}Copy Calculation{/tr}"}
+			{button href="#" _onclick="formatCellClick();return false;" _text="{tr}Format Cell{/tr}"}
 		<div id="detail"></div>
 	</div>
 	<form method="post" action="tiki-view_sheets.php?mode=edit&sheetId={$sheetId}" id="Grid"></form>
@@ -40,20 +40,20 @@
 	var g;
 {$init_grid}
 
-	controlInsertRowBefore = '<form name="insert" onsubmit="insertRowSubmit(this)"><input type="radio" name="pos" value="before" checked="checked" id="sht_ins_row_before" /> <label for="sht_ins_row_before">{tr}Before{/tr}</label> <input type="radio" name="pos" value="after" id="sht_ins_row_after" /> <label for="sht_ins_row_after">{tr}After{/tr}</label> <select name="row">';
+	controlInsertRowBefore = '<form name="insert" onsubmit="return insertRowSubmit(this)"><input type="radio" name="pos" value="before" checked="checked" id="sht_ins_row_before" /> <label for="sht_ins_row_before">{tr}Before{/tr}</label> <input type="radio" name="pos" value="after" id="sht_ins_row_after" /> <label for="sht_ins_row_after">{tr}After{/tr}</label> <select name="row">';
 	controlInsertRowAfter = '</select><input type="text" name="qty" value="1" size="2" /><input type="submit" name="submit" value="{tr}Insert Row{/tr}" /></form>';
 	
-	controlInsertColumnBefore = '<form name="insert" onsubmit="insertColumnSubmit(this)"><input type="radio" name="pos" value="before" checked="checked" id="sht_ins_col_before" /> <label for="sht_ins_col_before">{tr}Before{/tr}</label> <input type="radio" name="pos" value="after" id="sht_ins_col_after" /> <label for="sht_ins_col_after">{tr}After{/tr}</label> <select name="column">';
+	controlInsertColumnBefore = '<form name="insert" onsubmit="return insertColumnSubmit(this)"><input type="radio" name="pos" value="before" checked="checked" id="sht_ins_col_before" /> <label for="sht_ins_col_before">{tr}Before{/tr}</label> <input type="radio" name="pos" value="after" id="sht_ins_col_after" /> <label for="sht_ins_col_after">{tr}After{/tr}</label> <select name="column">';
 	controlInsertColumnAfter = '</select><input type="text" name="qty" value="1" size="2" /><input type="submit" name="submit" value="{tr}Insert Column{/tr}" /></form>';
 
-	controlRemoveRowBefore = '<form name="remove" onsubmit="removeRowSubmit(this)"><select name="row">';
+	controlRemoveRowBefore = '<form name="remove" onsubmit="return removeRowSubmit(this)"><select name="row">';
 	controlRemoveRowAfter = '</select><input type="submit" name="submit" value="{tr}Remove Row{/tr}" /></form>';
 
-	controlRemoveColumnBefore = '<form name="remove" onsubmit="removeColumnSubmit(this)"><select name="column">';
+	controlRemoveColumnBefore = '<form name="remove" onsubmit="return removeColumnSubmit(this)"><select name="column">';
 	controlRemoveColumnAfter = '</select><input type="submit" name="submit" value="{tr}Remove Column{/tr}" /></form>';
 	controlCopyCalculation = '<form name="copy" onsubmit="copyCalculationSubmit(this)"><input type="submit" name="type" value="Left" onclick="document.copy.clicked.value = this.value;" /><input type="submit" name="type" value="Right" onclick="document.copy.clicked.value = this.value;" /><input type="submit" name="type" value="Up" onclick="document.copy.clicked.value = this.value;" /><input type="submit" name="type" value="Down" onclick="document.copy.clicked.value = this.value;" /><input type="hidden" name="clicked" /></form>';
 	initGrid();
-	controlFormatCellBefore = '<form name="format" onsubmit="formatCellSubmit(this)"><select name="format"><option value="">None</option>';
+	controlFormatCellBefore = '<form name="format" onsubmit="return formatCellSubmit(this)"><select name="format"><option value="">None</option>';
 	controlFormatCellAfter = '</select><input type="submit" name="submit" value="{tr}Format Cell{/tr}" /></form>';
 	//--><!]]>
 	</script>
