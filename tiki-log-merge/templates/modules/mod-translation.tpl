@@ -14,7 +14,7 @@
 	{/if}
 	{if $mod_translation_better_known or $mod_translation_better_other}
 		<div>			
-			{tr}Import from these:{/tr}
+			{tr}Import from:{/tr}
 			{if $mod_translation_better_known}
 			<ul>
 				{foreach item=better from=$mod_translation_better_known}
@@ -23,7 +23,12 @@
 						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;diff_style={$default_diff_style}">{icon _id=page_translate_from alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
 					<a href="tiki-index.php?page={$better.page|escape:'url'}">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
-					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page|escape}">{$better.page|escape}</a> ({$better.lang})
+					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page|escape}">
+					{if $show_language eq 'y'}
+					{$better.lang|langname}</a> 
+					{else}
+					{$better.page|escape}</a> ({$better.lang})
+					{/if}
 				</li>
 				{/foreach}
 			</ul>
@@ -41,7 +46,12 @@
 						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;{$default_diff_style}=htmldiff">{icon _id=page_translate_from alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
 					<a href="tiki-index.php?page={$better.page|escape:'url'}">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
-					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page|escape}">{$better.page|escape}</a> ({$better.lang})
+					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page|escape}">
+					{if $show_language eq 'y'}
+					{$better.lang|langname}</a> 
+					{else}
+					{$better.page|escape}</a> ({$better.lang})
+					{/if}
 				</li>
 				{/foreach}
 			</ul>
@@ -55,7 +65,12 @@
 			<ul>
 				{foreach item=equiv from=$mod_translation_equivalent_known}
 				<li>
-					<a href="tiki-index.php?page={$equiv.page|escape:'url'}" title="{$equiv.page|escape}">{$equiv.page|escape}</a> ({$equiv.lang})
+					<a href="tiki-index.php?page={$equiv.page|escape:'url'}" title="{$equiv.page|escape}">
+					{if $show_language eq 'y'}
+					{$equiv.lang|langname}</a> 
+					{else}
+					{$equiv.page|escape}</a> ({$equiv.lang})
+					{/if}
 				</li>
 				{/foreach}
 			</ul>
@@ -69,7 +84,12 @@
 			<ul id="mod-translation-equiv-ul"{if $prefs.change_language eq 'y'} style="display:none"{/if}>
 				{foreach item=equiv from=$mod_translation_equivalent_other}
 				<li>
-					<a href="tiki-index.php?page={$equiv.page|escape:'url'}" title="{$equiv.page|escape}">{$equiv.page|escape}</a> ({$equiv.lang})
+					<a href="tiki-index.php?page={$equiv.page|escape:'url'}" title="{$equiv.page|escape}">
+					{if $show_language eq 'y'}
+					{$equiv.lang|langname}</a> 
+					{else}
+					{$equiv.page|escape}</a> ({$equiv.lang})
+					{/if}
 				</li>
 				{/foreach}
 			</ul>
@@ -78,7 +98,7 @@
 	{/if}
 	{if $mod_translation_worst_known or $mod_translation_worst_other}
 		<div>			
-			{tr}Export to these:{/tr}
+			{tr}Export to:{/tr}
 			{if $mod_translation_worst_known}
 			<ul>
 				{foreach item=worst from=$mod_translation_worst_known}
@@ -87,7 +107,12 @@
 						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style={$default_diff_style}">{icon _id=page_translate_to alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
 					<a href="tiki-index.php?page={$worst.page|escape:'url'}"">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
-					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page|escape}">{$worst.page|escape}</a> ({$worst.lang})
+					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page|escape}">
+					{if $show_language eq 'y'}
+					{$worst.lang|langname}</a> 
+					{else}
+					{$worst.page|escape}</a> ({$worst.lang})
+					{/if}
 				</li>
 				{/foreach}
 			</ul>
@@ -105,7 +130,12 @@
 						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style={$default_diff_style}">{icon _id=page_translate_to alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
 					<a href="tiki-index.php?page={$worst.page|escape:'url'}">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
-					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page|escape}">{$worst.page|escape}</a> ({$worst.lang})
+					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page|escape}">
+					{if $show_language eq 'y'}
+					{$worst.lang|langname}</a> 
+					{else}
+					{$worst.page|escape}</a> ({$worst.lang})
+					{/if}
 				</li>
 				{/foreach}
 			</ul>

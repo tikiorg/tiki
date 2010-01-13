@@ -15,6 +15,10 @@ function module_translation_info() {
 			'pivot_language' => array(
 				'name' => tra('Reference language'),
 				'description' => tra('If set to a language code, restricts the localized pages shown to the reference page, unless that page is being displayed.') . " " . tra('Example values:') . ' en, fr.' . " " . tra('Not set by default.')
+			),
+			'show_language' => array(
+				'name' => tra('Show language'),
+				'description' => tra('If "y" the page language will be shown instead of the page name.') . tra('Default = "n".')
 			)
 		)
 	);
@@ -42,7 +46,13 @@ function module_translation( $mod_reference, $module_params ) {
 	
 		global $multilinguallib;
 		include_once('lib/multilingual/multilinguallib.php');
-	
+
+		if ( $module_params['show_language'] == 'y') {
+			$smarty->assign( 'show_language', 'y');
+		} else {
+			$smarty->assign( 'show_langauge', 'n');
+		}
+		
 		$pivotLanguage = isset( $module_params['pivot_language'] ) ? $module_params['pivot_language'] : '';
 		$langs = $multilinguallib->preferredLangs();
 		if( isset( $GLOBALS['pageLang'] ) )

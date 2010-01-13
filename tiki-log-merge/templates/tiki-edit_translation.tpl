@@ -42,7 +42,7 @@
 <h3>{tr}Translate updates to this page or its translations{/tr}</h3>
 
 <div style="width:50%">
-	{include file='modules/mod-translation.tpl'}
+	{$content_of_update_translation_section}
 </div>
 
 <br>

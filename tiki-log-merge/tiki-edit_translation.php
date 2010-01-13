@@ -298,15 +298,13 @@ $smarty->assign('mid', 'tiki-edit_translation.tpl');
 $smarty->display("tiki.tpl");
 
 function execute_module_translation() { 
-
+	global $smarty;
 	$module_reference = array(
-		'moduleId' => null,
 		'name' => 'translation',
-		'params' => array(),
-		'position' => null,
-		'ord' => null,
 	);
 
 	global $modlib; require_once 'lib/modules/modlib.php';	
+
 	$out = $modlib->execute_module( $module_reference );
+	$smarty->assign('content_of_update_translation_section', $out);
 }
