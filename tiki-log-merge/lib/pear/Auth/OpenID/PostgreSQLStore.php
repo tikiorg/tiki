@@ -109,3 +109,5 @@ class Auth_OpenID_PostgreSQLStore extends Auth_OpenID_SQLStore {
         return $this->_unoctify($blob);
     }
 }
+
+?>

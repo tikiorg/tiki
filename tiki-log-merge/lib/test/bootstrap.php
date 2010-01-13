@@ -30,6 +30,17 @@ $db = TikiDb::get();
 $db->setServerType( $db_tiki );
 
 $pwd = getcwd();
-chdir('../../');
+chdir( dirname(__FILE__) . '/../..' );
 require_once 'lib/cache/cachelib.php';
+require_once 'lib/tikilib.php';
+require_once 'lib/userslib.php';
+$tikilib = new TikiLib;
+$userlib = new UsersLib;
+$_SESSION = array(
+	'u_info' => array(
+		'login' => null
+	)
+);
 chdir($pwd);
+require_once 'lib/setup/prefs.php';
+

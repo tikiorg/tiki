@@ -72,6 +72,9 @@
 							{if $prefs.feature_custom_center_column_header}{* Content comes from Look and Feel admin  *}
 								{eval var=$prefs.feature_custom_center_column_header}
 							{/if}
+{if $display_msg}
+	{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
+{/if}
 <div role="main">
 {$mid_data}
 </div>

@@ -498,7 +498,7 @@ $jq("#genepass").keyup(function () {
 				<td>
 					<label for="csvlist">
 						{tr}CSV File:{/tr}
-						{if $prefs.feature_help eq 'y'}{help url="Users+Management#Adding_new_users_in_bulk" desc="{tr}CSV file layout{/tr}: {tr}login,password,email<br />user1,pass1,email1<br />user2,pass2,email2{/tr}"}{/if}
+						{help url="Users+Management#Adding_new_users_in_bulk" desc="{tr}CSV file layout{/tr}: {tr}login,password,email<br />user1,pass1,email1<br />user2,pass2,email2{/tr}"}
 					</label>
 				</td>
 				<td>

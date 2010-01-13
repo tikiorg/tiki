@@ -19,6 +19,7 @@ if ($tiki_p_view_faqs != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+$smarty->assign('headtitle', tra('FAQs'));
 if (!isset($_REQUEST["faqId"])) {
 	$_REQUEST["faqId"] = 0;
 }

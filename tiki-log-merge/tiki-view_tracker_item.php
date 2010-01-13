@@ -603,7 +603,7 @@ if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item
 				$categorized_fields[] = $m[1];
 			}
 		}
-		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields);
+		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $_REQUEST['trackerId'], empty($_REQUEST['itemId'])?'':$_REQUEST['itemId']);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
 		$smarty->assign('err_value', $field_errors['err_value']);
 		// values are OK, then lets save the item
@@ -1149,6 +1149,7 @@ if ($prefs['feature_ajax'] == 'y') {
 }
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
+
 if (isset($_REQUEST['print'])) {
 	$smarty->display('tiki-print.tpl');
 	$smarty->assign('print', 'y');

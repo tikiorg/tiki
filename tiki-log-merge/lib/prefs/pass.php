@@ -10,7 +10,7 @@ function prefs_pass_list() {
 			'name' => tra('Password expires after'),
 			'type' => 'text',
 			'size' => 5,
-			'filter' => 'digits',
+			'filter' => 'int',
 			'shorthint' => tra('days'),
 			'hint' => tra('Use "-1" for never'),
 		),

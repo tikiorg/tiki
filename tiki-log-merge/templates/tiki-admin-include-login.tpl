@@ -63,20 +63,9 @@
 				{preference name=desactive_login_autocomplete}
 				{preference name=feature_challenge}
 
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="https_login">{tr}Use HTTPS login:{/tr}</label>
-						<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
-							<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
-							<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
-							<option value="encouraged"{if $prefs.https_login eq 'encouraged'} selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
-							<option value="force_nocheck"{if $prefs.https_login eq 'force_nocheck'} selected="selected"{/if}>{tr}Consider we are always in HTTPS, but do not check{/tr}</option>
-							<option value="required"{if $prefs.https_login eq 'required'} selected="selected"{/if}>{tr}Require secure (https) login{/tr}</option>
-						</select>
-					</div>
-				</div>
+				{preference name=https_login}
 
-				<div id="httpsoptions" style="clear:both;margin-left:2.5em;display:{if $prefs.https_login eq 'disabled'}none{else}block{/if}">
+				<div class="adminoptionboxchild https_login_childcontainer allowed encouraged force_nocheck required">
 					{preference name=feature_show_stay_in_ssl_mode}
 					{preference name=feature_switch_ssl_mode}
 					{preference name=http_port}
@@ -92,7 +81,7 @@
 							<option value="all" {if $prefs.rememberme eq 'all'} selected="selected"{/if}>{tr}User's choice{/tr}</option>
 							<option value="always" {if $prefs.rememberme eq 'always'} selected="selected"{/if}>{tr}Always{/tr}</option>
 						</select>
-				 	{if $prefs.feature_help eq 'y'}{help url="Login+Config#Remember_Me"}{/if}
+				 	{help url="Login+Config#Remember_Me"}
 					</div>
 				</div>
 	
@@ -112,15 +101,8 @@
 	
 			<fieldset>
 				<legend>{tr}Username{/tr}</legend>
-				<div class="adminoptionbox">
-					<div class="adminoption">
-						<input type="checkbox" id="login_is_email" name="login_is_email" {if $prefs.login_is_email eq 'y'}checked="checked"{/if} onclick="flip('useemailaslogin');" />
-					</div>
-					<div class="adminoptionlabel">
-						<label for="login_is_email">{tr}Use email as username{/tr}.</label>
-					</div>
-				</div>
-				<div id="useemailaslogin" style="display:{if $prefs.login_is_email eq 'y'}none{else}block{/if};">
+				{preference name=login_is_email mode=invert}
+				<div class="adminoptionboxchild" id="login_is_email_childcontainer">
 					{preference name=min_username_length}
 					{preference name=max_username_length}
 					{preference name=lowercase_username}
@@ -163,7 +145,7 @@
 			</fieldset>
 
 			<fieldset>
-				<legend>{tr}LDAP Bind settings{/tr} {if $prefs.feature_help eq 'y'} {help url="LDAP+Authentication"}{/if}</legend>
+				<legend>{tr}LDAP Bind settings{/tr}{help url="LDAP+Authentication"}</legend>
 				{preference name=auth_ldap_host}
 				{preference name=auth_ldap_port}
 				{preference name=auth_ldap_debug}
@@ -233,7 +215,7 @@
 
 		{tab name="{tr}Shibboleth{/tr}"}
 			<fieldset>
-				<legend>{tr}Shibboleth{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}{/if}</legend>
+				<legend>{tr}Shibboleth{/tr}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_shib" />
 				{if $prefs.auth_method ne 'shib'}
 					<div style="padding:0.5em;clear:both" class="simplebox">
@@ -255,7 +237,7 @@
 		{tab name="{tr}CAS{/tr}"}
 			<input type="hidden" name="auth_cas" />
 			<fieldset>
-				<legend>{tr}CAS (Central Authentication Service){/tr} {if $prefs.feature_help eq 'y'} {help url="CAS+Authentication"}{/if}</legend>
+				<legend>{tr}CAS (Central Authentication Service){/tr}{help url="CAS+Authentication"}</legend>
 				{if $prefs.auth_method ne 'cas'}
 					<div style="padding:0.5em;clear:both" class="simplebox">
 						<div>
@@ -282,7 +264,7 @@
 		{/tab}
 		{tab name="{tr}phpBB{/tr}"}
 			<fieldset>
-				<legend>{tr}phpBB{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthphpBB" desc="{tr}phpBB User Database Authentication {/tr}"}{/if}</legend>
+				<legend>{tr}phpBB{/tr}{help url="AuthphpBB" desc="{tr}phpBB User Database Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_phpbb" />
 				{if $prefs.auth_method ne 'phpbb'}
 					<div style="padding:0.5em;clear:both" class="simplebox">

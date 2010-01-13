@@ -122,6 +122,15 @@ $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->star);
 $smarty->assign('tiki_uses_svn', $TWV->svn);
 
+if( isset( $_GET['msg'] ) ) {
+	$smarty->assign( 'display_msg', $_GET['msg'] );
+} elseif( isset( $_SESSION['msg'] ) ) {
+	$smarty->assign( 'display_msg', $_SESSION['msg'] );
+	unset($_SESSION['msg']);
+} else {
+	$smarty->assign( 'display_msg', '' );
+}
+
 $headerlib->add_jsfile( 'lib/tiki-js.js' );	// tiki-js.js gets included even if javascript_enabled==n for the js test
 
 if ($prefs['javascript_enabled'] == 'y') {

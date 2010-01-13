@@ -6,6 +6,9 @@ function prefs_categories_list() {
 			'name' => tra('Categories used in templates (TPL)'),
 			'type' => 'flag',
 			'perspective' => false,
+			'dependencies' => array(
+				'feature_categories',
+			),
 		),
 	);
 }

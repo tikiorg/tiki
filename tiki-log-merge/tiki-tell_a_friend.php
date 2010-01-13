@@ -7,6 +7,7 @@
 require_once ('tiki-setup.php');
 // To include a link in your tpl do
 //<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
+$smarty->assign('headtitle', tra('Send a link to a friend '));
 if (empty($_REQUEST['report'])) {
 	if ($prefs['feature_tell_a_friend'] != 'y') {
 		$smarty->assign('msg', tra('This feature is disabled') . ': feature_tell_a_friend');

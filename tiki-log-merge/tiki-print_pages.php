@@ -20,6 +20,7 @@ if ($tiki_p_view != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+$smarty->assign('headtitle', tra('Print'));
 if (!isset($cookietab)) { $cookietab = '1'; }
 if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
 	$printpages = array();

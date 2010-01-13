@@ -24,12 +24,13 @@ function prefs_wiki_list() {
 	return array(
 		'wiki_page_regex' => array(
 			'name' => tra('Wiki link format'),
-			'description' => tra('Character set used when detecting wiki links within pages.'),
+			'description' => tra('What level of special characters are accepted as wiki links for page names. Ex.: ((Page &eacute;&agrave;&icirc;))'),
+			'hint' => tra('Strict will only be basic characters like a-z and 0-9. If you have accented or special characters in page names, you should not use strict.'),
 			'type' => 'list',
 			'options' => array(
 				'complete' => tra('Complete'),
-				'full' => tra('Latin'),
-				'strict' => tra('English'),
+				'full' => tra('Relaxed'),
+				'strict' => tra('Strict'),
 			),
 		),
 		'wiki_show_version' => array(
@@ -143,7 +144,7 @@ function prefs_wiki_list() {
 			'filter' => 'digits',
 		),
 		'wiki_encourage_contribution' => array(
-			'name' => tra('Encourage contribution to wiki pages by anonymnous'),
+			'name' => tra('Encourage contribution to wiki pages by anonymous'),
 			'description' => tra('When a page is not editable and the user is anonymous, display the edit links anyway. The visitor will be prompted with a login screen and be encouraged to register.'),
 			'type' => 'flag',
 		),
@@ -485,6 +486,11 @@ function prefs_wiki_list() {
 			'description' => tra('When listing similar pages, such as in missing page 404, only display pages in the same language as the request.'),
 			'type' => 'flag',
 			'dependencies' => array( 'feature_multilingual' ),
+		),
+		'wiki_mandatory_edit_summary' => array(
+			'name' => tra('Mandatory edit summary on wiki pages'),
+			'description' => tra('Reject save attempts not providing an edit summary to describe the changes made.'),
+			'type' => 'flag',
 		),
 	);
 }

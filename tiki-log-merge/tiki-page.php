@@ -26,6 +26,7 @@ $page_data = $htmlpageslib->get_html_page($_REQUEST["pageName"]);
 $smarty->assign('type', $page_data["type"]);
 $smarty->assign('refresh', $page_data["refresh"]);
 $smarty->assign('pageName', $_REQUEST["pageName"]);
+$smarty->assign('headtitle', $_REQUEST["pageName"]);
 $parsed = $htmlpageslib->parse_html_page($_REQUEST["pageName"], $page_data["content"]);
 $smarty->assign_by_ref('parsed', $parsed);
 $section = 'html_pages';

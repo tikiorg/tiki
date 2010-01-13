@@ -95,6 +95,12 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 		$smarty->assign('tiki_p_create_tracker_items', 'n');
 	}
 }
+if ($tiki_p_view_trackers != 'y' && $tiki_p_create_tracker_items != 'y') {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}
 if ($tiki_p_view_trackers != 'y') {
 	$userCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
 	$groupCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'g', '1%');
@@ -102,11 +108,6 @@ if ($tiki_p_view_trackers != 'y') {
 		$my = $user;
 	} elseif ($user && !$ours and isset($tracker_info['writerGroupCanModify']) and $tracker_info['writerGroupCanModify'] == 'y' and !empty($groupCreatorFieldId)) {
 		$ours = $group;
-	} elseif ($tiki_p_create_tracker_items != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("You do not have permission to use this feature"));
-		$smarty->display("error.tpl");
-		die;
 	}
 }
 $smarty->assign('my', $my);
@@ -512,7 +513,7 @@ if (isset($_REQUEST['import'])) {
 				$categorized_fields[] = $m[1];
 			}
 		}
-		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields);
+		$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $_REQUEST['trackerId'], empty($_REQUEST['itemId'])?'':$_REQUEST['itemId']);
 		$smarty->assign('err_mandatory', $field_errors['err_mandatory']);
 		$smarty->assign('err_value', $field_errors['err_value']);
 		// values are OK, then lets add a new item
@@ -735,7 +736,7 @@ if ($tiki_p_export_tracker == 'y') {
 		}
 	}
 	$smarty->assign('recordsMax', $items['cant']);
-	$smarty->assign('recordsOffset', 0);
+	$smarty->assign('recordsOffset', 1);
 }
 include_once ('tiki-section_options.php');
 $smarty->assign('uses_tabs', 'y');

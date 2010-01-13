@@ -58,7 +58,7 @@ $needed_prefs = array(
 	'memcache_enabled' => 'n',
 	'memcache_expiration' => 3600,
 	'memcache_prefix' => 'tiki_',
-	'memcache_flags' => MEMCACHE_COMPRESSED,
+	'memcache_compress' => 'y',
 	'memcache_servers' => false,
 );
 $tikilib->get_preferences($needed_prefs, true, true);
@@ -78,7 +78,7 @@ if( $prefs['memcache_enabled'] == 'y' ) {
 		'enabled' => true,
 		'expiration' => (int) $prefs['memcache_expiration'],
 		'key_prefix' => $prefs['memcache_prefix'],
-		'flags' => $prefs['memcache_flags'],
+		'compress' => $prefs['memcache_compress'],
 	) );
 }
 
@@ -434,11 +434,20 @@ $jitCookie->setDefaultFilter('xss');
 // Apply configured filters to all other input
 if (!isset($inputConfiguration)) $inputConfiguration = array();
 
-$inputConfiguration[] = array(
+array_unshift( $inputConfiguration, array(
 	'staticKeyFilters' => array(
 		'menu' => 'striptags',
+		'cat_categorize' => 'alpha',
+		'cat_clearall' => 'alpha',
+		'tab' => 'digits',
+		'javascript_enabled' => 'alpha',
+		'msg' => 'striptags',
 	),
-);
+	'staticKeyFiltersForArrays' => array(
+		'cat_managed' => 'digits',
+		'cat_categories' => 'digits',
+	),
+) );
 
 $inputFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));
 if ($clean_xss) {

@@ -5,7 +5,7 @@
 	{tabset name="admin_freetags"}
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
-				<legend>{tr}Freetags{/tr}{if $prefs.feature_help eq 'y'} {help url="Tags"}{/if}</legend>
+				<legend>{tr}Freetags{/tr}{help url="Tags"}</legend>
 				<input type="hidden" name="freetagsfeatures" />
 				{preference name=freetags_browse_show_cloud}
 

@@ -182,7 +182,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 	$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, empty($listfields)?'': array('fieldId'=>$listfields));
 	if (empty($listfields)) {
 		foreach ($fields['data'] as $field) {
-			$listfields = $field['fieldId'];
+			$listfields[] = $field['fieldId'];
 		}
 	}
 

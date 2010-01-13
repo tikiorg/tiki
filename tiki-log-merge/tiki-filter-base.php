@@ -70,6 +70,22 @@ if ($dir_level > 0) {
 if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
 if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
+// Add global filter for xajax and cookie
+global $inputConfiguration;
+if ( empty($inputConfiguration) ) {
+	$inputConfiguration = array();
+}
+array_unshift($inputConfiguration,array(
+  'staticKeyFilters' => array(
+		'cookietab'	=>	'int',
+		'xjxfun'	=> 'striptags',
+		'xjxr'		=>	'int'
+  ),
+	'staticKeyFiltersForArrays' => array(
+		'xjxargs' => 'striptags',
+	)
+));
+
 require_once('lib/init/initlib.php');
 TikiInit::prependIncludePath($tikipath.'lib/pear');
 TikiInit::appendIncludePath($tikipath.'lib/core/lib');

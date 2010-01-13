@@ -11,3 +11,9 @@
 		</form>
 	{/tikimodule}
 {/if}
+
+{if $tiki_p_perspective_admin eq 'y'}
+	<div align="center">
+	<a href="tiki-edit_perspective.php">{tr}Edit perspectives{/tr}</a>
+	</div>
+{/if}

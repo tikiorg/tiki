@@ -214,10 +214,15 @@ class TikiAccessLib extends TikiLib
 		global $prefs;
 		if( $url == '' ) $url = $prefs['tikiIndex'];
 		if (trim( $msg )) {
-			if (strpos( $url, '?' )) {
-				$url .= '&msg=' . urlencode( $msg );
+			$session = session_id();
+			if( empty( $session ) ) {
+				if (strpos( $url, '?' )) {
+					$url .= '&msg=' . urlencode( $msg );
+				} else {
+					$url .= '?msg=' . urlencode( $msg );
+				}
 			} else {
-				$url .= '?msg=' . urlencode( $msg );
+				$_SESSION['msg'] = $msg;
 			}
 		}
 

@@ -9,7 +9,7 @@
 	</div>
 	<input type="hidden" name="adssetup" />
 	<fieldset>
-		<legend>{tr}Site Ads and Banners{/tr}{if $prefs.feature_help eq 'y'} {help url="Banners"}{/if}</legend>
+		<legend>{tr}Site Ads and Banners{/tr}{help url="Banners"}</legend>
 
 		{preference name=sitead}
 		{preference name=feature_sitead}

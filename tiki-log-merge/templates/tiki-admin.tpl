@@ -53,7 +53,7 @@ Add a value in first check when you create a new admin page. *}
 "calendar", "intertiki", "kaltura", "freetags", "gmap",
 "i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
 "multimedia", "ads", "profiles", "semantic", "plugins", "webservices",
-'sefurl', 'connect', 'metrics'))}
+'sefurl', 'connect', 'metrics', 'payment'))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}
@@ -131,6 +131,7 @@ Add a value in first check when you create a new admin page. *}
 	{if $prefs.feature_banning eq 'y'}<a href="tiki-admin_banning.php">{tr}Banning{/tr}</a> {/if}
 	{if $prefs.lang_use_db eq 'y'}<a href="tiki-edit_languages.php">{tr}Edit Languages{/tr}</a> {/if}
 	{if $prefs.feature_pagelist eq 'y'}<a href="tiki-admin_pagelist.php">{tr}Page List{/tr}</a>{/if}
+	<a href="tiki-admin.php?page=payment">{tr}Payment{/tr}</a>
 	<hr />
 
 	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br />

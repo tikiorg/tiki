@@ -9,7 +9,7 @@
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>
 	<fieldset>
-		<legend>{tr}{$crumbs[$crumb]->description}{/tr}{if $prefs.feature_help eq 'y'} {help crumb=$crumbs[$crumb]}{/if}</legend>
+		<legend>{tr}{$crumbs[$crumb]->description}{/tr}{help crumb=$crumbs[$crumb]}</legend>
 
 		{preference name=feature_modulecontrols}
 		{preference name=user_assigned_modules}

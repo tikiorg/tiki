@@ -107,6 +107,10 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 		$jq('.tikihelp').cluetip({splitTitle: ':', width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
 		$jq('.stickytips').cluetip({ showTitle: false, width: 'auto', cluezIndex: 400, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml', fx: {open: 'fadeIn', openSpeed: 'fast'}});
 		
+		// repeats for "tiki" buttons as you cannot set the class and title on the same element with that function (it seems?)
+		$jq('span.button.tips a').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
+		$jq('span.button.titletips a').cluetip({splitTitle: '|', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
+		
 		// override overlib
 		convertOverlib = function (element, tip, params) {	// process modified overlib event fn to cluetip from {popup} smarty func
 			
@@ -572,6 +576,9 @@ $jq.fn.tiki = function(func, type, options) {
 							break;
 						case "username":
 							data = "tiki-ajax_services.php?listonly=users";
+							break;
+						case "tag":
+							data = "tiki-ajax_services.php?listonly=tags&separator=+";
 							break;
 					}
 			 		return this.each(function() {

@@ -1,4 +1,11 @@
 {* $Id$ *}
+{if !empty($errors)}
+	{remarksbox type="errors" title="{tr}Errors{/tr}"}
+	{foreach from=$errors item=error}
+		{$error|escape}<br />
+	{/foreach}
+	{/remarksbox}
+{/if}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 {tr}To create or remove file galleries, select{/tr} <a class="rbox-link" href="tiki-list_file_gallery.php">{tr}File Galleries{/tr}</a> {tr}from the application menu{/tr}.
@@ -36,13 +43,14 @@
 	<div class="adminoptionboxchild" id="fgal_use_db_childcontainer_1">
 		 {preference name='fgal_use_dir'}
 	</div>
+	{button href="tiki-admin.php?page=fgal&amp;move=to_fs" _text="{tr}Move files from database to directory{/tr}"}
 
 	{preference name='fgal_podcast_dir'}
 
 <input type="hidden" name="filegalfeatures" />
 
 <fieldset>
-	<legend>{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config"}{/if}</legend>
+	<legend>{tr}Features{/tr}{help url="File+Gallery+Config"}</legend>
 
 	{preference name='feature_file_galleries_rankings'}
 
@@ -70,7 +78,7 @@
 </fieldset>
 
 <fieldset>
-	<legend>{tr}Quota{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config#Quota"}{/if}</legend>
+	<legend>{tr}Quota{/tr}{help url="File+Gallery+Config#Quota"}</legend>
 	{preference name='fgal_quota'}{tr}Used:{/tr} {$usedSize|kbsize}
 	<div class="adminoptionboxchild" id="fgal_quota_childcontainer">
 		{if !empty($prefs.fgal_quota)}
@@ -85,7 +93,7 @@
 </fieldset>
 
 <fieldset>
-	<legend>{tr}Upload Regex{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config#Filename_must_match:"}{/if}</legend>
+	<legend>{tr}Upload Regex{/tr}{help url="File+Gallery+Config#Filename_must_match:"}</legend>
 	{preference name='fgal_match_regex'}
 	{preference name='fgal_nmatch_regex'}
 </fieldset>
@@ -128,7 +136,7 @@
 
 <input name="filegalhandlers" type="hidden" />
 <div class="adminoptionbox">
-<fieldset><legend>{tr}Handlers{/tr}{if $prefs.feature_help eq 'y'} {help url="File+Gallery+Config#File_galleries_search_indexing"}{/if}</legend>
+<fieldset><legend>{tr}Handlers{/tr}{help url="File+Gallery+Config#File_galleries_search_indexing"}</legend>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Add custom handlers to make your files &quot;searchable&quot; content{/tr}.
     <ul>

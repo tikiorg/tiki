@@ -17,13 +17,40 @@
 			{preference name=feature_purifier}
 			{preference name=feature_htmlpurifier_output}
 		<fieldset>
-			<legend>{tr}CSRF Security{/tr} {if $prefs.feature_help eq 'y'} {help url="Security"}{/if}</legend>
+			<legend>{tr}CSRF Security{/tr}{help url="Security"}</legend>
 			<div class="adminoptionbox">
 				{tr}Use these options to protect against cross-site request forgeries (CSRF){/tr}.
 			</div>
 			{preference name=feature_ticketlib}
 			{preference name=feature_ticketlib2}
 		</fieldset>
+	
+		<fieldset>
+			<legend>{tr}Spam protection{/tr}</legend>
+			{preference name=feature_antibot}
+			{preference name=feature_wiki_protect_email}
+		</fieldset>		
+	
+		<fieldset>
+			<legend>{tr}Category{/tr}</legend>
+				{preference name=feature_search_show_forbidden_cat}
+				{preference name=feature_category_reinforce}
+		</fieldset>		
+
+		<fieldset>
+			<legend>{tr}Site Access{/tr}</legend>
+				{preference name=site_closed}
+				<div class="adminoptionboxchild" id="site_closed_childcontainer">
+					{preference name=site_closed_msg}
+				</div>
+
+				{preference name=use_load_threshold}
+				<div class="adminoptionboxchild" id="use_load_threshold_childcontainer">
+					{preference name=load_threshold}
+					{preference name=site_busy_msg}
+				</div>
+		</fieldset>
+		
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 		<input type="submit" name="security" value="{tr}Apply{/tr}" />

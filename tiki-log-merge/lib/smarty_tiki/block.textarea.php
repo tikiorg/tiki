@@ -11,8 +11,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * special params:
  *    _toolbars: if set to 'y', display toolbars above the textarea
- *    previewConfirmExit: if set to 'n' doesn't warn about lost edits after preview
- *    simple: if set to 'y' does no wysiwyg, auto_save, lost edit warning etc
+ *    _previewConfirmExit: if set to 'n' doesn't warn about lost edits after preview
+ *    _simple: if set to 'y' does no wysiwyg, auto_save, lost edit warning etc
  *
  * usage: {textarea id='my_area' name='my_area'}{tr}My Text{/tr}{/textarea}
  *
@@ -39,9 +39,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
 	
 	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit
-	$params['previewConfirmExit'] = isset($params['previewConfirmExit']) ? $params['previewConfirmExit'] : 'y';
+	$params['_previewConfirmExit'] = isset($params['_previewConfirmExit']) ? $params['_previewConfirmExit'] : 'y';
 	
-	$params['simple'] = isset($params['simple']) ? $params['simple'] : 'n';
+	$params['_simple'] = isset($params['_simple']) ? $params['_simple'] : 'n';
 	
 	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
@@ -62,7 +62,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	} else {
 		$as_id = $params['name'];
 	}
-	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['simple'] == 'n') {	// retrieve autosaved content
+	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
 
 		if (empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') {
@@ -82,7 +82,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 
 
 
-	if ( $params['_wysiwyg'] == 'y' && $params['simple'] == 'n') {
+	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
 
 		global $url_path;
 		include_once 'lib/tikifck.php';
@@ -143,7 +143,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
 		}
 		
-		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['simple'] == 'n') {
+		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {
 			$headerlib->add_jq_onready("register_id('$textarea_id'); auto_save();");
 			$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");	// onready is too late...
 		}
@@ -160,7 +160,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 	$js_editconfirm = '';
 	$js_editlock = '';
 
-	if ($params['simple'] == 'n') {
+	if ($params['_simple'] == 'n') {
 // Display edit time out
 
 		$js_editlock .= "
@@ -223,10 +223,10 @@ window.onbeforeunload = confirmExit;
 });
 
 window.needToConfirm = true;
-window.editorDirty = ".(isset($_REQUEST["preview"]) && $params['previewConfirmExit'] == 'y' ? 'true' : 'false').";
+window.editorDirty = ".(isset($_REQUEST["preview"]) && $params['_previewConfirmExit'] == 'y' ? 'true' : 'false').";
 ";
 
-		if ($prefs['feature_wysiwyg'] && $prefs['wysiwyg_optional']) {
+		if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_optional'] == 'y') {
 			$js_editconfirm .= '
 function switchEditor(mode, form) {
 	window.needToConfirm=false;
@@ -241,12 +241,15 @@ function switchEditor(mode, form) {
 	form.submit();
 }';
 		}
-	
+		if ($prefs['feature_jquery_ui'] == 'y') {
+			$js_editconfirm .= "\n\$jq('#$as_id').resizable( { minWidth: \$jq('#$as_id').width(), minHeight: 50 });";
+		}
+		
 		if( $prefs['wiki_timeout_warning'] == 'y' ) {
 			$headerlib->add_js($js_editlock);
 		}
 		$headerlib->add_js($js_editconfirm);
-	}	// end if ($params['simple'] == 'n')
+	}	// end if ($params['_simple'] == 'n')
 
 	return $auto_save_warning.$html;
 }

@@ -112,6 +112,7 @@ if( isset( $_REQUEST['lm_preference'] ) ) {
 if( isset( $_REQUEST['lm_criteria'] ) ) {
 	global $prefslib; require_once 'lib/prefslib.php';
 
+	set_time_limit(0);
 	$results = $prefslib->getMatchingPreferences( $_REQUEST['lm_criteria'] );
 	$results = array_slice( $results, 0, 10 );
 	$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );

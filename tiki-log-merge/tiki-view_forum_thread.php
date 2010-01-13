@@ -324,6 +324,16 @@ if ($prefs['feature_forum_parse'] == 'y') {
 	$plugins = $wikilib->list_plugins(true, 'editpost2');
 	$smarty->assign_by_ref('plugins', $plugins);
 }
+if (!empty($_REQUEST['view_atts']) && $_REQUEST['view_atts'] == 'y') {
+	$fa_offset = isset($_REQUEST['fa_offset'])? $_REQUEST['fa_offset']:0;
+	$fa_maxRecords = isset($_REQUEST['fa_maxRecords'])? $_REQUEST['fa_maxRecords']:$prefs['maxRecords'];
+	$atts = $commentslib->get_all_thread_attachments($_REQUEST['comments_parentId'], $fa_offset, $fa_maxRecords);
+	$atts['offset'] = $fa_offset;
+	$atts['maxRecords'] = $fa_maxRecords;
+	$smarty->assign_by_ref('atts', $atts);
+	$smarty->assign_by_ref('view_atts', $_REQUEST['view_atts']);
+}
+
 // Display the template
 if (isset($_REQUEST['display'])) {
 	// Remove icons and actions that should not be printed

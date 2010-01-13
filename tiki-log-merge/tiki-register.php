@@ -7,6 +7,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/registration/registrationlib.php');
 include_once ('lib/notifications/notificationlib.php');
+$smarty->assign('headtitle', tra('Register'));
 // Permission: needs p_register and not to be a slave
 if ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']))) {
 	header("location: index.php");
