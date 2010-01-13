@@ -154,6 +154,7 @@
 			</tr>
 			{cycle print=false values="even,odd"}
 			{section name=user loop=$users}
+				{if $users[user].editable}
 				<tr class="{cycle}">
 					<td class="thin">
 						{if $users[user].user ne 'admin'}
@@ -206,8 +207,8 @@
 					</td>
 
 					<td>
+						{self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings{/tr}: `$users[user].user`"}{/self_link}
 						{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
-							{self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings{/tr}: `$users[user].user`"}{/self_link}
 							<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences{/tr}: {$users[user].user}">{icon _id='wrench' alt="{tr}Change user preferences{/tr}: `$users[user].user`"}</a>
 						{/if}
 
@@ -223,6 +224,7 @@
 						{/if}
 					</td>
 				</tr>
+				{/if}
 			{sectionelse}
 				<tr class="odd">
 					<td colspan="8">{tr}No records found.{/tr}</td>
@@ -309,13 +311,14 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 	{if $userinfo.userId}
 		<h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
-		{if $userinfo.login ne 'admin'}
+		{if $userinfo.login ne 'admin' and $userinfo.editable}
 			{assign var=thisloginescaped value=$userinfo.login|escape:'url'}
 			{button href="tiki-assignuser.php?assign_user=$thisloginescaped" _text="{tr}Assign user to Groups{/tr}"}
 		{/if}
 	{else}
 		<h2>{tr}Add a New User{/tr}</h2>
 	{/if}
+	{if $userinfo.editable}
 	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data" name="RegForm" autocomplete="off">
 		<table class="normal">
 			<tr class="formcolor">
@@ -468,6 +471,9 @@
 			<br />
 		{/if}
 	</form>
+	{else}
+		{tr}You do not have permission to edit this user{/tr}
+	{/if}
 </div>
 
 {* ---------------------- tab with upload -------------------- *}
@@ -501,5 +507,7 @@
 			</tr>
 		</table>
 	</form>
-	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group in <a href="tiki-admingroups.php">admin->groups->a_group</a>{/tr}{/remarksbox}
+	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
+		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group in <a href="tiki-admingroups.php">admin->groups->a_group</a>{/tr}{/remarksbox}
+	{/if}
 </div>
