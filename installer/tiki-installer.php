@@ -801,6 +801,15 @@ if ($install_step == '2') {
 		$gd_test = 'y';
 		$gd_info = gd_info();
 		$smarty->assign('gd_info', $gd_info['GD Version']);
+		
+		$im = @imagecreate(110, 20);
+		if ($im) {
+				$smarty->assign('sample_image', 'y');
+				imagedestroy($im);
+		} else{
+				$smarty->assign('sample_image', 'n');
+		}
+
 		} else {
 		$gd_test = 'n'; }
 	$smarty->assign('gd_test', $gd_test);
