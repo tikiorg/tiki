@@ -12124,5 +12124,12 @@ $lang=Array(
 "Last pages" => "Les últimes pàgines",
 "Tiki RSS feed for the wiki pages" => "Alimentació RSS del Tiki per a planes wiki",
 "Last modifications to the Wiki." => "Darreres modificacions al Wiki.",
+"Mo" => "Dl",
+"Tu" => "Dt",
+"We" => "Dc",
+"Th" => "Dj",
+"Fr" => "Dv",
+"Sa" => "Ds",
+"Su" => "Du",
 "###end###"=>"###end###");
 ?>
