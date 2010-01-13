@@ -64,30 +64,7 @@
 	<div class="wikitext">{$mail_msg}</div>
 {/if}
 
-{if count($err_mandatory) > 0}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
-	<div class="highlight"><em class='mandatory_note'>{tr}Following mandatory fields are missing{/tr}&nbsp;</em>:
-		<br/>
-		{section name=ix loop=$err_mandatory}
-			{$err_mandatory[ix].name}
-			{if !$smarty.section.ix.last},&nbsp;{/if}
-		{/section}
-	</div>
-	{/remarksbox}
-	<br />
-{/if}
-
-{if count($err_value) > 0}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
-	<div class="highlight"><em class='mandatory_note'>
-		{tr}Following fields are incorrect{/tr}</em>&nbsp;:<br/>
-		{section name=ix loop=$err_value}
-			{$err_value[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
-		{/section}
-	</div>
-	{/remarksbox}
-	<br />
-{/if}
+{include file='tracker_error.tpl'}
 
 {tabset name='tabs_view_tracker'}
 

@@ -28,6 +28,13 @@ class Perms_BaseTest extends TikiTestCase
 		$this->assertEquals( array( 'context' ), $accessor->getContext() );
 	}
 
+	function testWithoutArrayContext() {
+		$expect = Perms::get( array( 'type' => 'wiki page', 'object' => 'HomePage' ) );
+		$accessor = Perms::get( 'wiki page', 'HomePage' );
+
+		$this->assertEquals( $expect, $accessor );
+	}
+
 	/**
 	 * @dataProvider resolverMatches
 	 */

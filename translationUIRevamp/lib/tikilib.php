@@ -6,7 +6,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-require_once('lib/init/tra.php');
 if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
 // performance collecting:
@@ -8137,6 +8136,19 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		return $scheme.'://'.$url_host.(($url_port!='')?":$url_port":'');    
+	}
+
+	function tikiUrl( $relative, $args = array() ) {
+		global $tikiroot;
+
+		$base = $this->httpPrefix() . $tikiroot . $relative;
+
+		if( count( $args ) ) {
+			$base .= '?';
+			$base .= http_build_query( $args, '', '&' );
+		}
+
+		return $base;
 	}
 
 	function distance($lat1,$lon1,$lat2,$lon2) {

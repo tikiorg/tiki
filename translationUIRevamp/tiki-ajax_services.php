@@ -22,6 +22,15 @@ if (!$user) {	// only registered users so far - pending proper perms control
 }
 
 if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
+	$sep = '|';
+	if( isset( $_REQUEST['separator'] ) ) {
+		$sep = $_REQUEST['separator'];
+	}
+	$p = strrpos($_REQUEST['q'], $sep);
+	if ($p !== false) {
+		$_REQUEST['q'] = substr($_REQUEST['q'], $p + 1);
+	}
+
 	if ($_REQUEST['listonly'] == 'groups') {
 		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 		
@@ -29,33 +38,30 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		// $listgroups['data'] = Perms::filter( array( 'type' => 'group' ), 'object', $listgroups['data'], array( 'object' => 'groupName' ), 'view_group' );
 		
 		$grs = array();
-		$p = strrpos($_REQUEST['q'], '|');
-		if ($p !== false) {
-			$_REQUEST['q'] = substr($_REQUEST['q'], $p + 1);
-		}
 		foreach($listgroups['data'] as $gr) {
 			if (isset($_REQUEST['q']) && stripos($gr['groupName'], $_REQUEST['q']) !== false) {
 				$grs[] = $gr['groupName'];
 			}
 		}
 		$access->output_serialized($grs);
-	} else if ($_REQUEST['listonly'] == 'users') {
+	} elseif ($_REQUEST['listonly'] == 'users') {
 		$listusers = $userlib->get_users_names();
 		
 		// TODO also - proper perms checking
 		// tricker for users? Check the group they're in, then tiki_p_group_view_members
 		
 		$usrs = array();
-		$p = strrpos($_REQUEST['q'], '|');	// delimiter should be sent in the request
-		if ($p !== false) {
-			$_REQUEST['q'] = substr($_REQUEST['q'], $p + 1);
-		}
 		foreach($listusers as $usr) {
 			if (isset($_REQUEST['q']) && stripos($usr, $_REQUEST['q']) !== false) {
 				$usrs[] = $usr;
 			}
 		}
 		$access->output_serialized($usrs);
+	} elseif( $_REQUEST['listonly'] == 'tags' ) {
+		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
+
+		$tags = $freetaglib->get_tags_containing( $_REQUEST['q'] );
+		$access->output_serialized( $tags );
 	}
 
 }

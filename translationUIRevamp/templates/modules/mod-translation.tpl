@@ -14,7 +14,7 @@
 	{/if}
 	{if $mod_translation_better_known or $mod_translation_better_other}
 		<div>			
-			{tr}Better translations:{/tr}
+			{tr}Import from these:{/tr}
 			{if $mod_translation_better_known}
 			<ul>
 				{foreach item=better from=$mod_translation_better_known}
@@ -78,7 +78,7 @@
 	{/if}
 	{if $mod_translation_worst_known or $mod_translation_worst_other}
 		<div>			
-			{tr}Translations that need improvement:{/tr}
+			{tr}Export to these:{/tr}
 			{if $mod_translation_worst_known}
 			<ul>
 				{foreach item=worst from=$mod_translation_worst_known}

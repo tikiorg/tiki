@@ -12,8 +12,9 @@
 
 	<fieldset>
 		<legend>
-			{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Category"}{/if}
+			{tr}Features{/tr}{help url="Category"}
 		</legend>
+		{preference name=feature_categories}
 		{preference name=feature_categorypath}
 		<div class="adminoptionboxchild" id="feature_categorypath_childcontainer">
 			{preference name=categorypath_excluded}
@@ -25,7 +26,7 @@
 		{preference name=category_defaults}
 
 		{preference name=category_i18n_sync}
-		<div class="adminoptionboxchild">
+		<div class="adminoptionboxchild category_i18n_sync_childcontainer blacklist whitelist required">
 			{preference name=category_i18n_synced}
 		</div>
 	</fieldset>

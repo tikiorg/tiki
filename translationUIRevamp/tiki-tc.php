@@ -67,5 +67,10 @@ if ($prefs['feature_theme_control'] == 'y') {
 		if (!empty($tc_theme_option)) { // special handling for 'None' case
 			$headerlib->add_cssfile($tikilib->get_style_path( $tc_theme, $tc_theme_option, $tc_theme_option), 52);
 		}
+		// Reset IE specific CSS
+		global $style_ie6_css, $style_ie7_css, $style_ie8_css;
+		$style_ie6_css = $tikilib->get_style_path($tc_theme, $tc_theme_option, 'ie6.css');
+		$style_ie7_css = $tikilib->get_style_path($tc_theme, $tc_theme_option, 'ie7.css');
+		$style_ie8_css = $tikilib->get_style_path($tc_theme, $tc_theme_option, 'ie8.css');
 	}
 }

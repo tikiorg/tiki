@@ -121,6 +121,13 @@ function wikiplugin_trackerlist_info() {
 				'description' => tra('Sort Mode'),
 				'filter' => 'word'
 			),
+			'sortchoice' => array(
+				'required' => false,
+				'name' => tra('Sort choice'),
+				'description' => tra('Sort choice'),
+				'filter' => 'text',
+				'separator' => ':'
+			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum number of items'),
@@ -398,6 +405,15 @@ function wikiplugin_trackerlist($data, $params) {
 			$showpagination = 'y';
 		}
 		$smarty->assign_by_ref('showpagination', $showpagination);
+		if (!isset($sortchoice)) {
+			$sortchoice = '';
+		} else {
+			foreach ($sortchoice as $i=>$sc) {
+				$sc = explode('|', $sc);
+				$sortchoice[$i] = array('value'=>$sc[0], 'label'=>empty($sc[1])?$sc[0]: $sc[1]);
+			}
+		}
+		$smarty->assign_by_ref('sortchoice', $sortchoice);
 
 		if (!isset($status)) {
 			$status = "o";
@@ -475,6 +491,7 @@ function wikiplugin_trackerlist($data, $params) {
 		} elseif ($sort_mode != 'created_asc' && $sort_mode != 'lastModif_asc' && $sort_mode != 'created_desc' && $sort_mode != 'lastModif_des' && !preg_match('/f_[0-9]+_(asc|desc)/', $sort_mode)) {
 			return tra('Incorrect param').' sort_mode';
 		}
+
 		$tr_sort_mode = $sort_mode;
 		$smarty->assign_by_ref('tr_sort_mode', $tr_sort_mode);
 		

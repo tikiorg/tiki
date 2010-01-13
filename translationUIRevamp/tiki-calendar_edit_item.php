@@ -265,14 +265,13 @@ if (isset($_POST['act'])) {
 					$save['changed'] = true;
 				}
 				$calitemId = $calendarlib->set_item($user,$save['calitemId'],$save);
-			}
 
-			if ($prefs['feature_groupalert'] == 'y') {
-				$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
+            if ($prefs['feature_groupalert'] == 'y') {
+              $groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
+            }
+            header('Location: tiki-calendar.php?todate='.$save['start']);
+            die;
 			}
-
-			header('Location: tiki-calendar.php?todate='.$save['start']);
-			die;
 		}
 	}
 }

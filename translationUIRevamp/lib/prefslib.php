@@ -15,13 +15,18 @@ class PreferencesLib
 			if( $source == null ) {
 				$source = $prefs;
 			}
+		
+			$value = $source[$name];
+			if( false !== $unserialized = unserialize( $value ) ) {
+				$value = $unserialized;
+			}
 
 			$info['preference'] = $name;
 			if( isset( $info['serialize'] ) ) {
 				$fnc = $info['serialize'];
-				$info['value'] = $fnc( $source[$name] );
+				$info['value'] = $fnc( $value );
 			} else {
-				$info['value'] = $source[$name];
+				$info['value'] = $value;
 			}
 			$info['raw'] = $source[$name];
 			$info['id'] = 'pref-' . ++$id;

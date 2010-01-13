@@ -5,7 +5,7 @@
 		<input type="submit" name="calprefs" value="{tr}Change settings{/tr}" />
 	</div>
 	<fieldset>
-		<legend>{tr}Polls{/tr}{if $prefs.feature_help eq 'y'} {help url="Polls+Config"}{/if}</legend>
+		<legend>{tr}Polls{/tr}{help url="Polls+Config"}</legend>
 		<input type="hidden" name="pollprefs" />
 
 		{preference name=feature_poll_anonymous}

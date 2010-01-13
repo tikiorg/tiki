@@ -76,6 +76,7 @@
 				{button href="tiki-edit_templates.php" _text="{tr}Edit Templates{/tr}" }
 			</div>
 			{preference name=log_tpl}
+			{preference name=categories_used_in_tpl}
 		{/tab}
 		
 		{tab name="{tr}General Layout options{/tr}"}

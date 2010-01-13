@@ -30,7 +30,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Features{/tr}{if $prefs.feature_help eq 'y'} {help url="Forum+Admin"}{/if}
+					{tr}Features{/tr}{help url="Forum+Admin"}
 				</legend>
 				<input type="hidden" name="forumprefs" />
 				{preference name=feature_forum_rankings}

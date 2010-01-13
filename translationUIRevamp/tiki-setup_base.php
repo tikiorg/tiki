@@ -434,11 +434,20 @@ $jitCookie->setDefaultFilter('xss');
 // Apply configured filters to all other input
 if (!isset($inputConfiguration)) $inputConfiguration = array();
 
-$inputConfiguration[] = array(
+array_unshift( $inputConfiguration, array(
 	'staticKeyFilters' => array(
 		'menu' => 'striptags',
+		'cat_categorize' => 'alpha',
+		'cat_clearall' => 'alpha',
+		'tab' => 'digits',
+		'javascript_enabled' => 'alpha',
+		'msg' => 'striptags',
 	),
-);
+	'staticKeyFiltersForArrays' => array(
+		'cat_managed' => 'digits',
+		'cat_categories' => 'digits',
+	),
+) );
 
 $inputFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));
 if ($clean_xss) {

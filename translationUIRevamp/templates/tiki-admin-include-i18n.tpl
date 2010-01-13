@@ -53,6 +53,11 @@
 	{preference name=quantify_changes}
 	{preference name=feature_multilingual_structures}
 	{preference name=freetags_multilingual}
+	{preference name=category_i18n_sync}
+	<div class="adminoptionboxchild category_i18n_sync_childcontainer blacklist whitelist required">
+		{preference name=category_i18n_synced}
+	</div>
+	{preference name=wiki_dynvar_multilingual}
 </div>
 
 {preference name=lang_use_db}

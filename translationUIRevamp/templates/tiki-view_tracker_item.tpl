@@ -52,29 +52,11 @@
 {/pagination_links}
 {/if}
 
-{****  Display warnings about incorrect values and missing mandatory fields ***}
-{if count($err_mandatory) > 0}
-{remarksbox type='Warning' title='{tr}Warning{/tr}'}
-<div class="highlight"><em class='mandatory_note'>
-{tr}Following mandatory fields are missing{/tr}</em>&nbsp;:<br/>
-	{section name=ix loop=$err_mandatory}
-{$err_mandatory[ix].name|escape}{if !$smarty.section.ix.last},&nbsp;{/if}
-	{/section}
-</div>	{/remarksbox}<br />
-{/if}
-{if count($err_value) > 0}
-{remarksbox type='Warning' title='{tr}Warning{/tr}'}
-<div class="highlight"><em class='mandatory_note'>
-{tr}Following fields are incorrect{/tr}</em>&nbsp;:<br/>
-	{section name=ix loop=$err_value}
-{$err_value[ix].name|escape}{if !$smarty.section.ix.last},&nbsp;{/if}
-	{/section}
-</div>	{/remarksbox}<br />
-{/if}
+{include file='tracker_error.tpl'}
 
 {tabset name='tabs_view_tracker_item'}
 
-{tab name="{tr}View{/tr}"}
+{tab name="{tr}Idea{/tr}"}{*accion*}
 {* --- tab with view ------------------------------------------------------------------------- *}
 {if empty($tracker_info.viewItemPretty)}
 <h2>{tr}View Item{/tr}</h2>

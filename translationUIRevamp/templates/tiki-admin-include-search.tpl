@@ -17,7 +17,7 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
 				<legend>
-					{tr}Search type{/tr}{if $prefs.feature_help eq 'y'} {help url="Search+Admin"}{/if}
+					{tr}Search type{/tr}{help url="Search+Admin"}
 				</legend>
 				{preference name=feature_search_fulltext}
 

@@ -19,7 +19,7 @@ class Cachelib
 
   function Cachelib() {
 		global $tikidomain;
-		$this->folder = "temp/cache";
+		$this->folder = realpath( "temp/cache" );
 		if ($tikidomain) { 
 			$this->folder.= "/$tikidomain"; 
 		}
@@ -31,7 +31,7 @@ class Cachelib
 	
   function cacheItem($key, $data, $type='') {
 		$key = $type.md5($key);
-		$fw = fopen($this->folder."/$key","w");
+		$fw = fopen($this->folder."/$key","w+");
 		fwrite($fw,$data);
 		fclose($fw);
 		return true;

@@ -12,7 +12,6 @@
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
 			{preference name=wikiHomePage}
-			{preference name=wiki_page_regex}
 
 			<fieldset>
 				<legend>{tr}Page display{/tr}</legend>
@@ -20,8 +19,6 @@
 				{preference name=feature_page_title label="{tr}Title{/tr}"}
 				{preference name=feature_wiki_pageid label="{tr}Page ID{/tr}"}
 				{preference name=wiki_show_version label="{tr}Page version{/tr}"}
-				{preference name=wiki_pagename_strip}
-				{preference name=wiki_badchar_prevent}
 				{preference name=wiki_authors_style label="{tr}List authors{/tr}"}
 
 				<div class="adminoptionboxchild">
@@ -34,10 +31,16 @@
 				{preference name=wiki_topline_position}
 				{preference name=page_bar_position}
 				{preference name=wiki_encourage_contribution}
-				{preference name=wiki_dynvar_style}
-				{preference name=wiki_dynvar_multilingual}
 			</fieldset>
 
+			<fieldset>
+				<legend>{tr}Page name{/tr}</legend>
+
+				{preference name=wiki_page_regex}
+				{preference name=wiki_badchar_prevent}
+				{preference name=wiki_pagename_strip}
+			</fieldset>
+			
 			<fieldset>
 				<legend>{tr}Edit{/tr}</legend>
 
@@ -67,6 +70,7 @@
 				</div>
 				{preference name=feature_wiki_mandatory_category}
 				{preference name=feature_actionlog_bytes}
+				{preference name=wiki_mandatory_edit_summary}
 			</fieldset>
 		{/tab}
 
@@ -228,7 +232,7 @@
 
 		<div class="adminoptionbox">
 			<fieldset>
-				<legend>{tr}Wiki watch{/tr}{if $prefs.feature_help eq 'y'} {help url="Watch"}{/if}</legend>
+				<legend>{tr}Wiki watch{/tr}{help url="Watch"}</legend>
 				{if $prefs.feature_user_watches ne 'y'}
 					<div class="adminoptionbox">
 						{icon _id=information} {tr}Feature disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.

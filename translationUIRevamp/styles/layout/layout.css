@@ -2001,4 +2001,10 @@ ul.column_switcher {
   position: absolute;
   font-weight: bold;
 }
+
+/* Preferencies        */
+.pref_dependency {
+	margin-left: 20px;
+	font-size: 95%;
+}
 /* End of File */

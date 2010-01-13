@@ -162,7 +162,7 @@
  */
 require_once "Auth/OpenID.php";
 require_once "Auth/OpenID/Message.php";
-require_once "Auth/OpenID/HMACSHA1.php";
+require_once "Auth/OpenID/HMAC.php";
 require_once "Auth/OpenID/Association.php";
 require_once "Auth/OpenID/CryptUtil.php";
 require_once "Auth/OpenID/DiffieHellman.php";
@@ -711,7 +711,9 @@ class Auth_OpenID_GenericConsumer {
             return $this->_completeInvalid($message, $endpoint);
         }
 
-        return new Auth_OpenID_SetupNeededResponse($endpoint);
+        $user_setup_url = $message->getArg(Auth_OpenID_OPENID2_NS,
+                                           'user_setup_url');
+        return new Auth_OpenID_SetupNeededResponse($endpoint, $user_setup_url);
     }
 
     /**
@@ -723,7 +725,8 @@ class Auth_OpenID_GenericConsumer {
                                            'user_setup_url');
 
         if ($this->_checkSetupNeeded($message)) {
-            return SetupNeededResponse($endpoint, $user_setup_url);
+            return new Auth_OpenID_SetupNeededResponse(
+                $endpoint, $user_setup_url);
         } else {
             return $this->_doIdRes($message, $endpoint, $return_to);
         }
@@ -1292,7 +1295,8 @@ class Auth_OpenID_GenericConsumer {
             Auth_OpenID_OPENID2_NS => array_merge($basic_sig_fields,
                                                   array('response_nonce',
                                                         'claimed_id',
-                                                        'assoc_handle')),
+                                                        'assoc_handle',
+                                                        'op_endpoint')),
             Auth_OpenID_OPENID1_NS => array_merge($basic_sig_fields,
                                                   array('nonce'))
             );
@@ -1401,7 +1405,7 @@ class Auth_OpenID_GenericConsumer {
         if ($response->status == 400) {
             return Auth_OpenID_ServerErrorContainer::fromMessage(
                         $response_message);
-        } else if ($response->status != 200) {
+        } else if ($response->status != 200 and $response->status != 206) {
             return null;
         }
 
@@ -1749,8 +1753,7 @@ class Auth_OpenID_AuthRequest {
         $this->assoc = $assoc;
         $this->endpoint =& $endpoint;
         $this->return_to_args = array();
-        $this->message = new Auth_OpenID_Message();
-        $this->message->setOpenIDNamespace(
+        $this->message = new Auth_OpenID_Message(
             $endpoint->preferredNamespace());
         $this->_anonymous = false;
     }
@@ -2223,3 +2226,5 @@ class Auth_OpenID_SetupNeededResponse extends Auth_OpenID_ConsumerResponse {
         $this->setup_url = $setup_url;
     }
 }
+
+?>

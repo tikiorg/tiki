@@ -140,7 +140,7 @@ function get_default_prefs() {
 		'wiki_list_sortorder' => 'pageName',
 		'wiki_list_sortdirection' => 'asc',
 		'wiki_pagealias_tokens' => 'alias',
-		'wiki_page_regex' => 'full',
+		'wiki_page_regex' => 'complete',
 		'wiki_page_separator' => '...page...',
 		'wiki_page_navigation_bar' => 'bottom',
 		'wiki_actions_bar' => 'bottom',
@@ -183,6 +183,7 @@ function get_default_prefs() {
 		'wiki_dynvar_multilingual' => 'n',
 		'wiki_keywords' => 'n',
 		'wiki_likepages_samelang_only' => 'n',
+		'wiki_mandatory_edit_summary' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',
@@ -250,6 +251,7 @@ function get_default_prefs() {
 		'wikiplugin_mcalendar' => 'n',
 		'wikiplugin_mediaplayer' => 'y',
 		'wikiplugin_memberlist' => 'n',
+		'wikiplugin_memberpayment' => 'y',
 		'wikiplugin_miniquiz' => 'y',
 		'wikiplugin_module' => 'y',
 		'wikiplugin_mono' => 'n',
@@ -258,6 +260,7 @@ function get_default_prefs() {
 		'wikiplugin_myspace' => 'n',
 		'wikiplugin_objecthits' => 'n',
 		'wikiplugin_pagelist' => 'n',
+		'wikiplugin_payment' => 'y',
 		'wikiplugin_picture' => 'n',  // Old syntax for images
 		'wikiplugin_pluginmanager' => 'n',
 		'wikiplugin_poll' => 'y',
@@ -271,6 +274,7 @@ function get_default_prefs() {
 		'wikiplugin_remarksbox' => 'y',
 		'wikiplugin_rss' => 'y',
 		'wikiplugin_screencast' => 'n',
+		'wikiplugin_scroll' => 'n',
 		'wikiplugin_sf' => 'n',
 		'wikiplugin_share' => 'n',
 		'wikiplugin_sharethis' => 'n',
@@ -380,6 +384,7 @@ function get_default_prefs() {
 		'wikiplugininline_mcalendar' => 'n',
 		'wikiplugininline_mediaplayer' => 'n',
 		'wikiplugininline_memberlist' => 'n',
+		'wikiplugininline_memberpayment' => 'n',
 		'wikiplugininline_miniquiz' => 'n',
 		'wikiplugininline_module' => 'n',
 		'wikiplugininline_mono' => 'n',
@@ -388,6 +393,7 @@ function get_default_prefs() {
 		'wikiplugininline_myspace' => 'n',
 		'wikiplugininline_objecthits' => 'n',
 		'wikiplugininline_pagelist' => 'n',
+		'wikiplugininline_payment' => 'n',
 		'wikiplugininline_picture' => 'n',  // Old syntax for images
 		'wikiplugininline_pluginmanager' => 'n',
 		'wikiplugininline_poll' => 'n',
@@ -401,6 +407,7 @@ function get_default_prefs() {
 		'wikiplugininline_remarksbox' => 'n',
 		'wikiplugininline_rss' => 'n',
 		'wikiplugininline_screencast' => 'n',
+		'wikiplugininline_scroll' => 'n',
 		'wikiplugininline_sf' => 'n',
 		'wikiplugininline_share' => 'n',
 		'wikiplugininline_sharethis' => 'n',
@@ -873,8 +880,8 @@ function get_default_prefs() {
 		'calendar_timespan' => '5',
 		'feature_jscalendar' => 'y',
 		'feature_action_calendar' => 'n',
-		'calendar_start_year' => '+0',
-		'calendar_end_year' => '+3',
+		'calendar_start_year' => '-3',
+		'calendar_end_year' => '+5',
 		'calendar_list_begins_focus' => 'n',
 		'feature_cal_manual_time' => '',
 		'calendar_view_days' => array(0,1,2,3,4,5,6),
@@ -1560,6 +1567,14 @@ function get_default_prefs() {
 		'metrics_metric_name_length' => 255,
 		'metrics_tab_name_length' => 255,
 		'metrics_cache_output' => 'y',
+
+		// Payment
+		'payment_feature' => 'n',
+		'payment_currency' => 'USD',
+		'payment_default_delay' => 30,
+		'payment_paypal_business' => '',
+		'payment_paypal_environment' => 'https://www.paypal.com/cgi-bin/webscr',
+		'payment_paypal_ipn' => 'y',
 	);
 
 	// spellcheck

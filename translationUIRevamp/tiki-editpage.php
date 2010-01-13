@@ -935,8 +935,15 @@ if (isset($_REQUEST['save']) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$smarty->assign('category_needed', 'y');
 } else {
 	$category_needed = false;
-}	
-if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $tiki_p_admin == 'y') && !$category_needed && !$contribution_needed) {
+}
+if (isset($_REQUEST['save']) && $prefs['wiki_mandatory_edit_summary'] == 'y' && empty($_REQUEST['comment']) ) {
+	$summary_needed = true;
+	$smarty->assign( 'summary_needed', 'y' );
+} else {
+	$summary_needed = false;
+}
+
+if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $tiki_p_admin == 'y') && !$category_needed && !$contribution_needed && ! $summary_needed) {
 	check_ticket('edit-page');
 	// Check if all Request values are delivered, and if not, set them
 	// to avoid error messages. This can happen if some features are

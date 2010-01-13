@@ -916,7 +916,7 @@ class TrackerLib extends TikiLib
 	function filter_categ_items($ret) {
 		//this is an approxomation - the perm should be function of the status
 		global $categlib; include_once('lib/categories/categlib.php');
-		if ($categlib->is_categorized('trackeritem', $ret['itemId'])) {
+		if (empty($ret['itemId']) || $categlib->is_categorized('trackeritem', $ret['itemId'])) {
 			return Perms::filter(array('type' => 'trackeritem'), 'object', $ret, array('object' => 'itemId'), 'view_trackers');
 		} else {
 			return $ret;
@@ -1960,7 +1960,7 @@ class TrackerLib extends TikiLib
 
 	// check the validity of each field values of a tracker item
 	// and the presence of mandatory fields
-	function check_field_values($ins_fields, $categorized_fields='') {
+	function check_field_values($ins_fields, $categorized_fields='', $trackerId='', $itemId='') {
 		global $prefs;
 		$mandatory_fields = array();
 		$erroneous_values = array();
@@ -1970,23 +1970,25 @@ class TrackerLib extends TikiLib
 			if ($f['type'] != 'q' and isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
 
 				if (isset($f['type']) &&  $f['type'] == 'e') {
-					if (!in_array($f['fieldId'], $categorized_fields))
+					if (!in_array($f['fieldId'], $categorized_fields)) {
 						$mandatory_fields[] = $f;
+					}
 				} elseif (isset($f['type']) &&  ($f['type'] == 'a' || $f['type'] == 't') && ($this->is_multilingual($f['fieldId']) == 'y')) {
-                                  if (!isset($multi_languages))
-                                  $multi_languages=$prefs['available_languages'];
-				    //Check recipient
-				    if (isset($f['lingualvalue']) ) {
-				        foreach ($f['lingualvalue'] as $val)
-				        foreach ($multi_languages as $num=>$tmplang)
-				            //Check if trad is empty
-				            if (!isset($val['lang']) ||!isset($val['value']) ||(($val['lang']==$tmplang) && strlen($val['value'])==0))
-				            $mandatory_fields[] = $f;
-
-				    }else
-				    {
-				       $mandatory_fields[] = $f;
-				    }
+					if (!isset($multi_languages)) {
+						$multi_languages=$prefs['available_languages'];
+					}
+					//Check recipient
+					if (isset($f['lingualvalue']) ) {
+						foreach ($f['lingualvalue'] as $val) {
+							foreach ($multi_languages as $num=>$tmplang) {	//Check if trad is empty
+								if (!isset($val['lang']) ||!isset($val['value']) ||(($val['lang']==$tmplang) && strlen($val['value'])==0)) {
+									$mandatory_fields[] = $f;
+								}
+							}
+						}
+					} else {
+						$mandatory_fields[] = $f;
+					}
 				} elseif (isset($f['type']) &&  ($f['type'] == 'u' || $f['type'] == 'g') && $f['options_array'][0] == 1) {
 					;
 				} elseif ($f['type'] == 'c' && (empty($f['value']) || $f['value'] == 'n')) {
@@ -2076,6 +2078,12 @@ class TrackerLib extends TikiLib
 							$erroneous_values[] = $f;
 						}
 					}
+					if (isset($f['options_array'][6]) &&  $f['options_array'][6] == 'y') {
+						if (in_array($f['value'], $this->list_tracker_field_values($trackerId, $f['fieldId'], 'opc', 'y', '', $itemId))) {
+							$erroneous_values[] = $f;
+						}
+					}
+					break;
 				}
 			}
 		}
@@ -2721,7 +2729,7 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
-				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax</strong>
+				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax,distinct</strong>
 				<dt>Example: 0,80,5,30,200
 				<dt>Description:
 				<dd><strong>[toolbars]</strong> enables toolbars if a 1 is specified;
@@ -2730,6 +2738,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[max]</strong> is the maximum number of characters that can be saved;
 				<dd><strong>[listmax]</strong> is the maximum number of characters that are displayed in list mode;
 				<dd><strong>[wordmax]</strong> will alert if word count exceeded with a positive number (1+) or display a word count with a negative number (-1);
+				<dd><strong>[distinct]</strong> is y or n. y = all values of the field must be different
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['c'] = array(
@@ -3159,7 +3168,7 @@ class TrackerLib extends TikiLib
 	}
 	/* list all the values of a field
 	 */
-	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y', $lang='') {
+	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y', $lang='', $exceptItemId='') {
 		$mid = '';
 		$bindvars[] = (int)$fieldId;
 		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId)) {
@@ -3167,9 +3176,13 @@ class TrackerLib extends TikiLib
 		}
 		$sort_mode = "value_asc";
 		$distinct = $distinct == 'y'?'distinct': '';
-		if ($lang) {
+		if (!empty($lang)) {
 			$mid .= ' and `lang`=? ';
 			$bindvars[] = $lang;
+		}
+		if (!empty($exceptItemId)) {
+			$mid .= ' and ttif.`itemId` != ? ';
+			$bindvars[] = $exceptItemId;
 		}
 		$query = "select $distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$result = $this->query( $query, $bindvars);
@@ -3387,8 +3400,6 @@ class TrackerLib extends TikiLib
 		$res = $this->get_item_values_by_type($itemId?$itemId:$newItemId, 'u');
 		if (is_array($res)) {
 			foreach ($res as $f) {
-				if (isset($f['options_array'][0]) && ($f['options_array'][0] == 1 || $f['options_array'][0] == 2) && empty($itemId))
-					continue;//do not send email on a new item for a creator/modif field
 				if (isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
 					$tikilib->get_user_preferences($f['value'], array('email', 'user', 'language', 'mailCharset'));
 					$emails[] = array('email'=>$userlib->get_user_email($f['value']), 'user'=>$f['value'], 'language'=>$user_preferences[$f['value']]['language'], 'mailCharset'=>$user_preferences[$f['value']]['mailCharset']);

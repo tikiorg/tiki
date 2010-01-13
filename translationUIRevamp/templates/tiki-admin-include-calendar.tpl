@@ -8,7 +8,7 @@
 	</div>
 
 	<fieldset>
-		<legend>{tr}General settings{/tr}{if $prefs.feature_help eq 'y'} {help url="Calendar+Admin"}{/if}</legend>
+		<legend>{tr}General settings{/tr}{help url="Calendar+Admin"}</legend>
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
 				{tr}Default calendars to display{/tr}:
@@ -51,7 +51,7 @@
 		</div>
 		<div class="adminoptionlabel">
 			<label for="feature_jscalendar">{tr}JS calendar{/tr}</label>
-			{if $prefs.feature_help eq 'y'} {help url="Js+Calendar"}{/if}
+			{help url="Js+Calendar"}
 		</div>
 		</div>
 		<div id="usejscalendar" style="display:{if $prefs.feature_jscalendar eq 'y'}none{else}block{/if}">

@@ -58,3 +58,5 @@ class Auth_OpenID_Extension {
         return $message;
     }
 }
+
+?>

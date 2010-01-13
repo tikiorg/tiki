@@ -54,7 +54,7 @@ $sections = array(
 	'forums' => array(
 		'feature' => 'feature_forums',
 		'key' => 'forumId',
-		'itemkey' => 'postId',
+		'itemkey' => 'comments_parentId',
 		'objectType' =>'forum',
 		'itemObjectType' => 'forum post',
 	),
@@ -140,8 +140,9 @@ $sections = array(
 	'calendar' => array(
 		'feature' => 'feature_calendar',
 		'key' => 'calendarId',
-		'itemkey' => 'calitmId',
+		'itemkey' => 'viewcalitemId',
 		'objectType' => 'calendar',
+		'itemObjectType' => 'event',
 	),
 	// tra('Map')
 	'maps' => array(
@@ -191,4 +192,32 @@ if ( ! empty($section_class) ) {
 	$smarty->assign('section_class', $section_class);
 }elseif ( ! empty($section) ) {
 	$smarty->assign('section_class', 'tiki_'.str_replace(' ','_',$section));
+}
+
+function current_object() {
+	global $section, $sections, $cat_type, $cat_objid;
+
+	if( $cat_type && $cat_objid ) {
+		return array(
+			'type' => $cat_type,
+			'object' => $cat_objid,
+		);
+	}
+	
+	if( isset( $sections[$section] ) ) {
+		$info = $sections[$section];
+
+		if( isset( $info['itemkey'], $info['itemObjectType'], $_REQUEST[ $info['itemkey'] ] ) ) {
+			$type = isset( $_REQUEST[ $info['key'] ] ) ? $info['key'] : '';
+			return array(
+				'type' => sprintf( $info['itemObjectType'], $type ),
+				'object' => $_REQUEST[ $info['itemkey'] ],
+			);
+		} elseif( isset( $info['key'], $info['objectType'], $_REQUEST[ $info['key'] ] ) ) {
+			return array(
+				'type' => $info['objectType'],
+				'object' => $_REQUEST[ $info['key'] ],
+			);
+		}
+	}
 }
