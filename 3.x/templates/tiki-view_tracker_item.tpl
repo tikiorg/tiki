@@ -202,7 +202,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {/if}
 {/section}
 
-{remarksbox type="note"}<em class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</em>{/remarksbox}
+{remarksbox type="note"}{tr}Fields marked with a * are mandatory.{/tr}{/remarksbox}
 <table class="normal">
 <tr class="formcolor">
 <td class="formcontent">&nbsp;</td>
