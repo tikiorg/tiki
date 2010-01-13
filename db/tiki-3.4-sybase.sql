@@ -5695,10 +5695,6 @@ UPDATE users_permissions SET feature_check = 'feature_wiki_pictures' WHERE permN
 go
 
 
-UPDATE users_permissions SET feature_check = 'feature_wiki_templates' WHERE permName = 'tiki_p_use_as_template'
-go
-
-
 UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_admin_attachments'
 go
 
