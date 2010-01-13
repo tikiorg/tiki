@@ -59,7 +59,7 @@
 // ### If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // ### then TikiWiki tries to translate 'Login' and ':' separately.
 // ### This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
-// ### and it still allows to translate ":" as " :" for languages that
+// ### and it still allows to translate ":" as "&nbsp;:" for languages that
 // ### need it (like french)
 
 $lang=Array(
@@ -94,6 +94,7 @@ $lang=Array(
 "Add a Category" => "Přidej kategorii",
 "in current category" => "in current kategorii",
 "Total categories" => "Celkem kategorií",
+"Exact match" => "Přesná shoda",
 // ### end of unused words
 
 // ### start of untranslated words
@@ -681,6 +682,10 @@ $lang=Array(
 // "Footnote" => "Footnote",
 // "Inserts a superscripted footnote number next to text and takes in footnote as parameter" => "Inserts a superscripted footnote number next to text and takes in footnote as parameter",
 // "The footnote" => "The footnote",
+// "Sameas" => "Sameas",
+// "Tag to existing footnote" => "Tag to existing footnote",
+// "CheckDuplicate" => "CheckDuplicate",
+// "check for duplcate footnotes" => "check for duplcate footnotes",
 // "Footnotearea" => "Footnotearea",
 // "Inserts a section for collected footnotes within the wiki page" => "Inserts a section for collected footnotes within the wiki page",
 // "Download box for a file on ftp server" => "Download box for a file on ftp server",
@@ -2806,6 +2811,7 @@ $lang=Array(
 // "Show in popup box" => "Show in popup box",
 // "Both" => "Both",
 // "Show an icon in a column" => "Show an icon in a column",
+// "Exact&nbsp;match" => "Exact&nbsp;match",
 // "any type" => "any type",
 // "all topic" => "all topic",
 // "any language" => "any language",
@@ -2947,6 +2953,7 @@ $lang=Array(
 // "Last `\$module_rows` blog comments" => "Last `\$module_rows` blog comments",
 // "Last blog comments" => "Last blog comments",
 // "on blogpost" => "on blogpost",
+// "Add event" => "Add event",
 // "\$modcattitle" => "\$modcattitle",
 // "Current events" => "Current events",
 // "Folksonomy" => "Folksonomy",
@@ -4305,6 +4312,7 @@ $lang=Array(
 // "User must change password at first login" => "User must change password at first login",
 // "Send an email to the user in order to allow him to validate his account" => "Send an email to the user in order to allow him to validate his account",
 // "Last Login" => "Last Login",
+// "You do not have permission to edit this user" => "You do not have permission to edit this user",
 // "Overwrite but keep the previous login if the login exists in another case" => "Overwrite but keep the previous login if the login exists in another case",
 // "Don't overwrite" => "Don't overwrite",
 // "Overwrite groups" => "Overwrite groups",
@@ -4930,7 +4938,6 @@ $lang=Array(
 // "Requires" => "Requires",
 // "Not Enabled" => "Not Enabled",
 // "Missing dependency. Obtain <a href=\"http://tikiwiki.org/tiki-download_file.php?fileId=50\">visorFreemind.swf</a> and upload it in files/" => "Missing dependency. Obtain <a href=\"http://tikiwiki.org/tiki-download_file.php?fileId=50\">visorFreemind.swf</a> and upload it in files/",
-// "Add event" => "Add event",
 // "Tikiwiki Mods" => "Tikiwiki Mods",
 // "Mods Configuration" => "Mods Configuration",
 // "Update remote index" => "Update remote index",
@@ -5356,7 +5363,7 @@ $lang=Array(
 // "Save the page as a draft" => "Save the page as a draft",
 // "Save Draft" => "Save Draft",
 // "If you want people to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>" => "If you want people to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>",
-// "Separate multiple usernames with a comma ( , )" => "Separate multiple usernames with a comma ( , )",
+// "Separate multiple usernames with a comma (&nbsp;,&nbsp;)" => "Separate multiple usernames with a comma (&nbsp;,&nbsp;)",
 // "Permission denied you cannot view the Tiki calendar" => "Permission denied you cannot view the Tiki calendar",
 // "%s set" => "%s set",
 // "%s unset" => "%s unset",
@@ -5491,6 +5498,13 @@ $lang=Array(
 // "You need to <a href=\"tiki-admin_calendars.php\">create a calendar</a>" => "You need to <a href=\"tiki-admin_calendars.php\">create a calendar</a>",
 // "Permission denied you can not view this page" => "Permission denied you can not view this page",
 // "First day of week: Sunday (its ID is 0) - translators you need to localize this string" => "First day of week: Sunday (its ID is 0) - translators you need to localize this string",
+// "Mo" => "Mo",
+// "Tu" => "Tu",
+// "We" => "We",
+// "Th" => "Th",
+// "Fr" => "Fr",
+// "Sa" => "Sa",
+// "Su" => "Su",
 // "Tiki RSS feed for calendars" => "Tiki RSS feed for calendars",
 // "Invalid username or activation code. Maybe this code has already been used" => "Invalid username or activation code. Maybe this code has already been used",
 // "Invalid old password or unknown user" => "Invalid old password or unknown user",
@@ -6788,7 +6802,6 @@ $lang=Array(
 "Name-filename" => "Název-název souboru",
 "Filename only" => "Pouze název souboru",
 "Close" => "Zavřít",
-"Exact match" => "Přesná shoda",
 "Number of displayed rows" => "Počet zobrazených řádků",
 "Go" => "Jdi",
 "in:" => "v:",
