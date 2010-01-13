@@ -56,6 +56,12 @@ function wikiplugin_trackerstat_info()
 				'name' => tra('Show link to tiki-view_tracker'),
 				'description' => 'y|n',
 			),
+			'show_lastmodif' => array(
+				'required' => false,
+				'name' => tra('Show last modification date of a tracker'),
+				'description' => tra('Date format'),
+				'filter' => 'text'
+			),
 		),
 	);
 }
@@ -73,12 +79,23 @@ function wikiplugin_trackerstat($data, $params)
 	if (!$perms->view_trackers) {
 		return tra('Permission denied');
 	}
+	if (!empty($show_lastmodif)) {
+		$date = $trklib->lastModif($trackerId);
+		if (!function_exists('smarty_modifier_tiki_date_format')) {
+			include('lib/smarty_tiki/modifier.tiki_date_format.php');
+		}
+		if ($show_lastmodif == 'y') {
+			$show_lastmodif = $prefs['short_date_format'];
+		}
+		return smarty_modifier_tiki_date_format($date, tra($show_lastmodif));
+	}
 
 	if (!isset($status)) {
 		$status = 'o';
 	} elseif (!$trklib->valid_status($status)) {
 		return "invalid status";
 	}
+
 	if (isset($show_percent) && $show_percent == 'y') {
 		$average = 'y';
 		$smarty->assign('show_percent', 'y');
