@@ -18,6 +18,334 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 3.4
+<http://tikiwiki.org/ReleaseNotes34>
+------------------
+
+----------------------------------------------
+r24342 | nyloth | 2010-01-13 23:14:44 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r24313 | jonnybradley | 2010-01-13 20:07:50 +0100 (mer. 13 janv. 2010) | 1 ligne
+[bp/r24287][ENH] Add 'page' param to logout to redirect to custom page instead of home. (Slightly modified for 3.x)
+
+
+----------------------------------------------
+r24341 | nyloth | 2010-01-13 23:13:31 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r24312 | jonnybradley | 2010-01-13 19:58:32 +0100 (mer. 13 janv. 2010) | 1 ligne
+[bp/r24291][FIX] Reset IE CSS paths in Theme Control
+
+
+----------------------------------------------
+r24340 | nyloth | 2010-01-13 23:12:32 +0100 (mer. 13 janv. 2010) | 7 lignes
+
+[QT] Quality Team Backport
+
+r24295 | chealer | 2010-01-12 21:42:03 +0100 (mar. 12 janv. 2010) | 2 lignes
+[FIX] OpenID logo not showing in OpenID URL input field on Strasa
+already fixed for trunk in r24290
+
+
+----------------------------------------------
+r24339 | nyloth | 2010-01-13 23:11:12 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r24250 | sylvieg | 2010-01-11 15:50:42 +0100 (lun. 11 janv. 2010) | 1 ligne
+[FIX]last_articles: mismatch param + heading (has been merged with articles modules in 4)
+
+
+----------------------------------------------
+r24338 | nyloth | 2010-01-13 23:09:32 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r24141 | jonnybradley | 2010-01-04 19:51:27 +0100 (lun. 04 janv. 2010) | 1 ligne
+[bp/r24139] [FIX] Allow multitiki to cope with (or without) 'www.' at start of http_host
+
+
+----------------------------------------------
+r24337 | nyloth | 2010-01-13 23:07:21 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r24122 | xavidp | 2010-01-02 18:24:17 +0100 (sam. 02 janv. 2010) | 1 ligne
+[FIX/bp r24117 & 23960] Backporting the fix from Jonnyb (thanks! :-)  to patch spreadsheets in order to allow inserting rows and columns again.
+
+
+----------------------------------------------
+r24336 | nyloth | 2010-01-13 23:04:40 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r24119 | xavidp | 2010-01-02 17:37:31 +0100 (sam. 02 janv. 2010) | 1 ligne
+[FIX]Adding needed img rewrite rule, as it was used back in tiki 2.x. I?ll add it to the proposed branches also. Many images were not displayed in one site after upgrading from 2.x to 3.x because of this missing rewrite rule for images.
+
+
+----------------------------------------------
+r24335 | nyloth | 2010-01-13 23:03:03 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23913 | pkdille | 2009-12-16 16:07:48 +0100 (mer. 16 déc. 2009) | 1 ligne
+[partial bp/r21785 + r23911][FIX] wiki page: the technical hr below the wikitext must have visibility=hidden style for being hidden in Internet Explorer
+
+
+----------------------------------------------
+r24334 | nyloth | 2010-01-13 23:00:35 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23839 | sylvieg | 2009-12-12 13:27:22 +0100 (sam. 12 déc. 2009) | 1 ligne
+[bp/r 23584][FIX]comment: malformed object - the tiki_object was created with an object Id nul - It means that all these objects are lost
+
+
+----------------------------------------------
+r24333 | nyloth | 2010-01-13 22:59:04 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23819 | chibaguy | 2009-12-11 05:55:38 +0100 (ven. 11 déc. 2009) | 1 ligne
+[FIX] Log-in button wasn't monochrome. Thanks to Eric Kelner for reporting.
+
+
+----------------------------------------------
+r24332 | nyloth | 2010-01-13 22:56:42 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23793 | Jyhem | 2009-12-10 15:11:30 +0100 (jeu. 10 déc. 2009) | 1 ligne
+[ENH] Improve bottom of wiki pages (comments and attribution)
+
+
+----------------------------------------------
+r24331 | nyloth | 2010-01-13 22:54:43 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23791 | Jyhem | 2009-12-10 12:08:19 +0100 (jeu. 10 déc. 2009) | 1 ligne
+[FIX] Let's preserve the existing classes like tiki_wiki_page, it corrects issues identified about #23490
+
+
+----------------------------------------------
+r24330 | nyloth | 2010-01-13 22:42:57 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23747 | luciash | 2009-12-08 16:54:41 +0100 (mar. 08 déc. 2009) | 1 ligne
+[bp/r23745][FIX] czech language: use proper utf-8 characters instead of html entities
+
+
+----------------------------------------------
+r24329 | nyloth | 2010-01-13 22:38:09 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23718 | xavidp | 2009-12-07 17:30:07 +0100 (lun. 07 déc. 2009) | 1 ligne
+[MOD]Added the 2 letters for the days of the week. Thanks chibaguy and luciash for the tips and feedback on this issue! (forgot to thank in the previous commit)
+
+
+----------------------------------------------
+r24327 | nyloth | 2010-01-13 22:32:58 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23717 | xavidp | 2009-12-07 17:27:25 +0100 (lun. 07 déc. 2009) | 1 ligne
+[bp/r23716][ENH]Allow 2 letters as abreviated names from days of the week in the module calendar, since in some languages, more than one letter is needd. By default 2 letters shown from now onwards, and overridable at language.php level. In addition, button to add new events shown in module calendar and upcoming_events for users with the appropriate perm.
+
+
+----------------------------------------------
+r24326 | nyloth | 2010-01-13 22:24:18 +0100 (mer. 13 janv. 2010) | 7 lignes
+
+[QT] Quality Team Backport
+
+r23673 | jonnybradley | 2009-12-04 18:32:23 +0100 (ven. 04 déc. 2009) | 2 lignes
+[bp/r23611 & r23643][FIX] Only display users you can actually edit.
+(combined "WYSIWYCA" version, without the re-indentation for clarity)
+
+
+----------------------------------------------
+r24323 | nyloth | 2010-01-13 22:13:02 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23633 | sylvieg | 2009-12-02 19:25:08 +0100 (mer. 02 déc. 2009) | 1 ligne
+[bp/r 23630, 23632][FIX]language: browser langauge must be limited to available language(ex: en_uk can be the browser language and not selected)
+
+
+----------------------------------------------
+r24322 | pkdille | 2010-01-13 22:09:56 +0100 (mer. 13 janv. 2010) | 1 ligne
+
+[MOD] french translations: add french abreviations for daysnames_abr
+----------------------------------------------
+r24321 | nyloth | 2010-01-13 22:09:10 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23619 | sylvieg | 2009-12-02 14:43:31 +0100 (mer. 02 déc. 2009) | 1 ligne
+[bp/r 23593][FIX]tracker: fix export when sort field is not the default one for a tracker
+
+
+----------------------------------------------
+r24319 | nyloth | 2010-01-13 22:06:19 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23579 | sylvieg | 2009-11-28 15:57:18 +0100 (sam. 28 nov. 2009) | 1 ligne
+[bp/r 23578] [FIX]actionlog: tmpDir by default has not /
+
+
+----------------------------------------------
+r24316 | nyloth | 2010-01-13 21:51:37 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23490 | Jyhem | 2009-11-24 18:52:54 +0100 (mar. 24 nov. 2009) | 1 ligne
+[ENH] more meaningful section names for use in CSS styles (in 4.x #23484 and #23488)
+
+
+----------------------------------------------
+r24315 | nyloth | 2010-01-13 21:21:29 +0100 (mer. 13 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23489 | Jyhem | 2009-11-24 18:44:51 +0100 (mar. 24 nov. 2009) | 1 ligne
+[FIX] Let commit #23242 respect environment (categbar should be like previous navbar)
+
+
+----------------------------------------------
+r24174 | campbe13 | 2010-01-06 20:37:37 +0100 (mer. 06 janv. 2010) | 1 ligne
+
+[MOD] new params sameas/checkDuplicates to allow for multiple ref to  footnotes
+----------------------------------------------
+r24111 | nyloth | 2010-01-01 14:28:51 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23426 | sylvieg | 2009-11-22 13:38:05 +0100 (dim. 22 nov. 2009) | 1 ligne
+[bp/r 23254][FIX]categ perm: some people found intrusive that an edit_categorized was able to remove a wiki page-> the perm will have to be added manually
+
+
+----------------------------------------------
+r24110 | nyloth | 2010-01-01 14:21:45 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23354 | nyloth | 2009-11-18 14:52:59 +0100 (mer. 18 nov. 2009) | 2 lignes
+[bp/r23353][FIX] comments and forums moderation feedback: stop php script just after setting the Location HTTP header used to redirect the browser. This ensures that no other processing is made after that which fixes the feedback message 'Your message has been queued for approval...' after sending a reply in a moderated forum (This feedback was correctly set in the 'feedback' session var, but this one was unset during the same request, before the redirect, in tiki-view_forum_thread.php after including comments.php).
+
+
+----------------------------------------------
+r24109 | nyloth | 2010-01-01 14:20:36 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23346 | Jyhem | 2009-11-17 18:32:02 +0100 (mar. 17 nov. 2009) | 1 ligne
+[FIX] These two texts were glued together and it was illegible
+
+
+----------------------------------------------
+r24108 | nyloth | 2010-01-01 14:18:55 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23290 | sylvieg | 2009-11-14 15:03:06 +0100 (sam. 14 nov. 2009) | 1 ligne
+[bp/r 23289] [FIX]perms: perms to download a file were not checked if the param page was not set + check also you can view the page + some nicer error messages
+
+
+----------------------------------------------
+r24107 | nyloth | 2010-01-01 14:15:33 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23242 | Jyhem | 2009-11-13 18:27:35 +0100 (ven. 13 nov. 2009) | 1 ligne
+[FIX] These are not navbars or buttons so they need to be styled with another class called categbar so we can later have different looks (in 4.x r23241) 
+
+
+----------------------------------------------
+r24106 | nyloth | 2010-01-01 14:03:16 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23231 | nyloth | 2009-11-13 15:57:28 +0100 (ven. 13 nov. 2009) | 2 lignes
+[bp/r21041][FIX]log: test pref
+
+
+----------------------------------------------
+r24105 | nyloth | 2010-01-01 13:57:34 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r23225 | nyloth | 2009-11-13 10:03:42 +0100 (ven. 13 nov. 2009) | 2 lignes
+[bp/r23007][FIX] htaccess rewrite rules: A check on the file extension is really needed, because the requested file does not necessarily exist. In this case, the browser may end in an infinite loop to try to get this file. It is the case on most 3.x installs that uses transition styles because files like 1.9to3.2.css does not exist. Tiki is very slow to display each page due to this in 3.1+ in many cases (this is a partial rollback of r17058 and has been discussed already on CVS mailing list by replies on commit r16304)
+
+
+----------------------------------------------
+r24104 | nyloth | 2010-01-01 13:53:59 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r22988 | Jyhem | 2009-11-09 16:14:04 +0100 (lun. 09 nov. 2009) | 1 ligne
+[FIX] The link attribute was missing, making the thumbnail unclickable (bug not present in trunk)
+
+
+----------------------------------------------
+r24103 | nyloth | 2010-01-01 13:50:47 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r22944 | pkdille | 2009-11-06 18:29:37 +0100 (ven. 06 nov. 2009) | 1 ligne
+[bp/r22943] [FIX] In wiki, as in other features (like forum), the error code when the user does not have the perms to view the page should be 401 instead of 403 in order to have the loginbox on error redirection working
+
+
+----------------------------------------------
+r24102 | nyloth | 2010-01-01 13:44:36 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r22768 | sylvieg | 2009-10-30 17:39:40 +0100 (ven. 30 oct. 2009) | 1 ligne
+[bp/ r 22764 22766] getrif off REQUEST_URI
+
+
+----------------------------------------------
+r24101 | nyloth | 2010-01-01 13:41:52 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r22733 | sylvieg | 2009-10-29 14:02:27 +0100 (jeu. 29 oct. 2009) | 1 ligne
+[FIX commit 15091] tiki.sql is not supposed to have update - the change must be done in the insert level
+
+
+----------------------------------------------
+r24100 | nyloth | 2010-01-01 10:43:31 +0100 (ven. 01 janv. 2010) | 6 lignes
+
+[QT] Quality Team Backport
+
+r22727 | nyloth | 2009-10-28 23:06:24 +0100 (mer. 28 oct. 2009) | 2 lignes
+[bp/r22726][FIX] release script: Update the checkout before trying to get its last revision, in order to be sure to create the svn tag with the last commit from the release script (usually secdb changes).
+
+
+----------------------------------------------
+r23838 | sylvieg | 2009-12-12 13:24:15 +0100 (sam. 12 déc. 2009) | 1 ligne
+
+[FIX]rollback 23585] should have been in proposed
+----------------------------------------------
+r23652 | Jyhem | 2009-12-04 09:57:11 +0100 (ven. 04 déc. 2009) | 1 ligne
+
+[ENH] Better consistency in translating 'report'
+----------------------------------------------
+r23629 | Jyhem | 2009-12-02 17:33:06 +0100 (mer. 02 déc. 2009) | 1 ligne
+
+[FIX] Really explain what the option does (in 4.x #23447)
+----------------------------------------------
+r23585 | sylvieg | 2009-11-30 19:23:23 +0100 (lun. 30 nov. 2009) | 1 ligne
+
+[bp/r 23584][FIX]comment: malformed object
+----------------------------------------------
 Version 3.3
 <http://tikiwiki.org/ReleaseNotes33>
 ------------------
