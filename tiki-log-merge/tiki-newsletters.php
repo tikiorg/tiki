@@ -18,6 +18,7 @@ if ($tiki_p_list_newsletters != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
 $auto_query_args = array('nlId', 'offset', 'sort_mode', 'find');
 $smarty->assign('confirm', 'n');
 //TODO: memorize the charset for each subscription
@@ -66,6 +67,12 @@ if ($user) {
 $smarty->assign('email', $user_email);
 if ($tiki_p_subscribe_newsletters == 'y') {
 	if (isset($_REQUEST["subscribe"])) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+			$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
+			$smarty->assign('errortype', 'no_redirect_login');
+			$smarty->display("error.tpl");
+			die;
+		}
 		check_ticket('newsletters');
 		if ($tiki_p_subscribe_email != 'y') {
 			$_REQUEST["email"] = $userlib->get_user_email($user);

@@ -54,27 +54,35 @@
 			{preference name=useGroupTheme}
 			{preference name=slide_style}
 			{preference name=feature_editcss}
-			<div class="adminoptionboxchild" id="feature_editcss_childcontainer">
-				{if $tiki_p_create_css eq 'y'}
-					{button _text="{tr}Edit CSS{/tr}" href="tiki-edit_css.php"}
-				{/if}
-			</div>
+			{if $prefs.feature_editcss eq 'y'}
+				<div class="adminoptionboxchild">
+					{if $tiki_p_create_css eq 'y'}
+						{button _text="{tr}Edit CSS{/tr}" href="tiki-edit_css.php"}
+					{/if}
+				</div>
+			{/if}
 
 			{preference name=feature_theme_control}
-			<div class="adminoptionboxchild" id="feature_theme_control_childcontainer">
-				{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php"}
-
-			</div>
+			{if $prefs.feature_theme_control eq 'y'}
+				<div class="adminoptionboxchild">
+					{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php"}
+				</div>
+			{/if}
 
 			{preference name=feature_view_tpl}
-			<div class="adminoptionboxchild" id="feature_view_tpl_childcontainer">
-				{button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}" }
-			</div>
+			{if $prefs.feature_view_tpl eq 'y'}
+				<div class="adminoptionboxchild">
+					{button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}" }
+				</div>
+			{/if}
 
 			{preference name=feature_edit_templates}
-			<div class="adminoptionboxchild" id="feature_edit_templates_childcontainer">
-				{button href="tiki-edit_templates.php" _text="{tr}Edit Templates{/tr}" }
-			</div>
+			{if $prefs.feature_edit_templates eq 'y'}
+				<div class="adminoptionboxchild">
+					{button href="tiki-edit_templates.php" _text="{tr}Edit Templates{/tr}" }
+				</div>
+			{/if}
+
 			{preference name=log_tpl}
 			{preference name=categories_used_in_tpl}
 		{/tab}
