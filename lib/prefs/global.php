@@ -248,5 +248,84 @@ function prefs_global_list() {
 				'31556926'	=> tra('1') .  tra('year'),
 			),
 		),
+		'urlIndex' => array(
+			'name' => tra('Use different URL as home page'),
+			'type' => 'text',
+			'size' => 50,
+		),
+		'tikiIndex' => array(
+			'name' => tra('Use TikiWiki feature as homepage'),
+			'type' => 'list',
+			'options' => feature_home_pages(),
+		),
 	);
+}
+
+/**
+ *  Computes the alternate homes for each feature
+ *		(used in admin general template)
+ * 
+ * @access public
+ * @return array of url's and labels of the alternate homepages
+ */
+function feature_home_pages()
+{
+	global $prefs, $tikilib, $commentslib;
+	$tikiIndex = array();
+
+	//wiki
+	$tikiIndex['tiki-index.php'] = tra('Wiki');
+	
+	// Articles
+	if ($prefs['feature_articles'] == 'y') {
+		$tikiIndex['tiki-view_articles.php'] = tra('Articles');
+	}
+	// Blog
+	if ($prefs['feature_blogs'] == 'y') {
+		if ( $prefs['home_blog'] != '0' ) {
+			$hbloginfo = $tikilib->get_blog($prefs['home_blog']);
+			$home_blog_name = substr($hbloginfo['title'], 0, 20);
+		} else {
+			$home_blog_name = tra('Set blogs homepage first');
+		}
+		$tikiIndex['tiki-view_blog.php?blogId=' . $prefs['home_blog']] = tra('Blog:') . $home_blog_name;
+	}
+	
+	// Image gallery
+	if ( $prefs['feature_galleries'] == 'y' ) {
+		if ($prefs['home_gallery'] != '0') {
+			$hgalinfo = $tikilib->get_gallery($prefs['home_gallery']);
+			$home_gal_name = substr($hgalinfo["name"], 0, 20);
+		} else {
+			$home_gal_name = tra('Set Image gal homepage first');
+		}
+		$tikiIndex['tiki-browse_gallery.php?galleryId=' . $prefs['home_gallery']] = tra('Image Gallery:') . $home_gal_name;
+	}
+
+	// File gallery
+	if ( $prefs['feature_file_galleries'] == 'y' ) {
+			$hgalinfo = $tikilib->get_file_gallery($prefs['home_file_gallery']);
+			$home_gal_name = substr($hgalinfo["name"], 0, 20);
+			$tikiIndex['tiki-list_file_gallery.php?galleryId=' . $prefs['home_gallery']] = tra('File Gallery:') . $home_gal_name;
+	}
+	
+	// Forum
+	if ( $prefs['feature_forums'] == 'y' ) {
+		require_once ('lib/commentslib.php');
+		if (!isset($commentslib)) {
+			$commentslib = new Comments($dbTiki);
+		}
+		if ($prefs['home_forum'] != '0') {
+			$hforuminfo = $commentslib->get_forum($prefs['home_forum']);
+			$home_forum_name = substr($hforuminfo['name'], 0, 20);
+		} else {
+			$home_forum_name = tra('Set Forum homepage first');
+		}
+		$tikiIndex['tiki-view_forum.php?forumId=' . $prefs['home_forum']] = tra('Forum:') . $home_forum_name;
+	}
+	
+	// Custom home
+	$tikiIndex['tiki-custom_home.php'] = tra('Custom home');
+
+		return $tikiIndex;
 }
