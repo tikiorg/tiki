@@ -29,6 +29,7 @@
 				{preference name=feature_userfiles}
 				{preference name=feature_userlevels}
 				{preference name=feature_groupalert}
+				{preference name=change_theme}
 			</div>
 		{/tab}
 
