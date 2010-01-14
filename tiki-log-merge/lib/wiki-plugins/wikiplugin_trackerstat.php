@@ -56,6 +56,12 @@ function wikiplugin_trackerstat_info()
 				'name' => tra('Show link to tiki-view_tracker'),
 				'description' => 'y|n',
 			),
+			'show_lastmodif' => array(
+				'required' => false,
+				'name' => tra('Show last modification date of a tracker'),
+				'description' => tra('Date format'),
+				'filter' => 'text'
+			),
 		),
 	);
 }
@@ -73,12 +79,23 @@ function wikiplugin_trackerstat($data, $params)
 	if (!$perms->view_trackers) {
 		return tra('Permission denied');
 	}
+	if (!empty($show_lastmodif)) {
+		$date = $trklib->lastModif($trackerId);
+		if (!function_exists('smarty_modifier_tiki_date_format')) {
+			include('lib/smarty_tiki/modifier.tiki_date_format.php');
+		}
+		if ($show_lastmodif == 'y') {
+			$show_lastmodif = $prefs['short_date_format'];
+		}
+		return smarty_modifier_tiki_date_format($date, tra($show_lastmodif));
+	}
 
 	if (!isset($status)) {
 		$status = 'o';
 	} elseif (!$trklib->valid_status($status)) {
 		return "invalid status";
 	}
+
 	if (isset($show_percent) && $show_percent == 'y') {
 		$average = 'y';
 		$smarty->assign('show_percent', 'y');
@@ -142,7 +159,9 @@ function wikiplugin_trackerstat($data, $params)
 		if ($allFields["data"][$i]['type'] == 'e') {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$listCategs = $categlib->get_child_categories($allFields["data"][$i]['options']);
-			$itemId = $trklib->get_user_item($trackerId, $tracker_info);
+			if ($tracker_info['oneUserItem'] == 'y') {
+				$itemId = $trklib->get_user_item($trackerId, $tracker_info);
+			}
 			for ($j = 0, $jcount_listcategs = count($listCategs); $j < $jcount_listcategs; ++$j) {
 				$objects = $categlib->get_category_objects($listCategs[$j]['categId'], 'trackeritem', array('table'=>'tiki_tracker_items', 'join'=>'itemId', 'filter'=>'trackerId', 'bindvars'=>$trackerId));
 				if ($status == 'opc' || $tracker_info['showStatus'] == 'n') {
@@ -156,10 +175,12 @@ function wikiplugin_trackerstat($data, $params)
 					}
 				}
 				$v[$j]['value'] = $listCategs[$j]['name'];
-				foreach($objects as $o) {
-					if ($o['itemId'] == $itemId) {
-						$v[$j]['me'] = 'y';
-						break;
+				if ($tracker_info['oneUserItem'] == 'y') {
+					foreach($objects as $o) {
+						if ($o['itemId'] == $itemId) {
+							$v[$j]['me'] = 'y';
+							break;
+						}
 					}
 				}
 				$v[$j]['href'] = "trackerId=$trackerId&amp;filterfield=$fieldId&amp;filtervalue[$fieldId][]=".$listCategs[$j]['categId'];

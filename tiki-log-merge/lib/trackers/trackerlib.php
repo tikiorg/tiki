@@ -3539,6 +3539,12 @@ class TrackerLib extends TikiLib
 		$query = 'select count(*) from `tiki_tracker_item_attachments` where `user`=?';
 		return $this->getOne($query, array($user));
 	}
+	function lastModif($trackerId) {
+		$bindvars = array($trackerId);
+		$mid = '`trackerId` = ? ';
+		$query = "select max(`lastmodif`) from `tiki_tracker_items` where $mid group by `lastmodif`";
+		return $this->getOne($query, $bindvars);
+	}
 
 }
 

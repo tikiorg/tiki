@@ -133,6 +133,13 @@
 {if $gd_test eq 'y'}
 	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki detected:{/tr} <strong>GD {$gd_info}</strong>.</p>
+{if $sample_image eq 'y'}
+		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki can create images.{/tr}</p>
+{else}
+	<div style="border: solid 1px #000; padding: 5px; background: #FF0000">
+		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to create a sample image. Please check your GD library configuration.{/tr}.</p>
+	</div>
+{/if}
 	</div>
 {else}
 	<div style="border: solid 1px #000; padding: 5px; background: #FF0000">

@@ -1595,7 +1595,7 @@ class CategLib extends ObjectLib
 			}
 		}
 
-		if ($prefs['feature_user_watches'] == 'y') {
+		if ($prefs['feature_user_watches'] == 'y' && !empty($new_categories)) {
 			foreach ($new_categories as $categId) {			
 		   		$category = $this->get_category($categId);
 				$values = array('categoryId'=>$categId, 'categoryName'=>$category['name'], 'categoryPath'=>$this->get_category_path_string_with_root($categId),
@@ -1603,6 +1603,8 @@ class CategLib extends ObjectLib
 					'action'=>'object entered category', 'objectName'=>$name, 'objectType'=>$objType, 'objectUrl'=>$href);		
 				$this->notify($values);								
 			}
+		}
+		if ($prefs['feature_user_watches'] == 'y' && !empty($removed_categories)) {
 			foreach ($removed_categories as $categId) {
 				$category = $this->get_category($categId);	
 				$values= array('categoryId'=>$categId, 'categoryName'=>$category['name'], 'categoryPath'=>$this->get_category_path_string_with_root($categId),
@@ -1613,7 +1615,7 @@ class CategLib extends ObjectLib
 		}
 	}
 
-	private function applyManipulator( $manip, $objType, $objId, $desc, $name, $href ) {
+	private function applyManipulator( $manip, $objType, $objId, $desc='', $name='', $href='' ) {
 		$old_categories = $this->get_object_categories($objType, $objId, -1, false);
 		$manip->setCurrentCategories( $old_categories );
 

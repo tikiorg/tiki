@@ -1770,6 +1770,7 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler // {
 			'list_topic_replies' => 'n',
 			'list_topic_points' => 'n',
 			'list_topic_last_post' => 'n',
+			'list_topic_last_post_title' => 'n',
 			'list_topic_author' => 'n',
 
 			'show_description' => 'n',
@@ -1882,7 +1883,9 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler // {
 			$data['forum_last_n'],
 			$data['comments_per_page'],
 			$data['thread_style'],
-			$data['is_flat']
+			$data['is_flat'],
+			$data['list_att_nb'],
+			$data['list_topic_last_post_title']
 		);
 
 		return $id;
