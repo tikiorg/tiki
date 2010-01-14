@@ -1083,31 +1083,54 @@ class FileGalLib extends TikiLib {
 	} 
 	/* move files to file system
 	 * return '' if ok otherwise error message */
-	function moveToFs() {
-		$query = 'select * from `tiki_files` where `path` = ?';
+	function moveFiles($to='to_fs', &$feedbacks) {
+		if ($to == 'to_db') {
+			$query = 'select * from `tiki_files` where `path` != ?';
+			$msg = tra('Number of files transfered to the database:');
+		} else {
+			$query = 'select * from `tiki_files` where `path` = ?';
+			$msg = tra('Number of files transfered to the file system:');
+		}
 		$result = $this->query($query, array(''));
+		$nb = 0;
 		while ($res = $result->fetchRow()) {
-			if (($errors = $this->moveFileToFs($res)) != '') {
+			if (($errors = $this->moveFile($to, $res)) != '') {
+				$feedbacks[] = "$msg $nb";
 				return $errors;
 			}
+			++$nb;
 		}
+		$feedbacks[] = "$msg $nb";
 		return '';
 	}
-	function moveFileToFs($file_info) {
+	function moveFile($to='to_fs', $file_info) {
 		global $prefs;
-		$fhash = md5($file_info['name']);
-		do {
+		if ($to == 'to_db') {
+			if (!($fw = fopen($prefs['fgal_use_dir'] .$file_info['path'], 'rb'))) {
+				return tra('Cannot open this file:') . $prefs['fgal_use_dir'] . $file_info['path'];
+			}
+			if (($data = fread($fw, $file_info['filesize'])) === false) {
+				return tra('Cannot read to this file:') . $prefs['fgal_use_dir'] . $fhash;
+			}
+			fclose($fw);
+			$query = 'update `tiki_files` set `data`=?, `path`=? where `fileId`=?';
+			$this->query($query, array($data, '', $file_info['fileId'])) ;
+			unlink($prefs['fgal_use_dir'] .$file_info['path']);
+		} else {
+			$fhash = md5($file_info['name']);
+			do {
 				$fhash = md5(uniqid($fhash));
-		} while (file_exists($prefs['fgal_use_dir'] . $fhash));
-		if (!($fw = fopen($prefs['fgal_use_dir'] . $fhash, 'wb'))) {
-			return tra('Cannot open this file:') . $prefs['fgal_use_dir'] . $fhash;
+			} while (file_exists($prefs['fgal_use_dir'] . $fhash));
+			if (!($fw = fopen($prefs['fgal_use_dir'] . $fhash, 'wb'))) {
+				return tra('Cannot open this file:') . $prefs['fgal_use_dir'] . $fhash;
+			}
+			if (!fwrite($fw, $file_info['data'])) {
+				return tra('Cannot write to this file:') . $prefs['fgal_use_dir'] . $fhash;
+			}
+			fclose($fw);
+			$query = 'update `tiki_files` set `data`=?, `path`=? where `fileId`=?';
+			$this->query($query, array('', $fhash, $file_info['fileId']));
 		}
-		if (!fwrite($fw, $file_info['data'])) {
-			return tra('Cannot write to this file:') . $prefs['fgal_use_dir'] . $fhash;
-		}
-		fclose($fw);
-		$query = 'update `tiki_files` set `data`=?, `path`=? where `fileId`=?';
-		$this->query($query, array('', $fhash, $file_info['fileId']));
 		return '';
 	}
 }

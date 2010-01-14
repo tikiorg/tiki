@@ -36,16 +36,24 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	simple_set_value('fgal_quota_default');
 }
 
-if (isset($_REQUEST['move']) && $_REQUEST['move'] == 'to_fs') {
-	if (empty($prefs['fgal_use_dir'])) {
-		$errors[] = tra('You must specify a directory');
-	} else {
-		$errors = $filegallib->moveToFs();
+if (!empty($_REQUEST['move'])) {
+	if ($_REQUEST['move'] == 'to_fs') {
+		if (empty($prefs['fgal_use_dir'])) {
+			$errors[] = tra('You must specify a directory');
+		} else {
+			$feedbacks = array();
+			$errors = $filegallib->moveFiles($_REQUEST['move'], $feedbacks);
+		}
+	} elseif ($_REQUEST['move'] == 'to_db') {
+		$feedbacks = array();
+		$errors = $filegallib->moveFiles($_REQUEST['move'], $feedbacks);
 	}
 	if (!empty($errors)) {
 		$smarty->assign_by_ref('errors', $errors);
 	}
-}
+	if (!empty($feedbacks)) {
+		$smarty->assign_by_ref('feedbacks', $feedbacks);
+	}}
 
 if (isset($_REQUEST["filegallistprefs"])) {
 	check_ticket('admin-inc-fgal');
