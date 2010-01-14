@@ -167,6 +167,7 @@
 		{tab name="{tr}Navigation{/tr}"}
 			<fieldset>
 				<legend>{tr}Menus{/tr}</legend>
+				<em>Create and edit menus </em><a href="tiki-admin_menus.php"><em>here</em></a>
 				<div class="adminoptionbox">
 					{preference name=feature_phplayers}
 					{preference name=feature_cssmenus}
