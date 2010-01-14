@@ -185,7 +185,7 @@ class WikiLib extends TikiLib {
 				$comment_info = $commentslib->get_comment($objectId);
 				$data = $comment_info['data'];
 		    }
-		    $quotedOldName = preg_quote( $oldName );
+		    $quotedOldName = preg_quote( $oldName, '/' );
 			foreach( $semantics as $sem ) {
 				$data = str_replace( "($sem($oldName", "($sem($newName", $data );
 			}
