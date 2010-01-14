@@ -326,7 +326,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		$calendar = $calendarlib->get_calendar($calitem['calendarId']);
   }
 	$smarty->assign('edit',true);
-	$hour_minmax = floor(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
+	$hour_minmax = ceil(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } elseif (isset($_REQUEST['preview']) || $impossibleDates) {
 	$save['parsed'] = $tikilib->parse_data($save['description']);
 	$save['parsedName'] = $tikilib->parse_data($save['name']);
@@ -396,7 +396,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		);
 	$id = 0;
 	$smarty->assign('edit',true);
-	$hour_minmax = floor(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
+	$hour_minmax = ceil(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } else {
   $smarty->assign('errortype', 401);
   $smarty->assign('msg', tra("Permission denied you can not view this page"));
