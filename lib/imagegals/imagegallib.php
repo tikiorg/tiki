@@ -1082,7 +1082,8 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 				if (!$sort_mode) {
 					// first image in default gallery sortorder
 					$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
-					$result=$this->query($query2,$bindvars);
+					$bindvars2=array($galleryId);
+					$result=$this->query($query2,$bindvars2);
 					$res = $result->fetchRow();
 					$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
 				}
@@ -1104,7 +1105,8 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 				} else {
 					// last image in default gallery sortorder
 					$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
-					$result=$this->query($query2,$bindvars);
+					$bindvars2=array($galleryId);
+					$result=$this->query($query2,$bindvars2);
 					$res = $result->fetchRow();
 					if($res['sortdirection'] == 'asc') {
 						$res['sortdirection']='desc';
@@ -1824,7 +1826,7 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 	function remove_gallery($id) {
 		global $prefs;
 
-		$query = "select `imageId`,path from `tiki_images` where `galleryId`=?";
+		$query = "select `imageId`,`path` from `tiki_images` where `galleryId`=?";
 		$result = $this->query($query,array((int) $id));
 
 		while ($res = $result->fetchRow()) {

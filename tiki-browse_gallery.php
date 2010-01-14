@@ -240,6 +240,8 @@ $smarty->assign_by_ref('find', $find);
 $subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $_REQUEST["galleryId"]);
 $remainingImages = $maxImages - count($subgals['data']);
 $newoffset = $offset - $subgals['cant'];
+if ($remainingImages < 0) $remainingImages = 0; //negative values make sql errors
+if ($newoffset < 0) $newoffset = 0;
 $images = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
 //get categories for each images
 global $objectlib;
