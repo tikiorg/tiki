@@ -1,15 +1,5 @@
 <?php
 
-function wikiplugin_calendar_help() {
-	$help = tra("Includes a calendar");
-	$help .="<br />";
-	$help .= tra("~np~{CALENDAR(calendarId=>1)}{CALENDAR}");
-	$help .= "<br />";
-	$help .= tra("Id is optional. If not given, all calendars viewable by default are used.");
-
-	return $help;
-}
-
 function wikiplugin_calendar_info() {
 	return array(
 		'name' => tra('Calendar'),
@@ -17,10 +7,11 @@ function wikiplugin_calendar_info() {
 		'description' => tra('Includes a calendar and/or a list of calendar events.'),
 		'prefs' => array( 'feature_calendar', 'wikiplugin_calendar' ),
 		'params' => array(
-			'calendarId' => array(
+			'calIds' => array(
 				'name' => tra('Calendar filter'),
 				'description' => tra('If set to a calendar identifier, restricts the events displayed to those in the specified calendar.'),
 				'filter' => 'digits',
+				'separator' => ',',
 			),
 			'viewlist' => array(
 				'required' => false,
@@ -51,8 +42,6 @@ function wikiplugin_calendar($data, $params) {
 
 	if ( empty($params['calIds']) ) {
 		$params['calIds'] = array(1);
-	} else {
-		$params['calIds'] = explode(',',$params['calIds']);
 	}
 	if ( empty($params['viewlist']) ) {
 		$params['viewlist'] = 'table';
