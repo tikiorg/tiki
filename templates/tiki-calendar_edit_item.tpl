@@ -468,7 +468,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <select name="save[categoryId]">
 <option value=""></option>
 {foreach item=it from=$listcats}
-<option value="{$it.categoryId}"{if $calitem.categoryId eq $it.categoryId} selected="selected"{/if}>{$it.name}</option>
+<option value="{$it.categoryId}"{if $calitem.categoryId eq $it.categoryId} selected="selected"{/if}>{$it.name|escape}</option>
 {/foreach}
 </select>
 {tr}or new{/tr} {/if}
@@ -486,7 +486,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <select name="save[locationId]">
 <option value=""></option>
 {foreach item=it from=$listlocs}
-<option value="{$it.locationId}"{if $calitem.locationId eq $it.locationId} selected="selected"{/if}>{$it.name}</option>
+<option value="{$it.locationId}"{if $calitem.locationId eq $it.locationId} selected="selected"{/if}>{$it.name|escape}</option>
 {/foreach}
 </select>
 {tr}or new{/tr} {/if}
