@@ -616,6 +616,9 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 	<input type="radio" id="id_affectAll" name="affect" value="all"/><label for="id_affectAll">{tr}Update every events of this recurrence rule{/tr}</label>
 </td></tr>
 {/if}
+{if !$user and $prefs.feature_antibot eq 'y'}
+	{include file='antibot.tpl' tr_style="formcolor"}
+{/if}
 <tr><td><input type="submit" name="act" value="{tr}Save{/tr}" />
 {if $id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y";return false;' value="{tr}Delete event{/tr}"/>{/if}
 {if $recurrence.id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?recurrenceId={$recurrence.id}&amp;delete=y";return false;' value="{tr}Delete Recurrent events{/tr}"/>{/if}
