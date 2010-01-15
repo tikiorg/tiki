@@ -1,3 +1,5 @@
+# TikiWiki Version: 5.0 [This line is used to check that this htaccess file is up to date. Do not edit this line.]
+#
 # These are suggested Rewrite Rules for use with TikiWiki.
 # They enhance security and permit short URLS. 
 # In your Tiki instance, visit tiki-admin.php?page=sefurl
