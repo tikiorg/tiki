@@ -1184,7 +1184,7 @@ function prefs_feature_list() {
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
-				'yes' => tra('Only if module'),
+				'y' => tra('Only if module'),
 				'fixed' => tra('Always'),
 				'user' => tra('User Decides'),
 				'n' => tra('Never'),
@@ -1195,7 +1195,7 @@ function prefs_feature_list() {
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
-				'yes' => tra('Only if module'),
+				'y' => tra('Only if module'),
 				'fixed' => tra('Always'),
 				'user' => tra('User Decides'),
 				'n' => tra('Never'),
