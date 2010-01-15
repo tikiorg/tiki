@@ -584,6 +584,10 @@ categories = {$catsdump}
 					</td>
 				</tr>
 				<tr class="formcolor">
+					<td>{tr}Separator{/tr}</td>
+					<td><input type="text" name="separator" value="," /></td>
+				</tr>
+				<tr class="formcolor">
 					<td>&nbsp;</td>
 					<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 				</tr>
