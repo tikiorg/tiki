@@ -286,6 +286,21 @@
 				{preference name=auth_phpbb_table_prefix}
 			</fieldset>
 		{/tab}
+
+		{tab name="{tr}Web Server{/tr}"}
+			<fieldset>
+				<legend>{tr}Web Server{/tr}{help url="External+Authentication#Web_Server_HTTP_" desc="{tr}Web Server Authentication {/tr}"}</legend>
+				<input type="hidden" name="auth_ws" />
+				{if $prefs.auth_method ne 'ws'}
+					<div style="padding:0.5em;clear:both" class="simplebox">
+						<div>
+							{icon _id=information} {tr}You must change the Authentication Method to Web Server for these changes to take effect{/tr}.
+						</div>
+					</div>
+				{/if}
+				{preference name='auth_ws_create_tiki'}
+			</fieldset>
+		{/tab}
 	{/tabset}
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" value="{tr}Change preferences{/tr}" />

@@ -1035,6 +1035,8 @@ function get_default_prefs() {
 		'auth_phpbb_dbtype' => 'mysql',
 		'auth_phpbb_table_prefix' => 'phpbb_',
 
+		'auth_ws_create_tiki' => 'n',
+
 		'https_login' => 'allowed',
 		'https_external_links_for_users' => 'n',
 		'feature_show_stay_in_ssl_mode' => 'y',
