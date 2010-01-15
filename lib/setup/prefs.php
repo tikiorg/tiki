@@ -152,7 +152,7 @@ function get_default_prefs() {
 		'wiki_watch_author' => 'n',
 		'wiki_watch_comments' => 'y',
 		'wiki_watch_editor' => 'n',
-		'wiki_watch_minor' => 'y',
+		'wiki_watch_minor' => 'n',
 		'feature_wiki_history_full' => 'n',
 		'feature_wiki_categorize_structure' => 'n',
 		'feature_wiki_watch_structure' => 'n',
