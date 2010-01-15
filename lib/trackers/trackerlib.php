@@ -1837,7 +1837,7 @@ class TrackerLib extends TikiLib
 		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		while (($data = fgetcsv($csvHandle,100000,  $csvDelimiter)) !== FALSE) {
-			$status = $tracker_info['defaultStatus'];
+			$status = 'o';
 			$itemId = 0;
 			$created = $tikilib->now;
 			$lastModif = $created;
@@ -2962,6 +2962,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[fieldId]</strong> is the field in [trackerId] from which you can select a value among all the field values of the items of [trackerId];
 				<dd><strong>[linkToItem]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to the item in the other tracker;
 				<dd><strong>[displayedFieldsList]</strong> is a list of fields in [trackerId] to display instead of [fieldId], multiple fields can be separated with a |;
+				<dd><strong>[status]</strong> filter on status (o, p, c, op, oc, pc or opc);
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['l'] = array(
