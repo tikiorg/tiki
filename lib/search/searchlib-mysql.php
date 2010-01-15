@@ -635,7 +635,7 @@ class SearchLib extends TikiLib
 				$retFinal[$j]['relevance'] += $res['relevance'];
 			}
 		}
-		return array('cant'=> sizeof($retFinal), 'data'=> $retFinal);
+		return array('cant'=> count($retFinal), 'data'=> $retFinal);
 	}
 
 	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)

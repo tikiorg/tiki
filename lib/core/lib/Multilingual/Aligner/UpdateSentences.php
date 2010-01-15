@@ -22,7 +22,7 @@ class Multilingual_Aligner_UpdateSentences1
 	$changedSource_translated=array();
 	
 	$diff = &new Text_Diff($unchangedSource_array,$changedSource_array);
-	$context=sizeof($unchangedSource_array);
+	$context=count($unchangedSource_array);
 	$renderer = &new Text_Diff_Renderer_unified($context);
 	$arr=$renderer->render($diff);
 	$k=0;
@@ -286,7 +286,7 @@ class Multilingual_Aligner_UpdateSentences1
 	{
 	
 	$diff = &new Text_Diff($Souce_Updated_Translated,$Target_Updated);
-	$context=sizeof($Souce_Updated_Translated);
+	$context=count($Souce_Updated_Translated);
 	
 	$renderer = &new Text_Diff_Renderer_unified($context);
 	$arr=$renderer->render($diff);
