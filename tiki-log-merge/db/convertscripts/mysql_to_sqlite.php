@@ -153,5 +153,3 @@
 //
 //// save file
 //file_put_contents($tikiversion.'.to_sqlite.sql', $data);
-
-?>

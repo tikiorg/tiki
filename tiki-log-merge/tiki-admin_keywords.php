@@ -91,5 +91,3 @@ if ( $existing_keywords['cant'] > 0 ) {
 
 $smarty->assign( 'mid', 'tiki-admin_keywords.tpl' );
 $smarty->display( 'tiki.tpl' );
-
-?>

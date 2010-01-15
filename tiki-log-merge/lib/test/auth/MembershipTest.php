@@ -71,5 +71,3 @@ class MembershipTest extends TikiTestCase
 		);
 	}
 }
-
-?>
