@@ -46,7 +46,7 @@ class  Multilingual_Aligner_SentenceAlignmentsTest extends TikiTestCase
    /**
     * @group multilingual
     */ 
-	public function test_This_is_how_you_retrieve_a_sentence_in_the_other_language () {
+	public function __test_This_is_how_you_retrieve_a_sentence_in_the_other_language () {
 		$en_sentence = "hello world";
 		$fr_sentence = $this->alignments->getSentenceInOtherLanguage($en_sentence, 'en');
 	}

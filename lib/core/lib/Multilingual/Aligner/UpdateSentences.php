@@ -1,19 +1,18 @@
 <?php
-	include_once "lib/diff/Diff.php";
-	include_once "lib/diff/difflib.php";
-    include_once "lib/diff/Renderer.php";
-    include_once "lib/diff/renderer_unified.php";
-    include_once "SentenceAlignments.php";
-    include_once "SentenceSegmentor.php";
-	include_once "MockMTWrapper.php";
+include_once "lib/diff/Diff.php";
+include_once "lib/diff/difflib.php";
+include_once "lib/diff/Renderer.php";
+include_once "lib/diff/renderer_unified.php";
+include_once "SentenceAlignments.php";
+include_once "SentenceSegmentor.php";
+include_once "MockMTWrapper.php";
 	
  
 /*
  * Class used to update the modifications done in one version of page to the other version of same page.
  */
 
-class Multilingual_Aligner_UpdateSentences1
-{
+class Multilingual_Aligner_UpdateSentences1 {
 	
 	//$translation is 1 in case of source modification(H) and 0 in case of target modification(T"), final_diff is carrying end result
 	public function DifferencebetweenOriginalFileandModifiedFile($unchangedSource_array,$changedSource_array,$alignments,$translator,$source_lng,$target_lng,$translation)
@@ -21,9 +20,11 @@ class Multilingual_Aligner_UpdateSentences1
 	$changed_diff_unchanged=array();
 	$changedSource_translated=array();
 	
-	$diff = &new Text_Diff($unchangedSource_array,$changedSource_array);
+	$diff = new Text_Diff($unchangedSource_array,$changedSource_array);
 	$context=count($unchangedSource_array);
-	$renderer = &new Text_Diff_Renderer_unified($context);
+	$renderer = new Text_Diff_Renderer_unified($context);
+
+
 	$arr=$renderer->render($diff);
 	$k=0;
 	$body=0;
@@ -180,6 +181,7 @@ class Multilingual_Aligner_UpdateSentences1
 	}//else
 	
 	return $final_diff;
+	
 	}//function ends
 	
 	
@@ -285,10 +287,10 @@ class Multilingual_Aligner_UpdateSentences1
 	public function FinalUpdatedFileinTagetLanguage($Souce_Updated_Translated,$Target_Updated)
 	{
 	
-	$diff = &new Text_Diff($Souce_Updated_Translated,$Target_Updated);
+	$diff = new Text_Diff($Souce_Updated_Translated,$Target_Updated);
 	$context=count($Souce_Updated_Translated);
 	
-	$renderer = &new Text_Diff_Renderer_unified($context);
+	$renderer = new Text_Diff_Renderer_unified($context);
 	$arr=$renderer->render($diff);
 	$k=0;
 	$body=0;
