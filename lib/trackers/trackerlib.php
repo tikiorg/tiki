@@ -3542,7 +3542,7 @@ class TrackerLib extends TikiLib
 	function lastModif($trackerId) {
 		$bindvars = array($trackerId);
 		$mid = '`trackerId` = ? ';
-		$query = "select max(`lastmodif`) from `tiki_tracker_items` where $mid group by `lastmodif`";
+		$query = "select max(`lastmodif`) from `tiki_tracker_items` where $mid";
 		return $this->getOne($query, $bindvars);
 	}
 
