@@ -92,7 +92,7 @@ class PreferencesLib
 			$function = '_get' . ucfirst( $info['type'] ) . 'Value';
 			$value = $this->$function( $info, $data );
 
-			if( in_array($pref, $user_overrider_prefs) || $tikilib->get_preference( $pref ) != $value ) {
+			if( $tikilib->get_preference( $pref ) != $value ) {
 				$tikilib->set_preference( $pref, $value );
 				$changes[$pref] = $value;
 			}

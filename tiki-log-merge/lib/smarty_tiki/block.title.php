@@ -47,7 +47,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat) {
   }
   
   if ( $tiki_p_admin == 'y' && $params['admpage'] != '' ) {
-    $html .= '<a class="tikihelp" href="tiki-admin.php?page=' . $params['admpage'] . '">'
+    $html .= '<a class="tikihelp" href="tiki-admin.php?page=' . $params['admpage'] . '" target="tikihelp" class="tikihelp" title="' . tra('Admin page:') . ' ' . $content . '">'
           . smarty_function_icon(array('_id' => 'wrench', 'alt' => tra('Admin Feature')), $smarty)
           . "</a>\n";
   }

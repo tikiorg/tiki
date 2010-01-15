@@ -279,22 +279,22 @@ function showDetails( id, domain, profile ) { // {{{
 								<td>
 									<br/>
 									<p>
-										<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Featured Profiles</a>
+										<a href="tiki-admin.php?profile=&categories%5B%5D=5.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Featured Profiles</a>
 										<br />Featured Profiles is a list of applications that are maintained by the TikiWiki community and are a great way to get started.
 									</p>
 		
 									<p>
-										<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Full+profile+(out+of+the+box+%26+ready+to+go)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Full Profiles</a>
+										<a href="tiki-admin.php?profile=&categories%5B%5D=5.x&categories%5B%5D=Full+profile+(out+of+the+box+%26+ready+to+go)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Full Profiles</a>
 										<br />Full Profiles are full featured out of the box solutions. 
 									</p>
 		
 									<p>
-										<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Mini-profile+(can+be+included+in+other)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Mini Profiles</a>
+										<a href="tiki-admin.php?profile=&categories%5B%5D=5.x&categories%5B%5D=Mini-profile+(can+be+included+in+other)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Mini Profiles</a>
 										<br />Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration. 
 									</p>
 		
 									<p>
-										<a href="tiki-admin.php?profile=&categories%5B%5D=4.x&categories%5B%5D=Learning+profile+(just+to+show+off+feature)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Learning Profiles</a>
+										<a href="tiki-admin.php?profile=&categories%5B%5D=5.x&categories%5B%5D=Learning+profile+(just+to+show+off+feature)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Learning Profiles</a>
 										<br />Learning Profiles will allow you to quickly evaluate specific features in TikiWiki.
 									</p>
 		

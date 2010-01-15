@@ -248,7 +248,7 @@ div.adminanchors a {float: left}
 	font-size: 10px;
 }
 
-.toolbars-placeholder {
+.toolbars-placeholder, .placeholder {
 	width: 18px;
 	height: 18px;
 	list-style-type: none;
@@ -290,6 +290,12 @@ div.adminanchors a {float: left}
 
 #toolbar_edit_div .adminoptionbox {
 	text-align: right;
+}
+
+.assigned_modules {
+	padding: 1em 2em 1em 0;
+	width: 40%;
+	min-height: 10em;
 }
 
 /* end from ui-revamp branch */

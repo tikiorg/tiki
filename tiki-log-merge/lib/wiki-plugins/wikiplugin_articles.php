@@ -71,6 +71,11 @@ function wikiplugin_articles_info()
 				'name' => tra('Title only'),
 				'description' => tra('Whether to only show the title of the articles.'),
 			),
+			'start' => array(
+				'required' => false,
+				'name' => tra('Starting article'),
+				'description' => tra('The article number that the list should start with.'),
+			),
 		),
 	);
 }

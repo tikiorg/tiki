@@ -46,7 +46,7 @@
 		{if $catree[dx].has_perm eq 'y'}
 			<a title="{tr}Edit permissions for this category{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'urlencode'}&amp;permType=all">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Edit permissions for this category{/tr}"}</a>
 		{else}
-			<a title="{tr}Assign Permissions{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'urlencode'}&amp;permType=all">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
+			<a title="{tr}Assign Permissions{/tr}" href="tiki-objectpermissions.php?objectType=category&amp;objectId={$catree[dx].categId}&amp;objectName={$catree[dx].name|escape:'url'}&amp;permType=all">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
 		{/if}
 		
 		<div style="display: inline; padding-left:{$catree[dx].deep*30+5}px;">
@@ -69,7 +69,7 @@
 <div class="cbox">
 	<div class="cbox-title">
 		{if $categId > 0}
-			{tr}Edit this category:{/tr} <b>{$name}</b> [<a href="tiki-admin_categories.php?parentId={$parentId}#editcreate" class="cboxtlink">{tr}Create New{/tr}</a>]
+			{tr}Edit this category:{/tr} <b>{$name|escape}</b> [<a href="tiki-admin_categories.php?parentId={$parentId}#editcreate" class="cboxtlink">{tr}Create New{/tr}</a>]
 		{else}
 			{tr}Add new category{/tr}
 		{/if}
@@ -225,7 +225,7 @@
 				<form action="tiki-admin_categories.php" method="post">
 					<input type="hidden" name="parentId" value="{$parentId|escape}" />
 					<table>
-						{if $prefs.feature_wiki eq 'y'}
+						{if $prefs.feature_wiki eq 'y' and $pages}
 							<tr>
 								<td class="form">{tr}page:{/tr}</td>
 								<td class="form">
@@ -241,7 +241,7 @@
 							</tr>
 						{/if}
 						
-						{if $prefs.feature_articles eq 'y'}
+						{if $prefs.feature_articles eq 'y' and $articles}
 							<tr>
 								<td class="form">{tr}Article:{/tr}</td>
 								<td class="form">
@@ -255,7 +255,7 @@
 							</tr>
 						{/if}
 						
-						{if $prefs.feature_blogs eq 'y'}
+						{if $prefs.feature_blogs eq 'y' and $blogs}
 							<tr>
 								<td class="form">{tr}Blog:{/tr}</td>
 								<td class="form">
@@ -269,7 +269,7 @@
 							</tr>
 						{/if}
 						
-						{if $prefs.feature_directory eq 'y'}
+						{if $prefs.feature_directory eq 'y'and $directories}
 							<tr>
 								<td class="form">{tr}Directory:{/tr}</td>
 								<td class="form">
@@ -283,7 +283,7 @@
 							</tr>
 						{/if}
 
-						{if $prefs.feature_galleries eq 'y'}
+						{if $prefs.feature_galleries eq 'y' and $galleries}
 							<tr>
 								<td class="form">{tr}image gal:{/tr}</td>
 								<td class="form">
@@ -297,7 +297,7 @@
 							</tr>
 						{/if}
 				
-						{if $prefs.feature_file_galleries eq 'y'}
+						{if $prefs.feature_file_galleries eq 'y' and $file_galleries}
 							<tr>
 								<td class="form">{tr}file gal:{/tr}</td>
 								<td class="form">
@@ -311,7 +311,7 @@
 							</tr>
 						{/if}
 				
-						{if $prefs.feature_forums eq 'y'}
+						{if $prefs.feature_forums eq 'y' and $forums}
 							<tr>
 								<td class="form">{tr}Forum:{/tr}</td>
 								<td class="form">
@@ -325,7 +325,7 @@
 							</tr>
 						{/if}
 				
-						{if $prefs.feature_polls eq 'y'}
+						{if $prefs.feature_polls eq 'y' and $polls}
 							<tr>
 								<td class="form">{tr}Poll:{/tr}</td>
 								<td class="form">
@@ -339,7 +339,7 @@
 							</tr>
 						{/if}
 						
-						{if $prefs.feature_faqs eq 'y'}
+						{if $prefs.feature_faqs eq 'y and $faqs'}
 							<tr>
 								<td class="form">{tr}FAQ:{/tr}</td>
 								<td class="form">
@@ -353,7 +353,7 @@
 							</tr> 
 						{/if}
 				
-						{if $prefs.feature_trackers eq 'y'}
+						{if $prefs.feature_trackers eq 'y' and $trackers}
 							<tr>
 								<td class="form">{tr}Tracker:{/tr}</td>
 								<td class="form">
@@ -367,7 +367,7 @@
 							</tr>
 						{/if}
 						
-						{if $prefs.feature_quizzes eq 'y'}
+						{if $prefs.feature_quizzes eq 'y' and $quizzes}
 							<tr>
 								<td class="form">{tr}quiz:{/tr}</td>
 								<td class="form">

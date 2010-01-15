@@ -167,6 +167,7 @@
 		{tab name="{tr}Navigation{/tr}"}
 			<fieldset>
 				<legend>{tr}Menus{/tr}</legend>
+				<em>Create and edit menus </em><a href="tiki-admin_menus.php"><em>here</em></a>
 				<div class="adminoptionbox">
 					{preference name=feature_phplayers}
 					{preference name=feature_cssmenus}
@@ -187,44 +188,15 @@
 						{preference name=limitedGoGroupHome}
 					</div>
 				</div>
-				<div class="adminoptionbox">
-					<div id="tiki_home_page" style="display:{if $prefs.useUrlIndex eq 'y'}none{else}block{/if};">{tr}Use TikiWiki feature as homepage:{/tr}
-						<select name="tikiIndex" id="general-homepage">
-							<option value="tiki-index.php" {if $prefs.site_tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>{tr}Wiki{/tr}</option>
-							{if $prefs.feature_articles eq 'y'}
-								<option value="tiki-view_articles.php" {if $prefs.site_tikiIndex eq 'tiki-view_articles.php'}selected="selected"{/if}>{tr}Articles{/tr}</option>
-							{/if}
-							
-							{if $prefs.home_blog}
-								<option value="{$home_blog_url|escape}" {if $prefs.site_tikiIndex eq $home_blog_url}selected="selected"{/if}>{tr}Blog:{/tr} {$home_blog_name|escape}</option>
-							{/if}
-							
-							{if $prefs.home_gallery}
-								<option value="{$home_gallery_url|escape}" {if $prefs.site_tikiIndex eq $home_gallery_url}selected="selected"{/if}>{tr}Image Gallery:{/tr} {$home_gal_name|escape}</option>
-							{/if}
+				
+				{preference name=tikiIndex defaul=$prefs.site_tikiIndex}
 
-							{if $prefs.home_file_gallery}
-								<option value="{$home_file_gallery_url|escape}" {if $prefs.site_tikiIndex eq $home_file_gallery_url}selected="selected"{/if}>{tr}File Gallery:{/tr} {$home_fil_name|escape}</option>
-							{/if}
-
-							{if $prefs.home_forum}
-								<option value="{$home_forum_url|escape}" {if $prefs.site_tikiIndex eq $home_forum_url}selected="selected"{/if}>{tr}Forum:{/tr} {$home_forum_name|escape}</option>
-							{/if}
-						
-							{if $prefs.feature_custom_home eq 'y'}
-								<option value="tiki-custom_home.php" {if $prefs.site_tikiIndex eq 'tiki-custom_home.php'}selected="selected"{/if}>{tr}Custom home{/tr}</option>
-							{/if}
-						</select>
-						<br />{tr}or{/tr}<br />
-					</div>
+				<div class="adminoptionboxchild">
+					{tr}or{/tr}
 					<div class="adminoption">
 						<input type="checkbox" name="useUrlIndex" id="general-uri" {if $prefs.useUrlIndex eq 'y'}checked="checked" {/if}onclick="flip('tiki_home_page');" />
 					</div>
-					<div>
-						<label for="general-uri">{tr}Use different URL as home page{/tr}</label>:
-						<br />
-						<input type="text" name="urlIndex" value="{$prefs.urlIndex|escape}" size="50" />
-					</div>
+					{preference name=urlIndex}
 				</div>
 			</fieldset>
 
