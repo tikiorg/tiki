@@ -143,5 +143,3 @@ window.onload=getcontent_height
 ~/np~";
 	return $ret;
 }
-
-?>
