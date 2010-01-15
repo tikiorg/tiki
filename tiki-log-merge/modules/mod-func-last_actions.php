@@ -37,7 +37,8 @@ function module_last_actions( $mod_reference, $module_params ) {
 	if ($user) {
 		global $logslib; require_once('lib/logs/logslib.php');
 		
-		$actions = $logslib->list_actions('', '', $tiki_p_admin == 'y' ? '' : $user, 0, $mod_reference["rows"]);
+		$results = $logslib->list_actions('', '', $tiki_p_admin == 'y' ? '' : $user, 0, $mod_reference["rows"]);
+		$actions = $results['data'];
 	
 		$smarty->assign('modLastActions', $actions);
 		$showuser = isset($module_params["showuser"]) ? $module_params["showuser"] : 'n';

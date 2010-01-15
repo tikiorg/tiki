@@ -40,9 +40,11 @@ div.iconmenu {
 	display: inline;
 }
 
+/*
 select[multiple] {
 	height: 10em;
 }
+*/
 
 #col2 select,
 #col3 select,
