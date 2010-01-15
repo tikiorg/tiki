@@ -7,7 +7,7 @@
 			<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Save the page as a completed translation.{/tr}" name="save" value="{tr}Complete Translation{/tr}" onclick="needToConfirm=false"/>
 		{else}
 			{if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox' and $prefs.wiki_edit_minor neq 'n'}
-			<input type="submit" class="wikiaction tips" name="minor" title="{tr}Edit wiki page{/tr}|{tr}Save the page, but do not send notifications and do not count it as new content to be translated.{/tr}" value="{tr}Save Minor Edit{/tr}" onclick="needToConfirm=false;" />
+			<input type="submit" class="wikiaction tips" name="minor" title="{tr}Edit wiki page{/tr}|{if $prefs.wiki_watch_minor}{tr}Save the page, but do not count it as new content to be translated.{/tr}{else}{tr}Save the page, but do not send notifications and do not count it as new content to be translated.{/tr}{/if}" value="{tr}Save Minor Edit{/tr}" onclick="needToConfirm=false;" />
 			{/if}
 			<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Save the page.{/tr}" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
 
