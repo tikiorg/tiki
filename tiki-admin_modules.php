@@ -32,7 +32,7 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
     $smarty->assign('wysiwyg', 'y');
 }
 // PERMISSIONS: NEEDS p_admin
-if ($tiki_p_admin != 'y') {
+if ($tiki_p_admin != 'y' && $tiki_p_admin_modules != 'y') {
     $smarty->assign('errortype', 401);
     $smarty->assign('msg', tra('You do not have permission to use this feature'));
     $smarty->display('error.tpl');
