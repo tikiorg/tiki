@@ -41,10 +41,6 @@ abstract class Toolbar
 			return $tag;
 		elseif( $tagName == 'fullscreen' )
 			return new ToolbarFullscreen;
-		elseif( $tagName == 'enlarge' )
-			return new ToolbarTextareaResize( 'enlarge' );
-		elseif( $tagName == 'reduce' )
-			return new ToolbarTextareaResize( 'reduce' );
 		elseif( $tagName == 'tikiimage' )
 			return new ToolbarFileGallery;
 		elseif( $tagName == 'help' )
@@ -118,8 +114,6 @@ abstract class Toolbar
 			'fontsize',
 			'source',
 			'fullscreen',
-			'enlarge',
-			'reduce',
 			'help',
 			'tikiimage',
 			'switcheditor',
@@ -1365,45 +1359,6 @@ class ToolbarFullscreen extends Toolbar
 			$name = 'preview';
 		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="toolbar qt-fullscreen" '.
 				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
-	} // }}}
-}
-
-class ToolbarTextareaResize extends Toolbar
-{
-	private $diff;
-
-	function __construct( $type ) // {{{
-	{
-		switch( $type ) {
-		case 'reduce':
-			$this->setLabel( tra('Reduce area height') )
-				->setIcon( tra('pics/icons/arrow_in.png') )
-					->setType('TextareaResize');
-			$this->diff = '-10';
-			break;
-
-		case 'enlarge':
-			$this->setLabel( tra('Enlarge area height') )
-				->setIcon( tra('pics/icons/arrow_out.png') )
-					->setType('TextareaResize');
-			$this->diff = '+10';
-			break;
-
-		default:
-			throw new Exception('Unknown resize icon type type');
-		}
-	} // }}}
-
-	function getWikiHtml( $areaName ) // {{{
-	{
-		return $this->getSelfLink('textareasize(\'' . $areaName . '\', ' . $this->diff . ', 0)',
-							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-resize');
-	} // }}}
-
-	function isAccessible() // {{{
-	{
-		global $prefs;
-		return parent::isAccessible() && ! isset($_REQUEST['zoom']) && $prefs['feature_jquery_ui'] != 'y';
 	} // }}}
 }
 
