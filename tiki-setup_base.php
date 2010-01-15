@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-require_once 'tiki-filter-base.php';
+require_once ('tiki-filter-base.php');
 // ---------------------------------------------------------------------
 // basic php conf adjustment
 // xhtml compliance
@@ -32,14 +32,14 @@ ini_set('magic_quotes_runtime', 0);
 ini_set('allow_call_time_pass_reference', 'On');
 // ---------------------------------------------------------------------
 // inclusions of mandatory stuff and setup
-require_once ("lib/setup/compat.php");
-require_once ("lib/tikiticketlib.php");
-require_once ("db/tiki-db.php");
-require_once ("lib/tikilib.php");
+require_once ('lib/setup/compat.php');
+require_once ('lib/tikiticketlib.php');
+require_once ('db/tiki-db.php');
+require_once ('lib/tikilib.php');
 global $cachelib;
-require_once ("lib/cache/cachelib.php");
+require_once ('lib/cache/cachelib.php');
 global $logslib;
-require_once ("lib/logs/logslib.php");
+require_once ('lib/logs/logslib.php');
 include_once ('lib/init/tra.php');
 $tikilib = new TikiLib;
 // Get tiki-setup_base needed preferences in one query
@@ -121,20 +121,22 @@ if ( $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] ) ) {
 }
 
 // Moved here from tiki-setup.php because smarty use a copy of session
-if ($prefs['feature_fullscreen'] == 'y') require_once ('lib/setup/fullscreen.php');
+if ($prefs['feature_fullscreen'] == 'y') {
+	require_once ('lib/setup/fullscreen.php');
+}
 // Smarty needs session since 2.6.25
-require_once ("setup_smarty.php");
+require_once ('setup_smarty.php');
 // Retrieve all preferences
 require_once ('lib/setup/prefs.php');
 // Handle Smarty Security
 if ($prefs['smarty_security'] == 'y') {
 	$smarty->security = true;
 }
-require_once ("lib/userslib.php");
+require_once ('lib/userslib.php');
 $userlib = new UsersLib;
-require_once ("lib/tikiaccesslib.php");
+require_once ('lib/tikiaccesslib.php');
 $access = new TikiAccessLib;
-require_once ("lib/breadcrumblib.php");
+require_once ('lib/breadcrumblib.php');
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
 function remove_gpc(&$var) {
@@ -360,7 +362,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	$user_details = $userlib->get_user_details($user);
 	if (!is_array($user_details) || !is_array($user_details['info']) || (int)$user_details['info']['lastLogin'] <= 0) {
 		global $cachelib;
-		require_once ("lib/cache/cachelib.php");
+		require_once ('lib/cache/cachelib.php');
 		$cachelib->invalidate('user_details_' . $user);
 		$user_details = $userlib->get_user_details($user);
 		if (!is_array($user_details) || !is_array($user_details['info'])) {
@@ -393,10 +395,9 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// }
 	
 }
-require 'lib/setup/perms.php';
+require_once ('lib/setup/perms.php');
 // --------------------------------------------------------------
 $magic_quotes_gpc = get_magic_quotes_gpc();
-$clean_xss = ($tiki_p_trust_input != 'y');
 // deal with register_globals
 if (ini_get('register_globals')) {
 	foreach(array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob) {
@@ -409,7 +410,7 @@ if (ini_get('register_globals')) {
 	}
 }
 $serverFilter = new DeclFilter;
-if ($clean_xss) {
+if ( $tiki_p_trust_input != 'y' ) {
 	$serverFilter->addStaticKeyFilters(array('QUERY_STRING' => 'url', 'REQUEST_URI' => 'url', 'PHP_SELF' => 'url',));
 }
 $jitServer = new JitFilter($_SERVER);
@@ -450,7 +451,7 @@ array_unshift( $inputConfiguration, array(
 ) );
 
 $inputFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));
-if ($clean_xss) {
+if ( $tiki_p_trust_input != 'y' ) {
 	$inputFilter->addCatchAllFilter('xss');
 }
 $_GET = $inputFilter->filter($_GET);
