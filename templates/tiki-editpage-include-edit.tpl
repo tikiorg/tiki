@@ -566,8 +566,5 @@
 			</tr>
 		{/if}
 	</table>
-	{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg eq 'y' and $allowhtml eq 'y'}
-	  <input type="hidden" name="allowhtml" checked="checked"/>
-	{/if}
 </form>
 {include file='tiki-page_bar.tpl'}
