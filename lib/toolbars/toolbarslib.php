@@ -1354,11 +1354,15 @@ class ToolbarFullscreen extends Toolbar
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		$name = 'zoom';
-		if( isset($_REQUEST['zoom']) )
-			$name = 'preview';
-		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="toolbar qt-fullscreen" '.
-				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
+		
+		return $this->getSelfLink('toggleFullScreen(\''.$areaName.'\');return false;',
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-fullscreen');
+		
+		
+//		if( isset($_REQUEST['zoom']) )
+//			$name = 'preview';
+//		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="toolbar qt-fullscreen" '.
+//				'title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
 	} // }}}
 }
 
@@ -1575,7 +1579,7 @@ class ToolbarsList
 	private function addLine( array $tags, array $rtags = array() ) // {{{
 	{
 		$elements = array();
-		$j = count($rtags) > 1 ? 2 : 1;
+		$j = count($rtags) > 0 ? 2 : 1;
 		
 		for ($i = 0; $i <  $j; $i++) {
 			$group = array();
