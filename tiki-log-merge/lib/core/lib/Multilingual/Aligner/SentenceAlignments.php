@@ -23,7 +23,7 @@ class Multilingual_Aligner_SentenceAlignments
         }	
   }
 
-	public function getSentenceInOtherLanguage($source_lng_sentence, $source_lng,$key_value,$sentence_array,$index) 
+	public function getSentenceInOtherLanguage($source_lng_sentence, $source_lng, $key_value, $sentence_array, $index) 
 	{
 		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
 					
