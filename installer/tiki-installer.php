@@ -714,7 +714,7 @@ if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
 	include_once 'tiki-setup.php';
 	$cachelib->empty_full_cache();
 	if ($install_type == 'scratch') {
-		$u = 'tiki-change_password.php?user=admin';
+		$u = 'tiki-change_password.php?user=admin&oldpass=admin';
 	} else {
 		$u = '';
 	}
