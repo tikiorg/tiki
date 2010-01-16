@@ -110,6 +110,11 @@
 		</div>
 	{/if}
 {/if}
+
+{if $prompt_for_edit_or_translate == 'y'}
+	{include file='tiki-edit-page-include-prompt_for_edit_or_translate.tpl'}
+{/if}
+
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
 	{if $diff_style}
 		<select name="diff_style">

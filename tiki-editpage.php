@@ -102,6 +102,18 @@ function translationsToThisPageAreInProgress($page_id) {
 
 }
 
+function execute_module_translation() { 
+	global $smarty;
+	$module_reference = array(
+		'name' => 'translation',
+	);
+
+	global $modlib; require_once 'lib/modules/modlib.php';	
+
+	$out = $modlib->execute_module( $module_reference );
+	$smarty->assign('content_of_update_translation_section', $out);
+}
+
 // Define all templates files that may be used with the 'zoom' feature
 $zoom_templates = array('wiki_edit');
 
@@ -132,6 +144,7 @@ if ( ( $stagingPage = $tikilib->get_staging_page( $_REQUEST['page'] ) ) && ($pre
 }
 
 $page = $_REQUEST["page"];
+$smarty->assign('page', $page);
 $info = $tikilib->get_page_info($page);
 
 $editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
@@ -139,6 +152,8 @@ guess_new_page_attributes_from_parent_pages($page, $info);
  
 if ($translation_mode == 'n' && translationsToThisPageAreInProgress($info['page_id'])) {
 	$smarty->assign('prompt_for_edit_or_translate', 'y');
+	include_once('modules/mod-func-translation.php');
+	execute_module_translation();	
 } else {
 	$smarty->assign('prompt_for_edit_or_translate', 'n');
 }
