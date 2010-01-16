@@ -8,7 +8,7 @@
 # If you don't have php-cli the, you can use:
 # sh convertsqls.sh domain.com/subdomain/
 
-VERSION="4.1"
+VERSION="4.2"
 
 # Display help information?
 if [ "$1" = "-h" ]; then
