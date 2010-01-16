@@ -32,6 +32,20 @@ function wikiplugin_module_help() {
 }
 
 function wikiplugin_module_info() {
+	global $modlib, $smarty;
+	require_once ('lib/modules/modlib.php');
+
+	$all_modules = $modlib->get_all_modules();
+	$all_modules_info = array_combine( 
+		$all_modules, 
+		array_map( array( $modlib, 'get_module_info' ), $all_modules ) 
+	);
+	asort($all_modules_info);
+	$modules_options = array();
+	foreach($all_modules_info as $module => $module_info) {
+		$modules_options[] = array('text' => $module_info['name'] . ' (' . $module . ')', 'value' => $module);
+	}
+
 	return array(
 		'name' => tra('Insert Module'),
 		'documentation' => 'PluginModule',
@@ -44,6 +58,7 @@ function wikiplugin_module_info() {
 				'required' => true,
 				'name' => tra('Module Name'),
 				'description' => tra('Module name as known in Tikiwiki.'),
+				'options' => $modules_options
 			),
 			'float' => array(
 				'required' => false,
