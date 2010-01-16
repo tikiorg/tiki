@@ -2,7 +2,7 @@
 {popup_init src="lib/overlib.js"}
 {title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
 
-{if $prefs.feature_search_preferences eq 'y'}
+{if $prefs.feature_search_preferences eq 'y' and $smarty.get.page != 'profiles'}
 <form method="post" action="">
 	{remarksbox type="note" title="{tr}Development Notice{/tr}"}
 		{tr}Unless a significant amount of preferences are documented and use dynamic preferences before the 5.0 release, this search feature 
