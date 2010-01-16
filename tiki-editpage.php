@@ -91,6 +91,17 @@ function guess_new_page_attributes_from_parent_pages($page, $page_info) {
 	}
 }
 
+function translationsToThisPageAreInProgress($page_id) {
+	global $multilinguallib;
+
+	include_once("lib/multilingual/multilinguallib.php");
+
+	$translations_in_progress = $multilinguallib->getTranslationsInProgressFlags($page_id);
+	$answer = count($translations_in_progress) > 0;
+	return $answer;
+
+}
+
 // Define all templates files that may be used with the 'zoom' feature
 $zoom_templates = array('wiki_edit');
 
@@ -100,7 +111,13 @@ if ($prefs['feature_wiki'] != 'y') {
 	die;
 }
 
-$smarty->assign( 'translation_mode', ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) ?'y':'n' );
+if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
+	$translation_mode = 'y';
+	include_once("lib/multilingual/multilinguallib.php");
+} else {
+	$translation_mode = 'n';
+}
+$smarty->assign('translation_mode', $translation_mode);
 
 // If page is blank (from quickedit module or wherever) tell user -- instead of editing the default page
 // Dont get the page from default HomePage if not set (surely this would always be an error?)
@@ -118,7 +135,13 @@ $page = $_REQUEST["page"];
 $info = $tikilib->get_page_info($page);
 
 $editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
-guess_new_page_attributes_from_parent_pages($page, $info); 
+guess_new_page_attributes_from_parent_pages($page, $info);
+ 
+if ($translation_mode == 'n' && translationsToThisPageAreInProgress($info['page_id'])) {
+	$smarty->assign('prompt_for_edit_or_translate', 'y');
+} else {
+	$smarty->assign('prompt_for_edit_or_translate', 'n');
+}
 
 // wysiwyg decision
 include 'lib/setup/editmode.php';
@@ -410,9 +433,13 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 										$targetInfo['page_id'],
 										$sourceInfo['version'],
 										$targetInfo['version'] );
+								$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
+							} else {
+								$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
 							}
 
 						} elseif( $editlib->isUpdateTranslationMode() ) {
+							$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
 							$targetInfo = $tikilib->get_page_info( $pagename );
 
 							if( !isset($_REQUEST['partial_save']) ) {
@@ -422,6 +449,10 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 										$targetInfo['page_id'],
 										(int) $_REQUEST['newver'],
 										$targetInfo['version'] );
+								$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
+
+							} else {
+								$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
 							}
 
 						} else {
@@ -1057,6 +1088,9 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 							$targetInfo['page_id'],
 							$sourceInfo['version'],
 							$targetInfo['version'] );
+							$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
+				} else {
+					$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);				
 				}
 
 			} else {
@@ -1100,10 +1134,9 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 			global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
 			unset( $tikilib->cache_page_info );
 
-			if( $editlib->isUpdateTranslationMode() ) {
+			if( $editlib->isUpdateTranslationMode() ) {				
 				$sourceInfo = $tikilib->get_page_info( $_REQUEST['source_page'] );
 				$targetInfo = $tikilib->get_page_info( $_REQUEST['page'] );
-
 				if( !isset($_REQUEST['partial_save']) ) {
 					$multilinguallib->propagateTranslationBits( 
 							'wiki page',
@@ -1111,6 +1144,9 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 							$targetInfo['page_id'],
 							(int) $_REQUEST['newver'],
 							$targetInfo['version'] );
+							$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
+				} else {
+					$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);				
 				}
 
 			} else {
