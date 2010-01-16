@@ -628,6 +628,10 @@ if (
 			$installer = new Installer;
 			$installer->setServerType($db_tiki);
 		}
+	} else {
+		$dbcon = false;
+		$smarty->assign('dbcon', 'n');
+		$tikifeedback[] = array('num'=>1, 'mes'=>tra("No database name specified"));
 	}
 }
 
