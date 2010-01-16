@@ -829,6 +829,7 @@ function get_default_prefs() {
 		'feature_webmail' => 'n',
 		'webmail_max_attachment' => 1500000,
 		'webmail_view_html' => 'y',
+		'webmail_quick_flags' => 'n',
 
 		// contacts
 		'feature_contacts' => 'n',
@@ -883,7 +884,7 @@ function get_default_prefs() {
 		'calendar_start_year' => '-3',
 		'calendar_end_year' => '+5',
 		'calendar_list_begins_focus' => 'n',
-		'feature_cal_manual_time' => '',
+		'feature_cal_manual_time' => 'n',
 		'calendar_view_days' => array(0,1,2,3,4,5,6),
 
 		// dates
