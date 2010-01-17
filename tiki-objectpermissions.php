@@ -173,6 +173,19 @@ if ($group_filter === false) {
 	$tikilib->set_user_preference($user, 'objectperm_admin_groups', serialize($group_filter));
 }
 
+if (isset($_REQUEST['group'])) {
+	$grp_id = 0;
+	foreach($groups['data'] as $grp) {
+		if ($grp['groupName'] == $_REQUEST['group']) {
+			$grp_id = $grp['id'];
+			break; 
+		}
+	}
+	if ($grp_id > 0 && !in_array($grp_id, $group_filter)) {
+		$group_filter[] = $grp_id;
+	}
+}
+
 // Process the form to assign a new permission to this object
 if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	check_ticket('object-perms');
@@ -447,6 +460,12 @@ JS;
 JS;
 	$i++;
 }	// end of for $groupNames loop
+
+if (!empty($_REQUEST['textFilter'])) {
+	$js .= '
+$jq("#treetable_1_filter").val("'.$_REQUEST['textFilter'].'");
+setTimeout(function(){$jq("#treetable_1_filter").keyup();}, 500);';
+}
 
 $headerlib->add_jq_onready($js);
 
