@@ -187,7 +187,9 @@
 
 {* -------------------- page selector ------------------------- *} 
 {elseif $field_value.type eq  'k'}
-	{if $list_mode eq 'y'}
+	{if $showlinks ne 'y'}
+		{$field_value.value|escape}
+	{elseif $list_mode eq 'y'}
 		{wiki}(({$field_value.value|escape})){/wiki}
 	{elseif $list_mode eq 'csv'}
 		{$field_value.value}
