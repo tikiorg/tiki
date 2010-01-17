@@ -55,7 +55,7 @@
 			</a>
 		{/if}
 		{if $prefs.blog_list_description eq 'y'}
-			<div class="subcomment">{$listpages[changes].description}</div>
+			<div class="subcomment">{$listpages[changes].description|escape|nl2br}</div>
 		{/if}
 	</td>
 {/if}
