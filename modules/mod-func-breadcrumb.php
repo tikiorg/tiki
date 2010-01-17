@@ -40,8 +40,9 @@ function module_breadcrumb( $mod_reference, $module_params ) {
 		foreach($_SESSION["breadCrumb"] as $step) {
 			if (isset($objectIds[$step])) $breadIds[$objectIds[$step]]=$step;
 		}
-		
-		$relevantIds=$categlib->filter_objects_categories(array_keys($breadIds),$categlib->get_jail());
+		if ($breadIds) {
+			$relevantIds=$categlib->filter_objects_categories(array_keys($breadIds),$categlib->get_jail());
+		}
 		$fullBreadCrumb=array();
 		foreach ($breadIds as $breadId => $breadName) {
 			if (in_array($breadId, $relevantIds)) $fullBreadCrumb[$breadId]=$breadName;

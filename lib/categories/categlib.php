@@ -1675,8 +1675,11 @@ class CategLib extends ObjectLib
 
 	// Returns an array containing the ids of the passed $objects present in any of the passed $categories.
 	function filter_objects_categories($objects, $categories) {
-		$query="SELECT `catObjectId` from `tiki_category_objects` where `categId` in (".implode(',', array_fill(0,count($categories),'?')).") AND `catObjectId` in (".implode(',', array_fill(0,count($objects),'?')).")";
-		$result = $this->query($query, array_merge($categories, $objects));
+		$query="SELECT `catObjectId` from `tiki_category_objects` where `catObjectId` in (".implode(',', array_fill(0,count($objects),'?')).")";				
+		if ($categories) {
+			$query .= " and `categId` in (".implode(',', array_fill(0,count($categories),'?')).")";
+		}	
+		$result = $this->query($query, array_merge($objects, $categories));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[]=$res["catObjectId"];
