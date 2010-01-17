@@ -178,13 +178,6 @@ if (isset($_REQUEST['save']) && !isset($_REQUEST['preview']) && !isset($_REQUEST
 
 if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['changeCal'])) {
 
-	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
-		$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
-		$smarty->assign('errortype', 'no_redirect_login');
-		$smarty->display("error.tpl");
-		die;
-	}
-
 	$save = $_POST['save'];
 	// Take care of timestamps dates coming from jscalendar
 	if ( isset($save['date_start']) || isset($save['date_end']) ) {
@@ -255,6 +248,13 @@ if (isset($save['start']) && isset($save['end'])) {
 }
 
 if (isset($_POST['act'])) {
+	// Check antibot code if anonymous and allowed
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
+		$smarty->assign('errortype', 'no_redirect_login');
+		$smarty->display("error.tpl");
+		die;
+	}
 	if (empty($save['user'])) $save['user'] = $user;
 	$newcalid = $save['calendarId'];
 
@@ -321,6 +321,13 @@ if (isset($_POST['act'])) {
 				}
 				$calRecurrence->setUser($save['user']);
 				$calRecurrence->save($_POST['affect'] == 'all');
+					// Save the ip at the log for the addition of new calendar items when done by anonymous users
+					if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) { 
+						$logslib->add_log('calendar','Recurrent calendar item starting on '.$_POST['startPeriod'].' added to calendar '.$save['calendarId']);
+					}
+					if (empty($user) && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) { 
+						$logslib->add_log('calendar','Recurrent calendar item starting on '.$_POST['startPeriod'].' changed in calendar '.$save['calendarId']);
+					}
 				header('Location: tiki-calendar.php?todate='.$save['start']);
 				die;
 			}
@@ -331,6 +338,13 @@ if (isset($_POST['act'])) {
 					$save['changed'] = true;
 				}
 				$calitemId = $calendarlib->set_item($user,$save['calitemId'],$save);
+					// Save the ip at the log for the addition of new calendar items when done by anonymous users
+					if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) { 
+						$logslib->add_log('calendar','Calendar item '.$calitemId.' added to calendar '.$save['calendarId']);
+					}
+					if (empty($user) && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) { 
+						$logslib->add_log('calendar','Calendar item '.$calitemId.' changed in calendar '.$save['calendarId']);
+					}
 			}
 
 			if ($prefs['feature_groupalert'] == 'y') {
@@ -344,11 +358,15 @@ if (isset($_POST['act'])) {
 }
 
 if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"]) and $tiki_p_change_events == 'y') {
+	// There is no check for valid antibot code if anonymous allowed to delete events since this comes from a JS button at the tpl and bots are not know to use JS
   $area = 'delcalevent';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
     $calendarlib->drop_item($user, $_REQUEST["calitemId"]);
+	if (empty($user)) { 
+		$logslib->add_log('calendar','Calendar item '.$_REQUEST['calitemId'].' deleted');
+	}
     $_REQUEST["calitemId"] = 0;
 		header('Location: tiki-calendar.php?todate='.$calitem['start']);
 		die;
@@ -356,8 +374,12 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
     key_get($area);
   }
 } elseif (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["recurrenceId"]) and $tiki_p_change_events == 'y') {
+	// There is no check for valid antibot code if anonymous allowed to delete events since this comes from a JS button at the tpl and bots are not know to use JS
 	$calRec = new CalRecurrence($_REQUEST['recurrenceId']);
 	$calRec->delete();
+	if (empty($user)) { 
+		$logslib->add_log('calendar','Recurrent calendar items (recurrenceId = '.$_REQUEST["recurrenceId"].') deleted');
+	}
     $_REQUEST["recurrenceTypeId"] = 0;
     $_REQUEST["calitemId"] = 0;
 	header('Location: tiki-calendar.php');
@@ -371,9 +393,19 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   } else {
     $calendarlib->drop_item($user, $_REQUEST['drop']);
   }
+	if (empty($user)) { 
+		$logslib->add_log('calendar','Calendar item/s '.$_REQUEST['calitemId'].' droped');
+	}
 	header('Location: tiki-calendar.php');
 	die;
 }  elseif (isset($_REQUEST['duplicate']) and $tiki_p_add_events == 'y') {
+	// Check antibot code if anonymous and allowed
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
+		$smarty->assign('errortype', 'no_redirect_login');
+		$smarty->display("error.tpl");
+		die;
+	}
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
 	$calitem['calendarId'] = $calID;
 	$calitem['calitemId'] = 0;
