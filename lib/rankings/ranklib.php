@@ -481,7 +481,7 @@ class RankLib extends TikiLib
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			if ($this->user_has_perm_on_object($user, $res['articleId'], 'article', 'tiki_p_read_article')) {
+			if ($this->user_has_perm_on_object($user, $res['articleId'], 'article', 'tiki_p_read_article') && ($res["show_pre_publ"] == 'y' or $this->now < $res["publishDate"])) {
 				$aux["name"] = $res["title"];
 				$aux["hits"] = $res["nbreads"];
 				$aux["href"] = 'tiki-read_article.php?articleId=' . $res["articleId"];
@@ -490,7 +490,7 @@ class RankLib extends TikiLib
 		}
 
 		$retval["data"] = $ret;
-		$retval["title"] = tra("Wiki top articles");
+		$retval["title"] = tra("Top articles");
 		$retval["y"] = tra("Reads");
 		$retval["type"] = "nb";
 		return $retval;
