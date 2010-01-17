@@ -8029,7 +8029,7 @@ class TikiLib extends TikiDb_Bridge
 	// Comparison function used to sort languages by their name in the
 	// current locale.
 	static function formatted_language_compare($a, $b) {
-		return strcmp($a['name'], $b['name']);
+		return strcasecmp($a['name'], $b['name']);
 	}
 	// Returns a list of languages formatted as a twodimensionel array
 	// with 'value' being the language code and 'name' being the name of
