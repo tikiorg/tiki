@@ -12,3 +12,4 @@
 		{icon _id=error alt=''}
 	</a>
 {/if}
+{$p.pages}

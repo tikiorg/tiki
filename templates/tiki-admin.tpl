@@ -19,7 +19,7 @@ the <a href="tiki-edit_perspective.php">perspectives GUI</a> to work.{/tr}
 	<form method="post" action="">
 		<hr class="clear"/>
 		{foreach from=$lm_searchresults item=prefName}
-			{preference name=$prefName}
+			{preference name=$prefName get_pages="y"}
 		{/foreach}
 		<input type="submit" value="{tr}Change{/tr}" class="clear"/>
 		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}"/>
