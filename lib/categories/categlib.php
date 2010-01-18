@@ -1667,6 +1667,7 @@ class CategLib extends ObjectLib
 	function get_default_categories() {
 		global $prefs;
 		if( $this->get_jail() ) {
+			// Default categories are not the entire jail including the sub-categories but only the "root" categories
 			return $prefs['category_jail'];
 		} else {
 			return array();
