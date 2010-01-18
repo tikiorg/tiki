@@ -174,9 +174,8 @@
 			{/jq}
 		{/if}
 	{else}
-		<table>
     	{foreach from=$field_value.lingualvalue item=ling}
-    		<tr><td>{$ling.lang|langname}</td><td>
+    		<label for="{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}">{$ling.lang|langname}</label><br />
             {*prepend*}{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
         	<input type="text" id="{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" value="{$ling.value|escape}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} /> {*@@ missing value*}
         	{*append*}{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
@@ -191,9 +190,7 @@
 					 });
 				{/jq}
 			{/if}
-   		</td></tr>
 		{/foreach}
-		</table>
 	{/if}
 
 {* -------------------- page selector  -------------------- *}
@@ -261,11 +258,8 @@
 			</div>
 		{/if}
 	{else}
-		<table>
 		{foreach from=$field_value.lingualvalue item=ling}
-    	<tr>
-			<td>{$ling.lang|langname}</td>
-      		<td>
+			<label for="area_{$field_value.fieldId}_{$ling.lang}">{$ling.lang|langname}</label>
 				{if $field_value.options_array[0] eq 1}
         			{toolbars qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
         		{/if}
@@ -273,10 +267,7 @@
 					{$ling.value|escape}
 				</textarea>
 				{if $field_value.options_array[5]}<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}_{$ling.lang}" size="4" readOnly=true{if !empty($ling.value)} value="{$ling.value|count_words}"{/if} />{if $field_value.options_array[5] > 0}{tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>{/if}
-      		</td>
-    	</tr>
 		{/foreach}
-		</table>
 {/if}
 
 {* -------------------- date and time -------------------- *}
