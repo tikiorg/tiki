@@ -31,8 +31,6 @@ function module_breadcrumb( $mod_reference, $module_params ) {
 	}
 
 	if ($jail = $categlib->get_jail()) {
-		$fullBreadCrumb=$_SESSION["breadCrumb"];
-	} else {
 		global $objectlib; include_once ('lib/objectlib.php');//
 		$objectIds=$objectlib->get_object_ids("wiki page", $_SESSION["breadCrumb"]);
 	
@@ -50,6 +48,8 @@ function module_breadcrumb( $mod_reference, $module_params ) {
 		foreach ($breadIds as $breadId => $breadName) {
 			if (in_array($breadId, $relevantIds)) $fullBreadCrumb[$breadId]=$breadName;
 		}
+	} else {
+		$fullBreadCrumb=$_SESSION["breadCrumb"];
 	}
 
 	$bbreadCrumb = array_slice(array_reverse($fullBreadCrumb), 0, $mod_reference['rows']);
