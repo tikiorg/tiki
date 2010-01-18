@@ -17,7 +17,8 @@ function list_perms($objectId, $objectType) {
 	$perms = $userlib->get_object_permissions($objectId, $objectType);
 	if (!empty($perms)) {
 		foreach($perms as $perm) {
-			$ret[] = array('group' => $perm['groupName'], 'perm' => $perm['permName'], 'reason' => 'Special');
+			$ret[] = array('group' => $perm['groupName'], 'perm' => $perm['permName'], 'reason' => 'Special',
+					'objectId' => $objectId, 'objectType' => $objectType, 'objectName' => $objectId);
 		}
 	} elseif ($prefs['feature_categories'] == 'y') {
 		global $categlib;
@@ -31,7 +32,9 @@ function list_perms($objectId, $objectType) {
 				if (!empty($category_perms)) {
 					foreach($category_perms as $category_perm) {
 						$config[$category_perm['groupName']][$category_perm['permName']] = 'y';
-						$ret[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'], 'reason' => 'Category');
+						$ret[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'],
+									'reason' => 'Category', 'objectId' => $categId, 'objectType' => 'category',
+									'objectName' => $categlib->get_category_name($categId));
 					}
 				}
 			}

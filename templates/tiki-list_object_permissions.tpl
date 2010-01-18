@@ -27,7 +27,19 @@
 	{foreach from=$content.objects item=object}
 		{if !empty($object.special)}
 			{foreach from=$object.special item=special}
-				<tr class="{cycle}"><td>{$object.objectId}</td><td>{$special.group|escape}</td><td>{$special.perm|escape}</td><td>{$special.reason|escape} {if !empty($special.detail)}({$special.detail|escape}){/if}</td></tr>
+				<tr class="{cycle}">
+					<td>{$object.objectId}</td>
+					<td>{$special.group|escape}</td>
+					<td>{$special.perm|escape}</td>
+					<td>
+						{if !empty($special.objectId)}
+							<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{$special.reason|escape}</a>
+						{else}
+							{$special.reason|escape}
+						{/if}
+						{if !empty($special.detail)}({$special.detail|escape}){/if}
+					</td>
+				</tr>
 			{/foreach}
 		{/if}
 	{/foreach}
