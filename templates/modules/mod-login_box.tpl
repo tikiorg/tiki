@@ -1,4 +1,5 @@
 {* $Id$ *}
+{if $display_login} {* Hack to display the login module only once if it is also actually used as a module *}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 {literal}
@@ -16,7 +17,7 @@ function capLock(e){
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $user}
-      <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
+      <div>{tr}Logged in as:{/tr} <span style="white-space: nowrap">{$user|userlink}</span></div>
       <div style="text-align: center;">
 				{button href="tiki-logout.php" _text="{tr}Log out{/tr}"}
 			</div>
@@ -24,10 +25,10 @@ function capLock(e){
         <form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
          <fieldset>
           <legend>{tr}Switch User{/tr}</legend>
-          <label for="login-switchuser">{tr}Username{/tr}:</label>
+          <label for="login-switchuser">{tr}Username:{/tr}</label>
           <input type="hidden" name="su" value="1" />
 		  {if $prefs.feature_help eq 'y'}
-			{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User{/tr}:{tr}Enter user name and click 'Switch'.<br />Useful for testing permissions.{/tr}"}
+			{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br />Useful for testing permissions.{/tr}"}
 		  {/if}
           <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
           <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
@@ -102,10 +103,10 @@ function capLock(e){
 		{/if}</div>
 		<script type="text/javascript">document.getElementById('login-user').focus();</script>
           {if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
-          <div><label for="login-email">{tr}eMail{/tr}:</label><br />
+          <div><label for="login-email">{tr}eMail:{/tr}</label><br />
           <input type="text" name="email" id="login-email" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" /></div>
           {/if}
-          <div><label for="login-pass">{tr}Password{/tr}:</label><br />
+          <div><label for="login-pass">{tr}Password:{/tr}</label><br />
           <input onkeypress="capLock(event)" type="password" name="pass" id="login-pass" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 		  <div id="divCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 		  </div>
@@ -139,7 +140,7 @@ function capLock(e){
           </div>
           {/if}
           {if $prefs.feature_show_stay_in_ssl_mode eq 'y' && $show_stay_in_ssl_mode eq 'y'}
-                <div><label for="login-stayssl">{tr}Stay in ssl Mode{/tr}:</label>?
+                <div><label for="login-stayssl">{tr}Stay in SSL Mode:{/tr}</label>?
                 <input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} /></div>
           {/if}
 	{* This is needed as unchecked checkboxes are not sent. The other way of setting hidden field with same name is potentially non-standard *}
@@ -175,3 +176,4 @@ function capLock(e){
 		</form>
 	{/if}
 {/tikimodule}
+{/if}
