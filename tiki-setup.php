@@ -70,13 +70,7 @@ if ($prefs['feature_debug_console'] == 'y') {
 	include_once ('lib/debug/debugger.php');
 }
 if ($prefs['feature_integrator'] == 'y') require_once ('lib/setup/integrator.php');
-if ($prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'random') {
-	include_once ('lib/search/refresh.php');
-	include_once('lib/search/refresh-functions.php');
 
-	register_shutdown_function('refresh_search_index');
-
-}
 if (isset($_REQUEST['comzone'])) require_once ('lib/setup/comments_zone.php');
 if ($prefs['feature_lastup'] == 'y') require_once ('lib/setup/last_update.php');
 if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive_translation_mode'] == 'on')) {

@@ -36,13 +36,13 @@ class SearchLib extends TikiLib
 			'from': the table or tables to be looked (ex: 'tiki_pages') (ex: 'tiki_comments c, tiki_pages p'
 			'name': the column that contains the name
 			'data': the column that contains the data that will be displayed as description (the first characters only)
-			'hits': the column that contains the number that will be displyed as hits
+			'hits': the column that contains the number that will be displayed as hits
 			'lastModif': the column that contains the date that will be displayed
 			'href': the link that will be displayed (each parameter is in the array id
 			'id': the list of parameters used in href 
 			'pageName': the value that will displayed as title
 			'search': the columns taht are searched (the index columns)
-			'orderby': a ordereing (will be added to relevance ordering)
+			'orderby': a ordering (will be added to relevance ordering)
 			'permName': the permission the user needs to see each result
 			'objectKey': the field corresponding to objectId according to users_objectpermissions table
 			'objectType': the object type according to users_objectpermissions

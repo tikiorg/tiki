@@ -348,11 +348,6 @@ class ArtLib extends TikiLib
 		    }
 	    }
 
-
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('articles', $articleId);
-		}
 		$this->syncParsedText($body."\n".$heading, array('type'=>'article', 'object'=>$articleId, 'description'=>substr($heading, 0, 200), 'name'=>$title, 'href'=>"tiki-read_article.php?articleId=$articleId"));
 
 		return $articleId;

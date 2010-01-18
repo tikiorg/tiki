@@ -588,8 +588,6 @@ function get_default_prefs() {
 		'forum_list_visits' =>  'y',
 		'forum_list_desc' =>  'y',
 		'forum_list_description_len' => '240',
-		'feature_forum_local_search' => 'n',
-		'feature_forum_local_tiki_search' => 'n',
 		'forum_thread_defaults_by_forum' => 'n',
 		'forum_thread_user_settings' => 'y',
 		'forum_thread_user_settings_threshold' => 10,
@@ -779,8 +777,7 @@ function get_default_prefs() {
 
 		// search
 		'feature_search_stats' => 'n',
-		'feature_search' => 'n',
-		'feature_search_fulltext' => 'y',
+		'feature_search' => 'y',
 		'feature_search_show_forbidden_obj' => 'n',
 		'feature_search_show_forbidden_cat' => 'n',
 		'feature_search_show_object_filter' => 'n',
@@ -789,7 +786,6 @@ function get_default_prefs() {
 		'feature_search_show_pertinence' => 'n',
 		'feature_search_show_object_type' => 'n',
 		'feature_search_show_last_modification' => 'y',
-		'search_refresh_index_mode' => 'normal',
 		'search_parsed_snippet' => 'y',
 		'feature_search_preferences' => 'y',
 		'search_default_where' => '',
@@ -1055,14 +1051,6 @@ function get_default_prefs() {
 		'intertiki_logfile' => '',
 		'intertiki_errfile' => '',
 		'feature_intertiki_sharedcookie' => 'n',
-
-		// search
-		'search_lru_length' => '100',
-		'search_lru_purge_rate' => '5',
-		'search_max_syllwords' => '100',
-		'search_min_wordlength' => '3',
-		'search_refresh_rate' => '5',
-		'search_syll_age' => '48',
 
 		// categories
 		'feature_categories' => 'n',

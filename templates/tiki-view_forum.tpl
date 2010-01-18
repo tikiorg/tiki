@@ -73,7 +73,7 @@
 				<div class="categbar" align="right" >
 					{if $user and $prefs.feature_user_watches eq 'y'}
 						{if $category_watched eq 'y'}
-							{tr}Watched by categories{/tr}:
+							{tr}Watched by categories:{/tr}
 							{section name=i loop=$watching_categories}
 								<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>
 								&nbsp;
@@ -140,7 +140,7 @@
 
 	<div id="forumpost" style="display:{if $comments_threadId > 0 or $openpost eq 'y' or $warning eq 'y' or $comment_title neq '' or $smarty.request.comments_previewComment neq ''}block{else}none{/if};">
 		{if $comments_threadId > 0}
-			{tr}Editing{/tr}: {$comment_title|escape} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}Post New{/tr}</a>)
+			{tr}Editing:{/tr} {$comment_title|escape} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}Post New{/tr}</a>)
 		{/if}
 		<form method="post" enctype="multipart/form-data" action="tiki-view_forum.php" id="editpageform">
 			<input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
@@ -244,7 +244,7 @@
 				{/if}
 				{if empty($user) && $prefs.feature_user_watches eq 'y'}
 					<tr>
-						<td><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}:</label></td>
+						<td><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address:{/tr}</label></td>
 						<td><input type="text" size="30" id="anonymous_email" name="anonymous_email" /></td>
 					</tr>
 				{/if}
@@ -253,7 +253,7 @@
 					<td>{tr}Post{/tr}</td>
 					<td>
 						{if empty($user)}
-							{tr}Enter your name{/tr}:&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" />
+							{tr}Enter your name:{/tr}&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" />
 						{/if}
 						<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
 						<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
@@ -267,7 +267,7 @@
 		<table class="normal" id="commentshelp">
 			<tr>
 				<td class="even">
-					<b>{tr}Editing posts{/tr}:</b>
+					<b>{tr}Editing posts:{/tr}</b>
 					<br />
 					<br />
 					{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br />
@@ -282,7 +282,7 @@
 
 {if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
 	<div class="findtable">
-		<form id="search-form" class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+		<form id="search-form" class="forms" method="get" action="tiki-searchresults.php">
 				<input name="highlight" size="30" type="text" />
 				<input type="hidden" name="where" value="forums" />
 				<input type="hidden" name="forumId" value="{$forum_info.forumId}" />
@@ -323,7 +323,7 @@
 			{if $smarty.request.movesel_x} 
 				<tr>
 					<td class="odd" colspan="18">
-						{tr}Move to{/tr}:
+						{tr}Move to:{/tr}
 						<select name="moveto">
 							{section name=ix loop=$all_forums}
 								{if $all_forums[ix].forumId ne $forumId}
@@ -338,7 +338,7 @@
 			{if $smarty.request.splitsel_x} 
 				<tr>
 					<td class="odd" colspan="18">
-						{tr}Merge into topic{/tr}:
+						{tr}Merge into topic:{/tr}
 						<select name="mergetopic">
 							{section name=ix loop=$comments_coms}
 								{if !in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}
@@ -533,7 +533,7 @@
 	{button href="javascript:flip('filteroptions');" _flip_id="filteroptions" _text="{tr}Filter Posts{/tr}"}
 	{if $prefs.feature_forum_quickjump eq 'y' and count($all_forums) > 1}
 		<form id='quick' method="post" action="tiki-view_forum.php" style="float:right;">
-			<small>{tr}Jump to forum{/tr}:</small>
+			<small>{tr}Jump to forum:{/tr}</small>
 			<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
 				{section name=ix loop=$all_forums}
 					<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>

@@ -1244,8 +1244,7 @@ CREATE TABLE `tiki_menu_options` (
 
 -- when adding new inserts, order commands by position
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Home','./',10,'','','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search_fulltext','tiki_p_search','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','',0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Search','tiki-searchresults.php',13,'feature_search','tiki_p_search','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_category','',0);
@@ -1837,36 +1836,6 @@ CREATE TABLE `tiki_rss_feeds` (
   `lastUpdated` int(14) default NULL,
   `cache` longblob,
   PRIMARY KEY (`name`,`rssVer`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `tiki_searchindex`;
-CREATE TABLE tiki_searchindex(
-  `searchword` varchar(80) NOT NULL default '',
-  `location` varchar(80) NOT NULL default '',
-  `page` varchar(255) NOT NULL default '',
-  `count` int(11) NOT NULL default '1',
-  `last_update` int(11) NOT NULL default '0',
-  PRIMARY KEY (`searchword`,`location`,`page`(80)),
-  KEY `last_update` (last_update),
-  KEY `location` (location(50), page(200))
-) ENGINE=MyISAM;
-
--- LRU (last recently used) list for searching parts of words
-DROP TABLE IF EXISTS `tiki_searchsyllable`;
-CREATE TABLE tiki_searchsyllable(
-  `syllable` varchar(80) NOT NULL default '',
-  `lastUsed` int(11) NOT NULL default '0',
-  `lastUpdated` int(11) NOT NULL default '0',
-  PRIMARY KEY (`syllable`),
-  KEY `lastUsed` (`lastUsed`)
-) ENGINE=MyISAM;
-
--- searchword caching table for search syllables
-DROP TABLE IF EXISTS `tiki_searchwords`;
-CREATE TABLE tiki_searchwords(
-  `syllable` varchar(80) NOT NULL default '',
-  `searchword` varchar(80) NOT NULL default '',
-  PRIMARY KEY (`syllable`,`searchword`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_search_stats`;

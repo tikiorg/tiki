@@ -806,11 +806,6 @@ class ImageGalsLib extends TikiLib
 			$result = $this->query($query, array((int)$id, 'o'));
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('images', $id);
-		}
-
 		return true;
 	}
 
@@ -878,11 +873,6 @@ class ImageGalsLib extends TikiLib
 			$logslib->add_action('Uploaded', $galleryId, 'image gallery', 'imageId='.$imageId);
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('images', $imageId);
-		}
-		
 		$this->notify($imageId, $galleryId, $name, $filename, $description, isset($gal_info['name'])?$gal_info['name']: '', 'upload image', $user);
 
 		return $imageId;
@@ -1791,11 +1781,6 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 			if ($prefs['feature_score'] == 'y') {
 			    $this->score_event($user, 'igallery_new');
 			}
-		}
-
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('galleries', $galleryId);
 		}
 
 		return $galleryId;

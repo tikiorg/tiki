@@ -171,10 +171,6 @@ class BlogLib extends TikiLib
 			$this->syncParsedText($heading, array('type'=>'blog', 'object'=>$blogId, 'description'=>$description, 'name'=>$title, 'href'=>"tiki-view_blog.php?blogId=$blogId"));
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blogs', $blogId);
-		}
 		return $blogId;
 	}
 
@@ -419,10 +415,6 @@ class BlogLib extends TikiLib
 			$logslib->add_action('Posted', $blogId, 'blog', "blogId=$blogId&amp;postId=$id&amp;add=" . strlen($data) . "#postId$id", '', '', '', '', $contributions);
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blog_posts', $id);
-		}
 		$this->syncParsedText($data, array('type'=>'blog post', 'object'=>$id, 'description'=>substr($edit_data, 0, 200), 'name'=>$title, 'href'=>"tiki-view_blog_post.php?postId=$id"));
 
 		return $id;
@@ -527,10 +519,6 @@ class BlogLib extends TikiLib
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);
-		}
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blog_posts', $postId);
 		}
 		$this->syncParsedText($data, array('type'=>'blog post', 'object'=>$postId));
 	}

@@ -4825,11 +4825,6 @@ class TikiLib extends TikiDb_Bridge
 			$this->score_event($user, 'wiki_new');
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('pages', $name);
-		}
-
 		$this->syncParsedText($data, array('type'=> 'wiki page', 'object'=> $page, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$page"));
 
 		return true;
@@ -7655,10 +7650,6 @@ class TikiLib extends TikiDb_Bridge
 				$this->score_event($user, 'wiki_edit');
 			}
 
-		}
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('pages', $pageName);
 		}
 		$this->syncParsedText($edit_data, array('type'=>'wiki page', 'object'=>$pageName));
 	}
