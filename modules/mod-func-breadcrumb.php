@@ -40,14 +40,18 @@ function module_breadcrumb( $mod_reference, $module_params ) {
 		foreach($_SESSION["breadCrumb"] as $step) {
 			if (isset($objectIds[$step])) $breadIds[$objectIds[$step]]=$step;
 		}
-		if ($breadIds) {
-			$relevantIds=$categlib->filter_objects_categories(array_keys($breadIds),$categlib->get_jail());
+		if ($breadIds && $jail = $categlib->get_jail()) { // If we have visited pages and we're in a perspective
+			$relevantIds=$categlib->filter_objects_categories(array_keys($breadIds), $jail);
+		} else {
+			$relevantIds=array_keys($breadIds);
 		}
+
 		$fullBreadCrumb=array();
 		foreach ($breadIds as $breadId => $breadName) {
 			if (in_array($breadId, $relevantIds)) $fullBreadCrumb[$breadId]=$breadName;
 		}
 	}
+
 	$bbreadCrumb = array_slice(array_reverse($fullBreadCrumb), 0, $mod_reference['rows']);
 	$smarty->assign('breadCrumb', $bbreadCrumb);
 	$smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
