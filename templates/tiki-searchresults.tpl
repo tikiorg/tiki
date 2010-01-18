@@ -105,7 +105,7 @@
 				<input type="submit" name="search" value="{tr}Go{/tr}"/>
 			</label>
 			{if !$searchNoResults}
-				{button _auto_args='highlight' href="tiki-searchindex.php?highlight=" _text="{tr}Clear Filter{/tr}"}
+				{button _auto_args='highlight' href="tiki-searchresults.php?highlight=" _text="{tr}Clear Filter{/tr}"}
 			{/if}
 		</form>
 	{/if}
