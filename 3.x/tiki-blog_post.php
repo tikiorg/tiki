@@ -305,7 +305,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	include_once ("freetag_apply.php");
 
 	if (isset($_REQUEST['save_exit'])) {
-		header ("location: tiki-view_blog.php?blogId=$blogId");
+		header ("location: tiki-view_blog_post.php?postId=$postid");
 
 		die;
 	}
