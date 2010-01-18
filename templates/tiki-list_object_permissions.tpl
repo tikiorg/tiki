@@ -28,7 +28,7 @@
 		{if !empty($object.special)}
 			{foreach from=$object.special item=special}
 				<tr class="{cycle}">
-					<td>{$object.objectId}</td>
+					<td>{$special.objectName}</td>
 					<td>{$special.group|escape}</td>
 					<td>{$special.perm|escape}</td>
 					<td>

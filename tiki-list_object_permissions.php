@@ -11,14 +11,14 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-function list_perms($objectId, $objectType) {
+function list_perms($objectId, $objectType, $objectName) {
 	global $userlib, $tikilib, $prefs;
 	$ret = array();
 	$perms = $userlib->get_object_permissions($objectId, $objectType);
 	if (!empty($perms)) {
 		foreach($perms as $perm) {
 			$ret[] = array('group' => $perm['groupName'], 'perm' => $perm['permName'], 'reason' => 'Special',
-					'objectId' => $objectId, 'objectType' => $objectType, 'objectName' => $objectId);
+					'objectId' => $objectId, 'objectType' => $objectType, 'objectName' => $objectName);
 		}
 	} elseif ($prefs['feature_categories'] == 'y') {
 		global $categlib;
@@ -61,7 +61,7 @@ foreach($types as $type) {
 		case 'wiki':
 			$objects = $tikilib->list_pageNames();
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['pageName'], $type);
+				$res[$type]['objects'][] = list_perms($object['pageName'], $type, $object['pageName']);
 			}
 			break;
 
@@ -69,7 +69,7 @@ foreach($types as $type) {
 		case 'file gallery':
 			$objects = $tikilib->list_file_galleries( 0, -1, 'name_desc', '', '', $prefs['fgal_root_id'] );
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['id'], $type);
+				$res[$type]['objects'][] = list_perms($object['id'], $type, $object['name']);
 			}
 			break;
 
@@ -77,7 +77,7 @@ foreach($types as $type) {
 		case 'trackers':
 			$objects = $tikilib->list_trackers();
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['trackerId'], $type);
+				$res[$type]['objects'][] = list_perms($object['trackerId'], $type, $object['name']);
 			}
 			break;
 
@@ -85,7 +85,7 @@ foreach($types as $type) {
 		case 'forums':
 			$objects = $commentslib->list_forums();
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['forumId'], $type);
+				$res[$type]['objects'][] = list_perms($object['forumId'], $type, $object['name']);
 			}
 			break;
 
