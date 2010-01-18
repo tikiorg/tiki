@@ -93,7 +93,7 @@
 	</div>
 {/if}
 
-{if $preview && $translation_mode eq 'n'}
+{if $preview}
 	{include file='tiki-preview.tpl'}
 {/if}
 {if $diff_style}
