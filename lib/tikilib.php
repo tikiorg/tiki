@@ -8506,7 +8506,7 @@ JS;
 			// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
 			global $categlib; require_once ('lib/categories/categlib.php');
 			$key = $prefs['category_jail'];
-			$categories = explode( ',', $prefs['category_jail'] );
+			$categories = $prefs['category_jail'];
 			if( $prefs['expanded_category_jail_key'] != $key ) {
 				$additional = array();
 
