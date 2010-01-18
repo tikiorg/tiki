@@ -8502,14 +8502,11 @@ JS;
 
 	function get_jail() {
 		global $prefs;
-		if( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) ) {
+		if( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) && $prefs['category_jail'] != array(0 => 0) ) {
+			// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
 			global $categlib; require_once ('lib/categories/categlib.php');
 			$key = $prefs['category_jail'];
 			$categories = explode( ',', $prefs['category_jail'] );
-			if ( count($key) == 1 && !$key[0] ) {
-				// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
-				return array();
-			}
 			if( $prefs['expanded_category_jail_key'] != $key ) {
 				$additional = array();
 
