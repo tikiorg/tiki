@@ -1666,7 +1666,7 @@ class CategLib extends ObjectLib
 	// Returns the categories a new object should be in by default, that is none in general, or the perspective categories if the user is in a perspective.
 	function get_default_categories() {
 		global $prefs;
-		if( ! empty( $prefs['category_jail'] ) ) {
+		if( $this->get_jail() ) {
 			return $prefs['category_jail'];
 		} else {
 			return array();
