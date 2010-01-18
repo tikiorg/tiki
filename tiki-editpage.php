@@ -988,6 +988,18 @@ if (isset($_REQUEST['save']) && $prefs['wiki_mandatory_edit_summary'] == 'y' && 
 } else {
 	$summary_needed = false;
 }
+if ($prefs['wiki_mandatory_edit_summary'] == 'y') {
+	$headerlib->add_jq_onready('
+$jq("input[name=save],input[name=minor]").click(function(){
+	if (!$jq("#comment").val()) {
+		var s = prompt("'.tra('Describe the change you made').'");
+		if (!s) return false;
+		$jq("#comment").val(s);
+	}
+	return true;
+})
+');
+}
 
 if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $tiki_p_admin == 'y') && !$category_needed && !$contribution_needed && ! $summary_needed) {
 	check_ticket('edit-page');
