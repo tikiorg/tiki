@@ -5487,7 +5487,7 @@ class TikiLib extends TikiDb_Bridge
 		return $plugins;
 	}
 
-	function plugin_exists( $name, $include = false, $include_aliases = true ) {
+	function plugin_exists( $name, $include = false ) {
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
 		$php_name .= strtolower($name) . '.php';
 
@@ -5498,8 +5498,6 @@ class TikiLib extends TikiDb_Bridge
 
 		if( $exists )
 			return true;
-		elseif (!$include_aliases)
-			return false;
 		elseif( $info = $this->plugin_alias_info( $name ) ) {
 			// Make sure the underlying implementation exists
 
