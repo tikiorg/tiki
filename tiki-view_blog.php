@@ -58,6 +58,8 @@ $smarty->assign('blogId', $_REQUEST["blogId"]);
 $smarty->assign('title', $blog_data["title"]);
 $smarty->assign('heading', $blog_data["heading"]);
 $smarty->assign('use_title', $blog_data["use_title"]);
+$smarty->assign('use_author', $blog_data["use_author"]);
+$smarty->assign('add_date', $blog_data["add_date"]);
 $smarty->assign('use_find', $blog_data["use_find"]);
 $smarty->assign('allow_comments', $blog_data["allow_comments"]);
 $smarty->assign('show_avatar', $blog_data["show_avatar"]);
