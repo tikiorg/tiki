@@ -293,6 +293,7 @@ CREATE TABLE `tiki_blogs` (
   `heading` text,
   `use_find` char(1) default NULL,
   `use_title` char(1) default NULL,
+  `use_author` char(1) default NULL,
   `add_date` char(1) default NULL,
   `add_poster` char(1) default NULL,
   `allow_comments` char(1) default NULL,
