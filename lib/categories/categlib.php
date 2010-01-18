@@ -1667,7 +1667,7 @@ class CategLib extends ObjectLib
 	function get_default_categories() {
 		global $prefs;
 		if( ! empty( $prefs['category_jail'] ) ) {
-			return explode( ',', $prefs['category_jail'] );
+			return $prefs['category_jail'];
 		} else {
 			return array();
 		}
