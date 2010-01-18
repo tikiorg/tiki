@@ -301,11 +301,6 @@ if (isset($_REQUEST["page"])) {
 		$description = "Text area"; //get_strings tra("Text area")
 		$helpUrl = "Text+area";
 		include_once ('tiki-admin_include_textarea.php');
-	} else if ($adminPage == "multimedia") {
-		$admintitle = "Multimedia"; //get_strings tra("Multimedia")
-		$description = "Multimedia"; //get_strings tra("Multimedia")
-		$helpUrl = "Multimedia";
-		include_once ('tiki-admin_include_multimedia.php');
 	} else if ($adminPage == "ads") {
 		$admintitle = "Site Ads and Banners"; // this is already translated
 		$description = "Configure Site Ads and Banners"; //get_strings tra("Configure Site Ads and Banners")

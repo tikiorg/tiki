@@ -173,13 +173,6 @@ function prefs_feature_list() {
 			'help' => 'Copyright',
 			'type' => 'flag',
 		),
-		'feature_multimedia' => array(
-			'name' => tra('Multimedia'),
-			'description' => tra('The applet is designed to read MP3 or FLV file'),
-			'help' => 'Multimedia',
-			'type' => 'flag',
-			'warning' => tra('Experimental. This feature is not actively maintained.'),
-		),
 		'feature_shoutbox' => array(
 			'name' => tra('Shoutbox'),
 			'description' => tra('Quick comment (graffiti) box. Like a group chat, but not in real time.'),

@@ -52,7 +52,7 @@ Add a value in first check when you create a new admin page. *}
 "metatags", "performance", "security", "wikiatt", "score", "community", "messages",
 "calendar", "intertiki", "kaltura", "freetags", "gmap",
 "i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
-"multimedia", "ads", "profiles", "semantic", "plugins", "webservices",
+ "ads", "profiles", "semantic", "plugins", "webservices",
 'sefurl', 'connect', 'metrics', 'payment'))}
   {assign var="include" value=$smarty.get.page}
 {else}

@@ -113,22 +113,6 @@
 		<a href="{$smarty.server.PHP_SELF}?{query removeImage='y' fieldId=`$field_value.fieldId` itemId=`$item.itemId` trackerId=`$item.trackerId` fieldName=`$field_value.name`}">{icon _id='cross' alt='{tr}Remove Image{/tr}'}</a>
    {/if}
 
-{* -------------------- multimedia -------------------- *}
-{elseif $field_value.type eq 'M'}
-	{if ($field_value.options_array[0] > '2')}
-		<input type="file" name="{$field_value.ins_id}"  value="{$field_value.value}" />
-	{else}
-		<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-	{/if}
-	{assign var='Height' value=$prefs.MultimediaDefaultHeight}
-	{assign var='Length' value=$prefs.MultimediaDefaultLength}
-
-	{if $field_value.value ne ''}	
-		{if isset($cur_field.options_array[1]) and $field_value.options_array[1] ne '' } {assign var=$Length value=$field_value.options_array[1] }{/if}
-		{if isset($cur_field.options_array[2]) and $field_value.options_array[2] ne '' } {assign var=$Height value=$field_value.options_array[2] }{/if}
-		{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-		{include file='multiplayer.tpl' url=$field_value.value w=$Length h=$Height video=$ModeVideo}
-	{/if}
 
 {* -------------------- file -------------------- *}
 {elseif $field_value.type eq 'A'}

@@ -569,37 +569,6 @@ function get_default_prefs() {
 		'preset_galleries_info' =>'n',
 		'gal_image_mouseover' => 'n',
 
-		// multimedia
-		'ProgressBarPlay' => '//FF8D41',
-		'ProgressBarLoad' => "//A7A7A7",
-		'ProgressBarButton' => "//FF0000",
-		'ProgressBar' => "//C3C3C3",
-		'VolumeOn' => "//21AC2A",
-		'VolumeOff' => "//8EFF8A",
-		'VolumeButton' => 0,
-		'Button' => "//555555",
-		'ButtonPressed' => "//FF00FF",
-		'ButtonOver' => "//B3B3B3",
-		'ButtonInfo' => "//C3C3C3",
-		'ButtonInfoPressed' => "//555555",
-		'ButtonInfoOver' => "//FF8D41",
-		'ButtonInfoText' => "//FFFFFF",
-		'ID3' => "//6CDCEB",
-		'PlayTime' => "//00FF00",
-		'TotalTime' => "//FF2020",
-		'PanelDisplay' => "//555555",
-		'AlertMesg' => "//00FFFF",
-		'PreloadDelay' => 3,
-		'VideoHeight' => 240,
-		'VideoLength' => 300,
-		'ProgressBarPlay' => "//FFFFFF",
-		'URLAppend' => "",
-		'LimitedMsg' => "You are limited to 1 minute",
-		'MaxPlay' => 60,
-		'MultimediaGalerie' => 1,
-		'MultimediaDefaultLength' => 200,
-		'MultimediaDefaultHeight' => 100,
-
 		// forums
 		'feature_forums' => 'n',
 		'home_forum' => 0,
@@ -1262,7 +1231,6 @@ function get_default_prefs() {
 
 		// copyright
 		'feature_copyright' => 'n',
-		'feature_multimedia' => 'n',
 
 		// textarea
 		'feature_smileys' => 'y',
