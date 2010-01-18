@@ -8523,6 +8523,8 @@ JS;
 			}
 
 			return explode( ',', $prefs['expanded_category_jail'] );
+		} else {
+			return array();
 		}
 	}
 
