@@ -380,10 +380,20 @@ if (isset($_REQUEST['edit'])) {
 			$categlib->build_cache();
 		}
 		if (isset($_REQUEST['viewitem'])) {
-			header('Location: tiki-list_file_gallery.php?galleryId=' . $fgid.(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
+			print 
+				'<script>
+				FileGallery.open("tiki-list_file_gallery.php?galleryId=' . $fgid.(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:'').'"); 
+				$("#fg-jquery-upload-dialog").dialog("close");
+				</script>';
+//			header('Location: tiki-list_file_gallery.php?galleryId=' . $fgid.(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
 			die;
 		} else {
-			header('Location: tiki-list_file_gallery.php?'.($_REQUEST["galleryId"]? 'galleryId=' . $_REQUEST["galleryId"] : ($_REQUEST["parentId"]? 'galleryId='.$_REQUEST["parentId"] : "")).(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
+			print
+				'<script> 
+				FileGallery.open("tiki-list_file_gallery.php?'.($_REQUEST["galleryId"]? 'galleryId=' . $_REQUEST["galleryId"] : ($_REQUEST["parentId"]? 'galleryId='.$_REQUEST["parentId"] : "")).(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:'').'"); 
+				$("#fg-jquery-upload-dialog").dialog("close");
+				</script>';
+//			header('Location: tiki-list_file_gallery.php?'.($_REQUEST["galleryId"]? 'galleryId=' . $_REQUEST["galleryId"] : ($_REQUEST["parentId"]? 'galleryId='.$_REQUEST["parentId"] : "")).(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
 			die;
 		}
 		$smarty->assign('edit_mode', 'y');

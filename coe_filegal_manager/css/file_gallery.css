@@ -1,7 +1,7 @@
 .fg-dialog a { cursor: pointer; }
 .fg-dialog { position: relative; border: 1px solid #999999; width: 700px; height: 633px; font-family: Arial; background: white; }
 .fg-dialog h1 { position: absolute; left: 14px; top: 8px; font-size: 14px; font-weight: bold; text-transform: uppercase; color: #525252; }
-.fg-quick-insert-button { position: absolute; left: 14px; top: 46px; display: block; width: 131px; height: 19px; text-align: center; padding-top: 5px; text-decoration: none; color: white; background: #7BBA45; font-size: 11px; }
+.fg-quick-insert-button { position: absolute; left: 14px; top: 46px; display: block; width: 174px; height: 19px; text-align: center; padding-top: 5px; text-decoration: none; color: white !important; background: #7BBA45; font-size: 11px; }
 .fg-settings-icon { position: absolute; right: 48px; top: 10px; }
 .fg-tip-icon { position: absolute; right: 25px; top: 9px; }
 .fg-watch-icon { position: absolute; right: 69px; top: 9px; }
@@ -23,6 +23,7 @@
 .fg-toolbar-icon { display: block; float: left; height: 16px; }
 .fg-toolbar-left .fg-toolbar-icon { margin-right: 7px; }
 .fg-toolbar-right .fg-toolbar-icon { margin-left: 7px; margin-top: 4px; }
+.fg-files .fg-toolbar-left .fg-toolbar-icon { padding-top: 3px; }
 .fg-galleries-list { padding: 7px; line-height: normal; }
 .fg-galleries-list h3 { margin: 9px 0px 6px 0px; font-weight: bold; font-size: 12px; padding: 2px 0px 0px 20px; background: url(../images/file_gallery/icon-folders.gif) left center no-repeat; color: #4b4b4b; font-weight: bold; }
 .fg-gallery { display: block; height: 14px; font-size: 11px; padding-left: 40px; padding-top: 5px; background: url(../images/file_gallery/icon-folder.gif) 20px 5px no-repeat; color: black; text-decoration: none; }
@@ -122,14 +123,15 @@ input.fg-toolbar-search-input { width: 147px; height: 21px; border: 0px; backgro
 .fg-upload #fg-insert-as-link { margin-left: 0px; margin-top: 0px; }
 .fg-upload #fg-insert-as-link label { width: 60px; font-weight: bold; display: block; height: 16px; padding-top: 4px; padding-right: 10px; font-size: 11px; }
 
-.fg-folder-dialog { height: 396px; width: 100%; overflow: auto; font-size: 12px; border-left: 1px solid #A7A7A7; }
+.fg-folder-dialog { height: 500px; width: 500px; overflow: auto; font-size: 11px; border: 1px solid #A7A7A7; }
+.fg-folder-dialog h1 { padding-left: 14px; padding-top: 8px; padding-bottom: 20px; margin: 0; font-size: 14px; font-weight: bold; text-transform: uppercase; color: #525252; }
 .fg-folder-dialog textarea { border: 1px solid #A7A7A7; }
 .fg-folder-dialog input[type='text'] { border: 1px solid #A7A7A7; }
 .fg-folder-dialog .fg-submit-container { padding: 5px; }
 
 .fg-tabheads { list-style-type: none; margin: 0px; padding: 0px 0px 0px 10px; }
 .fg-tabheads li { display: block; float: left; padding: 3px 10px 3px 10px; background: #e8e8e8; margin-left: 3px; }
-.fg-tabheads a { color: black; text-decoration: none; }
+.fg-tabheads a { color: black; text-decoration: none; cursor: pointer; }
 .fg-tabheads li.fg-tabheads-active { background: #01B8E0; }
 .fg-tabheads li.fg-tabheads-active a { color: white; font-weight: bold; }
 .fg-tabs { clear: both; }

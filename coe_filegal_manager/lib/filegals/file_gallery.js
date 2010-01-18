@@ -29,9 +29,13 @@ var FileGallery = {
 		if ($(".fg-galleries").hasClass("fg-galleries-hidden")) {
 			$(".fg-galleries").removeClass("fg-galleries-hidden");
 			$(".fg-files").removeClass("fg-files-wide");
+			$(".fg-galleries > .fg-toolbar > .fg-toolbar-right").append($(".fg-files > .fg-toolbar > .fg-toolbar-left > .fg-toolbar-icon"));
+			$(".fg-galleries > .fg-toolbar > .fg-toolbar-right > .fg-toolbar-icon > img").attr("src", "images/file_gallery/icon-hidegalleries.gif");
 		} else {
 			$(".fg-galleries").addClass("fg-galleries-hidden");
 			$(".fg-files").addClass("fg-files-wide");
+			$(".fg-galleries > .fg-toolbar > .fg-toolbar-right > .fg-toolbar-icon > img").attr("src", "images/file_gallery/icon-showgalleries.gif");
+			$(".fg-files > .fg-toolbar > .fg-toolbar-left").prepend($(".fg-galleries > .fg-toolbar > .fg-toolbar-right > .fg-toolbar-icon"));
 		}
 	},
 	limit: function(event, count, view, galleryId, fm) {
@@ -58,12 +62,25 @@ var FileGallery = {
 		$(".fg-tab").hide();
 		$("#fg-tab-"+name).show();
 	},
+	editGallery: function(url) {
+		$("#fg-jquery-upload-dialog").load(url, function() {
+			$("#fg-jquery-upload-dialog").dialog({
+				autoOpen: false,
+				width: 504,
+//				modal: true,
+				resizable: false,
+				draggable: false
+			});
+			$("#fg-jquery-upload-dialog").dialog('option','height','auto');
+			$("#fg-jquery-upload-dialog").dialog('open');
+		});
+	},
 	saveGallery: function() {
 		var params = $("#fg-folder-form").serialize();
 		var url = $("#fg-folder-form").attr("action");
 		url += (url.indexOf("?") ? "&" : "?")+params;
 		$.post(url, null, function(data) {
-			$("#fg-jquery-dialog").html(data);
+			$("#fg-jquery-upload-dialog").html(data);
 		});
 	}
 }
