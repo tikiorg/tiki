@@ -1007,7 +1007,7 @@ class Comments extends TikiLib
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " AND `name` like ? or `description` like ? ";
+			$mid = " AND `tiki_forums`.`name` like ? or `tiki_forums`.`description` like ? ";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		} else {
