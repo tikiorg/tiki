@@ -3552,7 +3552,7 @@ CREATE TABLE `tiki_file_backlinks` (
 	   KEY `fileId` (`fileId`)
 );
 
-DROP TABLE `tiki_payment_requests`;
+DROP TABLE IF EXISTS `tiki_payment_requests`;
 CREATE TABLE `tiki_payment_requests` (
 	`paymentRequestId` INT NOT NULL AUTO_INCREMENT,
 	`amount` DECIMAL(7,2) NOT NULL,
@@ -3566,7 +3566,7 @@ CREATE TABLE `tiki_payment_requests` (
 	PRIMARY KEY( `paymentRequestId` )
 );
 
-DROP TABLE `tiki_payment_received`;
+DROP TABLE IF EXISTS `tiki_payment_received`;
 CREATE TABLE `tiki_payment_received` (
 	`paymentReceivedId` INT NOT NULL AUTO_INCREMENT,
 	`paymentRequestId` INT NOT NULL,
