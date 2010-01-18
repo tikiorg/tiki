@@ -68,6 +68,18 @@
       <td><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}/></td>
     </tr>
     <tr class="editblogform">
+     <td><label for="blogs-titles">{tr}Display titles in blog posts{/tr}</label></td>	 
+       <td><input type="checkbox" name="use_title" id="blogs-titles" {if $use_title eq 'y'}checked='checked'{/if}/></td>	 
+    </tr>	 
+	<tr class="editblogform">
+     <td><label for="blogs-author">{tr}Display author in blog posts{/tr}</label></td>	 
+       <td><input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}/></td>	 
+    </tr>
+    <tr class="editblogform">
+     <td><label for="blogs-date">{tr}Display published date in blog posts{/tr}</label></td>	 
+       <td><input type="checkbox" name="add_date" id="blogs-date" {if $add_date eq 'y'}checked='checked'{/if}/></td>	 
+    </tr>		
+    <tr class="editblogform">
       <td><label for="blogs-search">{tr}Allow search{/tr}</label></td>
       <td><input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}/></td>
     </tr>
