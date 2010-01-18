@@ -1186,8 +1186,7 @@ class Comments extends TikiLib
 		$result = $this->query($query, array((int) $forumId));
 
 		$lastPost = $this->getOne("select max(`commentDate`) from
-				`tiki_comments`,`tiki_forums` where `object` = ".$this->cast("`forumId`", "string").
-				" and `objectType` = 'forum' and
+				`tiki_comments`,`tiki_forums` where `object` = `forumId` and `objectType` = 'forum' and
 				`forumId` = ?", array( (int) $forumId ) );
 		$query = "update `tiki_forums` set `lastPost`=? where
 			`forumId`=? ";

@@ -309,7 +309,7 @@ class UsersLib extends TikiLib
 
 	function validate_hash($user, $hash) {
 		return $this->getOne(
-			"select count(*) from `users_users` where " . $this->convertBinary(). " `login` = ? and `hash`=?",
+			"select count(*) from `users_users` where binary `login` = ? and `hash`=?",
 			array($user, $hash)
 		);
 	}
@@ -972,7 +972,7 @@ class UsersLib extends TikiLib
 	// shall not be hold in the tiki db but in LDAP or somewhere else
 	function disable_tiki_auth($user) {
 		global $tiki;
-		$query = "update `users_users` set `password`=?, `hash`=? where " . $this->convertBinary(). " `login` = ?";
+		$query = "update `users_users` set `password`=?, `hash`=? where binary `login` = ?";
 		$result = $this->query($query, array('','',$user));
 	}
 
@@ -1091,7 +1091,7 @@ class UsersLib extends TikiLib
 		global $prefs;
 
 		// first verify that the user exists
-		$query = "select * from `users_users` where " . $this->convertBinary(). " `login` = ?";
+		$query = "select * from `users_users` where binary `login` = ?";
 		$result = $this->query($query, array($user) );
 
 		if (!$result->numRows())
@@ -1141,7 +1141,7 @@ class UsersLib extends TikiLib
 		} else {
 			// Use challenge-reponse method
 			// Compare pass against md5(user,challenge,hash)
-			$hash = $this->getOne("select `hash` from `users_users` where " . $this->convertBinary(). " `login`=?",
+			$hash = $this->getOne("select `hash` from `users_users` where binary `login`=?",
 					array($user) );
 
 			if (!isset($_SESSION["challenge"]))
@@ -1551,15 +1551,15 @@ class UsersLib extends TikiLib
 				$trklib->remove_tracker_item( $itemId );
 		}
 
-		$query = "delete from `users_users` where ". $this->convertBinary()." `login` = ?";
+		$query = "delete from `users_users` where binary `login` = ?";
 		$result = $this->query($query, array( $user ) );
 		$query = "delete from `users_usergroups` where `userId`=?";
 		$result = $this->query($query, array( $userId ) );
-		$query = "delete from `tiki_user_watches` where ". $this->convertBinary()." `user`=?";
+		$query = "delete from `tiki_user_watches` where binary `user`=?";
 		$result = $this->query($query, array($user));
-		$query = "delete from `tiki_user_preferences` where ". $this->convertBinary()." `user`=?";
+		$query = "delete from `tiki_user_preferences` where binary `user`=?";
 		$result = $this->query($query, array($user));
-		$query = "delete from `tiki_newsletter_subscriptions` where ". $this->convertBinary()." `email`=? and `isUser`=?";
+		$query = "delete from `tiki_newsletter_subscriptions` where binary `email`=? and `isUser`=?";
 		$result = $this->query($query, array($user, 'y'));
 
 		$cachelib->invalidate('userslist');
@@ -2483,7 +2483,7 @@ class UsersLib extends TikiLib
 		$oldMail = $this->get_user_email($user);
 		$notificationlib->update_mail_address($user, $oldMail, $email);
 
-		$query = "update `users_users` set `email`=? where " . $this->convertBinary(). " `login`=?";
+		$query = "update `users_users` set `email`=? where binary `login`=?";
 
 		$result = $this->query($query, array(
 			$email,
@@ -2495,23 +2495,23 @@ class UsersLib extends TikiLib
 		// is this still necessary?
 		if (!empty($pass)) {
 			$hash = $this->hash_pass($pass);
-			$query = "update `users_users` set `hash`=? where " . $this->convertBinary(). " `login`=?";
+			$query = "update `users_users` set `hash`=? where binary `login`=?";
 			$result = $this->query($query, array(
 				$hash,
 				$user
 			));
 		}
 
-		$query = "update `tiki_user_watches` set `email`=? where " . $this->convertBinary(). " `user`=?";
+		$query = "update `tiki_user_watches` set `email`=? where binary `user`=?";
 		$result = $this->query($query, array( $email, $user));
 
-		$query = "update `tiki_live_support_requests` set `email`=? where " . $this->convertBinary(). " `user`=?";
+		$query = "update `tiki_live_support_requests` set `email`=? where binary `user`=?";
 		$result = $this->query($query, array( $email, $user));
 		return true;
 	}
 
 	function get_user_password($user) {
-		$query = "select `password`,`provpass` from `users_users` where " . $this->convertBinary(). " `login`=?";
+		$query = "select `password`,`provpass` from `users_users` where binary `login`=?";
 
 		$result = $this->query($query, array($user));
 		$res = $result->fetchRow();
@@ -2523,7 +2523,7 @@ class UsersLib extends TikiLib
 
 	function get_user_email($user) {
 		global $prefs;
-		return ( $prefs['login_is_email'] == 'y' && $user != 'admin' ) ? $user : $this->getOne("select `email` from `users_users` where " . $this->convertBinary(). " `login`=?", array($user));
+		return ( $prefs['login_is_email'] == 'y' && $user != 'admin' ) ? $user : $this->getOne("select `email` from `users_users` where binary `login`=?", array($user));
 	}
 
 	/**
@@ -2538,7 +2538,7 @@ class UsersLib extends TikiLib
 	}
 
 	function get_user_hash($user) {
-		$query = "select `hash` from `users_users` where " . $this->convertBinary(). " `login` = ?";
+		$query = "select `hash` from `users_users` where binary `login` = ?";
 		$pass = $this->getOne($query, array($user));
 		return $pass;
 	}
@@ -2606,7 +2606,7 @@ class UsersLib extends TikiLib
 		if ( $prefs['auth_method'] == 'cas' || $prefs['change_password'] != 'y') {
 			return false;
 		}
-		$confirm = $this->getOne("select `pass_confirm` from `users_users` where " . $this->convertBinary(). " `login`=?", array($user));
+		$confirm = $this->getOne("select `pass_confirm` from `users_users` where binary `login`=?", array($user));
 		if (!$confirm) {
 			return true;
 		}
@@ -2624,7 +2624,7 @@ class UsersLib extends TikiLib
 		if ($prefs['email_due'] < 0) {
 			return false;
 		}
-		$confirm = $this->getOne("select `email_confirm` from `users_users` where " . $this->convertBinary(). " `login`=?", array($user));
+		$confirm = $this->getOne("select `email_confirm` from `users_users` where binary `login`=?", array($user));
 		if ($confirm + (60 * 60 * 24 * $prefs['email_due']) < $this->now) {
 			return true;
 		}
@@ -2632,7 +2632,7 @@ class UsersLib extends TikiLib
 	}
 
 	function unsuccessful_logins($user) {
-		return $this->getOne('select `unsuccessful_logins` from `users_users` where ' . $this->convertBinary(). ' `login`=?', array($user));
+		return $this->getOne('select `unsuccessful_logins` from `users_users` where binary `login`=?', array($user));
 	}
 
 	function renew_user_password($user) {
@@ -2692,7 +2692,7 @@ class UsersLib extends TikiLib
 			$pass = '';
 		}
 
-		$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=? where " . $this->convertBinary(). " `login`=?";
+		$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=? where binary `login`=?";
 		$result = $this->query($query, array(
 			$hash,
 			$pass,
@@ -2834,8 +2834,7 @@ class UsersLib extends TikiLib
 		}
 
 		if (count($q) > 0) {
-			$query = "update `users_users` set " . implode(",", $q). " where " .
-				$this->convertBinary(). " `login` = ?";
+			$query = "update `users_users` set " . implode(",", $q). " where binary `login` = ?";
 			$bindvars[] = $u['login'];
 			$result = $this->query($query, $bindvars);
 		}

@@ -51,7 +51,6 @@ class TikiDb_Pdo extends TikiDb
 			$query = $this->getQuery();
 		}
 
-		$this->convertQuery( $query );
 		$this->convertQueryTablePrefixes( $query );
 
 		if( $offset != -1 && $numrows != -1 )

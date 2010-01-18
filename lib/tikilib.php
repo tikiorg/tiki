@@ -295,12 +295,12 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function remove_user_watch($user, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_user_watches` where ".$this->convertBinary()." `user`=? and `event`=? and `object`=? and `type` = ?";
+		$query = "delete from `tiki_user_watches` where binary `user`=? and `event`=? and `object`=? and `type` = ?";
 		$this->query($query,array($user,$event,$object,$type));
 	}
 
 	function remove_group_watch($group, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_group_watches` where ".$this->convertBinary()." `group`=? and `event`=? and `object`=? and `type` = ?";
+		$query = "delete from `tiki_group_watches` where binary `group`=? and `event`=? and `object`=? and `type` = ?";
 		$this->query($query,array($group,$event,$object,$type));
 	}
 
@@ -313,7 +313,7 @@ class TikiLib extends TikiDb_Bridge
 			$bindvars[]=$event;
 		}
 
-		$query = "select * from `tiki_user_watches` where ".$this->convertBinary()." `user`=? $mid";
+		$query = "select * from `tiki_user_watches` where binary `user`=? $mid";
 		$result = $this->query($query,$bindvars);
 		$ret = array();
 
@@ -4461,7 +4461,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function set_lastUpdatePrefs() {
-		$query = "update `tiki_preferences` set `value`=".$this->cast('value','int')."+1 where `name`=?";
+		$query = "update `tiki_preferences` set `value`=`value`+1 where `name`=?";
 		$this->query($query, array('lastUpdatePrefs'));
 	}
 
