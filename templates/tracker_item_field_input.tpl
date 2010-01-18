@@ -259,7 +259,7 @@
 		{/if}
 	{else}
 		{foreach from=$field_value.lingualvalue item=ling}
-			<label for="area_{$field_value.fieldId}_{$ling.lang}">{$ling.lang|langname}</label>
+			<label for="area_{$field_value.fieldId}_{$ling.lang}">{$ling.lang|langname}</label><br />
 				{if $field_value.options_array[0] eq 1}
         			{toolbars qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
         		{/if}
