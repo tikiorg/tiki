@@ -2797,7 +2797,7 @@ class TrackerLib extends TikiLib
 				<dt>Description:
 				<dd><strong>[list of items]</strong> is the list of all values you want in the set, separated by commas;
 				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear as the one selected.
-				<dd>If first option is &lt;br&gt;, options will be separated with a carriaage return
+				<dd>If first option is &lt;br&gt;, options will be separated with a carriage return
 				</dl>'));
 		$type['u'] = array(
 			'label'=>tra('user selector'),
