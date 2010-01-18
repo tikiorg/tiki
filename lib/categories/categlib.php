@@ -289,7 +289,7 @@ class CategLib extends ObjectLib
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`, `rootCategId`) values(?,?,?,?,?)";
 		$result = $this->query($query,array($name,$description,(int) $parentId, 0, $rootCategId));
-		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=?";
+		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? order by `categId` desc";
 		$id = $this->getOne($query,array($name,(int) $parentId));
 		if (empty($rootCategId)) {
 			$cachelib->invalidate('allcategs');
@@ -937,7 +937,7 @@ class CategLib extends ObjectLib
 		
 		global $prefs; if(!$prefs) require_once 'lib/setup/prefs.php';
 		$exclude = $this->exclude_categs ($prefs['ws_container'], "", $showWS);
-		$query = "select * from `tiki_categories` $exclude order by `name`";
+		$query = "select * from `tiki_categories` $exclude order by `name` asc, `categId` desc";
 		if (!empty($prefs['ws_container']))
 			$bindvals = array($prefs['ws_container']);
 		else
