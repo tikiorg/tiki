@@ -160,6 +160,9 @@
 						{/if}
 					{/remarksbox}
 					<p>{tr}Page name{/tr}: <input type="text" name="page" value="{$page|escape}" /></p>
+				{else}
+					<input type="hidden" name="page" value="{$page}" /> 
+					{* the above hidden field is needed for auto-save to work *}
 				{/if}
 				{tabset name='tabs_editpage'}
 					{tab name="{tr}Edit page{/tr}"}
