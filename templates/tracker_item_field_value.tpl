@@ -187,8 +187,8 @@
 
 {* -------------------- page selector ------------------------- *} 
 {elseif $field_value.type eq  'k'}
-	{if $showlinks ne 'y'}
-		{$field_value.value|escape}
+	{if isset($field_value.options_array[3]) && $field_value.options_array[3] eq 'n'}
+		{$field_value.value}
 	{elseif $list_mode eq 'y'}
 		{wiki}(({$field_value.value|escape})){/wiki}
 	{elseif $list_mode eq 'csv'}
