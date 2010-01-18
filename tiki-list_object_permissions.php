@@ -91,7 +91,6 @@ foreach($types as $type) {
 
 		case 'group':
 		case 'groups':
-			$objects = $commentslib->list_forums();
 			foreach($all_groups as $object) {
 				$res[$type]['objects'][] = list_perms($object, $type);
 			}
