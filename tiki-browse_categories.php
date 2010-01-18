@@ -4,6 +4,55 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.37.2.1 2007-12-06 16:43:43 nkoth Exp $
+
+function add_watch_icons ($descendants, $usercatwatches, $requestid, $categid, $deep, $user) {
+	$nodesc = count($descendants);
+	$watch_desc = 'n';
+	$watch_this = 'n';
+	$eyes = '';
+	$eye_rem_desc = '&nbsp;&nbsp;<a href="tiki-browse_categories.php?parentId=' . $requestid . '&amp;watch_event=category_changed&amp;watch_object=' . $categid . '&amp;deep=' . $deep . '&amp;watch_action=remove_desc" class="icon">
+				<img src="pics/icons/no_eye_arrow_down.png" alt="Stop Watching This Category and Its Descendants" style="margin-bottom:2px" width="14" height="14" border="0" title="Stop Watching This Category and Its Descendants" class="icon" />';
+	$eye_rem = 	'<a href="tiki-browse_categories.php?parentId=' . $requestid . '&amp;watch_event=category_changed&amp;watch_object=' . $categid . '&amp;deep=' . $deep . '&amp;watch_action=remove" class="icon">
+				<img src="pics/icons/no_eye.png" alt="Stop Watching Only This Category" width="14" style="margin-bottom:2px" height="14" border="0" title="Stop Watching Only This Category" class="icon" /></a>';
+	$eye_add_desc = '&nbsp;&nbsp;<a href="tiki-browse_categories.php?parentId=' . $requestid . '&amp;watch_event=category_changed&amp;watch_object=' . $categid . '&amp;deep=' . $deep . '&amp;watch_action=add_desc" class="icon">
+					<img src="pics/icons/eye_arrow_down.png" alt="Watch This Category and Its Descendants" style="margin-bottom:2px" width="14" height="14" border="0" title="Watch This Category and Its Descendants" class="icon" />';
+	$eye_add = 	'<a href="tiki-browse_categories.php?parentId=' . $requestid . '&amp;watch_event=category_changed&amp;watch_object=' . $categid . '&amp;deep=' . $deep . '&amp;watch_action=add" class="icon">
+				<img src="pics/icons/eye.png" alt="Watch Only This Category" width="14" style="margin-bottom:2px" height="14" border="0" title="Watch Only This Category" class="icon" /></a>';
+	foreach ($descendants as $descendant) {
+			if ($nodesc > 1) {
+				foreach ($usercatwatches as $usercatwatch) {
+					if ($usercatwatch['object'] == $descendant) {
+						$watch_desc = 'y';
+						break;
+					} else {
+						$watch_desc = 'n';
+					}
+				}
+				if ($watch_desc == 'n') {
+					$eyes = $eye_add_desc; 
+					break;
+				} else {
+					$eyes = $eye_rem_desc;
+				}
+			}
+	}
+		foreach ($usercatwatches as $usercatwatch) {				
+			if ($usercatwatch['object'] == $descendants[0]) {
+				$watch_this = 'y';
+				break;
+			} else {
+				$watch_this = 'n';
+			}
+		}
+		if ($watch_this == 'n') {
+			$nodesc > 1 ? $eyes .= $eye_add : $eyes .= '&nbsp;&nbsp;' . $eye_add;
+		} else {
+			$nodesc > 1 ? $eyes .= $eye_rem : $eyes .= '&nbsp;&nbsp;' . $eye_rem;
+		}
+	return $eyes;
+}
+
+
 $section = 'categories';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
@@ -97,38 +146,7 @@ if (!$canView) {
 	$smarty->display("error.tpl");
 	die;
 }
-
-$ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
-if ($prefs['feature_phplayers'] == 'y' && $prefs['feature_category_use_phplayers'] == 'y') {
-	global $tikiphplayers;
-	include_once ('lib/phplayers_tiki/tiki-phplayers.php');
-	$urlEnd = "&amp;deep=$deep";
-	if ($type) $urlEnd.= "&amp;type=$type";
-	if (isset($_REQUEST['expanded'])) $urlEnd.= "||||1";
-	$urlEnd.= "\n";
-	list($itall, $count) = $tikiphplayers->mkCatEntry(0, ".", '', $ctall, $urlEnd, 'browsedcategory.tpl');
-	$smarty->assign('tree', $tikiphplayers->mkmenu($itall, 'treecategories', 'tree'));
-} else {
-	$tree_nodes = array();
-	foreach($ctall as $c) {
-		$tree_nodes[] = array(
-			"id" => $c["categId"],
-			"parent" => $c["parentId"],
-			"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $c["categId"] . '&amp;deep=' . $deep . '&amp;type=' . urlencode($type) . '">' . htmlspecialchars($c["name"]) . '</a><br />'
-		);
-	}
-	$tm = new CatBrowseTreeMaker("categ");
-	$res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
-	$smarty->assign('tree', $res);
-}
-$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, $type, $find, $deep == 'on', (!empty($_REQUEST['and'])) ? true : false);
-if ($deep == 'on') {
-	for ($i = count($objects["data"]) - 1; $i >= 0; --$i) $objects['data'][$i]['categName'] = $tikilib->other_value_in_tab_line($ctall, $objects['data'][$i]['categId'], 'categId', 'name');
-}
-$smarty->assign_by_ref('objects', $objects["data"]);
-$smarty->assign_by_ref('cant_pages', $objects["cant"]);
-include_once ('tiki-section_options.php');
-ask_ticket('browse-categories');
+//new
 if ($prefs['feature_user_watches'] == 'y') {
 	if ($user && isset($_REQUEST['watch_event'])) {
 		if ($_REQUEST['watch_action'] == 'add_desc') {
@@ -149,11 +167,50 @@ if ($prefs['feature_user_watches'] == 'y') {
 			$categlib->unwatch_category($user, $_REQUEST['watch_object']);
 		}
 	}
-	$smarty->assign('user_watching_category', 'n');
-	if ($user && $watch = $tikilib->get_user_event_watches($user, 'category_changed', $_REQUEST['parentId'])) {
-		$smarty->assign('user_watching_category', 'y');
-	}
 }
+
+$ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
+
+$descendants_curr = $categlib->get_category_descendants($_REQUEST['parentId']);
+$usercatwatches_curr = $tikilib->get_user_watches($user, 'category_changed');
+$eyes_curr = add_watch_icons ($descendants_curr, $usercatwatches_curr, $_REQUEST['parentId'], $_REQUEST['parentId'], $deep, $user);
+$smarty->assign_by_ref('eyes_curr', $eyes_curr);
+
+if ($prefs['feature_phplayers'] == 'y' && $prefs['feature_category_use_phplayers'] == 'y') {
+	global $tikiphplayers;
+	include_once ('lib/phplayers_tiki/tiki-phplayers.php');
+	$urlEnd = "&amp;deep=$deep";
+	if ($type) $urlEnd.= "&amp;type=$type";
+	if (isset($_REQUEST['expanded'])) $urlEnd.= "||||1";
+	$urlEnd .= '&nbsp;hello';
+	$urlEnd.= "\n";
+	list($itall, $count) = $tikiphplayers->mkCatEntry(0, ".", '', $ctall, $urlEnd, 'browsedcategory.tpl');
+	$smarty->assign('tree', $tikiphplayers->mkmenu($itall, 'treecategories', 'tree'));
+} else {
+	$tree_nodes = array();
+	foreach($ctall as $c) {
+		$descendants = $categlib->get_category_descendants($c['categId']);
+		$usercatwatches = $tikilib->get_user_watches($user, 'category_changed');
+		$eyes = add_watch_icons ($descendants, $usercatwatches, $_REQUEST['parentId'], $c['categId'], $deep, $user);
+		$tree_nodes[] = array(
+			"id" => $c["categId"],
+			"parent" => $c["parentId"],
+			"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $c["categId"] . '&amp;deep=' . $deep . '&amp;type=' . urlencode($type) . '">' . htmlspecialchars($c["name"]) . $eyes,
+		);
+	}
+	$tm = new CatBrowseTreeMaker("categ");
+	$res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
+	$smarty->assign('tree', $res);
+}
+$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, $type, $find, $deep == 'on', (!empty($_REQUEST['and'])) ? true : false);
+if ($deep == 'on') {
+	for ($i = count($objects["data"]) - 1; $i >= 0; --$i) $objects['data'][$i]['categName'] = $tikilib->other_value_in_tab_line($ctall, $objects['data'][$i]['categId'], 'categId', 'name');
+}
+$smarty->assign_by_ref('objects', $objects["data"]);
+$smarty->assign_by_ref('cant_pages', $objects["cant"]);
+include_once ('tiki-section_options.php');
+ask_ticket('browse-categories');
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 if (isset($_GET['plain'])) {

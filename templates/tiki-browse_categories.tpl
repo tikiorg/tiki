@@ -7,15 +7,6 @@
 {/if}
 {if $tiki_p_admin_categories eq 'y'}
 	<div class="categbar">
-		{if $user and $prefs.feature_user_watches eq 'y'}
-			{if $user_watching_category eq 'n'}
-				<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;watch_action=add" class="icon">{icon _id='eye' align='right' alt='{tr}Watch Only This Category{/tr}'}</a>
-				<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;watch_action=add_desc" class="icon">{icon _id='eye_arrow_down' align='right' alt='{tr}Watch This Category and Their Descendants{/tr}'}</a>
-			{else}
-				<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;watch_action=remove">{icon _id='no_eye' align='right' alt='{tr}Stop Watching Only This Category{/tr}'}</a>
-				<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;watch_action=remove_desc" class="icon">{icon _id='no_eye_arrow_down' align='right' alt='{tr}Stop Watching This Category and Their Descendants{/tr}'}</a>
-			{/if}
-		{/if}
 		{button href="tiki-admin_categories.php?parentId=$parentId" _text="{tr}Admin Category{/tr}" _title="{tr}Admin the Category System{/tr}"}
 	</div>
 {/if}
@@ -136,17 +127,19 @@
 {if $path}
 	<div class="treetitle">{tr}Current category{/tr}:
 		<a href="tiki-browse_categories.php?parentId=0&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" class="categpath">{tr}Top{/tr}</a>
-		{section name=x loop=$path}
+		{section name=x loop=$path &nbsp;$eyes_curr}
 			&nbsp;{$prefs.site_crumb_seper}&nbsp;
 			<a class="categpath" href="tiki-browse_categories.php?parentId={$path[x].categId|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}">{$path[x].name|tr_if|escape}</a>
 		{/section}
+			{$eyes_curr}	
 	</div>
-
+     
 	{if $parentId ne '0'}
 		<div class="treenode">
 			<a class="catname" href="tiki-browse_categories.php?parentId={$father|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" title="{tr}Upper level{/tr}">..</a>
 		</div>
 	{/if}
+	
 {elseif $paths}
 	{section name=x loop=$paths}
 		{section name=y loop=$paths[x]}
@@ -156,7 +149,6 @@
 		<br />
 	{/section}
 {/if}
-
 <table class="admin">
 	<tr>
 		<td>{$tree}</td>
