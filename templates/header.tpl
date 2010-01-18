@@ -1,4 +1,5 @@
 {* $Id$ *}
+{if $base_url and $dir_level gt 0}		<base href="{$base_url}" />{/if}
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="TikiWiki CMS/Groupware - http://TikiWiki.org" />
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}		<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name} {$thread_info.title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
