@@ -376,16 +376,8 @@ function update_preferences( $dbTiki, &$prefs ) {
 function load_sql_scripts() {
 	global $smarty;
 	global $dbversion_tiki;
-	$files = array();
-	$h = opendir('db/');
+	$files = "tiki.sql";
 
-	while ($file = readdir($h)) {
-        	if (preg_match('#\d\..*to.*\.sql$#', $file) || preg_match('#secdb#',$file)) {
-                	$files[] = $file;
-        	}
-	}
-
-	closedir ($h);
 	rsort($files);
 	reset($files);
 	$smarty->assign('files', $files);
@@ -484,7 +476,6 @@ $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2
 $dbservers = array();
 if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
 if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
-if (function_exists('pg_connect'))		$dbservers['pgsql'] = tra('PostgreSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';

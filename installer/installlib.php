@@ -33,7 +33,7 @@ class Installer extends TikiDb_Bridge
 		$TWV = new TWVersion;
 		$dbversion_tiki = $TWV->getBaseVersion();
 
-		$this->runFile( dirname(__FILE__) . '/../db/tiki-'.$dbversion_tiki.'-'.$db_tiki.'.sql' );
+		$this->runFile( dirname(__FILE__) . '/../db/tiki.sql' );
 		$this->buildPatchList();
 		$this->buildScriptList();
 
@@ -144,20 +144,8 @@ class Installer extends TikiDb_Bridge
 
 		fclose($fp);
 
-		switch ( $db_tiki ) {
-		case 'sybase':
-			$statements = split("(\r|\n)go(\r|\n)", $command);
-			break;
-		case 'mssql':
-			$statements = split("(\r|\n)go(\r|\n)", $command);
-			break;
-		case 'oci8':
-			$statements = preg_split("#(;\s*\n)|(\n/\n)#", $command);
-			break;
-		default:
-			$statements = preg_split("#(;\s*\n)|(;\s*\r\n)#", $command);
-			break;
-		}
+		// split the file into several queries?
+		$statements = preg_split("#(;\s*\n)|(;\s*\r\n)#", $command);
 
 		$prestmt="";
 		$do_exec=true;
