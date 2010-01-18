@@ -3,4 +3,4 @@ $lang_custom = array(
 //"Hello"=>"My Hello",
 //"This is the place to customize your traduction"=>":-)",
 );
-$lang = $lang + $lang_custom);
+$lang = $lang + $lang_custom;
