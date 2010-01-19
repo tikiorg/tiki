@@ -188,7 +188,7 @@ class BlogLib extends TikiLib
 	 * @access public
 	 * @return array posts
 	 */
-	function list_blog_posts($blogId = 0, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date_min = '', $date_max = '', $approved = 'y') {
+	function list_blog_posts($blogId = 0, $allowDrafts = false, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date_min = '', $date_max = '', $approved = 'y') {
 		global $tiki_p_admin_comments;
 
 		$mid = array();
@@ -214,6 +214,11 @@ class BlogLib extends TikiLib
 			$mid[] = "`created`<=?";
 			$bindvars[] = (int)$date_max;
 		}
+		if ( !$allowDrafts ){
+			$mid[] = "`priv`='n'";
+		}
+
+		
 		$mid = empty($mid) ? '' : 'where ' . implode(' and ', $mid);
 
 		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
