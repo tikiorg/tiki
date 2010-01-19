@@ -210,7 +210,7 @@ function prefs_global_list() {
 		'groupTracker' => array(
 			'name' => tra('Use tracker to collect more group information'),
 			'type' => 'flag',
-			'help' => 'User+Tracker',
+			'help' => 'Group+Tracker',
 			'dependencies' => array(
 				'feature_trackers',
 			),
