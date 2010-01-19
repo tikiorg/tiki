@@ -11,7 +11,7 @@
 			<div class="simplebox highlight">{tr}Please select some actions to view.{/tr}</div>
 		{else}
 		<fieldset>
-			<label>{tr}Date{/tr}</label>
+			<legend>{tr}Date{/tr}</legend>
 			<table class="smallnormal" width="100%">
 				<tr class="formcolor">
 					<td>{tr}Start:{/tr}</td>
@@ -23,7 +23,7 @@
 		</fieldset>
 				{if $tiki_p_admin eq 'y'}
 			<fieldset>
-				<label>{tr}Users and Groups{/tr}</label>
+				<legend>{tr}Users and Groups{/tr}</legend>
 				<table class="smallnormal" width="100%">
 					<tr class="formcolor">
 						<td>{tr}User:{/tr}</td>
@@ -56,15 +56,15 @@
 				{/if}
 
 			<fieldset>
-				<label>{tr}Category:{/tr}</label>
+				<legend>{tr}Category:{/tr}</legend>
 				<table class="smallnormal" width="100%">
 				<tr class="formcolor">
 					<td>
 						<select name="categId">
 							<option value="" {if $reportCateg eq '' or $reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>
-							{section name=ix loop=$categories}
-								<option value="{$categories[ix].categId|escape}" {if $reportCateg eq $categories[ix].name}selected="selected"{/if}>{$categories[ix].name|escape}</option>
-							{/section}
+							{foreach item=category from=$categories}
+								<option value="{$category.categId|escape}" {if $reportCateg eq $category.name}selected="selected"{/if}>{$category.name|escape}</option>
+							{/foreach}
 						</select>
 						</td>
 					</tr>
@@ -72,7 +72,7 @@
 				</fieldset>
 
 				<fieldset>
-				<label>{tr}Misc.{/tr}</label>
+				<legend>{tr}Misc.{/tr}</legend>
 				<table class="smallnormal" width="100%">
 					<tr class="formcolor">
 						<th>{tr}Units{/tr}</th>
@@ -125,9 +125,9 @@
 									{tr}Save graphs to image gallery:{/tr} 
 									<select name="galleryId">
 										<option value="" selected="selected" />
-										{section name=idx loop=$galleries}
-											<option value="{$galleries[idx].galleryId|escape}">{$galleries[idx].name}</option>
-										{/section}
+										{foreach item=gallery from=$galleries}
+											<option value="{$gallery.galleryId|escape}">{$gallery.name}</option>
+										{/foreach}
 									</select>
 								{/if}
 							</td>
@@ -608,7 +608,7 @@
 
 {* -------------------------------------------------- tab with setting --- *}
 {tab name="{tr}Settings{/tr}"}
-	<a name="Setting" />
+	<a name="Setting" ></a>
 	<h2>{tr}Setting{/tr}</h2>
 	<form method="post" action="tiki-admin_actionlog.php">
 				<span class="input_submit_container" style="float: right">
@@ -616,6 +616,27 @@
 				</span>
 				<br class="clearfix" />
 		{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
+		<fieldset>
+		<legend>{tr}Filter{/tr}</legend>
+		<label for="action_log_type">{tr}Type{/tr}</label>
+		<select id="action_log_type" name="action_log_type">
+				<option value="" {if $action_log_type eq ''} selected="selected" {/if}>{tr}All{/tr}</option>
+			{foreach from=$action_log_types item=type}
+				<option value="{$type}" {if $type eq $action_log_type} selected="selected" {/if}>{$type}</option>
+			{/foreach}
+		</select>
+		<label for="action_log_action">{tr}Action{/tr}</label>
+		<select id="action_log_action" name="action_log_action">
+				<option value="" {if $action_log_action eq ''} selected="selected" {/if}>{tr}All{/tr}</option>
+				<option value="\%" {if $action_log_action eq '\%'} selected="selected" {/if}>*</option>
+			{foreach from=$action_log_actions item=action}
+				<option value="{$action}" {if $type eq $action_log_action} selected="selected" {/if}>{$action}</option>
+			{/foreach}
+		</select>
+				<span class="input_submit_container">
+					<input type="submit" name="search" value="{tr}Search{/tr}" />
+				</span>
+		</fieldset>	
 		<table class="smallnormal">
 			<tr>
 				{if $tiki_p_admin eq 'y'}
@@ -626,22 +647,22 @@
 				<th>{tr}Type{/tr}</th>
 			</tr>
 			{cycle values="even,odd" print=false}
-			{section name=ix loop=$actionlogConf}
+			{foreach from=$action_log_conf_selected item=actionlog}
 				<tr>
 					{if $tiki_p_admin eq 'y'}
 						<td class="{cycle advance=false}">
-							<input type="checkbox" name="{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}checked="checked"{/if} />
+							<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if} />
 						</td>
 					{/if}
-					{if $tiki_p_admin eq 'y' or $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}
+					{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
 						<td class="{cycle advance=false}">
-							<input type="checkbox" name="v_{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'v'}checked="checked"{/if} />
+							<input type="checkbox" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if} />
 						</td>
-						<td class="{cycle advance=false}">{tr}{$actionlogConf[ix].action}{/tr}</td>
-						<td class="{cycle}">{tr}{$actionlogConf[ix].objectType}{/tr}</td>
+						<td class="{cycle advance=false}">{tr}{$actionlog.action}{/tr}</td>
+						<td class="{cycle}">{tr}{$actionlog.objectType}{/tr}</td>
 					{/if}
 				</tr>
-			{/section}
+			{/foreach}
 			<tr>
 				<td colspan="4" class="input_submit_container">
 					<input type="submit" name="save" value="{tr}Set{/tr}" />

@@ -246,18 +246,48 @@ class LogsLib extends TikiLib
 	{
 		global $actionlogConf;
 		if (!isset($actionlogConf)) {
-			$actionlogConf = array();
-			$query = "select * from `tiki_actionlog_conf` order by `objectType` desc, `action` asc";
+			$actionlogConf = self::get_actionlog_conf();
+		}
+		return $actionlogConf;
+	}
+
+	function get_actionlog_conf($type = '%', $action = '%')
+	{
+			$actionlogconf = array();
+			$query = "select * from `tiki_actionlog_conf` where `objectType` like '$type' and `action` like '$action' order by `objectType` desc, `action` asc";
 			$result = $this->query($query, array());
 			while ($res = $result->fetchRow()) {
 				if ( $res['action'] == '%' ) {
 					 $res['action'] = '*';
 				}
-				$res['code'] = $this->encode_actionlog_conf($res['action'], $res['objectType']);
-				$actionlogConf[] = $res;
+				$res['code'] = self::encode_actionlog_conf($res['action'], $res['objectType']);
+				$actionlogconf[] = $res;
 			}
-		}
-		return $actionlogConf;
+		return $actionlogconf;
+	}
+
+	function get_actionlog_types()
+	{
+			$actionlogtype = array();
+			$query = "select distinct `objectType` from `tiki_actionlog_conf` order by `objectType`";
+			$result = $this->query($query, array());
+			while ($res = $result->fetchRow()) {
+				$actionlogtypes[] = $res['objectType'];
+			}
+		return $actionlogtypes;
+	}
+
+	function get_actionlog_actions()
+	{
+			$actionlogactions = array();
+			$query = "select distinct `action` from `tiki_actionlog_conf` order by `action`";
+			$result = $this->query($query, array());
+			while ($res = $result->fetchRow()) {
+				if ( $res['action'] != '%' ) {
+					$actionlogactions[] = $res['action'];
+				}
+			}
+		return $actionlogactions;
 	}
 
 	function encode_actionlog_conf($action, $objectType)

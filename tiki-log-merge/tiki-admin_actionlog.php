@@ -43,7 +43,21 @@ $auto_query_args = array(
 		'find'
 		);
 $categories = $categlib->list_categs();
+
+if (!empty($_REQUEST["action_log_type"])) {
+  $action_log_type = $_REQUEST["action_log_type"];
+} else {
+  $action_log_type = '%';
+}
+
+if (!empty($_REQUEST["action_log_action"])) {
+  $action_log_action = $_REQUEST["action_log_action"];
+} else {
+  $action_log_action = '%';
+}
+
 $confs = $logslib->get_all_actionlog_conf();
+$action_log_conf_selected = $logslib->get_actionlog_conf($action_log_type, $action_log_action);
 $nbViewedConfs = 0;
 
 if (isset($_REQUEST["find"])) {
@@ -63,33 +77,34 @@ if (isset($_REQUEST["max"])) {
 
 if ($tiki_p_admin == 'y') {
 	if (isset($_REQUEST['save'])) {
-		foreach($confs as $index => $conf) {
+		foreach($action_log_conf_selected as $index => $conf) {
 			if (isset($_REQUEST['v_' . $conf['code']]) && $_REQUEST['v_' . $conf['code']] == 'on') { //viewed and reported
 				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'v');
-				$confs[$index]['status'] = 'v';
 			} elseif (isset($_REQUEST[$conf['code']]) && $_REQUEST[$conf['code']] == 'on') {
 				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'y');
-				$confs[$index]['status'] = 'y';
 			} else {
 				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'n');
-				$confs[$index]['status'] = 'n';
 			}
 		}
+		global $actionlogConf; unset($actionlogConf);
+		$confs = $logslib->get_all_actionlog_conf();
+		$action_log_conf_selected = $logslib->get_actionlog_conf($action_log_type);
 	}
 } else {
 	if (isset($_REQUEST['save'])) {
 		$_prefs = 'v';
-		foreach($confs as $index => $conf) {
+		foreach($action_log_conf_selected as $index => $conf) {
 			if ($conf['status'] == 'v' || $conf['status'] == 'y') { // can only change what is recorded
 				if (isset($_REQUEST['v_' . $conf['code']]) && $_REQUEST['v_' . $conf['code']] == 'on') { //viewed
 					$_prefs.= $conf['id'] . 'v';
-					$confs[$index]['status'] = 'v';
 				} else {
 					$_prefs.= $conf['id'] . 'y';
-					$confs[$index]['status'] = 'y';
 				}
 			}
 		}
+		global $actionlogConf; unset($actionlogConf);
+		$confs = $logslib->get_all_actionlog_conf();
+		$action_log_conf_selected = $logslib->get_actionlog_conf($action_log_type);
 		$tikilib->set_user_preference($user, 'actionlog_conf', $_prefs);
 	} else {
 		$_prefs = $tikilib->get_user_preference($user, 'actionlog_conf', '');
@@ -696,6 +711,12 @@ if (isset($_REQUEST['graph'])) {
 $smarty->assign_by_ref('offset', $offset);
 $smarty->assign_by_ref('cant', $actions_cant);
 $smarty->assign_by_ref('maxRecords', $maxRecords);
+$action_log_types = $logslib->get_actionlog_types();
+$smarty->assign('action_log_type',$_REQUEST["action_log_type"]);
+$smarty->assign('action_log_action',$_REQUEST["action_log_action"]);
+$smarty->assign('action_log_conf_selected',$action_log_conf_selected);
+$smarty->assign('action_log_types',$action_log_types);
+$smarty->assign('action_log_actions',$logslib->get_actionlog_actions());
 
 if (isset($_REQUEST['time'])) $smarty->assign('time', $_REQUEST['time']);
 if (isset($_REQUEST['unit'])) $smarty->assign('unit', $_REQUEST['unit']);
