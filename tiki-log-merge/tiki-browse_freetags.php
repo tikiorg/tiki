@@ -7,6 +7,7 @@
 $section = 'freetags';
 require_once ('tiki-setup.php');
 include_once ('lib/freetag/freetaglib.php');
+$smarty->assign('headtitle', tra('Tags'));
 if ($prefs['feature_freetags'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_freetags");
 	$smarty->display("error.tpl");

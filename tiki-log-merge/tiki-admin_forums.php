@@ -99,7 +99,9 @@ if (isset($_REQUEST["save"])) {
 	$_REQUEST['topics_list_pts'] = isset($_REQUEST['topics_list_pts']) ? 'y' : 'n';
 	$_REQUEST['topics_list_lastpost'] = isset($_REQUEST['topics_list_lastpost']) ? 'y' : 'n';
 	$_REQUEST['topics_list_lastpost_title'] = isset($_REQUEST['topics_list_lastpost_title']) ? 'y' : 'n';
+	$_REQUEST['topics_list_lastpost_avatar'] = isset($_REQUEST['topics_list_lastpost_avatar']) ? 'y' : 'n';
 	$_REQUEST['topics_list_author'] = isset($_REQUEST['topics_list_author']) ? 'y' : 'n';
+	$_REQUEST['topics_list_author_avatar'] = isset($_REQUEST['topics_list_author_avatar']) ? 'y' : 'n';
 	$_REQUEST['att_list_nb'] = isset($_REQUEST['att_list_nb']) ? 'y' : 'n';
 	if (empty($_REQUEST['threadOrdering'])) $_REQUEST['threadOrdering'] = '';
 	if (empty($_REQUEST['threadStyle'])) $_REQUEST['threadStyle'] = '';
@@ -109,7 +111,7 @@ if (isset($_REQUEST["save"])) {
 	if (substr($_REQUEST["att_store_dir"], -1) != "\\" && substr($_REQUEST["att_store_dir"], -1) != "/" && $_REQUEST["att_store_dir"] != "") {
 		$_REQUEST["att_store_dir"].= "/";
 	}
-	$fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood, $_REQUEST["floodInterval"], $_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"], $_REQUEST['topics_list_reads'], $_REQUEST['topics_list_replies'], $_REQUEST['topics_list_pts'], $_REQUEST['topics_list_lastpost'], $_REQUEST['topics_list_author'], $_REQUEST['vote_threads'], $_REQUEST['show_description'], $_REQUEST['inbound_pop_server'], 110, $_REQUEST['inbound_pop_user'], $_REQUEST['inbound_pop_password'], trim($_REQUEST['outbound_address']) , $_REQUEST['outbound_mails_for_inbound_mails'], $_REQUEST['outbound_mails_reply_link'], $_REQUEST['outbound_from'], $_REQUEST['topic_smileys'], $_REQUEST['topic_summary'], $_REQUEST['ui_avatar'], $_REQUEST['ui_flag'], $_REQUEST['ui_posts'], $_REQUEST['ui_level'], $_REQUEST['ui_email'], $_REQUEST['ui_online'], $_REQUEST['approval_type'], $_REQUEST['moderator_group'], $_REQUEST['forum_password'], $_REQUEST['forum_use_password'], $_REQUEST['att'], $_REQUEST['att_store'], $_REQUEST['att_store_dir'], $_REQUEST['att_max_size'], $_REQUEST['forum_last_n'], $_REQUEST['commentsPerPage'], $_REQUEST['threadStyle'], $_REQUEST['is_flat'], $_REQUEST['att_list_nb'], $_REQUEST['topics_list_lastpost_title']);
+	$fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood, $_REQUEST["floodInterval"], $_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"], $_REQUEST['topics_list_reads'], $_REQUEST['topics_list_replies'], $_REQUEST['topics_list_pts'], $_REQUEST['topics_list_lastpost'], $_REQUEST['topics_list_author'], $_REQUEST['vote_threads'], $_REQUEST['show_description'], $_REQUEST['inbound_pop_server'], 110, $_REQUEST['inbound_pop_user'], $_REQUEST['inbound_pop_password'], trim($_REQUEST['outbound_address']) , $_REQUEST['outbound_mails_for_inbound_mails'], $_REQUEST['outbound_mails_reply_link'], $_REQUEST['outbound_from'], $_REQUEST['topic_smileys'], $_REQUEST['topic_summary'], $_REQUEST['ui_avatar'], $_REQUEST['ui_flag'], $_REQUEST['ui_posts'], $_REQUEST['ui_level'], $_REQUEST['ui_email'], $_REQUEST['ui_online'], $_REQUEST['approval_type'], $_REQUEST['moderator_group'], $_REQUEST['forum_password'], $_REQUEST['forum_use_password'], $_REQUEST['att'], $_REQUEST['att_store'], $_REQUEST['att_store_dir'], $_REQUEST['att_max_size'], $_REQUEST['forum_last_n'], $_REQUEST['commentsPerPage'], $_REQUEST['threadStyle'], $_REQUEST['is_flat'], $_REQUEST['att_list_nb'], $_REQUEST['topics_list_lastpost_title'], $_REQUEST['topics_list_lastpost_avatar'], $_REQUEST['topics_list_author_avatar']);
 	$cat_type = 'forum';
 	$cat_objid = $fid;
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
@@ -189,7 +191,9 @@ if ($_REQUEST["forumId"]) {
 	$info["topics_list_pts"] = 'n';
 	$info["topics_list_lastpost"] = 'y';
 	$info['topics_list_lastpost_title'] = 'y';
+	$info['topics_list_lastpost_avatar'] = 'n';
 	$info["topics_list_author"] = 'y';
+	$info['topics_list_author_avatar'] = 'n';
 	$info["vote_threads"] = 'n';
 	$info["forum_last_n"] = 0;
 	$info["is_flat"] = 'n';

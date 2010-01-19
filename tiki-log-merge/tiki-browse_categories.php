@@ -9,6 +9,7 @@ $section = 'categories';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/tree/categ_browse_tree.php');
+$smarty->assign('headtitle', tra('Categories'));
 if ($prefs['feature_categories'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_categories");
 	$smarty->display("error.tpl");

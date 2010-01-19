@@ -375,10 +375,10 @@
 			{if $forum_info.topics_list_pts eq 'y'}
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='average'}{tr}pts{/tr}{/self_link}</th>
 			{/if}
-			{if $forum_info.topics_list_lastpost eq 'y'}
+			{if $forum_info.topics_list_lastpost eq 'y' or $forum_info.topics_list_lastpost_avatar eq 'y'}
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
 			{/if}
-			{if $forum_info.topics_list_author eq 'y'}
+			{if $forum_info.topics_list_author eq 'y' or $forum_info.topics_list_author_avatar eq 'y'}
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
 			{/if}
 			{if $forum_info.att_list_nb eq 'y'}
@@ -453,14 +453,29 @@
 				{/if}
 				{if $forum_info.topics_list_lastpost eq 'y'}
 					<td class="{cycle advance=false}">{$comments_coms[ix].lastPost|tiki_short_datetime} {* date_format:"%b %d [%H:%M]" *}
+						{if $forum_info.topics_list_lastpost_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
+							<div style="float:right;padding-left:1px"><img src="tiki-show_user_avatar.php?user={$comments_coms[ix].lastPostData.userName|escape:"url"}" title="{$comments_coms[ix].lastPostData.userName|username}" /></div>
+						{/if}
 						{if $comments_coms[ix].replies}
 							<br />
 							<small>{if $forum_info.topics_list_lastpost_title eq 'y'}<i>{$comments_coms[ix].lastPostData.title|escape}</i> {/if}{tr}by{/tr} {$comments_coms[ix].lastPostData.userName|userlink}</small>
 						{/if}
 					</td>
+				{elseif $forum_info.topics_list_lastpost_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
+					<td class="{cycle advance=false}">
+						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].lastPostData.userName|escape:"url"}" title="{$comments_coms[ix].lastPostData.userName|username}" />
+					</td>
 				{/if}
 				{if $forum_info.topics_list_author eq 'y'}
-					<td class="{cycle advance=false}">{$comments_coms[ix].userName|userlink}</td>
+					<td class="{cycle advance=false}">
+						{if $forum_info.topics_list_author_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
+							<div style="float:right;padding-left:1px"><img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}" /></div>
+						{/if}
+						{$comments_coms[ix].userName|userlink}</td>
+				{elseif $forum_info.topics_list_author_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
+					<td class="{cycle advance=false}">
+						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}" />
+					</td>
 				{/if}
 				
 				{if $forum_info.att_list_nb eq 'y'}
