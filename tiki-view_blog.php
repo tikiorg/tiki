@@ -122,7 +122,7 @@ $smarty->assign('find', $find);
 // Get a list of last changes to the blog database
 $date_min = isset($_REQUEST['date_min']) ? $_REQUEST['date_min'] : '';
 $date_max = isset($_REQUEST['date_max']) ? $_REQUEST['date_max'] : $tikilib->now;
-$listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data["maxPosts"], $sort_mode, $find, $date_min, $date_max);
+$listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], false, $offset, $blog_data["maxPosts"], $sort_mode, $find, $date_min, $date_max);
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
 	$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1));
