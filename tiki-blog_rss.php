@@ -39,7 +39,7 @@ if ($output["data"] == "EMPTY") {
 	$authorId = "user";
 	$titleId = "title";
 	$readrepl = "tiki-view_blog_post.php?postId=%s";
-	$changes = $bloglib->list_blog_posts($_REQUEST["$id"], 0, $prefs['max_rss_blog'], $dateId . '_desc', '', '', $tikilib->now);
+	$changes = $bloglib->list_blog_posts($_REQUEST["$id"], false, 0, $prefs['max_rss_blog'], $dateId . '_desc', '', '', $tikilib->now);
 	$tmp = array();
 	include_once ('tiki-sefurl.php');
 	foreach($changes["data"] as $data) {
