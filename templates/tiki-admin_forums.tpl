@@ -235,7 +235,9 @@
 							<td class="formcolor">{tr}Points{/tr}</td>
 							<td class="formcolor">{tr}Last post{/tr}</td>
 							<td class="formcolor">{tr}Last post title{/tr}</td>
+							<td class="formcolor">{tr}Last post avatar{/tr}</td>
 							<td class="formcolor">{tr}Author{/tr}</td>
+							<td class="formcolor">{tr}Author avatar{/tr}</td>
 						</tr>
 						<tr>
 							<td>
@@ -254,8 +256,15 @@
 								<input type="checkbox" name="topics_list_lastpost_title" {if $topics_list_lastpost_title eq 'y'}checked="checked"{/if} />
 							</td>
 							<td>
+								<input type="checkbox" name="topics_list_lastpost_avatar" {if $topics_list_lastpost_avatar eq 'y'}checked="checked"{/if} />
+							</td>
+							<td>
 								<input type="checkbox" name="topics_list_author" {if $topics_list_author eq 'y'}checked="checked"{/if} />
 							</td>
+							<td>
+								<input type="checkbox" name="topics_list_author_avatar" {if $topics_list_author_avatar eq 'y'}checked="checked"{/if} />
+							</td>
+
 						</tr>
 					</table>
 				</td>
