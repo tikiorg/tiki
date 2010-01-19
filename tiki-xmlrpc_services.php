@@ -297,7 +297,7 @@ function getRecentPosts($params) {
 	}
 
 	// Now get the post information
-	$posts = $bloglib->list_blog_posts($blogid, 0, $number, 'created_desc', '', '');
+	$posts = $bloglib->list_blog_posts($blogid, false, 0, $number, 'created_desc', '', '');
 
 	if (count($posts) == 0) {
 		return new XML_RPC_Response(0, 101, "No posts");
