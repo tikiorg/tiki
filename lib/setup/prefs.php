@@ -1523,7 +1523,7 @@ function get_default_prefs() {
 		'multidomain_config' => '',
 
 		'feature_use_minified_scripts' => 'y',		// for debugging
-		'tiki_minify_javascript' => 'n',
+		'tiki_minify_javascript' => 'y',
 
 		// Token Access
 		'auth_token_access' => 'n',
