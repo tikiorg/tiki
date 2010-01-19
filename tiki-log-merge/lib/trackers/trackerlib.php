@@ -1028,7 +1028,7 @@ class TrackerLib extends TikiLib
 				if ( isset($fopt['options_array'][2]) && isset($fil[$fopt['options_array'][2]]) && ($lst = $fil[$fopt['options_array'][2]]) && isset($fopt['options_array'][3])) {
 					$opts[1] = split(':', $fopt['options_array'][1]);
 					$finalFields = explode('|', $fopt['options_array'][3]);
-					$fopt['links'] = $this->get_join_values($itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($finalFields[0])), $fopt['options_array'][0], $finalFields);
+					$fopt['links'] = $this->get_join_values($trackerId, $itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($finalFields[0])), $fopt['options_array'][0], $finalFields, ' ', empty($fopt['options_array'][5])?'':$fopt['options_array'][5]);
 					$fopt['trackerId'] = $fopt['options_array'][0];
 				}
 				if (isset($fopt['links']) && count($fopt['links']) == 1) { //if a computed field use it
@@ -2757,7 +2757,8 @@ class TrackerLib extends TikiLib
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
 				<dd><strong>[size]</strong> is the visible input length of the field in characters (<=0 not limited);
-				<dd><strong>[create]</strong>: will create the page if not exits copy of the page with name value of this param.which pagename is the value of this param
+				<dd><strong>[create]</strong> will create the page if not exits copy of the page with name value of this param.which pagename is the value of this param
+				<dd><strong>[link]</strong> will not display the link to the page if equals to n 
 				<dd>
 				</dl>'));
 		$type['y'] = array(
@@ -2891,6 +2892,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[fieldIdHere]</strong> is the field in this tracker you want to link with;
 				<dd><strong>[displayFieldIdThere]</strong> the field(s) in [trackerId] you want to display, multiple fields can be separated by "|";
 				<dd><strong>[linkToItems]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to that values item in the other tracker;
+				<dd><strong>[status]</strong> filter on status (o, p, c, op, oc, pc or opc);
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['w'] = array(
@@ -3321,11 +3323,12 @@ class TrackerLib extends TikiLib
 		}
 		return $emails;
 	}
-	function get_join_values($itemId, $fieldIds, $finalTrackerId='', $finalFields='', $separator=' ') {
+	function get_join_values($trackerId, $itemId, $fieldIds, $finalTrackerId='', $finalFields='', $separator=' ', $status='') {
 		global $smarty;
 		$select[] = "`tiki_tracker_item_fields` t0";
 		$where[] = " t0.`itemId`=?";
 		$bindVars[] = $itemId;
+		$mid = '';
 		for ($i = 0; $i < count($fieldIds)-1; $i = $i+2) {
 			$j = $i + 1;
 			$k = $j + 1;
@@ -3337,7 +3340,12 @@ class TrackerLib extends TikiLib
 			$where[] = "t$j.`itemId`=t$k.`itemId` and t$k.`fieldId`=?";
 			$bindVars[] = $fieldIds[$k];
 		}
-		$query = "select t$k.* from ".implode(',',$select).' where '.implode(' and ',$where);
+		if (!empty($status)) {
+			$this->getSqlStatus($status, $mid, $bindVars, $trackerId);
+			$select[] = '`tiki_tracker_items` tti';
+			$mid .= " and tti.`itemId`=t$k.`itemId`";
+		}
+		$query = "select t$k.* from ".implode(',',$select).' where '.implode(' and ',$where).$mid;
 		$result = $this->query($query, $bindVars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {

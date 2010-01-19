@@ -790,7 +790,7 @@ function wikiplugin_tracker($data, $params)
 					} elseif ($f['type'] == 'l' && isset($itemId)) {
 						$opts[1] = split(':', $f['options_array'][1]);
 						$finalFields = explode('|', $f['options_array'][3]);
-						$flds['data'][$i]['value'] = $trklib->get_join_values($itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields);
+						$flds['data'][$i]['value'] = $trklib->get_join_values($trackerId, $itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields, ' ', empty($f['options_array'][5])?'':$f['options_array'][5]);
 					} elseif ($f['type'] == 'w') {
 						$refFieldId = $f['options_array'][2];
 						foreach ($flds['data'] as $i=>$ff) {

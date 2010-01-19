@@ -738,11 +738,11 @@ if ($_REQUEST["itemId"]) {
 					if (isset($fields["data"][$i]["options_array"][3])) {
 						$l = split(':', $fields["data"][$i]["options_array"][1]);
 						$finalFields = explode('|', $fields['data'][$i]['options_array'][3]);
-						$ins_fields["data"][$i]['links'] = $trklib->get_join_values($_REQUEST['itemId'], array_merge(array(
+						$ins_fields["data"][$i]['links'] = $trklib->get_join_values($_REQUEST['trackerId'], $_REQUEST['itemId'], array_merge(array(
 							$fields["data"][$i]["options_array"][2]
 						) , $l, array(
 							$fields["data"][$i]["options_array"][3]
-						)) , $fields["data"][$i]["options_array"][0], $finalFields);
+									  )) , $fields["data"][$i]["options_array"][0], $finalFields, ' ', empty($fields['data'][$i]['options_array'][5])?'':$fields['data'][$i]['options_array'][5]);
 						if (count($ins_fields["data"][$i]['links']) == 1) {
 							foreach($ins_fields["data"][$i]['links'] as $linkItemId => $linkValue) {
 								if (is_numeric($ins_fields["data"][$i]['links'][$linkItemId])) { //if later a computed field use this field
