@@ -15,7 +15,9 @@ the <a href="tiki-edit_perspective.php">perspectives GUI</a> to work.{/tr}
 		<input type="submit" value="{tr}Search{/tr}"/></label>
 	</p>
 </form>
-{if $lm_searchresults}
+{if $lm_error}
+	{remarksbox type="warning" title="{tr}Search error{/tr}"}{$lm_error}{/remarksbox}
+{elseif $lm_searchresults}
 	<form method="post" action="">
 		<hr class="clear"/>
 		{foreach from=$lm_searchresults item=prefName}

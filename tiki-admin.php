@@ -113,10 +113,16 @@ if( isset( $_REQUEST['lm_criteria'] ) ) {
 	global $prefslib; require_once 'lib/prefslib.php';
 
 	set_time_limit(0);
-	$results = $prefslib->getMatchingPreferences( $_REQUEST['lm_criteria'] );
-	$results = array_slice( $results, 0, 10 );
-	$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );
-	$smarty->assign( 'lm_searchresults', $results );
+	try {
+		$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );
+		$results = $prefslib->getMatchingPreferences( $_REQUEST['lm_criteria'] );
+		$results = array_slice( $results, 0, 10 );
+		$smarty->assign( 'lm_searchresults', $results );
+		$smarty->assign( 'lm_error', '' );
+	} catch(Zend_Search_Lucene_Exception $e) {
+		$smarty->assign( 'lm_error', $e->getMessage() );
+		$smarty->assign( 'lm_searchresults', '' );
+	}
 }
 
 if (isset($_REQUEST["page"])) {
