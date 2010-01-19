@@ -179,7 +179,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 	
 	if( $prefs['feature_jquery_ui'] == 'y' || $prefs['feature_jquery_tooltips'] == 'y' || $prefs['feature_jquery_autocomplete'] == 'y' || $prefs['feature_jquery_superfish'] == 'y' || $prefs['feature_jquery_reflection'] == 'y' || $prefs['feature_jquery_cycle'] == 'y' || $prefs['feature_shadowbox'] == 'y' ) {
 		$headerlib->add_jsfile( "lib/jquery/jquery.cookie.js" );
-		$headerlib->add_jsfile( "lib/jquery/jquery.async.js" );
+		$headerlib->add_jsfile( "lib/jquery/jquery.async.js", 10 );
 		$headerlib->add_jsfile( "lib/jquery/jquery.columnmanager/jquery.columnmanager.js" );
 		$headerlib->add_jsfile( "lib/jquery/treeTable/src/javascripts/jquery.treeTable.js" );
 		$headerlib->add_cssfile( "lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css" );
