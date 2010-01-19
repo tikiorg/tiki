@@ -1,7 +1,4 @@
-{remarksbox type="warning" title="{tr}This page is undergoing translation{/tr}"}
-	<p>
-	{tr}To <b>continue translating</b>, click on one of the translation icons below.{/tr}
+{remarksbox type="warning" title="{tr}Translation of this page is incomplete.{/tr}"}
 	{$content_of_update_translation_section}
-	{tr}To make a <b>brand new change</b> to this page, use the editor below.{/tr}
-	<p>
+	<p>{tr}To add <strong>new content</strong> to the page{/tr} <strong>{$page}</strong>, {tr}use the editor{/tr}.</p>
 {/remarksbox}
