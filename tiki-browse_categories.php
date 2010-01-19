@@ -20,6 +20,8 @@ if ($tiki_p_view_category != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
+$prefsgroups = $prefs['feature_group_watches'];
+global $prefsgroups, $tiki_p_admin_users, $tiki_p_admin;
 
 $auto_query_args = array('deep', 'sort_mode', 'offset', 'find', 'type', 'parentId');
 
@@ -98,7 +100,7 @@ if (!$canView) {
 	$smarty->display("error.tpl");
 	die;
 }
-//new
+//watches
 if ($prefs['feature_user_watches'] == 'y') {
 	if ($user && isset($_REQUEST['watch_event'])) {
 		if ($_REQUEST['watch_action'] == 'add_desc') {
@@ -122,11 +124,12 @@ if ($prefs['feature_user_watches'] == 'y') {
 }
 
 $ctall = $categlib->get_all_categories_respect_perms(null, 'view_category');
-
 $descendants_curr = $categlib->get_category_descendants($_REQUEST['parentId']);
+//user watches on current level
 $usercatwatches_curr = $tikilib->get_user_watches($user, 'category_changed');
 $eyes_curr = add_watch_icons ($descendants_curr, $usercatwatches_curr, $_REQUEST['parentId'], $_REQUEST['parentId'], $deep, $user);
 $smarty->assign_by_ref('eyes_curr', $eyes_curr);
+
 $i = 0;
 foreach($ctall as $c) {
 	$descendants = $categlib->get_category_descendants($c['categId']);
@@ -162,6 +165,8 @@ $objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $max
 if ($deep == 'on') {
 	for ($i = count($objects["data"]) - 1; $i >= 0; --$i) $objects['data'][$i]['categName'] = $tikilib->other_value_in_tab_line($ctall, $objects['data'][$i]['categId'], 'categId', 'name');
 }
+
+
 $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cant_pages', $objects["cant"]);
 include_once ('tiki-section_options.php');
@@ -179,49 +184,70 @@ if (isset($_GET['plain'])) {
 	$smarty->display("tiki.tpl");
 }
 
-function add_watch_icons ($descendants, $usercatwatches, $requestid, $categid, $deep, $user) {
+function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $deep, $user) {
+	global $prefsgroups, $tiki_p_admin_users, $tiki_p_admin, $categlib;
+	$section = 'categories';
+	require_once ('tiki-setup.php');
+	include_once ('lib/categories/categlib.php');
+	include_once ('lib/tree/categ_browse_tree.php');
 	$nodesc = count($descendants);
 	$watch_desc = 'n';
 	$watch_this = 'n';
 	$eyes = '';
 	$eye_rem_desc = '</a>&nbsp;&nbsp;<a href="tiki-browse_categories.php?parentId=' . $requestid . '&amp;watch_event=category_changed&amp;watch_object=' . $categid . '&amp;deep=' . $deep . '&amp;watch_action=remove_desc" class="icon">
-				<img src="pics/icons/no_eye_arrow_down.png" alt="Stop Watching This Category and Its Descendants" style="margin-bottom:2px" width="14" height="14" border="0" title="Stop Watching This Category and Its Descendants" class="icon" />';
+				<img src="pics/icons/no_eye_arrow_down.png" alt="Stop watching this category and its descendants" style="margin-bottom:2px" width="14" height="14" border="0" title="Stop watching this category and its descendants" class="icon" />';
 	$eye_rem = 	'</a><a href="tiki-browse_categories.php?parentId=' . $requestid . '&amp;watch_event=category_changed&amp;watch_object=' . $categid . '&amp;deep=' . $deep . '&amp;watch_action=remove" class="icon">
-				<img src="pics/icons/no_eye.png" alt="Stop Watching Only This Category" width="14" style="margin-bottom:2px" height="14" border="0" title="Stop Watching Only This Category" class="icon" /></a>';
+				<img src="pics/icons/no_eye.png" alt="Stop watching this category" width="14" style="margin-bottom:2px" height="14" border="0" title="Stop watching this category" class="icon" /></a>';
 	$eye_add_desc = '</a>&nbsp;&nbsp;<a href="tiki-browse_categories.php?parentId=' . $requestid . '&amp;watch_event=category_changed&amp;watch_object=' . $categid . '&amp;deep=' . $deep . '&amp;watch_action=add_desc" class="icon">
-					<img src="pics/icons/eye_arrow_down.png" alt="Watch This Category and Its Descendants" style="margin-bottom:2px" width="14" height="14" border="0" title="Watch This Category and Its Descendants" class="icon" />';
+					<img src="pics/icons/eye_arrow_down.png" alt="Watch this category and its descendants" style="margin-bottom:2px" width="14" height="14" border="0" title="Watch this category and its descendants" class="icon" />';
 	$eye_add = 	'</a><a href="tiki-browse_categories.php?parentId=' . $requestid . '&amp;watch_event=category_changed&amp;watch_object=' . $categid . '&amp;deep=' . $deep . '&amp;watch_action=add" class="icon">
-				<img src="pics/icons/eye.png" alt="Watch Only This Category" width="14" style="margin-bottom:2px" height="14" border="0" title="Watch Only This Category" class="icon" /></a>';
+				<img src="pics/icons/eye.png" alt="Watch this category" width="14" style="margin-bottom:2px" height="14" border="0" title="Watch this category" class="icon" /></a>';
 	foreach ($descendants as $descendant) {
-			if ($nodesc > 1) {
-				foreach ($usercatwatches as $usercatwatch) {
-					if ($usercatwatch['object'] == $descendant) {
-						$watch_desc = 'y';
-						break;
-					} else {
-						$watch_desc = 'n';
-					}
-				}
-				if ($watch_desc == 'n') {
-					$eyes = $eye_add_desc; 
+		if ($nodesc > 1) {
+			//this category and descendants
+			foreach ($usercatwatches as $usercatwatch) {
+				if ($usercatwatch['object'] == $descendant) {
+					$watch_desc = 'y';
 					break;
 				} else {
-					$eyes = $eye_rem_desc;
+					$watch_desc = 'n';
 				}
 			}
-	}
-		foreach ($usercatwatches as $usercatwatch) {				
-			if ($usercatwatch['object'] == $descendants[0]) {
-				$watch_this = 'y';
+			if ($watch_desc == 'n') {
+				$eyes = $eye_add_desc; 
 				break;
 			} else {
-				$watch_this = 'n';
+				$eyes = $eye_rem_desc;
 			}
 		}
-		if ($watch_this == 'n') {
-			$nodesc > 1 ? $eyes .= $eye_add : $eyes .= '&nbsp;&nbsp;' . $eye_add;
+	}
+	//this category only
+	foreach ($usercatwatches as $usercatwatch) {				
+		if ($usercatwatch['object'] == $descendants[0]) {
+			$watch_this = 'y';
+			break;
 		} else {
-			$nodesc > 1 ? $eyes .= $eye_rem : $eyes .= '&nbsp;&nbsp;' . $eye_rem;
+			$watch_this = 'n';
 		}
-	return $eyes;
+	}
+	if ($watch_this == 'n') {
+		$nodesc > 1 ? $eyes .= $eye_add : $eyes .= '&nbsp;&nbsp;' . $eye_add;
+	} else {
+		$nodesc > 1 ? $eyes .= $eye_rem : $eyes .= '&nbsp;&nbsp;' . $eye_rem;
+	}
+	//group watches
+	foreach ($descendants as $descendant) {
+		if ($prefsgroups == 'y' && ( $tiki_p_admin_users == 'y' || $tiki_p_admin == 'y' )) {
+			if ($descendant == 0) {
+				$name = 'Top';
+			} else {
+				$name = $categlib->get_category_path_string_with_root($categid);
+			}
+			$eyesgroup = '</a>&nbsp;<a href="tiki-object_watches.php?objectId=' . $categid . '&amp;watch_event=category_changed&amp;objectType=Category&amp;objectName=' 
+						. $name . '&amp;objectHref=tiki-browse_categories.php?parentId=' . $categid . '&amp;deep=' . $deep . '" >
+						<img src="pics/icons/eye_group.png" alt="Group watches for this category" width="14" style="margin-bottom:2px" height="14" border="0" 
+						title="Group watches for this category" class="icon" /></a>';
+		}
+	}
+	return $eyes . $eyesgroup;
 }

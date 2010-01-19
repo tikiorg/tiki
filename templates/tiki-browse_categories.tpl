@@ -127,11 +127,11 @@
 {if $path}
 	<div class="treetitle">{tr}Current category{/tr}:
 		<a href="tiki-browse_categories.php?parentId=0&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" class="categpath">{tr}Top{/tr}</a>
-		{section name=x loop=$path &nbsp;$eyes_curr}
+		{section name=x loop=$path}
 			&nbsp;{$prefs.site_crumb_seper}&nbsp;
 			<a class="categpath" href="tiki-browse_categories.php?parentId={$path[x].categId|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}">{$path[x].name|tr_if|escape}</a>
 		{/section}
-			{$eyes_curr}	
+			{$eyes_curr}
 	</div>
      
 	{if $parentId ne '0'}
