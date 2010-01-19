@@ -801,7 +801,7 @@ class Comments extends TikiLib
 			$approval_type='all_posted', $moderator_group='', $forum_password='',
 			$forum_use_password='n', $att='att_no', $att_store='db', $att_store_dir='',
 			$att_max_size=1000000, $forum_last_n=0, $commentsPerPage='', $threadStyle='',
-			$is_flat='n', $att_list_nb='n') {
+						   $is_flat='n', $att_list_nb='n', $topics_list_lastpost_title='y', $topics_list_lastpost_avatar='n', $topics_list_author_avatar='n') {
 
 		if ($forumId)
 		{
@@ -847,7 +847,10 @@ class Comments extends TikiLib
 			`att_max_size` = ?, 
 			`topics_list_pts` = ?,
 			`topics_list_lastpost` = ?,
+			`topics_list_lastpost_title` = ?,
+			`topics_list_lastpost_avatar` = ?,
 			`topics_list_author` = ?,
+			`topics_list_author_avatar` = ?,
 			`topicsPerPage` = ?,
 			`topicOrdering` = ?,
 			`threadOrdering` = ?,
@@ -902,7 +905,10 @@ class Comments extends TikiLib
 						(int) $att_max_size,
 						$topics_list_pts,
 						$topics_list_lastpost,
+						$topics_list_lastpost_title,
+						$topics_list_lastpost_avatar,
 						$topics_list_author,
+						$topics_list_author_avatar,
 						(int) $topicsPerPage,
 						$topicOrdering,
 						$threadOrdering,
@@ -923,8 +929,8 @@ class Comments extends TikiLib
 				`usePruneOld`,`pruneMaxAge`, `topicsPerPage`,
 				`topicOrdering`, `threadOrdering`,`section`,
 				`topics_list_reads`, `topics_list_replies`,
-				`topics_list_pts`, `topics_list_lastpost`,
-				`topics_list_author`, `vote_threads`, `show_description`,
+				`topics_list_pts`, `topics_list_lastpost`, `topics_list_lastpost_title`, `topics_list_lastpost_avatar`,
+				`topics_list_author`, `topics_list_author_avatar`,`vote_threads`, `show_description`,
 				`inbound_pop_server`,`inbound_pop_port`,`inbound_pop_user`,`inbound_pop_password`,
 				`outbound_address`, `outbound_mails_for_inbound_mails`,
 				`outbound_mails_reply_link`, `outbound_from`,
@@ -938,14 +944,14 @@ class Comments extends TikiLib
 							?,?,?,?,?,?,?,?,?,?,
 							?,?,?,?,?,?,?,?,?,?,
 							?,?,?,?,?,?,?,?,?,?,
-							?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+							?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name, $description, (int) $this->now, (int) $this->now, 0,
 					$controlFlood, (int) $floodInterval, $moderator, 0, $mail,
 					$useMail, $usePruneUnreplied, (int) $pruneUnrepliedAge,
 					$usePruneOld, (int) $pruneMaxAge, (int) $topicsPerPage,  $topicOrdering,
 					$threadOrdering, $section, $topics_list_reads,
 					$topics_list_replies, $topics_list_pts,
-					$topics_list_lastpost, $topics_list_author, $vote_threads,
+							$topics_list_lastpost, $topics_list_lastpost_title, $topics_list_lastpost_avatar, $topics_list_author,  $topics_list_author_avatar, $vote_threads,
 					$show_description, $inbound_pop_server, $inbound_pop_port,
 					$inbound_pop_user, $inbound_pop_password, $outbound_address,
 					$outbound_mails_for_inbound_mails,
@@ -2363,7 +2369,7 @@ class Comments extends TikiLib
 			$forum_info['approval_type'], $forum_info['moderator_group'], $forum_info['forum_password'],
 			$forum_info['forum_use_password'], $forum_info['att'], $forum_info['att_store'], $forum_info['att_store_dir'],
 			$forum_info['att_max_size'], $forum_info['forum_last_n'], $forum_info['commentsPerPage'], $forum_info['threadStyle'],
-			$forum_info['is_flat'], $forum_info['att_list_nb']);
+										   $forum_info['is_flat'], $forum_info['att_list_nb'], $forum_info['topics_list_lastpost_title'], $forum_info['topics_list_lastpost_avatar'], $forum_info['topics_list_author_avatar']);
 
 		return $newForumId;		
 	}
