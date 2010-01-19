@@ -366,12 +366,6 @@ class HeaderLib
 			}
 			$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
 		}
-//		// include json parser (not included by default yet - Tiki 4.0 oct 09)
-//		if (0 && $prefs['feature_use_minified_scripts'] == 'y') {	// could reduce to only using dialog (needs core, draggable & resizable)
-//			$headerlib->add_jsfile('lib/jquery/json2.min.js');
-//		} else {
-//			$headerlib->add_jsfile('lib/jquery/json2.js');
-//		}
 	}
 
 }
