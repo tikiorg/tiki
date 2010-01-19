@@ -373,16 +373,6 @@ function update_preferences( $dbTiki, &$prefs ) {
 	return false;
 }
 
-function load_sql_scripts() {
-	global $smarty;
-	global $dbversion_tiki;
-	$files = "tiki.sql";
-
-	rsort($files);
-	reset($files);
-	$smarty->assign('files', $files);
-}
-
 // from PHP manual (ini-get function example)
 function return_bytes( $val ) {
 	$val = trim($val);
@@ -474,7 +464,7 @@ $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2
 
 // Available DB Servers
 $dbservers = array();
-if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
+if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli)');
 if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
@@ -642,9 +632,6 @@ if ($dbcon) {
 if (isset($_REQUEST['restart'])) {
 	$_SESSION["install-logged-$multi"] = '';
 }
-
-
-load_sql_scripts();
 
 $smarty->assign('admin_acc', $admin_acc);
 
