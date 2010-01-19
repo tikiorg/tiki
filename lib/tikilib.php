@@ -4879,6 +4879,19 @@ class TikiLib extends TikiDb_Bridge
 			// Be sure to have the correct character case (because DB is caseinsensitive)
 			$pageNameEncode = urlencode($row['pageName']);
 
+			// Limit memory usage of the page cache.  No 
+			// intelligence is attempted here whatsoever.  This was 
+			// done because a few thousand ((page)) links would blow 
+			// up memory, even with the limit at 128MiB.  
+			// Information on 128 pages really should be plenty.
+			while( count($this->cache_page_info) >= 128 )
+			{
+				// Need to delete something; pick at random
+				$keys=array_keys($this->cache_page_info);
+				$num=rand(0,count($keys));
+				unset($this->cache_page_info[$keys[$num]]);
+			}
+
 			$this->cache_page_info[$pageNameEncode] = $row;
 
 			global $user, $prefs;
