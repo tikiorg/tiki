@@ -11,13 +11,14 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-function list_perms($objectId, $objectType) {
+function list_perms($objectId, $objectType, $objectName) {
 	global $userlib, $tikilib, $prefs;
 	$ret = array();
 	$perms = $userlib->get_object_permissions($objectId, $objectType);
 	if (!empty($perms)) {
 		foreach($perms as $perm) {
-			$ret[] = array('group' => $perm['groupName'], 'perm' => $perm['permName'], 'reason' => 'Special');
+			$ret[] = array('group' => $perm['groupName'], 'perm' => $perm['permName'], 'reason' => 'Special',
+					'objectId' => $objectId, 'objectType' => $objectType, 'objectName' => $objectName);
 		}
 	} elseif ($prefs['feature_categories'] == 'y') {
 		global $categlib;
@@ -31,7 +32,9 @@ function list_perms($objectId, $objectType) {
 				if (!empty($category_perms)) {
 					foreach($category_perms as $category_perm) {
 						$config[$category_perm['groupName']][$category_perm['permName']] = 'y';
-						$ret[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'], 'reason' => 'Category');
+						$ret[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'],
+									'reason' => 'Category', 'objectId' => $categId, 'objectType' => 'category',
+									'objectName' => $categlib->get_category_name($categId));
 					}
 				}
 			}
@@ -39,7 +42,7 @@ function list_perms($objectId, $objectType) {
 	}
 	return array('objectId' => $objectId, 'special' => $ret);
 }
-$types = array('wiki page', 'file gallery', 'tracker', 'forum');
+$types = array('wiki page', 'file gallery', 'tracker', 'forum', 'group');
 include_once ("lib/commentslib.php"); global $commentslib; $commentslib = new Comments($dbTiki);
 $all_groups = $userlib->list_all_groups();
 $res = array();
@@ -58,7 +61,7 @@ foreach($types as $type) {
 		case 'wiki':
 			$objects = $tikilib->list_pageNames();
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['pageName'], $type);
+				$res[$type]['objects'][] = list_perms($object['pageName'], $type, $object['pageName']);
 			}
 			break;
 
@@ -66,7 +69,7 @@ foreach($types as $type) {
 		case 'file gallery':
 			$objects = $tikilib->list_file_galleries( 0, -1, 'name_desc', '', '', $prefs['fgal_root_id'] );
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['id'], $type);
+				$res[$type]['objects'][] = list_perms($object['id'], $type, $object['name']);
 			}
 			break;
 
@@ -74,7 +77,7 @@ foreach($types as $type) {
 		case 'trackers':
 			$objects = $tikilib->list_trackers();
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['trackerId'], $type);
+				$res[$type]['objects'][] = list_perms($object['trackerId'], $type, $object['name']);
 			}
 			break;
 
@@ -82,11 +85,18 @@ foreach($types as $type) {
 		case 'forums':
 			$objects = $commentslib->list_forums();
 			foreach($objects['data'] as $object) {
-				$res[$type]['objects'][] = list_perms($object['forumId'], $type);
+				$res[$type]['objects'][] = list_perms($object['forumId'], $type, $object['name']);
 			}
 			break;
 
-		default:
+		case 'group':
+		case 'groups':
+			foreach($all_groups as $object) {
+				$res[$type]['objects'][] = list_perms($object, $type);
+			}
+			break;
+
+			default:
 			break;
 	}
 }

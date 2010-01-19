@@ -11,5 +11,3 @@
  *********************************************************/ 
  
  include_once('lib/diff/difflib.php');
- include_once('lib/diff/renderer_unified.php');
- 

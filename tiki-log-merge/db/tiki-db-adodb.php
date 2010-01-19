@@ -12,15 +12,6 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 	require_once ('lib/adodb/adodb.inc.php');
 	include_once ('lib/adodb/adodb-pear.inc.php');
 
-	if ($db_tiki == 'pgsql') {
-		$db_tiki = 'postgres7';
-	}
-
-	if ($db_tiki == 'sybase') {
-		// avoid database change messages
-		ini_set('sybct.min_server_severity', '11');
-	}
-
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 // ADODB_FETCH_BOTH appears to be buggy for null values
@@ -53,10 +44,6 @@ if (!@$dbTiki->Execute('select login from users_users limit 1')) {
 				"		<p>".tra("Please see <a href=\"http://doc.tikiwiki.org/\">the documentation</a> for more information.")."</p>\n";
 	$dberror = true;
 	include_once('tiki-install.php');
-}
-
-if ($db_tiki == 'sybase') {
-	$dbTiki->Execute('set quoted_identifier on');
 }
 
 if( ! function_exists( 'close_connection' ) ) {

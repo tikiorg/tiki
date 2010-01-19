@@ -45,6 +45,8 @@ $smarty->assign('description', '');
 $smarty->assign('public', 'n');
 $smarty->assign('use_find', 'y');
 $smarty->assign('use_title', 'y');
+$smarty->assign('add_date', 'y');
+$smarty->assign('use_author', 'y');
 $smarty->assign('allow_comments', 'y');
 $smarty->assign('show_avatar', 'n');
 $smarty->assign('maxPosts', 10);
@@ -79,6 +81,8 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('description', $data["description"]);
 	$smarty->assign('public', $data["public"]);
 	$smarty->assign('use_title', $data["use_title"]);
+	$smarty->assign('add_date', $data["add_date"]);
+	$smarty->assign('use_author', $data["use_author"]);
 	$smarty->assign('allow_comments', $data["allow_comments"]);
 	$smarty->assign('show_avatar',$data["show_avatar"]);
 	$smarty->assign('use_find', $data["use_find"]);
@@ -122,11 +126,13 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$allow_comments = isset($_REQUEST["allow_comments"]) ? 'y' : 'n';
 	$show_avatar = isset($_REQUEST['show_avatar']) ? 'y' : 'n';	
 	$use_find = isset($_REQUEST['use_find']) ? 'y' : 'n';
+	$use_author = isset($_REQUEST['use_author']) ? 'y' : 'n';
+	$add_date = isset($_REQUEST['add_date']) ? 'y' : 'n';
 
 	$bid = $bloglib->replace_blog($_REQUEST["title"],
 	    $_REQUEST["description"], $_REQUEST["creator"], $public,
 	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
-	    $heading, $use_title, $use_find,
+	    $heading, $use_title, $use_author, $add_date, $use_find,
 	    $allow_comments, $show_avatar);
 
 	$cat_type = 'blog';
@@ -147,6 +153,8 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('public', isset($_REQUEST["public"]) ? 'y' : 'n');
 	$smarty->assign('use_find', isset($_REQUEST["use_find"]) ? 'y' : 'n');
 	$smarty->assign('use_title', isset($_REQUEST["use_title"]) ? 'y' : 'n');
+	$smarty->assign('use_author', isset($_REQUEST["use_author"]) ? 'y' : 'n');
+	$smarty->assign('add_date', isset($_REQUEST["add_date"]) ? 'y' : 'n');
 	$smarty->assign('allow_comments', isset($_REQUEST["allow_comments"]) ? 'y' : 'n');
 	$smarty->assign('maxPosts', $_REQUEST["maxPosts"]);
 	$smarty->assign('heading', $heading);

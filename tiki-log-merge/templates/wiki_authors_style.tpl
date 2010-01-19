@@ -17,7 +17,7 @@
 
 {else}
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="wiki_authors_style">{tr}List authors:{/tr}</label> <a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+	<div class="adminoptionlabel"><label for="wiki_authors_style">{tr}List authors:{/tr}</label> <a class="link" href="tiki-objectpermissions.php?permType=wiki" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 	<select name="wiki_authors_style" id="wiki_authors_style">
       {if isset($wiki_authors_style_site) && $wiki_authors_style_site eq 'y'}
       <option value="" style="font-style:italic;border-bottom:1px dashed #666;"{if $wiki_authors_style eq ''} selected="selected"{/if}>{tr}Site default{/tr}</option>

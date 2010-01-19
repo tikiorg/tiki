@@ -249,5 +249,10 @@ function prefs_auth_list() {
 			'size' => 15,
 			'perspective' => false,
 		),
+		'auth_ws_create_tiki' => array(
+			'name' => tra('Create user if not in Tiki'),
+			'type' => 'flag',
+			'perspective' => false,
+		),
 	);
 }

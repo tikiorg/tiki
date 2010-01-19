@@ -5,8 +5,8 @@ function prefs_jquery_list() {
 	global $prefs;
 
 	$jquery_effect_options = array(
-		'none'  => tra('None'),
 		''      => tra('Default'),
+		'none'  => tra('None'),
 		'slide' => tra('Slide'),
 		'fade'  => tra('Fade'),
 	);	

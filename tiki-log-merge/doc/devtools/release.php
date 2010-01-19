@@ -866,9 +866,6 @@ function display_howto() {
    -- check if anyone has committed anything manually to README that needs to be brought back into this script
    -- check links
    - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
-   - cd db/convertscripts and run convertsqls.sh
-   --- Check that you do not have spurious quote marks in your db/*.sql file
-   --- the string \" should not appear, if it does, ask nyloth or nkoth3 on IRC
    - in lib/setup/twversion.class.php
      - increment the version number in the constructor
      - update list of valid releases in getVersions()
@@ -905,9 +902,7 @@ function display_howto() {
 post/
    Update appropriate http://tikiwiki.org/stable.version file with new release version
    (or ask the TAG to do this)
-   Increment/update lib/setup/twversion.class.php and db/convertscripts/convertsqls.sh accordingly (depending if major or minor release)
-   Delete trunk/db/*.sql for old versions
-   Regenerate new database files with db/convertscripts/convertsqls.sh
+   Increment/update lib/setup/twversion.class.php (depending if major or minor release)
 
 All that process has to be relayed on live irc channel : 
 irc://irc.freenode.net/#tikiwiki

@@ -123,7 +123,6 @@
 						{preference name=feature_html_pages}
 						{preference name=feature_galleries}
 						{preference name=feature_faqs}
-						{preference name=feature_multimedia}
 				</fieldset>
 
 				<fieldset>

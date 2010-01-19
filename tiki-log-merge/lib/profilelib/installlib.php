@@ -568,7 +568,6 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 				'item_list' => 'l',
 				'item_list_dynamic' => 'w',
 				'email' => 'm',
-				'multimedia' => 'M',
 				'auto_increment' => 'q',
 				'user_subscription' => 'U',
 				'map' => 'G',
@@ -1247,8 +1246,8 @@ class Tiki_Profile_InstallHandler_Blog extends Tiki_Profile_InstallHandler // {{
 
 		$this->replaceReferences( $data );
 
-		$blogId = $bloglib->replace_blog( $data['title'], $data['description'], $data['user'], $data['public'], $data['max_posts'], 0, $data['heading'], $data['use_title'], $data['use_find'], $data['allow_comments'], $data['show_avatar'] );
-
+		$blogId = $bloglib->replace_blog( $data['title'], $data['description'], $data['user'], $data['public'], $data['max_posts'], 0, $data['heading'], $data['use_title'], $data['use_author'], $data['add_date'], $data['use_find'], $data['allow_comments'], $data['show_avatar'] );
+		
 		return $blogId;
 	}
 } // }}}

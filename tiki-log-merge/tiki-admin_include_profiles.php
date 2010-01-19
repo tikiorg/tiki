@@ -166,5 +166,8 @@ elseif (($openSources > 0) &&($openSources < count($sources)))
 else
 	$smarty->assign('openSources', 'none');
 	
+$smarty->assign('tikiMajorVersion' ,substr($TWV->version,0,2));
+
+	
 
 ask_ticket('admin-inc-profiles');

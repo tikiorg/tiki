@@ -96,10 +96,6 @@
 {self_link page="gmap" _class="icon tips" _title="{tr}Google Maps{/tr}|{tr}Defaults and API key for Google Maps{/tr}"}{icon _id="pics/large/google_maps.png" alt="{tr}Google Maps{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
-{if $prefs.feature_multimedia eq 'y'}
-{self_link page="multimedia" _class="icon tips" _title="{tr}Multimedia{/tr}|{tr}??{/tr}"}{icon _id="pics/large/multimedia.png" alt="{tr}Multimedia{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
-{/if}
-
 {if $prefs.feature_copyright eq 'y'}
 {self_link page="copyright" _class="icon tips" _title="{tr}Copyright{/tr}|{tr}Site-wide copyright information{/tr}"}{icon _id="pics/large/copyright.png" alt="{tr}Copyright{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}

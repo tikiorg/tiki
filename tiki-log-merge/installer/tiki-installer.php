@@ -373,24 +373,6 @@ function update_preferences( $dbTiki, &$prefs ) {
 	return false;
 }
 
-function load_sql_scripts() {
-	global $smarty;
-	global $dbversion_tiki;
-	$files = array();
-	$h = opendir('db/');
-
-	while ($file = readdir($h)) {
-        	if (preg_match('#\d\..*to.*\.sql$#', $file) || preg_match('#secdb#',$file)) {
-                	$files[] = $file;
-        	}
-	}
-
-	closedir ($h);
-	rsort($files);
-	reset($files);
-	$smarty->assign('files', $files);
-}
-
 // from PHP manual (ini-get function example)
 function return_bytes( $val ) {
 	$val = trim($val);
@@ -482,9 +464,8 @@ $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2
 
 // Available DB Servers
 $dbservers = array();
-if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
+if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli)');
 if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
-if (function_exists('pg_connect'))		$dbservers['pgsql'] = tra('PostgreSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
@@ -628,6 +609,10 @@ if (
 			$installer = new Installer;
 			$installer->setServerType($db_tiki);
 		}
+	} else {
+		$dbcon = false;
+		$smarty->assign('dbcon', 'n');
+		$tikifeedback[] = array('num'=>1, 'mes'=>tra("No database name specified"));
 	}
 }
 
@@ -647,9 +632,6 @@ if ($dbcon) {
 if (isset($_REQUEST['restart'])) {
 	$_SESSION["install-logged-$multi"] = '';
 }
-
-
-load_sql_scripts();
 
 $smarty->assign('admin_acc', $admin_acc);
 
@@ -714,7 +696,7 @@ if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
 	include_once 'tiki-setup.php';
 	$cachelib->empty_full_cache();
 	if ($install_type == 'scratch') {
-		$u = 'tiki-change_password.php?user=admin';
+		$u = 'tiki-change_password.php?user=admin&oldpass=admin';
 	} else {
 		$u = '';
 	}

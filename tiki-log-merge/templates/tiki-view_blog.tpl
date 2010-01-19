@@ -78,11 +78,23 @@ class="icon">{$watching_categories[i].name}</a>&nbsp;
             {/if}
 			</div>
 			<div class="author_info">
-					{tr}By{/tr} {$listpages[ix].user|userlink}
+			
+				{if $use_author eq 'y' || $add_date eq 'y'}
+				{tr}Published {/tr}
+				{/if}
+				
+			    {if $use_author eq 'y'}
+				{tr}by{/tr} {$listpages[ix].user|userlink} 
+				{/if}
+				
+				{if $add_date eq 'y'}
+				{tr}at{/tr} {$listpages[ix].created|tiki_short_datetime}
+				{/if}
+				
 				{if $show_avatar eq 'y'}
 					{$listpages[ix].avatar}
 				{/if}
-				{tr}on{/tr} {$listpages[ix].created|tiki_short_datetime}
+				
 				
 			</div>
 		</div>
@@ -90,9 +102,11 @@ class="icon">{$watching_categories[i].name}</a>&nbsp;
 		<a name="postId{$listpages[ix].postId}"></a> {* ?? *}
 
 		<div class="clearfix postbody-title">
+			{if $use_title eq 'y'}
 			<div class="title"> {* because used in forums, but I don't know purpose *}
 				<h2><a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{$listpages[ix].title|escape}</a></h2>
 			</div>
+			{/if}
 	  
 			{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 				{if $listpages[ix].freetags.data|@count >0}

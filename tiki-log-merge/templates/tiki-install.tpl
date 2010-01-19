@@ -255,7 +255,6 @@
 {tr}Failed to set max_execution_time to 0 for PHP. You may experience problems when creating/upgrading the database on a slow system. This will manitest itself by a blank page.{/tr}
 {/remarksbox}
 {/if}
-<div style="float:left; width:60px"><img src="pics/large/profiles48x48.png" alt="{tr}Profiles{/tr}" /></div>
 <div class="clearfix">
 <p>
 {if $tikidb_created}
@@ -265,7 +264,6 @@
 	{tr}A new install will populate the database.{/tr}
 {/if}
 </p>
-{* <p>{tr}Profiles can be used to pre-configure your site with specific features and settings.{/tr} {tr}Visit <a href="http://profiles.tikiwiki.org" target="_blank">http://profiles.tikiwiki.org</a> for more information.{/tr}</p>  *}
 	  {if $dbdone eq 'n'}
 		  {if $logged eq 'y'}
 		    {* we are logged if no admin account is found or if the admin user is logged in*}

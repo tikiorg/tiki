@@ -240,7 +240,6 @@ function showDetails( id, domain, profile ) { // {{{
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}TikiWiki Profiles{/tr}</a>{/remarksbox}
 
-
 {if $profilefeedback}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
 		{cycle values="odd,even" print=false}
@@ -278,23 +277,31 @@ function showDetails( id, domain, profile ) { // {{{
 							<tr>
 								<td>
 									<br/>
+									{assign var=profilesFilterUrlStart value='tiki-admin.php?profile=&categories%5B%5D='}
+									{assign var=profilesFilterUrlMid value='x&categories%5B%5D='}
+									{assign var=profilesFilterUrlEnd value='&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2'}
+									
 									<p>
-										<a href="tiki-admin.php?profile=&categories%5B%5D=5.x&categories%5B%5D=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Featured Profiles</a>
+										{assign var=profilesFilterUrlFeaturedProfiles value='Featured+profiles'}
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}">Featured Profiles</a>
 										<br />Featured Profiles is a list of applications that are maintained by the TikiWiki community and are a great way to get started.
 									</p>
-		
+									
 									<p>
-										<a href="tiki-admin.php?profile=&categories%5B%5D=5.x&categories%5B%5D=Full+profile+(out+of+the+box+%26+ready+to+go)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Full Profiles</a>
+										{assign var=profilesFilterUrlFullProfiles value='Full+profile+(out+of+the+box+%26+ready+to+go)'}
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFullProfiles}{$profilesFilterUrlEnd}">Full Profiles</a>
 										<br />Full Profiles are full featured out of the box solutions. 
 									</p>
 		
 									<p>
-										<a href="tiki-admin.php?profile=&categories%5B%5D=5.x&categories%5B%5D=Mini-profile+(can+be+included+in+other)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Mini Profiles</a>
+										{assign var=profilesFilterUrlMiniProfiles value='Mini-profile+(can+be+included+in+other)'}
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlMiniProfiles}{$profilesFilterUrlEnd}">Mini Profiles</a>
 										<br />Mini Profiles will configure specific features and are a great way to add more functionality to an existing configuration. 
 									</p>
 		
 									<p>
-										<a href="tiki-admin.php?profile=&categories%5B%5D=5.x&categories%5B%5D=Learning+profile+(just+to+show+off+feature)&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2">Learning Profiles</a>
+										{assign var=profilesFilterUrlLearningProfiles value='Learning+profile+(just+to+show+off+feature)'}
+										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlLearningProfiles}{$profilesFilterUrlEnd}">Learning Profiles</a>
 										<br />Learning Profiles will allow you to quickly evaluate specific features in TikiWiki.
 									</p>
 		

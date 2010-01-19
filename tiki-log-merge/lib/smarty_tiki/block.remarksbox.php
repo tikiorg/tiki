@@ -28,6 +28,8 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 
 
 function smarty_block_remarksbox($params, $content, &$smarty) {
+	global $prefs;
+	
 	extract($params);
 	if (!isset($type))  $type = 'tip';
 	if (!isset($title)) $title = '';
@@ -55,6 +57,9 @@ function smarty_block_remarksbox($params, $content, &$smarty) {
 		}
 	}
 	
+	if ($prefs['javascript_enabled'] != 'y') {
+		$close = false;
+	}
 	
 	$smarty->assign('remarksbox_title', $title);
 	$smarty->assign('remarksbox_type', $type);

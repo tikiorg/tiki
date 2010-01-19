@@ -73,11 +73,6 @@ class TikiDb_Bridge extends TikiDb
 		self::get()->handleQueryError( $query, $values, $result );
 	} // }}}
 
-	protected function convertQuery( &$query ) // {{{
-	{
-		self::get()->convertQuery( $query );
-	} // }}}
-
 	protected function convertQueryTablePrefixes( &$query ) // {{{
 	{
 		self::get()->convertQueryTablePrefixes( $query );
@@ -86,16 +81,6 @@ class TikiDb_Bridge extends TikiDb
 	function convertSortMode( $sort_mode ) // {{{
 	{
 		return self::get()->convertSortMode( $sort_mode );
-	} // }}}
-
-	function convertBinary() // {{{
-	{
-		return self::get()->convertBinary();
-	} // }}}
-	
-	function cast( $var,$type ) // {{{
-	{
-		return self::get()->cast( $var, $type );
 	} // }}}
 
 	function getQuery() // {{{

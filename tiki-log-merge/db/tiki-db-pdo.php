@@ -9,12 +9,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 // Set the host string for PDO dsn.
 $db_hoststring = "host=$host_tiki";
 
-switch ($db_tiki) {
-	case 'postgres7':
-	case 'postgres8':
-		$db_tiki = 'pgsql';
-		break;
-	case 'mysqli':
+if ($db_tiki == 'mysqli') {
 		$db_tiki = 'mysql';
 
 		// If using mysql and it is set to use sockets instead of hostname,
@@ -24,14 +19,6 @@ switch ($db_tiki) {
 		if (isset($socket_tiki)) {
 			$db_hoststring = "unix_socket=$socket_tiki";
 		}
-		break;
-	case 'oracle':
-		$db_tiki = 'oci';
-}
-
-if ($db_tiki == 'sybase') {
-	// avoid database change messages
-	ini_set('sybct.min_server_severity', '11');
 }
 
 try {
@@ -40,10 +27,6 @@ try {
 	$dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
 	$dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
 	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);
-
-	if ($db_tiki == 'sybase') {
-		$dbTiki->exec('set quoted_identifier on');
-	}
 
 	require_once 'lib/core/lib/TikiDb/Pdo.php';
 	TikiDb::set( new TikiDb_Pdo( $dbTiki ) );

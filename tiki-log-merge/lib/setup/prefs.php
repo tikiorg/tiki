@@ -152,7 +152,7 @@ function get_default_prefs() {
 		'wiki_watch_author' => 'n',
 		'wiki_watch_comments' => 'y',
 		'wiki_watch_editor' => 'n',
-		'wiki_watch_minor' => 'y',
+		'wiki_watch_minor' => 'n',
 		'feature_wiki_history_full' => 'n',
 		'feature_wiki_categorize_structure' => 'n',
 		'feature_wiki_watch_structure' => 'n',
@@ -569,37 +569,6 @@ function get_default_prefs() {
 		'preset_galleries_info' =>'n',
 		'gal_image_mouseover' => 'n',
 
-		// multimedia
-		'ProgressBarPlay' => '//FF8D41',
-		'ProgressBarLoad' => "//A7A7A7",
-		'ProgressBarButton' => "//FF0000",
-		'ProgressBar' => "//C3C3C3",
-		'VolumeOn' => "//21AC2A",
-		'VolumeOff' => "//8EFF8A",
-		'VolumeButton' => 0,
-		'Button' => "//555555",
-		'ButtonPressed' => "//FF00FF",
-		'ButtonOver' => "//B3B3B3",
-		'ButtonInfo' => "//C3C3C3",
-		'ButtonInfoPressed' => "//555555",
-		'ButtonInfoOver' => "//FF8D41",
-		'ButtonInfoText' => "//FFFFFF",
-		'ID3' => "//6CDCEB",
-		'PlayTime' => "//00FF00",
-		'TotalTime' => "//FF2020",
-		'PanelDisplay' => "//555555",
-		'AlertMesg' => "//00FFFF",
-		'PreloadDelay' => 3,
-		'VideoHeight' => 240,
-		'VideoLength' => 300,
-		'ProgressBarPlay' => "//FFFFFF",
-		'URLAppend' => "",
-		'LimitedMsg' => "You are limited to 1 minute",
-		'MaxPlay' => 60,
-		'MultimediaGalerie' => 1,
-		'MultimediaDefaultLength' => 200,
-		'MultimediaDefaultHeight' => 100,
-
 		// forums
 		'feature_forums' => 'n',
 		'home_forum' => 0,
@@ -619,8 +588,6 @@ function get_default_prefs() {
 		'forum_list_visits' =>  'y',
 		'forum_list_desc' =>  'y',
 		'forum_list_description_len' => '240',
-		'feature_forum_local_search' => 'n',
-		'feature_forum_local_tiki_search' => 'n',
 		'forum_thread_defaults_by_forum' => 'n',
 		'forum_thread_user_settings' => 'y',
 		'forum_thread_user_settings_threshold' => 10,
@@ -810,8 +777,7 @@ function get_default_prefs() {
 
 		// search
 		'feature_search_stats' => 'n',
-		'feature_search' => 'n',
-		'feature_search_fulltext' => 'y',
+		'feature_search' => 'y',
 		'feature_search_show_forbidden_obj' => 'n',
 		'feature_search_show_forbidden_cat' => 'n',
 		'feature_search_show_object_filter' => 'n',
@@ -820,7 +786,6 @@ function get_default_prefs() {
 		'feature_search_show_pertinence' => 'n',
 		'feature_search_show_object_type' => 'n',
 		'feature_search_show_last_modification' => 'y',
-		'search_refresh_index_mode' => 'normal',
 		'search_parsed_snippet' => 'y',
 		'feature_search_preferences' => 'y',
 		'search_default_where' => '',
@@ -829,6 +794,7 @@ function get_default_prefs() {
 		'feature_webmail' => 'n',
 		'webmail_max_attachment' => 1500000,
 		'webmail_view_html' => 'y',
+		'webmail_quick_flags' => 'n',
 
 		// contacts
 		'feature_contacts' => 'n',
@@ -883,7 +849,7 @@ function get_default_prefs() {
 		'calendar_start_year' => '-3',
 		'calendar_end_year' => '+5',
 		'calendar_list_begins_focus' => 'n',
-		'feature_cal_manual_time' => '',
+		'feature_cal_manual_time' => 'n',
 		'calendar_view_days' => array(0,1,2,3,4,5,6),
 
 		// dates
@@ -952,7 +918,23 @@ function get_default_prefs() {
 		'rssfeed_publisher' => '',
 		'rssfeed_img' => 'img/tiki/tikilogo.png',
 		'rss_basic_auth' => 'n',
-
+		'rss_maps' => 'n',
+		'showAuthor_rss_blogs' => 'n',
+		'showAuthor_rss_blog' => 'n',
+		'showAuthor_rss_articles' => 'n',
+		'showAuthor_rss_image_galleries' => 'n',
+		'showAuthor_rss_image_gallery' => 'n',
+		'showAuthor_rss_file_galleries' => 'n',
+		'showAuthor_rss_file_gallery' => 'n',
+		'showAuthor_rss_wiki' => 'n',		
+		'showAuthor_rss_forums' => 'n',
+		'showAuthor_rss_forum' => 'n',
+		'showAuthor_rss_trackers' => 'n',
+		'showAuthor_rss_tracker' => 'n',
+		'showAuthor_rss_calendar' => 'n',
+		'showAuthor_rss_directories' => 'n',
+		'showAuthor_rss_maps' => 'n',
+	
 		// maps
 		'feature_maps' => 'n',
 		'map_path' => '',
@@ -1035,6 +1017,8 @@ function get_default_prefs() {
 		'auth_phpbb_dbtype' => 'mysql',
 		'auth_phpbb_table_prefix' => 'phpbb_',
 
+		'auth_ws_create_tiki' => 'n',
+
 		'https_login' => 'allowed',
 		'https_external_links_for_users' => 'n',
 		'feature_show_stay_in_ssl_mode' => 'y',
@@ -1068,14 +1052,6 @@ function get_default_prefs() {
 		'intertiki_errfile' => '',
 		'feature_intertiki_sharedcookie' => 'n',
 
-		// search
-		'search_lru_length' => '100',
-		'search_lru_purge_rate' => '5',
-		'search_max_syllwords' => '100',
-		'search_min_wordlength' => '3',
-		'search_refresh_rate' => '5',
-		'search_syll_age' => '48',
-
 		// categories
 		'feature_categories' => 'n',
 		'feature_categoryobjects' => 'n',
@@ -1084,7 +1060,7 @@ function get_default_prefs() {
 		'feature_category_use_phplayers' => 'n',
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',
-		'category_jail' => '',
+		'category_jail' => array(),
 		'category_defaults' => false,
 		'category_i18n_sync' => 'n',
 		'category_i18n_synced' => array(),
@@ -1115,6 +1091,7 @@ function get_default_prefs() {
 		'feature_translation_incomplete_notice' => 'y',
 		'lang_use_db' => 'n',
 		'language' => 'en',
+		'restrict_language' => 'n',
 		'feature_babelfish' => 'n',
 		'feature_babelfish_logo' => 'n',
 		'quantify_changes' => 'n',
@@ -1242,7 +1219,6 @@ function get_default_prefs() {
 
 		// copyright
 		'feature_copyright' => 'n',
-		'feature_multimedia' => 'n',
 
 		// textarea
 		'feature_smileys' => 'y',
@@ -1264,7 +1240,7 @@ function get_default_prefs() {
 			find, replace,-,  removeformat, specialchar, smiley | help, switcheditor
 			/
 			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_html, outdent, indent, 
-			- , table, -, wikiplugin_code, source, showblocks | fullscreen, enlarge, reduce
+			- , table, -, wikiplugin_code, source, showblocks | fullscreen
 		',
 		'toolbar_global_comments' => '
 			bold, italic, strike , - , link, smiley | help
@@ -1471,7 +1447,7 @@ function get_default_prefs() {
 		'jquery_effect_tabs_direction' => 'vertical',
 		'jquery_effect_tabs_speed' => 'fast',
 
-		'feature_jquery_ui' => 'n',				// include UI lib for more effects
+		'feature_jquery_ui' => 'y',				// include UI lib for more effects
 		'feature_jquery_ui_theme' => 'smoothness',	// theme for UI lib (see http://jqueryui.com/themeroller/ for list & demos - previously ui-darkness)
 		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
 		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
@@ -1547,7 +1523,7 @@ function get_default_prefs() {
 		'multidomain_config' => '',
 
 		'feature_use_minified_scripts' => 'y',		// for debugging
-		'tiki_minify_javascript' => 'n',
+		'tiki_minify_javascript' => 'y',
 
 		// Token Access
 		'auth_token_access' => 'n',

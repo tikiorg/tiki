@@ -90,6 +90,11 @@ if ($jq("#assignstructure").attr("checked")) {
 			{/if}
 		</div>
 	</form>
+	
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+		{tr}Previous version of assign permissions page can still be found{/tr} <a href="tiki-assignpermission.php?group=Anonymous">{tr}here{/tr}</a>
+	{/remarksbox}
+	
 	{/tab}
 
 	{tab name="{tr}Select groups{/tr}"}

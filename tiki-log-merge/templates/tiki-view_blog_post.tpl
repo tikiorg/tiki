@@ -16,21 +16,30 @@
 {/if}
 			</div>
 		<div class="author_info">
-		     {if $blog_data.show_avatar eq 'y'}
-					{$post_info.avatar}
+			{if $blog_data.use_author eq 'y' || $blog_data.add_date eq 'y'}
+			{tr}Published {/tr}
 			{/if}
 			
-			{if $blog_data.use_title eq 'y'}
-				{tr}By{/tr} {$post_info.user|userlink} {tr}on{/tr} {$post_info.created|tiki_short_datetime}
-			{else}
-				{tr}By{/tr} {$post_info.user|userlink}
+			{if $blog_data.use_author eq 'y'}
+				{tr}by{/tr} {$post_info.user|userlink} 
+			{/if}
+			
+			{if $blog_data.add_date eq 'y'}
+				{tr}at{/tr} {$post_info.created|tiki_short_datetime}
+			{/if}
+			
+			{if $blog_data.show_avatar eq 'y'}
+					{$post_info.avatar}
 			{/if}
 		</div>
 	</div>
 	<div class="clearfix postbody-title">
+		{if $blog_data.use_title eq 'y'}
 		<div class="title">
-				<h2>{$post_info.title|escape}</h2>
+			<h2>{$post_info.title|escape}</h2>
 		</div>
+		{/if}
+		
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 		{if $tags.data|@count >0}
 			<div class="freetaglist">

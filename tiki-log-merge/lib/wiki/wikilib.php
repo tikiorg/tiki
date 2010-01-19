@@ -328,11 +328,6 @@ class WikiLib extends TikiLib
 			}
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('pages', $newName);
-		}
-
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->rename_wiki_page($oldName, $newName);
 
@@ -782,9 +777,9 @@ class WikiLib extends TikiLib
 			$area_name = '';	
 		}	
 		if ($with_help) {
-			global $cachelib, $headerlib;
+			global $cachelib, $headerlib, $prefs;
 			if (empty($_REQUEST['xjxfun'])) { $headerlib->add_jsfile( 'tiki-jsplugin.php', 'dynamic' ); }
-			$cachetag = 'plugindesc' . $this->get_language() . $area_name;
+			$cachetag = 'plugindesc' . $this->get_language() . $area_name . '_js=' . $prefs['javascript_enabled'];
 			if (!$cachelib->isCached( $cachetag ) ) {
 				$list = $this->plugin_get_list();
 

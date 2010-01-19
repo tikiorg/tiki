@@ -361,14 +361,6 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {elseif $field_value.type eq 'k'}
 {include file='tracker_item_field_input.tpl'}
 
-{* -------------------- multimedia -------------------- *}
-{elseif $field_value.type eq 'M'}
-{if ($field_value.options_array[0] > '2')}
-<input type="file" name="{$field_value.ins_id}" /><br />
-{else}
-<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" /><br />
-{/if}
-
 {* -------------------- text field / email -------------------- *}
 {elseif $field_value.type eq 't'}
 {include file='tracker_item_field_input.tpl'}

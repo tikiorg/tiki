@@ -112,7 +112,7 @@ $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != "Done") {
 		if ($jq("div.tiki_sheet").children().length == 0)  {	// new sheet
-			$jq("div.tiki_sheet").append($jq("<table><tbody><tr><td>&nbsp;</td><tr></tbody></table>"));
+			$jq("div.tiki_sheet").append($jq("<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>"));
 		}
 		$jq("div.tiki_sheet").tiki("sheet", "", {title: "'.$info['title'].'", urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"});
 		$a.attr("temp", $a.text());

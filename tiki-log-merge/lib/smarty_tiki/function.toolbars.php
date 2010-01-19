@@ -30,9 +30,9 @@ function smarty_function_toolbars($params, &$smarty)
 	// some tool filters to help roll out textarea & toolbars to more sections quickly (for 4.0)
 
 	$hidden = array();
-	if ($params['section'] != 'wiki page') {
-		$hidden[] = 'fullscreen';
-	}
+//	if ($params['section'] != 'wiki page' && $params['section'] != 'blogs' && $params['section'] != 'newsletters' && $params['section'] != 'trackers') {
+//		$hidden[] = 'fullscreen';
+//	}
 	if (!in_array($params['section'], array('wiki page', 'blogs', 'newsletters'))) {
 		$hidden[] = 'switcheditor';
 	}

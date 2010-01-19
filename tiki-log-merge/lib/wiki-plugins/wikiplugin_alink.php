@@ -80,6 +80,6 @@ function wikiplugin_alink($data, $params)
 			'"  class="wiki wikinew">?</a>';
 	    }
 	} else {
-	    return "<a href=\"#$aname\">$data</a>";
+	    return "<a href=\"".$_REQUEST["page"]."#$aname\">$data</a>";
 	}
 }

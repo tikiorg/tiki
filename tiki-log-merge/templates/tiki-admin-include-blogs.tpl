@@ -11,24 +11,7 @@
 
 	{tabset name="admin_blogs"}
 		{tab name="{tr}General Settings{/tr}"}
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="home_forum">{tr}Home Blog (main blog){/tr}</label>
-					<select name="homeBlog" id="blogs-home"{if !$blogs} disabled="disabled"{/if}>
-						{section name=ix loop=$blogs}
-							<option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $prefs.home_blog}selected="selected"{/if}>{$blogs[ix].title|truncate:$prefs.blog_list_title_len:"...":true|escape}</option>
-						{sectionelse}
-							<option value="" disabled="disabled" selected="selected">{tr}None{/tr}</option>
-						{/section}
-					</select>
-					{if $blogs}
-						<input type="submit" name="blogset" value="{tr}Set{/tr}" />
-					{else}
-						<a href="tiki-edit_blog.php" class="button" title="{tr}Create a blog{/tr}"> {tr}Create a blog{/tr} </a>
-					{/if}
-				</div>
-			</div>
-
+			{preference name=home_blog}
 			<fieldset>
 				<legend>
 					{tr}Features{/tr}{help url="Blog+Config"}

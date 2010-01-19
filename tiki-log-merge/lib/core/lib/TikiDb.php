@@ -117,42 +117,6 @@ abstract class TikiDb
 		}
 	} // }}}
 
-	protected function convertQuery( &$query ) // {{{
-	{
-		switch ($this->getServerType()) {
-			case "oci8":
-				$query = preg_replace("/`/", "\"", $query);
-
-				// convert bind variables - adodb does not do that
-				$qe = explode("?", $query);
-				$query = '';
-
-				$temp_max = count($qe) - 1;
-				for ($i = 0; $i < $temp_max; $i++) {
-					$query .= $qe[$i] . ":" . $i;
-				}
-
-				$query .= $qe[$i];
-			break;
-
-			case "pgsql":
-			case "postgres7":
-			case "postgres8":
-			case "sybase":
-				$query = preg_replace("/`/", "\"", $query);
-			break;
-
-			case "mssql":
-				$query = preg_replace("/`/","",$query);
-				$query = preg_replace("/\?/","'?'",$query);
-			break;
-
-			case "sqlite":
-				$query = preg_replace("/`/", "", $query);
-			break;
-		}
-	} // }}}
-
 	protected function convertQueryTablePrefixes( &$query ) // {{{
 	{
 		$db_table_prefix = $this->tablePrefix;
@@ -182,21 +146,7 @@ abstract class TikiDb
 		$sort_mode = preg_replace('/[^A-Za-z_,.]/', '', $sort_mode);
 
 		if ($sort_mode == 'random') {
-			$map = array(	"pgsql" => "RANDOM()",
-					"postgres7" => "RANDOM()",
-					"postgres8" => "RANDOM()",
-					"mysql3" => "RAND()",
-					"mysql" => "RAND()",
-					"mysqli" => "RAND()",
-					"mssql" => "NEWID()",
-					"firebird" => "1", // does this exist in tiki?
-
-					// below is still needed, return 1 just for not breaking query
-					"oci8" => "1",
-					"sqlite" => "1",
-					"sybase" => "1");
-
-			return $map[$this->getServerType()];
+			return "RAND()";
 		}
 
 		$sorts=explode(',', $sort_mode);
@@ -212,89 +162,17 @@ abstract class TikiDb
 				$sort .= 'asc';
 			}
 
-			switch ($this->getServerType()) {
-				case "pgsql":
-				case "postgres7":
-				case "postgres8":
-				case "oci8":
-				case "sybase":
-				case "mssql":
-					$sort = preg_replace('/_asc$/', '" asc', $sort);
-					$sort = preg_replace('/_desc$/', '" desc', $sort);
-					$sort = str_replace('.', '"."', $sort);
-					$sort = '"' . $sort;
-				break;
-
-				case "sqlite":
-					$sort = preg_replace('/_asc$/', ' asc', $sort);
-				$sort = preg_replace('/_desc$/', ' desc', $sort);
-				break;
-
-				case "mysql3":
-					case "mysql": 
-					case "mysqli":
-				default:
-					$sort = preg_replace('/_asc$/', '` asc', $sort);
-					$sort = preg_replace('/_desc$/', '` desc', $sort);
-					$sort = '`' . $sort;
-					$sort = str_replace('.', '`.`', $sort);
-					break;
-			}
+			$sort = preg_replace('/_asc$/', '` asc', $sort);
+			$sort = preg_replace('/_desc$/', '` desc', $sort);
+			$sort = '`' . $sort;
+			$sort = str_replace('.', '`.`', $sort);
 			$sorts[$k]=$sort;
 		}
 
 		$sort_mode=implode(',', $sorts);
 		return $sort_mode;
 	} // }}}
-
-	function convertBinary() // {{{
-	{
-		switch ($this->getServerType()) {
-		case "oci8":
-		case "pgsql":
-		case "postgres7":
-		case "postgres8":
-		case "sqlite":
-			return;
-
-		case "mysql3":
-		case "mysql":
-		case "mysqli":
-			return "binary";
-		}
-	} // }}}
 	
-	function cast( $var,$type ) // {{{
-	{
-		switch ($this->getServerType()) {
-		case "pgsql":
-		case "postgres7":
-		case "postgres8":
-			switch ($type) {
-				case "int":
-					return "$var::INT4";
-				case "string":
-					return "$var::VARCHAR";
-				default:
-					return($var);
-			}
-		case "sybase":
-			switch ($type) {
-			case "int":
-				return " CONVERT(numeric(14,0),$var) ";
-			case "string":
-				return " CONVERT(varchar(255),$var) ";
-			case "float":
-				return " CONVERT(numeric(10,5),$var) ";
-			default:
-				return($var);
-			}
-
-		default:
-			return($var);
-		}
-	} // }}}
-
 	function getQuery() // {{{
 	{
 		return $this->savedQuery;

@@ -82,7 +82,7 @@ array_unshift($inputConfiguration,array(
 		'xjxr'		=>	'int'
   ),
 	'staticKeyFiltersForArrays' => array(
-		'xjxargs' => 'striptags',
+		'xjxargs' => 'xss',
 	)
 ));
 

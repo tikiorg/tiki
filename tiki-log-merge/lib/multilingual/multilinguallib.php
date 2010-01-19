@@ -121,7 +121,7 @@ class MultilingualLib extends TikiLib
 	 */
 	function getTranslations($type, $objId, $objName='', $objLang='', $long=false) {
 		if ($type == 'wiki page') {
-			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 LEFT JOIN `tiki_pages` p ON p.`page_id`= " . $this->cast('t2.`objId`','int') . " where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
+			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 LEFT JOIN `tiki_pages` p ON p.`page_id`= t2.`objId` where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
 		}
 		elseif ($long) {
 			$query = "select t2.`objId`, t2.`lang`, a.`title` as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_articles` as a where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=? and a.`articleId`=t2.`objId`";
@@ -504,7 +504,7 @@ class MultilingualLib extends TikiLib
 			FROM
 				tiki_translated_objects a
 				INNER JOIN tiki_translated_objects b ON a.`traId` = b.`traId` AND a.`objId` <> b.`objId`
-				INNER JOIN tiki_pages_translation_bits bits ON " . $this->cast('b.`objId`','int') . " = bits.page_id
+				INNER JOIN tiki_pages_translation_bits bits ON b.`objId` = bits.page_id
 				LEFT JOIN tiki_pages_translation_bits self
 					ON bits.`translation_bit_id` = self.`original_translation_bit` AND self.`page_id` = ?
 			WHERE
@@ -817,7 +817,6 @@ class MultilingualLib extends TikiLib
         
 	function getTemplateIDInLanguage($section, $template_name, $language) {
 		global $templateslib; require_once 'lib/templates/templateslib.php';
-		// echo "<pre>-- multilinguallib.getTemplateIDInLanguage: \$template_name='$template_name', \$language='$language'</pre>\n";
 		$all_templates = $templateslib->list_templates($section, 0, -1, 'name_asc', '');
 		$looking_for_templates_named = array("$template_name-$language");
 		foreach ($looking_for_templates_named as $looking_for_this_template) {
@@ -825,12 +824,10 @@ class MultilingualLib extends TikiLib
 			foreach ($all_templates['data'] as $a_template) {
 				$a_template_name = $a_template['name'];
 				if ($a_template_name == $looking_for_this_template) {
-					// echo "<pre>-- multilinguallib.getTemplateIDInLanguage: returning '".$a_template['templateId']."'</pre>\n";
 					return $a_template['templateId'];
 				}
 			}
 		}
-		// echo "<pre>-- multilinguallib.getTemplateIDInLanguage: returning null</pre>\n";
 
 		return null;
 	}
@@ -838,7 +835,42 @@ class MultilingualLib extends TikiLib
 
 	function setMachineTranslationFeatureTo($on_or_off) {
 		$this->mtEnabled = $on_or_off;
+	} 
+
+	function getTranslationsInProgressFlags($page_id, $language) {
+		$fields = '`page_id`';
+		$valuesSpec = "?";
+		$values = array($page_id);
+		if ($language) {
+			$fields .= ', `language`';
+			$valuesSpec .= ", ?";
+			$values[] = $language;
+		}
+		$query = "select `language` from `tiki_translations_in_progress` where ($fields)=($valuesSpec)";
+		$query_result = $this->query($query, $values);
+		return $query_result->result;
 	}   
+
+	function addTranslationInProgressFlags($page_id, $language) {
+		//
+		// First, make sure that there isn't already a row in the table
+		// capturing the fact that this page is being translated from that language
+		// 
+		$translationInProgressForThatLanguage = $this->getTranslationsInProgressFlags($page_id, $language);
+		if (count($translationInProgressForThatLanguage) == 0) {
+			$query = "insert into `tiki_translations_in_progress` (`page_id`,`language`) values (?,?)";
+			$results = $this->query($query, array($page_id, $language));
+		}
+	}
+	
+
+	function deleteTranslationInProgressFlags($page_id, $language) {
+		$query = 
+			"DELETE FROM `tiki_translations_in_progress`\n".
+			"   WHERE (`page_id`, `language`) = ('$page_id', '$language')";	
+		$results = $this->query($query, array($page_id, $language));
+	}
 }
+
 
 $multilinguallib = new MultilingualLib;

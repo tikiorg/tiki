@@ -69,15 +69,16 @@ class="icon">{$watching_categories[i].name}</a>&nbsp;
 	{/if}
 			
 	<div class="clearfix postbody">
-		
 		<div class="clearfix postbody-title">
-	{if $show_avatar eq 'y'}
-		{$listpages[ix].avatar}
-	{/if}
+		{if $show_avatar eq 'y'}
+			{$listpages[ix].avatar}
+		{/if}
+		
+		{if $use_title eq 'y'}
 			<div class="title">
 				<h2><a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{$listpages[ix].title|escape}</a></h2>
-			</div>
-			
+			</div>	
+		{/if}		
 		</div><!-- postbody-title -->
 
 		<div class="author_actions clearfix">
@@ -93,8 +94,17 @@ class="icon">{$watching_categories[i].name}</a>&nbsp;
 			</div>
 			
 			<div class="author_info">
-		{tr}By{/tr} {$listpages[ix].user|userlink}
-		{tr}on{/tr} {$listpages[ix].created|tiki_short_datetime}
+			{if $use_author eq 'y' || $add_date eq 'y'}
+			{tr}Published {/tr}
+			{/if}
+			
+			{if $use_author eq 'y'}
+			{tr}by{/tr} {$listpages[ix].user|userlink}
+			{/if}
+			
+			{if $add_date eq 'y'}
+			{tr}at{/tr} {$listpages[ix].created|tiki_short_datetime}
+			{/if}
 
 			</div>
 		</div><!-- author_actions -->

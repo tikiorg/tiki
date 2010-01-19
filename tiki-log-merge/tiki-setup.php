@@ -70,13 +70,7 @@ if ($prefs['feature_debug_console'] == 'y') {
 	include_once ('lib/debug/debugger.php');
 }
 if ($prefs['feature_integrator'] == 'y') require_once ('lib/setup/integrator.php');
-if ($prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'random') {
-	include_once ('lib/search/refresh.php');
-	include_once('lib/search/refresh-functions.php');
 
-	register_shutdown_function('refresh_search_index');
-
-}
 if (isset($_REQUEST['comzone'])) require_once ('lib/setup/comments_zone.php');
 if ($prefs['feature_lastup'] == 'y') require_once ('lib/setup/last_update.php');
 if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive_translation_mode'] == 'on')) {
@@ -185,7 +179,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 	
 	if( $prefs['feature_jquery_ui'] == 'y' || $prefs['feature_jquery_tooltips'] == 'y' || $prefs['feature_jquery_autocomplete'] == 'y' || $prefs['feature_jquery_superfish'] == 'y' || $prefs['feature_jquery_reflection'] == 'y' || $prefs['feature_jquery_cycle'] == 'y' || $prefs['feature_shadowbox'] == 'y' ) {
 		$headerlib->add_jsfile( "lib/jquery/jquery.cookie.js" );
-		$headerlib->add_jsfile( "lib/jquery/jquery.async.js" );
+		$headerlib->add_jsfile( "lib/jquery/jquery.async.js", 10 );
 		$headerlib->add_jsfile( "lib/jquery/jquery.columnmanager/jquery.columnmanager.js" );
 		$headerlib->add_jsfile( "lib/jquery/treeTable/src/javascripts/jquery.treeTable.js" );
 		$headerlib->add_cssfile( "lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css" );

@@ -20,8 +20,7 @@ if ($fp) {
       	 	$fdata .= fread($fp, filesize('.htaccess')); 
 	}
 	fclose ($fp);
-	
-	if (strpos($fdata,'tiki-index.php?page=$1') !== FALSE) {
+	if (strpos($fdata, 'TikiWiki Version: ' . $TWV->version) !== FALSE) {
 		$needtowarn = 0;
 	} 
 }

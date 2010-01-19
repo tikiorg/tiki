@@ -77,6 +77,11 @@ if ($tiki_p_subscribe_newsletters == 'y') {
 		if ($tiki_p_subscribe_email != 'y') {
 			$_REQUEST["email"] = $userlib->get_user_email($user);
 		}
+		// Save the ip at the log for email subscriptions from anonymous
+		if (empty($user)) { 
+			$logslib->add_log('newsletter','subscribed email '.$_REQUEST["email"].' to newsletter '.$_REQUEST["nlId"]);
+			$smarty->assign('subscribed', 'y'); // will receive en email
+		}
 		// Now subscribe the email address to the newsletter
 		$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
 		if ($nl_info['allowAnySub'] != 'y' && $user) {

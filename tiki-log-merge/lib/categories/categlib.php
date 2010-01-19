@@ -289,7 +289,7 @@ class CategLib extends ObjectLib
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`, `rootCategId`) values(?,?,?,?,?)";
 		$result = $this->query($query,array($name,$description,(int) $parentId, 0, $rootCategId));
-		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=?";
+		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=? order by `categId` desc";
 		$id = $this->getOne($query,array($name,(int) $parentId));
 		if (empty($rootCategId)) {
 			$cachelib->invalidate('allcategs');
@@ -937,7 +937,7 @@ class CategLib extends ObjectLib
 		
 		global $prefs; if(!$prefs) require_once 'lib/setup/prefs.php';
 		$exclude = $this->exclude_categs ($prefs['ws_container'], "", $showWS);
-		$query = "select * from `tiki_categories` $exclude order by `name`";
+		$query = "select * from `tiki_categories` $exclude order by `name` asc, `categId` desc";
 		if (!empty($prefs['ws_container']))
 			$bindvals = array($prefs['ws_container']);
 		else
@@ -1666,8 +1666,9 @@ class CategLib extends ObjectLib
 	// Returns the categories a new object should be in by default, that is none in general, or the perspective categories if the user is in a perspective.
 	function get_default_categories() {
 		global $prefs;
-		if( ! empty( $prefs['category_jail'] ) ) {
-			return explode( ',', $prefs['category_jail'] );
+		if( $this->get_jail() ) {
+			// Default categories are not the entire jail including the sub-categories but only the "root" categories
+			return $prefs['category_jail'];
 		} else {
 			return array();
 		}
@@ -1675,8 +1676,11 @@ class CategLib extends ObjectLib
 
 	// Returns an array containing the ids of the passed $objects present in any of the passed $categories.
 	function filter_objects_categories($objects, $categories) {
-		$query="SELECT `catObjectId` from `tiki_category_objects` where `categId` in (".implode(',', array_fill(0,count($categories),'?')).") AND `catObjectId` in (".implode(',', array_fill(0,count($objects),'?')).")";
-		$result = $this->query($query, array_merge($categories, $objects));
+		$query="SELECT `catObjectId` from `tiki_category_objects` where `catObjectId` in (".implode(',', array_fill(0,count($objects),'?')).")";				
+		if ($categories) {
+			$query .= " and `categId` in (".implode(',', array_fill(0,count($categories),'?')).")";
+		}	
+		$result = $this->query($query, array_merge($objects, $categories));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[]=$res["catObjectId"];

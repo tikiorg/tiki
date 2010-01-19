@@ -52,7 +52,7 @@
 					<span class='searchMenu'>
 						{tr}in{/tr}
 						<select name="where">
-							{if empty($where_list)} {* Required when file included outside tiki-searchindex.php. eg. error.rpl *}
+							{if empty($where_list)} {* Required when file included outside tiki-searchresults.php. eg. error.tpl *}
 								<option value="pages">{tr}Entire Site{/tr}</option>
 								{if $prefs.feature_wiki eq 'y'}
 									<option value="wikis">{tr}Wiki Pages{/tr}</option>
@@ -105,7 +105,7 @@
 				<input type="submit" name="search" value="{tr}Go{/tr}"/>
 			</label>
 			{if !$searchNoResults}
-				{button _auto_args='highlight' href="tiki-searchindex.php?highlight=" _text="{tr}Clear Filter{/tr}"}
+				{button _auto_args='highlight' href="tiki-searchresults.php?highlight=" _text="{tr}Clear Filter{/tr}"}
 			{/if}
 		</form>
 	{/if}
@@ -138,7 +138,7 @@
 				<span class="itemhits">({tr}Hits{/tr}: {$results[search].hits|escape})</span>
 			{/if}
 
-			{if $prefs.feature_search_show_pertinence eq 'y' && $prefs.feature_search_fulltext eq 'y'}
+			{if $prefs.feature_search_show_pertinence eq 'y'}
 				<span class="itemrelevance">
 					{if $results[search].relevance <= 0}
 						({tr}Simple search{/tr})

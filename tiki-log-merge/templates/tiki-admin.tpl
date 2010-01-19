@@ -2,7 +2,7 @@
 {popup_init src="lib/overlib.js"}
 {title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
 
-{if $prefs.feature_search_preferences eq 'y'}
+{if $prefs.feature_search_preferences eq 'y' and $smarty.get.page != 'profiles'}
 <form method="post" action="">
 	{remarksbox type="note" title="{tr}Development Notice{/tr}"}
 		{tr}Unless a significant amount of preferences are documented and use dynamic preferences before the 5.0 release, this search feature 
@@ -15,11 +15,13 @@ the <a href="tiki-edit_perspective.php">perspectives GUI</a> to work.{/tr}
 		<input type="submit" value="{tr}Search{/tr}"/></label>
 	</p>
 </form>
-{if $lm_searchresults}
+{if $lm_error}
+	{remarksbox type="warning" title="{tr}Search error{/tr}"}{$lm_error}{/remarksbox}
+{elseif $lm_searchresults}
 	<form method="post" action="">
 		<hr class="clear"/>
 		{foreach from=$lm_searchresults item=prefName}
-			{preference name=$prefName}
+			{preference name=$prefName get_pages="y"}
 		{/foreach}
 		<input type="submit" value="{tr}Change{/tr}" class="clear"/>
 		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}"/>
@@ -52,7 +54,7 @@ Add a value in first check when you create a new admin page. *}
 "metatags", "performance", "security", "wikiatt", "score", "community", "messages",
 "calendar", "intertiki", "kaltura", "freetags", "gmap",
 "i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
-"multimedia", "ads", "profiles", "semantic", "plugins", "webservices",
+ "ads", "profiles", "semantic", "plugins", "webservices",
 'sefurl', 'connect', 'metrics', 'payment'))}
   {assign var="include" value=$smarty.get.page}
 {else}

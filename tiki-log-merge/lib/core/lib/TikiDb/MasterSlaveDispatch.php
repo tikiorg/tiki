@@ -84,11 +84,6 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 		$this->getApplicable()->handleQueryError( $query, $values, $result );
 	} // }}}
 
-	protected function convertQuery( &$query ) // {{{
-	{
-		$this->getApplicable( $query )->convertQuery( $query );
-	} // }}}
-
 	protected function convertQueryTablePrefixes( &$query ) // {{{
 	{
 		$this->getApplicable( $query )->convertQueryTablePrefixes( $query );
@@ -97,16 +92,6 @@ class TikiDb_MasterSlaveDispatch extends TikiDb
 	function convertSortMode( $sort_mode ) // {{{
 	{
 		return $this->getApplicable()->convertSortMode( $sort_mode );
-	} // }}}
-
-	function convertBinary() // {{{
-	{
-		return $this->getApplicable()->convertBinary();
-	} // }}}
-	
-	function cast( $var,$type ) // {{{
-	{
-		return $this->getApplicable()->cast( $var, $type );
 	} // }}}
 
 	function getQuery() // {{{

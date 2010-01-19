@@ -1315,39 +1315,6 @@ class TrackerLib extends TikiLib
 				}
 			}
 
-			if ( $ins_fields["data"][$i]["type"] == 'M' && $ins_fields["data"][$i]["options_array"][0] >= '3' && isset($ins_fields["data"][$i]['value'])) {
-					$itId = $itemId ? $itemId : $new_itemId;
-					$old_file = $this->get_item_value($trackerId, $itemId, $ins_fields["data"][$i]['fieldId']);
-					if($ins_fields["data"][$i]["value"] == 'blank') {
-						if(file_exists($old_file)) {
-							unlink($old_file);
-						}
-						$ins_fields["data"][$i]["value"] = '';
-					} else if( $ins_fields["data"][$i]['value'] != '' ) {
-						$opts = split(',', $ins_fields['data'][$i]["options"]);
- 						global $filegallib;
-						if(  $ins_fields["data"][$i]["options_array"][0] == '3' ||  $ins_fields["data"][$i]["options_array"][0] == '5' ) {// flv
-						$Mytype="video/x-flv";
-						}
-						else {	//MP3
-						$Mytype="audio/x-mp3";
-						}
-						$fileGalId=$filegallib->insert_file($prefs['MultimediaGalerie'],$ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["file_name"] , $ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["value"] ,$ins_fields["data"][$i]["file_size"] ,$Mytype , $user,"" , '', "system", time(), $lockedby=NULL) ;
-						$ins_fields["data"][$i]['value']=$fileGalId;
-
- 						if (!$fileGalId) {
-							$errors[] = tra('Upload was not successful. Duplicate file content ?'). ': ' . $name;
-// 						if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
-// 							@unlink($savedir . $fhash);
-// 						}
-// 						if ( $prefs['URLAppend'] == "" ) { }
-						$ins_fields["data"][$i]["value"]="$fileGalId";
-
-					}
-					     }
-
-					}
-
 				// ---------------------------
                 if (isset($ins_fields["data"][$i]["fieldId"]))
 				   $fieldId = $ins_fields["data"][$i]["fieldId"];
@@ -1725,10 +1692,6 @@ class TrackerLib extends TikiLib
 			$categlib->categorize($catObjectId, $currentCategId);
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('tracker_items', $itemId);
-		}
 		$parsed = '';
 		if ($ins_fields['data'][$i]['type'] == 'a') {
 			$parsed .= $ins_fields['data'][$i]['value']."\n";
@@ -1834,10 +1797,9 @@ class TrackerLib extends TikiLib
 			return 'Duplicate header names';
 		}
 		$total = 0;
-		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		while (($data = fgetcsv($csvHandle,100000,  $csvDelimiter)) !== FALSE) {
-			$status = $tracker_info['defaultStatus'];
+			$status = 'o';
 			$itemId = 0;
 			$created = $tikilib->now;
 			$lastModif = $created;
@@ -1877,7 +1839,6 @@ class TrackerLib extends TikiLib
 				}
 				$replace = false;
 			}
-			$need_reindex[] = $itemId;
 			if (!empty($cats)) {
 				$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
 			}
@@ -1937,11 +1898,6 @@ class TrackerLib extends TikiLib
 			$total++;
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' && is_array($need_reindex) ) {
-			require_once('lib/search/refresh-functions.php');
-			foreach ( $need_reindex as $id ) refresh_index('tracker_items', $id);
-			unset($need_reindex);
-		}
 		$cant_items = $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
 		$query = "update `tiki_trackers` set `items`=?,`lastModif`=?  where `trackerId`=?";
 		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
@@ -2020,46 +1976,8 @@ class TrackerLib extends TikiLib
 						$erroneous_values[] = $f;
 					}
 					break;
-				//multimedia
-				case 'M':
-				if ( empty($f['options_array'][0])
-					||$f['options_array'][0] == '0' ) {
-					//MP3 link file in gallery expected
-					  $file=$prefs['URLAppend'].$f['value'];
-					  list($rest1,$idfilegal)=split('=',$file);
-					  global $filegallib ; include_once ('lib/filegals/filegallib.php');
-					  $info = $filegallib->get_file_info($idfilegal);
-					  $filetype = $info['filetype'];
-					  if ( $filetype != "audio/x-mp3" && $filetype != "audio/mpeg" ) {
-					$f['error'] = tra('Field is not a link to mp3 in the gallery');
-					$erroneous_values[] = $f;
-					  }
-					}
-				elseif ($f['options_array'][0] == '1' ) {
-					// FLV link in gallery expected
-					  $file=$prefs['URLAppend'].$f['value'] ;
-					  list($rest1,$idfilegal)=split('=',$file);
-					  global $filegallib ;include_once ('lib/filegals/filegallib.php');
-					  $info = $filegallib->get_file_info($idfilegal);
-					  $filetype = $info['filetype'];
-					  if ( $filetype != "video/x-flv" ) {
-				   	   $f['error'] = tra('Field is not a link to FLV in the gallery');
-					   $erroneous_values[] = $f;
-					  }
-					}
-				elseif ($f['options_array'][0] == '2' ) {
-					// FLV or MP3 link in gallery expected
-					  $file=$prefs['URLAppend'].$f['value'] ;
-					  list($rest1,$idfilegal)=split('=',$file);
-					  global $filegallib ;include_once ('lib/filegals/filegallib.php');
-					  $info = $filegallib->get_file_info($idfilegal);
-					  $filetype = $info['filetype'];
-					  if ( $filetype != "video/x-flv" && $filetype != "audio/x-mp3" && $filetype != "audio/mpeg" ) {
-				   	   $f['error'] = tra('Field is not a link to FLV or MP3 in the gallery');
-					   $erroneous_values[] = $f;
-					  }
-					}
-				break;
+
+				// password					
 				case 'p':
 				if ($f['options_array'][0] == 'password') {
 					global $userlib;
@@ -2326,11 +2244,6 @@ class TrackerLib extends TikiLib
 		}
 		$this->clear_tracker_cache($trackerId);
 
-		global $prefs;
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('trackers', $trackerId);
-		}
 		if ($descriptionIsParsed == 'y') {
 			$this->syncParsedText($description, array('type'=>'tracker', 'object'=>$trackerId, 'href'=>"tiki-view_tracker.php?trackerId=$trackerId", 'description'=>$description));
 		}
@@ -2797,7 +2710,7 @@ class TrackerLib extends TikiLib
 				<dt>Description:
 				<dd><strong>[list of items]</strong> is the list of all values you want in the set, separated by commas;
 				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear as the one selected.
-				<dd>If first option is &lt;br&gt;, options will be separated with a carriaage return
+				<dd>If first option is &lt;br&gt;, options will be separated with a carriage return
 				</dl>'));
 		$type['u'] = array(
 			'label'=>tra('user selector'),
@@ -2962,6 +2875,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[fieldId]</strong> is the field in [trackerId] from which you can select a value among all the field values of the items of [trackerId];
 				<dd><strong>[linkToItem]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to the item in the other tracker;
 				<dd><strong>[displayedFieldsList]</strong> is a list of fields in [trackerId] to display instead of [fieldId], multiple fields can be separated with a |;
+				<dd><strong>[status]</strong> filter on status (o, p, c, op, oc, pc or opc);
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['l'] = array(
@@ -3012,20 +2926,6 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows users to enter an url in a wiki syntax.
-				</dl>'));
-		$type['M'] = array(
-			'label'=>tra('multimedia'),
-			'opt'=>true,
-			'help'=>tra('<dl>
-				<dt>Function: Will play MP3 or FLV files, as specified, in a player.
-				<dt>Usage: <strong>source,xSize,ySize</strong>
-				<dt>Description:
-				<dd><strong>[source]</strong> is one of [0|1|2|3|4|5] where 0 is default and will support a URL in the file gallery for MP3, 1 for URL in file gallery for FLV, 2 for URL in file gallery of either MP3 or FLV, 3 to upload an MP3 file to be played, 4 to upload an FLV file to be played, 5 to upload either an MP3 or FLV file;
-				<dd><strong>[xSize]</strong> is the width in pixels of the player applet (default 200);
-				<dd><strong>[ySize]</strong> is the height in pixels of the player applet (default 100);
-				<dd>multiple options must appear in the order specified, separated by commas.
-				<dd>this is best-used as a tracker item that is not generally editable and you want a specific file played;
-					edit the tracker item and provide the URL for the file you wish to play.
 				</dl>'));
 		$type['q'] = array(
 			'label'=>tra('auto-increment'),

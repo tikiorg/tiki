@@ -62,10 +62,10 @@
 				{preference name=wiki_edit_icons_toggle}
 				{preference name=wiki_edit_minor}
 				<div class="adminoptionboxchild" id="wiki_edit_minor_childcontainer">
-					{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications.{/tr}.
+					{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications (unless "Watch minor edits" is enabled).{/tr}
 						<br />
 						{tr}Only user groups granted the tiki_p_minor permission (and admins) will be able to save minor edits when this is enabled.{/tr}
-						<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Registered" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+						<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=minor&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 					{/remarksbox}
 				</div>
 				{preference name=feature_wiki_mandatory_category}
@@ -80,7 +80,7 @@
 			
 			{preference name=feature_wiki_comments}
 			<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
-				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+				<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=comment&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 				{preference name=wiki_comments_displayed_default}
 				{preference name=wiki_comments_notitle}
 				{preference name=wiki_comments_per_page}
@@ -91,7 +91,7 @@
 
 			{preference name=feature_wiki_attachments}
 			<div class="adminoptionboxchild" id="feature_wiki_attachments_childcontainer">
-				<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+				<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=attach&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 					{preference name=w_displayed_default}
 					{preference name=w_use_db}
 					<div class="adminoptionboxchild">
@@ -146,14 +146,14 @@
 
 		{preference name=feature_wiki_pictures}
 		<div class="adminoptionboxchild" id="feature_wiki_pictures_childcontainer">
-			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=picture&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 			{preference name=feature_filegals_manager}
 			{button href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
 		</div>
 
 		{preference name=feature_wiki_export}
 		<div class="adminoptionboxchild" id="feature_wiki_export_childcontainer">
-			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=export&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 			{button href="tiki-export_wiki_pages.php" _text="{tr}Export Wiki Pages{/tr}"}
 		</div>
     
@@ -165,7 +165,7 @@
 
 		{preference name=feature_history}
 		<div class="adminoptionboxchild" id="feature_history_childcontainer">
-			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=history&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 			{preference name=maxVersions}
 			{preference name=keep_versions}
 			{preference name=feature_wiki_history_ip}
@@ -176,22 +176,22 @@
 		{preference name=feature_wiki_discuss}
 		<div class="adminoptionboxchild" id="feature_wiki_discuss_childcontainer">
 			{preference name=wiki_forum_id}
-			<a class="link" href="tiki-assignpermission.php?level=forum" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			<a class="link" href="tiki-objectpermissions.php?permType=forums" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
 
 		{preference name=feature_source}
 		<div class="adminoptionboxchild" id="feature_source_childcontainer">
-			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=source&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
 
 		{preference name=feature_wiki_ratings}
 		<div class="adminoptionboxchild" id="feature_wiki_ratings_childcontainer">
-			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=ratings&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
 
 		{preference name=feature_backlinks}
 		<div class="adminoptionboxchild" id="feature_backlinks_childcontainer">
-			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=backlinks&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
 
 		{preference name=feature_semantic}
@@ -221,7 +221,7 @@
 
 		{preference name=feature_wiki_usrlock}
 		<div class="adminoptionboxchild" id="feature_wiki_usrlock_childcontainer">
-			<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=lock&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
 
 		{preference name=wiki_creator_admin}

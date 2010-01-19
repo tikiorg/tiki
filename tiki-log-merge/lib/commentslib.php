@@ -963,12 +963,6 @@ class Comments extends TikiLib
 					array($name,(int) $this->now));
 		}
 
-		global $prefs;
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('forums', $forumId);
-		}
-
 		return $forumId;
 	}
 
@@ -1007,7 +1001,7 @@ class Comments extends TikiLib
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " AND `name` like ? or `description` like ? ";
+			$mid = " AND `tiki_forums`.`name` like ? or `tiki_forums`.`description` like ? ";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		} else {
@@ -1186,8 +1180,7 @@ class Comments extends TikiLib
 		$result = $this->query($query, array((int) $forumId));
 
 		$lastPost = $this->getOne("select max(`commentDate`) from
-				`tiki_comments`,`tiki_forums` where `object` = ".$this->cast("`forumId`", "string").
-				" and `objectType` = 'forum' and
+				`tiki_comments`,`tiki_forums` where `object` = `forumId` and `objectType` = 'forum' and
 				`forumId` = ?", array( (int) $forumId ) );
 		$query = "update `tiki_forums` set `lastPost`=? where
 			`forumId`=? ";
@@ -2053,10 +2046,6 @@ class Comments extends TikiLib
 				$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 			}
 
-			if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-				require_once('lib/search/refresh-functions.php');
-				refresh_index('comments', $threadId);
-			}
 			if ($object[0] == 'forum') {
 				$type = 'forum post';
 			} else {
@@ -2194,10 +2183,6 @@ class Comments extends TikiLib
 		$threadId = $this->getOne("select `threadId` from
 				`tiki_comments` where `hash`=?", array( $hash ) );
 
-		/* Force an index refresh of the data */
-		include_once("lib/search/refresh-functions.php");
-		refresh_index_comments( $threadId );
-
 		global $prefs;
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
@@ -2217,10 +2202,6 @@ class Comments extends TikiLib
 			$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('comments', $threadId);
-		}
 		if ($object[0] == 'forum') {
 			$type = 'forum post';
 		} else {

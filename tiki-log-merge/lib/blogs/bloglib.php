@@ -151,17 +151,17 @@ class BlogLib extends TikiLib
 	 * @access public
 	 * @return int blogId
 	 */
-	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, $heading, $use_title, $use_find, $allow_comments, $show_avatar) {
+	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, $heading, $use_title, $use_author, $add_date, $use_find, $allow_comments, $show_avatar) {
 		global $prefs;
 		if ($blogId) {
-			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=? where `blogId`=?";
+			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_author`=?,`add_date`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=? where `blogId`=?";
 
-			$result = $this->query($query, array($title, $description, $user, $public, $this->now, $maxPosts, $heading, $use_title, $use_find, $allow_comments, $show_avatar, $blogId));
+			$result = $this->query($query, array($title, $description, $user, $public, $this->now, $maxPosts, $heading, $use_title, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $blogId));
 			$this->syncParsedText($heading, array('type'=>'blog', 'object'=>$blogId));
 		} else {
-			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_find`,`allow_comments`,`show_avatar`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_author`,`add_date`,`use_find`,`allow_comments`,`show_avatar`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query, array((int) $this->now, (int) $this->now, $title, $description, $user, $public, 0, (int) $maxPosts, 0, $heading, $use_title, $use_find, $allow_comments, $show_avatar));
+			$result = $this->query($query, array((int) $this->now, (int) $this->now, $title, $description, $user, $public, 0, (int) $maxPosts, 0, $heading, $use_title, $use_author, $add_date, $use_find, $allow_comments, $show_avatar));
 			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
 			$blogId = $this->getOne($query2, array((int) $this->now));
 
@@ -171,10 +171,6 @@ class BlogLib extends TikiLib
 			$this->syncParsedText($heading, array('type'=>'blog', 'object'=>$blogId, 'description'=>$description, 'name'=>$title, 'href'=>"tiki-view_blog.php?blogId=$blogId"));
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blogs', $blogId);
-		}
 		return $blogId;
 	}
 
@@ -192,7 +188,7 @@ class BlogLib extends TikiLib
 	 * @access public
 	 * @return array posts
 	 */
-	function list_blog_posts($blogId = 0, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date_min = '', $date_max = '', $approved = 'y') {
+	function list_blog_posts($blogId = 0, $allowDrafts = false, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date_min = '', $date_max = '', $approved = 'y') {
 		global $tiki_p_admin_comments;
 
 		$mid = array();
@@ -218,6 +214,11 @@ class BlogLib extends TikiLib
 			$mid[] = "`created`<=?";
 			$bindvars[] = (int)$date_max;
 		}
+		if ( !$allowDrafts ){
+			$mid[] = "`priv`='n'";
+		}
+
+		
 		$mid = empty($mid) ? '' : 'where ' . implode(' and ', $mid);
 
 		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
@@ -419,10 +420,6 @@ class BlogLib extends TikiLib
 			$logslib->add_action('Posted', $blogId, 'blog', "blogId=$blogId&amp;postId=$id&amp;add=" . strlen($data) . "#postId$id", '', '', '', '', $contributions);
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blog_posts', $id);
-		}
 		$this->syncParsedText($data, array('type'=>'blog post', 'object'=>$id, 'description'=>substr($edit_data, 0, 200), 'name'=>$title, 'href'=>"tiki-view_blog_post.php?postId=$id"));
 
 		return $id;
@@ -527,10 +524,6 @@ class BlogLib extends TikiLib
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);
-		}
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('blog_posts', $postId);
 		}
 		$this->syncParsedText($data, array('type'=>'blog post', 'object'=>$postId));
 	}

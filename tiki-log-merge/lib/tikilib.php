@@ -295,12 +295,12 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	function remove_user_watch($user, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_user_watches` where ".$this->convertBinary()." `user`=? and `event`=? and `object`=? and `type` = ?";
+		$query = "delete from `tiki_user_watches` where binary `user`=? and `event`=? and `object`=? and `type` = ?";
 		$this->query($query,array($user,$event,$object,$type));
 	}
 
 	function remove_group_watch($group, $event, $object, $type = 'wiki page') {
-		$query = "delete from `tiki_group_watches` where ".$this->convertBinary()." `group`=? and `event`=? and `object`=? and `type` = ?";
+		$query = "delete from `tiki_group_watches` where binary `group`=? and `event`=? and `object`=? and `type` = ?";
 		$this->query($query,array($group,$event,$object,$type));
 	}
 
@@ -313,7 +313,7 @@ class TikiLib extends TikiDb_Bridge
 			$bindvars[]=$event;
 		}
 
-		$query = "select * from `tiki_user_watches` where ".$this->convertBinary()." `user`=? $mid";
+		$query = "select * from `tiki_user_watches` where binary `user`=? $mid";
 		$result = $this->query($query,$bindvars);
 		$ret = array();
 
@@ -4461,7 +4461,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function set_lastUpdatePrefs() {
-		$query = "update `tiki_preferences` set `value`=".$this->cast('value','int')."+1 where `name`=?";
+		$query = "update `tiki_preferences` set `value`=`value`+1 where `name`=?";
 		$this->query($query, array('lastUpdatePrefs'));
 	}
 
@@ -4825,11 +4825,6 @@ class TikiLib extends TikiDb_Bridge
 			$this->score_event($user, 'wiki_new');
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('pages', $name);
-		}
-
 		$this->syncParsedText($data, array('type'=> 'wiki page', 'object'=> $page, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$page"));
 
 		return true;
@@ -4883,6 +4878,19 @@ class TikiLib extends TikiDb_Bridge
 
 			// Be sure to have the correct character case (because DB is caseinsensitive)
 			$pageNameEncode = urlencode($row['pageName']);
+
+			// Limit memory usage of the page cache.  No 
+			// intelligence is attempted here whatsoever.  This was 
+			// done because a few thousand ((page)) links would blow 
+			// up memory, even with the limit at 128MiB.  
+			// Information on 128 pages really should be plenty.
+			while( count($this->cache_page_info) >= 128 )
+			{
+				// Need to delete something; pick at random
+				$keys=array_keys($this->cache_page_info);
+				$num=rand(0,count($keys));
+				unset($this->cache_page_info[$keys[$num]]);
+			}
 
 			$this->cache_page_info[$pageNameEncode] = $row;
 
@@ -7654,10 +7662,6 @@ class TikiLib extends TikiDb_Bridge
 			}
 
 		}
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('pages', $pageName);
-		}
 		$this->syncParsedText($edit_data, array('type'=>'wiki page', 'object'=>$pageName));
 	}
 	function syncParsedText($text, $context) {
@@ -8029,7 +8033,7 @@ class TikiLib extends TikiDb_Bridge
 	// Comparison function used to sort languages by their name in the
 	// current locale.
 	static function formatted_language_compare($a, $b) {
-		return strcmp($a['name'], $b['name']);
+		return strcasecmp($a['name'], $b['name']);
 	}
 	// Returns a list of languages formatted as a twodimensionel array
 	// with 'value' being the language code and 'name' being the name of
@@ -8502,11 +8506,11 @@ JS;
 
 	function get_jail() {
 		global $prefs;
-		if( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) ) {
+		if( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) && $prefs['category_jail'] != array(0 => 0) ) {
+			// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
 			global $categlib; require_once ('lib/categories/categlib.php');
 			$key = $prefs['category_jail'];
-			$categories = explode( ',', $prefs['category_jail'] );
-
+			$categories = $prefs['category_jail'];
 			if( $prefs['expanded_category_jail_key'] != $key ) {
 				$additional = array();
 
@@ -8523,6 +8527,8 @@ JS;
 			}
 
 			return explode( ',', $prefs['expanded_category_jail'] );
+		} else {
+			return array();
 		}
 	}
 

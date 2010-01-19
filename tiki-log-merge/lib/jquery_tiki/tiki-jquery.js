@@ -102,14 +102,14 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	// tooltip functions and setup
 	if (jqueryTiki.tooltips) {	// apply "cluetips" to all .tips class anchors
 	
-		$jq('.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
-		$jq('.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
-		$jq('.tikihelp').cluetip({splitTitle: ':', width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
+		$jq('.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
+		$jq('.titletips').cluetip({splitTitle: '|', cluezIndex: 400, clickThrough: true});
+		$jq('.tikihelp').cluetip({splitTitle: ':', width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
 		$jq('.stickytips').cluetip({ showTitle: false, width: 'auto', cluezIndex: 400, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml', fx: {open: 'fadeIn', openSpeed: 'fast'}});
 		
 		// repeats for "tiki" buttons as you cannot set the class and title on the same element with that function (it seems?)
-		$jq('span.button.tips a').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
-		$jq('span.button.titletips a').cluetip({splitTitle: '|', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}});
+		$jq('span.button.tips a').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
+		$jq('span.button.titletips a').cluetip({splitTitle: '|', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
 		
 		// override overlib
 		convertOverlib = function (element, tip, params) {	// process modified overlib event fn to cluetip from {popup} smarty func
@@ -117,6 +117,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			if (element.processed) { return false; }
 			
 			var options = {};
+			options.clickThrough = true;
 			for (var param in params) {
 				var val = "";
 				var i = params[param].indexOf("=");
@@ -140,6 +141,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 						break;
 					case "onclick":
 						options.activation = 'click';
+						options.clickThrough = false;
 						break;
 					case "width":
 						options.width = val;
@@ -207,7 +209,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 		
 		nd = function() {
 			$jq("#cluetip").hide();
-		}
+		};
 	}	// end cluetip setup
 	
 	// superfish setup (CSS menu effects)
@@ -536,17 +538,106 @@ function popupPluginForm(area_name, type, index, pageName, pluginArgs, bodyConte
 			textarea.selectionEnd = tempSelectionEnd;
 		}
 	}
-// getElementById(area_name).focus(); // unsuccesfull attempt to get Fx3.5/win
-// to keep selection info
 }
 
-// temporary debug helper
-//setInterval(function () {
-//	$jq("#qe-1").val( $jq("#editwiki")[0].selectionStart + "," + $jq("#editwiki")[0].selectionEnd );
-//}, 200);
+/*
+ * JS only textarea fullscreen function (for Tiki 5+)
+ */
+
+var fullScreenState = [];
+
+function toggleFullScreen(area_name) {
+	var $ta = $jq("#" + area_name);
+	if (!$ta.length) {
+		$ta = $jq(getElementById(area_name));
+	}
+	
+	if (fullScreenState[area_name]) {	// leave full screen
+		
+		$ta.width(fullScreenState[area_name]["ta"]["width"]).height(fullScreenState[area_name]["ta"]["height"]);
+		$ta.resizable({minWidth: fullScreenState[area_name]["resizable"]["minWidth"], minHeight: fullScreenState[area_name]["resizable"]["minHeight"]});
+		
+		for(var i = 0; i < fullScreenState[area_name]["hidden"].length; i++) {
+			fullScreenState[area_name]["hidden"][i].show();
+		}
+		
+		for (var i = 0; i < fullScreenState[area_name]["changed"].length; i++) {
+			var $el = $jq(fullScreenState[area_name]["changed"][i]["el"]);
+			$el.css("margin-left", fullScreenState[area_name]["changed"][i]["margin-left"])
+				.css("margin-right", fullScreenState[area_name]["changed"][i]["margin-right"])
+				.css("margin-top", fullScreenState[area_name]["changed"][i]["margin-top"])
+				.css("margin-bottom", fullScreenState[area_name]["changed"][i]["margin-bottom"])
+				.css("padding-left", fullScreenState[area_name]["changed"][i]["padding-left"])
+				.css("padding-right", fullScreenState[area_name]["changed"][i]["padding-right"])
+				.css("padding-top", fullScreenState[area_name]["changed"][i]["padding-top"])
+				.css("padding-bottom", fullScreenState[area_name]["changed"][i]["padding-bottom"])
+				.width(fullScreenState[area_name]["changed"][i]["width"])
+				.height(fullScreenState[area_name]["changed"][i]["height"]);
+		}
+		
+		$jq(".fs_clones").remove();
+		$jq(document.documentElement).css("overflow","auto");
+		
+		fullScreenState[area_name] = false;
+		
+	} else {		// go full screen
+		$jq(window).scrollTop(0);
+		$jq(document.documentElement).css("overflow","hidden");
+		
+		fullScreenState[area_name] = [];
+		fullScreenState[area_name]["hidden"] = [];
+		fullScreenState[area_name]["changed"] = [];
+		fullScreenState[area_name]["resizable"] = [];
+		fullScreenState[area_name]["resizable"]["minWidth"] = $ta.resizable("option", "minWidth");
+		fullScreenState[area_name]["resizable"]["minHeight"] = $ta.resizable("option", "minHeight");
+		
+		$ta.resizable("destroy");
+		var h = $jq(window).height();
+		var w = $jq(window).width();
+		
+		fullScreenState[area_name]["hidden"].push($jq("#header, #col2, #col3, #footer"));
+		$jq("#header, #col2, #col3, #footer").hide();
+		
+		$ta.parents().each(function() {
+			fullScreenState[area_name]["hidden"].push($jq(this).siblings(":visible"));
+			var ob = [];
+			ob["el"] = this;
+			ob["margin-left"] = $jq(this).css("margin-left");	// this is for IE - it fails using margin or padding as a single setting
+			ob["margin-right"] = $jq(this).css("margin-right");
+			ob["margin-top"] = $jq(this).css("margin-top");
+			ob["margin-bottom"] = $jq(this).css("margin-bottom");
+			ob["padding-left"] = $jq(this).css("padding-left");
+			ob["padding-right"] = $jq(this).css("padding-right");
+			ob["padding-top"] = $jq(this).css("padding-top");
+			ob["padding-bottom"] = $jq(this).css("padding-bottom");
+			ob["width"] = $jq(this).css("width");
+			ob["height"] = $jq(this).css("height");
+			fullScreenState[area_name]["changed"].push(ob);
+		});
+		$ta.parents().each(function() {
+			$jq(this).siblings(":visible").hide();
+			$jq(this).css("margin", 0).css("padding", 0).width(w).height(h);
+		});
+		
+		fullScreenState[area_name]["ta"] = [];
+		fullScreenState[area_name]["ta"]["width"] = $ta.width();
+		fullScreenState[area_name]["ta"]["height"] = $ta.height();
+		
+		$ta.width(w).height($ta.parent().height() - $jq(".textarea-toolbar").height() - 60);
+		
+		if ($jq("div.top_actions").length) {
+			$ta.parent().append($jq("div.top_actions > .wikiaction").clone(true).addClass("fs_clones"));
+		} else {
+			$ta.parent().append($jq(".wikiaction").clone(true).addClass("fs_clones"));
+		}
+		
+		$jq(".fs_clones").show();
+
+	}
+}
 
 /* Simple tiki plugin for jQuery
- * Initially for autocomplete helpers
+ * Helpers for autocomplete and sheet
  */
 
 $jq.fn.tiki = function(func, type, options) {

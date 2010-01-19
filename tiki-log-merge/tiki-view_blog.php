@@ -58,6 +58,8 @@ $smarty->assign('blogId', $_REQUEST["blogId"]);
 $smarty->assign('title', $blog_data["title"]);
 $smarty->assign('heading', $blog_data["heading"]);
 $smarty->assign('use_title', $blog_data["use_title"]);
+$smarty->assign('use_author', $blog_data["use_author"]);
+$smarty->assign('add_date', $blog_data["add_date"]);
 $smarty->assign('use_find', $blog_data["use_find"]);
 $smarty->assign('allow_comments', $blog_data["allow_comments"]);
 $smarty->assign('show_avatar', $blog_data["show_avatar"]);
@@ -120,7 +122,7 @@ $smarty->assign('find', $find);
 // Get a list of last changes to the blog database
 $date_min = isset($_REQUEST['date_min']) ? $_REQUEST['date_min'] : '';
 $date_max = isset($_REQUEST['date_max']) ? $_REQUEST['date_max'] : $tikilib->now;
-$listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data["maxPosts"], $sort_mode, $find, $date_min, $date_max);
+$listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], false, $offset, $blog_data["maxPosts"], $sort_mode, $find, $date_min, $date_max);
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
 	$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1));

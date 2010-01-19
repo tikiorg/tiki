@@ -71,8 +71,6 @@
 	
 	{self_link page="gmap" _class="admbox" _style="background-image: url('pics/large/google_maps48x48.png')" _selected="'`$prefs.feature_gmap`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Google Maps{/tr}" title="{tr}Google Maps{/tr}{if $prefs.feature_gmap ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Google Maps{/tr}</span>{/self_link}
 
-	{self_link page="multimedia" _class="admbox" _style="background-image: url('pics/large/multimedia48x48.png')" _selected="'`$prefs.feature_multimedia`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Multimedia{/tr}" title="{tr}Multimedia{/tr}{if $prefs.feature_multimedia ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Multimedia{/tr}</span>{/self_link}
-
 	{self_link page="copyright" _class="admbox" _style="background-image: url('pics/large/copyright48x48.png')" _selected="'`$prefs.feature_copyright`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Copyright{/tr}" title="{tr}Copyright{/tr}{if $prefs.feature_copyright ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Copyright{/tr}</span>{/self_link}
 
 	{self_link page="messages" _class="admbox" _style="background-image: url('pics/large/messages48x48.png')" _selected="'`$prefs.feature_messages`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Messages{/tr}" title="{tr}Messages{/tr}{if $prefs.feature_messages ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Messages{/tr}</span>{/self_link}

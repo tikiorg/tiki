@@ -173,13 +173,6 @@ function prefs_feature_list() {
 			'help' => 'Copyright',
 			'type' => 'flag',
 		),
-		'feature_multimedia' => array(
-			'name' => tra('Multimedia'),
-			'description' => tra('The applet is designed to read MP3 or FLV file'),
-			'help' => 'Multimedia',
-			'type' => 'flag',
-			'warning' => tra('Experimental. This feature is not actively maintained.'),
-		),
 		'feature_shoutbox' => array(
 			'name' => tra('Shoutbox'),
 			'description' => tra('Quick comment (graffiti) box. Like a group chat, but not in real time.'),
@@ -932,12 +925,6 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'hint' => 'tiki-orphan_pages.php',
 		),
-		'feature_search_fulltext' => array(
-			'name' => tra('Database search'),
-			'hint' => tra('This search uses the MySQL Full-Text feature. The indexation is always updated.'),
-			'type' => 'flag',
-			'help' => 'Search',
-		),
 		'feature_referer_highlight' => array(
 			'name' => tra('Referer Search Highlighting'),
 			'type' => 'flag',
@@ -1065,14 +1052,6 @@ function prefs_feature_list() {
 				'feature_search',
 			),
 		),
-		'feature_forum_local_tiki_search' => array(
-			'name' => tra('Use Tiki (database-independent) search.'),
-			'type' => 'flag',
-		),
-		'feature_forum_local_search' => array(
-			'name' => tra('Use database (full-text) search.'),
-			'type' => 'flag',
-		),
 		'feature_clear_passwords' => array(
 			'name' => tra('Store password as plain text'),
 			'type' => 'flag',
@@ -1184,7 +1163,7 @@ function prefs_feature_list() {
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
-				'yes' => tra('Only if module'),
+				'y' => tra('Only if module'),
 				'fixed' => tra('Always'),
 				'user' => tra('User Decides'),
 				'n' => tra('Never'),
@@ -1195,7 +1174,7 @@ function prefs_feature_list() {
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
-				'yes' => tra('Only if module'),
+				'y' => tra('Only if module'),
 				'fixed' => tra('Always'),
 				'user' => tra('User Decides'),
 				'n' => tra('Never'),

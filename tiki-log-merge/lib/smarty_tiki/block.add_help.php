@@ -19,6 +19,10 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 
 	if (!isset($content)) return ;
 	
+	if ($prefs['javascript_enabled'] != 'y') {
+		return $content;
+	}
+	
 	if (isset($params['title'])) $section['title'] = $params['title'];
 	if (isset($params['id'])) {
 		$section['id'] = $params['id'];

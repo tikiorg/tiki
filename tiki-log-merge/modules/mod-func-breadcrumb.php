@@ -25,14 +25,12 @@ function module_breadcrumb_info() {
 
 function module_breadcrumb( $mod_reference, $module_params ) {
 	global $smarty, $prefs;
+	global $categlib; include_once ('lib/categories/categlib.php');
 	if (!isset($_SESSION["breadCrumb"])) {
 		$_SESSION["breadCrumb"] = array();
 	}
 
-	if (!isset($prefs['category_jail']) || empty($prefs['category_jail'])) {
-		$fullBreadCrumb=$_SESSION["breadCrumb"];
-	} else {
-		global $categlib; include_once ('lib/categories/categlib.php');
+	if ($jail = $categlib->get_jail()) {
 		global $objectlib; include_once ('lib/objectlib.php');//
 		$objectIds=$objectlib->get_object_ids("wiki page", $_SESSION["breadCrumb"]);
 	
@@ -40,13 +38,20 @@ function module_breadcrumb( $mod_reference, $module_params ) {
 		foreach($_SESSION["breadCrumb"] as $step) {
 			if (isset($objectIds[$step])) $breadIds[$objectIds[$step]]=$step;
 		}
-		
-		$relevantIds=$categlib->filter_objects_categories(array_keys($breadIds),$categlib->get_jail());
+		if ($breadIds) { // If we have visited pages and we're in a perspective
+			$relevantIds=$categlib->filter_objects_categories(array_keys($breadIds), $jail);
+		} else {
+			$relevantIds=array_keys($breadIds);
+		}
+
 		$fullBreadCrumb=array();
 		foreach ($breadIds as $breadId => $breadName) {
 			if (in_array($breadId, $relevantIds)) $fullBreadCrumb[$breadId]=$breadName;
 		}
+	} else {
+		$fullBreadCrumb=$_SESSION["breadCrumb"];
 	}
+
 	$bbreadCrumb = array_slice(array_reverse($fullBreadCrumb), 0, $mod_reference['rows']);
 	$smarty->assign('breadCrumb', $bbreadCrumb);
 	$smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);

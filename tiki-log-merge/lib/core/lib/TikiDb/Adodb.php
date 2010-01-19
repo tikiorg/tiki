@@ -30,7 +30,6 @@ class TikiDb_Adodb extends TikiDb
 		if ( $query == null ) {
 			$query = $this->getQuery();
 		}
-		$this->convertQuery($query);
 		$this->convertQueryTablePrefixes( $query );
 
 		$starttime=$this->startTimer();

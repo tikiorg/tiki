@@ -93,7 +93,7 @@
 	</div>
 {/if}
 
-{if $preview && $translation_mode eq 'n'}
+{if $preview}
 	{include file='tiki-preview.tpl'}
 {/if}
 {if $diff_style}
@@ -110,6 +110,11 @@
 		</div>
 	{/if}
 {/if}
+
+{if $prompt_for_edit_or_translate == 'y'}
+	{include file='tiki-edit-page-include-prompt_for_edit_or_translate.tpl'}
+{/if}
+
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
 	{if $diff_style}
 		<select name="diff_style">
@@ -155,6 +160,9 @@
 						{/if}
 					{/remarksbox}
 					<p>{tr}Page name{/tr}: <input type="text" name="page" value="{$page|escape}" /></p>
+				{else}
+					<input type="hidden" name="page" value="{$page}" /> 
+					{* the above hidden field is needed for auto-save to work *}
 				{/if}
 				{tabset name='tabs_editpage'}
 					{tab name="{tr}Edit page{/tr}"}
@@ -566,8 +574,7 @@
 			</tr>
 		{/if}
 	</table>
-	{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg eq 'y' and $allowhtml eq 'y'}
-	  <input type="hidden" name="allowhtml" checked="checked"/>
-	{/if}
 </form>
 {include file='tiki-page_bar.tpl'}
+{include file='tiki-edit_help.tpl'}
+{include file='tiki-edit_help_plugins.tpl'}

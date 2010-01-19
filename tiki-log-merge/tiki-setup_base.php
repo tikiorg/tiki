@@ -327,13 +327,25 @@ if (($prefs['rememberme'] != 'disabled') and (isset($_COOKIE["$user_cookie_site"
 // if the auth method is 'web site', look for the username in $_SERVER
 if (($prefs['auth_method'] == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
 	if ($userlib->user_exists($_SERVER['REMOTE_USER'])) {
-		$_SESSION["$user_cookie_site"] = $_SERVER['REMOTE_USER'];
+		$user = $_SERVER['REMOTE_USER'];
+		$_SESSION["$user_cookie_site"] = $user;
 	} elseif ($userlib->user_exists(str_replace("\\\\", "\\", $_SERVER['REMOTE_USER']))) {
 		// Check for the domain\username with just one backslash
-		$_SESSION["$user_cookie_site"] = str_replace("\\\\", "\\", $_SERVER['REMOTE_USER']);
+		$user = str_replace("\\\\", "\\", $_SERVER['REMOTE_USER']);
+		$_SESSION["$user_cookie_site"] = $user;
 	} elseif ($userlib->user_exists(substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2))) {
 		// Check for the username without the domain name
-		$_SESSION["$user_cookie_site"] = substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2);
+		$user = substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2);
+		$_SESSION["$user_cookie_site"] = $user;
+	} elseif ($prefs['auth_ws_create_tiki'] == 'y') {
+		$user = $_SERVER['REMOTE_USER'];
+		if ($userlib->add_user($_SERVER['REMOTE_USER'],'', '')) {
+			$user = $_SERVER['REMOTE_USER'];
+			$_SESSION["$user_cookie_site"] = $user;
+		}
+	}
+	if (!empty($_SESSION["$user_cookie_site"])) {
+		$userlib->update_lastlogin($user);
 	}
 }
 // Check for Shibboleth Login
