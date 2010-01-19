@@ -599,10 +599,6 @@
 			</table>
 		{/if}
 
-		<a name="csv"></a>
-		{if $csv}
-			<div class="cbox">{$csv}</div>
-		{/if}
 {/tab}
 
 

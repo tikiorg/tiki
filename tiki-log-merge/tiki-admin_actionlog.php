@@ -355,7 +355,15 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$smarty->assign('url', "&amp;list=y$url#Report");
 	if (isset($_REQUEST['export'])) {
 		$csv = $logslib->export($actions);
-		$smarty->assign('csv', $csv);
+		header('Content-type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="tiki-actionlogs_stats.csv"');
+		if ( function_exists('mb_strlen') ) {
+  	  header('Content-Length: '.mb_strlen($csv, '8bit'));
+	  } else {
+    	header('Content-Length: '.strlen($csv));
+ 	 }
+		echo $csv;
+		die();
 	}
 	if ($prefs['feature_contribution'] == 'y') {
 		if (empty($_REQUEST['contribTime'])) $_REQUEST['contribTime'] = 'w';

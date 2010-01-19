@@ -817,7 +817,7 @@ class LogsLib extends TikiLib
 				$csv .= $contribution['name'];
 			}
 		}
-		$csv .= '"<br />';
+		$csv .= "\"\n";
 	}
 	return $csv;
 	}
