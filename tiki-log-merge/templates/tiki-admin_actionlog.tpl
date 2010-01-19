@@ -474,8 +474,8 @@
 				<caption>{tr}Number of actions per category{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
-					{foreach key=title item=nb from=$userActions[0]}
-						{if $title ne 'user'}<th>{$title|replace:"/":" "}</th>{/if}
+					{foreach key=title item=nb from=$statCateg[0]}
+						{if $title ne 'category'}<th>{$title|replace:"/":" "}</th>{/if}
 					{/foreach}
 				</tr>
 				{foreach key=categId item=stat from=$statCateg}

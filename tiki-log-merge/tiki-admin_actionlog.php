@@ -298,6 +298,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$results = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], $offset, $maxRecords, 'lastModif_desc', $find, $startDate, $endDate, $_REQUEST['categId']);
 	$actions = $results['data'];
 	$actions_cant = $results['cant'];
+	$actions = $logslib->get_more_info($actions, $categNames);
 	$contributorActions = $logslib->split_actions_per_contributors($actions, $_REQUEST['selectedUsers']);
 	if (!empty($_REQUEST['selectedUsers'])) {
 		$results = $logslib->list_actions('', '', '', $offset, $maxRecords, 'lastModif_desc', $find, $startDate, $endDate, $_REQUEST['categId']);
@@ -307,7 +308,6 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$allActions = $actions;
 		$allContributorsActions = $contributorActions;
 	}
-	$actions = $logslib->get_more_info($actions, $categNames);
 	$userActions = $logslib->get_stat_actions_per_user($contributorActions);
 	$smarty->assign_by_ref('userActions', $userActions);
 	$objectActions = $logslib->get_stat_actions_per_field($actions, 'object');

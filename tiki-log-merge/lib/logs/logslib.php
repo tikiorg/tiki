@@ -575,6 +575,12 @@ class LogsLib extends TikiLib
 					// differ only by the categories
 					continue;
 			}
+			if ( strpos($action['action'],'logged from') === 0 ) {
+        $action['action'] = 'login';
+      }
+			if ( strpos($action['action'],'logged out') === 0 ) {
+        $action['action'] = 'login';
+      }
 			$previousAction = $action;
 			if (empty($action['user'])) {
 				$groups = array('Anonymous');
@@ -612,6 +618,12 @@ class LogsLib extends TikiLib
 		foreach ($actions as $action) {
 			//if ($action['categId'] == 0) print also stat for non categ object
 			//	continue;
+			if ( strpos($action['action'],'logged from') === 0 ) {
+        $action['action'] = 'login';
+      }
+			if ( strpos($action['action'],'logged out') === 0 ) {
+        $action['action'] = 'login';
+      }
 			$key = $action['categId'];
 			if (!array_key_exists($key, $stats)) {
 				$stats[$key]['category'] = $key? $categNames[$key]: '';
@@ -635,6 +647,12 @@ class LogsLib extends TikiLib
 		foreach ($actions as $action) {
 			//if ($action['categId'] == 0) print also stat for non categ object
 			//	continue;
+			if ( strpos($action['action'],'logged from') === 0 ) {
+        $action['action'] = 'login';
+      }
+			if ( strpos($action['action'],'logged out') === 0 ) {
+        $action['action'] = 'login';
+      }
 			if (!($bytes = $this->get_volume_action($action))) {
 				continue;
 			}
@@ -669,6 +687,12 @@ class LogsLib extends TikiLib
 		foreach ($actions as $action) {
 			//if ($action['categId'] == 0) print also stat for non categ object
 			//	continue;
+			if ( strpos($action['action'],'logged from') === 0 ) {
+        $action['action'] = 'login';
+      }
+			if ( strpos($action['action'],'logged out') === 0 ) {
+        $action['action'] = 'login';
+      }
 			if ($action['user'] == '' 
 					|| !($bytes = $this->get_volume_action($action))) {
 				continue;
@@ -718,6 +742,12 @@ class LogsLib extends TikiLib
 			if (empty($action['categId'])) {
 				continue;
 			}
+			if ( strpos($action['action'],'logged from') === 0 ) {
+        $action['action'] = 'login';
+      }
+			if ( strpos($action['action'],'logged out') === 0 ) {
+        $action['action'] = 'login';
+      }
 			$key = $action['categId'].'/'.$action['user'];;
 			if (!array_key_exists($key, $stats)) {
 				$stats[$key]['category'] = $categNames[$action['categId']];
@@ -1232,6 +1262,9 @@ class LogsLib extends TikiLib
 	{
 		global $tikilib, $prefs;
 	foreach($actions as &$action) {
+		if ( empty($action['user']) ) {
+			$action['user'] = 'Anonymous';
+		}
 		if ($action['categId']) {
 			$action['categName'] = $categNames[$action['categId']];
 		}
