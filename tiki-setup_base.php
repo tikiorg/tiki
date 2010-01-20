@@ -45,6 +45,7 @@ $needed_prefs = array(
 	'session_silent' => 'n',
 	'session_cookie_name' => session_name(),
 	'language' => 'en',
+	'lang_use_db' => 'n',
 	'feature_pear_date' => 'y',
 	'lastUpdatePrefs' => - 1,
 	'feature_fullscreen' => 'n',
