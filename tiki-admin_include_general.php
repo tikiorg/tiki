@@ -44,29 +44,6 @@ if (isset($_REQUEST['new_prefs'])) {
 	// Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
 	
 }
-// Handle Password Change Request
-if (isset($_REQUEST['newadminpass'])) {
-	check_ticket('admin-inc-general');
-	if ($_REQUEST['adminpass'] <> $_REQUEST['again']) {
-		$msg = tra('The passwords do not match');
-		$access->display_error(basename(__FILE__) , $msg);
-	}
-	// Dont allow blank passwords here
-	if (empty($_REQUEST['adminpass'])) {
-		$smarty->assign('msg', tra('You cannot have a blank password'));
-		$smarty->display('error.tpl');
-		die;
-	}
-	// Validate password here
-	if (strlen($_REQUEST['adminpass']) < $prefs['min_pass_length']) {
-		$text = tra('Password should be at least');
-		$text.= ' ' . $prefs['min_pass_length'] . ' ';
-		$text.= tra('characters long');
-		$access->display_error(basename(__FILE__) , $text);
-	}
-	$userlib->change_user_password('admin', $_REQUEST['adminpass']);
-	$smarty->assign('pagetop_msg', tra('Your admin password has been changed'));
-}
 // Get list of time zones
 $smarty->assign('timezones', TikiDate::getTimeZoneList());
 
