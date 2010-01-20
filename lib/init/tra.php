@@ -14,6 +14,7 @@ function tr($content) {
 
 function tra($content, $lg='', $no_interactive = false, $args = array()) {
 	global $prefs;
+	static $languages = array();
 
 	if ($lg == '') {
 		if( $prefs['language'] ) {
@@ -25,6 +26,11 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 		$lang = $lg;
 	}
 
+	if( ! isset( $languages[$lang] ) ) {
+		$languages[ $lang ] = true;
+		init_language( $lang );
+	}
+
 	$out = tra_impl( $content, $lang, $no_interactive, $args );
 
 	if( empty( $lg ) || $lg == $lang ) {
@@ -34,33 +40,34 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 	return $out;
 }
 
+function init_language( $lg ) {
+	global $tikidomain;
+	if( is_file("lang/$lg/language.php")) {
+		global ${"lang_$lg"};
+
+		if (!isset(${"lang_$lg"})) {
+			include_once("lang/$lg/language.php");
+			if (is_file("lang/$lg/custom.php")) {
+				include_once("lang/$lg/custom.php");
+			}
+			if (!empty($tikidomain) && is_file("lang/$lg/$tikidomain/custom.php")) {
+				include_once("lang/$lg/$tikidomain/custom.php");
+			}
+			${"lang_$lg"} = $lang;
+			unset($lang);
+		}
+	}
+}
+
 function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 	global $prefs;
 
 	if ($content != '') {
 		if ($prefs['lang_use_db'] != 'y') {
-			global $lang, $tikidomain;
-			if (is_file("lang/$lg/language.php")) {
-				$l = $lg;
-			} else {
-				$l = false;
-			}
-			if ($l) {
-				global ${"lang_$l"};
-				if (!isset(${"lang_$l"})) {
-				  include_once("lang/$l/language.php");
-				  if (is_file("lang/$l/custom.php")) {
-					include_once("lang/$l/custom.php");
-				  }
-				  if (!empty($tikidomain) && is_file("lang/$l/$tikidomain/custom.php")) {
-					include_once("lang/$l/$tikidomain/custom.php");
-				  }
-				  ${"lang_$l"} = $lang;
-				  unset($lang);
-				}
-			}
-			if ($l and isset(${"lang_$l"}[$content])) {
-				return tr_replace( ${"lang_$l"}[$content], $args );
+			global $lang;
+			global ${"lang_$lg"};
+			if ($lg and isset(${"lang_$lg"}[$content])) {
+				return tr_replace( ${"lang_$lg"}[$content], $args );
 			} else {
 				// If no translation has been found and if the string ends with a punctuation,
 				//   try to translate punctuation separately (e.g. if the content is 'Login:' or 'Login :',
@@ -72,8 +79,8 @@ function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 				foreach ( $punctuations as $p ) {
 					if ( $content[$content_length - 1] == $p ) {
 						$new_content = substr($content, 0, $content_length - 1);
-						if ( isset(${"lang_$l"}[$new_content]) ) {
-							return tr_replace( ${"lang_$l"}[$new_content].( isset(${"lang_$l"}[$p]) ? ${"lang_$l"}[$p] : $p ), $args );
+						if ( isset(${"lang_$lg"}[$new_content]) ) {
+							return tr_replace( ${"lang_$lg"}[$new_content].( isset(${"lang_$lg"}[$p]) ? ${"lang_$lg"}[$p] : $p ), $args );
 						} else {
 							return tr_replace( $content, $args );
 						}
