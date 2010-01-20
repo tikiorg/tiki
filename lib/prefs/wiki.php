@@ -492,5 +492,16 @@ function prefs_wiki_list() {
 			'description' => tra('Reject save attempts not providing an edit summary to describe the changes made.'),
 			'type' => 'flag',
 		),
+		'wiki_structure_bar_position' => array(
+			'name' => tra('Structure navigation bar location'),
+			'description' => tra('Displays Next/Back buttons, breadcrumbs, and form to add a new page.'),
+			'type' => 'list',
+			'options' => array(
+				'top' => tra('Top'),
+				'bottom' => tra('Bottom'),
+				'both' => tra('Both'),
+			),
+		),
+		
 	);
 }

@@ -208,6 +208,7 @@
 			{preference name=feature_wiki_categorize_structure}
 			{preference name=feature_create_webhelp}
 			{preference name=page_n_times_in_a_structure}
+			{preference name=wiki_structure_bar_position}
 		</div>
 
 		{preference name=feature_wiki_import_html}
