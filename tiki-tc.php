@@ -37,14 +37,21 @@ if ($prefs['feature_theme_control'] == 'y') {
 	if (isset($cat_type) && isset($cat_objid)) {
 		$tc_categs = $categlib->get_object_categories($cat_type, $cat_objid);
 		if (count($tc_categs)) {
+			$cat_themes = array();	// collect all the category themes
 			foreach($tc_categs as $cat) {
-				if ($cat_theme = $tcontrollib->tc_get_theme_by_categ($cat)) {
-					list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($cat_theme);
+				$ct = $tcontrollib->tc_get_theme_by_categ($cat);
+				if (!in_array($ct, $cat_themes)) {
+					$cat_themes[] = $ct;
 					
-					$catt = $categlib->get_category($cat);
-					$smarty->assign_by_ref('category', $catt["name"]);
-					break;
+//					$catt = $categlib->get_category($cat);
+//					$smarty->assign_by_ref('category', $catt["name"]);
+//					break;
+// 	Dead code? Smarty var $category only found in wikiplugin_files.tpl and set correctly there
+// 	seems to have no connection with theme control (jonnyb tiki5)
 				}
+			}
+			if (count($cat_themes) == 1) {	// only use category theme if there is exactly one set
+				list($tc_theme, $tc_theme_option) = $tcontrollib->parse_theme_option_string($cat_themes[0]);	
 			}
 		}
 	}
