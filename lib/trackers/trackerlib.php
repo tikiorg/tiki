@@ -3444,7 +3444,7 @@ class TrackerLib extends TikiLib
 		return array();
 	}
 	function nbComments($user) {
-		$query = 'select count(*) from `tiki_tracker_item_attachments` where `user`=?';
+		$query = 'select count(*) from `tiki_tracker_item_comments` where `user`=?';
 		return $this->getOne($query, array($user));
 	}
 	function lastModif($trackerId) {
