@@ -299,7 +299,7 @@ class FileGalLib extends TikiLib
 		return 'fgals_';
 	}
 
-	function process_batch_file_upload($galleryId, $file, $user, $description) {
+	function process_batch_file_upload($galleryId, $file, $user, $description, &$errors) {
 		global $prefs, $smarty;
 
 		include_once ('lib/pclzip/pclzip.lib.php');
@@ -345,17 +345,14 @@ class FileGalLib extends TikiLib
 			}
 		}
 		if (!$upl) {
-			$smarty->assign('msg', implode('<br />', $errors));
-			$smarty->display('error.tpl');
-			die;
+			return false;
 		}
 		rewinddir ($h);
 		while (($file = readdir($h)) !== false) {
 			if ($file != '.' && $file != '..' && is_file($extract_dir.'/'.$file)) {
 				if (!($fp = fopen($extract_dir.$file, "rb"))) {
-					$smarty->assign('msg', tra('Cannot open this file:'). "temp/$file");
-					$smarty->display("error.tpl");
-					die;
+					$errors[] = tra('Cannot open this file:'). "temp/$file";
+					return false;
 				}
 				$data = '';
 				$fhash = '';
@@ -366,10 +363,8 @@ class FileGalLib extends TikiLib
 					@$fw = fopen($savedir . $fhash, "wb");
 
 					if (!$fw) {
-						$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
-
-						$smarty->display("error.tpl");
-						die;
+						$errors[] = tra('Cannot write to this file:'). $fhash;
+						return false;
 					}
 				}
 				while (!feof($fp)) {
@@ -400,6 +395,7 @@ class FileGalLib extends TikiLib
 
 		closedir ($h);
 		rmdir($extract_dir);
+		return true;
 	}
 
 	function get_file_info($fileId, $include_search_data = true, $include_data = true) {
