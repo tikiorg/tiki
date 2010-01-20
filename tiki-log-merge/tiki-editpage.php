@@ -104,8 +104,14 @@ function translationsToThisPageAreInProgress($page_id) {
 
 function execute_module_translation() { 
 	global $smarty;
+// will show the language of the avialble translations. Chnage to 'n' to show the page name
+	$params['show_language'] = 'y';
+// flag to indicate that the module is appearing within the notification area of the edit page
+	$params['from_edit_page'] = 'y';
+	$params['nobox'] = 'y';
 	$module_reference = array(
 		'name' => 'translation',
+			'params' => array( 'show_language' => $params['show_language'], 'from_edit_page' => $params['from_edit_page'], 'nobox' => $params['nobox'] )
 	);
 
 	global $modlib; require_once 'lib/modules/modlib.php';	

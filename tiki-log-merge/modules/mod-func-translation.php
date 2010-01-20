@@ -37,6 +37,16 @@ function filter_languages_from_pivot( $langInfo ) {
 function module_translation( $mod_reference, $module_params ) {
 	global $pivotLanguage, $tikilib, $smarty, $prefs, $page, $_REQUEST;
 	
+	
+//are we arriving from the edit page?	
+		if ( $module_params['from_edit_page'] == 'y') {
+			$smarty->assign( 'from_edit_page', 'y');
+		} else {
+			$smarty->assign( 'from_edit_page', 'n');
+		}
+	
+	
+	
 	if ((!$page or $page == '') and isset($_REQUEST['page'])) {
 		$page = $_REQUEST['page'];
 	}

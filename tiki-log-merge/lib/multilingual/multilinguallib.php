@@ -837,7 +837,7 @@ class MultilingualLib extends TikiLib
 		$this->mtEnabled = $on_or_off;
 	} 
 
-	function getTranslationsInProgressFlags($page_id, $language) {
+	function getTranslationsInProgressFlags($page_id, $language=NULL) {
 		$fields = '`page_id`';
 		$valuesSpec = "?";
 		$values = array($page_id);
