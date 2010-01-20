@@ -2,11 +2,11 @@
 .fg-dialog { position: relative; border: 1px solid #999999; width: 700px; height: 633px; font-family: Arial; background: white; }
 .fg-dialog h1 { position: absolute; left: 14px; top: 8px; font-size: 14px; font-weight: bold; text-transform: uppercase; color: #525252; }
 .fg-quick-insert-button { position: absolute; left: 14px; top: 46px; display: block; width: 174px; height: 19px; text-align: center; padding-top: 5px; text-decoration: none; color: white !important; background: #7BBA45; font-size: 11px; }
-.fg-settings-icon { position: absolute; right: 48px; top: 10px; }
-.fg-tip-icon { position: absolute; right: 25px; top: 9px; }
-.fg-watch-icon { position: absolute; right: 69px; top: 9px; }
+.fg-settings-icon { position: absolute; right: 58px; top: 10px; }
+.fg-tip-icon { position: absolute; right: 35px; top: 9px; }
+.fg-watch-icon { position: absolute; right: 79px; top: 9px; }
 .fg-rss-icon { position: absolute; right: 10px; bottom: 10px; }
-.fg-info-icon { position: absolute; right: 94px; top: 9px; }
+.fg-info-icon { position: absolute; right: 104px; top: 9px; }
 .fg-tip { position: absolute; left: 189px; top: 27px; background: url(../images/file_gallery/tip.gif) no-repeat; width: 502px; height: 63px; display: none; }
 .fg-tip h4 { font-size: 11px; margin: 0px; padding: 0px; position: absolute; left: 10px; top: 0px; }
 .fg-tip p { font-size: 10px; font-style: italic; position: absolute; left: 10px; top: 13px; display: block; width: 480px; line-height: 90%; color: #6a6a6a; }

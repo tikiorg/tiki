@@ -22,6 +22,10 @@ var FileGallery = {
 			$('.fg-pager a').bind('click', function(e) { FileGallery.open(this.href); return false; });
 		})
 	},
+	close: function() {
+		FileGallery.upload.close();
+		$("#fg-jquery-dialog").dialog("close");
+	},
 	loadmid: function(url) {
 		$("#fg-files-content").load(url);
 	},
