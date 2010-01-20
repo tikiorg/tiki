@@ -81,7 +81,7 @@ class TikiDb_Pdo extends TikiDb {
 		} else {
 			$this->setErrorMessage( "" );
 			if( $pq->columnCount() ) {
-				return $pq->fetchAll();
+				return $pq->fetchAll(PDO::FETCH_ASSOC);
 			} else {
 				return array();
 			}
