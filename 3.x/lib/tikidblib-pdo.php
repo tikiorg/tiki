@@ -99,7 +99,7 @@ class TikiDB {
 			return false;
 		} else {
 			$this->sql_error_msg = "";
-			$tmp = new TikiResult($pq->fetchAll());
+			$tmp = new TikiResult($pq->fetchAll(PDO::FETCH_ASSOC));
 			$pq->closeCursor();
 			return $tmp;
 		}
