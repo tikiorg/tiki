@@ -338,7 +338,7 @@ class FileGalLib extends TikiLib
 					}
 				}
 
-				if ($this->checkQuota(filesize($extract_dir.$file), $galleryId, $error)) {
+				if (!$this->checkQuota(filesize($extract_dir.$file), $galleryId, $error)) {
 					$errors[] = $error;
 					$upl = 0;
 				}
@@ -349,7 +349,7 @@ class FileGalLib extends TikiLib
 			$smarty->display('error.tpl');
 			die;
 		}
-		
+		rewinddir ($h);
 		while (($file = readdir($h)) !== false) {
 			if ($file != '.' && $file != '..' && is_file($extract_dir.'/'.$file)) {
 				if (!($fp = fopen($extract_dir.$file, "rb"))) {
@@ -1019,9 +1019,10 @@ class FileGalLib extends TikiLib
 			}
 		}
 	}
-	// check a size in K can be added to a gallery
+	// check a size in K can be added to a gallery return false if problem
 	function checkQuota($size, $galleryId, &$error) {
 		global $prefs, $smarty;
+		$error = '';
 		if (!empty($prefs['fgal_quota'])) {
 			$use = $this->getUsedSize();
 			if ($use + $size > $prefs['fgal_quota']*1024*1024) {
