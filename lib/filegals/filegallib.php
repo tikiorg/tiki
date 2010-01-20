@@ -832,11 +832,9 @@ class FileGalLib extends TikiLib
 			global $prefs, $cachelib, $user;
 			$cacheName = $this->get_all_galleries_cache_name($user);
 			$cacheType = $this->get_all_galleries_cache_type();
-			if ( ! $cachelib->isCached($cacheName, $cacheType) ) {
+			if ( ! $return = $cachelib->getSerialized($cacheName, $cacheType) ) {
 				$return = $this->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false,false,true, false );
 				$cachelib->cacheItem($cacheName, serialize($return), $cacheType);
-			} else {
-				$return = unserialize($cachelib->getCached($cacheName, $cacheType));
 			}
 		}
 

@@ -4355,12 +4355,11 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			//logged out
 			global $cachelib; require_once("lib/cache/cachelib.php");
-			if ($cachelib->isCached("tiki_preferences_cache")) {
-				return unserialize($cachelib->getCached("tiki_preferences_cache"));
-			} else {
-				$needLoading = true;
-				$needCache = true;
+			if ( $data = $cachelib->getSerialized("tiki_preferences_cache")) {
+				return $data;
 			}
+			$needLoading = true;
+			$needCache = true;
 		}	
 
 		if( $needLoading ) {

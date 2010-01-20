@@ -534,7 +534,7 @@ class TrackerLib extends TikiLib
 			$cache .= md5(serialize($jail));
 		}
 
-		if (!$cachelib->isCached($cache) || !$this->valid_status($status)) {
+		if ( ( ! $ret = $cachelib->getSerialized($cache) ) || !$this->valid_status($status)) {
 			$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
 			$mid = "  (".implode('=? or ',array_fill(0,count($sts),'tti.`status`'))."=?) ";
 			$fieldIdArray = preg_split('/\|/', $fieldId, -1, PREG_SPLIT_NO_EMPTY);
@@ -557,8 +557,6 @@ class TrackerLib extends TikiLib
 				$ret[] = $res;
 			}
 			$cachelib->cacheItem($cache,serialize($ret));
-		} else {
-			$ret = unserialize($cachelib->getCached($cache));
 		}
 		if ($needToCheckCategPerms) {
 			$ret = $this->filter_categ_items($ret);

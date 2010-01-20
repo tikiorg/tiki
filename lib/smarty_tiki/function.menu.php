@@ -65,8 +65,8 @@ function smarty_function_menu($params, &$smarty)
 		$cacheType = 'menu_'.$id.'_';
 	}
 
-	if ( $cachelib->isCached($cacheName, $cacheType) ) {
-		list($menu_info, $channels) = unserialize($cachelib->getCached($cacheName, $cacheType));
+	if ( $cdata = $cachelib->getSerialized($cacheName, $cacheType) ) {
+		list($menu_info, $channels) = $cdata;
 	} elseif (isset($structureId)) {
 		global $structlib; include_once('lib/structures/structlib.php');
 		$channels = $structlib->build_subtree_toc($structureId);

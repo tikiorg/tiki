@@ -134,11 +134,7 @@ class CategLib extends ObjectLib
 
 	function get_category_path_string($categId) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
-		if (!$cachelib->isCached('allcategs')) {
-			$categs = $this->build_cache();
-		} else {
-			$categs = unserialize($cachelib->getCached('allcategs'));
-		}
+		$categs = $this->get_category_cache();
 		foreach ($categs as $cat) {
 			if ($cat['categId'] == $categId) {
 				return $cat['categpath'];
@@ -310,7 +306,7 @@ class CategLib extends ObjectLib
 		if ( empty($itemId) ) return 0;
 
 		global $cachelib; include_once('lib/cache/cachelib.php');
-		if ( $cachelib->isCached('allcategs') && count(unserialize($cachelib->getCached('allcategs'))) == 0 ) {
+		if ( count( $this->get_category_cache() ) == 0 ) {
 			return 0;
 		}
 
@@ -878,7 +874,7 @@ class CategLib extends ObjectLib
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		global $prefs;
 		if (!$categId) $categId = "0"; // avoid wrong cache
-		if (!$cachelib->isCached("childcategs$categId")) {
+		if( ! $ret = $cachelib->getSerialized("childcategs$categId") ) {
 			$ret = array();
 			$query = "select * from `tiki_categories` where `parentId`=? order by name";
 			$result = $this->query($query,array($categId));
@@ -892,8 +888,6 @@ class CategLib extends ObjectLib
 				$ret[] = $res;
 			}
 			$cachelib->cacheItem("childcategs$categId",serialize($ret));
-		} else {
-			$ret = unserialize($cachelib->getCached("childcategs$categId"));
 		}
 		if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
 			foreach ($ret as $key=>$res) {
@@ -970,25 +964,25 @@ class CategLib extends ObjectLib
 		return $ret;
 	}
 
+	private function get_category_cache() {
+		global $cachelib;
+		if( ! $ret = $cachelib->getSerialized("allcategs") ) {
+			$ret = $this->build_cache(false);
+		}
+
+		return $ret;
+	}
+
 	// Same as get_all_categories + it also get info about count of objects
 	function get_all_categories_ext($showWS = false) {
 
 		global $cachelib; include_once('lib/cache/cachelib.php');
-		if ($showWS)
-		{
-			if (!$cachelib->isCached("allws")) {
-				$ret = $this->build_cache($showWS);
-			} else {
-				$ret = unserialize($cachelib->getCached("allws"));
-			} 
-		}			
-		else
-		{
-			if (!$cachelib->isCached("allcategs")) {
-				$ret = $this->build_cache($showWS);
-			} else {
-				$ret = unserialize($cachelib->getCached("allcategs"));
+		if ($showWS) {
+			if( ! $ret = $cachelib->getSerialized("allws") ) {
+				$ret = $this->build_cache(true);
 			}
+		} else {
+			$ret = $this->get_category_cache();
 		}
 
 		if( $jail = $this->get_jail() ) {

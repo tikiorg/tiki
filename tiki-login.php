@@ -235,10 +235,9 @@ if ($isvalid) {
 				if (!empty($_REQUEST['url'])) {
 					global $cachelib; include_once('lib/cache/cachelib.php');
 					preg_match('/(.*)\?cache=(.*)/', $_REQUEST['url'], $matches);
-					if (!empty($matches[2]) && $cachelib->isCached($matches[2], 'edit')) {
+					if (!empty($matches[2]) && $cdata = $cachelib->getCached($matches[2], 'edit')) {
 						if (!empty($matches[1])) {
-							$url = $matches[1].'?'.$cachelib->getCached($matches[2], 'edit');
-							$cachelib->invalidate($matches[2], 'edit');
+							$url = $matches[1].'?'.$cdata;
 						}
 						$cachelib->invalidate($matches[2], 'edit');
 					}

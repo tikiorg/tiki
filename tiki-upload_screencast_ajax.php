@@ -76,9 +76,7 @@ if ( $prefs['feature_wiki_screencasts'] == 'y' && (isset($tiki_p_upload_screenca
     $xml .= '<message>' . $msg . '</message>' . "\n";
   }
   
-  if ( $cachelib->isCached($pageHash) ) {
-    $videos = unserialize($cachelib->getCached($pageHash));
-  } else {
+  if ( ! $videos = $cachelib->getSerialized($pageHash) ) {
     $videos = $screencastlib->find($pageHash, true);
     $cachelib->cacheItem($pageHash, serialize($videos));
   }

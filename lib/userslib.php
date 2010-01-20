@@ -117,11 +117,9 @@ class UsersLib extends TikiLib
 		global $cachelib;
 
 		$groups = $this->get_groups();
-		if (!$cachelib->isCached($objectType . "_permission_names")) {
+		if (! $perms = $cachelib->getSerialized($objectType . "_permission_names")) {
 			$perms = $this->get_permissions(0, -1, 'permName_desc', '', $objectType);
 			$cachelib->cacheItem($objectType . "_permission_names",serialize($perms));
-		} else {
-			$perms = unserialize($cachelib->getCached($objectType . "_permission_names"));
 		}
 		foreach ($groups['data'] as $group) {
 			foreach ($perms['data'] as $perm) {
@@ -1465,47 +1463,44 @@ class UsersLib extends TikiLib
 
 	function list_all_users() {
 		global $cachelib;
-		if (!$cachelib->isCached("userslist")) {
+		if (! $users = $cachelib->getSerialized("userslist")) {
 			$users = array();
 			$result = $this->query("select `login`,`userId` from `users_users` order by `login`", array());
 			while ($res = $result->fetchRow()) {
 				$users["{$res['userId']}"] = $res['login'];
 			}
 			$cachelib->cacheItem("userslist",serialize($users));
-			return $users;
-		} else {
-			return unserialize($cachelib->getCached("userslist"));
 		}
+
+		return $users;
 	}
 
 	function list_all_groups() {
 		global $cachelib;
-		if (!$cachelib->isCached("grouplist")) {
+		if (! $groups = $cachelib->getSerialized("grouplist")) {
 			$groups = array();
 			$result = $this->query("select `groupName` from `users_groups` order by `groupName`", array());
 			while ($res = $result->fetchRow()) {
 				$groups[] = $res['groupName'];
 			}
 			$cachelib->cacheItem("grouplist",serialize($groups));
-			return $groups;
-		} else {
-			return unserialize($cachelib->getCached("grouplist"));
 		}
+
+		return $groups;
 	}
 
 	function list_all_groupIds() {
 		global $cachelib;
-		if (!$cachelib->isCached("groupIdlist")) {
+		if (! $groups = $cachelib->getSerialized("groupIdlist")) {
 			$groups = array();
 			$result = $this->query("select `id`, `groupName` from `users_groups` order by `groupName`", array());
 			while ($res = $result->fetchRow()) {
 				$groups[] = $res;
 			}
 			$cachelib->cacheItem("groupIdlist",serialize($groups));
-			return $groups;
-		} else {
-			return unserialize($cachelib->getCached("groupIdlist"));
 		}
+
+		return $groups;
 	}
 
 	function list_can_include_groups($group) {
@@ -1775,8 +1770,8 @@ class UsersLib extends TikiLib
 		global $cachelib; require_once("lib/cache/cachelib.php");
 		$k = 'group_theme_'.$group;
 
-		if ( $cachelib->isCached($k) ) {
-			$return = $cachelib->getCached($k);
+		if ( ! $data = $cachelib->getCached($k) ) {
+			$return = $data;
 		} elseif ( ! empty($group) ) {
 			$query = 'select `groupTheme` from `users_groups` where `groupName` = ?';
 			$return = $this->getOne($query, array($group));
@@ -1863,11 +1858,9 @@ class UsersLib extends TikiLib
 
 		$cacheKey = 'user_details_'.$login;
 
-		$user_details = array();
+		if ( ! $user_details = $cachelib->getSerialized($cacheKey)) {
+			$user_details = array();
 
-		if ($cachelib->isCached($cacheKey)) {
-			return unserialize($cachelib->getCached($cacheKey));
-		} else {
 			$query = 'SELECT `userId` , `login`, `email` , `lastLogin` , `currentLogin` , `registrationDate` , `created` , `avatarName` , `avatarSize` , `avatarFileType` , `avatarLibName` , `avatarType` FROM `users_users` WHERE `login` = ?';
 
 			$result = $this->query($query, array($login));
@@ -1897,9 +1890,9 @@ class UsersLib extends TikiLib
 
 			global $user_preferences;
 			$user_preferences[$login] = $user_details['preferences'];
-
-			return $user_details;
 		}
+
+		return $user_details;
 	}
 
 	function set_default_group($user,$group) {
@@ -2159,7 +2152,7 @@ class UsersLib extends TikiLib
 
 	function get_group_permissions($group) {
 		global $cachelib;
-		if ( ! $cachelib->isCached("groupperms_$group") ) {
+		if ( ! $ret = $cachelib->getSerialized("groupperms_$group") ) {
 
 			$query = "select `permName` from `users_grouppermissions` where `groupName`=?";
 			$result = $this->query($query, array($group));
@@ -2170,9 +2163,6 @@ class UsersLib extends TikiLib
 			}
 
 			$cachelib->cacheItem("groupperms_$group",serialize($ret));
-
-		} else {
-			$ret = unserialize($cachelib->getCached("groupperms_$group"));
 		}
 
 		return $ret;

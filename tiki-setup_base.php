@@ -36,11 +36,6 @@ require_once ('lib/setup/compat.php');
 require_once ('lib/tikiticketlib.php');
 require_once ('db/tiki-db.php');
 require_once ('lib/tikilib.php');
-global $cachelib;
-require_once ('lib/cache/cachelib.php');
-global $logslib;
-require_once ('lib/logs/logslib.php');
-include_once ('lib/init/tra.php');
 $tikilib = new TikiLib;
 // Get tiki-setup_base needed preferences in one query
 $prefs = array();
@@ -66,6 +61,12 @@ if ($prefs['lastUpdatePrefs'] == - 1) {
 	$tikilib->query('insert into `tiki_preferences`(`name`,`value`) values(?,?)', array('lastUpdatePrefs', 1));
 }
 
+global $cachelib;
+require_once ('lib/cache/cachelib.php');
+global $logslib;
+require_once ('lib/logs/logslib.php');
+include_once ('lib/init/tra.php');
+
 if( $prefs['memcache_enabled'] == 'y' ) {
 	require_once('lib/cache/memcachelib.php');
 	if( is_array( $prefs['memcache_servers'] ) ) {
@@ -74,6 +75,7 @@ if( $prefs['memcache_enabled'] == 'y' ) {
 		$servers = unserialize( $prefs['memcache_servers'] );
 	}
 
+	global $memcachelib;
 	$memcachelib = new MemcacheLib( $servers, array(
 		'enabled' => true,
 		'expiration' => (int) $prefs['memcache_expiration'],

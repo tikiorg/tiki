@@ -226,10 +226,10 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	}
 
 	$build_content = true;
-        if ( $use_cache && $cachelib->isCached($cacheName, $cacheType) ) {
-		$content = null; // Explicitely free memory before getting cache
-		$content = $cachelib->getCached($cacheName, $cacheType);
-		if ($content !== serialize(false) and $content != "") $build_content = false;
+	if ( $use_cache && $content = $cachelib->getCached($cacheName, $cacheType) ) {
+		if ($content !== serialize(false) and $content != "") {
+			$build_content = false;
+		}
 		$content_changed = true;
 	}
 

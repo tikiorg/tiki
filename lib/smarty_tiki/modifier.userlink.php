@@ -30,8 +30,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set', $fullname='', $max_length=0) {
 	global $tikilib, $userlib, $cachelib, $user, $prefs, $userprefslib;
 
-	$cachePeriod = 60*60*2; // how long does an entry stay in the cache for?  2hr
-
 	$show_mouseover = $prefs['feature_community_mouseover'] == 'y' && $userlib->get_user_preference($user, 'show_mouseover_user_info','y') == 'y';
 	$show_friends = $prefs['feature_friends'] == 'y' && $tikilib->verify_friendship($user, $other_user);
 
@@ -40,13 +38,9 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 	} else {
 		$cacheItem = 'userlink.'.$other_user.$fullname.$max_length;
 	}
-	$cacheDate = $cachelib->getCachedDate($cacheItem);
-	if( $cacheDate ) {
-		if( (time() - $cacheDate) < $cachePeriod ) {
-			return $cachelib->getCached($cacheItem);
-		} else {
-			$cachelib->invalidate($cacheItem);
-		}
+
+	if( $cached = $cachelib->getCached( $cacheItem ) ) {
+		return $cached;
 	}
 
 	$star = '';

@@ -872,9 +872,7 @@ if (($prefs['feature_wiki_screencasts'] == 'y') && (isset($tiki_p_upload_screenc
 		}
 	}
 
-	if ( $cachelib->isCached($pageHash) ) {
-		$screencasts_uploaded = unserialize($cachelib->getCached($pageHash));
-	} else {
+	if ( ! $screencasts_uploaded = $cachelib->getSerialized($pageHash) ) {
 		$screencasts_uploaded = $screencastlib->find($pageHash, true);
 		$cachelib->cacheItem($pageHash, serialize($screencasts_uploaded));
 	}

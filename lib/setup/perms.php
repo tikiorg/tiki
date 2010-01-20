@@ -6,11 +6,9 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.8 2008-03-22 05:12:47 mose Exp $
 //this script may only be included - so its better to die if called directly.
 
-if (!$cachelib->isCached("allperms")) {
+if (! $allperms = $cachelib->getSerialized("allperms")) {
 	$allperms = $userlib->get_permissions(0, -1, 'permName_desc', '', '');
 	$cachelib->cacheItem("allperms", serialize($allperms));
-} else {
-	$allperms = unserialize($cachelib->getCached("allperms"));
 }
 $permissionList = array();
 $adminPermissions = array();

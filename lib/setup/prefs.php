@@ -20,10 +20,9 @@ function get_default_prefs() {
 	if( is_array($prefs) )
 		return $prefs;
 
-	global $cachelib;
-	if( isset($cachelib) && $cachelib->isCached("tiki_default_preferences_cache") ) {
-		$prefs = unserialize( $cachelib->getCached("tiki_default_preferences_cache") );
-		if ( $prefs !== false ) return $prefs;
+	global $cachelib; require_once 'lib/cache/cachelib.php';
+	if( $prefs = $cachelib->getSerialized("tiki_default_preferences_cache") ) {
+		return $prefs;
 	}
 
 	global $tikidate, $tikilib;
@@ -1592,7 +1591,7 @@ function get_default_prefs() {
 		}
 	}
 
-	if ( isset($cachelib) ) $cachelib->cacheItem("tiki_default_preferences_cache",serialize($prefs));
+	$cachelib->cacheItem("tiki_default_preferences_cache",serialize($prefs));
 	return $prefs;
 }
 

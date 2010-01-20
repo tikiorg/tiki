@@ -82,12 +82,9 @@ if (empty($current)) {
 $smarty->assign('not_default', false);
 if ($section == 'global') {
 	global $cachelib;
-	if( isset($cachelib) && $cachelib->isCached("tiki_default_preferences_cache") ) {
-		$defprefs = unserialize( $cachelib->getCached("tiki_default_preferences_cache") );
-		if ( $defprefs !== false ) {
-			if ($defprefs['toolbar_global' . ($comments ? '_comments' : '')] != $current) {
-				$smarty->assign('not_default', true);
-			}
+	if( $defprefs = $cachelib->getSerialized("tiki_default_preferences_cache") ) {
+		if ($defprefs['toolbar_global' . ($comments ? '_comments' : '')] != $current) {
+			$smarty->assign('not_default', true);
 		}
 	}
 }

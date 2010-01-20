@@ -392,11 +392,9 @@ if (empty($_REQUEST['fileId'])) {
 	include_once ('lib/cache/cachelib.php');
 	$cacheName = $filegallib->get_all_galleries_cache_name($user);
 	$cacheType = $filegallib->get_all_galleries_cache_type();
-	if (!$cachelib->isCached($cacheName, $cacheType)) {
+	if (!$galleries = $cachelib->getSerialized($cacheName, $cacheType)) {
 		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false, false, true, false);
 		$cachelib->cacheItem($cacheName, serialize($galleries), $cacheType);
-	} else {
-		$galleries = unserialize($cachelib->getCached($cacheName, $cacheType));
 	}
 	$temp_max = count($galleries["data"]);
 	for ($i = 0; $i < $temp_max; $i++) {
