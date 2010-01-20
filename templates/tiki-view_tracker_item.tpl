@@ -61,7 +61,7 @@
 {if empty($tracker_info.viewItemPretty)}
 <h2>{tr}View Item{/tr}</h2>
 <table class="normal">
-{if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
+{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
   {assign var=ustatus value=$info.status|default:"p"}
   <tr class="formcolor">
     <td class="formlabel">{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td>
@@ -212,7 +212,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {/if}
 </td></tr>
 {* ------------------- *}
-{if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}
+{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 <tr class="formcolor">
 <td class="formlabel">{tr}Status{/tr}</td>
 <td class="formcontent">
@@ -226,7 +226,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {foreach from=$ins_fields key=ix item=cur_field}
-{if ($cur_field.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y' or $cur_field.isHidden eq 'c') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')  and ($cur_field.type ne 'A' or $tiki_p_attach_trackers eq 'y')}
+{if ($cur_field.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y' or $cur_field.isHidden eq 'c') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')  and ($cur_field.type ne 'A' or $tiki_p_attach_trackers eq 'y') and ($cur_field.type ne '*')}
 
 {if $cur_field.type eq 's' and ($cur_field.name eq "Rating" or $cur_field.name eq tra("Rating")) and ($tiki_p_tracker_view_ratings eq 'y' || $tiki_p_tracker_vote_ratings eq 'y') and (empty($cur_field.visibleBy) or in_array($default_group, $cur_field.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 	<tr class="formcolor">
