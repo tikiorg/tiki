@@ -1155,7 +1155,7 @@ class FileGalLib extends TikiLib
 			} else {
 				$f = Perms::filter(array('type'=>$type), 'object', $list, array('object' => 'itemId'), str_replace('tiki_p_', '', $map[$type]));
 			}
-			$debug=1;
+			$debug=0;
 			if (!empty($debug)) {
 				echo "<br />FILE$fileId";
 				if (!empty($f)) echo 'OK-';else echo 'NO-';

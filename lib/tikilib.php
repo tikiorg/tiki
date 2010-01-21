@@ -4829,7 +4829,7 @@ class TikiLib extends TikiDb_Bridge
 			refresh_index('pages', $name);
 		}
 
-		$this->syncParsedText($data, array('type'=> 'wiki page', 'object'=> $page, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$page"));
+		$this->syncParsedText($data, array('type'=> 'wiki page', 'object'=> $name, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$name"));
 
 		return true;
 	}
