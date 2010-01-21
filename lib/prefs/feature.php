@@ -1072,10 +1072,6 @@ function prefs_feature_list() {
 			'perspective' => false,
 		),
 
-		'feature_search_preferences' => array(
-			'name' => tra('Admins can search for features in the admin panels'),
-			'type' => 'flag',
-		),
 		'feature_crypt_passwords' => array(
 			'name' => tra('Encryption method'),
 			'type' => 'list',
