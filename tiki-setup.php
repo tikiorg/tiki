@@ -169,15 +169,12 @@ if ($prefs['javascript_enabled'] == 'y') {
 		$headerlib->add_jsfile( "lib/jquery/tablesorter/jquery.tablesorter.js" );
 		$headerlib->add_jsfile( "lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js" );
 	}
-	if( $prefs['feature_jquery_cycle'] == 'y' ) {
-		$headerlib->add_jsfile( "lib/jquery/malsup-cycle/jquery.cycle.all.js" );
-	}
 	if( $prefs['feature_shadowbox'] == "y" ) {
 		$headerlib->add_jsfile( "lib/jquery/colorbox/jquery.colorbox.js" );
 		$headerlib->add_cssfile( "lib/jquery/colorbox/styles/colorbox.css" );
 	}
 	
-	if( $prefs['feature_jquery_ui'] == 'y' || $prefs['feature_jquery_tooltips'] == 'y' || $prefs['feature_jquery_autocomplete'] == 'y' || $prefs['feature_jquery_superfish'] == 'y' || $prefs['feature_jquery_reflection'] == 'y' || $prefs['feature_jquery_cycle'] == 'y' || $prefs['feature_shadowbox'] == 'y' ) {
+	if( $prefs['feature_jquery_ui'] == 'y' || $prefs['feature_jquery_tooltips'] == 'y' || $prefs['feature_jquery_autocomplete'] == 'y' || $prefs['feature_jquery_superfish'] == 'y' || $prefs['feature_jquery_reflection'] == 'y' || $prefs['feature_shadowbox'] == 'y' ) {
 		$headerlib->add_jsfile( "lib/jquery/jquery.cookie.js" );
 		$headerlib->add_jsfile( "lib/jquery/jquery.async.js", 10 );
 		$headerlib->add_jsfile( "lib/jquery/jquery.columnmanager/jquery.columnmanager.js" );

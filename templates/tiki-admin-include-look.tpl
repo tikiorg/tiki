@@ -224,7 +224,6 @@
 						<div class="adminoptionlabel">
 							{icon _id=information} <em>{tr}For future use{/tr}:</em>
 							<div class="adminoptionboxchild">	
-								{preference name=feature_jquery_cycle}
 								{preference name=feature_jquery_sheet}
 								{preference name=feature_jquery_tablesorter}
 							</div>

@@ -1311,11 +1311,6 @@ function prefs_feature_list() {
 				'vader' => 'vader',
 			), 
 		),
-		'feature_jquery_cycle' => array(
-			'name' => tra('Cycle (slideshow)'),
-			'type' => 'flag',
-			'help' => 'JQuery#Cycle',
-		),
 		'feature_jquery_sheet' => array(
 			'name' => tra('JQuery Sheet'),
 			'type' => 'flag',
