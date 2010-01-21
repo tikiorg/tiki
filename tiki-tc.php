@@ -40,7 +40,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 			$cat_themes = array();	// collect all the category themes
 			foreach($tc_categs as $cat) {
 				$ct = $tcontrollib->tc_get_theme_by_categ($cat);
-				if (!in_array($ct, $cat_themes)) {
+				if (!empty($ct) && !in_array($ct, $cat_themes)) {
 					$cat_themes[] = $ct;
 					
 //					$catt = $categlib->get_category($cat);
