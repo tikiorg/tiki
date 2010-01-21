@@ -1314,7 +1314,12 @@ function prefs_feature_list() {
 		'feature_jquery_sheet' => array(
 			'name' => tra('JQuery Sheet'),
 			'type' => 'flag',
-			'help' => 'JQuery#Cycle',
+			'help' => 'JQuery#Sheet',
+		),
+		'feature_jquery_carousel' => array(
+			'name' => tra('JQuery Infinite Carousel'),
+			'type' => 'flag',
+			'help' => 'JQuery#Carousel',
 		),
 		'feature_jquery_tablesorter' => array(
 			'name' => tra('JQuery Sortable Tables'),

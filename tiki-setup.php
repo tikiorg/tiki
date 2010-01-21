@@ -173,7 +173,10 @@ if ($prefs['javascript_enabled'] == 'y') {
 		$headerlib->add_jsfile( "lib/jquery/colorbox/jquery.colorbox.js" );
 		$headerlib->add_cssfile( "lib/jquery/colorbox/styles/colorbox.css" );
 	}
-	
+	if( $prefs['feature_jquery_carousel'] == 'y' ) {
+		$headerlib->add_jsfile( 'lib/jquery/infinitecarousel/jquery.infinitecarousel2.js' );
+	}
+
 	$headerlib->add_jsfile( "lib/jquery/jquery.cookie.js" );
 	$headerlib->add_jsfile( "lib/jquery/jquery.async.js", 10 );
 	$headerlib->add_jsfile( "lib/jquery/treeTable/src/javascripts/jquery.treeTable.js" );

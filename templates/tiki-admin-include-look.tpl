@@ -222,10 +222,11 @@
 
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">
-							{icon _id=information} <em>{tr}For future use{/tr}:</em>
+							<em>{tr}Experimental{/tr}:</em> {icon _id=bug_error}
 							<div class="adminoptionboxchild">	
 								{preference name=feature_jquery_sheet}
 								{preference name=feature_jquery_tablesorter}
+								{preference name=feature_jquery_carousel}
 							</div>
 						</div>
 					</div>
