@@ -328,6 +328,11 @@ class WikiLib extends TikiLib
 			}
 		}
 
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('pages', $newName);
+		}
+
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->rename_wiki_page($oldName, $newName);
 

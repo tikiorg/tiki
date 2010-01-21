@@ -120,6 +120,10 @@ class Importer extends Comments
 		$query = "update `tiki_forums` set `comments` = ?, `threads` = ? where `forumId` = ?";
 		$result = $this->query($query, array( (int) $tComments, (int) $tThreads, (int) $tF ));
 
+		// Force an index refresh on comments table.
+		include_once("lib/search/refresh-functions.php");
+		refresh_index_forums();
+		refresh_index('comments');
 		return $fPosts;
 	}
 

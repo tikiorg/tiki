@@ -16,6 +16,53 @@
 	{tabset name=admin_search}
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
+				<legend>
+					{tr}Search type{/tr}{help url="Search+Admin"}
+				</legend>
+				{preference name=feature_search_fulltext}
+
+				<div class="adminoption">
+					<input type="checkbox"{if $prefs.feature_search eq 'y'} checked="checked"{/if} onclick="flip('searchrefresh');flip('autosearchrefresh');"/>
+				</div>
+				<div class="adminoptionlabel">
+					<label>{tr}Tiki search{/tr}</label>
+				</div>
+
+				<div class="adminoptionboxchild" id="autosearchrefresh" style="display:{if $prefs.feature_search eq 'y'}block{else}none{/if};">
+					{tr}Specify the Tiki search settings{/tr}:
+					
+					{preference name=search_refresh_index_mode}
+					{preference name=search_refresh_rate}
+					{preference name=search_min_wordlength}
+					{preference name=search_max_syllwords}
+					{preference name=search_syll_age}
+					{preference name=search_lru_purge_rate}
+					{preference name=search_lru_length}
+				</div>	
+						
+				<div class="adminoptionboxchild" id="searchrefresh">
+					<em>{tr}The Tiki search indexes must be refreshed if you turn the Tiki search on{/tr}:</em>
+					{if $refresh_index_all_now neq 'y'}
+						<br />
+						<a href="tiki-admin.php?page=search&amp;refresh_index_all_now=y" class="button" title="{tr}Refresh all search index now{/tr}">{tr}Refresh all search index now{/tr}</a>
+					{/if}
+					{if $refresh_index_now neq 'y'}
+						<br />
+						<a href="tiki-admin.php?page=search&amp;refresh_index_now=y" class="button" title="{tr}Refresh wiki search index now{/tr}">{tr}Refresh wiki search index now{/tr}</a>
+					{/if}
+					{if $refresh_tracker_index_now neq 'y' and $prefs.trk_with_mirror_tables neq 'y'}
+						<br />
+						<a href="tiki-admin.php?page=search&amp;refresh_tracker_index_now=y" class="button" title="{tr}Refresh trackers search index now{/tr}">{tr}Refresh tracker search index now{/tr}</a>
+					{/if}
+					{if $refresh_files_index_now neq 'y' and $prefs.trk_with_mirror_tables neq 'y'}
+						<br />
+						<a href="tiki-admin.php?page=search&amp;refresh_files_index_now=y" class="button" title="{tr}Refresh files search index now{/tr}">{tr}Refresh files search index now{/tr}</a>
+					{/if}
+				</div>
+			</fieldset>
+				
+
+			<fieldset>
 				<legend>{tr}Features{/tr}</legend>
 				{preference name=feature_referer_highlight}
 				{preference name=search_parsed_snippet}

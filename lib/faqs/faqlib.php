@@ -140,6 +140,12 @@ class FaqLib extends TikiLib
 			$questionId = $this->getOne('select max(questionId) from `tiki_faq_questions` where `faqId`=?', $faqId);
 		}
 
+		global $prefs;
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('faq_questions', $questionId);
+		}
+
 		return true;
 	}
 
@@ -155,6 +161,12 @@ class FaqLib extends TikiLib
 			$query = 'insert into `tiki_faqs`(`title`,`description`,`created`,`hits`,`canSuggest`) values(?,?,?,?,?)';
 			$result = $this->query($query, array($title, $description, (int) $this->now, 0, $canSuggest));
 			$faqId = $this->getOne('select max(`faqId`) from `tiki_faqs` where `title`=? and `created`=?', array($title, (int) $this->now));
+		}
+
+		global $prefs;
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('faqs', $faqId);
 		}
 
 		return $faqId;

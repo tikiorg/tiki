@@ -925,6 +925,12 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'hint' => 'tiki-orphan_pages.php',
 		),
+		'feature_search_fulltext' => array(
+			'name' => tra('Database search'),
+			'hint' => tra('This search uses the MySQL Full-Text feature. The indexation is always updated.'),
+			'type' => 'flag',
+			'help' => 'Search',
+		),
 		'feature_referer_highlight' => array(
 			'name' => tra('Referer Search Highlighting'),
 			'type' => 'flag',
@@ -1051,6 +1057,14 @@ function prefs_feature_list() {
 			'dependencies' => array(
 				'feature_search',
 			),
+		),
+		'feature_forum_local_tiki_search' => array(
+			'name' => tra('Use Tiki (database-independent) search.'),
+			'type' => 'flag',
+		),
+		'feature_forum_local_search' => array(
+			'name' => tra('Use database (full-text) search.'),
+			'type' => 'flag',
 		),
 		'feature_clear_passwords' => array(
 			'name' => tra('Store password as plain text'),

@@ -108,6 +108,11 @@ class FileGalLib extends TikiLib
 			$logslib->add_action('Uploaded', $galleryId, 'file gallery', "fileId=$fileId&amp;add=$size");
 		}
 
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' && ( $prefs['fgal_asynchronous_indexing'] != 'y' || ! isset($_REQUEST['fast']) ) ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('files', $fileId);
+		}
+
 		//Watches
 		$smarty->assign('galleryId', $galleryId);
                 $smarty->assign('fname', $name);
@@ -276,6 +281,10 @@ class FileGalLib extends TikiLib
 			}
 		}
 
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('file_galleries', $galleryId);
+		}
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$cachelib->empty_type_cache($this->get_all_galleries_cache_type());
 
@@ -467,6 +476,12 @@ class FileGalLib extends TikiLib
 			$this->query($query, array($this->now, $galleryId));
 		}
 
+		global $prefs;
+		if ( $reindex && $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('files', $id);
+		}
+
 		return $result;
 	}
 
@@ -512,6 +527,11 @@ class FileGalLib extends TikiLib
 
 			if ( $didFileReplace && !empty($oldPath) ) {
 				unlink($savedir . $oldPath);
+			}
+
+			if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' && ( $prefs['fgal_asynchronous_indexing'] != 'y' || ! isset($_REQUEST['fast']) ) ) {
+				require_once('lib/search/refresh-functions.php');
+				refresh_index('files', $id);
 			}
 
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
@@ -600,6 +620,8 @@ class FileGalLib extends TikiLib
 				$result = $this->query($query,array($search_text,$row['fileId']));
 			}
 		}
+		include_once("lib/search/refresh-functions.php");
+		refresh_index('files');
 	}
 
 	function get_search_text_for_data($data,$path,$type, $galleryId) {

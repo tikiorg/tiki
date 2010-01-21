@@ -76,6 +76,7 @@ $smarty->assign('sortdirection', 'desc');
 $smarty->assign_by_ref('gal_info', $gal_info);
 $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
+$smarty->assign('reindex_file_id', -1);
 // Execute batch actions
 if ($tiki_p_admin_file_galleries == 'y') {
 	if (isset($_REQUEST['delsel_x'])) {
@@ -523,6 +524,9 @@ if (!empty($_FILES)) {
 			}
 			$smarty->assign('fileId', $fileId);
 			$smarty->assign('fileChangedMessage', tra('File update was successful') . ': ' . $v['name']);
+			if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {
+				$smarty->assign('reindex_file_id', $fileId);
+			}
 		} elseif ($v['error'] != 0) {
 			$smarty->assign('msg', tra('Upload was not successful') . ': ' . $tikilib->uploaded_file_error($v['error']));
 			$smarty->display('error.tpl');
