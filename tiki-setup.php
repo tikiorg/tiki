@@ -5,12 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-	header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
 	exit;
 }
 if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-	header("location: tiki-install.php");
+	header('location: tiki-install.php');
 	exit;
 }
 require_once 'lib/setup/third_party.php';
@@ -74,7 +74,7 @@ if ($prefs['feature_integrator'] == 'y') require_once ('lib/setup/integrator.php
 if (isset($_REQUEST['comzone'])) require_once ('lib/setup/comments_zone.php');
 if ($prefs['feature_lastup'] == 'y') require_once ('lib/setup/last_update.php');
 if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive_translation_mode'] == 'on')) {
-	include_once ("lib/multilingual/multilinguallib.php");
+	include_once ('lib/multilingual/multilinguallib.php');
 	$cachelib->empty_full_cache();
 }
 if ($prefs['feature_freetags'] == 'y') require_once ('lib/setup/freetags.php');
@@ -138,58 +138,58 @@ if ($prefs['javascript_enabled'] == 'y') {
 	}
 	
 	if( $prefs['feature_jquery_tooltips'] == 'y' ) {
-		$headerlib->add_jsfile( "lib/jquery/cluetip/lib/jquery.hoverIntent.js" );
-		$headerlib->add_jsfile( "lib/jquery/cluetip/lib/jquery.bgiframe.min.js" );
-		$headerlib->add_jsfile( "lib/jquery/cluetip/jquery.cluetip.js" );
-		$headerlib->add_cssfile( "lib/jquery/cluetip/jquery.cluetip.css" );
+		$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.hoverIntent.js' );
+		$headerlib->add_jsfile( 'lib/jquery/cluetip/lib/jquery.bgiframe.min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/cluetip/jquery.cluetip.js' );
+		$headerlib->add_cssfile( 'lib/jquery/cluetip/jquery.cluetip.css' );
 	}
 	
 	if( $prefs['feature_jquery_autocomplete'] == 'y' ) {
-		$headerlib->add_jsfile( "lib/jquery/jquery-autocomplete/lib/jquery.ajaxQueue.js" );
+		$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.ajaxQueue.js' );
 		if( $prefs['feature_jquery_tooltips'] != 'y' ) {
-			$headerlib->add_jsfile( "lib/jquery/jquery-autocomplete/lib/jquery.bgiframe.min.js" );
+			$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/lib/jquery.bgiframe.min.js' );
 		}
-		$headerlib->add_jsfile( "lib/jquery/jquery-autocomplete/jquery.autocomplete.js" );
-		$headerlib->add_cssfile( "lib/jquery/jquery-autocomplete/jquery.autocomplete.css" );
+		$headerlib->add_jsfile( 'lib/jquery/jquery-autocomplete/jquery.autocomplete.js' );
+		$headerlib->add_cssfile( 'lib/jquery/jquery-autocomplete/jquery.autocomplete.css' );
 	}
 	
 	if( $prefs['feature_jquery_superfish'] == 'y' ) {
-		$headerlib->add_jsfile( "lib/jquery/superfish/js/superfish.js" );
-		$headerlib->add_jsfile( "lib/jquery/superfish/js/supersubs.js" );
+		$headerlib->add_jsfile( 'lib/jquery/superfish/js/superfish.js' );
+		$headerlib->add_jsfile( 'lib/jquery/superfish/js/supersubs.js' );
 	}
 	if( $prefs['feature_jquery_reflection'] == 'y' ) {
-		$headerlib->add_jsfile( "lib/jquery/reflection-jquery/js/reflection.js" );
+		$headerlib->add_jsfile( 'lib/jquery/reflection-jquery/js/reflection.js' );
 	}
 	if( $prefs['feature_jquery_sheet'] == 'y' ) {
-		$headerlib->add_cssfile( "lib/jquery/jquery.sheet/jquery.sheet.base.css" );
-		$headerlib->add_jsfile( "lib/jquery/jquery.sheet/jquery.sheet.js" );
+		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.base.css' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
 	}
 	if( $prefs['feature_jquery_tablesorter'] == 'y' ) {
-		$headerlib->add_cssfile( "lib/jquery_tiki/tablesorter/themes/tiki/style.css" );
-		$headerlib->add_jsfile( "lib/jquery/tablesorter/jquery.tablesorter.js" );
-		$headerlib->add_jsfile( "lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js" );
+		$headerlib->add_cssfile( 'lib/jquery_tiki/tablesorter/themes/tiki/style.css' );
+		$headerlib->add_jsfile( 'lib/jquery/tablesorter/jquery.tablesorter.js' );
+		$headerlib->add_jsfile( 'lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js' );
 	}
-	if( $prefs['feature_shadowbox'] == "y" ) {
-		$headerlib->add_jsfile( "lib/jquery/colorbox/jquery.colorbox.js" );
-		$headerlib->add_cssfile( "lib/jquery/colorbox/styles/colorbox.css" );
+	if( $prefs['feature_shadowbox'] == 'y' ) {
+		$headerlib->add_jsfile( 'lib/jquery/colorbox/jquery.colorbox.js' );
+		$headerlib->add_cssfile( 'lib/jquery/colorbox/styles/colorbox.css' );
 	}
 	if( $prefs['feature_jquery_carousel'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/jquery/infinitecarousel/jquery.infinitecarousel2.js' );
 	}
 
-	$headerlib->add_jsfile( "lib/jquery/jquery.cookie.js" );
-	$headerlib->add_jsfile( "lib/jquery/jquery.async.js", 10 );
-	$headerlib->add_jsfile( "lib/jquery/treeTable/src/javascripts/jquery.treeTable.js" );
-	$headerlib->add_cssfile( "lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css" );
+	$headerlib->add_jsfile( 'lib/jquery/jquery.cookie.js' );
+	$headerlib->add_jsfile( 'lib/jquery/jquery.async.js', 10 );
+	$headerlib->add_jsfile( 'lib/jquery/treeTable/src/javascripts/jquery.treeTable.js' );
+	$headerlib->add_cssfile( 'lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css' );
 	
 	if( ( $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_tablesorter'] != 'y' ) && $prefs['javascript_enabled'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/tiki-js-sorttable.js' );
 	}
 	
 	if( $prefs['feature_phplayers'] == 'y' ) {
-		$headerlib->add_jsfile( "lib/phplayers/libjs/layersmenu-library.js" );
-		$headerlib->add_jsfile( "lib/phplayers/libjs/layersmenu.js" );
-		$headerlib->add_jsfile( "lib/phplayers/libjs/layerstreemenu-cookies.js" );
+		$headerlib->add_jsfile( 'lib/phplayers/libjs/layersmenu-library.js' );
+		$headerlib->add_jsfile( 'lib/phplayers/libjs/layersmenu.js' );
+		$headerlib->add_jsfile( 'lib/phplayers/libjs/layerstreemenu-cookies.js' );
 	}
 	
 	if( $prefs['wikiplugin_flash'] == 'y' ) {
