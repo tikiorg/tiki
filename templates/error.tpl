@@ -70,7 +70,7 @@ close();
 						{/if}
 					{/if}
 				{/if}
-				{if $required_preferences eq 'y'}
+				{if $required_preferences}
 					<form method="post" action="tiki-admin.php">
 						{foreach from=$required_preferences item=pref}
 							{preference name=$pref}
