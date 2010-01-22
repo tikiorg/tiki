@@ -96,7 +96,7 @@ if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST[
 
 $use_best_language = $multilinguallib->useBestLanguage();
 
-echo "<pre>-- tiki-index.php: \$use_best_language='"; var_dump($use_best_language); echo "'</pre>\n";
+//echo "<pre>-- tiki-index.php: \$use_best_language='"; var_dump($use_best_language); echo "'</pre>\n";
 
 $info = null;
 
