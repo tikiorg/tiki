@@ -29,6 +29,7 @@ if ($tiki_p_admin != 'y') {
 
 $categories = $categlib->get_all_categories();
 $smarty->assign('categories', $categories);
+$smarty->assign('categId', isset($_REQUEST['categId']) ? $_REQUEST['categId'] : 0);
 
 $list_styles = $tikilib->list_styles();
 $smarty->assign_by_ref('styles',$list_styles);
