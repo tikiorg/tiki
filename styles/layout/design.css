@@ -1087,6 +1087,9 @@ table.treeTable .parent td {
 #intertrans-form input {
 	width: 100%;
 }
-
+.popup-backlinks {
+	display: none;
+	width: 100px;
+}
  /* wikiplugin_tracker */
 /* End of file */
