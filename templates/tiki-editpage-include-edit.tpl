@@ -116,6 +116,7 @@
 {/if}
 
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
+	<input type="hidden" name="no_bl" value="y" />
 	{if $diff_style}
 		<select name="diff_style">
 		

@@ -73,14 +73,17 @@ if ((!empty($activeWS)) and $isHomePage)
 	if (!empty($preferences['wsHomepage']))
 		$_REQUEST['page'] = $preferences['wsHomepage'];
 }
+//echo "<pre>-- tiki-index.php: before get_page_name_from_id, \n\$_REQUEST['page']='".$_REQUEST['page']."'\n\$_REQUEST['page_id']=".$_REQUEST['page_id']."\n\$page='$page'\n\$smarty->get_template_vars('page')='".$smarty->get_template_vars('page')."'</pre>\n";
+//die("-- dying so can see traces");
 
 // If a page have been requested, then show the page.
 if (isset($_REQUEST['page_id'])) {
     $_REQUEST['page'] = $tikilib->get_page_name_from_id($_REQUEST['page_id']);
     //TODO: introduce a get_info_from_id to save a sql request
 }
+//echo "<pre>-- tiki-index.php: after get_page_name_from_id, \n\$_REQUEST['page']='".$_REQUEST['page']."'\n\$_REQUEST['page_id']=".$_REQUEST['page_id']."\n\$page='$page'\n\$smarty->get_template_vars('page')='".$smarty->get_template_vars('page')."'</pre>\n";
+//die("-- dying so can see traces");
 
-$use_best_language = false;
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
 	if ($objectperms->view) {
@@ -90,7 +93,10 @@ if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST[
 	}
 }
 
-$use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']) || isset($_REQUEST['switchLang']);
+
+$use_best_language = $multilinguallib->useBestLanguage();
+
+echo "<pre>-- tiki-index.php: \$use_best_language='"; var_dump($use_best_language); echo "'</pre>\n";
 
 $info = null;
 
@@ -137,6 +143,8 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 
 if (!empty($page_ref_id)) {
     $page_info = $structlib->s_get_page_info($page_ref_id);
+//	echo "<pre>-- tiki-index.php: after calling s_get_page_info, \$page_info="; var_dump($page_info); echo "</pre>\n";
+    
     $info = null;
     // others still need a good set page name or they will get confused.
     // comments of home page were all visible on every structure page
@@ -146,8 +154,11 @@ if (!empty($page_ref_id)) {
 	$smarty->assign('showstructs', $structs_with_perm);
 	$smarty->assign('page_ref_id', $page_ref_id);
 }
+
 $page = $_REQUEST['page'];
 $smarty->assign_by_ref('page',$page);
+
+//echo "<pre>-- tiki-index.php: before function_exists('utf8, \$page='$page', \$_REQUEST['page']='".$_REQUEST['page']."'\n\$smarty->get_template_vars('page')='".$smarty->get_template_vars('page')."'</pre>\n";
 
 if ( function_exists('utf8_encode') ) {
 	$pagename_utf8 = utf8_encode($page);
@@ -169,8 +180,12 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 		$url = 'tiki-index.php?page='.$prefs['feature_wiki_userpage_prefix'].$user;
 		if ($prefs['feature_sefurl'] == 'y') {
 			include_once('tiki-sefurl.php');
+			echo "<pre>-- tiki-index.php: header 1, location='".urlencode(filter_out_sefurl($url, $smarty, 'wiki'))."'</pre>\n";
+			die("-- dying so you can see the traces go by");
 			header('location: '. urlencode(filter_out_sefurl($url, $smarty, 'wiki')));
 		} else {
+			echo "<pre>-- tiki-index.php: header 2, location='".$url."'</pre>\n";
+			die("-- dying so you can see the traces go by");
 			header("Location: $url");
 		}
 		die;
@@ -191,6 +206,9 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 
 
 if (empty($info) && $user && $prefs['feature_wiki_userpage'] == 'y' && (strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0 || strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0 )) {
+	echo "<pre>-- tiki-index.php: header 2, location='".'tiki-editpage.php?page='.$prefs['feature_wiki_userpage_prefix'].$user."'</pre>\n";
+	die("-- dying so you can see the traces go by");	
+	
 	header('Location: tiki-editpage.php?page='.$prefs['feature_wiki_userpage_prefix'].$user);
     	die;
 }
@@ -245,6 +263,8 @@ if( ! $pageRenderer->canView ) {
 // Convert page to structure
 if (isset($_REQUEST['convertstructure']) && isset($structs) && count($structs) == 0) {
 	$page_ref_id = $structlib->s_create_page(0, null, $page);
+	echo "<pre>-- tiki-index.php: header 3, location='".'tiki-index.php?page_ref_id='.$page_ref_id."'</pre>\n";
+	die;
 	header('Location: tiki-index.php?page_ref_id='.$page_ref_id );
 	exit;
 }
@@ -452,6 +472,10 @@ if (!empty($_REQUEST['machine_translate_to_lang'])) {
 } 
 
 $smarty->assign('mid','tiki-show_page.tpl');
+
+//echo "<pre>-- tiki-index.php: Just before display, smarty variables are:\n"; var_dump($smarty->get_template_vars()); echo "</pre>\n";
+//echo "<pre>-- tiki-index.php: Just before display, \$_REQUEST=:\n"; var_dump($_REQUEST); echo "</pre>\n";
+
 $smarty->display("tiki.tpl");
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);

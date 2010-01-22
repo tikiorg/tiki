@@ -222,24 +222,29 @@ class MultilingualLib extends TikiLib
 	 */
 	function preferredLangs($langContext = null,$include_browser_lang=TRUE) {
 		global $user, $prefs, $tikilib;
+//		 echo "<pre>-- multilinguallib.preferredLangs: \$langContext='$langContext', \$include_browser_lang='$include_browser_lang'</pre>\n";
 		$langs = array();
 
 		if ($langContext) {
+			// echo "<pre>-- multilinguallib.preferredLangs: looking at language context</pre>\n";
 			$langs[] = $langContext;
 			if (strchr($langContext, "-")) // add en if en-uk
 				$langs[] = $this->rootLang($langContext);
 		}
+//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 		
 		if ($prefs['language'] && !in_array($prefs['language'], $langs)) {
+//			 echo "<pre>-- multilinguallib.preferredLangs: looking at prefs['language']</pre>\n";
 			$langs[] = $prefs['language'];
 			$l = $this->rootLang($prefs['language']);
 			if (!in_array($l, $langs))
 				$langs[] = $l;
 		}
+//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 
 		if (isset($prefs['read_language'])) {
 			$tok = strtok($prefs['read_language'], ' ');
-
+//			 echo "<pre>-- multilinguallib.preferredLangs: looking at prefs['read_language']</pre>\n";
 			while (false !== $tok) {
 				if (!in_array($tok, $langs) )
 					$langs[] = $tok;
@@ -250,9 +255,11 @@ class MultilingualLib extends TikiLib
 				$tok = strtok(' ');
 			}
 		}
+//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 
 		if (($include_browser_lang)&&(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))) {
 			$ls = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE'])); // browser
+//			 echo "<pre>-- multilinguallib.preferredLangs: looking at browser langs['read_language']</pre>\n";			
 			foreach ($ls as $l) {
 				if (!in_array($l, $langs)) {
 					$langs[] = $l;
@@ -262,20 +269,27 @@ class MultilingualLib extends TikiLib
 				}
 			}
 		}
+//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 
 		$l = $prefs['site_language'];
 		if (!in_array($l, $langs)) {
+//			 echo "<pre>-- multilinguallib.preferredLangs: looking at site language</pre>\n";			
 			$langs[] = $l; // site language
 			$l = $this->rootLang($l);
 			if (!in_array($l, $langs))
 				$langs[] = $l;
 		}
+//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 
 		if( $prefs['available_languages'] && $prefs['language_inclusion_threshold'] >= count($prefs['available_languages']) ) {
+//			 echo "<pre>-- multilinguallib.preferredLangs: looking at available languages</pre>\n";			
 			foreach( array_diff( $prefs['available_languages'], $langs ) as $lang ) {
 				$langs[] = $lang;
 			}
 		}
+//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
+		
+//		 echo "<pre>-- multilinguallib.preferredLangs: returning \$langs="; var_dump($langs); echo "</pre>\n";
 
 		return $langs;	
 	}
@@ -365,6 +379,76 @@ class MultilingualLib extends TikiLib
 		$urcontent=urlencode($content);
 		$ret= "<span  onclick=\"window.open('tiki-interactive_trans.php?content=$urcontent','traduction','toolbar=no,location=no,scrollbars=yes,directories=no,status=no,menubar=no,resizable=no,copyhistory=no,width=600,height=300,left=10,top=10');return false;\">Â°</span>";
 		return $ret;
+	}
+
+	/*
+	 * Determine if the best language should be used for an object, based on request and preference parameters,
+	 */
+	function useBestLanguage() {
+		/*
+		 * Indicates whether or not content should be displayed in the user's preferred language
+		 * (as expressed in either its Tiki or browser language preferences).
+		 */
+		global $prefs, $_REQUEST;
+//		echo "<pre>-- multilinguallib.useBestLanguage: \$prefs['feature_multilingual']=".$prefs['feature_multilingual']."</pre>\n";
+//		echo "<pre>-- multilinguallib.useBestLanguage: \$prefs['feature_best_language']=".$prefs['feature_best_language']."</pre>\n";
+//		echo "<pre>-- multilinguallib.useBestLanguage: \$prefs['feature_detect_language']=".$prefs['feature_detect_language']."</pre>\n";
+//		echo "<pre>-- multilinguallib.useBestLanguage: \$_REQUEST['bl']=".$_REQUEST['bl']."</pre>\n";
+//		echo "<pre>-- multilinguallib.useBestLanguage: \$_REQUEST['best_lang']=".$_REQUEST['best_lang']."</pre>\n";
+//		echo "<pre>-- multilinguallib.useBestLanguage: \$_REQUEST['switchLang']=".$_REQUEST['switchLang']."</pre>\n";
+		
+		if ($prefs['feature_multilingual'] == 'n') {
+//			echo "<pre>-- multilinguallib.useBestLanguage: returning false cause of feature_multilingual</pre>\n";
+			return false;
+		}
+		if ($prefs['feature_detect_language'] == 'n' && 
+			$prefs['feature_best_language'] == 'n') {
+//			echo "<pre>-- multilinguallib.useBestLanguage: returning false cause of feature_best_language or feature_detect_language</pre>\n";
+		    return false;
+		} 
+		
+		if (isset($_REQUEST['no_bl']) && $_REQUEST['no_bl'] == 'y') {
+			return false;
+		}
+
+		/*
+		 * Alain Désilets (2010-01-12):
+		 * 
+		 *  There is also a bl= argument, but it seems too be used very inconsistenly. 
+		 *  - Sometimes, the mere presence of bl (no matter its value) s interpreted as meaning
+		 *    that bBest Language should be used.
+		 *  - In other cases, we set bl=n, presumably to signifiy that Best Language should not be used.
+		 *  - Yet, in in lib/setup/language.php, there is a statement which, if unsets bl, if its value was n, so 
+		 *    not clear that all the checks for bl=n are doing anything.
+		 *  - If the purpose of bl is to indicate that Best Language is to be used (when bl is defined),
+		 *    then it's kind of weird, because Best Language cannot be used when multilingual features
+		 *    or best_languge or detec_language are inactive. Yet, when one of those is active, Best Language
+		 *    is always used, so there is no need to say that with an argument. There may be a need to 
+		 *    say that in a particular case, Best Language should NOT be used, but not to say that Best Language
+		 *    SHOULD be used.
+		 *  
+ 		 */
+		
+//		echo "<pre>-- multilinguallib.useBestLanguage: returning true</pre>\n";
+		return true;
+	}
+	
+	function  setUrlNoBestLanguageArg($url, $no_bl_value) {
+//		echo "<pre>-- multilinguallib.setUrlBestLanguageArg: \$url='$url', \$no_bl_value='$no_bl_value'</pre>\n";
+		if (preg_match('/[?&]no_bl=/', $url)) {
+//			echo "<pre>-- multilinguallib.setUrlBestLanguageArg: changing existing no_bl arg</pre>\n";
+			$url = preg_replace('/([?&])no_bl=[yn]{0,1}/', '$1no_bl=$no_bl_value', $url);
+		} elseif (!preg_match('/[?&]lang=/', $url)) {
+//			echo "<pre>-- multilinguallib.setUrlBestLanguageArg: ADDING no_bl arg</pre>\n";
+			if (strstr($url, '?')) {
+				$url.= '&no_bl=$no_bl_value';
+			} else {
+				$url.= '?no_bl=$no_bl_value';
+			}
+		}
+//			echo "<pre>-- multilinguallib.setUrlBestLanguageArg: returning \$url='$url'</pre>\n";
+		
+		return $url;
 	}
 
 	function getSupportedTranslationBitFlags() {
@@ -870,6 +954,9 @@ class MultilingualLib extends TikiLib
 			"   WHERE (`page_id`, `language`) = ('$page_id', '$language')";	
 		$results = $this->query($query, array($page_id, $language));
 	}
+
+
+
 }
 
 

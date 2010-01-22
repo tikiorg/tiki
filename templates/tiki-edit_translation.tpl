@@ -3,7 +3,7 @@
 <div class="navbar">
 	{if $type eq 'wiki page'}
 		{assign var=thisname value=$name|escape:'url'}
-		{button href="tiki-index.php?page=$thisname&bl=n" _text="{tr}View Page{/tr}"}
+		{button href="tiki-index.php?page=$thisname&no_bl=y" _text="{tr}View Page{/tr}"}
 	{else}
 		{button href="tiki-read_article.php?articleId=$id" _text="{tr}View Article{/tr}"}
 	{/if}
@@ -126,7 +126,7 @@ function validate_translation_request() {
 		{section name=i loop=$trads}
 		<tr class="{cycle}">
 			<td>{$trads[i].langName}</td>
-			<td>{if $type == 'wiki page'}<a href="tiki-index.php?page={$trads[i].objName|escape:url}&bl=n">{else}<a href="tiki-read_article.php?articleId={$trads[i].objId|escape:url}">{/if}{$trads[i].objName|escape}</a></td>
+			<td>{if $type == 'wiki page'}<a href="tiki-index.php?page={$trads[i].objName|escape:url}&no_bl=y">{else}<a href="tiki-read_article.php?articleId={$trads[i].objId|escape:url}">{/if}{$trads[i].objName|escape}</a></td>
 			<td>
 				{if $tiki_p_detach_translation eq 'y' }
 					<a rel="nofollow" class="link" href="tiki-edit_translation.php?detach&amp;page={$name|escape}&amp;id={$id|escape:url}&amp;srcId={$trads[i].objId|escape:url}&amp;type={$type|escape:url}">{icon _id='cross' alt='{tr}detach{/tr}'}</a>
