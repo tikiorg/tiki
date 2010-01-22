@@ -801,6 +801,8 @@ function wikiplugin_img_info() {
 					$imgdata_dim = '';
 					$width = $fwidth;
 				}			
+			} else if (count($imagesize) > 2) {
+				$imgdata_dim = ' ' . $imagesize[3];
 			}
 		} else {
 			if (!empty($height)) {
