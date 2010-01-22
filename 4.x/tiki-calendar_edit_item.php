@@ -263,7 +263,7 @@ if (isset($_POST['act'])) {
 				}
 				$calRecurrence->setUser($save['user']);
 				$calRecurrence->save($_POST['affect'] == 'all');
-+					// Save the ip at the log for the addition of new calendar items when done by anonymous users
+					// Save the ip at the log for the addition of new calendar items when done by anonymous users
 					if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) { 
 						$logslib->add_log('calendar','Recurrent calendar item starting on '.$_POST['startPeriod'].' added to calendar '.$save['calendarId']);
 					}
