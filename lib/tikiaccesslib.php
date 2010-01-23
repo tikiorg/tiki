@@ -47,7 +47,7 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
-	function check_feature($features, $feature_name="") {
+	function check_feature($features, $feature_name="", $url_to_relevant_admin_panel="tiki-admin.php?page=features") {
 		global $prefs;
 		require_once ('tiki-setup.php');
 
@@ -66,7 +66,12 @@ class TikiAccessLib extends TikiLib
 				if( $perms->admin ) {
 					$smarty->assign('required_preferences', $features);
 				}
-				$this->display_error('', tra("This feature is disabled").": ". $feature, '503' );
+				$msg = tra("This feature is disabled").": <b>". $feature."</b>\n<P>\n".
+				       tra('To enable this feature, go to:').
+					   " <a href=\"$url_to_relevant_admin_panel\">".tra('Admin Feature').'</a>. '."\n<P>\n".
+				       tra('If you do not have privileges to activate this feature, ask the site admin to do it.').'</a>';
+				
+				$this->display_error('', $msg, '503' );
 			}
 		}
 	}
