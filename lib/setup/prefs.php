@@ -43,6 +43,7 @@ function get_default_prefs() {
 		'feature_wiki' => 'y',
 		'default_wiki_diff_style' => 'sidediff',
 		'feature_backlinks' => 'n',
+		'backlinks_name_len' => '0',
 		'feature_dump' => 'n',
 		'feature_history' => 'y',
 		'feature_lastChanges' => 'y',

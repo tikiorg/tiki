@@ -81,10 +81,12 @@
 
 	{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
 			<form action="tiki-index.php" method="get" style="display: block; float: left">
-				<select name="page" onchange="this.form.submit()">
+				<select name="page" onchange="this.form.submit()" title="{tr}Backlinks{/tr}">
 					<option>{tr}Backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}
-					<option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
+					<option value="{$backlinks[back].fromPage}" title="{$backlinks[back].fromPage}">
+					{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true}{else}{$backlinks[back].fromPage}{/if}
+					</option>
 		{/section}
 				</select>
 			</form>

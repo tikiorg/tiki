@@ -502,6 +502,13 @@ function prefs_wiki_list() {
 				'both' => tra('Both'),
 			),
 		),
-		
+		'wiki_backlinks_name_len' => array(
+			'name' => tra('Name length'),
+			'description' => tra('Maximum length (characters) to display/truncate for backlink page names. Use "0" for no truncation.'),
+			'type' => 'text',
+			'size' => '3',
+			'filter' => 'digits',
+			'dependencies' => array( 'feature_backlinks' ),
+		),
 	);
 }
