@@ -125,7 +125,8 @@
 		<h3>{tr}Preview{/tr}</h3>
 		{$preview_data}
 	{/if}
-	<form method="post" action="tiki-admin_modules.php">
+	<form method="post" action="tiki-admin_modules.php{if (empty($assign_name))}#assign{/if}">
+	{* on the initial selection of a new module, reload the page to the #assign anchor *}
 		{if !empty($info.moduleId)}
 			<input type="hidden" name="moduleId" value="{$info.moduleId}" />
 		{elseif !empty($moduleId)}
@@ -145,7 +146,7 @@
 			</tr>
 
 {if !empty($assign_name)}
-{* because changeing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
+{* because changing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
 			<tr>
 				<td class="formcolor"><label for="assign_position">{tr}Position{/tr}</label></td>
 				<td class="formcolor">
