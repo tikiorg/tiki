@@ -22,6 +22,7 @@ class MultilingualLib extends TikiLib
 	 */
 	function insertTranslation($type, $srcId, $srcLang, $objId, $objLang) {
 		global $prefs;
+//		echo "<pre>-- multilinguallib.insertTranslation: \$type='$type', \$srcId='$srcId', \$srcLang='$srcLang', \$objId='$objId', \$objLang='$objLang'</pre>\n";
 		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {
 			$srcPageName = $this->get_page_name_from_id($srcId);
 			$objPageName = $this->get_page_name_from_id($objId);
