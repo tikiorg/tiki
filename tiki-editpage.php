@@ -61,7 +61,7 @@ function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $descrip
 }
 
 function guess_new_page_attributes_from_parent_pages($page, $page_info) {
-	global $editlib, $smarty, $_REQUEST, $tikilib;
+	global $editlib, $smarty, $_REQUEST, $tikilib, $need_lang;
 	if (!$page_info) {
 		//
 		// This is a new page being created. See if we can guess some of its attributes
@@ -85,7 +85,7 @@ function guess_new_page_attributes_from_parent_pages($page, $page_info) {
 			$languages = $tikilib->list_languages(false, true);
 			$smarty->assign('languages', $languages);
 			$smarty->assign('default_lang', $prefs['language']);
-			$smarty->assign('need_lang', 'y');
+			$need_lang = true;
 			$smarty->assign('_REQUEST', $_REQUEST);
 		}
 	}
@@ -1469,8 +1469,12 @@ if (strtolower($page) != 'sandbox' &&
 ask_ticket('edit-page');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-// Display the Index Template
-$smarty->assign('mid', 'tiki-editpage.tpl');
+// Display the Edit Template or language check
+if ($need_lang) {
+	$smarty->assign('mid', 'tiki-choose_page_language.tpl');
+} else {
+	$smarty->assign('mid', 'tiki-editpage.tpl');
+}
 $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
