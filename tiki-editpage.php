@@ -121,7 +121,7 @@ function execute_module_translation() {
 }
 
 // Define all templates files that may be used with the 'zoom' feature
-$zoom_templates = array('wiki_edit');
+$zoom_templates = array('wiki_edit', 'tiki-editpage');
 
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
@@ -1303,7 +1303,8 @@ if ($prefs['feature_multilingual'] == 'y') {
 		   screwed up. Will reactivate as soon as I get the CSS right for
 		   that.
 		 */
-//		$_REQUEST['zoom'] = 'wiki_edit';
+//		$_REQUEST['zoom'] = 'tiki-editpage';
+//		$diff_style = 'inlinediff-full';
 		$smarty->assign('update_translation', 'y');
 	}
 }
