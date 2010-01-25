@@ -1389,6 +1389,7 @@ function get_default_prefs() {
 		'log_sql_perf_min' => '0.05',
 		'log_mail' => 'n',
 		'log_tpl' => 'n',
+		'disableJavascript' => 'n',
 
 		'case_patched' => 'n',
 		'site_closed' => 'n',
