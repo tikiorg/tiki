@@ -61,7 +61,7 @@ function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $descrip
 }
 
 function guess_new_page_attributes_from_parent_pages($page, $page_info) {
-	global $editlib, $smarty, $_REQUEST, $tikilib, $need_lang;
+	global $editlib, $smarty, $_REQUEST, $tikilib, $prefs, $need_lang;
 	if (!$page_info) {
 		//
 		// This is a new page being created. See if we can guess some of its attributes
