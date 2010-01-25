@@ -121,17 +121,9 @@
 	<input type="hidden" name="no_bl" value="y" />
 	{if $diff_style}
 		<select name="diff_style">
-		
-			{if $diff_style eq "htmldiff"}
-				<option value="htmldiff" selected="selected">html</option>
-			{else}
-				<option value="htmldiff">html</option>
-			{/if}
-			{if $diff_style eq "inlinediff"}
-				<option value="inlinediff" selected="selected">text</option>
-			{else}
-				<option value="inlinediff">text</option>
-			{/if}   
+			<option value="htmldiff"{if $diff_style eq "htmldiff"} selected="selected"{/if}>{tr}html{/tr}</option>
+			<option value="inlinediff"{if $diff_style eq "inlinediff"} selected="selected"{/if} >{tr}text{/tr}</option>			  
+			<option value="inlinediff-full"{if $diff_style eq "inlinediff-full"} selected="selected"{/if} >{tr}text full{/tr}</option>			  
 		</select>
 		<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Change the style used to display differences to be translated.{/tr}" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
 	{/if}
