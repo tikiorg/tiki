@@ -23,7 +23,6 @@
 {/if}
 
 {* --- tikiwiki block --- *}
-{include file='bidi.tpl'}
 		<title>
 {if isset($trail)}
 	{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}

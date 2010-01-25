@@ -136,6 +136,9 @@ $headerlib->add_jsfile( 'lib/tiki-js.js' );	// tiki-js.js gets included even if 
 if( $prefs['feature_cssmenus'] == 'y' ) {
 	$headerlib->add_cssfile( 'css/cssmenus.css' );
 }
+if( $prefs['feature_bidi'] == 'y' ) {
+	$headerlib->add_cssfile( 'styles/BiDi/BiDi.css' );
+}
 
 if ($prefs['javascript_enabled'] == 'y') {
 	
