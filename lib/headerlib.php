@@ -129,27 +129,7 @@ class HeaderLib
 			$back.= "\n";
 		}
 
-		if (count($this->cssfiles)) {
-			foreach ($this->cssfiles as $x=>$cssf) {
-				$back.= "<!-- cssfile $x -->\n";
-				foreach ($cssf as $cf) {
-					global $tikipath, $tikidomain, $style_base;
-					if (!empty($tikidomain) && is_file("styles/$tikidomain/$style_base/$cf")) {
-						$cf = "styles/$tikidomain/$style_base/$cf";
-					} elseif (is_file("styles/$style_base/$cf")) {
-						$cf = "styles/$style_base/$cf";
-					}
-					$cfprint = str_replace('.css','',$cf) . '-print.css';
-					if (!file_exists($tikipath . $cfprint)) {
-						$back.= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($cf) . "\" type=\"text/css\" />\n";
-					} else {
-						// add support for print style sheets
-						$back.= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($cf) . "\" type=\"text/css\" media=\"screen\" />\n";
-						$back.= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($cfprint) . "\" type=\"text/css\" media=\"print\" />\n";
-					}
-				}
-			}
-		}
+		$back .= $this->output_css_files();
 
 		if (count($this->css)) {
 			$back.= "<style type=\"text/css\"><!--\n";
@@ -368,6 +348,51 @@ class HeaderLib
 		}
 	}
 
+	private function output_css_files() {
+		$files = $this->collect_css_files();
+
+		$back = $this->output_css_files_list( $files['screen'], 'screen' );
+		$back .= $this->output_css_files_list( $files['print'], 'print' );
+		return $back;
+	}
+	
+	private function output_css_files_list( $files, $media ) {
+		$back = '';
+		foreach( $files as $file ) {
+			$back.= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($file) . "\" type=\"text/css\" media=\"" . smarty_modifier_escape($media) . "\" />\n";
+		}
+
+		return $back;
+	}
+
+	private function collect_css_files() {
+		global $tikipath, $tikidomain, $style_base;
+
+		$files = array(
+			'screen' => array(),
+			'print' => array(),
+		);
+
+		foreach ($this->cssfiles as $x=>$cssf) {
+			foreach ($cssf as $cf) {
+				if (!empty($tikidomain) && is_file("styles/$tikidomain/$style_base/$cf")) {
+					$cf = "styles/$tikidomain/$style_base/$cf";
+				} elseif (is_file("styles/$style_base/$cf")) {
+					$cf = "styles/$style_base/$cf";
+				}
+				$cfprint = str_replace('.css','',$cf) . '-print.css';
+				if (!file_exists($tikipath . $cfprint)) {
+					$files['screen'][] = $cf;
+					$files['print'][] = $cf;
+				} else {
+					$files['screen'][] = $cf;
+					$files['print'][] = $cfprint;
+				}
+			}
+		}
+
+		return $files;
+	}
 }
 
 $headerlib = new HeaderLib;
