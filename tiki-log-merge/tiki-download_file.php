@@ -105,19 +105,13 @@ if (!$skip) {
 		$smarty->display('error.tpl');
 		die;
 	}
-
-	if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
+	//var_dump($filegallib->hasOnlyPrivateBacklinks($info['fileId'])); die;
+	if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files') && !($info['backlinkPerms'] == 'y' && !$filegallib->hasOnlyPrivateBacklinks($info['fileId']))) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;
 	}
-	if ($info['backlinkPerms'] == 'y' && $filegallib->hasOnlyPrivateBacklinks($info['fileId'])) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display('error.tpl');
-		die;
-	}		
 }
 
 // Add hits ( if download or display only ) + lock if set
@@ -219,19 +213,22 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 
 	// Cache only thumbnails to avoid DOS attacks
 	if ( ( isset($_GET['thumbnail']) || isset($_GET['preview']) ) && ! isset($_GET['display']) && ! isset($_GET['icon']) && ! isset($_GET['scale']) && ! isset($_GET['x']) && ! isset($_GET['y']) && ! isset($_GET['format']) && ! isset($_GET['max']) ) {
-	        global $cachelib; include_once('lib/cache/cachelib.php');
+		global $cachelib; include_once('lib/cache/cachelib.php');
 		$cacheName = $md5;
-	        $cacheType = ( isset($_GET['thumbnail']) ? 'thumbnail_' : 'preview_' ) . ((int)$_REQUEST['fileId']).'_';
+		$cacheType = ( isset($_GET['thumbnail']) ? 'thumbnail_' : 'preview_' ) . ((int)$_REQUEST['fileId']).'_';
 		$use_cache = true;
 	}
 
 	$build_content = true;
-        if ( $use_cache && $cachelib->isCached($cacheName, $cacheType) ) {
-		$content = null; // Explicitely free memory before getting cache
-		$content = $cachelib->getCached($cacheName, $cacheType);
-		if ($content !== serialize(false) and $content != "") $build_content = false;
+	$content_temp = $cachelib->getCached($cacheName, $cacheType);
+	if ( $use_cache && $content_temp ) {
+		if ($content_temp !== serialize(false) and $content_temp != "") {
+			$build_content = false;
+			$content = $content_temp;
+		}
 		$content_changed = true;
 	}
+	unset($content_temp);
 
 	if ($build_content) {
 
@@ -317,7 +314,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 			}
 		}
 		
-		if ( $use_cache ) {
+		if ( $use_cache && !empty($content) ) {
 			// Remove all existing thumbnails for this file, to avoid taking too much disk space
 			// (only one thumbnail size is handled at the same time)
 			$cachelib->empty_type_cache($cacheType);

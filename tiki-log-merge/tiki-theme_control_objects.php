@@ -36,7 +36,7 @@ $tcontrollib->setup_theme_menus();
 $find_objects = '';
 $objectypes = array('image gallery', 'file gallery', 'forum', 'blog', 'wiki page', 'html page', 'faq', 'quiz', 'article');
 $smarty->assign('objectypes', $objectypes);
-if (!isset($_REQUEST['type'])) $_REQUEST['type'] = '';
+if (empty($_REQUEST['type'])) $_REQUEST['type'] = 'wiki page';
 $smarty->assign('type', $_REQUEST['type']);
 switch ($_REQUEST['type']) {
 	case 'image gallery':

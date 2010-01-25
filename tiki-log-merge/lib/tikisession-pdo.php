@@ -7,9 +7,6 @@
 class Session
 {
 	public $db;
-	// public $maxlifetime = get_cfg_var("session.gc_maxlifetime");
-	public $maxlifetime = 1800; /* 30 mins */
-	public $expiry;
 
 	public function __destruct(){
 		session_write_close();
@@ -23,22 +20,27 @@ class Session
 		return true;
 	}
 
-	public function read($sesskey){
-		$qry = "select data from sessions where sesskey = '$sesskey' and expiry > " . time();
-		$sth = TikiDb::get()->query($qry);
-		$result = $sth->fetchRow();
-		return $result['data'];
+	public function read($sesskey) {
+		global $prefs;
+
+		$bindvars = array( $sesskey );
+
+		if( $prefs['session_lifetime'] > 0 ) {
+			$qry = "select data from sessions where sesskey = ? and expiry > ?";
+		} else {
+			$qry = "select data from sessions where sesskey = ?";
+		}
+
+		return TikiDb::get()->getOne($qry, $bindvars );
 	}
 
 	public function write($sesskey, $data){
-		$this->expiry = time() + $this->maxlifetime;
-		try {
-			$qry= "insert into sessions (sesskey, data, expiry) values( ?, ?, ? )";
-			TikiDb::get()->query($qry, array( $sesskey, $data, $this->expiry ) );
-		} catch (PDOException $e) {
-			$qry= "update sessions set data=?, expiry=? where sesskey=?";
-			TikiDb::get()->query($qry, array( $data, $this->expiry, $sesskey ) );
-		}
+		global $prefs;
+
+		$expiry = time() + ( $prefs['session_lifetime'] * 60 );
+
+		TikiDb::get()->query("delete from sessions where sesskey = ?", array( $sesskey ) );
+		TikiDb::get()->query("insert into sessions (sesskey, data, expiry) values( ?, ?, ? )", array( $sesskey, $data, $expiry ) );
 	}
 
 	public function destroy($sesskey){
@@ -48,8 +50,13 @@ class Session
 	}
 
 	public function gc($maxlifetime){
-		$qry = "delete from sessions where expiry < ?";
-		TikiDb::get()->query($qry, array( time() ) );
+		global $prefs;
+
+		if( $prefs['session_lifetime'] > 0 ) {
+			$qry = "delete from sessions where expiry < ?";
+			TikiDb::get()->query($qry, array( time() ) );
+		}
+
 		return 1;
 	}
 }

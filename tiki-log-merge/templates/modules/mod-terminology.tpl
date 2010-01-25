@@ -3,6 +3,10 @@
     <b>{tr}Find term:{/tr}</b><br>
 	<div id="mod-search_wiki_pager1" style="display: block" class="clearfix box-data">
       <form class="forms" method="post" action="tiki-listpages.php">
+      	{if $term_root_category_id != ''}
+      		<input type="hidden" name="categId" value="{$term_root_category_id}"/>
+      		<input type="hidden" name="create_page_with_search_category" value="y"/>
+      	{/if}
         <input name="find" size="14" type="text" accesskey="s" value=""/>
         <input type="hidden" name="exact_match" value="On"/>
         <input type="hidden" name="hits_link_to_all_languages" value="On"/>

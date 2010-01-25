@@ -191,6 +191,7 @@
 
 		{preference name=feature_backlinks}
 		<div class="adminoptionboxchild" id="feature_backlinks_childcontainer">
+			{preference name=wiki_backlinks_name_len}
 			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=backlinks&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
 
@@ -208,6 +209,7 @@
 			{preference name=feature_wiki_categorize_structure}
 			{preference name=feature_create_webhelp}
 			{preference name=page_n_times_in_a_structure}
+			{preference name=wiki_structure_bar_position}
 		</div>
 
 		{preference name=feature_wiki_import_html}

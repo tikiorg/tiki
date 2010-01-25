@@ -39,10 +39,7 @@ class OIntegrate
 		global $cachelib;
 		require_once 'lib/cache/cachelib.php';
 
-		if( $cachelib->isCached( $url.$postBody ) ) {
-			$cache = $cachelib->getCached( $url.$postBody );
-			$cache = unserialize( $cache );
-
+		if ( $cache = $cachelib->getSerialized( $url.$postBody )) {
 			if( time() < $cache['expires'] )
 				return $cache['data'];
 

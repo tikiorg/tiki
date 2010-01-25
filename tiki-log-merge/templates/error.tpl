@@ -45,7 +45,11 @@ close();
 					{/if}
 
 					{if $prefs.feature_search eq 'y'}
-						{include file='tiki-searchresults.tpl' searchNoResults="false" searchStyle="menu" searchOrientation="horiz" words="$page"}
+						{if $prefs.feature_search_fulltext eq 'y'}
+							{include file='tiki-searchresults.tpl' searchNoResults="false" searchStyle="menu" searchOrientation="horiz" words="$page"}
+						{else}
+							{include file='tiki-searchindex.tpl' searchNoResults="true"	searchStyle="menu" searchOrientation="horiz" words="$page"}
+						{/if}
 					{/if}
 
 					<br />
@@ -66,7 +70,7 @@ close();
 						{/if}
 					{/if}
 				{/if}
-				{if $required_preferences && $prefs.feature_search_preferences eq 'y'}
+				{if $required_preferences}
 					<form method="post" action="tiki-admin.php">
 						{foreach from=$required_preferences item=pref}
 							{preference name=$pref}

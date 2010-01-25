@@ -7,12 +7,12 @@
 $section = 'search';
 require_once ('tiki-setup.php');
 require_once ('lib/ajax/ajaxlib.php');
-require_once ('lib/search/searchlib.php');
+require_once ('lib/search/searchlib-mysql.php');
 $auto_query_args = array('highlight', 'where', 'initial', 'maxRecords', 'sort_mode', 'find', 'lang', 'words', 'boolean');
 $searchlib = new SearchLib;
 $smarty->assign('headtitle', tra('Search'));
-if ($prefs['feature_search'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_search");
+if ($prefs['feature_search_fulltext'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled") . ": feature_search_fulltext");
 	$smarty->display("error.tpl");
 	die;
 }
@@ -134,6 +134,7 @@ if (!isset($_REQUEST["offset"])) {
 	$offset = $_REQUEST["offset"];
 }
 $smarty->assign_by_ref('offset', $offset);
+$fulltext = $prefs['feature_search_fulltext'] == 'y';
 if (isset($_REQUEST['boolean']) && ($_REQUEST['boolean'] == 'on' || $_REQUEST['boolean'] == 'y')) {
 	$boolean = 'y';
 } else {
@@ -150,7 +151,7 @@ if (!isset($_REQUEST["words"]) || empty($_REQUEST["words"])) {
 	if (!method_exists($searchlib, $find_where)) {
 		$find_where = "find_pages";
 	}
-	$results = $searchlib->$find_where($words, $offset, $maxRecords, true, $filter, $boolean, $_REQUEST["date"]);
+	$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST["date"]);
 	$smarty->assign('words', $words);
 }
 $smarty->assign('cant', $results['cant']);

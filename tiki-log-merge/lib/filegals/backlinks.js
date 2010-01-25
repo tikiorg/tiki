@@ -1,0 +1,1 @@
+$jq('a.fgalbacklink').cluetip({showTitle:false, sticky:true});

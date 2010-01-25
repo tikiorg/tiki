@@ -50,6 +50,12 @@ function wikiplugin_userlist_info() {
 				'name' => tra('Real Name'),
 				'description' => tra('Display the user\'s real name instead of login name.'),
 			),
+			'group' => array(
+				'required' => false,
+				'name' => tra('Group'),
+				'description' => tra('Filter on the group'),
+				'filter' => 'groupname',
+			),
 		),
 	);
 }
@@ -62,6 +68,7 @@ function wikiplugin_userlist($data, $params) {
     if (!isset($sep)) $sep=', ';
     if (!isset($max)) { $numRows = -1; } else { $numRows = (int) $max; }
 
+	$from = '';
     if ($data) {
         $mid = '`login` like ?';
         $findesc = '%' . $data . '%';
@@ -84,8 +91,13 @@ function wikiplugin_userlist($data, $params) {
         	$post='</td></tr></table>';
         }
     }
+	if (isset($group)) {
+		$from .= ", users_usergroups uug";
+		$mid .= ' and uug.`groupName` = ? and uu.`userId` = uug.`userId`';
+		$bindvars[] = $group;
+	}
     
-    $query = 'select `login`, `userId` from `users_users` where '.$mid;
+    $query = "select `login`, uu.`userId` from `users_users` uu $from where $mid";
     $result = $tikilib->query($query, $bindvars, $numRows);
     $ret = array();
 

@@ -48,7 +48,8 @@
 				{if $prefs.feature_machine_translation eq 'y'}
 				<input type="hidden" name="machine_translate_to_lang" value="" />
 				{/if}
-				<select name="page" onchange="quick_switch_language( this )">
+				<input type="hidden" name="no_bl" value="y" /> 
+				<select name="page" onchange="quick_switch_language( this )"> 
 					{if $prefs.feature_machine_translation eq 'y'}
 					<option value="Human Translations" disabled="disabled" style="color:black;font-weight:bold">{tr}Human Translations{/tr}</option>
 					{/if}

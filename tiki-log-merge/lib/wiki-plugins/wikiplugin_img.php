@@ -392,7 +392,7 @@ function wikiplugin_img_info() {
 	return $imgdata;
 	}
 }
-////////////////////////////////////End of function for processing default and mandatory parameters////////////////////////////////////
+////////////////////////////////////End of function for processing default and mandatory parameters////////////////////
 	//function calls
 	if( !empty($imgdata['default']) || !empty($imgdata['mandatory'])) {
 		if(!empty($imgdata['default'])) { 
@@ -402,7 +402,7 @@ function wikiplugin_img_info() {
 		if(!empty($imgdata['mandatory'])) $imgdata = apply_default_and_mandatory($imgdata, 'mandatory');   //apply mandatory settings, overriding user settings
 	}		
 
-//////////////////////////////////////////////////// Error messages and clean javascript /////////////////////////////////////////////////
+//////////////////////////////////////////////////// Error messages and clean javascript //////////////////////////////
 	// Must set at least one image identifier
 	if ( empty($imgdata['fileId']) and empty($imgdata['id']) and empty($imgdata['src']) and empty($imgdata['attId']) ) {
 		return tra("''No image specified. Either the fileId, attId, id, or src parameter must be specified.''");
@@ -424,172 +424,73 @@ function wikiplugin_img_info() {
 		}
 
 	include_once('tiki-sefurl.php');
-//TODO Get rid of this section by allowing images to bypass code they don't need	
-///////////////////////////////////// If only old img parameters used, use old code and get out of program quickly ///////////////////
-	if (!empty($imgdata['src']) && (strpos($imgdata['src'], '|') == FALSE  ) && (strpos($imgdata['src'], ',') == FALSE  ) && empty($imgdata['thumb']) 
-		&& empty($imgdata['button']) && empty($imgdata['max']) && empty($imgdata['styleimage']) && empty($imgdata['stylebox']) && empty($imgdata['styledesc']) 
-		&& empty($imgdata['block']) && ($imgdata['desc'] != 'desc') && ($imgdata['desc'] != 'idesc') && ($imgdata['desc'] != 'name') && ($imgdata['desc'] != 'ititle') && ($imgdata['rel'] != 'box')) {	
-		if ($tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
-			$imgdata['src'] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata['src']);
-		}
-		// Handle absolute links (e.g. to send a newsletter with images that remains on the tiki site)
-		$absolute_links = isset($parseOptions['absolute_links']) ? $parseOptions['absolute_links'] : false;
-		if ( $imgdata['src'] != '' && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
-			global $base_host, $url_path;
-			$imgdata['src'] = $base_host.( $imgdata['src'][0] == '/' ? '' : $url_path ).$imgdata['src'];
-		}
-
-		$imgdata_dim = '';
-		if ( $prefs['feature_filegals_manager'] == 'y' ) {
-			global $detected_lib;
-			include_once('lib/images/images.php');
+	//////////////////////Process multiple images //////////////////////////////////////
+	//Process "|" or "," separated images
+	$srcmash = $imgdata['fileId'] . $imgdata['id'] . $imgdata['attId'] . $imgdata['src'];
+	if (( strpos($srcmash, '|') !== FALSE ) || (strpos($srcmash, ',') !== FALSE ))  {
+		$id = '';
+		if (!empty($imgdata['id'])) {
+			$id = 'id';
+		} elseif (!empty($imgdata['fileId'])) {
+			$id = 'fileId';
+		} elseif (!empty($imgdata['attId'])) {
+			$id = 'attId';
 		} else {
-			$detected_lib = '';
+			$id = 'src';
+		}		
+		$separator = '';
+		if ( strpos($imgdata[$id], '|') !== FALSE ) {
+			$separator = '|';
+		} elseif ( strpos($imgdata[$id], ',') !== FALSE )  {
+			$separator = ',';
 		}
-
-		if ( $detected_lib != '' && ereg('^'.$tikiroot.'tiki-download_file.php\?', $imgdata['src']) ) {
-			// If an image lib has been detected and if we are using an image from a file gallery,
-			//   then also resize the image server-side, because it will generally imply less data to download from the user
-			//   (i.e. speed up the page download) and a better image quality (browser resize algorithms are quick but bad)
-			//
-			//   Note: ctype_digit is used to ensure there is only digits in width and height strings (e.g. to avoid '50%', ...)
-			//
-			if ( (int)$imgdata['width'] > 0 && ctype_digit($imgdata['width']) ) $imgdata['src'] .= '&amp;x='.$imgdata['width'];
-			if ( (int)$imgdata['height'] > 0 && ctype_digit($imgdata['height']) ) $imgdata['src'] .= '&amp;y='.$imgdata['height'];
-		}
-		
-		$imgdata['src'] = filter_out_sefurl(htmlentities($imgdata['src']), $smarty);
-		
-		if ( $imgdata['width'] ) $imgdata_dim .= ' width="' . $imgdata['width'] . '"';
-		if ( $imgdata['height'] ) $imgdata_dim .= ' height="' . $imgdata['height'] . '"';
-
-		$repl = '<img alt="' . $imgdata["alt"] . '" src="'.$imgdata["src"].'" border="0" '.$imgdata_dim;
-
-		if ($imgdata['imalign']) {
-			$repl .= ' style="float: ' . $imgdata['imalign'] . '"';
-		}
-		if ($imgdata['usemap']) {
-			$repl .= ' usemap="#'.$imgdata['usemap'].'"';
-		}
-		if ($imgdata['class']) {
-			$repl .= ' class="'.$imgdata['class'].'"';
-		}
-
-		$repl .= ' />';
-
-		if ($imgdata['link']) {
-			$imgtarget= '';
-
-			if ($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $imgdata['link']) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$imgdata['link']))) {
-				$imgtarget = ' target="_blank"';
-			}
-
-			if ($imgdata['rel'])
-				$linkrel = ' rel="'.$imgdata['rel'].'"';
-			else
-				$linkrel = '';
-
-			if ($imgdata['title'])
-				$linktitle = ' title="'.$imgdata['title'].'"';
-			else
-				$linktitle = '';
-			$repl = '<a href="'.$imgdata['link'].'"'.$linkrel.$imgtarget.$linktitle.'>' . $repl . '</a>';
-		}
-
-		if ($imgdata['desc']) {
-			$repl = '<table cellpadding="0" cellspacing="0"><tr><td>' . $repl . '</td></tr><tr><td class="mini">' . $imgdata['desc'] . '</td></tr></table>';
-		}
-
-		if ($imgdata['align']) {
-			$repl = '<div class="img" align="' . $imgdata["align"] . '">' . $repl . "</div>";
-		} elseif (!$imgdata['desc']) {
-			$repl = '<span class="img">' . $repl . "</span>";
-		}
-		return $repl;
-		///////////end of old IMG code////////////////////
-	} else {
-		//////////////////////Process multiple images //////////////////////////////////////
-		//TODO this breaks some urls - needs to be fixed
-		//Process "|" or "," separated images
-		$srcmash = $imgdata['fileId'] . $imgdata['id'] . $imgdata['attId'] . $imgdata['src'];
-		if (( strpos($srcmash, '|') !== FALSE ) || (strpos($srcmash, ',') !== FALSE ))  {
-			$id = '';
-			if (!empty($imgdata['id'])) {
-				$id = 'id';
-			} elseif (!empty($imgdata['fileId'])) {
-				$id = 'fileId';
-			} elseif (!empty($imgdata['attId'])) {
-				$id = 'attId';
-			} else {
-				$id = 'src';
-			}		
-			$separator = '';
-			if ( strpos($imgdata[$id], '|') !== FALSE ) {
-				$separator = '|';
-			} elseif ( strpos($imgdata[$id], ',') !== FALSE )  {
-				$separator = ',';
-			}
-			$repl = '';
-			$id_list = array();
-			$id_list = explode($separator,$imgdata[$id]);
-			$params[$id] = '';
-			foreach ($id_list as $i => $value) {
-				$params[$id] = trim($value);
-				$repl .= wikiplugin_img( $data, $params, $offset, $parseOptions );
-			}
-			$repl = "\n\r" . '<br style="clear:both" />' . "\r" . $repl . "\n\r" . '<br style="clear:both" />' . "\r";
-			return $repl; // return the multiple images
-		}
-		
-		//////////////////////Set src for html///////////////////////////////
-		//Set variables for the base path for images in file galleries, image galleries and attachments
-		$imagegalpath = 'show_image.php?id=';
-		$filegalpath = 'tiki-download_file.php?fileId=';
-		$attachpath = 'tiki-download_wiki_attachment.php?attId=';
-		
 		$repl = '';
-		$absolute_links = (!empty($parseOptions['absolute_links'])) ? $parseOptions['absolute_links'] : false;
-		$thumbstring = '';
-		
-		if (empty($imgdata['src'])) {
-			if (!empty($imgdata['id'])) {
-				$src = $imagegalpath . $imgdata['id'];
-				if (!empty($imgdata['thumb'])) {
-					$thumbstring = '&thumb=1';
-				}
-			} elseif (!empty($imgdata['fileId'])) {		
-				$src = $filegalpath . $imgdata['fileId']; 
-				if (!empty($imgdata['thumb'])) {
-					if (empty($imgdata['height']) && empty($imgdata['width']) 
-						&& empty($imgdata['max'])
-					) {
-						$thumbstring = '&thumbnail';
-					}
-				}
-			} else {					//only attachments left
-				$src = $attachpath . $imgdata['attId']; 
-			}
-		} elseif ( (!empty($imgdata['src'])) && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
-			global $base_host, $url_path;
-			$src = $base_host.( $imgdata['src'][0] == '/' ? '' : $url_path ) . $imgdata['src'];
-		} elseif (!empty($imgdata['src']) && $tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
-			$src = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata['src']);
-		} elseif (!empty($imgdata['src'])) {
-			$src = $imgdata['src'];
+		$id_list = array();
+		$id_list = explode($separator,$imgdata[$id]);
+		$params[$id] = '';
+		foreach ($id_list as $i => $value) {
+			$params[$id] = trim($value);
+			$repl .= wikiplugin_img( $data, $params, $offset, $parseOptions );
 		}
-		
-		// URL of original full size image
-		$pos = strpos($src, '&thumb');
-		if ($pos > 0) {
-			//Strip off any thumbnail parameter
-			$len = strlen($src);
-			$browse_full_image = substr_replace($src, '', $pos, $len-($len-$pos));
-		} else {
-			$browse_full_image = $src; 
+		$repl = "\n\r" . '<br style="clear:both" />' . "\r" . $repl . "\n\r" . '<br style="clear:both" />' . "\r";
+		return $repl; // return the multiple images
+	}
+	
+	//////////////////////Set src for html///////////////////////////////
+	//Set variables for the base path for images in file galleries, image galleries and attachments
+	$imagegalpath = 'show_image.php?id=';
+	$filegalpath = 'tiki-download_file.php?fileId=';
+	$attachpath = 'tiki-download_wiki_attachment.php?attId=';
+	
+	$repl = '';
+	$absolute_links = (!empty($parseOptions['absolute_links'])) ? $parseOptions['absolute_links'] : false;
+	
+	if (empty($imgdata['src'])) {
+		if (!empty($imgdata['id'])) {
+			$src = $imagegalpath . $imgdata['id'];
+		} elseif (!empty($imgdata['fileId'])) {		
+			$src = $filegalpath . $imgdata['fileId']; 
+		} else {					//only attachments left
+			$src = $attachpath . $imgdata['attId']; 
 		}
+	} elseif ( (!empty($imgdata['src'])) && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
+		global $base_host, $url_path;
+		$src = $base_host.( $imgdata['src'][0] == '/' ? '' : $url_path ) . $imgdata['src'];
+	} elseif (!empty($imgdata['src']) && $tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
+		$src = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata['src']);
+	} elseif (!empty($imgdata['src'])) {
+		$src = $imgdata['src'];
+	}
+	
+	$browse_full_image = $src; 
 
 	///////////////////////////Get DB info for image size and iptc data/////////////////////////////
-	//TODO Add bypass when db query not needed, but must be sure full height and width are available when needed	
+	if (!empty($imgdata['height']) || !empty($imgdata['width']) || !empty($imgdata['max']) 
+		|| $imgdata['desc'] == 'desc' || $imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'name' 
+		|| $imgdata['desc'] == 'ititle' || strpos($imgdata['rel'], 'box') != FALSE 
+		|| !empty($imgdata['stylebox']) || !empty($imgdata['styledesc']) || !empty($imgdata['button']) 
+		|| !empty($imgdata['thumb'])  || !empty($imgdata['align'])
+	) {
 		//Get ID numbers for images in galleries and attachments included in src parameter as url
 		//So we can get db info for these too
 		if (strlen(strstr($imgdata['src'], $imagegalpath)) > 0) {                                     
@@ -609,9 +510,9 @@ function wikiplugin_img_info() {
 					$dbinfo = $imagegallib->get_image_info($imgdata['id'], 'o');
 					$dbinfo2 = $imagegallib->get_image($imgdata['id'], 'o');
 					$dbinfo = array_merge($dbinfo, $dbinfo2);
-//					$dbinfot = $imagegallib->get_image_info($imgdata['id'], 't');
-//					$dbinfot2 = $imagegallib->get_image($imgdata['id'], 't');
-//					$dbinfot = array_merge($dbinfot, $dbinfot2);
+					$dbinfot = $imagegallib->get_image_info($imgdata['id'], 't');
+					$dbinfot2 = $imagegallib->get_image($imgdata['id'], 't');
+    				$dbinfot = array_merge($dbinfot, $dbinfot2);
 					$basepath = $prefs['gal_use_dir'];
 			} elseif (!empty($imgdata['fileId'])) {
 					global $filegallib; 
@@ -638,169 +539,243 @@ function wikiplugin_img_info() {
 					}
 				}	
 			}
-			//Set other variables from db info
-			if (!empty($dbinfo['comment'])) {		//attachment database uses comment instead of description or name
-				$desc = $dbinfo['comment'];
-				$imgname = $dbinfo['comment'];
-			} elseif (isset($dbinfo)) {
-				$desc = $dbinfo['description'];
-				$imgname = $dbinfo['name'];
-			}
 		} //finished getting info from db for images in image or file galleries or attachments
 		
-		//Now get height, width, iptc data from actual image
-		//First get the data. Images in db handled differently than those in directories or path
-		global $imagesize, $iptc, $otherinfo;
-		$otherinfo = array();
-		
-		if (!empty($dbinfo['data'])) {
-			getimagesize_raw($dbinfo['data']);  //images in databases, calls function in this program
+		//get image to get height and width and iptc data
+		$imageObj = '';
+		require_once('lib/images/images.php');
+		global $imagesize, $iptc, $otherinfo, $imagesizet;
+
+		//if we need iptc data
+		if ($imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'ititle') {
+			$imagesize = '';
+			$iptc = '';
+			$ititle = '';
+			$idesc = '';
+			$otherinfo = array();
+			if (!empty($dbinfo['data'])) {
+				getimagesize_raw($dbinfo['data'], false);  //images in databases, calls function in this program
+			} else {
+				if (!empty($dbinfo['path'])) {
+					$imagesize = getimagesize(($basepath . $dbinfo['path']), $otherinfo);  //images in tiki directories
+				} else {
+					$imagesize = getimagesize($src, $otherinfo);  //wiki_up and external images
+				}
+				if (isset($otherinfo['APP13'])) { 
+					$iptc = iptcparse($otherinfo['APP13']); 
+				}
+			}
+		//if we only need height and width
 		} else {
-			if (!empty($dbinfo['path'])) {
-				$imagesize = getimagesize(($basepath . $dbinfo['path']), $otherinfo);  //images in tiki directories
+			if (!empty($dbinfo['data'])) {
+				$imageObj = new Image($dbinfo['data'], false);
+			} elseif (!empty($dbinfo['path'])) {
+				$imageObj = new Image($basepath . $dbinfo['path'], true);	
 			} else {
-				$imagesize = getimagesize($src, $otherinfo);  //wiki_up and external images
+				$imageObj = new Image($src, true);
 			}
-			if (isset($otherinfo['APP13'])) { $iptc = iptcparse($otherinfo['APP13']); }
 		}
-		//handle image gallery thumbs
-/*		if (!empty($dbinfot['data']) || !empty($dbinfot['path'])) {
-			if (!empty($dbinfot['data'])) {
-				$imagesizet = getimagesize_raw($dbinfot['data']);  
-			} else {
-				$imagesizet = getimagesize($basepath . $dbinfot['path']);
-			}
-		}*/
-				
-		//Set variables for height, width and iptc data from image data
-//		$fwidtht = $imagesizet[0]; //image gal thumbs
-//		$fheightt = $imagesizet[1];  //image gal thumbs
-		$fwidth = $imagesize[0];
-		$fheight = $imagesize[1];
-		$idesc = isset($iptc['2#120'][0]) ? trim($iptc['2#120'][0]) : '';		//description from image iptc
-		$ititle = isset($iptc['2#005'][0]) ? trim($iptc['2#005'][0]) : '';		//title from image iptc
+		//Set the variables for height, width and iptc data
+		$fwidth = '';
+		$fheight = '';
+		if (is_object($imageObj)) {
+			$fwidth = $imageObj->get_width();
+			$fheight = $imageObj->get_height();
+		} else {  
+			$fwidth = $imagesize[0];
+			$fheight = $imagesize[1];
+			//description from image iptc
+			$idesc = isset($iptc['2#120'][0]) ? trim($iptc['2#120'][0]) : '';	
+			//title from image iptc	
+			$ititle = isset($iptc['2#005'][0]) ? trim($iptc['2#005'][0]) : '';
+		}		
 		
-	/////////////////////////////////////Add image dimensions to src string////////////////////////////////////////////////////////////////
+		//get image gal thumbnail image for height and width
+		if (!empty($dbinfot['data']) || !empty($dbinfot['path'])) {
+			$fwidtht = '';
+			$fheightt = '';
+			$imagesizet = '';
+			if (!empty($dbinfot['data'])) {
+				$imageObjt = new Image($dbinfot['data'], false);
+			} else {
+				$imageObjt = new Image($basepath . $dbinfot['path'] . '.thumb', true);
+			}
+			//height and width for image gal thumbs
+			$fwidtht = $imageObjt->get_width();
+			$fheightt = $imageObjt->get_height();
+		}		
+	/////////////////////////////////////Add image dimensions to src string////////////////////////////////////////////
 		//Use url resizing parameters for file gallery images to set $height and $width
-		//since they can affect other elements, overrides plugin parameters
+		//since they can affect other elements; overrides plugin parameters
 		if (!empty($imgdata['fileId']))  {
-			preg_match('/(?<=\&thumbnail)[0-9]+(?=.*)/', $src, $urlthumb);
-			preg_match('/(?<=\&preview)[0-9]+(?=.*)/', $src, $urlprev); 
+			$urlthumb = strpos($src, '&thumbnail');
+			$urlprev = strpos($src, '&preview');
+			$urldisp = strpos($src, '&display'); 
 			preg_match('/(?<=\&max=)[0-9]+(?=.*)/', $src, $urlmax);
 			preg_match('/(?<=\&x=)[0-9]+(?=.*)/', $src, $urlx);
 			preg_match('/(?<=\&y=)[0-9]+(?=.*)/', $src, $urly);
-			preg_match('/(?<=\&scale=)[0-9]+(?=.*)/', $src, $urlscale);
-			if (!empty($urlthumb[0]) && $urlthumb[0] > 0) $imgdata['max'] = 120;
-			if (!empty($urlprev[0]) && $urlprev[0] > 0) $imgdata['max'] = 800;
+			preg_match('/(?<=\&scale=)[0]*\.[0-9]+(?=.*)/', $src, $urlscale);
+			if ($urlthumb != FALSE ) $imgdata['max'] = 120;
+			if ($urlprev != FALSE ) $imgdata['max'] = 800;
 			if (!empty($urlmax[0]) && $urlmax[0] > 0) $imgdata['max'] = $urlmax[0];
 			if (!empty($urlx[0]) && $urlx[0] > 0) $imgdata['width'] = $urlx[0];
 			if (!empty($urly[0]) && $urly[0] > 0) $imgdata['height'] = $urly[0];
 			if (!empty($urlscale[0]) && $urlscale[0] > 0) {
-				$height = $urlscale[0] * $fheight;
-				$width = $urlscale[0] * $fwidth;
+				$height = floor($urlscale[0] * $fheight);
+				$width = floor($urlscale[0] * $fwidth);
+				$imgdata['width'] = '';
+				$imgdata['height'] = '';
 			}	
 		}
-		//Handle image gal thumbs
-/*		$imgalthumb = false;
+		//Note if image gal url thumb parameter is used
+		$imgalthumb = false;
 		if (!empty($imgdata['id']))  {
 			preg_match('/(?<=\&thumb=1)[0-9]+(?=.*)/', $src, $urlimthumb);
 			if (!empty($urlimthumb[0]) && $urlimthumb[0] > 0) $imgalthumb = true;
-		}*/
+		}
+			
 		//Now set dimensions based on plugin parameter settings
 		if (!empty($imgdata['max']) || !empty($imgdata['height']) || !empty($imgdata['width']) 
 			|| !empty($imgdata['thumb'])
 		) {
+			//Convert % and px in height and width
+			$scale = '';
+			if (strpos($imgdata['height'], '%') != FALSE || strpos($imgdata['width'], '%') != FALSE) {
+				if ((strpos($imgdata['height'], '%') != FALSE && strpos($imgdata['width'], '%') != FALSE) 
+					&& (empty($imgdata['fileId']) || (empty($urlx[0]) && empty($urly[0])))) {
+					$imgdata['height'] = floor(rtrim($imgdata['height'], '%') / 100 * $fheight);
+					$imgdata['width'] = floor(rtrim($imgdata['width'], '%') / 100 * $fwidth);
+				} elseif (strpos($imgdata['height'], '%') != FALSE) {
+					if ($imgdata['fileId']) {
+						$scale = rtrim($imgdata['height'], '%') / 100;
+						$height = floor($scale * $fheight);
+					} else {
+						$imgdata['height'] = floor(rtrim($imgdata['height'], '%') / 100 * $fheight);
+					}
+				} else {
+					if ($imgdata['fileId']) {
+						$scale = rtrim($imgdata['width'], '%') / 100;
+						$width = floor($scale * $fwidth);
+					} else {
+						$imgdata['width'] = floor(rtrim($imgdata['width'], '%') / 100 * $fwidth);
+					}
+				}
+			} elseif (strpos($imgdata['height'], 'px') != FALSE || strpos($imgdata['width'], 'px') != FALSE) {
+				if (strpos($imgdata['height'], 'px') != FALSE) {
+					$imgdata['height'] = rtrim($imgdata['height'], 'px');
+				} else {
+					$imgdata['width'] = rtrim($imgdata['width'], 'px');
+				}
+			}
 			// Adjust for max setting, keeping aspect ratio
 			if ((!empty($imgdata['max'])) && (ctype_digit($imgdata['max']))) {
 				if (($fwidth > $imgdata['max']) || ($fheight > $imgdata['max'])) {
 					//use image gal thumbs when possible
-/*					if ((!empty($imgdata['id']) && $imgalthumb == false) 
+					if ((!empty($imgdata['id']) && $imgalthumb == false) 
 						&& ($imgdata['max'] < $fwidtht || $imgdata['max'] < $fheightt)
 					) {
 						$src .= '&thumb=1';
-						$here = 'yes'; //debug
 						$imgalthumb == true;
-					}*/
+					}
 					if ($fwidth > $fheight) {
 						$width = $imgdata['max'];
-						$height = ($width * $fheight / $fwidth);
+						$height = floor($width * $fheight / $fwidth);
 					} else {
 						$height = $imgdata['max'];
-						$width = ($height * $fwidth / $fheight);	
+						$width = floor($height * $fwidth / $fheight);	
 					}
-				} else {                             //cases where max is set but image is smaller than max 
+				//cases where max is set but image is smaller than max 
+				} else {                             
 					$height = $fheight;
 					$width = $fwidth;
 				}
 			// Adjust for user settings for height and width if max isn't set.	
-			} elseif (!empty($imgdata['height']) && ctype_digit($imgdata['height']))  {
+			} elseif (!empty($imgdata['height']) )  {
 				//use image gal thumbs when possible
-				/*if ((!empty($imgdata['id']) && $imgalthumb == false) 
+				if ((!empty($imgdata['id']) && $imgalthumb == false) 
 					&& ($imgdata['height'] < $fheightt)
 				) {
 					$src .= '&thumb=1';
 					$imgalthumb == true;
-				}*/
+				}
 				$height = $imgdata['height'];
 				if (empty($imgdata['width'])) {
-					$width = ($height * $fwidth / $fheight);
+					$width = floor($height * $fwidth / $fheight);
 				} else {
 					$width = $imgdata['width'];
 				}
-			} elseif (!empty($imgdata['width']) && ctype_digit($imgdata['width']))  {
-			//use image gal thumbs when possible
-/*				if ((!empty($imgdata['id']) && $imgalthumb == false) 
+			} elseif (!empty($imgdata['width']))  {
+				//use image gal thumbs when possible
+				if ((!empty($imgdata['id']) && $imgalthumb == false) 
 					&& ($imgdata['width'] < $widtht)
 				) {
 					$src .= '&thumb=1';
 					$imgalthumb == true;
-				}*/
+				}
 				$width =  $imgdata['width'];
 				if (empty($imgdata['height'])) {
-					$height = ($width * $fheight / $fwidth);
+					$height = floor($width * $fheight / $fwidth);
 				} else {
 					$height = $imgdata['height'];
 				}
 			// If not otherwise set, use default setting for thumbnail height if thumb is set
-			} elseif (!empty($imgdata['thumb'])) {
-				$thumbdef = 84;                         //Thumbnail height max when none is set
+			} elseif ((!empty($imgdata['thumb']) || !empty($urlthumb))  && empty($scale)) {
 				if (!empty($imgdata['fileId'])) {
 					$thumbdef = 120;	// filegals thumbnails size is hard-coded in lib/images/abstract.php
+				} else {
+					$thumbdef = 84;  
 				}
-/*				if (!empty($imgdata['id']) && $imagegalthumb == true) {
+				//handle image gal thumbs
+				if (!empty($imgdata['id'])) {
 					$width = $fwidtht;
 					$height = $fheightt;
-				} else {*/
+					if ($imgalthumb == false) {
+						$src .= '&thumb=1';
+						$imgalthumb == true;
+					}
+				} else {
 					if (($fwidth > $thumbdef) || ($fheight > $thumbdef)) {
 						if ($fwidth > $fheight) {
 							$width = $thumbdef;
-							$height = ($width * $fheight / $fwidth);
+							$height = floor($width * $fheight / $fwidth);
 						} else {
 							$height = $thumbdef;
-							$width = ($height * $fwidth / $fheight);	
+							$width = floor($height * $fwidth / $fheight);	
 						}
-					}
-//				}
+					} 
+				}
 			}
 		}
 		
 		//Set final height and width dimension string
 		//handle file gallery images separately to use server-side resizing capabilities
 		if (!empty($imgdata['fileId'])) {
-			if (!empty($imgdata['max']) && $imgdata['thumb'] != 'download') {
-				$src .= '&display&max=' . $imgdata['max'];
+			if (empty($urldisp) && empty($urlthumb) && $imgdata['thumb'] != 'download') {
+				$src .= '&display';
+			}
+			if (!empty($scale) && empty($urlscale[0])) {
+				$src .= '&scale=' . $scale;
+			} elseif ((!empty($imgdata['max']) && $imgdata['thumb'] != 'download') 
+					&& (empty($urlthumb) && empty($urlmax[0]) && empty($urlprev))
+			) {
+				$src .= '&max=' . $imgdata['max'];
 			} elseif (!empty($width) || !empty($height)) {
-				if (!empty($width) && !empty($height)) {
-					$src .= '&display&x=' . $width . '&y=' . $height;
-				} elseif (!empty($width)) {
-					$src .= '&display&x=' . $width; 
+				if ((!empty($width) && !empty($height)) && (empty($urlx[0]) && empty($urly[0]) 
+					&& empty($urlthumb) && empty($urlscale[0]))) {
+					$src .= '&x=' . $width . '&y=' . $height;
+				} elseif (!empty($width) && (empty($urlx[0]) && empty($urlthumb) && empty($urlscale[0]))) {
+					$src .= '&x=' . $width; 
 					$imgdata_dim = '';
 					$height = $fheight;
-				} else {
-					$src .= '&display&y=' . $height;
+				} elseif (!empty($heigth) && (empty($urly[0]) && empty($urlthumb) && empty($urlscale[0]))) {
+					$src .= '&y=' . $height;
 					$imgdata_dim = '';
 					$width = $fwidth;
 				}			
+			} else {
+				$imgdata_dim = '';
+				$height = $fheight;
+				$width = $fwidth;
 			}
 		} else {
 			if (!empty($height)) {
@@ -816,59 +791,76 @@ function wikiplugin_img_info() {
 				$width = $fwidth;
 			}
 		}
+	}
 		
-	////////////////////////////////////////// Create the HTML img tag ///////////////////////////////////////////////////////////////////
-		//Start tag with src and dimensions
-		$src = filter_out_sefurl(htmlentities($src . $thumbstring), $smarty);
-		$replimg = "\r\t" . '<img src="' . $src . '"';
-		if (!empty($imgdata_dim)) $replimg .= $imgdata_dim;
-		
-		//Create style attribute allowing for shortcut inputs 
-		//First set alignment string
+	////////////////////////////////////////// Create the HTML img tag //////////////////////////////////////////////
+	//Start tag with src and dimensions
+	$src = filter_out_sefurl(htmlentities($src), $smarty);
+	$replimg = "\r\t" . '<img src="' . $src . '"';
+	if (!empty($imgdata_dim)) $replimg .= $imgdata_dim;
+	
+	//Create style attribute allowing for shortcut inputs 
+	//First set alignment string
+
+	$center = 'display:block; margin-left:auto; margin-right:auto;';	//used to center image and box
+	if (!empty($imgdata['imalign'])) {
 		$imalign = '';
+		if ($imgdata['imalign'] == 'center') {
+			$imalign = $center;
+		} else {
+			$imalign = 'float:' . $imgdata['imalign'] . ';';
+		}
+	}
+	//set entire style string
+	if( !empty($imgdata['styleimage']) || !empty($imalign)) {
 		$border = '';
 		$style = '';
-		$center = 'display:block; margin-left:auto; margin-right:auto;';	//used to center image and box
 		$borderdef = 'border:1px solid darkgray;';   //default border when styleimage set to border
-		if (!empty($imgdata['imalign'])) {
-			if ($imgdata['imalign'] == 'center') {
-				$imalign = $center;
-			} else {
-				$imalign = 'float:' . $imgdata['imalign'] . ';';
-			}
-		}
-		//set entire style string
-		if( !empty($imgdata['styleimage']) || !empty($imalign)) {
-			if ( !empty($imgdata['styleimage'])) {
-				if (!empty($imalign)) {
-					if ((strpos(trim($imgdata['styleimage'],' '),'float:') > 0) || (strpos(trim($imgdata['styleimage'],' '),'display:') > 0)) {
-						$imalign = '';			//override imalign setting is style image contains alignment syntax
-					}
-				}
-				if ($imgdata['styleimage'] == 'border') {
-					$border = $borderdef;
-				} else if (strpos($imgdata['styleimage'],'hidden') === false && strpos($imgdata['styleimage'],'position') === false) {	// quick filter for dangerous styles
-					$style = $imgdata['styleimage'];
+		if ( !empty($imgdata['styleimage'])) {
+			if (!empty($imalign)) {
+				if ((strpos(trim($imgdata['styleimage'],' '),'float:') > 0) 
+					|| (strpos(trim($imgdata['styleimage'],' '),'display:') > 0)
+				) {
+					$imalign = '';			//override imalign setting is style image contains alignment syntax
 				}
 			}
-			$replimg .= ' style="' . $imalign . $border . $style . '"';
+			if ($imgdata['styleimage'] == 'border') {
+				$border = $borderdef;
+			} else if (strpos($imgdata['styleimage'],'hidden') === false 
+				&& strpos($imgdata['styleimage'],'position') === false
+			) {	// quick filter for dangerous styles
+				$style = $imgdata['styleimage'];
+			}
 		}
-		//alt
-		if( !empty($imgdata['alt']) ) {
-			$replimg .= ' alt="' . $imgdata['alt'] . '"';
-		}
-		//usemap
-		if ( !empty($imgdata['usemap']) ) {
-			$replimg .= ' usemap="#' . $imgdata['usemap'] . '"';
-		}
-		//class
-		if ( !empty($imgdata['class']) ) {
-			$replimg .= ' class="' . $imgdata['class'] . '"';
-		}
-		
-		//title (also used for description and link title below)
-		//first set description, which is used for title if no title is set
+		$replimg .= ' style="' . $imalign . $border . $style . '"';
+	}
+	//alt
+	if( !empty($imgdata['alt']) ) {
+		$replimg .= ' alt="' . $imgdata['alt'] . '"';
+	}
+	//usemap
+	if ( !empty($imgdata['usemap']) ) {
+		$replimg .= ' usemap="#' . $imgdata['usemap'] . '"';
+	}
+	//class
+	if ( !empty($imgdata['class']) ) {
+		$replimg .= ' class="' . $imgdata['class'] . '"';
+	}
+	
+	//title (also used for description and link title below)
+	//first set description, which is used for title if no title is set
+	if (!empty($imgdata['desc']) || !empty($imgdata['title'])) {
+		$desc = '';
+		$imgname = '';
+		$desconly = '';
 		if ( !empty($imgdata['desc']) ) {
+			if (!empty($dbinfo['comment'])) {		//attachment database uses comment instead of description or name
+				$desc = $dbinfo['comment'];
+				$imgname = $dbinfo['comment'];
+			} elseif (isset($dbinfo)) {
+				$desc = $dbinfo['description'];
+				$imgname = $dbinfo['name'];
+			}
 			switch ($imgdata['desc']) {
 				case 'desc':
 					$desconly = $desc;
@@ -887,256 +879,267 @@ function wikiplugin_img_info() {
 			}
 		}
 		//now set title
+		$imgtitle = '';
+		$titleonly = '';
 		if ( !empty($imgdata['title']) || !empty($desconly)) {
 			$imgtitle = ' title="';
 			if ( !empty($imgdata['title']) ) {
 				$titleonly = $imgdata['title'];
-			} else {										//use desc setting for title if title is empty
+			//use desc setting for title if title is empty
+			} else {										
 				$titleonly = $desconly;
 			}
 			$imgtitle .= $titleonly . '"';
 			$replimg .= $imgtitle;
-		}	
-		
-		$replimg .= ' />';
+		}
+	}	
+	
+	$replimg .= ' />';
 
-		////////////////////////////////////////// Create the HTML link ///////////////////////////////////////////
-		//Variable for identifying if javascript mouseover is set
-		if (($imgdata['thumb'] == 'mouseover') || ($imgdata['thumb'] == 'mousesticky')) {
-			$javaset = 'true';
+	////////////////////////////////////////// Create the HTML link ///////////////////////////////////////////
+	//Variable for identifying if javascript mouseover is set
+	if (($imgdata['thumb'] == 'mouseover') || ($imgdata['thumb'] == 'mousesticky')) {
+		$javaset = 'true';
+	} else {
+		$javaset = '';
+	}
+	// Set link to user setting or to image itself if thumb is set
+	if (!empty($imgdata['link']) || !empty($imgdata['thumb'])) {
+		$mouseover = '';
+		if (!empty($imgdata['link'])) {
+			$link = $imgdata['link'];
+		} elseif ((($imgdata['thumb'] == 'browse') || ($imgdata['thumb'] == 'browsepopup')) && !empty($imgdata['id'])) {
+			$link = 'tiki-browse_image.php?imageId=' . $imgdata['id'];
+		} elseif ($javaset == 'true') {
+			$link = 'javascript:void(0)';
+			$popup_params = array( 'text'=>$data, 'width'=>$fwidth, 'height'=>$fheight, 'background'=>$browse_full_image);
+			if ($imgdata['thumb'] == 'mousesticky') {
+				$popup_params['sticky'] = true;
+			}
+			require_once $smarty->_get_plugin_filepath('function', 'popup');
+			$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
 		} else {
-			$javaset = '';
+			if (!empty($imgdata['fileId']) && $imgdata['thumb'] != 'download' && empty($urldisp)) {
+				$link = $browse_full_image . '&display';
+			} else {
+				$link = $browse_full_image;
+			}
 		}
-		// Set link to user setting or to image itself if thumb is set
-		if (!empty($imgdata['link']) || !empty($imgdata['thumb'])) {
-			$mouseover = '';
-			if (!empty($imgdata['link'])) {
-				$link = $imgdata['link'];
-			} elseif ((($imgdata['thumb'] == 'browse') || ($imgdata['thumb'] == 'browsepopup')) && !empty($imgdata['id'])) {
-				$link = 'tiki-browse_image.php?imageId=' . $imgdata['id'];
-			} elseif ($javaset == 'true') {
-				$link = 'javascript:void(0)';
-				$popup_params = array( 'text'=>$data, 'width'=>$fwidth, 'height'=>$fheight, 'background'=>$browse_full_image);
-				if ($imgdata['thumb'] == 'mousesticky') {
-					$popup_params['sticky'] = true;
-				}
-				require_once $smarty->_get_plugin_filepath('function', 'popup');
-				$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
+		// Set other link-related attributes				
+		// target
+		$imgtarget= '';
+		if (($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $link) 
+			|| preg_match('#^www\.([a-z0-9\-]+)\.#i',$link))) || ($imgdata['thumb'] == 'popup') 
+			|| ($imgdata['thumb'] == 'browsepopup')
+		) {
+			if (!empty($javaset) || ($imgdata['rel'] == 'box')) {
+				$imgtarget= '';
 			} else {
-				if (!empty($imgdata['fileId']) && $imgdata['thumb'] != 'download') {
-					$link = $browse_full_image . '&display';
-				} else {
-					$link = $browse_full_image;
-				}
+				$imgtarget = ' target="_blank"';
 			}
-			// Set other link-related attributes				
-			// target
-			$imgtarget= '';
-			if (($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $link) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$link))) || ($imgdata['thumb'] == 'popup') || ($imgdata['thumb'] == 'browsepopup')) {
-				if (!empty($javaset) || ($imgdata['rel'] == 'box')) {
-					$imgtarget= '';
-				} else {
-					$imgtarget = ' target="_blank"';
+		}
+		// rel
+		if (!empty($imgdata['rel'])) {
+			if ($imgdata['rel'] == 'box') {
+				$linkrel = ' rel="box';
+				if (!empty($fwidth) && !empty($fheight)) {
+					$linkrel .= ";width=$fwidth;height=$fheight";
 				}
-			}
-			// rel
-			if (!empty($imgdata['rel'])) {
-				if ($imgdata['rel'] == 'box') {
-					$linkrel = ' rel="box';
-					if (!empty($fwidth) && !empty($fheight)) {
-						$linkrel .= ";width=$fwidth;height=$fheight";
-					}
-					/*if (!empty($desconly)) {
-						$linkrel .= ";title=$desconly";
-					}*/
-					$linkrel .= '"';
-					
-				} else {
-					$linkrel = ' rel="'.$imgdata['rel'].'"';
-				}
+				$linkrel .= '"';
+				
 			} else {
-				$linkrel = '';
+				$linkrel = ' rel="'.$imgdata['rel'].'"';
 			}
-			// title
-			if ( !empty($imgtitle) ) {
-				$linktitle = $imgtitle;
-			} else {
-				$linktitle = '';
-			}
-			
-			$link = filter_out_sefurl(htmlentities($link), $smarty);
-
-			//Final link string
-			$replimg = '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle 
-			. $mouseover . '>' . $replimg . '</a>';
+		} else {
+			$linkrel = '';
+		}
+		// title
+		if ( !empty($imgtitle) ) {
+			$linktitle = $imgtitle;
+		} else {
+			$linktitle = '';
 		}
 		
-		//Add link string to rest of string
-		$repl .= $replimg;
+		$link = filter_out_sefurl(htmlentities($link), $smarty);
 
-	//////////////////////  Create enlarge button, description and their divs////////////////////
+		//Final link string
+		$replimg = '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle 
+		. $mouseover . '>' . $replimg . '</a>';
+	}
+	
+	//Add link string to rest of string
+	$repl .= $replimg;
+
+//////////////////////  Create enlarge button, description and their divs////////////////////
+	//Start div that goes around button and description if these are set
+	if ((!empty($imgdata['button'])) || (!empty($imgdata['desc'])) || (!empty($imgdata['styledesc']))) {
 		//To set room for enlarge button under image if there is no description
 		$descheightdef = 'height:15px;';           
 		//styling for the caption div
 		$captiondef = 'padding-top:2px;';		
 		//styling for the enlarge button div
 		$enlargedef = 'float:right; padding-top:.1cm;';								
-		//Start div that goes around button and description if these are set
-		if ((!empty($imgdata['button'])) || (!empty($imgdata['desc'])) || (!empty($imgdata['styledesc']))) {
-			$repl .= "\r\t" . '<div class="mini" style="width:' . $width . 'px;';
-			if( !empty($imgdata['styledesc']) ) {
-				if (($imgdata['styledesc'] == 'left') || ($imgdata['styledesc'] == 'right')) {
-					$repl .= 'text-align:' . $imgdata['styledesc'] . '">';
-				} else {
-				$repl .= $imgdata['styledesc'] . '">';
-				}
-			} elseif ((!empty($imgdata['button'])) && (empty($desconly))) {
-				$repl .= $descheightdef . '">';
+		$repl .= "\r\t" . '<div class="mini" style="width:' . $width . 'px;';
+		if( !empty($imgdata['styledesc']) ) {
+			if (($imgdata['styledesc'] == 'left') || ($imgdata['styledesc'] == 'right')) {
+				$repl .= 'text-align:' . $imgdata['styledesc'] . '">';
 			} else {
-				$repl .= '">';
+			$repl .= $imgdata['styledesc'] . '">';
 			}
-			
-			//Start description div that also includes enlarge button div
-			$repl .= "\r\t\t" . '<div class="thumbcaption" style="' . $captiondef . '" >';
-			
-			//Enlarge button div and link string (innermost div)
-			if (!empty($imgdata['button'])) {
-				if (empty($link) || (!empty($link) && !empty($javaset))) {
-					if ((($imgdata['button'] == 'browse') || ($imgdata['button'] == 'browsepopup')) && !empty($imgdata['id']))  {
-						$link_button = 'tiki-browse_image.php?imageId=' . $imgdata['id'];
-					} else {
-						if (!empty($imgdata['fileId']) && $imgdata['button'] != 'download') {
-							$link_button = $browse_full_image . '&display';
-						} elseif (!empty($imgdata['attId']) && $imgdata['thumb'] == 'download'){
-							$link = $browse_full_image . '&download=y';
-						} else {
-							$link_button = $browse_full_image;
-						}
-					}
-				} else {
-					$link_button = $link;
-				}
-				//Set button rel
-				if (empty($linkrel) || !empty($javaset)) {
-						$linkrel_button = '';
-				} else {
-					$linkrel_button = $linkrel;
-				}
-				//Set button target
-				if (empty($imgtarget) && (empty($imgdata['thumb']) || !empty($javaset))) {
-					if (($imgdata['button'] == 'popup') || ($imgdata['button'] == 'browsepopup')) {
-						$imgtarget_button = ' target="_blank"';
-					} else {
-						$imgtarget_button = '';
-					}
-				} else {
-					$imgtarget_button = $imgtarget;
-				}
-				$repl .= "\r\t\t\t" . '<div class="magnify" style="' . $enlargedef . '">';
-				$repl .= "\r\t\t\t\t" . '<a href="' . $link_button . '"' . $linkrel_button . $imgtarget_button ;
-				$repl .= ' class="internal"';
-				if (!empty($titleonly)) {
-					$repl .= ' title="' . $titleonly . '"';
-				}
-				$repl .= ">\r\t\t\t\t" . '<img src="./img/magnifying-glass-micro-icon.png" width="10" height="10" alt="Enlarge" /></a>' . "\r\t\t\t</div>";
-			}	
-			//Add description based on user setting (use $desconly from above) and close divs
-			isset($desconly) ? $repl .= $desconly : '';
-			$repl .= "\r\t\t</div>";
-			$repl .= "\r\t</div>";
+		} elseif ((!empty($imgdata['button'])) && (empty($desconly))) {
+			$repl .= $descheightdef . '">';
+		} else {
+			$repl .= '">';
 		}
-	///////////////////////////////Wrap in overall div that includes image if stylebox or button is set/////////////////////////////////////	
-		//Need a box if either button, desc or stylebox is set
-		if (!empty($imgdata['button']) || !empty($imgdata['desc']) || !empty($imgdata['stylebox']) || !empty($imgdata['align'])) {
-			//Make the div surrounding the image 2 pixels bigger than the image
-			if (empty($height)) $height = '';
-			if (empty($width)) $width = '';
-			$boxwidth = $width + 2;
-			$boxheight = $height + 2;
-			$alignbox = '';
-			$borderbox = '';
-			//default border when stylebox set to border or y
-			$borderboxdef = 'border:1px solid darkgray; padding:5px; background-color: #f9f9f9;';	
-			//default text style for description
-			$descdef = 'font-size:12px; line-height:1.5em;';		 
-			if (!empty($imgdata['align'])) {
-				if ($imgdata['align'] == 'center') {
-					$alignbox = $center;
+		
+		//Start description div that also includes enlarge button div
+		$repl .= "\r\t\t" . '<div class="thumbcaption" style="' . $captiondef . '" >';
+		
+		//Enlarge button div and link string (innermost div)
+		if (!empty($imgdata['button'])) {
+			if (empty($link) || (!empty($link) && !empty($javaset))) {
+				if ((($imgdata['button'] == 'browse') || ($imgdata['button'] == 'browsepopup')) && !empty($imgdata['id']))  {
+					$link_button = 'tiki-browse_image.php?imageId=' . $imgdata['id'];
 				} else {
-					$alignbox = 'float:' . $imgdata['align'] . ';';
-				}
-			}
-			//first set stylebox string if style box is set
-			if (!empty($imgdata['stylebox']) || !empty($imgdata['align'])) {				//create strings from shortcuts first
-				if ( !empty($imgdata['stylebox'])) {
-					if ($imgdata['stylebox'] == 'border') {
-						$borderbox = $borderboxdef;
-						if (!empty($alignbox)) {
-							if ((strpos(trim($imgdata['stylebox'],' '),'float:') > 0) || (strpos(trim($imgdata['stylebox'],' '),'display:') > 0)) {
-								$alignbox = '';			//override imalign setting is style image contains alignment syntax
-							}
-						}
+					if (!empty($imgdata['fileId']) && $imgdata['button'] != 'download') {
+						$link_button = $browse_full_image . '&display';
+					} elseif (!empty($imgdata['attId']) && $imgdata['thumb'] == 'download'){
+						$link = $browse_full_image . '&download=y';
 					} else {
-						$styleboxinit = $imgdata['stylebox'];
+						$link_button = $browse_full_image;
 					}
 				}
-				if (empty($imgdata['button']) && empty($imgdata['desc']) && empty($styleboxinit)) {
-					$styleboxplus = $alignbox . $borderbox . ' width:' . $boxwidth . 'px; height:' . $boxheight . 'px';
-				} elseif (!empty($styleboxinit)) {
-					$styleboxplus = $styleboxinit;
-				} else {
-					$styleboxplus = $alignbox . $borderbox . $descdef . ' width:' . $boxwidth . 'px';
-				}
-			} elseif (!empty($imgdata['button']) || !empty($imgdata['desc'])) {
-			$styleboxplus = $descdef . ' width:' . $boxwidth . 'px;';
+			} else {
+				$link_button = $link;
 			}
-		}
-		if ( !empty($styleboxplus)) {
-			$repl = "\r" . '<div class="img" style="' . $styleboxplus . '">' . $repl . "\r</div>";
+			//Set button rel
+			if (empty($linkrel) || !empty($javaset)) {
+					$linkrel_button = '';
+			} else {
+				$linkrel_button = $linkrel;
+			}
+			//Set button target
+			if (empty($imgtarget) && (empty($imgdata['thumb']) || !empty($javaset))) {
+				if (($imgdata['button'] == 'popup') || ($imgdata['button'] == 'browsepopup')) {
+					$imgtarget_button = ' target="_blank"';
+				} else {
+					$imgtarget_button = '';
+				}
+			} else {
+				$imgtarget_button = $imgtarget;
+			}
+			$repl .= "\r\t\t\t" . '<div class="magnify" style="' . $enlargedef . '">';
+			$repl .= "\r\t\t\t\t" . '<a href="' . $link_button . '"' . $linkrel_button . $imgtarget_button ;
+			$repl .= ' class="internal"';
+			if (!empty($titleonly)) {
+				$repl .= ' title="' . $titleonly . '"';
+			}
+			$repl .= ">\r\t\t\t\t" . '<img src="./img/magnifying-glass-micro-icon.png" width="10" 
+					height="10" alt="Enlarge" /></a>' . "\r\t\t\t</div>";
 		}	
-	//////////////////////////////////////Place 'clear' block///////////////////////////////////////////////////////////////////////////////////
-		if( !empty($imgdata['block']) ) {
-			switch ($imgdata['block']) {
-			case 'top': 
-							$repl = "\n\r<br style=\"clear:both\" />\r" . $repl;
-							break;
-			case 'bottom': 
-							$repl = $repl . "\n\r<br style=\"clear:both\" />\r";
-							break;
-			case 'both': 
-							$repl = "\n\r<br style=\"clear:both\" />\r" . $repl . "\n\r<br style=\"clear:both\" />\r";
-							break;
-			case 'top': 
-							break;
-			} 
-		} 
-		// Mobile
-		if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
-			$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
-		}
-		return '~np~'.$repl.'~/np~';
+		//Add description based on user setting (use $desconly from above) and close divs
+		isset($desconly) ? $repl .= $desconly : '';
+		$repl .= "\r\t\t</div>";
+		$repl .= "\r\t</div>";
 	}
+///////////////////////////////Wrap in overall div that includes image if stylebox or button is set////////////////	
+	//Need a box if either button, desc or stylebox is set
+	if (!empty($imgdata['button']) || !empty($imgdata['desc']) 
+		|| !empty($imgdata['stylebox']) || !empty($imgdata['align'])
+	) {
+		//Make the div surrounding the image 2 pixels bigger than the image
+		if (empty($height)) $height = '';
+		if (empty($width)) $width = '';
+		$boxwidth = $width + 2;
+		$boxheight = $height + 2;
+		$alignbox = '';
+		$borderbox = '';
+		//default border when stylebox set to border or y
+		$borderboxdef = 'border:1px solid darkgray; padding:5px; background-color: #f9f9f9;';	
+		//default text style for description
+		$descdef = 'font-size:12px; line-height:1.5em;';		 
+		if (!empty($imgdata['align'])) {
+			if ($imgdata['align'] == 'center') {
+				$alignbox = $center;
+			} else {
+				$alignbox = 'float:' . $imgdata['align'] . ';';
+			}
+		}
+		//first set stylebox string if style box is set
+		if (!empty($imgdata['stylebox']) || !empty($imgdata['align'])) {				//create strings from shortcuts first
+			if ( !empty($imgdata['stylebox'])) {
+				if ($imgdata['stylebox'] == 'border') {
+					$borderbox = $borderboxdef;
+					if (!empty($alignbox)) {
+						if ((strpos(trim($imgdata['stylebox'],' '),'float:') > 0) 
+						|| (strpos(trim($imgdata['stylebox'],' '),'display:') > 0)
+					) {
+							$alignbox = '';			//override imalign setting is style image contains alignment syntax
+						}
+					}
+				} else {
+					$styleboxinit = $imgdata['stylebox'];
+				}
+			}
+			if (empty($imgdata['button']) && empty($imgdata['desc']) && empty($styleboxinit)) {
+				$styleboxplus = $alignbox . $borderbox . ' width:' . $boxwidth . 'px; height:' . $boxheight . 'px';
+			} elseif (!empty($styleboxinit)) {
+				$styleboxplus = $styleboxinit;
+			} else {
+				$styleboxplus = $alignbox . $borderbox . $descdef . ' width:' . $boxwidth . 'px';
+			}
+		} elseif (!empty($imgdata['button']) || !empty($imgdata['desc'])) {
+		$styleboxplus = $descdef . ' width:' . $boxwidth . 'px;';
+		}
+	}
+	if ( !empty($styleboxplus)) {
+		$repl = "\r" . '<div class="img" style="' . $styleboxplus . '">' . $repl . "\r</div>";
+	}	
+//////////////////////////////////////Place 'clear' block///////////////////////////////////////////////////////////
+	if( !empty($imgdata['block']) ) {
+		switch ($imgdata['block']) {
+		case 'top': 
+						$repl = "\n\r<br style=\"clear:both\" />\r" . $repl;
+						break;
+		case 'bottom': 
+						$repl = $repl . "\n\r<br style=\"clear:both\" />\r";
+						break;
+		case 'both': 
+						$repl = "\n\r<br style=\"clear:both\" />\r" . $repl . "\n\r<br style=\"clear:both\" />\r";
+						break;
+		case 'top': 
+						break;
+		} 
+	} 
+	// Mobile
+	if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
+	}
+	return '~np~'.$repl.'~/np~';
 }
 
 /////////////////////////////////////////Function for getting image data from raw file (no filename)////////////////////////////////
  ///Creates a temporary file name and path for a raw image stored in a tiki database since getimagesize needs one to work
 if (!function_exists('getimagesize_raw')) {
-	function getimagesize_raw($data)
+	function getimagesize_raw($data, $thumb)
 	{
         $cwd = getcwd(); #get current working directory
         $tempfile = tempnam("$cwd/tmp", "temp_image_");#create tempfile and return the path/name (make sure you have created tmp directory under $cwd
         $temphandle = fopen($tempfile, "w");#open for writing
         fwrite($temphandle, $data); #write image to tempfile
         fclose($temphandle);
-		global $imagesize, $otherinfo, $iptc;
-        $imagesize = getimagesize($tempfile, $otherinfo); #get image params from the tempfile
-		if (!empty($otherinfo['APP13'])) {
-			$iptc = iptcparse($otherinfo['APP13']);
+		global $imagesize, $otherinfo, $iptc, $imagesizet;
+		if ($thumb == false) {
+	        $imagesize = getimagesize($tempfile, $otherinfo); #get image params from the tempfile
+			if (!empty($otherinfo['APP13'])) {
+				$iptc = iptcparse($otherinfo['APP13']);
+			} else {
+				$iptc = '';
+			}
 		} else {
-			$iptc = '';
+			$imagesizet = getimagesize($tempfile);
 		}
         unlink($tempfile); // this removes the tempfile
 	}
 }
-
  

@@ -415,15 +415,13 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 	   
 				// routine to verify field in tracker that's used as label
 				$cacheKey = 'trackerItemLabel'.$res['itemId'];
-				if (!$cachelib->isCached($cacheKey)) {
+				if (! $label = $cachelib->getCached($cacheKey)) {
 					$query = "select `fieldId` from `tiki_tracker_fields` where `isMain` = ? and `trackerId` = ? order by `position`";
 					$fieldId = $tikilib->getOne($query, array('y',$res['trackerId']));
 					$query = "select `value` from `tiki_tracker_item_fields` where `fieldId` = ? and `itemId` = ?";
 					$label = $tikilib->getOne($query, array($fieldId,$res['itemId']));
 
 					$cachelib->cacheItem($cacheKey, $label);
-				} else {
-					$label = $cachelib->getCached($cacheKey);
 				}
 
 				// If the label is empty (b:0;), then use the item ID
@@ -469,15 +467,13 @@ function module_since_last_visit_new($mod_reference, $params = null) {
 	   
 				// routine to verify field in tracker that's used as label
 				$cacheKey = 'trackerItemLabel'.$res['itemId'];
-				if (!$cachelib->isCached($cacheKey)) {
+				if (! $label = $cachelib->getCached($cacheKey)) {
 					$query = "select `fieldId` from `tiki_tracker_fields` where `isMain` = ? and `trackerId` = ? order by `position`";
 					$fieldId = $tikilib->getOne($query, array('y',$res['trackerId']));
 					$query = "select `value` from `tiki_tracker_item_fields` where `fieldId` = ? and `itemId` = ?";
 					$label = $tikilib->getOne($query, array($fieldId,$res['itemId']));
 
 					$cachelib->cacheItem($cacheKey, $label);
-				} else {
-					$label = $cachelib->getCached($cacheKey);
 				}
 
 				// If the label is empty (b:0;), then use the item ID

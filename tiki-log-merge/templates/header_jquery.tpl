@@ -11,10 +11,10 @@ jqueryTiki.autocomplete = {if $prefs.feature_jquery_autocomplete eq 'y'}true{els
 jqueryTiki.superfish = {if $prefs.feature_jquery_superfish eq 'y'}true{else}false{/if};
 jqueryTiki.replection = {if $prefs.feature_jquery_reflection eq 'y'}true{else}false{/if};
 jqueryTiki.tablesorter = {if $prefs.feature_jquery_tablesorter eq 'y'}true{else}false{/if};
-jqueryTiki.cycle = {if $prefs.feature_jquery_cycle eq 'y'}true{else}false{/if};
 jqueryTiki.colorbox = {if $prefs.feature_shadowbox eq 'y'}true{else}false{/if};
 jqueryTiki.cboxCurrent = "{literal}{{/literal}current{literal}} / {{/literal}total{literal}}{/literal}";
 jqueryTiki.sheet = {if $prefs.feature_jquery_sheet eq 'y'}true{else}false{/if};
+jqueryTiki.carousel = {if $prefs.feature_jquery_carousel eq 'y'}true{else}false{/if};
 
 jqueryTiki.effect = "{$prefs.jquery_effect}";				// Default effect
 jqueryTiki.effect_direction = "{$prefs.jquery_effect_direction}";	// 'horizontal' | 'vertical' etc

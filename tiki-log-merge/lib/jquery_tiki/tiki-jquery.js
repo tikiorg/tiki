@@ -548,13 +548,19 @@ var fullScreenState = [];
 
 function toggleFullScreen(area_name) {
 	var $ta = $jq("#" + area_name);
+	var $diff = $jq("#diff_outer");
+	
 	if (!$ta.length) {
 		$ta = $jq(getElementById(area_name));
 	}
 	
 	if (fullScreenState[area_name]) {	// leave full screen
-		
-		$ta.width(fullScreenState[area_name]["ta"]["width"]).height(fullScreenState[area_name]["ta"]["height"]);
+		if ($diff.length) {
+			$diff.css("float", fullScreenState[area_name]["diff"]["float"]).width(fullScreenState[area_name]["diff"]["width"]).height(fullScreenState[area_name]["diff"]["height"]);
+			$jq("#diff_history").height(fullScreenState[area_name]["diff_history"]["height"])
+								.width(fullScreenState[area_name]["diff_history"]["width"]);
+		}
+		$ta.css("float", fullScreenState[area_name]["ta"]["float"]).width(fullScreenState[area_name]["ta"]["width"]).height(fullScreenState[area_name]["ta"]["height"]);
 		$ta.resizable({minWidth: fullScreenState[area_name]["resizable"]["minWidth"], minHeight: fullScreenState[area_name]["resizable"]["minHeight"]});
 		
 		for(var i = 0; i < fullScreenState[area_name]["hidden"].length; i++) {
@@ -595,6 +601,10 @@ function toggleFullScreen(area_name) {
 		var h = $jq(window).height();
 		var w = $jq(window).width();
 		
+		if ($diff.length) {	// translation diff there so split the screen down the middle (for now)
+			w = Math.floor(w / 2) - 5;
+		}
+		
 		fullScreenState[area_name]["hidden"].push($jq("#header, #col2, #col3, #footer"));
 		$jq("#header, #col2, #col3, #footer").hide();
 		
@@ -615,15 +625,33 @@ function toggleFullScreen(area_name) {
 			fullScreenState[area_name]["changed"].push(ob);
 		});
 		$ta.parents().each(function() {
-			$jq(this).siblings(":visible").hide();
+			$jq(this).siblings(":visible:not(#diff_outer)").hide();
 			$jq(this).css("margin", 0).css("padding", 0).width(w).height(h);
 		});
+		
+		if ($diff.length) {
+			fullScreenState[area_name]["diff"] = [];
+			fullScreenState[area_name]["diff"]["width"] = $diff.width();
+			fullScreenState[area_name]["diff"]["height"] = $diff.height();
+			fullScreenState[area_name]["diff"]["float"] = $diff.css("float");
+			fullScreenState[area_name]["diff_history"] = [];
+			fullScreenState[area_name]["diff_history"]["height"] = $jq("#diff_history").height();
+			fullScreenState[area_name]["diff_history"]["width"] = $jq("#diff_history").width();
+			$diff.parents().each(function() {			// shares some parents with the textarea
+				$jq(this).width($jq(window).width());	// so make room for both
+			});
+		}
 		
 		fullScreenState[area_name]["ta"] = [];
 		fullScreenState[area_name]["ta"]["width"] = $ta.width();
 		fullScreenState[area_name]["ta"]["height"] = $ta.height();
+		fullScreenState[area_name]["ta"]["float"] = $ta.css("float");
 		
 		$ta.width(w).height($ta.parent().height() - $jq(".textarea-toolbar").height() - 60);
+		if ($diff.length) {
+			$diff.width(w).height(h).css("float", "left").next().css("float", "right");
+			$jq("#diff_history").height(h * 0.9).width(w);
+		}
 		
 		if ($jq("div.top_actions").length) {
 			$ta.parent().append($jq("div.top_actions > .wikiaction").clone(true).addClass("fs_clones"));
@@ -642,69 +670,81 @@ function toggleFullScreen(area_name) {
 
 $jq.fn.tiki = function(func, type, options) {
 
-		switch (func) {
-			case "autocomplete":
-				if (jqueryTiki.autocomplete) {
-					if (typeof type != 'undefined') { // func and type given
-						options = options || {};		// some default options for autocompletes in tiki
-						var opts = {extraParams: {"httpaccept": "text/javascript"},
-									dataType: "json",
-									parse: parseAutoJSON,
-									formatItem: function(row) { return row; },
-									selectFirst: false
-								};
-						for(opt in options) {
-							opts[opt] = options[opt];
-						}
-					}
-					var data = "";
-					switch (type) {
-						case "pagename":
-							data = "tiki-listpages.php?listonly";
-							break;
-						case "groupname":
-							data = "tiki-ajax_services.php?listonly=groups";
-							break;
-						case "username":
-							data = "tiki-ajax_services.php?listonly=users";
-							break;
-						case "tag":
-							data = "tiki-ajax_services.php?listonly=tags&separator=+";
-							break;
-					}
-			 		return this.each(function() {
-						$jq(this).autocomplete(data, opts);
-			
-					});
-				}
-				break;
-
-			case "sheet":
-				if (jqueryTiki.sheet) {
-					options = options || {};	// some default options for sheets in tiki
-					var sheet_theme = jqueryTiki.ui ? "lib/jquery/jquery.ui/themes/" + jqueryTiki.ui_theme + "/jquery-ui.css" : "lib/jquery/jquery.sheet/theme/jquery-ui-1.7.2.custom.css";
-					var opts = {urlBaseCss: 	"lib/jquery/jquery.sheet/jquery.sheet.css",
-								urlTheme: 		sheet_theme,
-								urlMenu: 		"lib/jquery/jquery.sheet/menu.html",
-								urlMenuJs: 		"lib/jquery/jquery.sheet/plugins/mbMenu.min.js", 			//set to bool false if you don't want to use
-								urlMenuCss: 	"lib/jquery/jquery.sheet/plugins/menu.css", 				//set to bool false if you don't want to use
-								urlMetaData: 	"lib/jquery/jquery.sheet/plugins/jquery.metadata.js", 		//set to bool false if you don't want to use
-								urlScrollTo: 	"lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js", 	//set to bool false if you don't want to use
-								urlScrollsync: 	"lib/jquery/jquery.sheet/plugins/scrollsync.js", 			//set to bool false if you don't want to use
-								urlJGCharts: 	"lib/jquery/jquery.sheet/plugins/jgcharts.pack.js", 		//set to bool false if you don't want to use
-								urlGet: "",
-								buildSheet: false
+	switch (func) {
+		case "autocomplete":
+			if (jqueryTiki.autocomplete) {
+				if (typeof type != 'undefined') { // func and type given
+					options = options || {};		// some default options for autocompletes in tiki
+					var opts = {extraParams: {"httpaccept": "text/javascript"},
+								dataType: "json",
+								parse: parseAutoJSON,
+								formatItem: function(row) { return row; },
+								selectFirst: false
 							};
 					for(opt in options) {
 						opts[opt] = options[opt];
 					}
-			 		return this.each(function() {
-						$jq(this).sheet(opts);
-			
-					});
 				}
-				break;
-		}
+				var data = "";
+				switch (type) {
+					case "pagename":
+						data = "tiki-listpages.php?listonly";
+						break;
+					case "groupname":
+						data = "tiki-ajax_services.php?listonly=groups";
+						break;
+					case "username":
+						data = "tiki-ajax_services.php?listonly=users";
+						break;
+					case "tag":
+						data = "tiki-ajax_services.php?listonly=tags&separator=+";
+						break;
+				}
+		 		return this.each(function() {
+					$jq(this).autocomplete(data, opts);
+		
+				});
+			}
+			break;
+
+		case "sheet":
+			if (jqueryTiki.sheet) {
+				options = options || {};	// some default options for sheets in tiki
+				var sheet_theme = jqueryTiki.ui ? "lib/jquery/jquery.ui/themes/" + jqueryTiki.ui_theme + "/jquery-ui.css" : "lib/jquery/jquery.sheet/theme/jquery-ui-1.7.2.custom.css";
+				var opts = {urlBaseCss: 	"lib/jquery/jquery.sheet/jquery.sheet.css",
+							urlTheme: 		sheet_theme,
+							urlMenu: 		"lib/jquery/jquery.sheet/menu.html",
+							urlMenuJs: 		"lib/jquery/jquery.sheet/plugins/mbMenu.min.js", 			//set to bool false if you don't want to use
+							urlMenuCss: 	"lib/jquery/jquery.sheet/plugins/menu.css", 				//set to bool false if you don't want to use
+							urlMetaData: 	"lib/jquery/jquery.sheet/plugins/jquery.metadata.js", 		//set to bool false if you don't want to use
+							urlScrollTo: 	"lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js", 	//set to bool false if you don't want to use
+							urlScrollsync: 	"lib/jquery/jquery.sheet/plugins/scrollsync.js", 			//set to bool false if you don't want to use
+							urlJGCharts: 	"lib/jquery/jquery.sheet/plugins/jgcharts.pack.js", 		//set to bool false if you don't want to use
+							urlGet: "",
+							buildSheet: false
+						};
+				for(opt in options) {
+					opts[opt] = options[opt];
+				}
+		 		return this.each(function() {
+					$jq(this).sheet(opts);
+		
+				});
+			}
+			break;
+		case "carousel":
+			if (jqueryTiki.carousel) {
+				var opts = {
+						imagePath: "lib/jquery/infinitecarousel/images/"
+					};
+				for(opt in options) {
+					opts[opt] = options[opt];
+				}
+		 		return this.each(function() {
+					$jq(this).infiniteCarousel(opts);			
+				});
+			}
+	}
 };
 
 

@@ -20,7 +20,7 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $
 	global $cachelib;
 	include_once ('lib/cache/cachelib.php');
 	if (!is_array($sefurl_regex_out)) {
-		if (!$cachelib->isCached('sefurl_regex_out')) {
+		if (! $sefurl_regex_out = $cachelib->getSerialized('sefurl_regex_out')) {
 			$query = 'select * from `tiki_sefurl_regex_out` where `silent` != ? order by `order` asc';
 			$result = $tikilib->query($query, array('y'));
 			$sefurl_regex_out = array();
@@ -32,8 +32,6 @@ function filter_out_sefurl($tpl_output, &$smarty, $type = null, $title = null, $
 				}
 			}
 			$cachelib->cacheItem('sefurl_regex_out', serialize($sefurl_regex_out));
-		} else {
-			$sefurl_regex_out = unserialize($cachelib->getCached('sefurl_regex_out'));
 		}
 	}
 	$title = '';

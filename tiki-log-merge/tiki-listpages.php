@@ -340,4 +340,18 @@ function possibly_look_for_page_aliases($query) {
 		}
 	}
 	$smarty->assign('alias_found', $alias_found);
+
+	set_category_for_new_page_creation();
+}
+
+function set_category_for_new_page_creation() {
+	global $_REQUEST, $prefs, $smarty;
+
+	$create_page_with_categId = '';
+    if (isset($_REQUEST['create_page_with_search_category'])) {
+		if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
+			$create_page_with_categId = $_REQUEST['categId'];
+		}
+	}
+	$smarty->assign('create_page_with_categId', $create_page_with_categId);
 }

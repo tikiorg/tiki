@@ -23,7 +23,7 @@ function discardUser($u, $reason) {
 	return $u;
 }
 function batchImportUsers() {
-	global $userlib, $smarty, $logslib, $tiki_p_admin, $user, $prefs, $userGroups;
+	global $userlib, $smarty, $logslib, $tiki_p_admin, $user, $prefs, $userGroups, $tikilib;
 	$fname = $_FILES['csvlist']['tmp_name'];
 	$fhandle = fopen($fname, "r");
 	$fields = fgetcsv($fhandle, 1000);
@@ -82,7 +82,11 @@ function batchImportUsers() {
 				$local[] = discardUser($u, tra("User login is required"));
 			}
 			if (empty($u['password'])) {
-				$local[] = discardUser($u, tra("Password is required"));
+				if (!empty($_REQUEST['notification'])) {
+					$u['password'] = $tikilib->genPass();
+				} else {
+					$local[] = discardUser($u, tra("Email is required"));
+				}
 			}
 			if (empty($u['email'])) {
 				$local[] = discardUser($u, tra("Email is required"));
@@ -100,8 +104,18 @@ function batchImportUsers() {
 			continue;
 		}
 		if (!$exist) {
-			$userlib->add_user($u['login'], $u['password'], $u['email'], '', $pass_first_login);
+			if (!empty($_REQUEST['notification'])) {
+				$apass = addslashes(md5($tikilib->genPass()));
+			} else {
+				$apass = '';
+			}
+
+			$userlib->add_user($u['login'], $u['password'], $u['email'], $pass_first_login?$u['password']:'', $pass_first_login, $apass, NULL, (!empty($_REQUEST['notification'])?'u':NULL));
 			$logslib->add_log('users', sprintf(tra("Created account %s <%s>") , $u['login'], $u['email']));
+			if (!empty($_REQUEST['notification'])) {
+				$realpass = $pass_first_login ? '' : $u['password'];
+				$userlib->send_validation_email($u['login'], $apass, $u['email'], '', '', '', 'user_creation_validation_mail', $realpass);
+			}
 		}
 		$userlib->set_user_fields($u);
 		if ($exist && isset($_REQUEST['overwriteGroup'])) {
@@ -213,8 +227,10 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			if (isset($_REQUEST['need_email_validation']) && $_REQUEST['need_email_validation'] == 'on') {
 				$send_validation_email = true;
 				$apass = addslashes(md5($tikilib->genPass()));
+			} else {
+				$apass = '';
 			}
-			if ($userlib->add_user($_REQUEST["name"], $_REQUEST['pass'] , $_REQUEST["email"], '', $pass_first_login, $apass, NULL, ($send_validation_email?'u':NULL))) {
+			if ($userlib->add_user($_REQUEST['name'], $_REQUEST['pass'] , $_REQUEST['email'], $pass_first_login?$_REQUEST['pass']:'', $pass_first_login, $apass, NULL, ($send_validation_email?'u':NULL))) {
 				$tikifeedback[] = array(
 					'num' => 0,
 					'mes' => sprintf(tra("New %s created with %s %s.") , tra("user") , tra("username") , $_REQUEST["name"])

@@ -61,7 +61,7 @@ function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $descrip
 }
 
 function guess_new_page_attributes_from_parent_pages($page, $page_info) {
-	global $editlib, $smarty, $_REQUEST, $tikilib;
+	global $editlib, $smarty, $_REQUEST, $tikilib, $need_lang;
 	if (!$page_info) {
 		//
 		// This is a new page being created. See if we can guess some of its attributes
@@ -85,7 +85,7 @@ function guess_new_page_attributes_from_parent_pages($page, $page_info) {
 			$languages = $tikilib->list_languages(false, true);
 			$smarty->assign('languages', $languages);
 			$smarty->assign('default_lang', $prefs['language']);
-			$smarty->assign('need_lang', 'y');
+			$need_lang = true;
 			$smarty->assign('_REQUEST', $_REQUEST);
 		}
 	}
@@ -121,7 +121,7 @@ function execute_module_translation() {
 }
 
 // Define all templates files that may be used with the 'zoom' feature
-$zoom_templates = array('wiki_edit');
+$zoom_templates = array('wiki_edit', 'tiki-editpage');
 
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
@@ -872,9 +872,7 @@ if (($prefs['feature_wiki_screencasts'] == 'y') && (isset($tiki_p_upload_screenc
 		}
 	}
 
-	if ( $cachelib->isCached($pageHash) ) {
-		$screencasts_uploaded = unserialize($cachelib->getCached($pageHash));
-	} else {
+	if ( ! $screencasts_uploaded = $cachelib->getSerialized($pageHash) ) {
 		$screencasts_uploaded = $screencastlib->find($pageHash, true);
 		$cachelib->cacheItem($pageHash, serialize($screencasts_uploaded));
 	}
@@ -1230,8 +1228,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	} else {
 		$url = $wikilib->sefurl($page);
 	}
-	if ($prefs['feature_best_language'] == 'y') {
-		$url .= '&bl=n';
+	if ($prefs['feature_best_language'] == 'y' || isset($_REQUEST['save'])) {
+		$url .= '&no_bl=y';
 	}
 	$_SESSION['saved_msg'] = $_REQUEST["page"];
 
@@ -1305,7 +1303,8 @@ if ($prefs['feature_multilingual'] == 'y') {
 		   screwed up. Will reactivate as soon as I get the CSS right for
 		   that.
 		 */
-//		$_REQUEST['zoom'] = 'wiki_edit';
+//		$_REQUEST['zoom'] = 'tiki-editpage';
+//		$diff_style = 'inlinediff-full';
 		$smarty->assign('update_translation', 'y');
 	}
 }
@@ -1471,8 +1470,12 @@ if (strtolower($page) != 'sandbox' &&
 ask_ticket('edit-page');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-// Display the Index Template
-$smarty->assign('mid', 'tiki-editpage.tpl');
+// Display the Edit Template or language check
+if ($need_lang) {
+	$smarty->assign('mid', 'tiki-choose_page_language.tpl');
+} else {
+	$smarty->assign('mid', 'tiki-editpage.tpl');
+}
 $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');

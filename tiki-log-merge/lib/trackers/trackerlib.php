@@ -534,7 +534,7 @@ class TrackerLib extends TikiLib
 			$cache .= md5(serialize($jail));
 		}
 
-		if (!$cachelib->isCached($cache) || !$this->valid_status($status)) {
+		if ( ( ! $ret = $cachelib->getSerialized($cache) ) || !$this->valid_status($status)) {
 			$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
 			$mid = "  (".implode('=? or ',array_fill(0,count($sts),'tti.`status`'))."=?) ";
 			$fieldIdArray = preg_split('/\|/', $fieldId, -1, PREG_SPLIT_NO_EMPTY);
@@ -557,8 +557,6 @@ class TrackerLib extends TikiLib
 				$ret[] = $res;
 			}
 			$cachelib->cacheItem($cache,serialize($ret));
-		} else {
-			$ret = unserialize($cachelib->getCached($cache));
 		}
 		if ($needToCheckCategPerms) {
 			$ret = $this->filter_categ_items($ret);
@@ -1692,6 +1690,10 @@ class TrackerLib extends TikiLib
 			$categlib->categorize($catObjectId, $currentCategId);
 		}
 
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('tracker_items', $itemId);
+		}
 		$parsed = '';
 		if ($ins_fields['data'][$i]['type'] == 'a') {
 			$parsed .= $ins_fields['data'][$i]['value']."\n";
@@ -1797,6 +1799,7 @@ class TrackerLib extends TikiLib
 			return 'Duplicate header names';
 		}
 		$total = 0;
+		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		while (($data = fgetcsv($csvHandle,100000,  $csvDelimiter)) !== FALSE) {
 			$status = 'o';
@@ -1839,6 +1842,7 @@ class TrackerLib extends TikiLib
 				}
 				$replace = false;
 			}
+			$need_reindex[] = $itemId;
 			if (!empty($cats)) {
 				$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
 			}
@@ -1898,6 +1902,11 @@ class TrackerLib extends TikiLib
 			$total++;
 		}
 
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' && is_array($need_reindex) ) {
+			require_once('lib/search/refresh-functions.php');
+			foreach ( $need_reindex as $id ) refresh_index('tracker_items', $id);
+			unset($need_reindex);
+		}
 		$cant_items = $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
 		$query = "update `tiki_trackers` set `items`=?,`lastModif`=?  where `trackerId`=?";
 		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
@@ -2244,6 +2253,11 @@ class TrackerLib extends TikiLib
 		}
 		$this->clear_tracker_cache($trackerId);
 
+		global $prefs;
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('trackers', $trackerId);
+		}
 		if ($descriptionIsParsed == 'y') {
 			$this->syncParsedText($description, array('type'=>'tracker', 'object'=>$trackerId, 'href'=>"tiki-view_tracker.php?trackerId=$trackerId", 'description'=>$description));
 		}
@@ -3444,7 +3458,7 @@ class TrackerLib extends TikiLib
 		return array();
 	}
 	function nbComments($user) {
-		$query = 'select count(*) from `tiki_tracker_item_attachments` where `user`=?';
+		$query = 'select count(*) from `tiki_tracker_item_comments` where `user`=?';
 		return $this->getOne($query, array($user));
 	}
 	function lastModif($trackerId) {

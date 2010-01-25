@@ -76,6 +76,7 @@ $smarty->assign('sortdirection', 'desc');
 $smarty->assign_by_ref('gal_info', $gal_info);
 $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
+$smarty->assign('reindex_file_id', -1);
 // Execute batch actions
 if ($tiki_p_admin_file_galleries == 'y') {
 	if (isset($_REQUEST['delsel_x'])) {
@@ -523,6 +524,9 @@ if (!empty($_FILES)) {
 			}
 			$smarty->assign('fileId', $fileId);
 			$smarty->assign('fileChangedMessage', tra('File update was successful') . ': ' . $v['name']);
+			if (isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y') {
+				$smarty->assign('reindex_file_id', $fileId);
+			}
 		} elseif ($v['error'] != 0) {
 			$smarty->assign('msg', tra('Upload was not successful') . ': ' . $tikilib->uploaded_file_error($v['error']));
 			$smarty->display('error.tpl');
@@ -578,11 +582,15 @@ if (isset($_GET['slideshow'])) {
 	$offset = 0;
 	$files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
 	$smarty->assign('cant', $files['cant']);
-	$i = 0;
-	$smarty->assign_by_ref('filesid', $filesid);
 	$smarty->assign_by_ref('file', $files['data']);
-	reset($filesid);
-	$smarty->assign('firstId', current($filesid));
+
+// These lines seem to do nothing, but there is a connection to 2 tpls (tiki-browse_image.tpl (2 matches) and tiki-browse_video.tpl (2 matches))
+// but that must be broken - leaving for a little while just in case (jonnyb tiki5)
+//	$i = 0;
+//	$smarty->assign_by_ref('filesid', $filesid);
+//	reset($filesid);
+//	$smarty->assign('firstId', current($filesid));
+	
 	$smarty->assign('show_find', 'n');
 	$smarty->assign('direct_pagination', 'y');
 	if (isset($_REQUEST['slideshow_noclose'])) {

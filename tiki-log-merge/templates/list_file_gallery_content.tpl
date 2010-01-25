@@ -1,3 +1,4 @@
+{* $Id$ *}
 {if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
 <table class="normal">
   <tr>
@@ -52,7 +53,7 @@
         <th{$td_args}>
            {self_link _sort_arg=$sort_arg _sort_field=$propname _title=$link_title}
              {if $propicon}{icon _id=$propicon alt=$link_title}{else}{$propval}{/if}
-		   {/self_link}
+           {/self_link}
         </th>
       {/if}
     {/if}
@@ -246,7 +247,13 @@
           {assign var=propval value=$propval|userlink}
         {/if}
       {elseif $propname eq 'backlinks'}
+        {if empty($files[changes].nbBacklinks)}
           {assign var=propval value=$files[changes].nbBacklinks}
+        {else}
+          {assign var=propval value=$files[changes].nbBacklinks}
+		  {assign var=fid value=$files[changes].id}
+          {assign var=propval value="<a class='fgalbacklink' href='list-file_backlinks_ajax.php?fileId=$fid' rel='list-file_backlinks_ajax.php?fileId=$fid'>$propval</a>"}
+        {/if}
       {/if}
 
       {if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
@@ -303,3 +310,4 @@
   {/if}
 
 </table>
+<script type="text/javascript" src="lib/filegals/backlinks.js"></script>

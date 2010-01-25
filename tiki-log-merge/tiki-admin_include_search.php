@@ -96,5 +96,26 @@ function activated_features() {
 	}
 	return $activated_features;
 }
+global $tiki_p_admin;
+if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_all_now']) && $_REQUEST['refresh_index_all_now'] == 'y') {
+	require_once ('lib/search/refresh-functions.php');
+	foreach(activated_features() as $feature) refresh_index($feature);
+	$smarty->assign('refresh_index_all_now', $_REQUEST['refresh_index_all_now']);
+}
+if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_files_index_now']) && $_REQUEST['refresh_files_index_now'] == 'y') {
+	require_once ('lib/search/refresh-functions.php');
+	refresh_index('files');
+	$smarty->assign('refresh_files_index_now', $_REQUEST['refresh_files_index_now']);
+}
+if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_now']) && $_REQUEST['refresh_index_now'] == 'y') {
+	require_once ('lib/search/refresh-functions.php');
+	refresh_index('pages');
+	$smarty->assign('refresh_index_now', $_REQUEST['refresh_index_now']);
+}
+if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_tracker_index_now']) && $_REQUEST['refresh_tracker_index_now'] == 'y') {
+	require_once ('lib/search/refresh-functions.php');
+	refresh_index('tracker_items');
+	$smarty->assign('refresh_tracker_index_now', $_REQUEST['refresh_tracker_index_now']);
+}
 $headerlib->add_cssfile('css/admin.css');
 ask_ticket('admin-inc-search');

@@ -4355,12 +4355,11 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			//logged out
 			global $cachelib; require_once("lib/cache/cachelib.php");
-			if ($cachelib->isCached("tiki_preferences_cache")) {
-				return unserialize($cachelib->getCached("tiki_preferences_cache"));
-			} else {
-				$needLoading = true;
-				$needCache = true;
+			if ( $data = $cachelib->getSerialized("tiki_preferences_cache")) {
+				return $data;
 			}
+			$needLoading = true;
+			$needCache = true;
 		}	
 
 		if( $needLoading ) {
@@ -4825,7 +4824,12 @@ class TikiLib extends TikiDb_Bridge
 			$this->score_event($user, 'wiki_new');
 		}
 
-		$this->syncParsedText($data, array('type'=> 'wiki page', 'object'=> $page, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$page"));
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('pages', $name);
+		}
+
+		$this->syncParsedText($data, array('type'=> 'wiki page', 'object'=> $name, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$name"));
 
 		return true;
 	}
@@ -7661,6 +7665,10 @@ class TikiLib extends TikiDb_Bridge
 				$this->score_event($user, 'wiki_edit');
 			}
 
+		}
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('pages', $pageName);
 		}
 		$this->syncParsedText($edit_data, array('type'=>'wiki page', 'object'=>$pageName));
 	}

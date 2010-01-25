@@ -48,9 +48,7 @@ function wikiplugin_screencast($data, $params) {
 	$msg = ($data) ? $data : tra("Watch a video of these instructions");
 
 	$fileNameParts = split("-", $file);
-	if ( $cachelib->isCached($fileNameParts[0]) ) {
-		$allVideos = unserialize($cachelib->getCached($fileNameParts[0]));
-	} else {
+	if ( ! $allVideos = $cachelib->getSerialized($fileNameParts[0]) ) {
 		$allVideos = $screencastlib->find($fileNameParts[0], true);
 		$cachelib->cacheItem($fileNameParts[0], serialize($allVideos));
 	}

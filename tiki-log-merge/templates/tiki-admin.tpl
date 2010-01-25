@@ -2,13 +2,10 @@
 {popup_init src="lib/overlib.js"}
 {title help="$helpUrl"}{tr}{$admintitle}{/tr}{/title}
 
-{if $prefs.feature_search_preferences eq 'y' and $smarty.get.page != 'profiles'}
+{if $smarty.get.page != 'profiles'} {* We don't want on this page because it results in two search boxes *}
 <form method="post" action="">
 	{remarksbox type="note" title="{tr}Development Notice{/tr}"}
-		{tr}Unless a significant amount of preferences are documented and use dynamic preferences before the 5.0 release, this search feature 
-will become disabled by default.{/tr} {tr}More than half the job is done, please help{/tr}: <a 
-href="http://dev.tikiwiki.org/Dynamic+Preferences">http://dev.tikiwiki.org/Dynamic+Preferences</a>.{tr}Also, Dynamic preferences are essential for 
-the <a href="tiki-edit_perspective.php">perspectives GUI</a> to work.{/tr}
+		{tr}This search feature and the <a href="tiki-edit_perspective.php">perspectives GUI</a> need <a href="http://dev.tikiwiki.org/Dynamic+Preferences">http://dev.tikiwiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
 	{/remarksbox}
 	<p>
 		<label>Configuration search: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>

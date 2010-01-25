@@ -925,6 +925,12 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'hint' => 'tiki-orphan_pages.php',
 		),
+		'feature_search_fulltext' => array(
+			'name' => tra('Database search'),
+			'hint' => tra('This search uses the MySQL Full-Text feature. The indexation is always updated.'),
+			'type' => 'flag',
+			'help' => 'Search',
+		),
 		'feature_referer_highlight' => array(
 			'name' => tra('Referer Search Highlighting'),
 			'type' => 'flag',
@@ -1052,16 +1058,20 @@ function prefs_feature_list() {
 				'feature_search',
 			),
 		),
+		'feature_forum_local_tiki_search' => array(
+			'name' => tra('Use Tiki (database-independent) search.'),
+			'type' => 'flag',
+		),
+		'feature_forum_local_search' => array(
+			'name' => tra('Use database (full-text) search.'),
+			'type' => 'flag',
+		),
 		'feature_clear_passwords' => array(
 			'name' => tra('Store password as plain text'),
 			'type' => 'flag',
 			'perspective' => false,
 		),
 
-		'feature_search_preferences' => array(
-			'name' => tra('Admins can search for features in the admin panels'),
-			'type' => 'flag',
-		),
 		'feature_crypt_passwords' => array(
 			'name' => tra('Encryption method'),
 			'type' => 'list',
@@ -1311,15 +1321,15 @@ function prefs_feature_list() {
 				'vader' => 'vader',
 			), 
 		),
-		'feature_jquery_cycle' => array(
-			'name' => tra('Cycle (slideshow)'),
-			'type' => 'flag',
-			'help' => 'JQuery#Cycle',
-		),
 		'feature_jquery_sheet' => array(
 			'name' => tra('JQuery Sheet'),
 			'type' => 'flag',
-			'help' => 'JQuery#Cycle',
+			'help' => 'JQuery#Sheet',
+		),
+		'feature_jquery_carousel' => array(
+			'name' => tra('JQuery Infinite Carousel'),
+			'type' => 'flag',
+			'help' => 'JQuery#Carousel',
 		),
 		'feature_jquery_tablesorter' => array(
 			'name' => tra('JQuery Sortable Tables'),

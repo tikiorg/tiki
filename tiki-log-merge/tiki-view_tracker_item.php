@@ -917,6 +917,9 @@ if ($_REQUEST["itemId"]) {
 					$trklib->replace_star($_REQUEST['ins_'.$fields['data'][$i]['fieldId']], $_REQUEST['trackerId'], $_REQUEST['itemId'], $ins_fields['data'][$i], $user, true);
 				} else {
 					$trklib->update_star_field($_REQUEST['trackerId'], $_REQUEST['itemId'], $ins_fields['data'][$i]);
+					if (!empty($ins_fields['data'][$i]['numVotes'])) {
+						$smarty->assign('itemHasVotes', 'y');
+					}
 				}
 			}
 			if ($fields['data'][$i]['isMain'] == 'y') $smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);
