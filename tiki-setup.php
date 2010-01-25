@@ -133,6 +133,10 @@ if( isset( $_GET['msg'] ) ) {
 
 $headerlib->add_jsfile( 'lib/tiki-js.js' );	// tiki-js.js gets included even if javascript_enabled==n for the js test
 
+if( $prefs['feature_cssmenus'] == 'y' ) {
+	$headerlib->add_cssfile( 'css/cssmenus.css' );
+}
+
 if ($prefs['javascript_enabled'] == 'y') {
 	
 	$headerlib->add_jsfile( 'lib/jquery/jquery.js' );

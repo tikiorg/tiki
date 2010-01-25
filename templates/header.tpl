@@ -54,11 +54,6 @@
 {* --- phplayers block --- *}
 {if $prefs.feature_phplayers eq 'y' and isset($phplayers_headers)}		{$phplayers_headers}{/if}
 
-{*-- css menus block --*}
-{if $prefs.feature_cssmenus eq 'y'}
-		<link rel="stylesheet" href="css/cssmenus.css" type="text/css" />
-{/if}
-
 {* --- universaleditbutton.org --- *}
 {if (isset($editable) and $editable) and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox' or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y')}
 		<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page|escape:url}" />
