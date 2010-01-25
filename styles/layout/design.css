@@ -1092,4 +1092,5 @@ table.treeTable .parent td {
 	width: 100px;
 }
  /* wikiplugin_tracker */
+.trackerCategoryName {white-space:nowrap;}
 /* End of file */
