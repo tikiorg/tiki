@@ -1536,6 +1536,8 @@ function get_default_prefs() {
 
 		'feature_use_minified_scripts' => 'y',		// for debugging
 		'tiki_minify_javascript' => 'y',
+		'tiki_minify_css' => 'y',
+		'tiki_minify_css_single_file' => 'n',
 
 		// Token Access
 		'auth_token_access' => 'n',

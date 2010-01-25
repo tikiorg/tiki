@@ -357,12 +357,89 @@ class HeaderLib
 	}
 	
 	private function output_css_files_list( $files, $media ) {
+		global $prefs;
+
 		$back = '';
+
+		if( $prefs['tiki_minify_css'] == 'y' ) {
+			require_once 'Minify/CSS.php';
+
+			if( $prefs['tiki_minify_css_single_file'] == 'y' ) {
+				$files = $this->get_minified_css_single( $files );
+			} else {
+				$files = $this->get_minified_css( $files );
+			}
+		}
+
 		foreach( $files as $file ) {
 			$back.= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($file) . "\" type=\"text/css\" media=\"" . smarty_modifier_escape($media) . "\" />\n";
 		}
 
 		return $back;
+	}
+
+	private function get_minified_css( $files ) {
+		$out = array();
+			$target = "temp/public/";
+
+		foreach( $files as $file ) {
+			$hash = md5( $file );
+			$min = $target . "minified_$hash.css";
+
+			if( ! file_exists( $min ) ) {
+				file_put_contents( $min, $this->minify_css( $file ) );
+			}
+
+			$out[] = $min;
+		}
+
+		return $out;
+	}
+
+	private function get_minified_css_single( $files ) {
+		global $tikiroot;
+		$hash = md5( serialize( $files ) );
+		$target = "temp/public/";
+		$file = $target . "minified_$hash.css";
+
+		if( ! file_exists( $file ) ) {
+			$minified = '';
+
+			foreach( $files as $f ) {
+				$minified .= $this->minify_css( $f );
+			}
+
+			$minified = $this->handle_css_imports( $minified );
+
+			file_put_contents( $file, $minified );
+		}
+
+		return array( $file );
+	}
+
+	private function handle_css_imports( $minified ) {
+		preg_match_all( '/@import\s+url\("([^;]*)"\);/', $minified, $parts );
+		$imports = array_unique( $parts[0] );
+
+		$pre = '';
+		foreach( $parts[1] as $f ) {
+			$f = substr( $f, strlen($tikiroot) );
+			$pre .= $this->minify_css( $f );
+		}
+
+		$minified = $pre . $minified;
+		$minified = str_replace( $imports, '', $minified );
+
+		return $minified;
+	}
+
+	private function minify_css( $file ) {
+		$content = file_get_contents( $file );
+
+		return Minify_CSS::minify( $content, array(
+			'currentDir' => dirname( $file ),
+			'bubbleCssImports' => true,
+		) );
 	}
 
 	private function collect_css_files() {
