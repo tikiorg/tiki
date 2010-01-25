@@ -17,7 +17,7 @@ class cssLib extends TikiLib
 		$handle = opendir('.');
 
 		while ($file = basename(readdir($handle))) {
-			if ((substr($file, -4, 4) == ".css") and (ereg("^[-_a-zA-Z0-9\.]*$", $file))) {
+			if ((substr($file, -4, 4) == ".css") and (preg_match('/^[-_a-zA-Z0-9\.]*$/', $file))) {
 				$back[] = substr($file, 0, -4);
 			}
 		}
