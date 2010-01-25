@@ -91,7 +91,7 @@ $smarty->assign_by_ref('file', $file);
 $smarty->assign_by_ref('cant', $files['cant']);
 $smarty->assign_by_ref('file_info', $fileInfo);
 
-$gal_info = array_merge($gal_info, array(
+$gal_info = array_merge(array(
 	'show_id' => 'n',
 	'show_icon' => 'y',
 	'show_name' => 'f',
@@ -109,7 +109,7 @@ $gal_info = array_merge($gal_info, array(
 	'show_checked' => 'y',
 	'show_userlink' => 'y',
 //	'show_checked' = 'n'
-));
+	), $gal_info);
 $smarty->assign_by_ref('gal_info', $gal_info);
 
 include_once ('tiki-section_options.php');
