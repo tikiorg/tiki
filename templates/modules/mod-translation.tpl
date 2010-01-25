@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{assign var="default_diff_style" value="inlinediff" }
+{assign var="default_diff_style" value="inlinediff-full" }
 
 {if $show_translation_module}
 {tikimodule error=$module_params.error title=$tpl_module_title name="translation" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
