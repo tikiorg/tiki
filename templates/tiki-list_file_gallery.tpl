@@ -65,7 +65,7 @@
   {/if}
 
   {if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-    {button _text="{tr}Create a File Gallery{/tr}" href="?edit_mode=1&amp;parentId=$galleryId"}
+    {button _text="{tr}Create a File Gallery{/tr}" href="?edit_mode=1&amp;parentId=$galleryId&amp;cookietab=1"}
   {/if}
   {if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y'}
     {button _text="{tr}Duplicate File Gallery{/tr}" dup_mode=1 galleryId=$galleryId}
