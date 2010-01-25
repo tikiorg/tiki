@@ -209,3 +209,13 @@ if ($prefs['javascript_enabled'] == 'y') {
 		$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 	}
 }	// end if $prefs['javascript_enabled'] == 'y'
+
+if( session_id() ) {
+	if( $prefs['tiki_cachecontrol_session'] ) {
+		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_session'] );
+	}
+} else {
+	if( $prefs['tiki_cachecontrol_nosession'] ) {
+		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_nosession'] );
+	}
+}

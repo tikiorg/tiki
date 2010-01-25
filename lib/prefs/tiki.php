@@ -39,5 +39,18 @@ function prefs_tiki_list() {
 			'description' => tra('When displaying short date and time, skip date for today. Only time will be displayed.'),
 			'type' => 'flag',
 		),
+		'tiki_cachecontrol_session' => array(
+			'name' => tra('Cache-Control header'),
+			'description' => tra('Custom HTTP header to use when a session is active.'),
+			'type' => 'text',
+			'filter' => 'striptags',
+		),
+		'tiki_cachecontrol_nosession' => array(
+			'name' => tra('Cache-Control header (no session)'),
+			'description' => tra('Custom HTTP header to use when no session is active.'),
+			'type' => 'text',
+			'filter' => 'striptags',
+			'dependencies' => array( 'session_silent' ),
+		),
 	);
 }

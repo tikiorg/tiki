@@ -27,6 +27,8 @@
 					</div>
 				{/if}
 			</div>
+			{preference name=tiki_cachecontrol_session}
+			{preference name=tiki_cachecontrol_nosession}
 		</fieldset>
 		
 		<fieldset>
