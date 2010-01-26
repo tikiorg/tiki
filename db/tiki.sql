@@ -758,6 +758,7 @@ CREATE TABLE `tiki_files` (
   `user` varchar(200) default '',
   `author` varchar(40) default NULL,
   `hits` int(14) default NULL,
+  `lastDownload` int(14) default NULL,
   `votes` int(8) default NULL,
   `points` decimal(8,2) default NULL,
   `path` varchar(255) default NULL,

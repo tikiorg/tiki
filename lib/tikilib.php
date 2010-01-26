@@ -2430,9 +2430,12 @@ class TikiLib extends TikiDb_Bridge
 				}
 			}
 
-			$query = "update `tiki_files` set `hits`=`hits`+1 where `fileId`=?";
-			$result = $this->query($query,array((int) $id));
-		}
+			$query = 'update `tiki_files` set `hits`=`hits`+1, `lastDownload`=? where `fileId`=?';
+			$this->query($query,array($this->now, (int) $id));
+		} else {
+			$query = 'update `tiki_files` set `lastDownload`=? where `fileId`=?';
+			$this->query($query,array($this->now, (int) $id));
+		}			
 
 		if ($prefs['feature_score'] == 'y') {
 			if( ! $this->score_event($user, 'fgallery_download', $id) )
@@ -7957,7 +7960,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @return string - style passed in up to - | or . char (e.g. "thenews")
 	 */
 	function get_style_base($stl) {
-		$parts = split("-|\.", $stl);
+		$parts = preg_split('/[\-\.]/', $stl);
 		if (count($parts) > 0) {
 			return $parts[0];
 		} else {
