@@ -108,14 +108,15 @@ class EditLib
 				
 		$this->setTranslationSourceAndTargetVersions();
 		echo "<pre>-- editlib.prepareTranslationData: \$this->oldSourceVersion="; var_dump($this->oldSourceVersion); echo "</pre>\n";
-//		if ($this->isNewTranslationMode()) {
-//			include_once('lib/wiki/histlib.php');
-//			histlib_helper_setup_diff($this->sourcePageName, $this->oldSourceVersion, $this->newSourceVersion );
-//		}
+		echo "<pre>-- editlib.prepareTranslationData: \$this->newSourceVersion="; var_dump($this->newSourceVersion); echo "</pre>\n";
 	}
 	
 	private function setTranslationSourceAndTargetPageNames() {
-		global $_REQUEST;
+		global $_REQUEST, $smarty;
+		
+		if (!$this->isTranslationMode()) {
+			return;
+		}
 		
 		$target_page_name = null;
 		if (isset($_REQUEST['page'])) {
@@ -129,16 +130,29 @@ class EditLib
 		}
 		$this->sourcePageName = $source_page_name;
 		$this->targetPagename = $target_page_name;
+		if ($this->isNewTranslationMode()) {
+			$smarty->assign('translationIsNew', 'y');
+		} else {
+			$smarty->assign('translationIsNew', 'n');
+			
+		}
 	}
 	
 	private function setTranslationSourceAndTargetVersions($source_page_name, $target_page_name) {
 		global $_REQUEST, $tikilib;
-		if (isset($_REQUEST['oldver']) && $_REQUEST['oldver']  != -1) {
-			$_REQUEST['oldver'] = -1;
+		
+		if (isset($_REQUEST['oldver'])) {
+			$this->oldSourceVersion = $_REQUEST['oldver'];
+		} else {
+			// Note: -1 means a "virtual" empty version.
+			$this->oldsourceVersion = -1;
 		}
-		$this->oldSourceVersion = $_REQUEST['oldver'];
+		
 		if (isset($_REQUEST['newver'])) {
 			$this->newSourceVersion = $_REQUEST['newver'];
+		} else {
+			// Note: version number of 0 means the most recent version.
+			$this->newSourceVersion = 0;
 		}
 	}	
 

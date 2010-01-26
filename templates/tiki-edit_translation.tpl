@@ -64,7 +64,9 @@
 			{/if}
 			{/section}
 		</select>
-	<br />{tr}Enter the page title:{/tr} <input type="text" size="40" name="page" id="translation_name"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
+		<br />{tr}Enter the page title:{/tr}
+		<input type="text" size="40" name="page" id="translation_name"/>
+		<input type="hidden" name="translationOf" value="{$name|escape}"/>
 	{if $prefs.feature_categories eq 'y'}
 		<P>
 		{tr}Below, assign categories to this new translation (Note: they should probably be the same as the categories of the page being translate){/tr}
