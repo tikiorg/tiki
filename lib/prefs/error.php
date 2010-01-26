@@ -16,6 +16,7 @@ function prefs_error_list() {
 				2047 => tra('Report all PHP errors except strict'),
 				-1 => tra('Report all PHP errors'),
 				2039 => tra('Report all PHP errors except notices'),
+				"php" => tra('According to PHP configuration')
 			),
 		),
 	);
