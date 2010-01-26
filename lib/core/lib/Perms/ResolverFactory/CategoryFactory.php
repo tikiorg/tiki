@@ -101,11 +101,11 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		$db = TikiDb::get();
 		$bindvars = array( $baseContext['type'] );
-		$result = $db->query( 'SELECT `categId`, `itemId` FROM `tiki_category_objects` INNER JOIN `tiki_objects` ON `catObjectId` = `objectId` WHERE `type` = ? AND ' . $db->in( 'itemId', array_keys( $objects ), $bindvars ) . ' ORDER BY `catObjectId`, `categId`', $bindvars );
+		$result = $db->fetchAll( 'SELECT `categId`, `itemId` FROM `tiki_category_objects` INNER JOIN `tiki_objects` ON `catObjectId` = `objectId` WHERE `type` = ? AND ' . $db->in( 'itemId', array_keys( $objects ), $bindvars ) . ' ORDER BY `catObjectId`, `categId`', $bindvars );
 
 		$categories = array();
 
-		while( $row = $result->fetchRow() ) {
+		foreach( $result as $row ) {
 			$category = (int) $row['categId'];
 			$object = $row['itemId'];
 			$key = $objects[$object];
@@ -131,9 +131,9 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		$db = TikiDb::get();
 
 		$bindvars = array();
-		$result = $db->query( 'SELECT `objectId`, `groupName`, `permName` FROM `users_objectpermissions` WHERE `objectType` = \'category\' AND ' . $db->in( 'objectId', array_keys( $objects ), $bindvars ), $bindvars );
+		$result = $db->fetchAll( 'SELECT `objectId`, `groupName`, `permName` FROM `users_objectpermissions` WHERE `objectType` = \'category\' AND ' . $db->in( 'objectId', array_keys( $objects ), $bindvars ), $bindvars );
 
-		while( $row = $result->fetchRow() ) {
+		foreach( $result as $row ) {
 			$object = $row['objectId'];
 			$group = $row['groupName'];
 			$categ = $objects[$object];
