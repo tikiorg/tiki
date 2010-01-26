@@ -142,11 +142,20 @@ if( $prefs['feature_bidi'] == 'y' ) {
 
 if ($prefs['javascript_enabled'] == 'y') {
 	
-	$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
+	if( $prefs['javascript_cdn'] == 'google' ) {
+		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js', 'external' );
+	} else {
+		$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
+	}
+
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
 	
 	if( $prefs['feature_jquery_ui'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+		if( $prefs['javascript_cdn'] == 'google' ) {
+			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js', 'external' );
+		} else {
+			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+		}
 		$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
 	}
 	
@@ -207,6 +216,12 @@ if ($prefs['javascript_enabled'] == 'y') {
 	
 	if( $prefs['wikiplugin_flash'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
+	}
+
+	if( $prefs['feature_metrics_dashboard'] == 'y' ) {
+		$headerlib->add_cssfile("styles/metrics.css");
+		$headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
+		$headerlib->add_jsfile("lib/metrics.js");
 	}
 }	// end if $prefs['javascript_enabled'] == 'y'
 

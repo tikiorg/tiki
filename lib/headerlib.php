@@ -193,9 +193,16 @@ class HeaderLib
 					unset( $this->jsfiles['dynamic'] );
 				}
 
+				$external = array();
+				if( isset( $this->jsfiles['external'] ) ) {
+					$external = $this->jsfiles['external'];
+					unset( $this->jsfiles['external'] );
+				}
+
 				$jsfiles = $this->getMinifiedJs();
 
 				$jsfiles['dynamic'] = $dynamic;
+				$jsfiles['external'] = $external;
 			} else {
 				$jsfiles = $this->jsfiles;
 			}
@@ -226,6 +233,8 @@ class HeaderLib
 		}
 
 		return array(
+			'external' => array(),
+			'dynamic' => array(),
 			array( $file ),
 		);
 	}
@@ -333,19 +342,6 @@ class HeaderLib
 
 	function hasOutput() {
 		return $this->hasDoneOutput;
-	}
-
-	function include_jquery_ui() {
-		global $prefs, $headerlib;
-
-		if ($prefs['feature_jquery_ui'] != 'y') {
-			if ($prefs['feature_use_minified_scripts'] == 'y') {	// could reduce to only using dialog (needs core, draggable & resizable)
-				$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
-			} else {
-				$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
-			}
-			$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
-		}
 	}
 
 	private function output_css_files() {

@@ -72,11 +72,7 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 			if (($fixondom = $prefs['iepngfix_elements']) != '') {
 				$fixondom = "DD_belatedPNG.fixPng($fixondom); // list of HTMLDomElements to fix separated by commas (default is none)";
 			}
-			if ($prefs['feature_use_minified_scripts'] != 'n') {
-				$scriptpath = 'lib/iepngfix/DD_belatedPNG.js';
-			} else {
-				$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
-			}
+			$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
 			$headerlib->add_jsfile ($scriptpath, 200);
 			$headerlib->add_js (<<<JS
 DD_belatedPNG.fix('$fixoncss'); // list of CSS selectors to fix separated by commas (default is set to fix sitelogo)

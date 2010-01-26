@@ -576,13 +576,6 @@ function prefs_feature_list() {
 			'help' => 'TikiTests',
 			'type' => 'flag',
 		),
-		'feature_use_minified_scripts' => array(
-			'name' => tra('Use Minified Scripts'),
-			'description' => tra('These JavaScript files have been previously minified and are stable. They make pages quicker to load than their non-minified versions.'),
-			'help' => 'MinifiedScripts',
-			'type' => 'flag',
-			'perspective' => false,
-		),
 		'feature_version_checks' => array(
 			'name' => tra('Check for updates automatically'),
 			'description' => tra('TikiWiki will check for updates when you access the main Administration page'),

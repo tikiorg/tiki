@@ -1440,6 +1440,7 @@ function get_default_prefs() {
 		'wiki_3d_adjust_camera' => 'true',
 		'wiki_3d_autoload' => '',
 		'javascript_enabled' => 'n',
+		'javascript_cdn' => 'none',
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_comments_locking' => 'n',
@@ -1535,7 +1536,6 @@ function get_default_prefs() {
 		'multidomain_active' => 'n',
 		'multidomain_config' => '',
 
-		'feature_use_minified_scripts' => 'y',		// for debugging
 		'tiki_minify_javascript' => 'y',
 		'tiki_minify_css' => 'y',
 		'tiki_minify_css_single_file' => 'n',
