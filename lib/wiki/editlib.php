@@ -14,9 +14,14 @@
 
 class EditLib
 {
+	// Fields for translation related methods.
+	public $sourcePageName = null;
+	public $targetPageName = null;
+	public $oldSourceVersion = null;
+	public $newSourceVersion = null;
 	
 	// general
-	
+		
 	function make_sure_page_to_be_created_is_not_an_alias($page, $page_info) {
 		global $_REQUEST, $semanticlib, $access, $wikilib, $tikilib;
 		require_once 'lib/wiki/semanticlib.php';
@@ -62,19 +67,80 @@ class EditLib
 	
 	// translation functions
 	
+	function isTranslationMode() {
+		return $this->isUpdateTranslationMode() || $this->isNewTranslationMode();
+	}
+	
 	function isNewTranslationMode() {
 		global $prefs;
 	
-		return $prefs['feature_multilingual'] == 'y'
-			&& isset( $_REQUEST['translationOf']  )
-			&& ! empty( $_REQUEST['translationOf'] );
+		if ($prefs['feature_multilingual'] != 'y') {
+//			echo "<pre>-- editlib.isNewTranslationModde: returning false</pre>\n";
+			return false;
+		}
+		if (isset( $_REQUEST['translationOf']  )
+			&& ! empty( $_REQUEST['translationOf'] )) {
+//			echo "<pre>-- editlib.isNewTranslationModde: returning true</pre>\n";
+
+			return true;
+		}
+		if (isset( $_REQUEST['oldver']  )
+			&& $_REQUEST['oldver'] ==  -1) {
+//			echo "<pre>-- editlib.isNewTranslationModde: returning true</pre>\n";
+			return true;
+		}	
+//		echo "<pre>-- editlib.isNewTranslationModde: returning false</pre>\n";
+		return false;		
 	}
 
 	function isUpdateTranslationMode() {
 		return isset( $_REQUEST['source_page'] )
 			&& isset( $_REQUEST['oldver'] )
+			&& $_REQUEST['oldver'] != -1
 			&& isset( $_REQUEST['newver'] );
 	}
+	
+	function prepareTranslationData() {
+		global $_REQUEST, $tikilib, $smarty, $editlib;
+		$this->setTranslationSourceAndTargetPageNames();
+		echo "<pre>-- editlib.prepareTranslationData: \$this->sourcePageName="; var_dump($this->sourcePageName); echo "</pre>\n";
+		echo "<pre>-- editlib.prepareTranslationData: \$this->target_page_name="; var_dump($this->target_page_name); echo "</pre>\n";
+				
+		$this->setTranslationSourceAndTargetVersions();
+		echo "<pre>-- editlib.prepareTranslationData: \$this->oldSourceVersion="; var_dump($this->oldSourceVersion); echo "</pre>\n";
+//		if ($this->isNewTranslationMode()) {
+//			include_once('lib/wiki/histlib.php');
+//			histlib_helper_setup_diff($this->sourcePageName, $this->oldSourceVersion, $this->newSourceVersion );
+//		}
+	}
+	
+	private function setTranslationSourceAndTargetPageNames() {
+		global $_REQUEST;
+		
+		$target_page_name = null;
+		if (isset($_REQUEST['page'])) {
+			$target_page_name = $_REQUEST['page'];		
+		} 
+		$source_page_name = null;
+		if ($_REQUEST['translationOf']) {
+			$source_page_name = $_REQUEST['translationOf'];
+		} elseif (isset($_REQUEST['source_page'])) {
+			$source_page_name = $_REQUEST['source_page'];
+		}
+		$this->sourcePageName = $source_page_name;
+		$this->targetPagename = $target_page_name;
+	}
+	
+	private function setTranslationSourceAndTargetVersions($source_page_name, $target_page_name) {
+		global $_REQUEST, $tikilib;
+		if (isset($_REQUEST['oldver']) && $_REQUEST['oldver']  != -1) {
+			$_REQUEST['oldver'] = -1;
+		}
+		$this->oldSourceVersion = $_REQUEST['oldver'];
+		if (isset($_REQUEST['newver'])) {
+			$this->newSourceVersion = $_REQUEST['newver'];
+		}
+	}	
 
 	function parseToWiki(&$inData) {
 		// Parsing page data as first time seeing html page in normal editor
