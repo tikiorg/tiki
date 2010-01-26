@@ -68,25 +68,6 @@ foreach($languages as $clang) {
 	}
 }
 $smarty->assign_by_ref('templates', $templates);
-// fixing UTF-8 Errors
-require_once ('lib/admin/adminlib.php');
-$tabfields = $adminlib->list_content_tables();
-$smarty->assign_by_ref('tabfields', $tabfields);
-if (isset($_REQUEST['utf8it'])) {
-	if ($adminlib->check_utf8($_REQUEST['utf8it'], $_REQUEST['utf8if'])) {
-		$smarty->assign('investigate_utf8', tra('No Errors detected'));
-	} else {
-		$smarty->assign('investigate_utf8', tra('Errors detected'));
-	}
-	$smarty->assign('utf8it', $_REQUEST['utf8it']);
-	$smarty->assign('utf8if', $_REQUEST['utf8if']);
-}
-if (isset($_REQUEST['utf8ft'])) {
-	$errc = $adminlib->fix_utf8($_REQUEST['utf8ft'], $_REQUEST['utf8ff']);
-	$smarty->assign('errc', $errc);
-	$smarty->assign('utf8ft', $_REQUEST['utf8ft']);
-	$smarty->assign('utf8ff', $_REQUEST['utf8ff']);
-}
 if ($prefs['feature_forums'] == 'y') {
 	include_once ('lib/commentslib.php');
 	$commentslib = new Comments($dbTiki);
