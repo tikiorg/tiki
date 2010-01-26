@@ -2177,6 +2177,7 @@ class TikiLib extends TikiDb_Bridge
 				'tf.`user` as `creator`' => 'tfg.`user` as `creator`',
 				'tf.`author`' => "'' as `author`",
 				'tf.`hits`' => "tfg.`hits`",
+				'tf.`lastDownload`' => "0 as `lastDownload`",
 				'tf.`votes`' => 'tfg.`votes`',
 				'tf.`points`' => 'tfg.`points`',
 				'tf.`path`' => "'' as `path`",
