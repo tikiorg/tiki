@@ -28,6 +28,7 @@ $fgal_listing_conf = array(
 	'comment' => array('name' => tra('Comment')),
 	'files' => array('name' => tra('Files')),
 	'hits' => array('name' => tra('Hits')),
+	'lastDownload' => array('name' => tra('Last download')),
 	'lockedby' => array('name' => tra('Locked by'), 'icon' => 'lock_gray'),
 	'backlinks' => array('name' => tra('Backlinks'))
 );

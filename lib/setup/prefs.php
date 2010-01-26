@@ -530,6 +530,7 @@ function get_default_prefs() {
 		'fgal_list_comment' => 'o',
 		'fgal_list_files' => 'o',
 		'fgal_list_hits' => 'o',
+		'fgal_list_lastDownload' => 'n',
 		'fgal_list_lockedby' => 'a',
 		'fgal_show_path' => 'y',
 		'fgal_show_explorer' => 'y',

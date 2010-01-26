@@ -717,6 +717,7 @@ CREATE TABLE `tiki_file_galleries` (
   `max_desc` int(8) default NULL,
   `show_created` char(1) default NULL,
   `show_hits` char(1) default NULL,
+  `show_lastDownload` char(1) default NULL,
   `parentId` int(14) NOT NULL default -1,
   `lockable` char(1) default 'n',
   `show_lockedby` char(1) default NULL,
