@@ -2169,11 +2169,11 @@ class TrackerLib extends TikiLib
 
 		$query = "select * from `tiki_tracker_fields` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_fields` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$result = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach( $result as $res ) {
 			$res['options_array'] = preg_split('/\s*,\s*/', trim($res['options']));
 			$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 			$res['visibleBy'] = ($res['visibleBy'] != '') ? unserialize($res['visibleBy']) : array();
