@@ -41,7 +41,7 @@ function wikiplugin_fancylist($data, $params) {
 			$result = '<ol class="fancylist'.(isset($class) ? " $class" : "").'">';
 			}
 	// split data by lines (trimed whitespace from start and end)
-	$lines = split("\n", trim($data));
+	$lines = preg_split("/\n/", trim($data));
 	foreach ($lines as $line) {
 		// replace all before and including the ")"
 		$part = preg_replace("/[\w]+\)(.*)/", "$1", $line);
