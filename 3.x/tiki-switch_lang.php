@@ -52,11 +52,11 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 		if (!empty($param['page_id'])) {
 			$orig_url = preg_replace('/(.*[&?]page_id=)'.$pageId.'(.*)/', '${1}'.$bestLangPageId.'$2', $orig_url);
 		} elseif (!empty($param['articleId'])) {
-				$orig_url = preg_replace('/(.*[&?]articleId=)'.$pageId.'(.*)/', '${1}'.$bestLangPageId.'$2', $orig_url);
+			$orig_url = preg_replace('/(.*[&?]articleId=)'.$pageId.'(.*)/', '${1}'.$bestLangPageId.'$2', $orig_url);
 
 		} else {
 			$newPage = $tikilib->get_page_name_from_id($bestLangPageId);
-			$orig_url = preg_replace('/(.*[&?]page=)'.$page.'(.*)/', "$1$newPage$2", $orig_url);
+			$orig_url = preg_replace('/(.*[&?]page=)' . $page . '(.*)/', '${1}' . "${newPage}" . '$2', $orig_url);
 			$orig_url = preg_replace('/(.*)(tiki-index.php)$/', "$1$2?page=$newPage", $orig_url);
 		}
 	}
@@ -86,4 +86,3 @@ if ( isset($_GET['language']) ) {
 
 header("location: $orig_url");
 exit;
-?>
