@@ -1,8 +1,8 @@
-{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name|escape}{if isset($languageName)}&nbsp;({$languageName}, {$langpage|escape}){/if}{/title}
+{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$target_page|escape}{if isset($languageName)}&nbsp;({$languageName}, {$langpage|escape}){/if}{/title}
 
 <div class="navbar">
 	{if $type eq 'wiki page'}
-		{assign var=thisname value=$name|escape:'url'}
+		{assign var=thisname value=$target_page|escape:'url'}
 		{button href="tiki-index.php?page=$thisname&no_bl=y" _text="{tr}View Page{/tr}"}
 	{else}
 		{button href="tiki-read_article.php?articleId=$id" _text="{tr}View Article{/tr}"}
@@ -66,7 +66,7 @@
 		</select>
 		<br />{tr}Enter the page title:{/tr}
 		<input type="text" size="40" name="page" id="translation_name"/>
-		<input type="hidden" name="translationOf" value="{$name|escape}"/>
+		<input type="hidden" name="target_page" value="{$target_page|escape}"/>
 	{if $prefs.feature_categories eq 'y'}
 		<P>
 		{tr}Below, assign categories to this new translation (Note: they should probably be the same as the categories of the page being translate){/tr}
@@ -131,7 +131,7 @@ function validate_translation_request() {
 			<td>{if $type == 'wiki page'}<a href="tiki-index.php?page={$trads[i].objName|escape:url}&no_bl=y">{else}<a href="tiki-read_article.php?articleId={$trads[i].objId|escape:url}">{/if}{$trads[i].objName|escape}</a></td>
 			<td>
 				{if $tiki_p_detach_translation eq 'y' }
-					<a rel="nofollow" class="link" href="tiki-edit_translation.php?detach&amp;page={$name|escape}&amp;id={$id|escape:url}&amp;srcId={$trads[i].objId|escape:url}&amp;type={$type|escape:url}">{icon _id='cross' alt='{tr}detach{/tr}'}</a>
+					<a rel="nofollow" class="link" href="tiki-edit_translation.php?detach&amp;page={$target_page|escape}&amp;id={$id|escape:url}&amp;srcId={$trads[i].objId|escape:url}&amp;type={$type|escape:url}">{icon _id='cross' alt='{tr}detach{/tr}'}</a>
 				{/if}
 		</td></tr>
 		{/section}
@@ -144,7 +144,7 @@ function validate_translation_request() {
 		<form action="tiki-edit_translation.php" method="post">
 			<input type="hidden" name="id" value="{$id}" />
 			<input type="hidden" name="type" value="{$type|escape}" />
-			<input type="hidden" name="page" value="{$name|escape}" />
+			<input type="hidden" name="page" value="{$target_page|escape}" />
 			<p>{tr}Add existing page as a translation of this page:{/tr}<br />
 
 			{if $articles}
@@ -173,7 +173,7 @@ function validate_translation_request() {
 		<option value="{$lang.value|escape}">{$lang.name}</option>
 		{/foreach}
 	</select>
-	<input type="hidden" name="page" value="{$name|escape}"/>
+	<input type="hidden" name="page" value="{$target_page|escape}"/>
 	<input type="submit" name="switch" value="{tr}Change Language{/tr}"/>
 </div>
 </form>
@@ -194,7 +194,7 @@ function validate_translation_request() {
 			</select>
 			<input type="hidden" name="id" value="{$id}" />
 			<input type="hidden" name="type" value="{$type|escape}" />
-			<input type="hidden" name="page" value="{$name|escape}"/>
+			<input type="hidden" name="page" value="{$target_page|escape}"/>
 			<input type="submit" value="{tr}Set Current Page's Language{/tr}"/>
 		</p>
 	</form>

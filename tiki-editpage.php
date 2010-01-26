@@ -27,6 +27,7 @@ if ($prefs['feature_ajax'] == 'y') {
 }
 require_once ("lib/wiki/editlib.php");
 
+// echo "<pre>-- tiki-editpage: \$_REQUEST="; var_dump($_REQUEST); echo "</pre>\n";s
 function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user) {
 	global $tikilib, $multilinguallib, $categlib, $prefs;
 
@@ -154,9 +155,9 @@ $smarty->assign('page', $page);
 $info = $tikilib->get_page_info($page);
 
 // 2010-01-26: Keep in active until translation refactoring is done.
-// if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
-// 	$editlib->prepareTranslationData();
-// }
+ if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
+ 	$editlib->prepareTranslationData();
+ }
 $editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
 guess_new_page_attributes_from_parent_pages($page, $info);
  
@@ -1170,8 +1171,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 			unset( $tikilib->cache_page_info );
 
 			if( $editlib->isUpdateTranslationMode() ) {				
-				$sourceInfo = $tikilib->get_page_info( $_REQUEST['source_page'] );
-				$targetInfo = $tikilib->get_page_info( $_REQUEST['page'] );
+				$sourceInfo = $tikilib->get_page_info( $editlib->sourcePageName );
+				$targetInfo = $tikilib->get_page_info( $editlib->targetPageName );
 				if( !isset($_REQUEST['partial_save']) ) {
 					$multilinguallib->propagateTranslationBits( 
 							'wiki page',
