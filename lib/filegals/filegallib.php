@@ -1122,8 +1122,8 @@ class FileGalLib extends TikiLib
 		}
 	}
 	// get the backlinks of an object
-	function getFileBacklinks($fileId, $sort='type_asc') {
-		$query = 'select tob.* from `tiki_file_backlinks` tfb left join `tiki_objects` tob on (tob.`objectId`=tfb.`objectId`) where `fileId`=? ';
+	function getFileBacklinks($fileId, $sort_mode='type_asc') {
+		$query = 'select tob.* from `tiki_file_backlinks` tfb left join `tiki_objects` tob on (tob.`objectId`=tfb.`objectId`) where `fileId`=? order by '.$this->convertSortMode($sort_mode);
 		return $this->fetchAll($query, array((int)$fileId));
 	}
 	// can not see a file if all its backlinks are not viewable
@@ -1313,6 +1313,17 @@ class FileGalLib extends TikiLib
 			$this->query($query, array('', $fhash, $file_info['fileId']));
 		}
 		return '';
+	}
+	// find the fileId in the pool of fileId archives files that is closer before the date 
+	function getArchiveJustBefore($fileId, $date) {
+		$query = 'select `archiveId` from `tiki_files` where `fileId`=?';
+		$archiveId = $this->getOne($query, array($fileId));
+		if (empty($archiveId)) {
+			$archiveId = $fileId;
+		}
+		$query = 'select `fileId` from `tiki_files` where (`fileId`=? or `archiveId`=?) and `created` <= ? order by `created` desc';
+		$fileId = $this->getOne($query, array($archiveId, $archiveId, $date));
+		return $fileId;
 	}
 }
 $filegallib = new FileGalLib;

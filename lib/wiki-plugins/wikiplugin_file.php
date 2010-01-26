@@ -10,11 +10,11 @@ function wikiplugin_file_info()
 		'inline' => true,
 		'params' => array(
     		'name' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Name'),
 				'description' => tra("Gives the name of the attached file to link to"),
 			),
-			'desc' => array(
+ 			'desc' => array(
 				'required' => false,
 				'name' => tra('Description'),
 				'description' => tra('Comment'),
@@ -34,13 +34,53 @@ function wikiplugin_file_info()
 				'name' => tra('Image'),
 				'description' => tra("Says that this file is an image, and should be displayed inline using the img tag"),
 			),
+			'fileId' => array(
+				'required' => false,
+				'name' => tra('File ID'),
+				'description' => tra('Numeric ID of a file in the file galleries'),
+				'filter' => 'digits',
+			),
+			'date' => array(
+				'required' => false,
+				'name' => tra('Date'),
+				'description' => tra('Pick the archive if exists created just before teh date'),
+			),
 		),
 	);
 }
 
 function wikiplugin_file( $data, $params )
 {
-	global $tikilib;
+	global $tikilib, $prefs;
+	if (isset($params['fileId'])) {
+		if ($prefs['feature_file_galleries'] != 'y') {
+			return;
+		}
+		$fileId = $params['fileId'];
+		if (isset($params['date'])) {
+			static $wikipluginFileDate = 0;
+			if (empty($params['date'])) {
+				if (empty($wikipluginFileDate)) {
+					return tra('The date has not been set');
+				}
+				$date = $wikipluginFileDate;
+			} else {
+				if (($date = strtotime($params['date'])) === false) {
+					return tra('Incorrect date format');
+				}
+				$wikipluginFileDate = $date;
+			}
+			global $filegallib; include_once ('lib/filegals/filegallib.php');
+			$fileId = $filegallib->getArchiveJustBefore($fileId, $date);
+			if (empty($fileId)) {
+				return tra('No such file');
+			}
+		}
+		if (empty($data)) { // to avaoid problem with parsing
+			$data = ' ';
+		}
+		return "[tiki-download_file.php?fileId=$fileId|$data]";
+	}
 
 	$filedata = array();
 	$filedata["name"] = '';
