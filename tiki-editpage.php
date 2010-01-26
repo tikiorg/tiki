@@ -1303,8 +1303,6 @@ if ($prefs['feature_multilingual'] == 'y') {
 		   screwed up. Will reactivate as soon as I get the CSS right for
 		   that.
 		 */
-//		$_REQUEST['zoom'] = 'tiki-editpage';
-//		$diff_style = 'inlinediff-full';
 		$smarty->assign('update_translation', 'y');
 	}
 }

@@ -413,7 +413,7 @@ class MultilingualLib extends TikiLib
 		}
 
 		/*
-		 * Alain Désilets (2010-01-12):
+		 * Alain Dï¿½silets (2010-01-12):
 		 * 
 		 *  There is also a bl= argument, but it seems too be used very inconsistenly. 
 		 *  - Sometimes, the mere presence of bl (no matter its value) s interpreted as meaning

@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{assign var="default_diff_style" value="inlinediff" }
+{assign var="default_diff_style" value="inlinediff-full" }
 
 {if $show_translation_module}
 
