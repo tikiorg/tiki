@@ -163,7 +163,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 			if ($prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
 				break;
 			$back = "<div style='padding:4px;border:1px solid #000;background-color:#FF6;font-size:10px;'>";
-			$back.= "<b>PHP (".PHP_VERSION.") NOTICE ($errno):</b><br />";
+			$back.= "<b>PHP (".PHP_VERSION.") NOTICE ($err[$errno]):</b><br />";
 			$back.= "<tt><b>File:</b></tt> $errfile<br />";
 			$back.= "<tt><b>Line:</b></tt> $errline<br />";
 			$back.= "<tt><b>Type:</b></tt> $errstr";

@@ -25,6 +25,7 @@ if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 }
 
 set_error_handler("tiki_error_handling", $errorReportingLevel);
+error_reporting($errorReportingLevel);
 
 if ( $prefs['log_sql'] == 'y' && $api_tiki == 'adodb' ) {
 	$dbTiki->LogSQL();
