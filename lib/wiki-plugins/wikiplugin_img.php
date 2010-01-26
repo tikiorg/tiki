@@ -713,7 +713,7 @@ function wikiplugin_img_info() {
 					$imgalthumb == true;
 				}
 				$width =  $imgdata['width'];
-				if (empty($imgdata['height'])) {
+				if (empty($imgdata['height']) && $fwidth > 0) {
 					$height = floor($width * $fheight / $fwidth);
 				} else {
 					$height = $imgdata['height'];
