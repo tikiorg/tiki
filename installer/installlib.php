@@ -142,8 +142,6 @@ class Installer extends TikiDb_Bridge
 			exit(1);
 		}
 
-		fclose($fp);
-
 		// split the file into several queries?
 		$statements = preg_split("#(;\s*\n)|(;\s*\r\n)#", $command);
 
