@@ -397,7 +397,6 @@ class HeaderLib
 	}
 
 	private function get_minified_css_single( $files ) {
-		global $tikiroot;
 		$hash = md5( serialize( $files ) );
 		$target = "temp/public/";
 		$file = $target . "minified_$hash.css";
@@ -418,6 +417,8 @@ class HeaderLib
 	}
 
 	private function handle_css_imports( $minified ) {
+		global $tikiroot;
+
 		preg_match_all( '/@import\s+url\("([^;]*)"\);/', $minified, $parts );
 		$imports = array_unique( $parts[0] );
 
