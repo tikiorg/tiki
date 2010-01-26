@@ -118,18 +118,22 @@ class EditLib
 			return;
 		}
 		
-		$target_page_name = null;
-		if (isset($_REQUEST['page'])) {
-			$target_page_name = $_REQUEST['page'];		
+		$this->targetPageName = null;
+		if (isset($_REQUEST['target_page'])) {
+			$this->targetPageName = $_REQUEST['target_page'];
+		} elseif (isset($_REQUEST['page'])) {
+			$this->targetPageName = $_REQUEST['page'];		
 		} 
-		$source_page_name = null;
+		$smarty->assign('target_page', $this->targetPageName);
+
+		$this->sourcePageName = null;		
 		if ($_REQUEST['translationOf']) {
-			$source_page_name = $_REQUEST['translationOf'];
+			$this->sourcePageName = $_REQUEST['translationOf'];
 		} elseif (isset($_REQUEST['source_page'])) {
-			$source_page_name = $_REQUEST['source_page'];
+			$this->sourcePageName = $_REQUEST['source_page'];
 		}
-		$this->sourcePageName = $source_page_name;
-		$this->targetPagename = $target_page_name;
+		$smarty->assign('source_page', $this->sourcePageName);
+		
 		if ($this->isNewTranslationMode()) {
 			$smarty->assign('translationIsNew', 'y');
 		} else {

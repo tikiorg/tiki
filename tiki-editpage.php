@@ -153,6 +153,10 @@ $page = $_REQUEST["page"];
 $smarty->assign('page', $page);
 $info = $tikilib->get_page_info($page);
 
+// 2010-01-26: Keep in active until translation refactoring is done.
+// if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
+// 	$editlib->prepareTranslationData();
+// }
 $editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
 guess_new_page_attributes_from_parent_pages($page, $info);
  
@@ -1272,7 +1276,9 @@ if ($prefs['feature_multilingual'] == 'y') {
 
 		if( $tikilib->page_exists( $page ) ) {
 			// Display an error if the page already exists
-			$smarty->assign('msg',tra("Page already exists. Go back and choose a different name."));
+			$smarty->assign('msg',
+								tra("Page already exists. Go back and choose a different name.")."<P>".
+								tra("Page name is").": '$page'");
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -1292,17 +1298,6 @@ if ($prefs['feature_multilingual'] == 'y') {
 		histlib_helper_setup_diff( $_REQUEST['source_page'], $_REQUEST['oldver'], $_REQUEST['newver'] );
 		$smarty->assign( 'diff_oldver', (int) $_REQUEST['oldver'] );
 		$smarty->assign( 'diff_newver', (int) $_REQUEST['newver'] );
-		$smarty->assign( 'source_page', $_REQUEST['source_page'] );
-		/* 
-		   Use Full Screen mode when translating an update, because 
-		   user needs to see both diffs that have happened in the source language
-		   and the edit form for the  target language. This requires a lot of real-estate
-		   
-		   AD (2009-11-09): For now, keep that line commented because the 
-		   side-by-side source and target layout in wiki-edit is a bit 
-		   screwed up. Will reactivate as soon as I get the CSS right for
-		   that.
-		 */
 		$smarty->assign('update_translation', 'y');
 	}
 }
