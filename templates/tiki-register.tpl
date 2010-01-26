@@ -130,7 +130,7 @@
     {* Groups *}
 	{if isset($theChoiceGroup)}
 				<input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
-	{elseif $listgroups}
+	{elseif isset($listgroups)}
 				<tr>
 					<td class="formcolor">{tr}Group{/tr}</td>
 					<td class="formcolor">
