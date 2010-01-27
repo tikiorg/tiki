@@ -45,6 +45,7 @@ return array(
 function wikiplugin_trackerfilter($data, $params) {
 	global $smarty, $prefs;
 	global $trklib;	include_once('lib/trackers/trackerlib.php');
+	static $iTrackerFilter = 0;
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
@@ -82,6 +83,18 @@ function wikiplugin_trackerfilter($data, $params) {
 				$_REQUEST['filter'] = 'y';
 				break;
 			}
+		}
+	}
+	if (!isset($sortchoice)) {
+		$sortchoice = '';
+	} else {
+		unset($params['sortchoice']);
+		if (isset($_REQUEST["tr_sort_mode$iTrackerFilter"])) {
+			$params['sort_mode'] = $_REQUEST["tr_sort_mode$iTrackerFilter"];
+		}
+		foreach ($sortchoice as $i=>$sc) {
+			$sc = explode('|', $sc);
+			$sortchoice[$i] = array('value'=>$sc[0], 'label'=>empty($sc[1])?$sc[0]: $sc[1]);
 		}
 	}
 	if (empty($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
@@ -128,6 +141,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		$data = '';
 	}
 
+	$smarty->assign_by_ref('sortchoice', $sortchoice);
 	$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats);
 	if (!is_array($filters)) {
 		return $filters;
@@ -136,7 +150,6 @@ function wikiplugin_trackerfilter($data, $params) {
 	//echo '<pre>';print_r($filters); echo '</pre>';
 	$smarty->assign_by_ref('trackerId', $trackerId);
 	$smarty->assign_by_ref('line', $line);
-	static $iTrackerFilter = 0;
 	$smarty->assign('iTrackerFilter', $iTrackerFilter++);
 	if ($displayList == 'n' || !empty($_REQUEST['filter'])) {
 		$open = 'y';
@@ -148,7 +161,6 @@ function wikiplugin_trackerfilter($data, $params) {
 		$action = 'Filter';//tra('Filter')
 	}
 	$smarty->assign_by_ref('action', $action);
-
 	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
 
 	static $first = true;

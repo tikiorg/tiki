@@ -67,6 +67,12 @@
 {if $action}
 <td>&nbsp;</td><td><input type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" /></td>
 {/if}
+{if !empty($sortchoice)}
+	{if $line ne 'y'}<tr>{/if}
+	<td>{tr}Sort{/tr}</td>
+	<td>{include file='tracker_sort_input.tpl' iTRACKERLIST=$iTrackerFilter}
+	{if $line ne 'y'}</tr>{/if}
+{/if}
 {if $line ne 'y' and $action}</tr>{/if}
 </table>
 {if empty($inForm)}</form>{/if}
