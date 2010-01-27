@@ -75,21 +75,17 @@ class EditLib
 		global $prefs;
 	
 		if ($prefs['feature_multilingual'] != 'y') {
-//			echo "<pre>-- editlib.isNewTranslationModde: returning false</pre>\n";
 			return false;
 		}
 		if (isset( $_REQUEST['translationOf']  )
 			&& ! empty( $_REQUEST['translationOf'] )) {
-//			echo "<pre>-- editlib.isNewTranslationModde: returning true</pre>\n";
 
 			return true;
 		}
 		if (isset( $_REQUEST['oldver']  )
 			&& $_REQUEST['oldver'] ==  -1) {
-//			echo "<pre>-- editlib.isNewTranslationModde: returning true</pre>\n";
 			return true;
 		}	
-//		echo "<pre>-- editlib.isNewTranslationModde: returning false</pre>\n";
 		return false;		
 	}
 
@@ -102,11 +98,8 @@ class EditLib
 	
 	function prepareTranslationData() {
 		global $_REQUEST, $tikilib, $smarty, $editlib;
-		$this->setTranslationSourceAndTargetPageNames();
-				
+		$this->setTranslationSourceAndTargetPageNames();		
 		$this->setTranslationSourceAndTargetVersions();
-		echo "<pre>-- editlib.prepareTranslationData: \$this->oldSourceVersion="; var_dump($this->oldSourceVersion); echo "</pre>\n";
-		echo "<pre>-- editlib.prepareTranslationData: \$this->newSourceVersion="; var_dump($this->newSourceVersion); echo "</pre>\n";
 	}
 	
 	private function setTranslationSourceAndTargetPageNames() {

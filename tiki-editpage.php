@@ -27,7 +27,7 @@ if ($prefs['feature_ajax'] == 'y') {
 }
 require_once ("lib/wiki/editlib.php");
 
-echo "<pre>-- tiki-editpage: \$_REQUEST="; var_dump($_REQUEST); echo "</pre>\n";
+//echo "<pre>-- tiki-editpage: \$_REQUEST="; var_dump($_REQUEST); echo "</pre>\n";
 
 function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user) {
 	global $tikilib, $multilinguallib, $categlib, $prefs;
