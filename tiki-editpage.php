@@ -27,7 +27,8 @@ if ($prefs['feature_ajax'] == 'y') {
 }
 require_once ("lib/wiki/editlib.php");
 
-// echo "<pre>-- tiki-editpage: \$_REQUEST="; var_dump($_REQUEST); echo "</pre>\n";s
+echo "<pre>-- tiki-editpage: \$_REQUEST="; var_dump($_REQUEST); echo "</pre>\n";
+
 function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user) {
 	global $tikilib, $multilinguallib, $categlib, $prefs;
 
@@ -1296,9 +1297,9 @@ if ($prefs['feature_multilingual'] == 'y') {
 
 	if( $editlib->isUpdateTranslationMode() ) {
 		include_once('lib/wiki/histlib.php');
-		histlib_helper_setup_diff( $_REQUEST['source_page'], $_REQUEST['oldver'], $_REQUEST['newver'] );
-		$smarty->assign( 'diff_oldver', (int) $_REQUEST['oldver'] );
-		$smarty->assign( 'diff_newver', (int) $_REQUEST['newver'] );
+		histlib_helper_setup_diff( $editlib->sourcePageName, $editlib->oldSourceVersion, $editlib->newSourceVersion );
+		$smarty->assign( 'diff_oldver', (int) $editlib->oldSourceVersion );
+		$smarty->assign( 'diff_newver', (int) $editlib->newSourceVersion );
 		$smarty->assign('update_translation', 'y');
 	}
 }

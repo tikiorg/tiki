@@ -1,4 +1,4 @@
-{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$target_page|escape}{if isset($languageName)}&nbsp;({$languageName}, {$langpage|escape}){/if}{/title}
+{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$source_page|escape}{if isset($languageName)}&nbsp;({$languageName}, {$langpage|escape}){/if}{/title}
 
 <div class="navbar">
 	{if $type eq 'wiki page'}
@@ -66,7 +66,8 @@
 		</select>
 		<br />{tr}Enter the page title:{/tr}
 		<input type="text" size="40" name="page" id="translation_name"/>
-		<input type="hidden" name="target_page" value="{$target_page|escape}"/>
+		<input type="hidden" name="source_page" value="{$page|escape}"/>
+		<input type="hidden" name="oldver" value="-1"/>
 	{if $prefs.feature_categories eq 'y'}
 		<P>
 		{tr}Below, assign categories to this new translation (Note: they should probably be the same as the categories of the page being translate){/tr}
@@ -75,6 +76,7 @@
 	{/if}
 	<p>
 	<input type="submit" value="{tr}Create translation{/tr}"/></p>
+	<input type="hidden" name="source_page" value="{$page}"/>
 	<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
 

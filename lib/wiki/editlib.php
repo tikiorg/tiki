@@ -103,8 +103,6 @@ class EditLib
 	function prepareTranslationData() {
 		global $_REQUEST, $tikilib, $smarty, $editlib;
 		$this->setTranslationSourceAndTargetPageNames();
-		echo "<pre>-- editlib.prepareTranslationData: \$this->sourcePageName="; var_dump($this->sourcePageName); echo "</pre>\n";
-		echo "<pre>-- editlib.prepareTranslationData: \$this->target_page_name="; var_dump($this->target_page_name); echo "</pre>\n";
 				
 		$this->setTranslationSourceAndTargetVersions();
 		echo "<pre>-- editlib.prepareTranslationData: \$this->oldSourceVersion="; var_dump($this->oldSourceVersion); echo "</pre>\n";
