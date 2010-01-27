@@ -450,7 +450,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 						}
 
 						if( $editlib->isNewTranslationMode() ) {
-							$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
+							$sourceInfo = $tikilib->get_page_info( $editlib->sourcePageName );
 							$targetInfo = $tikilib->get_page_info( $pagename );
 
 							if( !isset($_REQUEST['partial_save']) ) {
@@ -466,7 +466,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 							}
 
 						} elseif( $editlib->isUpdateTranslationMode() ) {
-							$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
+							$sourceInfo = $tikilib->get_page_info( $editlib->sourcePageName );
 							$targetInfo = $tikilib->get_page_info( $pagename );
 
 							if( !isset($_REQUEST['partial_save']) ) {
@@ -1086,8 +1086,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		if( $editlib->isNewTranslationMode() && ! empty( $pageLang ) )
 		{
 			include_once("lib/multilingual/multilinguallib.php");
-			$infoSource = $tikilib->get_page_info($_REQUEST['translationOf']);
-			$infoCurrent = $tikilib->get_page_info($_REQUEST['page']);
+			$infoSource = $tikilib->get_page_info($editlib->sourcePageName);
+			$infoCurrent = $tikilib->get_page_info($editlib->targetPageName);
 			if ($multilinguallib->insertTranslation('wiki page', $infoSource['page_id'], $infoSource['lang'], $infoCurrent['page_id'], $pageLang)){
 				$pageLang = $info['lang'];
 				$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
@@ -1115,7 +1115,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 
 			unset( $tikilib->cache_page_info );
 			if( $editlib->isNewTranslationMode() ) {
-				$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
+				$sourceInfo = $tikilib->get_page_info( $editlib->sourcePageName );
 				$targetInfo = $tikilib->get_page_info( $_REQUEST['page'] );
 
 				if( !isset($_REQUEST['partial_save']) ) {
@@ -1274,7 +1274,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$smarty->assign_by_ref('languages', $languages);
 
 	if( $editlib->isNewTranslationMode() ) {
-		$smarty->assign( 'translationOf', $_REQUEST['translationOf'] );
+		$smarty->assign( 'translationOf', $editlib->sourcePageName );
 
 		if( $tikilib->page_exists( $page ) ) {
 			// Display an error if the page already exists
@@ -1286,7 +1286,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 		}
 
 		global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
-		$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
+		$sourceInfo = $tikilib->get_page_info( $editlib->sourcePageName );
 		if( $multilinguallib->getTranslation('wiki page', $sourceInfo['page_id'], $_REQUEST['lang'] ) ) {
 			// Display an error if the page already exists
 			$smarty->assign('msg',tra("The translation set already contains a page in this language."));
@@ -1295,7 +1295,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 		}
 	}
 
-	if( $editlib->isUpdateTranslationMode() ) {
+	if( $editlib->isTranslationMode() ) {
 		include_once('lib/wiki/histlib.php');
 		histlib_helper_setup_diff( $editlib->sourcePageName, $editlib->oldSourceVersion, $editlib->newSourceVersion );
 		$smarty->assign( 'diff_oldver', (int) $editlib->oldSourceVersion );
@@ -1315,7 +1315,7 @@ if ($prefs['feature_freetags'] == 'y') {
 	if ( isset($_REQUEST['freetag_string']) ) {
 		$smarty->assign('taglist', $_REQUEST['freetag_string']);
 	} elseif( $editlib->isNewTranslationMode() ) {
-		$tags = $freetaglib->get_all_tags_on_object_for_language($_REQUEST['translationOf'], 'wiki page', $pageLang);
+		$tags = $freetaglib->get_all_tags_on_object_for_language($editlib->sourcePageName, 'wiki page', $pageLang);
 		$smarty->assign( 'taglist', implode( ' ', $tags ) );
 	}
 }
