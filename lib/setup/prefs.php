@@ -1080,6 +1080,7 @@ function get_default_prefs() {
 		'category_i18n_unsynced' => array(),
 		'expanded_category_jail' => '',
 		'expanded_category_jail_key' => '',
+		'ws_container' => 0,
 
 		// html pages
 		'feature_html_pages' => 'n',

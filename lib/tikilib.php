@@ -988,7 +988,7 @@ class TikiLib extends TikiDb_Bridge
 							}
 						}
 					}
-					if (ereg_replace("[^a-zA-Z0-9]","",$res2["name"]) == $csort_mode) {
+					if (preg_replace("/[^a-zA-Z0-9]/","",$res2["name"]) == $csort_mode) {
 						$kx = $res2["value"].$itid;
 					}
 				}
@@ -2781,7 +2781,7 @@ class TikiLib extends TikiDb_Bridge
 			$sort_mode = substr($sort_mode, $ppos + 1);
 			$sort_by_pref = true;
 
-			if ( ereg('^(.+)_(asc|desc)$', $sort_mode, $regs) ) {
+			if ( preg_match('/^(.+)_(asc|desc)$/i', $sort_mode, $regs) ) {
 				$sort_value = $regs[1];
 				$sort_way = $regs[2];
 				unset($regs);
@@ -6937,7 +6937,7 @@ class TikiLib extends TikiDb_Bridge
 								$hdr_structure[$nb_hdrs][$h + $nb_last_hdr] = '1';
 							}
 						}
-						$show_title_level[$hdrlevel] = ereg('^!+[\+\-]?#', $line);
+						$show_title_level[$hdrlevel] = preg_match('/^!+[\+\-]?#/', $line);
 
 						// Update last_hdr info for the next header
 						$last_hdr = $hdr_structure[$nb_hdrs];
@@ -6981,7 +6981,7 @@ class TikiLib extends TikiDb_Bridge
 						$divstate = substr($line, $hdrlevel, 1);
 						if ($divstate == '+' || $divstate == '-') {
 							// OK. Must insert flipper after HEADER, and then open new div...
-							$thisid = 'id' . ereg_replace('[^a-zA-z0-9]', '',urlencode($options['page'])) .$nb_hdrs;
+							$thisid = 'id' . preg_replace('/[^a-zA-z0-9]/', '',urlencode($options['page'])) .$nb_hdrs;
 							$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
 							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
 							$aclose2 = $aclose2 . '<script type="text/javascript">'."\n".'<!--//--><![CDATA[//><!--'."\n".'setheadingstate(\''. $thisid .'\')'."\n".' //--><!]]>'."\n".'</script>';
@@ -6999,10 +6999,10 @@ class TikiLib extends TikiDb_Bridge
 						// Workaround pb with plugin replacement and header id
 						//  first we remove hash from title_text for headings beginning
 						//  with images and HTML tags
-						$thisid = ereg_replace('§[a-z0-9]{32}§', '', $title_text);
-						$thisid = ereg_replace('</?[^>]+>', '', $thisid);
-						$thisid = ereg_replace('[^a-zA-Z0-9\:\.\-\_]+', '_', $thisid);
-						$thisid = ereg_replace('^[^a-zA-Z]*', '', $thisid);
+						$thisid = preg_replace('/§[a-z0-9]{32}§/', '', $title_text);
+						$thisid = preg_replace('#</?[^>]+>#', '', $thisid);
+						$thisid = preg_replace('/[^a-zA-Z0-9\:\.\-\_]+/', '_', $thisid);
+						$thisid = preg_replace('/^[^a-zA-Z]*/', '', $thisid);
 						if (empty($thisid)) $thisid = 'a'.md5($title_text);
 
 						// Add a number to the anchor if it already exists, to avoid duplicated anchors
@@ -7224,10 +7224,10 @@ class TikiLib extends TikiDb_Bridge
 						}
 					}
 					$maketoc = $this->parse_data($maketoc);
-					$maketoc = ereg_replace("^<ul>", '<ul class="toc">', $maketoc);
+					$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
 
 					if ( $link_class != 'link' ) {
-						$maketoc = ereg_replace("'link'", "'$link_class'", $maketoc);
+						$maketoc = preg_replace("/'link'/", "'$link_class'", $maketoc);
 					}
 				}
 				$maketoc = $maketoc_header.$maketoc.$maketoc_footer;
@@ -8126,10 +8126,10 @@ class TikiLib extends TikiDb_Bridge
 		foreach ($file as $line) {
 			$r = $s = '';
 			if (substr($line,0,1) != "#") {
-				if( ereg("^\[([A-Z0-9]+)\]",$line,$r) ) {
+				if( preg_match("/^\[([A-Z0-9]+)\]/",$line,$r) ) {
 					$var = strtolower($r[1]);
 				}
-				if (isset($var) and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
+				if (isset($var) and (preg_match("/^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)/",$line,$s))) {
 					$back[$var][trim($s[1])] = trim($s[2]);
 				}
 			}

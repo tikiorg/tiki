@@ -45,10 +45,10 @@ $smarty->assign_by_ref("style_options", $tikilib->list_style_options($a_style));
 function get_thumbnail_file($stl, $opt = '') { // find thumbnail if there is one
 	global $tikilib;
 	if (!empty($opt) && $opt != tr('None')) {
-		$filename = eregi_replace('\.css$', '.png', $opt); // change .css to .png
+		$filename = preg_replace('/\.css$/i', '.png', $opt); // change .css to .png
 		
 	} else {
-		$filename = eregi_replace('\.css$', '.png', $stl); // change .css to .png
+		$filename = preg_replace('/\.css$/i', '.png', $stl); // change .css to .png
 		$opt = '';
 	}
 	return $tikilib->get_style_path($stl, $opt, $filename);
