@@ -1009,14 +1009,14 @@ class CategLib extends ObjectLib
 	function get_link_categories($link) {
 		$ret=array();
 		$parsed=parse_url($link);
-		$urlPath = split("/",$parsed["path"]);
+		$urlPath = preg_split("#\/#",$parsed["path"]);
 		$parsed["path"]=end($urlPath);
 		if(!isset($parsed["query"])) return($ret);
 		/* not yet used. will be used to get the "base href" of a page
 		$params=array();
 		$a = explode('&', $parsed["query"]);
 		for ($i=0; $i < count($a);$i++) {
-			$b = split('=', $a[$i]);
+			$b = preg_split('/=/', $a[$i]);
 			$params[htmlspecialchars(urldecode($b[0]))]=htmlspecialchars(urldecode($b[1]));
 		}
 		*/
@@ -1087,7 +1087,7 @@ class CategLib extends ObjectLib
 			global $smarty, $prefs;
 
 			if ($include_excluded == false) {
-				$excluded = split(',', $prefs['categorypath_excluded']);
+				$excluded = preg_split('/,/', $prefs['categorypath_excluded']);
 				$cats = array_diff($cats, $excluded);
 			}			
 			
@@ -1165,7 +1165,7 @@ class CategLib extends ObjectLib
 		if ($types == '*') {
 			$typesallowed = array_keys($typetitles);
 		} elseif (strpos($types,'+')) {
-			$alltypes = split('\+',$types);
+			$alltypes = preg_split('/\+/',$types);
 			foreach ($alltypes as $t) {
 				if (isset($typetokens["$t"])) {
 					$typesallowed[] = $typetokens["$t"];
