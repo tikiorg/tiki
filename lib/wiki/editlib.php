@@ -97,7 +97,7 @@ class EditLib
 	}
 	
 	function prepareTranslationData() {
-		global $_REQUEST, $tikilib, $smarty, $editlib;
+		global $_REQUEST, $tikilib, $smarty;
 		$this->setTranslationSourceAndTargetPageNames();		
 		$this->setTranslationSourceAndTargetVersions();
 	}
@@ -150,6 +150,47 @@ class EditLib
 			$this->newSourceVersion = 0;
 		}
 	}	
+
+	function aTranslationWasSavedAs($complete_or_partial) {	
+		if (!$this->isTranslationMode() ||
+			!isset($_REQUEST['save'])) {
+			return false;
+		}
+		
+		// We are saving a translation. Is it partial or complete?
+		if ($complete_or_partial == 'complete' && isset($_REQUEST['partial_save'])) {
+			return false;
+		} else if ($complete_or_partial == 'partial' && !isset($_REQUEST['partial_save'])) {
+			return false;
+		}
+		
+		return true;
+	} 
+	
+	function saveCompleteTranslation() {
+		global $multilinguallib, $tikilib;
+		
+		$sourceInfo = $tikilib->get_page_info( $this->sourcePageName );
+		$targetInfo = $tikilib->get_page_info( $this->targetPageName );
+				
+		$multilinguallib->propagateTranslationBits( 
+			'wiki page',
+			$sourceInfo['page_id'],
+			$targetInfo['page_id'],
+			$sourceInfo['version'],
+			$targetInfo['version'] );
+		$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);		
+	}
+	
+	function savePartialTranslation() {
+		global $multilinguallib, $tikilib;
+
+		$sourceInfo = $tikilib->get_page_info( $this->sourcePageName );
+		$targetInfo = $tikilib->get_page_info( $this->targetPageName );
+		
+		$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
+		
+	}
 
 	function parseToWiki(&$inData) {
 		// Parsing page data as first time seeing html page in normal editor
