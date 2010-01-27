@@ -887,6 +887,11 @@ a.linkmodule:hover {
 	color: #000000;
 }
 
+div.menuSection {
+	padding: 0 0 16px 0;
+	}
+
+
 div.menuSection div.menuSection,
 div.menuSection div.separator {
 	margin-left: 16px;
