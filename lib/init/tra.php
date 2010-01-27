@@ -95,7 +95,7 @@ function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 		}
 	}
 
-	if ($prefs['record_untranslated'] == 'y') {
+	if (isset($prefs['record_untranslated']) && $prefs['record_untranslated'] == 'y') {
 		$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
 		$tikilib->query($query, array($content,$lg),-1,-1,false);
 	}
