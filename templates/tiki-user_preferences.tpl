@@ -23,6 +23,7 @@
     {section name=n loop=$tikifeedback}<div>{$tikifeedback[n].mes}</div>{/section}
   </div>
 {/if}
+{cycle values="odd,even" print=false}
 {tabset name="mytiki_user_preference"}
 
 {if $prefs.feature_userPreferences eq 'y'}
@@ -31,7 +32,6 @@
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
 
 
-  {cycle values="odd,even" print=false}
   <table class="normal">
     <tr>
       <td class="{cycle advance=false}">{tr}User:{/tr}</td>
