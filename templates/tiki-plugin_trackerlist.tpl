@@ -11,6 +11,17 @@
 		 {/if}
 </div>
 	{/if}
+
+	{if $user_watching_tracker eq 'n'}
+		<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}">
+			{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}
+		</a>
+	{elseif $user_watching_tracker eq 'y'}
+		<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">
+		   {icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}
+		</a>
+	{/if}
+
 	<div class="trackerlistsort">
 	{if !empty($sortchoice)}
 		<form method="post">

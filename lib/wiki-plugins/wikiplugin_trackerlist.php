@@ -255,12 +255,18 @@ function wikiplugin_trackerlist_info() {
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
+			'showwatch' => array(
+				'required' => false,
+				'name' => tra('Watch'),
+				'description' => 'y|n',
+				'filter' => 'alpha'
+			),
 		),
 	);
 }
 
 function wikiplugin_trackerlist($data, $params) {
-	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib, $tiki_p_traker_vote_rating, $tiki_p_export_tracker;
+	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib, $tiki_p_traker_vote_rating, $tiki_p_export_tracker, $tiki_p_watch_trackers;
 	require_once("lib/trackers/trackerlib.php");
 	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
 	static $iTRACKERLIST = 0;
@@ -315,6 +321,23 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 			header('Location: tiki-index.php?page='.urlencode($page));
 			die;
+		}
+
+		if (!empty($showwatch) && $showwatch == 'y' && $prefs['feature_user_watches'] == 'y' && $tiki_p_watch_trackers == 'y' && !empty($user)) {
+			if (isset($_REQUEST['watch']) && isset($_REQUEST['trackerId']) && $_REQUEST['trackerId'] == $trackerId) {
+				if ($_REQUEST['watch'] == 'add') { 
+					$tikilib->add_user_watch($user, 'tracker_modified', $trackerId, 'tracker', $tracker_info['name'], "tiki-view_tracker.php?trackerId=" . $trackerId);
+				} elseif ($_REQUEST['watch'] == 'stop') {
+					$tikilib->remove_user_watch($user, 'tracker_modified', $trackerId, 'tracker');
+				}
+			}
+			if ($tikilib->user_watches($user, 'tracker_modified', $trackerId, 'tracker')) {
+				$smarty->assign('user_watching_tracker', 'y');
+			} else {
+				$smarty->assign('user_watching_tracker', 'n');
+			}
+		} else {
+			$smarty->clear_assign('user_watching_tracker');
 		}
 
 		if (!empty($fields)) {
