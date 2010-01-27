@@ -6153,6 +6153,7 @@ class TikiLib extends TikiDb_Bridge
 		$options['parseimgonly'] = isset($options['parseimgonly']) ? $options['parseimgonly'] : false;
 		$options['preview_mode'] = isset($options['preview_mode']) ? (bool)$options['preview_mode'] : false;
 		$options['suppress_icons'] = isset($options['suppress_icons']) ? (bool)$options['suppress_icons'] : false;
+		$options['parsetoc'] = isset($options['parsetoc']) ? (bool)$options['parsetoc'] : true;
 		
 		
 		// if simple_wiki is true, disable some wiki syntax
@@ -6551,7 +6552,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		if (!$simple_wiki) {
+		if (!$simple_wiki && $options['parsetoc']) {
 			$this->parse_data_process_maketoc( $data, $options);
 
 		} // closing if ($simple_wiki)
@@ -8345,7 +8346,7 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 		if ($prefs['search_parsed_snippet'] == 'y') {
 			$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
-			$data = $this->parse_data($data, array('is_html' => $is_html));
+			$data = $this->parse_data($data, array('is_html' => $is_html, 'noparseplugins' => true, 'parsetoc' => false));
 			$data = strip_tags($data);
 		}
 		if (function_exists('mb_substr')) 
