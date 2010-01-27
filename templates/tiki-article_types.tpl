@@ -1,11 +1,10 @@
 {* $Id$ *}
 {title url="tiki-article_types.php" help=Articles}{tr}Admin Article Types{/tr}{/title}
 
-<h2>{tr}List of types{/tr}</h2>
-
 <div class="navbar">
 	{button _onclick="javascript:toggle('wiki-edithelp')" _text="{tr}Show Help{/tr}"}
 </div>
+
 
 <div class="wiki-edithelp" id="wiki-edithelp" style="display:none;">
 	<b>{tr}Article type{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
@@ -31,10 +30,14 @@
 	<b>{tr}Action{/tr}</b> - {tr}Actions on this article type{/tr}<br />
 </div>
 
+{tabset name='tabs_articletypes'}
+{tab name="{tr}List of article types{/tr}"}
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
+	{section name=user loop=$types}
+<h3>{tr}{$types[user].type|escape}{/tr}</h3>
+<a class="link" href="tiki-view_articles.php?type={$types[user].type|escape:url}">view articles with this type</a>
 	<table class="normal">
 		<tr>
-			<th>{tr}Article type{/tr}</th>
 			<th>{tr}Articles{/tr}</th>
 			<th>{tr}Rate{/tr}</th>
 			<th>{tr}Show before publish date{/tr}</th>
@@ -46,24 +49,12 @@
 			<th>{tr}Show avatar{/tr}</th>
 			<th>{tr}Show author{/tr}</th>
 			<th>{tr}Show publish date{/tr}</th>
-			<th>{tr}Show expire date{/tr}</th>
-			<th>{tr}Show reads{/tr}</th>
-			<th>{tr}Show size{/tr}</th>
-			<th>{tr}Show topline{/tr}</th>
-			<th>{tr}Show subtitle{/tr}</th>
-			<th>{tr}Show source{/tr}</th>
-			<th>{tr}Show Image Caption{/tr}</th>
-			<th>{tr}Show lang{/tr}</th>
-			<th>{tr}Creator can edit{/tr}</th>
-			<th>{tr}Action{/tr}</th>
+
 		</tr>
 		{cycle print=false values="even,odd"}
-		{section name=user loop=$types}
+		
 			<input type="hidden" name="type_array[{$types[user].type|escape}]" />
 			<tr>
-				<td class="{cycle advance=false}">
-					<a class="link" href="tiki-view_articles.php?type={$types[user].type|escape:url}">{tr}{$types[user].type|escape}{/tr}</a>
-				</td>
 				{*get_strings {tr}Article{/tr}{tr}Review{/tr}{tr}Event{/tr}{tr}Classified{/tr} *}
 				<td class="{cycle advance=false}">{$types[user].article_cnt}</td>
 				<td class="{cycle advance=false}">
@@ -96,7 +87,24 @@
 				<td class="{cycle advance=false}">
 					<input type="checkbox" name="show_pubdate[{$types[user].type|escape}]" {if $types[user].show_pubdate eq 'y'}checked="checked"{/if} />
 				</td>
-				<td class="{cycle advance=false}">
+				
+			</tr>
+		
+		<tr>
+			<th>{tr}Show expire date{/tr}</th>
+			<th>{tr}Show reads{/tr}</th>
+			<th>{tr}Show size{/tr}</th>
+			<th>{tr}Show topline{/tr}</th>
+			<th>{tr}Show subtitle{/tr}</th>
+			<th>{tr}Show source{/tr}</th>
+			<th>{tr}Show Image Caption{/tr}</th>
+			<th>{tr}Show lang{/tr}</th>
+			<th>{tr}Creator can edit{/tr}</th>
+			<th colspan="2">{tr}Action{/tr}</th>
+		</tr>
+		<tr>
+
+			<td class="{cycle advance=false}">
 					<input type="checkbox" name="show_expdate[{$types[user].type|escape}]" {if $types[user].show_expdate eq 'y'}checked="checked"{/if} />
 				</td>
 				<td class="{cycle advance=false}">
@@ -123,19 +131,26 @@
 				<td class="{cycle advance=false}">
 					<input type="checkbox" name="creator_edit[{$types[user].type|escape}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} />
 				</td>
-				<td class="{cycle}">
+				<td class="{cycle}" colspan="2">
+				<center>
 					{if $types[user].article_cnt eq 0}
 						<a class="link" href="tiki-article_types.php?remove_type={$types[user].type|escape:url}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 					{else}
 						&nbsp;
 					{/if}
+				</center>
 				</td>
-			</tr>
-		{/section}
+			
+		</tr>
 	</table>
-
 	<input type="submit" name="update_type" value="{tr}Save{/tr}" /><br />
-
+	<hr />
+	<br />
+	{/section}
+	{/tab}
+	{tab name="{tr}Create a new type{/tr}"}
 	<h3>{tr}Create a new type{/tr}</h3>
 	<input type="text" name="new_type" /><input type="submit" name="add_type" value="{tr}Create a new type{/tr}" />
+	{/tab}
+	{/tabset}
 </form>
