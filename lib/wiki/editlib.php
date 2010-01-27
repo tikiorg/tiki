@@ -14,6 +14,8 @@
 
 class EditLib
 {
+	private $tracesOn = false;
+	
 	// Fields for translation related methods.
 	public $sourcePageName = null;
 	public $targetPageName = null;
@@ -82,8 +84,8 @@ class EditLib
 
 			return true;
 		}
-		if (isset( $_REQUEST['oldver']  )
-			&& $_REQUEST['oldver'] ==  -1) {
+		if (isset( $_REQUEST['is_new_translation']  )
+			&& $_REQUEST['is_new_translation'] ==  'y') {
 			return true;
 		}	
 		return false;		
@@ -92,7 +94,7 @@ class EditLib
 	function isUpdateTranslationMode() {
 		return isset( $_REQUEST['source_page'] )
 			&& isset( $_REQUEST['oldver'] )
-			&& $_REQUEST['oldver'] != -1
+			&& (!isset($_REQUEST['is_new_translation']) || $_REQUEST['is_new_translation'] == 'n')
 			&& isset( $_REQUEST['newver'] );
 	}
 	
@@ -163,7 +165,6 @@ class EditLib
 		} else if ($complete_or_partial == 'partial' && !isset($_REQUEST['partial_save'])) {
 			return false;
 		}
-		
 		return true;
 	} 
 	

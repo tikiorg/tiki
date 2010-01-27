@@ -50,6 +50,7 @@ function module_translation( $mod_reference, $module_params ) {
 	if ((!$page or $page == '') and isset($_REQUEST['page'])) {
 		$page = $_REQUEST['page'];
 	}
+	$smarty->assign('page', $page);
 	$smarty->assign( 'show_translation_module', false);
 
 	if( ! empty( $page ) && is_string($page) ) {

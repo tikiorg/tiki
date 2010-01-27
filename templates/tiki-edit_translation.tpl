@@ -68,6 +68,7 @@
 		<input type="text" size="40" name="page" id="translation_name"/>
 		<input type="hidden" name="source_page" value="{$page|escape}"/>
 		<input type="hidden" name="oldver" value="-1"/>
+		<input type="hidden" name="is_new_translation" value="y"/>
 	{if $prefs.feature_categories eq 'y'}
 		<P>
 		{tr}Below, assign categories to this new translation (Note: they should probably be the same as the categories of the page being translate){/tr}

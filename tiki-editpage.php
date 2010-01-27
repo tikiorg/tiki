@@ -11,6 +11,7 @@
 // If you want to see the traces, set value below to true.
 // WARNING: DO NOT COMMIT WITH TRUE!!!!
 $dieInsteadOfForwardingWithHeader = false;
+$tracesOn = false;
 
 
 $inputConfiguration = array(
@@ -113,7 +114,7 @@ function translationsToThisPageAreInProgress($page_id) {
 
 function execute_module_translation() { 
 	global $smarty;
-// will show the language of the avialble translations. Chnage to 'n' to show the page name
+// will show the language of the available translations. Chnage to 'n' to show the page name
 	$params['show_language'] = 'y';
 // flag to indicate that the module is appearing within the notification area of the edit page
 	$params['from_edit_page'] = 'y';
@@ -263,7 +264,7 @@ if (isset($_REQUEST['cancel_edit'])) {
 		$url .= '&bl=n';
 	}
 
-	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying so we can see the traces");
+	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before first call to header(), so we can see traces. Forwarding to: \$url='$url'");
 	header($url);
 	die;
 }
@@ -505,7 +506,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			$url .= '&bl=n';
 		}
 
-		if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying so we can see the traces");
+		if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before second call to header(), so we can see traces. Forwarding to: '$url'");
 		header("location: $url");
 		die;
 	}
@@ -1155,7 +1156,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 					$editlib->saveCompleteTranslation();
 				} else if ($editlib->aTranslationWasSavedAs('partial')) {
 					$editlib->savePartialTranslation();
-				}				
+				}
 			} else {
 				$info = $tikilib->get_page_info( $_REQUEST['page'] );
 				$flags = array();
@@ -1214,7 +1215,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
 	}
 	
-	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying so we can see the traces");
+	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before third call to header(), so we can see traces. Forwarding to: '$url'");
 	header("location: $url");
 	die;
 } //save
@@ -1369,7 +1370,7 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 	} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {		
 		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
 		if ($prefs['wikiapproval_block_editapproved'] == 'y') {			
-			if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying so we can see the traces");
+			if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before fourth call to header(), so we can see traces. Forwarding to: 'tiki-editpage.php?page=$stagingPageName'");
 			header("location: tiki-editpage.php?page=$stagingPageName");
 		}
 		$smarty->assign('needsStaging', 'y');
