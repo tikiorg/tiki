@@ -176,7 +176,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		} );' );
 	}
 
-	return '<div class="trackerfilter-result">"' . $data.$dataF.$dataRes . '</div>';
+	return '<div class="trackerfilter-result">' . $data.$dataF.$dataRes . '</div>';
 }
 
 function wikiplugin_trackerFilter_split_filters($filters) {
