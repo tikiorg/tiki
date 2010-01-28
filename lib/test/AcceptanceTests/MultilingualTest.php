@@ -4,7 +4,12 @@
 * Automated acceptance tests for Multilingual Features.
 *************************************************************/
 
-
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group gui
+ */
+ 
 require_once 'TikiSeleniumTestCase.php';
 
 class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
@@ -15,7 +20,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     }
         
    /**
-    * @group acceptance
+    * @group gui
     */ 
    public function testHomePageIsMultilingual() {
    		$this->openTikiPage('tiki-index.php');
@@ -25,7 +30,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
    }
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testMultilingualPageDisplaysLanguagePicklist() {
        	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -35,7 +40,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     }
 
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testSwitchBetweenLanguages() {
        $this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -46,7 +51,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     
   	
    /**
-    * @group acceptance
+    * @group gui
     */ 
   	public function testLanguageLinkLeadsToTranslatedPageInThatLanguage() {
   		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -60,7 +65,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
   	}
   	
    /**
-    * @group acceptance
+    * @group gui
     */ 
   	public function testTranslateOptionAppearsOnlyWhenLoggedIn() {
   		$this->openTikiPage('tiki-index.php');
@@ -72,7 +77,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
   	}
 
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testClickOnTranslateShowsTranslatePage() {
     	$this->openTikiPage('tiki-index.php');
@@ -84,7 +89,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
   	
    /**
-    * @group acceptance
+    * @group gui
     */ 
   	public function testListOfLanguagesOnTranslatePageDoesNotContainAlreadyTranslatedLanguages() {
   		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -98,7 +103,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
   	}
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testCannotGiveATranslationTheNameOfAnExistingPage() {
     	//NB. This is in fact wrong. If you have similar languages, say English and British English, 
@@ -119,7 +124,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     }
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testShouldNotChangeLanguageOfThePageInCaseCreateTranslationFails() {
     	//In case when a page already exists create translation gives an error message which is ok.
@@ -144,7 +149,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testUpToDatenessIs100percentForTheCompletelyTranslatedPages(){
     	$this->openTikiPage('tiki-index.php?page=Page+de+test+multilingue+1');
@@ -155,7 +160,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
  
 
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testUponAddingNewContentTranslationsThatNeedImprovementAppears() {
     	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -173,7 +178,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     }
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testCompleteTranslationBringsBackUpToDatenessTo100() {
     	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -192,7 +197,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     }
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testPartialTranslationBringsUpUpToDatenessPourcentage() {
 		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
@@ -218,7 +223,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testMachineTranslationOfAPageCausesErrorMessageIfNotEnabled() {
     	$this->logInIfNecessaryAs('admin');

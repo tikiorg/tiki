@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+ 
 class JitFilter_AccessTest extends TikiTestCase
 {
 	private $array;

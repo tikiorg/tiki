@@ -7,6 +7,13 @@
 * See: http://profiles.tikiwiki.org/Collaborative_Multilingual_Terminology
 *************************************************************/
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group gui
+ */
+ 
+
 
 require_once 'TikiSeleniumTestCase.php';
 
@@ -31,11 +38,5 @@ class  AcceptanceTests_CollaborativeMultilingualTerminologyTest extends TikiSele
     	$this->fail("Don't forget to do this");
     }
        
-   /**
-    * @group acceptance
-    */ 
-   public function testNevermind() {
-    	$this->fail("Nevermind");
-   }
     
 }

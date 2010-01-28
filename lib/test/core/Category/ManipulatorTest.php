@@ -1,7 +1,14 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 class Category_ManipulatorTest extends TikiTestCase
-{
+{	
 	function testSimpleManipulation() {
 		$perms = new Perms;
 		$perms->setResolverFactories( array(

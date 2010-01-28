@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 class DeclFilter_StaticKeyFilterTest extends TikiTestCase
 {
 	function testMatch()

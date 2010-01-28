@@ -83,7 +83,13 @@ class TikiAcceptanceTestDBRestorer
 		global $last_restored;
 		chdir($this->mysql_data_dir);
 		if (!file_exists($tiki_test_db_dump)) {
-			die ("The initial database dump was not created. You need to create it first before you can restore it. Call TikiAcceptanceTestDBRestorer::create_dump_file()");
+			$error_msg =
+				"\nTried to run an acceptance test without an initial database dump. ".
+			    "Run script lib/core/test/create_dump_db_file.php to create it.\n";
+			echo($error_msg);
+			$this->printCallStack();
+			
+			die ();
 		}
 
 		if ($last_restored == $tiki_test_db_dump) {
@@ -167,4 +173,19 @@ class TikiAcceptanceTestDBRestorer
 		chdir($this->current_dir);
 	}
 
+	function printCallStack() {
+		// Can't believe this is not standard in PHP!
+		$backtrace = debug_backtrace();
+
+		// Remove printCallStack() element from the stack, and print just the rest.
+		array_shift($backtrace);
+		foreach ($backtrace as $backtraceElement) {
+			$line = "In File: ".$backtraceElement['file'].", at line: ".$backtraceElement['line']."\n";
+			if (isset($backtraceElement['class'])) {
+				$line .= $backtraceElement['class']."::";
+			}
+			$line .= $backtraceElement['function']."\n";
+			echo $line;
+		}		
+	}
 }

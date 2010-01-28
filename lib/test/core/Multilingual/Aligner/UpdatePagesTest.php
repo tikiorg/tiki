@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 //include_once "lib/core/lib/Multilingual/Aligner/SentenceAlignments.php";
 //include_once "lib/core/lib/Multilingual/Aligner/UpdateSentences.php";
 //include_once "lib/test/TikiTestCase.php";

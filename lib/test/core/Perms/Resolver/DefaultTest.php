@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 class Perms_Resolver_DefaultTest extends TikiTestCase
 {
 	function testAsExpected() {

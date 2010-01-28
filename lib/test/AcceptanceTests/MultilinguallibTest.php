@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group gui
+ */
+ 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
 
@@ -13,7 +19,7 @@ class  AcceptanceTests_MultilinguallibTest extends TikiSeleniumTestCase
     }
 
    /**
-    * @group acceptance
+    * @group gui
     */ 
 	public function test_remember_to_reactivate_all_tests_in_MultilinguallibTest() {
 		global $multilinguallib;

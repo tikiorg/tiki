@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 class Perms_Reflection_PermissionComparatorTest extends TikiTestCase
 {
 	function testIdenticalSets() {

@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group gui
+ */
+ 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 require_once 'TikiSeleniumTestCase.php';
 
@@ -19,7 +25,7 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
     }
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testSearchFormIsWellFormed() {
        	$this->openTikiPage('tiki-index.php');
@@ -28,7 +34,7 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
     }    
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testFillSearchFormAndSubmit() {
     	$this->openTikiPage('tiki-index.php');
@@ -43,7 +49,7 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
     
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testSearchIsCaseInsensitive() {
        $this->openTikiPage('tiki-index.php');
@@ -56,7 +62,7 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
     }
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testByDefaultSearchLooksForAnyOfTheQueryTerms() {
        $this->openTikiPage('tiki-index.php');

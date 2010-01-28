@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 class Perms_ResolverFactory_GlobalFactoryTest extends PHPUnit_Framework_TestCase
 {
 	private $tableData = array();

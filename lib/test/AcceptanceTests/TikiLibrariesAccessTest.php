@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group gui
+ */
+ 
 require_once 'TikiTestCase.php';
 
 /* 
@@ -23,7 +29,7 @@ class  AcceptanceTests_TikiLibrariesAccessTest extends TikiTestCase
     }
        
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testAccessPreferences() {
     	global $tikilib, $prefs;

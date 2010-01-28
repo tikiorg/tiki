@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 class Transition_AtMostTest extends PHPUnit_Framework_TestCase
 {
 	function testOver() {

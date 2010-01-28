@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 class WikiParser_PluginRepositoryTest extends TikiTestCase
 {
 	function testPluginDoesNotExist()

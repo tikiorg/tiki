@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Ttest groups that this PHPUnit test belongs to
+ * 
+ * @group gui
+ */
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
 
@@ -11,7 +16,7 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 	}
 	
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testListPagesTableIsWellFormed() {
         $this->openTikiPage('tiki-listpages.php');
@@ -25,7 +30,7 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
     }    
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testPageSortingWorks()
     {
@@ -39,7 +44,7 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
   	}
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testDeleteAPageFromTheList() {
         $this->openTikiPage('tiki-listpages.php');
@@ -52,7 +57,7 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
     }
     
    /**
-    * @group acceptance
+    * @group gui
     */ 
     public function testLinksInListPagesWork() {
 		$this->openTikiPage('tiki-listpages.php');

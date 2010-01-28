@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 class Perms_Check_AlternateTest extends PHPUnit_Framework_TestCase
 {
 	function testUnconfigured() {

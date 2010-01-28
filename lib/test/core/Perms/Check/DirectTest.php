@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Test groups that this PHPUnit test belongs to
+ * 
+ * @group unit
+ * 
+ */
+
 class Perms_Check_DirectTest extends TikiTestCase
 {
 	function testCallForwarded() {
