@@ -541,8 +541,8 @@ class UsersLib extends TikiLib
 			$shibproviderid = $_SERVER['HTTP_SHIB_IDENTITY_PROVIDER'];
 
 			// Get the affiliation information to log in
-			$shibaffiliarray = split(";",strtoupper($shibaffiliation));
-			$validaffiliarray = split(",",strtoupper($prefs['shib_affiliation']));
+			$shibaffiliarray = preg_split('/;/',strtoupper($shibaffiliation));
+			$validaffiliarray = preg_split('/,/',strtoupper($prefs['shib_affiliation']));
 			$validafil=false;
 			foreach($shibaffiliarray as $affil){
 				if(in_array($affil, $validaffiliarray)){
@@ -2087,7 +2087,7 @@ class UsersLib extends TikiLib
 
 		while ($res = $result->fetchRow()) {
 			if( $enabledOnly && $res['feature_check'] ) {	// only list enabled features
-				$feats = split(',', $res['feature_check']);
+				$feats = preg_split('/,/', $res['feature_check']);
 				$got_one = false;
 				foreach ($feats as $feat) {
 					if ( $prefs[ trim($feat) ] == 'y') {
@@ -3078,7 +3078,7 @@ class UsersLib extends TikiLib
 			}
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
-			$emails = !empty($prefs['validator_emails'])?split(',', $prefs['validator_emails']): (!empty($prefs['sender_email'])? array($prefs['sender_email']): '');
+			$emails = !empty($prefs['validator_emails'])?preg_split('/,/', $prefs['validator_emails']): (!empty($prefs['sender_email'])? array($prefs['sender_email']): '');
 			if (empty($emails)) {
 				if ($prefs['feature_messages'] != 'y') {
 					$smarty->assign('msg', tra("The registration mail can't be sent because there is no server email address set, and this feature is disabled").": feature_messages");

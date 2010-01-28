@@ -81,11 +81,11 @@ function smarty_function_treetable($params, &$smarty) {
 	$_openall = isset($_openall) ? $_openall : 'n';
 	
 	if (is_string($_checkbox) && strpos($_checkbox, ',') !== false) {
-		$_checkbox = split(',', trim($_checkbox));
+		$_checkbox = preg_split('/,/', trim($_checkbox));
 	}
 	if (!empty($_checkboxColumnIndex)) {
 		if (is_string($_checkboxColumnIndex) && strpos($_checkboxColumnIndex, ',') !== false) {
-			$_checkboxColumnIndex = split(',', trim($_checkboxColumnIndex));
+			$_checkboxColumnIndex = preg_split('/,/', trim($_checkboxColumnIndex));
 		}
 		if (count($_checkbox) != count($_checkboxColumnIndex)) {
 			return tra('{treetable}: Number of items in _checkboxColumnIndex doesn not match items in _checkbox');
@@ -94,7 +94,7 @@ function smarty_function_treetable($params, &$smarty) {
 	if (!empty($_checkboxTitles)) {
 		if (is_string($_checkboxTitles)) {
 			if (strpos($_checkboxTitles, ',') !== false) {
-				$_checkboxTitles = split(',', trim($_checkboxTitles));
+				$_checkboxTitles = preg_split('/,/', trim($_checkboxTitles));
 			} else {
 				$_checkboxTitles = array(trim($_checkboxTitles));
 			}
@@ -151,10 +151,10 @@ function smarty_function_treetable($params, &$smarty) {
 			}
 		}
 	} else if (is_string($_columns)) {
-		$ar = split(',', $_columns);
+		$ar = preg_split('/,/', $_columns);
 		$_columns = array();
 		foreach ($ar as $str) {
-			$ar2 = split('=', trim($str));
+			$ar2 = preg_split('/=/', trim($str));
 			$_columns[trim($ar2[0],' "')] = trim($ar2[1],' "');
 		}
 		unset($ar, $ar2);
