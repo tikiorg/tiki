@@ -37,7 +37,7 @@
 			<input type="text" name="email" id="email" value="{$smarty.post.email}"/>
 			<input type="hidden" name="name" value="{$smarty.post.name}"/>
 			<input type="hidden" name="pass" value="{$smarty.post.pass}"/>
-			<input type="hidden" name="regcode" value="{$smarty.post.regcode}"/>
+			<input type="hidden" name="passcode" value="{$smarty.post.passcode}"/>
 			<input type="hidden" name="novalidation" value="yes"/>
 	{if isset($smarty.post.antibotcode)}		<input type="hidden" name="antibotcode" value="{$smarty.post.antibotcode}"/>{/if}
 	{if $smarty.post.chosenGroup}		<input type="hidden" name="chosenGroup" value="{$smarty.post.chosenGroup}" />{/if}
