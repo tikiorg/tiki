@@ -163,7 +163,7 @@ class SearchLib extends TikiLib
 		} else if ($words) {
 			$sqlFields .= ', -1 AS relevance';
 
-			$vwords = split(' ', $words);
+			$vwords = preg_split('/ /', $words);
 			foreach ($vwords as $aword) {
 				//$aword = $this->qstr('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
 				$aword = preg_replace('/([\*\.\?\^\$\+\(\]\|])/', '\\\\\1', $aword);
@@ -274,7 +274,7 @@ class SearchLib extends TikiLib
 		);
 	}
 
-	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0)
+	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $lang='')
 	{
 		global $tikilib, $prefs;
 		$rv = array();
@@ -293,6 +293,9 @@ class SearchLib extends TikiLib
 			'objectType' => 'wiki page',
 			'objectKey' => 'p.`pageName`',
 		);
+		if (!empty($lang)) {
+			$search_wikis_comments['filter'] .= " AND p.`lang`='$lang'";
+		}
 		$search_wikis_comments['href'] = $prefs['feature_sefurl'] == 'y'? '%s#comments': 'tiki-index.php?page=%s#comments';
 		$rv = $this->_find($search_wikis_comments, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Wiki Comment'), $searchDate);
 
@@ -310,6 +313,9 @@ class SearchLib extends TikiLib
 			'objectType' => 'wiki page',
 			'objectKey' => 'p.`pageName`',
 		);
+		if (!empty($lang)) {
+			$search_wikis['filter'] = " p.`lang`='$lang'";
+		}
 		$search_wikis['href'] = $prefs['feature_sefurl'] == 'y'? '%s': 'tiki-index.php?page=%s';
 		if ($prefs['search_parsed_snippet'] == 'y') {
 			$search_wikis['is_html'] = 'is_html';
