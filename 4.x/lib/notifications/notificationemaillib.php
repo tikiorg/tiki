@@ -275,8 +275,7 @@ function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comm
 	    }
 
 	    foreach ($nots as $not) {
-			if (isset($not['hash']))
-				$smarty->assign('mail_hash', $not['hash']);
+				$smarty->assign('watchId', $not['watchId']);
 
 			$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed_subject.tpl");
 			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed.tpl");

@@ -47,7 +47,8 @@ if (isset($_REQUEST['id'])) {
 	$area = 'deluserwatch';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
-		$tikilib->remove_user_watch_by_id($_REQUEST['id']);
+		$error = $tikilib->remove_user_watch_by_id($_REQUEST['id']);
+		$smarty->assign('remove_user_watch_error', !$error);
 	} else {
 		key_get($area);
 	}
