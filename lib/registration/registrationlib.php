@@ -251,7 +251,7 @@ class RegistrationLib extends TikiLib
   }
 
   if(!preg_match_all("/[A-Z0-9a-z\_\-]+/", $_REQUEST["name"], $matches)) {
-    $smarty->assign('msg', tra("Invalid username"));
+    $smarty->assign('msg', tra("Login contains invalid characters"));
     $smarty->display("error.tpl");
     die;
   }
