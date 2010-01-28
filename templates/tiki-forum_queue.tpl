@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 
-{title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name}{/title}
+{title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name|escape}{/title}
 
 <div class="navbar">
 	{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}Back to forum{/tr}"}
@@ -25,7 +25,7 @@
 	<td class="formcolor">
 		<select name="parentId">
 			{section name=ix loop=$topics}
-			<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title}</option>
+			<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title|escape}</option>
 			{/section}
 		</select>
 	</td>
@@ -37,7 +37,7 @@
 		<select name="parentId">
 			<option value="0" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{tr}None, this is a thread message{/tr}</option>
 			{section name=ix loop=$topics}
-			<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title}</option>
+			<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title|escape}</option>
 			{/section}
 		</select>
 	</td>
@@ -140,16 +140,16 @@
   
 	<td class="{cycle}" style="text-align:left;">
 		{if $items[ix].parentId > 0}
-			[{tr}Topic{/tr}: {$items[ix].topic_title}]
+			[{tr}Topic:{/tr} {$items[ix].topic_title|escape}]
 		{else}
 			[{tr}New Topic{/tr}]
 		{/if}
-		<b><a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{$items[ix].title}</a></b>
-		by {$items[ix].user} on {$items[ix].timestamp|tiki_short_datetime}
+		<b><a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{$items[ix].title|escape}</a></b>
+		by {$items[ix].user|username} on {$items[ix].timestamp|tiki_short_datetime}
 		<br />
 		{if $items[ix].parentId eq 0 and $forum_info.topic_summary eq 'y'}
 			{if strlen($items[ix].summary) > 0}
-				<i>{$items[ix].summary}</i><br />
+				<i>{$items[ix].summary|escape}</i><br />
 			{else}
 				<i>{tr}no summary{/tr}</i>
 			{/if}

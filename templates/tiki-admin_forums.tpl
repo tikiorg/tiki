@@ -161,7 +161,7 @@
 						<option value="" {if $forumSection eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
 						<option value="__new__">{tr}Create new{/tr}</option>
 						{section name=ix loop=$sections}
-							<option {if $forumSection eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]|escape}">{$sections[ix]}</option>
+							<option {if $forumSection eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]|escape}">{$sections[ix]|escape}</option>
 						{/section}
 					</select>
 					<input name="new_section" type="text" />
