@@ -250,10 +250,30 @@ class TikiLib extends TikiDB {
 		return true;
 	}
 
+	/**
+	 * get_user_notification: returns the owner (user) related to a watchId 
+	 * 
+	 * @param mixed $id watchId 
+	 * @access public
+	 * @return the user login related to the watchId
+	 */
+	function get_user_notification($id) {
+
+		$query = "select `user` from `tiki_user_watches` where `watchId`=?";
+		return $this->getOne($query, array($id));
+
+	}
 	/*shared*/
 	function remove_user_watch_by_id($id) {
-		$query = "delete from `tiki_user_watches` where `watchId`=?";
-		$this->query($query,array($id));
+		global $tiki_p_admin_notifications, $user;
+		if ( $tiki_p_admin_notifications === 'y' or $user === $this->get_user_notification($id) ) {
+			$query = "delete from `tiki_user_watches` where `watchId`=?";
+			$this->query($query, array($id));
+
+			return true;
+		}
+
+		return false;
 	}
 
 	function remove_group_watch_by_id($id) {

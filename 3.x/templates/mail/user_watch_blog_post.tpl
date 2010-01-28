@@ -7,5 +7,4 @@
 {$mail_machine_raw}/tiki-view_blog_post.php?blogId={$mail_blogid}&postId={$mail_postid}
 
 {tr}If you don't want to receive these notifications follow this link:{/tr}
-{$mail_machine_raw}/tiki-user_watches.php?hash={$mail_hash}
-
+{$mail_machine_raw}/tiki-user_watches.php?id={$watchId}

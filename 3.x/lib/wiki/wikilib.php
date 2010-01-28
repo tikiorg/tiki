@@ -307,6 +307,7 @@ class WikiLib extends TikiLib {
 				$smarty->assign('mail_newname', $newName);
 				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
+				$smarty->assign('watchId', $nots['watchId']);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
 				$machine = $tikilib->httpPrefix(). $foo["path"];
 				$smarty->assign('mail_machine', $machine);
