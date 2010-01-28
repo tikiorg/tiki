@@ -2831,7 +2831,8 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	// BLOG METHODS ////
-	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
+	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $ref='') {
+
 		global $categlib; if (!$categlib) require_once 'lib/categories/categlib.php';
 		$bindvars = array();
 		$join = '';
@@ -2857,7 +2858,7 @@ class TikiLib extends TikiDb_Bridge
 		while ($res = $result->fetchRow()) {
 			global $user;
 			if ($objperm = $this->get_perm_object($res['blogId'], 'blog', '', false)) {
-				if ( $objperm['tiki_p_read_blog'] == 'y' ) {
+				if ( $objperm['tiki_p_read_blog'] == 'y' || ($ref == 'post' && $objperm['tiki_p_blog_post_view_ref'] == 'y') || ($ref == 'blog' && $objperm['tiki_p_blog_view_ref'] == 'y')) {
 				  ++$cant;
 				  if ($maxRecords == - 1 || ($i >= $offset && $nb < $maxRecords)) {
 					$ret[] = $res;
@@ -2955,9 +2956,9 @@ class TikiLib extends TikiDb_Bridge
 		return $ret;
 	}
 
-	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='') {
+	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='', $ref='') {
 
-		$authorized_blogs = $this->list_blogs();
+		$authorized_blogs = $this->list_blogs(0, -1, 'created_desc', '', $ref);
 		$permit_blogs = array();
 		for ($i = 0; $i < $authorized_blogs["cant"] ; $i++) {
 			$permit_blogs[] = $authorized_blogs["data"][$i]['blogId'];
@@ -3005,7 +3006,6 @@ class TikiLib extends TikiDb_Bridge
 			if ( ! in_array($blogId, $permit_blogs) ) {
 				continue;
 			}
-
 			$query = "select `title`  from `tiki_blogs` where `blogId`=?";
 			$cant_com = $this->getOne("select count(*) from
 					`tiki_comments` where `object`=? and `objectType` = ?",

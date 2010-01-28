@@ -224,7 +224,15 @@ class Perms
 		}
 
 		$accessor = self::get( $context );
-		return $accessor->$permission;
+		if (is_array($permission)) {
+			foreach ($permission as $perm) {
+				if ($accessor->$perm) {
+					return true;
+				}
+			}
+		} else {
+			return $accessor->$permission;
+		}
 	}
 
 	public static function mixedFilter( array $baseContext, $discriminator, $bulkKey, $data, $contextMapMap, $permissionMap ) {

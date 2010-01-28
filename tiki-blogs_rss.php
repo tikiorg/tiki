@@ -19,7 +19,8 @@ if ($prefs['rss_blogs'] != 'y') {
 }
 $res = $access->authorize_rss(array(
 	'tiki_p_read_blog',
-	'tiki_p_blog_admin'
+	'tiki_p_blog_admin',
+	'tiki_p_blog_view_ref'
 ));
 if ($res) {
 	if ($res['header'] == 'y') {

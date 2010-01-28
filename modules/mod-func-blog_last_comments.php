@@ -29,7 +29,7 @@ function module_blog_last_comments_info() {
 function module_blog_last_comments( $mod_reference, $module_params ) {
 	global $bloglib, $smarty;
 	include_once ('lib/blogs/bloglib.php');
-	$comments = $bloglib->list_blog_post_comments('y', $mod_reference["rows"]);
+	$comments = $bloglib->list_blog_post_comments('y', $mod_reference["rows"], 'post');
 	
 	$smarty->assign('comments', $comments['data']);
 	$smarty->assign('moretooltips', isset($module_params['moretooltips']) ? $module_params['moretooltips'] : 'n');

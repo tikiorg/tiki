@@ -18,7 +18,7 @@ function module_last_modified_blogs_info() {
 
 function module_last_modified_blogs( $mod_reference, $module_params ) {
 	global $tikilib, $smarty;
-	$ranking = $tikilib->list_blogs(0, $mod_reference["rows"], 'lastModif_desc', '');
+	$ranking = $tikilib->list_blogs(0, $mod_reference["rows"], 'lastModif_desc', '', 'blog');
 	
 	$smarty->assign('modLastModifiedBlogs', $ranking["data"]);
 }

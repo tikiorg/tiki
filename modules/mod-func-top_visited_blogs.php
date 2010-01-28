@@ -18,7 +18,7 @@ function module_top_visited_blogs_info() {
 
 function module_top_visited_blogs( $mod_reference, $module_params ) {
 	global $tikilib, $smarty;
-	$ranking = $tikilib->list_blogs(0, $mod_reference["rows"], 'hits_desc', '');
+	$ranking = $tikilib->list_blogs(0, $mod_reference["rows"], 'hits_desc', '', 'blog');
 	
 	$smarty->assign('modTopVisitedBlogs', $ranking["data"]);
 }

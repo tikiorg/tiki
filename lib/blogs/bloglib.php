@@ -263,7 +263,7 @@ class BlogLib extends TikiLib
 	 * @access public
 	 * @return void
 	 */
-	function list_blog_post_comments($approved = 'y', $maxRecords = -1) {
+	function list_blog_post_comments($approved = 'y', $maxRecords = -1, $ref='') {
 		global $user;
 
 		$query = "SELECT b.`title`, b.`postId`, c.`threadId`, c.`title` as commentTitle, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b WHERE `objectType`='post' AND b.`postId`=c.`object`";
@@ -282,7 +282,7 @@ class BlogLib extends TikiLib
 
 		$ret = array();
 		while ( $res = $result->fetchRow() ) {
-			if ( $this->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_read_blog') ) {
+			if ( $this->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_read_blog') || ($ref == 'post' && $this->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_blog_post_view_ref'))) {
 
 				/// check if the blog post is marked private
 				$priv = ( $res2 = $this->get_post($res['postId']) ) ? $res2['priv'] : '';
@@ -307,7 +307,7 @@ class BlogLib extends TikiLib
 	 * @access public
 	 * @return void
 	 */
-	function list_all_blog_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '') {
+	function list_all_blog_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '', $ref='') {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -334,7 +334,7 @@ class BlogLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
-		$result = Perms::filter( array( 'type' => 'blog' ), 'object', $result, array( 'object' => 'blogId' ), 'read_blog' );
+		$result = Perms::filter( array( 'type' => 'blog' ), 'object', $result, array( 'object' => 'blogId' ), array('read_blog', 'blog_view_ref') );
 
 		global $prefs;
 		foreach( $result as $res ) {
