@@ -65,7 +65,7 @@ if ($prefs['users_prefs_display_timezone'] == 'Site' || (isset($user_preferences
 	$prefs['display_timezone'] = $prefs['server_timezone'];
 } elseif ( ! isset($user_preferences[$user]['display_timezone']) || $user_preferences[$user]['display_timezone'] == '' || $user_preferences[$user]['display_timezone'] == 'Local' ) {
 	// If the display timezone is not known ...
-	if ( isset($_COOKIE['local_tz']) && eregi('[A-Z]', $_COOKIE['local_tz']) ) {
+	if ( isset($_COOKIE['local_tz']) && preg_match('/[a-zA-Z]/', $_COOKIE['local_tz']) ) {
 		//   ... we try to use the timezone detected by javascript and stored in cookies
 		if ( $_COOKIE['local_tz'] == 'CEST' || $_COOKIE['local_tz'] == 'HAEC' ) {
 			// CEST (and HAEC, returned by Safari on Mac) is not recognized as a DST timezone (with daylightsavings) by PEAR Date

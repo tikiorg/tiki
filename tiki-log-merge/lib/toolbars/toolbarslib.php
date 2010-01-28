@@ -1273,7 +1273,6 @@ if (textarea.selectionEnd != tempSelectionEnd) {
 		global $headerlib;
 
 		if( ! $dialogAdded ) {
-			$headerlib->include_jquery_ui();
 			$headerlib->add_js( <<<JS
 window.dialogData = [];
 var dialogDiv;

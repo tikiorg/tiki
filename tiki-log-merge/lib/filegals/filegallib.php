@@ -199,6 +199,7 @@ class FileGalLib extends TikiLib
 		if (!isset($fgal_info['quota']))  $fgal_info['quota'] = 0;
 		if (!isset($fgal_info['backlinkPerms'])) $fgal_info['backlinkPerms'] = 'n';
 		if (!isset($fgal_info['show_backlinks'])) $fgal_info['show_backlinks'] = 'n';
+		if (!isset($fgal_info['show_lastDownload'])) $fgal_info['show_lastDownload'] = 'n';
 
 		// if the user is admin or the user is the same user and the gallery exists
 		// then replace if not then create the gallary if the name is unused.
@@ -213,7 +214,7 @@ class FileGalLib extends TikiLib
 			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?,
 			`description`=?, `lastModif`=?, `public`=?, `visible`=?, `show_icon`=?,
 			`show_id`=?, `show_name`=?, `show_description`=?, `show_size`=?,
-			`show_created`=?, `show_hits`=?, `max_desc`=?, `type`=?, `parentId`=?,
+			`show_created`=?, `show_hits`=?, `show_lastDownload`=?, `max_desc`=?, `type`=?, `parentId`=?,
 			`user`=?, `lockable`=?, `show_lockedby`=?, `archives`=?, `sort_mode`=?,
 			`show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=?,
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
@@ -224,7 +225,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['visible'], $fgal_info['show_icon'], $fgal_info['show_id'],
 			$fgal_info['show_name'], $fgal_info['show_description'],
 			$fgal_info['show_size'], $fgal_info['show_created'],
-			$fgal_info['show_hits'], (int) $fgal_info['max_desc'],
+			$fgal_info['show_hits'], $fgal_info['show_lastDownload'], (int) $fgal_info['max_desc'],
 			$fgal_info['type'], $fgal_info['parentId'], $fgal_info['user'],
 			$fgal_info['lockable'], $fgal_info['show_lockedby'],
 			$fgal_info['archives'], $fgal_info['sort_mode'],
@@ -249,7 +250,7 @@ class FileGalLib extends TikiLib
 			$query = "insert into `tiki_file_galleries`(`name`, `description`,
 			`created`, `user`, `lastModif`, `maxRows`, `public`, `hits`, `visible`,
 			`show_id`, `show_icon`, `show_name`, `show_description`, `show_created`,
-			`show_hits`, `max_desc`, `type`, `parentId`, `lockable`, `show_lockedby`,
+			`show_hits`, `show_lastDownload`, `max_desc`, `type`, `parentId`, `lockable`, `show_lockedby`,
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
 			`show_explorer`, `show_path`, `show_slideshow`, `default_view`, `quota`, `backlinkPerms`, `show_backlinks`)
@@ -260,7 +261,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['maxRows'], $fgal_info['public'], 0, $fgal_info['visible'],
 			$fgal_info['show_id'], $fgal_info['show_icon'], $fgal_info['show_name'],
 			$fgal_info['show_description'], $fgal_info['show_created'],
-			$fgal_info['show_hits'], (int) $fgal_info['max_desc'],
+			$fgal_info['show_hits'], $fgal_info['show_lastDownload'], (int) $fgal_info['max_desc'],
 			$fgal_info['type'], $fgal_info['parentId'], $fgal_info['lockable'],
 			$fgal_info['show_lockedby'], $fgal_info['archives'],
 			$fgal_info['sort_mode'], $fgal_info['show_modified'],
@@ -1122,8 +1123,8 @@ class FileGalLib extends TikiLib
 		}
 	}
 	// get the backlinks of an object
-	function getFileBacklinks($fileId, $sort='type_asc') {
-		$query = 'select tob.* from `tiki_file_backlinks` tfb left join `tiki_objects` tob on (tob.`objectId`=tfb.`objectId`) where `fileId`=? ';
+	function getFileBacklinks($fileId, $sort_mode='type_asc') {
+		$query = 'select tob.* from `tiki_file_backlinks` tfb left join `tiki_objects` tob on (tob.`objectId`=tfb.`objectId`) where `fileId`=? order by '.$this->convertSortMode($sort_mode);
 		return $this->fetchAll($query, array((int)$fileId));
 	}
 	// can not see a file if all its backlinks are not viewable
@@ -1313,6 +1314,17 @@ class FileGalLib extends TikiLib
 			$this->query($query, array('', $fhash, $file_info['fileId']));
 		}
 		return '';
+	}
+	// find the fileId in the pool of fileId archives files that is closer before the date 
+	function getArchiveJustBefore($fileId, $date) {
+		$query = 'select `archiveId` from `tiki_files` where `fileId`=?';
+		$archiveId = $this->getOne($query, array($fileId));
+		if (empty($archiveId)) {
+			$archiveId = $fileId;
+		}
+		$query = 'select `fileId` from `tiki_files` where (`fileId`=? or `archiveId`=?) and `created` <= ? order by `created` desc';
+		$fileId = $this->getOne($query, array($archiveId, $archiveId, $date));
+		return $fileId;
 	}
 }
 $filegallib = new FileGalLib;

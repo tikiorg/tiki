@@ -7,26 +7,25 @@
 // details.
 
 //this script may only be included - so its better to die if called directly.
-global $access;
+global $access, $prefs, $smarty;
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-if ( $prefs['error_reporting_level'] == 2047 && $prefs['error_reporting_adminonly'] == 'y' ) {
-	$prefs['error_reporting_level'] = ( $tiki_p_admin == 'y' ) ? 2047 : 0; // 2047 means E_ALL in PHP < 5.2.x (if we support PHP >= 5.2 only, 6143 should be used instead)
-} elseif ( $prefs['error_reporting_level'] == 2039 ) {
-	$prefs['error_reporting_level'] = ( $tiki_p_admin == 'y' ) ? 2039 : 0; // should mean E_ALL & ~E_NOTICE
-}
-
 if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
-	$prefs['error_reporting_level'] = 0;
-}
-
-if ($prefs['error_reporting_level'] != 0) {
-	ini_set('display_errors', 1); // just in case the server allows it
+	$errorReportingLevel = 0;
+} elseif ($prefs['error_reporting_level'] == 2047) {
+	$errorReportingLevel = E_ALL & ~E_STRICT;
+} elseif ($prefs['error_reporting_level'] == 2039) {
+	$errorReportingLevel = E_ALL & ~E_NOTICE;
+} elseif ($prefs['error_reporting_level'] == -1) {
+	$errorReportingLevel = E_ALL;
+} elseif ($prefs['error_reporting_level'] == "php") {
+	$errorReportingLevel = error_reporting();
 } else {
-	$prefs['error_reporting_level'] = 0;
+	$errorReportingLevel = $prefs['error_reporting_level'];
 }
 
-error_reporting($prefs['error_reporting_level']);
+set_error_handler("tiki_error_handling", $errorReportingLevel);
+error_reporting($errorReportingLevel);
 
 if ( $prefs['log_sql'] == 'y' && $api_tiki == 'adodb' ) {
 	$dbTiki->LogSQL();

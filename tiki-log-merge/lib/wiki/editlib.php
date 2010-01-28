@@ -14,9 +14,16 @@
 
 class EditLib
 {
+	private $tracesOn = false;
+	
+	// Fields for translation related methods.
+	public $sourcePageName = null;
+	public $targetPageName = null;
+	public $oldSourceVersion = null;
+	public $newSourceVersion = null;
 	
 	// general
-	
+		
 	function make_sure_page_to_be_created_is_not_an_alias($page, $page_info) {
 		global $_REQUEST, $semanticlib, $access, $wikilib, $tikilib;
 		require_once 'lib/wiki/semanticlib.php';
@@ -62,18 +69,128 @@ class EditLib
 	
 	// translation functions
 	
+	function isTranslationMode() {
+		return $this->isUpdateTranslationMode() || $this->isNewTranslationMode();
+	}
+	
 	function isNewTranslationMode() {
 		global $prefs;
 	
-		return $prefs['feature_multilingual'] == 'y'
-			&& isset( $_REQUEST['translationOf']  )
-			&& ! empty( $_REQUEST['translationOf'] );
+		if ($prefs['feature_multilingual'] != 'y') {
+			return false;
+		}
+		if (isset( $_REQUEST['translationOf']  )
+			&& ! empty( $_REQUEST['translationOf'] )) {
+
+			return true;
+		}
+		if (isset( $_REQUEST['is_new_translation']  )
+			&& $_REQUEST['is_new_translation'] ==  'y') {
+			return true;
+		}	
+		return false;		
 	}
 
 	function isUpdateTranslationMode() {
 		return isset( $_REQUEST['source_page'] )
 			&& isset( $_REQUEST['oldver'] )
+			&& (!isset($_REQUEST['is_new_translation']) || $_REQUEST['is_new_translation'] == 'n')
 			&& isset( $_REQUEST['newver'] );
+	}
+	
+	function prepareTranslationData() {
+		global $_REQUEST, $tikilib, $smarty;
+		$this->setTranslationSourceAndTargetPageNames();		
+		$this->setTranslationSourceAndTargetVersions();
+	}
+	
+	private function setTranslationSourceAndTargetPageNames() {
+		global $_REQUEST, $smarty;
+		
+		if (!$this->isTranslationMode()) {
+			return;
+		}
+		
+		$this->targetPageName = null;
+		if (isset($_REQUEST['target_page'])) {
+			$this->targetPageName = $_REQUEST['target_page'];
+		} elseif (isset($_REQUEST['page'])) {
+			$this->targetPageName = $_REQUEST['page'];		
+		} 
+		$smarty->assign('target_page', $this->targetPageName);
+
+		$this->sourcePageName = null;		
+		if ($_REQUEST['translationOf']) {
+			$this->sourcePageName = $_REQUEST['translationOf'];
+		} elseif (isset($_REQUEST['source_page'])) {
+			$this->sourcePageName = $_REQUEST['source_page'];
+		}
+		$smarty->assign('source_page', $this->sourcePageName);
+		
+		if ($this->isNewTranslationMode()) {
+			$smarty->assign('translationIsNew', 'y');
+		} else {
+			$smarty->assign('translationIsNew', 'n');
+			
+		}
+	}
+	
+	private function setTranslationSourceAndTargetVersions($source_page_name, $target_page_name) {
+		global $_REQUEST, $tikilib;
+		
+		if (isset($_REQUEST['oldver'])) {
+			$this->oldSourceVersion = $_REQUEST['oldver'];
+		} else {
+			// Note: -1 means a "virtual" empty version.
+			$this->oldsourceVersion = -1;
+		}
+		
+		if (isset($_REQUEST['newver'])) {
+			$this->newSourceVersion = $_REQUEST['newver'];
+		} else {
+			// Note: version number of 0 means the most recent version.
+			$this->newSourceVersion = 0;
+		}
+	}	
+
+	function aTranslationWasSavedAs($complete_or_partial) {	
+		if (!$this->isTranslationMode() ||
+			!isset($_REQUEST['save'])) {
+			return false;
+		}
+		
+		// We are saving a translation. Is it partial or complete?
+		if ($complete_or_partial == 'complete' && isset($_REQUEST['partial_save'])) {
+			return false;
+		} else if ($complete_or_partial == 'partial' && !isset($_REQUEST['partial_save'])) {
+			return false;
+		}
+		return true;
+	} 
+	
+	function saveCompleteTranslation() {
+		global $multilinguallib, $tikilib;
+		
+		$sourceInfo = $tikilib->get_page_info( $this->sourcePageName );
+		$targetInfo = $tikilib->get_page_info( $this->targetPageName );
+				
+		$multilinguallib->propagateTranslationBits( 
+			'wiki page',
+			$sourceInfo['page_id'],
+			$targetInfo['page_id'],
+			$sourceInfo['version'],
+			$targetInfo['version'] );
+		$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);		
+	}
+	
+	function savePartialTranslation() {
+		global $multilinguallib, $tikilib;
+
+		$sourceInfo = $tikilib->get_page_info( $this->sourcePageName );
+		$targetInfo = $tikilib->get_page_info( $this->targetPageName );
+		
+		$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
+		
 	}
 
 	function parseToWiki(&$inData) {

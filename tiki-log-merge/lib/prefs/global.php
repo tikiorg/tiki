@@ -258,6 +258,11 @@ function prefs_global_list() {
 			'type' => 'list',
 			'options' => feature_home_pages(),
 		),
+		'disableJavascript' => array(
+			'name' => tra('Disable javascript'),
+			'type' => 'flag',
+			'description' => tra('Disable javascript for testing purpose even if the browser allows it'),
+		),
 	);
 }
 

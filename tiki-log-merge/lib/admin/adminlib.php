@@ -386,53 +386,5 @@ class AdminLib extends TikiLib
 		$logslib->add_log('dump', 'dump created');
 	}
 
-	function list_content_tables() {
-		global $TWV;
-	   // this function lists all tables and fields that hold textual content.
-	   // used in System Admin -> Fix UTF-8 Errors.
-
-	   $tikisql=file('db/tiki-'.$TWV->getBaseVersion().'-mysql.sql');
-	   $tabfields=array();
-	   foreach($tikisql as $item) {
-	      if(preg_match('/^CREATE TABLE ([a-zA-Z0-9_]+)/',$item,$tmatch)) {
-		 $table=$tmatch[1];
-	      }
-	      if(preg_match('/^  ([a-zA-Z0-9_]+) (varchar|text|mediumtext|longtext)/',$item,$fmatch)) {
-		 $field=$fmatch[1];
-		 $tabfields[]=array('table'=>$table,'field' => $field);
-	      }
-	   }
-	   return($tabfields);
-	}
-
-	function check_utf8($table,$field) {
-	   // this function checks for utf8 errors in a table and field
-	   $utf8ok=true;
-	   $query='select `'.$field.'` from `'.$table.'`';
-	   $result = $this->query($query,array());
-	   while ($res = $result->fetchRow()) {
-	      if($res[$field]!=utf8_encode($res[$field])) {
-		 $utf8ok=false;
-		 break;
-	      }
-	   }
-	   return($utf8ok);
-	}
-
-	function fix_utf8($table,$field) {
-	   // this function fixes utf8 errors in a table and field
-	   $errc=0;
-	   $query='select `'.$field.'` from `'.$table.'`';
-	   $result = $this->query($query,array());
-	   while ($res = $result->fetchRow()) {
-	      if($res[$field]!=utf8_encode($res[$field])) {
-		 $query2='update `'.$table.'` set `'.$field.'`=? where `'.$field.'`=?';
-		 $result2=$this->query($query2,array(utf8_encode($res[$field]),$res[$field]));
-		 $errc++;
-	      }
-	   }
-	   return($errc);
-	}
-
 }
 $adminlib = new AdminLib;

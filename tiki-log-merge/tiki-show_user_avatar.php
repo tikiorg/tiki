@@ -21,8 +21,11 @@ if (!isset($_REQUEST["user"])) {
 $info = $userprefslib->get_user_avatar_img($_REQUEST["user"]);
 $type = $info["avatarFileType"];
 $content = $info["avatarData"];
+if (empty($content) && isset($_REQUEST['always'])) {
+	$content = file_get_contents('pics/noavatar.png');
+}
 header("Content-type: $type");
-echo "$content";
+echo $content;
 
 if( $prefs['users_serve_avatar_static'] == 'y' ) {
 	require 'lib/mime/mimeextensions.php';

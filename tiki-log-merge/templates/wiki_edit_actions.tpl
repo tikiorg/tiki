@@ -4,6 +4,8 @@
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 	{if ! $page_badchars_display or $prefs.wiki_badchar_prevent neq 'y'}
 		{if $translation_mode eq 'y'}
+			<input type="hidden" name="source_page" value="{$source_page}"/>
+			<input type="hidden" name="target_page" value="{$target_page}"/>
 			<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Save the page as a partial translation.{/tr}" name="partial_save" value="{tr}Partial Translation{/tr}" onclick="needToConfirm=false"/>
 			<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Save the page as a completed translation.{/tr}" name="save" value="{tr}Complete Translation{/tr}" onclick="needToConfirm=false"/>
 		{else}

@@ -109,6 +109,8 @@ else if ($_REQUEST['id']) {
 }
 
 $smarty->assign('name', $name);
+$smarty->assign('target_page', $name);
+
 $smarty->assign('type', $type);
 $smarty->assign('id', $objId);
 

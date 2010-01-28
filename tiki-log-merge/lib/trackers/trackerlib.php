@@ -468,7 +468,7 @@ class TrackerLib extends TikiLib
 
                     $tmp=$this->get_item_value($trackerId,$itemId,$field);
                     if ($is_trackerlink){
-                      $options = split(',', $myfield["options"]);
+                      $options = preg_split('/,/', $myfield["options"]);
                       $tmp=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$tmp),$options[3]);
                      }
                     if ($is_date) $tmp=$this->date_format("%e/%m/%y",$tmp);
@@ -486,7 +486,7 @@ class TrackerLib extends TikiLib
                 $is_trackerlink=($myfield['type']=='r');
                 $tmp="";
                 $tmp=$this->get_all_items($trackerId,$field,$status, false);//deliberatly do not check perm on categs on items
-                $options = split(',', $myfield["options"]);
+                $options = preg_split('/,/', $myfield["options"]);
                 foreach ($tmp as $key=>$value){
                     if ($is_date) $value=$this->date_format("%e/%m/%y",$value);
                     if ($is_trackerlink){
@@ -701,7 +701,7 @@ class TrackerLib extends TikiLib
 			return array('cant' => 0, 'data' => '');
 		}
 		if ( substr($sort_mode, 0, 2) == 'f_' ) {
-			list($a, $asort_mode, $corder) = split('_', $sort_mode);
+			list($a, $asort_mode, $corder) = preg_split('/_/', $sort_mode);
 		}
 		if ( $initial ) {
 			$mid .= ' AND ttif.`value` LIKE ?';
@@ -718,8 +718,8 @@ class TrackerLib extends TikiLib
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
 				$csort_mode = 'sttif.`value` ';
 				if (isset($listfields[$asort_mode]['type']) && $listfields[$asort_mode]['type'] == 'l') {// item list
-					$optsl = split(',', $listfields[$asort_mode]['options']);
-					$optsl[1] = split(':', $optsl[1]);
+					$optsl = preg_split('/,/', $listfields[$asort_mode]['options']);
+					$optsl[1] = preg_split('/:/', $optsl[1]);
 					$sort_tables = $this->get_left_join_sql(array_merge(array($optsl[2]), $optsl[1], array($optsl[3])));
 				} else {
 					$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif)'
@@ -741,7 +741,7 @@ class TrackerLib extends TikiLib
 						break;
 				}
 			} else {
-				list($csort_mode, $corder) = split('_', $sort_mode);
+				list($csort_mode, $corder) = preg_split('/_/', $sort_mode);
 				$csort_mode = 'tti.`'.$csort_mode.'` ';
 			}
 
@@ -851,7 +851,7 @@ class TrackerLib extends TikiLib
 				}
 			}
 		} else {
-			list($csort_mode, $corder) = split('_', $sort_mode);
+			list($csort_mode, $corder) = preg_split('/_/', $sort_mode);
 			$csort_mode = "`" . $csort_mode . "`";
 			if ($csort_mode == '`itemId`')
 				$csort_mode = 'tti.`itemId`';
@@ -967,7 +967,7 @@ class TrackerLib extends TikiLib
 			}
 			$fopt['linkId'] = '';
 			if (!empty($fopt['options'])) {
-				$fopt['options_array'] = split(',', $fopt['options']);
+				$fopt['options_array'] = preg_split('/,/', $fopt['options']);
 			}
 			if ($fopt['isHidden'] == 'c' && empty($itemUser)) { // need itemUser
 				$itemUser = $this->get_item_creator($trackerId, $itemId);
@@ -975,7 +975,7 @@ class TrackerLib extends TikiLib
 			switch ( $fopt['type'] ) {
 			case 'r':
 				$fopt['links'] = array();
-				$opts = split(',', $fopt['options']);
+				$opts = preg_split('/,/', $fopt['options']);
 				$fopt['linkId'] = $this->get_item_id($opts[0], $opts[1], $fopt['value']);
 				$fopt['trackerId'] = $opts[0];
 				break;
@@ -1024,7 +1024,7 @@ class TrackerLib extends TikiLib
 				break;
 			case 'l':
 				if ( isset($fopt['options_array'][2]) && isset($fil[$fopt['options_array'][2]]) && ($lst = $fil[$fopt['options_array'][2]]) && isset($fopt['options_array'][3])) {
-					$opts[1] = split(':', $fopt['options_array'][1]);
+					$opts[1] = preg_split('/:/', $fopt['options_array'][1]);
 					$finalFields = explode('|', $fopt['options_array'][3]);
 					$fopt['links'] = $this->get_join_values($trackerId, $itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($finalFields[0])), $fopt['options_array'][0], $finalFields, ' ', empty($fopt['options_array'][5])?'':$fopt['options_array'][5]);
 					$fopt['trackerId'] = $fopt['options_array'][0];
@@ -1217,7 +1217,7 @@ class TrackerLib extends TikiLib
 						}
 						$ins_fields["data"][$i]["value"] = '';
 					} else if( $ins_fields["data"][$i]['value'] != '' && $this->check_image_type( $ins_fields["data"][$i]['file_type'] ) ) {
-						$opts = split(',', $ins_fields['data'][$i]["options"]);
+						$opts = preg_split('/,/', $ins_fields['data'][$i]["options"]);
 						if (!empty($opts[4])) {
 							global $imagegallib;include_once('lib/imagegals/imagegallib.php');
 							$imagegallib->image = $ins_fields["data"][$i]['value'];
@@ -1277,7 +1277,7 @@ class TrackerLib extends TikiLib
 				} elseif ($ins_fields['data'][$i]['type'] == 'k') { //page selector
 					if ($ins_fields['data'][$i]['value'] != '') {
 						if (!$this->page_exists($ins_fields['data'][$i]['value'])) {
-							$opts = split(',', $ins_fields['data'][$i]['options']);
+							$opts = preg_split('/,/', $ins_fields['data'][$i]['options']);
 							if (!empty($opts[2])) {
 								global $IP;
 								$info = $this->get_page_info($opts[2]);
@@ -1448,7 +1448,7 @@ class TrackerLib extends TikiLib
 								}
 								if ($old_value != $new_value) {
 									// split old value by lines
-									$lines = split("\n", $old_value);
+									$lines = preg_split("/\n/", $old_value);
 									// mark every old value line with standard email reply character
 									$old_value_lines = '';
 									foreach ($lines as $line) {
@@ -1821,7 +1821,7 @@ class TrackerLib extends TikiLib
 				} elseif ($header[$i] == 'lastModif' && is_numeric($data[$i])) {
 					$lastModif = $data[$i];
 				} elseif ($header[$i] == 'categs') { // for old compatibility
-					$cats = split(',',trim($data[$i]));
+					$cats = preg_split('/,/',trim($data[$i]));
 				}
 			}
 			if ($itemId && ($t = $this->get_tracker_for_item($itemId)) && $t == $trackerId) {
@@ -1859,7 +1859,7 @@ class TrackerLib extends TikiLib
 							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 							continue;
 						} elseif ($field['type'] == 'e') {
-							$cats = split('%%%', trim($data[$i]));
+							$cats = preg_split('/%%%/', trim($data[$i]));
 							$catIds = array();
 							if (!empty($cats)) {
 								foreach ($cats as $c) {
@@ -1883,10 +1883,10 @@ class TrackerLib extends TikiLib
 								$data[$i] = 'n';
 						} elseif ($field['type'] == 'f' || $field['type'] == 'j') {
 							if ($dateFormat == 'mm/dd/yyyy') {
-								list($m, $d, $y) = split('/', $data[$i]);
+								list($m, $d, $y) = preg_split('#/#', $data[$i]);
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
 							} elseif ($dateFormat == 'dd/mm/yyyy') {
-								list($d, $m, $y) = split('/', $data[$i]);
+								list($d, $m, $y) = preg_split('#/#', $data[$i]);
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
 							}
 						}
@@ -2169,11 +2169,11 @@ class TrackerLib extends TikiLib
 
 		$query = "select * from `tiki_tracker_fields` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_fields` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$result = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach( $result as $res ) {
 			$res['options_array'] = preg_split('/\s*,\s*/', trim($res['options']));
 			$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 			$res['visibleBy'] = ($res['visibleBy'] != '') ? unserialize($res['visibleBy']) : array();
@@ -2196,7 +2196,7 @@ class TrackerLib extends TikiLib
 						$fieldId = 0;
 				} elseif (is_numeric($res['options_array'][1])) {
 					$fieldId = $res['options_array'][1];
-				} elseif ($fields = split(':', $res['options_array'][1])) {
+				} elseif ($fields = preg_split('/:/', $res['options_array'][1])) {
 					$fieldId = $fields[count($fields) - 1];
 				}
 				if (!empty($fieldId)) {
@@ -2549,7 +2549,7 @@ class TrackerLib extends TikiLib
 		if (!$result->numRows())
 			return false;
 		$res = $result->fetchRow();
-		$res['options_array'] = split(',', $res['options']);
+		$res['options_array'] = preg_split('/,/', $res['options']);
 		$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 		$res['visibleBy'] = ($res['visibleBy'] != '') ? unserialize($res['visibleBy']) : array();
 		$res['editableBy'] = ($res['editableBy'] != '') ? unserialize($res['editableBy']) : array();
@@ -2602,7 +2602,7 @@ class TrackerLib extends TikiLib
 			$resu = $result->fetchRow();
 		}
 		if (strstr($resu['orderAttachments'],'|')) {
-			$fields = split(',',substr($resu['orderAttachments'],strpos($resu['orderAttachments'],'|')+1));
+			$fields = preg_split('/,/',substr($resu['orderAttachments'],strpos($resu['orderAttachments'],'|')+1));
 			$query = "select `".implode("`,`",$fields)."` from `tiki_tracker_item_attachments` where `attId`=?";
 			$result = $this->query($query,array((int)$attId));
 			$res = $result->fetchRow();
@@ -3245,7 +3245,7 @@ class TrackerLib extends TikiLib
 		$watchers_item = $itemId? $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId)): array();
 		$watchers_outbound = array();
 		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
-			$emails3 = split(',', $options['outboundEmail']);
+			$emails3 = preg_split('/,/', $options['outboundEmail']);
 			foreach ($emails3 as $w) {
 				global $userlib, $user_preferences;
 				$u = $userlib->get_user_by_email($w);
@@ -3303,7 +3303,7 @@ class TrackerLib extends TikiLib
 		$result = $this->query($query, array($itemId, $typeField));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$res['options_array'] = split(',', $res['options']);
+			$res['options_array'] = preg_split('/,/', $res['options']);
 			$ret[] = $res;
 		}
 		return $ret;

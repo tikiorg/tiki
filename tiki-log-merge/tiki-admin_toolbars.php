@@ -27,15 +27,6 @@ if ($prefs['javascript_enabled'] != 'y') {
 	die;
 }
 
-if ($prefs['feature_jquery_ui'] != 'y') {
-	if ($prefs['feature_use_minified_scripts'] == 'y') {
-		$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
-	} else {
-		$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
-	}
-	$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
-}
-
 $sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps', 'admin');
 
 if( isset($_REQUEST['section']) && in_array($_REQUEST['section'], $sections) ) {

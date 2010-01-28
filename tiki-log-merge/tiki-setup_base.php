@@ -307,7 +307,7 @@ if (empty($_SERVER['SERVER_NAME'])) {
 }
 // in the case of tikis on same domain we have to distinguish the realm
 // changed cookie and session variable name by a name made with browsertitle
-$cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $prefs['cookie_name']);
+$cookie_site = preg_replace("/[^a-zA-Z0-9]/", "", $prefs['cookie_name']);
 $user_cookie_site = 'tiki-user-' . $cookie_site;
 // if remember me is enabled, check for cookie where auth hash is stored
 // user gets logged in as the first user in the db with a matching hash
@@ -458,6 +458,7 @@ array_unshift( $inputConfiguration, array(
 		'tab' => 'digits',
 		'javascript_enabled' => 'alpha',
 		'msg' => 'striptags',
+		'XDEBUG_PROFILE' => 'int',
 	),
 	'staticKeyFiltersForArrays' => array(
 		'cat_managed' => 'digits',

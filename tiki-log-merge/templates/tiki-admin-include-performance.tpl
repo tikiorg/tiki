@@ -11,7 +11,11 @@
 		<fieldset>
 			<legend>{tr}Performance{/tr}</legend>
 			{preference name=tiki_minify_javascript}
-			{preference name=feature_use_minified_scripts}
+			{preference name=javascript_cdn}
+			{preference name=tiki_minify_css}
+			<div class="adminoptionboxchild" id="tiki_minify_css_childcontainer">
+				{preference name=tiki_minify_css_single_file}
+			</div>
 			{preference name=feature_obzip}
 			{preference name=users_serve_avatar_static}
 			<div class="adminoptionboxchild">
@@ -23,6 +27,8 @@
 					</div>
 				{/if}
 			</div>
+			{preference name=tiki_cachecontrol_session}
+			{preference name=tiki_cachecontrol_nosession}
 		</fieldset>
 		
 		<fieldset>

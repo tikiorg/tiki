@@ -135,7 +135,7 @@
           {assign var=propval value=$files[changes].$propname}
   
           {* Format property values *}
-          {if $propname eq 'created' or $propname eq 'lastModif'}
+          {if $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
             {assign var=propval value=$propval|tiki_long_date}
           {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
             {assign var=propval value=$propval|username}
@@ -223,7 +223,7 @@
         {else}
           {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
         {/if}
-      {elseif $propname eq 'created' or $propname eq 'lastModif'}
+      {elseif $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
         {assign var=propval value=$propval|tiki_short_date}
       {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
         {assign var=propval value=$propval|userlink}

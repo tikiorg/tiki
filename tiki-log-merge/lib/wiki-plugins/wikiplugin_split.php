@@ -20,11 +20,6 @@
  *
  */
 
-function wikiplugin_split_help()
-{
-	return tra("Split a page into rows and columns").":<br />~np~{SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1],colsize=>size1|size2|...,first=>[col|line], edit=>y|n)}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
-}
-
 function wikiplugin_split_info()
 {
 	return array(
@@ -32,26 +27,31 @@ function wikiplugin_split_info()
 		'documentation' => 'PluginSplit',
 		'description' => tra('Split a page into rows and columns'),
 		'prefs' => array( 'wikiplugin_split' ),
+		'filter' => 'wikicontent',
 		'params' => array(
 			'joincols' => array(
 				'required' => false,
 				'name' => tra('Join Columns'),
 				'description' => 'y|n'.' '.tra('Generate the colspan attribute if columns are missing' ),
+				'filter' => 'alpha',
 			),
 			'fixedsize' => array(
 				'required' => false,
 				'name' => tra('Fixed Size'),
 				'description' => 'y|n'.' '.tra('Generate the width attribute on the columns'),
+				'filter' => 'alpha',
 			),
 			'colsize' => array(
 				'required' => false,
 				'name' => tra('Column Size'),
 				'description' => tra('?'),
+				'filter' => 'imgsize',
 			),
 			'first' => array(
 				'required' => false,
 				'name' => tra('First'),
 				'description' => 'col|line',
+				'filter' => 'alpha',
 			),
 			'edit' => array(
 				'required' => false,

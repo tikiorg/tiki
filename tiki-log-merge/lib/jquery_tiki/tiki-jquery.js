@@ -546,19 +546,37 @@ function popupPluginForm(area_name, type, index, pageName, pluginArgs, bodyConte
 
 var fullScreenState = [];
 
+$jq(document).ready(function() {	// if in translation-diff-mode go fullscreen automatically
+	if ($jq("#diff_outer").length && !$jq(".wikipreview").length) {	// but not if previewing (TODO better)
+		toggleFullScreen("editwiki");
+	}
+});
+
 function toggleFullScreen(area_name) {
 	var $ta = $jq("#" + area_name);
-	var $diff = $jq("#diff_outer");
-	
+	var $diff = $jq("#diff_outer"), $edit_form, $edit_form_innards;	// vars for translation diff elements if present
+
 	if (!$ta.length) {
-		$ta = $jq(getElementById(area_name));
+		$ta = $jq(getElementById(area_name));	// use the cursed getElementById() func from tiki-js.js
+		area_name = $ta.attr("id");				// as some textareas use name instead of id still
 	}
 	
-	if (fullScreenState[area_name]) {	// leave full screen
+	if (fullScreenState[area_name]) {	// leave full screen - fullScreenState[area_name] contains info about previous page DOM state when fullscreen
 		if ($diff.length) {
+			$jq("#fs_grippy_" + area_name).remove();
 			$diff.css("float", fullScreenState[area_name]["diff"]["float"]).width(fullScreenState[area_name]["diff"]["width"]).height(fullScreenState[area_name]["diff"]["height"]);
 			$jq("#diff_history").height(fullScreenState[area_name]["diff_history"]["height"])
 								.width(fullScreenState[area_name]["diff_history"]["width"]);
+			for(var i = 0; i < fullScreenState[area_name]["edit_form_innards"].length; i++) {
+				$jq(fullScreenState[area_name]["edit_form_innards"][i]["el"])
+						.css("left", fullScreenState[area_name]["edit_form_innards"][i]["left"])
+						.width(fullScreenState[area_name]["edit_form_innards"][i]["width"])
+						.height(fullScreenState[area_name]["edit_form_innards"][i]["height"]);
+			}	
+			$edit_form = $jq(fullScreenState[area_name]["edit_form"]["el"]);	// hmmm?
+			$edit_form.css("position", fullScreenState[area_name]["edit_form"]["position"])
+						.css("left", fullScreenState[area_name]["edit_form"]["left"])
+						.width(fullScreenState[area_name]["edit_form"]["width"]).height(fullScreenState[area_name]["edit_form"]["height"]);
 		}
 		$ta.css("float", fullScreenState[area_name]["ta"]["float"]).width(fullScreenState[area_name]["ta"]["width"]).height(fullScreenState[area_name]["ta"]["height"]);
 		$ta.resizable({minWidth: fullScreenState[area_name]["resizable"]["minWidth"], minHeight: fullScreenState[area_name]["resizable"]["minHeight"]});
@@ -605,9 +623,11 @@ function toggleFullScreen(area_name) {
 			w = Math.floor(w / 2) - 5;
 		}
 		
+		// store & hide anything not in col1 
 		fullScreenState[area_name]["hidden"].push($jq("#header, #col2, #col3, #footer"));
 		$jq("#header, #col2, #col3, #footer").hide();
 		
+		// store & reset margins, padding and size for all the textarea parents, and hide siblings
 		$ta.parents().each(function() {
 			fullScreenState[area_name]["hidden"].push($jq(this).siblings(":visible"));
 			var ob = [];
@@ -629,6 +649,7 @@ function toggleFullScreen(area_name) {
 			$jq(this).css("margin", 0).css("padding", 0).width(w).height(h);
 		});
 		
+		// store & resize translation diff divs etc
 		if ($diff.length) {
 			fullScreenState[area_name]["diff"] = [];
 			fullScreenState[area_name]["diff"]["width"] = $diff.width();
@@ -637,29 +658,69 @@ function toggleFullScreen(area_name) {
 			fullScreenState[area_name]["diff_history"] = [];
 			fullScreenState[area_name]["diff_history"]["height"] = $jq("#diff_history").height();
 			fullScreenState[area_name]["diff_history"]["width"] = $jq("#diff_history").width();
+			$edit_form = $diff.next();
+			$edit_form_innards = $edit_form.find("#edit-zone, table.normal, textarea, fieldset");
+			fullScreenState[area_name]["edit_form"] = [];
+			fullScreenState[area_name]["edit_form"]["el"] = $edit_form[0];	// store this element for easy access later
+			fullScreenState[area_name]["edit_form"]["height"] = $edit_form.height();
+			fullScreenState[area_name]["edit_form"]["width"] = $edit_form.width();
+			fullScreenState[area_name]["edit_form"]["left"] = $edit_form.css("left") != "auto" ? $edit_form.css("left") : 0;
+			fullScreenState[area_name]["edit_form"]["position"] = $edit_form.css("position");
+			fullScreenState[area_name]["edit_form_innards"] = [];
+			$edit_form_innards.each(function() {
+				var ob = [];
+				ob["el"] = this;
+				ob["width"] = $jq(this).css("width");
+				ob["height"] = $jq(this).css("height");
+				ob["left"] = $jq(this).css("left");
+				fullScreenState[area_name]["edit_form_innards"].push(ob);
+			});
+			
 			$diff.parents().each(function() {			// shares some parents with the textarea
 				$jq(this).width($jq(window).width());	// so make room for both
 			});
 		}
 		
+		// resize the actual textarea
 		fullScreenState[area_name]["ta"] = [];
 		fullScreenState[area_name]["ta"]["width"] = $ta.width();
 		fullScreenState[area_name]["ta"]["height"] = $ta.height();
 		fullScreenState[area_name]["ta"]["float"] = $ta.css("float");
 		
 		$ta.width(w).height($ta.parent().height() - $jq(".textarea-toolbar").height() - 60);
+		
+		// add grippy resize bar to translation diff page
 		if ($diff.length) {
+			var grippy_width = 10;
 			$diff.width(w).height(h).css("float", "left").next().css("float", "right");
-			$jq("#diff_history").height(h * 0.9).width(w);
+			$jq("#diff_history").height(h * 0.9).width(w).css("left", w + grippy_width);
+			$edit_form.css("position","absolute").css("left", w + grippy_width).width(w - grippy_width)
+			
+			$grippy = $jq("<div id='fs_grippy_" + area_name +"' />").css({"background-image": "url(pics/icons/shading.png)",
+											"background-repeat": "repeat-y",
+											"background-position": -3,
+											"position": "absolute",
+											"left": w + "px",
+											"top": 0,
+											"cursor": "col-resize"})
+									.width(grippy_width).height(h).draggable({ axis: 'x', drag: function(event, ui) {
+										$diff.find("div,table").width(ui.offset.left - grippy_width);
+										$edit_form.css("left", ui.offset.left + grippy_width).find("#edit-zone, table.normal, textarea, fieldset")
+												.width($jq(window).width() - ui.offset.left);
+									} });
+			$diff.after($grippy);
+			
 		}
 		
+		// copy and add the action buttons (preview, save etc)
 		if ($jq("div.top_actions").length) {
 			$ta.parent().append($jq("div.top_actions > .wikiaction").clone(true).addClass("fs_clones"));
 		} else {
 			$ta.parent().append($jq(".wikiaction").clone(true).addClass("fs_clones"));
 		}
-		
-		$jq(".fs_clones").show();
+
+		// show action buttons and reapply cluetip options
+		$jq(".fs_clones").cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true}).show();
 
 	}
 }

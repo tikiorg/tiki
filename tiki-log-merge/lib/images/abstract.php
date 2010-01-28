@@ -14,7 +14,7 @@ class ImageAbstract
 
 	function __construct($image, $isfile = false) {
 		if ( ! empty($image) || $this->filename !== null ) {
-			if ( $this->filename !== null && function_exists('exif_thumbnail') ) {
+			if ( is_readable( $this->filename ) && function_exists('exif_thumbnail') ) {
 				$this->thumb = exif_thumbnail($this->filename, $this->width, $this->height);
 				if (trim($this->thumb) == "") $this->thumb = NULL;
 			}

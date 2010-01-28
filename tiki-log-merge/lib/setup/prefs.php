@@ -530,6 +530,7 @@ function get_default_prefs() {
 		'fgal_list_comment' => 'o',
 		'fgal_list_files' => 'o',
 		'fgal_list_hits' => 'o',
+		'fgal_list_lastDownload' => 'n',
 		'fgal_list_lockedby' => 'a',
 		'fgal_show_path' => 'y',
 		'fgal_show_explorer' => 'y',
@@ -1079,6 +1080,7 @@ function get_default_prefs() {
 		'category_i18n_unsynced' => array(),
 		'expanded_category_jail' => '',
 		'expanded_category_jail_key' => '',
+		'ws_container' => 0,
 
 		// html pages
 		'feature_html_pages' => 'n',
@@ -1389,6 +1391,7 @@ function get_default_prefs() {
 		'log_sql_perf_min' => '0.05',
 		'log_mail' => 'n',
 		'log_tpl' => 'n',
+		'disableJavascript' => 'n',
 
 		'case_patched' => 'n',
 		'site_closed' => 'n',
@@ -1439,6 +1442,7 @@ function get_default_prefs() {
 		'wiki_3d_adjust_camera' => 'true',
 		'wiki_3d_autoload' => '',
 		'javascript_enabled' => 'n',
+		'javascript_cdn' => 'none',
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_comments_locking' => 'n',
@@ -1534,8 +1538,11 @@ function get_default_prefs() {
 		'multidomain_active' => 'n',
 		'multidomain_config' => '',
 
-		'feature_use_minified_scripts' => 'y',		// for debugging
 		'tiki_minify_javascript' => 'y',
+		'tiki_minify_css' => 'y',
+		'tiki_minify_css_single_file' => 'n',
+		'tiki_cachecontrol_session' => '',
+		'tiki_cachecontrol_nosession' => '',
 
 		// Token Access
 		'auth_token_access' => 'n',
@@ -1586,6 +1593,7 @@ function get_default_prefs() {
 
 	// Special default values
 
+	global $tikidomain;
 	if ( is_file('styles/'.$tikidomain.'/'.$prefs['site_favicon']) )
 		$prefs['site_favicon'] = 'styles/'.$tikidomain.'/'.$prefs['site_favicon'];
 	elseif ( ! is_file($prefs['site_favicon']) )
@@ -1625,7 +1633,7 @@ if (isset($_SESSION['s_prefs'])) {
 	}
 
 	// Reload if the virtual host or tikiroot has changed
-	if (!isset($_SESSION['lastPrefsSite'])) $lastPrefsSite = '';
+	if (!isset($_SESSION['lastPrefsSite'])) $_SESSION['lastPrefsSite'] = '';
 	//   (this is needed when using the same php sessions for more than one tiki)
 	if ( $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
 		$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;

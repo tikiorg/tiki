@@ -878,7 +878,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 	$tree = '$tree=Array('.$this->structure_to_tree($page_ref_id).');';
 	eval($tree);
 	//Now we have the tree in $tree!
-	$menucode="foldersTree = gFld(\"Index\", \"pages/$top.html\")\n";
+	$menucode="foldersTree = gFld(\"Contents\", \"content.html\")\n";
 	$menucode.=$this->traverse($tree);
 	$base = "whelp/$dir";
 	copy("$base/menu/options.cfg","$base/menu/menuNodes.js");
@@ -904,7 +904,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   		$dat = preg_replace("/tiki-index.php\?page=([^\'\" ]+)/","$1.html",$dat);
   		$dat = str_replace('?nocache=1','',$dat);
   		$cs = '';
-  		$data = "<html><head><script src=\"../js/highlight.js\"></script><link rel=\"StyleSheet\"  href=\"../../../styles/$style_base.css\" type=\"text/css\" /><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /> <title>".$res["pageName"]."</title></head><body onload=\"doProc();\">$cs<div id='tiki-center'><div class='wikitext'>".$dat.'</div></div></body></html>';
+  		$data = "<html><head><script src=\"../js/highlight.js\"></script><link rel=\"StyleSheet\"  href=\"../../../styles/$style_base.css\" type=\"text/css\" /><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /> <title>".$res["pageName"]."</title></head><body style=\"padding:10px\" onload=\"doProc();\">$cs<div id='tiki-center'><div class='wikitext'>".$dat.'</div></div></body></html>';
   		$fw=fopen("$base/pages/".$res['pageName'].'.html','wb+');
   		fwrite($fw,$data);
   		fclose($fw);
@@ -940,15 +940,14 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 	fclose($fw);
 
 // write the title page, using:
-// Browser Title, Site Title, Site subtitle
+// Browser Title, Logo, Site Title, Site subtitle
 	$fw = fopen("$base/content.html",'w+');
-	$titlepage = "<h1>". $prefs['browsertitle'] . "</h1><h2>". $prefs['sitetitle'] ."</h2><h3>".  $prefs['sitesubtitle']  ."</h3>";
-	$titlepage = 
+	$titlepage = "<h1>". $prefs['browsertitle'] . "</h1><p><img src='../../".$prefs['sitelogo_src']."' alt='".$prefs['sitelogo_alt']."' align='center' /></p><h2>". $prefs['sitetitle'] ."</h2><h3>".  $prefs['sitesubtitle']  ."</h3>";
 	fwrite($fw, $titlepage);
 	fclose($fw);
-
 	}
-  function structure_to_tree($page_ref_id) {
+
+	function structure_to_tree($page_ref_id) {
 	$query = 'select * from `tiki_structures` ts,`tiki_pages` tp where tp.`page_id`=ts.`page_id` and `page_ref_id`=?';
 	$result = $this->query($query,array((int)$page_ref_id));
 	$res = $result->fetchRow();

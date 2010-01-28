@@ -18,7 +18,7 @@ function module_translation_info() {
 			),
 			'show_language' => array(
 				'name' => tra('Show language'),
-				'description' => tra('If "y" the page language will be shown instead of the page name.') . tra('Default = "n".')
+				'description' => tra('If "y" the page language will be shown instead of the page name.') . tra('Default = "y".')
 			)
 		)
 	);
@@ -50,6 +50,7 @@ function module_translation( $mod_reference, $module_params ) {
 	if ((!$page or $page == '') and isset($_REQUEST['page'])) {
 		$page = $_REQUEST['page'];
 	}
+	$smarty->assign('page', $page);
 	$smarty->assign( 'show_translation_module', false);
 
 	if( ! empty( $page ) && is_string($page) ) {
@@ -57,10 +58,10 @@ function module_translation( $mod_reference, $module_params ) {
 		global $multilinguallib;
 		include_once('lib/multilingual/multilinguallib.php');
 
-		if ( $module_params['show_language'] == 'y') {
-			$smarty->assign( 'show_language', 'y');
+		if ( $module_params['show_language'] == 'n') {
+			$smarty->assign( 'show_language', 'n');
 		} else {
-			$smarty->assign( 'show_langauge', 'n');
+			$smarty->assign( 'show_language', 'y');
 		}
 		
 		$pivotLanguage = isset( $module_params['pivot_language'] ) ? $module_params['pivot_language'] : '';

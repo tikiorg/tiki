@@ -119,7 +119,7 @@ function displayError($message) { // {{{
 	$smarty->display("error.tpl");
 	die;
 } // }}}
-function &getStore() { // {{{
+function getStore() { // {{{
 	
 	/**
 	 * This is where the example will store its OpenID information.
@@ -134,7 +134,7 @@ function &getStore() { // {{{
 	}
 	return new Auth_OpenID_FileStore($store_path);
 } // }}}
-function &getConsumer() { // {{{
+function getConsumer() { // {{{
 	
 	/**
 	 * Create a consumer object using the store object created

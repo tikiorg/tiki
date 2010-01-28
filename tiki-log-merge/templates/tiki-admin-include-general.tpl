@@ -98,6 +98,7 @@
 						{preference name=smarty_notice_reporting label="{tr}Include Smarty notices{/tr}"}
 					</div>
 				</div>
+				{preference name=disableJavascript}
 
 				{preference name=log_mail}
 				{preference name=log_sql}

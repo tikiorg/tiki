@@ -56,6 +56,9 @@ class TikiFilter
 		case 'lang':
 			require_once 'Zend/Filter/PregReplace.php';
 			return new Zend_Filter_PregReplace( '/^.*([a-z]{2})(\-[a-z]{2}).*$/', '$1$2' );
+		case 'imgsize':
+			require_once 'Zend/Filter/PregReplace.php';
+			return new Zend_Filter_PregReplace( '/^.*(\d+)\s*(%?).*$/', '$1$2' );
 		default:
 			trigger_error( 'Filter not found: ' . $filter, E_USER_WARNING );
 			require_once 'TikiFilter/PreventXss.php';

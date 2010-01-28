@@ -71,6 +71,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 				$calIds = array_keys($module_params['calIds']['data']);
 			} else {
 				$calIds = $calendarlib->list_calendars();
+				$calIds = $calIds['data'];
 			}
 		} elseif ( ! empty($prefs['default_calendars']) ) {
 			$calIds = $_SESSION['CalendarViewGroups'] = is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']);
@@ -94,7 +95,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		}
 
 		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day');
-		if ($viewlist == 'list') {
+		if ($_REQUEST['viewlist'] == 'list') {
 			foreach ($tc_infos['listevents'] as $i=>$e) {
 				$tc_infos['listevents'][$i]['head'] = '';
 				$tc_infos['listevents'][$i]['group_description'] ='';

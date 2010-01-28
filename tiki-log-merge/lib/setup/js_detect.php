@@ -13,7 +13,9 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 //   (to be able to generate non-javascript code if there is no javascript, when noscript tag is not useful enough)
 //   It uses cookies instead of session vars to keep the correct value after a session timeout
 
-if ( isset($_COOKIE['javascript_enabled']) ) {
+if ($prefs['disableJavascript'] == 'y' ) {
+	$prefs['javascript_enabled'] = 'n';
+} elseif ( isset($_COOKIE['javascript_enabled']) ) {
 	// Update the pref with the cookie value
 	$prefs['javascript_enabled'] = $_COOKIE['javascript_enabled'];
 } else {
@@ -21,7 +23,7 @@ if ( isset($_COOKIE['javascript_enabled']) ) {
 	$prefs['javascript_enabled'] = 'n';
 }
 
-if ( $prefs['javascript_enabled'] != 'y' ) {
+if ( $prefs['javascript_enabled'] != 'y' && $prefs['disableJavascript'] != 'y' ) {
 	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers) - duration: approx. 1 year
 	$headerlib->add_js("var jsedate = new Date();\njsedate.setTime(" . ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) . ");\nsetCookieBrowser('javascript_enabled', 'y', null, jsedate);");
 
@@ -32,14 +34,15 @@ if ( $prefs['javascript_enabled'] != 'y' ) {
 	} elseif ( $_COOKIE['runs_before_js_detect'] > 0 ) {
 		$prefs['javascript_enabled'] = 'y';
 		setcookie( 'runs_before_js_detect', $_COOKIE['runs_before_js_detect'] - 1, ( 1000 * ( $tikilib->now + 365 * 24 * 3600 ) ) );
-     	} else {
-		// disable js dependant features
-		$prefs['feature_tabs'] = 'n';
-		$prefs['feature_jquery'] = 'n';
-		$prefs['feature_shadowbox'] = 'n';
-		$prefs['feature_wysiwyg'] = 'n';
-		$prefs['feature_ajax'] = 'n';
 	}
+}
+if ($prefs['javascript_enabled'] == 'n') {
+	// disable js dependant features
+	$prefs['feature_tabs'] = 'n';
+	$prefs['feature_jquery'] = 'n';
+	$prefs['feature_shadowbox'] = 'n';
+	$prefs['feature_wysiwyg'] = 'n';
+	$prefs['feature_ajax'] = 'n';
 }
 
 if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
@@ -69,11 +72,7 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 			if (($fixondom = $prefs['iepngfix_elements']) != '') {
 				$fixondom = "DD_belatedPNG.fixPng($fixondom); // list of HTMLDomElements to fix separated by commas (default is none)";
 			}
-			if ($prefs['feature_use_minified_scripts'] != 'n') {
-				$scriptpath = 'lib/iepngfix/DD_belatedPNG.js';
-			} else {
-				$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
-			}
+			$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
 			$headerlib->add_jsfile ($scriptpath, 200);
 			$headerlib->add_js (<<<JS
 DD_belatedPNG.fix('$fixoncss'); // list of CSS selectors to fix separated by commas (default is set to fix sitelogo)

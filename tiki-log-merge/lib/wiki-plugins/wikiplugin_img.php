@@ -11,26 +11,31 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Image source'),
 				'description' => tra('Full URL to the image to display. "id", "fileId", "attId" or "src" required.'),
+				'filter' => 'url',
 			),
 			'id' => array(
 				'required' => false,
 				'name' => tra('Image ID'),
 				'description' => tra('Numeric ID of an image in an Image Gallery (or comma-separated list). "id", "fileId", "attId" or "src" required.'),
+				'filter' => 'striptags',
 			),
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File ID'),
 				'description' => tra('Numeric ID of an image in a File Gallery (or comma-separated list). "id", "fileId", "attId" or "src" required.'),
+				'filter' => 'int',
 			),
 			'attId' => array(
 				'required' => false,
 				'name' => tra('Attachment ID'),
 				'description' => tra('Numeric ID of an image attached to a wiki page (or comma-separated list). "id", "fileId", "attId" or "src" required.'),
+				'filter' => 'int',
 			),
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumbnail'),
 				'description' => tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "browse" and "browsepopup" only work with image gallery and "download" only works with file gallery.'),
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y', 'description' => tra('Full size image appears when thumbnail is clicked.')),
@@ -46,6 +51,7 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Enlarge button'),
 				'description' => tra('Button for enlarging image.'),
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -55,36 +61,43 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Link'),
 				'description' => tra('Enter a url to the address the image should link to. Not needed if thumb parameter is set; overrides thumb setting.'),
+				'filter' => 'url',
 			),
 			'rel' => array(
 				'required' => false,
 				'name' => tra('Link relation'),
+				'filter' => 'striptags',
 				'description' => tra('Enter "box" for colorbox effect (like shadowbox and lightbox) or appropriate syntax for link relation.'),
 			),
 			'usemap' => array(
 				'required' => false,
 				'name' => tra('Image map'),
+				'filter' => 'striptags',
 				'description' => tra('Name of the image map to use for the image.'),
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Image height'),
 				'description' => tra('Height in pixels.'),
+				'filter' => 'imgsize',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Image width'),
 				'description' => tra('Width in pixels.'),
+				'filter' => 'imgsize',
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum image size'),
 				'description' => tra('Maximum height or width in pixels (largest dimension is scaled). Overrides height and width settings.'),
+				'filter' => 'imgsize',
 			),
 			'imalign' => array(
 				'required' => false,
 				'name' => tra('Align image'),
 				'description' => tra('Aligns the image itself. If the image is inside a box (because of other settings), use the align parameter to align the box.'),
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
@@ -96,11 +109,13 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Image style'),
 				'description' => tra('Enter "border" to place a dark gray border around the image. Otherwise enter CSS styling syntax for other style effects.'),
+				'filter' => 'striptags',
 			),
 			'align' => array(
 				'required' => false,
 				'name' => tra('Align image block'),
 				'description' => tra('Aligns the box containing the image.'),
+				'filter' => 'alpĥa',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
@@ -111,17 +126,20 @@ function wikiplugin_img_info() {
 			'stylebox' => array(
 				'required' => false,
 				'name' => tra('Image block style'),
+				'filter' => 'striptags',
 				'description' => tra('Enter "border" to place a dark gray border frame around the image. Otherwise enter CSS styling syntax for other style effects.'),
 			),
 			'styledesc' => array(
 				'required' => false,
 				'name' => tra('Description style'),
+				'filter' => 'striptags',
 				'description' => tra('Enter "right" or "left" to align text accordingly. Otherwise enter CSS styling syntax for other style effects.'),
 			),
 			'block' => array(
 				'required' => false,
 				'name' => tra('Wrapping control'),
 				'description' => tra('Control how other items wrap around the image.'),
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Top'), 'value' => 'top'), 
@@ -132,21 +150,25 @@ function wikiplugin_img_info() {
 			'class' => array(
 				'required' => false,
 				'name' => tra('CSS class'),
+				'filter' => 'striptags',
 				'description' => tra('CSS class to apply to the image.'),
 			),
 			'desc' => array(
 				'required' => false,
 				'name' => tra('Caption'),
+				'filter' => 'text',
 				'description' => tra('Image caption. "desc" or "name" for tiki images, "idesc" or "ititle" for iptc data, otherwise enter your own description.'),
 			),
 			'title' => array(
 				'required' => false,
 				'name' => tra('Link title'),
+				'filter' => 'text',
 				'description' => tra('Title text.'),
 			),
 			'alt' => array(
 				'required' => false,
 				'name' => tra('Alternate text'),
+				'filter' => 'text',
 				'description' => tra('Alternate text that displays when image does not load.'),
 			),
 			'default' => array(
@@ -713,7 +735,7 @@ function wikiplugin_img_info() {
 					$imgalthumb == true;
 				}
 				$width =  $imgdata['width'];
-				if (empty($imgdata['height'])) {
+				if (empty($imgdata['height']) && $fwidth > 0) {
 					$height = floor($width * $fheight / $fwidth);
 				} else {
 					$height = $imgdata['height'];

@@ -76,7 +76,7 @@ function smarty_function_icon($params, &$smarty) {
 		$icons_basedir = $basedirs[0].'/';
 	}
 
-	if ( ! eregi('^[a-z0-9_-]+$', $params['_id']) )
+	if ( ! preg_match('/^[a-z0-9_-]+$/i', $params['_id']) )
 		return;
 
 	global $url_path, $base_url, $tikipath, $tikilib;

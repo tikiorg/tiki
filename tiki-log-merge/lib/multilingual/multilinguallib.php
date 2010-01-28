@@ -10,6 +10,8 @@ class MultilingualLib extends TikiLib
 	/** brief add a translation
 	  */
 	  
+	private $tracesOn = false;
+	  
 	public $mtEnabled = 'y';
 	  
 	/* @brief add an object and its transaltion set into the set of translations of another one
@@ -413,7 +415,7 @@ class MultilingualLib extends TikiLib
 		}
 
 		/*
-		 * Alain Désilets (2010-01-12):
+		 * Alain Dï¿½silets (2010-01-12):
 		 * 
 		 *  There is also a bl= argument, but it seems too be used very inconsistenly. 
 		 *  - Sometimes, the mere presence of bl (no matter its value) s interpreted as meaning
@@ -725,7 +727,7 @@ class MultilingualLib extends TikiLib
 		*/
 		return "(
 					SELECT 
-						IFNULL( IF(MIN(version) = 1, 2, MIN(version)), 2 ) - 1
+						IFNULL( IF(MIN(version) = 1, 0, MIN(version)), 0 ) - 1
 					FROM
 						tiki_pages_translation_bits
 					WHERE
@@ -740,8 +742,8 @@ class MultilingualLib extends TikiLib
 	function getBetterPages( $pageId )
 	{
 		$pageId = (int) $pageId;
-
-		$result = $this->query( "
+		
+		$query = "
 			SELECT DISTINCT
 				page.page_id,
 				page.pageName page,
@@ -762,7 +764,8 @@ class MultilingualLib extends TikiLib
 					FROM tiki_pages_translation_bits
 					WHERE page_id = b.objId
 				)
-		", array( $pageId ) );
+		";
+		$result = $this->query($query, array( $pageId ) );
 
 		$pages = array();
 		while( $row = $result->fetchRow() ) {

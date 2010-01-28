@@ -39,7 +39,7 @@ if ( ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )
 
 $url_scheme = $https_mode ? 'https' : 'http';
 $url_host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST']  : $_SERVER['SERVER_NAME'];
-list($url_host,)=split(":",$url_host);	// Strip url port
+list($url_host,)=preg_split('/:/',$url_host);	// Strip url port
 $url_port = $https_mode ? $prefs['https_port'] : $prefs['http_port'];
 $url_path = $tikiroot;
 $base_host = $url_scheme.'://'.$url_host.(($url_port!='')?':'.$url_port:'');

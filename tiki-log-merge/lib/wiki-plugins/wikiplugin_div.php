@@ -5,10 +5,6 @@
  * 
  * 
  */
-function wikiplugin_div_help() {
-	return tra("Insert a division block, span, blockquote or other text formatting on wiki page.").":<br />~np~{DIV(class=>class, id=>id, type=>div|span|pre|i|b|tt|blockquote, align=>right|center|justify, bg=>color, width=>num[%]|numpx, float=>left|right], clear=>left|right|both)}".tra("text")."{DIV}~/np~";
-}
-
 function wikiplugin_div_info() {
 	return array(
 		'name' => tra('Div'),
@@ -38,11 +34,13 @@ function wikiplugin_div_info() {
 				'required' => false,
 				'name' => tra('Background color'),
 				'description' => tra('As defined by CSS, name or Hex code.'),
+				'filter' => 'striptags',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Box width'),
 				'description' => tra('In pixels or percentage. Default value is 100%.'),
+				'filter' => 'imgsize',
 			),
 			'align' => array(
 				'required' => false,
@@ -89,6 +87,7 @@ function wikiplugin_div_info() {
 				'required' => false,
 				'name' => tra('HTML id'),
 				'description' => tra('Sets the div\'s id attribute, as defined by HTML.'),
+				'filter' => 'striptags',
 			),
 		),
 	);

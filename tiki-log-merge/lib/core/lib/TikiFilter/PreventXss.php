@@ -5,7 +5,7 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 	function filter( $value )
 	{
 		// No need to filter really simple values
-		if( ctype_alnum( $value ) )
+		if( ctype_alnum( $value ) || empty($value) )
 			return $value;
 		else
 			return $this->RemoveXSS( $value );

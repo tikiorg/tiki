@@ -74,7 +74,7 @@ function smarty_function_tree($params, &$smarty) {
 	// Update cookie that stores tree elements that should be expanded
 	//   by keeping those already expanded by the user and those that should now be expanded ($params['expanded'])
 	//
-	if ( isset($_COOKIE) && isset($_COOKIE['phplm_expand']) && ereg('^[0-9\|]+$', $_COOKIE['phplm_expand']) ) {
+	if ( isset($_COOKIE) && isset($_COOKIE['phplm_expand']) && preg_match('/^[0-9\|]+$/', $_COOKIE['phplm_expand']) ) {
 		// Get user choices stored in Cookies from this script and from phplayers itself in javascript version
 		$phplm_expand = $_COOKIE['phplm_expand'];
 		$default_expand = array_unique(array_merge($params['expanded'], explode('|', $_COOKIE['phplm_expand'])));

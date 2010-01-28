@@ -5,6 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // Initialization
 
+// If you put some traces in this script, and can't see them
+// because the script automatically forwards to another URL
+// with a call to header(), then you will not see the traces
+// If you want to see the traces, set value below to true.
+// WARNING: DO NOT COMMIT WITH TRUE!!!!
+$dieInsteadOfForwardingWithHeader = false;
+$tracesOn = false;
+
+
 $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
 		'page' => 'pagename',
@@ -26,6 +35,7 @@ if ($prefs['feature_ajax'] == 'y') {
 	require_once ("lib/wiki/wiki-ajax.php");
 }
 require_once ("lib/wiki/editlib.php");
+
 
 function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user) {
 	global $tikilib, $multilinguallib, $categlib, $prefs;
@@ -61,7 +71,7 @@ function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $descrip
 }
 
 function guess_new_page_attributes_from_parent_pages($page, $page_info) {
-	global $editlib, $smarty, $_REQUEST, $tikilib, $need_lang;
+	global $editlib, $smarty, $_REQUEST, $tikilib, $prefs, $need_lang;
 	if (!$page_info) {
 		//
 		// This is a new page being created. See if we can guess some of its attributes
@@ -104,7 +114,7 @@ function translationsToThisPageAreInProgress($page_id) {
 
 function execute_module_translation() { 
 	global $smarty;
-// will show the language of the avialble translations. Chnage to 'n' to show the page name
+// will show the language of the available translations. Chnage to 'n' to show the page name
 	$params['show_language'] = 'y';
 // flag to indicate that the module is appearing within the notification area of the edit page
 	$params['from_edit_page'] = 'y';
@@ -153,6 +163,10 @@ $page = $_REQUEST["page"];
 $smarty->assign('page', $page);
 $info = $tikilib->get_page_info($page);
 
+// 2010-01-26: Keep in active until translation refactoring is done.
+ if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
+ 	$editlib->prepareTranslationData();
+ }
 $editlib->make_sure_page_to_be_created_is_not_an_alias($page, $info);
 guess_new_page_attributes_from_parent_pages($page, $info);
  
@@ -250,6 +264,7 @@ if (isset($_REQUEST['cancel_edit'])) {
 		$url .= '&bl=n';
 	}
 
+	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before first call to header(), so we can see traces. Forwarding to: \$url='$url'");
 	header($url);
 	die;
 }
@@ -444,38 +459,17 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 						}
 
 						if( $editlib->isNewTranslationMode() ) {
-							$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
-							$targetInfo = $tikilib->get_page_info( $pagename );
-
-							if( !isset($_REQUEST['partial_save']) ) {
-								$multilinguallib->propagateTranslationBits( 
-										'wiki page',
-										$sourceInfo['page_id'],
-										$targetInfo['page_id'],
-										$sourceInfo['version'],
-										$targetInfo['version'] );
-								$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
-							} else {
-								$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
+							if ($editlib->aTranslationWasSavedAs('complete')) {
+								$editlib->saveCompleteTranslation();
+							} else if ($editlib->aTranslationWasSavedAs('partial')) {
+								$editlib->savePartialTranslation();
 							}
-
 						} elseif( $editlib->isUpdateTranslationMode() ) {
-							$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
-							$targetInfo = $tikilib->get_page_info( $pagename );
-
-							if( !isset($_REQUEST['partial_save']) ) {
-								$multilinguallib->propagateTranslationBits( 
-										'wiki page',
-										$_REQUEST['source_page'],
-										$targetInfo['page_id'],
-										(int) $_REQUEST['newver'],
-										$targetInfo['version'] );
-								$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
-
-							} else {
-								$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
+							if ($editlib->aTranslationWasSavedAs('complete')) {
+								$editlib->saveCompleteTranslation();
+							} else if ($editlib->aTranslationWasSavedAs('partial')) {
+								$editlib->savePartialTranslation();
 							}
-
 						} else {
 							$info = $tikilib->get_page_info( $pagename );
 							$flags = array();
@@ -511,6 +505,8 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 		if ($prefs['feature_best_language'] == 'y') {
 			$url .= '&bl=n';
 		}
+
+		if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before second call to header(), so we can see traces. Forwarding to: '$url'");
 		header("location: $url");
 		die;
 	}
@@ -1080,8 +1076,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		if( $editlib->isNewTranslationMode() && ! empty( $pageLang ) )
 		{
 			include_once("lib/multilingual/multilinguallib.php");
-			$infoSource = $tikilib->get_page_info($_REQUEST['translationOf']);
-			$infoCurrent = $tikilib->get_page_info($_REQUEST['page']);
+			$infoSource = $tikilib->get_page_info($editlib->sourcePageName);
+			$infoCurrent = $tikilib->get_page_info($editlib->targetPageName);
 			if ($multilinguallib->insertTranslation('wiki page', $infoSource['page_id'], $infoSource['lang'], $infoCurrent['page_id'], $pageLang)){
 				$pageLang = $info['lang'];
 				$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
@@ -1109,21 +1105,11 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 
 			unset( $tikilib->cache_page_info );
 			if( $editlib->isNewTranslationMode() ) {
-				$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
-				$targetInfo = $tikilib->get_page_info( $_REQUEST['page'] );
-
-				if( !isset($_REQUEST['partial_save']) ) {
-					$multilinguallib->propagateTranslationBits( 
-							'wiki page',
-							$sourceInfo['page_id'],
-							$targetInfo['page_id'],
-							$sourceInfo['version'],
-							$targetInfo['version'] );
-							$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
-				} else {
-					$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);				
+				if ($editlib->aTranslationWasSavedAs('complete')) {
+					$editlib->saveCompleteTranslation();
+				} else if ($editlib->aTranslationWasSavedAs('partial')) {
+					$editlib->savePartialTranslation();
 				}
-
 			} else {
 				$info = $tikilib->get_page_info( $_REQUEST['page'] );
 				$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], 1 );
@@ -1165,21 +1151,12 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 			global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
 			unset( $tikilib->cache_page_info );
 
-			if( $editlib->isUpdateTranslationMode() ) {				
-				$sourceInfo = $tikilib->get_page_info( $_REQUEST['source_page'] );
-				$targetInfo = $tikilib->get_page_info( $_REQUEST['page'] );
-				if( !isset($_REQUEST['partial_save']) ) {
-					$multilinguallib->propagateTranslationBits( 
-							'wiki page',
-							$sourceInfo['page_id'],
-							$targetInfo['page_id'],
-							(int) $_REQUEST['newver'],
-							$targetInfo['version'] );
-							$multilinguallib->deleteTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);
-				} else {
-					$multilinguallib->addTranslationInProgressFlags($targetInfo['page_id'], $sourceInfo['lang']);				
+			if( $editlib->isUpdateTranslationMode() ) {
+				if ($editlib->aTranslationWasSavedAs('complete')) {
+					$editlib->saveCompleteTranslation();
+				} else if ($editlib->aTranslationWasSavedAs('partial')) {
+					$editlib->savePartialTranslation();
 				}
-
 			} else {
 				$info = $tikilib->get_page_info( $_REQUEST['page'] );
 				$flags = array();
@@ -1237,6 +1214,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		$tmp = $tikilib->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited
 		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
 	}
+	
+	if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before third call to header(), so we can see traces. Forwarding to: '$url'");
 	header("location: $url");
 	die;
 } //save
@@ -1268,17 +1247,19 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$smarty->assign_by_ref('languages', $languages);
 
 	if( $editlib->isNewTranslationMode() ) {
-		$smarty->assign( 'translationOf', $_REQUEST['translationOf'] );
+		$smarty->assign( 'translationOf', $editlib->sourcePageName );
 
 		if( $tikilib->page_exists( $page ) ) {
 			// Display an error if the page already exists
-			$smarty->assign('msg',tra("Page already exists. Go back and choose a different name."));
+			$smarty->assign('msg',
+								tra("Page already exists. Go back and choose a different name.")."<P>".
+								tra("Page name is").": '$page'");
 			$smarty->display("error.tpl");
 			die;
 		}
 
 		global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
-		$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
+		$sourceInfo = $tikilib->get_page_info( $editlib->sourcePageName );
 		if( $multilinguallib->getTranslation('wiki page', $sourceInfo['page_id'], $_REQUEST['lang'] ) ) {
 			// Display an error if the page already exists
 			$smarty->assign('msg',tra("The translation set already contains a page in this language."));
@@ -1287,24 +1268,11 @@ if ($prefs['feature_multilingual'] == 'y') {
 		}
 	}
 
-	if( $editlib->isUpdateTranslationMode() ) {
+	if( $editlib->isTranslationMode() ) {
 		include_once('lib/wiki/histlib.php');
-		histlib_helper_setup_diff( $_REQUEST['source_page'], $_REQUEST['oldver'], $_REQUEST['newver'] );
-		$smarty->assign( 'diff_oldver', (int) $_REQUEST['oldver'] );
-		$smarty->assign( 'diff_newver', (int) $_REQUEST['newver'] );
-		$smarty->assign( 'source_page', $_REQUEST['source_page'] );
-		/* 
-		   Use Full Screen mode when translating an update, because 
-		   user needs to see both diffs that have happened in the source language
-		   and the edit form for the  target language. This requires a lot of real-estate
-		   
-		   AD (2009-11-09): For now, keep that line commented because the 
-		   side-by-side source and target layout in wiki-edit is a bit 
-		   screwed up. Will reactivate as soon as I get the CSS right for
-		   that.
-		 */
-//		$_REQUEST['zoom'] = 'tiki-editpage';
-//		$diff_style = 'inlinediff-full';
+		histlib_helper_setup_diff( $editlib->sourcePageName, $editlib->oldSourceVersion, $editlib->newSourceVersion );
+		$smarty->assign( 'diff_oldver', (int) $editlib->oldSourceVersion );
+		$smarty->assign( 'diff_newver', (int) $editlib->newSourceVersion );
 		$smarty->assign('update_translation', 'y');
 	}
 }
@@ -1320,7 +1288,7 @@ if ($prefs['feature_freetags'] == 'y') {
 	if ( isset($_REQUEST['freetag_string']) ) {
 		$smarty->assign('taglist', $_REQUEST['freetag_string']);
 	} elseif( $editlib->isNewTranslationMode() ) {
-		$tags = $freetaglib->get_all_tags_on_object_for_language($_REQUEST['translationOf'], 'wiki page', $pageLang);
+		$tags = $freetaglib->get_all_tags_on_object_for_language($editlib->sourcePageName, 'wiki page', $pageLang);
 		$smarty->assign( 'taglist', implode( ' ', $tags ) );
 	}
 }
@@ -1401,7 +1369,8 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 		$smarty->assign('approvedPageExists', $approvedPageExists);
 	} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {		
 		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
-		if ($prefs['wikiapproval_block_editapproved'] == 'y') {
+		if ($prefs['wikiapproval_block_editapproved'] == 'y') {			
+			if ($dieInsteadOfForwardingWithHeader) die ("-- tiki-editpage: Dying before fourth call to header(), so we can see traces. Forwarding to: 'tiki-editpage.php?page=$stagingPageName'");
 			header("location: tiki-editpage.php?page=$stagingPageName");
 		}
 		$smarty->assign('needsStaging', 'y');

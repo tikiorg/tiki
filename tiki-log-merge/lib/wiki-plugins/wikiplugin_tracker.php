@@ -336,7 +336,7 @@ function wikiplugin_tracker($data, $params)
 				}
 				$cpt = 0;
 				if (isset($fields)) {
-					$fields_plugin = split(':', $fields);
+					$fields_plugin = preg_split('/:/', $fields);
 				}
 				foreach ($flds['data'] as $fl) {
 					// store value to display it later if form
@@ -501,7 +501,7 @@ function wikiplugin_tracker($data, $params)
 						$trklib->replace_rating($trackerId, $rid, $newItemRateField, $user, $newItemRate);
 					}
 					if (!empty($email)) {
-						$emailOptions = split("\|", $email);
+						$emailOptions = preg_split("#\|#", $email);
 						if (is_numeric($emailOptions[0])) {
 							$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
 						}
@@ -511,7 +511,7 @@ function wikiplugin_tracker($data, $params)
 						if (empty($emailOptions[1])) { // to
 							$emailOptions[1][0] = $prefs['sender_email'];
 						} else {
-							$emailOptions[1] = split(',', $emailOptions[1]);
+							$emailOptions[1] = preg_split('/,/', $emailOptions[1]);
 							foreach ($emailOptions[1] as $key=>$email) {
 								if (is_numeric($email))
 									$emailOptions[1][$key] = $trklib->get_item_value($trackerId, $rid, $email);
@@ -567,7 +567,7 @@ function wikiplugin_tracker($data, $params)
 					$values = array($values);
 				}
 				if (isset($fields)) {
-					$fl = split(':', $fields);
+					$fl = preg_split('/:/', $fields);
 					for ($j = 0, $count_fl = count($fl); $j < $count_fl; $j++) {
 						for ($i = 0, $count_flds = count($flds['data']); $i < $count_flds; $i++) {
 							if ($flds['data'][$i]['fieldId'] == $fl[$j]) { 
@@ -584,7 +584,7 @@ function wikiplugin_tracker($data, $params)
 			
 			} elseif (!empty($itemId)) {
 				if (isset($fields)) {
-					$fl = split(':', $fields);
+					$fl = preg_split('/:/', $fields);
 					$filter = '';
 					foreach ($flds['data'] as $f) {
 						if (in_array($f['fieldId'], $fl))
@@ -605,7 +605,7 @@ function wikiplugin_tracker($data, $params)
 				if (isset($_REQUEST['values']) && isset($_REQUEST['prefills'])) { //url:prefields=1:2&values[]=x&values[]=y
 					if (!is_array($_REQUEST['values']))
 						$_REQUEST['values'] = array($_REQUEST['values']);
-					$fl = split(':', $_REQUEST['prefills']);
+					$fl = preg_split('/:/', $_REQUEST['prefills']);
 				} else {
 					unset($fl);
 				}
@@ -621,7 +621,7 @@ function wikiplugin_tracker($data, $params)
 			$optional = array();
 			$outf = array();
 			if (isset($fields) && !empty($fields)) {
-				$fl = split(":", $fields);
+				$fl = preg_split('/:/', $fields);
 				if ($sort == 'y')
 					$flds = $trklib->sort_fields($flds, $fl);		
 				foreach ($fl as $l) {
@@ -698,8 +698,8 @@ function wikiplugin_tracker($data, $params)
 			}
 			if (isset($_REQUEST['email']))
 				$back.= '<input type="hidden" name="email" value="'.$_REQUEST["email"].'" />';
-			if (isset($_REQUEST['regcode']))
-				$back.= '<input type="hidden" name="regcode" value="'.$_REQUEST["regcode"].'" />';
+			if (isset($_REQUEST['antibotcode']))
+				$back.= '<input type="hidden" name="antibotcode" value="'.$_REQUEST["antibotcode"].'" />';
 			if (isset($_REQUEST['chosenGroup'])) // for registration
 				$back.= '<input type="hidden" name="chosenGroup" value="'.$_REQUEST["chosenGroup"].'" />';
 			if (isset($_REQUEST['register']))
@@ -788,7 +788,7 @@ function wikiplugin_tracker($data, $params)
 							// all in the smarty object now
 						}
 					} elseif ($f['type'] == 'l' && isset($itemId)) {
-						$opts[1] = split(':', $f['options_array'][1]);
+						$opts[1] = preg_split('/:/', $f['options_array'][1]);
 						$finalFields = explode('|', $f['options_array'][3]);
 						$flds['data'][$i]['value'] = $trklib->get_join_values($trackerId, $itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields, ' ', empty($f['options_array'][5])?'':$f['options_array'][5]);
 					} elseif ($f['type'] == 'w') {

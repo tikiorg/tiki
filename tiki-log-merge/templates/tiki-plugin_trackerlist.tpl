@@ -11,18 +11,25 @@
 		 {/if}
 </div>
 	{/if}
+
+	{if $user_watching_tracker eq 'n'}
+		<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}" class="trackerlistwatch">
+			{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}
+		</a>
+	{elseif $user_watching_tracker eq 'y'}
+		<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}" class="trackerlistwatch">
+		   {icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}
+		</a>
+	{/if}
+
+{if !empty($sortchoice)}
 	<div class="trackerlistsort">
-	{if !empty($sortchoice)}
 		<form method="post">
-			<select id="{'tr_sort_mode'|cat:$iTRACKERLIST}" name="{'tr_sort_mode'|cat:$iTRACKERLIST}">
-				{foreach from=$sortchoice item=sc}
-					<option value={$sc.value}{if $tr_sort_mode eq $sc.value} selected="selected"{/if}>{tr}{$sc.label|escape}{/tr}</option>
-				{/foreach}
-			</select>
+			{include file='tracker_sort_input.tpl'}
 			<input type="submit" name="sort" value="{tr}Sort{/tr}" />
 		</form>
-	{/if}
 	</div>
+{/if}
 
 	{if $shownbitems eq 'y'}<div class="nbitems">{tr}Items found:{/tr} {$count_item}</div>{/if}
 

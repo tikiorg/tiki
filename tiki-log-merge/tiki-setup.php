@@ -5,6 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 //this script may only be included - so its better to die if called directly.
+global $prefs, $tikilib;
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
@@ -133,13 +134,29 @@ if( isset( $_GET['msg'] ) ) {
 
 $headerlib->add_jsfile( 'lib/tiki-js.js' );	// tiki-js.js gets included even if javascript_enabled==n for the js test
 
+if( $prefs['feature_cssmenus'] == 'y' ) {
+	$headerlib->add_cssfile( 'css/cssmenus.css' );
+}
+if( $prefs['feature_bidi'] == 'y' ) {
+	$headerlib->add_cssfile( 'styles/BiDi/BiDi.css' );
+}
+
 if ($prefs['javascript_enabled'] == 'y') {
 	
-	$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
+	if( $prefs['javascript_cdn'] == 'google' ) {
+		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js', 'external' );
+	} else {
+		$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
+	}
+
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
 	
 	if( $prefs['feature_jquery_ui'] == 'y' ) {
-		$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+		if( $prefs['javascript_cdn'] == 'google' ) {
+			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js', 'external' );
+		} else {
+			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+		}
 		$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
 	}
 	
@@ -201,4 +218,20 @@ if ($prefs['javascript_enabled'] == 'y') {
 	if( $prefs['wikiplugin_flash'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 	}
+
+	if( $prefs['feature_metrics_dashboard'] == 'y' ) {
+		$headerlib->add_cssfile("styles/metrics.css");
+		$headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
+		$headerlib->add_jsfile("lib/metrics.js");
+	}
 }	// end if $prefs['javascript_enabled'] == 'y'
+
+if( session_id() ) {
+	if( $prefs['tiki_cachecontrol_session'] ) {
+		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_session'] );
+	}
+} else {
+	if( $prefs['tiki_cachecontrol_nosession'] ) {
+		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_nosession'] );
+	}
+}

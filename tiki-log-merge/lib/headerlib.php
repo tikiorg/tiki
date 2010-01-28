@@ -119,37 +119,17 @@ class HeaderLib
 
 		$back = "\n";
 		if ($this->title) {
-			$back = '<title>'.$this->title."</title>\n\n";
+			$back = '<title>'.smarty_modifier_escape($this->title)."</title>\n\n";
 		}
 
 		if (count($this->metatags)) {
 			foreach ($this->metatags as $n=>$m) {
-				$back.= "<meta name=\"$n\" content=\"$m\" />\n";
+				$back.= "<meta name=\"" . smarty_modifier_escape($n) . "\" content=\"" . smarty_modifier_escape($m) . "\" />\n";
 			}
 			$back.= "\n";
 		}
 
-		if (count($this->cssfiles)) {
-			foreach ($this->cssfiles as $x=>$cssf) {
-				$back.= "<!-- cssfile $x -->\n";
-				foreach ($cssf as $cf) {
-					global $tikipath, $tikidomain, $style_base;
-					if (!empty($tikidomain) && is_file("styles/$tikidomain/$style_base/$cf")) {
-						$cf = "styles/$tikidomain/$style_base/$cf";
-					} elseif (is_file("styles/$style_base/$cf")) {
-						$cf = "styles/$style_base/$cf";
-					}
-					$cfprint = str_replace('.css','',$cf) . '-print.css';
-					if (!file_exists($tikipath . $cfprint)) {
-						$back.= "<link rel=\"stylesheet\" href=\"$cf\" type=\"text/css\" />\n";
-					} else {
-						// add support for print style sheets
-						$back.= "<link rel=\"stylesheet\" href=\"$cf\" type=\"text/css\" media=\"screen\" />\n";
-						$back.= "<link rel=\"stylesheet\" href=\"$cfprint\" type=\"text/css\" media=\"print\" />\n";
-					}
-				}
-			}
-		}
+		$back .= $this->output_css_files();
 
 		if (count($this->css)) {
 			$back.= "<style type=\"text/css\"><!--\n";
@@ -166,19 +146,19 @@ class HeaderLib
 		$back .= "<!--[if lt IE 7]>\n"
 				.'<link rel="stylesheet" href="css/ie6.css" type="text/css" />'."\n";
 		if ( $style_ie6_css != '' ) {
-			$back .= '<link rel="stylesheet" href="'.$style_ie6_css.'" type="text/css" />'."\n";
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($style_ie6_css).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 7]>\n"
 				.'<link rel="stylesheet" href="css/ie7.css" type="text/css" />'."\n";
 		if ( $style_ie7_css != '' ) {
-			$back .= '<link rel="stylesheet" href="'.$style_ie7_css.'" type="text/css" />'."\n";
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($style_ie7_css).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 8]>\n"
 				.'<link rel="stylesheet" href="css/ie8.css" type="text/css" />'."\n";
 		if ( $style_ie8_css != '' ) {
-			$back .= '<link rel="stylesheet" href="'.$style_ie8_css.'" type="text/css" />'."\n";
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($style_ie8_css).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 
@@ -188,7 +168,7 @@ class HeaderLib
 			foreach ($this->rssfeeds as $x=>$rssf) {
 				$back.= "<!-- rss $x -->\n";
 				foreach ($rssf as $rsstitle=>$rssurl) {
-					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"$rsstitle\" href=\"$rssurl\" />\n";
+					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"".smarty_modifier_escape($rsstitle)."\" href=\"".smarty_modifier_escape($rssurl)."\" />\n";
 				}
 			}
 			$back.= "\n";
@@ -213,9 +193,16 @@ class HeaderLib
 					unset( $this->jsfiles['dynamic'] );
 				}
 
+				$external = array();
+				if( isset( $this->jsfiles['external'] ) ) {
+					$external = $this->jsfiles['external'];
+					unset( $this->jsfiles['external'] );
+				}
+
 				$jsfiles = $this->getMinifiedJs();
 
 				$jsfiles['dynamic'] = $dynamic;
+				$jsfiles['external'] = $external;
 			} else {
 				$jsfiles = $this->jsfiles;
 			}
@@ -223,7 +210,7 @@ class HeaderLib
 			foreach ($jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
 				foreach ($jsf as $jf) {
-					$back.= "<script type=\"text/javascript\" src=\"$jf\"></script>\n";
+					$back.= "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
 				}
 			}
 			$back.= "\n";
@@ -246,6 +233,8 @@ class HeaderLib
 		}
 
 		return array(
+			'external' => array(),
+			'dynamic' => array(),
 			array( $file ),
 		);
 	}
@@ -340,7 +329,7 @@ class HeaderLib
 		if (count($this->jsfiles)) {
 			foreach ($this->jsfiles as $x=>$jsf) {
 				foreach ($jsf as $jf) {
-					$out[] = "<script type=\"text/javascript\" src=\"$jf\"></script>\n";
+					$out[] = "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
 				}
 			}
 		}
@@ -355,19 +344,129 @@ class HeaderLib
 		return $this->hasDoneOutput;
 	}
 
-	function include_jquery_ui() {
-		global $prefs, $headerlib;
+	private function output_css_files() {
+		$files = $this->collect_css_files();
 
-		if ($prefs['feature_jquery_ui'] != 'y') {
-			if ($prefs['feature_use_minified_scripts'] == 'y') {	// could reduce to only using dialog (needs core, draggable & resizable)
-				$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js');
+		$back = $this->output_css_files_list( $files['screen'], 'screen' );
+		$back .= $this->output_css_files_list( $files['print'], 'print' );
+		return $back;
+	}
+	
+	private function output_css_files_list( $files, $media ) {
+		global $prefs;
+
+		$back = '';
+
+		if( $prefs['tiki_minify_css'] == 'y' ) {
+			require_once 'Minify/CSS.php';
+
+			if( $prefs['tiki_minify_css_single_file'] == 'y' ) {
+				$files = $this->get_minified_css_single( $files );
 			} else {
-				$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
+				$files = $this->get_minified_css( $files );
 			}
-			$headerlib->add_cssfile('lib/jquery/jquery-ui/themes/'.$prefs['feature_jquery_ui_theme'].'/jquery-ui.css');
 		}
+
+		foreach( $files as $file ) {
+			$back.= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($file) . "\" type=\"text/css\" media=\"" . smarty_modifier_escape($media) . "\" />\n";
+		}
+
+		return $back;
 	}
 
+	private function get_minified_css( $files ) {
+		$out = array();
+			$target = "temp/public/";
+
+		foreach( $files as $file ) {
+			$hash = md5( $file );
+			$min = $target . "minified_$hash.css";
+
+			if( ! file_exists( $min ) ) {
+				file_put_contents( $min, $this->minify_css( $file ) );
+			}
+
+			$out[] = $min;
+		}
+
+		return $out;
+	}
+
+	private function get_minified_css_single( $files ) {
+		$hash = md5( serialize( $files ) );
+		$target = "temp/public/";
+		$file = $target . "minified_$hash.css";
+
+		if( ! file_exists( $file ) ) {
+			$minified = '';
+
+			foreach( $files as $f ) {
+				$minified .= $this->minify_css( $f );
+			}
+
+			$minified = $this->handle_css_imports( $minified );
+
+			file_put_contents( $file, $minified );
+		}
+
+		return array( $file );
+	}
+
+	private function handle_css_imports( $minified ) {
+		global $tikiroot;
+
+		preg_match_all( '/@import\s+url\("([^;]*)"\);/', $minified, $parts );
+		$imports = array_unique( $parts[0] );
+
+		$pre = '';
+		foreach( $parts[1] as $f ) {
+			$f = substr( $f, strlen($tikiroot) );
+			$pre .= $this->minify_css( $f );
+		}
+
+		$minified = $pre . $minified;
+		$minified = str_replace( $imports, '', $minified );
+
+		return $minified;
+	}
+
+	private function minify_css( $file ) {
+		$content = file_get_contents( $file );
+
+		return Minify_CSS::minify( $content, array(
+			'currentDir' => dirname( $file ),
+			'bubbleCssImports' => true,
+		) );
+	}
+
+	private function collect_css_files() {
+		global $tikipath, $tikidomain, $style_base;
+
+		$files = array(
+			'screen' => array(),
+			'print' => array(),
+		);
+
+		foreach ($this->cssfiles as $x=>$cssf) {
+			foreach ($cssf as $cf) {
+				if (!empty($tikidomain) && is_file("styles/$tikidomain/$style_base/$cf")) {
+					$cf = "styles/$tikidomain/$style_base/$cf";
+				} elseif (is_file("styles/$style_base/$cf")) {
+					$cf = "styles/$style_base/$cf";
+				}
+				$cfprint = str_replace('.css','',$cf) . '-print.css';
+				if (!file_exists($tikipath . $cfprint)) {
+					$files['screen'][] = $cf;
+					$files['print'][] = $cf;
+				} else {
+					$files['screen'][] = $cf;
+					$files['print'][] = $cfprint;
+				}
+			}
+		}
+
+		return $files;
+	}
 }
 
 $headerlib = new HeaderLib;

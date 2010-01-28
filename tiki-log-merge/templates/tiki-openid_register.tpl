@@ -35,7 +35,7 @@
 					{* Groups *}
 					{if isset($theChoiceGroup)}
 								<input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
-					{elseif $listgroups}
+					{elseif isset($listgroups)}
 								<div>
 									<label for="chosenGroup">{tr}Group{/tr}</label>
 						{foreach item=gr from=$listgroups}
