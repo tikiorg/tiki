@@ -8,23 +8,13 @@
  */
 
 require_once 'lib/auth/tokens.php';
-require_once 'lib/core/lib/TikiDb.php';
 
 class AuthTokensTest extends PHPUnit_Framework_TestCase
 {
 	private $db;
 	
 	function setUp() {
-		
-		$this->markTestSkipped(
-              'This Test Case was not active til now. '.
-              'It has now been activated, but is causing a number of errors. '.
-              'Need to fix those.'
-            );
-		
-		global $db;
-		$this->db = $db;
-
+		$this->db = TikiDb::get();
 		$this->db->query( 'TRUNCATE tiki_auth_tokens' );
 	}
 
