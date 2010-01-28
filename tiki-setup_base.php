@@ -457,7 +457,6 @@ array_unshift( $inputConfiguration, array(
 		'cat_clearall' => 'alpha',
 		'tab' => 'digits',
 		'javascript_enabled' => 'alpha',
-		'msg' => 'striptags',
 		'XDEBUG_PROFILE' => 'int',
 	),
 	'staticKeyFiltersForArrays' => array(
