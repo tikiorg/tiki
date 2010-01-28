@@ -159,7 +159,7 @@ if (isset($_REQUEST["save"])) {
 			$smarty->assign('mail_page', $_REQUEST["mapfile"]);
 			$smarty->assign('mail_date', date("U"));
 			$smarty->assign('mail_user', $user);
-			$smarty->assign('mail_hash', $not['hash']);
+			$smarty->assign('watchId', $not['watchId']);
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$machine = $tikilib->httpPrefix() . $foo["path"];
 			$smarty->assign('mail_machine', $machine);
