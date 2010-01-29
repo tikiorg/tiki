@@ -4,9 +4,7 @@
 * Automated acceptance tests for Multilingual Features.
 *************************************************************/
 
-/*
- * Test groups that this PHPUnit test belongs to
- * 
+/**
  * @group gui
  */
  
@@ -241,6 +239,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
     protected function setUp()
     {
+    	$this->markTestSkipped("These tests are still too experimental, so skipping it.");    	    	
         $this->setBrowserUrl('http://localhost/');
         $this->current_test_db = "multilingualTestDump.sql";
         $this->restoreDBforThisTest();

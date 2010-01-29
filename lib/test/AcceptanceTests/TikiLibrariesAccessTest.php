@@ -1,8 +1,6 @@
 <?php
 
-/*
- * Test groups that this PHPUnit test belongs to
- * 
+/**
  * @group gui
  */
  
@@ -21,10 +19,11 @@ class  AcceptanceTests_TikiLibrariesAccessTest extends TikiTestCase
 
     protected function setUp()
     {
+    	$this->markTestSkipped("TikiLibrariesAccessTest is still experimental. So skipping it for now.");
     }
 
 
-    public function ___testRememberToReactivateAllTestsInTikiLibrariesAccessTest() {
+    public function testRememberToReactivateAllTestsInTikiLibrariesAccessTest() {
        	$this->fail("Don't forget to do this");
     }
        

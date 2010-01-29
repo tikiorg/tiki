@@ -1,10 +1,7 @@
 <?php
 
-/*
- * Test groups that this PHPUnit test belongs to
- * 
+/** 
  * @group integration
- * 
  */
 
 require_once 'lib/auth/tokens.php';

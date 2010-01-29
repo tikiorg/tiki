@@ -1,15 +1,10 @@
 <?php
 
-/*
- * Test groups that this PHPUnit test belongs to
- * 
+/**
  * @group unit
+ * @group multilingual
+ * @group GoogleTranslate
  * 
- */
-
-/*
- * Created on Jan 27, 2009
- *
  */
  
 class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTestCase

@@ -81,15 +81,13 @@ class TikiAcceptanceTestDBRestorer
 
 	function restoreDB($tiki_test_db_dump) {
 		global $last_restored;
+		$error_msg = null;
 		chdir($this->mysql_data_dir);
 		if (!file_exists($tiki_test_db_dump)) {
 			$error_msg =
 				"\nTried to run an acceptance test without an initial database dump. ".
-			    "Run script lib/core/test/create_dump_db_file.php to create it.\n";
-			echo($error_msg);
-			$this->printCallStack();
-			
-			die ();
+			    "Run script lib/core/test/create_dump_db_file.php to create it.\n";		
+			return $error_msg;
 		}
 
 		if ($last_restored == $tiki_test_db_dump) {
@@ -124,7 +122,7 @@ class TikiAcceptanceTestDBRestorer
 			$tiki_test_db_dump_as_string = file_get_contents($this->tiki_test_db_dump);
 
 			//CREATE SQL FILE THAT WILL RESTORE ONLY THE CHANGED TABLES
-			$tiki_restore_db_file = fopen($this->tiki_restore_db_file_name, 'w') or die("can't open file");
+			$tiki_restore_db_file = fopen($this->tiki_restore_db_file_name, 'w') or die("can't open file for restoring DB".$this->tiki_restore_db_file_name);
 			foreach ($diff as $table_name) {
 				$match_this = "/(LOCK TABLES `".$table_name."`.+UNLOCK TABLES;)/Us";
 				$is_matched = preg_match($match_this, $tiki_test_db_dump_as_string, $matches);
@@ -152,6 +150,7 @@ class TikiAcceptanceTestDBRestorer
 			$last_restored = $tiki_test_db_dump;
 		}
 		chdir($this->current_dir);
+		return null;
 	}
 
 	function get_table_name(&$table_name_date_time) {

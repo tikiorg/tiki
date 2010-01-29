@@ -7,9 +7,7 @@
 * See: http://profiles.tikiwiki.org/Collaborative_Multilingual_Terminology
 *************************************************************/
 
-/*
- * Test groups that this PHPUnit test belongs to
- * 
+/**
  * @group gui
  */
  
@@ -22,6 +20,7 @@ class  AcceptanceTests_CollaborativeMultilingualTerminologyTest extends TikiSele
 
     protected function setUp()
     {
+    	$this->markTestSkipped("This test still too experimental, so skipping it.");    	
         $this->current_test_db = "multilingualTestDump.sql";
         $this->restoreDBforThisTest();
 #        $this->applyProfile('Collaborative_Multilingual_Terminology',

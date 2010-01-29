@@ -1,8 +1,6 @@
 <?php
 
-/*
- * Ttest groups that this PHPUnit test belongs to
- * 
+/**
  * @group gui
  */
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
@@ -10,7 +8,7 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
 class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 {
-
+	
 	public function ___testRememberToReactivateTestsIn_AcceptanceTests_ListPagesTest() {
 		$this->fail("don't forget!!");
 	}
@@ -77,6 +75,7 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 
     protected function setUp()
     {
+    	$this->markTestSkipped("These tests are still too experimental, so skipping it.");    	
     	$this->setBrowserUrl('http://localhost/');
         $this->current_test_db = "listPagesTestDump.sql";
         $this->restoreDBforThisTest();         
