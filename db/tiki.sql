@@ -3468,25 +3468,6 @@ CREATE TABLE `tiki_transitions` (
 	KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_page_lists`;
-CREATE TABLE IF NOT EXISTS `tiki_page_lists` (
-  `list_type_id` int(8) unsigned NOT NULL,
-  `priority` int(8) unsigned NOT NULL,
-  `page_name` varchar(160) NOT NULL,
-  `score` float default NULL,
-  PRIMARY KEY  (`list_type_id`,`page_name`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `tiki_page_list_types`;
-CREATE TABLE IF NOT EXISTS `tiki_page_list_types` (
-  `id` int(8) unsigned NOT NULL auto_increment,
-  `name` varchar(40) NOT NULL,
-  `title` varchar(160) default NULL,
-  `description` varchar(200) default NULL,
-  PRIMARY KEY  (`name`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
 DROP TABLE IF EXISTS `tiki_auth_tokens`;
 CREATE TABLE `tiki_auth_tokens` (
 	`tokenId` INT NOT NULL AUTO_INCREMENT,
