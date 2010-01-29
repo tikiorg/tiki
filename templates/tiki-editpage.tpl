@@ -99,6 +99,10 @@
 {if $diff_style}
 	<div id="diff_outer">
 		<div style="overflow:auto;height:20ex;" id="diff_history">
+			{if $translation_mode == 'y'}		
+				<h2>{tr}Translate from{/tr}: {$source_page}</h2>
+				{tr}Changes that need to be translated are highlighted below.{/tr}
+			{/if}
 			{include file='pagehistory.tpl'}
 		</div>
 		{if $diff_summaries}
@@ -118,6 +122,12 @@
 {/if}
 
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
+
+	{if $translation_mode == 'y'}
+		<h2>{tr}Translate to{/tr}: {$target_page}</h2>
+		({tr}Reproduce the changes highlithed on the left using the editor below{/tr}). 
+	{/if}
+
 	<input type="hidden" name="no_bl" value="y" />
 	{if $diff_style}
 		<select name="diff_style">
