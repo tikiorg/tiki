@@ -132,6 +132,13 @@ if( isset( $_GET['msg'] ) ) {
 	$smarty->assign( 'display_msg', '' );
 }
 
+// ADD CSS file imported from styles
+if( $prefs['tiki_minify_css'] == 'y' ) {
+	$headerlib->add_cssfile( 'styles/lite/lite.css' );
+	$headerlib->add_cssfile( 'styles/layout/layout.css' );
+	$headerlib->add_cssfile( 'styles/layout/design.css' );
+}
+
 $headerlib->add_jsfile( 'lib/tiki-js.js' );	// tiki-js.js gets included even if javascript_enabled==n for the js test
 
 if( $prefs['feature_cssmenus'] == 'y' ) {
