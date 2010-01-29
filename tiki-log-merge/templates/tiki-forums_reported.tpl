@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 
-{title help="Forums" admpage="forums"}{tr}Reported messages for forum{/tr}&nbsp;{$forum_info.name}{/title}
+{title help="Forums" admpage="forums"}{tr}Reported messages for forum{/tr}&nbsp;{$forum_info.name|escape}{/title}
 
 <div class="navbar">
 	{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}Back to forum{/tr}"}
@@ -48,11 +48,11 @@
 	</td>
   
 	<td class="{cycle advance=false}" style="text-align:left;">
-		<a class="link" href="tiki-view_forum_thread.php?topics_offset=0&amp;topics_sort_mode=commentDate_desc&amp;topics_threshold=0&amp;topics_find=&amp;forumId={$items[ix].forumId}&amp;comments_parentId={$items[ix].parentId}">{$items[ix].title}</a>
+		<a class="link" href="tiki-view_forum_thread.php?topics_offset=0&amp;topics_sort_mode=commentDate_desc&amp;topics_threshold=0&amp;topics_find=&amp;forumId={$items[ix].forumId}&amp;comments_parentId={$items[ix].parentId}">{$items[ix].title|escape}</a>
 	</td>
 	
 	<td class="{cycle}" style="text-align:left;">
-		{$items[ix].user|default:'{tr}Anonymous{/tr}'}
+		{$items[ix].user|username}
 	</td>
 
 </tr>

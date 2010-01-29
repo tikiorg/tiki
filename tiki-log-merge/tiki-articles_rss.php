@@ -20,7 +20,7 @@ if ($prefs['rss_articles'] != 'y') {
 	require_once ('tiki-rss_error.php');
 }
 
-$res=$access->authorize_rss(array('tiki_p_read_article','tiki_p_admin_cms'));
+$res=$access->authorize_rss(array('tiki_p_read_article','tiki_p_admin_cms', 'tiki_p_articles_read_heading'));
 if($res) {
    if($res['header'] == 'y') {
       header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');

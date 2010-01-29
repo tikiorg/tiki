@@ -75,11 +75,11 @@
   {assign var=section_old value=$section}
 	{if ($tiki_p_admin eq 'y' or $tiki_p_admin_forum eq 'y')} 
 		<tr>
-			<td class="third" colspan="7">{$section}</td>
+			<td class="third" colspan="7">{$section|escape}</td>
 		</tr>
 	{else}
 		<tr>
-			<td class="third" colspan="6">{$section}</td>
+			<td class="third" colspan="6">{$section|escape}</td>
 		</tr>
 	{/if}
 {/if}
@@ -118,7 +118,7 @@
   {if $prefs.forum_reply_notitle neq 'y'}
     <small><i>{$channels[user].lastPostData.title|escape}</i>
   {/if}
-  {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
+  {tr}by{/tr} {$channels[user].lastPostData.userName|username}</small>
 {/if}
 </td>
 {/if}

@@ -2698,6 +2698,8 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_blog_post', 'Can post to a blog', 'registered', 'blogs', NULL, 'feature_blogs');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_create_blogs', 'Can create a blog', 'editors', 'blogs', NULL, 'feature_blogs');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_read_blog', 'Can read blogs', 'basic', 'blogs', NULL, 'feature_blogs');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_blog_post_view_ref', 'Can view in module and feed the blog posts', 'basic', 'blogs', NULL, 'feature_blogs');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_blog_view_ref', 'Can view in module and feed the blog', 'basic', 'blogs', NULL, 'feature_blogs');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_admin_file_galleries', 'Can admin file galleries', 'editors', 'file galleries', 'y', 'feature_file_galleries');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_assign_perm_file_gallery', 'Can assign perms to file gallery', 'admin', 'file galleries', NULL, 'feature_file_galleries');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_batch_upload_file_dir', 'Can use Directory Batch Load', 'editors', 'file galleries', NULL, 'feature_file_galleries');
@@ -3070,23 +3072,6 @@ CREATE TABLE `tiki_stats` (
   `hits` int(14) NOT NULL default '0',
   PRIMARY KEY (`object`(200),`type`,`day`)
 ) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `tiki_events`;
-CREATE TABLE `tiki_events` (
-  `callback_type` int(1) NOT NULL default '3',
-  `order` int(2) NOT NULL default '50',
-  `event` varchar(200) NOT NULL default '',
-  `file` varchar(200) NOT NULL default '',
-  `object` varchar(200) NOT NULL default '',
-  `method` varchar(200) NOT NULL default '',
-  PRIMARY KEY (`callback_type`,`order`)
-) ENGINE=MyISAM;
-
-INSERT IGNORE INTO tiki_events(callback_type,`order`,event,file,object,method) VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
-INSERT IGNORE INTO tiki_events(event,file,object,method) VALUES ('user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_save_registration');
-INSERT IGNORE INTO tiki_events(callback_type,`order`,event,file,object,method) VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
-INSERT IGNORE INTO tiki_events(callback_type,`order`,event,file,object,method) VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
-INSERT IGNORE INTO tiki_events(callback_type,`order`,event,file,object,method) VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
 
 DROP TABLE IF EXISTS `tiki_registration_fields`;
 CREATE TABLE `tiki_registration_fields` (

@@ -133,6 +133,8 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
+$searchLang = isset($_REQUEST['searchLang'])? $_REQUEST['searchLang']: '';
+$smarty->assign_by_ref('searchLang', $searchLang);
 $smarty->assign_by_ref('offset', $offset);
 $fulltext = $prefs['feature_search_fulltext'] == 'y';
 if (isset($_REQUEST['boolean']) && ($_REQUEST['boolean'] == 'on' || $_REQUEST['boolean'] == 'y')) {
@@ -151,7 +153,11 @@ if (!isset($_REQUEST["words"]) || empty($_REQUEST["words"])) {
 	if (!method_exists($searchlib, $find_where)) {
 		$find_where = "find_pages";
 	}
-	$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST["date"]);
+	if ($where == 'wikis') {
+		$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST['date'], $searchLang);
+	} else {
+		$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST['date']);
+	}
 	$smarty->assign('words', $words);
 }
 $smarty->assign('cant', $results['cant']);
@@ -187,6 +193,11 @@ if ($prefs['feature_articles'] == 'y') {
 }
 if ($prefs['feature_trackers'] == 'y') {
 	$where_list['trackers'] = tra('Trackers');
+}
+if ($where == 'wikis' && $prefs['feature_multilingual'] == 'y') {
+	$languages = array();
+	$languages = $tikilib->list_languages(false, 'y');
+	$smarty->assign_by_ref('languages', $languages);
 }
 $smarty->assign_by_ref('where_list', $where_list);
 $smarty->assign_by_ref('results', $results["data"]);

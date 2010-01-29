@@ -253,6 +253,8 @@ $smarty->assign_by_ref('cant_pages', $items['cant']);
 
 $smarty->assign_by_ref('items', $items["data"]);
 
+$topics = $commentslib->get_forum_topics($_REQUEST['forumId']);
+$smarty->assign_by_ref('topics', $topics);
 ask_ticket('forum-queue');
 
 // Display the template

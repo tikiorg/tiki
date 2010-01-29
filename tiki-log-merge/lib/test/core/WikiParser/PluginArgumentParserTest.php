@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ * @group unit
+ * 
+ */
+
 class WikiParser_PluginArgumentParserTest extends TikiTestCase
 {
 	function testSingleSimpleArgument()

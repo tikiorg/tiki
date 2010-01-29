@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @group unit
+ * 
+ */
+
 class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 {
 

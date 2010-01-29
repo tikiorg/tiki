@@ -30,6 +30,6 @@ function module_last_blog_posts( $mod_reference, $module_params ) {
 	
 	$blogId = isset($module_params["blogid"]) ? $module_params["blogid"] : -1;
 	$smarty->assign('blogid', $blogId);
-	$ranking = $tikilib->list_posts(0, $mod_reference["rows"], 'created_desc', '', $blogId);
+	$ranking = $tikilib->list_posts(0, $mod_reference["rows"], 'created_desc', '', $blogId, '', 'post');
 	$smarty->assign('modLastBlogPosts', $ranking["data"]);
 }

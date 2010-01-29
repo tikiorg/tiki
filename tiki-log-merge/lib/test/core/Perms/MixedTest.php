@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ * @group unit
+ * 
+ */
+
 class Perms_MixedTest extends TikiTestCase
 {
 	function testFilterMixed() {

@@ -45,6 +45,21 @@
 						{/section}
 					</select>
 				</label>
+				{if $prefs.feature_multilingual eq 'y' and $where eq 'wikis'}
+					<label class="searchLang" for="searchLang">
+						   {tr}Language:{/tr}
+						   <select id="searchLang" name="searchLang">
+						   <option value="" >{tr}Any{/tr}</option>
+						   {section name=ix loop=$languages}
+						   		{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
+									<option value="{$languages[ix].value|escape}" {if $searchLang eq $languages[ix].value}selected="selected"{/if}>
+									{tr}{$languages[ix].name}{/tr}
+									</option>
+								{/if}
+							{/section}
+						   </select>
+					</label>
+				{/if}
 			{/if}
 
 			{if $prefs.feature_search_show_object_filter eq 'y'}

@@ -31,11 +31,11 @@
 				<a title="{tr}Wiki RSS{/tr}" href="tiki-wiki_rss.php?ver={$prefs.rssfeed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 				<small>{tr}Wiki{/tr}</small>
 		{/if}
-		{if $prefs.feature_blogs eq 'y' and $prefs.rss_blogs eq 'y' and $tiki_p_read_blog eq 'y'}
+		{if $prefs.feature_blogs eq 'y' and $prefs.rss_blogs eq 'y' and ($tiki_p_read_blog eq 'y' or $tiki_p_blog_view_ref eq 'y')}
 				<a title="{tr}Blogs RSS{/tr}" href="tiki-blogs_rss.php?ver={$prefs.rssfeed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 				<small>{tr}Blogs{/tr}</small>
 		{/if}
-		{if $prefs.feature_articles eq 'y' and $prefs.rss_articles eq 'y' and $tiki_p_read_article eq 'y'}
+		{if $prefs.feature_articles eq 'y' and $prefs.rss_articles eq 'y' and ($tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y')}
 				<a title="{tr}Articles RSS{/tr}" href="tiki-articles_rss.php?ver={$prefs.rssfeed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 				<small>{tr}Articles{/tr}</small>
 		{/if}

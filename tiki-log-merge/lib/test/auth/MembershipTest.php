@@ -1,5 +1,7 @@
 <?php
-
+/** 
+ * @group integration
+ */
 class MembershipTest extends TikiTestCase
 {
 	function setUp() {

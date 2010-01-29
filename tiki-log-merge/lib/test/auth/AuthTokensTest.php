@@ -1,19 +1,26 @@
 <?php
 
+/** 
+ * @group integration
+ */
+
 require_once 'lib/auth/tokens.php';
 
 class AuthTokensTest extends PHPUnit_Framework_TestCase
 {
 	private $db;
+	
 	function setUp() {
 		$this->db = TikiDb::get();
 		$this->db->query( 'TRUNCATE tiki_auth_tokens' );
 	}
 
 	function tearDown() {
-		$this->db->query( 'TRUNCATE tiki_auth_tokens' );
+		if ($this->db) {
+			$this->db->query( 'TRUNCATE tiki_auth_tokens' );
+		}
 	}
-	
+		
 	function testNoTokensIsDenied() {
 		$lib = new AuthTokens( $this->db );
 

@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ * @group unit
+ * 
+ */
+
 class TikiFilter_CallbackTest extends TikiTestCase
 {
 	function testSimple()

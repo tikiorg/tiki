@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @group unit
+ * 
+ */
+ 
 class JitFilter_AccessTest extends TikiTestCase
 {
 	private $array;

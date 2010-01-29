@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ * @group unit
+ * 
+ */
+
 class Perms_CheckSequenceTest extends TikiTestCase
 {
 	private $mockA;

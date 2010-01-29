@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @group unit
+ * 
+ */
+
 class DeclFilter_KeyPatternFilterTest extends TikiTestCase
 {
 	function testMatch()

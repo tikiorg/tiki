@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ * @group unit
+ * 
+ */
+
 class WikiParser_PluginRepositoryTest extends TikiTestCase
 {
 	function testPluginDoesNotExist()

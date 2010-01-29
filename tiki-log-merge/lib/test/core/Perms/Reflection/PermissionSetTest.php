@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @group unit
+ * 
+ */
+
 class Perms_Reflection_PermissionSetTest extends TikiTestCase
 {
 	function testEmptySet() {

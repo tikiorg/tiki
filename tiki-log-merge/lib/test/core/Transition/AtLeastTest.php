@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ * @group unit
+ * 
+ */
+
 class Transition_AtLeastTest extends PHPUnit_Framework_TestCase
 {
 	function testOver() {

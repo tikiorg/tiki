@@ -3,9 +3,9 @@
 require_once(dirname(__FILE__) . '/TikiTestCase.php');
 
 ini_set( 'display_errors', 'on' );
-error_reporting( E_ALL );
+error_reporting( E_ALL & ~E_DEPRECATED);
 
-ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . "." . PATH_SEPARATOR . "../core/lib" . PATH_SEPARATOR . "../.." );
+ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . "." . PATH_SEPARATOR . "../core/lib" . PATH_SEPARATOR . "../.." . PATH_SEPARATOR . "core");
 
 function tra( $string ) {
 	return $string;

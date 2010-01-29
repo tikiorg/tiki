@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @group unit
+ * 
+ */
+
 class Perms_Check_CreatorTest extends TikiTestCase
 {
 	function testNoActionTakenWhenNoCreator() {

@@ -50,7 +50,10 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 
 	public function restoreDBforThisTest() {
 		$dbRestorer = new TikiAcceptanceTestDBRestorer();
-		$dbRestorer->restoreDB($this->current_test_db);
+		$error_msg = $dbRestorer->restoreDB($this->current_test_db);
+		if ($error_msg != null) {
+			$this->markTestSkipped($error_msg);
+		}
 	}
 
 	public function logInIfNecessaryAs($my_user) {

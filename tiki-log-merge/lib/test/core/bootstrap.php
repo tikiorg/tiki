@@ -31,6 +31,6 @@ $db = TikiDb::get();
 $db->setServerType( $db_tiki );
 
 $pwd = getcwd();
-chdir('../../../');
+chdir(dirname(__FILE__) . '/../../../');
 require_once 'lib/cache/cachelib.php';
 chdir($pwd);

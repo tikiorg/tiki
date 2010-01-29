@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ * @group unit
+ * 
+ */
+
 class WikiParser_PluginMatcherTest extends TikiTestCase
 {
 	function toArray( $matcher )

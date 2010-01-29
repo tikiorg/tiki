@@ -1,5 +1,10 @@
 <?php
 
+/** 
+ * @group unit
+ * 
+ */
+
 class Perms_ResolverFactory_TestFactoryTest extends TikiTestCase
 {
 	/**
