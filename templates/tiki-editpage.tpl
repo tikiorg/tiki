@@ -316,67 +316,6 @@
 									</fieldset>
 								{/if}
 	
-								{if $prefs.feature_wiki_screencasts eq 'y' && $tiki_p_upload_screencast eq 'y'}
-									<fieldset>
-										<legend>{tr}Upload Screencast{/tr}:</legend>
-										<form id="screencast-upload-form" enctype="multipart/form-data" method="post" action="tiki-upload_screencast_ajax.php" target="screencast-loader">
-											<input type="hidden" name="MAX_FILE_SIZE" value="{$prefs.feature_wiki_screencasts_max_size}" />
-											<div id="screencast-error" class="simplebox highlight" {if count($screencasts_errors) < 1}style="display: none;"{/if}>
-												{if count($screencasts_errors) >= 1}
-													<ol>
-														{foreach from=$screencasts_errors item=screencasts_error}
-															<li>{$screencasts_error}</li>
-														{/foreach}
-													</ol>
-												{/if}
-											</div>
-											<div id="screencast-add-wrapper">
-												<script type="text/javascript">
-													{literal}
-													function screencastError(fileType, error) {
-													  if ( fileType == 'flash' ) {
-														if ( error == "400")
-														  return "{/literal}{tr}Incorrect file extension was used for your flash screencast, expecting .swf or .flv{/tr}{literal}";
-														return "{/literal}{tr}An unexpected error occurred while uploading your flash screencast!{/tr}{literal}";
-													  } else if ( fileType == 'ogg' ) {
-														if ( error == "400")
-														  return "{/literal}{tr}Incorrect file extension was used for your Ogg screencast, expecting .ogg{/tr}{literal}";
-														if ( error == "NEEDS_FLASH")
-														  return "{/literal}{tr}A flash screencast is mandatory!{/tr}{literal}";
-														return "{/literal}{tr}An unexpected error occurred while uploading your Ogg screencast!{/tr}{literal}";
-													  }
-													}
-													if ( !screencastThumbText ) { 
-													  var screencastThumbText = "{/literal}{tr}Insert Screencast{/tr}{literal}";
-													}
-													var screencastNoPreview = "{/literal}{tr}Preview not possible{/tr}{literal}";
-													{/literal}
-												</script>
-												<span id="screencast-add-form" class="screencast-add-form">
-													<div class="screencast-input-wrapper">
-														<label for="flash_screencast" class="screencast-input-label">{tr}Flash video (required){/tr}</label>
-														<input name="flash_screencast[]" class="screencast-flash" type="file"/>
-													</div>
-													<div class="screencast-input-wrapper">
-														<label for="ogg_screencast" class="screencast-input-label">{tr}Ogg video (optional){/tr}</label>
-														<input name="ogg_screencast[]" class="screencast-ogg" type="file"/>
-													</div>
-												</span>
-											</div>
-											<input id="screencast-upload-now" type="submit" value="Upload"/>
-											<a id="screencast-add-another">{tr}Add another screencast{/tr}</a> 
-											<iframe id="screencast-loader" name="screencast-loader" style=""></iframe>
-										</form>
-									</fieldset>
-									<fieldset id="screencast-insert-tr" {if count($screencasts_uploaded) < 1 }style="display:none;"{/if}>
-										<legend>{tr}Insert Screencast{/tr}:</legend>
-										<div id="screencast-insert-wrapper">
-											<script type="text/javascript">
-											  var thumb_videos = [{foreach from=$screencasts_uploaded item=screencast name=screencasts}"{$screencast}"{if !$smarty.foreach.screencasts.last},{/if}{/foreach}];
-											</script>
-										</div>
-									</fieldset>
-								{/if}
 							{/if}
 						{/tab}
 					{/if}
