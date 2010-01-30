@@ -103,14 +103,20 @@
 				<h2>{tr}Translate from{/tr}: {$source_page}</h2>
 				{tr}Changes that need to be translated are highlighted below.{/tr}
 			{/if}
-			{include file='pagehistory.tpl'}
+			{include file='pagehistory.tpl' cant=0}
 		</div>
 		{if $diff_summaries}
 			<div class="wikitext" id="diff_versions">
 				<ul>
 					{foreach item=diff from=$diff_summaries}
-						<li>{tr}Version:{/tr} {$diff.version|escape} - {$diff.comment|escape|default:"<em>{tr}No comment{/tr}</em>"}</li>
+						<li>
+							{tr}Version:{/tr} {$diff.version|escape} - {$diff.comment|escape|default:"<em>{tr}No comment{/tr}</em>"}
+							{if count($diff_summaries) gt 1}
+								{icon _id="arrow_right"  onclick="\$jq('input[name=oldver]').val(`$diff.version`);\$jq('#editpageform').submit();return false;"  _text="{tr}View{/tr}" style="cursor: pointer"}
+							{/if}
+						</li>
 					{/foreach}
+					{button  _onclick="\$jq('input[name=oldver]').val(1);\$jq('#editpageform').submit();return false;"  _text="{tr}All Versions{/tr}" _ajax="n"}
 				</ul>
 			</div>
 		{/if}
@@ -123,14 +129,9 @@
 
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
 
-	{if $translation_mode == 'y'}
-		<h2>{tr}Translate to{/tr}: {$target_page}</h2>
-		({tr}Reproduce the changes highlithed on the left using the editor below{/tr}). 
-	{/if}
-
 	<input type="hidden" name="no_bl" value="y" />
 	{if $diff_style}
-		<select name="diff_style">
+		<select name="diff_style" class="wikiaction"title="{tr}Edit wiki page{/tr}|{tr}Select the style used to display differences to be translated.{/tr}">
 			<option value="htmldiff"{if $diff_style eq "htmldiff"} selected="selected"{/if}>{tr}html{/tr}</option>
 			<option value="inlinediff"{if $diff_style eq "inlinediff"} selected="selected"{/if} >{tr}text{/tr}</option>			  
 			<option value="inlinediff-full"{if $diff_style eq "inlinediff-full"} selected="selected"{/if} >{tr}text full{/tr}</option>			  
@@ -171,6 +172,12 @@
 				{/if}
 				{tabset name='tabs_editpage'}
 					{tab name="{tr}Edit page{/tr}"}
+						{if $translation_mode == 'y'}
+							<div class="translation_message">
+								<h2>{tr}Translate to{/tr}: {$target_page}</h2>
+								<p>{tr}Reproduce the changes highlighted on the left using the editor below{/tr}.</p>
+							</div>
+						{/if}
 						{textarea}{$pagedata}{/textarea}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
