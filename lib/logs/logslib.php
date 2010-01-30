@@ -24,7 +24,7 @@ class LogsLib extends TikiLib
 			$ip = $this->get_ip_address();
 		}
 		if (!$client) {
-			if (!$_SERVER['HTTP_USER_AGENT']) {
+			if (empty($_SERVER['HTTP_USER_AGENT'])) {
 				$client = 'NO USER AGENT';
 			} else {
 				$client = $_SERVER['HTTP_USER_AGENT'];
