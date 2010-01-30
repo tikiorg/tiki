@@ -37,7 +37,14 @@
      <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div></td>
    </tr>
 {/if}
-
+	<tr>
+		<td colspan="2">
+			{pagination_links cant=$cant offset=$smarty.request.oldver offset_arg="oldver" zero_based_offset="n" itemname={tr}Version{/tr}}{/pagination_links}
+		</td>
+		<td colspan="2">
+			{pagination_links cant=$cant offset=$smarty.request.newver offset_arg="newver" zero_based_offset="n" itemname={tr}Version{/tr}}{/pagination_links}
+		</td>
+	</tr>
 {if $diff_style eq 'unidiff'}
  <tr><td colspan="4">
  {if $diffdata}
@@ -76,7 +83,7 @@
 {/if}
 
 {if $diff_style neq 'unidiff' && $diff_style neq 'sideview'}
-  {if $diffdata}{$diffdata}{else}<tr><td colspan="3">{tr}Versions are identical{/tr}</td></tr>{/if}
+  {if $diffdata}{$diffdata}{else}<tr><td colspan="4">{tr}Versions are identical{/tr}</td></tr>{/if}
 {/if}
 
    </table>

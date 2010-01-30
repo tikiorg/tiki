@@ -134,6 +134,15 @@ if (isset($preview)) {
 // fetch page history, but omit the actual page content (to save memory)
 $history = $histlib->get_page_history($page, false);
 $smarty->assign_by_ref('history', $history);
+// for pagination
+$smarty->assign('cant', count($history) + 1);
+if ($oldver === 0) {
+	$_REQUEST['oldver'] = count($history) + 1;
+}
+if ($newver === 0) {
+	$_REQUEST['newver'] = count($history) + 1;
+}
+
 if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['show_translation_history'])) {
 	include_once ("lib/multilingual/multilinguallib.php");
 	$smarty->assign('show_translation_history', 1);
