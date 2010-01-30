@@ -19,7 +19,7 @@ class Cachelib
 	function __construct() {
 		global $prefs;
 
-		if( $prefs['memcache_enabled'] == 'y' ) {
+		if( isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y' ) {
 			$this->implementation = new CacheLibMemcache;
 		} else {
 			$this->implementation = new CacheLibFileSystem;
