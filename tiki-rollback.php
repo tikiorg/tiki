@@ -54,7 +54,7 @@ if (isset($_REQUEST["rollback"])) {
 	require_once('lib/diff/difflib.php');
 	require_once('lib/categories/categlib.php');
 	rollback_page_to_version($_REQUEST['page'], $_REQUEST['version']);
-	header("location: tiki-index.php?page=$page");
+	header("location: tiki-index.php?page=" . urlencode($page));
 	die;
 }
 ask_ticket('rollback');

@@ -100,7 +100,7 @@
 	<div id="diff_outer">
 		<div style="overflow:auto;height:20ex;" id="diff_history">
 			{if $translation_mode == 'y'}		
-				<h2>{tr}Translate from{/tr}: {$source_page}</h2>
+				<h2>{tr}Translate from:{/tr} {$source_page|escape}</h2>
 				{tr}Changes that need to be translated are highlighted below.{/tr}
 			{/if}
 			{include file='pagehistory.tpl' cant=0}
@@ -165,26 +165,26 @@
 							{tr 0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
 						{/if}
 					{/remarksbox}
-					<p>{tr}Page name{/tr}: <input type="text" name="page" value="{$page|escape}" /></p>
+					<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}" /></p>
 				{else}
-					<input type="hidden" name="page" value="{$page}" /> 
+					<input type="hidden" name="page" value="{$page|escape}" /> 
 					{* the above hidden field is needed for auto-save to work *}
 				{/if}
 				{tabset name='tabs_editpage'}
 					{tab name="{tr}Edit page{/tr}"}
 						{if $translation_mode == 'y'}
 							<div class="translation_message">
-								<h2>{tr}Translate to{/tr}: {$target_page}</h2>
+								<h2>{tr}Translate to:{/tr} {$target_page|escape}</h2>
 								<p>{tr}Reproduce the changes highlighted on the left using the editor below{/tr}.</p>
 							</div>
 						{/if}
 						{textarea}{$pagedata}{/textarea}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
-								<label for="comment">{tr}Describe the change you made{/tr}: {help url='Editing+Wiki+Pages' desc='{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}'}</label>
+								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc='{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}'}</label>
 								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" />
 								{if $show_watch eq 'y'}
-									<label for="watch">{tr}Monitor this page{/tr}:</label>
+									<label for="watch">{tr}Monitor this page:{/tr}</label>
 									<input type="checkbox" id="watch" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} />
 								{/if}
 							</fieldset>
@@ -198,7 +198,7 @@
 							{/if}
 							{if $wysiwyg neq 'y' and $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $prefs.feature_filegals_manager neq 'y'}
 								<fieldset>
-									<legend>{tr}Upload picture{/tr}:</legend>
+									<legend>{tr}Upload picture:{/tr}</legend>
 									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 									<input type="hidden" name="hasAlreadyInserted" value="" />
 									<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
@@ -233,7 +233,7 @@
 						{tab name="{tr}Tools{/tr}"}
 							{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 								<fieldset>
-									<legend>{tr}Apply template{/tr}:</legend>
+									<legend>{tr}Apply template:{/tr}</legend>
 									<select id="templateId" name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
 										<option value="0">{tr}none{/tr}</option>
 										{section name=ix loop=$templates}
@@ -279,9 +279,9 @@
 	//--><!]]>
 								</script>
 								<fieldset>
-									<legend>{tr}Regex search {/tr}:</legend>
+									<legend>{tr}Regex search:{/tr}</legend>
 									<input style="width:100;" class="wikiedit" type="text" id="search"/>
-									<label>{tr}Replace with{/tr}:
+									<label>{tr}Replace with:{/tr}
 									<input style="width:100;" class="wikiedit" type="text" id="replace"/></label>
 									<label><input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}</label>
 									<input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();">
@@ -289,19 +289,19 @@
 							{/if}
 							{if $prefs.wiki_spellcheck eq 'y'}
 								<fieldset>
-									<legend>{tr}Spellcheck{/tr}:</legend>
+									<legend>{tr}Spellcheck:{/tr}</legend>
 									<input type="checkbox" id="spellcheck"name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/>
 								</fieldset>
 							{/if}
 							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 								<fieldset>
-									<legend>{tr}Allow HTML{/tr}:</legend>
+									<legend>{tr}Allow HTML:{/tr}</legend>
 									<input type="checkbox" id="allowhtml" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/>
 								</fieldset>
 							{/if}
 							{if $prefs.feature_wiki_import_html eq 'y'}
 								<fieldset>
-									<legend>{tr}Import HTML{/tr}:</legend>
+									<legend>{tr}Import HTML:{/tr}</legend>
 									<input class="wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}" />&nbsp;
 									<input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;" />&nbsp;
 									<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
@@ -311,7 +311,7 @@
 							
 							{if $tiki_p_admin_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
 								<fieldset>
-									<legend>{tr}Import page{/tr}:</legend>
+									<legend>{tr}Import page:{/tr}</legend>
 									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 									<input id="userfile1" name="userfile1" type="file" />
 									{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
@@ -323,12 +323,12 @@
 							{if $wysiwyg neq 'y'}
 								{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 									<fieldset>
-										<legend>{tr}Upload file{/tr}:</legend>
+										<legend>{tr}Upload file:{/tr}</legend>
 										<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 										<input type="hidden" name="hasAlreadyInserted2" value="" />
 										<input type="hidden" id="page2" name="page2" value="{$page}" />
 										<input name="userfile2" type="file" id="attach-upload" />
-										 <label>{tr}Comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" /></label>
+										 <label>{tr}Comment:{/tr}<input type="text" name="attach_comment" maxlength="250" id="attach-comment" /></label>
 										<input type="submit" class="wikiaction" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
 									</fieldset>
 								{/if}
@@ -341,7 +341,7 @@
 							{if $page|lower neq 'sandbox'}
 								{if $prefs.wiki_feature_copyrights  eq 'y'}
 									<fieldset>
-										<legend>{tr}Copyright{/tr}:</legend>
+										<legend>{tr}Copyright:{/tr}</legend>
 										<table border="0">
 											<tr class="formcolor">
 												<td><label for="copyrightTitle">{tr}Title:{/tr}</label></td>
@@ -404,10 +404,10 @@
 								{/if}
 								{if $prefs.wiki_feature_copyrights  eq 'y'}
 									<fieldset>
-										<legend>{tr}License{/tr}:</legend>
+										<legend>{tr}License:{/tr}</legend>
 										<a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a>
 										{if $prefs.wikiSubmitNotice neq ""}
-											{remarksbox type="note" title="{tr}Important{/tr}:"}
+											{remarksbox type="note" title="{tr}Important:{/tr}"}
 												<strong>{tr}{$prefs.wikiSubmitNotice}{/tr}</strong>
 											{/remarksbox}
 										{/if}
@@ -423,9 +423,9 @@
 							{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 								<fieldset>
 									{if $prefs.metatag_pagedesc eq 'y'}
-										<legend>{tr}Description (used for metatags){/tr}:</legend>
+										<legend>{tr}Description (used for metatags):{/tr}</legend>
 									{else}
-										<legend>{tr}Description{/tr}:</legend>
+										<legend>{tr}Description:{/tr}</legend>
 									{/if}
 									<input style="width:98%;" type="text" id="description" name="description" value="{$description|escape}" />
 								</fieldset>
@@ -433,14 +433,14 @@
 							{if $prefs.feature_wiki_footnotes eq 'y'}
 								{if $user}
 									<fieldset>
-										<legend>{tr}My Footnotes{/tr}:</legend>
+										<legend>{tr}My Footnotes:{/tr}</legend>
 										<textarea id="footnote" name="footnote" rows="8" cols="42" style="width:98%;" >{$footnote|escape}</textarea>
 									</fieldset>
 								{/if}
 							{/if}
 							{if $prefs.feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
 								<fieldset>
-									<legend>{tr}Use rating{/tr}:</legend>
+									<legend>{tr}Use rating:{/tr}</legend>
 
 									{foreach from=$poll_rated item=rating}
 										<div>
@@ -479,7 +479,7 @@
 							{/if}
 							{if $prefs.feature_multilingual eq 'y'}
 								<fieldset>
-									<legend>{tr}Language{/tr}:</legend>
+									<legend>{tr}Language:{/tr}</legend>
 									<select name="lang" id="lang">
 										<option value="">{tr}Unknown{/tr}</option>
 										{section name=ix loop=$languages}
@@ -492,14 +492,13 @@
 								</fieldset>
 								{if $trads|@count > 1 and $urgent_allowed}
 									<fieldset {if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
-										<legend>{tr}Translation request{/tr}:</legend>
+										<legend>{tr}Translation request:{/tr}</legend>
 										<input type="hidden" name="lang" value="{$lang|escape}"/>
 										<input type="checkbox" id="translation_critical" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
 										<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
 										{if $diff_style}
 											<input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
 											<input type="hidden" name="newver" value="{$diff_newver|escape}"/>
-											<input type="hidden" name="source_page" value="{$source_page|escape}"/>
 										{/if}
 									</fieldset>
 								{/if}

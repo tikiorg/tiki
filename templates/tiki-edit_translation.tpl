@@ -77,7 +77,6 @@
 	{/if}
 	<p>
 	<input type="submit" value="{tr}Create translation{/tr}"/></p>
-	<input type="hidden" name="source_page" value="{$page}"/>
 	<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
 
