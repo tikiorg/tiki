@@ -39,7 +39,7 @@ function module_translation( $mod_reference, $module_params ) {
 	
 	
 //are we arriving from the edit page?	
-		if ( $module_params['from_edit_page'] == 'y') {
+		if ( isset($module_params['from_edit_page']) && $module_params['from_edit_page'] == 'y') {
 			$smarty->assign( 'from_edit_page', 'y');
 		} else {
 			$smarty->assign( 'from_edit_page', 'n');
@@ -58,7 +58,7 @@ function module_translation( $mod_reference, $module_params ) {
 		global $multilinguallib;
 		include_once('lib/multilingual/multilinguallib.php');
 
-		if ( $module_params['show_language'] == 'n') {
+		if ( isset($module_params['show_language']) && $module_params['show_language'] == 'n') {
 			$smarty->assign( 'show_language', 'n');
 		} else {
 			$smarty->assign( 'show_language', 'y');
