@@ -1,9 +1,4 @@
 {* $Id$ *}
-
-{if $prefs.feature_ajax == 'y'}
-  <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
-{/if}
-
 {if $page|lower neq 'sandbox'}
 	{remarksbox type='tip' title='{tr}Tip{/tr}'}
 	{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}

@@ -224,6 +224,14 @@ if ($prefs['javascript_enabled'] == 'y') {
 		$headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
 		$headerlib->add_jsfile("lib/metrics.js");
 	}
+
+	if ( $prefs['feature_ajax'] === 'y' ) {
+		$headerlib->add_jsfile('lib/ajax/tiki-ajax.js');
+		$headerlib->add_jsfile('lib/wiki/wiki-ajax.js');
+		if ( $prefs['feature_ajax_autosave'] === 'y' ) {
+			$headerlib->add_jsfile('lib/ajax/autosave.js');
+		}
+	}
 }	// end if $prefs['javascript_enabled'] == 'y'
 
 if( session_id() ) {
