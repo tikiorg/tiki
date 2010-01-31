@@ -99,12 +99,12 @@ function module_upcoming_events( $mod_reference, $module_params ) {
 	$smarty->assign_by_ref('infocals', $rawcals['data']);
 	
 	$events = array();
-	if (!empty($module_params['calendarId']) && !is_array($module_params['calendarId']) && !is_numeric($module_params['calendarId'])) {
-		$module_params['calendarId'] = preg_split('/[\|:\&,]/', $module_params['calendarId']);
+	if (!empty($module_params['calendarId'])) {
+		$calIds = preg_split('/[\|:\&,]/', $module_params['calendarId']);
 	}
 	if (!empty($viewable))
 		$events = $calendarlib->upcoming_events($mod_reference['rows'],
-			array_intersect(isset($module_params['calendarId']) ? (is_array($module_params['calendarId'])? $module_params['calendarId']: array($module_params['calendarId'])) : $calIds, $viewable),
+			array_intersect($calIds, $viewable),
 			-1,
 			'start_asc', 
 			isset($module_params["priorDays"]) ? (int) $module_params["priorDays"] : 0,

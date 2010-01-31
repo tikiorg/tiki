@@ -17,7 +17,7 @@ function wikiplugin_events_info() {
 		'params' => array(
 			'calendarid' => array(
 				'required' => true,
-				'name' => tra('Calendar ID'),
+				'name' => tra('Calendars filter'),
 				'description' => tra('Numeric'),
 			),
 			'maxdays' => array(
@@ -58,7 +58,6 @@ function wikiplugin_events($data,$params) {
 	extract($params,EXTR_SKIP);
 
 	if (!isset($maxdays)) {$maxdays=365;}
-	if (isset($calendarid)) { $calendarids=explode("|",$calendarid); }
 	if (!isset($max)) { $max=10; }
 	if (!isset($datetime)) { $datetime=1; }
 	if (!isset($desc)) { $desc=1; }
@@ -97,10 +96,12 @@ function wikiplugin_events($data,$params) {
 		}
 	}
 
-
+	if (isset($calendarid)) {
+		$calIds=explode("|",$calendarid);
+	}
 	$events = $calendarlib->upcoming_events($max,
-    array_intersect(isset($calendarid) ? $calendarids : $calIds, $viewable),
-    $maxdays);
+		array_intersect($calIds, $viewable),
+		$maxdays);
  
 	$smarty->assign_by_ref('datetime', $datetime);
 	$smarty->assign_by_ref('desc', $desc);
