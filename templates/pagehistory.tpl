@@ -39,10 +39,18 @@
 {/if}
 	<tr>
 		<td colspan="2">
-			{pagination_links cant=$cant offset=$smarty.request.oldver offset_arg="oldver" zero_based_offset="n" itemname={tr}Version{/tr}}{/pagination_links}
+			{if isset($show_all_versions) and $show_all_versions eq "n"}
+				{pagination_links cant=$cant offset=$smarty.request.oldver_idx offset_arg="oldver_idx" itemname={tr}Session{/tr}}{/pagination_links}
+			{else}
+				{pagination_links cant=$cant offset=$smarty.request.oldver_idx offset_arg="oldver_idx" itemname={tr}Version{/tr}}{/pagination_links}
+			{/if}
 		</td>
 		<td colspan="2">
-			{pagination_links cant=$cant offset=$smarty.request.newver offset_arg="newver" zero_based_offset="n" itemname={tr}Version{/tr}}{/pagination_links}
+			{if isset($show_all_versions) and $show_all_versions eq "n"}
+				{pagination_links cant=$cant offset=$smarty.request.newver_idx offset_arg="newver_idx" itemname={tr}Session{/tr}}{/pagination_links}
+			{else}
+				{pagination_links cant=$cant offset=$smarty.request.newver_idx offset_arg="newver_idx" itemname={tr}Version{/tr}}{/pagination_links}
+			{/if}
 		</td>
 	</tr>
 {if $diff_style eq 'unidiff'}

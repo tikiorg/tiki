@@ -39,12 +39,6 @@
 	<form action="tiki-pagehistory.php" method="get">
 		<input type="hidden" name="page" value="{$page|escape}" />
 		<div style="text-align:center;">
-			<div class="simplebox">
-				<b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}
-				{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}, {tr}s=source{/tr} {/if}
-				{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}
-				{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}
-			</div>
 			{if ($prefs.default_wiki_diff_style ne "old") and $history}
 				<div style=" text-align:right;">
 					<select name="diff_style">
@@ -60,8 +54,20 @@
 						<option value="unidiff" {if $diff_style == "unidiff"}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
 						<option value="sideview" {if $diff_style == "sideview"}selected="selected"{/if}>{tr}Side-by-side view{/tr}</option>
 					</select>
+					<input type="hidden" name="show_all_versions" value="{$show_all_versions}"/>
+					{if $show_all_versions eq "y"}
+						{button _text="{tr}Show Edit Sessions{/tr}"  show_all_versions="n" _auto_args="*"}
+					{else}
+						{button _text="{tr}Show All Versions{/tr}"  show_all_versions="y" _auto_args="*"}
+					{/if}
 				</div>
 			{/if}
+			<div class="simplebox">
+				<b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}
+				{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}, {tr}s=source{/tr} {/if}
+				{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}
+				{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}
+			</div>
 			<table class="normal">
 				<tr>
 					{if $tiki_p_remove eq 'y'}<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>{/if}
@@ -162,7 +168,13 @@
 								{section name=ix loop=$element.contributors}{if !$smarty.section.ix.first},{/if}{$element.contributors[ix].login|username}{/section}
 							</td>
 						{/if}
-						<td class="{cycle advance=false} button">{$element.version}</td>
+						<td class="{cycle advance=false} button">
+							{if $show_all_versions eq "n" and not empty($element.session)}
+								<em>{$element.session} - {$element.version}</em>
+							{else}
+								{$element.version}
+							{/if}
+						</td>
 						<td class="{cycle advance=false} button">
 							&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$element.version}" title="{tr}View{/tr}">v</a>
 							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
@@ -179,7 +191,13 @@
 						</td>
 						{if $prefs.default_wiki_diff_style ne "old"}
 						<td class="{cycle advance=false} button">
-							<input type="radio" name="oldver" value="{$element.version}" title="{tr}Older Version{/tr}" {if $old.version == $element.version or (!$smarty.request.diff_style and $smarty.foreach.hist.first)}checked="checked"{/if} />
+							{if $show_all_versions eq 'n' and not empty($element.session)}
+								<input type="radio" name="oldver" value="{$element.session}"
+									title="{tr}Older Version{/tr}" {if $old.version == $element.session or (!$smarty.request.diff_style and $smarty.foreach.hist.first)}checked="checked"{/if}/>
+							{else}
+								<input type="radio" name="oldver" value="{$element.version}"
+									title="{tr}Older Version{/tr}" {if $old.version == $element.version or (!$smarty.request.diff_style and $smarty.foreach.hist.first)}checked="checked"{/if}/>
+							{/if}
 						</td>
 						<td class="{cycle} button">
 							{* if $smarty.foreach.hist.last &nbsp; *}
@@ -197,14 +215,12 @@
 							{/section}
 						</select>
 						<input type="submit" name="update_translation" value="{tr}Update Translation{/tr}"/>
-						<div>
-							{if $show_translation_history}
-								<input type="hidden" name="show_translation_history" value="1"/>
-								<a href="tiki-pagehistory.php?page={$page|escape}">{tr}Hide translation history{/tr}</a>
-							{else}
-								<a href="tiki-pagehistory.php?page={$page|escape}&amp;show_translation_history=1">{tr}Show translation history{/tr}</a>
-							{/if}
-						</div>
+						{if $show_translation_history}
+							<input type="hidden" name="show_translation_history" value="1"/>
+							{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*"}
+						{else}
+							{button show_translation_history=1 _text="{tr}Show translation history{/tr}" _auto_args="*"}
+						{/if}
 					</td>
 				</tr>
 				{/if}
