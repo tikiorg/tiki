@@ -140,5 +140,6 @@
 	{eval var=$prefs.feature_endbody_code}
 {/if}
 		{interactivetranslation}
+{if $headerlib}   {$headerlib->output_js_files()}{/if}
 	</body>
 </html>

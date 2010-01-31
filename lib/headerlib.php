@@ -162,7 +162,7 @@ class HeaderLib
 		}
 		$back .= "<![endif]-->\n";
 
-		$back .= $this->output_js_files();	// TODO move some files to end of page?
+		//$back .= $this->output_js_files();	// TODO move some files to end of page?
 
 		if (count($this->rssfeeds)) {
 			foreach ($this->rssfeeds as $x=>$rssf) {
