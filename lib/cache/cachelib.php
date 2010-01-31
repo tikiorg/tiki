@@ -188,7 +188,7 @@ class CacheLibFileSystem
 	function getCached($key, $type='') {
 		$key = $type.md5($key);
 		if ( !file_exists($this->folder."/$key")) { 	
-			return serialize(false);
+			return false;
 		} 
 		$fw = fopen($this->folder."/$key","r");
 		if ($l = filesize($this->folder."/$key"))
