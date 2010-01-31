@@ -7205,8 +7205,8 @@ class TikiLib extends TikiDb_Bridge
 						break;
 					default: 
 						$maketoc = '';
-						$maketoc_header = "<span id='toc'>".$maketoc_title;
-						$maketoc_footer = '</span>';
+						$maketoc_header = "<div id='toc'>".$maketoc_title;
+						$maketoc_footer = '</div>';
 						$link_class = 'link';
 				}
 				if ( count($anch) and $need_maketoc !== false) {
