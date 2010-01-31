@@ -274,12 +274,16 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function add_group_watch($group, $event, $object, $type, $title, $url) {
-
-		$this->remove_group_watch( $group, $event, $object, $type );
-		$query = "insert into `tiki_group_watches`(`group`,`event`,`object`,`type`,`title`,`url`) ";
-		$query.= "values(?,?,?,?,?,?)";
-		$this->query($query,array($group,$event,$object,$type,$title,$url));
-		return true;
+		
+		if ($type == 'Category' && $object == 0) {
+			return false;
+		} else {
+			$this->remove_group_watch( $group, $event, $object, $type );
+			$query = "insert into `tiki_group_watches`(`group`,`event`,`object`,`type`,`title`,`url`) ";
+			$query.= "values(?,?,?,?,?,?)";
+			$this->query($query,array($group,$event,$object,$type,$title,$url));
+			return true;
+		}
 	}
 
 	/**

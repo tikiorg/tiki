@@ -1334,10 +1334,11 @@ class CategLib extends ObjectLib
 	 */
 	function watch_category($user, $categId, $categName) {
 		global $tikilib;		
-		        
-        $name = $this->get_category_path_string_with_root($categId);
-        $tikilib->add_user_watch($user, 'category_changed', $categId, 'Category', $name, 
-			"tiki-browse_categories.php?parentId=".$categId."&deep=off");			                         
+		if ($categId != 0) {        
+	        $name = $this->get_category_path_string_with_root($categId);
+	        $tikilib->add_user_watch($user, 'category_changed', $categId, 'Category', $name, 
+				"tiki-browse_categories.php?parentId=".$categId."&deep=off");		
+		}	                         
 	}
 
 
@@ -1348,14 +1349,37 @@ class CategLib extends ObjectLib
 	function watch_category_and_descendants($user, $categId, $categName) {
 		global $tikilib;
 		
-        $tikilib->add_user_watch($user, 'category_changed', $categId, 'Category', $categName, 
-			"tiki-browse_categories.php?parentId=".$categId."&deep=off");
+		if ($categId != 0) {
+	        $tikilib->add_user_watch($user, 'category_changed', $categId, 'Category', $categName, 
+				"tiki-browse_categories.php?parentId=".$categId."&deep=off");
+		}
                          
 		$descendants = $this->get_category_descendants($categId);
 		foreach ($descendants as $descendant) {
 			if ($descendant != 0 && $this->has_view_permission($user,$descendant)) {
 				$name = $this->get_category_path_string_with_root($descendant);
 				$tikilib->add_user_watch($user, 'category_changed', $descendant, 'Category', $name, 
+					"tiki-browse_categories.php?parentId=".$descendant."&deep=off");
+			}
+		}		
+	}
+	
+function group_watch_category_and_descendants($group, $categId, $categName, $top = true) {
+		global $tikilib, $descendants; 
+		
+		if ($categId != 0 && $top == true) {
+	        $tikilib->add_group_watch($group, 'category_changed', $categId, 'Category', $categName, 
+				"tiki-browse_categories.php?parentId=".$categId."&deep=off");
+		}
+		$descendants = $this->get_category_descendants($categId);
+		if ($top == false) {
+			$length = count($descendants);
+			$descendants = array_slice($descendants, 1, $length, true);
+		}		
+		foreach ($descendants as $descendant) {
+			if ($descendant != 0) {
+				$name = $this->get_category_path_string_with_root($descendant);
+				$tikilib->add_group_watch($group, 'category_changed', $descendant, 'Category', $name, 
 					"tiki-browse_categories.php?parentId=".$descendant."&deep=off");
 			}
 		}		
@@ -1383,6 +1407,24 @@ class CategLib extends ObjectLib
 		$descendants = $this->get_category_descendants($categId);
 		foreach ($descendants as $descendant) {
 			$tikilib->remove_user_watch($user, 'category_changed', $descendant, 'Category');
+		}
+	}
+	
+	function group_unwatch_category_and_descendants($group, $categId, $top = true) {
+		global $tikilib, $descendants;	
+			
+		if ($categId != 0 && $top == true) {
+			$tikilib->remove_group_watch($group, 'category_changed', $categId, 'Category');
+		}
+		$descendants = $this->get_category_descendants($categId);
+		if ($top == false) {
+			$length = count($descendants);
+			$descendants = array_slice($descendants, 1, $length, true);
+		}		
+		foreach ($descendants as $descendant) {
+			if ($descendant != 0) {
+				$tikilib->remove_group_watch($group, 'category_changed', $descendant, 'Category');
+			}
 		}
 	}
 
