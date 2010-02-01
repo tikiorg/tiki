@@ -204,7 +204,7 @@ $result .= "$pos-$icell-".htmlspecialchars(substr($data, $pos, 10));
 			}
 			else
 				$result .= '<div>';
-			$result .= preg_replace("/\r?\n/", "<br />\r\n", $i). '</div>';
+			$result .= "\n".preg_replace("/\r?\n/", "<br />\r\n", $i). '</div>';
 			++$idx;
 			++$icell;
 		}
