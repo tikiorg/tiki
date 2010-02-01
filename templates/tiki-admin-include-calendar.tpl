@@ -28,7 +28,7 @@
 									<input type="checkbox" name="default_calendars[]" id="{$k.calendarId}" value="{$k.calendarId}" {if in_array($k.calendarId,$prefs.site_default_calendars)}checked="checked"{/if} />
 								</div>
 								<div class="adminoptionlabel">
-									<label for="{$k.calendarId}">{$k.name}</label>
+									<label for="{$k.calendarId}">{$k.name|escape}</label>
 								</div>
 							</div>
 						{/foreach}
