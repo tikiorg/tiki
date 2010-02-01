@@ -8,8 +8,8 @@ function wikiplugin_calendar_info() {
 		'prefs' => array( 'feature_calendar', 'wikiplugin_calendar' ),
 		'params' => array(
 			'calIds' => array(
-				'name' => tra('Calendar filter'),
-				'description' => tra('If set to a calendar identifier, restricts the events displayed to those in the specified calendar.'),
+				'name' => tra('Calendars filter'),
+				'description' => tra('If set to a list of calendar identifiers, restricts the events to those in the identified calendars. Identifiers are separated by commas (",").') . " " . tra('Example values:') . '"13", "4,7", "31,49". ' . tra('Not set by default.'),
 				'filter' => 'digits',
 				'separator' => ',',
 			),
