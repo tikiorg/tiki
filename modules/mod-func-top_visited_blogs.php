@@ -11,14 +11,34 @@ function module_top_visited_blogs_info() {
 		'name' => tra('Most visited blogs'),
 		'description' => tra('Displays the specified number of blogs with links to them, from the most visited one to the least.'),
 		'prefs' => array( 'feature_blogs' ),
-		'params' => array(),
+		'params' => array(
+			'showlastpost' => array(
+				'name' => tra('Show Last Post'),
+				'description' => 'y|n',
+				'required' => false,
+				'filter' => 'alpha'
+			),
+			'sort_mode' => array(
+				'name' => tra('Sort Mode'),
+				'description' => tra('Sort Mode'),
+				'required' => false,
+				'filter' => 'word'
+			),
+		),
 		'common_params' => array('nonums', 'rows')
 	);
 }
 
 function module_top_visited_blogs( $mod_reference, $module_params ) {
 	global $tikilib, $smarty;
-	$ranking = $tikilib->list_blogs(0, $mod_reference["rows"], 'hits_desc', '', 'blog');
+	$with = '';
+	if (isset($mod_reference['params']['showlastpost']) && $mod_reference['params']['showlastpost'] == 'y') {
+		$with = array('showlastpost'=>'y');
+	}
+	if (empty($mod_reference['sort_mode'])) {
+		$mod_reference['sort_mode'] = 'hits_desc';
+	}
+	$ranking = $tikilib->list_blogs(0, $mod_reference['rows'], $mod_reference['sort_mode'], '', 'blog', $with);
 	
-	$smarty->assign('modTopVisitedBlogs', $ranking["data"]);
+	$smarty->assign('modTopVisitedBlogs', $ranking['data']);
 }

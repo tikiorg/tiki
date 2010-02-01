@@ -2855,8 +2855,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	// BLOG METHODS ////
-	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $ref='') {
-
+	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $ref='', $with = '') {
 		global $categlib; if (!$categlib) require_once 'lib/categories/categlib.php';
 		$bindvars = array();
 		$join = '';
@@ -2871,8 +2870,11 @@ class TikiLib extends TikiDb_Bridge
 			$where .= ' and (`tiki_blogs`.`title` like ? or `tiki_blogs`.`description` like ?) ';
 			$bindvars = array_merge($bindvars, array($findesc, $findesc));
 		}
-
-		$query = "select * from `tiki_blogs` $join WHERE 1=1 $where order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
+		if (isset($with['showlastpost'])) {
+			$query = "SELECT tb.*, tbp.`postId`, tbp.`created` as postCreated,  tbp.`user` as postUser, tbp.`title` as postTitle, tbp.`data` as postData FROM `tiki_blogs` tb, `tiki_blog_posts` tbp  $join where tb.`blogId` = tbp.`blogId` and tbp.`created` = (select max(`created`) from `tiki_blog_posts` tbp2 where tbp2.`blogId`=tb.`blogId` order by `created` desc) $where order by tb.".$this->convertSortMode($sort_mode);
+		} else {
+			$query = "select * from `tiki_blogs` $join WHERE 1=1 $where order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
+		}
 		$result = $this->query($query, $bindvars);
 
 		$ret = array();
