@@ -1,5 +1,6 @@
 <div class="fg-insert">
 	<h2>Choose the insert method</h2>
+	<a class="fg-upload-close" onclick="FileGallery.upload.close()"><img src="images/file_gallery/close.gif" border="0"/></a>
 	<div class="fg-insert-choose">
 		<a id="fg-insert-mode-image" onclick="FileGallery.upload.switchto('image')"{if $as='image'} class="fg-insert-active"{/if}>Insert as an image</a>
 		<a id="fg-insert-mode-link" onclick="FileGallery.upload.switchto('link')"{if $as<>'image'} class="fg-insert-active"{/if}>Insert as a link</a>

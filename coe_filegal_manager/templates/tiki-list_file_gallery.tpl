@@ -2,14 +2,15 @@
 
 <!-- {popup_init src="lib/overlib.js"} -->
 
-<link rel="stylesheet" type="text/css" href="/css/file_gallery.css"/>
+<link rel="stylesheet" type="text/css" href="css/file_gallery.css"/>
 
 {if $edit_mode eq 'y'}
 	{include file='edit_file_gallery.tpl'}
 {else}
 
 {if $filegals_manager eq ''}
-	<script> FileGallery.dialogmode = false;; </script>
+	<script type="text/javascript" src="lib/filegals/file_gallery.js"></script>
+	<script> FileGallery.dialogmode = false; </script>
 	<div id="fg-jquery-upload-dialog"></div>
 {/if}
 <div class="fg-dialog"{if $filegals_manager eq ''} id="fg-jquery-dialog"{/if}>
@@ -35,7 +36,9 @@
     {/if}
   {/strip}
   </h1>
+  {if $filegals_manager neq ''}
   <a class="fg-quick-insert-button" onclick="FileGallery.upload.extra('{$galleryId}','{$filegals_manager}')">Quick upload and insert button</a>
+  {/if}
   <a class="fg-settings-icon"><img src="images/file_gallery/icon-tools.gif" border="0"/></a>
   <a class="fg-tip-icon" target="wikihelp" href="http://doc.tikiwiki.org/File+Galleries" onmouseover="$('.fg-tip').show()" onmouseout="$('.fg-tip').hide()"><img src="images/file_gallery/icon-help.gif" border="0"/></a>
   <a class="fg-upload-close" onclick="FileGallery.close()"><img src="images/file_gallery/close.gif" border="0"/></a>
