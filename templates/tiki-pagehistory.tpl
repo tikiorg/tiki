@@ -16,7 +16,14 @@
 			<a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a>
 		</div>
 	{/if}
-  <div class="wikitext">{$previewd}</div>
+	<div>
+	  	{if isset($show_all_versions) and $show_all_versions eq "n"}
+			{pagination_links cant=$cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Session{/tr}}{/pagination_links}
+		{else}
+			{pagination_links cant=$cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Version{/tr}}{/pagination_links}
+		{/if}
+	</div>
+	<div class="wikitext">{$previewd}</div>
 {/if}
 
 {if $source}
@@ -27,6 +34,13 @@
 	{if $info.version ne $source and $tiki_p_rollback eq 'y'}
 		<div class="navbar"><a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$source}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a></div>
 	{/if}
+	<div>
+	  	{if isset($show_all_versions) and $show_all_versions eq "n"}
+			{pagination_links cant=$cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Session{/tr}}{/pagination_links}
+		{else}
+			{pagination_links cant=$cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Version{/tr}}{/pagination_links}
+		{/if}
+	</div>
 	<div class="wikitext">{$sourced}</div>
 {/if}
 
@@ -117,7 +131,7 @@
 							{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}
 						</td>
 					{/if}
-					<td class="odd button">{$info.version}<br />{tr}Current{/tr}</td>
+					<td class="odd button">{if $current eq $info.version}<strong>{/if}{$info.version}<br />{tr}Current{/tr}{if $current eq $info.version}</strong>{/if}</td>
 					<td class="odd button">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$info.version}" title="{tr}View{/tr}">v</a>
 					{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 						&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$info.version}" title="{tr}Source{/tr}">s</a>
@@ -169,11 +183,13 @@
 							</td>
 						{/if}
 						<td class="{cycle advance=false} button">
+							{if $current eq $element.version}<strong>{/if}
 							{if $show_all_versions eq "n" and not empty($element.session)}
 								<em>{$element.session} - {$element.version}</em>
 							{else}
 								{$element.version}
 							{/if}
+							{if $current eq $element.version}</strong>{/if}
 						</td>
 						<td class="{cycle advance=false} button">
 							&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$element.version}" title="{tr}View{/tr}">v</a>

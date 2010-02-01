@@ -76,57 +76,7 @@ if ($prefs['feature_contribution'] == 'y') {
 		$smarty->assign_by_ref('contributors', $contributors);
 	}
 }
-if (isset($_REQUEST['source'])) $source = $_REQUEST['source'];
-if (isset($_REQUEST['version'])) $rversion = $_REQUEST['version'];
-if (isset($_REQUEST['preview'])) $preview = $_REQUEST["preview"];
-$smarty->assign('source', false);
-if (isset($source)) {
-	if ($source == '' && isset($rversion)) {
-		$source = $rversion;
-	}
-	if ($source == $info["version"] || $source == 0) {
-		if ($info['is_html'] == 1) {
-			$smarty->assign('sourced', $info["data"]);
-		} else {
-			$smarty->assign('sourced', nl2br($info["data"]));
-		}
-		$smarty->assign('source', $info['version']);
-	} else {
-		$version = $histlib->get_version($page, $source);
-		if ($version) {
-			if ($version['is_html'] == 1) {
-				$smarty->assign('sourced', $version['data']);
-			} else {
-				$smarty->assign('sourced', nl2br($version["data"]));
-			}
-			$smarty->assign('source', $source);
-		}
-	}
-	if ($source == 0) {
-		$smarty->assign('noHistory', true);
-	}
-}
-$smarty->assign('preview', false);
-if (isset($preview)) {
-	if ($preview == '' && isset($rversion)) {
-		$preview = $rversion;
-	}
-	if ($preview == $info["version"] || $preview == 0) {
-		$previewd = $tikilib->parse_data($info["data"], array('preview_mode' => true));
-		$smarty->assign_by_ref('previewd', $previewd);
-		$smarty->assign('preview', $info['version']);
-	} else {
-		$version = $histlib->get_version($page, $preview);
-		if ($version) {
-			$previewd = $tikilib->parse_data($version["data"], array('preview_mode' => true));
-			$smarty->assign_by_ref('previewd', $previewd);
-			$smarty->assign('preview', $preview);
-		}
-	}
-	if ($preview == 0) {
-		$smarty->assign('noHistory', true);
-	}
-}
+
 // fetch page history, but omit the actual page content (to save memory)
 $history = $histlib->get_page_history($page, false);
 if (!isset($_REQUEST['show_all_versions'])) {
@@ -185,10 +135,12 @@ foreach($history as &$h) {	// as $h has been used by reference before it needs t
 }
 $history_versions = array_reverse($history_versions);
 $history_sessions = array_reverse($history_sessions);
+$history_versions[] = $info["version"];	// current is last one
+$history_sessions[] = 0;
 $smarty->assign_by_ref('history', $history);
 
 // for pagination
-$smarty->assign('cant', count($history) + 1);
+$smarty->assign('cant', count($history_versions));
 
 // calculate version and offset
 if (isset($_REQUEST['newver_idx'])) {
@@ -224,7 +176,91 @@ if (isset($_REQUEST['oldver_idx'])) {
 		$_REQUEST['oldver_idx'] = count($history_versions);
 	}
 }
+// source view
+if (isset($_REQUEST['source_idx'])) {
+	$source = $history_versions[$_REQUEST['source_idx']];
+} else {
+	if (isset($_REQUEST['source']) && $_REQUEST['source'] > 0) {
+		$source = (int)$_REQUEST["source"];
+		$_REQUEST['source_idx'] = array_search($source, $history_versions);
+	} else {
+		$source = $history_versions[count($history_versions)];
+		$_REQUEST['source_idx'] = count($history_versions);
+	}
+}
+if (isset($_REQUEST['preview_idx'])) {
+	$preview = $history_versions[$_REQUEST['preview_idx']];
+} else {
+	if (isset($_REQUEST['preview']) && $_REQUEST['preview'] > 0) {
+		$preview = (int)$_REQUEST["preview"];
+		$_REQUEST['preview_idx'] = array_search($preview, $history_versions);
+	} else {
+		$preview = $history_versions[count($history_versions)];
+		$_REQUEST['preview_idx'] = count($history_versions);
+	}
+}
 
+if (isset($_REQUEST['version'])) $rversion = $_REQUEST['version'];
+
+$smarty->assign('source', false);
+if (isset($source)) {
+	if ($source == '' && isset($rversion)) {
+		$source = $rversion;
+	}
+	if ($source == $info["version"] || $source == 0) {
+		if ($info['is_html'] == 1) {
+			$smarty->assign('sourced', $info["data"]);
+		} else {
+			$smarty->assign('sourced', nl2br($info["data"]));
+		}
+		$smarty->assign('source', $info['version']);
+	} else {
+		$version = $histlib->get_version($page, $source);
+		if ($version) {
+			if ($version['is_html'] == 1) {
+				$smarty->assign('sourced', $version['data']);
+			} else {
+				$smarty->assign('sourced', nl2br($version["data"]));
+			}
+			$smarty->assign('source', $source);
+		}
+	}
+	if ($source == 0) {
+		$smarty->assign('noHistory', true);
+	}
+}
+$smarty->assign('preview', false);
+if (isset($preview)) {
+	if ($preview == '' && isset($rversion)) {
+		$preview = $rversion;
+	}
+	if ($preview == $info["version"] || $preview == 0) {
+		$previewd = $tikilib->parse_data($info["data"], array('preview_mode' => true));
+		$smarty->assign_by_ref('previewd', $previewd);
+		$smarty->assign('preview', $info['version']);
+	} else {
+		$version = $histlib->get_version($page, $preview);
+		if ($version) {
+			$previewd = $tikilib->parse_data($version["data"], array('preview_mode' => true));
+			$smarty->assign_by_ref('previewd', $previewd);
+			$smarty->assign('preview', $preview);
+		}
+	}
+	if ($preview == 0) {
+		$smarty->assign('noHistory', true);
+	}
+}
+if ($preview) {
+	$smarty->assign('current', $preview);
+} else if ($source) {
+	$smarty->assign('current', $source);
+} else if ($newver) {
+	$smarty->assign('current', $newver);
+} else if ($oldver) {
+	$smarty->assign('current', $oldver);
+} else {
+	$smarty->assign('current', 0);
+}
 if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['show_translation_history'])) {
 	include_once ("lib/multilingual/multilinguallib.php");
 	$smarty->assign('show_translation_history', 1);
