@@ -45,7 +45,6 @@ function wikiplugin_split_info()
 				'required' => false,
 				'name' => tra('Column Size'),
 				'description' => tra('?'),
-				'filter' => 'imgsize',
 			),
 			'first' => array(
 				'required' => false,
