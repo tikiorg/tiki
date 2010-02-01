@@ -3,6 +3,9 @@
 <!-- {popup_init src="lib/overlib.js"} -->
 
 <link rel="stylesheet" type="text/css" href="css/file_gallery.css"/>
+<!--[if lte IE 7]>
+<link rel="stylesheet" type="text/css" href="css/file_gallery_ie6.css"/>
+<![endif]-->
 
 {if $edit_mode eq 'y'}
 	{include file='edit_file_gallery.tpl'}

@@ -1,3 +1,4 @@
+
 {asssign var=colcnt value='0'}
 <table border="0" cellspacing="0" cellpadding="0" class="fg-gallery-view">
 <tr>
