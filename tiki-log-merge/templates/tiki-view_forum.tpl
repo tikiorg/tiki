@@ -653,10 +653,8 @@
 			</form>
 </div>
 {if empty($user) and $prefs.javascript_enabled eq "y"}
-	<script type="text/javascript">
-		<!--//--><![CDATA[//><!--
+	{jq}
 			var js_anonymous_name = getCookie('anonymous_name');
 			if (js_anonymous_name) document.getElementById('anonymous_name').value = js_anonymous_name;
-			//--><!]]>
-	</script>
+	{/jq}
 {/if}

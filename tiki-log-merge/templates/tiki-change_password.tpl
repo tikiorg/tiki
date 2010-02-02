@@ -1,7 +1,6 @@
 {* test for caps lock*}
+{jq}
 {literal}
-	<script type="text/javascript">
-	<!--
 		function regCapsLock(e){
 			kc = e.keyCode?e.keyCode:e.which;
 			sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
@@ -30,9 +29,8 @@
 			}
 			return true;
 		}
-	// -->
-	</script>
 {/literal}
+{/jq}
 {if isset($new_user_validation) && $new_user_validation eq 'y'}
 	{title}{tr}Your account has been validated.{/tr}<br />{tr}You have to choose a password to use this account.{/tr}{/title}
 {else}

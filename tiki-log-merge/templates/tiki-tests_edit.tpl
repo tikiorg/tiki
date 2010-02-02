@@ -1,5 +1,4 @@
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 {literal}
 var html = new Array();
 function test_xpath(index) {
@@ -12,8 +11,7 @@ function test_xpath(index) {
 {literal}
 }
 {/literal}
-//--><!]]>
-</script>
+{/jq}
 
 {title help="tests"}{tr}TikiTests Edit{/tr}{/title}
 

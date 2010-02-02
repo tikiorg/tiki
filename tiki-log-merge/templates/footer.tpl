@@ -21,5 +21,3 @@
 		{$phplayers_LayersMenu->printFooter()}
 	{/if}
 {/if}
-
-{if $headerlib}{$headerlib->output_js()}{/if}

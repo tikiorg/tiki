@@ -263,7 +263,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *<strong>{/if}
+<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}
 </td><td colspan="3" class="formcontent" >
 {/if}
 {/if}
@@ -503,10 +503,8 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {foreach from=$fields key=ix item=field_value}
 {assign var=fid value=$field_value.fieldId}
 {if $listfields.$fid.http_request}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 selectValues('trackerIdList={$listfields.$fid.http_request[0]}&fieldlist={$listfields.$fid.http_request[3]}&filterfield={$listfields.$fid.http_request[1]}&status={$listfields.$fid.http_request[4]}&mandatory={$listfields.$fid.http_request[6]}','{$listfields.$fid.http_request[5]}','{$field_value.ins_id}')
-//--><!]]>
-</script>
+{/jq}
 {/if}
 {/foreach}

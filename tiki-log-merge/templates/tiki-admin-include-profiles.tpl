@@ -1,6 +1,5 @@
 {* $Id$ *}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 var baseURI = '{$smarty.server.REQUEST_URI}';
 {literal}
 function refreshCache( entry ) { // {{{
@@ -235,8 +234,7 @@ function showDetails( id, domain, profile ) { // {{{
 	req.send('');
 } // }}}
 {/literal}
-//--><!]]>
-</script>
+{/jq}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}TikiWiki Profiles{/tr}</a>{/remarksbox}
 
@@ -438,8 +436,8 @@ function showDetails( id, domain, profile ) { // {{{
 {/tab}
 {/tabset}
 
-<script type="text/javascript">
+{jq}
 {foreach item=k from=$oldSources}
 	refreshCache({$k});
 {/foreach}
-</script>
+{/jq}

@@ -1,6 +1,5 @@
 {* $Id$ *}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
         var articleTypes = new Array();
 {foreach from=$types key=type item=properties}
 
@@ -13,6 +12,5 @@
 
         articleTypes['{$type|escape}'] = typeProp;
 {/foreach}
-//--><!]]>
-</script>
+{/jq}
         

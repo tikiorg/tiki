@@ -1,6 +1,5 @@
 {title help="Toolbars"}{tr}Admin Toolbars{/tr}{/title}
-<script type='text/javascript'>
-<!--//--><![CDATA[//><!--
+{jq}
 {literal}
 	function toolbars_autoreload() {
 		if (document.forms['toolbars'].elements['autoreload'].checked) {
@@ -8,8 +7,7 @@
 		}
 	}
 {/literal}
-//--><!]]>
-</script>
+{/jq}
 
 <div class="toolbars-admin clearfix">
 	<form name="toolbars" method="post" action="tiki-admin_toolbars.php" onsubmit="return saveRows()">

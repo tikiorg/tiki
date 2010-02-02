@@ -20,7 +20,6 @@
 {/if}
 
 {* --- tikiwiki block --- *}
-<script type="text/javascript" src="lib/tiki-js.js"></script>
 {include file='bidi.tpl'}
 <title>
 {if isset($trail)}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
@@ -44,9 +43,6 @@
 {if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
 <!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
-{if ($prefs.feature_jquery neq "y" or $prefs.feature_jquery_tablesorter neq "y") and $prefs.javascript_enabled eq "y"}
-	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
-{/if}
 {if $prefs.feature_jquery eq "y"}
 	{include file='header_jquery.tpl'}
 {/if}

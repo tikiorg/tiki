@@ -137,7 +137,7 @@
 	{/if}
 	</div>
 
-<script type="text/javascript">
+{jq}
 {literal}
         
         function CloseClick(isModified) {
@@ -152,6 +152,6 @@
 			window.location="./tiki-list_kaltura_entries.php";
 		}
 {/literal}
-</script>
+{/jq}
 
 

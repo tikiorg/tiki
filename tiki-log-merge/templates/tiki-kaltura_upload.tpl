@@ -13,7 +13,7 @@
 <br>		
 <div id="kcwFlashObject"></div>
 
-<script type="text/javascript">
+{jq}
 {literal}
 	var params = {
        	allowScriptAccess: "always",
@@ -35,7 +35,7 @@
 {/literal}
 	var flashVars = {$cwflashVars};
 	swfobject.embedSWF("http://www.kaltura.com/kcw/ui_conf_id/1000741", "kcwFlashObject", "680", "360", "9.0.0", "expressInstall.swf", flashVars, params);
-</script>
+{/jq}
 		
 <form name='kcw' id='kcw' action='tiki-kaltura_upload.php' method='post' enctype='multipart/form-data' style='margin:0px; padding:0px'>
 	<input type="hidden" name="kcw" value="true"/>

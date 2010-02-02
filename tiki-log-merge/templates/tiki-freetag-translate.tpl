@@ -13,8 +13,7 @@
 	<input type="hidden" name="type" value="{$type|escape}"/>
 	<input type="hidden" name="objId" value="{$objId|escape}"/>
 	<input type="hidden" name="offset" value="{$freetags_offset|escape}"/>
-	<script type="text/javascript">
-	<!--//--><![CDATA[//><!--
+{jq}
 	{literal}
 	function show_cleartra_checkboxes()
 	{
@@ -29,8 +28,7 @@
 		document.getElementById('scblink').style.display = 'none';
 	}
 	{/literal}
-	//--><!]]>
-	</script>
+{/jq}
 		
 {button _onclick="javascript:show_cleartra_checkboxes()" id="scblink" _text="{tr}Show checkboxes to clear language information on tags{/tr}"}
 

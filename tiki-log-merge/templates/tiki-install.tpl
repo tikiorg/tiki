@@ -277,16 +277,14 @@
 		<td valign="top">
 			<fieldset><legend>{tr}Install{/tr}</legend>
 				{if $tikidb_created}
-				<script type="text/javascript">
-				<!--//--><![CDATA[//><!--
+				{jq}
 					{literal}
 					function install() {
 						document.getElementById('install-link').style.display='none';
 						document.getElementById('install-table').style.visibility='';
 					}
 					{/literal}
-				//--><!]]>
-				</script>
+				{/jq}
 				<div id="install-link">
 				
 				<p style="text-align:center"><a class="button" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
@@ -363,15 +361,13 @@
 	<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <span style="font-weight: bold">{tr}Database was left unchanged.{/tr}</span></p>
 {/if}
 {if $installer->failures|@count > 0}
-			<script type="text/javascript">
-			<!--//--><![CDATA[//><!--
+			{jq}
 				{literal}
 				function sql_failed() {
 					document.getElementById('sql_failed_log').style.display='block';
 				}
 				{/literal}
-			//--><!]]>
-			</script>
+			{/jq}
 
 <p><img src="pics/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle"/> <strong>{tr}Operations failed:{/tr}</strong> {$installer->failures|@count} {tr}SQL queries.{/tr}
 <a href="javascript:sql_failed()">{tr}Display details.{/tr}</a>

@@ -254,8 +254,7 @@
 							{/if}
 				
 							{if $prefs.feature_wiki_replace eq 'y' and $wysiwyg neq 'y'}
-								<script type="text/javascript">
-	<!--//--><![CDATA[//><!--
+{jq}
 	{literal}
 	function searchrep() {
 		c = document.getElementById('caseinsens')
@@ -271,8 +270,7 @@
 		t.value = str.replace(re,r.value)
 	}
 	{/literal}
-	//--><!]]>
-								</script>
+{/jq}
 								<fieldset>
 									<legend>{tr}Regex search:{/tr}</legend>
 									<input style="width:100;" class="wikiedit" type="text" id="search"/>

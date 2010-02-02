@@ -1,8 +1,7 @@
 {* $Id$ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 {literal}
 	function CheckAll() {
 		for (var i = 0; i < document.banningform.elements.length; i++) {
@@ -13,8 +12,7 @@
 		}
 	}
 {/literal}
-//--><!]]>
-</script>
+{/jq}
 
 {title help="Banning+System"}{tr}Banning system{/tr}{/title}
 

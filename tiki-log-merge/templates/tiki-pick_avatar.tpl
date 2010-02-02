@@ -35,7 +35,7 @@
 </div>
 {else} 
 
-<script type='text/javascript'>
+{jq}
 var avatars = new Array();
 {section name=ix loop=$avatars}
   avatars[{$smarty.section.ix.index}] = '{$avatars[ix]}';
@@ -63,7 +63,7 @@ function subavt() {
   document.getElementById('avatar').value=avatars[pepe];
 }
 {/literal}
-</script>
+{/jq}
 
 <h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=y">{tr}Show all{/tr}</a> {$numav} {tr}Items{/tr}</h2>
 <form action="tiki-pick_avatar.php" method="post">

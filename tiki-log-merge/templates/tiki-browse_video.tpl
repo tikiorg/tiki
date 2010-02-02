@@ -109,8 +109,7 @@
 
 {if $listVideoId}
 
-<script type='text/javascript'>
-<!--
+{jq}
 var tmp = window.location.search.match(/delay=(\d+)/);
 tmp = tmp ? parseInt(tmp[1]) : 3000;
 var thepix = new Diaporama('thepix', [{$listImgId}], {ldelim}
@@ -119,8 +118,7 @@ var thepix = new Diaporama('thepix', [{$listImgId}], {ldelim}
 	  resetUrl: 1,
 	  delay: tmp
 	{rdelim});
-//-->
-</script>
+{/jq}
 
 {/if}
 

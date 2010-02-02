@@ -11,8 +11,7 @@
 </tr>
 </table>
 </div>
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 {literal}
 function createCookie(name,value,days) {
 	if (days) {
@@ -46,6 +45,5 @@ function tikitest_state(state) {
 {elseif $tikitest_state eq 2}
 	hide("tikitest_pause");
 {/if}
-//--><!]]>
-</script>
+{/jq}
 <!-- EndTikiTestRemoveMe -->

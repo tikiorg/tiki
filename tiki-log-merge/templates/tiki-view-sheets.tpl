@@ -33,8 +33,7 @@
 	<script type="text/javascript" src="lib/sheet/grid.js"></script>
 	<script type="text/javascript" src="lib/sheet/control.js"></script>
 	<script type="text/javascript" src="lib/sheet/formula.js"></script>
-	<script type="text/javascript">
-	<!--//--><![CDATA[//><!--
+	{jq}
 	var g;
 {$init_grid}
 
@@ -53,8 +52,7 @@
 	initGrid();
 	controlFormatCellBefore = '<form name="format" onsubmit="return formatCellSubmit(this)"><select name="format"><option value="">None</option>';
 	controlFormatCellAfter = '</select><input type="submit" name="submit" value="{tr}Format Cell{/tr}" /></form>';
-	//--><!]]>
-	</script>
+	{/jq}
 
 {else}
 	<div class="tiki_sheet">{$grid_content}</div>

@@ -7,11 +7,9 @@
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <form action="tiki-directory_validate_sites.php" method="post" name="form_validate_sites">
-  <script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 var CHECKBOX_LIST = [{section name=user loop=$items}'sites[{$items[user].siteId}]'{if not $smarty.section.user.last},{/if}{/section}];
-//--><!]]>
-</script>
+{/jq}
   <br />
   <table class="normal">
     <tr>

@@ -61,8 +61,7 @@
 <div class="wikitext">
 	<div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
 </div>
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 function load() {literal}{{/literal}
   var map = new GMap2(document.getElementById("map"));
   map.addControl(new GLargeMapControl());
@@ -79,8 +78,6 @@ function load() {literal}{{/literal}
   {literal}});{/literal}
 
 {literal}}{/literal}
-//load();
-//--><!]]>
 window.onload=load;
-</script>
+{/jq}
 {/if}

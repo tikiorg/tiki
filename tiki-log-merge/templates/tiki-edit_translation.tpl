@@ -80,8 +80,7 @@
 	<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
 
-<script type='text/javascript'>
-<!--
+{jq}
 {literal}
 // Make the translation name have the focus.
 window.onload = function()
@@ -113,9 +112,8 @@ function validate_translation_request() {
    }
    return success;
 }
-// -->
 {/literal}
-</script>   
+{/jq}
 
 {if !empty($langpage)}
 	<br />

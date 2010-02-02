@@ -294,8 +294,7 @@
 </div>
 
 	{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
-		<script type="text/javascript">
-		<!--//--><![CDATA[//><!--
+		{jq}
 		{literal}
 		var nb_upload = 1;
 		function add_upload_file() {
@@ -343,7 +342,6 @@
 			hide('form');
 		}
 		{/literal}
-		//--><!]]>
-		</script>
+		{/jq}
 	{/if}
 

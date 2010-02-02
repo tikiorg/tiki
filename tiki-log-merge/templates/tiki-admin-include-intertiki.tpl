@@ -11,9 +11,8 @@
   </td>
   <td>
 
+	{jq}
   {literal}
-    <script type="text/javascript">
-		<!--//--><![CDATA[//><!--
       function check_server_visibility(sel) {
         if (sel.selectedIndex == 0) {
 	  document.getElementById('admin-server-options').style.display = 'block';
@@ -23,9 +22,8 @@
 	  document.getElementById('admin-slavemode-options').style.display = 'block';
         }
       }	
-		//--><!]]>
-    </script>
   {/literal}
+	{/jq}
 
     <select name="feature_intertiki_mymaster" onchange="check_server_visibility(this);">
       <option value="">{tr}No{/tr}</option>
