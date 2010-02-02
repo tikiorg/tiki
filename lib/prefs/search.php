@@ -54,8 +54,8 @@ function prefs_search_list() {
 			'type' => 'flag',
 		),
 		'search_default_where' => array(
-			'name' => tra('Where by default the search boxes'),
-			'description' => tra('When object filter is not on, limit to search boxes to search one type of object'),
+			'name' => tra('Default where'),
+			'description' => tra('When object filter is not on, limit to search one type of object'),
 			'type' => 'list',
 			'options' => array(
 				'' => tra('Entire site'),
