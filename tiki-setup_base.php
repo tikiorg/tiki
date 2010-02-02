@@ -135,7 +135,7 @@ require_once ('lib/setup/prefs.php');
 if ($prefs['smarty_security'] == 'y') {
 	$smarty->security = true;
 }
-require_once ('lib/userslib.php');
+require_once ('lib/userslib.php'); global $userlib;
 $userlib = new UsersLib;
 require_once ('lib/tikiaccesslib.php');
 $access = new TikiAccessLib;
