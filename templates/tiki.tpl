@@ -140,6 +140,10 @@
 	{eval var=$prefs.feature_endbody_code}
 {/if}
 		{interactivetranslation}
-{if $headerlib}   {$headerlib->output_js_files()}{/if}
+<!-- Put JS at the end -->
+{if $headerlib}
+	{$headerlib->output_js_files()}
+	{$headerlib->output_js()}
+{/if}
 	</body>
 </html>
