@@ -1,7 +1,6 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://doc.tikiwiki.org/Internationalization">{tr}Internationalization{/tr}</a>{/remarksbox}
 
-  <script type="text/javascript">
-	<!--//--><![CDATA[//><!--
+{jq}
   {literal}
 	function updateList( active )
 	{
@@ -12,9 +11,7 @@
 				optionList[i].selected = false;
 		}
 	}
-  //--><!]]>
-  {/literal}
-  </script>
+{/jq}
 
 <form action="tiki-admin.php?page=i18n" method="post">
 	<div class="heading input_submit_container" style="text-align: right">

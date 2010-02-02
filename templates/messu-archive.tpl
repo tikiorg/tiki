@@ -54,12 +54,9 @@
 <input type="hidden" name="priority" value="{$priority|escape}" />
 <input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <input type="submit" name="download" value="{tr}Download{/tr}" />
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}];
-//--><!]]>
-</script>
-
+{/jq}
 <table class="normal" >
   <tr>
     <th><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_archive',CHECKBOX_LIST,this.checked);" /></th>

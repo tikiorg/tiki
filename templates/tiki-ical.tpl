@@ -11,7 +11,7 @@
    <br />{tr}From{/tr}:  
    <input type="hidden" name="tstart" id="tstart" value="{$tstart|escape}" />
    <span id="tstartl" class="daterow" style="padding:0; margin:0">Click</span>
-   <script type="text/javascript" >
+{jq}
    {literal}
 	Calendar.setup({
 		inputField     :    "tstart",     // id of the input field
@@ -22,11 +22,11 @@
 		singleClick    :    true
 	});
     {/literal}
-    </script>
+{/jq}
     <br /> {tr}To{/tr} :
     <input type="hidden" name="tstop" id="tstop" value="{$tstop|escape}" />
     <span id="tstopl" class="daterow" style="padding:0; margin:0">Click</span>
-    <script type="text/javascript" >
+{jq}
     {literal}
 	Calendar.setup({
 		inputField     :    "tstop",     // id of the input field
@@ -37,7 +37,7 @@
 		singleClick    :    true
 	});
     {/literal}
-    </script>
+{/jq}
     <br />
    <input  class="wikiaction"  value="export" type="submit" />
 </form>

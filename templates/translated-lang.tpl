@@ -11,8 +11,7 @@
 				</select>
 				</form>
 			{else} {* get method to have the param in the url *}
-				<script type="text/javascript">
-				<!--//--><![CDATA[//><!--
+				{jq}
 				{if $beingStaged == 'y'}
 					var page_to_translate = '{$approvedPageName|escape:"quotes"}';
 				{else}
@@ -42,8 +41,7 @@
 						element.form.submit();
 				}
 				{/literal}
-				//--><!]]>
-				</script>
+				{/jq}
 				<form action="tiki-index.php" method="get">
 				{if $prefs.feature_machine_translation eq 'y'}
 				<input type="hidden" name="machine_translate_to_lang" value="" />

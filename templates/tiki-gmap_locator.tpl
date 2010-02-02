@@ -37,8 +37,7 @@
 {/if}
 
 <div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 var map = null;
 var geocoder = null;
 function load() {literal}{{/literal}
@@ -99,9 +98,8 @@ function showAddress(address) {literal}{{/literal}
 
 {literal}$jq("input[name=address]").focus(function () { if ($jq(this).val() == "{/literal}{tr}enter address{/tr}{literal}") {$jq(this).val("");}}){/literal}
 
-//--><!]]>
 window.onload=load;
-</script>
+{/jq}
 {else}
 Google Maps is not enabled.
 {/if}

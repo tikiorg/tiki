@@ -52,11 +52,9 @@
 <input type="hidden" name="flag" value="{$flag|escape}" />
 <input type="hidden" name="flagval" value="{$flagval|escape}" />
 <input type="hidden" name="priority" value="{$priority|escape}" />
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}];
-//--><!]]>
-</script>
+{/jq}
 <table class="normal">
   <tr>
     <th>{if $items}<input title="{tr}Select All{/tr}" type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_mailbox',CHECKBOX_LIST,this.checked);" />{/if}</th>

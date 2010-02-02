@@ -6,8 +6,7 @@
 <div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
 </div>
 
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 function load() {literal}{{/literal}
   var map = new GMap2(document.getElementById("map"));
   map.addControl(new GLargeMapControl());
@@ -24,11 +23,6 @@ function load() {literal}{{/literal}
 {/foreach}
 
 {literal}}{/literal}
-//--><!]]>
-</script>
-
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
 function addLoadEvent(func) {literal}{{/literal}
   var oldonload = window.onload;
   if (typeof window.onload != 'function') {literal}{{/literal}
@@ -44,6 +38,4 @@ function addLoadEvent(func) {literal}{{/literal}
 {literal}}{/literal}
 
 addLoadEvent(load);
-//--><!]]>
-</script>
-
+{/jq}

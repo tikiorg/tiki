@@ -293,8 +293,7 @@
 	{/tabset}
 {/if}
 
-<script type='text/javascript'>
-<!--
+{jq}
 {if $allowTxt eq 'n'}
 document.getElementById('txtcol1').style.display='none';
 document.getElementById('txtcol2').style.display='none';
@@ -311,6 +310,4 @@ function remove_newsletter_file(id) {
 	document.getElementById('newsletterfiles').removeChild(document.getElementById('newsletterfileid_'+id));
 }
 {/literal}
-
--->
-</script>
+{/jq}

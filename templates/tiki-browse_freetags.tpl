@@ -50,8 +50,7 @@
 	</div>
 
 	{if $prefs.freetags_browse_show_cloud eq 'y'}
-		<script type="text/javascript">
-			<!--//--><![CDATA[//><!--
+		{jq}
 			{literal}
 				function addTag(tag) {
 					if (tag.search(/ /) >= 0) tag = '"'+tag+'"';
@@ -61,8 +60,7 @@
 					document.getElementById('tagBox').value = '';
 				}
 			{/literal}
-			//--><!]]>
-		</script>
+		{/jq}
 
 		<div class="freetaglist"> 
 			{foreach from=$most_popular_tags item=popular_tag}

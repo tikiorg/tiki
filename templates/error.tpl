@@ -1,9 +1,7 @@
 {if isset($close_window) and $close_window eq 'y'}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
+{jq}
 close();
-//--><!]]>
-</script>
+{/jq}
 {/if}
 {* 402: need login
  * 401, 403: perm

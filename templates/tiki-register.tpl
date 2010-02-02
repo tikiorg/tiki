@@ -1,8 +1,7 @@
 {* $Id$ *}
 {* test for caps lock*}
+{jq}
 {literal}
-	<script type="text/javascript">
-	<!--
 		function regCapsLock(e){
 			kc = e.keyCode?e.keyCode:e.which;
 			sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
@@ -11,9 +10,8 @@
 			else
 				document.getElementById('divRegCapson').style.visibility = 'hidden';
 		}
-	// -->
-	</script>
 {/literal}
+{/jq}
 
 {title admpage='login'}{tr}Registration{/tr}{/title}
 	

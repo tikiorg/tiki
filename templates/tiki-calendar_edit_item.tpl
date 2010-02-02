@@ -171,7 +171,7 @@
 				<option value="11" {if $recurrence.dateOfYear_month eq '11'}selected="selected"{/if}>{tr}November{/tr}</option>
 				<option value="12" {if $recurrence.dateOfYear_month eq '12'}selected="selected"{/if}>{tr}December{/tr}</option>
 			  </select>
-			  <script type="text/javascript">
+{jq}
 {literal}
 			    function checkDateOfYear(day,month) {
 {/literal}
@@ -191,7 +191,8 @@
 					}
 				}
 {/literal}
-			  </script>&nbsp;&nbsp;
+{jq}
+&nbsp;&nbsp;
 			  <span id="errorDateOfYear" style="color:#900;"></span>
 		<br /><br /><hr />
 {/if}

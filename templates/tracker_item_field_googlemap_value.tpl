@@ -5,8 +5,7 @@
 	<div id="map{$field_value.fieldId}_{$item.itemId}" style="width: {$width}px; height: {$height}px;border: 1px solid #000;overflow:hidden;">
 	</div>
 	<div class="description">{tr}Latitude{/tr} (Y) = {$field_value.y}<br /> {tr}Longitude{/tr} (X) = {$field_value.x} {if $control ne 'n'}<br />Zoom = {$field_value.z}{/if}</div>
-	<script type="text/javascript">
-	<!--//--><![CDATA[//><!--
+	{jq}
 	function load_googlemap{$field_value.fieldId}_{$item.itemId}() {literal}{{/literal}
 	var map = new GMap2(document.getElementById("map{$field_value.fieldId}_{$item.itemId}"));
 	  map.setCenter(new GLatLng({$field_value.y}, {$field_value.x}), {$field_value.z});
@@ -30,5 +29,4 @@
 	{literal}}{/literal}
 	window.unload=GUnload;
 	load_googlemap{$field_value.fieldId}_{$item.itemId}();
-	//--><!]]>
-	</script>
+	{/jq}
