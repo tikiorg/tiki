@@ -105,7 +105,6 @@
 						{preference name=feature_webservices}
 						{preference name=feature_webmail}
 						{preference name=feature_sefurl}
-						{preference name=feature_pagelist}
 				</fieldset>
 			</div>
 

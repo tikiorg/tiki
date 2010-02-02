@@ -39,7 +39,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 		$cacheItem = 'userlink.'.$other_user.$fullname.$max_length;
 	}
 
-	if( $cached = $cachelib->getSerialized( $cacheItem ) ) {
+	if( $cached = $cachelib->getCached( $cacheItem ) ) {
 		return $cached;
 	}
 

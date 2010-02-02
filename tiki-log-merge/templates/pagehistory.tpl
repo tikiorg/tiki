@@ -1,10 +1,6 @@
 {if $smarty.request.diff_style}
    {if $translation_mode ne 'y'}
      <h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>     
-   {else}
-     <p>
-     {tr}Changes that need to be reproduced are highlighted below.{/tr}
-     </p>
    {/if}
    <table class="normal diff">
    {if $translation_mode eq 'n'}
@@ -41,7 +37,22 @@
      <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div></td>
    </tr>
 {/if}
-
+	<tr>
+		<td colspan="2">
+			{if isset($show_all_versions) and $show_all_versions eq "n"}
+				{pagination_links cant=$cant offset=$smarty.request.oldver_idx offset_arg="oldver_idx" itemname={tr}Session{/tr}}{/pagination_links}
+			{else}
+				{pagination_links cant=$cant offset=$smarty.request.oldver_idx offset_arg="oldver_idx" itemname={tr}Version{/tr}}{/pagination_links}
+			{/if}
+		</td>
+		<td colspan="2">
+			{if isset($show_all_versions) and $show_all_versions eq "n"}
+				{pagination_links cant=$cant offset=$smarty.request.newver_idx offset_arg="newver_idx" itemname={tr}Session{/tr}}{/pagination_links}
+			{else}
+				{pagination_links cant=$cant offset=$smarty.request.newver_idx offset_arg="newver_idx" itemname={tr}Version{/tr}}{/pagination_links}
+			{/if}
+		</td>
+	</tr>
 {if $diff_style eq 'unidiff'}
  <tr><td colspan="4">
  {if $diffdata}
@@ -80,7 +91,7 @@
 {/if}
 
 {if $diff_style neq 'unidiff' && $diff_style neq 'sideview'}
-  {if $diffdata}{$diffdata}{else}<tr><td colspan="3">{tr}Versions are identical{/tr}</td></tr>{/if}
+  {if $diffdata}{$diffdata}{else}<tr><td colspan="4">{tr}Versions are identical{/tr}</td></tr>{/if}
 {/if}
 
    </table>

@@ -11,11 +11,17 @@
 //TODO: list languages must used browser preferences
 //QUESTION: can we translated all the objects or only those the user can see - if yes filter list_pages
 
+$tracesOn = false;
+
 // Initialization
 require_once('tiki-setup.php');
 
 include_once('lib/multilingual/multilinguallib.php');
 include_once('modules/mod-func-translation.php');
+
+if ($tracesOn) {
+	echo "<pre>-- tiki-edit_translation: \$_REQUEST="; var_dump($_REQUEST); echo "</pre>\n";
+}
 
 execute_module_translation();
 

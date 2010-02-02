@@ -19,7 +19,7 @@ class Cachelib
 	function __construct() {
 		global $prefs;
 
-		if( $prefs['memcache_enabled'] == 'y' ) {
+		if( isset($prefs['memcache_enabled']) && $prefs['memcache_enabled'] == 'y' ) {
 			$this->implementation = new CacheLibMemcache;
 		} else {
 			$this->implementation = new CacheLibFileSystem;
@@ -188,7 +188,7 @@ class CacheLibFileSystem
 	function getCached($key, $type='') {
 		$key = $type.md5($key);
 		if ( !file_exists($this->folder."/$key")) { 	
-			return serialize(false);
+			return false;
 		} 
 		$fw = fopen($this->folder."/$key","r");
 		if ($l = filesize($this->folder."/$key"))

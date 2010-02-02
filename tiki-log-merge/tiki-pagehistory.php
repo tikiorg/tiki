@@ -36,6 +36,8 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 
+$auto_query_args = array('page', 'oldver', 'newver', 'compare', 'diff_style', 'show_translation_history', 'show_all_versions');
+
 $tikilib->get_perm_object( $_REQUEST['page'], 'wiki page' );
 
 // Now check permissions to access this page
@@ -74,15 +76,132 @@ if ($prefs['feature_contribution'] == 'y') {
 		$smarty->assign_by_ref('contributors', $contributors);
 	}
 }
-if (isset($_REQUEST['oldver'])) {
-	$oldver = (int)$_REQUEST["oldver"];
-} else $oldver = 0;
-if (isset($_REQUEST['newver'])) {
-	$newver = (int)$_REQUEST["newver"];
-} else $newver = 0;
-if (isset($_REQUEST['source'])) $source = $_REQUEST['source'];
+
+// fetch page history, but omit the actual page content (to save memory)
+$history = $histlib->get_page_history($page, false);
+if (!isset($_REQUEST['show_all_versions'])) {
+	$_REQUEST['show_all_versions'] = "y";
+}
+$sessions = array();
+if (count($history) > 0) {
+	$lastuser = '';		// calculate edit session info
+	$lasttime = 0;		// secs
+	$idletime = 1800; 	// max gap between edits in sessions 30 mins? Maybe should use a pref?
+	for($i = 0, $cnt = count($history); $i < $cnt; $i++) {
+		
+		if ($history[$i]['user'] != $lastuser || $lasttime - $history[$i]['lastModif'] > $idletime) {
+			$sessions[] = $history[$i];
+			//$history[$i]['session'] = $history[$i]['version'];
+		} else if (count($sessions) > 0) {
+			$history[$i]['session'] = $sessions[count($sessions)-1]['version'];
+		}
+		$lastuser = $history[$i]['user'];
+		$lasttime = $history[$i]['lastModif'];
+	}
+	$csesh = count($sessions) + 1;
+	foreach($history as &$h) {	// move ending 'version' into starting 'session'
+		if (!empty($h['session'])) {
+			foreach($history as &$h2) {
+				if ($h2['version'] == $h['session']) {
+					$h2['session'] = $h['version'];
+				}
+			}
+			$h['session'] = '';
+		}
+	}
+	if ($_REQUEST['show_all_versions'] == "n") {
+		for($i = 0, $cnt = count($history); $i < $cnt; $i++) {	// remove versions inside sessions
+			if (!empty($history[$i]['session']) && $i < $cnt - 1) {
+				$seshend = $history[$i]['session'];
+				$i++;
+				for ($i; $i < $cnt; $i++) {
+					if ($history[$i]['version'] >= $seshend) {
+						unset($history[$i]);
+					} else {
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+$smarty->assign('show_all_versions', $_REQUEST['show_all_versions']);
+$history_versions = array();
+$history_sessions = array();
+reset($history);
+foreach($history as &$h) {	// as $h has been used by reference before it needs to be so again (it seems)
+	$history_versions[] = (int)$h['version'];
+	$history_sessions[] = isset($h['session']) ? (int)$h['session'] : 0;
+}
+$history_versions = array_reverse($history_versions);
+$history_sessions = array_reverse($history_sessions);
+$history_versions[] = $info["version"];	// current is last one
+$history_sessions[] = 0;
+$smarty->assign_by_ref('history', $history);
+
+// for pagination
+$smarty->assign('cant', count($history_versions));
+
+// calculate version and offset
+if (isset($_REQUEST['newver_idx'])) {
+	$newver = $history_versions[$_REQUEST['newver_idx']];
+} else {
+	if (isset($_REQUEST['newver']) && $_REQUEST['newver'] > 0) {
+		$newver = (int)$_REQUEST["newver"];
+		if (in_array($newver, $history_versions)) {
+			$_REQUEST['newver_idx'] = array_search($newver, $history_versions);
+		} else {
+			$_REQUEST['newver_idx'] = array_search($newver, $history_sessions);
+		}
+	} else {
+		$newver = $history_versions[count($history_versions)];
+		$_REQUEST['newver_idx'] = count($history_versions);
+	}
+}
+if (isset($_REQUEST['oldver_idx'])) {
+	$oldver = $history_versions[$_REQUEST['oldver_idx']];
+	if ($oldver == $newver && !empty($history_sessions[$_REQUEST['oldver_idx']])) {
+		$oldver = $history_sessions[$_REQUEST['oldver_idx']];
+	}
+} else {
+	if (isset($_REQUEST['oldver']) && $_REQUEST['oldver'] > 0) {
+		$oldver = (int)$_REQUEST["oldver"];
+		if (in_array($oldver, $history_versions)) {
+			$_REQUEST['oldver_idx'] = array_search($oldver, $history_versions);
+		} else {
+			$_REQUEST['oldver_idx'] = array_search($oldver, $history_sessions);
+		}
+	} else {
+		$oldver = $history_versions[count($history_versions)];
+		$_REQUEST['oldver_idx'] = count($history_versions);
+	}
+}
+// source view
+if (isset($_REQUEST['source_idx'])) {
+	$source = $history_versions[$_REQUEST['source_idx']];
+} else {
+	if (isset($_REQUEST['source']) && $_REQUEST['source'] > 0) {
+		$source = (int)$_REQUEST["source"];
+		$_REQUEST['source_idx'] = array_search($source, $history_versions);
+	} else {
+		$source = $history_versions[count($history_versions)];
+		$_REQUEST['source_idx'] = count($history_versions);
+	}
+}
+if (isset($_REQUEST['preview_idx'])) {
+	$preview = $history_versions[$_REQUEST['preview_idx']];
+} else {
+	if (isset($_REQUEST['preview']) && $_REQUEST['preview'] > 0) {
+		$preview = (int)$_REQUEST["preview"];
+		$_REQUEST['preview_idx'] = array_search($preview, $history_versions);
+	} else {
+		$preview = $history_versions[count($history_versions)];
+		$_REQUEST['preview_idx'] = count($history_versions);
+	}
+}
+
 if (isset($_REQUEST['version'])) $rversion = $_REQUEST['version'];
-if (isset($_REQUEST['preview'])) $preview = $_REQUEST["preview"];
+
 $smarty->assign('source', false);
 if (isset($source)) {
 	if ($source == '' && isset($rversion)) {
@@ -131,9 +250,17 @@ if (isset($preview)) {
 		$smarty->assign('noHistory', true);
 	}
 }
-// fetch page history, but omit the actual page content (to save memory)
-$history = $histlib->get_page_history($page, false);
-$smarty->assign_by_ref('history', $history);
+if ($preview) {
+	$smarty->assign('current', $preview);
+} else if ($source) {
+	$smarty->assign('current', $source);
+} else if ($newver) {
+	$smarty->assign('current', $newver);
+} else if ($oldver) {
+	$smarty->assign('current', $oldver);
+} else {
+	$smarty->assign('current', 0);
+}
 if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['show_translation_history'])) {
 	include_once ("lib/multilingual/multilinguallib.php");
 	$smarty->assign('show_translation_history', 1);

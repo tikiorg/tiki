@@ -629,7 +629,7 @@ function toggleFullScreen(area_name) {
 		
 		// store & reset margins, padding and size for all the textarea parents, and hide siblings
 		$ta.parents().each(function() {
-			fullScreenState[area_name]["hidden"].push($jq(this).siblings(":visible"));
+			fullScreenState[area_name]["hidden"].push($jq(this).siblings(":visible:not('#diff_outer, .translation_message')"));
 			var ob = [];
 			ob["el"] = this;
 			ob["margin-left"] = $jq(this).css("margin-left");	// this is for IE - it fails using margin or padding as a single setting
@@ -645,7 +645,7 @@ function toggleFullScreen(area_name) {
 			fullScreenState[area_name]["changed"].push(ob);
 		});
 		$ta.parents().each(function() {
-			$jq(this).siblings(":visible:not(#diff_outer)").hide();
+			$jq(this).siblings(":visible:not('#diff_outer, .translation_message')").hide();
 			$jq(this).css("margin", 0).css("padding", 0).width(w).height(h);
 		});
 		
@@ -687,13 +687,19 @@ function toggleFullScreen(area_name) {
 		fullScreenState[area_name]["ta"]["height"] = $ta.height();
 		fullScreenState[area_name]["ta"]["float"] = $ta.css("float");
 		
-		$ta.width(w).height($ta.parent().height() - $jq(".textarea-toolbar").height() - 60);
+		var b = $ta.css("border-left-width").replace("px","");;
+		$ta.width(w - b * 2).height($ta.parent().height() - $jq(".textarea-toolbar").height() - $jq(".translation_message").height() - 60 - b * 2);
 		
 		// add grippy resize bar to translation diff page
 		if ($diff.length) {
 			var grippy_width = 10;
 			$diff.width(w).height(h).css("float", "left").next().css("float", "right");
-			$jq("#diff_history").height(h * 0.9).width(w).css("left", w + grippy_width);
+			var vh = $jq("#diff_versions").css("overflow", "auto").height() + 18;
+			if (vh > h * 0.15) {
+				vh = h * 0.15;
+			}
+			$jq("#diff_versions").height(vh);
+			$jq("#diff_history").height(h - vh).width(w).css("left", w + grippy_width);
 			$edit_form.css("position","absolute").css("left", w + grippy_width).width(w - grippy_width)
 			
 			$grippy = $jq("<div id='fs_grippy_" + area_name +"' />").css({"background-image": "url(pics/icons/shading.png)",

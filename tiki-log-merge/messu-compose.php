@@ -154,7 +154,7 @@ if (isset($_REQUEST['send'])) {
 		$users_formatted = array();
 		foreach ($users as $rawuser)
 			$users_formatted[] = htmlspecialchars($rawuser);
-		$message.= tra("Message will be sent to: ") . implode(',', $users_formatted) . "<br />";
+		$message.= tra("Message has been sent to: ") . implode(',', $users_formatted) . "<br />";
 	} else {
 		$message.= tra('ERROR: No valid users to send the message');
 		$smarty->assign('message', $message);

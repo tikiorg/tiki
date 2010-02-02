@@ -935,8 +935,8 @@ class MultilingualLib extends TikiLib
 			$values[] = $language;
 		}
 		$query = "select `language` from `tiki_translations_in_progress` where ($fields)=($valuesSpec)";
-		$query_result = $this->query($query, $values);
-		return $query_result->result;
+		$flags = $this->fetchAll($query, $values);
+		return $flags;
 	}   
 
 	function addTranslationInProgressFlags($page_id, $language) {

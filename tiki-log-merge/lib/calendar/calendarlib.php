@@ -644,19 +644,21 @@ class CalendarLib extends TikiLib
 
 	// Returns an array of a maximum of $maxrows upcoming (but possibly past) events in the given $order. If $calendarId is set, events not in the specified calendars are filtered. $calendarId can be a calendar identifier or an array of calendar identifiers. If $maxDaysEnd is a natural, events ending after $maxDaysEnd days are filtered. If $maxDaysStart is a natural, events starting after $maxDaysStart days are filtered. Events ending more than $priorDays in the past are filtered.
 	// Each event is represented by a string-indexed array with indices start, end, name, description, calitemId, calendarId, user, lastModif, url, allday in the same format as tiki_calendar_items fields, as well as location for the event's locations, parsed for the parsed description and category for the event's calendar category.
-	function upcoming_events($maxrows = -1, $calendarId = 0, $maxDaysEnd = -1, $order = 'start_asc', $priorDays = 0, $maxDaysStart = -1) {
+	function upcoming_events($maxrows = -1, $calendarId = null, $maxDaysEnd = -1, $order = 'start_asc', $priorDays = 0, $maxDaysStart = -1) {
 		$cond = '';
 		$bindvars = array();
-		if(is_array($calendarId) && count($calendarId) > 0) {
-			$cond = $cond."and (0=1";
-			foreach($calendarId as $id) {
-				$cond = $cond." or i.`calendarId` = ? ";
+		if (isset($calendarId)) {
+			if(is_array($calendarId)) {
+				$cond = $cond."and (0=1";
+				foreach($calendarId as $id) {
+					$cond = $cond." or i.`calendarId` = ? ";
+				}
+				$cond = $cond.")";
+				$bindvars = array_merge( $bindvars, $calendarId );
+			} else {
+				$cond = $cond." and i.`calendarId` = ? ";
+				$bindvars[] = $calendarId;
 			}
-			$cond = $cond.")";
-			$bindvars = array_merge( $bindvars, $calendarId );
-		} elseif (!is_array($calendarId) and $calendarId > 0) {
-			$cond = $cond." and i.`calendarId` = ? ";
-			$bindvars[] = $calendarId;
 		}
 		$cond .= " and `end` >= (unix_timestamp(now()) - ?*3600*34)";
 		$bindvars[] = $priorDays;

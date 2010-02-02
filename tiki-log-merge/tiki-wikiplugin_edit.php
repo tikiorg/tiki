@@ -4,9 +4,6 @@ require 'tiki-setup.php';
 if( ! isset( $_POST['page'], $_POST['content'], $_POST['index'], $_POST['type'], $_SERVER['HTTP_REFERER'] ) )
 	die( 'Missing parameters' );
 
-if( ! isset( $_POST['message'] ) )
-	$_POST['message'] = tra('Plugin modified by editor.');
-
 $page = $_POST['page'];
 
 $plugin = strtolower( basename( $_POST['type'] ) );
@@ -14,6 +11,9 @@ $type = strtoupper( $plugin );
 
 if( ! $meta = $tikilib->plugin_info( $plugin ) )
 	exit;
+
+if( ! isset( $_POST['message'] ) )
+	$_POST['message'] = isset($meta['name']) ? tra($meta['name']) : $plugin . ' ' . tra('Plugin modified by editor.');
 
 $info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);

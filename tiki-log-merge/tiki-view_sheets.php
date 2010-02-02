@@ -111,13 +111,15 @@ if ($prefs['feature_jquery_sheet'] == 'y') {
 $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != "Done") {
-		if ($jq("div.tiki_sheet").children().length == 0)  {	// new sheet
-			$jq("div.tiki_sheet").append($jq("<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>"));
+		var options = {title: "'.$info['title'].'", urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
+		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {	// new sheet
+			//$jq("div.tiki_sheet").append($jq("<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>"));
+			options.buildSheet = "2x1";
 		}
-		$jq("div.tiki_sheet").tiki("sheet", "", {title: "'.$info['title'].'", urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"});
+		$jq("div.tiki_sheet").tiki("sheet", "", options);
 		$a.attr("temp", $a.text());
 		$a.text("Done");
-		$jq("#edit_button").parent().find(".button:not(#edit_button)").hide();
+		$jq("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
 		$jq("#save_button").show();
 	} else {
 		//$jq("div.tiki_sheet").sheet("destroy");

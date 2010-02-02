@@ -1,8 +1,4 @@
 {* $Id$ *} 
-{if $prefs.feature_ajax == 'y'}
-  <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
-{/if}
-
 {if !$hide_page_header}
 	{* display breadcrumbs here only if the feature is on and when site location feature is selected to appear above page in top of center column  *}
 	{if $prefs.feature_siteloc eq 'page' and $prefs.feature_breadcrumbs eq 'y'}

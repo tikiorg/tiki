@@ -175,7 +175,6 @@ function get_default_prefs() {
 		'wiki_edit_plugin' => 'y',
 		'wiki_validate_plugin' => 'y',
 		'wiki_edit_minor' => 'n',
-		'feature_pagelist' => 'n',
 		'wiki_badchar_prevent' => 'n',
 		'wiki_ranking_reload_probability' => 1000,
 		'wiki_encourage_contribution' => 'n',
@@ -246,7 +245,6 @@ function get_default_prefs() {
 		'wikiplugin_lang' => 'y',
 		'wikiplugin_lastmod' => 'n',
 		'wikiplugin_listpages' => 'n',
-		'wikiplugin_listprogress' => 'n',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_map' => 'y',
 		'wikiplugin_mcalendar' => 'n',
@@ -260,7 +258,6 @@ function get_default_prefs() {
 		'wikiplugin_mwtable' => 'n',
 		'wikiplugin_myspace' => 'n',
 		'wikiplugin_objecthits' => 'n',
-		'wikiplugin_pagelist' => 'n',
 		'wikiplugin_payment' => 'y',
 		'wikiplugin_picture' => 'n',  // Old syntax for images
 		'wikiplugin_pluginmanager' => 'n',
@@ -274,7 +271,6 @@ function get_default_prefs() {
 		'wikiplugin_regex' => 'n',
 		'wikiplugin_remarksbox' => 'y',
 		'wikiplugin_rss' => 'y',
-		'wikiplugin_screencast' => 'n',
 		'wikiplugin_scroll' => 'n',
 		'wikiplugin_sf' => 'n',
 		'wikiplugin_share' => 'n',
@@ -379,7 +375,6 @@ function get_default_prefs() {
 		'wikiplugininline_lang' => 'n',
 		'wikiplugininline_lastmod' => 'n',
 		'wikiplugininline_listpages' => 'n',
-		'wikiplugininline_listprogress' => 'n',
 		'wikiplugininline_lsdir' => 'n',
 		'wikiplugininline_map' => 'n',
 		'wikiplugininline_mcalendar' => 'n',
@@ -393,7 +388,6 @@ function get_default_prefs() {
 		'wikiplugininline_mwtable' => 'n',
 		'wikiplugininline_myspace' => 'n',
 		'wikiplugininline_objecthits' => 'n',
-		'wikiplugininline_pagelist' => 'n',
 		'wikiplugininline_payment' => 'n',
 		'wikiplugininline_picture' => 'n',  // Old syntax for images
 		'wikiplugininline_pluginmanager' => 'n',
@@ -407,7 +401,6 @@ function get_default_prefs() {
 		'wikiplugininline_regex' => 'n',
 		'wikiplugininline_remarksbox' => 'n',
 		'wikiplugininline_rss' => 'n',
-		'wikiplugininline_screencast' => 'n',
 		'wikiplugininline_scroll' => 'n',
 		'wikiplugininline_sf' => 'n',
 		'wikiplugininline_share' => 'n',
@@ -1479,15 +1472,6 @@ function get_default_prefs() {
 		'feature_sefurl_paths' => array(),
 		'feature_sefurl_title_article' =>'n',
 		'feature_sefurl_title_blog' =>'n',
-
-		// screencasts
-		'feature_wiki_screencasts' => 'n',
-		'feature_wiki_screencasts_base' => '',
-		'feature_wiki_screencasts_httpbase' => '',
-		'feature_wiki_screencasts_upload_type' => 'local',
-		'feature_wiki_screencasts_user' => '',
-		'feature_wiki_screencasts_pass' => '',
-		'feature_wiki_screencasts_max_size' =>  10485760,
 
 		// TikiTests
 		'feature_tikitests' => 'n',

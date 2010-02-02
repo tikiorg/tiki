@@ -176,7 +176,12 @@ if ( ! empty($info['path']) )  {
 // ETag: Entity Tag used for strong cache validation.
 if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
   // if image will be modified, emit a different ETag for modifications.
-  $etag = '"' . $md5 . '-' . crc32($md5) . '-' . crc32( $_GET['x'] . 'x' . $_GET['y'] . 'y' . $_GET['scale'] . 's' . $_GET['max'] . 'm' . $_GET['format'] . 'f' ) . '"';
+	$str = isset($_GET['x']) ? $_GET['x'] . 'x' : '';
+	$str .= isset($_GET['y']) ? $_GET['y'] . 'y' : '';
+	$str .= isset($_GET['scale']) ? $_GET['scale'] . 's' : '';
+	$str .= isset($_GET['max']) ? $_GET['max'] . 'm' : '';
+	$str .= isset($_GET['format']) ? $_GET['format'] . 'f' : '';
+	$etag = '"' . $md5 . '-' . crc32($md5) . '-' . crc32( $str ) . '"';
 } else {
   $etag = '"' . $md5 . '-' . crc32($md5) . '"';
 }
@@ -198,7 +203,7 @@ if ( isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && $last_modified == strtotime(cu
 
 header("Pragma: ");
 header('Expires: ');
-header('Cache-Control: '.( $user ? 'private' : 'public' ).',must-revalidate,post-check=0,pre-check=0');
+header('Cache-Control: '.( !empty($user) ? 'private' : 'public' ).',must-revalidate,post-check=0,pre-check=0');
 
 if ( $use_client_cache ) {
 	header('Status: 304 Not Modified', true, 304);

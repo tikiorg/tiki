@@ -807,79 +807,6 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 	$smarty->assign( 'translation_critical', 0 );
 }
 
-// Screencasts {{{
-if (($prefs['feature_wiki_screencasts'] == 'y') && (isset($tiki_p_upload_screencast)) && ($tiki_p_upload_screencast == 'y')) {
-	if ( !isset($headerlib) || !is_object($headerlib) ) {
-		include_once("lib/headerlib.php");
-	}
-	$headerlib->add_jsfile('lib/wikiplugin_screencast.js');
-
-	require_once("lib/screencasts/screencastlib.php");
-
-	if ( !isset($cachelib) || !is_object($cachelib) )
-		require_once("lib/cache/cachelib");
-
-	// Get a page hash identical to what images are assigned
-	$pageHash = md5( $pageLang . '/' . $tikilib->get_approved_page_or_self( $page ) );
-	$hashedFileName = join('-', array($pageHash, time(), rand(1,1000)));
-
-	$screencastErrors = array();
-
-	if ( isset($_FILES['flash_screencast']) ) {
-		$cachelib->invalidate($pageHash);
-
-		for ( $i = 0; $i <= count($_FILES['flash_screencast']['name']); $i++ ) {
-
-			if ( $_FILES['flash_screencast']['size'][$i] > $prefs['feature_wiki_screencasts_max_size'] ||
-					$_FILES['flash_screencast']['error'][$i] == 1 || $_FILES['flash_screencast']['error'][$i] == 2 ) {
-
-				$screencastErrors[] = tra("The file you selected is too large to upload") . ' (' . htmlentities($_FILES['flash_screencast']['name'][$i], ENT_QUOTES) . ')';
-				continue;
-			}
-
-			if ( is_uploaded_file($_FILES['flash_screencast']['tmp_name'][$i]) ) {
-				if ( preg_match("/\.((swf)|(flv))$/", $_FILES['flash_screencast']['name'][$i], $ext) ) {
-					if ( !$screencastlib->add($_FILES['flash_screencast']['tmp_name'][$i], $hashedFileName . "-" . $i . "." . $ext[1] ) ) {
-						$screencastErrors[] = tra("An unexpected error occurred while uploading your flash screencast!");
-					}
-				} else {
-					$screencastErrors[] = tra("Incorrect file extension was used for your flash screencast, expecting .swf or .flv");     
-				}
-
-				if ( isset($_FILES['ogg_screencast']) && $_FILES['ogg_screencast']['name'][$i]) {
-					if ( $_FILES['ogg_screencast']['size'][$i] >= $prefs['feature_wiki_screencasts_max_size'] ||
-						$_FILES['ogg_screencast']['error'][$i] == 1 || $_FILES['ogg_screencast']['error'][$i] == 2 ) {
-
-						$screencastErrors[] = tra("The file you selected is too large to upload") . ' (' . htmlentities($_FILES['ogg_screencast']['name'][$i], ENT_QUOTES) . ')';
-							continue;
-					}
-
-					if ( is_uploaded_file($_FILES['ogg_screencast']['tmp_name'][$i]) ) { 
-						if ( preg_match("/\.(ogg)$/", $_FILES['ogg_screencast']['name'][$i], $ext) ) {
-							if ( !$screencastlib->add($_FILES['ogg_screencast']['tmp_name'][$i], $hashedFileName . "-" . $i . "." .  $ext[1])) {
-								$screencastErrors[] = tra("An unexpected error occurred while uploading your Ogg screencast!");
-							}
-						} else {
-							$screencastErrors[] = tra("Incorrect file extension was used for your 0gg screencast, expecting .ogg");
-						}
-					}
-				}
-			}
-		}
-	}
-
-	if ( ! $screencasts_uploaded = $cachelib->getSerialized($pageHash) ) {
-		$screencasts_uploaded = $screencastlib->find($pageHash, true);
-		$cachelib->cacheItem($pageHash, serialize($screencasts_uploaded));
-	}
-
-	$smarty->assign('screencasts_uploaded', $screencasts_uploaded);
-
-	if ( count($screencastErrors) > 0 ) {
-		$smarty->assign('screencasts_errors', array_unique($screencastErrors));
-	}
-} // }}}
-
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
 if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
@@ -1417,8 +1344,7 @@ if (($prefs['feature_wiki_templates'] == 'y' && $tiki_p_use_content_templates ==
 	$prefs['feature_wiki_import_html'] == 'y' ||
 	$prefs['wiki_comments_allow_per_page'] != 'n' ||
 	($tiki_p_admin_wiki == 'y' && $prefs['feature_wiki_import_page'] == 'y') ||
-	($wysiwyg != 'y' && ($prefs['feature_wiki_attachments'] == 'y' && ($tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_admin_attachments == 'y')) ||
-						($prefs['feature_wiki_screencasts'] == 'y' && $tiki_p_upload_screencast == 'y'))) {
+	($wysiwyg != 'y' && ($prefs['feature_wiki_attachments'] == 'y' && ($tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_admin_attachments == 'y')))) {
 	$smarty->assign('showToolsTab', 'y');
 }
 if (strtolower($page) != 'sandbox' &&

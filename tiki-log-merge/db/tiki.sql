@@ -2884,7 +2884,6 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_download_videos', 'Can download kaltura entry', 'registered', 'kaltura', NULL, 'feature_kaltura');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_list_videos', 'Can list kaltura entries', 'basic', 'kaltura', NULL, 'feature_kaltura');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_view_videos', 'Can view kaltura entry', 'basic', 'kaltura', NULL, 'feature_kaltura');
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_upload_screencast', 'Can upload screencasts to wiki pages', 'basic', 'registered', NULL, 'feature_wiki_screencasts');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_dsn_query', 'Can execute arbitrary queries on a given DSN', 'admin', 'dsn', NULL, NULL);
 
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_payment_admin', 'Can administer payments', 'admin', 'payment', 'y', 'payment_feature');
@@ -3470,25 +3469,6 @@ CREATE TABLE `tiki_transitions` (
 	KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_page_lists`;
-CREATE TABLE IF NOT EXISTS `tiki_page_lists` (
-  `list_type_id` int(8) unsigned NOT NULL,
-  `priority` int(8) unsigned NOT NULL,
-  `page_name` varchar(160) NOT NULL,
-  `score` float default NULL,
-  PRIMARY KEY  (`list_type_id`,`page_name`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS `tiki_page_list_types`;
-CREATE TABLE IF NOT EXISTS `tiki_page_list_types` (
-  `id` int(8) unsigned NOT NULL auto_increment,
-  `name` varchar(40) NOT NULL,
-  `title` varchar(160) default NULL,
-  `description` varchar(200) default NULL,
-  PRIMARY KEY  (`name`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
 DROP TABLE IF EXISTS `tiki_auth_tokens`;
 CREATE TABLE `tiki_auth_tokens` (
 	`tokenId` INT NOT NULL AUTO_INCREMENT,
@@ -3567,4 +3547,12 @@ CREATE TABLE `tiki_payment_received` (
 	`details` TEXT,
 	PRIMARY KEY(`paymentReceivedId`),
 	KEY `payment_request_ix` (`paymentRequestId`)
+);
+DROP TABLE IF EXISTS `tiki_translations_in_progress`;
+CREATE TABLE IF NOT EXISTS `tiki_translations_in_progress` (
+   `page_id` int(14) NOT NULL,
+   `language` char(2) NOT NULL,
+   KEY `page_id` (`page_id`),
+   KEY `language` (`language`),
+   UNIQUE (`page_id`, `language`)
 );

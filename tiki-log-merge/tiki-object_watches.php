@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 include_once ('tiki-setup.php');
+global $categlib;
+include_once ('lib/categories/categlib.php');
 if ($prefs['feature_group_watches'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled') . ': feature_group_watches');
 	$smarty->display('error.tpl');
@@ -13,10 +15,12 @@ if ($prefs['feature_group_watches'] != 'y') {
 if ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied'));
-	$smarty->display("error.tpl");
+	$smarty->display('error.tpl');
 	die;
 }
-if (!isset($_REQUEST['objectId']) || empty($_REQUEST['objectType']) || !isset($_REQUEST['objectName']) || !isset($_REQUEST['watch_event']) || !isset($_REQUEST['objectHref'])) {
+if (!isset($_REQUEST['objectId']) || empty($_REQUEST['objectType']) || !isset($_REQUEST['objectName']) 
+	|| !isset($_REQUEST['watch_event']) || !isset($_REQUEST['objectHref'])
+	) {
 	$smarty->assign('msg', tra('Not enough information to display this page'));
 	$smarty->display('error.tpl');
 	die;
@@ -24,33 +28,80 @@ if (!isset($_REQUEST['objectId']) || empty($_REQUEST['objectType']) || !isset($_
 $auto_query_args = array('objectId', 'objectType', 'objectName', 'watch_event', 'referer', 'objectHref');
 $all_groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('all_groups', $all_groups);
+$smarty->assign_by_ref('objectType', strtolower($_REQUEST['objectType']));
+$desc_cnt = $categlib->get_category_descendants($_REQUEST['objectId']);
+count($desc_cnt) > 1 ? $smarty->assign('desc', 'y') : $smarty->assign('desc', '');
+$_REQUEST['objectType'] == 'Category' ? $smarty->assign('cat', 'y') : $smarty->assign('cat', '');
+$_REQUEST['objectId'] == 0 && $_REQUEST['objectType'] == 'Category' ? $smarty->assign('isTop', 'y') : $smarty->assign('isTop', '');
+
 if (!isset($_REQUEST['referer']) && isset($_SERVER['HTTP_REFERER'])) {
 	$_REQUEST['referer'] = $_SERVER['HTTP_REFERER'];
 }
 if (isset($_REQUEST['referer'])) {
 	$smarty->assign('referer', $_REQUEST['referer']);
 }
+
 if (isset($_REQUEST['assign'])) {
+	global $descendants;
 	$addedGroups = array();
 	$deletedGroups = array();
+	$addedGroupsDesc = array();
+	$deletedGroupsDesc = array();
+	$catsInvoled = array();
+	$catTreeNodes = array();
 	if (!isset($_REQUEST['checked'])) $_REQUEST['checked'] = array();
 	$old_watches = $tikilib->get_groups_watching($_REQUEST['objectType'], $_REQUEST['objectId'], $_REQUEST['watch_event']);
 	check_ticket('object_watches');
 	foreach($all_groups as $g) {
 		if (in_array($g, $_REQUEST['checked']) && !in_array($g, $old_watches)) {
-			$tikilib->add_group_watch($g, $_REQUEST['watch_event'], $_REQUEST['objectId'], $_REQUEST['objectType'], $_REQUEST['objectName'], $_REQUEST['objectHref']);
+			$tikilib->add_group_watch($g, $_REQUEST['watch_event'], $_REQUEST['objectId'], $_REQUEST['objectType'], 
+				$_REQUEST['objectName'], $_REQUEST['objectHref']);
 			$addedGroups[] = $g;
 		} elseif (!in_array($g, $_REQUEST['checked']) && in_array($g, $old_watches)) {
-			$tikilib->remove_group_watch($g, $_REQUEST['watch_event'], $_REQUEST['objectId'], $_REQUEST['objectType'], $_REQUEST['objectName'], $_REQUEST['objectHref']);
+			$tikilib->remove_group_watch($g, $_REQUEST['watch_event'], $_REQUEST['objectId'], $_REQUEST['objectType'], 
+				$_REQUEST['objectName'], $_REQUEST['objectHref']);
 			$deletedGroups[] = $g;
 		}
+		if (isset($_REQUEST[$g]) && $_REQUEST[$g] == 'add') {
+			$categlib->group_watch_category_and_descendants($g, $_REQUEST['objectId'], $_REQUEST['objectName'], false);
+			if ($g != 'Anonymous') {
+				$addedGroupsDesc[] = $g;
+			}
+		}
+		if (isset($_REQUEST[$g]) && $_REQUEST[$g] == 'remove') {
+			$categlib->group_unwatch_category_and_descendants($g, $_REQUEST['objectId'], false);
+			if ($g != 'Anonymous') {
+				$deletedGroupsDesc[] = $g;
+			}
+		}
 	}
+	if (count($descendants) > 0) {
+		foreach($descendants as $d) {
+			if ($d != 0) {
+				$catinfo = $categlib->get_category($d);
+				$catTreeNodes[] = array(
+					'id' => $catinfo['categId'],
+					'parent' => $catinfo['parentId'],
+					'data' => $catinfo['name'], 
+				);
+			}
+			include_once('lib/tree/categ_browse_tree.php');
+			$tm = new CatBrowseTreeMaker('categ');
+			$res = $tm->make_tree($catTreeNodes[0]['parent'], $catTreeNodes);
+			$smarty->assign('tree', $res);
+			$smarty->assign_by_ref('catTreeNodes', $catTreeNodes);
+		}
+	}
+		
 	$smarty->assign_by_ref('addedGroups', $addedGroups);
 	$smarty->assign_by_ref('deletedGroups', $deletedGroups);
+	$smarty->assign_by_ref('addedGroupsDesc', $addedGroupsDesc);
+	$smarty->assign_by_ref('deletedGroupsDesc', $deletedGroupsDesc);
 	$group_watches = $_REQUEST['checked'];
 } else {
 	$group_watches = $tikilib->get_groups_watching($_REQUEST['objectType'], $_REQUEST['objectId'], $_REQUEST['watch_event']);
 }
+
 $smarty->assign_by_ref('group_watches', $group_watches);
 ask_ticket('object_watches');
 $smarty->assign('mid', 'tiki-object_watches.tpl');

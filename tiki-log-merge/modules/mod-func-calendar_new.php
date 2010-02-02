@@ -12,10 +12,9 @@ function module_calendar_new_info() {
 		'description' => tra('Includes a calendar or a list of calendar events.'),
 		'prefs' => array( 'feature_calendar' ),
 		'params' => array(
-			'calendarId' => array(
-				'name' => tra('Calendar filter'),
-				'description' => tra('If set to a calendar identifier, restricts the events displayed to those in the specified calendar.'),
-				'filter' => 'digits',
+			'calIds' => array(
+				'name' => tra('Calendars filter'),
+				'description' => tra('If set to a list of calendar identifiers, restricts the events to those in the identified calendars. Identifiers are separated by vertical bars ("|"), commas (",") or colons (":").') . " " . tra('Example values:') . '"13", "4,7", "31:49". ' . tra('Not set by default.')
 			),
 			'month_delta' => array(
 				'name' => tra('Displayed month (relative)'),
@@ -59,26 +58,22 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		$_REQUEST['todate'] = $tikilib->make_time(0,0,0,$focus_month+$module_params['month_delta'],1,$focus_year);
 	}
 
-	if (isset($module_params['calendarId'])) {
-		$calIds = array($module_params['calendarId']);
-	} // Should ideally support several ids at some point
-
-	if (empty($calIds)) {
-		if (!empty($_SESSION['CalendarViewGroups'])) {
-			$calIds = $_SESSION['CalendarViewGroups'];
-		} elseif ( $prefs['feature_default_calendars'] == 'n' ) {
-			if (!empty($module_params['calIds']['data'])) {
-				$calIds = array_keys($module_params['calIds']['data']);
-			} else {
-				$calIds = $calendarlib->list_calendars();
-				$calIds = $calIds['data'];
-			}
-		} elseif ( ! empty($prefs['default_calendars']) ) {
-			$calIds = $_SESSION['CalendarViewGroups'] = is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']);
-		} else {
-			$calIds = array();
+	if (!empty($module_params['calIds'])) {
+		$calIds = $module_params['calIds'];
+		if (!is_array($module_params['calIds'])) {
+			$calIds = preg_split('/[\|:\&,]/', $calIds);
 		}
+	} elseif (!empty($_SESSION['CalendarViewGroups'])) {
+		$calIds = $_SESSION['CalendarViewGroups'];
+	} elseif ( $prefs['feature_default_calendars'] == 'n' ) {
+		$calendars = $calendarlib->list_calendars();
+		$calIds = array_keys($calendars['data']);
+	} elseif ( ! empty($prefs['default_calendars']) ) {
+		$calIds = $_SESSION['CalendarViewGroups'] = is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']);
+	} else {
+		$calIds = array();
 	}
+
 
 	$_REQUEST['gbi'] = 'y';
 	if ( !empty($module_params['viewlist']) ) {
@@ -87,13 +82,13 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		$_REQUEST['viewlist'] = 'table';
 	}
 
-	if ( is_array($calIds) ) {
-		foreach ($calIds as $i=>$cal_id) {
-			if ($tiki_p_admin_calendars != 'y' && !$userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
-				unset($calIds[$i]);
-			}
+	foreach ($calIds as $i=>$cal_id) {
+		if ($tiki_p_admin_calendars != 'y' && !$userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
+			unset($calIds[$i]);
 		}
+	}
 
+	if ( !empty($calIds) ) {
 		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day');
 		if ($_REQUEST['viewlist'] == 'list') {
 			foreach ($tc_infos['listevents'] as $i=>$e) {

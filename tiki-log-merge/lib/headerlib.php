@@ -162,7 +162,7 @@ class HeaderLib
 		}
 		$back .= "<![endif]-->\n";
 
-		$back .= $this->output_js_files();	// TODO move some files to end of page?
+		//$back .= $this->output_js_files();	// TODO move some files to end of page?
 
 		if (count($this->rssfeeds)) {
 			foreach ($this->rssfeeds as $x=>$rssf) {
@@ -420,7 +420,6 @@ class HeaderLib
 
 		$pre = '';
 		foreach( $parts[1] as $f ) {
-			$f = substr( $f, strlen($tikiroot) );
 			$pre .= $this->minify_css( $f );
 		}
 
@@ -431,11 +430,24 @@ class HeaderLib
 	}
 
 	private function minify_css( $file ) {
-		$content = file_get_contents( $file );
+		global $tikipath, $tikiroot;
+		if (strpos($file, $tikiroot) === 0) {
+			$currentdir = dirname( $file );
+			$content = file_get_contents( str_replace( $tikiroot, $tikipath, $file)) ;
+		} else {
+			if ( $file[0] == '/' ) {
+				$file = $tikipath.$file;
+			}
+			$currentdir = addslashes(str_replace($tikipath, $tikiroot, dirname(realpath( $file ))));
+			$content = file_get_contents( $file );
+		}
 
 		return Minify_CSS::minify( $content, array(
-			'currentDir' => dirname( $file ),
+			'currentDir' => $currentdir,
+			'prependRelativePath', $currentdir,
+			'docRoot' => '/',
 			'bubbleCssImports' => true,
+//			'symlinks' => array ('/styles', $tikiroot.'/styles'),
 		) );
 	}
 

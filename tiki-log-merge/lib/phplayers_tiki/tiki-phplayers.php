@@ -71,7 +71,7 @@ class TikiPhplayers extends TikiLib
 		if (preg_match('/.*tiki.index.php$/', $url)) {
 			$url .= "?page=$homePage";
 		} elseif (preg_match('/tiki-index.php/', $url)) {
-			$url = strtolower($url);
+			$url = ($url);
 		}
 		$realKey = 0;
 		$level = 0;
@@ -101,7 +101,7 @@ class TikiPhplayers extends TikiLib
 					$cd['url'] .= "?page=$homePage";
 				}
 				if (preg_match('/tiki-index.php/', $cd['url'])) {
-					$cd['url'] = strtolower($cd['url']);
+					$cd['url'] = ($cd['url']);
 				}
 				if (($pos = strpos($url, $cd['url'])) !== false && ($pos == 0 || $url[$pos -1] == '/' || $url[$pos - 1] == '\\' || $url[$pos-1] == '=')) {
 					$last = $pos + strlen($cd['url']);

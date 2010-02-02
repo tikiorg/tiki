@@ -40,7 +40,6 @@ function wikiplugin_div_info() {
 				'required' => false,
 				'name' => tra('Box width'),
 				'description' => tra('In pixels or percentage. Default value is 100%.'),
-				'filter' => 'imgsize',
 			),
 			'align' => array(
 				'required' => false,

@@ -303,7 +303,7 @@ if (empty($_SERVER['REQUEST_URI'])) {
 	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 }
 if (empty($_SERVER['SERVER_NAME'])) {
-	$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
+	$_SERVER['SERVER_NAME'] = isset($_SERVER['HTTP_HOST'])?$_SERVER['HTTP_HOST']: '';
 }
 // in the case of tikis on same domain we have to distinguish the realm
 // changed cookie and session variable name by a name made with browsertitle

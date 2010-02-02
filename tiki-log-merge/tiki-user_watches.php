@@ -70,13 +70,19 @@ if ( isset($_REQUEST['categwatch']) ) {
 }
 
 if (isset($_REQUEST['id'])) {
+	if ($tiki_p_admin_notifications != 'y' && $user != $tikilib->get_user_notification($_REQUEST['id'])) {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("Permission denied"));
+		$smarty->display("error.tpl");
+		die;
+	}
 	$area = 'deluserwatch';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$error = $tikilib->remove_user_watch_by_id($_REQUEST['id']);
 		$smarty->assign('remove_user_watch_error', !$error);
 	} else {
-		key_get($area);
+		key_get($area, tra('Remove the notification email'));
 	}
 }
 

@@ -274,12 +274,16 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function add_group_watch($group, $event, $object, $type, $title, $url) {
-
-		$this->remove_group_watch( $group, $event, $object, $type );
-		$query = "insert into `tiki_group_watches`(`group`,`event`,`object`,`type`,`title`,`url`) ";
-		$query.= "values(?,?,?,?,?,?)";
-		$this->query($query,array($group,$event,$object,$type,$title,$url));
-		return true;
+		
+		if ($type == 'Category' && $object == 0) {
+			return false;
+		} else {
+			$this->remove_group_watch( $group, $event, $object, $type );
+			$query = "insert into `tiki_group_watches`(`group`,`event`,`object`,`type`,`title`,`url`) ";
+			$query.= "values(?,?,?,?,?,?)";
+			$this->query($query,array($group,$event,$object,$type,$title,$url));
+			return true;
+		}
 	}
 
 	/**
@@ -2851,8 +2855,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	// BLOG METHODS ////
-	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $ref='') {
-
+	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $ref='', $with = '') {
 		global $categlib; if (!$categlib) require_once 'lib/categories/categlib.php';
 		$bindvars = array();
 		$join = '';
@@ -2867,8 +2870,11 @@ class TikiLib extends TikiDb_Bridge
 			$where .= ' and (`tiki_blogs`.`title` like ? or `tiki_blogs`.`description` like ?) ';
 			$bindvars = array_merge($bindvars, array($findesc, $findesc));
 		}
-
-		$query = "select * from `tiki_blogs` $join WHERE 1=1 $where order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
+		if (isset($with['showlastpost'])) {
+			$query = "SELECT tb.*, tbp.`postId`, tbp.`created` as postCreated,  tbp.`user` as postUser, tbp.`title` as postTitle, tbp.`data` as postData FROM `tiki_blogs` tb, `tiki_blog_posts` tbp  $join where tb.`blogId` = tbp.`blogId` and tbp.`created` = (select max(`created`) from `tiki_blog_posts` tbp2 where tbp2.`blogId`=tb.`blogId` order by `created` desc) $where order by tb.".$this->convertSortMode($sort_mode);
+		} else {
+			$query = "select * from `tiki_blogs` $join WHERE 1=1 $where order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
+		}
 		$result = $this->query($query, $bindvars);
 
 		$ret = array();
@@ -7205,8 +7211,8 @@ class TikiLib extends TikiDb_Bridge
 						break;
 					default: 
 						$maketoc = '';
-						$maketoc_header = "<span id='toc'>".$maketoc_title;
-						$maketoc_footer = '</span>';
+						$maketoc_header = "<div id='toc'>".$maketoc_title;
+						$maketoc_footer = '</div>';
 						$link_class = 'link';
 				}
 				if ( count($anch) and $need_maketoc !== false) {
