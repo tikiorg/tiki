@@ -95,8 +95,6 @@ if (!$skip) {
 	} elseif ( isset($_REQUEST['fileId']) && is_array($_REQUEST['fileId'])) {
 		$info = $filegallib->zip($_REQUEST['fileId'], $error);
 		$zip = true;
-	} elseif ( !empty($_REQUEST['randomGalleryId'])) {
-		$info =  $tikilib->get_file(0, $_REQUEST['randomGalleryId']);
 	} else {
 		$smarty->assign('msg', tra('Incorrect param'));
 		$smarty->display('error.tpl');
@@ -219,6 +217,8 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	$use_cache = false;
 
 	// Cache only thumbnails to avoid DOS attacks
+	$cacheName = '';
+	$cacheType = '';
 	if ( ( isset($_GET['thumbnail']) || isset($_GET['preview']) ) && ! isset($_GET['display']) && ! isset($_GET['icon']) && ! isset($_GET['scale']) && ! isset($_GET['x']) && ! isset($_GET['y']) && ! isset($_GET['format']) && ! isset($_GET['max']) ) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		$cacheName = $md5;
