@@ -257,7 +257,13 @@ function wikiplugin_trackerlist_info() {
 			),
 			'showwatch' => array(
 				'required' => false,
-				'name' => tra('Watch'),
+				'name' => tra('Show Watch Button'),
+				'description' => 'y|n',
+				'filter' => 'alpha'
+			),
+			'showrss' => array(
+				'required' => false,
+				'name' => tra('Show Feed Button'),
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
@@ -338,6 +344,11 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		} else {
 			$smarty->clear_assign('user_watching_tracker');
+		}
+		if (empty($showrss) || $showrss == 'n') {
+			$smarty->assign('showrss', 'n');
+		} else {
+			$smarty->assign('showrss', 'y');
 		}
 
 		if (!empty($fields)) {
