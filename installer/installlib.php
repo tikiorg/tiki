@@ -226,6 +226,8 @@ class Installer extends TikiDb_Bridge
 	function buildScriptList() // {{{
 	{
 		$files = glob( dirname(__FILE__) . '/script/*.php' );
+		if (empty($files))
+			return;
 		foreach( $files as $file ) {
 			$filename = basename( $file );
 			$this->scripts[] = substr( $filename, 0, -4 );
