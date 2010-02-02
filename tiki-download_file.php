@@ -95,6 +95,8 @@ if (!$skip) {
 	} elseif ( isset($_REQUEST['fileId']) && is_array($_REQUEST['fileId'])) {
 		$info = $filegallib->zip($_REQUEST['fileId'], $error);
 		$zip = true;
+	} elseif ( !empty($_REQUEST['randomGalleryId'])) {
+		$info =  $tikilib->get_file(0, $_REQUEST['randomGalleryId']);
 	} else {
 		$smarty->assign('msg', tra('Incorrect param'));
 		$smarty->display('error.tpl');

@@ -2121,9 +2121,16 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/*shared*/
-	function get_file($id) {
-		$query = "select tf.*, tfg.`backlinkPerms` from `tiki_files` tf left join `tiki_file_galleries` tfg on (tfg.`galleryId`=tf.`galleryId`) where `fileId`=? ";
-		$result = $this->query($query, array((int)$id));
+	function get_file($id, $randomGalleryId='') {
+		if (empty($randomGalleryId)) {
+			$where = '`fileId`=?';
+			$bindvars[] = (int)$id;
+		} else {
+			$where = 'tf.`galleryId`=? order by '.$this->convertSortMode('random'). ' limit 1 ';
+			$bindvars[] = (int)$randomGalleryId;
+		}
+		$query = "select tf.*, tfg.`backlinkPerms` from `tiki_files` tf left join `tiki_file_galleries` tfg on (tfg.`galleryId`=tf.`galleryId`) where $where";
+		$result = $this->query($query, $bindvars);
 		return $result ? $result->fetchRow() : array();
 	}
 
