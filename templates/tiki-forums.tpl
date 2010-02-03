@@ -98,7 +98,12 @@
 {if $prefs.forum_list_desc eq 'y'}
 	<br />
 	<div class="subcomment">
-		{$channels[user].description|truncate:$prefs.forum_list_description_len:"...":true|escape|nl2br}
+		{capture name="parsedDesc"}{wiki}{$channels[user].description}{/wiki}{/capture}
+		{if strlen($smarty.capture.parsedDesc) < $prefs.forum_list_description_len}
+			{$smarty.capture.parsedDesc}
+		{else}
+			{$smarty.capture.parsedDesc|strip_tags|truncate:$prefs.forum_list_description_len:"...":true}
+		{/if}
 	</div>
 {/if}
 </td>
@@ -128,7 +133,7 @@
 
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 	<td style="text-align:right;" class="{cycle advance=false}">
-		<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{icon _id='page_edit'}</a>
+		<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&cookietab=2">{icon _id='page_edit'}</a>
 	</td>
 {/if}
 

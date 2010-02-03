@@ -13,7 +13,7 @@
 		{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}View this forum{/tr}"}
 	{/if}
 	{button href="tiki-forum_import.php" _text="{tr}Import forums{/tr}"}
-	{button href="#editforums" _text="{tr}List forums{/tr}"}
+	{button href="tiki-forums.php" _text="{tr}List forums{/tr}"}
 </div>
 
 {tabset}
