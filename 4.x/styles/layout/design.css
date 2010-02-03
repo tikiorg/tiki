@@ -518,6 +518,14 @@ p.editdate {
 	color: red;
 }
 
+.trackerplugindesc {
+	color: #BEBCBC; font-style: italic
+}
+
+.charCount {
+	color: #BEBCBC; font-style: italic
+}
+
 /* mouseover plugin */
 
 .plugin-mouseover {
