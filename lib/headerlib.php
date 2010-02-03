@@ -61,7 +61,7 @@ class HeaderLib
 			$this->jq_onready[$rank][] = $script;
 		}
 		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
-			return $this->wrap_js("\$jq(\"document\").ready(function(){".$script."});\n");
+			return $this->wrap_js("\$jq(document).ready(function(){".$script."});\n");
 		} else {
 			return '';
 		}
@@ -251,7 +251,7 @@ class HeaderLib
 		return $content;
 	}
 
-	function output_js() {	// called in footer.tpl - JS output at end of file now (pre 4.0)
+	function output_js() {	// called in tiki.tpl - JS output at end of file now (pre 5.0)
 		global $prefs;
 
 		ksort($this->js);
@@ -271,7 +271,7 @@ class HeaderLib
 		}
 
 		if (count($this->jq_onready)) {
-			$b = '$jq("document").ready(function(){'."\n";
+			$b = '$jq(document).ready(function(){'."\n";
 			foreach ($this->jq_onready as $x=>$js) {
 				$b.= "// jq_onready $x \n";
 				foreach ($js as $j) {
@@ -304,7 +304,7 @@ class HeaderLib
 			}
 		}
 		if (count($this->jq_onready)) {
-			$b = '$jq("document").ready(function(){'."\n";
+			$b = '$jq(document).ready(function(){'."\n";
 			foreach ($this->jq_onready as $x=>$js) {
 				$b.= "// jq_onready $x \n";
 				foreach ($js as $j) {
