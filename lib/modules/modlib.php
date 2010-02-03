@@ -11,6 +11,8 @@ global $usermoduleslib; include_once('lib/usermodules/usermoduleslib.php');
 class ModLib extends TikiLib
 {
 
+	public $pref_errors = array();
+	
 	function replace_user_module($name, $title, $data, $parse=NULL) {
 		if ((!empty($name)) && (!empty($data))) {
 			$query = "delete from `tiki_user_modules` where `name`=?";
@@ -277,6 +279,7 @@ class ModLib extends TikiLib
 		$module_info = $this->get_module_info( $module['name'] );
 		foreach( $module_info['prefs'] as $p ) {
 			if( $prefs[$p] != 'y' ) {
+				$this->add_pref_error($module['name'], $p);
 				return false;
 			}
 		}
@@ -690,6 +693,10 @@ class ModLib extends TikiLib
 		}
 
 		return http_build_query( $expanded, '', '&' );
+	}
+	
+	function add_pref_error($module_name, $preference_name) {
+		$this->pref_errors[] = array('mod_name' => $module_name, 'pref_name' => $preference_name);
 	}
 }
 $modlib = new ModLib;

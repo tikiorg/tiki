@@ -108,6 +108,16 @@
 				<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_rightcolumn) and $cookie.show_rightcolumn ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 					<h2 class="hidden">Sidebar</h2>
 					<div class="content">
+		{if $module_pref_errors}
+			{remarksbox  type="warning" title="{tr}Module errors{/tr}"}
+				{tr}The following modules could not be loaded{/tr}
+				<p>
+				{foreach from=$module_pref_errors key=index item=pref_error}
+					<b>{$pref_error.mod_name}:</b><br>
+					{tr}Preference was not set{/tr}: '{$pref_error.pref_name}'<br>
+				{/foreach}
+			{/remarksbox}
+		{/if}
 		{section name=homeix loop=$right_modules}
 			{$right_modules[homeix].data}
 		{/section}
