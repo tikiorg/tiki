@@ -6608,7 +6608,7 @@ class TikiLib extends TikiDb_Bridge
 	function parse_wiki_argvariable(&$data, $options=null) {
 		global $prefs, $user;
 		if( $prefs['feature_wiki_argvariable'] == 'y' ) {
-			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]+))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
+			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]*))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
 				$needles = array();
 				$replacements = array();
 
