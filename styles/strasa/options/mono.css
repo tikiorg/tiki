@@ -685,6 +685,10 @@ a.pagetitle:hover {
 	border-bottom: 1px solid #696969;
 }
 
+.wikitext h2 {
+	border-bottom-color: #666;
+}
+
 .wikitext .fancylist li {
 	background: transparent url('mono/list_icon.png') top left no-repeat;
 	color: #f90;
@@ -787,7 +791,7 @@ div.articlesubtitle {
 	color: #fff}
 	
 div.articletitle h2 {
-	background: #f5f5f5 url(mono/headerbg.jpg) repeat-x 0 100%;
+	background: #666 url(mono/lightbg.jpg) repeat-x 0 100%;
 	color: #fff;
 	padding: 10px 5px;
 	margin: 0}
@@ -828,7 +832,7 @@ body.tiki_blogs .author_actions .actions {
 
 body.tiki_blogs .postbody-title,
 .post .postbody-title {
-	background: #111111 url('mono/headerbg.jpg') repeat-x 0 100%;
+	background: #111111 url('mono/lightbg.jpg') repeat-x 0 100%;
 }
 
 .post .postbody-title .title,
