@@ -358,7 +358,7 @@ class HeaderLib
 		$back = '';
 
 		if( $prefs['tiki_minify_css'] == 'y' ) {
-			require_once 'Minify/CSS.php';
+			require_once 'lib/pear/Minify/CSS.php';
 
 			if( $prefs['tiki_minify_css_single_file'] == 'y' ) {
 				$files = $this->get_minified_css_single( $files );
@@ -443,8 +443,8 @@ class HeaderLib
 		}
 
 		return Minify_CSS::minify( $content, array(
-			'currentDir' => $currentdir,
-			'prependRelativePath', $currentdir,
+//			'currentDir' => $currentdir,
+			'prependRelativePath' => $currentdir.'/',
 			'docRoot' => '/',
 			'bubbleCssImports' => true,
 //			'symlinks' => array ('/styles', $tikiroot.'/styles'),
