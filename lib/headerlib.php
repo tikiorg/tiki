@@ -438,16 +438,13 @@ class HeaderLib
 			if ( $file[0] == '/' ) {
 				$file = $tikipath.$file;
 			}
-			$currentdir = addslashes(str_replace($tikipath, $tikiroot, dirname(realpath( $file ))));
+			$currentdir = str_replace($tikipath, $tikiroot, str_replace('\\', '/', dirname(realpath( $file ))));
 			$content = file_get_contents( $file );
 		}
 
 		return Minify_CSS::minify( $content, array(
-//			'currentDir' => $currentdir,
 			'prependRelativePath' => $currentdir.'/',
-			'docRoot' => '/',
 			'bubbleCssImports' => true,
-//			'symlinks' => array ('/styles', $tikiroot.'/styles'),
 		) );
 	}
 
