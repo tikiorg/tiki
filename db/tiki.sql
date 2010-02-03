@@ -3532,6 +3532,7 @@ CREATE TABLE `tiki_payment_requests` (
 	`cancel_date` TIMESTAMP NULL,
 	`description` VARCHAR(100) NOT NULL,
 	`actions` TEXT,
+	`detail` TEXT,
 	PRIMARY KEY( `paymentRequestId` )
 );
 

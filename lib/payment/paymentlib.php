@@ -2,17 +2,17 @@
 
 class PaymentLib extends TikiDb_Bridge
 {
-	function request_payment( $description, $amount, $paymentWithin ) {
+	function request_payment( $description, $amount, $paymentWithin, $detail = null ) {
 		global $prefs;
 
 		$description = substr( $description, 0, 100 );
 
-		$query = 'INSERT INTO `tiki_payment_requests` ( `amount`, `amount_paid`, `currency`, `request_date`, `due_date`, `description` ) VALUES( ?, 0, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? DAY), ? )';
-		$bindvars = array( $amount, $prefs['payment_currency'], (int) $paymentWithin, $description );
+		$query = 'INSERT INTO `tiki_payment_requests` ( `amount`, `amount_paid`, `currency`, `request_date`, `due_date`, `description`, `detail` ) VALUES( ?, 0, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? DAY), ?, ? )';
+		$bindvars = array( $amount, $prefs['payment_currency'], (int) $paymentWithin, $description, $detail );
 
 		$this->query( $query, $bindvars );
 
-		return $this->getOne( 'SELECT MAX(`paymentRequestId`) FROM `tiki_payment_requests` WHERE `description` = ?', array( $description ) );
+		return $this->lastInsertId();
 	}
 
 	private function get_payments( $conditions, $offset, $max ) {

@@ -42,6 +42,11 @@ abstract class TikiDb
 
 	abstract function query( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true );
 
+	function lastInsertId() // {{{
+	{
+		return $this->getOne( 'SELECT LAST_INSERT_ID()' );
+	} // }}}
+
 	function queryError( $query, &$error, $values = null, $numrows = -1, $offset = -1 ) // {{{
 	{
 		$result = $this->query( $query, $values, $numrows, $offset, false );
