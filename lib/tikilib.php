@@ -6628,7 +6628,7 @@ class TikiLib extends TikiDb_Bridge
 						break;
 					}
 
-					if( ! empty( $value ) ) {
+					if( ! empty( $value ) || isset( $arg[4] ) ) {
 						$needles[] = $arg[0];
 						$replacements[] = $value;
 					}
