@@ -39,6 +39,9 @@ class TikiFilter
 		case 'email':
 		case 'url':
 		case 'text':
+		case 'date':
+		case 'time':
+		case 'datetime':
 			// Use striptags
 		case 'striptags':
 			require_once 'Zend/Filter/StripTags.php';
