@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.26 2008-03-19 13:32:42 sylvieg Exp $
+// $Id$
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -915,9 +915,9 @@ function wikiplugin_tracker($data, $params)
 				$back.= "<tr><td></td><td>";
 			}
 			if (!empty($preview)) {
-				$back .= "<input type='submit' name='tr_preview' value='".tra($preview)."' />";
+				$back .= "<input class='button submit preview' type='submit' name='tr_preview' value='".tra($preview)."' />";
 			}
-			$back .= "<input type='submit' name='action' value='".tra($action)."' />";
+			$back .= "<input class='button submit' type='submit' name='action' value='".tra($action)."' />";
 			if ($showmandatory == 'y' and $onemandatory) {
 				$back.= "<em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em>";
 			}
