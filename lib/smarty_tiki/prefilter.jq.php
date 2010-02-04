@@ -18,7 +18,7 @@ function smarty_prefilter_jq($source) {
 	if (strpos($source, '{jq') === false) {
 		return $source;			// quick escape if no jq tags
 	}
-	$return = preg_replace_callback('/(?s)(\{jq\})(.+?)\{\/jq\}/', '_escape_smarty_jq', $source);
+	$return = preg_replace_callback('/(?s)(\{jq.*?\})(.+?)\{\/jq\}/', '_escape_smarty_jq', $source);
 
 	return $return;
 }
