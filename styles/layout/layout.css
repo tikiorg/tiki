@@ -1755,40 +1755,16 @@ table.treeTable .parent td {
 	font-style: italic;
 }
 
-/* column manager list styles */
-div#column_switches_div {
-	border: 1px solid gray;
-	background-color: #eee;
-	width: 12em;
-	padding: .2em .4em;
-}
-ul.column_switcher {
-	margin: 0;
-	padding: 0;
-}
-.column_switcher li {
-	font-weight: bold;
-	cursor: pointer;
-	padding-left: 20px;
-	list-style: none;
-}
-.column_switcher li.advon {
-	color: #080;
-	background: url(../../pics/icons/tick.png) no-repeat 0 50%;
-}
-.column_switcher li.advoff {
-	color: #d00;
-	background: url(../../pics/icons/cross.png) no-repeat 0 50%;
-}
-.column_switcher li:hover {
-	background-color: #ccc;
-}
 .thumbnailcontener { border: solid 1px lightgrey; margin: 1px; padding: 2px; text-align: center;}
 
-/* jquery-ui doalogs help */
+/* jquery-ui dialogs help */
 
 .ui-dialog label {
 	display: block;
+}
+
+.ui-datepicker {
+	z-index: 1024;
 }
 
 /* Preferencies        */
