@@ -9,11 +9,10 @@
 			</select>
 			<input type="submit" value="{tr}Go{/tr}"/>
 		</form>
+		{if $tiki_p_perspective_admin eq 'y'}
+			<div align="center">
+			<a href="tiki-edit_perspective.php">{tr}Edit perspectives{/tr}</a>
+			</div>
+		{/if}
 	{/tikimodule}
-{/if}
-
-{if $tiki_p_perspective_admin eq 'y'}
-	<div align="center">
-	<a href="tiki-edit_perspective.php">{tr}Edit perspectives{/tr}</a>
-	</div>
 {/if}
