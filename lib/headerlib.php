@@ -162,8 +162,6 @@ class HeaderLib
 		}
 		$back .= "<![endif]-->\n";
 
-		//$back .= $this->output_js_files();	// TODO move some files to end of page?
-
 		if (count($this->rssfeeds)) {
 			foreach ($this->rssfeeds as $x=>$rssf) {
 				$back.= "<!-- rss $x -->\n";
@@ -218,7 +216,7 @@ class HeaderLib
 		return $back;
 	}
 
-	private function getMinifiedJs() {
+	public function getMinifiedJs() {
 		$hash = md5( serialize( $this->jsfiles ) );
 		$file = "temp/public/minified_$hash.js";
 
@@ -251,13 +249,13 @@ class HeaderLib
 		return $content;
 	}
 
-	function output_js() {	// called in tiki.tpl - JS output at end of file now (pre 5.0)
+	function output_js($wrap = true) {	// called in tiki.tpl - JS output at end of file now (pre 5.0)
 		global $prefs;
 
 		ksort($this->js);
 		ksort($this->jq_onready);
 
-		$back = "\n";
+		$back = "/*output_js */\n";
 
 		if (count($this->js)) {
 			$b = '';
@@ -267,7 +265,11 @@ class HeaderLib
 					$b.= "$j\n";
 				}
 			}
-			$back.=  $this->wrap_js($b);
+			if ( $wrap === true ) {
+				$back .= $this->wrap_js($b);
+			} else {
+				$back .= $b;
+			}
 		}
 
 		if (count($this->jq_onready)) {
@@ -279,7 +281,11 @@ class HeaderLib
 				}
 			}
 			$b .= "});\n";
-			$back .= $this->wrap_js($b);
+			if ( $wrap === true ) {
+				$back .= $this->wrap_js($b);
+			} else {
+				$back .= $b;
+			}
 		}
 
 		return $back;
@@ -311,12 +317,16 @@ class HeaderLib
 					$b.= "$j\n";
 				}
 			}
-			$b .= "});\n";
+			$b .= "}) /* end on ready */;\n";
 			$out[] = $b;
 		}
 		return $out;
 	}
 
+
+	function getJsFilesList() {
+		return $this->jsfiles;
+	}
 	/**
 	 * Gets included JavaScript files (for AJAX)
 	 * @return array[strings]

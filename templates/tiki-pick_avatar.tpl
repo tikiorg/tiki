@@ -37,14 +37,13 @@
 
 {jq}
 var avatars = new Array();
-{section name=ix loop=$avatars}
+{{section name=ix loop=$avatars}
   avatars[{$smarty.section.ix.index}] = '{$avatars[ix]}';
 {if $smarty.section.ix.index eq $yours}
 {assign var="yours" value=$avatars[ix]}
 {/if}
-{/section}
+{/section}}
 var pepe=1;
-{literal}
 function addavt() {
   pepe++;
   if(pepe > avatars.length-1) {
@@ -62,7 +61,6 @@ function subavt() {
   document.getElementById('avtimg').src=avatars[pepe]; 
   document.getElementById('avatar').value=avatars[pepe];
 }
-{/literal}
 {/jq}
 
 <h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=y">{tr}Show all{/tr}</a> {$numav} {tr}Items{/tr}</h2>

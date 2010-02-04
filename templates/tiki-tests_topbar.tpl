@@ -12,7 +12,6 @@
 </table>
 </div>
 {jq}
-{literal}
 function createCookie(name,value,days) {
 	if (days) {
 		var date = new Date();
@@ -34,16 +33,13 @@ function tikitest_state(state) {
 		toggleSpan("tikitest_pause");
 		hide("tikitest_play");
 	} else if (state == '3') {
-{/literal}
-		location.href="tiki_tests/tiki-tests_edit.php?filename={$tikitest_filename}.xml";
-{literal}
+		location.href="tiki_tests/tiki-tests_edit.php?filename={{$tikitest_filename}}.xml";
 	}
 }
-{/literal}
-{if $tikitest_state eq 1}
+{{if $tikitest_state eq 1}
 	hide("tikitest_play");
 {elseif $tikitest_state eq 2}
 	hide("tikitest_pause");
-{/if}
+{/if}}
 {/jq}
 <!-- EndTikiTestRemoveMe -->

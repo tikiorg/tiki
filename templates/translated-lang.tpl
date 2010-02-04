@@ -12,12 +12,11 @@
 				</form>
 			{else} {* get method to have the param in the url *}
 				{jq}
-				{if $beingStaged == 'y'}
+				{{if $beingStaged == 'y'}
 					var page_to_translate = '{$approvedPageName|escape:"quotes"}';
 				{else}
 					var page_to_translate = '{$page|escape:"quotes"}';
-				{/if}
-				{literal}
+				{/if}}
 				function quick_switch_language( element )
 				{
 					var index = element.selectedIndex;
@@ -40,7 +39,6 @@
 					} else
 						element.form.submit();
 				}
-				{/literal}
 				{/jq}
 				<form action="tiki-index.php" method="get">
 				{if $prefs.feature_machine_translation eq 'y'}

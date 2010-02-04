@@ -51,7 +51,6 @@
 
 	{if $prefs.freetags_browse_show_cloud eq 'y'}
 		{jq}
-			{literal}
 				function addTag(tag) {
 					if (tag.search(/ /) >= 0) tag = '"'+tag+'"';
 					document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;	
@@ -59,7 +58,6 @@
 				function clearTags() {
 					document.getElementById('tagBox').value = '';
 				}
-			{/literal}
 		{/jq}
 
 		<div class="freetaglist"> 

@@ -1,12 +1,10 @@
 {title help="Toolbars"}{tr}Admin Toolbars{/tr}{/title}
 {jq}
-{literal}
 	function toolbars_autoreload() {
 		if (document.forms['toolbars'].elements['autoreload'].checked) {
 			document.forms['toolbars'].submit();
 		}
 	}
-{/literal}
 {/jq}
 
 <div class="toolbars-admin clearfix">

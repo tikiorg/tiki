@@ -2,7 +2,6 @@
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 {jq}
-{literal}
 	function CheckAll() {
 		for (var i = 0; i < document.banningform.elements.length; i++) {
 			var e = document.banningform.elements[i];
@@ -11,7 +10,6 @@
 			}
 		}
 	}
-{/literal}
 {/jq}
 
 {title help="Banning+System"}{tr}Banning system{/tr}{/title}

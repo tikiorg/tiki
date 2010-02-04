@@ -278,12 +278,10 @@
 			<fieldset><legend>{tr}Install{/tr}</legend>
 				{if $tikidb_created}
 				{jq}
-					{literal}
 					function install() {
 						document.getElementById('install-link').style.display='none';
 						document.getElementById('install-table').style.visibility='';
 					}
-					{/literal}
 				{/jq}
 				<div id="install-link">
 				

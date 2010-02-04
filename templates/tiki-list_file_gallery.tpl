@@ -146,7 +146,6 @@ function checkClose() {
 if (getCookie("fgalKeepOpen")) {
 	document.getElementById("keepOpenCbx").checked = "checked";
 }
-  {/literal}
 {/jq}
 
 {/if}

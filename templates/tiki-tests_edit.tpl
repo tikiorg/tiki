@@ -1,16 +1,12 @@
 {jq}
-{literal}
 var html = new Array();
 function test_xpath(index) {
 	/*
 	alert("Index:"+index);
   alert ('Xpath['+index+']='+document.getElementById('xpath_'+index).value);
 	*/
-{/literal}
-	window.open('tiki_tests/tiki-tests_show_xpath.php?filename={$filename}&index='+index+'&xpath='+document.getElementById('xpath_'+index).value,'_blank')	;
-{literal}
+	window.open('tiki_tests/tiki-tests_show_xpath.php?filename={{$filename}}&index='+index+'&xpath='+document.getElementById('xpath_'+index).value,'_blank')	;
 }
-{/literal}
 {/jq}
 
 {title help="tests"}{tr}TikiTests Edit{/tr}{/title}

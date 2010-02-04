@@ -35,7 +35,7 @@
 	<script type="text/javascript" src="lib/sheet/formula.js"></script>
 	{jq}
 	var g;
-{$init_grid}
+{{$init_grid}}
 
 	controlInsertRowBefore = '<form name="insert" onsubmit="return insertRowSubmit(this)"><input type="radio" name="pos" value="before" checked="checked" id="sht_ins_row_before" /> <label for="sht_ins_row_before">{tr}Before{/tr}</label> <input type="radio" name="pos" value="after" id="sht_ins_row_after" /> <label for="sht_ins_row_after">{tr}After{/tr}</label> <select name="row">';
 	controlInsertRowAfter = '</select><input type="text" name="qty" value="1" size="2" /><input type="submit" name="submit" value="{tr}Insert Row{/tr}" /></form>';

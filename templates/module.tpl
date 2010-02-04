@@ -70,7 +70,7 @@
 {if $module_nobox neq 'y'}
 {if $module_flip eq 'y'}
 {jq}
-				setsectionstate('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','{$module_dstate}', 'module.png');
+				setsectionstate('mod-{{$module_name|cat:$module_position|cat:$module_ord|escape}}','{{$module_dstate}}', 'module.png');
 {/jq}
 {/if}
 		</div>

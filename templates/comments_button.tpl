@@ -33,5 +33,5 @@
 </noscript>
 {/if}
 {jq}
-	document.write('{button href="#comments" _auto_args="*" _escape="y" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$flip_open}');
+	document.write('{{button href="#comments" _auto_args="*" _escape="y" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$flip_open}}');
 {/jq}
