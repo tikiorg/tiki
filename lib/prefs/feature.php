@@ -1093,6 +1093,7 @@ function prefs_feature_list() {
 			'type' => 'text',
 			'size' => '5',
 			'dependencies' => array(
+				'feature_cssmenus',
 				'feature_phplayers',
 			),
 		),
