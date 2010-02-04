@@ -94,6 +94,9 @@
 								</td><td  valign="top">
 							{/if}
 							<div class="articleheadingtext">{$listpages[ix].parsed_heading}</div>
+							{if isset($fullbody) and $fullbody eq "y"}
+								<div class="articlebody">{$listpages[ix].parsed_body}</div>
+							{/if}
 						</td>
 					</tr>
 				</table>

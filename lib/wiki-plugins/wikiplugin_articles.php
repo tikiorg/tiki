@@ -69,12 +69,29 @@ function wikiplugin_articles_info()
 			'titleonly' => array(
 				'required' => false,
 				'name' => tra('Title only'),
-				'description' => tra('Whether to only show the title of the articles.'),
+				'description' => tra('Whether to only show the title of the articles.') . ' (n|y)',
+			),
+			'fullbody' => array(
+				'required' => false,
+				'name' => tra('Show body'),
+				'description' => tra('Whether to only show the body of the articles or just the heading.') . ' (n|y)',
 			),
 			'start' => array(
 				'required' => false,
 				'name' => tra('Starting article'),
 				'description' => tra('The article number that the list should start with.'),
+			),
+			'dateStart' => array(
+				'required' => false,
+				'name' => tra('Start date'),
+				'description' => tra('Earliest date to select articles from.'),
+				'filter' => 'date',
+			),
+			'dateEnd' => array(
+				'required' => false,
+				'name' => tra('End date'),
+				'description' => tra('Latest date to select articles from.'),
+				'filter' => 'date',
 			),
 		),
 	);
@@ -113,11 +130,27 @@ function wikiplugin_articles($data, $params)
 	if (!isset($quiet))
 		$quiet = 'n';
 	$smarty->assign_by_ref('quiet', $quiet);
-
+	
+	if (isset($dateStart)) {
+		$dateStartTS = TikiDate::parseDateString($dateStart);
+	}
+	if (isset($dateEnd)) {
+		$dateEndTS = TikiDate::parseDateString($dateEnd);
+	}
+	$dateStartTS = !empty($dateStartTS) ? $dateStartTS : 0;
+	$dateEndTS = !empty($dateEndTS) ? $dateEndTS : $tikilib->now;
+	
+	if (isset($fullbody) && $fullbody == 'y') {
+		$smarty->assign('fullbody', 'y');
+	} else {
+		$smarty->assign('fullbody', 'n');
+		$fullbody = 'n';
+	}
+	
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, $sort, '', 0, $tikilib->now, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
+	$listpages = $tikilib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
  	if ($prefs['feature_multilingual'] == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
@@ -126,6 +159,9 @@ function wikiplugin_articles($data, $params)
 
 	for ($i = 0, $icount_listpages = count($listpages["data"]); $i < $icount_listpages; $i++) {
 		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
+		if ($fullbody == 'y') {
+			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data($listpages["data"][$i]["body"]);
+		}
 		$comments_prefix_var='article:';
 		$comments_object_var=$listpages["data"][$i]["articleId"];
 		$comments_objectId = $comments_prefix_var.$comments_object_var;
