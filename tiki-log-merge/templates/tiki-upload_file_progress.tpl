@@ -42,7 +42,7 @@
 </table>
 {/capture}
 {jq}
-	parent.progress('{$FormId}','{$msg|escape:"javascript"}');
+	parent.progress('{{$FormId}}','{{$msg|escape:"javascript"}}');
 {/jq}
 
 

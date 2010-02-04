@@ -1,5 +1,5 @@
 {* $Id$ *}
-{jq}
+{jq notonready=true}
 var baseURI = '{$smarty.server.REQUEST_URI}';
 {literal}
 function refreshCache( entry ) { // {{{
@@ -437,7 +437,7 @@ function showDetails( id, domain, profile ) { // {{{
 {/tabset}
 
 {jq}
-{foreach item=k from=$oldSources}
+{{foreach item=k from=$oldSources}
 	refreshCache({$k});
-{/foreach}
+{/foreach}}
 {/jq}

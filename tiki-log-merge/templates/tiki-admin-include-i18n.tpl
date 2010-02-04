@@ -1,7 +1,6 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://doc.tikiwiki.org/Internationalization">{tr}Internationalization{/tr}</a>{/remarksbox}
 
 {jq}
-  {literal}
 	function updateList( active )
 	{
 		if( ! active )

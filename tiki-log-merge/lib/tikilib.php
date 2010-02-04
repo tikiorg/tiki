@@ -2121,9 +2121,16 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/*shared*/
-	function get_file($id) {
-		$query = "select tf.*, tfg.`backlinkPerms` from `tiki_files` tf left join `tiki_file_galleries` tfg on (tfg.`galleryId`=tf.`galleryId`) where `fileId`=? ";
-		$result = $this->query($query, array((int)$id));
+	function get_file($id, $randomGalleryId='') {
+		if (empty($randomGalleryId)) {
+			$where = '`fileId`=?';
+			$bindvars[] = (int)$id;
+		} else {
+			$where = 'tf.`galleryId`=? order by '.$this->convertSortMode('random'). ' limit 1 ';
+			$bindvars[] = (int)$randomGalleryId;
+		}
+		$query = "select tf.*, tfg.`backlinkPerms` from `tiki_files` tf left join `tiki_file_galleries` tfg on (tfg.`galleryId`=tf.`galleryId`) where $where";
+		$result = $this->query($query, $bindvars);
 		return $result ? $result->fetchRow() : array();
 	}
 
@@ -6601,7 +6608,7 @@ class TikiLib extends TikiDb_Bridge
 	function parse_wiki_argvariable(&$data, $options=null) {
 		global $prefs, $user;
 		if( $prefs['feature_wiki_argvariable'] == 'y' ) {
-			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]+))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
+			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]*))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
 				$needles = array();
 				$replacements = array();
 
@@ -6621,7 +6628,7 @@ class TikiLib extends TikiDb_Bridge
 						break;
 					}
 
-					if( ! empty( $value ) ) {
+					if( ! empty( $value ) || isset( $arg[4] ) ) {
 						$needles[] = $arg[0];
 						$replacements[] = $value;
 					}

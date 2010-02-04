@@ -55,6 +55,31 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 		$headerlib->add_jsfile($custom_js, 50);
 	}
 	
+	$js = '
+// JS Object to hold prefs for jq
+var jqueryTiki = new Object();
+jqueryTiki.ui = '.($prefs['feature_jquery_ui'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.ui_theme = "'.$prefs['feature_jquery_ui_theme'].'";
+jqueryTiki.tooltips = '.($prefs['feature_jquery_tooltips'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.autocomplete = '.($prefs['feature_jquery_autocomplete'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.superfish = '.($prefs['feature_jquery_superfish'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.replection = '.($prefs['feature_jquery_reflection'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.tablesorter = '.($prefs['feature_jquery_tablesorter'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.colorbox = '.($prefs['feature_shadowbox'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.cboxCurrent = "{current} / {total}";
+jqueryTiki.sheet = '.($prefs['feature_jquery_sheet'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.carousel = '.($prefs['feature_jquery_carousel'] == 'y' ? 'true' : 'false') . ';
+
+jqueryTiki.effect = "'.$prefs['jquery_effect'].'";				// Default effect
+jqueryTiki.effect_direction = "'.$prefs['jquery_effect_direction'].'";	// "horizontal" | "vertical" etc
+jqueryTiki.effect_speed = "'.$prefs['jquery_effect_speed'].'";	// "slow" | "normal" | "fast" | milliseconds (int) ]
+jqueryTiki.effect_tabs = "'.$prefs['jquery_effect_tabs'].'";		// Different effect for tabs
+jqueryTiki.effect_tabs_direction = "'.$prefs['jquery_effect_tabs_direction'].'";
+jqueryTiki.effect_tabs_speed = "'.$prefs['jquery_effect_tabs_speed'].'";
+';
+	$headerlib->add_js($js, 100);	
+	
+	
 	if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 		
 		$smarty->assign('ie6', true);

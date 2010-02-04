@@ -294,7 +294,7 @@
 </div>
 
 	{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
-		{jq}
+		{jq notonready=true}
 		{literal}
 		var nb_upload = 1;
 		function add_upload_file() {
@@ -305,9 +305,9 @@
 			{/if}
 			tmp += '<input type="hidden" name="formId" value="'+nb_upload+'"/>';
 			tmp += '{$upload_str|strip|escape:'javascript'}';
-			{literal}
 			tmp += '</form><div id="multi_'+(nb_upload+1)+'"></div>';
 			//tmp += '<div id="multi_'+(nb_upload+1)+'"></div>';
+			{literal}
 			document.getElementById('multi_'+nb_upload).innerHTML = tmp;
 			document.getElementById('progress').innerHTML += "<div id='progress_"+nb_upload+"'></div>";
 			document.getElementById('upload_progress').innerHTML += "<iframe id='upload_progress_"+nb_upload+"' name='upload_progress_"+nb_upload+"' height='1' width='1' style='border:0px none'></iframe>";
@@ -322,9 +322,7 @@
 		function do_submit(n) {
 //				alert(document.getElementById('file_'+n).name);
 			if (document.forms['file_'+n].elements['userfile[]'].value != '') {
-			{/literal}
 				progress(n,"<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
-			{literal}
 				document.getElementById('file_'+n).submit();
 				document.getElementById('file_'+n).reset();
 			} else {

@@ -3,11 +3,9 @@
 		<td><label for="tagBox">{tr}Folksonomy Tags{/tr}</label></td>
 		<td>
 {jq}
-				{literal}
-					function addTag(tag) {
-						document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;
-					}
-				{/literal}
+	function addTag(tag) {
+		document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;
+	}
 {/jq}
 			<div id="freetager">
 				{if $prefs.feature_help eq 'y'}

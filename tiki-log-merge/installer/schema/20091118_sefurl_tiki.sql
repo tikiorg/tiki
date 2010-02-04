@@ -1,2 +1,1 @@
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-view_tracker_item.php\\?itemId=(\\d+)', 'item$2', 'trackeritem', 'feature_trackers', 200);
-INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-list_file_gallery.php\\?galleryId=(\\d+)', 'files$2', 'file gallery', 'feature_file_galleries', 200);

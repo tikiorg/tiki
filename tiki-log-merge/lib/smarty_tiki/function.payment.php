@@ -1,6 +1,7 @@
 <?php
 
 function smarty_function_payment( $params, $smarty ) {
+	global $tikilib;
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	$invoice = (int) $params['id'];
 
@@ -12,6 +13,7 @@ function smarty_function_payment( $params, $smarty ) {
 	if( $info && $info['state'] == 'outstanding' || $info['state'] == 'overdue' || $objectperms->payment_view ) {
 		$info['fullview'] = $objectperms->payment_view;
 		$smarty->assign( 'payment_info', $info );
+		$smarty->assign( 'payment_detail', $tikilib->parse_data( htmlspecialchars($info['detail']) ) );
 		return $smarty->fetch( 'tiki-payment-single.tpl' );
 	} else {
 		return tra('This invoice does not exist or is in limited access.');

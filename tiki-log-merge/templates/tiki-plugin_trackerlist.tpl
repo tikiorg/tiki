@@ -21,6 +21,9 @@
 		   {icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}
 		</a>
 	{/if}
+	{if $showrss eq 'y'}
+			<a href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
+	{/if}
 
 {if !empty($sortchoice)}
 	<div class="trackerlistsort">

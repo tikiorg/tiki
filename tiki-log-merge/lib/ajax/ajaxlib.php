@@ -181,7 +181,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		// Help
 		require_once $smarty->_get_plugin_filepath('function', 'show_help');
 		$content .= smarty_function_show_help(null,$smarty); 
-
 		// Handle TikiTabs in order to display only the current tab in the XAJAX response
 		// This has to be done here, since it is tikitabs() is usually called when loading the <body> tag
 		//   which is not done again when replacing content by the XAJAX response
@@ -221,7 +220,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 
 		// now remove all the js from the source
 		$content = preg_replace('/\s*<script.*javascript.*>.*\/script>\s*/Umis', '', $content);
-
 		// attach the cleaned xhtml to the response
 		$objResponse->Assign($htmlElementId, "innerHTML", $content);
 
@@ -263,28 +261,37 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 	}
 
-	$objResponse->script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
-	if (count($js_script)) {
-		foreach($js_script as $s) {
-			if (trim($s) != '') {
-				$objResponse->script($s);
+	if( $prefs['tiki_minify_javascript'] == 'y' ) {
+		$hjsfiles = $headerlib->getMinifiedJs();
+	} else {
+		$hjsfiles = $headerlib->getJsFilesList();
+	}
+	foreach($hjsfiles as $f) {
+		foreach ($f as $jsf) {
+			if (trim($jsf) != '') {
+				$objResponse->includeScriptOnce($jsf);
 			}
 		}
-		if ($prefs['feature_ajax_autosave'] == 'y') {
-			$objResponse->call("auto_save");
-		}
 	}
+
+	$objResponse->script('xajax.config.requestURI="'.$ajaxlib->getRequestURI().'";');
+	
 	$max_tikitabs = (int)$max_tikitabs;
 	if ( $max_tikitabs > 0 && $prefs['feature_tabs'] == 'y' ) {
 		global $cookietab;
 		$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
-		$objResponse->script("tikitabs($tab,$max_tikitabs);");
+		$headerlib->add_js("tikitabs($tab,$max_tikitabs);");
 	}
 	// collect js from headerlib
-	foreach($headerlib->getJs() as $s) {
-		if (trim($s) != '') {
-			$objResponse->script($s);
-		}
+	$jscontent = $headerlib->output_js(false); 
+	$tmp_jsfile = 'temp/public/'.md5($jscontent).'.js';
+	if ( ! file_exists( $tmp_jsfile) ) {
+		file_put_contents( $tmp_jsfile, $jscontent );
+	}
+	$objResponse->includeScript($tmp_jsfile);
+	
+	if ($prefs['feature_ajax_autosave'] == 'y') {
+		$objResponse->call("auto_save");
 	}
 	
 	return $objResponse;

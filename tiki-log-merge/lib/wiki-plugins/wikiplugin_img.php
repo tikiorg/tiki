@@ -25,6 +25,12 @@ function wikiplugin_img_info() {
 				'description' => tra('Numeric ID of an image in a File Gallery (or comma-separated list). "id", "fileId", "attId" or "src" required.'),
 				'filter' => 'int',
 			),
+			'randomGalleryId' => array(
+				'required' => false,
+				'name' => tra('Gallery ID'),
+				'description' => tra('Numeric ID of a File Gallery . Will take a random file'),
+				'filter' => 'int',
+			),
 			'attId' => array(
 				'required' => false,
 				'name' => tra('Attachment ID'),
@@ -193,6 +199,7 @@ function wikiplugin_img_info() {
 	$imgdata['src'] = '';
 	$imgdata['id'] = '';
 	$imgdata['fileId'] = '';
+	$imgdata['randomGalleryId'] = '';
 	$imgdata['attId'] = '';
 	$imgdata['thumb'] = '';
 	$imgdata['button'] = '';
@@ -342,6 +349,9 @@ function wikiplugin_img_info() {
 														case 'fileId':
 															$imgdata['fileId'] = trim($img_parameter_array[1]);
 														break;
+														case 'randomGalleryId':
+															$imgdata['randomGalleryId'] = trim($img_parameter_array[1]);
+														break;
 														case 'attId':
 															$imgdata['attId'] = trim($img_parameter_array[1]);
 														break;
@@ -426,12 +436,12 @@ function wikiplugin_img_info() {
 
 //////////////////////////////////////////////////// Error messages and clean javascript //////////////////////////////
 	// Must set at least one image identifier
-	if ( empty($imgdata['fileId']) and empty($imgdata['id']) and empty($imgdata['src']) and empty($imgdata['attId']) ) {
-		return tra("''No image specified. Either the fileId, attId, id, or src parameter must be specified.''");
+	if ( empty($imgdata['fileId']) and empty($imgdata['id']) and empty($imgdata['src']) and empty($imgdata['attId']) and empty($imgdata['randomGalleryId']) ) {
+		return tra("''No image specified. Either the fileId, randomGalleryId, attId, id, or src parameter must be specified.''");
 	}
 	// Can't set more than one image identifier
-	if ( ! ( !empty($imgdata['fileId']) Xor !empty($imgdata['id']) Xor !empty($imgdata['src']) Xor !empty($imgdata['attId']) ) ) {
-		return tra("''Use one and only one of the following parameters: fileId, attId, id, or src.''");
+	if ( ! ( !empty($imgdata['fileId']) Xor !empty($imgdata['id']) Xor !empty($imgdata['src']) Xor !empty($imgdata['attId']) Xor !empty($imgdata['randomGalleryId'])) ) {
+		return tra("''Use one and only one of the following parameters: fileId, randomGalleryId, attId, id, or src.''");
 	}	
 	// Clean up src URLs to exclude javascript
 	if (stristr(str_replace(' ', '', $imgdata['src']),'javascript:')) {
@@ -492,6 +502,8 @@ function wikiplugin_img_info() {
 			$src = $imagegalpath . $imgdata['id'];
 		} elseif (!empty($imgdata['fileId'])) {		
 			$src = $filegalpath . $imgdata['fileId']; 
+		} elseif (!empty($imgdata['randomGalleryId'])) {		
+			$src = 'tiki-download_file.php?randomGalleryId='. $imgdata['randomGalleryId']; 
 		} else {					//only attachments left
 			$src = $attachpath . $imgdata['attId']; 
 		}

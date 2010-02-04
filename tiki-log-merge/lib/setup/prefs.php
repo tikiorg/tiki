@@ -185,6 +185,7 @@ function get_default_prefs() {
 		'wiki_likepages_samelang_only' => 'n',
 		'wiki_mandatory_edit_summary' => 'n',
 
+		'wikiplugin_addtocart' => 'n',
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',
 		'wikiplugin_aname' => 'n',
@@ -315,6 +316,7 @@ function get_default_prefs() {
 		'wikiplugin_youtube' => 'y',
 
 		// Inline wiki plugins have their edit plugin icon disabled
+		'wikiplugininline_addtocart' => 'n',
 		'wikiplugininline_agentinfo' => 'n',
 		'wikiplugininline_alink' => 'n',
 		'wikiplugininline_aname' => 'n',

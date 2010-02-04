@@ -2,6 +2,9 @@
 	<h2>{$payment_info.description|escape}</h2>
 	<p>{tr}State{/tr}: <strong>{$payment_info.state|escape}</strong></p>
 	{if $payment_info.fullview}
+		<div class="clearfix wikitext">
+			{$payment_detail}
+		</div>
 		<p>{tr}Initial amount{/tr}: {$payment_info.amount_original|escape} {$payment_info.currency|escape}</p>
 	{/if}
 	<p>

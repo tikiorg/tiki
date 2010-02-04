@@ -98,16 +98,16 @@ function wikiplugin_trackeritemfield($data, $params) {
 		if (empty($itemId) && empty($test) && empty($status)) {// need an item
 			return tra('Incorrect param').': itemId';
 		}
-		if (empty($trackerId)) {
-			return tra('Incorrect param').': trackerId';
-		}
 
 		if (!empty($status) && !$trklib->valid_status($status)) {
 			return tra('Incorrect param').': status';
 		}
 
 		$info = $trklib->get_item_info($itemId);
-		if (!$memoUserTracker) {
+		if (!empty($info) && empty($trackerId)) {
+			$trackerId = $info['trackerId'];
+		}
+		if (!empty($info) && !$memoUserTracker) {
 			$perm = ($info['status'] == 'c')? 'view_trackers_closed':(($info['status'] == 'p')?'view_trackers_pending':'view_trackers');
 			$perms = Perms::get(array('type'=>'tracker', 'object'=>$trackerId));
 			if (!$perms->$perm) {
@@ -144,7 +144,11 @@ function wikiplugin_trackeritemfield($data, $params) {
 			return $dataelse;
 		}
 	}
-	if (isset($fields)) {
+	if (empty($itemId) && !empty($test)) {
+		return $dataelse;
+	} elseif (empty($itemId)) {
+		return tra('Incorrect param').': itemId';
+	} elseif (isset($fields)) {
 		$all_fields = $trklib->list_tracker_fields($trackerId, 0, -1);
 		$all_fields = $all_fields['data'];
 		if (!empty($fields)) {

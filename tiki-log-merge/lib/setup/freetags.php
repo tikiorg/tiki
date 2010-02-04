@@ -43,17 +43,19 @@ if ( isset($section) and isset($sections[$section])) {
 	if( $tiki_p_freetags_tag == 'y' && $prefs['freetags_multilingual'] == 'y' ) {
 		$ft_lang = null;
 		$ft_multi = false;
-		foreach( $tags['data'] as $row ) {
-			$l = $row['lang'];
-
-			if( ! $l )
-				continue;
-
-			if( ! $ft_lang )
-				$ft_lang = $l;
-			elseif( $ft_lang != $l ) {
-				$ft_multi = true;
-				break;
+		if (!empty($tags['data'])) {
+			foreach( $tags['data'] as $row ) {
+				$l = $row['lang'];
+	
+				if( ! $l )
+					continue;
+	
+				if( ! $ft_lang )
+					$ft_lang = $l;
+				elseif( $ft_lang != $l ) {
+					$ft_multi = true;
+					break;
+				}
 			}
 		}
 

@@ -504,7 +504,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {assign var=fid value=$field_value.fieldId}
 {if $listfields.$fid.http_request}
 {jq}
-selectValues('trackerIdList={$listfields.$fid.http_request[0]}&fieldlist={$listfields.$fid.http_request[3]}&filterfield={$listfields.$fid.http_request[1]}&status={$listfields.$fid.http_request[4]}&mandatory={$listfields.$fid.http_request[6]}','{$listfields.$fid.http_request[5]}','{$field_value.ins_id}')
+selectValues('trackerIdList={{$listfields.$fid.http_request[0]}}&fieldlist={{$listfields.$fid.http_request[3]}}&filterfield={{$listfields.$fid.http_request[1]}}&status={{$listfields.$fid.http_request[4]}}&mandatory={{$listfields.$fid.http_request[6]}}','{{$listfields.$fid.http_request[5]}}','{{$field_value.ins_id}}')
 {/jq}
 {/if}
 {/foreach}

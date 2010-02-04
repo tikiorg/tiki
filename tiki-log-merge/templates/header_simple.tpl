@@ -43,10 +43,6 @@
 {if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
 <!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
-{if $prefs.feature_jquery eq "y"}
-	{include file='header_jquery.tpl'}
-{/if}
-
 {if $headerlib}{$headerlib->output_headers()}{/if}
 
 </head>

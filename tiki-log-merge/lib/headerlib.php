@@ -61,7 +61,7 @@ class HeaderLib
 			$this->jq_onready[$rank][] = $script;
 		}
 		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
-			return $this->wrap_js("\$jq(\"document\").ready(function(){".$script."});\n");
+			return $this->wrap_js("\$jq(document).ready(function(){".$script."});\n");
 		} else {
 			return '';
 		}
@@ -162,8 +162,6 @@ class HeaderLib
 		}
 		$back .= "<![endif]-->\n";
 
-		//$back .= $this->output_js_files();	// TODO move some files to end of page?
-
 		if (count($this->rssfeeds)) {
 			foreach ($this->rssfeeds as $x=>$rssf) {
 				$back.= "<!-- rss $x -->\n";
@@ -218,7 +216,7 @@ class HeaderLib
 		return $back;
 	}
 
-	private function getMinifiedJs() {
+	public function getMinifiedJs() {
 		$hash = md5( serialize( $this->jsfiles ) );
 		$file = "temp/public/minified_$hash.js";
 
@@ -251,7 +249,7 @@ class HeaderLib
 		return $content;
 	}
 
-	function output_js() {	// called in footer.tpl - JS output at end of file now (pre 4.0)
+	function output_js($wrap = true) {	// called in tiki.tpl - JS output at end of file now (pre 5.0)
 		global $prefs;
 
 		ksort($this->js);
@@ -267,11 +265,15 @@ class HeaderLib
 					$b.= "$j\n";
 				}
 			}
-			$back.=  $this->wrap_js($b);
+			if ( $wrap === true ) {
+				$back .= $this->wrap_js($b);
+			} else {
+				$back .= $b;
+			}
 		}
 
 		if (count($this->jq_onready)) {
-			$b = '$jq("document").ready(function(){'."\n";
+			$b = '$jq(document).ready(function(){'."\n";
 			foreach ($this->jq_onready as $x=>$js) {
 				$b.= "// jq_onready $x \n";
 				foreach ($js as $j) {
@@ -279,7 +281,11 @@ class HeaderLib
 				}
 			}
 			$b .= "});\n";
-			$back .= $this->wrap_js($b);
+			if ( $wrap === true ) {
+				$back .= $this->wrap_js($b);
+			} else {
+				$back .= $b;
+			}
 		}
 
 		return $back;
@@ -304,19 +310,23 @@ class HeaderLib
 			}
 		}
 		if (count($this->jq_onready)) {
-			$b = '$jq("document").ready(function(){'."\n";
+			$b = '$jq(document).ready(function(){'."\n";
 			foreach ($this->jq_onready as $x=>$js) {
 				$b.= "// jq_onready $x \n";
 				foreach ($js as $j) {
 					$b.= "$j\n";
 				}
 			}
-			$b .= "});\n";
+			$b .= "}) /* end on ready */;\n";
 			$out[] = $b;
 		}
 		return $out;
 	}
 
+
+	function getJsFilesList() {
+		return $this->jsfiles;
+	}
 	/**
 	 * Gets included JavaScript files (for AJAX)
 	 * @return array[strings]
@@ -358,7 +368,7 @@ class HeaderLib
 		$back = '';
 
 		if( $prefs['tiki_minify_css'] == 'y' ) {
-			require_once 'Minify/CSS.php';
+			require_once 'lib/pear/Minify/CSS.php';
 
 			if( $prefs['tiki_minify_css_single_file'] == 'y' ) {
 				$files = $this->get_minified_css_single( $files );
@@ -438,16 +448,13 @@ class HeaderLib
 			if ( $file[0] == '/' ) {
 				$file = $tikipath.$file;
 			}
-			$currentdir = addslashes(str_replace($tikipath, $tikiroot, dirname(realpath( $file ))));
+			$currentdir = str_replace($tikipath, $tikiroot, str_replace('\\', '/', dirname(realpath( $file ))));
 			$content = file_get_contents( $file );
 		}
 
 		return Minify_CSS::minify( $content, array(
-			'currentDir' => $currentdir,
-			'prependRelativePath', $currentdir,
-			'docRoot' => '/',
+			'prependRelativePath' => $currentdir.'/',
 			'bubbleCssImports' => true,
-//			'symlinks' => array ('/styles', $tikiroot.'/styles'),
 		) );
 	}
 

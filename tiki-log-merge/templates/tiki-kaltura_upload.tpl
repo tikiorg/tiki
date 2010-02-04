@@ -14,7 +14,6 @@
 <div id="kcwFlashObject"></div>
 
 {jq}
-{literal}
 	var params = {
        	allowScriptAccess: "always",
        	allowNetworking: "all",
@@ -32,8 +31,7 @@
 		document.getElementById('new_entries').innerHTML = tmp;
 		document.kcw.submit();
 		}
-{/literal}
-	var flashVars = {$cwflashVars};
+	var flashVars = {{$cwflashVars}};
 	swfobject.embedSWF("http://www.kaltura.com/kcw/ui_conf_id/1000741", "kcwFlashObject", "680", "360", "9.0.0", "expressInstall.swf", flashVars, params);
 {/jq}
 		

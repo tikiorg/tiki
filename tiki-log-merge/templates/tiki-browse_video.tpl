@@ -112,12 +112,12 @@
 {jq}
 var tmp = window.location.search.match(/delay=(\d+)/);
 tmp = tmp ? parseInt(tmp[1]) : 3000;
-var thepix = new Diaporama('thepix', [{$listImgId}], {ldelim}
-	  startId: {$videoId},
-	  root: '{$rootid}browse_image',
+var thepix = new Diaporama('thepix', [{{$listImgId}}], {
+	  startId: {{$videoId}},
+	  root: '{{$rootid}}browse_image',
 	  resetUrl: 1,
 	  delay: tmp
-	{rdelim});
+	});
 {/jq}
 
 {/if}

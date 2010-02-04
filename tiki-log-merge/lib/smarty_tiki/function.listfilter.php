@@ -62,7 +62,7 @@ function smarty_function_listfilter($params, &$smarty) {
 		if (!isset($selectors)) $selectors = ".$id table tr";
 			
 		$content = "
-\$jq('#$id').keyup( function() {
+\$jq('#$id').keypress( function() {
 	var criterias = this.value.toLowerCase().split( /\s+/ );
 	
 	\$jq('$selectors').each( function() {
@@ -92,10 +92,7 @@ function smarty_function_listfilter($params, &$smarty) {
 } );	// end keyup
 		";
 	
-		$js = $headerlib->add_jq_onready($content);
-		if ($js) {
-			$input .= $js;
-		}
+		$headerlib->add_jq_onready($content);
 		return $input;
 	}
 }

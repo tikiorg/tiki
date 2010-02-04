@@ -255,7 +255,6 @@
 				
 							{if $prefs.feature_wiki_replace eq 'y' and $wysiwyg neq 'y'}
 {jq}
-	{literal}
 	function searchrep() {
 		c = document.getElementById('caseinsens')
 		s = document.getElementById('search')
@@ -269,7 +268,6 @@
 		var re = new RegExp(s.value,opt)
 		t.value = str.replace(re,r.value)
 	}
-	{/literal}
 {/jq}
 								<fieldset>
 									<legend>{tr}Regex search:{/tr}</legend>

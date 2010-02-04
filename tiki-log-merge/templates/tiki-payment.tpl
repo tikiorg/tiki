@@ -35,6 +35,11 @@
 				</fieldset>
 
 				<fieldset>
+					<label for="detail">{tr}Detail{/tr}:</label>
+					<textarea id="detail" name="detail" style="width: 100%;" rows="10"/></textarea>
+				</fieldset>
+
+				<fieldset>
 					<label for="amount">{tr}Amount{/tr}:</label>
 					<input type="text" id="amount" name="amount"/>
 					{$prefs.payment_currency|escape}

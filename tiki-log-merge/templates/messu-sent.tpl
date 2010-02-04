@@ -54,7 +54,7 @@
 <input type="submit" name="archive" value="{tr}move to archive{/tr}" />
 <input type="submit" name="download" value="{tr}Download{/tr}" />
 {jq}
-var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}];
+var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
 <table class="normal" >
   <tr>

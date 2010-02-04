@@ -120,6 +120,7 @@ var fckEditorInstances = new Array();
 function FCKeditor_OnComplete( editorInstance ) {
 	fckEditorInstances[fckEditorInstances.length] = editorInstance;
 	editorInstance.ResetIsDirty();
+	$jq(".fckeditzone").resizable({ minWidth: $jq("#'.$as_id.'").width(), minHeight: 50 });
 };'); }
 
 
@@ -242,8 +243,10 @@ function switchEditor(mode, form) {
 }';
 		}
 		
-		$js_editconfirm .= "\n\$jq('#$as_id').resizable( { minWidth: \$jq('#$as_id').width(), minHeight: 50 });";
-		
+		if ( $params['_wysiwyg'] != 'y') {
+			$js_editconfirm .= "\n\$jq('#$as_id').resizable( { minWidth: \$jq('#$as_id').width(), minHeight: 50 });";
+		}
+			
 		if( $prefs['wiki_timeout_warning'] == 'y' ) {
 			$headerlib->add_js($js_editlock);
 		}

@@ -19,6 +19,7 @@ $inputConfiguration = array( array(
 		'invoice' => 'digits',
 		'cancel' => 'digits',
 		'note' => 'striptags',
+		'detail' => 'wikicontent',
 	),
 	'catchAllUnset' => null,
 ) );
@@ -69,7 +70,7 @@ if( isset( $_POST['request'] ) && $globalperms->request_payment ) {
 	// Create new payment request
 
 	if( ! empty( $_POST['description'] ) && preg_match( '/^\d+(\.\d{2})?$/', $_POST['amount'] ) && $_POST['payable'] > 0 ) {
-		$id = $paymentlib->request_payment( $_POST['description'], $_POST['amount'], (int) $_POST['payable'] );
+		$id = $paymentlib->request_payment( $_POST['description'], $_POST['amount'], (int) $_POST['payable'], $_POST['detail'] );
 
 		if( $prefs['feature_categories'] == 'y' ) {
 			$cat_objid = $id;

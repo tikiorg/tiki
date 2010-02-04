@@ -131,14 +131,12 @@
 			<input type='submit' id='button_install' name='button-remove' value='{tr}Remove{/tr}'{if $installask.unavailable} style='display: none;'{/if} />
 		{/if}
 {jq}
-		{literal}
 function update_button_install() {
 	var button=document.getElementById('button_install');
 	button.name='button-check';
 	button.value='Check again';
 	button.style.display='';
 }
-		{/literal}
 {/jq}
 	</div>
 </form>

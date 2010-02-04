@@ -32,6 +32,8 @@ $module_zones = array(
 );
 
 $modules = $modlib->get_modules_for_user( $user, $module_zones );
+record_module_loading_errors();
+
 $show_columns = array_fill_keys( array_keys( $modules ), 'n' );
 
 foreach( $modules as $zone => & $moduleList ) {
@@ -51,3 +53,11 @@ $module_isflippable = array('flip' => 'y');
 $smarty->assign('module_nodecorations', $module_nodecorations);
 $smarty->assign('module_isflippable', $module_isflippable);
 
+
+function record_module_loading_errors() {
+	global $user, $modlib, $tikilib, $smarty;
+	$user_groups = $tikilib->get_user_groups($user);
+	if (in_array('Admins', $user_groups)) {
+		$smarty->assign('module_pref_errors', $modlib->pref_errors);
+	}
+}

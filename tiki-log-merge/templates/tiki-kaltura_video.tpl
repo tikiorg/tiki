@@ -138,9 +138,7 @@
 	</div>
 
 {jq}
-{literal}
-        
-        function CloseClick(isModified) {
+    function CloseClick(isModified) {
 			window.location="./tiki-list_kaltura_entries.php";
 		}
 
@@ -151,7 +149,6 @@
 		function closeEditorHandler() {
 			window.location="./tiki-list_kaltura_entries.php";
 		}
-{/literal}
 {/jq}
 
 
