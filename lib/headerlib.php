@@ -255,7 +255,7 @@ class HeaderLib
 		ksort($this->js);
 		ksort($this->jq_onready);
 
-		$back = "/*output_js */\n";
+		$back = "\n";
 
 		if (count($this->js)) {
 			$b = '';
