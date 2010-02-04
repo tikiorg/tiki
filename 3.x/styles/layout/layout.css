@@ -1082,6 +1082,14 @@ table.wikiplugin-split .codelisting {width: 95%}
 	font-weight: bold;
 	color: red}
 
+.trackerplugindesc {
+	color: #BEBCBC; font-style: italic
+}
+
+.charCount {
+	color: #BEBCBC; font-style: italic
+}
+
 ul.floatleft {
 	display: block;
 	list-style: none;
