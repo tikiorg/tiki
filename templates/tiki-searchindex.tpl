@@ -84,7 +84,7 @@
 			{if $prefs.feature_search_show_object_type eq 'y'}
 				<span class="objecttype">{tr}{$results[search].location}{/tr}:</span>
 			{/if}
-			<a href="{$results[search].href}&amp;highlight={$words}{$results[search].anchor}" class="objectname">{$results[search].pageName|strip_tags|escape}</a> 
+			<a href="{$results[search].href}&amp;highlight={$words}{$results[search].anchor}{if $results[search].location eq 'Wiki'}{if ($prefs.feature_multilingual eq 'y') and ($prefs.feature_best_language eq 'y')}&amp;bl{/if}{/if}" class="objectname">{$results[search].pageName|strip_tags|escape}</a> 
 			{if $prefs.feature_search_show_visit_count eq 'y'}
 				<span class="itemhits">({tr}Hits{/tr}: {$results[search].hits})</span>
 			{/if}
