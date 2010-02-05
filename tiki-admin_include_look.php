@@ -84,21 +84,20 @@ $js
 
 \$jq(document).ready( function() {
 	// pick up theme drop-down change
-	\$jq('#general-theme').change( function() {
-		var ops = style_options[\$jq('#general-theme').val()];
+	\$jq('select[name=site_style]').change( function() {
+		var ops = style_options[\$jq('select[name=site_style]').val()];
 		var none = true;
-		\$jq('#general-theme-options').empty().attr('disabled','').attr('selectedIndex', 0);
+		\$jq('select[name=site_style_option]').empty().attr('disabled','').attr('selectedIndex', 0);
 		\$jq.each(ops[1], function(i, val) {
-			\$jq('#general-theme-options').append(\$jq(document.createElement('option')).attr('value',i).text(i));
+			\$jq('select[name=site_style_option]').append(\$jq(document.createElement('option')).attr('value',i).text(i));
 			none = false;
 		});
 		if (none) {
-			\$jq('#general-theme-options').empty().attr('disabled','disabled').
+			\$jq('select[name=site_style_option]').empty().attr('disabled','disabled').
 					append(\$jq(document.createElement('option')).attr('value',"$none").text("$none"));
 		}
-	});
-	\$jq('#general-theme').change( function() {
-		var t = \$jq('#general-theme').val();
+		
+		var t = \$jq('select[name=site_style]').val();
 		var f = style_options[t][0];
 		if (f) {
 			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
@@ -106,16 +105,16 @@ $js
 			\$jq('#style_thumb').animate({'opacity': 0.3}, 'fast');
 		}
 	});
-	\$jq('#general-theme-options').change( function() {
-		var t = \$jq('#general-theme').val();
-		var o = \$jq('#general-theme-options').val();
+	\$jq('select[name=site_style_option]').change( function() {
+		var t = \$jq('select[name=site_style]').val();
+		var o = \$jq('select[name=site_style_option]').val();
 		var f = style_options[t][1][o];
 		if (f) {
 			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
 		} else {
 			\$jq('#style_thumb').animate({'opacity': 0.3}, 'fast');
 		}
-	});
+	});	
 });
 JS
 	);
