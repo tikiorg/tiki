@@ -72,6 +72,7 @@ function wikiplugin_bloglist($data, $params) {
 	
 	$blogItems = $tikilib->list_posts($params['offset'], $params['max'], $params['sort_mode'], $params['find'], $params['Id'], $params['author'], '', $dateStartTS, $dateEndTS);
 	$smarty->assign_by_ref('blogItems', $blogItems['data']);
+	$smarty->assign('container_class', 'wikiplugin_bloglist');
 	$ret = $smarty->fetch('wiki-plugins/wikiplugin_bloglist.tpl');
 	return '~np~'.$ret.'~/np~';
 }

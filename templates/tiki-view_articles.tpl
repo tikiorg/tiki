@@ -15,7 +15,7 @@
 				{/foreach}
 			</div>
 		{/if} 
-		<div class="article">
+		<div class="article{if !empty($container_class)} {$container_class}{/if}">
 			{if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline|escape}</div>{/if}
 			<div class="articletitle">
 				<h2><a href="{$listpages[ix].articleId|sefurl:article}">{$listpages[ix].title|escape}</a></h2>
