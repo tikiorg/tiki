@@ -23,16 +23,18 @@ class PerspectiveLib
 			global $prefs;
 		}
 
-		if( $prefs['multidomain_active'] != 'y' ) {
+		if( isset($prefs['multidomain_active']) && $prefs['multidomain_active'] != 'y' ) {
 			return array();
 		}
 
 		$out = array();
 
-		foreach( explode( "\n", $prefs['multidomain_config'] ) as $config ) {
-			list( $domain, $perspective ) = explode( ',', $config );
-
-			$out[$domain] = trim($perspective);
+		if (isset($prefs['multidomain_config'])) {
+			foreach( explode( "\n", $prefs['multidomain_config'] ) as $config ) {
+				list( $domain, $perspective ) = explode( ',', $config );
+	
+				$out[$domain] = trim($perspective);
+			}
 		}
 
 		return $out;

@@ -58,7 +58,7 @@ $needed_prefs = array(
 	'memcache_servers' => false,
 );
 $tikilib->get_preferences($needed_prefs, true, true);
-if ($prefs['lastUpdatePrefs'] == - 1) {
+if (!isset($prefs['lastUpdatePrefs']) || $prefs['lastUpdatePrefs'] == - 1) {
 	$tikilib->query('insert into `tiki_preferences`(`name`,`value`) values(?,?)', array('lastUpdatePrefs', 1));
 }
 

@@ -4413,7 +4413,7 @@ class TikiLib extends TikiDb_Bridge
 					$modified[$name] = $value;
 			}
 
-			$modified['lastReadingPrefs'] = $modified['lastUpdatePrefs'];		
+			$modified['lastReadingPrefs'] = isset($modified['lastUpdatePrefs']) ? $modified['lastUpdatePrefs'] : -1;		
 		}
 
 		if( $needCache ) {

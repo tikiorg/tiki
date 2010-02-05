@@ -498,9 +498,9 @@ if ($errors) {
 
 //adodb settings
 
-define('ADODB_FORCE_NULLS', 1);
-define('ADODB_ASSOC_CASE', 2);
-define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase? // so do we even need this without sybase? What's this?
+if (!defined('ADODB_FORCE_NULLS')) { define('ADODB_FORCE_NULLS', 1); }
+if (!defined('ADODB_ASSOC_CASE')) { define('ADODB_ASSOC_CASE', 2); }
+if (!defined('ADODB_CASE_ASSOC')) { define('ADODB_CASE_ASSOC', 2); } // typo in adodb's driver for sybase? // so do we even need this without sybase? What's this?
 include_once ('lib/adodb/adodb.inc.php');
 
 include('lib/tikilib.php');
@@ -642,6 +642,7 @@ if ($admin_acc == 'n') {
 
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
+$install_type = '';
 
 // Installation steps
 if (
@@ -679,7 +680,7 @@ if (
 	//   - there is already an existing .htaccess (that is not necessarily the one that comes from TikiWiki),
 	//   - the rename does not work (e.g. due to filesystem permissions)
 	//
-	if ( file_exists('_htaccess') && ( !file_exists('.htaccess') || ! @rename('_htaccess', '.htaccess') ) ) {
+	if ( !file_exists('.htaccess') && ! @rename('_htaccess', '.htaccess') ) {
 		$smarty->assign('htaccess_error', 'y');
 	}
 }
@@ -692,7 +693,11 @@ if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
 	if (isset( $_GET['lockenter'])) {
 		touch( 'db/lock' );
 	}
+	
 	global $userlib, $cachelib;
+	if (session_id()) {
+		session_destroy();
+	}
 	include_once 'tiki-setup.php';
 	$cachelib->empty_full_cache();
 	if ($install_type == 'scratch') {
@@ -722,7 +727,7 @@ $smarty->assign('email_test_tw', $email_test_tw);
 //  Sytem requirements test. 
 if ($install_step == '2') {
 
-	if (($_REQUEST['perform_mail_test']) == 'y') {
+	if (isset($_REQUEST['perform_mail_test']) && $_REQUEST['perform_mail_test'] == 'y') {
 
 		$email_test_to = $email_test_tw;
 		$email_test_headers = '';
@@ -800,7 +805,7 @@ if ($install_step == '2') {
 unset($TWV);
 
 // write general settings
-if ( $_REQUEST['general_settings'] == 'y' ) {
+if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y' ) {
 	global $dbTiki;
 	$switch_ssl_mode = ( isset($_REQUEST['feature_switch_ssl_mode']) && $_REQUEST['feature_switch_ssl_mode'] == 'on' ) ? 'y' : 'n';
 	$show_stay_in_ssl_mode = ( isset($_REQUEST['feature_show_stay_in_ssl_mode']) && $_REQUEST['feature_show_stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
