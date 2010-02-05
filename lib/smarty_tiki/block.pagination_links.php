@@ -35,6 +35,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - offset_arg: Name of the URL argument that contains the offset. Defaults to 'offset'.
  *	- zero_based_offset: Items addressed as zero-based (defaults to 'y'). If 'n' then "one based" offset used (1 to cant + 1)
  *		(jb tiki5: only fully tested without reloffset and step=1) 
+ *	- show_numbers: Show/hide direct_pagination links, current and total numbers (Defaults to 'y')
  */
 function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	global $prefs;
@@ -50,6 +51,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	if ( ! isset($params['offset']) ) $params['offset'] = 0;
 	if ( ! isset($params['offset_arg']) ) $params['offset_arg'] = 'offset';
 	if ( ! isset($params['zero_based_offset']) ) $params['zero_based_offset'] = 'y';
+	if ( ! isset($params['show_numbers']) ) $params['show_numbers'] = 'y';
 	if ($params['zero_based_offset'] != 'y') {
 		//$params['offset']--;
 		$zero_based_min = 1;
@@ -202,7 +204,11 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	   		} elseif (isset($images)) {
 				$html .= '<a class="prevnext"><span style="padding-left:16px"></span></a><a class="prevnext"><span style="padding-left:16px"> </span></a>';
 			}
-			$html .= '<span class="pagenums">' . tra($params['itemname']).': '.($zero_based_maxminus + floor(($real_offset) / $params['step'])).'/'.$nb_pages . "</span>";
+			$html .= '<span class="pagenums">' . tra($params['itemname']);
+			if ($params['show_numbers'] == 'y') {
+				$html .= ': '.($zero_based_maxminus + floor(($real_offset) / $params['step'])).'/'.$nb_pages;
+			}
+			$html .= "</span>";
 			if ( $params['next'] == 'y' ) {
 				$html .= ( isset($images) ? '' : ' [' )
 					.make_prevnext_link($url.$next_offset, ( isset($images) ? $images['next'] : tra('Next') ), $params )
@@ -224,7 +230,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 			}
 		}
 
-		if ( $prefs['direct_pagination'] == 'y' && $nb_pages > 1 ) {
+		if ( $prefs['direct_pagination'] == 'y' && $nb_pages > 1 && $params['show_numbers'] == 'y' ) {
 			$html .= "\n<br />";
 			$last_dots = false;
 			$page_num = floor($real_offset / $params['step']);
