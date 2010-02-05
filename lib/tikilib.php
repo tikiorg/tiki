@@ -2989,7 +2989,7 @@ class TikiLib extends TikiDb_Bridge
 		return $ret;
 	}
 
-	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='', $ref='') {
+	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='', $ref='', $date_min = 0, $date_max = 0) {
 
 		$authorized_blogs = $this->list_blogs(0, -1, 'created_desc', '', $ref);
 		$permit_blogs = array();
@@ -3016,6 +3016,20 @@ class TikiLib extends TikiDb_Bridge
 			}
 			$mid .= " ( `data` like ? ) ";
 			$bindvars[] = $findesc;
+		}
+		if ($date_min !== 0 || $date_max !== 0) {
+			if ( $date_max <= 0 ) {
+				// show articles published today
+				$date_max = $this->now;
+			}
+			if ($mid == '') {
+				$mid = ' where ';
+			} else {
+				$mid .= ' and ';
+			}
+			$mid .= '(`created`>=? and `created`<=?)';
+			$bindvars[] = $date_min;
+			$bindvars[] = $date_max;
 		}
 		if (!empty($author)) {
 			if ($mid == '') {

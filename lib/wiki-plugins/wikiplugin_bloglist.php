@@ -30,7 +30,18 @@ function wikiplugin_bloglist_info() {
 				'name' => tra('Author'),
 				'description' => tra('Author'),
 			),
-				
+			'dateStart' => array(
+				'required' => false,
+				'name' => tra('Start date'),
+				'description' => tra('Earliest date to select posts from.') . ' (YYYY-MM-DD)',
+				'filter' => 'date',
+			),
+			'dateEnd' => array(
+				'required' => false,
+				'name' => tra('End date'),
+				'description' => tra('Latest date to select posts from.') . ' (YYYY-MM-DD)',
+				'filter' => 'date',
+			),
 		),
 	);
 }
@@ -50,7 +61,16 @@ function wikiplugin_bloglist($data, $params) {
 	if (!isset($params['find'])) $params['find'] = '';
 	if (!isset($params['author'])) $params['author'] = '';
 
-	$blogItems = $tikilib->list_posts($params['offset'], $params['max'], $params['sort_mode'], $params['find'], $params['Id'], $params['author']);
+	if (isset($params['dateStart'])) {
+		$dateStartTS = strtotime($params['dateStart']);
+	}
+	if (isset($params['dateEnd'])) {
+		$dateEndTS = strtotime($params['dateEnd']);
+	}
+	$dateStartTS = !empty($dateStartTS) ? $dateStartTS : 0;
+	$dateEndTS = !empty($dateEndTS) ? $dateEndTS : $tikilib->now;
+	
+	$blogItems = $tikilib->list_posts($params['offset'], $params['max'], $params['sort_mode'], $params['find'], $params['Id'], $params['author'], '', $dateStartTS, $dateEndTS);
 	$smarty->assign_by_ref('blogItems', $blogItems['data']);
 	$ret = $smarty->fetch('wiki-plugins/wikiplugin_bloglist.tpl');
 	return '~np~'.$ret.'~/np~';
