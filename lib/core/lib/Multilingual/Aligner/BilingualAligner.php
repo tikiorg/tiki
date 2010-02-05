@@ -12,6 +12,16 @@ class Multilingual_Aligner_BilingualAligner
     var $cost_matrix = array();
            
 	public function align($l1_sentences, $l2_sentences) {
+		$this->l1_sentences = $l1_sentences;
+		$this->l2_sentences = $l2_sentences;
+		$this->_generate_shortest_path_matrix();
+
+		// TODO: Once the shortest path matrix has been generated, find the shortest
+		//       path using ShortestPathFinder class.
+		
+		// TODO: Once the shortest path has been found, translate that into 
+		//       source-target sentence alignments.
+		
 	    return;
 	}
 	
