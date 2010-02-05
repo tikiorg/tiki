@@ -15,15 +15,16 @@
 {if $lm_error}
 	{remarksbox type="warning" title="{tr}Search error{/tr}"}{$lm_error}{/remarksbox}
 {elseif $lm_searchresults}
+<fieldset>
+<legend>{tr}Preferences Search Results{/tr}</legend>
 	<form method="post" action="">
-		<hr class="clear"/>
 		{foreach from=$lm_searchresults item=prefName}
 			{preference name=$prefName get_pages="y"}
 		{/foreach}
 		<input type="submit" value="{tr}Change{/tr}" class="clear"/>
 		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}"/>
-		<hr class="clear"/>
 	</form>
+</fieldset>
 {/if}
 {/if}
 
