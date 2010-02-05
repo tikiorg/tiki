@@ -277,12 +277,14 @@
 		<td valign="top">
 			<fieldset><legend>{tr}Install{/tr}</legend>
 				{if $tikidb_created}
-				{jq}
+				<script type='text/javascript'><!--//--><![CDATA[//><!--
+				{literal}
 					function install() {
 						document.getElementById('install-link').style.display='none';
 						document.getElementById('install-table').style.visibility='';
 					}
-				{/jq}
+				{/literal}
+				//--><!]]></script>
 				<div id="install-link">
 				
 				<p style="text-align:center"><a class="button" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
