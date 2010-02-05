@@ -66,5 +66,9 @@ function prefs_art_list() {
 			'name' => tra('Images'),
 			'type' => 'flag',
 		),
+		'art_list_id' => array(
+			'name' => tra('Id'),
+			'type' => 'flag',
+		),
 	);
 }

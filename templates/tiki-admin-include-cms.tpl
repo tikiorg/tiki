@@ -74,6 +74,7 @@
 			<div class="adminoptionboxchild" id="art_list_title_childcontainer">
 				{preference name=art_list_title_len}
 			</div>
+			{preference name=art_list_id}
 			{preference name=art_list_type}
 			{preference name=art_list_topic}
 			{preference name=art_list_date}

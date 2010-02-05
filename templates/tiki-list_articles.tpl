@@ -59,6 +59,9 @@
 		{if $prefs.art_list_img eq 'y'}
 			<th>{tr}Img{/tr}</th>
 		{/if}
+		{if $prefs.art_list_id eq 'y'}
+			<th>{tr}Id{/tr}</th>
+		{/if}
 		{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage) or $tiki_p_read_article}
 			<th>{tr}Action{/tr}</th>
 		{/if}
@@ -77,6 +80,9 @@
 						</a>
 					{/if}
 				</td>
+			{/if}
+			{if $prefs.art_list_id eq 'y'}
+				<td class="{cycle advance=false}">{$listpages[changes].articleId}</td>
 			{/if}
 			{if $prefs.art_list_type eq 'y'}	
 				<td class="{cycle advance=false}">{tr}{$listpages[changes].type|escape}{/tr}</td>
