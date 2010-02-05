@@ -99,6 +99,11 @@ span.highlight {
 	margin: 0;
 }
 
+/* submit buttons input type="submit" in a container */
+.input_submit_container {
+	/* allows easily align the buttons in the container, ex: text-align: right; */
+}
+
 div.iconmenu {
 	display: inline;
 }

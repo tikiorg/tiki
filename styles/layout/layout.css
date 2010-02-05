@@ -35,7 +35,12 @@ input[type=submit] {
 	white-space: nowrap;
 	cursor: pointer;
 }
-	
+
+/* submit buttons input type="submit" in a container */
+.input_submit_container {
+	padding: 1px;
+}
+
 div.iconmenu {
 	display: inline;
 }

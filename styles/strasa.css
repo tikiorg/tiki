@@ -172,11 +172,6 @@ span.highlight a:visited {
 	color: #000 !important;
 }
 
-/* submit buttons input type="submit" in a container */
-.input_submit_container {
-	padding: 1px;
-}
-
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;
 }
