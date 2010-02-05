@@ -2,7 +2,7 @@
 {title url="tiki-article_types.php" help=Articles}{tr}Admin Article Types{/tr}{/title}
 
 <div class="navbar">
-	{button _onclick="javascript:toggle('wiki-edithelp')" _text="{tr}Show Help{/tr}"}
+	{button _onclick="javascript:toggle('wiki-edithelp');return false;" _text="{tr}Show Help{/tr}" _ajax="n"}
 </div>
 
 
