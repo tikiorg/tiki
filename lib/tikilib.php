@@ -1917,8 +1917,9 @@ class TikiLib extends TikiDb_Bridge
 				if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y') {
 					$res['url'] .= "&amp;bl=y";
 					$res['sefurl'] .= "?bl=y";
-				}	
-				if (!$this->user_has_perm_on_object($user, $matches[1], 'wiki page', 'tiki_p_view')) {
+				}
+				$perms = Perms::get(array('type'=>'wiki page', 'object'=>$matches[1]));
+				if (!$perms->view && !$perms->wiki_view_ref) {
 					continue;
 				}
 			}
@@ -3995,7 +3996,7 @@ class TikiLib extends TikiDb_Bridge
 		return $this->list_pages($offset, $maxRecords, $sort_mode, $find, '', true, true);
 	}
 
-	function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false, $filter='', $onlyCant=false) {
+	function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false, $filter='', $onlyCant=false, $ref='') {
 		global $prefs, $user;
 
 		$join_tables = '';
@@ -4135,6 +4136,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$offset_tmp = 0;
 		$haveEnough=FALSE;
+		$filterPerms = empty($ref)? 'view': array('view', 'wiki_view_ref');
 		while (!$haveEnough) {
 			$rawTemp = array();
 			$result = $this->query($query, $bindvars, $maxRecords , $offset_tmp);
@@ -4145,7 +4147,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 			if (count($rawTemp) == 0) $haveEnough = TRUE; // end of table
 
-			$rawTemp = Perms::filter( array( 'type' => 'wiki page' ), 'object', $rawTemp, array( 'object' => 'pageName', 'creator' => 'creator' ), 'view' );
+			$rawTemp = Perms::filter( array( 'type' => 'wiki page' ), 'object', $rawTemp, array( 'object' => 'pageName', 'creator' => 'creator' ), $filterPerms );
 
 			$raw = array_merge($raw, $rawTemp);
 			if( (count($raw) >= $offset + $maxRecords) || $maxRecords == -1 ) $haveEnough = TRUE; // now we have enough records

@@ -22,7 +22,7 @@ if ($prefs['rss_wiki'] != 'y') {
 	require_once ('tiki-rss_error.php');
 }
 
-$res=$access->authorize_rss(array('tiki_p_view'));
+$res=$access->authorize_rss(array('tiki_p_view', 'tiki_p_wiki_view_ref'));
 if($res) {
    if($res['header'] == 'y') {
       header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
@@ -52,9 +52,15 @@ if ($output["data"]=="EMPTY") {
 	}
 	$param = "previous";
 	
-	$changes = $tikilib -> list_pages(0, $prefs['max_rss_wiki'], 'lastModif_desc');
+	$changes = $tikilib -> list_pages(0, $prefs['max_rss_wiki'], 'lastModif_desc', '', '', true, false, false, false, '', false, 'y');
 	$tmp = array();
 	foreach ($changes["data"] as $data) {
+		if ($tiki_p_view != 'y') {
+			$data['sefurl'] = $wikilib->sefurl($data['pageName']);
+			unset($data['data']);
+			$tmp[] = $data;
+			continue;
+		}
 		// get last 2 versions of the page and parse them
 		$curr_page = $tikilib->get_page_info($data["pageName"]);
 		$pageversion = (int)$histlib->get_page_latest_version($data["pageName"]);
@@ -89,7 +95,6 @@ if ($output["data"]=="EMPTY") {
 		}
 		
 		$data["$descId"] = $result;
-		$data['sefurl'] = $wikilib->sefurl($data['pageName']);
 	
 		// hand over the version of the second page
 		$data["$param"] = $prev_page["version"];
