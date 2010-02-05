@@ -1,5 +1,5 @@
 {* test for caps lock*}
-{jq}
+{jq notonready=true}
 {literal}
 		function regCapsLock(e){
 			kc = e.keyCode?e.keyCode:e.which;
