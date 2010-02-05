@@ -1053,7 +1053,7 @@ class Comments extends TikiLib
 			if ( $res['comments'] > 0 ) {
 				$result2 = $this->query(
 					'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by `commentDate` desc',
-					array($res['forumId'], 'forum'));
+					array($res['forumId'], 'forum'), 1);
 
 				$res['lastPostData'] = $result2->fetchRow();
 				$res['lastPost'] = $res['lastPostData']['commentDate'];
