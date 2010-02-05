@@ -10,58 +10,72 @@
 		{if empty($nbViewedConfs)}
 			<div class="simplebox highlight">{tr}Please select some actions to view.{/tr}</div>
 		{else}
-			<table class="smallnormal">
+		<fieldset>
+			<legend>{tr}Date{/tr}</legend>
+			<table class="smallnormal" width="100%">
 				<tr class="formcolor">
-					<td>{tr}Start date:{/tr}</td>
+					<td>{tr}Start:{/tr}</td>
 					<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order}</td>
-				</tr>
-				<tr class="formcolor">
-					<td>{tr}End date:{/tr}</td>
+					<td>{tr}End:{/tr}</td>
 					<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$prefs.display_field_order}</td>
 				</tr>
+			</table>
+		</fieldset>
 				{if $tiki_p_admin eq 'y'}
+			<fieldset>
+				<legend>{tr}Users and Groups{/tr}</legend>
+				<table class="smallnormal" width="100%">
 					<tr class="formcolor">
 						<td>{tr}User:{/tr}</td>
 						<td>
-							<select multiple="multiple" size="5" name="selectedUsers[]">
-								<option value="">&nbsp;</option>
+							<select multiple="multiple" size="{if $users|@count > 5}5{else}{math equation=x+y x=$users|@count y=2}{/if}" name="selectedUsers[]">
+								<option value="">{tr}All{/tr}</option>
+								<option value="Anonymous">{tr}Anonymous{/tr}</option>
 								{foreach key=ix item=auser from=$users}
 									<option value="{$auser|escape}" {if $selectedUsers[$ix] eq 'y'}selected="selected"{/if}>{$auser|escape}</option>
 								{/foreach}
 							</select>
 						</td>
-					</tr>
 				{else}
 					<input type="hidden" name="selectedUsers[]" value="{$auser|escape}">
 				{/if}
 				
 				{if $groups|@count >= 1}
-					<tr class="formcolor">
 						<td>{tr}Group:{/tr}</td>
 						<td>
-							<select multiple="multiple" size="{if $groups|@count < 5}{math equation=x+y x=$groups|@count y=1}{else}5{/if}" name="selectedGroups[]">
-								<option value="">&nbsp;</option>
+							<select multiple="multiple" size="{if $groups|@count > 5}5{else}{math equation=x+y x=$groups|@count y=1}{/if}" name="selectedGroups[]">
+								<option value="">{tr}All{/tr}</option>
 								{foreach from=$groups key=ix item=group}
 									<option value="{$group|escape}" {if $selectedGroups[$group] eq 'y'}selected="selected"{/if}>{$group}</option>
 								{/foreach}
 							</select>
 						</td>
 					</tr>
+				</table>
+				</fieldset>
 				{/if}
 
+			<fieldset>
+				<legend>{tr}Category:{/tr}</legend>
+				<table class="smallnormal" width="100%">
 				<tr class="formcolor">
-					<td>{tr}Category:{/tr}</td>
 					<td>
 						<select name="categId">
 							<option value="" {if $reportCateg eq '' or $reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>
-							{section name=ix loop=$categories}
-								<option value="{$categories[ix].categId|escape}" {if $reportCateg eq $categories[ix].name}selected="selected"{/if}>{$categories[ix].name|escape}</option>
-							{/section}
+							{foreach item=category from=$categories}
+								<option value="{$category.categId|escape}" {if $reportCateg eq $category.name}selected="selected"{/if}>{$category.name|escape}</option>
+							{/foreach}
 						</select>
 						</td>
 					</tr>
+				</table>
+				</fieldset>
+
+				<fieldset>
+				<legend>{tr}Misc.{/tr}</legend>
+				<table class="smallnormal" width="100%">
 					<tr class="formcolor">
-						<td></td>
+						<th>{tr}Units{/tr}</th>
 						<td>
 							{tr}bytes{/tr}
 							<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if} /> {tr}kb{/tr}
@@ -69,7 +83,7 @@
 						</td>
 					</tr>
 					<tr class="formcolor">
-						<td></td>
+						<th>{tr}Contibution Time{/tr}</th>
 						<td>
 							{tr}Week{/tr}
 							<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if} /> 
@@ -78,10 +92,12 @@
 						</td>
 					</tr>
 					<tr class="formcolor">
-						<td colspan="2" class="input_submit_container">
-							<input type="submit" name="list" value="{tr}Report{/tr}" /></td>
+						<th>{tr}Search{/tr}</th>
+						<td>
+							<input type="text" name="find" value="{$find}" /> 
+						</td>
 					</tr>
-					
+				
 					{if $prefs.feature_contribution eq 'y'}
 						<tr class="formcolor">
 							<td colspan="2">
@@ -109,23 +125,28 @@
 									{tr}Save graphs to image gallery:{/tr} 
 									<select name="galleryId">
 										<option value="" selected="selected" />
-										{section name=idx loop=$galleries}
-											<option value="{$galleries[idx].galleryId|escape}">{$galleries[idx].name}</option>
-										{/section}
+										{foreach item=gallery from=$galleries}
+											<option value="{$gallery.galleryId|escape}">{$gallery.name}</option>
+										{/foreach}
 									</select>
 								{/if}
 							</td>
 						</tr>
 					{/if}
 
-					{if $tiki_p_admin eq 'y'}
-						<tr class="formcolor">
-							<td colspan="2" class="input_submit_container">
-								<input type="submit" name="export" value="{tr}Export{/tr}" />
-							</td>
-						</tr>
-					{/if}
 				</table>
+				</fieldset>
+
+				<input type="hidden" name="max" value="{$maxRecords}" />
+				<span class="input_submit_container">
+					<input type="submit" name="list" value="{tr}Report{/tr}" /></td>
+				</span>
+				{if $tiki_p_admin eq 'y'}
+					<span class="input_submit_container">
+						<input type="submit" name="export" value="{tr}Export{/tr}" />
+					</span>
+				{/if}
+
 			</form>
 		{/if}
 
@@ -157,6 +178,14 @@
 		</h2>
 		
 		{if $actionlogs}
+			{if $maxRecords gt 0}
+				{if $cant gt $maxRecords}
+					{self_link max=-1}{tr}All{/tr}{/self_link}
+				{/if}
+			{else}
+					{self_link max=$prefs.maxRecords}{tr}Pagination{/tr}{/self_link}
+			{/if}
+		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 			<table class="smallnormal">
 				<tr>
 					<th>
@@ -257,6 +286,7 @@
 					</tr>
 				{/foreach}
 			</table>
+			{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 		{/if}
 
 		{if $action}
@@ -315,18 +345,18 @@
 		</h2>
 		<i>{tr}Volumes are equally distributed on each contributors/author{/tr}</i>
 
-		{if $showLogin eq 'y' and $logTimes|@count ne 0}
+ 		{if $showLogin eq 'y' and $logTimes|@count ne 0}
 			<table class="smallnormal">
 				<caption>{tr}Log in{/tr}</caption>
 				<tr>
-					{if $selectedUsers|@count gt 1}<th>{tr}User{/tr}</th>{/if}
+					{if $selectedUsers|@count gt 0}<th>{tr}User{/tr}</th>{/if}
 					<th>{tr}connection time{/tr}</th>
 					<th>{tr}connection seconds{/tr}</th>
 					<th>{tr}Log in{/tr}</th>
 				</tr>
 				{foreach key=auser item=time from=$logTimes}
 					<tr>
-						{if $selectedUsers|@count gt 1}
+						{if $selectedUsers|@count gt 0}
 							<td class="{cycle advance=false}">{$auser}</td>
 						{/if}
 						<td class="{cycle advance=false}">
@@ -396,7 +426,7 @@
 				<caption>{tr}Number of actions per user{/tr}</caption>
 				<tr>
 					<th>{tr}User{/tr}</th>
-					{foreach key=title item=nb from=$userActions[0]}
+					{foreach key=title item=nb from=$userActions.0}
 						{if $title ne 'user'}<th>{$title|replace:"/":" "}</th>{/if}
 					{/foreach}
 				</tr>
@@ -444,8 +474,8 @@
 				<caption>{tr}Number of actions per category{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
-					{foreach key=title item=nb from=$userActions[0]}
-						{if $title ne 'user'}<th>{$title|replace:"/":" "}</th>{/if}
+					{foreach key=title item=nb from=$statCateg[0]}
+						{if $title ne 'category'}<th>{$title|replace:"/":" "}</th>{/if}
 					{/foreach}
 				</tr>
 				{foreach key=categId item=stat from=$statCateg}
@@ -569,19 +599,40 @@
 			</table>
 		{/if}
 
-		<a name="csv"></a>
-		{if $csv}
-			<div class="cbox">{$csv}</div>
-		{/if}
 {/tab}
 
 
 {* -------------------------------------------------- tab with setting --- *}
 {tab name="{tr}Settings{/tr}"}
-	<a name="Setting" />
+	<a name="Setting" ></a>
 	<h2>{tr}Setting{/tr}</h2>
 	<form method="post" action="tiki-admin_actionlog.php">
+				<span class="input_submit_container" style="float: right">
+					<input type="submit" name="save" value="{tr}Set{/tr}" />
+				</span>
+				<br class="clearfix" />
 		{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
+		<fieldset>
+		<legend>{tr}Filter{/tr}</legend>
+		<label for="action_log_type">{tr}Type{/tr}</label>
+		<select id="action_log_type" name="action_log_type">
+				<option value="" {if $action_log_type eq ''} selected="selected" {/if}>{tr}All{/tr}</option>
+			{foreach from=$action_log_types item=type}
+				<option value="{$type}" {if $type eq $action_log_type} selected="selected" {/if}>{$type}</option>
+			{/foreach}
+		</select>
+		<label for="action_log_action">{tr}Action{/tr}</label>
+		<select id="action_log_action" name="action_log_action">
+				<option value="" {if $action_log_action eq ''} selected="selected" {/if}>{tr}All{/tr}</option>
+				<option value="\%" {if $action_log_action eq '\%'} selected="selected" {/if}>*</option>
+			{foreach from=$action_log_actions item=action}
+				<option value="{$action}" {if $type eq $action_log_action} selected="selected" {/if}>{$action}</option>
+			{/foreach}
+		</select>
+				<span class="input_submit_container">
+					<input type="submit" name="search" value="{tr}Search{/tr}" />
+				</span>
+		</fieldset>	
 		<table class="smallnormal">
 			<tr>
 				{if $tiki_p_admin eq 'y'}
@@ -592,22 +643,22 @@
 				<th>{tr}Type{/tr}</th>
 			</tr>
 			{cycle values="even,odd" print=false}
-			{section name=ix loop=$actionlogConf}
+			{foreach from=$action_log_conf_selected item=actionlog}
 				<tr>
 					{if $tiki_p_admin eq 'y'}
 						<td class="{cycle advance=false}">
-							<input type="checkbox" name="{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}checked="checked"{/if} />
+							<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if} />
 						</td>
 					{/if}
-					{if $tiki_p_admin eq 'y' or $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}
+					{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
 						<td class="{cycle advance=false}">
-							<input type="checkbox" name="v_{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'v'}checked="checked"{/if} />
+							<input type="checkbox" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if} />
 						</td>
-						<td class="{cycle advance=false}">{tr}{$actionlogConf[ix].action}{/tr}</td>
-						<td class="{cycle}">{tr}{$actionlogConf[ix].objectType}{/tr}</td>
+						<td class="{cycle advance=false}">{tr}{$actionlog.action}{/tr}</td>
+						<td class="{cycle}">{tr}{$actionlog.objectType}{/tr}</td>
 					{/if}
 				</tr>
-			{/section}
+			{/foreach}
 			<tr>
 				<td colspan="4" class="input_submit_container">
 					<input type="submit" name="save" value="{tr}Set{/tr}" />

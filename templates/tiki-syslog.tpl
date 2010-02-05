@@ -22,26 +22,28 @@
 
 {include file='find.tpl'}
 
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+
 <table class="normal">
 <tr>
-<th>{self_link _sort_arg="sort_mode" _sort_field="logid"}{tr}Id{/tr}{/self_link}</th>
-<th>{self_link _sort_arg="sort_mode" _sort_field="logtype"}{tr}Type{/tr}{/self_link}</th>
-<th>{self_link _sort_arg="sort_mode" _sort_field="logtime"}{tr}Time{/tr}{/self_link}</th>
-<th>{self_link _sort_arg="sort_mode" _sort_field="loguser"}{tr}User{/tr}{/self_link}</th>
-<th>{self_link _sort_arg="sort_mode" _sort_field="logmessage"}{tr}Message{/tr}{/self_link}</th>
-<th>{self_link _sort_arg="sort_mode" _sort_field="logip"}{tr}IP{/tr}{/self_link}</th>
-<th>{self_link _sort_arg="sort_mode" _sort_field="logclient"}{tr}Client{/tr}{/self_link}</th>
+<th>{self_link _sort_arg="sort_mode" _sort_field="id"}{tr}Id{/tr}{/self_link}</th>
+<th>{self_link _sort_arg="sort_mode" _sort_field="action"}{tr}Type{/tr}{/self_link}</th>
+<th>{self_link _sort_arg="sort_mode" _sort_field="lastModif"}{tr}Time{/tr}{/self_link}</th>
+<th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User{/tr}{/self_link}</th>
+<th>{self_link _sort_arg="sort_mode" _sort_field="action"}{tr}Message{/tr}{/self_link}</th>
+<th>{self_link _sort_arg="sort_mode" _sort_field="ip"}{tr}IP{/tr}{/self_link}</th>
+<th>{self_link _sort_arg="sort_mode" _sort_field="client"}{tr}Client{/tr}{/self_link}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list}
 <tr class="{cycle}">
-<td>{$list[ix].logId}</td>
-<td>{$list[ix].logtype|escape}</td>
-<td><span title="{$list[ix].logtime|tiki_long_datetime}">{$list[ix].logtime|tiki_short_datetime}</span></td>
-<td>{$list[ix].loguser|userlink}</td>
-<td title="{$list[ix].logmessage|escape:'html'}">{$list[ix].logmessage|truncate:60|escape:'html'}</td>
-<td>{$list[ix].logip|escape:"html"}</td>
-<td><span title="{$list[ix].logclient|escape:'html'}">{$list[ix].logclient|truncate:30:"..."|escape:'html'}</span></td>
+<td>{$list[ix].actionId}</td>
+<td>{$list[ix].object|escape}</td>
+<td><span title="{$list[ix].lastModif|tiki_long_datetime}">{$list[ix].lastModif|tiki_short_datetime}</span></td>
+<td>{$list[ix].user|userlink}</td>
+<td title="{$list[ix].action|escape:'html'}">{$list[ix].action|truncate:60|escape:'html'}</td>
+<td>{$list[ix].ip|escape:"html"}</td>
+<td><span title="{$list[ix].client|escape:'html'}">{$list[ix].client|truncate:30:"..."|escape:'html'}</span></td>
 </tr>
 {/section}
 </table>

@@ -1812,10 +1812,10 @@ class UsersLib extends TikiLib
 		return $ret;
 	}
 
-	function get_group_users($group, $offset) {
+	function get_group_users($group, $offset = 0) {
 		global $prefs;
 		$query = "select `login` from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=?";
-		$result = $this->query($query,array($group), $prefs['maxRecords'], $offset);
+		$result = $this->query($query,$group, $prefs['maxRecords'], $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["login"];
@@ -3347,6 +3347,7 @@ class UsersLib extends TikiLib
 		}
 		return $ret;
 	}
+
 	function nb_users_in_group($group=null) {
 		if (!empty($group)) {
 			$query = 'SELECT count(*) FROM `users_usergroups` WHERE `groupName`=?';
@@ -3356,6 +3357,7 @@ class UsersLib extends TikiLib
 			return $this->getOne($query, array());
 		}
 	}
+
 }
 
 /* For the emacs weenies in the crowd.

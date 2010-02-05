@@ -29,46 +29,82 @@ if (empty($user) || ($tiki_p_view_actionlog != 'y' && $tiki_p_view_actionlog_own
 }
 $auto_query_args = array(
 		'actionId',
-		'startDate',
-		'endDate',
+		'startDate_Day',
+		'startDate_Month',
+		'startDate_Year',
+		'endDate_Day',
+		'endDate_Month',
+		'endDate_Year',
 		'selectedUsers',
 		'selectedGroups',
 		'list',
 		'sort_mode',
-		'categId'
+		'categId',
+		'find'
 		);
 $categories = $categlib->list_categs();
+
+if (!empty($_REQUEST["action_log_type"])) {
+  $action_log_type = $_REQUEST["action_log_type"];
+} else {
+  $action_log_type = '%';
+}
+
+if (!empty($_REQUEST["action_log_action"])) {
+  $action_log_action = $_REQUEST["action_log_action"];
+} else {
+  $action_log_action = '%';
+}
+
 $confs = $logslib->get_all_actionlog_conf();
+$action_log_conf_selected = $logslib->get_actionlog_conf($action_log_type, $action_log_action);
 $nbViewedConfs = 0;
+
+if (isset($_REQUEST["find"])) {
+  $find = $_REQUEST["find"];
+} else {
+  $find = '';
+}
+$smarty->assign('find', $find);
+if (!isset($_REQUEST["offset"])) {
+  $offset = 0;
+} else {
+  $offset = $_REQUEST["offset"];
+}
+if (isset($_REQUEST["max"])) {
+  $maxRecords = $_REQUEST["max"];
+}
+
 if ($tiki_p_admin == 'y') {
 	if (isset($_REQUEST['save'])) {
-		foreach($confs as $index => $conf) {
+		foreach($action_log_conf_selected as $index => $conf) {
 			if (isset($_REQUEST['v_' . $conf['code']]) && $_REQUEST['v_' . $conf['code']] == 'on') { //viewed and reported
 				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'v');
-				$confs[$index]['status'] = 'v';
 			} elseif (isset($_REQUEST[$conf['code']]) && $_REQUEST[$conf['code']] == 'on') {
 				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'y');
-				$confs[$index]['status'] = 'y';
 			} else {
 				$logslib->set_actionlog_conf($conf['action'], $conf['objectType'], 'n');
-				$confs[$index]['status'] = 'n';
 			}
 		}
+		global $actionlogConf; unset($actionlogConf);
+		$confs = $logslib->get_all_actionlog_conf();
+		$action_log_conf_selected = $logslib->get_actionlog_conf($action_log_type);
 	}
 } else {
 	if (isset($_REQUEST['save'])) {
 		$_prefs = 'v';
-		foreach($confs as $index => $conf) {
+		foreach($action_log_conf_selected as $index => $conf) {
 			if ($conf['status'] == 'v' || $conf['status'] == 'y') { // can only change what is recorded
 				if (isset($_REQUEST['v_' . $conf['code']]) && $_REQUEST['v_' . $conf['code']] == 'on') { //viewed
 					$_prefs.= $conf['id'] . 'v';
-					$confs[$index]['status'] = 'v';
 				} else {
 					$_prefs.= $conf['id'] . 'y';
-					$confs[$index]['status'] = 'y';
 				}
 			}
 		}
+		global $actionlogConf; unset($actionlogConf);
+		$confs = $logslib->get_all_actionlog_conf();
+		$action_log_conf_selected = $logslib->get_actionlog_conf($action_log_type);
 		$tikilib->set_user_preference($user, 'actionlog_conf', $_prefs);
 	} else {
 		$_prefs = $tikilib->get_user_preference($user, 'actionlog_conf', '');
@@ -90,6 +126,7 @@ foreach($confs as $conf) {
 }
 $smarty->assign('nbViewedConfs', $nbViewedConfs);
 $smarty->assign_by_ref('actionlogConf', $confs);
+
 if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 	$action = $logslib->get_info_action($_REQUEST['actionId']);
 	if (empty($action)) {
@@ -221,7 +258,10 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 				$selectedGroups[$g] = 'y';
 				if ($tiki_p_admin == 'y' || $tiki_p_view_actionlog_owngroups == 'y') {
 					$members = $userlib->get_group_users($g);
-					foreach($members as $m) $_REQUEST['selectedUsers'][] = $m;
+					foreach($members as $m) {
+						$_REQUEST['selectedUsers'][] = $m;
+						$selectedUsers[$m] = 'y';
+					}
 				}
 			} else {
 				$selectedGroups[$g] = 'n';
@@ -237,7 +277,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	}
 	$showCateg = $logslib->action_is_viewed('*', 'category');
 	$smarty->assign('showCateg', $showCateg ? 'y' : 'n');
-	$showLogin = $logslib->action_is_viewed('*', 'login');
+	$showLogin = $logslib->action_is_viewed('login', 'system');
 	$smarty->assign('showLogin', $showLogin ? 'y' : 'n');
 	if (isset($_REQUEST['startDate_Month'])) {
 		$startDate = $tikilib->make_time(0, 0, 0, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
@@ -255,16 +295,19 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$endDate = $_REQUEST['endDate'];
 	} else $endDate = $tikilib->make_time(23, 59, 59, $tikilib->date_format('%m') , $tikilib->date_format('%d') , $tikilib->date_format('%Y'));
 	$smarty->assign('endDate', $endDate);
-	$actions = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);
+	$results = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], $offset, $maxRecords, 'lastModif_desc', $find, $startDate, $endDate, $_REQUEST['categId']);
+	$actions = $results['data'];
+	$actions_cant = $results['cant'];
+	$actions = $logslib->get_more_info($actions, $categNames);
 	$contributorActions = $logslib->split_actions_per_contributors($actions, $_REQUEST['selectedUsers']);
 	if (!empty($_REQUEST['selectedUsers'])) {
-		$allActions = $logslib->list_actions('', '', '', 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);
+		$results = $logslib->list_actions('', '', '', $offset, $maxRecords, 'lastModif_desc', $find, $startDate, $endDate, $_REQUEST['categId']);
+		$allActions = $results['data'];
 		$allContributorsActions = $logslib->split_actions_per_contributors($actions, '');
 	} else {
 		$allActions = $actions;
 		$allContributorsActions = $contributorActions;
 	}
-	$actions = $logslib->get_more_info($actions, $categNames);
 	$userActions = $logslib->get_stat_actions_per_user($contributorActions);
 	$smarty->assign_by_ref('userActions', $userActions);
 	$objectActions = $logslib->get_stat_actions_per_field($actions, 'object');
@@ -288,24 +331,9 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$smarty->assign_by_ref('statUserCateg', $statUserCateg);
 	}
 	if ($showLogin) {
-		$logins = $logslib->list_logs('login', $_REQUEST['selectedUsers'], 0, -1, 'logtime_asc', '', $startDate, $endDate, $actions);
+		$logins = $logslib->list_logs('login', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_asc', '', $startDate, $endDate, $actions);
 		$logTimes = $logslib->get_login_time($logins['data'], $startDate, $endDate, $actions);
 		$smarty->assign_by_ref('logTimes', $logTimes);
-		foreach($logins['data'] as $log) { // merge logs table in action table
-			if (strstr($log['logmessage'], "logged from")) $action = "Login";
-			elseif (strstr($log['logmessage'], "logged out")) $action = "Logout";
-			else $action = ucfirst($log['logmessage']);
-			$actions[] = array(
-					'lastModif' => $log['logtime'],
-					'user' => $log['loguser'],
-					'action' => $action,
-					'objectType' => 'login'
-					);
-		}
-		usort($actions, array(
-					$logslib,
-					'sort_by_date'
-					));
 	}
 	if (isset($_REQUEST['unit']) && $_REQUEST['unit'] == 'kb') {
 		for ($i = count($actions) - 1; $i >= 0; --$i) {
@@ -327,7 +355,15 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$smarty->assign('url', "&amp;list=y$url#Report");
 	if (isset($_REQUEST['export'])) {
 		$csv = $logslib->export($actions);
-		$smarty->assign('csv', $csv);
+		header('Content-type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="tiki-actionlogs_stats.csv"');
+		if ( function_exists('mb_strlen') ) {
+  	  header('Content-Length: '.mb_strlen($csv, '8bit'));
+	  } else {
+    	header('Content-Length: '.strlen($csv));
+ 	 }
+		echo $csv;
+		die();
 	}
 	if ($prefs['feature_contribution'] == 'y') {
 		if (empty($_REQUEST['contribTime'])) $_REQUEST['contribTime'] = 'w';
@@ -680,18 +716,18 @@ if (isset($_REQUEST['graph'])) {
 	$smarty->assign('galleries', $galleries['data']);
 }
 
+$smarty->assign_by_ref('offset', $offset);
+$smarty->assign_by_ref('cant', $actions_cant);
+$smarty->assign_by_ref('maxRecords', $maxRecords);
+$action_log_types = $logslib->get_actionlog_types();
+$smarty->assign('action_log_type',$_REQUEST["action_log_type"]);
+$smarty->assign('action_log_action',$_REQUEST["action_log_action"]);
+$smarty->assign('action_log_conf_selected',$action_log_conf_selected);
+$smarty->assign('action_log_types',$action_log_types);
+$smarty->assign('action_log_actions',$logslib->get_actionlog_actions());
+
 if (isset($_REQUEST['time'])) $smarty->assign('time', $_REQUEST['time']);
 if (isset($_REQUEST['unit'])) $smarty->assign('unit', $_REQUEST['unit']);
-if ($prefs['feature_ajax'] == "y") {
-	function user_actionlog_ajax() {
-		global $ajaxlib, $xajax;
-		$ajaxlib->registerTemplate("tiki-admin_actionlog.tpl");
-		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");
-		$ajaxlib->registerFunction("loadComponent");
-		$ajaxlib->processRequests();
-	}
-	user_actionlog_ajax();
-}
 // Display the template
 $smarty->assign('mid', 'tiki-admin_actionlog.tpl');
 $smarty->display("tiki.tpl");

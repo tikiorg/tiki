@@ -20,8 +20,9 @@ if (isset($_REQUEST["clean"])) {
 		$logslib->clean_logs($date);
 	} else key_get($area);
 }
+
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'logtime_desc';
+	$sort_mode = 'lastModif_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -41,13 +42,14 @@ $smarty->assign_by_ref('offset', $offset);
 if (isset($_REQUEST["max"])) {
 	$maxRecords = $_REQUEST["max"];
 }
+$smarty->assign_by_ref('cant', $list['cant']);
+$smarty->assign_by_ref('maxRecords', $maxRecords);
+
 $list = $logslib->list_logs('', '', $offset, $maxRecords, $sort_mode, $find);
 $smarty->assign('list', $list['data']);
 $urlquery['sort_mode'] = $sort_mode;
 $urlquery['find'] = $find;
 $smarty->assign_by_ref('urlquery', $urlquery);
 ask_ticket('admin-logs');
-$smarty->assign_by_ref('cant', $list['cant']);
-$smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign('mid', 'tiki-syslog.tpl');
 $smarty->display('tiki.tpl');
