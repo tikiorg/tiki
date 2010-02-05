@@ -80,7 +80,6 @@ close();
 					{remarksbox type='errors' title=$errortitle}
 					{$extraButton.comment}
 					{button href=$extraButton.href _text=$extraButton.text}
-					</div>
 					{/remarksbox}
 				{/if}
 
