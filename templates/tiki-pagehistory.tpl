@@ -5,6 +5,11 @@
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}
 	{button href="tiki-index.php?page=$thispage" _text="{tr}View page{/tr}"}
+	{if $show_all_versions eq "y"}
+		{button _text="{tr}Show Edit Sessions{/tr}" show_all_versions="n" href="?clear_versions=1" _auto_args="*"}
+	{else}
+		{button _text="{tr}Show All Versions{/tr}" show_all_versions="y" href="?clear_versions=1" _auto_args="*"}
+	{/if}
 </div>
 
 {if $preview}
@@ -18,9 +23,9 @@
 	{/if}
 	<div>
 	  	{if isset($show_all_versions) and $show_all_versions eq "n"}
-			{pagination_links cant=$cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Session{/tr}}{/pagination_links}
+			{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Session{/tr} show_numbers="n"}{/pagination_links}
 		{else}
-			{pagination_links cant=$cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Version{/tr}}{/pagination_links}
+			{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Version{/tr} show_numbers="n"}{/pagination_links}
 		{/if}
 	</div>
 	<div class="wikitext">{$previewd}</div>
@@ -36,9 +41,9 @@
 	{/if}
 	<div>
 	  	{if isset($show_all_versions) and $show_all_versions eq "n"}
-			{pagination_links cant=$cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Session{/tr}}{/pagination_links}
+			{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Session{/tr} show_numbers="n"}{/pagination_links}
 		{else}
-			{pagination_links cant=$cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Version{/tr}}{/pagination_links}
+			{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Version{/tr} show_numbers="n"}{/pagination_links}
 		{/if}
 	</div>
 	<div class="wikitext">{$sourced}</div>
@@ -55,7 +60,23 @@
 		<div style="text-align:center;">
 			{if ($prefs.default_wiki_diff_style ne "old") and $history}
 				<div style=" text-align:right;">
-					<select name="diff_style">
+					{if $prefs.javascript_enabled eq y}{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n"}
+					{jq}
+$jq("#toggle_diffs a").click(function(){
+	if ($jq(this).text() == "{tr}Advanced{/tr}") {
+		$jq(this).text("{tr}Simple{/tr}");
+		$jq("#diff_style_all").show().attr("name", "diff_style");
+		$jq("#diff_style_simple").hide().attr("name", "");
+	} else {
+		$jq(this).text("{tr}Advanced{/tr}");
+		$jq("#diff_style_all").hide().attr("name", "");
+		$jq("#diff_style_simple").show().attr("name", "diff_style");
+	}
+	return false;
+});
+{{if $diff_style neq "htmldiff" and $diff_style neq "sidediff"}$jq("#toggle_diffs a").click();{/if}}
+					{/jq}{/if}
+					<select name="diff_style" id="diff_style_all"{if $prefs.javascript_enabled eq y} style="display: none"{/if}>
 						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
 						<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
 						<option value="sidediff-char" {if $diff_style == "sidediff-char"}selected="selected"{/if}>{tr}Side-by-side diff by characters{/tr}</option>
@@ -68,12 +89,12 @@
 						<option value="unidiff" {if $diff_style == "unidiff"}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
 						<option value="sideview" {if $diff_style == "sideview"}selected="selected"{/if}>{tr}Side-by-side view{/tr}</option>
 					</select>
+					{if $prefs.javascript_enabled eq y}<select name="diff_style" id="diff_style_simple">
+						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
+						<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
+					</select>{/if}
 					<input type="hidden" name="show_all_versions" value="{$show_all_versions}"/>
-					{if $show_all_versions eq "y"}
-						{button _text="{tr}Show Edit Sessions{/tr}"  show_all_versions="n" _auto_args="*"}
-					{else}
-						{button _text="{tr}Show All Versions{/tr}"  show_all_versions="y" _auto_args="*"}
-					{/if}
+					<input type="submit" name="compare" value="{tr}Compare{/tr}" />
 				</div>
 			{/if}
 			<div class="simplebox">
@@ -95,7 +116,7 @@
 					<th>{tr}Action{/tr}</th>
 					{if $prefs.default_wiki_diff_style != "old" and $history}
 						<th colspan="2">
-							<input type="submit" name="compare" value="{tr}Compare{/tr}" /><br />
+							<input type="submit" name="compare" value="{tr}Compare{/tr}" />
 						</th>
 					{/if}
 				</tr>

@@ -38,20 +38,30 @@
    </tr>
 {/if}
 	<tr>
-		<td colspan="2">
-			{if isset($show_all_versions) and $show_all_versions eq "n"}
-				{pagination_links cant=$cant offset=$smarty.request.oldver_idx offset_arg="oldver_idx" itemname={tr}Session{/tr}}{/pagination_links}
-			{else}
-				{pagination_links cant=$cant offset=$smarty.request.oldver_idx offset_arg="oldver_idx" itemname={tr}Version{/tr}}{/pagination_links}
-			{/if}
-		</td>
-		<td colspan="2">
-			{if isset($show_all_versions) and $show_all_versions eq "n"}
-				{pagination_links cant=$cant offset=$smarty.request.newver_idx offset_arg="newver_idx" itemname={tr}Session{/tr}}{/pagination_links}
-			{else}
-				{pagination_links cant=$cant offset=$smarty.request.newver_idx offset_arg="newver_idx" itemname={tr}Version{/tr}}{/pagination_links}
-			{/if}
-		</td>
+		{if $smarty.request.oldver_idx + 1 eq $smarty.request.newver_idx or $smarty.request.oldver_idx eq $smarty.request.newver_idx}
+			<td colspan="4">
+				{if isset($show_all_versions) and $show_all_versions eq "n"}
+					{pagination_links cant=$ver_cant offset=$smarty.request.bothver_idx offset_arg="bothver_idx" itemname="{tr}Session{/tr}" show_numbers="n"}{/pagination_links}
+				{else}
+					{pagination_links cant=$ver_cant offset=$smarty.request.bothver_idx offset_arg="bothver_idx" itemname="{tr}Version{/tr}" show_numbers="n"}{/pagination_links}
+				{/if}
+			</td>
+		{else}
+			<td colspan="2">
+				{if isset($show_all_versions) and $show_all_versions eq "n"}
+					{pagination_links cant=$ver_cant offset=$smarty.request.oldver_idx offset_arg="oldver_idx" itemname="{tr}Old Session{/tr}" show_numbers="n"}{/pagination_links}
+				{else}
+					{pagination_links cant=$ver_cant offset=$smarty.request.oldver_idx offset_arg="oldver_idx" itemname="{tr}Old Version{/tr}" show_numbers="n"}{/pagination_links}
+				{/if}
+			</td>
+			<td colspan="2">
+				{if isset($show_all_versions) and $show_all_versions eq "n"}
+					{pagination_links cant=$ver_cant offset=$smarty.request.newver_idx offset_arg="newver_idx" itemname="{tr}New Session{/tr}" show_numbers="n"}{/pagination_links}
+				{else}
+					{pagination_links cant=$ver_cant offset=$smarty.request.newver_idx offset_arg="newver_idx" itemname="{tr}New Version{/tr}" show_numbers="n"}{/pagination_links}
+				{/if}
+			</td>
+		{/if}
 	</tr>
 {if $diff_style eq 'unidiff'}
  <tr><td colspan="4">

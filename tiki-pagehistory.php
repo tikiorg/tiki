@@ -118,6 +118,7 @@ if (count($history) > 0) {
 					if ($history[$i]['version'] >= $seshend) {
 						unset($history[$i]);
 					} else {
+						$i--;
 						break;
 					}
 				}
@@ -140,9 +141,30 @@ $history_sessions[] = 0;
 $smarty->assign_by_ref('history', $history);
 
 // for pagination
-$smarty->assign('cant', count($history_versions));
+$smarty->assign('ver_cant', count($history_versions));
 
+if (isset($_REQUEST['clear_versions'])) {
+	unset($_REQUEST['clear_versions']);
+	unset($_REQUEST['newver']);
+	unset($_REQUEST['newver_idx']);
+	unset($_REQUEST['oldver']);
+	unset($_REQUEST['oldver_idx']);
+	unset($_REQUEST['compare']);
+	unset($_REQUEST['diff_style']);
+}
 // calculate version and offset
+if (isset($_REQUEST['bothver_idx'])) {
+	if ($_REQUEST['bothver_idx'] == 0) {
+		$_REQUEST['bothver_idx'] = 1;
+	}
+	$_REQUEST['oldver_idx'] = $_REQUEST['bothver_idx'] - 1;
+	$_REQUEST['newver_idx'] = $_REQUEST['bothver_idx'];
+	if ($_REQUEST['show_all_versions'] == 'n' && !empty($history_sessions[$_REQUEST['bothver_idx']])) {
+		$_REQUEST['oldver_idx'] = $_REQUEST['bothver_idx'];
+	} else {
+		//$_REQUEST['oldver_idx'] = $_REQUEST['bothver_idx'] - 2;
+	}
+}
 if (isset($_REQUEST['newver_idx'])) {
 	$newver = $history_versions[$_REQUEST['newver_idx']];
 } else {
@@ -154,13 +176,13 @@ if (isset($_REQUEST['newver_idx'])) {
 			$_REQUEST['newver_idx'] = array_search($newver, $history_sessions);
 		}
 	} else {
-		$newver = $history_versions[count($history_versions)];
-		$_REQUEST['newver_idx'] = count($history_versions);
+		$newver = $history_versions[count($history_versions)-1];
+		$_REQUEST['newver_idx'] = count($history_versions)-1;
 	}
 }
 if (isset($_REQUEST['oldver_idx'])) {
 	$oldver = $history_versions[$_REQUEST['oldver_idx']];
-	if ($oldver == $newver && !empty($history_sessions[$_REQUEST['oldver_idx']])) {
+	if ($_REQUEST['show_all_versions'] == 'n' && !empty($history_sessions[$_REQUEST['oldver_idx']])) {
 		$oldver = $history_sessions[$_REQUEST['oldver_idx']];
 	}
 } else {
@@ -172,9 +194,12 @@ if (isset($_REQUEST['oldver_idx'])) {
 			$_REQUEST['oldver_idx'] = array_search($oldver, $history_sessions);
 		}
 	} else {
-		$oldver = $history_versions[count($history_versions)];
-		$_REQUEST['oldver_idx'] = count($history_versions);
+		$oldver = $history_versions[count($history_versions)-1];
+		$_REQUEST['oldver_idx'] = count($history_versions)-1;
 	}
+}
+if ($_REQUEST['oldver_idx'] + 1 == $_REQUEST['newver_idx']) {
+	$_REQUEST['bothver_idx'] = $_REQUEST['newver_idx'];
 }
 // source view
 if (isset($_REQUEST['source_idx'])) {
@@ -314,6 +339,38 @@ if ($prefs['feature_multilingual'] == 'y') {
 		exit;
 	}
 }
+$current_version = $info["version"];
+
+$headerlib->add_jq_onready(<<<JS
+\$jq("input[name=oldver], input[name=newver]").change(function () {
+	var ver = \$jq(this).val(), ver2;
+	if (ver == 0) { ver = $current_version; }
+	if (\$jq(this).attr("name") == "oldver") {
+		\$jq("input[name=newver]").each(function () {
+			ver2 = \$jq(this).val();
+			if (ver2 == 0) { ver2 = $current_version; }
+			if (ver2 <= ver) {
+				\$jq(this).attr("disabled", "disabled");
+			} else {
+				\$jq(this).attr("disabled", "");
+			}
+		});
+	} else if (\$jq(this).attr("name") == "newver") {
+		\$jq("input[name=oldver]").each(function () {
+			ver2 = \$jq(this).val();
+			if (ver2 == 0) { ver2 = $current_version; }
+			if (ver2 >= ver) {
+				\$jq(this).attr("disabled", "disabled");
+			} else {
+				\$jq(this).attr("disabled", "");
+			}
+		});
+	}
+});
+\$jq("input[name=newver][checked=checked]").change();
+\$jq("input[name=oldver][checked=checked]").change();
+JS
+);
 if (isset($_REQUEST["compare"])) histlib_helper_setup_diff($page, $oldver, $newver);
 else $smarty->assign('diff_style', $prefs['default_wiki_diff_style']);
 if ($info["flag"] == 'L') $smarty->assign('lock', true);
