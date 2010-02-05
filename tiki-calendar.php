@@ -18,11 +18,7 @@ $headerlib->add_cssfile('css/calendar.css',20);
 # 	$tiki_p_admin_calendar
 # 	$tiki_p_change_events
 # 	$tiki_p_add_events
-if ($prefs['feature_calendar'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_calendar');
 
 $maxSimultaneousWeekViewEvents = 3;
 
