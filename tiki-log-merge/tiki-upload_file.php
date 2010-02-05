@@ -161,9 +161,7 @@ if (isset($_REQUEST["upload"])) {
 	$batch_job = false;
 	$didFileReplace = false;
 	foreach($_FILES["userfile"]["error"] as $key => $error) {
-		if ($prefs['javascript_enabled'] == 'y') {
-			print_progress('<?xml version="1.0" encoding="UTF-8"?>');
-		}
+		print_progress('<?xml version="1.0" encoding="UTF-8"?>');
 		$formId = $_REQUEST['formId'];
 		$smarty->assign("FormId", $_REQUEST['formId']);
 		if (empty($_REQUEST['galleryId'][$key])) {

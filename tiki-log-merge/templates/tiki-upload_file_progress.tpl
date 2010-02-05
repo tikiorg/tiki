@@ -41,8 +41,6 @@
 	</tr>
 </table>
 {/capture}
-{jq}
-	parent.progress('{{$FormId}}','{{$msg|escape:"javascript"}}');
-{/jq}
-
-
+<script type='text/javascript'><!--//--><![CDATA[//><!--
+	parent.progress('{$FormId}','{$msg|escape:"javascript"}');
+//--><!]]></script>

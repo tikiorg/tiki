@@ -55,6 +55,27 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 		$headerlib->add_jsfile($custom_js, 50);
 	}
 	
+	// convert PHP fdate format strings to jQuery UI DatePicker (see http://docs.jquery.com/UI/Datepicker/formatDate)
+	
+	$phpFmt = array(); $jsFmt = array();
+	
+	$phpFmt[] = '/%a/'; $jsFmt[] = 'D';
+	$phpFmt[] = '/%A/'; $jsFmt[] = 'DD';
+	$phpFmt[] = '/%e/'; $jsFmt[] = 'd';
+	$phpFmt[] = '/%d/'; $jsFmt[] = 'dd';
+	$phpFmt[] = '/%j/'; $jsFmt[] = 'o';
+	$phpFmt[] = '/%j/'; $jsFmt[] = 'oo';
+	$phpFmt[] = '/%b/'; $jsFmt[] = 'M';
+	$phpFmt[] = '/%B/'; $jsFmt[] = 'MM';
+	$phpFmt[] = '/%m/'; $jsFmt[] = 'm';
+	$phpFmt[] = '/%m/'; $jsFmt[] = 'mm';
+	$phpFmt[] = '/%y/'; $jsFmt[] = 'y';
+	$phpFmt[] = '/%Y/'; $jsFmt[] = 'yy';
+	$phpFmt[] = '/%s/'; $jsFmt[] = '@';
+	$phpFmt[] = '/%%/'; $jsFmt[] = '%';
+	$phpFmt[] = '/of/'; $jsFmt[] = '\'of\'';
+	$phpFmt[] = '/%?/'; $jsFmt[] = '';
+
 	$js = '
 // JS Object to hold prefs for jq
 var jqueryTiki = new Object();
@@ -76,6 +97,12 @@ jqueryTiki.effect_speed = "'.$prefs['jquery_effect_speed'].'";	// "slow" | "norm
 jqueryTiki.effect_tabs = "'.$prefs['jquery_effect_tabs'].'";		// Different effect for tabs
 jqueryTiki.effect_tabs_direction = "'.$prefs['jquery_effect_tabs_direction'].'";
 jqueryTiki.effect_tabs_speed = "'.$prefs['jquery_effect_tabs_speed'].'";
+
+jqueryTiki.long_date_format = "'.preg_replace($phpFmt, $jsFmt, $prefs['long_date_format']).'";
+jqueryTiki.short_date_format = "'.preg_replace($phpFmt, $jsFmt, $prefs['short_date_format']).'";
+jqueryTiki.long_time_format = "'.preg_replace($phpFmt, $jsFmt, $prefs['long_time_format']).'";
+jqueryTiki.short_time_format = "'.preg_replace($phpFmt, $jsFmt, $prefs['short_time_format']).'";
+
 ';
 	$headerlib->add_js($js, 100);	
 	

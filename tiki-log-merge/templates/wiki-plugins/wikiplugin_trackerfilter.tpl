@@ -65,7 +65,7 @@
 {/section}
 {if $line ne 'y' and $action}<tr>{/if}
 {if $action}
-<td>&nbsp;</td><td><input type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" /></td>
+<td>&nbsp;</td><td><input class="button submit" type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" /></td>
 {/if}
 {if !empty($sortchoice)}
 	{if $line ne 'y'}<tr>{/if}

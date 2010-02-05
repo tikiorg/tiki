@@ -76,44 +76,43 @@ function toggle_dynamic_var(name) {
 }
 
 function chgArtType() {
-        articleType = document.getElementById('articletype').value;
-        typeProperties = articleTypes[articleType];
+	var articleType = document.getElementById('articletype').value;
+	var typeProperties = articleTypes[articleType];
 
-  propertyList = ['show_topline','y',
-         'show_subtitle','y',
-         'show_linkto','y',
-         'show_lang','y',
-         'show_author','y',
-         'use_ratings','y',
-         'heading_only','n',
-         'show_image_caption','y',
-         'show_pre_publ','y',
-         'show_post_expire','y',
-         'show_image','y'
-         ];
+	propertyList = ['show_topline','y',
+					'show_subtitle','y',
+					'show_linkto','y',
+					'show_lang','y',
+					'show_author','y',
+					'use_ratings','y',
+					'heading_only','n',
+					'show_image_caption','y',
+					'show_pre_publ','y',
+					'show_post_expire','y',
+					'show_image','y'
+					];
 
-  var l = propertyList.length;
-  for (var i=0; i<l; i++) {
-      property = propertyList[i++];
-      value = propertyList[i];
-
-      if (typeProperties[property] == value) {
-    display = "";
-      } else {
-    display = "none";
-      }
-
-      if (document.getElementById(property)) {
-    document.getElementById(property).style.display = display;
-      } else {
-    j = 1;
-    while (document.getElementById(property+'_'+j)) {
-        document.getElementById(property+'_'+j).style.display=display;
-        j++;
-    }
-      }
-
-  }
+	var l = propertyList.length, property, value;
+	for (var i=0; i<l; i++) {
+		property = propertyList[i++];
+		value = propertyList[i];
+		
+		if (typeProperties[property] == value || (!typeProperties[property] && value == "n")) {
+			display = "";
+		} else {
+			display = "none";
+		}
+		
+		if (document.getElementById(property)) {
+			document.getElementById(property).style.display = display;
+		} else {
+			j = 1;
+			while (document.getElementById(property+'_'+j)) {
+				document.getElementById(property+'_'+j).style.display = display;
+				j++;
+			}
+		}
+	}
 }
 
 function chgMailinType() {
@@ -1371,6 +1370,8 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 				$jq(input).tiki("autocomplete", "groupname", {multiple: true, multipleSeparator: "|"});
 			} else if (paramDef.filter == "username") {
 				$jq(input).tiki("autocomplete", "username", {multiple: true, multipleSeparator: "|"});
+			} else if (paramDef.filter == "date") {
+				$jq(input).tiki("datepicker", {showOn: "focus"});
 			}
 		}
 	}

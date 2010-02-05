@@ -74,7 +74,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 					include_once('lib/smarty_tiki/block.self_link.php');
 					include_once('lib/smarty_tiki/block.remarksbox.php');
 					$msg = tra('If you want the saved version instead of this autosaved one').'&nbsp;'.smarty_block_self_link( array( 'noautosave'=>'y', '_ajax'=>'n'), tra('Click Here'), $smarty);
-					$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'warning', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
+					$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
 				}
 			}
 		}

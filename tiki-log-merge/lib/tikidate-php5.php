@@ -181,6 +181,31 @@ class TikiDate
 	static function TimezoneIsValidId($id) {
 		return array_key_exists( strtolower($id), timezone_abbreviations_list() );
 	}
+	
+	/**
+	 * Parse any (?) date string and return the Unix timestamp 
+	 * 
+	 * @param $inString
+	 * @return int
+	 */
+	static function parseDateString($inString) {
+		$timestamp = strtotime($inString);	// works on simple (US) date strings only
+		if (!$timestamp) {
+			include_once 'lib/core/lib/Zend/Date.php';
+			include_once 'lib/core/lib/Zend/Locale/Format.php';
+			try {
+				$dt = Zend_Locale_Format::getDate($inString);
+				$dt = new Zend_Date($dt);
+				$timestamp = $dt->getTimestamp();
+			} catch (Zend_Locale_Exception $e) {
+				require_once 'Zend/Date/Exception.php';
+				throw new Zend_Date_Exception($e->getMessage());
+			}
+		} else {
+			$timestamp = false;
+		}
+		return $timestamp;
+	}
 
 }
 
