@@ -67,8 +67,8 @@ function smarty_function_html_select_time($params, &$smarty)
 	$html_result = '';
 
 	if ($display_hours) {
-				list($hour_min,$hour_max) = split('-',$hour_minmax);
-		$hours       = $use_24_hours ? range($hour_min, $hour_max) : range(1, 12);
+		list($hour_min,$hour_max) = explode('-',$hour_minmax);
+		$hours = $use_24_hours ? range($hour_min, $hour_max) : range(1, 12);
 		$hour_fmt = $use_24_hours ? '%H' : '%I';
 		for ($i = 0, $for_max = count($hours); $i < $for_max; $i++)
 			$hours[$i] = sprintf('%02d', $hours[$i]);
