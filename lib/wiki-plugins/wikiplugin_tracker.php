@@ -912,20 +912,18 @@ function wikiplugin_tracker($data, $params)
 				$back .= $smarty->fetch('antibot.tpl');
 			}
 			if (empty($tpl) && empty($wiki)) {
-				$back.= "<tr><td></td><td>";
-			}
-			if (!empty($preview)) {
-				$back .= "<input class='button submit preview' type='submit' name='tr_preview' value='".tra($preview)."' />";
-			}
-			$back .= "<input class='button submit' type='submit' name='action' value='".tra($action)."' />";
-			if ($showmandatory == 'y' and $onemandatory) {
-				$back.= "<em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em>";
-			}
-			if (empty($tpl) && empty($wiki)) {
-				$back.= "</td></tr>";
 				$back.= "</table>";
 			} else {
 				$back .= '</div>';
+			}
+			$back .= '<div class="input_submit_container">';
+			if (!empty($preview)) {
+				$back .= "<input class='button submit preview' type='submit' name='tr_preview' value='".tra($preview)."' />";
+			}
+			$back .= "	<input class='button submit' type='submit' name='action' value='".tra($action)."' />";
+			$back .= '</div>';
+			if ($showmandatory == 'y' and $onemandatory) {
+				$back.= "<em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em>";
 			}
 			$back.= '</form>';
 			if (!empty($js)) {
