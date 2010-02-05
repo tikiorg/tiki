@@ -13,7 +13,7 @@ if( ! $meta = $tikilib->plugin_info( $plugin ) )
 	exit;
 
 if( ! isset( $_POST['message'] ) )
-	$_POST['message'] = isset($meta['name']) ? tra($meta['name']) : $plugin . ' ' . tra('Plugin modified by editor.');
+	$_POST['message'] = (isset($meta['name']) ? tra($meta['name']) : $plugin) . ' ' . tra('Plugin modified by editor.');
 
 $info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
