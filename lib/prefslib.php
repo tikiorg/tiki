@@ -246,6 +246,7 @@ class PreferencesLib
 		$doc->addField( Zend_Search_Lucene_Field::UnIndexed('preference', $pref) );
 		$doc->addField( Zend_Search_Lucene_Field::Text('name', $info['name']) );
 		$doc->addField( Zend_Search_Lucene_Field::Text('description', $info['description']) );
+		$doc->addField( Zend_Search_Lucene_Field::Text('keywords', $info['keywords']) );
 
 		if( isset( $info['options'] ) ) {
 			$doc->addField( Zend_Search_Lucene_Field::Text('options', implode( ' ', $info['options'] ) ) );
