@@ -6,16 +6,11 @@ function prefs_wiki_list() {
 	$wiki_forums = array();
 
 	if ($prefs['feature_forums'] == 'y') {
-		global $dbTiki;
-		include_once ('lib/commentslib.php');
-		$commentslib = new Comments($dbTiki);
-		$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
+		$all_forums = TikiDb::get()->fetchMap( 'SELECT `forumId`, `name` FROM `tiki_forums` ORDER BY `name` ASC' );
 
 
-		if ($all_forums) {
-			foreach ($all_forums['data'] as $forum) {
-				$wiki_forums[$forum['forumId']] = $forum['name'];
-			}
+		if ( count( $all_forums ) ) {
+			$wiki_forums = $all_forums;
 		} else {
 			$wiki_forums[''] = tra('None');
 		}

@@ -77,6 +77,22 @@ abstract class TikiDb
 		return $rows;
 	} // }}}
 
+	function fetchMap( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	{
+		$result = $this->fetchAll( $query, $values, $numrows, $offset, $reporterrors );
+
+		$map = array();
+
+		foreach( $result as $row ) {
+			$key = array_shift( $row );
+			$value = array_shift( $row );
+
+			$map[ $key ] = $value;
+		}
+
+		return $map;
+	} // }}}
+
 	function setErrorHandler( TikiDb_ErrorHandler $handler ) // {{{
 	{
 		$this->errorHandler = $handler;
