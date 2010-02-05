@@ -26,13 +26,15 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_view_freetags == 'y') {
 	$tags = $freetaglib->get_tags_on_object($cat_objid, $cat_type);	
 	$tagarray = array(); 
 	$taglist = '';
-	foreach ($tags['data'] as $tag) {
-		if (strstr($tag['tag'], ' ')) {
-			$taglist .= '"'.$tag['tag'] . '" ';
-		} else {
-			$taglist .= $tag['tag'] . ' ';
+	if (!empty($tags['data'])) {
+		foreach ($tags['data'] as $tag) {
+			if (strstr($tag['tag'], ' ')) {
+				$taglist .= '"'.$tag['tag'] . '" ';
+			} else {
+				$taglist .= $tag['tag'] . ' ';
+			}
+		    $tagarray[] = $tag['tag'];
 		}
-	    $tagarray[] = $tag['tag'];
 	}
 
     if ($prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_combine_freetags'] == 'y'
