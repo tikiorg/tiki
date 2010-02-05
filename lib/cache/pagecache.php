@@ -41,7 +41,7 @@ class Tiki_PageCache
 	function addKeys( $array, $keys ) {
 		if( is_array( $this->cacheData ) ) {
 			foreach( $keys as $k ) {
-				$this->cacheData[$key] = isset( $array[$k] ) ? $array[$k] : null;
+				$this->cacheData[$k] = isset( $array[$k] ) ? $array[$k] : null;
 			}
 		}
 
