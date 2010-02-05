@@ -318,7 +318,7 @@ function feature_home_pages()
 	if ( $prefs['feature_forums'] == 'y' ) {
 		require_once ('lib/commentslib.php');
 		if (!isset($commentslib)) {
-			$commentslib = new Comments($dbTiki);
+			$commentslib = new Comments;
 		}
 		if ($prefs['home_forum'] != '0') {
 			$hforuminfo = $commentslib->get_forum($prefs['home_forum']);
