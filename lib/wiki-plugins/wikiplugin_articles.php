@@ -84,13 +84,13 @@ function wikiplugin_articles_info()
 			'dateStart' => array(
 				'required' => false,
 				'name' => tra('Start date'),
-				'description' => tra('Earliest date to select articles from.'),
+				'description' => tra('Earliest date to select articles from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
 			),
 			'dateEnd' => array(
 				'required' => false,
 				'name' => tra('End date'),
-				'description' => tra('Latest date to select articles from.'),
+				'description' => tra('Latest date to select articles from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
 			),
 		),
@@ -132,10 +132,10 @@ function wikiplugin_articles($data, $params)
 	$smarty->assign_by_ref('quiet', $quiet);
 	
 	if (isset($dateStart)) {
-		$dateStartTS = TikiDate::parseDateString($dateStart);
+		$dateStartTS = strtotime($dateStart);
 	}
 	if (isset($dateEnd)) {
-		$dateEndTS = TikiDate::parseDateString($dateEnd);
+		$dateEndTS = strtotime($dateEnd);
 	}
 	$dateStartTS = !empty($dateStartTS) ? $dateStartTS : 0;
 	$dateEndTS = !empty($dateEndTS) ? $dateEndTS : $tikilib->now;
