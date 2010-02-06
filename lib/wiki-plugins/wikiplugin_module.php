@@ -144,6 +144,7 @@ function wikiplugin_module($data, $params) {
 			'rows' => $max,
 			'position' => null,
 			'ord' => null,
+			'cache_time'=> 0,
 		);
 
 		global $modlib; require_once 'lib/modules/modlib.php';
