@@ -431,7 +431,8 @@ function wikiplugin_img_info() {
 			$imgdata = apply_default_and_mandatory($imgdata, 'default');   //first process defaults
 			$imgdata = array_merge( $imgdata, $params );    //apply user settings, overriding defaults
 		}
-		if(!empty($imgdata['mandatory'])) $imgdata = apply_default_and_mandatory($imgdata, 'mandatory');   //apply mandatory settings, overriding user settings
+		//apply mandatory settings, overriding user settings
+		if(!empty($imgdata['mandatory'])) $imgdata = apply_default_and_mandatory($imgdata, 'mandatory');   
 	}		
 
 //////////////////////////////////////////////////// Error messages and clean javascript //////////////////////////////
@@ -496,14 +497,20 @@ function wikiplugin_img_info() {
 	
 	$repl = '';
 	$absolute_links = (!empty($parseOptions['absolute_links'])) ? $parseOptions['absolute_links'] : false;
-	
+	//get random image and treat as file gallery image afterwards
+	if (!empty($imgdata['randomGalleryId'])) {
+		include_once('lib/tikilib.php');
+		$tikilib = new TikiLib();
+		$dbinfo = $tikilib->get_file(0, $imgdata['randomGalleryId']);
+		$imgdata['fileId'] = $dbinfo['fileId'];
+		$basepath = $prefs['fgal_use_dir'];
+	}
+
 	if (empty($imgdata['src'])) {
 		if (!empty($imgdata['id'])) {
 			$src = $imagegalpath . $imgdata['id'];
 		} elseif (!empty($imgdata['fileId'])) {		
 			$src = $filegalpath . $imgdata['fileId']; 
-		} elseif (!empty($imgdata['randomGalleryId'])) {		
-			$src = 'tiki-download_file.php?randomGalleryId='. $imgdata['randomGalleryId']; 
 		} else {					//only attachments left
 			$src = $attachpath . $imgdata['attId']; 
 		}
@@ -536,32 +543,34 @@ function wikiplugin_img_info() {
 		}
 		
 		//Deal with images in tiki databases (file and image galleries and attachments)
-		if (!empty($imgdata['id']) || !empty($imgdata['fileId']) || !empty($imgdata['attId'])) {
+		if (empty($imgdata['randomGalleryId']) && (!empty($imgdata['id']) || !empty($imgdata['fileId']) 
+			|| !empty($imgdata['attId'])) 
+		) {
 			//Try to get image from database
 			if (!empty($imgdata['id'])) {
-					global $imagegallib; 
-					include_once('lib/imagegals/imagegallib.php');
-					$dbinfo = $imagegallib->get_image_info($imgdata['id'], 'o');
-					$dbinfo2 = $imagegallib->get_image($imgdata['id'], 'o');
-					$dbinfo = array_merge($dbinfo, $dbinfo2);
-					$dbinfot = $imagegallib->get_image_info($imgdata['id'], 't');
-					$dbinfot2 = $imagegallib->get_image($imgdata['id'], 't');
-    				$dbinfot = array_merge($dbinfot, $dbinfot2);
-					$basepath = $prefs['gal_use_dir'];
-			} elseif (!empty($imgdata['fileId'])) {
-					global $filegallib; 
-					include_once('lib/filegals/filegallib.php');
-					$dbinfo = $filegallib->get_file($imgdata['fileId']);
-					$basepath = $prefs['fgal_use_dir'];
+				global $imagegallib; 
+				include_once('lib/imagegals/imagegallib.php');
+				$dbinfo = $imagegallib->get_image_info($imgdata['id'], 'o');
+				$dbinfo2 = $imagegallib->get_image($imgdata['id'], 'o');
+				$dbinfo = array_merge($dbinfo, $dbinfo2);
+				$dbinfot = $imagegallib->get_image_info($imgdata['id'], 't');
+				$dbinfot2 = $imagegallib->get_image($imgdata['id'], 't');
+    			$dbinfot = array_merge($dbinfot, $dbinfot2);
+				$basepath = $prefs['gal_use_dir'];
+			} elseif (!isset($dbinfo) && !empty($imgdata['fileId'])) {
+				global $filegallib; 
+				include_once('lib/filegals/filegallib.php');
+				$dbinfo = $filegallib->get_file($imgdata['fileId']);
+				$basepath = $prefs['fgal_use_dir'];
 			} else {					//only attachments left
-					global $atts;
-					global $wikilib;
-					include_once('lib/wiki/wikilib.php');
-					$dbinfo = $wikilib->get_item_attachment($imgdata['attId']);
-					$basepath = $prefs['w_use_dir'];
+				global $atts;
+				global $wikilib;
+				include_once('lib/wiki/wikilib.php');
+				$dbinfo = $wikilib->get_item_attachment($imgdata['attId']);
+				$basepath = $prefs['w_use_dir'];
 			}		
 			//Give error messages if it doesn't exist or isn't an image
-			if (!empty($imgdata['id']) || !empty($imgdata['fileId']) || !empty($imgdata['attId'])) {
+			if (!empty($imgdata['id']) || !empty($imgdata['fileId']) || !empty($imgdata['attId']) || !empty($imgdata['randomGalleryId'])) {
 				if( ! $dbinfo ) {
 					return '^' . tra('File not found.') . '^';
 				} elseif( substr($dbinfo['filetype'], 0, 5) != 'image' ) {
