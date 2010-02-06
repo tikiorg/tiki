@@ -10,37 +10,37 @@ function wikiplugin_img_info() {
 			'src' => array(
 				'required' => false,
 				'name' => tra('Image source'),
-				'description' => tra('Full URL to the image to display. "id", "fileId", "attId" or "src" required.'),
+				'description' => tra('Full URL to the image to display. "src", id", "fileId", "attId" or "randomGalleryId" required.'),
 				'filter' => 'url',
 			),
 			'id' => array(
 				'required' => false,
 				'name' => tra('Image ID'),
-				'description' => tra('Numeric ID of an image in an Image Gallery (or comma-separated list). "id", "fileId", "attId" or "src" required.'),
+				'description' => tra('Numeric ID of an image in an Image Gallery (or list separated by commas or |).'),
 				'filter' => 'striptags',
 			),
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File ID'),
-				'description' => tra('Numeric ID of an image in a File Gallery (or comma-separated list). "id", "fileId", "attId" or "src" required.'),
-				'filter' => 'int',
+				'description' => tra('Numeric ID of an image in a File Gallery (or list separated by commas or |).'),
+				'filter' => 'striptags',
 			),
 			'randomGalleryId' => array(
 				'required' => false,
 				'name' => tra('Gallery ID'),
-				'description' => tra('Numeric ID of a File Gallery . Will take a random file'),
+				'description' => tra('Numeric ID of a File Gallery. Displays a random image from that gallery.'),
 				'filter' => 'int',
 			),
 			'attId' => array(
 				'required' => false,
 				'name' => tra('Attachment ID'),
-				'description' => tra('Numeric ID of an image attached to a wiki page (or comma-separated list). "id", "fileId", "attId" or "src" required.'),
-				'filter' => 'int',
+				'description' => tra('Numeric ID of an image attached to a wiki page (or list separated by commas or |).'),
+				'filter' => 'striptags',
 			),
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumbnail'),
-				'description' => tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "browse" and "browsepopup" only work with image gallery and "download" only works with file gallery.'),
+				'description' => tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "browse" and "browsepopup" only work with image gallery and "download" only works with file gallery or attachments.'),
 				'filter' => 'alpha',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
@@ -50,7 +50,7 @@ function wikiplugin_img_info() {
 					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')), 
 					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')), 
 					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')), 
-					array('text' => tra('Download'), 'value' => 'download', 'description' => tra('Download dialog box will appear for file gallery images when thumbnail is clicked.')),
+					array('text' => tra('Download'), 'value' => 'download', 'description' => tra('Download dialog box will appear for file gallery and attachment images when thumbnail is clicked.')),
 				),
 			),
 			'button' => array(
@@ -84,20 +84,20 @@ function wikiplugin_img_info() {
 			'height' => array(
 				'required' => false,
 				'name' => tra('Image height'),
-				'description' => tra('Height in pixels.'),
-				'filter' => 'imgsize',
+				'description' => tra('Height in pixels or percent. Syntax: "100" or "100px" means 100 pixels; "50%" means 50 percent.'),
+				'filter' => 'striptags',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Image width'),
-				'description' => tra('Width in pixels.'),
-				'filter' => 'imgsize',
+				'description' => tra('Width in pixels or percent. Syntax: "100" or "100px" means 100 pixels; "50%" means 50 percent.'),
+				'filter' => 'striptags',
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum image size'),
 				'description' => tra('Maximum height or width in pixels (largest dimension is scaled). Overrides height and width settings.'),
-				'filter' => 'imgsize',
+				'filter' => 'int',
 			),
 			'imalign' => array(
 				'required' => false,
@@ -121,7 +121,7 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Align image block'),
 				'description' => tra('Aligns the box containing the image.'),
-				'filter' => 'alpĥa',
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
@@ -180,12 +180,12 @@ function wikiplugin_img_info() {
 			'default' => array(
 				'required' => false,
 				'name' => tra('Default config settings'),
-				'description' => tra('Default configuration settings (usually set by admin).'),
+				'description' => tra('Default configuration settings (usually set by admin in the source code or through Plugin Alias).'),
 			),
 			'mandatory' => array(
 				'required' => false,
 				'name' => tra('Mandatory admin setting'),
-				'description' => tra('Mandatory configuration settings (usually set by admin).'),
+				'description' => tra('Mandatory configuration settings (usually set by admin in the source code or through Plugin Alias).'),
 			),
 		),
 	);
