@@ -463,12 +463,12 @@ if (strstr($info["orderAttachments"], '|')) {
 	$info["orderPopup"] = $part[1];
 }
 $i = 1;
-foreach(split(',', $info["orderAttachments"]) as $it) {
+foreach(preg_split('/,/', $info["orderAttachments"]) as $it) {
 	$outatt["$it"] = $i;
 	$i++;
 }
 $i = - 1;
-foreach(split(',', $info["orderPopup"]) as $it) {
+foreach(preg_split('/,/', $info["orderPopup"]) as $it) {
 	$outatt["$it"] = $i;
 	$i--;
 }
