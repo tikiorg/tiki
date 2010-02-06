@@ -15,20 +15,8 @@ if ($prefs['feature_ajax'] == 'y') {
 include_once ('lib/webmail/webmaillib.php');
 include_once ('lib/webmail/contactlib.php');
 
-if ($prefs['feature_webmail'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_webmail');
-
-	$smarty->display('error.tpl');
-	die;
-}
-
-if ($tiki_p_use_webmail != 'y' && $tiki_p_use_group_webmail != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('Permission denied to use this feature'));
-
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_webmail');
+$access->check_permission( array('tiki_p_use_webmail', 'tiki_p_use_group_webmail') );
 
 require_once ('lib/webmail/net_pop3.php');
 require_once ('lib/mail/mimelib.php');
@@ -55,12 +43,7 @@ function handleWebmailRedirect($inUrl) {		// TODO refactor into tikilib?
 	
 }
 
-if (!$user) {
-	$smarty->assign('msg', tra('You are not logged in'));
-
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_user($user);
 
 $auto_query_args = array(
     'msgid',

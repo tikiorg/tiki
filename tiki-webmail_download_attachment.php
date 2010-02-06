@@ -9,20 +9,8 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_webmail'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_use_webmail != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_webmail');
+$access->check_permission('tiki_p_use_webmail');
 
 require_once ('lib/webmail/webmaillib.php');
 

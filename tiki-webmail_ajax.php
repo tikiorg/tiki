@@ -11,28 +11,8 @@ global $headerlib, $ajaxlib;
 require_once ('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
-
-if ($prefs['feature_webmail'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_webmail');
-
-	$smarty->display('error.tpl');
-	die;
-}
-
-if ($prefs['feature_ajax'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_ajax');
-
-	$smarty->display('error.tpl');
-	die;
-}
-
-if ($tiki_p_use_webmail != 'y' && $tiki_p_use_group_webmail != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('Permission denied to use this feature'));
-
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature( array('feature_webmail', 'feature_ajax' ) );
+$access->check_permission( array('tiki_p_use_webmail', 'tiki_p_use_group_webmail') )
 
 if (!isset($_REQUEST['xjxfun'])) {	// "normal" (non-AJAX) page load
 
