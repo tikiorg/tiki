@@ -6,11 +6,9 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.24 2008-02-28 14:57:12 sylvieg Exp $
 $section = 'trackers';
 require_once ('tiki-setup.php');
-if ($prefs['feature_trackers'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_trackers");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_trackers');
+
 include_once ('lib/trackers/trackerlib.php');
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;

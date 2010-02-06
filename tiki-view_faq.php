@@ -13,11 +13,9 @@ if ($prefs['feature_categories'] == 'y') {
 		include_once ('lib/categories/categlib.php');
 	}
 }
-if ($prefs['feature_faqs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_faqs");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_faqs');
+
 if (!isset($_REQUEST["faqId"])) {
 	$smarty->assign('msg', tra("No faq indicated"));
 	$smarty->display("error.tpl");
@@ -27,12 +25,7 @@ if (!isset($_REQUEST["faqId"])) {
 $smarty->assign('headtitle', tra('FAQs'));
 $tikilib->get_perm_object( $_REQUEST['faqId'], 'faq' );
 
-if ($tiki_p_view_faqs != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_view_faqs');
 
 $faqlib->add_faq_hit($_REQUEST["faqId"]);
 $smarty->assign('faqId', $_REQUEST["faqId"]);

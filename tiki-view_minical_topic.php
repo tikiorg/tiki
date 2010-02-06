@@ -6,17 +6,10 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-view_minical_topic.php,v 1.7.2.1 2008-03-01 16:07:36 lphuberdeau Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/minical/minicallib.php');
-if ($prefs['feature_minical'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_minical");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['tiki_p_minical'] != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$acces->check_feature('feature_minical', '');
+$acces->check_permission('tiki_p_minical');
+
 if (!$user) die;
 if (!isset($_REQUEST["topicId"])) {
 	die;

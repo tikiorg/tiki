@@ -15,11 +15,9 @@ if ($prefs['feature_categories'] == 'y') {
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
 }
-if ($prefs['feature_forums'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_forums");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_forums');
+
 $auto_query_args = array(
 	'forumId',
 	'comment_threadId',
@@ -85,12 +83,9 @@ if ($tiki_p_admin_forum != 'y' && $user) {
 		$smarty->assign('tiki_p_forum_post_topic', 'y');
 	}
 }
-if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission( array('tiki_p_admin_forum', 'tiki_p_forum_read') );
+
 $commentslib->forum_add_hit($_REQUEST["forumId"]);
 if (isset($_REQUEST['report']) && $tiki_p_forums_report == 'y') {
 	check_ticket('view-forum');

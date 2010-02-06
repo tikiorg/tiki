@@ -6,11 +6,8 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.7 2008-01-29 02:58:11 nkoth Exp $
 $section = 'forums';
 require_once ('tiki-setup.php');
-if ($prefs['feature_forums'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_forums");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_forums');
 
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
@@ -117,12 +114,9 @@ if ($tiki_p_admin_forum == 'y') {
 	$tiki_p_forum_post_topic = 'y';
 	$smarty->assign('tiki_p_forum_post_topic', 'y');
 }
-if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission( array('tiki_p_admin_forum', 'tiki_p_forum_read') );
+
 $smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
 $smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
 //$end_time = microtime(true);
