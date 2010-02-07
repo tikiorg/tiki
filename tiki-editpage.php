@@ -1338,13 +1338,13 @@ $smarty->assign('edittimeout', ini_get('session.gc_maxlifetime'));
 // tools tab
 if (($prefs['feature_wiki_templates'] == 'y' && $tiki_p_use_content_templates == 'y') ||
 	($prefs['feature_wiki_usrlock'] == 'y' && ($tiki_p_lock == 'y' || $tiki_p_admin_wiki == 'y')) ||
-	($prefs['feature_wiki_replace'] == 'y' && $wysiwyg != 'y') ||
+	($prefs['feature_wiki_replace'] == 'y' && $_SESSION['wysiwyg'] != 'y') ||
 	$prefs['wiki_spellcheck'] == 'y' ||
-	($prefs['feature_wiki_allowhtml'] == 'y' && $tiki_p_use_HTML == 'y' && $wysiwyg != 'y') ||
+	($prefs['feature_wiki_allowhtml'] == 'y' && $tiki_p_use_HTML == 'y' && $_SESSION['wysiwyg'] != 'y') ||
 	$prefs['feature_wiki_import_html'] == 'y' ||
 	$prefs['wiki_comments_allow_per_page'] != 'n' ||
 	($tiki_p_admin_wiki == 'y' && $prefs['feature_wiki_import_page'] == 'y') ||
-	($wysiwyg != 'y' && ($prefs['feature_wiki_attachments'] == 'y' && ($tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_admin_attachments == 'y')))) {
+	($_SESSION['wysiwyg'] != 'y' && ($prefs['feature_wiki_attachments'] == 'y' && ($tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_admin_attachments == 'y')))) {
 	$smarty->assign('showToolsTab', 'y');
 }
 if (strtolower($page) != 'sandbox' &&
