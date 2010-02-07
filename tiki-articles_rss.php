@@ -42,6 +42,14 @@ if (isset($_REQUEST["topic"])) {
     $uniqueid = $feed;
     $topic = "";
 }
+
+if (isset($_REQUEST["type"])) {
+        $uniqueid .= '-'.$type;
+        $type = $_REQUEST["type"];
+} else {
+        $type = '';
+}
+
 if (isset($_REQUEST['lang'])) {
 	$articleLang = $_REQUEST['lang'];
 	$prefs['rssfeed_language'] = $articleLang;
@@ -75,7 +83,7 @@ if ($output["data"]=="EMPTY") {
 	$tmp = $prefs['desc_rss_'.$feed];
 	if ($desc<>'') $desc = $tmp;
 
-	$changes = $tikilib -> list_articles(0, $prefs['max_rss_articles'], $dateId.'_desc', '', 0, $tikilib->now, $user, '', $topic, 'y', '', '', '', '', $articleLang);
+	$changes = $tikilib -> list_articles(0, $prefs['max_rss_articles'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', '', '', '', $articleLang);
 	$tmp = array();
 	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data)  {
