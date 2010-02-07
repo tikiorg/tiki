@@ -194,7 +194,7 @@ function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $d
 	$nodesc = count($descendants);
 	$watch_desc = 'n';
 	$watch_this = 'n';
-	$eyes = '';
+	$eyes = $eyesgroup = '';
 	if ($categid == 0) {
 		$tip_rem_desc = 'Stop watching all categories';
 		$tip_add_desc = 'Watch all categories';
@@ -255,7 +255,7 @@ function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $d
 		} else {
 			$objName = $categlib->get_category_path_string_with_root($categid);
 		}
-	$eyesgroup = '</a>&nbsp;<a href="tiki-object_watches.php?objectId=' . $categid . '&amp;watch_event=category_changed&amp;objectType=Category&amp;objectName=' 
+		$eyesgroup = '</a>&nbsp;<a href="tiki-object_watches.php?objectId=' . $categid . '&amp;watch_event=category_changed&amp;objectType=Category&amp;objectName=' 
 				. $objName . '&amp;objectHref=tiki-browse_categories.php?parentId=' . $categid . '&amp;deep=' . $deep . '" >
 				<img src="pics/icons/eye_group.png" alt="' . $tip_group . '" width="14" style="margin-bottom:2px" height="14" border="0" 
 				title="' . $tip_group . '" class="icon" /></a>';
