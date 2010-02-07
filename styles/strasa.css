@@ -86,7 +86,7 @@ textarea,
 option,
 select,
 body.wikitext {
-	background: #F3FCFE !important;
+	background: #F3FCFE;
 	color: #000;
 }
 
