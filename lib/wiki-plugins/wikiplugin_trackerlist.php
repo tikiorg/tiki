@@ -312,21 +312,27 @@ function wikiplugin_trackerlist($data, $params) {
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 
 		if (!empty($_REQUEST['itemId']) && $tiki_p_tracker_vote_ratings == 'y' && $user) {
+			$hasVoted = false;
 			foreach ($allfields['data'] as $f) {
 				if ($f['type'] == 's' && isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' && ($f['name'] == 'Rating' || $f['name'] = tra('Rating'))) {
 					$i = $f['fieldId'];
 					if (isset($_REQUEST["ins_$i"]) && ($_REQUEST["ins_$i"] == 'NULL' || in_array($_REQUEST["ins_$i"], split(',',$tracker_info['ratingOptions'])))) {
 						$trklib->replace_rating($trackerId, $_REQUEST['itemId'], $i, $user, $_REQUEST["ins_$i"]);
+						$hasVoted = true; 
 					}
 				} elseif ($f['type'] == '*') {
 					$i = $f['fieldId'];
 					if (isset($_REQUEST["ins_$i"])) {
 						$trklib->replace_star($_REQUEST["ins_$i"], $trackerId, $_REQUEST['itemId'], $f, $user);
+						$hasVoted = true;
 					}
 				}
 			}
-			header('Location: tiki-index.php?page='.urlencode($page));
-			die;
+			if ($hasVoted) {
+				$url = preg_replace('/vote=y&?/', '', preg_replace('/itemId=[0-9]+&?/', '', preg_replace('/ins_[0-9]+=-?[0-9]*&?/', '', $_SERVER['REQUEST_URI'])));
+				header("Location: $url");
+				die;
+			}
 		}
 
 		if (!empty($showwatch) && $showwatch == 'y' && $prefs['feature_user_watches'] == 'y' && $tiki_p_watch_trackers == 'y' && !empty($user)) {
