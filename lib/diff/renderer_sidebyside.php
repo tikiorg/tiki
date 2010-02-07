@@ -37,7 +37,7 @@ class Text_Diff_Renderer_sidebyside extends Tiki_Text_Diff_Renderer
 
     function _startBlock($header)
     {
-        $h = split(",", $header);
+        $h = explode(",", $header);
         echo '<tr class="diffheader"><td colspan="2">';
         if ($h[1] == 1)
            echo tra('Line:')."&nbsp;".$h[0];

@@ -39,7 +39,7 @@ class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer
                     } else {
                         if ($ntrail) {
                             $context = array_slice($edit->orig, 0, $ntrail);
-                            $block[] = &new Text_Diff_Op_copy($context);
+                            $block[] = new Text_Diff_Op_copy($context);
                         }
                         $this->_block($x0, $ntrail + $xi - $x0,
                                       $y0, $ntrail + $yi - $y0,
@@ -56,7 +56,7 @@ class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer
                     $y0 = $yi - count($context);
                     $block = array();
                     if ($context) {
-                        $block[] = &new Text_Diff_Op_copy($context);
+                        $block[] = new Text_Diff_Op_copy($context);
                     }
                 }
                 $block[] = $edit;
@@ -90,8 +90,8 @@ function diff2($page1, $page2, $type='sidediff') {
 		preg_match_all($search,$page2,$out,PREG_PATTERN_ORDER);
 		$page2 = $out[0];
 	} else {
-		$page1 = split("\n", $page1);
-		$page2 = split("\n", $page2);
+		$page1 = explode("\n", $page1);
+		$page2 = explode("\n", $page2);
 	}
 	$z = new Text_Diff($page1, $page2);
 	if ($z->isEmpty()) {

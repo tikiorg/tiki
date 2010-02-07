@@ -36,9 +36,9 @@ class Text_Diff
         array_walk($to_lines, array($this, '_trimNewlines'));
 
         if (extension_loaded('xdiff')) {
-            $engine = &new Text_Diff_Engine_xdiff();
+            $engine = new Text_Diff_Engine_xdiff();
         } else {
-            $engine = &new Text_Diff_Engine_native();
+            $engine = new Text_Diff_Engine_native();
         }
 
         $this->_edits = $engine->diff($from_lines, $to_lines);
@@ -57,7 +57,7 @@ class Text_Diff
      *
      * Example:
      * <code>
-     * $diff = &new Text_Diff($lines1, $lines2);
+     * $diff = new Text_Diff($lines1, $lines2);
      * $rev = $diff->reverse();
      * </code>
      *
@@ -280,15 +280,15 @@ class Text_Diff_Engine_xdiff
         foreach ($diff as $line) {
             switch ($line[0]) {
             case ' ':
-                $edits[] = &new Text_Diff_Op_copy(array(substr($line, 1)));
+                $edits[] = new Text_Diff_Op_copy(array(substr($line, 1)));
                 break;
 
             case '+':
-                $edits[] = &new Text_Diff_Op_add(array(substr($line, 1)));
+                $edits[] = new Text_Diff_Op_add(array(substr($line, 1)));
                 break;
 
             case '-':
-                $edits[] = &new Text_Diff_Op_delete(array(substr($line, 1)));
+                $edits[] = new Text_Diff_Op_delete(array(substr($line, 1)));
                 break;
             }
         }
@@ -397,7 +397,7 @@ class Text_Diff_Engine_native
                 ++$yi;
             }
             if ($copy) {
-                $edits[] = &new Text_Diff_Op_copy($copy);
+                $edits[] = new Text_Diff_Op_copy($copy);
             }
 
             // Find deletes & adds.
@@ -412,11 +412,11 @@ class Text_Diff_Engine_native
             }
 
             if ($delete && $add) {
-                $edits[] = &new Text_Diff_Op_change($delete, $add);
+                $edits[] = new Text_Diff_Op_change($delete, $add);
             } elseif ($delete) {
-                $edits[] = &new Text_Diff_Op_delete($delete);
+                $edits[] = new Text_Diff_Op_delete($delete);
             } elseif ($add) {
-                $edits[] = &new Text_Diff_Op_add($add);
+                $edits[] = new Text_Diff_Op_add($add);
             }
         }
 
@@ -773,7 +773,7 @@ class Text_Diff_Op_copy extends Text_Diff_Op
 
     function &reverse()
     {
-        return $reverse = &new Text_Diff_Op_copy($this->final, $this->orig);
+        return $reverse = new Text_Diff_Op_copy($this->final, $this->orig);
     }
 
 }
@@ -793,7 +793,7 @@ class Text_Diff_Op_delete extends Text_Diff_Op
 
     function &reverse()
     {
-        return $reverse = &new Text_Diff_Op_add($this->orig);
+        return $reverse = new Text_Diff_Op_add($this->orig);
     }
 
 }
@@ -813,7 +813,7 @@ class Text_Diff_Op_add extends Text_Diff_Op
 
     function &reverse()
     {
-        return $reverse = &new Text_Diff_Op_delete($this->final);
+        return $reverse = new Text_Diff_Op_delete($this->final);
     }
 
 }
@@ -833,7 +833,7 @@ class Text_Diff_Op_change extends Text_Diff_Op
 
     function &reverse()
     {
-        return $reverse = &new Text_Diff_Op_change($this->final, $this->orig);
+        return $reverse = new Text_Diff_Op_change($this->final, $this->orig);
     }
 
 }

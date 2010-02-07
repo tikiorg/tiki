@@ -86,11 +86,13 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 
 	function _count_tags($line, $version) {
 		preg_match("#<(/?)([^ >]+)#", $line, $out);
-		if (in_array($out[2], $this->tracked_tags)) {
-			if ($out[1] == '/') {
-				$this->tags[$version][$out[2]]--;
-			} else {
-				$this->tags[$version][$out[2]]++;
+		if (count($out) > 1 && in_array($out[2], $this->tracked_tags)) {
+			if (isset($this->tags[$version][$out[2]])) {
+				if ($out[1] == '/') {
+					$this->tags[$version][$out[2]]--;
+				} else {
+					$this->tags[$version][$out[2]]++;
+				}
 			}
 		}
 	}
@@ -101,10 +103,12 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 			return false;
 		}
 
-		foreach($this->tags as $v) {
-			foreach($v as $tag) {
-				if ($tag != 0) {
-					return false;
+		if (isset($this->tags)) {
+			foreach($this->tags as $v) {
+				foreach($v as $tag) {
+					if ($tag != 0) {
+						return false;
+					}
 				}
 			}
 		}
@@ -133,7 +137,9 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 						$this->final[$this->n] .= "</span>";
 						$this->rspan = false;
 					}
+					if (!isset($this->original[$this->n])) { $this->original[$this->n] = ''; }
 					$this->original[$this->n] .= "$line";
+					if (!isset($this->final[$this->n])) { $this->final[$this->n] = ''; }
 					$this->final[$this->n] .= "$line";
 				}
 				break;
