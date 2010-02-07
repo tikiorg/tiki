@@ -3,7 +3,6 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.39.2.3 2008-03-05 22:33:29 sylvieg Exp $
 $section = 'search';
 require_once ('tiki-setup.php');
 require_once ('lib/ajax/ajaxlib.php');
@@ -11,17 +10,10 @@ require_once ('lib/search/searchlib-mysql.php');
 $auto_query_args = array('highlight', 'where', 'initial', 'maxRecords', 'sort_mode', 'find', 'lang', 'words', 'boolean');
 $searchlib = new SearchLib;
 $smarty->assign('headtitle', tra('Search'));
-if ($prefs['feature_search_fulltext'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_search_fulltext");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_search != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('Permission denied'));
-	$smarty->display('error.tpl');
-	die;
-}
+
+$access->check_feature('feature_search_fulltext');
+$access->check_permission('tiki_p_search');
+
 if (isset($_REQUEST["highlight"]) && !empty($_REQUEST["highlight"])) {
 	$_REQUEST["words"] = $_REQUEST["highlight"];
 }
@@ -36,51 +28,24 @@ if (!isset($_REQUEST["where"])) {
 $find_where = 'find_' . $where;
 $smarty->assign('where', $where);
 $filter = array();
+
 if ($where == 'wikis') {
-	if ($prefs['feature_wiki'] != 'y') {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_wiki");
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_feature('feature_wiki');
 }
+
 if ($where == 'directory') {
-	if ($prefs['feature_directory'] != 'y') {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_directory");
-		$smarty->display("error.tpl");
-		die;
-	}
-	if ($tiki_p_admin_directory != 'y' && $tiki_p_view_directory != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_feature('feature_directory');
+	$access->check_permission('tiki_p_view_directory');
 }
+
 if ($where == 'faqs') {
-	if ($prefs['feature_faqs'] != 'y') {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_faqs");
-		$smarty->display("error.tpl");
-		die;
-	}
-	if ($tiki_p_admin_faqs != 'y' && $tiki_p_view_faqs != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("You do not have permission to use this feature"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_feature('feature_faqs');
+	$access->check_permission('tiki_p_view_faqs');
 }
+
 if ($where == 'forums') {
-	if ($prefs['feature_forums'] != 'y') {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_forums");
-		$smarty->display("error.tpl");
-		die;
-	}
-	if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("You do not have permission to use this feature"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_feature('feature_forums');
+	$access->check_permission('tiki_p_forum_read');
 	if (!empty($_REQUEST['forumId'])) {
 		$filter['forumId'] = $_REQUEST['forumId'];
 		global $commentslib;
@@ -93,41 +58,27 @@ if ($where == 'forums') {
 		$cant = '';
 	}
 }
+
 if ($where == 'files') {
-	if ($prefs['feature_file_galleries'] != 'y') {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_file_galleries");
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_feature('feature_file_galleries');
 }
+
 if ($where == 'articles') {
-	if ($prefs['feature_articles'] != 'y') {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_articles");
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_feature('feature_articles');
 }
+
 if (($where == 'galleries' || $where == 'images')) {
-	if ($prefs['feature_galleries'] != 'y') {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_galleries");
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_feature('feature_galleries');
 }
+
 if (($where == 'blogs' || $where == 'posts')) {
-	if ($prefs['feature_blogs'] != 'y') {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_blogs");
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_feature('feature_blogs');
 }
+
 if (($where == 'trackers')) {
-	if ($prefs['feature_trackers'] != 'y') {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_trackers");
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_feature('feature_trackers');
 }
+
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {

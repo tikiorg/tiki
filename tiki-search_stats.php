@@ -3,20 +3,12 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-search_stats.php,v 1.14 2007-10-12 07:55:32 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/search/searchstatslib.php');
-if ($prefs['feature_search_stats'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_search_stats");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_search_stats');
+$access->check_permission('tiki_p_admin');
+
 if (isset($_REQUEST["clear"])) {
 	check_ticket('search-stats');
 	$searchstatslib->clear_search_stats();

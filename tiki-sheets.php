@@ -3,16 +3,12 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.12 2007-10-12 07:55:32 nyloth Exp $
-// Based on tiki-galleries.php
 $section = 'sheet';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
-if ($prefs['feature_sheet'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_sheet");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_sheet');
+
 if (!isset($_REQUEST["sheetId"])) {
 	$_REQUEST["sheetId"] = 0;
 	$info = array();
@@ -28,11 +24,9 @@ if (!isset($_REQUEST["sheetId"])) {
 	else $tiki_p_view_sheet_history = 'n';
 	$smarty->assign('tiki_p_view_sheet_history', $tiki_p_view_sheet_history);
 }
-if ($tiki_p_view_sheet != 'y') {
-	$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('tiki_p_view_sheet');
+
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
@@ -47,11 +41,7 @@ $smarty->assign('edit_mode', 'n');
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
 // If we are editing an existing gallery prepare smarty variables
 if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
-	if ($tiki_p_edit_sheet != 'y') {
-		$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_edit_sheet');
 	check_ticket('sheet');
 	// Get information about this galleryID and fill smarty variables
 	$smarty->assign('edit_mode', 'y');
@@ -76,11 +66,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 }
 // Process the insertion or modification of a gallery here
 if (isset($_REQUEST["edit"])) {
-	if ($tiki_p_edit_sheet != 'y') {
-		$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_edit_sheet');
 	check_ticket('sheet');
 	// Everything is ok so we proceed to edit the gallery
 	$smarty->assign('edit_mode', 'y');
@@ -100,12 +86,7 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign('edit_mode', 'n');
 }
 if (isset($_REQUEST["removesheet"])) {
-	if ($tiki_p_edit_sheet != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot remove this sheet"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_edit_sheet');
 	$area = 'delsheet';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);

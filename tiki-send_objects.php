@@ -3,15 +3,12 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.28.2.2 2007-10-25 19:51:42 sylvieg Exp $
 require_once ('tiki-setup.php');
 include_once ("lib/pear/XML/Server.php");
 include_once ('lib/structures/structlib.php');
-if ($prefs['feature_comm'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_comm");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_comm');
+//$access->check_permission( array('tiki_p_send_pages', 'tiki_p_send_articles') );
 if ($tiki_p_send_pages != 'y' && $tiki_p_send_articles != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
