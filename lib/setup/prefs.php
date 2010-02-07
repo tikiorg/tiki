@@ -176,6 +176,7 @@ function get_default_prefs() {
 		'wiki_validate_plugin' => 'y',
 		'wiki_edit_minor' => 'n',
 		'wiki_badchar_prevent' => 'n',
+		'wiki_backlinks_name_len' => 0,
 		'wiki_ranking_reload_probability' => 1000,
 		'wiki_encourage_contribution' => 'n',
 		'wiki_timeout_warning' => 'y',
