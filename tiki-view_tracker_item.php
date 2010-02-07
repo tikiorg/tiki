@@ -920,7 +920,10 @@ if ($_REQUEST["itemId"]) {
 					}
 				}
 			}
-			if ($fields['data'][$i]['isMain'] == 'y') $smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);
+			if ($fields['data'][$i]['isMain'] == 'y' && empty($tracker_item_main_value)) {
+				$tracker_item_main_value = $ins_fields['data'][$i]['value']; 
+				$smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);
+			}
 		}
 	}
 }
