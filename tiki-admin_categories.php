@@ -18,17 +18,9 @@ if (!isset($polllib)) {
 if (!isset($commentslib)) {
 	$commentslib = new Comments($dbTiki);
 }
-if ($prefs['feature_categories'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_categories");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin_categories != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_categories');
+$access->check_permission('$tiki_p_admin_categories');
+
 // Check for parent category or set to 0 if not present
 if (!empty($_REQUEST['parentId']) && !$categlib->get_category($_REQUEST['parentId'])) {
 	$smarty->assign('msg', 'Incorrect param'.' parentId');

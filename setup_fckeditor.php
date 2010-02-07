@@ -5,11 +5,7 @@
 // (this is why FCKeditor doesn't find the "Tiki" toolbar defined here when compression is activated)
 $force_no_compression = true;
 include('tiki-setup.php');
-if ($prefs['feature_wysiwyg'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_wysiwyg');
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_wysiwyg');
 
 include_once 'lib/toolbars/toolbarslib.php';
 

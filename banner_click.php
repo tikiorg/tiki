@@ -17,12 +17,7 @@ if (!isset($bannerlib)) {
 }
 
 // CHECK FEATURE BANNERS HERE
-if ($prefs['feature_banners'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_banners");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_banners');
 
 $bannerlib->add_click($_REQUEST["id"]);
 $url = urldecode($_REQUEST["url"]);

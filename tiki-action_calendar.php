@@ -2,19 +2,8 @@
 
 include 'tiki-setup.php';
 include 'lib/calendar/tikicalendarlib.php';
-
-if ($prefs['feature_action_calendar'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_action_calendar");
-  $smarty->display("error.tpl");
-  die;
-}
-
-if ($tiki_p_view_tiki_calendar != 'y') {
-  $smarty->assign('errortype', 401);
-  $smarty->assign('msg', tra("Permission denied you cannot view the Tiki calendar"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_action_calendar');
+$access->check_permission('tiki_p_view_tiki_calendar');
 
 $headerlib->add_cssfile('css/calendar.css',20);
 

@@ -19,12 +19,7 @@
 
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_articles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_articles');
 
 // Now check permissions to access this page
 if(($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y')) {

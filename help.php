@@ -11,11 +11,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_wiki'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-  $smarty->display("error.tpl");
-  die;
-}
+$access->check_feature('feature_wiki');
+
 include_once ('lib/wiki/wikilib.php');
 $plugins = $wikilib->list_plugins(true);
 $smarty->assign_by_ref('plugins', $plugins);

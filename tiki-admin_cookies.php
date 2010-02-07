@@ -6,12 +6,9 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_cookies.php,v 1.17 2007-10-12 07:55:23 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/taglines/taglinelib.php');
-if ($tiki_p_edit_cookies != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('tiki_p_edit_cookies');
+
 if (!isset($_REQUEST["cookieId"])) {
 	$_REQUEST["cookieId"] = 0;
 }

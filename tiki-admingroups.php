@@ -5,12 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.10 2008-03-14 19:51:58 sylvieg Exp $
 require_once ('tiki-setup.php');
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You don't have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('tiki_p_admin');
+
 $auto_query_args = array('group');
 
 if (!isset($cookietab)) { $cookietab = '1'; }

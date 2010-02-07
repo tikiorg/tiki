@@ -5,18 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 //$Id: /cvsroot/tikiwiki/tiki/tiki-admin_contribution.php,v 1.7 2007-10-12 07:55:23 nyloth Exp $
 require_once ('tiki-setup.php');
-if ($prefs['feature_contribution'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_contribution");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_contribution');
+
 include_once ('lib/contribution/contributionlib.php');
-if ($tiki_p_admin != 'y' && $tiki_p_admin_contribution != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission(array('tiki_p_admin','tiki_p_admin_contribution'));
+
 if (isset($_REQUEST['setting'])) {
 	check_ticket('admin_contribution');
 	if (isset($_REQUEST['feature_contribution_mandatory']) && $_REQUEST['feature_contribution_mandatory'] == "on") {

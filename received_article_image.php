@@ -14,13 +14,7 @@ if (!isset($_REQUEST["id"])) {
 }
 
 require_once ('tiki-setup.php');
-
-if ($prefs['feature_articles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_articles');
 
 include_once ('lib/commcenter/commlib.php');
 $data = $commlib->get_received_article($_REQUEST["id"]);

@@ -16,11 +16,8 @@ include_once ('lib/commentslib.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/contribution/contributionlib.php');
 $commentslib = new Comments($dbTiki);
-if ($prefs['feature_actionlog'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_actionlog");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_actionlog');
+
 if (empty($user) || ($tiki_p_view_actionlog != 'y' && $tiki_p_view_actionlog_owngroups != 'y')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));

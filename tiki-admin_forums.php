@@ -10,11 +10,8 @@ $smarty->assign('headtitle', tra('Admin Forums'));
 if (!isset($_REQUEST["forumId"])) {
 	$_REQUEST["forumId"] = 0;
 }
-if ($prefs['feature_forums'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_forums');
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_forums');
+
 $smarty->assign('individual', 'n');
 if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
 	$smarty->assign('individual', 'y');
@@ -32,12 +29,7 @@ if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
 		}
 	}
 }
-if ($tiki_p_admin_forum != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('You do not have permission to use this feature'));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_permission('tiki_p_admin_forum');
 
 $auto_query_args = array(
 			'forumId',

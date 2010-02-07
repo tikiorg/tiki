@@ -21,11 +21,7 @@ if (!isset($bannerlib)) {
 }
 
 // CHECK FEATURE BANNERS HERE
-if ($prefs['feature_banners'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_banners");
+$access->check_feature('feature_banners');
 
-	$smarty->display("error.tpl");
-	die;
-}
 $banner = $bannerlib->select_banner($_REQUEST["zone"]);
 print ($banner);

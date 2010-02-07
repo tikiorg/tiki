@@ -5,18 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_content_templates.php,v 1.21 2007-10-12 07:55:23 nyloth Exp $
 require_once ('tiki-setup.php');
-if ($prefs['feature_wiki_templates'] != 'y' && $prefs['feature_cms_templates'] != 'y') {
-	$smarty->assign('msg', tra('Feature is disabled:').' '.'feature_wiki_templates'.' '.'feature_cms_templates');
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature(array('feature_wiki_templates','feature_cms_templates'));
+
 include_once ('lib/templates/templateslib.php');
-if ($tiki_p_edit_content_templates != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('$tiki_p_edit_content_templates');
+
 if (!isset($_REQUEST["templateId"])) {
 	$_REQUEST["templateId"] = 0;
 }
