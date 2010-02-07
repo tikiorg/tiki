@@ -27,12 +27,8 @@ if ($prefs['feature_messages'] != 'y') {
 		die;
 	}
 }
-if ($tiki_p_broadcast != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_broadcast');
+
 $auto_query_args = array('to', 'cc', 'bcc', 'subject', 'body', 'priority', 'replyto_hash', 'groupbr');
 if (!isset($_REQUEST['to'])) $_REQUEST['to'] = '';
 if (!isset($_REQUEST['cc'])) $_REQUEST['cc'] = '';

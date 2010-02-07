@@ -27,12 +27,7 @@ if ($prefs['feature_messages'] != 'y') {
 		die;
 	}
 }
-if ($tiki_p_messages != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_messages');
 $maxRecords = $messulib->get_user_preference($user, 'maxRecords', 20);
 // Delete messages if the delete button was pressed
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {

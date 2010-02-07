@@ -5,17 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.20 2007-10-12 07:55:24 nyloth Exp $
 require_once ('tiki-setup.php');
-if ($prefs['layout_section'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": layout_section");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('layout_section');
+$access->check_permission('tiki_p_admin');
+
 foreach($sections_enabled as $section => $data) {
 	if (isset($_REQUEST["${section}_layout"])) {
 		check_ticket('admin-layout');

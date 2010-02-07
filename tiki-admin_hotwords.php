@@ -6,17 +6,9 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_hotwords.php,v 1.21.2.2 2007-11-25 21:42:35 sylvieg Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/hotwords/hotwordlib.php');
-if ($prefs['feature_hotwords'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_hotwords');
-	$smarty->display('error.tpl');
-	die;
-}
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('You do not have permission to use this feature'));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_hotwords');
+$access->check_permission('tiki_p_admin');
+
 // Process the form to add a user here
 if (isset($_REQUEST["add"])) {
 	check_ticket('admin-hotwords');

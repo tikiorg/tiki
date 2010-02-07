@@ -19,7 +19,7 @@ if (!isset($commentslib)) {
 	$commentslib = new Comments($dbTiki);
 }
 $access->check_feature('feature_categories');
-$access->check_permission('$tiki_p_admin_categories');
+$access->check_permission('tiki_p_admin_categories');
 
 // Check for parent category or set to 0 if not present
 if (!empty($_REQUEST['parentId']) && !$categlib->get_category($_REQUEST['parentId'])) {

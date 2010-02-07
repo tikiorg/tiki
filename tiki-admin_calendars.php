@@ -11,12 +11,7 @@ include_once ('lib/calendar/calendarlib.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
-if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission(array('tiki_p_admin_calendar','tiki_p_admin'));
 if (!isset($_REQUEST["calendarId"])) {
 	$_REQUEST["calendarId"] = 0;
 } else {

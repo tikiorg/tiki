@@ -22,12 +22,7 @@ require_once ('tiki-setup.php');
 $access->check_feature('feature_articles');
 
 // Now check permissions to access this page
-if(($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y')) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg',tra("Permission denied. You cannot view pages"));
-	$smarty->display("error.tpl");
-	die;  
-}
+$access->check_permission(array('tiki_p_read_article','tiki_p_articles_read_heading'));
 
 if (!isset($_REQUEST["id"])) {
 	die;

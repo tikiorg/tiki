@@ -27,12 +27,7 @@ if ($prefs['feature_messages'] != 'y') {
 		die;
 	}
 }
-if ($tiki_p_messages != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_messages');
 if ($prefs['allowmsg_is_optional'] == 'y') {
 	if ($tikilib->get_user_preference($user, 'allowMsgs', 'y') != 'y') {
 		$smarty->assign('msg', tra("You have to be able to receive messages in order to send them. Goto your user preferences and enable 'Allow messages from other users'"));

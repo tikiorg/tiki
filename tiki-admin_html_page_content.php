@@ -6,17 +6,9 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_html_page_content.php,v 1.15 2007-10-12 07:55:23 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/htmlpages/htmlpageslib.php');
-if ($prefs['feature_html_pages'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_html_pages");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_edit_html_pages != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_html_pages');
+$access->check_permission('tiki_p_edit_html_pages');
+
 if (!isset($_REQUEST["pageName"])) {
 	$smarty->assign('msg', tra("No page indicated"));
 	$smarty->display("error.tpl");

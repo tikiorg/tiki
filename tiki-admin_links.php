@@ -6,18 +6,8 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_links.php,v 1.21 2007-10-12 07:55:24 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/featured_links/flinkslib.php');
-if ($prefs['feature_featuredLinks'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_featuredLinks");
-	$smarty->display("error.tpl");
-	die;
-}
-// PERMISSIONS: NEEDS p_admin
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_featuredLinks');
+$access->check_permission('tiki_p_admin');
 $smarty->assign('title', '');
 $smarty->assign('type', 'f');
 $smarty->assign('position', 1);

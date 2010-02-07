@@ -27,12 +27,7 @@ if ($prefs['feature_messages'] != 'y') {
 		die;
 	}
 }
-if ($tiki_p_messages != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_messages');
 if (isset($_REQUEST["delete"])) {
 	check_ticket('messu-read');
 	$messulib->delete_message($user, $_REQUEST['msgdel']);
