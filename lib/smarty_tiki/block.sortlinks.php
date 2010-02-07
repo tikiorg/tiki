@@ -21,7 +21,7 @@ function smarty_block_sortlinks($params, $content, &$smarty)
 { 
 if ($content) { 
   
-  $links=split("\n",$content);
+  $links=preg_split("/\n/",$content);
   $links2=array();
   foreach ($links as $value) {
 	preg_match('/.*(<[^>]*>)(.*)(<\/[^¨>]*>)/U', $value, $splitted);
