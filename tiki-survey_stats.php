@@ -3,22 +3,14 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-survey_stats.php,v 1.16 2007-10-12 07:55:32 nyloth Exp $
 $section = 'surveys';
 require_once ('tiki-setup.php');
 include_once ('lib/surveys/surveylib.php');
 $auto_query_args = array('sort_mode', 'offset', 'find');
-if ($prefs['feature_surveys'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_surveys");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_view_survey_stats != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_surveys');
+$access->check_permission('tiki_p_view_survey_stats');
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {

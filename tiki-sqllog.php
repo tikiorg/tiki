@@ -3,19 +3,16 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54.2.5 2008-01-22 16:58:23 sylvieg Exp $
 include_once ('tiki-setup.php');
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('tiki_p_admin');
+
 if ($api_tiki != 'adodb') {
 	$smarty->assign('msg', tra('This feature is disabled') . ': adodb');
 	$smarty->display('error.tpl');
 	die;
 }
+
 $query = "show tables like 'adodb_logsql'";
 $result = $tikilib->query($query, array());
 if (!$result->numRows()) {

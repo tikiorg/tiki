@@ -3,7 +3,6 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.25.2.1 2007-12-07 05:56:38 mose Exp $
 $section = 'quizzes';
 require_once ('tiki-setup.php');
 include_once ('lib/quizzes/quizlib.php');
@@ -13,11 +12,9 @@ if ($prefs['feature_categories'] == 'y') {
 		include_once ('lib/categories/categlib.php');
 	}
 }
-if ($prefs['feature_quizzes'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_quizzes");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_quizzes');
+
 if (!isset($_REQUEST["quizId"])) {
 	$smarty->assign('msg', tra("No quiz indicated"));
 	$smarty->display("error.tpl");
@@ -27,12 +24,8 @@ $tikilib->get_perm_object( $_REQUEST['quizId'], 'quiz' );
 
 $smarty->assign('quizId', $_REQUEST["quizId"]);
 $quiz_info = $quizlib->get_quiz($_REQUEST["quizId"]);
-if ($tiki_p_take_quiz != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('tiki_p_take_quiz');
 if ($user) {
 	// If the quiz cannot be repeated
 	if ($quiz_info["canRepeat"] == 'n') {

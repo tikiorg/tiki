@@ -3,14 +3,10 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.8.2.1 2008-02-14 10:25:11 nyloth Exp $
 require_once ('tiki-setup.php');
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('tiki_p_admin');
+
 $auto_query_args = array('offset', 'numrows', 'maxRecords', 'find', 'sort_mode');
 if (isset($_REQUEST["clean"])) {
 	$area = 'cleanlogs';

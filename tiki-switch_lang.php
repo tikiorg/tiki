@@ -5,11 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 require_once ('tiki-setup.php');
-if ($prefs['feature_multilingual'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_multilingual");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_multilingual');
+
 if (isset($_GET['from'])) $orig_url = $_GET['from'];
 elseif (isset($_SERVER['HTTP_REFERER'])) $orig_url = $_SERVER['HTTP_REFERER'];
 else $orig_url = $prefs['tikiIndex'];

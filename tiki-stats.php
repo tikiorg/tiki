@@ -3,20 +3,11 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-stats.php,v 1.17 2007-10-12 07:55:32 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
-if ($prefs['feature_stats'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_stats");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_view_stats != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_stats');
+$access->check_permission('tiki_p_view_stats');
 
 if (isset($_REQUEST['startDate_Year']) || isset($_REQUEST['endDate_Year'])) {
 	$start_date = $tikilib->make_time(23, 59, 59, $_REQUEST['startDate_Month'], $_REQUEST['startDate_Day'], $_REQUEST['startDate_Year']);
@@ -106,6 +97,5 @@ $best_objects_stats_between = $statslib->best_overall_object_stats(20, 0, $start
 $smarty->assign_by_ref('best_objects_stats_between', $best_objects_stats_between);
 }
 ask_ticket('stats');
-// Display the template
 $smarty->assign('mid', 'tiki-stats.tpl');
 $smarty->display("tiki.tpl");

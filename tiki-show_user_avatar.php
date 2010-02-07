@@ -3,13 +3,10 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-show_user_avatar.php,v 1.10 2007-03-06 19:29:52 sylvieg Exp $
 require 'tiki-setup.php';
-if ($prefs['feature_userPreferences'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_userPreferences");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_userPreferences');
+
 global $userprefslib;
 include_once ('lib/userprefs/userprefslib.php');
 // application to display an image from the database with

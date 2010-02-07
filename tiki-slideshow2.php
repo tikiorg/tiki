@@ -3,16 +3,12 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.20 2007-10-12 07:55:32 nyloth Exp $
 $section = 'wiki page';
 require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 include_once ('lib/wiki/wikilib.php');
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_wiki");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_wiki');
 $page_ref_id = $_REQUEST['page_ref_id'];
 if (!isset($page_ref_id)) {
 	$smarty->assign('msg', tra("Page must be defined inside a structure to use this feature"));
@@ -34,12 +30,8 @@ if (!($info = $tikilib->get_page_info($page))) {
 }
 // Now check permissions to access this page
 $tikilib->get_perm_object($page, 'wiki page', $info);
-if ($tiki_p_view != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('tiki_p_view');
 // BreadCrumbNavigation here
 // Get the number of pages from the default or userPreferences
 // Remember to reverse the array when posting the array

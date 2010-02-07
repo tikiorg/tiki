@@ -3,37 +3,21 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.8.2.6 2008-03-15 22:21:48 sylvieg Exp $
 require_once ('tiki-setup.php');
 // To include a link in your tpl do
 //<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
+
 $smarty->assign('headtitle', tra('Send a link to a friend '));
 if (empty($_REQUEST['report'])) {
-	if ($prefs['feature_tell_a_friend'] != 'y') {
-		$smarty->assign('msg', tra('This feature is disabled') . ': feature_tell_a_friend');
-		$smarty->display('error.tpl');
-		die;
-	}
-	if ($tiki_p_tell_a_friend != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display('error.tpl');
-		die;
-	}
+	$access->check_feature('feature_tell_a_friend');
+	$access->check_permission('tiki_p_tell_a_friend');
 }
+
 if (!empty($_REQUEST['report']) && $_REQUEST['report'] == 'y') {
-	if ($prefs['feature_site_report'] != 'y') {
-		$smarty->assign('msg', tra('This feature is disabled') . ': feature_site_report');
-		$smarty->display('error.tpl');
-		die;
-	}
-	if ($tiki_p_site_report != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display('error.tpl');
-		die;
-	}
+	$access->check_feature('feature_site_report', '', 'look');
+	$access->check_permission('tiki_p_site_report');
 }
+
 if (empty($_REQUEST['url']) && !empty($_SERVER['HTTP_REFERER'])) {
 	$u = parse_url($_SERVER['HTTP_REFERER']);
 	if ($u['host'] != $_SERVER['SERVER_NAME']) {
