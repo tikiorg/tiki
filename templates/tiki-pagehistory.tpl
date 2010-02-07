@@ -5,10 +5,12 @@
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}
 	{button href="tiki-index.php?page=$thispage" _text="{tr}View page{/tr}"}
-	{if $show_all_versions eq "y"}
-		{button _text="{tr}Show Edit Sessions{/tr}" show_all_versions="n" href="?clear_versions=1" _auto_args="*"}
-	{else}
-		{button _text="{tr}Show All Versions{/tr}" show_all_versions="y" href="?clear_versions=1" _auto_args="*"}
+	{if !isset($noHistory)}
+		{if $show_all_versions eq "y"}
+			{button _text="{tr}Show Edit Sessions{/tr}" show_all_versions="n" href="?clear_versions=1" _auto_args="*"}
+		{else}
+			{button _text="{tr}Show All Versions{/tr}" show_all_versions="y" href="?clear_versions=1" _auto_args="*"}
+		{/if}
 	{/if}
 </div>
 
@@ -22,10 +24,12 @@
 		</div>
 	{/if}
 	<div>
-	  	{if isset($show_all_versions) and $show_all_versions eq "n"}
-			{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Session{/tr} show_numbers="n"}{/pagination_links}
-		{else}
-			{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Version{/tr} show_numbers="n"}{/pagination_links}
+		{if !isset($noHistory)}
+		  	{if isset($show_all_versions) and $show_all_versions eq "n"}
+				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Session{/tr} show_numbers="n"}{/pagination_links}
+			{else}
+				{pagination_links cant=$ver_cant offset=$smarty.request.preview_idx offset_arg="preview_idx" itemname={tr}Version{/tr} show_numbers="n"}{/pagination_links}
+			{/if}
 		{/if}
 	</div>
 	<div class="wikitext">{$previewd}</div>
@@ -40,27 +44,30 @@
 		<div class="navbar"><a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$source}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a></div>
 	{/if}
 	<div>
-	  	{if isset($show_all_versions) and $show_all_versions eq "n"}
-			{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Session{/tr} show_numbers="n"}{/pagination_links}
-		{else}
-			{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Version{/tr} show_numbers="n"}{/pagination_links}
+		{if !isset($noHistory)}
+		  	{if isset($show_all_versions) and $show_all_versions eq "n"}
+				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Session{/tr} show_numbers="n"}{/pagination_links}
+			{else}
+				{pagination_links cant=$ver_cant offset=$smarty.request.source_idx offset_arg="source_idx" itemname={tr}Version{/tr} show_numbers="n"}{/pagination_links}
+			{/if}
 		{/if}
 	</div>
-	<div class="wikitext">{$sourced}</div>
+	<textarea class="wikiedit readonly" style="width:100%;height:400px" readonly="readonly" id="page_source">{$sourced}</textarea>
+	{if $prefs.feature_jquery_ui eq "y"}{jq}$jq("#page_source").resizable();{/jq}{/if}
 {/if}
 
 {include file='pagehistory.tpl'}
 
-<br />
+<hr />
 
-{if (!isset($noHistory))}
+{if !isset($noHistory)}
 	{if $preview || $source || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
 	<form action="tiki-pagehistory.php" method="get">
 		<input type="hidden" name="page" value="{$page|escape}" />
 		<div style="text-align:center;">
 			{if ($prefs.default_wiki_diff_style ne "old") and $history}
 				<div style=" text-align:right;">
-					{if $prefs.javascript_enabled eq y}{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n"}
+					{if $prefs.javascript_enabled eq "y"}{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n"}
 					{jq}
 $jq("#toggle_diffs a").click(function(){
 	if ($jq(this).text() == "{tr}Advanced{/tr}") {
@@ -76,7 +83,7 @@ $jq("#toggle_diffs a").click(function(){
 });
 {{if $diff_style neq "htmldiff" and $diff_style neq "sidediff"}$jq("#toggle_diffs a").click();{/if}}
 					{/jq}{/if}
-					<select name="diff_style" id="diff_style_all"{if $prefs.javascript_enabled eq y} style="display: none"{/if}>
+					<select name="diff_style" id="diff_style_all"{if $prefs.javascript_enabled eq "y"} style="display: none"{/if}>
 						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
 						<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
 						<option value="sidediff-char" {if $diff_style == "sidediff-char"}selected="selected"{/if}>{tr}Side-by-side diff by characters{/tr}</option>
@@ -89,7 +96,7 @@ $jq("#toggle_diffs a").click(function(){
 						<option value="unidiff" {if $diff_style == "unidiff"}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
 						<option value="sideview" {if $diff_style == "sideview"}selected="selected"{/if}>{tr}Side-by-side view{/tr}</option>
 					</select>
-					{if $prefs.javascript_enabled eq y}<select name="diff_style" id="diff_style_simple">
+					{if $prefs.javascript_enabled eq "y"}<select name="diff_style" id="diff_style_simple">
 						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
 						<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
 					</select>{/if}

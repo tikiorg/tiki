@@ -205,23 +205,27 @@ if ($_REQUEST['oldver_idx'] + 1 == $_REQUEST['newver_idx']) {
 if (isset($_REQUEST['source_idx'])) {
 	$source = $history_versions[$_REQUEST['source_idx']];
 } else {
-	if (isset($_REQUEST['source']) && $_REQUEST['source'] > 0) {
+	if (isset($_REQUEST['source'])) {
 		$source = (int)$_REQUEST["source"];
-		$_REQUEST['source_idx'] = array_search($source, $history_versions);
-	} else {
-		$source = $history_versions[count($history_versions)];
-		$_REQUEST['source_idx'] = count($history_versions);
+		if ($source > 0) {
+			$_REQUEST['source_idx'] = array_search($source, $history_versions);
+		} else {
+			$_REQUEST['source_idx'] = count($history_versions) - 1;
+			$smarty->assign('noHistory', true);
+		}
 	}
 }
 if (isset($_REQUEST['preview_idx'])) {
 	$preview = $history_versions[$_REQUEST['preview_idx']];
 } else {
-	if (isset($_REQUEST['preview']) && $_REQUEST['preview'] > 0) {
+	if (isset($_REQUEST['preview'])) {
 		$preview = (int)$_REQUEST["preview"];
-		$_REQUEST['preview_idx'] = array_search($preview, $history_versions);
-	} else {
-		$preview = $history_versions[count($history_versions)];
-		$_REQUEST['preview_idx'] = count($history_versions);
+		if ($_REQUEST['preview'] > 0) {
+			$_REQUEST['preview_idx'] = array_search($preview, $history_versions);
+		} else {
+			$_REQUEST['preview_idx'] = count($history_versions) - 1;
+			$smarty->assign('noHistory', true);
+		}
 	}
 }
 
@@ -233,11 +237,7 @@ if (isset($source)) {
 		$source = $rversion;
 	}
 	if ($source == $info["version"] || $source == 0) {
-		if ($info['is_html'] == 1) {
-			$smarty->assign('sourced', $info["data"]);
-		} else {
-			$smarty->assign('sourced', nl2br($info["data"]));
-		}
+		$smarty->assign('sourced', $info["data"]);
 		$smarty->assign('source', $info['version']);
 	} else {
 		$version = $histlib->get_version($page, $source);
@@ -249,9 +249,6 @@ if (isset($source)) {
 			}
 			$smarty->assign('source', $source);
 		}
-	}
-	if ($source == 0) {
-		$smarty->assign('noHistory', true);
 	}
 }
 $smarty->assign('preview', false);
@@ -271,13 +268,10 @@ if (isset($preview)) {
 			$smarty->assign('preview', $preview);
 		}
 	}
-	if ($preview == 0) {
-		$smarty->assign('noHistory', true);
-	}
 }
-if ($preview) {
+if (isset($preview)) {
 	$smarty->assign('current', $preview);
-} else if ($source) {
+} else if (isset($source)) {
 	$smarty->assign('current', $source);
 } else if ($newver) {
 	$smarty->assign('current', $newver);
