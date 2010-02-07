@@ -329,7 +329,7 @@ function wikiplugin_trackerlist($data, $params) {
 				}
 			}
 			if ($hasVoted) {
-				$url = preg_replace('/vote=y&?/', '', preg_replace('/itemId=[0-9]+&?/', '', preg_replace('/ins_[0-9]+=-?[0-9]*&?/', '', $_SERVER['REQUEST_URI'])));
+				$url = preg_replace('/[(\?)|&]vote=y/', '$1', preg_replace('/[(\?)|&]itemId=[0-9]+/', '$1', preg_replace('/[(\?)|&]ins_[0-9]+=-?[0-9]*/', '$1', $_SERVER['REQUEST_URI'])));
 				header("Location: $url");
 				die;
 			}
