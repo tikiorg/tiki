@@ -8,11 +8,9 @@ $section = 'wiki page';
 $section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/histlib.php');
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_wiki');
-	$smarty->display('error.tpl');
-	die;
-}
+
+$access->check_feature('feature_wiki');
+
 if (!isset($_REQUEST["source"])) {
 	if ($prefs['feature_history'] != 'y') {
 		$smarty->assign('msg', tra('This feature is disabled') . ': feature_history');
@@ -36,7 +34,7 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 
-$auto_query_args = array('page', 'oldver', 'newver', 'compare', 'diff_style', 'show_translation_history', 'show_all_versions');
+$auto_query_args = array('page', 'oldver', 'newver', 'compare', 'diff_style', 'show_translation_history', 'show_all_versions', 'history_offset', 'paginate', 'history_pagesize');
 
 $tikilib->get_perm_object( $_REQUEST['page'], 'wiki page' );
 
@@ -77,8 +75,31 @@ if ($prefs['feature_contribution'] == 'y') {
 	}
 }
 
+$paginate = (isset($_REQUEST['paginate']) && $_REQUEST['paginate'] == 'on') || !isset($_REQUEST['diff_style']);
+$smarty->assign('paginate', $paginate);
+
+if (isset($_REQUEST['history_offset']) && $paginate) {
+	$history_offset = $_REQUEST['history_offset'];
+} else {
+	$history_offset = 0;
+}
+$smarty->assign('history_offset', $history_offset);
+
+if (isset($_REQUEST['history_pagesize']) && $paginate) {
+	$history_pagesize = $_REQUEST['history_pagesize'];
+} else {
+	$history_pagesize = $prefs['maxRecords'];
+}
+$smarty->assign('history_pagesize', $history_pagesize);
+
+if (!isset($_REQUEST['compare'])) {
+	$_REQUEST['diff_style'] = '';
+}
+
 // fetch page history, but omit the actual page content (to save memory)
-$history = $histlib->get_page_history($page, false);
+$history = $histlib->get_page_history($page, false, $history_offset, $paginate ? $history_pagesize : -1);
+$smarty->assign('history_cant', $histlib->get_nb_history($page));
+
 if (!isset($_REQUEST['show_all_versions'])) {
 	$_REQUEST['show_all_versions'] = "y";
 }
@@ -334,6 +355,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 	}
 }
 $current_version = $info["version"];
+$not_comparing = empty($_REQUEST['compare']) ? 'true' : 'false';
 
 $headerlib->add_jq_onready(<<<JS
 \$jq("input[name=oldver], input[name=newver]").change(function () {
@@ -361,8 +383,13 @@ $headerlib->add_jq_onready(<<<JS
 		});
 	}
 });
-\$jq("input[name=newver][checked=checked]").change();
-\$jq("input[name=oldver][checked=checked]").change();
+if (\$jq("input[name=newver][checked=checked]").length) {
+	\$jq("input[name=newver][checked=checked]").change();
+	\$jq("input[name=oldver][checked=checked]").change();
+} else if ($not_comparing) {
+	\$jq("input[name=newver]:eq(0)").attr("checked", "checked").change();
+	\$jq("input[name=oldver]:eq(1)").attr("checked", "checked").change();
+}
 JS
 );
 if (isset($_REQUEST["compare"])) histlib_helper_setup_diff($page, $oldver, $newver);

@@ -136,11 +136,11 @@ class HistLib extends TikiLib
 
 	// Returns all the versions for this page
 	// without the data itself
-	function get_page_history($page, $fetchdata=true) {
+	function get_page_history($page, $fetchdata=true, $offset = 0, $limit = -1) {
 		global $prefs;
 
 		$query = "select * from `tiki_history` where `pageName`=? order by `version` desc";
-		$result = $this->query($query,array($page));
+		$result = $this->query($query,array($page), $limit, $offset);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
