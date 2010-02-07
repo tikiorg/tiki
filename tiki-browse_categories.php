@@ -10,17 +10,9 @@ require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/tree/categ_browse_tree.php');
 $smarty->assign('headtitle', tra('Categories'));
-if ($prefs['feature_categories'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_categories');
-	$smarty->display('error.tpl');
-	die;
-}
-if ($tiki_p_view_category != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('Permission denied'));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_categories');
+$access->check_permission('tiki_p_view_category');
+
 $prefsgroups = $prefs['feature_group_watches'];
 global $prefsgroups, $tiki_p_admin_users, $tiki_p_admin;
 
