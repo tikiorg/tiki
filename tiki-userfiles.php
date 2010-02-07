@@ -3,29 +3,17 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.22.2.1 2007-12-11 22:42:54 pkdille Exp $
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/userfiles/userfileslib.php');
-if ($prefs['feature_userfiles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_userfiles");
-	$smarty->display("error.tpl");
-	die;
-}
-if (!$user) {
-	$smarty->assign('msg', tra("Must be logged to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_userfiles != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_userfiles', '', 'community');
+$access->check_user($user);
+$access->check_permission('tiki_p_userfiles');
+
 $quota = $userfileslib->userfiles_quota($user);
 $limit = $prefs['userfiles_quota'] * 1024 * 1000;
 if ($limit == 0) $limit = 999999999;

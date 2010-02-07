@@ -3,20 +3,13 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-user_contacts_prefs.php,v 1.7.2.1 2007-11-04 22:08:05 nyloth Exp $
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 require_once ('lib/webmail/contactlib.php');
-if (!$user) {
-	$smarty->assign('msg', tra("You must log in to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['feature_contacts'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_contacts");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_contacts', '', 'community');
+$access->check_user($user);
+
 if (!isset($cookietab)) { $cookietab = '1'; }
 if (isset($_REQUEST['prefs'])) {
 	$tikilib->set_user_preference($user, 'user_contacts_default_view', $_REQUEST['user_contacts_default_view']);

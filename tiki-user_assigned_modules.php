@@ -3,28 +3,16 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-user_assigned_modules.php,v 1.20 2007-10-12 07:55:32 nyloth Exp $
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
-$access->check_feature( 'feature_modulecontrols' );
-$access->check_feature( 'user_assigned_modules' );
-
 include_once ('lib/usermodules/usermoduleslib.php');
-if (!$user) {
-	$smarty->assign('msg', tra("You must log in to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
 
-if ($tiki_p_configure_modules != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature( array('feature_modulecontrols', 'user_assigned_modules') );
+$access->check_user($user);
+$access->check_permission('tiki_p_configure_modules');
 
 if (isset($_REQUEST["recreate"])) {
 	check_ticket('user-modules');
@@ -73,10 +61,8 @@ if (count($assignables) > 0) {
 $modules = $usermoduleslib->get_user_assigned_modules($user);
 $smarty->assign('modules_l', $usermoduleslib->get_user_assigned_modules_pos($user, 'l'));
 $smarty->assign('modules_r', $usermoduleslib->get_user_assigned_modules_pos($user, 'r'));
-//print_r($modules);
 $smarty->assign_by_ref('assignables', $assignables);
 $smarty->assign_by_ref('modules', $modules);
-//print_r($modules);
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('user-modules');
 if ($prefs['feature_ajax'] == "y") {

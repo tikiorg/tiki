@@ -3,7 +3,6 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.45.2.4 2008-01-16 15:50:48 sylvieg Exp $
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
@@ -29,14 +28,10 @@ if (isset($_REQUEST['userId'])) {
 		die;
 	}
 } else {
-	if ($user) {
-		$userwatch = $user;
-	} else {
-		$smarty->assign('msg', tra("You are not logged in and no user indicated"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_user($user);
+	$userwatch = $user;
 }
+
 $smarty->assign('userwatch', $userwatch);
 // Custom fields
 $customfields = array();

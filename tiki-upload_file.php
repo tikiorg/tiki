@@ -3,17 +3,14 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.65.2.4 2008-03-11 15:17:54 nyloth Exp $
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
 if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 }
-if ($prefs['feature_file_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_file_galleries");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_file_galleries');
+
 include_once ('lib/filegals/filegallib.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
@@ -68,14 +65,9 @@ if (empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_f
 if (isset($_REQUEST['galleryId'][1])) {
 	foreach($_REQUEST['galleryId'] as $i => $gal) {
 		if (!$i) continue;
-		// TODO get the ggod gal_info
+		// TODO get the good gal_info
 		$perms = $tikilib->get_perm_object($_REQUEST['galleryId'][$i], 'file gallery', $gal_info, false);
-		if ($perms['tiki_p_upload_files'] != 'y') {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied"));
-			$smarty->display('error.tpl');
-			die;
-		}
+		$access->check_permission('tiki_p_upload_files');
 	}
 }
 if (!empty($_REQUEST['fileId'])) {

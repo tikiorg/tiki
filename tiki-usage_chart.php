@@ -3,24 +3,13 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-usage_chart.php,v 1.11 2007-10-12 07:55:32 nyloth Exp $
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_stats'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled") . ": feature_stats");
-  $smarty->display("error.tpl");
-  die;
-}
-if ( $tiki_p_view_stats != 'y' ) {
-  $smarty->assign('errortype', 401);
-  $smarty->assign('msg', tra("You do not have permission to use this feature"));
-  $smarty->display("error.tpl");
-  die;
-}
+$access->check_feature('feature_stats', '', 'general');
+$access->check_permission('tiki_p_view_stats');
 
 require_once ('lib/graph-engine/gd.php');
 require_once ('lib/graph-engine/graph.bar.php');
-
 include_once ('lib/stats/statslib.php');
 
 //Define the object

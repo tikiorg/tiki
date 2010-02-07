@@ -3,23 +3,20 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.46.2.1 2008-03-15 21:11:15 sylvieg Exp $
 $section = 'galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/imagegals/imagegallib.php');
-if ($prefs['feature_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_galleries");
-	$smarty->display("error.tpl");
-	die;
-}
-// Now check permissions to access this page
+
+$access->check_feature('feature_galleries');
+
 if ($tiki_p_upload_images != 'y' and !$tikilib->user_has_perm_on_object($user, $_REQUEST["galleryId"], "image gallery", "tiki_p_upload_images")) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot upload images"));
 	$smarty->display("error.tpl");
 	die;
 }
+
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-upload_image", "tiki-browse_image", $foo["path"]);
 $foo2 = str_replace("tiki-upload_image", "show_image", $foo["path"]);
@@ -37,12 +34,8 @@ if (isset($_REQUEST["upload"])) {
 		$tiki_p_upload_images = 'y';
 		$tiki_p_create_galleries = 'y';
 	}
-	if ($tiki_p_upload_images != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot upload images"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_upload_images');
+
 	$gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
 	if ($gal_info["thumbSizeX"] == 0) $gal_info["thumbSizeX"] = 80;
 	if ($gal_info["thumbSizeY"] == 0) $gal_info["thumbSizeY"] = 80;
@@ -106,7 +99,6 @@ if (isset($_REQUEST["upload"])) {
 				$size = $_FILES['userfile1']['size'];
 				$filename = $_FILES['userfile1']['name'];
 				// Check for a zip file.....
-				// Fixed by Flo
 				if (substr($filename, strlen($filename) - 3) == 'zip') {
 					if ($tiki_p_batch_upload_images == 'y') {
 						if ($imagegallib->process_batch_image_upload($_REQUEST["galleryId"], $_FILES['userfile1']['tmp_name'], $user) == 0) {
@@ -323,6 +315,5 @@ include_once ('tiki-section_options.php');
 ask_ticket('upload-image');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-// Display the template
 $smarty->assign('mid', 'tiki-upload_image.tpl');
 $smarty->display("tiki.tpl");
