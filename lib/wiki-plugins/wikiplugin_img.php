@@ -460,7 +460,7 @@ function wikiplugin_img_info() {
 	//////////////////////Process multiple images //////////////////////////////////////
 	//Process "|" or "," separated images
 	$srcmash = $imgdata['fileId'] . $imgdata['id'] . $imgdata['attId'] . $imgdata['src'];
-	if (( strpos($srcmash, '|') !== FALSE ) || (strpos($srcmash, ',') !== FALSE ))  {
+	if (( strpos($srcmash, '|') !== false ) || (strpos($srcmash, ',') !== false ))  {
 		$id = '';
 		if (!empty($imgdata['id'])) {
 			$id = 'id';
@@ -472,9 +472,9 @@ function wikiplugin_img_info() {
 			$id = 'src';
 		}		
 		$separator = '';
-		if ( strpos($imgdata[$id], '|') !== FALSE ) {
+		if ( strpos($imgdata[$id], '|') !== false ) {
 			$separator = '|';
-		} elseif ( strpos($imgdata[$id], ',') !== FALSE )  {
+		} elseif ( strpos($imgdata[$id], ',') !== false )  {
 			$separator = ',';
 		}
 		$repl = '';
@@ -528,7 +528,7 @@ function wikiplugin_img_info() {
 	///////////////////////////Get DB info for image size and iptc data/////////////////////////////
 	if (!empty($imgdata['height']) || !empty($imgdata['width']) || !empty($imgdata['max']) 
 		|| $imgdata['desc'] == 'desc' || $imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'name' 
-		|| $imgdata['desc'] == 'ititle' || strpos($imgdata['rel'], 'box') != FALSE 
+		|| $imgdata['desc'] == 'ititle' || strpos($imgdata['rel'], 'box') !== false 
 		|| !empty($imgdata['stylebox']) || !empty($imgdata['styledesc']) || !empty($imgdata['button']) 
 		|| !empty($imgdata['thumb'])  || !empty($imgdata['align'])
 	) {
@@ -658,8 +658,8 @@ function wikiplugin_img_info() {
 			preg_match('/(?<=\&x=)[0-9]+(?=.*)/', $src, $urlx);
 			preg_match('/(?<=\&y=)[0-9]+(?=.*)/', $src, $urly);
 			preg_match('/(?<=\&scale=)[0]*\.[0-9]+(?=.*)/', $src, $urlscale);
-			if ($urlthumb != FALSE ) $imgdata['max'] = 120;
-			if ($urlprev != FALSE ) $imgdata['max'] = 800;
+			if ($urlthumb != false ) $imgdata['max'] = 120;
+			if ($urlprev != false ) $imgdata['max'] = 800;
 			if (!empty($urlmax[0]) && $urlmax[0] > 0) $imgdata['max'] = $urlmax[0];
 			if (!empty($urlx[0]) && $urlx[0] > 0) $imgdata['width'] = $urlx[0];
 			if (!empty($urly[0]) && $urly[0] > 0) $imgdata['height'] = $urly[0];
@@ -683,12 +683,12 @@ function wikiplugin_img_info() {
 		) {
 			//Convert % and px in height and width
 			$scale = '';
-			if (strpos($imgdata['height'], '%') != FALSE || strpos($imgdata['width'], '%') != FALSE) {
-				if ((strpos($imgdata['height'], '%') != FALSE && strpos($imgdata['width'], '%') != FALSE) 
+			if (strpos($imgdata['height'], '%') !== false || strpos($imgdata['width'], '%') !== false) {
+				if ((strpos($imgdata['height'], '%') !== false && strpos($imgdata['width'], '%') !== false) 
 					&& (empty($imgdata['fileId']) || (empty($urlx[0]) && empty($urly[0])))) {
 					$imgdata['height'] = floor(rtrim($imgdata['height'], '%') / 100 * $fheight);
 					$imgdata['width'] = floor(rtrim($imgdata['width'], '%') / 100 * $fwidth);
-				} elseif (strpos($imgdata['height'], '%') != FALSE) {
+				} elseif (strpos($imgdata['height'], '%') !== false) {
 					if ($imgdata['fileId']) {
 						$scale = rtrim($imgdata['height'], '%') / 100;
 						$height = floor($scale * $fheight);
@@ -703,8 +703,8 @@ function wikiplugin_img_info() {
 						$imgdata['width'] = floor(rtrim($imgdata['width'], '%') / 100 * $fwidth);
 					}
 				}
-			} elseif (strpos($imgdata['height'], 'px') != FALSE || strpos($imgdata['width'], 'px') != FALSE) {
-				if (strpos($imgdata['height'], 'px') != FALSE) {
+			} elseif (strpos($imgdata['height'], 'px') !== false || strpos($imgdata['width'], 'px') !== false) {
+				if (strpos($imgdata['height'], 'px') !== false) {
 					$imgdata['height'] = rtrim($imgdata['height'], 'px');
 				} else {
 					$imgdata['width'] = rtrim($imgdata['width'], 'px');
@@ -855,16 +855,16 @@ function wikiplugin_img_info() {
 		}
 	}
 	//set entire style string
-	if( !empty($imgdata['styleimage']) || !empty($imalign)) {
+	if( !empty($imgdata['styleimage']) || !empty($imalign) ) {
 		$border = '';
 		$style = '';
 		$borderdef = 'border:1px solid darkgray;';   //default border when styleimage set to border
 		if ( !empty($imgdata['styleimage'])) {
 			if (!empty($imalign)) {
-				if ((strpos(trim($imgdata['styleimage'],' '),'float:') > 0) 
-					|| (strpos(trim($imgdata['styleimage'],' '),'display:') > 0)
+				if ((strpos(trim($imgdata['styleimage'],' '),'float:') !== false) 
+					|| (strpos(trim($imgdata['styleimage'],' '),'display:') !== false)
 				) {
-					$imalign = '';			//override imalign setting is style image contains alignment syntax
+					$imalign = '';			//override imalign setting if style image contains alignment syntax
 				}
 			}
 			if ($imgdata['styleimage'] == 'border') {
@@ -897,7 +897,8 @@ function wikiplugin_img_info() {
 		$imgname = '';
 		$desconly = '';
 		if ( !empty($imgdata['desc']) ) {
-			if (!empty($dbinfo['comment'])) {		//attachment database uses comment instead of description or name
+			//attachment database uses comment instead of description or name
+			if (!empty($dbinfo['comment'])) {
 				$desc = $dbinfo['comment'];
 				$imgname = $dbinfo['comment'];
 			} elseif (isset($dbinfo)) {
@@ -982,32 +983,15 @@ function wikiplugin_img_info() {
 			}
 		}
 		// rel
-		if (!empty($imgdata['rel'])) {
-			if ($imgdata['rel'] == 'box') {
-				$linkrel = ' rel="box';
-				if (!empty($fwidth) && !empty($fheight)) {
-					$linkrel .= ";width=$fwidth;height=$fheight";
-				}
-				$linkrel .= '"';
-				
-			} else {
-				$linkrel = ' rel="'.$imgdata['rel'].'"';
-			}
-		} else {
-			$linkrel = '';
-		}
+		!empty($imgdata['rel']) ? $linkrel = ' rel="'.$imgdata['rel'].'"' : $linkrel = '';
 		// title
-		if ( !empty($imgtitle) ) {
-			$linktitle = $imgtitle;
-		} else {
-			$linktitle = '';
-		}
+		!empty($imgtitle) ? $linktitle = $imgtitle : $linktitle = '';
 		
 		$link = filter_out_sefurl(htmlentities($link), $smarty);
 
 		//Final link string
 		$replimg = '<a href="' . $link . '" class="internal"' . $linkrel . $imgtarget . $linktitle 
-		. $mouseover . '>' . $replimg . '</a>';
+					. $mouseover . '>' . $replimg . '</a>';
 	}
 	
 	//Add link string to rest of string
@@ -1114,9 +1098,9 @@ function wikiplugin_img_info() {
 				if ($imgdata['stylebox'] == 'border') {
 					$borderbox = $borderboxdef;
 					if (!empty($alignbox)) {
-						if ((strpos(trim($imgdata['stylebox'],' '),'float:') > 0) 
-						|| (strpos(trim($imgdata['stylebox'],' '),'display:') > 0)
-					) {
+						if ((strpos(trim($imgdata['stylebox'],' '),'float:') !== false) 
+							|| (strpos(trim($imgdata['stylebox'],' '),'display:') !== false)
+						) {
 							$alignbox = '';			//override imalign setting is style image contains alignment syntax
 						}
 					}
@@ -1127,7 +1111,13 @@ function wikiplugin_img_info() {
 			if (empty($imgdata['button']) && empty($imgdata['desc']) && empty($styleboxinit)) {
 				$styleboxplus = $alignbox . $borderbox . ' width:' . $boxwidth . 'px; height:' . $boxheight . 'px';
 			} elseif (!empty($styleboxinit)) {
-				$styleboxplus = $styleboxinit;
+				if ((strpos(trim($imgdata['stylebox'],' '),'height:') === false) 
+					&& (strpos(trim($imgdata['stylebox'],' '),'width:') === false)
+				) {
+					$styleboxplus = $styleboxinit . ' width:' . $boxwidth . 'px;';
+				} else {
+					$styleboxplus = $styleboxinit;
+				}
 			} else {
 				$styleboxplus = $alignbox . $borderbox . $descdef . ' width:' . $boxwidth . 'px';
 			}
@@ -1142,16 +1132,16 @@ function wikiplugin_img_info() {
 	if( !empty($imgdata['block']) ) {
 		switch ($imgdata['block']) {
 		case 'top': 
-						$repl = "\n\r<br style=\"clear:both\" />\r" . $repl;
-						break;
+			$repl = "\n\r<br style=\"clear:both\" />\r" . $repl;
+			break;
 		case 'bottom': 
-						$repl = $repl . "\n\r<br style=\"clear:both\" />\r";
-						break;
+			$repl = $repl . "\n\r<br style=\"clear:both\" />\r";
+			break;
 		case 'both': 
-						$repl = "\n\r<br style=\"clear:both\" />\r" . $repl . "\n\r<br style=\"clear:both\" />\r";
-						break;
+			$repl = "\n\r<br style=\"clear:both\" />\r" . $repl . "\n\r<br style=\"clear:both\" />\r";
+			break;
 		case 'top': 
-						break;
+			break;
 		} 
 	} 
 	// Mobile
