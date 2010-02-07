@@ -704,23 +704,25 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
-		global $prefs;
-
-		echo "	var g;\n";
-		echo "	function initGrid()\n";
-		echo "	{\n";
+		global $prefs, $headerlib;
 		
-		echo "		g = new Grid( document.getElementById( 'Grid' ) );\n";
+		$js = '';
+
+		$js .= "	var g;\n";
+		$js .= "	function initGrid()\n";
+		$js .= "	{\n";
+		
+		$js .= "		g = new Grid( document.getElementById( 'Grid' ) );\n";
 		
 		for( $i = 0; $sheet->getRowCount() > $i; $i++ )
-			echo "		new Row( g, null );\n";
+			$js .= "		new Row( g, null );\n";
 
 		for( $i = 0; $sheet->getColumnCount() > $i; $i++ )
-			echo "		new Column( g, null );\n";
+			$js .= "		new Column( g, null );\n";
 	   
-		echo "		g.draw();\n";
+		$js .= "		g.draw();\n";
 
-		echo "		var cell;\n";
+		$js .= "		var cell;\n";
 
 		for( $y = 0; $sheet->getRowCount() > $y; $y++ )
 		{
@@ -745,13 +747,13 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 				else
 					$format = "'$format'";
 
-				echo "		cell = g.getIndexCell( $y, $x );\n";
-				echo "		cell.value = '{$calc}';\n";
-				echo "		cell.endValue = '{$value}';\n";
-				echo "		cell.format = {$format};\n";
+				$js .= "		cell = g.getIndexCell( $y, $x );\n";
+				$js .= "		cell.value = '{$calc}';\n";
+				$js .= "		cell.endValue = '{$value}';\n";
+				$js .= "		cell.format = {$format};\n";
 
 				if( !empty( $width ) && !empty( $height ) && ($width != 1 || $height != 1) )
-					echo "		cell.changeSize( {$height}, {$width} );\n";
+					$js .= "		cell.changeSize( {$height}, {$width} );\n";
 			}
 		}
 
@@ -762,14 +764,16 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 			for ($i = $contributions['cant'] - 1; $i >= 0; -- $i) {
 				$name = str_replace("'", "\\'", $contributions['data'][$i]['name']);
 				$j = $contributions['data'][$i]['contributionId'];
-				echo "		g.addContribution($j, '$name');\n";
+				$js .= "		g.addContribution($j, '$name');\n";
 			}
 		}
 	   
-		echo "		g.draw();\n";
-		echo "		g.refresh();\n";
+		$js .= "		g.draw();\n";
+		$js .= "		g.refresh();\n";
 
-		echo "	}\n";
+		$js .= "	}\n";
+		
+		$headerlib->add_js($js);
 
 		return true;
 	}
