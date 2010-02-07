@@ -509,7 +509,7 @@ class SearchLib extends TikiLib
 								. ' where'
 										. ' `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 										. ' and s.`location`= \'tracker\''
-										. ' and ' . $this->cast('s.`page`', 'int') . '=t.`trackerId`'
+										. ' and s.`page`=t.`trackerId`'
 										;
 			$result = $this->query($query, $words, $maxRecords, $offset);
 			$cant1 = 0;
@@ -587,7 +587,7 @@ class SearchLib extends TikiLib
 							. ' from `tiki_searchindex` s, `tiki_galleries` g'
 							.	' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 									.	' and s.`location`=\'imggal\''
-									.	' and ' . $this->cast('s.`page`', 'int') . '=g.`galleryId`'
+									.	' and s.`page`=g.`galleryId`'
 							. ' order by `hits` desc'
 							;
 			$result = $this->query($query, $words, $maxRecords, $offset);
@@ -622,7 +622,7 @@ class SearchLib extends TikiLib
 							. ' from `tiki_searchindex` s, `tiki_images` g, `tiki_galleries` gal'
 							. ' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 								. ' and s.`location`=\'img\''
-								.	' and ' . $this->cast('s.`page`', 'int') . '=g.`imageId`'
+								.	' and s.`page`=g.`imageId`'
 							. ' order by `hits` desc'
 							;
 			$result = $this->query($query, $words, $maxRecords, $offset);
@@ -659,7 +659,7 @@ class SearchLib extends TikiLib
 							. ' from `tiki_searchindex` s, `tiki_blogs` b'
 							.	' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 								. ' and s.`location`=\'blog\''
-								. ' and ' . $this->cast('s.`page`', 'int') . '=b.`blogId`'
+								. ' and s.`page`=b.`blogId`'
 							. ' order by `hits` desc'
 							;
 			$result = $this->query($query, $words, $maxRecords, $offset);
@@ -694,7 +694,7 @@ class SearchLib extends TikiLib
 							. ' from `tiki_searchindex` s, `tiki_blogs` b ,`tiki_blog_posts` bp'
 							. ' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 								. ' and s.`location`=\'blog_post\''
-								.	' and ' . $this->cast('s.`page`', 'int') . '=bp.`postId`'
+								.	' and s.`page`=bp.`postId`'
 								.	' and bp.`blogId`=b.`blogId`'
 							. ' order by `hits` desc'
 							;
@@ -729,7 +729,7 @@ class SearchLib extends TikiLib
 						. ' from `tiki_searchindex` s, `tiki_articles` a'
 						.	' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 							. ' and s.`location`=\'article\''
-							. ' and ' . $this->cast('s.`page`', 'int') . '=a.`articleId`'
+							. ' and s.`page`=a.`articleId`'
 						. ' order by `nbreads` desc';
 			$result = $this->query($query, $words, $maxRecords, $offset);
 			$cant = 0;
@@ -802,7 +802,7 @@ class SearchLib extends TikiLib
 						. ' from `tiki_searchindex` s, `tiki_directory_categories` d'
 						. ' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 							. ' and s.`location`=\'dir_cat\''
-							. ' and ' . $this->cast('s.`page`', 'int') . '=d.`categId`'
+							. ' and s.`page`=d.`categId`'
 						. ' order by `hits` desc'
 						;
 			$result = $this->query($query, $words, $maxRecords, $offset);
@@ -838,7 +838,7 @@ class SearchLib extends TikiLib
 							. ' from `tiki_searchindex` s, `tiki_directory_sites` d ,`tiki_category_sites` cs'
 							. ' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 								. ' and s.`location`=\'dir_site\''
-								. ' and ' . $this->cast('s.`page`', 'int') . '=d.`siteId`'
+								. ' and s.`page`=d.`siteId`'
 								. ' and cs.`siteId`=d.`siteId`'
 								;
 			global $tiki_p_admin;
@@ -881,7 +881,7 @@ class SearchLib extends TikiLib
 							. ' from `tiki_searchindex` s, `tiki_faqs` f'
 							. ' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 								. ' and s.`location`=\'faq\''
-								. ' and ' . $this->cast('s.`page`', 'int') . '=f.`faqId`'
+								. ' and s.`page`=f.`faqId`'
 							. ' order by `hits` desc'
 							;
 			$result = $this->query($query, $words, $maxRecords, $offset);
@@ -917,7 +917,7 @@ class SearchLib extends TikiLib
 							. ' from `tiki_searchindex` s, `tiki_faqs` faq, `tiki_faq_questions` f'
 							. ' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 								. ' and s.`location`=\'faq_question\''
-								. ' and ' . $this->cast('s.`page`', 'int') . '=f.`questionId`'
+								. ' and s.`page`=f.`questionId`'
 								. ' and f.`faqId`=faq.`faqId`'
 							. ' order by `hits` desc'
 							;
@@ -962,7 +962,7 @@ class SearchLib extends TikiLib
 							. ' from `tiki_searchindex` s, `tiki_forums` f'
 							. ' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 								. ' and s.`location`=\'forum\''
-								. ' and ' . $this->cast('s.`page`', 'int') . '=f.`forumId`'
+								. ' and s.`page`=f.`forumId`'
 								. $mid
 							. ' order by `hits` desc'
 							;
@@ -1006,8 +1006,8 @@ class SearchLib extends TikiLib
 							. ' from `tiki_searchindex` s, `tiki_comments` f,`tiki_forums` fo'
 							. ' where `searchword` in (' . implode(',', array_fill(0, count($words), '?')) . ')'
 								. ' and s.`location`=\'forumcomment\''
-								. ' and ' . $this->cast('s.`page`', 'int') . '=f.`threadId`'
-								. ' and fo.`forumId`=' . $this->cast('f.`object`', 'int')
+								. ' and s.`page`=f.`threadId`'
+								. ' and fo.`forumId`=f.`object`'
 								. $mid
 							. ' order by `count` desc'
 							;
@@ -1045,7 +1045,7 @@ class SearchLib extends TikiLib
 							. ' and s.`location`=\'file\''
 							. ' and f.`galleryId`= g.`galleryId`'
 							. ' and f.`archiveId`=0'
-							. ' and ' . $this->cast('s.`page`', 'int') . '=f.`fileId`'
+							. ' and s.`page`=f.`fileId`'
 						. 'order by `count` desc'
 						;
 			$result = $this->query($query, $words, $maxRecords, $offset);
