@@ -62,7 +62,7 @@
 			{/if}
 
 			{if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-				{button href="tiki-objectpermissions.php?objectId=$thispage&amp;objectName=$thispage&amp;objectType=wiki+page&amp;permType=wiki"	_text="{tr}Perms{/tr}"}
+				{button href="tiki-objectpermissions.php?objectId=$thispage&amp;objectName=$thispage&amp;objectType=wiki+page&amp;permType=wiki"	_text="{tr}Permissions{/tr}"}
 			{/if}
 
 			{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
