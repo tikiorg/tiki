@@ -3,7 +3,6 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.21.2.1 2008-03-13 21:00:48 sylvieg Exp $
 $section = 'mytiki';
 include_once ('tiki-setup.php');
 include_once('lib/reportslib.php');
@@ -11,17 +10,10 @@ include_once('lib/reportslib.php');
 if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
-if (!$user) {
-	$smarty->assign('msg', tra("You must log in to use this feature"));
-	$smarty->assign('errortype', '402');
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['feature_user_watches'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_user_watches");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_user($user);
+$access->check_feature('feature_user_watches');
+
 if ($prefs['feature_user_watches_translations']) {
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);

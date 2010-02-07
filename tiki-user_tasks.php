@@ -3,7 +3,6 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.27.2.3 2007-11-04 21:49:20 nyloth Exp $
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {
@@ -11,23 +10,11 @@ if ($prefs['feature_ajax'] == "y") {
 }
 include_once ('lib/tasks/tasklib.php');
 include_once ('lib/messu/messulib.php');
-if ($prefs['feature_tasks'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_tasks");
-	$smarty->display("error.tpl");
-	die;
-}
-if (!$user) {
-	$smarty->assign('msg', tra("Must be logged to use this feature"));
-	$smarty->assign('errortype', '402');
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_tasks != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_tasks', '', 'community');
+$access->check_user($user);
+$access->check_permission('tiki_p_tasks');
+
 if (isset($tiki_p_tasks_admin) && $tiki_p_tasks_admin == 'y') {
 	$task_admin = true;
 } else {

@@ -3,26 +3,23 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.65.2.1 2007-12-07 05:56:38 mose Exp $
-// 2009-02-23 SEWilco
-// Added blogTitle parameter for access by title.
 $section = 'blogs';
 require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
+
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
 }
+
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once ('lib/categories/categlib.php');
 	}
 }
-if ($prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_blogs");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_blogs');
+
 if (isset($_REQUEST["blogTitle"])) {
 	$blog_data = $tikilib->get_blog_by_title(trim(trim($_REQUEST["blogTitle"]) , "\x22\x27"));
 	if ((!empty($blog_data)) && (!empty($blog_data["blogId"]))) {
@@ -36,12 +33,9 @@ if (!isset($_REQUEST["blogId"])) {
 }
 $tikilib->get_perm_object( $_REQUEST["blogId"], 'blog' ); 
 
-if ($tiki_p_read_blog != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you can not view this section"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('tiki_p_read_blog');
+
 $blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
 $ownsblog = 'n';
 if ($user && $user == $blog_data["user"]) {
@@ -78,12 +72,7 @@ if (isset($_REQUEST["remove"])) {
 	}
 	if ($ownsblog == 'n') {
 		if (!$user || $data["user"] != $user) {
-			if ($tiki_p_blog_admin != 'y') {
-				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra("Permission denied you cannot remove the post"));
-				$smarty->display("error.tpl");
-				die;
-			}
+			$access->check_permission('tiki_p_blog_admin');
 		}
 	}
 	$area = 'delpost';

@@ -3,10 +3,10 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.46.2.1 2007-11-24 15:28:37 nyloth Exp $
 $section = 'blogs';
 require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
+
 $auto_query_args = array(
 	'postId',
 	'blogId',
@@ -17,12 +17,9 @@ $auto_query_args = array(
 	'mode',
 	'show_comments'
 );
-// first of all , we just die if blogs feature is not set
-if ($prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_blogs");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_blogs');
+
 if (!isset($_REQUEST['blogId']) && !isset($_REQUEST['postId'])) {
 	$parts = parse_url($_SERVER['REQUEST_URI']);
 	$paths = explode('/', $parts['path']);
@@ -46,12 +43,8 @@ if (!$blog_data) {
 
 $tikilib->get_perm_object($blogId, 'blog');
 
-if ($tiki_p_read_blog != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you can not view this section"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_read_blog');
+
 $ownsblog = 'n';
 if ($user && $user == $blog_data["user"]) {
 	$ownsblog = 'y';

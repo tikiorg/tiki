@@ -3,26 +3,14 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-usermenu.php,v 1.17 2007-10-12 07:55:32 nyloth Exp $
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 include_once ('lib/usermenu/usermenulib.php');
-if ($prefs['feature_usermenu'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_usermenu");
-	$smarty->display("error.tpl");
-	die;
-}
-if (!$user) {
-	$smarty->assign('msg', tra("Must be logged to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_usermenu != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_usermenu');
+$access->check_user($user);
+$access->check_permission('tiki_p_usermenu');
+
 if (!isset($_REQUEST["menuId"])) $_REQUEST["menuId"] = 0;
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["menu"])) {
 	check_ticket('user-menu');

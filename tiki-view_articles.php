@@ -3,7 +3,6 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.41.2.1 2007-11-08 21:47:51 ricks99 Exp $
 $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
@@ -15,24 +14,13 @@ if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 }
 $commentslib = new Comments($dbTiki);
-if ($prefs['feature_articles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_articles");
-	$smarty->display("error.tpl");
-	die;
-}
-if (($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y')) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this section"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_features('feature_articles');
+$access->check_permission( array('tiki_p_read_article', 'tiki_p_articles_read_heading') );
+
 if (isset($_REQUEST["remove"])) {
-	if ($tiki_p_remove_article != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot remove articles"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_remove_article');
+
 	$area = 'delarticle';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);

@@ -3,7 +3,6 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.13 2008-03-05 19:06:23 sylvieg Exp $
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {
@@ -13,17 +12,13 @@ include_once ('lib/modules/modlib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/userprefs/userprefslib.php');
 // User preferences screen
-if ($prefs['feature_userPreferences'] != 'y' && $prefs['change_password'] != 'y' && $tiki_p_admin != 'y') {
+if ($prefs['feature_userPreferences'] != 'y' && $prefs['change_password'] != 'y' && $tiki_p_admin_users != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_userPreferences");
 	$smarty->display("error.tpl");
 	die;
 }
-if (!$user) {
-	$smarty->assign('msg', tra("You are not logged in"));
-	$smarty->assign('errortype', '402');
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_user($user);
+
 // Make sure user preferences uses https if set
 if (!$https_mode && isset($https_login) && $https_login == 'required') {
 	header('Location: ' . $base_url_https . 'tiki-user_preferences.php');
@@ -37,25 +32,16 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 			$smarty->assign('msg', tra("Unknown user"));
 			$smarty->display("error.tpl");
 			die;
-		} elseif ($tiki_p_admin != 'y' and $tiki_p_admin_users != 'y') {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("You do not have permission to view other users data"));
-			$smarty->display("error.tpl");
-			die;
+		} else {
+			$access->check_permission('tiki_p_admin_users');
 		}
 	}
 } elseif (isset($_REQUEST["view_user"])) {
 	if ($_REQUEST["view_user"] != $user) {
-		if ($tiki_p_admin == 'y' or $tiki_p_admin_users == 'y') {
-			$userwatch = $_REQUEST["view_user"];
-			if (!$userlib->user_exists($userwatch)) {
-				$smarty->assign('msg', tra("Unknown user"));
-				$smarty->display("error.tpl");
-				die;
-			}
-		} else {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("You do not have permission to view other users data"));
+		$access->check_permission('tiki_p_admin_users');
+		$userwatch = $_REQUEST["view_user"];
+		if (!$userlib->user_exists($userwatch)) {
+			$smarty->assign('msg', tra("Unknown user"));
 			$smarty->display("error.tpl");
 			die;
 		}

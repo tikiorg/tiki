@@ -4,17 +4,9 @@
 include_once ('tiki-setup.php');
 include_once('lib/reportslib.php');
 
-if (!$user) {
-	$smarty->assign('msg', tra("You must log in to use this feature"));
-	$smarty->assign('errortype', '402');
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['feature_daily_report_watches'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_daily_report_watches");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_user($user);
+$access->check_feature('feature_daily_report_watches');
+
 include_once ('lib/reportslib.php');
 //Enable User Reports
 if (isset($_POST['report_preferences']) && $_POST['use_daily_reports'] == "true") {

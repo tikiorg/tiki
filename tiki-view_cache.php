@@ -3,13 +3,10 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-view_cache.php,v 1.14 2007-10-12 07:55:33 nyloth Exp $
 require_once ('tiki-setup.php');
-if ($prefs['cachepages'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": cachepages");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('cachepages','', 'textarea');
+
 if (isset($_REQUEST['url'])) {
 	$id = $tikilib->get_cache_id($_REQUEST['url']);
 	if (!$id) {
