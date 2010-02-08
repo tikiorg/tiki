@@ -146,7 +146,7 @@ function get_default_prefs() {
 		'wiki_actions_bar' => 'bottom',
 		'wiki_pagename_strip' => '',
 		'wiki_right_column' => 'y',
-		'wiki_structure_bar_positionn' => 'top',
+		'wiki_structure_bar_position' => 'top',
 		'wiki_top_bar' => 'y',
 		'wiki_topline_position' => 'top',
 		'wiki_uses_slides' => 'n',
