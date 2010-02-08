@@ -1,7 +1,7 @@
 # TikiWiki Version: 5.0 [This line is used to check that this htaccess file is up to date. Do not edit this line.]
 #
-# These are suggested Rewrite Rules for use with TikiWiki.
-# They enhance security and permit short URLS. 
+# These are suggested Rewrite Rules for use with Tiki.
+# They enhance security and permit short URLs.
 # In your Tiki instance, visit tiki-admin.php?page=sefurl
 #
 # To use
@@ -17,6 +17,9 @@
 	order deny,allow
 	deny from all
 </FilesMatch>
+
+# By default don't use ETags if not specified. If you got some ETags specified comment out or remove the following line.
+FileETag none
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -111,12 +114,12 @@ RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [L]
 RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]
 
-# Error pages, handled by Apache (not by TikiWiki)
-# TikiWiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors bypass TikiWiki and must be handled by Apache (ex.: impossiblepagename.php) 
+# Error pages, handled by Apache (not by Tiki)
+# Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors bypass Tiki and must be handled by Apache (ex.: impossiblepagename.php) 
 # To use Apache error handling, uncomment the following line and adapt the page name. You must create the page before trying to use it. 
 # ErrorDocument 404 /tiki-index.php?page=Page+not+found
 
-# to active the error display, uncomment
+# to activate the error display, uncomment the following line
 #php_flag display_errors on
 
 </IfModule>
