@@ -6,17 +6,9 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.10 2007-10-12 07:55:28 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/userprefs/userprefslib.php');
-if ($prefs['feature_friends'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_friends');
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_list_users != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_friends');
+$access->check_permission('tiki_p_list_users');
+
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
