@@ -27,20 +27,20 @@ function wikiplugin_trackerlist_info() {
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort'),
-				'description' => 'y|n',
+				'description' => 'y|n'.' '.tra('If y, sort fields'),
 				'filter' => 'alpha'
 			),
 			'popup' => array(
 				'required' => false,
 				'name' => tra('Popup'),
-				'description' => tra('Colon-separated list of fields to display on click. Example: 6:7'),
+				'description' => tra('Colon-separated list of fields to display in a tooltip on mouse over. Example: 6:7'),
 				'filter' => 'digits',
 				'separator' => ':',
 			),
 			'stickypopup' => array(
 				'required' => false,
 				'name' => tra('Sticky Popup'),
-				'description' => 'y|n',
+				'description' => 'y|n'.' '.tra('If y, the tooltip will stay displayed on mouse out'),
 				'filter' => 'alpha'
 			),
 			'showtitle' => array(
@@ -63,7 +63,7 @@ function wikiplugin_trackerlist_info() {
 			),
 			'shownbitems' => array(
 				'required' => false,
-				'name' => tra('shownbitems'),
+				'name' => tra('Show Number of Items'),
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
@@ -112,12 +112,12 @@ function wikiplugin_trackerlist_info() {
 			'sort_mode' => array(
 				'required' => false,
 				'name' => tra('Sort Mode'),
-				'description' => tra('Sort Mode'),
+				'description' => tra('Sort mode. Example: lastModif_desc, created_asc, fieldname_desc, etc.'),
 				'filter' => 'word'
 			),
 			'sortchoice' => array(
 				'required' => false,
-				'name' => tra('Sort choice'),
+				'name' => tra('Sort Choice'),
 				'description' => tra('Sort choice'),
 				'filter' => 'text',
 				'separator' => ':'
@@ -171,30 +171,30 @@ function wikiplugin_trackerlist_info() {
 			'more' => array(
 				'required' => false,
 				'name' => tra('More'),
-				'description' => 'y|n',
+				'description' => 'y|n'.' '.tra('If y, show a more link'),
 				'filter' => 'alpha'
 			),
 			'moreurl' => array(
 				'required' => false,
 				'name' => tra('More URL'),
-				'description' => tra('More Url'),
+				'description' => tra('More link pointing to specified URL instead of default tracker item link'),
 				'filter' => 'url'
 			),
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
-				'description' => 'user|page '.tra('Select automatically the item of the current user or the page'),
+				'description' => 'user|page '.tra('Display automatically the item of the current user or the current page name'),
 				'filter' => 'alpha'
 			),
 			'tpl' => array(
 				'required' => false,
-				'name' => tra('Template'),
-				'description' => tra('?'),
+				'name' => tra('Template File'),
+				'description' => tra('Use content of the tpl file as template to display the item'),
 			),
 			'wiki' => array(
 				'required' => false,
-				'name' => tra('Wiki'),
-				'description' => tra('?'),
+				'name' => tra('Wiki Page'),
+				'description' => tra('Use content of the wiki page as template to display the item'),
 				'filter' => 'pagename'
 			),
 			'view_user' => array(
