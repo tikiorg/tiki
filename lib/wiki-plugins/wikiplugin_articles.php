@@ -32,16 +32,19 @@ function wikiplugin_articles_info()
 				'required' => false,
 				'name' => tra('Topics expression'),
 				'description' => '[!]topic+topic+topic',
+				'filter' => 'striptags',
 			),
 			'topicId' => array(
 				'required' => false,
 				'name' => tra('Topic ID expression'),
 				'description' => '[!]topicId+topicId+topicId',
+				'filter' => 'striptags',
 			),
 			'type' => array(
 				'required' => false,
 				'name' => tra('Type expression'),
 				'description' => '[!]type+type+type',
+				'filter' => 'striptags',
 			),
 			'categId' => array(
 				'required' => false,
@@ -65,21 +68,25 @@ function wikiplugin_articles_info()
 				'required' => false,
 				'name' => tra('Quiet'),
 				'description' => tra('Whether to not report when there are no articles.'),
+				'filter' => 'alpha',
 			),
 			'titleonly' => array(
 				'required' => false,
 				'name' => tra('Title only'),
 				'description' => tra('Whether to only show the title of the articles.') . ' (n|y)',
+				'filter' => 'alpha',
 			),
 			'fullbody' => array(
 				'required' => false,
 				'name' => tra('Show body'),
 				'description' => tra('Whether to only show the body of the articles or just the heading.') . ' (n|y)',
+				'filter' => 'alpha',
 			),
 			'start' => array(
 				'required' => false,
 				'name' => tra('Starting article'),
 				'description' => tra('The article number that the list should start with.'),
+				'filter' => 'int',
 			),
 			'dateStart' => array(
 				'required' => false,
@@ -92,6 +99,12 @@ function wikiplugin_articles_info()
 				'name' => tra('End date'),
 				'description' => tra('Latest date to select articles from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
+			),
+			'containerClass' => array(
+				'required' => false,
+				'name' => tra('Container class'),
+				'description' => tra('CSS Class to add to the container DIV.article. (Default="wikiplugin_articles")'),
+				'filter' => 'striptags',
 			),
 		),
 	);
@@ -130,6 +143,9 @@ function wikiplugin_articles($data, $params)
 	if (!isset($quiet))
 		$quiet = 'n';
 	$smarty->assign_by_ref('quiet', $quiet);
+	
+	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
+	$smarty->assign('container_class', $containerClass);
 	
 	if (isset($dateStart)) {
 		$dateStartTS = strtotime($dateStart);
@@ -188,7 +204,6 @@ function wikiplugin_articles($data, $params)
 		$smarty->assign_by_ref('type', $type);
 	}
 
-	$smarty->assign('container_class', 'wikiplugin_articles');
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 
 	if (isset($titleonly) && $titleonly == 'y') {
