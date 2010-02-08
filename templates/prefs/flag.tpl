@@ -11,7 +11,7 @@
 	</div>
 	{include file=prefs/shared-dependencies.tpl}
 	{jq}
-if ($jq('{{$p.preference|escape}}_childcontainer').length) {
+if ($jq('#{{$p.preference|escape}}_childcontainer').length) {
 	$jq('#{{$p.id|escape}}').change( function() {
 		var id = '{{$p.preference|escape}}_childcontainer';
 		if( $jq('#{{$p.id|escape}}').attr('checked') || $jq('#{{$p.id|escape}}').attr('disabled') ) {

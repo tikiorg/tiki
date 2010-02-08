@@ -22,7 +22,7 @@ if( ! $jq('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').attr('chec
 }
 $jq('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').change( function() {
 	if( $jq('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').attr('checked') ) {
-		show('{{$p.preference|escape}}_childcontainer_{{$smarty.foreach.loop.index}}');
+		show('#{{$p.preference|escape}}_childcontainer_{{$smarty.foreach.loop.index}}');
 	}
 } );
 {/jq}

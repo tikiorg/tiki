@@ -14,7 +14,7 @@
 	{/if}
 	{include file=prefs/shared-dependencies.tpl}
 	{jq}
-if ($jq('{{$p.preference|escape}}_childcontainer').length) {
+if ($jq('.{{$p.preference|escape}}_childcontainer').length) {
 	$jq('#{{$p.id|escape}}').change( function( e ) {
 		$jq('.{{$p.preference|escape}}_childcontainer').hide();
 		$jq('.{{$p.preference|escape}}_childcontainer.' + $jq(this).val()).show();
