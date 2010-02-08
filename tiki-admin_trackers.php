@@ -7,8 +7,8 @@
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/groupalert/groupalertlib.php');
-$acess->check_feature('feature_trackers');
-$acess->check_permission('tiki_p_admin_trackers');
+$access->check_feature('feature_trackers');
+$access->check_permission('tiki_p_admin_trackers');
 $auto_query_args = array();
 
 if (!isset($_REQUEST["trackerId"])) {
