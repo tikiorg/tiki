@@ -310,4 +310,4 @@
   {/if}
 
 </table>
-<script type="text/javascript" src="lib/filegals/backlinks.js"></script>
+{jq}$jq('a.fgalbacklink').cluetip({showTitle:false, sticky:true});{/jq}
