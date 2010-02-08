@@ -71,7 +71,7 @@ function smarty_function_icon($params, &$smarty) {
 		if ( ($pos = strrpos($params['_id'], '.')) !== false )
 			$icons_extension = substr($params['_id'], $pos);
 
-		$params['_id'] = ereg_replace('(^'.$icons_basedir.'|'.$icons_extension.'$)', '', $params['_id']);
+		$params['_id'] = preg_replace('/^'.str_replace('/', '\/',$icons_basedir).'|'.$icons_extension.'$/', '', $params['_id']);
 	} else {
 		$icons_basedir = $basedirs[0].'/';
 	}
