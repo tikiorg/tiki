@@ -24,10 +24,9 @@
 
 		{if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
 			{if $displayedcals|@count eq 1}
-				{button href="tiki-admin_calendars.php?calendarId=$displayedcals[0]" _text="{tr}Admin Calendar{/tr}"}
-			{else}
-				{button href="tiki-admin_calendars.php" _text="{tr}Admin Calendar{/tr}"}
+				{button href="tiki-admin_calendars.php?calendarId=$displayedcals[0]" _text="{tr}Edit Calendar{/tr}"}
 			{/if}
+			{button href="tiki-admin_calendars.php" _text="{tr}Admin Calendars{/tr}"}
 		{/if}
 {* avoid Add Event being shown if no calendar is displayed *}
 		{if $tiki_p_add_events eq 'y'}
