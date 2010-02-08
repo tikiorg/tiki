@@ -7,11 +7,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 
-if ($prefs['feature_trackers'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_trackers');
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_trackers');
 
 if (!isset($_REQUEST['trackerId'])) {
 	$smarty->assign('msg', tra('No tracker indicated'));

@@ -7,26 +7,8 @@
 $section = 'user_messages';
 require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
-if (!$user) {
-	if ($prefs['feature_redirect_on_error'] == 'y') {
-		header('location: ' . $prefs['tikiIndex']);
-		die;
-	} else {
-		$smarty->assign('msg', tra("You are not logged in"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
-if ($prefs['feature_messages'] != 'y') {
-	if ($prefs['feature_redirect_on_error'] == 'y') {
-		header('location: ' . $prefs['tikiIndex']);
-		die;
-	} else {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_messages");
-		$smarty->display("error.tpl");
-		die;
-	}
-}
+$access->check_user($user);
+$access->check_feature('feature_messages');
 $access->check_permission('tiki_p_messages');
 
 if (isset($_REQUEST["delete"])) {

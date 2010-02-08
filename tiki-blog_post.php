@@ -10,13 +10,9 @@ include_once ('lib/categories/categlib.php');
 include_once ('lib/blogs/bloglib.php');
 include_once ('lib/wiki/editlib.php');
 $smarty->assign('headtitle', tra('Edit Post'));
+$access->check_feature('feature_blogs');
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
-}
-if ($prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_blogs");
-	$smarty->display("error.tpl");
-	die;
 }
 if (isset($_REQUEST['blogId'])) {
 	$blogId = $_REQUEST['blogId'];

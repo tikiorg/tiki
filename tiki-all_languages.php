@@ -7,17 +7,7 @@ include_once('lib/multilingual/multilinguallib.php');
 include_once('lib/wiki/wikilib.php');
 include_once('lib/wiki/renderlib.php');
 
-if ($prefs['feature_multilingual'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_multilingual");
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($prefs['feature_multilingual_one_page'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_multilingual_one_page");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature(array('feature_multilingual', 'feature_multilingual_one_page'));
 
 if( !isset($_REQUEST['page']) ) {
 	header('Location: tiki-index.php');

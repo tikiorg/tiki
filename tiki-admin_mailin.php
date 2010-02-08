@@ -7,18 +7,9 @@
 require_once ('tiki-setup.php');
 include_once ('lib/mailin/mailinlib.php');
 //check if feature is on
-if ($prefs['feature_mailin'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_mailin");
-	$smarty->display("error.tpl");
-	die;
-}
-//check permissions
-if ($tiki_p_admin_mailin != 'y' and $tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_mailin');
+$access->check_permission(array('tiki_p_admin_mailin', 'tiki_p_admin'));
+
 function account_ok($pop, $user, $pass) {
 	//include_once ("lib/webmail/pop3.php");
 	include_once ("lib/webmail/net_pop3.php");

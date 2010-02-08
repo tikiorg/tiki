@@ -9,22 +9,9 @@ $section = 'blogs';
 require_once ('tiki-setup.php');
 include_once ('lib/rankings/ranklib.php');
 $smarty->assign('headtitle', tra('Rankings'));
-if ($prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_blogs");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['feature_blog_rankings'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_blog_rankings");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_read_blog != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this section"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature(array('feature_blogs', 'feature_blog_rankings'));
+$access->check_permission('tiki_p_read_blog');
+
 $allrankings = array(
 	array(
 		'name' => tra('Top visited blogs') ,

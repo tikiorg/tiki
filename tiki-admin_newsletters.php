@@ -7,11 +7,8 @@
 // Initialization
 $section = 'newsletters';
 require_once ('tiki-setup.php');
-if ($prefs['feature_newsletters'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_newsletters");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_newsletters');
+
 global $nllib;
 include_once ('lib/newsletters/nllib.php');
 $auto_query_args = array(

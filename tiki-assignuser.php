@@ -13,12 +13,7 @@ require_once ('tiki-setup.php');
 
 $auto_query_args = array('sort_mode', 'offset', 'find', 'assign_user', 'group', 'maxRecords');
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y' && $tiki_p_subscribe_groups != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission(array('tiki_p_admin', 'tiki_p_admin_users', 'tiki_p_subscribe_groups'));
 
 if (!isset($_REQUEST["assign_user"]) || ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y')) {
 	$_REQUEST['assign_user'] = $user;

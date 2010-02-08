@@ -7,11 +7,7 @@
 $section = 'surveys';
 require_once ('tiki-setup.php');
 include_once ('lib/surveys/surveylib.php');
-if ($prefs['feature_surveys'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_surveys");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_surveys');
 
 $auto_query_args = array(
 	'surveyId',
@@ -42,12 +38,7 @@ if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
 		}
 	}
 }
-if ($tiki_p_admin_surveys != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You don't have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin_surveys');
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-surveys');
 	$sid = $srvlib->replace_survey($_REQUEST["surveyId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["status"]);

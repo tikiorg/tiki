@@ -6,12 +6,7 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.31.2.3 2007-11-27 14:53:11 sylvieg Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/menubuilder/menulib.php');
-if ($tiki_p_admin != 'y' && $tiki_p_edit_menu_option != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission(array('tiki_p_admin', 'tiki_p_edit_menu_option'));
 if (!isset($_REQUEST["menuId"])) {
 	$smarty->assign('msg', tra("No menu indicated"));
 	$smarty->display("error.tpl");

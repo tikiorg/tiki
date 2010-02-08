@@ -17,11 +17,7 @@ $auto_query_args = array(
 	'offset_g',
 	'find_g'
 );
-if ($prefs['feature_newsletters'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_newsletters");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_newsletters');
 if (!isset($_REQUEST["nlId"])) {
 	$smarty->assign('msg', tra("No newsletter indicated"));
 	$smarty->display("error.tpl");
@@ -45,12 +41,7 @@ if ($userlib->object_has_one_permission($_REQUEST["nlId"], 'newsletter')) {
 		}
 	}
 }
-if ($tiki_p_admin_newsletters != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin_newsletters');
 if ($_REQUEST["nlId"]) {
 	$info = $nllib->get_newsletter($_REQUEST["nlId"]);
 } else {

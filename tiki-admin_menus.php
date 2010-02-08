@@ -11,12 +11,8 @@ $auto_query_args = array(
 	'sort_mode',
 	'menuId'
 );
-if ($tiki_p_admin != 'y' && $tiki_p_edit_menu != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission(array('tiki_p_admin', 'tiki_p_edit_menu'));
+
 if (!isset($_REQUEST["menuId"])) {
 	$_REQUEST["menuId"] = 0;
 }

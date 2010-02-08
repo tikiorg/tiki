@@ -9,17 +9,8 @@ include_once ('lib/polls/polllib.php');
 if (!isset($polllib)) {
 	$polllib = new PollLib;
 }
-if ($prefs['feature_polls'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_polls");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin_polls != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_polls');
+$access->check_permission('tiki_p_admin_polls');
 
 $auto_query_args = array('pollId', 'sort_mode', 'offset', 'find');
 

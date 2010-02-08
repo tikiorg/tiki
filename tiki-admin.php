@@ -11,12 +11,8 @@ $tikifeedback = array();
 $auto_query_args = array(
 	'page'
     );
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin');
+
 function add_feedback( $name, $message, $st, $num = null ) {
 	global $tikifeedback;
 	$tikifeedback[] = array(

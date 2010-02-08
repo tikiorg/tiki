@@ -16,12 +16,8 @@ $auto_query_args = array(
 if (!isset($rsslib)) {
 	$rsslib = new RssLib;
 }
-if ($tiki_p_admin_rssmodules != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin_rssmodules');
+
 if (isset($_REQUEST["rssId"])) {
 	$smarty->assign('rssId', $_REQUEST["rssId"]);
 }

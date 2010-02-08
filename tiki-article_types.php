@@ -12,21 +12,10 @@ include_once ('lib/articles/artlib.php');
 
 $smarty->assign('headtitle',tra('Admin Article Types'));
 
-if ($prefs['feature_articles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_articles');
 
 // PERMISSIONS: NEEDS p_admin or tiki_p_articles_admin_types
-if ($tiki_p_admin_cms != 'y' && $tiki_p_articles_admin_types != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission(array('tiki_p_admin_cms', 'tiki_p_articles_admin_types'));
 
 if(isset($_REQUEST["add_type"])) {
 	$artlib->add_type($_REQUEST["new_type"]);

@@ -14,11 +14,8 @@ $auto_query_args = array(
 	'sort_mode',
 	'maxRecords'
 );
-if ($prefs['feature_surveys'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_surveys");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_surveys');
+
 if (!isset($_REQUEST["surveyId"])) {
 	$smarty->assign('msg', tra("No survey indicated"));
 	$smarty->display("error.tpl");
@@ -42,12 +39,8 @@ if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
 		}
 	}
 }
-if ($tiki_p_admin_surveys != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin_surveys');
+
 $survey_info = $srvlib->get_survey($_REQUEST["surveyId"]);
 $smarty->assign('survey_info', $survey_info);
 if (!isset($_REQUEST["questionId"])) {

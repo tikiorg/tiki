@@ -6,16 +6,8 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-backlinks.php,v 1.15 2007-10-12 07:55:24 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_wiki");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['feature_backlinks'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_backlinks");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature(array('feature_wiki', 'feature_backlinks'));
+
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("No page indicated"));
@@ -32,12 +24,8 @@ if (!($info = $tikilib->get_page_info($page))) {
 }
 // Now check permissions to access this page
 $tikilib->get_perm_object($page, 'wiki page', $info);
-if ($tiki_p_view != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot view backlinks for this page"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_view');
+
 // If the page doesn't exist then display an error
 if (!$tikilib->page_exists($page)) {
 	$smarty->assign('msg', tra("The page cannot be found"));

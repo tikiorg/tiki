@@ -8,17 +8,9 @@ $section = 'freetags';
 require_once ('tiki-setup.php');
 include_once ('lib/freetag/freetaglib.php');
 $smarty->assign('headtitle', tra('Tags'));
-if ($prefs['feature_freetags'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_freetags");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_view_freetags != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_freetags');
+$access->check_permission('tiki_p_view_freetags');
+
 if (isset($_REQUEST['del'])) {
 	if ($tiki_p_admin == 'y' || $tiki_p_unassign_freetags == 'y') {
 		$freetaglib->delete_object_tag($_REQUEST['itemit'], $_REQUEST['typeit'], $_REQUEST['tag']);

@@ -29,12 +29,8 @@ $inputConfiguration = array(
 // Initialization
 require_once ('tiki-setup.php');
 include_once ('lib/notifications/notificationlib.php');
-if ($tiki_p_admin != 'y' && $tiki_p_admin_notifications != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission(array('tiki_p_admin', 'tiki_p_admin_notifications'));
+
 $auto_query_args = array(
 	'offset',
 	'sort_mode',

@@ -5,12 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.28.2.5 2008/03/24 14:51:10 sylvieg Exp $
 require_once ('tiki-setup.php');
-if ($tiki_p_admin != 'y' && $tiki_p_clean_cache != 'y') { // admin test needed for the first inclusion of this perm before clearing the cache
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('You do not have permission to use this feature'));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_permission(array('tiki_p_admin', 'tiki_p_clean_cache'));
+
 $done = '';
 $output = '';
 $buf = '';

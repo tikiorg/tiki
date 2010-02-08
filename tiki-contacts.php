@@ -7,11 +7,7 @@
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_contacts'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_contacts");
-  $smarty->display("error.tpl");
-  die;
-}
+$access->checkèfeature('feature_contacts');
 include_once ('lib/webmail/contactlib.php');
 
 $auto_query_args = array(

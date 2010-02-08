@@ -16,14 +16,9 @@ include_once ('lib/commentslib.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/contribution/contributionlib.php');
 $commentslib = new Comments($dbTiki);
+$access->check_user($user);
 $access->check_feature('feature_actionlog');
-
-if (empty($user) || ($tiki_p_view_actionlog != 'y' && $tiki_p_view_actionlog_owngroups != 'y')) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission(array('tiki_p_view_actionlog', 'tiki_p_view_actionlog_owngroups'));
 $auto_query_args = array(
 		'actionId',
 		'startDate_Day',

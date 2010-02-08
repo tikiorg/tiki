@@ -7,17 +7,8 @@
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/groupalert/groupalertlib.php');
-if ($prefs['feature_trackers'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_trackers");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin_trackers != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You don't have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$acess->check_feature('feature_trackers');
+$acess->check_permission('tiki_p_admin_trackers');
 $auto_query_args = array();
 
 if (!isset($_REQUEST["trackerId"])) {

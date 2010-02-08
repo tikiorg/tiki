@@ -8,17 +8,16 @@ $section = 'galleries';
 require_once ('tiki-setup.php');
 include_once ("lib/imagegals/imagegallib.php");
 include_once ('lib/stats/statslib.php');
+
+$access->check_feature('feature_galleries');
+
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once ('lib/categories/categlib.php');
 	}
 }
-if ($prefs['feature_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_galleries");
-	$smarty->display("error.tpl");
-	die;
-}
+
 if ($_REQUEST["galleryId"] == 0 && $tiki_p_admin_galleries != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot access this gallery"));
@@ -34,12 +33,8 @@ $smarty->assign('individual', 'n');
 
 $tikilib->get_perm_object( $_REQUEST['galleryId'], 'image gallery' );
 
-if ( $tiki_p_view_image_gallery != 'y' ) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you can not view this section"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_view_image_gallery');
+
 $auto_query_args = array(
 	'offset',
 	'galleryId',

@@ -17,19 +17,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 }
 
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($prefs['feature_wikiapproval'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wikiapproval");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature(array('feature_wiki', 'feature_wikiapproval'));
 
 // Get the page from the request var or fail
 if (!isset($_REQUEST["page"])) {
@@ -73,11 +61,7 @@ if (!$tikilib->page_exists($page) || !$tikilib->page_exists($staging_page)) {
 // Check approved page edit permissions
 $info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
-if ($tiki_p_edit != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_edit');
 
 // get staging page info
 

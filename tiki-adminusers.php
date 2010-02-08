@@ -6,12 +6,11 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76.2.6 2008-03-13 16:54:36 sylvieg Exp $
 $tikifeedback = array();
 require_once ('tiki-setup.php');
-if (!($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) { // temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't clean the temp/cache each time you sqlupgrade the perms setting is not synchornous with the cache
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+// temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't
+// clean the temp/cache each time you sqlupgrade the perms setting is not
+// synchornous with the cache
+$access->check_permission(array('tiki_p_admin', 'tiki_p_admin_users'));
+
 if ($tiki_p_admin != 'y') {
 	$userGroups = $userlib->get_user_groups_inclusion($user);
 	$smarty->assign_by_ref('userGroups', $userGroups);

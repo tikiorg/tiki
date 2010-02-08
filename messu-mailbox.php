@@ -10,27 +10,8 @@ if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/messu/messulib.php');
-if (!$user) {
-	if ($prefs['feature_redirect_on_error'] == 'y') {
-		header('location: ' . $prefs['tikiIndex']);
-		die;
-	} else {
-		$smarty->assign('msg', tra("You are not logged in"));
-		$smarty->assign('errortype', '402');
-		$smarty->display("error.tpl");
-		die;
-	}
-}
-if ($prefs['feature_messages'] != 'y') {
-	if ($prefs['feature_redirect_on_error'] == 'y') {
-		header('location: ' . $prefs['tikiIndex']);
-		die;
-	} else {
-		$smarty->assign('msg', tra("This feature is disabled") . ": feature_messages");
-		$smarty->display("error.tpl");
-		die;
-	}
-}
+$access->check_user($user);
+$access->check_feature('feature_messages');
 $access->check_permission('tiki_p_messages');
 $maxRecords = $messulib->get_user_preference($user, 'mess_maxRecords', 20);
 // auto-archiving of read mails?

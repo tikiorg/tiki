@@ -8,11 +8,8 @@
 $section = 'calendar';
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_calendar'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
-  $smarty->display("error.tpl");
-  die;
-}
+$access->check_feature('feature_calendar');
+
 include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/newsletters/nllib.php');
 include_once ('lib/calendar/calrecurrence.php');
@@ -108,12 +105,7 @@ if ($calendar['personal'] == 'y') {
 	$tiki_p_change_events = $ownCal;
 }
 
-if( $tiki_p_view_calendar != 'y' ) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg',tra("Permission denied. You cannot view this page."));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_view_calendar');
 
 if (isset($_REQUEST['save']) && !isset($_REQUEST['preview']) && !isset($_REQUEST['act'])) {
 	$_REQUEST['changeCal'] = 'y';

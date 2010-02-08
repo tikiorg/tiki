@@ -14,27 +14,8 @@ include_once ('lib/rankings/ranklib.php');
 
 $smarty->assign('headtitle',tra('Rankings'));
 
-if ($prefs['feature_articles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($prefs['feature_cms_rankings'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_cms_rankings");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_read_article != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this section"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature(aaray('feature_articles', 'feature_cms_rankings'));
+$acess->check_permission('tiki_p_read_article');
 
 $allrankings = array(
 	array(

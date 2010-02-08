@@ -9,23 +9,9 @@ require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 include_once ('lib/categories/categlib.php');
 include_once ("lib/ziplib.php");
-if ($tiki_p_view != 'y') {
-	// This allows tiki_p_view in, in order to see structure tree - security hardening for editing features below.
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_wiki');
-	$smarty->display('error.tpl');
-	die;
-}
-if ($prefs['feature_wiki_structure'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_wiki_structure');
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature(array('feature_wiki', 'feature_wiki_structure'));
+$access->check_permission('tiki_p_view');
+
 // start security hardened section
 if ($tiki_p_edit_structures == 'y') {
 	if (isset($_REQUEST['rremove'])) {

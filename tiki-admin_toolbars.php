@@ -20,12 +20,7 @@ require_once 'tiki-setup.php';
 require_once 'lib/toolbars/toolbarslib.php';
 
 $access->check_permission('tiki_p_admin');
-
-if ($prefs['javascript_enabled'] != 'y') {
-	$smarty->assign('msg', tra("JavaScript is required for this page"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('javascript_enabled');
 
 $sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps', 'admin');
 

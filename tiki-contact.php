@@ -13,22 +13,8 @@ include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 
 // This feature needs both 'feature_contact' and 'feature_messages' to work
-if ($prefs['feature_contact'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_contact');
-	$smarty->display('error.tpl');
-	die;
-}
-if ($prefs['feature_messages'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_messages');
-	$smarty->display('error.tpl');
-	die;
-}
-
-if ($prefs['contact_anon'] != 'y' && !$user) {
-	$smarty->assign('msg', 'You are not logged in');
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature(array('feature_contact', 'feature_messages', 'contact_anon'));
+$access->check_page($user,'contact_anon');
 
 $auto_query_args = array();
 

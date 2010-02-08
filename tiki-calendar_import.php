@@ -12,17 +12,8 @@ $section = 'calendar';
 require_once ('tiki-setup.php');
 require_once ('lib/calendar/calendarlib.php');
 
-if ($prefs['feature_calendar'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_admin_calendar != 'y') {
-	$smarty->assign('msg', tra("Access Denied").": feature_calendar");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_calendar');
+$access->check_permission('tiki_p_admin_calendar');
 
 if (isset($_REQUEST["import"]) && isset($_REQUEST["calendarId"]) && isset($_FILES["fileCSV"])) {
 	if ($calendarlib->importCSV($_FILES["fileCSV"]["tmp_name"], $_REQUEST["calendarId"]))

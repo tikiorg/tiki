@@ -9,12 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_custom_home'] != 'y') {
-	$smarty->assign('msg', tra("This feature has been disabled"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_custom_home');
 
 // Display the template
 $smarty->assign('mid', 'tiki-custom_home.tpl');

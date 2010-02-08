@@ -8,23 +8,11 @@ $section = 'galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/imagegals/imagegallib.php');
-if ($prefs['feature_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_galleries");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['feature_gal_batch'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_gal_batch");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature(array('feature_galleries', 'feature_gal_batch'));
+
 // Now check permissions to access this page
-if ($tiki_p_batch_upload_image_dir != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot use the batch directory loading"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_batch_upload_image_dir');
+
 // check directory path
 if (!isset($prefs['gal_batch_dir']) or !is_dir($prefs['gal_batch_dir'])) {
 	$msg = tra("Incorrect directory chosen for batch upload of images.") . "<br />";

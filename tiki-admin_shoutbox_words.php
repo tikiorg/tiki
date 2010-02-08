@@ -9,17 +9,9 @@
 // Initialization
 require_once ('tiki-setup.php');
 include_once ('lib/shoutbox/shoutboxlib.php');
-if ($prefs['feature_shoutbox'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_shoutbox");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin_shoutbox != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->cheack_feature('feature_shoutbox');
+$access->check_ermission('tiki_p_admin_shoutbox');
+
 // Do the add bad word form here
 if (isset($_REQUEST["add"])) {
 	check_ticket('admin-shoutboxwords');

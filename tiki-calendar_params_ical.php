@@ -8,11 +8,7 @@
 $section = 'calendar';
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_calendar'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_calendar');
 
 include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/categories/categlib.php');

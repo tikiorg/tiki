@@ -10,12 +10,8 @@ include_once ('lib/polls/polllib.php');
 if (!isset($polllib)) {
 	$polllib = new PollLib;
 }
-if ($tiki_p_admin_polls != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('tiki_p_admin_polls');
+
 if (!isset($_REQUEST["pollId"])) {
 	$smarty->assign('msg', tra("No poll indicated"));
 	$smarty->display("error.tpl");
