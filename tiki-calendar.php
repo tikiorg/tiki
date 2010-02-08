@@ -162,6 +162,9 @@ include_once("tiki-calendar_setup.php");
 
 // Calculate all the displayed days for the selected calendars
 $viewdays = array();
+if (empty($_SESSION['CalendarViewGroups'])) {
+	$viewdays = array(0,1,2,3,4,5,6);
+}
 foreach($_SESSION['CalendarViewGroups'] as $calendar) {
 	$info = $calendarlib->get_calendar($calendar);
 	$viewdays = array_merge($info['viewdays'],$viewdays);
