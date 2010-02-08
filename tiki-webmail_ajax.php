@@ -219,7 +219,7 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 		$ext = $contactlib->get_ext_by_name($user, tra('Wiki Page'), $contId);
 	}
 	
-	$arr = split(" ", trim(html_entity_decode($m['sender']['name']), '"\' '), 2);
+	$arr = explode(" ", trim(html_entity_decode($m['sender']['name']), '"\' '), 2);
 	if (count($arr) < 2) {
 		$arr[] = '';
 	}

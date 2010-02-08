@@ -1,12 +1,7 @@
 <?php
 include 'tiki-setup.php';
 include_once ('lib/trackers/trackerlib.php');
-
-if ($prefs['feature_gmap'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').": feature_gmap");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_gmap');
 $auto_query_args = array('for', 'itemId', 'fieldId', 'trackerId', 'view_user');
 
 if ($tiki_p_admin == 'y' and isset($_REQUEST['view_user']) and $userlib->user_exists($_REQUEST['view_user'])) {
@@ -65,7 +60,7 @@ if (isset($_REQUEST['set_default']) && ($user == $userwatch || $tiki_p_admin =='
       				}
     			}
   		}
-		$xyz = split(',', $trklib->get_item_value($_REQUEST['trackerId'],$_REQUEST['itemId'],$_REQUEST['fieldId']));
+		$xyz = explode(',', $trklib->get_item_value($_REQUEST['trackerId'],$_REQUEST['itemId'],$_REQUEST['fieldId']));
   		$pointx = $xyz['0'];
   		$pointy = $xyz['1'];
   		$pointz = $xyz['2'];

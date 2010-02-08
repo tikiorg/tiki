@@ -8,17 +8,9 @@
 
 @ini_set('max_execution_time', 0); //will not work if safe_mode is on
 require_once('tiki-setup.php');
+$access->check_feature('feature_trackers');
+$access->check_feature('feature_ajax');
 
-if ($prefs['feature_trackers'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_trackers');
-	$smarty->display('error.tpl');
-	die;
-}
-if ($prefs['feature_ajax'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_ajax');
-	$smarty->display('error.tpl');
-	die;
-}
 if (!isset($_REQUEST['trackerId'])) {
 	$smarty->assign('msg', tra('No tracker indicated'));
 	$smarty->display('error.tpl');

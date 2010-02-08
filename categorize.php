@@ -22,7 +22,7 @@ if ($prefs['feature_categories'] == 'y' && $catobjperms->modify_object_categorie
 	$smarty->assign('cat_categorize', 'n');
 
 	if (isset($_REQUEST['import']) and isset($_REQUEST['categories'])) {
-		$_REQUEST["cat_categories"] = split(',',$_REQUEST['categories']);
+		$_REQUEST["cat_categories"] = explode(',',$_REQUEST['categories']);
 		$_REQUEST["cat_categorize"] = 'on';
 	}
 

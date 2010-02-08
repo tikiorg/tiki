@@ -99,7 +99,7 @@ if (empty($_REQUEST['tsort_mode'])) {
 }
 $most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $tsort_mode);
 if (!empty($prefs['freetags_cloud_colors'])) {
-	$colors = split(',', $prefs['freetags_cloud_colors']);
+	$colors = explode(',', $prefs['freetags_cloud_colors']);
 	$prev = '';
 	foreach($most_popular_tags as $id => $tag) {
 		if (count($colors) == 1) {

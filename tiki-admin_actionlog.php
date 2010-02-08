@@ -334,7 +334,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		}
 	}
 	if (isset($_REQUEST['sort_mode'])) {
-		list($col, $order) = split('_', $_REQUEST['sort_mode']);
+		list($col, $order) = explode('_', $_REQUEST['sort_mode']);
 		$sort = array();
 		foreach($actions as $a) {
 			$sort[] = isset($a[$col]) ? $a[$col] : '';

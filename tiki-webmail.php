@@ -182,7 +182,7 @@ if ($_REQUEST['locSection'] == 'read') {
 		$to_addresses = $aux['from'];
 	
 		// Get email addresses from the 'from' portion
-		$to_addresses = split(',', $to_addresses);
+		$to_addresses = explode(',', $to_addresses);
 	
 		$temp_max = count($to_addresses);
 		for ($i = 0; $i < $temp_max; $i++) {
@@ -204,7 +204,7 @@ if ($_REQUEST['locSection'] == 'read') {
 				$cc_addresses .= ',';
 	
 			$cc_addresses .= $aux['to'];
-			$cc_addresses = split(',', $cc_addresses);
+			$cc_addresses = explode(',', $cc_addresses);
 	
 			$temp_max = count($cc_addresses);
 			for ($i = 0; $i < $temp_max; $i++) {

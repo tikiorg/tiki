@@ -13,13 +13,7 @@ require_once ('tiki-setup.php');
 global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
 global $categlib; include_once ('lib/categories/categlib.php');
 include_once ('lib/map/usermap.php');
-
-if ($prefs['feature_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_galleries');
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
@@ -252,7 +246,7 @@ if (isset($_REQUEST["edit"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	#add scales
 	if (isset($_REQUEST["scaleSize"])) {
 		if (strstr($_REQUEST["scaleSize"],',')) {
-			$sc = split(',',$_REQUEST["scaleSize"]);
+			$sc = explode(',',$_REQUEST["scaleSize"]);
 			foreach ($sc as $thisc) {
 				$thisc = trim($thisc);
 				if (is_numeric($thisc)) {

@@ -267,7 +267,7 @@ if (isset($_REQUEST["save"])) {
 	}
 	if (isset($_REQUEST['ui'])) {
 		if (!is_array($_REQUEST['ui'])) {
-			$_REQUEST['ui'] = split(',', $_REQUEST['ui']);
+			$_REQUEST['ui'] = explode(',', $_REQUEST['ui']);
 		}
 		$showlist = array();
 		$popupinfo = array();
@@ -449,7 +449,7 @@ $smarty->assign_by_ref('info', $info);
 $outatt = array();
 $info["orderPopup"] = '';
 if (strstr($info["orderAttachments"], '|')) {
-	$part = split("\|", $info["orderAttachments"]);
+	$part = explode('|', $info["orderAttachments"]);
 	$info["orderAttachments"] = $part[0];
 	$info["orderPopup"] = $part[1];
 }

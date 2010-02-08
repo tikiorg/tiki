@@ -249,7 +249,7 @@ if (isset($_REQUEST['reloff'])) {
 	$cant = 0;
 	$listfields = array();
 	if (substr($sort_mode, 0, 2) == 'f_') { //look at the field in case the field needs some processing to find the sort
-		list($a, $i, $o) = split('_', $sort_mode);
+		list($a, $i, $o) = explode('_', $sort_mode);
 		foreach($xfields['data'] as $f) {
 			if ($f['fieldId'] == $i) {
 				$listfields = array(
@@ -734,7 +734,7 @@ if ($_REQUEST["itemId"]) {
 					}
 				} elseif ($fields["data"][$i]["type"] == 'l') {
 					if (isset($fields["data"][$i]["options_array"][3])) {
-						$l = split(':', $fields["data"][$i]["options_array"][1]);
+						$l = explode(':', $fields["data"][$i]["options_array"][1]);
 						$finalFields = explode('|', $fields['data'][$i]['options_array'][3]);
 						$ins_fields["data"][$i]['links'] = $trklib->get_join_values($_REQUEST['trackerId'], $_REQUEST['itemId'], array_merge(array(
 							$fields["data"][$i]["options_array"][2]
@@ -878,7 +878,7 @@ if ($_REQUEST["itemId"]) {
 				if ($fields['data'][$i]['type'] == 'M') {
 					global $filegallib, $prefs;
 					if ($prefs['URLAppend'] == '') {
-						list($val1, $val2) = split('=', $ins_fields["data"][$i]["value"]);
+						list($val1, $val2) = explode('=', $ins_fields["data"][$i]["value"]);
 					} else {
 						$val2 = $ins_fields["data"][$i]["value"];
 					}
@@ -1113,7 +1113,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 	if (strstr($tracker_info["orderAttachments"], '|')) {
 		$attextra = 'y';
 	}
-	$attfields = split(',', strtok($tracker_info["orderAttachments"], '|'));
+	$attfields = explode(',', strtok($tracker_info["orderAttachments"], '|'));
 	$atts = $trklib->list_item_attachments($_REQUEST["itemId"], 0, -1, 'comment_asc', '');
 	$smarty->assign('atts', $atts["data"]);
 	$smarty->assign('attCount', $atts["cant"]);

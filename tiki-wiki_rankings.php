@@ -27,7 +27,7 @@ if (!isset($_REQUEST["limit"])) {
 
 if (isset($_REQUEST["categId"]) && $_REQUEST["categId"] > 0) {
 	$smarty->assign('categIdstr', $_REQUEST["categId"]);
-	$categs = split(",",$_REQUEST["categId"]);
+	$categs = explode(",",$_REQUEST["categId"]);
 } else {
 	$categs = array();	
 }

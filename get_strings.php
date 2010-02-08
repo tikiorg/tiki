@@ -309,7 +309,7 @@ if ( $script_mode ) {
 
 	$_REQUEST = array();
 	for ( $k = 1 ; $k < $_SERVER['argc'] ; $k++ ) {
-		list($key, $value) = split('=', $_SERVER['argv'][$k], 2);
+		list($key, $value) = explode('=', $_SERVER['argv'][$k], 2);
 		$_REQUEST[$key] = $value ? $value : 'y';
 	}
 
