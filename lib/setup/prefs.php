@@ -607,6 +607,7 @@ function get_default_prefs() {
 		'feature_cms_emails' => 'n',
 		'art_list_title' => 'y',
 		'art_list_title_len' => '20',
+		'art_list_id' => 'y',
 		'art_list_topic' => 'y',
 		'art_list_date' => 'y',
 		'art_list_author' => 'y',
