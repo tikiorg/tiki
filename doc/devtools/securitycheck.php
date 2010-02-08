@@ -127,7 +127,7 @@ function feature_pattern( &$featureNameIndex ) // {{{
 	elseif( ($major == 1 && $minor == 10) || $major >= 2 )
 	{
 		$featureNameIndex = 1;
-		return "/\\\$prefs\s*\[$q$featureName$q\]\s*(!=|==)=?\s*$q(y|n)$q/";
+		return "/\\\$prefs\s*\[$q(\w+)$q\]\s*(!=|==)=?\s*$q(y|n)$q/";
 	}
 } // }}}
 
@@ -289,6 +289,7 @@ function perform_feature_check( &$file ) // {{{
 	foreach( $index as $i )
 		$featuresInFile = array_merge( $features, $parts[$i] );
 
+	$featuresInFile = array_merge( $featuresInFile, access_check_call( $path, 'check_feature' ) );
 	$featuresInFile = array_unique( $featuresInFile );
 	$file['features'] = $featuresInFile;
 	//	var_dump($featuresInFile);
@@ -336,7 +337,12 @@ function perform_permission_check( &$file ) // {{{
 
 	preg_match_all( $permission_pattern, get_content( $file['path'] ), $parts );
 
-	$permissions = array_unique( $parts[$index] );
+	$permissions = array_unique( array_merge(
+		access_check_call( $file['path'], 'check_permission' ),
+		permission_check_accessors( $file['path'] ),
+		$parts[$index]
+	) );
+
 	$file['permissions'] = $permissions;
 } // }}}
 
@@ -391,6 +397,112 @@ function perform_extract_skip_check( &$file ) // {{{
 
 } // }}}
 
+function access_check_call( $file, $type ) // {{{
+{
+	$content = get_content( $file );
+	$tokens = token_get_all( $content );
+
+	$checks = array();
+
+	foreach( $tokens as $key => $token ) {
+		if( is_array( $token ) ) {
+			if( $token[0] == T_VARIABLE && $token[1] == '$access' ) {
+				if( $tokens[$key+1][0] == T_OBJECT_OPERATOR
+					&& $tokens[$key+2][0] == T_STRING && $tokens[$key+2][1] == $type ) {
+					$checks = array_merge( $checks, access_checks( $tokens, $key + 2 ) );
+				}
+			}
+		}
+	}
+
+	return $checks;
+} // }}}
+
+function access_checks( $tokens, $from ) // {{{
+{
+	$end = count($tokens);
+
+	$features = array();
+
+	for( $i = $from; $end > $i; ++$i ) {
+		$token = $tokens[$i];
+
+		if( is_string( $token ) && $token == ';' ) {
+			break;
+		}
+
+		if( is_array( $token ) && $token[0] == T_CONSTANT_ENCAPSED_STRING ) {
+			$features[] = trim( $token[1], "\"'" );
+		}
+	}
+
+	return $features;
+} // }}}
+
+function permission_check_accessors( $file ) // {{{
+{
+	$tokens = token_get_all( get_content( $file ) );
+
+	$perms = array();
+
+	foreach( $tokens as $key => $token ) {
+		if( is_array( $token ) && ( $token[0] == T_IF || $token[0] == T_ELSEIF ) ) {
+			$subset = tokenizer_get_subset( $tokens, $key );
+			$perms = array_merge( $perms, permission_check_condition( $subset ) );
+		}
+	}
+	
+	return $perms;
+} // }}}
+
+function tokenizer_get_subset( $tokens, $from ) // {{{
+{
+	$out = array();
+
+	$started = false;
+	$count = 0;
+	$end = count($tokens);
+
+	for( $i = $from; $end > $i && ( ! $started || $count > 0 ); ++$i ) {
+		$t = $tokens[$i];
+
+		if( is_string( $t ) ) {
+			if( $t == '(' ) {
+				$started = true;
+				$count++;
+			} elseif( $t == ')' ) {
+				$count--;
+			}
+		}
+
+		$out[] = $t;
+	}
+
+	return $out;
+} // }}}
+
+function permission_check_condition( $tokens ) // {{{
+{
+	$permissions = array();
+
+	foreach( $tokens as $i => $t ) {
+		if( $t[0] == T_VARIABLE ) {
+			if( 'perms' == substr( $t[1], -5 ) ) {
+				if( $tokens[$i+1][0] == T_OBJECT_OPERATOR && $tokens[$i+2][0] == T_STRING ) {
+					$perm = $tokens[$i+2][1];
+
+					if( 'tiki_p_' != substr( $perm, 0, 7 ) ) {
+						$perm = 'tiki_p_' . $perm;
+					}
+
+					$permissions[] = $perm;
+				}
+			}
+		}
+	}
+
+	return $permissions;
+} // }}}
 
 /* Build Files structures */
 // a hash of filenames, each element is a hash of attributes of that file
@@ -404,6 +516,7 @@ $files = array();
 
 // build these two files structures
 scanfiles( '.', $files );
+error_reporting(E_ALL);
 
 /* Iterate each file, and perform checks */
 $unsafe = array();
@@ -446,6 +559,7 @@ function sort_cb( $a, $b )
 
 usort( $files, 'sort_cb' );
 usort( $unsafe, 'sort_cb' );
+
 
 ?>
 <html>
