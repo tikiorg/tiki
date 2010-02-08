@@ -13,6 +13,15 @@ $auto_query_args = array(
     );
 $access->check_permission('tiki_p_admin');
 
+/**
+ * Display feedback on prefs changed
+ * 
+ * @param $name		Name of feature
+ * @param $message	Other message
+ * @param $st		Type of change (0=disabled, 1=enabled, 2=changed, 3=info)
+ * @param $num		unknown
+ * @return void
+ */
 function add_feedback( $name, $message, $st, $num = null ) {
 	global $tikifeedback;
 	$tikifeedback[] = array(
