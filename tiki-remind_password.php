@@ -5,11 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.34.2.1 2008-01-16 13:48:10 sylvieg Exp $
 require_once ('tiki-setup.php');
-if ($prefs['forgotPass'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": forgotPass");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('forgotPass');
 $smarty->assign('showmsg', 'n');
 $smarty->assign('showfrm', 'y');
 $smarty->assign('headtitle', tra('I forgot my password'));

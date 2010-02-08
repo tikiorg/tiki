@@ -7,17 +7,9 @@
 require_once ('tiki-setup.php');
 include_once ('lib/commcenter/commlib.php');
 include_once ('lib/articles/artlib.php');
-if ($prefs['feature_comm'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_comm");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin_received_articles != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_comm');
+$access->check_permission('tiki_p_admin_received_articles');
+
 if (!isset($_REQUEST["receivedArticleId"])) {
 	$_REQUEST["receivedArticleId"] = 0;
 }

@@ -8,11 +8,7 @@ $section = 'wiki page';
 $section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_wiki");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_wiki');
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("No page indicated"));

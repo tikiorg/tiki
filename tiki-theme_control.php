@@ -7,17 +7,8 @@
 require_once ('tiki-setup.php');
 include_once ('lib/themecontrol/tcontrol.php');
 include_once ('lib/categories/categlib.php');
-if ($prefs['feature_theme_control'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_theme_control");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_theme_control');
+$access->check_permission('tiki_p_admin');
 
 $auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme-option', 'categId');
 

@@ -6,17 +6,9 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-referer_stats.php,v 1.15 2007-10-12 07:55:32 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/refererstats/refererlib.php');
-if ($prefs['feature_referer_stats'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_referer_stats");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_view_referer_stats != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_referer_stats');
+$access->check_permission('tiki_p_view_referer_stats');
+
 if (isset($_REQUEST["clear"])) {
 	$area = 'delrefstats';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {

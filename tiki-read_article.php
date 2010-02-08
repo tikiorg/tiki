@@ -6,11 +6,7 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.61.2.2 2007-12-19 16:11:26 sylvieg Exp $
 $section = 'cms';
 require_once ('tiki-setup.php');
-if ($prefs['feature_articles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_articles");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_articles');
 if (!isset($_REQUEST["articleId"])) {
 	$smarty->assign('msg', tra("No article indicated"));
 	$smarty->display("error.tpl");

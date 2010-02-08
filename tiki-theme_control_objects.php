@@ -16,17 +16,8 @@ function correct_array(&$arr, $id, $name) {
 		$arr[$i]['objName'] = $arr[$i][$name];
 	}
 }
-if ($prefs['feature_theme_control'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_theme_control");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_theme_control');
+$access->check_permission('tiki_p_admin');
 
 $auto_query_args = array('find', 'sort_mode', 'offset', 'theme', 'theme-option', 'type', 'objdata');
 $smarty->assign('a_object', isset($_REQUEST['objdata']) ? $_REQUEST['objdata'] : '');
