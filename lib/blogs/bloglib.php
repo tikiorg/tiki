@@ -179,9 +179,10 @@ class BlogLib extends TikiLib
 	}
 
 	/**
-	 * list_blog_posts Returns al the posts for the blog $blogId
+	 * list_blog_posts Returns all the posts for the blog $blogId
 	 *
 	 * @param int $blogId
+	 * @param bool $allowDrafts
 	 * @param int $offset
 	 * @param int $maxRecords
 	 * @param string $sort_mode
@@ -193,7 +194,7 @@ class BlogLib extends TikiLib
 	 * @return array posts
 	 */
 	function list_blog_posts($blogId = 0, $allowDrafts = false, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date_min = '', $date_max = '', $approved = 'y') {
-		global $tiki_p_admin_comments;
+		global $tiki_p_admin_comments, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user;
 
 		$mid = array();
 		$bindvars = array();
@@ -201,6 +202,30 @@ class BlogLib extends TikiLib
 		if ( $blogId > 0 ) {
 			$mid[] = "`blogId`=?";
 			$bindvars[] = (int)$blogId;
+
+			$blog_data = $this->get_blog($blogId);
+			if ($user && $user == $blog_data["user"]) {
+				$ownsblog = 'y';
+			}
+		}
+
+		if ( !$allowDrafts ){
+			$mid[] = "`priv`!='y'";
+		}else{
+			// Private posts can be accessed on the following conditions:
+			// user has tiki_p_admin or tiki_p_blog_admin or has written the post
+			// If blog is configured with 'Allow other user to post in this blog', then also if user has tiki_p_blog_post or is owner of this blog
+			if ( ($tiki_p_admin != 'y')
+			     and ($tiki_p_blog_admin != 'y')
+			     and ($blog_data["public"] != 'y' || $tiki_p_blog_post != 'y')
+			     and ($blog_data["public"] != 'y' || $ownsblog != 'y') ) {
+				if ( isset($user) ) {
+					$mid[] = "(`priv`!='y' or `user`=?)";
+					$bindvars[] = "$user";
+				} else {
+					$mid[] = "`priv`!='y'";
+				}
+			}
 		}
 
 		if ( $find ) {
@@ -218,11 +243,7 @@ class BlogLib extends TikiLib
 			$mid[] = "`created`<=?";
 			$bindvars[] = (int)$date_max;
 		}
-		if ( !$allowDrafts ){
-			$mid[] = "`priv`='n'";
-		}
 
-		
 		$mid = empty($mid) ? '' : 'where ' . implode(' and ', $mid);
 
 		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
