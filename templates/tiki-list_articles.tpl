@@ -22,6 +22,9 @@
 		{if $prefs.art_list_title eq 'y'}
 			<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
 		{/if}
+		{if $prefs.art_list_id eq 'y'}
+			<th>{tr}Id{/tr}</th>
+		{/if}
 		{if $prefs.art_list_type eq 'y'}	
 			<th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
 		{/if}
@@ -58,9 +61,6 @@
 		{/if}
 		{if $prefs.art_list_img eq 'y'}
 			<th>{tr}Img{/tr}</th>
-		{/if}
-		{if $prefs.art_list_id eq 'y'}
-			<th>{tr}Id{/tr}</th>
 		{/if}
 		{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage) or $tiki_p_read_article}
 			<th>{tr}Action{/tr}</th>
