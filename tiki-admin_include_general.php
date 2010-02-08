@@ -47,13 +47,15 @@ if (isset($_REQUEST['new_prefs'])) {
 // Get list of time zones
 $smarty->assign('timezones', TikiDate::getTimeZoneList());
 
-if (isset($_REQUEST['testMail'])) {
+if (!empty($_REQUEST['testMail'])) {
 	include_once('lib/webmail/tikimaillib.php');
 	$mail = new TikiMail();
-	$mail->setSubject(tra('Test'));
-	$mail->setText(tra('Test'));
+	$mail->setSubject(tra('TikiWiki Email Test'));
+	$mail->setText(tra('TikiWiki Test email from:').' '.$_SERVER['SERVER_NAME']);
 	if (!$mail->send(array($_REQUEST['testMail']))) {
 		$smarty->assign('error_msg', tra('Unable to send mail'));
+	} else {
+		 add_feedback( 'testMail', tra('Test mail sent to').' '.$_REQUEST['testMail'], 1 );
 	}
 }
 $listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
