@@ -50,6 +50,23 @@ class WikiParser_PluginOutput
 		), $message, $smarty ) );
 	}
 
+	public static function disabled( $name, $preferences ) {
+		$content = tr('Plugin <strong>%0</strong> cannot be executed.', $name );
+
+		if( Perms::get()->admin ) {
+			global $smarty;
+			require_once 'lib/smarty_tiki/function.preference.php';
+			require_once 'lib/smarty_tiki/modifier.escape.php';
+			$content .= '<form method="post" action="tiki-admin.php">';
+			foreach( $preferences as $pref ) {
+				$content .= smarty_function_preference( array( 'name' => $pref ), $smarty );
+			}
+			$content .= '<input type="submit" value="' . smarty_modifier_escape( tra('Set') ) . '"/>';
+			$content .= '</form>';
+		}
+		return self::error( tra( 'Plugin disabled' ), $content );
+	}
+
 	function toWiki() {
 		switch( $this->format ) {
 		case 'wiki':

@@ -5383,7 +5383,8 @@ class TikiLib extends TikiDb_Bridge
 						$arguments = array('' => '');
 					}
 
-					if( $this->plugin_enabled( $plugin_name ) ) {
+					$pluginOutput = null;
+					if( $this->plugin_enabled( $plugin_name, $pluginOutput ) ) {
 
 						static $plugin_indexes = array();
 
@@ -5484,7 +5485,7 @@ class TikiLib extends TikiDb_Bridge
 						// Handle nested plugins.
 						$this->parse_first($plugin_data, $preparsed, $noparsed, $options);
 
-						$ret = tra( "__WARNING__: Plugin disabled $plugin!" ) . $plugin_data;
+						$ret = $pluginOutput->toWiki() . $plugin_data;
 					}
 
 					$skip = false;
@@ -5640,16 +5641,23 @@ class TikiLib extends TikiDb_Bridge
 		$cachelib->invalidate('plugindesc');
 	}
 
-	function plugin_enabled( $name ) {
+	function plugin_enabled( $name, & $output ) {
 		if( ! $meta = $this->plugin_info( $name ) )
 			return true; // Legacy plugins always execute
 
 		global $prefs;
 
+		$missing = array();
+
 		if( isset( $meta['prefs'] ) )
 			foreach( $meta['prefs'] as $pref )
 				if( $prefs[$pref] != 'y' )
-					return false;
+					$missing[] = $pref;
+		
+		if( count( $missing ) > 0 ) {
+			$output = WikiParser_PluginOutput::disabled( $name, $missing );
+			return false;
+		}
 
 		return true;
 	}
@@ -5834,8 +5842,18 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array() ) {
-		if( ! $this->plugin_exists( $name, true ) )
-			return false;
+		$outputFormat = 'wiki';
+		if( $parseOptions['context_format'] ) {
+			$outputFormat = $parseOptions['context_format'];
+		}
+
+		if( ! $this->plugin_exists( $name, true ) ) {
+			return $this->convert_plugin_output( WikiParser_PluginOutput::internalError( tr('Plugin <strong>%0</strong> does not exist.', $name) ), '', $outputFormat, $parseOptions );
+		}
+
+		if( ! $validationPerformed && ! $this->plugin_enabled( $name, $output ) ) {
+			return $this->convert_plugin_output( $output, '', $outputFormat, $parseOptions );
+		}
 
 		require_once 'lib/core/lib/WikiParser/PluginOutput.php';
 
@@ -5889,11 +5907,6 @@ class TikiLib extends TikiDb_Bridge
 			$pluginFormat = 'wiki';
 			if( isset( $info['format'] ) ) {
 				$pluginFormat = $info['format'];
-			}
-
-			$outputFormat = 'wiki';
-			if( $parseOptions['context_format'] ) {
-				$outputFormat = $parseOptions['context_format'];
 			}
 
 			$output = $func_name( $data, $args, $offset, $parseOptions );
