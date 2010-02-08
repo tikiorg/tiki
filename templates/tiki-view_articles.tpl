@@ -103,7 +103,7 @@
 			</div>
 			<div class="articletrailer">
 				{if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
-					{if ($listpages[ix].heading_only ne 'y')}
+					{if ($listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
 						{if ($listpages[ix].size > 0)}
 							<div class="status"> {* named to be similar to forum/blog item *}
 								<a href="{$listpages[ix].articleId|sefurl:article}">{tr}Read More{/tr}</a>
