@@ -6,17 +6,8 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-directory_admin_related.php,v 1.17 2007-10-12 07:55:25 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
-if ($prefs['feature_directory'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_directory");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin_directory_cats != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_directory');
+$access->check_permission('tiki_p_admin_directory_cats');
 // If no parent category then the parent category is 0
 if (!isset($_REQUEST["parent"])) $_REQUEST["parent"] = 0;
 $smarty->assign('parent', $_REQUEST["parent"]);

@@ -6,12 +6,8 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-mods_admin.php,v 1.7.2.1 2007-12-03 22:05:50 marclaporte Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/mods/modslib.php');
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin');
+
 if (isset($_REQUEST['save'])) {
 	if (isset($_REQUEST['feature_mods_provider']) and $_REQUEST['feature_mods_provider'] == 'on') {
 		$tikilib->set_preference('feature_mods_provider', 'y');

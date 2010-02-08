@@ -6,17 +6,9 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-directory_admin.php,v 1.13 2007-10-12 07:55:25 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
-if ($prefs['feature_directory'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_directory");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin_directory != 'y' && $tiki_p_admin_directory_sites != 'y' && $tiki_p_admin_directory_cats != 'y' && $tiki_p_validate_links != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_directory');
+$access->check_permission(array('tiki_p_admin_directory','tiki_p_admin_directory_sites','tiki_p_admin_directory_cats','tiki_p_validate_links'));
+
 // This will only display a menu to
 // admin_categories
 // admin_sites

@@ -31,9 +31,7 @@ $smarty->assign('wysiwyg', 'n');
 if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
     $smarty->assign('wysiwyg', 'y');
 }
-// PERMISSIONS: NEEDS p_admin
 $access->check_permission(array('tiki_p_admin', 'tiki_p_admin_modules'));
-
 $auto_query_args = array();
 
 // Values for the user_module edit/create form
