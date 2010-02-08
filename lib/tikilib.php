@@ -5843,7 +5843,7 @@ class TikiLib extends TikiDb_Bridge
 
 	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array() ) {
 		$outputFormat = 'wiki';
-		if( $parseOptions['context_format'] ) {
+		if( isset($parseOptions['context_format']) ) {
 			$outputFormat = $parseOptions['context_format'];
 		}
 
