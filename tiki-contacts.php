@@ -7,7 +7,7 @@
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 
-$access->checkèfeature('feature_contacts');
+$access->check_feature('feature_contacts');
 include_once ('lib/webmail/contactlib.php');
 
 $auto_query_args = array(
