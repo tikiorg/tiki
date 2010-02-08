@@ -55,7 +55,7 @@ if (!empty($_REQUEST['testMail'])) {
 	if (!$mail->send(array($_REQUEST['testMail']))) {
 		$smarty->assign('error_msg', tra('Unable to send mail'));
 	} else {
-		 add_feedback( 'testMail', tra('Test mail sent to').' '.$_REQUEST['testMail'], 1 );
+		 add_feedback( 'testMail', tra('Test mail sent to').' '.$_REQUEST['testMail'], 3 );
 	}
 }
 $listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
