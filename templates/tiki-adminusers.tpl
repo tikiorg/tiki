@@ -498,7 +498,7 @@ $jq("#genepass").keyup(function () {
 				<td>
 					<label for="csvlist">
 						{tr}CSV File:{/tr}
-						{help url="Users+Management#Adding_new_users_in_bulk" desc="{tr}CSV file layout{/tr}: {tr}login,password,email<br />user1,pass1,email1<br />user2,pass2,email2{/tr}"}
+						{help url="Users+Management#Adding_new_users_in_bulk" desc="{tr}CSV file layout{/tr}: {tr}login,password,email,groups<br />user1,pass1,email1,group1<br />user2,pass2,email2,"group1,group2"{/tr}"}
 					</label>
 				</td>
 				<td>
@@ -513,6 +513,8 @@ $jq("#genepass").keyup(function () {
 					<label>{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></label>
                     <br />
                     <label>{tr}User must change password at first login:{/tr} <input type="checkbox" name="forcePasswordChange" /></label>
+					<br />
+                    <label>{tr}Send an email to the user in order to allow him to validate his account.{/tr} <input type="checkbox" name="notification" /></label>
 				</td>
 			</tr>
 			<tr class="formcolor">
