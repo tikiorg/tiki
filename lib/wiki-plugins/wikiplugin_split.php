@@ -187,7 +187,7 @@ function wikiplugin_split($data, $params, $pos)
 	$result .= '<tr>';
 	foreach ($rows as $r) {
 		$idx = 0;
-		$result .= '<td valign="top" '.(($fixedsize && isset($tdsize))? ' width="'.$tdsize[$idx].'%"' : '').'>';
+		$result .= '<td valign="top" '.(($fixedsize && isset($tdsize))? ' width="'.$tdsize[$idx].(strstr($tdsize[$idx], '%')?'':'%').'"' : '').'>';
 		foreach ($r as $i) {
 			if (substr($i, 0, 2) == "\r\n") {
 				$i = substr($i, 2);
