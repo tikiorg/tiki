@@ -6,8 +6,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once 'lib/init/tra.php';
-
 function smarty_prefilter_tr($source) {
   // Now replace the matched language strings with the entry in the file
 //  $return = preg_replace_callback('/\{tr[^\{]*\}([^\{]+)\{\/tr\}/', '_translate_lang', $source);

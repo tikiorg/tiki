@@ -20,10 +20,10 @@ class Smarty_Tikiwiki extends Smarty
 	function Smarty_Tikiwiki($tikidomain = '') {
 		parent::Smarty();
 		if ($tikidomain) { $tikidomain.= '/'; }
-		$this->template_dir = 'templates/';
-		$this->compile_dir = "templates_c/$tikidomain";
-		$this->config_dir = 'configs/';
-		$this->cache_dir = "templates_c/$tikidomain";
+		$this->template_dir = realpath('templates/');
+		$this->compile_dir = realpath("templates_c/$tikidomain");
+		$this->config_dir = realpath('configs/');
+		$this->cache_dir = realpath("templates_c/$tikidomain");
 		$this->caching = 0;
 		$this->assign('app_name', 'Tikiwiki');
 		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin

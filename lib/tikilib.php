@@ -5853,6 +5853,8 @@ class TikiLib extends TikiDb_Bridge
 		if( ! $this->plugin_exists( $name, true ) )
 			return false;
 
+		require_once 'lib/core/lib/WikiParser/PluginOutput.php';
+
 		$func_name = 'wikiplugin_' . $name;
 		
 		if( ! $validationPerformed ) {
@@ -5900,7 +5902,19 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if( function_exists( $func_name ) ) {
-			return $func_name( $data, $args, $offset, $parseOptions );
+			$pluginFormat = 'wiki';
+			if( isset( $info['format'] ) ) {
+				$pluginFormat = $info['format'];
+			}
+
+			$outputFormat = 'wiki';
+			if( $parseOptions['context_format'] ) {
+				$outputFormat = $parseOptions['context_format'];
+			}
+
+			$output = $func_name( $data, $args, $offset, $parseOptions );
+
+			return $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
 		} elseif( $info = $this->plugin_alias_info( $name ) ) {
 			$name = $info['implementation'];
 
@@ -5933,6 +5947,22 @@ class TikiLib extends TikiDb_Bridge
 			}
 
 			return $this->plugin_execute( $name, $data, $params, $offset, $validationPerformed, $parseOptions );
+		}
+	}
+	
+	private function convert_plugin_output( $output, $from, $to, $parseOptions ) {
+		if( ! $output instanceof WikiParser_PluginOutput ) {
+			if( $from == 'wiki' ) {
+				$output = WikiParser_PluginOutput::wiki( $output );
+			} elseif( $from == 'html' ) {
+				$output = WikiParser_PluginOutput::html( $output );
+			}
+		}
+
+		if( $to == 'html' ) {
+			return $output->toHtml( $parseOptions );
+		} elseif( $to == 'wiki' ) {
+			return $output->toWiki();
 		}
 	}
 

@@ -6,6 +6,7 @@ function wikiplugin_addtocart_info() {
 		'description' => tra('Adds a product to the virtual cart. The cart can be manipulated using the cart module.'),
 		'prefs' => array( 'wikiplugin_addtocart', 'payment_feature' ),
 		'filter' => 'wikicontent',
+		'format' => 'html',
 		'params' => array(
 			'code' => array(
 				'required' => true,
@@ -37,11 +38,11 @@ function wikiplugin_addtocart_info() {
 
 function wikiplugin_addtocart( $data, $params ) {
 	if( ! session_id() ) {
-		return '^' . tra('A session must be active to use the cart.') . '^';
+		return WikiParser_PluginOutput::internalError( tra('A session must be active to use the cart.') );
 	}
 	
 	if( ! isset( $params['code'], $params['description'], $params['price'] ) ) {
-		return '^' . tra('Missing arguments.') . '^';
+		return WikiParser_PluginOutput::argumentError( array_diff( array( 'code', 'description', 'price' ), array_keys( $params ) ) );
 	}
 
 	if( ! isset( $params['href'] ) ) {
@@ -80,6 +81,6 @@ FORM;
 		}
 	}
 	
-	return "~np~$form~/np~";
+	return $form;
 }
 
