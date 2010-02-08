@@ -124,7 +124,13 @@ function batchImportUsers() {
 			$grps = explode(",", $u['groups']);
 			foreach($grps as $grp) {
 				$grp = preg_replace("/^ *(.*) *$/u", "$1", $grp);
-				if (!$userlib->group_exists($grp)) {
+				$existg = false;
+				if ($userlib->group_exists($grp)) {
+					$existg = true;
+				} elseif (!empty($_REQUEST['createGroup']) && $userlib->add_group($grp)) {
+					$existg = true;
+				}
+				if (!$existg) {
 					$err = tra("Unknown") . ": $grp";
 					if (!in_array($err, $errors)) $errors[] = $err;
 				} elseif ($tiki_p_admin != 'y' && !array_key_exists($grp, $userGroups)) {

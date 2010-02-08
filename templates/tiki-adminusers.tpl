@@ -512,7 +512,9 @@ $jq("#genepass").keyup(function () {
 					<br />
 					<label>{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></label>
                     <br />
-                    <label>{tr}User must change password at first login:{/tr} <input type="checkbox" name="forcePasswordChange" /></label>
+					<label>{tr}Create groups:{/tr} <input type="checkbox" name="createGroup" /></label>
+                    <br />
+                     <label>{tr}User must change password at first login:{/tr} <input type="checkbox" name="forcePasswordChange" /></label>
 					<br />
                     <label>{tr}Send an email to the user in order to allow him to validate his account.{/tr} <input type="checkbox" name="notification" /></label>
 				</td>
