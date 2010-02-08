@@ -77,12 +77,30 @@ class CartLib
 		if( $total > 0 ) {
 			$invoice = $paymentlib->request_payment( tra('Cart Check-Out'), $total, $prefs['payment_default_delay'], $this->get_description() );
 
+			foreach( $this->get_behaviors() as $behavior ) {
+				$paymentlib->register_behavior( $invoice, $behavior['event'], $behavior['behavior'], $behavior['arguments'] );
+			}
+
 			$_SESSION['cart'] = array();
 
 			return $invoice;
 		}
 
 		return 0;
+	}
+
+	private function get_behaviors() {
+		$behaviors = array();
+
+		foreach( $this->get_content() as $item ) {
+			foreach( $item['behaviors'] as $behavior ) {
+				for( $i = 0; $item['quantity'] > $i; ++$i ) {
+					$behaviors[] = $behavior;
+				}
+			}
+		}
+
+		return $behaviors;
 	}
 
 	private function init_cart() {

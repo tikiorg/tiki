@@ -204,6 +204,46 @@ T-456|Foobar|1|120.50
 		$this->assertEquals( 246, $payment['amount_original'] );
 		$this->assertContains( '123|test|2|123', $payment['detail'] );
 	}
+
+	function testRegisteredBehaviorsOnItems() {
+		global $paymentlib; require_once 'lib/payment/paymentlib.php';
+		$lib = new CartLib;
+		$lib->add_product( '123', 2, array(
+			'price' => 123,
+			'description' => 'test',
+			'behaviors' => array(
+				array( 'event' => 'complete', 'behavior' => 'sample', 'arguments' => array( 'Done 123!' ) ),
+				array( 'event' => 'cancel', 'behavior' => 'sample', 'arguments' => array( 'No 123!' ) ),
+			),
+		) );
+		$lib->add_product( '456', 1, array(
+			'price' => 456,
+			'description' => 'test',
+			'behaviors' => array(
+				array( 'event' => 'complete', 'behavior' => 'sample', 'arguments' => array( 'Done 456!' ) ),
+				array( 'event' => 'cancel', 'behavior' => 'sample', 'arguments' => array( 'No 456!' ) ),
+			),
+		) );
+
+		$id = $lib->request_payment();
+
+		$this->assertNotEquals( 0, $id );
+
+		$payment = $paymentlib->get_payment( $id );
+
+		TikiDb::get()->query( 'DELETE FROM tiki_payment_requests WHERE paymentRequestId = ?', array( $id ) );
+
+		$this->assertEquals( array(
+			array( 'behavior' => 'sample', 'arguments' => array( 'Done 123!' ) ),
+			array( 'behavior' => 'sample', 'arguments' => array( 'Done 123!' ) ),
+			array( 'behavior' => 'sample', 'arguments' => array( 'Done 456!' ) ),
+		), $payment['actions']['complete'] );
+		$this->assertEquals( array(
+			array( 'behavior' => 'sample', 'arguments' => array( 'No 123!' ) ),
+			array( 'behavior' => 'sample', 'arguments' => array( 'No 123!' ) ),
+			array( 'behavior' => 'sample', 'arguments' => array( 'No 456!' ) ),
+		), $payment['actions']['cancel'] );
+	}
 }
 
 
