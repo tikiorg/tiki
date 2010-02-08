@@ -129,7 +129,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 		}
 		$memoStatus = $info['status'];
 		$memoItemId = $itemId;
-		$memoTrackerId = $trackerId;
+		$memoTrackerId = $info['trackerId'];
 	}
 	if (!isset($data)) {
 		$data = $dataelse = '';
