@@ -15,7 +15,7 @@ if ($prefs['feature_categories'] == 'y') {
 }
 $commentslib = new Comments($dbTiki);
 
-$access->check_features('feature_articles');
+$access->check_feature('feature_articles');
 $access->check_permission( array('tiki_p_read_article', 'tiki_p_articles_read_heading') );
 
 if (isset($_REQUEST["remove"])) {
