@@ -1,7 +1,7 @@
 <?php
 
 // $Id$
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2010, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
 // details.
@@ -18,7 +18,7 @@ if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 	$errorReportingLevel = E_ALL & ~E_NOTICE;
 } elseif ($prefs['error_reporting_level'] == -1) {
 	$errorReportingLevel = E_ALL;
-} elseif ($prefs['error_reporting_level'] == "php") {
+} elseif ($prefs['error_reporting_level'] == 1) {
 	$errorReportingLevel = error_reporting();
 } else {
 	$errorReportingLevel = $prefs['error_reporting_level'];
