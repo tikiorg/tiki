@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Id: /cvsroot/tikiwiki/tiki/lib/tree/categ_admin_tree.php,v 1.6 2007-03-06 19:30:29 sylvieg Exp $
+ * $Id$
  *
  * \brief Categories browse tree
  *
@@ -29,12 +29,17 @@ class CatAdminTreeMaker extends TreeMaker
 
 	/// Generate HTML code for tree. Need to redefine to add javascript cookies block
 	function make_tree($rootid, $ar) {
-		global $debugger;
+		global $headerlib;
+		
+		$r = '<ul class="tree root">'."\n";
 
-		$r = $this->make_tree_r($rootid, $ar);
-		// $debugger->var_dump('$r');
-		// return tree with java script block that opens the nodes as remembered in cookies
-		return $r . "<script type='text/javascript'> " . $this->jsscriptblock . " </script>\n";
+		$r .= $this->make_tree_r($rootid, $ar) . "</ul>\n";
+
+		// java script block that opens the nodes as remembered in cookies
+		$headerlib->add_js($this->jsscriptblock);
+		
+		// return tree
+		return $r;
 	}
 
 	//

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Id: /cvsroot/tikiwiki/tiki/lib/tree/categ_browse_tree.php,v 1.6 2006-10-26 11:23:27 luciash Exp $
+ * $Id$
  *
  * \brief Categories browse tree
  *
@@ -30,14 +30,17 @@ class CatBrowseTreeMaker extends TreeMaker
 
 	/// Generate HTML code for tree. Need to redefine to add javascript cookies block
 	function make_tree($rootid, $ar) {
-		global $debugger;
+		global $headerlib;
 		
 		$r = '<ul class="tree root">'."\n";
 
-		$r .= $this->make_tree_r($rootid, $ar);
-		// $debugger->var_dump('$r');
-		// return tree with java script block that opens the nodes as remembered in cookies
-		return $r . "</ul>\n<script type='text/javascript'>\n" . $this->jsscriptblock . "\n</script>\n";
+		$r .= $this->make_tree_r($rootid, $ar) . "</ul>\n";
+
+		// java script block that opens the nodes as remembered in cookies
+		$headerlib->add_js($this->jsscriptblock);
+		
+		// return tree
+		return $r;
 	}
 
 	//
@@ -70,7 +73,7 @@ class CatBrowseTreeMaker extends TreeMaker
 		$this->itemID = $this->prefix . 'id' . $nodeinfo["id"];
 
 		$this->jsscriptblock .= "setFlipWithSign('" . $this->itemID . "'); ";
-		return '<a class="link categflipper" id="flipper' . $this->itemID . '" href="javascript:flipWithSign(\'' . $this->itemID . '\')">[+]</a>&nbsp;';
+		return '<a class="link categflipper" id="flipper' . $this->itemID . '" href="#" onclick="javascript:flipWithSign(\'' . $this->itemID . '\');return false;">[+]</a>&nbsp;';
 	}
 
 	//

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Id: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.10 2006-10-26 11:23:27 luciash Exp $
+ * $Id$
  *
  * \brief Base tree maker
  *
