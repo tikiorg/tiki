@@ -1057,7 +1057,7 @@ table.normal td.heading {
 	color: #5ae0ff;
 	background: #1b3a50;
 	min-height: 32px;
-	text-align: center;
+	#text-align: center;
 }
 
 th a:link,

@@ -5,22 +5,6 @@ textarea#metric_query, textarea#tab_content {
 	width: 450px;
 }
 
-table.normal {
-	width: 100%;
-}
-table.normal td.heading {
-	padding: 2px 5px;
-	font-weight: bold;
-	border-bottom: 1px solid #ccc;
-}
-table.normal td {
-	text-align: center;
-	padding: 5px 0;
-}
-/*table.normal td.first {
-	text-align: left;
-}*/
-
 .trend-green {
 	color: #26831d;
 }
