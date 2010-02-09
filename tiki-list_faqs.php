@@ -8,17 +8,8 @@ $section = 'faqs';
 require_once ('tiki-setup.php');
 include_once ('lib/faqs/faqlib.php');
 $auto_query_args = array('offset', 'find', 'sort_mode', 'faqId');
-if ($prefs['feature_faqs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_faqs");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_view_faqs != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_faqs');
+$access->check_permission('tiki_p_view_faqs');
 $smarty->assign('headtitle', tra('FAQs'));
 if (!isset($_REQUEST["faqId"])) {
 	$_REQUEST["faqId"] = 0;

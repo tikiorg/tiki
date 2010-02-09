@@ -8,16 +8,8 @@ $section = 'wiki page';
 $section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_wiki");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['feature_likePages'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_likePages");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_wiki');
+$access->check_feature('feature_likePages');
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("No page indicated"));
@@ -32,14 +24,8 @@ if (!($info = $tikilib->get_page_info($page))) {
 	$smarty->display('error.tpl');
 	die;
 }
-// Now check permissions to access this page
 $tikilib->get_perm_object($page, 'wiki page', $info);
-if ($tiki_p_view != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view pages like this page"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_view');
 $likepages = $wikilib->get_like_pages($page);
 // If the page doesn't exist then display an error
 if (!$tikilib->page_exists($page)) {

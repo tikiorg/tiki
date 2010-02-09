@@ -9,12 +9,7 @@ include_once ('lib/banners/bannerlib.php');
 if (!isset($bannerlib)) {
 	$bannerlib = new BannerLib;
 }
-// CHECK FEATURE BANNERS HERE
-if ($prefs['feature_banners'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_banners");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_banners');
 
 if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_admin_banners != 'y') {

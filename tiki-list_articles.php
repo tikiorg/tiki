@@ -8,18 +8,8 @@ $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
 $smarty->assign('headtitle', tra('List Articles'));
-if ($prefs['feature_articles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_articles");
-	$smarty->display("error.tpl");
-	die;
-}
-// Now check permissions to access this page
-if ($tiki_p_read_article != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view pages"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_articles');
+$access->check_permission('tiki_p_read_article');
 if (isset($_REQUEST["remove"])) {
 	$artperms = Perms::get( array( 'type' => 'article', 'object' => $_REQUEST['remove'] ) );
 

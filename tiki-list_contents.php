@@ -10,17 +10,8 @@ $auto_query_args = array('sort_mode', 'offset', 'find');
 if (!isset($dcslib)) {
 	$dcslib = new DCSLib;
 }
-if ($prefs['feature_dynamic_content'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_dynamic_content");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin_dynamic != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_dynamic_content');
+$access->check_permission('tiki_p_admin_dynamic');
 if (isset($_REQUEST["remove"])) {
 	$area = 'delcontents';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {

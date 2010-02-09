@@ -8,12 +8,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/commentslib.php');
 $auto_query_args = array('types_section', 'types', 'show_types', 'sort_mode', 'offset', 'find', 'findfilter_approved');
 $commentslib = new Comments($dbTiki);
-if ($tiki_p_admin_comments != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin_comments');
 $title = tra('Comments');
 $sections_keys = array('objectType' => 'commentsFeature', 'itemObjectType' => 'itemCommentsFeature');
 // types_section is used to limit the user to only one section (e.g. 'blogs')

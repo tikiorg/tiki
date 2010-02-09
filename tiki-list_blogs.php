@@ -11,17 +11,8 @@ $smarty->assign('headtitle', tra('Blogs'));
 if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 }
-if ($prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_blogs");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_read_blog != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you can not view this section"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_blogs');
+$access->check_permission('tiki_p_read_blog');
 if (isset($_REQUEST["remove"])) {
 	// Check if it is the owner
 	$data = $tikilib->get_blog($_REQUEST["remove"]);

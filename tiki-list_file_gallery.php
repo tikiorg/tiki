@@ -6,11 +6,7 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.14 2008-03-16 00:06:53 nyloth Exp $
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
-if ($prefs['feature_file_galleries'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_file_galleries');
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_file_galleries');
 include_once ('lib/filegals/filegallib.php');
 include_once ('lib/stats/statslib.php');
 if ($prefs['feature_categories'] == 'y') {

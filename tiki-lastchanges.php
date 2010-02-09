@@ -10,22 +10,9 @@ require_once ('tiki-setup.php');
 include_once ('lib/wiki/histlib.php');
 $auto_query_args = array('sort_mode', 'offset', 'find', 'days');
 $smarty->assign('headtitle', tra('Last Changes'));
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_wiki");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($prefs['feature_lastChanges'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_lastChanges");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_view != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_wiki');
+$access->check_feature('feature_lastChanges');
+$access->check_permission('tiki_p_view');
 if (!isset($_REQUEST["find"])) {
 	$findwhat = '';
 } else {
