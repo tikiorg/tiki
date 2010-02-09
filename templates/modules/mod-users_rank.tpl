@@ -12,7 +12,7 @@
 {if $nonums != 'y'}</ol>{else}</ul>{/if}
 {/if}
 {if $prefs.feature_friends eq 'y'}
-<a style="margin-left: 20px" href="tiki-list_users.php">{tr}More{/tr}...</a>
+<a style="margin-left: 20px" href="tiki-list_users.php" class="more">{tr}More...{/tr}</a>
 {/if}
 
 {/tikimodule}

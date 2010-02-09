@@ -156,7 +156,7 @@ function wikiplugin_code($data, $params) {
 		.'</pre>';
 
 	if ( isset($caption) ) {
-		$out = '<div class="codecaption">'.$caption.'</div>'.$out;
+		$out = '<div class="plugincode"><div class="codecaption">'.$caption.'</div>'.$out.'</div>';
 	}
 
 	return $out;

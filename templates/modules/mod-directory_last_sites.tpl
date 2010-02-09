@@ -17,7 +17,7 @@
 		{else}
 			{assign var='thisparent' value=''}
 		{/if}
-		{button href="tiki-directory_browse.php$thisparent" _text="{tr}More...{/tr}"}
+		{button class='more' href="tiki-directory_browse.php$thisparent" _text="{tr}More...{/tr}"}
 	</div>
 {/if}
 {/tikimodule}

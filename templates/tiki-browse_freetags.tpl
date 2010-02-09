@@ -72,7 +72,7 @@
 				{if empty($maxPopular)}
 					{assign var=maxPopular value=50+$prefs.freetags_browse_amount_tags_in_cloud}
 				{/if}
-				<a href="{$smarty.server.PHP_SELF}?{query maxPopular=$maxPopular tagString=$tagString}">{tr}More Popular Tags{/tr}</a>
+				<a class='more' href="{$smarty.server.PHP_SELF}?{query maxPopular=$maxPopular tagString=$tagString}">{tr}More Popular Tags{/tr}</a>
 			</div>
 
 			<div class="mini">

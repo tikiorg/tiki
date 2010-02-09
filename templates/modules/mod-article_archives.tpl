@@ -20,7 +20,7 @@
 					{capture assign=queryArgs}{$queryArgs}{$urlParam}={$module_params[$urlParamKey]|escape:"url"}{/capture}
 				{/if}
 			{/foreach}
-			{button href="tiki-view_articles.php$queryArgs" _text="{tr}More...{/tr}"}
+			{button class='more' href="tiki-view_articles.php$queryArgs" _text="{tr}More...{/tr}"}
 		</div>
 	{/if}
 {/tikimodule}

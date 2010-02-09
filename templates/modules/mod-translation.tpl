@@ -45,7 +45,7 @@
 					
 					{if $mod_translation_better_other}
 						{if $prefs.change_language eq 'y'}
-							<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-better-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-better-ul').style.display='block';this.style.display='none'" class="linkmenu">{icon _id=plus_small alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"} {tr}More...{/tr}</a>
+							<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-better-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-better-ul').style.display='block';this.style.display='none'" class="linkmenu more">{icon _id=plus_small alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"} {tr}More...{/tr}</a>
 						{/if}
 						<ul id="mod-translation-better-ul"{if $prefs.change_language eq 'y'} style="display:none"{/if}>
 							{foreach item=better from=$mod_translation_better_other}
@@ -95,7 +95,7 @@
 					{/if}
 					{if $mod_translation_worst_other}
 		{if $prefs.change_language eq 'y'}
-					<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-worst-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-worst-ul').style.display='block';this.style.display='none'" class="linkmenu">{icon _id=plus_small alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"}{tr}More...{/tr}</a>
+					<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-worst-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-worst-ul').style.display='block';this.style.display='none'" class="linkmenu more">{icon _id=plus_small alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"}{tr}More...{/tr}</a>
 		{/if}
 					<ul id="mod-translation-worst-ul"{if $prefs.change_language eq 'y'} style="display:none"{/if}>
 						{foreach item=worst from=$mod_translation_worst_other}

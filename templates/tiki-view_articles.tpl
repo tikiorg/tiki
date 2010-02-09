@@ -106,7 +106,7 @@
 					{if ($listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
 						{if ($listpages[ix].size > 0)}
 							<div class="status"> {* named to be similar to forum/blog item *}
-								<a href="{$listpages[ix].articleId|sefurl:article}">{tr}Read More{/tr}</a>
+								<a href="{$listpages[ix].articleId|sefurl:article}" class="more">{tr}Read More{/tr}</a>
 							</div>
 							{if ($listpages[ix].show_size eq 'y')}
 								<span>

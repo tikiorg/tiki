@@ -125,8 +125,8 @@
 	<div class="postbody-content">*}
 		{$listpages[ix].parsed_data}
 		{if $listpages[ix].pages > 1}
-			<a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">
-			{tr}Read more{/tr} ({$listpages[ix].pages} {tr}pages{/tr})</a>
+			<a class="link more" href="{$listpages[ix].postId|sefurl:blogpost}">
+			{tr}More...{/tr} ({$listpages[ix].pages} {tr}pages{/tr})</a>
 		{/if}
 		{if $prefs.blogs_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
         	{if $prefs.wikiLicensePage == $page}
