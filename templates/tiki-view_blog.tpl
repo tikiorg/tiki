@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if isset($show_heading) and $show_heading neq "n"}
+{if !isset($show_heading) or $show_heading neq "n"}
 	<div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}</div>
 	{if strlen($heading) > 0 and $prefs.feature_blog_heading eq 'y'}
 	  {eval var=$heading}
