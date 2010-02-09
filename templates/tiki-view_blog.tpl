@@ -7,7 +7,7 @@
 	  {include file='blog-heading.tpl'}
 	{/if}
 	
-	<div class="bloginfo" align="right" >
+	<div align="right" >
 	<span class="blogactions">
 			{if $tiki_p_blog_post eq "y"}
 			{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
