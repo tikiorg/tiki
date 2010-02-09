@@ -88,28 +88,7 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 		}
 	}
 
-	include_once ('lib/tree/categ_picker_tree.php');
-	$tree_nodes = array();
-	$roots = $categlib->findRoots( $categories );
-	foreach ($categories as $c) {
-		if (isset($c['name']) || $c['parentId'] != 0) {
-			$smarty->assign( 'category_data', $c );
-			$tree_nodes[] = array(
-				'id' => $c['categId'],
-				'parent' => $c['parentId'],
-				'data' => $smarty->fetch( 'category_tree_entry.tpl' ),
-			);
-			if (in_array( $c['parentId'], $roots )) {
-				$tree_nodes[count($tree_nodes) - 1]['data'] = '<strong>'.$tree_nodes[count($tree_nodes) - 1]['data'].'</strong>';
-			}
-		}
-	}
-	$tm = new CatPickerTreeMaker("categorize");
-	$res = '';
-	foreach( $roots as $root ) {
-		$res .= $tm->make_tree($root, $tree_nodes);
-	}
-	$smarty->assign('cat_tree', $res);
+	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories));
 	
 	if (!empty($cats))
 		$smarty->assign('catsdump', implode(',',$cats));

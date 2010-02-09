@@ -1739,5 +1739,31 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 		echo $query.' '.$to. ' '.$from;
 		$this->query($query, array((int)$to, (int)$from));
 	}
+	// generate category tree for use in various places (like categorize_list.php)
+	function generate_cat_tree($categories) {
+		global $smarty;
+		include_once ('lib/tree/categ_picker_tree.php');
+		$tree_nodes = array();
+		$roots = $this->findRoots( $categories );
+		foreach ($categories as $c) {
+			if (isset($c['name']) || $c['parentId'] != 0) {
+				$smarty->assign( 'category_data', $c );
+				$tree_nodes[] = array(
+					'id' => $c['categId'],
+					'parent' => $c['parentId'],
+					'data' => $smarty->fetch( 'category_tree_entry.tpl' ),
+				);
+				if (in_array( $c['parentId'], $roots )) {
+					$tree_nodes[count($tree_nodes) - 1]['data'] = '<strong>'.$tree_nodes[count($tree_nodes) - 1]['data'].'</strong>';
+				}
+			}
+		}
+		$tm = new CatPickerTreeMaker("categorize");
+		$res = '';
+		foreach( $roots as $root ) {
+			$res .= $tm->make_tree($root, $tree_nodes);
+		}
+		return $res;
+	}
 }
 $categlib = new CategLib;
