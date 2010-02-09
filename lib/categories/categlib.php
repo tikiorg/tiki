@@ -1740,13 +1740,17 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 		$this->query($query, array((int)$to, (int)$from));
 	}
 	// generate category tree for use in various places (like categorize_list.php)
-	function generate_cat_tree($categories) {
+	function generate_cat_tree($categories, $canchangeall = false) {
 		global $smarty;
 		include_once ('lib/tree/categ_picker_tree.php');
 		$tree_nodes = array();
 		$roots = $this->findRoots( $categories );
 		foreach ($categories as $c) {
 			if (isset($c['name']) || $c['parentId'] != 0) {
+				// if used for purposes such as find, should be able to "change" all cats
+				if ($canchangeall) {
+					$c['canchange'] = true;
+				}
 				$smarty->assign( 'category_data', $c );
 				$tree_nodes[] = array(
 					'id' => $c['categId'],
