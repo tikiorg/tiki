@@ -32,4 +32,6 @@
 	{button comzone="show" _anchor="comments" _auto_args="comzone,*" _class=$thisbuttonclass _text=$thistext _flip_hide_text='n' _flip_default_open=$flip_open}
 </noscript>
 {/if}
-{button href="#comments" _auto_args="*" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$flip_open}
+{if $prefs.javascript_enabled eq "y"}
+	{button href="#comments" _auto_args="*" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$flip_open}
+{/if}
