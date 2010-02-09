@@ -62,12 +62,31 @@
 				<fieldset id="resultzone" class="tabcontent" style="text-align: left;"></fieldset>
 			</form>
 			{jq}
-				$jq('#preferences').droppable( {
-					activeClass: 'ui-state-highlight',
-					drop: function( e, ui ) {
-						$jq('#preferences').append( ui.draggable );
-					}
-				} );
+				$jq('#preferences')
+					.droppable( {
+						activeClass: 'ui-state-highlight',
+						drop: function( e, ui ) {
+							$jq('#preferences').append( ui.draggable );
+							$jq(ui.draggable)
+								.draggable('destroy')
+								.draggable( {
+									distance: 50,
+									handle: 'label',
+									axis: 'x',
+									stop: function( e, ui ) {
+										$jq(this).remove();
+									}
+								} );
+						}
+					} )
+					.find('div.adminoptionbox').draggable( {
+						distance: 50,
+						handle: 'label',
+						axis: 'x',
+						stop: function( e, ui ) {
+							$jq(this).remove();
+						}
+					} );
 				$jq('#searchform').submit( function(e) {
 					e.preventDefault();
 					$jq('#resultzone').load( this.action, $jq(this).serialize(), function() {
