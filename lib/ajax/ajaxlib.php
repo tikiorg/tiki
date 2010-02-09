@@ -162,7 +162,8 @@ $ajaxlib->registerFunction("loadComponent");
 function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user = '') {
 	global $smarty, $ajaxlib, $prefs, $user, $headerlib;
 	global $js_script;
-	$objResponse = new xajaxResponse('UTF-8');
+	$objResponse = new xajaxResponse();
+	$objResponse->setCharacterEncoding('UTF-8');
 
 	if ( $last_user != $user ) {
 
