@@ -167,8 +167,8 @@ function wikiplugin_trackerfilter($data, $params) {
 
 	if( $first ) {
 		$first = false;
-		require_once 'lib/smarty_tiki/block.jq.php';
-		smarty_block_jq( array(), '$jq(".trackerfilter-result .prevnext").click( function( e ) {
+		global $headerlib;
+		$headerlib->add_js('$jq(".trackerfilter-result .prevnext").click( function( e ) {
 			e.preventDefault();
 			$jq(".trackerfilter-result form")
 				.attr("action", $jq(this).attr("href"))
