@@ -5,7 +5,7 @@
 	{/if}
 	{$confirm_detail}
 	<br />
-	<div class="cbox-title">
+	<div class="cbox-data">
 		<form name='confirm' action="{$confirmaction|escape}" method="post">
 			{query _type='form_input' _keepall='y' ticket=$ticket daconfirm='y'}
 			{button href="#" _onclick="javascript:document.forms['confirm'].submit();return false;" _text="{tr}Click here to confirm your action{/tr}"}
