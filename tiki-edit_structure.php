@@ -12,30 +12,14 @@ $section = 'wiki page';
 require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
-
-if($prefs['feature_wiki'] != 'y') {
-    $smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
-    $smarty->display('error.tpl');
-    die;  
-}
-if($prefs['feature_wiki_structure'] != 'y') {
-    $smarty->assign('msg', tra('This feature is disabled').': feature_wiki_structure');
-    $smarty->display('error.tpl');
-    die;  
-}
+$access->check_feature('feature_wiki');
+$access->check_feature('feature_wiki_structure');
 if (!isset($_REQUEST["page_ref_id"])) {
 	$smarty->assign('msg', tra("No structure indicated"));
 	$smarty->display("error.tpl");
 	die;
 }
-if ($tiki_p_view != 'y') {
-// This allows tiki_p_view in, in order to see structure tree - security hardening for editing features below.
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_view');
 
 if (isset($_REQUEST['move_to'])) {
 	check_ticket('edit-structure');

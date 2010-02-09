@@ -14,22 +14,8 @@ include_once ('lib/articles/artlib.php');
 if ($prefs['feature_freetags'] == 'y') {
     include_once('lib/freetag/freetaglib.php');
 }
-
-if ($prefs['feature_submissions'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_submissions");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-// Now check permissions to access this page
-if ($tiki_p_submit_article != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot send submissions"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_submissions');
+$access->check_permission('tiki_p_submit_article');
 
 if ($tiki_p_admin != 'y') {
 	if ($tiki_p_use_HTML != 'y') {

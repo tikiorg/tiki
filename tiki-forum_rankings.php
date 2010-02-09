@@ -13,28 +13,9 @@ require_once ('tiki-setup.php');
 include_once ('lib/rankings/ranklib.php');
 
 $smarty->assign('headtitle',tra('Rankings'));
-
-if ($prefs['feature_forums'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($prefs['feature_forum_rankings'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_forum_rankings");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_forum_read != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this section"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_forums');
+$access->check_feature('feature_forum_rankings');
+$access->check_permission('tiki_p_forum_read');
 
 $allrankings = array(
 	array(

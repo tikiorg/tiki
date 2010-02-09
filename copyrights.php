@@ -7,15 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 require_once ('tiki-setup.php');
-
-if ($prefs['wiki_feature_copyrights'] != 'y') {
-	$smarty->assign('msg', tra("The copyright management feature is not enabled."));
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-
+$access->check_feature('wiki_feature_copyrights');
 $access->check_permission(array('tiki_p_edit_copyrights'), tra("Copyright management"));
 
 include_once ("lib/copyrights/copyrightslib.php");

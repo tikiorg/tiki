@@ -7,11 +7,7 @@
 $section = 'directory';
 require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
-if ($prefs['feature_directory'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_directory');
 // Set parent category to 2 ("tiki sites")
 $_REQUEST["parent"] = 2;
 $smarty->assign('parent', $_REQUEST["parent"]);

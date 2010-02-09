@@ -9,18 +9,8 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($prefs['lang_use_db'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": lang_use_db");
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_edit_languages != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('lang_use_db');
+$access->check_permission('tiki_p_edit_languages');
 
 // Create a language
 if (isset($_REQUEST["createlang"])) {

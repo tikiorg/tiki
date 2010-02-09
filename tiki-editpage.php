@@ -133,11 +133,7 @@ function execute_module_translation() {
 // Define all templates files that may be used with the 'zoom' feature
 $zoom_templates = array('wiki_edit', 'tiki-editpage');
 
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_wiki');
 
 if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
 	$translation_mode = 'y';

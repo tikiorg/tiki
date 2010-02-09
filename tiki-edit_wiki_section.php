@@ -11,11 +11,7 @@ if (isset($_REQUEST['type']))
 require_once ('tiki-setup.php');
 global $objectlib; include_once('lib/objectlib.php');
 
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_wiki');
 
 if (isset($_REQUEST['page']))
 	$_REQUEST['object'] = $_REQUEST['page'];

@@ -7,17 +7,9 @@
 $section = 'directory';
 require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
-if ($prefs['feature_directory'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_directory");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_submit_link != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_directory');
+$access->check_permission('tiki_p_submit_link');
+
 // If no parent category then the parent category is 0
 if (!isset($_REQUEST["parent"])) $_REQUEST["parent"] = 0;
 // If no site category then the site category is -1

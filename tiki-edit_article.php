@@ -17,13 +17,7 @@ $smarty->assign('headtitle',tra('Edit article'));
 if ($prefs['feature_freetags'] == 'y') {
 	global $freetaglib;include_once('lib/freetag/freetaglib.php');
 }
-
-if ($prefs['feature_articles'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_articles');
 
 if ($tiki_p_admin != 'y') {
 	if ($tiki_p_use_HTML != 'y') {

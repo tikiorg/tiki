@@ -4,21 +4,8 @@ $section = 'cms';
 require_once('tiki-setup.php');
 include_once('lib/articles/artlib.php');
 
-if($prefs['feature_articles'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-  $smarty->display("error.tpl");
-  die;  
-}
-
-
-// PERMISSIONS: NEEDS p_admin
-
-if($tiki_p_admin_cms != 'y') {
-	  $smarty->assign('errortype', 401);
-	  $smarty->assign('msg',tra("You do not have permission to use this feature"));
-	  $smarty->display("error.tpl");
-	  die;
-}
+$access->check_feature('feature_articles');
+$access->check_permission('tiki_p_admin_cms');
 
 if (!isset($_REQUEST["topicid"])) {
   $smarty->assign('msg', tra("No topic id specified"));

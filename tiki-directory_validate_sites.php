@@ -6,17 +6,8 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-directory_validate_sites.php,v 1.18 2007-10-12 07:55:26 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
-if ($prefs['feature_directory'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_directory");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_validate_links != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_directory');
+$access->check_permission('tiki_p_validate_links');
 if (isset($_REQUEST["validate"]) && isset($_REQUEST['sites'])) {
 	check_ticket('dir-validate');
 	foreach(array_keys($_REQUEST["sites"]) as $siteId) {

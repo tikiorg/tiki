@@ -9,11 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_edit_templates'] != 'y' && $prefs['feature_view_tpl'] != 'y') {
-	$smarty->assign('msg', tra("Feature disabled"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature(array('feature_edit_templates','feature_view_tpl'));
 
 // you have to have the perm view and edit to continue:
       // if view perm is set: continue

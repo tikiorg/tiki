@@ -12,22 +12,8 @@ require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
 
 $smarty->assign('headtitle',tra('Create Blog'));
-
-if ($prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-// Now check permissions to access this page
-if ($tiki_p_create_blogs != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot create or edit blogs"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_blogs');
+$access->check_permission('tiki_p_create_blogs');
 
 if (isset($_REQUEST["blogId"])) {
 	$blogId = $_REQUEST["blogId"];

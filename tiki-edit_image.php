@@ -18,12 +18,7 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 }
 
-if ($prefs['feature_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_galleries');
 
 // Sanity anyone?
 if (!$_REQUEST['edit'] or !$_REQUEST['galleryId']) {
@@ -35,14 +30,7 @@ if (!$_REQUEST['edit'] or !$_REQUEST['galleryId']) {
 
 $tikilib->get_perm_object( $_REQUEST['galleryId'], 'image gallery' );
 
-// Now check permissions to access this page
-if ($tiki_p_upload_images != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot edit images"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_upload_images');
 
 $imageId=$_REQUEST['edit'];
 $foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -61,13 +49,7 @@ $smarty->assign('sort_mode', $sort_mode);
 if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 	check_ticket('edit-image');
 
-	if ( $tiki_p_upload_images != 'y' ) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot edit images"));
-
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_upload_images');
 
 	if ($gal_info["thumbSizeX"] == 0)
 		$gal_info["thumbSizeX"] = 80;

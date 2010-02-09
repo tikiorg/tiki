@@ -16,21 +16,8 @@ if (!isset($bannerlib)) {
 	$bannerlib = new BannerLib;
 }
 
-// CHECK FEATURE BANNERS AND ADMIN PERMISSION HERE
-if ($prefs['feature_banners'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_banners");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_admin_banners != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permissions to edit banners"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_banners');
+$access->check_permission('tiki_p_admin_banners');
 
 if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$info = $bannerlib->get_banner($_REQUEST["bannerId"]);

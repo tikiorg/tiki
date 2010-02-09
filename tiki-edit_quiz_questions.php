@@ -11,13 +11,7 @@ require_once('tiki-setup.php');
 include_once('lib/quizzes/quizlib.php');
 
 $auto_query_args = array('quizId', 'questionId', 'sort_mode', 'offset', 'find');
-
-if ($prefs['feature_quizzes'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_quizzes');
 
 if (!isset($_REQUEST["quizId"])) {
 	$smarty->assign('msg', tra("No quiz indicated"));
@@ -28,13 +22,7 @@ if (!isset($_REQUEST["quizId"])) {
 
 $tikilib->get_perm_object($_REQUEST["quizId"], 'quiz');
 
-if ($tiki_p_admin_quizzes != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You don't have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin_quizzes');
 
 $smarty->assign('quizId', $_REQUEST["quizId"]);
 

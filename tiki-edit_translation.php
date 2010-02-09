@@ -25,11 +25,7 @@ if ($tracesOn) {
 
 execute_module_translation();
 
-if ($prefs['feature_multilingual'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_multilingual");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_multilingual');
 
 if (isset($_REQUEST['page'])) {
 	$smarty->assign('page', $_REQUEST['page']);

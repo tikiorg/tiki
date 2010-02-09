@@ -14,21 +14,8 @@ $auto_query_args = array('contentId','sort_mode','offset','find');
 if (!isset($dcslib)) {
 	$dcslib = new DCSLib;
 }
-
-if ($prefs['feature_dynamic_content'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_dynamic_content");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_admin_dynamic != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_dynamic_content');
+$access->check_permission('tiki_p_admin_dynamic');
 
 if (!isset($_REQUEST["contentId"])) {
 	$smarty->assign('msg', tra("No content id indicated"));

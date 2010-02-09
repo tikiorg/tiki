@@ -45,12 +45,7 @@ if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE[ sess
 if (!$skip) {
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
-
-	if ( $prefs['feature_file_galleries'] != 'y' ) {
-		$smarty->assign('msg', tra('This feature is disabled'));
-		$smarty->display('error.tpl');
-		die;
-	}
+	$access->check_feature('feature_file_galleries');
 }
 
 if ( ! ini_get('safe_mode') ) {

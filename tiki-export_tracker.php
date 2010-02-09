@@ -29,12 +29,7 @@ $smarty->assign_by_ref('trackerId', $_REQUEST['trackerId']);
 $smarty->assign_by_ref('tracker_info', $tracker_info);
 
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
-if ($tiki_p_view_trackers != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('You do not have permission to use this feature'));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_view_trackers');
 
 $filters = array();
 if (!empty($_REQUEST['listfields'])) {

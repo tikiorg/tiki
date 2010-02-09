@@ -6,15 +6,9 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
-
 include_once ('lib/featured_links/flinkslib.php');
 
-if ($prefs['feature_featuredLinks'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_featuredLinks");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_featuredLinks');
 
 $flinkslib->add_featured_link_hit($_REQUEST["url"]);
 // Get the page from the request var or default it to HomePage

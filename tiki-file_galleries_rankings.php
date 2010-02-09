@@ -6,24 +6,10 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// Initialization
 require_once ('tiki-setup.php');
-
 include_once ('lib/rankings/ranklib.php');
-
-if ($prefs['feature_file_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($prefs['feature_file_galleries_rankings'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries_rankings");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_file_galleries');
+$access->check_feature('feature_file_galleries_rankings');
 
 if ((isset($tiki_p_list_file_galleries) && $tiki_p_list_file_galleries != 'y') || (!isset($tiki_p_list_file_galleries) && $tiki_p_view_file_gallery != 'y')) {
 	$smarty->assign('errortype', 401);

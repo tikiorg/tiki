@@ -6,14 +6,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
-
 include_once ('lib/filegals/filegallib.php');
 
-if ($prefs['feature_file_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_file_galleries');
 
 if (empty($_REQUEST['fileId']) || !($fileInfo = $filegallib->get_file_info($_REQUEST['fileId']))) {
 	$smarty->assign('msg', tra("Incorrect param"));

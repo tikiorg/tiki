@@ -12,20 +12,8 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/faqs/faqlib.php');
 
-if ($prefs['feature_faqs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_faqs");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_admin_faqs != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_faqs');
+$access->check_permission('tiki_p_admin_faqs');
 
 if (!isset($_REQUEST["faqId"])) {
 	$smarty->assign('msg', tra("No questions group indicated"));
