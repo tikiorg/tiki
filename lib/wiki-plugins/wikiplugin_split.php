@@ -185,8 +185,8 @@ function wikiplugin_split($data, $params, $pos)
 	$ind = 0;
 	$icell = 0;
 	$result .= '<tr>';
+	$idx = 0;
 	foreach ($rows as $r) {
-		$idx = 0;
 		$result .= '<td valign="top" '.(($fixedsize && isset($tdsize))? ' width="'.$tdsize[$idx].(strstr($tdsize[$idx], '%')?'':'%').'"' : '').'>';
 		foreach ($r as $i) {
 			if (substr($i, 0, 2) == "\r\n") {
@@ -205,9 +205,9 @@ $result .= "$pos-$icell-".htmlspecialchars(substr($data, $pos, 10));
 			else
 				$result .= '<div>';
 			$result .= "\n".preg_replace("/\r?\n/", "<br />\r\n", $i). '</div>';
-			++$idx;
 			++$icell;
 		}
+		++$idx;
 		$result .= '</td>';
 	}
 	$result .= '</tr>';
