@@ -9,35 +9,10 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
-if ($prefs['feature_freetags'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_freetags");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($prefs['freetags_multilingual'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": freetags_multilingual");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($prefs['feature_multilingual'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_multilingual");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_freetags_tag != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_freetags');
+$access->check_feature('freetags_multilingual');
+$access->check_feature('feature_multilingual');
+$access->check_permission('tiki_p_freetags_tag');
 
 if( !isset($_REQUEST['type']))
 	$_REQUEST['type'] = 'wiki page';

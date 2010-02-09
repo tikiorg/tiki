@@ -12,12 +12,7 @@ $section = 'sheet';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
-if ($prefs['feature_sheet'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_sheet");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_sheet');
 
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 

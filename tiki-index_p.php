@@ -25,14 +25,7 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 }
 
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-//print($GLOBALS["HTTP_REFERER"]);
+$access->check_feature('feature_wiki');
 
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($prefs['wikiHomePage'])) {

@@ -6,16 +6,8 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// Initialization
 require_once ('tiki-setup.php');
-
-if ($tiki_p_edit_languages != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_edit_languages');
 
 $query = "select `lang` from `tiki_languages`";
 $result = $tikilib->query($query,array());

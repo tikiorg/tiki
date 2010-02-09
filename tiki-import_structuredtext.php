@@ -6,20 +6,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 require_once ('tiki-setup.php');
-
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-
-if($prefs['feature_wiki'] != 'y') {
-    $smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
-    $smarty->display('error.tpl');
-    die;  
-}
-
+$access->check_feature('feature_wiki');
+$access->check_permission('tiki_p_admin');
 
 function parse_st($dump) {
 	$bodysep  = '>>>>>>>>>>>>>>>>>>>>>>>>';

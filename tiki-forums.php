@@ -6,7 +6,6 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// Initialization
 $section = 'forums';
 require_once ('tiki-setup.php');
 
@@ -14,20 +13,8 @@ $auto_query_args = array('sort_mode', 'offset', 'find', 'mode');
 
 $smarty->assign('headtitle',tra('Forums'));
 
-if ($prefs['feature_forums'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_forum_read != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this section"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_forums');
+$access->check_permission('tiki_p_forum_read');
 
 // This shows a list of forums everybody can use this listing
 include_once ("lib/commentslib.php");

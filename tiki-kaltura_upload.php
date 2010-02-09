@@ -4,21 +4,11 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
-
-if ($prefs['feature_kaltura'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_kaltura");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_kaltura');
 
 include_once ("lib/videogals/KalturaClient_v3.php");
 
-if ($tiki_p_upload_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied: You cannot upload videos"));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_permission(array('tiki_p_upload_videos','tiki_p_admin_kaltura','tiki_p_admin'));
 
 $secret = $prefs['secret'];
 $admin_secret = $prefs['adminSecret'];

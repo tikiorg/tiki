@@ -29,17 +29,9 @@ if (!isset($_REQUEST["galleryId"])) {
 
 $smarty->assign('galleryId', $_REQUEST["galleryId"]);
 
-// This check should be done before checking individual permissions
-if ($tiki_p_list_image_galleries != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you can not view this section"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_list_image_galleries');
 
 // Individual permissions are checked because we may be trying to edit the gallery
-
 // Check here for indivdual permissions the objectType is 'image galleries' and the id is galleryId
 $smarty->assign('individual', 'n');
 

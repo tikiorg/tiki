@@ -5,11 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
 
-if ($prefs['feature_kaltura'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_kaltura");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_kaltura');
 
 include_once ("lib/videogals/KalturaClient_v3.php");
 $secret = $prefs['secret'];

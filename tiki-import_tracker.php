@@ -3,11 +3,7 @@
 require_once('tiki-setup.php');
 include_once('lib/trackers/trackerlib.php');
 
-if ($prefs['feature_trackers'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
-  $smarty->display("error.tpl");
-  die;
-}
+$access->check_feature('feature_trackers');
 
 if (!isset($_REQUEST["trackerId"])) {
   $smarty->assign('msg', tra("No tracker indicated"));
@@ -15,12 +11,7 @@ if (!isset($_REQUEST["trackerId"])) {
   die;
 }
 
-if ($tiki_p_admin_trackers != 'y') {
-	$smarty->assign('errortype', 401);
-    $smarty->assign('msg',tra("Permission denied. You cannot view this page."));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin_trackers');
 
 if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_name'])) {
 	$replace = false;

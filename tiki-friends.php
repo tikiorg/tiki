@@ -9,11 +9,7 @@ if(!$user) {
   die;
 }
 
-if($prefs['feature_friends'] != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("error.tpl");
-  die;
-}
+$access->check_feature('feature_friends');
 
 // TODO: all messages should be translated to receiver language, not sender.
 if (isset($_REQUEST['request_friendship'])) {

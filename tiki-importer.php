@@ -4,11 +4,7 @@ require_once('tiki-setup.php');
 require_once('lib/importer/tikiimporter.php');
 require_once('lib/importer/tikiimporter_wiki.php');
 
-if ($tiki_p_admin_importer != 'y') {
-    $smarty->assign('msg', tra("Permission denied. You cannot view this section"));
-    $smarty->display("error.tpl");
-    die;
-}
+$access->check_permission('tiki_p_admin_importer');
 
 if (!empty($_POST['importerClassName'])) {
     $importerClassName = $_POST['importerClassName'];

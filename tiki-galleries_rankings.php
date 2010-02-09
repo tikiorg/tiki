@@ -6,33 +6,12 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// Initialization
 $section = 'galleries';
 require_once ('tiki-setup.php');
-
 include_once ('lib/rankings/ranklib.php');
-
-if ($prefs['feature_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($prefs['feature_gal_rankings'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_gal_rankings");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_list_image_galleries != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this section"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_galleries');
+$access->check_feature('feature_gal_rankings');
+$access->check_permission('tiki_p_list_image_galleries');
 
 $allrankings = array(
 	array(

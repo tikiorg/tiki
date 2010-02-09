@@ -6,22 +6,14 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// Initialization
 $section = 'forums';
 require_once ('tiki-setup.php');
 
-// Forums must be active
-if ($prefs['feature_forums'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_forums');
 
 // forumId must be received
 if (!isset($_REQUEST["forumId"])) {
 	$smarty->assign('msg', tra("No forum indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -40,30 +32,20 @@ $tikilib->get_perm_object($_REQUEST["forumId"], 'forum');
 if ($user) {
 	if ($forum_info["moderator"] == $user) {
 		$tiki_p_admin_forum = 'y';
-
 		$smarty->assign('tiki_p_admin_forum', 'y');
 	} elseif (in_array($forum_info['moderator_group'], $userlib->get_user_groups($user))) {
 		$tiki_p_admin_forum = 'y';
-
 		$smarty->assign('tiki_p_admin_forum', 'y');
 	}
 }
 
-// Must be admin to manipulate the queue
-if ($tiki_p_admin_forum != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin_forum');
 
 $smarty->assign_by_ref('forum_info', $forum_info);
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'forum';
-
 	$cat_objid = $_REQUEST["forumId"];
 	include ('tiki-tc.php');
 }
