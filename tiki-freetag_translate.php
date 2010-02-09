@@ -9,9 +9,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-$access->check_feature('feature_freetags');
-$access->check_feature('freetags_multilingual');
-$access->check_feature('feature_multilingual');
+$access->check_feature(array('feature_freetags','freetags_multilingual','feature_multilingual'));
 $access->check_permission('tiki_p_freetags_tag');
 
 if( !isset($_REQUEST['type']))

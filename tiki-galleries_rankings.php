@@ -9,8 +9,7 @@
 $section = 'galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/rankings/ranklib.php');
-$access->check_feature('feature_galleries');
-$access->check_feature('feature_gal_rankings');
+$access->check_feature(array('feature_galleries','feature_gal_rankings'));
 $access->check_permission('tiki_p_list_image_galleries');
 
 $allrankings = array(
