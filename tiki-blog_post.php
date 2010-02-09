@@ -82,7 +82,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 		}
 	}
 	if (empty($data["data"])) $data["data"] = '';
-	$smarty->assign('data', TikiLib::htmldecode($data["data"]));
+	$smarty->assign('data', $data["data"]);
 	$smarty->assign('title', $data["title"]);
 	$smarty->assign('created', $data["created"]);
 	$smarty->assign('parsed_data', $tikilib->parse_data($data["data"]));
@@ -162,7 +162,7 @@ if (isset($_REQUEST["preview"])) {
 			$smarty->assign('spellcheck', 'n');
 		}
 	}
-	$smarty->assign('data', TikiLib::htmldecode($edit_data));
+	$smarty->assign('data', $edit_data);
 	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
 	}
@@ -225,7 +225,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	}
 	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
 	$parsed_data = $tikilib->parse_data($parsed_data);
-	$smarty->assign('data', TikiLib::htmldecode($edit_data));
+	$smarty->assign('data', $edit_data);
 	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
 	}
@@ -235,7 +235,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 if ($contribution_needed) {
 	$smarty->assign('title', $_REQUEST["title"]);
 	$smarty->assign('parsed_data', $tikilib->parse_data($_REQUEST['data']));
-	$smarty->assign('data', TikiLib::htmldecode($_REQUEST['data']));
+	$smarty->assign('data', $_REQUEST['data']);
 	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
 	}
