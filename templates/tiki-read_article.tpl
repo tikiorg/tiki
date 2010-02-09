@@ -23,6 +23,7 @@
 		<span class="titleb">
 			{if $show_author eq 'y' && $authorName}{tr}By:{/tr} {$authorName|escape} {/if}
 			{if $show_pubdate eq 'y' && $publishDate}{tr}on:{/tr} {$publishDate|tiki_short_datetime} {/if}
+			{if $show_expdate eq 'y' && $expireDate}{tr}expires:{/tr} {$expireDate|tiki_short_datetime} {/if}
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
 		</span>
 		<br />
