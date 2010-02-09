@@ -32,7 +32,7 @@ class Image extends ImageAbstract
 	function _load_data() {
 		if (!$this->loaded && $this->havegd) {
 			if (!empty($this->filename)) {
-				$this->format = strtolower(substr($image, strrpos($image, '.') + 1));
+				$this->format = strtolower(substr($this->filename, strrpos($this->filename, '.') + 1));
 				list($this->width, $this->height, $type) = getimagesize($this->filename);
 				if (function_exists("image_type_to_extension")) {
 					$this->format = image_type_to_extension($type,false);
@@ -75,7 +75,7 @@ class Image extends ImageAbstract
 
 		$this->_load_data();
 		if ($this->data) {
-			ob_end_flush();
+			@ob_end_flush();	// ignore E_NOTICE if no buffer
 			ob_start();
 			switch ( strtolower($this->format) ) {
 				case 'jpeg':
