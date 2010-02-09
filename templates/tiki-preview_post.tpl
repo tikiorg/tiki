@@ -1,10 +1,10 @@
-<h2>{tr}Preview{/tr}: {$page}</h2>
+<h2>{tr}Preview{/tr}</h2>
 <div style="text-align:left" class="posthead">
 {if $blog_data.use_title eq 'y'}
-	{$title}<br />
-	<small>{tr}Posted by{/tr} {$author} on {$created|tiki_short_datetime}</small>
+	{$title|escape}<br />
+	<small>{tr}Posted by{/tr} {$author|userlink} on {$created|tiki_short_datetime}</small>
 {else}
-	{$created|tiki_short_datetime}<small>{tr}Posted by{/tr} {$author}</small>
+	{$created|tiki_short_datetime}<small>{tr}Posted by{/tr} {$author|userlink}</small>
 {/if}
 </div>
 <div class="postbody">
