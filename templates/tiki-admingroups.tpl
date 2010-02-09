@@ -34,6 +34,7 @@
 	<table class="normal">
 		<tr>
 			<th style="width: 20px;">&nbsp;</th>
+			<th>{tr}ID{/tr}</th>
 			<th>
 				<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a>
 			</th>
@@ -51,6 +52,7 @@
 				<td style="width: 20px;">
 					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 				</td>
+				<td>{$users[user].id|escape}</td>
 				<td>
 					<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName|escape}</a>
 				</td>
