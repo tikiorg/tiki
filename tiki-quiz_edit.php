@@ -3,9 +3,8 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.21.2.1 2007-11-04 21:49:20 nyloth Exp $
-/*
 
+/*
 (The expire date must be rigid.  That is, papers will not be accepted after the expire
 date, even if the quiz was started before the expire date.  Otherwise, in cases where
 we have "show answers after expire date", a student who has completed the quiz could
@@ -24,11 +23,9 @@ You can also set the same option under the Generl Options section.
 */
 require_once ('tiki-setup.php');
 include_once ('lib/quizzes/quizlib.php');
-if ($prefs['feature_quizzes'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_quizzes");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_quizzes');
+
 // quizId of 0 is used as a place holder; There should NEVER be a row in the
 //   tiki_quizzes table with an id of zero.
 if (!isset($_REQUEST["quizId"])) {
@@ -36,12 +33,9 @@ if (!isset($_REQUEST["quizId"])) {
 }
 
 $tikilib->get_perm_object($_REQUEST["quizId"], 'quiz');
-if ($tiki_p_admin_quizzes != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You don't have permission to edit quizzes."));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_permission('tiki_p_admin_quizzes');
+
 $cat_type = 'quiz';
 $cat_objid = $_REQUEST["quizId"];
 include_once ("categorize_list.php");
@@ -176,6 +170,6 @@ $tpl = array();
 setup_options($tpl);
 $smarty->assign('tpl', $tpl);
 ask_ticket('edit-quiz-question');
-// Display the template
+
 $smarty->assign('mid', 'tiki-quiz_edit.tpl');
 $smarty->display("tiki.tpl");

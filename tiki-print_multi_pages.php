@@ -3,14 +3,12 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-print_multi_pages.php,v 1.15.2.3 2008-01-21 09:47:15 nyloth Exp $
+
 require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
-if ($prefs['feature_wiki_multiprint'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_wiki_multiprint");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_wiki_multiprint');
+
 if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
 	$smarty->assign('msg', tra("No pages indicated"));
 	$smarty->display("error.tpl");

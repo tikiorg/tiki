@@ -3,22 +3,15 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-quiz_stats.php,v 1.15 2007-10-12 07:55:31 nyloth Exp $
 $section = 'quizzes';
 require_once ('tiki-setup.php');
 include_once ('lib/quizzes/quizlib.php');
+
 $auto_query_args = array('sort_mode', 'offset', 'find');
-if ($prefs['feature_quizzes'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_quizzes");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_view_quiz_stats != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_quizzes');
+$access->check_permission('tiki_p_view_quiz_stats');
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'quizName_asc';
 } else {
@@ -71,6 +64,6 @@ $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
 include_once ('tiki-section_options.php');
 ask_ticket('quiz-stats');
-// Display the template
+
 $smarty->assign('mid', 'tiki-quiz_stats.tpl');
 $smarty->display("tiki.tpl");

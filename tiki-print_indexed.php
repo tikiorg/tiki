@@ -7,11 +7,7 @@
 require_once 'tiki-setup.php';
 require_once 'lib/categories/categlib.php';
 
-if ($prefs['feature_print_indexed'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_print_indexed");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_print_indexed');
 
 $inputConfiguration = array(array('staticKeyFilters' => array('list' => 'alpha',)), array('staticKeyFiltersForArrays' => array('languages' => 'alpha', 'categId' => 'digits',)), array('catchAllUnset' => null),);
 

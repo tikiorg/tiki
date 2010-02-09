@@ -3,13 +3,16 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.19 2007-10-12 07:55:32 nyloth Exp $
+
 $section = 'wiki page';
 $section_class = "tiki_wiki_page manage";	// This will be body class instead of $section
+
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/histlib.php');
 include_once ('lib/wiki/wikilib.php');
+
 $access->check_feature('feature_wiki');
+
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("No page indicated"));
@@ -24,14 +27,10 @@ if (!($info = $tikilib->get_page_info($page))) {
 	$smarty->display('error.tpl');
 	die;
 }
-// Now check permissions to access this page
+
 $tikilib->get_perm_object($page, 'wiki page', $info);
-if ($tiki_p_remove != 'y' || $tiki_p_edit != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot remove versions from this page"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission( array('tiki_p_remove', 'tiki_p_edit') );
+
 if ($_REQUEST["version"] <> "last") {
 	$smarty->assign_by_ref('version', $_REQUEST["version"]);
 	$version = $_REQUEST["version"];

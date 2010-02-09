@@ -3,15 +3,13 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-print_blog_post.php,v 1.17 2007-10-12 07:55:29 nyloth Exp $
+
 $section = 'blogs';
 require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
-if ($prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_blogs");
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_blogs');
+
 if (!isset($_REQUEST["postId"])) {
 	$smarty->assign('msg', tra("No post indicated"));
 	$smarty->display("error.tpl");
@@ -45,13 +43,8 @@ $smarty->assign('parsed_data', $parsed_data);
 $smarty->assign('individual', 'n');
 
 $tikilib->get_perm_object($_REQUEST["blogId"], 'blog');
+$access->check_permission('tiki_p_read_blog');
 
-if ($tiki_p_read_blog != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you can not view this section"));
-	$smarty->display("error.tpl");
-	die;
-}
 $blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
 $ownsblog = 'n';
 if ($user && $user == $blog_data["user"]) {
