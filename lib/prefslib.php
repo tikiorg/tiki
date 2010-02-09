@@ -333,7 +333,7 @@ class PreferencesLib
 	}
 	private function _getRadioValue( $info, $data ) {
 		$name = $info['preference'];
-		$value = $data[$name];
+		$value = isset($data[$name]) ? $data[$name]: null;
 
 		$options = $info['options'];
 		$options = array_keys( $options );
