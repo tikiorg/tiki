@@ -5655,6 +5655,7 @@ class TikiLib extends TikiDb_Bridge
 					$missing[] = $pref;
 		
 		if( count( $missing ) > 0 ) {
+			require_once 'lib/core/lib/WikiParser/PluginOutput.php';
 			$output = WikiParser_PluginOutput::disabled( $name, $missing );
 			return false;
 		}
