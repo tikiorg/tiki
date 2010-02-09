@@ -56,10 +56,10 @@
         <select name="creator">
           {if $tiki_p_admin eq 'y' or $tiki_p_blog_admin eq 'y'}
             {foreach from=$users key=userId item=u}
-              <option value="{$u|escape}"{if $u eq $creator} selected="selected"{/if}>{$u}</option>
+              <option value="{$u|escape}"{if $u eq $creator} selected="selected"{/if}>{$u|escape}</option>
             {/foreach}
           {else}
-            <option value="{$user|escape}" selected="selected">{$user}</option>
+            <option value="{$user|escape}" selected="selected">{$user|escape}</option>
           {/if}
         </select> 
       </td>

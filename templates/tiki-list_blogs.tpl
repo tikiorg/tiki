@@ -72,7 +72,7 @@
 	<td class="{cycle advance=false}">&nbsp;{$listpages[changes].user|avatarize}&nbsp;<br />
 	&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
 {else}
-	<td class="{cycle advance=false}">&nbsp;{$listpages[changes].user}&nbsp;</td>
+	<td class="{cycle advance=false}">&nbsp;{$listpages[changes].user|escape}&nbsp;</td>
 {/if}
 {/if}
 {if $prefs.blog_list_posts eq 'y'}
