@@ -2466,7 +2466,8 @@ class TrackerLib extends TikiLib
 	}
 
 	function remove_tracker_field($fieldId,$trackerId) {
-		global $cachelib;
+		global $cachelib; include_once ('lib/cache/cachelib.php');
+		global $logslib; include_once('lib/logs/logslib.php');
 
 		// -------------------------------------
 		// remove images when needed
@@ -2490,6 +2491,7 @@ class TrackerLib extends TikiLib
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'poc'));
 
 		$this->clear_tracker_cache($trackerId);
+		$logslib->add_log('admintrackerfields', 'removed tracker field ' . $fieldId . ' from tracker ' . $trackerId);
 
 		return true;
 	}

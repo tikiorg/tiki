@@ -32,6 +32,8 @@
 </td>
 </tr>
 </table>
+
+<form>
 <table class="normal">
 <tr>
 <th>&nbsp;</th>
@@ -48,7 +50,7 @@
 <th>{self_link _sort_arg='sort_mode' _sort_field='isPublic' _title='{tr}Field is public? (viewed in trackerlist plugin){/tr}'}{tr}Public{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isHidden'}{tr}Hidden{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
-<th>&nbsp;</th>
+<th>{select_all checkbox_names='action[]'}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -76,10 +78,22 @@
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> 
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}">{icon _id='resultset_down'}</a>
+<input type="checkbox" name="action[]" value='{$channels[user].fieldId}' />
 {/if}</td>
 </tr>
 {/section}
 </table>
+
+<div style="text-align:right">
+{tr}Perform action with checked{/tr}:
+<select name="batchaction">
+<option value="">{tr}...{/tr}</option>
+<option value="delete">{tr}Delete{/tr}</option>
+</select>
+<input type="hidden" name="trackerId" value="{$trackerId}" />
+<input type="submit" name="act" value="{tr}OK{/tr}" />
+</div>
+</form>
 
 {pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}
 {/tab}

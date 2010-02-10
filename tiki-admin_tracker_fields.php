@@ -105,7 +105,6 @@ if (isset($_REQUEST["remove"]) and ($tracker_info['useRatings'] != 'y' or $info[
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$trklib->remove_tracker_field($_REQUEST["remove"], $_REQUEST["trackerId"]);
-		$logslib->add_log('admintrackerfields', 'removed tracker field ' . $_REQUEST["remove"] . ' from tracker ' . $tracker_info['name']);
 	} else {
 		key_get($area);
 	}
@@ -209,6 +208,12 @@ function replace_tracker_from_request($tracker_info) {
 }
 if (isset($_REQUEST['refresh']) && isset($_REQUEST['exportAll'])) {
 	$smarty->assign('export_all', 'y');
+}
+if (isset($_REQUEST['batchaction']) and $_REQUEST['batchaction'] == 'delete') {
+	check_ticket('admin-tracker-fields');
+	foreach($_REQUEST['action'] as $batchid) {
+		$trklib->remove_tracker_field($batchid, $_REQUEST['trackerId']);
+	}
 }
 if (isset($_REQUEST["save"])) {
 	if (isset($_REQUEST['import']) and isset($_REQUEST['rawmeat'])) {
