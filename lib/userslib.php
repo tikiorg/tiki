@@ -2256,13 +2256,18 @@ class UsersLib extends TikiLib
 	}
 
 	function get_group_info($group) {
-		$query = "select * from `users_groups` where `groupName`=?";
-
-		$result = $this->query($query, array($group));
-		$res = $result->fetchRow();
-		$perms = $this->get_group_permissions($group);
-		$res["perms"] = $perms;
-		return $res;
+		$ret = array();
+		if (is_array($group)) {
+			$query = 'select * from `users_groups` where `groupName` in ('.implode(',',array_fill(0,count($group),'?')).')';
+			$ret = $this->fetchAll($query, $group);
+		} else {
+			$query = 'select * from `users_groups` where `groupName`=?';
+			$result = $this->query($query, array($group));
+			$ret = $result->fetchRow();
+			$perms = $this->get_group_permissions($group);
+			$ret['perms'] = $perms;
+		}
+		return $ret;
 	} 
 
 	function get_groupId_info($groupId) {
