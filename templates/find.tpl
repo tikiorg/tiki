@@ -14,6 +14,7 @@
 	* find_show_languages   : If value = 'y' adds lang dropdown with languages value dropdown
 	*		find_lang             : lang dropdown selected value
 	* find_show_categories  : If value = 'y' adds categories dropdown with categories array values
+	* find_show_categories_multi  : If value = 'y' adds categories dropdown with categories array values with multi selector
 	*		find_categId          : categories selected value
 	* find_show_num_rows    : If value = 'y' adds maxRecords field. Value: maxRecords
 	* filters               : array( filter_field1 => array( option1_value => option1_text, ... ), filter_field2 => ... )
@@ -28,7 +29,7 @@
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
 		{if $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
 
-		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL' offset='NULL'}
+		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL'}
 
 	<label class="findtitle">
 		{if empty($whatlabel)}
@@ -99,17 +100,39 @@
 	</label>
 {/if}
 
-{if $find_show_categories eq 'y' and $prefs.feature_categories eq 'y' and !empty($categories)}
-	<label class="findcateg"> 
-		<select name="categId">
-			<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
-			{section name=ix loop=$categories}
-				<option value="{$categories[ix].categId|escape}" {if $find_categId eq $categories[ix].categId}selected="selected"{/if}>
-					{capture}{tr}{$categories[ix].categpath}{/tr}{/capture}{$smarty.capture.default|escape}
-				</option>
-			{/section}
-		</select>
-	</label>
+{if ($find_show_categories eq 'y' or $find_show_categories_multi eq 'y') and $prefs.feature_categories eq 'y' and !empty($categories)}
+	<div id="category_singleselect_find" style="display: {if $find_show_categories_multi eq 'y' && $find_cat_categories|@count > 1}none{else}block{/if};">
+		<label class="findcateg"> 
+			<select name="categId">
+				<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
+				{section name=ix loop=$categories}
+					<option value="{$categories[ix].categId|escape}" {if $find_categId eq $categories[ix].categId}selected="selected"{/if}>
+						{capture}{tr}{$categories[ix].categpath}{/tr}{/capture}{$smarty.capture.default|escape}
+					</option>
+				{/section}
+			</select>
+		</label>
+		{if $prefs.javascript_enabled eq 'y' && $find_show_categories_multi eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');">{tr}Multiple select{/tr}</a>{/if}
+	</div>
+	<div id="category_multiselect_find" style="display: {if $find_show_categories_multi eq 'y' && $find_cat_categories|@count > 1}block{else}none{/if};">
+  		<div class="multiselect"> 
+  			{if count($categories) gt 0}
+				{$cat_tree}
+				<div class="clear">
+				{if $tiki_p_admin_categories eq 'y'}
+    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+				{/if}
+				{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
+			{else}
+				<div class="clear">
+ 				{if $tiki_p_admin_categories eq 'y'}
+    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+ 				{/if}
+    			{tr}No categories defined{/tr}
+  			{/if}
+			</div> {* end .clear *}
+		</div> {* end #multiselect *}
+	</div> {* end #category_multiselect_find *}
 {/if}
 
 {if $find_show_num_rows eq 'y'}

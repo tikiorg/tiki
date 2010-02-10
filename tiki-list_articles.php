@@ -77,26 +77,39 @@ if (!isset($_REQUEST["type"])) {
 if (!isset($_REQUEST["topic"])) {
 	$_REQUEST["topic"] = '';
 }
-if (!isset($_REQUEST["categId"])) {
-	$_REQUEST["categId"] = '';
+
+$filter['categId'] = 0;
+if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) {
+	$filter['categId'] = $_REQUEST['cat_categories'];
+	if (count($_REQUEST['cat_categories']) > 1) {
+		$smarty->assign('find_cat_categories', $_REQUEST['cat_categories']);
+		unset($_REQUEST['categId']);
+	} else {
+		$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
+	}
+} else {
+		$_REQUEST['cat_categories'] = array();
+}
+if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
+	$filter['categId'] = $_REQUEST['categId'];
+	$smarty->assign('find_categId', $_REQUEST['categId']);
 }
 if (!isset($_REQUEST['lang'])) {
 	$_REQUEST['lang'] = '';
 }
 $smarty->assign('find_topic', $_REQUEST["topic"]);
 $smarty->assign('find_type', $_REQUEST["type"]);
-$smarty->assign('find_categId', $_REQUEST["categId"]);
 $smarty->assign('find_lang', $_REQUEST['lang']);
 $visible_only = 'y';
 if (($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y')) {
 	$visible_only = "n";
 }
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, 0, $date_max, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only, '', $_REQUEST["categId"], '', '', $_REQUEST['lang']);
+$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, 0, $date_max, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only, '', $filter["categId"], '', '', $_REQUEST['lang']);
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('cant', $listpages['cant']);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
-//print_r($listpages["data"]);
+
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 $types = $artlib->list_types();
@@ -106,6 +119,7 @@ if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 	$categories = $categlib->get_all_categories_respect_perms(null, 'view_category');
 	$smarty->assign_by_ref('categories', $categories);
+	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));	
 }
 if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();

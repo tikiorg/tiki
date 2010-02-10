@@ -159,6 +159,17 @@ if (!empty($multiprint_pages)) {
 		$filter['langOrphan'] = $_REQUEST['langOrphan'];
 		$smarty->assign_by_ref('find_langOrphan', $_REQUEST['langOrphan']);
 	}
+	if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) {
+		$filter['categId'] = $_REQUEST['cat_categories'];
+		if (count($_REQUEST['cat_categories']) > 1) {
+			$smarty->assign_by_ref('find_cat_categories', $_REQUEST['cat_categories']);
+			unset($_REQUEST['categId']);
+		} else {
+			$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
+		}
+	} else {
+		$_REQUEST['cat_categories'] = array();
+	}
 	if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
 		$filter['categId'] = $_REQUEST['categId'];
 		$smarty->assign_by_ref('find_categId', $_REQUEST['categId']);
@@ -240,6 +251,8 @@ if (!empty($multiprint_pages)) {
 		global $categlib;
 		include_once ('lib/categories/categlib.php');
 		$categories = $categlib->get_all_categories_respect_perms($user, 'view_category');
+		$smarty->assign('notable', 'y');
+		$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));
 		$smarty->assign_by_ref('categories', $categories);
 		if ((isset($prefs['wiki_list_categories']) && $prefs['wiki_list_categories'] == 'y') || (isset($prefs['wiki_list_categories_path']) && $prefs['wiki_list_categories_path'] == 'y')) {
 			foreach($listpages['data'] as $i => $check) {
