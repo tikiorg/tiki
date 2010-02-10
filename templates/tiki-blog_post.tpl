@@ -41,7 +41,7 @@
 <tr><td class="editblogform">{tr}Blog{/tr}</td><td class="editblogform">
 <select name="blogId">
 {section name=ix loop=$blogs}
-<option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $blogId}selected="selected"{/if}>{$blogs[ix].title}</option>
+<option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $blogId}selected="selected"{/if}>{$blogs[ix].title|escape}</option>
 {/section}
 </select>
 </td></tr>
