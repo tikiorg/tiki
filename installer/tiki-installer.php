@@ -642,7 +642,6 @@ if ($admin_acc == 'n') {
 
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
-$install_type = '';
 
 // Installation steps
 if (
