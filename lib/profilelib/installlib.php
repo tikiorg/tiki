@@ -893,7 +893,11 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 		
 		global $categlib;
 		require_once 'lib/categories/categlib.php';
-		$id = $categlib->add_category( $this->parent, $this->name, $this->description );
+		if ($id = $categlib->exist_child_category( $this->parent, $this->name )) {
+			$categlib->update_category( $id, $this->name, $this->description, $this->parent );
+		} else {
+			$id = $categlib->add_category( $this->parent, $this->name, $this->description );
+		}
 
 		foreach( $this->items as $item )
 		{
