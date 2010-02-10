@@ -684,8 +684,12 @@ if (
 	}
 }
 
-if (!isset($install_type) && isset($_REQUEST['install_type'])) {
-	$install_type = $_REQUEST['install_type'];
+if (!isset($install_type)) {
+	if (isset($_REQUEST['install_type'])) {
+		$install_type = $_REQUEST['install_type'];
+	} else {
+		$install_type = '';
+	}
 }
 
 if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
