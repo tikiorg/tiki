@@ -27,7 +27,7 @@ function smarty_function_select_all($params, &$smarty) {
 	}
 	$onclick = '';
 	$checkbox_names = explode(',', $params['checkbox_names']);
-	foreach ( $checkbox_names as $cn ) $onclick .= "switchCheckboxes(this.form,'$cn',this.checked);";
+	foreach ( $checkbox_names as $cn ) $onclick .= "switchCheckboxes(this.form,'" . htmlspecialchars(addslashes($cn)) . "',this.checked);";
 
 	return "<div>\n"
 		. '<input name="switcher'.$id.'" id="clickall'.$id.'" type="checkbox" onclick="' . $onclick . '"'
