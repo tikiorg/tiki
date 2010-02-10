@@ -17,6 +17,7 @@
 	* find_show_categories_multi  : If value = 'y' adds categories dropdown with categories array values with multi selector
 	*		find_categId          : categories selected value
 	* find_show_num_rows    : If value = 'y' adds maxRecords field. Value: maxRecords
+	* find_show_date_range  : If value = 'y' adds date range to filter within
 	* filters               : array( filter_field1 => array( option1_value => option1_text, ... ), filter_field2 => ... )
 	*		filter_names          : array( filter_field1 => filter_field1_name, ... )
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
@@ -98,6 +99,19 @@
 			</select>
 		</label>
 	</label>
+{/if}
+
+{if $find_show_date_range eq 'y'}
+	<div id="date_range_find">
+		<label class="findDateFrom">
+			{tr}From{/tr}
+			{html_select_date time="2009-01-01" prefix="find_from_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
+		</label>
+		<label class="findDateTo">
+			{tr}to{/tr}
+			{html_select_date prefix="find_to_" start_year="-2" end_year="+2" month_format="%m" field_order=$prefs.display_field_order}
+		</label>
+	</div>
 {/if}
 
 {if ($find_show_categories eq 'y' or $find_show_categories_multi eq 'y') and $prefs.feature_categories eq 'y' and !empty($categories)}
