@@ -12,8 +12,7 @@ $section = 'wiki page';
 require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
-$access->check_feature('feature_wiki');
-$access->check_feature('feature_wiki_structure');
+$access->check_feature(array('feature_wiki','feature_wiki_structure'));
 if (!isset($_REQUEST["page_ref_id"])) {
 	$smarty->assign('msg', tra("No structure indicated"));
 	$smarty->display("error.tpl");

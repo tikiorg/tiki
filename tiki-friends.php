@@ -3,12 +3,7 @@
 require_once('tiki-setup.php');
 include_once('lib/messu/messulib.php');
 
-if(!$user) {
-  $smarty->assign('msg', tra("You must be logged in to use this feature"));
-  $smarty->display("error.tpl");
-  die;
-}
-
+$access->check_user($user);
 $access->check_feature('feature_friends');
 
 // TODO: all messages should be translated to receiver language, not sender.

@@ -4,19 +4,8 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
-
-if ($prefs['feature_kaltura'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_kaltura");
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_list_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied: You cannot view this page"));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_kaltura');
+$access->check_permission(array('tiki_p_list_videos','tiki_p_admin_kaltura','tiki_p_admin'));
 
 include_once ("lib/videogals/KalturaClient_v3.php");
 
@@ -76,60 +65,44 @@ $entryType = $_REQUEST['list'];
 switch($_REQUEST['action']){
 	
 	case 'Create Remix':
-		
-		if( $tiki_p_remix_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied: You cannot remix videos"));
-			$smarty->display('error.tpl');
-			die;
-		}else{		
-			if($kentryType == "media"){
-				$kentry = $kclient->media->get($videoId[0]);
-				$kmixEntry = new KalturaMixEntry();
-				$kmixEntry->name = "Remix of ".$kentry->name;
-				$kmixEntry->editorType = 1;
-				$kmixEntry = $kclient->mixing->add($kmixEntry);		
-				for($i=0;$i<count($videoId);$i++){
-					$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id,$videoId[0]);
-				}
+		$access->check_permission(array('tiki_p_remix_videos','tiki_p_admin_kaltura','tiki_p_admin'));	
+		if($kentryType == "media"){
+			$kentry = $kclient->media->get($videoId[0]);
+			$kmixEntry = new KalturaMixEntry();
+			$kmixEntry->name = "Remix of ".$kentry->name;
+			$kmixEntry->editorType = 1;
+			$kmixEntry = $kclient->mixing->add($kmixEntry);		
+			for($i=0;$i<count($videoId);$i++){
+				$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id,$videoId[0]);
 			}
-			
 		}
 		header ('Location: tiki-kaltura_video.php?action=remix&mixId='.$kmixEntry->id);
 		die;
 		break;
 		
 	case 'Delete':
-
-		if($tiki_p_delete_videos != 'y' && $tiki_p_admin_kaltura != 'y' && $tiki_p_admin != 'y' ){
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("Permission denied: You cannot delete kaltura video"));
-			$smarty->display('error.tpl');
-			die;
-		} else {
-			$area = 'delkalturaentry';
-			if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-				key_check($area);
-				if($kentryType == "media"){
-					foreach( $videoId as $vi ) {
-						$kclient->media->delete($vi);
-					}
-				header ('Location: tiki-list_kaltura_entries.php?list=media');
-				die;
+		$access->check_permission(array('tiki_p_delete_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+		$area = 'delkalturaentry';
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+			key_check($area);
+			if($kentryType == "media"){
+				foreach( $videoId as $vi ) {
+					$kclient->media->delete($vi);
 				}
-				if($kentryType == "mix"){
-					foreach( $videoId as $vi ) {
-						$kclient->mixing->delete($vi);
-					}					
+			header ('Location: tiki-list_kaltura_entries.php?list=media');
+			die;
+			}
+			if($kentryType == "mix"){
+				foreach( $videoId as $vi ) {
+					$kclient->mixing->delete($vi);
+				}					
 				header ('Location: tiki-list_kaltura_entries.php?list=mix');
 				die;
-				}	
-					
-		    } else {
-				key_get($area);
-			}
-
-		}		
+			}	
+				
+		} else {
+			key_get($area);
+		}
 	break;
 	
 	case 'default':

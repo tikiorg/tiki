@@ -42,12 +42,7 @@ if (isset($_REQUEST["remove"])) {
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('list-faqs');
-	if ($tiki_p_admin_faqs != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("You do not have permission to use this feature"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_admin_faqs');
 	if (isset($_REQUEST["canSuggest"]) && $_REQUEST["canSuggest"] == 'on') {
 		$canSuggest = 'y';
 	} else {

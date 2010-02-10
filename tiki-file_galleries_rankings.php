@@ -8,13 +8,11 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/rankings/ranklib.php');
-$access->check_feature('feature_file_galleries');
-$access->check_feature('feature_file_galleries_rankings');
+$access->check_feature(array('feature_file_galleries','feature_file_galleries_rankings'));
 
 if ((isset($tiki_p_list_file_galleries) && $tiki_p_list_file_galleries != 'y') || (!isset($tiki_p_list_file_galleries) && $tiki_p_view_file_gallery != 'y')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied. You cannot view this section"));
-
 	$smarty->display("error.tpl");
 	die;
 }

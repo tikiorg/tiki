@@ -8,8 +8,7 @@
 
 @ini_set('max_execution_time', 0); //will not work if safe_mode is on
 require_once('tiki-setup.php');
-$access->check_feature('feature_trackers');
-$access->check_feature('feature_ajax');
+$access->check_feature(array('feature_trackers','feature_ajax'));
 
 if (!isset($_REQUEST['trackerId'])) {
 	$smarty->assign('msg', tra('No tracker indicated'));

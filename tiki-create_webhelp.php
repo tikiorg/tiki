@@ -49,18 +49,8 @@ function deldirfiles($dir){
   closedir($current_dir);
 }
 
-if ($prefs['feature_create_webhelp'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_create_webhelp");
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_edit_structures != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_create_webhelp');
+$access->check_permission('tiki_p_edit_structures');
 
 $struct_info = $structlib->s_get_structure_info($_REQUEST['struct']);
 $smarty->assign_by_ref('struct_info',$struct_info);
