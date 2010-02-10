@@ -226,7 +226,7 @@ $jq("#'.$id.'_openall").click( function () {
 			$html .= '<th class="checkBoxHeader">';
 			$html .= smarty_function_select_all(
 						array('checkbox_names'=>$_checkbox[$i].'[]',
-							  'label' => empty($_checkboxTitles) ? '' : $_checkboxTitles[$i]), $smarty);
+							  'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i])), $smarty);
 			$html .= '</th>';
 		}
 	}
@@ -282,7 +282,7 @@ $jq("#'.$id.'_openall").click( function () {
 					if (!empty($_checkbox)) {
 						for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 							$html .= '<td class="checkBoxHeader">';
-							$html .= empty($_checkboxTitles) ? '' : $_checkboxTitles[$i];
+							$html .= empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i]);
 							$html .= '</td>';
 						}
 					}
@@ -315,11 +315,11 @@ $jq("#'.$id.'_openall").click( function () {
 				// get checkbox's "value"
 				$cbxVal = htmlspecialchars($row[$_checkboxColumnIndex[$i]]);
 				$rowVal = htmlspecialchars($row[$_valueColumnIndex]);
-				$cbxTit = empty($_checkboxTitles) ? $cbxVal : $_checkboxTitles[$i];
+				$cbxTit = empty($_checkboxTitles) ? $cbxVal : htmlspecialchars($_checkboxTitles[$i]);
 				$html .= '<td class="checkBoxCell">';
-				$html .= '<input type="checkbox" name="'.$_checkbox[$i].'[]" value="'.$rowVal.'"'.($cbxVal=='y' ? ' checked="checked"' : '').' title="'.$cbxTit.'" />';
+				$html .= '<input type="checkbox" name="'.htmlspecialchars($_checkbox[$i]).'[]" value="'.$rowVal.'"'.($cbxVal=='y' ? ' checked="checked"' : '').' title="'.$cbxTit.'" />';
 				if ($cbxVal == 'y') {
-					$html .= '<input type="hidden" name="old_'.$_checkbox[$i].'[]" value="'.$rowVal.'" />';
+					$html .= '<input type="hidden" name="old_'.htmlspecialchars($_checkbox[$i]).'[]" value="'.$rowVal.'" />';
 				}
 				$html .= '</td>';
 			}
