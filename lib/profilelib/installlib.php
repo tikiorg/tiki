@@ -2129,16 +2129,15 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 		{
 			global $calendarlib; if (!$calendarlib) require_once 'lib/calendar/calendarlib.php';
 			
-			$data = $this->getData();
+			$calendar = $this->getData();
+			$this->replaceReferences( $calendar );
 			
-			foreach ($data as $calendar)
+			if ((isset ($calendar['name'])) && (!empty ($calendar['name'])))
 			{
-				if ((isset ($calendar['name'])) && (!empty ($calendar['name'])))
-				{
-					$customflags = isset($calendar['customflags']) ? $calendar['customflags']  : array();
-					$options = isset($calendar['options']) ? $calendar['options']  : array();
-					$calendarlib->set_calendar(null, $user, $calendar['name'], $calendar['description'], $customflags,$options);
-				}
+				global $user;
+				$customflags = isset($calendar['customflags']) ? $calendar['customflags']  : array();
+				$options = isset($calendar['options']) ? $calendar['options']  : array();
+				$calendarlib->set_calendar(null, $user, $calendar['name'], $calendar['description'], $customflags,$options);
 			}
 			return 1;
 		}
