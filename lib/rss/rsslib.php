@@ -619,8 +619,15 @@ class RSSLib extends TikiLib
 
 	private function process_action_article( $configuration, $data ) {
 		global $artlib; require_once 'lib/articles/artlib.php';
+		$publication = $data['publication_date'];
 
-		$artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $data['publication_date'], $data['publication_date'] + 3600*24*$configuration['expiry'], 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '' );
+		if( $configuration['future_publish'] > 0 ) {
+			$publication = $this->now + $configuration['future_publish']*60;
+		}
+
+		$expire = $publication + 3600*24*$configuration['expiry'];
+
+		$artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '' );
 	}
 
 	function set_article_generator( $rssId, $configuration ) {
@@ -658,6 +665,7 @@ class RSSLib extends TikiLib
 			'expiry' => 365,
 			'atype' => 'Article',
 			'topic' => 0,
+			'future_publish' => -1,
 		);
 
 		foreach( $actions as $action ) {

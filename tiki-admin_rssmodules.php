@@ -74,6 +74,7 @@ if( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 			'expiry' => $jitPost->expiry->int(),
 			'atype' => $jitPost->type->text(),
 			'topic' => $jitPost->topic->int(),
+			'future_publish' => $jitPost->future_publish->int(),
 		) );
 	}
 
