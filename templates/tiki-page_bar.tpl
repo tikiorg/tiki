@@ -160,7 +160,7 @@
 	{include file='attachments.tpl'}
 {/if}
 
-{if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y'}
+{if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y' and $comments_allowed_on_page == 'y'}
 	<a name="comments"></a>
 	{include file='comments.tpl'}
 {/if}
