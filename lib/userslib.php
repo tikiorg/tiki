@@ -214,7 +214,7 @@ class UsersLib extends TikiLib
 	 * @return void : redirects to suitable homepage or redir param if not remote 
 	 */
 	function user_logout($user, $remote = false, $redir = '') {
-		global $prefs, $logslib, $lslib, $user_cookie_site, $cookie_path, $phpcas_enabled;
+		global $prefs, $logslib, $lslib, $user_cookie_site, $phpcas_enabled;
 
 		$logslib->add_log('login', 'logged out');
 		
@@ -246,7 +246,7 @@ class UsersLib extends TikiLib
 				$lslib->set_operator_status($user, 'offline');
 			}
 		}
-		setcookie($user_cookie_site, '', -3600, $cookie_path, $prefs['cookie_domain']);
+		setcookie($user_cookie_site, '', -3600, $prefs['cookie_path'], $prefs['cookie_domain']);
 		/* change group home page or deactivate if no page is set */
 		if (!empty($redir)) {
 			$url = $redir;
@@ -267,7 +267,6 @@ class UsersLib extends TikiLib
 			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path']);
 			phpCAS::logoutWithRedirectServiceAndUrl($url,$url);
 		}
-		session_unregister('user');
 		unset($_SESSION[$user_cookie_site]);
 		session_destroy();
 		
