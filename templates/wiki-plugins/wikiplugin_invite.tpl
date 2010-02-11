@@ -1,4 +1,4 @@
-{* $Id: tiki-admin-include-features.tpl 16901 2009-02-24 22:53:51Z sylvieg $ *}
+{* $Id$ *}
 {if $errors}
 	{remarksbox type="feedback"}
 		{foreach from=$errors item=error}

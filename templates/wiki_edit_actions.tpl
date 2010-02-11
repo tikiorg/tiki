@@ -1,4 +1,4 @@
-{* $Id: tiki-editpage.tpl 20027 2009-07-09 19:31:46Z sylvieg $ *}
+{* $Id$ *}
 <input type="hidden" name="no_bl" value="y" />
 <input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}

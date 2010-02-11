@@ -1,4 +1,4 @@
-{* $Id: wikiplugin_trackerstat.tpl 12245 2008-03-30 13:38:13Z luciash $ *}
+{* $Id$ *}
 <table class="normal">
 <tr><th colspan="2">{tr}Upcoming events{/tr}</th></tr>
 {cycle values="odd,even" print=false}

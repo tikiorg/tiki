@@ -1,5 +1,5 @@
 {strip}
-{* $Id: tiki-plugin_trackerlist.tpl 22986 2009-11-09 14:21:19Z sylvieg $ *}
+{* $Id$ *}
 {* param item, fields, wiki(wiki:page or tpl:tpl), list_mode, perms, default_group, listfields *}
 {if !isset($list_mode)}{assign var=list_mode value="n"}{/if}
 {foreach from=$fields item=field}

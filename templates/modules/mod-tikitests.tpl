@@ -1,4 +1,4 @@
-{* $Id: mod-top_file_galleries.tpl 12615 2008-04-21 05:18:48Z chibaguy $ *}
+{* $Id$ *}
 
 {if $tiki_p_admin_tikitests eq 'y' or  $tiki_p_play_tikitests eq 'y' or $tiki_p_edit_tikitests eq 'y'}
 {if !isset($tpl_module_title)}

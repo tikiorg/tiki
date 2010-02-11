@@ -1,5 +1,5 @@
 {strip}
-{* $Id: tiki-view_tracker_item.tpl 23988 2009-12-22 13:55:35Z sylvieg $ *}
+{* $Id$ *}
 {****  Display warnings about incorrect values and missing mandatory fields ***}
 {if count($err_mandatory) > 0}
 {remarksbox type='errors' title='{tr}Errors{/tr}'}

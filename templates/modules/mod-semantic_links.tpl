@@ -1,4 +1,4 @@
-{* $Id: mod-translation.tpl 14467 2008-08-22 09:21:05Z sept_7 $ *}
+{* $Id$ *}
 
 {if $show_semantic_links_module}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Page Relations{/tr}"}{/if}

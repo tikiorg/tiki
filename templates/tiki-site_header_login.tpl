@@ -1,4 +1,4 @@
-{* $Id: tiki-site_header.tpl 12554 2008-04-15 23:03:57Z luciash $ *}
+{* $Id$ *}
 {* site header login form *}
 {strip}
 {if $filegals_manager eq '' and $print_page ne 'y'}

@@ -1,4 +1,4 @@
-{* $Id: mod-article_archives.tpl 18779 2009-05-14 16:28:19Z pkdille $ *}
+{* $Id$ *}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="article_archives" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 

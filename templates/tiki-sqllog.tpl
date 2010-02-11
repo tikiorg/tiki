@@ -1,4 +1,4 @@
-{* $Id: tiki-adminusers.tpl 14918 2008-09-30 15:28:29Z ricks99 $ *}
+{* $Id$ *}
 {title admpage="general"}{tr}Log SQL{/tr}{/title}
 
 {if $prefs.log_sql ne 'y'}

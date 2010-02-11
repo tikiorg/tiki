@@ -1,4 +1,4 @@
-{* $Id: tiki-export_tracker.tpl 15727 2008-11-21 22:05:51Z sylvieg $ *}
+{* $Id$ *}
 
 <h2>{tr}Export Tracker Items{/tr}</h2>
 

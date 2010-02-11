@@ -1,4 +1,4 @@
-{* $Id: mod-last_created_faqs.tpl 21754 2009-09-25 20:26:38Z chealer $ *}
+{* $Id$ *}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="last_validated_faq_questions" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $nonums != 'y'}<ol>{else}<ul>{/if}

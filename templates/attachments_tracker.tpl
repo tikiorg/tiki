@@ -1,4 +1,4 @@
-{* $Id: tiki-view_tracker_item.tpl 12901 2008-05-20 17:35:20Z sylvieg $ *}
+{* $Id$ *}
 {strip}
 {if $tiki_p_attach_trackers eq 'y'}
 	<h2>{tr}Attach a file to this item{/tr}</h2>

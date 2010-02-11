@@ -1,4 +1,4 @@
-{* $Id: tracker_item_field_value.tpl 14576 2008-09-02 01:19:41Z rischconsulting $ *}
+{* $Id$ *}
 {* idem tracker_item_field with no strip *}
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}&amp;sensor=false" type="text/javascript">
 	</script>

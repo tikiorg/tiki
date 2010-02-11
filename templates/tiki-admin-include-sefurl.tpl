@@ -1,4 +1,4 @@
-{* $Id: tiki-user_information.tpl 16912 2009-02-25 03:38:43Z luciash $ *}
+{* $Id$ *}
 <form class="admin" method="post" action="tiki-admin.php?page=sefurl">
 	<div class="heading input_submit_container" style="text-align: right;">
 		<input type="submit" name="save" value="{tr}Change preferences{/tr}" />

@@ -1,4 +1,4 @@
-{* $Id: tiki-browse_image.tpl 17641 2009-03-26 14:24:18Z sylvieg $ *}
+{* $Id$ *}
 
 
   {title}{tr}Browsing Video:{/tr}&nbsp;{$name}{/title}
