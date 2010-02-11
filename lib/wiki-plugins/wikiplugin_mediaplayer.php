@@ -11,6 +11,12 @@ function wikiplugin_mediaplayer_info() {
 				 'extraparams' =>true,
 				 'prefs' => array( 'wikiplugin_mediaplayer' ),
 				 'params' => array(
+								'fullscreen' => array(
+									'required' => false,
+									'name' => tra('Allow Fullscreen'),
+									'description' => tra('Allow fullscreen mode.').'true|false',
+								),
+								
 								   'mp3' => array(
 												  'required' => false,
 												  'name'=> tra('MP3 URL'),
@@ -26,6 +32,11 @@ function wikiplugin_mediaplayer_info() {
 													'name' => tra('Style'),
 													'description' => tra('One of:').'mini|normal|maxi|multi',
 													),
+								'wmode' => array(
+									'required' => false,
+									'name' => tra('Flash Window Mode'),
+									'description' => tra('Sets the Window Mode property of the Flash movie for transparency, layering, and positioning in the browser. Default value: ').'transparent',
+								),
 
 								   ),
 				 );
@@ -59,13 +70,22 @@ function wikiplugin_mediaplayer($data, $params) {
 	}
 	$code = '<object type="application/x-shockwave-flash" data="'.$params['where'].$player.'" width="'.$params['width'].'" height="'.$params['height'].'">';
 	$code .= '<param name="movie" value="'.$params['where'].$player.'" />';
+	if (!empty($params['fullscreen'])) {
+		$code .= '<param name="allowFullscreen" value="'.$params['fullscreen'].'" />';
+	}
+	if (empty($params['wmode'])) {
+		$wmode = transparent;
+	} else {
+		$wmode = $params['wmode'];
+	}
+	$code .= '<param name="wmode" value="'.$wmode.'" />';
 	if (empty($params['flv']) && !empty($params['mp3'])) 
 		$code .= '<param name="FlashVars" value="mp3='.$params['mp3'].'" />';
-	unset($params['width']); unset($params['height']); unset($params['where']); unset($params['player']);unset($params['mp3']); unset($params['style']);
+	unset($params['width']); unset($params['height']); unset($params['where']); unset($params['player']);unset($params['mp3']); unset($params['style']); unset($params['fullscreen']); unset($params['wmode']);
 	foreach ($params as $key=>$value) {
 		$code .= '<param name="FlashVars" value="'.$key.'='.$value.'" />';
 	}
 	$code .= '</object>';
-	
+
 	return "~np~$code~/np~";
 }
