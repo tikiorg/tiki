@@ -1,9 +1,10 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+
 require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
 $access->check_feature('feature_directory');
@@ -26,6 +27,5 @@ $section = 'directory';
 include_once ('tiki-section_options.php');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-// Display the template
 $smarty->assign('mid', 'tiki-directory_admin.tpl');
 $smarty->display("tiki.tpl");
