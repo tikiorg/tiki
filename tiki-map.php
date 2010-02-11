@@ -14,22 +14,8 @@ if (!function_exists('ms_newMapObj')) {
 	$smarty->display('error.tpl');
 	die;
 }
-if ($prefs['feature_maps'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_maps');
-	$smarty->display('error.tpl');
-	die;
-}
-if ($prefs['feature_ajax'] != 'y') {
-	$smarty->assign('msg', tra('Feature Ajax Disabled. Please ask your site administrator to enable') . ': feature_ajax');
-	$smarty->display('error.tpl');
-	die;
-}
-if ($tiki_p_map_view != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('You do not have permission to use this feature'));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature(array('feature_maps','feature_ajax'));
+$access->check_permission('tiki_p_map_view');
 //setting up xajax
 require_once ("lib/ajax/xajax/xajax_core/xajaxAIO.inc.php");
 $xajax = new xajax("x_maps.php");

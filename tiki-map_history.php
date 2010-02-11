@@ -11,12 +11,7 @@ if (!isset($prefs['feature_maps']) or $prefs['feature_maps'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-if ($tiki_p_map_view != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permissions to view the maps"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_map_view');
 // Validate to prevent editing any file
 if (isset($_REQUEST["mapfile"])) {
 	if (strstr($_REQUEST["mapfile"], '..')) {
