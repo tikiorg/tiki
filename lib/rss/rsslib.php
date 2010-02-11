@@ -620,7 +620,7 @@ class RSSLib extends TikiLib
 	private function process_action_article( $configuration, $data ) {
 		global $artlib; require_once 'lib/articles/artlib.php';
 
-		$artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], $data['content'], $data['publication_date'], $data['publication_date'] + 3600*24*$configuration['expiry'], 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '' );
+		$artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $data['publication_date'], $data['publication_date'] + 3600*24*$configuration['expiry'], 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '' );
 	}
 
 	function set_article_generator( $rssId, $configuration ) {
