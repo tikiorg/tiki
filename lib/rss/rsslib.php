@@ -627,7 +627,16 @@ class RSSLib extends TikiLib
 
 		$expire = $publication + 3600*24*$configuration['expiry'];
 
-		$artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '' );
+		$id = $artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '' );
+
+		if( count( $configuration['categories'] ) ) {
+			global $categlib; require_once 'lib/categories/categlib.php';
+			$objectId = $categlib->add_categorized_object( 'article', $id, $data['title'], $data['title'], 'tiki-read_article.php?articleId=' . $id );
+
+			foreach( $configuration['categories'] as $categId ) {
+				$categlib->categorize( $objectId, $categId );
+			}
+		}
 	}
 
 	function set_article_generator( $rssId, $configuration ) {
@@ -666,6 +675,7 @@ class RSSLib extends TikiLib
 			'atype' => 'Article',
 			'topic' => 0,
 			'future_publish' => -1,
+			'categories' => array(),
 		);
 
 		foreach( $actions as $action ) {

@@ -75,6 +75,7 @@ if( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 			'atype' => $jitPost->type->text(),
 			'topic' => $jitPost->topic->int(),
 			'future_publish' => $jitPost->future_publish->int(),
+			'categories' => (array) $jitPost->cat_categories->int(),
 		) );
 	}
 
@@ -84,6 +85,12 @@ if( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 	global $artlib; require_once 'lib/articles/artlib.php';
 	$smarty->assign( 'topics', $artlib->list_topics() );
 	$smarty->assign( 'types', $artlib->list_types() );
+
+	$cat_type = 'null';
+	$cat_objid = 'null';
+	$_REQUEST['cat_categorize'] = 'on';
+	$_REQUEST['cat_categories'] = $config['categories'];
+	include 'categorize_list.php';
 }
 
 if (isset($_REQUEST["save"])) {
