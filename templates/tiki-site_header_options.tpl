@@ -43,7 +43,9 @@
 					</div>
 				{/if}
 				<div id="sitelogo" class="floatright"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
-					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
+					{if $prefs.sitelogo_src}
+						<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>
+					{/if}
 				</div>
 			{/if}
 		</div>
