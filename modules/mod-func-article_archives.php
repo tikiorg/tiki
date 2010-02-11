@@ -1,5 +1,5 @@
 <?php
-// $Id: mod-article_archives.php 18886 2009-05-18 15:19:05Z dex $
+// $Id$
 
 // Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
