@@ -1,12 +1,12 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22.2.3 2007-10-29 17:49:48 sylvieg Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Id: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22.2.3 2007-10-29 17:49:48 sylvieg Exp $
+# $Id$
 include_once("tiki-setup.php");
 include_once ("lib/pear/XML/Server.php");
 include_once ('lib/commcenter/commlib.php');

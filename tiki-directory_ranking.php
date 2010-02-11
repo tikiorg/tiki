@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-directory_ranking.php,v 1.12 2007-10-14 15:17:16 nyloth Exp $
+// $Id$
 $section = 'directory';
 require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');

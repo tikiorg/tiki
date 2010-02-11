@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.24.2.3 2008-01-17 14:47:58 sylvieg Exp $
+// $Id$
 $section = 'newsletters';
 require_once ('tiki-setup.php');
 include_once ('lib/newsletters/nllib.php');

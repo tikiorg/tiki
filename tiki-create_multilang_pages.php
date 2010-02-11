@@ -1,5 +1,5 @@
 <?php
-// $Id: tiki-quick_create_multilingual_page.php 24605 2010-01-22 18:24:30Z alain_desilets $
+// $Id$
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.

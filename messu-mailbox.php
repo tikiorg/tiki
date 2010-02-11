@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.26 2007-10-15 07:43:28 sept_7 Exp $
+// $Id$
 $section = 'user_messages';
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {

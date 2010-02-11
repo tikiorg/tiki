@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.73.2.3 2007-12-07 05:56:37 mose Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 

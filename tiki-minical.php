@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.26.2.1 2007-11-04 21:49:20 nyloth Exp $
+// $Id$
 $section = 'calendar';
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {

@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.91.2.4 2008/03/23 14:12:05 sylvieg Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/registration/registrationlib.php');
 include_once ('lib/notifications/notificationlib.php');

@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_dsn.php,v 1.15.2.1 2007-11-25 21:42:34 sylvieg Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/admin/adminlib.php');
 

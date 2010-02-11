@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.46.2.4 2008-03-06 19:45:42 sampaioprimo Exp $
+// $Id$
 $section = "galleries";
 require_once ('tiki-setup.php');
 include_once ("lib/imagegals/imagegallib.php");

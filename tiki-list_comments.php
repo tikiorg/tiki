@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-list_comments.php,v 1.2.2.1 2007-11-04 22:08:04 nyloth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/commentslib.php');
 $auto_query_args = array('types_section', 'types', 'show_types', 'sort_mode', 'offset', 'find', 'findfilter_approved');

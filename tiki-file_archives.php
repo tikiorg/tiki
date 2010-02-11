@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.9.2.2 2008-03-03 20:16:13 nyloth Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.35.2.1 2008-01-17 17:47:01 sylvieg Exp $
+// $Id$
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/blogs/bloglib.php');

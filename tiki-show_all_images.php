@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-show_all_images.php,v 1.3.2.1 2007-11-04 22:08:04 nyloth Exp $
+// $Id$
 // change this if needed
 $fontfile = "/usr/share/fonts/truetype/ttf-bitstream-vera/VeraBd.ttf";
 if (!isset($_REQUEST['view'])) {

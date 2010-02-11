@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_shoutbox_words.php,v 1.6 2007-10-12 07:55:24 nyloth Exp $
+// $Id$
 // Admin to the filtering of bad shoutbox words
 // First commit on cvs by damosoft aka damian
 // Initialization

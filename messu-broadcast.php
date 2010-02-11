@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.30.2.1 2007-11-22 17:09:02 sylvieg Exp $
+// $Id$
 $section = 'user_messages';
 require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');

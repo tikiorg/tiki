@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.10 2008-03-10 18:04:42 sylvieg Exp $
+// $Id$
 $section = 'forums';
 require_once ('tiki-setup.php');
 if ($prefs['feature_categories'] == 'y') {

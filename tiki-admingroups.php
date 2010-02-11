@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.10 2008-03-14 19:51:58 sylvieg Exp $
+// $Id$
 require_once ('tiki-setup.php');
 
 $access->check_permission('tiki_p_admin');

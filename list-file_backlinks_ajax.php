@@ -1,5 +1,5 @@
 <?php
-// $Id:$
+// $Id$
 require_once('tiki-setup.php');
 if ( $prefs['feature_file_galleries'] != 'y' || $prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_autocomplete'] != 'y') {
 	/* echo '{}'; */

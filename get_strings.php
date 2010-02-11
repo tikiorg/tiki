@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.49.2.1 2007-12-26 17:27:37 pkdille Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.31.2.3 2007-11-27 14:53:11 sylvieg Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/menubuilder/menulib.php');
 $access->check_permission(array('tiki_p_admin', 'tiki_p_edit_menu_option'));

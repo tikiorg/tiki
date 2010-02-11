@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-map_history.php,v 1.6.2.1 2008-02-27 00:09:14 franck Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/map/maplib.php');
 if (!isset($prefs['feature_maps']) or $prefs['feature_maps'] != 'y') {

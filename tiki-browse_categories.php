@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.37.2.1 2007-12-06 16:43:43 nkoth Exp $
+// $Id$
 
 $section = 'categories';
 require_once ('tiki-setup.php');

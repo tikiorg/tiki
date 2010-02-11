@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.7 2008-01-29 02:58:11 nkoth Exp $
+// $Id$
 $section = 'forums';
 require_once ('tiki-setup.php');
 

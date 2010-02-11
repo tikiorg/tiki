@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.29.2.1 2007-12-07 05:56:38 mose Exp $
+// $Id$
 $section = 'galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');

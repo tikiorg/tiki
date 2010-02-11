@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.47.2.3 2007-11-23 12:57:18 nyloth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 

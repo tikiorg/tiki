@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-list_cache.php,v 1.14 2007-10-12 07:55:28 nyloth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 $access->check_permission('tiki_p_admin');
 if (isset($_REQUEST["remove"])) {

@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_html_page_content.php,v 1.15 2007-10-12 07:55:23 nyloth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/htmlpages/htmlpageslib.php');
 $access->check_feature('feature_html_pages');

@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-old_polls.php,v 1.14.2.2 2007-12-06 14:14:11 nkoth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/polls/polllib.php');
 if (!isset($polllib)) {

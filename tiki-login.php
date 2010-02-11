@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.9 2008-03-19 13:17:26 jyhem Exp $
+// $Id$
 $bypass_siteclose_check = 'y';
 require_once ('tiki-setup.php');
 if (isset($_REQUEST['cas']) && $_REQUEST['cas'] == 'y' && $prefs['auth_method'] == 'cas') {

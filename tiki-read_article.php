@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.61.2.2 2007-12-19 16:11:26 sylvieg Exp $
+// $Id$
 $section = 'cms';
 require_once ('tiki-setup.php');
 $access->check_feature('feature_articles');

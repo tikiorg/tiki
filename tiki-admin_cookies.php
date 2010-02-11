@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_cookies.php,v 1.17 2007-10-12 07:55:23 nyloth Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/taglines/taglinelib.php');
 

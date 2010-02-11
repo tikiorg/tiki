@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/help.php,v 1.5.2.1 2007-11-25 20:58:11 mose Exp $
+// $Id$
 
 // Initialization
 

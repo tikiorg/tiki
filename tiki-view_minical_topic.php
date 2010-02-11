@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-view_minical_topic.php,v 1.7.2.1 2008-03-01 16:07:36 lphuberdeau Exp $
+// $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/minical/minicallib.php');
 

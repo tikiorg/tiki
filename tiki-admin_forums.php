@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.6 2007-12-18 14:08:59 nkoth Exp $
+// $Id$
 $section = 'forums';
 require_once ('tiki-setup.php');
 $smarty->assign('headtitle', tra('Admin Forums'));

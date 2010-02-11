@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.24.2.3 2008-03-12 13:04:41 ricks99 Exp $
+// $Id$
 $section = 'faqs';
 require_once ('tiki-setup.php');
 include_once ('lib/faqs/faqlib.php');

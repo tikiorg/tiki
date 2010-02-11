@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.34.2.2 2008-02-12 19:20:11 sylvieg Exp $
+// $Id$
 $section = 'calendar';
 require_once ('tiki-setup.php');
 require_once ('lib/categories/categlib.php');

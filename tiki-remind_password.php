@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.34.2.1 2008-01-16 13:48:10 sylvieg Exp $
+// $Id$
 require_once ('tiki-setup.php');
 $access->check_feature('forgotPass');
 $smarty->assign('showmsg', 'n');

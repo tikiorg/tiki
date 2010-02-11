@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.21.2.4 2007-12-06 14:14:11 nkoth Exp $
+// $Id$
 $section = 'poll';
 require_once ('tiki-setup.php');
 if ($prefs['feature_polls'] != 'y') {

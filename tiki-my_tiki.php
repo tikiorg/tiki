@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.28.2.1 2007-12-13 23:24:45 nkoth Exp $
+// $Id$
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {

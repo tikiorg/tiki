@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.63.2.2 2007-11-24 15:28:37 nyloth Exp $
+// $Id$
 $section = 'blogs';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');

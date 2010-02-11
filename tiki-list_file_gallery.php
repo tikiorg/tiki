@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.14 2008-03-16 00:06:53 nyloth Exp $
+// $Id$
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
 $access->check_feature('feature_file_galleries');
