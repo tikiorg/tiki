@@ -532,29 +532,30 @@ class RSSLib extends TikiLib
 
 		if( $force ) {
 			$bindvars = array();
-			$result = $this->fetchAll( 'SELECT `rssId`, `url` FROM `tiki_rss_modules` WHERE ' . $this->in( 'rssId', $feeds, $bindvars ), $bindvars );
+			$result = $this->fetchAll( 'SELECT `rssId`, `url`, `actions` FROM `tiki_rss_modules` WHERE ' . $this->in( 'rssId', $feeds, $bindvars ), $bindvars );
 		} else {
 			$bindvars = array( $this->now );
-			$result = $this->fetchAll( 'SELECT `rssId`, `url` FROM `tiki_rss_modules` WHERE (`lastUpdated` < ? - `refresh`) AND ' . $this->in( 'rssId', $feeds, $bindvars ), $bindvars );
+			$result = $this->fetchAll( 'SELECT `rssId`, `url`, `actions` FROM `tiki_rss_modules` WHERE (`lastUpdated` < ? - `refresh`) AND ' . $this->in( 'rssId', $feeds, $bindvars ), $bindvars );
 		}
 
 		foreach( $result as $row ) {
-			$this->update_feed( $row['rssId'], $row['url'] );
+			$this->update_feed( $row['rssId'], $row['url'], $row['actions'] );
 		}
 	}
 
-	private function update_feed( $rssId, $url ) {
+	private function update_feed( $rssId, $url, $actions ) {
 		require_once 'Zend/Feed/Reader.php';
 
 		$filter = new DeclFilter;
 		$filter->addStaticKeyFilters( array(
 			'url' => 'url',
-			'guid' => 'url',
 			'title' => 'striptags',
 			'author' => 'striptags',
 			'description' => 'striptags',
 			'content' => 'purifier',
 		) );
+
+		$guidFilter = TikiFilter::get('url');
 
 		try {
 			$feed = Zend_Feed_Reader::import( $url );
@@ -570,27 +571,103 @@ class RSSLib extends TikiLib
 			array( $this->now, $siteTitle, $siteUrl, $rssId ) );
 
 		foreach( $feed as $entry ) {
-			$data = $filter->filter( array(
-				'title' => $entry->getTitle(),
-				'guid' => $entry->getId(),
-				'url' => $entry->getLink(),
-				'description' => $entry->getDescription(),
-				'content' => $entry->getContent(),
-				'author' => $authors ? implode( ', ', $authors->getValues() ) : '', 
-			) );
+			$guid = $guidFilter->filter( $entry->getId() );
 
-			$query = 'INSERT IGNORE INTO `tiki_rss_items` ( `rssId`, `guid`, `url`, `publication_date`, `title`, `author`, `description`, `content` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ? )';
-			$this->query( $query, array(
-				$rssId,
-				$data['guid'],
-				$data['url'],
-				$entry->getDateCreated()->get( Zend_Date::TIMESTAMP ),
-				$data['title'],
-				$data['author'],
-				$data['description'],
-				$data['content'],
-			) );
+			if( $this->getOne( 'SELECT COUNT(*) FROM `tiki_rss_items` WHERE `rssId` = ? AND `guid` = ?', array( $rssId, $guid ) ) == 0 ) {
+				$authors = $entry->getAuthors();
+
+				$data = $filter->filter( array(
+					'title' => $entry->getTitle(),
+					'url' => $entry->getLink(),
+					'description' => $entry->getDescription(),
+					'content' => $entry->getContent(),
+					'author' => $authors ? implode( ', ', $authors->getValues() ) : '', 
+				) );
+
+				$data['guid'] = $guid;
+				$data['publication_date'] = $entry->getDateCreated()->get( Zend_Date::TIMESTAMP );
+
+				$this->insert_item( $rssId, $data, $actions );
+			}
 		}
+	}
+
+	private function insert_item( $rssId, $data, $actions ) {
+		$query = 'INSERT INTO `tiki_rss_items` ( `rssId`, `guid`, `url`, `publication_date`, `title`, `author`, `description`, `content` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ? )';
+		$this->query( $query, array(
+			$rssId,
+			$data['guid'],
+			$data['url'],
+			$data['publication_date'],
+			$data['title'],
+			$data['author'],
+			$data['description'],
+			$data['content'],
+		) );
+		
+		$actions = json_decode( $actions, true );
+
+		foreach( $actions as $action ) {
+			$method = 'process_action_' . $action['type'];
+			unset( $action['type'] );
+
+			if( $action['active'] ) {
+				$this->$method( $action, $data );
+			}
+		}
+	}
+
+	private function process_action_article( $configuration, $data ) {
+		global $artlib; require_once 'lib/articles/artlib.php';
+
+		$artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], $data['content'], $data['publication_date'], $data['publication_date'] + 3600*24*$configuration['expiry'], 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '' );
+	}
+
+	function set_article_generator( $rssId, $configuration ) {
+		$configuration['type'] = 'article';
+
+		if( $module['actions'] ) {
+			$actions = json_decode( $module['actions'], true );
+		} else {
+			$actions = array();
+		}
+
+		$out = array();
+		foreach( $actions as $action ) {
+			if( $action['type'] != 'article' ) {
+				$out[] = $action;
+			}
+		}
+
+		$out[] = $configuration;
+
+		$this->query( 'UPDATE `tiki_rss_modules` SET `actions` = ? WHERE `rssId` = ?', array( json_encode( $out ), $rssId ) );
+	}
+
+	function get_article_generator( $rssId ) {
+		$module = $this->get_rss_module( $rssId );
+
+		if( $module['actions'] ) {
+			$actions = json_decode( $module['actions'], true );
+		} else {
+			$actions = array();
+		}
+
+		$default = array(
+			'active' => false,
+			'expiry' => 365,
+			'atype' => 'Article',
+			'topic' => 0,
+		);
+
+		foreach( $actions as $action ) {
+			if( $action['type'] == 'article' ) {
+				unset( $action['type'] );
+				return array_merge( $default, $action );
+			}
+		}
+
+		return $default;
 	}
 }
 global $rsslib;

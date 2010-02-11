@@ -66,6 +66,25 @@ if (isset($_REQUEST["remove"])) {
 		key_get($area);
 	}
 }
+
+if( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
+	if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+		$rsslib->set_article_generator( $_REQUEST['article'], array(
+			'active' => isset( $_POST['enable'] ),
+			'expiry' => $jitPost->expiry->int(),
+			'atype' => $jitPost->type->text(),
+			'topic' => $jitPost->topic->int(),
+		) );
+	}
+
+	$config = $rsslib->get_article_generator( $_REQUEST['article'] );
+	$smarty->assign( 'articleConfig', $config );
+
+	global $artlib; require_once 'lib/articles/artlib.php';
+	$smarty->assign( 'topics', $artlib->list_topics() );
+	$smarty->assign( 'types', $artlib->list_types() );
+}
+
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-rssmodules');
 	if (isset($_REQUEST['showTitle']) == 'on') {
