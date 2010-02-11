@@ -85,7 +85,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		
 		break;
 	case 'dupl':
-		$access->check_permission(array('tiki_p_uplaod_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+		$access->check_permission(array('tiki_p_upload_videos','tiki_p_admin_kaltura','tiki_p_admin'));
 		if($kentryType == "mix"){
 			$knewmixEntry = $kclient->mixing->cloneAction($videoId[0]);
 		}
