@@ -67,22 +67,23 @@
 <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="even,odd" print=false}
-{section name=user loop=$channels}
+{section name=chan loop=$channels}
 <tr>
-<td class="{cycle advance=false}">{$channels[user].rssId}</td>
-<td class="{cycle advance=false}"><strong>{$channels[user].name|escape}</strong><br />{$channels[user].description|escape|nl2br}<br /><a class="link" href="{$channels[user].url}">URL: {$channels[user].url|truncate:50:"...":true}</a><br />
-Size: {$channels[user].size} kb<br />
+<td class="{cycle advance=false}">{$channels[chan].rssId|escape}</td>
+<td class="{cycle advance=false}"><strong>{$channels[chan].name|escape}</strong><br />{$channels[chan].description|escape|nl2br}<br />
+Site: <a href="{$channels[chan].siteurl|escape}">{$channels[chan].sitetitle|escape}</a><br />
+Feed: <a class="link" href="{$channels[chan].url|escape}">{$channels[chan].url|truncate:50:"...":true}</a><br />
 </td>
-<td class="{cycle advance=false}">{if $channels[user].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[user].lastUpdated|tiki_short_datetime}{/if}<br />
+<td class="{cycle advance=false}">{if $channels[chan].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[chan].lastUpdated|tiki_short_datetime}{/if}<br />
 Refresh rate: 
-{$channels[user].refresh|duration}
+{$channels[chan].refresh|duration}
 </td>
-<td class="{cycle advance=false}" style="text-align:center">{$channels[user].showTitle}</td>
-<td class="{cycle advance=false}" style="text-align:center">{$channels[user].showPubDate}</td>
-<td class="{cycle}">   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rssId={$channels[user].rssId}" title="{tr}Edit{/tr}">{icon _id=page_edit}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].rssId}" title="{tr}View{/tr}">{icon _id=feed alt="{tr}View feed{/tr}"}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$channels[user].rssId}" title="{tr}Refresh{/tr}">{icon _id=arrow_refresh alt="{tr}Refresh{/tr}"}</a>
+<td class="{cycle advance=false}" style="text-align:center">{$channels[chan].showTitle}</td>
+<td class="{cycle advance=false}" style="text-align:center">{$channels[chan].showPubDate}</td>
+<td class="{cycle}">   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[chan].rssId}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rssId={$channels[chan].rssId}" title="{tr}Edit{/tr}">{icon _id=page_edit}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[chan].rssId}" title="{tr}View{/tr}">{icon _id=feed alt="{tr}View feed{/tr}"}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$channels[chan].rssId}" title="{tr}Refresh{/tr}">{icon _id=arrow_refresh alt="{tr}Refresh{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}

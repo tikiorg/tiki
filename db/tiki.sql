@@ -1830,7 +1830,8 @@ CREATE TABLE `tiki_rss_modules` (
   `lastUpdated` int(14) default NULL,
   `showTitle` char(1) default 'n',
   `showPubDate` char(1) default 'n',
-  `content` longblob,
+  `sitetitle` VARCHAR(255),
+  `siteurl` VARCHAR(255),
   PRIMARY KEY (`rssId`),
   KEY `name` (name)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -3559,3 +3560,19 @@ CREATE TABLE IF NOT EXISTS `tiki_translations_in_progress` (
    KEY `language` (`language`),
    UNIQUE (`page_id`, `language`)
 );
+
+DROP TABLE IF EXISTS `tiki_rss_items`;
+CREATE TABLE `tiki_rss_items` (
+	`rssItemId` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`rssId` INT NOT NULL,
+	`guid` VARCHAR(255) NOT NULL,
+	`url` VARCHAR(255) NOT NULL,
+	`publication_date` INT UNSIGNED NOT NULL,
+	`title` VARCHAR(255) NOT NULL,
+	`author` VARCHAR(255),
+	`description` TEXT,
+	`content` TEXT,
+	KEY `tiki_rss_items_rss` (`rssId`),
+	UNIQUE `tiki_rss_items_item` (`rssId`, `guid`)
+);
+

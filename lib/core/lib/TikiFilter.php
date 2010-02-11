@@ -52,6 +52,9 @@ class TikiFilter
 		case 'xss':
 			require_once 'TikiFilter/PreventXss.php';
 			return new TikiFilter_PreventXss;
+		case 'purifier':
+			require_once 'TikiFilter/HtmlPurifier.php';
+			return new TikiFilter_HtmlPurifier( 'temp/cache' );
 		case 'wikicontent':
 		case 'rawhtml_unsafe':
 			require_once 'TikiFilter/RawUnsafe.php';
