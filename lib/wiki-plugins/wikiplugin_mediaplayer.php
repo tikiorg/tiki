@@ -115,7 +115,7 @@ function wikiplugin_mediaplayer($data, $params) {
 		$code .= '<param name="allowFullscreen" value="'.$params['fullscreen'].'" />';
 	}
 	if (empty($params['wmode'])) {
-		$wmode = transparent;
+		$wmode = 'transparent';
 	} else {
 		$wmode = $params['wmode'];
 	}
