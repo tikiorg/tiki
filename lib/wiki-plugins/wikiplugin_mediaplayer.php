@@ -14,27 +14,70 @@ function wikiplugin_mediaplayer_info() {
 			'fullscreen' => array(
 				'required' => false,
 				'name' => tra('Allow Fullscreen'),
-				'description' => tra('Allow fullscreen mode.').'true|false',
+				'description' => tra('Allow fullscreen mode.').' true|false',
+				'filter' => 'alpha',
+				'options' => array(
+					array(
+						'text' => tra('Yes'),
+						'value' => 'true'
+					),
+					array(
+						'text' => tra('No'),
+						'value' => 'false'
+					)
+				)
 			),
 			'mp3' => array(
 				'required' => false,
 				'name'=> tra('MP3 URL'),
 				'description' => tra('Complete URL to the mp3 to include.'),
+				'filter' => 'url'
 			),
 			'flv' => array(
 				'required' => false,
 				'name'=> tra('FLV URL'),
 				'description' => tra('Complete URL to the flv to include.'),
+				'filter' => 'url'
 			),
 			'style' => array(
 				'required' => false,
 				'name' => tra('Style'),
 				'description' => tra('One of:').'mini|normal|maxi|multi',
+				'filter' => 'alpha',
+				'options' => array(
+					array(
+						'text' => 'mini', 'value' => 'mini'
+					),
+					array(
+						'text' => 'normal', 'value' => 'normal'
+					),
+					array(
+						'text' => 'maxi', 'value' => 'maxi'
+					),
+					array(
+						'text' => 'multi', 'value' => 'multi'
+					)
+				)
 			),
 			'wmode' => array(
 				'required' => false,
 				'name' => tra('Flash Window Mode'),
 				'description' => tra('Sets the Window Mode property of the Flash movie for transparency, layering, and positioning in the browser. Default value: ').'transparent',
+				'filter' => 'alpha',
+				'options' => array(
+					array(
+						'text' => 'transparent'.tra(' - show background through and allow to be covered'),
+						'value' => 'transparent'
+					),
+					array(
+						'text' => 'opaque'.tra(' - hide everything behind'),
+						'value' => 'opaque'
+					),
+					array(
+						'text' => 'window'.tra(' - play movie in its own rectangular window on a web page'),
+						'value' => 'window'
+					)
+				)
 			),
 		),
 	);
