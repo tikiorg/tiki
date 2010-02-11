@@ -27,6 +27,7 @@
 <tr><td class="formcolor">{tr}Class Name{/tr}:</td><td class="formcolor"><input type="text" name="className" value="{$className|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Header Rows{/tr}:</td><td class="formcolor"><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Footer Rows{/tr}:</td><td class="formcolor"><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
+<tr><td class="formcolor">{tr}Wiki Parse Values{/tr}:</td><td class="formcolor"><input type="checkbox" name="parseValues"{if $parseValues eq 'y'} checked="checked"{/if}/></td></tr>
 {include file='categorize.tpl'}
 {if $tiki_p_admin eq 'y'}
 <tr><td class="formcolor">{tr}Creator{/tr}:</td><td class="formcolor">

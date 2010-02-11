@@ -1944,6 +1944,7 @@ CREATE TABLE `tiki_sheet_layout` (
   `headerRow` int(4) NOT NULL default '0',
   `footerRow` int(4) NOT NULL default '0',
   `className` varchar(64) default NULL,
+  `parseValues` char( 1 ) NOT NULL default 'n',
   UNIQUE KEY `sheetId` (`sheetId`, `begin`)
 ) ENGINE=MyISAM;
 

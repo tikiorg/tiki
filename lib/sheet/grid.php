@@ -128,6 +128,7 @@ class TikiSheet
 	 */
 	var $headerRow;
 	var $footerRow;
+	var $parseValues;
 	var $cssName;
 
 	/**
@@ -181,6 +182,7 @@ class TikiSheet
 
 		$this->headerRow = 0;
 		$this->footerRow = 0;
+		$this->parseValues = 'n';
 		$this->className = '';
 	}
 	
@@ -195,12 +197,15 @@ class TikiSheet
 	 *						as part of the header.
 	 * @param $footerRow	The amount of rows that are considered
 	 *						as part of the footer.
+	 * @param $parseValues	Parse cell values as wiki text if ='y'
+	 * 						when using output handler
 	 */
-	function configureLayout( $className, $headerRow = 0, $footerRow = 0 )
+	function configureLayout( $className, $headerRow = 0, $footerRow = 0, $parseValues = 'n' )
 	{
 		$this->cssName = $className;
 		$this->headerRow = $headerRow;
 		$this->footerRow = $footerRow;
+		$this->parseValues = $parseValues;
 	}
 	
 	/** getColumnIndex {{{2
@@ -1203,12 +1208,12 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		}
 
 		// Fetching the layout informations.
-		$result2 = $tikilib->query( "SELECT `className`, `headerRow`, `footerRow` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result2 = $tikilib->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		if( $row = $result2->fetchRow() )
 		{
 			extract( $row );
-			$sheet->configureLayout( $className, $headerRow, $footerRow );
+			$sheet->configureLayout( $className, $headerRow, $footerRow, $parseValues );
 		}
 
 		return true;
@@ -1610,14 +1615,17 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 class TikiSheetOutputHandler extends TikiSheetDataHandler
 {
 	var $heading;
+	var $parseOutput;
 	
 	/** Constructor {{{2
 	 * Identifies the caption of the table if it applies.
-	 * @param $heading The heading
+	 * @param $heading 			The heading
+	 * @param $parseOutput		Parse wiki markup in cells if parseValues=y in sheet layout
 	 */
-	function TikiSheetOutputHandler( $heading = null )
+	function TikiSheetOutputHandler( $heading = null, $parseOutput = true )
 	{
 		$this->heading = $heading;
+		$this->parseOutput = $parseOutput;
 	}
 	
 	// _save {{{2
@@ -1696,6 +1704,11 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				$format = $sheet->cellInfo[$i][$j]['format'];
 				if( !empty( $format ) )
 					$data = TikiSheetDataFormat::$format( $data );
+				
+				if ($this->parseOutput && $sheet->parseValues == 'y') {
+					global $tikilib;
+					$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+				}
 				echo "			<td$append>$data</td>\n";
 			}
 			
@@ -1907,7 +1920,7 @@ class SheetLib extends TikiLib
 
 	function get_sheet_layout( $sheetId ) // {{{2
 	{
-		$result = $this->query( "SELECT `className`, `headerRow`, `footerRow` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND `end` IS NULL", array( $sheetId ) );
+		$result = $this->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND `end` IS NULL", array( $sheetId ) );
 
 		return $result->fetchRow();
 	}
@@ -2000,13 +2013,14 @@ class SheetLib extends TikiLib
 		return $sheetId;
 	}
 
-	function replace_layout( $sheetId, $className, $headerRow, $footerRow ) // {{{2
+	function replace_layout( $sheetId, $className, $headerRow, $footerRow, $parseValues = 'n' ) // {{{2
 	{
 		if( $row = $this->get_sheet_layout( $sheetId ) )
 		{
 			if( $row[ 'className' ] == $className
 			 && $row[ 'headerRow' ] == $headerRow
-			 && $row[ 'footerRow' ] == $footerRow )
+			 && $row[ 'footerRow' ] == $footerRow
+			 && $row[ 'parseValues' ] == $parseValues )
 				return true; // No changes have to be made
 		}
 
@@ -2017,7 +2031,8 @@ class SheetLib extends TikiLib
 		$stamp = time();
 
 		$this->query( "UPDATE `tiki_sheet_layout` SET `end` = ? WHERE sheetId = ? AND `end` IS NULL", array( $stamp, $sheetId ) );
-		$this->query( "INSERT INTO `tiki_sheet_layout` ( `sheetId`, `begin`, `className`, `headerRow`, `footerRow` ) VALUES( ?, ?, ?, ?, ? )", array( $sheetId, $stamp, $className, (int)$headerRow, (int)$footerRow ) );
+		$this->query( "INSERT INTO `tiki_sheet_layout` ( `sheetId`, `begin`, `className`, `headerRow`, `footerRow`, `parseValues` ) VALUES( ?, ?, ?, ?, ?, ? )",
+												array( $sheetId, $stamp, $className, (int)$headerRow, (int)$footerRow, $parseValues ) );
 
 		return true;
 	}
