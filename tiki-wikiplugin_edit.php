@@ -64,7 +64,7 @@ while( true )
 			$endparamA = strpos( $current, '/}', $pos );
 			$endparamB = strpos( $current, ')}', $pos );
 			if( false === $endparamA && false === $endparamB )
-				die( 'oops.' );
+				die( 'Failed to find end of plugin code.' );
 			if( ( false !== $endparamA 
 				&& ( false !== $endparamB && $endparamA < $endparamB ) )
 				|| $endparamB === false )
@@ -86,7 +86,7 @@ while( true )
 			$body = $endparam;
 			$endbody = strpos( $current, "{{$type}}", $endparam );
 			if( false === $endbody )
-				die( 'oops.' );
+				die( 'Failed to find end of plugin body.' );
 
 			$before = substr( $current, 0, $body );
 			$after = substr( $current, $endbody + strlen("{{$type}}") );
