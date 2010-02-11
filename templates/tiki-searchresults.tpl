@@ -61,6 +61,41 @@
 				{/if}
 			{/if}
 
+			{if $prefs.feature_categories eq 'y' and !empty($categories)}
+				<div id="category_singleselect_find" style="display: {if $find_cat_categories|@count > 1}none{else}block{/if};">
+					<label class="findcateg"> 
+						<select name="categId">
+							<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
+							{section name=ix loop=$categories}
+								<option value="{$categories[ix].categId|escape}" {if $find_categId eq $categories[ix].categId}selected="selected"{/if}>
+									{capture}{tr}{$categories[ix].categpath}{/tr}{/capture}{$smarty.capture.default|escape}
+								</option>
+							{/section}
+						</select>
+					</label>
+					{if $prefs.javascript_enabled eq 'y'}<a href="#" onclick="show('category_multiselect_find');hide('category_singleselect_find');">{tr}Multiple select{/tr}</a>{/if}
+				</div>
+				<div id="category_multiselect_find" style="display: {if $find_cat_categories|@count > 1}block{else}none{/if};">
+			  		<div class="multiselect"> 
+			  			{if count($categories) gt 0}
+							{$cat_tree}
+							<div class="clear">
+							{if $tiki_p_admin_categories eq 'y'}
+			    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+							{/if}
+							{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
+						{else}
+							<div class="clear">
+			 				{if $tiki_p_admin_categories eq 'y'}
+			    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+			 				{/if}
+			    			{tr}No categories defined{/tr}
+			  			{/if}
+						</div> {* end .clear *}
+					</div> {* end #multiselect *}
+				</div> {* end #category_multiselect_find *}
+			{/if}
+			
 			{if $prefs.feature_search_show_object_filter eq 'y'}
 				{if $searchStyle eq "menu" }
 					<span class='searchMenu'>
