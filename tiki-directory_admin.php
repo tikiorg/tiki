@@ -8,7 +8,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/directory/dirlib.php');
 $access->check_feature('feature_directory');
-$access->check_permission(array('tiki_p_validate_links'));
+$access->check_permission_either(array('tiki_p_admin_directory_sites','tiki_p_admin_directory_cats','tiki_p_validate_links'));
 
 // This will only display a menu to
 // admin_categories

@@ -10,7 +10,7 @@ include_once ("lib/pear/XML/Server.php");
 include_once ('lib/structures/structlib.php');
 
 $access->check_feature('feature_comm');
-//$access->check_permission( array('tiki_p_send_pages', 'tiki_p_send_articles') );
+$access->check_permission_either( array('tiki_p_send_pages', 'tiki_p_send_articles') );
 if ($tiki_p_send_pages != 'y' && $tiki_p_send_articles != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));

@@ -19,7 +19,7 @@ include_once ('lib/contribution/contributionlib.php');
 $commentslib = new Comments($dbTiki);
 $access->check_user($user);
 $access->check_feature('feature_actionlog');
-$access->check_permission(array('tiki_p_view_actionlog', 'tiki_p_view_actionlog_owngroups'));
+$access->check_permission_either(array('tiki_p_view_actionlog', 'tiki_p_view_actionlog_owngroups'));
 $auto_query_args = array(
 		'actionId',
 		'startDate_Day',

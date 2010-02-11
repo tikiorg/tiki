@@ -14,7 +14,7 @@ include_once ('lib/webmail/webmaillib.php');
 include_once ('lib/webmail/contactlib.php');
 
 $access->check_feature('feature_webmail');
-$access->check_permission( array('tiki_p_use_webmail', 'tiki_p_use_group_webmail') );
+$access->check_permission_either( array('tiki_p_use_webmail', 'tiki_p_use_group_webmail') );
 
 require_once ('lib/webmail/net_pop3.php');
 require_once ('lib/mail/mimelib.php');
