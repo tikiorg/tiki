@@ -1,0 +1,10 @@
+body {
+	font-family: Verdana, Geneva, Arial, sans-serif;
+	background-color: #D6DFE7;
+	padding: 5px; 
+	margin: 0; 
+}
+
+.menu,.result {  font-weight:bold;color:#000080; font-family: Verdana, Geneva, Arial, sans-serif;font-size: 10px; text-decoration:none;  }
+.menu:hover,.result:hover {  font-weight:bold;color:white; font-family: Verdana, Geneva, Arial, sans-serif;font-size: 10px; text-decoration:underline; }
+
