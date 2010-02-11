@@ -221,7 +221,7 @@ class UsersLib extends TikiLib {
 
 		$logslib->add_log('login', 'logged out');
 		
-		$this->delete_user_cookie();
+		$this->delete_user_cookie($user);
 		
 		if ($remote && $prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
 			include_once('XML/RPC.php');
