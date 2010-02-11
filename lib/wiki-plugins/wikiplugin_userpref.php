@@ -1,5 +1,5 @@
 <?php
-// $Id: wikiplugin_userpref.php 20911 2009-08-17 12:34:09Z lphuberdeau $
+// $Id$
 
 function wikiplugin_userpref_info() {
 	return array(

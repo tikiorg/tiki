@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.33 2007-10-12 07:55:48 nyloth Exp $
+/* $Id$
 Displays a module inline in a wiki page
 
 Parameters

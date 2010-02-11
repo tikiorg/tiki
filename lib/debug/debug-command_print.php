@@ -1,6 +1,6 @@
 <?php
 //
-// $Id: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_print.php,v 1.3 2003-08-07 02:30:52 rossta Exp $
+// $Id$
 //
 // \brief Command to print PHP variables to debug console
 //

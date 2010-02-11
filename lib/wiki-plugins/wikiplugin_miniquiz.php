@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.10 2007-10-12 07:55:48 nyloth Exp $
+// $Id$
 /*
 DEV NOTE
 that plugin is not finished !! -- mose

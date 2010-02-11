@@ -33,7 +33,7 @@
 // | Co-Author: Damian Fernandez Sosa <damlists@cnba.uba.ar>               |
 // +-----------------------------------------------------------------------+
 //
-// $Id: net_pop3.php,v 1.4 2005-08-08 22:44:53 rlpowell Exp $
+// $Id$
 
 require_once('lib/pear/Net/Socket.php');
 

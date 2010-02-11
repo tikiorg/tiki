@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.14 2007-10-12 07:55:49 nyloth Exp $
+// $Id$
 /* A plugin vote based on tracker
  */
 /* fields is optionnal - all the fields except the type suer, group, ip will be used

@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.18 2008-03-17 21:10:11 sylvieg Exp $
+// $Id$
 function wikiplugin_trackercomments_info() {
 	return array(
 		'name' => tra('Tracker Comments'),

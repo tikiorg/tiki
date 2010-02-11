@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/diff/renderer_character.php,v 1.3 2005-05-18 11:00:35 mose Exp $
+// $Id$
 
 /**
  * "Side-by-Side" diff renderer.

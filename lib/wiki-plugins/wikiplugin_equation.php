@@ -1,6 +1,6 @@
 <?php
 /*
- * $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_equation.php,v 1.1.2.1 2008-03-04 16:25:35 chriscramer Exp $
+ * $Id$
  * Tiki-Wiki plugin equation
  *  
  * This plugin will try to render a formula written with LaTeX syntax

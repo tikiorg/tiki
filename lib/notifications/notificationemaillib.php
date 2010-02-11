@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.36.2.2 2008-01-29 19:01:17 sylvieg Exp $
+// $Id$
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'

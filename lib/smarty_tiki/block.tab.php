@@ -1,5 +1,5 @@
 <?php
-/* $Id: block.tabs.php 17175 2009-03-04 20:43:16Z sylvieg $ */
+/* $Id$ */
 
 // this script may only be included - so it's better to die if called directly
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

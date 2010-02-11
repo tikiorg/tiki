@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: modifier.sefurl.php,v 1.1.2.2 2008-02-16 22:40:31 sylvieg Exp $
+// CVS: $Id$
 
 // Translate only if feature_multilingual is on
 

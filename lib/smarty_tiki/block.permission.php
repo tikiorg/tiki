@@ -1,5 +1,5 @@
 <?php
-/* $Id: block.pagination_links.php 19298 2009-06-03 09:02:27Z changi67 $ */
+/* $Id$ */
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

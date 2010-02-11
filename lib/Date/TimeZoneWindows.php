@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZoneWindows.php,v 1.8 2005-05-18 10:59:50 mose Exp $
+// $Id$
 //
 // Date_TimeZone Class Windows Support File
 //

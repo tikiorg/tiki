@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_backlinks.php,v 1.17 2007-06-16 16:01:59 sylvieg Exp $
+// $Id$
 
 /**
 * Include the library {@link PluginsLib}

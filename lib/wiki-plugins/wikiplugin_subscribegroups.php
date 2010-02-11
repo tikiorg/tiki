@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_subscribegroups.php,v 1.1.2.1 2007-12-04 20:33:16 sylvieg Exp $
+// $Id$
 
 function wikiplugin_subscribegroups_help() {
 	$help = tra('Subscribe or unsubscribe to a group').":\n";

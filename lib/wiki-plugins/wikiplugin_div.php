@@ -1,6 +1,6 @@
 <?php
 /*
- * $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.10 2007-07-19 21:02:35 ricks99 Exp $
+ * $Id$
  *
  * 
  * 

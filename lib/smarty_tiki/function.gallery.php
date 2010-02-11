@@ -1,5 +1,5 @@
 <?php
-/* $Id: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.gallery.php,v 1.11 2006-08-29 20:19:10 sylvieg Exp $ */
+/* $Id$ */
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");

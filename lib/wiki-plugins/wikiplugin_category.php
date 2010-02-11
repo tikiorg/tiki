@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.19 2007-10-12 07:55:48 nyloth Exp $
+ * $Id$
  *
  * Tiki-Wiki CATEGORY plugin.
  * 

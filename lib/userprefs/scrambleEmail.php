@@ -1,5 +1,5 @@
 <?php
-// 	$Id: /cvsroot/tikiwiki/tiki/lib/userprefs/scrambleEmail.php,v 1.5 2005-05-18 11:01:56 mose Exp $
+// 	$Id$
 /**
 *	scramble an email with a method
 *	@param string email emil to be scrambled

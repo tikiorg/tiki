@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.38.2.4 2008-03-20 15:33:27 nyloth Exp $
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {

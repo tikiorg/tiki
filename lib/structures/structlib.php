@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: structlib.php,v 1.94.2.3 2008-03-04 15:22:26 lphuberdeau Exp $
+// CVS: $Id$
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   header('location: index.php');

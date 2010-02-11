@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: objectlib.php,v 1.9.2.2 2008-03-04 14:28:37 sept_7 Exp $
+// CVS: $Id$
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");

@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.10 2006-02-01 21:06:13 jdrexler Exp $
+// $Id$
 
 /**
  * "Side-by-Side" diff renderer.

@@ -1,5 +1,5 @@
 <?php
-  /* $Id:$
+  /* $Id$
    */
 function wikiplugin_colorbox_info() {
 	return array(

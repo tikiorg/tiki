@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sub.php,v 1.6 2005-05-18 11:02:00 mose Exp $
+// $Id$
 
 // Wiki plugin to output <sub>...</sub>
 // - rlpowell

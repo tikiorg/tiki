@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: tiki_registration_fields.php,v 1.3 2007-03-02 19:49:11 luciash Exp $
+ * @version $Id$
  * @package Tikiwiki
  * @subpackage db
  * @copyright (C) 2005 the Tiki community

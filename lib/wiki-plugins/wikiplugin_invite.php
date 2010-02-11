@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.22 2008-03-12 15:10:01 ricks99 Exp $
+// $Id$
 function wikiplugin_invite_info() {
 	return array(
 		'name' => tra( 'Invite' ),

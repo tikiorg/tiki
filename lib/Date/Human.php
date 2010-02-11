@@ -16,7 +16,7 @@
 // | Author: Allan Kent <allan@lodestone.co.za>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Human.php,v 1.8 2007-02-04 20:09:35 mose Exp $
+// $Id$
 //
 
 //this script may only be included - so its better to die if called directly.

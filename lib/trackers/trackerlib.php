@@ -11,7 +11,7 @@
  * @copyright		Copyright (c) 2002-2009, All Rights Reserved.
  * 			See copyright.txt for details and a complete list of authors.
  * @license		LGPL - See license.txt for details.
- * @version		SVN $Rev$
+ * @version		SVN $Rev: 25023 $
  * @filesource
  * @link		http://dev.tikiwiki.org/Trackers
  * @since		Always

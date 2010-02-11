@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Id: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.19 2008-03-07 16:27:14 sylvieg Exp $
+ * $Id$
  *
  * \brief Categories support class
  *

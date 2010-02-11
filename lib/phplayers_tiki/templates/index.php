@@ -1,6 +1,6 @@
 <?php
 
-// $Id: $
+// $Id$
 
 header ("location: ../index.php");
 die;

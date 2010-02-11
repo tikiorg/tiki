@@ -1,6 +1,6 @@
 <?php
 /*
- * $Id: function.toolbars.php 20665 2009-08-07 15:13:18Z jonnybradley $
+ * $Id$
  *
  * Smarty plugin to display content only to some groups
  */

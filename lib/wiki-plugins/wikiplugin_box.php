@@ -1,6 +1,6 @@
 <?php
 /*
- * $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.18.2.1 2007-11-28 23:29:23 sylvieg Exp $
+ * $Id$
  *
  * Tiki-Wiki BOX plugin.
  * 

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Id: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_sprint.php,v 1.3 2003-08-07 04:34:03 rossta Exp $
+ * $Id$
  *
  * \brief Print Smarty vars
  *

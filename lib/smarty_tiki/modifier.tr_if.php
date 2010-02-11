@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: modifier.tr_if.php,v 1.3.2.1 2007-11-04 12:39:15 nyloth Exp $
+// CVS: $Id$
 
 // Translate only if feature_multilingual is on
 

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Id: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_dmsg.php,v 1.4 2003-08-14 01:00:30 zaufi Exp $
+ * $Id$
  *
  * \brief 'debugger command' to show user messages in tab
  *

@@ -1,5 +1,5 @@
 <?php
-/* $Id: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.24 2007-10-12 07:55:38 nyloth Exp $
+/* $Id$
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing

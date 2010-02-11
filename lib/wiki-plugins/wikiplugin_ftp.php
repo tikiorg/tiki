@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.12 2008-03-22 12:13:54 sylvieg Exp $
+// $Id$
 
 function wikiplugin_ftp_help() {
 	$help = tra('Download box for a file on ftp server.');
