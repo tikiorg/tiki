@@ -5,41 +5,39 @@ function wikiplugin_mediaplayer_help() {
 }
 function wikiplugin_mediaplayer_info() {
 	return array(
-				 'name' => tra('Mediaplayer'),
-				 'documentation' => 'PluginMediaplayer',
-				 'description' => 'Simple mp3 or flv Player',
-				 'extraparams' =>true,
-				 'prefs' => array( 'wikiplugin_mediaplayer' ),
-				 'params' => array(
-								'fullscreen' => array(
-									'required' => false,
-									'name' => tra('Allow Fullscreen'),
-									'description' => tra('Allow fullscreen mode.').'true|false',
-								),
-								
-								   'mp3' => array(
-												  'required' => false,
-												  'name'=> tra('MP3 URL'),
-												  'description' => tra('Complete URL to the mp3 to include.'),
-												  ),
-								   'flv' => array(
-												  'required' => false,
-												  'name'=> tra('FLV URL'),
-												  'description' => tra('Complete URL to the flv to include.'),
-												  ),
-								   'style' => array(
-													'required' => false,
-													'name' => tra('Style'),
-													'description' => tra('One of:').'mini|normal|maxi|multi',
-													),
-								'wmode' => array(
-									'required' => false,
-									'name' => tra('Flash Window Mode'),
-									'description' => tra('Sets the Window Mode property of the Flash movie for transparency, layering, and positioning in the browser. Default value: ').'transparent',
-								),
-
-								   ),
-				 );
+		'name' => tra('Mediaplayer'),
+		'documentation' => 'PluginMediaplayer',
+		'description' => 'Simple mp3 or flv Player',
+		'extraparams' =>true,
+		'prefs' => array( 'wikiplugin_mediaplayer' ),
+		'params' => array(
+			'fullscreen' => array(
+				'required' => false,
+				'name' => tra('Allow Fullscreen'),
+				'description' => tra('Allow fullscreen mode.').'true|false',
+			),
+			'mp3' => array(
+				'required' => false,
+				'name'=> tra('MP3 URL'),
+				'description' => tra('Complete URL to the mp3 to include.'),
+			),
+			'flv' => array(
+				'required' => false,
+				'name'=> tra('FLV URL'),
+				'description' => tra('Complete URL to the flv to include.'),
+			),
+			'style' => array(
+				'required' => false,
+				'name' => tra('Style'),
+				'description' => tra('One of:').'mini|normal|maxi|multi',
+			),
+			'wmode' => array(
+				'required' => false,
+				'name' => tra('Flash Window Mode'),
+				'description' => tra('Sets the Window Mode property of the Flash movie for transparency, layering, and positioning in the browser. Default value: ').'transparent',
+			),
+		),
+	);
 }
 function wikiplugin_mediaplayer($data, $params) {
 	if (empty($params['mp3']) && empty($params['flv'])) {
