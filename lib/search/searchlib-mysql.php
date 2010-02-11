@@ -658,7 +658,7 @@ class SearchLib extends TikiLib
 		global $prefs, $tiki_p_view_directory, $tiki_p_read_article, $tiki_p_view_faqs, $tiki_p_view_trackers;
 		
 		if ($prefs['feature_wiki'] == 'y') {
-			$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
+			$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, '', $categId);
 		
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
