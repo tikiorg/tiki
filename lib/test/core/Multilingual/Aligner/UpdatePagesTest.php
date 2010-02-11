@@ -33,7 +33,7 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 	} 
 
 
-	public function ___test_reminder()  {
+	public function test_reminder()  {
 		$this->fail("remember to reactivate all tests in UpdateSentences");
 	}
 
@@ -57,8 +57,8 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$target_lng = "fr";
 		$source_outofdate="Firefox supports international characters for languages such as Hindi. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
 		$source_modified="Firefox supports international characters for languages such as Hindi.This is a test statement. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
-		$target_outofdate="Firefox supporte les caract�res internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.";
-		$target_modified="Firefox supporte les caract�res internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.";
+		$target_outofdate="Firefox supporte les caractères internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";
+		$target_modified="Firefox supporte les caractères internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";
 
 //		$source_outofdate = $this->in_sync_source_sentences;
 //		$target_outofdate = $this->in_sync_target_sentences;
@@ -66,18 +66,18 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 //		$target_modified = $target_outofdate;
 
 		$source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
-		$target_alignment="Firefox supporte les caract�res internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.";
+		$target_alignment="Firefox supporte les caractères internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";
 		
 		$source_Mtranslation="This is a test statement.";
-		$target_Mtranslation="C'est une d�claration d'essai.";
+		$target_Mtranslation="C'est une déclaration d'essai.";
 		
 
 		$expected_content = 
 			array(
-				"Firefox supporte les caract�res internationaux pour des langues tel que lindien.",
-			 	"Added_Source C'est une d�claration d'essai.",
+				"Firefox supporte les caractères internationaux pour des langues tel que lindien.",
+			 	"Added_Source C'est une déclaration d'essai.",
 			 	"Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.",
-			 	"La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police."
+			 	"La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police."
 			 	); 
 
 		
