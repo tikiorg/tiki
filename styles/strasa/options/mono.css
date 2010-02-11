@@ -687,6 +687,12 @@ a.pagetitle:hover {
 
 .wikitext h2 {
 	border-bottom-color: #666;
+	color: #3F3F3F;
+}
+
+.wikitext h4 {
+	border-bottom:1px dashed #ccc;
+	color:#3F3F3F;
 }
 
 .wikitext .fancylist li {
