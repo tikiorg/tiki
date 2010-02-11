@@ -599,7 +599,9 @@ span.toolbar-list {
 	display: inline-block;
 }
 
-
+.fckeditzone {
+	min-width: 510px;
+}
 
 /* New Help section */
 div#tikihelp {

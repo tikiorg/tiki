@@ -662,8 +662,6 @@ div#edithelpzone {
 	display: none
 }
 
-#edithelpzone code {}
-
 #rules-copy-panel {
 	display: none;
 }
@@ -893,7 +891,10 @@ span.toolbar-list {	/* groups of tools */
 	display: inline-block;
 }
 
-
+/* To ensure that full width of wysiwyg toolbar displays in narrow themes. */
+.fckeditzone {
+	min-width: 510px;
+}
 
 /* New Help section */
 div#tikihelp {
