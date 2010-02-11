@@ -3081,7 +3081,10 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/*shared*/
-	function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date_min = 0, $date_max = 0, $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='',$creator='',$group='', $lang='', $min_rating='', $max_rating='') {
+	function list_articles( $offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '',
+							$date_min = 0, $date_max = 0, $user=false, $type = '', $topicId = '',
+							$visible_only = 'y', $topic='', $categId='',$creator='',$group='', $lang='',
+							$min_rating='', $max_rating='', $override_dates = false) {
 
 		global $userlib, $user;
 
@@ -3168,8 +3171,12 @@ class TikiLib extends TikiDb_Bridge
 			}
 			$bindvars[] = (int)$date_min;
 			$bindvars[] = (int)$date_max;
-			$bindvars[] = (int)$this->now;
-			$condition = "`tiki_articles`.`publishDate`>=? and (`tiki_articles`.`publishDate`<=? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+			if ($override_dates) {
+				$condition = "`tiki_articles`.`publishDate`>=? and `tiki_articles`.`publishDate`<=?";
+			} else {
+				$bindvars[] = (int)$this->now;
+				$condition = "`tiki_articles`.`publishDate`>=? and (`tiki_articles`.`publishDate`<=? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+			}
 			$mid .= ( $mid ? ' and ' : ' where ' ) . $condition;
 		}
 		if (!empty($lang)) {
