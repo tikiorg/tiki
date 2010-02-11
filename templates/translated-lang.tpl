@@ -11,7 +11,7 @@
 				</select>
 				</form>
 			{else} {* get method to have the param in the url *}
-				{jq}
+				{jq notonready=true}
 				{{if $beingStaged == 'y'}
 					var page_to_translate = '{$approvedPageName|escape:"quotes"}';
 				{else}
