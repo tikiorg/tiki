@@ -89,6 +89,7 @@ if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) 
 		unset($_REQUEST['categId']);
 	} else {
 		$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
+		unset($_REQUEST['cat_categories']);
 	}
 } else {
 		$_REQUEST['cat_categories'] = array();
