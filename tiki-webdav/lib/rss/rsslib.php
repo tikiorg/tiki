@@ -439,14 +439,18 @@ class RSSLib extends TikiLib
 		if ($rssId) {
 			$query = "update `tiki_rss_modules` set `name`=?,`description`=?,`refresh`=?,`url`=?,`showTitle`=?,`showPubDate`=? where `rssId`=?";
 			$bindvars=array($name, $description, $refresh, $url, $showTitle, $showPubDate, (int)$rssId);
+			$result = $this->query($query, $bindvars);
 		} else {
 			// was: replace into, no clue why.
-			$query = "insert into `tiki_rss_modules`(`name`,`description`,`url`,`refresh`,`content`,`lastUpdated`,`showTitle`,`showPubDate`)
-                values(?,?,?,?,?,?,?,?)";
-			$bindvars=array($name, $description, $url, $refresh, '', 1000000, $showTitle, $showPubDate);
+			$query = "insert into `tiki_rss_modules`(`name`,`description`,`url`,`refresh`,`lastUpdated`,`showTitle`,`showPubDate`)
+                values(?,?,?,?,?,?,?)";
+			$bindvars=array($name, $description, $url, $refresh, 1000000, $showTitle, $showPubDate);
+
+			$result = $this->query($query, $bindvars);
+			$rssId = $this->lastInsertId();
 		}
 
-		$result = $this->query($query, $bindvars);
+		$this->update_feeds( array( $rssId ), true );
 		return true;
 	}
 
@@ -473,109 +477,8 @@ class RSSLib extends TikiLib
 		return $res;
 	}
 
-	/* parse xml data and return it in an array */
-	function parse_rss_data($data, $rssId)
-	{
-		$showPubDate = $this->get_rss_showPubDate($rssId);
-		$showTitle = $this->get_rss_showTitle($rssId);
-
-		$news = array();
-
-		//Only include the title if the option for doing that (showTitle) has been set.
-		if ($showTitle=="y") {
-			// get title and link of the feed:
-			preg_match("/<title>(.*?)<\/title>/i", $data, $title);
-			preg_match("/<link>(.*?)<\/link>/i", $data, $link);
-                        
-			// set "y" if title should be shown:
-			$anew["isTitle"]=$showTitle;
-			$anew["title"] = "";
-			if (isset($title[1])) { $anew["title"] = $title[1]; }
-			$anew["link"] = "";
-			if (isset($link[1])) { $anew["link"] = $link[1]; }
-			$news[] = $anew;
-		}
-
-		// get all items / entries of the feed:		
-		preg_match_all("/<item[^s].*?>(.*?)<\/item>/msi", $data, $items);
-		if (count($items[1])<1)				
-			preg_match_all("/<entry.*?>(.*?)<\/entry>/msi", $data, $items);
-
-		for ($it = 0, $icount_items = count($items[1]); $it < $icount_items; $it++) {
-			// extract all the data we need:
-			preg_match_all("/<title[^>]*>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/title>/msi", $items[0][$it], $titles);
-	 		preg_match_all("/<link>(.*?)<\/link>/msi", $items[0][$it], $links);
-			if (count($links[1]) > 0) {
-				preg_match_all("/<!\[CDATA\[(.*?)\]\]>/msi", $links[1][0], $links2);
-				if (count($links2[1]) > 0) {
-					$links[1][0] = $links2[1][0];
-				}
-		 	} else {
-				preg_match_all("/<link.*?href=[\"'](.*?)[\"'].*?>/msi", $items[0][$it], $links);
-			}
-	 		preg_match_all("/<description[^>]*>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/description>/msi", $items[0][$it], $description);
-			if (count($description[1])<1)
-		 		preg_match_all("/<dc:description>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/dc:description>/i", $items[0][$it], $description);
-			if (count($description[1])<1)
-				preg_match_all("/<content[^>]*>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/content>/msi", $items[0][$it], $description);
-
-			$pubdate = array();
-			preg_match_all("/<dc:date>(.*?)<\/dc:date>/msi", $items[0][$it], $pubdate);
-			if (count($pubdate[1])<1)				
-				preg_match_all("/<pubDate>(.*?)<\/pubDate>/msi", $items[0][$it], $pubdate);
-			if (count($pubdate[1])<1)				
-				preg_match_all("/<issued>(.*?)<\/issued>/msi", $items[0][$it], $pubdate);
-			if (count($pubdate[1])<1)				
-				preg_match_all("/<published>(.*?)<\/published>/msi", $items[0][$it], $pubdate);
-
-			preg_match_all("/<author>(.*?)<\/author>/msi", $items[0][$it], $author);
-			if (count($author[1])<1)				
-				preg_match_all("/<dc:creator>(.*?)<\/dc:creator>/msi", $items[0][$it], $author);
-
-				$anew["title"] = '';
-				if (isset($titles[2][0])) {
-					$anew["title"] = $titles[2][0]; } //Because of the CDATA-matching, the index is off by 1.
-				$anew["link"] = '';
-				if (isset($links[1][0])) {
-					$anew["link"] = $links[1][0];
-				}
-				$anew["author"] = '';
-				if (isset($author[1][0])) {
-					$anew["author"] = $author[1][0];
-				}
-				$anew["description"] = '';
-				if (isset($description[2][0])) {
-					$anew["description"] = $description[2][0]; //Because of the CDATA-matching, the index is off by 1.
-				}
-				$anew["pubDate"] = '';
-				if ( isset($pubdate[1][0]) && ($showPubDate == 'y') )
-				{
-					$anew["pubDate"] = $pubdate[1][0];
-				}
-				$anew["isTitle"]="n";
-				$news[] = $anew;
-		}
-		return $news;
-	}
-
-	/* refresh content of a certain rss feed */
-	function refresh_rss_module($rssId, $info='')
-	{
-		if (empty($info)) {
-			$info = $this->get_rss_module($rssId);
-		}
-		if ($info) {
-			if (($gotit = $this->httprequest($info['url'])) !== false) {
-				$data = $this->rss_iconv($gotit);
-			} else {
-				return false;
-			}
-			$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
-			$result = $this->query($query, array((string)$data, (int) $this->now, (int)$rssId));
-			return $data;
-		} else {
-			return false;
-		}
+	function refresh_rss_module($rssId ) {
+		$this->update_feeds( array( $rssId ), true );
 	}
 
 	/* check if an rss feed name already exists */
@@ -614,82 +517,80 @@ class RSSLib extends TikiLib
 		return $showPubDate;
 	}
 
-	/* retrieve the content of an rss feed, first try cache, then http request (may be forced) */
-	function get_rss_module_content($rssId, $refresh=false)
-	{
-		$info = $this->get_rss_module($rssId);
+	function get_feed_items( $feeds, $count = 10 ) {
+		$feeds = (array) $feeds;
 
-		// cache too old, get data from feed and update cache
-		if (($info["lastUpdated"] + $info["refresh"] < $this->now) || ($info["content"]=="") || $refresh) {
-			$data = $this->refresh_rss_module($rssId, $info);
-		}
+		$this->update_feeds( $feeds );
 
-		// get from cache
-		$info = $this->get_rss_module($rssId);
-		return $info["content"];
+		$bindvars = array();
+		$query = 'SELECT * FROM `tiki_rss_items` WHERE ' . $this->in( 'rssId', $feeds, $bindvars ) . ' ORDER BY publication_date DESC';
+
+		return $this->fetchAll( $query, $bindvars, $count );
 	}
 
-	/* encode rss feed content */
-	function rss_iconv($xmlstr, $tencod = "UTF-8")
-	{
-		if (preg_match("/<\?xml.*encoding=\"(.*)\".*\?>/", $xmlstr, $xml_head)) {
-			$sencod = strtoupper($xml_head[1]);
+	private function update_feeds( $feeds, $force = false ) {
 
-			switch ($sencod) {
-			case "ISO-8859-1":
-				// Use utf8_encode a more standard function
-				$xmlstr = utf8_encode($xmlstr);
-
-				break;
-
-			case "UTF-8":
-			case "US-ASCII":
-				// UTF-8 and US-ASCII don't need convertion
-				break;
-
-			default:
-				// Not supported encoding, we must use iconv() or recode()
-				if (function_exists('iconv')) {
-					// We have iconv use it
-					$new_xmlstr = @iconv($sencod, $tencod, $xmlstr);
-
-					if ($new_xmlstr === FALSE) {
-						// in_encod -> out_encod not supported, may be misspelled encoding
-						$sencod = strtr($sencod, array(
-							"-" => "",
-							"_" => "",
-							" " => ""
-						));
-
-						$new_xmlstr = @iconv($sencod, $tencod, $xmlstr);
-
-						if ($new_xmlstr === FALSE) {
-							// in_encod -> out_encod not supported, leave it
-							$tencod = $sencod;
-
-							break;
-						}
-					}
-
-					$xmlstr = $new_xmlstr;
-					// Fix an iconv bug, a few garbage chars beyound xml...
-					$xmlstr = preg_replace("/(.*<\/rdf:RDF>).*/s", "\$1", $xmlstr);
-				} elseif (function_exists('recode_string')) {
-					// I don't have recode support could somebody test it?
-					$xmlstr = @recode_string("$sencod..$tencod", $xmlstr);
-				} 
-/*				else {
-				// This PHP intallation don't have any EncodConvFunc...
-				// somebody could create tiki_iconv(...)?
-				}
-*/
-			}
-
-			// Replace header, put the new encoding
-			$xmlstr = preg_replace("/(<\?xml.*)encoding=\".*\"(.*\?>)/", "\$1 encoding=\"$tencod\"\$2", $xmlstr);
+		if( $force ) {
+			$bindvars = array();
+			$result = $this->fetchAll( 'SELECT `rssId`, `url` FROM `tiki_rss_modules` WHERE ' . $this->in( 'rssId', $feeds, $bindvars ), $bindvars );
+		} else {
+			$bindvars = array( $this->now );
+			$result = $this->fetchAll( 'SELECT `rssId`, `url` FROM `tiki_rss_modules` WHERE (`lastUpdated` < ? - `refresh`) AND ' . $this->in( 'rssId', $feeds, $bindvars ), $bindvars );
 		}
 
-		return $xmlstr;
+		foreach( $result as $row ) {
+			$this->update_feed( $row['rssId'], $row['url'] );
+		}
+	}
+
+	private function update_feed( $rssId, $url ) {
+		require_once 'Zend/Feed/Reader.php';
+
+		$filter = new DeclFilter;
+		$filter->addStaticKeyFilters( array(
+			'url' => 'url',
+			'guid' => 'url',
+			'title' => 'striptags',
+			'author' => 'striptags',
+			'description' => 'striptags',
+			'content' => 'purifier',
+		) );
+
+		try {
+			$feed = Zend_Feed_Reader::import( $url );
+		} catch( Zend_Exception $e ) {
+			$this->query( 'UPDATE `tiki_rss_modules` SET `lastUpdated` = ?, `sitetitle` = ?, `siteurl` = ? WHERE `rssId` = ?',
+				array( $this->now, 'N/A', '#', $rssId ) );
+			return;
+		}
+		$siteTitle = TikiFilter::get('striptags')->filter( $feed->getTitle() );
+		$siteUrl = TikiFilter::get('url')->filter( $feed->getLink() );
+
+		$this->query( 'UPDATE `tiki_rss_modules` SET `lastUpdated` = ?, `sitetitle` = ?, `siteurl` = ? WHERE `rssId` = ?',
+			array( $this->now, $siteTitle, $siteUrl, $rssId ) );
+
+		foreach( $feed as $entry ) {
+			$data = $filter->filter( array(
+				'title' => $entry->getTitle(),
+				'guid' => $entry->getId(),
+				'url' => $entry->getLink(),
+				'description' => $entry->getDescription(),
+				'content' => $entry->getContent(),
+				'author' => $authors ? implode( ', ', $authors->getValues() ) : '', 
+			) );
+
+			$query = 'INSERT IGNORE INTO `tiki_rss_items` ( `rssId`, `guid`, `url`, `publication_date`, `title`, `author`, `description`, `content` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ? )';
+			$this->query( $query, array(
+				$rssId,
+				$data['guid'],
+				$data['url'],
+				$entry->getDateCreated()->get( Zend_Date::TIMESTAMP ),
+				$data['title'],
+				$data['author'],
+				$data['description'],
+				$data['content'],
+			) );
+		}
 	}
 }
 global $rsslib;

@@ -1,14 +1,12 @@
 <?php
-
-// $Id$
-
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 // This script is used to assign groups to a particular user
 // ASSIGN USER TO GROUPS
-// Initialization
 require_once ('tiki-setup.php');
 
 $auto_query_args = array('sort_mode', 'offset', 'find', 'assign_user', 'group', 'maxRecords');

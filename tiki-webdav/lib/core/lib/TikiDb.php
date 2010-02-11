@@ -219,7 +219,9 @@ abstract class TikiDb
 		$values = rtrim( str_repeat( '?,', count( $values ) ), ',' );
 		return " $field IN( $values ) ";
 	} // }}}
-	function parentObjects(&$objects, $table, $childKey, $parentKey) {
+
+	function parentObjects(&$objects, $table, $childKey, $parentKey) // {{{
+	{
 		$query = "select `$childKey`, `$parentKey` from `$table` where `$childKey` in (".implode(',',array_fill(0, count($objects),'?')).')';
 		foreach ($objects as $object) {
 			$bindvars[] = $object['itemId'];
@@ -231,7 +233,7 @@ abstract class TikiDb
 		foreach ($objects as $i=>$object) {
 			$objects[$i][$parentKey] = $ret[$object['itemId']];
 		}
-	}
+	} // }}}
 
 	function concat() // {{{
 	{
