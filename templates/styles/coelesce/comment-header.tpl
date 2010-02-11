@@ -135,7 +135,7 @@
 	</div>
 	{/if}
 
-	{if $comment.title neq '' && $comment.title neq 'Untitled'}
+	{if $comment.title neq '' && $comment.title neq 'Untitled' && $comment.title neq $page}
 	<div class="title">
 	{if $first eq 'y'}
 		<h2>{$comment.title}</h2>
