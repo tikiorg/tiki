@@ -1,8 +1,9 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 // Live Support CHAT server.
 // This PHP script handles all the messaging between the clients
 // and the server (this script). Messaging is done using a REST
@@ -14,6 +15,7 @@
 //   * The client chat window
 // Long includes and heavy operations should be avoided to maximize the
 // response time of this script which is critical.
+
 include "tiki-setup.php";
 header('Content-Type: text/xml');
 if ($prefs['feature_live_support'] != 'y') {

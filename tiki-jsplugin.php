@@ -1,5 +1,10 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+
 /*
  * This is included in the html generated for each wiki page. It is included for each plugin used on a wiki page.
  * The include is of the form <script type="text/javascript" src="tiki-jsplugin.php?plugin=googledoc"></script>
