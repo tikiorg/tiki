@@ -86,7 +86,7 @@
 	</div>
 	{/if}
 
-	{if $comment.title neq ''}
+	{if $comment.title neq '' && $comment.title neq 'Untitled'}
 	<div class="title">
 	{if $first eq 'y'}
 		<h2>{$comment.title|escape}</h2>
