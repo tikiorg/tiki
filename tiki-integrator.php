@@ -9,7 +9,7 @@ require_once('tiki-setup.php');
 require_once('lib/integrator/integrator.php');
 
 $access->check_feature('feature_integrator');
-$access->check_permission(array('tiki_p_view_integrator','tiki_p_admin_integrator','tiki_p_admin'));
+$access->check_permission(array('tiki_p_view_integrator'));
 
 $repID = (isset($_REQUEST["repID"]) && strlen($_REQUEST["repID"]) > 0) ? $_REQUEST["repID"] : 0;
 

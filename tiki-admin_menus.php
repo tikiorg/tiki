@@ -12,7 +12,7 @@ $auto_query_args = array(
 	'sort_mode',
 	'menuId'
 );
-$access->check_permission(array('tiki_p_admin', 'tiki_p_edit_menu'));
+$access->check_permission(array('tiki_p_edit_menu'));
 
 if (!isset($_REQUEST["menuId"])) {
 	$_REQUEST["menuId"] = 0;

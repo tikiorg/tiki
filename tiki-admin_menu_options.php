@@ -7,7 +7,7 @@
 
 require_once ('tiki-setup.php');
 include_once ('lib/menubuilder/menulib.php');
-$access->check_permission(array('tiki_p_admin', 'tiki_p_edit_menu_option'));
+$access->check_permission(array('tiki_p_edit_menu_option'));
 if (!isset($_REQUEST["menuId"])) {
 	$smarty->assign('msg', tra("No menu indicated"));
 	$smarty->display("error.tpl");

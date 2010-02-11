@@ -6,7 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-$access->check_permission(array('tiki_p_admin', 'tiki_p_clean_cache'));
+$access->check_permission(array('tiki_p_clean_cache'));
 
 $done = '';
 $output = '';

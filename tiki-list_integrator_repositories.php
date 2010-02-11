@@ -8,7 +8,7 @@
 require_once ('tiki-setup.php');
 require_once ('lib/integrator/integrator.php');
 $access->check_feature('feature_integrator');
-$access->check_permission(array('tiki_p_view_integrator','tiki_p_admin_integrator','tiki_p_admin'));
+$access->check_permission(array('tiki_p_view_integrator'));
 // Create instance of integrator
 $integrator = new TikiIntegrator($dbTiki);
 // Fill list of repositories

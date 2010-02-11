@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/integrator/integrator.php');
 // If Integrator is ON, check permissions...
 $access->check_feature('feature_integrator');
-$access->check_permission(array('tiki_p_admin_integrator','tiki_p_admin'));
+$access->check_permission(array('tiki_p_admin_integrator'));
 // Setup local variables from request or set default values
 $repID = (isset($_REQUEST["repID"]) && strlen($_REQUEST["repID"]) > 0) ? $_REQUEST["repID"] : 0;
 $ruleID = (isset($_REQUEST["ruleID"]) && strlen($_REQUEST["ruleID"]) > 0) ? $_REQUEST["ruleID"] : 0;

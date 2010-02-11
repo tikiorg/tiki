@@ -85,7 +85,7 @@ if ($tiki_p_admin_forum != 'y' && $user) {
 	}
 }
 
-$access->check_permission( array('tiki_p_admin_forum', 'tiki_p_forum_read') );
+$access->check_permission( array('tiki_p_forum_read') );
 
 $commentslib->forum_add_hit($_REQUEST["forumId"]);
 if (isset($_REQUEST['report']) && $tiki_p_forums_report == 'y') {

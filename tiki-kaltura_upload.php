@@ -10,7 +10,7 @@ $access->check_feature('feature_kaltura');
 
 include_once ("lib/videogals/KalturaClient_v3.php");
 
-$access->check_permission(array('tiki_p_upload_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+$access->check_permission(array('tiki_p_upload_videos'));
 
 $secret = $prefs['secret'];
 $admin_secret = $prefs['adminSecret'];

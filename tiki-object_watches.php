@@ -9,7 +9,7 @@ include_once ('tiki-setup.php');
 global $categlib;
 include_once ('lib/categories/categlib.php');
 $access->check_feature('feature_group_watches');
-$access->check_permission(array('tiki_p_admin','tiki_p_admin_users'));
+$access->check_permission(array('tiki_p_admin_users'));
 if (!isset($_REQUEST['objectId']) || empty($_REQUEST['objectType']) || !isset($_REQUEST['objectName']) 
 	|| !isset($_REQUEST['watch_event']) || !isset($_REQUEST['objectHref'])
 	) {

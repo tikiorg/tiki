@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 // temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't
 // clean the temp/cache each time you sqlupgrade the perms setting is not
 // synchornous with the cache
-$access->check_permission(array('tiki_p_admin', 'tiki_p_admin_users'));
+$access->check_permission(array('tiki_p_admin_users'));
 
 if ($tiki_p_admin != 'y') {
 	$userGroups = $userlib->get_user_groups_inclusion($user);

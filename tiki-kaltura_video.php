@@ -56,7 +56,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 	switch($mode){
 	
 	case 'remix':
-		$access->check_permission(array('tiki_p_remix_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+		$access->check_permission(array('tiki_p_remix_videos'));
 		$seflashVars = 'uid=' .$user.
 			'&ks=' .$ksession. 
 			'&partner_id=' . $partner_id .
@@ -85,7 +85,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		
 		break;
 	case 'dupl':
-		$access->check_permission(array('tiki_p_upload_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+		$access->check_permission(array('tiki_p_upload_videos'));
 		if($kentryType == "mix"){
 			$knewmixEntry = $kclient->mixing->cloneAction($videoId[0]);
 		}
@@ -94,7 +94,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		
 		break;	
 	case 'revert':
-		$access->check_permission(array('tiki_p_admin_kaltura','tiki_p_admin'));
+		$access->check_permission(array('tiki_p_admin_kaltura'));
 		$koldentry = $kclient->mixing->get($videoId[0],$_REQUEST['version']);
 		$koldentry = new KalturaMixEntry();
 		$knewentry = new KalturaMixEntry();
@@ -113,7 +113,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		$smarty->assign_by_ref('videoInfo',$knewentry);
 		break;
 	case 'delete':
-		$access->check_permission(array('tiki_p_delete_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+		$access->check_permission(array('tiki_p_delete_videos'));
 		$area = 'delkalturaentry';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
@@ -134,14 +134,14 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		die;
 		break;
 	case 'download':
-		$access->check_permission(array('tiki_p_download_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+		$access->check_permission(array('tiki_p_download_videos'));
 		$kres = $kclient->mixing->requestFlattening($videoId[0],'flv');
 
 		header ('Location: tiki-kaltura_video.php?videoId='.$videoId[0]);
 		die;
 		break;
 	case 'edit':
-		$access->check_permission(array('tiki_p_edit_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+		$access->check_permission(array('tiki_p_edit_videos'));
 		if($kentryType == "mix"){
 			$kentry = $kclient->mixing->get($videoId[0]);
 			
@@ -214,7 +214,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		
 }else{
 	if(isset($videoId[0])){
-		$access->check_permission(array('tiki_p_view_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+		$access->check_permission(array('tiki_p_view_videos'));
 		$smarty->assign('mode', 'view');
 		if($kentryType == "mix"){
 			$kentry = $kclient->mixing->get($videoId[0]);

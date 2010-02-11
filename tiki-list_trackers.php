@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 $auto_query_args = array('sort_mode', 'offset', 'find');
 $access->check_feature('feature_trackers');
-$access->check_permission(array('tiki_p_admin_trackers','tiki_p_list_trackers'));
+$access->check_permission(array('tiki_p_list_trackers'));
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
 }
