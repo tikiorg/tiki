@@ -29403,7 +29403,7 @@ r12271 | luciash | 2008-03-31 00:44:29 +0200 (lun, 31 mar 2008) | 1 line
 ------------------------------------------------------------------------
 r12270 | luciash | 2008-03-30 22:06:05 +0200 (dim, 30 mar 2008) | 1 line
 
-[MOD] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion -- $Header: $ CVS keyword is obsolete, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[MOD] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion -- $Header: $ CVS keyword is obsolete, use $Id: $ instead
 ------------------------------------------------------------------------
 r12269 | ricks99 | 2008-03-30 20:50:47 +0200 (dim, 30 mar 2008) | 1 line
 
@@ -29427,7 +29427,7 @@ r12265 | ricks99 | 2008-03-30 17:52:26 +0200 (dim, 30 mar 2008) | 1 line
 ------------------------------------------------------------------------
 r12264 | luciash | 2008-03-30 17:49:28 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion
 ------------------------------------------------------------------------
 r12263 | luciash | 2008-03-30 17:37:15 +0200 (dim, 30 mar 2008) | 1 line
 
@@ -29435,99 +29435,99 @@ r12263 | luciash | 2008-03-30 17:37:15 +0200 (dim, 30 mar 2008) | 1 line
 ------------------------------------------------------------------------
 r12262 | luciash | 2008-03-30 17:28:00 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion (not set on third party lib files)
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion (not set on third party lib files)
 ------------------------------------------------------------------------
 r12261 | luciash | 2008-03-30 17:15:01 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion (not set on third party lib files)
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion (not set on third party lib files)
 ------------------------------------------------------------------------
 r12260 | luciash | 2008-03-30 17:03:01 +0200 (dim, 30 mar 2008) | 1 line
 
-[MOD] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[MOD] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12259 | luciash | 2008-03-30 17:01:47 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion
 ------------------------------------------------------------------------
 r12258 | luciash | 2008-03-30 16:57:53 +0200 (dim, 30 mar 2008) | 1 line
 
-[MOD] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[MOD] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12257 | luciash | 2008-03-30 16:56:52 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion (not set on image files)
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion (not set on image files)
 ------------------------------------------------------------------------
 r12256 | luciash | 2008-03-30 16:50:28 +0200 (dim, 30 mar 2008) | 1 line
 
-[MOD] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[MOD] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12255 | luciash | 2008-03-30 16:49:23 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion
 ------------------------------------------------------------------------
 r12254 | luciash | 2008-03-30 16:40:50 +0200 (dim, 30 mar 2008) | 1 line
 
-[MOD] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[MOD] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12253 | luciash | 2008-03-30 16:37:20 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion
 ------------------------------------------------------------------------
 r12252 | luciash | 2008-03-30 16:28:52 +0200 (dim, 30 mar 2008) | 1 line
 
-[MOD] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[MOD] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12251 | luciash | 2008-03-30 16:25:59 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion
 ------------------------------------------------------------------------
 r12250 | luciash | 2008-03-30 16:23:05 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[SVN] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12249 | luciash | 2008-03-30 16:22:12 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion
 ------------------------------------------------------------------------
 r12248 | luciash | 2008-03-30 16:10:58 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[SVN] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12247 | luciash | 2008-03-30 16:10:09 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] svn:keywords setting - adding property for keyword Id ($Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $) expansion
+[SVN] svn:keywords setting - adding property for keyword Id ($Id: ... $) expansion
 ------------------------------------------------------------------------
 r12246 | luciash | 2008-03-30 15:41:44 +0200 (dim, 30 mar 2008) | 1 line
 
-[MOD] (forgotten replace) $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[MOD] (forgotten replace) $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12245 | luciash | 2008-03-30 15:38:13 +0200 (dim, 30 mar 2008) | 1 line
 
-[MOD] (forgotten replace) $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[MOD] (forgotten replace) $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12244 | luciash | 2008-03-30 15:32:53 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[SVN] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12243 | luciash | 2008-03-30 15:24:31 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[SVN] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12242 | luciash | 2008-03-30 15:22:01 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[SVN] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12241 | luciash | 2008-03-30 15:15:43 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[SVN] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12240 | luciash | 2008-03-30 15:12:49 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[SVN] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12239 | luciash | 2008-03-30 15:10:42 +0200 (dim, 30 mar 2008) | 1 line
 
-[SVN] $Header: $ CVS keyword is deprecated, use $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ instead
+[SVN] $Header: $ CVS keyword is deprecated, use $Id: $ instead
 ------------------------------------------------------------------------
 r12238 | sylvieg | 2008-03-30 00:14:16 +0100 (dim, 30 mar 2008) | 1 line
 
@@ -42916,7 +42916,7 @@ The version of the libraries are :
 * update PEAR module Net::URL 1.0.15 ;
 * update PEAR module XML-RPC 1.5.1 ;
 
-I have updated the line with $Id: changelog.txt 25048 2010-02-11 07:06:18Z pkdille $ by removing the $ characters so it is now
+I have updated the line with $Id:$ by removing the $ characters so it is now
 easy to compare the official versions of the libraries to the ones in tiki.
 
 For the Date.php I re did the modifications but not as patch but by modifying
