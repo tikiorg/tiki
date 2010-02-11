@@ -281,7 +281,7 @@
 	{/if}
 
 	{if $field_value.value eq ''}
-		{assign var=time value=""}
+		{assign var=time value="--"}
 	{else}
 		{assign var=time value=$field_value.value}
 	{/if}
