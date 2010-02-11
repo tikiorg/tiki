@@ -100,6 +100,12 @@ function wikiplugin_articles_info()
 				'description' => tra('Latest date to select articles from.') . ' (YYYY-MM-DD)',
 				'filter' => 'date',
 			),
+			'overrideDates' => array(
+				'required' => false,
+				'name' => tra('Override Dates'),
+				'description' => tra('Whether obey article type\'s "show before publish" and "show after expiry" settings.') . ' (n|y)',
+				'filter' => 'alpha',
+			),
 			'containerClass' => array(
 				'required' => false,
 				'name' => tra('Container class'),
@@ -119,42 +125,31 @@ function wikiplugin_articles($data, $params)
 		//	the feature is disabled or the user can't read articles, not even article headings
 		return("");
 	}
-	if(!isset($max)) {$max='3';}
-	if(!isset($start)) {$start='0';}
+	if(!isset($max))		$max = -1;
+	if(!isset($start))		$start = 0;
 
-	if(!isset($topicId))
-		$topicId='';
-	if(!isset($topic))
-		$topic='';
+	if(!isset($topicId))	$topicId='';
+	if(!isset($topic))		$topic='';
 
-	if (!isset($sort))
-		$sort = 'publishDate_desc';
+	if (!isset($sort))		$sort = 'publishDate_desc';
 
 	// Adds filtering by type if type is passed
-	if(!isset($type)) 
-		$type='';
+	if(!isset($type))		$type='';
 
-	if (!isset($categId))
-		$categId = '';
+	if (!isset($categId))	$categId = '';
 
-	if (!isset($lang))
-		$lang = '';
+	if (!isset($lang))		$lang = '';
 
-	if (!isset($quiet))
-		$quiet = 'n';
+	if (!isset($quiet))		$quiet = 'n';
 	$smarty->assign_by_ref('quiet', $quiet);
 	
 	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
 	$smarty->assign('container_class', $containerClass);
 	
-	if (isset($dateStart)) {
-		$dateStartTS = strtotime($dateStart);
-	}
-	if (isset($dateEnd)) {
-		$dateEndTS = strtotime($dateEnd);
-	}
+	if (isset($dateStart)) 	$dateStartTS = strtotime($dateStart);
+	if (isset($dateEnd))	$dateEndTS = strtotime($dateEnd);
 	$dateStartTS = !empty($dateStartTS) ? $dateStartTS : 0;
-	$dateEndTS = !empty($dateEndTS) ? $dateEndTS : $tikilib->now;
+	$dateEndTS = !empty($dateEndTS) ? $dateEndTS : 0;
 	
 	if (isset($fullbody) && $fullbody == 'y') {
 		$smarty->assign('fullbody', 'y');
@@ -163,10 +158,12 @@ function wikiplugin_articles($data, $params)
 		$fullbody = 'n';
 	}
 	
+	if (!isset($overrideDates))	$overrideDates = 'n';
+	
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
+	$listpages = $tikilib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'));
  	if ($prefs['feature_multilingual'] == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
