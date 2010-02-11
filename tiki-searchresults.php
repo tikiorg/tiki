@@ -81,6 +81,23 @@ if (($where == 'trackers')) {
 	$access->check_feature('feature_trackers');
 }
 
+$categId = 0;
+if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) {
+	$categId = $_REQUEST['cat_categories'];
+	if (count($_REQUEST['cat_categories']) > 1) {
+		$smarty->assign('find_cat_categories', $_REQUEST['cat_categories']);
+		unset($_REQUEST['categId']);
+	} else {
+		$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
+	}
+} else {
+		$_REQUEST['cat_categories'] = array();
+}
+if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
+	$categId = $_REQUEST['categId'];
+	$smarty->assign('find_categId', $_REQUEST['categId']);
+}
+
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
@@ -107,9 +124,9 @@ if (!isset($_REQUEST["words"]) || empty($_REQUEST["words"])) {
 		$find_where = "find_pages";
 	}
 	if ($where == 'wikis') {
-		$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST['date'], $searchLang);
+		$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST['date'], $searchLang, $categId);
 	} else {
-		$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST['date']);
+		$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST['date'], $categId);
 	}
 	$smarty->assign('words', $words);
 }
@@ -151,6 +168,13 @@ if ($where == 'wikis' && $prefs['feature_multilingual'] == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages(false, 'y');
 	$smarty->assign_by_ref('languages', $languages);
+}
+if ($prefs['feature_categories'] == 'y') {
+	global $categlib;
+	include_once ('lib/categories/categlib.php');
+	$categories = $categlib->get_all_categories_respect_perms(null, 'view_category');
+	$smarty->assign_by_ref('categories', $categories);
+	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));	
 }
 $smarty->assign_by_ref('where_list', $where_list);
 $smarty->assign_by_ref('results', $results["data"]);
