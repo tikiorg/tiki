@@ -127,7 +127,7 @@ function wikiplugin_mediaplayer($data, $params) {
 	unset($params['width']); unset($params['height']); unset($params['where']); unset($params['player']);unset($params['mp3']); unset($params['style']); unset($params['fullscreen']); unset($params['wmode']);
 	
 	foreach ($params as $key=>$value) {
-		$code .= '&'.$key.'='.$value;
+		$code .= '&amp;'.$key.'='.$value;
 	}
 	$code .= '" />';
 	$code .= '</object>';
