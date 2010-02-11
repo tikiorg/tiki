@@ -248,7 +248,7 @@ class UsersLib extends TikiLib {
 				$lslib->set_operator_status($user, 'offline');
 			}
 		}
-		setcookie($user_cookie_site, '', -3600, $cookie_path, $prefs['cookie_domain']);
+		setcookie($user_cookie_site, '', -3600, $prefs['cookie_path'], $prefs['cookie_domain']);
 
 		if ($phpcas_enabled == 'y' && $prefs['auth_method'] == 'cas' && $user != 'admin' && $user != '') {
 			require_once ('lib/phpcas/source/CAS/CAS.php');

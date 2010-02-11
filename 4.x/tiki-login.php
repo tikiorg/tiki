@@ -291,7 +291,7 @@ if ($isvalid) {
 					if (isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
 						$hash = $userlib->create_user_cookie($_REQUEST['user']);
 						$time = substr($hash, strpos($hash, '.') + 1);
-						setcookie($user_cookie_site, $hash . '.' . $user, $time, $cookie_path, $prefs['cookie_domain']);
+						setcookie($user_cookie_site, $hash . '.' . $user, $time, $prefs['cookie_path'], $prefs['cookie_domain']);
 						$logslib->add_log('login', 'got a cookie for ' . $prefs['remembertime'] . ' seconds');
 					}
 				}
