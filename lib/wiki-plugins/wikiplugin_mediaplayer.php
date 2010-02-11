@@ -120,12 +120,16 @@ function wikiplugin_mediaplayer($data, $params) {
 		$wmode = $params['wmode'];
 	}
 	$code .= '<param name="wmode" value="'.$wmode.'" />';
+	$code .= '<param name="FlashVars" value="';
 	if (empty($params['flv']) && !empty($params['mp3'])) 
-		$code .= '<param name="FlashVars" value="mp3='.$params['mp3'].'" />';
+		$code .= 'mp3='.$params['mp3'];
+	
 	unset($params['width']); unset($params['height']); unset($params['where']); unset($params['player']);unset($params['mp3']); unset($params['style']); unset($params['fullscreen']); unset($params['wmode']);
+	
 	foreach ($params as $key=>$value) {
-		$code .= '<param name="FlashVars" value="'.$key.'='.$value.'" />';
+		$code .= '&'.$key.'='.$value;
 	}
+	$code .= '" />';
 	$code .= '</object>';
 
 	return "~np~$code~/np~";
