@@ -8,17 +8,8 @@ $section = 'mytiki';
 require_once ('tiki-setup.php');
 include_once ('lib/userprefs/userprefslib.php');
 include_once ('lib/imagegals/imagegallib.php');
-// User preferences screen
-if ($prefs['feature_userPreferences'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_userPreferences");
-	$smarty->display("error.tpl");
-	die;
-}
-if (!$user) {
-	$smarty->assign('msg', tra("You are not logged in"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_userPreferences');
+$access->check_user($user);
 if (!isset($_REQUEST["showall"])) $_REQUEST["showall"] = 'n';
 $smarty->assign('showall', $_REQUEST["showall"]);
 $userwatch = $user;

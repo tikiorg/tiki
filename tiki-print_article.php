@@ -7,11 +7,7 @@
 $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
-if ($prefs['feature_cms_print'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_cms_print");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_cms_print');
 if (!isset($_REQUEST["articleId"])) {
 	$smarty->assign('msg', tra("No article indicated"));
 	$smarty->display("error.tpl");

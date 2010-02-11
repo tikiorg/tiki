@@ -10,22 +10,9 @@ if ($prefs['feature_ajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/minical/minicallib.php');
-if ($prefs['feature_minical'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_minical");
-	$smarty->display("error.tpl");
-	die;
-}
-if (!$user) {
-	$smarty->assign('msg', tra("Must be logged to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_minical != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_minical');
+$access->check_user($user);
+$access->check_permission('tiki_p_minical');
 if (!isset($_REQUEST["eventId"])) $_REQUEST["eventId"] = 0;
 if (isset($_REQUEST['remove'])) {
 	$area = 'delminicalevent';

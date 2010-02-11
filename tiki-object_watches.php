@@ -7,17 +7,8 @@
 include_once ('tiki-setup.php');
 global $categlib;
 include_once ('lib/categories/categlib.php');
-if ($prefs['feature_group_watches'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_group_watches');
-	$smarty->display('error.tpl');
-	die;
-}
-if ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('Permission denied'));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_group_watches');
+$access->check_permission(array('tiki_p_admin','tiki_p_admin_users'));
 if (!isset($_REQUEST['objectId']) || empty($_REQUEST['objectType']) || !isset($_REQUEST['objectName']) 
 	|| !isset($_REQUEST['watch_event']) || !isset($_REQUEST['objectHref'])
 	) {

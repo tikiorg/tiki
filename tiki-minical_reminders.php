@@ -7,11 +7,7 @@
 include_once ("lib/init/initlib.php");
 include_once ('tiki-setup_base.php');
 include_once ('lib/minical/minicallib.php');
-if ($prefs['feature_minical'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_minical");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_minical');
 if (!$prefs['minical_reminders']) die;
 //$refresh=$_REQUEST['refresh']*1000;
 $refresh = 1000 * 60 * 1;

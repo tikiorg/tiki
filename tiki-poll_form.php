@@ -11,18 +11,8 @@ include_once ('lib/polls/polllib.php');
 if (!isset($polllib)) {
 	$polllib = new PollLib;
 }
-if ($prefs['feature_polls'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_polls");
-	$smarty->display("error.tpl");
-	die;
-}
-// Now check permissions to access this page
-if ($tiki_p_vote_poll != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_polls');
+$access->check_permission('tiki_p_vote_poll');
 if (!isset($_REQUEST["pollId"])) {
 	$smarty->assign('msg', tra("No poll indicated"));
 	$smarty->display("error.tpl");

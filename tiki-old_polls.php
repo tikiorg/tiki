@@ -9,18 +9,8 @@ include_once ('lib/polls/polllib.php');
 if (!isset($polllib)) {
 	$polllib = new PollLib;
 }
-if ($prefs['feature_polls'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_polls");
-	$smarty->display("error.tpl");
-	die;
-}
-// Now check permissions to access this page
-if ($tiki_p_view_poll_results != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied. You cannot view this page."));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_polls');
+$access->check_permission('tiki_p_view_poll_results');
 // This script can receive the thresold
 // for the information as the number of
 // days to get in the log 1,3,4,etc

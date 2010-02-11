@@ -6,16 +6,8 @@
 // $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/minical/minicallib.php');
-if ($prefs['feature_minical'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_minical");
-	$smarty->display("error.tpl");
-	die;
-}
-if (!$user) {
-	$smarty->assign('msg', tra("Must be logged to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_minical');
+$access->check_user($user);
 //if($tiki_p_minical != 'y') {
 //  $smarty->assign('msg',tra("Permission denied to use this feature"));
 //  $smarty->display("error.tpl");

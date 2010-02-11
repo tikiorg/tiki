@@ -6,11 +6,7 @@
 // $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/newsletters/nllib.php');
-if ($prefs['feature_newsletters'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_newsletters");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_newsletters');
 if (!empty($_REQUEST['nlId'])) {
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);

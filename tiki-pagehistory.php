@@ -12,17 +12,9 @@ include_once ('lib/wiki/histlib.php');
 $access->check_feature('feature_wiki');
 
 if (!isset($_REQUEST["source"])) {
-	if ($prefs['feature_history'] != 'y') {
-		$smarty->assign('msg', tra('This feature is disabled') . ': feature_history');
-		$smarty->display('error.tpl');
-		die;
-	}
+	$access->check_feature('feature_history');
 } else {
-	if ($prefs['feature_source'] != 'y') {
-		$smarty->assign('msg', tra('This feature is disabled') . ': feature_source');
-		$smarty->display('error.tpl');
-		die;
-	}
+	$access->check_feature('feature_source');
 }
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
@@ -40,19 +32,9 @@ $tikilib->get_perm_object( $_REQUEST['page'], 'wiki page' );
 
 // Now check permissions to access this page
 if (!isset($_REQUEST["source"])) {
-	if ($tiki_p_wiki_view_history != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot browse this page history"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_wiki_view_history');
 } else {
-	if ($tiki_p_wiki_view_source != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot view the source of this page"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_wiki_view_source');
 }
 $info = $tikilib->get_page_info($page);
 $smarty->assign_by_ref('info', $info);

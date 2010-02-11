@@ -6,22 +6,9 @@
 // $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/notepad/notepadlib.php');
-if ($prefs['feature_notepad'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_notepad");
-	$smarty->display("error.tpl");
-	die;
-}
-if (!$user) {
-	$smarty->assign('msg', tra("Must be logged to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_notepad != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_notepad');
+$access->check_user($user);
+$access->check_permission('tiki_p_notepad');
 if (!isset($_REQUEST["noteId"])) {
 	$smarty->assign('msg', tra("No note indicated"));
 	$smarty->display("error.tpl");

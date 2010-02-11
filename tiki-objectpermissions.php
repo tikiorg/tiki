@@ -39,12 +39,7 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 		$tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType'], $info);
 	}
 } else if ($_REQUEST['objectType'] == 'global') {
-	if ($tiki_p_admin != 'y') {						// is there a better perm for this?
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot assign permissions for this object"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_admin');
 } else {
 	$tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType']);
 	if ($_REQUEST['objectType'] == 'tracker') {

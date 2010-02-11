@@ -6,18 +6,8 @@
 // $Id$
 $section = 'poll';
 require_once ('tiki-setup.php');
-if ($prefs['feature_polls'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled') . ': feature_polls');
-	$smarty->display('error.tpl');
-	die;
-}
-// Now check permissions to access this page
-if ($tiki_p_view_poll_results != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('Permission denied. You cannot view this page.'));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_polls');
+$access->check_permission('tiki_p_view_poll_results');
 global $pollib;
 include_once ('lib/polls/polllib.php');
 $auto_query_args = array('offset', 'pollId', 'maxRecords', 'scoresort_desc', 'scoresort_asc', 'sort_mode', 'list', 'vote_from_date', 'vote_to_date', 'which_date', 'from_Day', 'from_Month', 'from_Year', 'to_Day', 'to_Month', 'to_Year');

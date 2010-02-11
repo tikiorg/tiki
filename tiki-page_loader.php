@@ -5,11 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 include_once ('tiki-setup.php');
-if ($prefs['feature_html_pages'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_html_pages");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_html_pages');
 include_once ('lib/htmlpages/htmlpageslib.php');
 $refresh = 1000 * $_REQUEST["refresh"];
 ?>

@@ -7,16 +7,8 @@
 require_once ('tiki-setup.php');
 include_once ('lib/htmlpages/htmlpageslib.php');
 include_once ('lib/stats/statslib.php');
-if ($prefs['feature_html_pages'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_html_pages");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_view_html_pages != 'y') {
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_html_pages');
+$access->check_permission('tiki_p_view_html_pages');
 if (!isset($_REQUEST["pageName"])) {
 	$smarty->assign('msg', tra("No page indicated"));
 	$smarty->display("error.tpl");

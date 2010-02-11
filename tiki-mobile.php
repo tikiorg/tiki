@@ -6,11 +6,7 @@
 // $Id$
 require_once ('tiki-setup.php');
 include_once ("lib/hawhaw/hawtikilib.php");
-if ($prefs['feature_mobile'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_mobile");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_mobile');
 $TikiPage = new HAW_deck(HAWIKI_TITLE, HAW_ALIGN_CENTER);
 HAWTIKI_deck_init($TikiPage);
 if (isset($_REQUEST['content']) && $_REQUEST['content'] == "about") {

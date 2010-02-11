@@ -6,12 +6,7 @@
 // $Id$
 require_once ('tiki-setup.php');
 include_once ('lib/mods/modslib.php');
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_permission('tiki_p_admin');
 if (!is_dir($prefs['mods_dir'])) {
 	@mkdir($prefs['mods_dir'], 02777);
 }

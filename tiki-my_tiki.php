@@ -11,12 +11,7 @@ if ($prefs['feature_ajax'] == "y") {
 }
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/tasks/tasklib.php');
-if (!$user) {
-	$smarty->assign('msg', tra("You are not logged in"));
-	$smarty->assign('errortype', '402');
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_user($user);
 $userwatch = $user;
 if (isset($_REQUEST["view_user"])) {
 	if ($_REQUEST["view_user"] <> $user) {
