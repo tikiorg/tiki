@@ -7,17 +7,9 @@
 $section = 'surveys';
 require_once ('tiki-setup.php');
 include_once ('lib/surveys/surveylib.php');
-if ($prefs['feature_surveys'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_surveys");
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_take_survey != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You don't have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_surveys');
+$access->check_permission('tiki_p_take_survey');
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {

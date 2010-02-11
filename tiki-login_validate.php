@@ -5,11 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.25.2.3 2008-03-22 12:21:03 sylvieg Exp $
 require_once ('tiki-setup.php');
-if ($prefs['validateUsers'] != 'y' && $prefs['validateRegistration'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": validateUsers");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature(array('validateUsers','validateRegistration'));
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["pass"])) {

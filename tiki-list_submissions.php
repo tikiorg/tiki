@@ -7,18 +7,9 @@
 $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
-if ($prefs['feature_submissions'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_submissions");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_submissions');
 if (isset($_REQUEST["remove"])) {
-	if ($tiki_p_remove_submission != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot remove submissions"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_remove_submission'),
 	$area = 'delsubmission';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
@@ -29,12 +20,7 @@ if (isset($_REQUEST["remove"])) {
 }
 if (isset($_REQUEST["approve"])) {
 	check_ticket('list-submissions');
-	if ($tiki_p_approve_submission != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("Permission denied you cannot approve submissions"));
-		$smarty->display("error.tpl");
-		die;
-	}
+	$access->check_permission('tiki_p_approve_submission');
 	$artlib->approve_submission($_REQUEST["approve"]);
 }
 // This script can receive the thresold

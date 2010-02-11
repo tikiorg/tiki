@@ -6,11 +6,8 @@
 // $Id: /cvsroot/tikiwiki/tiki/tiki-list_posts.php,v 1.17 2007-10-12 07:55:28 nyloth Exp $
 require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
-if ($prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_blogs");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_blogs');
+$access->check_permission('tiki_p_blog_admin');
 /*
 if($prefs['feature_listPages'] != 'y') {
 $smarty->assign('msg',tra("This feature is disabled"));
@@ -27,12 +24,6 @@ $smarty->display("error.tpl");
 die;
 }
 */
-if ($tiki_p_blog_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You cannot admin blogs"));
-	$smarty->display("error.tpl");
-	die;
-}
 if (isset($_REQUEST["remove"])) {
 	$area = 'delblogpost';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {

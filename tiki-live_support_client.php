@@ -11,11 +11,7 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modifie
 header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache"); // HTTP/1.0
-if ($prefs['feature_live_support'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled") . ": feature_live_support");
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature('feature_live_support');
 if (!$lslib->operators_online()) {
 	header("location: tiki-live_support_message.php");
 	die;

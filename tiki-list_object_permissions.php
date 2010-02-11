@@ -5,12 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 include_once ('tiki-setup.php');
-if ($tiki_p_admin != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You don't have permission to use this feature"));
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_permission('tiki_p_admin');
 function list_perms($objectId, $objectType, $objectName) {
 	global $userlib, $tikilib, $prefs;
 	$ret = array();
