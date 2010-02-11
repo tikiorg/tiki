@@ -52,8 +52,11 @@ if (!empty($_REQUEST['maxRecords'])) {
 	$maxRecords = $maxRecords;
 }
 $smarty->assign_by_ref('maxRecords', $maxRecords);
+
+$visible_only = 'y';
 if (($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y')) {
 	$date_max = '';
+	$visible_only = "n";
 } elseif (isset($_SESSION["thedate"])) {
 	if ($_SESSION["thedate"] < $tikilib->now) {
 		// If the session is older then set it to today
@@ -65,6 +68,21 @@ if (($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y')) {
 } else {
 	$date_max = $tikilib->now;
 }
+if (isset($_REQUEST["find_from_Month"]) && isset($_REQUEST["find_from_Day"]) && isset($_REQUEST["find_from_Year"])) {
+	$date_min = $tikilib->make_time(0, 0, 0, $_REQUEST["find_from_Month"], $_REQUEST["find_from_Month"], $_REQUEST["find_from_Year"]);
+	$smarty->assign('find_date_from', $date_min);
+} else {
+	$date_min = 0;
+	$smarty->assign('find_date_from', $tikilib->now - 365*24*3600);
+}
+if (isset($_REQUEST["find_to_Month"]) && isset($_REQUEST["find_to_Day"]) && isset($_REQUEST["find_to_Year"])) {
+	$t_date_max = $tikilib->make_time(0, 0, 0, $_REQUEST["find_to_Month"], $_REQUEST["find_to_Month"], $_REQUEST["find_to_Year"]);
+	if ($t_date_max < $date_max || $date_max == '') {
+		$date_max = $t_date_max;
+		$visible_only = 'y';
+	}
+}
+$smarty->assign('find_date_to', $date_max);
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
@@ -100,12 +118,8 @@ if (!isset($_REQUEST['lang'])) {
 $smarty->assign('find_topic', $_REQUEST["topic"]);
 $smarty->assign('find_type', $_REQUEST["type"]);
 $smarty->assign('find_lang', $_REQUEST['lang']);
-$visible_only = 'y';
-if (($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y')) {
-	$visible_only = "n";
-}
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, 0, $date_max, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only, '', $filter["categId"], '', '', $_REQUEST['lang']);
+$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, $date_min, $date_max, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only, '', $filter["categId"], '', '', $_REQUEST['lang']);
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('cant', $listpages['cant']);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
