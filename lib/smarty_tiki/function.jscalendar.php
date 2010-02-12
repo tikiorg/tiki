@@ -91,28 +91,28 @@ function smarty_function_jscalendar_body($params, &$smarty) {
 		$back.= "<input type=\"hidden\" name=\"$fieldname\" value=\"$date\" id=\"id_$id\" />\n";
 	}
 	$back.= "<span title=\"".tra("Date Selector")."\" id=\"disp_$id\" class=\"daterow\">$formatted_date</span>\n";
-	$back.= "<script type=\"text/javascript\">\n";
+	$js = '';
 	if ($goto) {
-		$back.= "function goto_url() { window.location='".sprintf($goto,"'+document.getElementById('id_$id').value+'")."'; }\n";
+		$js .= "function goto_url() { window.location='".sprintf($goto,"'+document.getElementById('id_$id').value+'")."'; }\n";
 	}
-	$back.= "Calendar.setup( {\n";
-	$back.= "date : \"$formatted_date\",\n";
+	$js .= "Calendar.setup( {\n";
+	$js .= "date : \"$formatted_date\",\n";
 	if ($fieldname) {
-		$back.= "inputField : \"id_$id\",\n";
+		$js .= "inputField : \"id_$id\",\n";
 	}
-	$back.= "ifFormat : \"$ifFormat\",\n";
-	$back.= "displayArea : \"disp_$id\",\n";
-	$back.= "daFormat : \"$format\",\n";
+	$js .= "ifFormat : \"$ifFormat\",\n";
+	$js .= "displayArea : \"disp_$id\",\n";
+	$js .= "daFormat : \"$format\",\n";
 	// $back.= "singleClick : true,\n";
 	if ($showtime) {
-		$back.= "showsTime : true,\n";
+		$js .= "showsTime : true,\n";
 	}
 	if ($goto) {
-		$back.= "onUpdate : goto_url,\n";
+		$js .= "onUpdate : goto_url,\n";
 	}
-	$back.= "align : \"$align\"\n";
-	$back.= "} );\n";
-	$back.= "</script>\n";
+	$js .= "align : \"$align\"\n";
+	$js .= "} );\n";
+	$headerlib->add_jq_onready($js);
 
 	return $back;
 
