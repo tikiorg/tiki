@@ -36,7 +36,7 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$this->updater->alignments = new Multilingual_Aligner_SentenceAlignments();
 		$this->updater->translator=new Multilingual_Aligner_MockMTWrapper();
 		
-		$this->updater->SetMT(
+		$this->updater->translator->SetMT(
 							$this->extra_source_sentence."<br/>".$this->mt_extra_target_sentence, 
 							$this->mt_extra_source_sentence."<br/>".$this->extra_target_sentence,
 							'en', 'fr');
