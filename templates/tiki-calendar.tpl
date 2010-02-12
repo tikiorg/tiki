@@ -34,7 +34,7 @@
 		{/if}
 
 		{if $tiki_p_admin_calendar eq 'y'}
-			{button href="#" _onclick="javascript:toggle('exportcal');" _text="{tr}Export Calendars{/tr}" _title="{tr}Click to export calendars{/tr}"}
+			{button href="#" _onclick="toggle('exportcal');return false;" _text="{tr}Export Calendars{/tr}" _title="{tr}Click to export calendars{/tr}"}
 		{/if}
 
 		{if $viewlist eq 'list'}
@@ -46,7 +46,7 @@
 		{/if}
 
 		{if count($listcals) >= 1}
-			{button href="#" _onclick="javascript:toggle('filtercal');" _text="{tr}Visible Calendars{/tr}" _title="{tr}Click to select visible calendars{/tr}"}
+			{button href="#" _onclick="toggle('filtercal');return false;" _text="{tr}Visible Calendars{/tr}" _title="{tr}Click to select visible calendars{/tr}"}
 
 			{if count($thiscal)}
 				<div id="configlinks">
@@ -55,7 +55,7 @@
 						{assign var=thiscustombgcolor value=$infocals.$k.custombgcolor}
 						{assign var=thiscustomfgcolor value=$infocals.$k.customfgcolor}
 						{assign var=thisinfocalsname value=$infocals.$k.name|escape}
-						{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor;border:1px solid #$thiscustomfgcolor;" _onclick="toggle('filtercal');" _text="$thisinfocalsname"}
+						{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor;border:1px solid #$thiscustomfgcolor;" _onclick="toggle('filtercal');return false;" _text="$thisinfocalsname"}
 					{/if}
 				{/foreach}
 				</div>
