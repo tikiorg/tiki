@@ -190,7 +190,7 @@ if (getCookie("fgalKeepOpen")) {
 
 {else}
 {if $files or ($find ne '')}
-  {include file='find.tpl' find_show_num_rows = 'y'}
+  {include file='find.tpl' find_show_num_rows = 'y' find_show_num_rows = 'y' find_show_categories_multi='y'}
 {/if}
 {if $prefs.fgal_quota_show eq 'y' && $gal_info.quota}
 	<div style="float:right">
