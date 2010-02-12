@@ -38,7 +38,7 @@ class CatPickerTreeMaker extends TreeMaker
 		$r .= $this->make_tree_r($rootid, $ar) . "</ul>\n";
 		
 		// java script block that opens the nodes as remembered in cookies
-		$headerlib->add_js($this->jsscriptblock);
+		$headerlib->add_jq_onready($this->jsscriptblock);
 		
 		// return tree
 		return $r;
