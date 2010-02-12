@@ -151,13 +151,13 @@
 {/if}
 {if $recurrence.id eq 0 or $recurrence.yearly}
 			  {tr}Each{/tr}&nbsp;
-			  <select name="dateOfYear_day" onChange="javascript: checkDateOfYear(this.options[this.selectedIndex].value,document.forms['f'].elements['dateOfYear_month'].options[document.forms['f'].elements['dateOfYear_month'].selectedIndex].value);">
+			  <select name="dateOfYear_day" onChange="checkDateOfYear(this.options[this.selectedIndex].value,document.forms['f'].elements['dateOfYear_month'].options[document.forms['f'].elements['dateOfYear_month'].selectedIndex].value);">
 				{section name=k start=1 loop=32}
 				<option value="{$smarty.section.k.index}" {if $recurrence.dateOfYear_day eq $smarty.section.k.index}selected="selected"{/if}>{if $smarty.section.k.index lt 10}0{/if}{$smarty.section.k.index}</option>
 				{/section}
 			  </select>
 			  &nbsp;{tr}of{/tr}&nbsp;
-			  <select name="dateOfYear_month" onChange="javascript: checkDateOfYear(document.forms['f'].elements['dateOfYear_day'].options[document.forms['f'].elements['dateOfYear_day'].selectedIndex].value,this.options[this.selectedIndex].value);">
+			  <select name="dateOfYear_month" onChange="checkDateOfYear(document.forms['f'].elements['dateOfYear_day'].options[document.forms['f'].elements['dateOfYear_day'].selectedIndex].value,this.options[this.selectedIndex].value);">
 				<option value="1"  {if $recurrence.dateOfYear_month eq '1'}selected="selected"{/if}>{tr}January{/tr}</option>
 				<option value="2"  {if $recurrence.dateOfYear_month eq '2'}selected="selected"{/if}>{tr}February{/tr}</option>
 				<option value="3"  {if $recurrence.dateOfYear_month eq '3'}selected="selected"{/if}>{tr}March{/tr}</option>
@@ -171,27 +171,6 @@
 				<option value="11" {if $recurrence.dateOfYear_month eq '11'}selected="selected"{/if}>{tr}November{/tr}</option>
 				<option value="12" {if $recurrence.dateOfYear_month eq '12'}selected="selected"{/if}>{tr}December{/tr}</option>
 			  </select>
-{jq}
-{literal}
-			    function checkDateOfYear(day,month) {
-{/literal}
-					var mName = new Array("-","{tr}January{/tr}","{tr}February{/tr}","{tr}March{/tr}","{tr}April{/tr}","{tr}May{/tr}","{tr}June{/tr}","{tr}July{/tr}","{tr}August{/tr}","{tr}September{/tr}","{tr}October{/tr}","{tr}November{/tr}","{tr}December{/tr}");
-{literal}
-					var error = false;
-					if (month == 4 || month == 6 || month == 9 || month == 11)
-						if (day == 31)
-							error = true;
-					if (month == 2)
-						if (day > 29)
-							error = true;
-					if (error) {
-{/literal}
-						document.getElementById('errorDateOfYear').innerHTML = "<em>{tr}There's no such date as{/tr} " + day + " {tr}of{/tr} " + mName[month] + "</em>";
-{literal}
-					}
-				}
-{/literal}
-{jq}
 &nbsp;&nbsp;
 			  <span id="errorDateOfYear" style="color:#900;"></span>
 		<br /><br /><hr />
