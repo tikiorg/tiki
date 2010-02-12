@@ -550,6 +550,16 @@ if (isset($_REQUEST['comment']) && $_REQUEST['comment'] != '' && isset($_REQUEST
 		die;
 	}
 }
+
+// load categories for find
+if ($prefs['feature_categories'] == 'y') {
+	global $categlib;
+	include_once ('lib/categories/categlib.php');
+	$categories = $categlib->get_all_categories_respect_perms(null, 'view_category');
+	$smarty->assign_by_ref('categories', $categories);
+	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));	
+}
+
 // Set display config
 if (!isset($_REQUEST['maxRecords']) || $_REQUEST['maxRecords'] <= 0) {
 	if (isset($gal_info['maxRows']) && $gal_info['maxRows'] > 0) {
@@ -574,10 +584,28 @@ $smarty->assign_by_ref('find', $_REQUEST['find']);
 if (isset($_REQUEST['fileId'])) {
 	$smarty->assign('fileId', $_REQUEST['fileId']);
 }
+$find_categId = 0;
+if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) {
+	$find_categId = $_REQUEST['cat_categories'];
+	if (count($_REQUEST['cat_categories']) > 1) {
+		$smarty->assign('find_cat_categories', $_REQUEST['cat_categories']);
+		unset($_REQUEST['categId']);
+	} else {
+		$_REQUEST['categId'] = $_REQUEST['cat_categories'][0];
+		unset($_REQUEST['cat_categories']);
+	}
+} else {
+		$_REQUEST['cat_categories'] = array();
+}
+if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
+	$find_categId = $_REQUEST['categId'];
+	$smarty->assign('find_categId', $_REQUEST['categId']);
+}
+
 if (isset($_GET['slideshow'])) {
 	$_REQUEST['maxRecords'] = $maxRecords = - 1;
 	$offset = 0;
-	$files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
+	$files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false, false, false, $find_categId);
 	$smarty->assign('cant', $files['cant']);
 	$smarty->assign_by_ref('file', $files['data']);
 
@@ -598,7 +626,7 @@ if (isset($_GET['slideshow'])) {
 } else {
 	if (!isset($_REQUEST["edit_mode"]) && !isset($_REQUEST["edit"])) {
 		// Get list of files in the gallery
-		$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true,true,true,false,false,true,false,'',true,false,($gal_info['show_backlinks']!='n'));
+		$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true,true,true,false,false,true,false,'',true,false,($gal_info['show_backlinks']!='n'), $find_categId);
 		$smarty->assign_by_ref('files', $files['data']);
 		$smarty->assign('cant', $files['cant']);
 	}
