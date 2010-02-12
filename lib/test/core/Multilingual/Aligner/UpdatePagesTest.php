@@ -28,8 +28,8 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 	private $extra_source_sentence = "This sentence was added on the source side.";
 	private $mt_extra_source_sentence = "Cette phrase a été ajoutée du côté source.";
 	
-	private $extra_target_sentence = "This sentence was added on the target side.";
-	private $mt_extra_target_sentence = "Cette phrase a été ajoutée du côté source.";
+	private $extra_target_sentence = "Cette phrase a été ajoutée du côté source.";
+	private $mt_extra_target_sentence = "This sentence was added on the target side.";
 	
 	protected function setUp()  {
 		$this->updater = new Multilingual_Aligner_UpdatePages();
@@ -80,7 +80,6 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 					$source_original_array,$source_modified_array,
 					$target_original_array, $target_modified_array, 
 					$expected_content, "");
-
 	}
 
 
@@ -147,9 +146,55 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 					$expected_content, "");
 	}
 	
-	public function test_sentence_added_in_both_source_and_target () {
+	public function test_sentence_inserted_in_both_source_and_target_sides () {
+		$this->markTestSkipped("This test is failing at the moment. Need to fix it");
+
+		$source_lng = "en";
+		$target_lng = "fr";
 		
+		$source_original_array = $this->orig_source_sentences;
+		$source_modified_array = $this->orig_source_sentences;
+		$source_modified_array = $this->insertSentenceAtIndex(1, $this->extra_source_sentence, $source_modified_array);
+
+		$target_original_array = $this->orig_target_sentences;
+		$target_modified_array = $this->orig_target_sentences;
+		$target_modified_array = $this->insertSentenceAtIndex(2, $this->extra_target_sentence, $target_modified_array);
+
+		$expected_content = $this->insertSentenceAtIndex(1, "Added_Source ".$this->mt_extra_source_sentence, $target_modified_array);
+
+		$this->do_test_basic_updating(
+					$source_lng,$target_lng,
+					$source_original_array,$source_modified_array,
+					$target_original_array, $target_modified_array, 
+					$expected_content, "");
+
 	}
+
+	public function test_sentence_deleted_on_both_source_and_target_sides() {
+		$this->markTestSkipped("This test is failing at the moment. Need to fix it");
+		
+		$source_lng = "en";
+		$target_lng = "fr";
+		
+		$source_original_array = $this->orig_source_sentences;
+		$source_modified_array = $this->orig_source_sentences;
+		$source_modified_array = $this->removeSentenceAtIndex(1, $source_modified_array);
+
+		$target_original_array = $this->orig_target_sentences;
+		$target_modified_array = $this->orig_target_sentences;
+		$target_modified_array = $this->removeSentenceAtIndex(2, $target_modified_array);
+
+		$expected_content = $target_original_array;
+		$expected_content [1] = "Deleted_Source ".$expected_content [1]; 
+		$expected_content [2] = "Deleted_Target ".$expected_content [2]; 
+
+		$this->do_test_basic_updating(
+					$source_lng,$target_lng,
+					$source_original_array,$source_modified_array,
+					$target_original_array, $target_modified_array, 
+					$expected_content, "");
+	}
+
 
 	public function do_test_basic_updating(
 						$source_lng,$target_lng,
