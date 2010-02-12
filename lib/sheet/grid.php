@@ -1850,40 +1850,30 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 //		$parser = new PEAR_XMLParser();
 //		$parser->parse('<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>'.$this->data.'</body>/head>');
 //		$res = $parser->getData();
-		
-		preg_match_all('/<TD.*\/TD>/Umis', $this->data, $cells);
-		
-		foreach( $cells[0] as $cell ) {
-			preg_match('/id="(.*?)"/i', $cell, $id);
-			preg_match('/formula="(.*?)"/i', $cell, $formula);
-			preg_match('/<TD.*>(.*)<\/TD>/i', $cell, $val);
-			
-			if (count($id) > 1) {
-				preg_match_all('/_[cr](\d+)/', $id[1], $rc);
-				if (count($rc > 1)) {
-					$col = $rc[1][0];
-					$row = $rc[1][1];
-				}
-			}
-			
-			if ($row && $col) {
-				$val = count($val) > 1 ? $val[1] : '';
 
-				$sheet->initCell( $row-1, $col-1 );
+		$d = json_decode($this->data);
+		
+		$rows = (int) $d->metadata->rows;
+		$cols = (int) $d->metadata->columns;
+		
+		for ($r = 1; $r <= $rows; $r++) {
+			for ($c = 1; $c <= $cols; $c++) {
+				$ri = 'r'.$r;
+				$ci = 'c'.$c;
+				$val = $d->data->$ri->$ci;
+				
+				$sheet->initCell( $r-1, $c-1 );
 				$sheet->setValue( $val );
 				$sheet->setSize( 1, 1 );
-				if (count($formula) > 1) {
-					if (substr($formula[1], 0, 1) == '=') {
-						$formula[1] = substr($formula[1], 1, strlen($formula[1])-1);
-					}
-					if (!empty($formula[1])) {
-						$sheet->setCalculation($formula[1]);
+				if (substr($val, 0, 1) == '=') {
+					$val = substr($val, 1, strlen($val)-1);
+					if (!empty($val)) {
+						$sheet->setCalculation($val);
 					}
 				}
 			}
 		}
-
-
+		
 		return true;
 	}
 
