@@ -299,10 +299,13 @@ class Tiki_Profile_Installer
 		}
 
 		foreach( $permissions as $perm => $v )
+		{
 			if( $v == 'y' )
 				$userlib->assign_permission_to_group( $perm, $groupName );
 			else
 				$userlib->remove_permission_from_group( $perm, $groupName );
+			$this->setFeedback(sprintf(tra('Modifed permission %s for %s'), $perm, $groupName));
+		}
 
 		foreach( $objects as $data )
 			foreach( $data['permissions'] as $perm => $v )
@@ -316,6 +319,7 @@ class Tiki_Profile_Installer
 					$userlib->assign_object_permission( $groupName, $data['id'], $data['type'], $perm );
 				else
 					$userlib->remove_object_permission( $groupName, $data['id'], $data['type'], $perm );
+				$this->setFeedback(sprintf(tra('Modifed permission %s on %s/%s for %s'), $perm, $data['type'], $data['id'], $groupName));
 			}
 
 		global $user;
@@ -2147,9 +2151,9 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 				global $user;
 				$customflags = isset($calendar['customflags']) ? $calendar['customflags']  : array();
 				$options = isset($calendar['options']) ? $calendar['options']  : array();
-				$calendarlib->set_calendar(null, $user, $calendar['name'], $calendar['description'], $customflags,$options);
+				$id = $calendarlib->set_calendar(null, $user, $calendar['name'], $calendar['description'], $customflags,$options);
 			}
-			return 1;
+			return $id;
 		}
 	}
 } // }}}
