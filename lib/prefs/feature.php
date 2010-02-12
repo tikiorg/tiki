@@ -385,7 +385,10 @@ function prefs_feature_list() {
 			'name' => tra('Ajax auto-save'),
 			'description' => tra('Ajax auto-save'),
 			'help' => 'Lost+Edit+Protection',
-			'type' => 'flag',
+			'dependencies' => array(
+				'feature_ajax',
+			),
+		'type' => 'flag',
 		),
 		'feature_wiki_save_draft' => array(
 			'name' => tra('Save draft'),
