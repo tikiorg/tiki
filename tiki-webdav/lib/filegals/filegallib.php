@@ -134,6 +134,9 @@ class FileGalLib extends TikiLib
 		global $prefs;
 		$id = (int)$id;
 
+		if ( $id == $prefs['fgal_root_id'] || $galleryId == $prefs['fgal_root_id']) {
+		return false;
+		}
 		if (empty($galleryId)) {
 			$info = $this->get_file_info($id);
 			$galleryId = $info['galleryId'];
@@ -1355,5 +1358,84 @@ class FileGalLib extends TikiLib
 		$fileId = $this->getOne($query, array($archiveId, $archiveId, $date));
 		return $fileId;
 	}
+
+	function get_objectid_from_virtual_path($path, $parentId = -1) {
+		if ( empty($path) || $path[0] != '/' ) return false;
+
+		if ( $path == '/' ) {
+			//      global $prefs;
+			//      return array('type' => 'filegal', 'id' => $prefs['fgal_root_id']);
+			return array('type' => 'filegal', 'id' => -1);
+		}
+
+		$pathParts = explode('/', $path, 3);
+
+		// Path detected as a file
+		if ( count($pathParts) < 3 )
+		{
+			if ( $result = $this->query(
+						'SELECT `fileId` FROM `tiki_files` WHERE `filename`=? AND `galleryId`=?',
+						array( $pathParts[1], (int)$parentId )
+						) )
+			{
+				$res = $result->fetchRow();
+				if ( ! empty($res) ) {
+					return array('type' => 'file', 'id' => $res['fileId']);
+				}
+			}
+		}
+
+		// Path detected as a file gallery
+		//   (or previously detected as a file, but not found, so check if it's not a filegal without a '/' at the end)
+		if ( $result = $this->query(
+					'SELECT `galleryId` FROM `tiki_file_galleries` WHERE `name`=? AND `parentId`=?',
+					array( $pathParts[1], (int)$parentId )
+					) )
+		{
+			$res = $result->fetchRow();
+
+			// as a leaf
+			if ( empty($pathParts[2]) )
+			{
+				return empty($res) ? false : array('type' => 'filegal', 'id' => $res['galleryId']);
+			}
+			// as node
+			else
+			{
+				return $this->get_objectid_from_virtual_path( '/' . $pathParts[2], $res['galleryId'] );
+			}
+		}
+
+		return false;
+	}
+
+	function get_full_virtual_path($id, $type = 'file') {
+		if ( ! $id > 0 ) return false;
+
+		switch( $type ) {
+			case 'filegal':
+				global $prefs;
+				//        if ( $id == $prefs['fgal_root_id'] ) return '/';
+				if ( $id == -1 ) return '/';
+				$query = 'SELECT `name`, `parentId` FROM `tiki_file_galleries` WHERE `galleryId`=?';
+				break;
+
+			case 'file': default:
+				$query = 'SELECT `filename` AS name, `galleryId` AS parentId FROM `tiki_files` WHERE `fileId`=?';
+		}
+
+		$res = false;
+		$result = $this->query($query, array((int)$id));
+		if ( $result ) {
+			$res = $result->fetchRow();
+		}
+		unset($result);
+
+		$parentPath = $this->get_full_virtual_path($res['parentId'], 'filegal');
+
+		return $res ? $parentPath . ( $parentPath == '/' ? '' : '/' ) . $res['name'] : false;
+	}
+
+
 }
 $filegallib = new FileGalLib;
