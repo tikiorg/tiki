@@ -73,8 +73,14 @@ if ($prefs['feature_tabs'] == 'y') {
 		if ($q_match == $ref_match) {	// for admin includes when staying on same panel
 			$cookietab = $_COOKIE['tab'];
 		}
-	} else {
+	}
+	if (empty($cookietab)) {
 		$cookietab = '1';
 	}
 	$smarty->assign('cookietab',$cookietab);
+	
+	// add JS to set up current tab
+	$max_tikitabs = 50;
+	$headerlib->add_jq_onready("tikitabs($cookietab,$max_tikitabs);");
+	
 }
