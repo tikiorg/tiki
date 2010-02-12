@@ -14,6 +14,12 @@ function wikiplugin_datachannel_info()
 				'name' => tra('Channel Name'),
 				'description' => tra('Name of the channel as registered by the administrator.'),
 			),
+			'debug' => array(
+				'required' => false,
+				'name' => tra('debug'),
+				'description' => 'y | n'.tra('Be careful, if debug is on, the page will not be refreshed and previous modules can be obsolete'),
+				'default' => 'n'
+			),
 		),
 	);
 }
@@ -64,15 +70,20 @@ function wikiplugin_datachannel( $data, $params )
 			$profile = reset($profiles);
 
 			$installer->setUserData( $userInput );
+			if (empty($params['debug']) || $params['debug'] != 'y') {
+				$installer->seDebug();
+			}
 			$installer->install( $profile );
 
-			header( 'Location: ' . $_SERVER['REQUEST_URI'] );
-		} else {
-
-			$smarty->assign( 'datachannel_fields', $fields );
-			$smarty->assign( 'datachannel_execution', $executionId );
-
-			return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_datachannel.tpl' ) . '~/np~';
+			if (empty($params['debug']) || $params['debug'] != 'y') {
+				header( 'Location: ' . $_SERVER['REQUEST_URI'] );
+				die;
+			}
+			$smarty->assign('datachannel_feedbacks', $installer->getFeedback());
 		}
+		$smarty->assign( 'datachannel_fields', $fields );
+		$smarty->assign( 'datachannel_execution', $executionId );
+
+		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_datachannel.tpl' ) . '~/np~';
 	}
 }

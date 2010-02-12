@@ -36,6 +36,7 @@ class Tiki_Profile_Installer
 	);
 
 	private $userData = false;
+	private $debug = false;
 	
 	private $feedback = array();	// Let users know what's happened
 
@@ -105,6 +106,11 @@ class Tiki_Profile_Installer
 	function setUserData( $userData ) // {{{
 	{
 		$this->userData = $userData;
+	} // }}}
+
+	function setDebug( ) // {{{
+	{
+		$this->debug = true;
 	} // }}}
 
 	function getInstallOrder( Tiki_Profile $profile ) // {{{
@@ -247,7 +253,7 @@ class Tiki_Profile_Installer
 	private function doInstall( Tiki_Profile $profile ) // {{{
 	{
 		global $tikilib, $prefs;
-		
+
 		$this->setFeedback(tra('Applying profile').': '.$profile->profile);
 
 		$this->installed[$profile->getProfileKey()] = $profile;
