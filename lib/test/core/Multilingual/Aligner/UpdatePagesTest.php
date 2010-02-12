@@ -112,33 +112,32 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$expected_content = $target_modified_array;
 		$expected_content [1] = "Deleted_Source ".$expected_content [1]; 
 
-		$this->removeSentenceAtIndex(1, $expected_content);
+		$this->do_test_basic_updating(
+					$source_lng,$target_lng,
+					$source_original_array,$source_modified_array,
+					$target_original_array, $target_modified_array, 
+					$expected_content, "");
+	}
+	
+	public function test_sentence_deleted_on_target_side_only() {
+		$source_lng = "en";
+		$target_lng = "fr";
+		
+		$source_original_array = $this->orig_source_sentences;
+		$source_modified_array = $this->orig_source_sentences;
+
+		$target_original_array = $this->orig_target_sentences;
+		$target_modified_array = $target_original_array;
+		$target_modified_array = $this->removeSentenceAtIndex(1, $target_modified_array);
+
+		$expected_content = $target_original_array;
+		$expected_content [1] = "Deleted_Target ".$expected_content [1]; 
 
 		$this->do_test_basic_updating(
 					$source_lng,$target_lng,
 					$source_original_array,$source_modified_array,
 					$target_original_array, $target_modified_array, 
 					$expected_content, "");
-
-	}
-	
-	public function ___test_This_is_how_you_DeleteSentencefromTargetside() {
-		$source_lng="en";
-		$target_lng="fr";
-		$source_outofdate="Firefox supports international characters for languages such as Hindi. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
-		$source_modified="Firefox supports international characters for languages such as Hindi. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
-		$target_outofdate="Firefox supporte les caract�res internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.";
-		$target_modified="Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.";
-		$source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
-		$target_alignment="Firefox supporte les caract�res internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.";
-		
-		$source_Mtranslation="This is a test statement.";
-		$target_Mtranslation="C'est une déclaration d'essai.";
-
-		$expected_content = "Deleted_Target Firefox supporte les caract�res internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien. La plupart des sites qui ont besoin de polices suppl�mentaires vont avoir une page qui d�crit o� vous pouvez obtenir la police.";
-
-		$final_updated=$this->do_test_basic_updating($source_alignment,$target_alignment,$source_Mtranslation,$target_Mtranslation,$source_lng,$target_lng,$source_outofdate,$source_modified,$target_outofdate,$target_modified, $expected_content, "");
-		
 	}
 
 	public function do_test_basic_updating(
