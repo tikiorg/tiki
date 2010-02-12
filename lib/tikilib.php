@@ -2271,7 +2271,7 @@ class TikiLib extends TikiDb_Bridge
 		if ( $find ) {
 			$findesc = '%'.$find.'%';
 			$mid = ' (upper(tab.`name`) LIKE upper(?) OR upper(tab.`description`) LIKE upper(?) OR upper(tab.`filename`) LIKE upper(?))';
-			array_push($bindvars, $findesc, $findesc, $findesc);
+			$midvars = array($findesc, $findesc, $findesc);
 		}
 
 		$galleryId_str = '';
@@ -2338,13 +2338,19 @@ class TikiLib extends TikiDb_Bridge
 			} else {
 				$query = "SELECT $select FROM ($g_query $g_group_by) as tab".$join;
 			}
-			if ( $mid != '' ) $query .= ' WHERE'.$mid;
+			if ( $mid != '' ){
+				$query .= ' WHERE'.$mid;
+				$bindvars = array_merge( $bindvars, $midvars );
+			}
 			if ( $orderby != '' ) $orderby = 'tab.'.$orderby;
 
 		} else {
 			$query = $f_query;
 			$bindvars = array_merge( $f_jail_bind, $bindvars );
-			if ( $mid != '' ) $query .= ' AND'.$mid;
+			if ( $mid != '' ) {
+				$query .= ' AND'.$mid;
+				$bindvars = array_merge( $bindvars, $midvars );
+			}
 			$query .= $f_group_by;
 		}
 
