@@ -171,8 +171,10 @@
 {else}
 {$parsed}
 {/if}
-<hr class="hrwikibottom" style="clear:both; height:0px;" /> {* Information below the wiki content
-must not overlap the wiki content that could contain floated elements *}
+
+{* Information below the wiki content must not overlap the wiki 
+	content that could contain floated elements *}
+<hr class="hrwikibottom" />
 
 {if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'top'}
 	<br />

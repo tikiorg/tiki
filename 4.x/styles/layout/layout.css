@@ -895,6 +895,14 @@ div#page-bar {
 	float: left;
 }
 
+/*Information below the wiki content must not overlap the wiki 
+		content that could contain floated elements */
+.hrwikibottom {
+	clear: both;
+	height: 0px;
+	visibility: hidden;
+}
+
 .wiki-edithelp {
 	display: none;
 }
