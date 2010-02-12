@@ -25,14 +25,21 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 	private $source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
 	private $target_alignment="Firefox supporte les caractères internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";	
 
-	private $extra_source_sentence = "This is a test statement.";
-	private $extra_target_sentence = "C'est une déclaration d'essai.";
+	private $extra_source_sentence = "This sentence was added on the source side.";
+	private $mt_extra_source_sentence = "Cette phrase a été ajoutée du côté source.";
 	
+	private $extra_target_sentence = "This sentence was added on the target side.";
+	private $mt_extra_target_sentence = "Cette phrase a été ajoutée du côté source.";
 	
 	protected function setUp()  {
 		$this->updater = new Multilingual_Aligner_UpdatePages();
 		$this->updater->alignments = new Multilingual_Aligner_SentenceAlignments();
 		$this->updater->translator=new Multilingual_Aligner_MockMTWrapper();
+		
+		$this->updater->SetMT(
+							$this->extra_source_sentence."<br/>".$this->mt_extra_target_sentence, 
+							$this->mt_extra_source_sentence."<br/>".$this->extra_target_sentence,
+							'en', 'fr');
 	} 
 
 
@@ -66,7 +73,7 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$target_original_array = $this->orig_target_sentences;
 		$target_modified_array = $target_original_array;
 
-		$expected_content = $this->insertSentenceAtIndex(1, "Added_Source ".$this->extra_target_sentence, $target_modified_array);
+		$expected_content = $this->insertSentenceAtIndex(1, "Added_Source ".$this->mt_extra_source_sentence, $target_modified_array);
 
 		$this->do_test_basic_updating(
 					$source_lng,$target_lng,
@@ -139,6 +146,10 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 					$target_original_array, $target_modified_array, 
 					$expected_content, "");
 	}
+	
+	public function test_sentence_added_in_both_source_and_target () {
+		
+	}
 
 	public function do_test_basic_updating(
 						$source_lng,$target_lng,
@@ -160,7 +171,6 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 
 
 		$this->updater->SetAlignment($this->source_alignment,$this->target_alignment,$source_lng,$target_lng);
-		$this->updater->SetMT($this->extra_source_sentence, $this->extra_target_sentence, $source_lng, $target_lng);
 		$final=$this->updater->UpdatingTargetPage($orig_source,$modified_source,$orig_target,$modified_target,$source_lng,$target_lng);
 
 //		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$final="; var_dump($final); echo "</pre>\n";
