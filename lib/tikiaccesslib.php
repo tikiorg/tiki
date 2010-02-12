@@ -104,6 +104,7 @@ class TikiAccessLib extends TikiLib
 	}
 
 	// check for any one of the permission will be enough
+	// NOTE that you do NOT have to use this to include admin perms, as admin perms automatically inherit the perms they are admin of 
 	function check_permission_either($permissions, $permission_name='') {
 		require_once ('tiki-setup.php');
 		$allowed = false;
