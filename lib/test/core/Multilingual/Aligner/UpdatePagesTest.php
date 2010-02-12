@@ -25,6 +25,7 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 	private $extra_source_sentence = "This is a test statement.";
 	private $extra_target_sentence = "C'est une déclaration d'essai.";
 	
+	
 	protected function setUp()  {
 		$this->updater = new Multilingual_Aligner_UpdatePages();
 		$this->updater->alignments = new Multilingual_Aligner_SentenceAlignments();
@@ -55,15 +56,12 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$source_lng = "en";
 		$target_lng = "fr";
 		
-		$source_outofdate = join('', $this->orig_source_sentences);
-				
+		$source_original_array = $this->orig_source_sentences;
 		$source_modified_array = $this->orig_source_sentences;
 		$source_modified_array = $this->insertSentenceAtIndex(1, $this->extra_source_sentence, $source_modified_array);
-		$source_modified = join('', $source_modified_array);
 
-		$target_outofdate = join('', $this->orig_target_sentences);
-
-		$target_modified = $target_outofdate;
+		$target_original_array = $this->orig_target_sentences;
+		$target_modified_array = $target_original_array;
 
 		$source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
 		$target_alignment="Firefox supporte les caractères internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";
@@ -71,17 +69,14 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$source_Mtranslation=$this->extra_source_sentence;
 		$target_Mtranslation=$this->extra_target_sentence;
 		
+		$expected_content = $this->insertSentenceAtIndex(1, "Added_Source ".$this->extra_target_sentence, $target_modified_array);
 
-		$expected_content = 
-			array(
-				"Firefox supporte les caractères internationaux pour des langues tel que lindien.",
-			 	"Added_Source C'est une déclaration d'essai.",
-			 	"Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.",
-			 	"La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police."
-			 	); 
+		$this->do_test_basic_updating($source_alignment,$target_alignment,
+					$source_lng,$target_lng,
+					$source_original_array,$source_modified_array,
+					$target_original_array, $target_modified_array, 
+					$expected_content, "");
 
-		
-		$final_updated=$this->do_test_basic_updating($source_alignment,$target_alignment,$source_Mtranslation,$target_Mtranslation,$source_lng,$target_lng,$source_outofdate,$source_modified,$target_outofdate,$target_modified, $expected_content, "");
 	}
 
 
@@ -148,34 +143,27 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$final_updated=$this->do_test_basic_updating($source_alignment,$target_alignment,$source_Mtranslation,$target_Mtranslation,$source_lng,$target_lng,$source_outofdate,$source_modified,$target_outofdate,$target_modified, $expected_content, "");
 		
 	}
-	
+
 	public function do_test_basic_updating($source_alignment,$target_alignment,
-						$source_Mtranslation,$target_Mtranslation,$source_lng,$target_lng,
-						$source_outofdate,$source_modified,$target_outofdate,$target_modified,
+						$source_lng,$target_lng,
+						$orig_source_array,$modified_source_array,
+						$orig_target_array,$modified_target_array,
 						$expected_updated_target, $message)
 	{
-//		$source_outofdate = join(' ', $source_outofdate_array);
-//		$source_modified = join(' ', $source_modified_array);			
-//		$target_outofdate = join(' ', $target_outofdate_array);
-//		$target_modified = join(' ', $target_modified_array);
+		$orig_source = join(' ', $orig_source_array);
+		$modified_source = join(' ', $modified_source_array);			
+		$orig_target = join(' ', $orig_target_array);
+		$modified_target = join(' ', $modified_target_array);
 
-//		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$source_outofdate="; var_dump($source_outofdate); echo "</pre>\n";
-//		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$target_outofdate="; var_dump($target_outofdate); echo "</pre>\n";
-//
-//		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$source_modified="; var_dump($source_modified); echo "</pre>\n";
-//		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$target_modified="; var_dump($target_modified); echo "</pre>\n";
 
 		$this->updater->SetAlignment($source_alignment,$target_alignment,$source_lng,$target_lng);
-		$this->updater->SetMT($source_Mtranslation,$target_Mtranslation,$source_lng,$target_lng);
-		$final=$this->updater->UpdatingTargetPage($source_outofdate,$source_modified,$target_outofdate,$target_modified,$source_lng,$target_lng);
+		$this->updater->SetMT($this->extra_source_sentence, $this->extra_target_sentence, $source_lng, $target_lng);
+		$final=$this->updater->UpdatingTargetPage($orig_source,$modified_source,$orig_target,$modified_target,$source_lng,$target_lng);
 
-//		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$final="; var_dump($final); echo "</pre>\n";
-//		echo "<pre>-- UpdatePagesTest.do_test_basic_updating: \$expected_updated_target="; var_dump($expected_updated_target); echo "</pre>\n";
-				
 		$this->assertEquals($expected_updated_target, $final, $message);
-		
-		return $final;
+
 	}
+
 
 	////////////////////////////////////////////////////////////////
 	// Helper functions.
