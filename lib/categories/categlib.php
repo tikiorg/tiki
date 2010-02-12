@@ -862,7 +862,7 @@ class CategLib extends ObjectLib
 			$info = $calendarlib->get_calendar($calendarId);
 
 			$href = 'tiki-calendar.php?calId=' . $calendarId;
-			$catObjectId = $this->add_categorized_object('calendar', $calendarId, $info["description"], $info["calname"], $href);
+			$catObjectId = $this->add_categorized_object('calendar', $calendarId, $info["description"], $info["name"], $href);
 		}
 
 		$this->categorize($catObjectId, $categId);
