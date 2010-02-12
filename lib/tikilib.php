@@ -3273,10 +3273,10 @@ class TikiLib extends TikiDb_Bridge
 
 				// Determine if the article would be displayed in the view page
 				$res["disp_article"] = 'y';
-				if (($res["show_pre_publ"] != 'y') and ($this->now < $res["publishDate"])) {
+				if (($res["show_pre_publ"] != 'y') and ($this->now < $res["publishDate"]) && !$override_dates) {
 					$res["disp_article"] = 'n';
 				}
-				if (($res["show_post_expire"] != 'y') and ($this->now > $res["expireDate"])) {
+				if (($res["show_post_expire"] != 'y') and ($this->now > $res["expireDate"]) && !$override_dates) {
 					$res["disp_article"] = 'n';
 				}
 				$ret[] = $res;
