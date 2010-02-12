@@ -71,7 +71,7 @@ function wikiplugin_datachannel( $data, $params )
 
 			$installer->setUserData( $userInput );
 			if (empty($params['debug']) || $params['debug'] != 'y') {
-				$installer->seDebug();
+				$installer->setDebug();
 			}
 			$installer->install( $profile );
 
@@ -79,7 +79,7 @@ function wikiplugin_datachannel( $data, $params )
 				header( 'Location: ' . $_SERVER['REQUEST_URI'] );
 				die;
 			}
-			$smarty->assign('datachannel_feedbacks', $installer->getFeedback());
+			$smarty->assign('datachannel_feedbacks', array_merge($installer->getFeedback(), $profile->getFeedback()) );
 		}
 		$smarty->assign( 'datachannel_fields', $fields );
 		$smarty->assign( 'datachannel_execution', $executionId );

@@ -19,10 +19,30 @@ class Tiki_Profile
 	public $pageContent = null;
 	private $data = array();
 
+	private $feedback = array();
+
 	private $objects = null;
 
 	private static $known = array();
 	private static $resolvePrefix = null;
+
+	function setFeedback( $feed ) // {{{
+	{
+		if (is_array( $feed )) {
+			$this->feedback = $feed;
+		} else {
+			$this->feedback[] = $feed;
+		}
+	} // }}}
+	function getFeedback( $index = null ) // {{{
+	{
+		if (! is_null( $index ) && $index < count($this->feedback) ) {
+			return $this->feedback[ $index ];
+		} else {
+			return $this->feedback;
+		}
+	} // }}}
+
 
 	public static function convertLists( $data, $conversion, $prependKey = false ) // {{{
 	{
@@ -562,8 +582,10 @@ class Tiki_Profile
 			if( isset( $data['objects'] ) )
 				foreach( $data['objects'] as $o )
 				{
-					if( !isset($o['type'], $o['id']) )
+					if( !isset($o['type'], $o['id']) ) {
+						$this->setFeedback(tra('Syntax error: ').tra("Permissions' object must have a field 'type' and 'id'"));
 						continue;
+					}
 
 					$perms = Tiki_Profile::convertLists( $o, array( 'allow' => 'y', 'deny' => 'n' ), 'tiki_p_' );
 					$perms = Tiki_Profile::convertYesNo( $perms );
