@@ -2791,6 +2791,10 @@ div.minichatdiv {
 	padding: 4px;
 }
 
+.hrwikibottom {
+	  visibility: hidden;
+}
+
 p.editdate {
 	border-top: 1px solid #8CACBB;
 	font-size: 0.9em;
