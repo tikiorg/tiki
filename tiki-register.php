@@ -14,7 +14,12 @@ if ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && !em
 	header("location: index.php");
 	die;
 }
-$access->check_user($user);
+// NOTE that this is not a standard access check, it checks for the opposite of that, i.e. whether logged in already
+if (!empty($user)) {
+	$smarty->assign('msg', tra('You are already logged in'));
+	$smarty->display('error.tpl');
+	die;
+}
 $smarty->assign('showmsg', 'n');
 // novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
 if (!isset($_REQUEST['novalidation'])) {
