@@ -10,18 +10,17 @@
 //include_once "lib/test/TikiTestCase.php";
 class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 {
-
-	private $in_sync_source_sentences =
+	private $orig_source_sentences =
 				array(
 					"Firefox supports international characters for languages such as Hindi.",
 					"You can test your Firefoxs support of Hindi scripts at BBC Hindi.",
-					"Most sites that require additional fonts will have a page describing where you can get the font."
+					"Most sites that require additional fonts will have a page describing where you can get the font.",
 				);
-	private $in_sync_target_sentences =
+	private $orig_target_sentences =
 			array(
-				"Firefox supporte les caractères internationaux pour des langues tel que l'indien.",
-			 	"Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.",
-			 	"La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police."
+				"Firefox supporte les caractères internationaux pour des langues tel que lindien.",
+				"Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.",
+				"La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police."
 			 	); 
 	private $extra_source_sentence = "This is an extra sentence.";
 	private $extra_target_sentence = "C'est une phrase extra.";
@@ -53,17 +52,22 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 	////////////////////////////////////////////////////////////////
 	 
 	public function test_This_is_how_you_AddSentenceintoSourceside() {
+
+	// OLD WAY
+
 		$source_lng = "en";
 		$target_lng = "fr";
-		$source_outofdate="Firefox supports international characters for languages such as Hindi. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
+		
+		$source_outofdate = join('', $this->orig_source_sentences);
+				
 		$source_modified="Firefox supports international characters for languages such as Hindi.This is a test statement. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
-		$target_outofdate="Firefox supporte les caractères internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";
-		$target_modified="Firefox supporte les caractères internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";
+//		$source_modified_array = $this->orig_source_sentences;
+//		$source_modified_array = $this->insertSentenceAtIndex(1, $this->extra_source_sentence, $source_modified_array);
+//		$source_modified = join('', $source_modified_array);
 
-//		$source_outofdate = $this->in_sync_source_sentences;
-//		$target_outofdate = $this->in_sync_target_sentences;
-//		$source_modified = $this->insertSentenceAtIndex(1, $this->extra_source_sentence, $source_outofdate);
-//		$target_modified = $target_outofdate;
+		$target_outofdate = join('', $this->orig_target_sentences);
+
+		$target_modified = $target_outofdate;
 
 		$source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
 		$target_alignment="Firefox supporte les caractères internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";
@@ -82,7 +86,6 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 
 		
 		$final_updated=$this->do_test_basic_updating($source_alignment,$target_alignment,$source_Mtranslation,$target_Mtranslation,$source_lng,$target_lng,$source_outofdate,$source_modified,$target_outofdate,$target_modified, $expected_content, "");
-
 	}
 
 
