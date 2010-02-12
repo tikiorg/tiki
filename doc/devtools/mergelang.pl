@@ -1,9 +1,14 @@
 #!/usr/bin/perl
+# (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+# 
+# All Rights Reserved. See copyright.txt for details and a complete list of authors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+# $Id$
+
 # A problem with having to maintain translations of several versions of tiki is that the same strings
 # have the same translation, but is not desirable to change twice the same strings
 # This utility takes the translations for the old version, and if the string is in the new translation file
 # it puts the old translation there.
-
 
 if ($#ARGV==1) {
 	$fileold=$ARGV[0];
