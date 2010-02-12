@@ -1440,7 +1440,7 @@ class TikiLib extends TikiDb_Bridge
 	/*shared*/
 	function get_user_groups($user) {
 		global $prefs, $userlib;
-		if (!$user) {
+		if (empty($user) || $user === 'Anonymous') {
 			$ret = array();
 			$ret[] = "Anonymous";
 			return $ret;
@@ -2303,7 +2303,7 @@ class TikiLib extends TikiDb_Bridge
 
 			// If $user is admin then get ALL galleries, if not only user galleries are shown
 			// If the user is not admin then select it's own galleries or public galleries
-			if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && ! $parentId ) {
+			if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && empty($parentId) ) {
 				$g_mid = " AND (tfg.`user`=? OR tfg.`visible`='y' OR tfg.`public`='y')";
 				$bindvars[] = $my_user;
 			}
@@ -2360,7 +2360,6 @@ class TikiLib extends TikiDb_Bridge
 			$query .= ' ORDER BY '.$orderby;
 		}
 		$result = $this->fetchAll($query, $bindvars);
-
 		$ret = array();
 		$gal_size_order = array();
 		$cant = 0;
@@ -2386,8 +2385,8 @@ class TikiLib extends TikiDb_Bridge
 			}
 			// Don't return the current item, if :
 			//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
-			if ( $res['perms']['tiki_p_view_file_gallery'] != 'y'
-					&& ( $res['isgal'] == 0 || $res['perms']['tiki_p_list_file_gallery'] != 'y' )
+			if ( ( $res['perms']['tiki_p_view_file_gallery'] != 'y' && ! $this->user_has_perm_on_object($user,$res['id'], $object_type, 'tiki_p_view_file_gallery') )
+					&& ( $res['isgal'] == 0 || ( $res['perms']['tiki_p_list_file_gallery'] != 'y' && ! $this->user_has_perm_on_object($user,$res['id'], $object_type, 'tiki_p_list_file_gallery') ) ) 
 				 ) {
 				continue;
 			}
@@ -4241,9 +4240,7 @@ class TikiLib extends TikiDb_Bridge
 	// if O.K. this function shall replace similar constructs in list_pages and other functions above.
 	// $categperm is the category permission that should grant $perm. if none, pass 0
 	function user_has_perm_on_object($user,$object,$objtype,$perm) {
-		global $userlib;
-		$groups = $userlib->get_user_groups( $user );
-
+		$groups = $this->get_user_groups( $user );
 		$context = array( 'type' => $objtype, 'object' => $object );
 
 		$accessor = Perms::get( $context );
