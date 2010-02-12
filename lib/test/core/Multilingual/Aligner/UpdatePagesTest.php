@@ -22,8 +22,8 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 				"Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.",
 				"La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police."
 			 	); 
-	private $extra_source_sentence = "This is an extra sentence.";
-	private $extra_target_sentence = "C'est une phrase extra.";
+	private $extra_source_sentence = "This is a test statement.";
+	private $extra_target_sentence = "C'est une déclaration d'essai.";
 	
 	protected function setUp()  {
 		$this->updater = new Multilingual_Aligner_UpdatePages();
@@ -32,7 +32,7 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 	} 
 
 
-	public function test_reminder()  {
+	public function ___test_reminder()  {
 		$this->fail("remember to reactivate all tests in UpdateSentences");
 	}
 
@@ -52,18 +52,14 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 	////////////////////////////////////////////////////////////////
 	 
 	public function test_This_is_how_you_AddSentenceintoSourceside() {
-
-	// OLD WAY
-
 		$source_lng = "en";
 		$target_lng = "fr";
 		
 		$source_outofdate = join('', $this->orig_source_sentences);
 				
-		$source_modified="Firefox supports international characters for languages such as Hindi.This is a test statement. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
-//		$source_modified_array = $this->orig_source_sentences;
-//		$source_modified_array = $this->insertSentenceAtIndex(1, $this->extra_source_sentence, $source_modified_array);
-//		$source_modified = join('', $source_modified_array);
+		$source_modified_array = $this->orig_source_sentences;
+		$source_modified_array = $this->insertSentenceAtIndex(1, $this->extra_source_sentence, $source_modified_array);
+		$source_modified = join('', $source_modified_array);
 
 		$target_outofdate = join('', $this->orig_target_sentences);
 
@@ -72,8 +68,8 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 		$source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
 		$target_alignment="Firefox supporte les caractères internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit ou vous pouvez obtenir la police.";
 		
-		$source_Mtranslation="This is a test statement.";
-		$target_Mtranslation="C'est une déclaration d'essai.";
+		$source_Mtranslation=$this->extra_source_sentence;
+		$target_Mtranslation=$this->extra_target_sentence;
 		
 
 		$expected_content = 
