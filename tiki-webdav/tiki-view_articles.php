@@ -1,8 +1,10 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
@@ -16,7 +18,7 @@ if ($prefs['feature_categories'] == 'y') {
 $commentslib = new Comments($dbTiki);
 
 $access->check_feature('feature_articles');
-$access->check_permission( array('tiki_p_read_article', 'tiki_p_articles_read_heading') );
+$access->check_permission_either( array('tiki_p_read_article', 'tiki_p_articles_read_heading') );
 
 if (isset($_REQUEST["remove"])) {
 	$access->check_permission('tiki_p_remove_article');

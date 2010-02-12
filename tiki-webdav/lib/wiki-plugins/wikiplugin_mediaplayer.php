@@ -5,30 +5,82 @@ function wikiplugin_mediaplayer_help() {
 }
 function wikiplugin_mediaplayer_info() {
 	return array(
-				 'name' => tra('Mediaplayer'),
-				 'documentation' => 'PluginMediaplayer',
-				 'description' => 'Simple mp3 or flv Player',
-				 'extraparams' =>true,
-				 'prefs' => array( 'wikiplugin_mediaplayer' ),
-				 'params' => array(
-								   'mp3' => array(
-												  'required' => false,
-												  'name'=> tra('MP3 URL'),
-												  'description' => tra('Complete URL to the mp3 to include.'),
-												  ),
-								   'flv' => array(
-												  'required' => false,
-												  'name'=> tra('FLV URL'),
-												  'description' => tra('Complete URL to the flv to include.'),
-												  ),
-								   'style' => array(
-													'required' => false,
-													'name' => tra('Style'),
-													'description' => tra('One of:').'mini|normal|maxi|multi',
-													),
-
-								   ),
-				 );
+		'name' => tra('Mediaplayer'),
+		'documentation' => 'PluginMediaplayer',
+		'description' => 'Simple mp3 or flv Player',
+		'extraparams' =>true,
+		'prefs' => array( 'wikiplugin_mediaplayer' ),
+		'params' => array(
+			'fullscreen' => array(
+				'required' => false,
+				'name' => tra('Allow Fullscreen'),
+				'description' => tra('Allow fullscreen mode.').' true|false',
+				'filter' => 'alpha',
+				'options' => array(
+					array(
+						'text' => tra('Yes'),
+						'value' => 'true'
+					),
+					array(
+						'text' => tra('No'),
+						'value' => 'false'
+					)
+				)
+			),
+			'mp3' => array(
+				'required' => false,
+				'name'=> tra('MP3 URL'),
+				'description' => tra('Complete URL to the mp3 to include.'),
+				'filter' => 'url'
+			),
+			'flv' => array(
+				'required' => false,
+				'name'=> tra('FLV URL'),
+				'description' => tra('Complete URL to the flv to include.'),
+				'filter' => 'url'
+			),
+			'style' => array(
+				'required' => false,
+				'name' => tra('Style'),
+				'description' => tra('One of:').'mini|normal|maxi|multi',
+				'filter' => 'alpha',
+				'options' => array(
+					array(
+						'text' => 'mini', 'value' => 'mini'
+					),
+					array(
+						'text' => 'normal', 'value' => 'normal'
+					),
+					array(
+						'text' => 'maxi', 'value' => 'maxi'
+					),
+					array(
+						'text' => 'multi', 'value' => 'multi'
+					)
+				)
+			),
+			'wmode' => array(
+				'required' => false,
+				'name' => tra('Flash Window Mode'),
+				'description' => tra('Sets the Window Mode property of the Flash movie for transparency, layering, and positioning in the browser. Default value: ').'transparent',
+				'filter' => 'alpha',
+				'options' => array(
+					array(
+						'text' => 'transparent'.tra(' - show background through and allow to be covered'),
+						'value' => 'transparent'
+					),
+					array(
+						'text' => 'opaque'.tra(' - hide everything behind'),
+						'value' => 'opaque'
+					),
+					array(
+						'text' => 'window'.tra(' - play movie in its own rectangular window on a web page'),
+						'value' => 'window'
+					)
+				)
+			),
+		),
+	);
 }
 function wikiplugin_mediaplayer($data, $params) {
 	if (empty($params['mp3']) && empty($params['flv'])) {
@@ -59,13 +111,26 @@ function wikiplugin_mediaplayer($data, $params) {
 	}
 	$code = '<object type="application/x-shockwave-flash" data="'.$params['where'].$player.'" width="'.$params['width'].'" height="'.$params['height'].'">';
 	$code .= '<param name="movie" value="'.$params['where'].$player.'" />';
-	if (empty($params['flv']) && !empty($params['mp3'])) 
-		$code .= '<param name="FlashVars" value="mp3='.$params['mp3'].'" />';
-	unset($params['width']); unset($params['height']); unset($params['where']); unset($params['player']);unset($params['mp3']); unset($params['style']);
-	foreach ($params as $key=>$value) {
-		$code .= '<param name="FlashVars" value="'.$key.'='.$value.'" />';
+	if (!empty($params['fullscreen'])) {
+		$code .= '<param name="allowFullscreen" value="'.$params['fullscreen'].'" />';
 	}
-	$code .= '</object>';
+	if (empty($params['wmode'])) {
+		$wmode = 'transparent';
+	} else {
+		$wmode = $params['wmode'];
+	}
+	$code .= '<param name="wmode" value="'.$wmode.'" />';
+	$code .= '<param name="FlashVars" value="';
+	if (empty($params['flv']) && !empty($params['mp3'])) 
+		$code .= 'mp3='.$params['mp3'];
 	
+	unset($params['width']); unset($params['height']); unset($params['where']); unset($params['player']);unset($params['mp3']); unset($params['style']); unset($params['fullscreen']); unset($params['wmode']);
+	
+	foreach ($params as $key=>$value) {
+		$code .= '&amp;'.$key.'='.$value;
+	}
+	$code .= '" />';
+	$code .= '</object>';
+
 	return "~np~$code~/np~";
 }

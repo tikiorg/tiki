@@ -55,7 +55,7 @@ class SearchLib extends TikiLib
 **/
 	function _find($h, $words = '', $offset = 0, $maxRecords = -1
 		, $fulltext = false, $filter='', $boolean='n'
-		, $type='Tiki', $searchDate = 0
+		, $type='Tiki', $searchDate = 0, $categId = 0
 	) {
 		global $tiki_p_admin, $prefs, $userlib, $user, $categlib;
 		    
@@ -76,7 +76,12 @@ class SearchLib extends TikiLib
 		$bindJoin = array();
 		$bindHaving = array();
 
-		if( $jail = $categlib->get_jail() ) {
+		if ( $categId ) {
+			$jail = $categId;
+		} else {
+			$jail = $categlib->get_jail();
+		}
+		if( $jail ) {
 			$categlib->getSqlJoin( $jail, $h['objectType'], $h['objectKey'], $sqlCategJoin, $sqlCategWhere, $bindCateg );
 		}
 
@@ -197,7 +202,7 @@ class SearchLib extends TikiLib
 		if (!$cant && $boolean != 'y') { // no result
 		
 			if ($fulltext && $words) { // try a simple search
-			    return $this->_find($h, $words, $offset, $maxRecords, false, $filter, $boolean, $type, $searchDate);
+			    return $this->_find($h, $words, $offset, $maxRecords, false, $filter, $boolean, $type, $searchDate, $categId);
 			} else {
 
 				return array(
@@ -274,7 +279,7 @@ class SearchLib extends TikiLib
 		);
 	}
 
-	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $lang='')
+	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $lang='', $categId = 0)
 	{
 		global $tikilib, $prefs;
 		$rv = array();
@@ -297,7 +302,7 @@ class SearchLib extends TikiLib
 			$search_wikis_comments['filter'] .= " AND p.`lang`='$lang'";
 		}
 		$search_wikis_comments['href'] = $prefs['feature_sefurl'] == 'y'? '%s#comments': 'tiki-index.php?page=%s#comments';
-		$rv = $this->_find($search_wikis_comments, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Wiki Comment'), $searchDate);
+		$rv = $this->_find($search_wikis_comments, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Wiki Comment'), $searchDate, $categId);
 
 		static $search_wikis = array(
 			'from' => '`tiki_pages` p',
@@ -325,10 +330,10 @@ class SearchLib extends TikiLib
 		// that pagerank re-calculation was speed handicap (timex30)
 		//$this->pageRank();
 		if (!$rv['cant'])
-			$data = $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Wiki'), $searchDate);
+			$data = $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Wiki'), $searchDate, $categId);
 		else {
 			$data = array();
-			$data = $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Wiki'), $searchDate);
+			$data = $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Wiki'), $searchDate, $categId);
 			if (!$data['cant'])
 				return $rv;
 			// merge
@@ -348,7 +353,7 @@ class SearchLib extends TikiLib
 		return ($a['relevance'] > $b['relevance']) ? -1 : (($a['relevance'] < $b['relevance']) ? 1 : 0);
 	}
 
-	function find_calendars($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_calendars($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		static $search_calendar = array(
 			'from' => '`tiki_calendar_items` c',
@@ -368,10 +373,10 @@ class SearchLib extends TikiLib
 			'parentJoin' => 'LEFT JOIN `tiki_calendars` tc ON tc.`calendarId` = c.`calendarId`',
 		);
 
-		return $this->_find($search_calendar, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Calendar item'), $searchDate);
+		return $this->_find($search_calendar, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Calendar item'), $searchDate, $categId);
 	}
 
-	function find_galleries($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_galleries($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		static $search_galleries = array(
 			'from' => '`tiki_galleries` g',
@@ -389,10 +394,10 @@ class SearchLib extends TikiLib
 			'objectKey' => '`galleryId`',
 		);
 
-		return $this->_find($search_galleries, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Gallery'), $searchDate);
+		return $this->_find($search_galleries, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Gallery'), $searchDate, $categId);
 	}
 
-	function find_faqs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_faqs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		$search_faqs = array(
 			'from' => '`tiki_faq_questions` q, `tiki_faqs` f',
@@ -410,10 +415,10 @@ class SearchLib extends TikiLib
 			'objectKey' => 'f.`faqId`',
 		);
 
-		return $this->_find($search_faqs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('FAQ'), $searchDate);
+		return $this->_find($search_faqs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('FAQ'), $searchDate, $categId);
 	}
 
-	function find_directory($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_directory($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		static $search_directory = array(
 			'from' => '`tiki_directory_sites` d',
@@ -434,10 +439,10 @@ class SearchLib extends TikiLib
 			$search_directory['filter'] =  "d.`isValid` = 'y'";
 		}
 
-		return $this->_find($search_directory, $words, $offset, $maxRecords, $fulltext, $filter, $boolean,tra('Directory'), $searchDate);
+		return $this->_find($search_directory, $words, $offset, $maxRecords, $fulltext, $filter, $boolean,tra('Directory'), $searchDate, $categId);
 	}
 
-	function find_images($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_images($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		static $search_images = array(
 			'from' => '`tiki_images` i',
@@ -456,10 +461,10 @@ class SearchLib extends TikiLib
 			
 		);
 
- 		return $this->_find($search_images, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Image'), $searchDate);
+ 		return $this->_find($search_images, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Image'), $searchDate, $categId);
 	}
 
-	function find_forums($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_forums($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		$search_forums = array(
 			'from' => '`tiki_comments` c, `tiki_forums` f',
@@ -482,7 +487,7 @@ class SearchLib extends TikiLib
 			$search_forums['filter'] .= ' AND f.forumId='.$filter['forumId'];
 		}
 
-		return $this->_find($search_forums, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Forum'), $searchDate);
+		return $this->_find($search_forums, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Forum'), $searchDate, $categId);
 	}
 
 	function find_files($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
@@ -509,7 +514,7 @@ class SearchLib extends TikiLib
 		return $this->_find($search_files, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('File Gallery'), $searchDate);
 	}
 
-	function find_blogs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_blogs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		static $search_blogs = array(
 			'from' => '`tiki_blogs` b',
@@ -527,7 +532,7 @@ class SearchLib extends TikiLib
 			'objectType' => 'blog',
 			'objectKey' => '`blogId`',
 		);
-		$res = $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog'), $searchDate);
+		$res = $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog'), $searchDate, $categId);
 		global $user, $smarty;
 		include_once('tiki-sefurl.php');
 		foreach ($res['data'] as $i=>$r) {
@@ -537,7 +542,7 @@ class SearchLib extends TikiLib
 		return $res;
 	}
 
-	function find_articles($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_articles($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		static $search_articles = array(
 			'from' => '`tiki_articles` a',
@@ -554,7 +559,7 @@ class SearchLib extends TikiLib
 			'objectKey'=>'`articleId`'
 		);
 
-		$res = $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Article'), $searchDate);
+		$res = $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Article'), $searchDate, $categId);
 		$ret = array('cant'=>$res['cant'], 'data'=>array());
 		global $user, $smarty;
 		include_once('tiki-sefurl.php');
@@ -571,7 +576,7 @@ class SearchLib extends TikiLib
 		return $ret;
 	}
 
-	function find_posts($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_posts($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 	  global $user;
 
@@ -599,10 +604,10 @@ class SearchLib extends TikiLib
 			'objectKey' => 'b.`blogId`',
 		);
 
-		return $this->_find($search_posts, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog post'), $searchDate);
+		return $this->_find($search_posts, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog post'), $searchDate, $categId);
 	}
 
-	function find_trackers($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_trackers($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		global $trklib; require_once('lib/trackers/trackerlib.php');
 		global $tiki_p_view_trackers_pending; global $tiki_p_view_trackers_closed;
@@ -628,7 +633,7 @@ class SearchLib extends TikiLib
 			$search_trackers['filter'] .= " AND tti.`status` != 'c'";
 		if ($tiki_p_view_trackers_pending != 'y')
 			$search_trackers['filter'] .= " AND tti.`status` != 'p'";
-		$ret = $this->_find($search_trackers, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Tracker item'), $searchDate);
+		$ret = $this->_find($search_trackers, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Tracker item'), $searchDate, $categId);
 		$retFinal = array();
 		$itemFinal = array();
 		foreach ($ret['data'] as $i=>$res) {
@@ -644,7 +649,7 @@ class SearchLib extends TikiLib
 		return array('cant'=> count($retFinal), 'data'=> $retFinal);
 	}
 
-	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
 	{
 		$data = array();
 
@@ -653,70 +658,70 @@ class SearchLib extends TikiLib
 		global $prefs, $tiki_p_view_directory, $tiki_p_read_article, $tiki_p_view_faqs, $tiki_p_view_trackers;
 		
 		if ($prefs['feature_wiki'] == 'y') {
-			$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, '', $categId);
 		
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
 		}
 		
 		if ($prefs['feature_galleries'] == 'y') {
-			$rv = $this->find_galleries($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_galleries($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
 		}
 		
 		if ($prefs['feature_faqs'] == 'y' && $tiki_p_view_faqs == 'y') {
-			$rv = $this->find_faqs($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_faqs($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
 		}
 		
 		if ($prefs['feature_galleries'] == 'y') {
-			$rv = $this->find_images($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_images($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
 		}
 		
 		if ($prefs['feature_forums'] == 'y') {
-			$rv = $this->find_forums($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_forums($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
 		}
 		
 		if ($prefs['feature_file_galleries'] == 'y') {
-			$rv = $this->find_files($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_files($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
 		}
 		
 		if ($prefs['feature_blogs'] =='y') {
-			$rv = $this->find_blogs($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_blogs($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
 		}
 		
 		if ($prefs['feature_articles'] == 'y' && $tiki_p_read_article == 'y') {
-			$rv = $this->find_articles($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_articles($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
 		}
 		
 		if ($prefs['feature_blogs'] == 'y') {
-			$rv = $this->find_posts($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_posts($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
 		}
 
 		if ($prefs['feature_directory'] == 'y' && $tiki_p_view_directory == 'y') {
-			$rv = $this->find_directory($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_directory($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			foreach ($rv['data'] as $a) {
 				$a['relevance'] *= 0.7; // decrease artifically the relevance because as description is shorter than a wiki data, a directory is returned before wiki page
@@ -726,7 +731,7 @@ class SearchLib extends TikiLib
 		}
 
 		if ($prefs['feature_trackers'] == 'y' && $tiki_p_view_trackers == 'y') {
-			$rv = $this->find_trackers($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_trackers($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
@@ -734,7 +739,7 @@ class SearchLib extends TikiLib
 
 		global $tiki_p_view_events, $tiki_p_view_calendar;		
 		if ($prefs['feature_calendar'] == 'y' && ($tiki_p_view_events == 'y' or $tiki_p_view_calendar == 'y') ) {
-			$rv = $this->find_calendars($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate);
+			$rv = $this->find_calendars($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];

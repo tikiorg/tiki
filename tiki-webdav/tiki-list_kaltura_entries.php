@@ -1,11 +1,13 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 require_once ('tiki-setup.php');
 $access->check_feature('feature_kaltura');
-$access->check_permission(array('tiki_p_list_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+$access->check_permission(array('tiki_p_list_videos'));
 
 include_once ("lib/videogals/KalturaClient_v3.php");
 
@@ -65,7 +67,7 @@ $entryType = $_REQUEST['list'];
 switch($_REQUEST['action']){
 	
 	case 'Create Remix':
-		$access->check_permission(array('tiki_p_remix_videos','tiki_p_admin_kaltura','tiki_p_admin'));	
+		$access->check_permission(array('tiki_p_remix_videos'));	
 		if($kentryType == "media"){
 			$kentry = $kclient->media->get($videoId[0]);
 			$kmixEntry = new KalturaMixEntry();
@@ -81,7 +83,7 @@ switch($_REQUEST['action']){
 		break;
 		
 	case 'Delete':
-		$access->check_permission(array('tiki_p_delete_videos','tiki_p_admin_kaltura','tiki_p_admin'));
+		$access->check_permission(array('tiki_p_delete_videos'));
 		$area = 'delkalturaentry';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);

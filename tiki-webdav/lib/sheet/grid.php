@@ -128,6 +128,7 @@ class TikiSheet
 	 */
 	var $headerRow;
 	var $footerRow;
+	var $parseValues;
 	var $cssName;
 
 	/**
@@ -181,6 +182,7 @@ class TikiSheet
 
 		$this->headerRow = 0;
 		$this->footerRow = 0;
+		$this->parseValues = 'n';
 		$this->className = '';
 	}
 	
@@ -195,12 +197,15 @@ class TikiSheet
 	 *						as part of the header.
 	 * @param $footerRow	The amount of rows that are considered
 	 *						as part of the footer.
+	 * @param $parseValues	Parse cell values as wiki text if ='y'
+	 * 						when using output handler
 	 */
-	function configureLayout( $className, $headerRow = 0, $footerRow = 0 )
+	function configureLayout( $className, $headerRow = 0, $footerRow = 0, $parseValues = 'n' )
 	{
 		$this->cssName = $className;
 		$this->headerRow = $headerRow;
 		$this->footerRow = $footerRow;
+		$this->parseValues = $parseValues;
 	}
 	
 	/** getColumnIndex {{{2
@@ -1203,12 +1208,12 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		}
 
 		// Fetching the layout informations.
-		$result2 = $tikilib->query( "SELECT `className`, `headerRow`, `footerRow` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result2 = $tikilib->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		if( $row = $result2->fetchRow() )
 		{
 			extract( $row );
-			$sheet->configureLayout( $className, $headerRow, $footerRow );
+			$sheet->configureLayout( $className, $headerRow, $footerRow, $parseValues );
 		}
 
 		return true;
@@ -1610,14 +1615,17 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 class TikiSheetOutputHandler extends TikiSheetDataHandler
 {
 	var $heading;
+	var $parseOutput;
 	
 	/** Constructor {{{2
 	 * Identifies the caption of the table if it applies.
-	 * @param $heading The heading
+	 * @param $heading 			The heading
+	 * @param $parseOutput		Parse wiki markup in cells if parseValues=y in sheet layout
 	 */
-	function TikiSheetOutputHandler( $heading = null )
+	function TikiSheetOutputHandler( $heading = null, $parseOutput = true )
 	{
 		$this->heading = $heading;
+		$this->parseOutput = $parseOutput;
 	}
 	
 	// _save {{{2
@@ -1696,6 +1704,11 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				$format = $sheet->cellInfo[$i][$j]['format'];
 				if( !empty( $format ) )
 					$data = TikiSheetDataFormat::$format( $data );
+				
+				if ($this->parseOutput && $sheet->parseValues == 'y') {
+					global $tikilib;
+					$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+				}
 				echo "			<td$append>$data</td>\n";
 			}
 			
@@ -1837,40 +1850,30 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 //		$parser = new PEAR_XMLParser();
 //		$parser->parse('<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>'.$this->data.'</body>/head>');
 //		$res = $parser->getData();
-		
-		preg_match_all('/<TD.*\/TD>/Umis', $this->data, $cells);
-		
-		foreach( $cells[0] as $cell ) {
-			preg_match('/id="(.*?)"/i', $cell, $id);
-			preg_match('/formula="(.*?)"/i', $cell, $formula);
-			preg_match('/<TD.*>(.*)<\/TD>/i', $cell, $val);
-			
-			if (count($id) > 1) {
-				preg_match_all('/_[cr](\d+)/', $id[1], $rc);
-				if (count($rc > 1)) {
-					$col = $rc[1][0];
-					$row = $rc[1][1];
-				}
-			}
-			
-			if ($row && $col) {
-				$val = count($val) > 1 ? $val[1] : '';
 
-				$sheet->initCell( $row-1, $col-1 );
+		$d = json_decode($this->data);
+		
+		$rows = (int) $d->metadata->rows;
+		$cols = (int) $d->metadata->columns;
+		
+		for ($r = 1; $r <= $rows; $r++) {
+			for ($c = 1; $c <= $cols; $c++) {
+				$ri = 'r'.$r;
+				$ci = 'c'.$c;
+				$val = $d->data->$ri->$ci;
+				
+				$sheet->initCell( $r-1, $c-1 );
 				$sheet->setValue( $val );
 				$sheet->setSize( 1, 1 );
-				if (count($formula) > 1) {
-					if (substr($formula[1], 0, 1) == '=') {
-						$formula[1] = substr($formula[1], 1, strlen($formula[1])-1);
-					}
-					if (!empty($formula[1])) {
-						$sheet->setCalculation($formula[1]);
+				if (substr($val, 0, 1) == '=') {
+					$val = substr($val, 1, strlen($val)-1);
+					if (!empty($val)) {
+						$sheet->setCalculation($val);
 					}
 				}
 			}
 		}
-
-
+		
 		return true;
 	}
 
@@ -1907,7 +1910,7 @@ class SheetLib extends TikiLib
 
 	function get_sheet_layout( $sheetId ) // {{{2
 	{
-		$result = $this->query( "SELECT `className`, `headerRow`, `footerRow` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND `end` IS NULL", array( $sheetId ) );
+		$result = $this->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND `end` IS NULL", array( $sheetId ) );
 
 		return $result->fetchRow();
 	}
@@ -2000,13 +2003,14 @@ class SheetLib extends TikiLib
 		return $sheetId;
 	}
 
-	function replace_layout( $sheetId, $className, $headerRow, $footerRow ) // {{{2
+	function replace_layout( $sheetId, $className, $headerRow, $footerRow, $parseValues = 'n' ) // {{{2
 	{
 		if( $row = $this->get_sheet_layout( $sheetId ) )
 		{
 			if( $row[ 'className' ] == $className
 			 && $row[ 'headerRow' ] == $headerRow
-			 && $row[ 'footerRow' ] == $footerRow )
+			 && $row[ 'footerRow' ] == $footerRow
+			 && $row[ 'parseValues' ] == $parseValues )
 				return true; // No changes have to be made
 		}
 
@@ -2017,7 +2021,8 @@ class SheetLib extends TikiLib
 		$stamp = time();
 
 		$this->query( "UPDATE `tiki_sheet_layout` SET `end` = ? WHERE sheetId = ? AND `end` IS NULL", array( $stamp, $sheetId ) );
-		$this->query( "INSERT INTO `tiki_sheet_layout` ( `sheetId`, `begin`, `className`, `headerRow`, `footerRow` ) VALUES( ?, ?, ?, ?, ? )", array( $sheetId, $stamp, $className, (int)$headerRow, (int)$footerRow ) );
+		$this->query( "INSERT INTO `tiki_sheet_layout` ( `sheetId`, `begin`, `className`, `headerRow`, `footerRow`, `parseValues` ) VALUES( ?, ?, ?, ?, ?, ? )",
+												array( $sheetId, $stamp, $className, (int)$headerRow, (int)$footerRow, $parseValues ) );
 
 		return true;
 	}

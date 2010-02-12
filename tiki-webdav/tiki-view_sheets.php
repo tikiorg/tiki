@@ -1,19 +1,35 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
-// Based on tiki-galleries.php
+
 $section = 'sheet';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 $auto_query_args = array(
 	'sheetId',
 	'readdate',
-	'mode'
+	'mode',
+	'parse'
 );
 $access->check_feature('feature_sheet');
+
+/**
+ * Write the sheet out to the smarty var
+ * 
+ * @return void
+ */
+function outputGrid() {
+	global $grid, $handler, $smarty;
+	
+	$handler = & new TikiSheetOutputHandler(null, ($grid->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
+	ob_start();
+	$grid->export($handler);
+	$smarty->assign('grid_content', ob_get_contents());
+	ob_end_clean();
+}
 
 if (!isset($_REQUEST['sheetId'])) {
 	$smarty->assign('msg', tra("A SheetId is required."));
@@ -25,6 +41,12 @@ if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_pe
 	$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
 	$smarty->display("error.tpl");
 	die;
+}
+if (!isset($_REQUEST['parse'])) {
+	$_REQUEST['parse'] = 'y';
+} else if ($_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
+	$_REQUEST['parse'] = 'n';
+	$headerlib->add_jq_onready('$jq("#edit_button").click();', 500);
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
@@ -69,11 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// Load the layout settings from the database
 	$grid = & new TikiSheet;
 	$grid->import($handler);
-	$handler = & new TikiSheetOutputHandler;
-	ob_start();
-	$grid->export($handler);
-	$smarty->assign('grid_content', ob_get_contents());
-	ob_end_clean();
+	outputGrid();
 } else {
 	$handler = & new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	$date = time();
@@ -97,22 +115,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			include_once ('contribution.php');
 		}
 	} else {
-		$handler = & new TikiSheetOutputHandler;
-		ob_start();
-		$grid->export($handler);
-		$smarty->assign('grid_content', ob_get_contents());
-		ob_end_clean();
+		outputGrid();
 	}
 }
 if ($prefs['feature_jquery_sheet'] == 'y') {
-	$headerlib->add_jq_onready('
+	// need to be in non-parsed mode to edit the sheet
+	if ($grid->parseValues == 'y' && $_REQUEST['parse'] == 'y') {
+		$smarty->assign('editReload', true);
+	} else {
+		$smarty->assign('editReload', false);
+		$headerlib->add_jq_onready('
 $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != "Done") {
+		'.$reloadString.'
 		var options = {title: "'.$info['title'].'", urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
-		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {	// new sheet
-			//$jq("div.tiki_sheet").append($jq("<table><tbody><tr><td>&nbsp;</td></tr></tbody></table>"));
-			options.buildSheet = "2x1";
+		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {
+			options.buildSheet = "2x1";	// new sheet
 		}
 		$jq("div.tiki_sheet").tiki("sheet", "", options);
 		$a.attr("temp", $a.text());
@@ -120,9 +139,7 @@ $jq("#edit_button").click( function () {
 		$jq("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
 		$jq("#save_button").show();
 	} else {
-		//$jq("div.tiki_sheet").sheet("destroy");
-		//$a.text($a.attr("temp"));
-		window.location.replace(window.location.href);
+		window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
 	}
 	return false;
 });
@@ -132,8 +149,10 @@ $jq("#save_button").click( function () {
 	return false;
 }).hide();
 ');
+	}
 }
-	
+
+$smarty->assign('parseValues', $grid->parseValues);
 
 if ($prefs['feature_warn_on_edit'] == 'y') {
 	if ($tikilib->semaphore_is_set($_REQUEST['sheetId'], $prefs['warn_on_edit_time'] * 60, 'sheet') && ($semUser = $tikilib->get_semaphore_user($_REQUEST['sheetId'], 'sheet')) != $user) {
@@ -151,9 +170,9 @@ if ($prefs['feature_warn_on_edit'] == 'y') {
 	}
 }
 $headerlib->add_cssfile('lib/sheet/style.css', 10);
-$cat_type = 'sheet';
-$cat_objid = $_REQUEST["sheetId"];
-include_once ("categorize_list.php");
+//$cat_type = 'sheet';
+//$cat_objid = $_REQUEST["sheetId"];
+//include_once ("categorize_list.php");
 include_once ('tiki-section_options.php');
 ask_ticket('sheet');
 // Display the template

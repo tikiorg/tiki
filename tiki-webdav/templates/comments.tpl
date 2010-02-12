@@ -351,7 +351,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{/if}
 		{* End: Xenfasa adding and testing article ratings in comments here *}
 
-		{if $prefs.section_comments_parse eq 'y'}
+		{if $prefs.section_comments_parse eq 'y' && $forum_mode neq 'y' || $prefs.feature_forum_parse eq 'y' && $forum_mode eq 'y'}
 	        {assign var=toolbars_html value=true}{* can't find where this gets set in ui-revamp project *}
 	        <tr>
 	    		<td class="formcolor"><label>{tr}Toolbars{/tr}</label></td>

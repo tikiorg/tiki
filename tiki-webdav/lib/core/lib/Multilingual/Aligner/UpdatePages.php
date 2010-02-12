@@ -6,6 +6,9 @@
 	
 	class Multilingual_Aligner_UpdatePages
 	{
+		
+	public $alignments = null;
+	
 	public function setUp()  {
       $this->alignments = new Multilingual_Aligner_SentenceAlignments();
       $this->translator=new Multilingual_Aligner_MockMTWrapper();
@@ -138,7 +141,7 @@
 	echo "sentence-> ".$item."<br/>";
 	$content = implode(' ',$final_updated);
 	echo "$content<br/>";
-	if(strcmp("Firefox supporte les caractères internationaux pour des langues tel que lindien. Added_Source This is a test statement. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien. La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit où vous pouvez obtenir la police.", $content)==0)
+	if(strcmp("Firefox supporte les caractï¿½res internationaux pour des langues tel que lindien. Added_Source This is a test statement. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien. La plupart des sites qui ont besoin de polices supplï¿½mentaires vont avoir une page qui dï¿½crit oï¿½ vous pouvez obtenir la police.", $content)==0)
 	echo "match<br/>";
 	else
 	echo "fail";
@@ -209,32 +212,31 @@
 		$target_lng="fr";
 		$source_outofdate="Firefox supports international characters for languages such as Hindi. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
 		$source_modified="Firefox supports international characters for languages such as Hindi. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
-		$target_outofdate="Firefox supporte les caractères internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit où vous pouvez obtenir la police.";
-		$target_modified="Firefox supporte les caractères internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien. C'est une déclaration d'essai.La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit où vous pouvez obtenir la police.";
+		$target_outofdate="Firefox supporte les caractï¿½res internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplï¿½mentaires vont avoir une page qui dï¿½crit oï¿½ vous pouvez obtenir la police.";
+		$target_modified="Firefox supporte les caractï¿½res internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien. C'est une dï¿½claration d'essai.La plupart des sites qui ont besoin de polices supplï¿½mentaires vont avoir une page qui dï¿½crit oï¿½ vous pouvez obtenir la police.";
 		$source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
-		$target_alignment="Firefox supporte les caractères internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit où vous pouvez obtenir la police.";
+		$target_alignment="Firefox supporte les caractï¿½res internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplï¿½mentaires vont avoir une page qui dï¿½crit oï¿½ vous pouvez obtenir la police.";
 		
 		$source_Mtranslation="This is a test statement.";
-		$target_Mtranslation="C'est une déclaration d'essai.";
+		$target_Mtranslation="C'est une dï¿½claration d'essai.";
 		*/
-		/*
+		
 		$source_lng="en";
 		$target_lng="fr";
 		$source_outofdate="Firefox supports international characters for languages such as Hindi. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
 		$source_modified="Firefox supports international characters for languages such as Hindi.This is a test statement. You can test your Firefoxs support of Hindi scripts at BBC Hindi.Most sites that require additional fonts will have a page describing where you can get the font.";
-		$target_outofdate="Firefox supporte les caractères internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit où vous pouvez obtenir la police.";
-		$target_modified="Firefox supporte les caractères internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit où vous pouvez obtenir la police.";
+		$target_outofdate="Firefox supporte les caractï¿½res internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplï¿½mentaires vont avoir une page qui dï¿½crit oï¿½ vous pouvez obtenir la police.";
+		$target_modified="Firefox supporte les caractï¿½res internationaux pour des langues tel que lindien. Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.La plupart des sites qui ont besoin de polices supplï¿½mentaires vont avoir une page qui dï¿½crit oï¿½ vous pouvez obtenir la police.";
 		$source_alignment="Firefox supports international characters for languages such as Hindi.<br/>You can test your Firefoxs support of Hindi scripts at BBC Hindi.<br/>Most sites that require additional fonts will have a page describing where you can get the font.";
-		$target_alignment="Firefox supporte les caractères internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplémentaires vont avoir une page qui décrit où vous pouvez obtenir la police.";
+		$target_alignment="Firefox supporte les caractï¿½res internationaux pour des langues tel que lindien.<br/>Vous pouvez tester le support Firefox des scripts indiens sur BBC indien.<br/>La plupart des sites qui ont besoin de polices supplï¿½mentaires vont avoir une page qui dï¿½crit oï¿½ vous pouvez obtenir la police.";
 		
 		$source_Mtranslation="This is a test statement.";
-		$target_Mtranslation="C'est une déclaration d'essai.";
+		$target_Mtranslation="C'est une dï¿½claration d'essai.";
 				
 	$test=new Multilingual_Aligner_UpdatePages();
 	$test->setUp();
 	$test->SetAlignment($source_alignment,$target_alignment,$source_lng,$target_lng);
 	$test->SetMT($source_Mtranslation,$source_Mtranslation,$source_lng,$target_lng);
 	$test->UpdatingTargetPage($source_outofdate,$source_modified,$target_outofdate,$target_modified,$source_lng,$target_lng);
-	*/
 ?>	
 

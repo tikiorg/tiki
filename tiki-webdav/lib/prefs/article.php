@@ -18,5 +18,10 @@ function prefs_article_list() {
 			),
 
 		),
+		'article_paginate' => array(
+			'name' => tra('Paginate articles'),
+			'description' => tra('Divide articles into multiple pages with pagebreak markers.'),
+			'type' => 'flag',
+		),
 	);
 }

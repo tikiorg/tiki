@@ -11,7 +11,7 @@ include_once ('lib/articles/artlib.php');
 $smarty->assign('headtitle', tra('Admin topics'));
 $access->check_feature('feature_articles');
 // PERMISSIONS: NEEDS p_admin or tiki_p_articles_admin_topics
-$access->check_permission(arrey('tiki_p_admin_cms', 'tiki_p_articles_admin_topics'));
+$access->check_permission(array('tiki_p_articles_admin_topics'));
 
 if (isset($_REQUEST["addtopic"])) {
 	check_ticket('admin-topics');

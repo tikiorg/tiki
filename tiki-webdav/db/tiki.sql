@@ -1832,6 +1832,7 @@ CREATE TABLE `tiki_rss_modules` (
   `showPubDate` char(1) default 'n',
   `sitetitle` VARCHAR(255),
   `siteurl` VARCHAR(255),
+  `actions` TEXT,
   PRIMARY KEY (`rssId`),
   KEY `name` (name)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -1943,6 +1944,7 @@ CREATE TABLE `tiki_sheet_layout` (
   `headerRow` int(4) NOT NULL default '0',
   `footerRow` int(4) NOT NULL default '0',
   `className` varchar(64) default NULL,
+  `parseValues` char( 1 ) NOT NULL default 'n',
   UNIQUE KEY `sheetId` (`sheetId`, `begin`)
 ) ENGINE=MyISAM;
 

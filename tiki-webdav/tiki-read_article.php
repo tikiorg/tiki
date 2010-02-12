@@ -1,9 +1,10 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+
 $section = 'cms';
 require_once ('tiki-setup.php');
 $access->check_feature('feature_articles');
@@ -88,29 +89,31 @@ if (strlen($article_data["image_data"]) > 0) {
 	$hasImage = 'y';
 }
 $smarty->assign('heading', $article_data["heading"]);
-if (!isset($_REQUEST['page'])) $_REQUEST['page'] = 1;
-// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
-$preparsed = array();
-$noparsed = array();
-$tikilib->parse_first($article_data["body"], $preparsed, $noparsed);
-$pages = $artlib->get_number_of_pages($article_data["body"]);
-$article_data["body"] = $artlib->get_page($article_data["body"], $_REQUEST['page']);
-$smarty->assign('pages', $pages);
-if ($pages > $_REQUEST['page']) {
-	$smarty->assign('next_page', $_REQUEST['page'] + 1);
-} else {
-	$smarty->assign('next_page', $_REQUEST['page']);
+if( $prefs['article_paginate'] == 'y' ) {
+	if (!isset($_REQUEST['page'])) $_REQUEST['page'] = 1;
+	// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
+	$preparsed = array();
+	$noparsed = array();
+	$tikilib->parse_first($article_data["body"], $preparsed, $noparsed);
+	$pages = $artlib->get_number_of_pages($article_data["body"]);
+	$article_data["body"] = $artlib->get_page($article_data["body"], $_REQUEST['page']);
+	$smarty->assign('pages', $pages);
+	if ($pages > $_REQUEST['page']) {
+		$smarty->assign('next_page', $_REQUEST['page'] + 1);
+	} else {
+		$smarty->assign('next_page', $_REQUEST['page']);
+	}
+	if ($_REQUEST['page'] > 1) {
+		$smarty->assign('prev_page', $_REQUEST['page'] - 1);
+	} else {
+		$smarty->assign('prev_page', 1);
+	}
+	$smarty->assign('first_page', 1);
+	$smarty->assign('last_page', $pages);
+	$smarty->assign('pagenum', $_REQUEST['page']);
+	// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
+	$tikilib->replace_preparse($article_data["body"], $preparsed, $noparsed);
 }
-if ($_REQUEST['page'] > 1) {
-	$smarty->assign('prev_page', $_REQUEST['page'] - 1);
-} else {
-	$smarty->assign('prev_page', 1);
-}
-$smarty->assign('first_page', 1);
-$smarty->assign('last_page', $pages);
-$smarty->assign('pagenum', $_REQUEST['page']);
-// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-$tikilib->replace_preparse($article_data["body"], $preparsed, $noparsed);
 $smarty->assign('body', $article_data["body"]);
 $smarty->assign('publishDate', $article_data["publishDate"]);
 $smarty->assign('expireDate', $article_data["expireDate"]);

@@ -68,14 +68,26 @@
 				{else}
 					{assign var="uWarning" value=""}
 				{/if}
-				{button _id="save_button" _text="{tr}Save{/tr}" _ajax="n" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
-				{button _id="edit_button" _text="{tr}Edit{/tr}" _ajax="n" _class="" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
+				{if $editReload}
+					{button _id="edit_button" _text="{tr}Edit{/tr}" _ajax="n" _class="" parse="edit" editSheet="y" _auto_args="*" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
+				{else}
+					{button _id="save_button" _text="{tr}Save{/tr}" _ajax="n" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
+					{button _id="edit_button" _text="{tr}Edit{/tr}" _ajax="n" _class="" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
+				{/if}
 			{else}
 				{if $editconflict eq 'y'}
 					{button sheetId="$sheetId" readdate="$read_date" mode="edit" _title="$semUser" _text="{tr}Edit{/tr}" _ajax="n"}
 				{else}
 					{button sheetId="$sheetId" readdate="$read_date" mode="edit" _text="{tr}Edit{/tr}" _ajax="n"}
 				{/if}
+			{/if}
+		{/if}
+		
+		{if $parseValues eq 'y'}
+			{if $smarty.request.parse eq 'y'}
+				{button parse="n" _text="{tr}No parse{/tr}" _ajax="n" _auto_args="*"}
+			{else}
+				{button parse="y" _text="{tr}Parse{/tr}" _ajax="n" _auto_args="*"}
 			{/if}
 		{/if}
 

@@ -182,24 +182,53 @@ class FileGalLib extends TikiLib
 			array((int)$new_parent_id, (int)$galleryId)
 		);
 	}
+	function default_file_gallery() {
+		global $prefs;
+		return array(
+			'visible' => 'y',
+			'type' => 'default',
+			'parentId' => -1,
+			'lockable' => 'n',
+			'show_lockedby' => 'y',
+			'archives' => -1,
+			'show_modified' => 'n',
+			'show_creator' => 'n',
+			'show_author' => 'n',
+			'quota' => 0,
+			'backlinkPerms' => 'n',
+			'show_backlinks' => 'n',
+			'show_lastDownload' => 'n',
+			'description' => '',
+			'sort_mode' => 'created_desc',
+			'maxRows' => $prefs['maxRowsGalleries'],
+			'max_desc' => 0,
+			'subgal_conf' => '',
+			'show_id' => 'n',
+			'show_icon' => 'y',
+			'show_name' => 'f',
+			'show_description' => 'o',
+			'show_size' => 'o',
+			'show_created' => 'o',
+			'show_modified' => 'y',
+			'show_creator' => 'o',
+			'show_author' => 'o',
+			'show_last_user' => 'o',
+			'show_comment' => 'y',
+			'show_files' => 'n',
+			'show_hits' => 'n',
+			'show_lockedby' => 'n',
+			'show_checked' => 'y',
+			'show_userlink' => 'y',
+			'show_explorer' => 'y',
+			'show_path' => 'y',
+			'show_slideshow' => 'n'
 
+		);
+	}
 	function replace_file_gallery($fgal_info) {
 
 		global $prefs;
-		// Default values
-		if (!isset($fgal_info['visible']))  $fgal_info['visible'] = 'y';
-		if (!isset($fgal_info['type']))  $fgal_info['type'] = 'default';
-		if (!isset($fgal_info['parentId']))  $fgal_info['parentId'] = -1;
-		if (!isset($fgal_info['lockable']))  $fgal_info['lockable'] = 'n';
-		if (!isset($fgal_info['show_lockedby']))  $fgal_info['show_lockedby'] = 'y';
-		if (!isset($fgal_info['archives']))  $fgal_info['archives'] = -1;
-		if (!isset($fgal_info['show_modified']))  $fgal_info['show_modified'] = 'n';
-		if (!isset($fgal_info['show_creator']))  $fgal_info['show_creator'] = 'n';
-		if (!isset($fgal_info['show_author']))  $fgal_info['show_author'] = 'n';
-		if (!isset($fgal_info['quota']))  $fgal_info['quota'] = 0;
-		if (!isset($fgal_info['backlinkPerms'])) $fgal_info['backlinkPerms'] = 'n';
-		if (!isset($fgal_info['show_backlinks'])) $fgal_info['show_backlinks'] = 'n';
-		if (!isset($fgal_info['show_lastDownload'])) $fgal_info['show_lastDownload'] = 'n';
+		$fgal_info = array_merge($this->default_file_gallery(), $fgal_info);
 
 		// if the user is admin or the user is the same user and the gallery exists
 		// then replace if not then create the gallary if the name is unused.
@@ -210,7 +239,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['sort_mode'] = null;
 		}
 
-		if ($fgal_info['galleryId'] > 0) {
+		if (!empty($fgal_info['galleryId']) && $fgal_info['galleryId'] > 0) {
 			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?,
 			`description`=?, `lastModif`=?, `public`=?, `visible`=?, `show_icon`=?,
 			`show_id`=?, `show_name`=?, `show_description`=?, `show_size`=?,

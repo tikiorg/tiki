@@ -43,6 +43,8 @@
 				{preference name=feature_cms_print}
 				{preference name=feature_cms_emails}
 
+				{preference name=article_paginate}
+
 				<input type="hidden" name="cmsfeatures" />
 
 			</fieldset>

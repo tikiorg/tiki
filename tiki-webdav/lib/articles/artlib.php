@@ -197,8 +197,7 @@ class ArtLib extends TikiLib
 	$imgdata,(int) $publishDate,(int) $expireDate, (int) $this->now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,
 	(int) $image_y,$type,(float) $rating,$isfloat,$topline, $subtitle, $linkto, $image_caption, $lang));
 			// Fixed query. -edgar
-			$query = "select max(`subId`) from `tiki_submissions` where `created` = ? and `title`=? and `hash`=?";
-			$id = $this->getOne($query, array( (int) $this->now, $title, $hash ) );
+			$id = $this->lastInsertId();
 		}
 
 		if ($tiki_p_autoapprove_submission != 'y') {

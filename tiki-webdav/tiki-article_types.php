@@ -15,7 +15,7 @@ $smarty->assign('headtitle',tra('Admin Article Types'));
 $access->check_feature('feature_articles');
 
 // PERMISSIONS: NEEDS p_admin or tiki_p_articles_admin_types
-$access->check_permission(array('tiki_p_admin_cms', 'tiki_p_articles_admin_types'));
+$access->check_permission(array('tiki_p_articles_admin_types'));
 
 if(isset($_REQUEST["add_type"])) {
 	$artlib->add_type($_REQUEST["new_type"]);

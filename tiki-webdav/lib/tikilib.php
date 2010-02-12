@@ -2163,7 +2163,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @param bool $parent_is_file use $galleryId param as $fileId (to return only archives of the file)
 	 * @return array of found files and subgals
 	 */
-	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false) {
+	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $categId = 0) {
 		global $user, $tiki_p_admin_file_galleries;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
@@ -2250,7 +2250,13 @@ class TikiLib extends TikiDb_Bridge
 			$f_group_by = ' GROUP BY tf.`fileId`';
 		}
 
-		if( $jail = $categlib->get_jail() ) {
+		if( $categId ) {
+			$jail = $categId;
+		} else {
+			$jail = $categlib->get_jail();
+		}
+			
+		if( $jail ) {
 			$categlib->getSqlJoin( $jail, 'file', 'tf.`fileId`', $f_jail_join, $f_jail_where, $f_jail_bind );
 		} else {
 			$f_jail_join = '';
@@ -2265,7 +2271,7 @@ class TikiLib extends TikiDb_Bridge
 		if ( $find ) {
 			$findesc = '%'.$find.'%';
 			$mid = ' (upper(tab.`name`) LIKE upper(?) OR upper(tab.`description`) LIKE upper(?) OR upper(tab.`filename`) LIKE upper(?))';
-			array_push($bindvars, $findesc, $findesc, $findesc);
+			$midvars = array($findesc, $findesc, $findesc);
 		}
 
 		$galleryId_str = '';
@@ -2302,14 +2308,14 @@ class TikiLib extends TikiDb_Bridge
 				$bindvars[] = $my_user;
 			}
 
-			if( $jail = $categlib->get_jail() ) {
+			if( $jail ) {
 				$categlib->getSqlJoin( $jail, 'file gallery', '`tfg`.`galleryId`', $g_jail_join, $g_jail_where, $g_jail_bind );
 			} else {
 				$g_jail_join = '';
 				$g_jail_where = '';
 				$g_jail_bind = array();
 			}
-
+			
 			$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_jail_join;
 			$g_query .= " WHERE 1=1 ";
 
@@ -2332,13 +2338,19 @@ class TikiLib extends TikiDb_Bridge
 			} else {
 				$query = "SELECT $select FROM ($g_query $g_group_by) as tab".$join;
 			}
-			if ( $mid != '' ) $query .= ' WHERE'.$mid;
+			if ( $mid != '' ){
+				$query .= ' WHERE'.$mid;
+				$bindvars = array_merge( $bindvars, $midvars );
+			}
 			if ( $orderby != '' ) $orderby = 'tab.'.$orderby;
 
 		} else {
 			$query = $f_query;
 			$bindvars = array_merge( $f_jail_bind, $bindvars );
-			if ( $mid != '' ) $query .= ' AND'.$mid;
+			if ( $mid != '' ) {
+				$query .= ' AND'.$mid;
+				$bindvars = array_merge( $bindvars, $midvars );
+			}
 			$query .= $f_group_by;
 		}
 

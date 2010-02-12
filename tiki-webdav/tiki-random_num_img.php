@@ -1,10 +1,10 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-//session_start();
-// hmm. to many session tweaks in setup_smarty ... we need to call this
+// $Id$
+
 require_once ('tiki-setup.php');
 if ($prefs['feature_antibot'] != 'y' && $prefs['rnd_num_reg'] != 'y') {
 	die;

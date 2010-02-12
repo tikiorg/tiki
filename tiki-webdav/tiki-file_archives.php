@@ -1,9 +1,10 @@
 <?php
-// $Id$
-
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');
@@ -86,25 +87,7 @@ $smarty->assign_by_ref('file', $file);
 $smarty->assign_by_ref('cant', $files['cant']);
 $smarty->assign_by_ref('file_info', $fileInfo);
 
-$gal_info = array_merge(array(
-	'show_id' => 'n',
-	'show_icon' => 'y',
-	'show_name' => 'f',
-	'show_description' => 'o',
-	'show_size' => 'o',
-	'show_created' => 'o',
-	'show_modified' => 'y',
-	'show_creator' => 'o',
-	'show_author' => 'o',
-	'show_last_user' => 'o',
-	'show_comment' => 'y',
-	'show_files' => 'n',
-	'show_hits' => 'n',
-	'show_lockedby' => 'n',
-	'show_checked' => 'y',
-	'show_userlink' => 'y',
-//	'show_checked' = 'n'
-	), $gal_info);
+$gal_info = array_merge($filegallib->default_file_gallery(), $gal_info);
 $smarty->assign_by_ref('gal_info', $gal_info);
 
 include_once ('tiki-section_options.php');

@@ -103,6 +103,24 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
+	// check for any one of the permission will be enough
+	// NOTE that you do NOT have to use this to include admin perms, as admin perms automatically inherit the perms they are admin of 
+	function check_permission_either($permissions, $permission_name='') {
+		require_once ('tiki-setup.php');
+		$allowed = false;
+		if ( ! is_array($permissions) ) { $permissions = array($permissions); }
+		foreach ($permissions as $permission) {
+			global $$permission;
+			if ($$permission == 'y') {
+				$allowed = true;
+			}
+		}
+		if ( !$allowed ) {
+			if ($permission_name) { $permission = $permission_name; }
+			$this->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
+		}
+	}
+	
 	// check permission, where the permission is normally unset
 	function check_permission_unset($permissions, $permission_name) {
 		require_once ('tiki-setup.php');

@@ -1,9 +1,10 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+
 //this script may only be included - so its better to die if called directly.
 global $prefs, $tikilib;
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
@@ -186,6 +187,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 	if( $prefs['feature_jquery_sheet'] == 'y' ) {
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.base.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.json-2.2.js' );
 	}
 	if( $prefs['feature_jquery_tablesorter'] == 'y' ) {
 		$headerlib->add_cssfile( 'lib/jquery_tiki/tablesorter/themes/tiki/style.css' );

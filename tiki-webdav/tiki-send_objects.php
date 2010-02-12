@@ -1,14 +1,16 @@
 <?php
-// (c) Copyright 2002-2009 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 require_once ('tiki-setup.php');
 include_once ("lib/pear/XML/Server.php");
 include_once ('lib/structures/structlib.php');
 
 $access->check_feature('feature_comm');
-//$access->check_permission( array('tiki_p_send_pages', 'tiki_p_send_articles') );
+$access->check_permission_either( array('tiki_p_send_pages', 'tiki_p_send_articles') );
 if ($tiki_p_send_pages != 'y' && $tiki_p_send_articles != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));

@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/mailin/mailinlib.php');
 //check if feature is on
 $access->check_feature('feature_mailin');
-$access->check_permission(array('tiki_p_admin_mailin', 'tiki_p_admin'));
+$access->check_permission(array('tiki_p_admin_mailin'));
 
 function account_ok($pop, $user, $pass) {
 	//include_once ("lib/webmail/pop3.php");

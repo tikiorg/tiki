@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 $access->check_feature('feature_contribution');
 
 include_once ('lib/contribution/contributionlib.php');
-$access->check_permission(array('tiki_p_admin','tiki_p_admin_contribution'));
+$access->check_permission(array('tiki_p_admin_contribution'));
 
 if (isset($_REQUEST['setting'])) {
 	check_ticket('admin_contribution');
