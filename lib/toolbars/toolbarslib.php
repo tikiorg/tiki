@@ -1496,7 +1496,8 @@ class ToolbarWikiplugin extends Toolbar
 	function isAccessible() // {{{
 	{
 		global $tikilib;
-		return parent::isAccessible() && $tikilib->plugin_enabled( $this->pluginName );
+		$dummy_output = '';
+		return parent::isAccessible() && $tikilib->plugin_enabled( $this->pluginName, $dummy_output );
 	} // }}}
 
 	private static function getToken( $name ) // {{{
