@@ -1,5 +1,5 @@
 <?php
-/* $Id $
+/* $Id$
  * 
  * return the attributes for a standard tiki page body tag
  * jonnyb refactoring for tiki5
@@ -17,10 +17,6 @@ function smarty_function_html_body_attributes($params, &$smarty) {
 	
 	if (isset($section) && $section == 'wiki page' && $prefs['user_dbl'] == 'y' and $dblclickedit == 'y' and $tiki_p_edit == 'y') {
 		$back .= ' ondblclick="location.href=\'tiki-editpage.php?page='.rawurlencode($page).'\';"';
-	}
-	
-	if ($prefs['feature_tabs'] == 'y') {
-		$onload .= 'tikitabs('.$cookietab.',50);';
 	}
 	
 	// this appears to be unused - smarty var $msgError is never assigned 
