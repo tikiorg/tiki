@@ -1020,7 +1020,13 @@ div.cachedpage {}
 
 #wikihelp-tab table td {padding: 2px}
 textarea.wikiedit {}
-p.editdate {padding-top: 10px}
+
+p.editdate {
+	padding-top: 10px;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
 img.externallink {}
 
 /* Needed esp. for light-on-dark theme */
