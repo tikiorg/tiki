@@ -1105,6 +1105,9 @@ div#page-bar {
 	line-height: 20px;
 }
 
+p.editdate {
+	border-top: 1px solid #8CACBB;
+}
 
 #wikihelp-tab table,
 #wikihelp-tab table td {
