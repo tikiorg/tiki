@@ -182,7 +182,7 @@ function refresh_index($object_type, $object_id = null) {
 			$content = '';
 
 			// For performance reasons, do not index all files with fulltext (depending on their mimetypes)
-			if ( $index_type == 'file' && ! preg_match($fulltext_mimetypes_pattern, $res['filetype']) ) $res['data'] = '';
+			if ( isset($index_type) && $index_type == 'file' && ! preg_match($fulltext_mimetypes_pattern, $res['filetype']) ) $res['data'] = '';
 
 			foreach ( $f_id as $k_id => $v_id ) $id .= (($id!='')?'#':'').$res[(is_string($k_id)?$k_id:$v_id)];
 			foreach ( $f_content as $k_content => $v_content ) $content .= ' '.$res[(is_string($k_content)?$k_content:$v_content)];
