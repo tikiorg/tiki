@@ -2,7 +2,13 @@
 
 {* The heading and category path *}
 {if $prefs.feature_breadcrumbs ne 'y'}
-  {title help="Directory" url="tiki-directory_browse.php?parent=$parent"}{tr}Directory{/tr}{/title}
+  {title help="Directory" url="tiki-directory_browse.php?parent=$parent"}
+  	{if $parent}
+		{tr}Directory:{/tr} {$parent_name|escape}
+	{else}
+		{tr}Directory{/tr}
+	{/if}
+{/title}
 {else}
   <div id="pageheader"> {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
   {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
