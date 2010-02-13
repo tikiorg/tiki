@@ -43,7 +43,6 @@ class Tiki_Profile
 		}
 	} // }}}
 
-
 	public static function convertLists( $data, $conversion, $prependKey = false ) // {{{
 	{
 		foreach( $conversion as $key => $endValue )
@@ -290,6 +289,15 @@ class Tiki_Profile
 
 	public function getPageContent( $pageName ) // {{{
 	{
+		if ($this->domain == 'tiki://local') {
+			global $tikilib;
+			$info = $tikilib->get_page_info($pageName);
+			if (empty($info)) {
+				$this->setFeedback(tra('Page cannot be found').' '.$pageName);
+				return null;
+			}
+			return $info['data'];
+		}
 		$exportUrl = dirname( $this->url ) . '/tiki-export_wiki_pages.php?'
 			. http_build_query( array( 'page' => $pageName ) );
 
@@ -359,9 +367,10 @@ class Tiki_Profile
 				$array = array_merge( $array, $this->traverseForReferences( $v ) );
 		elseif( preg_match( self::SHORT_PATTERN, $value, $parts ) )
 			$array[] = $this->convertReference( $parts );
-		elseif( preg_match_all( self::LONG_PATTERN, $value, $parts, PREG_SET_ORDER ) )
+		elseif( preg_match_all( self::LONG_PATTERN, $value, $parts, PREG_SET_ORDER ) ) {
 			foreach( $parts as $row )
 				$array[] = $this->convertReference( $row );
+		}
 
 		return $array;
 	} // }}}
@@ -632,8 +641,10 @@ class Tiki_Profile
 		while( ! empty( $objects ) )
 		{
 			// Circular dependency found... give what we have
-			if( $counter++ > count($objects) * 2 )
+			if( $counter++ > count($objects) * 2 ) {
+				$this->setFeedback(tra('Circular reference'));
 				break;
+			}
 
 			$object = array_shift( $objects );
 			$refs = $object->getInternalReferences();
@@ -716,7 +727,11 @@ class Tiki_Profile_Object
 	
 	function isWellStructured() // {{{
 	{
-		return isset( $this->data['type'], $this->data['data'] );
+		$is =  isset( $this->data['type'], $this->data['data'] );
+		if (!$is) {
+			$this->setFeedback(tra('Syntax error: ').tra("Needs a 'type' and 'data' field"));
+		}
+		return $is;
 	} // }}}
 
 	function getType() // {{{
