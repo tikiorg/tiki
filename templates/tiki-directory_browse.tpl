@@ -15,8 +15,6 @@
 {if $prefs.feature_breadcrumbs ne 'y'} <a class="dirlink" href="tiki-directory_browse.php?parent=0">{tr}Top{/tr}</a>{if $parent > 0} >> {/if}{$path}
 {/if}
 <div class="description">{$parent_info.description|escape}</div>
-<br />
-<br />
 {if count($items) > 0}
 <div class="findtable">
   <form action="tiki-directory_search.php" method="post">
@@ -35,11 +33,11 @@
   </form>
 </div>
 {/if}
-{if count($categs)} <br />
-<br />
-<b>{tr}Directory Subcategories{/tr}</b><br />
-{* The table with the subcategories *}
+
+{if count($categs)}
+<h2>{tr}Directory Subcategories{/tr}</h2>
 <div class="dircategs">
+{* The table with the subcategories *}
   <table  >
     <tr> {section name=numloop loop=$categs}
       <td><a class="dirlink" href="tiki-directory_browse.php?parent={$categs[numloop].categId}">{$categs[numloop].name|escape}</a> {if $categs[numloop].showCount eq 'y'}
@@ -71,9 +69,11 @@
     {/section}
   </table>
 </div>
-{/if} <br />
+{/if}
 {* The links *}
-{if $categ_info.allowSites eq 'y' and count($items) > 0} <b>{tr}Links{/tr}</b><br />
+{if $categ_info.allowSites eq 'y'}
+<h2>{tr}Links{/tr}</h2>
+{if count($items) > 0}
 <div class="dirlistsites">
   <div class="findtable">
   <form method="post" action="tiki-directory_browse.php">
@@ -108,9 +108,9 @@
     <span class="dirsitetrail"> {tr}Added{/tr}: {$items[ix].created|tiki_short_date} {tr}Last updated{/tr}: {$items[ix].lastModif|tiki_short_date} {tr}Hits{/tr}: {$items[ix].hits} </span> </div>
   {/section} </div>
 {pagination_links cant=$cant_pages step=$prefs.directory_links_per_page offset=$offset}{/pagination_links}
-
-{else}
+{elseif !empty($parent)}
 	{tr}No records.{/tr}
+{/if}
 {/if}
 
 {if count($related)>0}
