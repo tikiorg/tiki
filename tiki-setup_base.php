@@ -60,6 +60,7 @@ $needed_prefs = array(
 );
 $tikilib->get_preferences($needed_prefs, true, true);
 if (!isset($prefs['lastUpdatePrefs']) || $prefs['lastUpdatePrefs'] == - 1) {
+	$tikilib->query('delete from `tiki_preferences` where `name`=?', array('lastUpdatePrefs'));
 	$tikilib->query('insert into `tiki_preferences`(`name`,`value`) values(?,?)', array('lastUpdatePrefs', 1));
 }
 
