@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 // Performs a regular expression on the $data between the {REGEX()} $data {REGEX} tags 
 // Usage the WikiPageName holds the regex find replace commands 
 // for example /^i/i:: $1 is the first letter
