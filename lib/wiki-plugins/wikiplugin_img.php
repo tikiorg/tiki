@@ -662,8 +662,6 @@ function wikiplugin_img_info() {
 			preg_match('/(?<=\&x=)[0-9]+(?=.*)/', $src, $urlx);
 			preg_match('/(?<=\&y=)[0-9]+(?=.*)/', $src, $urly);
 			preg_match('/(?<=\&scale=)[0]*\.[0-9]+(?=.*)/', $src, $urlscale);
-			if ($urlthumb != false ) $imgdata['max'] = 120;
-			if ($urlprev != false ) $imgdata['max'] = 800;
 			if (!empty($urlmax[0]) && $urlmax[0] > 0) $imgdata['max'] = $urlmax[0];
 			if (!empty($urlx[0]) && $urlx[0] > 0) $imgdata['width'] = $urlx[0];
 			if (!empty($urly[0]) && $urly[0] > 0) $imgdata['height'] = $urly[0];
@@ -673,6 +671,8 @@ function wikiplugin_img_info() {
 				$imgdata['width'] = '';
 				$imgdata['height'] = '';
 			}	
+			if ($urlthumb != false && empty($imgdata['height']) && empty($imgdata['width']) && empty($imgdata['max'])) $imgdata['max'] = 120;
+			if ($urlprev != false && empty($urlscale[0]) && empty($imgdata['height']) && empty($imgdata['width']) && empty($imgdata['max']) ) $imgdata['max'] = 800;
 		}
 		//Note if image gal url thumb parameter is used
 		$imgalthumb = false;
@@ -807,8 +807,7 @@ function wikiplugin_img_info() {
 			) {
 				$src .= '&max=' . $imgdata['max'];
 			} elseif (!empty($width) || !empty($height)) {
-				if ((!empty($width) && !empty($height)) && (empty($urlx[0]) && empty($urly[0]) 
-					&& empty($urlthumb) && empty($urlscale[0]))) {
+				if ((!empty($width) && !empty($height)) && (empty($urlx[0]) && empty($urly[0]) && empty($urlscale[0]))) {
 					$src .= '&x=' . $width . '&y=' . $height;
 				} elseif (!empty($width) && (empty($urlx[0]) && empty($urlthumb) && empty($urlscale[0]))) {
 					$src .= '&x=' . $width; 
@@ -1109,7 +1108,7 @@ function wikiplugin_img_info() {
 						}
 					}
 				} else {
-					$styleboxinit = $imgdata['stylebox'];
+					$styleboxinit = $imgdata['stylebox'] . ';';
 				}
 			}
 			if (empty($imgdata['button']) && empty($imgdata['desc']) && empty($styleboxinit)) {
