@@ -959,7 +959,7 @@ DROP TABLE IF EXISTS `tiki_group_inclusion`;
 CREATE TABLE `tiki_group_inclusion` (
   `groupName` varchar(255) NOT NULL default '',
   `includeGroup` varchar(255) NOT NULL default '',
-  PRIMARY KEY (`groupName`(30),`includeGroup`(30))
+  PRIMARY KEY (`groupName`(120),`includeGroup`(120))
 ) ENGINE=MyISAM;
 INSERT INTO  `tiki_group_inclusion` (`groupName` ,`includeGroup`) VALUES ('Registered','Anonymous');
 
