@@ -527,8 +527,7 @@ function wikiplugin_img_info() {
 
 	///////////////////////////Get DB info for image size and iptc data/////////////////////////////
 	if (!empty($imgdata['height']) || !empty($imgdata['width']) || !empty($imgdata['max']) 
-		|| $imgdata['desc'] == 'desc' || $imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'name' 
-		|| $imgdata['desc'] == 'ititle' || strpos($imgdata['rel'], 'box') !== false 
+		|| !empty($imgdata['desc']) || strpos($imgdata['rel'], 'box') !== false 
 		|| !empty($imgdata['stylebox']) || !empty($imgdata['styledesc']) || !empty($imgdata['button']) 
 		|| !empty($imgdata['thumb'])  || !empty($imgdata['align'])
 	) {
