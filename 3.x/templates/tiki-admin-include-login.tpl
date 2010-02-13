@@ -202,17 +202,6 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <div id="remembermeoptions" style="clear:both;margin-left:2.5em;display:{if $prefs.rememberme eq 'disabled'}none{else}block{/if}">
 
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="remembermethod">{tr}Method{/tr}:</label> 
-	<select name="remembermethod" id="remembermethod">
-<option value="" {if $prefs.remembermethod eq ''}selected="selected"{/if}>{tr}Standard{/tr}</option>
-<option value="simple" {if $prefs.remembermethod eq 'simple'} selected="selected"{/if}>{tr}Simple{/tr}</option>
-	</select>
-	<br /><em>{tr}&quot;Standard&quot; uses the client's IP and is more secure. &quot;Simple&quot; uses a unique ID and is more reliable{/tr}.</em>
-	</div>
-</div>
-
-
-<div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="remembertime">{tr}Duration{/tr}:</label> 
 	<select name="remembertime" id="remembertime">
 <option value="300" {if $prefs.remembertime eq 300} selected="selected"{/if}>5 {tr}minutes{/tr}</option>

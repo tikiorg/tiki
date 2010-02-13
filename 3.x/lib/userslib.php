@@ -2194,30 +2194,21 @@ function get_included_groups($group, $recur=true) {
 	}
 	
 	function get_cookie_check() {
-		global $prefs;
-		if ($prefs['remembermethod'] == 'simple') {
-			// this only makes sense in setting the cookie - it will always be different if checked
-			return md5(session_id() . uniqid(mt_rand(), true));
-		} else {
-			return md5($this->get_ip_address().$_SERVER['HTTP_USER_AGENT']);
-		}
+		return md5(session_id() . uniqid(mt_rand(), true));
 	}
 
 	function get_user_by_cookie($hash,$bypasscheck=false) {
-		global $prefs;
 		list($check,$expire,$userCookie) = explode('.',$hash, 3);
-		if ($check == $this->get_cookie_check() or $bypasscheck or $prefs['remembermethod'] == 'simple') {
-			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value` like ? and `user`=?';
-			$user = $this->getOne($query, array('cookie',"$check.%",$userCookie));
-			// $fp=fopen('temp/interlogtest','a+');fputs($fp,"main gubc -- $check.$expire.$userCookie -- $user --\n");fclose($fp);
-			if ($user) {
-				if ($expire < $this->now) {
-					$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
-					$user = $this->query($query, array('cookie',$hash));
-					return false;
-				} else {
-					return $user;
-				}
+		$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value` like ? and `user`=?';
+		$user = $this->getOne($query, array('cookie',"$check.%",$userCookie));
+		// $fp=fopen('temp/interlogtest','a+');fputs($fp,"main gubc -- $check.$expire.$userCookie -- $user --\n");fclose($fp);
+		if ($user) {
+			if ($expire < $this->now) {
+				$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
+				$user = $this->query($query, array('cookie',$hash));
+				return false;
+			} else {
+				return $user;
 			}
 		}
 		return false;
