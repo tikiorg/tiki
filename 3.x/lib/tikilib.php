@@ -2970,7 +2970,7 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
-	function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date_min = 0, $date_max = 0, $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='',$creator='',$group='', $lang='') {
+	function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date_min = 0, $date_max = 0, $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='',$creator='',$group='', $lang='', $override_dates = false) {
 
 		global $userlib, $user;
 
@@ -3062,8 +3062,12 @@ class TikiLib extends TikiDB {
 			}
 			$bindvars[] = (int)$date_min;
 			$bindvars[] = (int)$date_max;
-			$bindvars[] = (int)$this->now;
-			$condition = "`tiki_articles`.`publishDate`>=? and (`tiki_articles`.`publishDate`<=? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+			if ($override_dates) {
+				$condition = "`tiki_articles`.`publishDate`>=? and `tiki_articles`.`publishDate`<=?";
+			} else {
+				$bindvars[] = (int)$this->now;
+				$condition = "`tiki_articles`.`publishDate`>=? and (`tiki_articles`.`publishDate`<=? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+			}
 			$mid .= ( $mid ? ' and ' : ' where ' ) . $condition;
 		}
 		if (!empty($lang)) {
@@ -3136,10 +3140,10 @@ class TikiLib extends TikiDB {
 
 				// Determine if the article would be displayed in the view page
 				$res["disp_article"] = 'y';
-				if (($res["show_pre_publ"] != 'y') and ($this->now < $res["publishDate"])) {
+				if (($res["show_pre_publ"] != 'y') and ($this->now < $res["publishDate"]) && !$override_dates) {
 					$res["disp_article"] = 'n';
 				}
-				if (($res["show_post_expire"] != 'y') and ($this->now > $res["expireDate"])) {
+				if (($res["show_post_expire"] != 'y') and ($this->now > $res["expireDate"]) && !$override_dates) {
 					$res["disp_article"] = 'n';
 				}
 				$ret[] = $res;
