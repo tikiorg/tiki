@@ -222,15 +222,6 @@ function prefs_global_list() {
 			'hint' => tra("The group will be named identical to the user's username"),
 			'help' => 'Groups',
 		),
-		'remembermethod' => array(
-			'name' => tra('Method'),
-			'type' => 'list',
-			'options' => array(
-				'' => tra('Standard'),
-				'simple' => tra('Simple'),
-			),
-			'hint' => tra('"Standard" uses the client\'s IP and is more secure. "Simple" uses a unique ID and is more reliable'),
-		),
 		'remembertime' => array(
 			'name' => tra('Duration'),
 			'type' => 'list',

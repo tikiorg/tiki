@@ -86,7 +86,6 @@
 				</div>
 	
 				<div id="remembermeoptions" style="clear:both;margin-left:2.5em;display:{if $prefs.rememberme eq 'disabled'}none{else}block{/if}">
-					{preference name=remembermethod}
 					{preference name=remembertime}
 				</div>
 	
