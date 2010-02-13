@@ -18,7 +18,7 @@
 {/if}
 
 {section name=ix loop=$listpages}
-<div class="post">
+<div class="post{if !empty($container_class)} {$container_class}{/if}">
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 		{if $listpages[ix].freetags.data|@count >0}
 	<div class="freetaglist">

@@ -22,7 +22,7 @@
 {/if}
 
 {section name=ix loop=$listpages}
-<div class="post">
+<div class="post{if !empty($container_class)} {$container_class}{/if}">
 	<div class="clearfix postbody">
 		<div class="author_actions clearfix">
 			<div class="actions">
