@@ -66,6 +66,10 @@ function wikiplugin_img_info() {
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')), 
+					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')), 
+					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')), 
+					array('text' => tra('Download'), 'value' => 'download', 'description' => tra('Download dialog box will appear for file gallery and attachment images when thumbnail is clicked.')),
 				),
 			),
 			'link' => array(
@@ -715,7 +719,7 @@ function wikiplugin_img_info() {
 				}
 			}
 			// Adjust for max setting, keeping aspect ratio
-			if ((!empty($imgdata['max'])) && (ctype_digit($imgdata['max']))) {
+			if (!empty($imgdata['max'])) {
 				if (($fwidth > $imgdata['max']) || ($fheight > $imgdata['max'])) {
 					//use image gal thumbs when possible
 					if ((!empty($imgdata['id']) && $imgalthumb == false) 
