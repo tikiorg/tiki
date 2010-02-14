@@ -30,7 +30,7 @@ function smarty_function_html_body_attributes($params, &$smarty) {
 		$class .= 'tiki '.$section_class;
 	}
 	
-	if ($_SESSION['fullscreen'] == 'y') {
+	if (isset($_SESSION['fullscreen']) && $_SESSION['fullscreen'] == 'y') {
 		$class .= empty($class) ? ' ' : '';
 		$class .= 'fullscreen';
 	}
