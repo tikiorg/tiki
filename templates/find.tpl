@@ -115,6 +115,7 @@
 {/if}
 
 {if ($find_show_categories eq 'y' or $find_show_categories_multi eq 'y') and $prefs.feature_categories eq 'y' and !empty($categories)}
+	<div class="category_find">
 	<div id="category_singleselect_find" style="display: {if $find_show_categories_multi eq 'y' && $find_cat_categories|@count > 1}none{else}block{/if};">
 		<label class="findcateg"> 
 			<select name="categId">
@@ -147,6 +148,7 @@
 			</div> {* end .clear *}
 		</div> {* end #multiselect *}
 	</div> {* end #category_multiselect_find *}
+	</div>
 {/if}
 
 {if $find_show_num_rows eq 'y'}
