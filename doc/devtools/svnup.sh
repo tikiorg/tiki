@@ -46,7 +46,7 @@ rm -f .lastup .svnrev
 rm -f last.log
 svn update > last.log
 echo `date +%s` > .lastup
-svn info | grep ^Rev | awk '{print $2}' > .svnrev
+svn info --xml | grep "revision=" | head -n 1 | awk -F'\"' '{print $2}' > .svnrev
 
 # uncomment the line below to see the list of all files updated. (ex.: if running manually)
 # less last.log
