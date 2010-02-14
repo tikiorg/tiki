@@ -1364,13 +1364,18 @@ class UsersLib extends TikiLib
 			return $this->groupinclude_cache[$engroup];
 		}
 	}
-	function get_including_groups($group) {
-		$query = 'select `groupName` from `tiki_group_inclusion` where `includeGroup`=?';
+	function get_including_groups($group, $recur='n') {
+		$query = 'select `groupName` from `tiki_group_inclusion` where `includeGroup`=? order by `groupName`';
 		$result = $this->query($query, array($group));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res['groupName'];
-			$ret = array_merge($ret, $this->get_including_groups($res['groupName']));
+			if ($recur == 'y') {
+				$ret = array_merge($ret, $this->get_including_groups($res['groupName']));
+			}
+		}
+		if ($recur == 'y') {
+			sort($ret);
 		}
 		return $ret;
 	}
