@@ -49,6 +49,7 @@ abstract class TikiDb
 
 	function queryError( $query, &$error, $values = null, $numrows = -1, $offset = -1 ) // {{{
 	{
+		$this->errorMessage = '';
 		$result = $this->query( $query, $values, $numrows, $offset, false );
 		$error = $this->errorMessage;
 
