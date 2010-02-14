@@ -112,7 +112,9 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{if $forum_mode neq 'y'}
 			<div class="headers">
 			{if $tiki_p_admin_comments eq 'y' or $tiki_p_lock_comments eq 'y'}
-				<span class="title">{tr}Moderator actions{/tr}</span>
+				{if ($tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y') or $prefs.feature_comments_locking eq 'y'}
+					<span class="title">{tr}Moderator actions{/tr}</span>
+				{/if}
 				<span class="infos">
 				{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 					<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n">{tr}queued:{/tr}{$queued}</a>
