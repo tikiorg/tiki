@@ -113,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 		$parsed = $tikilib->parse_data($profile->pageContent);
 		$installed = $installer->isInstalled($profile);
+		
 		echo json_encode(array(
 			'dependencies' => $dependencies,
 			'userInput' => $userInput,
@@ -121,6 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			'content' => $parsed,
 			'already' => $installed,
 			'url' => $profile->url,
+			'feedback' => $profile->getFeedback(),
 		));
 		exit;
 	} // }}}

@@ -211,6 +211,11 @@ function showDetails( id, domain, profile ) { // {{{
 
 				row.id = nid;
 				prev.parentNode.insertBefore( row, prev.nextSibling );
+
+				if (data.feedback.length) {
+					alert("Profile issues: \n" + data.feedback);
+				}
+
 			}
 		} else {		// readyState not 4 (complete)
 			

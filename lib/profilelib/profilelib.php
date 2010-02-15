@@ -634,8 +634,16 @@ class Tiki_Profile
 			foreach( $this->data['objects'] as &$entry )
 			{
 				$o = new Tiki_Profile_Object( $entry, $this );
-				if( $o->isWellStructured() )
+				if( $o->isWellStructured() ) {
 					$objects[] = $o;
+				} else {
+					$str = '';
+					foreach ($entry as $k => $v) {
+						$str .= empty($str) ? '' : ', ';
+						$str .= "$k: $v";
+					}
+					$this->setFeedback(tra('Syntax error: ').$str."\n".tra("Needs a 'type' and 'data' field"));
+				}
 			}
 
 		$classified = array();
@@ -734,9 +742,6 @@ class Tiki_Profile_Object
 	function isWellStructured() // {{{
 	{
 		$is =  isset( $this->data['type'], $this->data['data'] );
-		if (!$is) {
-			$this->setFeedback(tra('Syntax error: ').tra("Needs a 'type' and 'data' field"));
-		}
 		return $is;
 	} // }}}
 
