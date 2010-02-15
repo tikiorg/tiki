@@ -277,10 +277,8 @@ if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')
 		}
 		$comments_show = 'y';
 
-		if (!$tikilib->user_has_voted($user, 'comment' . $_REQUEST["comments_threadId"])) {
+		if( $tikilib->register_user_vote($user, 'comment' . $_REQUEST["comments_threadId"], $_REQUEST['comments_vote'], range( 1, 5 ) ) ) {
 			$commentslib->vote_comment($_REQUEST["comments_threadId"], $user, $_REQUEST["comments_vote"]);
-
-			$tikilib->register_user_vote($user, 'comment' . $_REQUEST["comments_threadId"], $_REQUEST['comments_vote'] );
 		}
 
 		$_REQUEST["comments_threadId"] = 0;

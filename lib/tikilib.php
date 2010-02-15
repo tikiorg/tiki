@@ -2074,8 +2074,18 @@ class TikiLib extends TikiDb_Bridge
 
 	// Registers a user vote
 	/*shared*/
-	function register_user_vote($user, $id, $optionId=false) {
+	function register_user_vote($user, $id, $optionId=false, array $valid_options = array(), $allow_revote = false ) {
 		global $prefs;
+
+		// If an option is specified and the valid options are specified, skip the vote entirely if not valid
+		if( false !== $optionId && count( $valid_options ) > 0 && ! in_array( $optionId, $valid_options ) ) {
+			return false;
+		}
+
+		if( $user && ! $allow_revote && $this->user_has_voted( $user, $id ) ) {
+			return false;
+		}
+
 		$ip = $this->get_ip_address();
 		$_SESSION['votes'][] = $id;
 		setcookie(md5("tiki_wiki_poll_$id"), $ip, time()+60*60*24*300);
@@ -2104,6 +2114,8 @@ class TikiLib extends TikiDb_Bridge
 				$result = $this->query($query, array($user, $ip, (string)$id, (int)$optionId, (int)$this->now));
 			}
 		}
+
+		return true;
 	}
 
 	function get_user_vote($id,$user) {

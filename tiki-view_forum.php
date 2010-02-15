@@ -235,9 +235,8 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_vote == 'y') {
 	if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
 		check_ticket('view-forum');
 		$comments_show = 'y';
-		if (!$tikilib->user_has_voted($user, 'comment' . $_REQUEST["comments_threadId"])) {
+		if( $tikilib->register_user_vote($user, 'comment' . $_REQUEST["comments_threadId"], $_REQUEST['comments_vote'], range( 1, 5 ) ) ) {
 			$commentslib->vote_comment($_REQUEST["comments_threadId"], $user, $_REQUEST["comments_vote"]);
-			$tikilib->register_user_vote($user, 'comment' . $_REQUEST["comments_threadId"], $_REQUEST['comments_vote']);
 		}
 		$_REQUEST["comments_threadId"] = 0;
 		$smarty->assign('comments_threadId', 0);

@@ -2373,7 +2373,7 @@ class TrackerLib extends TikiLib
 			//echo "$val - $olrate + $new_rate = $newval";die;
 		}
 		$this->query($query,array((int)$newval,(int)$itemId,(int)$fieldId));
-		$this->register_user_vote($user, $key, $new_rate);
+		$this->register_user_vote( $user, $key, $new_rate, range( 1, 5 ), true );
 		return $newval;
 	}
 	function replace_star($userValue, $trackerId, $itemId, &$field, $user, $updateField=true) {

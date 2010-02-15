@@ -12,9 +12,8 @@ if ( isset($_REQUEST['pollVote']) ) {
 	if ( $tiki_p_vote_poll == 'y' && isset($_REQUEST['polls_optionId']) ) {
 		if( $prefs['feature_poll_anonymous'] == 'y' || $user ) {
 			global $polllib; include_once('lib/polls/polllib_shared.php');
-			if (($prefs['feature_poll_revote'] == 'y' && $user) || !$tikilib->user_has_voted($user, 'poll'.$_REQUEST['polls_pollId'])) {
+			if( $tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId'], array(), $prefs['feature_poll_revote'] == 'y' ) ) {
 				$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
-				$tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
 			}
 		}
 	}
