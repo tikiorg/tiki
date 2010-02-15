@@ -2392,7 +2392,7 @@ class TrackerLib extends TikiLib
 			return;
 		}
 		$result = $this->query("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$field['fieldId']));
-		$this->register_user_vote($user, $key, $userValue);
+		$this->register_user_vote($user, $key, $userValue, array(), true);
 		$field['my_rate'] = $userValue;
 		if (!$result->numRows()) {
 			$field['voteavg'] = $field['value'] = $userValue;
