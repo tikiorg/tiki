@@ -46,7 +46,12 @@ if (!isset($_REQUEST['parse'])) {
 	$_REQUEST['parse'] = 'y';
 } else if ($_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
-	$headerlib->add_jq_onready('$jq("#edit_button").click();', 500);
+	$headerlib->add_jq_onready('
+if (typeof ajaxLoadingShow == "function") {
+	ajaxLoadingShow("tiki-center");
+}
+setTimeout (function () { $jq("#edit_button").click(); }, 500);
+', 500);
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
@@ -138,6 +143,9 @@ $jq("#edit_button").click( function () {
 		$a.text("Done");
 		$jq("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
 		$jq("#save_button").show();
+		if (typeof ajaxLoadingHide == "function") {
+			ajaxLoadingHide();
+		}
 	} else {
 		window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
 	}
