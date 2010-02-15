@@ -24,7 +24,7 @@ class CalendarLib extends TikiLib
 		$res = array();
 		$bindvars = array();
 		if ($find) {
-			$mid = "where tcal.`name` like ?";
+			$mid = "and tcal.`name` like ?";
 			$bindvars[] = '%'.$find.'%';
 		}
 	
