@@ -8,5 +8,5 @@
 		<input type="submit" value="{tr}Rate{/tr}"/>
 	</p>
 {else}
-	<a href="">{tr}You already voted on this topic.{/tr}</a>
+	{tr}You already voted on this topic.{/tr}
 {/if}

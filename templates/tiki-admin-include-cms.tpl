@@ -31,6 +31,7 @@
 
 				{preference name=feature_submissions}
 				{preference name=feature_cms_rankings}
+				{preference name=article_user_rating}
 
 				{preference name=feature_article_comments}
 				<div class="adminoptionboxchild" id="feature_article_comments_childcontainer">

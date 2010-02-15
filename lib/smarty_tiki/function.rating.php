@@ -11,8 +11,10 @@ function smarty_function_rating( $params, $smarty ) {
 		$key = $params['id'];
 	} elseif( $params['comment'] ) {
 		$key = 'comment' . $params['comment'];
+	} elseif( $params['article'] ) {
+		$key = 'article' . $params['article'];
 	} else {
-		return '<a href="">'.tra('No key provided for rating.').'</a>';
+		return tra('No key provided for rating.');
 	}
 
 	if( is_array( $params['options'] ) ) {
@@ -34,9 +36,9 @@ function smarty_function_rating( $params, $smarty ) {
 					$commentslib->vote_comment( $params['comment'], $user, $_REQUEST['rating_value'] );
 				}
 
-				return '<a href="">'.tra('Your vote was recorded.').'</a>';
+				return tra('Your vote was recorded.');
 			} else {
-				return '<a href="">'.tra('Your vote could not be recorded. You may have voted before.').'</a>';
+				return tra('Your vote could not be recorded. You may have voted before.');
 			}
 		}
 	}

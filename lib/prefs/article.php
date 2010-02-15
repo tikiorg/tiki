@@ -28,5 +28,10 @@ function prefs_article_list() {
 			'description' => tra('Divide articles into multiple pages with pagebreak markers.'),
 			'type' => 'flag',
 		),
+		'article_user_rating' => array(
+			'name' => tra('User ratings on articles'),
+			'description' => tra('Allows users to rate the articles.'),
+			'type' => 'flag',
+		),
 	);
 }
