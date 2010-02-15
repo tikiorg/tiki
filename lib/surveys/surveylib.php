@@ -417,7 +417,7 @@ class SurveyLib extends TikiLib
 		}
 
 		global $user;
-		$this->register_user_vote($user, 'survey' . $surveyId);
+		$this->register_user_vote($user, 'survey' . $surveyId, 0);
 
 		return true;
 	}
