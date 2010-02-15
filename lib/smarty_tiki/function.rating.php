@@ -13,6 +13,8 @@ function smarty_function_rating( $params, $smarty ) {
 		$key = 'comment' . $params['comment'];
 	} elseif( $params['article'] ) {
 		$key = 'article' . $params['article'];
+	} elseif( $params['wiki'] ) {
+		$key = 'wiki' . $params['wiki'];
 	} else {
 		return tra('No key provided for rating.');
 	}

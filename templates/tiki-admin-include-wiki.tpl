@@ -188,6 +188,7 @@
 		<div class="adminoptionboxchild" id="feature_wiki_ratings_childcontainer">
 			<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=ratings&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 		</div>
+		{preference name=wiki_simple_ratings}
 
 		{preference name=feature_backlinks}
 		<div class="adminoptionboxchild" id="feature_backlinks_childcontainer">

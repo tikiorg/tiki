@@ -81,6 +81,7 @@ function get_default_prefs() {
 		'feature_wiki_protect_email' => 'y',
 		'feature_wiki_rankings' => 'n',
 		'feature_wiki_ratings' => 'n',
+		'wiki_simple_ratings' => 'n',
 		'feature_wiki_replace' => 'n',
 		'feature_wiki_show_hide_before' => 'n',
 		'feature_wiki_tables' => 'new',

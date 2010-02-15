@@ -510,5 +510,10 @@ function prefs_wiki_list() {
 			'filter' => 'digits',
 			'dependencies' => array( 'feature_backlinks' ),
 		),
+		'wiki_simple_ratings' => array(
+			'name' => tra('Simple wiki ratings'),
+			'description' => tra('Enable users to rate articles based on a simple numeric scale.'),
+			'type' => 'flag',
+		),
 	);
 }
