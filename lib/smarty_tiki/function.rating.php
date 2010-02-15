@@ -7,23 +7,28 @@ function smarty_function_rating( $params, $smarty ) {
 		return tra('Cookies must be enabled to vote.');
 	}
 
+	if( ! isset( $params['options'] ) ) {
+		$options = range( 1, 5 );
+	} elseif( is_array( $params['options'] ) ) {
+		$options = $params['options'];
+	} else {
+		$options = explode( ',', $params['options'] );
+	}
+
 	if( isset( $params['id'] ) ) {
 		$key = $params['id'];
 	} elseif( $params['comment'] ) {
 		$key = 'comment' . $params['comment'];
 	} elseif( $params['article'] ) {
 		$key = 'article' . $params['article'];
+		$options = $tikilib->get_preference( 'article_user_rating_options', range(1,5), true );
 	} elseif( $params['wiki'] ) {
 		$key = 'wiki' . $params['wiki'];
+		$options = $tikilib->get_preference( 'wiki_simple_ratings_options', range(1,5), true );
 	} else {
 		return tra('No key provided for rating.');
 	}
 
-	if( is_array( $params['options'] ) ) {
-		$options = $params['options'];
-	} else {
-		$options = explode( ',', $params['options'] );
-	}
 
 	$revote = isset( $params['revote'] ) && $params['revote'] == 'y';
 

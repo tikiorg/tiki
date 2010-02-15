@@ -4497,9 +4497,15 @@ class TikiLib extends TikiDb_Bridge
 		return $preferences;
 	}
 
-	function get_preference($name, $default = '') {
+	function get_preference($name, $default = '', $expectArray = false ) {
 		global $prefs;
-		return isset($prefs[$name]) ? $prefs[$name] : $default;
+		$value = isset($prefs[$name]) ? $prefs[$name] : $default;
+
+		if( $expectArray && is_string( $value ) ) {
+			return unserialize( $value );
+		} else {
+			return $value;
+		}
 	}
 
 	function delete_preference($name) {

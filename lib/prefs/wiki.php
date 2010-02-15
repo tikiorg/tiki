@@ -515,5 +515,12 @@ function prefs_wiki_list() {
 			'description' => tra('Enable users to rate articles based on a simple numeric scale.'),
 			'type' => 'flag',
 		),
+		'wiki_simple_ratings_options' => array(
+			'name' => tra('Wiki rating options'),
+			'description' => tra('List of options available for the rating of wiki pages.'),
+			'type' => 'text',
+			'separator' => ',',
+			'filter' => 'int',
+		),
 	);
 }

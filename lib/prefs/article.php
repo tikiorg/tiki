@@ -33,5 +33,12 @@ function prefs_article_list() {
 			'description' => tra('Allows users to rate the articles.'),
 			'type' => 'flag',
 		),
+		'article_user_rating_options' => array(
+			'name' => tra('Article rating options'),
+			'description' => tra('List of options available for the rating of articles.'),
+			'type' => 'text',
+			'separator' => ',',
+			'filter' => 'int',
+		),
 	);
 }
