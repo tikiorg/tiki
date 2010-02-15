@@ -631,7 +631,7 @@ class RSSLib extends TikiLib
 
 		$expire = $publication + 3600*24*$configuration['expiry'];
 
-		$id = $artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '' );
+		$id = $artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
 
 		if( count( $configuration['categories'] ) ) {
 			global $categlib; require_once 'lib/categories/categlib.php';
@@ -680,6 +680,7 @@ class RSSLib extends TikiLib
 			'topic' => 0,
 			'future_publish' => -1,
 			'categories' => array(),
+			'rating' => 5,
 		);
 
 		foreach( $actions as $action ) {
