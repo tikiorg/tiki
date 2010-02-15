@@ -26,11 +26,12 @@ DBUSER=${user_tiki:-'root'}
 DBPASS=${pass_tiki:-''}
 
 NOWDATE=`date +%Y-%m-%d`
-DUMPFILE="site_backup.$VIRTUAL.$DATE.sql"
+DUMPFILE="$DBNAME-$NOWDATE-sql.bz2"
 
 cd $ARCHIVEDIR
 
 mysqldump -Q -u $DBUSER -h$DBHOST -p$DBPASS $DBNAME | bzip2 -c > $DUMPFILE
-scp -C $DUMPFILE $SCPTO
-rm $DUMPFILE
-
+if [ "$SCPTO" ]; then 
+	scp -C $DUMPFILE $SCPTO
+	rm $DUMPFILE
+fi
