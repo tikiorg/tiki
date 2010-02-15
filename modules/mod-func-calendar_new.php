@@ -108,6 +108,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		$smarty->assign('var', '');
 		$smarty->assign('myurl', 'tiki-calendar.php');
 		$smarty->assign('show_calendar_module', 'y');
+		$smarty->assign('calendarViewMode', $calendarViewMode);
 
 		if ( isset($save_todate) ) {
 			$_REQUEST['todate'] = $save_todate;
