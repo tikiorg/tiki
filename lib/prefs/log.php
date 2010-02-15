@@ -16,7 +16,7 @@ function prefs_log_list() {
 		'log_tpl' => array(
 			'name' => tra('Smarty Template usage indicator'),
 			'description' => tra('Add HTML comment at start and end of each Smarty template (TPL)'),
-			'hint' => tra('Use only for developement, not in production because these warnings are added to emails as well, and visible to the users'),
+			'hint' => tra('Use only for development, not in production because these warnings are added to emails as well, and visible to the users'),
 			'type' => 'flag',
 		),
 		'log_sql' => array(
