@@ -483,6 +483,12 @@ foreach ($languages as $ksel => $sel) {
   if (!$nohelp && !$completion) {
     // Good to have instructions for translators in the release file.
     // The comments get filtered away by Smarty anyway
+    writeFile_and_User ($fw, "// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project\n");
+    writeFile_and_User ($fw, "// \n");
+    writeFile_and_User ($fw, "// All Rights Reserved. See copyright.txt for details and a complete list of authors.\n");
+    writeFile_and_User ($fw, "// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.\n");
+    writeFile_and_User ($fw, "// \$Id$");
+    writeFile_and_User ($fw, "\n");
     writeFile_and_User ($fw, "// Parameters:\n\n");
     writeFile_and_User ($fw, "// lang=xx    : only translates language 'xx',\n");
     writeFile_and_User ($fw, "//              if not given all languages are translated\n");
