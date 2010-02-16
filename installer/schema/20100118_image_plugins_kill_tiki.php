@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $tikilib;
+global $tikilib, $prefs, $tikiroot, $user_overrider_prefs, $tiki_p_trust_input;	// globals are required here for tiki-setup_base.php
 include_once('tiki-setup_base.php');
 
 function upgrade_20100118_image_plugins_kill_tiki( $installer ) {
