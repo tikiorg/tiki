@@ -22,21 +22,22 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 	// $edit describes what was supposed to be given by tiki_p_edit_categorized
 	// this time use a subset of it to assign tiki_p_modify_object_categories
 
-	global $prefs, $installer;
+	global $installer;
 	
 	$query = "SELECT `name`, `value` FROM `tiki_preferences` WHERE `name`='feature_categories'";
 	@$result = $installer->query($query);
 
+	$feature_cats = false;
 	if ( $result ) {
 		while ( $res = $result->fetchRow() ) {
-			if ( ! isset($prefs[$res['name']]) ) {
-				$prefs[$res['name']] = $res['value'];
+			if ( isset($res['value']) && $res['value'] == 'y' ) {
+				$feature_cats = true;
 			}
 		}
 	}
 	
 	
-	if ($prefs['feature_categories'] == 'y') {	// only relevant if categories are enabled
+	if ($feature_cats) {	// only relevant if categories are enabled
 
 		$edit[] = 'tiki_p_modify_tracker_items';
 		$edit[] = 'tiki_p_create_tracker_items';
@@ -136,6 +137,6 @@ function upgrade_20091123_upgrade_categperm_2_tiki( $installer) {
 		$installer->query('update `users_permissions` set `permDesc`=\'Obsolete tw>=4 (Can search on objects of this category)\' where `permName`=\'tiki_p_search_categorized\';');
 		
 		
-	}	// end if ($prefs['feature_categories'])	
+	}	// end if ($a_pref['feature_categories'])	
 	
 }
