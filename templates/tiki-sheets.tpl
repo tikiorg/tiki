@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Spreadsheet"}{tr}TikiSheet{/tr}{/title}
+{title help="Spreadsheet"}{tr}Spreadsheets{/tr}{/title}
 
 {if $tiki_p_edit_sheet eq 'y'}
 {if $edit_mode eq 'y'}
