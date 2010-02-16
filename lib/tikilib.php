@@ -5600,19 +5600,25 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function plugin_info( $name ) {
+		static $known = array();
+
+		if( isset( $known[$name] ) ) {
+			return $known[$name];
+		}
+
 		if( ! $this->plugin_exists( $name, true ) )
-			return false;
+			return $known[$name] = false;
 
 		$func_name_info = "wikiplugin_{$name}_info";
 
 		if( ! function_exists( $func_name_info ) ) {
 			if( $info = $this->plugin_alias_info( $name ) )
-				return $info['description'];
+				return $known[$name] = $info['description'];
 			else
-				return false;
+				return $known[$name] = false;
 		}
 
-		return $func_name_info();
+		return $known[$name] = $func_name_info();
 	}
 
 	function plugin_alias_info( $name ) {
