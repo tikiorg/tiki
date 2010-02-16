@@ -74,26 +74,27 @@ if (!isset($local_php) or !is_file($local_php)) {
 } else {
 	$local_php = preg_replace(array('/\.\./','/^db\//'),array('',''),$local_php);
 }
+$tikidomain = '';
 if (is_file('db/virtuals.inc')) {
-	if (!isset($multi)) {
-		if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
-			$multi = $_SERVER['TIKI_VIRTUAL'];
-		} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
-			$multi = $_SERVER['SERVER_NAME'];
-		} elseif (isset($_SERVER['HTTP_HOST'])) {
-			if (is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
-				$multi = $_SERVER['HTTP_HOST'];
-			} else if (is_file('db/'.preg_replace('/^www\./','',$_SERVER['HTTP_HOST']).'/local.php')) {
-				$multi = preg_replace('/^www\./','',$_SERVER['HTTP_HOST']);
-			}
+	if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
+		$tikidomain = $_SERVER['TIKI_VIRTUAL'];
+	} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
+		$tikidomain = $_SERVER['SERVER_NAME'];
+	} else if (isset($_REQUEST['multi']) && is_file('db/'.$_REQUEST['multi'].'/local.php')) {
+		$tikidomain = $_REQUEST['multi'];
+	} elseif (isset($_SERVER['HTTP_HOST'])) {
+		if (is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
+			$tikidomain = $_SERVER['HTTP_HOST'];
+		} else if (is_file('db/'.preg_replace('/^www\./','',$_SERVER['HTTP_HOST']).'/local.php')) {
+			$tikidomain = preg_replace('/^www\./','',$_SERVER['HTTP_HOST']);
 		}
 	}
-	if (isset($multi)) {
-		$local_php = "db/$multi/local.php";
-		
-		$tikidomain = $multi;
+	if (!empty($tikidomain)) {
+		$local_php = "db/$tikidomain/local.php";
 	}
 }
+$tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
+
 $re = false;
 if ( file_exists($local_php) ) $re = include($local_php);
 if ( $re === false ) {

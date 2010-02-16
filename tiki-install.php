@@ -16,6 +16,8 @@ if (version_compare(PHP_VERSION, '5.0.0', '<')) {
 	createPage($title, $content);
 }
 
+include_once('db/tiki-db.php');	// to set up multitiki etc if there
+
 // if tiki installer is locked (probably after previous installation) display notice
 if (file_exists('db/lock')) {
 	$title = 'Tiki Installer Disabled';
@@ -48,8 +50,8 @@ class InstallerDatabaseErrorHandler implements TikiDb_ErrorHandler
 }
 
 // Were database details defined before? If so, load them
-if (file_exists('db/local.php')) {
-	include 'db/local.php';
+if (file_exists('db/'.$tikidomainslash.'local.php')) {
+	include 'db/'.$tikidomainslash.'local.php';
 
 	// In case of replication, ignore it during installer.
 	unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );

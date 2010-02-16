@@ -434,6 +434,8 @@ if (!empty($multi)) {
 }
 
 $tikidomain = $multi;
+$tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
+
 include 'lib/cache/cachelib.php';
 $cachelib->empty_full_cache();
 
