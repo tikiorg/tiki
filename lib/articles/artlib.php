@@ -337,6 +337,8 @@ class ArtLib extends TikiLib
 		    $smarty->assign('mail_date', $this->now);
 		    $smarty->assign('mail_user', $user);
 		    $smarty->assign('mail_data', $heading."\n----------------------\n".$body);
+		    $smarty->assign('mail_heading', $heading);
+		    $smarty->assign('mail_body', $body);
 		    $foo = parse_url($_SERVER["REQUEST_URI"]);
 		    $machine = $tikilib->httpPrefix( true ). $foo["path"];
 		    $smarty->assign('mail_machine', $machine);
