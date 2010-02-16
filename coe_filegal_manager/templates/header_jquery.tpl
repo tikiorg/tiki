@@ -19,6 +19,7 @@
 <script type="text/javascript" src="lib/jquery/jquery-ui/ui/ui.draggable.js"></script>
 <script type="text/javascript" src="lib/jquery/jquery-ui/ui/ui.resizable.js"></script>
 <script type="text/javascript" src="lib/jquery/jquery-ui/ui/ui.dialog.js"></script>
+<script type="text/javascript" src="lib/filegals/file_gallery.js"></script>
 {if $prefs.feature_jquery_tooltips eq 'y'}
 <script type="text/javascript" src="lib/jquery/cluetip/lib/jquery.hoverIntent.js"></script>
 <script type="text/javascript" src="lib/jquery/cluetip/lib/jquery.bgiframe.min.js"></script>

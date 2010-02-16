@@ -8,3 +8,6 @@
 .ui-dialog .ui-dialog-content button, .ui-widget .ui-dialog-content button, .ui-widget-content .ui-dialog-content button, .ui-corner-all .ui-dialog-content button,
 .ui-dialog .ui-dialog-content select, .ui-widget .ui-dialog-content select, .ui-widget-content .ui-dialog-content select, .ui-corner-all .ui-dialog-content select,
 .ui-dialog .ui-dialog-content textarea, .ui-widget .ui-dialog-content textarea, .ui-widget-content .ui-dialog-content textarea, .ui-corner-all .ui-dialog-content textarea { font-size: 12px !important; background: auto !important; }
+
+.fg-toolbar-search-input, #fg-toolbar-search-input { width: 147px; height: 21px; border: 0px; background: url(../images/file_gallery/search.gif) no-repeat !important; float: left; padding: 4px 4px 0px 4px; font-size: 11px; color: #999999; display: block; }
+

@@ -252,6 +252,7 @@ function searchrep() {
 										<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:openFgalsWindow('{filegal_manager_url area_name=editwiki}');return false;" name="uploadpicture" />
 										<div id="fg-jquery-dialog"></div>
 										<div id="fg-jquery-upload-dialog"></div>
+										<div id="fg-jquery-gallery-dialog"></div>
 									{else}
 										<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 										<input type="hidden" name="hasAlreadyInserted" value="" />

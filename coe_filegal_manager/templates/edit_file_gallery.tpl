@@ -2,6 +2,7 @@
 {if $tiki_p_create_file_galleries eq 'y'}
 <div class="fg-folder-dialog">
 	<h1>{if $galleryId eq 0}{tr}Create a File Gallery{/tr}{else}{tr}Edit Gallery:{/tr}{/if}</h1>
+	<a class="fg-upload-close" onclick="FileGallery.closeGallery()"><img src="images/file_gallery/close.gif" border="0"/></a>
 	{if $individual eq 'y'}
 	<br /><a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
 	{/if}
@@ -46,7 +47,7 @@
 				</tr>
 				<tr>
 					<td class="formcolor"><label for="description">{tr}Description{/tr}:</label></td>
-					<td class="formcolor"><textarea rows="5" cols="40" id="description" name="description" style="width:100%">{$gal_info.description|escape}</textarea><br/><em>{tr}Required for podcasts{/tr}.</em></td>
+					<td class="formcolor"><textarea rows="5" cols="40" id="description" name="description" style="width:90%">{$gal_info.description|escape}</textarea><br/><em>{tr}Required for podcasts{/tr}.</em></td>
 				</tr>
 				<tr>
 					<td class="formcolor"><label for="visible">{tr}Gallery is visible to non-admin users{/tr}.<label></td>

@@ -722,7 +722,8 @@ if ($_REQUEST['galleryId'] == 0) {
 // Get listing display config
 include_once ('fgal_listing_conf.php');
 
-$smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
+$view = isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value'];
+$smarty->assign('view', $view);
 $other = (isset($_REQUEST['view'])&&$_REQUEST['view']=='browse'?'list':'browse');
 $smarty->assign('altmode', $_SERVER['PHP_SELF']."?view=".$other."&filegals_manager=".$_REQUEST["filegals_manager"].(isset($_REQUEST["galleryId"])?"&galleryId=".$_REQUEST["galleryId"]:""));
 // Display the template

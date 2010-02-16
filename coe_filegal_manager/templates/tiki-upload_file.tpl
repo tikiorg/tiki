@@ -21,7 +21,9 @@
 <input type="hidden" name="upload" />
 {/if}
 
-<div class="fg-upload{if $extra eq '1'} fg-upload-extra{/if}">
+<script src="lib/filegals/file_gallery.js" language="JavaScript"></script>
+<link rel="stylesheet" type="text/css" href="css/file_gallery.css"/>
+<div class="fg-upload{if $extra eq '1'} fg-upload-extra{/if}{if $fgspecial eq ''}{if $filegals_manager eq ''} fg-standalone{/if}{/if}">
 	<h2>Upload file</h2>
 	<a class="fg-upload-close" onclick="FileGallery.upload.close()"><img src="images/file_gallery/close.gif" border="0"/></a>
 
@@ -35,6 +37,7 @@
 	{/if}
 	
 	{if $prefs.javascript_enabled eq 'y'}
+	{remarksbox}{/remarksbox}
 	<div id="upload_progress">
 	<iframe id="upload_progress_0" name="upload_progress_0" height="1" width="1" style="border:0px none"></iframe>
 	</div>

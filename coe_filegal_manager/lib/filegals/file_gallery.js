@@ -1,26 +1,51 @@
 var FileGallery = {
 	dialogmode: true,
-	open: function(url) {
+	form: function(id) {
+		var form = $('form#'+id);
+		var data = {};
+		$('input[name]', form).each(function(){
+			if ($(this).attr('type')=="radio" && $(this).attr('checked') || $(this).attr('type')!="radio")
+				if ($(this).val())
+					data[$(this).attr('name')] = $(this).val();
+		});
+		$('textarea[name]', form).each(function(){
+			data[$(this).attr('name')] = $(this).val();
+		});
+		$('select[name]', form).each(function(){
+			data[$(this).attr('name')] = $(this).val();
+		});
+		return data;
+	},
+	open: function(url, form) {
 		if (!this.dialogmode) {
-			window.location = url;
+			if (form)
+				return true;
+			else
+				window.location = url;
 			return;
 		}
 		if (this.dialogmode) {
 			$('#fg-jquery-dialog').dialog({
 				autoOpen: false,
 				width: 702,
-	//			modal: true,
+				modal: false,
 				resizable: false,
-				draggable: false
+				draggable: true,
+				stack: false 
 			});
+			$('.ui-draggable').draggable({handle:'h1'});
 		}
-		$('#fg-jquery-dialog').load(url, function() {
+		var data = '';
+		if (form)
+			data = this.form(form);
+		$('#fg-jquery-dialog').load(url, data, function() {
 			if (FileGallery.dialogmode) {
 				$('#fg-jquery-dialog').dialog('option','height','auto');
 				$('#fg-jquery-dialog').dialog('open');
 			}
 			$('.fg-pager a').bind('click', function(e) { FileGallery.open(this.href); return false; });
-		})
+		});
+		return false;
 	},
 	close: function() {
 		FileGallery.upload.close();
@@ -67,16 +92,18 @@ var FileGallery = {
 		$("#fg-tab-"+name).show();
 	},
 	editGallery: function(url) {
-		$("#fg-jquery-upload-dialog").load(url, function() {
-			$("#fg-jquery-upload-dialog").dialog({
+		$("#fg-jquery-gallery-dialog").load(url, function() {
+			$("#fg-jquery-gallery-dialog").dialog({
 				autoOpen: false,
-				width: 504,
-//				modal: true,
+				width: 500,
+				modal: false,
 				resizable: false,
-				draggable: false
+				draggable: true,
+				stack: false 
 			});
-			$("#fg-jquery-upload-dialog").dialog('option','height','auto');
-			$("#fg-jquery-upload-dialog").dialog('open');
+//			$("#fg-jquery-gallery-dialog").dialog('option','height','auto');
+//			$("#fg-jquery-gallery-dialog").dialog('option','width','504');
+			$("#fg-jquery-gallery-dialog").dialog('open');
 		});
 	},
 	saveGallery: function() {
@@ -84,8 +111,11 @@ var FileGallery = {
 		var url = $("#fg-folder-form").attr("action");
 		url += (url.indexOf("?") ? "&" : "?")+params;
 		$.post(url, null, function(data) {
-			$("#fg-jquery-upload-dialog").html(data);
+			$("#fg-jquery-gallery-dialog").html(data);
 		});
+	},
+	closeGallery: function() {
+		$("#fg-jquery-gallery-dialog").dialog("close");
 	}
 }
 
@@ -102,12 +132,13 @@ FileGallery.upload = {
 			autoOpen: false,
 			width: 587,
 			resizable: false,
-			draggable: false
+			draggable: true,
+			stack: false 
 		});
 	},
 	show: function(gallery, fm) {
 		this.dialog();
-		$("#fg-jquery-upload-dialog").load("tiki-upload_file.php?galleryId="+gallery+"&filegals_manager="+fm, function() {
+		$("#fg-jquery-upload-dialog").load("tiki-upload_file.php?galleryId="+gallery+"&filegals_manager="+fm+"&fgspecial=1", function() {
 			$("#fg-jquery-upload-dialog").dialog("option", "height", "auto");
 			$("#fg-jquery-upload-dialog").dialog("open")
 		});
@@ -124,7 +155,9 @@ FileGallery.upload = {
 	},
 	progress: function(id,msg) {
 //			alert ('progress_'+id);
-		document.getElementById('progress_'+id).innerHTML = msg;
+//		document.getElementById('progress_'+id).innerHTML = msg;
+		$(".fg-upload > .tip").show();
+		$(".fg-upload > .tip > .rbox-data").html(msg);
 	},
 	do_submit: function(n) {
 		this.asimage = $("#fg-insert-as-image").css("display")=="block";
@@ -157,12 +190,12 @@ FileGallery.upload = {
 		});
 	},
 	insertImage: function(file, defsize, width, height) {
-		insertAt("edit", "{img fileId="+file+(defsize?"":" width="+width+" height="+height)+"}", false, false, true);
+		this.insertAt("editwiki", "{img fileId="+file+(defsize?"":" width="+width+" height="+height)+"}", false, false, true);
 		$("#fg-jquery-dialog").dialog('close');
 		$("#fg-jquery-upload-dialog").dialog('close');
 	},
 	insertLink: function(file, title) {
-		insertAt('edit', '[tiki-download_file.php?fileId='+file+'|'+title+']', false, false, true);
+		this.insertAt('editwiki', '[tiki-download_file.php?fileId='+file+'|'+title+']', false, false, true);
 		$("#fg-jquery-dialog").dialog('close');
 		$("#fg-jquery-upload-dialog").dialog('close');
 	},
@@ -175,6 +208,27 @@ FileGallery.upload = {
 		} else {
 			$("#fg-insert-as-image").hide();
 			$("#fg-insert-as-link").show();
+		}
+	},
+	insertAt: function(id, text) {
+		var textarea = document.getElementById(id);
+		
+		if( document.selection && document.selection.createRange().text.length ) {
+			var range = document.selection.createRange();
+			var stored_range = range.duplicate();
+			stored_range.moveToElementText( textarea );
+			stored_range.setEndPoint( 'EndToEnd', range );
+			textarea.selectionStart = stored_range.text.length - range.text.length;
+			textarea.selectionEnd = textarea.selectionStart + range.text.length;
+		}
+		
+		if (textarea.selectionStart<=textarea.selectionEnd && textarea.selectionEnd>0 && textarea.selectionStart>=0) {
+		alert(textarea.selectionStart);
+			textarea.value = textarea.value.substr(0, textarea.selectionStart)+text+textarea.value.substr(textarea.selectionEnd);
+			textarea.selectionStart = 0;
+			textarea.selectionEnd = 0;
+		} else {
+			textarea.value = textarea.value + text;
 		}
 	}
 }

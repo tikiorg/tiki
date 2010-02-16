@@ -1,4 +1,5 @@
 // $Id$
+
 var feature_no_cookie = 'n';
 
 function browser() {

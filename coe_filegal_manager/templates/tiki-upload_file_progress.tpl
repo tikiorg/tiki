@@ -52,7 +52,11 @@
 	if (!parent.document.getElementById("fg-insert-as-image"))
 		parent.FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&filegals_manager={$filegals_manager}');
 {else}
-	parent.FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&filegals_manager={$filegals_manager}');
-	parent.FileGallery.upload.close();
+	{if $fgspecial neq ''}
+		parent.FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&filegals_manager={$filegals_manager}');
+		parent.FileGallery.upload.close();
+	{else}
+		parent.location = 'tiki-list_file_gallery.php?galleryId={$galleryId}';
+	{/if}
 {/if}
 </script>

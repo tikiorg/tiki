@@ -1,8 +1,10 @@
 
-{asssign var=colcnt value='0'}
+{assign var=colcnt value='0'}
+{assign var=index value='0'}
 <table border="0" cellspacing="0" cellpadding="0" class="fg-gallery-view">
 <tr>
 {section name=changes loop=$files}
+    {assign var=index value=$index+1}
 	{if $colcnt eq '3'}
 		</tr>
 		<tr>
@@ -38,20 +40,33 @@
 			{/if}
 		{/if}
 	{/strip}{/capture}
+    {capture name=over_actions}{strip}
+    <div class='opaque'>
+      <div class='box-title'>{tr}Actions{/tr}</div>
+      <div class='box-data'>
+        {include file='fgal_context_menu.tpl' menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text}
+      </div>
+    </div>
+    {/strip}{/capture}
 	{math equation="x + 6" x=$thumbnail_size assign=thumbnailcontener_size}
 	<td id="colid-{$colcnt}">
 		<div class="fg-gallery-view-tools">
 			<input type="checkbox" name="{$checkname}[]" value="{$files[changes].id}"/><br/>
-			<img src="images/file_gallery/icon-file-tools.gif" border="0"/>
+			<!--img src="images/file_gallery/icon-file-tools.gif" border="0"/-->
+			<a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
 		</div>
 		<div class="fg-gallery-view-entry">
-			<div class="fg-gallery-view-image" onmouseover="this.className='fg-gallery-view-image fg-hover'" onmouseout="this.className='fg-gallery-view-image'">
+            {assign var=nb_over_infos value=0}
+			<div class="fg-gallery-view-image" onmouseover1="this.className='fg-gallery-view-image fg-hover'" onmouseout1="this.className='fg-gallery-view-image'">
 				{assign var=key_type value=$files[changes].type|truncate:9:'':true}
-				<a {$link}{if $prefs.feature_shadowbox eq 'y' && $filegals_manager eq ''} rel="shadowbox[gallery];type={if $key_type eq 'image/png' or $key_type eq 'image/jpe' or $key_type eq 'image/gif'}img{else}iframe{/if}"{/if}{if $over_infos neq ''} {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}{else} title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} ({$files[changes].description|escape}){/if}"{/if}>
+				<a onmouseover="return convertOverlib(this, $('#fg-gallery-view-info-{$index}').html(), ['FULLHTML'])" {$link}{if $prefs.feature_shadowbox eq 'y' && $filegals_manager eq ''} rel="shadowbox[gallery];type={if $key_type eq 'image/png' or $key_type eq 'image/jpe' or $key_type eq 'image/gif'}img{else}iframe{/if}"{/if} title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} ({$files[changes].description|escape}){/if}">
 					<img src="{$files[changes].id|sefurl:thumbnail}" alt="" />
 				</a>
-				<div class="fg-gallery-view-info">
-					<h3>Properties</h3>
+				<div id="fg-gallery-view-info-{$index}" style="display:none">
+				  <div class="fg-gallery-view-info">
+				    <div class='box-title'>{tr}Properties{/tr}</div>
+				    <div class='box-data'>
+				      <div>
 						{foreach from=$fgal_listing_conf item=item key=propname}
 							{assign var=key_name_len value=16}
 							{if isset($item.key)}
@@ -84,7 +99,10 @@
 									{$item.name}: <b>{$propval}</b><br/>
 								{/if}
 							{/if}
-						{/foreach}
+					    {/foreach}
+					  </div>
+				    </div>
+				  </div>   
 				</div>
 			</div>
 			<div class="fg-gallery-view-name">

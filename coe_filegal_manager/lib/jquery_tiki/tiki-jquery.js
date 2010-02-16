@@ -150,7 +150,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			
 			options.splitTitle = '|';
 			options.showTitle = false;
-			options.cluezIndex = 400;
+			options.cluezIndex = 1100;
 			options.dropShadow = true;
 			options.fx = {open: 'fadeIn', openSpeed: 'fast'};
 			options.closeText = 'x';
@@ -178,7 +178,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 					$jq(el).width($jq(window).width() * 0.8);
 				}
 				options.width = $jq(el).width();
-				document.body.removeChild(el);
+//				document.body.removeChild(el);
 				
 				element.tipWidth = options.width;
 			}
