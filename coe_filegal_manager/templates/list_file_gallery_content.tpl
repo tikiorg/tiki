@@ -1,4 +1,5 @@
 {if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
+
 <table class="normal" cellspacing="0" cellpadding="0" class="fg-list-view">
   <tr>
   {if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
