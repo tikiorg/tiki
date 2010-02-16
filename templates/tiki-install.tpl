@@ -307,7 +307,7 @@
 			<fieldset><legend>{tr}Upgrade{/tr}</legend>
 			{if $tikidb_oldPerms gt 0}
 				{remarksbox type="warning" title="{tr}Warning: Category Permissions Will Not Be Upgraded{/tr}" close="n"}
-					{tr}Category permissions have been revamped in version 4. If you have been using category permissions, note that they may not work properly after upgrading to version 4, and it will be necessary to reconfigure them.{/tr}
+					{tr}Category permissions have been revamped since version 3. If you have been using category permissions, note that they may not work properly after upgrading to version 4 onwards, and it will be necessary to reconfigure them.{/tr}
 				{/remarksbox}
 			{/if}
 			<p>{tr}Automatically upgrade your existing database to v{/tr}{$tiki_version_name}.</p>
