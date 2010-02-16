@@ -1192,7 +1192,8 @@ class TikiLib extends TikiDb_Bridge
 				$path = "tiki-show_user_avatar.php?user=$user";
 
 				if( $prefs['users_serve_avatar_static'] == 'y' ) {
-					$files = glob( "temp/public/avatar_$user.*" );
+					global $tikidomain;
+					$files = glob( "temp/public/$tikidomain/avatar_$user.*" );
 
 					if( count( $files ) ) {
 						$path = $files[0];
