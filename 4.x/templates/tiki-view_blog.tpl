@@ -1,3 +1,4 @@
+{if !isset($show_heading) or $show_heading neq "n"}
 <div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}</div>
 {if strlen($heading) > 0 and $prefs.feature_blog_heading eq 'y'}
   {eval var=$heading}
@@ -60,9 +61,10 @@ class="icon">{$watching_categories[i].name}</a>&nbsp;
         -->	*}
 	</div>
 {/if}
+{/if}
 
 {section name=ix loop=$listpages}
-<div class="post{if !empty($container_class)} {$container_class}{/if}">
+<div class="post">
 	<div class="clearfix postbody">
 		<div class="author_actions clearfix">
 			<div class="actions">
