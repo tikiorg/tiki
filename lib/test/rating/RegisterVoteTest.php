@@ -2,7 +2,7 @@
 
 require_once 'lib/rating/ratinglib.php';
 
-class RegisterVoteTest extends TikiTestCase
+class Rating_RegisterVoteTest extends TikiTestCase
 {
 	function setUp() {
 		global $user; $user = null;
