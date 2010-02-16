@@ -166,6 +166,13 @@ if ($prefs['feature_ajax'] == "y") {
 	}
 	user_information_ajax();
 }
+// Get full user picture if it is set
+if ($prefs["user_store_file_gallery_picture"] == 'y') {
+	require_once ('lib/userprefs/userprefslib.php');
+	if ($user_picture_id = $userprefslib->get_user_picture_id($userwatch)) {	
+		$smarty->assign('user_picture_id', $user_picture_id);
+	}	
+}
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-user_information.tpl');
