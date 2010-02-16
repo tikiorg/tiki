@@ -189,14 +189,14 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			'mes' => tra("The passwords do not match")
 		);
                $AddUser=false;
-         } elseif (empty($_REQUEST["pass"])) {
+	} elseif (empty($_REQUEST["pass"]) && empty($_REQUEST["genepass"])) {
 		$tikifeedback[] = array(
 			'num' => 1,
 			'mes' => tra("Password not set")
 		);
                $AddUser=false;
 	 }
-                
+	$newPass = $_POST["pass"] ? $_POST["pass"] : $_POST["genepass"];                
 	// Check if the user already exists
 	if ($userlib->user_exists($_REQUEST["name"])) {
 			$tikifeedback[] = array(
@@ -222,7 +222,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	// end verify newuser info
 	if ($AddUser) {
 		$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on');
-		$polerr = $userlib->check_password_policy($_POST["pass"]);
+		$polerr = $userlib->check_password_policy($newPass);
 			if (strlen($polerr) > 0) {
 				$smarty->assign('msg', $polerr);
 				$smarty->display("error.tpl");
@@ -236,14 +236,14 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			} else {
 				$apass = '';
 			}
-			if ($userlib->add_user($_REQUEST['name'], $_REQUEST['pass'] , $_REQUEST['email'], $pass_first_login?$_REQUEST['pass']:'', $pass_first_login, $apass, NULL, ($send_validation_email?'u':NULL))) {
+			if ($userlib->add_user($_REQUEST['name'], $newPass , $_REQUEST['email'], $pass_first_login ? $newPass : '', $pass_first_login, $apass, NULL, ($send_validation_email?'u':NULL))) {
 				$tikifeedback[] = array(
 					'num' => 0,
 					'mes' => sprintf(tra("New %s created with %s %s.") , tra("user") , tra("username") , $_REQUEST["name"])
 				);
 				if ($send_validation_email) {
 					// No need to send credentials in mail if the user is forced to choose a new password after validation
-					$realpass = $pass_first_login ? '' : $_REQUEST["pass"];
+					$realpass = $pass_first_login ? '' : $newPass;
 					$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email'], '', '', '', 'user_creation_validation_mail', $realpass);
 				}
 				$cookietab = '1';
@@ -535,25 +535,26 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				}
 			}
 		}
-		if (isset($_POST['pass']) && $_POST["pass"]) {
+		if ((isset($_POST['pass']) && $_POST["pass"]) || (isset($_POST['genepass']) && $_POST['genepass'])) {
 			if ($_POST["pass"] != $_POST["pass2"]) {
 				$smarty->assign('msg', tra("The passwords do not match"));
 				$smarty->display("error.tpl");
 				die;
 			}
 			if ($tiki_p_admin == 'y' || $tiki_p_admin_users == 'y' || $userinfo['login'] == $user) {
-				$polerr = $userlib->check_password_policy($_POST["pass"]);
+				$newPass = $_POST["pass"] ? $_POST["pass"] : $_POST["genepass"];
+				$polerr = $userlib->check_password_policy($newPass);
 				if (strlen($polerr) > 0) {
 					$smarty->assign('msg', $polerr);
 					$smarty->display("error.tpl");
 					die;
 				}
-				if ($userlib->change_user_password($userinfo['login'], $_POST['pass'])) {
+				if ($userlib->change_user_password($userinfo['login'], $newPass)) {
 					$tikifeedback[] = array(
 						'num' => 0,
 						'mes' => sprintf(tra("%s modified successfully.") , tra("password"))
 					);
-					$logslib->add_log('adminusers', 'changed password for ' . $_POST['name']);
+					$logslib->add_log('adminusers', 'changed password for ' . $newPass);
 				} else {
 					$tikifeedback[] = array(
 						'num' => 0,
