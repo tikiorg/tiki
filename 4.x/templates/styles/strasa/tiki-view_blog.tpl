@@ -1,4 +1,5 @@
 {* $Id$ *}
+{if !isset($show_heading) or $show_heading neq "n"}
 <a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}
 {if strlen($heading) > 0 and $prefs.feature_blog_heading eq 'y'}
 	{eval var=$heading}
@@ -54,9 +55,10 @@ class="icon">{$watching_categories[i].name}</a>&nbsp;
 		</form>
 	</div>
 {/if}
+{/if}
 
 {section name=ix loop=$listpages}
-<div class="post">
+<div class="post{if !empty($container_class)} {$container_class}{/if}">
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 		{if $listpages[ix].freetags.data|@count >0}
 	<div class="freetaglist">
