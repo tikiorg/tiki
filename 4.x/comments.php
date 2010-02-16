@@ -44,7 +44,9 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 		foreach ( $handled_requests as $request_name )
 			if ( isset($_SESSION['forums_'.$request_name]) && ! isset($_REQUEST[$request_name]) )
 				$$request_name = $_SESSION['forums_'.$request_name];
-
+		if (empty($thread_sort_mode)) {
+			$thread_sort_mode = $prefs['forum_thread_sort_mode'];
+		}
 	} else {
 		// Fallback to global values if 'forum_thread_user_settings_keep' is disabled AND if :
 		//    - forum specific settings are set to empty (i.e. 'default')
