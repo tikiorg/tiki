@@ -76,6 +76,9 @@ class Installer extends TikiDb_Bridge
 		$secdb = dirname(__FILE__) . '/../db/tiki-secdb_' . $dbversion_tiki . '_mysql.sql';
 		if( file_exists( $secdb ) )
 			$this->runFile( $secdb );
+		
+		$display_errors = ini_get('display_errors');
+		ini_set('display_errors', 'Off');
 
 		$patches = $this->patches;
 		foreach( $patches as $patch ) {
@@ -84,6 +87,9 @@ class Installer extends TikiDb_Bridge
 
 		foreach( $this->scripts as $script )
 			$this->runScript( $script );
+		
+		ini_set('display_errors', $display_errors);
+		
 	} // }}}
 
 	function installPatch( $patch ) // {{{
