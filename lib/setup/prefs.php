@@ -661,6 +661,8 @@ function get_default_prefs() {
 		'user_assigned_modules' => 'n',
 		'user_flip_modules' => 'module',
 		'user_show_realnames' => 'n',
+		'user_store_file_gallery_picture' => 'n',
+		'user_picture_gallery_id' => 0,
 		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',

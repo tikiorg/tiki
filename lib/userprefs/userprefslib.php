@@ -36,6 +36,47 @@ class UserPrefsLib extends TikiLib
 		return $res;
 	}
 
+	function set_file_gallery_image($u, $filename, $size, $type, $data) {
+		global $prefs, $tikilib;
+		global $filegallib;
+		if (!is_object($filegallib)) {
+				require_once( 'lib/filegals/filegallib.php' );
+		}
+		if (!$prefs["user_picture_gallery_id"]) {
+			return false;
+		}
+		if ($user_image_id = $tikilib->get_user_preference($u, 'user_fg_image_id')) {
+			$didFileReplace = false;
+			$gal_info = $tikilib->get_file_gallery($prefs["user_picture_gallery_id"]);
+			$filegallib->replace_file($user_image_id, $u, $u, $filename, $data, $size, $type, $u, '', '', $gal_info, $didFileReplace);	
+		} else {
+			$user_image_id = $filegallib->insert_file($prefs["user_picture_gallery_id"], $u, $u, $filename, $data, $size, $type, $u, '', '', '');
+			$tikilib->set_user_preference($u, 'user_fg_image_id', $user_image_id);
+		}
+		return $user_image_id;
+	}
+	
+	function remove_file_gallery_image($u) {
+		global $prefs, $tikilib;
+		global $filegallib;
+		if (!is_object($filegallib)) {
+				require_once( 'lib/filegals/filegallib.php' );
+		}
+		if ($user_image_id = $tikilib->get_user_preference($u, 'user_fg_image_id')) {
+			$file_info = $filegallib->get_file_info($user_image_id, false, false);
+			$filegallib->remove_file($file_info, '', true); 
+			$tikilib->set_user_preference($u, 'user_fg_image_id', '');
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function get_user_picture_id($u) {
+		global $tikilib;
+		return $tikilib->get_user_preference($u, 'user_fg_image_id');		
+	}
+	
 	function get_userprefs($user) {
 		$query = "select * from `tiki_user_preferences` where `user`=?";
 		$result = $this->query($query,array($user));

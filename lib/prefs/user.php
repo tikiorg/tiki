@@ -38,5 +38,18 @@ function prefs_user_list() {
 				'n' => tra('Never'),
 			),
 		),
+		'user_store_file_gallery_picture' => array(
+			'name' => tra('Store full-size copy of avatar in file gallery'),
+			'help' => 'User+Preferences',
+			'type' => 'flag',
+		),
+		'user_picture_gallery_id' => array(
+			'name' => tra('File gallery to store full-size copy of avatar in'),
+			'description' => tra('Enter the gallery id here. Please create a dedicated gallery that is admin-only for security, or make sure gallery permissions are set so that only admins can edit.'),
+			'help' => 'User+Preferences',
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => '3',
+		),
 	);
 }

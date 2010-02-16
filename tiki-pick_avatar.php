@@ -38,7 +38,14 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 	$data = fread($fp, filesize($_FILES['userfile1']['tmp_name']));
 	fclose($fp);
-	list($iwidth, $iheight, $itype, $iattr) = getimagesize($_FILES['userfile1']['tmp_name']);
+	
+	// Get image parameters
+	list($iwidth, $iheight, $itype, $iattr) = getimagesize($_FILES['userfile1']['tmp_name']);	
+	// Store full-size file gallery image if that is required
+	if ($prefs["user_store_file_gallery_picture"] == 'y') {
+		$fgImageId = $userprefslib->set_file_gallery_image($userwatch, $name, $size, $itype, $data);
+	}
+	// Store small avatar
 	if (($iwidth == 45 and $iheight <= 45) || ($iwidth <= 45 and $iheight == 45)) {
 		$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $itype, $data);
 	} else {
@@ -77,6 +84,11 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	header('Location: tiki-pick_avatar.php');
 	exit;
 }
+// Get full user picture if it is set
+if ($prefs["user_store_file_gallery_picture"] == 'y' && $user_picture_id = $userprefslib->get_user_picture_id($userwatch) ) {
+	$smarty->assign('user_picture_id', $user_picture_id);	
+}
+
 if (isset($_REQUEST["uselib"])) {
 	check_ticket('pick-avatar');
 	$userprefslib->set_user_avatar($userwatch, 'l', $_REQUEST["avatar"], '', '', '', '');
@@ -84,6 +96,7 @@ if (isset($_REQUEST["uselib"])) {
 if (isset($_REQUEST["reset"])) {
 	check_ticket('pick-avatar');
 	$userprefslib->set_user_avatar($userwatch, '0', '', '', '', '', '');
+	$userprefslib->remove_file_gallery_image($userwatch);
 }
 $avatars = array();
 $h = opendir("img/avatars/");

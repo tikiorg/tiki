@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function smarty_block_wikiplugin( $params, $content, $smarty ) {
+function smarty_block_wikiplugin( $params, $content, &$smarty ) {
 	global $tikilib;
 	if( ! isset( $params['_name'] ) ) {
 		return '<div class="error">' . tra('Plugin name not specified.') . '</div>';

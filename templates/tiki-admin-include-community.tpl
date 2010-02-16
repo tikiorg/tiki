@@ -51,6 +51,9 @@
 			{preference name=user_tracker_infos}
 			<em>{tr}Use the format: trackerId, fieldId1, fieldId2, ...{/tr}</em>
 
+			{preference name=user_store_file_gallery_picture}
+			{preference name=user_picture_gallery_id}
+			
 			<input type="hidden" name="userfeatures" />
 			<fieldset>
 				<legend>{tr}Community{/tr}{help url="Community"}</legend>
