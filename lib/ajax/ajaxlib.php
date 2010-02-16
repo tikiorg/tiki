@@ -289,8 +289,9 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		$headerlib->add_js("tikitabs($tab,$max_tikitabs);");
 	}
 	// collect js from headerlib
-	$jscontent = $headerlib->output_js(false); 
-	$tmp_jsfile = 'temp/public/'.md5($jscontent).'.js';
+	$jscontent = $headerlib->output_js(false);
+	global $tikidomainslash;
+	$tmp_jsfile = 'temp/public/'.$tikidomainslash.md5($jscontent).'.js';
 	if ( ! file_exists( $tmp_jsfile) ) {
 		file_put_contents( $tmp_jsfile, $jscontent );
 	}
