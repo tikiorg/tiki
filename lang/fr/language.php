@@ -5298,7 +5298,7 @@ $lang=Array(
 // "Postfix the checked" => "Postfix the checked",
 // "Minimum {\$prefs.min_username_length} characters long" => "Minimum {\$prefs.min_username_length} characters long",
 // "Passcode to register" => "Passcode to register",
-// "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\t\t\tcontact the sytem administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}" => "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\t\t\tcontact the sytem administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}",
+// "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\t\t\tcontact the system administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}" => "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\t\t\tcontact the system administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}",
 // "{\$customfields[ir].label}" => "{\$customfields[ir].label}",
 // "Make sure to whitelist this domain to prevent registration emails being canned by your spam filter" => "Make sure to whitelist this domain to prevent registration emails being canned by your spam filter",
 // "to version" => "to version",

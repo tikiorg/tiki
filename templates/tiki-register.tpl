@@ -66,7 +66,7 @@
 					<td class="formcolor">
 						<input type="password" name="passcode" id="passcode" onkeypress="regCapsLock(event)" />
 						<em>{tr}Not your password.{/tr} {tr}To request a passcode, {if $prefs.feature_contact eq 'y'}<a href="tiki-contact.php">{/if}
-						contact the sytem administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em>
+						contact the system administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em>
 					</td>
 				</tr>
 	{/if}
