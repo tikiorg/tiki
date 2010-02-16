@@ -114,7 +114,7 @@ class Installer extends TikiDb_Bridge
 				$post( $this );
 		}
 
-		if ($status) {
+		if (!isset($status) || $status ) {
 			$this->installed[] = $patch;
 			$this->recordPatch( $patch );
 		}
