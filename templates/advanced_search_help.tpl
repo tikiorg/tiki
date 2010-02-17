@@ -13,7 +13,7 @@
 <div>{tr}Add a plus sign ( + ) before a term to indicate that the term <em>must</em> appear in results.{/tr}
 </div>
 <p>
-<div id="excluding"><strong>{tr}Excluding terms{/tr}</strong</div>
+<div id="excluding"><strong>{tr}Excluding terms{/tr}</strong></div>
 <div>{tr}Add a minus sign ( - ) before a term to indicate that the term <em>must not</em> appear results.{/tr} {tr}To reduce a term's value without completely excluding it, <a href="#reducing" title="{tr}Reducing a term's value{/tr}">use a tilde</a>.{/tr}</div>
 </p>
 <p>
