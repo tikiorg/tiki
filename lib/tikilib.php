@@ -2292,24 +2292,23 @@ class TikiLib extends TikiDb_Bridge
 			$mid = ' (upper(tab.`name`) LIKE upper(?) OR upper(tab.`description`) LIKE upper(?) OR upper(tab.`filename`) LIKE upper(?))';
 			$midvars = array($findesc, $findesc, $findesc);
 		}
-
+		if ( $creator ) {
+				$f_query .= ' AND tf.`user` = ? ';
+				$bindvars[] = $creator;
+		}
 		$galleryId_str = '';
 		if ( is_array($galleryId) ) {
 			$galleryId_str = ' in ('.implode(',', array_fill(0, count($galleryId),'?')).')';
-			$bindvars = array_merge($galleryId, $bindvars);
+			$bindvars = array_merge($bindvars, $galleryId);
 		} elseif ( $galleryId >= -1 ) {
 			$galleryId_str = '=?';
-			if ( $with_subgals ) array_unshift($bindvars, $galleryId);
-			if ( $with_files ) array_unshift($bindvars, $galleryId);
+			if ( $with_files ) $bindvars[] = $galleryId;
+			if ( $with_subgals ) $bindvars[] = $galleryId;
 		}
 		if ( $galleryId_str != '' ) {
 			$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
 		}
-		if ( $creator ) {
-			$f_query .= ' AND tf.`user` = ? ';
-			$bindvars[] = $creator;
-		}
-
+		
 		if ( $with_subgals ) {
 
 			$g_mid = '';
