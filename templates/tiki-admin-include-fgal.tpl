@@ -153,6 +153,14 @@
 	</div>
 </div>
 
+{if !empty($missingHandlers)}
+{remarksbox type=warning title='{tr}Missing Handlers{/tr}'}
+{foreach from=$missingHandlers item=mime}
+	{$mime|escape}<br />
+{/foreach}
+{/remarksbox}
+{/if}
+
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">
 	<table class="normal">

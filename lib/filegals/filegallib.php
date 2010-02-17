@@ -1365,5 +1365,18 @@ class FileGalLib extends TikiLib
 		$fileId = $this->getOne($query, array($archiveId, $archiveId, $date));
 		return $fileId;
 	}
+	function getFiletype($not=array()) {
+		if (empty($not)) {
+			$query = 'select distinct(`filetype`) from `tiki_files` order by `filetype` asc'; 
+		} else {
+			$query = 'select distinct(`filetype`) from `tiki_files` where `filetype` not in('.implode(',',array_fill(0, count($not),'?')).')order by `filetype` asc'; 
+		}
+		$result = $this->query($query, $not);
+		$ret = array();
+		while($res = $result->fetchRow()) {
+			$ret[] = $res['filetype'];
+		}
+		return $ret;
+	}
 }
 $filegallib = new FileGalLib;
