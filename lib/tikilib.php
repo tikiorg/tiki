@@ -2292,14 +2292,6 @@ class TikiLib extends TikiDb_Bridge
 			$mid = ' (upper(tab.`name`) LIKE upper(?) OR upper(tab.`description`) LIKE upper(?) OR upper(tab.`filename`) LIKE upper(?))';
 			$midvars = array($findesc, $findesc, $findesc);
 		}
-		
-		if ( $creator ) {
-			if ( $mid ) {
-				$mid .= " AND ";
-			}
-			$mid .= ' creator = ? ';
-			$midvars[] = $creator;
-		}
 
 		$galleryId_str = '';
 		if ( is_array($galleryId) ) {
@@ -2312,6 +2304,10 @@ class TikiLib extends TikiDb_Bridge
 		}
 		if ( $galleryId_str != '' ) {
 			$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
+		}
+		if ( $creator ) {
+			$f_query .= ' AND tf.`user` = ? ';
+			$bindvars[] = $creator;
 		}
 
 		if ( $with_subgals ) {
