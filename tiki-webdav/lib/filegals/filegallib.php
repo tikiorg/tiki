@@ -128,6 +128,7 @@ class FileGalLib extends TikiLib
 		$query = "update `tiki_files` set `galleryId`=? where `fileId`=?";
 
 		$this->query($query,array($gallery,$file));
+		return true;
 	}
 
 	function remove_file_gallery($id, $galleryId=0, $recurse = true) {

@@ -26,13 +26,13 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		global $prefs;
 
 		// avoid not having a deadlock when trying to acquire WebDav lock
+		@file_put_contents('/tmp/tiki4log', "Lock Directory: ".$prefs['fgal_use_dir']."\n", FILE_APPEND );
 		if ( !empty($prefs['fgal_use_dir']) && file_exists($prefs['fgal_use_dir'] ) ) {
 			$this->root = realpath( $prefs['fgal_use_dir'] );
 		} else {
 			$this->root = realpath( 'temp/' );
 		}
-		@file_put_contents('/tmp/tiki4log', "Lock Directory: ".$prefs['fgal_use_dir']."\n", FILE_APPEND );
-		$this->options = new ezcWebdavMemoryBackendOptions(); ///FIXME
+		$this->options = new ezcWebdavFileBackendOptions( array ( 'lockFileName' => $this->root.'/.webdav_lock', 'waitForLock' => 200000, 'propertyStoragePath' => $this->root, 'noLock' => false ) ); 
 		$this->propertyStorage = new ezcWebdavBasicPropertyStorage();
 	}
 
@@ -41,6 +41,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 ///		@file_put_contents('/tmp/tiki4log', "WARNING: lock method not implemented\n", FILE_APPEND );
 
 		// Check and raise lockLevel counter
+		@file_put_contents('/tmp/tiki4log', "LOCK Level: ".$this->lockLevel." \n", FILE_APPEND );
 		if ( $this->lockLevel > 0 )
 		{
 			// Lock already acquired
@@ -50,42 +51,52 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		$lockStart = microtime( true );
 
-		$lockFileName = $this->root . '/' . $this->options->lockFileName;
+		// Timeout is in microseconds...
+		$timeout /= 1000000;
+		$lockFileName = $this->options->lockFileName;
+		@file_put_contents('/tmp/tiki4log', "LOCK: ".$this->options->lockFileName." \n", FILE_APPEND );
 
 		// fopen in mode 'x' will only open the file, if it does not exist yet.
 		// Even this is is expected it will throw a warning, if the file
 		// exists, which we need to silence using the @
-		while ( ( $fp = @fopen( $lockFileName, 'x' ) ) === false )
-		{
-			// This is untestable.
-			if ( microtime( true ) - $lockStart > $timeout )
-			{
-				// Release timed out lock
-				unlink( $lockFileName );
-				$lockStart = microtime( true );
+		if ( !empty($this->options->lockFileName) ) {
+			if ( file_exists($lockFileName) ) {
+				while ( file_exists($lockFileName) )
+				{
+					// This is untestable.
+						//@file_put_contents('/tmp/tiki4log', "LOCK TIME ".(microtime( true ) - $lockStart).":".$timeout." \n", FILE_APPEND );
+					if ( microtime( true ) - $lockStart > $timeout )
+					{
+						// Release timed out lock
+						unlink( $lockFileName );
+						//@file_put_contents('/tmp/tiki4log', "LOCK TIMEOUT ".(microtime( true ) - $lockStart).":".$timeout." \n", FILE_APPEND );
+						$lockStart = microtime( true );
+					}
+					else
+					{
+						usleep( $waitTime );
+					}
+				}
 			}
-			else
-			{
-				usleep( $waitTime );
-			}
+			@file_put_contents($lockFileName, microtime(),FILE_APPEND );
 		}
-
-		// Store random bit in file ... the microtime for example - might prove
-		// useful some time.
-		fwrite( $fp, microtime() );
-		fclose( $fp );
 
 		// Add first lock
 		++$this->lockLevel;
+		//@file_put_contents('/tmp/tiki4log', "LOCK END \n", FILE_APPEND );
 	}
 
 	public function unlock()
 	{
+		//@file_put_contents('/tmp/tiki4log', "unLOCK Level: ".$this->lockLevel." \n", FILE_APPEND );
 		if ( --$this->lockLevel === 0 )
 		{
 			// Remove the lock file
-			$lockFileName = $this->root . '/' . $this->options->lockFileName;
-			unlink( $lockFileName );
+			$lockFileName = $this->options->lockFileName;
+			if ( !empty($this->options->lockFileName) ) {
+				unlink( $lockFileName );
+			}
+			//@file_put_contents('/tmp/tiki4log', "Remove LOCK: ".$this->options->lockFileName." \n", FILE_APPEND );
 		}
 	}
 
@@ -121,26 +132,31 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	protected function acquireLock( $readOnly = false )
 	{
-		if ( $this->options->noLock )
+		if ( empty($this->options->lockFileName) )
 		{
 			return true;
 		}
 
 		try
 		{
+			//@file_put_contents('/tmp/tiki4log', "LOCK: \n", FILE_APPEND );
 			$this->lock( $this->options->waitForLock, 2000000 );
 		}
 		catch ( ezcWebdavLockTimeoutException $e )
 		{
+			//@file_put_contents('/tmp/tiki4log', "LOCK: failed\n", FILE_APPEND );
 			return false;
 		}
+		//@file_put_contents('/tmp/tiki4log', "LOCK: Acquired\n", FILE_APPEND );
 		return true;
 	}
 
 	protected function freeLock()
 	{
-		if ( $this->options->noLock )
+		//@file_put_contents('/tmp/tiki4log', "FreeLOCK: ".$this->options->lockFileName."\n", FILE_APPEND );
+		if ( empty($this->options->lockFileName) )
 		{
+			//@file_put_contents('/tmp/tiki4log', "FreeLOCK: TOTO\n", FILE_APPEND );
 			return true;
 		}
 
@@ -254,6 +270,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 ///		$type = empty($this->requestMimeType) ? '' : $this->requestMimeType;
 
+		//@file_put_contents('/tmp/tiki4log', "createResource: $fhash, content=$content \n", FILE_APPEND );	
 		return (bool) $filegallib->insert_file(
 			$objectId['id'],
 			$name,
@@ -617,7 +634,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	public function delete( ezcWebdavDeleteRequest $request )
 	{
-		@file_put_contents('/tmp/tiki4log', "-- HTTP method: DELETE --\n", FILE_APPEND );
+		@file_put_contents('/tmp/tiki4log', "-- HTTP method: DELETE --".print_r($request,true)."\n", FILE_APPEND );
 		$this->acquireLock();
 		$return = parent::delete( $request );
 		$this->freeLock();

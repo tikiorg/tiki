@@ -8,10 +8,10 @@ class TikiWebdav_PathFactories_File implements ezcWebdavPathFactory
     public function __construct()
     {
         global $base_url;
-	if ( ( $pos = strpos($base_url, 'webdav.php/') ) !== false ) {
-		$this->baseUri = substr($base_url, 0, strpos($base_url, 'webdav.php') + 10);
+	if ( ( $pos = strpos($base_url, 'tiki-webdav.php/') ) !== false ) {
+		$this->baseUri = substr($base_url, 0, strpos($base_url, 'tiki-webdav.php') + 15);
 	} else {
-		$this->baseUri = $base_url . 'webdav.php';
+		$this->baseUri = $base_url . 'tiki-webdav.php';
 	}
 	$this->baseUriLength = strlen($this->baseUri);
     }

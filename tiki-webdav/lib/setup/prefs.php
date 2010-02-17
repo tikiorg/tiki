@@ -39,6 +39,8 @@ function get_default_prefs() {
 
 		'groups_are_emulated' => 'n',
 
+		'feature_webdav' => 'n',
+
 		// wiki
 		'feature_wiki' => 'y',
 		'default_wiki_diff_style' => 'sidediff',
