@@ -66,6 +66,9 @@ if (isset($_REQUEST["remove"])) {
 		$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
 		$smarty->assign('position', $maxPos + 1);
 		$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
+		// reload to prevent white screen
+		$url = $_SERVER['REQUEST_URI'] . "?menuId=" . $_REQUEST["menuId"];
+		header("location: $url");
 	} else {
 		key_get($area);
 	}
