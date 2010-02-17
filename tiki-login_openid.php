@@ -116,20 +116,13 @@ function displaySelectionList($data, $messages) // {{{
 } // }}}
 function displayError($message) { // {{{
 	global $smarty;
-	$smarty->assign('msg', tra("Failure") . ": " . $message);
+	$smarty->assign('msg', tra("Failure:") . " " . $message);
 	$smarty->assign('errortype', 'login');
 	$smarty->display("error.tpl");
 	die;
 } // }}}
 function getStore() { // {{{
-	
-	/**
-	 * This is where the example will store its OpenID information.
-	 * You should change this path if you want the example store to be
-	 * created elsewhere.  After you're done playing with the example
-	 * script, you'll have to remove this directory manually.
-	 */
-	$store_path = "/tmp/_php_consumer_test";
+	$store_path = "temp/openid_consumer";
 	if (!file_exists($store_path) && !mkdir($store_path)) {
 		print "Could not create the FileStore directory '$store_path'. " . " Please check the effective permissions.";
 		exit(0);
@@ -176,7 +169,7 @@ function runAuth() { // {{{
 	$auth_request = $consumer->begin($openid);
 	// No auth request means we can't begin OpenID.
 	if (!$auth_request) {
-		displayError("Authentication error; not a valid OpenID.");
+		displayError(tra("Authentication error; not a valid OpenID."));
 	}
 	$sreg_request = Auth_OpenID_SRegRequest::build(
 	// Required
@@ -196,7 +189,7 @@ function runAuth() { // {{{
 		// If the redirect URL can't be built, display an error
 		// message.
 		if (Auth_OpenID::isFailure($redirect_url)) {
-			displayError("Could not redirect to server: " . $redirect_url->message);
+			displayError(tra("Could not redirect to server: ") . $redirect_url->message);
 		} else {
 			// Send redirect.
 			header("Location: " . $redirect_url);
@@ -208,7 +201,7 @@ function runAuth() { // {{{
 		// Display an error if the form markup couldn't be generated;
 		// otherwise, render the HTML.
 		if (Auth_OpenID::isFailure($form_html)) {
-			displayError("Could not redirect to server: " . $form_html->message);
+			displayError(tra("Could not redirect to server: ") . $form_html->message);
 		} else {
 			print $form_html;
 		}
@@ -223,10 +216,10 @@ function runFinish() { // {{{
 	// Check the response status.
 	if ($response->status == Auth_OpenID_CANCEL) {
 		// This means the authentication was cancelled.
-		displayError('Verification cancelled.');
+		displayError(tra('Verification cancelled.'));
 	} else if ($response->status == Auth_OpenID_FAILURE) {
 		// Authentication failed; display the error message.
-		displayError("OpenID authentication failed: " . $response->message);
+		displayError(tra("OpenID authentication failed: ") . $response->message);
 	} else if ($response->status == Auth_OpenID_SUCCESS) {
 		// This means the authentication succeeded; extract the
 		// identity URL and Simple Registration data (if it was
