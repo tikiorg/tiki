@@ -137,6 +137,7 @@ function wikiplugin_files($data, $params) {
 	}
 	global $filegallib; include_once('lib/filegals/filegallib.php');
 
+	$creator = '';
 	extract($params, EXTR_SKIP);
 
 	if ($prefs['feature_categories'] != 'y') {
