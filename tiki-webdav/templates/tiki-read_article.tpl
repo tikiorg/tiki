@@ -41,6 +41,11 @@
 			({$rating}/10)
 		</div>
 	{/if}
+	{if $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
+		<form method="post" action="">
+			{rating article=$articleId}
+		</form>
+	{/if}
 
 	<div class="articletrailer">
 		<span>

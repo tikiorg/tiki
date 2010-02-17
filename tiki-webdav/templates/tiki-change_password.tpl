@@ -63,7 +63,7 @@
 <tr>
   <td class="formcolor"><label for="pass">{tr}New password:{/tr}</label></td>
   <td class="formcolor">
-						<div style="float:right;width:150px;margin-left:5px;">
+						<div style="float:right;width:175px;margin-left:5px;">
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 						</div>

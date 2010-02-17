@@ -66,6 +66,11 @@
 				{preference name=memcache_forum_output}
 			</div>
 		</fieldset>
+
+		<fieldset>
+			<legend>{tr}Plugins{/tr}</legend>
+			{preference name=wikiplugin_snarf_cache}
+		</fieldset>
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 		<input type="submit" name="performance" value="{tr}Apply{/tr}" />

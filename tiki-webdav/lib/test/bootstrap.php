@@ -1,9 +1,11 @@
 <?php
 
+define( 'CUSTOM_ERROR_LEVEL', defined( 'E_DEPRECATED' ) ? E_ALL ^ E_DEPRECATED : E_ALL );
+
 require_once(dirname(__FILE__) . '/TikiTestCase.php');
 
 ini_set( 'display_errors', 'on' );
-error_reporting( E_ALL & ~E_DEPRECATED);
+error_reporting( CUSTOM_ERROR_LEVEL );
 
 ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . "." . PATH_SEPARATOR . "../core/lib" . PATH_SEPARATOR . "../.." . PATH_SEPARATOR . "core");
 
@@ -43,5 +45,9 @@ $_SESSION = array(
 	)
 );
 chdir($pwd);
+global $user_overrider_prefs;
+$user_overrider_prefs = array();
 require_once 'lib/setup/prefs.php';
 
+ini_set( 'display_errors', 'on' );
+error_reporting( CUSTOM_ERROR_LEVEL );

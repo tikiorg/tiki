@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function prefs_log_list() {
 	return array(
@@ -11,7 +16,7 @@ function prefs_log_list() {
 		'log_tpl' => array(
 			'name' => tra('Smarty Template usage indicator'),
 			'description' => tra('Add HTML comment at start and end of each Smarty template (TPL)'),
-			'hint' => tra('Use only for developement, not in production because these warnings are added to emails as well, and visible to the users'),
+			'hint' => tra('Use only for development, not in production because these warnings are added to emails as well, and visible to the users'),
 			'type' => 'flag',
 		),
 		'log_sql' => array(

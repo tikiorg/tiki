@@ -17,7 +17,7 @@ $metric_range_all = $metricslib->getMetricsRangeAll();
 $smarty->assign('metric_range_all', $metric_range_all);
 $metric_datatype_all = $metricslib->getMetricsDatatypeAll();
 $smarty->assign('metric_datatype_all', $metric_datatype_all);
-$headerlib->add_cssfile("styles/mozmetrics.css");
+$headerlib->add_cssfile("css/metrics.css");
 
 $dsn_list = $adminlib->list_dsn( 0, -1, 'name_asc', '' );
 $smarty->assign( 'dsn_list', $dsn_list['data'] );

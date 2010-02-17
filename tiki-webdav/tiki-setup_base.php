@@ -60,6 +60,7 @@ $needed_prefs = array(
 );
 $tikilib->get_preferences($needed_prefs, true, true);
 if (!isset($prefs['lastUpdatePrefs']) || $prefs['lastUpdatePrefs'] == - 1) {
+	$tikilib->query('delete from `tiki_preferences` where `name`=?', array('lastUpdatePrefs'));
 	$tikilib->query('insert into `tiki_preferences`(`name`,`value`) values(?,?)', array('lastUpdatePrefs', 1));
 }
 
@@ -470,9 +471,12 @@ $inputFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAl
 if ( $tiki_p_trust_input != 'y' ) {
 	$inputFilter->addCatchAllFilter('xss');
 }
+$cookieFilter = DeclFilter::fromConfiguration($inputConfiguration, array('catchAllFilter'));
+$cookieFilter->addCatchAllFilter('striptags');
+
 $_GET = $inputFilter->filter($_GET);
 $_POST = $inputFilter->filter($_POST);
-$_COOKIE = $inputFilter->filter($_COOKIE);
+$_COOKIE = $cookieFilter->filter($_COOKIE);
 // Rebuild request with filtered values
 $_REQUEST = array_merge($_GET, $_POST);
 if ($tiki_p_trust_input != 'y') {

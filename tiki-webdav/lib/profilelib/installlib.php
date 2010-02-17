@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 class Tiki_Profile_Installer
 {
@@ -36,6 +41,7 @@ class Tiki_Profile_Installer
 	);
 
 	private $userData = false;
+	private $debug = false;
 	
 	private $feedback = array();	// Let users know what's happened
 
@@ -105,6 +111,11 @@ class Tiki_Profile_Installer
 	function setUserData( $userData ) // {{{
 	{
 		$this->userData = $userData;
+	} // }}}
+
+	function setDebug( ) // {{{
+	{
+		$this->debug = true;
 	} // }}}
 
 	function getInstallOrder( Tiki_Profile $profile ) // {{{
@@ -247,7 +258,7 @@ class Tiki_Profile_Installer
 	private function doInstall( Tiki_Profile $profile ) // {{{
 	{
 		global $tikilib, $prefs;
-		
+
 		$this->setFeedback(tra('Applying profile').': '.$profile->profile);
 
 		$this->installed[$profile->getProfileKey()] = $profile;
@@ -293,10 +304,13 @@ class Tiki_Profile_Installer
 		}
 
 		foreach( $permissions as $perm => $v )
+		{
 			if( $v == 'y' )
 				$userlib->assign_permission_to_group( $perm, $groupName );
 			else
 				$userlib->remove_permission_from_group( $perm, $groupName );
+			$this->setFeedback(sprintf(tra('Modifed permission %s for %s'), $perm, $groupName));
+		}
 
 		foreach( $objects as $data )
 			foreach( $data['permissions'] as $perm => $v )
@@ -310,6 +324,7 @@ class Tiki_Profile_Installer
 					$userlib->assign_object_permission( $groupName, $data['id'], $data['type'], $perm );
 				else
 					$userlib->remove_object_permission( $groupName, $data['id'], $data['type'], $perm );
+				$this->setFeedback(sprintf(tra('Modifed permission %s on %s/%s for %s'), $perm, $data['type'], $data['id'], $groupName));
 			}
 
 		global $user;
@@ -2141,9 +2156,9 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 				global $user;
 				$customflags = isset($calendar['customflags']) ? $calendar['customflags']  : array();
 				$options = isset($calendar['options']) ? $calendar['options']  : array();
-				$calendarlib->set_calendar(null, $user, $calendar['name'], $calendar['description'], $customflags,$options);
+				$id = $calendarlib->set_calendar(null, $user, $calendar['name'], $calendar['description'], $customflags,$options);
 			}
-			return 1;
+			return $id;
 		}
 	}
 } // }}}

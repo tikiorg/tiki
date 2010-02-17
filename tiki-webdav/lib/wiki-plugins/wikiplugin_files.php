@@ -1,5 +1,10 @@
 <?php
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/files/wiki-plugins/wikiplugin_files.php,v 1.2 2008/01/18 22:00:48 sylvieg Exp $
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 /*	list files of galleries
  * galleryId
  * categId

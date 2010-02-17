@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
@@ -71,6 +76,9 @@ class Installer extends TikiDb_Bridge
 		$secdb = dirname(__FILE__) . '/../db/tiki-secdb_' . $dbversion_tiki . '_mysql.sql';
 		if( file_exists( $secdb ) )
 			$this->runFile( $secdb );
+		
+		$display_errors = ini_get('display_errors');
+		ini_set('display_errors', 'Off');
 
 		$patches = $this->patches;
 		foreach( $patches as $patch ) {
@@ -79,6 +87,9 @@ class Installer extends TikiDb_Bridge
 
 		foreach( $this->scripts as $script )
 			$this->runScript( $script );
+		
+		ini_set('display_errors', $display_errors);
+		
 	} // }}}
 
 	function installPatch( $patch ) // {{{
@@ -103,14 +114,16 @@ class Installer extends TikiDb_Bridge
 			if( function_exists( $pre ) )
 				$pre( $this );
 	
-			$this->runFile( $schema );
+			$status = $this->runFile( $schema );
 	
 			if( function_exists( $post ) )
 				$post( $this );
 		}
 
-		$this->installed[] = $patch;
-		$this->recordPatch( $patch );
+		if (!isset($status) || $status ) {
+			$this->installed[] = $patch;
+			$this->recordPatch( $patch );
+		}
 	} // }}}
 
 	function runScript( $script ) // {{{
@@ -147,6 +160,7 @@ class Installer extends TikiDb_Bridge
 
 		$prestmt="";
 		$do_exec=true;
+		$status = true;
 		foreach ($statements as $statement) {
 			if (trim($statement)) {
 				switch ($db_tiki) {
@@ -162,17 +176,22 @@ class Installer extends TikiDb_Bridge
 					}
 					if($do_exec)
 						if (preg_match('/^\s*(?!-- )/m', $statement)) // If statement is not commented
-							$this->query($statement);
+							if ($this->query($statement) === false) {
+								$status = false;
+							}
 					break;
 				default:
 					if (preg_match('/^\s*(?!-- )/m', $statement)) // If statement is not commented
-						$this->query($statement);
+						if ($this->query($statement) === false) {
+							$status = false;
+						}
 					break;
 				}
 			}
 		}
 
 		$this->query("update `tiki_preferences` set `value`= `value`+1 where `name`='lastUpdatePrefs'");
+		return $status;
 	} // }}}
 
 	function query( $query = null, $values = array(), $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
@@ -180,7 +199,7 @@ class Installer extends TikiDb_Bridge
 		$error = '';
 		$result = $this->queryError( $query, $error, $values );
 
-		if( $result ) {
+		if( $result && empty($error) ) {
 			$this->success[] = $query;
 			return $result;
 		} else {

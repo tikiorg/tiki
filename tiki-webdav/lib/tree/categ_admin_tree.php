@@ -1,7 +1,11 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 /** \file
- * $Id$
- *
  * \brief Categories browse tree
  *
  * \author zaufi@sendmail.ru
@@ -36,7 +40,7 @@ class CatAdminTreeMaker extends TreeMaker
 		$r .= $this->make_tree_r($rootid, $ar) . "</ul>\n";
 
 		// java script block that opens the nodes as remembered in cookies
-		$headerlib->add_js($this->jsscriptblock);
+		$headerlib->add_jq_onready($this->jsscriptblock);
 		
 		// return tree
 		return $r;

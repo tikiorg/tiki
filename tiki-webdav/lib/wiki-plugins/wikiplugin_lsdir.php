@@ -1,14 +1,16 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 /*
- * $Id$
- *
  * Tikiwiki LSDIR plugin: lists files in a directory
  * 
  * Syntax:
  * 
  *  {LSDIR([dir=>/dirpath/],[urlprefix=>prefix],[sortby=>name|atime|ctime|mtime|size],[sortmode=>asc|desc],[filter=>search_text],[limit=>#])}
  *  {LSDIR}
- * 
  */
 
 function wikiplugin_lsdir_help() {

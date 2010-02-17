@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function wikiplugin_img_info() {
 	return array(
@@ -61,6 +66,10 @@ function wikiplugin_img_info() {
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')), 
+					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')), 
+					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')), 
+					array('text' => tra('Download'), 'value' => 'download', 'description' => tra('Download dialog box will appear for file gallery and attachment images when thumbnail is clicked.')),
 				),
 			),
 			'link' => array(
@@ -527,8 +536,7 @@ function wikiplugin_img_info() {
 
 	///////////////////////////Get DB info for image size and iptc data/////////////////////////////
 	if (!empty($imgdata['height']) || !empty($imgdata['width']) || !empty($imgdata['max']) 
-		|| $imgdata['desc'] == 'desc' || $imgdata['desc'] == 'idesc' || $imgdata['desc'] == 'name' 
-		|| $imgdata['desc'] == 'ititle' || strpos($imgdata['rel'], 'box') !== false 
+		|| !empty($imgdata['desc']) || strpos($imgdata['rel'], 'box') !== false 
 		|| !empty($imgdata['stylebox']) || !empty($imgdata['styledesc']) || !empty($imgdata['button']) 
 		|| !empty($imgdata['thumb'])  || !empty($imgdata['align'])
 	) {
@@ -658,8 +666,6 @@ function wikiplugin_img_info() {
 			preg_match('/(?<=\&x=)[0-9]+(?=.*)/', $src, $urlx);
 			preg_match('/(?<=\&y=)[0-9]+(?=.*)/', $src, $urly);
 			preg_match('/(?<=\&scale=)[0]*\.[0-9]+(?=.*)/', $src, $urlscale);
-			if ($urlthumb != false ) $imgdata['max'] = 120;
-			if ($urlprev != false ) $imgdata['max'] = 800;
 			if (!empty($urlmax[0]) && $urlmax[0] > 0) $imgdata['max'] = $urlmax[0];
 			if (!empty($urlx[0]) && $urlx[0] > 0) $imgdata['width'] = $urlx[0];
 			if (!empty($urly[0]) && $urly[0] > 0) $imgdata['height'] = $urly[0];
@@ -669,6 +675,8 @@ function wikiplugin_img_info() {
 				$imgdata['width'] = '';
 				$imgdata['height'] = '';
 			}	
+			if ($urlthumb != false && empty($imgdata['height']) && empty($imgdata['width']) && empty($imgdata['max'])) $imgdata['max'] = 120;
+			if ($urlprev != false && empty($urlscale[0]) && empty($imgdata['height']) && empty($imgdata['width']) && empty($imgdata['max']) ) $imgdata['max'] = 800;
 		}
 		//Note if image gal url thumb parameter is used
 		$imgalthumb = false;
@@ -711,7 +719,7 @@ function wikiplugin_img_info() {
 				}
 			}
 			// Adjust for max setting, keeping aspect ratio
-			if ((!empty($imgdata['max'])) && (ctype_digit($imgdata['max']))) {
+			if (!empty($imgdata['max'])) {
 				if (($fwidth > $imgdata['max']) || ($fheight > $imgdata['max'])) {
 					//use image gal thumbs when possible
 					if ((!empty($imgdata['id']) && $imgalthumb == false) 
@@ -803,8 +811,7 @@ function wikiplugin_img_info() {
 			) {
 				$src .= '&max=' . $imgdata['max'];
 			} elseif (!empty($width) || !empty($height)) {
-				if ((!empty($width) && !empty($height)) && (empty($urlx[0]) && empty($urly[0]) 
-					&& empty($urlthumb) && empty($urlscale[0]))) {
+				if ((!empty($width) && !empty($height)) && (empty($urlx[0]) && empty($urly[0]) && empty($urlscale[0]))) {
 					$src .= '&x=' . $width . '&y=' . $height;
 				} elseif (!empty($width) && (empty($urlx[0]) && empty($urlthumb) && empty($urlscale[0]))) {
 					$src .= '&x=' . $width; 
@@ -1061,8 +1068,8 @@ function wikiplugin_img_info() {
 			if (!empty($titleonly)) {
 				$repl .= ' title="' . $titleonly . '"';
 			}
-			$repl .= ">\r\t\t\t\t" . '<img src="./img/magnifying-glass-micro-icon.png" width="10" 
-					height="10" alt="Enlarge" /></a>' . "\r\t\t\t</div>";
+			$repl .= ">\r\t\t\t\t" . '<img src="./pics/icons/magnifier.png" width="12"
+					 height="12" alt="Enlarge" /></a>' . "\r\t\t\t</div>";
 		}	
 		//Add description based on user setting (use $desconly from above) and close divs
 		isset($desconly) ? $repl .= $desconly : '';
@@ -1105,7 +1112,7 @@ function wikiplugin_img_info() {
 						}
 					}
 				} else {
-					$styleboxinit = $imgdata['stylebox'];
+					$styleboxinit = $imgdata['stylebox'] . ';';
 				}
 			}
 			if (empty($imgdata['button']) && empty($imgdata['desc']) && empty($styleboxinit)) {

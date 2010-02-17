@@ -1,7 +1,11 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 /*
- * $Id$
- *
  * Tiki-Wiki BOX plugin.
  * 
  * Syntax:
@@ -9,7 +13,6 @@
  *  {BOX([title=>Title],[bg=>color|#999fff],[width=>num[%]],[align=>left|right|center])}
  *   Content inside box
  *  {BOX}
- * 
  */
 function wikiplugin_box_help() {
 	return tra("Insert theme-styled box on wiki page").":<br />~np~{BOX(title=>Title, bg=>color, width=>num[%], align=>left|right|center, float=>|left|right),class=class, id=id}".tra("text")."{BOX}~/np~";

@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+# 
+# All Rights Reserved. See copyright.txt for details and a complete list of authors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 # $Id$
 #
 # A script to dump a TW and SCP copy it somewhere
@@ -23,11 +26,12 @@ DBUSER=${user_tiki:-'root'}
 DBPASS=${pass_tiki:-''}
 
 NOWDATE=`date +%Y-%m-%d`
-DUMPFILE="site_backup.$VIRTUAL.$DATE.sql"
+DUMPFILE="$DBNAME-$NOWDATE-sql.bz2"
 
 cd $ARCHIVEDIR
 
 mysqldump -Q -u $DBUSER -h$DBHOST -p$DBPASS $DBNAME | bzip2 -c > $DUMPFILE
-scp -C $DUMPFILE $SCPTO
-rm $DUMPFILE
-
+if [ "$SCPTO" ]; then 
+	scp -C $DUMPFILE $SCPTO
+	rm $DUMPFILE
+fi

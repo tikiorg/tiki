@@ -1,4 +1,9 @@
 #!/bin/sh
+# (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+# 
+# All Rights Reserved. See copyright.txt for details and a complete list of authors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+# $Id$
 
 #
 # Purpose: Update your Tiki instance to the latest version of SVN.
@@ -41,7 +46,7 @@ rm -f .lastup .svnrev
 rm -f last.log
 svn update > last.log
 echo `date +%s` > .lastup
-svn info | grep ^Rev | awk '{print $2}' > .svnrev
+svn info --xml | grep "revision=" | head -n 1 | awk -F'\"' '{print $2}' > .svnrev
 
 # uncomment the line below to see the list of all files updated. (ex.: if running manually)
 # less last.log

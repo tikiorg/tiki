@@ -85,7 +85,8 @@ $smarty->assign_by_ref('user_prefs', $user_preferences[$userwatch]);
 $user_style = $tikilib->get_user_preference($userwatch, 'theme', $prefs['site_style']);
 $smarty->assign_by_ref('user_style', $user_style);
 $user_language = $tikilib->get_language($userwatch);
-$smarty->assign_by_ref('user_language', $user_language);
+$user_language_text = $tikilib->format_language_list(array($user_language));
+$smarty->assign_by_ref('user_language', $user_language_text[0]['name']);
 $realName = $tikilib->get_user_preference($userwatch, 'realName', '');
 $gender = $tikilib->get_user_preference($userwatch, 'gender', '');
 $country = $tikilib->get_user_preference($userwatch, 'country', 'Other');
@@ -165,6 +166,13 @@ if ($prefs['feature_ajax'] == "y") {
 		$ajaxlib->processRequests();
 	}
 	user_information_ajax();
+}
+// Get full user picture if it is set
+if ($prefs["user_store_file_gallery_picture"] == 'y') {
+	require_once ('lib/userprefs/userprefslib.php');
+	if ($user_picture_id = $userprefslib->get_user_picture_id($userwatch)) {	
+		$smarty->assign('user_picture_id', $user_picture_id);
+	}	
 }
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

@@ -1181,10 +1181,6 @@ div.messureadbody {
 /***** Ajax *****/
 div#ajaxLoading {}
 
-#shadowbox_content {
-	background: #F3FCFE;
-}
-
 /***** TikiSheet Default Style *****/
 table.default thead td,
 table.default tfoot td {

@@ -1,10 +1,9 @@
 <?php
-
-// $Id$
-
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 // To (re-)enable this script the file has to be named tiki-installer.php and the following four lines
 // must start with two '/' and 'stopinstall:'. (Make sure there are no spaces inbetween // and stopinstall: !)
@@ -435,6 +434,8 @@ if (!empty($multi)) {
 }
 
 $tikidomain = $multi;
+$tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
+
 include 'lib/cache/cachelib.php';
 $cachelib->empty_full_cache();
 

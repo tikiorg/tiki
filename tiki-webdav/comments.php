@@ -43,7 +43,9 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 		foreach ( $handled_requests as $request_name )
 			if ( isset($_SESSION['forums_'.$request_name]) && ! isset($_REQUEST[$request_name]) )
 				$$request_name = $_SESSION['forums_'.$request_name];
-
+		if (empty($thread_sort_mode)) {
+			$thread_sort_mode = $prefs['forum_thread_sort_mode'];
+		}
 	} else {
 		// Fallback to global values if 'forum_thread_user_settings_keep' is disabled AND if :
 		//    - forum specific settings are set to empty (i.e. 'default')
@@ -268,24 +270,9 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 
 if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')) || ($tiki_p_forum_vote == 'y' && isset($forum_mode) && $forum_mode == 'y')) {
 	// Process a vote here
-
-	if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
-		if (!$user && !isset($_COOKIE['PHPSESSID'])) {
-			$smarty->assign_by_ref('msg',tra('For you to vote, cookies must be allowed'));
-			$smarty->display("error.tpl");
-			die;
-		}
-		$comments_show = 'y';
-
-		if (!$tikilib->user_has_voted($user, 'comment' . $_REQUEST["comments_threadId"])) {
-			$commentslib->vote_comment($_REQUEST["comments_threadId"], $user, $_REQUEST["comments_vote"]);
-
-			$tikilib->register_user_vote($user, 'comment' . $_REQUEST["comments_threadId"]);
-		}
-
-		$_REQUEST["comments_threadId"] = 0;
-		$smarty->assign('comments_threadId', 0);
-	}
+	$smarty->assign( 'rating_is_enabled', 'y' );
+} else {
+	$smarty->assign( 'rating_is_enabled', 'n' );
 }
 
 // Comments Moderation

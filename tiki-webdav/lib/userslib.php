@@ -1,5 +1,10 @@
 <?php
-// CVS: $Id$
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
@@ -1359,13 +1364,18 @@ class UsersLib extends TikiLib
 			return $this->groupinclude_cache[$engroup];
 		}
 	}
-	function get_including_groups($group) {
-		$query = 'select `groupName` from `tiki_group_inclusion` where `includeGroup`=?';
+	function get_including_groups($group, $recur='n') {
+		$query = 'select `groupName` from `tiki_group_inclusion` where `includeGroup`=? order by `groupName`';
 		$result = $this->query($query, array($group));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res['groupName'];
-			$ret = array_merge($ret, $this->get_including_groups($res['groupName']));
+			if ($recur == 'y') {
+				$ret = array_merge($ret, $this->get_including_groups($res['groupName']));
+			}
+		}
+		if ($recur == 'y') {
+			sort($ret);
 		}
 		return $ret;
 	}
@@ -2254,10 +2264,10 @@ class UsersLib extends TikiLib
 		return true;
 	}
 
-	function get_group_info($group) {
+	function get_group_info($group, $sort_mode='groupName_asc') {
 		$ret = array();
 		if (is_array($group)) {
-			$query = 'select * from `users_groups` where `groupName` in ('.implode(',',array_fill(0,count($group),'?')).')';
+			$query = 'select * from `users_groups` where `groupName` in ('.implode(',',array_fill(0,count($group),'?')).') order by '.$this->convertSortMode($sort_mode);
 			$ret = $this->fetchAll($query, $group);
 		} else {
 			$query = 'select * from `users_groups` where `groupName`=?';
@@ -2553,30 +2563,21 @@ class UsersLib extends TikiLib
 	}
 
 	function get_cookie_check() {
-		global $prefs;
-		if ($prefs['remembermethod'] == 'simple') {
-			// this only makes sense in setting the cookie - it will always be different if checked
-			return md5(session_id() . uniqid(mt_rand(), true));
-		} else {
-			return md5($this->get_ip_address().$_SERVER['HTTP_USER_AGENT']);
-		}
+		return md5(session_id() . uniqid(mt_rand(), true));
 	}
 
-	function get_user_by_cookie($hash,$bypasscheck=false) {
+	function get_user_by_cookie($hash) {
 		global $prefs;
 		list($check,$expire,$userCookie) = explode('.',$hash, 3);
-		if ($check == $this->get_cookie_check() or $bypasscheck or $prefs['remembermethod'] == 'simple') {
-			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value` like ? and `user`=?';
-			$user = $this->getOne($query, array('cookie',"$check.%",$userCookie));
-			// $fp=fopen('temp/interlogtest','a+');fputs($fp,"main gubc -- $check.$expire.$userCookie -- $user --\n");fclose($fp);
-			if ($user) {
-				if ($expire < $this->now) {
-					$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
-					$user = $this->query($query, array('cookie',$hash));
-					return false;
-				} else {
-					return $user;
-				}
+		$query = "select `user` from `tiki_user_preferences` where `prefName`='cookie' and `value` like ? and `user`=?";
+
+		if ($this->getOne($query, array("$check.%",$userCookie))) {
+			if ($expire < $this->now) {
+				$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
+				$this->query($query, array('cookie',$hash));
+				return false;
+			} else {
+				return $userCookie;
 			}
 		}
 		return false;

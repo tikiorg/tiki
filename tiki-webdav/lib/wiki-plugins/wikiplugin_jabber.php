@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 /* Tiki plugin for Jabber
    Written by Dennis Heltzel, 9/15/2003
    You can only use this plugin to connect to a jabber server that is running on the same server as the http server for tiki. This is a constraint of the applet for security reasons. you can get more info about that at jabberapplet.jabberstudio.org.

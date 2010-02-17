@@ -89,7 +89,7 @@ if ($_REQUEST['locSection'] == 'read') {
 		$mail = $webmaillib->get_mail_storage($current);
 	} catch (Exception $e) {
 		// do something better with the error
-		$smarty->assign('conmsg', tra('There are a problem connecting to that account.').'<br />'.$e->getMessage());
+		$smarty->assign('conmsg', tra('There is a problem connecting to that account.').'<br />'.$e->getMessage());
 	}
 
 	if (isset($_REQUEST['delete_one'])) {

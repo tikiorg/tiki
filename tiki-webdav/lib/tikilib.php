@@ -1,5 +1,10 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+
 // this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
@@ -1187,7 +1192,8 @@ class TikiLib extends TikiDb_Bridge
 				$path = "tiki-show_user_avatar.php?user=$user";
 
 				if( $prefs['users_serve_avatar_static'] == 'y' ) {
-					$files = glob( "temp/public/avatar_$user.*" );
+					global $tikidomain;
+					$files = glob( "temp/public/$tikidomain/avatar_$user.*" );
 
 					if( count( $files ) ) {
 						$path = $files[0];
@@ -2069,8 +2075,18 @@ class TikiLib extends TikiDb_Bridge
 
 	// Registers a user vote
 	/*shared*/
-	function register_user_vote($user, $id, $optionId=false) {
+	function register_user_vote($user, $id, $optionId=false, array $valid_options = array(), $allow_revote = false ) {
 		global $prefs;
+
+		// If an option is specified and the valid options are specified, skip the vote entirely if not valid
+		if( false !== $optionId && count( $valid_options ) > 0 && ! in_array( $optionId, $valid_options ) ) {
+			return false;
+		}
+
+		if( $user && ! $allow_revote && $this->user_has_voted( $user, $id ) ) {
+			return false;
+		}
+
 		$ip = $this->get_ip_address();
 		$_SESSION['votes'][] = $id;
 		setcookie(md5("tiki_wiki_poll_$id"), $ip, time()+60*60*24*300);
@@ -2099,6 +2115,8 @@ class TikiLib extends TikiDb_Bridge
 				$result = $this->query($query, array($user, $ip, (string)$id, (int)$optionId, (int)$this->now));
 			}
 		}
+
+		return true;
 	}
 
 	function get_user_vote($id,$user) {
@@ -3273,10 +3291,10 @@ class TikiLib extends TikiDb_Bridge
 
 				// Determine if the article would be displayed in the view page
 				$res["disp_article"] = 'y';
-				if (($res["show_pre_publ"] != 'y') and ($this->now < $res["publishDate"])) {
+				if (($res["show_pre_publ"] != 'y') and ($this->now < $res["publishDate"]) && !$override_dates) {
 					$res["disp_article"] = 'n';
 				}
-				if (($res["show_post_expire"] != 'y') and ($this->now > $res["expireDate"])) {
+				if (($res["show_post_expire"] != 'y') and ($this->now > $res["expireDate"]) && !$override_dates) {
 					$res["disp_article"] = 'n';
 				}
 				$ret[] = $res;
@@ -3741,6 +3759,34 @@ class TikiLib extends TikiDb_Bridge
 			where `url`=?";
 		$id = $this->getOne($query, array( $url ) );
 		return $id;
+	}
+	/* cachetime = 0 => no cache, otherwise duration cache is valid */
+	function get_cached_url($url, &$isFresh, $cachetime=0) {
+		$query = 'select * from `tiki_link_cache` where `url`=?';
+		$result = $this->query($query, $url);
+		$res = $result->fetchRow();
+		$now =  $this->now;
+		if (empty($res) || ($now - $res['refresh']) > $cachetime) { // no cache or need to refresh
+			$res['data'] = $this->httprequest($url);
+			$isFresh = true;
+			//echo '<br />Not cached:'.$url.'/'.strlen($res['data']);
+			$res['refresh'] = $now;
+			if ($cachetime > 0) {
+				if (empty($res['cacheId'])) {
+					$query2 = 'insert into `tiki_link_cache` (`url`,`data`,`refresh`) values(?,?,?)';
+					$this->query($query2, array($url, $res['data'], $res['refresh']));
+					$result = $this->query($query, $url);
+					$res = $result->fetchRow();
+				} else {
+					$query = 'update `tiki_link_cache` set `data`=?, `refresh`=? where `cacheId`=?';
+					$this->query($query, array($res['data'], $res['refresh'], $res['cacheId']));
+				}
+			}
+		} else {
+			//echo '<br />Cached:'.$url;
+			$isFresh = false;
+		}
+		return $res;
 	}
 
 	// This funcion return the $limit most accessed pages
@@ -4480,9 +4526,15 @@ class TikiLib extends TikiDb_Bridge
 		return $preferences;
 	}
 
-	function get_preference($name, $default = '') {
+	function get_preference($name, $default = '', $expectArray = false ) {
 		global $prefs;
-		return isset($prefs[$name]) ? $prefs[$name] : $default;
+		$value = isset($prefs[$name]) ? $prefs[$name] : $default;
+
+		if( $expectArray && is_string( $value ) ) {
+			return unserialize( $value );
+		} else {
+			return $value;
+		}
 	}
 
 	function delete_preference($name) {
@@ -5577,19 +5629,25 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function plugin_info( $name ) {
+		static $known = array();
+
+		if( isset( $known[$name] ) ) {
+			return $known[$name];
+		}
+
 		if( ! $this->plugin_exists( $name, true ) )
-			return false;
+			return $known[$name] = false;
 
 		$func_name_info = "wikiplugin_{$name}_info";
 
 		if( ! function_exists( $func_name_info ) ) {
 			if( $info = $this->plugin_alias_info( $name ) )
-				return $info['description'];
+				return $known[$name] = $info['description'];
 			else
-				return false;
+				return $known[$name] = false;
 		}
 
-		return $func_name_info();
+		return $known[$name] = $func_name_info();
 	}
 
 	function plugin_alias_info( $name ) {

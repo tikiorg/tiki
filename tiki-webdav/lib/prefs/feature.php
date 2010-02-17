@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function prefs_feature_list() {
 
@@ -385,7 +390,10 @@ function prefs_feature_list() {
 			'name' => tra('Ajax auto-save'),
 			'description' => tra('Ajax auto-save'),
 			'help' => 'Lost+Edit+Protection',
-			'type' => 'flag',
+			'dependencies' => array(
+				'feature_ajax',
+			),
+		'type' => 'flag',
 		),
 		'feature_wiki_save_draft' => array(
 			'name' => tra('Save draft'),

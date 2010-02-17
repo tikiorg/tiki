@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 // This rather simple set of PHP lines fill in for a missing Tiki
 // feature. It exports links between pages in Tiki in a format that
 // can be fed to TGBrowser to get those nice browsable graphs.

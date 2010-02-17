@@ -1,4 +1,8 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
@@ -531,7 +535,13 @@ class FileGalLib extends TikiLib
 			$savedir=$prefs['fgal_use_dir'];
 		}
 
-		if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
+		// User avatar full images are always using db and not file location (at the curent state of feature)
+		if ($prefs['user_store_file_gallery_picture'] == 'y' && $prefs["user_picture_gallery_id"] == $gal_info['galleryId']) {
+			$userPictureGallery = true;			
+		} else {
+			$userPictureGallery = false;
+		}
+		if (($prefs['fgal_use_db'] == 'n' && !$userPictureGallery) || ($podCastGallery)) {
 			if (function_exists('md5_file')) {
 				if (!($checksum = md5_file($savedir . $path)))
 					$checksum = '';

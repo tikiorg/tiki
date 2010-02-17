@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 function prefs_global_list() {
 	global $tikilib;
@@ -221,15 +226,6 @@ function prefs_global_list() {
 			'type' => 'flag',
 			'hint' => tra("The group will be named identical to the user's username"),
 			'help' => 'Groups',
-		),
-		'remembermethod' => array(
-			'name' => tra('Method'),
-			'type' => 'list',
-			'options' => array(
-				'' => tra('Standard'),
-				'simple' => tra('Simple'),
-			),
-			'hint' => tra('"Standard" uses the client\'s IP and is more secure. "Simple" uses a unique ID and is more reliable'),
 		),
 		'remembertime' => array(
 			'name' => tra('Duration'),

@@ -1,4 +1,8 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
@@ -627,7 +631,7 @@ class RSSLib extends TikiLib
 
 		$expire = $publication + 3600*24*$configuration['expiry'];
 
-		$id = $artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '' );
+		$id = $artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
 
 		if( count( $configuration['categories'] ) ) {
 			global $categlib; require_once 'lib/categories/categlib.php';
@@ -676,6 +680,7 @@ class RSSLib extends TikiLib
 			'topic' => 0,
 			'future_publish' => -1,
 			'categories' => array(),
+			'rating' => 5,
 		);
 
 		foreach( $actions as $action ) {

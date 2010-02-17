@@ -1,10 +1,9 @@
 <?php
-
-// $Id$
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
-// details.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 // RULE1: $prefs does not contain serialized values. Only the database contains serialized values.
 // RULE2: put array() in default prefs for serialized values
@@ -84,6 +83,8 @@ function get_default_prefs() {
 		'feature_wiki_protect_email' => 'y',
 		'feature_wiki_rankings' => 'n',
 		'feature_wiki_ratings' => 'n',
+		'wiki_simple_ratings' => 'n',
+		'wiki_simple_ratings_options' => range( 1, 5 ),
 		'feature_wiki_replace' => 'n',
 		'feature_wiki_show_hide_before' => 'n',
 		'feature_wiki_tables' => 'new',
@@ -285,6 +286,7 @@ function get_default_prefs() {
 		'wikiplugin_skype' => 'n',
 		'wikiplugin_smarty' => 'n',
 		'wikiplugin_snarf' => 'n',
+		'wikiplugin_snarf_cache' => 0,
 		'wikiplugin_sort' => 'y',
 		'wikiplugin_split' => 'y',
 		'wikiplugin_sql' => 'n',
@@ -635,6 +637,8 @@ function get_default_prefs() {
 		'article_comments_default_ordering' => 'points_desc',
 		'article_comments_per_page' => 10,
 		'article_paginate' => 'n',
+		'article_user_rating' => 'n',
+		'article_user_rating_options' => range( 1, 5 ),
 		'feature_cms_templates' => 'n',
 		'cms_bot_bar' => 'y',
 		'cms_left_column' => 'y',
@@ -660,6 +664,8 @@ function get_default_prefs() {
 		'user_assigned_modules' => 'n',
 		'user_flip_modules' => 'module',
 		'user_show_realnames' => 'n',
+		'user_store_file_gallery_picture' => 'n',
+		'user_picture_gallery_id' => 0,
 		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',
@@ -966,7 +972,6 @@ function get_default_prefs() {
 		'registerPasscode' => isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand()),
 		'rememberme' => 'disabled',
 		'remembertime' => 7200,
-		'remembermethod' => 'simple',	// '' = IP based (more secure but not reliable) | 'simple' = unique id based (default)
 		'feature_clear_passwords' => 'n',
 		'feature_crypt_passwords' => (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash',
 		'feature_challenge' => 'n',

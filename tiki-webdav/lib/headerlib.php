@@ -1,5 +1,10 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
@@ -217,8 +222,9 @@ class HeaderLib
 	}
 
 	public function getMinifiedJs() {
+		global $tikidomainslash;
 		$hash = md5( serialize( $this->jsfiles ) );
-		$file = "temp/public/minified_$hash.js";
+		$file = 'temp/public/'.$tikidomainslash.'minified_$hash.js';
 
 		if( ! file_exists( $file ) ) {
 			$complete = $this->getJavascript();
@@ -385,8 +391,9 @@ class HeaderLib
 	}
 
 	private function get_minified_css( $files ) {
+		global $tikidomainslash;
 		$out = array();
-			$target = "temp/public/";
+			$target = 'temp/public/'.$tikidomainslash;
 
 		foreach( $files as $file ) {
 			$hash = md5( $file );
@@ -403,8 +410,9 @@ class HeaderLib
 	}
 
 	private function get_minified_css_single( $files ) {
+		global $tikidomainslash;
 		$hash = md5( serialize( $files ) );
-		$target = "temp/public/";
+		$target = 'temp/public/'.$tikidomainslash;
 		$file = $target . "minified_$hash.css";
 
 		if( ! file_exists( $file ) ) {

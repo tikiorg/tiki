@@ -26,6 +26,12 @@
 						</div>
 					</div>
 		
+					{if $user_picture_id}
+					<div class="userpicture">
+						{wikiplugin _name="img" fileId="$user_picture_id"}{/wikiplugin}
+					</div>
+					{/if}
+					
 					<div class="simplebox">
 						<div>
 		{if $avatar}

@@ -222,7 +222,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 	}
 
 	if( $prefs['feature_metrics_dashboard'] == 'y' ) {
-		$headerlib->add_cssfile("styles/metrics.css");
+		$headerlib->add_cssfile("css/metrics.css");
 		$headerlib->add_jsfile("lib/jquery/jquery.sparkline.min.js");
 		$headerlib->add_jsfile("lib/metrics.js");
 	}

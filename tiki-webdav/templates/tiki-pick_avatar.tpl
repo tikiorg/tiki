@@ -17,9 +17,12 @@
 		{button href="tiki-user_preferences.php?view_user=$thisuserwatch" _text="{tr}User Preferences{/tr}"}
 	</div>
 {/if}
-
 <h2>{if $user eq $userwatch}{tr}Your current avatar{/tr}{else}{tr}Avatar{/tr}{/if}</h2>
-{if $avatar}{$avatar}{else}{tr}no avatar{/tr}{/if}
+{if $avatar}{$avatar}
+{if $user_picture_id}
+{wikiplugin _name="img" fileId="$user_picture_id"}{/wikiplugin}
+{/if}
+{else}{tr}no avatar{/tr}{/if}
 {if sizeof($avatars) eq 0 and $avatar}
 <a class="link" href="tiki-pick_avatar.php?reset=y&amp;view_user{$userwatch|escape}" title="{tr}reset{/tr}">{icon _id='cross' alt='{tr}reset{/tr}'}</a>
 {/if}
@@ -97,7 +100,7 @@ function subavt() {
 <fieldset>
 <legend><strong>{tr}Upload your own avatar{/tr}</strong></legend>
 {if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
-<label for="userfile1">{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}:</label>
+<label for="userfile1">{if $prefs.user_store_file_gallery_picture neq 'y'}{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}{else}{tr}File (only .gif, .jpg and .png images){/tr}{/if}:</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 <input id="userfile1" name="userfile1" type="file" />
 <input type="submit" name="upload" value="{tr}Upload{/tr}" />

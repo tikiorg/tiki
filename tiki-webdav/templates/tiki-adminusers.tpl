@@ -369,7 +369,7 @@
 					</tr>
 				{else}
 					<tr class="formcolor">
-						<td><label for="pass1">{tr}Password:{/tr}</label></td>
+						<td><label for="pass1">{tr}Password:{/tr}</label>{if !$userinfo.userId}<br />({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
 							<div style="float:right;margin-left:5px;">
@@ -386,7 +386,7 @@
 						</td>
 					</tr>
 					<tr class="formcolor">
-						<td><label for="pass2">{tr}Repeat Password:{/tr}</label></td>
+						<td><label for="pass2">{tr}Repeat Password:{/tr}</label>{if !$userinfo.userId}<br />({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass2" id="pass2" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
 							<div style="float:right;margin-left:5px;">
@@ -396,15 +396,20 @@
 					</tr>
 					{if ! ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' ) }
 						<tr><td>&nbsp;</td><td>
-							<input id='genepass' name="genpass" type="text" />
+							<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none" />
 							{jq}
-$jq("#genepass").keyup(function () {
-  $jq('#pass1').val($jq(this).val());
-  $jq('#pass2').val($jq(this).val());
-  runPassword($jq(this).val(), 'mypassword');
-  checkPasswordsMatch("#pass2", "#pass1", "#mypassword2_text");
-});{/jq}
-							{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');return false;" _text="{tr}Generate a password{/tr}"}
+								$jq("#genPass span").click(function () {
+									$jq('#pass1, #pass2').val('');
+									$jq('#mypassword_text, #mypassword2_text').hide();
+									$jq("#genepass").show();
+								});
+								$jq("#pass1, #pass2").change(function () {
+									$jq('#mypassword_text, #mypassword2_text').show();
+									document.RegForm.genepass.value='';
+									$jq("#genepass").hide();
+								});
+							{/jq}
+							<span id="genPass">{button href="#" _onclick="genPass('genepass');runPassword(document.RegForm.genepass.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');return false;" _text="{tr}Generate a password{/tr}"}</div>
 						</td></tr>
 					{/if}
 					{if $userinfo.login neq 'admin' and empty($userinfo.userId)}
@@ -459,7 +464,7 @@ $jq("#genepass").keyup(function () {
 					</tr>
 				{/if}
 				<tr class="formcolor">
-					<td>{tr}Last Log in:{/tr}</td>
+					<td>&nbsp;</td>
 					<td>
 						{if $userinfo.userId}
 							<input type="hidden" name="user" value="{$userinfo.userId|escape}" />

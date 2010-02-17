@@ -1,13 +1,17 @@
 <?php
-  // analyse_file_path groups files by type, e.g. library, etc.
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
+// analyse_file_path groups files by type, e.g. library, etc.
 
 // Usage:
 // From TikiWiki root, run:
 // php doc/devtools/securitycheck.php > securityreport.html
 // visit securityreport.html (where your TikiWiki is)
 //
-
 
 if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 

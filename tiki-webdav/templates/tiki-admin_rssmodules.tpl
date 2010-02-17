@@ -56,6 +56,14 @@
 			</select>
 		</p>
 		<p>
+			<label for="article_rating">{tr}Rating{/tr}</label>
+			<select name="rating" id="article_rating">
+				{foreach from=$ratingOptions item=v}
+					<option{if $v eq $articleConfig.rating} selected="selected"{/if}>{$v|escape}</option>
+				{/foreach}
+			</select>
+		</p>
+		<p>
 			{include file=categorize.tpl}
 		</p>
 		<p>

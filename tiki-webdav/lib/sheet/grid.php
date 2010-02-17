@@ -1860,15 +1860,15 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 			for ($c = 1; $c <= $cols; $c++) {
 				$ri = 'r'.$r;
 				$ci = 'c'.$c;
-				$val = $d->data->$ri->$ci;
+				$val = $d->data->$ri->$ci->value;
 				
 				$sheet->initCell( $r-1, $c-1 );
 				$sheet->setValue( $val );
 				$sheet->setSize( 1, 1 );
-				if (substr($val, 0, 1) == '=') {
-					$val = substr($val, 1, strlen($val)-1);
-					if (!empty($val)) {
-						$sheet->setCalculation($val);
+				if (isset($d->data->$ri->$ci->formula)) {
+					$formula = substr($d->data->$ri->$ci->formula, 1, strlen($d->data->$ri->$ci->formula)-1);
+					if (!empty($formula)) {
+						$sheet->setCalculation($formula);
 					}
 				}
 			}

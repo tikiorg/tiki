@@ -1,11 +1,15 @@
 <?php
-/* $Id $
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+/* 
  * Params
  *     notonready = bool (default: false) - set to true if you want it _not_ to execute on document ready
  *     nojquery = string (default: "<!-- jq smarty plugin inactive: feature_jquery off -->") - Optional markup for when feature_jquery is off
  * 
  * data is the JQuery javascript code
- * 
  */
 function wikiplugin_jq_help() {
 	return tra("Insert JQuery javascript code.")."<br />~np~{JQ(nojquery='<p>You need JQuery for this!</p>')}".tra("jquery code e.g. \$jq(\"img\").click(function() {\n  \$jq(this).hide(\"slow\").show(\"fast\");\n});")."{JQ}~/np~";

@@ -1,7 +1,10 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 /*
- * $Id$
- *
  * Smarty plugin to make result HTML code smaller
  * In opposite to {strip} this plugin can be used ONCE at top level template
  * to strip all HTML at once... And it have no nasty BUG which is incorrectly

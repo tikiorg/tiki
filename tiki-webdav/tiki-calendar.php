@@ -407,23 +407,25 @@ $arows = array();
 if ($calendarViewMode == 'day') {
 	$hours = range($minHourOfDay,$maxHourOfDay);
 	$eventHoraires = array();
-	foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
-		$dayitems['time'] = ($dayitems['startTimeStamp'] > $cell[0]["{$weekdays[0]}"]['day'])
-			? $dayitems['time']
-			: str_pad($minHourOfDay,2,'0',STR_LEFT_PAD) . "00";
-		$dayitems['end'] = ($dayitems['endTimeStamp'] < ($cell[0]["{$weekdays[0]}"]['day'] + 86399))
-			? $dayitems['end']
-			: str_pad($maxHourOfDay,2,'0',STR_LEFT_PAD) . "59";
-		$rawhour =intval(substr($dayitems['time'],0,2));
-		$dayitems['mins'] = substr($dayitems['time'],2);
-		$dayitems['top'] = (($rawhour - $minHourOfDay) + $dayitems['mins']/60)*24 + 35;
-		$hrows["$rawhour"][] = $dayitems;
-
-		$currIndex = count($eventHoraires);
-		$eventHoraires[$currIndex]['id'] = $dayitems['calitemId'];
-		$eventHoraires[$currIndex]['start'] = $dayitems['time'];
-		$eventHoraires[$currIndex]['end'] =	$dayitems['end'];
-		$eventHoraires[$currIndex]['duree'] = max(1,number_format(($tikilib->make_time(substr($dayitems['end'],0,2),substr($dayitems['end'],2) + 1,0,1,1,2000) - $tikilib->make_time(substr($dayitems['time'],0,2),substr($dayitems['time'],2),0,1,1,2000)) / 3600,2));
+	if (!empty($cell[0]["{$weekdays[0]}"]['items'])) {
+		foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
+			$dayitems['time'] = ($dayitems['startTimeStamp'] > $cell[0]["{$weekdays[0]}"]['day'])
+				? $dayitems['time']
+				: str_pad($minHourOfDay,2,'0',STR_LEFT_PAD) . "00";
+			$dayitems['end'] = ($dayitems['endTimeStamp'] < ($cell[0]["{$weekdays[0]}"]['day'] + 86399))
+				? $dayitems['end']
+				: str_pad($maxHourOfDay,2,'0',STR_LEFT_PAD) . "59";
+			$rawhour =intval(substr($dayitems['time'],0,2));
+			$dayitems['mins'] = substr($dayitems['time'],2);
+			$dayitems['top'] = (($rawhour - $minHourOfDay) + $dayitems['mins']/60)*24 + 35;
+			$hrows["$rawhour"][] = $dayitems;
+	
+			$currIndex = count($eventHoraires);
+			$eventHoraires[$currIndex]['id'] = $dayitems['calitemId'];
+			$eventHoraires[$currIndex]['start'] = $dayitems['time'];
+			$eventHoraires[$currIndex]['end'] =	$dayitems['end'];
+			$eventHoraires[$currIndex]['duree'] = max(1,number_format(($tikilib->make_time(substr($dayitems['end'],0,2),substr($dayitems['end'],2) + 1,0,1,1,2000) - $tikilib->make_time(substr($dayitems['time'],0,2),substr($dayitems['time'],2),0,1,1,2000)) / 3600,2));
+		}
 	}
 	$orderedEventHoraires = array();
 	$eventIndexes = array();

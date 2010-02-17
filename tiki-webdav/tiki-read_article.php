@@ -138,7 +138,9 @@ if ($prefs['feature_article_comments'] == 'y') {
 	if (isset($_REQUEST['show_comzone']) && $_REQUEST['show_comzone'] == 'y') $smarty->assign('show_comzone', 'y');
 }
 $objId = $_REQUEST['articleId'];
-$is_categorized = $categlib->is_categorized('article',$objId);
+if ($prefs['feature_categories'] == 'y') {
+	$is_categorized = $categlib->is_categorized('article',$objId);
+}
 // Display category path or not (like {catpath()})
 if (isset($is_categorized) && $is_categorized) {
 	$smarty->assign('is_categorized', 'y');

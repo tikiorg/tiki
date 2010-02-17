@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
 $access->check_feature('feature_submissions');
 if (isset($_REQUEST["remove"])) {
-	$access->check_permission('tiki_p_remove_submission'),
+	$access->check_permission('tiki_p_remove_submission');
 	$area = 'delsubmission';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);

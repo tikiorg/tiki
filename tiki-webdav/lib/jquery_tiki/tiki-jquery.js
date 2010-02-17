@@ -15,6 +15,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 
 	// override existing show/hide routines here
 
+	// add id's of any elements that don't like being animated here
 	var jqNoAnimElements = ['help_sections', 'ajaxLoading'];
 
 	show = function (foo,f,section) {
@@ -404,13 +405,15 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 						
 						if (count == 1) x['data']['r'+cur_row] = {};
 						
+						x['data']['r'+cur_row]['c'+cur_column] = {};
+						
+						x['data']['r'+cur_row]['c'+cur_column]['value'] = txt;
+						
 						formula = jQuery(this).attr('formula');
-						if (formula != undefined)
-						{
-							txt = formula;
+						if (formula != undefined) {
+							x['data']['r'+cur_row]['c'+cur_column]['formula'] = formula;
 						}
 						
-						x['data']['r'+cur_row]['c'+cur_column] = txt;
 					}
 				});
 				
@@ -870,8 +873,13 @@ $jq.fn.tiki = function(func, type, options) {
 				}
 		 		return this.each(function() {
 		 			if (jqueryTiki.ui) {
+		 				$jq(this).height($jq(this).height() + 100);	// make room for controls
 		 				$jq(this).sheet(opts);
-		 				$jq("#jSheetEditPane").resizable({minWidth: $jq("#jSheetEditPane").width()});
+		 				$jq(this).resizable({minWidth: $jq(this).width() * 0.5, resize: function() {
+		 						$jq("#jSheetBarLeftParent").height($jq(this).height() - $jq("#jSheetBarCornerParent").height() - $jq("#jSheetControls").height());
+		 						$jq("#jSheetBarTopParent").width($jq(this).width() - $jq("#jSheetBarCornerParent").width());
+		 						$jq("#jSheetEditPane").width($jq("#jSheetBarTopParent").width()).height($jq("#jSheetBarLeftParent").height());
+		 					}});
 		 			} else {
 		 				$jq(this).sheet(opts);
 		 			}

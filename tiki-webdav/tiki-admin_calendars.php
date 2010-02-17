@@ -13,6 +13,7 @@ if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
 $access->check_permission(array('tiki_p_admin_calendar'));
+$auto_query_args = array('calendarId', 'sort_mode', 'find', 'offset');
 if (!isset($_REQUEST["calendarId"])) {
 	$_REQUEST["calendarId"] = 0;
 } else {

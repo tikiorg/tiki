@@ -482,6 +482,23 @@ if ($calitem['recurrenceId'] > 0) {
 	$cr = new CalRecurrence($calitem['recurrenceId']);
 	$smarty->assign('recurrence',$cr->toArray());
 }
+$headerlib->add_js('
+function checkDateOfYear(day,month) {
+	var mName = new Array("-","'.tra('January').'","'.tra('February').'","'.tra('March').'","'.tra('April').'","'.tra('May').'","'.tra('June').'","'.tra('July').'","'.tra('August').'","'.tra('September').'","'.tra('October').'","'.tra('November').'","'.tra('December').'}");
+	var error = false;
+	if (month == 4 || month == 6 || month == 9 || month == 11)
+		if (day == 31)
+			error = true;
+	if (month == 2)
+		if (day > 29)
+			error = true;
+	if (error) {
+		document.getElementById("errorDateOfYear").innerHTML = "<em>'.tra('There\'s no such date as').' " + day + " '.tra('of').' " + mName[month] + "</em>";
+	} else {
+		document.getElementById("errorDateOfYear").innerHTML = "";
+	}
+}
+');
 $smarty->assign('calitem', $calitem);
 $smarty->assign('calendar', $calendar);
 $smarty->assign('calendarId', $calID);

@@ -1,9 +1,13 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
+
 // Includes articles listing in a wiki page
 // Usage:
 // {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
-//
 
 function wikiplugin_articles_help()
 {
@@ -61,7 +65,7 @@ function wikiplugin_articles_info()
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
-				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format.'),
+				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")'),
 				'filter' => 'word',
 			),
 			'quiet' => array(

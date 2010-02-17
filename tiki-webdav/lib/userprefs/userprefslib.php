@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -10,14 +15,14 @@ class UserPrefsLib extends TikiLib
 {
 
 	function set_user_avatar($user, $type, $avatarLibName, $avatarName, $avatarSize, $avatarType, $avatarData) {
-		global $prefs, $userlib;
+		global $prefs, $userlib, $tikidomainslash;
 		$query = "update `users_users` set `avatarType` = ?, `avatarLibName` = ?, `avatarName` = ?, `avatarSize` = ?, `avatarFileType` = ?, `avatarData` = ?  where `login`=?";
 		$result = $this->query($query,array($type,$avatarLibName,$avatarName,($avatarSize?$avatarSize:NULL),$avatarType,$avatarData,$user));
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']) && $prefs['feature_intertiki_import_preferences'] == 'y') { //send to the master
 			$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $user);
 		}
 
-		$image = 'temp/public/avatar_' . $user . '.*';
+		$image = 'temp/public/'.$tikidomainslash.'avatar_' . $user . '.*';
 		foreach( glob( $image ) as $file ) {
 			unlink($file);
 		}
@@ -31,6 +36,47 @@ class UserPrefsLib extends TikiLib
 		return $res;
 	}
 
+	function set_file_gallery_image($u, $filename, $size, $type, $data) {
+		global $prefs, $tikilib;
+		global $filegallib;
+		if (!is_object($filegallib)) {
+				require_once( 'lib/filegals/filegallib.php' );
+		}
+		if (!$prefs["user_picture_gallery_id"]) {
+			return false;
+		}
+		if ($user_image_id = $tikilib->get_user_preference($u, 'user_fg_image_id')) {
+			$didFileReplace = false;
+			$gal_info = $tikilib->get_file_gallery($prefs["user_picture_gallery_id"]);
+			$filegallib->replace_file($user_image_id, $u, $u, $filename, $data, $size, $type, $u, '', '', $gal_info, $didFileReplace);	
+		} else {
+			$user_image_id = $filegallib->insert_file($prefs["user_picture_gallery_id"], $u, $u, $filename, $data, $size, $type, $u, '', '', '');
+			$tikilib->set_user_preference($u, 'user_fg_image_id', $user_image_id);
+		}
+		return $user_image_id;
+	}
+	
+	function remove_file_gallery_image($u) {
+		global $prefs, $tikilib;
+		global $filegallib;
+		if (!is_object($filegallib)) {
+				require_once( 'lib/filegals/filegallib.php' );
+		}
+		if ($user_image_id = $tikilib->get_user_preference($u, 'user_fg_image_id')) {
+			$file_info = $filegallib->get_file_info($user_image_id, false, false);
+			$filegallib->remove_file($file_info, '', true); 
+			$tikilib->set_user_preference($u, 'user_fg_image_id', '');
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function get_user_picture_id($u) {
+		global $tikilib;
+		return $tikilib->get_user_preference($u, 'user_fg_image_id');		
+	}
+	
 	function get_userprefs($user) {
 		$query = "select * from `tiki_user_preferences` where `user`=?";
 		$result = $this->query($query,array($user));

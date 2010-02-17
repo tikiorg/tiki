@@ -8617,7 +8617,7 @@ $lang=Array(
 // "Minimum {\$prefs.min_username_length} characters long" => "Minimum {\$prefs.min_username_length} characters long",
 // "Passcode to register" => "Passcode to register",
 // "Not your password" => "Not your password",
-// "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\t\t\tcontact the sytem administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}" => "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\t\t\tcontact the sytem administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}",
+// "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\t\t\tcontact the system administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}" => "To request a passcode, {if \$prefs.feature_contact eq 'y'}<a href=\"tiki-contact.php\">{/if}\n\t\t\t\t\t\tcontact the system administrator{if \$prefs.feature_contact eq 'y'}</a>{/if}",
 // "Generate a\tpassword" => "Generate a\tpassword",
 // "A valid email is mandatory to register" => "A valid email is mandatory to register",
 // "Select your group" => "Select your group",

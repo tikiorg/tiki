@@ -1,6 +1,5 @@
 {* $Id$ *}
-{* test for caps lock*}
-{jq}
+{jq notonready=true} {* test for caps lock*}
 		function regCapsLock(e){
 			kc = e.keyCode?e.keyCode:e.which;
 			sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
@@ -9,6 +8,22 @@
 			else
 				document.getElementById('divRegCapson').style.visibility = 'hidden';
 		}
+{/jq}
+{jq}
+		$jq("#genPass span").click(function () {
+			genPass('genepass','pass1','pass2');
+			runPassword(document.RegForm.genepass.value, 'mypassword');
+			checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');
+			$jq('#pass1, #pass2').val('');
+			$jq('#mypassword_text, #mypassword2_text').hide();
+			$jq("#genepass").show();
+		});
+
+		$jq("#pass1, #pass2").change(function () {
+			$jq('#mypassword_text, #mypassword2_text').show();
+			document.RegForm.genepass.value='';
+			$jq("#genepass").hide();
+		});
 {/jq}
 
 {title admpage='login'}{tr}Registration{/tr}{/title}
@@ -66,7 +81,7 @@
 					<td class="formcolor">
 						<input type="password" name="passcode" id="passcode" onkeypress="regCapsLock(event)" />
 						<em>{tr}Not your password.{/tr} {tr}To request a passcode, {if $prefs.feature_contact eq 'y'}<a href="tiki-contact.php">{/if}
-						contact the sytem administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em>
+						contact the system administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em>
 					</td>
 				</tr>
 	{/if}
@@ -74,9 +89,11 @@
 				<tr>
 					<td class="formcolor"><label for="pass1">{tr}Password:{/tr}</label></td>
 					<td class="formcolor">
-						<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
-						<span id="mypassword_text"></span>
-						<span id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></span>
+						<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
+						<div style="float:right;margin-left:5px;">
+							<div id="mypassword_text"></div>
+							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
+						</div>
 						{if $prefs.feature_ajax ne 'y'}
 							{if $prefs.min_pass_length > 1}<div class="highlight"><em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em></div>{/if}
 							{if $prefs.pass_chr_num eq 'y'}<div class="highlight"><em>{tr}Password must contain both letters and numbers{/tr}</em></div>{/if}
@@ -87,16 +104,21 @@
 				<tr>
 					<td class="formcolor" style="vertical-align:top"><label for="pass2">{tr}Repeat password:{/tr}</label></td>
 					<td class="formcolor">
-						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" {if $prefs.feature_ajax eq'y'}onkeyup="check_pass()"{/if}/>
+						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text'){if $prefs.feature_ajax eq'y'};check_pass(){/if}" />
+						<div style="float:right;margin-left:5px;">
+							<div id="mypassword2_text"></div>
+						</div>
 						{if $prefs.feature_ajax eq'y'}<span id="checkpass"></span>{/if}
 						{if $prefs.generate_password eq 'y'}
 							<p>
+							<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none" />
+							<span id="genPass">
 							{if $prefs.feature_ajax eq 'y'}
-								{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');check_pass();"	_text="{tr}Generate a password:{/tr}"}
+								{button href="#" _onclick="check_pass();" _text="{tr}Generate a password{/tr}"}
 							{else}
-								{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');"	_text="{tr}Generate a	password:{/tr}"}
+								{button href="#" _onclick="" _text="{tr}Generate a password{/tr}"}
 							{/if}
-							<input id='genepass' name="genpass" type="text" />
+							</span>
 							</p>
 						{/if}
 					</td>

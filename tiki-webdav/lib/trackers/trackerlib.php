@@ -1,8 +1,13 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
 /**
  * Tracker Library
  *
- * $Id$
  * \brief Functions to support accessing and processing of the Trackers.
  *
  * @package		Tiki
@@ -2368,7 +2373,7 @@ class TrackerLib extends TikiLib
 			//echo "$val - $olrate + $new_rate = $newval";die;
 		}
 		$this->query($query,array((int)$newval,(int)$itemId,(int)$fieldId));
-		$this->register_user_vote($user, $key, $new_rate);
+		$this->register_user_vote( $user, $key, $new_rate, array(), true );
 		return $newval;
 	}
 	function replace_star($userValue, $trackerId, $itemId, &$field, $user, $updateField=true) {
@@ -2387,7 +2392,7 @@ class TrackerLib extends TikiLib
 			return;
 		}
 		$result = $this->query("select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$field['fieldId']));
-		$this->register_user_vote($user, $key, $userValue);
+		$this->register_user_vote($user, $key, $userValue, array(), true);
 		$field['my_rate'] = $userValue;
 		if (!$result->numRows()) {
 			$field['voteavg'] = $field['value'] = $userValue;

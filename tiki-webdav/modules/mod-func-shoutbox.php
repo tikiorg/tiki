@@ -1,10 +1,11 @@
 <?php
-/* $Id$
- *
- * Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
- * All Rights Reserved. See copyright.txt for details and a complete list of authors.
- * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
- *
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
+
+/*
  * AJAXified Shoutbox module (jonnybradley for mpvolt Aug/Sept 2008)
  * 
  * Prefers Ajax enabled (Admin/Features/Experimental - feature_ajax) but will work the old way without it

@@ -136,7 +136,7 @@ function cookie_check($params) {
 		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
 		return new XML_RPC_Response(0, 101, $msg);
 	}
-	$result = $userlib->get_user_by_cookie($hash,true);
+	$result = $userlib->get_user_by_cookie($hash);
 	// $fp=fopen('temp/interlogtest','a+');fputs($fp,"main      -- ".$hash."\n");fclose($fp);
 	if ($result) {
 		return new XML_RPC_Response(new XML_RPC_Value($result, "string"));

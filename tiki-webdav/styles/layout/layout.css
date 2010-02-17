@@ -1653,8 +1653,8 @@ div#ajaxLoading {
 	color: #fff;
 	display: none;
 	position: fixed;
-	top: 50% !important;
-	left: 50% !important;
+	top: 50%;
+	left: 50%;
 	padding: 3px;
 	color: #333;
 	text-align: center;
@@ -1670,34 +1670,11 @@ div#ajaxLoadingBG {
 	z-index: 9999;
 	display: none;
 	position: fixed;
-	left: 0 !important; top: 0 !important;
+	left: 0;
+	top: 0;
 	background: transparent url(../../img/overlay-light.png);
-	width: 100% !important;
-	height: 100% !important;
-}
-
-#shadowbox_title {
-	height: auto !important;
-	padding: 0;
-	overflow: visible
-}
-
-#shadowbox_title_inner{
-	height: auto !important;
-	font-size: 1em !important;
-	line-height: 1em !important;
-	white-space: normal !important;
-	padding: 5px 0 4px 8px;
-}
-	
-#shadowbox_toolbar,
-#shadowbox_toolbar_inner {
-	height: auto;
-}
-	
-#shadowbox_content {
-	background: #f5f5f5;
-	color: #000;
+	width: 100%;
+	height: 100%;
 }
 
 /* ColorBox */

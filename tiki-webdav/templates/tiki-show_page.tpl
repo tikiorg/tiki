@@ -137,6 +137,11 @@
 {/if}
 
 {if $prefs.feature_wiki_ratings eq 'y'}{include file='poll.tpl'}{/if}
+{if $prefs.wiki_simple_ratings eq 'y' && $tiki_p_assign_perm_wiki_page eq 'y'}
+	<form method="post" action="">
+		{rating wiki=$page_id}
+	</form>
+{/if}
 {/if} {*hide_page_header*}
 
 {if $machine_translate_to_lang != ''}

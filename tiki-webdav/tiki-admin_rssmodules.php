@@ -76,11 +76,13 @@ if( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 			'topic' => $jitPost->topic->int(),
 			'future_publish' => $jitPost->future_publish->int(),
 			'categories' => (array) $jitPost->cat_categories->int(),
+			'rating' => $jitPost->rating->int(),
 		) );
 	}
 
 	$config = $rsslib->get_article_generator( $_REQUEST['article'] );
 	$smarty->assign( 'articleConfig', $config );
+	$smarty->assign( 'ratingOptions', range( 0, 10 ) );
 
 	global $artlib; require_once 'lib/articles/artlib.php';
 	$smarty->assign( 'topics', $artlib->list_topics() );

@@ -9,7 +9,7 @@ require 'tiki-setup.php';
 
 $access->check_feature('feature_userPreferences');
 
-global $userprefslib;
+global $userprefslib, $tikidomain;
 include_once ('lib/userprefs/userprefslib.php');
 // application to display an image from the database with
 // option to resize the image dynamically creating a thumbnail on the fly.
@@ -29,7 +29,7 @@ echo $content;
 if( $prefs['users_serve_avatar_static'] == 'y' ) {
 	require 'lib/mime/mimeextensions.php';
 	$ext = $mimeextensions[$type];
-	$image = "temp/public/avatar_{$_REQUEST['user']}.$ext";
+	$image = "temp/public/$tikidomain/avatar_{$_REQUEST['user']}.$ext";
 
 	file_put_contents( $image, $info['avatarData'] );
 }

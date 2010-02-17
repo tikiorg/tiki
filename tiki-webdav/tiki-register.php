@@ -14,7 +14,12 @@ if ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && !em
 	header("location: index.php");
 	die;
 }
-$access->check_user($user);
+// NOTE that this is not a standard access check, it checks for the opposite of that, i.e. whether logged in already
+if (!empty($user)) {
+	$smarty->assign('msg', tra('You are already logged in'));
+	$smarty->display('error.tpl');
+	die;
+}
 $smarty->assign('showmsg', 'n');
 // novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
 if (!isset($_REQUEST['novalidation'])) {
@@ -101,7 +106,8 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		$smarty->display("error.tpl");
 		die;
 	}
-	$polerr = $userlib->check_password_policy($_REQUEST["pass"]);
+	$newPass = $_REQUEST["pass"] ? $_REQUEST["pass"] : $_REQUEST["genepass"];
+	$polerr = $userlib->check_password_policy($newPass);
 	if (!isset($_SESSION['openid_url']) && (strlen($polerr) > 0)) {
 		$smarty->assign('msg', $polerr);
 		$smarty->display("error.tpl");
@@ -157,11 +163,11 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		if ($prefs['validateUsers'] == 'y' || (isset($prefs['validateRegistration']) && $prefs['validateRegistration'] == 'y')) {
 			$apass = addslashes(md5($tikilib->genPass()));
 			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email'], '', '', isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : '');
-			$userlib->add_user($_REQUEST["name"], $_REQUEST['pass'], $_REQUEST["email"], '', false, $apass, $openid_url , $prefs['validateRegistration'] == 'y'?'a':'u');
+			$userlib->add_user($_REQUEST["name"], $newPass, $_REQUEST["email"], '', false, $apass, $openid_url , $prefs['validateRegistration'] == 'y'?'a':'u');
 			$logslib->add_log('register', 'created account ' . $_REQUEST["name"]);
 			$smarty->assign('showmsg', 'y');
 		} else {
-			$userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"], '', false, NULL, $openid_url);
+			$userlib->add_user($_REQUEST["name"], $newPass, $_REQUEST["email"], '', false, NULL, $openid_url);
 			$logslib->add_log('register', 'created account ' . $_REQUEST["name"]);
 			$smarty->assign('msg', $smarty->fetch('mail/user_welcome_msg.tpl'));
 			$smarty->assign('showmsg', 'y');

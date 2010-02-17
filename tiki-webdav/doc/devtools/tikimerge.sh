@@ -1,6 +1,10 @@
 #!/bin/sh
+# (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+# 
+# All Rights Reserved. See copyright.txt for details and a complete list of authors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 # $Id$
-#
+
 # NOTE: Since 1.9 release, merge only concerns BRANCH-1-9 to HEAD
 #
 # That script is done for fast merging fixes that are done on branch
