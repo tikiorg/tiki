@@ -1821,10 +1821,10 @@ class UsersLib extends TikiLib
 		return $ret;
 	}
 
-	function get_group_users($group, $offset = 0) {
+	function get_group_users($group, $offset = 0, $max=-1) {
 		global $prefs;
 		$query = "select `login` from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=?";
-		$result = $this->query($query,$group, $prefs['maxRecords'], $offset);
+		$result = $this->query($query,$group, $max, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["login"];
