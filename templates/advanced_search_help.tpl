@@ -1,10 +1,44 @@
-<ul>
-	<li>+ : {tr}A leading plus sign indicates that this word must be present in every object returned.{/tr}</li>
-	<li>- : {tr}A leading minus sign indicates that this word must not be present in any row returned.{/tr}</li>
-    <li>{tr}By default (when neither plus nor minus is specified) the word is optional, but the object that contain it will be rated higher.{/tr}</li>
-	<li>&lt; &gt; : {tr}These two operators are used to change a word's contribution to the relevance value that is assigned to a row.{/tr}</li>
-	<li>( ) : {tr}Parentheses are used to group words into subexpressions.{/tr}</li>
-	<li>~ : {tr}A leading tilde acts as a negation operator, causing the word's contribution to the object relevance to be negative. It's useful for marking noise words. An object that contains such a word will be rated lower than others, but will not be excluded altogether, as it would be with the - operator.{/tr}</li>
-	<li>* : {tr}An asterisk is the truncation operator. Unlike the other operators, it should be appended to the word, not prepended.{/tr}</li>
-	<li>&quot; : {tr}The phrase, that is enclosed in double quotes &quot;, matches only objects that contain this phrase literally, as it was typed.{/tr}</li>
-</ul>
+<p>
+<div><strong>{tr}Default search behavior{/tr}</strong></div>
+<div>{tr}By default, all search terms are <em>optional</em>.{/tr} {tr}Objects that contain the terms are rated higher in the results.{/tr} {tr}For example, <strong>wiki forum</strong> will find:{/tr}
+	<ul>
+		<li>{tr}objects that include the term <strong>wiki</strong>{/tr}</li>
+		<li>{tr}objects that include the term <strong>forum</strong>{/tr}</li>
+		<li>{tr}objects that include both terms{/tr}</li>
+	</ul>
+</div>
+</p>
+<p>
+<div><strong>{tr}Requiring terms{/tr}</strong></div>
+<div>{tr}Add a plus sign ( + ) before a term to indicate that the term <em>must</em> appear in results.{/tr}
+</div>
+<p>
+<div id="excluding"><strong>{tr}Excluding terms{/tr}</strong</div>
+<div>{tr}Add a minus sign ( - ) before a term to indicate that the term <em>must not</em> appear results.{/tr} {tr}To reduce a term's value without completely excluding it, <a href="#reducing" title="{tr}Reducing a term's value{/tr}">use a tilde</a>.{/tr}</div>
+</p>
+<p>
+<div><strong>{tr}Grouping terms{/tr}</strong></div>
+<div>{tr}Use parenthesis ( ) to group terms into subexpressions.{/tr}</div>
+</p>
+<p>
+<div><strong>{tr}Finding phrases{/tr}</strong></div>
+<div>{tr}Use double quotes ( " ) around a phrase to find terms in the exact order, exactly as typed.{/tr}</div>
+</p>
+<p>
+<div><strong>{tr}Using wildcards{/tr}</strong></div>
+<div>{tr}Add an asterisk ( * ) after a term to find objects that include the root word.{/tr} {tr}For example, <strong>run*</strong> will find:{/tr}
+	<ul>
+		<li>{tr}objects that include the term <strong>run</strong>{/tr}</li>
+		<li>{tr}objects that include the term <strong>runner</strong>{/tr}</li>
+		<li>{tr}objects that include the term <strong>running</strong>{/tr}</li>		
+	</ul>
+</div>
+</p>
+<p>
+<div id="reducing"><strong>{tr}Reducing a term's value{/tr}</strong></div>
+<div>{tr}Add a tilde ( ~ ) before a term to reduce its value indicate to the ranking of the results.{/tr} {tr}Objects that contain the term will appear lower than other objects (unlike the <a href="#excluding" title={tr}Excluding terms{/tr}">minus sign</a> which will completely exclude a term).{/tr}</div>
+</p>
+<p>
+<div><strong>{tr}Changing relevance value{/tr}</strong></div>
+<div>{tr}Add a less than ( &lt; ) or greater than ( &gt; ) sign before a term to change the term's contribution to the overall relevance value assigned to a row.{/tr}</div>
+</p>
