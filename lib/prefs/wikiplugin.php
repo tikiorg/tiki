@@ -23,6 +23,14 @@ function prefs_wikiplugin_list() {
 			'dependencies' => $dependencies,
 		);
 	}
+	$prefs['wikiplugin_snarf_cache'] = array(
+		'name' => tra('Global cache time for the plugin snarf in seconds'),
+		'description' => tra('Default cache time for the plugin snarf'). tra('0 for no cache'),
+		'default' => 0,
+		'dependencies' => array('wikiplugin_snarf'),
+		'filter' => 'int',
+		'type' => 'text'
+	);
 
 	return $prefs;
 }

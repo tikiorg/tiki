@@ -284,6 +284,7 @@ function get_default_prefs() {
 		'wikiplugin_skype' => 'n',
 		'wikiplugin_smarty' => 'n',
 		'wikiplugin_snarf' => 'n',
+		'wikiplugin_snarf_cache' => 0,
 		'wikiplugin_sort' => 'y',
 		'wikiplugin_split' => 'y',
 		'wikiplugin_sql' => 'n',

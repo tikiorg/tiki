@@ -3760,6 +3760,34 @@ class TikiLib extends TikiDb_Bridge
 		$id = $this->getOne($query, array( $url ) );
 		return $id;
 	}
+	/* cachetime = 0 => no cache, otherwise duration cache is valid */
+	function get_cached_url($url, &$isFresh, $cachetime=0) {
+		$query = 'select * from `tiki_link_cache` where `url`=?';
+		$result = $this->query($query, $url);
+		$res = $result->fetchRow();
+		$now =  $this->now;
+		if (empty($res) || ($now - $res['refresh']) > $cachetime) { // no cache or need to refresh
+			$res['data'] = $this->httprequest($url);
+			$isFresh = true;
+			//echo '<br />Not cached:'.$url.'/'.strlen($res['data']);
+			$res['refresh'] = $now;
+			if ($cachetime > 0) {
+				if (empty($res['cacheId'])) {
+					$query2 = 'insert into `tiki_link_cache` (`url`,`data`,`refresh`) values(?,?,?)';
+					$this->query($query2, array($url, $res['data'], $res['refresh']));
+					$result = $this->query($query, $url);
+					$res = $result->fetchRow();
+				} else {
+					$query = 'update `tiki_link_cache` set `data`=?, `refresh`=? where `cacheId`=?';
+					$this->query($query, array($res['data'], $res['refresh'], $res['cacheId']));
+				}
+			}
+		} else {
+			//echo '<br />Cached:'.$url;
+			$isFresh = false;
+		}
+		return $res;
+	}
 
 	// This funcion return the $limit most accessed pages
 	// it returns pageName and hits for each page
