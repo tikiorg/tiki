@@ -1,7 +1,7 @@
 <?php
 require_once 'tiki-setup.php';
 
-//$access->check_feature('feature_webdav');
+$access->check_feature('feature_webdav');
 
 //@file_put_contents('/tmp/tiki4log', "\n=== _SERVER() ===\n".print_r($_SERVER,true)."\n", FILE_APPEND );
 // Check if we come here with a browser
@@ -19,8 +19,8 @@ $server = TikiWebdav_Server::getInstance();
 $pathFactory = new TikiWebdav_PathFactories_File;
 $backend = new TikiWebdav_Backends_File;
 
-$server->auth = new TikiWebdav_Auth_Default( '/tmp/tokens.php' ); ///FIXME
-//$server->auth = new TikiWebdav_Auth_Default;
+//$server->auth = new TikiWebdav_Auth_Default( '/tmp/tokens.php' ); ///FIXME
+$server->auth = new TikiWebdav_Auth_Default;
 $server->pluginRegistry->registerPlugin(
 	new ezcWebdavLockPluginConfiguration()
 );
