@@ -122,6 +122,11 @@ function wikiplugin_files_info() {
 				'name' => tra('Shows the slideshow of a gallery'),
 				'description' => 'y|n',
 			),
+			'creator' => array(
+				'required' => false,
+				'name' => tra('Show only created by this user'),
+				'description' => tra('User Login'),
+			),
 	  )
 	 );
 }
@@ -173,7 +178,7 @@ function wikiplugin_files($data, $params) {
 			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
-		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true);
+		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true, true, true, false, false, true, false, '', true, false, false, 0, $creator);
 		if (isset($categId)) {
 			$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file');
 			$objects_in_categs = array();
@@ -215,7 +220,7 @@ function wikiplugin_files($data, $params) {
 				$p_edit_gallery_file = 'y';
 			}
 
-			$fs = $tikilib->get_files(0, -1, $sort, '', $og['itemId'], false, true, false, true, false, true);
+			$fs = $tikilib->get_files(0, -1, $sort, '', $og['itemId'], false, true, false, true, false, true, true, false, '', true, false, false, 0, $creator);			                                                      
 			if ($fs['cant']) {
 				for ($i = 0; $i < $fs['cant']; ++$i) {
 					$fs['data'][$i]['gallery'] = $gal_info['name'];
