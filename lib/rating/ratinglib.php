@@ -181,6 +181,31 @@ class RatingLib extends TikiDb_Bridge
 			return $this->session_to_user( session_id() );
 		}
 	}
+
+	function test_formula( $formula, $available = false ) {
+		try {
+			$runner = $this->get_runner();
+			$runner->setFormula( $formula );
+			$variables = $runner->inspect();
+
+			if( $available ) {
+				$extra = array_diff( $variables, $available );
+				if( count($extra) > 0 ) {
+					return tr( 'Unknown variables referenced: %0', implode( ', ', $extra ) );
+				}
+			}
+		} catch( Math_Formula_Exception $e ) {
+			return $e->getMessage();
+		}
+	}
+
+	private function get_runner() {
+		require_once 'Math/Formula/Runner.php';
+		return new Math_Formula_Runner( array(
+			'Math_Formula_Function_' => 'lib/core/lib/Math/Formula/Function',
+			'Tiki_Formula_Function_' => dirname(__FILE__) . '/formula',
+		) );
+	}
 }
 
 global $ratinglib; $ratinglib = new RatingLib;

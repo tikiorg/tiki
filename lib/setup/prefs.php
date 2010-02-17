@@ -1566,6 +1566,9 @@ function get_default_prefs() {
 		'payment_paypal_business' => '',
 		'payment_paypal_environment' => 'https://www.paypal.com/cgi-bin/webscr',
 		'payment_paypal_ipn' => 'y',
+
+		// Rating
+		'rating_advanced' => 'n',
 	);
 
 	// spellcheck

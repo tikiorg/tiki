@@ -353,6 +353,11 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Connect";
 		$description = "Connect";
 		include_once ('tiki-admin_include_connect.php');
+	} else if ($adminPage == "rating") {
+		$admintitle = "Advanced Rating";
+		$helpUrl = "Advanced+Rating";
+		$description = "Advanced Rating";
+		include_once ('tiki-admin_include_rating.php');
 	} else {
 		$helpUrl = '';
 	}
