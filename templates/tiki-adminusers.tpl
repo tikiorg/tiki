@@ -369,7 +369,7 @@
 					</tr>
 				{else}
 					<tr class="formcolor">
-						<td><label for="pass1">{tr}Password:{/tr}<br>({tr}required{/tr})</label></td>
+						<td><label for="pass1">{tr}Password:{/tr}</label>{if !$userinfo.userId}<br />({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
 							<div style="float:right;margin-left:5px;">
@@ -386,7 +386,7 @@
 						</td>
 					</tr>
 					<tr class="formcolor">
-						<td><label for="pass2">{tr}Repeat Password:{/tr}<br>({tr}required{/tr})</label></td>
+						<td><label for="pass2">{tr}Repeat Password:{/tr}</label>{if !$userinfo.userId}<br />({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass2" id="pass2" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
 							<div style="float:right;margin-left:5px;">
