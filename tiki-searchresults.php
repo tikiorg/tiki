@@ -63,6 +63,9 @@ if ($where == 'forums') {
 
 if ($where == 'files') {
 	$access->check_feature('feature_file_galleries');
+	if (!empty($_REQUEST['galleryId'])) {
+		$filter['galleryId'] = $_REQUEST['galleryId'];
+	}
 }
 
 if ($where == 'articles') {
