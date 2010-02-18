@@ -126,6 +126,7 @@
 	</div>
 </div>
 	{preference name='fgal_quota_show'}
+	{preference name='fgal_search_in_content'}
 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Select which items to display when listing galleries: {/tr}:</div>

@@ -100,5 +100,9 @@ function prefs_fgal_list() {
 			'size' => 50,
 			'perspective' => false,
 		),
+		'fgal_search_in_content' => array(
+			'name' => tra('Include the search box on the current gallery files just after the find div'),
+			'type' => 'flag',
+		),
 	);
 }

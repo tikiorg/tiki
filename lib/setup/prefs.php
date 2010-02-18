@@ -543,6 +543,7 @@ function get_default_prefs() {
 		'fgal_quota_default' => 0,
 		'fgal_quota_show' => 'y',
 		'fgal_list_backlinks' => 'n',
+		'fgal_search_in_content' => 'n',
 
 		// imagegals
 		'feature_galleries' => 'n',

@@ -192,6 +192,20 @@ if (getCookie("fgalKeepOpen")) {
 {if $files or ($find ne '')}
   {include file='find.tpl' find_show_num_rows = 'y' find_show_num_rows = 'y' find_show_categories_multi='y'}
 {/if}
+
+{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
+	<div class="findtable">
+		<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
+				<input type="hidden" name="where" value="files" />
+				<input type="hidden" name="galleryId" value="{$galleryId}" />
+			  	<label>{tr}Search in content{/tr}
+				<input name="highlight" size="30" type="text" />
+				</label>
+				<input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
+		</form>
+	</div>
+{/if}
+
 {if $prefs.fgal_quota_show eq 'y' && $gal_info.quota}
 	<div style="float:right">
 		{capture name='use'}{math equation="round((100*x)/(1024*1024*y))" x=$gal_info.usedSize y=$gal_info.quota}{/capture}
