@@ -1573,6 +1573,9 @@ function get_default_prefs() {
 
 		// Rating
 		'rating_advanced' => 'n',
+		'rating_recalculation' => 'vote',
+		'rating_recalculation_odd' => '100',
+		'rating_recalculation_count' => '100',
 	);
 
 	// spellcheck
