@@ -215,7 +215,7 @@ class htmlMimeMail
 		if (!is_null($pass))
 			$this->smtp_params['pass'] = $pass;
 			
-		if (!$security)
+		if (!is_null($security))
 			$this->smtp_params['security'] = $security;
 	}
 
