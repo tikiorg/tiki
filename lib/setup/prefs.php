@@ -1544,7 +1544,9 @@ function get_default_prefs() {
 
 		// Token Access
 		'auth_token_access' => 'n',
-		'auth_token_access_maxtimeout' => 30,
+		'auth_token_access_maxtimeout' => 3600*24*7,
+		'auth_token_access_maxhits' => 10,
+		'auth_token_tellafriend' => 'n',
 
 		// PDF
 		'print_pdf_from_url' => 'none',

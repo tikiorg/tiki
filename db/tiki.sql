@@ -3488,6 +3488,7 @@ CREATE TABLE `tiki_auth_tokens` (
 	`tokenId` INT NOT NULL AUTO_INCREMENT,
 	`creation` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`timeout` INT NOT NULL DEFAULT 0,
+	`hits` INT NOT NULL DEFAULT 1,
 	`token` CHAR(32),
 	`entry` VARCHAR(50),
 	`parameters` VARCHAR(255),

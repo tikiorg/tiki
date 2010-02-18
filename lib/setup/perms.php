@@ -51,10 +51,11 @@ $groupList = $tikilib->get_user_groups( $user );
 if( $prefs['auth_token_access'] == 'y' && isset($_REQUEST['TOKEN']) ) {
 	require_once 'lib/auth/tokens.php';
 	$token = $_REQUEST['TOKEN'];
+	unset( $_GET['TOKEN'] );
 	unset( $_REQUEST['TOKEN'] );
 
 	$tokenlib = AuthTokens::build( $prefs );
-	if( $groups = $tokenlib->getGroups( $token, $_SERVER['PHP_SELF'], $_REQUEST ) ) {
+	if( $groups = $tokenlib->getGroups( $token, $_SERVER['PHP_SELF'], $_GET ) ) {
 	 	$groupList = $groups;
 	}
 }

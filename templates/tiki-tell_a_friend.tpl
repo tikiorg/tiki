@@ -80,7 +80,13 @@
     
     <tr>
       <td class="formcolor"></td>
-      <td class="formcolor"><input type="submit" name="send" value="{tr}Send{/tr}" /></td>
+      <td class="formcolor">
+        <input type="submit" name="send" value="{tr}Send{/tr}" />
+		{if $prefs.auth_token_tellafriend eq 'y'}
+			<input type="checkbox" name="share_access" value="1" id="share_access"/>
+			<label for="share_access">{tr}Share access rights{/tr}</label>
+		{/if}
+      </td>
     </tr>
   </table>
 </form>

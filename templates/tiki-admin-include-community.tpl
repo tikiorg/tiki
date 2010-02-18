@@ -129,14 +129,10 @@
 			{preference name=users_prefs_user_information}
 			{preference name=users_prefs_user_dbl}
 
-			{* not used (r18323)
-				{if $prefs.feature_history eq 'y'}
-					{preference name=users_prefs_diff_versions}
-				{/if}
-			*}
-
 			{preference name=users_prefs_show_mouseover_user_info}
 			{preference name=users_prefs_tasks_maxRecords}
+
+			{preference name=auth_token_tellafriend}
 		</fieldset>
 
 		{* *** User Messages *** *}
