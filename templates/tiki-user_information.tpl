@@ -280,6 +280,26 @@
 	</div>		
 	{/tab}{/if}
 	
+	
+	{if $prefs.feature_actionlog eq 'y' && $prefs.user_who_viewed_my_stuff eq 'y'}
+	{tab name="{tr}Who Looks At Your Stuff?{/tr}"}	
+		<div class="simplebox">
+			<h2 class="center">{tr}Who Looks At Your Stuff?{/tr}</h2>
+			{cycle values="even,odd" print=false}
+			{section name=ix loop=$whoviewed}
+			<div class="clearfix {cycle}">
+		 		<div class="form floatleft">
+					{$whoviewed[ix].user|userlink} - {$whoviewed[ix].lastViewed|tiki_short_datetime}
+		 		</div>
+				<div class="form floatright">
+					<a href="{$whoviewed[ix].link|escape:url}">{$whoviewed[ix].object|escape} ({$whoviewed[ix].objectType|escape})</a>
+				</div>
+			</div>
+			{/section}
+		</div>
+	{/tab}
+	{/if}
+	
 	{if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}{tab name="{tr}Send Me A Message{/tr}"}
 			<div id="message" class="simplebox">
 		{if $sent}
