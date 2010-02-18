@@ -554,8 +554,12 @@ class BlogLib extends TikiLib
 	 * @access public
 	 * @return void
 	 */
-	function update_post($postId, $blogId, $data, $user, $title = '', $contributions = '', $old_data = '', $priv='n', $created) {
+	function update_post($postId, $blogId, $data, $user, $title = '', $contributions = '', $old_data = '', $priv='n', $created = 0) {
 		global $prefs;
+		
+		if(!$created) {
+			$created = $this->now;	
+		}
 		$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`created`=?,`user`=?,`title`=?, `priv`=? where `postId`=?";
 		$result = $this->query($query, array($blogId, $data, $created,$user, $title, $priv, $postId));
 		if ($prefs['feature_actionlog'] == 'y') {
