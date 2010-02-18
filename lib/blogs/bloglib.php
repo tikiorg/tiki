@@ -205,7 +205,7 @@ class BlogLib extends TikiLib
 		$bindvars = array();
 
 		if ( $blogId > 0 ) {
-			$mid[] = "`blogId`=?";
+			$mid[] = "tbp.`blogId`=?";
 			$bindvars[] = (int)$blogId;
 
 			$blog_data = $this->get_blog($blogId);
@@ -213,6 +213,7 @@ class BlogLib extends TikiLib
 				$ownsblog = 'y';
 			}
 		}
+		$mid[] = "tbp.blogId = tb.blogId";
 
 		if ( !$allowDrafts ){
 			$mid[] = "`priv`!='y'";
@@ -225,34 +226,34 @@ class BlogLib extends TikiLib
 			     and ($blog_data["public"] != 'y' || $tiki_p_blog_post != 'y')
 			     and ($blog_data["public"] != 'y' || $ownsblog != 'y') ) {
 				if ( isset($user) ) {
-					$mid[] = "(`priv`!='y' or `user`=?)";
+					$mid[] = "(tbp.`priv`!='y' or tbp.`user`=?)";
 					$bindvars[] = "$user";
 				} else {
-					$mid[] = "`priv`!='y'";
+					$mid[] = "tbp.`priv`!='y'";
 				}
 			}
 		}
 
 		if ( $find ) {
 			$findesc = '%' . $find . '%';
-			$mid[] = "(`data` like ? or `title` like ?)";
+			$mid[] = "(tbp.`data` like ? or tbp.`title` like ?)";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
 
 		if ( $date_min ) {
-			$mid[] = "`created`>=?";
+			$mid[] = "tbp.`created`>=?";
 			$bindvars[] = (int)$date_min;
 		}
 		if ( $date_max ) {
-			$mid[] = "`created`<=?";
+			$mid[] = "tbp.`created`<=?";
 			$bindvars[] = (int)$date_max;
 		}
 
 		$mid = empty($mid) ? '' : 'where ' . implode(' and ', $mid);
 
-		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
+		$query = "select tbp.*,tb.title as blogTitle from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
