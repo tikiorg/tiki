@@ -38,7 +38,7 @@ class PdfGenerator
 			$tokenlib = AuthTokens::build( $prefs );
 			$params['TOKEN'] = $tokenlib->createToken( $tikiroot . $file, $params, $perms->getGroups(), array(
 				'timeout' => 60,
-			);
+			) );
 		}
 
 		$url = $base_url . $file . '?' . http_build_query( $params, '', '&' );
