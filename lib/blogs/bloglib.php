@@ -389,17 +389,21 @@ class BlogLib extends TikiLib
 	 * @access public
 	 * @return int postId
 	 */
-	function blog_post($blogId, $data, $user, $title = '', $contributions = '', $priv = 'n', $created) {
+	function blog_post($blogId, $data, $user, $title = '', $contributions = '', $priv = 'n', $created = 0) {
 		// update tiki_blogs and call activity functions
 		global $smarty, $tikilib, $prefs, $reportslib;
-
+		
+		if(!$created) {
+			$created = $this->now;	
+		}
+		
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
 		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?)";
 		$result = $this->query($query, array((int) $blogId, $data, (int) $created, $user, $title, $priv));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
 		$id = $this->getOne($query, array((int) $created, $user));
 		$query = "update `tiki_blogs` set `lastModif`=?,`posts`=`posts`+1 where `blogId`=?";
-		$result = $this->query($query, array((int) $this->now, (int) $blogId));
+		$result = $this->query($query, array((int) $created, (int) $blogId));
 		$this->add_blog_activity($blogId);
 
 		if ($prefs['feature_user_watches'] == 'y') {
