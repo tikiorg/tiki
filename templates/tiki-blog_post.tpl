@@ -117,8 +117,7 @@
 {/if}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform">
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false" />
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
-<input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" onclick="needToConfirm=false" />
+<input type="submit" class="wikiaction" name="save_exit" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
 <input type="hidden" name="referer" value="{$referer|escape}" />
 &nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";needToConfirm=false;return false;' value="{tr}Cancel{/tr}"/>
 </td></tr>
