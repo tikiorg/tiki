@@ -51,5 +51,20 @@ function prefs_user_list() {
 			'filter' => 'digits',
 			'size' => '3',
 		),
+		'user_who_viewed_my_stuff' => array(
+			'name' => tra('Display who viewed my stuff on the user information page'),
+			'description' => tra('You will need to activate tracking of views for various items in the action log for this to work'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_actionlog',
+			),
+		),
+		'user_who_viewed_my_stuff_days' => array(
+			'name' => tra('Number of days to consider who viewed my stuff'),
+			'description' => tra('Number of days before current time to consider when showing who viewed my stuff'),
+			'type' => 'text',
+			'filter' => 'digit',
+			'size' => '4',
+		),
 	);
 }
