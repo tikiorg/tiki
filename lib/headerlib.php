@@ -224,7 +224,7 @@ class HeaderLib
 	public function getMinifiedJs() {
 		global $tikidomainslash;
 		$hash = md5( serialize( $this->jsfiles ) );
-		$file = 'temp/public/'.$tikidomainslash.'minified_$hash.js';
+		$file = 'temp/public/'.$tikidomainslash."minified_$hash.js";
 
 		if( ! file_exists( $file ) ) {
 			$complete = $this->getJavascript();
