@@ -31,9 +31,9 @@ class TikiMail extends HtmlMimeMail
 		}
 		if ($prefs['zend_mail_handler'] == 'smtp') {
 			if ($prefs['zend_mail_smtp_auth'] == 'login') {
-				$this->setSMTPParams($prefs['zend_mail_smtp_server'], $prefs['zend_mail_smtp_port'], $prefs['zend_mail_smtp_helo'], true, $prefs['zend_mail_smtp_user'], $prefs['zend_mail_smtp_pass']);
+				$this->setSMTPParams($prefs['zend_mail_smtp_server'], $prefs['zend_mail_smtp_port'], $prefs['zend_mail_smtp_helo'], true, $prefs['zend_mail_smtp_user'], $prefs['zend_mail_smtp_pass'], $prefs['zend_mail_smtp_security']);
 			} else {
-				$this->setSMTPParams($prefs['zend_mail_smtp_server'], $prefs['zend_mail_smtp_port']);
+				$this->setSMTPParams($prefs['zend_mail_smtp_server'], $prefs['zend_mail_smtp_port'], $prefs['zend_mail_smtp_helo'], false, null, null, $prefs['zend_mail_smtp_security']);
 			}
 		}
 		if (empty($from)) {
