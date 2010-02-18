@@ -160,7 +160,7 @@
 
 		{if $prefs.wiki_simple_ratings eq 'y' && $tiki_p_assign_perm_wiki_page eq 'y'}
 			<form method="post" action="">
-				{rating type=wiki id=$page_id}
+				{rating type="wiki page" id=$page_id}
 			</form>
 		{/if}
 	{/if} {*hide_page_header*}
