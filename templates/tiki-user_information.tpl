@@ -292,7 +292,7 @@
 					{$whoviewed[ix].user|userlink} - {$whoviewed[ix].lastViewed|tiki_short_datetime}
 		 		</div>
 				<div class="form floatright">
-					<a href="{$whoviewed[ix].link|escape:url}">{$whoviewed[ix].object|escape} ({$whoviewed[ix].objectType|escape})</a>
+					<a href="{$whoviewed[ix].link|escape}">{$whoviewed[ix].object|escape} ({$whoviewed[ix].objectType|escape})</a>
 				</div>
 			</div>
 			{/section}
