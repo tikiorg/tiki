@@ -10,9 +10,10 @@ function smarty_function_rating( $params, $smarty ) {
 	$type = $params['type'];
 	$id = $params['id'];
 
-	if( isset( $_REQUEST['rating_value'][$type][$id] ) ) {
+	if( isset( $_REQUEST['rating_value'][$type][$id], $_REQUEST['rating_prev'][$type][$id] ) ) {
 		$value = $_REQUEST['rating_value'][$type][$id];
-		if( $ratinglib->record_vote( $type, $id, $value ) ) {
+		$prev = $_REQUEST['rating_prev'][$type][$id];
+		if( $value != $prev && $ratinglib->record_vote( $type, $id, $value ) ) {
 
 			// Handle type-specific actions
 			if( $type == 'comment' ) {
@@ -22,10 +23,8 @@ function smarty_function_rating( $params, $smarty ) {
 					$commentslib->vote_comment( $id, $user, $value );
 				}
 			}
-
-			return tra('Your vote was recorded.');
-		} else {
-			return tra('Your vote could not be recorded. You may have voted before.');
+		} elseif( $value != $prev ) {
+			return tra('An error occured.');
 		}
 	}
 
