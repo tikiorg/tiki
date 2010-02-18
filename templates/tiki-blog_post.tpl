@@ -97,6 +97,15 @@
 
 <tr><td class="editblogform">{tr}Mark entry as private:{/tr}</td>
   <td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td></tr>
+<tr id='show_pubdate' class="formcolor">
+			<td>{tr}Publish Date{/tr}</td>
+			<td>
+				{html_select_date prefix="publish_" time=$created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
+				<span dir="ltr">{html_select_time prefix="publish_" time=$created display_seconds=false}
+					
+				</span>
+			</td>
+</tr>
 {if $prefs.blog_spellcheck eq 'y'}
 <tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
