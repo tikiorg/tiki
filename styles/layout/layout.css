@@ -984,6 +984,25 @@ ul.floatleft li {
 	cursor: pointer;
 }
 
+/* img plugin */
+div.imgbox {
+        padding: 5px;
+}
+
+div.thumbcaption {
+        padding: 2px;
+}
+
+div.magnify {
+        float: right;
+        padding-top: 0.1cm;
+}
+
+img.magnify {
+        height: 12px;
+        width: 12px;
+}
+
 /** Wiki tocs **/
 div.tocnav {
 	margin-bottom: 4px;

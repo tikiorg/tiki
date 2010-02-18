@@ -1210,6 +1210,12 @@ div.quotebody {
 	background: #3f3f3f;
 }
 
+/* Img plugin */
+div.imgbox {
+	border: 1px solid #818181;
+    background-color: transparent;
+}
+
 /** Wiki tocs **/
 div.tocnav {
 	background: #474747;

@@ -658,7 +658,7 @@ function wikiplugin_img_info() {
 	/////////////////////////////////////Add image dimensions to src string////////////////////////////////////////////
 		//Use url resizing parameters for file gallery images to set $height and $width
 		//since they can affect other elements; overrides plugin parameters
-		if (!empty($imgdata['fileId']))  {
+		if (!empty($imgdata['fileId']) && strpos($src, '&') !== false)  {
 			$urlthumb = strpos($src, '&thumbnail');
 			$urlprev = strpos($src, '&preview');
 			$urldisp = strpos($src, '&display'); 
@@ -801,7 +801,7 @@ function wikiplugin_img_info() {
 		//Set final height and width dimension string
 		//handle file gallery images separately to use server-side resizing capabilities
 		if (!empty($imgdata['fileId'])) {
-			if (empty($urldisp) && empty($urlthumb) && $imgdata['thumb'] != 'download') {
+			if (empty($urldisp) && empty($urlthumb)) {
 				$src .= '&display';
 			}
 			if (!empty($scale) && empty($urlscale[0])) {
@@ -851,7 +851,6 @@ function wikiplugin_img_info() {
 	
 	//Create style attribute allowing for shortcut inputs 
 	//First set alignment string
-
 	$center = 'display:block; margin-left:auto; margin-right:auto;';	//used to center image and box
 	if (!empty($imgdata['imalign'])) {
 		$imalign = '';
@@ -860,6 +859,8 @@ function wikiplugin_img_info() {
 		} else {
 			$imalign = 'float:' . $imgdata['imalign'] . ';';
 		}
+	} elseif ($imgdata['stylebox'] == 'border') {
+		$imalign = $center;
 	}
 	//set entire style string
 	if( !empty($imgdata['styleimage']) || !empty($imalign) ) {
@@ -1008,11 +1009,7 @@ function wikiplugin_img_info() {
 	//Start div that goes around button and description if these are set
 	if ((!empty($imgdata['button'])) || (!empty($imgdata['desc'])) || (!empty($imgdata['styledesc']))) {
 		//To set room for enlarge button under image if there is no description
-		$descheightdef = 'height:15px;';           
-		//styling for the caption div
-		$captiondef = 'padding-top:2px;';		
-		//styling for the enlarge button div
-		$enlargedef = 'float:right; padding-top:.1cm;';								
+		$descheightdef = 'height:17px;clear:left;';						
 		$repl .= "\r\t" . '<div class="mini" style="width:' . $width . 'px;';
 		if( !empty($imgdata['styledesc']) ) {
 			if (($imgdata['styledesc'] == 'left') || ($imgdata['styledesc'] == 'right')) {
@@ -1027,7 +1024,7 @@ function wikiplugin_img_info() {
 		}
 		
 		//Start description div that also includes enlarge button div
-		$repl .= "\r\t\t" . '<div class="thumbcaption" style="' . $captiondef . '" >';
+		$repl .= "\r\t\t" . '<div class="thumbcaption">';
 		
 		//Enlarge button div and link string (innermost div)
 		if (!empty($imgdata['button'])) {
@@ -1047,11 +1044,12 @@ function wikiplugin_img_info() {
 				$link_button = $link;
 			}
 			//Set button rel
-			if (empty($linkrel) || !empty($javaset)) {
+			!empty($imgdata['rel']) ? $linkrel_button = ' rel="'.$imgdata['rel'].'"' : $linkrel_button = '';
+/*			if (empty($linkrel) || !empty($javaset)) {
 					$linkrel_button = '';
 			} else {
 				$linkrel_button = $linkrel;
-			}
+			}*/
 			//Set button target
 			if (empty($imgtarget) && (empty($imgdata['thumb']) || !empty($javaset))) {
 				if (($imgdata['button'] == 'popup') || ($imgdata['button'] == 'browsepopup')) {
@@ -1062,14 +1060,13 @@ function wikiplugin_img_info() {
 			} else {
 				$imgtarget_button = $imgtarget;
 			}
-			$repl .= "\r\t\t\t" . '<div class="magnify" style="' . $enlargedef . '">';
+			$repl .= "\r\t\t\t" . '<div class="magnify">';
 			$repl .= "\r\t\t\t\t" . '<a href="' . $link_button . '"' . $linkrel_button . $imgtarget_button ;
 			$repl .= ' class="internal"';
 			if (!empty($titleonly)) {
 				$repl .= ' title="' . $titleonly . '"';
 			}
-			$repl .= ">\r\t\t\t\t" . '<img src="./pics/icons/magnifier.png" width="12"
-					 height="12" alt="Enlarge" /></a>' . "\r\t\t\t</div>";
+			$repl .= ">\r\t\t\t\t" . '<img class="magnify" src="./pics/icons/magnifier.png" alt="Enlarge" /></a>' . "\r\t\t\t</div>";
 		}	
 		//Add description based on user setting (use $desconly from above) and close divs
 		isset($desconly) ? $repl .= $desconly : '';
@@ -1087,11 +1084,7 @@ function wikiplugin_img_info() {
 		$boxwidth = $width + 2;
 		$boxheight = $height + 2;
 		$alignbox = '';
-		$borderbox = '';
-		//default border when stylebox set to border or y
-		$borderboxdef = 'border:1px solid darkgray; padding:5px; background-color: #f9f9f9;';	
-		//default text style for description
-		$descdef = 'font-size:12px; line-height:1.5em;';		 
+		$class = '';
 		if (!empty($imgdata['align'])) {
 			if ($imgdata['align'] == 'center') {
 				$alignbox = $center;
@@ -1100,15 +1093,15 @@ function wikiplugin_img_info() {
 			}
 		}
 		//first set stylebox string if style box is set
-		if (!empty($imgdata['stylebox']) || !empty($imgdata['align'])) {				//create strings from shortcuts first
+		if (!empty($imgdata['stylebox']) || !empty($imgdata['align'])) {		//create strings from shortcuts first
 			if ( !empty($imgdata['stylebox'])) {
 				if ($imgdata['stylebox'] == 'border') {
-					$borderbox = $borderboxdef;
+					$class = 'class="imgbox" ';
 					if (!empty($alignbox)) {
 						if ((strpos(trim($imgdata['stylebox'],' '),'float:') !== false) 
 							|| (strpos(trim($imgdata['stylebox'],' '),'display:') !== false)
 						) {
-							$alignbox = '';			//override imalign setting is style image contains alignment syntax
+							$alignbox = '';			//override align setting if stylebox contains alignment syntax
 						}
 					}
 				} else {
@@ -1116,7 +1109,7 @@ function wikiplugin_img_info() {
 				}
 			}
 			if (empty($imgdata['button']) && empty($imgdata['desc']) && empty($styleboxinit)) {
-				$styleboxplus = $alignbox . $borderbox . ' width:' . $boxwidth . 'px; height:' . $boxheight . 'px';
+				$styleboxplus = $alignbox . ' width:' . $boxwidth . 'px; height:' . $boxheight . 'px';
 			} elseif (!empty($styleboxinit)) {
 				if ((strpos(trim($imgdata['stylebox'],' '),'height:') === false) 
 					&& (strpos(trim($imgdata['stylebox'],' '),'width:') === false)
@@ -1126,14 +1119,15 @@ function wikiplugin_img_info() {
 					$styleboxplus = $styleboxinit;
 				}
 			} else {
-				$styleboxplus = $alignbox . $borderbox . $descdef . ' width:' . $boxwidth . 'px';
+				$styleboxplus = $alignbox . $descdef . ' width:' . $boxwidth . 'px;';
+//				$styleboxplus = $alignbox . $borderbox . $descdef . ' width:' . $boxwidth . 'px';
 			}
 		} elseif (!empty($imgdata['button']) || !empty($imgdata['desc'])) {
 		$styleboxplus = $descdef . ' width:' . $boxwidth . 'px;';
 		}
 	}
 	if ( !empty($styleboxplus)) {
-		$repl = "\r" . '<div class="img" style="' . $styleboxplus . '">' . $repl . "\r</div>";
+		$repl = "\r" . '<div ' . $class . 'style="' . $styleboxplus . '">' . $repl . "\r</div>";
 	}	
 //////////////////////////////////////Place 'clear' block///////////////////////////////////////////////////////////
 	if( !empty($imgdata['block']) ) {
