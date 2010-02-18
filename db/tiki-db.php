@@ -98,8 +98,13 @@ $tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
 $re = false;
 if ( file_exists($local_php) ) $re = include($local_php);
 if ( $re === false ) {
-	header('location: tiki-install.php');
-	exit;
+	if ( $in_installer != 1) {
+		header('location: tiki-install.php');
+		exit;
+	} else {
+		// we are in the installer don't redirect...
+		return ;
+  }
 }
 
 if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
