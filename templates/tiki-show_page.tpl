@@ -206,70 +206,24 @@
 	<div class="wikitext" id="wikifootnote">{$footnote}</div>
 {/if}
 
-{if $wiki_authors_style neq 'none' || $prefs.wiki_feature_copyrights eq 'y'|| $print_page eq 'y'}
-	<p class="editdate"> {* begining editdate *}
-{/if}
-
-{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
-	{tr}Last edited by{/tr} {$lastUser|userlink}
-	{section name=author loop=$contributors}
-		{if $smarty.section.author.first}
-			, {tr}based on work by{/tr}
-		{else}
-			{if !$smarty.section.author.last}
-				,
-			{else}
-				{tr}and{/tr}
-			{/if}
-		{/if}
-		{$contributors[author]|userlink}
-	{/section}.
-	<br />
-	{tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
-{elseif isset($wiki_authors_style) && $wiki_authors_style eq 'collaborative'}
-	{tr}Contributors to this page{/tr}: {$lastUser|userlink}
-	{section name=author loop=$contributors}
-		{if !$smarty.section.author.last}
-			,
-		{else} 
-			{tr}and{/tr}
-		{/if}
-		{$contributors[author]|userlink}
-	{/section}.
-	<br />
-	{tr 0=$lastModif|tiki_long_datetime 1=$lastUser|userlink}Page last modified on %0 by %1{/tr}. 
-	{if $prefs.wiki_show_version eq 'y'}
-		({tr}Version{/tr} {$lastVersion})
+{capture name='editdate_section'}
+	{if isset($wiki_authors_style) && $wiki_authors_style neq 'none'}
+		{include file=wiki_authors.tpl}
 	{/if}
-{elseif empty($wiki_authors_style) || $wiki_authors_style eq 'none'}
 
-{elseif isset($wiki_authors_style) && $wiki_authors_style eq 'lastmodif'}
-	{tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}
-{else}
-	{tr 0=$creator|userlink}Created by %0{/tr}.
-	{tr 0=$lastModif|tiki_long_datetime 1=$lastUser|userlink}Last Modification: %0 by %1{/tr}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion})
-	{/if}
-{/if}
+	{include file=show_copyright.tpl}
 
-{if $prefs.wiki_feature_copyrights eq 'y' and $prefs.wikiLicensePage}
-	{if $prefs.wikiLicensePage == $page}
-		{if $tiki_p_edit_copyrights eq 'y'}
-			<br />
-			{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.
-		{/if}
-	{else}
+	{if $print_page eq 'y'}
 		<br />
-		{tr}The content on this page is licensed under the terms of the{/tr} <a href="{$prefs.wikiLicensePage|sefurl:wiki:with_next}copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.
+		{tr}The original document is available at{/tr} <a href="{$base_url}{$page|sefurl}">{$base_url}{$page|sefurl}</a>
 	{/if}
-{/if}
+{/capture}
 
-{if $print_page eq 'y'}
-	<br />
-	{tr}The original document is available at{/tr} <a href="{$base_url}{$page|sefurl}">{$base_url}{$page|sefurl}</a>
-{/if}
-
-{if $wiki_authors_style neq 'none' || $prefs.wiki_feature_copyrights eq 'y'|| $print_page eq 'y'}
-	</p> {* end editdate *}
+{* When editdate (authors + copyright + print_page) section is not empty show it *}
+{if $smarty.capture.editdate_section neq ''}
+	<p class="editdate">
+		{$smarty.capture.editdate_section}
+	</p>
 {/if}
 
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}
