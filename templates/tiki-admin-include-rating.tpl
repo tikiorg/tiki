@@ -1,4 +1,4 @@
-{* $Id: tiki-admin-include-performance.tpl 25307 2010-02-17 12:45:53Z sylvieg $ *}
+{* $Id$ *}
 
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=rating" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
