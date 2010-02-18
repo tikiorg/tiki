@@ -1407,7 +1407,7 @@ class TikiLib extends TikiDb_Bridge
 		if ( $u == '' ) return -1;
 
 		// If we ask for the current user id and if we already know it in session
-		$current = ( $u == $_SESSION['u_info']['login'] );
+		$current = ( isset($_SESSION['u_info']) && $u == $_SESSION['u_info']['login'] );
 		if ( isset($_SESSION['u_info']['id']) && $current ) return $_SESSION['u_info']['id'];
 
 		// In other cases, we look in db
