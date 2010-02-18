@@ -9,7 +9,7 @@ require_once 'Math/Formula/Function.php';
 
 class Tiki_Formula_Function_RatingAverage extends Math_Formula_Function
 {
-	private $mode = 'avg';
+	protected $mode = 'avg';
 
 	function evaluate( $element ) {
 		$allowed = array( 'object', 'range', 'ignore', 'keep', 'revote' );
