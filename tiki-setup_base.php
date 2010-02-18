@@ -323,9 +323,12 @@ if (($prefs['rememberme'] != 'disabled') and (isset($_COOKIE["$user_cookie_site"
 			}
 		}
 	} else {
-		$user = $userlib->get_user_by_cookie($_COOKIE["$user_cookie_site"]);
+		if ($userId = $userlib->get_user_by_cookie($_COOKIE["$user_cookie_site"])) {
+			$userInfo = $userlib->get_userid_info($userId);
+			$user = $userInfo['login'];
+		}
 	}
-	if ($user) {
+	if (isset($user) && $user) {
 		$_SESSION["$user_cookie_site"] = $user;
 	}
 }

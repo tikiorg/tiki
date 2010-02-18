@@ -2323,6 +2323,14 @@ CREATE TABLE `tiki_user_bookmarks_urls` (
   PRIMARY KEY (`urlId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS `tiki_user_login_cookies`;
+CREATE TABLE `tiki_user_login_cookies` (
+	`userId` INT NOT NULL,
+	`secret` TEXT NOT NULL,
+	`expiration` TIMESTAMP NOT NULL,
+	PRIMARY KEY (`userId`, `secret`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
 DROP TABLE IF EXISTS `tiki_user_mail_accounts`;
 CREATE TABLE `tiki_user_mail_accounts` (
   `accountId` int(12) NOT NULL auto_increment,

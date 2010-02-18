@@ -292,13 +292,12 @@ if ($isvalid) {
 				// This happens if the user has just registered and it's first login
 				if ($url == '' || ereg('(tiki-register|tiki-login_validate|tiki-login_scr)\.php', $url)) $url = $prefs['tikiIndex'];
 				// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
-				if ($prefs['rememberme'] != 'disabled') {
-					if (isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
-						$hash = $userlib->create_user_cookie($_REQUEST['user']);
-						$time = substr($hash, strpos($hash, '.') + 1);
-						setcookie($user_cookie_site, $hash . '.' . $user, $time, $prefs['cookie_path'], $prefs['cookie_domain']);
+				if ($prefs['rememberme'] != 'disabled' && isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
+						$userInfo = $userlib->get_user_info($user);
+						$userId = $userInfo['userId'];
+						$secret = $userlib->create_user_cookie($userId);
+						setcookie($user_cookie_site, $secret . '.' . $userId, $tikilib->now + $prefs['remembertime'], $prefs['cookie_path'], $prefs['cookie_domain']);
 						$logslib->add_log('login', 'got a cookie for ' . $prefs['remembertime'] . ' seconds');
-					}
 				}
 			}
 		}
