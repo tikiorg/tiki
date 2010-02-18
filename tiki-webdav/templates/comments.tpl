@@ -16,7 +16,7 @@ prefs.wiki_comments_displayed_default: {$prefs.wiki_comments_displayed_default}<
 prefs.show_comzone: {$prefs.show_comzone}<br />
 cookie_key: {$cookie_key}<br />
 smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$cookie_key}<br />*}
-<div
+<div {*do not missed up with the space*}
 {if $pagemd5}
 	id="comzone{$pagemd5}"
 {else}

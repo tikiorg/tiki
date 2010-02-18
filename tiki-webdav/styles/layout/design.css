@@ -535,6 +535,16 @@ p.editdate {
 	border: 1px solid #bbb;
 }
 
+/* img plugin */
+div.imgbox {
+	    border: 1px solid darkgray;
+        background-color: #f9f9f9;
+}
+
+div.thumbcaption {
+		font-size: 90%;
+}
+
 /* TOC */
 ul.toc {
 	padding-left: 2em;

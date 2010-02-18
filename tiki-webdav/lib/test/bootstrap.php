@@ -9,6 +9,10 @@ error_reporting( CUSTOM_ERROR_LEVEL );
 
 ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . "." . PATH_SEPARATOR . "../core/lib" . PATH_SEPARATOR . "../.." . PATH_SEPARATOR . "core");
 
+function tr( $string ) {
+	return $string;
+}
+
 function tra( $string ) {
 	return $string;
 }

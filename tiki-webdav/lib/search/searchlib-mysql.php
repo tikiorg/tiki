@@ -514,6 +514,9 @@ class SearchLib extends TikiLib
 			'objectKeyGroup' => 'f.`fileId`',
 			'parentJoin' => 'LEFT JOIN `tiki_file_galleries` tfg ON tfg.`galleryId` = f.`galleryId`',
 		);
+		if (!empty($filter['galleryId'])) {
+			$search_files['filter'] .= ' AND f.galleryId='.$filter['galleryId'];
+		}
 
 		return $this->_find($search_files, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('File Gallery'), $searchDate);
 	}

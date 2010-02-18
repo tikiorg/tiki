@@ -128,6 +128,8 @@ $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 $handlers = $filegallib->get_file_handlers();
 ksort($handlers);
 $smarty->assign("fgal_handlers", $handlers);
+$missingHandlers = $filegallib->getFiletype(array_keys($handlers));
+$smarty->assign_by_ref('missingHandlers', $missingHandlers);
 include_once ('fgal_listing_conf.php');
 $file_galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);

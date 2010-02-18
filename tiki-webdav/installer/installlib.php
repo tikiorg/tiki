@@ -34,7 +34,6 @@ class Installer extends TikiDb_Bridge
 
 	function cleanInstall() // {{{
 	{
-		global $db_tiki;
 		$TWV = new TWVersion;
 		$dbversion_tiki = $TWV->getBaseVersion();
 
@@ -77,9 +76,6 @@ class Installer extends TikiDb_Bridge
 		if( file_exists( $secdb ) )
 			$this->runFile( $secdb );
 		
-		$display_errors = ini_get('display_errors');
-		ini_set('display_errors', 'Off');
-
 		$patches = $this->patches;
 		foreach( $patches as $patch ) {
 			$this->installPatch( $patch );
@@ -87,9 +83,6 @@ class Installer extends TikiDb_Bridge
 
 		foreach( $this->scripts as $script )
 			$this->runScript( $script );
-		
-		ini_set('display_errors', $display_errors);
-		
 	} // }}}
 
 	function installPatch( $patch ) // {{{
@@ -148,8 +141,6 @@ class Installer extends TikiDb_Bridge
 
 	function runFile( $file ) // {{{
 	{
-		global $db_tiki;
-
 		if ( !is_file($file) || !$command = file_get_contents($file) ) {
 			print('Fatal: Cannot open '.$file);
 			exit(1);
@@ -163,29 +154,14 @@ class Installer extends TikiDb_Bridge
 		$status = true;
 		foreach ($statements as $statement) {
 			if (trim($statement)) {
-				switch ($db_tiki) {
-				case "oci8":
-					// we have to preserve the ";" in sqlplus programs (triggers)
-					if (preg_match("/BEGIN/",$statement)) {
-						$prestmt=$statement.";";
-						$do_exec=false;
+				if (preg_match('/^\s*(?!-- )/m', $statement)) {// If statement is not commented
+					$display_errors = ini_get('display_errors');
+					ini_set('display_errors', 'Off');
+
+					if ($this->query($statement) === false) {
+						$status = false;
 					}
-					if (preg_match("/END/",$statement)) {
-						$statement=$prestmt."\n".$statement.";";
-						$do_exec=true;
-					}
-					if($do_exec)
-						if (preg_match('/^\s*(?!-- )/m', $statement)) // If statement is not commented
-							if ($this->query($statement) === false) {
-								$status = false;
-							}
-					break;
-				default:
-					if (preg_match('/^\s*(?!-- )/m', $statement)) // If statement is not commented
-						if ($this->query($statement) === false) {
-							$status = false;
-						}
-					break;
+					ini_set('display_errors', $display_errors);
 				}
 			}
 		}
@@ -255,18 +231,7 @@ class Installer extends TikiDb_Bridge
 
 	function tableExists( $tableName ) // {{{
 	{
-		global $db_tiki;
-		switch ( $db_tiki ) {
-			case 'sqlite':
-				$result = $this->query( "SELECT name FROM sqlite_master WHERE type = 'table'" );
-				break;
-				case 'pgsql':
-					$result = $this->query( "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'" );
-					break;
-			default:
-				$result = $this->query( "show tables" );
-				break;
-		}
+		$result = $this->query( "show tables" );
 		$list = array();
 		while( $row = $result->fetchRow() )
 			$list[] = reset( $row );

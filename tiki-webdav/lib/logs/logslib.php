@@ -1263,14 +1263,14 @@ class LogsLib extends TikiLib
 		$imagegallib->insert_image($_REQUEST['galleryId'], $title.$period, '', $title.$period.'.'.$ext, 'image/'.$ext, $data, $size, $info[0], $info[1], $user, '', '');
 	}
 
-	function get_more_info($actions, $categNames)
+	function get_more_info($actions, $categNames = array())
 	{
 		global $tikilib, $prefs;
 	foreach($actions as &$action) {
 		if ( empty($action['user']) ) {
 			$action['user'] = 'Anonymous';
 		}
-		if ($action['categId']) {
+		if ($action['categId'] && $categNames) {
 			$action['categName'] = $categNames[$action['categId']];
 		}
 		if ($bytes = $this->get_volume_action($action)) {
@@ -1289,9 +1289,21 @@ class LogsLib extends TikiLib
 				$action['link'] = 'tiki-index.php?page='.$action['object'];
 			}
 			break;
+		case 'article':
+			$action['link'] = 'tiki-read_article.php?articleId='.$action['object'];
+			if (!isset($articleNames)) {
+				$objects = $tikilib->list_articles(0, -1, 'title_asc', '', 0, 0, '');
+				$articleNames = array();
+				foreach ($objects['data'] as $object) {
+					$articleNames[$object['articleId']] = $object['title'];
+				}
+			}
+			if (!empty($articleNames[$action['object']]))
+				$action['object'] = $articleNames[$action['object']];
+			break;
 		case 'category':
 			$action['link'] = 'tiki-browse_categories.php?parentId='.$action['object'];
-			if (!empty($categNames[$action['object']])) {
+			if ($categNames && !empty($categNames[$action['object']])) {
 				$action['object'] = $categNames[$action['object']];
 			}
 			break;
@@ -1401,6 +1413,70 @@ class LogsLib extends TikiLib
 		$query = 'delete from `tiki_actionlog_params` where `actionId`=?';
 		$this->query($query, array($actionId));
 	}
+	
+	function get_who_viewed($mystuff, $anonymous = true)
+	{
+		global $prefs;
+		$bindvars = array();
+		$mid = '';
+		foreach ($mystuff as $obj) {
+			// If changing type, compose rest of partial filter immediately
+			if (isset($objectType) && $obj["objectType"] != $objectType) {
+				$mid .= ' and `object` in ('.implode(',', array_fill(0, $thistype,'?')).')';
+				// add comments filter if needed
+				if ($comments) {
+					$bindvars = array_merge($bindvars, $comments);
+					$mid .= ' and `comment` in ('.implode(',', array_fill(0, count($comments),'?')).')';				
+				}
+			}
+			// If starting out, or changing type, to start new sub filter
+			if (!isset($objectType) || $obj["objectType"] != $objectType) {
+				$objectType = $obj["objectType"];
+				if ( !$mid ) {
+					$mid .= ' (`objectType` = ?';
+				} else {
+					$mid .= ' or `objectType` = ?';
+				}
+				$bindvars[] = $objectType;
+				// reset comment detection and counter
+				$comments = array();
+				$thistype = 0;
+			}
+			// Just keep adding while objectType remain unchanged			
+			$bindvars[] = $obj["object"];
+			if ($obj["comment"]) {
+				// i.e. this objectType filters by comments also, not just on object (id)
+				$comments[] = $obj["comment"]; 
+			}
+			$thistype++;			
+		}
+		// compose rest of filter for last type
+		$mid .= ' and `object` in ('.implode(',', array_fill(0, $thistype,'?')).')';
+		// add comments filter if needed
+		if ($comments) {
+			$bindvars = array_merge($bindvars, $comments);
+			$mid .= ' and `comment` in ('.implode(',', array_fill(0, count($comments),'?')).')';				
+		}
+		// add date filter
+		if ($prefs['user_who_viewed_my_stuff_days']) {
+			$firsttime = $this->now - 3600*24*$prefs['user_who_viewed_my_stuff_days'];
+			$mid .= ") and `lastModif` > $firsttime";
+		}
+		if (!$anonymous) {
+			$mid .= " and `user` != 'Anonymous'"; 
+		}
+		$mid .= " and `action` = 'Viewed'";
+		$mid .= " and `user` IS NOT NULL"; // just to avoid those strange null entries
+		$query = "select *, max(`lastModif`) as `lastViewed` from `tiki_actionlog` where $mid group by `user`, `object`, `objectType`, `comment` order by `lastViewed` desc";
+		$result = $this->query($query, $bindvars);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		$ret = $this->get_more_info($ret);
+		return $ret;
+	}
+	
 }
 
 $logslib = new LogsLib;

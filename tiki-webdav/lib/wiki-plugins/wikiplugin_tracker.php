@@ -516,32 +516,41 @@ function wikiplugin_tracker($data, $params)
 						if (empty($emailOptions[1])) { // to
 							$emailOptions[1][0] = $prefs['sender_email'];
 						} else {
-							$emailOptions[1] = preg_split('/,/', $emailOptions[1]);
+							$emailOptions[1] = preg_split('/ *, */', $emailOptions[1]);
 							foreach ($emailOptions[1] as $key=>$email) {
 								if (is_numeric($email))
 									$emailOptions[1][$key] = $trklib->get_item_value($trackerId, $rid, $email);
 							}
 						}
-						if (!empty($emailOptions[2])) { //tpl
-							if (!preg_match('/\.tpl$/', $emailOptions[2]))
-								$emailOptions[2] .= '.tpl';
-							$tplSubject = str_replace('.tpl', '_subject.tpl', $emailOptions[2]);
-						} else {
-							$emailOptions[2] = 'tracker_changed_notification.tpl';
-						}
-						if (empty($tplSubject)) {
-							$tplSubject = 'tracker_changed_notification_subject.tpl';
-						}							
 						include_once('lib/webmail/tikimaillib.php');
 						$mail = new TikiMail();
-						@$mail_data = $smarty->fetch('mail/'.$tplSubject);
-						if (empty($mail_data))
-							$mail_data = tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
-						$mail->setSubject($mail_data);
-						$mail_data = $smarty->fetch('mail/'.$emailOptions[2]);
-						$mail->setText($mail_data);
 						$mail->setHeader('From', $emailOptions[0]);
-						$mail->send($emailOptions[1]);
+						
+						if (!empty($emailOptions[2])) { //tpl
+							$emailOptions[2] = preg_split('/ *, */', $emailOptions[2]);
+							foreach ($emailOptions[2] as $ieo=>$eo) {
+								if (!preg_match('/\.tpl$/', $eo))
+									$emailOptions[2][$ieo] = $eo.'.tpl';
+								$tplSubject[$ieo] = str_replace('.tpl', '_subject.tpl', $emailOptions[2][$ieo]);
+							}
+						} else {
+							$emailOptions[2] = array('tracker_changed_notification.tpl');
+						}
+						if (empty($tplSubject)) {
+							$tplSubject = array('tracker_changed_notification_subject.tpl');
+						}
+						$itpl = 0;
+						foreach ($emailOptions[1] as $ieo=>$ueo) {
+							@$mail_data = $smarty->fetch('mail/'.$tplSubject[$itpl]);
+							if (empty($mail_data))
+								$mail_data = tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
+							$mail->setSubject($mail_data);
+							$mail_data = $smarty->fetch('mail/'.$emailOptions[2][$itpl]);
+							$mail->setText($mail_data);
+							$mail->send($ueo);
+							if (isset($tplSubject[$itpl+1]))
+								++$itpl;
+						}
 					}
 					if (empty($url)) {
 						if (!empty($page)) {

@@ -666,6 +666,8 @@ function get_default_prefs() {
 		'user_show_realnames' => 'n',
 		'user_store_file_gallery_picture' => 'n',
 		'user_picture_gallery_id' => 0,
+		'user_who_viewed_my_stuff' => 'n',
+		'user_who_viewed_my_stuff_days' => 90,
 		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',
@@ -1568,6 +1570,9 @@ function get_default_prefs() {
 		'payment_paypal_business' => '',
 		'payment_paypal_environment' => 'https://www.paypal.com/cgi-bin/webscr',
 		'payment_paypal_ipn' => 'y',
+
+		// Rating
+		'rating_advanced' => 'n',
 	);
 
 	// spellcheck

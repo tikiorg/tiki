@@ -143,6 +143,40 @@ if ($prefs['feature_display_my_to_others'] == 'y') {
 		$user_forum_topics = $commentslib->get_user_forum_comments($userwatch, -1, 'topics');
 		$smarty->assign_by_ref('user_forum_topics', $user_forum_topics);
 	}
+	if ($prefs['user_who_viewed_my_stuff'] == 'y') {
+		$mystuff = array();
+		if (isset($user_pages)) {
+			$stuffType = 'wiki page';
+			foreach ($user_pages as $obj) {
+				$mystuff[] = array( 'object' => $obj["pageName"], 'objectType' => $stuffType, 'comment' => '' );
+			}
+		}
+		if (isset($user_blogs)) {
+			$stuffType = 'blog';
+			foreach ($user_blogs as $obj) {
+				$mystuff[] = array( 'object' => $obj["blogId"], 'objectType' => $stuffType, 'comment' => '' );
+			}
+		}
+		if (isset($user_articles)) {
+			$stuffType = 'article';
+			foreach ($user_articles as $obj) {
+				$mystuff[] = array( 'object' => $obj["articleId"], 'objectType' => $stuffType, 'comment' => '' );
+			}
+		}
+		if (isset($user_forum_topics)) {
+			$stuffType = 'forum';
+			foreach ($user_forum_topics as $obj) {
+				$forum_comment = 'comments_parentId=' . $obj["threadId"];
+				$mystuff[] = array( 'object' => $obj["object"], 'objectType' => $stuffType, 'comment' => $forum_comment );
+			}
+		}
+		global $logslib;
+		if (!is_object($logslib)) {
+			require_once("lib/logs/logslib.php");		
+		}
+		$whoviewed = $logslib->get_who_viewed($mystuff, false);
+		$smarty->assign('whoviewed', $whoviewed);
+	}
 }
 if ($prefs['user_tracker_infos']) {
 	// arg passed 11,56,58,68=trackerId,fieldId...

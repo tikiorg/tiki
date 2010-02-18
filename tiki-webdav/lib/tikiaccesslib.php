@@ -277,6 +277,10 @@ class TikiAccessLib extends TikiLib
 		exit();
 	}
 
+	function flash( $message ) {
+		$this->redirect( $_SERVER['REQUEST_URI'], $message );
+	}
+
 	/**
 	 * Authorizes access to Tiki RSS feeds via user/password embedded in a URL
 	 * e.g. https://joe:secret@localhost/tiki/tiki-calendars_rss.php?ver=2
