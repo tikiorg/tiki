@@ -76,9 +76,6 @@ class Installer extends TikiDb_Bridge
 		if( file_exists( $secdb ) )
 			$this->runFile( $secdb );
 		
-		$display_errors = ini_get('display_errors');
-		ini_set('display_errors', 'Off');
-
 		$patches = $this->patches;
 		foreach( $patches as $patch ) {
 			$this->installPatch( $patch );
@@ -86,9 +83,6 @@ class Installer extends TikiDb_Bridge
 
 		foreach( $this->scripts as $script )
 			$this->runScript( $script );
-		
-		ini_set('display_errors', $display_errors);
-		
 	} // }}}
 
 	function installPatch( $patch ) // {{{
@@ -160,10 +154,15 @@ class Installer extends TikiDb_Bridge
 		$status = true;
 		foreach ($statements as $statement) {
 			if (trim($statement)) {
-				if (preg_match('/^\s*(?!-- )/m', $statement)) // If statement is not commented
+				if (preg_match('/^\s*(?!-- )/m', $statement)) {// If statement is not commented
+					$display_errors = ini_get('display_errors');
+					ini_set('display_errors', 'Off');
+
 					if ($this->query($statement) === false) {
 						$status = false;
 					}
+					ini_set('display_errors', $display_errors);
+				}
 			}
 		}
 
