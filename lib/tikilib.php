@@ -7675,7 +7675,8 @@ class TikiLib extends TikiDb_Bridge
 		$minor=$info["version_minor"];
 		$description = $info['description'];
 		$data = $info["data"];
-		$version = $old_version + 1;
+		$willDoHistory = ($prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $edit_description || $comment != $edit_comment );
+		$version = $old_version + ($willDoHistory?1:0);
 
 		if( $prefs['quantify_changes'] == 'y' && $prefs['feature_multilingual'] == 'y' ) {
 			include_once 'lib/wiki/quantifylib.php';
@@ -7775,7 +7776,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
-		if( $prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $edit_description || $comment != $edit_comment ) {
+		if( $willDoHistory ) {
 			if (strtolower($pageName) != 'sandbox') {
 				$query = "insert into `tiki_history`(`pageName`, `version`, `version_minor`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
 					values(?,?,?,?,?,?,?,?,?,?)";
