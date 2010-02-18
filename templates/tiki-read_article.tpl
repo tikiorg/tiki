@@ -43,7 +43,7 @@
 	{/if}
 	{if $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
 		<form method="post" action="">
-			{rating article=$articleId}
+			{rating type=article id=$articleId}
 		</form>
 	{/if}
 

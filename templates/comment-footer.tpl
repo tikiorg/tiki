@@ -19,10 +19,10 @@
 
 		{if $first eq 'y'}
 			<form method="post" action="">
-				{rating comment=$comment.threadId options=1,2,3,4,5}
+				{rating type=comment id=$comment.threadId}
 			</form>
 		{else}
-			{rating comment=$comment.threadId options=1,2,3,4,5}
+			{rating type=comment id=$comment.threadId}
 		{/if}
 
 		{/if}
