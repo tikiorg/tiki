@@ -251,8 +251,7 @@ class BlogLib extends TikiLib
 		}
 
 		$mid = empty($mid) ? '' : 'where ' . implode(' and ', $mid);
-
-		$query = "select tbp.*,tb.title as blogTitle from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select tbp.*,tb.title as blogTitle from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
