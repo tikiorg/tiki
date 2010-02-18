@@ -133,7 +133,7 @@ if( isset( $_GET['msg'] ) ) {
 	$smarty->assign( 'display_msg', '' );
 }
 
-if( $prefs['rating_recalculation'] == 'randomload' ) {
+if( $prefs['rating_advanced'] == 'y' && $prefs['rating_recalculation'] == 'randomload' ) {
 	global $ratinglib; require_once 'lib/rating/ratinglib.php';
 	$ratinglib->attempt_refresh();
 }

@@ -126,10 +126,12 @@ class RatingLib extends TikiDb_Bridge
 		$this->query( 'INSERT INTO `tiki_user_votings` ( `user`, `ip`, `id`, `optionId`, `time` ) VALUES( ?, ?, ?, ?, ? )',
 			array( $user, $ip, $token, $score, $time ) );
 
-		if( $prefs['rating_recalculation'] == 'vote' ) {
-			$this->refresh_rating( $type, $objectId );
-		} elseif( $prefs['rating_recalculation'] == 'randomvote' ) {
-			$this->attempt_refresh();
+		if( $prefs['rating_advanced'] == 'y' ) {
+			if( $prefs['rating_recalculation'] == 'vote' ) {
+				$this->refresh_rating( $type, $objectId );
+			} elseif( $prefs['rating_recalculation'] == 'randomvote' ) {
+				$this->attempt_refresh();
+			}
 		}
 
 		return true;
