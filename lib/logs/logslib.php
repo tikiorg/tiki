@@ -1289,6 +1289,18 @@ class LogsLib extends TikiLib
 				$action['link'] = 'tiki-index.php?page='.$action['object'];
 			}
 			break;
+		case 'article':
+			$action['link'] = 'tiki-read_article.php?articleId='.$action['object'];
+			if (!isset($articleNames)) {
+				$objects = $tikilib->list_articles(0, -1, 'title_asc', '', 0, 0, '');
+				$articleNames = array();
+				foreach ($objects['data'] as $object) {
+					$articleNames[$object['articleId']] = $object['title'];
+				}
+			}
+			if (!empty($articleNames[$action['object']]))
+				$action['object'] = $articleNames[$action['object']];
+			break;
 		case 'category':
 			$action['link'] = 'tiki-browse_categories.php?parentId='.$action['object'];
 			if ($categNames && !empty($categNames[$action['object']])) {
