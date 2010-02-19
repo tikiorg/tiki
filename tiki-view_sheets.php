@@ -134,7 +134,7 @@ $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != "Done") {
 		'.$reloadString.'
-		var options = {title: "'.$info['title'].'", urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
+		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
 		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {
 			options.buildSheet = "2x1";	// new sheet
 		}

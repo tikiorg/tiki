@@ -1267,6 +1267,9 @@ function get_default_prefs() {
 		'toolbar_global_comments' => '
 			bold, italic, strike , - , link, smiley | help
 		',
+		'toobar_sheet' => 'addrow, addrowmulti, deleterow, -, addcolumn, deletecolumn, addcolumnmulti, -,
+			sheetsave, sheetrefresh, sheetfind, sheetgetrange, sheetclose, -,
+			bold, italic, strike, center,-, color, bgcolor, -, tikilink, nonparsed/',
 
 		// pagination
 		'direct_pagination' => 'y',
