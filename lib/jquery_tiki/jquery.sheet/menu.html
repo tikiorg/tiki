@@ -12,6 +12,7 @@
 	<a class="{menu: 'menuView'}">View</a>
 	<a class="{menu: 'menuEdit'}">Edit</a>
 	<a class="{menu: 'menuHelp'}">Help</a>
+	<a class="{menu: 'menuTestMethods'}">Test Methods</a>
 </div>
 
 <div id="menuFile" class="menu">
@@ -111,4 +112,9 @@
 	<a onclick="jS.openSheet('documentation.html table:eq(1)')">API</a>
 	<a onclick="jS.openSheet('documentation.html table:first')">Excel Style Functions</a>
 	<a onclick="jS.openSheet('documentation.html table:eq(2)')">UI Features</a>
+</div>
+
+<div id="menuTestMethods" class="menu">
+	<a onclick="jS.exportSheet.xml();">Export to xml</a>
+	<a onclick="jS.exportSheet.json();">Export to json</a>
 </div>
