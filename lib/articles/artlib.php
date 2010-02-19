@@ -722,7 +722,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 							$visible_only = 'y', $topic='', $categId='',$creator='',$group='', $lang='',
 							$min_rating='', $max_rating='', $override_dates = false) {
 
-		global $userlib, $user;
+		global $userlib, $user, $prefs;
 
 		$mid = '';
 		$bindvars=array();
@@ -824,8 +824,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 		if ($mid)
 			$mid2 = " and ";
 		else
-			$mid2 = " where ";
-		$mid2 .= "  `tiki_articles`.`type` = `tiki_article_types`.`type`";
+			$mid2 = " where 1 = 1 ";
 
 		if ($creator!=''){
 			$mid2 .= " and `tiki_articles`.`author` like ? " ;
@@ -848,6 +847,13 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 		if ($categId) {
 			$categlib->getSqlJoin($categId, 'article', '`tiki_articles`.`articleId`', $fromSql, $mid2, $bindvars);
 		}
+
+		if( $prefs['rating_advanced'] == 'y' ) {
+			global $ratinglib; require_once 'lib/rating/ratinglib.php';
+			$fromSql .= $ratinglib->convert_rating_sort( $sort_mode, 'article', '`articleId`' );
+		}
+
+		$fromSql .= ' inner join `tiki_article_types` on `tiki_articles`.`type` = `tiki_article_types`.`type` ';
 		
 		$query = "select `tiki_articles`.*,
 			`tiki_article_types`.`use_ratings`,
@@ -868,10 +874,12 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 			`tiki_article_types`.`show_image_caption`,
 			`tiki_article_types`.`show_lang`,
 			`tiki_article_types`.`creator_edit`
-				from `tiki_articles`, `tiki_article_types`$fromSql
+				from `tiki_articles` 
+				$fromSql
 				$mid $mid2 order by ".$this->convertSortMode($sort_mode);
+
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$query_cant = "select count(*) from  `tiki_articles`, `tiki_article_types`$fromSql $mid $mid2";
+		$query_cant = "select count(*) from  `tiki_articles` $fromSql $mid $mid2";
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
