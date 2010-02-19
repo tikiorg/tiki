@@ -4,6 +4,21 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.39.2.3 2008-03-05 22:33:29 sylvieg Exp $
+
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+			'date' => 'digits',
+			'maxRecords' => 'digits',
+			'highlight' => 'word',
+			'where' => 'word',
+			'find' => 'word',
+			'lang' => 'word',
+			'words' =>'word',
+			'boolean' =>'word',
+		)
+	)
+);
+
 $section = 'search';
 require_once ('tiki-setup.php');
 require_once ('lib/ajax/ajaxlib.php');
