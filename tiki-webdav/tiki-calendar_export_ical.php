@@ -28,10 +28,16 @@ $startTime = mktime(0,0,0,$now[0],$now[1]-1,$now[2]);
 // by default, this will be considered the end of time
 $stopTime = 9999999999;
 
-if (isset($_REQUEST["tstart"]))
+if (isset($_REQUEST['start_date_Month'])) {
+	$startTime = TikiLib::make_time(0, 0, 0, $_REQUEST['start_date_Month'],	$_REQUEST['start_date_Day'], $_REQUEST['start_date_Year']);
+} elseif (isset($_REQUEST["tstart"])) {
 	$startTime = $_REQUEST["tstart"];
-if (isset($_REQUEST["tstop"]))
+}
+if (isset($_REQUEST['stop_date_Month'])) {
+	$stopTime = TikiLib::make_time(0, 0, 0, $_REQUEST['stop_date_Month'],	$_REQUEST['stop_date_Day'], $_REQUEST['stop_date_Year']);
+} elseif (isset($_REQUEST["tstop"])) {
 	$stopTime = $_REQUEST["tstop"];
+}
 
 $calendarIds = array();
 if (isset($_REQUEST['calendarIds'])) {

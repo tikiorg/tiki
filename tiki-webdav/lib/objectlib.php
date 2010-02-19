@@ -124,8 +124,8 @@ class ObjectLib extends TikiLib
 				$info = $tikilib->get_page_info($object);
 				return (array('title'=>$object, 'data'=>$info['data'], 'is_html'=>$info['is_html']));
 			case 'article':
-				global $tikilib; include_once('lib/tikilib.php');
-				$info = $artlib->$tikilib->get_article($object);
+				global $artlib; require_once 'lib/articles/artlib.php';
+				$info = $artlib->get_article($object);
 				return (array('title'=>$info['title'], 'data'=>$info['body']));
 		}
 		return (array('error'=>'true'));

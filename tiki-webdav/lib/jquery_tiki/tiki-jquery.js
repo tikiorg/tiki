@@ -369,9 +369,10 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 				data: s,
 				//contentType: "application/json; charset=utf-8",
 				dataType: 'html',
-				beforeSend: function() { $jq("#sheetStatus").html("Saving").show(); }, 
+				beforeSend: function() { window.showFeedback("Saving", 10000); }, 
 				success: function(data) {
-					alert('Success! - ' + data);
+					jS.setDirty(false);
+					window.showFeedback(data);
 				}
 			});
 		};
@@ -383,7 +384,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			var s = jQuery('<div />').html(sheetClone).html();
 			var x = {metadata:{},data:{}};
 			var count = 0;
-			var cur_column = cur_row = '';
+			var cur_column = cur_row = 0;
 			var max_column = max_row = 0;
 			jQuery(s).find('tr').each(function(){
 				count = 0;
@@ -396,8 +397,8 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 					var pos2 = id.search(/_r/i);
 					
 					if (pos != -1 && pos2 != -1) {
-						cur_column = id.substr(pos+6, pos2-(pos+6));
-						cur_row = id.substr(pos2+2);
+						cur_column = parseInt(id.substr(pos+6, pos2-(pos+6)));
+						cur_row = parseInt(id.substr(pos2+2));
 						
 						if (max_column < cur_column) max_column = cur_column;
 						
@@ -876,9 +877,11 @@ $jq.fn.tiki = function(func, type, options) {
 		 				$jq(this).height($jq(this).height() + 100);	// make room for controls
 		 				$jq(this).sheet(opts);
 		 				$jq(this).resizable({minWidth: $jq(this).width() * 0.5, resize: function() {
-		 						$jq("#jSheetBarLeftParent").height($jq(this).height() - $jq("#jSheetBarCornerParent").height() - $jq("#jSheetControls").height());
-		 						$jq("#jSheetBarTopParent").width($jq(this).width() - $jq("#jSheetBarCornerParent").width());
-		 						$jq("#jSheetEditPane").width($jq("#jSheetBarTopParent").width()).height($jq("#jSheetBarLeftParent").height());
+		 						$jq("#jSheetUI").width($jq(this).width()).height($jq(this).height());
+		 						$jq("#jSheetUI .barTop, #jSheetUI .sheetPane, #jSheetEditPane")
+		 							.width($jq(this).width() - $jq("#jSheetBarCornerParent").width());
+		 						$jq("#jSheetUI .sheetPane, #jSheetEditPane")
+		 							.height($jq(this).height() - $jq("#jSheetBarCornerParent").height() - $jq("#jSheetControls").height());
 		 					}});
 		 			} else {
 		 				$jq(this).sheet(opts);

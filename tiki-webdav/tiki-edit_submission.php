@@ -59,8 +59,8 @@ $smarty->assign('image_name', '');
 $smarty->assign('image_type', '');
 $smarty->assign('image_size', '');
 $smarty->assign('image_data', '');
-$smarty->assign('image_x', 0);
-$smarty->assign('image_y', 0);
+$smarty->assign('image_x', $prefs['article_image_size_x']);
+$smarty->assign('image_y', $prefs['article_image_size_y']);
 $smarty->assign('heading', '');
 $smarty->assign('body', '');
 $smarty->assign('type', 'Article');
@@ -78,7 +78,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 
 // If the submissionId is passed then get the submission data
 if (isset($_REQUEST["subId"])) {
-	$article_data = $tikilib->get_submission($_REQUEST["subId"]);
+	$article_data = $artlib->get_submission($_REQUEST["subId"]);
 
 	$publishDate = $article_data["publishDate"];
 	$expireDate = $article_data["expireDate"];

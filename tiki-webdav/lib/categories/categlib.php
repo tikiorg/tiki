@@ -721,8 +721,9 @@ class CategLib extends ObjectLib
 		$catObjectId = $this->is_categorized('article', $articleId);
 
 		if (!$catObjectId) {
+			global $artlib; require_once 'lib/articles/artlib.php';
 			// The page is not cateorized
-			$info = $this->get_article($articleId);
+			$info = $artlib->get_article($articleId);
 
 			$href = 'tiki-read_article.php?articleId=' . $articleId;
 			$catObjectId = $this->add_categorized_object('article', $articleId, $info["heading"], $info["title"], $href);

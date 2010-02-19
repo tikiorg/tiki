@@ -23,7 +23,8 @@ function module_top_articles_info() {
 
 function module_top_articles( $mod_reference, $module_params ) {
 	global $tikilib, $smarty, $user;
-	$ranking = $tikilib->list_articles(0, $mod_reference['rows'], 'nbreads_desc', '', '', '', $user);
+	global $artlib; require_once 'lib/articles/artlib.php';
+	$ranking = $artlib->list_articles(0, $mod_reference['rows'], 'nbreads_desc', '', '', '', $user);
 	
 	$smarty->assign('modTopArticles', $ranking["data"]);
 }

@@ -31,6 +31,7 @@ if (isset($_REQUEST['new_prefs'])) {
 	}
 	$pref_simple_values = array(
 		'zend_mail_handler',
+		'zend_mail_smtp_auth',
 	);
 	foreach($pref_simple_values as $svitem) {
 		simple_set_value($svitem);
@@ -54,7 +55,12 @@ if (!empty($_REQUEST['testMail'])) {
 	$mail->setSubject(tra('TikiWiki Email Test'));
 	$mail->setText(tra('TikiWiki Test email from:').' '.$_SERVER['SERVER_NAME']);
 	if (!$mail->send(array($_REQUEST['testMail']))) {
-		$smarty->assign('error_msg', tra('Unable to send mail'));
+		$msg = tra('Unable to send mail') ;
+		if ($tiki_p_admin == 'y') {
+			$mailerrors = print_r($mail->errors, true);
+			$msg .= $mailerrors;
+		}
+		$smarty->assign('error_msg', $msg);
 	} else {
 		 add_feedback( 'testMail', tra('Test mail sent to').' '.$_REQUEST['testMail'], 3 );
 	}

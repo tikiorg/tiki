@@ -65,6 +65,7 @@ function wikiplugin_article($data, $params) {
 	      $add="";
 	}
 
-	$article_data = $tikilib->get_article($Id);
+	global $artlib; require_once 'lib/articles/artlib.php';
+	$article_data = $artlib->get_article($Id);
 	return $article_data[$Field].$add;
 }

@@ -1290,9 +1290,10 @@ class LogsLib extends TikiLib
 			}
 			break;
 		case 'article':
+			global $artlib; require_once 'lib/articles/artlib.php';
 			$action['link'] = 'tiki-read_article.php?articleId='.$action['object'];
 			if (!isset($articleNames)) {
-				$objects = $tikilib->list_articles(0, -1, 'title_asc', '', 0, 0, '');
+				$objects = $artlib->list_articles(0, -1, 'title_asc', '', 0, 0, '');
 				$articleNames = array();
 				foreach ($objects['data'] as $object) {
 					$articleNames[$object['articleId']] = $object['title'];

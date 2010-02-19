@@ -545,6 +545,7 @@ function get_default_prefs() {
 		'fgal_quota_default' => 0,
 		'fgal_quota_show' => 'y',
 		'fgal_list_backlinks' => 'n',
+		'fgal_search_in_content' => 'n',
 
 		// imagegals
 		'feature_galleries' => 'n',
@@ -639,6 +640,8 @@ function get_default_prefs() {
 		'article_paginate' => 'n',
 		'article_user_rating' => 'n',
 		'article_user_rating_options' => range( 1, 5 ),
+		'article_image_size_x' => '0',
+		'article_image_size_y' => '0',
 		'feature_cms_templates' => 'n',
 		'cms_bot_bar' => 'y',
 		'cms_left_column' => 'y',
@@ -1268,6 +1271,9 @@ function get_default_prefs() {
 		'toolbar_global_comments' => '
 			bold, italic, strike , - , link, smiley | help
 		',
+		'toobar_sheet' => 'addrow, addrowmulti, deleterow, -, addcolumn, deletecolumn, addcolumnmulti, -,
+			sheetsave, sheetrefresh, sheetfind, sheetgetrange, sheetclose, -,
+			bold, italic, strike, center,-, color, bgcolor, -, tikilink, nonparsed/',
 
 		// pagination
 		'direct_pagination' => 'y',
@@ -1546,7 +1552,9 @@ function get_default_prefs() {
 
 		// Token Access
 		'auth_token_access' => 'n',
-		'auth_token_access_maxtimeout' => 30,
+		'auth_token_access_maxtimeout' => 3600*24*7,
+		'auth_token_access_maxhits' => 10,
+		'auth_token_tellafriend' => 'n',
 
 		// PDF
 		'print_pdf_from_url' => 'none',
@@ -1573,6 +1581,9 @@ function get_default_prefs() {
 
 		// Rating
 		'rating_advanced' => 'n',
+		'rating_recalculation' => 'vote',
+		'rating_recalculation_odd' => '100',
+		'rating_recalculation_count' => '100',
 	);
 
 	// spellcheck

@@ -197,7 +197,7 @@ class htmlMimeMail
 	/**
 	* Accessor to set the SMTP parameters
 	*/
-	function setSMTPParams($host = null, $port = null, $helo = null, $auth = null, $user = null, $pass = null) {
+	function setSMTPParams($host = null, $port = null, $helo = null, $auth = null, $user = null, $pass = null, $security = '') {
 		if (!is_null($host))
 			$this->smtp_params['host'] = $host;
 
@@ -214,6 +214,9 @@ class htmlMimeMail
 
 		if (!is_null($pass))
 			$this->smtp_params['pass'] = $pass;
+			
+		if (!is_null($security))
+			$this->smtp_params['security'] = $security;
 	}
 
 	/**
@@ -2173,6 +2176,10 @@ class smtp
 
 			if (is_resource($this->connection)) {
 				$m = $this->auth ? $this->ehlo() : $this->helo();
+				if ($this->security == 'tls') {
+					$this->starttls();
+					$m = $this->auth ? $this->ehlo() : $this->helo();
+				}
 				return $m;
 			} else {
 				$this->errors[] = 'Failed to connect to server: ' . $errstr;
@@ -2260,6 +2267,21 @@ class smtp
 			return TRUE;
 		} else {
 			$this->errors[] = 'EHLO command failed, output: ' . trim(substr(trim($error), 3));
+
+			return FALSE;
+		}
+	}
+
+	/**
+* Function to implement STARTTLS cmd
+*/
+	function starttls() {
+		if (is_resource($this->connection)AND $this->send_data('STARTTLS')AND strpos($this->get_data(), 'Ready to start TLS') !== false) {
+			stream_socket_enable_crypto( $this->connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT );
+			
+			return TRUE;
+		} else {
+			$this->errors[] = 'STARTTLS command failed, output: ' . trim(substr(trim($error), 3));
 
 			return FALSE;
 		}

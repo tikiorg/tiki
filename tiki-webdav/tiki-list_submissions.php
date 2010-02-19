@@ -60,7 +60,7 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 $smarty->assign('find', $find);
-$listpages = $tikilib->list_submissions($offset, $maxRecords, $sort_mode, $find, $pdate);
+$listpages = $artlib->list_submissions($offset, $maxRecords, $sort_mode, $find, $pdate);
 $smarty->assign_by_ref('cant_pages', $listpages["cant"]);
 include_once ('tiki-section_options.php');
 $smarty->assign_by_ref('listpages', $listpages["data"]);

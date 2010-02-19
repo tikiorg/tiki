@@ -128,22 +128,18 @@
 			<a class="link more" href="{$listpages[ix].postId|sefurl:blogpost}">
 			{tr}More...{/tr} ({$listpages[ix].pages} {tr}pages{/tr})</a>
 		{/if}
-		{if $prefs.blogs_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
-        	{if $prefs.wikiLicensePage == $page}
-        		{if $tiki_p_edit_copyrights eq 'y'}
-					<div class="editdate">
-						{tr}To edit the copyright notices{/tr} 
-						<a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.
-					</div>
-				{/if}
-			{else}
-				<div class="editdate">
-					{tr}The content on this page is licensed under the terms of the{/tr} 
-            		<a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">
-					{$prefs.wikiLicensePage}</a>.
-				</div>
-			{/if}
+		
+		{capture name='copyright_section'}
+			{include file='show_copyright.tpl'}
+		{/capture}
+	
+		{* When copyright section is not empty show it *}
+		{if $smarty.capture.copyright_section neq ''}
+			<p class="editdate">
+				{$smarty.capture.copyright_section}
+			</p>
 		{/if}
+		
 		<div class="postfooter">
 			<div class="status"> {* renamed to match forum footer layout *}
 				<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>

@@ -205,11 +205,18 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	}
 	$edit_data = $imagegallib->capture_images($edit_data);
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
+	if (isset($_REQUEST["publish_Hour"])) {
+
+	$publishDate = $tikilib->make_time($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]);
+	} else {
+		$publishDate = $tikilib->now;
+	}
+	
 	if ($_REQUEST["postId"] > 0) {
-		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $data['data'], $blogpriv);
+		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $data['data'], $blogpriv, $publishDate);
 		$postid = $_REQUEST["postId"];
 	} else {
-		$postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv);
+		$postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate);
 		$smarty->assign('postId', $postid);
 	}
 	// TAG Stuff
@@ -220,6 +227,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	$cat_href = "tiki-view_blog_post.php?postId=" . urlencode($postid);
 	include_once ("freetag_apply.php");
 	if (isset($_REQUEST['save_exit'])) {
+		
 		header ("location: tiki-view_blog_post.php?postId=$postid");
 
 		die;

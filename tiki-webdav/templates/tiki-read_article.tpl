@@ -43,7 +43,7 @@
 	{/if}
 	{if $prefs.article_user_rating eq 'y' && $tiki_p_rate_article eq 'y'}
 		<form method="post" action="">
-			{rating article=$articleId}
+			{rating type=article id=$articleId}
 		</form>
 	{/if}
 
@@ -137,18 +137,15 @@
 		</div>
 	{/if}
 
-	{if $prefs.articles_feature_copyrights eq 'y' and $prefs.wikiLicensePage}
-		{if $prefs.wikiLicensePage == $page}
-			{if $tiki_p_edit_copyrights eq 'y'}
-				<p class="editdate">
-					{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.
-				</p>
-			{/if}
-		{else}
-			<p class="editdate">
-				{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.
-			</p>
-		{/if}
+	{capture name='copyright_section'}
+		{include file='show_copyright.tpl'}
+	{/capture}
+
+	{* When copyright section is not empty show it *}
+	{if $smarty.capture.copyright_section neq ''}
+		<p class="editdate">
+			{$smarty.capture.copyright_section}
+		</p>
 	{/if}
 </div>
 

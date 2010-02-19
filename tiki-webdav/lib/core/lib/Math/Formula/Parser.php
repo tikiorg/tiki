@@ -27,6 +27,7 @@ class Math_Formula_Parser
 		$first = array_shift( $tokens );
 
 		if( $first != '(' ) {
+			array_unshift( $tokens, $first );
 			require_once 'Math/Formula/Parser/Exception.php';
 			throw new Math_Formula_Parser_Exception( tra('Expecting "("'), $tokens );
 		}

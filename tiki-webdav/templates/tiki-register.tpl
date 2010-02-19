@@ -89,7 +89,7 @@
 				<tr>
 					<td class="formcolor"><label for="pass1">{tr}Password:{/tr}</label></td>
 					<td class="formcolor">
-						<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
+						<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="{if $prefs.feature_ajax neq 'y'}runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{else}check_pass();{/if}" />
 						<div style="float:right;margin-left:5px;">
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
@@ -104,7 +104,7 @@
 				<tr>
 					<td class="formcolor" style="vertical-align:top"><label for="pass2">{tr}Repeat password:{/tr}</label></td>
 					<td class="formcolor">
-						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text'){if $prefs.feature_ajax eq'y'};check_pass(){/if}" />
+						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" onkeyup="{if $prefs.feature_ajax neq 'y'}checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{else}check_pass();{/if}" />
 						<div style="float:right;margin-left:5px;">
 							<div id="mypassword2_text"></div>
 						</div>

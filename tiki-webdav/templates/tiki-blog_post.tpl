@@ -97,6 +97,15 @@
 
 <tr><td class="editblogform">{tr}Mark entry as private:{/tr}</td>
   <td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td></tr>
+<tr id='show_pubdate' class="formcolor">
+			<td>{tr}Publish Date{/tr}</td>
+			<td>
+				{html_select_date prefix="publish_" time=$created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
+				<span dir="ltr">{html_select_time prefix="publish_" time=$created display_seconds=false}
+					
+				</span>
+			</td>
+</tr>
 {if $prefs.blog_spellcheck eq 'y'}
 <tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
@@ -108,8 +117,7 @@
 {/if}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform">
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false" />
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
-<input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" onclick="needToConfirm=false" />
+<input type="submit" class="wikiaction" name="save_exit" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
 <input type="hidden" name="referer" value="{$referer|escape}" />
 &nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";needToConfirm=false;return false;' value="{tr}Cancel{/tr}"/>
 </td></tr>

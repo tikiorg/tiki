@@ -5,6 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+print_r($_REQUEST);
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
 $access->check_feature('feature_file_galleries');
@@ -693,7 +694,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 	}
 }
 
-if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel'])) {
+if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel_x'])) {
 	$all_galleries = $filegallib->getFileGalleriesData();
 	$gals = array();
 	foreach ($all_galleries['data'] as $gal) {

@@ -52,6 +52,8 @@ abstract class Toolbar
 			return new ToolbarSwitchEditor;
 		elseif( $tagName == '-' )
 			return new ToolbarSeparator;
+		elseif( $tag = ToolbarSheet::fromName( $tagName ) )
+			return $tag;
 	} // }}}
 
 	public static function getList() // {{{
@@ -122,6 +124,18 @@ abstract class Toolbar
 			'switcheditor',
 			'autosave',
 			'nonparsed',
+		
+			'sheetsave',	// spreadsheet ones
+			'addrow',
+			'addrowmulti',
+			'deleterow',
+			'addcolumn',
+			'deletecolumn',
+			'addcolumnmulti',
+			'sheetgetrange',
+			'sheetfind',
+			'sheetrefresh',
+			'sheetclose',
 		), $plugins ));
 	} // }}}
 	
@@ -1521,6 +1535,105 @@ class ToolbarWikiplugin extends Toolbar
 							$label, 'qt-plugin');
 	} // }}}
 }
+
+class ToolbarSheet extends Toolbar {
+	protected $syntax;
+
+	public static function fromName( $tagName ) // {{{
+	{
+		switch( $tagName ) {
+			case 'sheetsave':
+				$label = tra('Save Sheet');
+				$icon = tra('pics/icons/disk.png');
+				$syntax = 'jS.s.fnSave();';
+				break;
+			case 'addrow':
+				$label = tra('Add Row');
+				$icon = tra('pics/icons/shading.png');
+				$syntax = 'jS.addRow(true);';	// add row after current or at end if none selected
+				break;
+			case 'addrowmulti':
+				$label = tra('Add Multi-Rows');
+				$icon = tra('pics/icons/shading.png');
+				$syntax = 'jS.addRowMulti();';
+				break;
+			case 'deleterow':
+				$label = tra('Delete Row');
+				$icon = tra('pics/icons/shading.png');
+				$syntax = 'jS.deleteRow();';
+				break;
+			case 'addcolumn':
+				$label = tra('Add Column');
+				$icon = tra('pics/icons/shading.png');
+				$syntax = 'jS.addColumn(true);';	// add col after current or at end if none selected
+				break;
+			case 'deletecolumn':
+				$label = tra('Delete Column');
+				$icon = tra('pics/icons/shading.png');
+				$syntax = 'jS.deleteColumn();';
+				break;
+			case 'addcolumnmulti':
+				$label = tra('Add Multi-Columns');
+				$icon = tra('pics/icons/shading.png');
+				$syntax = 'jS.addColumnMulti();';
+				break;
+			case 'sheetgetrange':
+				$label = tra('Get Cell Range');
+				$icon = tra('pics/icons/shading.png');
+				$syntax = 'jS.getTdRange();';
+				break;
+			case 'sheetfind':
+				$label = tra('Find');
+				$icon = tra('pics/icons/find.png');
+				$syntax = 'jS.cellFind();';
+				break;
+			case 'sheetrefresh':
+				$label = tra('Refresh Calculations');
+				$icon = tra('pics/icons/arrow_refresh.png');
+				$syntax = 'jS.calc(jS.obj.tableBody());';
+				break;
+			case 'sheetclose':
+				$label = tra('Finish Editing');
+				$icon = tra('pics/icons/close.png');
+				$syntax = '$jq("#edit_button").click();';	// temporary workaround TODO properly
+				break;
+				
+			default:
+				return;
+		}
+
+		$tag = new self;
+		$tag->setLabel( $label )
+			->setWysiwygToken( $wysiwyg )
+				->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
+					->setSyntax( $syntax )
+						->setType('Sheet');
+		
+		return $tag;
+	} // }}}
+
+	function getSyntax() // {{{
+	{
+		return $this->syntax;
+	} // }}}
+	
+	protected function setSyntax( $syntax ) // {{{
+	{
+		$this->syntax = $syntax;
+
+		return $this;
+	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		return $this->getSelfLink(addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')),
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-sheet');
+
+	} // }}}
+	
+}
+
+
 
 class ToolbarsList
 {

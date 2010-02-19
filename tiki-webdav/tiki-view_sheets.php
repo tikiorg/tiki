@@ -24,7 +24,7 @@ $access->check_feature('feature_sheet');
 function outputGrid() {
 	global $grid, $handler, $smarty;
 	
-	$handler = & new TikiSheetOutputHandler(null, ($grid->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
+	$handler = new TikiSheetOutputHandler(null, ($grid->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
 	ob_start();
 	$grid->export($handler);
 	$smarty->assign('grid_content', ob_get_contents());
@@ -44,7 +44,7 @@ if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_pe
 }
 if (!isset($_REQUEST['parse'])) {
 	$_REQUEST['parse'] = 'y';
-} else if ($_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
+} else if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
 if (typeof ajaxLoadingShow == "function") {
@@ -66,7 +66,7 @@ $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 $smarty->assign('page_mode', 'view');
 // Process the insertion or modification of a gallery here
-$grid = & new TikiSheet;
+$grid = new TikiSheet;
 if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && $tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
 	$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
 	$smarty->display("error.tpl");
@@ -79,26 +79,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		die;
 	}
 	if (!empty($_REQUEST['s'])) {	// ajax save request from jQuery.sheet
-		$handler = & new TikiSheetHTMLTableHandler($_REQUEST['s']);
+		$handler = new TikiSheetHTMLTableHandler($_REQUEST['s']);
 		$res = $grid->import($handler);
 		// Save the changes
-		$handler = & new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
+		$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 		$grid->export($handler);
-		die($res ? 'saved ' . $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' grid' : 'failed');
+		die($res ? tra('Saved') . ' ' . $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') : tra('Save failed'));
 	}
 	
 	// Load data from the form
-	$handler = & new TikiSheetFormHandler;
-	if (!$grid->import($handler)) $grid = & new TikiSheet;
+	$handler = new TikiSheetFormHandler;
+	if (!$grid->import($handler)) $grid = new TikiSheet;
 	// Save the changes
-	$handler = & new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
+	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	$grid->export($handler);
 	// Load the layout settings from the database
-	$grid = & new TikiSheet;
+	$grid = new TikiSheet;
 	$grid->import($handler);
 	outputGrid();
 } else {
-	$handler = & new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
+	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	$date = time();
 	if (!empty($_REQUEST['readdate'])) {
 		$date = $_REQUEST['readdate'];
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$handler->setReadDate($date);
 	$grid->import($handler);
 	if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit') {
-		$handler = & new TikiSheetFormHandler;
+		$handler = new TikiSheetFormHandler;
 		ob_start();
 		$grid->export($handler);
 		$smarty->assign('init_grid', ob_get_contents());
@@ -134,11 +134,19 @@ $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != "Done") {
 		'.$reloadString.'
-		var options = {title: "'.$info['title'].'", urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
+		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
 		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {
 			options.buildSheet = "2x1";	// new sheet
 		}
 		$jq("div.tiki_sheet").tiki("sheet", "", options);
+
+//		// duplicate the edit button and make it a save button (translation TODO)
+//		$save_button = $jq("#edit_button").clone().attr("id", "save_button").click( function () {
+//			$jq.sheet.cellEditDone();
+//			$jq.sheet.saveSheet();
+//			return false;
+//		}).find("a").text("Save");
+		
 		$a.attr("temp", $a.text());
 		$a.text("Done");
 		$jq("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
@@ -147,7 +155,9 @@ $jq("#edit_button").click( function () {
 			ajaxLoadingHide();
 		}
 	} else {
-		window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
+		if (!jS.isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
+			window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
+		}
 	}
 	return false;
 });
@@ -156,6 +166,13 @@ $jq("#save_button").click( function () {
 	$jq.sheet.saveSheet();
 	return false;
 }).hide();
+
+window.showFeedback = function(message, delay) {
+	if (typeof delay == "undefined") { delay = 2000; }
+	$fbsp = $jq("#feedback span");
+	$fbsp.html(message).show();
+	window.setTimeout( function () { $fbsp.fadeOut("slow", function () { $fbsp.html("&nbsp;"); }); }, delay);
+}
 ');
 	}
 }

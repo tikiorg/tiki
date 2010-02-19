@@ -547,6 +547,7 @@ function wikiplugin_tracker($data, $params)
 							$mail->setSubject($mail_data);
 							$mail_data = $smarty->fetch('mail/'.$emailOptions[2][$itpl]);
 							$mail->setText($mail_data);
+							$mail->buildMessage(array('text_encoding' => '8bit'));
 							$mail->send($ueo);
 							if (isset($tplSubject[$itpl+1]))
 								++$itpl;

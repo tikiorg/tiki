@@ -17,6 +17,7 @@
 // If image_type has no value, we default to "article" to preserve previous behaviour
 
 require_once ('tiki-setup.php');
+require_once 'lib/articles/artlib.php';
 
 $access->check_feature('feature_articles');
 
@@ -58,13 +59,13 @@ $cachefile.= "/$image_cache_prefix.".$_REQUEST["id"];
 if ( (isset($_REQUEST["reload"])) || (!is_file($cachefile))) {
 	switch ($_REQUEST["image_type"]) {
 		case "article":
-			$storedData = $tikilib->get_article_image($_REQUEST["id"]);
+			$storedData = $artlib->get_article_image($_REQUEST["id"]);
 			break;
 		case "submission":
-			$storedData = $tikilib->get_submission($_REQUEST["id"]);
+			$storedData = $artlib->get_submission($_REQUEST["id"]);
 			break;
 		case "topic":
-			$storedData = $tikilib->get_topic_image($_REQUEST["id"]);
+			$storedData = $artlib->get_topic_image($_REQUEST["id"]);
 			break;
 		case "preview":
 			// We can't get the data from the database. No fallback solution.

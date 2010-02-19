@@ -145,6 +145,9 @@ function batchImportUsers() {
 				}
 			}
 		}
+		if (!empty($u['default_group'])) {
+			$userlib->set_default_group($u['login'], $u['default_group']);
+		}
 		$added++;
 	}
 	$smarty->assign('added', $added);

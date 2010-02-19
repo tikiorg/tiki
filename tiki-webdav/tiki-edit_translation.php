@@ -91,7 +91,8 @@ else if ($_REQUEST['id']) {
 		$cat_objid = $name;
 	}
 	else if ($_REQUEST['type'] == "article") {
-		$info = $tikilib->get_article($_REQUEST["id"]);
+		global $artlib; require_once 'lib/articles/artlib.php';
+		$info = $artlib->get_article($_REQUEST["id"]);
 		if (empty($info)) {
 			$smarty->assign('msg', tra("Article not found"));
 			$smarty->display("error.tpl");
@@ -101,8 +102,8 @@ else if ($_REQUEST['id']) {
 		$type = "article";
 		$objId = $_REQUEST['id'];
 		$langpage = $info['lang'];
-		$articles = $tikilib->list_articles(0, -1, 'title_asc', '', '', '', $user);
-		$smarty->assign_by_ref('articles', $articles["data"]);
+		$articles = $artlib->list_articles(0, -1, 'title_asc', '', '', '', $user);
+		$smarty->assign('articles', $articles["data"]);
 		$cat_type = 'article';
 		$cat_objid = $objId;
 	}
@@ -192,7 +193,8 @@ else if  (isset($_REQUEST['set']) && !empty($_REQUEST['srcId'])) {
 		$smarty->assign('error', $error);
 	}
 	else {
-		$srcInfo = $tikilib->get_article($_REQUEST["srcId"]);
+		global $artlib; require_once 'lib/articles/artlib.php';
+		$srcInfo = $artlib->get_article($_REQUEST["srcId"]);
 	if (empty($srcInfo)) {
 			$error = "srcExists";
 			$smarty->assign('error', $error);

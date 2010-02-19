@@ -205,7 +205,7 @@ class BlogLib extends TikiLib
 		$bindvars = array();
 
 		if ( $blogId > 0 ) {
-			$mid[] = "`blogId`=?";
+			$mid[] = "tbp.`blogId`=?";
 			$bindvars[] = (int)$blogId;
 
 			$blog_data = $this->get_blog($blogId);
@@ -213,6 +213,7 @@ class BlogLib extends TikiLib
 				$ownsblog = 'y';
 			}
 		}
+		$mid[] = "tbp.blogId = tb.blogId";
 
 		if ( !$allowDrafts ){
 			$mid[] = "`priv`!='y'";
@@ -225,34 +226,33 @@ class BlogLib extends TikiLib
 			     and ($blog_data["public"] != 'y' || $tiki_p_blog_post != 'y')
 			     and ($blog_data["public"] != 'y' || $ownsblog != 'y') ) {
 				if ( isset($user) ) {
-					$mid[] = "(`priv`!='y' or `user`=?)";
+					$mid[] = "(tbp.`priv`!='y' or tbp.`user`=?)";
 					$bindvars[] = "$user";
 				} else {
-					$mid[] = "`priv`!='y'";
+					$mid[] = "tbp.`priv`!='y'";
 				}
 			}
 		}
 
 		if ( $find ) {
 			$findesc = '%' . $find . '%';
-			$mid[] = "(`data` like ? or `title` like ?)";
+			$mid[] = "(tbp.`data` like ? or tbp.`title` like ?)";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
 
 		if ( $date_min ) {
-			$mid[] = "`created`>=?";
+			$mid[] = "tbp.`created`>=?";
 			$bindvars[] = (int)$date_min;
 		}
 		if ( $date_max ) {
-			$mid[] = "`created`<=?";
+			$mid[] = "tbp.`created`<=?";
 			$bindvars[] = (int)$date_max;
 		}
 
 		$mid = empty($mid) ? '' : 'where ' . implode(' and ', $mid);
-
-		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
-		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
+		$query = "select tbp.*,tb.title as blogTitle from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $mid order by ".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_blog_posts` as tbp, `tiki_blogs` as tb $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
@@ -388,17 +388,21 @@ class BlogLib extends TikiLib
 	 * @access public
 	 * @return int postId
 	 */
-	function blog_post($blogId, $data, $user, $title = '', $contributions = '', $priv = 'n') {
+	function blog_post($blogId, $data, $user, $title = '', $contributions = '', $priv = 'n', $created = 0) {
 		// update tiki_blogs and call activity functions
 		global $smarty, $tikilib, $prefs, $reportslib;
-
+		
+		if(!$created) {
+			$created = $this->now;	
+		}
+		
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
 		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?)";
-		$result = $this->query($query, array((int) $blogId, $data, (int) $this->now, $user, $title, $priv));
+		$result = $this->query($query, array((int) $blogId, $data, (int) $created, $user, $title, $priv));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
-		$id = $this->getOne($query, array((int) $this->now, $user));
+		$id = $this->getOne($query, array((int) $created, $user));
 		$query = "update `tiki_blogs` set `lastModif`=?,`posts`=`posts`+1 where `blogId`=?";
-		$result = $this->query($query, array((int) $this->now, (int) $blogId));
+		$result = $this->query($query, array((int) $created, (int) $blogId));
 		$this->add_blog_activity($blogId);
 
 		if ($prefs['feature_user_watches'] == 'y') {
@@ -455,7 +459,6 @@ class BlogLib extends TikiLib
 			refresh_index('blog_posts', $id);
 		}
 		$this->syncParsedText($data, array('type'=>'blog post', 'object'=>$id, 'description'=>substr($edit_data, 0, 200), 'name'=>$title, 'href'=>"tiki-view_blog_post.php?postId=$id"));
-
 		return $id;
 	}
 
@@ -551,10 +554,14 @@ class BlogLib extends TikiLib
 	 * @access public
 	 * @return void
 	 */
-	function update_post($postId, $blogId, $data, $user, $title = '', $contributions = '', $old_data = '', $priv='n') {
+	function update_post($postId, $blogId, $data, $user, $title = '', $contributions = '', $old_data = '', $priv='n', $created = 0) {
 		global $prefs;
-		$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`user`=?,`title`=?, `priv`=? where `postId`=?";
-		$result = $this->query($query, array($blogId, $data, $user, $title, $priv, $postId));
+		
+		if(!$created) {
+			$created = $this->now;	
+		}
+		$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`created`=?,`user`=?,`title`=?, `priv`=? where `postId`=?";
+		$result = $this->query($query, array($blogId, $data, $created,$user, $title, $priv, $postId));
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);

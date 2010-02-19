@@ -15,6 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_article($params, &$smarty)
 {
 	global $tikilib;
+	global $artlib; require_once 'lib/articles/artlib.php';
 	global $dbTiki;
 	extract($params);
 
@@ -35,7 +36,7 @@ function smarty_function_article($params, &$smarty)
 	} else {
 		$skip = array();
 	}
-	$list_articles = $tikilib->list_articles(0, $max, 'publishDate_desc', '', '', '', '', '', '', 1);
+	$list_articles = $artlib->list_articles(0, $max, 'publishDate_desc', '', '', '', '', '', '', 1);
 
 	$x = "";
 

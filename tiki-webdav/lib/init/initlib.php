@@ -101,7 +101,7 @@ class TikiInit
   * In Windows, this is usually c:\windows\temp or c:\winnt\temp
   * \static
   */
-	function tempdir() {
+	static function tempdir() {
 		static $tempdir;
 		if (!$tempdir) {
 			$tempfile = tempnam(false,'');

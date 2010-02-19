@@ -23,6 +23,13 @@ class RatingLib extends TikiDb_Bridge
 		return $this->get_user_vote( $target, $type, $objectId );
 	}
 
+	function convert_rating_sort( & $sort_mode, $type, $objectKey ) {
+		if( preg_match( '/^adv_rating_(\d+)_(asc|desc)$/', $sort_mode, $parts ) ) {
+			$sort_mode = 'adv_rating_' . $parts[2];
+			return ' LEFT JOIN (SELECT `object` as `adv_rating_obj`, `value` as `adv_rating` FROM `tiki_rating_obtained` WHERE `type` = ' . $this->qstr( $type ) . ' AND `ratingConfigId` = ' . intval( $parts[1] ) . ') `adv_rating` ON `adv_rating`.`adv_rating_obj` = ' . $objectKey . ' ';
+		}
+	}
+
 	/**
 	 * Collect the aggregate score of an item based on various arguments.
 	 *
@@ -106,7 +113,7 @@ class RatingLib extends TikiDb_Bridge
 	}
 
 	function record_user_vote( $user, $type, $objectId, $score, $time = null ) {
-		global $tikilib;
+		global $tikilib, $prefs;
 
 		if( ! $this->is_valid( $type, $score ) ) {
 			return false;
@@ -125,6 +132,14 @@ class RatingLib extends TikiDb_Bridge
 
 		$this->query( 'INSERT INTO `tiki_user_votings` ( `user`, `ip`, `id`, `optionId`, `time` ) VALUES( ?, ?, ?, ?, ? )',
 			array( $user, $ip, $token, $score, $time ) );
+
+		if( $prefs['rating_advanced'] == 'y' ) {
+			if( $prefs['rating_recalculation'] == 'vote' ) {
+				$this->refresh_rating( $type, $objectId );
+			} elseif( $prefs['rating_recalculation'] == 'randomvote' ) {
+				$this->attempt_refresh();
+			}
+		}
 
 		return true;
 	}
@@ -196,6 +211,68 @@ class RatingLib extends TikiDb_Bridge
 			}
 		} catch( Math_Formula_Exception $e ) {
 			return $e->getMessage();
+		}
+	}
+
+	function refresh_rating( $type, $object ) {
+		global $ratingconfiglib; require_once 'lib/rating/configlib.php';
+		$configurations = $ratingconfiglib->get_configurations();
+
+		$runner = $this->get_runner();
+
+		$this->internal_refresh_rating( $type, $object, $runner, $configurations );
+	}
+
+	function attempt_refresh( $all = false ) {
+		global $prefs;
+		if( 1 == rand( 1, $prefs['rating_recalculation_odd'] ) ) {
+			$this->internal_refresh_list( $prefs['rating_recalculation_count'] );
+		}
+	}
+
+	function refresh_all() {
+		$this->internal_refresh_list( -1 );
+	}
+
+	private function internal_refresh_list( $max ) {
+		global $ratingconfiglib; require_once 'lib/rating/configlib.php';
+
+		// Pre-parse formulas to avoid doing it multiple times
+		require_once 'Math/Formula/Parser.php';
+		$parser = new Math_Formula_Parser;
+		$configurations = array();
+		foreach( $ratingconfiglib->get_configurations() as $config ) {
+			$config['formula'] = $parser->parse( $config['formula'] );
+			$configurations[] = $config;
+		}
+
+		$runner = $this->get_runner();
+		
+		$list = $ratingconfiglib->get_expired_object_list( $max );
+
+		foreach( $list as $object ) {
+			$this->internal_refresh_rating( $object['type'], $object['object'], $runner, $configurations );
+		}
+	}
+
+	private function internal_refresh_rating( $type, $object, $runner, $configurations ) {
+		global $ratingconfiglib; require_once 'lib/rating/configlib.php';
+		$runner->setVariables( array(
+			'type' => $type,
+			'object-id' => $object,
+		) );
+
+		foreach( $configurations as $config ) {
+			try {
+				$runner->setFormula( $config['formula'] );
+				$result = $runner->evaluate();
+
+				$ratingconfiglib->record_value( $config, $type, $object, $result );
+			} catch( Math_Formula_Exception $e ) {
+				// Some errors are expected for type-specific configurations.
+				// Skip safely. Sufficient validation is made on save to make sure
+				// other errors will not happen.
+			}
 		}
 	}
 

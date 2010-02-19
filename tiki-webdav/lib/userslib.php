@@ -223,7 +223,8 @@ class UsersLib extends TikiLib
 
 		$logslib->add_log('login', 'logged out');
 		
-		$this->delete_user_cookie($user);
+		$userInfo = $this->get_user_info($user);
+		$this->delete_user_cookie($userInfo['userId']);
 		
 		if ($remote && $prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
 			include_once('XML/RPC.php');
@@ -2535,50 +2536,34 @@ class UsersLib extends TikiLib
 		}
 	}
 
-	function get_user_hash($user) {
-		$query = "select `hash` from `users_users` where binary `login` = ?";
-		$pass = $this->getOne($query, array($user));
-		return $pass;
-	}
-
-	function get_user_by_hash($hash) {
-		$query = "select `login` from `users_users` where `hash`=?";
-		$pass = $this->getOne($query, array($hash));
-		return $pass;
-	}
-
-	function create_user_cookie($user,$hash=false) {
+	function create_user_cookie($user, $secret=false) {
 		global $prefs;
-		if (!$hash) {
-			$hash = $this->get_cookie_check() . ".". ($this->now + $prefs['remembertime']);
+		if (!$secret) {
+			$secret = $this->get_cookie_check();
 		}
 		$this->delete_user_cookie($user);
-		$this->set_user_preference($user,'cookie',$hash);
-		return $hash;
+
+		$query = "insert into `tiki_user_login_cookies`(`userId`, `secret`, `expiration`) values(?, ?, FROM_UNIXTIME(?))";
+		$result = $this->query($query, array($user, $secret, $this->now + $prefs['remembertime']));
+		return $secret;
 	}
 
 	function delete_user_cookie($user) {
-		$query = 'delete from `tiki_user_preferences` where `prefName`=? and `user`=?';
-		$this->query($query, array('cookie',$user));
+		$query = 'delete from `tiki_user_login_cookies` where `userId`=?';
+		$this->query($query, array($user));
 	}
 
 	function get_cookie_check() {
 		return md5(session_id() . uniqid(mt_rand(), true));
 	}
 
-	function get_user_by_cookie($hash) {
+	function get_user_by_cookie($cookie) {
 		global $prefs;
-		list($check,$expire,$userCookie) = explode('.',$hash, 3);
-		$query = "select `user` from `tiki_user_preferences` where `prefName`='cookie' and `value` like ? and `user`=?";
+		list($secret, $userId) = explode('.', $cookie, 2);
+		$query = "select `userId` from `tiki_user_login_cookies` where `secret`=? and `userId`=? and `expiration` > NOW()";
 
-		if ($this->getOne($query, array("$check.%",$userCookie))) {
-			if ($expire < $this->now) {
-				$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
-				$this->query($query, array('cookie',$hash));
-				return false;
-			} else {
-				return $userCookie;
-			}
+		if ($userId === $this->getOne($query, array($secret, $userId))) {
+			return $userId;
 		}
 		return false;
 	}

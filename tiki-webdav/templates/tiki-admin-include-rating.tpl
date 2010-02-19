@@ -9,6 +9,11 @@
 	<fieldset>
 		<legend>{tr}Global configuration{/tr}</legend>
 		{preference name=rating_advanced}
+		{preference name=rating_recalculation}
+		<div class="rating_recalculation_childcontainer randomvote randomload">
+			{preference name=rating_recalculation_odd}
+			{preference name=rating_recalculation_count}
+		</div>
 	</fieldset>
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">

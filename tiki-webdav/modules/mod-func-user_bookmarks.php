@@ -78,7 +78,8 @@ function module_user_bookmarks( $mod_reference, $module_params ) {
 	
 				// Check if we are bookmarking an article
 				if (strstr($_SERVER["REQUEST_URI"], 'tiki-read_article')) {
-					$info = $tikilib->get_article($setup_query_data["articleId"]);
+					global $artlib; require_once 'lib/articles/artlib.php';
+					$info = $artlib->get_article($setup_query_data["articleId"]);
 	
 					$name = $info["title"];
 				}

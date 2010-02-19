@@ -132,6 +132,7 @@ Add a value in first check when you create a new admin page. *}
 	{if $prefs.lang_use_db eq 'y'}<a href="tiki-edit_languages.php">{tr}Edit Languages{/tr}</a> {/if}
 	{if $prefs.feature_pagelist eq 'y'}<a href="tiki-admin_pagelist.php">{tr}Page List{/tr}</a>{/if}
 	<a href="tiki-admin.php?page=payment">{tr}Payment{/tr}</a>
+	<a href="tiki-admin.php?page=rating">{tr}Advanced Rating{/tr}</a>
 	<hr />
 
 	{tr}Transversal features{/tr} ({tr}which apply to more than one section{/tr}):<br />

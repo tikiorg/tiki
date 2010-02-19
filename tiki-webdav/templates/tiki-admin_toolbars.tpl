@@ -1,5 +1,5 @@
 {title help="Toolbars"}{tr}Admin Toolbars{/tr}{/title}
-{jq}
+{jq notonready=true}
 	function toolbars_autoreload() {
 		if (document.forms['toolbars'].elements['autoreload'].checked) {
 			document.forms['toolbars'].submit();
@@ -26,11 +26,11 @@
 			<div class="adminoptionbox" style="float: right;">
 				<label for="view_mode">{tr}View mode{/tr}</label>
 				<select id="view_mode" name="view_mode">
-					<option value="both">{tr}Wiki and WYSIWYG{/tr}</option>
-					<option value="wiki">{tr}Wiki only{/tr}</option>
-					<option value="wysiwyg">{tr}WYSIWYG only{/tr}</option>
+					{if $prefs.feature_wysiwyg eq 'y'}<option value="both"{if $view_mode eq "both"} selected{/if}>{tr}Wiki and WYSIWYG{/tr}</option>{/if}
+					<option value="wiki"{if $view_mode eq "wiki"} selected{/if}>{tr}Wiki only{/tr}</option>
+					{if $prefs.feature_wysiwyg eq 'y'}<option value="wysiwyg"{if $view_mode eq "wysiwyg"} selected{/if}>{tr}WYSIWYG only{/tr}</option>{/if}
+					{if $prefs.feature_sheet eq 'y'}<option value="sheet"{if $view_mode eq "sheet"} selected{/if}>{tr}Spreadsheet{/tr}</option>{/if}
 				</select>
-				{if $prefs.feature_wysiwyg neq 'y'}{jq}$jq("#view_mode").val("wiki").change().attr("disabled","disabled");{/jq}{/if}
 			</div>
 			<div class="adminoptionbox">
 				<input name="load" type="submit" value="{tr}Load{/tr}"/>

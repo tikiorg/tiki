@@ -14,7 +14,7 @@ $inputConfiguration = array( array(
 	),
 ) );
 
-$auto_query_args = array('section', 'comments', 'autoreload');
+$auto_query_args = array('section', 'comments', 'autoreload', 'view_mode');
 
 require_once 'tiki-setup.php';
 require_once 'lib/toolbars/toolbarslib.php';
@@ -22,7 +22,7 @@ require_once 'lib/toolbars/toolbarslib.php';
 $access->check_permission('tiki_p_admin');
 $access->check_feature('javascript_enabled');
 
-$sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps', 'admin');
+$sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps', 'admin', 'sheet');
 
 if( isset($_REQUEST['section']) && in_array($_REQUEST['section'], $sections) ) {
 	$section = $_REQUEST['section'];
@@ -34,6 +34,8 @@ if( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
 } else {
 	$comments = false;
 }
+
+$smarty->assign('view_mode', isset($_REQUEST['view_mode']) ? $_REQUEST['view_mode'] : '');
 
 if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
@@ -124,7 +126,9 @@ foreach( $qtlist as $name ) {
 		continue;
 	}
 	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
-	$wiki = strlen($tag->getWikiHtml('')) ? 'qt-wiki' : '';
+	$test_html = $tag->getWikiHtml('');
+	$wiki = strlen($test_html) > 0 ? 'qt-wiki' : '';
+	$wiki = strpos($test_html, 'qt-sheet') !== false ? 'qt-sheet' : $wiki;
 	$cust = Toolbar::isCustomTool($name) ? 'qt-custom' : '';
 	$avail = $tag->isAccessible() ? '' : 'qt-noaccess';
 	$icon = $tag->getIconHtml();

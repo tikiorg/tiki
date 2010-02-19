@@ -23,8 +23,8 @@ function module_last_submissions_info() {
 }
 
 function module_last_submissions( $mod_reference, $module_params ) {
-	global $tikilib, $smarty;
-	$ranking = $tikilib->list_submissions(0, $mod_reference['rows'], 'created_desc', '', '');
+	global $artlib, $smarty; require_once 'lib/articles/artlib.php';
+	$ranking = $artlib->list_submissions(0, $mod_reference['rows'], 'created_desc', '', '');
 	
 	$smarty->assign('modLastSubmissions', $ranking["data"]);
 }

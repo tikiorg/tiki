@@ -56,6 +56,7 @@
 
 {else}
 	<div class="tiki_sheet">{$grid_content}</div>
+	<div id="feedback" style="height: 1.5em; margin-left: .2em"><span></span></div>
 	<div class="navbar">
 		{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-sheets.php" _text="{tr}List Sheets{/tr}"}
@@ -122,4 +123,5 @@
 		{/if}
 
 	</div>
+	<div id="sheetTools" style="display: none;">{toolbars area_name="jSheetControls_formula"}</div>
 {/if}

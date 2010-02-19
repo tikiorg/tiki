@@ -1,58 +1,39 @@
 <?php
 
 function smarty_function_rating( $params, $smarty ) {
-	global $tikilib, $user;
+	global $ratinglib; require_once 'lib/rating/ratinglib.php';
 
-	if (!$user && !isset($_COOKIE['PHPSESSID'])) {
-		return tra('Cookies must be enabled to vote.');
+	if( ! isset( $params['type'], $params['id'] ) ) {
+		return tra('No object information provided for rating.');
 	}
 
-	if( ! isset( $params['options'] ) ) {
-		$options = range( 1, 5 );
-	} elseif( is_array( $params['options'] ) ) {
-		$options = $params['options'];
-	} else {
-		$options = explode( ',', $params['options'] );
-	}
+	$type = $params['type'];
+	$id = $params['id'];
 
-	if( isset( $params['id'] ) ) {
-		$key = $params['id'];
-	} elseif( $params['comment'] ) {
-		$key = 'comment' . $params['comment'];
-	} elseif( $params['article'] ) {
-		$key = 'article' . $params['article'];
-		$options = $tikilib->get_preference( 'article_user_rating_options', range(1,5), true );
-	} elseif( $params['wiki'] ) {
-		$key = 'wiki' . $params['wiki'];
-		$options = $tikilib->get_preference( 'wiki_simple_ratings_options', range(1,5), true );
-	} else {
-		return tra('No key provided for rating.');
-	}
+	if( isset( $_REQUEST['rating_value'][$type][$id], $_REQUEST['rating_prev'][$type][$id] ) ) {
+		$value = $_REQUEST['rating_value'][$type][$id];
+		$prev = $_REQUEST['rating_prev'][$type][$id];
+		if( $value != $prev && $ratinglib->record_vote( $type, $id, $value ) ) {
 
+			// Handle type-specific actions
+			if( $type == 'comment' ) {
+				global $commentslib, $user; require_once 'lib/commentslib.php';
 
-	$revote = isset( $params['revote'] ) && $params['revote'] == 'y';
-
-	if( isset( $_REQUEST['rating_key'], $_REQUEST['rating_value'] ) ) {
-		if( $_REQUEST['rating_key'] == $key ) {
-			if( $tikilib->register_user_vote( $user, $key, $_REQUEST['rating_value'], $options, $revote ) ) {
-
-				// Handle type-specific actions
-				if( isset( $params['comment'] ) ) {
-					global $commentslib; require_once 'lib/commentslib.php';
-
-					$commentslib->vote_comment( $params['comment'], $user, $_REQUEST['rating_value'] );
+				if( $user ) {
+					$commentslib->vote_comment( $id, $user, $value );
 				}
-
-				return tra('Your vote was recorded.');
-			} else {
-				return tra('Your vote could not be recorded. You may have voted before.');
 			}
+		} elseif( $value != $prev ) {
+			return tra('An error occured.');
 		}
 	}
 
-	$smarty->assign( 'rating_key', $key );
-	$smarty->assign( 'rating_options', $options );
-	$smarty->assign( 'rating_canvote', ! $tikilib->user_has_voted( $user, $key ) || $revote );
+	$vote = $ratinglib->get_vote( $type, $id );
+
+	$smarty->assign( 'rating_type', $type );
+	$smarty->assign( 'rating_id', $id );
+	$smarty->assign( 'rating_options', $ratinglib->get_options( $type ) );
+	$smarty->assign( 'current_rating', $vote );
 	return $smarty->fetch( 'rating.tpl' );
 }
 

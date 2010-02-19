@@ -75,7 +75,8 @@ function validate($params) {
 		}
 	} 
 	if ($prefs['intertiki_logfile']) logit($prefs['intertiki_logfile'],"logged",$login,INTERTIKI_OK,$prefs['known_hosts'][$key]['name']);
-	$userlib->create_user_cookie($login,$hashkey);
+	$userInfo = $userlib->get_user_info($login);
+	$userlib->create_user_cookie($userInfo['userId'], $hashkey);
 
 	if ($slave) {
 	    $logslib->add_log('intertiki','auth granted from '.$prefs['known_hosts'][$key]['name'],$login);
@@ -120,7 +121,8 @@ function logout($params) {
 		return new XML_RPC_Response(0, 101, $msg);
 	}
 	$userlib->user_logout($login, true);
-	$userlib->delete_user_cookie($login);
+	$userInfo = $this->get_user_info($login);
+	$userlib->delete_user_cookie($userInfo['userId']);
 	if ($prefs['intertiki_logfile']) logit($prefs['intertiki_logfile'],"logout",$login,INTERTIKI_OK,$prefs['known_hosts'][$key]['name']);
 	$logslib->add_log('intertiki','auth revoked from '.$prefs['known_hosts'][$key]['name'],$login);
 	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
