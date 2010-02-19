@@ -6,7 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-$access->check_feature(array('validateUsers','validateRegistration'));
+$access->check_feature(array('validateUsers','validateRegistration'), '', 'login', true);
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["pass"])) {
