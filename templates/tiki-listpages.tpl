@@ -41,7 +41,7 @@
 <b>{tr}Insert name of the page you wish to create{/tr}</b>
 <form method="get" action="tiki-editpage.php">
 <input id="pagename" type="text" size="30" name="page" /><br />
-<input type="submit" name="quickedit" value="Create Page" />
+<input type="submit" name="quickedit" value="{tr}Create Page{/tr}" />
 </form>
 </center>
 {/tab}
