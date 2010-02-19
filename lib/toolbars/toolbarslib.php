@@ -1579,8 +1579,8 @@ class ToolbarSheet extends Toolbar {
 				break;
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');
-				$icon = tra('pics/icons/shading.png');
-				$syntax = 'jS.getTdRange();';
+				$icon = tra('pics/icons/sheet_get_range.png');
+				$syntax = 'insertAt("jSheetControls_formula", jS.getTdRange());';
 				break;
 			case 'sheetfind':
 				$label = tra('Find');
