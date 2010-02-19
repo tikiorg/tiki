@@ -27,6 +27,7 @@
 {set var=f_created value=$item.created}
 {set var=f_lastmodif value=$item.lastModif}
 {set var=f_itemId value=$item.itemId}
+{set var=f_status value=$item.status}
 {* ------------------------------------ *}
 {include file="$wiki" item=$item}
 {/strip}
