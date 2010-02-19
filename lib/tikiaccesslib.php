@@ -59,7 +59,7 @@ class TikiAccessLib extends TikiLib
 	 * @access public
 	 * @return void
 	 */
-	function check_feature($features, $feature_name='', $relevant_admin_panel='features') {
+	function check_feature($features, $feature_name='', $relevant_admin_panel='features', $either = false) {
 		global $prefs;
 		require_once ('tiki-setup.php');
 
@@ -71,27 +71,45 @@ class TikiAccessLib extends TikiLib
 		}
 
 		if ( ! is_array($features) ) { $features = array($features); }
+		
+		if ( $either ) {
+			// if anyone will do, start assuming no go and test for feature
+			$allowed = false;
+		} else {
+			// if all is needed, start assuming it's a go and test for feature not on
+			$allowed = true;
+		}
+		
 		foreach ($features as $feature) {
 			if ($prefs[$feature] != 'y') {
 				if ($feature_name != '') {
 					$feature = $feature_name; 
 				}
-
-				global $smarty;
-				if( $perms->admin ) {
-					$smarty->assign('required_preferences', $features);
-				}
+				$allowed = false;
+				break;
+			} elseif ($either && $prefs[$feature] == 'y') {
+				// test for feature in "anyone will do" case
+				$allowed = true;
+				break;
+			}
+		}
+		
+		if ( !$allowed ) {		
+			global $smarty;
+		
+			if( $perms->admin ) {
+				$smarty->assign('required_preferences', $features);
+			}
 				
-				$msg = tra('This feature is disabled') . ': <b>' . $feature . "</b>\n<P>\n"
+			$msg = tra('This feature is disabled') . ': <b>' . $feature . "</b>\n<P>\n"
 									. tra('To enable this feature, go to:')
 									.	" <a href=\"tiki-admin.php?page=$relevant_admin_panel\">" . tra('Admin Feature') . '</a>. ' 
 									. "\n<P>\n"
 									. tra('If you do not have privileges to activate this feature, ask the site admin to do it.')
 									;
 
-				$this->display_error('', $msg, '503' );
-			}
-		}
+			$this->display_error('', $msg, '503' );
+		}		
 	}
 
 	function check_permission($permissions, $permission_name='') {
