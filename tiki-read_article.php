@@ -7,13 +7,14 @@
 
 $section = 'cms';
 require_once ('tiki-setup.php');
+require_once 'lib/articles/artlib.php';
 $access->check_feature('feature_articles');
 if (!isset($_REQUEST["articleId"])) {
 	$smarty->assign('msg', tra("No article indicated"));
 	$smarty->display("error.tpl");
 	die;
 }
-$article_data = $tikilib->get_article($_REQUEST["articleId"]);
+$article_data = $artlib->get_article($_REQUEST["articleId"]);
 if ($article_data === false) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied'));

@@ -92,7 +92,8 @@ switch ($_REQUEST['type']) {
 		break;
 
 	case 'article':
-		$objects = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, 0, 0, $user);
+		global $artlib; require_once 'lib/articles/artlib.php';
+		$objects = $artlib->list_articles(0, -1, 'title_asc', $find_objects, 0, 0, $user);
 		$smarty->assign_by_ref('objects', $objects["data"]);
 		$objects = $objects['data'];
 		correct_array($objects, 'articleId', 'title');

@@ -123,6 +123,7 @@ function wikiplugin_articles_info()
 function wikiplugin_articles($data, $params)
 {
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
+	global $artlib; require_once 'lib/articles/artlib.php';
 
 	extract($params, EXTR_SKIP);
 	if (($prefs['feature_articles'] !=  'y') || (($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y'))) {
@@ -167,7 +168,7 @@ function wikiplugin_articles($data, $params)
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'));
+	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'));
  	if ($prefs['feature_multilingual'] == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");

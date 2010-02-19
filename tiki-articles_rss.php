@@ -32,7 +32,8 @@ if (isset($_REQUEST["topic"])) {
     $uniqueid = $feed.".".$topic;
     $topic = (int) ereg_replace("[^0-9]","", $topic);
 } elseif (isset($_REQUEST['topicname'])) {
-	$topic = $tikilib->fetchtopicId($_REQUEST['topicname']);
+	global $artlib; require_once 'lib/articles/artlib.php';
+	$topic = $artlib->fetchtopicId($_REQUEST['topicname']);
 	$uniqueid = $feed.".".$topic;
 } else {
     $uniqueid = $feed;

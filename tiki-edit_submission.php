@@ -78,7 +78,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 
 // If the submissionId is passed then get the submission data
 if (isset($_REQUEST["subId"])) {
-	$article_data = $tikilib->get_submission($_REQUEST["subId"]);
+	$article_data = $artlib->get_submission($_REQUEST["subId"]);
 
 	$publishDate = $article_data["publishDate"];
 	$expireDate = $article_data["expireDate"];

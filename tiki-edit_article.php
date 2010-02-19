@@ -82,10 +82,9 @@ $smarty->assign('userEmail', $userlib->get_user_email($user));
 
 // If the articleId is passed then get the article data
 // GGG - You have to check for the actual value of the articleId because it
-//  will be 0 when you select preview while creating a new article. You
-//  really do not want to do $tikilib->get_article if the articleId is 0
+//  will be 0 when you select preview while creating a new article.
 if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
-	$article_data = $tikilib->get_article($_REQUEST["articleId"]);
+	$article_data = $artlib->get_article($_REQUEST["articleId"]);
 	if ($article_data === false) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('Permission denied'));

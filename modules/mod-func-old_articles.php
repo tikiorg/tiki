@@ -23,9 +23,10 @@ function module_old_articles_info() {
 
 function module_old_articles( $mod_reference, $module_params ) {
 	global $user, $prefs, $tikilib, $smarty;
+	global $artlib; require_once 'lib/articles/artlib.php';
 	if (!isset($prefs['maxArticles']))
 		$prefs['maxArticles'] = 0;
 	
-	$ranking = $tikilib->list_articles($prefs['maxArticles'], $mod_reference["rows"], 'publishDate_desc', '', '', '', $user);
+	$ranking = $artlib->list_articles($prefs['maxArticles'], $mod_reference["rows"], 'publishDate_desc', '', '', '', $user);
 	$smarty->assign('modOldArticles', $ranking["data"]);
 }
