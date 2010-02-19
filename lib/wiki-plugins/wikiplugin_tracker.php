@@ -845,7 +845,6 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($item_info)) {
 					$smarty->assign_by_ref('item', $item_info);
 				}
-				print_r($item);
 				$status_input = $smarty->fetch('tracker_status_input.tpl');
 			}
 
