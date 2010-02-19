@@ -1295,7 +1295,7 @@ class CategLib extends ObjectLib
 	function getSqlJoin($categId, $objType, $sqlObj, &$fromSql, &$whereSql, &$bindVars, $type = '?') {
 		static $callno = 0;
 		$callno++;
-		$fromSql .= ",`tiki_objects` co$callno";
+		$fromSql .= " inner join `tiki_objects` co$callno";
 		$whereSql .= " AND co$callno.`type`=$type AND co$callno.`itemId`= $sqlObj ";
 		if( $type == '?' ) {
 			$bind = array($objType);
@@ -1306,19 +1306,19 @@ class CategLib extends ObjectLib
 			$categId['AND'] = $this->get_jailed( $categId['AND'] );
 			$i = 0;
 			foreach ($categId['AND'] as $c) {
-				$fromSql .= ", `tiki_category_objects` t{$callno}co$i ";
+				$fromSql .= " inner join `tiki_category_objects` t{$callno}co$i ";
 				$whereSql .= " AND t{$callno}co$i.`categId`= ?  AND co$callno.`objectId`=t{$callno}co$i.`catObjectId` ";
 				++$i;
 			}
 			$bind = array_merge($bind, $categId['AND']);
 		} elseif (is_array($categId)) {
 			$categId = $this->get_jailed( $categId );
-			$fromSql .= ", `tiki_category_objects` tco$callno ";
+			$fromSql .= " inner join `tiki_category_objects` tco$callno ";
 			$whereSql .= " AND co$callno.`objectId`=tco$callno.`catObjectId` ";
 			$whereSql .= "AND tco$callno.`categId` IN (".implode(',',array_fill(0,count($categId),'?')).')';
 			$bind = array_merge($bind, $categId);
 		} else {
-			$fromSql .= ", `tiki_category_objects` tco$callno ";
+			$fromSql .= " inner join `tiki_category_objects` tco$callno ";
 			$whereSql .= " AND co$callno.`objectId`=tco$callno.`catObjectId` ";
 			$whereSql .= " AND tco$callno.`categId`= ? ";
 			$bind[] = $categId;

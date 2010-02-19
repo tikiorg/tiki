@@ -822,7 +822,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 			$bindvars[] = $lang;
 		}
 		if ($mid)
-			$mid2 = " and 1 = 1";
+			$mid2 = " and 1 = 1 ";
 		else
 			$mid2 = " where 1 = 1 ";
 
