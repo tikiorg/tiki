@@ -638,6 +638,8 @@ function get_default_prefs() {
 		'article_paginate' => 'n',
 		'article_user_rating' => 'n',
 		'article_user_rating_options' => range( 1, 5 ),
+		'article_image_size_x' => '0',
+		'article_image_size_y' => '0',
 		'feature_cms_templates' => 'n',
 		'cms_bot_bar' => 'y',
 		'cms_left_column' => 'y',
