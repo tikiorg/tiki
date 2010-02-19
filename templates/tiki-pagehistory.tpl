@@ -276,10 +276,10 @@ $jq("#toggle_diffs a").click(function(){
 				{pagination_links cant=$history_cant offset=$smarty.request.history_offset offset_arg="history_offset" step=$maxRecords}{/pagination_links}
 			{/if}
 			<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if} onchange="this.form.submit();" />
-			<label for="paginate">Enable pagination</label>
+			<label for="paginate">{tr}Enable pagination{/tr}</label>
 			{if $paginate}
 				<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5" />
-				<label for="history_pagesize">Page size</label>
+				<label for="history_pagesize">{tr}per page{/tr}</label>
 			{/if}
 		</div>
 	</form>
