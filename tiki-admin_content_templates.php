@@ -6,11 +6,11 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-$access->check_feature(array('feature_wiki_templates','feature_cms_templates'));
+$access->check_feature(array('feature_wiki_templates','feature_cms_templates'), '', 'features', true);
 
 include_once ('lib/templates/templateslib.php');
 
-$access->check_permission('$tiki_p_edit_content_templates');
+$access->check_permission('tiki_p_edit_content_templates');
 
 if (!isset($_REQUEST["templateId"])) {
 	$_REQUEST["templateId"] = 0;
