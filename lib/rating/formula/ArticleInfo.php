@@ -16,7 +16,7 @@ class Tiki_Formula_Function_ArticleInfo extends Math_Formula_Function
 			$this->error( tra('Expecting three arguments for article-info.') );
 		}
 
-		$supported = array( 'rating', 'age-second', 'age-hour', 'age-day', 'age-week', 'age-month' );
+		$supported = array( 'rating', 'age-second', 'age-hour', 'age-day', 'age-week', 'age-month', 'view-count' );
 		if( ! in_array( $element[2], $supported ) ) {
 			$this->error( tra('Unsupported property. Supported properties are: ' . implode( ', ', $supported ) ) );
 		}
@@ -35,6 +35,8 @@ class Tiki_Formula_Function_ArticleInfo extends Math_Formula_Function
 
 			if( $property == 'rating' ) {
 				return $article[ 'rating' ];
+			} elseif( $property == 'view-count' ) {
+				return $article[ 'nbreads' ];
 			} elseif( substr( $property, 0, 4 ) == 'age-' ) {
 				$age = time() - $article[ 'publishDate' ];
 
