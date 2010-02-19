@@ -1390,7 +1390,6 @@ class FileGalLib extends TikiLib
 			$prefs['fgal_list_author'], $prefs['fgal_list_last_user'], $prefs['fgal_list_comment'], $prefs['fgal_list_files'], $prefs['fgal_list_hits'], 
 			$prefs['fgal_list_lastDownload'], $prefs['fgal_list_lockedby'], $prefs['fgal_list_backlinks']), 
 			$fgalIds));
-		print_r($fgalIds); echo $query;
 	}
 }
 $filegallib = new FileGalLib;
