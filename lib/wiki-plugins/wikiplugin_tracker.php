@@ -60,6 +60,12 @@ function wikiplugin_tracker_info()
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
+			'showstatus' => array(
+				'required' => false,
+				'name' => tra('Show Status'),
+				'description' => 'y|n',
+				'filter' => 'alpha'
+			),
 			'embedded' => array(
 				'required' => false,
 				'name' => tra('Embedded'),
@@ -831,12 +837,29 @@ function wikiplugin_tracker($data, $params)
 					}
 				}
 			}
+			if (!empty($showstatus) && $showstatus == 'y') {
+				$status_types = $trklib->status_types();
+				$smarty->assign_by_ref('status_types', $status_types);
+				$smarty->assign('form_status', 'status');
+				$smarty->assign_by_ref('tracker', $tracker);
+				if (!empty($item_info)) {
+					$smarty->assign_by_ref('item', $item_info);
+				}
+				print_r($item);
+				$status_input = $smarty->fetch('tracker_status_input.tpl');
+			}
 
 			// Loop on tracker fields and display form
 			if (empty($tpl) && empty($wiki)) {
 				$back.= '<table class="wikiplugin_tracker">';
+				if (!empty($showstatus) && $showstatus == 'y') {
+					$back .= '<tr><td>'.tra('Status').'</td><td>'.$status_input.'</td></tr>';
+				}
 			} else {
 				$back .= '<div class="wikiplugin_tracker">';
+				if (!empty($showstatus) && $showstatus == 'y') {
+					$smarty->assign_by_ref('f_status_input', $status_input);
+				}
 			}
 			$backLength0 = strlen($back);
 			foreach ($flds['data'] as $f) {
