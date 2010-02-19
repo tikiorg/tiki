@@ -1549,32 +1549,32 @@ class ToolbarSheet extends Toolbar {
 				break;
 			case 'addrow':
 				$label = tra('Add Row');
-				$icon = tra('pics/icons/shading.png');
+				$icon = tra('pics/icons/sheet_row_add.png');
 				$syntax = 'jS.addRow(true);';	// add row after current or at end if none selected
 				break;
 			case 'addrowmulti':
 				$label = tra('Add Multi-Rows');
-				$icon = tra('pics/icons/shading.png');
+				$icon = tra('pics/icons/sheet_row_add_multi.png');
 				$syntax = 'jS.addRowMulti();';
 				break;
 			case 'deleterow':
 				$label = tra('Delete Row');
-				$icon = tra('pics/icons/shading.png');
+				$icon = tra('pics/icons/sheet_row_delete.png');
 				$syntax = 'jS.deleteRow();';
 				break;
 			case 'addcolumn':
 				$label = tra('Add Column');
-				$icon = tra('pics/icons/shading.png');
+				$icon = tra('pics/icons/sheet_col_add.png');
 				$syntax = 'jS.addColumn(true);';	// add col after current or at end if none selected
 				break;
 			case 'deletecolumn':
 				$label = tra('Delete Column');
-				$icon = tra('pics/icons/shading.png');
+				$icon = tra('pics/icons/sheet_col_delete.png');
 				$syntax = 'jS.deleteColumn();';
 				break;
 			case 'addcolumnmulti':
 				$label = tra('Add Multi-Columns');
-				$icon = tra('pics/icons/shading.png');
+				$icon = tra('pics/icons/sheet_col_add_multi.png');
 				$syntax = 'jS.addColumnMulti();';
 				break;
 			case 'sheetgetrange':
