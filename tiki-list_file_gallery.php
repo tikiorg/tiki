@@ -5,7 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-print_r($_REQUEST);
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
 $access->check_feature('feature_file_galleries');
@@ -103,6 +102,15 @@ if ($tiki_p_admin_file_galleries == 'y') {
 			foreach(array_values($_REQUEST['subgal']) as $subgal) {
 				$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
 			}
+		}
+	}
+	if (isset($_REQUEST['defaultsel_x'])) {
+		check_ticket('fgal');
+		if (!empty($_REQUEST['file'])) {
+			$filegallib->setDefault(array_values($_REQUEST['file']));
+		}
+		if (!empty($_REQUEST['subgal'])) {
+			$filegallib->setDefault(array_values($_REQUEST['subgal']));
 		}
 	}
 }
