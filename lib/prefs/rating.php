@@ -11,6 +11,7 @@ function prefs_rating_list() {
 			'name' => tra('Advanced Rating'),
 			'description' => tra('Rating system allowing for options and calculation method to be configured.'),
 			'type' => 'flag',
+			'help' => 'Advanced+Rating',
 		),
 		'rating_recalculation' => array(
 			'name' => tra('Rating recalculation mode'),
