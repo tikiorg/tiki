@@ -41,7 +41,7 @@ function help_doclink($params) {
     
     if ($prefs['feature_help'] == 'y' and $url) {
     	if (!isset($desc)) $desc = tra('Help link');
-        $ret = '<a title="'.htmlentities($desc).'" href="'
+        $ret = '<a title="'.htmlentities($desc,ENT_COMPAT,"UTF-8").'" href="'
         .$prefs['helpurl'].$url.'" target="tikihelp" class="tikihelp">'
         .'<img src="pics/icons/help.png"'
         .' border="0" height="16" width="16" alt="'.tra('Help','',true).'" /></a>';
