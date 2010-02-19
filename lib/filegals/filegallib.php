@@ -1379,6 +1379,7 @@ class FileGalLib extends TikiLib
 		return $ret;
 	}
 	function setDefault($fgalIds) {
+		global $prefs;
 		$query = "update `tiki_file_galleries` set `sort_mode`=?, `maxRows`=?,
 			`show_id`=?, `show_icon`=?, `show_name`=?, `show_description`=?, `show_size`=?,
 			`show_created`=?, `show_modified`=?, `show_creator`=?, `show_author`=?, `show_last_user`=?,
