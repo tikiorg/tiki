@@ -1556,4 +1556,14 @@ function adjustThumbnails() {
 	}
 }
 
+function open_webdav(url) {
+	// Works only in IE
+	if (typeof ActiveXObject != 'undefined') {
+		EditDocumentButton = new ActiveXObject("SharePoint.OpenDocuments.1");
+		EditDocumentButton.EditDocument(url); 
+	} else {
+		alert('Sorry Works only in IE :(');
+	}
+}
+
 

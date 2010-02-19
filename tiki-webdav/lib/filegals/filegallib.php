@@ -68,10 +68,14 @@ class FileGalLib extends TikiLib
 			$savedir=$prefs['fgal_use_dir'];
 		}
 		if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
-			if (function_exists('md5_file')) {
-				$checksum = md5_file($savedir . $path);
+			if ( filesize ($savedir . $path) > 0 ) {
+				if (function_exists('md5_file')) {
+					$checksum = md5_file($savedir . $path);
+				} else {
+					$checksum = md5(implode('', file($savedir . $path)));
+				}
 			} else {
-				$checksum = md5(implode('', file($savedir . $path)));
+				$checksum = md5(time());
 			}
 		} else {
 			$checksum = md5($data);
@@ -85,14 +89,19 @@ class FileGalLib extends TikiLib
 				$fgal_query .= ' and `galleryId`=?';
 				$fgal_vars[] = $galleryId;
 			}
-			if ( $this->getOne($fgal_query, $fgal_vars) > 0 ) return false;
+			if ( $this->getOne($fgal_query, $fgal_vars) > 0 ) {
+				@file_put_contents('/tmp/tiki4log', "insert_file no duplicate hash=$checksum\n", FILE_APPEND );
+				return false;
+			}
 		}
 
 		$search_data = '';
 		if ($prefs['fgal_enable_auto_indexing'] != 'n') {
 			$search_data = $this->get_search_text_for_data($data,$path,$type, $galleryId);
-			if ($search_data === false)
+			if ($search_data === false) {
+				@file_put_contents('/tmp/tiki4log', "insert_file search_data\n", FILE_APPEND );
 				return false;
+			}
 		}
 		if ( empty($created) ) $created = $this->now;
 		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`hits`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`, `author`, `lockedby`)
@@ -536,7 +545,7 @@ class FileGalLib extends TikiLib
 		}
 
 		// User avatar full images are always using db and not file location (at the curent state of feature)
-		if ($prefs['user_store_file_gallery_picture'] == 'y' && $prefs["user_picture_gallery_id"] == $gal_info['galleryId']) {
+		if (isset($prefs['user_store_file_gallery_picture']) && $prefs['user_store_file_gallery_picture'] == 'y' && $prefs["user_picture_gallery_id"] == $gal_info['galleryId']) {
 			$userPictureGallery = true;			
 		} else {
 			$userPictureGallery = false;

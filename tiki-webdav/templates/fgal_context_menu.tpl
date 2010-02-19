@@ -24,6 +24,11 @@
             {/if}
 						</a>
         {/if}
+	  {if $prefs.feature_webdav eq 'y'}
+    	{assign var=virtual_path value=$files[changes].id|virtual_path:'filegal'}
+			<a style="behavior: url(#default#AnchorClick);" href="{$virtual_path}" folder="{$virtual_path}">{icon _id='tree_folder_open'}{tr}Open as WebFolder{/tr}</a>
+  	{/if}
+
 
 	{if $files[changes].perms.tiki_p_create_file_galleries eq 'y'}
 		{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon _ajax='n' removegal=$files[changes].id}{tr}Delete{/tr}{/self_link}
@@ -122,6 +127,11 @@
 				{/if}
 			{/if}
 		{/if}
+	{/if}
+
+	{if $prefs.feature_webdav eq 'y'}
+		{assign var=virtual_path value=$files[changes].fileId|virtual_path}
+		{self_link _icon='tree_folder_open' _menu_text=$menu_text _menu_icon=$menu_icon _script="javascript:open_webdav('$virtual_path')" _noauto='y' _ajax='n'}{tr}Open in WebDAV{/tr}{/self_link}
 	{/if}
 
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
