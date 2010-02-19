@@ -971,7 +971,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 		return $retval;
 	}
 
-	function get_article($articleId) {
+	function get_article($articleId, $checkPerms = true) {
 		global $user, $tiki_p_admin_cms, $prefs, $userlib;
 		$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
 		$query = "select `tiki_articles`.*,
@@ -1004,8 +1004,17 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 		} else {
 			return '';
 		}
-		if (!($tiki_p_admin_cms == 'y' || (($this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article') || ($this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_articles_read_heading'))) && (!$res['topicId'] || !$userlib->object_has_one_permission($res['topicId'], 'topic') || $this->user_has_perm_on_object($user, $res['topicId'], 'topic','tiki_p_topic_read'))))) {
-			return false;
+		if( $checkPerms ) {
+			$perms = Perms::get( 'article', $articleId );
+
+			$permsok = $perms->admin_cms || $perms->read_article || $perms->articles_read_heading;
+
+			// If not allowed to view article, check if allowed to view topic
+			$permsok = $permsok || ( $res['topicId'] && Perms::get( 'topic', $res['topicId'] )->read_topic );
+
+			if( ! $permsok ) {
+				return false;
+			}
 		}
 
 		if ($prefs['feature_score'] == 'y') {
