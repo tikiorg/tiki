@@ -44,7 +44,7 @@ if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_pe
 }
 if (!isset($_REQUEST['parse'])) {
 	$_REQUEST['parse'] = 'y';
-} else if ($_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
+} else if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
 if (typeof ajaxLoadingShow == "function") {
