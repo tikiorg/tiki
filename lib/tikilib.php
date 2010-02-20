@@ -119,6 +119,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function get_db_by_name( $name ) {
+		include_once ('tiki-setup.php');
 		if( $name == 'local' || empty($name) ) {
 			return TikiDb::get();
 		} else {
@@ -139,17 +140,20 @@ class TikiLib extends TikiDb_Bridge
 				$dbhost = strtok( $parsedsn, "/" );
 				$parsedsn = substr( $parsedsn, strlen($dbhost) + 1 );
 				$database = $parsedsn;
-
-				require_once ('lib/adodb/adodb.inc.php');
-				$dbsqlplugin = ADONewConnection($dbdriver);
-
-				if( $dbsqlplugin->NConnect( $dbhost, $dbuserid, $dbpassword, $database ) ) {
-					require_once 'lib/core/lib/TikiDb/Adodb.php';
-
-					$connectionMap[$name] = new TikiDb_AdoDb( $dbsqlplugin );
+				
+				$api_tiki = null;
+				require 'db/local.php';				
+				if (isset($api_tiki) &&  $api_tiki == 'adodb') {
+					require_once ('lib/adodb/adodb.inc.php');
+					$dbsqlplugin = ADONewConnection($dbdriver);
+					if( $dbsqlplugin->NConnect( $dbhost, $dbuserid, $dbpassword, $database ) ) {
+						require_once ('lib/core/lib/TikiDb/Adodb.php');
+						$connectionMap[$name] = new TikiDb_AdoDb( $dbsqlplugin );
+					}
+				} else {
+					$connectionMap[$name] = new PDO("$dbdriver:host=$dbhost;dbname=$database", $dbuserid, $dbpassword);
 				}
 			}
-
 			return $connectionMap[$name];
 		}
 	}
