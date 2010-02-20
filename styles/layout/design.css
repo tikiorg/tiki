@@ -455,6 +455,9 @@ td.form {
 	padding: 0.2em;
 }
 
+caption {
+	font-weight: bold;
+}
 /** Tabs **/
 
 .tabactive {
