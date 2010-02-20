@@ -272,7 +272,7 @@ function breadcrumb_getDescription($crumbs, $loc) {
             return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
         }
     } else if ( !($prefs['feature_wiki_description'] == 'n' && $info)) {
-        return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
+        return tra($crumbs[$len-1]->description);
     }
 }
 
