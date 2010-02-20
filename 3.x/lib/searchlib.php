@@ -59,6 +59,10 @@ class SearchLib extends TikiLib {
 	function _find($h, $words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n',$type='Tiki', $searchDate = 0) {
 		global $tiki_p_admin, $prefs, $userlib, $user, $categlib;
 		    
+		if (!is_int($searchDate) && !ctype_digit($searchDate)) {
+			exit("Error: searchDate not an integer");
+		}
+
 		if (!is_object($categlib)) {
 			require_once('lib/categories/categlib.php');
 		}
@@ -199,7 +203,7 @@ class SearchLib extends TikiLib {
 
 		$orderby = (isset($h['orderby']) ? $h['orderby'] : $h['hits']);
 
-		if ( is_int($searchDate+0) and $searchDate >0 and !empty($h['lastModif']) ) {
+		if ( $searchDate >0 and !empty($h['lastModif']) ) {
 			$sqlWhere .= ' AND '. $h['lastModif']. " >= unix_timestamp(date_sub(now(),interval ". $searchDate . " month)) ";
 		}
 
