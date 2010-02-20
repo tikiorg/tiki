@@ -40,6 +40,12 @@ if (isset($_REQUEST["articlecomprefs"])) {
   simple_set_value ("article_comments_default_ordering");
 }
 
+if (isset($_REQUEST["artprops"])) {
+	check_ticket('admin-inc-cms');
+	simple_set_value('article_image_size_x');
+	simple_set_value('article_image_size_y');
+}
+
 if (isset($_REQUEST['artlist'])) {
 	check_ticket('admin-inc-cms');
 	$pref_toggles = array(
