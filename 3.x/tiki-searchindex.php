@@ -7,6 +7,19 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$inputConfiguration = array(
+		array( 'staticKeyFilters' => array(
+				'date' => 'digits',
+				'maxRecords' => 'digits',
+				'highlight' => 'word',
+				'where' => 'word',
+				'find' => 'word',
+				'lang' => 'word',
+				'words' =>'word',
+				'boolean' =>'word',
+		)
+	)
+);
 require_once ('tiki-setup.php');
 
 require_once ('lib/search/searchlib.php'); 
