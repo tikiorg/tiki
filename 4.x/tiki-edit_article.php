@@ -15,7 +15,8 @@ include_once ('lib/articles/artlib.php');
 $smarty->assign('headtitle',tra('Edit article'));
 
 if ($prefs['feature_freetags'] == 'y') {
-	global $freetaglib;include_once('lib/freetag/freetaglib.php');
+	global $freetaglib;
+	include_once('lib/freetag/freetaglib.php');
 }
 
 if ($prefs['feature_articles'] != 'y') {
@@ -76,8 +77,8 @@ $smarty->assign('image_name', '');
 $smarty->assign('image_type', '');
 $smarty->assign('image_size', '');
 $smarty->assign('image_data', '');
-$smarty->assign('image_x', 0);
-$smarty->assign('image_y', 0);
+$smarty->assign('image_x', $prefs['article_image_size_x']);
+$smarty->assign('image_y', $prefs['article_image_size_y']);
 $smarty->assign('heading', '');
 $smarty->assign('body', '');
 $smarty->assign('author', '');
