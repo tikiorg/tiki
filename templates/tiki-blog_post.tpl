@@ -25,9 +25,11 @@
 
 {if $wysiwyg ne 'y'}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-  {tr}If you want to use images please save the post first and you will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor or use the image URL to include images using the WYSIWYG editor. {/tr}
+  {if $prefs.feature_filegals_manager == 'y'}{tr}Images should now be uploaded via the editor toolbar icon instead of the old and soon to be replaced "Upload image for this post" field.{/tr}{/if}
+  {if !$postId} {tr}Uploading images the old way to new posts require saving first, perhaps after setting a future Publish Date, and then reediting it to be able to add images.{/tr}{/if}
+  <hr />
   {if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}
-    <hr />{tr}Use ...page... to separate pages in a multi-page post{/tr}
+    {tr}Use ...page... to separate pages in a multi-page post{/tr}
   {/if}
 {/remarksbox}
 {/if}
