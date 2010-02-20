@@ -2476,12 +2476,12 @@ table.default thead td,	table.default tfoot td {
 	font-weight: bold;
 	text-align:	center;
 	background: #eee;
-	color: #D8D8D8;
+	color: #000;
 }
 
 table.default	td {
 	border: solid 1px #909090;
-	background: #eee;
+	background: #fff;
 }
 
 /**********   'advanced feature' divs   **********/

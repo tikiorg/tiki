@@ -2701,17 +2701,18 @@ div#ajaxLoading {
 .tab-menu li.tab-selected a {background: #f8f8ff}
 
 /***** TikiSheet Default Style *****/
-
 table.default thead td,
 table.default tfoot td {
 	font-weight: bold;
-	text-align:	center;
+	text-align: center;
 	background: #4a6a90;
-	color: #4a6a90}
+	color: white;
+}
 
 table.default td {
-	border: solid 1px #A9A9A9;
-	background: white}
+	border: solid 1px #a9a9a9;
+	background: white;
+}
 
 .highlight_word_0{
 	color: #ffff66;
