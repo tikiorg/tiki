@@ -20,6 +20,7 @@ function prefs_site_list() {
 			'name' => tra('Theme'),
 			'type' => 'list',
 			'help' => 'Themes',
+			'description' => tra('Style of the site, sometimes called theme or CSS'),
 			'options' => $styles,
 		),
 		'site_closed' => array(
