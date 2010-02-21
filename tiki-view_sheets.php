@@ -124,6 +124,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 }
 if ($prefs['feature_jquery_sheet'] == 'y') {
+		if ($prefs['feature_contribution'] == 'y') {
+			$contributionItemId = $_REQUEST['sheetId'];
+			include_once ('contribution.php');
+		}
 	// need to be in non-parsed mode to edit the sheet
 	if ($grid->parseValues == 'y' && $_REQUEST['parse'] == 'y') {
 		$smarty->assign('editReload', true);
