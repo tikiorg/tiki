@@ -18,7 +18,6 @@ function prefs_smarty_list() {
 			'warning' => tra('You should leave this on unless you know what you are doing.'),
 			'type' => 'flag',
 			'perspective' => false,
-			'help' => tra(''),
 		),
 	);
 }

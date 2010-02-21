@@ -55,7 +55,7 @@ function prefs_freetags_list() {
 			'type' => 'flag',
 		),
 		'freetags_3d_autoload' => array(
-			'name' => tra(''),
+			'name' => tra('3D autoload'),
 			'type' => 'flag',
 		),
 		'freetags_3d_width' => array(
