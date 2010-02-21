@@ -48,6 +48,7 @@ if (isset($_REQUEST['new_prefs'])) {
 }
 // Get list of time zones
 $smarty->assign('timezones', TikiDate::getTimeZoneList());
+$smarty->assign('now', $tikilib->now);
 
 if (!empty($_REQUEST['testMail'])) {
 	include_once('lib/webmail/tikimaillib.php');

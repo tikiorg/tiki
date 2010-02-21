@@ -17,7 +17,7 @@
 				<legend>{tr}Release Check{/tr}</legend>
 				<div class="adminoptionbox">{tr}Tiki version:{/tr} 
 					<strong>
-						{if $lastup}
+						{if !empty($lastup)}
 							{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
 								{if $svnrev}
 									- REV {$svnrev}
