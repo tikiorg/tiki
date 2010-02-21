@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-global $headerlib, $ajaxlib;
+global $headerlib, $ajaxlib, $access;
 require_once ('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
