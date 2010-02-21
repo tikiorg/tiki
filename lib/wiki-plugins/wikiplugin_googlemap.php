@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 function wikiplugin_googlemap_help() {
-	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user|item, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14, setdefaultxyz=1|0, locateitemtype=wiki page|..., locateitemid=xxx, hideifnone=0|1, togglehidden=0|1, starthidden=0|1, autozoom=14)}{GOOGLEMAP}~/np~";
+	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user|item|objectlist, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14, setdefaultxyz=1|0, locateitemtype=wiki page|..., locateitemid=xxx, hideifnone=0|1, togglehidden=0|1, starthidden=0|1, autozoom=14)}{GOOGLEMAP}~/np~";
 }
 
 function wikiplugin_googlemap_info() {
@@ -270,7 +270,7 @@ function wikiplugin_googlemap($data, $params) {
 		include_once ('lib/ajax/ajaxlib.php');
 	}
 	
-	if ($locateitemtype == 'user') {
+	if ($type != 'objectlist' && $locateitemtype == 'user') {
 		$smarty->assign('gmapitemtype', 'user');
 		global $userlib, $user, $tiki_p_admin;
 		if (!$locateitemid) {
@@ -289,7 +289,7 @@ function wikiplugin_googlemap($data, $params) {
 		if ($type == 'locator') {
 			$ajaxlib->registerFunction('saveGmapUser');
 		}
-	} elseif ($locateitemtype && $locateitemid) {
+	} elseif ($type != 'objectlist' && $locateitemtype && $locateitemid) {
 		global $objectlib, $attributelib, $user;
 		include_once('lib/objectlib.php');
 		include_once('lib/attributes/attributelib.php'); 
@@ -324,6 +324,35 @@ function wikiplugin_googlemap($data, $params) {
 			$ajaxlib->registerFunction('saveGmapItem');
 		}			
 	}	
+	
+	if ($type == 'objectlist') {
+		// An global array of objects with type, id, title, href is read  
+		// This assumes the objects have already been filtered for permissions
+		global $gmapobjectarray;
+		foreach ($gmapobjectarray as $obj) {
+			global $attributelib;
+			include_once('lib/attributes/attributelib.php'); 
+			$attributes = $attributelib->get_attributes( $obj["type"], $obj["id"] );
+			if ( isset($attributes['tiki.geo.lon']) ) {
+				$lon = $attributes['tiki.geo.lon'];
+			} else {
+				$lon = '';
+			}
+			if ( isset($attributes['tiki.geo.lat']) ) {
+				$lat = $attributes['tiki.geo.lat'];
+			} else {
+				$lat = '';
+			}
+			$popup = '<a href="' . $obj['href']  . '">' . htmlspecialchars($obj['title']) . '</a>';
+			if ($lat && $lon) { 
+				$markers[] = array($lat,$lon,$popup);
+			}
+		}
+		// free up memory
+		if (isset($gmapobjectarray)) {
+			unset($gmapobjectarray);	
+		}
+	}
 	
 	$smarty->assign('gmapmarkers', $markers);
 	$smarty->assign('pointx', $pointx);
