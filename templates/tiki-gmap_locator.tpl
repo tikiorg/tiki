@@ -1,10 +1,17 @@
 {if $prefs.feature_gmap eq 'y'}
 
+{if $prefs.feature_ajax eq 'y'}
+{* Ajax version using new plugin *}
+{title help="gmap"}{tr}Google Map Locator{/tr} - {$userwatch}{/title}
+{wikiplugin _name="googlemap" type="locator" setdefaultxyz="y" locateitemtype="user" locateitemid="$userwatch"}{/wikiplugin}
+
+{else}
+{* Old non-ajax version which can be removed once Ajax becomes always on *}
 {title help="gmap"}{tr}Google Map Locator{/tr}{/title}
 {if $watch}({$watch}){/if}
 
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}"></script>
-<div clas="navbar">
+<div class="navbar">
 {button href="$backurl" _text="$backlink"}
 </div>
 
@@ -100,7 +107,8 @@ function showAddress(address) {literal}{{/literal}
 
 window.onload=load;
 {/jq}
+
+{/if} {*end if ajax *}
 {else}
 Google Maps is not enabled.
 {/if}
-
