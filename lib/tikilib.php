@@ -151,7 +151,9 @@ class TikiLib extends TikiDb_Bridge
 						$connectionMap[$name] = new TikiDb_AdoDb( $dbsqlplugin );
 					}
 				} else {
-					$connectionMap[$name] = new PDO("$dbdriver:host=$dbhost;dbname=$database", $dbuserid, $dbpassword);
+					require_once ('lib/core/lib/TikiDb/Pdo.php');
+					$dbsqlplugin = new PDO("$dbdriver:host=$dbhost;dbname=$database", $dbuserid, $dbpassword);
+					$connectionMap[$name] = new TikiDb_Pdo( $dbsqlplugin );
 				}
 			}
 			return $connectionMap[$name];

@@ -30,7 +30,6 @@ function wikiplugin_sql_info() {
 function wikiplugin_sql($data, $params) {
 
 	global $tikilib;
-	require 'db/local.php';	
 	extract ($params,EXTR_SKIP);
 
 	if (!isset($db)) {
@@ -74,23 +73,17 @@ function wikiplugin_sql($data, $params) {
 	
 	$first = true;
 	$class = 'even';
-	if (isset($api_tiki) && $api_tiki == 'adodb') {
-		$fetch = 'fetchRow';
-	} else {
-		$fetch = 'fetch';
-	}
-	while ($result && $res = $result->$fetch()) {
-
+	while ($result && $res = $result->fetchRow() ) {
 		if ($first) {
-			$ret .= "<div align='center'><table class='sortable'><tr>";
+			$ret .= "<table class='normal'><thead><tr>";
 
 			$first = false;
 
 			foreach (array_keys($res)as $col) {
-				$ret .= "<td class='heading'>$col</td>";
+				$ret .= "<th>$col</th>";
 			}
 
-			$ret .= "</tr>";
+			$ret .= "</tr></thead>";
 		}
 
 		$ret .= "<tr>";
@@ -108,7 +101,7 @@ function wikiplugin_sql($data, $params) {
 	}
 
 	if ($ret) {
-		$ret .= "</table></div>";
+		$ret .= "</table>";
 	}
 	if ($dbmsg) {
 		$ret .= $dbmsg;
