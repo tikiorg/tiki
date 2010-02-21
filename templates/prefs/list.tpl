@@ -6,10 +6,10 @@
 		{/foreach}
 	</select>
 	{include file=prefs/shared-flags.tpl}
-	{if !empty($p.shorthint)}
+	{if $p.shorthint}
 		<em>{$p.shorthint|escape}</em>
 	{/if}
-	{if !empty($p.hint)}
+	{if $p.hint}
 		<br/><em>{$p.hint|escape}</em>
 	{/if}
 	{include file=prefs/shared-dependencies.tpl}

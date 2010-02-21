@@ -1,5 +1,5 @@
 <input type="hidden" name="lm_preference[]" value="{$p.preference|escape}" />
-{if !empty($p.dependencies)}
+{if $p.dependencies}
 	{foreach from=$p.dependencies item=dep}
 		{if $dep.met}
 			<div class="pref_dependency">{tr}Requires{/tr} <a href="{$dep.link|escape}">{$dep.label|escape}</a> (OK)</div>
