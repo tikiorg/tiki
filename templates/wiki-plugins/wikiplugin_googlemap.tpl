@@ -1,15 +1,20 @@
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$gmapkey}"></script>
 
-<div class="wikitext">
+{if $gmaptoggle}
+<div class="tellafriend">
+<a href="#" onclick="toggle('gmap{$gmapname|escape}container');return false;">{tr}Toggle location map{/tr}</a>
+</div>
+{/if}
+<div class="wikitext" id="gmap{$gmapname|escape}container" style="display: {if $gmaphidden}none{else}block{/if}">
 
 {if $gmaptype eq 'locator'}
 <form onsubmit="showAddress(this.form.address.value);return false;">
-<input type="text" size="60" name="address" value="{tr}enter address{/tr}" />
+<input type="text" size="{$gmapaddresslength}" name="address" value="{tr}enter address{/tr}" />
 <input type="submit" name="cancel" value="{tr}Find address{/tr}" onclick="showAddress(this.form.address.value);return false;" /><br />
 </form>
 <form>
-{tr}Lon.{/tr}: <input type="text" name="point[x]" value="{$pointx}" id="pointx" size="16" />
-{tr}Lat.{/tr}: <input type="text" name="point[y]" value="{$pointy}" id="pointy" size="16" />
+{tr}Lon.{/tr}: <input type="text" name="point[x]" value="{$pointx}" id="pointx" size="6" />
+{tr}Lat.{/tr}: <input type="text" name="point[y]" value="{$pointy}" id="pointy" size="6" />
 {tr}Zoom{/tr}: <input type="text" name="point[z]" value="{$pointz}" id="pointz" size="2" />
 </form>
 {/if}
@@ -21,6 +26,11 @@
 {if $gmaptype eq 'locator' && $gmapitemtype eq 'user'}
 <form>
 <input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapUser();return false;" value="{tr}Save as user location{/tr}" />
+</form>
+{/if}
+{if $gmaptype eq 'locator' && $gmapitemtype neq 'user'}
+<form>
+<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapItem();return false;" value="{tr}Save as object location{/tr}" />
 </form>
 {/if}
 <span id="gmap{$gmapname|escape}_ajax_msg">&nbsp;</span>
@@ -38,7 +48,12 @@ function showAddress(address) {literal}{{/literal}
           document.getElementById('pointx').value = point.x;
           document.getElementById('pointy').value = point.y;
           document.getElementById('pointz').value = gmap{$gmapname|escape}map.getZoom();
-          gmap{$gmapname|escape}map.setCenter(point,14);
+          {if isset($gmapautozoom)}
+          gmap{$gmapname|escape}map.setCenter(point,{$gmapautozoom});
+          {else}
+          gmap{$gmapname|escape}map.setCenter(point);
+          {/if}
+          gmap{$gmapname|escape}map.clearOverlays();
           var marker = new GMarker(point);
           gmap{$gmapname|escape}map.addOverlay(marker);
           marker.openInfoWindowHtml(address);
@@ -56,6 +71,11 @@ function saveGmapDefaultxyz() {literal}{{/literal}
 function saveGmapUser() {literal}{{/literal}
 	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
 	xajax_saveGmapUser('gmap{$gmapname|escape}_ajax_msg', document.getElementById('pointx').value, document.getElementById('pointy').value, document.getElementById('pointz').value, '{$gmapitem}');
+{literal}}{/literal}
+
+function saveGmapItem() {literal}{{/literal}
+	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
+	xajax_saveGmapItem('gmap{$gmapname|escape}_ajax_msg', document.getElementById('pointx').value, document.getElementById('pointy').value, document.getElementById('pointz').value, '{$gmapitemtype}', '{$gmapitem}');
 {literal}}{/literal}
 
 {/jq}

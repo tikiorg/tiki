@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 function wikiplugin_googlemap_help() {
-	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14, setdefaultxyz=1|0, locateitemtype=wiki page|..., locateitemid=xxx)}{GOOGLEMAP}~/np~";
+	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user|item, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14, setdefaultxyz=1|0, locateitemtype=wiki page|..., locateitemid=xxx, hideifnone=0|1, togglehidden=0|1, starthidden=0|1, autozoom=14)}{GOOGLEMAP}~/np~";
 }
 
 function wikiplugin_googlemap_info() {
@@ -93,7 +93,37 @@ function wikiplugin_googlemap_info() {
 				'required' => false,
 				'name' => tra('ID of item being geotagged'),
 				'description' => tra('Name of page, blog ID, etc..., will attempt to use current object if not specified'),
-			),			
+			),		
+			'hideifnone' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Do not show map if there is no '),
+				'description' => tra('1|0, allow user to set current map view as default view for himself only'),
+			),
+			'hideifnone' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Hide map if there are no markers to be shown'),
+				'description' => tra('1|0'),
+			),
+			'togglehidden' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Ability to toggle visibility'),
+				'description' => tra('1|0'),
+			),
+			'starthidden' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Start hidden'),
+				'description' => tra('1|0'),
+			),		
+			'autozoom' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Auto zoom to this level on address find'),
+				'description' => tra('An integer between 0 and 19'),
+			),		
 		),
 	);
 }
@@ -105,7 +135,8 @@ function wikiplugin_googlemap($data, $params) {
 	$access->check_feature('feature_gmap');
 	
 	$type = $params["type"];
-	$smarty->assign('gmaptype', $type);
+	$smarty->assign_by_ref('gmaptype', $type); // by ref as may be overridden later
+
 	
 	if (isset($params["mode"]) && $params["mode"]) {
 		$smarty->assign( 'gmapmode', $params["mode"] );
@@ -128,19 +159,19 @@ function wikiplugin_googlemap($data, $params) {
 	}
 	$smarty->assign( 'gmapname',  $gmapname);
 	
-	if (isset($params["defaultx"]) && $params["defaultx"]) {
+	if (isset($params["defaultx"])) {
 		$smarty->assign( 'gmap_defaultx', $params["defaultx"] );
 	} else {
 		$smarty->assign( 'gmap_defaultx', $prefs["gmap_defaultx"] );
 	}
 	
-	if (isset($params["defaulty"]) && $params["defaulty"]) {
+	if (isset($params["defaulty"])) {
 		$smarty->assign( 'gmap_defaulty', $params["defaulty"] );
 	} else {
 		$smarty->assign( 'gmap_defaulty', $prefs["gmap_defaulty"] );
 	}
 	
-	if (isset($params["defaultz"]) && $params["defaultz"]) {
+	if (isset($params["defaultz"])) {
 		$smarty->assign( 'gmap_defaultz', $params["defaultz"] );
 	} else {
 		$smarty->assign( 'gmap_defaultz', $prefs["gmap_defaultz"] );
@@ -157,10 +188,12 @@ function wikiplugin_googlemap($data, $params) {
 	}
 	
 	if (isset($params["width"]) && $params["width"]) {
-		$smarty->assign( 'gmapwidth', $params["width"] );
+		$width = $params["width"];
 	} else {
-		$smarty->assign( 'gmapwidth', 500 );
+		$width = 500;
 	}
+	$smarty->assign( 'gmapwidth', $width );
+	$smarty->assign( 'gmapaddresslength', floor($width/14));
 	
 	if (isset($params["height"]) && $params["height"]) {
 		$smarty->assign( 'gmapheight', $params["height"] );
@@ -185,6 +218,23 @@ function wikiplugin_googlemap($data, $params) {
 		$locateitemid = '';
 	}
 	
+	if (isset($params["togglehidden"]) && $params["togglehidden"]) {
+		$smarty->assign( 'gmaptoggle', 1 );
+	} else {
+		$smarty->assign( 'gmaptoggle', 0 );
+	}	
+	if (isset($params["hideifnone"]) && $params["hideifnone"]) {
+		$hideifnone = true;
+	} else {
+		$hideifnone = false;
+	}
+	if (isset($params["starthidden"]) && $params["starthidden"]) {
+		$smarty->assign( 'gmaphidden', 1 );
+	}
+	if (isset($params["autozoom"])) {
+		$smarty->assign( 'gmapautozoom', $params["autozoom"] );
+	}
+
 	// defaults for these could perhaps be specified as params (but they might be overridden below)
 	$pointx = '';
 	$pointy = '';
@@ -212,32 +262,77 @@ function wikiplugin_googlemap($data, $params) {
 				$markers[] = array($res['lat'],$res['lon'],addslashes($image).'&nbsp;'.$nameShow.'<br />Lat: '.$res['lon'].'&deg;<br /> Long: '.$res['lat'].'&deg;');
 			}
 		}
-		
-	} elseif ($type == 'locator') {
+	}
+	
+	if ($type == 'locator') {
 		$access->check_feature('feature_ajax');
 		global $ajaxlib;
 		include_once ('lib/ajax/ajaxlib.php');
-		if ($locateitemtype == 'user') {
-			$smarty->assign('gmapitemtype', 'user');
-			global $userlib, $user;
-			if (!$locateitemid) {
-				$locateitemid = $user;
-			}
-			if ($locateitemid != $user && !$userlib->user_exists($locateitemid)) {
-				return tra("No such user");
-			}
-			$smarty->assign('gmapitem', $locateitemid);
-			$pointx = $tikilib->get_user_preference( $locateitemid, 'lon', '' );
-			$pointy = $tikilib->get_user_preference( $locateitemid, 'lat', '' );
-			$pointz = $tikilib->get_user_preference( $locateitemid, 'zoom', '' );		
+	}
+	
+	if ($locateitemtype == 'user') {
+		$smarty->assign('gmapitemtype', 'user');
+		global $userlib, $user, $tiki_p_admin;
+		if (!$locateitemid) {
+			$locateitemid = $user;
+		}
+		if ($locateitemid != $user && !$userlib->user_exists($locateitemid)) {
+			return tra("No such user");
+		}
+		if ($locateitemid != $user && $tiki_p_admin != 'y' && $tikilib->get_user_preference($locateitemid, 'user_information') == 'private') {
+			return tra("The user has chosen to make his information private");
+		}
+		$smarty->assign('gmapitem', $locateitemid);
+		$pointx = $tikilib->get_user_preference( $locateitemid, 'lon', '' );
+		$pointy = $tikilib->get_user_preference( $locateitemid, 'lat', '' );
+		$pointz = $tikilib->get_user_preference( $locateitemid, 'zoom', '' );
+		if ($type == 'locator') {
 			$ajaxlib->registerFunction('saveGmapUser');
 		}
-	}
+	} elseif ($locateitemtype && $locateitemid) {
+		global $objectlib, $attributelib, $user;
+		include_once('lib/objectlib.php');
+		include_once('lib/attributes/attributelib.php'); 
+		$objectId = $objectlib->get_object_id($locateitemtype, $locateitemid);
+		if (!$objectId) {
+			return tra("No such object");
+		}
+		$viewPermNeeded = $objectlib->get_needed_perm($locateitemtype, 'view');
+		if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $viewPermNeeded)) {
+			return '';
+		}
+		if ($type == 'locator') {
+			$editPermNeeded = $objectlib->get_needed_perm($locateitemtype, 'edit');
+			if (!$tikilib->user_has_perm_on_object($user, $locateitemid, $locateitemtype, $editPermNeeded)) {
+				// if no perm to edit, even if type is set to locator, locator is disabled
+				$type = 'item';
+			}
+		}
+		$smarty->assign('gmapitem', $locateitemid);
+		$smarty->assign('gmapitemtype', $locateitemtype);
+		$attributes = $attributelib->get_attributes( $locateitemtype, $locateitemid );
+		if ( isset($attributes['tiki.geo.lon']) ) {
+			$pointx = $attributes['tiki.geo.lon'];
+		}
+		if ( isset($attributes['tiki.geo.lat']) ) {
+			$pointy = $attributes['tiki.geo.lat'];
+		}
+		if ( isset($attributes['tiki.geo.google.zoom']) ) {
+			$pointz = $attributes['tiki.geo.google.zoom'];
+		}
+		if ($type == 'locator') {
+			$ajaxlib->registerFunction('saveGmapItem');
+		}			
+	}	
 	
 	$smarty->assign('gmapmarkers', $markers);
 	$smarty->assign('pointx', $pointx);
 	$smarty->assign('pointy', $pointy);
 	$smarty->assign('pointz', $pointz);	
+	
+	if (!$markers && !$pointx && !$pointy && $hideifnone) {
+		$smarty->assign('gmaphidden', 1);
+	}
 			
 	$ret = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_googlemap.tpl') . '~/np~';
 	return $ret;
@@ -280,5 +375,31 @@ function saveGmapUser($feedback, $pointx, $pointy, $pointz, $u) {
 	$tikilib->set_user_preference($u, 'lat', $pointy);
 	$tikilib->set_user_preference($u, 'zoom', $pointz);	
 	$objResponse->assign($feedback, "innerHTML", tra("User location saved for ") . $u);
+	return $objResponse;
+}
+
+function saveGmapItem($feedback, $pointx, $pointy, $pointz, $type, $itemId) {
+	global $tikilib, $ajaxlib, $user, $objectlib, $attributelib;
+	$objResponse = new xajaxResponse();
+	include_once('lib/objectlib.php');
+	include_once('lib/attributes/attributelib.php'); 
+	$editPermNeeded = $objectlib->get_needed_perm($type, 'edit');
+	if (!$tikilib->user_has_perm_on_object($user, $itemid, $type, $editPermNeeded)) {
+		$objResponse->assign($feedback, "innerHTML", tra("You cannot edit this object or no such object"));
+		return $objResponse;
+	}
+	if (!is_numeric($pointx) || !is_numeric($pointy) || !is_numeric($pointz) ||
+		 !($pointx > -180 && $pointx < 180 && $pointy > -180 && $pointy < 180 && $pointz >= 0 && $pointz < 20) ) {
+		$objResponse->assign($feedback, "innerHTML", tra("Please select a point to set both Lon. and Lat."));
+		return $objResponse;		
+	}
+	$res = $attributelib->set_attribute($type, $itemId, 'tiki.geo.lon', $pointx);
+	$res = $attributelib->set_attribute($type, $itemId, 'tiki.geo.lat', $pointy);
+	$res = $attributelib->set_attribute($type, $itemId, 'tiki.geo.google.zoom', $pointz);
+	if ($res) {
+		$objResponse->assign($feedback, "innerHTML", tra("Location saved for object"));
+	} else {
+		$objResponse->assign($feedback, "innerHTML", tra("Error saving location"));
+	}
 	return $objResponse;
 }
