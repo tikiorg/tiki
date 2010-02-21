@@ -176,7 +176,13 @@ window.showFeedback = function(message, delay) {
 	$fbsp = $jq("#feedback span");
 	$fbsp.html(message).show();
 	window.setTimeout( function () { $fbsp.fadeOut("slow", function () { $fbsp.html("&nbsp;"); }); }, delay);
-}
+};
+
+window.setEditable = function(isEditable) {
+	jS.s.editable = false;
+	$jq("#save_button").hide();
+	$jq("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
+};
 ');
 	}
 }
