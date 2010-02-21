@@ -1822,13 +1822,13 @@ class UsersLib extends TikiLib
 		return $ret;
 	}
 
-	function get_group_users($group, $offset = 0, $max=-1) {
+	function get_group_users($group, $offset = 0, $max=-1, $what='login') {
 		global $prefs;
-		$query = "select `login` from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=?";
+		$query = "select uu.`$what` from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=?";
 		$result = $this->query($query,$group, $max, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret[] = $res["login"];
+			$ret[] = $res[$what];
 		}
 		return $ret;
 	}
@@ -2523,6 +2523,15 @@ class UsersLib extends TikiLib
 	function get_user_email($user) {
 		global $prefs;
 		return ( $prefs['login_is_email'] == 'y' && $user != 'admin' ) ? $user : $this->getOne("select `email` from `users_users` where binary `login`=?", array($user));
+	}
+	function get_userId_what($userIds, $what='email') {
+		$query = "select `$what` from `users_users` where `userId` in (".implode(',',array_fill(0, count($userIds),'?')).')';
+		$result = $this->query($query, $userIds);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res[$what];
+		}
+		return $ret;
 	}
 
 	/**
