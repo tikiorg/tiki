@@ -28,7 +28,7 @@
 <tr><td class="formcolor">{tr}Header Rows{/tr}:</td><td class="formcolor"><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Footer Rows{/tr}:</td><td class="formcolor"><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
 {include file=categorize.tpl}
-{if $tiki_p_admin eq 'y'}
+{if $tiki_p_admin eq 'y' or $tiki_p_admin_sheet eq 'y'}
 <tr><td class="formcolor">{tr}Creator{/tr}:</td><td class="formcolor">
 		<select name="creator">
 		<option value=""></option>
