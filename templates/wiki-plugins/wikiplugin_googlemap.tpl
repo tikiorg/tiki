@@ -13,9 +13,19 @@
 {tr}Zoom{/tr}: <input type="text" name="point[z]" value="{$pointz}" id="pointz" size="2" />
 </form>
 {/if}
+{if $gmap_defaultset && $user}
+<form>
+<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapDefaultxyz();return false;" value="{tr}Save current map view as user default{/tr}" />
+</form>
+{/if}
+{if $gmaptype eq 'locator' && $gmapitemtype eq 'user'}
+<form>
+<input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapUser();return false;" value="{tr}Save as user location{/tr}" />
+</form>
+{/if}
+<span id="gmap{$gmapname|escape}_ajax_msg">&nbsp;</span>
 <div id="gmap{$gmapname|escape}" style="width: {$gmapwidth|escape}px; height: {$gmapheight|escape}px;{if $gmapframeborder}border: 1px solid #000;{/if}"></div>
 </div>
-
 {jq notonready=true}
 function showAddress(address) {literal}{{/literal}
   if (geocoder) {literal}{{/literal}
@@ -37,6 +47,17 @@ function showAddress(address) {literal}{{/literal}
     );
   {literal}}{/literal}
 {literal}}{/literal}
+
+function saveGmapDefaultxyz() {literal}{{/literal}
+	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
+	xajax_saveGmapDefaultxyz('gmap{$gmapname|escape}_ajax_msg', gmap{$gmapname|escape}map.getCenter().x, gmap{$gmapname|escape}map.getCenter().y, gmap{$gmapname|escape}map.getZoom());
+{literal}}{/literal}
+
+function saveGmapUser() {literal}{{/literal}
+	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
+	xajax_saveGmapUser('gmap{$gmapname|escape}_ajax_msg', document.getElementById('pointx').value, document.getElementById('pointy').value, document.getElementById('pointz').value, '{$gmapitem}');
+{literal}}{/literal}
+
 {/jq}
 
 {jq}
@@ -71,6 +92,7 @@ function loadgmap() {literal}{{/literal}
     {literal}} else {{/literal}
       document.getElementById('pointx').value = point.x;
       document.getElementById('pointy').value = point.y;
+      document.getElementById('pointz').value = gmap{$gmapname|escape}map.getZoom();
       gmap{$gmapname|escape}map.clearOverlays();
       gmap{$gmapname|escape}map.addOverlay(new GMarker(point));
     {literal}}{/literal}

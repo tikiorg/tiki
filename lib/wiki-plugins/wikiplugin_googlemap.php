@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 function wikiplugin_googlemap_help() {
-	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14)}{GOOGLEMAP}~/np~";
+	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14, setdefaultxyz=1|0, locateitemtype=wiki page|..., locateitemid=xxx)}{GOOGLEMAP}~/np~";
 }
 
 function wikiplugin_googlemap_info() {
@@ -76,6 +76,24 @@ function wikiplugin_googlemap_info() {
 				'name' => tra('Default zoom level to view map'),
 				'description' => tra('An integer between 0 and 19'),
 			),
+			'setdefaultxyz' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Allow user to set map view as user default'),
+				'description' => tra('1|0, allow user to set current map view as default view for himself only'),
+			),
+			'locateitemtype' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Type of item being geotagged'),
+				'description' => tra('user, wiki page, blog, etc..., will attempt to use current object if not specified'),
+			),
+			'locateitemid' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('ID of item being geotagged'),
+				'description' => tra('Name of page, blog ID, etc..., will attempt to use current object if not specified'),
+			),			
 		),
 	);
 }
@@ -104,10 +122,11 @@ function wikiplugin_googlemap($data, $params) {
 	}
 	
 	if (isset($params["name"]) && $params["name"]) {
-		$smarty->assign( 'gmapname', str_replace(' ', '', $params["name"]) );
+		$gmapname = str_replace(' ', '', $params["name"]);
 	} else {
-		$smarty->assign( 'gmapname', 'default' );
+		$gmapname = 'default';
 	}
+	$smarty->assign( 'gmapname',  $gmapname);
 	
 	if (isset($params["defaultx"]) && $params["defaultx"]) {
 		$smarty->assign( 'gmap_defaultx', $params["defaultx"] );
@@ -127,6 +146,16 @@ function wikiplugin_googlemap($data, $params) {
 		$smarty->assign( 'gmap_defaultz', $prefs["gmap_defaultz"] );
 	}
 	
+	if (isset($params["setdefaultxyz"]) && $params["setdefaultxyz"]) {
+		$access->check_feature('feature_ajax');
+		$smarty->assign( 'gmap_defaultset', true) ;
+		global $ajaxlib;
+		include_once ('lib/ajax/ajaxlib.php');
+		$ajaxlib->registerFunction('saveGmapDefaultxyz');
+	} else {
+		$smarty->assign( 'gmap_defaultset', false) ;
+	}
+	
 	if (isset($params["width"]) && $params["width"]) {
 		$smarty->assign( 'gmapwidth', $params["width"] );
 	} else {
@@ -144,6 +173,18 @@ function wikiplugin_googlemap($data, $params) {
 	} else {
 		$smarty->assign( 'gmapframeborder', 0 );
 	}
+	
+	if (isset($params["locateitemtype"]) && $params["locateitemtype"]) {
+		$locateitemtype = $params["locateitemtype"];
+	} else {
+		$locateitemtype = '';
+	}
+	if (isset($params["locateitemid"]) && $params["locateitemid"]) {
+		$locateitemid = $params["locateitemid"];
+	} else {
+		$locateitemid = '';
+	}
+	
 	
 	if ($type == 'user') {
 		$query = "SELECT `login`, `avatarType`, `avatarLibName`, `userId`, p1.`value` as lon, p2.`value` as lat FROM `users_users` as u ";
@@ -169,11 +210,61 @@ function wikiplugin_googlemap($data, $params) {
 
 		$smarty->assign('users',$out);
 	} elseif ($type == 'locator') {
-	
-	
+		$access->check_feature('feature_ajax');
+		global $ajaxlib;
+		include_once ('lib/ajax/ajaxlib.php');
+		if ($locateitemtype == 'user') {
+			$smarty->assign('gmapitemtype', 'user');
+			global $userlib, $user, $tiki_p_admin_users;
+			if ($locateitemid && $tiki_p_admin_users == 'y' && $locateitemid != $user && $userlib->user_exists($locateitemid)) {
+				$smarty->assign('gmapitem', $locateitemid);
+			} else {
+				$smarty->assign('gmapitem', $user);
+			}
+			$ajaxlib->registerFunction('saveGmapUser');
+		}
 	}
 	
 	$ret = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_googlemap.tpl') . '~/np~';
 	return $ret;
 
+}
+
+function saveGmapDefaultxyz($feedback, $pointx, $pointy, $pointz) {
+	global $tikilib, $ajaxlib, $user;
+	$objResponse = new xajaxResponse();
+	if (!$user) {
+		$objResponse->assign($feedback, "innerHTML", tra("Not logged in"));
+		return $objResponse;
+	}
+	if (!is_numeric($pointx) || !is_numeric($pointy) || !is_numeric($pointz) ||
+		 !($pointx > -180 && $pointx < 180 && $pointy > -180 && $pointy < 180 && $pointz >= 0 && $pointz < 20) ) {
+		$objResponse->assign($feedback, "innerHTML", tra("Error: Invalid Lon. and Lat. values"));
+		return $objResponse;		
+	}
+	$tikilib->set_user_preference($user, 'gmap_defx', $pointx);
+	$tikilib->set_user_preference($user, 'gmap_defy', $pointy);
+	$tikilib->set_user_preference($user, 'gmap_defz', $pointz);	
+	
+	$objResponse->assign($feedback, "innerHTML", tra("Map view saved as default for ") . $user);
+	return $objResponse;
+}
+
+function saveGmapUser($feedback, $pointx, $pointy, $pointz, $u) {
+	global $tikilib, $ajaxlib, $user, $userlib, $tiki_p_admin_users;
+	$objResponse = new xajaxResponse();
+	if (!($u == $user || $tiki_p_admin_users == 'y' && $u != $user && $userlib->user_exists($u))) {		
+		$objResponse->assign($feedback, "innerHTML", tra("You can only set your own location"));
+		return $objResponse;		
+	}
+	if (!is_numeric($pointx) || !is_numeric($pointy) || !is_numeric($pointz) ||
+		 !($pointx > -180 && $pointx < 180 && $pointy > -180 && $pointy < 180 && $pointz >= 0 && $pointz < 20) ) {
+		$objResponse->assign($feedback, "innerHTML", tra("Please select a point to set both Lon. and Lat."));
+		return $objResponse;		
+	}
+	$tikilib->set_user_preference($u, 'lon', $pointx);
+	$tikilib->set_user_preference($u, 'lat', $pointy);
+	$tikilib->set_user_preference($u, 'zoom', $pointz);	
+	$objResponse->assign($feedback, "innerHTML", tra("User location saved for ") . $u);
+	return $objResponse;
 }
