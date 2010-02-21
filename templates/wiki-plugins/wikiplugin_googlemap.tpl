@@ -67,7 +67,13 @@ function loadgmap() {literal}{{/literal}
   gmap{$gmapname|escape}map = new GMap2(document.getElementById("gmap{$gmapname|escape}"), {literal}{{/literal}size: gmapSize{literal}}{/literal});
   gmap{$gmapname|escape}map.addControl(new GLargeMapControl());
   gmap{$gmapname|escape}map.addControl(new GMapTypeControl());
-  gmap{$gmapname|escape}map.setCenter(new GLatLng({$gmap_defaulty|escape}, {$gmap_defaultx|escape}), {$gmap_defaultz|escape});
+  {if $pointx and $pointy and $pointz}
+  	gmap{$gmapname|escape}map.setCenter(new GLatLng({$pointy|escape}, {$pointx|escape}), {$pointz|escape});
+  	var point = new GMarker(new GLatLng({$pointy|escape},{$pointx|escape}));
+	gmap{$gmapname|escape}map.addOverlay(point);
+  {else}
+  	gmap{$gmapname|escape}map.setCenter(new GLatLng({$gmap_defaulty|escape}, {$gmap_defaultx|escape}), {$gmap_defaultz|escape});
+  {/if}
   {if $gmapmode eq 'normal'}
     gmap{$gmapname|escape}map.setMapType(G_NORMAL_MAP);  
   {elseif $gmapmode eq 'satellite'}
@@ -77,7 +83,7 @@ function loadgmap() {literal}{{/literal}
   {/if}	
   geocoder = new GClientGeocoder();
 
-{foreach key=i item=u from=$users}
+{foreach key=i item=u from=$gmapmarkers}
 	marker{$i} = new GMarker(new GLatLng({$u[0]},{$u[1]}));
 	gmap{$gmapname|escape}map.addOverlay(marker{$i});
 	GEvent.addListener(marker{$i},"click", function() {literal}{{/literal}

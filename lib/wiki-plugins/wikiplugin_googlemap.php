@@ -185,6 +185,11 @@ function wikiplugin_googlemap($data, $params) {
 		$locateitemid = '';
 	}
 	
+	// defaults for these could perhaps be specified as params (but they might be overridden below)
+	$pointx = '';
+	$pointy = '';
+	$pointz = '';
+	$markers = array();
 	
 	if ($type == 'user') {
 		$query = "SELECT `login`, `avatarType`, `avatarLibName`, `userId`, p1.`value` as lon, p2.`value` as lat FROM `users_users` as u ";
@@ -204,27 +209,36 @@ function wikiplugin_googlemap($data, $params) {
 					$nameShow = $realName;
 				}
 				$nameShow = '<a href="tiki-user_information.php?userId=' . $res['userId'] . '">' . $nameShow . '</a>';
-				$out[] = array($res['lat'],$res['lon'],addslashes($image).'&nbsp;'.$nameShow.'<br />Lat: '.$res['lon'].'&deg;<br /> Long: '.$res['lat'].'&deg;');
+				$markers[] = array($res['lat'],$res['lon'],addslashes($image).'&nbsp;'.$nameShow.'<br />Lat: '.$res['lon'].'&deg;<br /> Long: '.$res['lat'].'&deg;');
 			}
 		}
-
-		$smarty->assign('users',$out);
+		
 	} elseif ($type == 'locator') {
 		$access->check_feature('feature_ajax');
 		global $ajaxlib;
 		include_once ('lib/ajax/ajaxlib.php');
 		if ($locateitemtype == 'user') {
 			$smarty->assign('gmapitemtype', 'user');
-			global $userlib, $user, $tiki_p_admin_users;
-			if ($locateitemid && $tiki_p_admin_users == 'y' && $locateitemid != $user && $userlib->user_exists($locateitemid)) {
-				$smarty->assign('gmapitem', $locateitemid);
-			} else {
-				$smarty->assign('gmapitem', $user);
+			global $userlib, $user;
+			if (!$locateitemid) {
+				$locateitemid = $user;
 			}
+			if ($locateitemid != $user && !$userlib->user_exists($locateitemid)) {
+				return tra("No such user");
+			}
+			$smarty->assign('gmapitem', $locateitemid);
+			$pointx = $tikilib->get_user_preference( $locateitemid, 'lon', '' );
+			$pointy = $tikilib->get_user_preference( $locateitemid, 'lat', '' );
+			$pointz = $tikilib->get_user_preference( $locateitemid, 'zoom', '' );		
 			$ajaxlib->registerFunction('saveGmapUser');
 		}
 	}
 	
+	$smarty->assign('gmapmarkers', $markers);
+	$smarty->assign('pointx', $pointx);
+	$smarty->assign('pointy', $pointy);
+	$smarty->assign('pointz', $pointz);	
+			
 	$ret = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_googlemap.tpl') . '~/np~';
 	return $ret;
 
