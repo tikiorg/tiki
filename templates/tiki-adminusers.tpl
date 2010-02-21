@@ -503,7 +503,7 @@
 				<td>
 					<label for="csvlist">
 						{tr}CSV File:{/tr}
-						{help url="Users+Management#Adding_new_users_in_bulk" desc='{tr}CSV file layout{/tr}: {tr}login,password,email,groups,default_group<br />user1,pass1,email1,group1,group1<br />user2,pass2,email2,"group1,group2",group1{/tr}'}
+						{help url="Users+Management#Adding_new_users_in_bulk" desc='{tr}CSV file layout{/tr}: {tr}login,password,email,groups,default_group,realName<br />user1,pass1,email1,group1,group1<br />user2,pass2,email2,"group1,group2",group1{/tr}<br /><br />{tr}Only login, password, email are mandatory.Use an empty password for automatic password generation. Use same login and email if the login use email{/tr}'}
 					</label>
 				</td>
 				<td>
