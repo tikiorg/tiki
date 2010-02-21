@@ -1043,6 +1043,7 @@ function prefs_feature_list() {
 		),
 		'feature_theme_control' => array(
 			'name' => tra('Theme Control'),
+			'description' => tra('Assign different themes to different sections, categories, and objects'),
 			'type' => 'flag',
 		),
 		'feature_view_tpl' => array(
