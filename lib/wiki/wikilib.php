@@ -339,6 +339,9 @@ class WikiLib extends TikiLib
 			refresh_index('pages', $newName);
 		}
 
+		$query = "update `tiki_object_attributes` set `itemId`=? where `itemId`=? AND type='wiki page'";
+		$this->query($query, array( $newName, $oldName ) );
+
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->rename_wiki_page($oldName, $newName);
 

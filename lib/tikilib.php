@@ -3591,6 +3591,9 @@ class TikiLib extends TikiDb_Bridge
 		$query = "delete from `tiki_group_watches` where `event`=? and `object`=?";
 		$this->query($query,array('wiki_page_changed', $page));
 
+		$query = "delete from `tiki_object_attributes` where `type`=? and `itemId`=?";
+		$this->query($query,array('wiki page', $page));
+
 		$atts = $wikilib->list_wiki_attachments($page, 0, -1, 'created_desc', '');
 		foreach ($atts["data"] as $at) {
 			$wikilib->remove_wiki_attachment($at["attId"]);
