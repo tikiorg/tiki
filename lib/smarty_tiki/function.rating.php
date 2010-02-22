@@ -9,11 +9,16 @@ function smarty_function_rating( $params, $smarty ) {
 
 	$type = $params['type'];
 	$id = $params['id'];
+	if ( isset($params['changemandated']) && $params['changemandated'] == 'y' ) {
+		$changemandated = true; // needed to fix multiple submission problem in comments
+	} else {
+		$changemandated = false;
+	}
 
 	if( isset( $_REQUEST['rating_value'][$type][$id], $_REQUEST['rating_prev'][$type][$id] ) ) {
 		$value = $_REQUEST['rating_value'][$type][$id];
 		$prev = $_REQUEST['rating_prev'][$type][$id];
-		if( $value != $prev && $ratinglib->record_vote( $type, $id, $value ) ) {
+		if( ( !$changemandated || $value != $prev ) && $ratinglib->record_vote( $type, $id, $value ) ) {
 
 			// Handle type-specific actions
 			if( $type == 'comment' ) {
