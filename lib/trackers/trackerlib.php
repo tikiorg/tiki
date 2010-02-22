@@ -3490,16 +3490,16 @@ class TrackerLib extends TikiLib
 		if ($field['type'] == 'u' || $field['type'] == 'g' || $field['type'] == 'I') {
 			return false;
 		}
-		if (isset($field['isHidden']) && ($field['isHidden'] == 'p' || $field['isHidden'] == 'y')) {
-			return false;
-		}
-		if (isset($field['isHidden']) && isset($item['createdBy']) && $user == $item['createdBy'] && $field['isHidden'] == 'ec') {
+		if (empty($field['isHidden']) || $field['isHidden'] == 'n') {
 			return true;
 		}
-		if (!empty($field['isHidden'])) {
+		if ($field['isHidden'] == 'p' || $field['isHidden'] == 'y') {
 			return false;
 		}
-		return true;
+		if (isset($item['createdBy']) && $user == $item['createdBy'] && $field['isHidden'] == 'ec') {
+			return true;
+		}
+		return false;
 	}
 
 }
