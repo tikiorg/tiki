@@ -332,16 +332,32 @@ function wikiplugin_tracker($data, $params)
 
 			if ($thisIsThePlugin) {
 				/* ------------------------------------- Recup all values from REQUEST -------------- */
+				if (!empty($_REQUEST['autosavefields'])) {
+					$autosavefields = explode(':', $_REQUEST['autosavefields']);
+					$autosavevalues = explode(':', $_REQUEST['autosavevalues']);
+					if (isset($params['autosavefields'])) {
+						$autosavefields = array_merge($autosavefields, $params['autosavefields']);
+						$autosavevalues = array_merge($autosavevalues, $params['autosavevalues']);
+					}
+				}
 				if (!empty($autosavefields)) {
 					foreach ($autosavefields as $i=>$f) {
+						if (!$ff = $trklib->get_field($f, $flds['data'])) {
+							continue;
+						}
+						if (!$trklib->fieldId_is_editable($ff, $item_info)) {
+							continue;
+						}
 						if (preg_match('/categories\(([0-9]+)\)/', $autosavevalues[$i], $matches)) {
 							global $categlib; include_once('lib/categories/categlib.php');
 							$categs = $categlib->list_categs($matches[1]);
 							$_REQUEST["ins_cat_$f"][] = $categs[0]['categId'];
 						} elseif (preg_match('/preference\((.*)\)/', $autosavevalues[$i], $matches)) {
-							$_REQUEST["ins_cat_$f"][] = $_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
+							$_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
+						} elseif ($ff['type'] == 'e') {
+							$_REQUEST["ins_cat_$f"][] = $autosavevalues[$i];
 						} else {
-							$_REQUEST["ins_cat_$f"][] = $_REQUEST["$ins_id_$f"] = $autosavevalues[$i];
+							$_REQUEST['track'][$f] = $autosavevalues[$i];
 						}
 					}
 				}

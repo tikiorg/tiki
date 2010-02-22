@@ -3474,6 +3474,33 @@ class TrackerLib extends TikiLib
 		$query = "select max(`lastmodif`) from `tiki_tracker_items` where $mid";
 		return $this->getOne($query, $bindvars);
 	}
+	function get_field($fieldId, $fields) {
+		foreach ($fields as $f) {
+			if ($f['fieldId'] == $fieldId) {
+				return $f;
+			}
+		}
+		return false;
+	}
+	function fieldId_is_editable($field, $item) {
+		global $tiki_p_admin_trackers;
+		if ($tiki_p_admin_trackers == 'y') {
+			return true;
+		}
+		if ($field['type'] == 'u' || $field['type'] == 'g' || $field['type'] == 'I') {
+			return false;
+		}
+		if (isset($field['isHidden']) && ($field['isHidden'] == 'p' || $field['isHidden'] == 'y')) {
+			return false;
+		}
+		if (isset($field['isHidden']) && isset($item['createdBy']) && $user == $item['createdBy'] && $field['isHidden'] == 'ec') {
+			return true;
+		}
+		if (!empty($field['isHidden'])) {
+			return false;
+		}
+		return true;
+	}
 
 }
 
