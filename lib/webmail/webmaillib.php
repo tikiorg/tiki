@@ -15,7 +15,7 @@ class WebMailLib extends TikiLib
 {
 	
 	// current account row from database (tiki_user_mail_accounts)
-	// [accountId, user, account, pop, current, port, username, pass, msgs, smtp, useAuth, smtpPort, flagsPublic, autoRefresh, imap, mbox, maildir, useSSL]
+	// [accountId, user, account, pop, current, port, username, pass, msgs, smtp, useAuth, smtpPort, flagsPublic, autoRefresh, imap, mbox, maildir, useSSL, fromEmail]
 	var $current_account = array();
 	
 	// slightly complicated sub-query to check for public messages
@@ -168,17 +168,17 @@ class WebMailLib extends TikiLib
 	}
 
 	// MatWho 16/09/08 added flagsPublic
-	function replace_webmail_account($accountId, $user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh, $imap, $mbox, $maildir, $useSSL) {
+	function replace_webmail_account($accountId, $user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh, $imap, $mbox, $maildir, $useSSL, $fromEmail) {
 		
 		// Check the name
 		if ($accountId) {
-			$query = "update `tiki_user_mail_accounts` set `user`=?, `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `msgs`=?, `flagsPublic`=?, `autoRefresh`=? , `imap`=?, `mbox`=?, `maildir`=?, `useSSL`=? where `accountId`=? and `user`=?";
-			$bindvars = array($user,$account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,(int)$autoRefresh,$imap,$mbox,$maildir,$useSSL,(int)$accountId, $user);
+			$query = "update `tiki_user_mail_accounts` set `user`=?, `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `msgs`=?, `flagsPublic`=?, `autoRefresh`=? , `imap`=?, `mbox`=?, `maildir`=?, `useSSL`=?, `fromEmail`=? where `accountId`=? and `user`=?";
+			$bindvars = array($user,$account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,(int)$autoRefresh,$imap,$mbox,$maildir,$useSSL,$fromEmail,(int)$accountId, $user);
 			$result = $this->query($query,$bindvars);
 		} else {
 
-			$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`, `imap`, `mbox`, `maildir`, `useSSL`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL);
+			$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`, `imap`, `mbox`, `maildir`, `useSSL`, `fromEmail`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL,$fromEmail);
 			$result = $this->query($query, $bindvars);
 		}
 		if ($accountId == $this->get_current_webmail_accountId($user)) {
@@ -188,13 +188,13 @@ class WebMailLib extends TikiLib
 		return true;
 	}
 
-	function new_webmail_account($user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh, $imap, $mbox, $maildir, $useSSL) {
+	function new_webmail_account($user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh, $imap, $mbox, $maildir, $useSSL, $fromEmail) {
 
-		$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`, `imap`, `mbox`, `maildir`, `useSSL`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL);
+		$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`, `imap`, `mbox`, `maildir`, `useSSL`, `fromEmail`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh,$imap,$mbox,$maildir,$useSSL,$fromEmail);
 		$result = $this->query($query, $bindvars);
 
-		$query = 'SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=? AND `account`=? AND `pop`=? AND `port`=? AND `smtpPort`=? AND `username`=? AND `pass`=? AND `smtp`=? AND `useAuth`=? AND `msgs`=? AND `flagsPublic`=? AND `autoRefresh`=? AND `imap`=? AND `mbox`=? AND `maildir`=? AND `useSSL`=?';
+		$query = 'SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=? AND `account`=? AND `pop`=? AND `port`=? AND `smtpPort`=? AND `username`=? AND `pass`=? AND `smtp`=? AND `useAuth`=? AND `msgs`=? AND `flagsPublic`=? AND `autoRefresh`=? AND `imap`=? AND `mbox`=? AND `maildir`=? AND `useSSL`=? AND `fromEmail`=?';
 		$accountID = $this->getOne($query, $bindvars);
 
 		return $accountID;

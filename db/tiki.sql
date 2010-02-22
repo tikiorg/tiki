@@ -2351,6 +2351,7 @@ CREATE TABLE `tiki_user_mail_accounts` (
   `mbox` varchar( 255 ) default NULL,
   `maildir` varchar( 255 ) default NULL,
   `useSSL` char( 1 ) NOT NULL default 'n',
+  `fromEmail` varchar( 255 ) NOT NULL default '',
   PRIMARY KEY (`accountId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

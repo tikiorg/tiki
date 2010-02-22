@@ -115,6 +115,15 @@
 								{tr}No{/tr}<input type="radio" name="useAuth" value="n" {if $info.useAuth eq 'n'}checked="checked"{/if} />
 							</td>
 						</tr>
+						<tr>
+							<td class="formcolor">{tr}From email{/tr}</td>
+							<td colspan="2" class="formcolor">
+								<input type="text" name="fromEmail" value="{$info.fromEmail}" />
+							</td>
+							<td>
+								<em>{tr}Uses current in preferences if empty{/tr} ({if !empty($userEmail)}{$userEmail}{else}<strong>{tr}No email set:{/tr}</strong> {icon _id="arrow_right" href="tiki-user_preferences.php?cookietab=2"}{/if})</em>
+							</td>
+						</tr>
 						<tr><td class="formcolor" colspan="4">
 							<hr />
 							<h3>{tr}Account details{/tr}</h3>

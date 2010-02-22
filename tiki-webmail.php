@@ -586,7 +586,7 @@ END;
 					$_REQUEST['account'], $_REQUEST['pop'], $_REQUEST['port'], $_REQUEST['username'],
 					$_REQUEST['pass'], $_REQUEST['msgs'], $_REQUEST['smtp'], $_REQUEST['useAuth'],
 					$_REQUEST['smtpPort'], $_REQUEST['flagsPublic'], $_REQUEST['autoRefresh'],
-					$_REQUEST['imap'], $_REQUEST['mbox'], $_REQUEST['maildir'], isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n');
+					$_REQUEST['imap'], $_REQUEST['mbox'], $_REQUEST['maildir'], isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n', $_REQUEST['fromEmail']);
 
 			if ($webmaillib->count_webmail_accounts($user) == 1) {	// first account?
 				$webmaillib->current_webmail_account($user, $_REQUEST['accountId']);
@@ -598,7 +598,7 @@ END;
 					$_REQUEST['account'], $_REQUEST['pop'], $_REQUEST['port'], $_REQUEST['username'],
 					$_REQUEST['pass'], $_REQUEST['msgs'], $_REQUEST['smtp'], $_REQUEST['useAuth'],
 					$_REQUEST['smtpPort'], $_REQUEST['flagsPublic'], $_REQUEST['autoRefresh'],
-					$_REQUEST['imap'], $_REQUEST['mbox'], $_REQUEST['maildir'], isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n');
+					$_REQUEST['imap'], $_REQUEST['mbox'], $_REQUEST['maildir'], isset($_REQUEST['useSSL']) ? $_REQUEST['useSSL'] : 'n', $_REQUEST['fromEmail']);
 		}
 		unset($_REQUEST['accountId']);
 	}
@@ -620,7 +620,7 @@ END;
 	$smarty->assign('mailCurrentAccount', $tikilib->get_user_preference($user, 'mailCurrentAccount', 0));
 
 	$smarty->assign('accountId', empty($_REQUEST['accountId']) ? 0 : $_REQUEST['accountId']);
-
+	$smarty->assign('userEmail', trim($userlib->get_user_email($user)));
 
 	if (!empty($_REQUEST['accountId'])) {
 		$info = $webmaillib->get_webmail_account($user, $_REQUEST['accountId']);
@@ -640,6 +640,7 @@ END;
 		$info['mbox'] = '';
 		$info['maildir'] = '';
 		$info['useSSL'] = 'n';
+		$info['fromEmail'] = '';
 	}
 
 	$smarty->assign('info', $info);
@@ -673,10 +674,9 @@ if ($_REQUEST['locSection'] == 'compose') {
 	$smarty->assign('attaching', 'n');
 
 	if (isset($_REQUEST['send'])) {
-		$mail = new TikiMail($user);
+		$email = empty($current['fromEmail']) ? $userlib->get_user_email($user) : $current['fromEmail'];
+		$mail = new TikiMail($user, $email);
 
-		$email = $userlib->get_user_email($user);
-		$mail->setFrom($email);
 		if (!empty($_REQUEST['cc'])) {
 			$mail->setCc($_REQUEST['cc']);
 		}
