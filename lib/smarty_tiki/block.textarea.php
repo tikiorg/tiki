@@ -248,8 +248,13 @@ function switchEditor(mode, form) {
 }';
 		}
 		
-		if ( $params['_wysiwyg'] != 'y') {
-			$js_editconfirm .= "\n\$jq('#$as_id').resizable( { minWidth: \$jq('#$as_id').width(), minHeight: 50 });";
+		if ( $params['_wysiwyg'] != 'y') {	// show hidden parent before applying resizable
+			$js_editconfirm .= "
+var hiddenParents = \$jq('#$as_id').parents('fieldset:hidden:last');
+if (hiddenParents.length) { hiddenParents.show(); }
+\$jq('#$as_id').resizable( { minWidth: \$jq('#$as_id').width(), minHeight: 50 });
+if (hiddenParents.length) { hiddenParents.hide(); }
+";
 		}
 			
 		if( $prefs['wiki_timeout_warning'] == 'y' ) {
