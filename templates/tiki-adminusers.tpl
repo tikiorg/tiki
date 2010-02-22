@@ -260,7 +260,7 @@
 								</select></label>
 								<br />
 								<input type="submit" value="{tr}OK{/tr}" />
-								<div class="simplebox">{tr}Tip: Hold down CTRL to select multiple{/tr}</div>
+								{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 							{elseif $set_default_groups_mode eq 'y'}
 								<label>{tr}Set the default group of the selected users to:{/tr}
 								<br />

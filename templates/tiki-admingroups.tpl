@@ -95,7 +95,7 @@
 				<td><label for="groups_group">{tr}Group:{/tr}</label></td>
 				<td>
 					{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}
-						<input type="text" name="name" id="groups_group" value="{$groupname|escape}" />
+						<input type="text" name="name" id="groups_group" value="{$groupname|escape}" style="width:95%" />
 					{else}
 						<input type="hidden" name="name" id="groups_group" value="{$groupname|escape}" />{$groupname}
 					{/if}
@@ -104,14 +104,12 @@
 			<tr class="formcolor">
 				<td><label for="groups_desc">{tr}Description:{/tr}</label></td>
 				<td>
-					<textarea rows="5" cols="20" name="desc" id="groups_desc" style="width:95%">{$groupdesc|escape}</textarea>
+					<textarea rows="5" name="desc" id="groups_desc" style="width:95%">{$groupdesc|escape}</textarea>
 				</td>
 			</tr>
 			<tr class="formcolor">
 				<td>
 					<label for="groups_inc">{tr}Inherit permissions directly from following groups.{/tr}</label>
-					<br />
-					{remarksbox type="tip" title="{tr}Note{/tr}"}{tr}Selected groups only. Use Ctrl+Click to select more than one.{/tr}{/remarksbox}
 				</td>
 				<td>
 					{if $inc|@count > 20 and $hasOneIncludedGroup eq "y"}
@@ -120,12 +118,14 @@
 						{/foreach}
 						<br />
 					{/if}
-					<select name="include_groups[]" id="groups_inc" multiple="multiple" size="4">
+					<select name="include_groups[]" id="groups_inc" multiple="multiple" size="8">
 						{if !empty($groupname)}<option value="">{tr}None{/tr}</option>{/if}
 						{foreach key=gr item=yn from=$inc}
 							<option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52"|escape}</option>
 						{/foreach}
 					</select>
+					<br />
+					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 				</td>
 			</tr>
 
@@ -148,10 +148,10 @@
 			{if $prefs.useGroupHome eq 'y'}
 				<tr class="formcolor">
 					<td>
-						<label for="groups_home">{tr}Group Homepage:{/tr}</label>
+						<label for="groups_home">{tr}Group Homepage or Url:{/tr}</label>
 					</td>
 					<td>
-						<input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
+						<input type="text" style="width:95%" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
 						{remarksbox type="tip" title="{tr}Tip{/tr}"}
 							{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}
 						{/remarksbox}
@@ -164,7 +164,7 @@
 						<label for="groups_defcat">{tr}Default category assigned to uncategorized objects edited by a user with this default group:{/tr}</label>
 					</td>
 					<td>
-						<select name="defcat" id="groups_defcat" size="4">
+						<select name="defcat" id="groups_defcat" size="8">
 							<option value="" {if ($groupdefcat eq "") or ($groupdefcat eq 0)} selected="selected"{/if}>{tr}none{/tr}</option>
 							{section name=ix loop=$categories}
 								<option value="{$categories[ix].categId|escape}" {if $categories[ix].categId eq $groupdefcat}selected="selected"{/if}>{$categories[ix].categpath|escape}</option>
@@ -245,7 +245,7 @@
 				</tr>
 				<tr class="formcolor">
 					<td>{tr}Users Information Tracker Fields Asked at Registration Time<br />(fieldIds separated with :){/tr}</td>
-					<td><input type="text" size="40" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td>
+					<td><input type="text" style="width:95%" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td>
 				</tr>
 			{/if}
 

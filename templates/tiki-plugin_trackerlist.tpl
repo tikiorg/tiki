@@ -217,7 +217,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		{capture assign=moreUrl}
 			{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$trackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}
 		{/capture}
-		{button href="$moreUrl" _text="{tr}More...{/tr}"}
+		{button class='more' href="$moreUrl" _text="{tr}More...{/tr}"}
 	</div>
 	{elseif $showpagination ne 'n'}
 		{pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}

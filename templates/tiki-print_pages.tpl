@@ -43,7 +43,7 @@
 {tab name="{tr}Pages{/tr}"}
 {* --- tab with pages -- *}
 			{if $prefs.feature_help eq 'y'}
-				{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple pages{/tr}.{/remarksbox}
+				{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 			{/if}
 <form action="tiki-print_pages.php" method="post">
 	<input type="hidden" name="printpages" value="{$form_printpages|escape}" />
@@ -148,7 +148,7 @@
       {/section}
     </select>
 {if $prefs.feature_help eq 'y'}
-  {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple pages{/tr}.{/remarksbox}
+  {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 {/if}    
     <br />
     <input type="submit" name="addpage" value="{tr}Add Page{/tr}" />

@@ -1,6 +1,6 @@
 <form method="post">
 {if !empty($sents)}
-{remarksbox type='feedback'}
+{remarksbox type='feedback' title='{tr}Message sent to{/tr}'}
 	{tr}Email sent to:{/tr}
 	<ul>
 	{foreach from=$sents item=sent}
@@ -10,19 +10,19 @@
 {/remarksbox}
 {/if}
 {if !empty($mail_error)}
-{remarksbox type='errors'}
+{remarksbox type='errors' title='{tr}Errors{/tr}'}
 	{tr}Error{/tr}
 {/remarksbox}
 {/if}
 <table>
-	{if $params.showuserdd eq 'y' or $params.showuser eq 'y'}
+	{if $params.showuserdd eq 'y' or $params.showrealnamedd eq 'y'}
 	<tr>
 	<td>
-		<label for="mail_user{$ipluginmail}">{tr}Send to:{/tr}</label>
+		<label for="mail_user_dd{$ipluginmail}">{tr}Send to users:{/tr}</label>
 	</td>
 	<td>
 		{if $params.showuserdd eq 'y'}
-    		<select name="mail_user_dd[]" id="mail_user_dd{$ipluginmail}" multiple="multiple" size="10">
+    		<select name="mail_user_dd[]" id="mail_user_dd{$ipluginmail}" multiple="multiple" size="8">
 				<option value="" />
 					{foreach from=$users item=muser}
 						<option value="{$muser.userId}"{if in_array($muser.userId, $mail_user_dd)} selected="selected"{/if}>{$muser.login|escape}</option>
@@ -30,20 +30,24 @@
     		</select>
 		{/if}
 		{if $params.showrealnamedd eq 'y'}
-    		<select name="mail_user_dd[]" id="mail_user_dd{$ipluginmail}" multiple="multiple" size="10">
+    		<select name="mail_user_dd[]" id="mail_user_dd{$ipluginmail}" multiple="multiple" size="8">
 				<option value="" />
 					{foreach from=$names item=muser}
 						<option value="{$muser.userId}"{if in_array($muser.userId, $mail_user_dd)} selected="selected"{/if}>{$muser.login|username:true:false}</option>
 					{/foreach}
     		</select>
 		{/if}
-		{if $params.showuserdd eq 'y' or $params.showrealnamedd eq 'y'}
-			{remarksbox type='tip'}{tr}Hold down CTRL to select multiple{/tr}{/remarksbox}
-		{/if}
+		{remarksbox type='tip'  title='{tr}Tip{/tr}'}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+	</td>
+	</tr>
+	<tr>
+	<td>
+		<label for="mail_user{$ipluginmail}">{tr}Send to:{/tr}</label>
+	</td>
+	<td>
 		{if $params.showuser eq 'y'}
-			{if $params.showuserdd eq 'y' or $params.showrealnamedd eq 'y'}<br />{/if}
 			<input type="text" size="80" name="mail_user" />
-			{remarksbox type='tip'}{tr}Email separated by comma{/tr}{/remarksbox}
+			{remarksbox type='tip' title='{tr}Tip{/tr}'}{tr}Email separated by comma{/tr}{/remarksbox}
 		{/if}
 	</td>
 	</tr>
@@ -58,7 +62,7 @@
 		{if $params.showuser eq 'y'}
 		{/if}
 		{if $params.showgroupdd eq 'y'}
-    		<select name="mail_group_dd[]" id="mail_group_dd{$ipluginmail}" multiple="multiple" size="10">
+    		<select name="mail_group_dd[]" id="mail_group_dd{$ipluginmail}" multiple="multiple" size="8">
 				<option value="" />
 					{foreach from=$groups item=mgroup}
 						{if $mgroup eq 'Anonymous'}
@@ -69,7 +73,7 @@
 						{/if}
 					{/foreach}
     		</select>
-			{remarksbox type='tip'}{tr}Hold down CTRL to select multiple{/tr}{/remarksbox}
+			{remarksbox type='tip' title='{tr}Tip{/tr}'}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 		{/if}
 	</td>
 	</tr>
