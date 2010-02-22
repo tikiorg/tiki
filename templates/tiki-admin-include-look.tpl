@@ -121,6 +121,7 @@
 			<div class="adminoptionboxchild" id="feature_top_bar_childcontainer">
 				{preference name=feature_sitemenu}
 				<div class="adminoptionboxchild" id="feature_sitemenu_childcontainer">
+					{preference name=feature_sitemenu_custom_code}
 					{preference name=feature_topbar_id_menu}
 				</div>
 				{preference name=feature_topbar_version}

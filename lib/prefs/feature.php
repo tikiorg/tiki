@@ -1097,6 +1097,13 @@ function prefs_feature_list() {
 			'name' => tra('Site menu bar'),
 			'type' => 'flag',
 		),
+		'feature_sitemenu_custom_code' => array (
+			'name' => tra('Site menu custom code'),
+			'type' => 'textarea',
+			'size' => '4',
+			'hint' => tra('Example:') . " {if isset(\$objectCategoryIds) and in_array(2, \$objectCategoryIds)}
+     {menu id=43 css=y type=horiz}{else}{menu id=44 css=y type=horiz}{/if}",
+		),
 		'feature_topbar_id_menu' => array(
 			'name' => tra('Menu ID'),
 			'hint' => tra('Needs either CSS Menus or PHPLayers'),
