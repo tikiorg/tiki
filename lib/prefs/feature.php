@@ -1099,6 +1099,7 @@ function prefs_feature_list() {
 		),
 		'feature_topbar_id_menu' => array(
 			'name' => tra('Menu ID'),
+			'hint' => tra('Needs either CSS Menus or PHPLayers'),
 			'type' => 'text',
 			'size' => '5',
 			'dependencies' => array(
