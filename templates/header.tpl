@@ -4,7 +4,7 @@
 		<meta name="generator" content="TikiWiki CMS/Groupware - http://TikiWiki.org" />
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}		<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
 {elseif isset($galleryId) && $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}		<meta name="keywords" content="{tr}Images Galleries{/tr} {$title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
-{elseif $prefs.metatag_keywords ne '' or $metatag_local_keywords ne ''}		<meta name="keywords" content="{$prefs.metatag_keywords|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if} {$metatag_local_keywords|escape}" />
+{elseif $prefs.metatag_keywords ne '' or !empty($metatag_local_keywords)}		<meta name="keywords" content="{$prefs.metatag_keywords|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if} {$metatag_local_keywords|escape}" />
 {/if}
 {if $prefs.metatag_author ne ''}		<meta name="author" content="{$prefs.metatag_author|escape}" />
 {/if}

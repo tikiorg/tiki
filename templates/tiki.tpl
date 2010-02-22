@@ -1,7 +1,7 @@
 {* $Id$ *}<!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if $page_id} id="page_{$page_id}"{/if}>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}"{if !empty($page_id)} id="page_{$page_id}"{/if}>
 	<head>
 {include file='header.tpl'}
 	</head>
@@ -12,7 +12,7 @@
 
 {if $prefs.feature_community_mouseover eq 'y'}		{popup_init src="lib/overlib.js"}{/if}
 
-{if $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}
+{if $prefs.feature_fullscreen eq 'y' and isset($filegals_manager) and $filegals_manager eq '' and $print_page ne 'y'}
 	{if $smarty.session.fullscreen eq 'n'}
 		{self_link fullscreen="y" _class="fullscreenbutton" _ajax='n' _icon=application_get _title="{tr}Fullscreen{/tr}"}{/self_link}
 	{else}

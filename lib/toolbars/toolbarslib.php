@@ -1604,10 +1604,9 @@ class ToolbarSheet extends Toolbar {
 
 		$tag = new self;
 		$tag->setLabel( $label )
-			->setWysiwygToken( $wysiwyg )
-				->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
-					->setSyntax( $syntax )
-						->setType('Sheet');
+			->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
+				->setSyntax( $syntax )
+					->setType('Sheet');
 		
 		return $tag;
 	} // }}}
