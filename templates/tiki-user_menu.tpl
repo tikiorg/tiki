@@ -46,9 +46,17 @@
 			{/if}
 		{else}
 			{if empty($menu_info.icon)}
-				{icon _id="folder" alt='Toggle' name="$icon_name"}
+				{if isset($chdata.open) and $chdata.open}
+					{icon _id="ofolder" alt='Toggle' name="$icon_name"}
+				{else}
+					{icon _id="folder" alt='Toggle' name="$icon_name"}
+				{/if}
 			{else}
-				<img src="{$menu_info.icon}" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
+				{if isset($chdata.open) and $chdata.open}
+					<img src="{$menu_info.oicon}" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
+				{else}
+					<img src="{$menu_info.icon}" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
+				{/if}
 			{/if}
 		{/if}
 	</a>
@@ -68,11 +76,10 @@
 
 {assign var=opensec value=$opensec+1}
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
-<div class="menuSection" {if $menu_info.type eq 'd' and ($smarty.cookies.menu ne '' or $menu_cookie eq 'n') and $prefs.javascript_enabled ne 'n'}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
+<div class="menuSection" {if !isset($chdata.open) || !$chdata.open}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
 {else}
 <div class="menuSection">
 {/if}
-
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
 <div class="option{$sep}{if isset($chdata.selected) and $chdata.selected} selected{/if}"><a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and ($opensec eq 0 or $chdata.icon neq '')}{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path} {/if}<span class="menuText">{if $translate eq 'n'}{$chdata.name|escape}{else}{capture}{tr}{$chdata.name}{/tr}{/capture}{$smarty.capture.default|escape}{/if}</span></a></div>
@@ -106,11 +113,11 @@
 			{{else}}
 				status = '';
 			{{/if}}
-			{{if $prefs.feature_menusfolderstyle eq 'y'}}
+			{{*if $prefs.feature_menusfolderstyle eq 'y'}}
 				setfolderstate('menu{{$menu_info.menuId|cat:'__'|cat:$chdata.position}}', '{{$menu_info.type}}', '', status);
 			{{else}}
 				setsectionstate('menu{{$menu_info.menuId|cat:'__'|cat:$chdata.position}}', '{{$menu_info.type}}', '', status);
-			{{/if}}
+			{{/if*}}
 		{{/if}}
 	{{/foreach}}
 {/jq}
