@@ -100,7 +100,7 @@ class WebMailLib extends TikiLib
 			$this->query($query, array($user,(int)$accountId ));
 			$tikilib->set_user_preference($user, 'mailCurrentAccount', 0);
 		}
-		$this->get_current_webmail_account();
+		$this->get_current_webmail_account($user);
 	}
 
 	function list_webmail_accounts($user, $offset, $maxRecords, $sort_mode, $find) {
