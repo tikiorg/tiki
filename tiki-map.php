@@ -7,6 +7,44 @@
 
 $_SERVER["SCRIPT_NAME"] = basename(__FILE__);
 require_once ('tiki-setup.php');
+
+// was lib/setup/menus.php but only used here
+function setDisplayMenu($name) {
+	global $smarty;
+	if ( getCookie($name, 'menu', isset($_COOKIE['menu']) ? null : 'o') == 'o' ) {
+		$smarty->assign('mnu_'.$name, 'display:block;');
+		$smarty->assign('icn_'.$name, 'o');
+	} else {
+		$smarty->assign('mnu_'.$name, 'display:none;');
+	}
+}
+
+setDisplayMenu('nlmenu');
+setDisplayMenu('evmenu');
+setDisplayMenu('chartmenu');
+setDisplayMenu('mymenu');
+setDisplayMenu('wfmenu');
+setDisplayMenu('usrmenu');
+setDisplayMenu('friendsmenu');
+setDisplayMenu('wikimenu');
+setDisplayMenu('homeworkmenu');
+setDisplayMenu('srvmenu');
+setDisplayMenu('trkmenu');
+setDisplayMenu('quizmenu');
+setDisplayMenu('formenu');
+setDisplayMenu('dirmenu');
+setDisplayMenu('admmnu');
+setDisplayMenu('faqsmenu');
+setDisplayMenu('galmenu');
+setDisplayMenu('cmsmenu');
+setDisplayMenu('blogmenu');
+setDisplayMenu('filegalmenu');
+setDisplayMenu('mapsmenu');
+setDisplayMenu('layermenu');
+setDisplayMenu('shtmenu');
+setDisplayMenu('prjmenu');
+// end from lib/setup/menus.php
+
 include_once ('lib/stats/statslib.php');
 include_once ('lib/map/map_query.php');
 if (!function_exists('ms_newMapObj')) {

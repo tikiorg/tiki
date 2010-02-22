@@ -61,7 +61,6 @@ if (!empty($varcheck_errors)) {
 if ($prefs['feature_challenge'] == 'y') {
 	require_once ('lib/setup/challenge.php');
 }
-require_once ('lib/setup/menus.php');
 if ($prefs['feature_usermenu'] == 'y') require_once ('lib/setup/usermenu.php');
 if ($prefs['feature_live_support'] == 'y') require_once ('lib/setup/live_support.php');
 if ($prefs['feature_referer_stats'] == 'y' || $prefs['feature_stats'] == 'y') require_once ('lib/setup/stats.php');
