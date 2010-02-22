@@ -1554,6 +1554,8 @@ class UsersLib extends TikiLib
 		$result = $this->query($query, array( $user ) );
 		$query = "delete from `users_usergroups` where `userId`=?";
 		$result = $this->query($query, array( $userId ) );
+		$query = "delete from `tiki_user_login_cookies` where `userId`=?";
+		$result = $this->query($query, array( $userId ) );
 		$query = "delete from `tiki_user_watches` where binary `user`=?";
 		$result = $this->query($query, array($user));
 		$query = "delete from `tiki_user_preferences` where binary `user`=?";
