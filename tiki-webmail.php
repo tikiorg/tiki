@@ -555,10 +555,6 @@ if ($_REQUEST['locSection'] == 'settings') {
 \$jq('a[title=$deleteTitle]').click(function() {
 	return confirm('$deleteConfirm');
 });
-// open/close account form
-\$jq('#addAccountIcon').click(function() {
-	flip(\$jq('#settingsFormDiv').attr('id'));
-}).css("cursor", "pointer");
 
 END;
 		$headerlib->add_jq_onready($js);
@@ -603,9 +599,9 @@ END;
 		unset($_REQUEST['accountId']);
 	}
 	
-	if (empty($_REQUEST['accountId']) || isset($_REQUEST['new_acc']) && $webmaillib->count_webmail_accounts($user) > 0) {
-		$headerlib->add_jq_onready('$jq("#settingsFormDiv").hide();');
-	}
+//	if (empty($_REQUEST['accountId']) || isset($_REQUEST['new_acc']) && $webmaillib->count_webmail_accounts($user) > 0) {
+//		$headerlib->add_jq_onready('$jq("#settingsFormDiv").hide();');
+//	}
 	// The red cross was pressed
 	if (isset($_REQUEST['remove'])) {
 		check_ticket('webmail');
@@ -624,6 +620,7 @@ END;
 
 	if (!empty($_REQUEST['accountId'])) {
 		$info = $webmaillib->get_webmail_account($user, $_REQUEST['accountId']);
+		$cookietab = 2;
 	} else {
 		$info['account'] = '';
 		$info['username'] = '';

@@ -41,258 +41,263 @@
 <hr/>
 
 {if $locSection eq 'settings'}
-	{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y' or !isset($info.user) or $user eq $info.user}
-		<h2>{if $accountId eq 0}{tr}Add a new{/tr}{else}{tr}Edit this{/tr}{/if} {tr} mail account{/tr} {icon _id='add' id='addAccountIcon'}</h2>
-		<div id="settingsFormDiv"{if $accountId eq 0 and count($accounts) != 0}style="display:none"{/if}>
-			<form action="tiki-webmail.php" method="post" name="settings">
-				<input type="hidden" name="accountId" value="{$accountId|escape}" />
-				<input type="hidden" name="locSection" value="settings" />
+	{tabset  name='tabs_webmail_settings'}
+		{tab name="List"}
+			{if count($accounts) != 0}
+				<h2>{tr}Personal e-mail accounts{/tr}</h2>
 				<table class="normal">
 					<tr>
-						<td class="formcolor">{tr}Account name{/tr}</td>
-						<td class="formcolor">
-							<input type="text" name="account" value="{$info.account|escape}" />
-						</td>
-						<td class="formcolor"></td>
-						<td class="formcolor"></td>
+						<th>{tr}Active{/tr}</th>
+						<th>{tr}Account{/tr}</th>
+						<th>{tr}Server{/tr}</th>
+						<th>{tr}Username{/tr}</th>
+						<th>{tr}Action{/tr}</th>
 					</tr>
-					<tr><td class="formcolor" colspan="4">
-						<hr />
-						<h3>{tr}Incoming servers (used in this order){/tr}</h3>
-					</td></tr>
-					<tr>
-						<td class="formcolor">{tr}IMAP server{/tr}</td>
-						<td class="formcolor">
-							<input type="text" name="imap" value="{$info.imap|escape}" />
-						</td>
-						<td rowspan="2" class="formcolor" valign="middle">{tr}Port{/tr}</td>
-						<td rowspan="2" class="formcolor" valign="middle">
-							<input type="text" name="port" size="7" value="{$info.port}" />
-						</td>
-					</tr>
-					<tr>
-						<td class="formcolor">{tr}Mbox filepath{/tr}</td>
-						<td class="formcolor">
-							<input type="text" name="mbox" value="{$info.mbox|escape}" />
-						</td>
-					</tr>
-					<tr>
-						<td class="formcolor">{tr}Maildir mail directory{/tr}</td>
-						<td class="formcolor">
-							<input type="text" name="maildir" value="{$info.maildir|escape}" />
-						</td>
-						<td rowspan="2" class="formcolor" valign="middle">{tr}Use SSL{/tr}</td>
-						<td rowspan="2" class="formcolor" valign="middle">
-							<input type="checkbox" name="useSSL" value="y" {if $info.useSSL eq 'y'}checked="checked"{/if} />
-						</td>
-					</tr>
-					<tr>
-						<td class="formcolor">{tr}POP server{/tr}</td>
-						<td class="formcolor">
-							<input type="text" name="pop" value="{$info.pop|escape}" />
-						</td>
-					</tr>
-					<tr><td class="formcolor" colspan="4">
-						<hr />
-						<h3>{tr}Outgoing server{/tr}</h3>
-					</td></tr>
-					<tr>
-						<td class="formcolor">{tr}SMTP server{/tr}</td>
-						<td class="formcolor">
-							<input type="text" name="smtp" value="{$info.smtp|escape}" />
-						</td>
-						<td class="formcolor">{tr}Port{/tr}</td>
-						<td class="formcolor">
-							<input type="text" name="smtpPort" size="7" value="{$info.smtpPort}" />
-						</td>
-					</tr>
-					<tr>
-						<td class="formcolor">{tr}SMTP requires authentication{/tr}</td>
-						<td colspan="3" class="formcolor">
-							{tr}Yes{/tr}<input type="radio" name="useAuth" value="y" {if $info.useAuth eq 'y'}checked="checked"{/if} />
-							{tr}No{/tr}<input type="radio" name="useAuth" value="n" {if $info.useAuth eq 'n'}checked="checked"{/if} />
-						</td>
-					</tr>
-					<tr>
-						<td class="formcolor">{tr}From email{/tr}</td>
-						<td colspan="2" class="formcolor">
-							<input type="text" name="fromEmail" value="{$info.fromEmail}" />
-						</td>
-						<td>
-							<em>{tr}Uses current in preferences if empty{/tr} ({if !empty($userEmail)}{$userEmail}{else}<strong>{tr}No email set:{/tr}</strong> {icon _id="arrow_right" href="tiki-user_preferences.php?cookietab=2"}{/if})</em>
-						</td>
-					</tr>
-					<tr><td class="formcolor" colspan="4">
-						<hr />
-						<h3>{tr}Account details{/tr}</h3>
-					</td></tr>
-					<tr>
-						<td class="formcolor">{tr}Username{/tr}</td>
-						<td colspan="3" class="formcolor">
-							<input type="text" name="username" value="{$info.username|escape}" />
-						</td>
-					</tr>
-					<tr>
-						<td class="formcolor">{tr}Password{/tr}</td>
-						<td colspan="3" class="formcolor">
-							<input type="password" name="pass" value="{$info.pass|escape}" />
-						</td>
-					</tr>
-					<tr>
-						<td class="formcolor">{tr}Messages per page{/tr}</td>
-						<td colspan="3" class="formcolor">
-							<input type="text" name="msgs" size="4" value="{$info.msgs|escape}" />
-						</td>
-					</tr>
-
-					{if ($tiki_p_admin_group_webmail eq 'y' and $tiki_p_admin_personal_webmail eq 'y') or $tiki_p_admin eq 'y'}
+					{cycle values="odd,even" print=false}
+					{section name=ix loop=$accounts}
+						{if $accounts[ix].current eq 'y' and $accounts[ix].user eq $user or $accounts[ix].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
 						<tr>
-							<td class="formcolor">{tr}Group (shared mail inbox) or private{/tr}</td>
-							<td colspan="3" class="formcolor">
-								{tr}Group{/tr}<input type="radio" name="flagsPublic" value="y" {if $info.flagsPublic eq 'y'}checked="checked"{/if} /> {tr}Private{/tr}<input type="radio" name="flagsPublic" value="n" {if $info.flagsPublic eq 'n'}checked="checked"{/if} />
+							<td class="{cycle advance=false}">
+								{if !$active}
+									{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
+								{else}
+									{icon _id='star' alt="{tr}This is the active account.{/tr}"}
+								{/if}
 							</td>
-						</tr>
-					{else}
-						<tr>
-							<td></td>
-							<td>
-								<input type="hidden" name="flagsPublic" {if $tiki_p_admin_group_webmail eq 'y'}value="y"{else} value="n"{/if}>
-								{if $tiki_p_admin_group_webmail eq 'y'}
-									{tr}This will be a group mail account.{/tr}{else}{tr}This will be a personal mail account.{/tr}
+							<td class="{cycle advance=false}">
+								{if !$active}
+									{self_link current=$accounts[ix].accountId _title='{tr}Activate{/tr}'}{$accounts[ix].account}{/self_link}
+								{else}
+									<strong>{$accounts[ix].account|escape}</strong>
+								{/if}
+							</td>
+							<td class="{cycle advance=false}">
+								{if !empty($accounts[ix].imap)}{tr}IMAP{/tr}: {$accounts[ix].imap} ({$accounts[ix].port})
+								{elseif !empty($accounts[ix].mbox)}{tr}Mbox{/tr}: {$accounts[ix].mbox}
+								{elseif !empty($accounts[ix].maildir)}{tr}Maildir{/tr}: {$accounts[ix].maildir}
+								{elseif !empty($accounts[ix].pop)}{tr}POP3{/tr}: {$accounts[ix].pop} ({$accounts[ix].port}){/if}
+							</td>
+							<td class="{cycle advance=false}">
+								{$accounts[ix].username}
+							</td>
+							<td class="{cycle}">
+								{self_link _icon='cross' remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
+								{self_link _icon='page_edit' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
+								{if !$active}
+									{self_link _icon='accept' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 								{/if}
 							</td>
 						</tr>
-					{/if}
-
-					<tr>
-						<td class="formcolor">{tr}Auto-refresh page time{/tr}</td>
-						<td colspan="3" class="formcolor">
-							<input type="text" name="autoRefresh" size="4" value="{$info.autoRefresh|escape}" /> seconds (0 = no auto refresh)
-						</td>
-					</tr>
-					<tr>
-						<td class="formcolor">&nbsp;</td>
-						<td colspan="3" class="formcolor">
-							<input type="submit" name="new_acc" value="{if $accountId eq ''}{tr}Add{/tr}{else}{tr}Update{/tr}{/if}" />
-							<input type="submit" name="cancel_acc" value="{tr}Clear{/tr}" />
-						</td>
-					</tr>
+					{sectionelse}
+						<tr>
+							<td colspan="5" class="odd">{tr}No records found.{/tr}</td>
+						</tr>
+					{/section}
 				</table>
-			</form>
-		</div>
-	{else}
-		{remarksbox type="info" title="{tr}Permissions{/tr}"}
-			{tr}You do not have the correct permissions to Add or Edit a webmail account. <BR />Please contact your administrator and ask for "admin_personal_webmail" or "admin_group_webmail" permission.{/tr}
-		{/remarksbox}
-	{/if}
-
-	{if count($accounts) != 0}
-		<h2>{tr}Personal e-mail accounts{/tr}</h2>
-		<table class="normal">
-			<tr>
-				<th>{tr}Active{/tr}</th>
-				<th>{tr}Account{/tr}</th>
-				<th>{tr}Server{/tr}</th>
-				<th>{tr}Username{/tr}</th>
-				<th>{tr}Action{/tr}</th>
-			</tr>
-			{cycle values="odd,even" print=false}
-			{section name=ix loop=$accounts}
-				{if $accounts[ix].current eq 'y' and $accounts[ix].user eq $user or $accounts[ix].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
-				<tr>
-					<td class="{cycle advance=false}">
-						{if !$active}
-							{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
-						{else}
-							{icon _id='star' alt="{tr}This is the active account.{/tr}"}
-						{/if}
-					</td>
-					<td class="{cycle advance=false}">
-						{if !$active}
-							{self_link current=$accounts[ix].accountId _title='{tr}Activate{/tr}'}{$accounts[ix].account}{/self_link}
-						{else}
-							<strong>{$accounts[ix].account|escape}</strong>
-						{/if}
-					</td>
-					<td class="{cycle advance=false}">
-						{if !empty($accounts[ix].imap)}{tr}IMAP{/tr}: {$accounts[ix].imap} ({$accounts[ix].port})
-						{elseif !empty($accounts[ix].mbox)}{tr}Mbox{/tr}: {$accounts[ix].mbox}
-						{elseif !empty($accounts[ix].maildir)}{tr}Maildir{/tr}: {$accounts[ix].maildir}
-						{elseif !empty($accounts[ix].pop)}{tr}POP3{/tr}: {$accounts[ix].pop} ({$accounts[ix].port}){/if}
-					</td>
-					<td class="{cycle advance=false}">
-						{$accounts[ix].username}
-					</td>
-					<td class="{cycle}">
-						{self_link _icon='cross' remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
-						{self_link _icon='page_edit' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
-						{if !$active}
-							{self_link _icon='accept' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
-						{/if}
-					</td>
-				</tr>
-			{sectionelse}
-				<tr>
-					<td colspan="5" class="odd">{tr}No records found.{/tr}</td>
-				</tr>
-			{/section}
-		</table>
-	{/if}
-	
-	{if $tiki_p_use_group_webmail eq 'y'}
-		{if count($pubAccounts) != 0}
-			<h2>{tr}Group e-mail accounts{/tr}</h2>
-			<table class="normal">
-				<tr>
-					<th>{tr}Active{/tr}</th>
-					<th>{tr}Account{/tr}</th>
-					<th>{tr}Server{/tr}</th>
-					<th>{tr}Username{/tr}</th>
-					<th>{tr}Action{/tr}</th>
-				</tr>
-				{cycle values="odd,even" print=false}
-				{section name=ixp loop=$pubAccounts}
-					{if $pubAccounts[ixp].current eq 'y' and $pubAccounts[ixp].user eq $user or $pubAccounts[ixp].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
-					<tr>
-						<td class="{cycle advance=false}">
-							{if !$active}
-								{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+			{/if}
+			
+			{if $tiki_p_use_group_webmail eq 'y'}
+				{if count($pubAccounts) != 0}
+					<h2>{tr}Group e-mail accounts{/tr}</h2>
+					<table class="normal">
+						<tr>
+							<th>{tr}Active{/tr}</th>
+							<th>{tr}Account{/tr}</th>
+							<th>{tr}Server{/tr}</th>
+							<th>{tr}Username{/tr}</th>
+							<th>{tr}Action{/tr}</th>
+						</tr>
+						{cycle values="odd,even" print=false}
+						{section name=ixp loop=$pubAccounts}
+							{if $pubAccounts[ixp].current eq 'y' and $pubAccounts[ixp].user eq $user or $pubAccounts[ixp].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
+							<tr>
+								<td class="{cycle advance=false}">
+									{if !$active}
+										{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+									{else}
+										{icon _id='star' alt="{tr}This is the active account.{/tr}"}
+									{/if}
+								</td>
+								<td class="{cycle advance=false}">
+									{if !$active}
+										{self_link current=$pubAccounts[ixp].accountId _title='{tr}Activate{/tr}'}{$pubAccounts[ixp].account}{/self_link}
+									{else}
+										<strong>{$pubAccounts[ixp].account|escape}</strong>
+									{/if}
+								</td>
+								<td class="{cycle advance=false}">
+									{if !empty($pubAccounts[ixp].imap)}{tr}IMAP{/tr}: {$pubAccounts[ixp].imap} ({$pubAccounts[ixp].port})
+									{elseif !empty($pubAccounts[ixp].mbox)}{tr}Mbox{/tr}: {$pubAccounts[ixp].mbox}
+									{elseif !empty($pubAccounts[ixp].maildir)}{tr}Maildir{/tr}: {$pubAccounts[ixp].maildir}
+									{elseif !empty($pubAccounts[ixp].pop)}{tr}POP3{/tr}: {$pubAccounts[ixp].pop} ({$pubAccounts[ixp].port}){/if}
+								</td>
+								<td class="{cycle advance=false}">{$pubAccounts[ixp].username}</td>
+								<td class="{cycle}">
+									{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
+										{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
+										{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
+									{/if}
+									{if !$active}
+										{self_link _icon='accept' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+									{/if}
+								</td>
+							</tr>
+						{sectionelse}
+							<tr>
+								<td colspan="5" class="odd">{tr}No records found.{/tr}</td>
+							</tr>
+						{/section}
+					</table>
+				{/if}
+			{/if}
+		{/tab}
+		{if $accountId eq 0}{assign var="tablab" value="{tr}Create{/tr}"}{else}{assign var="tablab" value="{tr}Edit{/tr}"}{/if} {tr}{/tr}
+		{tab name=$tablab}
+			{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y' or !isset($info.user) or $user eq $info.user}
+				<div id="settingsFormDiv">
+					<form action="tiki-webmail.php" method="post" name="settings">
+						<input type="hidden" name="accountId" value="{$accountId|escape}" />
+						<input type="hidden" name="locSection" value="settings" />
+						<table class="normal">
+							<tr>
+								<td class="formcolor">{tr}Account name{/tr}</td>
+								<td class="formcolor">
+									<input type="text" name="account" value="{$info.account|escape}" />
+								</td>
+								<td class="formcolor"></td>
+								<td class="formcolor"></td>
+							</tr>
+							<tr><td class="formcolor" colspan="4">
+								<hr />
+								<h3>{tr}Incoming servers (used in this order){/tr}</h3>
+							</td></tr>
+							<tr>
+								<td class="formcolor">{tr}IMAP server{/tr}</td>
+								<td class="formcolor">
+									<input type="text" name="imap" value="{$info.imap|escape}" />
+								</td>
+								<td rowspan="2" class="formcolor" valign="middle">{tr}Port{/tr}</td>
+								<td rowspan="2" class="formcolor" valign="middle">
+									<input type="text" name="port" size="7" value="{$info.port}" />
+								</td>
+							</tr>
+							<tr>
+								<td class="formcolor">{tr}Mbox filepath{/tr}</td>
+								<td class="formcolor">
+									<input type="text" name="mbox" value="{$info.mbox|escape}" />
+								</td>
+							</tr>
+							<tr>
+								<td class="formcolor">{tr}Maildir mail directory{/tr}</td>
+								<td class="formcolor">
+									<input type="text" name="maildir" value="{$info.maildir|escape}" />
+								</td>
+								<td rowspan="2" class="formcolor" valign="middle">{tr}Use SSL{/tr}</td>
+								<td rowspan="2" class="formcolor" valign="middle">
+									<input type="checkbox" name="useSSL" value="y" {if $info.useSSL eq 'y'}checked="checked"{/if} />
+								</td>
+							</tr>
+							<tr>
+								<td class="formcolor">{tr}POP server{/tr}</td>
+								<td class="formcolor">
+									<input type="text" name="pop" value="{$info.pop|escape}" />
+								</td>
+							</tr>
+							<tr><td class="formcolor" colspan="4">
+								<hr />
+								<h3>{tr}Outgoing server{/tr}</h3>
+							</td></tr>
+							<tr>
+								<td class="formcolor">{tr}SMTP server{/tr}</td>
+								<td class="formcolor">
+									<input type="text" name="smtp" value="{$info.smtp|escape}" />
+								</td>
+								<td class="formcolor">{tr}Port{/tr}</td>
+								<td class="formcolor">
+									<input type="text" name="smtpPort" size="7" value="{$info.smtpPort}" />
+								</td>
+							</tr>
+							<tr>
+								<td class="formcolor">{tr}SMTP requires authentication{/tr}</td>
+								<td colspan="3" class="formcolor">
+									{tr}Yes{/tr}<input type="radio" name="useAuth" value="y" {if $info.useAuth eq 'y'}checked="checked"{/if} />
+									{tr}No{/tr}<input type="radio" name="useAuth" value="n" {if $info.useAuth eq 'n'}checked="checked"{/if} />
+								</td>
+							</tr>
+							<tr>
+								<td class="formcolor">{tr}From email{/tr}</td>
+								<td colspan="2" class="formcolor">
+									<input type="text" name="fromEmail" value="{$info.fromEmail}" />
+								</td>
+								<td>
+									<em>{tr}Uses current in preferences if empty{/tr} ({if !empty($userEmail)}{$userEmail}{else}<strong>{tr}No email set:{/tr}</strong> {icon _id="arrow_right" href="tiki-user_preferences.php?cookietab=2"}{/if})</em>
+								</td>
+							</tr>
+							<tr><td class="formcolor" colspan="4">
+								<hr />
+								<h3>{tr}Account details{/tr}</h3>
+							</td></tr>
+							<tr>
+								<td class="formcolor">{tr}Username{/tr}</td>
+								<td colspan="3" class="formcolor">
+									<input type="text" name="username" value="{$info.username|escape}" />
+								</td>
+							</tr>
+							<tr>
+								<td class="formcolor">{tr}Password{/tr}</td>
+								<td colspan="3" class="formcolor">
+									<input type="password" name="pass" value="{$info.pass|escape}" />
+								</td>
+							</tr>
+							<tr>
+								<td class="formcolor">{tr}Messages per page{/tr}</td>
+								<td colspan="3" class="formcolor">
+									<input type="text" name="msgs" size="4" value="{$info.msgs|escape}" />
+								</td>
+							</tr>
+		
+							{if ($tiki_p_admin_group_webmail eq 'y' and $tiki_p_admin_personal_webmail eq 'y') or $tiki_p_admin eq 'y'}
+								<tr>
+									<td class="formcolor">{tr}Group (shared mail inbox) or private{/tr}</td>
+									<td colspan="3" class="formcolor">
+										{tr}Group{/tr}<input type="radio" name="flagsPublic" value="y" {if $info.flagsPublic eq 'y'}checked="checked"{/if} /> {tr}Private{/tr}<input type="radio" name="flagsPublic" value="n" {if $info.flagsPublic eq 'n'}checked="checked"{/if} />
+									</td>
+								</tr>
 							{else}
-								{icon _id='star' alt="{tr}This is the active account.{/tr}"}
+								<tr>
+									<td></td>
+									<td>
+										<input type="hidden" name="flagsPublic" {if $tiki_p_admin_group_webmail eq 'y'}value="y"{else} value="n"{/if}>
+										{if $tiki_p_admin_group_webmail eq 'y'}
+											{tr}This will be a group mail account.{/tr}{else}{tr}This will be a personal mail account.{/tr}
+										{/if}
+									</td>
+								</tr>
 							{/if}
-						</td>
-						<td class="{cycle advance=false}">
-							{if !$active}
-								{self_link current=$pubAccounts[ixp].accountId _title='{tr}Activate{/tr}'}{$pubAccounts[ixp].account}{/self_link}
-							{else}
-								<strong>{$pubAccounts[ixp].account|escape}</strong>
-							{/if}
-						</td>
-						<td class="{cycle advance=false}">
-							{if !empty($pubAccounts[ixp].imap)}{tr}IMAP{/tr}: {$pubAccounts[ixp].imap} ({$pubAccounts[ixp].port})
-							{elseif !empty($pubAccounts[ixp].mbox)}{tr}Mbox{/tr}: {$pubAccounts[ixp].mbox}
-							{elseif !empty($pubAccounts[ixp].maildir)}{tr}Maildir{/tr}: {$pubAccounts[ixp].maildir}
-							{elseif !empty($pubAccounts[ixp].pop)}{tr}POP3{/tr}: {$pubAccounts[ixp].pop} ({$pubAccounts[ixp].port}){/if}
-						</td>
-						<td class="{cycle advance=false}">{$pubAccounts[ixp].username}</td>
-						<td class="{cycle}">
-							{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
-								{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
-								{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
-							{/if}
-							{if !$active}
-								{self_link _icon='accept' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
-							{/if}
-						</td>
-					</tr>
-				{sectionelse}
-					<tr>
-						<td colspan="5" class="odd">{tr}No records found.{/tr}</td>
-					</tr>
-				{/section}
-			</table>
-		{/if}
-	{/if}
+		
+							<tr>
+								<td class="formcolor">{tr}Auto-refresh page time{/tr}</td>
+								<td colspan="3" class="formcolor">
+									<input type="text" name="autoRefresh" size="4" value="{$info.autoRefresh|escape}" /> seconds (0 = no auto refresh)
+								</td>
+							</tr>
+							<tr>
+								<td class="formcolor">&nbsp;</td>
+								<td colspan="3" class="formcolor">
+									<input type="submit" name="new_acc" value="{if $accountId eq ''}{tr}Add{/tr}{else}{tr}Update{/tr}{/if}" />
+									<input type="submit" name="cancel_acc" value="{tr}Cancel{/tr}" />
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			{else}
+				{remarksbox type="info" title="{tr}Permissions{/tr}"}
+					{tr}You do not have the correct permissions to Add or Edit a webmail account. <BR />Please contact your administrator and ask for "admin_personal_webmail" or "admin_group_webmail" permission.{/tr}
+				{/remarksbox}
+			{/if}
+		{/tab}
+	{/tabset}
 {/if}
 
 
