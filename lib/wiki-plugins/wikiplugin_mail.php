@@ -9,7 +9,7 @@ function wikiplugin_mail_info() {
 	global $prefs;
 
 	return array(
-		'name' => tra('Mait'),
+		'name' => tra('Mail'),
 		'description' => tra('Allow to send mail to groups or user or email directly'),
 		'validate' => 'all',
 		'params' => array(
