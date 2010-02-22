@@ -455,7 +455,7 @@ class RSSLib extends TikiLib
 		}
 
 		$this->update_feeds( array( $rssId ), true );
-		return true;
+		return $rssId;
 	}
 
 	/* remove rss feed from db */
