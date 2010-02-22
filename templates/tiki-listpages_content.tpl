@@ -167,13 +167,13 @@
 
 		{if $prefs.wiki_list_id eq 'y'}
 			<td class="{cycle advance=false}">
-				<a href="{$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName}">{$listpages[changes].page_id}</a>
+				<a href="{$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">{$listpages[changes].page_id}</a>
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_name eq 'y'}
 			<td class="{cycle advance=false}">
-				<a href="{$listpages[changes].pageName|sefurl:'wiki':'':$all_langs}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName}">
+				<a href="{$listpages[changes].pageName|sefurl:'wiki':'':$all_langs}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">
 					{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}
 				</a>
 				{if $prefs.wiki_list_description eq 'y' && $listpages[changes].description neq ""}
@@ -187,8 +187,8 @@
 		{foreach from=$wplp_used key=lc item=ln}
 			<td class="{cycle advance=false}">
 				{if $listpages[changes].translations[$lc]}
-					<a href="{$listpages[changes].translations[$lc]|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].translations[$lc]}">
-						{$listpages[changes].translations[$lc]}
+					<a href="{$listpages[changes].translations[$lc]|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].translations[$lc]|escape}">
+						{$listpages[changes].translations[$lc]|escape}
 					</a>
 				{/if}
 			</td>
