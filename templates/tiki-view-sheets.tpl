@@ -74,6 +74,7 @@
 				{else}
 					{button _id="save_button" _text="{tr}Save{/tr}" _ajax="n" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
 					{button _id="edit_button" _text="{tr}Edit{/tr}" _ajax="n" _class="" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
+					{jq notonready=true}var editSheetButtonLabel2="{tr}Cancel{/tr}";{/jq}
 					{if $prefs.feature_contribution eq 'y'}
 						{include file='contribution.tpl'}
 					{/if}
