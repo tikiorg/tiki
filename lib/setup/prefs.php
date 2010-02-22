@@ -1175,6 +1175,7 @@ function get_default_prefs() {
 		'feature_site_login' => 'y',
 		'feature_sitemenu' => 'n',
 		'feature_sitemenu_custom_code' => '',
+		'feature_secondary_sitemenu_custom_code' => '',
 		'feature_topbar_version' => 'n',
 		'feature_topbar_debug' => 'n',
 		'feature_topbar_id_menu' => '42',

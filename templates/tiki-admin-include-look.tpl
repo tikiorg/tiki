@@ -89,7 +89,7 @@
 		
 		{tab name="{tr}General Layout options{/tr}"}
 			{preference name=feature_custom_html_head_content}
-			
+			{preference name=feature_secondary_sitemenu_custom_code}
 			{preference name=feature_sitemycode}
 			<div class="adminoptionboxchild" id="feature_sitemycode_childcontainer">
 				{icon _id=information}
