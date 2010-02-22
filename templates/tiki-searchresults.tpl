@@ -12,7 +12,7 @@
 <div class="nohighlight">
 	{if $searchStyle neq "menu" && $prefs.feature_search_show_object_filter eq 'y'}
 		<div class="navbar">
-			{tr}Search in{/tr}:
+			{tr}Search in:{/tr}
 			{foreach item=name key=k from=$where_list}
 				{button _auto_args='where,highlight' href="tiki-searchresults.php?where=$k"  _selected="'$where'=='$k'" _selected_class="highlight" _text="$name"}
 			{/foreach}
@@ -166,7 +166,7 @@
 	<div class="nohighlight simplebox">
 		 {tr}Found{/tr} "{$words|escape}" {tr}in{/tr} 
 			{if $where_forum}
-				{tr}{$where|escape}{/tr}: {$where_forum|escape}
+				{tr}{$where|escape}:{/tr} {$where_forum|escape}
 			{else}
 				{$cant} {tr}{$where|escape}{/tr}
 			{/if}
@@ -185,7 +185,7 @@
 				{/if}
 			<a href="{$results[search].href}&amp;highlight={$words}" class="objectname">{$results[search].pageName|escape}</a>
 			{if $prefs.feature_search_show_visit_count eq 'y'}
-				<span class="itemhits">({tr}Hits{/tr}: {$results[search].hits|escape})</span>
+				<span class="itemhits">({tr}Hits:{/tr} {$results[search].hits|escape})</span>
 			{/if}
 
 			{if $prefs.feature_search_show_pertinence eq 'y' && $prefs.feature_search_fulltext eq 'y'}
@@ -193,14 +193,14 @@
 					{if $results[search].relevance <= 0}
 						({tr}Simple search{/tr})
 					{else}
-						({tr}Relevance{/tr}: {$results[search].relevance})
+						({tr}Relevance:{/tr} {$results[search].relevance})
 					{/if}
 				</span>
 			{/if}
 
 			<div class="searchdesc">{$results[search].data|strip_tags|truncate:250:'...'|escape}</div>
 			{if $prefs.feature_search_show_last_modification eq 'y'}
-				<div class="searchdate">{tr}Last modification{/tr}: {$results[search].lastModif|tiki_long_datetime}</div>
+				<div class="searchdate">{tr}Last modification:{/tr} {$results[search].lastModif|tiki_long_datetime}</div>
 			{/if}
 		</li>
 		{sectionelse}
