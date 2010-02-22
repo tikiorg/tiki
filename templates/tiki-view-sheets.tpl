@@ -58,11 +58,11 @@
 	<div class="tiki_sheet">{$grid_content}</div>
 	<div id="feedback" style="height: 1.5em; margin-left: .2em"><span></span></div>
 	<div class="navbar">
-		{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_view_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-sheets.php" _text="{tr}List Sheets{/tr}"}
 		{/if}
 	
-		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{if $prefs.feature_jquery_sheet eq "y"}
 				{if $editconflict eq 'y'}
 					{assign var="uWarning" value="&lt;br /&gt;{tr}Already being edited by{/tr} $semUser"}
@@ -95,15 +95,15 @@
 			{/if}
 		{/if}
 
-		{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}History{/tr}"}
 		{/if}
 
-		{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_view_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-export_sheet.php?sheetId=$sheetId" _text="{tr}Export{/tr}"}
 		{/if}
 
-		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-import_sheet.php?sheetId=$sheetId" _text="{tr}Import{/tr}"}
 		{/if}
 
@@ -111,7 +111,7 @@
 			{button href="tiki-graph_sheet.php?sheetId=$sheetId" _text="{tr}Graph{/tr}"}
 		{/if}
 
-		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{if $prefs.feature_jquery_sheet eq "y"}{* temporary button to edit the previous way *}
 				<br /><br /><br />
 				{remarksbox type="note" icon="bricks" title="jQuery.sheet under development"}
