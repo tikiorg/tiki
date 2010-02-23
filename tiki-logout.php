@@ -7,4 +7,16 @@
 $bypass_siteclose_check = 'y';
 require_once ('tiki-setup.php');
 
-$userlib->user_logout($user);
+if (!empty($_REQUEST['page'])) {
+	$out_page =  $_REQUEST['page'];
+	if ($tikilib->page_exists($out_page)) {
+		global $wikilib; include_once( 'lib/wiki/wikilib.php');
+		$out_page = $wikilib->sefurl($out_page);
+	} else {
+		$out_page = '';
+	}
+} else {
+	$out_page = '';
+}
+
+$userlib->user_logout($user, false, $out_page);
