@@ -1,5 +1,4 @@
 {* $Id$ *}
-{if $display_login} {* Hack to display the login module only once if it is also actually used as a module *}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 {literal}
@@ -176,4 +175,3 @@ function capLock(e){
 		</form>
 	{/if}
 {/tikimodule}
-{/if}

@@ -711,6 +711,11 @@ div.multiselect div.selection {
 	background: #fff;
 }
 
+div.multiselect,
+div.multiselect div.selection {
+	border: 1px solid transparent;
+}
+
 div.multiselect:hover,
 div.multiselect div.selection:hover {
 	border: 1px solid #80b1e2;

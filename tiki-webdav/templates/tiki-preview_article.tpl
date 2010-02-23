@@ -49,7 +49,7 @@
 	</div>
 
 	<div style="padding:5px;" class="articletrailer">
-		({$size} bytes)
+		({$size} {tr}bytes{/tr})
 	</div>
 
 	<div class="articlebody">

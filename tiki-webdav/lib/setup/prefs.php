@@ -1489,7 +1489,7 @@ function get_default_prefs() {
 		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
 		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
 		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus
-		'feature_jquery_reflection' => 'y',		// reflection effects on images
+		'feature_jquery_reflection' => 'n',		// reflection effects on images
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
 		'feature_jquery_carousel' => 'y',		// slideshow/carousel for file gals etc

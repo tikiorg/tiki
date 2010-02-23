@@ -66,7 +66,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		if ( isset($_COOKIE["tabbed_$smarty_tabset_name"]) && $_COOKIE["tabbed_$smarty_tabset_name"] == 'n' ) {
 			return $ret.$content;
 		}
-		$ret .= '<div class="tabs">
+		$ret .= '<div class="clearfix tabs">
 			';
 		$max = $smarty_tabset_i_tab - 1;
 		$ini = $smarty_tabset_i_tab - count($smarty_tabset);

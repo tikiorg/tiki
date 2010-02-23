@@ -125,7 +125,7 @@
   {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Be careful to set the right permissions on the files you link to{/tr}.{/remarksbox}
   <label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
   <input type="checkbox" name="keepOpenCbx" id="keepOpenCbx" onchange="keepOpenChanged(this);">
-{jq}
+{jq notonready=true}
 function keepOpenChanged(cbx) {
 	if (cbx.checked) {
 		setCookie("fgalKeepOpen", "1");

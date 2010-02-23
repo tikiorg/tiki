@@ -1,5 +1,8 @@
 {* $Id$ *}
 <input type="hidden" name="no_bl" value="y" />
+{if $prefs.feature_ajax_autosave eq "y"}
+	{button _title="{tr}Preview your changes in a separate window.{/tr}" _class="wikiaction tips" _text="{tr}AJAX Preview{/tr}" _ajax="n" _onclick="ajax_preview(); return false;"}&nbsp;&nbsp;
+{/if}
 <input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 	{if ! $page_badchars_display or $prefs.wiki_badchar_prevent neq 'y'}
@@ -19,7 +22,6 @@
 			{/if}
 		{/if}
 	{/if}
-
 	{if $page|lower ne 'sandbox'}
 	<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;" />
 	{/if}

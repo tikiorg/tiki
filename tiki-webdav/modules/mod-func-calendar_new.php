@@ -35,6 +35,11 @@ function module_calendar_new_info() {
 				'name' => tra('Calendar view type time span'),
 				'description' => tra('If in calendar (or "table") view type, determines the time span displayed by the calendar.') . ' ' . tra('Possible values:') . ' year, semester, quarter, month, week, day. A user changing this time span in the calendar can change the time span the module displays for him.',
 				'filter' => 'word'
+			),
+			'showaction' => array(
+				'name' => tra('Show action'),
+				'description' => 'y|n',
+				'filter' => 'word'
 			)
 		)
 	);

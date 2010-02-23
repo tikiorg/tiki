@@ -366,6 +366,10 @@ class ModLib extends TikiLib
 				}
 			}
 		}
+		
+		if ($module['name'] == 'login_box' && basename($_SERVER['SCRIPT_NAME']) == 'tiki-login_scr.php') {
+			return false;
+		}
 
 		return true;
 	}

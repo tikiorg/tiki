@@ -1,3 +1,4 @@
+{* $Id$ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_article.tpl *}
 
 {popup_init src="lib/overlib.js"}
@@ -109,9 +110,9 @@
 				{/if}
 			</td>
 		</tr>
-		<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if}>
-			<td class="formcolor">{tr}Rating{/tr}</td>
-			<td class="formcolor">
+		<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+			<td>{tr}Rating{/tr}</td>
+			<td>
 				<select name='rating'>
 					<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
 					<option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
@@ -146,7 +147,7 @@
 		{if $hasImage eq 'y'}
 			<tr class="formcolor">
 				<td>{tr}Own Image{/tr}</td>
-				<td>{$image_name} [{$image_type}] ({$image_size} bytes)</td>
+				<td>{$image_name} [{$image_type}] ({$image_size} {tr}bytes{/tr})</td>
 			</tr>
 			<tr class="formcolor">
 				<td>{tr}Own Image{/tr}</td>
@@ -176,21 +177,24 @@
 		<tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
 			<td>{tr}Own image size x{/tr} *</td>
 			<td>
-				<input type="text" name="image_x" value="{$image_x|escape}" />{tr}pixels{/tr}
+				<input type="text" name="image_x" value="{$image_x|escape}" />
+				{tr}pixels{/tr}
 			</td>
 		</tr>
 		<tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
 			<td>{tr}Own image size y{/tr} *</td>
 			<td>
-				<input type="text" name="image_y" value="{$image_y|escape}" />{tr}pixels{/tr}
+				<input type="text" name="image_y" value="{$image_y|escape}" />
+				{tr}pixels{/tr}
 			</td>
 		</tr>
 		<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
 			<td>{tr}Image caption{/tr} *</td>
 			<td>
-				<input type="text" name="image_caption" value="{$image_caption|escape}" size="60" />
+				<input type="text" name="image_caption" value="{$image_caption|escape}" size="80" />
 			</td>
 		</tr>
+
 		{if $prefs.feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 			<tr class="formcolor">
 				<td>{tr}Apply template{/tr} *</td>
@@ -204,7 +208,9 @@
 				</td>
 			</tr>
 		{/if}
+
 		{include file='categorize.tpl'}
+
 		<tr class="formcolor">
 			<td>
 				{tr}Heading{/tr}
@@ -226,31 +232,40 @@
 				<input type="hidden" name="cols" value="{$cols}" />
 			</td>
 		</tr>
+
 		{if $prefs.cms_spellcheck eq 'y'}
 			<tr class="formcolor">
-				<td>{tr}Spellcheck:{/tr} </td>
+				<td>
+					{tr}Spellcheck:{/tr}
+				</td>
 				<td>
 					<input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/>
 				</td>
 			</tr>
 		{/if}
+
 		<tr id='show_pubdate' {if $types.$type.show_pubdate eq 'y' || $types.$type.show_pre_publ ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
 			<td>{tr}Publish Date{/tr}</td>
 			<td>
-				{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order} 
-				{tr}at{/tr} 
+				{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
+				{tr}at{/tr}
 				<span dir="ltr">
-					{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}&nbsp;{$siteTimeZone}
+					{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
+					&nbsp;
+					{$siteTimeZone}
 				</span>
 			</td>
 		</tr>
+
 		<tr id='show_expdate' {if $types.$type.show_expdate eq 'y' || $types.$type.show_post_expire ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
 			<td>{tr}Expiration Date{/tr}</td>
 			<td>
-				{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order} 
+				{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
 				{tr}at{/tr} 
 				<span dir="ltr">
-					{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}&nbsp;{$siteTimeZone}
+					{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
+					&nbsp;
+					{$siteTimeZone}
 				</span>
 			</td>
 		</tr>

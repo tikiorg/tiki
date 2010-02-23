@@ -39,7 +39,7 @@
 	
 	<div class="articletrailer">
 		{if $show_size eq 'y'}
-			({$size} bytes)
+			({$size} {tr}bytes{/tr})
 		{/if}
 	</div>
 	
