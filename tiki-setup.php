@@ -189,7 +189,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 		$headerlib->add_jsfile( 'lib/jquery/reflection-jquery/js/reflection.js' );
 	}
 	if( $prefs['feature_jquery_sheet'] == 'y' ) {
-		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.base.css' );
+		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.json-2.2.js' );
 	}
