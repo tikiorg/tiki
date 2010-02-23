@@ -1028,7 +1028,7 @@ class TrackerLib extends TikiLib
 				$fopt['value'] = $catIds;
 				break;
 			case 'l':
-				if ( isset($fopt['options_array'][2]) && isset($fil[$fopt['options_array'][2]]) && ($lst = $fil[$fopt['options_array'][2]]) && isset($fopt['options_array'][3])) {
+				if ( isset($fopt['options_array'][2]) && isset($fopt['options_array'][2]) && isset($fopt['options_array'][3])) {
 					$opts[1] = preg_split('/:/', $fopt['options_array'][1]);
 					$finalFields = explode('|', $fopt['options_array'][3]);
 					$fopt['links'] = $this->get_join_values($trackerId, $itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($finalFields[0])), $fopt['options_array'][0], $finalFields, ' ', empty($fopt['options_array'][5])?'':$fopt['options_array'][5]);
