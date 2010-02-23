@@ -3089,6 +3089,7 @@ class TrackerLib extends TikiLib {
 	function get_filtered_item_values($fieldId, $value, $fieldIdOut) {
 		$query = "select ttifOut.`value` from `tiki_tracker_item_fields` ttifOut, `tiki_tracker_item_fields` ttif
 			where ttifOut.`itemId`= ttif.`itemId`and ttif.`fieldId`=? and ttif.`value`=? and ttifOut.`fieldId`=?";
+		$bindvars = array($fieldId, $value, $fieldIdOut);
 		$result = $this->query($query, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
