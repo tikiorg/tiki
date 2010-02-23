@@ -1004,7 +1004,7 @@ function get_default_prefs() {
 		'register_url' => 'tiki-register.php',
 		'error_url' => 'tiki-error.php',
 		'highlight_group' => '0',
-		'cookie_path' => '/',
+		'cookie_path' => $GLOBALS['tikiroot'],
 		'cookie_domain' => '',
 		'cookie_name' => 'tikiwiki',
 		'user_tracker_infos' => '',
