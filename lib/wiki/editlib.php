@@ -185,7 +185,7 @@ class EditLib {
 							// Generate wiki list item according to current list depth.
 							// (ensure '*/#' starts from begining of line)
 							$temp_max = count($p['listack']);
-							for ($l = '', $strl_l = strlen($l); $strl_l < $temp_max; $l .= end($p['listack']));
+							for ($l = ''; strlen($l) < $temp_max; $l .= end($p['listack']));	// needs strlen function in 2nd for loop argument
 							$src .= "\n$l ";
 							break;
 						case "font":
