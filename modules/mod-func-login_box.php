@@ -27,6 +27,5 @@ function module_login_box_info() {
 }
 
 function module_login_box( $mod_reference, $module_params ) {
-	global $smarty;
-	$smarty->assign('display_login', basename($_SERVER['SCRIPT_NAME']) != 'tiki-login_scr.php');
+	// all done in mod-login_box.tpl
 }
