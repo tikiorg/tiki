@@ -100,7 +100,7 @@ function batchImportUsers() {
 			continue;
 		}
 		if (!$exist) {
-			$userlib->add_user($u['login'], $u['password'], $u['email'], '', $pass_first_login);
+			$userlib->add_user($u['login'], $u['password'], $u['email'], $pass_first_login?$u['password']:'', $pass_first_login);
 			$logslib->add_log('users', sprintf(tra("Created account %s <%s>") , $u['login'], $u['email']));
 		}
 		$userlib->set_user_fields($u);
@@ -214,7 +214,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				$send_validation_email = true;
 				$apass = addslashes(md5($tikilib->genPass()));
 			}
-			if ($userlib->add_user($_REQUEST["name"], $_REQUEST['pass'] , $_REQUEST["email"], '', $pass_first_login, $apass, NULL, ($send_validation_email?'u':NULL))) {
+			if ($userlib->add_user($_REQUEST["name"], $_REQUEST['pass'] , $_REQUEST["email"], $pass_first_login?$_REQUEST['pass']:'', $pass_first_login, NULL, ($send_validation_email?'u':NULL))) {
 				$tikifeedback[] = array(
 					'num' => 0,
 					'mes' => sprintf(tra("New %s created with %s %s.") , tra("user") , tra("username") , $_REQUEST["name"])
