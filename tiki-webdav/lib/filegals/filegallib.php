@@ -67,7 +67,7 @@ class FileGalLib extends TikiLib
 		} else {
 			$savedir=$prefs['fgal_use_dir'];
 		}
-		if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
+		if (($prefs['fgal_use_db'] === 'n') || ($podCastGallery)) {
 			if ( filesize ($savedir . $path) > 0 ) {
 				if (function_exists('md5_file')) {
 					$checksum = md5_file($savedir . $path);
@@ -82,15 +82,14 @@ class FileGalLib extends TikiLib
 		}
 		$description = strip_tags($description);
 
-		if ( $prefs['fgal_allow_duplicates'] != 'y' ) {
+		if ( $prefs['fgal_allow_duplicates'] !== 'y' && !empty($data) ) {
 			$fgal_query = 'select count(*) from `tiki_files` where `hash`=?';
 			$fgal_vars = array($checksum);
-			if ( $prefs['fgal_allow_duplicates'] == 'different_galleries' ) {
+			if ( $prefs['fgal_allow_duplicates'] === 'different_galleries' ) {
 				$fgal_query .= ' and `galleryId`=?';
 				$fgal_vars[] = $galleryId;
 			}
 			if ( $this->getOne($fgal_query, $fgal_vars) > 0 ) {
-				@file_put_contents('/tmp/tiki4log', "insert_file no duplicate hash=$checksum\n", FILE_APPEND );
 				return false;
 			}
 		}
@@ -99,7 +98,7 @@ class FileGalLib extends TikiLib
 		if ($prefs['fgal_enable_auto_indexing'] != 'n') {
 			$search_data = $this->get_search_text_for_data($data,$path,$type, $galleryId);
 			if ($search_data === false) {
-				@file_put_contents('/tmp/tiki4log', "insert_file search_data\n", FILE_APPEND );
+				//@file_put_contents('/tmp/tiki4log', "insert_file search_data\n", FILE_APPEND );
 				return false;
 			}
 		}
@@ -1393,14 +1392,28 @@ class FileGalLib extends TikiLib
 		// Path detected as a file
 		if ( count($pathParts) < 3 )
 		{
-			if ( $result = $this->query(
-						'SELECT `fileId` FROM `tiki_files` WHERE `filename`=? AND `galleryId`=?',
-						array( $pathParts[1], (int)$parentId )
-						) )
-			{
-				$res = $result->fetchRow();
-				if ( ! empty($res) ) {
-					return array('type' => 'file', 'id' => $res['fileId']);
+			// If we ask for a previous version (name?version)
+			if ( preg_match('/^([^?]*)\?(\d*)$/', $pathParts[1], $matches) ) {
+				if ( $result = $this->query(
+							'SELECT `fileId` FROM `tiki_files` WHERE `name`=? AND `galleryId`=? order by fileId asc',
+							array( $matches[1], (int)$parentId )
+							,1, $matches[2]) )
+				{
+					$res = $result->fetchRow();
+					if ( ! empty($res) ) {
+						return array('type' => 'file', 'id' => $res['fileId']);
+					}
+				}
+			} else {
+				if ( $result = $this->query(
+							'SELECT `fileId` FROM `tiki_files` WHERE `name`=? AND `galleryId`=? order by fileId desc',
+							array( $pathParts[1], (int)$parentId )
+							) )
+				{
+					$res = $result->fetchRow();
+					if ( ! empty($res) ) {
+						return array('type' => 'file', 'id' => $res['fileId']);
+					}
 				}
 			}
 		}
@@ -1441,7 +1454,7 @@ class FileGalLib extends TikiLib
 				break;
 
 			case 'file': default:
-				$query = 'SELECT `filename` AS name, `galleryId` AS parentId FROM `tiki_files` WHERE `fileId`=?';
+				$query = 'SELECT `name` AS name, `galleryId` AS parentId FROM `tiki_files` WHERE `fileId`=?';
 		}
 
 		$res = false;

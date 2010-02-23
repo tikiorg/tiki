@@ -250,9 +250,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	protected function createResource( $path, $content = null )
 	{
-		global $user, $tikilib;
+		global $user, $tikilib, $prefs;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
+		//@file_put_contents('/tmp/tiki4log', "createResource: $path, content=$content \n", FILE_APPEND );
 		if ( empty($path)
 			|| substr($path, -1, 1) == '/'
 			|| ( $objectId = $filegallib->get_objectid_from_virtual_path( dirname( $path ) ) ) === false
@@ -262,16 +263,19 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		$name = basename( $path );
 		if ( empty($content) ) $content = '';
 
-		$fhash = md5( $name );
-		do
-		{
-			$fhash = md5( uniqid( $fhash ) );
-		}
-		while ( file_exists( $this->root . '/' . $fhash ) );
+		if ( $prefs['fgal_use_db'] === 'n' ) {
+			$fhash = md5( $name );
+			do
+			{
+				$fhash = md5( uniqid( $fhash ) );
+			}
+			while ( file_exists( $this->root . '/' . $fhash ) );
 
-		//@file_put_contents('/tmp/tiki4log', "createResource: $fhash, content=$content \n", FILE_APPEND );
-		if ( @file_put_contents( $this->root . '/' . $fhash, $content ) === false )
-			return false;
+			if ( @file_put_contents( $this->root . '/' . $fhash, $content ) === false )
+				return false;
+		} else {
+			$fhash = '';
+		}
 
 ///		$type = empty($this->requestMimeType) ? '' : $this->requestMimeType;
 
@@ -292,12 +296,12 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$user
 		);
 		//@file_put_contents('/tmp/tiki4log', "createResource: end fileID=$fileId\n", FILE_APPEND );	
-		return $fileID != 0;
+		return $fileId != 0;
 	}
 
 	protected function setResourceContents( $path, $content )
 	{
-		global $user, $tikilib;
+		global $user, $tikilib, $prefs;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
 		if ( empty($path)
@@ -309,22 +313,26 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		$name = basename( $path );
 		if ( empty($content) ) $content = '';
 
-		$fhash = md5( $name );
-		do
-		{
-			$fhash = md5( uniqid( $fhash ) );
+		if ( $prefs['fgal_use_db'] === 'n' ) {
+			$fhash = md5( $name );
+			do
+			{
+				$fhash = md5( uniqid( $fhash ) );
+			}
+			while ( file_exists( $this->root . '/' . $fhash ) );
+		} else {
+			$fhash = '';
 		}
-		while ( file_exists( $this->root . '/' . $fhash ) );
 
-		//@file_put_contents('/tmp/tiki4log', "setResourceContents : $fhash, content=$content \n", FILE_APPEND );
+		//@file_put_contents('/tmp/tiki4log', "setResourceContents : $path/$fhash \n", FILE_APPEND );
 		$fileInfo = $filegallib->get_file_info($objectId['id'], false, false);
 		$filegalInfo = $filegallib->get_file_gallery_info($fileInfo['galleryId']);
 
-		if ( empty($fileInfo['path']) || @file_put_contents( $this->root . '/' . $fhash, $content ) === false )
+		if ( $prefs['fgal_use_db'] === 'n' && empty($fileInfo['path']) && @file_put_contents( $this->root . '/' . $fhash, $content ) === false ) {
 			return false;
-		//@file_put_contents('/tmp/tiki4log', "setResourceContents: end \n", FILE_APPEND );	
+		}
 
-		return (bool) $filegallib->replace_file(
+		$fileId = $filegallib->replace_file(
 			$objectId['id'],
 			$fileInfo['name'],
 			$fileInfo['description'],
@@ -339,6 +347,8 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$filegalInfo,
 			true
 		);
+		//@file_put_contents('/tmp/tiki4log', "setResourceContents: fileId = $fileId end \n", FILE_APPEND );	
+		return $fileId;
 	}
 
 	protected function getResourceContents( $path )
@@ -352,13 +362,16 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		if ( $objectId !== false && $objectId['type'] == 'file' )
 		{
 			$fileInfo = $tikilib->get_file($objectId['id']);
-			$result = $this->root . '/' . $fileInfo['path'];
+			if ( empty($fileInfo['path']) ) {
+				return $fileInfo['data'];
+			} else {
+				$result = $this->root . '/' . $fileInfo['path'];
 
-			if ( ! file_exists($result) )
-				return false;
+				if ( ! file_exists($result) )
+					return false;
+			}
+			return file_get_contents( $result );
 		}
-
-		return file_get_contents( $result );
 	}
 
 	///TODO
@@ -604,7 +617,11 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	protected function getETag( $path )
 	{
-		return $this->getProperty( $path, 'getetag' )->etag;
+		if ( $etag = $this->getProperty( $path, 'getetag' ) ) {
+			return $this->getProperty( $path, 'getetag' )->etag;
+		} else {
+			return md5($path);
+		}
 	}
 
 	public function getAllProperties( $path )
@@ -615,9 +632,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		foreach ( $this->handledLiveProperties as $property )
 		{
 			//@file_put_contents('/tmp/tiki4log', "getAllProperties : property : $property\n", FILE_APPEND );
-			$storage->attach(
-				$this->getProperty( $path, $property )
-			);
+			$storage->attach( $this->getProperty( $path, $property ) );
 		}
 
 		return $storage;
@@ -678,7 +693,8 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		//@file_put_contents('/tmp/tiki4log', "-> getCollectionMembers\n", FILE_APPEND );
 		//@file_put_contents('/tmp/tiki4log', "-> getCollectionMembers\ngalleryId:$galleryId\n", FILE_APPEND );
 		if ( $galleryId !== false ) {
-			$files = $tikilib->get_files(0, -1, 'name_desc', '', (int)$galleryId, false, true, false, true, false, false, false, false, 'admin', true, false);
+			//$files = $tikilib->get_files(0, -1, 'name_desc', '', (int)$galleryId, false, true, false, true, false, false, false, false, 'admin', true, false);
+			$files = $tikilib->get_files(0, -1, 'name_desc', '', (int)$galleryId, true, true, false, true, false, false, false, false, 'admin', true, false);
 
 			foreach ( $files['data'] as $fileInfo ) {
 				if ( $fileInfo['isgal'] == '1' ) {
@@ -686,11 +702,13 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 					$contents[] = new ezcWebdavCollection( $path . $fileInfo['name'] . '/' );
 				} else {
 					// Add files without content
-					$contents[] = new ezcWebdavResource( $path . $fileInfo['filename'] );
+					//$contents[] = new ezcWebdavResource( $path . $fileInfo['name'] . ( $fileInfo['nbArchives'] > 0 ? "?".$fileInfo['nbArchives'] : '') );
+					$contents[] = new ezcWebdavResource( $path . $fileInfo['name'] );
 				}
 			}
 		}
 
+		//@file_put_contents('/tmp/tiki4log',"getCollectionMembers ".print_r($contents,true). "\n", FILE_APPEND );
 		return $contents;
 	}
 
@@ -772,7 +790,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	public function move( ezcWebdavMoveRequest $request )
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 		global $filegallib; include_once('lib/filegals/filegallib.php');
 
 		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: MOVE --\n", FILE_APPEND );
@@ -1024,19 +1042,23 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 					);
 					*/
 
-					$newPath = md5( $infos['dest']['name'] );
-					do
-					{
-						$newPath = md5( uniqid( $newPath ) );
-					}
-					while ( file_exists( $this->root . '/' . $newPath ) );
+					if ( $prefs['fgal_use_db'] === 'n' ) {
+						$newPath = md5( $infos['dest']['name'] );
+						do
+						{
+							$newPath = md5( uniqid( $newPath ) );
+						}
+						while ( file_exists( $this->root . '/' . $newPath ) );
 
-					if ( ( @rename( $this->root . '/' . $infos['source']['infos']['path'] , $this->root . '/' . $newPath ) === false )
-						|| ( @file_put_contents( $this->root . '/' . $infos['source']['infos']['path'], '' ) === false )
-					)
-					{
-						$this->freeLock();
-						return false;
+						if ( ( @rename( $this->root . '/' . $infos['source']['infos']['path'] , $this->root . '/' . $newPath ) === false )
+								|| ( @file_put_contents( $this->root . '/' . $infos['source']['infos']['path'], '' ) === false )
+							 )
+						{
+							$this->freeLock();
+							return false;
+						}
+					} else {
+						$newPath = '';
 					}
 
 					$noErrors = (bool) $filegallib->replace_file(
