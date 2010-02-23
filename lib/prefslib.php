@@ -27,7 +27,7 @@ class PreferencesLib
 								'warning' => '',
 								'hint' => '',
 								'shorthint' => '',
-								'perspective' => false,
+								'perspective' => true,
 			);
 			$info = $data[$name];
 
