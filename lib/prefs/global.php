@@ -138,9 +138,9 @@ function prefs_global_list() {
 			'size' => '5',
 		),
 		'urlOnUsername' => array(
-			'name' => tra('Url to go when clicking on a username.'),
+			'name' => tra('Url to go to when clicking on a username.'),
 			'type' => 'text',
-			'description' => tra('Url to go when clicking on a username.').' '.tra('Default: ').'tiki-user_information.php?userId=',
+			'description' => tra('Url to go to when clicking on a username.').' '.tra('Default').': tiki-user_information.php?userId=%userId% <em>('.tra('Use %user% for login name and %userId% for userId)').')</em>',
 		),
 		'forgotPass' => array(
 			'name' => tra('Remind/forgot password'),
