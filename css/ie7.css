@@ -22,3 +22,7 @@
 .codelisting {
 	padding-bottom: 1.8em;
 }
+
+form#editpageform {
+	width: 520px;
+}
