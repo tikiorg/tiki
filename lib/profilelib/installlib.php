@@ -998,7 +998,6 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		}
 		global $filegallib; require_once 'lib/filegals/filegallib.php';
 		$data['galleryId'] = $filegallib->getGalleryId($data['name'], $data['parentId']);
-		echo 'fff'; print_r($data);
 		switch ($data['mode']) {
 		case 'update':
 			if (empty($data['galleryId'])) {
