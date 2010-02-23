@@ -69,6 +69,11 @@ function module_upcoming_events_info() {
 				'name' => tra('Maximum length'),
 				'description' => tra('If set to an integer, event names are allowed that number of characters as a maximum before being truncated.'),
 				'filter' => 'int'
+			),
+			'showaction' => array(
+				'name' => tra('Show action'),
+				'description' => 'y|n',
+				'filter' => 'word'
 			)
 		),
 		'common_params' => array('nonums', 'rows')
