@@ -44,7 +44,7 @@ $clicks = $info["clicks"];
 $smarty->assign('impressions', $impressions);
 $smarty->assign('clicks', $clicks);
 if ($impressions) {
-	$smarty->assign('ctr', $clicks / $impressions);
+	$smarty->assign('ctr', ($clicks / $impressions) * 100);
 } else {
 	$smarty->assign('ctr', 0);
 }
