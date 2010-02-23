@@ -11,12 +11,7 @@ $inputConfiguration = array(
 		array( 'staticKeyFilters' => array(
 				'date' => 'digits',
 				'maxRecords' => 'digits',
-				'highlight' => 'word',
-				'where' => 'word',
-				'find' => 'word',
-				'lang' => 'word',
-				'words' =>'word',
-				'boolean' =>'word',
+				'boolean' =>'word'
 		)
 	)
 );
