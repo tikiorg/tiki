@@ -800,6 +800,7 @@ function wikiplugin_img_info() {
 		
 		//Set final height and width dimension string
 		//handle file gallery images separately to use server-side resizing capabilities
+		$imgdata_dim = '';
 		if (!empty($imgdata['fileId'])) {
 			if (empty($urldisp) && empty($urlthumb)) {
 				$src .= '&display';
@@ -813,10 +814,13 @@ function wikiplugin_img_info() {
 			} elseif (!empty($width) || !empty($height)) {
 				if ((!empty($width) && !empty($height)) && (empty($urlx[0]) && empty($urly[0]) && empty($urlscale[0]))) {
 					$src .= '&x=' . $width . '&y=' . $height;
+					$imgdata_dim .= ' width="' . $width . '"';
+					$imgdata_dim .= ' height="' . $height . '"';
 				} elseif (!empty($width) && (empty($urlx[0]) && empty($urlthumb) && empty($urlscale[0]))) {
 					$src .= '&x=' . $width; 
-					$imgdata_dim = '';
 					$height = $fheight;
+					$imgdata_dim .= ' width="' . $width . '"';
+					$imgdata_dim .= ' height="' . $height . '"';
 				} elseif (!empty($heigth) && (empty($urly[0]) && empty($urlthumb) && empty($urlscale[0]))) {
 					$src .= '&y=' . $height;
 					$imgdata_dim = '';
