@@ -138,7 +138,8 @@ function getScheme() { // {{{
 	return $scheme;
 } // }}}
 function getReturnTo() { // {{{
-	$string = sprintf("%s://%s:%s%s/tiki-login_openid.php?action=return", getScheme(), $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], dirname($_SERVER['PHP_SELF']));
+	$path = dirname($_SERVER['PHP_SELF']);
+	$string = sprintf("%s://%s:%s%s/tiki-login_openid.php?action=return", getScheme(), $_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'], $path == '/' ? '' : $path);
 	if (isset($_GET['action']) && $_GET['action'] == 'force') $string.= '&force=true';
 	return $string;
 } // }}}
