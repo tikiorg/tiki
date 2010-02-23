@@ -18,5 +18,19 @@ function prefs_article_list() {
 			),
 
 		),
+		'article_image_size_x' => array(
+			'name' => tra('Default article image width'),
+			'type' => 'text',
+			'size' => 3,
+			'filter' => 'int',
+			'hint' => tra('0 for original image size'),
+		),
+		'article_image_size_y' => array(
+			'name' => tra('Default article image height'),
+			'type' => 'text',
+			'size' => 3,
+			'filter' => 'int',
+			'hint' => tra('0 for original image size.') ,
+		),
 	);
 }

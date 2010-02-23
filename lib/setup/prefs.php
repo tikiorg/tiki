@@ -637,6 +637,8 @@ function get_default_prefs() {
 		'feature_article_comments' => 'n',
 		'article_comments_default_ordering' => 'points_desc',
 		'article_comments_per_page' => 10,
+		'article_image_size_x' => '0',
+		'article_image_size_y' => '0',
 		'feature_cms_templates' => 'n',
 		'cms_bot_bar' => 'y',
 		'cms_left_column' => 'y',

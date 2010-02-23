@@ -56,7 +56,18 @@
 				{preference name=feature_cms_emails}
 
 				<input type="hidden" name="cmsfeatures" />
+			</fieldset>
+			
+			<fieldset>
+				<legend>
+					{tr}Article properties{/tr}
+				</legend>
+				{remarksbox type="tip" title="{tr}Tip{/tr}"}
+					{tr}Give only one value (width or height) to keep the image proportions{/tr}
+				{/remarksbox}
 
+				{preference name=article_image_size_x}
+				{preference name=article_image_size_y}
 			</fieldset>
 
 			<fieldset>
