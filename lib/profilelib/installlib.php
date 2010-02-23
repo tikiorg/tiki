@@ -937,6 +937,8 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		$defaults = array(
 			'owner' => 'admin',
 			'public' => 'n',
+			'galleryId' => null,
+			'parent' => -1,
 		);
 
 		$conversions = array(
@@ -978,7 +980,7 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 			}
 
 		unset( $data['galleryId'] );
-
+		$this->replaceReferences($data);
 		return $this->data = $data;
 	}
 
@@ -987,17 +989,34 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		$data = $this->getData();
 		if( ! isset( $data['name'] ) )
 			return false;
-
+		return $this->convertMode($data);
+	}
+	private function convertMode($data)
+	{
+		if (!isset($data['mode'])) {
+			return true; // will duplicate if already exists
+		}
+		global $filegallib; require_once 'lib/filegals/filegallib.php';
+		$data['galleryId'] = $filegallib->getGalleryId($data['name'], $data['parentId']);
+		echo 'fff'; print_r($data);
+		switch ($data['mode']) {
+		case 'update':
+			if (empty($data['galleryId'])) {
+				throw new Exception(tra('File gallery does not exist').' '.$data['name']);
+			}
+		case 'create':
+			if (!empty($data['galleryId'])) {
+				throw new Exception(tra('File gallery already exists').' '.$data['name']);
+			}
+		}
 		return true;
 	}
-
 	function _install()
 	{
 		global $filegallib;
 		if( ! $filegallib ) require_once 'lib/filegals/filegallib.php';
 
 		$input = $this->getData();
-		$this->replaceReferences( $input );
 		
 		return $filegallib->replace_file_gallery( $input );
 	}
@@ -2131,15 +2150,39 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 		if( $this->data )
 			return $this->data;
 
-		return $this->data = $this->obj->getData();
+		$data = $this->obj->getData();
+		$this->replaceReferences($data);
+
+		return $this->data = $data;
 	}
 	
 	function canInstall()
 	{
 		$data = $this->getData();
 		
-		if (isset($data)) return true;
-		else return false;
+		if (!isset($data['name'])) {
+			return false;
+		}
+		return $this->convertMode($data);
+	}
+	private function convertMode($data)
+	{
+		global $calendarlib; include_once('lib/calendar/calendarlib.php');
+		if (!isset($data['mode'])) {
+			return true; // will duplicate if already exists
+		}
+		$data['calendarId'] = $calendarlib->get_calendarId_from_name($data['name']);
+		switch ($data['mode']) {
+		case 'update':
+			if (empty($data['calendarId'])) {
+				throw new Exception(tra('Calendar does not exist').' '.$data['name']);
+			}
+		case 'create':
+			if (!empty($data['calendarId'])) {
+				throw new Exception(tra('Calendar already exists').' '.$data['name']);
+			}
+		}
+		return true;
 	}
 	
 	function _install()
@@ -2149,15 +2192,11 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 			global $calendarlib; if (!$calendarlib) require_once 'lib/calendar/calendarlib.php';
 			
 			$calendar = $this->getData();
-			$this->replaceReferences( $calendar );
 			
-			if ((isset ($calendar['name'])) && (!empty ($calendar['name'])))
-			{
-				global $user;
-				$customflags = isset($calendar['customflags']) ? $calendar['customflags']  : array();
-				$options = isset($calendar['options']) ? $calendar['options']  : array();
-				$id = $calendarlib->set_calendar(null, $user, $calendar['name'], $calendar['description'], $customflags,$options);
-			}
+			global $user;
+			$customflags = isset($calendar['customflags']) ? $calendar['customflags']  : array();
+			$options = isset($calendar['options']) ? $calendar['options']  : array();
+			$id = $calendarlib->set_calendar($data['calendarId'], $user, $calendar['name'], $calendar['description'], $customflags,$options);
 			return $id;
 		}
 	}

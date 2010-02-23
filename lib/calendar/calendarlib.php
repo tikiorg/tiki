@@ -79,6 +79,10 @@ class CalendarLib extends TikiLib
 		}
 		return $res;
 	}
+	function get_calendarId_from_name($name) {
+		$query = 'select `calendarId` from `tiki_calendars` where `name`=?';
+		return $this->getOne($query, array($name));
+	}
 
 	function set_calendar($calendarId, $user, $name, $description, $customflags=array(),$options=array()) {
 		global $prefs;

@@ -1392,5 +1392,9 @@ class FileGalLib extends TikiLib
 			$prefs['fgal_list_lastDownload'], $prefs['fgal_list_lockedby'], $prefs['fgal_list_backlinks']), 
 			$fgalIds));
 	}
+	function getGalleryId($name, $parentId) {
+		$query = 'select `galleryId` from `tiki_file_galleries` where `name`=? and `parentId`=?';
+		return $this->getOne($query, array($name, $parentId));
+	}
 }
 $filegallib = new FileGalLib;
