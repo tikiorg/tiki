@@ -88,6 +88,7 @@ RewriteRule ^display([0-9]+)(.*)   tiki-download_file.php?fileId=$1&display$2 [Q
 RewriteRule ^preview([0-9]+)(.*)   tiki-download_file.php?fileId=$1&preview$2 [QSA,L]
 RewriteRule ^forum([0-9]+)(.*)     tiki-view_forum.php?forumId=$1$2         [QSA,L]
 RewriteRule ^gallery([0-9]+)(.*)   tiki-browse_gallery.php?galleryId=$1$2   [QSA,L]
+RewriteRule ^img([0-9]+)(.*)       show_image.php?id=$1$2                   [QSA,L]
 RewriteRule ^image([0-9]+)(.*)     show_image.php?id=$1$2                   [QSA,L]
 RewriteRule ^imagescale([0-9]+)/([0-9]+)(.*) show_image.php?id=$1&scalesize=$2$3  [QSA,L]
 RewriteRule ^newsletter([0-9]+)(.*) tiki-newsletters.php?nlId=$1$2          [QSA,L]
