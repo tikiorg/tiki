@@ -8241,7 +8241,6 @@ $lang=Array(
 // "Manage existing translations of this page" => "Manage existing translations of this page",
 // "detach" => "detach",
 // "Change language for this page" => "Change language for this page",
-// "Please choose the language for this page:" => "Please choose the language for this page:",
 // "Select from available options.." => "Select from available options..",
 // "Change Language" => "Change Language",
 // "No language is assigned to this page" => "No language is assigned to this page",
