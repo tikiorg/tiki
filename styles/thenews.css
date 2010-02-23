@@ -1735,12 +1735,12 @@ table.default tfoot td {
 	font-weight: bold;
 	text-align: center;
 	background: #eee;
-	color: #d8d8d8;
+	color: #000;
 }
 
 table.default	td {
 	border: solid 1px #909090;
-	background: #eee;
+	background: #fff;
 }
 
 .highlight_word_0,
