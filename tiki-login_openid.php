@@ -106,7 +106,7 @@ function &getStore() { // {{{
 	 * created elsewhere.  After you're done playing with the example
 	 * script, you'll have to remove this directory manually.
 	 */
-	$store_path = "/tmp/_php_consumer_test";
+	$store_path = "temp/openid_consumer";
 	if (!file_exists($store_path) && !mkdir($store_path)) {
 		print "Could not create the FileStore directory '$store_path'. " . " Please check the effective permissions.";
 		exit(0);
