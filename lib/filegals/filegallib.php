@@ -145,7 +145,9 @@ class FileGalLib extends TikiLib
 
 		global $cachelib; require_once("lib/cache/cachelib.php");
 		$cachelib->empty_type_cache('fgals_perms_'.$id."_");
-		$cachelib->empty_type_cache('fgals_perms_'.$info['galleryId']."_");
+		if (isset($info['galleryId'])) {
+			$cachelib->empty_type_cache('fgals_perms_'.$info['galleryId']."_");
+		}
 		$cachelib->empty_type_cache($this->get_all_galleries_cache_type());
 
 		$this->query('delete from `tiki_file_galleries` where `galleryId`=?', array($id));
