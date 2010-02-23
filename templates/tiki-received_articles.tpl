@@ -25,7 +25,7 @@
 		</table>
 	</div>
 	<div class="articletrailer">
-		(xx bytes)
+		(xx {tr}bytes{/tr})
 	</div>
 
 	<div class="articlebody">

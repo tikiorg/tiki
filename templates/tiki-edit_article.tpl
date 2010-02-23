@@ -153,7 +153,7 @@
 		{if $hasImage eq 'y'}
 			<tr class="formcolor">
 				<td>{tr}Own Image{/tr}</td>
-				<td>{$image_name} [{$image_type}] ({$image_size} bytes)</td>
+				<td>{$image_name} [{$image_type}] ({$image_size} {tr}bytes{/tr})</td>
 			</tr>
 			<tr class="formcolor">
 				<td>{tr}Own Image{/tr}</td>
