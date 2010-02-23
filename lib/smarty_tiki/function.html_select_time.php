@@ -56,7 +56,7 @@ function smarty_function_html_select_time($params, &$smarty)
 	extract($params);
 	if (!isset($time) or !$time) {
 		$time = $tikilib->now;
-	} else {
+		} else if (is_string($time) && strpos($time, ':') !== false) {
 		$e = explode(':', $time, 3);
 		$time = $tikilib->make_time(isset($e[0])?$e[0]:0, isset($e[1])?$e[1]:0, isset($e[2])?$e[2]:0, $tikilib->date_format('%m'), $tikilib->date_format('%d'), $tikilib->date_format('%Y'));
 	}
