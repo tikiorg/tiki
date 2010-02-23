@@ -35,6 +35,18 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	}
 	simple_set_value('fgal_quota_default');
 }
+
+if (isset($_REQUEST['move']) && $_REQUEST['move'] == 'to_fs') {
+	if (empty($prefs['fgal_use_dir'])) {
+		$errors[] = tra('You must specify a directory');
+	} else {
+		$errors = $filegallib->moveToFs();
+	}
+	if (!empty($errors)) {
+		$smarty->assign_by_ref('errors', $errors);
+	}
+}
+
 if (isset($_REQUEST["filegallistprefs"])) {
 	check_ticket('admin-inc-fgal');
 	simple_set_value('fgal_list_id');

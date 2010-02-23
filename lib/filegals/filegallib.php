@@ -1081,5 +1081,34 @@ class FileGalLib extends TikiLib {
 		}
 		return true;			
 	} 
+	/* move files to file system
+	 * return '' if ok otherwise error message */
+	function moveToFs() {
+		$query = 'select * from `tiki_files` where `path` = ?';
+		$result = $this->query($query, array(''));
+		while ($res = $result->fetchRow()) {
+			if (($errors = $this->moveFileToFs($res)) != '') {
+				return $errors;
+			}
+		}
+		return '';
+	}
+	function moveFileToFs($file_info) {
+		global $prefs;
+		$fhash = md5($file_info['name']);
+		do {
+				$fhash = md5(uniqid($fhash));
+		} while (file_exists($prefs['fgal_use_dir'] . $fhash));
+		if (!($fw = fopen($prefs['fgal_use_dir'] . $fhash, 'wb'))) {
+			return tra('Cannot open this file:') . $prefs['fgal_use_dir'] . $fhash;
+		}
+		if (!fwrite($fw, $file_info['data'])) {
+			return tra('Cannot write to this file:') . $prefs['fgal_use_dir'] . $fhash;
+		}
+		fclose($fw);
+		$query = 'update `tiki_files` set `data`=?, `path`=? where `fileId`=?';
+		$this->query($query, array('', $fhash, $file_info['fileId']));
+		return '';
+	}
 }
 $filegallib = new FileGalLib;
