@@ -3,12 +3,12 @@
 {strip}
 {if $filegals_manager eq '' and $print_page ne 'y'}
 	{if $prefs.feature_site_login eq 'y'}
-		{if $user}
+		{if !empty($user)}
 <div id="siteloginbar" class="logged-in">
 	{$user|userlink} | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 {else}
 <div id="siteloginbar">
-	{if $user}
+	{if !empty($user)}
 		{$user|userlink} | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 	{elseif $smarty.request.user neq 'admin' && $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
 		<b><a href="tiki-login.php?cas=y">{tr}Log in through CAS{/tr}</a></b>
