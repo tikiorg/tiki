@@ -552,7 +552,8 @@ class CategLib extends ObjectLib {
 	}
 
 	// Get all the objects in a category
-	function get_category_objects($categId, $type=null) {
+	// filter = array('table'=>, 'join'=>, 'filter'=>, 'bindvars'=>)
+	function get_category_objects($categId, $type=null, $filter = null) {
 		$bindVars[] = (int)$categId;
 		if (!empty($type)) {
 			$where = ' and o.`type`=?';
@@ -560,7 +561,14 @@ class CategLib extends ObjectLib {
 		} else {
 			$where = '';
 		}
-		$query = "select * from `tiki_category_objects` c,`tiki_categorized_objects` co, `tiki_objects` o where c.`catObjectId`=co.`catObjectId` and co.`catObjectId`=o.`objectId` and c.`categId`=?".$where;
+		if (!empty($filter)) {
+			$from = ',`'.$filter['table'].'` ft';
+			$where .= ' and o.`itemId`=ft.`'.$filter['join'].'` and ft.`'.$filter['filter'].'`=?';
+			$bindVars[] .= $filter['bindvars'];
+		} else {
+			$from = '';
+		}
+		$query = "select * from `tiki_category_objects` c,`tiki_categorized_objects` co, `tiki_objects` o $from where c.`catObjectId`=co.`catObjectId` and co.`catObjectId`=o.`objectId` and c.`categId`=?".$where;
 		$result = $this->query($query, $bindVars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
