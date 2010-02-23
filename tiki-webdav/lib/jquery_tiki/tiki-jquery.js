@@ -864,7 +864,6 @@ $jq.fn.tiki = function(func, type, options) {
 							urlMenuCss: 	"lib/jquery/jquery.sheet/plugins/menu.css", 				//set to bool false if you don't want to use
 							urlMetaData: 	"lib/jquery/jquery.sheet/plugins/jquery.metadata.js", 		//set to bool false if you don't want to use
 							urlScrollTo: 	"lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js", 	//set to bool false if you don't want to use
-							urlScrollsync: 	"lib/jquery/jquery.sheet/plugins/scrollsync.js", 			//set to bool false if you don't want to use
 							urlJGCharts: 	"lib/jquery/jquery.sheet/plugins/jgcharts.pack.js", 		//set to bool false if you don't want to use
 							urlGet: "",
 							buildSheet: false

@@ -28,7 +28,7 @@
 				</option>
 			{/section}
 			</select>
-			{if $filters[if].format eq "m"} {tr}Tip: Hold down CTRL to select multiple{/tr}{/if}
+			{if $filters[if].format eq "m"}{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
 {*------text *} 
 		{elseif $filters[if].format eq 't' or $filters[if].format eq 'T' or $filters[if].format eq 'i'}
 			{if $filters[if].format eq 'i'}

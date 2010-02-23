@@ -60,6 +60,12 @@ function wikiplugin_tracker_info()
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
+			'showstatus' => array(
+				'required' => false,
+				'name' => tra('Show Status'),
+				'description' => 'y|n',
+				'filter' => 'alpha'
+			),
 			'embedded' => array(
 				'required' => false,
 				'name' => tra('Embedded'),
@@ -326,16 +332,32 @@ function wikiplugin_tracker($data, $params)
 
 			if ($thisIsThePlugin) {
 				/* ------------------------------------- Recup all values from REQUEST -------------- */
+				if (!empty($_REQUEST['autosavefields'])) {
+					$autosavefields = explode(':', $_REQUEST['autosavefields']);
+					$autosavevalues = explode(':', $_REQUEST['autosavevalues']);
+					if (isset($params['autosavefields'])) {
+						$autosavefields = array_merge($autosavefields, $params['autosavefields']);
+						$autosavevalues = array_merge($autosavevalues, $params['autosavevalues']);
+					}
+				}
 				if (!empty($autosavefields)) {
 					foreach ($autosavefields as $i=>$f) {
+						if (!$ff = $trklib->get_field($f, $flds['data'])) {
+							continue;
+						}
+						if (!$trklib->fieldId_is_editable($ff, $item_info)) {
+							continue;
+						}
 						if (preg_match('/categories\(([0-9]+)\)/', $autosavevalues[$i], $matches)) {
 							global $categlib; include_once('lib/categories/categlib.php');
 							$categs = $categlib->list_categs($matches[1]);
 							$_REQUEST["ins_cat_$f"][] = $categs[0]['categId'];
 						} elseif (preg_match('/preference\((.*)\)/', $autosavevalues[$i], $matches)) {
-							$_REQUEST["ins_cat_$f"][] = $_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
+							$_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
+						} elseif ($ff['type'] == 'e') {
+							$_REQUEST["ins_cat_$f"][] = $autosavevalues[$i];
 						} else {
-							$_REQUEST["ins_cat_$f"][] = $_REQUEST["$ins_id_$f"] = $autosavevalues[$i];
+							$_REQUEST['track'][$f] = $autosavevalues[$i];
 						}
 					}
 				}
@@ -831,12 +853,28 @@ function wikiplugin_tracker($data, $params)
 					}
 				}
 			}
+			if (!empty($showstatus) && $showstatus == 'y') {
+				$status_types = $trklib->status_types();
+				$smarty->assign_by_ref('status_types', $status_types);
+				$smarty->assign('form_status', 'status');
+				$smarty->assign_by_ref('tracker', $tracker);
+				if (!empty($item_info)) {
+					$smarty->assign_by_ref('item', $item_info);
+				}
+				$status_input = $smarty->fetch('tracker_status_input.tpl');
+			}
 
 			// Loop on tracker fields and display form
 			if (empty($tpl) && empty($wiki)) {
 				$back.= '<table class="wikiplugin_tracker">';
+				if (!empty($showstatus) && $showstatus == 'y') {
+					$back .= '<tr><td>'.tra('Status').'</td><td>'.$status_input.'</td></tr>';
+				}
 			} else {
 				$back .= '<div class="wikiplugin_tracker">';
+				if (!empty($showstatus) && $showstatus == 'y') {
+					$smarty->assign_by_ref('f_status_input', $status_input);
+				}
 			}
 			$backLength0 = strlen($back);
 			foreach ($flds['data'] as $f) {

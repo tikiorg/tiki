@@ -25,9 +25,18 @@ function browser() {
 	this.docom = (this.ie56||this.ns||this.iewin||this.op||this.iemac||this.safari||this.moz||this.oldmoz||this.ns6);
 }
 
-function getElementById(id) {
+function getElementById(id) {	// actually gets element by name too...
 	if (typeof document.getElementById == "function") {
-		return document.getElementById(id);
+		var el = document.getElementById(id);
+		if (el) {
+			return el;
+		}
+	}
+	if (typeof document.getElementsByName == "function") {
+		var arr = document.getElementsByName(id);
+		if (arr.length > 0) {
+			return arr[0];
+		}
 	}
 	for (i=0;i<document.forms.length;i++) {
 		if (document.forms[i].elements[id]) {return document.forms[i].elements[id]; }
@@ -618,6 +627,9 @@ function setSessionVar(name,value) {
 }
 
 function setCookie(name, value, section, expires, path, domain, secure) {
+	if (getCookie(name, section) == value) {
+		return true;
+	}
 	if (!expires) {
 		expires = new Date();
 		expires.setFullYear(expires.getFullYear() + 1);
@@ -799,6 +811,12 @@ function collapseSign(foo) {
 var expires = new Date();
 var local_date = expires.toLocaleString();
 var local_tz = local_date.substring(local_date.lastIndexOf(' ') + 1);
+if (parseInt(local_tz) > 0) {	// picked up year, not zone
+	local_tz = expires.toString().match(/\((.*?)\)$/);
+	if (local_tz.length > 0) {
+		local_tz = local_tz[1];
+	}
+}
 expires.setFullYear(expires.getFullYear() + 1);
 setCookie("local_tz", local_tz, null, expires, "/");
 

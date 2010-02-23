@@ -15,6 +15,20 @@ class PreferencesLib
 		$data = $this->loadData( $name );
 
 		if( isset( $data[$name] ) ) {
+			$defaults = array('type' => '',
+								'helpurl' => '',
+								'help' => '',
+								'dependencies' => array(),
+								'extensions' => array(),
+								'options' => array(),
+								'description' => '',
+								'size' => 40,
+								'detail' => '',
+								'warning' => '',
+								'hint' => '',
+								'shorthint' => '',
+								'perspective' => false,
+			);
 			$info = $data[$name];
 
 			if( $source == null ) {
@@ -69,6 +83,8 @@ class PreferencesLib
 				}
 				$info['pages'] = $pages;
 			}
+			
+			$info = array_merge($defaults, $info);
 
 			return $info;
 		}

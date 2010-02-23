@@ -216,12 +216,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 <tr class="formcolor">
 <td class="formlabel">{tr}Status{/tr}</td>
 <td class="formcontent">
-<select name="edstatus">
-{foreach key=st item=stdata from=$status_types}
-<option value="{$st}" {if $item_info.status eq $st} selected="selected" {/if}
-style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:17px;">{$stdata.label}</option>
-{/foreach}
-</select>
+{include file='tracker_status_input.tpl' item=$item_info form_status=edstatus}
 </td></tr>
 {/if}
 

@@ -1,5 +1,6 @@
 {* $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/files/templates/wikiplugin_files.tpl,v 1.1 2008/01/18 22:00:48 sylvieg Exp $ *}
 
+{if $params.showtitle eq 'y'}
 {if $data}<h4>{$data|escape}</h4>{else}
 <h4>
 {if $category}
@@ -17,7 +18,8 @@
 {if $gal_info.name}{tr}File Gallery:{/tr} <a href="tiki-list_file_gallery.php?galleryId={$gal_info.galleryId}" title="{tr}list{/tr}">{$gal_info.name|escape}</a>{/if}
 </h4>
 {/if}
-{if $show_find eq 'y'}
+{/if}
+{if $params.showfind eq 'y'}
 	{include file="find.tpl"}
 {/if}
 {include file="list_file_gallery_content.tpl"}

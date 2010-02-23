@@ -130,24 +130,34 @@ function isWindows() {
 class Smarty_Tikiwiki_Installer extends Smarty
 {
 
-	function Smarty_Tikiwiki_Installer() {
+	function Smarty_Tikiwiki_Installer($tikidomain) {
 		parent::Smarty();
-		$this->template_dir = "templates/";
-		$this->compile_dir = "templates_c/";
-		$this->config_dir = "configs/";
-		$this->cache_dir = "cache/";
-		$this->caching = false;
+		if ($tikidomain) { $tikidomain.= '/'; }
+		$this->template_dir = realpath('templates/');
+		$this->compile_dir = realpath("templates_c/$tikidomain");
+		$this->config_dir = realpath('configs/');
+		$this->cache_dir = realpath("templates_c/$tikidomain");
+		$this->caching = 0;
 		$this->assign('app_name', 'Tikiwiki');
-		$this->plugins_dir = array(
-			dirname(dirname(SMARTY_DIR))."/smarty_tiki",
-			SMARTY_DIR."plugins"
+		include_once('lib/setup/third_party.php');
+		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
+			TIKI_SMARTY_DIR,
+			SMARTY_DIR.'plugins'
 		);
-                // we cannot use subdirs in safe mode
-                if(ini_get('safe_mode')) {
-                        $this->use_sub_dirs = false;
-                }
-	//$this->debugging = true;
-	//$this->debug_tpl = 'debug.tpl';
+
+		// In general, it's better that use_sub_dirs = false
+		// If ever you are on a very large/complex/multilingual site and your
+		// templates_c directory is > 10 000 files, (you can check at tiki-admin_system.php)
+		// you can change to true and maybe you will get better performance.
+		// http://smarty.php.net/manual/en/variable.use.sub.dirs.php
+		//
+		$this->use_sub_dirs = false;
+
+		// security_settings['MODIFIER_FUNCS'], ['IF_FUNCS'] and secure_dir not needed in installer
+
+		$this->security_settings['ALLOW_SUPER_GLOBALS'] = true;
+		//$this->debugging = true;
+		//$this->debug_tpl = 'debug.tpl';
 	}
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
@@ -442,7 +452,8 @@ $cachelib->empty_full_cache();
 $_SESSION["install-logged-$multi"] = 'y';
 
 // Init smarty
-$smarty = new Smarty_Tikiwiki_Installer();
+global $tikidomain;
+$smarty = new Smarty_Tikiwiki_Installer($tikidomain);
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');

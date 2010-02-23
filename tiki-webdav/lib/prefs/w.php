@@ -18,6 +18,7 @@ function prefs_w_list() {
 			'perspective' => false,
 		),
 		'w_use_db' => array(
+			'name' => tra('Storage'),
 			'type' => 'radio',
 			'perspective' => false,
 			'options' => array(

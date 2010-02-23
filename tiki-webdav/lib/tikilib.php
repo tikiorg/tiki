@@ -119,6 +119,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function get_db_by_name( $name ) {
+		include_once ('tiki-setup.php');
 		if( $name == 'local' || empty($name) ) {
 			return TikiDb::get();
 		} else {
@@ -139,17 +140,22 @@ class TikiLib extends TikiDb_Bridge
 				$dbhost = strtok( $parsedsn, "/" );
 				$parsedsn = substr( $parsedsn, strlen($dbhost) + 1 );
 				$database = $parsedsn;
-
-				require_once ('lib/adodb/adodb.inc.php');
-				$dbsqlplugin = ADONewConnection($dbdriver);
-
-				if( $dbsqlplugin->NConnect( $dbhost, $dbuserid, $dbpassword, $database ) ) {
-					require_once 'lib/core/lib/TikiDb/Adodb.php';
-
-					$connectionMap[$name] = new TikiDb_AdoDb( $dbsqlplugin );
+				
+				$api_tiki = null;
+				require 'db/local.php';				
+				if (isset($api_tiki) &&  $api_tiki == 'adodb') {
+					require_once ('lib/adodb/adodb.inc.php');
+					$dbsqlplugin = ADONewConnection($dbdriver);
+					if( $dbsqlplugin->NConnect( $dbhost, $dbuserid, $dbpassword, $database ) ) {
+						require_once ('lib/core/lib/TikiDb/Adodb.php');
+						$connectionMap[$name] = new TikiDb_AdoDb( $dbsqlplugin );
+					}
+				} else {
+					require_once ('lib/core/lib/TikiDb/Pdo.php');
+					$dbsqlplugin = new PDO("$dbdriver:host=$dbhost;dbname=$database", $dbuserid, $dbpassword);
+					$connectionMap[$name] = new TikiDb_Pdo( $dbsqlplugin );
 				}
 			}
-
 			return $connectionMap[$name];
 		}
 	}
@@ -3584,6 +3590,9 @@ class TikiLib extends TikiDb_Bridge
 		$this->query($query,array('wiki_page_changed', $page));
 		$query = "delete from `tiki_group_watches` where `event`=? and `object`=?";
 		$this->query($query,array('wiki_page_changed', $page));
+
+		$query = "delete from `tiki_object_attributes` where `type`=? and `itemId`=?";
+		$this->query($query,array('wiki page', $page));
 
 		$atts = $wikilib->list_wiki_attachments($page, 0, -1, 'created_desc', '');
 		foreach ($atts["data"] as $at) {

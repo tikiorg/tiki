@@ -55,6 +55,22 @@ class Math_Formula_ParserTest extends TikiTestCase
 		$this->assertEquals( $element, $parser->parse( '(score (object type object) (range (mul 3600 60)))' ) );
 	}
 
+	function testSkipComments() {
+		$equivalent = '(score (object type object) (range (mul 3600 60)))';
+		$documented = <<<DOC
+(score
+	(comment calculate for a 60 hour range)
+	(object type object)
+	(range (mul
+		(comment 3600 is an hour, times 60)
+		3600 60))
+)
+DOC;
+
+		$parser = new Math_Formula_Parser;
+		$this->assertEquals( $parser->parse( $equivalent ), $parser->parse( $documented ) );
+	}
+
 	function badStrings() {
 		return array(
 			'noOpening' => array( 'test' ),

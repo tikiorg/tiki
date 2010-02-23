@@ -68,7 +68,7 @@
 				{/if}
 			{/foreach}
 		</select>
-		{remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple fields.{/tr}{/remarksbox}
+		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 	</td>
 </tr>
 <tr class="formcolor">

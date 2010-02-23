@@ -28,8 +28,8 @@ function wikiplugin_sql_info() {
 }
 
 function wikiplugin_sql($data, $params) {
-	global $tikilib;
 
+	global $tikilib;
 	extract ($params,EXTR_SKIP);
 
 	if (!isset($db)) {
@@ -70,21 +70,20 @@ function wikiplugin_sql($data, $params) {
 	} else {
 		return '~np~' . tra('Could not obtain valid DSN connection.') . '~/np~';
 	}
-
+	
 	$first = true;
 	$class = 'even';
-
-	while ($result && $res = $result->fetchRow()) {
+	while ($result && $res = $result->fetchRow() ) {
 		if ($first) {
-			$ret .= "<div align='center'><table class='sortable'><tr>";
+			$ret .= "<table class='normal'><thead><tr>";
 
 			$first = false;
 
 			foreach (array_keys($res)as $col) {
-				$ret .= "<td class='heading'>$col</td>";
+				$ret .= "<th>$col</th>";
 			}
 
-			$ret .= "</tr>";
+			$ret .= "</tr></thead>";
 		}
 
 		$ret .= "<tr>";
@@ -102,7 +101,7 @@ function wikiplugin_sql($data, $params) {
 	}
 
 	if ($ret) {
-		$ret .= "</table></div>";
+		$ret .= "</table>";
 	}
 	if ($dbmsg) {
 		$ret .= $dbmsg;

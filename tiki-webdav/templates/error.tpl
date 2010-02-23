@@ -66,7 +66,7 @@ close();
 						{/remarksbox}
 					{/if}
 				{/if}
-				{if $required_preferences}
+				{if !empty($required_preferences)}
 					{remarksbox type='errors' title=$errortitle}
 					<form method="post" action="tiki-admin.php">
 						{foreach from=$required_preferences item=pref}

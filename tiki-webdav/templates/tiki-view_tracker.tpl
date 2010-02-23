@@ -239,12 +239,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
 <td>
-<select name="status">
-{foreach key=st item=stdata from=$status_types}
-<option value="{$st}" {if $tracker_info.newItemStatus eq $st} selected="selected"{/if}
-style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:17px;">{$stdata.label}</option>
-{/foreach}
-</select>
+{include file='tracker_status_input.tpl' tracker=$tracker_info form_status=status}
 </td></tr>
 {/if}
 

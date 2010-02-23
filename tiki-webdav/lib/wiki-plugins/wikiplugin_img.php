@@ -1119,11 +1119,10 @@ function wikiplugin_img_info() {
 					$styleboxplus = $styleboxinit;
 				}
 			} else {
-				$styleboxplus = $alignbox . $descdef . ' width:' . $boxwidth . 'px;';
-//				$styleboxplus = $alignbox . $borderbox . $descdef . ' width:' . $boxwidth . 'px';
+				$styleboxplus = $alignbox . ' width:' . $boxwidth . 'px;';
 			}
 		} elseif (!empty($imgdata['button']) || !empty($imgdata['desc'])) {
-		$styleboxplus = $descdef . ' width:' . $boxwidth . 'px;';
+		$styleboxplus = ' width:' . $boxwidth . 'px;';
 		}
 	}
 	if ( !empty($styleboxplus)) {

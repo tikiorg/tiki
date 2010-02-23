@@ -435,7 +435,7 @@ class RSSLib extends TikiLib
 	}
 
 	/* replace rss feed in db */
-	function replace_rss_module($rssId, $name, $description, $url, $refresh, $showTitle, $showPubDate)
+	function replace_rss_module($rssId, $name, $description, $url, $refresh, $showTitle, $showPubDate, $noUpdate = false)
 	{
 		//if($this->rss_module_name_exists($name)) return false; // TODO: Check the name
 		$refresh = 60 * $refresh;
@@ -454,8 +454,11 @@ class RSSLib extends TikiLib
 			$rssId = $this->lastInsertId();
 		}
 
-		$this->update_feeds( array( $rssId ), true );
-		return true;
+		if (!$noUpdate) {
+			// Updating is normally required, except for cases where we know it will be updated later (e.g. after article generation is set, so that articles are created immediately) 
+			$this->update_feeds( array( $rssId ), true );
+		}
+		return $rssId;
 	}
 
 	/* remove rss feed from db */

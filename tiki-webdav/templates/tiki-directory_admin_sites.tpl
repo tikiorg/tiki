@@ -47,7 +47,7 @@
 				
         </select>
         {if $categs|@count ge '2'}
-        {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple directory categories.{/tr}{/remarksbox}
+        {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
         {/if} </td>
     </tr>
     {if $prefs.directory_country_flag eq 'y'}

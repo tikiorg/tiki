@@ -33,8 +33,8 @@ function batchImportUsers() {
 		$smarty->display("error.tpl");
 		die;
 	}
-	if ($fields[0] != "login" && $fields[0] != "password" && $fields[0] != "email" && $fields[0] != "groups") {
-		$smarty->assign('msg', tra("The file does not have the required header:") . " login, email, password, groups");
+	if (!in_array('login', $fields) || !in_array('email', $fields) || !in_array('password', $fields)) {
+		$smarty->assign('msg', tra("The file does not have the required header:") . " login, email, password");
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -86,7 +86,7 @@ function batchImportUsers() {
 				if (!empty($_REQUEST['notification'])) {
 					$u['password'] = $tikilib->genPass();
 				} else {
-					$local[] = discardUser($u, tra("Email is required"));
+					$local[] = discardUser($u, tra('Password is required'));
 				}
 			}
 			if (empty($u['email'])) {
@@ -147,6 +147,9 @@ function batchImportUsers() {
 		}
 		if (!empty($u['default_group'])) {
 			$userlib->set_default_group($u['login'], $u['default_group']);
+		}
+		if (!empty($u['realName'])) {
+			$tikilib->set_user_preference($u['login'], 'realName', $u['realName']);
 		}
 		$added++;
 	}

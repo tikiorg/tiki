@@ -126,9 +126,14 @@ if( isset( $_REQUEST['lm_criteria'] ) ) {
 		$smarty->assign( 'lm_searchresults', $results );
 		$smarty->assign( 'lm_error', '' );
 	} catch(Zend_Search_Lucene_Exception $e) {
+		$smarty->assign( 'lm_criteria', $_REQUEST['lm_criteria'] );
 		$smarty->assign( 'lm_error', $e->getMessage() );
 		$smarty->assign( 'lm_searchresults', '' );
 	}
+} else {
+	$smarty->assign( 'lm_criteria', '' );
+	$smarty->assign( 'lm_searchresults', '' );
+	$smarty->assign( 'lm_error', '' );
 }
 
 if (isset($_REQUEST["page"])) {

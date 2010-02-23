@@ -124,6 +124,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 }
 if ($prefs['feature_jquery_sheet'] == 'y') {
+		if ($prefs['feature_contribution'] == 'y') {
+			$contributionItemId = $_REQUEST['sheetId'];
+			include_once ('contribution.php');
+		}
 	// need to be in non-parsed mode to edit the sheet
 	if ($grid->parseValues == 'y' && $_REQUEST['parse'] == 'y') {
 		$smarty->assign('editReload', true);
@@ -132,23 +136,15 @@ if ($prefs['feature_jquery_sheet'] == 'y') {
 		$headerlib->add_jq_onready('
 $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
-	if ($a.text() != "Done") {
-		'.$reloadString.'
+	if ($a.text() != editSheetButtonLabel2) {
 		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
 		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {
 			options.buildSheet = "2x1";	// new sheet
 		}
 		$jq("div.tiki_sheet").tiki("sheet", "", options);
 
-//		// duplicate the edit button and make it a save button (translation TODO)
-//		$save_button = $jq("#edit_button").clone().attr("id", "save_button").click( function () {
-//			$jq.sheet.cellEditDone();
-//			$jq.sheet.saveSheet();
-//			return false;
-//		}).find("a").text("Save");
-		
 		$a.attr("temp", $a.text());
-		$a.text("Done");
+		$a.text(editSheetButtonLabel2);
 		$jq("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
 		$jq("#save_button").show();
 		if (typeof ajaxLoadingHide == "function") {
@@ -162,6 +158,7 @@ $jq("#edit_button").click( function () {
 	return false;
 });
 $jq("#save_button").click( function () {
+	var dummySaveButtonVar;
 	$jq.sheet.cellEditDone();
 	$jq.sheet.saveSheet();
 	return false;
@@ -172,17 +169,30 @@ window.showFeedback = function(message, delay) {
 	$fbsp = $jq("#feedback span");
 	$fbsp.html(message).show();
 	window.setTimeout( function () { $fbsp.fadeOut("slow", function () { $fbsp.html("&nbsp;"); }); }, delay);
-}
+	// if called from save button then exit edit page mode
+	f = window.showFeedback;
+	while((f = f.caller) !== null) {
+		if (f.toString().indexOf("dummySaveButtonVar") > -1) {
+			window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
+		}
+	}
+};
+
+window.setEditable = function(isEditable) {
+	jS.s.editable = false;
+	$jq("#save_button").hide();
+	$jq("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
+};
 ');
 	}
 }
 
 $smarty->assign('parseValues', $grid->parseValues);
 
+$smarty->assign('semUser', '');
 if ($prefs['feature_warn_on_edit'] == 'y') {
 	if ($tikilib->semaphore_is_set($_REQUEST['sheetId'], $prefs['warn_on_edit_time'] * 60, 'sheet') && ($semUser = $tikilib->get_semaphore_user($_REQUEST['sheetId'], 'sheet')) != $user) {
 		$editconflict = 'y';
-		$smarty->assign('editconflict', 'y');
 		$smarty->assign('semUser', $semUser);
 	} else {
 		$editconflict = 'n';
@@ -193,7 +203,10 @@ if ($prefs['feature_warn_on_edit'] == 'y') {
 		$tikilib->semaphore_unset($_REQUEST['sheetId'], $_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']]);
 		unset($_SESSION['edit_lock_sheet' . $_REQUEST['sheetId']]);
 	}
+} else {
+		$editconflict = 'n';
 }
+$smarty->assign('editconflict', $editconflict);
 $headerlib->add_cssfile('lib/sheet/style.css', 10);
 //$cat_type = 'sheet';
 //$cat_objid = $_REQUEST["sheetId"];

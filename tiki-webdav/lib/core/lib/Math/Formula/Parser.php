@@ -47,6 +47,10 @@ class Math_Formula_Parser
 			if( $token == '(' ) {
 				array_unshift( $tokens, $token );
 				$token = $this->getElement( $tokens );
+
+				if( $token->getType() == 'comment' ) {
+					continue;
+				}
 			}
 
 			$element->addChild( $token );

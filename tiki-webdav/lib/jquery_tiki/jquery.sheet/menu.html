@@ -108,10 +108,10 @@
 </div-->
 
 <div id="menuHelp" class="menu">
-	<a onclick="jS.openSheet('documentation.html table:eq(3)')">About</a>
-	<a onclick="jS.openSheet('documentation.html table:eq(1)')">API</a>
-	<a onclick="jS.openSheet('documentation.html table:first')">Excel Style Functions</a>
-	<a onclick="jS.openSheet('documentation.html table:eq(2)')">UI Features</a>
+	<a onclick="if (jS.openSheet('lib/jquery/jquery.sheet/documentation.html table:eq(3)')) { window.setEditable(false); }">About</a>
+	<a onclick="if (jS.openSheet('lib/jquery/jquery.sheet/documentation.html table:eq(1)')) { window.setEditable(false); }">API</a>
+	<a onclick="if (jS.openSheet('lib/jquery/jquery.sheet/documentation.html table:first')) { window.setEditable(false); }">Excel Style Functions</a>
+	<a onclick="if (jS.openSheet('lib/jquery/jquery.sheet/documentation.html table:eq(2)')) { window.setEditable(false); }">UI Features</a>
 </div>
 
 <div id="menuTestMethods" class="menu">

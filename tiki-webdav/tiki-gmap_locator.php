@@ -16,6 +16,12 @@ if ($tiki_p_admin == 'y' and isset($_REQUEST['view_user']) and $userlib->user_ex
 } else {
 	$userwatch = $user;
 }
+
+if ($prefs["feature_ajax"] == 'y') {
+	// Ajax version using new plugin
+	$smarty->assign('userwatch', $userwatch);
+} else {
+	// Old non-ajax version which can be removed once Ajax becomes always on 
 if (!isset($_REQUEST['for']))
 	$_REQUEST['for'] = '';
 
@@ -91,6 +97,6 @@ if (($_REQUEST['for'] == 'user' && ($user == $userwatch || $tiki_p_admin == 'y')
 	$smarty->assign('input','y');
 }
 $smarty->assign('for',$_REQUEST['for']);
-
+} //end if feature_ajax
 $smarty->assign('mid','tiki-gmap_locator.tpl');
 $smarty->display('tiki.tpl');

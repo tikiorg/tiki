@@ -359,6 +359,7 @@ function prefs_wiki_list() {
 			),
 		),
 		'wiki_list_sortdirection' => array(
+			'name' => tra('Sort Direction'),
 			'type' => 'radio',
 			'options' => array(
 				'desc' => tra('Descending'),

@@ -4,7 +4,7 @@
 		<meta name="generator" content="TikiWiki CMS/Groupware - http://TikiWiki.org" />
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}		<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
 {elseif isset($galleryId) && $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}		<meta name="keywords" content="{tr}Images Galleries{/tr} {$title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
-{elseif $prefs.metatag_keywords ne '' or $metatag_local_keywords ne ''}		<meta name="keywords" content="{$prefs.metatag_keywords|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if} {$metatag_local_keywords|escape}" />
+{elseif $prefs.metatag_keywords ne '' or !empty($metatag_local_keywords)}		<meta name="keywords" content="{$prefs.metatag_keywords|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if} {$metatag_local_keywords|escape}" />
 {/if}
 {if $prefs.metatag_author ne ''}		<meta name="author" content="{$prefs.metatag_author|escape}" />
 {/if}
@@ -24,14 +24,22 @@
 
 {* --- tikiwiki block --- *}
 		<title>
-{if isset($trail)}
-	{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
-{else}
 	{if $prefs.site_title_location eq 'before'}
 		{$prefs.browsertitle|escape} : 
 	{/if}
-	{if !empty($headtitle)}{$headtitle|escape}
-	{elseif !empty($page)}{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
+{if isset($trail)}
+	{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
+{else}
+	{if !empty($headtitle)}
+		{$headtitle|escape}
+	{elseif !empty($page)}
+		{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}
+			{$approvedPageName|escape}
+		{else}
+			{$page|escape}
+		{/if}
+	{elseif !empty($description)}{$description|escape}
+	{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 	{elseif !empty($arttitle)}{$arttitle|escape}
 	{elseif !empty($title)}{$title|escape}
 	{elseif !empty($thread_info.title)}{$thread_info.title|escape}
@@ -42,10 +50,10 @@
 	{elseif !empty($tracker_item_main_value)}{$tracker_item_main_value|escape}
 	{elseif !empty($tracker_info.name)}{$tracker_info.name|escape}
 	{/if}
+{/if}
 	{if $prefs.site_title_location eq 'after'}
 		: {$prefs.browsertitle|escape} 
 	{/if}
-{/if}
 		</title>
 
 {if $prefs.site_favicon}		<link rel="icon" href="{$prefs.site_favicon|escape}" />{/if}

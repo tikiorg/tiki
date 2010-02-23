@@ -14,12 +14,10 @@ function prefs_directory_list() {
 		),
 		'directory_cool_sites' => array(
 			'name' => tra('Enable cool sites'),
-			'description' => tra(''),
 			'type' => 'flag',
 		),
 		'directory_validate_urls' => array(
 			'name' => tra('Validate URLs'),
-			'description' => tra(''),
 			'type' => 'flag',
 		),
 		'directory_columns' => array(
@@ -37,7 +35,6 @@ function prefs_directory_list() {
 			),
 		'directory_links_per_page' => array(
 			'name' => tra('Links per page'),
-			'description' => tra(''),
 			'type' => 'text',
 			),
 		'directory_open_links' => array(

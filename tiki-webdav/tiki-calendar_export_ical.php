@@ -65,37 +65,35 @@ $smarty->assign('calendars',$calendars["data"]);
 if ( ((is_array($calendarIds) && (count($calendarIds) > 0)) or isset($_REQUEST["calendarItem"]) ) && $_REQUEST["export"]=='y') {
 	// get calendar events 
 	if ( !isset($_REQUEST["calendarItem"]) ) {
-		$events=$calendarlib->list_items($calendarIds, $user, $startTime, $stopTime, -1, $maxRecords, $sort_mode='start_asc', $find='');
+		$events=$calendarlib->list_raw_items($calendarIds, $user, $startTime, $stopTime, -1, $maxRecords, $sort_mode='start_asc', $find='');
 	} else {
-		$events[][]['result'] = $calendarlib->get_item($_REQUEST["calendarItem"]);
+		$events[] = $calendarlib->get_item($_REQUEST["calendarItem"]);
 	}
 
 	// create ical array//
 	$iCal = new File_iCal();
 	
 	$cal = $iCal->getSkeletonCalendar();
-	foreach ($events as $day=>$day_data) {
-		foreach( $day_data as $dd) {
-			$ea=array();
-			$ea["Summary"]=$dd["result"]["name"];
-			$ea["dateStart"]=$dd["result"]["start"];
-			$ea["dateEnd"]=$dd["result"]["end"];
-			$ea["Description"]=preg_replace("/\n/","\\n",$dd["result"]["description"]);
-			if ($dd["result"]["participants"]) {
-				$ea["Attendees"]=$dd["result"]["participants"];
-			}
-			$ea["LastModified"]=$dd["result"]["lastModif"];
-			// Second character of duration value must be a 'P' ?? 
-			$ea["Duration"]=($dd["result"]["end"] - $dd["result"]["start"]);
-			$ea["Contact"]=array($dd["result"]["user"]);
-			$ea["organizer"]=array($dd["result"]["organizers"]);
-			$ea["URL"]=$dd["result"]["url"];
-			$ea["DateStamp"]=$dd["result"]["created"];
-			//$ea["RequestStatus"]=$dd["result"]["status"];
-			$ea["UID"]="tiki-".$dd["result"]["calendarId"]."-".$dd["result"]["calitemId"];
-			$c = $iCal->factory("Event",$ea);
-			$cal->addEvent($c);
+	foreach ($events as $event) {
+		$ea=array();
+		$ea['Summary']=$event['name'];
+		$ea['dateStart']=$event['start'];
+		$ea['dateEnd']=$event['end'];
+		$ea['Description']=preg_replace('/\n/',"\\n",$event['description']);
+		if ($event['participants']) {
+			$ea['Attendees']=$event['participants'];
 		}
+		$ea['LastModified']=$event['lastModif'];
+		// Second character of duration value must be a 'P' ?? 
+		$ea['Duration']=($event['end'] - $event['start']);
+		$ea['Contact']=array($event['user']);
+		$ea['organizer']=array($event['organizers']);
+		$ea['URL']=$event['url'];
+		$ea['DateStamp']=$event['created'];
+		//$ea['RequestStatus']=$event['status'];
+		$ea['UID']='tiki-'.$event['calendarId'].'-'.$event['calitemId'];
+		$c = $iCal->factory('Event',$ea);
+		$cal->addEvent($c);
 	}
 	$iCal->addCalendar($cal);
 	$iCal->sendHeader("calendar");

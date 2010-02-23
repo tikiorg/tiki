@@ -2326,7 +2326,7 @@ CREATE TABLE `tiki_user_bookmarks_urls` (
 DROP TABLE IF EXISTS `tiki_user_login_cookies`;
 CREATE TABLE `tiki_user_login_cookies` (
 	`userId` INT NOT NULL,
-	`secret` TEXT NOT NULL,
+	`secret` CHAR(64) NOT NULL,
 	`expiration` TIMESTAMP NOT NULL,
 	PRIMARY KEY (`userId`, `secret`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -2351,6 +2351,7 @@ CREATE TABLE `tiki_user_mail_accounts` (
   `mbox` varchar( 255 ) default NULL,
   `maildir` varchar( 255 ) default NULL,
   `useSSL` char( 1 ) NOT NULL default 'n',
+  `fromEmail` varchar( 255 ) NOT NULL default '',
   PRIMARY KEY (`accountId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

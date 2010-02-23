@@ -235,6 +235,7 @@ function get_default_prefs() {
 		'wikiplugin_gauge' => 'n',
 		'wikiplugin_googleanalytics' => 'n',
 		'wikiplugin_googledoc' => 'n',
+		'wikiplugin_googlemap' => 'y',
 		'wikiplugin_group' => 'y',
 		'wikiplugin_grouplist' => 'n',
 		'wikiplugin_groupmailcore' => 'n',
@@ -252,6 +253,7 @@ function get_default_prefs() {
 		'wikiplugin_lastmod' => 'n',
 		'wikiplugin_listpages' => 'n',
 		'wikiplugin_lsdir' => 'n',
+		'wikiplugin_mail' => 'n',
 		'wikiplugin_map' => 'y',
 		'wikiplugin_mcalendar' => 'n',
 		'wikiplugin_mediaplayer' => 'y',
@@ -368,6 +370,7 @@ function get_default_prefs() {
 		'wikiplugininline_gauge' => 'n',
 		'wikiplugininline_googleanalytics' => 'y',
 		'wikiplugininline_googledoc' => 'n',
+		'wikiplugininline_googlemap' => 'n',
 		'wikiplugininline_group' => 'y',
 		'wikiplugininline_grouplist' => 'y',
 		'wikiplugininline_groupmailcore' => 'n',
@@ -385,6 +388,7 @@ function get_default_prefs() {
 		'wikiplugininline_lastmod' => 'n',
 		'wikiplugininline_listpages' => 'n',
 		'wikiplugininline_lsdir' => 'n',
+		'wikiplugininline_mail' => 'y',
 		'wikiplugininline_map' => 'n',
 		'wikiplugininline_mcalendar' => 'n',
 		'wikiplugininline_mediaplayer' => 'n',
@@ -1172,6 +1176,8 @@ function get_default_prefs() {
 		'feature_sitesearch' => 'y',
 		'feature_site_login' => 'y',
 		'feature_sitemenu' => 'n',
+		'feature_sitemenu_custom_code' => '',
+		'feature_secondary_sitemenu_custom_code' => '',
 		'feature_topbar_version' => 'n',
 		'feature_topbar_debug' => 'n',
 		'feature_topbar_id_menu' => '42',
@@ -1271,9 +1277,9 @@ function get_default_prefs() {
 		'toolbar_global_comments' => '
 			bold, italic, strike , - , link, smiley | help
 		',
-		'toobar_sheet' => 'addrow, addrowmulti, deleterow, -, addcolumn, deletecolumn, addcolumnmulti, -,
-			sheetsave, sheetrefresh, sheetfind, sheetgetrange, sheetclose, -,
-			bold, italic, strike, center,-, color, bgcolor, -, tikilink, nonparsed/',
+		'toobar_sheet' => 'addrow, addrowmulti, deleterow, -, addcolumn, addcolumnmulti, deletecolumn, -, sheetgetrange, -,
+			sheetsave, sheetrefresh, sheetfind, -,
+			bold, italic, strike, center,-, color, bgcolor, -, tikilink, nonparsed|sheetclose/',
 
 		// pagination
 		'direct_pagination' => 'y',

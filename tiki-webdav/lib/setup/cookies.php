@@ -80,6 +80,6 @@ if ($prefs['feature_tabs'] == 'y') {
 	
 	// add JS to set up current tab
 	$max_tikitabs = 50;
-	$headerlib->add_jq_onready("tikitabs($cookietab,$max_tikitabs);");
+	//$headerlib->add_jq_onready("tikitabs($cookietab,$max_tikitabs);");
 	
 }

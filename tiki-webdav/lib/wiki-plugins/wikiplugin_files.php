@@ -41,11 +41,21 @@ function wikiplugin_files_info() {
 				'required' => false,
 				'name' => tra('sort'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showfind' => array(
 				'required' => false,
 				'name' => tra('find'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
+				'default' => 'y'
+			),
+			'showtitle' => array(
+				'required' => false,
+				'name' => tra('Show title'),
+				'description' => 'y|n',
+				'filter' => 'alpha',
+				'default' => 'y'
 			),
 			'showid' => array(
 				'required' => false,
@@ -56,51 +66,67 @@ function wikiplugin_files_info() {
 				'required' => false,
 				'name' => tra('Shows Icon'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showname' => array(
 				'required' => false,
 				'name' => tra('Shows Name'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showfilename' => array(
 				'required' => false,
 				'name' => tra('Shows Filename'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showsize' => array(
 				'required' => false,
 				'name' => tra('Shows Size'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showdescription' => array(
 				'required' => false,
 				'name' => tra('Shows Description'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showcreated' => array(
 				'required' => false,
 				'name' => tra('Shows Creation Date'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
+			),
+			'showmodified' => array(
+				'required' => false,
+				'name' => tra('Shows Last Modification Date'),
+				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showhits' => array(
 				'required' => false,
 				'name' => tra('Shows Hits'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showlockedby' => array(
 				'required' => false,
 				'name' => tra('Shows Locked by'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showlmodified' => array(
 				'required' => false,
 				'name' => tra('Shows Modification Date'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showauthor' => array(
 				'required' => false,
 				'name' => tra('Shows Author'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showcreator' => array(
 				'required' => false,
@@ -111,16 +137,19 @@ function wikiplugin_files_info() {
 				'required' => false,
 				'name' => tra('Shows Parent Gallery Name'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'showfiles' => array(
 				'required' => false,
 				'name' => tra('Shows Number of Files'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'slideshow' => array(
 				'required' => false,
 				'name' => tra('Shows the slideshow of a gallery'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 			'creator' => array(
 				'required' => false,
@@ -136,6 +165,8 @@ function wikiplugin_files($data, $params) {
 		return('');
 	}
 	global $filegallib; include_once('lib/filegals/filegallib.php');
+	$default = array('showfind'=>'n', 'showtitle'=>'y');
+	$params = array_merge($default, $params);
 
 	$creator = '';
 	extract($params, EXTR_SKIP);
@@ -304,10 +335,7 @@ function wikiplugin_files($data, $params) {
 		$smarty->assign_by_ref('category', $category);
 	} else
 		$smarty->assign('category', '');
-	if (!isset($showfind)) {
-		$showfind = 'n';
-	}
-	$smarty->assign_by_ref('show_find', $showfind);
+	$smarty->assign_by_ref('params', $params);
 	$smarty->assign('sort_arg', "wp_files_sort_mode$iplugin");
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_files.tpl').'~/np~';
 }
