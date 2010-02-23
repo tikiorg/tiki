@@ -63,6 +63,9 @@
 				{else}
 					<input type="hidden" name="email" value="{$email|escape}" />
 				{/if}
+				{if !$user and $prefs.feature_antibot eq 'y'}
+					{include file='antibot.tpl' tr_style="formcolor"}
+				{/if}
 				<tr>
 					<td class="even">&nbsp;</td>
 					<td class="even">
