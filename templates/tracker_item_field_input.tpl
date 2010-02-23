@@ -230,7 +230,7 @@
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
 	{if $field_value.description}
-		<em>{$field_value.description|escape|nl2br}</em><br />
+		<span class="trackerplugindesc">{$field_value.description|escape|nl2br}</span><br />
 	{/if}
 	{if $field_value.isMultilingual ne 'y'}
 		{if $field_value.options_array[0] eq 1}
