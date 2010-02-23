@@ -9,10 +9,9 @@ $inputConfiguration = array(
   array( 'staticKeyFilters' => array(
     'date' => 'digits',
     'maxRecords' => 'digits',
-    'highlight' => 'word',
-    'where' => 'xss',
-    'find' => 'xss',
-    'lang' => 'word',
+    'highlight' => 'xss',
+    'where' => 'word',
+    'searchLang' => 'word',
     'words' =>'xss',
     'boolean' =>'word',
     )
