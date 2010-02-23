@@ -50,6 +50,7 @@
 	{/if}
 		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
 			{foreach item=it key=itid from=$listcals}
+				{if $it.tiki_p_add_events eq 'y'}
 				<option value="{$it.calendarId}" style="background-color:#{$it.custombgcolor};color:#{$it.customfgcolor};"
 				{if $calitem.calendarId}
 					{if $calitem.calendarId eq $itid} selected="selected"{/if}
@@ -62,6 +63,7 @@
 						{/if}
 					{/if}
 				{/if}>{$it.name|escape}</option>
+				{/if}
 			{/foreach}
 		</select>
 {else}
