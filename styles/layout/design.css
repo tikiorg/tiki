@@ -478,6 +478,8 @@ body.tiki_wiki #comments {
 p.editdate {
 	padding-bottom: 5px;
 	padding-top: 10px;
+	font-size: 0.9em;
+	font-style: italic;
 }
 
 /* wikiplugin_fancylist */
