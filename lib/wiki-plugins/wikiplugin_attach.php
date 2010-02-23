@@ -119,7 +119,7 @@ function wikiplugin_attach($data, $params) {
 	global $mimeextensions;
 	global $wikilib;
 	global $tikilib;
-	global $user;
+	global $user, $section;
 	include_once('lib/wiki/wikilib.php');
 
 	extract ($params,EXTR_SKIP);
@@ -132,7 +132,7 @@ function wikiplugin_attach($data, $params) {
 		// We're being called from a preview or something; try to build the atts ourselves.
 
 		// See if we're being called from a tracker page.
-		if( strstr( $_SERVER['SCRIPT_NAME'], "tiki-view_tracker_item.php" ) ) {
+		if( $section == 'trackers' ) {
 			$atts_item_name = $_REQUEST["itemId"];
 			$tracker_info = $trklib->get_tracker($atts_item_name);
 			$tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($atts_item_name));
@@ -149,7 +149,7 @@ function wikiplugin_attach($data, $params) {
 		}
 
 		// See if we're being called from a wiki page.
-		if( strstr( $_SERVER['SCRIPT_NAME'], 'tiki-index.php' ) || strstr( $_SERVER['SCRIPT_NAME'], "tiki-editpage.php" ) || strstr( $_SERVER['SCRIPT_NAME'], 'tiki-pagehistory.php') ) {
+		if( $section == 'wiki page' ) {
 			$atts_item_name = $_REQUEST["page"];
 			$atts = $wikilib->list_wiki_attachments($atts_item_name,0,-1,'created_desc','');
 		}
