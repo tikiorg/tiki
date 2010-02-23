@@ -7,7 +7,7 @@
 {/if}
 {section name=ix loop=$listpages}
 {if $listpages[ix].disp_article eq 'y'}
-<div class="article">
+<div class="article{if !empty($container_class)} {$container_class}{/if}">
 {if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline|escape}</div>{/if}
 <div class="articletitle">
 <h2><a href="{$listpages[ix].articleId|sefurl:article}">{$listpages[ix].title|escape}</a></h2>
@@ -80,12 +80,15 @@ alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$li
 </td><td  valign="top">
 {/if}
 <div class="articleheadingtext">{$listpages[ix].parsed_heading}</div>
+{if isset($fullbody) and $fullbody eq "y"}
+	<div class="articlebody">{$listpages[ix].parsed_body}</div>
+{/if}
 </td></tr>
 </table>
 </div>
 <div class="articletrailer">
 {if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
-  {if ($listpages[ix].heading_only ne 'y')}
+	{if ($tiki_p_read_article eq 'y' and $listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
     {if ($listpages[ix].size > 0)}
 		<div class="status"> {* named to be similar to forum/blog item *}
 	    <a href="{$listpages[ix].articleId|sefurl:article}">{tr}Read More{/tr}</a>
