@@ -223,7 +223,7 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 						$smarty->assign('mail_user', $user);
 						$smarty->assign('mail_title', $_REQUEST["comments_title"]);
 						$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
-						$smarty->assign('mail_hash', $not['hash']);
+						$smarty->assign('watchId', $not['watchId']);
 						$foo = parse_url($_SERVER["REQUEST_URI"]);
 						$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
 						$smarty->assign('mail_machine', $machine);
