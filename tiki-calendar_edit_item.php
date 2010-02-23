@@ -120,6 +120,14 @@ if (isset($_REQUEST['save']) && !isset($_REQUEST['preview']) && !isset($_REQUEST
 }
 
 if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['changeCal'])) {
+
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
+		$smarty->assign('errortype', 'no_redirect_login');
+		$smarty->display("error.tpl");
+		die;
+	}
+
 	$save = $_POST['save'];
 	// Take care of timestamps dates coming from jscalendar
 	if ( isset($save['date_start']) || isset($save['date_end']) ) {
