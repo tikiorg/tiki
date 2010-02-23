@@ -103,6 +103,10 @@
       <td><input type="checkbox" name="public" id="blogs-allow_others" {if $public eq 'y'}checked='checked'{/if}/></td>
     </tr>	
     <tr class="editblogform">
+      <td><label for="blogs-always_owner">{tr}If others post to blog, Author should always be Owner{/tr}</label></td>
+      <td><input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if $alwaysOwner eq 'y'}checked='checked'{/if}/></td>
+    </tr>
+    <tr class="editblogform">
       <td><label for="blogs-search">{tr}Allow search{/tr}</label></td>
       <td><input type="checkbox" name="use_find" id="blogs-search" {if $use_find eq 'y'}checked='checked'{/if}/></td>
     </tr>
