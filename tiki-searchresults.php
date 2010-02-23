@@ -1,20 +1,20 @@
 <?php
 // (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
 $inputConfiguration = array(
-  array( 'staticKeyFilters' => array(
-    'date' => 'digits',
-    'maxRecords' => 'digits',
-    'highlight' => 'word',
-		'where' => 'word',
-		'find' => 'word',
-		'lang' => 'word',
-		'words' =>'word',
-		'boolean' =>'word',
+	array( 'staticKeyFilters' => array(
+				'date' => 'digits',
+				'maxRecords' => 'digits',
+				'highlight' => 'xss',
+				'where' => 'word',
+				'find' => 'xss',
+				'lang' => 'word',
+				'words' =>'xss',
+				'boolean' =>'word',
 		)
 	)
 );
@@ -109,7 +109,7 @@ if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) 
 		unset($_REQUEST['cat_categories']);
 	}
 } else {
-		$_REQUEST['cat_categories'] = array();
+	$_REQUEST['cat_categories'] = array();
 }
 if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
 	$categId = $_REQUEST['categId'];
@@ -192,7 +192,7 @@ if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 	$categories = $categlib->get_all_categories_respect_perms(null, 'view_category');
 	$smarty->assign_by_ref('categories', $categories);
-	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));	
+	$smarty->assign('cat_tree', $categlib->generate_cat_tree($categories, true, $_REQUEST['cat_categories']));
 }
 $smarty->assign_by_ref('where_list', $where_list);
 $smarty->assign_by_ref('results', $results["data"]);

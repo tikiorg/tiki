@@ -10,10 +10,10 @@ $inputConfiguration = array(
     'date' => 'digits',
     'maxRecords' => 'digits',
     'highlight' => 'word',
-    'where' => 'word',
-    'find' => 'word',
+    'where' => 'xss',
+    'find' => 'xss',
     'lang' => 'word',
-    'words' =>'word',
+    'words' =>'xss',
     'boolean' =>'word',
     )
   )
