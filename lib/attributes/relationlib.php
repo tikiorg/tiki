@@ -42,12 +42,18 @@ class RelationLib extends TikiDb_Bridge
 
 			$this->query( 'DELETE FROM `tiki_object_relations` WHERE `relation` = ? AND `source_type` = ? AND `source_itemId` = ? AND `target_type` = ? AND `target_itemId` = ?', $data );
 			$this->query( 'INSERT INTO `tiki_object_relations` (`relation`, `source_type`, `source_itemId`, `target_type`, `target_itemId`) VALUES(?,?,?,?,?)', $data );
+
+			return $this->lastInsertId();
 		}
 	}
 
 	function get_relation( $id ) {
 		$result = $this->fetchAll( 'SELECT * FROM `tiki_object_relations` WHERE `relationId` = ?', array( $id ) );
 		return reset( $result );
+	}
+
+	function remove_relation( $id ) {
+		$this->fetchAll( 'DELETE FROM `tiki_object_relations` WHERE `relationId` = ?', array( $id ) );
 	}
 
 	private function apply_relation_condition( $relation, & $cond, & $vars ) {
