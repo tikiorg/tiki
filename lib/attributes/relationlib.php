@@ -45,6 +45,11 @@ class RelationLib extends TikiDb_Bridge
 		}
 	}
 
+	function get_relation( $id ) {
+		$result = $this->fetchAll( 'SELECT * FROM `tiki_object_relations` WHERE `relationId` = ?', array( $id ) );
+		return reset( $result );
+	}
+
 	private function apply_relation_condition( $relation, & $cond, & $vars ) {
 		$relation = TikiFilter::get( 'attribute_type' )
 			->filter( $relation );
