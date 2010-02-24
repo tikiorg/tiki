@@ -66,5 +66,13 @@ function prefs_user_list() {
 			'filter' => 'digit',
 			'size' => '4',
 		),
+		'user_who_viewed_my_stuff_show_others' => array(
+			'name' => tra('Show to others who viewed my stuff on the user information page'),
+			'description' => tra('Show to others who viewed my stuff on the user information page. Admins can always see this information.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'user_who_viewed_my_stuff',
+			),
+		),
 	);
 }

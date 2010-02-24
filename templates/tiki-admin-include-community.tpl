@@ -53,6 +53,7 @@
 
 			{preference name=user_who_viewed_my_stuff}
 			{preference name=user_who_viewed_my_stuff_days}
+			{preference name=user_who_viewed_my_stuff_show_others}
 			
 			{preference name=user_store_file_gallery_picture}
 			{preference name=user_picture_gallery_id}

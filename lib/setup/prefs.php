@@ -675,6 +675,7 @@ function get_default_prefs() {
 		'user_picture_gallery_id' => 0,
 		'user_who_viewed_my_stuff' => 'n',
 		'user_who_viewed_my_stuff_days' => 90,
+		'user_who_viewed_my_stuff_show_others' => 'n',
 		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',
