@@ -28,7 +28,7 @@ $smarty->assign_by_ref('trackerId', $_REQUEST['trackerId']);
 $smarty->assign_by_ref('tracker_info', $tracker_info);
 
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
-$access->check_permission('tiki_p_view_trackers');
+$access->check_permission('tiki_p_export_tracker');
 
 $filters = array();
 if (!empty($_REQUEST['listfields'])) {
