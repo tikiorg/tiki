@@ -81,6 +81,7 @@ class TikiLib extends TikiDb_Bridge
 			$aSettingsRequest["proxy_port"]=$prefs['proxy_port'];
 		}
 		include_once ('lib/pear/HTTP/Request.php');
+		$aSettingsRequest['allowRedirects'] = true;
 		$req = new HTTP_Request($url, $aSettingsRequest);
 		$data="";
 		// (cdx) return false when can't connect
