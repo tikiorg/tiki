@@ -245,23 +245,7 @@ class WikiLib extends TikiLib
 		//	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
 		//  $this->query($query);
 
-		// in tiki_comments update object
-		$query = "update `tiki_comments` set `object`=? where `object`=?";
-		$this->query($query, array( $newName, $oldName ) );
-
-		// Move email notifications
-		$oldId = 'wikipage' . $oldName;
-		$newId = 'wikipage' . $newName;
-		$query = "update `tiki_user_watches` set `object`=? where `object`=?";
-		$this->query($query, array( $newId, $oldId ) );
-		$query = "update `tiki_group_watches` set `object`=? where `object`=?";
-		$this->query($query, array( $newId, $oldId ) );
-
-		// theme_control_objects(objId,name)
-		$oldId = md5('wiki page' . $oldName);
-		$newId = md5('wiki page' . $newName);
-		$query = "update `tiki_theme_control_objects` set `objId`=?, `name`=? where `objId`=?";
-		$this->query($query, array( $newId, $newName, $oldId ) );
+		$this->rename_object( 'wiki page', $oldName, $newName );
 
 		$query = "update `tiki_wiki_attachments` set `page`=? where `page`=?";
 		$this->query($query, array( $newName, $oldName ) );
@@ -276,27 +260,10 @@ class WikiLib extends TikiLib
 			$_SESSION["breadCrumb"][$pos] = $newName;
 		}
 
-		// polls
-		if ($prefs['feature_polls'] == 'y') {
-			$query = "update `tiki_polls` tp inner join `tiki_poll_objects` tpo on tp.`pollId` = tpo.`pollId` inner join `tiki_objects` tob on tpo.`catObjectId` = tob.`objectId` set tp.`title`=? where tp.`title`=? and tob.`type` = 'wiki page'";
-			$this->query($query, array( $newName, $oldName ) );
-		}
-
-		// Move custom permissions
-		$oldId = md5('wiki page' . strtolower($oldName));
-		$newId = md5('wiki page' . strtolower($newName));
-		$query = "update `users_objectpermissions` set `objectId`=? where `objectId`=?";
-		$this->query($query, array( $newId, $oldId ) );
-
 		global $prefs;
-		if ($prefs['feature_actionlog'] == 'y') {
-			global $logslib; include_once('lib/logs/logslib.php');
-			$logslib->add_action('Renamed', $newName, 'wiki page', 'old='.$oldName.'&new='.$newName, '', '', '', '', '', array(array('rename'=>$oldName)));
-			$logslib->rename('wiki page', $oldName, $newName);
-		}
-		global $user;
 		global $tikilib;
 		global $smarty;
+		global $user;
 
 		// first get all watches for this page ...
 		if ($prefs['feature_user_watches'] == 'y') {
@@ -338,12 +305,6 @@ class WikiLib extends TikiLib
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('pages', $newName);
 		}
-
-		$query = "update `tiki_object_attributes` set `itemId`=? where `itemId`=? AND type='wiki page'";
-		$this->query($query, array( $newName, $oldName ) );
-
-		global $menulib; include_once('lib/menubuilder/menulib.php');
-		$menulib->rename_wiki_page($oldName, $newName);
 
 		if ($prefs['wikiHomePage'] == $oldName) {
 			$tikilib->set_preference('wikiHomePage', $newName);

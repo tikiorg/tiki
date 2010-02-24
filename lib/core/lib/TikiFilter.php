@@ -70,6 +70,9 @@ class TikiFilter
 		case 'imgsize':
 			require_once 'Zend/Filter/PregReplace.php';
 			return new Zend_Filter_PregReplace( '/^.*(\d+)\s*(%?).*$/', '$1$2' );
+		case 'attribute_type':
+			require_once 'TikiFilter/AttributeType.php';
+			return new TikiFilter_AttributeType;
 		default:
 			trigger_error( 'Filter not found: ' . $filter, E_USER_WARNING );
 			require_once 'TikiFilter/PreventXss.php';

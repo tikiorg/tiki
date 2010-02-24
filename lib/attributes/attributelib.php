@@ -24,15 +24,8 @@ class AttributeLib extends TikiDb_Bridge
 	}
 
 	private function get_valid( $name ) {
-		// Force to have at least two dots to scope the attribute name
-		if( substr_count( $name, '.' ) < 2 ) {
-			return false;
-		}
-
-		$name = strtolower( $name );
-		$name = preg_replace( '/[^a-z\.]/', '', $name );
-
-		return $name;
+		$filter = TikiFilter::get('attribute_type');
+		return $filter->filter( $name );
 	}
 }
 
