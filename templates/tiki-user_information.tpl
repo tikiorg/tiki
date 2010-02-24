@@ -281,10 +281,10 @@
 	{/tab}{/if}
 	
 	
-	{if $prefs.feature_actionlog eq 'y' and $prefs.user_who_viewed_my_stuff eq 'y' and !empty($user) and ($user eq $userinfo.login or $tiki_p_admin eq "y")}
-	{tab name="{tr}Who Looks At Your Stuff?{/tr}"}	
+	{if $prefs.feature_actionlog eq 'y' and $prefs.user_who_viewed_my_stuff eq 'y' and !empty($user) and ($prefs.user_who_viewed_my_stuff_show_others eq 'y' or $user eq $userinfo.login or $tiki_p_admin eq "y")}
+	{tab name="{tr}Who Looks At Stuff?{/tr}"}	
 		<div class="simplebox">
-			<h2 class="center">{tr}Who Looks At Your Stuff?{/tr}</h2>
+			<h2 class="center">{if $user eq $userinfo.login}{tr}Who Looks At Your Stuff?{/tr}{else}{tr}Who Looks At His Stuff?{/tr}{/if}</h2>
 			{cycle values="even,odd" print=false}
 			{section name=ix loop=$whoviewed}
 			<div class="clearfix {cycle}">
