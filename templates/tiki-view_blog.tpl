@@ -1,3 +1,4 @@
+{if !isset($show_heading) or $show_heading neq "n"}
 <div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}</div>
 {if strlen($heading) > 0 and $prefs.feature_blog_heading eq 'y'}
   {eval var=$heading}
@@ -59,6 +60,7 @@ class="icon">{$watching_categories[i].name}</a>&nbsp;
           <a class="bloglink" href="tiki-view_blog.php?blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a>
         -->	*}
 	</div>
+{/if}
 {/if}
 
 {section name=ix loop=$listpages}
