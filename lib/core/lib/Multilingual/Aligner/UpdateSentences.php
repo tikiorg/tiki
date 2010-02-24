@@ -132,7 +132,7 @@ class Multilingual_Aligner_UpdateSentences1 {
 	{
 	$changed_diff_unchanged=array();
 	$diff = &new Text_Diff($unchangedSentence_array,$changedSentence_array);
-	$context=sizeof($unchangedSentence_array);
+	$context=count($unchangedSentence_array);
 	$renderer = &new Text_Diff_Renderer_unified($context);
 	$arr=$renderer->render($diff);
 	$kk=0;
@@ -510,5 +510,3 @@ class Multilingual_Aligner_UpdateSentences1 {
 	
 	
 }
-
-?>

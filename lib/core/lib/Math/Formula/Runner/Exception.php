@@ -6,4 +6,6 @@
 // $Id$
 
 require_once 'Math/Formula/Exception.php';
-class Math_Formula_Runner_Exception extends Math_Formula_Exception {}
+class Math_Formula_Runner_Exception extends Math_Formula_Exception
+{
+}

@@ -476,4 +476,3 @@ class Multilingual_Aligner_SentenceAlignments {
 	echo "#".$fr_sentence."#";
 	
 */
-?>

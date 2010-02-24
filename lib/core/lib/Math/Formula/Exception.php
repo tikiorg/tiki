@@ -5,5 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Math_Formula_Exception extends Exception {}
-
+class Math_Formula_Exception extends Exception
+{
+}

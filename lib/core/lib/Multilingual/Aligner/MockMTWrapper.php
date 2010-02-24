@@ -5,9 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-	require_once "SentenceAlignments.php";
-	  
-	class Multilingual_Aligner_MockMTWrapper extends Multilingual_Aligner_SentenceAlignments{
+require_once "SentenceAlignments.php";
+  
+class Multilingual_Aligner_MockMTWrapper extends Multilingual_Aligner_SentenceAlignments
+{
 
 	public function getTranslationInOtherLanguage($source_lng_sentence, $source_lng) {
 	
@@ -51,8 +52,4 @@
 			$this->addSentencePair($source_array[$i],$source_lng,$target_array[$i],$target_lng);
 		}
 		}//function ends
-
-	
-
-	}//class ends
-?>
+}//class ends
