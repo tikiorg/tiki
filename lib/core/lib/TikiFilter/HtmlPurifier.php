@@ -23,5 +23,3 @@ class TikiFilter_HtmlPurifier implements Zend_Filter_Interface
 		return $purifier->purify( $data );
 	}
 }
-
-?>
