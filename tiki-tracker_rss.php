@@ -21,7 +21,8 @@ if (!isset($_REQUEST["trackerId"])) {
 	$errmsg = tra("No trackerId specified");
 	require_once ('tiki-rss_error.php');
 }
-if ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['trackerId'], 'tracker', 'tiki_p_view_trackers')) {
+$perms = Perms::get(array('type' => 'tracker', 'object' => $_REQUEST['trackerId']));
+if ($tiki_p_admin_trackers != 'y' && (!$perms->view_trackers && !$perms->view_trackers_pending && !$perms->view_trackers_closed)) {
 	$smarty->assign('errortype', 401);
 	$errmsg = tra("Permission denied. You cannot view this section");
 	require_once ('tiki-rss_error.php');
@@ -71,9 +72,27 @@ if ($output["data"] == "EMPTY") {
 		$filtervalue = null;
 	}
 	if (isset($_REQUEST['status'])) {
+		if (!$trklib->valid_status($_REQUEST['status'])) {
+			$errmsg = tra("Incorrect parameter");
+			require_once ('tiki-rss_error.php');
+		}
 		$status = $_REQUEST['status'];
 	} else {
-		$status = null;
+		$status = 'opc';
+	}
+	if (!$perms->view_trackers) {
+		$status = str_replace('o', '', $status);
+	}
+	if (!$perms->view_trackers_pending) {
+		$status = str_replace('p', '', $status);
+	}
+	if (!$perms->view_trackers_closed) {
+		$status = str_replace('c', '', $status);
+	}
+	if (empty($status)) {
+		$smarty->assign('errortype', 401);
+		$errmsg = tra("Permission denied. You cannot view this section");
+		require_once ('tiki-rss_error.php');
 	}
 	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $sort_mode, $fields, $filterfield, $filtervalue, $status, null, $exactvalue);
 	foreach($tmp["data"] as $data) {
