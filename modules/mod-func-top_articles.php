@@ -24,7 +24,12 @@ function module_top_articles_info() {
 function module_top_articles( $mod_reference, $module_params ) {
 	global $tikilib, $smarty, $user;
 	global $artlib; require_once 'lib/articles/artlib.php';
-	$ranking = $artlib->list_articles(0, $mod_reference['rows'], 'nbreads_desc', '', '', '', $user);
+
+	$lang = '';
+	if(isset($module_params['lang'])){
+		$lang = $module_params['lang'];
+	}
+	$ranking = $artlib->list_articles(0, $mod_reference['rows'], 'nbreads_desc', '', '', '', $user,'','','','','','','',$lang,'','','');
 	
 	$smarty->assign('modTopArticles', $ranking["data"]);
 }
