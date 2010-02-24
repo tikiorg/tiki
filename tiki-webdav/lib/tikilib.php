@@ -1813,6 +1813,14 @@ class TikiLib extends TikiDb_Bridge
 		}
 		// remove object
 		$objectlib->delete_object($type, $id);
+
+		$query = "delete from `tiki_object_attributes` where `type`=? and `itemId`=?";
+		$this->query($query,array($type, $id));
+		$query = "delete from `tiki_object_relations` where `source_type`=? and `source_itemId`=?";
+		$this->query($query,array($type, $id));
+		$query = "delete from `tiki_object_relations` where `target_type`=? and `target_itemId`=?";
+		$this->query($query,array($type, $id));
+
 		return true;
 	}
 
@@ -3584,15 +3592,13 @@ class TikiLib extends TikiDb_Bridge
 		$this->query($query, array(NULL, $page));
 		$query = 'delete from `tiki_theme_control_objects` where `name`=? and `type`=?';
 		$this->query($query, array($page, 'wiki page'));
+
 		$this->remove_object('wiki page', $page);
 
 		$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
 		$this->query($query,array('wiki_page_changed', $page));
 		$query = "delete from `tiki_group_watches` where `event`=? and `object`=?";
 		$this->query($query,array('wiki_page_changed', $page));
-
-		$query = "delete from `tiki_object_attributes` where `type`=? and `itemId`=?";
-		$this->query($query,array('wiki page', $page));
 
 		$atts = $wikilib->list_wiki_attachments($page, 0, -1, 'created_desc', '');
 		foreach ($atts["data"] as $at) {
@@ -8427,6 +8433,58 @@ JS;
 		} else {
 			return $page;
 		}
+	}
+
+	protected function rename_object( $type, $old, $new ) {
+		global $prefs;
+
+		// comments
+		$query = "update `tiki_comments` set `object`=? where `object`=? AND `objectType` = ?";
+		$this->query($query, array( $new, $old, $type ) );
+
+		// Move email notifications
+		$oldId = str_replace( $type, ' ', '' ) . $old;
+		$newId = str_replace( $type, ' ', '' ) . $new;
+		$query = "update `tiki_user_watches` set `object`=? where `object`=?";
+		$this->query($query, array( $newId, $oldId ) );
+		$query = "update `tiki_group_watches` set `object`=? where `object`=?";
+		$this->query($query, array( $newId, $oldId ) );
+
+		// theme_control_objects(objId,name)
+		$oldId = md5($type . $old);
+		$newId = md5($type . $new);
+		$query = "update `tiki_theme_control_objects` set `objId`=?, `name`=? where `objId`=?";
+		$this->query($query, array( $newId, $new, $oldId ) );
+
+		// polls
+		if ($prefs['feature_polls'] == 'y') {
+			$query = "update `tiki_polls` tp inner join `tiki_poll_objects` tpo on tp.`pollId` = tpo.`pollId` inner join `tiki_objects` tob on tpo.`catObjectId` = tob.`objectId` set tp.`title`=? where tp.`title`=? and tob.`type` = ?";
+			$this->query($query, array( $new, $old, $type ) );
+		}
+
+		// Move custom permissions
+		$oldId = md5($type . strtolower($old));
+		$newId = md5($type . strtolower($new));
+		$query = "update `users_objectpermissions` set `objectId`=? where `objectId`=? AND `objectType` = ?";
+		$this->query($query, array( $newId, $oldId, $type ) );
+
+		// Logs
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Renamed', $new, 'wiki page', 'old='.$old.'&new='.$new, '', '', '', '', '', array(array('rename'=>$old)));
+			$logslib->rename($type, $old, $new);
+		}
+
+		// Attributes
+		$query = "update `tiki_object_attributes` set `itemId`=? where `itemId`=? AND type=?";
+		$this->query($query, array( $new, $old, $type) );
+		$query = "update `tiki_object_relations` set `source_itemId`=? where `source_itemId`=? AND source_type=?";
+		$this->query($query, array( $new, $old, $type) );
+		$query = "update `tiki_object_relations` set `target_itemId`=? where `target_itemId`=? AND target_type=?";
+		$this->query($query, array( $new, $old, $type) );
+
+		global $menulib; include_once('lib/menubuilder/menulib.php');
+		$menulib->rename_wiki_page($old, $new);
 	}
 }
 // end of class ------------------------------------------------------

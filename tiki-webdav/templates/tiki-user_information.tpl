@@ -14,7 +14,7 @@
 		<div style="vertical-align: top">
 					<div class="clearfix">
 		 				<div class="floatleft">
-		 					<h2><big>{$userinfo.login|userlink}</big></h2>
+		 					<h2>{$userinfo.login|userlink}</h2>
 		 				</div>
 						<div class="form floatright">
 		{if $tiki_p_admin eq 'y' or $userinfo.login eq $user}
