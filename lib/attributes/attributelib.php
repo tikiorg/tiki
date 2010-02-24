@@ -10,7 +10,17 @@ class AttributeLib extends TikiDb_Bridge
 	function get_attributes( $type, $objectId ) {
 		return $this->fetchMap( 'SELECT `attribute`, `value` FROM `tiki_object_attributes` WHERE `type` = ? AND `itemId` = ?', array( $type, $objectId ) );
 	}
+	
+	/**
+	 * The attribute must contain at least two dots and only lowercase letters.
+	 */
 
+	/**
+	 * NAMESPACE management and attribute naming.
+	 * Please see http://dev.tikiwiki.org/Object+Attributes+and+Relations for guidelines on 
+	 * attribute naming, and document new tiki.*.* names that you add 
+	 * (also grep "set_attribute" just in case there are undocumented names already used)
+	 */
 	function set_attribute( $type, $objectId, $attribute, $value ) {
 		if( false === $name = $this->get_valid( $attribute ) ) {
 			return false;

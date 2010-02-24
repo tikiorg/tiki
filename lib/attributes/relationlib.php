@@ -33,6 +33,14 @@ class RelationLib extends TikiDb_Bridge
 	/**
 	 * The relation must contain at least two dots and only lowercase letters.
 	 */
+	
+	/**
+	 * NAMESPACE management and relation naming.
+	 * Please see http://dev.tikiwiki.org/Object+Attributes+and+Relations for guidelines on 
+	 * relation naming, and document new tiki.*.* names that you add.
+	 * (also grep "add_relation" just in case there are undocumented names already used)
+	 */
+	
 	function add_relation( $relation, $src_type, $src_object, $target_type, $target_object ) {
 		$relation = TikiFilter::get( 'attribute_type' )
 			->filter( $relation );
