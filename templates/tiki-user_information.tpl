@@ -281,7 +281,7 @@
 	{/tab}{/if}
 	
 	
-	{if $prefs.feature_actionlog eq 'y' && $prefs.user_who_viewed_my_stuff eq 'y'}
+	{if $prefs.feature_actionlog eq 'y' and $prefs.user_who_viewed_my_stuff eq 'y' and !empty($user) and ($user eq $userinfo.login or $tiki_p_admin eq "y")}
 	{tab name="{tr}Who Looks At Your Stuff?{/tr}"}	
 		<div class="simplebox">
 			<h2 class="center">{tr}Who Looks At Your Stuff?{/tr}</h2>
