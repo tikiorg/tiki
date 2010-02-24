@@ -47,7 +47,7 @@ class TikiWebdav_PathFactories_File implements ezcWebdavPathFactory
             }
         }
 
-	//@file_put_contents('/tmp/tiki4log', "parseUriToPath($uri): $requestPath\n", FILE_APPEND );
+	print_debug("parseUriToPath($uri): $requestPath\n");
 	return $requestPath;
     }
 
@@ -58,7 +58,7 @@ class TikiWebdav_PathFactories_File implements ezcWebdavPathFactory
 
 	$result = $this->baseUri . implode( '/', array_map( 'rawurlencode', explode( '/', $path ) ) );
 
-	//@file_put_contents('/tmp/tiki4log', "generateUriFromPath($path): $result\n", FILE_APPEND );
+	print_debug("generateUriFromPath($path): $result\n");
 	return $result;
     }
 }

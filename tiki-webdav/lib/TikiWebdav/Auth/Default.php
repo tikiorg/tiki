@@ -1,6 +1,5 @@
 <?php
 
-///class TikiWebdav_Auth_Default implements ezcWebdavLockAuthorizer, ezcWebdavAnonymousAuthenticator, ezcWebdavAuthorizer
 class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAuthorizer, ezcWebdavLockAuthorizer, ezcWebdavBasicAuthenticator
 {
 	protected $tokens;
@@ -12,7 +11,7 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 
 	public function __construct( $storageFile = null )
 	{
-		//@file_put_contents('/tmp/tiki4log', "TEST: $storageFile\n", FILE_APPEND);
+		print_debug("Auth_Default: $storageFile\n");
 		$this->storageFile = $storageFile;
 
 		$this->tokens = array();
@@ -25,12 +24,12 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 	public function __destruct()
 	{
 		if (empty($this->storageFile) ) return true;
-		//@file_put_contents('/tmp/tiki4log', "TEST: ".$this->storageFile."\n", FILE_APPEND);
+		print_debug("Auth_Default __destruct: ".$this->storageFile."\n");
 		if ( $this->tokens !== array() )
 		{
 			file_put_contents( $this->storageFile, serialize( $this->tokens ));
 		} else {
-			//@file_put_contents('/tmp/tiki4log', 'TEST:'.serialize($this->tokens)."\n", FILE_APPEND);
+			print_debug('Auth_Default __destruct: '.serialize($this->tokens)."\n", FILE_APPEND);
 		}
 	} 
 
@@ -47,7 +46,7 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 		if (!isset($_SESSION['webdav_user']) ) {
 			if ( $data->username === '' or $data->username === 'Anonymous') {
 				$user = $_SESSION['webdav_user'] = 'Anonymous';
-				//@file_put_contents('/tmp/tiki4log', "Login Anonymous User=".$data->username." Already logged\n", FILE_APPEND);
+				print_debug("Login Anonymous User=".$data->username." Already logged\n");
 				return true;
 			}
 			global $userlib; include_once('lib/userslib.php');
@@ -59,7 +58,7 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 			} 
 			return false;
 		} else {
-			//@file_put_contents('/tmp/tiki4log', "Login Basic User=".$data->username." Already logged\n", FILE_APPEND);
+			print_debug("Login Basic User=".$data->username." Already logged\n");
 			$user = $_SESSION['webdav_user'];
 			return true;
 		}
@@ -77,7 +76,7 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 			}
 			global $userlib; include_once('lib/userslib.php');
 			list($isvalid, $user, $error) = $userlib->validate_user($data->username, 'tototi');
-			//@file_put_contents('/tmp/tiki4log', "Login Digest User=".$data->username." ".($isvalid ? 'OK' : 'FAILED')." ".print_r($data,true)."\n", FILE_APPEND);
+			print_debug("Login Digest User=".$data->username." ".($isvalid ? 'OK' : 'FAILED')." ".print_r($data,true)."\n");
 			if ($isvalid) {
 				$userlib->update_expired_groups();
 				$_SESSION['webdav_user'] = $data->username;
@@ -96,44 +95,42 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 	{
 		global $tikilib;
 		global $filegallib; include_once('lib/filegals/filegallib.php');
-		//@file_put_contents('/tmp/tiki4log', "Authorize...PATH=$path ACCESS=".($access == self::ACCESS_READ?'READ':'WRITE')."\n", FILE_APPEND);
+		print_debug("Authorize...PATH=$path ACCESS=".($access == self::ACCESS_READ?'READ':'WRITE')."\n");
 		$path = dirname(urldecode($path));
 		if ( $path === '/' && $access === self::ACCESS_READ ) return true;
 		$fgal = $filegallib->get_objectid_from_virtual_path($path);
 		$id = $fgal['id'];
 		if (!$id) {
-			//@file_put_contents('/tmp/tiki4log', "Authorize...PATH=$path does not exist\n", FILE_APPEND);
+			print_debug("Authorize...PATH=$path does not exist\n");
 			return false;
 		}
 
-		//@file_put_contents('/tmp/tiki4log', "Authorize...TOTO 1\n", FILE_APPEND);
 		$groups = $tikilib->get_user_groups( $user );
     $perms = Perms::getInstance();
     $perms->setGroups( $groups );
 		$perms = Perms::get(array('type'=>'file gallery', 'object'=>$id));
-		//@file_put_contents('/tmp/tiki4log', "Authorize...PERMS:".print_r($perms,true)."\n", FILE_APPEND);
+		print_debug("Authorize...PERMS:".print_r($perms,true)."\n");
 		$ret = false;
-		//@file_put_contents('/tmp/tiki4log', "Authorize...TOTO 2\n", FILE_APPEND);
 		if ( $access === self::ACCESS_READ ) {
-			//@file_put_contents('/tmp/tiki4log', "Authorize...READ ".($perms->view_file_gallery?'OK':'PAS')." ".($perms->list_file_gallery?'OK':'PAS')."\n", FILE_APPEND);
+			print_debug("Authorize...READ ".($perms->view_file_gallery?'OK':'PAS')." ".($perms->list_file_gallery?'OK':'PAS')."\n");
 			if ($perms->view_file_gallery || $perms->list_file_gallery) {
 				$ret = true;
 			}
 		} elseif ( $access === self::ACCESS_WRITE ) {
-			//@file_put_contents('/tmp/tiki4log', "Authorize...WRITE ".($perms->upload_files?'OK':'PAS')." ".($perms->admin_file_galleries?'OK':'PAS')."\n", FILE_APPEND);
+			print_debug("Authorize...WRITE ".($perms->upload_files?'OK':'PAS')." ".($perms->admin_file_galleries?'OK':'PAS')."\n");
 			if ( $perms->upload_files || $perms->admin_file_galleries ) {
 				$ret = true;
 			}
 		}
 		
-		//@file_put_contents('/tmp/tiki4log', "Authorize...USER=$user PATH=$path ".($ret?'OK':'PAS OK')."\n", FILE_APPEND);
+		print_debug("Authorize...USER=$user PATH=$path ".($ret?'OK':'PAS OK')."\n");
 		return $ret;
 	}
 
 	public function assignLock( $user, $lockToken )
 	{
 		if ( $user == '' ) $user = 'Anonymous';
-		//@file_put_contents('/tmp/tiki4log', "Assigning Lock($user, $lockToken)...\n", FILE_APPEND);
+		print_debug("Assigning Lock($user, $lockToken)...\n");
 		if ( !isset( $this->tokens[$user] ) )
 		{
 			$this->tokens[$user] = array();
@@ -144,14 +141,14 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 	public function ownsLock( $user, $lockToken )
 	{
 		if ( $user == '' ) $user = 'Anonymous';
-		//@file_put_contents('/tmp/tiki4log', "Checking Lock($user, $lockToken): ".( isset( $this->tokens[$user][$lockToken] ) ? 'OK' : 'NOT OK' )."\n", FILE_APPEND);
+		print_debug("Checking Lock($user, $lockToken): ".( isset( $this->tokens[$user][$lockToken] ) ? 'OK' : 'NOT OK' )."\n");
 		return isset( $this->tokens[$user][$lockToken] );
 		return true; ///FIXME
 	}
 
 	public function releaseLock( $user, $lockToken )
 	{
-		//@file_put_contents('/tmp/tiki4log', "Releasing Lock($user, $lockToken)...\n", FILE_APPEND);
+		print_debug("Releasing Lock($user, $lockToken)...\n");
 		if ( $user == '' ) $user = 'Anonymous';
 		unset( $this->tokens[$user][$lockToken] );
 	} 

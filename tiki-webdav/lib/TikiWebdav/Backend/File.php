@@ -30,22 +30,25 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		global $prefs;
 
 		// avoid not having a deadlock when trying to acquire WebDav lock
-		//@file_put_contents('/tmp/tiki4log', "Lock Directory: ".$prefs['fgal_use_dir']."\n", FILE_APPEND );
+		print_debug("Lock Directory: ".$prefs['fgal_use_dir']."\n", FILE_APPEND );
 		if ( !empty($prefs['fgal_use_dir']) && file_exists($prefs['fgal_use_dir'] ) ) {
 			$this->root = realpath( $prefs['fgal_use_dir'] );
 		} else {
 			$this->root = realpath( 'temp/' );
 		}
-		$this->options = new ezcWebdavFileBackendOptions( array ( 'lockFileName' => $this->root.'/.webdav_lock', 'waitForLock' => 200000, 'propertyStoragePath' => $this->root, 'noLock' => false ) ); 
+		$this->options = new ezcWebdavFileBackendOptions( array ( 
+			'lockFileName' => $this->root.'/.webdav_lock', 
+			'waitForLock' => 200000, 
+			'propertyStoragePath' => $this->root, 
+			'noLock' => false )
+		); 
 		$this->propertyStorage = new ezcWebdavBasicPropertyStorage();
 	}
 
 	public function lock( $waitTime, $timeout )
 	{
-///		@file_put_contents('/tmp/tiki4log', "WARNING: lock method not implemented\n", FILE_APPEND );
-
 		// Check and raise lockLevel counter
-		//@file_put_contents('/tmp/tiki4log', "LOCK Level: ".$this->lockLevel." \n", FILE_APPEND );
+		print_debug("LOCK Level: ".$this->lockLevel." \n");
 		if ( $this->lockLevel > 0 )
 		{
 			// Lock already acquired
@@ -58,7 +61,6 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		// Timeout is in microseconds...
 		$timeout /= 1000000;
 		$lockFileName = $this->options->lockFileName;
-		//@file_put_contents('/tmp/tiki4log', "LOCK: ".$this->options->lockFileName." \n", FILE_APPEND );
 
 		// fopen in mode 'x' will only open the file, if it does not exist yet.
 		// Even this is is expected it will throw a warning, if the file
@@ -68,12 +70,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				while ( file_exists($lockFileName) )
 				{
 					// This is untestable.
-						//@file_put_contents('/tmp/tiki4log', "LOCK TIME ".(microtime( true ) - $lockStart).":".$timeout." \n", FILE_APPEND );
 					if ( microtime( true ) - $lockStart > $timeout )
 					{
 						// Release timed out lock
 						unlink( $lockFileName );
-						//@file_put_contents('/tmp/tiki4log', "LOCK TIMEOUT ".(microtime( true ) - $lockStart).":".$timeout." \n", FILE_APPEND );
 						$lockStart = microtime( true );
 					}
 					else
@@ -87,12 +87,12 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		// Add first lock
 		++$this->lockLevel;
-		//@file_put_contents('/tmp/tiki4log', "LOCK END \n", FILE_APPEND );
+		print_debug("LOCK END \n");
 	}
 
 	public function unlock()
 	{
-		//@file_put_contents('/tmp/tiki4log', "unLOCK Level: ".$this->lockLevel." \n", FILE_APPEND );
+		print_debug("unLOCK Level: ".$this->lockLevel." \n");
 		if ( --$this->lockLevel === 0 )
 		{
 			// Remove the lock file
@@ -100,7 +100,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			if ( !empty($this->options->lockFileName) ) {
 				unlink( $lockFileName );
 			}
-			//@file_put_contents('/tmp/tiki4log', "Remove LOCK: ".$this->options->lockFileName." \n", FILE_APPEND );
+			print_debug("Remove LOCK: ".$this->options->lockFileName." \n");
 		}
 	}
 
@@ -143,24 +143,22 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		try
 		{
-			//@file_put_contents('/tmp/tiki4log', "LOCK: \n", FILE_APPEND );
 			$this->lock( $this->options->waitForLock, 2000000 );
 		}
 		catch ( ezcWebdavLockTimeoutException $e )
 		{
-			//@file_put_contents('/tmp/tiki4log', "LOCK: failed\n", FILE_APPEND );
+			print_debug("LOCK: failed\n");
 			return false;
 		}
-		//@file_put_contents('/tmp/tiki4log', "LOCK: Acquired\n", FILE_APPEND );
+		print_debug("LOCK: Acquired\n");
 		return true;
 	}
 
 	protected function freeLock()
 	{
-		//@file_put_contents('/tmp/tiki4log', "FreeLOCK: ".$this->options->lockFileName."\n", FILE_APPEND );
+		print_debug("FreeLOCK: ".$this->options->lockFileName."\n");
 		if ( empty($this->options->lockFileName) )
 		{
-			//@file_put_contents('/tmp/tiki4log', "FreeLOCK: TOTO\n", FILE_APPEND );
 			return true;
 		}
 
@@ -253,7 +251,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		global $user, $tikilib, $prefs;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
-		//@file_put_contents('/tmp/tiki4log', "createResource: $path, content=$content \n", FILE_APPEND );
+		print_debug("createResource: $path\n");
 		if ( empty($path)
 			|| substr($path, -1, 1) == '/'
 			|| ( $objectId = $filegallib->get_objectid_from_virtual_path( dirname( $path ) ) ) === false
@@ -277,11 +275,6 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$fhash = '';
 		}
 
-///		$type = empty($this->requestMimeType) ? '' : $this->requestMimeType;
-
-		//@file_put_contents('/tmp/tiki4log', print_r(debug_backtrace(false),true), FILE_APPEND );
-			//@file_put_contents('/tmp/tiki4log', 'galleryId:'.$objectId['id']."name=$name,filename=$name,content=$content,user=$user,fhash=$fhash\n", FILE_APPEND );
-
 		$fileId = $filegallib->insert_file(
 			$objectId['id'],
 			$name,
@@ -295,7 +288,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			'',
 			$user
 		);
-		//@file_put_contents('/tmp/tiki4log', "createResource: end fileID=$fileId\n", FILE_APPEND );	
+		print_debug("createResource: end fileID=$fileId\n");	
 		return $fileId != 0;
 	}
 
@@ -324,7 +317,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$fhash = '';
 		}
 
-		//@file_put_contents('/tmp/tiki4log', "setResourceContents : $path/$fhash \n", FILE_APPEND );
+		print_debug("setResourceContents : $path/$fhash \n");
 		$fileInfo = $filegallib->get_file_info($objectId['id'], false, false);
 		$filegalInfo = $filegallib->get_file_gallery_info($fileInfo['galleryId']);
 
@@ -347,7 +340,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$filegalInfo,
 			true
 		);
-		//@file_put_contents('/tmp/tiki4log', "setResourceContents: fileId = $fileId end \n", FILE_APPEND );	
+		print_debug("setResourceContents: fileId = $fileId end \n");	
 		return $fileId;
 	}
 
@@ -377,50 +370,41 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 	///TODO
 	protected function getPropertyStorage( $path )
 	{
-		//@file_put_contents('/tmp/tiki4log', "getPropertyStorage method \n", FILE_APPEND );
+		print_debug("getPropertyStorage method \n");
 		if ( @file_exists($storagePath = $this->options->propertyStoragePath.'/properties-'.md5($path)) ) {
-			//$xml = DOMDocument::load($storagePath);
 			$xml = ezcWebdavServer::getInstance()->xmlTool->createDom( @file_get_contents($storagePath) );
-			//@file_put_contents('/tmp/tiki4log', "getPropertyStorage content XML=".file_get_contents($storagePath)."\n", FILE_APPEND );
 		} else {
 			$xml = ezcWebdavServer::getInstance()->xmlTool->createDom();
 		}
 		$handler = new ezcWebdavPropertyHandler(
         new ezcWebdavXmlTool()
         );
-		//@file_put_contents('/tmp/tiki4log', "getPropertyStorage method TOTO 1 XML=".serialize($xml)."\n", FILE_APPEND );
 		try {
 		$handler->extractProperties($xml->getElementsByTagNameNS('DAV:','*'),$this->propertyStorage);
 		}
 		catch ( Exception $e ) {
-			//@file_put_contents('/tmp/tiki4log', "getPropertyStorage method TOTO 3 ".$e->getMessage()."\n", FILE_APPEND );
 		}
-		//@file_put_contents('/tmp/tiki4log', "getPropertyStorage method TOTO 2\n", FILE_APPEND );
 
-		//@file_put_contents('/tmp/tiki4log', "All properties:".print_r($this->propertyStorage->getAllProperties(),true)."\n", FILE_APPEND );
-		//@file_put_contents('/tmp/tiki4log', "getPropertyStorage method end\n", FILE_APPEND );
+		print_debug("getPropertyStorage method end\n");
 		return $this->propertyStorage;
 	}
 
 	protected function storeProperties( $path, ezcWebdavBasicPropertyStorage $storage )
 	{
-		//@file_put_contents('/tmp/tiki4log', "storeProperties method \n", FILE_APPEND );
+		print_debug("storeProperties method \n");
 		$storagePath = $this->options->propertyStoragePath.'/properties-'.md5($path);
 
-		//@file_put_contents('/tmp/tiki4log', "storeProperties method TOTO1 $storagePath\n", FILE_APPEND );
 		// Create handler structure to read properties
 		$handler = new ezcWebdavPropertyHandler(
 				$xml = new ezcWebdavXmlTool()
 				);
 
-		//@file_put_contents('/tmp/tiki4log', "storeProperties method TOTO2\n", FILE_APPEND );
 		// Create new dom document with property storage for one namespace
 		$doc = new DOMDocument( '1.0' );
 
 		$properties = $doc->createElement( 'properties' );
 		$doc->appendChild( $properties );
 
-		//@file_put_contents('/tmp/tiki4log', "storeProperties method TOTO3\n", FILE_APPEND );
 		// Store and store properties
 		foreach ($this->handledLiveProperties as $propName) {
 			$storage->detach($propName);
@@ -430,7 +414,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				$properties
 				);
 
-		//@file_put_contents('/tmp/tiki4log', "storeProperties method end\n", FILE_APPEND );
+		print_debug("storeProperties method end\n");
 		
 		return $doc->save( $storagePath );
 	}
@@ -438,7 +422,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 	///TODO
 	public function setProperty( $path, ezcWebdavProperty $property )
 	{
-		//@file_put_contents('/tmp/tiki4log', "setProperty method PATH=$path PROPERTY:".$property->name."\n", FILE_APPEND );
+		print_debug("setProperty method PATH=$path PROPERTY:".$property->name."\n");
 		// Check if property is a self handled live property and return an
 		// error in this case.
 		if ( ( $property->namespace === 'DAV:' ) &&
@@ -457,14 +441,13 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		// Store document back
 		$this->storeProperties( $path, $storage );
-		//@file_put_contents('/tmp/tiki4log', "setProperty method PATH=$path PROPERTY:".$property->name." value=".print_r($this->getProperty($path,$property->name,true))."\n", FILE_APPEND );
 
 		return true;
 	}
 
 	public function removeProperty( $path, ezcWebdavProperty $property )
 	{
-		//@file_put_contents('/tmp/tiki4log', "WARNING: removeProperty method not implemented\n", FILE_APPEND );
+		print_debug("removeProperty method\n");
 		// Live properties may not be removed.
 		if ( $property instanceof ezcWebdavLiveProperty )
 		{
@@ -481,15 +464,13 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		$this->storeProperties( $path, $storage );
 
 		return true;
-		return true; ///FIXME
 	}
 
-	///TODO
 	public function resetProperties( $path, ezcWebdavPropertyStorage $storage )
 	{
-		//@file_put_contents('/tmp/tiki4log', "WARNING: resetProperties method not implemented\n", FILE_APPEND );
+		print_debug("resetProperties method\n");
 		$this->storeProperties( $path, $storage );
-		return true; ///FIXME
+		return true;
 	}
 
 	public function getProperty( $path, $propertyName, $namespace = 'DAV:' )
@@ -497,32 +478,26 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		global $tikilib;
 		global $filegallib; include_once('lib/filegals/filegallib.php');
 
-		//@file_put_contents('/tmp/tiki4log', "GetProperty($path, $propertyName, $namespace)", FILE_APPEND );
+		print_debug("GetProperty($path, $propertyName, $namespace)");
 		if ( ( $objectId = $filegallib->get_objectid_from_virtual_path($path) ) === false ) {
-			//@file_put_contents('/tmp/tiki4log', "GetProperty out early\n", FILE_APPEND); 
 				return false;
 		}
 
 		$isCollection = ( $objectId['type'] == 'filegal' );
 
-		//@file_put_contents('/tmp/tiki4log', "GetProperty $path isCollection".($isCollection ?' TRUE':'FALSE')."\n", FILE_APPEND);
 		if ( $isCollection ) {
 			$tikiInfo = $filegallib->get_file_gallery_info($objectId['id']);
 		} else {
 			$tikiInfo = $filegallib->get_file_info($objectId['id']);
 		}
 
-		//@file_put_contents('/tmp/tiki4log', "GetProperty TikiInfo".print_r($tikiInfo,true)."\n", FILE_APPEND);
-
 		$storage = $this->getPropertyStorage( $path );
 
 		$properties = $storage->getAllProperties();
-		//@file_put_contents('/tmp/tiki4log', "GetProperty TOTO $path\n", FILE_APPEND); 
 		// Handle dead propreties
 		if ( $namespace !== 'DAV:' )
 		{
 			return $properties[$namespace][$propertyName];
-			//@file_put_contents('/tmp/tiki4log', "GetProperty out early 2\n", FILE_APPEND); 
 		}
 
 		// Handle live properties
@@ -534,28 +509,27 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 					ezcWebdavGetContentLengthProperty::COLLECTION :
 					$tikiInfo['filesize']
 				);
-				//@file_put_contents('/tmp/tiki4log', "-> " . ($isCollection ?  ezcWebdavGetContentLengthProperty::COLLECTION :$tikiInfo['filesize']) ."\n", FILE_APPEND );
 				return $property;
 
 			case 'getlastmodified':
 				$property = new ezcWebdavGetLastModifiedProperty( new ezcWebdavDateTime(
 					'@' . (int)$tikiInfo['lastModif']
 				) );
-				//@file_put_contents('/tmp/tiki4log', "-> " . $tikiInfo['lastModif'] ."\n", FILE_APPEND );
+				print_debug("-> " . $tikiInfo['lastModif'] ."\n");
 				return $property;
 
 			case 'creationdate':
 				$property = new ezcWebdavCreationDateProperty( new ezcWebdavDateTime(
 					'@' . (int)$tikiInfo['created']
 				) );
-				//@file_put_contents('/tmp/tiki4log', "-> " . $tikiInfo['created'] ."\n", FILE_APPEND );
+				print_debug("-> " . $tikiInfo['created'] ."\n");
 				return $property;
 
 			case 'displayname':
 				$property = new ezcWebdavDisplayNameProperty(
 					$tikiInfo['name']
 				);
-				//@file_put_contents('/tmp/tiki4log', "-> " . $tikiInfo['name'] ."\n", FILE_APPEND );
+				print_debug("-> " . $tikiInfo['name'] ."\n");
 				return $property;
 
 			case 'getcontenttype':
@@ -564,7 +538,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 					'httpd/unix-directory' :
 					( empty($tikiInfo['filetype']) ? 'application/octet-stream' : $tikiInfo['filetype'] )
 				);
-				//@file_put_contents('/tmp/tiki4log', "-> " . ( $isCollection ?  'httpd/unix-directory' : ( empty($tikiInfo['filetype']) ? 'application/octet-stream' : $tikiInfo['filetype'] ) ) ."\n", FILE_APPEND );
+				print_debug("-> " . ( $isCollection ?  'httpd/unix-directory' : ( empty($tikiInfo['filetype']) ? 'application/octet-stream' : $tikiInfo['filetype'] ) ) ."\n");
 				return $property;
 
 			case 'getetag':
@@ -572,7 +546,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				$property = new ezcWebdavGetEtagProperty(
 					'"' . $md5 . '-' . crc32($md5) . '"'
 				);
-				//@file_put_contents('/tmp/tiki4log', "-> " . '"' . $md5 . '-' . crc32($md5) . '"' ."\n", FILE_APPEND );
+				print_debug("-> " . '"' . $md5 . '-' . crc32($md5) . '"' ."\n");
 				return $property;
 
 			case 'resourcetype':
@@ -581,7 +555,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 					ezcWebdavResourceTypeProperty::TYPE_COLLECTION :
 					ezcWebdavResourceTypeProperty::TYPE_RESOURCE
 				);
-				//@file_put_contents('/tmp/tiki4log', "-> " . ( $isCollection ? 'TYPE_COLLECTION' : 'TYPE_RESOURCE' ) ."\n", FILE_APPEND );
+				print_debug("-> " . ( $isCollection ? 'TYPE_COLLECTION' : 'TYPE_RESOURCE' ) ."\n");
 				return $property;
 
 			case 'supportedlock':
@@ -590,7 +564,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				} else {
 					$property = $properties[$namespace][$propertyName];
 				}
-				//@file_put_contents('/tmp/tiki4log', "-> " . print_r($property, true) . "\n", FILE_APPEND );
+				print_debug("-> " . print_r($property, true) . "\n");
 				return $property;
 
 			case 'lockdiscovery':
@@ -599,7 +573,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				} else {
 					$property = $properties[$namespace][$propertyName];
 				}
-				//@file_put_contents('/tmp/tiki4log', "-> " . print_r($property, true) . "\n", FILE_APPEND );
+				print_debug("-> " . print_r($property, true) . "\n");
 				return $property;
 
 			default:
@@ -611,7 +585,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 	private function getContentLength( $path )
 	{
-		//@file_put_contents('/tmp/tiki4log', "getContentLength $path". $this->getProperty( $path, 'getcontentlength' )->contentlength ."\n", FILE_APPEND);
+		print_debug("getContentLength $path". $this->getProperty( $path, 'getcontentlength' )->contentlength ."\n");
 		return $this->getProperty( $path, 'getcontentlength' )->contentlength;
 	}
 
@@ -631,7 +605,6 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		// Add all live properties to stored properties
 		foreach ( $this->handledLiveProperties as $property )
 		{
-			//@file_put_contents('/tmp/tiki4log', "getAllProperties : property : $property\n", FILE_APPEND );
 			$storage->attach( $this->getProperty( $path, $property ) );
 		}
 
@@ -641,15 +614,15 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 	///TODO
 	public function copyRecursive( $source, $destination, $depth = ezcWebdavRequest::DEPTH_INFINITY )
 	{
-		//@file_put_contents('/tmp/tiki4log', "WARNING: copyRecursive method not implemented\n", FILE_APPEND );
-		return true; ///FIXME
+		print_debug("WARNING: copyRecursive method not implemented\n");
+		return false; //FIXME
 	}
 
 	///TODO
 	protected function performCopy( $fromPath, $toPath, $depth = ezcWebdavRequest::DEPTH_INFINITY )
 	{
-		//@file_put_contents('/tmp/tiki4log', "WARNING: performCopy method not implemented\n", FILE_APPEND );
-		return true; ///FIXME
+		print_debug("WARNING: performCopy method not implemented\n");
+		return false; ///FIXME
 	}
 
 	protected function performDelete( $path )
@@ -690,10 +663,8 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		$galleryId = ( $objectId = $filegallib->get_objectid_from_virtual_path($path) ) !== false ? $objectId['id'] : false;
 
-		//@file_put_contents('/tmp/tiki4log', "-> getCollectionMembers\n", FILE_APPEND );
-		//@file_put_contents('/tmp/tiki4log', "-> getCollectionMembers\ngalleryId:$galleryId\n", FILE_APPEND );
+		print_debug("-> getCollectionMembers\ngalleryId:$galleryId\n");
 		if ( $galleryId !== false ) {
-			//$files = $tikilib->get_files(0, -1, 'name_desc', '', (int)$galleryId, false, true, false, true, false, false, false, false, 'admin', true, false);
 			$files = $tikilib->get_files(0, -1, 'name_desc', '', (int)$galleryId, true, true, false, true, false, false, false, false, 'admin', true, false);
 
 			foreach ( $files['data'] as $fileInfo ) {
@@ -708,83 +679,71 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			}
 		}
 
-		//@file_put_contents('/tmp/tiki4log',"getCollectionMembers ".print_r($contents,true). "\n", FILE_APPEND );
+		print_debug("getCollectionMembers ".print_r($contents,true). "\n");
 		return $contents;
 	}
 
 	public function get( ezcWebdavGetRequest $request )
 	{
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: GET --\n", FILE_APPEND );
-		//$this->acquireLock( true );
+		print_debug("-- HTTP method: GET --\n");
 		$return = parent::get( $request );
-		//$this->freeLock();
 
 		return $return;
 	}
 
 	public function head( ezcWebdavHeadRequest $request )
 	{
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: HEAD --\n", FILE_APPEND );
-		//$this->acquireLock( true );
+		print_debug("-- HTTP method: HEAD --\n");
 		$return = parent::head( $request );
-		//$this->freeLock();
 
 		return $return;
 	}
 
 	public function propFind( ezcWebdavPropFindRequest $request )
 	{
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: PROPFIND --\n", FILE_APPEND );
-//		$this->acquireLock( true );
+		print_debug("-- HTTP method: PROPFIND --\n");
 		$return = parent::propFind( $request );
-//		$this->freeLock();
 
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: PROPFIND end --\n", FILE_APPEND );
 		return $return;
 	}
 
 	public function propPatch( ezcWebdavPropPatchRequest $request )
 	{
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: PROPPATCH --\n", FILE_APPEND );
+		print_debug("-- HTTP method: PROPPATCH --\n");
 		$this->acquireLock();
 		$return = parent::propPatch( $request );
 		$this->freeLock();
 
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: PROPPATCH end --\n", FILE_APPEND );
 		return $return;
 	}
 
 	public function put( ezcWebdavPutRequest $request )
 	{
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: PUT --\n", FILE_APPEND );
-///		$this->requestMimeType = $request->getHeader('Content-Type');
+		print_debug("-- HTTP method: PUT --\n");
 		$this->acquireLock();
 		$return = parent::put( $request );
 		$this->freeLock();
 
-		//@file_put_contents('/tmp/tiki4log', "\n-- HTTP method: PUT end --\n", FILE_APPEND );
 		return $return;
 	}
 
 	public function delete( ezcWebdavDeleteRequest $request )
 	{
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: DELETE --".print_r($request,true)."\n", FILE_APPEND );
+		print_debug("-- HTTP method: DELETE --".print_r($request,true)."\n");
 		$this->acquireLock();
 		$return = parent::delete( $request );
 		$this->freeLock();
 
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: DELETE end --".print_r($request,true)."\n", FILE_APPEND );
 		return $return;
 	}
 
 	public function copy( ezcWebdavCopyRequest $request )
 	{
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: COPY --\n", FILE_APPEND );
+		print_debug("-- HTTP method: COPY --\n");
 		$this->acquireLock();
 		$return = parent::copy( $request );
 		$this->freeLock();
 
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: COPY end --\n", FILE_APPEND );
 		return $return;
 	}
 
@@ -793,7 +752,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		global $tikilib, $prefs;
 		global $filegallib; include_once('lib/filegals/filegallib.php');
 
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: MOVE --\n", FILE_APPEND );
+		print_debug("-- HTTP method: MOVE --\n");
 
 		$this->acquireLock();
 
@@ -808,21 +767,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		// Check authorization
 		// Need to do this before checking of node existence is checked, to
 		// avoid leaking information 
-/*
-		///FIXME: Can't call this private method...
-		$authState = $this->recursiveAuthCheck(
-			$request,
-			$dest,
-			ezcWebdavAuthorizer::ACCESS_WRITE,
-			true
-		);
 
-		if ( count( $authState['errors'] ) !== 0 )
-		{
-			// Source permission denied
-			return $authState['errors'][0];
-		}
-*/
 		if ( !ezcWebdavServer::getInstance()->isAuthorized( $dest, $request->getHeader( 'Authorization' ), ezcWebdavAuthorizer::ACCESS_WRITE ) )
 		{
 			$this->freeLock();
@@ -874,21 +819,6 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				$dest
 			);
 		}
-
-		// Verify If-[None-]Match headers on the $source
-/*
-		///FIXME: Can't call this private method...
-		$res = $this->checkIfMatchHeadersRecursive(
-			$request,
-			$source,
-			// We move, not copy!
-			ezcWebdavRequest::DEPTH_INFINITY
-		);
-		if ( $res !== null )
-		{
-			return $res;
-		}
-*/
 
 		// Verify If-[None-]Match headers on the $dest if it exists
 		if ( $this->nodeExists( $dest ) &&
@@ -1031,17 +961,6 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 				if ( $doRename )
 				{
-					/*
-					$noErrors = (bool) $filegallib->update_file(
-						$infos['source']['id'],
-						$infos['dest']['name'],
-						$infos['source']['infos']['description'],
-						$user,
-						$infos['source']['infos']['comment'],
-						false
-					);
-					*/
-
 					if ( $prefs['fgal_use_db'] === 'n' ) {
 						$newPath = md5( $infos['dest']['name'] );
 						do
@@ -1107,13 +1026,13 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		}
 
 
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: MOVE end --\n", FILE_APPEND );
+		print_debug("-- HTTP method: MOVE end --\n");
 		return $return;
 	}
 
 	public function makeCollection( ezcWebdavMakeCollectionRequest $request )
 	{
-		//@file_put_contents('/tmp/tiki4log', "-- HTTP method: MAKECOL --\n", FILE_APPEND );
+		print_debug("-- HTTP method: MAKECOL --\n");
 		$this->acquireLock();
 		$return = parent::makeCollection( $request );
 		$this->freeLock();
