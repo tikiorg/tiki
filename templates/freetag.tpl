@@ -2,7 +2,7 @@
 	<tr class="formcolor">
 		<td><label for="tagBox">{tr}Folksonomy Tags{/tr}</label></td>
 		<td>
-{jq}
+{jq notonready=true}
 	function addTag(tag) {
 		document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;
 	}
