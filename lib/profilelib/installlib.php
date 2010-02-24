@@ -17,6 +17,7 @@ class Tiki_Profile_Installer
 		'file_gallery' => 'Tiki_Profile_InstallHandler_FileGallery',
 		'module' => 'Tiki_Profile_InstallHandler_Module',
 		'menu' => 'Tiki_Profile_InstallHandler_Menu',
+		'menu_option' => 'Tiki_Profile_InstallHandler_MenuOption',
 		'blog' => 'Tiki_Profile_InstallHandler_Blog',
 		'blog_post' => 'Tiki_Profile_InstallHandler_BlogPost',
 		'plugin_alias' => 'Tiki_Profile_InstallHandler_PluginAlias',
@@ -1236,6 +1237,57 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 
 		return $menuId;
 
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_MenuOption extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'type' => 'o',
+			'optionId' => 0,
+			'position' => 1,
+			'section' => '',
+			'perm' => '',
+			'groups' => array(),
+			'level' => 0,
+			'icon' => '',
+			'menuId' => 0
+		);
+
+
+		$data = $this->obj->getData();
+
+		$data = array_merge( $defaults, $data );
+
+		$this->replaceReferences($data);
+
+		if (!empty($data['menuId']) && !empty($data['url'])) {
+		   global $menulib; require_once 'lib/menubuilder/menulib.php';
+		   $data['optionId'] = $menulib->get_option($data['menuId'], $data['url']);
+		}
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['url'] ) || ! isset( $data['menuId'] ) )
+			return false;
+		return true;
+	}
+	function _install()
+	{
+		global $menulib; require_once 'lib/menubuilder/menulib.php';
+
+		$data = $this->getData();
+
+		return $menulib->replace_menu_option( $data['menuId'], $data['optionId'], $data['name'], $data['url'], $data['type'], $data['position'], $data['section'], $data['perm'], implode(',', $data['groups']), $data['level'], $data['icon'] );
 	}
 } // }}}
 

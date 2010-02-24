@@ -456,5 +456,9 @@ class MenuLib extends TikiLib
 		echo $data;
 		die;
 	}
+	function get_option($menuId, $url) {
+		$query = 'select `optionId` from `tiki_menu_options` where `menuId`=? and `url`=?';
+		return $this->getOne($query, array($menuId, $url));
+	}
 }
 $menulib = new MenuLib;
