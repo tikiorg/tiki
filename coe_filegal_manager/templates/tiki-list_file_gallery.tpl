@@ -41,7 +41,7 @@
   {/strip}
   </h1>
   {if $filegals_manager neq ''}
-  <a class="fg-quick-insert-button" onclick="FileGallery.upload.extra('{$galleryId}','{$filegals_manager}')">Quick upload and insert button</a>
+  <a class="fg-quick-insert-button" onclick="FileGallery.upload.extra('{$galleryId}','{$filegals_manager}')">{tr}Quick upload and insert{/tr}</a>
   {/if}
   <a class="fg-settings-icon"><img src="images/file_gallery/icon-tools.gif" border="0"/></a>
   <a class="fg-tip-icon" target="wikihelp" href="http://doc.tikiwiki.org/File+Galleries" onmouseover="$('.fg-tip').show()" onmouseout="$('.fg-tip').hide()"><img src="images/file_gallery/icon-help.gif" border="0"/></a>
@@ -123,7 +123,7 @@
 					Browse by image
 				{/if}
 			</a>
-			<a class="fg-files-button-upload" onclick="FileGallery.upload.show('{$galleryId}','{$filegals_manager}')">Upload files</a>
+			<a class="fg-files-button-upload" onclick="FileGallery.upload.show('{$galleryId}','{$filegals_manager}')">{tr}Upload files{/tr}</a>
 		</div>
 		<div id="fg-files-content">
 		{if $edit_mode eq 'y'}
