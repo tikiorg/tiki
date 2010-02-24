@@ -67,32 +67,40 @@ class FileGalLib extends TikiLib
 		} else {
 			$savedir=$prefs['fgal_use_dir'];
 		}
-		if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
-			if (function_exists('md5_file')) {
-				$checksum = md5_file($savedir . $path);
+		if (($prefs['fgal_use_db'] === 'n') || ($podCastGallery)) {
+			if ( filesize ($savedir . $path) > 0 ) {
+				if (function_exists('md5_file')) {
+					$checksum = md5_file($savedir . $path);
+				} else {
+					$checksum = md5(implode('', file($savedir . $path)));
+				}
 			} else {
-				$checksum = md5(implode('', file($savedir . $path)));
+				$checksum = md5(time());
 			}
 		} else {
 			$checksum = md5($data);
 		}
 		$description = strip_tags($description);
 
-		if ( $prefs['fgal_allow_duplicates'] != 'y' ) {
+		if ( $prefs['fgal_allow_duplicates'] !== 'y' && !empty($data) ) {
 			$fgal_query = 'select count(*) from `tiki_files` where `hash`=?';
 			$fgal_vars = array($checksum);
-			if ( $prefs['fgal_allow_duplicates'] == 'different_galleries' ) {
+			if ( $prefs['fgal_allow_duplicates'] === 'different_galleries' ) {
 				$fgal_query .= ' and `galleryId`=?';
 				$fgal_vars[] = $galleryId;
 			}
-			if ( $this->getOne($fgal_query, $fgal_vars) > 0 ) return false;
+			if ( $this->getOne($fgal_query, $fgal_vars) > 0 ) {
+				return false;
+			}
 		}
 
 		$search_data = '';
 		if ($prefs['fgal_enable_auto_indexing'] != 'n') {
 			$search_data = $this->get_search_text_for_data($data,$path,$type, $galleryId);
-			if ($search_data === false)
+			if ($search_data === false) {
+				//@file_put_contents('/tmp/tiki4log', "insert_file search_data\n", FILE_APPEND );
 				return false;
+			}
 		}
 		if ( empty($created) ) $created = $this->now;
 		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`hits`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`, `author`, `lockedby`)
@@ -132,12 +140,16 @@ class FileGalLib extends TikiLib
 		$query = "update `tiki_files` set `galleryId`=? where `fileId`=?";
 
 		$this->query($query,array($gallery,$file));
+		return true;
 	}
 
 	function remove_file_gallery($id, $galleryId=0, $recurse = true) {
 		global $prefs;
 		$id = (int)$id;
 
+		if ( $id == $prefs['fgal_root_id'] || $galleryId == $prefs['fgal_root_id']) {
+		return false;
+		}
 		if (empty($galleryId)) {
 			$info = $this->get_file_info($id);
 			$galleryId = $info['galleryId'];
@@ -534,7 +546,7 @@ class FileGalLib extends TikiLib
 		}
 
 		// User avatar full images are always using db and not file location (at the curent state of feature)
-		if ($prefs['user_store_file_gallery_picture'] == 'y' && $prefs["user_picture_gallery_id"] == $gal_info['galleryId']) {
+		if (isset($prefs['user_store_file_gallery_picture']) && $prefs['user_store_file_gallery_picture'] == 'y' && $prefs["user_picture_gallery_id"] == $gal_info['galleryId']) {
 			$userPictureGallery = true;			
 		} else {
 			$userPictureGallery = false;
@@ -1367,6 +1379,98 @@ class FileGalLib extends TikiLib
 		$fileId = $this->getOne($query, array($archiveId, $archiveId, $date));
 		return $fileId;
 	}
+
+	function get_objectid_from_virtual_path($path, $parentId = -1) {
+		if ( empty($path) || $path[0] != '/' ) return false;
+
+		if ( $path == '/' ) {
+			//      global $prefs;
+			//      return array('type' => 'filegal', 'id' => $prefs['fgal_root_id']);
+			return array('type' => 'filegal', 'id' => -1);
+		}
+
+		$pathParts = explode('/', $path, 3);
+
+		// Path detected as a file
+		if ( count($pathParts) < 3 )
+		{
+			// If we ask for a previous version (name?version)
+			if ( preg_match('/^([^?]*)\?(\d*)$/', $pathParts[1], $matches) ) {
+				if ( $result = $this->query(
+							'SELECT `fileId` FROM `tiki_files` WHERE `name`=? AND `galleryId`=? order by fileId asc',
+							array( $matches[1], (int)$parentId )
+							,1, $matches[2]) )
+				{
+					$res = $result->fetchRow();
+					if ( ! empty($res) ) {
+						return array('type' => 'file', 'id' => $res['fileId']);
+					}
+				}
+			} else {
+				if ( $result = $this->query(
+							'SELECT `fileId` FROM `tiki_files` WHERE `name`=? AND `galleryId`=? order by fileId desc',
+							array( $pathParts[1], (int)$parentId )
+							) )
+				{
+					$res = $result->fetchRow();
+					if ( ! empty($res) ) {
+						return array('type' => 'file', 'id' => $res['fileId']);
+					}
+				}
+			}
+		}
+
+		// Path detected as a file gallery
+		//   (or previously detected as a file, but not found, so check if it's not a filegal without a '/' at the end)
+		if ( $result = $this->query(
+					'SELECT `galleryId` FROM `tiki_file_galleries` WHERE `name`=? AND `parentId`=?',
+					array( $pathParts[1], (int)$parentId )
+					) )
+		{
+			$res = $result->fetchRow();
+
+			// as a leaf
+			if ( empty($pathParts[2]) )
+			{
+				return empty($res) ? false : array('type' => 'filegal', 'id' => $res['galleryId']);
+			}
+			// as node
+			else
+			{
+				return $this->get_objectid_from_virtual_path( '/' . $pathParts[2], $res['galleryId'] );
+			}
+		}
+
+		return false;
+	}
+
+	function get_full_virtual_path($id, $type = 'file') {
+		if ( ! $id > 0 ) return false;
+
+		switch( $type ) {
+			case 'filegal':
+				global $prefs;
+				//        if ( $id == $prefs['fgal_root_id'] ) return '/';
+				if ( $id == -1 ) return '/';
+				$query = 'SELECT `name`, `parentId` FROM `tiki_file_galleries` WHERE `galleryId`=?';
+				break;
+
+			case 'file': default:
+				$query = 'SELECT `name` AS name, `galleryId` AS parentId FROM `tiki_files` WHERE `fileId`=?';
+		}
+
+		$res = false;
+		$result = $this->query($query, array((int)$id));
+		if ( $result ) {
+			$res = $result->fetchRow();
+		}
+		unset($result);
+
+		$parentPath = $this->get_full_virtual_path($res['parentId'], 'filegal');
+
+		return $res ? $parentPath . ( $parentPath == '/' ? '' : '/' ) . $res['name'] : false;
+	}
+
 	function getFiletype($not=array()) {
 		if (empty($not)) {
 			$query = 'select distinct(`filetype`) from `tiki_files` order by `filetype` asc'; 

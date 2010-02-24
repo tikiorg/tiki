@@ -1651,5 +1651,9 @@ function prefs_feature_list() {
 			'name' => tra('Manual selection of time/date'),
 			'type' => 'flag',
 		),
+		'feature_webdav' => array(
+			'name' => tra('WebDAV access to Tiki'),
+			'type' => 'flag',
+		),
 	);
 }
