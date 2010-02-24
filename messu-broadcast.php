@@ -99,7 +99,7 @@ if (isset($_REQUEST['send']) || isset($_REQUEST['preview'])) {
 			}
 		}
 		// Insert a copy of the message in the sent box of the sender
-		$messulib->save_sent_message($user, $user, $_REQUEST['to'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], $_REQUEST['replyto_hash']);
+		$messulib->save_sent_message($user, $user, $_REQUEST['groupbr'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], $_REQUEST['replyto_hash']);
 		$smarty->assign('message', $message);
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib->add_action('Posted', '', 'message', 'add=' . strlen($_REQUEST['body']));
