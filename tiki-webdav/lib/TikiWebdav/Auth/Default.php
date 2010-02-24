@@ -1,4 +1,9 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id: $
 
 class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAuthorizer, ezcWebdavLockAuthorizer, ezcWebdavBasicAuthenticator
 {
@@ -6,8 +11,8 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 	protected $storageFile;
 
 	protected $credentials = array(
-		'guest' => 'guest'
-	);
+			'guest' => 'guest'
+			);
 
 	public function __construct( $storageFile = null )
 	{
@@ -106,8 +111,8 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 		}
 
 		$groups = $tikilib->get_user_groups( $user );
-    $perms = Perms::getInstance();
-    $perms->setGroups( $groups );
+		$perms = Perms::getInstance();
+		$perms->setGroups( $groups );
 		$perms = Perms::get(array('type'=>'file gallery', 'object'=>$id));
 		print_debug("Authorize...PERMS:".print_r($perms,true)."\n");
 		$ret = false;
@@ -122,7 +127,7 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 				$ret = true;
 			}
 		}
-		
+
 		print_debug("Authorize...USER=$user PATH=$path ".($ret?'OK':'PAS OK')."\n");
 		return $ret;
 	}

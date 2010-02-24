@@ -1,4 +1,10 @@
 <?php
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id: $
+
 class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebdavLockBackend
 {
 	private $requestMimeType;
@@ -8,19 +14,19 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 	protected $lockLevel = 0;
 
 	protected $handledLiveProperties = array( 
-		'getcontentlength', 
-		'getlastmodified', 
-		'creationdate', 
-		'displayname', 
-		'getetag', 
-		'getcontenttype', 
-		'resourcetype',
-//		'supportedlock',
-//		'lockdiscovery',
-	);
+			'getcontentlength', 
+			'getlastmodified', 
+			'creationdate', 
+			'displayname', 
+			'getetag', 
+			'getcontenttype', 
+			'resourcetype',
+			//'supportedlock',
+			//'lockdiscovery',
+			);
 
 	protected $propertyStorage = null;
-	
+
 	public function getRoot() {
 		return $this->root;
 	}
@@ -37,11 +43,11 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$this->root = realpath( 'temp/' );
 		}
 		$this->options = new ezcWebdavFileBackendOptions( array ( 
-			'lockFileName' => $this->root.'/.webdav_lock', 
-			'waitForLock' => 200000, 
-			'propertyStoragePath' => $this->root, 
-			'noLock' => false )
-		); 
+					'lockFileName' => $this->root.'/.webdav_lock', 
+					'waitForLock' => 200000, 
+					'propertyStoragePath' => $this->root, 
+					'noLock' => false )
+				); 
 		$this->propertyStorage = new ezcWebdavBasicPropertyStorage();
 	}
 
@@ -182,22 +188,22 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		// Check if extension ext/mime-magic is usable.
 		if ( $this->options->useMimeExts && 
-			ezcBaseFeatures::hasExtensionSupport( 'mime_magic' ) &&
-			( $mimeType = mime_content_type( $this->root . $path ) ) !== false )
+				ezcBaseFeatures::hasExtensionSupport( 'mime_magic' ) &&
+				( $mimeType = mime_content_type( $this->root . $path ) ) !== false )
 		{
 			return $mimeType;
 		}
 
 		// Check if some browser submitted mime type is available.
-/* FIXME
-		$storage = $this->getPropertyStorage( $path );
-		$properties = $storage->getAllProperties();
+		/* FIXME
+			 $storage = $this->getPropertyStorage( $path );
+			 $properties = $storage->getAllProperties();
 
-		if ( isset( $properties['DAV:']['getcontenttype'] ) )
-		{
-			return $properties['DAV:']['getcontenttype']->mime;
-		}
-*/
+			 if ( isset( $properties['DAV:']['getcontenttype'] ) )
+			 {
+			 return $properties['DAV:']['getcontenttype']->mime;
+			 }
+		 */
 		// Try to detect mimetype from the file extension
 		if ( ! empty( $filename ) && ( $pos = strrpos( $filename, '.' ) ) !== false )
 		{
@@ -211,11 +217,11 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			}
 		}
 
-                if (isset($mimetypes[$ext])) {
-                        return $mimetypes[$ext];
-                } else {
-                        return $defaultmime;
-                }
+		if (isset($mimetypes[$ext])) {
+			return $mimetypes[$ext];
+		} else {
+			return $defaultmime;
+		}
 
 		// Default to 'application/octet-stream' if no mimetype has been detected
 		return 'application/octet-stream';
@@ -253,10 +259,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		print_debug("createResource: $path\n");
 		if ( empty($path)
-			|| substr($path, -1, 1) == '/'
-			|| ( $objectId = $filegallib->get_objectid_from_virtual_path( dirname( $path ) ) ) === false
-			|| $objectId['type'] != 'filegal'
-		) return false;
+				|| substr($path, -1, 1) == '/'
+				|| ( $objectId = $filegallib->get_objectid_from_virtual_path( dirname( $path ) ) ) === false
+				|| $objectId['type'] != 'filegal'
+			 ) return false;
 
 		$name = basename( $path );
 		if ( empty($content) ) $content = '';
@@ -276,18 +282,18 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		}
 
 		$fileId = $filegallib->insert_file(
-			$objectId['id'],
-			$name,
-			'',
-			$name,
-			'',
-			0,
-			'application/octet-stream',
-			$user,
-			$fhash,
-			'',
-			$user
-		);
+				$objectId['id'],
+				$name,
+				'',
+				$name,
+				'',
+				0,
+				'application/octet-stream',
+				$user,
+				$fhash,
+				'',
+				$user
+				);
 		print_debug("createResource: end fileID=$fileId\n");	
 		return $fileId != 0;
 	}
@@ -298,10 +304,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
 		if ( empty($path)
-			|| substr($path, -1, 1) == '/'
-			|| ( $objectId = $filegallib->get_objectid_from_virtual_path( $path ) ) === false
-			|| $objectId['type'] != 'file'
-		) return false;
+				|| substr($path, -1, 1) == '/'
+				|| ( $objectId = $filegallib->get_objectid_from_virtual_path( $path ) ) === false
+				|| $objectId['type'] != 'file'
+			 ) return false;
 
 		$name = basename( $path );
 		if ( empty($content) ) $content = '';
@@ -326,20 +332,20 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		}
 
 		$fileId = $filegallib->replace_file(
-			$objectId['id'],
-			$fileInfo['name'],
-			$fileInfo['description'],
-			$fileInfo['filename'],
-			$content,
-			@strlen( $content ),
-///			empty($this->requestMimeType) ? $fileInfo['filetype'] : $this->requestMimeType,
-			$this->getMimeType( '/' . $fhash, $name ),
-			$user,
-			$fhash,
-			'',
-			$filegalInfo,
-			true
-		);
+				$objectId['id'],
+				$fileInfo['name'],
+				$fileInfo['description'],
+				$fileInfo['filename'],
+				$content,
+				@strlen( $content ),
+				///			empty($this->requestMimeType) ? $fileInfo['filetype'] : $this->requestMimeType,
+				$this->getMimeType( '/' . $fhash, $name ),
+				$user,
+				$fhash,
+				'',
+				$filegalInfo,
+				true
+				);
 		print_debug("setResourceContents: fileId = $fileId end \n");	
 		return $fileId;
 	}
@@ -377,10 +383,10 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 			$xml = ezcWebdavServer::getInstance()->xmlTool->createDom();
 		}
 		$handler = new ezcWebdavPropertyHandler(
-        new ezcWebdavXmlTool()
-        );
+				new ezcWebdavXmlTool()
+				);
 		try {
-		$handler->extractProperties($xml->getElementsByTagNameNS('DAV:','*'),$this->propertyStorage);
+			$handler->extractProperties($xml->getElementsByTagNameNS('DAV:','*'),$this->propertyStorage);
 		}
 		catch ( Exception $e ) {
 		}
@@ -415,7 +421,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				);
 
 		print_debug("storeProperties method end\n");
-		
+
 		return $doc->save( $storagePath );
 	}
 
@@ -480,7 +486,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 
 		print_debug("GetProperty($path, $propertyName, $namespace)");
 		if ( ( $objectId = $filegallib->get_objectid_from_virtual_path($path) ) === false ) {
-				return false;
+			return false;
 		}
 
 		$isCollection = ( $objectId['type'] == 'filegal' );
@@ -505,56 +511,56 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		{
 			case 'getcontentlength':
 				$property = new ezcWebdavGetContentLengthProperty(
-					$isCollection ?
-					ezcWebdavGetContentLengthProperty::COLLECTION :
-					$tikiInfo['filesize']
-				);
+						$isCollection ?
+						ezcWebdavGetContentLengthProperty::COLLECTION :
+						$tikiInfo['filesize']
+						);
 				return $property;
 
 			case 'getlastmodified':
 				$property = new ezcWebdavGetLastModifiedProperty( new ezcWebdavDateTime(
-					'@' . (int)$tikiInfo['lastModif']
-				) );
+							'@' . (int)$tikiInfo['lastModif']
+							) );
 				print_debug("-> " . $tikiInfo['lastModif'] ."\n");
 				return $property;
 
 			case 'creationdate':
 				$property = new ezcWebdavCreationDateProperty( new ezcWebdavDateTime(
-					'@' . (int)$tikiInfo['created']
-				) );
+							'@' . (int)$tikiInfo['created']
+							) );
 				print_debug("-> " . $tikiInfo['created'] ."\n");
 				return $property;
 
 			case 'displayname':
 				$property = new ezcWebdavDisplayNameProperty(
-					$tikiInfo['name']
-				);
+						$tikiInfo['name']
+						);
 				print_debug("-> " . $tikiInfo['name'] ."\n");
 				return $property;
 
 			case 'getcontenttype':
 				$property = new ezcWebdavGetContentTypeProperty(
-					$isCollection ?
-					'httpd/unix-directory' :
-					( empty($tikiInfo['filetype']) ? 'application/octet-stream' : $tikiInfo['filetype'] )
-				);
+						$isCollection ?
+						'httpd/unix-directory' :
+						( empty($tikiInfo['filetype']) ? 'application/octet-stream' : $tikiInfo['filetype'] )
+						);
 				print_debug("-> " . ( $isCollection ?  'httpd/unix-directory' : ( empty($tikiInfo['filetype']) ? 'application/octet-stream' : $tikiInfo['filetype'] ) ) ."\n");
 				return $property;
 
 			case 'getetag':
 				$md5 = ( $isCollection || empty($tikiInfo['hash']) ) ? md5($path) : $tikiInfo['hash'];
 				$property = new ezcWebdavGetEtagProperty(
-					'"' . $md5 . '-' . crc32($md5) . '"'
-				);
+						'"' . $md5 . '-' . crc32($md5) . '"'
+						);
 				print_debug("-> " . '"' . $md5 . '-' . crc32($md5) . '"' ."\n");
 				return $property;
 
 			case 'resourcetype':
 				$property = new ezcWebdavResourceTypeProperty(
-					$isCollection ?
-					ezcWebdavResourceTypeProperty::TYPE_COLLECTION :
-					ezcWebdavResourceTypeProperty::TYPE_RESOURCE
-				);
+						$isCollection ?
+						ezcWebdavResourceTypeProperty::TYPE_COLLECTION :
+						ezcWebdavResourceTypeProperty::TYPE_RESOURCE
+						);
 				print_debug("-> " . ( $isCollection ? 'TYPE_COLLECTION' : 'TYPE_RESOURCE' ) ."\n");
 				return $property;
 
@@ -772,9 +778,9 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		{
 			$this->freeLock();
 			return $this->createUnauthorizedResponse(
-				$dest,
-				$request->getHeader( 'Authorization' )
-			);
+					$dest,
+					$request->getHeader( 'Authorization' )
+					);
 		}
 
 		// Check if resource is available
@@ -782,9 +788,9 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		{
 			$this->freeLock();
 			return new ezcWebdavErrorResponse(
-				ezcWebdavResponse::STATUS_404,
-				$source
-			);
+					ezcWebdavResponse::STATUS_404,
+					$source
+					);
 		}
 
 		// If source and destination are equal, the request should always fail.
@@ -792,21 +798,21 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		{
 			$this->freeLock();
 			return new ezcWebdavErrorResponse(
-				ezcWebdavResponse::STATUS_403,
-				$source
-			);
+					ezcWebdavResponse::STATUS_403,
+					$source
+					);
 		}
 
 		// Check if destination resource exists and throw error, when
 		// overwrite header is F
 		if ( ( $request->getHeader( 'Overwrite' ) === 'F' ) &&
-			$this->nodeExists( $dest ) )
+				$this->nodeExists( $dest ) )
 		{
 			$this->freeLock();
 			return new ezcWebdavErrorResponse(
-				ezcWebdavResponse::STATUS_412,
-				$dest
-			);
+					ezcWebdavResponse::STATUS_412,
+					$dest
+					);
 		}
 
 		// Check if the destination parent directory already exists, otherwise
@@ -815,15 +821,15 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		{
 			$this->freeLock();
 			return new ezcWebdavErrorResponse(
-				ezcWebdavResponse::STATUS_409,
-				$dest
-			);
+					ezcWebdavResponse::STATUS_409,
+					$dest
+					);
 		}
 
 		// Verify If-[None-]Match headers on the $dest if it exists
 		if ( $this->nodeExists( $dest ) &&
-			( $res = $this->checkIfMatchHeaders( $request, $dest ) ) !== null
-		)
+				( $res = $this->checkIfMatchHeaders( $request, $dest ) ) !== null
+			 )
 		{
 			$this->freeLock();
 			return $res;
@@ -839,15 +845,15 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		// The destination resource should be deleted if it exists and the
 		// overwrite headers is T
 		if ( ( $request->getHeader( 'Overwrite' ) === 'T' ) &&
-			$this->nodeExists( $dest ) )
+				$this->nodeExists( $dest ) )
 		{
 			// Check sub-sequent authorization on destination
 			$authState = $this->recursiveAuthCheck(
-				$request,
-				$dest,
-				ezcWebdavAuthorizer::ACCESS_WRITE,
-				true
-			);
+					$request,
+					$dest,
+					ezcWebdavAuthorizer::ACCESS_WRITE,
+					true
+					);
 			if ( count( $authState['errors'] ) !== 0 )
 			{
 				// Permission denied on deleting destination
@@ -882,7 +888,7 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 						$infos[$k]['parentId'] = $infos[$k]['infos']['parentId'];
 						$infos[$k]['name'] = $infos[$k]['infos']['name'];
 						break;
-	
+
 					case 'file':
 						///TODO: Throw an error if dest is a file, but source is a filegal
 
@@ -898,16 +904,16 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				///TODO: Throw an error if dest is a new filegal, but source is a file
 
 				if ( ( $objectId = $filegallib->get_objectid_from_virtual_path( dirname( $$k ) ) ) !== false
-					&& $objectId['type'] == 'filegal'
-				)
+						&& $objectId['type'] == 'filegal'
+					 )
 				{
 					$infos[$k] = array(
-						'id' => $infos['source']['id'],
-						'type' => $infos['source']['type'],
-						'infos' => $infos['source']['infos'],
-						'parentId' => $objectId['id'],
-						'name' => basename( $$k )
-					);
+							'id' => $infos['source']['id'],
+							'type' => $infos['source']['type'],
+							'infos' => $infos['source']['infos'],
+							'parentId' => $objectId['id'],
+							'name' => basename( $$k )
+							);
 
 					switch ( $infos[$k]['type'] )
 					{
@@ -943,16 +949,16 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 				if ( $doRename )
 				{
 					$noErrors = (bool) $filegallib->replace_file_gallery(
-						$infos['dest']['infos']
-					);
+							$infos['dest']['infos']
+							);
 				}
 				// Move is not needed if the rename occured, since filegal renaming function handle the move already
 				elseif ( $doMove )
 				{
 					$noErrors = (bool) $filegallib->move_file_gallery(
-						$infos['source']['id'],
-						$infos['dest']['parentId']
-					);
+							$infos['source']['id'],
+							$infos['dest']['parentId']
+							);
 				}
 
 				break;
@@ -981,30 +987,30 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 					}
 
 					$noErrors = (bool) $filegallib->replace_file(
-						$infos['source']['id'],
-						$infos['dest']['name'],
-						$infos['source']['infos']['description'],
-						$infos['dest']['name'],
-						$infos['source']['infos']['data'],
-						$infos['source']['infos']['filesize'],
-						$infos['source']['infos']['filetype'],
-						$user,
-						$newPath,
-						'',
-						$filegallib->get_file_gallery_info( $infos['source']['parentId'] ),
-						true,
-						$infos['source']['infos']['author'],
-						$infos['source']['infos']['created'],
-						$infos['source']['infos']['lockedby']
-					);
+							$infos['source']['id'],
+							$infos['dest']['name'],
+							$infos['source']['infos']['description'],
+							$infos['dest']['name'],
+							$infos['source']['infos']['data'],
+							$infos['source']['infos']['filesize'],
+							$infos['source']['infos']['filetype'],
+							$user,
+							$newPath,
+							'',
+							$filegallib->get_file_gallery_info( $infos['source']['parentId'] ),
+							true,
+							$infos['source']['infos']['author'],
+							$infos['source']['infos']['created'],
+							$infos['source']['infos']['lockedby']
+							);
 				}
 
 				if ( $doMove && $noErrors )
 				{
 					$noErrors = (bool) $filegallib->set_file_gallery(
-						$infos['source']['id'],
-						$infos['dest']['parentId']
-					);
+							$infos['source']['id'],
+							$infos['dest']['parentId']
+							);
 				}
 
 				break;
@@ -1015,14 +1021,14 @@ class TikiWebdav_Backends_File extends ezcWebdavSimpleBackend implements ezcWebd
 		if ( $noErrors )
 		{
 			$return = new ezcWebdavMoveResponse(
-				$replaced
-			);
+					$replaced
+					);
 		}
 		else
 		{
 			$return = new ezcWebdavErrorResponse(
-				ezcWebdavResponse::STATUS_500
-			);
+					ezcWebdavResponse::STATUS_500
+					);
 		}
 
 
