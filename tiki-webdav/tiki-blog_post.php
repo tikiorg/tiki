@@ -212,11 +212,18 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 		$publishDate = $tikilib->now;
 	}
 	
+	
 	if ($_REQUEST["postId"] > 0) {
 		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $data['data'], $blogpriv, $publishDate);
 		$postid = $_REQUEST["postId"];
 	} else {
-		$postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate);
+		if($blog_data['always_owner'] == 'y'){
+			$author = $blog_data['user'];
+		}
+		else {
+			$author = $user;
+		}
+		$postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $author, $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate);
 		$smarty->assign('postId', $postid);
 	}
 	// TAG Stuff

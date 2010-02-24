@@ -423,6 +423,8 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 	textarea.scrollTop=scrollTop;
 
 	if (hiddenParents.length) { hiddenParents.hide(); }
+	if (typeof auto_save_id != "undefined" && auto_save_id.length > 0 && typeof auto_save == 'function') {  auto_save(); }
+
 }
 
 function setUserModuleFromCombo(id, textarea) {
@@ -806,15 +808,36 @@ function collapseSign(foo) {
 //Set client timezone
 //Added 7/25/03 by Jeremy Jongsma (jjongsma@tickchat.com)
 //Updated 11/04/07 by Nyloth to get timezone name instead of timezone offset
+//Updated feb 2010 by jonnyb (had stopped working)
 
+function inArray(item, array) {
+    for (var i in array) {
+        if (array[i] === item) {
+            return i;
+        }
+    }
+    return false;
+}
 
+var allTimeZoneCodes = ["A","ACDT","ACST","ADT","AEDT","AEST","AKDT","AKST","AST","AWDT","AWST","B","BST","C","CDT","CDT","CEDT","CEST","CET","CST","CST","CST","CXT","D","E","EDT","EDT","EEDT","EEST","EET","EST","EST","EST","F","G","GMT","H","HAA","HAC","HADT","HAE","HAP","HAR","HAST","HAT","HAY","HNA","HNC","HNE","HNP","HNR","HNT","HNY","HST","I","IST","K","L","M","MDT","MESZ","MEZ","MSD","MSK","MST","N","NDT","NFT","NST","O","P","PDT","PST","Q","R","S","T","U","UTC","V","W","WDT","WEDT","WEST","WET","WST","WST","X","Y","Z"];
 var expires = new Date();
-var local_date = expires.toLocaleString();
-var local_tz = local_date.substring(local_date.lastIndexOf(' ') + 1);
-if (parseInt(local_tz) > 0) {	// picked up year, not zone
-	local_tz = expires.toString().match(/\((.*?)\)$/);
-	if (local_tz.length > 0) {
-		local_tz = local_tz[1];
+var local_tz = "";
+var local_dates = expires.toLocaleString().match(/[A-Za-z]{1,4}/g);	// split into alpha strings
+for (var i = local_dates.length - 1; i > -1; i--) {					// iterate through backwards
+	var cx = inArray(local_dates[i], allTimeZoneCodes);
+	if (cx) {
+		local_tz = allTimeZoneCodes[cx];							// until you find a matching timezone
+		break;
+	}
+}
+if (!local_tz) {													// some browsers only do the tz in toString()
+	local_dates = expires.toString().match(/[A-Za-z]{1,4}/g);
+	for (var i = local_dates.length - 1; i > -1; i--) {
+		cx = inArray(local_dates[i], allTimeZoneCodes);
+		if (cx) {
+			local_tz = allTimeZoneCodes[cx];
+			break;
+		}
 	}
 }
 expires.setFullYear(expires.getFullYear() + 1);

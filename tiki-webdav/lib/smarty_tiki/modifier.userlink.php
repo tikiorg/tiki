@@ -161,7 +161,11 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 		}
 
 
-		$url = empty($prefs['urlOnUsername'])? 'tiki-user_information.php?userId='.urlencode($info['userId']): $prefs['urlOnUsername'];
+		if(empty($prefs['urlOnUsername'])) {
+			$url = 'tiki-user_information.php?userId='.urlencode($info['userId']);
+		} else {
+			$url = preg_replace(array('/%userId%/', '/%user%/'), array($info['userId'], $info['login']),  $prefs['urlOnUsername']);
+		}
 		if (is_numeric($idletime) && empty($mouseover)) {
 			$ret = "<a class='$class' target='_top' href='{$url}' title='".tra('More info about $other_user')." ".tra('(idle for $idletime seconds)')."'>$ou</a>$friend$star";
 			$cachelib->cacheItem($cacheItem, $ret);

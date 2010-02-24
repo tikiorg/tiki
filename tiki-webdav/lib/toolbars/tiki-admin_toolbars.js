@@ -175,8 +175,14 @@ $jq(document).ready( function () {
 		$jq('#qt-form-field').val(ser.replace(',,', ','));
 	};
 	
-	// view mode filter
+	// view mode filter (still doc.ready)
 	
+	if ($jq("#section").val() == "sheet") {
+		$jq("#view_mode").val("sheet");
+	} else {
+		$jq("#view_mode").val("both");
+	}
+
 	$jq('#view_mode').change(setViewMode);
 	
 	setViewMode();

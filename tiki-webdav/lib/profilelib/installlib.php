@@ -981,6 +981,11 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 
 		unset( $data['galleryId'] );
 		$this->replaceReferences($data);
+
+		if (!empty($data['name'])) {
+			global $filegallib; require_once 'lib/filegals/filegallib.php';
+			$data['galleryId'] = $filegallib->getGalleryId($data['name'], $data['parentId']);
+		}
 		return $this->data = $data;
 	}
 
@@ -996,8 +1001,6 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		if (!isset($data['mode'])) {
 			return true; // will duplicate if already exists
 		}
-		global $filegallib; require_once 'lib/filegals/filegallib.php';
-		$data['galleryId'] = $filegallib->getGalleryId($data['name'], $data['parentId']);
 		switch ($data['mode']) {
 		case 'update':
 			if (empty($data['galleryId'])) {
@@ -1016,7 +1019,7 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		if( ! $filegallib ) require_once 'lib/filegals/filegallib.php';
 
 		$input = $this->getData();
-		
+
 		return $filegallib->replace_file_gallery( $input );
 	}
 } // }}}
@@ -2152,6 +2155,11 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 		$data = $this->obj->getData();
 		$this->replaceReferences($data);
 
+		if (!empty($data['name'])) {
+			global $calendarlib; include_once('lib/calendar/calendarlib.php');
+			$data['calendarId'] = $calendarlib->get_calendarId_from_name($data['name']);
+		}
+
 		return $this->data = $data;
 	}
 	
@@ -2166,11 +2174,9 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 	}
 	private function convertMode($data)
 	{
-		global $calendarlib; include_once('lib/calendar/calendarlib.php');
 		if (!isset($data['mode'])) {
 			return true; // will duplicate if already exists
 		}
-		$data['calendarId'] = $calendarlib->get_calendarId_from_name($data['name']);
 		switch ($data['mode']) {
 		case 'update':
 			if (empty($data['calendarId'])) {
@@ -2195,7 +2201,7 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 			global $user;
 			$customflags = isset($calendar['customflags']) ? $calendar['customflags']  : array();
 			$options = isset($calendar['options']) ? $calendar['options']  : array();
-			$id = $calendarlib->set_calendar($data['calendarId'], $user, $calendar['name'], $calendar['description'], $customflags,$options);
+			$id = $calendarlib->set_calendar($calendar['calendarId'], $user, $calendar['name'], $calendar['description'], $customflags,$options);
 			return $id;
 		}
 	}

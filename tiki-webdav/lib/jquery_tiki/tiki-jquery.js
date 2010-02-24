@@ -117,6 +117,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 			
 			if (element.processed) { return false; }
 			
+			tip = decodeURIComponent(unescape(tip.replace(/\+/g, '%20')));
 			var options = {};
 			options.clickThrough = true;
 			for (var param in params) {
@@ -177,9 +178,11 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 				var el = document.createElement('DIV');
 				$jq(el).css('position', 'absolute').css('visibility', 'hidden');
 				document.body.appendChild(el);
+/*
 				if (tip.length > 2000) {
 					tip = tip.substring(0, 2000); // setting html to anything bigger seems to blow jquery away :(
 				}
+*/
 				$jq(el).html(tip);
 				if ($jq(el).width() > $jq(window).width()) {
 					$jq(el).width($jq(window).width() * 0.8);
@@ -918,5 +921,3 @@ $jq.fn.tiki = function(func, type, options) {
 			}
 	}
 };
-
-

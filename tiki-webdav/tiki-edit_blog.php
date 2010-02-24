@@ -72,6 +72,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('use_find', $data["use_find"]);
 	$smarty->assign('maxPosts', $data["maxPosts"]);
 	$smarty->assign('creator', $data["user"]);
+	$smarty->assign('alwaysOwner', $data["always_owner"]);
 
 }
 
@@ -112,12 +113,13 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$use_find = isset($_REQUEST['use_find']) ? 'y' : 'n';
 	$use_author = isset($_REQUEST['use_author']) ? 'y' : 'n';
 	$add_date = isset($_REQUEST['add_date']) ? 'y' : 'n';
+	$alwaysOwner = isset($_REQUEST['alwaysOwner']) ? 'y' : 'n';
 
 	$bid = $bloglib->replace_blog($_REQUEST["title"],
 	    $_REQUEST["description"], $_REQUEST["creator"], $public,
 	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
 	    $heading, $use_title, $use_author, $add_date, $use_find,
-	    $allow_comments, $show_avatar);
+	    $allow_comments, $show_avatar, $alwaysOwner);
 
 	$cat_type = 'blog';
 	$cat_objid = $bid;
