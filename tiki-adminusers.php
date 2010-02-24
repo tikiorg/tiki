@@ -122,10 +122,10 @@ function batchImportUsers() {
 		if ($exist && isset($_REQUEST['overwriteGroup'])) {
 			$userlib->remove_user_from_all_groups($u['login']);
 		}
-		if (@$u['groups']) {
-			$grps = explode(",", $u['groups']);
+		if (!empty($u['groups'])) {
+			$grps = preg_split("/(?<!,),(?!,)/", $u['groups']);
 			foreach($grps as $grp) {
-				$grp = preg_replace("/^ *(.*) *$/u", "$1", $grp);
+				$grp = preg_replace('/,,/', ',', preg_replace("/^ *(.*) *$/u", "$1", $grp));
 				$existg = false;
 				if ($userlib->group_exists($grp)) {
 					$existg = true;
