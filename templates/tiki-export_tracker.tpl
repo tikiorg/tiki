@@ -18,7 +18,7 @@
 </tr>
 </table>
 </form>
-<form action="tiki-export_tracker{if $prefs.feature_ajax.php eq 'y'}_ajax{/if}.php" method="post" id="export_form">
+<form action="tiki-export_tracker{if $prefs.feature_ajax eq 'y'}_ajax{/if}.php" method="post" id="export_form">
 <table class="normal">
 <tr class="formcolor">
 	<td>{tr}File{/tr}</td>
@@ -74,7 +74,7 @@
 <tr class="formcolor">
 	<td>{tr}Filter{/tr}</td>
 	<td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y" inForm="y"}</td></tr>
-{if $prefs.feature_ajax.php eq 'y'}
+{if $prefs.feature_ajax eq 'y'}
 	<tr class="formcolor">
 		<td><label for="recordsMax">{tr}Number of records{/tr}</label></td>
 		<td>
@@ -98,7 +98,7 @@
 <style type="text/css">
 	.ui-progressbar-value {ldelim} background-image: url(lib/jquery/jquery-ui/themes/{$prefs.feature_jquery_ui_theme}/images/pbar-ani.gif); {rdelim}
 </style>
-{if $prefs.feature_ajax.php eq 'y'}{jq}
+{if $prefs.feature_ajax eq 'y'}{jq}
 
 // setup for AJAX export
 $jq("#export_form").submit( function () { return exportStart(this); });
