@@ -203,7 +203,9 @@ class ModLib extends TikiLib
 			$user_groups = array( 'Anonymous' );
 		}
 		$pass = 'y';
-		if ($tiki_p_admin != 'y' && $prefs['modallgroups'] != 'y') {
+		if ($tiki_p_admin == 'y' && $prefs['modhideanonadmin'] == 'y' && $module_info['groups'] == serialize(array('Anonymous'))) {
+			$pass = 'n';
+		} elseif ($tiki_p_admin != 'y' && $prefs['modallgroups'] != 'y') {
 			if ($module_info['groups']) {
 				$module_groups = unserialize($module_info['groups']);
 			} else {

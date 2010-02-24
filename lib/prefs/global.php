@@ -125,6 +125,10 @@ function prefs_global_list() {
 			'name' => tra('Hide anonymous-only modules from registered users'),
 			'type' => 'flag',
 		),
+		'modhideanonadmin' => array(
+			'name' => tra('Hide anonymous-only modules from Admins'),
+			'type' => 'flag',
+		),
 		'maxArticles' => array(
 			'name' => tra('Maximum number of articles on articles home page'),
 			'type' => 'text',

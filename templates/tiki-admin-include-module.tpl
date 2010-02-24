@@ -19,6 +19,7 @@
 			{tr}Hint: If you lose your login module, use tiki-login_scr.php to be able to login!{/tr}
 		{/remarksbox}
 		{preference name=modseparateanon}
+		{preference name=modhideanonadmin}
 
 		</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">

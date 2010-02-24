@@ -1386,6 +1386,7 @@ function get_default_prefs() {
 		'minical_reminders' => 0,
 		'modallgroups' => 'n',
 		'modseparateanon' => 'n',
+		'modhideanonadmin' => 'n',
 		'php_docroot' => 'http://php.net/',
 		'proxy_host' => '',
 		'proxy_port' => '',
