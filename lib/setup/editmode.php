@@ -23,7 +23,7 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 		$_SESSION['wysiwyg'] = 'n';
 	} elseif ($prefs['wysiwyg_optional'] == 'n') {
 		$_SESSION['wysiwyg'] = 'y';
-	} elseif ($prefs['wysiwyg_memo'] == 'y' and !empty($info)) {
+	} elseif ($prefs['wysiwyg_memo'] == 'y' and !empty($info['wysiwyg'])) {
 		$_SESSION['wysiwyg'] = $info['wysiwyg'];
 	} elseif ($prefs['wysiwyg_default'] == 'y' and !isset($_REQUEST['wysiwyg'])) {
 		$_SESSION['wysiwyg'] = 'y';
