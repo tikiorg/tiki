@@ -38,7 +38,7 @@ if ($t = $trklib->get_tracker_options($_REQUEST['trackerId'])) {
 }
 
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
-$access->check_permission('tiki_p_view_trackers');
+$access->check_permission('tiki_p_export_tracker');
 
 $filters = array();
 if (!empty($_REQUEST['listfields'])) {
