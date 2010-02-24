@@ -17,7 +17,7 @@
 		{$message}
 		{if $preview eq '1'}
 			<br />
-			<form>
+			<form method="post">
 				<input type="hidden" name="groupbr" value="{$groupbr|escape}" />
 				<input type="hidden" name="priority" value="{$priority|escape}" />
 				<input type="hidden" name="replyto_hash" value="{$replyto_hash|escape}" />
