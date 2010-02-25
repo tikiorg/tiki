@@ -9,6 +9,7 @@ $section = 'calendar';
 require_once ('tiki-setup.php');
 
 $access->check_feature('feature_calendar');
+$access->check_permission('tiki_p_admin_calendar');
 
 include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/categories/categlib.php');
