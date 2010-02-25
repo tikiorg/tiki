@@ -1444,7 +1444,7 @@ class Comments extends TikiLib
 	}
 	
 	
-	function order_comments_by_count($type = 'article', $lang = '', $maxRecords = -1) {
+	function order_comments_by_count($type = 'wiki', $lang = '', $maxRecords = -1) {
 		$bind = array();
 		$query = '';
 		if($type == 'article') {
@@ -1457,20 +1457,22 @@ class Comments extends TikiLib
 			
 			$query = $query. " GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
 		}
+		else {
 		
-		if($type == 'blog'){		
-			$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='post' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
-		}
-		
-		if($type == 'wiki'){	
-			$query = "SELECT count(*),`tiki_pages`.`pageName` FROM `tiki_comments` INNER JOIN `tiki_pages` ON `tiki_comments`.`object`=`tiki_pages`.`pageName` WHERE `tiki_comments`.`objectType`='wiki page'";
-		
-			if($lang != ''){
-				$query = $query. " and `tiki_pages`.`lang`=?";
-				$bind[] = $lang;
+			if($type == 'blog'){		
+				$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='post' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
 			}
+			else {
+				//Default to Wiki
+				$query = "SELECT count(*),`tiki_pages`.`pageName` FROM `tiki_comments` INNER JOIN `tiki_pages` ON `tiki_comments`.`object`=`tiki_pages`.`pageName` WHERE `tiki_comments`.`objectType`='wiki page'";
+		
+				if($lang != ''){
+					$query = $query. " and `tiki_pages`.`lang`=?";
+					$bind[] = $lang;
+				}
 			
-			$query = $query. " GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+				$query = $query. " GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+			}
 		}
 		
 		$result = $this->query($query, $bind, $maxRecords);
