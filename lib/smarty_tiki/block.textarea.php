@@ -114,19 +114,21 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		}
 		$fcked->Config['DefaultLanguage'] = $prefs['language'];
 		$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php'.(isset($params['_section']) ? '?section='.urlencode($params['_section']) : '');
-		$html .= $fcked->CreateHtml();
 		
-		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+		// this JS needs to be there before the iframe always - at end of page is too late
 		
-		// fix for Safari which refuses to make the edit box 100% height
-		$h = str_replace('px','', $fcked->Height);
-		if ($h) { $headerlib->add_js('
+		$html .= $headerlib->wrap_js('
 var fckEditorInstances = new Array();
 function FCKeditor_OnComplete( editorInstance ) {
 	fckEditorInstances[fckEditorInstances.length] = editorInstance;
 	editorInstance.ResetIsDirty();
-	$jq(".fckeditzone").resizable({ minWidth: $jq("#'.$as_id.'").width(), minHeight: 50 });
-};'); }
+};');
+		
+		$html .= $fcked->CreateHtml();
+		
+		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+		
+		$headerlib->add_jq_onready('$jq(".fckeditzone").resizable({ minWidth: $jq("#'.$as_id.'").width(), minHeight: 50 });');
 
 
 	} else {
