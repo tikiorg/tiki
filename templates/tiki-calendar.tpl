@@ -124,7 +124,8 @@
 				<a href="{$iCalAdvParamsUrl}">{tr}advanced parameters{/tr}</a>
 			</div>
 			<div class="calinput">
-				<input type="submit" name="valid" value="{tr}Export{/tr}"/>
+				<input type="submit" name="ical" value="{tr}Export as iCal{/tr}"/>
+				<input type="submit" name="csv" value="{tr}Export as CSV{/tr}"/>
 			</div>
 		</form>
 	{/if}

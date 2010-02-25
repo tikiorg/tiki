@@ -32,7 +32,7 @@ if (!empty($_REQUEST['focus'])) {
 if (!empty($_REQUEST['day']) && !empty($_REQUEST['mon']) && !empty($_REQUEST['year'])) {//can come from the event module
         $_REQUEST['todate'] = $tikilib->make_time(23,59,59,intval($_REQUEST['mon']),intval($_REQUEST['day']),intval($_REQUEST['year']));
 } elseif (isset($_REQUEST['todate']) && $_REQUEST['todate']) {
-
+	$_SESSION['CalendarFocusDate'] = $_REQUEST["todate"];
 } elseif (!isset($_REQUEST['todate']) && isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 } else {

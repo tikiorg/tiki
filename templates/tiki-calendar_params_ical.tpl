@@ -66,7 +66,8 @@
 </td>
 </tr>
 <tr class="formcolor">
-	<td colspan="2"><input type="submit" value="{tr}Export calendars{/tr}"/></td>
+	<td><input type="submit" name="ical" value="{tr}Export calendars iCal{/tr}"/></td>
+	<td><input type="submit" name="csv" value="{tr}Export calendars CSV{/tr}"/></td>
 </tr>
 </table>
 </form>

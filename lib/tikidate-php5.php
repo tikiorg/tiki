@@ -147,6 +147,13 @@ class TikiDate
 			$this->date->modify("$days day");
 	}
 
+	function addMonths($months) {
+		if ($months >= 0)
+			$this->date->modify("+$months months");
+		else
+			$this->date->modify("$months months");
+	}
+
 	function getTime() {
 		return (int)$this->date->format("U");
 	}
