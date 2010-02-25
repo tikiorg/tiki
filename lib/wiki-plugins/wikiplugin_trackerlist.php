@@ -288,7 +288,8 @@ function wikiplugin_trackerlist($data, $params) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	} else {
 
-		$auto_query_args = array('itemId','tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user');
+		global $auto_query_args;
+		$auto_query_args = array_merge($auto_query_args, array('itemId','tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user'));
 		$smarty->assign('trackerId', $trackerId);
 		$tracker_info = $trklib->get_tracker($trackerId);
 		if ($t = $trklib->get_tracker_options($trackerId)) {
