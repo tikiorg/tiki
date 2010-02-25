@@ -78,7 +78,7 @@
 <div class="calnavigation">
 	 {if $viewlist ne 'list' or $prefs.calendar_list_begins_focus ne 'y'}
 		{if $calendarViewMode eq 'month'}
-			{$currMonth|tiki_date_format:"%B %Y"}
+			{$daystart|tiki_date_format:"%B %Y"}
 		{elseif $calendarViewMode eq 'week'}
 {* test display_field_order and use %d/%m or %m/%d  *}
 			{if ($prefs.display_field_order eq 'DMY') || ($prefs.display_field_order eq 'DYM') || ($prefs.display_field_order eq 'YDM')}		
