@@ -10,7 +10,7 @@ include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/groupalert/groupalertlib.php');
 $access->check_feature('feature_trackers');
 $access->check_permission('tiki_p_admin_trackers');
-$auto_query_args = array();
+$auto_query_args = array('trackerId');
 
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
@@ -40,8 +40,6 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 }
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
-} else {
-	if (!isset($cookietab)) { $cookietab = '1'; }
 }
 if (isset($_REQUEST["remove"])) {
 	$area = 'deltracker';
@@ -386,7 +384,6 @@ $info['autoAssignGroupItem'] = '';
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info, $tikilib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info, $trklib->get_tracker_options($_REQUEST["trackerId"]));
-	$cookietab = '2';
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 	$smarty->assign('action', '');
 	include_once ('lib/wiki-plugins/wikiplugin_trackerfilter.php');
