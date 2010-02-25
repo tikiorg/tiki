@@ -31,7 +31,6 @@ if (isset($_REQUEST['loginprefs'])) {
 		if (count($in)) $userlib->set_registrationChoice($in, 'y');
 		if (count($out)) $userlib->set_registrationChoice($out, NULL);
 	}
-	simple_set_toggle('feature_display_my_to_others');
 }
 
 $smarty->assign('gd_lib_found', function_exists('gd_info') ? 'y' : 'n');
