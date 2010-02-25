@@ -745,7 +745,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 				$connect = " and ";
 			}
 			$add = "";
-			$rest =  split ("\+", $type);
+			$rest =  explode ('+', $type);
 			foreach($rest as $type) {
 				if ($add == "") {
 					if ($mid) { $mid .= " and "; } else { $mid = " where "; }
