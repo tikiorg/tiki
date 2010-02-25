@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: attributelib.php 25339 2010-02-18 08:28:32Z changi67 $
+// $Id$
 
 require_once 'Zend/Filter/Interface.php';
 

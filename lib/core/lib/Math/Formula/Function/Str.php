@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Mul.php 25325 2010-02-17 21:55:51Z lphuberdeau $
+// $Id$
 
 require_once 'Math/Formula/Function.php';
 
