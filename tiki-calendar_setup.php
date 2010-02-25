@@ -369,6 +369,7 @@ if ($firstDayofWeek != 0) {
 $weeks = array();
 $cell = array();
 
+if (!function_exists('correct_start_day')) {
 function correct_start_day($d) {
 	global $prefs;
 	
@@ -377,6 +378,7 @@ function correct_start_day($d) {
 		$tmp += 7;
 	}
 	return $tmp;
+}
 }
 
 if (empty($myurl))
