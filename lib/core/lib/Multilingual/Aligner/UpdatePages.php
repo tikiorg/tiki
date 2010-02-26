@@ -5,17 +5,18 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-	include_once "UpdateSentences.php";
-	include_once "SentenceSegmentor.php";
-	include_once "SentenceAlignments.php";
-	include_once "MockMTWrapper.php";
+	include_once 'UpdateSentences.php';
+	include_once 'SentenceSegmentor.php';
+	include_once 'SentenceAlignments.php';
+	include_once 'MockMTWrapper.php';
 	
 	class Multilingual_Aligner_UpdatePages
 	{
 		
 	public $alignments = null;
 	
-	public function setUp()  {
+	public function setUp()
+	{
       $this->alignments = new Multilingual_Aligner_SentenceAlignments();
       $this->translator=new Multilingual_Aligner_MockMTWrapper();
 	}
@@ -222,5 +223,3 @@
 //	$test->SetAlignment($source_alignment,$target_alignment,$source_lng,$target_lng);
 //	$test->translator->SetMT($source_Mtranslation,$source_Mtranslation,$source_lng,$target_lng);
 //	$test->UpdatingTargetPage($source_outofdate,$source_modified,$target_outofdate,$target_modified,$source_lng,$target_lng);
-?>	
-

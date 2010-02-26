@@ -1536,7 +1536,8 @@ class ToolbarWikiplugin extends Toolbar
 	} // }}}
 }
 
-class ToolbarSheet extends Toolbar {
+class ToolbarSheet extends Toolbar
+{
 	protected $syntax;
 
 	public static function fromName( $tagName ) // {{{

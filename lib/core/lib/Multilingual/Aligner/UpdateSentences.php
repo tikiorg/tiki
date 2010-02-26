@@ -5,20 +5,21 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-	include_once "lib/diff/Diff.php";
-	include_once "lib/diff/difflib.php";
-    include_once "lib/diff/Renderer.php";
-    include_once "lib/diff/renderer_unified.php";
-    include_once "SentenceAlignments.php";
-    include_once "SentenceSegmentor.php";
-	include_once "MockMTWrapper.php";
+	include_once 'lib/diff/Diff.php';
+	include_once 'lib/diff/difflib.php';
+  include_once 'lib/diff/Renderer.php';
+  include_once 'lib/diff/renderer_unified.php';
+  include_once 'SentenceAlignments.php';
+  include_once 'SentenceSegmentor.php';
+	include_once 'MockMTWrapper.php';
 	
  
 /*
  * Class used to update the modifications done in one version of page to the other version of same page.
  */
 
-class Multilingual_Aligner_UpdateSentences1 {
+class Multilingual_Aligner_UpdateSentences1
+{
 	
 	//$translation is 1 in case of source modification(H) and 0 in case of target modification(T"), final_diff is carrying end result
 	public function DifferencebetweenOriginalFileandModifiedFile($unchangedSource_array,$changedSource_array,$alignments,$translator,$source_lng,$target_lng,$translation)
@@ -507,6 +508,4 @@ class Multilingual_Aligner_UpdateSentences1 {
 		}//for $ii
 		return -1;
 	}//function over
-	
-	
 }
