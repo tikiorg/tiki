@@ -97,13 +97,8 @@ class TrackerLib extends TikiLib
 		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment`,`longdesc`,`version` ";
 		$query.= " from `tiki_tracker_item_attachments` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_attachments` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$ret = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
 
 		$retval = array();
 		$retval["data"] = $ret;
@@ -135,12 +130,8 @@ class TrackerLib extends TikiLib
 		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment`,`path` ";
 		$query.= " from `tiki_tracker_item_attachments` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_attachments` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$ret = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
@@ -321,14 +312,11 @@ class TrackerLib extends TikiLib
 
 		$query = "select * from `tiki_tracker_item_comments` where `itemId`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_comments` where `itemId`=? $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$ret = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach ( $ret as &$res ) {
 			$res["parsed"] = nl2br(htmlspecialchars($res["data"]));
-
-			$ret[] = $res;
 		}
 
 		$retval = array();
@@ -359,18 +347,16 @@ class TrackerLib extends TikiLib
 		$query = "select t.*, a.`trackerId` from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid order by `posted` desc";
 		$query_cant = "select count(*) from `tiki_tracker_item_comments` where $mid";
 	    }
-	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+	    $ret = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
 	    $cant = $this->getOne($query_cant,$bindvars);
-	    $ret = array();
 
-	    while ($res = $result->fetchRow()) {
-			if (!$trackerId && !$this->user_has_perm_on_object($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers') ) {
-				--$cant;
-				continue;
+			foreach ( $ret as &$res ) {
+				if (!$trackerId && !$this->user_has_perm_on_object($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers') ) {
+					--$cant;
+					continue;
+				}
+				$res["parsed"] = nl2br($res["data"]);
 			}
-		$res["parsed"] = nl2br($res["data"]);
-		$ret[] = $res;
-	    }
 
 	    $retval = array();
 	    $retval["data"] = $ret;
@@ -556,11 +542,7 @@ class TrackerLib extends TikiLib
 			}
 			$query = "select ttif.`itemId` , ttif.`value` FROM `tiki_tracker_items` tti,`tiki_tracker_item_fields` ttif $join ";
 			$query.= " WHERE  $mid and  tti.`itemId` = ttif.`itemId` order by ".$this->convertSortMode($sort_mode);
-			$result = $this->query($query,$bindvars);
-			$ret = array();
-			while ($res = $result->fetchRow()) {
-				$ret[] = $res;
-			}
+			$ret = $this->fetchAll($query,$bindvars);
 			$cachelib->cacheItem($cache,serialize($ret));
 		}
 		if ($needToCheckCategPerms) {
@@ -886,13 +868,10 @@ class TrackerLib extends TikiLib
 		// echo htmlentities($query); print_r($bindvars);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
 
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$ret1 = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$type = '';
-		$ret = $ret1 = array();
-		while ( $res = $result->fetchRow() ) {
-			$ret1[] = $res;
-		}
+		$ret = array();
 		if ($needToCheckCategPerms) {
 			$ret1 = $this->filter_categ_items($ret1);
 		}
@@ -2539,13 +2518,7 @@ class TrackerLib extends TikiLib
 			$where[] = "`value` != ''";
 		}
 		$query = 'select * from `tiki_tracker_options` where '. implode(' and ', $where);
-		$result = $this->query($query, $bindvars);
-		if (!$result->numRows()) return array();
-		$res = array();
-		while ($opt = $result->fetchRow()) {
-			$res[] = $opt;
-		}
-		return $res;
+		return $this->fetchAll($query, $bindvars);
 	}
 
 	function get_tracker_field($fieldId) {
@@ -3305,11 +3278,9 @@ class TrackerLib extends TikiLib
 	function get_item_values_by_type($itemId, $typeField) {
 		$query = "select ttif.`value`, ttf.`options` from `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif";
 		$query .= " where ttif.`itemId`=? and ttf.`type`=? and ttf.`fieldId`=ttif.`fieldId`";
-		$result = $this->query($query, array($itemId, $typeField));
-		$ret = array();
-		while ($res = $result->fetchRow()) {
+		$ret = $this->fetchAll($query, array($itemId, $typeField));
+		foreach ( $ret as &$res ) {
 			$res['options_array'] = preg_split('/,/', $res['options']);
-			$ret[] = $res;
 		}
 		return $ret;
 	}
