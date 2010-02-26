@@ -575,13 +575,7 @@ class CategLib extends ObjectLib
 			$from = '';
 		}
 		$query = "select * from `tiki_category_objects` c,`tiki_categorized_objects` co, `tiki_objects` o $from where c.`catObjectId`=co.`catObjectId` and co.`catObjectId`=o.`objectId` and c.`categId`=?".$where;
-		$result = $this->query($query, $bindVars);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-
-		return $ret;
+		return $this->fetchAll($query, $bindVars);
 	}
 
 	// Removes the object with the given identifer from the category with the given identifier
@@ -879,17 +873,15 @@ class CategLib extends ObjectLib
 		global $prefs;
 		if (!$categId) $categId = "0"; // avoid wrong cache
 		if( ! $ret = $cachelib->getSerialized("childcategs$categId") ) {
-			$ret = array();
 			$query = "select * from `tiki_categories` where `parentId`=? order by name";
-			$result = $this->query($query,array($categId));
-			while ($res = $result->fetchRow()) {
+			$ret = $this->fetchAll($query,array($categId));
+			foreach ( $ret as &$res ) {
 				$id = $res["categId"];
 				$query = "select count(*) from `tiki_categories` where `parentId`=?";
 				$res["children"] = $this->getOne($query,array($id));
 				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
 				$res["objects"] = $this->getOne($query,array($id));
 				$res['name']=$this->get_category_name($id);
-				$ret[] = $res;
 			}
 			$cachelib->cacheItem("childcategs$categId",serialize($ret));
 		}
@@ -1245,13 +1237,9 @@ class CategLib extends ObjectLib
 		}
 		$sort_mode = "created_desc";
 		$query = "select co.`catObjectId`, `categId`, `type`, `name`, `href` from `tiki_category_objects` co, `tiki_categorized_objects` cdo, `tiki_objects` o where co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId` $mid order by o.".$this->convertSortMode($sort_mode);
-		$result = $this->query($query,$bindvars,$maxRecords,0);
+		$ret = $this->fetchAll($query,$bindvars,$maxRecords,0);
 
-		$ret = array('data'=>array());
-		while ($res = $result->fetchRow()) {
-		    $ret['data'][] = $res;
-		}
-		return $ret;
+		return array('data'=> $ret);
     }
 
     // Gets a list of categories that will block objects to be seen by user, recursive
