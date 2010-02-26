@@ -160,7 +160,7 @@ exportProgress = function () {
 {remarksbox type="note" title="Warning"}Please note: Using experimental AJAX export function - work in progress!{/remarksbox}
 {/if}
 </div>
-{if $tiki_p_tracker_dump eq "y"}
+{if $tiki_p_tracker_dump eq "y" or $tiki_p_admin eq "y"}
 	<h2>{tr}Dump All Tracker Items{/tr}</h2>
 	<div>
 		<form action="{$smarty.server.PHP_SELF}" method="post">
