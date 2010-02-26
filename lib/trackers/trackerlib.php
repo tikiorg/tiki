@@ -2323,8 +2323,6 @@ class TrackerLib extends TikiLib
 			}
 			$result = $this->query($query, $bindvars);
 		} else {
-			$this->query("delete from `tiki_tracker_fields` where `trackerId`=? and `name`=?",
-				array((int) $trackerId,$name),-1,-1,false);
 			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`description`,`isMultilingual`, `itemChoices`, `errorMsg`, `visibleBy`, `editableBy`, `descriptionIsParsed`)
                 values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
