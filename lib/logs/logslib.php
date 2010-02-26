@@ -91,12 +91,8 @@ class LogsLib extends TikiLib
 		$query = "select `logId`,`loguser`,`logtype`,`logmessage`,`logtime`,`logip`,`logclient` ";
 		$query.= " from `tiki_logs` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_logs` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$ret = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
@@ -831,11 +827,7 @@ class LogsLib extends TikiLib
 	{
 		if (empty($name)) {
 			$query = "select * from `tiki_actionlog_params` where `actionId`=?";
-			$result = $this->query($query, array($actionId));
-			$ret = array();
-			while ($res = $result->fetchRow()) {
-				$ret[] = $res;
-			}
+			$ret = $this->fetchAll($query, array($actionId));
 		} else {
 			$query = "select `value` from `tiki_actionlog_params` where `actionId`=? and `name`=?";
 			$result = $this->query($query, array($actionId, $name));
@@ -850,12 +842,7 @@ class LogsLib extends TikiLib
 	function get_action_contributions($actionId)
 	{
 		$query = "select tc.* from `tiki_contributions` tc, `tiki_actionlog_params` tp where tp.`actionId`=? and tp.`name`=? and tp.`value`=tc.`contributionId`";
-		$result = $this->query($query, array($actionId, 'contribution'));
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-		return $ret;
+		return $this->fetchAll($query, array($actionId, 'contribution'));
 	}
 
 	function rename($objectType, $oldName, $newName)
@@ -1129,12 +1116,7 @@ class LogsLib extends TikiLib
 	function get_contributors($actionId)
 	{
 		$query = 'select uu.`login` from `tiki_actionlog_params` tap, `users_users` uu where tap.`actionId`=? and tap.`name`=? and uu.`userId`=tap.`value`';
-		$result = $this->query($query, array($actionId, 'contributor'));
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-		return $ret;
+		return $this->fetchAll($query, array($actionId, 'contributor'));
 	}
 
 	// get the contributors of the last update of a wiki page
@@ -1150,12 +1132,7 @@ class LogsLib extends TikiLib
 										and ta.`lastModif`=? 
 							order by `login` asc'
 							;
-		$result = $this->query($query, array('contributor', $page_info['pageName'], 'wiki page', $page_info['lastModif'])); 
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-		return $ret;
+		return $this->fetchAll($query, array('contributor', $page_info['pageName'], 'wiki page', $page_info['lastModif'])); 
 	}
    
 	function split_actions_per_contributors($actions, $users)
@@ -1209,13 +1186,9 @@ class LogsLib extends TikiLib
 			$bindvars[] = $findesc;$bindvars[] = $findesc;$bindvars[] = $findesc;
 		}
 		$query = 'select * from `adodb_logsql`'.($find?" where $amid":'').' order by '.$this->convertSortMode($sort_mode);
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$ret = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$query_cant = 'select count(*) from `adodb_logsql`'.($find?" where $amid":'');
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
 		$retval = array();
 		$retval['data'] = $ret;
 		$retval['cant'] = $cant;
@@ -1469,11 +1442,7 @@ class LogsLib extends TikiLib
 		$mid .= " and `action` = 'Viewed'";
 		$mid .= " and `user` IS NOT NULL"; // just to avoid those strange null entries
 		$query = "select *, max(`lastModif`) as `lastViewed` from `tiki_actionlog` where $mid group by `user`, `object`, `objectType`, `comment` order by `lastViewed` desc";
-		$result = $this->query($query, $bindvars);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
+		$ret = $this->fetchAll($query, $bindvars);
 		$ret = $this->get_more_info($ret);
 		return $ret;
 	}
