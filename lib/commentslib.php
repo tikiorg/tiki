@@ -51,13 +51,8 @@ class Comments extends TikiLib
 		$query_cant = "select count(*) from `tiki_forums_reported` tfr,
 			`tiki_comments` tc where tfr.`threadId` = tc.`threadId` and
 				`forumId`=? $mid";
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$ret = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
 
 		$retval = array();
 		$retval["data"] = $ret;
@@ -194,14 +189,7 @@ class Comments extends TikiLib
 		}
 
 		$query = "select `filename`,`filesize`,`attId` from `tiki_forum_attachments` $cond";
-		$result = $this->query($query, $bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-
-		return $ret;
+		return $this->fetchAll($query, $bindvars);
 	}
 
 	function get_thread_attachment($attId) {
@@ -579,15 +567,13 @@ class Comments extends TikiLib
 		$query = "select * from `tiki_forums_queue` where `object`=? $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_forums_queue` where `object`=? $mid";
 
-		$result = $this->query($query, $bindvars, $maxRecords, $offset );
+		$ret = $this->fetchAll($query, $bindvars, $maxRecords, $offset );
 		$cant = $this->getOne($query_cant, $bindvars );
-		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach ( $ret as &$res ) {
 			$res['parsed'] = $this->parse_comment_data($res['data']);
 
 			$res['attachments'] = $this->get_thread_attachments(0, $res['qId']);
-			$ret[] = $res;
 		}
 
 		$retval = array();
@@ -665,10 +651,9 @@ class Comments extends TikiLib
 			a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`, ";
 		$query .= $info['query'];
 
-		$result = $this->query($query, $info['bindvars'], $max, $offset);
+		$ret = $this->fetchAll($query, $info['bindvars'], $max, $offset);
 
-		$ret = array();
-		while ($res = $result->fetchRow()) {
+		foreach ( $ret as &$res ) {
 			$tid = $res['threadId'];
 			if ($res["lastPost"]!=$res["commentDate"]) {
 				// last post data is for tiki-view_forum.php. 
@@ -682,7 +667,6 @@ class Comments extends TikiLib
 
 			// Has the user read it?
 			$res['is_marked'] = $this->is_marked($tid);
-			$ret[] = $res;
 		}
 
 		return $ret;
@@ -781,14 +765,7 @@ class Comments extends TikiLib
 		$sort_mode = 'commentDate_desc';
 
 		$query = "select * from `tiki_comments` $mid order by ".$this->convertSortMode($sort_mode);
-		$result = $this->query($query, $bind_mid, $maxRecords, 0);
-
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-
-		return $ret;
+		return $this->fetchAll($query, $bind_mid, $maxRecords, 0);
 	}
 
 	function replace_forum($forumId=0, $name='', $description='', $controlFlood='n',
@@ -1028,11 +1005,10 @@ class Comments extends TikiLib
 		$query = "select * from `tiki_forums` $join WHERE 1=1 $where $mid order by `section` asc,".$this->convertSortMode('`tiki_forums`.' . $sort_mode);
 		$result = $this->fetchAll($query, $bindvars);
 		$result = Perms::filter( array( 'type' => 'forum' ), 'object', $result, array( 'object' => 'forumId' ), 'forum_read' );
-		$ret = array();
 		$count = 0;
 		$cant = 0;
 		$off = 0;
-		foreach( $result as $res ) {
+		foreach( $result as &$res ) {
 			$cant++; // Count the whole number of forums the user has access to
 
 			if ( ( $maxRecords > -1 && $count >= $maxRecords ) || $off++ < $offset ) continue;
@@ -1077,12 +1053,11 @@ class Comments extends TikiLib
 				$res['users_per_day'] = 0;
 			}
 
-			$ret[] = $res;
 			++$count;
 		}
 
 		$retval = array();
-		$retval["data"] = $ret;
+		$retval["data"] = $result;
 		$retval["cant"] = $cant;
 		return $retval;
 	}
@@ -1100,11 +1075,10 @@ class Comments extends TikiLib
 
 		$query = "select * from `tiki_forums` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `tiki_forums`";
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$ret = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, array());
-		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach ( $ret as &$res ) {
 			$forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
 
 			$res["age"] = $forum_age;
@@ -1133,7 +1107,6 @@ class Comments extends TikiLib
 			$result2 = $this->query($query2, array($res["lastPost"]));
 			$res2 = $result2->fetchRow();
 			$res["lastPostData"] = $res2;
-			$ret[] = $res;
 		}
 
 		$retval = array();
@@ -1475,12 +1448,7 @@ class Comments extends TikiLib
 			}
 		}
 		
-		$result = $this->query($query, $bind, $maxRecords);
-		$ret = array();
-		while ( $res = $result->fetchRow() ){
-					$ret[] = $res;
-		}
-		
+		$ret = $this->fetchAll($query, $bind, $maxRecords);
 		return array('data' => $ret);
 	}
 
@@ -1784,11 +1752,10 @@ class Comments extends TikiLib
 			$ret[] = $this->get_comments_fathers($reply_threadId, $ret);
 			$cant = 1;
 		} else {
-			$result = $this->query($query, array_merge($bind_mid, $bind_time));
+			$ret = $this->fetchAll($query, array_merge($bind_mid, $bind_time));
 			$cant = $this->getOne($query_cant, array_merge($bind_mid_cant, $bind_time));
-			while ( $row = $result->fetchRow() ) {
+			foreach ( $ret as $row ) {
 				$this->add_comments_extras($row);
-				$ret[] = $row;
 			}
 		}
 
@@ -1936,14 +1903,12 @@ class Comments extends TikiLib
 		}
 
 		$query = "select tc.*, tc.`title` as parentTitle from `tiki_comments` tc $join $jail_join where $mid $jail_where order by ".$this->convertSortMode($sort_mode);
-		$result = $this->query($query, array_merge( $bindvars, $jail_bind ), $maxRecords, $offset);
+		$ret = $this->fetchAll($query, array_merge( $bindvars, $jail_bind ), $maxRecords, $offset);
 		$query = "select count(*) from `tiki_comments` tc $jail_join where $mid $jail_where";
 		$cant = $this->getOne($query, array_merge( $bindvars, $jail_bind ));
-		$ret = array();
-		while ($res = $result->fetchRow()) {
+		foreach ( $ret as &$res ) {
 			$res['href'] = $this->getHref($res['objectType'], $res['object'], $res['threadId']);
 			$res['parsed'] = $this->parse_comment_data($res['data']);
-			$ret[] = $res;
 		}
 		return array('cant'=>$cant, 'data'=>$ret);
 	}
@@ -2468,16 +2433,10 @@ class Comments extends TikiLib
 	function get_outbound_emails() {
 		$ret = array();
 		$query = "select `forumId`, `mail` as outbound_address from `tiki_forums` where `useMail`=? and `mail` != ''";
-		$result = $this->query($query, array('y'));
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
+		$ret = $this->fetchAll($query, array('y'));
 		$query = "select `forumId`, `outbound_address` from `tiki_forums` where `outbound_address` != '' and `outbound_address` is not null";
-		$result = $this->query($query);
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-		return $ret;
+		$result = $this->fetchAll($query);
+		return array_merge($ret,$result);
 	}
 
 	/* post a topic or a reply in forum
@@ -2751,11 +2710,7 @@ class Comments extends TikiLib
 	function get_all_thread_attachments($threadId, $offset=0, $maxRecords=-1, $sort_mode='created_desc') {
 		$query = 'select tfa.* from `tiki_forum_attachments` tfa, `tiki_comments` tc where tc.`threadId`=tfa.`threadId` and ((tc.`threadId`=? and tc.`parentId`=?) or tc.`parentId`=?) order by '.$this->convertSortMode($sort_mode);
 		$bindvars = array($threadId, 0, $threadId);
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
+		$ret = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$query = 'select count(*) from `tiki_forum_attachments` tfa, `tiki_comments` tc where tc.`threadId`=tfa.`threadId` and ((tc.`threadId`=? and tc.`parentId`=?) or tc.`parentId`=?)';
 		$cant = $this->getOne($query, $bindvars);
 		return array('cant' => $cant, 'data' => $ret);
