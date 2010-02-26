@@ -112,11 +112,7 @@
 					<div id="trackerDesc" style="display:none;" >
 						{toolbars qtnum="trackerDesc" area_name="trackerDescription"}
 						{if $descriptionIsParsed eq 'y'}
-							<script language="javascript">
-								<!--//--><![CDATA[//><!--
-								toggleBlock('trackerDesc');
-								//--><!]]>
-							</script>
+							{jq}toggleBlock('trackerDesc');{/jq}
 						{/if}
 					</div>
 					<textarea id="trackerDescription" name="description" rows="4" cols="40">{$description|escape}</textarea>
@@ -585,11 +581,15 @@ categories = {$catsdump}
 				</tr>
 				<tr class="formcolor">
 					<td>{tr}Separator{/tr}</td>
-					<td><input type="text" name="separator" value="," /></td>
+					<td><input type="text" name="separator" value="," size="2" /></td>
 				</tr>
+				<!--tr class="formcolor">
+					<td>{tr}Add as new items:{/tr}</td>
+					<td><input type="checkbox" name="add_items" /></td>
+				</tr-->
 				<tr class="formcolor">
 					<td>&nbsp;</td>
-					<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+					<td><input type="submit" name="save" value="{tr}Import{/tr}" /></td>
 				</tr>
 			</table>
 		</form>
@@ -615,11 +615,7 @@ categories = {$catsdump}
 					<div id="duplicateTrackerDesc" style="display:none;" >
 						{toolbars qtnum="duplicateTrackerDesc" area_name="duplicateTrackerDescription"}
 						{if $descriptionIsParsed eq 'y'}
-							<script language="javascript">
-							<!--//--><![CDATA[//><!--
-							toggleBlock('duplicateTrackerDesc');
-							//--><!]]>
-							</script>
+							{jq}toggleBlock('duplicateTrackerDesc');{/jq}
 						{/if}
 					</div>
 					<br />
