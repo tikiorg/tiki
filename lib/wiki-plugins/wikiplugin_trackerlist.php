@@ -213,6 +213,13 @@ function wikiplugin_trackerlist_info() {
 				'filter' => 'digits',
 				'separator' => ':',
 			),
+			'ignoreRequestItemId' => array(
+				'required' => false,
+				'name' => tra('Do not filter on the param itemId if in the url'),
+				'description' => 'y|n',
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
@@ -589,7 +596,7 @@ function wikiplugin_trackerlist($data, $params) {
 		} elseif ($exactvalue == '#user') {
 			$exactvalue = $user;
 		}
-		if (!empty($_REQUEST['itemId'])) {
+		if (!empty($_REQUEST['itemId']) && (empty($ignoreRequestItemId) || $ignoreRequestItemId != 'y') ) {
 			$itemId = $_REQUEST['itemId'];
 		}
 
@@ -638,7 +645,19 @@ function wikiplugin_trackerlist($data, $params) {
 									$exactvalue[] = $prefs[$matches[2]];
 								} else {
 									$exactvalue[] = array('not'=>$prefs[$matches[2]]);
-								}							
+								}
+							} elseif (preg_match('/(not)?field\(([0-9]+)(,([0-9]+))?\)/', $evs[$i], $matches)) {
+								if (empty($matches[4]) && !empty($_REQUEST['itemId'])) {
+									$matches[4] = $_REQUEST['itemId'];
+								}
+								if (!empty($matches[4])) {
+									$l = $trklib->get_item_value(0, $matches[4], $matches[2]);
+								}
+								if (empty($matches[1])) {
+									$exactvalue[] = $l;
+								} else {
+									$exactvalue[] = array('not'=>$l);
+								}
 							} else {
 								$exactvalue[] = $evs[$i];
 							}
