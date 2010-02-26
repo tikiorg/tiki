@@ -8,7 +8,7 @@
 <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css" />
 <script type="text/javascript" src="lib/imagegals/imagegallib.js"></script>
 </head>
-<body>
+<body class="tiki_browse_image_popup">
 <div id="{$rootid}browse_image">
 {else}
 
