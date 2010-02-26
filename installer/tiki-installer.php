@@ -783,8 +783,17 @@ if ($install_step == '2') {
 		}
 	}
 
-	$smarty->assign('php_memory_limit', intval($tikilib->get_memory_limit()));
-	
+	// copy of most of $tikilib->return_bytes() not available at this stage
+	$memory_limit = trim(ini_get('memory_limit'));
+	$last = strtolower($memory_limit{strlen($memory_limit)-1});
+	switch ( $last ) {
+		// The 'G' modifier is available since PHP 5.1.0
+		case 'g': $memory_limit *= 1024;
+		case 'm': $memory_limit *= 1024;
+		case 'k': $memory_limit *= 1024;
+	}
+	$smarty->assign('php_memory_limit', intval($memory_limit));
+		
 	if ((extension_loaded('gd') && function_exists('gd_info'))) {
 		$gd_test = 'y';
 		$gd_info = gd_info();
