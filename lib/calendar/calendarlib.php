@@ -562,10 +562,7 @@ class CalendarLib extends TikiLib
 		$res = array();
 		if ($calendarId > 0) {
 			$query = "select `callocId` as `locationId`, `name` from `tiki_calendar_locations` where `calendarId`=? order by `name`";
-			$result = $this->query($query,array($calendarId));
-			while ($rez = $result->fetchRow()) {
-				$res[] = $rez;
-			}
+			return $this->fetchAll($query,array($calendarId));
 		}
 		return $res;
 	}
@@ -574,10 +571,7 @@ class CalendarLib extends TikiLib
 		$res = array();
 		if ($calendarId > 0) {
 			$query = "select `calcatId` as `categoryId`, `name` from `tiki_calendar_categories` where `calendarId`=? order by `name`";
-			$result = $this->query($query,array($calendarId));
-			while ($rez = $result->fetchRow()) {
-				$res[] = $rez;
-			}
+			return $this->fetchAll($query,array($calendarId));
 		}
 		return $res;
 	}
@@ -596,15 +590,7 @@ class CalendarLib extends TikiLib
 				
 		$query = "select `start`, `name`, `calitemId`, `calendarId`, `user`, `lastModif` from `tiki_calendar_items` ".$cond."order by ".$this->convertSortMode('lastModif_desc');
 	
-		$result = $this->query($query,$bindvars,$maxrows,0);
-		
-		$ret = array();
-		
-		while ($res = $result->fetchRow()) {
-		    $ret[] = $res;
-		}
-		
-		return $ret;
+		return $this->fetchAll($query,$bindvars,$maxrows,0);
 	}
 	
 	function importCSV($fname, $calendarId) {
@@ -684,13 +670,10 @@ class CalendarLib extends TikiLib
 		}
 		$ljoin = "left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` left join `tiki_calendar_categories` as c on i.`categoryId`=c.`calcatId`";
 		$query = "select i.`start`, i.`end`, i.`name`, i.`description`, i.`calitemId`, i.`calendarId`, i.`user`, i.`lastModif`, i.`url`, l.`name` as location, i.`allday`, c.`name` as category from `tiki_calendar_items` i $ljoin where 1=1 ".$cond." order by ".$this->convertSortMode($order);
-		$result = $this->query($query,$bindvars,$maxrows,0);
+		$ret = $this->fetchAll($query,$bindvars,$maxrows,0);
 			
-		$ret = array();
-			
-		while ($res = $result->fetchRow()) {
+		foreach ( $ret as &$res ) {
 			$res['parsed'] = $this->parse_data($res['description']);
-			$ret[] = $res;
 		}
 	
 		return $ret;
