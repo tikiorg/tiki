@@ -159,26 +159,10 @@ $logger->info('------------- start mem used: ' . round(memory_get_usage(true)/10
 
 saveStatus(array('status' => 'header', 'msg' => '', 'current' => 0));
 
-function write_export_header() {
-	header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
-	if (!empty($_REQUEST['file'])) {
-		if (preg_match('/.csv$/', $_REQUEST['file'])) {
-			$file = $_REQUEST['file'];
-		} else {
-			$file = $_REQUEST['file'].'.csv';
-		}
-	} else {
-		$file = tra('tracker').'_'.$_REQUEST['trackerId'].'.csv';
-	}
-	header("Content-Disposition: attachment; filename=$file");
-	header("Expires: 0");
-	header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-	header("Pragma: public");
-}
 session_write_close();
 
 if (empty($fp)) {
-	write_export_header();
+	$trklib->write_export_header();
 }
 
 if ($tracker_info['defaultOrderKey'] == -1)
