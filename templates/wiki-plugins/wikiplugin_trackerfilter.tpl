@@ -55,9 +55,17 @@
 			</select>
 {*------checkbox, radio *}
 		{else}
-			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}" value=""{if !$filters[if].selected} checked="checked"{/if} /> {tr}Any{/tr}</input>{if $line ne 'y'}<br />{/if}
+			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if}
+					name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}"
+					value=""{if !$filters[if].selected} checked="checked"{/if} />
+			{tr}Any{/tr}{if $line ne 'y'}<br />{/if}
 			{section name=io loop=$filters[if].opts}
-				<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}" value="{$filters[if].opts[io].id|escape}"{if $filters[if].opts[io].selected eq "y"} checked="checked"{/if} /> {$filters[if].opts[io].name|tr_if}</input>{if $line ne 'y'}<br />{/if}
+				<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if}
+						name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}"
+						value="{$filters[if].opts[io].id|escape}"
+						{if $filters[if].opts[io].selected eq "y"} checked="checked"{/if} />
+				{$filters[if].opts[io].name|tr_if}
+				{if $line ne 'y'}<br />{/if}
 			{/section}
 		{/if}
 		</td>
