@@ -1772,6 +1772,10 @@ table.treeTable .parent td {
 	z-index: 1024;
 }
 
+.ui-accordion-header {
+	padding-left: 28px;
+}
+
 /* Preferencies        */
 .pref_dependency {
 	margin-left: 20px;

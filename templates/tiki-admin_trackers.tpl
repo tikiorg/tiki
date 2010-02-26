@@ -51,7 +51,7 @@
 				<td>{$channels[user].lastModif|tiki_short_date}</td>
 				<td style="text-align:right;" >{$channels[user].items}</td>
 				<td class="auto">
-					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}">{icon _id='page_edit'}</a>
+					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&show=mod">{icon _id='page_edit'}</a>
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 					{if $channels[user].individual eq 'y'}
@@ -505,10 +505,11 @@
 {/tab}
 
 {if $trackerId}
+{jq}if ($jq.ui) { $jq("#content3").tiki("accordion", {heading: "h2"});}{/jq}
 {tab name="{tr}Import/Export{/tr}"}
 {* --- tab with raw form --- *}
 <h2>{tr}Import/export trackers{/tr}</h2>
-
+	<div>
 	<form action="tiki-admin_trackers.php" method="post">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 		<input type="hidden" name="import" value="1" />
@@ -547,11 +548,13 @@ categories = {$catsdump}
 		<br />
 		<input type="submit" name="save" value="{tr}Import{/tr}" />
 	</form>
-
+	</div>
+	
 	{if $trackerId}
 		{include file='tiki-export_tracker.tpl'}
 
 		<h2>{tr}Import CSV data{/tr}</h2>
+		<div>
 		<form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 			<table class="normal">
 				<tr class="formcolor">
@@ -593,6 +596,7 @@ categories = {$catsdump}
 				</tr>
 			</table>
 		</form>
+		</div>
 	{/if}
 {/tab}
 {/if}

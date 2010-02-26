@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <h2>{tr}Export Tracker Items{/tr}</h2>
-
+<div>
 <form action="tiki-view_tracker.php?trackerId={$trackerId}&cookietab=3" method="post">
 <table class="normal">
 <tr class="formcolor">
@@ -30,15 +30,15 @@
 </tr>
 <tr class="formcolor">
 	<td><label for="separator">{tr}Separator{/tr}</label></td>
-	<td><input type="text" name="separator" id="separator" value="," /></td>
+	<td><input type="text" name="separator" id="separator" value="," size="2" /></td>
 </tr>
 <tr class="formcolor">
 	<td><label for="delimitorL">{tr}Delimitors{/tr}</label></td>
-	<td><input type="text" name="delimitorL" id="delimitorL" value='"' /><input type="text" name="delimitorR" value='"' /></td>
+	<td><input type="text" name="delimitorL" id="delimitorL" value='"' size="2" /><input type="text" name="delimitorR" value='"' size="2" /></td>
 </tr>
 <tr class="formcolor">
 	<td><label for="CR">{tr}Carriage Return inside Field Value{/tr}</label></td>
-	<td><input type="text" name="CR" id="CR" value='%%%' /></td>
+	<td><input type="text" name="CR" id="CR" value='%%%' size="4" /></td>
 </tr>
 <tr class="formcolor">
 	<td><label for="parse">{tr}Parse as Wiki Text{/tr}</label></td>
@@ -48,9 +48,9 @@
 	<td>{tr}Info{/tr}</td>
 	<td>
 		<input name="showItemId" id="showItemId" type="checkbox" checked="checked" /><label for="showItemId">{tr}itemId{/tr}</label>
-		<br /><input type="checkbox" name="showStatus" id="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if} /><label for="showStatus">{tr}status{/tr}</label>
-		<br /><input type="checkbox" name="showCreated" id="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if} /><label for="showCreated">{tr}created{/tr}</label>
-		<br /><input type="checkbox" name="showLastModif" id="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if} /><label for="lastModif">{tr}lastModif{/tr}</label>
+		<input type="checkbox" name="showStatus" id="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if} /><label for="showStatus">{tr}status{/tr}</label>
+		<input type="checkbox" name="showCreated" id="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if} /><label for="showCreated">{tr}created{/tr}</label>
+		<input type="checkbox" name="showLastModif" id="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if} /><label for="lastModif">{tr}lastModif{/tr}</label>
 	</td>
 </tr>
 <tr class="formcolor">
@@ -61,14 +61,17 @@
 		<br /><input type="radio" name="which" id="item" value="item"/> <label for="item">{tr}Fields visible in an item view{/tr}</label>
 		<br /><input type="radio" name="which" id="all" value="all"{if empty($displayedFields)} checked="checked"{/if} /> <label for="all">{tr}All fields{/tr}</label>
 		<br /><input type="radio" name="which" id="these" value="these"{if !empty($displayedFields)} checked="checked"{/if}> <label for="these">{tr}These fields{/tr}</label>
-		<select multiple="multiple" name="listfields[]" id="listfields">
-			{foreach from=$fields item=ix}
-				{if ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
-					<option value="{$ix.fieldId}"{if !empty($displayedFields) and in_array($ix.fieldId, $displayedFields)} selected="selected"{/if}>{$ix.name|escape}</option>
-				{/if}
-			{/foreach}
-		</select>
-		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+		<div id="fields_list"{if empty($displayedFields)} style="display:none"{/if}>
+			<select multiple="multiple" name="listfields[]" id="listfields">
+				{foreach from=$fields item=ix}
+					{if ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+						<option value="{$ix.fieldId}"{if !empty($displayedFields) and in_array($ix.fieldId, $displayedFields)} selected="selected"{/if}>{$ix.name|escape}</option>
+					{/if}
+				{/foreach}
+			</select>
+			{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+		</div>
+		{jq}$jq("input:name=which").change(function(){ if ($jq(this).val() == "these") { $jq("#fields_list").slideDown("fast"); } else { $jq("#fields_list").slideUp("fast"); } });{/jq}
 	</td>
 </tr>
 <tr class="formcolor">
@@ -78,9 +81,9 @@
 	<tr class="formcolor">
 		<td><label for="recordsMax">{tr}Number of records{/tr}</label></td>
 		<td>
-			<input type="text" name="recordsMax" id="recordsMax" value="{$recordsMax}" />
+			<input type="text" name="recordsMax" id="recordsMax" value="{$recordsMax}" size="6" />
 			<label for="recordsOffset">{tr}Start record{/tr}</label>
-			<input type="text" name="recordsOffset" id="recordsOffset" value="{$recordsOffset}" />
+			<input type="text" name="recordsOffset" id="recordsOffset" value="{$recordsOffset}" size="6" />
 		</td>
 	</tr>
 	<tr>
@@ -156,3 +159,5 @@ exportProgress = function () {
 {/jq}
 {remarksbox type="note" title="Warning"}Please note: Using experimental AJAX export function - work in progress!{/remarksbox}
 {/if}
+</div>
+
