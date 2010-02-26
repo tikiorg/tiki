@@ -469,7 +469,7 @@ class TikiLib extends TikiDb_Bridge
 				left join `tiki_user_preferences` tup2 on (tup2.`user`=uu.`login` and tup2.`prefName`='mailCharset')
 				where $mid
 				";
-		$result = $this->fecthAll($query,array_merge( $bindvars, $bindvars ));
+		$result = $this->fetchAll($query,array_merge( $bindvars, $bindvars ));
 
 		if ( count($result) > 0 ) {
 
