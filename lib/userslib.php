@@ -151,14 +151,7 @@ class UsersLib extends TikiLib
 			$query .= " and `permName`=?";
 			$bindvars[] = $perm;
 		}
-		$result = $this->query($query, $bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-
-		return $ret;
+		return $this->fetchAll($query, $bindvars);
 	}
 
 	function get_object_permissions_for_user ($objectId, $objectType, $user) {
@@ -2141,14 +2134,8 @@ class UsersLib extends TikiLib
 		global $prefs;
 
 		$query = "select distinct `type` from `users_permissions`";
-		$result = $this->query($query);
-		$cant = 0;
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$cant++;
-			$ret[] = $res;
-		}
+		$ret = $this->fetchAll($query);
+		$cant = count($ret);
 
 		return array(
 			'data' => $ret,
@@ -2181,14 +2168,8 @@ class UsersLib extends TikiLib
 		// Use group cache if only one group
 		//if ( count($groups) == 1 ) return $this->get_group_permissions($groups[0]);
 
-		$ret = array();
 		$query = 'select distinct up.* from `users_permissions` as up, `users_grouppermissions` as ug where ug.`groupName` in ('.implode(',',array_fill(0,count($groups),'?')).') and up.`permName`=ug.`permName`';
-		$result = $this->query($query, $groups);
-
-		while ( $res = $result->fetchRow() ) {
-			$ret[] = $res;
-		}
-		return $ret;
+		return $this->fetchAll($query, $groups);
 	}
 
 	function assign_permission_to_group($perm, $group) {
@@ -2887,14 +2868,7 @@ class UsersLib extends TikiLib
 
 		$bindvals = array($user, $user);
 
-		$result = $this->query($query, $bindvals, $max, 0);
-
-		$ret = array();
-		while ($row = $result->fetchRow()) {
-			$ret[] = $row;
-		}
-
-		return $ret;
+		return $this->fetchAll($query, $bindvals, $max, 0);
 	}
 
 	// Friends methods
@@ -3002,12 +2976,7 @@ class UsersLib extends TikiLib
 		// Case-sensitivity regression only. used for patching
 	function get_object_case_permissions($objectId, $objectType) {
 		$query = "select `groupName`, `permName` from `users_objectpermissions` where `objectId` = ? and `objectType` = ?";
-		$result = $this->query($query, array(md5($objectType . $objectId),$objectType));
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-		return $ret;
+		return $this->fetchAll($query, array(md5($objectType . $objectId),$objectType));
 	}
 
 	function object_has_one_case_permission($objectId, $objectType) {
