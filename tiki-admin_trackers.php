@@ -389,6 +389,10 @@ if ($_REQUEST["trackerId"]) {
 	include_once ('lib/wiki-plugins/wikiplugin_trackerfilter.php');
 	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId']);
 	$smarty->assign_by_ref('filters', $filters);
+	
+	$smarty->assign('recordsMax', $info['items']);
+	$smarty->assign('recordsOffset', 1);
+	
 }
 $dstatus = preg_split('//', $info['defaultStatus'], -1, PREG_SPLIT_NO_EMPTY);
 foreach($dstatus as $ds) {
