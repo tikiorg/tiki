@@ -689,25 +689,11 @@ foreach($xfields['data'] as $xfd) {
 }
 // dynamic list process
 foreach($listfields as $sfid => $oneitem) {
-	if ($listfields[$sfid]['type'] == 'w') {
-		if (!isset($listfields[$listfields[$sfid]['options_array'][2]]['http_request'])) $listfields[$listfields[$sfid]['options_array'][2]]['http_request'] = array(
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			''
-		);
-		for ($i = 0; $i < 5; $i++) {
-			$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i].= ($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i] ? "," : "") . isset($listfields[$sfid]['options_array'][$i]) ? $listfields[$sfid]['options_array'][$i] : '';
-		}
-		$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5].= ($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5] ? "," : "") . $sfid;
-		$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][6].= ($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][6] ? "," : "") . $listfields[$sfid]['isMandatory'];
+	if ($listfields[$sfid]['type'] == 'w') { // need to set the httprequest on item link
+		$trklib->prepare_dynamic_items_list($listfields[$sfid], $fields['data']);
 	}
 }
+
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
 $smarty->assign('fields', $fields['data']);

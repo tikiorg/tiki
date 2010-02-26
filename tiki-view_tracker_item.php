@@ -943,18 +943,9 @@ foreach($xfields['data'] as $sid => $onefield) {
 }
 foreach($ins_fields['data'] as $sid => $onefield) {
 	if ($ins_fields['data'][$sid]['type'] == 'w') {
-		if (!isset($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'])) $ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'] = array('',	'',	'',	'',	'',	'',	'',	'',	'');
-		for ($i = 0; $i < 5; $i++) {
-			$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][$i].= ($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][$i] ? "," : "") . $ins_fields['data'][$sid]['options_array'][$i];
-		}
-		$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][5].= ($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][5] ? "," : "") . $ins_fields['data'][$sid]['fieldId'];
-		$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][6].= ($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][6] ? "," : "") . $ins_fields['data'][$sid]['isMandatory'];
-		$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][7] = $ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['value'];
-		$ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][8].= ($ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['http_request'][8] ? "," : "") . ($ins_fields['data'][$sid]['value'] ? $ins_fields['data'][$sid]['value'] : " ");
-		$ins_fields['data'][$sid]['filter_value'] = $ins_fields['data'][$id_fields[$ins_fields['data'][$sid]['options_array'][2]]]['value'];
+		$trklib->prepare_dynamic_items_list($ins_fields['data'][$sid], $ins_fields['data']);
 	}
 }
-
 
 // Pull realname for user.
 $info["createdByReal"] = $tikilib->get_user_preference($info["createdBy"], 'realName', '');

@@ -586,7 +586,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					} else {
 						if (strstr($url, 'itemId')) {
-							$url = str_replace('itemId', 'itemId='.$rid, $url);
+							$url = str_replace('itemId=?', 'itemId='.$rid, $url);
 						}
 						header("Location: $url");
 						die;
@@ -829,27 +829,7 @@ function wikiplugin_tracker($data, $params)
 						$finalFields = explode('|', $f['options_array'][3]);
 						$flds['data'][$i]['value'] = $trklib->get_join_values($trackerId, $itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields, ' ', empty($f['options_array'][5])?'':$f['options_array'][5]);
 					} elseif ($f['type'] == 'w') {
-						$refFieldId = $f['options_array'][2];
-						foreach ($flds['data'] as $i=>$ff) {
-							if ($ff['fieldId'] == $refFieldId) {
-								$refFieldId = $i;
-							}
-						}
-						if (!isset($flds['data'][$refFieldId]['http_request']))
-							$flds['data'][$refFieldId]['http_request'] = array('', '', '', '', '', '', '', '', '');
-						for ($i = 0; $i < 5; $i++) {
-							$flds['data'][$refFieldId]['http_request'][$i] .= 
-								($flds['data'][$refFieldId]['http_request'][$i] ? "," : "") .
-								isset($f['options_array'][$i])?$f['options_array'][$i]:'';
-						}
-						$flds['data'][$refFieldId]['http_request'][5] .=
-							($flds['data'][$refFieldId]['http_request'][5] ? ",":"") .
-							$f['fieldId'];
-						$flds['data'][$refFieldId]['http_request'][6] .=
-							($flds['data'][$refFieldId]['http_request'][6] ? "," : "") .
-							$f['isMandatory'];
-						$flds['data'][$refFieldId]['http_request'][7] .= $flds['data'][$refFieldId]['value'];
-						$flds['data'][$refFieldId]['http_request'][8] .= ($flds['data'][$refFieldId]['http_request'][8] ? "," : "") . $f['value'];
+						$trklib->prepare_dynamic_items_list($f, $flds['data']);
 					}
 				}
 			}

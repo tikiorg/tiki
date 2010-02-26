@@ -402,12 +402,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 
 {* -------------------- item link -------------------- *}
 {elseif $field_value.type eq 'r'}
-<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-{if $field_value.isMandatory ne 'y'}<option value=""></option>{/if}
-{foreach key=id item=label from=$field_value.list}
-<option value="{$label|escape}" {if $input_err}{if $field_value.value eq $label}selected="selected"{/if}{elseif $defaultvalues.$fid eq $label}selected="selected"{/if}>{if $field_value.listdisplay.$id eq ''}{$label}{else}{$field_value.listdisplay.$id}{/if}</option>
-{/foreach}
-</select>
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}
