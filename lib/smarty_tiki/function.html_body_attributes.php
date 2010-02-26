@@ -7,7 +7,7 @@
 
 /* return the attributes for a standard tiki page body tag
  * jonnyb refactoring for tiki5
- * 
+ * eromneg adding additional File Gallery popup body class
  */
 
 function smarty_function_html_body_attributes($params, &$smarty) {
@@ -30,6 +30,10 @@ function smarty_function_html_body_attributes($params, &$smarty) {
 		$class .= 'tiki '.$section_class;
 	}
 	
+	if (!empty($_REQUEST['filegals_manager'])) {
+		$class .= ' filegal_popup ';
+	}
+		
 	if (isset($_SESSION['fullscreen']) && $_SESSION['fullscreen'] == 'y') {
 		$class .= empty($class) ? ' ' : '';
 		$class .= 'fullscreen';
