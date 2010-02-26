@@ -12,18 +12,25 @@
  * The java script generated defines tiki_plugins["pluginname"] with meta data for the parameters of the plugin.
  * This is then used to allow a nice way for the editor of the page to use a form to edit the plug-in when they
  * click the little edit icon next to the plug-ins generated html.
- *
+ * 
+ * Cached by language to allow translations (tiki 5)
  */
 
 header('content-type: application/x-javascript');
 
-$all = !isset( $_GET['plugin'] );
+// Apply filters on the body
+include 'lib/core/lib/TikiFilter.php';
+$filter = TikiFilter::get('xss');
+$_REQUEST['plugin'] = isset($_GET['plugin']) ? $filter->filter($_GET['plugin']) : '';
+$_REQUEST['language'] = isset($_GET['language']) ? $filter->filter($_GET['language']) : '';
+
+$all = empty( $_REQUEST['plugin'] );
 
 $files = array();
 
 if( $all )
 {
-	$cache = "temp/cache/wikiplugin_ALL";
+	$cache = "temp/cache/wikiplugin_ALL_".$_REQUEST['language'];
 
 	if( file_exists( $cache ) )
 	{
@@ -37,9 +44,9 @@ if( $all )
 }
 else
 {
-	$plugin = basename( $_GET['plugin'] );
+	$plugin = basename( $_REQUEST['plugin'] );
 
-	$cache = "temp/cache/wikiplugin_$plugin";
+	$cache = 'temp/cache/wikiplugin_'.$plugin.'_'.$_REQUEST['language'];
 
 	if( file_exists( $cache ) )
 	{

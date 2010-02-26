@@ -257,7 +257,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		$objResponse->alert(sprintf(tra("Template %s not registered"),$template));
 	}
 
-	$js_files[] = 'tiki-jsplugin.php';
+	$js_files[] = 'tiki-jsplugin.php?language='.$prefs['language'];
 
 	if (count($js_files)) {
 		foreach($js_files as $f) {

@@ -5204,7 +5204,7 @@ class TikiLib extends TikiDb_Bridge
 						}
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 						global $headerlib;
-						$headerlib->add_jsfile( 'tiki-jsplugin.php', 'dynamic' );
+						$headerlib->add_jsfile( 'tiki-jsplugin.php?language='.$prefs['language'], 'dynamic' );
 						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) && !$options['suppress_icons'] ) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $page;
