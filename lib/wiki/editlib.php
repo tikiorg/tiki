@@ -119,7 +119,7 @@ class EditLib
 		$smarty->assign('target_page', $this->targetPageName);
 
 		$this->sourcePageName = null;		
-		if ($_REQUEST['translationOf']) {
+		if (isset($_REQUEST['translationOf']) && $_REQUEST['translationOf']) {
 			$this->sourcePageName = $_REQUEST['translationOf'];
 		} elseif (isset($_REQUEST['source_page'])) {
 			$this->sourcePageName = $_REQUEST['source_page'];
@@ -134,7 +134,7 @@ class EditLib
 		}
 	}
 	
-	private function setTranslationSourceAndTargetVersions($source_page_name, $target_page_name) {
+	private function setTranslationSourceAndTargetVersions() {
 		global $_REQUEST, $tikilib;
 		
 		if (isset($_REQUEST['oldver'])) {
