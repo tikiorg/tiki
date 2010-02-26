@@ -42,8 +42,11 @@ function module_most_commented( $mod_reference, $module_params ) {
 	if(isset($module_params['lang'])){
 		$lang = $module_params['lang'];
 	}
-	$result = $commentslib->order_comments_by_count($type, $lang, $mod_reference['rows']);
 	
+	
+	$result = $commentslib->order_comments_by_count($type, $lang, $mod_reference['rows']);
 	$smarty->assign('modMostCommented', $result['data']);
 	$smarty->assign('modContentType', $type);
+	$smarty->assign('nonums', $module_params['nonums']);
+	
 }
