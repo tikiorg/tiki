@@ -1280,11 +1280,10 @@ class UsersLib extends TikiLib
 
 		$query = "select uu.* from `users_users` uu $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `users_users` uu $mmid";
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$ret = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $mbindvars);
-		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach ( $ret as &$res ) {
 			$aux = array();
 
 			$res["user"] = $res["login"];
@@ -1299,8 +1298,6 @@ class UsersLib extends TikiLib
 			$res['user_information'] = $this->get_user_preference($user, 'user_information', 'public');
 
 			$res['editable'] = $this->user_can_be_edited($user);
-
-			$ret[] = $res;
 		}
 
 		$retval = array();
@@ -1437,11 +1434,10 @@ class UsersLib extends TikiLib
 
 		$query = "select * from `users_groups` $mid order by ".$this->convertSortMode($sort_mode);
 		$query_cant = "select count(*) from `users_groups` $mid";
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$ret = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach ( $ret as &$res ) {
 			if ($details == "y") {
 				$perms = $this->get_group_permissions($res['groupName']);
 				$res['perms'] = $perms;
@@ -1449,7 +1445,6 @@ class UsersLib extends TikiLib
 				$groups = $this->get_included_groups($res['groupName']);
 				$res['included'] = $groups;
 			}
-			$ret[] = $res;
 		}
 
 		$retval = array();
@@ -1489,11 +1484,7 @@ class UsersLib extends TikiLib
 	function list_all_groupIds() {
 		global $cachelib;
 		if (! $groups = $cachelib->getSerialized("groupIdlist")) {
-			$groups = array();
-			$result = $this->query("select `id`, `groupName` from `users_groups` order by `groupName`", array());
-			while ($res = $result->fetchRow()) {
-				$groups[] = $res;
-			}
+			$groups = $this->fetchAll("select `id`, `groupName` from `users_groups` order by `groupName`", array());
 			$cachelib->cacheItem("groupIdlist",serialize($groups));
 		}
 
@@ -2080,11 +2071,10 @@ class UsersLib extends TikiLib
 			}
 		}
 		$query = "select * from `users_permissions` $mid order by $sort_mode ";
-		$result = $this->query($query, $values, $maxRecords, $offset);
+		$ret = $this->fetchAll($query, $values, $maxRecords, $offset);
 		$cant = 0;
-		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		foreach ( $ret as &$res ) {
 			if( $enabledOnly && $res['feature_check'] ) {	// only list enabled features
 				$feats = preg_split('/,/', $res['feature_check']);
 				$got_one = false;
@@ -2120,8 +2110,6 @@ class UsersLib extends TikiLib
 					}
 				}
 			}
-
-			$ret[] = $res;
 		}
 
 		return array(
