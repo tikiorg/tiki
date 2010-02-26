@@ -1766,7 +1766,18 @@ class TrackerLib extends TikiLib
 		return $total;
 	}
 
-	function import_csv($trackerId, $csvHandle, $replace = true, $dateFormat='', $encoding='UTF8', $csvDelimiter=',') {
+	/**
+	 * Called from tiki-admin_trackers.php import button
+	 * 
+	 * @param int		$trackerId
+	 * @param resource	$csvHandle 		file handle to import
+	 * @param bool		$replace_rows 	make new items for those with existing itemId
+	 * @param string	$dateFormat 	used for item fields of type date
+	 * @param string	$encoding 		defaults "UTF8"
+	 * @param string	$csvDelimiter 	defaults to ","
+	 * @return number	items imported
+	 */
+	function import_csv($trackerId, $csvHandle, $replace_rows = true, $dateFormat='', $encoding='UTF8', $csvDelimiter=',') {
 		global $tikilib;
 		$tracker_info = $this->get_tracker_options($trackerId);
 		if (($header = fgetcsv($csvHandle,100000,  $csvDelimiter)) === FALSE) {
@@ -1808,7 +1819,7 @@ class TrackerLib extends TikiLib
 					$cats = preg_split('/,/',trim($data[$i]));
 				}
 			}
-			if ($itemId && ($t = $this->get_tracker_for_item($itemId)) && $t == $trackerId) {
+			if ($itemId && ($t = $this->get_tracker_for_item($itemId)) && $t == $trackerId && $replace_rows) {
 				$query = "update `tiki_tracker_items` set `created`=?, `lastModif`=?, `status`=? where `itemId`=?";
 				$this->query($query, array((int)$created, (int)$lastModif, $status, (int)$itemId));
 				$replace = true;
@@ -1874,10 +1885,10 @@ class TrackerLib extends TikiLib
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
 							}
 						}
-						if ($itemId && $replace && $this->get_item_value($trackerId, $itemId, $field['fieldId']) !== false) {
-							$this->query($query2, array($data[$i], (int)$itemId,(int)$field['fieldId']));
+						if ($this->get_item_value($trackerId, $itemId, $field['fieldId']) !== false) {
+							$this->query($query2, array($data[$i], (int)$itemId,(int)$field['fieldId']));	// update
 						} else {
-							$this->query($query, array((int)$itemId,(int)$field['fieldId'], $data[$i]));
+							$this->query($query, array((int)$itemId,(int)$field['fieldId'], $data[$i]));	// insert
 						}
 						break;
 					}

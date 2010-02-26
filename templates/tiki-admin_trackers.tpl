@@ -586,10 +586,10 @@ categories = {$catsdump}
 					<td>{tr}Separator{/tr}</td>
 					<td><input type="text" name="separator" value="," size="2" /></td>
 				</tr>
-				<!--tr class="formcolor">
+				<tr class="formcolor">
 					<td>{tr}Add as new items:{/tr}</td>
 					<td><input type="checkbox" name="add_items" /></td>
-				</tr-->
+				</tr>
 				<tr class="formcolor">
 					<td>&nbsp;</td>
 					<td><input type="submit" name="save" value="{tr}Import{/tr}" /></td>

@@ -23,7 +23,11 @@ if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_
 	$total = 'Incorrect file';
 	$fp = @ fopen($_FILES['importfile']['tmp_name'], "rb");
 	if ($fp) {
-		$total = $trklib->import_csv($_REQUEST["trackerId"],$fp, true, isset($_REQUEST['dateFormat'])? $_REQUEST['dateFormat']: '', isset($_REQUEST['encoding'])? $_REQUEST['encoding']: 'UTF8', isset($_REQUEST['separator'])? $_REQUEST['separator']:',');
+		$total = $trklib->import_csv($_REQUEST["trackerId"],$fp, 
+				isset($_REQUEST['add_items']) ? false : true,
+				isset($_REQUEST['dateFormat'])? $_REQUEST['dateFormat']: '',
+				isset($_REQUEST['encoding'])? $_REQUEST['encoding']: 'UTF8',
+				isset($_REQUEST['separator'])? $_REQUEST['separator']:',');
 	}
 	fclose($fp);
 	if (!is_numeric($total)) {
@@ -32,5 +36,9 @@ if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_
 		die;
 	}
 }
-header('Location: tiki-view_tracker.php?trackerId='.$_REQUEST["trackerId"]);
+if (isset($_SERVER['HTTP_REFERER']) && strpos('tiki-admin_trackers.php') !== false) {
+	header('Location: tiki-admin_trackers.php?trackerId='.$_REQUEST["trackerId"]);
+} else {
+	header('Location: tiki-view_tracker.php?trackerId='.$_REQUEST["trackerId"]);
+}
 die;
