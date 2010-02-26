@@ -8082,6 +8082,34 @@ class TikiLib extends TikiDb_Bridge
 			default: return tra('Unknown error.');
 		}
 	}
+	
+	// from PHP manual (ini-get function example)
+	/**
+	 * @param string $val		php.ini key returning memory string i.e. 32M
+	 * @return int				size in bytes
+	 */
+	function return_bytes( $val ) {
+		$val = trim($val);
+		$last = strtolower($val{strlen($val)-1});
+		switch ( $last ) {
+			// The 'G' modifier is available since PHP 5.1.0
+			case 'g': $val *= 1024;
+			case 'm': $val *= 1024;
+			case 'k': $val *= 1024;
+		}
+		return $val;
+	}
+
+	/**
+	 * @return int	bytes of memory available for PHP
+	 */
+	function get_memory_avail() {
+		return $this->get_memory_limit() - memory_get_usage(true);
+	}
+	
+	function get_memory_limit() {
+		return $this->return_bytes(ini_get('memory_limit'));
+	}
 
 	function get_flags($with_names = false, $translate = false, $sort_names = false) {
 		$flags = array();

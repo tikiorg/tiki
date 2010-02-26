@@ -382,19 +382,6 @@ function update_preferences( $dbTiki, &$prefs ) {
 	return false;
 }
 
-// from PHP manual (ini-get function example)
-function return_bytes( $val ) {
-	$val = trim($val);
-	$last = strtolower($val{strlen($val)-1});
-	switch ( $last ) {
-		// The 'G' modifier is available since PHP 5.1.0
-		case 'g': $val *= 1024;
-		case 'm': $val *= 1024;
-		case 'k': $val *= 1024;
-	}
-	return $val;
-}
-
 // -----------------------------------------------------------------------------
 // end of functions .. now starts the processing
 
@@ -796,8 +783,7 @@ if ($install_step == '2') {
 		}
 	}
 
-	$php_memory_limit = return_bytes(ini_get('memory_limit'));
-	$smarty->assign('php_memory_limit', intval($php_memory_limit));
+	$smarty->assign('php_memory_limit', intval($tikilib->get_memory_limit()));
 	
 	if ((extension_loaded('gd') && function_exists('gd_info'))) {
 		$gd_test = 'y';

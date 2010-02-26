@@ -93,32 +93,14 @@ class ImageGalsLib extends TikiLib
 	}
 
 	function max_img_upload_size() {
-	   $this->upload_max_filesize=$this->return_bytes($this->upload_max_filesize);
-	   $this->post_max_size=$this->return_bytes($this->post_max_size);
+		global $tikilib;
+	   $this->upload_max_filesize=$tikilib->return_bytes($this->upload_max_filesize);
+	   $this->post_max_size=$tikilib->return_bytes($this->post_max_size);
 	   if($this->file_uploads==0) {
 		  return(0);
 	   } else {
 		  return(($this->post_max_size > $this->upload_max_filesize) ? $this->post_max_size : $this->upload_max_filesize);
 	   }
-	}
-
-
-
-	// from php manual. one of the rare circumstances where
-	// a break in the switch-case is not needed
-	function return_bytes($val) {
-	  $val = trim($val);
-	  $last = strtolower($val{strlen($val)-1});
-	  switch($last) {
-			// The 'G' modifier is available since PHP 5.1.0
-			case 'g':
-				$val *= 1024;
- 			case 'm':
- 				$val *= 1024;
- 			case 'k':
- 				$val *= 1024;
- 		}
-		return $val;
 	}
 
 	// Features
