@@ -107,9 +107,9 @@ function create_dirs($domain=''){
 		// Check again and report problems
 		if (!is_dir($dir)) {
 			$ret .= "The directory '$docroot/$dir' does not exist.\n";
-		} else if (!is_writeable($dir)) {
+		} else if (!TikiInit::is_writeable($dir)) {
 			@chmod($dir,02777);
-			if (!is_writeable($dir)) {
+			if (!TikiInit::is_writeable($dir)) {
 				$ret .= "The directory '$docroot/$dir' is not writeable.\n";
 			}
 		}
@@ -225,7 +225,7 @@ function check_session_save_path() {
 		if (empty($open_basedir)) {
         		if (!is_dir($save_path)) {
                 		$errors .= "The directory '$save_path' does not exist or PHP is not allowed to access it (check open_basedir entry in php.ini).\n";
-        		} else if (!is_writeable($save_path)) {
+        		} else if (!TikiInit::is_writeable($save_path)) {
                 		$errors .= "The directory '$save_path' is not writeable.\n";
         		}
 		}
@@ -233,7 +233,7 @@ function check_session_save_path() {
         	if ($errors) {
                 	$save_path = TikiInit::tempdir();
 
-                	if (is_dir($save_path) && is_writeable($save_path)) {
+                	if (is_dir($save_path) && TikiInit::is_writeable($save_path)) {
                         	ini_set('session.save_path', $save_path);
 
                         	$errors = '';

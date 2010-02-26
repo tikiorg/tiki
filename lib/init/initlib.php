@@ -44,7 +44,50 @@ class TikiInit
 		}
 		return $windows;
 	}
+	
+	/*
+	 * @param string $path	directory to test
+	 * @param bool $is_file	default false for a dir
+	 * @return bool
+	 *
+	 * Copes with Windows premissions
+	 */
+	static function is_writeable($path) {
+		if (self::isWindows()) {
+			return self::is__writable($path);
+		} else {
+			return is_writeable($path);
+		}
+	}
 
+	/*
+	 * @param string $path	directory to test	NOTE: use a trailing slash for folders!!!
+	 * @return bool
+	 * 
+	 * From the php is_writable manual (thanks legolas558 d0t users dot sf dot net)
+	 * Note the two underscores and no "e"
+	 */
+	static function is__writable($path) {
+		//will work in despite of Windows ACLs bug
+		//NOTE: use a trailing slash for folders!!!
+		//see http://bugs.php.net/bug.php?id=27609
+		//see http://bugs.php.net/bug.php?id=30931
+
+		if ($path{strlen($path)-1}=='/') { // recursively return a temporary file path
+			return self::is__writable($path.uniqid(mt_rand()).'.tmp');
+		} else if (is_dir($path)) {
+			return self::is__writable($path.'/'.uniqid(mt_rand()).'.tmp');
+		}
+		// check tmp file for read/write capabilities
+		$rm = file_exists($path);
+		$f = @fopen($path, 'a');
+		if ($f===false)
+			return false;
+		fclose($f);
+		if (!$rm)
+			unlink($path);
+		return true;
+	}
 
 /** Return ';' if windows otherwise ':'
   * \static
