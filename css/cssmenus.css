@@ -281,8 +281,4 @@ div.navbar .cssmenu_horiz ul li.sfHover > a > .sf-sub-indicator {
 div.navbar .cssmenu_horiz > li > ul {
 	background: transparent;
 	padding: 0;
-	-moz-border-radius-bottomleft: 0;
-	-moz-border-radius-topright: 0;
-	-webkit-border-top-right-radius: 0;
-	-webkit-border-bottom-left-radius: 0;
 }
