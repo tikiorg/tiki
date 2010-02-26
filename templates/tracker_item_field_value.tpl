@@ -168,7 +168,7 @@
 		{if strstr($field_value.options_array[0], 't')}
 			{$field_value.info.filename|iconify}&nbsp;
 		{/if}
-		{if strstr($field_value.options_array[0], 'm')}
+		{if strstr($field_value.options_array[0], 'm') && (strstr($field_value.info.filetype, 'audio') || strstr($field_value.info.filetype, 'video'))}
 			{if $field_value.value ne ''}
 			{wiki}{literal}{MEDIAPLAYER(mp3="tiki-download_item_attachment.php?attId={/literal}{$field_value.value}",style="max"){literal}}{/literal}{/wiki}
 			{/if}
