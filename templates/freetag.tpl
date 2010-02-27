@@ -21,4 +21,17 @@
 			</div>
 		</td>
 	</tr>
+	{if $prefs.feature_multilingual eq 'y' && $prefs.freetags_multilingual eq 'y' && $blog eq 'y'}
+	<tr>
+		<td>{tr}Folksonomy Language{/tr}</td>
+		<td>
+			<select name="lang">
+				<option value="">{tr}All{/tr}</option>
+					{section name=ix loop=$languages}
+							<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+					{/section}
+			</select>
+		</td>
+	</tr>
+	{/if}
 {/if}

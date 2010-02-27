@@ -14,6 +14,13 @@ $smarty->assign('headtitle', tra('Edit Post'));
 $access->check_feature('feature_blogs');
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
+	
+	if ($prefs['feature_multilingual'] == 'y') {
+		$languages = array();
+		$languages = $tikilib->list_languages();
+		$smarty->assign_by_ref('languages', $languages);
+		$smarty->assign('blog', 'y');
+	}
 }
 if (isset($_REQUEST['blogId'])) {
 	$blogId = $_REQUEST['blogId'];
@@ -107,6 +114,7 @@ if ($postId) {
 	$smarty->assign_by_ref('post_images', $post_images);
 	$cat_type = 'blog post';
 	$cat_objid = $postId;
+	$cat_lang = $_REQUEST['lang'];
 	include_once ('freetag_list.php');
 }
 $smarty->assign('preview', 'n');
@@ -232,6 +240,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	$cat_desc = substr($edit_data, 0, 200);
 	$cat_name = $title;
 	$cat_href = "tiki-view_blog_post.php?postId=" . urlencode($postid);
+	$cat_lang = $_REQUEST['lang'];
 	include_once ("freetag_apply.php");
 	if (isset($_REQUEST['save_exit'])) {
 		
