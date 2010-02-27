@@ -35,7 +35,7 @@
 									<div class="notif-highlight" id="staging_outofdate_details">{$outofdate_desc|escape}</div>
 								{/if}
 							{/if}
-							<div class="notif-pad-2">
+							    <div class="notif-pad-2">
 								<label for="approve_summary">{tr}Feedback to the author (optional):{/tr}</label>
 								<br/>
 								<textarea id="approve_summary" name="approve_comment" rows="3" cols="50"></textarea>
@@ -52,14 +52,16 @@
 								</div>
 							</div>
 							<input type="submit" name="staging_action" value="{tr}Submit{/tr}"/>
-						</form>
+						</div>
 					</div>
+				</form>
 				{else}
 					{tr}Latest changes will be synchronized after approval.{/tr}
-				{/if}
+				{/if} {*canApproveStaging*}
+				</div>
 			{/if}
-		</div>
-	{/if}
+	</div>
+	{/if} {*beingStaged*}
 	
 	{if $needsFirstApproval == 'y' and $canApproveStaging == 'y'}
 		<div class="tocnav">
