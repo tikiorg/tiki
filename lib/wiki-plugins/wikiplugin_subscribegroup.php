@@ -53,6 +53,8 @@ function wikiplugin_subscribegroup_info() {
 
 function wikiplugin_subscribegroup($data, $params) {
 	global $tiki_p_subscribe_groups, $userlib, $user, $smarty;
+	static $iSubscribeGroup = 0;
+	++$iSubscribeGroup;
 	if (empty($user)) {
 		return '';
 	}
@@ -80,7 +82,7 @@ function wikiplugin_subscribegroup($data, $params) {
 
 	$groups = $userlib->get_user_groups_inclusion($user);
 
-	if (!empty($_REQUEST['subscribeGroup']) && $_REQUEST['group'] == $group) {
+	if (!empty($_REQUEST['subscribeGroup']) && !empty($_REQUEST['iSubscribeGroup']) && $_REQUEST['iSubscribeGroup'] == $iSubscribeGroup && $_REQUEST['group'] == $group) {
 		if (isset($groups[$group])) {
 			$userlib->remove_user_from_group($user, $group);
 			unset($groups[$group]);
@@ -108,6 +110,7 @@ function wikiplugin_subscribegroup($data, $params) {
 	}
 	$smarty->assign('text', sprintf(tra($text), $group));
 	$smarty->assign('subscribeGroup', $group);
+	$smarty->assign('iSubscribeGroup', $iSubscribeGroup);
 	$data = $smarty->fetch('wiki-plugins/wikiplugin_subscribegroup.tpl');
 	return $data;
 }
