@@ -505,7 +505,7 @@
 {/tab}
 
 {if $trackerId}
-{jq}if ($jq.ui) { $jq("#content3").tiki("accordion", {heading: "h2"});}{/jq}
+{jq}if ($jq.ui && $jq(".tabs").length) { $jq("#content3").tiki("accordion", {heading: "h2"});}{/jq}
 {tab name="{tr}Import/Export{/tr}"}
 {* --- tab with raw form --- *}
 <h2>{tr}Import/export trackers{/tr}</h2>
