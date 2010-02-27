@@ -28,7 +28,7 @@ function prefs_wikiapproval_list() {
 	$all_groups = $userlib->list_all_groups();
 
 	$staging_groups = array();
-	$staging_groups['0'] = tra('None');
+	$staging_groups['-1'] = tra('None');
 
 	foreach ($all_groups as $group) {
 		$staging_groups[] = $group;
