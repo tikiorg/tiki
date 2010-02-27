@@ -21,6 +21,7 @@ function wikiplugin_subscribegroup_info() {
 		'documentation' => 'PluginSubscribeGroup',		
 		'description' => tra('Subscribe or unsubscribe to a group'),
 		'prefs' => array( 'wikiplugin_subscribegroup' ),
+		'body' => tra('text displyed before the button'),
 		'params' => array(
 			'group' => array(
 				'required' => true,
@@ -111,6 +112,6 @@ function wikiplugin_subscribegroup($data, $params) {
 	$smarty->assign('text', sprintf(tra($text), $group));
 	$smarty->assign('subscribeGroup', $group);
 	$smarty->assign('iSubscribeGroup', $iSubscribeGroup);
-	$data = $smarty->fetch('wiki-plugins/wikiplugin_subscribegroup.tpl');
+	$data = $data.$smarty->fetch('wiki-plugins/wikiplugin_subscribegroup.tpl');
 	return $data;
 }
