@@ -99,6 +99,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 		die;
 	}
 
+		$cat_lang = $article_data["lang"];
 	$publishDate = $article_data["publishDate"];
 	$expireDate = $article_data["expireDate"];
 	$smarty->assign('title', $article_data["title"]);
@@ -394,7 +395,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 			die;
 		}
 	}
-
+	
 	$artid = $artlib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>')
 																	, $_REQUEST["authorName"]
 																		, $_REQUEST["topicId"]
@@ -428,6 +429,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	$cat_desc = substr($_REQUEST["heading"], 0, 200);
 	$cat_name = $_REQUEST["title"];
 	$cat_object_exists = (bool) $artid;
+	$cat_lang = $_REQUEST['lang'];
 	$cat_href = "tiki-read_article.php?articleId=" . $cat_objid;
 	include_once("categorize.php");
 	include_once ("freetag_apply.php");
