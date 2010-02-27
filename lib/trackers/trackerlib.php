@@ -1927,7 +1927,7 @@ class TrackerLib extends TikiLib
 		
 		// then "field names -- index" as first line
 		$str = '';
-		$str .= '"itemId", "status", "created", "lastModif",';
+		$str .= 'itemId,status,created,lastModif,';	// these headings weren't quoted in the previous export function
 		if (count($fields['data']) > 0) {
 			foreach ($fields['data'] as $field) {
 				$str .= '"'.$field['name'].' -- '.$field['fieldId'].'",';
@@ -1940,7 +1940,7 @@ class TrackerLib extends TikiLib
 		$bindvars = array($trackerId);
 		$join = '';
 		
-		$query_items =	'SELECT tti.*'
+		$query_items =	'SELECT tti.itemId, tti.status, tti.created, tti.lastModif'
 						.' FROM  `tiki_tracker_items` tti'
 						.$mid
 						.' ORDER BY tti.`itemId` ASC';
@@ -1984,7 +1984,7 @@ class TrackerLib extends TikiLib
 			foreach ( $field_values as $res ) {
 				if ($lastItem != $res['itemId']) {
 					$lastItem = $res['itemId'];
-					echo "\n".'"'.$items[$lastItem]['itemId'].'",'.$items[$lastItem]['status'].'",'.$items[$lastItem]['created'].'",'.$items[$lastItem]['lastModif'].'",';
+					echo "\n".$items[$lastItem]['itemId'].','.$items[$lastItem]['status'].','.$items[$lastItem]['created'].','.$items[$lastItem]['lastModif'].',';	// also these fields weren't traditionally escaped
 					$count++;
 					$icount++;
 					if ($icount > $maxrecords_items) {
