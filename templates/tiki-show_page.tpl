@@ -55,11 +55,11 @@
 						</div>
 					</div>
 				</form>
+				</div>
 				{else}
 					{tr}Latest changes will be synchronized after approval.{/tr}
 				{/if} {*canApproveStaging*}
-				</div>
-			{/if}
+			{/if}{*outOfSync*}
 	</div>
 	{/if} {*beingStaged*}
 	
