@@ -16,7 +16,7 @@ function prefs_wikiapproval_list() {
 		include_once ('lib/categories/categlib.php');
 		$all_categs = $categlib->get_all_categories();
 
-		$staging_catree['-1'] = tra('None');
+		$staging_catree['0'] = tra('None');
 
 		foreach ($all_categs as $categ)
 		{
@@ -28,7 +28,7 @@ function prefs_wikiapproval_list() {
 	$all_groups = $userlib->list_all_groups();
 
 	$staging_groups = array();
-	$staging_groups['-1'] = tra('None');
+	$staging_groups['0'] = tra('None');
 
 	foreach ($all_groups as $group) {
 		$staging_groups[] = $group;
