@@ -174,7 +174,7 @@
 					{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}
 				</div>
 				<div class="description">
-					{$objects[ix].description}&nbsp;
+					{$objects[ix].description|escape}&nbsp;
 				</div>
 			</div>
 		{/section}
