@@ -34,6 +34,7 @@
 
 			<fieldset>
 				<legend>{tr}Miscellaneous{/tr}</legend>
+				{preference name=feature_purifier}
 				{preference name=feature_autolinks}
 				{preference name=feature_hotwords}
 				<div class="adminoptionboxchild" id="feature_hotwords_childcontainer">
