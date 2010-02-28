@@ -16,6 +16,10 @@ function module_action_similarcontent_info(){
 				'name' => tra('Similar Content Filter'),
 				'description' => tra('Display only similar content of type specified') . " " . tra('Default: "All Content Type".') . " " . tra('Options: "article, wiki page, blog post".')
 			),
+			'broaden' => array(
+				'name' => tra('Broaden FreeTag Search'),
+				'description' => tra('Find similar content that contains one of the Tags or All of the Tags') . " " . tra('Default: "n - needs to contain all of the Tags".') . " " . tra('Options: "n - Needs to contain All Tags / y - Needs to contain one of the Tags".')
+			),
 		),
 		'common_params' => array('nonums', 'rows')
 	);
@@ -27,8 +31,13 @@ function module_action_similarcontent( $mod_reference, $module_params ) {
 	include_once ('lib/freetag/freetaglib.php');
 
 	$filterType = '';
-	if(isset($module_params)){
+	if(isset($module_params['contentType'])){
 		$filterType = $module_params['contentType'];
+	}
+	
+	$broaden = 'n';
+	if(isset($module_params['broaden'])){
+		$filterType = $module_params['broaden'];
 	}
 		
 	$currentContentType = "article";
@@ -65,7 +74,7 @@ function module_action_similarcontent( $mod_reference, $module_params ) {
 		}
 		
 			
-		$similarContent = $freetaglib->get_objects_with_tag_combo($allTags, $filterType, '', 0, $mod_reference['rows'], 'name_asc', '', 'y');
+		$similarContent = $freetaglib->get_objects_with_tag_combo($allTags, $filterType, '', 0, $mod_reference['rows'], 'name_asc', '', $broaden);
 			
 		foreach($similarContent['data'] as $item){
 			if($item['type'] != $currentContentType){
