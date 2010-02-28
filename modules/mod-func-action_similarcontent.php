@@ -65,7 +65,7 @@ function module_action_similarcontent( $mod_reference, $module_params ) {
 		}
 		
 			
-		$similarContent = $freetaglib->get_objects_with_tag_combo($allTags, $filterType, '', 0, -1, 'name_asc', '', 'y');
+		$similarContent = $freetaglib->get_objects_with_tag_combo($allTags, $filterType, '', 0, $mod_reference['rows'], 'name_asc', '', 'y');
 			
 		foreach($similarContent['data'] as $item){
 			if($item['type'] != $currentContentType){
