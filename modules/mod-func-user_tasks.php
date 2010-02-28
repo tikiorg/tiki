@@ -27,12 +27,6 @@ function module_user_tasks( $mod_reference, $module_params ) {
 	include_once('lib/tasks/tasklib.php');
 	
 	if ($user && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {
-		if (isset($_SESSION['thedate'])) {
-			$pdate = $_SESSION['thedate'];
-		} else {
-			$pdate = date("U");
-		}
-	
 		if (isset($_REQUEST["modTasksDel"])) {
 			foreach (array_keys($_REQUEST["modTasks"]) as $task) {
 				$tasklib->mark_task_as_trash($task, $user);

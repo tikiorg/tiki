@@ -41,10 +41,9 @@ class TikiLib extends TikiDb_Bridge
 	var $cache_page_info;
 	var $sessionId = null;
 
-	// Constructor receiving a PEAR::Db database object.
 	// DB param left for interface compatibility, although not considered
 	function __construct( $db = null ) {
-		$this->now = (int) date('U');
+		$this->now = time();
 	}
 
 
