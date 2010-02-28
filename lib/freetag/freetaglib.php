@@ -840,7 +840,6 @@ class FreetagLib extends ObjectLib
 			$query = trim($tag_string);
 		}
 
-		$query = preg_replace('/[<>&;#%!*]/','',$query);
 		$words = preg_split('/(")/', $query,-1,PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
 		$delim = 0;
 		$newwords = array();
