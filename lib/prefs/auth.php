@@ -27,6 +27,7 @@ function prefs_auth_list() {
 		'auth_token_access' => array(
 			'name' => tra('Token Access'),
 			'description' => tra('Allow to access the content with superior rights with the presentation of a token. The primary use of this authentication method is to grant temporary access to content to an external service.'),
+			'help' => 'Token+Access',
 			'perspective' => false,
 			'type' => 'flag',
 		),
@@ -37,6 +38,7 @@ function prefs_auth_list() {
 			'size' => 5,
 			'perspective' => false,
 			'filter' => 'digits',
+			'shorthint' => '(seconds)',
 		),
 		'auth_token_access_maxhits' => array(
 			'name' => tra('Token Access Max Hits'),

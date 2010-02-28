@@ -50,6 +50,14 @@
 					{preference name=site_busy_msg}
 				</div>
 		</fieldset>
+
+		<fieldset>
+			<legend>{tr}Tokens{/tr}</legend>
+				{preference name=auth_token_access}
+				{preference name=auth_token_access_maxtimeout}
+				{preference name=auth_token_access_maxhits}
+				{preference name=auth_token_tellafriend}
+		</fieldset>
 		
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
