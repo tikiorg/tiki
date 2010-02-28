@@ -279,12 +279,11 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_htmlpurifier_output' => array(
-			'name' => tra('Output should be HTMLPurified'),
-			'description' => tra('This enable HTPMPurifier on outputs to filter remaining security problems like XSS.'),
+			'name' => tra('Output should be HTML Purified'),
+			'description' => tra('This enables HTML Purifier on outputs to filter potential remaining security problems like XSS.'),
 			'help' => 'Purifier',
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
-			'default' => 'n',
 			'perspective' => false,
 		),
 		'feature_fullscreen' => array(
