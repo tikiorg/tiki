@@ -131,7 +131,6 @@ if $pagetop_msg}
 	<a href="tiki-admin.php?page=metrics">{tr}Metrics Dashboard{/tr}</a>
 	{if $prefs.feature_banning eq 'y'}<a href="tiki-admin_banning.php">{tr}Banning{/tr}</a> {/if}
 	{if $prefs.lang_use_db eq 'y'}<a href="tiki-edit_languages.php">{tr}Edit Languages{/tr}</a> {/if}
-	{if $prefs.feature_listPages eq 'y'}<a href="tiki-admin.php?page=wiki&cookietab=4">{tr}Page List{/tr}</a>{/if}
 	<a href="tiki-admin.php?page=payment">{tr}Payment{/tr}</a>
 	<a href="tiki-admin.php?page=rating">{tr}Advanced Rating{/tr}</a>
 	<hr />
