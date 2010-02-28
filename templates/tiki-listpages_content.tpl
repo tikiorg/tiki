@@ -52,7 +52,7 @@
 
 		{if $prefs.wiki_list_hits eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
-			<th style="text-align:right;">{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</th>
 		{/if}
 
 		{if $prefs.wiki_list_lastmodif eq 'y' or $prefs.wiki_list_comment eq 'y'}
