@@ -279,12 +279,11 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_htmlpurifier_output' => array(
-			'name' => tra('Output should be HTMLPurified'),
-			'description' => tra('This enable HTPMPurifier on outputs to filter remaining security problems like XSS.'),
+			'name' => tra('Output should be HTML Purified'),
+			'description' => tra('This enables HTML Purifier on outputs to filter remaining security problems like XSS.'),
 			'help' => 'Purifier',
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
-			'default' => 'n',
 			'perspective' => false,
 		),
 		'feature_fullscreen' => array(
@@ -313,7 +312,8 @@ function prefs_feature_list() {
 		),
 		'feature_purifier' => array(
 			'name' => tra('HTML Purifier'),
-			'description' => tra('HTML Purifier'),
+			'description' => tra("HTML Purifier is a standards-compliant HTML filter library written in PHP and integrated in Tiki. HTML Purifier will not only remove all malicious code (better known as XSS) with a thoroughly audited, secure yet permissive whitelist, it will also make sure your documents are standards compliant, something only achievable with a comprehensive knowledge of W3C's specifications."),
+			'hint' => tra('If you are trying to use HTML in your pages and it gets stripped out, you should make sure your HTML is valid or de-activate this feature.'),
 			'help' => 'Purifier',
 			'type' => 'flag',
 			'perspective' => false,
