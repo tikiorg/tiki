@@ -9,8 +9,10 @@ function prefs_categories_list() {
 	return array(
 	'categories_used_in_tpl' => array(
 			'name' => tra('Categories used in templates (TPL)'),
+			'description' => tra('Permits to show alternate content depending on category of current object'),
 			'type' => 'flag',
 			'perspective' => false,
+			'help' => 'http://themes.tikiwiki.org/Template+Tricks',
 			'dependencies' => array(
 				'feature_categories',
 			),
