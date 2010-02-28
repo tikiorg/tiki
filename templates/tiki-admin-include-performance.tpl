@@ -38,13 +38,6 @@
 			{preference name=wiki_ranking_reload_probability}
 		</fieldset>
 
-		<fieldset>
-			<legend>{tr}Search{/tr}</legend>
-			{remarksbox type="tip" title="{tr}Tip{/tr}"}
-				{tr}Many search options impact performance. Please see <a href="tiki-admin.php?page=search">Search admin panel</a>.{/tr}
-			{/remarksbox}
-		</fieldset>
-
 			<fieldset>
 				<legend>{tr}Database{/tr}</legend>
 				{preference name=log_sql}
@@ -71,7 +64,16 @@
 			<legend>{tr}Plugins{/tr}</legend>
 			{preference name=wikiplugin_snarf_cache}
 		</fieldset>
-	
+
+		<fieldset>
+			<legend>{tr}These are reported to slow down Tiki. If you have a high-volume site, you may want to deactivate them{/tr}</legend>
+			{preference name=feature_phplayers}
+			{preference name=wikiplugin_sharethis}
+			{remarksbox type="tip" title="{tr}Tip{/tr}"}
+				{tr}Many search options impact performance. Please see <a href="tiki-admin.php?page=search">Search admin panel</a>.{/tr}
+			{/remarksbox}
+		</fieldset>
+
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 		<input type="submit" name="performance" value="{tr}Apply{/tr}" />
 	</div>

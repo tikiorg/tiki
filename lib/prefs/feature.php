@@ -279,11 +279,12 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_htmlpurifier_output' => array(
-			'name' => tra('Output should be HTML Purified'),
-			'description' => tra('This enables HTML Purifier on outputs to filter remaining security problems like XSS.'),
+			'name' => tra('Output should be HTMLPurified'),
+			'description' => tra('This enable HTPMPurifier on outputs to filter remaining security problems like XSS.'),
 			'help' => 'Purifier',
 			'warning' => tra('Experimental. This feature is still under development.'),
 			'type' => 'flag',
+			'default' => 'n',
 			'perspective' => false,
 		),
 		'feature_fullscreen' => array(
@@ -661,7 +662,7 @@ function prefs_feature_list() {
 		),
 		'feature_obzip' => array(
 			'name' => tra('GZip output'),
-			'description' => tra('GZip output'),
+			'description' => tra('Compress your pages on-the-fly, if the requesting browser supports this'),
 			'help' => 'Compression',
 			'type' => 'flag',
 			'perspective' => false,
