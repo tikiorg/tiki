@@ -71,12 +71,12 @@ jqueryTiki.carousel = '.($prefs['feature_jquery_carousel'] == 'y' ? 'true' : 'fa
 
 jqueryTiki.effect = "'.$prefs['jquery_effect'].'";				// Default effect
 jqueryTiki.effect_direction = "'.$prefs['jquery_effect_direction'].'";	// "horizontal" | "vertical" etc
-jqueryTiki.effect_speed = "'.$prefs['jquery_effect_speed'].'";	// "slow" | "normal" | "fast" | milliseconds (int) ]
+jqueryTiki.effect_speed = '.($prefs['jquery_effect_speed'] == 'normal' ? '400' : '"'.$prefs['jquery_effect_speed'].'"').';	// "slow" | "normal" | "fast" | milliseconds (int) ]
 jqueryTiki.effect_tabs = "'.$prefs['jquery_effect_tabs'].'";		// Different effect for tabs
 jqueryTiki.effect_tabs_direction = "'.$prefs['jquery_effect_tabs_direction'].'";
-jqueryTiki.effect_tabs_speed = "'.$prefs['jquery_effect_tabs_speed'].'";
+jqueryTiki.effect_tabs_speed = '.($prefs['jquery_effect_tabs_speed'] == 'normal' ? '400' : '"'.$prefs['jquery_effect_tabs_speed'].'"').';
 
-';
+';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
 	$headerlib->add_js($js, 100);	
 	
 	
