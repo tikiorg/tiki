@@ -247,7 +247,7 @@
 					<fieldset class="admin">
 						<legend>{tr}Tab UI effects{/tr}</legend>
 						{preference name=jquery_effect_tabs}
-						{preference name=jquery_effect_speed}
+						{preference name=jquery_effect_tabs_speed}
 						{preference name=jquery_effect_tabs_direction}
 				</fieldset>
 			</div>
