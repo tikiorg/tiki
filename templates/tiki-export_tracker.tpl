@@ -71,7 +71,7 @@
 			</select>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 		</div>
-		{jq}$jq("input:name=which").change(function(){ if ($jq(this).val() == "these") { $jq("#fields_list").slideDown("fast"); } else { $jq("#fields_list").slideUp("fast"); } });{/jq}
+		{jq}$jq("input[name=which]").change(function(){ if ($jq(this).val() == "these") { $jq("#fields_list").slideDown("fast"); } else { $jq("#fields_list").slideUp("fast"); } });{/jq}
 	</td>
 </tr>
 <tr class="formcolor">
