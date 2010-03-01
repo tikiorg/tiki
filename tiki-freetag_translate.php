@@ -17,7 +17,7 @@ if( !isset($_REQUEST['objId']))
 $cat_type = $_REQUEST['type'];
 $cat_objId = $_REQUEST['objId'];
 
-if ($cat_type != 'wiki page') {
+if ($cat_type != 'wiki page' && $cat_type != 'article') {
 	$smarty->assign('msg', tra("Not supported yet."));
 
 	$smarty->display("error.tpl");
