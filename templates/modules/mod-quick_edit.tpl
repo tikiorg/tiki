@@ -4,7 +4,7 @@
 <form method="get" action="{$qe_action|escape}">
 {if $categId}<input type="hidden" name="categId" value="{$categId}" />{/if}
 {if $templateId}<input type="hidden" name="templateId" value="{$templateId}" />{/if}
-{if $mod_quickedit_heading}<div class="bod-data">{$mod_quickedit_heading}</div>{/if}
+{if $mod_quickedit_heading}<div class="box-data">{$mod_quickedit_heading}</div>{/if}
 <input id="{$qefield}" type="text" size="{$size}" name="page" />
 <input type="submit" name="quickedit" value="{$submit}" />
 </form>
