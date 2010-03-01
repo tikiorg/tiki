@@ -693,22 +693,21 @@ class Comments extends TikiLib
 			$bind_time = array();
 		}
 		if (!empty($who)) {
-			$time_cond .= ' and a.`threadId` IN (';
 			//get a list of threads the user has posted in
 			//this needs to be a separate query otherwise it'll run once for every row in the db!
 			$user_thread_ids_query = "SELECT DISTINCT IF(parentId=0, threadId, parentId) threadId FROM tiki_comments WHERE object = ? AND userName = ? ORDER BY threadId DESC";
 			$user_thread_ids_params = array($forumId, $who);
 			$user_thread_ids_result = $this->query($user_thread_ids_query, $user_thread_ids_params, 1000);
 
-			if ($user_thread_ids_result->numRows() == 0) {
-				return array();
+			if ($user_thread_ids_result->numRows()) {
+				$time_cond .= ' and a.`threadId` IN (';
+				$user_thread_ids = array();
+				while ($res = $user_thread_ids_result->fetchRow()) {
+					$user_thread_ids[] = $res['threadId'];
+				}
+				$time_cond .= implode(",", $user_thread_ids);
+				$time_cond .= ") ";
 			}
-			$user_thread_ids = array();
-			while ($res = $user_thread_ids_result->fetchRow()) {
-				$user_thread_ids[] = $res['threadId'];
-			}
-			$time_cond .= implode(",", $user_thread_ids);
-			$time_cond .= ") ";
 		}
 		if (!empty($type)) {
 			$time_cond .= ' and a.`type` = ? ';
