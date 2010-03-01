@@ -149,7 +149,7 @@ if( $prefs['feature_bidi'] == 'y' ) {
 if ($prefs['javascript_enabled'] == 'y') {
 	
 	if( $prefs['javascript_cdn'] == 'google' ) {
-		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js', 'external' );
+		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'external' );
 	} else {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
 	}
