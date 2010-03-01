@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+// $Id: index.php 18582 2009-05-09 15:53:46Z chibaguy $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
