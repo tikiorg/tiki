@@ -87,15 +87,6 @@ button:hover {
 	cursor: pointer;
 }
 
-input.button {
-	margin: 0;
-	font: bold 1em Arial, Sans-serif;
-	border: 1px solid #CCC;
-	background: #FFF;
-	padding: 2px 3px;
-	color: #333;
-}
-
 textarea,
 body.wikitext {
 	color: #333;
@@ -124,7 +115,7 @@ input[type=submit],
 span.button input,
 .calbuttonbox {
 	vertical-align: middle;
-	margin: 2px;
+	font: bold 1em Arial, sans-serif;
 	background: url(feb12/header.jpg) repeat-x 0 -2px;
 	border: 1px solid #5aa5cf;
 	color: #F5F5F5;
