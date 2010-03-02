@@ -2520,37 +2520,8 @@ class TikiLib extends TikiDb_Bridge
 
 		if ( $defaultValues === null && $defaultsFallback ) {
 			global $prefs;
-			$defaultValues = array(
-				'name' => '',
-				'show_id' => $prefs['fgal_list_id'],
-				'show_icon' => $prefs['fgal_list_type'],
-				'show_name' => 'f',
-				'show_description' => $prefs['fgal_list_description'],
-				'show_size' => $prefs['fgal_list_size'],
-				'show_created' => $prefs['fgal_list_created'],
-				'show_modified' => $prefs['fgal_list_lastModif'],
-				'show_creator' => $prefs['fgal_list_creator'],
-				'show_author' => $prefs['fgal_list_author'],
-				'show_last_user' => $prefs['fgal_list_last_user'],
-				'show_comment' => $prefs['fgal_list_comment'],
-				'show_files' => $prefs['fgal_list_files'],
-				'show_explorer' => $prefs['fgal_show_explorer'],
-				'show_path' =>$prefs['fgal_show_path'],
-				'show_slideshow' => $prefs['fgal_show_slideshow'],
-				'default_view' => $prefs['fgal_default_view'],
-				'show_hits' => $prefs['fgal_list_hits'],
-				'show_lockedby' => $prefs['fgal_list_lockedby'],
-				'show_checked' => 'y',
-				'show_userlink' => 'y',
-				'sort_mode' => $prefs['fgal_sort_mode'],
-				'public' =>'y',
-				'lockable' => 'n',
-				'visible' => 'y',
-				'archives' => -1,
-				'type' => 'default',
-				'description' => '',
-				'quota' => $prefs['fgal_quota_default'],
-			);
+			global $filegallib; require_once 'lib/filegals/filegallib.php';
+			$defaultValues = $filegallib->default_file_gallery();
 		}
 
 		if ( $id > 0 ) {
