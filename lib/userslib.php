@@ -878,7 +878,7 @@ class UsersLib extends TikiLib
 		}
 	}
 
-	function init_ldap($user) {
+	function init_ldap($user, $pass) {
 		global $prefs;
 		if ( !isset($this->ldap) ) {
 			require_once('auth/ldap.php');
@@ -919,7 +919,7 @@ class UsersLib extends TikiLib
 		global $prefs;
 		global $logslib;
 
-		$this->init_ldap($user);
+		$this->init_ldap($user, $pass);
 
 		switch($err=$this->ldap->bind()) {
 		case LDAP_INVALID_CREDENTIALS:
@@ -977,7 +977,7 @@ class UsersLib extends TikiLib
 		global $prefs;
 		global $logslib;
 		$ret=true;
-		$this->init_ldap($user);
+		$this->init_ldap($user, $pass);
 
 		if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing user and group with ldap');
 		$userattributes=$this->ldap->get_user_attributes();
