@@ -126,7 +126,7 @@ function displayError($message) { // {{{
 	global $smarty;
 
 	$smarty->assign('msg', tra("Failure").": " . $message);
-
+	$smarty->assign('errortype', 'login');
 	$smarty->display("error.tpl");
 	die;
 } // }}}
