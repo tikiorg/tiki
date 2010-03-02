@@ -47,7 +47,9 @@ if ( ! check_svn_version() )
 if ( ! $options['no-check-svn'] && has_uncommited_changes('.') )
 	error("Uncommited changes exist in the working folder.\n");
 
-list( $script, $version, $subrelease ) = $_SERVER['argv'];
+$script = $_SERVER['argv'][0];
+$version = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
+$subrelease = isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : '';
 
 if ( ! preg_match("/^\d+\.\d+$/", $version) )
 	error("Version number should be in X.X format.\n");
@@ -391,6 +393,7 @@ function get_options() {
 		'howto' => false,
 		'help' => false,
 		'http-proxy' => false,
+		'svn-mirror-uri' => false,
 		'no-commit' => false,
 		'no-check-svn' => false,
 		'no-check-php' => false,
@@ -430,6 +433,10 @@ function get_options() {
 						'request_fulluri' => true
 					) ) );
 				} else $options[substr($arg, 2, 10)] = true;
+			} elseif ( substr($arg, 2, 15) == 'svn-mirror-uri=' ) {
+				if ( ( $uri = substr($arg, 17) ) != '' ) {
+					$options[substr($arg, 2, 14)] = $uri;
+				}
 			} else {
 				error("Unknown option $arg. Try using --help option.\n");
 			}
@@ -598,13 +605,15 @@ function update_copyright_file($newVersion) {
 	if ( ! is_readable(COPYRIGHTS) || ! is_writable(COPYRIGHTS) )
 		error('The copyright file "' . COPYRIGHTS . '" is not readable or writable.');
 
-	global $nbCommiters;
+	global $nbCommiters, $options;
 	$nbCommiters = 0;
 	$contributors = array();
-	$repositoryInfo = get_info(TIKISVN);
+
+	$repositoryUri = empty($options['svn-mirror-uri']) ? TIKISVN : $options['svn-mirror-uri'];
+	$repositoryInfo = get_info($repositoryUri);
 
 	$oldContributors = parse_copyrights();
-	get_contributors_data(TIKISVN, $contributors, 1, (int)$repositoryInfo->entry->commit['revision']);
+	get_contributors_data($repositoryUri, $contributors, 1, (int)$repositoryInfo->entry->commit['revision']);
 	ksort($contributors);
 
 	$totalContributors = count($contributors);
@@ -828,6 +837,7 @@ Options:
 	--howto			: display the Tiki release HOWTO
 	--help			: display this help
 	--http-proxy=HOST:PORT	: use an http proxy to get copyright data on sourceforge
+	--svn-mirror-uri=URI	: use another repository URI to update the copyrights file (to avoid retrieving data from sourceforge, which is usually slow)
 	--no-commit		: do not commit any changes back to SVN
 	--no-check-svn		: do not check if there is uncommited changes on the checkout used for the release
 	--no-check-php		: do not check syntax of all PHP files
