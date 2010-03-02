@@ -61,11 +61,11 @@
 {else}
 	{$grid_content}
 	<div class="navbar">
-		{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_view_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-sheets.php" _text="{tr}List Sheets{/tr}"}
 		{/if}
 	
-		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{if $editconflict eq 'y'}
 				{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;mode=edit" _title="$semUser" _text="{tr}Edit{/tr}" _ajax="n"}
 			{else}
@@ -73,15 +73,15 @@
 			{/if}
 		{/if}
 
-		{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}History{/tr}"}
 		{/if}
 
-		{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_view_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-export_sheet.php?sheetId=$sheetId" _text="{tr}Export{/tr}"}
 		{/if}
 
-		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-import_sheet.php?sheetId=$sheetId" _text="{tr}Import{/tr}"}
 		{/if}
 
