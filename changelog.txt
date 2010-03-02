@@ -18,6 +18,346 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 3.5
+<http://tikiwiki.org/ReleaseNotes35>
+------------------
+
+----------------------------------------------
+r25865 | pkdille | 2010-03-02 23:31:15 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24298 | chealer | 2010-01-12 22:28:18 +0100 (Tue, 12 Jan 2010) | 1 line
+[bp/24273][FIX] "Prevent automatic/robot registration:" interferes with OpenID (Ticket 1505)
+
+
+----------------------------------------------
+r25864 | pkdille | 2010-03-02 23:25:13 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23761 | sylvieg | 2009-12-09 15:45:09 +0100 (Wed, 09 Dec 2009) | 1 line
+[bp/r:22409 partial] just the require/include part - got an install with no htmlpurifier install
+
+
+----------------------------------------------
+r25863 | pkdille | 2010-03-02 23:20:42 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23574 | sylvieg | 2009-11-28 14:55:31 +0100 (Sat, 28 Nov 2009) | 1 line
+[bp/r 23570] [FIX]actionlog: see all the visible galleries not only the public one
+
+
+----------------------------------------------
+r25858 | pkdille | 2010-03-02 22:44:14 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23443 | sylvieg | 2009-11-22 23:29:30 +0100 (Sun, 22 Nov 2009) | 1 line
+[bp/r 23412 partial][FIX] the default pattern username
+
+
+----------------------------------------------
+r25852 | pkdille | 2010-03-02 22:06:47 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25795 | sept_7 | 2010-03-01 09:43:16 +0100 (Mon, 01 Mar 2010) | 2 lines
+[FIX/bp25793] fix redirection path, thnx gary for noticing
+
+
+----------------------------------------------
+r25851 | pkdille | 2010-03-02 22:05:56 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25562 | chealer | 2010-02-23 19:47:39 +0100 (Tue, 23 Feb 2010) | 1 line
+[FIX] backport search parameters filter fixes from trunk, playing safer by removing those we're not sure about
+
+
+----------------------------------------------
+r25850 | pkdille | 2010-03-02 22:05:31 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25534 | pkdille | 2010-02-23 13:24:29 +0100 (Tue, 23 Feb 2010) | 1 line
+[bp/r25532][FIX] articles: untranslated string (bytes)
+
+
+----------------------------------------------
+r25849 | pkdille | 2010-03-02 22:04:14 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25496 | xavidp | 2010-02-22 14:54:47 +0100 (Mon, 22 Feb 2010) | 1 line
+[FIX][bp/r25494]fixing old missreference to local sheet admin perm
+
+
+----------------------------------------------
+r25848 | pkdille | 2010-03-02 22:03:12 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25463 | xavidp | 2010-02-21 11:43:24 +0100 (Sun, 21 Feb 2010) | 1 line
+[FIX][bp/r25461]Fix bug for users with local perm to admin a sheet but not full admin (re: bug1920 ). Thanks space_egd for reporting the fix.
+
+
+----------------------------------------------
+r25847 | pkdille | 2010-03-02 22:01:58 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25441 | jonnybradley | 2010-02-20 20:02:03 +0100 (Sat, 20 Feb 2010) | 1 line
+[bp/r25434, r25415] [FIX] MySQL search: fix buggy validation
+
+
+----------------------------------------------
+r25846 | pkdille | 2010-03-02 22:00:53 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25438 | xavidp | 2010-02-20 17:30:00 +0100 (Sat, 20 Feb 2010) | 1 line
+[FIX][bp/r25436]Fix contrast with spreadsheet bg and colors, that was lost at some point for a few themes
+
+
+----------------------------------------------
+r25845 | pkdille | 2010-03-02 22:00:11 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25433 | pkdille | 2010-02-20 13:39:38 +0100 (Sat, 20 Feb 2010) | 1 line
+[bp/r25394][NEW] articles and submission: Give admin the opportunity to define a default size for images. It's a value that can be changed by the user when he contributes an article or a submission.
+
+
+----------------------------------------------
+r25844 | pkdille | 2010-03-02 21:59:05 +0100 (Tue, 02 Mar 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r25429 | chealer | 2010-02-20 02:09:34 +0100 (Sat, 20 Feb 2010) | 3 lines
+[bp/r25427][SEC] MySQL search: fix buggy validation on _find() $searchDate parameter.
+Thanks Mateusz Drygas <security[-at-]man.poznan.pl>
+
+
+----------------------------------------------
+r25843 | pkdille | 2010-03-02 21:57:56 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25305 | chealer | 2010-02-17 10:40:32 +0100 (Wed, 17 Feb 2010) | 1 line
+[bp/r25303] OpenID: avoid two consecutive slashes in URL when returning from provider in webserver root
+
+
+----------------------------------------------
+r25842 | pkdille | 2010-03-02 21:57:37 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25302 | chealer | 2010-02-17 09:12:01 +0100 (Wed, 17 Feb 2010) | 2 lines
+[bp/r25300][FIX] OpenID on machines running httpd as several users.
+
+
+----------------------------------------------
+r25841 | pkdille | 2010-03-02 21:57:22 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25298 | chealer | 2010-02-17 06:01:28 +0100 (Wed, 17 Feb 2010) | 1 line
+[bp/r25296][FIX] error message on OpenID authentication failure
+
+
+----------------------------------------------
+r25840 | pkdille | 2010-03-02 21:56:31 +0100 (Tue, 02 Mar 2010) | 10 lines
+
+[QT] Quality Team Backport
+
+r25255 | jonnybradley | 2010-02-16 13:42:10 +0100 (Tue, 16 Feb 2010) | 7 lines
+[bp/r25253] Enhancements to bloglist plugin: Date range, container_class and non-simple list mode. (2nd attempt - including r24996 properly)
+[bp/r24996] [FIX] Correct logic for $show_heading
+[bp/r24969] [ENH] New mode for wikiplugin_bloglist: Not "simple list" as before but full blog posts. Also add container class param.
+[bp/r24888] [MOD] Add $container_class to output of articles and bloglist plugins (.wikiplugin_articles or .wikiplugin_bloglist respectively) for custom CSS targeting.
+[bp/r24886] [ENH] Add date range params to bloglist plugin
+
+
+----------------------------------------------
+r25839 | pkdille | 2010-03-02 21:52:52 +0100 (Tue, 02 Mar 2010) | 5 lines
+
+[QT] Quality Team Backport
+r24380 [bp/r23100][FIX] user messages: prefer user preferences max messages to display pagination
+r25218 [bp/r25217][FIX] better fix for 24380: user messages: prefer user preferences max messages to display pagination
+
+
+----------------------------------------------
+r25837 | pkdille | 2010-03-02 21:46:29 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25196 | chealer | 2010-02-13 23:08:51 +0100 (Sat, 13 Feb 2010) | 1 line
+[bp/r25194][MOD][SEC] Remove Standard Remember method for persistent login and use Simple instead. IP address and User agent are no more checked
+
+
+----------------------------------------------
+r25836 | pkdille | 2010-03-02 21:44:59 +0100 (Tue, 02 Mar 2010) | 13 lines
+
+[QT] Quality Team Backport
+
+r25187 | jonnybradley | 2010-02-13 22:31:29 +0100 (Sat, 13 Feb 2010) | 10 lines
+[bp/r25182] Enhancements to articles plugin: Date range, container_class, show fullbody and a few minor fixes.
+[bp/r25134] [FIX] Override dates wasn't entirely overriding the dates
+[bp/r25133] [MOD] Helpful description
+[bp/r25068] [FIX] Add overrideDates param to articles plugin so you can list the date range you actually want, whether the 'article type' says so or not. Also various other small fixes (including don't default to only 3 items) and some code reformatting.
+[bp/r25066] [MOD] Add $override_dates param to list_articles. This allows you to ignore the "show before publish" and "show after expiry" date settings on the article type (in other words find only the date range you were looking for).
+[bp/r24968] [ENH] Expose container class as a param (and add some filters)
+[bp/r24951] [FIX] Don't display "Read more" if showing "fullbody" (from articles plugin)
+[bp/r24856] [ENH] Add date range for articles plugin. Also flag to show body of article as well as the header.
+
+
+----------------------------------------------
+r25835 | pkdille | 2010-03-02 21:41:10 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25150 | pkdille | 2010-02-12 16:34:52 +0100 (Fri, 12 Feb 2010) | 3 lines
+[bp/r25146 + 25147] [FIX] page-bar: when no buttons are visible, the page_bar div has not to be included in the code
+
+
+----------------------------------------------
+r25834 | pkdille | 2010-03-02 21:40:27 +0100 (Tue, 02 Mar 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r25145 | pkdille | 2010-02-12 15:57:00 +0100 (Fri, 12 Feb 2010) | 4 lines
+[bp/r23911][FIX] wiki page: the "technical" hr below the wikitext must have visibility=hidden style for being hidden in Internet Explorer.
+	This commit is for the stylesheets where layout.css is not included (specific for v3.x)
+
+
+----------------------------------------------
+r25833 | pkdille | 2010-03-02 21:39:16 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25139 | pkdille | 2010-02-12 15:14:51 +0100 (Fri, 12 Feb 2010) | 1 line
+[bp/r25121][MOD] wiki editdate styling: give a smaller size to this text in order to see a difference with the wiki page
+
+
+----------------------------------------------
+r25832 | pkdille | 2010-03-02 21:34:29 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24837 | xavidp | 2010-02-04 09:50:54 +0100 (Thu, 04 Feb 2010) | 1 line
+[BP/r24835][MOD]Username to be included in QUOTE. Fix applied as reported long ago in wish2089. Thanks people at precarios-www
+
+
+----------------------------------------------
+r25831 | pkdille | 2010-03-02 21:34:02 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24736 | chealer | 2010-01-29 09:31:28 +0100 (Fri, 29 Jan 2010) | 1 line
+[bp/r24733][SEC] improve OpenID robustness
+
+
+----------------------------------------------
+r25830 | pkdille | 2010-03-02 21:32:25 +0100 (Tue, 02 Mar 2010) | 9 lines
+
+[QT] Quality Team Backport
+
+r24722 | pkdille | 2010-01-28 21:40:31 +0100 (Thu, 28 Jan 2010) | 6 lines
+[bp/r24720][FIX] mail notifications : fix the link sent in the notification email which gives the possibility to unsubscribe the user watch.
+    BTW, fix the remove_user_watch_by_id function in order to not allow anybody to remove every notification.
+    This was broken since r11994 and was ticket 2895 in dev tracker.
+    Thks to nyloth and sept_7 for the help
+
+
+----------------------------------------------
+r25829 | pkdille | 2010-03-02 21:30:55 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24664 | Jyhem | 2010-01-26 10:51:27 +0100 (Tue, 26 Jan 2010) | 1 line
+[FIX] Page names starting with a figure could not switch language (trunk #24661) 
+
+
+----------------------------------------------
+r25828 | pkdille | 2010-03-02 21:30:27 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24600 | jonnybradley | 2010-01-22 05:48:09 +0100 (Fri, 22 Jan 2010) | 1 line
+[bp/r22926 partial][FIX] Remember selected category when changing themes (was part of a more extensive theme control revamp for 4.x)
+
+
+----------------------------------------------
+r25827 | pkdille | 2010-03-02 21:29:05 +0100 (Tue, 02 Mar 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r24599 | jonnybradley | 2010-01-22 05:21:04 +0100 (Fri, 22 Jan 2010) | 2 lines
+[bp/r22261][FIX] autocomplete not to automatically select the first item any more.
+(Originally committed to tiki-jquery.js in trunk pre-branch/4.x)
+
+
+----------------------------------------------
+r25826 | pkdille | 2010-03-02 21:28:43 +0100 (Tue, 02 Mar 2010) | 10 lines
+
+[QT] Quality Team Backport
+
+r24563 | sept_7 | 2010-01-20 11:08:56 +0100 (Wed, 20 Jan 2010) | 6 lines
+[BP/24554] [FIX] PDO: avoid returning twice the result of the query once in
+associative mode and one (not used) in index mode. Reduce the memory needed
+when PDO is used.
+  
+It will improve perf when query returns large results
+
+
+----------------------------------------------
+r25825 | pkdille | 2010-03-02 21:28:17 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24493 | pkdille | 2010-01-18 15:29:54 +0100 (Mon, 18 Jan 2010) | 1 line
+[br/r24491][FIX] blog post: return to view_blog_post instead of view_blog (on the top of the whole blog.. and not the post which was just done) when a new post is submitted or a post is modified. This is easier to understand for users.
+
+
+----------------------------------------------
+r25824 | pkdille | 2010-03-02 21:26:09 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24445 | xavidp | 2010-01-17 14:35:37 +0100 (Sun, 17 Jan 2010) | 1 line
+[MOD][bp/r24443]Spam protection: when aonymous is allowed to add or change events in calendars, the ip is logged at syslog to allow banning ip's if needed. Also antibot code checked only when saving (not when changing calendar, or previewing). No check on deletion of events for anons (if allowed) since bots are not known to use JS buttons.
+
+
+----------------------------------------------
+r25823 | pkdille | 2010-03-02 21:25:44 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24387 | chealer | 2010-01-15 00:43:25 +0100 (Fri, 15 Jan 2010) | 1 line
+[bp/r24384][FIX] page rename: handle slashes in old page name. Fixes ticket ID 2360
+
+
+----------------------------------------------
+r25822 | pkdille | 2010-03-02 21:22:28 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24362 | xavidp | 2010-01-14 14:52:43 +0100 (Thu, 14 Jan 2010) | 1 line
+[ENH/bp r24357]Anti-bot captcha added when anonymous are allowed to add new any email to newsletters.
+
+
+----------------------------------------------
+r25821 | pkdille | 2010-03-02 21:20:54 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24361 | xavidp | 2010-01-14 14:51:28 +0100 (Thu, 14 Jan 2010) | 1 line
+[ENH/bp r24356]Anti-bot captcha added when anonymous are allowed add new calendar items.
+
+
+----------------------------------------------
 Version 3.4
 <http://tikiwiki.org/ReleaseNotes34>
 ------------------
