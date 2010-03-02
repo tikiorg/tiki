@@ -188,6 +188,6 @@ function branch( $source, $branch, $revision )
 
 function get_logs( $localPath, $minRevision, $maxRevision = 'HEAD' ) {
 	if ( empty($minRevision) || empty($maxRevision) ) return false;
-	$logs = `svn log -r$maxRevision:$minRevision $localPath`;
+	$logs = `LANG=C svn log -r$maxRevision:$minRevision $localPath`;
 	return $logs;
 }
