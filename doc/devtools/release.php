@@ -47,7 +47,9 @@ if ( ! check_svn_version() )
 if ( ! $options['no-check-svn'] && has_uncommited_changes('.') )
 	error("Uncommited changes exist in the working folder.\n");
 
-list( $script, $version, $subrelease ) = $_SERVER['argv'];
+$script = $_SERVER['argv'][0];
+$version = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
+$subrelease = isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : '';
 
 if ( ! preg_match("/^\d+\.\d+$/", $version) )
 	error("Version number should be in X.X format.\n");
@@ -195,6 +197,7 @@ if ( $isPre ) {
 // Helper functions
 
 function write_secdb( $file, $root, $version ) {
+	$file_exists = @file_exists($file);
 	$fp = @fopen($file, 'w+') or error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
 	$queries = array();
 	md5_check_dir( $root, $root, $version, $queries );
@@ -207,7 +210,7 @@ function write_secdb( $file, $root, $version ) {
 
 	fclose( $fp );
 
-	if ( $file_exists = file_exists($file) ) {
+	if ( $file_exists ) {
 		info(">> Existing SecDB file '$file' has been updated.");
 		`svn add $file 2> /dev/null`;
 	} else {
@@ -250,8 +253,10 @@ function md5_check_dir($root, $dir, $version, &$queries) {
 }
 
 function build_packages($releaseVersion, $svnRelativePath) {
+	global $options;
+
 	$script = TOOLS . '/tikirelease.sh';
-	if ($options['-debug-packaging']) {
+	if ($options['debug-packaging']) {
 	   $debugflag = '-x';
 	} else {
 	   $debugflag = '';
@@ -388,6 +393,7 @@ function get_options() {
 		'howto' => false,
 		'help' => false,
 		'http-proxy' => false,
+		'svn-mirror-uri' => false,
 		'no-commit' => false,
 		'no-check-svn' => false,
 		'no-check-php' => false,
@@ -427,6 +433,10 @@ function get_options() {
 						'request_fulluri' => true
 					) ) );
 				} else $options[substr($arg, 2, 10)] = true;
+			} elseif ( substr($arg, 2, 15) == 'svn-mirror-uri=' ) {
+				if ( ( $uri = substr($arg, 17) ) != '' ) {
+					$options[substr($arg, 2, 14)] = $uri;
+				}
 			} else {
 				error("Unknown option $arg. Try using --help option.\n");
 			}
@@ -495,8 +505,8 @@ function important_step($msg, $increment_step = true, $commit_msg = false) {
 		}
 	}
 
-	if ( $commit_msg && $do_step ) {
-	  $revision = commit($commit_msg) && info(">> Commited revision $revision.");
+	if ( $commit_msg && $do_step && ( $revision = commit($commit_msg) ) ) {
+		info(">> Commited revision $revision.");
 	}
 
 	return $do_step;
@@ -595,13 +605,15 @@ function update_copyright_file($newVersion) {
 	if ( ! is_readable(COPYRIGHTS) || ! is_writable(COPYRIGHTS) )
 		error('The copyright file "' . COPYRIGHTS . '" is not readable or writable.');
 
-	global $nbCommiters;
+	global $nbCommiters, $options;
 	$nbCommiters = 0;
 	$contributors = array();
-	$repositoryInfo = get_info(TIKISVN);
+
+	$repositoryUri = empty($options['svn-mirror-uri']) ? TIKISVN : $options['svn-mirror-uri'];
+	$repositoryInfo = get_info($repositoryUri);
 
 	$oldContributors = parse_copyrights();
-	get_contributors_data(TIKISVN, $contributors, 1, (int)$repositoryInfo->entry->commit['revision']);
+	get_contributors_data($repositoryUri, $contributors, 1, (int)$repositoryInfo->entry->commit['revision']);
 	ksort($contributors);
 
 	$totalContributors = count($contributors);
@@ -611,19 +623,19 @@ function update_copyright_file($newVersion) {
 Tiki Copyright
 ----------------
 
-The following list attempts to gather the copyright holders for tikiwiki
+The following list attempts to gather the copyright holders for Tiki
 as of version $newVersion.
 
 Accounts listed below with commits have contributed source code to CVS or SVN. 
 Please note that even more people contributed on various other aspects (documentation, 
 bug reporting, testing, etc.)
 
-This is how we implement the Tikiwiki Social Contract.
-http://dev.tikiwiki.org/SocialContract
+This is how we implement the Tiki Social Contract.
+http://tikiwiki.org/Social+Contract
 
 List of members of the Community
 As of $now, the community has:
-  * $totalContributors members on Sourceforge,
+  * $totalContributors members on SourceForge.net,
   * $nbCommiters of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
@@ -825,6 +837,7 @@ Options:
 	--howto			: display the Tiki release HOWTO
 	--help			: display this help
 	--http-proxy=HOST:PORT	: use an http proxy to get copyright data on sourceforge
+	--svn-mirror-uri=URI	: use another repository URI to update the copyrights file (to avoid retrieving data from sourceforge, which is usually slow)
 	--no-commit		: do not commit any changes back to SVN
 	--no-check-svn		: do not check if there is uncommited changes on the checkout used for the release
 	--no-check-php		: do not check syntax of all PHP files
@@ -887,11 +900,11 @@ function display_howto() {
    In case of a major version (x.0), you need at least 3 installations from 3 different people
 
 6/ When the "tarballs" are tested, follow the steps to upload on SourceForge:
-   http://tinyurl.com/59uubv
+   http://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download
 
 7/ Announce the good news on devel mailing-list
-   and ask the TAG (TikiWiki Admin Group) through the admin mailing-list
-   to launch the announce-speading process (Freshmeat, SourceForge and tikiwiki.org (manually for now).
+   and ask the Communications Team to launch the announce-spreading process as described on
+   http://tikiwiki.org/Communications+Team+Release
 
 post/
    Update appropriate http://tikiwiki.org/stable.version file with new release version
