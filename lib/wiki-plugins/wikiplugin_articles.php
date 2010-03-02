@@ -30,16 +30,19 @@ function wikiplugin_articles_info() {
 				'required' => false,
 				'name' => tra('Topics expression'),
 				'description' => '[!]topic+topic+topic',
+				'filter' => 'striptags',
 			),
 			'topicId' => array(
 				'required' => false,
 				'name' => tra('Topic ID expression'),
 				'description' => '[!]topicId+topicId+topicId',
+				'filter' => 'striptags',
 			),
 			'type' => array(
 				'required' => false,
 				'name' => tra('Type expression'),
 				'description' => '[!]type+type+type',
+				'filter' => 'striptags',
 			),
 			'categId' => array(
 				'required' => false,
@@ -56,18 +59,56 @@ function wikiplugin_articles_info() {
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
-				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format.'),
+				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")'),
 				'filter' => 'word',
 			),
 			'quiet' => array(
 				'required' => false,
 				'name' => tra('Quiet'),
 				'description' => tra('Whether to not report when there are no articles.'),
+				'filter' => 'alpha',
 			),
 			'titleonly' => array(
 				'required' => false,
 				'name' => tra('Title only'),
-				'description' => tra('Whether to only show the title of the articles.'),
+				'description' => tra('Whether to only show the title of the articles.') . ' (n|y)',
+				'filter' => 'alpha',
+			),
+			'fullbody' => array(
+				'required' => false,
+				'name' => tra('Show body'),
+				'description' => tra('Whether to only show the body of the articles or just the heading.') . ' (n|y)',
+				'filter' => 'alpha',
+			),
+			'start' => array(
+				'required' => false,
+				'name' => tra('Starting article'),
+				'description' => tra('The article number that the list should start with.'),
+				'filter' => 'int',
+			),
+			'dateStart' => array(
+				'required' => false,
+				'name' => tra('Start date'),
+				'description' => tra('Earliest date to select articles from.') . ' (YYYY-MM-DD)',
+				'filter' => 'striptags',
+			),
+			'dateEnd' => array(
+				'required' => false,
+				'name' => tra('End date'),
+				'description' => tra('Latest date to select articles from.') . ' (YYYY-MM-DD)',
+				'filter' => 'striptags',
+			),
+			'overrideDates' => array(
+				'required' => false,
+				'name' => tra('Override Dates'),
+				'description' => tra('Whether obey article type\'s "show before publish" and "show after expiry" settings.') . ' (n|y)',
+				'filter' => 'alpha',
+			),
+			'containerClass' => array(
+				'required' => false,
+				'name' => tra('Container class'),
+				'description' => tra('CSS Class to add to the container DIV.article. (Default="wikiplugin_articles")'),
+				'filter' => 'striptags',
 			),
 		),
 	);
@@ -105,19 +146,39 @@ function wikiplugin_articles($data,$params) {
 	if (!isset($quiet))
 		$quiet = 'n';
 	$smarty->assign_by_ref('quiet', $quiet);
-
+	
+	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
+	$smarty->assign('container_class', $containerClass);
+	
+	if (isset($dateStart)) 	$dateStartTS = strtotime($dateStart);
+	if (isset($dateEnd))	$dateEndTS = strtotime($dateEnd);
+	$dateStartTS = !empty($dateStartTS) ? $dateStartTS : 0;
+	$dateEndTS = !empty($dateEndTS) ? $dateEndTS : 0;
+	
+	if (isset($fullbody) && $fullbody == 'y') {
+		$smarty->assign('fullbody', 'y');
+	} else {
+		$smarty->assign('fullbody', 'n');
+		$fullbody = 'n';
+	}
+	
+	if (!isset($overrideDates))	$overrideDates = 'n';
+	
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, $sort, '', 0, $tikilib->now, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
+	$listpages = $tikilib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, ($overrideDates == 'y'));
  	if ($prefs['feature_multilingual'] == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);
 	}
 
-	for ($i = 0; $i < count($listpages["data"]); $i++) {
+	for ($i = 0, $icount_listpages = count($listpages["data"]); $i < $icount_listpages; $i++) {
 		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
+		if ($fullbody == 'y') {
+			$listpages["data"][$i]["parsed_body"] = $tikilib->parse_data($listpages["data"][$i]["body"]);
+		}
 		$comments_prefix_var='article:';
 		$comments_object_var=$listpages["data"][$i]["articleId"];
 		$comments_objectId = $comments_prefix_var.$comments_object_var;
@@ -126,8 +187,8 @@ function wikiplugin_articles($data,$params) {
 	}
 	global $artlib; require_once ('lib/articles/artlib.php');
 
-         $topics = $artlib->list_topics();
-         $smarty->assign_by_ref('topics', $topics);
+	$topics = $artlib->list_topics();
+	$smarty->assign_by_ref('topics', $topics);
 
 	if (!empty($topic) && !strstr($topic, '!') && !strstr($topic, '+')) {
 		$smarty->assign_by_ref('topic', $topic);
@@ -153,4 +214,3 @@ function wikiplugin_articles($data,$params) {
 	}
 	//return str_replace("\n","",$smarty->fetch('tiki-view_articles.tpl')); // this considers the hour in the header like a link
 }
-?>
