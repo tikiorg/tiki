@@ -819,12 +819,6 @@ class UsersLib extends TikiLib {
 	$res = $result->fetchRow();
 	$user = $res['login'];
 
-	// Temporary escape of the process until the email confirmation gets repaired
-	// In the case the account was created with OpenID, no need to confirm the account
-	// beyond this point.
-	if( !empty( $res['openid_url'] ) && empty( $res['hash'] ) )
-		return array(USER_VALID, $user);
-
 	// next verify the password with every hashes methods
 	if ($prefs['feature_challenge'] == 'n' || empty($response)) {
 	    if ($res['hash'] == md5($user.$pass.trim($res['email']))) // very old method md5(user.pass.email), for compatibility
