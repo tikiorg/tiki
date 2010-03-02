@@ -19,7 +19,8 @@ $jq(document).ready( function() {
 			{extraParams: {'httpaccept': 'text/javascript'},
 			 dataType: "json",
 			 parse: parseAutoJSON,
-			 formatItem: function(row) { return row; }
+			 formatItem: function(row) { return row; },
+			 selectFirst: false
 			});
 });
 {/literal}
