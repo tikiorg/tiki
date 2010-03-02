@@ -99,6 +99,15 @@
               {if $prefs.cms_spellcheck eq 'y'}checked="checked"{/if} />{else}{tr}Not Installed{/tr}{/if}</div>
 	<div class="adminoptionlabel"><label for="articles-spell">{tr}Spell checking{/tr}</label>{if $prefs.feature_help eq 'y'}  {help url="Spellcheck"}{/if}<br /><em>{tr}Requires a separate download{/tr}.</em></div>
 </div>
+			</fieldset>
+			
+			<fieldset>
+				<legend>
+					{tr}Article properties{/tr}
+				</legend>
+				{remarksbox type="tip" title="{tr}Tip{/tr}"}
+					{tr}Give only one value (width or height) to keep the image proportions{/tr}
+				{/remarksbox}
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_cms_templates" id="articles-templates"
@@ -118,8 +127,30 @@
 	<div class="adminoptionlabel"><label for="articles-emails">{tr}Specify notification emails when creating articles{/tr}.</label></div>
 </div>
 <input type="hidden" name="cmsfeatures" />
+			</fieldset>
 
-</fieldset>
+			<fieldset>
+				<legend>
+					{tr}Article properties{/tr}
+				</legend>
+				{remarksbox type="tip" title="{tr}Tip{/tr}"}
+					{tr}Give only one value (width or height) to keep the image proportions{/tr}
+				{/remarksbox}
+				<div class="adminoptionbox">
+					<div class="adminoptionlabel">
+						<label for="article_image_sizex">{tr}Default article image width{/tr}</label>
+						<input size="3" type="text" name="article_image_size_x" id="article_image_sizex" value="{$prefs.article_image_size_x|escape}" />
+					</div>
+				</div>
+
+				<div class="adminoptionbox">
+					<div class="adminoptionlabel">
+						<label for="article_image_sizey">{tr}Default article image height{/tr}</label>
+						<input size="3" type="text" name="article_image_size_y" id="article_image_sizey" value="{$prefs.article_image_size_y|escape}" />
+					</div>
+				</div>
+				<input type="hidden" name="artprops" />
+			</fieldset>
 
 <fieldset><legend>{tr}Import CSV file{/tr}</legend>
 <div class="adminoptionbox">
