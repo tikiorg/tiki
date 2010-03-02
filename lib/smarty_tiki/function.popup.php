@@ -116,7 +116,7 @@ function smarty_function_popup($params, &$smarty)
 		$append .= ',\'' . $trigger . '\'';
 	}
 
-    $retval = $trigger . '="return convertOverlib(this,\''.preg_replace(array("!'!","![\r\n]!"),array("\'",'\r'),$text).'\'';
+	$retval = $trigger . '="return convertOverlib(this,\''.urlencode(TikiLib::htmldecode($text)).'\'';
 	$append = trim($append, ',');
     $retval .= ',[' . $append . ']);"';
 //    if ($trigger == 'onmouseover')
