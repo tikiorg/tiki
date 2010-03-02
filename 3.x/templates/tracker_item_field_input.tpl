@@ -197,7 +197,7 @@
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
 	{if $field_value.description}
-		<span class="trackerplugindesc">{$field_value.description|escape|nl2br}</span><br />
+		<em>{$field_value.description|escape|nl2br}</em><br />
 	{/if}
 	{if $field_value.isMultilingual ne 'y'}
 		{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}

@@ -796,7 +796,7 @@ function wikiplugin_tracker($data, $params) {
 						if ($f['descriptionIsParsed'] == 'y') {
 							$back .= $tikilib->parse_data($f['description']);
 						} else {
-							$back .= '<span class="trackerplugindesc">'.$f['description'].'</span>';
+							$back .= '<i>'.$f['description'].'</i>';
 						}
 					}
 					if (empty($tpl) && empty($wiki)) {
