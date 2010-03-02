@@ -56,7 +56,7 @@ if (isset($_REQUEST['export'])) { // {{{
 } // }}}
 $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : $prefs['wikiHomePage'];
 $ePage = urlencode($page);
-$code = $tikilib->embed_flash(array('movie' => 'files/visorFreemind.swf', 'bgcolor' => '#cccccc', 'width' => 600, 'height' => 500,), '', array('openUrl' => '_blank', 'initLoadFile' => "tiki-mindmap.php?export={$ePage}", 'startCollapsedToLevel' => 1, 'mainNodeShape' => 'bubble',));
+$code = $tikilib->embed_flash(array('movie' => 'files/visorFreemind.swf', 'bgcolor' => '#cccccc', 'width' => 800, 'height' => 800,), '', array('openUrl' => '_blank', 'initLoadFile' => "tiki-mindmap.php?export={$ePage}", 'startCollapsedToLevel' => 1, 'mainNodeShape' => 'bubble',));
 $smarty->assign('mindmap', $code);
 $smarty->assign('page', $page);
 $smarty->assign('mid', 'tiki-mindmap.tpl');
