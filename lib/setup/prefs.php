@@ -892,7 +892,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'registerPasscode' => isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand()),
 		'rememberme' => 'disabled',
 		'remembertime' => 7200,
-		'remembermethod' => '',	// '' = IP based (default) | 'simple' = unique id based
 		'feature_clear_passwords' => 'n',
 		'feature_crypt_passwords' => (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash',
 		'feature_challenge' => 'n',
