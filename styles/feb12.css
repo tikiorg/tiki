@@ -2228,13 +2228,15 @@ div#ajaxLoading {
 table.default thead td,
 table.default tfoot td {
 	font-weight: bold;
-	text-align:	center;
-	background: #F5F5F5;
-	color: #D8D8D8}
+	text-align: center;
+	background: #4179AA;
+	color: #D8D8D8;
+}
 
 table.default td {
 	border: solid 1px #909090;
-	background: #F5F5F5}
+	background: #F5F5F5;
+}
 
 /***** 'Advanced feature' *****/
 
