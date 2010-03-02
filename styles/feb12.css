@@ -1225,6 +1225,10 @@ div#page-bar {
 
 #page-bar span { float: left}
 
+.hrwikibottom {
+	  visibility: hidden;
+}
+
 ul.floatleft {
 	display: block;
 	list-style: none;

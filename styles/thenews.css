@@ -1467,6 +1467,10 @@ div#page-bar {
 	float: left;
 }
 
+.hrwikibottom {
+	  visibility: hidden;
+}
+
 ul.floatleft {
 	display: block;
 	list-style: none;

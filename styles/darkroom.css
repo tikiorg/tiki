@@ -1355,6 +1355,9 @@ div#page-bar {
 	line-height: 150%;
 }
 
+.hrwikibottom {
+	  visibility: hidden;
+}
 
 ul.floatleft {
 	display: block;
