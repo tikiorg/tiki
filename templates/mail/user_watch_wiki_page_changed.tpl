@@ -16,8 +16,9 @@
 {$mail_machine_raw}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&compare=1&oldver={$mail_oldver}&newver={$mail_newver}
 {/if}
 
-{if $mail_hash}{tr}If you don't want to receive these notifications follow this link:{/tr}
-{$mail_machine_raw}/tiki-user_watches.php?hash={$mail_hash}
+{if $watchId}
+	{tr}If you don't want to receive these notifications follow this link:{/tr}
+	{$mail_machine_raw}/tiki-user_watches.php?id={$watchId}
 {/if}
 
 ***********************************************************

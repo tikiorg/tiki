@@ -7,10 +7,8 @@
 {if $mail_action neq 'Delete'}{tr}View the article at:{/tr}
 {$mail_machine_raw}/{$mail_postid|sefurl:article}
 {/if}
-{if $mail_user ne 'admin'}
 
 {tr}If you don't want to receive these notifications follow this link:{/tr}
-{$mail_machine_raw}/tiki-user_watches.php?hash={$mail_hash}
-{/if}
+{$mail_machine_raw}/tiki-user_watches.php?id={$watchId}
 {$mail_data}
 

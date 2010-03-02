@@ -6,7 +6,12 @@
   {include file=tiki-mytiki_bar.tpl}
 {/if}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
+{if $remove_user_watch_error}
+	{remarksbox type="error" title="{tr}Error{/tr}"}{tr}You are not allowed to remove this notification !{/tr}{/remarksbox}
+{else}
+	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
+{/if}
+
 
 {if $add_options|@count > 0}
 <h2>{tr}Add Watch{/tr}</h2>
