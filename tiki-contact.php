@@ -12,7 +12,7 @@ include_once ('lib/userprefs/scrambleEmail.php');
 
 // This feature needs both 'feature_contact' and 'feature_messages' to work
 $access->check_feature(array('feature_contact', 'feature_messages'));
-$access->check_page($user,'contact_anon');
+$access->check_page('anon','contact_anon');
 
 $auto_query_args = array();
 
