@@ -15,6 +15,8 @@ function wikiplugin_img_info() {
 			'src' => array(
 				'required' => false,
 				'name' => tra('Image source'),
+				'type' => 'image',
+				'area' => 'fgal_picker',
 				'description' => tra('Full URL to the image to display. "src", id", "fileId", "attId" or "randomGalleryId" required.'),
 				'filter' => 'url',
 			),
@@ -27,6 +29,8 @@ function wikiplugin_img_info() {
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File ID'),
+				'type' => 'image',
+				'area' => 'fgal_picker_id',
 				'description' => tra('Numeric ID of an image in a File Gallery (or list separated by commas or |).'),
 				'filter' => 'striptags',
 			),
