@@ -30,8 +30,10 @@ $smarty->assign('headtitle', tra('Search'));
 $access->check_feature('feature_search_fulltext');
 $access->check_permission('tiki_p_search');
 
-if (isset($_REQUEST["highlight"]) && !empty($_REQUEST["highlight"])) {
+if (!empty($_REQUEST["highlight"])) {
 	$_REQUEST["words"] = $_REQUEST["highlight"];
+} else if (!empty($_REQUEST['find'])) {
+	$_REQUEST['words'] = $_REQUEST['find'];
 }
 if ($prefs['feature_search_stats'] == 'y') {
 	$searchlib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');
