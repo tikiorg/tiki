@@ -398,14 +398,8 @@ function wikiplugin_tracker($data, $params)
 						$_REQUEST['track'][$fl['fieldId']] = '';
 					} elseif ($flds['data'][$cpt]['type'] == 'f') {
 						$ins_id = 'track_'.$fl['fieldId'];
-						if (isset($_REQUEST[$ins_id.'Day'])) {
-							if (empty($_REQUEST['$ins_id'.'Hour'])) {
-								$_REQUEST['$ins_id'.'Hour'] = 0;
-							}
-							if (empty($_REQUEST['$ins_id'.'Minute'])) {
-								$_REQUEST['$ins_id'.'Minute'] = 0;
-							}
-							$_REQUEST['track'][$fl['fieldId']] = $tikilib->make_time($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"], 0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
+						if (isset($_REQUEST[$ins_id.'Day']) || isset($_REQUEST[$ins_id.'Hour'])) {
+							$_REQUEST['track'][$fl['fieldId']] = $trklib->build_date($_REQUEST, $flds['data'][$cpt], $ins_id);
 						} else {
 							$_REQUEST['track'][$fl['fieldId']] = $tikilib->now;
 						}
@@ -830,6 +824,8 @@ function wikiplugin_tracker($data, $params)
 						$flds['data'][$i]['value'] = $trklib->get_join_values($trackerId, $itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields, ' ', empty($f['options_array'][5])?'':$f['options_array'][5]);
 					} elseif ($f['type'] == 'w') {
 						$trklib->prepare_dynamic_items_list($f, $flds['data']);
+					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {
+						$flds['data'][$i]['value'] = $tikilib->now;
 					}
 				}
 			}
