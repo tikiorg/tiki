@@ -1905,7 +1905,132 @@ class TrackerLib extends TikiLib {
 		return $total;
 	}
 
-	function _describe_category_list($categs) {
+	function dump_tracker_csv($trackerId) {
+		global $tikilib;
+		$tracker_info = $this->get_tracker_options($trackerId);
+		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+		
+		$trackerId = (int)$trackerId;
+		
+		// write out file header
+		session_write_close();
+		$this->write_export_header();
+		
+		// then "field names -- index" as first line
+		$str = '';
+		$str .= 'itemId,status,created,lastModif,';	// these headings weren't quoted in the previous export function
+		if (count($fields['data']) > 0) {
+			foreach ($fields['data'] as $field) {
+				$str .= '"'.$field['name'].' -- '.$field['fieldId'].'",';
+			}
+		}
+		echo $str;
+		
+		// prepare queries
+		$mid = ' WHERE tti.`trackerId` = ? ';
+		$bindvars = array($trackerId);
+		$join = '';
+		
+		$query_items =	'SELECT tti.itemId, tti.status, tti.created, tti.lastModif'
+						.' FROM  `tiki_tracker_items` tti'
+						.$mid
+						.' ORDER BY tti.`itemId` ASC';
+		$query_fields =  'SELECT tti.itemId, ttif.`value`, ttf.`type`'
+						.' FROM ('
+						.' `tiki_tracker_items` tti'
+						.' INNER JOIN `tiki_tracker_item_fields` ttif ON tti.`itemId` = ttif.`itemId`'
+						.' INNER JOIN `tiki_tracker_fields` ttf ON ttf.`fieldId` = ttif.`fieldId`'
+						.')'
+						.$mid
+						.' ORDER BY tti.`itemId` ASC, ttif.`fieldId` ASC';
+		$base_tables = '('
+			.' `tiki_tracker_items` tti'
+			.' INNER JOIN `tiki_tracker_item_fields` ttif ON tti.`itemId` = ttif.`itemId`'
+			.' INNER JOIN `tiki_tracker_fields` ttf ON ttf.`fieldId` = ttif.`fieldId`'
+			.')'.$join;
+	
+						
+		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$mid;
+		$cant = $this->getOne($query_cant, $bindvars);
+		
+		
+		$memory_limit = trim(ini_get('memory_limit'));
+		$last = strtolower($memory_limit{strlen($memory_limit)-1});
+		switch ( $last ) {
+			// The 'G' modifier is available since PHP 5.1.0
+			case 'g': $memory_limit *= 1024;
+			case 'm': $memory_limit *= 1024;
+			case 'k': $memory_limit *= 1024;
+		}
+				
+		$avail_mem = $memory_limit - memory_get_usage(true);
+		$maxrecords_items = intval(($avail_mem - 10 * 1024 * 1025) / 5000);		// depends on size of items table (fixed)
+		$offset_items = 0;
+		
+		$items = $this->get_dump_items_array($query_items, $bindvars, $maxrecords_items, $offset_items);
+		
+		$avail_mem = $memory_limit - memory_get_usage(true);				// update avail after getting first batch of items
+		$maxrecords = (int)($avail_mem / 40000) * count($fields['data']);	// depends on number of fields
+		$canto = $cant * count($fields['data']);
+		$offset = 0;
+		$lastItem = -1;
+		$count = 0; $icount = 0;
+		$field_values = array();
+		
+		// write out rows
+		for ($offset = 0; $offset < $canto; $offset = $offset + $maxrecords) {
+			$field_values = $this->fetchAll($query_fields, $bindvars, $maxrecords, $offset);
+			$mem = memory_get_usage(true);
+			
+			foreach ( $field_values as $res ) {
+				if ($lastItem != $res['itemId']) {
+					$lastItem = $res['itemId'];
+					echo "\n".$items[$lastItem]['itemId'].','.$items[$lastItem]['status'].','.$items[$lastItem]['created'].','.$items[$lastItem]['lastModif'].',';	// also these fields weren't traditionally escaped
+					$count++;
+					$icount++;
+					if ($icount > $maxrecords_items) {
+						$offset_items += $maxrecords_items;
+						$items = $this->get_dump_items_array($query_items, $bindvars, $maxrecords_items, $offset_items);
+						$icount = 0;
+					}
+				}
+				echo '"' . $res['value'] . '",';
+			}
+			ob_flush();
+			flush();
+			//if ($offset == 0) { $maxrecords = 1000 * count($fields['data']); }
+		}
+		echo "\n";
+		ob_end_flush();
+	}
+	
+	function get_dump_items_array($query, $bindvars, $maxrecords, $offset) {
+		$items_array = $this->fetchAll($query, $bindvars, $maxrecords, $offset);
+		$items = array();
+		foreach ($items_array as $item) {
+			$items[$item['itemId']] = $item;
+		}
+		unset($items_array);
+		return $items;
+	}
+
+	function write_export_header() {
+		header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
+		if (!empty($_REQUEST['file'])) {
+			if (preg_match('/.csv$/', $_REQUEST['file'])) {
+				$file = $_REQUEST['file'];
+			} else {
+				$file = $_REQUEST['file'].'.csv';
+			}
+		} else {
+			$file = tra('tracker').'_'.$_REQUEST['trackerId'].'.csv';
+		}
+		header("Content-Disposition: attachment; filename=$file");
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+		header("Pragma: public");
+	}
+		function _describe_category_list($categs) {
 	    global $categlib;
 	    $res = '';
 	    foreach ($categs as $cid) {
