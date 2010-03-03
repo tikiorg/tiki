@@ -2266,8 +2266,10 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler // {{
 	{
 		if( $this->data )
 			return $this->data;
+		$data = $this->obj->getData();
+		$this->replaceReferences($data);
 
-		return $this->data = $this->obj->getData();
+		return $this->data = $data;
 	}
 	
 	function canInstall()
