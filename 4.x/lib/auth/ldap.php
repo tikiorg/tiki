@@ -176,7 +176,7 @@ class TikiLdapLib {
 				break;
 			case 'ol': // openldap
 			default:
-				$this->options['binddn'] = 'cn='.$user.','.$prefs['auth_ldap_userdn'].','.$prefs['auth_ldap_basedn'];
+				$this->options['binddn'] = 'cn='.$user.','.$prefs['auth_ldap_basedn'];
 				break;
 		}
 
