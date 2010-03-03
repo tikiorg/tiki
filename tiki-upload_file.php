@@ -26,6 +26,7 @@ function print_progress($msg) {
 		ob_flush();
 	}
 }
+
 function print_msg($msg, $id) {
 	global $prefs;
 	if ($prefs['javascript_enabled'] == 'y') {
@@ -54,10 +55,12 @@ if (!empty($_REQUEST['fileId'])) {
 } elseif (isset($_REQUEST['galleryId']) && !is_array($_REQUEST['galleryId'])) {
 	$_REQUEST['galleryId'] = array($_REQUEST['galleryId']);
 }
+
 if (isset($_REQUEST['galleryId'][0])) {
 	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST['galleryId'][0]);
 	$tikilib->get_perm_object($_REQUEST['galleryId'][0], 'file gallery', $gal_info, true);
 }
+
 if (empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
@@ -105,6 +108,7 @@ if (!empty($_REQUEST['fileId'])) {
 		die;
 	}
 }
+
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-upload_file", "tiki-download_file", $foo["path"]);
 $smarty->assign('url_browse', $tikilib->httpPrefix() . $foo1);
@@ -127,6 +131,7 @@ if (!empty($_REQUEST['galleryId'][0]) && $prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('groupforalert', $groupforalert);
 	$smarty->assign_by_ref('showeachuser', $showeachuser);
 }
+
 if (isset($_REQUEST['fileId'])) {$editFileId = $_REQUEST['fileId'];} else {$editFileId = 0;}
 $editFile = false;
 if (!empty($editFileId)) {
@@ -203,13 +208,97 @@ if (isset($_REQUEST["upload"])) {
 				$errors[] = $error;
 				continue;
 			}
+
+			$size = $_FILES["userfile"]['size'][$key];
+			$type = $_FILES["userfile"]['type'][$key];
+			$name = stripslashes($_FILES["userfile"]['name'][$key]);
+
 			$file_name = $_FILES["userfile"]["name"][$key];
 			$file_tmp_name = $_FILES["userfile"]["tmp_name"][$key];
 			$tmp_dest = $prefs['tmpDir'] . "/" . $file_name . ".tmp";
-			if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
-				$errors[] = tra('Errors detected');
-				continue;
+
+			// Handle per gallery image size limits
+			$ratio = 0;
+			list(,$subtype)=explode('/',strtolower($type));
+			// If it's an image format we can handle and gallery has limits on image sizes
+			if ( (in_array($subtype, array("jpg","jpeg","gif","png","bmp","wbmp"))) 
+				&& ( ($gal_info["image_max_size_x"]) || ($gal_info["image_max_size_y"]) && (!$podCastGallery) ) ) {
+				$image_size_info = getimagesize($file_tmp_name);
+				$image_x = $image_size_info[0];
+				$image_y = $image_size_info[1];
+				if($gal_info["image_max_size_x"]) {
+					$rx=$image_x/$gal_info["image_max_size_x"];
+				}else{
+					$rx=0;
+				}
+				if($gal_info["image_max_size_y"]) {
+					$ry=$image_y/$gal_info["image_max_size_y"];
+				}else{
+					$ry=0;
+				}
+				$ratio=max($rx,$ry);
+				if($ratio>1) {	// Resizing will occur
+					$image_new_x=$image_x/$ratio;
+					$image_new_y=$image_y/$ratio;
+					$resized_file = $tmp_dest;
+					$image_resized_p = imagecreatetruecolor($image_new_x, $image_new_y);
+					switch($subtype) {
+						case "gif":
+							$image_p = imagecreatefromgif($file_tmp_name);
+							break;
+						case "png":
+							$image_p = imagecreatefrompng($file_tmp_name);
+							break;
+						case "bmp":
+						case "wbmp":
+							$image_p = imagecreatefromwbmp($file_tmp_name);
+							break;
+						case "jpg":
+						case "jpeg":
+							$image_p = imagecreatefromjpeg($file_tmp_name);
+							break;
+					}
+					if(!imagecopyresampled($image_resized_p, $image_p, 0, 0, 0, 0, $image_new_x, $image_new_y, $image_x, $image_y)) {
+						$errors[] = tra('Cannot resize the file:') . ' ' . $resized_file;
+					}
+					switch($subtype) {
+						case "gif":
+							if (!imagegif($image_resized_p, $resized_file)){
+								$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
+							}
+							break;
+						case "png":
+							if (!imagepng($image_resized_p, $resized_file)){
+								$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
+							}
+							break;
+						case "bmp":
+						case "wbmp":
+							if (!image2wbmp($image_resized_p, $resized_file)){
+								$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
+							}
+							break;
+						case "jpg":
+						case "jpeg":
+							if (!imagejpeg($image_resized_p, $resized_file)){
+								$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
+							}
+							break;
+					}
+					unlink($image_p);
+					$feedback_message = sprintf(tra('Image was reduced: %s x %s -> %s x %s'),$image_x, $image_y, (int)$image_new_x, (int)$image_new_y);
+					$size = filesize($resized_file);
+				}
 			}
+
+			if ($ratio <=1) {
+				// No resizing
+				if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+					$errors[] = tra('Errors detected');
+					continue;
+				}
+			}
+
 			$fp = fopen($tmp_dest, "rb");
 			if (!$fp) {
 				$errors[] = tra('Cannot read file:') . ' ' . $tmp_dest;
@@ -259,9 +348,7 @@ if (isset($_REQUEST["upload"])) {
 				fclose($fw);
 				$data = '';
 			}
-			$size = $_FILES["userfile"]['size'][$key];
-			$name = stripslashes($_FILES["userfile"]['name'][$key]);
-			$type = $_FILES["userfile"]['type'][$key];
+
 			if (preg_match('/.flv$/', $name)) {
 				$type = "video/x-flv";
 			}
@@ -276,11 +363,12 @@ if (isset($_REQUEST["upload"])) {
 					$errors[] = tra('Warning: Empty file:') . ' ' . $name . '. ' . tra('Please re-upload your file');
 				}
 			}
+
 			if (empty($_REQUEST['name'][$key])) $_REQUEST['name'][$key] = $name;
 			if (empty($_REQUEST['user'][$key])) $_REQUEST['user'][$key] = $user;
 			if (!isset($_REQUEST['description'][$key])) $_REQUEST['description'][$key] = '';
 			if (empty($_REQUEST['author'][$key])) $_REQUEST['author'][$key] = $user;
-			
+
 			$fileInfo['filename'] = $file_name;
 			if (isset($data)) {
 				if ($editFile) {
@@ -331,6 +419,7 @@ if (isset($_REQUEST["upload"])) {
 						$smarty->assign("fileId", $aux['fileId']);
 						$smarty->assign("dllink", $aux['dllink']);
 						$smarty->assign("nextFormId", $_REQUEST['formId'] + 1);
+						$smarty->assign("feedback_message",$feedback_message);
 						print_progress($smarty->fetch("tiki-upload_file_progress.tpl"));
 					}
 				}

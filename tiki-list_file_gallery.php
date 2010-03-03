@@ -269,6 +269,8 @@ if (isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode']) {
 		$smarty->assign_by_ref('parentId', $gal_info['parentId']);
 		$smarty->assign_by_ref('creator', $gal_info['user']);
 		$smarty->assign('max_desc', $gal_info['max_desc']);
+
+
 		if (isset($gal_info['sort_mode']) && preg_match('/(.*)_(asc|desc)/', $gal_info['sort_mode'], $matches)) {
 			$smarty->assign('sortorder', $matches[1]);
 			$smarty->assign('sortdirection', $matches[2]);
@@ -335,7 +337,7 @@ if (isset($_REQUEST['edit'])) {
 		}
 	}
 	// Everything is ok so we proceed to edit the file or gallery
-	$request_vars = array('name', 'fname', 'description', 'fdescription', 'max_desc', 'fgal_type', 'maxRows', 'rowImages', 'thumbSizeX', 'thumbSizeY', 'parentId', 'creator', 'quota');
+	$request_vars = array('name', 'fname', 'description', 'fdescription', 'max_desc', 'fgal_type', 'maxRows', 'rowImages', 'thumbSizeX', 'thumbSizeY', 'parentId', 'creator', 'quota', 'image_max_size_x', 'image_max_size_y');
 	foreach($request_vars as $v) {
 		if (isset($_REQUEST[$v])) {
 			$smarty->assign_by_ref($v, $_REQUEST[$v]);
@@ -363,7 +365,45 @@ if (isset($_REQUEST['edit'])) {
 			die;
 		}
 		$old_gal_info = $filegallib->get_file_gallery_info($galleryId);
-		$gal_info = array('galleryId' => $galleryId, 'name' => $_REQUEST['name'], 'description' => $_REQUEST['description'], 'user' => $_REQUEST['user'], 'maxRows' => $_REQUEST['maxRows'], 'public' => $public, 'visible' => $visible, 'show_id' => $_REQUEST['fgal_list_id'], 'show_icon' => $_REQUEST['fgal_list_type'], 'show_name' => $_REQUEST['fgal_list_name'], 'show_size' => $_REQUEST['fgal_list_size'], 'show_description' => $_REQUEST['fgal_list_description'], 'show_created' => $_REQUEST['fgal_list_created'], 'show_hits' => $_REQUEST['fgal_list_hits'], 'show_lastDownload' => $_REQUEST['fgal_list_lastDownload'], 'max_desc' => $_REQUEST['max_desc'], 'type' => $_REQUEST['fgal_type'], 'parentId' => $_REQUEST['parentId'], 'lockable' => $lockable, 'show_lockedby' => $_REQUEST['fgal_list_lockedby'], 'archives' => $_REQUEST['archives'], 'sort_mode' => $_REQUEST['sortorder'] . '_' . $_REQUEST['sortdirection'], 'show_modified' => $_REQUEST['fgal_list_lastModif'], 'show_creator' => $_REQUEST['fgal_list_creator'], 'show_author' => $_REQUEST['fgal_list_author'], 'subgal_conf' => $_REQUEST['subgal_conf'], 'show_last_user' => $_REQUEST['fgal_list_last_user'], 'show_comment' => $_REQUEST['fgal_list_comment'], 'show_files' => $_REQUEST['fgal_list_files'], 'show_explorer' => (isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n'), 'show_path' => (isset($_REQUEST['fgal_show_path']) ? 'y' : 'n'), 'show_slideshow' => (isset($_REQUEST['fgal_show_slideshow']) ? 'y' : 'n'), 'default_view' => $_REQUEST['fgal_default_view'], 'quota' => $_REQUEST['quota'], 'backlinkPerms' => isset($_REQUEST['backlinkPerms'])? 'y': 'n', 'show_backlinks'=> $_REQUEST['fgal_list_backlinks']);
+		$gal_info = array('galleryId' => $galleryId,
+			'name' => $_REQUEST['name'],
+			'description' => $_REQUEST['description'],
+			'user' => $_REQUEST['user'],
+			'maxRows' => $_REQUEST['maxRows'],
+			'public' => $public,
+			'visible' => $visible,
+			'show_id' => $_REQUEST['fgal_list_id'],
+			'show_icon' => $_REQUEST['fgal_list_type'],
+			'show_name' => $_REQUEST['fgal_list_name'],
+			'show_size' => $_REQUEST['fgal_list_size'],
+			'show_description' => $_REQUEST['fgal_list_description'],
+			'show_created' => $_REQUEST['fgal_list_created'],
+			'show_hits' => $_REQUEST['fgal_list_hits'],
+			'show_lastDownload' => $_REQUEST['fgal_list_lastDownload'],
+			'max_desc' => $_REQUEST['max_desc'],
+			'type' => $_REQUEST['fgal_type'],
+			'parentId' => $_REQUEST['parentId'],
+			'lockable' => $lockable,
+			'show_lockedby' => $_REQUEST['fgal_list_lockedby'],
+			'archives' => $_REQUEST['archives'],
+			'sort_mode' => $_REQUEST['sortorder'] . '_' . $_REQUEST['sortdirection'],
+			'show_modified' => $_REQUEST['fgal_list_lastModif'],
+			'show_creator' => $_REQUEST['fgal_list_creator'],
+			'show_author' => $_REQUEST['fgal_list_author'],
+			'subgal_conf' => $_REQUEST['subgal_conf'],
+			'show_last_user' => $_REQUEST['fgal_list_last_user'],
+			'show_comment' => $_REQUEST['fgal_list_comment'],
+			'show_files' => $_REQUEST['fgal_list_files'],
+			'show_explorer' => (isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n'),
+			'show_path' => (isset($_REQUEST['fgal_show_path']) ? 'y' : 'n'),
+			'show_slideshow' => (isset($_REQUEST['fgal_show_slideshow']) ? 'y' : 'n'),
+			'default_view' => $_REQUEST['fgal_default_view'],
+			'quota' => $_REQUEST['quota'],
+			'image_max_size_x' => $_REQUEST['image_max_size_x'],
+			'image_max_size_y' => $_REQUEST['image_max_size_y'],
+			'backlinkPerms' => isset($_REQUEST['backlinkPerms'])? 'y': 'n',
+			'show_backlinks'=> $_REQUEST['fgal_list_backlinks']
+		);
 		if ($prefs['fgal_show_slideshow'] != 'y') {
 			$gal_info['show_slideshow'] = $old_gal_info['show_slideshow'];
 		}
@@ -401,10 +441,16 @@ if (isset($_REQUEST['edit'])) {
 		$smarty->assign('edit_mode', 'y');
 	}
 }
+
 // Process duplication of a gallery
 if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['galleryId'])) {
 	check_ticket('fgal');
-	$newGalleryId = $filegallib->duplicate_file_gallery($galleryId, $_REQUEST['name'], isset($_REQUEST['description']) ? $_REQUEST['description'] : '');
+	$newGalleryId = $filegallib->duplicate_file_gallery(
+		$galleryId,
+		$_REQUEST['name'],
+		isset($_REQUEST['description']) ? $_REQUEST['description'] : ''
+	);
+
 	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $prefs['feature_categories'] == 'y') {
 		global $categlib;
 		include_once ('lib/categories/categlib.php');
