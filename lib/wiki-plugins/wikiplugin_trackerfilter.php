@@ -66,7 +66,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	$listfields = wikiplugin_trackerFilter_split_filters($filters);
 	foreach ($listfields as $i=>$f) {
 		if (strchr($f, '/')) {
-			list($fieldId, $format) = split('/',$f);
+			list($fieldId, $format) = explode('/',$f);
 			$listfields[$i] = $fieldId;
 			$formats[$fieldId] = $format;
 		} else {
