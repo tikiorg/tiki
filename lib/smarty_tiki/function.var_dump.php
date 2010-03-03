@@ -17,23 +17,32 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 /**
  * \brief Smarty plugin to add variable dump to debug console log
- * Usage format {var_dump var=var_name_2_dump}
+ * Usage format {var_dump var="var_name_2_dump"}
+ * 
+ * Adapted to do more than string for tiki 5
  */
 function smarty_function_var_dump($params, &$smarty)
 {
-  global $debugger;
-  require_once('lib/debug/debugger.php');
-  //
-  $v = $params['var'];
-  if (strlen($v) != 0)
-  {
-    $tmp = $smarty->get_template_vars();
-    if (is_array($tmp) && isset($tmp["$v"]))
-      $debugger->msg("Smarty var_dump(".$v.') = '.print_r($tmp[$v], true));
-    else
-      $debugger->msg("Smarty var_dump(".$v."): Variable not found");
-  }
-  else
-    $debugger->msg("Smarty var_dump: Parameter 'var' not specified");
-  return '<!-- var_dump('.$v.') -->';
+	global $debugger, $smarty;
+	require_once('lib/debug/debugger.php');
+	//
+	$v = $params['var'];
+	if (!empty($v)) {
+		$tmp = $smarty->get_template_vars();
+		if (is_array($tmp) && isset($tmp["$v"])) {
+			if (is_string($tmp[$v])) {
+				$debugger->msg("Smarty var_dump(".$v.') = '.print_r($tmp[$v], true));
+			} else {
+				ob_start();
+				var_dump($tmp[$v]);
+				$d = ob_get_clean();
+				$debugger->msg("Smarty var_dump(".$v.') = '. $d);
+			}
+		} else {
+			$debugger->msg("Smarty var_dump(".$v."): Variable not found");
+		}
+	} else {
+		$debugger->msg("Smarty var_dump: Parameter 'var' not specified");
+	}
+	return '<!-- var_dump('.$v.') -->';
 }

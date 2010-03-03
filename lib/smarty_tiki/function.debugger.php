@@ -58,7 +58,7 @@ function smarty_function_debugger($params, &$smarty) {
 		//       but it is quite suitable for
 		foreach ($tabs_list as $tname => $tcode) {
 			// Generate href code for current button
-			$href = 'javascript:';
+			$href = '';
 		
 			foreach ($tabs_list as $tn => $t)
 				$href .= (($tn == $tname) ? 'show' : 'hide') . "('" . md5($tn). "');";
@@ -67,7 +67,7 @@ function smarty_function_debugger($params, &$smarty) {
 			$tabs[] = array(
 				"button_caption" => $tname,
 				"tab_id" => md5($tname),
-				"button_href" => $href,
+				"button_href" => $href . 'return false;',
 				"tab_code" => $tcode
 			);
 		}

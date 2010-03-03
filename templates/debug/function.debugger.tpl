@@ -39,7 +39,7 @@
     <td>
 			{assign var=thistabshref value=$tabs[i].button_href}
 			{assign var=thistabscaption value=$tabs[i].button_caption}
-			{button href=$thistabshref _text=$thistabscaption}
+			{button _onclick=$thistabshref _text=$thistabscaption _ajax="n"}
     </td>
   {/section}
   </tr></table>
