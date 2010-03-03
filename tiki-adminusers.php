@@ -182,7 +182,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
         $AddUser= true;;
 	check_ticket('admin-users');
         // if email validation set check if email addr is set   
-	if (isset($_REQUEST['need_email_validation']) &&
+	if ($prefs["login_is_email"] != 'y' && isset($_REQUEST['need_email_validation']) &&
 		 empty($_REQUEST['email'])) {
 		$errors[] = array(
 			'num' => 1,
