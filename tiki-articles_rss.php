@@ -7,6 +7,7 @@
 
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
+require_once ('lib/articles/artlib.php');
 require_once ('lib/rss/rsslib.php');
 
 $access->check_feature('feature_articles');
@@ -80,7 +81,7 @@ if ($output["data"]=="EMPTY") {
 	$tmp = $prefs['desc_rss_'.$feed];
 	if ($desc<>'') $desc = $tmp;
 
-	$changes = $tikilib -> list_articles(0, $prefs['max_rss_articles'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', '', '', '', $articleLang);
+	$changes = $artlib -> list_articles(0, $prefs['max_rss_articles'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', '', '', '', $articleLang);
 	$tmp = array();
 	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data)  {
