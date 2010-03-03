@@ -225,14 +225,9 @@ if ($isvalid) {
 		$url = $_SESSION['loginfrom'];
 		$logslib->add_log('login', 'logged from ' . $url);
 		// Special '?page=...' case. Accept only some values to avoid security problems
-		switch ($_REQUEST['page']) {
-			case 'tikiIndex':
-				$url = $ {
-						$_REQUEST['page']
-				};
-				break;
-
-			default:
+		if ( isset($_REQUEST['page']) and $_REQUEST['page'] === 'tikiIndex') {
+				$url = ${$_REQUEST['page']};
+		} else {	
 				if (!empty($_REQUEST['url'])) {
 					global $cachelib; include_once('lib/cache/cachelib.php');
 					preg_match('/(.*)\?cache=(.*)/', $_REQUEST['url'], $matches);
