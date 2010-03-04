@@ -344,6 +344,7 @@ $daysnames = array();
 $daysnames_abr = array();
 if ($firstDayofWeek == 0) {
 	$daysnames[] = tra("Sunday");
+	$daysnames_abr[] = tra('Su');
 }
 
 array_push($daysnames, 
@@ -360,11 +361,11 @@ array_push($daysnames_abr,
 	tra("We"),
 	tra("Th"),
 	tra("Fr"),
-	tra("Sa"),
-	tra("Su")
+	tra("Sa")
 );
 if ($firstDayofWeek != 0) {
 	$daysnames[] = tra("Sunday");
+	$daysnames_abr[] = tra('Su');
 }
 $weeks = array();
 $cell = array();
