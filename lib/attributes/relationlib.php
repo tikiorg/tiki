@@ -52,6 +52,8 @@ class RelationLib extends TikiDb_Bridge
 			$this->query( 'INSERT INTO `tiki_object_relations` (`relation`, `source_type`, `source_itemId`, `target_type`, `target_itemId`) VALUES(?,?,?,?,?)', $data );
 
 			return $this->lastInsertId();
+		} else {
+			return 0;	
 		}
 	}
 
