@@ -211,9 +211,6 @@
 
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
-	{if $field_value.description}
-		<span class="trackerplugindesc">{$field_value.description|escape|nl2br}</span><br />
-	{/if}
 	{if $field_value.isMultilingual ne 'y'}
 		{if $field_value.options_array[0] eq 1}
     		{toolbars qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId section="trackers"}

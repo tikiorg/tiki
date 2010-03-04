@@ -429,7 +429,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </select>
 
 {/if}
-{if $field_value.type ne 'a' and $field_value.type ne 'S'}
+{if $field_value.type ne 'S'}
 {if $field_value.description}
 <br />{if $field_value.descriptionIsParsed eq 'y'}{wiki}{$field_value.description}{/wiki}{else}<em>{$field_value.description|escape}</em>{/if}
 {/if}
