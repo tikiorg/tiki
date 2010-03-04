@@ -192,7 +192,7 @@ span.button input,
 	outline: none;*/
 	
 border: 1px solid #d3d3d3;
-background: #e6e6e6 url(../lib/jquery/jquery-ui/themes/base/images/?new=e6e6e6&w=1&h=400&f=png&q=100&fltr[]=over|textures/02_glass.png|0|0|75) 50% 50% repeat-x;
+background: #e6e6e6 url(../lib/jquery/jquery-ui/themes/base/images/textures/02_glass.png|0|0|75) 50% 50% repeat-x;
 font-weight: normal;
 color: #555555;
 outline: none; 
@@ -212,7 +212,7 @@ span.button input:hover,
 	margin: .5em .4em .5em 0;
 /*	padding: .2em .6em .3em .6em;*/
 	border: 1px solid #999999;
-	background: #dadada url(../lib/jquery/jquery-ui/themes/base/images/?new=dadada&w=1&h=400&f=png&q=100&fltr[]=over|textures/02_glass.png|0|0|75) 50% 50% repeat-x; font-weight: normal; color: #212121; outline: none;}
+	background: #dadada url(../lib/jquery/jquery-ui/themes/base/images/textures/02_glass.png|0|0|75) 50% 50% repeat-x; font-weight: normal; color: #212121; outline: none;}
 	
 .button a:active,
 button:active,
@@ -230,7 +230,7 @@ span.highlight a:visited {
 span.highlight a {
 	border: /*spanhighlighta_border*/;
 	color: /*spanhighlightacolor*/;
-border: 1px solid #fcefa1; background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/?new=fbf9ee&w=1&h=400&f=png&q=100&fltr[]=over|textures/02_glass.png|0|0|55) 50% 50% repeat-x; color: #363636;
+border: 1px solid #fcefa1; background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/textures/02_glass.png|0|0|55) 50% 50% repeat-x; color: #363636;
 }
 
 span.button.highlight {
@@ -240,7 +240,7 @@ span.button.highlight {
 span.button.highlight a {
 	background: /*spanbuttonhighlighta_background*/;
 	color: /*spanbuttonhighlightaba_color*/;
-border: 1px solid #fcefa1; background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/?new=fbf9ee&w=1&h=400&f=png&q=100&fltr[]=over|textures/02_glass.png|0|0|55) 50% 50% repeat-x; color: #363636;
+border: 1px solid #fcefa1; background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/textures/02_glass.png|0|0|55) 50% 50% repeat-x; color: #363636;
 
 }
 
@@ -489,7 +489,7 @@ h3.box-title,
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
 	-moz-background-origin:padding;
-	background: #FBF9EE url(../lib/jquery/jquery-ui/themes/base/images/?new=fbf9ee&w=1&h=400&f=png&q=100&fltr[]=over|textures/02_glass.png|0|0|55) repeat-x scroll 50% 50%;
+	background: #FBF9EE url(../lib/jquery/jquery-ui/themes/base/images/textures/02_glass.png|0|0|55) repeat-x scroll 50% 50%;
 	border: 1px solid #FCEFA1;
 	color: #363636;
 }
@@ -516,7 +516,7 @@ div.errors {
 .errors .rbox-title,
 .errors .rbox-data {
 	color: #cd0a0a;
-	background:#FEF1EC url(../lib/jquery/jquery-ui/themes/base/images/?new=fef1ec&w=1&h=100&f=png&q=100&fltr[]=over|textures/05_inset_soft.png|0|0|95) repeat-x scroll 50% bottom;
+	background:#FEF1EC url(../lib/jquery/jquery-ui/themes/base/images/textures/05_inset_soft.png|0|0|95) repeat-x scroll 50% bottom;
 	border:1px solid #CD0A0A;
 }
 
