@@ -580,7 +580,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					} else {
 						if (strstr($url, 'itemId')) {
-							$url = str_replace('itemId=?', 'itemId='.$rid, $url);
+							$url = str_replace('itemId', 'itemId='.$rid, $url);
 						}
 						header("Location: $url");
 						die;
