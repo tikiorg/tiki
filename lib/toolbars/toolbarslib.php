@@ -1551,12 +1551,12 @@ class ToolbarSheet extends Toolbar
 			case 'addrow':
 				$label = tra('Add Row');
 				$icon = tra('pics/icons/sheet_row_add.png');
-				$syntax = 'jS.addRow(true);';	// add row after current or at end if none selected
+				$syntax = 'jS.controlFactory.addRow(true);';	// add row after current or at end if none selected
 				break;
 			case 'addrowmulti':
 				$label = tra('Add Multi-Rows');
 				$icon = tra('pics/icons/sheet_row_add_multi.png');
-				$syntax = 'jS.addRowMulti();';
+				$syntax = 'jS.controlFactory.addRowMulti();';
 				break;
 			case 'deleterow':
 				$label = tra('Delete Row');
@@ -1566,7 +1566,7 @@ class ToolbarSheet extends Toolbar
 			case 'addcolumn':
 				$label = tra('Add Column');
 				$icon = tra('pics/icons/sheet_col_add.png');
-				$syntax = 'jS.addColumn(true);';	// add col after current or at end if none selected
+				$syntax = 'jS.controlFactory.addColumn(true);';	// add col after current or at end if none selected
 				break;
 			case 'deletecolumn':
 				$label = tra('Delete Column');
@@ -1576,7 +1576,7 @@ class ToolbarSheet extends Toolbar
 			case 'addcolumnmulti':
 				$label = tra('Add Multi-Columns');
 				$icon = tra('pics/icons/sheet_col_add_multi.png');
-				$syntax = 'jS.addColumnMulti();';
+				$syntax = 'jS.controlFactory.addColumnMulti();';
 				break;
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');
