@@ -6158,6 +6158,9 @@ class TikiLib extends TikiDb_Bridge
 				$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
 			}
 			$rel='external';
+			if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
+				$rel .= ' nofollow';
+			}
 		}
 
 		// The (?<!\[) stuff below is to give users an easy way to
@@ -6168,9 +6171,6 @@ class TikiLib extends TikiDb_Bridge
 			//use of urlencode for using cached versions of dynamic sites
 			$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
 
-			//$link2 = str_replace("/","\/",$link);
-			//$link2 = str_replace("?","\?",$link2);
-			//$link2 = str_replace("&","\&",$link2);
 			$link2 = str_replace("/", "\/", preg_quote($link));
 			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; //< last param expected here is always nocache
 			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
@@ -6186,9 +6186,6 @@ class TikiLib extends TikiDb_Bridge
 			$pattern = "/(?<!\[)\[$link2\]/";
 			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
 		} else {
-			//$link2 = str_replace("/","\/",$link);
-			//$link2 = str_replace("?","\?",$link2);
-			//$link2 = str_replace("&","\&",$link2);
 			$link2 = str_replace("/", "\/", preg_quote($link));
 			$data = str_replace("|nocache", "", $data);
 

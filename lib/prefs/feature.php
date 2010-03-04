@@ -708,6 +708,11 @@ function prefs_feature_list() {
 			'name' => tra('External link icon'),
 			'type' => 'flag',
 		),
+		'feature_wiki_ext_rel_nofollow' => array(
+			'name' => tra('Add "rel=nofollow" on external links'),
+			'description' => tra("nofollow is used to instruct some search engines that links should not influence search engines. It can reduce search engine spam and prevent 'spamdexing'"),
+		'type' => 'flag',
+		),
 		'feature_semantic' => array(
 			'name' => tra('Semantic links'),
 			'description' => tra('Going beyond Backlinks, allows to define some semantic relationships between wiki pages'),
