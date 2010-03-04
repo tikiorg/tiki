@@ -101,7 +101,16 @@
 						</td>
 						<td valign="top">
 					{/if}
-					<div class="articleheadingtext">{$parsed_heading}</div>
+					<div class="articleheadingtext">
+						{if $article_attributes}
+						<div class="articleattributes">
+							{foreach from=$article_attributes key=attname item=attvalue}
+							{tr}{$attname|escape}{/tr}: {$attvalue|escape}<br />
+							{/foreach}
+						</div>
+						{/if}
+						{$parsed_heading}
+					</div>
 				</td>
 			</tr>
 		</table>

@@ -115,6 +115,19 @@ if( $prefs['article_paginate'] == 'y' ) {
 	// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
 	$tikilib->replace_preparse($article_data["body"], $preparsed, $noparsed);
 }
+if ($prefs["article_custom_attributes"] == 'y') {
+	$t_article_attributes = $artlib->get_article_attributes($article_data["articleId"]);
+	$type_attributes = $artlib->get_article_type_attributes($article_data["type"]);
+	$article_attributes = array();
+	foreach ($type_attributes as $attname => $att) {
+		if (in_array($att["itemId"], array_keys($t_article_attributes))) {
+			$article_attributes[$attname] = $t_article_attributes[$att["itemId"]];
+		}
+	} 
+	$smarty->assign('article_attributes', $article_attributes);
+} else {
+	$smarty->assign('article_attributes', array());
+}
 $smarty->assign('body', $article_data["body"]);
 $smarty->assign('publishDate', $article_data["publishDate"]);
 $smarty->assign('expireDate', $article_data["expireDate"]);
