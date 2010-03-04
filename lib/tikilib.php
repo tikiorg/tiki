@@ -7877,7 +7877,7 @@ class TikiLib extends TikiDb_Bridge
 				if( preg_match("/^\[([A-Z0-9]+)\]/",$line,$r) ) {
 					$var = strtolower($r[1]);
 				}
-				if (isset($var) and (preg_match("/^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)/",$line,$s))) {
+				if (isset($var) and (preg_match("/^([-_\/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)/",$line,$s))) {
 					$back[$var][trim($s[1])] = trim($s[2]);
 				}
 			}
