@@ -12,7 +12,7 @@
 function wikiplugin_tracker_help()
 {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user|page, tpl=x.tpl,wiki=page,newstatus=o|p|c, itemId=, colwidth=##|##%)}Thank you for submitting this information{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, reset=reset, view=user|page, tpl=x.tpl,wiki=page,newstatus=o|p|c, itemId=, colwidth=##|##%)}Thank you for submitting this information{TRACKER}~/np~";
 	return $help;
 }
 
@@ -103,6 +103,11 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Preview'),
 				'description' => tra('preview'),
+			),
+			'reset' => array(
+				'required' => false,
+				'name' => tra('Reset'),
+				'description' => tra('Label for the reset button, to return all fields to their default values.'),
 			),
 			'view' => array(
 				'required' => false,
@@ -237,6 +242,13 @@ function wikiplugin_tracker($data, $params)
 		}
 	} else {
 		unset($_REQUEST['tr_preview']);
+	}
+	if (isset($reset)) {
+		if (empty($reset)) {
+			$reset = 'reset';
+		}
+	} else {
+		unset($_REQUEST['tr_reset']);
 	}
 	if (!isset($showmandatory)) {
 		$showmandatory = 'y';
@@ -946,6 +958,10 @@ function wikiplugin_tracker($data, $params)
 				$back .= '</div>';
 			}
 			$back .= '<div class="input_submit_container">';
+			
+			if (!empty($reset)) {
+				$back .= "<input class='button submit preview' type='reset' name='tr_reset' value='".tra($reset)."' />";
+			}
 			if (!empty($preview)) {
 				$back .= "<input class='button submit preview' type='submit' name='tr_preview' value='".tra($preview)."' />";
 			}
