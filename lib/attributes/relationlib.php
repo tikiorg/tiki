@@ -64,6 +64,7 @@ class RelationLib extends TikiDb_Bridge
 
 	function remove_relation( $id ) {
 		$this->fetchAll( 'DELETE FROM `tiki_object_relations` WHERE `relationId` = ?', array( $id ) );
+		$this->fetchAll( 'DELETE FROM `tiki_object_attributes` WHERE type = "relation" and `itemId` = ?', array( $id ) );
 	}
 
 	private function apply_relation_condition( $relation, & $cond, & $vars ) {
