@@ -433,6 +433,19 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	$cat_href = "tiki-read_article.php?articleId=" . $cat_objid;
 	include_once("categorize.php");
 	include_once ("freetag_apply.php");
+	// Add attributes
+	if ($prefs["article_custom_attributes"] == 'y') {
+		 $valid_att = $artlib->get_article_type_attributes($_REQUEST["type"]);
+		 $attributeArray = array();
+		 foreach ($valid_att as $att) {
+		 	// need to convert . to _ for matching
+		 	$toMatch = str_replace('.', '_', $att["itemId"]);
+		 	if (isset($_REQUEST[$toMatch])) {
+		 		$attributeArray[$att["itemId"]] = $_REQUEST[$toMatch];
+		 	}	
+		 }
+		 $artlib->set_article_attributes($artid, $attributeArray);
+	}
 	// Remove image cache because image may have changed, and we
 	// don't want to show the old image
 	@$artlib->delete_image_cache("article",$_REQUEST["id"]);
@@ -452,6 +465,23 @@ $smarty->assign_by_ref('topics', $topics);
 
 // get list of valid types
 $types = $artlib->list_types_byname();
+if ($prefs["article_custom_attributes"] == 'y') {
+	$article_attributes = $artlib->get_article_attributes($_REQUEST["articleId"]);	
+	$smarty->assign('article_attributes', $article_attributes);
+	$all_attributes = array();
+	foreach($types as &$t) {
+		// javascript needs htmlid to show/hide to be properties of basic array
+		$type_attributes = $artlib->get_article_type_attributes($t["type"]);
+		$all_attributes = array_merge($all_attributes, $type_attributes);
+		foreach ($type_attributes as $att) {
+			$htmlid = str_replace('.','_',$att['itemId']);
+			$t[$htmlid] = 'y';
+			$js_string .= "'$htmlid', 'y', ";
+		}
+	}
+	$smarty->assign('all_attributes', $all_attributes);	
+	$headerlib->add_js("articleCustomAttributes = new Array(); articleCustomAttributes = [$js_string];");
+}
 $smarty->assign_by_ref('types', $types);
 
 if ($prefs['feature_cms_templates'] == 'y' && $tiki_p_use_content_templates == 'y') {

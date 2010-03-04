@@ -51,12 +51,13 @@ class ArtLib extends TikiLib
 			$data["image_size"], $data["image_type"], $data["image_data"], $data["heading"], $data["body"], $data["publishDate"], $data["expireDate"],
 			$data["author"], 0, $data["image_x"], $data["image_y"], $data["type"],  $data["topline"],  $data["subtitle"],  $data["linkto"],  $data["image_caption"],  
 			$data["lang"], $data["rating"], $data['isfloat']);
+		$this->transfer_attributes_from_submission($subId, $articleId);
 		$this->remove_submission($subId);
 		global $prefs;
 		if ($prefs['feature_categories'] == 'y') {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$categlib->approve_submission($subId, $articleId);
-		}
+		} 
 		$query = 'update `tiki_objects` set `href`=?, `type`=? where `href`=?';
 		$this->query($query, array("'tiki-read_article.php?articleId=$articleId", 'article', "tiki-edit_submission.php?subId=$subId"));
 
@@ -557,6 +558,9 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 	function remove_type($type) {
 		$query = "delete from `tiki_article_types` where `type`=?";
 		$result = $this->query($query,array($type));
+		// remove attributes set for this type too
+		$query = "delete from `tiki_object_relations` where `source_type` = 'articletype' and `source_itemId`=?";
+		$result = $this->query($query,array($type));
 	}
 
 	function get_type($type) {
@@ -1050,6 +1054,104 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 		$result = $this->query($query, array((int) $id));
 		$res = $result->fetchRow();
 		return $res;
+	}
+	
+	function add_article_type_attribute($artType, $attributeName) {
+		global $relationlib, $attributelib;
+		if (!is_object($relationlib)) {
+			include_once('lib/attributes/relationlib.php');
+		}
+		if (!is_object($attributelib)) {
+			include_once('lib/attributes/attributelib.php');
+		}
+		$fullAttributeName = TikiFilter::get( 'attribute_type' )->filter( trim('tiki.article.' . $attributeName) );
+		$relationId = $relationlib->add_relation( 'tiki.article.attribute', 'articletype', $artType, 'attribute', $fullAttributeName);
+		if (!$relationId) {
+			return 0;
+		} else {
+			$attributelib->set_attribute( 'relation', $relationId, 'tiki.relation.target', $attributeName );
+			return $relationId; 
+		}
+	}
+	
+	function delete_article_type_attribute($artType, $relationId) {
+		global $relationlib;
+		if (!is_object($relationlib)) {
+			include_once('lib/attributes/relationlib.php');
+		}
+		// double check relation is associated with article type before deleting
+		$currentAttributes = $relationlib->get_relations_from( 'articletype', $artType, 'tiki.article.attribute' );
+		foreach ($currentAttributes as $att) {
+			if ($att["relationId"] == $relationId) {
+				$relationlib->remove_relation($att["relationId"]);
+			}
+		}
+		return true;
+	}
+	
+	function get_article_type_attributes($artType) {
+		global $relationlib, $attributelib;
+		if (!is_object($relationlib)) {
+			include_once('lib/attributes/relationlib.php');
+		}
+		if (!is_object($attributelib)) {
+			include_once('lib/attributes/attributelib.php');
+		}
+		$attributes = $relationlib->get_relations_from( 'articletype', $artType, 'tiki.article.attribute' );
+		$ret = array();
+		foreach ($attributes as $att) {
+			$relationAtt = $attributelib->get_attributes( 'relation', $att["relationId"]);
+			if (isset($relationAtt['tiki.relation.target'])) {
+				$ret[$relationAtt['tiki.relation.target']] = $att;
+			}
+		}
+		return $ret;
+	}
+	
+	function set_article_attributes($articleId, $attributeArray, $isSubmission = false) {
+		// expects attributeArray in the form of $key=>$val where $key is tiki.article.xxxx and $val is value
+		global $attributelib;
+		if (!is_object($attributelib)) {
+			include_once('lib/attributes/attributelib.php');
+		}
+		if ($isSubmission) {
+			$type = 'submission';
+		} else {
+			$type = 'article';
+		}
+		$currentAtt = $this->get_article_attributes($articleId);
+		foreach ($attributeArray as $name => $value) {
+				if ( !in_array($name,array_keys($currentAtt)) || $value != $currentAtt[$name]["value"] ) {
+					$attributelib->set_attribute( $type, $articleId, $name, $value ); 						
+				}
+		}
+		return true;
+	}
+	
+	function get_article_attributes($articleId, $isSubmission = false) {
+		global $attributelib;
+		if (!is_object($attributelib)) {
+			include_once('lib/attributes/attributelib.php');
+		}
+		if ($isSubmission) {
+			$type = 'submission';
+		} else {
+			$type = 'article';
+		}
+		$allAttributes = $attributelib->get_attributes( $type, $articleId );
+		$ret = array();
+		foreach ($allAttributes as $k => $att) {
+			if (substr($k,0,13) == 'tiki.article.') {
+				$ret[$k] = $att; 
+			}
+		}
+		return $ret;
+	}
+	
+	function transfer_attributes_from_submission($subId, $articleId) {
+		$this->query( 'UPDATE `tiki_object_attributes` set `type` = ?, `itemId` = ? where `type` = ? and `itemId` = ?',
+		
+			array( 'article', $articleId, 'submission', $subId ) );
 	}
 }
 

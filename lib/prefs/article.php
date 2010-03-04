@@ -54,5 +54,10 @@ function prefs_article_list() {
 			'filter' => 'int',
 			'hint' => tra('0 for original image size.') ,
 		),
+		'article_custom_attributes' => array(
+			'name' => tra('Custom attributes for article types'),
+			'description' => tra('Allow additional custom fields for article types'),
+			'type' => 'flag',
+		),
 	);
 }

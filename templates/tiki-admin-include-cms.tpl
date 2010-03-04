@@ -48,6 +48,7 @@
 				{preference name=feature_cms_emails}
 
 				{preference name=article_paginate}
+				{preference name=article_custom_attributes}
 
 				<input type="hidden" name="cmsfeatures" />
 			</fieldset>

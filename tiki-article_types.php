@@ -70,10 +70,30 @@ elseif(isset($_REQUEST["update_type"])) {
 				$_REQUEST["show_image_caption"][$this_type], 
 				$_REQUEST["show_lang"][$this_type], 
 				$_REQUEST["creator_edit"][$this_type]);
+				
+		// Add custom attributes
+		if ($prefs["article_custom_attributes"] == 'y' && !empty($_REQUEST["new_attribute"][$this_type])) {			
+			$ok = $artlib->add_article_type_attribute($this_type, $_REQUEST["new_attribute"][$this_type]);
+			if (!$ok) {
+				$smarty->assign('msg', tra("Failed to add attribute"));
+				$smarty->display("error.tpl");
+				die;
+			}
+		}
 	}
 }
 
 $types = $artlib->list_types();
+
+if ($prefs["article_custom_attributes"] == 'y') {
+	if (isset($_REQUEST["att_type"]) && isset($_REQUEST["att_remove"])) {
+		$artlib->delete_article_type_attribute($_REQUEST["att_type"], $_REQUEST["att_remove"]);
+	}
+	foreach($types as &$t) {
+		$t["attributes"] = $artlib->get_article_type_attributes($t["type"]);
+	}	
+}
+
 $smarty->assign('types', $types);
 
 include_once ('tiki-section_options.php');

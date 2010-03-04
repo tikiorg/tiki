@@ -270,6 +270,16 @@
 			</td>
 		</tr>
 		{include file='freetag.tpl'}
+		{if isset($all_attributes)}
+			{foreach from=$all_attributes item=att key=attname}
+			{assign var='attid' value=$att.itemId|replace:'.':'_'}
+			{assign var='attfullname' value=$att.itemId}
+			<tr id={$attid} {if $types.$type.$attid eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+				<td>{$attname|escape}</td>
+				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="80" /></td>
+			</tr>
+			{/foreach}
+		{/if}
 	</table>
 	
 	{if $tiki_p_use_HTML eq 'y'}

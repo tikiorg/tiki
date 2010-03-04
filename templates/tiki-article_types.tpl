@@ -143,6 +143,25 @@
 			
 		</tr>
 	</table>
+	{if $prefs.article_custom_attributes eq 'y'}
+	<table class="normal">
+		<tr>
+		<th>{tr}Custom attribute{/tr}</th>
+		<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle print=false values="even,odd"}
+		{foreach from=$types[user].attributes item=att key=attname}
+		<tr>
+		<td class="{cycle advance=false}" >{$attname|escape}</td>
+		<td class="{cycle}" ><a class="link" href="tiki-article_types.php?att_type={$types[user].type|escape:url}&att_remove={$att.relationId|escape:url}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
+		</tr>
+		{/foreach}
+		<tr>
+		<td><input type="text" name="new_attribute[{$types[user].type|escape}]" value="" /></td>
+		<td>&nbsp;</td>
+		</tr>
+	</table>
+	{/if}
 	<input type="submit" name="update_type" value="{tr}Save{/tr}" /><br />
 	<hr />
 	<br />
