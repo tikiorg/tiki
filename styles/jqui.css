@@ -71,12 +71,6 @@ body {
 	background: #fff url(../lib/jquery/jquery-ui/themes/smoothness/images/ui-bg_flat_75_ffffff_40x100.png);
 	border: 1px solid #d3d3d3;
 	border-bottom: none;
-	border-radius-topleft: 4px;
-	border-radius-topright: 4px;
-	-moz-border-radius-topleft: 4px;
-	-moz-border-radius-topright: 4px;
-	-webkit-border-radius-topleft: 4px;
-	-webkit-border-radius-topright: 4px;
 	margin: 10px;
 	margin-bottom: 0;
 	text-align: center;
@@ -142,9 +136,6 @@ span.button input,
 	font-weight: normal;
 	color: #555555;
 	outline: none; 
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
 }
 
 span.button a:hover,
@@ -213,9 +204,6 @@ div.error {
 	color: #222222;
 	margin: 0 10px 10px;
 	font-size: 1.1em;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 }
 	
 /****** Menus, Links ******/
@@ -334,8 +322,6 @@ a .sf-sub-indicator {
 	background: #ffffff url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
 	color: #222222;	
 	border: 1px solid #aaaaaa;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 }
 
 #col2 .box,
@@ -353,9 +339,6 @@ h3.box-title,
 	font-weight: bold;
 	margin: 0;
 	font-size: 1.1em;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 }
 
 .cbox-data,
@@ -379,25 +362,9 @@ h3.box-title,
 
 .rbox-title {
 	border-bottom: none !important;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	-moz-border-radius-topleft: 4px;
-	-moz-border-radius-topright: 4px;
-	-webkit-border-radius-topleft: 4px;
-	-webkit-border-radius-topright: 4px;
 }
 	
-.rbox-data {
-	border-top-right-radius: 4px;
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	-moz-border-radius-topright: 4px;
-	-moz-border-radius-bottomleft: 4px;
-	-moz-border-radius-bottomright: 4px;
-	-webkit-border-radius-topright: 4px;
-	-webkit-border-radius-bottomleft: 4px;
-	-webkit-border-radius-bottomright: 4px;
-}
+
 
 div.errors {
 	background: none;
@@ -483,13 +450,8 @@ li.even {
 	margin:0 0.2em -1px 0;
 	border: 1px solid #aaaa;
 	background: #ccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
-	border-radius-topleft: 4px;
-	border-radius-topright: 4px;
-	-webkit-border-radius-topleft: 4px;
-	-webkit-border-radius-topright: 4px;
-	-moz-border-radius-topleft: 4px;
-	-moz-border-radius-topright: 4px;
 }
+
 .tabs br {
 	display: none;
 }
@@ -505,12 +467,6 @@ li.even {
 	border: 1px solid #d3d3d3;
 	background: #e6e6e6 url(../lib/jquery/jquery-ui/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	outline: none;
-	border-top-left-radius:4px;
-	border-top-right-radius:4px;
-	-moz-border-radius-topleft:4px;
-	-moz-border-radius-topright:4px;
-	-webkit-border-radius-topleft:4px;
-	-webkit-border-radius-topright:4px;
 	border-bottom-width: 0 !important;
 	margin: 0 .2em -1px 0;
 }
@@ -552,9 +508,6 @@ div.articletrailer span {
 
 .post .postbody {
 	border: 1px solid #aaa;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 	padding: 6px;
 }
 /*
@@ -575,9 +528,7 @@ div.articletrailer span {
 	color: #222;
 	font-weight: bold;
 	font-size: 1.1em;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;}
+}
 	
 .postbody .actions {
 	text-align: right;
@@ -680,13 +631,6 @@ div.freetagitemlist {
 /*.caleven .calfocus, .caleven .calfocuson {background: ;}*/
 
 /***** Admin *****/
-body.tiki_admin .simplebox,
-a.admbox,
-a.admbox.off {
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
 	
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
@@ -700,5 +644,51 @@ a.admbox.off {
 /***** New (unsorted) *****/
 
 /***** End New (unsorted) *****/
+
+.footerbgtrap,
+.rbox-title,
+.tabs,
+.tabmark,
+.postbody-title {
+	border-radius-topleft: 4px;
+	border-radius-topright: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-radius-topleft: 4px;
+	-webkit-border-radius-topright: 4px;
+}
+
+span.button a,
+span.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+span.button input,
+.calbuttonBox a,
+#tiki-top,
+.box,
+.cbox,
+h3.box-title,
+.cbox-title,
+.post .postbody,
+body.tiki_admin .simplebox,
+a.admbox,
+a.admbox.off {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.rbox-data {
+	border-top-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-radius-topright: 4px;
+	-webkit-border-radius-bottomleft: 4px;
+	-webkit-border-radius-bottomright: 4px;
+}
 
 /* End of File */
