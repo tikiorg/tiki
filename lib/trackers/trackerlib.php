@@ -2466,12 +2466,13 @@ class TrackerLib extends TikiLib
 		if ($tiki_p_tracker_revote_ratings != 'y' && (($v = $this->get_user_vote($key, $user)) !== null && $v !== false)) {
 			return;
 		}
-		$val = $this->getOne("select count(*) from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$fieldId));
-		if (!$val) {
+		$count = $this->getOne("select count(*) from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$fieldId));
+		if (!$count) {
 			$query = "insert into `tiki_tracker_item_fields`(`value`,`itemId`,`fieldId`) values (?,?,?)";
 			$newval = $new_rate;
 			//echo "$newval";die;
 		} else {
+			$val = $this->getOne("select value from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?", array((int)$itemId,(int)$fieldId));
 			$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
 			$olrate = $this->get_user_vote("tracker.$trackerId.$itemId",$user);
 			if ($olrate === NULL) $olrate = 0;
