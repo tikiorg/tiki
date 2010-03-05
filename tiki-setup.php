@@ -193,6 +193,21 @@ if ($prefs['javascript_enabled'] == 'y') {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.json-2.2.js' );
 	}
+	if( $prefs['feature_jquery_jqs5'] == 'y' ) {
+		if (strpos($_SERVER['PHP_SELF'], 'tiki-index_raw.php') !== false && isset($_REQUEST['format']) && $_REQUEST['format'] == 'jqs5') {
+			$headerlib->add_cssfile( 'lib/jquery/jqs5/jqs5.css' );
+			//$headerlib->add_cssfile( 'lib/jquery/jqs5/theme/staticfree/style.css' );
+			$headerlib->add_jsfile( 'lib/jquery/jqs5/jqs5.js' );
+			$headerlib->add_jq_onready('jqs5_init("body > div > div > div");', 20);	// late, and tell jqs5 where the page is in tiki
+			$prefs['feature_wiki_description'] = 'n';
+			$prefs['wiki_authors_style'] = 'none';
+			$prefs['feature_page_title'] = 'n';
+			$prefs['wiki_topline_position'] = 'none';
+			$prefs['page_bar_position'] = 'none';
+			$prefs['wiki_edit_section'] = 'n';
+			$prefs['wiki_edit_plugin'] = 'n';
+		}
+	}
 	if( $prefs['feature_jquery_tablesorter'] == 'y' ) {
 		$headerlib->add_cssfile( 'lib/jquery_tiki/tablesorter/themes/tiki/style.css' );
 		$headerlib->add_jsfile( 'lib/jquery/tablesorter/jquery.tablesorter.js' );

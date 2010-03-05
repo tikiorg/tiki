@@ -1291,11 +1291,19 @@ function prefs_feature_list() {
 			'name' => tra('JQuery Sheet'),
 			'type' => 'flag',
 			'help' => 'JQuery#Sheet',
+			'description' => tra('Experimental implementation of jQuery.sheet - data remains compatible with previous Tiki Sheets'),
+		),
+		'feature_jquery_jqs5' => array(
+			'name' => tra('JQuery JQS5'),
+			'type' => 'flag',
+			'help' => 'JQuery#Sheet',
+			'description' => tra('jQuery Simple Standards-Based Slide Show System'),
 		),
 		'feature_jquery_carousel' => array(
 			'name' => tra('JQuery Infinite Carousel'),
 			'type' => 'flag',
 			'help' => 'JQuery#Carousel',
+			'description' => tra('Image "carousel" plugin'),
 		),
 		'feature_jquery_tablesorter' => array(
 			'name' => tra('JQuery Sortable Tables'),

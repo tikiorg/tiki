@@ -228,6 +228,7 @@
 								{preference name=feature_jquery_sheet}
 								{preference name=feature_jquery_tablesorter}
 								{preference name=feature_jquery_carousel}
+								{preference name=feature_jquery_jqs5}
 							</div>
 						</div>
 					</div>
