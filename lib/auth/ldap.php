@@ -148,7 +148,7 @@ class TikiLdapLib
 	}
 	// End public function TikiLdapLib($options)
 
-	private function __destruct() {
+	public function __destruct() {
 		unset($this->ldaplink);
 	}
 
@@ -184,11 +184,19 @@ class TikiLdapLib
 				break;
 			default:
 				// Anonymous binding
-				unset($this->options['binddn']);
-				unset($this->options['bindpw']);
+				$options_anonymous = $this->options;
+				$options_anonymous['binddn'] = '';
+				$options_anonymous['bindpw'] = '';
+				$this->ldaplink= Net_LDAP2::connect($options_anonymous);
+		    if(Net_LDAP2::isError($this->ldaplink)) {
+		      $this->add_log('ldap','Error: '.$this->ldaplink->getMessage().' at line '.__LINE__.' in '.__FILE__);
+				}
+		
+				self::get_user_attributes();
+				$this->options['binddn'] = $this->user_attributes['dn'];
+				$this->ldaplink->disconnect();
 		}
-
-			// attributes to fetch
+		// attributes to fetch
 /*
         $options['attributes'] = array();
         if ( $nameattr = $prefs['auth_ldap_nameattr'] ) $options['attributes'][] = $nameattr;
@@ -214,7 +222,7 @@ class TikiLdapLib
 			return($this->ldaplink->getCode());
 		}
 		
-		return LDAP_SUCCESS;
+		return 'LDAP_SUCCESS';
 	} // End bind()
 
 	
@@ -334,6 +342,7 @@ class TikiLdapLib
 		}
 		$this->add_log('ldap','Found '.$searchresult->count().' entries. Extracting entries now.');
 		
+		$this->groups = array();
 		while($entry=$searchresult->shiftEntry()) {
 			if (Net_LDAP2::isError($entry)) {
 				$this->add_log('ldap','Error fetching group entries: '.$entry->getMessage().' at line '.__LINE__.' in '.__FILE__);

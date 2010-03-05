@@ -921,15 +921,20 @@ class UsersLib extends TikiLib
 
 		$this->init_ldap($user, $pass);
 
-		switch($err=$this->ldap->bind()) {
-		case LDAP_INVALID_CREDENTIALS:
+		$err = $this->ldap->bind();
+		if (is_int($err)) {
+			$err=Net_LDAP2::errorMessage($err);
+		}
+
+		switch($err) {
+		case 'LDAP_INVALID_CREDENTIALS':
 			return PASSWORD_INCORRECT;
-		case LDAP_INVALID_SYNTAX:
-		case LDAP_NO_SUCH_OBJECT:
-		case LDAP_INVALID_DN_SYNTAX:
+		case 'LDAP_INVALID_SYNTAX':
+		case 'LDAP_NO_SUCH_OBJECT':
+		case 'LDAP_INVALID_DN_SYNTAX':
 			if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Error'.$err);
 			return USER_NOT_FOUND;
-		case LDAP_SUCCESS:
+		case 'LDAP_SUCCESS':
 			if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Bind successful.');
 			return USER_VALID;
 		default:
@@ -981,9 +986,7 @@ class UsersLib extends TikiLib
 
 		if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing user and group with ldap');
 		$userattributes=$this->ldap->get_user_attributes();
-		//var_dump($userattributes);
-		//print("<pre>");print_r($userattributes);print("</pre>");
-		$user=$userattributes[$prefs['auth_ldap_userattr']];
+		//$user=$userattributes[$prefs['auth_ldap_userattr']];
 
 		// sync user information
 		$this->disable_tiki_auth($user);
@@ -2794,20 +2797,9 @@ class UsersLib extends TikiLib
 		}
 
 		$aUserPrefs = array('realName','homePage','country');
-		foreach ($aUserPrefs as $pref){
+		foreach ($aUserPrefs as $pref) {
 			if (isset($u[$pref])) {
-				$bindvars = array();
-
-				$bindvars[] = strip_tags($u[$pref]);
-				$bindvars[] = $u['login'];
-				$bindvars[] = $pref;
-
-				if ($this->getOne("select `user` from `tiki_user_preferences` where `user`=? and `prefName`=?",array($u['login'],$pref))) {
-					$query = "UPDATE `tiki_user_preferences` set `value`=? where `user`=? and `prefName`=?";
-				} else {
-					$query = "INSERT INTO `tiki_user_preferences` (`value`,`user`,`prefName`) VALUES (?,?,?)";
-				}
-				$this->query($query, $bindvars);
+				$this->set_user_preference($u['login'],$pref,$u[$pref]);
 			}
 		}
 
