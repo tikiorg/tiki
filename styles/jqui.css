@@ -679,6 +679,15 @@ a.admbox.off {
 	-webkit-border-radius: 4px;
 }
 
+.rbox-title {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-radius-topleft: 4px;
+	-webkit-border-radius-topright: 4px;
+}
+
 .rbox-data {
 	border-top-right-radius: 4px;
 	border-bottom-left-radius: 4px;
