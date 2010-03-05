@@ -142,7 +142,15 @@
 						</td>
 	
 						<td>
-							<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings:{/tr} {$users[user].user|username}">{$users[user].user|username}</a>
+							{capture name=username}{$users[user].user|username}{/capture}
+							<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings:{/tr} {$smarty.capture.username}">
+							   {$users[user].user|escape}
+							</a>
+							{if $prefs.user_show_realnames eq 'y' and $smarty.capture.username ne $users[user].user}
+								<div class="subcomment">
+									{$smarty.capture.username|escape}
+								</div>
+							{/if}
 						</td>
 	
 						{if $prefs.login_is_email ne 'y'}
