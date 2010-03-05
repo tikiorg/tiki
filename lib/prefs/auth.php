@@ -151,7 +151,7 @@ function prefs_auth_list() {
 			'options' => array(
 				'default' => tra('Default: Anonymous Bind'),
 				'full' => tra('Full: userattr=username,UserDN,BaseDN'),
-				'ol' => tra('OpenLDAP: userattr=username,BaseDN'),
+				'ol' => tra('OpenLDAP: cn=username,BaseDN'),
 				'ad' => tra('Active Directory (username@domain)'),
 				'plain' => tra('Plain Username'),
 			),
