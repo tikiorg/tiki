@@ -1856,13 +1856,13 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 		$rows = (int) $d->metadata->rows;
 		$cols = (int) $d->metadata->columns;
 		
-		for ($r = 1; $r <= $rows; $r++) {
-			for ($c = 1; $c <= $cols; $c++) {
+		for ($r = 0; $r <= $rows; $r++) {
+			for ($c = 0; $c <= $cols; $c++) {
 				$ri = 'r'.$r;
 				$ci = 'c'.$c;
 				$val = $d->data->$ri->$ci->value;
 				
-				$sheet->initCell( $r-1, $c-1 );
+				$sheet->initCell( $r, $c );
 				$sheet->setValue( $val );
 				$sheet->setSize( 1, 1 );
 				if (isset($d->data->$ri->$ci->formula)) {

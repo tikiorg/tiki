@@ -1546,7 +1546,7 @@ class ToolbarSheet extends Toolbar
 			case 'sheetsave':
 				$label = tra('Save Sheet');
 				$icon = tra('pics/icons/disk.png');
-				$syntax = 'jS.s.fnSave();';
+				$syntax = '$jq.sheet.saveSheet();';
 				break;
 			case 'addrow':
 				$label = tra('Add Row');

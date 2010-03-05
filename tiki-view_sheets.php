@@ -82,8 +82,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$handler = new TikiSheetHTMLTableHandler($_REQUEST['s']);
 		$res = $grid->import($handler);
 		// Save the changes
-		$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-		$grid->export($handler);
+		if ($res) {
+			$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
+			$grid->export($handler);
+		}
 		die($res ? tra('Saved') . ' ' . $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') : tra('Save failed'));
 	}
 	
@@ -159,7 +161,7 @@ $jq("#edit_button").click( function () {
 });
 $jq("#save_button").click( function () {
 	var dummySaveButtonVar;
-	$jq.sheet.cellEditDone();
+	jS.evt.cellEditDone();
 	$jq.sheet.saveSheet();
 	return false;
 }).hide();
