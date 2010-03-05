@@ -18,6 +18,10 @@
 	deny from all
 </FilesMatch>
 
+<FilesMatch "\.(js|png|gif|jpg|css)$">
+	FileEtag None
+</FilesMatch>
+
 # By default don't use ETags if not specified. If you got some ETags specified comment out or remove the following line.
 FileETag none
 
