@@ -185,7 +185,7 @@ h3.box-title {
 
 .rbox-title, 
 .rbox-data {
-	background: #FBF9EE url(../../../lib/jquery/jquery-ui/themes/base/images/?new=fbf9ee&w=1&h=400&f=png&q=100&fltr[]=over|textures/02_glass.png|0|0|55) repeat-x scroll 50% 50%;
+	background: #FBF9EE url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png) repeat-x 50% 50%;
 	border: 1px solid #FCEFA1;
 	color: #363636;
 }
@@ -200,9 +200,10 @@ h3.box-title {
 	background: /*rboxdata_background*/;
 }
 
+.highlight, span.highlight a,
 .warning .rbox-title,
 .warning .rbox-data {
-	background: #F6ECD5 url(../../../lib/jquery/jquery-ui/themes/base/images/12_gloss_wave.png|0|0|95) repeat-x scroll 50% top;
+	background: #F1FBE5 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png) 50% 50% repeat-x;
 	border:1px solid #F1AC88;
 	color:#74736D;
 }
