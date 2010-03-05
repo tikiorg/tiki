@@ -20,7 +20,7 @@ function prefs_site_list() {
 			'name' => tra('Theme'),
 			'type' => 'list',
 			'help' => 'Themes',
-			'description' => tra('Style of the site, sometimes called theme or CSS'),
+			'description' => tra('Style of the site, sometimes called a skin or CSS. See http://themes.tikiwiki.org for more Tiki themes.'),
 			'options' => $styles,
 		),
 		'site_closed' => array(

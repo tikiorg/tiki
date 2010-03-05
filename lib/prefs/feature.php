@@ -421,10 +421,11 @@ function prefs_feature_list() {
 			'description' => tra('Banning system'),
 			'help' => 'Banning',
 			'type' => 'flag',
+			'description' => tra('Deny access to specific users based on username, IP, and date/time range.')
 		),
 		'feature_stats' => array(
 			'name' => tra('Stats'),
-			'description' => tra('Stats'),
+			'description' => tra('Record basic statistics about major Tiki features (number of wiki pages, size of file galleries, etc.)'),
 			'help' => 'Stats',
 			'type' => 'flag',
 		),
@@ -436,7 +437,7 @@ function prefs_feature_list() {
 		),
 		'feature_referer_stats' => array(
 			'name' => tra('Referer Stats'),
-			'description' => tra('Referer Stats'),
+			'description' => tra('Record domain name of sites that send visitors to this Tiki.'),
 			'help' => 'Stats',
 			'type' => 'flag',
 		),
@@ -703,10 +704,12 @@ function prefs_feature_list() {
 		'feature_filegals_manager' => array(
 			'name' => tra('Use File Galleries to store pictures'),
 			'type' => 'flag',
+			'description' => tra('If disabled, pictures will be stored in ../img/wiki_up/.. instead.'),
 		),
 		'feature_wiki_ext_icon' => array(
 			'name' => tra('External link icon'),
 			'type' => 'flag',
+			'description' => tra('External links will be identifed with an icon. Use the ../img/icons/external_link.gif image to customize the icon.')
 		),
 		'feature_wiki_ext_rel_nofollow' => array(
 			'name' => tra('Add "rel=nofollow" on external links'),
@@ -826,6 +829,7 @@ function prefs_feature_list() {
 			'name' => tra('Content templates'),
 			'type' => 'flag',
 			'help' => 'Content+Template',
+			'description' => tra('Pre-defined content for a wiki page.'),
 		),
 		'feature_cms_print' => array(
 			'name' => tra('Print'),
@@ -1066,6 +1070,7 @@ function prefs_feature_list() {
 		'feature_custom_html_head_content' => array(
 			'name' => tra('Custom HTML <head> Content'),
 			'hint' => tra('Example') . "{if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
+			'description' => tra('Use to inclue custom <meta> or <link> tags.'),
 			'type' => 'textarea',
 			'size' => '6',
 		),
@@ -1332,6 +1337,7 @@ function prefs_feature_list() {
 		'feature_warn_on_edit' => array(
 			'name' => tra('Warn on edit conflict'),
 			'type' => 'flag',
+			'description' => tra('Tiki will warn users who attempt to edit a page that another user is currenly editing.'),
 		),
 		'feature_wiki_undo' => array(
 			'name' => tra('Undo'),
@@ -1340,6 +1346,7 @@ function prefs_feature_list() {
 		'feature_wiki_footnotes' => array(
 			'name' => tra('Footnotes'),
 			'type' => 'flag',
+			'description' => tra('Create private notes for a page that are visible only by the author.'),
 		),
 		'feature_wiki_allowhtml' => array(
 			'name' => tra('Allow HTML'),
@@ -1353,16 +1360,19 @@ function prefs_feature_list() {
 		'feature_sandbox' => array(
 			'name' => tra('Sandbox'),
 			'type' => 'flag',
+			'description' => tra('A special wiki page for testing. Users can edit, but not save the Sandbox.'),
 		),
 		'feature_wiki_comments' => array(
 			'name' => tra('Comments'),
 			'type' => 'flag',
 			'help' => 'Comments',
+			'description' => tra('Allow users (with permission) to post threaded comments to a page.'),
 		),
 		'feature_wiki_pictures' => array(
 			'name' => tra('Pictures'),
 			'type' => 'flag',
 			'help' => 'Wiki-Syntax Images',
+			'description' => tra('Allow users to upload images (pictures) to a page.'),
 		),
 		'feature_wiki_export' => array(
 			'name' => tra('Export'),
@@ -1371,6 +1381,7 @@ function prefs_feature_list() {
 		'feature_wikiwords' => array(
 			'name' => tra('WikiWords'),
 			'type' => 'flag',
+			'description' => ('Automatically convert words with UpPeR and LoWeR-case letters into wiki links.'),
 		),
 		'feature_wiki_plurals' => array(
 			'name' => tra('Link plural WikiWords to their singular forms'),
@@ -1399,6 +1410,7 @@ function prefs_feature_list() {
 			'dependencies' => array(
 				'feature_forums'
 			),
+			'description' => tra('Include a link on each page to a forum topic.'),
 		),
 		'feature_source' => array(
 			'name' => tra('View source'),
@@ -1490,6 +1502,7 @@ function prefs_feature_list() {
 			'name' => tra('Attachments'),
 			'type' => 'flag',
 			'help' => 'Attachments',
+			'description' => tra('Allow users to upload (attach) files to a page.'),
 		),
 		'feature_dump' => array(
 			'name' => tra('Dumps'),
@@ -1558,6 +1571,7 @@ function prefs_feature_list() {
 			'name' => tra('AutoLinks'),
 			'type' => 'flag',
 			'help' => 'AutoLinks',
+			'description' => tra('Tiki will automatically convert http:// and email addresses into links.'),
 		),
 		'feature_hotwords' => array(
 			'name' => tra('Hotwords'),

@@ -66,6 +66,7 @@ function prefs_global_list() {
 		'tmpDir' => array(
 			'name' => tra('Temporary directory'),
 			'type' => 'text',
+			'description' => tra('Tiki requires full read and write access to this directory.'),
 			'size' => 30,
 			'default' => TikiSetup::tempdir(),
 			'perspective' => false,
@@ -189,10 +190,12 @@ function prefs_global_list() {
 		'validateEmail' => array(
 			'name' => tra("Validate user's email server"),
 			'type' => 'flag',
+			'description' => tra('Tiki will perform a DNS lookup and attempt to open a SMTP session to validate the email server.')
 		),
 		'validateRegistration' => array(
 			'name' => tra('Require validation by Admin'),
 			'type' => 'flag',
+			'description' => tra('The administrator will receive an email for each new user registration, and must validate the user before the user can login.'),
 			'dependencies' => array(
 				'sender_email',
 			),
@@ -200,17 +203,19 @@ function prefs_global_list() {
 		'useRegisterPasscode' => array(
 			'name' => tra('Require passcode to register'),
 			'type' => 'flag',
+			'description' => tra('Users must enter a code to register.  You must inform users of this code. Use to restrict registration to invited users only.'),
 		),
 		'registerPasscode' => array(
 			'name' => tra('Passcode'),
-			'type' => 'password',
+			'type' => 'text',
 			'size' => 15,
-			'hint' =>  tra('Users must enter this code to register'),
+			'hint' =>  tra('Alphanumeric code requierd to complete the registration'),
 		),
 		'userTracker' => array(
 			'name' => tra('Use tracker to collect more user information'),
 			'type' => 'flag',
 			'help' => 'User+Tracker',
+			'description' => tra('Display a tracker (form) for the user to complete, as part of the registration process. Use this tracker to store additional information about each user.'),
 			'dependencies' => array(
 				'feature_trackers',
 			),
@@ -257,6 +262,7 @@ function prefs_global_list() {
 			'name' => tra('Use TikiWiki feature as homepage'),
 			'type' => 'list',
 			'options' => feature_home_pages(),
+			'description' => tra('Select the Tiki feature to use as the site homepage. Only enabled features are listed.')
 		),
 		'disableJavascript' => array(
 			'name' => tra('Disable javascript'),

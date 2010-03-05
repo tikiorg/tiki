@@ -10,6 +10,7 @@ function prefs_pass_list() {
 		'pass_chr_num' => array(
 			'name' => tra('Require characters and numerals'),
 			'type' => 'flag',
+			'description' => tra('For improved security, require users to include a mix of characters and numerals in passwords.'),
 		),
 		'pass_due' => array(
 			'name' => tra('Password expires after'),

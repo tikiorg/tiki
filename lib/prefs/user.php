@@ -32,6 +32,7 @@ function prefs_user_list() {
 			'name' => tra('Users can shade modules'),
 			'help' => 'Users+Shade+Modules',
 			'type' => 'list',
+			'description' => tra('Allows users to hide/show modules.'),
 			'options' => array(
 				'y' => tra('Always'),
 				'module' => tra('Module decides'),
