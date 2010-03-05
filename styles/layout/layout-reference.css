@@ -911,22 +911,20 @@ div#tikihelp {
 
 div.help_sections {
 	width: 360px;
-	overflow: auto;
+	overflow: hidden !important;	/* override jq-ui's scroll bar as we use one on the div inside so the tabs stay in view */
 	height: 500px;
 }
 
 div.help_section {
-	/*overflow: hidden !important;*/
-	height: auto;
 }
 
 div.help_sections h3 {
-	padding-left: 24px;
-	line-height: 3ex;
 }
 
 div.help_sections > div {
 	font-size: .9em;
+	height: 100%;
+	overflow: auto;
 }
 
 #site_report {

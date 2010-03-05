@@ -1,17 +1,18 @@
 {* $Id$ *}
 {strip}
+
 <h3>{tr}Search Help{/tr}</h3>
 <div class="help_section">
 	<h4>{tr}Default search behavior{/tr}</h4>
 	<p>
 		{tr}By default, all search terms are <em>optional</em>.{/tr}
 		{tr}Objects that contain the terms are rated higher in the results.{/tr} {tr}For example, <strong>wiki forum</strong> will find:{/tr}
-		<ul>
-			<li>{tr}objects that include the term <strong>wiki</strong>{/tr}</li>
-			<li>{tr}objects that include the term <strong>forum</strong>{/tr}</li>
-			<li>{tr}objects that include both terms{/tr}</li>
-		</ul>
 	</p>
+	<ul>
+		<li>{tr}objects that include the term <strong>wiki</strong>{/tr}</li>
+		<li>{tr}objects that include the term <strong>forum</strong>{/tr}</li>
+		<li>{tr}objects that include both terms{/tr}</li>
+	</ul>
 	
 	<h4>{tr}Requiring terms{/tr}</h4>
 	<p>
@@ -33,12 +34,12 @@
 	<h4>{tr}Using wildcards{/tr}</h4>
 	<p>
 		{tr}Add an asterisk ( * ) after a term to find objects that include the root word.{/tr} {tr}For example, <strong>run*</strong> will find:{/tr}
-		<ul>
-			<li>{tr}objects that include the term <strong>run</strong>{/tr}</li>
-			<li>{tr}objects that include the term <strong>runner</strong>{/tr}</li>
-			<li>{tr}objects that include the term <strong>running</strong>{/tr}</li>		
-		</ul>
 	</p>
+	<ul>
+		<li>{tr}objects that include the term <strong>run</strong>{/tr}</li>
+		<li>{tr}objects that include the term <strong>runner</strong>{/tr}</li>
+		<li>{tr}objects that include the term <strong>running</strong>{/tr}</li>		
+	</ul>
 	
 	<h4 id="reducing">{tr}Reducing a term's value{/tr}</h4>
 	<p>
