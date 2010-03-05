@@ -13,7 +13,7 @@ $access->check_feature('feature_categories');
 $access->check_permission('tiki_p_admin_categories');
 
 // Check for parent category or set to 0 if not present
-if (!empty($_REQUEST['parentId']) && !$categlib->get_category($_REQUEST['parentId'])) {
+if (!empty($_REQUEST['parentId']) && !($info = $categlib->get_category($_REQUEST['parentId']))) {
 	$smarty->assign('msg', 'Incorrect param'.' parentId');
 	$smarty->display('error.tpl');
 	die;
@@ -31,7 +31,7 @@ if (!empty($_REQUEST['unassign'])) {
 		key_check($area);
 		$categlib->unassign_all_objects($_REQUEST['parentId']);
 	} else {
-		key_get($area, 'tiki-admin_categories.php?parentId='.$_REQUEST['parentId'].'&amp;unassign=y');
+		key_get($area, tra('Are you sure you want to unassign the objects of this category: ').$info['name']);
 	}
 }
 if (!empty($_REQUEST['move_to']) && !empty($_REQUEST['toId'])) {
