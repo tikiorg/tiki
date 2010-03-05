@@ -18,6 +18,791 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 4.2
+<http://tikiwiki.org/ReleaseNotes42>
+------------------
+
+----------------------------------------------
+r25952 | pkdille | 2010-03-05 22:06:57 +0100 (Fri, 05 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25926 | ricks99 | 2010-03-05 13:45:14 +0100 (Fri, 05 Mar 2010) | 1 line
+[ENH]Added support for RESET button to Tracker forms. Backport of 25911 from Trunk
+
+
+----------------------------------------------
+r25951 | pkdille | 2010-03-05 22:04:58 +0100 (Fri, 05 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25862 | sylvieg | 2010-03-02 23:17:55 +0100 (Tue, 02 Mar 2010) | 1 line
+[bp/r 25861][FIX]ldap: missing global - that was failing openldap auth
+
+
+----------------------------------------------
+r25950 | pkdille | 2010-03-05 22:02:24 +0100 (Fri, 05 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25949 | nyloth | 2010-03-05 21:37:29 +0100 (Fri, 05 Mar 2010) | 1 line
+[bp/r25947][FIX] ldap authentication : apply sept_7 patch to fix LDAP authentication (especially with anonymous bind)
+
+
+----------------------------------------------
+r25925 | ricks99 | 2010-03-05 13:42:36 +0100 (Fri, 05 Mar 2010) | 1 line
+
+Rolling back to 25608. Wrong branch, my bad.
+----------------------------------------------
+r25914 | ricks99 | 2010-03-04 23:53:01 +0100 (Thu, 04 Mar 2010) | 1 line
+
+[ENH]Added support for RESET button to Tracker forms. Backport of 25911 from Trunk
+----------------------------------------------
+r25820 | pkdille | 2010-03-02 21:01:19 +0100 (Tue, 02 Mar 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25794 | sept_7 | 2010-03-01 09:39:10 +0100 (Mon, 01 Mar 2010) | 2 lines
+[FIX/bp25793] fix redirection path, thnx gary for noticing
+
+
+----------------------------------------------
+r25819 | pkdille | 2010-03-02 20:59:42 +0100 (Tue, 02 Mar 2010) | 8 lines
+
+[QT] Quality Team Backport
+
+r25736 | sept_7 | 2010-02-26 15:20:26 +0100 (Fri, 26 Feb 2010) | 5 lines
+[FIX/bp25652] popup smarty plugin : better escaping of the string popup
+(urlencode) Suppress the size limit in the popup, previuously 2000 characters
+by Jonny
+
+
+----------------------------------------------
+r25818 | pkdille | 2010-03-02 20:56:57 +0100 (Tue, 02 Mar 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r25730 | jonnybradley | 2010-02-26 13:53:25 +0100 (Fri, 26 Feb 2010) | 2 lines
+[bp/r25481] [FIX] "Custom" getElementById() function needs to return element by name if not by id.
+Fixes toolbars again for now, but really all textareas using them should use id always (TODO (in trunk only)).
+
+
+----------------------------------------------
+r25651 | pkdille | 2010-02-24 01:19:52 +0100 (Wed, 24 Feb 2010) | 5 lines
+
+[QT] Quality Team Backport
+
+Special backport of 25183, 25251 (which was not only a rollback) and 25253 done in that order.
+
+
+----------------------------------------------
+r25642 | pkdille | 2010-02-24 00:15:20 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25561 | chealer | 2010-02-23 19:45:31 +0100 (Tue, 23 Feb 2010) | 1 line
+[FIX] backport search parameters filter fixes from trunk, playing safer by removing those we're not sure about
+
+
+----------------------------------------------
+r25641 | pkdille | 2010-02-24 00:15:05 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25533 | pkdille | 2010-02-23 13:20:25 +0100 (Tue, 23 Feb 2010) | 1 line
+[bp/r25532][FIX] articles: untranslated string (bytes)
+
+
+----------------------------------------------
+r25640 | pkdille | 2010-02-24 00:14:34 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25495 | xavidp | 2010-02-22 14:52:02 +0100 (Mon, 22 Feb 2010) | 1 line
+[FIX][bp/r25494]fixing old missreference to local sheet admin perm
+
+
+----------------------------------------------
+r25639 | pkdille | 2010-02-24 00:14:17 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25462 | xavidp | 2010-02-21 11:43:21 +0100 (Sun, 21 Feb 2010) | 1 line
+[FIX][bp/r25461]Fix bug for users with local perm to admin a sheet but not full admin (re: bug1920 ). Thanks space_egd for reporting the fix.
+
+
+----------------------------------------------
+r25638 | pkdille | 2010-02-24 00:14:00 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25437 | xavidp | 2010-02-20 17:12:50 +0100 (Sat, 20 Feb 2010) | 1 line
+[FIX][bp/r25436]Fix contrast with spreadsheet bg and colors, that was lost at some point for a few themes
+
+
+----------------------------------------------
+r25637 | pkdille | 2010-02-24 00:13:40 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25435 | sept_7 | 2010-02-20 14:13:32 +0100 (Sat, 20 Feb 2010) | 2 lines
+[SEC/bp25434] backport of security fix for SQL injection
+
+
+----------------------------------------------
+r25636 | pkdille | 2010-02-24 00:13:24 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25432 | pkdille | 2010-02-20 09:17:14 +0100 (Sat, 20 Feb 2010) | 1 line
+[bp/r25394][NEW] articles and submission: Give admin the opportunity to define a default size for images. It's a value that can be changed by the user when he contributes an article or a submission.
+
+
+----------------------------------------------
+r25635 | pkdille | 2010-02-24 00:11:54 +0100 (Wed, 24 Feb 2010) | 9 lines
+
+[QT] Quality Team Backport
+
+r25426 | jonnybradley | 2010-02-19 23:37:54 +0100 (Fri, 19 Feb 2010) | 5 lines
+[bp/r24919] [FIX] Correct problems with disappearing file galleries caused by 20090811_filegals_container_tiki.sql when running on MySQL 4.1 (wish3000).
+[bp/r24961] [FIX] Semicolons at end of query breaks ADODB getOne()
+Also removed stray inclusion of tiki-setup_base.php (broke other things)
+[bp/r25165] [MOD] header change : copyright + Id
+
+
+----------------------------------------------
+r25634 | pkdille | 2010-02-24 00:11:40 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25424 | sept_7 | 2010-02-19 22:49:50 +0100 (Fri, 19 Feb 2010) | 2 lines
+[SEC/bp25415] backport of security fix for SQL injection
+
+
+----------------------------------------------
+r25633 | pkdille | 2010-02-24 00:11:26 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25314 | sylvieg | 2010-02-17 17:19:49 +0100 (Wed, 17 Feb 2010) | 1 line
+[bp/r25312] [FIX]broadcast: group broadcasting was only sending to the maxRecords first users od a group
+
+
+----------------------------------------------
+r25632 | pkdille | 2010-02-24 00:11:10 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25304 | chealer | 2010-02-17 10:39:05 +0100 (Wed, 17 Feb 2010) | 1 line
+[bp/r25303] OpenID: avoid two consecutive slashes in URL when returning from provider in webserver root
+
+
+----------------------------------------------
+r25631 | pkdille | 2010-02-24 00:10:57 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25301 | chealer | 2010-02-17 09:11:32 +0100 (Wed, 17 Feb 2010) | 2 lines
+[bp/r25300][FIX] OpenID on machines running httpd as several users.
+
+
+----------------------------------------------
+r25630 | pkdille | 2010-02-24 00:10:43 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25297 | chealer | 2010-02-17 06:00:56 +0100 (Wed, 17 Feb 2010) | 1 line
+[bp/r25296][FIX] error message on OpenID authentication failure
+
+
+----------------------------------------------
+r25629 | pkdille | 2010-02-24 00:09:34 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25284 | xavidp | 2010-02-16 21:43:10 +0100 (Tue, 16 Feb 2010) | 1 line
+[FIX][bp/r25281]forum: avoid this variable may not be empty: $_POST["thread_sort_mode"] . thanks sylvieg for fixing
+
+
+----------------------------------------------
+r25628 | pkdille | 2010-02-24 00:09:21 +0100 (Wed, 24 Feb 2010) | 10 lines
+
+[QT] Quality Team Backport
+
+r25253 | jonnybradley | 2010-02-16 13:27:25 +0100 (Tue, 16 Feb 2010) | 7 lines
+Enhancements to bloglist plugin: Date range, container_class and non-simple list mode. (2nd attempt - including r24996 properly)
+[bp/r24996] [FIX] Correct logic for $show_heading
+[bp/r24969] [ENH] New mode for wikiplugin_bloglist: Not "simple list" as before but full blog posts. Also add container class param.
+[bp/r24888] [MOD] Add $container_class to output of articles and bloglist plugins (.wikiplugin_articles or .wikiplugin_bloglist respectively) for custom CSS targeting.
+[bp/r24886] [ENH] Add date range params to bloglist plugin
+
+
+----------------------------------------------
+r25627 | pkdille | 2010-02-24 00:08:59 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25219 | luciash | 2010-02-15 00:19:59 +0100 (Mon, 15 Feb 2010) | 1 line
+[bp/r25217][FIX] better fix for 24380: user messages: prefer user preferences max messages to display pagination
+
+
+----------------------------------------------
+r25626 | pkdille | 2010-02-24 00:08:45 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25195 | chealer | 2010-02-13 23:08:31 +0100 (Sat, 13 Feb 2010) | 1 line
+[bp/r25194][MOD][SEC] Remove Standard Remember method for persistent login and use Simple instead. IP address and User agent are no more checked
+
+
+----------------------------------------------
+r25625 | pkdille | 2010-02-24 00:07:38 +0100 (Wed, 24 Feb 2010) | 13 lines
+
+[QT] Quality Team Backport
+
+r25182 | jonnybradley | 2010-02-13 20:49:58 +0100 (Sat, 13 Feb 2010) | 10 lines
+Enhancements to articles plugin: Date range, container_class, show fullbody and a few minor fixes.
+[bp/r25134] [FIX] Override dates wasn't entirely overriding the dates
+[bp/r25133] [MOD] Helpful description
+[bp/r25068] [FIX] Add overrideDates param to articles plugin so you can list the date range you actually want, whether the 'article type' says so or not. Also various other small fixes (including don't default to only 3 items) and some code reformatting.
+[bp/r25066] [MOD] Add $override_dates param to list_articles. This allows you to ignore the "show before publish" and "show after expiry" date settings on the article type (in other words find only the date range you were looking for).
+[bp/r24968] [ENH] Expose container class as a param (and add some filters)
+[bp/r24951] [FIX] Don't display "Read more" if showing "fullbody" (from articles plugin)
+[bp/r24856] [ENH] Add date range for articles plugin. Also flag to show body of article as well as the header.
+
+
+----------------------------------------------
+r25624 | pkdille | 2010-02-24 00:05:59 +0100 (Wed, 24 Feb 2010) | 8 lines
+
+[QT] Quality Team Backport
+
+r25180 | jonnybradley | 2010-02-13 19:30:57 +0100 (Sat, 13 Feb 2010) | 3 lines
+[bp/r24851][FIX] Change article type fn chgArtType() used in Edit Article now counts unset properties as "n" (plus some missing var declarations and indentation)
+and
+[bp/r24955][FIX] Show expiry date if article type says so
+
+
+----------------------------------------------
+r25623 | pkdille | 2010-02-24 00:05:45 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25148 | pkdille | 2010-02-12 16:31:34 +0100 (Fri, 12 Feb 2010) | 3 lines
+[bp/r25146 + 25147] [FIX] page-bar: when no buttons are visible, the page_bar div has not to be included in the code
+
+
+----------------------------------------------
+r25621 | pkdille | 2010-02-24 00:05:30 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25125 | pkdille | 2010-02-12 11:53:59 +0100 (Fri, 12 Feb 2010) | 3 lines
+[partial bp/r21785 + r23911][FIX] wiki page: the technical hr below the wikitext must have visibility=hidden style for being hidden in Internet Explorer
+
+
+----------------------------------------------
+r25620 | pkdille | 2010-02-24 00:05:14 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25123 | pkdille | 2010-02-12 10:57:56 +0100 (Fri, 12 Feb 2010) | 1 line
+[bp/r25121][MOD] wiki editdate styling: give a smaller size to this text in order to see a difference with the wiki page
+
+
+----------------------------------------------
+r25619 | pkdille | 2010-02-24 00:03:54 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25060 | chibaguy | 2010-02-11 14:23:48 +0100 (Thu, 11 Feb 2010) | 1 line
+[b/p r25055,r25057][FIX] IE6 and IE7 width rules for wysiwyg toolbar container (toolbar right end was cut off in narrow themes). Thanks to coaboa for pointing out the problem.
+
+
+----------------------------------------------
+r25618 | pkdille | 2010-02-24 00:03:37 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25053 | chibaguy | 2010-02-11 13:25:33 +0100 (Thu, 11 Feb 2010) | 1 line
+[FIX] Min-width for wysiwyg toolbar container (toolbar right end was cut off in narrow themes). Thanks to coaboa for pointing out the problem.
+
+
+----------------------------------------------
+r25617 | pkdille | 2010-02-24 00:03:20 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25046 | chealer | 2010-02-11 07:15:01 +0100 (Thu, 11 Feb 2010) | 1 line
+[bp/r25043] [SEC] Server-side persistent login cookie deletion
+
+
+----------------------------------------------
+r25616 | pkdille | 2010-02-24 00:03:07 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25045 | chealer | 2010-02-11 07:13:34 +0100 (Thu, 11 Feb 2010) | 1 line
+[bp/r25041] [FIX] Persistent login cookie path (r7443 regression)
+
+
+----------------------------------------------
+r25615 | pkdille | 2010-02-24 00:02:51 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25044 | chealer | 2010-02-11 07:13:21 +0100 (Thu, 11 Feb 2010) | 1 line
+[bp/r25040] [FIX] Default cookie path outside tikiroot if Tiki not in domain root
+
+
+----------------------------------------------
+r25614 | pkdille | 2010-02-24 00:02:36 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25027 | jonnybradley | 2010-02-10 20:50:27 +0100 (Wed, 10 Feb 2010) | 1 line
+[bp/r24815][FIX] Handle param['time'] passed in as in integer (as in tiki-edit_article.tpl)
+
+
+----------------------------------------------
+r25613 | pkdille | 2010-02-24 00:02:21 +0100 (Wed, 24 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25025 | jonnybradley | 2010-02-10 19:41:08 +0100 (Wed, 10 Feb 2010) | 1 line
+[bp/r25002] [FIX] Move strlen function back to 2nd arg of enigmatic "for" loop (partial rollback of r22634 which caused an endless loop here)
+
+
+----------------------------------------------
+r25612 | pkdille | 2010-02-23 23:50:14 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24939 | chealer | 2010-02-08 05:41:47 +0100 (Mon, 08 Feb 2010) | 2 lines
+[bp/r24938][FIX] Top users generally empty
+
+
+----------------------------------------------
+r25611 | pkdille | 2010-02-23 23:49:59 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24864 | ricks99 | 2010-02-05 03:02:35 +0100 (Fri, 05 Feb 2010) | 1 line
+[FIX]Click ratio should be presented as a percentage -- not a decimal value. Backport of 24863 from /trunk/
+
+
+----------------------------------------------
+r25610 | pkdille | 2010-02-23 23:49:41 +0100 (Tue, 23 Feb 2010) | 10 lines
+
+[QT] Quality Team Backport
+
+r24858 | ricks99 | 2010-02-04 22:55:14 +0100 (Thu, 04 Feb 2010) | 5 lines
+[ENH]For bug #2780. Added two new parameters to the COUNTDOWN plugin: 
+* show=dhms Specify what information to show (days, hours, minutes, seconds). Default = dhms
+* since=y|n Specify if the time since an elapse should be shown. Default = y
+I did *not* address the "locate time" issue identified in the bug.
+This is identical to 24857 in trunk
+
+
+----------------------------------------------
+r25609 | pkdille | 2010-02-23 23:49:27 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24836 | xavidp | 2010-02-04 09:50:38 +0100 (Thu, 04 Feb 2010) | 1 line
+[BP/r24835][MOD]Username to be included in QUOTE. Fix applied as reported long ago in wish2089. Thanks people at precarios-www
+
+
+----------------------------------------------
+r25608 | pkdille | 2010-02-23 23:47:28 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24828 | xavidp | 2010-02-04 00:21:10 +0100 (Thu, 04 Feb 2010) | 1 line
+[BP/r24827][MOD]Add clearer color (greyish) + italics to the description field by default in all themes, as well as to character count. It can be overridable in a theme by theme basis, which imho is better than the default black and not italics as default (and no css class for description) before this commit. Thanks Ricks99 for tips and feedback.
+
+
+----------------------------------------------
+r25607 | pkdille | 2010-02-23 23:47:11 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24734 | chealer | 2010-01-29 09:06:42 +0100 (Fri, 29 Jan 2010) | 1 line
+[bp/r24733][SEC] improve OpenID robustness
+
+
+----------------------------------------------
+r25606 | pkdille | 2010-02-23 23:47:00 +0100 (Tue, 23 Feb 2010) | 9 lines
+
+[QT] Quality Team Backport
+
+r24721 | pkdille | 2010-01-28 21:31:23 +0100 (Thu, 28 Jan 2010) | 6 lines
+[bp/r24720][FIX] mail notifications : fix the link sent in the notification email which gives the possibility to unsubscribe the user watch.
+     BTW, fix the remove_user_watch_by_id function in order to not allow anybody to remove every notification.
+     This was broken since r11994 and was ticket 2895 in dev tracker.
+     Thks to nyloth and sept_7 for the help.
+
+
+----------------------------------------------
+r25605 | pkdille | 2010-02-23 23:46:20 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24663 | Jyhem | 2010-01-26 10:49:36 +0100 (Tue, 26 Jan 2010) | 1 line
+[FIX] Page names starting with a figure could not switch language (trunk #24661) 
+
+
+----------------------------------------------
+r25604 | pkdille | 2010-02-23 23:44:27 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24606 | jonnybradley | 2010-01-22 19:57:53 +0100 (Fri, 22 Jan 2010) | 1 line
+[bp/r24597][KIL] Removal (part 3) of Mootools based slideshow (SVN external property)
+
+
+----------------------------------------------
+r25603 | pkdille | 2010-02-23 23:33:53 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24603 | sylvieg | 2010-01-22 16:20:44 +0100 (Fri, 22 Jan 2010) | 1 line
+[FIX]typo introduce in 24444 - does not exist on trunk
+
+
+----------------------------------------------
+r25602 | pkdille | 2010-02-23 23:33:44 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24602 | sylvieg | 2010-01-22 15:41:45 +0100 (Fri, 22 Jan 2010) | 1 line
+[bp/r 24601] [FIX]login: the only time the password must be kept in clear in the database is when an admin adds a user and ask for change password
+
+
+----------------------------------------------
+r25601 | pkdille | 2010-02-23 23:33:34 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24573 | sylvieg | 2010-01-20 21:26:44 +0100 (Wed, 20 Jan 2010) | 1 line
+[bp/r 24570 2472][FIX]fix upload +unzipped files + fix errors unzip upload and ajax
+
+
+----------------------------------------------
+r25600 | pkdille | 2010-02-23 23:33:22 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24520 | sylvieg | 2010-01-18 22:56:59 +0100 (Mon, 18 Jan 2010) | 1 line
+[bp/r 24516]typo: thx sept7
+
+
+----------------------------------------------
+r25599 | pkdille | 2010-02-23 23:33:13 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24492 | pkdille | 2010-01-18 15:29:21 +0100 (Mon, 18 Jan 2010) | 1 line
+[br/r24491][FIX] blog post: return to view_blog_post instead of view_blog (on the top of the whole blog.. and not the post which was just done) when a new post is submitted or a post is modified. This is easier to understand for users.
+
+
+----------------------------------------------
+r25598 | pkdille | 2010-02-23 23:33:03 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24444 | xavidp | 2010-01-17 14:34:58 +0100 (Sun, 17 Jan 2010) | 1 line
+[MOD][bp/r24443]Spam protection: when aonymous is allowed to add or change events in calendars, the ip is logged at syslog to allow banning ip's if needed. Also antibot code checked only when saving (not when changing calendar, or previewing). No check on deletion of events for anons (if allowed) since bots are not known to use JS buttons.
+
+
+----------------------------------------------
+r25597 | pkdille | 2010-02-23 23:32:54 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24424 | sylvieg | 2010-01-15 23:49:12 +0100 (Fri, 15 Jan 2010) | 1 line
+[bp/r 24423][FIX]tra: array_merge does not preserve numeric key - as 0 is in langauge.php, it was transformed to 1 after the array_merge
+
+
+----------------------------------------------
+r25596 | pkdille | 2010-02-23 23:30:17 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24385 | chealer | 2010-01-15 00:35:45 +0100 (Fri, 15 Jan 2010) | 1 line
+[bp/r24384][FIX] page rename: handle slashes in old page name. Fixes ticket ID 2360
+
+
+----------------------------------------------
+r25595 | pkdille | 2010-02-23 23:30:07 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24383 | sylvieg | 2010-01-14 23:49:24 +0100 (Thu, 14 Jan 2010) | 1 line
+[bp/r 24382][MOD]fgal: do also the move files from fs to db (only for completness) + feedback of the operation
+
+
+----------------------------------------------
+r25594 | pkdille | 2010-02-23 23:29:51 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24360 | xavidp | 2010-01-14 14:44:08 +0100 (Thu, 14 Jan 2010) | 1 line
+[ENH / bp r24357]Anti-bot captcha added when anonymous are allowed add new any email to newsletters.
+
+
+----------------------------------------------
+r25593 | pkdille | 2010-02-23 23:29:38 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24359 | xavidp | 2010-01-14 14:41:22 +0100 (Thu, 14 Jan 2010) | 1 line
+[ENH/bp r24356]Anti-bot captcha added when anonymous are allowed add new calendar items.
+
+
+----------------------------------------------
+r25592 | pkdille | 2010-02-23 23:29:23 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24311 | jonnybradley | 2010-01-13 19:28:58 +0100 (Wed, 13 Jan 2010) | 1 line
+[bp/r24291][FIX] Reset IE CSS paths in Theme Control
+
+
+----------------------------------------------
+r25591 | pkdille | 2010-02-23 23:29:13 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24310 | jonnybradley | 2010-01-13 19:25:36 +0100 (Wed, 13 Jan 2010) | 1 line
+[bp/r24287][ENH] Add 'page' param to logout to redirect to custom page instead of home.
+
+
+----------------------------------------------
+r25590 | pkdille | 2010-02-23 23:23:34 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24297 | chealer | 2010-01-12 22:13:19 +0100 (Tue, 12 Jan 2010) | 1 line
+[bp/24273][FIX] "Prevent automatic/robot registration:" interferes with OpenID (Ticket 1505)
+
+
+----------------------------------------------
+r25589 | pkdille | 2010-02-23 23:23:24 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24294 | chealer | 2010-01-12 20:45:47 +0100 (Tue, 12 Jan 2010) | 1 line
+[bp/r24290] [FIX] OpenID logo not showing in OpenID URL input field on Strasa
+
+
+----------------------------------------------
+r25588 | pkdille | 2010-02-23 23:23:14 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24245 | sylvieg | 2010-01-10 22:39:00 +0100 (Sun, 10 Jan 2010) | 1 line
+[bp/ r 24244][NEW]fgal: button to move the files from db to dir
+
+
+----------------------------------------------
+r25587 | pkdille | 2010-02-23 23:22:57 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24212 | marclaporte | 2010-01-08 16:54:10 +0100 (Fri, 08 Jan 2010) | 1 line
+[bp/r24209] [FIX] Tracker exports: 1st line of data was on same line as headers 
+
+
+----------------------------------------------
+r25586 | pkdille | 2010-02-23 23:11:15 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24163 | sylvieg | 2010-01-06 14:51:14 +0100 (Wed, 06 Jan 2010) | 1 line
+[bp/r 24157]missing line(lost in 22386)
+
+
+----------------------------------------------
+r25585 | pkdille | 2010-02-23 23:11:05 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24162 | sylvieg | 2010-01-06 14:49:11 +0100 (Wed, 06 Jan 2010) | 1 line
+[bp/ r 24161][FIX]trackerstat: fix stat on categ field
+
+
+----------------------------------------------
+r25584 | pkdille | 2010-02-23 23:09:43 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24150 | alain_desilets | 2010-01-05 17:24:59 +0100 (Tue, 05 Jan 2010) | 1 line
+- Yet another bug fix in language filtering. When going directly to listpages.php (without going through the Wiki Search box), no pages were listed. Problem fixed in the backend at the level of tikilib->list_pages(), so it should be fixed, no matter how the function is invoked.
+
+
+----------------------------------------------
+r25583 | pkdille | 2010-02-23 23:09:34 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24140 | jonnybradley | 2010-01-04 19:31:21 +0100 (Mon, 04 Jan 2010) | 1 line
+[bp/r24139] [FIX] Allow multitiki to cope with (or without) 'www.' at start of http_host
+
+
+----------------------------------------------
+r25582 | pkdille | 2010-02-23 23:09:24 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24121 | xavidp | 2010-01-02 18:11:10 +0100 (Sat, 02 Jan 2010) | 1 line
+[FIX/bp r24117 & 23960] Backporting the fix from Jonnyb (thanks! :-)  to patch spreadsheets in order to allow inserting rows and columns again.
+
+
+----------------------------------------------
+r25581 | pkdille | 2010-02-23 23:09:14 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24120 | xavidp | 2010-01-02 17:55:21 +0100 (Sat, 02 Jan 2010) | 1 line
+[FIX]Adding needed img rewrite rule, as it was used back in tiki 2.x. I?ll add it to the proposed branches also. Many images were not displayed in one site after upgrading from 2.x to 3.x because of this missing rewrite rule for images.
+
+
+----------------------------------------------
+r25580 | pkdille | 2010-02-23 23:09:04 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24099 | chealer | 2010-01-01 03:17:34 +0100 (Fri, 01 Jan 2010) | 1 line
+[FIX] strange module title "Search Wiki Page (new)" (already fixed in trunk by r24098). reported by Marc Laporte
+
+
+----------------------------------------------
+r25579 | pkdille | 2010-02-23 23:08:53 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24045 | chibaguy | 2009-12-26 15:51:38 +0100 (Sat, 26 Dec 2009) | 1 line
+[bp/r24044][FIX] Shadow layer div tags were appearing even when the feature wasn't activated.
+
+
+----------------------------------------------
+r25578 | pkdille | 2010-02-23 23:07:27 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r24008 | sylvieg | 2009-12-22 22:13:22 +0100 (Tue, 22 Dec 2009) | 1 line
+[bp/r 24007][FIX]CATEGORY: the sort param can be a list of criteria separated by comma
+
+
+----------------------------------------------
+r25577 | pkdille | 2010-02-23 23:07:17 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23986 | sylvieg | 2009-12-22 11:58:08 +0100 (Tue, 22 Dec 2009) | 1 line
+[bp/r 23985][FIX]tracker: rating field has a system type - to allow other field to be named rating
+
+
+----------------------------------------------
+r25576 | pkdille | 2010-02-23 23:07:08 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23973 | sylvieg | 2009-12-21 19:21:02 +0100 (Mon, 21 Dec 2009) | 1 line
+[bp/r 23972][FIX]tracker: default value for radio fields in TRACKER on an existing tracker
+
+
+----------------------------------------------
+r25575 | pkdille | 2010-02-23 23:06:56 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23968 | sylvieg | 2009-12-20 16:27:59 +0100 (Sun, 20 Dec 2009) | 1 line
+[bp/r 23967][FIX]ATTACH: more generic to relay on  than on script_name
+
+
+----------------------------------------------
+r25574 | pkdille | 2010-02-23 23:04:45 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23962 | sylvieg | 2009-12-18 21:49:27 +0100 (Fri, 18 Dec 2009) | 1 line
+[bp/ r 23961][FIX]TRACKERITEMFIELD: REQUEST['itemId'] is more important than trackeruser - otherwise behavior is different for user with user tracker and without
+
+
+----------------------------------------------
+r25573 | pkdille | 2010-02-23 23:04:31 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23958 | sylvieg | 2009-12-18 20:21:00 +0100 (Fri, 18 Dec 2009) | 1 line
+[bp/r 23957][FIX]tracker: remove effectively the user vote
+
+
+----------------------------------------------
+r25572 | pkdille | 2010-02-23 23:02:37 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23918 | sylvieg | 2009-12-16 16:51:05 +0100 (Wed, 16 Dec 2009) | 1 line
+[bp/ r 23917] [FIX]FANCYTABLE: warning when jq option is not on
+
+
+----------------------------------------------
+r25571 | pkdille | 2010-02-23 22:57:00 +0100 (Tue, 23 Feb 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r23916 | sylvieg | 2009-12-16 16:41:56 +0100 (mer., 16 d?\195?\169c. 2009) | 1 line
+[bp/ r 23914 23915]FANCYTABLE: do not use plugin JQ but goes directly + respect alternative lines colors when sorting
+
+
+----------------------------------------------
+r25568 | nyloth | 2010-02-23 22:41:40 +0100 (Tue, 23 Feb 2010) | 1 line
+
+[QT] Rollback commit 24829
+----------------------------------------------
+r25440 | xavidp | 2010-02-20 19:43:30 +0100 (Sat, 20 Feb 2010) | 1 line
+
+[FIX] A few more strings translated
+----------------------------------------------
+r25270 | sylvieg | 2010-02-16 18:34:16 +0100 (Tue, 16 Feb 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+[BP/24554] [FIX] PDO: avoid returning twice the result of the query once in
+associative mode and one (not used) in index mode. Reduce the memory needed
+when PDO is used.
+
+
+----------------------------------------------
+r25010 | xavidp | 2010-02-09 23:12:42 +0100 (Tue, 09 Feb 2010) | 1 line
+
+[ENH]A few more strings translated. Nowadays this file is in sync with the one in proposals/4.x, which temporarily had more strings translated than the one in 4.x by mistake.
+----------------------------------------------
+r24829 | ricks99 | 2010-02-04 02:07:51 +0100 (Thu, 04 Feb 2010) | 1 line
+
+[FIX]Bug #1552. Tiki will now append the &bl parameter to search results (wiki pages only) when the multilingual and best_languages features are enabled.
+----------------------------------------------
+r24665 | Jyhem | 2010-01-26 10:54:37 +0100 (Tue, 26 Jan 2010) | 1 line
+
+oops! should have been in proposals
+----------------------------------------------
+r24662 | Jyhem | 2010-01-26 10:29:48 +0100 (Tue, 26 Jan 2010) | 1 line
+
+[FIX] Page names starting with a figure could not switch language (trunk #24661) 
+----------------------------------------------
+r24519 | jonnybradley | 2010-01-18 22:54:44 +0100 (Mon, 18 Jan 2010) | 3 lines
+
+[QT][bp/r24308][SVN] Fix jquery external lib to current revision (r23938)
+Emergency backport by jonnyb as changes in third_party/jquery for 5.0 broke branches/4.x.
+Votes to come soon (i hope)
+----------------------------------------------
+r24386 | redflo | 2010-01-15 00:38:56 +0100 (Fri, 15 Jan 2010) | 2 lines
+
+[FIX] Fix sql errors when using subgalleries. Fixed bugid 2892
+
+----------------------------------------------
 Version 4.1
 <http://tikiwiki.org/ReleaseNotes41>
 ------------------
