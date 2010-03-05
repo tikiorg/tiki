@@ -43,7 +43,7 @@ input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover,
 .calbuttonBox:hover {
-	border: 1px solid #000000;
+	border: 1px solid #000;
 	background: #000000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_glass_60_000000_1x400.png) 50% 50% repeat-x;
 	color: #96f226;
 }
@@ -62,7 +62,7 @@ body.wikitext {
 }
 #tiki-top {
 	border: 1px solid #aaaaaa;
-	background: #000000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% 50% repeat-x;
+	background: #000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% 50% repeat-x;
 	color: #c6e99c;
 	font-size: 1.1em;
 }
@@ -72,7 +72,7 @@ body.wikitext {
 }
 
 .footerbgtrap {
-	background: #000000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% 50% repeat-x;
+	background: #000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% 50% repeat-x;
 	color: #c6e99c;
 }
 
@@ -88,7 +88,6 @@ body.wikitext {
 	background: none;
 }
 
-/*.cssmenu_horiz li ul li,*/
 .cssmenu_vert li ul li,
 #secondary_site_menu .cssmenu_horiz li:hover ul li,
 #secondary_site_menu .cssmenu_horiz li.sfHover ul li {
@@ -118,32 +117,18 @@ body.wikitext {
 	border-top: none;
 }
 
-.cssmenu_horiz li ul li,
-.cssmenu_vert li ul li {
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-
 .wikitext {
 	padding: .2em;
 	margin: 0 .5em 10px;
 	border: 1px solid #4a4a4a;
-	background: #000000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
+	background: #000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
 	color: #f3fce8;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-
-h1.pagetitle a,
-h1.pagetitle a:visited,
-h1.pagetitle a:hover {
-
 }
 
 .box,
 .cbox {
 	border: 1px solid #4a4a4a;
-	background: #000000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
+	background: #000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
 	color: #f3fce8;
 }
 
@@ -153,15 +138,15 @@ h1.pagetitle a:hover {
 
 .cbox a,
 .box a {
-	 color: #ffffff;
+	 color: #fff;
 }
 
 .cbox-title,
 h3.box-title {
-	border: 1px solid #000000;
+	border: 1px solid #000;
 	background: #9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x; color: #222222;
 	font-weight: bold;
-	color: #222222;
+	color: #222;
 }
 
 .box-data a:link,
@@ -191,15 +176,9 @@ h3.box-title {
 }
 
 .rbox-title {
-	background: /*rboxtitle_background*/;
-	color: /*rboxtitle_color*/;
 	border-bottom: none !important;
 }
 	
-.rbox-data {
-	background: /*rboxdata_background*/;
-}
-
 .highlight, span.highlight a,
 .warning .rbox-title,
 .warning .rbox-data {
@@ -216,14 +195,12 @@ tr.odd td,
 td.odd,
 li.odd {
 	background: #c6e99c;
-	border-right: /*tdodd_border-right*/;
 }
 
 tr.even td,
 td.even,
 li.even {
 	background: #b0e077;
-	border-right: /*tdeven_border-right*/;
 }
 
 .tabs {
@@ -248,7 +225,7 @@ li.even {
 	border: 1px solid #696969;
 	background: #4c4c4c url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_flat_0_4c4c4c_40x100.png) 50% 50% repeat-x;
 	font-weight: bold;
-	color: #ffffff !important;
+	color: #fff !important;
 	outline: none;
 }
 
@@ -259,20 +236,18 @@ li.even {
 #tiki-top .cssmenu_horiz li {
 	background:#9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 	margin-right: 5px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 }
 
 .post .postbody {
 	border: 1px solid #4a4a4a;
 	background: #000000 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
-	color: #ffffff;
+	color: #fff;
 }
 
 .postbody-title {
 /*	border: 1px solid #aaaaaa; */
 	background:#9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
-	color: #222222;
+	color: #222;
 }
 	
 .caleven,
@@ -295,4 +270,13 @@ a.admbox.off {
 	border: 1px solid #4a4a4a;
 	background-color: #000;
 	color: #fff;
+}
+
+.cssmenu_horiz li ul li,
+.cssmenu_vert li ul li,
+.wikitext,
+#tiki-top .cssmenu_horiz li {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
