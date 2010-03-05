@@ -7,7 +7,7 @@ rem
 rem If you don't have php-cli the, you can use:
 rem convertsqls.bat domain.com/subdomain/
 
-set VERSION="4.1"
+set VERSION="4.2"
 
 rem Display help information?
 if "%1" == "-h" (
