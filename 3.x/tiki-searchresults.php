@@ -24,8 +24,8 @@ $smarty->assign('headtitle',tra('Search results'));
 
 $searchlib = new SearchLib($tikilib->db);
 
-if ($prefs['feature_search'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_search");
+if ($prefs['feature_search_fulltext'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_search_fulltext");
 
 	$smarty->display("error.tpl");
 	die;
