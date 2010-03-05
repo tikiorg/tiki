@@ -192,6 +192,11 @@ if ($prefs['javascript_enabled'] == 'y') {
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.json-2.2.js' );
+		// plugins
+		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/plugins/menu.css' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/mbMenu.min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jgcharts.pack.js' );
 	}
 	if( $prefs['feature_jquery_jqs5'] == 'y' ) {
 		if (strpos($_SERVER['PHP_SELF'], 'tiki-index_raw.php') !== false && isset($_REQUEST['format']) && $_REQUEST['format'] == 'jqs5') {
