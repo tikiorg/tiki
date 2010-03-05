@@ -149,6 +149,7 @@ class TikiLdapLib {
 
 	// Do a ldap bind
 	public function bind() {
+		global $prefs;
 		if($this->ldaplink instanceof Net_LDAP2) {
 			return (true); // do not try to reconnect since this may lead to huge timeouts
 		}
