@@ -844,81 +844,79 @@ class UsersLib extends TikiLib {
     }
 
     // called after create user or login from ldap
-    function ldap_sync_user_and_groups() {
-	global $prefs;
-	global $logslib;
-	$ret=true;
-	
-        if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing user and group with ldap');
-	$userattributes=$this->ldap->get_user_attributes();
-	//print("<pre>");print_r($userattributes);print("</pre>");
-	$user=$userattributes[$prefs['auth_ldap_userattr']];
+		function ldap_sync_user_and_groups() {
+			global $prefs;
+			global $logslib;
+			$ret=true;
 
-	// sync user information
-	$this->disable_tiki_auth($user);
+			if($prefs['auth_ldap_debug']=='y') $logslib->add_log('ldap','Syncing user and group with ldap');
+			$userattributes=$this->ldap->get_user_attributes();
+			//$user=$userattributes[$prefs['auth_ldap_userattr']];
 
-	
-	$u=array('login'=>$user);
-	if(isset($userattributes[$prefs['auth_ldap_nameattr']])) {
-		$u['realName']=$userattributes[$prefs['auth_ldap_nameattr']];
-	}
+			// sync user information
+			$this->disable_tiki_auth($user);
 
-	if(isset($userattributes[$prefs['auth_ldap_emailattr']])) {
-		$u['email']=$userattributes[$prefs['auth_ldap_emailattr']];
-	}
-	
-	if(isset($userattributes[$prefs['auth_ldap_countryattr']])) {
-		$u['country']=$userattributes[$prefs['auth_ldap_countryattr']];
-	}
+			$u=array('login'=>$user);
+			if(isset($userattributes[$prefs['auth_ldap_nameattr']])) {
+				$u['realName']=$userattributes[$prefs['auth_ldap_nameattr']];
+			}
 
-	if(count($u)>1) {
-		$this->set_user_fields($u);
-	}
+			if(isset($userattributes[$prefs['auth_ldap_emailattr']])) {
+				$u['email']=$userattributes[$prefs['auth_ldap_emailattr']];
+			}
 
-	// sync external group information of user
-	$ldapgroups=$this->ldap->get_groups();
-	$ldapgroups_simple=array();
-	$tikigroups=$this->get_user_groups($user);
-	foreach($ldapgroups as $group) {
-		$gname=$group[$prefs['auth_ldap_groupattr']];
-		$ldapgroups_simple[]=$gname; // needed later
-		if($this->group_exists($gname) && !$this->group_is_external($gname)) { // group exists
-			//check if we need to sync group information
-			if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
-				$ginfo=$this->get_group_info($gname);
-				if($group[$prefs['auth_ldap_groupdescattr']] != $ginfo['groupDesc']) {
-					$this->set_group_description($gname,$group[$prefs['auth_ldap_groupdescattr']]);
+			if(isset($userattributes[$prefs['auth_ldap_countryattr']])) {
+				$u['country']=$userattributes[$prefs['auth_ldap_countryattr']];
+			}
+
+			if(count($u)>1) {
+				$this->set_user_fields($u);
+			}
+
+			// sync external group information of user
+			$ldapgroups=$this->ldap->get_groups();
+			$ldapgroups_simple=array();
+			$tikigroups=$this->get_user_groups($user);
+			foreach($ldapgroups as $group) {
+				$gname=$group[$prefs['auth_ldap_groupattr']];
+				$ldapgroups_simple[]=$gname; // needed later
+				if($this->group_exists($gname) && !$this->group_is_external($gname)) { // group exists
+					//check if we need to sync group information
+					if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
+						$ginfo=$this->get_group_info($gname);
+						if($group[$prefs['auth_ldap_groupdescattr']] != $ginfo['groupDesc']) {
+							$this->set_group_description($gname,$group[$prefs['auth_ldap_groupdescattr']]);
+						}
+					}
+
+				} else if(!$this->group_exists($gname)){ // create group
+					if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
+						$gdesc=$group[$prefs['auth_ldap_groupdescattr']];
+					} else {
+						$gdesc='';
+					}
+					$logslib->add_log('ldap','Creating external group '.$gname);
+					$this->add_group($gname,$gdesc,'',0,0,'','',0,'',0,0,'y');
+				}
+
+				// add user
+				if(!in_array($gname,$tikigroups)) {
+					$logslib->add_log('ldap','Adding user '.$user.' to external group '.$gname);
+					$this->assign_user_to_group($user,$gname);
 				}
 			}
 
-		} else if(!$this->group_exists($gname)){ // create group
-			if(isset($group[$prefs['auth_ldap_groupdescattr']])) {
-				$gdesc=$group[$prefs['auth_ldap_groupdescattr']];
-			} else {
-				$gdesc='';
+			// now clean up group membership if user has been unassigned from a group in ldap
+			$extgroups=$this->get_user_external_groups($user);
+			foreach($extgroups as $eg) {
+				if(!in_array($eg,$ldapgroups_simple)) {
+					$logslib->add_log('ldap','Removing user '.$user.' from external group '.$eg);
+					$this->remove_user_from_group($user, $eg);
+				}
 			}
-			$logslib->add_log('ldap','Creating external group '.$gname);
-			$this->add_group($gname,$gdesc,'',0,0,'','',0,'',0,0,'y');
-		}
 
-		// add user
-		if(!in_array($gname,$tikigroups)) {
-			$logslib->add_log('ldap','Adding user '.$user.' to external group '.$gname);
-			$this->assign_user_to_group($user,$gname);
+			return($ret);
 		}
-	}
-
-	// now clean up group membership if user has been unassigned from a group in ldap
-	$extgroups=$this->get_user_external_groups($user);
-	foreach($extgroups as $eg) {
-		if(!in_array($eg,$ldapgroups_simple)) {
-			$logslib->add_log('ldap','Removing user '.$user.' from external group '.$eg);
-			$this->remove_user_from_group($user, $eg);
-		}
-	}
-
-	return($ret);
-    }
 
 	function set_group_description($group,$description) {
 		$query = "update `users_groups` set `groupDesc`=? where `groupName`=?";
@@ -2644,65 +2642,54 @@ function get_included_groups($group, $recur=true) {
 	return true;
     }
 
-    function set_user_fields($u) {
-	global $prefs;
-
-	$q = array();
-	$bindvars = array();
-
-	if (isset($u['password'])) {
-	    if ($prefs['feature_clear_passwords'] == 's') {
-		$q[] = "`password` = ?";
-		$bindvars[] = strip_tags($u['password']);
-	    }
-
-	    // I don't think there are currently cases where login and email are undefined
-	    //$hash = md5($u['login'] . $u['password'] . $u['email']);
-	    $hash = $this->hash_pass($u['password']);
-	    $q[] = "`hash` = ?";
-	    $bindvars[] = $hash;
-	}
-
-	if (isset($u['email'])) {
-	    $q[] = "`email` = ?";
-	    $bindvars[] = strip_tags($u['email']);
-	}
-
-    if (isset($u['openid_url'])) {
-	    if (isset($_SESSION['openid_url'])) {
-		$q[] = "`openid_url` = ?";
-		$bindvars[] = $u['openid_url'];
-	    }
-    }
-
-	if (sizeof($q) > 0) {
-	    $query = "update `users_users` set " . implode(",", $q). " where " .
-		$this->convertBinary(). " `login` = ?";
-	    $bindvars[] = $u['login'];
-	    $result = $this->query($query, $bindvars);
-	}
-
-	$aUserPrefs = array('realName','homePage','country');
-	foreach ($aUserPrefs as $pref){
-		if (isset($u[$pref])) {
-		    $bindvars = array();
-
-		    $bindvars[] = strip_tags($u[$pref]);
-		    $bindvars[] = $u['login'];
-		    $bindvars[] = $pref;
-
-		    if ($this->getOne("select `user` from `tiki_user_preferences` where `user`=? and `prefName`=?",array($u['login'],$pref))) {
-			$query = "UPDATE `tiki_user_preferences` set `value`=? where `user`=? and `prefName`=?";
-		    } else {
-			$query = "INSERT INTO `tiki_user_preferences` (`value`,`user`,`prefName`) VALUES (?,?,?)";
-		    }
-		    $this->query($query, $bindvars);
+		function set_user_fields($u) {
+			global $prefs;
+		
+			$q = array();
+			$bindvars = array();
+		
+			if (isset($u['password'])) {
+				if ($prefs['feature_clear_passwords'] == 's') {
+					$q[] = "`password` = ?";
+					$bindvars[] = strip_tags($u['password']);
+				}
+		
+				// I don't think there are currently cases where login and email are undefined
+				//$hash = md5($u['login'] . $u['password'] . $u['email']);
+				$hash = $this->hash_pass($u['password']);
+				$q[] = "`hash` = ?";
+				$bindvars[] = $hash;
+			}
+		
+			if (isset($u['email'])) {
+				$q[] = "`email` = ?";
+				$bindvars[] = strip_tags($u['email']);
+			}
+		
+			if (isset($u['openid_url'])) {
+				if (isset($_SESSION['openid_url'])) {
+					$q[] = "`openid_url` = ?";
+					$bindvars[] = $u['openid_url'];
+				}
+			}
+		
+			if (sizeof($q) > 0) {
+				$query = "update `users_users` set " . implode(",", $q). " where " .
+					$this->convertBinary(). " `login` = ?";
+				$bindvars[] = $u['login'];
+				$result = $this->query($query, $bindvars);
+			}
+		
+			$aUserPrefs = array('realName','homePage','country');
+			foreach ($aUserPrefs as $pref) {
+				if ( isset($u[$pref]) ) {
+					$this->set_user_preference($u['login'],$pref,$u[$pref]);
+				}
+			}
+		
+			return $result;
 		}
-	}
-
-	return $result;
-    }
-
+		
     // damian aka damosoft
     function count_users($group) {
         static $rv = array();
