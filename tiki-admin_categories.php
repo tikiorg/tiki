@@ -397,7 +397,7 @@ if( $prefs['feature_articles'] == 'y' ) {
 	$articles = $artlib->list_articles($offset, $maxRecords, 'title_asc', $find_objects, '', '', $user, '', '', 'n');
 }
 
-if( $prefs['feature_directories'] == 'y' ) {
+if( $prefs['feature_directory'] == 'y' ) {
 	include_once ('lib/directory/dirlib.php');
 	$directories = $dirlib->dir_list_all_categories($offset, $maxRecords, 'name_asc', $find_objects);
 }
