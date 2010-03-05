@@ -211,9 +211,9 @@ h3.box-title {
 	text-align: center;
 }
 
-.box-data a:link,
+.box-data a,
 .box-data a:visited,
-.wikitext a:link,
+.wikitext a,
 .wikitext a:visited  {
 	color: #e69700;
 }
@@ -221,24 +221,19 @@ h3.box-title {
 .rbox-title, 
 .rbox-data {
 	background: url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-small_25_c5ddfc_40x40.png) repeat scroll 50% 50%;
-	border:1px solid #FFFFFF;
-	color:#333333;
+	border: 1px solid #E69700;
+	color: #fff;
 }	
 	
 .rbox-title {
-	background: /*rboxtitle_background*/;
-	color: /*rboxtitle_color*/;
 	border-bottom: none !important;
 }
 	
-.rbox-data {
-	background: /*rboxdata_background*/;
-}
 .errors .rbox-title,
 .errors .rbox-data,
 .warning .rbox-title,
 .warning .rbox-data {
-	border: 1px solid #696969;
+	border: 1px solid #E69700;
 	font-weight: bold;
 	color: #fff;
 	outline: none;
