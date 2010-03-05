@@ -147,6 +147,10 @@ h1.pagetitle a:hover {
 	color: #f3fce8;
 }
 
+.box legend {
+	color: #f3fce8;	
+}
+
 .cbox a,
 .box a {
 	 color: #ffffff;
