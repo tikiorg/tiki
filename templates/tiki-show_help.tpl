@@ -4,10 +4,10 @@
 	{foreach item=help from=$help_sections}
 		{$help.content}
 	{/foreach}
-	{jq}
+	{if $prefs.feature_jquery_ui eq "y"}{jq}
 $jq(function() {
 	$jq("#help_sections").accordion({ fillSpace: false, clearStyle: true, collapsible: true, autoHeight: false,  header: 'h3' });
 });
-	{/jq}
+	{/jq}{/if}
 	</div>
 </div>
