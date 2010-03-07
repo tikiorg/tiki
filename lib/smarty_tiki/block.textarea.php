@@ -42,6 +42,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
+	$params['width'] = isset($params['cols']) ? $params['cols'] : '100%';
+	$params['height'] = isset($params['cols']) ? $params['cols'] : '500px';
 	
 	// mainly for modules admin - preview is for the module, not the user module so don;t need to confirmExit
 	$params['_previewConfirmExit'] = isset($params['_previewConfirmExit']) ? $params['_previewConfirmExit'] : 'y';
@@ -88,48 +90,101 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 
 
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
-
-		global $url_path;
-		include_once 'lib/tikifck.php';
-		if (!isset($params['name']))       $params['name'] = 'fckedit';
-		$fcked = new TikiFCK($params['name']);
-	
-		if (isset($content))			$fcked->Meat = $content;
-		if (isset($params['Width']))	$fcked->Width = $params['Width'];
-		if (isset($params['Height']))	$fcked->Height = $params['Height'];
 		
-		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-			$fcked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
-			$fcked->Config['autoSaveEditorId'] = $as_id;
-		}
-		if (isset($params['ToolbarSet'])) {
-			$fcked->ToolbarSet = $params['ToolbarSet'];
-		} else {
-			$fcked->ToolbarSet = 'Tiki';
-		}
-		if ($prefs['feature_detect_language'] == 'y') {
-			$fcked->Config['AutoDetectLanguage'] = true;
-		} else {
-			$fcked->Config['AutoDetectLanguage'] = false;
-		}
-		$fcked->Config['DefaultLanguage'] = $prefs['language'];
-		$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php'.(isset($params['_section']) ? '?section='.urlencode($params['_section']) : '');
+		if ($prefs['wysiwyg_ckeditor'] != 'y') {	// tried and tested FCKEditor
+			global $url_path;
+			include_once 'lib/tikifck.php';
+			if (!isset($params['name']))       $params['name'] = 'fckedit';
+			$fcked = new TikiFCK($params['name']);
 		
-		// this JS needs to be there before the iframe always - at end of page is too late
-		
-		$html .= $headerlib->wrap_js('
+			if (isset($content))			$fcked->Meat = $content;
+			if (isset($params['Width']))	$fcked->Width = $params['Width'];
+			if (isset($params['Height']))	$fcked->Height = $params['Height'];
+			
+			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
+				$fcked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
+				$fcked->Config['autoSaveEditorId'] = $as_id;
+			}
+			if (isset($params['ToolbarSet'])) {
+				$fcked->ToolbarSet = $params['ToolbarSet'];
+			} else {
+				$fcked->ToolbarSet = 'Tiki';
+			}
+			if ($prefs['feature_detect_language'] == 'y') {
+				$fcked->Config['AutoDetectLanguage'] = true;
+			} else {
+				$fcked->Config['AutoDetectLanguage'] = false;
+			}
+			$fcked->Config['DefaultLanguage'] = $prefs['language'];
+			$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php'.(isset($params['_section']) ? '?section='.urlencode($params['_section']) : '');
+			
+			// this JS needs to be there before the iframe always - at end of page is too late
+			
+			$html .= $headerlib->wrap_js('
 var fckEditorInstances = new Array();
 function FCKeditor_OnComplete( editorInstance ) {
 	fckEditorInstances[fckEditorInstances.length] = editorInstance;
 	editorInstance.ResetIsDirty();
 };');
 		
-		$html .= $fcked->CreateHtml();
-		
-		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
-		
-		$headerlib->add_jq_onready('$jq(".fckeditzone").resizable({ minWidth: $jq("#'.$as_id.'").width(), minHeight: 50 });');
+			$html .= $fcked->CreateHtml();
+			
+			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+			
+			$headerlib->add_jq_onready('$jq(".fckeditzone").resizable({ minWidth: $jq("#'.$as_id.'").width(), minHeight: 50 });');
 
+		} else {									// new ckeditor implementation 2010
+
+			//include_once 'lib/tiki_ckeditor.php';
+			if (!isset($params['name'])) { $params['name'] = 'edit'; }
+			//$cked = new TikiCK($params['name']);
+		
+			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js');
+			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js');
+		
+			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
+				$cked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
+				$cked->Config['autoSaveEditorId'] = $as_id;
+			}
+//			if (isset($params['ToolbarSet'])) {
+//				$cked->ToolbarSet = $params['ToolbarSet'];
+//			} else {
+//				$cked->ToolbarSet = 'Tiki';
+//			}
+			
+			include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
+			$cktools = smarty_function_toolbars($params, $smarty);
+			$cktools = json_encode($cktools);
+			$cktools = substr($cktools, 1, strlen($cktools) - 2);	// remove surrouding [ & ]
+			$cktools = str_replace(']],[[', '],"/",[', $cktools);	// add new row chars - done here so as not to break existing fck
+						
+//			if ($prefs['feature_detect_language'] == 'y') {
+//				$cked->Config['AutoDetectLanguage'] = true;
+//			} else {
+//				$cked->Config['AutoDetectLanguage'] = false;
+//			}
+			//$cked->Config['DefaultLanguage'] = $prefs['language'];
+			//$cked->Config['CustomConfigurationsPath'] = $url_path.'setup_ckeditor.php'.(isset($params['_section']) ? '?section='.urlencode($params['_section']) : '');
+			//$html .= $cked->CreateHtml();
+			
+			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+			$headerlib->add_jq_onready('
+$jq( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
+	toolbar_Tiki: '.$cktools.',
+	toolbar: "Tiki",
+	language: "'.$prefs['language'].'"
+});
+', 4);
+			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="display:none; width: '.$params['width'].'; height: '.$params['height'].';">'.htmlspecialchars($content).'</textarea>';
+			
+			$headerlib->add_js('
+var fckEditorInstances = new Array();
+function CKeditor_OnComplete( editorInstance ) {
+	fckEditorInstances[fckEditorInstances.length] = editorInstance;
+//	editorInstance.resetDirty(); // doesnt work
+};');
+			
+		}	// end both wysiwyg setups
 
 	} else {
 		

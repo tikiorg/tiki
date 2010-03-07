@@ -47,6 +47,10 @@ function smarty_function_toolbars($params, &$smarty)
 
 	include_once( 'lib/toolbars/toolbarslib.php' );
 	$list = ToolbarsList::fromPreference( $params['section'] . ($comments ? '_comments' : ''), $hidden );
-	return $list->getWikiHtml( $params['area_name'] );
+	if ( isset($params['_wysiwyg']) && $params['_wysiwyg'] == 'y') {
+		return $list->getWysiwygArray();
+	} else {
+		return $list->getWikiHtml( $params['area_name'] );
+	}
 }
 

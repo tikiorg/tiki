@@ -17,6 +17,15 @@
 		{preference name=wysiwyg_wiki_parsed}
 		{preference name=wysiwyg_wiki_semi_parsed}
 		{preference name=wysiwyg_toolbar_skin}
+		
+		<div class="adminoptionbox">
+			<div class="adminoptionlabel">
+				<em>{tr}Experimental{/tr}:</em> {icon _id=bug_error}
+				<div class="adminoptionboxchild">	
+					{preference name=wysiwyg_ckeditor}
+				</div>
+			</div>
+		</div>
 
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
