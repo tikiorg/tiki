@@ -605,11 +605,16 @@ a.phplmselected:hover {
 	color: #5a7ea2;
 }
 
-#tiki-top .cssmenu_horiz li a:link,
-#tiki-top .cssmenu_horiz li a:visited {
+#header .cssmenu_horiz li a:link,
+#header .cssmenu_horiz li a:visited {
 	text-decoration: none;
 	background: inherit;
 	color: #cfe3fb;
+}
+
+#secondary_site_menu .cssmenu_horiz li ul li a:link,
+#secondary_site_menu .cssmenu_horiz li ul li a:visited {
+	color: #295C83;
 }
 
 .cssmenu_vert li a {
