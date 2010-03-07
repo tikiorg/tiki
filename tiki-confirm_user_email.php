@@ -18,7 +18,7 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 		if (empty($user)) {
 			$_SESSION["$user_cookie_site"] = $user = $_REQUEST['user'];
 		}
-		header('Location: tiki-information.php?msg='.urlencode('Account validated successfully.'));
+		header('Location: tiki-information.php?msg='.urlencode(tra('Account validated successfully.')));
 		die;
 	}
 }
