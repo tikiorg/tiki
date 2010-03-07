@@ -299,8 +299,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_shadowbox' => array(
-			'name' => tra('Shadowbox'),
-			'description' => tra('Shadowbox'),
+			'name' => tra('Shadowbox / ColorBox'),
+			'description' => tra('"Displaying content with Eye Candy". <br />Uses jQuery plugin "ColorBox". e.g. <code>{img fileId="42" thumb="y" alt="" rel="box[g]"}</code>'),
 			'help' => 'Shadowbox',
 			'type' => 'flag',
 		),
@@ -1314,6 +1314,7 @@ function prefs_feature_list() {
 			'name' => tra('JQuery Sortable Tables'),
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
+			'description' => tra('As it turns out, an unused experiment...'),
 		),
 		'feature_tabs' => array(
 			'name' => tra('Use Tabs'),
