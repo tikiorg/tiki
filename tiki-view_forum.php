@@ -31,20 +31,6 @@ $auto_query_args = array(
 	'filter_type',
 	'reply_state'
 );
-// the following code is needed to pass $_REQUEST variables that are not passed as URL parameters
-$phpself = $_SERVER['PHP_SELF'];
-if (isset($_POST['daconfirm']) && !empty($_SESSION["requestvars_$phpself"])) {
-	if (!empty($_REQUEST['ticket'])) {
-		$ticket = $_REQUEST['ticket'];
-	} else {
-		// even if there is no ticket, let tikiticketlib handle it
-		$ticket = NULL;
-	}
-	$_REQUEST = $_SESSION["requestvars_$phpself"];
-	$_REQUEST['ticket'] = $ticket;
-	unset($ticket);
-	unset($_SESSION["requestvars_$phpself"]);
-}
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 if (!isset($_REQUEST["forumId"]) || !($forum_info = $commentslib->get_forum($_REQUEST["forumId"]))) {
@@ -99,22 +85,6 @@ if ($tiki_p_admin_forum == 'y') {
 			key_check($area);
 			$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
 		} else {
-			key_get($area);
-		}
-	}
-	if (isset($_REQUEST['delsel_x'])) {
-		$area = 'delforumtopics';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			if (isset($_REQUEST['forumtopic'])) {
-				foreach(array_values($_REQUEST['forumtopic']) as $topic) {
-					$commentslib->remove_comment($topic);
-					$commentslib->register_remove_post($_REQUEST['forumId'], 0);
-				}
-			}
-		} else {
-			// this SESSION var passes the current REQUEST variables since they are not passed by URL
-			$_SESSION["requestvars_$phpself"] = $_REQUEST;
 			key_get($area);
 		}
 	}
