@@ -81,7 +81,9 @@ if ( $isvalid ) {
 		} else {
 			$user = $_REQUEST['user'];
 			$_SESSION["$user_cookie_site"] = $user;
-			header('Location: tiki-information.php?msg='.urlencode('Account validated successfully.'));
+			$smarty->assign('msg', tra("Account validated successfully."));
+			$smarty->assign('mid', 'tiki-information.tpl');
+			$smarty->display("tiki.tpl");
 			die;
 		}
 	}
