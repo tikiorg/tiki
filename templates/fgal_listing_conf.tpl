@@ -14,7 +14,7 @@
 </tr>
 		{else}
 <tr class="formcolor">
-	<td><label for="fgal_{$key}">{$item.name}:</label></td>
+	<td><label for="fgal_{$key}{$fgal_ext}">{$item.name}:</label></td>
 	{assign var='pref_name' value="fgal_$key"}
 	<td><input type="checkbox" id="fgal_{$key}" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}{if $edit_mode eq 'y' and $prefs.$pref_name neq 'y'} disabled="disabled"{/if} />
 		{if $edit_mode eq 'y' and $prefs.$pref_name neq 'y'}
@@ -37,7 +37,7 @@
 	<td><label for="fgal_list_{$key}">{$item.name}:</label></td>
 	<td>
 		<select id="fgal_list_{$key}" name="fgal_list_{$key}">
-		{if $key eq 'name'}
+		{if $key eq 'name' or $key eq 'name_admin'}
 			<option value="a"{if $item.value eq 'a'} selected="selected"{/if}>{tr}Name-filename{/tr}</option>
 			<option value="n"{if $item.value eq 'n'} selected="selected"{/if}>{tr}Name{/tr}</option>
 			<option value="f"{if $item.value eq 'f'} selected="selected"{/if}>{tr}Filename only{/tr}</option>
@@ -47,7 +47,7 @@
 			<option value='o'{if $item.value eq 'o'} selected="selected"{/if}>{tr}Show in popup box{/tr}</option>
 			<option value='a'{if $item.value eq 'a'} selected="selected"{/if}>{tr}Both{/tr}</option>
 		{/if}
-		{if $key eq 'lockedby'}
+		{if $key eq 'lockedby' or $key eq 'lockedby_admin'}
 			<option value='i'{if $item.value eq 'i'} selected="selected"{/if}>{tr}Show an icon in a column{/tr}</option>
 		{/if}
 		</select>

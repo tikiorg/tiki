@@ -80,6 +80,22 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_toggle('fgal_show_slideshow');
 	simple_set_value('fgal_default_view');
 	simple_set_value('fgal_list_backlinks');
+	simple_set_value('fgal_list_id_admin');
+	simple_set_value('fgal_list_type_admin');
+	simple_set_value('fgal_list_name_admin');
+	simple_set_value('fgal_list_description_admin');
+	simple_set_value('fgal_list_size_admin');
+	simple_set_value('fgal_list_created_admin');
+	simple_set_value('fgal_list_lastModif_admin');
+	simple_set_value('fgal_list_creator_admin');
+	simple_set_value('fgal_list_author_admin');
+	simple_set_value('fgal_list_last_user_admin');
+	simple_set_value('fgal_list_comment_admin');
+	simple_set_value('fgal_list_files_admin');
+	simple_set_value('fgal_list_hits_admin');
+	simple_set_value('fgal_list_lastDownload_admin');
+	simple_set_value('fgal_list_lockedby_admin');
+	simple_set_value('fgal_list_backlinks_admin');
 }
 
 $usedSize = $filegallib->getUsedSize();

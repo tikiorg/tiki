@@ -128,13 +128,23 @@
 	{preference name='fgal_quota_show'}
 	{preference name='fgal_search_in_content'}
 
-<div class="adminoptionbox">
-	<div class="adminoptionlabel">{tr}Select which items to display when listing galleries: {/tr}:</div>
+<fieldset><legend>{tr}Select which items to display when listing galleries: {/tr}</legend>
         <table class="admin">
 		{include file='fgal_listing_conf.tpl'}
 		</table>
-</div>
+</fieldset>
 	{/tab}
+
+{if $section eq 'admin'}
+	{tab name="{tr}Admin Gallery Listings{/tr}"}
+<fieldset><legend>{tr}Select which items to display when admin galleries: {/tr}</legend>
+        <table class="admin">
+		{include file='fgal_listing_conf.tpl' fgal_options='' fgal_listing_conf=$fgal_listing_conf_admin}
+		</table>
+</fieldset>
+	{/tab}
+{/if}
+
 
 	{tab name="{tr}Search Indexing{/tr}"}
 <div class="adminoptionbox">

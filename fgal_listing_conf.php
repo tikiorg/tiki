@@ -31,6 +31,11 @@ $fgal_listing_conf = array(
 	'lockedby' => array('name' => tra('Locked by'), 'icon' => 'lock_gray'),
 	'backlinks' => array('name' => tra('Backlinks'))
 );
+if ($section == 'admin') {
+	foreach ($fgal_listing_conf as $k=>$v) {
+		$fgal_listing_conf_admin[$k.'_admin'] = $v;
+	}
+}
 foreach ( $fgal_listing_conf as $k => $v ) {
 
 	if ( $k == 'type' ) $show_k = 'icon';
@@ -53,6 +58,13 @@ foreach ( $fgal_listing_conf as $k => $v ) {
 }
 $smarty->assign_by_ref('fgal_listing_conf', $fgal_listing_conf);
 
+if ($section == 'admin') {
+	foreach ($fgal_listing_conf_admin as $k=>$v) {
+		$fgal_listing_conf_admin[$k]['value'] = $prefs['fgal_list_'.$k];
+	}
+	$smarty->assign_by_ref('fgal_listing_conf_admin', $fgal_listing_conf_admin);
+}
+
 $fgal_options = array(
 	'show_explorer' => array('name' => tra('Explorer')),
 	'show_path' => array('name' => tra('Path')),
@@ -60,17 +72,24 @@ $fgal_options = array(
 	'default_view' => array('name' => tra('Default View'))
 );
 
-foreach ( $fgal_options as $k_gal => $v ) {
-	$k_prefs = 'fgal_'.$k_gal;
+if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
+	$fgal_options['show_explorer'] = 'n';
+	$fgal_options['show_path'] = 'n';
+	$fgal_options['show_slideshow'] = 'n';
+	$fgal_options['default_view'] = 'list';
+} else {
+	foreach ( $fgal_options as $k_gal => $v ) {
+		$k_prefs = 'fgal_'.$k_gal;
 
-	if ( $k_gal == 'default_view' ) {
-		$fgal_options[$k_gal]['value'] = ( isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
-	} elseif ( !isset($_REQUEST['edit_mode']) ) {
-		// We are in the file gallery admin panel
-		$fgal_options[$k_gal]['value'] = $prefs[$k_prefs];
-	} else {
-		// We are in the edit file gallery page
-		$fgal_options[$k_gal]['value'] = $gal_info[$k_gal];
+		if ( $k_gal == 'default_view' ) {
+			$fgal_options[$k_gal]['value'] = ( isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
+		} elseif ( !isset($_REQUEST['edit_mode']) ) {
+			// We are in the file gallery admin panel
+			$fgal_options[$k_gal]['value'] = $prefs[$k_prefs];
+		} else {
+			// We are in the edit file gallery page
+			$fgal_options[$k_gal]['value'] = $gal_info[$k_gal];
+		}
 	}
 }
 

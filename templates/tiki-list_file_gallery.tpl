@@ -80,9 +80,12 @@
   {/if}
 
   {if $edit_mode neq 'y' and $dup_mode neq 'y'}
-    {if $view eq 'browse'}
+    {if $view eq 'browse' or $view eq 'admin'}
       {button _text="{tr}List Gallery{/tr}" href="?view=list&amp;galleryId=$galleryId"}
     {else}
+      {if $tiki_p_admin_file_galleries eq 'y'}
+         {button _text="{tr}Admin View{/tr}" href="?view=admin&amp;galleryId=$galleryId"}
+      {/if}
       {button _text="{tr}Browse Images{/tr}" href="?view=browse&amp;galleryId=$galleryId" _ajax='n'} {* no AJAX to make shadowbox work in browse view *}
     {/if}
   {/if}

@@ -551,6 +551,23 @@ function get_default_prefs() {
 		'fgal_quota_show' => 'y',
 		'fgal_list_backlinks' => 'n',
 		'fgal_search_in_content' => 'n',
+		'fgal_list_id_admin' => 'y',
+		'fgal_list_type_admin' => 'y',
+		'fgal_list_name_admin' => 'n',
+		'fgal_list_description_admin' => 'o',
+		'fgal_list_size_admin' => 'y',
+		'fgal_list_created_admin' => 'o',
+		'fgal_list_lastModif_admin' => 'y',
+		'fgal_list_creator_admin' => 'o',
+		'fgal_list_author_admin' => 'o',
+		'fgal_list_last_user_admin' => 'o',
+		'fgal_list_comment_admin' => 'o',
+		'fgal_list_files_admin' => 'o',
+		'fgal_list_hits_admin' => 'o',
+		'fgal_list_lastDownload_admin' => 'n',
+		'fgal_list_lockedby_admin' => 'n',
+		'fgal_list_backlinks_admin' => 'y',
+
 
 		// imagegals
 		'feature_galleries' => 'n',
