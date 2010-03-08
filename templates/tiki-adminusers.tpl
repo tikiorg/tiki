@@ -181,7 +181,8 @@
 								<div style="white-space:nowrap">
 									{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
 										{if $what ne 'included' and $grs != "Registered"}
-											{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title="{tr}Remove{/tr} `$username` {tr}from{/tr} $grs"}{/self_link}
+											{capture assign=grse}{$grs|escape}{/capture}
+											{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title="{tr}Remove{/tr} `$username` {tr}from{/tr} $grse"}{/self_link}
 										{else}
 											{icon _id='bullet_white'}
 										{/if}
