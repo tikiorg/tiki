@@ -136,7 +136,11 @@
   
           {* Format property values *}
           {if $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
-            {assign var=propval value=$propval|tiki_long_date}
+		  	{if empty($propval)}
+				{assign var=propval value=''}
+			{else}
+            	{assign var=propval value=$propval|tiki_long_date}
+			{/if}
           {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
             {assign var=propval value=$propval|username}
           {elseif $propname eq 'size'}
@@ -224,7 +228,11 @@
           {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
         {/if}
       {elseif $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
-        {assign var=propval value=$propval|tiki_short_date}
+		  	{if empty($propval)}
+				{assign var=propval value=''}
+			{else}
+				{assign var=propval value=$propval|tiki_short_date}
+			{/if}
       {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
         {assign var=propval value=$propval|userlink}
       {elseif $propname eq 'size'}

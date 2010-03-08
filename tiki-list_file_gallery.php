@@ -70,7 +70,6 @@ $smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['paren
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'created');
 $smarty->assign('sortdirection', 'desc');
-$smarty->assign_by_ref('gal_info', $gal_info);
 $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 $smarty->assign('reindex_file_id', -1);
@@ -618,11 +617,18 @@ if (empty($_REQUEST['sort_mode'])) {
 }
 $smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
 
+$find = array();
 if (!isset($_REQUEST['find_creator'])) {
 	$smarty->assign('find_creator', '');
 } else {
 	$find['creator'] = $_REQUEST['find_creator'];
 	$smarty->assign('find_creator', $_REQUEST['find_creator']);
+}
+if (!empty($_REQUEST['find_lastModif']) && !empty($_REQUEST['find_lastModif_unit'])) {
+	$find['lastModif'] = $tikilib->now - ($_REQUEST['find_lastModif'] * $_REQUEST['find_lastModif_unit']);
+}
+if (!empty($_REQUEST['find_lastDownload']) && !empty($_REQUEST['find_lastDownload_unit']) ) {
+	$find['lastDownload'] = $tikilib->now - ($_REQUEST['find_lastDownload'] * $_REQUEST['find_lastDownload_unit']);
 }
 
 if (!isset($_REQUEST['find'])) $_REQUEST['find'] = '';
@@ -630,7 +636,6 @@ $smarty->assign_by_ref('find', $_REQUEST['find']);
 if (isset($_REQUEST['fileId'])) {
 	$smarty->assign('fileId', $_REQUEST['fileId']);
 }
-$find = array();
 if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) {
 	$find['categId'] = $_REQUEST['cat_categories'];
 	if (count($_REQUEST['cat_categories']) > 1) {
@@ -680,6 +685,7 @@ if (isset($_GET['slideshow'])) {
 	}
 	$smarty->assign('mid', 'tiki-list_file_gallery.tpl');
 }
+
 // Browse view
 $smarty->assign('thumbnail_size', 120);
 $smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n');
@@ -778,6 +784,20 @@ if ($_REQUEST['galleryId'] == 0) {
 
 // Get listing display config
 include_once ('fgal_listing_conf.php');
+
+$find_durations = array();
+if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
+	$find_durations[] = array('label'=>'Not modified since', 'prefix'=>'find_lastModif', 'default'=>empty($_REQUEST['find_lastModif'])?'':$_REQUEST['find_lastModif'], 'default_unit'=>empty($_REQUEST['find_lastModif_unit'])?'week':$_REQUEST['find_lastModif_unit']);
+	$find_durations[] = array('label'=>'Not downloaded since', 'prefix'=>'find_lastDownload', 'default'=>empty($_REQUEST['find_lastDownload'])?'':$_REQUEST['find_lastDownload'], 'default_unit'=>empty($_REQUEST['find_lastDownload_unit'])?'week':$_REQUEST['find_lastDownload_unit']);
+	foreach ($fgal_listing_conf as $k=>$v) {
+		if ( $k == 'type' ) $show_k = 'icon';
+		elseif ( $k == 'lastModif' ) $show_k = 'modified';
+		else $show_k = $k;
+		$gal_info['show_'.$show_k] = $prefs['fgal_list_'.$k.'_admin'];
+	}
+}
+$smarty->assign_by_ref('find_durations', $find_durations);
+$smarty->assign_by_ref('gal_info', $gal_info);
 
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
 // Display the template

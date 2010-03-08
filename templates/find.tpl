@@ -151,13 +151,6 @@
 	</div>
 {/if}
 
-{if $find_show_num_rows eq 'y'}
-	<label class="findnumrows" for="findnumrows">
-			{tr}Number of displayed rows{/tr}
-			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3" />
-	</label>
-{/if}
-
 {if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox' }
 	<div class="findtypes">
 		<ul>
@@ -187,6 +180,22 @@
 			</select>
 		{/foreach}
 	</div>
+{/if}
+
+{if !empty($find_durations)}
+	{foreach key=key item=duration from=$find_durations}
+		<label class="find_duration">
+		{tr}{$duration.label}{/tr}
+		{html_select_duration prefix=$duration.prefix default=$duration.default default_unit=$duration.default_unit}
+		</label>
+	{/foreach}
+{/if}
+
+{if $find_show_num_rows eq 'y'}
+	<label class="findnumrows" for="findnumrows">
+			{tr}Number of displayed rows{/tr}
+			<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3" />
+	</label>
 {/if}
 
 <label class="findsubmit">
