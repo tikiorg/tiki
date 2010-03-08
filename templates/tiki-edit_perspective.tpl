@@ -53,7 +53,7 @@
 				</p>
 			</form>
 			<form method="post" id="searchform" action="tiki-edit_perspective.php">
-				{remarksbox type="info" title="{tr}Hint{/tr}"}{tr}Search for configurations below and drag them in the configuration section above.{/tr}{/remarksbox}
+				{remarksbox type="info" title="{tr}Hint{/tr}"}{tr}Search for configurations below and drag them in to the configuration section above.{/tr}{/remarksbox}
 				<p>
 					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}"/>
 					<input id="criteria" type="text" name="criteria"/>
@@ -89,12 +89,14 @@
 					} );
 				$jq('#searchform').submit( function(e) {
 					e.preventDefault();
+					if (typeof ajaxLoadingShow == 'function') { ajaxLoadingShow('resultzone'); }
 					$jq('#resultzone').load( this.action, $jq(this).serialize(), function() {
 						$jq('#resultzone div.adminoptionbox').draggable( {
 							handle: 'label',
 							axis: 'y',
 							helper: 'clone'
-						} );
+						} ).find('.tikihelp').cluetip({splitTitle: ':', width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true});
+						if (typeof ajaxLoadingHide == 'function') { ajaxLoadingHide(); }
 					} );
 				} );
 			{/jq}

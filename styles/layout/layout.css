@@ -1786,4 +1786,8 @@ table.treeTable .parent td {
 	border-right-color: #ccc;
 }
 
+.dropzone > div:hover {
+	background-color: #eee;
+} 
+
 /* End of File */
