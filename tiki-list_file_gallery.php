@@ -671,8 +671,10 @@ if (isset($_GET['slideshow'])) {
 	die();
 } else {
 	if (!isset($_REQUEST["edit_mode"]) && !isset($_REQUEST["edit"])) {
+		$recursive = (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin');
+		$with_subgals = !(isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin');
 		// Get list of files in the gallery
-		$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true,true,true,false,false,true,false,'',true,false,($gal_info['show_backlinks']!='n'), $find_categId, $find_creator);
+		$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, $with_subgals,true,true,false,false,true,$recursive,'',true,false,($gal_info['show_backlinks']!='n'), $find_categId, $find_creator);
 		$smarty->assign_by_ref('files', $files['data']);
 		$smarty->assign('cant', $files['cant']);
 	}
