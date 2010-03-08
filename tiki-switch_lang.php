@@ -34,14 +34,14 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 	if (!empty($param['page_id'])) {
 		$pageId = $param['page_id'];
 		$type = 'wiki page';
+	} else if (!empty($param['articleId'])) {
+                $pageId = $param['articleId'];
+                $type = 'article';
 	} else if (!empty($param['page'])) {
 		$page = $param['page'];
 		$info = $tikilib->get_page_info($page);
 		$pageId = $info['page_id'];
 		$type = 'wiki page';
-	} else if (!empty($param['articleId'])) {
-		$pageId = $param['articleId'];
-		$type = 'article';
 	} else {
 		global $wikilib;
 		include_once ('lib/wiki/wikilib.php');
