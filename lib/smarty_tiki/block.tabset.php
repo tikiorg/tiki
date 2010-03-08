@@ -78,7 +78,7 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		}
 		$ret .= "</div>$content";
 		if ($cookietab < $ini || $cookietab > $max) { // todo:: need to display the first tab
-			$headerlib->add_js("tikitabs($ini, $max, $ini);");
+			$headerlib->add_jq_onready("tikitabs($ini, $max, $ini);");
 		}
 		return $ret;
 	}

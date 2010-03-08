@@ -286,7 +286,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	if ( $max_tikitabs > 0 && $prefs['feature_tabs'] == 'y' ) {
 		global $cookietab;
 		$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
-		$headerlib->add_js("tikitabs($tab,$max_tikitabs);");
+		$headerlib->add_jq_onready("tikitabs($tab,$max_tikitabs);");
 	}
 	// collect js from headerlib
 	$jscontent = $headerlib->output_js(false);
