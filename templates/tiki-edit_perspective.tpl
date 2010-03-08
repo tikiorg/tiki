@@ -42,7 +42,7 @@
 					<input type="text" name="name" value="{$perspective_info.name|escape}"/>
 					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}"/>
 				</p>
-				<fieldset id="preferences" class="tabcontent" style="text-align: left;">
+				<fieldset id="preferences" class="dropzone" style="text-align: left;">
 					<p>{tr}Configurations{/tr}:</p>
 					{foreach from=$perspective_info.preferences key=name item=val}
 						{preference name=$name source=$perspective_info.preferences}
@@ -53,13 +53,13 @@
 				</p>
 			</form>
 			<form method="post" id="searchform" action="tiki-edit_perspective.php">
-				<p>{tr}Search for configurations and drag them in the configuration section above.{/tr}</p>
+				{remarksbox type="info" title="{tr}Hint{/tr}"}{tr}Search for configurations below and drag them in the configuration section above.{/tr}{/remarksbox}
 				<p>
 					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}"/>
 					<input id="criteria" type="text" name="criteria"/>
 					<input type="submit" value="{tr}Search{/tr}"/>
 				</p>
-				<fieldset id="resultzone" class="tabcontent" style="text-align: left;"></fieldset>
+				<fieldset id="resultzone" class="dropzone" style="text-align: left;"></fieldset>
 			</form>
 			{jq}
 				$jq('#preferences')

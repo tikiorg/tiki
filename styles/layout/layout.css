@@ -1775,4 +1775,15 @@ table.treeTable .parent td {
 	margin-left: 20px;
 	font-size: 95%;
 }
+
+/* Perspecives (edit) */
+
+.dropzone {
+	color: #000;
+	background-color: #fff;
+	border: #999 solid 2px;
+	border-bottom-color: #ccc;
+	border-right-color: #ccc;
+}
+
 /* End of File */

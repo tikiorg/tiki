@@ -92,6 +92,8 @@ if( $selectedId ) {
 	}
 }
 
+$headerlib->add_cssfile('css/admin.css');		// to display the prefs properly
+
 $smarty->assign( 'perspectives', $perspectives );
 $smarty->assign( 'mid', 'tiki-edit_perspective.tpl' );
 $smarty->display( 'tiki.tpl' );
