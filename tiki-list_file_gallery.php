@@ -17,7 +17,7 @@ if ($prefs['feature_categories'] == 'y') {
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
-$auto_query_args = array('galleryId', 'fileId', 'offset', 'find', 'find_creator', 'sort_mode', 'edit_mode', 'page', 'filegals_manager', 'maxRecords', 'show_fgalexplorer', 'dup_mode', 'show_details', 'view');
+$auto_query_args = array('galleryId', 'fileId', 'offset', 'find', 'find_creator', 'find_categId', 'sort_mode', 'edit_mode', 'page', 'filegals_manager', 'maxRecords', 'show_fgalexplorer', 'dup_mode', 'show_details', 'view');
 $gal_info = '';
 
 if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
@@ -619,20 +619,20 @@ if (empty($_REQUEST['sort_mode'])) {
 $smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
 
 if (!isset($_REQUEST['find_creator'])) {
-	$find_creator = '';
+	$smarty->assign('find_creator', '');
 } else {
-	$find_creator = $_REQUEST['find_creator'];
+	$find['creator'] = $_REQUEST['find_creator'];
+	$smarty->assign('find_creator', $_REQUEST['find_creator']);
 }
-$smarty->assign('find_creator', $find_creator);
 
 if (!isset($_REQUEST['find'])) $_REQUEST['find'] = '';
 $smarty->assign_by_ref('find', $_REQUEST['find']);
 if (isset($_REQUEST['fileId'])) {
 	$smarty->assign('fileId', $_REQUEST['fileId']);
 }
-$find_categId = 0;
+$find = array();
 if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) {
-	$find_categId = $_REQUEST['cat_categories'];
+	$find['categId'] = $_REQUEST['cat_categories'];
 	if (count($_REQUEST['cat_categories']) > 1) {
 		$smarty->assign('find_cat_categories', $_REQUEST['cat_categories']);
 		unset($_REQUEST['categId']);
@@ -644,14 +644,14 @@ if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['cat_categories'])) 
 		$_REQUEST['cat_categories'] = array();
 }
 if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
-	$find_categId = $_REQUEST['categId'];
+	$find['categId'] = $_REQUEST['categId'];
 	$smarty->assign('find_categId', $_REQUEST['categId']);
 }
 
 if (isset($_GET['slideshow'])) {
 	$_REQUEST['maxRecords'] = $maxRecords = - 1;
 	$offset = 0;
-	$files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false, false, false, $find_categId, $find_creator);
+	$files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false, false, false, $find);
 	$smarty->assign('cant', $files['cant']);
 	$smarty->assign_by_ref('file', $files['data']);
 
@@ -674,7 +674,7 @@ if (isset($_GET['slideshow'])) {
 		$recursive = (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin');
 		$with_subgals = !(isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin');
 		// Get list of files in the gallery
-		$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, $with_subgals,true,true,false,false,true,$recursive,'',true,false,($gal_info['show_backlinks']!='n'), $find_categId, $find_creator);
+		$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, $with_subgals,true,true,false,false,true,$recursive,'',true,false,($gal_info['show_backlinks']!='n'), $find);
 		$smarty->assign_by_ref('files', $files['data']);
 		$smarty->assign('cant', $files['cant']);
 	}

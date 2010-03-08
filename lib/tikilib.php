@@ -2169,7 +2169,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @param bool $parent_is_file use $galleryId param as $fileId (to return only archives of the file)
 	 * @return array of found files and subgals
 	 */
-	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $categId = 0, $creator = '') {
+	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='') {
 		global $user, $tiki_p_admin_file_galleries;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
@@ -2256,8 +2256,8 @@ class TikiLib extends TikiDb_Bridge
 			$f_group_by = ' GROUP BY tf.`fileId`';
 		}
 
-		if( $categId ) {
-			$jail = $categId;
+		if( !empty($filter['categId']) ) {
+			$jail = $filter['categId'];
 		} else {
 			$jail = $categlib->get_jail();
 		}
@@ -2280,9 +2280,17 @@ class TikiLib extends TikiDb_Bridge
 			$mid = ' (upper(tab.`name`) LIKE upper(?) OR upper(tab.`description`) LIKE upper(?) OR upper(tab.`filename`) LIKE upper(?))';
 			$midvars = array($findesc, $findesc, $findesc);
 		}
-		if ( $creator ) {
+		if ( !empty($filter['creator']) ) {
 				$f_query .= ' AND tf.`user` = ? ';
-				$bindvars[] = $creator;
+				$bindvars[] = $filter['creator'];
+		}
+		if ( !empty($filter['lastModif']) ) {
+				$f_query .= ' AND tf.`lastModif` >= ? ';
+				$bindvars[] = $filter['lastModif'];
+		}
+		if ( !empty($filter['lastDownload']) ) {
+				$f_query .= ' AND tf.`lastDownload` >= ? ';
+				$bindvars[] = $filter['lastDownload'];
 		}
 		$galleryId_str = '';
 		if ( is_array($galleryId) ) {

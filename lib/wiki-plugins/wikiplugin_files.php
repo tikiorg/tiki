@@ -181,7 +181,7 @@ function wikiplugin_files($data, $params) {
 	$default = array('showfind'=>'n', 'showtitle'=>'y');
 	$params = array_merge($default, $params);
 
-	$creator = '';
+	$filter = '';
 	extract($params, EXTR_SKIP);
 
 	if ($prefs['feature_categories'] != 'y') {
@@ -200,6 +200,7 @@ function wikiplugin_files($data, $params) {
 	if (isset($_REQUEST["wp_files_sort_mode$iplugin"])) {
 		$sort = $_REQUEST["wp_files_sort_mode$iplugin"];
 	}
+	$filter = empty($creator)?'':array('creator'=>$creator);
 	if (!isset($sort))
 		$sort = 'name_asc';
 	if (isset($galleryId)) {
@@ -223,7 +224,7 @@ function wikiplugin_files($data, $params) {
 			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&find_creator=$creator&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
-		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true, true, true, false, false, true, false, '', true, false, false, 0, $creator);
+		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true, true, true, false, false, true, false, '', true, false, false, $filter);
 		if (isset($categId)) {
 			$objects = $categlib->list_category_objects($categId, 0, -1, 'itemId_asc', 'file');
 			$objects_in_categs = array();
@@ -265,7 +266,7 @@ function wikiplugin_files($data, $params) {
 				$p_edit_gallery_file = 'y';
 			}
 
-			$fs = $tikilib->get_files(0, -1, $sort, '', $og['itemId'], false, true, false, true, false, true, true, false, '', true, false, false, 0, $creator);			                                                      
+			$fs = $tikilib->get_files(0, -1, $sort, '', $og['itemId'], false, true, false, true, false, true, true, false, '', true, false, false, $filter);			                                                      
 			if ($fs['cant']) {
 				for ($i = 0; $i < $fs['cant']; ++$i) {
 					$fs['data'][$i]['gallery'] = $gal_info['name'];

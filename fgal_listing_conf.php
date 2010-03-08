@@ -31,7 +31,7 @@ $fgal_listing_conf = array(
 	'lockedby' => array('name' => tra('Locked by'), 'icon' => 'lock_gray'),
 	'backlinks' => array('name' => tra('Backlinks'))
 );
-if ($section == 'admin') {
+if (isset($section) && $section == 'admin') {
 	foreach ($fgal_listing_conf as $k=>$v) {
 		$fgal_listing_conf_admin[$k.'_admin'] = $v;
 	}
@@ -58,7 +58,7 @@ foreach ( $fgal_listing_conf as $k => $v ) {
 }
 $smarty->assign_by_ref('fgal_listing_conf', $fgal_listing_conf);
 
-if ($section == 'admin') {
+if (isset($section) && $section == 'admin') {
 	foreach ($fgal_listing_conf_admin as $k=>$v) {
 		$fgal_listing_conf_admin[$k]['value'] = $prefs['fgal_list_'.$k];
 	}
