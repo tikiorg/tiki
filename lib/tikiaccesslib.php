@@ -199,7 +199,7 @@ class TikiAccessLib extends TikiLib
 			if (isset($_REQUEST['daconfirm'])) {
 				key_check();
 			} else {
-				key_get(null, $confirmation_text, $confirmaction);
+				key_get(null, $confirmation_text);
 			}
 		}
 	}
