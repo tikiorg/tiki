@@ -803,10 +803,14 @@ tr.diffheader {
 
 /** Tabs **/
 .tabs {
-	margin: 10px 3px -18px 3px;
+	margin: 10px 3px -1px 3px;
 	padding: 0;
 	position: relative;
 	z-index: 2;
+}
+
+.tabs br {
+	display: none;
 }
 
 .tabmark {
@@ -827,23 +831,15 @@ tr.diffheader {
 	border-bottom: none;
 	border-top-width: 2px;
 	position: relative;
-	top: -2px;
+	top: 0;
 }
 	
-[class].tabactive {
-	top: -1px;
-}
-
 .tabinactive {
 	border-bottom: none;
 	position: relative;
-	top: -3px;
+	top: 0;
 }
 	
-[class].tabinactive {
-	top: -2px;
-}
-
 .tabcontent {
 	z-index: 1;
 	position: relative;
