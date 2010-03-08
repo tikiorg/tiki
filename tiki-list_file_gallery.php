@@ -157,7 +157,7 @@ if (isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId'
 	if ($_REQUEST['lock'] == 'n' && !empty($fileInfo['lockedby'])) {
 		if ($fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y') {
 			$smarty->assign('errortype', 401);
-			$error_msg = tra('You do not have permission to do that');
+			$error_msg = sprintf(tra('The file is already locked by %s'), $fileInfo['lockedby']);
 		} else {
 			if ($fileInfo['lockedby'] != $user) {
 				$access->check_authenticity(sprintf(tra('The file is already locked by %s'), $fileInfo['lockedby']));
@@ -169,7 +169,7 @@ if (isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId'
 	} elseif ($_REQUEST['lock'] == 'y') {
 		if (!empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user) {
 			$error_msg = sprintf(tra('The file is already locked by %s'), $fileInfo['lockedby']);
-		} elseif ($tiki_p_edit_gallery_file != 'y') {
+		} elseif ($gal_info['lockable'] != 'y') {
 			$smarty->assign('errortype', 401);
 			$error_msg = tra('You do not have permission to do that');
 		} else {
