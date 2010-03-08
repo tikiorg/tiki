@@ -52,7 +52,6 @@ if (isset($_REQUEST["rollback"])) {
 	header("location: tiki-index.php?page=" . urlencode($page));
 	die;
 }
-ask_ticket('rollback');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-rollback.tpl');
