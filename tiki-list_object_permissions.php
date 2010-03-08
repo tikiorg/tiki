@@ -7,6 +7,18 @@
 
 include_once ('tiki-setup.php');
 $access->check_permission('tiki_p_admin');
+$all_perms = $userlib->get_permissions();
+
+function is_perm($permName, $objectType) {
+	global $all_perms, $tikilib;
+	$permGroup = $tikilib->get_permGroup_from_objectType($objectType);
+	foreach($all_perms['data'] as $perm) {
+		if ($perm['permName'] == $permName) {
+			return $permGroup == $perm['type'];
+		}
+	}
+	return false;
+}
 function list_perms($objectId, $objectType, $objectName) {
 	global $userlib, $tikilib, $prefs;
 	$ret = array();
@@ -27,10 +39,12 @@ function list_perms($objectId, $objectType, $objectName) {
 				$config = array();
 				if (!empty($category_perms)) {
 					foreach($category_perms as $category_perm) {
-						$config[$category_perm['groupName']][$category_perm['permName']] = 'y';
-						$ret[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'],
+						if (is_perm($category_perm['permName'], $objectType)) {
+							$config[$category_perm['groupName']][$category_perm['permName']] = 'y';
+							$ret[] = array('group' => $category_perm['groupName'], 'perm' => $category_perm['permName'],
 									'reason' => 'Category', 'objectId' => $categId, 'objectType' => 'category',
 									'objectName' => $categlib->get_category_name($categId));
+						}
 					}
 				}
 			}
@@ -63,7 +77,7 @@ foreach($types as $type) {
 
 		case 'file galleries':
 		case 'file gallery':
-			$objects = $tikilib->list_file_galleries( 0, -1, 'name_desc', '', '', $prefs['fgal_root_id'] );
+			$objects = $tikilib->list_file_galleries( 0, -1, 'name_asc', '', '', $prefs['fgal_root_id'] );
 			foreach($objects['data'] as $object) {
 				$res[$type]['objects'][] = list_perms($object['id'], $type, $object['name']);
 			}
@@ -88,7 +102,7 @@ foreach($types as $type) {
 		case 'group':
 		case 'groups':
 			foreach($all_groups as $object) {
-				$res[$type]['objects'][] = list_perms($object, $type);
+				$res[$type]['objects'][] = list_perms($object, $type, '');
 			}
 			break;
 

@@ -7,7 +7,9 @@
 {/foreach}
 </div>
 
+{tabset name='tabs_list_object_permissions'}
 {foreach from=$res key=type item=content}
+	{tab name="{tr}$type{/tr}"}		
 	<h2 id="{$type}">{tr}{$type}{/tr}</h2>
 
 	<h3>{tr}{$type}{/tr}:{tr}Default{/tr}</h3>
@@ -44,4 +46,6 @@
 		{/if}
 	{/foreach}
 	</table>
+	{/tab}
 {/foreach}
+{/tabset}
