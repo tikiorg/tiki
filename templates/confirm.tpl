@@ -3,7 +3,9 @@
 	{if !empty($confirmation_text)}
 		<div class="cbox-title">{icon _id=information style="vertical-align:middle"} {$confirmation_text}</div>
 	{/if}
-	{$confirm_detail}
+	{if !empty($confirmation_detail)}
+		{$confirm_detail}
+	{/if}
 	<br />
 	<div class="cbox-data">
 		<form name='confirm' action="{$confirmaction|escape}" method="post">
