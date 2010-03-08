@@ -52,12 +52,8 @@ if (isset($_REQUEST["action"])) {
 
 		case 'rm':
 			if ($repID != 0) {
-				if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-					key_check($area);
-					$integrator->remove_repository($repID);
-				} else {
-					key_get($area);
-				}
+				$access->check_authenticity();
+				$integrator->remove_repository($repID);
 			}
 			break;
 

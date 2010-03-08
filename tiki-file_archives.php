@@ -43,13 +43,8 @@ if (!empty($_REQUEST['remove'])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	$area = 'delfile';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$filegallib->remove_file($removeInfo, $gal_info);
-	} else {
-		key_get($area, ($removeInfo['archiveId']? tra('Remove archive: '): tra('Remove file gallery: ')).(!empty($removeInfo['name'])?$removeInfo['name'].' - ':'').$removeInfo['filename']);
-	}
+	$access->check_authenticity(($removeInfo['archiveId']? tra('Remove archive: '): tra('Remove file gallery: ')) . (!empty($removeInfo['name'])?$removeInfo['name'].' - ':'').$removeInfo['filename']);
+	$filegallib->remove_file($removeInfo, $gal_info);
 }
 if (isset($_REQUEST['delsel_x']) && !empty($_REQUEST['file'])) {
 	check_ticket('list-archives');

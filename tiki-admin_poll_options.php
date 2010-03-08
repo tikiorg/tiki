@@ -25,13 +25,8 @@ if (!isset($_REQUEST["optionId"])) {
 	$_REQUEST["optionId"] = 0;
 }
 if (isset($_REQUEST["remove"])) {
-	$area = 'delpolloption';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$polllib->remove_poll_option($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$polllib->remove_poll_option($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-poll-options');

@@ -11,12 +11,9 @@ $access->check_permission('tiki_p_admin');
 
 $auto_query_args = array('offset', 'numrows', 'maxRecords', 'find', 'sort_mode');
 if (isset($_REQUEST["clean"])) {
-	$area = 'cleanlogs';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$date = strtotime("-" . $_REQUEST["months"] . " months");
-		$logslib->clean_logs($date);
-	} else key_get($area);
+	$access->check_authenticity();
+	$date = strtotime("-" . $_REQUEST["months"] . " months");
+	$logslib->clean_logs($date);
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

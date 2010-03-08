@@ -30,13 +30,8 @@ if ($tiki_p_live_support_admin == 'y') {
 		$lslib->set_operator_status($_REQUEST['offline'], 'offline');
 	}
 	if (isset($_REQUEST['removeuser'])) {
-		$area = 'dellsuser';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$lsadminlib->remove_operator($_REQUEST['removeuser']);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$lsadminlib->remove_operator($_REQUEST['removeuser']);
 	}
 }
 // Get the list of operators

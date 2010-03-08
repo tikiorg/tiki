@@ -58,13 +58,8 @@ if (isset($_REQUEST["refresh"])) {
 	$rsslib->refresh_rss_module($_REQUEST["refresh"]);
 }
 if (isset($_REQUEST["remove"])) {
-	$area = 'delrss';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$rsslib->remove_rss_module($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$rsslib->remove_rss_module($_REQUEST["remove"]);
 }
 
 if( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {

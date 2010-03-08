@@ -29,13 +29,8 @@ if (!$result->numRows()) {
 //	die;
 //}
 if (isset($_REQUEST['clean'])) {
-	$area = 'cleanlogs';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$logslib->clean_logsql();
-	} else {
-		key_get($area, tra('Clean the sql logs'));
-	}
+	$access->check_authenticity(tra('Clean the sql logs'));
+	$logslib->clean_logsql();
 }
 $auto_query_args = array('offset', 'numrows', 'find', 'sort_mode');
 $numrows = (isset($_REQUEST['numrows'])) ? $_REQUEST['numrows'] : (isset($_REQUEST['maxRecords']) ? $_REQUEST['maxRecords'] : $prefs['maxRecords']);

@@ -62,22 +62,12 @@ if ($_REQUEST["templateId"]) {
 
 $smarty->assign('info', $info);
 if (isset($_REQUEST["remove"])) {
-	$area = 'delcontenttemplate';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$templateslib->remove_template($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$templateslib->remove_template($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["removesection"])) {
-	$area = 'delcontenttemplatefromsection';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$templateslib->remove_template_from_section($_REQUEST["rtemplateId"], $_REQUEST["removesection"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$templateslib->remove_template_from_section($_REQUEST["rtemplateId"], $_REQUEST["removesection"]);
 }
 $smarty->assign('preview', 'n');
 if (isset($_REQUEST["preview"])) {

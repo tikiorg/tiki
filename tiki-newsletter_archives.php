@@ -19,13 +19,8 @@ if (isset($_REQUEST['remove']) && !empty($_REQUEST['nlId'])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	$area = 'delnewsletter';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$nllib->remove_edition($_REQUEST["nlId"], $_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$nllib->remove_edition($_REQUEST["nlId"], $_REQUEST["remove"]);
 }
 if (!empty($_REQUEST['error'])) {
 	$edition_errors = $nllib->get_edition_errors($_REQUEST['error']);

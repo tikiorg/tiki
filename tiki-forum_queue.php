@@ -95,14 +95,9 @@ if (isset($_REQUEST['qId'])) {
 	}
 
 	if (isset($_REQUEST['remove'])) {
-		$area = 'delcomment';
-	  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-  	  key_check($area);
-			$smarty->assign('form', 'n');
-			$commentslib->remove_queued($_REQUEST['qId']);
-		  } else {
-		    key_get($area);
-  		}
+		$access->check_authenticity();
+		$smarty->assign('form', 'n');
+		$commentslib->remove_queued($_REQUEST['qId']);
 	}
 
 	if (isset($_REQUEST['saveapp'])) {

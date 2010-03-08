@@ -57,13 +57,8 @@ if (isset($_REQUEST['action']) && isset($_REQUEST['copyrightId'])) {
 	} elseif ($_REQUEST['action'] == 'down') {
 		$copyrightslib->down_copyright($_REQUEST['copyrightId']);
 	} elseif ($_REQUEST['action'] == 'delete') {
-		$area = 'delcopyright';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$copyrightslib->remove_copyright($_REQUEST['copyrightId']);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$copyrightslib->remove_copyright($_REQUEST['copyrightId']);
 	}
 }
 

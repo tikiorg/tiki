@@ -32,13 +32,8 @@ if ($_REQUEST["msgId"]) {
 $smarty->assign('message', $info["message"]);
 if ($tiki_p_admin_shoutbox == 'y' || $user == $owner) {
 	if (isset($_REQUEST["remove"])) {
-		$area = 'delshoutboxitem';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$shoutboxlib->remove_shoutbox($_REQUEST["remove"]);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$shoutboxlib->remove_shoutbox($_REQUEST["remove"]);
 	} elseif (isset($_REQUEST["shoutbox_admin"])) {
 		$prefs['shoutbox_autolink'] = (isset($_REQUEST["shoutbox_autolink"])) ? 'y' : 'n';
 		$tikilib->set_preference('shoutbox_autolink', $prefs['shoutbox_autolink']);

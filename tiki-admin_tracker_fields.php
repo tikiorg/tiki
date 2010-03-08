@@ -102,13 +102,8 @@ $smarty->assign_by_ref('itemChoices', $info['itemChoices']);
 $smarty->assign_by_ref('visibleBy', $info['visibleBy']);
 $smarty->assign_by_ref('editableBy', $info['editableBy']);
 if (isset($_REQUEST["remove"]) and ($tracker_info['useRatings'] != 'y' or $info['name'] != 'Rating')) {
-	$area = 'deltrackerfield';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$trklib->remove_tracker_field($_REQUEST["remove"], $_REQUEST["trackerId"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$trklib->remove_tracker_field($_REQUEST["remove"], $_REQUEST["trackerId"]);
 }
 function replace_tracker_from_request($tracker_info) {
 	global $trklib, $logslib, $smarty;

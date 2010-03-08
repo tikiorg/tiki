@@ -70,27 +70,17 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["rremove"])) {
-  $area = 'delstructure';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+	$access->check_authenticity();
 	$structlib->s_remove_page($_REQUEST["rremove"], false, empty($_REQUEST['page'])? '': $_REQUEST['page']);
-  	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
-  } else {
-    key_get($area);
-  }
+	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
 }
 # TODO : Case where the index page of the structure is removed seems to be unexpected, leaving a corrupted structure
 if (isset($_REQUEST["sremove"])) {
-  $area = 'delstructureandpages';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$page = $page_info["pageName"];
-		$delete = $tikilib->user_has_perm_on_object($user, $page_info['pageName'],'wiki page','tiki_p_remove');
-		$structlib->s_remove_page($_REQUEST["sremove"], $delete, empty($_REQUEST['page'])? '': $_REQUEST['page']);
-  	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
-  } else {
-    key_get($area);
-  }
+	$access->check_authenticity();
+	$page = $page_info["pageName"];
+	$delete = $tikilib->user_has_perm_on_object($user, $page_info['pageName'],'wiki page','tiki_p_remove');
+	$structlib->s_remove_page($_REQUEST["sremove"], $delete, empty($_REQUEST['page'])? '': $_REQUEST['page']);
+	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
 }
 
  if ($prefs['feature_user_watches'] == 'y' && $tiki_p_watch_structure == 'y' && $user && !empty($_REQUEST['watch_object']) && !empty($_REQUEST['watch_action'])) {

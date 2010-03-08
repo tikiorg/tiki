@@ -19,13 +19,8 @@ if (isset($_REQUEST["remove"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	$area = 'delbanner';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$bannerlib->remove_banner($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$bannerlib->remove_banner($_REQUEST["remove"]);
 }
 // This script can receive the thresold
 // for the information as the number of

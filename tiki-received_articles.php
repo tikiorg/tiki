@@ -98,13 +98,8 @@ $smarty->assign('rating', $info["rating"]);
 $smarty->assign('parsed_heading', $tikilib->parse_data($info["heading"]));
 $smarty->assign('parsed_body', $tikilib->parse_data($info["body"]));
 if (isset($_REQUEST["remove"])) {
-	$area = 'delreceivedarticle';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$commlib->remove_received_article($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$commlib->remove_received_article($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('received-articles');

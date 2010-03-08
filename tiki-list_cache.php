@@ -8,13 +8,8 @@
 require_once ('tiki-setup.php');
 $access->check_permission('tiki_p_admin');
 if (isset($_REQUEST["remove"])) {
-	$area = 'delcache';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$tikilib->remove_cache($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$tikilib->remove_cache($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["refresh"])) {
 	check_ticket('list-cache');

@@ -24,22 +24,12 @@ $smarty->assign('quizId', $_REQUEST["quizId"]);
 $quiz_info = $quizlib->get_quiz($_REQUEST["quizId"]);
 $smarty->assign('quiz_info', $quiz_info);
 if (isset($_REQUEST["remove"]) && $tiki_p_admin_quizzes == 'y') {
-	$area = 'delquizstatsquiz';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$quizlib->remove_quiz_stat($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$quizlib->remove_quiz_stat($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["clear"]) && $tiki_p_admin_quizzes == 'y') {
-	$area = 'delquizstatsclear';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$quizlib->clear_quiz_stats($_REQUEST["clear"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$quizlib->clear_quiz_stats($_REQUEST["clear"]);
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'timestamp_desc';

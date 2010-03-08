@@ -80,13 +80,8 @@ $showBoxCheck.= "
 	";
 $smarty->assign('showBoxCheck', $showBoxCheck);
 if (isset($_REQUEST["remove"])) {
-	$area = 'delnewsletter';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$nllib->remove_edition($_REQUEST["nlId"], $_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$nllib->remove_edition($_REQUEST["nlId"], $_REQUEST["remove"]);
 }
 
 // wysiwyg decision

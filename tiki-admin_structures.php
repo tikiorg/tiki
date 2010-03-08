@@ -16,7 +16,6 @@ $access->check_permission('tiki_p_view');
 // start security hardened section
 if ($tiki_p_edit_structures == 'y') {
 	if (isset($_REQUEST['rremove'])) {
-		$area = 'delstruct';
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremove']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
@@ -24,15 +23,10 @@ if ($tiki_p_edit_structures == 'y') {
 			$smarty->display("error.tpl");
 			die;
 		}
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$structlib->s_remove_page($_REQUEST["rremove"], false, empty($_REQUEST['page']) ? '' : $_REQUEST['page']);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$structlib->s_remove_page($_REQUEST["rremove"], false, empty($_REQUEST['page']) ? '' : $_REQUEST['page']);
 	}
 	if (isset($_REQUEST['rremovex'])) {
-		$area = 'delstructandpages';
 		$structure_info = $structlib->s_get_structure_info($_REQUEST['rremovex']);
 		if (!$tikilib->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit')) {
 			$smarty->assign('errortype', 401);
@@ -40,12 +34,8 @@ if ($tiki_p_edit_structures == 'y') {
 			$smarty->display("error.tpl");
 			die;
 		}
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$structlib->s_remove_page($_REQUEST["rremovex"], true, empty($_REQUEST['page']) ? '' : $_REQUEST['page']);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$structlib->s_remove_page($_REQUEST["rremovex"], true, empty($_REQUEST['page']) ? '' : $_REQUEST['page']);
 	}
 	if (isset($_REQUEST['export'])) {
 		check_ticket('admin-structures');

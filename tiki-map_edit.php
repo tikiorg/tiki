@@ -82,19 +82,14 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 }
 $smarty->assign('tiki_p_map_delete', $tiki_p_map_delete);
 if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
-	$area = 'delmap';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		if (!unlink($prefs['map_path'] . $_REQUEST["mapfile"])) {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra("You do not have permission to delete the mapfile"));
-			$smarty->display("error.tpl");
-			die;
-		}
-		$mode = 'listing';
-	} else {
-		key_get($area);
+	$access->check_authenticity();
+	if (!unlink($prefs['map_path'] . $_REQUEST["mapfile"])) {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("You do not have permission to delete the mapfile"));
+		$smarty->display("error.tpl");
+		die;
 	}
+	$mode = 'listing';
 }
 // Save the mapfile
 if (isset($_REQUEST["save"])) {

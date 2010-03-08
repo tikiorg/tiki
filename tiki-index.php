@@ -342,25 +342,19 @@ if($user
 // Process an undo here
 if ( isset($_REQUEST['undo']) ) {
 	if ( $pageRenderer->canUndo() ) {
-		$area = 'delundopage';
-		if ( $prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) ) {
-			key_check($area);
+		$access->check_authenticity();
 
-			// Remove the last version	
-			$wikilib->remove_last_version($page);
+		// Remove the last version	
+		$wikilib->remove_last_version($page);
 
-			// If page was deleted then re-create
-			if ( ! $tikilib->page_exists($page) ) {
-				$tikilib->create_page($page, 0, '', $tikilib->now, 'Tiki initialization'); 
-			}
-
-			// Restore page information
-			$info = $tikilib->get_page_info($page);
-			$pageRenderer->setInfos($info);
-
-		} else {
-			key_get($area);
+		// If page was deleted then re-create
+		if ( ! $tikilib->page_exists($page) ) {
+			$tikilib->create_page($page, 0, '', $tikilib->now, 'Tiki initialization'); 
 		}
+
+		// Restore page information
+		$info = $tikilib->get_page_info($page);
+		$pageRenderer->setInfos($info);
 	}	
 }
 
@@ -389,13 +383,8 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 	check_ticket('index');
 	$owner = $wikilib->get_attachment_owner($_REQUEST['removeattach']);
 	if( ($user && ($owner == $user) ) || $objectperms->wiki_admin_attachments ) {
-		$area = 'removeattach';
-	    if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$wikilib->remove_wiki_attachment($_REQUEST['removeattach']);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$wikilib->remove_wiki_attachment($_REQUEST['removeattach']);
 	}
 	$pageRenderer->setShowAttachments( 'y' );
     }

@@ -58,20 +58,14 @@ $smarty->assign('position', $info["position"]);
 $smarty->assign('groupname', $info["groupname"]);
 $smarty->assign('userlevel', $info["userlevel"]);
 if (isset($_REQUEST["remove"])) {
-	check_ticket('admin-menu-options');
-	$area = 'delmenuoption';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$menulib->remove_menu_option($_REQUEST["remove"]);
-		$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
-		$smarty->assign('position', $maxPos + 1);
-		$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
-		// reload to prevent white screen
-		$url = $_SERVER['REQUEST_URI'] . "?menuId=" . $_REQUEST["menuId"];
-		header("location: $url");
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$menulib->remove_menu_option($_REQUEST["remove"]);
+	$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
+	$smarty->assign('position', $maxPos + 1);
+	$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
+	// reload to prevent white screen
+	$url = $_SERVER['REQUEST_URI'] . "?menuId=" . $_REQUEST["menuId"];
+	header("location: $url");
 }
 if (isset($_REQUEST["up"])) {
 	check_ticket('admin-menu-options');

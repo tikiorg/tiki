@@ -32,22 +32,12 @@ if (isset($_REQUEST["addtopic"])) {
 	$artlib->add_topic($_REQUEST["name"], $imgname, $imgtype, $imgsize, $data);
 }
 if (isset($_REQUEST["remove"])) {
-	$area = 'delarttopic';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$artlib->remove_topic($_REQUEST["remove"]);
-	} else {
-		key_get($area, tra('Are you sure you want to remove this topic?'));
-	}
+	$access->check_authenticity(tra('Are you sure you want to remove this topic?'));
+	$artlib->remove_topic($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["removeall"])) {
-	$area = 'delarttopicall';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$artlib->remove_topic($_REQUEST["removeall"], 1);
-	} else {
-		key_get($area, tra('Are you sure you want to remove this topic AND all the articles related?'));
-	}
+	$access->check_authenticity(tra('Are you sure you want to remove this topic AND all the articles related?'));
+	$artlib->remove_topic($_REQUEST["removeall"], 1);
 }
 if (isset($_REQUEST["activate"])) {
 	check_ticket('admin-topics');

@@ -41,13 +41,8 @@ if ($_REQUEST["questionId"]) {
 // $smarty->assign('question',$info["question"]);  AWC moved this
 // $smarty->assign('answer',$info["answer"]);      AWC moved this
 if (isset($_REQUEST["remove"])) {
-  $area = 'delfaqquestion';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$faqlib->remove_faq_question($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
+	$access->check_authenticity();
+	$faqlib->remove_faq_question($_REQUEST["remove"]);
 }
 
 if (!isset($_REQUEST["filter"])) {

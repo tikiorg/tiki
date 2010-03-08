@@ -298,16 +298,11 @@ if ( $prefs['feature_comments_locking'] == 'y' && ! empty($_REQUEST['comments_lo
 if (($tiki_p_remove_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
 		|| (isset($forum_mode) && $forum_mode =='y' && $tiki_p_admin_forum == 'y' ) ) {
 	if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
-		$area = 'delcomment';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$comments_show = 'y';
-			$commentslib->remove_comment($_REQUEST["comments_threadId"]);
-			$_REQUEST["comments_threadId"] = 0;
-			$smarty->assign('comments_threadId', 0);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$comments_show = 'y';
+		$commentslib->remove_comment($_REQUEST["comments_threadId"]);
+		$_REQUEST["comments_threadId"] = 0;
+		$smarty->assign('comments_threadId', 0);
 	}
 }
 

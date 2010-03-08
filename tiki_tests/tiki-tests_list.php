@@ -7,11 +7,7 @@
 
 require_once('../tiki-setup.php');
 
-if ($prefs['feature_tikitests'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_tikitests');
-	$smarty->display('error.tpl');
-	die;
-}
+$access->check_feature('feature_tikitests');
 
 if ($tiki_p_admin_tikitests != 'y' and $tiki_p_play_tikitests != 'y') {
 	$smarty->assign('msg', tra('You do not have permission to do that'));
@@ -24,18 +20,13 @@ $smarty->assign("http",extension_loaded("http"));
 $smarty->assign("curl",extension_loaded("curl"));
 
 function delete_test($file) {
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_tiki-tests"])) {
-		key_check('tiki-tests');
-		// Clean the filename
-		$file = basename($file);
-		if (file_exists("tiki_tests/tests/$file")) {
-			return unlink("tiki_tests/tests/$file");
-		}
-		return FALSE;
-	} else {
-		key_get('tiki-tests',tra("You are about to delete a TikiTest file, do you want to continue ?"));
+	$access->check_authenticity(tra("You are about to delete a TikiTest file, do you want to continue ?"));
+	// Clean the filename
+	$file = basename($file);
+	if (file_exists("tiki_tests/tests/$file")) {
+		return unlink("tiki_tests/tests/$file");
 	}
-	return TRUE;
+	return FALSE;
 }
 
 if (isset($_GET['offset']) and ($_GET['offset']+0) > 0 ) {

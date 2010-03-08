@@ -97,13 +97,8 @@ if (isset($_REQUEST["edit"])) {
 }
 if (isset($_REQUEST["removesheet"])) {
 	$access->check_permission('tiki_p_edit_sheet');
-	$area = 'delsheet';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$sheetlib->remove_sheet($_REQUEST["sheetId"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$sheetlib->remove_sheet($_REQUEST["sheetId"]);
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'title_desc';

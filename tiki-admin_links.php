@@ -42,13 +42,8 @@ if (isset($_REQUEST["add"])) {
 	}
 }
 if (isset($_REQUEST["remove"])) {
-	$area = 'delfeaturedlink';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$flinkslib->remove_featured_link($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$flinkslib->remove_featured_link($_REQUEST["remove"]);
 }
 $links = $tikilib->get_featured_links(999999);
 $smarty->assign_by_ref('links', $links);

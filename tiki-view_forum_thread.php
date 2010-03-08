@@ -148,13 +148,8 @@ if ($tiki_p_admin_forum == 'y') {
 		}
 	}
 	if (isset($_REQUEST['remove_attachment'])) {
-		$area = 'delforumattach';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
 	}
 	if (isset($_REQUEST['movesel'])) {
 		if (isset($_REQUEST['forumthread'])) {

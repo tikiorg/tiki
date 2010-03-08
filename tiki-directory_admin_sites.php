@@ -55,13 +55,8 @@ if (isset($_REQUEST["remove"])) {
 			$dirlib->dir_remove_site($remid);
 		}
 	} else {
-		$area = 'deldirsite';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$dirlib->dir_remove_site($_REQUEST["remove"]);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$dirlib->dir_remove_site($_REQUEST["remove"]);
 	}
 }
 // Replace (add or edit) a category

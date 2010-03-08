@@ -291,20 +291,15 @@ if (isset($_POST['act'])) {
 
 if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"]) and $tiki_p_change_events == 'y') {
 	// There is no check for valid antibot code if anonymous allowed to delete events since this comes from a JS button at the tpl and bots are not know to use JS
-  $area = 'delcalevent';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+	$access->check_authenticity();
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
-    $calendarlib->drop_item($user, $_REQUEST["calitemId"]);
+	$calendarlib->drop_item($user, $_REQUEST["calitemId"]);
 	if (empty($user)) { 
 		$logslib->add_log('calendar','Calendar item '.$_REQUEST['calitemId'].' deleted');
 	}
-    $_REQUEST["calitemId"] = 0;
-		header('Location: tiki-calendar.php?todate='.$calitem['start']);
-		die;
-  } else {
-    key_get($area);
-  }
+	$_REQUEST["calitemId"] = 0;
+	header('Location: tiki-calendar.php?todate='.$calitem['start']);
+	exit;
 } elseif (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["recurrenceId"]) and $tiki_p_change_events == 'y') {
 	// There is no check for valid antibot code if anonymous allowed to delete events since this comes from a JS button at the tpl and bots are not know to use JS
 	$calRec = new CalRecurrence($_REQUEST['recurrenceId']);

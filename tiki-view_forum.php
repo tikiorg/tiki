@@ -80,13 +80,8 @@ if (isset($_REQUEST['report']) && $tiki_p_forums_report == 'y') {
 }
 if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['remove_attachment'])) {
-		$area = 'delforumattach';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
 	}
 	if (isset($_REQUEST['lock']) && isset($_REQUEST['forumId'])) {
 		check_ticket('view-forum');
@@ -218,15 +213,10 @@ if ($user) {
 }
 if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
 	if ($tiki_p_admin_forum == 'y' || ($commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"]) && $tiki_p_forum_post_topic == 'y')) {
-		$area = 'delforumcomm';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$comments_show = 'y';
-			$commentslib->remove_comment($_REQUEST["comments_threadId"]);
-			$commentslib->register_remove_post($_REQUEST["forumId"], 0);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$comments_show = 'y';
+		$commentslib->remove_comment($_REQUEST["comments_threadId"]);
+		$commentslib->register_remove_post($_REQUEST["forumId"], 0);
 	} else { // user can't edit this post
 		$smarty->assign('msg', tra('You are not permitted to remove someone else\'s post!'));
 		$smarty->assign('errortype', 'no_redirect_login');

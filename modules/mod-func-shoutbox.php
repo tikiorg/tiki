@@ -97,17 +97,8 @@ function module_shoutbox( $mod_reference, $module_params ) {
 		if (isset($_REQUEST['shout_remove'])) {
 			$info = $shoutboxlib->get_shoutbox($_REQUEST['shout_remove']);
 			if ($tiki_p_admin_shoutbox == 'y'  || $info['user'] == $user ) {
-				if ($prefs['feature_ticketlib2'] =='y') {
-					$area = 'delshoutboxentry';
-					if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
-						key_check($area);
-						$shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
-					} else {
-						key_get($area);
-					}
-				} else {
-					$shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
-				}
+				$access->check_authenticity();
+				$shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
 			}
 		}
 	

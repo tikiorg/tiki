@@ -16,16 +16,11 @@ if (!isset($_REQUEST["noteId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-$area = 'delnote';
 if (isset($_REQUEST["remove"])) {
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
-		key_check($area);
-		$notepadlib->remove_note($user, $_REQUEST['noteId']);
-		header('location: tiki-notepad_list.php');
-		die;
-	} else {
-		key_get($area, tra('Are you sure you want to delete this note?'));
-	}
+	$access->check_authenticity(tra('Are you sure you want to delete this note?'));
+	$notepadlib->remove_note($user, $_REQUEST['noteId']);
+	header('location: tiki-notepad_list.php');
+	die;
 }
 $info = $notepadlib->get_note($user, $_REQUEST["noteId"]);
 if (!$info) {

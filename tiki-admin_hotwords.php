@@ -21,13 +21,8 @@ if (isset($_REQUEST["add"])) {
 	$hotwordlib->add_hotword($_REQUEST["word"], $_REQUEST["url"]);
 }
 if (isset($_REQUEST["remove"]) && !empty($_REQUEST["remove"])) {
-	$area = 'delhotword';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$hotwordlib->remove_hotword($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$hotwordlib->remove_hotword($_REQUEST["remove"]);
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'word_desc';

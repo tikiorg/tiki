@@ -65,13 +65,8 @@ if (isset($_REQUEST["remove"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	$area = 'delgallery';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$imagegallib->remove_image($_REQUEST["remove"], $user);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$imagegallib->remove_image($_REQUEST["remove"], $user);
 }
 if (isset($_REQUEST["rebuild"])) {
 	check_ticket('list-gal');

@@ -126,13 +126,8 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 }
 
 if (isset($_REQUEST["removeZone"])) {
-  $area = 'delbannerzone';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$bannerlib->banner_remove_zone($_REQUEST["removeZone"]);
-  } else {
-    key_get($area);
-  }
+	$access->check_authenticity();
+	$bannerlib->banner_remove_zone($_REQUEST["removeZone"]);
 }
 
 // Now assign if the set button was pressed

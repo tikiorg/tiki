@@ -114,22 +114,17 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		break;
 	case 'delete':
 		$access->check_permission(array('tiki_p_delete_videos'));
-		$area = 'delkalturaentry';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			if($kentryType == "media"){
-				foreach( $videoId as $vi ) {
-					$kclient->media->delete($vi);
-				}
+		$access->check_authenticity();
+		if($kentryType == "media"){
+			foreach( $videoId as $vi ) {
+				$kclient->media->delete($vi);
 			}
-			if($kentryType == "mix"){
-				foreach( $videoId as $vi ) {
-					$kclient->mixing->delete($vi);
-				}					
-			}	
-		} else{
-			key_get($area);
 		}
+		if($kentryType == "mix"){
+			foreach( $videoId as $vi ) {
+				$kclient->mixing->delete($vi);
+			}					
+		}	
 		header ('Location: tiki-list_kaltura_entries.php');
 		die;
 		break;

@@ -25,14 +25,8 @@ if (!isset($_REQUEST["parentId"])) {
 $smarty->assign('parentId', $_REQUEST["parentId"]);
 
 if (!empty($_REQUEST['unassign'])) {
-	check_ticket('admin-categories');
-	$area = 'unassign';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$categlib->unassign_all_objects($_REQUEST['parentId']);
-	} else {
-		key_get($area, tra('Are you sure you want to unassign the objects of this category: ').$info['name']);
-	}
+	$access->check_authenticity(tra('Are you sure you want to unassign the objects of this category: ') . htmlspecialchars($info['name']));
+	$categlib->unassign_all_objects($_REQUEST['parentId']);
 }
 if (!empty($_REQUEST['move_to']) && !empty($_REQUEST['toId'])) {
 	check_ticket('admin-categories');
@@ -162,39 +156,28 @@ if (isset($_REQUEST["categId"])) {
 	$info["description"] = '';
 }
 if (isset($_REQUEST["removeObject"])) {
-	$area = 'delcategobject';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$category = $categlib->get_category($_REQUEST["parentId"]);
-		$categorizedObject = $categlib->get_categorized_object_via_category_object_id($_REQUEST["removeObject"]);
-		$categlib->remove_object_from_category($_REQUEST["removeObject"], $_REQUEST["parentId"]);
-		// Notify the users watching this category.
-		$values = array(
-			"categoryId" => $_REQUEST["parentId"],
-			"categoryName" => $category['name'],
-			"categoryPath" => $categlib->get_category_path_string_with_root($_REQUEST["parentId"]) ,
-			"description" => $category['description'],
-			"parentId" => $category['parentId'],
-			"parentName" => $categlib->get_category_name($category['parentId']) ,
-			"action" => "object leaved category",
-			"objectName" => $categorizedObject['name'],
-			"objectType" => $categorizedObject['type'],
-			"objectUrl" => $categorizedObject['href']
-		);
-		$categlib->notify($values);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$category = $categlib->get_category($_REQUEST["parentId"]);
+	$categorizedObject = $categlib->get_categorized_object_via_category_object_id($_REQUEST["removeObject"]);
+	$categlib->remove_object_from_category($_REQUEST["removeObject"], $_REQUEST["parentId"]);
+	// Notify the users watching this category.
+	$values = array(
+		"categoryId" => $_REQUEST["parentId"],
+		"categoryName" => $category['name'],
+		"categoryPath" => $categlib->get_category_path_string_with_root($_REQUEST["parentId"]) ,
+		"description" => $category['description'],
+		"parentId" => $category['parentId'],
+		"parentName" => $categlib->get_category_name($category['parentId']) ,
+		"action" => "object leaved category",
+		"objectName" => $categorizedObject['name'],
+		"objectType" => $categorizedObject['type'],
+		"objectUrl" => $categorizedObject['href']
+	);
+	$categlib->notify($values);
 }
 if (isset($_REQUEST["removeCat"]) && ($info = $categlib->get_category($_REQUEST['removeCat']))) {
-	$area = "delcateg";
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$categlib->remove_category($_REQUEST["removeCat"]);
-	} else {
-		$confirmation = tra('Click here to delete the category:') . ' ' . $info['name'];
-		key_get($area, $confirmation);
-	}
+	$access->check_authenticity(tra('Click here to delete the category:') . ' ' . htmlspecialchars($info['name']));
+	$categlib->remove_category($_REQUEST["removeCat"]);
 }
 if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["name"]) > 0) {
 	check_ticket('admin-categories');

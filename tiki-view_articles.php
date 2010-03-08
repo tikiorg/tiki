@@ -22,14 +22,8 @@ $access->check_permission_either( array('tiki_p_read_article', 'tiki_p_articles_
 
 if (isset($_REQUEST["remove"])) {
 	$access->check_permission('tiki_p_remove_article');
-
-	$area = 'delarticle';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$artlib->remove_article($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$artlib->remove_article($_REQUEST["remove"]);
 }
 // This script can receive the thresold
 // for the information as the number of

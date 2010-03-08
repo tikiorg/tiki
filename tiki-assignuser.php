@@ -57,14 +57,9 @@ if (isset($_REQUEST["action"])) {
 			$logslib->add_log('perms',sprintf("Assigned %s in group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
 		}			
 	} elseif ($_REQUEST["action"] == 'removegroup' && ($tiki_p_admin == 'y' || ($tiki_p_admin_users == 'y' && array_key_exists($_REQUEST["group"], $groups)))) {
-		$area = 'deluserfromgroup';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
-			$logslib->add_log('perms',sprintf("Removed %s from group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
+		$logslib->add_log('perms',sprintf("Removed %s from group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
 	}
 }
 

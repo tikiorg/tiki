@@ -31,13 +31,8 @@ if ($_REQUEST["contactId"]) {
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
-	$area = "delwebmailcontact";
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$contactlib->remove_contact($_REQUEST["remove"], $user);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$contactlib->remove_contact($_REQUEST["remove"], $user);
 }
 
 if (isset($_REQUEST["save"])) {

@@ -24,13 +24,8 @@ $path = $dirlib->dir_get_category_path_admin($_REQUEST["parent"]);
 $smarty->assign_by_ref('path', $path);
 // Remove a relationship
 if (isset($_REQUEST["remove"])) {
-	$area = 'deldirrelated';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$dirlib->dir_remove_related($_REQUEST["parent"], $_REQUEST["categId"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$dirlib->dir_remove_related($_REQUEST["parent"], $_REQUEST["categId"]);
 }
 // Update a relationship
 if (isset($_REQUEST["update"])) {

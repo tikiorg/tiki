@@ -267,19 +267,14 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	}
 } elseif (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete' && isset($_REQUEST["user"]) && $_REQUEST["user"] != 'admin') {
-		$area = 'deluser';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$userlib->remove_user($_REQUEST["user"]);
-			$tikifeedback = array();
-			$tikifeedback[] = array(
-				'num' => 0,
-				'mes' => sprintf(tra("%s %s successfully deleted.") , tra("user") , $_REQUEST["user"])
-			);
-			$logslib->add_log('users', sprintf(tra("Deleted account %s") , $_REQUEST['user']));
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$userlib->remove_user($_REQUEST["user"]);
+		$tikifeedback = array();
+		$tikifeedback[] = array(
+			'num' => 0,
+			'mes' => sprintf(tra("%s %s successfully deleted.") , tra("user") , $_REQUEST["user"])
+		);
+		$logslib->add_log('users', sprintf(tra("Deleted account %s") , $_REQUEST['user']));
 	}
 	if ($_REQUEST['action'] == 'removegroup' && isset($_REQUEST['user']) && !empty($_REQUEST['group'])) {
 		if ($tiki_p_admin != 'y' && !array_key_exists($_REQUEST['group'], $userGroups)) {
@@ -288,25 +283,16 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			$smarty->display('error.tpl');
 			die;
 		}
-		$area = 'deluserfromgroup';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$userlib->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
-			$tikifeedback[] = array(
-				'num' => 0,
-				'mes' => sprintf(tra("%s %s removed from %s %s.") , tra("user") , $_REQUEST["user"], tra("group") , $_REQUEST["group"])
-			);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$userlib->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
+		$tikifeedback[] = array(
+			'num' => 0,
+			'mes' => sprintf(tra("%s %s removed from %s %s.") , tra("user") , $_REQUEST["user"], tra("group") , $_REQUEST["group"])
+		);
 	}
 	if ($_REQUEST['action'] == 'email_due' && isset($_REQUEST['user'])) {
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$userlib->reset_email_due($_REQUEST['user']);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$userlib->reset_email_due($_REQUEST['user']);
 	}
 	$_REQUEST["user"] = '';
 	if (isset($tikifeedback[0]['msg'])) {
@@ -314,26 +300,15 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	}
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page') {
-		$area = 'batchdeluser';
-		if ($prefs['feature_ticketlib2'] == 'n' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			foreach($_REQUEST["checked"] as $deleteuser) if ($deleteuser != 'admin') {
-				$userlib->remove_user($deleteuser);
-				$logslib->add_log('users', sprintf(tra("Deleted account %s") , $deleteuser));
-				if ($_REQUEST['submit_mult'] == 'remove_users_with_page') $tikilib->remove_all_versions($prefs['feature_wiki_userpage_prefix'] . $deleteuser);
-				$tikifeedback[] = array(
-					'num' => 0,
-					'mes' => sprintf(tra("%s %s successfully deleted.") , tra("user") , $deleteuser)
-				);
-			}
-		} elseif ($prefs['feature_ticketlib2'] == 'y') {
-			$ch = "";
-			foreach($_REQUEST['checked'] as $c) {
-				$ch.= "&amp;checked[]=" . urlencode($c);
-			}
-			key_get($area, "", "tiki-adminusers.php?submit_mult=" . $_REQUEST['submit_mult'] . $ch);
-		} else {
-			key_get($area);
+		$access->check_authenticity();
+		foreach($_REQUEST["checked"] as $deleteuser) if ($deleteuser != 'admin') {
+			$userlib->remove_user($deleteuser);
+			$logslib->add_log('users', sprintf(tra("Deleted account %s") , $deleteuser));
+			if ($_REQUEST['submit_mult'] == 'remove_users_with_page') $tikilib->remove_all_versions($prefs['feature_wiki_userpage_prefix'] . $deleteuser);
+			$tikifeedback[] = array(
+				'num' => 0,
+				'mes' => sprintf(tra("%s %s successfully deleted.") , tra("user") , $deleteuser)
+			);
 		}
 	} elseif ($_REQUEST['submit_mult'] == 'assign_groups') {
 		$group_management_mode = TRUE;

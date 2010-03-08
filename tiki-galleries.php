@@ -327,13 +327,8 @@ if (isset($_REQUEST["removegal"])) {
 			die;
 		}
 	}
-  $area = 'delgal';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$imagegallib->remove_gallery($_REQUEST["removegal"]);
-  } else {
-    key_get($area);
-  }
+	$access->check_authenticity();
+	$imagegallib->remove_gallery($_REQUEST["removegal"]);
 }
 $smarty->assign('category_needed', $category_needed);
 

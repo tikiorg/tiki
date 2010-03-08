@@ -41,14 +41,9 @@ if (!isset($_REQUEST["calendarId"])) {
 	
 }
 if (isset($_REQUEST["drop"])) {
-	$area = "delcalendar";
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$calendarlib->drop_calendar($_REQUEST["drop"]);
-		$_REQUEST["calendarId"] = 0;
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$calendarlib->drop_calendar($_REQUEST["drop"]);
+	$_REQUEST["calendarId"] = 0;
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-calendars');

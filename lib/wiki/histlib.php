@@ -429,41 +429,37 @@ function histlib_strip_irrelevant( $data )
 }
 
 function rollback_page_to_version($page, $version, $check_key = true, $keep_lastModif = false) {
-	global $prefs, $histlib, $tikilib, $categlib;
-	$area = 'delrollbackpage';
-	if (!$check_key or $prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		if ($check_key) key_check($area);
-		$histlib->use_version($page, $version, '', $keep_lastModif);
+	global $prefs, $histlib, $tikilib, $categlib, $access;
+	if ($check_key) {
+		$access->check_authenticity();
+	}		
+	$histlib->use_version($page, $version, '', $keep_lastModif);
+	
+	if ( ($approved = $tikilib->get_approved_page($page)) && $prefs['wikiapproval_outofsync_category'] > 0) {
 		
-		if ( ($approved = $tikilib->get_approved_page($page)) && $prefs['wikiapproval_outofsync_category'] > 0) {
-			
-			$approved_page = $histlib->get_page_from_history($approved, 0, true);
-			$staging_page = $histlib->get_page_from_history($page, $version, true);
-			$cat_type='wiki page';	
-			$staging_cats = $categlib->get_object_categories($cat_type, $page);
-			$s_cat_desc = ($prefs['feature_wiki_description'] == 'y') ? substr($staging_info["description"],0,200) : '';
-			$s_cat_objid = $page;
-			$s_cat_name = $page;
-			$s_cat_href="tiki-index.php?page=".urlencode($s_cat_objid);
-			
-			//Instead of firing up diff, just check if the pages share the same exact data, drop the staging
-			//copy out of the review category if so
-			if ( $approved_page["data"] != $staging_page["data"] ) //compare these only once
-			$pages_diff = true;
-			if ( in_array($prefs['wikiapproval_outofsync_category'], $staging_cats) )
-			$in_staging_cat = true;
-	
-			if ( !$pages_diff && $in_staging_cat ) {
-				$staging_cats = array_diff($staging_cats,Array($prefs['wikiapproval_outofsync_category']));
-				$categlib->update_object_categories($staging_cats, $s_cat_objid, $cat_type, $s_cat_desc, $s_cat_name, $s_cat_href);	
-			} elseif ( $pages_diff && !$in_staging_cat ) {
-				$staging_cats[] = $prefs['wikiapproval_outofsync_category'];
-				$categlib->update_object_categories($staging_cats, $s_cat_objid, $cat_type, $s_cat_desc, $s_cat_name, $s_cat_href);	
-			}
+		$approved_page = $histlib->get_page_from_history($approved, 0, true);
+		$staging_page = $histlib->get_page_from_history($page, $version, true);
+		$cat_type='wiki page';	
+		$staging_cats = $categlib->get_object_categories($cat_type, $page);
+		$s_cat_desc = ($prefs['feature_wiki_description'] == 'y') ? substr($staging_info["description"],0,200) : '';
+		$s_cat_objid = $page;
+		$s_cat_name = $page;
+		$s_cat_href="tiki-index.php?page=".urlencode($s_cat_objid);
+		
+		//Instead of firing up diff, just check if the pages share the same exact data, drop the staging
+		//copy out of the review category if so
+		if ( $approved_page["data"] != $staging_page["data"] ) //compare these only once
+		$pages_diff = true;
+		if ( in_array($prefs['wikiapproval_outofsync_category'], $staging_cats) )
+		$in_staging_cat = true;
+
+		if ( !$pages_diff && $in_staging_cat ) {
+			$staging_cats = array_diff($staging_cats,Array($prefs['wikiapproval_outofsync_category']));
+			$categlib->update_object_categories($staging_cats, $s_cat_objid, $cat_type, $s_cat_desc, $s_cat_name, $s_cat_href);	
+		} elseif ( $pages_diff && !$in_staging_cat ) {
+			$staging_cats[] = $prefs['wikiapproval_outofsync_category'];
+			$categlib->update_object_categories($staging_cats, $s_cat_objid, $cat_type, $s_cat_desc, $s_cat_name, $s_cat_href);	
 		}
-	} else {
-		key_get($area);
-	}
-	
+	}	
 	$tikilib->invalidate_cache( $page );
 }

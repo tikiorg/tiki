@@ -67,13 +67,8 @@ $smarty->assign('referer', !empty($_REQUEST['referer']) ? $_REQUEST['referer'] :
 $blog_data = $bloglib->get_blog($blogId);
 $smarty->assign_by_ref('blog_data', $blog_data);
 if (isset($_REQUEST['remove_image'])) {
-	$area = 'delblogpostimage';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$bloglib->remove_post_image($_REQUEST['remove_image']);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$bloglib->remove_post_image($_REQUEST['remove_image']);
 }
 // If the articleId is passed then get the article data
 if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {

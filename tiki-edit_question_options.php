@@ -49,13 +49,8 @@ $smarty->assign('optionText', $info["optionText"]);
 $smarty->assign('points', $info["points"]);
 
 if (isset($_REQUEST["remove"])) {
-  $area = 'delquizquestionoptions';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$quizlib->remove_quiz_question_option($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
+	$access->check_authenticity();
+	$quizlib->remove_quiz_question_option($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {

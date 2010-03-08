@@ -24,13 +24,8 @@ $smarty->assign('surveyId', $_REQUEST["surveyId"]);
 $survey_info = $srvlib->get_survey($_REQUEST["surveyId"]);
 $smarty->assign('survey_info', $survey_info);
 if (isset($_REQUEST["clear"]) && $tiki_p_admin_surveys == 'y') {
-	$area = 'delsurveystats';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$srvlib->clear_survey_stats($_REQUEST["clear"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$srvlib->clear_survey_stats($_REQUEST["clear"]);
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc';

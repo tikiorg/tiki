@@ -11,13 +11,8 @@ $access->check_feature('feature_referer_stats');
 $access->check_permission('tiki_p_view_referer_stats');
 
 if (isset($_REQUEST["clear"])) {
-	$area = 'delrefstats';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$refererlib->clear_referer_stats();
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$refererlib->clear_referer_stats();
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'hits_desc';

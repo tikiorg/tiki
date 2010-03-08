@@ -42,14 +42,9 @@ if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
 }
 if (isset($_REQUEST["remove"])) {
-	$area = 'deltracker';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$trklib->remove_tracker($_REQUEST["remove"]);
-		$logslib->add_log('admintrackers', 'removed tracker ' . $_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$trklib->remove_tracker($_REQUEST["remove"]);
+	$logslib->add_log('admintrackers', 'removed tracker ' . $_REQUEST["remove"]);
 }
 $cat_type = 'tracker';
 $cat_objid = $_REQUEST["trackerId"];

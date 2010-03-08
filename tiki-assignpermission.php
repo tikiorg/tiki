@@ -50,14 +50,9 @@ if (isset($_REQUEST["action"])) {
 	}
 
 	if ($_REQUEST["action"] == 'remove') {
-		$area = 'delpermassign';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$userlib->remove_permission_from_group($_REQUEST["permission"], $group);
-			$logslib->add_log('perms',"unassigned perm ".$_REQUEST['permission']." from group $group");
-		} else {
-			key_get($area, sprintf(tra('Unassign perm %s from group %s'), $_REQUEST['permission'], $group));
-		}
+		$access->check_authenticity(sprintf(tra('Unassign perm %s from group %s'), $_REQUEST['permission'], $group));
+		$userlib->remove_permission_from_group($_REQUEST["permission"], $group);
+		$logslib->add_log('perms',"unassigned perm ".$_REQUEST['permission']." from group $group");
 	}
 }
 if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'temp_cache') {

@@ -53,16 +53,11 @@ if ($_REQUEST["nlId"]) {
 }
 $smarty->assign('nl_info', $info);
 if (isset($_REQUEST["remove"])) {
-	$area = 'delnlsub';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		if (isset($_REQUEST["email"])) $nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["email"], "n");
-		elseif (isset($_REQUEST["subuser"])) $nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["subuser"], "y");
-		elseif (isset($_REQUEST["group"])) $nllib->remove_newsletter_group($_REQUEST["remove"], $_REQUEST["group"]);
-		elseif (isset($_REQUEST["included"])) $nllib->remove_newsletter_included($_REQUEST["remove"], $_REQUEST["included"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	if (isset($_REQUEST["email"])) $nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["email"], "n");
+	elseif (isset($_REQUEST["subuser"])) $nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["subuser"], "y");
+	elseif (isset($_REQUEST["group"])) $nllib->remove_newsletter_group($_REQUEST["remove"], $_REQUEST["group"]);
+	elseif (isset($_REQUEST["included"])) $nllib->remove_newsletter_included($_REQUEST["remove"], $_REQUEST["included"]);
 }
 if (isset($_REQUEST["valid"])) {
 	check_ticket('admin-nl-subsriptions');

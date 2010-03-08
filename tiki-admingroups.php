@@ -111,25 +111,10 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 // Process a form to remove a group
 if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {
-		$area = 'delgroup';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$userlib->remove_group($_REQUEST["group"]);
-			$logslib->add_log('admingroups', 'removed group ' . $_REQUEST["group"]);
-			unset($_REQUEST['group']);
-		} else {
-			key_get($area, tra('Remove group: ') . $_REQUEST['group']);
-		}
-	}
-	if ($_REQUEST["action"] == 'remove') {
-		$area = 'delgroupperm';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$userlib->remove_permission_from_group($_REQUEST["permission"], $_REQUEST["group"]);
-			$logslib->add_log('admingroups', 'removed permission ' . $_REQUEST["permission"] . ' from group ' . $_REQUEST["group"]);
-		} else {
-			key_get($area, sprintf(tra('Remove permission: %s on %s') , $_REQUEST['permission'], $_REQUEST['group']));
-		}
+		$access->check_authenticity(tra('Remove group: ') . htmlspecialchars($_REQUEST['group']));
+		$userlib->remove_group($_REQUEST["group"]);
+		$logslib->add_log('admingroups', 'removed group ' . $_REQUEST["group"]);
+		unset($_REQUEST['group']);
 	}
 }
 if (isset($_REQUEST['clean'])) {

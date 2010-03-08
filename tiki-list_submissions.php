@@ -11,13 +11,8 @@ include_once ('lib/articles/artlib.php');
 $access->check_feature('feature_submissions');
 if (isset($_REQUEST["remove"])) {
 	$access->check_permission('tiki_p_remove_submission');
-	$area = 'delsubmission';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$artlib->remove_submission($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$artlib->remove_submission($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["approve"])) {
 	check_ticket('list-submissions');

@@ -22,22 +22,12 @@ if ($_REQUEST["cookieId"]) {
 }
 $smarty->assign('cookie', $info["cookie"]);
 if (isset($_REQUEST["remove"])) {
-	$area = 'delcookie';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$taglinelib->remove_cookie($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$taglinelib->remove_cookie($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["removeall"])) {
-	$area = 'delcookieall';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$taglinelib->remove_all_cookies();
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$taglinelib->remove_all_cookies();
 }
 if (isset($_REQUEST["upload"])) {
 	check_ticket('admin-cookies');

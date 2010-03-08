@@ -118,13 +118,8 @@ if (isset($_REQUEST["action"])) {
 
 		case 'rm':
 			if ($ruleID != 0) {
-				$area = "delintegratorrule";
-				if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-					key_check($area);
-					$integrator->remove_rule($ruleID);
-				} else {
-					key_get($area);
-				}
+				$access->check_authenticity();
+				$integrator->remove_rule($ruleID);
 			}
 			break;
 

@@ -23,13 +23,8 @@ if ($_REQUEST["extwikiId"]) {
 }
 $smarty->assign('info', $info);
 if (isset($_REQUEST["remove"])) {
-	$area = 'delextwiki';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$adminlib->remove_extwiki($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$adminlib->remove_extwiki($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-external-wikis');

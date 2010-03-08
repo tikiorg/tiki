@@ -14,13 +14,8 @@ if (!isset($dcslib)) {
 $access->check_feature('feature_dynamic_content');
 $access->check_permission('tiki_p_admin_dynamic');
 if (isset($_REQUEST["remove"])) {
-	$area = 'delcontents';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$dcslib->remove_contents($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$dcslib->remove_contents($_REQUEST["remove"]);
 }
 $smarty->assign('description', '');
 $smarty->assign('contentLabel', '');

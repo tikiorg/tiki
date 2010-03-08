@@ -21,13 +21,8 @@ if(isset($_REQUEST["add_type"])) {
 	$artlib->add_type($_REQUEST["new_type"]);
 }
 elseif(isset($_REQUEST["remove_type"])) {
-	$area = "delarticletype";
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$artlib->remove_type($_REQUEST["remove_type"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$artlib->remove_type($_REQUEST["remove_type"]);
 }
 elseif(isset($_REQUEST["update_type"])) {
 	foreach(array_keys($_REQUEST["type_array"]) as $this_type) {

@@ -160,13 +160,8 @@ if (isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId'
 			$error_msg = tra('You do not have permission to do that');
 		} else {
 			if ($fileInfo['lockedby'] != $user) {
-				$area = 'unlock';
-				if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-					key_check($area);
-					$filegallib->unlock_file($_REQUEST['fileId']);
-				} else {
-					key_get($area, sprintf(tra('The file is already locked by %s'), $fileInfo['lockedby']));
-				}
+				$access->check_authenticity(sprintf(tra('The file is already locked by %s'), $fileInfo['lockedby']));
+				$filegallib->unlock_file($_REQUEST['fileId']);
 			} else {
 				$filegallib->unlock_file($_REQUEST['fileId']);
 			}
@@ -204,21 +199,14 @@ if (!empty($_REQUEST['remove'])) {
 		}
 	}
 	$backlinks = $filegallib->getFileBacklinks($_REQUEST['remove']);
-	if (!empty($backlinks)) {
-		$prefs['feature_ticketlib2'] = 'y';
+
+	if (isset($_POST['daconfirm']) && !empty($backlinks)) {
+		$smarty->assign_by_ref('backlinks', $backlinks);
+		$smarty->assign('file_backlinks_title', 'WARNING: The file is used in:');//get_strings tra('WARNING: The file is used in:')
+		$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl'));
 	}
-	$area = 'delfile';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$filegallib->remove_file($info, $gal_info);
-	} else {
-		if (!empty($backlinks)) {
-			$smarty->assign_by_ref('backlinks', $backlinks);
-			$smarty->assign('file_backlinks_title', 'WARNING: The file is used in:');//get_strings tra('WARNING: The file is used in:')
-			$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl'));
-		}
-		key_get($area, tra('Remove file: ') . (!empty($info['name']) ? $info['name'] . ' - ' : '') . $info['filename']);
-	}
+	$access->check_authenticity(tra('Remove file: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+	$filegallib->remove_file($info, $gal_info);
 }
 $foo = parse_url($_SERVER['REQUEST_URI']);
 $smarty->assign('url', $tikilib->httpPrefix() . $foo['path']);
@@ -479,13 +467,8 @@ if (!empty($_REQUEST['removegal'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$area = 'delfilegal';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$filegallib->remove_file_gallery($_REQUEST['removegal'], $galleryId);
-	} else {
-		key_get($area, tra('Remove file gallery: ') . ' ' . $gal_info['name']);
-	}
+	$access->check_authenticity(tra('Remove file gallery: ') . ' ' . htmlspecialchars($gal_info['name']));
+	$filegallib->remove_file_gallery($_REQUEST['removegal'], $galleryId);
 }
 // Process upload of a file version
 if (!empty($_FILES)) {

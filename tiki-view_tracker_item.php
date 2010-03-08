@@ -995,13 +995,8 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 }
 if ($tracker_info["useComments"] == 'y') {
 	if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove_comment"])) {
-		$area = 'deltrackercomment';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$trklib->remove_item_comment($_REQUEST["remove_comment"]);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$trklib->remove_item_comment($_REQUEST["remove_comment"]);
 	}
 	if (isset($_REQUEST["commentId"])) {
 		$comment_info = $trklib->get_item_comment($_REQUEST["commentId"]);
@@ -1041,13 +1036,8 @@ if ($tracker_info["useAttachments"] == 'y') {
 		check_ticket('view-trackers-items');
 		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
 		if (($user && ($owner == $user)) || ($tiki_p_admin_trackers == 'y')) {
-			$area = 'deltrackerattach';
-			if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-				key_check($area);
-				$trklib->remove_item_attachment($_REQUEST["removeattach"]);
-			} else {
-				key_get($area);
-			}
+			$access->check_authenticity();
+			$trklib->remove_item_attachment($_REQUEST["removeattach"]);
 		}
 		$_REQUEST["show"] = "att";
 	}

@@ -42,13 +42,8 @@ $auto_query_args = array(
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 if (isset($_REQUEST["remove"])) {
-	$area = 'delforum';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$commentslib->remove_forum($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$commentslib->remove_forum($_REQUEST["remove"]);
 }
 if (isset($_REQUEST['lock']) && isset($_REQUEST['forumId'])) {
 	check_ticket('view-forum');

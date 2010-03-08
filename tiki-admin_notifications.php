@@ -131,16 +131,11 @@ if (!empty($tikifeedback)) {
 	$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 }
 if (isset($_REQUEST["removeevent"]) && isset($_REQUEST['removetype'])) {
-	$area = 'delnotif';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		if ($_REQUEST['removetype'] == 'user') {
-			$tikilib->remove_user_watch_by_id($_REQUEST["removeevent"]);
-		} else {
-			$tikilib->remove_group_watch_by_id($_REQUEST["removeevent"]);
-		}
+	$access->check_authenticity();
+	if ($_REQUEST['removetype'] == 'user') {
+		$tikilib->remove_user_watch_by_id($_REQUEST["removeevent"]);
 	} else {
-		key_get($area);
+		$tikilib->remove_group_watch_by_id($_REQUEST["removeevent"]);
 	}
 }
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {

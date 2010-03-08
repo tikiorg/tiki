@@ -25,13 +25,8 @@ if ($_REQUEST["pageName"]) {
 }
 $smarty->assign('info', $info);
 if (isset($_REQUEST["remove"])) {
-	$area = 'delhtmlpage';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$htmlpageslib->remove_html_page($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$htmlpageslib->remove_html_page($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';

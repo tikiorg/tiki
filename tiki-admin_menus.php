@@ -30,14 +30,9 @@ if ($_REQUEST["menuId"]) {
 }
 $smarty->assign_by_ref('info', $info);
 if (isset($_REQUEST["remove"])) {
-	$area = 'delmenu';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$menulib->remove_menu($_REQUEST["remove"]);
-		$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST['menuId']);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$menulib->remove_menu($_REQUEST["remove"]);
+	$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST['menuId']);
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-menus');

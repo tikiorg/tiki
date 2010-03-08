@@ -75,15 +75,10 @@ if ($tiki_p_edit_templates == 'y') {
 	}
 	
 	if (isset($_REQUEST['delete']) && !empty($_REQUEST['template'])) {
-		$area = 'deltpl';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-	    		key_check($area);
-			$file = $smarty->get_filename($_REQUEST['template']);
-			unlink($file);
-			unset($_REQUEST['template']);
-		} else {
-			 key_get($area);
-		}
+		$access->check_authenticity();
+		$file = $smarty->get_filename($_REQUEST['template']);
+		unlink($file);
+		unset($_REQUEST['template']);
 	}
 }
 

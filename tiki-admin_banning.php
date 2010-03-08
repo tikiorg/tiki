@@ -29,12 +29,8 @@ if (isset($_REQUEST['banId'])) {
 $smarty->assign('banId', $_REQUEST['banId']);
 $smarty->assign_by_ref('info', $info);
 if (isset($_REQUEST['remove'])) {
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$banlib->remove_rule($_REQUEST['remove']);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$banlib->remove_rule($_REQUEST['remove']);
 }
 if (isset($_REQUEST['del']) && isset($_REQUEST['delsec'])) {
 	check_ticket('admin-banning');

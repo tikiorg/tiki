@@ -159,13 +159,8 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 			}
 		}
 	} elseif (isset($_REQUEST['remove'])) {
-		$area = 'delete';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$logslib->remove_action($_REQUEST['actionId']);
-		} else {
-			key_get($area);
-		}
+		$access->check_authenticity();
+		$logslib->remove_action($_REQUEST['actionId']);
 	} else {
 		$smarty->assign_by_ref('action', $action);
 		if ($action['objectType'] == 'wiki page') {

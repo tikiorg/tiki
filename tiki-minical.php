@@ -16,32 +16,17 @@ $access->check_user($user);
 $access->check_permission('tiki_p_minical');
 if (!isset($_REQUEST["eventId"])) $_REQUEST["eventId"] = 0;
 if (isset($_REQUEST['remove'])) {
-	$area = 'delminicalevent';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$minicallib->minical_remove_event($user, $_REQUEST['remove']);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$minicallib->minical_remove_event($user, $_REQUEST['remove']);
 }
 if (isset($_REQUEST['remove2'])) {
-	$area = 'delminicalevent2';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$minicallib->minical_remove_event($user, $_REQUEST['eventId']);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$minicallib->minical_remove_event($user, $_REQUEST['eventId']);
 }
 if (isset($_REQUEST['delete'])) {
-	$area = 'delminical';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		foreach(array_keys($_REQUEST["event"]) as $ev) {
-			$minicallib->minical_remove_event($user, $ev);
-		}
-	} else {
-		key_get($area);
+	$access->check_authenticity();
+	foreach(array_keys($_REQUEST["event"]) as $ev) {
+		$minicallib->minical_remove_event($user, $ev);
 	}
 }
 if (isset($_REQUEST['day']) && isset($_REQUEST['mon']) && isset($_REQUEST['year'])) {
@@ -64,13 +49,8 @@ $pdate_h = mktime(date("G"), date("i"), date("s"), date("m", $pdate), date("d", 
 $smarty->assign('pdate', $pdate);
 $smarty->assign('pdate_h', $pdate_h);
 if (isset($_REQUEST['removeold'])) {
-	$area = 'delminicaloldevents';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$minicallib->minical_remove_old($user, $pdate_h);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$minicallib->minical_remove_old($user, $pdate_h);
 }
 if ($_REQUEST["eventId"]) {
 	$info = $minicallib->minical_get_event($user, $_REQUEST["eventId"]);

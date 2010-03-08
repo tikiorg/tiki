@@ -184,6 +184,26 @@ class TikiAccessLib extends TikiLib
 		}
 	}
 
+	/**
+	 *  Checks whether the request was willingly submitted by the user, instead of being triggered by Cross-Site Request Forgery.
+	 *  This uses random tokens. The first call brings to a request confirmation screen with a new token in the form. The second call, in the second request, verifies the submitted token matches.
+	 *  Typical usage: $access->check_authenticity();
+
+	 * @param string $confirmation_text Text on the confirmation screen. Default: 'Click here to confirm your action'
+	 * @access public
+	 * @return void
+	 */
+	function check_authenticity($confirmation_text = '') {
+		global $prefs;
+		if ($prefs['feature_ticketlib2'] == 'y') {
+			if (isset($_REQUEST['daconfirm'])) {
+				key_check();
+			} else {
+				key_get(null, $confirmation_text, $confirmaction);
+			}
+		}
+	}
+
 	// you must call ask_ticket('error') before calling this
 	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true, $message='') {
 		global $smarty, $wikilib, $prefs, $tikiroot, $userlib, $user;

@@ -61,13 +61,8 @@ if ($_REQUEST["surveyId"]) {
 }
 $smarty->assign('info', $info);
 if (isset($_REQUEST["remove"])) {
-	$area = 'delsurvey';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$srvlib->remove_survey($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$srvlib->remove_survey($_REQUEST["remove"]);
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';

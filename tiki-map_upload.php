@@ -65,19 +65,14 @@ if (isset($_REQUEST["upload"])) {
 //Do we have a file to delete?
 if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
 	if ($_REQUEST["action"] == "delete") {
-		$area = "delmapupload";
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			if (is_file($directory_path . $DSEP . $_REQUEST["file"]) && !preg_match("/^\./", $_REQUEST["file"])) {
-				$access->check_permission('tiki_p_map_delete');
-				unlink($directory_path . $DSEP . $_REQUEST["file"]);
-			} else {
-				$smarty->assign('msg', tra("File not found"));
-				$smarty->display("error.tpl");
-				die;
-			}
+		$access->check_authenticity();
+		if (is_file($directory_path . $DSEP . $_REQUEST["file"]) && !preg_match("/^\./", $_REQUEST["file"])) {
+			$access->check_permission('tiki_p_map_delete');
+			unlink($directory_path . $DSEP . $_REQUEST["file"]);
 		} else {
-			key_get($area);
+			$smarty->assign('msg', tra("File not found"));
+			$smarty->display("error.tpl");
+			die;
 		}
 	}
 }
@@ -98,19 +93,14 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
 		}
 	}
 	if ($_REQUEST["action"] == "deldir") {
-		$area = "delmapdir";
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			if (!preg_match("/^\./", $_REQUEST["directory"]) || !preg_match("/\.\//", $_REQUEST["directory"])) {
-				$access->check_permission('tiki_p_map_delete');
-				if (!@rmdir($directory_path . $DSEP . $_REQUEST["directory"])) {
-					$smarty->assign('msg', tra("The Directory is not empty"));
-					$smarty->display("error.tpl");
-					die;
-				}
+		$access->check_authenticity();
+		if (!preg_match("/^\./", $_REQUEST["directory"]) || !preg_match("/\.\//", $_REQUEST["directory"])) {
+			$access->check_permission('tiki_p_map_delete');
+			if (!@rmdir($directory_path . $DSEP . $_REQUEST["directory"])) {
+				$smarty->assign('msg', tra("The Directory is not empty"));
+				$smarty->display("error.tpl");
+				die;
 			}
-		} else {
-			key_get($area);
 		}
 	}
 }

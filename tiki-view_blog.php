@@ -77,13 +77,8 @@ if (isset($_REQUEST["remove"])) {
 			$access->check_permission('tiki_p_blog_admin');
 		}
 	}
-	$area = 'delpost';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$bloglib->remove_post($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$bloglib->remove_post($_REQUEST["remove"]);
 }
 // This script can receive the thresold
 // for the information as the number of

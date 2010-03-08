@@ -50,13 +50,8 @@ if (isset($_REQUEST["new_acc"])) {
 	$smarty->assign('confirmation', 0);
 }
 if (isset($_REQUEST["remove"])) {
-	$area = 'delmailin';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$mailinlib->remove_mailin_account($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$mailinlib->remove_mailin_account($_REQUEST["remove"]);
 }
 if ($_REQUEST["accountId"]) {
 	$info = $mailinlib->get_mailin_account($_REQUEST["accountId"]);

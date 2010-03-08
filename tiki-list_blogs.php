@@ -25,13 +25,8 @@ if (isset($_REQUEST["remove"])) {
 			die;
 		}
 	}
-	$area = 'delblog';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$bloglib->remove_blog($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$bloglib->remove_blog($_REQUEST["remove"]);
 }
 // This script can receive the thresold
 // for the information as the number of

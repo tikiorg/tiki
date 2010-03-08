@@ -97,12 +97,8 @@ if (!empty($_REQUEST['edit_assign'])) {
 if (!empty($_REQUEST['unassign'])) {
     check_ticket('admin-modules');
     $info = $modlib->get_assigned_module($_REQUEST['unassign']);
-    if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-        $modlib->unassign_module($_REQUEST['unassign']);
-        $logslib->add_log('adminmodules', 'unassigned module ' . $info['name']);
-    } else {
-        key_get($area, tra('Unassign module:') . ' ' . $info['name']);
-    }
+	$modlib->unassign_module($_REQUEST['unassign']);
+	$logslib->add_log('adminmodules', 'unassigned module ' . $info['name']);
 }
 if (!empty($_REQUEST['modup'])) {
     check_ticket('admin-modules');

@@ -48,13 +48,8 @@ $smarty->assign('comment', $info["comment"]);
 // Assign parsed
 $smarty->assign('parsed', $tikilib->parse_data($info["data"]));
 if (isset($_REQUEST["remove"])) {
-	$area = 'delreceivedpage';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$commlib->remove_received_page($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$commlib->remove_received_page($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('received-pages');

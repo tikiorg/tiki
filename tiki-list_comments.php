@@ -61,14 +61,9 @@ if (isset($_REQUEST['checked'])) {
 	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
 	// Delete comment(s)
 	if (isset($_REQUEST['remove'])) {
-		$area = 'removecomment';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			foreach($checked as $id) {
-				$commentslib->remove_comment($id);
-			}
-		} else {
-			key_get($area, tra('Delete comments'));
+		$access->check_authenticity(tra('Delete comments'));
+		foreach($checked as $id) {
+			$commentslib->remove_comment($id);
 		}
 	}
 	// Approve/Reject comment(s)

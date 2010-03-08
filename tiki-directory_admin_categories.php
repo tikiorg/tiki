@@ -42,13 +42,8 @@ if ($_REQUEST["categId"]) {
 $smarty->assign_by_ref('info', $info);
 // Remove a category
 if (isset($_REQUEST["remove"])) {
-	$area = 'deldircateg';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$dirlib->dir_remove_category($_REQUEST["remove"]);
-	} else {
-		key_get($area);
-	}
+	$access->check_authenticity();
+	$dirlib->dir_remove_category($_REQUEST["remove"]);
 }
 // Replace (add or edit) a category
 if (isset($_REQUEST["save"])) {

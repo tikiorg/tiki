@@ -28,13 +28,8 @@ $info = $dcslib->get_content($_REQUEST["contentId"]);
 $smarty->assign('description', $info["description"]);
 
 if (isset($_REQUEST["remove"])) {
-  $area = 'deldyncontent';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
-		$dcslib->remove_programmed_content($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
+	$access->check_authenticity();
+	$dcslib->remove_programmed_content($_REQUEST["remove"]);
 }
 
 $smarty->assign('data', '');

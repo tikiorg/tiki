@@ -70,14 +70,9 @@ if (isset($_REQUEST['id'])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	$area = 'deluserwatch';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-		key_check($area);
-		$error = $tikilib->remove_user_watch_by_id($_REQUEST['id']);
-		$smarty->assign('remove_user_watch_error', !$error);
-	} else {
-		key_get($area, tra('Remove the notification email'));
-	}
+	$access->check_authenticity(tra('Remove the notification email'));
+	$error = $tikilib->remove_user_watch_by_id($_REQUEST['id']);
+	$smarty->assign('remove_user_watch_error', !$error);
 }
 
 if (isset($_REQUEST["add"])) {
