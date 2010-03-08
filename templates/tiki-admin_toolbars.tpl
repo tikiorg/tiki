@@ -62,7 +62,7 @@
 		{/foreach}
 	</div>
 	<div class="lists">
-		<label for="#full-list-w">{tr}Formatting Tools:{/tr}</label>
+		<label for="full-list-w">{tr}Formatting Tools:{/tr}</label>
 		<ul id="full-list-w" class="full">
 		{foreach from=$display_w item=tool}
 			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
@@ -70,7 +70,7 @@
 		</ul>
 	</div>
 	<div class="lists">
-		<label for="#full-list-p">{tr}Plugin Tools:{/tr}</label><br/>
+		<label for="full-list-p">{tr}Plugin Tools:{/tr}</label><br/>
 		<ul id="full-list-p" class="full">
 		{foreach from=$display_p item=tool}
 			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
@@ -93,7 +93,7 @@
 					<label for="tool_syntax">{tr}Syntax{/tr}:</label>
 					<input type="text" name="tool_syntax" id="tool_syntax" class="text ui-widget-content ui-corner-all" />
 					<label for="tool_type">{tr}Type{/tr}:</label>
-					<select type="text" name="tool_type" id="tool_type" class="select ui-widget-content ui-corner-all">
+					<select name="tool_type" id="tool_type" class="select ui-widget-content ui-corner-all">
 						<option value="Inline">Inline</option>
 						<option value="Block">Block</option>
 						<option value="LineBased">LineBased</option>
@@ -113,15 +113,15 @@
 							<option value="{$plugin|escape}">{$info.name|escape}</option>
 						{/foreach}
 					</select>
-					<input type="hidden" value="" name="save_tool" id="save_tool">
-					<input type="hidden" value="" name="delete_tool" id="delete_tool">
+					<input type="hidden" value="" name="save_tool" id="save_tool" />
+					<input type="hidden" value="" name="delete_tool" id="delete_tool" />
 					<input type="hidden" name="section" value="{$loaded}"/>
 					<input type="hidden" name="comments" value="{if $comments}on{/if}"/>
 					<input type="hidden" name="autoreload" value="{if $autoreload}on{/if}"/>
 				</fieldset>
 			</form>
 		</div>
-		<label for="#full-list-c">{tr}Custom Tools:{/tr}</label>{icon _id="add" title="{tr}Add a new custom tool{/tr}" id="toolbar_add_custom"}<br/>
+		<label for="full-list-c">{tr}Custom Tools:{/tr}</label>{icon _id="add" title="{tr}Add a new custom tool{/tr}" id="toolbar_add_custom"}<br/>
 		<ul id="full-list-c" class="full">
 		{foreach from=$display_c item=tool}
 			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
