@@ -13,7 +13,7 @@
 
 {literal}
 <script language='javascript' type='text/javascript'>
-var minichat_lasttimeout=2000;
+var minichat_lasttimeout=6000;
 
 var minichat_firstchan=null;
 var minichat_lastchan=null;
