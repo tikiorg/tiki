@@ -410,14 +410,23 @@ class MultilingualLib extends TikiLib
 //			echo "<pre>-- multilinguallib.useBestLanguage: returning false cause of feature_multilingual</pre>\n";
 			return false;
 		}
-		if ($prefs['feature_detect_language'] == 'n' && 
-			$prefs['feature_best_language'] == 'n') {
+		if ($prefs['feature_best_language'] == 'n' && !isset($_REQUEST['bl'])) {
+			// If bl is explicitly set then for backward compatibility reasons let through even if feature is off.
 //			echo "<pre>-- multilinguallib.useBestLanguage: returning false cause of feature_best_language or feature_detect_language</pre>\n";
 		    return false;
 		} 
 		
 		if (isset($_REQUEST['no_bl']) && $_REQUEST['no_bl'] == 'y') {
-			return false;
+			return false; // no_bl is the new flag which has to be specified as y to have any effect
+		}
+		
+		// The following checks below maintained for backward compatibility
+		if (isset($_REQUEST['best_lang'])  && $_REQUEST['best_lang'] != 'y') {
+			return false; // the old best_lang check was default no, if present without y specified
+		}
+		
+		if (isset($_REQUEST['bl'])  && $_REQUEST['bl'] == 'n') {
+			return false; // the old bl check was default yes once present
 		}
 
 		/*
@@ -435,7 +444,7 @@ class MultilingualLib extends TikiLib
 		 *    is always used, so there is no need to say that with an argument. There may be a need to 
 		 *    say that in a particular case, Best Language should NOT be used, but not to say that Best Language
 		 *    SHOULD be used.
-		 *  
+		 *  -- extra note by nkoth: I've cleaned this up - so all the checking is done here now.
  		 */
 		
 //		echo "<pre>-- multilinguallib.useBestLanguage: returning true</pre>\n";

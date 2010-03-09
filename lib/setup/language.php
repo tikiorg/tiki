@@ -22,9 +22,6 @@ if (isset($_REQUEST['switchLang'])) { // check can change lang + valid lang
 //echo "U_INFO:".$u_info['prefs']['language']." S_PREFS:".$_SESSION['s_prefs']['language']." PREFS:".$prefs['language'];
 if (isset($_REQUEST['switchLang'])) {
 	$prefs['language'] = $_REQUEST['switchLang'];
-	if ($prefs['feature_best_language'] == 'y' && empty($_REQUEST['bl'])) {
-		$_REQUEST['bl'] = 'y';
-	}
 	if ($user && $prefs['feature_userPreferences'] == 'y') {
 		$tikilib->set_user_preference($user, 'language', $prefs['language']);
 	} else {
@@ -35,11 +32,6 @@ if (isset($_REQUEST['switchLang'])) {
 	if ( ! empty($browser_language) ) {
 		$prefs['language'] = $browser_language;
 	}
-}
-
-// clear bl if bl is 'n' for backward compatibility
-if (isset($_REQUEST['bl']) && $_REQUEST['bl'] == 'n') {
-	unset($_REQUEST['bl']);
 }
 
 if ( $prefs['lang_use_db'] != 'y' ) {
