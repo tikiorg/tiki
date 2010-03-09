@@ -1,0 +1,11 @@
+/* $Id$
+	Skeleton theme (skeleton.css) for Tikiwiki CMS/Groupware.
+	Simplified tiki.tpl file and no-content theme CSS file.
+	Visit http://themes.tikiwiki.org for more information.
+*/
+ 
+/* Import foundation CSS files. */
+@import "lite/lite.css";
+@import "layout/layout.css";
+@import "layout/design.css";
+/* End of File */
