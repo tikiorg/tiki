@@ -27,7 +27,7 @@ class TWVersion
 
 		// Set everything else, including defaults.
 		$this->version 	= '5.0';
-		$this->star	= '';
+		$this->star	= 'Vulpeculae';
 		$this->releases	= array();
 
 		// Check for Subversion or not
@@ -63,7 +63,8 @@ class TWVersion
 				12=>'Sirius',
 				13=>'Arcturus',
 				14=>'Betelgeuse',
-				15=>'Aldebaran'
+				15=>'Aldebaran',
+				16=>'Vulpeculae'
 				);
 	}
 
@@ -113,7 +114,7 @@ class TWVersion
 				'4.0',
 				'4.1',
 				'4.2',
-				'5.0'
+				'5.0alpha'
 				);
 	}
 
