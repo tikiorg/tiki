@@ -1973,6 +1973,7 @@ CREATE TABLE `tiki_sheets` (
   `title` varchar(200) NOT NULL default '',
   `description` text,
   `author` varchar(200) NOT NULL default '',
+  `parentSheetId` int(8) NULL,
   PRIMARY KEY (`sheetId`)
 ) ENGINE=MyISAM;
 

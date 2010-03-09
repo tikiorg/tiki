@@ -55,6 +55,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('title', $info["title"]);
 		$smarty->assign('description', $info["description"]);
 		$smarty->assign('creator', $info['author']);
+		$smarty->assign('parentSheetId', isset($info['parentSheetId']) ? $info['parentSheetId'] : 0);
 		$info = $sheetlib->get_sheet_layout($_REQUEST["sheetId"]);
 		$smarty->assign('className', $info["className"]);
 		$smarty->assign('headerRow', $info["headerRow"]);
@@ -66,6 +67,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('footerRow', '0');
 		$smarty->assign('parseValues', 'n');
 		$smarty->assign('creator', $user);
+		$smarty->assign('parentSheetId', 0);
 	}
 }
 // Process the insertion or modification of a sheet here
@@ -85,7 +87,7 @@ if (isset($_REQUEST["edit"])) {
 		$_REQUEST['parseValues'] = 'n';
 	}
 	$smarty->assign_by_ref('parseValues', $_REQUEST['parseValues']);
-	$gid = $sheetlib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $_REQUEST['creator']);
+	$gid = $sheetlib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $_REQUEST['creator'], $_REQUEST['parentSheetId']);
 	$sheetlib->replace_layout($gid, $_REQUEST["className"], $_REQUEST["headerRow"], $_REQUEST["footerRow"], $_REQUEST['parseValues']);
 	$cat_type = 'sheet';
 	$cat_objid = $gid;

@@ -1980,13 +1980,13 @@ class SheetLib extends TikiLib
 		}
 	}
 
-	function replace_sheet( $sheetId, $title, $description, $author ) // {{{2
+	function replace_sheet( $sheetId, $title, $description, $author, $parentSheetId = null ) // {{{2
 	{
 		global $prefs;
 
 		if( $sheetId == 0 )
 		{
-			$this->query( "INSERT INTO `tiki_sheets` ( `title`, `description`, `author` ) VALUES( ?, ?, ? )", array( $title, $description, $author ) );
+			$this->query( "INSERT INTO `tiki_sheets` ( `title`, `description`, `author`, `parentSheetId` ) VALUES( ?, ?, ?, ? )", array( $title, $description, $author, $parentSheetId ) );
 
 			$sheetId = $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $author ) );
 			if ($prefs['feature_actionlog'] == 'y') {
@@ -1998,7 +1998,7 @@ class SheetLib extends TikiLib
 		}
 		else
 		{
-			$this->query( "UPDATE `tiki_sheets` SET `title` = ?, `description` = ?, `author` = ? WHERE `sheetId` = ?", array( $title, $description, $author, $sheetId ) );
+			$this->query( "UPDATE `tiki_sheets` SET `title` = ?, `description` = ?, `author` = ?, `parentSheetId` = ? WHERE `sheetId` = ?", array( $title, $description, $author, $sheetId, $parentSheetId ) );
 		}
 		return $sheetId;
 	}

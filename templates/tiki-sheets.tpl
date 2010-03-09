@@ -37,6 +37,13 @@
 		</select>
 </td></tr>
 {/if}
+<tr><td class="formcolor">{tr}Parent SheetId{/tr}:</td><td class="formcolor">
+		<select name="parentSheetId">
+		<option value="">{tr}None{/tr}</option>
+		{section name=sheet loop=$sheets}<option value="{$sheets[sheet].sheetId}"{if $parentSheetId eq $sheets[sheet].sheetId} selected="selected"{/if}>{$sheets[sheet].title|escape}</option>{/section}
+		</select>
+		<em>{tr}Makes this sheet a "child" sheet of a multi-sheet set{/tr}<br />{tr}Coming soon...{/tr}</em>
+</td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
