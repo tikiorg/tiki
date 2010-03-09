@@ -102,7 +102,6 @@ if (substr($msg, 0, 1) == '/') {
 			$msgtotal = str_replace(":-D", "<img border='0' src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
 			$msgtotal = str_replace(":D", "<img border='0' src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
 			$msgtotal = str_replace(":-/", "<img border='0' src='img/smiles/icon_confused.gif' width='15' height='15'>", $msgtotal);
-			$msgtotal = str_replace(":/", "<img border='0' src='img/smiles/icon_confused.gif' width='15' height='15'>", $msgtotal);
 			$msgtotal = str_replace("8-)", "<img border='0' src='img/smiles/icon_cool.gif' width='19' height='25'>", $msgtotal);
 			$msgtotal = str_replace("8)", "<img border='0' src='img/smiles/icon_cool.gif' width='19' height='25'>", $msgtotal);
 			$msgtotal = str_replace(":-)", "<img border='0' src='img/smiles/icon_smile.gif' width='16' height='16'>", $msgtotal);
