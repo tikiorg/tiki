@@ -46,6 +46,8 @@ Disallow: tiki-likepages.php
 Disallow: /tiki-likepages.php
 Disallow: tiki-listpages.php
 Disallow: /tiki-listpages.php
+Disallow: tiki-list_file_gallery.php
+Disallow: /tiki-list_file_gallery.php
 Disallow: tiki-lastchanges.php
 Disallow: /tiki-lastchanges.php
 Disallow: tiki-orphan_pages.php
