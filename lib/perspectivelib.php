@@ -115,7 +115,9 @@ class PerspectiveLib
 		$db->query( 'DELETE FROM tiki_perspective_preferences WHERE perspectiveId = ?',
 			array( $perspectiveId ) );
 
+		global $prefslib; require_once 'lib/prefslib.php';
 		foreach( $preferences as $pref => $value ) {
+			$value = $prefslib->formatPreference( $pref, array($pref => $value));
 			$this->set_preference( $perspectiveId, $pref, $value );
 		}
 	}

@@ -126,9 +126,7 @@ class PreferencesLib
 
 		$changes = array();
 		foreach( $handled as $pref ) {
-			$info = $this->getPreference( $pref );
-			$function = '_get' . ucfirst( $info['type'] ) . 'Value';
-			$value = $this->$function( $info, $data );
+			$value = $this->formatPreference( $pref, $data );
 
 			if( $tikilib->get_preference( $pref ) != $value ) {
 				$tikilib->set_preference( $pref, $value );
@@ -139,6 +137,13 @@ class PreferencesLib
 		return $changes;
 	}
 
+	function formatPreference( $pref, $data ) {
+		$info = $this->getPreference( $pref );
+		$function = '_get' . ucfirst( $info['type'] ) . 'Value';
+		$value = $this->$function( $info, $data );
+		return $value;
+	}
+	
 	function getInput( JitFilter $filter, $preferences = array(), $environment ) {
 		$out = array();
 
