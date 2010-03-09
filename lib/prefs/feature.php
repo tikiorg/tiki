@@ -653,6 +653,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wiki_structure',
+				'feature_multilingual',
 			),
 		),
 		'feature_multilingual_one_page' => array(
