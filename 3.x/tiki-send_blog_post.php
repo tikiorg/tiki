@@ -162,7 +162,9 @@ if (isset($_REQUEST['send'])) {
 
 
 	/* Check if the emails are valid */
-	foreach ($emails as $email) {
+	while( list($key,$email) = each($emails) ) {
+		// Clean white spaces
+		$email = $emails[$key] = trim($email);
 	  if(!validate_email($email,$prefs['validateEmail'])) {
 	    $smarty->assign('msg', tra("One of the email addresses you typed is invalid").": " . $email);
 	    $smarty->display("error.tpl");
