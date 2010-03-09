@@ -1,9 +1,8 @@
-/* Strasa theme for Tiki 4.x, original design by Patrick Allard,
-   released under LGPL license. For more information, visit http://themes.tikiwiki.org
-   $Id$
-*/
+/* Strasa theme for Tiki 5.x, original design by Patrick Allard, released under LGPL license.
+   For more information, visit http://themes.tikiwiki.org
+   $Id$ */
 
-/* import *lite as the base: */
+/* Import *lite as the base: */
 @import url("lite/lite.css");
 
 /* Then import the default layout properties file: */
@@ -65,7 +64,7 @@ h6 {
 	font-size: 1.05em;
 }
 
-.wikitext h1 {color: #309FC0; line-height: .9; border-bottom: solid 1px #3090C0; text-transform: uppercase}
+.wikitext h1 {color: #309FC0; line-height: .9em; border-bottom: solid 1px #3090C0; text-transform: uppercase}
 .wikitext h2 {color: #000000}
 .wikitext h3 {color: #303030; line-height: .8em; font-style: italic}
 .wikitext h4 {border-bottom: dashed 1px #CCF0FF; color: #3F3F3F}
@@ -118,7 +117,7 @@ input[type=password] {
 	
 input#search {
 	background: #E7F8FD;
-	border: 1px solid #33CCFF;
+	border: 1px solid #3CF;
 	color: #517298;
 	height: 16px;
 	margin-right: 10px;
@@ -193,7 +192,7 @@ label {
 
 .fullscreenbutton:hover,
 #fullscreenbutton:hover {
-	color: #000000;
+	color: #000;
 }
 
 /*** Type 1 (*litecss-based) layout 
@@ -207,15 +206,9 @@ label {
 	min-height: 100%;
 }
 
-#header {
-/*	min-height: 121px;
-	position: relative;*/
-}
-
 #middle {
 	background: #fff;
-	padding-top: 40px;
-	padding-bottom: 40px;
+	padding: 40px 0;
 }
 
 #c1c2 {
@@ -223,8 +216,7 @@ label {
 }
 
 .fullscreen #col1 {
-	margin-left: 30px !important;
-	margin-right: 30px !important;
+	margin: 0 30px !important;
 }
 
 #c1c2 #wrapper .marginleft {
@@ -236,8 +228,7 @@ label {
 }
 
 #c1c2 #wrapper #col1 #tiki-center {
-	margin-left: 20px;
-	margin-right: 20px;
+	margin: 0 20px;
 }
 
 #c1c2 #col2 {
@@ -300,7 +291,7 @@ label {
 .fcol1 ul li,
 .fcol2 ul li,
 .fcol3 ul li {
-	border-bottom: 1px solid #666666;
+	border-bottom: 1px solid #666;
 	padding: 4px 0;
 	list-style: none;
 	margin: 0;
@@ -349,7 +340,6 @@ div#tiki-main {
 #header-top {
 	color: #fff;
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
-/*	position: static;*/
 }
 
 #siteheader {
