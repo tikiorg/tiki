@@ -551,6 +551,8 @@ function get_default_prefs() {
 		'fgal_quota_show' => 'y',
 		'fgal_list_backlinks' => 'n',
 		'fgal_search_in_content' => 'n',
+		'fgal_delete_after' => '',
+		'fgal_delete_after_email' => '',
 		'fgal_list_id_admin' => 'y',
 		'fgal_list_type_admin' => 'y',
 		'fgal_list_name_admin' => 'n',

@@ -58,7 +58,7 @@ class FileGalLib extends TikiLib
 		return true;
 	}
 
-	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $author, $created='', $lockedby=NULL) {
+	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $author, $created='', $lockedby=NULL, $deleteAfter=NULL) {
 	  global $prefs, $tikilib, $smarty, $user;
 
 		$name = strip_tags($name);
@@ -103,9 +103,9 @@ class FileGalLib extends TikiLib
 			}
 		}
 		if ( empty($created) ) $created = $this->now;
-		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`hits`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`, `author`, `lockedby`)
-                          values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($galleryId,trim($name),$description,$filename,$size,$type,$data,$creator,$created,0,$path,$checksum,$search_data,(int)$this->now,$user,$comment, $author, $lockedby));
+		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`hits`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`, `author`, `lockedby`, `deleteAfter`)
+                          values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array($galleryId,trim($name),$description,$filename,$size,$type,$data,$creator,$created,0,$path,$checksum,$search_data,(int)$this->now,$user,$comment, $author, $lockedby,$deleteAfter));
 		$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query,array((int) $this->now,$galleryId));
 		$query = "select max(`fileId`) from `tiki_files` where `created`=?";
@@ -540,7 +540,7 @@ class FileGalLib extends TikiLib
 		return $result;
 	}
 
-	function replace_file($id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $gal_info, $didFileReplace, $author='', $created='', $lockedby=NULL) {
+	function replace_file($id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $gal_info, $didFileReplace, $author='', $created='', $lockedby=NULL, $deleteAfter=NULL) {
 	  global $prefs, $tikilib, $user;
 
 		// Update the fields in the database
@@ -581,8 +581,8 @@ class FileGalLib extends TikiLib
 
 		if ( $gal_info['archives'] == -1 || ! $didFileReplace ) { // no archive
 
-			$query = "update `tiki_files` set `name`=?, `description`=?, `filename`=?, `filesize`=?, `filetype`=?, `data`=?, `lastModifUser`=?, `lastModif`=?, `path`=?, `hash`=?, `search_data`=?, `author`=?, `user`=?, `lockedby`=?  where `fileId`=?";
-			if ( ! ( $result = $this->query($query,array(trim($name),$description,$filename,$size,$type,$data,$user,(int)$this->now,$path,$checksum,$search_data,$author,$creator,$lockedby, $id)) ) ) {
+			$query = "update `tiki_files` set `name`=?, `description`=?, `filename`=?, `filesize`=?, `filetype`=?, `data`=?, `lastModifUser`=?, `lastModif`=?, `path`=?, `hash`=?, `search_data`=?, `author`=?, `user`=?, `lockedby`=?, `deleteAfter`=?  where `fileId`=?";
+			if ( ! ( $result = $this->query($query,array(trim($name),$description,$filename,$size,$type,$data,$user,(int)$this->now,$path,$checksum,$search_data,$author,$creator,$lockedby, $deleteAfter, $id)) ) ) {
 				return false;
 			}
 

@@ -23,7 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * Type:     function<br>
  * Name:     html_select_duration<br>
- * params: prefix, default_unit, default
+ * params: prefix, default_unit(key word or value in secs), default (nb of units), default_value (duration in secs)
  * Purpose:  Prints the dropdowns for duration selection
  */
 function smarty_function_html_select_duration($params, &$smarty)
@@ -31,12 +31,19 @@ function smarty_function_html_select_duration($params, &$smarty)
 	global $smarty;
 	require_once $smarty->_get_plugin_filepath('function','html_options');
 	$html_result = '';
-	$default = array('prefix'=>'Duration_', 'default_unit'=>'week', 'default'=>'');
+	$default = array('prefix'=>'Duration_', 'default_unit'=>'week', 'default'=>'', 'default_value'=>'');
 	$params = array_merge($default, $params);
 	$values = array(31536000, 2628000, 604800, 86400, 3600, 60);
 	$output = array(tra('Year'), tra('Month'), tra('Week'), tra('Day'), tra('Hour'), tra('Minute'));
 	$defs = array('year', 'month', 'week', 'day', 'hour', 'minute');
-	if (($key = array_search($params['default_unit'], $defs)) !== false) {
+	if (!empty($params['default_value'])) {
+		foreach ($values as $selected) {
+			if ($params['default_value'] >= $selected) {
+				$params['default'] = round($params['default_value'] / $selected);
+				break;
+			}
+		}
+	} elseif (($key = array_search($params['default_unit'], $defs)) !== false) {
 		$selected = $values[$key];
 	} elseif (in_array($params['default_unit'], $values)) {
 		$selected = $params['default_unit'];
@@ -44,7 +51,12 @@ function smarty_function_html_select_duration($params, &$smarty)
 		$selected = 604800;
 	}
 	$html_result .= '<input name="'.$params['prefix'].'" type="text" size="5" value="'.$params['default'].'" />';
-	$html_result .= '<select name="'.$params['prefix'].'_unit">';
+	if (strstr($params['prefix'], '[]')) {
+		$prefix = str_replace('[]', '_unit[]', $params['prefix']);
+	} else {
+		$prefix = $params['prefix'].'_unit';
+	}
+	$html_result .= '<select name="'.$prefix.'">';
 	$html_result .= smarty_function_html_options(array(
 		'values' => $values,
 		'output' => $output,

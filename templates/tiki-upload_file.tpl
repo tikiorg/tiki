@@ -155,6 +155,18 @@
 		</td></tr>
 	{/if}
 
+	{if $prefs.fgal_delete_after eq 'y'}
+		<tr><td>
+			<label for="deleteAfter">{tr}File can be deleted after{/tr}:</label>
+		</td><td width="80%">
+			{if $editFileId}
+				{html_select_duration prefix='deleteAfter' default_value=$fileInfo.deleteAfter}
+			{else}
+				{html_select_duration prefix='deleteAfter[]' default_unit=week}
+			{/if}
+		</td></tr>
+	{/if}
+
 		{if $editFileId}
 			<input type="hidden" name="galleryId" value="{$galleryId}"/>
 			<input type="hidden" name="fileId" value="{$editFileId}"/>

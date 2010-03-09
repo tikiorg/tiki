@@ -82,6 +82,9 @@
 	</div>
 
 	{preference name='feature_file_galleries_author'}
+
+	{preference name='fgal_delete_after'}
+	{preference name='fgal_delete_after_email'}
 </fieldset>
 
 <fieldset>

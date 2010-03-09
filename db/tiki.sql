@@ -774,6 +774,7 @@ CREATE TABLE `tiki_files` (
   `lockedby` varchar(200) default '',
   `comment` varchar(200) default NULL,
   `archiveId` int(14) default 0,
+  `deleteAfter` int(14) default NULL,
   PRIMARY KEY (`fileId`),
   KEY `name` (name),
   KEY `description` (description(255)),

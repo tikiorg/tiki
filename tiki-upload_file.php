@@ -368,17 +368,22 @@ if (isset($_REQUEST["upload"])) {
 			if (empty($_REQUEST['user'][$key])) $_REQUEST['user'][$key] = $user;
 			if (!isset($_REQUEST['description'][$key])) $_REQUEST['description'][$key] = '';
 			if (empty($_REQUEST['author'][$key])) $_REQUEST['author'][$key] = $user;
+			if (empty($_REQUEST['deleteAfter'][$key]) || empty($_REQUEST['deleteAfter_unit'][$key])) {
+				$deleteAfter = null;
+			} else {
+				$deleteAfter = $_REQUEST['deleteAfter'][$key]*$_REQUEST['deleteAfter_unit'][$key];
+			}
 
 			$fileInfo['filename'] = $file_name;
 			if (isset($data)) {
 				if ($editFile) {
 					$didFileReplace = true;
-					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"][$key], $_REQUEST["description"][$key], $name, $data, $size, $type, $_REQUEST['user'][$key], $fhash . $extension, $_REQUEST['comment'][$key], $gal_info, $didFileReplace, $_REQUEST['author'][$key], $fileInfo['lastModif'], $fileInfo['lockedby']);
+					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"][$key], $_REQUEST["description"][$key], $name, $data, $size, $type, $_REQUEST['user'][$key], $fhash . $extension, $_REQUEST['comment'][$key], $gal_info, $didFileReplace, $_REQUEST['author'][$key], $fileInfo['lastModif'], $fileInfo['lockedby'], $deleteAfter);
 					if ($prefs['fgal_limit_hits_per_file'] == 'y') {
 						$filegallib->set_download_limit($editFileId, $_REQUEST['hit_limit'][$key]);
 					}
 				} else {
-					$fileId = $filegallib->insert_file($_REQUEST["galleryId"][$key], $_REQUEST["name"][$key], $_REQUEST["description"][$key], $name, $data, $size, $type, $_REQUEST['user'][$key], $fhash . $extension, '', $_REQUEST['author'][$key]);
+					$fileId = $filegallib->insert_file($_REQUEST["galleryId"][$key], $_REQUEST["name"][$key], $_REQUEST["description"][$key], $name, $data, $size, $type, $_REQUEST['user'][$key], $fhash . $extension, '', $_REQUEST['author'][$key], '', '', $deleteAfter);
 				}
 				if (!$fileId) {
 					$errors[] = tra('Upload was not successful. Duplicate file content') . ': ' . $name;
@@ -432,7 +437,12 @@ if (isset($_REQUEST["upload"])) {
 		}
 	}
 	if ($editFile && !$didFileReplace) {
-		$filegallib->replace_file($editFileId, $_REQUEST['name'][0], $_REQUEST['description'][0], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $fileInfo['user'], $fileInfo['path'], $_REQUEST['comment'][0], $gal_info, $didFileReplace, $_REQUEST['author'][0], $fileInfo['lastModif'], $fileInfo['lockedby']);
+		if (empty($_REQUEST['deleteAfter']) || empty($_REQUEST['deleteAfter_unit'])) {
+			$deleteAfter = null;
+		} else {
+			$deleteAfter = $_REQUEST['deleteAfter']*$_REQUEST['deleteAfter_unit'];
+		}
+		$filegallib->replace_file($editFileId, $_REQUEST['name'][0], $_REQUEST['description'][0], $fileInfo['filename'], $fileInfo['data'], $fileInfo['filesize'], $fileInfo['filetype'], $fileInfo['user'], $fileInfo['path'], $_REQUEST['comment'][0], $gal_info, $didFileReplace, $_REQUEST['author'][0], $fileInfo['lastModif'], $fileInfo['lockedby'], $deleteAfter);
 		$fileChangedMessage = tra('File update was successful') . ': ' . $_REQUEST['name'];
 		$smarty->assign('fileChangedMessage', $fileChangedMessage);
 		$cat_type = 'file';
