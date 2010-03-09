@@ -212,6 +212,7 @@ function CKeditor_OnComplete( editorInstance ) {
 		}
 
 		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
+		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : 'n');
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'

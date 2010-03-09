@@ -224,8 +224,7 @@
 				{tr}Heading{/tr}
 			</td>
 			<td>
-				{toolbars area_name='heading'}
-				<textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea>
+				{textarea _simple="y" name="heading" rows="5" cols="80" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
 			</td>
 		</tr>
 
@@ -235,10 +234,7 @@
 				{tr}Body{/tr}
 			</td>
 			<td>
-				{toolbars area_name='body'}
-				<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
-				<input type="hidden" name="rows" value="{$rows}" />
-				<input type="hidden" name="cols" value="{$cols}" />
+				{textarea name="body" rows=$rows cols=$cols id="body"}{$body}{/textarea}
 			</td>
 		</tr>
 
