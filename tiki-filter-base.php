@@ -67,7 +67,7 @@ $tikiroot_relative = '';
 if ($dir_level > 0) {
 	$tikiroot = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikiroot);
 	$tikipath = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikipath);
-	$tikiroot_relative = str_repeat('../',$dir_level+1);
+	$tikiroot_relative = str_repeat('../',$dir_level);
 	chdir($tikiroot_relative);
 }
 
