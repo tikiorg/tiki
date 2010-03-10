@@ -100,7 +100,7 @@ function wikiplugin_div($data, $params) {
 	$c    = (isset($class)) ? " class='$class'"  : "";
 	$id    = (isset($id)) ? " id='$id'"  : "";
 	$w    = (isset($width)) ? " width: $width;"  : "";
-	$bg   = (isset($bg))    ? " background: $bg;" : "";
+	$bg   = (isset($bg))    ? " background-color: $bg;" : "";
 	$al   = (isset($align) && ($align == 'right' || $align == "center" || $align == "justify" || $align == 'left')) ? " text-align: $align;" : '';
 	$fl   = (isset($float) && ($float == 'left' || $float == 'right' || $float == 'none')) ? " float: $float;"  : '';
 	$cl   = (isset($clear) && ($clear == 'left' || $clear == 'right' || $clear == 'both' || $clear == 'none')) ? " clear: $clear;"  : '';

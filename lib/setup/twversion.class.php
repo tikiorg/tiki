@@ -26,8 +26,8 @@ class TWVersion
 		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= '5.0';
-		$this->star	= '';
+		$this->version 	= '5.0alpha';
+		$this->star	= 'Vulpeculae';
 		$this->releases	= array();
 
 		// Check for Subversion or not
@@ -63,7 +63,8 @@ class TWVersion
 				12=>'Sirius',
 				13=>'Arcturus',
 				14=>'Betelgeuse',
-				15=>'Aldebaran'
+				15=>'Aldebaran',
+				16=>'Vulpeculae'
 				);
 	}
 
@@ -106,10 +107,14 @@ class TWVersion
 				'3.1',
 				'3.2',
 				'3.3',
+				'3.4',
+				'3.5',
 				'4.0beta1',
 				'4.0RC1',
 				'4.0',
-				'4.1'
+				'4.1',
+				'4.2',
+				'5.0alpha'
 				);
 	}
 

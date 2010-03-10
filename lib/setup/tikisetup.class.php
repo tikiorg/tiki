@@ -27,13 +27,14 @@ class TikiSetup extends TikiInit
         $errors = '';
 
         if (strpos($_SERVER['SERVER_SOFTWARE'],'IIS')==TRUE){
-		if (array_key_exists('PATH_TRANSLATED', $_SERVER)) {
-        	$docroot = dirname($_SERVER['PATH_TRANSLATED']);
-		} else {
-			$docroot = getcwd();
-		}
-        }
-        else{
+        	if (array_key_exists('SCRIPT_FILENAME', $_SERVER)) {
+    	    	$docroot = dirname($_SERVER['SCRIPT_FILENAME']);
+			} elseif (array_key_exists('PATH_TRANSLATED', $_SERVER)) {
+    	    	$docroot = dirname($_SERVER['PATH_TRANSLATED']);
+			} else {
+				$docroot = getcwd();
+			}
+        } else{
         	$docroot = getcwd();
         }
 
