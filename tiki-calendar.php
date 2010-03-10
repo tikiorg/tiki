@@ -139,7 +139,7 @@ foreach ($listcals as $thatid) {
 	}
 }
 $smarty->assign('thiscal', $thiscal);
-
+$smarty->assign_by_ref('checkedCals', $checkedCals);
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
