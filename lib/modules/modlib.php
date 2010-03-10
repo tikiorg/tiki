@@ -485,7 +485,7 @@ class ModLib extends TikiLib
 			),
 			'theme' => array(
 				'name' => tra('Theme'),
-				'description' => tra('Module enabled or disabled depending on the theme. Specified themes can be either included or excluded. Theme names prefixed by \"!\" are in the exclusion list. Multiple values can be separated by semi-colons.'),
+				'description' => tra('Module enabled or disabled depending on the theme file name (e.g. "thenews.css"). Specified themes can be either included or excluded. Theme names prefixed by \"!\" are in the exclusion list. Multiple values can be separated by semi-colons.'),
 				'separator' => ';',
 				'filter' => 'themename',
 			),
