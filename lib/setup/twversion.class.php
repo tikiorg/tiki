@@ -26,8 +26,8 @@ class TWVersion
 		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= '5.0alpha';
-		$this->star	= 'Vulpeculae';
+		$this->version 	= '6.0 SVN';
+		$this->star	= '';
 		$this->releases	= array();
 
 		// Check for Subversion or not
