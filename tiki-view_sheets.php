@@ -181,9 +181,15 @@ window.showFeedback = function(message, delay) {
 };
 
 window.setEditable = function(isEditable) {
-	jS.s.editable = false;
-	$jq("#save_button").hide();
-	$jq("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
+	jS.s.editable = isEditable;
+	if (isEditable) {
+		$jq("#save_button").show();
+		//$jq("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
+	} else {
+		setTimeout( function(){ $jq("#jSheetControls").hide(); }, 200);
+		$jq("#save_button").hide();
+		$jq("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
+	}
 };
 ');
 	}
