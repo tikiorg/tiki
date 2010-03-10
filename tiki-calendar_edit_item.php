@@ -63,7 +63,9 @@ foreach ($rawcals["data"] as $cal_data) {
       $cal_data["tiki_p_change_events"] = $calperms->change_events ? "y" : "n";
   }
 	$caladd["$cal_id"] = $cal_data;
-
+	if ($cal_data['tiki_p_add_events'] == 'y' && empty($calID)) {
+		$calID = $cal_id;
+	}
 }
 $smarty->assign('listcals',$caladd);
 
@@ -76,11 +78,7 @@ if ( ! isset($_REQUEST["calendarId"]) ) {
 } elseif (isset($_REQUEST['calendarId'])) {
 	$calID = $_REQUEST['calendarId'];
 } elseif (isset($_REQUEST['save']) && isset($_REQUEST['save']['calendarId'])) {
-	$calId = $_REQUEST['save']['calendarId'];
-}
-if (!isset($calID) and count($caladd)) {
-	$keys = array_keys($caladd);
-	$calID = array_shift($keys);
+	$calID = $_REQUEST['save']['calendarId'];
 }
 
 if ($prefs['feature_groupalert'] == 'y' && !empty($calID) ) {
@@ -150,6 +148,9 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 			$save['duration'] = max(0, $save['end'] - $save['start']);
 		}
 	} else {
+		if (!empty($_REQUEST['start_Meridian']) && $_REQUEST['start_Meridian'] == 'pm') {
+			$_REQUEST['start_Hour'] += 12;
+		}
 		$save['start'] = TikiLib::make_time(
 			$_REQUEST['start_Hour'],
 			$_REQUEST['start_Minute'],
@@ -163,6 +164,9 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 			$save['duration'] = max(0, $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60);
 			$save['end'] = $save['start'] + $save['duration'];
 		} else {
+			if (!empty($_REQUEST['end_Meridian']) && $_REQUEST['end_Meridian'] == 'pm') {
+				$_REQUEST['end_Hour'] += 12;
+			}
 			$save['end'] = TikiLib::make_time(
 				$_REQUEST['end_Hour'],
 				$_REQUEST['end_Minute'],
