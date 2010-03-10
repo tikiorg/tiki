@@ -15,7 +15,7 @@
 	{if $edit}
 		{button href="tiki-calendar_edit_item.php?viewcalitemId=$id" _text="{tr}View event{/tr}"}
 	{elseif $tiki_p_change_events eq 'y'}
-		{button href="tiki-calendar_edit_item.php?calitemId=$id" _text="{tr}Edit event{/tr}"}
+		{button href="tiki-calendar_edit_item.php?calitemId=$id" _text="{tr}Edit/Delete event{/tr}"}
 	{/if}
 {/if}
 {if $tiki_p_admin_calendar eq 'y'}
