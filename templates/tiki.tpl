@@ -92,7 +92,7 @@
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 					<hr class="hidden" />{* for semantic separation of center and side columns *}
 	{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
-					<div id="col2"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+					<div id="col2"{if $prefs.feature_left_column eq 'user'} style="display:{if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 						<h2 class="hidden">Sidebar</h2>
 						<div class="content">
 		{section name=homeix loop=$left_modules}
@@ -105,7 +105,7 @@
 				</div>{* -- END of c1c2 -- *}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 	{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
-				<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_rightcolumn) and $cookie.show_rightcolumn ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+				<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 					<h2 class="hidden">Sidebar</h2>
 					<div class="content">
 		{if $module_pref_errors}
