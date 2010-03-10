@@ -181,9 +181,7 @@
 				<select id="galleryId" name="galleryId[]">
 					<option value="{$prefs.fgal_root_id}" {if $prefs.fgal_root_id eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}File Galleries{/tr}</option>
 				{section name=idx loop=$galleries}
-					{if $galleries[idx].id neq $prefs.fgal_root_id and
-						( ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y') )
-					}
+					{if $galleries[idx].id neq $prefs.fgal_root_id and $galleries[idx].perms.tiki_p_upload_files eq 'y'}
 					<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name|escape}</option>
 					{/if}
 				{/section}
