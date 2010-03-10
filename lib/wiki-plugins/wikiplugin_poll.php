@@ -55,6 +55,6 @@ function wikiplugin_poll($data, $params) {
 	    ask_ticket('poll-form');
 
 	    // Display the template
-	    return $smarty->fetch("tiki-plugin_poll.tpl");
+	    return '~np~'.$smarty->fetch("tiki-plugin_poll.tpl").'~/np~';
 	}
 }
