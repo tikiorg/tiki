@@ -22,6 +22,7 @@ $return=$source;
 }
 
 function _translate_lang($key) {
+	include_once ('lib/init/tra.php');
 	$s = tra($key[2]);
 	if ( $s == $key[2] && strstr($key[2], '{$') ) {
 		return $key[1].$key[2].'{/tr}';// keep the tags to be perhaps translated in block.tr.php
