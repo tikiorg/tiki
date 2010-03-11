@@ -487,22 +487,7 @@ if (empty($_REQUEST['fileId'])) {
 		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', $prefs['fgal_root_id'], false, true, false, false, false, true, false);
 		$cachelib->cacheItem($cacheName, serialize($galleries), $cacheType);
 	}
-	$temp_max = count($galleries["data"]);
-	for ($i = 0; $i < $temp_max; $i++) {
-		if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'file gallery')) {
-			$galleries["data"][$i]["individual"] = 'y';
-			if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery', 'tiki_p_upload_files')) {
-				$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'y';
-			} else {
-				$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'n';
-			}
-			if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery', 'tiki_p_admin_file_galleries')) {
-				$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'y';
-			}
-		} else {
-			$galleries["data"][$i]["individual"] = 'n';
-		}
-	}
+	$galleries['data'] = Perms::filter(array('file gallery'), 'object', $galleries['data'], array('object'=>'id'), 'upload_files');
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
 }
 if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
@@ -525,7 +510,7 @@ if ($prefs['javascript_enabled'] != 'y' or !isset($_REQUEST["upload"])) {
 	$smarty->assign('mid', 'tiki-upload_file.tpl');
 	if (!empty($_REQUEST['filegals_manager'])) {
 		$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
-		$smarty->display("tiki-print.tpl");
+		$smarty->display("tiki_full.tpl");
 	} else {
 		$smarty->display("tiki.tpl");
 	}

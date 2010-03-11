@@ -11,7 +11,8 @@ include_once ('lib/polls/polllib.php');
 if (!isset($polllib)) {
 	$polllib = new PollLib;
 }
-$access->check_feature('tiki_p_admin_polls');
+$access->check_feature('feature_polls');
+$access->check_permission('tiki_p_admin_polls');
 
 if (!isset($_REQUEST["pollId"])) {
 	$smarty->assign('msg', tra("No poll indicated"));

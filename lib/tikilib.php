@@ -2086,6 +2086,8 @@ class TikiLib extends TikiDb_Bridge
 					$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
 					$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));
 				}
+			} elseif (isset($_COOKIE[md5("tiki_wiki_poll_$id")])) {
+				return false;
 			} elseif ($optionId !== false && $optionId != 'NULL' ) {
 				$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
 				$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));

@@ -181,9 +181,7 @@
 				<select id="galleryId" name="galleryId[]">
 					<option value="{$prefs.fgal_root_id}" {if $prefs.fgal_root_id eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}File Galleries{/tr}</option>
 				{section name=idx loop=$galleries}
-					{if $galleries[idx].id neq $prefs.fgal_root_id and
-						( ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y') )
-					}
+					{if $galleries[idx].id neq $prefs.fgal_root_id and $galleries[idx].perms.tiki_p_upload_files eq 'y'}
 					<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name|escape}</option>
 					{/if}
 				{/section}
@@ -305,13 +303,11 @@
 
 </div>
 
-	{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
-		{jq notonready=true}
-		{literal}
+{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
+	{jq notonready=true}
 		var nb_upload = 1;
-		function add_upload_file() {
+		function add_upload_file() {literal}{{/literal}
 			tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
-			{/literal}
 			{if $filegals_manager neq ''}
 			tmp += '<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>';
 			{/if}
@@ -319,39 +315,37 @@
 			tmp += '{$upload_str|strip|escape:'javascript'}';
 			tmp += '</form><div id="multi_'+(nb_upload+1)+'"></div>';
 			//tmp += '<div id="multi_'+(nb_upload+1)+'"></div>';
-			{literal}
 			document.getElementById('multi_'+nb_upload).innerHTML = tmp;
 			document.getElementById('progress').innerHTML += "<div id='progress_"+nb_upload+"'></div>";
 			document.getElementById('upload_progress').innerHTML += "<iframe id='upload_progress_"+nb_upload+"' name='upload_progress_"+nb_upload+"' height='1' width='1' style='border:0px none'></iframe>";
 			nb_upload += 1;
-		}
+		{literal}}{/literal}
 
-		function progress(id,msg) {
+		function progress(id,msg) {literal}{{/literal}
 //			alert ('progress_'+id);
 			document.getElementById('progress_'+id).innerHTML = msg;
-		}
+		{literal}}{/literal}
 
-		function do_submit(n) {
+		function do_submit(n) {literal}{{/literal}
 //				alert(document.getElementById('file_'+n).name);
-			if (document.forms['file_'+n].elements['userfile[]'].value != '') {
+			if (document.forms['file_'+n].elements['userfile[]'].value != '') {literal}{{/literal}
 				progress(n,"<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
 				document.getElementById('file_'+n).submit();
 				document.getElementById('file_'+n).reset();
-			} else {
+			{literal}}{/literal} else {literal}{{/literal}
 				progress(n,"{tr}No File to Upload...{/tr}");
-			}
-		}
+			{literal}}{/literal}
+		{literal}}{/literal}
 
-		function upload_files(form, loader){
+		function upload_files(form, loader){literal}{{/literal}
 			//only do this if the form exists
 			n=0;
-			while (document.forms['file_'+n]){
+			while (document.forms['file_'+n]){literal}{{/literal}
 				do_submit(n);
 				n++;
-			}
+			{literal}}{/literal}
 			hide('form');
-		}
-		{/literal}
-		{/jq}
-	{/if}
+		{literal}}{/literal}
+	{/jq}
+{/if}
 

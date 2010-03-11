@@ -54,7 +54,7 @@ if (!($info = $tikilib->get_page_info($page))) {
 }
 
 $tikilib->get_perm_object( $page, 'wiki page', $info);
-$access-check_permission('tiki_p_view');
+$access->check_permission('tiki_p_view');
 
 // BreadCrumbNavigation here
 // Remember to reverse the array when posting the array

@@ -50,14 +50,21 @@
 
 			{if count($thiscal)}
 				<div id="configlinks">
+				{assign var='maxCalsForButton' value=20}
+				{if count($checkedCals) > $maxCalsForButton}<select size="5">{/if}
 				{foreach item=k from=$listcals name=listc}
 					{if $thiscal.$k}
 						{assign var=thiscustombgcolor value=$infocals.$k.custombgcolor}
 						{assign var=thiscustomfgcolor value=$infocals.$k.customfgcolor}
 						{assign var=thisinfocalsname value=$infocals.$k.name|escape}
-						{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor;border:1px solid #$thiscustomfgcolor;" _onclick="toggle('filtercal');return false;" _text="$thisinfocalsname"}
+						{if count($checkedCals) > $maxCalsForButton}
+							<option style="background-color:#{$thiscustombgcolor};color:#{$thiscustomfgcolor};" onclick="toggle('filtercal')">{$thisinfocalsname}</option>
+						{else}
+							{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor;border:1px solid #$thiscustomfgcolor;" _onclick="toggle('filtercal');return false;" _text="$thisinfocalsname"}
+						{/if}
 					{/if}
 				{/foreach}
+				{if count($checkedCals) > $maxCalsForButton}</select>{/if}
 				</div>
 			{else}
 				{button href="" _style="background-color:#fff;padding:0 4px;" _text="{tr}None{/tr}"}
