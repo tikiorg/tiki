@@ -74,7 +74,6 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$filetowrite .= "\$user_tiki='" . $user_tiki . "';\n";
 		$filetowrite .= "\$pass_tiki='" . $pass_tiki . "';\n";
 		$filetowrite .= "\$dbs_tiki='" . $dbs_tiki . "';\n";
-		$filetowrite .= "?>";
 		fwrite($fw, $filetowrite);
 		fclose($fw);
 	}
