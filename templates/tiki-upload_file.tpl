@@ -303,10 +303,8 @@
 
 </div>
 
-{* Note that this script cannot be enclosed in jq tags or use headerlib->add_js because it needs to be loaded even in the tiki-print.tpl template...*}
 {if $prefs.javascript_enabled neq 'y' || ! $editFileId}
-	<script type="text/javascript">
-		<!--//--><![CDATA[//><!--
+	{jq notonready=true}
 		var nb_upload = 1;
 		function add_upload_file() {literal}{{/literal}
 			tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
@@ -348,7 +346,6 @@
 			{literal}}{/literal}
 			hide('form');
 		{literal}}{/literal}
-		//--><!]]>
-	</script>
+	{/jq}
 {/if}
 
