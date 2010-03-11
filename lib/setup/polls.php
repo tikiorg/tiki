@@ -12,11 +12,15 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 	$ok = true;
 	if (empty($_REQUEST['polls_optionId'])) {
 		$ok = false;
-		$smarty->assign('msg', tra('You must choose an option'));
+		$smarty->assign('msg_poll', tra('You must choose an option'));
 	} elseif ( $tiki_p_vote_poll == 'y' && ($prefs['feature_poll_anonymous'] == 'y' || $user || $prefs['feature_antibot'] == 'y')) {
-		if (($prefs['feature_antibot'] == 'y' && empty($user)) && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		if (empty($user) && empty($_COOKIE)) {
 			$ok = false;
-			$smarty->assign('msg', tra('You have mistyped the anti-bot verification code; please try again.'));
+			$smarty->assign('msg_poll', tra('For you to vote, cookies must be allowed'));
+			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
+		} elseif (($prefs['feature_antibot'] == 'y' && empty($user)) && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+			$ok = false;
+			$smarty->assign('msg_poll', tra('You have mistyped the anti-bot verification code; please try again.'));
 			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
 		} else {
 			if( $tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId'], array(), $prefs['feature_poll_revote'] == 'y' ) ) {

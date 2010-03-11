@@ -1,6 +1,6 @@
-{if $prefs.feature_antibot eq 'y' && $user eq '' && !empty($msg)}
+{if !empty($msg_poll)}
 	{remarksbox type="errors"}
-		{$msg}
+		{$msg_poll}
 	{/remarksbox}
 {/if}
 
@@ -36,5 +36,3 @@
 </div>
 {/if}
 </form>
-{if !$user && !isset($smarty.cookies.PHPSESSID)}<i>{tr}For you to vote, cookies must be allowed{/tr}</i>{/if}
-
