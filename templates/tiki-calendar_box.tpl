@@ -1,4 +1,4 @@
-<div class='opaque' style="width:200px">
+<div class='opaque calBox' style="width:200px">
 {if $calendar_type eq "tiki_actions"}
 	<div class='box-title'><a href="{$item_url}">{$cellhead}</a>
 	{if $infocals.$cellcalendarId.custompriorities eq 'y' and $cellprio}
