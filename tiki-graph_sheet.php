@@ -72,7 +72,7 @@ $smarty->assign('page_mode', 'form' );
 
 // Process the insertion or modification of a gallery here
 
-$grid = &new TikiSheet;
+$grid = new TikiSheet;
 
 $sheetId = $_REQUEST['sheetId'];
 
@@ -88,19 +88,19 @@ if( isset( $_REQUEST['title'] ) )
 	switch( $_REQUEST['renderer'] )
 	{
 	case 'PNG':
-		$renderer = &new GD_GRenderer( $_REQUEST['width'], $_REQUEST['height'], 'png' );
+		$renderer = new GD_GRenderer( $_REQUEST['width'], $_REQUEST['height'], 'png' );
 		$ext = 'png';
 		break;
 	case 'JPEG':
-		$renderer = &new GD_GRenderer( $_REQUEST['width'], $_REQUEST['height'], 'jpg' );
+		$renderer = new GD_GRenderer( $_REQUEST['width'], $_REQUEST['height'], 'jpg' );
 		$ext = 'jpg';
 		break;
 	case 'PDF':
-		$renderer = &new PDFLib_GRenderer( $_REQUEST['format'], $_REQUEST['orientation'] );
+		$renderer = new PDFLib_GRenderer( $_REQUEST['format'], $_REQUEST['orientation'] );
 		$ext = 'pdf';
 		break;
 	case 'PS':
-		$renderer = &new PS_GRenderer( $_REQUEST['format'], $_REQUEST['orientation'] );
+		$renderer = new PS_GRenderer( $_REQUEST['format'], $_REQUEST['orientation'] );
 		$ext = 'ps';
 		break;
 	default:
@@ -117,7 +117,7 @@ if( isset( $_REQUEST['title'] ) )
 		exit;
 	}
 
-	$handler = &new TikiSheetDatabaseHandler( $sheetId );
+	$handler = new TikiSheetDatabaseHandler( $sheetId );
 	$grid->import( $handler );
 
 	$graph = $_REQUEST['graphic'];
@@ -188,7 +188,7 @@ else
 
 		ob_start();
 
-		$handler = &new TikiSheetDatabaseHandler( $sheetId );
+		$handler = new TikiSheetDatabaseHandler( $sheetId );
 		$grid->import( $handler );
 
 		$grid->export( new TikiSheetLabeledOutputHandler );

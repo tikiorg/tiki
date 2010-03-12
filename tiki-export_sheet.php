@@ -38,7 +38,7 @@ $smarty->assign('page_mode', 'form' );
 
 // Process the insertion or modification of a gallery here
 
-$grid = &new TikiSheet;
+$grid = new TikiSheet;
 
 if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 {
@@ -47,7 +47,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	$sheetId = $_REQUEST['sheetId'];
     $encoding = $_REQUEST['encoding'];
 
-	$handler = &new TikiSheetDatabaseHandler( $sheetId );
+	$handler = new TikiSheetDatabaseHandler( $sheetId );
 	$grid->import( $handler );
 
 	$handler = $_REQUEST['handler'];
@@ -60,7 +60,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 		die;
 	}
 
-	$handler = &new $handler( "php://stdout" , 'UTF-8', $encoding );
+	$handler = new $handler( "php://stdout" , 'UTF-8', $encoding );
 	$grid->export( $handler );
 
 	exit;
@@ -73,7 +73,7 @@ else
 	
 	foreach( $handlers as $key=>$handler )
 	{
-		$temp = &new $handler;
+		$temp = new $handler;
 		if( !$temp->supports( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC ) )
 			continue;
 

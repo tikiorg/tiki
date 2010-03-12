@@ -34,7 +34,7 @@ $smarty->assign('page_mode', 'form' );
 
 // Process the insertion or modification of a gallery here
 
-$grid = &new TikiSheet;
+$grid = new TikiSheet;
 
 if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 {
@@ -48,7 +48,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	switch( $handler )
 	{
 	case 'TikiSheetWikiTableHandler': // Well known, special handlers
-		$handler = &new $handler( $_POST['page'] );
+		$handler = new $handler( $_POST['page'] );
 		break;
 	default: // All file based handlers registered
 		if( !in_array( $handler, TikiSheet::getHandlerList() ) )
@@ -58,7 +58,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 			die;
 		}
         
-       	$handler = &new $handler( $_FILES['file']['tmp_name'] , $encoding, 'UTF-8');
+       	$handler = new $handler( $_FILES['file']['tmp_name'] , $encoding, 'UTF-8');
 	}
 
 	if( !$grid->import( $handler ) )
@@ -69,11 +69,11 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 		die;
 	}
 
-	$handler = &new TikiSheetDatabaseHandler( $sheetId );
+	$handler = new TikiSheetDatabaseHandler( $sheetId );
 	$grid->export( $handler );
 
 	ob_start();
-	$handler = &new TikiSheetOutputHandler;
+	$handler = new TikiSheetOutputHandler;
 	$grid->export( $handler );
 	$smarty->assign( "grid_content", ob_get_contents() );
 	ob_end_clean();
@@ -88,7 +88,7 @@ else
 	
 	foreach( $handlers as $key=>$handler )
 	{
-		$temp = &new $handler;
+		$temp = new $handler;
 		if( !$temp->supports( TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC ) )
 			continue;
 
