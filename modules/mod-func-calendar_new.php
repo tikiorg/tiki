@@ -28,18 +28,39 @@ function module_calendar_new_info() {
 			),
 			'viewlist' => array(
 				'name' => tra('View type'),
-				'description' => tra('Determines how to show events.') . ' ' . tra('Possible values:') . ' ' . 'calendar, list. ' . tra('Default value:') . ' calendar.',
+				'description' => tra('Determines how to show events.') . ' ' . tra('Possible values:') . ' ' . 'calendar, list. ',
 				'filter' => 'word',
+				'default' => 'calendar',
 			),
 			'viewmode' => array(
 				'name' => tra('Calendar view type time span'),
 				'description' => tra('If in calendar (or "table") view type, determines the time span displayed by the calendar.') . ' ' . tra('Possible values:') . ' year, semester, quarter, month, week, day. A user changing this time span in the calendar can change the time span the module displays for him.',
-				'filter' => 'word'
+				'filter' => 'word',
+				'default' => 'month',
 			),
 			'showaction' => array(
 				'name' => tra('Show action'),
 				'description' => 'y|n',
-				'filter' => 'word'
+				'filter' => 'word',
+				'default' => 'y',
+			),
+			'viewmodelink' => array(
+				'name' => tra('Viewmode when clicking on a day'),
+				'description' => 'week|day',
+				'filter' => 'word',
+				'default' => 'week',
+			),
+			'linkall' => array(
+				'name' => tra('Put a link on all the days , not only those with event'),
+				'description' => 'y|n',
+				'filter' => 'word',
+				'default' => 'n',
+			),
+			'viewnavbar' => array(
+				'name' => tra('View navigation bar'),
+				'description' => 'y|n|partial',
+				'filter' => 'word',
+				'default' => 'y'
 			)
 		)
 	);
@@ -51,6 +72,8 @@ function module_calendar_new( $mod_reference, $module_params ) {
 	global $userlib; include_once('lib/userslib.php');
 	global $headerlib; $headerlib->add_cssfile('css/calendar.css',20);
 	global $calendarViewMode, $focusdate;
+	$default = array('viewnavbar' => 'y', 'viewmodelink' => 'week', 'showaction' => 'y', 'linkall' => 'n');
+	$module_params = array_merge($default, $module_params);
 
 	if (isset($_REQUEST['viewmode'])) $save_viewmode = $_REQUEST['viewmode'];
 	if (!empty($module_params['viewmode']))
@@ -118,6 +141,8 @@ function module_calendar_new( $mod_reference, $module_params ) {
 		$smarty->assign('var', '');
 		$smarty->assign('myurl', 'tiki-calendar.php');
 		$smarty->assign('show_calendar_module', 'y');
+		$smarty->assign_by_ref('viewmodelink', $module_params['viewmodelink']);
+		$smarty->assign_by_ref('linkall', $module_params['linkall']);
 		$smarty->assign('calendarViewMode', $calendarViewMode);
 
 		if ( isset($save_todate) ) {
