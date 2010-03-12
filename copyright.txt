@@ -12,7 +12,7 @@ This is how we implement the Tiki Social Contract.
 http://tikiwiki.org/Social+Contract
 
 List of members of the Community
-As of 2010-03-11, the community has:
+As of 2010-03-12, the community has:
   * 467 members on SourceForge.net,
   * 229 of those people who made at least one code commit
 
@@ -349,15 +349,15 @@ SF Role: Developer
 Nickname: changi67
 Name: Jean-FranÃ§ois  B.
 First Commit: 2009-04-23
-Last Commit: 2010-02-28
-Number of Commits: 131
+Last Commit: 2010-03-12
+Number of Commits: 136
 SF Role: Packager (.rpm, .deb etc)
 
 Nickname: chealer
 Name: Philippe Cloutier
 First Commit: 2003-09-27
 Last Commit: 2010-03-09
-Number of Commits: 639
+Number of Commits: 645
 SF Role: Developer
 
 Nickname: chessy
@@ -753,7 +753,7 @@ Nickname: ggeller
 Name: George Geller
 First Commit: 2003-12-07
 Last Commit: 2005-11-30
-Number of Commits: 159
+Number of Commits: 161
 SF Role: Developer
 
 Nickname: giak
@@ -1214,7 +1214,7 @@ Name: lady
 Nickname: laetzer
 First Commit: 2004-01-09
 Last Commit: 2004-01-10
-Number of Commits: 4
+Number of Commits: 6
 SF Role: Developer
 
 Nickname: lauraxthomson
@@ -1364,8 +1364,8 @@ SF Role: Developer
 Nickname: marclaporte
 Name: Marc Laporte
 First Commit: 2003-11-28
-Last Commit: 2010-03-09
-Number of Commits: 817
+Last Commit: 2010-03-12
+Number of Commits: 818
 SF Role: Project Manager
 
 Nickname: marcmont
@@ -1559,7 +1559,7 @@ SF Role: Developer
 Nickname: mose
 First Commit: 2003-06-12
 Last Commit: 2008-03-22
-Number of Commits: 1950
+Number of Commits: 1954
 SF Role: Project Manager
 
 Nickname: mrbuiu
@@ -1809,8 +1809,8 @@ Number of Commits: 1
 
 Nickname: pkdille
 First Commit: 2007-03-14
-Last Commit: 2010-03-05
-Number of Commits: 1108
+Last Commit: 2010-03-11
+Number of Commits: 1110
 SF Role: Developer
 
 Nickname: plillevold
@@ -1930,8 +1930,8 @@ SF Role: Developer
 Nickname: ricks99
 Name: Rick Sapir
 First Commit: 2007-07-19
-Last Commit: 2010-03-05
-Number of Commits: 319
+Last Commit: 2010-03-12
+Number of Commits: 321
 SF Role: Developer
 
 Nickname: ripero
@@ -2014,7 +2014,7 @@ SF Role: Developer
 Nickname: russwilde
 First Commit: 2004-05-13
 Last Commit: 2004-05-13
-Number of Commits: 1
+Number of Commits: 2
 
 Nickname: rv540
 Name: Hervé Schoenenberger
@@ -2160,8 +2160,8 @@ SF Role: Developer
 Nickname: sylvieg
 Name: Sylvie Greverend
 First Commit: 2003-05-28
-Last Commit: 2010-03-11
-Number of Commits: 5547
+Last Commit: 2010-03-12
+Number of Commits: 5564
 SF Role: Developer
 
 Nickname: syracine
@@ -2188,7 +2188,7 @@ Nickname: telenieko
 Name: TeLeNiEkO
 First Commit: 2004-04-24
 Last Commit: 2005-01-18
-Number of Commits: 22
+Number of Commits: 23
 SF Role: Developer
 
 Nickname: terris
