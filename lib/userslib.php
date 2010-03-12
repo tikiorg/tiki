@@ -1908,7 +1908,6 @@ class UsersLib extends TikiLib
 		$userGroups = $this->get_user_groups_inclusion($user);
 		foreach ($groups as $group) {
 			if (!isset($userGroups[$group['groupName']]) && preg_match($group['emailPattern'], $email)) {
-					echo 'bingo';	
 				$this->assign_user_to_group($user, $group['groupName']);
 				$this->set_default_group($user, $group['groupName']);
 				++$nb;
