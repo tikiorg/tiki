@@ -188,6 +188,7 @@
 							<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
 							<div class="description">
 								{$param.description}
+								{if !empty($param.default)} - {tr}Default:{/tr} {$param.default|escape}{/if}
 							</div>
 						</td>
 					</tr>
