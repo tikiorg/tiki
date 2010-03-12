@@ -1,4 +1,7 @@
-{if empty($module_params.viewnavbar) || $module_params.viewnavbar ne 'n'}
+{if !isset($ajax)}
+	{assign var='ajax' value='y'}
+{/if}
+{if empty($module_params.viewnavbar) || $module_params.viewnavbar eq 'y'}
 <div class="clearfix tabrow" {if $module eq 'y'}style="padding: 0pt"{/if}>
 {if $module neq 'y'}
 	<div class="tabrowRight"></div>
@@ -19,10 +22,8 @@
 	{/if}
 	
 		<span style="display: inline-block">{strip}
+{*previous*}
 		<div>
-		{if !isset($ajax)}
-			{assign var='ajax' value='y'}
-		{/if}
 		{if $viewmode eq "day"}
 			{self_link _ajax=$ajax _class="next" todate=$daybefore _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "week"}
@@ -38,6 +39,7 @@
 		{/if}
 		</div>
 
+{*viewmodes*}
 		{if $calendar_type neq "tiki_actions"}
 			{if $module neq 'y'}
 				{button _ajax=$ajax href="?viewmode=day" _title="{tr}Day{/tr}" _text="{tr}Day{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'day'"}
@@ -59,6 +61,7 @@
 			{button _ajax=$ajax viewmode=year _title="{tr}Year{/tr}" _text="{tr}Year{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'year'"}
 		{/if}
 
+{*next*}
 		<div>
 		{if $viewmode eq "day"}
 			{self_link _ajax=$ajax _class="next" todate=$dayafter _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_next"}{/self_link}
@@ -82,7 +85,24 @@
 
 {if $viewmode ne 'day'}
 <div class="calnavigation">
-	 {if $viewlist ne 'list' or $prefs.calendar_list_begins_focus ne 'y'}
+{*previous*}
+	 {if !empty($module_params.viewnavbar) && $module_params.viewnavbar eq 'partial'}
+		{if $viewmode eq "day"}
+			{self_link _ajax=$ajax todate=$daybefore _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_previous"}{/self_link}
+		{elseif $viewmode eq "week"}
+			{self_link _ajax=$ajax todate=$weekbefore _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_previous"}{/self_link}
+		{elseif $viewmode eq "month"}
+			{self_link _ajax=$ajax todate=$monthbefore _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_previous"}{/self_link}
+		{elseif $viewmode eq "quarter"}
+			{self_link _ajax=$ajax todate=$quarterbefore _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_previous"}{/self_link}
+		{elseif $viewmode eq "semester"}
+			{self_link _ajax=$ajax todate=$semesterbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
+		{elseif $viewmode eq "year"}
+			{self_link _ajax=$ajax todate=$yearbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
+		{/if}
+	{/if}
+
+	{if $viewlist ne 'list' or $prefs.calendar_list_begins_focus ne 'y'}
 		{if $calendarViewMode eq 'month'}
 			{$daystart|tiki_date_format:"%B %Y"}
 		{elseif $calendarViewMode eq 'week'}
@@ -96,6 +116,23 @@
 		{/if}
 	{else}
 		{$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
+	{/if}
+
+{*next*}
+	{if !empty($module_params.viewnavbar) && $module_params.viewnavbar eq 'partial'}
+		{if $viewmode eq "day"}
+			{self_link _ajax=$ajax _class="next" todate=$dayafter _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_next"}{/self_link}
+		{elseif $viewmode eq "week"}
+			{self_link _ajax=$ajax _class="next" todate=$weekafter _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_next"}{/self_link}
+		{elseif $viewmode eq "month"}
+			{self_link _ajax=$ajax _class="next" todate=$monthafter _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_next"}{/self_link}
+		{elseif $viewmode eq "quarter"}
+			{self_link _ajax=$ajax _class="next" todate=$quarterafter _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_next"}{/self_link}
+		{elseif $viewmode eq "semester"}
+			{self_link _ajax=$ajax _class="next" todate=$semesterafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
+		{elseif $viewmode eq "year"}
+			{self_link _ajax=$ajax _class="next" todate=$yearafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
+		{/if}
 	{/if}
 </div>
 {/if}
