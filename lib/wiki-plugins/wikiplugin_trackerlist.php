@@ -587,14 +587,22 @@ function wikiplugin_trackerlist($data, $params) {
 			
 		if (!isset($filtervalue)) {
 			$filtervalue = '';
-		} elseif ($filtervalue == '#user') {
-			$filtervalue = $user;
+		} else {
+			foreach ($filtervalue as $i=>$f) {
+				if ($f == '#user') {
+					$filtervalue[$i] = $user;
+				}
+			}
 		}
 		
 		if (!isset($exactvalue)) {
 			$exactvalue = '';
-		} elseif ($exactvalue == '#user') {
-			$exactvalue = $user;
+		} else {
+			foreach ($exactvalue as $i=>$f) {
+				if ($f == '#user') {
+					$exactvalue[$i] = $user;
+				}
+			}
 		}
 		if (!empty($_REQUEST['itemId']) && (empty($ignoreRequestItemId) || $ignoreRequestItemId != 'y') ) {
 			$itemId = $_REQUEST['itemId'];
