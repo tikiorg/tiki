@@ -66,7 +66,7 @@
 			<a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}Status{/tr}</a>
 		</th>
 		<th>{tr}Questions{/tr}</th>
-		<th>{tr}Action{/tr}</th>
+		<th style="width:120px">{tr}Action{/tr}</th>
 	</tr>
 	
 	{cycle values="odd,even" print=false}
@@ -95,6 +95,9 @@
 					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
 				{else}
 					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
+				{/if}
+				{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
+					<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{icon _id='chart_curve' alt='{tr}Stats{/tr}'}</a>
 				{/if}
 			</td>
 		</tr>
