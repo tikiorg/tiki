@@ -3,6 +3,11 @@
 	{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
 	{button href="tiki-adminusers.php" _text="{tr}Admin Users{/tr}"}
 </div>
+{if !empty($feedback)}
+	{remarksbox title="{tr}Feedback{/tr}" type=note}
+		{$feedback}
+	{/remarksbox}
+{/if}
 
 <form action="tiki-admin.php?page=login" class="admin" method="post">
 	<input type="hidden" name="loginprefs" />
@@ -125,6 +130,7 @@
 				{preference name=min_pass_length}
 				{preference name=pass_due}
 			</fieldset>
+			{button href="?page=login&amp;refresh_email_group=y" _text="{tr}Assign users to group function of email pattern{/tr}"}
 		{/tab}
 
 		{tab name="{tr}LDAP{/tr}"}

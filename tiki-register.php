@@ -176,8 +176,8 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 			$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
 		} elseif (empty($_REQUEST['chosenGroup']) && isset($_SESSION['in_tracker'])) {
 			$userlib->set_default_group($_REQUEST['name'], 'Registered'); // to have tiki-user_preferences links par default to the registration tracker
-			
 		}
+		$userlib->set_email_group($_REQUEST['name'], $_REQUEST['mail']);
 		unset($_SESSION['in_tracker']);
 		// save default user preferences
 		$tikilib->set_user_preference($_REQUEST['name'], 'theme', $prefs['style']);

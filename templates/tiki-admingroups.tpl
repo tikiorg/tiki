@@ -256,7 +256,11 @@
 
 			<tr class="formcolor">
 				<td>{tr}Users are automatically unassigned from the group after{/tr}</td>
-				<td><input type="text" name="expireAfter" value="{$expireAfter|escape}" />{tr}Days{/tr}<br /><i>{tr}0 or empty for never{/tr}</i></td>
+				<td><input type="text" name="expireAfter" value="{$group_info.expireAfter|escape}" />{tr}Days{/tr}<br /><i>{tr}0 or empty for never{/tr}</i></td>
+			</tr>
+			<tr class="formcolor">
+				<td>{tr}Users are automatically assigned at registration in the group if their emails match the pattern{/tr}</td>
+				<td><input type="text" name="emailPattern" value="{$group_info.emailPattern|escape}" /> {tr}Example: {/tr}/@tw\.org/</td>
 			</tr>
 
 			{if $group ne ''}

@@ -32,6 +32,10 @@ if (isset($_REQUEST['loginprefs'])) {
 		if (count($out)) $userlib->set_registrationChoice($out, NULL);
 	}
 }
+if (!empty($_REQUEST['refresh_email_group'])) {
+	$nb = $userlib->refresh_set_email_group();
+	$smarty->assign('feedback', tra(sprintf(tra("%d user-group assigments"), $nb)));
+}
 
 $smarty->assign('gd_lib_found', function_exists('gd_info') ? 'y' : 'n');
 

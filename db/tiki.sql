@@ -2622,6 +2622,7 @@ CREATE TABLE `users_groups` (
   `groupTheme` varchar(255) default '',
   `isExternal` char(1) default 'n',
   `expireAfter` int(14) default 0,
+  `emailPattern`  varchar(255) default '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `groupName` (`groupName`),
   KEY `expireAfter` (`expireAfter`)
