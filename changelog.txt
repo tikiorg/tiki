@@ -23,6 +23,24 @@ Version 5.0
 ------------------
 
 ----------------------------------------------
+r26079 | sylvieg | 2010-03-12 15:47:25 +0100 (Fri, 12 Mar 2010) | 1 line
+
+[FIX]calendar module: try to be able to have the same display in calendar module than the old one
+----------------------------------------------
+r26075 | ricks99 | 2010-03-12 13:29:01 +0100 (Fri, 12 Mar 2010) | 1 line
+
+[ENH]access stats for specific surveys directly from the admin listing of all surveys
+----------------------------------------------
+r26074 | changi67 | 2010-03-12 09:41:54 +0100 (Fri, 12 Mar 2010) | 1 line
+
+[FIX] Strict Standards: Assigning the return value of new by reference is deprecated - PHP 5 changed the behavior and the object is defaultly passed by references
+----------------------------------------------
+r26071 | pkdille | 2010-03-11 22:57:59 +0100 (Thu, 11 Mar 2010) | 3 lines
+
+[MOD] languages: some cleanup in translation files. Remove some too much SUMO specific strings. Remove the language files with absolutely no translated strings. Remove the empty folders in /lang. Affect the correct svn properties to the php files. Add some missing index.php files. Remove some strange and unmaintained files (untranslated.php, Changelog).
+
+
+----------------------------------------------
 r26065 | sylvieg | 2010-03-11 10:05:33 -0800 (Thu, 11 Mar 2010) | 1 line
 
 [bp/ r 26033][FIX]release: blind commit
