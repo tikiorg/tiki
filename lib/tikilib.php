@@ -2808,10 +2808,11 @@ class TikiLib extends TikiDb_Bridge
 
 		if ( $ppos = strpos($sort_mode, ':') ) {
 
-			$sort_mode = substr($sort_mode, $ppos + 1);
+			$sort_value = substr($sort_mode, $ppos + 1);
 			$sort_by_pref = true;
+			$sort_way = 'asc';
 
-			if ( preg_match('/^(.+)_(asc|desc)$/i', $sort_mode, $regs) ) {
+			if ( preg_match('/^(.+)_(asc|desc)$/i', $sort_value, $regs) ) {
 				$sort_value = $regs[1];
 				$sort_way = $regs[2];
 				unset($regs);
