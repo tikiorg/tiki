@@ -260,7 +260,7 @@
 			</tr>
 			<tr class="formcolor">
 				<td>{tr}Users are automatically assigned at registration in the group if their emails match the pattern{/tr}</td>
-				<td><input type="text" name="emailPattern" value="{$group_info.emailPattern|escape}" /> {tr}Example: {/tr}/@tw\.org/</td>
+				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}" /> {tr}Example: {/tr}/@tw\.org$/ {tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
 			</tr>
 
 			{if $group ne ''}
