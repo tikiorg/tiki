@@ -23,7 +23,7 @@
 <h2>{tr}Add a directory category{/tr}</h2>
 {else}
 <h2>{tr}Edit this directory category{/tr}: {$info.name}</h2>
-<a href="tiki-directory_admin_categories.php">{tr}Add a directory category{/tr}</a> {/if}
+<a href="tiki-directory_admin_categories.php">{tr}Add a Directory Category{/tr}</a> {/if}
 <form action="tiki-directory_admin_categories.php" method="post">
   <input type="hidden" name="parent" value="{$parent|escape}" />
   <input type="hidden" name="categId" value="{$categId|escape}" />

@@ -32,7 +32,7 @@
 					<a class="button" href='#Browsing' onclick="document.getElementById('freetags_normalized_valid_chars').value='a-zA-Z0-9';">{tr}Alphanumeric ASCII characters only{/tr}</a>
 					({tr}No accents or special characters{/tr}.)
 					<br />
-					<a class="button" href='#Browsing' onclick="document.getElementById('freetags_normalized_valid_chars').value='';">{tr}Accept all charactrs{/tr}</a>
+					<a class="button" href='#Browsing' onclick="document.getElementById('freetags_normalized_valid_chars').value='';">{tr}Accept all characters{/tr}</a>
 				</div>
 				{preference name=freetags_lowercase_only}
 				{preference name=freetags_multilingual}
