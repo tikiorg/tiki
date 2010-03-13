@@ -17,7 +17,7 @@
 	{tab name="{tr}Past{/tr}"}
 		{include file=tiki-payment-list.tpl payments=$past}
 	{/tab}
-	{tab name="{tr}Canceled{/tr}"}
+	{tab name="{tr}Cancelled{/tr}"}
 		{include file=tiki-payment-list.tpl payments=$canceled}
 	{/tab}
 	{permission name=payment_request}

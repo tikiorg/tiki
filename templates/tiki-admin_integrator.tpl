@@ -35,7 +35,7 @@
     <td class="formcolor"><span title="{tr}File name of start page{/tr}">{tr}Start page{/tr}</span></td>
     <td class="formcolor"><input type="text" name="start" value="{$start|escape}" title="{tr}File name of start page{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor"><span title="{tr}CSS file to load when browse this repository{/tr}">{tr}CSS file{/tr}</span></td>
+    <td class="formcolor"><span title="{tr}CSS file to load when browse this repository{/tr}">{tr}CSS File{/tr}</span></td>
     <td class="formcolor"><input type="text" name="cssfile" value="{$cssfile|escape}" title="{tr}CSS file to load when browse this repository{/tr}" /></td>
   </tr><tr>
     <td class="formcolor"><span title="{tr}Is repository visible to users{/tr}">{tr}Visible{/tr}</span></td>

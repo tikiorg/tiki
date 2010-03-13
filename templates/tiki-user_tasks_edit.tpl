@@ -11,7 +11,7 @@
 <input type="hidden" name="creator" value="{$info.creator|escape}" />
 {if ($tiki_view_mode eq 'view')}
  <span class="tabbut">
-    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=edit" class="tablink">{tr}Edit task{/tr}</a>
+    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=edit" class="tablink">{tr}Edit Task{/tr}</a>
     </span>
 
 {/if}

@@ -218,7 +218,7 @@ function prefs_wiki_list() {
 			'size' => '5',
 		),
 		'wiki_comments_default_ordering' => array(
-			'name' => tra('Default ordering'),
+			'name' => tra('Default Ordering'),
 			'type' => 'list',
 			'options' => array(
 				'commentDate_desc' => tra('Newest first'),

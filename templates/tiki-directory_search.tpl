@@ -23,14 +23,14 @@
     <input type="hidden" name="where" value="{$where|escape}" />
     {tr}Sort by{/tr}:
     <select name="sort_mode">
-      <option value="name_desc" {if $sort_mode eq 'name_desc'}selected="selected"{/if}>{tr}name (desc){/tr}</option>
-      <option value="name_asc" {if $sort_mode eq 'name_asc'}selected="selected"{/if}>{tr}name (asc){/tr}</option>
-      <option value="hits_desc" {if $sort_mode eq 'hits_desc'}selected="selected"{/if}>{tr}hits (desc){/tr}</option>
-      <option value="hits_asc" {if $sort_mode eq 'hits_asc'}selected="selected"{/if}>{tr}hits (asc){/tr}</option>
-      <option value="created_desc" {if $sort_mode eq 'created_desc'}selected="selected"{/if}>{tr}creation date (desc){/tr}</option>
-      <option value="created_asc" {if $sort_mode eq 'created_asc'}selected="selected"{/if}>{tr}creation date (asc){/tr}</option>
-      <option value="lastModif_desc" {if $sort_mode eq 'lastModif_desc'}selected="selected"{/if}>{tr}last updated (desc){/tr}</option>
-      <option value="lastModif_asc" {if $sort_mode eq 'lastModif_asc'}selected="selected"{/if}>{tr}last updated (asc){/tr}</option>
+      <option value="name_desc" {if $sort_mode eq 'name_desc'}selected="selected"{/if}>{tr}Name (desc){/tr}</option>
+      <option value="name_asc" {if $sort_mode eq 'name_asc'}selected="selected"{/if}>{tr}Name (asc){/tr}</option>
+      <option value="hits_desc" {if $sort_mode eq 'hits_desc'}selected="selected"{/if}>{tr}Hits (desc){/tr}</option>
+      <option value="hits_asc" {if $sort_mode eq 'hits_asc'}selected="selected"{/if}>{tr}Hits (asc){/tr}</option>
+      <option value="created_desc" {if $sort_mode eq 'created_desc'}selected="selected"{/if}>{tr}Creation Date (desc){/tr}</option>
+      <option value="created_asc" {if $sort_mode eq 'created_asc'}selected="selected"{/if}>{tr}Creation Date (asc){/tr}</option>
+      <option value="lastModif_desc" {if $sort_mode eq 'lastModif_desc'}selected="selected"{/if}>{tr}Last updated (desc){/tr}</option>
+      <option value="lastModif_asc" {if $sort_mode eq 'lastModif_asc'}selected="selected"{/if}>{tr}Last updated (asc){/tr}</option>
     </select>
     <input type="submit" name="xx" value="sort" />
   </form>

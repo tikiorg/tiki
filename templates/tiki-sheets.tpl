@@ -50,7 +50,7 @@
 
 <br />
 {else}
-<div class="navbar"><a href="tiki-sheets.php?edit_mode=edit&sheetId=0">{tr}Create new Sheet{/tr}</a></div>
+<div class="navbar"><a href="tiki-sheets.php?edit_mode=edit&sheetId=0">{tr}Create New Sheet{/tr}</a></div>
 {/if}
 {/if}
 

@@ -75,16 +75,16 @@ Add a value in first check when you create a new admin page. *}
 			<li class="{cycle}">
 				<p>
 			{if $tikifeedback[n].st eq 0}
-				{icon _id=delete alt="{tr}disabled{/tr}" style="vertical-align: middle"}
+				{icon _id=delete alt="{tr}Disabled{/tr}" style="vertical-align: middle"}
 			{elseif $tikifeedback[n].st eq 1}
-				{icon _id=accept alt="{tr}enabled{/tr}" style="vertical-align: middle"}
+				{icon _id=accept alt="{tr}Enabled{/tr}" style="vertical-align: middle"}
 			{elseif $tikifeedback[n].st eq 2}
-				{icon _id=accept alt="{tr}changed{/tr}" style="vertical-align: middle"}
+				{icon _id=accept alt="{tr}Changed{/tr}" style="vertical-align: middle"}
 			{else}
-				{icon _id=information alt="{tr}information{/tr}" style="vertical-align: middle"}
+				{icon _id=information alt="{tr}Information{/tr}" style="vertical-align: middle"}
 			{/if}
-					{if $tikifeedback[n].st ne 3}{tr}preference{/tr} {/if}<strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong><br />
-					{if $tikifeedback[n].st ne 3}(<em>{tr}preference name:{/tr}</em> {$tikifeedback[n].name}){/if}
+					{if $tikifeedback[n].st ne 3}{tr}Preference{/tr} {/if}<strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong><br />
+					{if $tikifeedback[n].st ne 3}(<em>{tr}Preference name:{/tr}</em> {$tikifeedback[n].name}){/if}
 				</p>
 			</li>
 		{/section}
@@ -117,7 +117,7 @@ if $pagetop_msg}
 	{if $prefs.feature_live_support eq 'y'} <a href="tiki-live_support_admin.php">{tr}Live Support{/tr}</a> {/if}
 	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> 
 	{/if} *}
-	{if $prefs.feature_contact eq 'y'} <a href="tiki-contact.php">{tr}Contact us{/tr}</a> {/if}
+	{if $prefs.feature_contact eq 'y'} <a href="tiki-contact.php">{tr}Contact Us{/tr}</a> {/if}
 	<hr />
 
 	{tr}Administration features{/tr}:<br />

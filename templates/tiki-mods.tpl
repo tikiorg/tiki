@@ -164,7 +164,7 @@ function update_button_install() {
 		</select>
 		{tr}for version{/tr}
 		<select name="version" onchange="this.form.submit();">
-			<option value="">{tr}all versions{/tr}</option>
+			<option value="">{tr}All versions{/tr}</option>
 			{foreach key=it item=i from=$versions}
 				<option value="{$i|escape}"{if $i eq $version} selected="selected"{/if}>{$it}</option>
 			{/foreach}

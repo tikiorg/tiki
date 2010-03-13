@@ -164,7 +164,7 @@
 
 {/if}
 <a name="add"></a>
-<h2>{if $eventId}{tr}Edit event{/tr}{else}{tr}Add event{/tr}{/if}</h2>
+<h2>{if $eventId}{tr}Edit Event{/tr}{else}{tr}Add Event{/tr}{/if}</h2>
 <form action="tiki-minical.php" method="post">
 <input type="hidden" name="eventId" value="{$eventId|escape}" />
 <input type="hidden" name="view" value="{$view|escape}" />

@@ -14,7 +14,7 @@ function prefs_poll_list() {
 			'filter' => 'digits',
 		),
 		'poll_comments_default_ordering' => array(
-			'name' => tra('Default ordering'),
+			'name' => tra('Default Ordering'),
 			'type' => 'list',
 			'options' => array(
 				'commentDate_desc' => tra('Newest first'),

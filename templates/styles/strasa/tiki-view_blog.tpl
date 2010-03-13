@@ -17,7 +17,7 @@
 			<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}">{icon _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 			{/if}
 			{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
-			<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{icon _id='page_edit' alt='{tr}Edit blog{/tr}'}</a>
+			<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{icon _id='page_edit' alt='{tr}Edit Blog{/tr}'}</a>
 			{/if}
 			
 			{if $user and $prefs.feature_user_watches eq 'y'}
