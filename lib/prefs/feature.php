@@ -1302,7 +1302,7 @@ function prefs_feature_list() {
 		'feature_jquery_jqs5' => array(
 			'name' => tra('JQuery JQS5'),
 			'type' => 'flag',
-			'help' => 'JQuery#Sheet',
+			'help' => 'JQuery#JQS5',
 			'description' => tra('jQuery Simple Standards-Based Slide Show System'),
 		),
 		'feature_jquery_carousel' => array(
