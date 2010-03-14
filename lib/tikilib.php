@@ -6841,7 +6841,7 @@ class TikiLib extends TikiDb_Bridge
 								if ($in_paragraph && ( 0 == strcmp("", trim($line)) || substr(trim($line),0,5) == '</div' || substr(trim($line),0,4) == '<div')) {
 									// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 									$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-								} elseif (!$in_paragraph && (0 != strcmp("", trim($line))) && substr(trim($line),0,4) != '<div' && !preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $line)) {	// and not noparse guid
+								} elseif (!$in_paragraph && (0 != strcmp("", trim($line))) && substr(trim($line),0,4) != '<div' && substr(trim($line),0,5) != '</div' && !preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $line)) {	// and not noparse guid
 									// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 									$data .= "<p>";
 									$in_paragraph = 1;
