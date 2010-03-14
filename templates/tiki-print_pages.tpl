@@ -61,7 +61,7 @@
         <option value="" disabled="disabled">{tr}No pages{/tr}</option>
       {/section}
 {if $pages|@count eq $printpages|@count}
-<option value="" disabled="">{tr}All pages selcted{/tr}</option>
+<option value="" disabled="">{tr}All pages selected{/tr}</option>
 {/if} 
     </select>
 		</td>
