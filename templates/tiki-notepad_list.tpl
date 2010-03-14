@@ -14,10 +14,7 @@
 </div>
 
 {if count($channels) > 0 or $find ne ''}
-	<h2>{tr}Notes{/tr}</h2>
-
 	{include file='find.tpl'}
-
 	<form action="tiki-notepad_list.php" method="post">
 		<table class="normal">
 			<tr>

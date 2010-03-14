@@ -15,8 +15,6 @@
     <small>{tr}Used space:{/tr} {tr}no limit for admin{/tr}</small>
   {/if}
 </div>
-<br />
-<h2>{tr}User Files{/tr}</h2>
 <form action="tiki-userfiles.php" method="post">
 <table class="normal">
 <tr>
