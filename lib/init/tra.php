@@ -39,9 +39,7 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 
 	$out = tra_impl( $content, $lang, $no_interactive, $args );
 
-	if( empty( $lg ) || $lg == $lang ) {
-		record_string( $content, $out );
-	}
+	record_string( $content, $out );
 
 	return $out;
 }
