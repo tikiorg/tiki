@@ -1,10 +1,21 @@
-#tiki-center {
-	border: none !important;
+/* $Id$
+	Shadows theme option for Tikinewt theme.
+	Tiki Wiki CMS Groupware.
+*/
+
+body {
+	background: #F3F6F9;
+}
+
+#c1c2 #wrapper #col1 #tiki-center {
+	border: none;
+	background: none;
 }
 
 /***** Boxes *****/
 /** Modules **/
-div.box {
+div.box,
+#c1c2 #wrapper #col1 #tiki-center {
 	border: none;
 	background: url(shadows/box_shadow.png) no-repeat 100% 100%;
 	padding: 0 8px 9px 0;
@@ -20,6 +31,8 @@ div.box h3 {
 	margin-top: 0;
 }
 
+#role_main,
+#custom_center_column_header,
 div.box-data {
 	padding: 6px;
 	background: #fff;
@@ -71,7 +84,8 @@ div.article {
 
 div.articletitle,
 div.articleheading,
-div.articletrailer {
+div.articletrailer,
+div.articletopline {
 	background: #fff !important;
 	padding: 6px;
 	margin: 0;
