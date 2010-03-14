@@ -26,14 +26,16 @@
 							<div id="col1" class="{if $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}marginleft{/if}{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n')} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 								<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
 									{if $prefs.feature_custom_center_column_header}{* Content comes from Look and Feel admin  *}
-										{eval var=$prefs.feature_custom_center_column_header}
+										<div id="custom_center_column_header">
+											{eval var=$prefs.feature_custom_center_column_header}
+										</div>
 									{/if}
 									{if $display_msg}
 										{remarksbox type="note" title="{tr}Notice{/tr}"}
 											{$display_msg|escape}
 										{/remarksbox}
 									{/if}
-									<div role="main">
+									<div role="main" id="role_main">
 										{$mid_data}
 									</div>
 									{show_help}
