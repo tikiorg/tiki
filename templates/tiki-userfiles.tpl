@@ -2,7 +2,6 @@
 
 {title help="User+Files"}{tr}User Files{/tr}{/title}
 
-<!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
 {include file='tiki-mytiki_bar.tpl'}
 
 <div style="text-align:center;">
