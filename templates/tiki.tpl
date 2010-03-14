@@ -76,12 +76,12 @@
 
 							{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
 							{if $prefs.feature_custom_center_column_header}{* Content comes from Look and Feel admin  *}
-								{eval var=$prefs.feature_custom_center_column_header}
+								<div id="custom_center_column_header">{eval var=$prefs.feature_custom_center_column_header}</div>
 							{/if}
 {if $display_msg}
 	{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
 {/if}
-<div role="main">
+<div role="main" id="role_main">
 {$mid_data}
 </div>
 {show_help}
