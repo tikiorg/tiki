@@ -2,6 +2,8 @@
 
 {title url="tiki-user_information.php?view_user=$userwatch"}{tr}User Information{/tr}{/title}
 
+{include file='tiki-mytiki_bar.tpl'}
+
 {if $prefs.feature_tabs neq 'y' and $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
 <div class="navbar">
 	{button href="#message" _text="{tr}Send me a message{/tr}"}
@@ -102,7 +104,7 @@
 			{if $userPage_exists}
 									<a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}">{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}</a>
 			{elseif $user == $userinfo.login}
-				{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}" title="{tr}Create page{/tr}">?</a>
+				{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}" title="{tr}Create Page{/tr}">?</a>
 			{else}&nbsp;{/if}
 								</div>
 							</div>

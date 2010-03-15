@@ -41,7 +41,7 @@ function wikiplugin_youtube_info() {
 			),
 			'allowFullScreen' => array(
 				'required' => false,
-				'name' => tra('Allow full screen'),
+				'name' => tra('Allow Fullscreen'),
 				'description' => 'y|n',
 				'default' => 'n',
 			),

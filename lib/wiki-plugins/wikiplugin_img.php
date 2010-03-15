@@ -168,7 +168,7 @@ function wikiplugin_img_info() {
 			),
 			'class' => array(
 				'required' => false,
-				'name' => tra('CSS class'),
+				'name' => tra('CSS Class'),
 				'filter' => 'striptags',
 				'description' => tra('CSS class to apply to the image.'),
 			),

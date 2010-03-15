@@ -19,9 +19,9 @@ function module_terminology_info() {
 		'params' => array(
 			'root_category' => array(
 				'name' => tra('Root category'),
-				'description' => tra('All terms will automatically be put in that category. '.
-				                     'Note that the category must already exist. '.
-				                     'Defaults to \'Term\'')
+				'description' => tra('All terms will automatically be put in that category. ')
+												. tra('Note that the category must already exist. ')
+												. tra('Defaults to \'Term\'')
 			),
 		)
 	);

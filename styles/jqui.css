@@ -189,6 +189,7 @@ div.error {
 }
 
 #sitetitle {
+	margin-top: 20px;
 	font-size: 2.4em;
 }
 
@@ -447,8 +448,8 @@ li.even {
 	list-style-type: none;
 	position: relative;
 	padding: .2em .2em 0;
-	margin:0 0.2em -1px 0;
-	border: 1px solid #aaaa;
+	margin:0 0.2em 1px 0;
+	border: 1px solid #aaa;
 	background: #ccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 }
 

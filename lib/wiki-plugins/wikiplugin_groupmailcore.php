@@ -37,32 +37,32 @@ function wikiplugin_groupmailcore_info() {
 			),
 			'operatorFId' => array(
 				'required' => true,
-				'name' => tra('operator Field Id'),
+				'name' => tra('Operator Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 			),
 			'subjectFId' => array(
 				'required' => true,
-				'name' => tra('subject Field Id'),
+				'name' => tra('Subject Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 			),
 			'messageFId' => array(
 				'required' => true,
-				'name' => tra('message Field Id'),
+				'name' => tra('Message Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 			),
 			'contentFId' => array(
 				'required' => true,
-				'name' => tra('content Field Id'),
+				'name' => tra('Content Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 			),
 			'accountFId' => array(
 				'required' => true,
-				'name' => tra('account Field Id'),
+				'name' => tra('Account Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 			),
 			'datetimeFId' => array(
 				'required' => true,
-				'name' => tra('datetime Field Id'),
+				'name' => tra('Datetime Field Id'),
 				'description' => tra('Id of GroupMail Logs tracker field (usually set up in alias by profile).'),
 			),
 		),

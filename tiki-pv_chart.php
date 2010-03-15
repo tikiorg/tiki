@@ -12,8 +12,8 @@ require_once ("lib/graph-engine/gd.php");
 require_once ("lib/graph-engine/graph.multiline.php");
 
 //Define the object
-$renderer = & new GD_GRenderer(450, 300);
-$graph = & new MultilineGraphic;
+$renderer = new GD_GRenderer(450, 300);
+$graph = new MultilineGraphic;
 $graph->setTitle(tra('Pageviews'));
 //Set some data
 if (!isset($_REQUEST["days"])) $_REQUEST["days"] = 7;

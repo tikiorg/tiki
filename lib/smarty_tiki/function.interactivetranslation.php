@@ -13,6 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // Param: 'id' or 'label'
 function smarty_function_interactivetranslation($params, &$smarty) {
+	global $headerlib;
+
 	$strings = get_collected_strings();
 	if( count( $strings ) == 0 ) {
 		return;
@@ -27,25 +29,7 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 	$save = tra('Save translations');
 	$note = tra('Changes will be applied on next page load only.');
 	$cancel = tra('Cancel');
-	return <<<JS
-<div class="intertrans" id="intertrans-indicator">
-	<input type="checkbox" id="intertrans-active"/>
-	<label for="intertrans-active">$text</label>
-	<div>$help</div>
-</div>
-<div class="intertrans" id="intertrans-form">
-	<form method="post" action="tiki-interactive_trans.php">
-		<table>
-		</table>
-		<p>
-			<input type="submit" value="$save"/>
-			<input type="reset" value="$cancel"/>
-		</p>
-		<p>$note</p>
-	</form>
-</div>
-<script type="text/javascript">
-\$jq(document).ready( function() {
+	$jq = <<<JS
 	var data = $strings;
 
 	\$jq('.intertrans').find('*').addClass('intertrans');
@@ -93,9 +77,27 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 		\$jq('#intertrans-form').show();
 		return false;
 	} );
-} );
-</script>
 JS;
+	$headerlib->add_jq_onready($jq);
+
+	return <<<HTML
+<div class="intertrans" id="intertrans-indicator">
+	<input type="checkbox" id="intertrans-active"/>
+	<label for="intertrans-active">$text</label>
+	<div>$help</div>
+</div>
+<div class="intertrans" id="intertrans-form">
+	<form method="post" action="tiki-interactive_trans.php">
+		<table>
+		</table>
+		<p>
+			<input type="submit" value="$save"/>
+			<input type="reset" value="$cancel"/>
+		</p>
+		<p>$note</p>
+	</form>
+</div>
+HTML;
 }
 
 function sort_strings_by_length( $a, $b ) {

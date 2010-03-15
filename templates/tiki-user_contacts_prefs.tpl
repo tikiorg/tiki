@@ -13,7 +13,7 @@
 				<form method='post' action='tiki-user_contacts_prefs.php'>
 					<table class="admin">
 						<tr>
-							<td class="form">{tr}Default view{/tr}:</td>
+							<td class="form">{tr}Default View{/tr}:</td>
 							<td class="form">
 								<input type='radio' name='user_contacts_default_view' value='list' {if $user_contacts_default_view eq 'list'}checked="checked"{/if}/>
 								{tr}List View{/tr}

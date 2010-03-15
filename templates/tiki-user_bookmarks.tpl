@@ -1,8 +1,6 @@
 {title help="User+Bookmarks"}{tr}User Bookmarks{/tr}{/title}
 
-  {include file='tiki-mytiki_bar.tpl'}
-  <br />
-  <br />
+{include file='tiki-mytiki_bar.tpl'}
 
 {if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder:{/tr} {$path}<br />
 <br />

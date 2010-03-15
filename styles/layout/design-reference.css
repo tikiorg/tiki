@@ -7,6 +7,11 @@
 */
 
 /***** XHTML Elements *****/
+/* print mode only - to make sure print templates will use and print on seamless white bg color */
+html#print {
+	background: #fff;
+	color: #000;
+}
 
 body.fullscreen {
 	text-align: left;

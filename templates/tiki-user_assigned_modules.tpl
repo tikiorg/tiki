@@ -1,6 +1,6 @@
 {title help="UserAssignedModules"}{tr}User assigned modules{/tr}{/title}
 
-  {include file='tiki-mytiki_bar.tpl'}
+{include file='tiki-mytiki_bar.tpl'}
 
 <div class="navbar">
 	{button href="tiki-user_assigned_modules.php?recreate=1" _text="{tr}Restore defaults{/tr}"}

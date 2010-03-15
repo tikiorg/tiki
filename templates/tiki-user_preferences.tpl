@@ -6,6 +6,10 @@
   {title help="User+Preferences"}{tr}User Preferences{/tr}{/title}
 {/if}
 
+{if $userwatch eq $user or $userwatch eq ""}
+    {include file='tiki-mytiki_bar.tpl'}
+{/if}
+
 {if $tiki_p_admin_users eq 'y'}
 	<div class="navbar">
 		{assign var=thisuser value=$userinfo.login}
@@ -13,10 +17,6 @@
 	</div>
 {/if}
 
-{if $userwatch eq $user or $userwatch eq ""}
-    {include file='tiki-mytiki_bar.tpl'}
-  <br />
-{/if}
 
 {if $tikifeedback}
   <div class="simplebox highlight">

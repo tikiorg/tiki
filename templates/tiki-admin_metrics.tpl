@@ -185,7 +185,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="form {cycle advance=false}">{tr}Data type{/tr}</td>
+			<td class="form {cycle advance=false}">{tr}Data Type{/tr}</td>
 			<td class="{cycle}">
 				<select name="metric_datatype">
 				{foreach from=$metric_datatype_all key=datatypeid item=datatypename}

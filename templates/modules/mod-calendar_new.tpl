@@ -34,13 +34,17 @@
 						{if $month_cursor neq $focusmonth }
 							<span style="color:lightgrey">{$day_cursor}</span>
 						{elseif isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" || $cell[w][d].items[0].visible eq 'y')}
-							<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$cell[w][d].day}&amp;viewmode=week" {if $prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[0].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+							<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$cell[w][d].day}&amp;viewmode={$viewmodelink}" 
+							{if $prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[0].calitemId}
+									{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 								{else}
 									{popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 								{/if}
 								>
 								{$day_cursor}
 							</a>
+						{elseif $linkall eq 'y'}
+							<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$cell[w][d].day}&amp;viewmode={$viewmodelink}">{$day_cursor}</a>
 						{else}
 							{$day_cursor}
 						{/if}
@@ -52,7 +56,7 @@
 	</table>
 {/if}
 {if $tiki_p_add_events eq 'y' && (empty($module_params.showaction) || $module_params.showaction ne 'n')}
-	<p><a href="tiki-calendar_edit_item.php"><img src=pics/icons/add.png link="tiki-calendar_edit_item.php"> {tr}Add event{/tr}</a></p>
+	<p><a href="tiki-calendar_edit_item.php"><img src=pics/icons/add.png link="tiki-calendar_edit_item.php"> {tr}Add Event{/tr}</a></p>
 {/if}
 {/tikimodule}
 {/if}

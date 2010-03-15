@@ -79,7 +79,7 @@ document.getElementById('$formId').submit();
 EOF;
 			} else {
 				$intro = tra('Incomplete call to plugin: No target sheet.');
-				$label = tra('Create new sheet');
+				$label = tra('Create New Sheet');
 				return <<<EOF
 ~np~
 <form method="post" action="">

@@ -369,7 +369,7 @@ if (isset($_REQUEST['edit'])) {
 			'show_lastDownload' => $_REQUEST['fgal_list_lastDownload'],
 			'max_desc' => $_REQUEST['max_desc'],
 			'type' => $_REQUEST['fgal_type'],
-			'parentId' => empty($_REQUEST['parentid'])?$old_gal_info['parentId']:$_REQUEST['parentId'],
+			'parentId' => empty($_REQUEST['parentId'])?$old_gal_info['parentId']:$_REQUEST['parentId'],
 			'lockable' => $lockable,
 			'show_lockedby' => $_REQUEST['fgal_list_lockedby'],
 			'archives' => $_REQUEST['archives'],

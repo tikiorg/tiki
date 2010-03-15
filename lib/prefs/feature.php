@@ -827,7 +827,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_cms_templates' => array(
-			'name' => tra('Content templates'),
+			'name' => tra('Content Templates'),
 			'type' => 'flag',
 			'help' => 'Content+Template',
 			'description' => tra('Pre-defined content for a wiki page.'),
@@ -841,7 +841,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_categorypath' => array(
-			'name' => tra('Category path'),
+			'name' => tra('Category Path'),
 			'type' => 'flag',
 		),
 		'feature_categoryobjects' => array(
@@ -1302,7 +1302,7 @@ function prefs_feature_list() {
 		'feature_jquery_jqs5' => array(
 			'name' => tra('JQuery JQS5'),
 			'type' => 'flag',
-			'help' => 'JQuery#Sheet',
+			'help' => 'JQuery#JQS5',
 			'description' => tra('jQuery Simple Standards-Based Slide Show System'),
 		),
 		'feature_jquery_carousel' => array(

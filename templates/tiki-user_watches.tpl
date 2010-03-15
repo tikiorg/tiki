@@ -1,6 +1,7 @@
 {* $Id$ *}
 
 {title help="User+Watches"}{tr}User Watches and preferences{/tr}{/title}
+{include file='tiki-mytiki_bar.tpl'}
 
 {if $email_ok eq 'n'}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}
@@ -9,68 +10,66 @@
 	{/remarksbox}
 {/if}
 
-<h2>{tr}Report Preferences{/tr}</h2>
-{if $prefs.feature_daily_report_watches eq 'y'}
-
-{if $remove_user_watch_error}
-	{remarksbox type="error" title="{tr}Error{/tr}"}{tr}You are not allowed to remove this notification !{/tr}{/remarksbox}
-{else}
-	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use reports to summarise notifications about objects you are watching.{/tr}{/remarksbox}
-{/if}
-
-<form action="tiki-user_reports.php" method="post" id='formi'>
-	<input type="hidden" name="report_preferences" value="true"/>
-	<p><input type="checkbox" name="use_daily_reports" value="true" {if $report_preferences != false}checked{/if}/> {tr}Use reports{/tr}</p>
-
-	<p>
-	{tr}Interval in witch you want to get the reports{/tr}
-	<select name="interval">
-			<option value="daily" {if $report_preferences.interval eq "daily"}selected{/if}>{tr}Daily{/tr}</option>
-			<option value="weekly" {if $report_preferences.interval eq "weekly"}selected{/if}>{tr}Weekly{/tr}</option>
-			<option value="monthly" {if $report_preferences.interval eq "monthly"}selected{/if}>{tr}Monthly{/tr}</option>
-	</select>
-	</p>
-	
-	<div style="float:left; margin-right: 50px;">
-	    <input type="radio" name="view" value="short" {if $report_preferences.view eq "short"}checked{/if}> {tr}Short report{/tr}<br>
-    	<input type="radio" name="view" value="detailed" {if $report_preferences.view eq "detailed" OR $report_preferences eq false}checked{/if}> {tr}Detailed report{/tr}<br>
-	</div>
-	<div style="float:left; margin-right: 50px;">
-	    <input type="radio" name="type" value="html" {if $report_preferences.type eq "html" OR $report_preferences eq false}checked{/if}> {tr}HTML-Email{/tr}<br>
-    	<input type="radio" name="type" value="plain" {if $report_preferences.type eq "plain"}checked{/if}> {tr}Plain text{/tr}<br>
-    </div>
-	<div>
-		<input type="checkbox" name="always_email" value="1" {if $report_preferences.always_email eq 1 OR $report_preferences eq false}checked{/if}/> {tr}Send me an email also if nothing happened{/tr}
-	</div>
-	
-	<p><input type="submit" name="submit" value=" {tr}Apply{/tr} "></p>
-</form>
-{else}
-<p>{tr}Reports are disabled, only standard reporting is available{/tr}</p>
-{/if}
-
-<h2>{tr}Sites you are watching{/tr}</h2>
-
-  {include file='tiki-mytiki_bar.tpl'}
+{tabset name="user_watches"}
+	{tab name="{tr}Report Preferences{/tr}"}
+	{if $prefs.feature_daily_report_watches eq 'y'}
+		{if $remove_user_watch_error}
+			{remarksbox type="error" title="{tr}Error{/tr}"}{tr}You are not allowed to remove this notification !{/tr}{/remarksbox}
+		{else}
+			{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use reports to summarise notifications about objects you are watching.{/tr}{/remarksbox}
+		{/if}
+		
+		<form action="tiki-user_reports.php" method="post" id='formi'>
+			<input type="hidden" name="report_preferences" value="true"/>
+			<p><input type="checkbox" name="use_daily_reports" value="true" {if $report_preferences != false}checked{/if}/> {tr}Use reports{/tr}</p>
+		
+			<p>
+			{tr}Interval in witch you want to get the reports{/tr}
+			<select name="interval">
+					<option value="daily" {if $report_preferences.interval eq "daily"}selected{/if}>{tr}Daily{/tr}</option>
+					<option value="weekly" {if $report_preferences.interval eq "weekly"}selected{/if}>{tr}Weekly{/tr}</option>
+					<option value="monthly" {if $report_preferences.interval eq "monthly"}selected{/if}>{tr}Monthly{/tr}</option>
+			</select>
+			</p>
+			
+			<div style="float:left; margin-right: 50px;">
+			    <input type="radio" name="view" value="short" {if $report_preferences.view eq "short"}checked{/if}> {tr}Short report{/tr}<br>
+		    	<input type="radio" name="view" value="detailed" {if $report_preferences.view eq "detailed" OR $report_preferences eq false}checked{/if}> {tr}Detailed report{/tr}<br>
+			</div>
+			<div style="float:left; margin-right: 50px;">
+			    <input type="radio" name="type" value="html" {if $report_preferences.type eq "html" OR $report_preferences eq false}checked{/if}> {tr}HTML-Email{/tr}<br>
+		    	<input type="radio" name="type" value="plain" {if $report_preferences.type eq "plain"}checked{/if}> {tr}Plain text{/tr}<br>
+		    </div>
+			<div>
+				<input type="checkbox" name="always_email" value="1" {if $report_preferences.always_email eq 1 OR $report_preferences eq false}checked{/if}/> {tr}Send me an email also if nothing happened{/tr}
+			</div>
+			
+			<p><input type="submit" name="submit" value=" {tr}Apply{/tr} "></p>
+		</form>
+	{else}
+		<p>{tr}Reports are disabled, only standard reporting is available{/tr}</p>
+	{/if}
+	{/tab}
+	{tab name="{tr}Sites you are watching{/tr}"}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
 
 {if $add_options|@count > 0}
-<h2>{tr}Add Watch{/tr}</h2>
-<form action="tiki-user_watches.php" method="post">
-<table class="normal">
-<tr>
-	<td class="formcolor">{tr}Event{/tr}:</td>
-	<td class="formcolor">
-		<select name="event" id="type_selector">
-			<option>{tr}Select event type{/tr}</option>
-			{foreach key=event item=label from=$add_options}
-				<option value="{$event|escape}">{$label|escape}</option>
-			{/foreach}
-		</select>
-	</td>
-</tr>
-{if $prefs.feature_categories eq 'y'}
+	<h3>{tr}Add Watch{/tr}</h3>
+	<form action="tiki-user_watches.php" method="post">
+	<table class="normal">
+	<tr>
+		<td class="formcolor">{tr}Event{/tr}:</td>
+		<td class="formcolor">
+			<select name="event" id="type_selector">
+				<option>{tr}Select event type{/tr}</option>
+				{foreach key=event item=label from=$add_options}
+					<option value="{$event|escape}">{$label|escape}</option>
+				{/foreach}
+			</select>
+		</td>
+	</tr>
+	{if $prefs.feature_categories eq 'y'}
 	<tr id="categ_list">
 		<td class="formcolor">{tr}Category{/tr}</td>
 		<td class="formcolor">
@@ -81,8 +80,8 @@
 			</select>
 		</td>
 	</tr>
-{/if}
-{if $prefs.feature_multilingual eq 'y'}
+	{/if}
+	{if $prefs.feature_multilingual eq 'y'}
 	<tr id="lang_list">
 		<td class="formcolor">{tr}Language{/tr}</td>
 		<td class="formcolor">
@@ -93,32 +92,31 @@
 			</select>
 		</td>
 	</tr>
+	{/if}
+	<tr><td class="formcolor">&nbsp;</td>
+	<td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
+	</tr>
+	</table>
+	</form>
+	{jq}
+		$jq('#type_selector').change( function() {
+			var type = $jq(this).val();
+	
+			$jq('#lang_list').hide();
+			$jq('#categ_list').hide();
+	
+			if( type == 'wiki_page_in_lang_created' ) {
+				$jq('#lang_list').show();
+			}
+	
+			if( type == 'category_changed_in_lang' ) {
+				$jq('#lang_list').show();
+				$jq('#categ_list').show();
+			}
+		} ).trigger('change');
+	{/jq}
 {/if}
-<tr><td class="formcolor">&nbsp;</td>
-<td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
-</tr>
-</table>
-</form>
-{jq}
-	$jq('#type_selector').change( function() {
-		var type = $jq(this).val();
-
-		$jq('#lang_list').hide();
-		$jq('#categ_list').hide();
-
-		if( type == 'wiki_page_in_lang_created' ) {
-			$jq('#lang_list').show();
-		}
-
-		if( type == 'category_changed_in_lang' ) {
-			$jq('#lang_list').show();
-			$jq('#categ_list').show();
-		}
-	} ).trigger('change');
-{/jq}
-{/if}
-<br />
-<h2>{tr}Watches{/tr}</h2>
+<h3>{tr}Watches{/tr}</h3>
 <form action="tiki-user_watches.php" method="post" id='formi'>
 {tr}Show:{/tr}<select name="event" onchange="javascript:document.getElementById('formi').submit();">
 <option value=""{if $smarty.request.event eq ''} selected="selected"{/if}>{tr}All watched events{/tr}</option>
@@ -195,3 +193,5 @@
 	{tr}Perform action with checked{/tr}: <input type="submit" name="delete" value=" {tr}Delete{/tr} ">
 {/if}
 </form>
+{/tab}
+{/tabset}

@@ -18,6 +18,3650 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 5.0
+<http://tikiwiki.org/ReleaseNotes50>
+------------------
+
+----------------------------------------------
+r26079 | sylvieg | 2010-03-12 15:47:25 +0100 (Fri, 12 Mar 2010) | 1 line
+
+[FIX]calendar module: try to be able to have the same display in calendar module than the old one
+----------------------------------------------
+r26075 | ricks99 | 2010-03-12 13:29:01 +0100 (Fri, 12 Mar 2010) | 1 line
+
+[ENH]access stats for specific surveys directly from the admin listing of all surveys
+----------------------------------------------
+r26074 | changi67 | 2010-03-12 09:41:54 +0100 (Fri, 12 Mar 2010) | 1 line
+
+[FIX] Strict Standards: Assigning the return value of new by reference is deprecated - PHP 5 changed the behavior and the object is defaultly passed by references
+----------------------------------------------
+r26071 | pkdille | 2010-03-11 22:57:59 +0100 (Thu, 11 Mar 2010) | 3 lines
+
+[MOD] languages: some cleanup in translation files. Remove some too much SUMO specific strings. Remove the language files with absolutely no translated strings. Remove the empty folders in /lang. Affect the correct svn properties to the php files. Add some missing index.php files. Remove some strange and unmaintained files (untranslated.php, Changelog).
+
+
+----------------------------------------------
+r26065 | sylvieg | 2010-03-11 10:05:33 -0800 (Thu, 11 Mar 2010) | 1 line
+
+[bp/ r 26033][FIX]release: blind commit
+----------------------------------------------
+r26063 | nkoth | 2010-03-11 07:33:25 -0800 (Thu, 11 Mar 2010) | 1 line
+
+[FIX] Better fix than r26059 (i.e. use jq tag but use tiki_full.tpl instead of tiki-print.tpl). It is more consistent with the other filegal manager screens anyway
+----------------------------------------------
+r26061 | sylvieg | 2010-03-11 05:37:55 -0800 (Thu, 11 Mar 2010) | 1 line
+
+[MOD]cal: add a class for the box to be able to overwrite the hard coded 200px
+----------------------------------------------
+r26060 | sylvieg | 2010-03-10 14:22:06 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX]calendar: the default calendar to add events must one you can add event not the first + probably one typo + begining of 12 hour notations
+----------------------------------------------
+r26059 | nkoth | 2010-03-10 12:57:07 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX] image uploader not working. Cannot use jq or add_js because tiki-print.tpl does not include any js that way
+----------------------------------------------
+r26058 | jonnybradley | 2010-03-10 12:18:37 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX] Found a way to hide user hidden cols on load, by setting the col1 margins to the width of the col being opened in toggleCols().
+----------------------------------------------
+r26057 | jonnybradley | 2010-03-10 11:40:22 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX] Restore left and right column states. Couldn't get it to set the margins correctly when rendering the page, so it happens when javascript kicks in - late, but better than not at all.
+----------------------------------------------
+r26056 | nkoth | 2010-03-10 11:31:00 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX] r25877 broke file upload window
+----------------------------------------------
+r26055 | sylvieg | 2010-03-10 10:51:21 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX]poll: check of the cookie for anonymous to avoid revote was lost
+----------------------------------------------
+r26054 | sylvieg | 2010-03-10 10:38:08 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX]poll: add an antibot to poll voting + error message
+----------------------------------------------
+r26053 | sylvieg | 2010-03-10 09:44:02 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX]poll: fix check
+----------------------------------------------
+r26051 | sylvieg | 2010-03-10 08:21:47 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX]calendar: if url has allCals display all cals not the user defautl one
+----------------------------------------------
+r26050 | sylvieg | 2010-03-10 07:52:47 -0800 (Wed, 10 Mar 2010) | 1 line
+
+oops fix 26048
+----------------------------------------------
+r26049 | jonnybradley | 2010-03-10 07:51:35 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[MOD] Clarify how to control modules by theme (needs the .css on the end)
+----------------------------------------------
+r26048 | sylvieg | 2010-03-10 07:37:18 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX]calendar: switch to a drop down if too many calendars are displayed
+----------------------------------------------
+r26047 | jonnybradley | 2010-03-10 07:36:21 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX] Fixes to sheet for updates in plugin
+----------------------------------------------
+r26045 | sylvieg | 2010-03-10 06:51:18 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX]calendar: name the button edit/delete
+----------------------------------------------
+r26044 | jonnybradley | 2010-03-10 06:40:00 -0800 (Wed, 10 Mar 2010) | 2 lines
+
+[FIX] Perspective prefs (e.g. checkbox turning on) not setting properly
+("unofficial" backport from trunk r26027 by nkoth)
+----------------------------------------------
+r26043 | jonnybradley | 2010-03-10 06:36:27 -0800 (Wed, 10 Mar 2010) | 2 lines
+
+[FIX] Make style option a dynamic pref
+("unofficial" backport from trunk r26028 by nkoth)
+----------------------------------------------
+r26042 | sylvieg | 2010-03-10 06:17:54 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX]fgal: editing a subfgal was moving it to the root
+----------------------------------------------
+r26041 | jonnybradley | 2010-03-10 06:00:38 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX] Possible (blind) fix for page flicker in Firefox on rollover links with converted overlib tips (thanks Lindon, hope it works)
+----------------------------------------------
+r26037 | sylvieg | 2010-03-10 05:39:11 -0800 (Wed, 10 Mar 2010) | 1 line
+
+[FIX]fgal: verif categ perms for the list of fgals where you can upload
+----------------------------------------------
+r26035 | jonnybradley | 2010-03-09 15:36:05 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[FIX] Use "background-color" attribute to set colour (setting the colour as "background" wipes out css set in css files regarding background-image etc. Possibly we need a new param if this has been used extensively to set stuff other than colour).
+----------------------------------------------
+r26034 | jonnybradley | 2010-03-09 15:26:34 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[FIX] Warning when perspecives enabled in shell installer
+----------------------------------------------
+r26029 | chealer | 2010-03-09 12:22:58 -0800 (Tue, 09 Mar 2010) | 3 lines
+
+possibly fix ticket 2041 - Incorrect base path detected when installing on IIS (Directory does not exist errors)
+Preferably use SCRIPT_FILENAME on IIS - IIS FastCGI should have it
+suggested by Wade Hildo
+----------------------------------------------
+r26025 | marclaporte | 2010-03-09 09:27:14 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[BRANCH] Creation, trunk 0 to 26024
+----------------------------------------------
+r26023 | luciash | 2010-03-09 08:24:59 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[FIX] minichat module: removing replace for :/ - caused http:// pasteys in minichat to become broken by emoticon (todo: use global smileys from tikilib)
+----------------------------------------------
+r26022 | luciash | 2010-03-09 08:19:21 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[FIX] minichat module: 2 seconds refresh too fast - caused server overload (6 seconds by default now, todo: make it optional via module param)
+----------------------------------------------
+r26021 | luciash | 2010-03-09 08:11:27 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[ADD] robots.txt: attempt to reduce server overload by getting crawling robots lost in file galleries due to sort links (e.g. more than 7000 indexed variations of one Tiki filegals in Google for cca 10 galleries)
+----------------------------------------------
+r26020 | jonnybradley | 2010-03-09 08:08:39 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[ENH] Add parentSheetId to tiki_sheets table - plus admin interface (multi-sheet implementation to come soon)
+----------------------------------------------
+r26019 | marclaporte | 2010-03-09 07:59:38 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[DOC] tweak make branch procedure.
+----------------------------------------------
+r26018 | chealer | 2010-03-09 07:47:26 -0800 (Tue, 09 Mar 2010) | 2 lines
+
+[FIX] directly called scripts outside of root directory (r25039 regression)
+oops
+----------------------------------------------
+r26017 | luciash | 2010-03-09 07:33:11 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[MOD] Strasa theme: partial rollback of 25977 (sorry Gary) because text-transform: uppercase for H1 causes CamelCaseWikiPage page names to appear unreadable (CAMELCASEWIKIPAGE), text color becomes black because of the link color override on page titles, H2 sections of text are nomore easy to distinguish from H3, etc.
+----------------------------------------------
+r26016 | luciash | 2010-03-09 07:22:37 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[ENH] Strasa theme: some CSS code optimizations
+----------------------------------------------
+r26015 | sylvieg | 2010-03-09 06:14:00 -0800 (Tue, 09 Mar 2010) | 1 line
+
+[NEW]fgal: option a user can give a duration after a file can be deleted
+----------------------------------------------
+r26013 | jonnybradley | 2010-03-09 04:33:47 -0800 (Tue, 09 Mar 2010) | 3 lines
+
+[ENH] Basic WYSIWYG mode for edit articles. Doesn't transform markup correctly switching between modes or remember which mode you were editing in, but then neither do blogs or newsletters.
+Also, only the "body" textarea can be wysiwyg so far (should be both header and body one day).
+
+----------------------------------------------
+r26012 | chibaguy | 2010-03-08 21:26:32 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] Skeleton theme has simplified tiki.tpl and no-content stylesheet. Intended to be a learning model and base for designers. 
+----------------------------------------------
+r26011 | chibaguy | 2010-03-08 21:10:36 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] Maintained Dark Shine theme with correct license moved from Mods. 
+----------------------------------------------
+r26010 | chibaguy | 2010-03-08 20:48:49 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] Maintained Eatlon theme with correct license moved from Mods. 
+----------------------------------------------
+r26009 | chibaguy | 2010-03-08 20:38:46 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] Maintained Business theme with correct license moved from Mods. 
+----------------------------------------------
+r26008 | chibaguy | 2010-03-08 20:29:13 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] Maintained Twist theme with correct license moved from Mods. 
+----------------------------------------------
+r26007 | chibaguy | 2010-03-08 20:18:23 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] Maintained Snow theme with correct license moved from Mods. 
+----------------------------------------------
+r26006 | nkoth | 2010-03-08 20:16:16 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[FIX] Clean up best language feature (it wasn't working for certain cases before)
+----------------------------------------------
+r26005 | chibaguy | 2010-03-08 20:11:43 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] Maintained Ohia theme with correct license moved from Mods. 
+----------------------------------------------
+r26004 | chibaguy | 2010-03-08 20:01:00 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] Maintained absE theme with correct license moved from Mods. 
+----------------------------------------------
+r26003 | nkoth | 2010-03-08 19:55:09 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[FIX] multilingual structures should depend on multilingual
+----------------------------------------------
+r26002 | sylvieg | 2010-03-08 14:35:34 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW]smarty: input for a duration
+----------------------------------------------
+r26001 | pascalstjean | 2010-03-08 14:04:34 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] - Replicates Apache htaccess behaviors for IIS
+----------------------------------------------
+r25999 | pascalstjean | 2010-03-08 13:55:40 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[NEW] - Equivilant of _htaccess for SEFURLs to work on IIS. File needs to be renamed to web.config to activate
+----------------------------------------------
+r25998 | sylvieg | 2010-03-08 13:53:28 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[FIX]perms: list only the perms of the type of objects
+----------------------------------------------
+r25997 | chibaguy | 2010-03-08 12:54:32 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[ENH] Strasa wikitext h1 and h2 styles switched, for more logical appearance when pagetitle is turned off; seems ok when pagetitle is on, too.
+----------------------------------------------
+r25996 | sylvieg | 2010-03-08 11:16:57 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[MOD]fgal: admin view can filter on 'not downloaded since' and 'not modified since'
+----------------------------------------------
+r25995 | jonnybradley | 2010-03-08 09:34:40 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[MOD] A couple more cosmetic improvements on perspectives edit
+----------------------------------------------
+r25994 | nkoth | 2010-03-08 09:21:45 -0800 (Mon, 08 Mar 2010) | 2 lines
+
+[FIX] unable to switch lang on secondary pages of multipage articles
+
+----------------------------------------------
+r25993 | jonnybradley | 2010-03-08 08:47:54 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[MOD] Minor cosmetic improvements on perspectives edit
+----------------------------------------------
+r25992 | jonnybradley | 2010-03-08 08:46:30 -0800 (Mon, 08 Mar 2010) | 2 lines
+
+[FIX] Change setting of tikitabs calls to run on doc.ready.
+Not really needed anymore afaik, but this should stop the "show not defined" errors cropping up sporadically without braking anything else (hopefully).
+----------------------------------------------
+r25991 | sylvieg | 2010-03-08 06:54:50 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[FIX]fgal: use an array to stop parameter inflation
+----------------------------------------------
+r25989 | chealer | 2010-03-08 06:00:46 -0800 (Mon, 08 Mar 2010) | 2 lines
+
+[FIX] accesslib->check_authenticity(): undefined $confirmaction (from r25978)
+oops. Thanks Sylvie Greverend
+----------------------------------------------
+r25988 | sylvieg | 2010-03-08 05:00:18 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[FIX]fgal: the tpl does not check any perm for the lock -> reflect the same in the php: Perhaps a perm must be created
+----------------------------------------------
+r25987 | sylvieg | 2010-03-08 04:07:16 -0800 (Mon, 08 Mar 2010) | 1 line
+
+[MOD]fgal: show all the files in admin view
+----------------------------------------------
+r25986 | chealer | 2010-03-07 21:42:26 -0800 (Sun, 07 Mar 2010) | 2 lines
+
+[FIX] Articles Rankings: Fatal error (typo "aaray")
+thanks Gary Cunningham-Lee
+----------------------------------------------
+r25985 | chealer | 2010-03-07 19:54:25 -0800 (Sun, 07 Mar 2010) | 1 line
+
+rollback 25329. the root cause of the issue prompting it should be fixed with r25978
+----------------------------------------------
+r25984 | chibaguy | 2010-03-07 19:27:51 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[ENH] Tab adjustments.
+----------------------------------------------
+r25983 | chealer | 2010-03-07 19:19:16 -0800 (Sun, 07 Mar 2010) | 2 lines
+
+Remove Smarty ticket prefilter (already unused since r25978).
+Should fix recent irregular issues of Smarty compilation failures
+----------------------------------------------
+r25982 | chealer | 2010-03-07 19:05:35 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[FIX] Notice: undefined $confirm_detail
+----------------------------------------------
+r25980 | chealer | 2010-03-07 19:03:46 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[FIX] Admin Toolbars: HTML
+----------------------------------------------
+r25979 | chealer | 2010-03-07 19:02:02 -0800 (Sun, 07 Mar 2010) | 1 line
+
+remove useless ticket request
+----------------------------------------------
+r25978 | chealer | 2010-03-07 18:54:41 -0800 (Sun, 07 Mar 2010) | 6 lines
+
+accesslib: add check_authenticity() for CSRF protection
+some accesslib deployment
+ticketlib: Mark ticketlib[1] as deprecated again
+ticketlib: Store tickets in session instead of database
+[FIX] ticketlib: granting a ticket destroys previous one
+[FIX] HTML special chars escaping
+----------------------------------------------
+r25977 | sylvieg | 2010-03-07 14:18:38 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[NEW]fgal: different listing column setting for an admin view in fgal
+----------------------------------------------
+r25976 | sylvieg | 2010-03-07 13:52:35 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[FIX]stats: record the page view even if feature off - because otherwise the info is lost for ever and a futture turn on of stats will give stupid results
+----------------------------------------------
+r25975 | sylvieg | 2010-03-07 13:38:52 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[FIX]stats: pick the first tiki_schema entry as the start of the site + display only one time the most viewed objects as it is a very consuming function + use not fixed date
+----------------------------------------------
+r25974 | jonnybradley | 2010-03-07 13:00:44 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[NEW] CKEditor: Link to external, new pref wysiwyg_ckeditor to enable testing, and simple code to link editor into textarea smarty object.
+----------------------------------------------
+r25966 | jonnybradley | 2010-03-07 08:45:09 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[MOD] Couple of prefs descriptions
+----------------------------------------------
+r25965 | chibaguy | 2010-03-07 08:31:00 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[FIX] Secondary site menu text/background contrast.
+----------------------------------------------
+r25962 | Jyhem | 2010-03-07 07:54:27 -0800 (Sun, 07 Mar 2010) | 1 line
+
+[FIX] Message was not translated
+----------------------------------------------
+r25961 | chealer | 2010-03-06 22:54:36 -0800 (Sat, 06 Mar 2010) | 2 lines
+
+Forums: remove delsel_x, which was apparently never used
+
+----------------------------------------------
+r25948 | sylvieg | 2010-03-05 12:37:09 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[FIX]perm: not to be handle to download if view a page but not download
+----------------------------------------------
+r25947 | nyloth | 2010-03-05 12:31:25 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[FIX] ldap authentication : apply sept_7 patch to fix LDAP authentication (especially with anonymous bind)
+----------------------------------------------
+r25945 | sylvieg | 2010-03-05 12:22:35 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[FIX]category: directories in admin categ
+----------------------------------------------
+r25944 | lphuberdeau | 2010-03-05 11:55:16 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[ENH]?\194?\160Getting an A on YSlow for ETag, removing all occurences on static files
+----------------------------------------------
+r25943 | sylvieg | 2010-03-05 11:17:08 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[FIX]categories: confirm message - thx chealer
+----------------------------------------------
+r25942 | sylvieg | 2010-03-05 10:49:04 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[FIX]ldap: to have the description of openldap following the code: userattr is not used for the bind
+----------------------------------------------
+r25941 | jonnybradley | 2010-03-05 10:47:26 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[FIX] Restore sheet menu and help
+----------------------------------------------
+r25939 | sylvieg | 2010-03-05 10:34:43 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[FIX]user: show login and realname in tiki-adminusers.php is real name on
+----------------------------------------------
+r25938 | jonnybradley | 2010-03-05 09:57:53 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[FIX] Fixes for 1.0 jQuery.sheet. 0 based cells, changes to location of some functions etc
+----------------------------------------------
+r25936 | chealer | 2010-03-05 09:38:10 -0800 (Fri, 05 Mar 2010) | 1 line
+
+remove lib/setup/set_paths.php, unused since r9631
+----------------------------------------------
+r25935 | ricks99 | 2010-03-05 08:55:43 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[ENH]Added/updated help text for several options
+----------------------------------------------
+r25933 | jonnybradley | 2010-03-05 07:40:46 -0800 (Fri, 05 Mar 2010) | 3 lines
+
+[NEW] JQS5 experimental feature (jQuery driven standards based slideshow).
+Early days...
+
+----------------------------------------------
+r25932 | jonnybradley | 2010-03-05 07:37:54 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[MOD] Make tiki-index_raw.php slightly less "raw" by using tiki_full.tpl which includes CSS etc in the header.
+----------------------------------------------
+r25931 | jonnybradley | 2010-03-05 07:35:43 -0800 (Fri, 05 Mar 2010) | 2 lines
+
+[FIX] Obey prefs for page_bar (even in raw)
+
+----------------------------------------------
+r25929 | jonnybradley | 2010-03-05 07:04:54 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[ENH] Change the help popup dialog to use tabs instead of accordion (hopefully easier to use)
+----------------------------------------------
+r25928 | jonnybradley | 2010-03-05 06:19:56 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[MOD] Reformat advanced search help to fit in with other help panels (and be more semantic)
+----------------------------------------------
+r25927 | jonnybradley | 2010-03-05 05:00:14 -0800 (Fri, 05 Mar 2010) | 1 line
+
+[FIX] Feature test
+----------------------------------------------
+r25924 | chibaguy | 2010-03-04 21:15:56 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[ENH] Consolidation of border radius rules, for easier comment-out for a site that needs CSS2 validation.
+----------------------------------------------
+r25921 | chibaguy | 2010-03-04 17:19:59 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX] Tab color in wikitext, misc. other details.
+----------------------------------------------
+r25920 | chibaguy | 2010-03-04 16:57:48 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX] Background image URLs.
+----------------------------------------------
+r25919 | chibaguy | 2010-03-04 16:37:06 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX] Contrast problem.
+----------------------------------------------
+r25918 | chibaguy | 2010-03-04 16:31:17 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX] rbox-title border radius was missed.
+----------------------------------------------
+r25916 | chibaguy | 2010-03-04 15:41:25 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[ENH] Missing webkit border radius properties added. CSS3 border radius properties added for Opera 10.50.
+----------------------------------------------
+r25915 | nkoth | 2010-03-04 15:25:10 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[NEW] Allow setting of custom attribute fields for articles (this is the display of saved attributes)
+----------------------------------------------
+r25913 | nkoth | 2010-03-04 14:51:27 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[NEW] Allow adding of custom attribute fields to articles (this is the js selector to change visibility of attribute fields when type changes)
+----------------------------------------------
+r25912 | nkoth | 2010-03-04 14:48:57 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[NEW] Allow setting of custom attribute fields for articles
+----------------------------------------------
+r25911 | ricks99 | 2010-03-04 14:48:22 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[ENH]Added support for RESET button to Tracker forms.
+----------------------------------------------
+r25910 | sylvieg | 2010-03-04 12:59:16 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX]trackerfilter: to have the params in the url to be able to do a back on IE and bookmark
+----------------------------------------------
+r25909 | nkoth | 2010-03-04 12:58:27 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX] Remove attributes associated with relations (e.g. labels) when relation itself is removed
+----------------------------------------------
+r25908 | jonnybradley | 2010-03-04 11:28:50 -0800 (Thu, 04 Mar 2010) | 2 lines
+
+[ENH] Implement changes for jquery.sheet 1.0 beta
+More to do...
+----------------------------------------------
+r25906 | chibaguy | 2010-03-04 11:08:40 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[ENH] Removed empty rules and other cleaning up..
+----------------------------------------------
+r25904 | jonnybradley | 2010-03-04 09:49:22 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX] Correct some bg image filenames to jq-ui 1.8 ones.
+----------------------------------------------
+r25903 | sylvieg | 2010-03-04 09:01:42 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX]calendar: day abbreviation must follow first day too
+----------------------------------------------
+r25902 | jonnybradley | 2010-03-04 08:57:03 -0800 (Thu, 04 Mar 2010) | 2 lines
+
+[FIX] background urls - image filenames still need fixing for jquery-ui 1.8 (i think)
+
+----------------------------------------------
+r25901 | nkoth | 2010-03-04 08:41:12 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[MOD] explicit return
+----------------------------------------------
+r25900 | chibaguy | 2010-03-04 08:34:15 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[NEW] Initial commit of JQui theme and some theme options based on JQuery UI styles and using some JQuery UI graphic files. Todo: more theme options. (missed jqui.css - thanks Jonny)
+----------------------------------------------
+r25899 | sylvieg | 2010-03-04 07:56:58 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX]tracker: some servers do not like a make_time with a nul day
+----------------------------------------------
+r25898 | sylvieg | 2010-03-04 06:55:38 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX]rollback 25875
+----------------------------------------------
+r25897 | jonnybradley | 2010-03-04 05:09:16 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[ENH] nofollow pref and add to rel attributes of external links. Also added a new icon.
+----------------------------------------------
+r25896 | sylvieg | 2010-03-04 03:43:31 -0800 (Thu, 04 Mar 2010) | 1 line
+
+[FIX]tracker: render description textarea as other description + parse them
+----------------------------------------------
+r25895 | nkoth | 2010-03-03 22:17:45 -0800 (Wed, 03 Mar 2010) | 2 lines
+
+[FIX] Math broken by last commit
+
+----------------------------------------------
+r25894 | nkoth | 2010-03-03 21:13:03 -0800 (Wed, 03 Mar 2010) | 2 lines
+
+[FIX] Db error when voting trackers
+
+----------------------------------------------
+r25893 | nkoth | 2010-03-03 20:21:47 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX] Tracker field import not working
+----------------------------------------------
+r25892 | nkoth | 2010-03-03 17:49:26 -0800 (Wed, 03 Mar 2010) | 2 lines
+
+[FIX] &itemid not working
+
+----------------------------------------------
+r25890 | pascalstjean | 2010-03-03 11:29:00 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX] - changed check_page to check_feature for 'contact_anon'. This resolves the previous issue which blocked Anonymous users from using the contact us feature. 
+----------------------------------------------
+r25889 | jonnybradley | 2010-03-03 11:20:46 -0800 (Wed, 03 Mar 2010) | 4 lines
+
+[NEW] (sort of) Refactoring of the remaining three search modules into one.
+Changed the previous "search_box" module's title to "Search box" to avoid ambiguity.
+Uses a new parameter "mode" to emulate previous search modules ("search", "page" or "quick")
+TODO: migration script and removal of old ones & site search testing.
+----------------------------------------------
+r25888 | jonnybradley | 2010-03-03 11:14:53 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[MOD] Allow some harmless formatting tags through after you've gone to the bother of parsing the data in the first place.
+----------------------------------------------
+r25887 | sylvieg | 2010-03-03 10:55:24 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX]tracker: field date: blank date + default to now if not blank
+----------------------------------------------
+r25886 | pascalstjean | 2010-03-03 09:05:19 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX] - changed tikilib->list_articles (obsolete) to artlib->list_articles
+----------------------------------------------
+r25885 | sylvieg | 2010-03-03 08:24:09 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX]profile: to be able to use user input for username
+----------------------------------------------
+r25884 | pascalstjean | 2010-03-03 08:21:10 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX] - added string 'anon' as user in order to check feature 'contact_anon'. If User parameter is blank, method Check_Page automatically returns "User Not Logged In" which makes it impossible to check feature against anonymous user. 
+----------------------------------------------
+r25882 | nkoth | 2010-03-03 07:18:56 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX] Do not insist on checking for email field when login is email
+----------------------------------------------
+r25881 | sylvieg | 2010-03-03 05:42:56 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[MOD]css: use titletips as recommended by jonnyb
+----------------------------------------------
+r25880 | lphuberdeau | 2010-03-03 05:42:16 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX] Missing _tiki, once again
+----------------------------------------------
+r25879 | sylvieg | 2010-03-03 05:41:54 -0800 (Wed, 03 Mar 2010) | 1 line
+
+deprecated
+----------------------------------------------
+r25878 | jonnybradley | 2010-03-03 04:01:24 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX] Change smarty_function_var_dump so it can handle vars other than strings (e.g. arrays, by using the er, var_dump function). Also a couple of minor fixes to the debugger.
+----------------------------------------------
+r25877 | sept_7 | 2010-03-03 03:19:24 -0800 (Wed, 03 Mar 2010) | 2 lines
+
+[ENH] allow filegallery_browser to pick up images in wikiplugin IMG
+
+----------------------------------------------
+r25875 | sylvieg | 2010-03-03 03:12:44 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[FIX]ldap: openldap need the userdn to work
+----------------------------------------------
+r25873 | Jyhem | 2010-03-03 01:09:13 -0800 (Wed, 03 Mar 2010) | 1 line
+
+[ENH] Add possibility to limit image sizes in file galleries
+----------------------------------------------
+r25861 | sylvieg | 2010-03-02 14:03:55 -0800 (Tue, 02 Mar 2010) | 1 line
+
+[FIX]ldap: missing global - that was failing openldap auth
+----------------------------------------------
+r25854 | nyloth | 2010-03-02 13:25:43 -0800 (Tue, 02 Mar 2010) | 1 line
+
+[FIX] svn tools : force english language when retrieving logs from subversion, in order to get commit dates in english.
+----------------------------------------------
+r25838 | nyloth | 2010-03-02 12:52:42 -0800 (Tue, 02 Mar 2010) | 1 line
+
+[ENH] release script: new '--svn-mirror-uri=URI' command line option to allow specifying another repository URI (like a local mirror) to be used when updating the copyright file. This is to speed up the release, because this step is very slow when using the main sourceforge repository.
+----------------------------------------------
+r25817 | sylvieg | 2010-03-02 10:46:38 -0800 (Tue, 02 Mar 2010) | 1 line
+
+[FIX]fgal: kill duplicated code + prefer default in prefs
+----------------------------------------------
+r25816 | sept_7 | 2010-03-02 08:40:31 -0800 (Tue, 02 Mar 2010) | 2 lines
+
+[FIX] pass all necessary variables
+
+----------------------------------------------
+r25815 | jonnybradley | 2010-03-02 05:57:32 -0800 (Tue, 02 Mar 2010) | 1 line
+
+[TRA] Some English translations
+----------------------------------------------
+r25813 | chibaguy | 2010-03-02 04:25:18 -0800 (Tue, 02 Mar 2010) | 1 line
+
+[NEW] Initial commit of JQui theme and some theme options based on JQuery UI styles and using some JQuery UI graphic files. Todo: more theme options.
+----------------------------------------------
+r25812 | marclaporte | 2010-03-02 00:33:08 -0800 (Tue, 02 Mar 2010) | 1 line
+
+[MOD] Change default size for mindmaps. TODO: make a pref
+----------------------------------------------
+r25811 | marclaporte | 2010-03-02 00:14:51 -0800 (Tue, 02 Mar 2010) | 1 line
+
+[MOD] On fresh installs, have less columns on tiki-list_articles.php 
+----------------------------------------------
+r25810 | jonnybradley | 2010-03-01 15:28:38 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[FIX] typo?
+----------------------------------------------
+r25809 | jonnybradley | 2010-03-01 15:14:02 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[FIX] Show module params as a list instead of one, sometimes long, url string
+----------------------------------------------
+r25808 | sylvieg | 2010-03-01 14:40:07 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[FIX]forum: db error when filtering on by
+----------------------------------------------
+r25807 | jonnybradley | 2010-03-01 14:38:55 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[FIX] Incorrect jQuery selector syntax
+----------------------------------------------
+r25805 | pkdille | 2010-03-01 12:32:05 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[MOD] freetaglib: zend recommandations
+----------------------------------------------
+r25804 | jonnybradley | 2010-03-01 11:54:32 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[FIX] Correct line-ends on tooltips (from legacy {popup} function)
+----------------------------------------------
+r25803 | jonnybradley | 2010-03-01 11:51:52 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[FIX] Warning when $auto_query_args null
+----------------------------------------------
+r25801 | jonnybradley | 2010-03-01 11:37:20 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[FIX] Mystifyingly the "normal" (default) speed to show/hide animations doesn't seem to work with jquery 1.4.2, so replace with milliseconds for now.
+----------------------------------------------
+r25800 | jonnybradley | 2010-03-01 11:35:19 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[MOD] New jquery version from CDN (jQuery UI TODO on final 1.8 release)
+----------------------------------------------
+r25798 | pascalstjean | 2010-03-01 10:12:13 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[MOD] - Tested FreeTag Translation with Artilces (works fine). Added check for Article as one option. 
+----------------------------------------------
+r25796 | jonnybradley | 2010-03-01 09:35:16 -0800 (Mon, 01 Mar 2010) | 1 line
+
+[FIX] Correct pref name
+----------------------------------------------
+r25793 | sept_7 | 2010-03-01 00:37:29 -0800 (Mon, 01 Mar 2010) | 2 lines
+
+[FIX] fix redirection path, thnx gary for noticing
+
+----------------------------------------------
+r25792 | chibaguy | 2010-02-28 19:12:54 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[FIX] Inconsistent spacing around buttons in normal and hover states.
+----------------------------------------------
+r25791 | chibaguy | 2010-02-28 18:49:42 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[NEW] The header background image went missing from trunk at some point. I don't know about getting it back via svn, so am adding it as new again.
+----------------------------------------------
+r25790 | Jyhem | 2010-02-28 11:46:26 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[INDENT] No change
+----------------------------------------------
+r25789 | pascalstjean | 2010-02-28 09:09:59 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[MOD] - Added parameter to support "broaden" feature within FreeTag lib
+----------------------------------------------
+r25788 | changi67 | 2010-02-28 09:03:40 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[TRA] Some french translation
+----------------------------------------------
+r25787 | pascalstjean | 2010-02-28 09:01:28 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[MOD] - Added support for MaxRecords param
+----------------------------------------------
+r25786 | nkoth | 2010-02-28 08:45:45 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[MOD] Rollback r25762 - original problem fixed elsewhere now, if any more detected, we will fix it elsewhere instead of here
+----------------------------------------------
+r25785 | changi67 | 2010-02-28 07:47:09 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[MOD] Some table design
+----------------------------------------------
+r25784 | marclaporte | 2010-02-28 07:10:13 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[DOC] explaining this nifty feature
+----------------------------------------------
+r25783 | marclaporte | 2010-02-28 06:42:28 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[MOD] Moving all session-related prefs to a central place. (including some previously only accessible via search)
+----------------------------------------------
+r25782 | marclaporte | 2010-02-28 06:18:21 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[DOC] add an example for Cache-Control header
+----------------------------------------------
+r25781 | marclaporte | 2010-02-28 05:40:20 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[FIX] Cleanup of feature_htmlpurifier_output pref 
+----------------------------------------------
+r25780 | marclaporte | 2010-02-28 05:36:06 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[NEW] Admin panel section for Token Access. Combined with tell a friend, it lets you share your access rights for a specific URL only, for a maximum number of seconds or hits.
+----------------------------------------------
+r25779 | marclaporte | 2010-02-28 05:18:27 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[FIX] Add missing space
+----------------------------------------------
+r25778 | marclaporte | 2010-02-28 04:47:09 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[FIX] left-over link in admin panel, from removed feature
+----------------------------------------------
+r25777 | marclaporte | 2010-02-28 04:32:59 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[DOC] Admin panel cleanup + add a new section for slow features
+----------------------------------------------
+r25776 | marclaporte | 2010-02-28 04:00:51 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[DOC] doc about HTML Purifier
+----------------------------------------------
+r25775 | marclaporte | 2010-02-28 03:44:07 -0800 (Sun, 28 Feb 2010) | 1 line
+
+[MOD] HTML purifier affect wiki parsing so adding a checkbo near the others.
+----------------------------------------------
+r25774 | chealer | 2010-02-27 22:13:59 -0800 (Sat, 27 Feb 2010) | 1 line
+
+PHP 5.3 support: avoid "Warning: date() [function.date]: It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function." *sigh*
+----------------------------------------------
+r25773 | pkdille | 2010-02-27 14:35:02 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[MOD] coelesce: remove blue background in freetag item list
+----------------------------------------------
+r25772 | nkoth | 2010-02-27 13:07:25 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[FIX] div closing in wrong place
+----------------------------------------------
+r25771 | jonnybradley | 2010-02-27 12:56:20 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[FIX] Correct quoting on item info and reduce database call to fields actually used
+----------------------------------------------
+r25770 | nkoth | 2010-02-27 12:50:42 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[FIX] unclosed divs
+----------------------------------------------
+r25769 | nkoth | 2010-02-27 12:38:51 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[FIX] Partially revert previous commit which was not the part needed to be fixed
+----------------------------------------------
+r25768 | nkoth | 2010-02-27 12:37:19 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[FIX] "None" needs to be 0 not -1 for other parts to work
+----------------------------------------------
+r25767 | sylvieg | 2010-02-27 11:19:30 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[FIX]SUBSCRIBEGROUP: add the plugin data as the test to be put before the button
+----------------------------------------------
+r25765 | sylvieg | 2010-02-27 10:34:19 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[FIX]SUBSCRIBEGROUP: allow to have multiple this plugin with the same group
+----------------------------------------------
+r25764 | nkoth | 2010-02-27 08:14:37 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[FIX] js not working, and escaping
+----------------------------------------------
+r25763 | jonnybradley | 2010-02-27 06:47:24 -0800 (Sat, 27 Feb 2010) | 1 line
+
+[FIX] No accordion if no tabs (goes all wrong due to slightly different DOM structure)
+----------------------------------------------
+r25762 | nkoth | 2010-02-26 17:18:38 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[MOD] put back partial, crude, but at least partial getting rid of bad tag characters while allowing multiwords through "
+----------------------------------------------
+r25761 | pascalstjean | 2010-02-26 17:05:19 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[NEW] - Added ability to specify FreeTag language in Blog Post (Blog Posts don't have language preference therefore manual entry is needed)
+----------------------------------------------
+r25760 | pascalstjean | 2010-02-26 16:17:21 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX] - Added $cat_lang in order to allow multilingual FreeTags from Articles
+----------------------------------------------
+r25759 | jonnybradley | 2010-02-26 16:07:39 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX] feature check for 'Content Templates' menu item
+----------------------------------------------
+r25758 | jonnybradley | 2010-02-26 15:29:04 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX] Add test for admin on dump tracker
+----------------------------------------------
+r25757 | jonnybradley | 2010-02-26 15:20:40 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX] Replace code refactored to tikilib, as tikilib isn't available here
+----------------------------------------------
+r25756 | jonnybradley | 2010-02-26 15:18:44 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX] Windows savvy is_writeable test (Uses standard PHP is_writeable() if not Windows)
+----------------------------------------------
+r25755 | sylvieg | 2010-02-26 14:59:15 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX]freetag: rollback 22784 (mozilla upstream):  are use for compound word so strip this character is not ok
+----------------------------------------------
+r25754 | sylvieg | 2010-02-26 14:26:54 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX]multiplayer: show the multiplayer only if video or audio file
+----------------------------------------------
+r25753 | sylvieg | 2010-02-26 13:38:16 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX]tracker: local modif that should have not been committed
+----------------------------------------------
+r25752 | sylvieg | 2010-02-26 12:40:17 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX]tracker: kill duplicated code for dynamic item list
+----------------------------------------------
+r25750 | pascalstjean | 2010-02-26 10:41:50 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX] - Added support for NONUMS parameter. 
+----------------------------------------------
+r25749 | jonnybradley | 2010-02-26 10:34:09 -0800 (Fri, 26 Feb 2010) | 3 lines
+
+[NEW] Tracker dump. Allows an entire tracker to be exported as CSV. Overrides existing permissions so has it's own new perm, and saves raw values only (so far).
+Tested with up to 15,000 items with 20 fields each.
+Faster with more memory assigned but tested successfully down to around 45M.
+----------------------------------------------
+r25748 | sylvieg | 2010-02-26 10:08:28 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[MOD]TRACKELIST: the filter param can be exactvalue="field(xx, id)" or "field(xx)" where xx is a fieldId , id is an itemId. If id is not set will pick the $_REQUEST[itemId]. + param ignoreRequestItemId
+----------------------------------------------
+r25747 | jonnybradley | 2010-02-26 10:05:23 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[ENH] Import trackers: "add as new items" option (creates new duplicate items for those with existing itemId's)
+----------------------------------------------
+r25746 | jonnybradley | 2010-02-26 09:55:13 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX] Assign recordsMax and recordsOffset for export tpl
+----------------------------------------------
+r25745 | jonnybradley | 2010-02-26 09:51:41 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[ENH] Add accordion tiki jquery plugin wrapper and implement on tracker admin import/export (and some layout improvements)
+----------------------------------------------
+r25744 | jonnybradley | 2010-02-26 09:44:05 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[MOD] Refactor the various copies of return_bytes() into tikilib (and add a couple of useful functions; get_memory_avail and get_memory_limit)
+----------------------------------------------
+r25743 | jonnybradley | 2010-02-26 09:40:53 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX] Filegals use requires the jquery tooltip (cluetip) - maybe should be "always" on?
+----------------------------------------------
+r25742 | pkdille | 2010-02-26 08:30:40 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[MOD] Zend recommandations (some)
+----------------------------------------------
+r25741 | sept_7 | 2010-02-26 07:03:28 -0800 (Fri, 26 Feb 2010) | 2 lines
+
+[ENH] use fetchAll whenever possible to avoid useless copy and loop
+
+----------------------------------------------
+r25739 | eromneg | 2010-02-26 06:49:44 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[MOD]add body class when File Gallery used as a popup so that css can be customised
+----------------------------------------------
+r25735 | chibaguy | 2010-02-26 06:15:06 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX] Remove non-validating moz radius rules (had radius:0 anyway).
+----------------------------------------------
+r25734 | sept_7 | 2010-02-26 05:41:39 -0800 (Fri, 26 Feb 2010) | 2 lines
+
+[ENH] use fetchAll whenever possible to avoid useless copy...
+
+----------------------------------------------
+r25733 | sept_7 | 2010-02-26 05:33:57 -0800 (Fri, 26 Feb 2010) | 2 lines
+
+[ENH] use fetchAll whenever possible, should speed things up...
+
+----------------------------------------------
+r25732 | sept_7 | 2010-02-26 05:13:04 -0800 (Fri, 26 Feb 2010) | 2 lines
+
+[ENH] Use fetchAll whenever possible...
+
+----------------------------------------------
+r25731 | sept_7 | 2010-02-26 05:07:41 -0800 (Fri, 26 Feb 2010) | 2 lines
+
+[ENH] Tikilib : use fetchAll whenever possible to avoid useless loops 5hope I didn't break anything ! ;p )
+
+----------------------------------------------
+r25729 | sylvieg | 2010-02-26 03:55:58 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[FIX]tracker: allows to have field with same name at creation - was already allowed to modify a name to an already existing name
+----------------------------------------------
+r25728 | eromneg | 2010-02-26 02:23:07 -0800 (Fri, 26 Feb 2010) | 1 line
+
+[MOD]add body class when used as a popup so that css can be customised
+----------------------------------------------
+r25726 | jonnybradley | 2010-02-25 16:27:11 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] Do JS onready due to end of page scripts, better text for Import button (commented code to be implemented soon)
+----------------------------------------------
+r25725 | jonnybradley | 2010-02-25 16:22:45 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] Proper test for fckEditorInstances
+----------------------------------------------
+r25724 | jonnybradley | 2010-02-25 16:16:44 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] xhtml (no </input>s)
+----------------------------------------------
+r25723 | jonnybradley | 2010-02-25 16:11:59 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] Cache JS plugin edit form info by language (and add filter)
+----------------------------------------------
+r25722 | jonnybradley | 2010-02-25 16:08:46 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] Fullscreen translation diff fix: don't go fullscreen if wysiwyg mode,  handle no border & cluetips disabled condition
+----------------------------------------------
+r25721 | jonnybradley | 2010-02-25 16:05:32 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] notice & warning
+----------------------------------------------
+r25720 | changi67 | 2010-02-25 11:45:26 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] svn property keywords in order to have the correct revision information in the heading of all files
+----------------------------------------------
+r25719 | jonnybradley | 2010-02-25 09:40:14 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] Leave cookietab alone (so it works) and add auto_query_arg
+----------------------------------------------
+r25718 | jonnybradley | 2010-02-25 09:33:51 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] Deprecated split
+----------------------------------------------
+r25717 | pascalstjean | 2010-02-25 09:19:41 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[KIL] This module has been merged into most_commented
+----------------------------------------------
+r25711 | sylvieg | 2010-02-25 09:13:42 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX]TRACKERLIST: memo sort when using pagination
+----------------------------------------------
+r25710 | pascalstjean | 2010-02-25 09:11:26 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[NEW] - Most Commented Module. Will replace wiki, blog , article_most_commented. 
+----------------------------------------------
+r25709 | nkoth | 2010-02-25 09:10:55 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] this feature is no longer on this panel.  it is setting it to off erroneously
+----------------------------------------------
+r25707 | pascalstjean | 2010-02-25 08:38:16 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[MOD] - Changed to default most_commented to Wiki. This will be used to convert all Most_Commented Modules into one
+----------------------------------------------
+r25706 | sylvieg | 2010-02-25 08:15:24 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX]calendar: fix the button links to work in any page the module is in (Thx sept_7) + do not show the viewmode button if the module has a viewmode set
+----------------------------------------------
+r25705 | sylvieg | 2010-02-25 08:12:38 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX]MAIL: use the user from
+----------------------------------------------
+r25704 | sept_7 | 2010-02-25 07:21:33 -0800 (Thu, 25 Feb 2010) | 2 lines
+
+[FIX] check permission to match tiki-calendar.tpl
+
+----------------------------------------------
+r25703 | sept_7 | 2010-02-25 07:01:08 -0800 (Thu, 25 Feb 2010) | 2 lines
+
+[ENH] add _keepall for {buttton}
+
+----------------------------------------------
+r25702 | sept_7 | 2010-02-25 06:52:59 -0800 (Thu, 25 Feb 2010) | 2 lines
+
+[ENH] Print stylesheet for calendar
+
+----------------------------------------------
+r25701 | jonnybradley | 2010-02-25 06:24:18 -0800 (Thu, 25 Feb 2010) | 2 lines
+
+[FIX] Make AJAX preview work for WYSIWYG editor (thanks luci)
+Some casualties of the move JS to end project, some bits that just hadn't been written.
+----------------------------------------------
+r25700 | sept_7 | 2010-02-25 06:14:12 -0800 (Thu, 25 Feb 2010) | 2 lines
+
+[ROLLBACK 25697] useless test removed, thx sylvie
+
+----------------------------------------------
+r25699 | chibaguy | 2010-02-25 06:12:17 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX] Clearing floated menu items improves positioning of things in header.
+----------------------------------------------
+r25698 | sept_7 | 2010-02-25 06:06:45 -0800 (Thu, 25 Feb 2010) | 3 lines
+
+[ENH] Calendar : allow export to CSV
+[FIX] Calendar : default values for exports : use CalendarFocusDate and calendarViewMode
+
+----------------------------------------------
+r25696 | sylvieg | 2010-02-25 06:03:32 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX]calendar: to have the month name following the navigation in module : currMonth is only set in the calendar page not in the module/plugin
+----------------------------------------------
+r25695 | sylvieg | 2010-02-25 05:30:49 -0800 (Thu, 25 Feb 2010) | 1 line
+
+[FIX]calendar: to be able to use 2 calendar plugins in a same page
+----------------------------------------------
+r25694 | nkoth | 2010-02-24 15:31:34 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Allow showing of "who looks at stuff" to others
+----------------------------------------------
+r25693 | nkoth | 2010-02-24 15:29:45 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Allow showing of "Who looks at stuff" to others
+----------------------------------------------
+r25691 | pascalstjean | 2010-02-24 13:32:30 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[NEW] - Most commented blog posts module
+----------------------------------------------
+r25690 | pascalstjean | 2010-02-24 13:30:56 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[NEW] - Most commented wiki pages module
+----------------------------------------------
+r25689 | pascalstjean | 2010-02-24 13:25:58 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[NEW] - Most Commented Articles Module
+----------------------------------------------
+r25688 | pascalstjean | 2010-02-24 13:24:28 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[NEW] - Function will be used by Most Commented Modules (Wiki, Blog, Articles)
+----------------------------------------------
+r25687 | sylvieg | 2010-02-24 13:23:12 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[MOD]user: to import group with comma, double the comma
+----------------------------------------------
+r25686 | jonnybradley | 2010-02-24 11:03:53 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Correct perms check (must refactor these two)
+----------------------------------------------
+r25685 | jonnybradley | 2010-02-24 10:57:50 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Correct perms check
+----------------------------------------------
+r25684 | jonnybradley | 2010-02-24 10:57:21 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Remove some rogue .php's on the end of prefs checks (odd?)
+----------------------------------------------
+r25683 | nkoth | 2010-02-24 10:48:46 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[DOC] Refer to attribute and relation doc page for namespace guidelines
+----------------------------------------------
+r25682 | pascalstjean | 2010-02-24 10:40:15 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[MOD] - Added Language Filter to only display top_articles of specified lang if set.
+----------------------------------------------
+r25681 | sylvieg | 2010-02-24 10:33:39 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[MOD]module: preference to hide only anonymous modules to admin
+----------------------------------------------
+r25680 | luciash | 2010-02-24 10:31:27 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] user link: show correctly translated stuff in mouseover tooltip (thanks jonny for help)
+----------------------------------------------
+r25679 | lphuberdeau | 2010-02-24 10:27:11 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[MOD] Add relation removal function and modify tests not to be affected by real data
+----------------------------------------------
+r25678 | jonnybradley | 2010-02-24 10:23:26 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Check if user is looking at thier own info (or is admin)
+----------------------------------------------
+r25677 | lphuberdeau | 2010-02-24 10:18:59 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[MOD] Add support for relation_source and relation_target to display custom labels set as attributes
+----------------------------------------------
+r25676 | sylvieg | 2010-02-24 09:53:29 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[MOD]profile: menu option handler
+----------------------------------------------
+r25675 | pascalstjean | 2010-02-24 08:49:04 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] - Fixed the click on tag to add by making Javascrtip render in proper location. 
+----------------------------------------------
+r25674 | lphuberdeau | 2010-02-24 08:39:56 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[NEW] Dispatcher-type smarty plugin to display a link for 'any' object type, including fetching information not directly contained in the type/id. Uses sefurl in the background, but builds a complete link.
+----------------------------------------------
+r25673 | sept_7 | 2010-02-24 08:26:07 -0800 (Wed, 24 Feb 2010) | 2 lines
+
+[FIX] WebDav : missing file :(
+
+----------------------------------------------
+r25671 | lphuberdeau | 2010-02-24 08:03:21 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[MOD] Generic object relations
+----------------------------------------------
+r25670 | sept_7 | 2010-02-24 07:58:19 -0800 (Wed, 24 Feb 2010) | 4 lines
+
+[EHN] WebDAV : merge WebDav feature in Tiki
+Tested in cadaver, firefox plugin Trail Mix, IE and MS Office
+Works for basic functionnalities : add, upload, move, save, etc.
+
+----------------------------------------------
+r25668 | chibaguy | 2010-02-24 07:42:45 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Roll back if there's a case for '<h2><big>', but both the semantics and the effect seem to need fixing.
+----------------------------------------------
+r25667 | sylvieg | 2010-02-24 07:41:59 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX]tracker: rss must respect perms on closed, pending..
+----------------------------------------------
+r25666 | sept_7 | 2010-02-24 07:01:32 -0800 (Wed, 24 Feb 2010) | 2 lines
+
+[FIX] CodeStyling correction : no PHP end tag, dostounix, sizeof -> count
+
+----------------------------------------------
+r25665 | sept_7 | 2010-02-24 06:55:38 -0800 (Wed, 24 Feb 2010) | 2 lines
+
+[FIX] No PHP end tag
+
+----------------------------------------------
+r25663 | sylvieg | 2010-02-24 06:54:21 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX]messu : must be a post - thx sept_7
+----------------------------------------------
+r25660 | sylvieg | 2010-02-24 06:44:51 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX]messu: log the group in the sent message
+----------------------------------------------
+r25659 | sylvieg | 2010-02-24 06:42:34 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX]messu: use a form instead of the url (url can have a limit)
+----------------------------------------------
+r25657 | lphuberdeau | 2010-02-24 05:38:51 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Missing _tiki
+----------------------------------------------
+r25655 | jonnybradley | 2010-02-24 04:44:44 -0800 (Wed, 24 Feb 2010) | 3 lines
+
+[FIX] Yet another attempt at getting the timezone reliably from the browser.
+Now takes Date.toLocaleString and parses alpha only blocks from the end backwards checking each one against a definitive list of valid zone codes. If that fails it then does the same with the Date.toString output, as sometimes the locale one doesn't include the timezone.
+Tested and working on Safari, Chrome, Firevoxf and IE8.
+----------------------------------------------
+r25654 | jonnybradley | 2010-02-24 04:41:12 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Default to showing spreadsheet tools when editing spreadsheet toolbar (and "both" mode for the rest)
+----------------------------------------------
+r25653 | jonnybradley | 2010-02-24 03:51:58 -0800 (Wed, 24 Feb 2010) | 1 line
+
+[FIX] Logic wrong in r25492 (thanks chibaguy and marclaporte - sitesearch only appearing in wiki pages)
+----------------------------------------------
+r25652 | sept_7 | 2010-02-24 02:59:48 -0800 (Wed, 24 Feb 2010) | 3 lines
+
+[FIX] popup smarty plugin : better escaping of the string popup (urlencode)
+Suppress the size limit in the popup, previuously 2000 characters by Jonny
+
+----------------------------------------------
+r25622 | sylvieg | 2010-02-23 15:05:41 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX]calendar: do not show in the drop down calendar you can not add item in
+----------------------------------------------
+r25570 | pascalstjean | 2010-02-23 13:47:22 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[NEW] - Added 'always_owner' column to tiki_blogs database table
+----------------------------------------------
+r25569 | pascalstjean | 2010-02-23 13:41:43 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[NEW] - Added variable 'alwaysOwner' in order to support new feature in Blogs
+----------------------------------------------
+r25567 | pascalstjean | 2010-02-23 13:40:41 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[NEW] - Added logic to see who should be Auhtor. This is part of new feature in Blogs
+----------------------------------------------
+r25566 | pascalstjean | 2010-02-23 13:29:10 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[NEW] - Added checkbox 'alwaysOwner' in order to support new feature in Blogs
+----------------------------------------------
+r25565 | pascalstjean | 2010-02-23 13:26:45 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[NEW] - Added parameter 'alwaysOwner' in order to support new feature in Blogs
+----------------------------------------------
+r25564 | pascalstjean | 2010-02-23 13:25:09 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[NEW] - Add 'always_owner' column to tiki_blogs database table
+----------------------------------------------
+r25563 | sylvieg | 2010-02-23 13:00:48 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX]tracker: do not oblige to have the field used in join displayed to have the item list (since now we limit the fields that are fetched to the minimum
+----------------------------------------------
+r25560 | chealer | 2010-02-23 10:34:47 -0800 (Tue, 23 Feb 2010) | 3 lines
+
+[FIX] spaces filtered in search strings
+remove filter on apparently unused find parameter
+filter on "searchLang" instead of "lang"
+----------------------------------------------
+r25559 | sylvieg | 2010-02-23 10:03:50 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[MOD]FILES: param showcomment and showlasteditor
+----------------------------------------------
+r25558 | jonnybradley | 2010-02-23 09:40:12 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[ENH] Any toolbar (etc) usage now triggers auto_save if enabled
+----------------------------------------------
+r25557 | sylvieg | 2010-02-23 09:36:29 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX]profiler: the functions 'can be installed' and 'install' do not share the same handler-> todo: reuse the same handler)
+----------------------------------------------
+r25556 | jonnybradley | 2010-02-23 09:26:27 -0800 (Tue, 23 Feb 2010) | 2 lines
+
+[ENH] $prefs.urlOnUsername can have user or userId values in (using %user% or %userId%)
+Thanks Luciash... good idea!
+----------------------------------------------
+r25555 | sylvieg | 2010-02-23 09:26:13 -0800 (Tue, 23 Feb 2010) | 1 line
+
+notice: please verify
+----------------------------------------------
+r25551 | jonnybradley | 2010-02-23 08:31:32 -0800 (Tue, 23 Feb 2010) | 4 lines
+
+[NEW] AJAX Preview - enabled when feature_ajax_autosave=y.
+Opens a new popup window (blockers permitting) with automatically updating preview of the page.
+Needs polish...
+
+----------------------------------------------
+r25548 | pkdille | 2010-02-23 08:05:42 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[MOD] edit article and edit submission: no changes. Homogenize as much as possible the two files
+----------------------------------------------
+r25547 | jonnybradley | 2010-02-23 07:58:36 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] Add javascript outputs for tiki_full.tpl (like tiki.tpl)
+----------------------------------------------
+r25546 | sylvieg | 2010-02-23 07:54:49 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[MOD]profiler: option mode create or update for fgal and calendar to be able to set duplication
+----------------------------------------------
+r25545 | jonnybradley | 2010-02-23 07:46:22 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] Filename changes (jquery.sheet 0.54)
+----------------------------------------------
+r25544 | jonnybradley | 2010-02-23 07:45:43 -0800 (Tue, 23 Feb 2010) | 2 lines
+
+[FIX] Search words loosing space chars
+
+----------------------------------------------
+r25543 | jonnybradley | 2010-02-23 07:44:00 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] Smarty Notices (sorry Sylvie :)
+----------------------------------------------
+r25542 | jonnybradley | 2010-02-23 07:43:00 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] Remove the (non functioning?) Smarty display_login var and do the logic for not showing the login module on tiki-login_scr.php in $modlib->filter_active_module()
+----------------------------------------------
+r25541 | jonnybradley | 2010-02-23 07:28:59 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] JS notonready for filegal window close fn
+----------------------------------------------
+r25540 | jonnybradley | 2010-02-23 07:27:42 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] Tiny typo on sheet theme
+----------------------------------------------
+r25539 | jonnybradley | 2010-02-23 07:18:06 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[MOD] jQuery Reflection off on bare-bones install (can be added to profiles)
+----------------------------------------------
+r25538 | jonnybradley | 2010-02-23 07:17:08 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] Another go at setting the img tag width and height for filegal images.
+----------------------------------------------
+r25537 | jonnybradley | 2010-02-23 06:52:37 -0800 (Tue, 23 Feb 2010) | 2 lines
+
+[FIX] Modules default to "open" if $module_display is not set, as when mod-login_box.tpl is used as a template only (without calling the PHP behind).
+Thanks nkoth - should fix r25493 on tiki-login_scr.php
+----------------------------------------------
+r25536 | sylvieg | 2010-02-23 05:59:34 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[MOD]CALENDAR_NEW, UPCOMING EVENT: param to show or not the add event
+----------------------------------------------
+r25535 | jonnybradley | 2010-02-23 04:56:10 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] Default for perspective param is true (thanks Marc)
+----------------------------------------------
+r25532 | pkdille | 2010-02-23 02:59:07 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] articles: untranslated string (bytes)
+----------------------------------------------
+r25531 | chibaguy | 2010-02-23 01:20:13 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[FIX] Transparent border added to div.multiselect normal state to keep content from shifting on hover (:hover has a border).
+----------------------------------------------
+r25529 | chibaguy | 2010-02-23 00:44:06 -0800 (Tue, 23 Feb 2010) | 1 line
+
+[ENH] clearfix class added to .tabs div to enable background styling (make sure tabs are contained).
+----------------------------------------------
+r25528 | marclaporte | 2010-02-22 22:20:59 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Update URL to correspond to what is in Collaborative Terminology Profile
+----------------------------------------------
+r25527 | nkoth | 2010-02-22 21:47:41 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH] add css class instead of inline style
+----------------------------------------------
+r25526 | nkoth | 2010-02-22 18:57:10 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ROLLBACK] Revert r25525, the fix did not work
+----------------------------------------------
+r25525 | nkoth | 2010-02-22 18:35:09 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] After r25493, login box wont appear on tiki-login_scr anymore. This fixes it.
+----------------------------------------------
+r25523 | chealer | 2010-02-22 14:51:15 -0800 (Mon, 22 Feb 2010) | 1 line
+
+remove_user(): Remove persistent login cookies
+----------------------------------------------
+r25522 | nkoth | 2010-02-22 14:48:12 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Refix r25356 Confision when voting multiple comments to restrict checking to comments
+----------------------------------------------
+r25521 | jonnybradley | 2010-02-22 13:39:20 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[MOD] Convert webmail settings to use tabs
+----------------------------------------------
+r25520 | jonnybradley | 2010-02-22 13:34:46 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Missing param warning
+----------------------------------------------
+r25519 | lphuberdeau | 2010-02-22 13:14:47 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[NEW]?\194?\160Adding support for comment syntax (reserved node type)
+----------------------------------------------
+r25518 | lphuberdeau | 2010-02-22 13:11:38 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Handle page renames and deletion
+----------------------------------------------
+r25517 | jonnybradley | 2010-02-22 13:03:44 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Correct perms check on edit webmail account (and add remarksbox for remarks)
+----------------------------------------------
+r25516 | sylvieg | 2010-02-22 12:47:41 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX]calendar: multiday events must be exported only as one event
+----------------------------------------------
+r25515 | sylvieg | 2010-02-22 12:27:07 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX]tracker: forget in 25509 the case public
+----------------------------------------------
+r25514 | nkoth | 2010-02-22 11:39:03 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH] Allow for no update in special cases where we know it will be updated later
+----------------------------------------------
+r25513 | jonnybradley | 2010-02-22 11:38:15 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH] Add 'from' email address to webmail accounts - overrides user pref if set.
+----------------------------------------------
+r25512 | sylvieg | 2010-02-22 11:00:18 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX]tracker: pretty tracker can use {{xx}} so needs not to cached in this case + plugin name can be in l;ower case now
+----------------------------------------------
+r25510 | chealer | 2010-02-22 10:44:23 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] colons inside tr blocks
+----------------------------------------------
+r25509 | sylvieg | 2010-02-22 10:32:06 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[MOD]TRACKER: allow the autosavefields in the URL + check if field can be changed this way
+----------------------------------------------
+r25508 | jonnybradley | 2010-02-22 09:43:20 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH] Sheet: change Done button label to Cancel and make Save button leave edit mode.
+----------------------------------------------
+r25507 | jonnybradley | 2010-02-22 09:39:04 -0800 (Mon, 22 Feb 2010) | 2 lines
+
+[FIX] Tabs rendered correctly server-side, so no need to reset by javascript.
+(keeping these commented out pending some more testing)
+----------------------------------------------
+r25506 | jonnybradley | 2010-02-22 09:34:53 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Don't set cookie to value already set, and fix for timezone mistaken for year (fixes it for Firefox and Safari)
+----------------------------------------------
+r25505 | jonnybradley | 2010-02-22 08:50:38 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Show hidden parent for textarea hidden in tab before appying resizable. Fixes modules admin missing user module textarea and problems after attaching file to wiki page (etc).
+----------------------------------------------
+r25504 | jonnybradley | 2010-02-22 08:35:55 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Render class correctly depending on whether the tab is current or not.
+----------------------------------------------
+r25503 | jonnybradley | 2010-02-22 08:24:51 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Render HTML correctly depending on whether the menu is open or not.
+----------------------------------------------
+r25502 | jonnybradley | 2010-02-22 08:18:06 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[MOD] setsectionstate now done server-side
+----------------------------------------------
+r25501 | jonnybradley | 2010-02-22 08:08:27 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Missing ignore
+----------------------------------------------
+r25500 | sylvieg | 2010-02-22 07:07:24 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[MOD]FILES: now param showtitle + fix showmodified
+----------------------------------------------
+r25499 | jonnybradley | 2010-02-22 06:07:08 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[MOD][KIL] Move redundant "setDisplayMenu" code into tiki-map.php as that's the only place old style mnu_ menus are still referenced. Please could someone who has mapserver set-up test and verify this?
+----------------------------------------------
+r25497 | jonnybradley | 2010-02-22 06:00:27 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH] Upgrade schema for spreadsheet toolbar defaults
+----------------------------------------------
+r25494 | xavidp | 2010-02-22 05:47:05 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX]fixing old missreference to local sheet admin perm
+----------------------------------------------
+r25493 | jonnybradley | 2010-02-22 05:33:55 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Render HTML correctly depending on whether the module is shaded (closed) or not.
+----------------------------------------------
+r25492 | jonnybradley | 2010-02-22 05:31:06 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[FIX] Notices (lots)
+----------------------------------------------
+r25491 | sylvieg | 2010-02-22 04:47:13 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[MOD]look: use the same text and look for the tip for multiple select
+----------------------------------------------
+r25490 | chibaguy | 2010-02-22 02:43:49 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH][NEW] Secondary site menu for Coelesce and Strasa themes.
+----------------------------------------------
+r25489 | chibaguy | 2010-02-22 02:13:57 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH][NEW] Look and Feel option for secondary site menu, menu syntax specified in textarea, displays at top of site header area by default.
+----------------------------------------------
+r25488 | chibaguy | 2010-02-22 01:43:54 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH] Look and Feel option for displaying alternate site menus (specified with custom code in textarea). 
+----------------------------------------------
+r25487 | chibaguy | 2010-02-22 00:56:43 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH] Hint about menu type choice added for feature_topbar_id_menu.
+----------------------------------------------
+r25486 | nkoth | 2010-02-22 00:38:25 -0800 (Mon, 22 Feb 2010) | 1 line
+
+[ENH] return rssId instead of just true (useful on new creations)
+----------------------------------------------
+r25485 | chealer | 2010-02-21 21:44:38 -0800 (Sun, 21 Feb 2010) | 3 lines
+
+[FIX] failure to create tiki_user_login_cookies
+oops
+Thanks Nelson Koth
+----------------------------------------------
+r25484 | lindonb | 2010-02-21 19:44:29 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Notices.
+----------------------------------------------
+r25482 | sylvieg | 2010-02-21 15:41:00 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[NEW]MAIL: plugin to send direct email(not through tw message to either users, groups, realname user or others
+----------------------------------------------
+r25481 | jonnybradley | 2010-02-21 11:40:35 -0800 (Sun, 21 Feb 2010) | 2 lines
+
+[FIX] "Custom" getElementById() function needs to return element by name if not by id.
+Fixes toolbars again for now, but really all textareas using them should use id always (TODO).
+----------------------------------------------
+r25480 | jonnybradley | 2010-02-21 11:22:53 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] All prefs, including radio buttons, need name param (still causes smarty notice if missing)
+----------------------------------------------
+r25479 | jonnybradley | 2010-02-21 11:21:33 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Add defaults for all prefs - fixes multiple notices at source.
+----------------------------------------------
+r25478 | jonnybradley | 2010-02-21 11:20:16 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[MOD] Rollback of r25475 - better fix for notices to come next
+----------------------------------------------
+r25477 | jonnybradley | 2010-02-21 10:32:47 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Smarty notices (admin/general)
+----------------------------------------------
+r25476 | jonnybradley | 2010-02-21 10:32:08 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Smarty notices (admin)
+----------------------------------------------
+r25475 | jonnybradley | 2010-02-21 10:30:49 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Smarty notices (prefs)
+----------------------------------------------
+r25474 | jonnybradley | 2010-02-21 10:01:08 -0800 (Sun, 21 Feb 2010) | 2 lines
+
+[FIX] Add mordernisations from smarty_setup.php to installer smarty class. E.g. use realpath() and TIKI_SMARTY_DIR for better cross-platform behaviour.
+Needs testing (please)
+----------------------------------------------
+r25473 | lindonb | 2010-02-21 09:54:34 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Only partial fix: unset needed to be added after deprecated "=& new" was changed to "= new" in r19072. Permission check was also failing. Still doesn't work with PDO, but at least no fatal error.
+----------------------------------------------
+r25472 | marclaporte | 2010-02-21 09:52:05 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Dynamic pref description
+----------------------------------------------
+r25471 | jonnybradley | 2010-02-21 09:43:38 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FXI] jquery.sheet help sheets now load
+----------------------------------------------
+r25469 | marclaporte | 2010-02-21 09:28:22 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Dynamic prefs. Remove a few empty ones and add one name
+----------------------------------------------
+r25468 | marclaporte | 2010-02-21 08:57:52 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Add dynamic pref description
+----------------------------------------------
+r25467 | jonnybradley | 2010-02-21 08:45:47 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX] Missing global (used in webmail-inbox module)
+----------------------------------------------
+r25466 | sylvieg | 2010-02-21 07:08:22 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[MOD]user: can also inport real name
+----------------------------------------------
+r25464 | xavidp | 2010-02-21 05:04:57 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX]Type of contribution field is nowadays shown also when jquery.sheet is on, but user selections at that field are not saved yet when through jquery interface. Help is needed ( jonnyb ?, sylvieg ? ... )
+----------------------------------------------
+r25461 | xavidp | 2010-02-21 02:37:36 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[FIX]Fix bug for users with local perm to admin a sheet but not full admin (re: bug1920 ). Thanks space_egd for reporting the fix.
+----------------------------------------------
+r25460 | nkoth | 2010-02-21 00:28:19 -0800 (Sun, 21 Feb 2010) | 1 line
+
+[ENH] Allow showing of list of markers for objects from objectarray
+----------------------------------------------
+r25459 | nkoth | 2010-02-20 22:55:41 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[ENH] More refinements of the new Google maps wikiplugin
+----------------------------------------------
+r25458 | nkoth | 2010-02-20 18:54:34 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[NEW] Add new ajax version using the new wikiplugin
+----------------------------------------------
+r25457 | nkoth | 2010-02-20 18:42:07 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[FIX] Show the current user location of the user if user is specified for geolocating
+----------------------------------------------
+r25456 | nkoth | 2010-02-20 17:55:52 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[NEW] Add geolocator functionality with ability to set user pref for default map view, as well as user location (lon., lat.). Implementation does requires feature_ajax, otherwise I would replace the tiki-gmap_locator.php right away.
+----------------------------------------------
+r25455 | lindonb | 2010-02-20 17:41:15 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[FIX] Previous fix incomplete. Also updated formatting for table.
+----------------------------------------------
+r25451 | luciash | 2010-02-20 15:26:23 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[FIX] description as browser title: make it work again with after|before|none site title location (still not perfect fix but better than nothing)
+----------------------------------------------
+r25450 | luciash | 2010-02-20 15:01:21 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[FIX] description as browser title: do not return span tag there
+----------------------------------------------
+r25449 | nkoth | 2010-02-20 14:15:15 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[MOD] Change to make use of new googlemap plugin (reduce code duplication)
+----------------------------------------------
+r25448 | nkoth | 2010-02-20 14:13:33 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[NEW] All-in-one multipurpose google map wikiplugin (more coming)
+----------------------------------------------
+r25445 | lindonb | 2010-02-20 12:54:26 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[FIX] Now Plugin SQL works with both pdo and adodb (broke in 4.0 with move to pdo). Assumes pdo unless db.local.php has $api_tiki set to adodb.
+----------------------------------------------
+r25443 | luciash | 2010-02-20 12:09:08 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[FIX] admin groups: same as 25442 for adding new group and links to edit users + removal of some unnecessary <a name...
+----------------------------------------------
+r25442 | luciash | 2010-02-20 11:38:24 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[FIX] admin groups: following the links to edit the groups should display the second tab - regression workaround (this problem is not present in 4.x, maybe it is caused by moving the JS files to bottom again)
+----------------------------------------------
+r25439 | nkoth | 2010-02-20 08:53:49 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[DOC] Better tip for state of "Upload image to this post" which is a blog specific feature and should be removed (with migration). If a non-file gallery method of uploading images to blogs is desired, it should be the same one used in the wiki pages (the wiki_up one).
+----------------------------------------------
+r25436 | xavidp | 2010-02-20 08:04:27 -0800 (Sat, 20 Feb 2010) | 1 line
+
+[FIX]Fix contrast with spreadsheet bg and colors, that was lost at some point for a few themes
+----------------------------------------------
+r25434 | sept_7 | 2010-02-20 05:11:49 -0800 (Sat, 20 Feb 2010) | 2 lines
+
+[SEC] Same fix as 25415 : filter arguments
+
+----------------------------------------------
+r25431 | pkdille | 2010-02-19 23:32:43 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] caption styling: moving from (some) themes to design.css. All themes will have the captions bold
+----------------------------------------------
+r25430 | pascalstjean | 2010-02-19 18:47:08 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[NEW] - Module displays similar / related content based on FREETAGS attched to currently viewed object. 
+----------------------------------------------
+r25427 | chealer | 2010-02-19 17:07:47 -0800 (Fri, 19 Feb 2010) | 3 lines
+
+[SEC] MySQL search: fix buggy validation on _find() $searchDate parameter.
+
+Thanks Mateusz Drygas <security[-at-]man.poznan.pl>
+----------------------------------------------
+r25422 | jonnybradley | 2010-02-19 11:52:46 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[FIX] Don't show non-javascript help unless not javascript_enabled
+----------------------------------------------
+r25421 | jonnybradley | 2010-02-19 11:51:55 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[FIX] Dragging first icon to the right hand side fixed
+----------------------------------------------
+r25420 | jonnybradley | 2010-02-19 11:51:09 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[FIX] Get Cell Range icon, and change to default pref
+----------------------------------------------
+r25418 | sylvieg | 2010-02-19 11:36:26 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD]fgal: a button to reset to the default list table setting checked files
+----------------------------------------------
+r25416 | jonnybradley | 2010-02-19 10:22:46 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[ENH] Icons for sheet tools
+----------------------------------------------
+r25415 | sept_7 | 2010-02-19 10:14:44 -0800 (Fri, 19 Feb 2010) | 2 lines
+
+[SEC] filter arguments
+
+----------------------------------------------
+r25413 | sylvieg | 2010-02-19 09:37:30 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD]TRACKER: new option showstatus to be able to input the status (pretty param: {}
+----------------------------------------------
+r25412 | lphuberdeau | 2010-02-19 09:15:32 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] Adding view count property to article info operation
+----------------------------------------------
+r25411 | lphuberdeau | 2010-02-19 09:09:49 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[FIX] More SQL errors
+----------------------------------------------
+r25409 | lphuberdeau | 2010-02-19 09:03:28 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[FIX] SQL error
+----------------------------------------------
+r25408 | sylvieg | 2010-02-19 09:02:31 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD]tracker: kill duplicated code
+----------------------------------------------
+r25406 | jonnybradley | 2010-02-19 08:52:31 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] Changes for jQuery.sheet 0.54
+----------------------------------------------
+r25405 | changi67 | 2010-02-19 08:51:57 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] Some french translation
+----------------------------------------------
+r25404 | changi67 | 2010-02-19 08:44:44 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] replace <a> with selk_link to avoid more translation
+----------------------------------------------
+r25402 | lphuberdeau | 2010-02-19 08:43:59 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[ENH] Linking to documentation
+----------------------------------------------
+r25401 | lphuberdeau | 2010-02-19 08:37:14 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[NEW] Operation to extract information from articles
+----------------------------------------------
+r25399 | jonnybradley | 2010-02-19 08:09:47 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[FIX] Edit perm check
+----------------------------------------------
+r25398 | changi67 | 2010-02-19 08:07:37 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] Remove css style align right in th
+----------------------------------------------
+r25397 | lphuberdeau | 2010-02-19 07:36:04 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD]?\194?\160Allow to sort articles based on the advanced rating
+----------------------------------------------
+r25396 | sylvieg | 2010-02-19 07:33:35 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD]tracker: {} in pretty tracker (will show o or p or c
+----------------------------------------------
+r25394 | pkdille | 2010-02-19 07:04:21 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[NEW] articles and submission: Give admin the opportunity to define a default size for images. It's a value that can be changed by the user when he contributes an article or a submission.
+----------------------------------------------
+r25393 | lphuberdeau | 2010-02-19 06:44:35 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[ENH] Moving article-related functions to artlib and making sure features are checked in admin categories before listing objects
+----------------------------------------------
+r25392 | jonnybradley | 2010-02-19 06:01:18 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[ENH] Initial implementation of a toolbar for jQuery.sheet - needs polish (and icons etc)
+----------------------------------------------
+r25391 | jonnybradley | 2010-02-19 05:53:21 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[FIX] sheet fixes for saving feedback
+----------------------------------------------
+r25390 | jonnybradley | 2010-02-19 05:40:48 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[FIX] Use the proper test for document.getElementById in the cursed getElementById() function... will fail for IE3 (but we're not supporting that any more are we!)
+----------------------------------------------
+r25389 | changi67 | 2010-02-19 05:02:17 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] French translation
+----------------------------------------------
+r25388 | changi67 | 2010-02-19 05:01:52 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] Add translation on pagehistory
+----------------------------------------------
+r25387 | sylvieg | 2010-02-19 04:42:10 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[FIX]title: no reason to open in tikihelp frame. It is not an help
+----------------------------------------------
+r25386 | changi67 | 2010-02-19 04:22:10 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] Enable translation on submit button
+----------------------------------------------
+r25385 | changi67 | 2010-02-19 04:20:40 -0800 (Fri, 19 Feb 2010) | 1 line
+
+[MOD] UTF-8 encoding for htmlentities
+----------------------------------------------
+r25384 | nkoth | 2010-02-18 18:48:52 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[ENH] Allow filtering of categories shown by list of categoryId and parentId (not just specifying the root which already can be done)
+----------------------------------------------
+r25383 | nkoth | 2010-02-18 16:48:00 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] More feature checking logic corrections
+----------------------------------------------
+r25382 | nkoth | 2010-02-18 16:41:31 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Feature check (should be either case), and correct typo in perm check
+----------------------------------------------
+r25381 | nkoth | 2010-02-18 16:40:49 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Allow for testing for either case when checking for features (this is needed sometimes)
+----------------------------------------------
+r25380 | nkoth | 2010-02-18 16:15:46 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] two "passwords match" was appearing if ajax is on. Anyway, later on when ajax is always on, the duplication should be removed... Looks like the "Ajax" one is better (it tells you if it match or not as you type)...
+----------------------------------------------
+r25379 | nkoth | 2010-02-18 15:28:33 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] no harm setting security setting (even if empty string), may elim notice.
+----------------------------------------------
+r25378 | nkoth | 2010-02-18 15:25:08 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Implement TLS security for sending out mail via SMTP (was simply not working before)
+----------------------------------------------
+r25377 | jonnybradley | 2010-02-18 15:16:02 -0800 (Thu, 18 Feb 2010) | 2 lines
+
+[ENH] Some more enhancements to jQuery.sheet for tiki
+Warn about lost edits, better feedback about saving and [FIX] bug that limited saved sheets to 9 rows or columns
+----------------------------------------------
+r25375 | sylvieg | 2010-02-18 15:10:12 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX]fgal: the fgals list was not populated when moving
+----------------------------------------------
+r25374 | jonnybradley | 2010-02-18 14:39:27 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Static function not defined as static (strict)
+----------------------------------------------
+r25373 | nkoth | 2010-02-18 14:27:23 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Missing setting of param [ENH] add mailer error message for admin
+----------------------------------------------
+r25372 | pkdille | 2010-02-18 13:10:55 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD] wiki authors + copyright: un-duplicate some code and move the wiki authors code out of tiki-show_page
+----------------------------------------------
+r25371 | lphuberdeau | 2010-02-18 12:24:29 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[NEW]?\194?\160Adding function to input static strings
+----------------------------------------------
+r25370 | lphuberdeau | 2010-02-18 12:17:52 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD] Add uncalculated elements to the loop
+----------------------------------------------
+r25369 | sylvieg | 2010-02-18 12:05:41 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX]calendar: fix ical export when jscalendar is not on
+----------------------------------------------
+r25368 | lphuberdeau | 2010-02-18 11:48:38 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[NEW] Adding rating-sum, identical to rating-average
+----------------------------------------------
+r25367 | pascalstjean | 2010-02-18 11:31:05 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD] - removed SAVE button. Replaced SAVE and EXIT to act as default SAVE. The goal is to keep the Save workflow similar to Articles and Wiki Pages. 
+----------------------------------------------
+r25366 | pascalstjean | 2010-02-18 11:29:18 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD] - Added Default value to published Date variable & assign current Date if not set. 
+----------------------------------------------
+r25365 | pascalstjean | 2010-02-18 11:27:52 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] - changed convert_sortmode call to convertSortMode
+----------------------------------------------
+r25364 | pascalstjean | 2010-02-18 11:12:46 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[NEW] - Added Ability to choose published date for Blog post
+----------------------------------------------
+r25362 | sylvieg | 2010-02-18 11:00:25 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD]fgal: option to search in the content of the files of the current fgal: redirect on the tiki-searchxx
+----------------------------------------------
+r25361 | pascalstjean | 2010-02-18 10:45:48 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[NEW] - Added UI to choose published date for Blog post
+----------------------------------------------
+r25359 | lphuberdeau | 2010-02-18 10:27:29 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX]?\194?\160Must also verify the parent feature
+----------------------------------------------
+r25358 | lphuberdeau | 2010-02-18 10:27:07 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Parse error introduced earlier
+----------------------------------------------
+r25357 | lphuberdeau | 2010-02-18 10:22:13 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD]?\194?\160Connect recalculation of ratings to voting or page load, as configured
+----------------------------------------------
+r25356 | lphuberdeau | 2010-02-18 10:21:31 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Confusion when voting multiple comments
+----------------------------------------------
+r25355 | lphuberdeau | 2010-02-18 10:20:52 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Wrong type sent to the plugin
+----------------------------------------------
+r25354 | Jyhem | 2010-02-18 10:10:49 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Provide blogTitle for module last_blog_posts when last_blog_posts is called for no perticular blog
+----------------------------------------------
+r25353 | sylvieg | 2010-02-18 09:26:52 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD]users: acn import default_group too
+----------------------------------------------
+r25352 | lphuberdeau | 2010-02-18 09:23:23 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Wrong quotes used, variable not expanded
+----------------------------------------------
+r25351 | changi67 | 2010-02-18 09:12:18 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD] Some french traduction
+----------------------------------------------
+r25350 | lphuberdeau | 2010-02-18 08:54:12 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD] Convert rating wiki plugin to ratinglib
+----------------------------------------------
+r25349 | sylvieg | 2010-02-18 08:27:24 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX]TRACKER: to have the email bodies refreshed
+----------------------------------------------
+r25348 | pkdille | 2010-02-18 08:24:17 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD] tiki-show_page: no changes indenting only
+----------------------------------------------
+r25347 | lphuberdeau | 2010-02-18 08:18:52 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX] Confusing error message
+----------------------------------------------
+r25346 | lphuberdeau | 2010-02-18 08:01:46 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[NEW] Allow to generate auth tokens from tell a friend page to provide privileged access.
+----------------------------------------------
+r25345 | sept_7 | 2010-02-18 07:00:14 -0800 (Thu, 18 Feb 2010) | 2 lines
+
+[FIX] avoid infinite redirection loop in installer
+
+----------------------------------------------
+r25344 | pkdille | 2010-02-18 06:34:31 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD] wiki page: the categbar div should only be in the html code if not empty
+----------------------------------------------
+r25343 | sylvieg | 2010-02-18 05:19:44 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX]history: Do not change the history version if no history is kept (otherwise people think they are losing history
+----------------------------------------------
+r25342 | chealer | 2010-02-18 01:36:25 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[FIX]  Notice: Undefined index: u_info
+----------------------------------------------
+r25341 | chealer | 2010-02-18 01:26:58 -0800 (Thu, 18 Feb 2010) | 3 lines
+
+[SEC] move persistent login cookies from tiki_preferences to new table tiki_user_login_cookies
+Intertiki changes untested
+userslib: remove unused functions get_user_hash() and get_user_by_hash()
+----------------------------------------------
+r25337 | changi67 | 2010-02-18 00:16:56 -0800 (Thu, 18 Feb 2010) | 1 line
+
+[MOD] Adding svn:keywords
+----------------------------------------------
+r25336 | chealer | 2010-02-17 21:03:21 -0800 (Wed, 17 Feb 2010) | 1 line
+
+Installer: better confine disabling of error reporting to .sql files
+----------------------------------------------
+r25335 | chealer | 2010-02-17 20:56:48 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[KIL] more: DB abstraction
+----------------------------------------------
+r25334 | lindonb | 2010-02-17 19:13:32 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[FIX] Fix various small bugs in pluginimg: use classes to display border well in all themes, fix border display problems with certain parameter settings, ensure button functions properly when thumb isn't set. 
+----------------------------------------------
+r25333 | nkoth | 2010-02-17 18:41:13 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[ENH] get article links and title when getting more info from actionlog results
+----------------------------------------------
+r25332 | nkoth | 2010-02-17 18:30:29 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[FIX] broken URL
+----------------------------------------------
+r25331 | nkoth | 2010-02-17 18:23:43 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[NEW] All display of "who viewed my stuff" on user information page (part 2/2)
+----------------------------------------------
+r25330 | nkoth | 2010-02-17 17:50:00 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[NEW] All display of "who viewed my stuff" on user information page (part 1)
+----------------------------------------------
+r25329 | nkoth | 2010-02-17 15:00:27 -0800 (Wed, 17 Feb 2010) | 2 lines
+
+[FIX] Reload after deleting menu item to prevent white screen (better ideas on how to fix this are welcome)
+
+----------------------------------------------
+r25328 | sylvieg | 2010-02-17 14:53:28 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[MOD]TRACKER: possibility to have a different template for each email
+----------------------------------------------
+r25327 | luciash | 2010-02-17 14:14:45 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[FIX] advanced search help: xhtml typos and p cannot contain div
+----------------------------------------------
+r25326 | luciash | 2010-02-17 14:07:12 -0800 (Wed, 17 Feb 2010) | 1 line
+
+typo - html parsing error
+----------------------------------------------
+r25325 | lphuberdeau | 2010-02-17 13:55:51 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[NEW] Admin panel to configure rating calculations
+----------------------------------------------
+r25323 | sylvieg | 2010-02-17 11:00:22 -0800 (Wed, 17 Feb 2010) | 5 lines
+
+parse correctly long lines of *****. Ex:
+***************************
+* xxx
+**************************
+
+----------------------------------------------
+r25322 | sylvieg | 2010-02-17 10:58:25 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[FIX]blog: add a | for visibilty
+----------------------------------------------
+r25321 | sylvieg | 2010-02-17 10:57:54 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[FIX] html valid
+----------------------------------------------
+r25320 | sylvieg | 2010-02-17 10:52:37 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[MOD]fgal: possibility to limit a search on a fgal
+----------------------------------------------
+r25319 | nkoth | 2010-02-17 09:20:46 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[FIX] related to [ENH] Add ability to filter files returned by specific creator user , fixing the wrong order of varas being bound to query
+----------------------------------------------
+r25318 | sylvieg | 2010-02-17 09:18:34 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[MOD]fgal: display the mime types that have no search handler
+----------------------------------------------
+r25317 | nkoth | 2010-02-17 08:50:38 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[ENH] Add ability to filter files returned by specific creator user
+----------------------------------------------
+r25315 | nkoth | 2010-02-17 08:41:59 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[FIX][ENH] Add ability to filter files returned by specific creator user (previous commit), but still not perfect yet
+----------------------------------------------
+r25312 | sylvieg | 2010-02-17 08:02:17 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[FIX]broadcast: group broadcasting was only sending to the maxRecords first users od a group
+----------------------------------------------
+r25307 | sylvieg | 2010-02-17 04:45:53 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[MOD]snarf: plugin parameter to allow cache for a period of time + global cache option
+----------------------------------------------
+r25306 | sylvieg | 2010-02-17 03:43:20 -0800 (Wed, 17 Feb 2010) | 1 line
+
+[FIX]users: password are not required when modifying a user+html
+----------------------------------------------
+r25303 | chealer | 2010-02-17 01:38:04 -0800 (Wed, 17 Feb 2010) | 1 line
+
+OpenID: avoid two consecutive slashes in URL when returning from provider in webserver root
+----------------------------------------------
+r25300 | chealer | 2010-02-17 00:10:20 -0800 (Wed, 17 Feb 2010) | 2 lines
+
+[FIX] OpenID on machines running httpd as several users. thanks Marc Laporte
+[FIX] OpenID on Microsoft Windows (not verified)
+----------------------------------------------
+r25299 | changi67 | 2010-02-16 23:40:29 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[MOD]: add copyright and id to lang files
+----------------------------------------------
+r25296 | chealer | 2010-02-16 20:57:05 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] error message on OpenID authentication failure (r15187 regression)
+----------------------------------------------
+r25295 | ricks99 | 2010-02-16 18:47:57 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[ENH]Re-wrote (hopefully improving) the advanced search help. Text now includes better explanations, examples, and parallel structure. **PLS** review the explanation of the *, <, and > terms -- I'm not sure I fully understand what they do.
+----------------------------------------------
+r25294 | nkoth | 2010-02-16 17:46:16 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[ENH] Show user's language like "English (en)" instead of just en
+----------------------------------------------
+r25293 | ricks99 | 2010-02-16 17:36:39 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[ENH]150px was not wide enough to show "very weak" -- was causing line break in UI. Now all pw security prompts fit on a single line.
+----------------------------------------------
+r25292 | nkoth | 2010-02-16 16:26:55 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Set file type correctly to mime type (not integer image type)
+----------------------------------------------
+r25289 | jonnybradley | 2010-02-16 16:09:18 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Make room for jQuery.sheet control-bar
+----------------------------------------------
+r25288 | jonnybradley | 2010-02-16 15:38:49 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Better jQuery.sheet resize
+----------------------------------------------
+r25287 | nkoth | 2010-02-16 14:42:43 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[NEW] Show large full size image (stored in file gallery) for users in addition to small avatar
+----------------------------------------------
+r25285 | xavidp | 2010-02-16 12:57:22 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX]Hoping to fix my partial former commit r24833 with this other one. I was attempting to apply a patch suggested by someone in preacrios.org (using 3.x) which seemed to work there, but it seems that they didn't report about everywhere where those two lines had to be added. If this doesn't solve your concerns, pkdille, (& quality team), please rollback.
+----------------------------------------------
+r25283 | lphuberdeau | 2010-02-16 12:38:23 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[NEW] Function to calculate score aggregates
+----------------------------------------------
+r25282 | nkoth | 2010-02-16 11:54:06 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[NEW] Add ability to have a large full size image (stored in file gallery) for users in addition to small avatar
+----------------------------------------------
+r25281 | sylvieg | 2010-02-16 11:05:57 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX]forum: avoid this variable may not be empty: $_POST["thread_sort_mode"] + rollback 25266 that is not the right fix
+----------------------------------------------
+r25280 | lphuberdeau | 2010-02-16 11:04:14 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[NEW] Adding very simple library to manage attributes on any object (to be used by upcoming features)
+----------------------------------------------
+r25279 | jonnybradley | 2010-02-16 10:55:38 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Handle saving calculations properly in spreadsheets
+----------------------------------------------
+r25278 | jonnybradley | 2010-02-16 10:27:10 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[MOD] Rename TikiSheet to Spreadsheets (user visible instances only)
+----------------------------------------------
+r25277 | lphuberdeau | 2010-02-16 10:09:40 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[NEW] All new, cleaner, rating library, unconnected until second half is added
+----------------------------------------------
+r25276 | lphuberdeau | 2010-02-16 10:08:04 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Eliminate notice and do not depend on PHP 5.3 to report errors
+----------------------------------------------
+r25275 | jonnybradley | 2010-02-16 09:58:10 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[KIL] Remove last bit of screencasts
+----------------------------------------------
+r25274 | jonnybradley | 2010-02-16 09:56:06 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Remove reference to global $prefs in upgrade_20091123_upgrade_categperm_2_tiki()
+----------------------------------------------
+r25273 | jonnybradley | 2010-02-16 09:43:05 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Make user avatars multi-tiki aware
+----------------------------------------------
+r25272 | jonnybradley | 2010-02-16 09:41:28 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Make minify functions multi-tiki aware
+----------------------------------------------
+r25271 | jonnybradley | 2010-02-16 09:40:19 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Repair installer for multi-tiki - half of it was always using db/local.php regardless of 'multi' setting
+----------------------------------------------
+r25269 | jonnybradley | 2010-02-16 09:27:08 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[MOD] Categ perms warning wording
+----------------------------------------------
+r25268 | jonnybradley | 2010-02-16 09:24:10 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Missing globals for upgrade_20100118_image_plugins_kill_tiki()
+----------------------------------------------
+r25267 | jonnybradley | 2010-02-16 09:20:52 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] Disable display_errors during install as errors are reported in the post-update page
+----------------------------------------------
+r25266 | sylvieg | 2010-02-16 08:55:47 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX]forum: avoid this variable may not be empty: $_POST["thread_sort_mode"]
+----------------------------------------------
+r25265 | alain_desilets | 2010-02-16 08:10:19 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[ENH] User admin. Segregated errror messages from feedback messages. Feedback is printed discreetly at the top of the page, while error messages are printed more prominently on an error screen.
+----------------------------------------------
+r25263 | changi67 | 2010-02-16 07:52:44 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[MOD] header change : copyright + Id
+----------------------------------------------
+r25261 | lphuberdeau | 2010-02-16 07:04:33 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[ENH] Turns out repeated calls to info functions are expensive due to the large amount of calls to tra(), adding this return value cache cuts down the global call count from 1800 to 300 on the default home page (~20% execution time)
+----------------------------------------------
+r25260 | lphuberdeau | 2010-02-16 06:45:47 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX]?\194?\160Generated cookie names for votes caused tiki to be slower ever single vote made, changing the default filter on cookies to a more efficient filter
+----------------------------------------------
+r25250 | chealer | 2010-02-16 01:03:55 -0800 (Tue, 16 Feb 2010) | 1 line
+
+rename 200902026_admin_menu_tiki to 20090226_admin_menu_tiki
+----------------------------------------------
+r25249 | chealer | 2010-02-16 00:57:47 -0800 (Tue, 16 Feb 2010) | 1 line
+
+[FIX] standalone PHP schema scripts not recorded as installed (r25204 regression)
+----------------------------------------------
+r25246 | chealer | 2010-02-15 23:26:37 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[FIX] Installer: toggling display of failed queries (r24794 regression)
+----------------------------------------------
+r25245 | chealer | 2010-02-15 22:35:54 -0800 (Mon, 15 Feb 2010) | 7 lines
+
+[FIX] Admin users from bad merge in r23669
+Password choice input:
+[ENH] Password fields behavior
+[FIX] Register: Caps lock detection
+[FIX] Register: graphical password strength display
+[FIX] Admin users: entered password cleared when navigating
+[ENH] Register: Add "Passwords match" from Admin users
+----------------------------------------------
+r25243 | chealer | 2010-02-15 20:53:58 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[FIX] Registration with passcode: typo "sytem"
+----------------------------------------------
+r25241 | jonnybradley | 2010-02-15 11:28:34 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[CSS] Remove last (?) vestiges of shadowbox
+----------------------------------------------
+r25240 | jonnybradley | 2010-02-15 11:26:12 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[MOD] Show busy-loading spinner (if feature_ajax) while edit sheet is preparing, as it can be quite slow.
+----------------------------------------------
+r25239 | jonnybradley | 2010-02-15 11:23:12 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[MOD] Refactoring of ajax loading code and removal of some !importants from the CSS that stopped it working (also sync with layout-reference.css)
+----------------------------------------------
+r25238 | jonnybradley | 2010-02-15 11:15:41 -0800 (Mon, 15 Feb 2010) | 2 lines
+
+[FIX] Move feedback call from Tiki_Profile_Object into Tiki_Profile and display in an alert after profile is loaded.
+Needs (lots) more testing and polish.
+----------------------------------------------
+r25237 | lphuberdeau | 2010-02-15 11:00:45 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[ENH] Make rating options configurable on wiki and article
+----------------------------------------------
+r25236 | sylvieg | 2010-02-15 10:30:07 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[FIX]tracker: revote on star field
+----------------------------------------------
+r25235 | lphuberdeau | 2010-02-15 10:08:14 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[NEW] Deploying rating to wiki
+----------------------------------------------
+r25234 | lphuberdeau | 2010-02-15 09:56:23 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[NEW] Adding user ratings to articles
+----------------------------------------------
+r25233 | lphuberdeau | 2010-02-15 09:35:42 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[MOD] Move most logic to a plugin to ease deployment
+----------------------------------------------
+r25232 | lphuberdeau | 2010-02-15 08:25:39 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[FIX] Remove validation on trackers as the allowed values are not known in that function
+----------------------------------------------
+r25231 | lphuberdeau | 2010-02-15 08:19:13 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[MOD]?\194?\160Moving user already voted check inside register_user_vote and adding validation for the value voted to prevent someone from voting 1000000 (I tried, it worked)
+----------------------------------------------
+r25230 | lphuberdeau | 2010-02-15 08:17:29 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[FIX] Parse error
+----------------------------------------------
+r25228 | sylvieg | 2010-02-15 07:51:17 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[MOD]backup: optional scp
+----------------------------------------------
+r25227 | jonnybradley | 2010-02-15 07:18:53 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[MOD] Tiny typo
+----------------------------------------------
+r25226 | jonnybradley | 2010-02-15 07:18:16 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[FIX] Export sheet edeit button didn't know about jQuery.sheet
+----------------------------------------------
+r25225 | lphuberdeau | 2010-02-15 07:12:45 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[FIX]?\194?\160Comment rating and various other ratings would not store the user votes long term
+----------------------------------------------
+r25224 | lphuberdeau | 2010-02-15 06:49:35 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[MOD] Allow to specify default rating coming from a feed
+----------------------------------------------
+r25223 | sylvieg | 2010-02-15 05:46:44 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[FIX]calendar: not to have delete... in pagination
+----------------------------------------------
+r25222 | sylvieg | 2010-02-15 05:36:20 -0800 (Mon, 15 Feb 2010) | 1 line
+
+[FIX]calendar: sql error with find
+----------------------------------------------
+r25221 | lindonb | 2010-02-14 16:41:10 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[FIX] Smarty variable calendarViewMode not assigned, causing unnecessary date range to be shown in month view (February 2010 - February 2010).
+----------------------------------------------
+r25220 | sylvieg | 2010-02-14 15:31:41 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[FIX]htaccess: the comments are not depending on rewrite
+----------------------------------------------
+r25217 | luciash | 2010-02-14 14:53:17 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[FIX] better fix for 24380: user messages: prefer user preferences max messages to display pagination
+----------------------------------------------
+r25216 | sylvieg | 2010-02-14 14:29:39 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[FIX]comments: do not show moderation title if nothing to do
+----------------------------------------------
+r25215 | pkdille | 2010-02-14 13:36:34 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[MOD] workspaces: remove the menu items in menu 42. When workspaces will be back, this items have to be added again
+----------------------------------------------
+r25214 | sylvieg | 2010-02-14 13:25:38 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[FIX]find: a class for the 2 categs find (for those who do not want to find on categ
+----------------------------------------------
+r25212 | lindonb | 2010-02-14 12:58:17 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[FIX] Add missing options for button parameter. Delete last ctype_digit, which causes false returns even when parameters are properly set - also unnecessary with filters.
+----------------------------------------------
+r25209 | changi67 | 2010-02-14 12:26:45 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[MOD] Some french trad
+----------------------------------------------
+r25208 | changi67 | 2010-02-14 12:09:50 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[MOD] remove profile in menu
+----------------------------------------------
+r25206 | sylvieg | 2010-02-14 11:44:36 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[FIX]grouplist: must keep the order
+----------------------------------------------
+r25205 | sylvieg | 2010-02-14 11:18:30 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[FIX]groups: limit the including groups to the first level
+----------------------------------------------
+r25204 | sylvieg | 2010-02-14 10:53:00 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[FIX]installer: do not record the script name in tiki-schema if error occured. Like this the script will be run again at the next upgrade
+----------------------------------------------
+r25203 | changi67 | 2010-02-14 10:50:15 -0800 (Sun, 14 Feb 2010) | 1 line
+
+[MOD] get svnrev on every system (not only english one)
+----------------------------------------------
+r25201 | sylvieg | 2010-02-14 05:52:12 -0800 (Sun, 14 Feb 2010) | 1 line
+
+typo-ths lindon
+----------------------------------------------
+r25200 | sylvieg | 2010-02-13 15:54:45 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[FIX]directory: try to mimic the rest - when you are in a specific object - show it in the title
+----------------------------------------------
+r25199 | sylvieg | 2010-02-13 15:44:40 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[fix]directory: kill the br - replace bold with semantic hx
+----------------------------------------------
+r25198 | sylvieg | 2010-02-13 14:49:54 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[FIX]key: use as much as possible - group can be long (todo: use id)
+----------------------------------------------
+r25197 | pkdille | 2010-02-13 14:45:59 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[FIX] svn properties: last cleanup of the svn properties.
+----------------------------------------------
+r25194 | chealer | 2010-02-13 14:07:33 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[MOD][SEC] Remove Standard Remember method for persistent login and use Simple instead. IP address and User agent are no more checked
+----------------------------------------------
+r25186 | sylvieg | 2010-02-13 13:03:38 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[FIX]profile: do not use httprequest but directly get the page when the datachannel is local (domain=tiki://local)
+----------------------------------------------
+r25185 | lindonb | 2010-02-13 13:00:56 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[FIX] Allow &scale and &preview url parameters to work together and &thumbnail and &preview to work with dimension parameters.
+----------------------------------------------
+r25184 | rlpowell | 2010-02-13 12:33:38 -0800 (Sat, 13 Feb 2010) | 6 lines
+
+
+Avoid duplicates.
+-This line, and those below, will be ignored--
+
+M    tiki-setup_base.php
+
+----------------------------------------------
+r25181 | pkdille | 2010-02-13 11:40:13 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[MOD] svn properties: some text files had binary files mime-types
+----------------------------------------------
+r25179 | pascalstjean | 2010-02-13 10:26:07 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[FIX] added check to see if Category feature is on before making a CategLib call. 
+----------------------------------------------
+r25178 | lindonb | 2010-02-13 09:53:47 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[FIX] Use famfam color enlarge button icon so that it shows when darkroom theme is used. 
+----------------------------------------------
+r25176 | lindonb | 2010-02-13 09:01:43 -0800 (Sat, 13 Feb 2010) | 1 line
+
+[FIX] Need width anytime desc parameter is set.
+----------------------------------------------
+r25173 | chibaguy | 2010-02-12 22:59:13 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Rules in metrics.css such as for .pagetitle were affecting other pages, so are commented out until the correct scope of this stylesheet is set.
+----------------------------------------------
+r25172 | chibaguy | 2010-02-12 22:52:45 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Moved metrics.css from styles directory to css so it isn't listed as a theme.
+----------------------------------------------
+r25171 | ricks99 | 2010-02-12 15:40:32 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX]Addressed multiple xhtml validation errors. All pages of the installer now validate properly.
+----------------------------------------------
+r25170 | jonnybradley | 2010-02-12 15:04:11 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Warning on foreach
+----------------------------------------------
+r25169 | jonnybradley | 2010-02-12 14:51:15 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Move stubborn bit of javascript from template to php ({jq} block was breaking the whole page, but not for any understandable reason)
+----------------------------------------------
+r25168 | jonnybradley | 2010-02-12 14:23:11 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Missing (but unusable) param missing from plugin_enabled() call.
+----------------------------------------------
+r25167 | chealer | 2010-02-12 13:45:08 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] HTML for add events link (r23755 regression)
+----------------------------------------------
+r25166 | sylvieg | 2010-02-12 13:37:15 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX]calendar: fix calendar name in tiki_objects
+----------------------------------------------
+r25163 | jonnybradley | 2010-02-12 13:01:11 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Move jscalendar JS into doc.onready (fixes JS error on tiki-calendar.php and probably others)
+----------------------------------------------
+r25160 | jonnybradley | 2010-02-12 12:50:20 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Move tikitabs onload JS to doc.onready (code in lib/setup/cookies.php committed accidentally in r25157)
+----------------------------------------------
+r25159 | jonnybradley | 2010-02-12 12:34:09 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[MOD] Refactor all body tags to use {html_body_attributes} function.
+----------------------------------------------
+r25158 | jonnybradley | 2010-02-12 12:30:47 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Add return false to onclicks
+----------------------------------------------
+r25157 | jonnybradley | 2010-02-12 12:27:58 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[MOD] New Smarty function to build the attributes for all body tags. Deployment/refactoring to come next...
+----------------------------------------------
+r25155 | sylvieg | 2010-02-12 11:13:36 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX]installer: fix reference on calendar (so its categorization) + some more trace
+----------------------------------------------
+r25154 | jonnybradley | 2010-02-12 10:10:06 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Change JS to use document.onready block - should fix some of the spurious JS errors occuring after removing old show/hide functions (which were still being called by this).
+----------------------------------------------
+r25153 | nkoth | 2010-02-12 08:09:27 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Rollback (and add comment) of r25052 (which was the attempt to do access check deployment all around).
+----------------------------------------------
+r25152 | sylvieg | 2010-02-12 07:48:50 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[MOD]profiler: can also get some syntax error of the profiler
+----------------------------------------------
+r25151 | alain_desilets | 2010-02-12 07:43:37 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[REF] Cleaning up UpdatePagesTest (more to come).
+----------------------------------------------
+r25147 | pkdille | 2010-02-12 07:21:39 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] page-bar: when no buttons are visible, the page_bar div has not to be included in the code
+----------------------------------------------
+r25146 | pkdille | 2010-02-12 07:19:27 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[MOD] page-bar: remove some useless code
+----------------------------------------------
+r25144 | jonnybradley | 2010-02-12 06:54:06 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Open folder icons breaking on AJAX responses - tried lots of clever things but only checking the filename didn't start with an 'o' worked.
+----------------------------------------------
+r25142 | sylvieg | 2010-02-12 06:42:05 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[MOD]datachannel: option debug to show some feedback
+----------------------------------------------
+r25138 | jonnybradley | 2010-02-12 05:47:16 -0800 (Fri, 12 Feb 2010) | 2 lines
+
+[KIL] Remove some dead code forom tiki-js.js (setSomeElement, replaceSome, replaceImgSrc, flip_multi, setopacity, setfoldericonstate)
+Have grep'ed extensively on all file types and these fn's are not found (except some in changelog.txt) - but if anyone knows or spots otherwise yell or rollack!
+----------------------------------------------
+r25137 | jonnybradley | 2010-02-12 05:28:29 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[KIL] Remove tiki-js.js functions overridden in tiki-jquery.js (show, hide, flip and switchCheckboxes)
+----------------------------------------------
+r25136 | jonnybradley | 2010-02-12 05:15:10 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[INDENT] No code changes
+----------------------------------------------
+r25134 | jonnybradley | 2010-02-12 04:33:18 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[FIX] Override dates wasn't entirely overriding the dates
+----------------------------------------------
+r25133 | jonnybradley | 2010-02-12 04:32:22 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[MOD] Helpful description
+----------------------------------------------
+r25132 | jonnybradley | 2010-02-12 04:31:11 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[MOD] Pref dependency
+----------------------------------------------
+r25131 | alain_desilets | 2010-02-12 04:19:09 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[REF] Cleaning up UpdatePagesTest
+----------------------------------------------
+r25127 | sept_7 | 2010-02-12 03:10:12 -0800 (Fri, 12 Feb 2010) | 3 lines
+
+[FIX] fix some permission checks on File Galleries mainly in get_files, use
+specific perms on object in addition to global perms...
+
+----------------------------------------------
+r25122 | pkdille | 2010-02-12 01:54:37 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[MOD] wiki editdate styling: put a top border as a separation between the wiki page and this informations
+----------------------------------------------
+r25121 | pkdille | 2010-02-12 01:47:18 -0800 (Fri, 12 Feb 2010) | 1 line
+
+[MOD] wiki editdate styling: give a smaller size to this text in order to see a difference with the wiki page
+----------------------------------------------
+r25120 | nkoth | 2010-02-11 21:35:59 -0800 (Thu, 11 Feb 2010) | 2 lines
+
+[ENH] Activate category search filter for find under file galleries
+
+----------------------------------------------
+r25119 | nkoth | 2010-02-11 21:31:49 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] Parameters passed out of proper sequence to query causing filter to not work properly
+----------------------------------------------
+r25118 | nkoth | 2010-02-11 19:34:53 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[ENH] Allow category filtering in Find in file galleries
+----------------------------------------------
+r25117 | nkoth | 2010-02-11 17:27:32 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] Just some cleanup and prevention of js errors due to undefined elements
+----------------------------------------------
+r25116 | nkoth | 2010-02-11 16:06:28 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[DOC] add comment
+----------------------------------------------
+r25115 | jonnybradley | 2010-02-11 16:04:59 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[ENH] New saveSheet method for sheets using JSON - mostly working now.
+----------------------------------------------
+r25114 | nkoth | 2010-02-11 15:53:25 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] More perm checking fixing to incorporate either logic
+----------------------------------------------
+r25113 | nkoth | 2010-02-11 15:46:06 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] Show "Read more..." text only if tiki_p_read_article is y
+----------------------------------------------
+r25112 | nkoth | 2010-02-11 15:34:32 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[ENH] Add ability to check for any one of a list of permissions (either one will suffice)
+----------------------------------------------
+r25111 | luciash | 2010-02-11 15:29:40 -0800 (Thu, 11 Feb 2010) | 1 line
+
+& > &amp;
+----------------------------------------------
+r25110 | luciash | 2010-02-11 15:25:48 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] mediaplayer plugin: the additional optional params are correctly passed to the FlashVars now
+----------------------------------------------
+r25109 | nkoth | 2010-02-11 15:15:37 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] Permissions checking via access->check_permission checks for all of the perms, so the checks before that check for multiple ones did not make sense. With the admin perms, they automatically inherit those under the same perm section and need not be specified again.
+----------------------------------------------
+r25108 | luciash | 2010-02-11 15:01:58 -0800 (Thu, 11 Feb 2010) | 1 line
+
+oops, transparent is a string of course
+----------------------------------------------
+r25107 | alain_desilets | 2010-02-11 14:56:10 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[ENH] Fixing unit tests for UpdatePages.php.
+----------------------------------------------
+r25106 | luciash | 2010-02-11 14:56:06 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[ENH] mediaplayer plugin: make some params dropdown options in plugin helper
+----------------------------------------------
+r25104 | nkoth | 2010-02-11 14:50:52 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] perm typo
+----------------------------------------------
+r25103 | nkoth | 2010-02-11 13:39:16 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] Proper handling of showing of toolbar in comment/forum post editor depending on whether wiki syntax is accepted
+----------------------------------------------
+r25101 | luciash | 2010-02-11 12:54:25 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[ENH] mediaplayer plugin: fullscreen and wmode params
+----------------------------------------------
+r25100 | lphuberdeau | 2010-02-11 12:52:20 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[NEW] Allow to select default categories for new articles
+----------------------------------------------
+r25099 | nkoth | 2010-02-11 12:14:09 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] Do not show comments area if specific page is set to not allow comments
+----------------------------------------------
+r25098 | lphuberdeau | 2010-02-11 12:13:44 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[NEW] Allow to delay publication
+----------------------------------------------
+r25097 | jonnybradley | 2010-02-11 11:20:58 -0800 (Thu, 11 Feb 2010) | 2 lines
+
+[ENH] Tiki-sheet can now parse wiki syntax in cells.
+More to come (has produced more problems saving sheets with jQuery.sheet - saveSheet() needs rewiting... next)
+----------------------------------------------
+r25096 | lphuberdeau | 2010-02-11 11:20:49 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[ROLLBACK]?\194?\160Apparently, it only pushed it back.
+----------------------------------------------
+r25095 | lphuberdeau | 2010-02-11 11:18:05 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] Smarty parse error (unknown cause, but this fixes it)
+----------------------------------------------
+r25094 | nkoth | 2010-02-11 11:06:05 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] When switching back to single selector from multiple selector when only one selected, to forget multiple selector settings otherwise it gets in the way
+----------------------------------------------
+r25093 | nkoth | 2010-02-11 11:00:35 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] previous commit (this should only show in the main search area, not on the top bar search...)
+----------------------------------------------
+r25092 | nkoth | 2010-02-11 10:58:19 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[ENH] Allow category filter in searches
+----------------------------------------------
+r25090 | lphuberdeau | 2010-02-11 10:35:15 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] Enclose article content in ~np~ as it is all HTML. Make the pagination of article content optional as it breaks the wiki syntax.
+----------------------------------------------
+r25089 | nkoth | 2010-02-11 10:27:30 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] missing parameter
+----------------------------------------------
+r25088 | nkoth | 2010-02-11 10:23:50 -0800 (Thu, 11 Feb 2010) | 2 lines
+
+[ENH] Allow category filter in searches
+
+----------------------------------------------
+r25087 | lphuberdeau | 2010-02-11 10:15:02 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[NEW] Allow to pull RSS feeds into tiki articles
+----------------------------------------------
+r25086 | lphuberdeau | 2010-02-11 09:55:34 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] I have nothing against new words, but this one causes a parse error.
+----------------------------------------------
+r25084 | jonnybradley | 2010-02-11 09:19:58 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] {jq notonready=true} for "normal" JS (makes language select dropdown work again)
+----------------------------------------------
+r25082 | changi67 | 2010-02-11 09:07:03 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[MOD] Header: Copyright + Id
+----------------------------------------------
+r25075 | jonnybradley | 2010-02-11 07:44:35 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[KIL] Unused smarty function. No references found and no real commits since 2004
+----------------------------------------------
+r25074 | lphuberdeau | 2010-02-11 07:35:36 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[MOD] Rewriting external feed library to use Zend_Feed_Reader rather than an assorted set of regex. Should add support for more formats, resolve multiple issues and speed up feed display (feeds used to be parsed every single time they were displayed and sorted manually)
+----------------------------------------------
+r25071 | jonnybradley | 2010-02-11 07:05:31 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[KIL] Removing unused partial copy off PEAR::Date in lib/Date again (initially done in r8895 by sept_7 in 2007?)
+----------------------------------------------
+r25069 | jonnybradley | 2010-02-11 06:56:44 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[CSS] More monochromatic-ness
+----------------------------------------------
+r25068 | jonnybradley | 2010-02-11 06:51:53 -0800 (Thu, 11 Feb 2010) | 2 lines
+
+[FIX] Add overrideDates param to articles plugin so you can list the date range you actually want, whether the 'article type' says so or not.
+Also various other small fixes (including don't default to only 3 items) and some code reformatting.
+----------------------------------------------
+r25067 | sylvieg | 2010-02-11 06:33:34 -0800 (Thu, 11 Feb 2010) | 1 line
+
+rollback 25033 to a better fix
+----------------------------------------------
+r25066 | jonnybradley | 2010-02-11 06:30:13 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[MOD] Add $override_dates param to list_articles. This allows you to ignore the "show before publish" and "show after expiry" date settings on the article type (in other words find only the date range you were looking for).
+----------------------------------------------
+r25065 | pkdille | 2010-02-11 05:44:58 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] remove false Id informations in changelog.txt
+----------------------------------------------
+r25064 | jonnybradley | 2010-02-11 05:40:44 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[ENH] Object perms management page gets it's own menu item
+----------------------------------------------
+r25063 | jonnybradley | 2010-02-11 05:36:39 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[MOD] Move menu options (items) list into same table as the form and 'menu preview' for better layout (especially with long menus like 42)
+----------------------------------------------
+r25059 | jonnybradley | 2010-02-11 05:18:37 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[MOD] Slightly more sensible error messages
+----------------------------------------------
+r25057 | chibaguy | 2010-02-11 05:00:38 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] IE7 width rule for wysiwyg toolbar container (toolbar right end was cut off in narrow themes). Thanks to coaboa for pointing out the problem.
+----------------------------------------------
+r25056 | sylvieg | 2010-02-11 04:46:53 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX]tracker: fix free group selection
+----------------------------------------------
+r25055 | chibaguy | 2010-02-11 04:42:46 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] IE6 width rule for wysiwyg toolbar container (toolbar right end was cut off in narrow themes). Thanks to coaboa for pointing out the problem.
+----------------------------------------------
+r25054 | chibaguy | 2010-02-11 04:34:27 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] Min-width for wysiwyg toolbar container (toolbar right end was cut off in narrow themes). Thanks to coaboa for pointing out the problem.
+----------------------------------------------
+r25052 | changi67 | 2010-02-11 02:55:52 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[MOD] access check: deploy some accesslib check functions
+----------------------------------------------
+r25050 | pkdille | 2010-02-11 01:15:26 -0800 (Thu, 11 Feb 2010) | 1 line
+
+[FIX] svn property keywords removed from changelog file
+----------------------------------------------
+r25043 | chealer | 2010-02-10 22:13:04 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[SEC] Server-side persistent login cookie deletion (r23616 regression)
+----------------------------------------------
+r25041 | chealer | 2010-02-10 22:08:51 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX] Persistent login cookie path (r7443 regression)
+----------------------------------------------
+r25040 | chealer | 2010-02-10 22:08:37 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX] Default cookie path outside tikiroot if Tiki not in domain root
+----------------------------------------------
+r25039 | chealer | 2010-02-10 20:53:35 -0800 (Wed, 10 Feb 2010) | 1 line
+
+improve some code, hoping to protect others from brain damage
+----------------------------------------------
+r25038 | nkoth | 2010-02-10 18:44:14 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX] If comment title equals page name, it should simply not show since this is the auto-created when the comment is created with no title
+----------------------------------------------
+r25037 | nkoth | 2010-02-10 17:48:08 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX] Titles of comments titled "Untitled" should simply not be shown
+----------------------------------------------
+r25036 | nkoth | 2010-02-10 17:42:31 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX] Do not show comments title box check was wrong
+----------------------------------------------
+r25035 | nkoth | 2010-02-10 16:51:31 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[ENH] Activate showing of date range filter when finding articles
+----------------------------------------------
+r25034 | nkoth | 2010-02-10 16:48:58 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[ENH] Allow filtering of Find results by published date for articles
+----------------------------------------------
+r25033 | sylvieg | 2010-02-10 14:48:46 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX]date: temporary fix - recent changes in date did not accept anymore the trick date ='--' for a non defined date - need to find another trick - meanwhile - avoid blank screen - more to come
+----------------------------------------------
+r25032 | pkdille | 2010-02-10 14:20:37 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[MOD] svn props: test on one file to fix the svn:keywords property
+----------------------------------------------
+r25031 | nkoth | 2010-02-10 13:13:28 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[ENH] Allow for finding within date range in find.tpl
+----------------------------------------------
+r25030 | sylvieg | 2010-02-10 13:12:57 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX]profile: if a category with the same name at the same level exists, repalce the categ
+----------------------------------------------
+r25029 | sylvieg | 2010-02-10 12:56:20 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX]profile: getData does nor return an array
+----------------------------------------------
+r25028 | ricks99 | 2010-02-10 11:56:44 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX]fixed xhtml validation errors
+----------------------------------------------
+r25023 | sylvieg | 2010-02-10 09:44:14 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[MOD]tracker fields: checkbox for global delete
+----------------------------------------------
+r25022 | jonnybradley | 2010-02-10 07:22:45 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[FIX] Take 2 for fix $install_type notice but keeping change admin password form after clean install (thanks chealer)
+----------------------------------------------
+r25020 | sylvieg | 2010-02-10 04:21:19 -0800 (Wed, 10 Feb 2010) | 1 line
+
+missing to 25019
+----------------------------------------------
+r25019 | sylvieg | 2010-02-10 04:03:22 -0800 (Wed, 10 Feb 2010) | 1 line
+
+[NEW]grouplist: plugin to list the groups including a group and link to the home page
+----------------------------------------------
+r25018 | chealer | 2010-02-09 21:55:33 -0800 (Tue, 09 Feb 2010) | 2 lines
+
+[FIX] HTML special chars escaping
+jonnyb: might want to check this
+----------------------------------------------
+r25016 | nkoth | 2010-02-09 20:34:57 -0800 (Tue, 09 Feb 2010) | 2 lines
+
+[ENH] Activate selection of multiple categories when finding for articles and wiki pages
+
+----------------------------------------------
+r25015 | nkoth | 2010-02-09 20:32:38 -0800 (Tue, 09 Feb 2010) | 2 lines
+
+[ENH] Allow for multiple selection of categories when finding for articles and wiki pages
+
+----------------------------------------------
+r25014 | chealer | 2010-02-09 19:00:21 -0800 (Tue, 09 Feb 2010) | 2 lines
+
+[FIX] No prompt for admin password change after install (r24878 regression)
+reported by Alain D?\195?\169silets
+----------------------------------------------
+r25013 | Jyhem | 2010-02-09 17:32:04 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] Ooops, I should not have removed this in r24963
+----------------------------------------------
+r25012 | sylvieg | 2010-02-09 15:01:46 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[MOD]group: show id 
+----------------------------------------------
+r25011 | nkoth | 2010-02-09 14:42:13 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[ENH] continued from last commit: Need ability to change all selectors when tree checkboxes are used for purposes of finding, for e.g.
+----------------------------------------------
+r25009 | nkoth | 2010-02-09 14:06:36 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[ENH] Move the code for generating the category tree into the lib, so it can be used elsewhere other than in categorize_list.php (for find.tpl for example - coming soon).
+----------------------------------------------
+r25008 | sylvieg | 2010-02-09 13:57:49 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[MOD]More: unify the more link with a class more
+----------------------------------------------
+r25007 | changi67 | 2010-02-09 13:39:24 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[MOD] access check: deploy some accesslib check functions;  array is faster :) thx pkdille
+----------------------------------------------
+r25004 | pkdille | 2010-02-09 13:22:36 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[MOD] access check: deploy some accesslib check functions to some files.
+----------------------------------------------
+r25002 | jonnybradley | 2010-02-09 11:25:57 -0800 (Tue, 09 Feb 2010) | 2 lines
+
+[FIX] Move strlen function back to 2nd arg of enigmatic "for" loop (partial rollback of r22634 which caused an endless loop here)
+N.B. Also needs back-porting to 4.x
+----------------------------------------------
+r25001 | jonnybradley | 2010-02-09 10:59:39 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] Move closing </a> tags to end of links
+----------------------------------------------
+r25000 | jonnybradley | 2010-02-09 10:58:55 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] More JS headerlib tidying (plus some svn props)
+----------------------------------------------
+r24999 | sylvieg | 2010-02-09 10:00:46 -0800 (Tue, 09 Feb 2010) | 1 line
+
+missing include
+----------------------------------------------
+r24998 | lphuberdeau | 2010-02-09 08:35:24 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[MOD]?\194?\160Allow to remove preferences from the perspective by dragging out
+----------------------------------------------
+r24997 | sylvieg | 2010-02-09 08:32:17 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX]blog: make no sense to put the actions in the class bloginfo
+----------------------------------------------
+r24996 | jonnybradley | 2010-02-09 08:01:33 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] Correct logic for $show_heading
+----------------------------------------------
+r24995 | sylvieg | 2010-02-09 07:52:18 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX]wrong class
+----------------------------------------------
+r24994 | nkoth | 2010-02-09 07:30:47 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] Show expiry date of article on read_article if selected in the type to do so
+----------------------------------------------
+r24993 | nkoth | 2010-02-09 07:19:05 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] category tree and list not showing
+----------------------------------------------
+r24992 | lphuberdeau | 2010-02-09 06:00:01 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] Value not returned, thus unused
+----------------------------------------------
+r24991 | lphuberdeau | 2010-02-09 05:33:40 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] Uncenter everything, including that file everywhere had a bad side-effect
+----------------------------------------------
+r24989 | jonnybradley | 2010-02-09 04:25:14 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] Replace unknown var $image in _load_data() and ignore E_NOTICE in display() if no buffer already.
+----------------------------------------------
+r24988 | jonnybradley | 2010-02-09 03:17:54 -0800 (Tue, 09 Feb 2010) | 1 line
+
+[FIX] Only show one comments button if javascript disabled
+----------------------------------------------
+r24987 | sept_7 | 2010-02-09 02:05:26 -0800 (Tue, 09 Feb 2010) | 2 lines
+
+[FIX] fix change in API for characters encoding settings
+
+----------------------------------------------
+r24986 | sept_7 | 2010-02-09 01:01:55 -0800 (Tue, 09 Feb 2010) | 9 lines
+
+[FIX] fix Sylvie pb with commit 24697 :
+PHP (5.3.1) ERROR (E_WARNING):
+File: lib/smarty_tiki/block.jq.php
+Line: 35
+Type: Missing argument 3 for smarty_block_jq(), called
+in /var/www/html/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php on
+line 176 and defined
+Use headerlib->add_js instead of smarty_block_jq that calls headerlib->add_js
+
+----------------------------------------------
+r24985 | chealer | 2010-02-08 22:35:17 -0800 (Mon, 08 Feb 2010) | 2 lines
+
+[FIX] HTML special chars escaping
+[FIX] no pages in blogs
+----------------------------------------------
+r24983 | chealer | 2010-02-08 22:32:25 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] HTML entities converted to their characters in edit field
+----------------------------------------------
+r24982 | chealer | 2010-02-08 21:47:59 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] get_db_preferences(): comparison of 0 with strings in preferences
+----------------------------------------------
+r24981 | luciash | 2010-02-08 16:58:30 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] general admin: php error reporting dropdown select needs all values numeric otherwise its options are not selected and saved properly
+----------------------------------------------
+r24980 | sylvieg | 2010-02-08 16:08:32 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX]split: to have the colsize sync with param
+----------------------------------------------
+r24979 | sylvieg | 2010-02-08 14:12:31 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX]split: do not put 2 times %% in the width
+----------------------------------------------
+r24976 | sylvieg | 2010-02-08 12:02:19 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX]calendar: show always admin calendars (otherwise hard to find how to create a second calendar
+----------------------------------------------
+r24975 | jonnybradley | 2010-02-08 11:59:09 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] Mend comments button (r24794 casualty). Not sure why this was done by JS document.write in the first place - seems to work for me as a "normal" button.
+----------------------------------------------
+r24974 | sylvieg | 2010-02-08 11:45:17 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX]calendar: at least show an empty calendar table when no calendar has been created
+----------------------------------------------
+r24973 | jonnybradley | 2010-02-08 11:45:05 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] _childcontainer show/hide JS fixes
+----------------------------------------------
+r24971 | jonnybradley | 2010-02-08 11:27:03 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] ereg_replace is deprecated - hope this is correct (tested at least twice!)
+----------------------------------------------
+r24970 | lphuberdeau | 2010-02-08 11:21:14 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[MOD]?\194?\160Allow to specify callbacks when adding items to cart
+----------------------------------------------
+r24969 | jonnybradley | 2010-02-08 10:50:48 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[ENH] New mode for wikiplugin_bloglist: Not "simple list" as before but full blog posts. Also add container class param.
+----------------------------------------------
+r24968 | jonnybradley | 2010-02-08 10:38:59 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[ENH] Expose container class as a param (and add some filters)
+----------------------------------------------
+r24967 | lphuberdeau | 2010-02-08 10:37:22 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[ENH] Fix security script to read check_permission, check_feature and new permission checks (ie ->view)
+----------------------------------------------
+r24963 | Jyhem | 2010-02-08 09:38:50 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[ENH] Manage the blog 'mark as private' option and privilege the use of bloglib function list_blog_posts over tikilib duplicate function
+----------------------------------------------
+r24962 | jonnybradley | 2010-02-08 09:18:23 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] Move JS into {jq} block and KIL redundant single line JS file.
+----------------------------------------------
+r24961 | jonnybradley | 2010-02-08 08:27:45 -0800 (Mon, 08 Feb 2010) | 2 lines
+
+[FIX] Semicolons at end of query breaks ADODB getOne()
+Also removed stray inclusion of tiki-setup_base.php (broke other things)
+----------------------------------------------
+r24960 | lphuberdeau | 2010-02-08 08:23:42 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[ENH]?\194?\160When a plugin is disabled, show dynamic preferences for admin and add disabled/missing plugin reporting when called from outside the parser
+----------------------------------------------
+r24959 | sylvieg | 2010-02-08 08:17:34 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[NEW]user: option to create group when importing users
+----------------------------------------------
+r24958 | lphuberdeau | 2010-02-08 07:55:37 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[ENH] Removing dead code. Plugin match will never provide a plugin that does not execute, so the condition was never used.
+----------------------------------------------
+r24957 | lphuberdeau | 2010-02-08 07:50:49 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[MOD]?\194?\160Adding wiki plugin output mode and smarty plugin to execute wiki plugins attempting to avoid full execution when possible
+----------------------------------------------
+r24956 | sylvieg | 2010-02-08 07:47:38 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX]import user: missing in commit 24604
+----------------------------------------------
+r24955 | jonnybradley | 2010-02-08 07:43:39 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] Show expiry date if article type says so
+----------------------------------------------
+r24953 | jonnybradley | 2010-02-08 07:09:56 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] Missing pref
+----------------------------------------------
+r24952 | jonnybradley | 2010-02-08 07:09:40 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] Articles list headings out of sync
+----------------------------------------------
+r24951 | jonnybradley | 2010-02-08 06:59:47 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] Don't display "Read more" if showing "fullbody" (from articles plugin)
+----------------------------------------------
+r24950 | jonnybradley | 2010-02-08 06:28:24 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[MOD] Comment
+----------------------------------------------
+r24949 | jonnybradley | 2010-02-08 06:10:51 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] Change "st" param on add_feedback call to "3" (for info)
+----------------------------------------------
+r24948 | luciash | 2010-02-08 06:04:51 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[ENH] .htaccess: Do not use ETags by default - gives grade A in YSlow for Configure entity tags
+----------------------------------------------
+r24947 | changi67 | 2010-02-08 05:48:45 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[MOD] access check: deploy some accesslib check functions. + Replace split by explode where no pattern is needed
+----------------------------------------------
+r24946 | jonnybradley | 2010-02-08 05:28:07 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[FIX] Small improvements and fix to testMail
+----------------------------------------------
+r24943 | changi67 | 2010-02-08 02:49:49 -0800 (Mon, 08 Feb 2010) | 1 line
+
+[MOD] access check: deploy some accesslib check functions.
+----------------------------------------------
+r24938 | chealer | 2010-02-07 20:40:24 -0800 (Sun, 07 Feb 2010) | 2 lines
+
+[FIX] Top users generally empty (r21284 regression)
+thanks gerbert
+----------------------------------------------
+r24937 | chealer | 2010-02-07 20:38:36 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[FIX] Admin Modules (r24932 regression)
+----------------------------------------------
+r24936 | luciash | 2010-02-07 20:04:28 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[ENH] wikiplugin trackerlist: better/more info/descriptions for the plugin helper
+----------------------------------------------
+r24935 | luciash | 2010-02-07 19:16:59 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[FIX] wikiplugin trackerlist: typo caused sort_mode=lastModif_desc to return "Incorrect param" error
+----------------------------------------------
+r24934 | sept_7 | 2010-02-07 16:13:58 -0800 (Sun, 07 Feb 2010) | 2 lines
+
+[TYPO] correction of typo
+
+----------------------------------------------
+r24932 | sept_7 | 2010-02-07 16:08:42 -0800 (Sun, 07 Feb 2010) | 2 lines
+
+[ENH]?\194?\160use access lib function for feature and permission checks
+
+----------------------------------------------
+r24929 | nkoth | 2010-02-07 13:50:40 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[ENH] Add type filter to articles rss feed
+----------------------------------------------
+r24925 | sylvieg | 2010-02-07 13:24:44 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[FIX]tracker: fix the link for star/rating: trackerlist can be on other than a wiki page
+----------------------------------------------
+r24924 | sylvieg | 2010-02-07 12:24:50 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[FIX]tracker: keep all the url params except those used by the vote when replacing the voting(ex: keep itemId
+----------------------------------------------
+r24922 | sylvieg | 2010-02-07 11:59:48 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[FIX]tracker: the first main field is probably the best: TODO: a setting in a tracker  that gives the syntax of the item name (ex: / )
+----------------------------------------------
+r24921 | jonnybradley | 2010-02-07 11:45:44 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[FIX] Use headerlib for tiki-sheet JS (broken when JS moved to end of page)
+----------------------------------------------
+r24919 | jonnybradley | 2010-02-07 11:32:13 -0800 (Sun, 07 Feb 2010) | 2 lines
+
+[FIX] Correct problems with disappearing file galleries caused by 20090811_filegals_container_tiki.sql when running on MySQL 4.1 (wish3000).
+
+----------------------------------------------
+r24918 | chealer | 2010-02-07 11:01:24 -0800 (Sun, 07 Feb 2010) | 2 lines
+
+[FIX] calls to removed cast() (r24484 regression). oops
+thanks Pascal Kustner
+----------------------------------------------
+r24916 | jonnybradley | 2010-02-07 10:33:12 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[ENH] Pagination for version list on page history (switchable in case you need to compare version on a "page" boundary).
+----------------------------------------------
+r24915 | jonnybradley | 2010-02-07 09:25:26 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[FIX] Multiple notices in lib/diff
+----------------------------------------------
+r24914 | jonnybradley | 2010-02-07 08:53:24 -0800 (Sun, 07 Feb 2010) | 2 lines
+
+[MOD] Remove !important from textarea, option, select, & body.wikitext definition - otherwise every other background-color definition on any textarea, option or select, including in theme options will also need !important added to it.
+No visual change that i can find.
+----------------------------------------------
+r24913 | jonnybradley | 2010-02-07 08:49:56 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[FIX] Page source fixed (plus use textarea to show source and other fixes)
+----------------------------------------------
+r24912 | jonnybradley | 2010-02-07 08:47:32 -0800 (Sun, 07 Feb 2010) | 1 line
+
+[MOD] Use conventional English on buttons
+----------------------------------------------
+r24906 | pkdille | 2010-02-06 22:54:28 -0800 (Sat, 06 Feb 2010) | 1 line
+
+[MOD] accesslib: all admin panels are reachable through tiki-admin.php. The name of the panels is enough to build the url. Also some minor cleanups
+----------------------------------------------
+r24905 | lindonb | 2010-02-06 22:31:00 -0800 (Sat, 06 Feb 2010) | 1 line
+
+[FIX] Don't add height and width when rel=box (seemed to mess up display). Add a default width if not included in stylebox input. Other tidying.
+----------------------------------------------
+r24902 | lindonb | 2010-02-06 12:56:02 -0800 (Sat, 06 Feb 2010) | 1 line
+
+[FIX] No functionaty changed. Only category objects now go through category code and other clean up.
+----------------------------------------------
+r24901 | lindonb | 2010-02-06 11:49:24 -0800 (Sat, 06 Feb 2010) | 1 line
+
+[FIX] Integrate new randomGalleryId parameter so that all other parameters work with it.
+----------------------------------------------
+r24899 | lindonb | 2010-02-06 09:00:13 -0800 (Sat, 06 Feb 2010) | 1 line
+
+[FIX] Correct filters added in commit 24669 and updated some plugin info descriptions.
+----------------------------------------------
+r24897 | jonnybradley | 2010-02-05 14:09:35 -0800 (Fri, 05 Feb 2010) | 7 lines
+
+[ENH] Page history (mini-revamp part 2):
+Single navigation when diff is of adjacent versions
+Comparison radio buttons disabled when not relevant
+Simplified diff_style menu (plus "advanced" mode button)
+Clear diff when switching to session mode
+Removed distracting numbers from navigation
+...and various other minor fixes and layout improvements
+----------------------------------------------
+r24896 | jonnybradley | 2010-02-05 13:55:09 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[MOD] Add show_numbers param to pagination controls (default "y")
+----------------------------------------------
+r24894 | sylvieg | 2010-02-05 11:10:05 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[NEW]wiki: new perm tiki_p_wiki_view_ref to be able to see a page in modules and rss (without the data) convenient for a site with only one page visible. (more modules to come) 
+----------------------------------------------
+r24893 | lphuberdeau | 2010-02-05 11:02:55 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX] After a second look, the root of all evil was the great idea to retrieve all posts in a forum to obtain the last one. Please stop.
+----------------------------------------------
+r24892 | jonnybradley | 2010-02-05 10:35:23 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX] Plugin edit message
+----------------------------------------------
+r24891 | sylvieg | 2010-02-05 10:33:09 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX]fix 24885 - thx pkdille
+----------------------------------------------
+r24890 | jonnybradley | 2010-02-05 09:46:44 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[ENH] Optionally show article id in list
+----------------------------------------------
+r24889 | jonnybradley | 2010-02-05 09:36:08 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX] Admin article types help button fix
+----------------------------------------------
+r24888 | jonnybradley | 2010-02-05 09:24:55 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[MOD] Add $container_class to output of articles and bloglist plugins (.wikiplugin_articles or .wikiplugin_bloglist respectively) for custom CSS targeting.
+----------------------------------------------
+r24887 | lphuberdeau | 2010-02-05 09:23:58 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX]?\194?\160The call to list_forums() adds a signigicant memory overhead (+95M on test install) and COP overhead (30% on test install) for not much value added. Replacing with direct query to avoid it. list_forums() requires love/rework. The slowdown is caused by slow queries in a loop (many of them).
+----------------------------------------------
+r24886 | jonnybradley | 2010-02-05 09:09:42 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[ENH] Add date range params to bloglist plugin
+----------------------------------------------
+r24885 | sylvieg | 2010-02-05 09:00:57 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX]error: say at least page not found - when redirect on search. Put the error in remarksbox
+----------------------------------------------
+r24884 | jonnybradley | 2010-02-05 08:04:59 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[SVN] Add *.js to ignores
+----------------------------------------------
+r24883 | jonnybradley | 2010-02-05 08:01:43 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX] jQ for theme & option menus now uses name attribute to find them (id's changed after lesser magic).
+----------------------------------------------
+r24882 | alain_desilets | 2010-02-05 07:59:17 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[MOD][i18n] Added an outline of the automatic bilingual sentence alignment algorithm in BilingualAligner. Doesn't do anything really. Just to provide guidance to Akshi Gupta, a student who is working on finishing this.
+----------------------------------------------
+r24881 | jonnybradley | 2010-02-05 07:58:34 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[MOD] Don't bind event to show/hide the _childcontainer div if it doesn't exist.
+----------------------------------------------
+r24880 | sept_7 | 2010-02-05 07:51:54 -0800 (Fri, 05 Feb 2010) | 2 lines
+
+[ENH] Small layout enhancement for Prefernces search
+
+----------------------------------------------
+r24879 | sept_7 | 2010-02-05 07:34:31 -0800 (Fri, 05 Feb 2010) | 2 lines
+
+[EHN] use $access->check_feature instead of open coding it..
+
+----------------------------------------------
+r24878 | jonnybradley | 2010-02-05 07:32:36 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX] Various notice and warning fixes for the installer
+----------------------------------------------
+r24877 | sept_7 | 2010-02-05 07:29:31 -0800 (Fri, 05 Feb 2010) | 3 lines
+
+[EHN] allow a 'keywords' field in the definition of prefs to be able to find
+prefs more easily...
+
+----------------------------------------------
+r24876 | jonnybradley | 2010-02-05 05:57:16 -0800 (Fri, 05 Feb 2010) | 2 lines
+
+[FIX] Fix date format for plugins (datepicker) as parsing formats set in prefs is too brittle (depends on locale, browser etc).
+Remove unused parseDateString() and JS/PHP date format info.
+----------------------------------------------
+r24875 | jonnybradley | 2010-02-05 05:54:00 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[MOD] Move jQuery input setup to after element is attached to parent
+----------------------------------------------
+r24874 | luciash | 2010-02-05 05:50:37 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[MOD] CSS: move the input_submit_container in the general layout.css + added to reference file
+----------------------------------------------
+r24873 | jonnybradley | 2010-02-05 04:32:58 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX] Split is deprecated
+----------------------------------------------
+r24871 | jonnybradley | 2010-02-05 04:24:20 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[MOD] Update Zend framework to latest stable (1.10)
+----------------------------------------------
+r24870 | jonnybradley | 2010-02-05 03:42:53 -0800 (Fri, 05 Feb 2010) | 1 line
+
+[FIX] $key not defined - hopefully $k is the right one?
+----------------------------------------------
+r24869 | sept_7 | 2010-02-05 02:41:59 -0800 (Fri, 05 Feb 2010) | 3 lines
+
+[MERGE] merging of experimental/tiki-log-merge to trunk
+The aim of this is to unify tikilogs adn tikiactionlog, so now all logs are recorded via tikiactions logs...
+
+----------------------------------------------
+r24868 | sept_7 | 2010-02-05 02:32:20 -0800 (Fri, 05 Feb 2010) | 3 lines
+
+[FIX] fic change-passwd {jq} function should not be declared in the onready
+part... So add notonready=true in {jq}
+
+----------------------------------------------
+r24867 | sept_7 | 2010-02-05 02:22:35 -0800 (Fri, 05 Feb 2010) | 2 lines
+
+[FIX] installer : don't use {jq} in the installer for now
+
+----------------------------------------------
+r24865 | sept_7 | 2010-02-05 00:17:13 -0800 (Fri, 05 Feb 2010) | 2 lines
+
+[FIX] tiki-upload_file : show the result of the upload
+
+----------------------------------------------
+r24863 | ricks99 | 2010-02-04 17:59:34 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[FIX]Click ratio should be presented as a percentage -- not a decimal value.
+----------------------------------------------
+r24862 | luciash | 2010-02-04 16:37:25 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[ENH] tracker wikiplugin: no need to have submit buttons in another table row and cell and allow easy centering or aligning right for the buttons using the .input_submit_container
+----------------------------------------------
+r24861 | luciash | 2010-02-04 15:25:11 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[ENH] tracker wikiplugin: added class for submit button to allow better styling
+----------------------------------------------
+r24860 | luciash | 2010-02-04 15:15:28 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[ENH] trackerprefill wikiplugin: added class for submit button to allow better styling
+----------------------------------------------
+r24859 | luciash | 2010-02-04 15:13:36 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[ENH] trackerfilter wikiplugin: added class for submit button to allow better styling
+----------------------------------------------
+r24857 | ricks99 | 2010-02-04 13:52:14 -0800 (Thu, 04 Feb 2010) | 4 lines
+
+[ENH]For bug #2780. Added two new parameters to the COUNTDOWN plugin: 
+* show=dhms Specify what information to show (days, hours, minutes, seconds). Default = dhms
+* since=y|n Specify if the time since an elapse should be shown. Default = y
+I did *not* address the "locate time" issue identified in the bug.
+----------------------------------------------
+r24856 | jonnybradley | 2010-02-04 12:27:37 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[ENH] Add date range for articles plugin. Also flag to show body of article as well as the header.
+----------------------------------------------
+r24855 | jonnybradley | 2010-02-04 12:14:19 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[INDENT] No other changes
+----------------------------------------------
+r24854 | jonnybradley | 2010-02-04 11:48:58 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[CSS] Rule for datepicker needed to appear infront of plugin edit dialog (and some tidying)
+----------------------------------------------
+r24853 | jonnybradley | 2010-02-04 11:46:17 -0800 (Thu, 04 Feb 2010) | 2 lines
+
+[ENH] New jQuery.tiki wrapper for jQuery UI datepicker.
+New filter type 'date' for plugin params to automatically use datepicker (time and datetime TODO) & expose date format prefs to JavaScript.
+----------------------------------------------
+r24852 | jonnybradley | 2010-02-04 11:38:20 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[MOD] New function parseDateString() - usage to come...
+----------------------------------------------
+r24851 | jonnybradley | 2010-02-04 11:36:45 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[FIX] Change article type fn chgArtType() used in Edit Article now counts unset properties as "n" (plus some missing var declarations and indentation)
+----------------------------------------------
+r24850 | jonnybradley | 2010-02-04 11:26:06 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[MOD] Downgrade auto_save remarksbox to info (less scary)
+----------------------------------------------
+r24849 | jonnybradley | 2010-02-04 11:24:53 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[FIX] Non-jQuery JavaScript needs to execute before document.ready (sometimes). Also indentation.
+----------------------------------------------
+r24848 | jonnybradley | 2010-02-04 11:22:39 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[FIX] Fix regexp to allow {jq} parameters (e.g. notonready=true)
+----------------------------------------------
+r24846 | sept_7 | 2010-02-04 07:46:20 -0800 (Thu, 04 Feb 2010) | 2 lines
+
+[FIX] Oops debug message removal :(
+
+----------------------------------------------
+r24845 | sept_7 | 2010-02-04 07:05:54 -0800 (Thu, 04 Feb 2010) | 14 lines
+
+[FIX] Fix ajax script evaluation and refine {jq} tags
+
+Please test as {jq} is very special at what it interprets, it is supposed to be like {literal} but not always... Jhonny if you have some tips please share
+
+We also have a modification in how script are handled in xajaxResponse as the
+script evaluate the script in it own context so function declared in
+xajaxResponse->script() are not available in the page :(
+
+So we now use xajaResponse->includeScript() and we provide a js script in
+temp/public...
+
+[FIX] tiki-upload_file.php and filegallery slideshow, profiles are also fixed.
+If you found some pages not working please report
+
+----------------------------------------------
+r24844 | changi67 | 2010-02-04 03:42:28 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[MOD] Run get_strings groupwrite nosections lang=fr
+----------------------------------------------
+r24842 | changi67 | 2010-02-04 03:24:17 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[FIX] XHTML validation: duplicate definition of class attribute
+----------------------------------------------
+r24838 | changi67 | 2010-02-04 02:21:22 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[MOD] XHTML Validation
+----------------------------------------------
+r24835 | xavidp | 2010-02-04 00:50:07 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[MOD]Username to be included in QUOTE. Fix applied as reported long ago in wish2089. Thanks people at precarios-www
+----------------------------------------------
+r24832 | xavidp | 2010-02-04 00:32:40 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[MOD]Add heading and body of new articles in notification emails. Thanks Pablo from precarios.org to suggest this hack (I never understood why that content was not in the notification message for articles).
+----------------------------------------------
+r24831 | chibaguy | 2010-02-04 00:26:07 -0800 (Thu, 04 Feb 2010) | 1 line
+
+[FIX] cssmenus dependency should be indicated for topbar menu id, since the menu can use either a CSS menu or PHPL menu. Actually "or" should printed between these on the Look and Feel page, but how to do the logic for that in lib/prefs/feature.php?
+----------------------------------------------
+r24830 | chibaguy | 2010-02-03 23:54:45 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[ENH] Admin's Edit-perspective link shouldn't be outside the module box.
+----------------------------------------------
+r24827 | xavidp | 2010-02-03 15:18:11 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[MOD]Add clearer color (greyish) + italics to the description field by default in all themes, as well as to character count. It can be overridable in a theme by theme basis, which imho is better than the default black and not italics as default (and no css class for description) before this commit. Thanks Ricks99 for tips and feedback.
+----------------------------------------------
+r24826 | sylvieg | 2010-02-03 15:17:57 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[FIX]TRACKERITEMFIELD: be able to handle case as TRACKERITEMFIELD(itemId={{itemId}}, fieldId=1) when there is no itemId in the url
+----------------------------------------------
+r24825 | sylvieg | 2010-02-03 14:39:17 -0800 (Wed, 03 Feb 2010) | 1 line
+
+oops 24824 to be able also to default to empty {{itemId|}}
+----------------------------------------------
+r24824 | sylvieg | 2010-02-03 14:20:29 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[FIX]parsing: to be able to default the argument variables to 0 or empty(ex:{{itemId|}} or {{itemId|0}}
+----------------------------------------------
+r24823 | lphuberdeau | 2010-02-03 13:30:46 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[ROLLBACK] r24794 - breaks the entire profile installer. Thank you for easy to spot commit message.
+----------------------------------------------
+r24822 | sylvieg | 2010-02-03 12:07:48 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[FIX]tracker: missing status for item link with displayfields
+----------------------------------------------
+r24820 | jonnybradley | 2010-02-03 11:42:20 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[MOD] Move jQuery JS setup from header_jquery.tpl to lib/setup/js_detect.php (and KIL header_jquery.tpl)
+----------------------------------------------
+r24819 | alain_desilets | 2010-02-03 11:26:30 -0800 (Wed, 03 Feb 2010) | 1 line
+
+- When loading modules, if there were some preference errors and if the current user is part of the Admins group, then display error messages in the right colum.
+----------------------------------------------
+r24818 | lphuberdeau | 2010-02-03 10:28:47 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[NEW] Cart
+----------------------------------------------
+r24817 | sylvieg | 2010-02-03 10:16:26 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[FIX]forum: parse description + some link fixes
+----------------------------------------------
+r24816 | jonnybradley | 2010-02-03 10:06:07 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[MOD] Lighter background for article and blog titles and tiny graphic fixes
+----------------------------------------------
+r24815 | jonnybradley | 2010-02-03 09:35:43 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[FIX] Handle param['time'] passed in as in integer (as in tiki-edit_article.tpl)
+----------------------------------------------
+r24814 | jonnybradley | 2010-02-03 09:33:10 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[FIX] Warning when no data
+----------------------------------------------
+r24813 | sylvieg | 2010-02-03 07:14:14 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[MOD]forum: wiki parse the description. If somebody wants a setting, tell me
+----------------------------------------------
+r24812 | sept_7 | 2010-02-03 05:32:14 -0800 (Wed, 03 Feb 2010) | 2 lines
+
+[FIX] keep the same convention in path as the one fir $tikipath '\\' -> '/'
+
+----------------------------------------------
+r24811 | jonnybradley | 2010-02-03 04:34:28 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[FIX] Correct trextarea resizing for WYSIWYG mode. Good in Safari/Chrome, Ok in Fx, IE not tested yet
+----------------------------------------------
+r24810 | jonnybradley | 2010-02-03 04:31:17 -0800 (Wed, 03 Feb 2010) | 1 line
+
+[MOD] JavaScript document object shouldn't be in quotes
+----------------------------------------------
+r24809 | sept_7 | 2010-02-03 02:35:26 -0800 (Wed, 03 Feb 2010) | 2 lines
+
+[UPDATE] Update JSMin.php to a newer version
+
+----------------------------------------------
+r24808 | sept_7 | 2010-02-03 02:23:01 -0800 (Wed, 03 Feb 2010) | 2 lines
+
+[FIX] correct importation of import url() in CSS minifying
+
+----------------------------------------------
+r24807 | chealer | 2010-02-02 17:04:57 -0800 (Tue, 02 Feb 2010) | 1 line
+
+[FIX] upgrade from 4 inserting pre-existing tiki_sefurl_regex_out value (completes r23635)
+----------------------------------------------
+r24806 | luciash | 2010-02-02 15:26:35 -0800 (Tue, 02 Feb 2010) | 1 line
+
+oops, accidental removal... sorry sylvie
+----------------------------------------------
+r24805 | luciash | 2010-02-02 14:59:36 -0800 (Tue, 02 Feb 2010) | 1 line
+
+[FIX] file galleries: php notices borked image file intended to display
+----------------------------------------------
+r24804 | luciash | 2010-02-02 14:44:43 -0800 (Tue, 02 Feb 2010) | 1 line
+
+[FIX] installer: global  needed in tiki-setup_base.php for upgrades via installer (thx sylvie)
+----------------------------------------------
+r24802 | sylvieg | 2010-02-02 13:06:56 -0800 (Tue, 02 Feb 2010) | 1 line
+
+[NEW]trackerlist: option showrss
+----------------------------------------------
+r24801 | jonnybradley | 2010-02-02 11:27:16 -0800 (Tue, 02 Feb 2010) | 1 line
+
+[FIX] Dont include jQuery JS where this executes now output_js() happens in tiki.tpl at the end of the page.
+----------------------------------------------
+r24800 | jonnybradley | 2010-02-02 11:26:45 -0800 (Tue, 02 Feb 2010) | 2 lines
+
+[FIX] Dont include jQuery JS where this executes now output_js() happens in tiki.tpl at the end of the page.
+Also change keyup to keypress to eliminate spurious warnings.
+----------------------------------------------
+r24799 | sylvieg | 2010-02-02 11:09:58 -0800 (Tue, 02 Feb 2010) | 1 line
+
+missing to 24687
+----------------------------------------------
+r24798 | sylvieg | 2010-02-02 10:30:20 -0800 (Tue, 02 Feb 2010) | 1 line
+
+[MOD] better string
+----------------------------------------------
+r24797 | sylvieg | 2010-02-02 10:29:19 -0800 (Tue, 02 Feb 2010) | 1 line
+
+[MOD]search: compact language search part
+----------------------------------------------
+r24796 | sylvieg | 2010-02-02 09:29:40 -0800 (Tue, 02 Feb 2010) | 1 line
+
+[NEW]img: new param randomGalleryId to be able to pick a random file in a fgal
+----------------------------------------------
+r24794 | sept_7 | 2010-02-02 07:36:46 -0800 (Tue, 02 Feb 2010) | 3 lines
+
+[ENH] try to put javascript inside {jq} bloc to put them at the end of the page
+Please test to see if something breaks...
+
+----------------------------------------------
+r24793 | sept_7 | 2010-02-02 06:45:10 -0800 (Tue, 02 Feb 2010) | 2 lines
+
+[FIX/ENH] put JS script and JS files at the end of the page
+
+----------------------------------------------
+r24792 | sylvieg | 2010-02-02 06:07:28 -0800 (Tue, 02 Feb 2010) | 1 line
+
+missing commit to 24687
+----------------------------------------------
+r24790 | eromneg | 2010-02-02 04:03:37 -0800 (Tue, 02 Feb 2010) | 1 line
+
+[MOD]remove the strtolower function so that phplayer menu links can have Title tags with capitals and the behaviour is the same as with css menus
+----------------------------------------------
+r24789 | sept_7 | 2010-02-02 00:57:54 -0800 (Tue, 02 Feb 2010) | 2 lines
+
+[FIX] unserialize expect a string so ttest for string before trying unserialize
+
+----------------------------------------------
+r24788 | sylvieg | 2010-02-01 14:45:00 -0800 (Mon, 01 Feb 2010) | 1 line
+
+[FIX]split: to have the headers working in {SPLIT(first=col)}\!header{SPLIT}
+----------------------------------------------
+r24787 | jonnybradley | 2010-02-01 14:42:13 -0800 (Mon, 01 Feb 2010) | 1 line
+
+[FIX] Workaround for jQ.sheet's reluctance to add cells to an empty (new) spreadsheet.
+----------------------------------------------
+r24786 | sylvieg | 2010-02-01 14:15:52 -0800 (Mon, 01 Feb 2010) | 1 line
+
+[FIX]split: incorrect filter colsize can be 10|10%
+----------------------------------------------
+r24785 | jonnybradley | 2010-02-01 13:44:40 -0800 (Mon, 01 Feb 2010) | 1 line
+
+[ENH] More pagination controls for page history versions (now on preview and source views, as well as diffs)
+----------------------------------------------
+r24784 | sylvieg | 2010-02-01 13:04:25 -0800 (Mon, 01 Feb 2010) | 1 line
+
+missing table
+----------------------------------------------
+r24783 | sylvieg | 2010-02-01 12:46:56 -0800 (Mon, 01 Feb 2010) | 1 line
+
+[NEW]blog: 2 params to top_visited_blogs: showlastpost + sort_mode (todo merge the other blog module)
+----------------------------------------------
+r24778 | chealer | 2010-01-31 20:00:33 -0800 (Sun, 31 Jan 2010) | 4 lines
+
+[FIX] case where Calendar filter is not set and feature_default_calendars is used. oops
+[FIX] Don't display if none of the requested calendars can be viewed
+[ENH/FIX] Restore support for filtering with multiple calendars, now working (hopefully)
+Calendar module: "calendarId" becomes "calIds". just say if you were using it, I'll make the conversion
+----------------------------------------------
+r24777 | chealer | 2010-01-31 19:51:19 -0800 (Sun, 31 Jan 2010) | 2 lines
+
+[FIX] Last modified events: Calendar filter ignored (spello "calendarid")
+Thanks Pascal St-Jean
+----------------------------------------------
+r24775 | jonnybradley | 2010-01-31 12:40:36 -0800 (Sun, 31 Jan 2010) | 1 line
+
+[ENH] View page history by edit "session" (i.e. edits by the same author within 30 minutes, hardcoded for now)
+----------------------------------------------
+r24774 | lindonb | 2010-01-31 11:54:32 -0800 (Sun, 31 Jan 2010) | 3 lines
+
+[ENH] Added group watch/unwatch to category and descendants using new functions in categlib and altering tiki-object watch page
+[MOD] Changed user watch (tikilib) and group watch (categlib) functions to never add the Top category to watch tables, since Top is not a real category (not in the tiki-categories table).
+[FIX] Fixed various bugs in first commit and cleaned out double quotes
+----------------------------------------------
+r24773 | sept_7 | 2010-01-31 11:51:00 -0800 (Sun, 31 Jan 2010) | 2 lines
+
+[ENH] Move all JS files scripts to the end of the page...
+
+----------------------------------------------
+r24772 | chealer | 2010-01-31 11:47:34 -0800 (Sun, 31 Jan 2010) | 6 lines
+
+[FIX] Plugin DIV using width parameter (r24669 regression)
+Broken for "{DIV(width="48%",float="right")}RIGHT{DIV}{DIV(width="48%",float="left")}LEFT{DIV}"
+Cf http://sourceforge.net/mailarchive/forum.php?thread_name=AD9009DD1B046F4ABBB3E3541D9323FE061CB0B42E%40NRCCENMB3.nrc.ca&forum_name=tikiwiki-devel
+lphuberdeau: might want to check this
+Thanks Alain D?\195?\169silets
+
+----------------------------------------------
+r24770 | xavidp | 2010-01-31 11:12:36 -0800 (Sun, 31 Jan 2010) | 1 line
+
+While customized string translation seems broken at tiki 4.2 (from proposals), a few strings are added directly through svn
+----------------------------------------------
+r24769 | sept_7 | 2010-01-31 10:02:57 -0800 (Sun, 31 Jan 2010) | 3 lines
+
+[ENH] load JS files in tiki-setup.php with add_jsfile to reduce the number of
+requests
+
+----------------------------------------------
+r24768 | jonnybradley | 2010-01-31 09:23:15 -0800 (Sun, 31 Jan 2010) | 1 line
+
+[MOD] Add plugin name to commit message
+----------------------------------------------
+r24766 | jonnybradley | 2010-01-31 07:24:51 -0800 (Sun, 31 Jan 2010) | 1 line
+
+[FIX] Rollback r24628 - userlinks are cached unserialized as they are strings already. Cachlib fixed not to return serialized results in previous commit.
+----------------------------------------------
+r24765 | jonnybradley | 2010-01-31 07:22:59 -0800 (Sun, 31 Jan 2010) | 1 line
+
+[FIX] CacheLibFileSystem::getCached() incorrectly returning serialized result (which will be done by getSerialized() if necessary)
+----------------------------------------------
+r24763 | chealer | 2010-01-30 19:38:53 -0800 (Sat, 30 Jan 2010) | 2 lines
+
+[FIX] Plugin events, Upcoming events module: all events shown if all requested calendars can't be viewed
+[FIX] upcoming_events(): behavior diverging from specification
+----------------------------------------------
+r24762 | ricks99 | 2010-01-30 18:29:45 -0800 (Sat, 30 Jan 2010) | 1 line
+
+[FIX]Fixing an xhtml validation error. A block-level element (<div>) cannot be inside and inline element (<span>). Changed the <span id='toc'> to a <div>. The content from {maketoc} now validates properly.
+----------------------------------------------
+r24761 | sylvieg | 2010-01-30 14:30:33 -0800 (Sat, 30 Jan 2010) | 1 line
+
+[FIX]notice when running sqlupgrade
+----------------------------------------------
+r24760 | chealer | 2010-01-30 13:26:06 -0800 (Sat, 30 Jan 2010) | 3 lines
+
+[FIX] HTML special chars escaping
+[FIX] colons inside tr blocks
+[FIX] translation: duplicate form value source_page
+----------------------------------------------
+r24759 | jonnybradley | 2010-01-30 11:14:25 -0800 (Sat, 30 Jan 2010) | 1 line
+
+[ENH] Improvements for translationUIRevamp layout. Display message and diff type menu properly & add ability to view separate version diffs. Some other small fixes.
+----------------------------------------------
+r24758 | jonnybradley | 2010-01-30 09:58:32 -0800 (Sat, 30 Jan 2010) | 1 line
+
+[ENH] Pagination controls for page history versions
+----------------------------------------------
+r24757 | jonnybradley | 2010-01-30 09:46:33 -0800 (Sat, 30 Jan 2010) | 2 lines
+
+[ENH] New zero_based_offset param for pagination controls (defaults to "y").
+No change on existing behaviour expected, implementation to come.
+----------------------------------------------
 Version 4.1
 <http://tikiwiki.org/ReleaseNotes41>
 ------------------

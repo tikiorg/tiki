@@ -1,4 +1,4 @@
-{title}{tr}Contact us{/tr}{/title}
+{title}{tr}Contact Us{/tr}{/title}
 
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 	{if $message}<br />

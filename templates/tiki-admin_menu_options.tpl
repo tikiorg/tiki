@@ -194,7 +194,7 @@
 											<option value=",,,">{tr}Choose{/tr} ...</option>
 											<option value="tiki-list_blogs.php,{tr}List Blogs{/tr},feature_blogs,tiki_p_read_blog">{tr}List Blogs{/tr}</option>
 											<option value="tiki-blog_rankings.php,{tr}Rankings{/tr},feature_blog_rankings,tiki_p_read_blog">{tr}Rankings{/tr}</option>
-											<option value="tiki-edit_blog.php,{tr}Create blog{/tr},feature_blogs,tiki_p_create_blogs">{tr}Create blog{/tr}</option>
+											<option value="tiki-edit_blog.php,{tr}Create Blog{/tr},feature_blogs,tiki_p_create_blogs">{tr}Create Blog{/tr}</option>
 											<option value="tiki-blog_post.php,{tr}Post{/tr},feature_blogs,tiki_p_blog_post">{tr}Post{/tr}</option>
 										</select>
 									</td>

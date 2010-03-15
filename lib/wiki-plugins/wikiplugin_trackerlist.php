@@ -150,26 +150,26 @@ function wikiplugin_trackerlist_info() {
 			'filtervalue' => array(
 				'required' => false,
 				'name' => tra('Filter Value'),
-				'description' => tra('?'),
+				'description' => tra('Filter value of the filterfield. For better performance, use exact value instead'),
 				'filter' => 'text',
 				'separator' => ':',
 			),
 			'exactvalue' => array(
 				'required' => false,
 				'name' => tra('Exact Value'),
-				'description' => tra('?'),
+				'description' => tra('Exact value of the filter'),
 				'filter' => 'text',
 				'separator' => ':',
 			),
 			'checkbox' => array(
 				'required' => false,
 				'name' => tra('Checkbox'),
-				'description' => tra('?'),
+				'description' => tra('Adds a checkbox on each line to be able to do an action.'),
 			),
 			'goIfOne' => array(
 				'required' => false,
 				'name' => tra('goIfOne'),
-				'description' => 'y|n',
+				'description' => 'Go directly to tiki-view_tracker_item.php if only one item is found',
 				'filter' => 'alpha'
 			),
 			'more' => array(
@@ -204,7 +204,7 @@ function wikiplugin_trackerlist_info() {
 			'view_user' => array(
 				'required' => false,
 				'name' => tra('View User'),
-				'description' => tra('?'),
+				'description' => tra('Will display the items of the specified user'),
 			),
 			'itemId' => array(
 				'required' => false,
@@ -223,18 +223,18 @@ function wikiplugin_trackerlist_info() {
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
-				'description' => tra('link url'),
+				'description' => tra('The link that will be on each main field'),
 				'filter' => 'url'
 			),
 			'ldelim' => array(
 				'required' => false,
 				'name' => tra('Left Deliminator'),
-				'description' => tra('?'),
+				'description' => tra('Smarty left delimiter'),
 			),
 			'rdelim' => array(
 				'required' => false,
 				'name' => tra('Right Deliminator'),
-				'description' => tra('?'),
+				'description' => tra('Smarty reft delimiter'),
 			),
 			'list_mode' => array(
 				'required' => false,
@@ -587,14 +587,22 @@ function wikiplugin_trackerlist($data, $params) {
 			
 		if (!isset($filtervalue)) {
 			$filtervalue = '';
-		} elseif ($filtervalue == '#user') {
-			$filtervalue = $user;
+		} else {
+			foreach ($filtervalue as $i=>$f) {
+				if ($f == '#user') {
+					$filtervalue[$i] = $user;
+				}
+			}
 		}
 		
 		if (!isset($exactvalue)) {
 			$exactvalue = '';
-		} elseif ($exactvalue == '#user') {
-			$exactvalue = $user;
+		} else {
+			foreach ($exactvalue as $i=>$f) {
+				if ($f == '#user') {
+					$exactvalue[$i] = $user;
+				}
+			}
 		}
 		if (!empty($_REQUEST['itemId']) && (empty($ignoreRequestItemId) || $ignoreRequestItemId != 'y') ) {
 			$itemId = $_REQUEST['itemId'];

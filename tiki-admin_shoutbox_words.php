@@ -11,7 +11,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/shoutbox/shoutboxlib.php');
 $access->check_feature('feature_shoutbox');
-$access->check_ermission('tiki_p_admin_shoutbox');
+$access->check_permission('tiki_p_admin_shoutbox');
 
 // Do the add bad word form here
 if (isset($_REQUEST["add"])) {

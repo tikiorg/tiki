@@ -2,7 +2,6 @@
 
 {title help="User+Files"}{tr}User Files{/tr}{/title}
 
-<!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
 {include file='tiki-mytiki_bar.tpl'}
 
 <div style="text-align:center;">
@@ -16,8 +15,6 @@
     <small>{tr}Used space:{/tr} {tr}no limit for admin{/tr}</small>
   {/if}
 </div>
-<br />
-<h2>{tr}User Files{/tr}</h2>
 <form action="tiki-userfiles.php" method="post">
 <table class="normal">
 <tr>

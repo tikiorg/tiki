@@ -31,7 +31,7 @@ function prefs_blog_list() {
 			'name' => 'Default ordering',
 			'type' => 'list',
 			'options' => array(
-				'created_desc' => tra('Creation date (desc)'),
+				'created_desc' => tra('Creation Date (desc)'),
 				'lastModif_desc' => tra('Last modification date (desc)'),
 				'title_asc' => tra('Blog title (asc)'),
 				'posts_desc' => tra('Number of posts (desc)'),

@@ -412,7 +412,7 @@ if (isset($_REQUEST['graph'])) {
 		require_once ('lib/graph-engine/graph.multiline.php');
 		$graphType = 'BarStackGraphic';
 		$ext = 'jpg';
-		$background = & new GD_GRenderer(max($widthUser, $widthWeek) , 8 * $height, $ext);
+		$background = new GD_GRenderer(max($widthUser, $widthWeek) , 8 * $height, $ext);
 		$legendWidth = 300;
 	}
 	include_once ('lib/smarty_tiki/modifier.tiki_short_date.php');
@@ -449,7 +449,7 @@ if (isset($_REQUEST['graph'])) {
 						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
 					}
 				} else {
-					$renderer = & new GD_GRenderer($widthUser, $height, $ext);
+					$renderer = new GD_GRenderer($widthUser, $height, $ext);
 					$graph = new $graphType;
 					$graph->setData($series);
 					$graph->setTitle($title);
@@ -485,7 +485,7 @@ if (isset($_REQUEST['graph'])) {
 						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
 					}
 				} else {
-					$renderer = & new GD_GRenderer($widthUser, $height, $ext);
+					$renderer = new GD_GRenderer($widthUser, $height, $ext);
 					$graph = new $graphType;
 					$graph->setData($series);
 					$graph->setTitle($title);
@@ -519,7 +519,7 @@ if (isset($_REQUEST['graph'])) {
 						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
 					}
 				} else {
-					$renderer = & new GD_GRenderer($widthWeek, $height, $ext);
+					$renderer = new GD_GRenderer($widthWeek, $height, $ext);
 					$graph = new $graphType;
 					unset($series['totalVol']);
 					$graph->setData($series);
@@ -554,7 +554,7 @@ if (isset($_REQUEST['graph'])) {
 						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
 					}
 				} else {
-					$renderer = & new GD_GRenderer($widthWeek, $height, $ext);
+					$renderer = new GD_GRenderer($widthWeek, $height, $ext);
 					$graph = new $graphType;
 					unset($series['totalVol']);
 					$graph->setData($series);
@@ -582,7 +582,7 @@ if (isset($_REQUEST['graph'])) {
 						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
 					}
 				} else {
-					$renderer = & new GD_GRenderer($widthTotal, $height, $ext);
+					$renderer = new GD_GRenderer($widthTotal, $height, $ext);
 					$graph = new $graphType;
 					$graph->setData($series);
 					$graph->setTitle($title);
@@ -609,7 +609,7 @@ if (isset($_REQUEST['graph'])) {
 						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
 					}
 				} else {
-					$renderer = & new GD_GRenderer($widthTotal, $height, $ext);
+					$renderer = new GD_GRenderer($widthTotal, $height, $ext);
 					$graph = new $graphType;
 					$graph->setData($series);
 					$graph->setTitle($title);
@@ -639,7 +639,7 @@ if (isset($_REQUEST['graph'])) {
 						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
 					}
 				} else {
-					$renderer = & new GD_GRenderer($widthGroup, $height, $ext);
+					$renderer = new GD_GRenderer($widthGroup, $height, $ext);
 					$graph = new $graphType;
 					$graph->setData($series);
 					$graph->setTitle($title);
@@ -669,7 +669,7 @@ if (isset($_REQUEST['graph'])) {
 						$logslib->insert_image($_REQUEST['galleryId'], $graph, $ext, $title, $period);
 					}
 				} else {
-					$renderer = & new GD_GRenderer($widthGroup, $height, $ext);
+					$renderer = new GD_GRenderer($widthGroup, $height, $ext);
 					$graph = new $graphType;
 					$graph->setData($series);
 					$graph->setTitle($title);

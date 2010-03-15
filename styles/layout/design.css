@@ -5,6 +5,11 @@
 */
 
 /***** XHTML Elements *****/
+/* print mode only */
+html#print {
+	background: #fff;
+	color: #000;
+}
 
 body.fullscreen {
 	text-align: left;
