@@ -51,6 +51,10 @@ require_once ('lib/setup/wiki.php');
 if ($prefs['feature_polls'] == 'y') require_once ('lib/setup/polls.php');
 if ($prefs['feature_mailin'] == 'y') require_once ('lib/setup/mailin.php');
 if ($prefs['useGroupHome'] == 'y') require_once ('lib/setup/default_homepage.php');
+if ($prefs['feature_sefurl'] == 'y' && $prefs['tikiIndex'] == 'tiki-index.php' && $prefs['wikiHomePage']) {
+	include_once('lib/wiki/wikilib.php');
+	$prefs['tikiIndex'] = $wikilib->sefurl($prefs['wikiHomePage']);
+}
 require_once ('lib/setup/theme.php');
 if ($prefs['feature_babelfish'] == 'y' || $prefs['feature_babelfish_logo'] == 'y') require_once ('lib/setup/babelfish.php');
 if (!empty($varcheck_errors)) {
