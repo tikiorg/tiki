@@ -117,7 +117,7 @@
         <option value="" disabled="disabled">{tr}No structures{/tr}</option>
       {/section}
     </select>
-    <p class="mini"><input type="submit" name="addstructurepages" value="{tr}Add Structure Pages{/tr}"/></p>
+    <p class="mini"><input type="submit" name="addstructurepages" value="{tr}Add Pages from Structures{/tr}"/></p>
 		</td>
 		<td width="20%"></td>
 		<td width="40%"></td>		

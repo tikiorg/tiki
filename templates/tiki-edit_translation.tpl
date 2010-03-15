@@ -39,7 +39,7 @@
 <hr>
 
 <a name="translate_updates"></a>
-<h3>{tr}Translate updates to this page or its translations{/tr}</h3>
+<h3>{tr}Translate updates made on this page or one of its translations{/tr}</h3>
 
 <div style="width:50%">
 	{$content_of_update_translation_section}
@@ -168,7 +168,7 @@ function validate_translation_request() {
 <form method="post" action="tiki-edit_translation.php">
 <div>
 	<select name="langpage">
-		<option value="">{tr}Select from available options...{/tr}</option>
+		<option value="">{tr}Unspecified{/tr}</option>
 		{foreach item=lang from=$languages}
 		<option value="{$lang.value|escape}">{$lang.name}</option>
 		{/foreach}
