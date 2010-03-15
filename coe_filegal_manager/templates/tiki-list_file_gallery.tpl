@@ -50,7 +50,7 @@
 	<a class="fg-watch-icon1" href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=file_gallery_changed&amp;objectType=File+Gallery&amp;objectName={$gal_info.name|escape:"url"}&amp;objectHref={'tiki-list_file_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}' align='right' hspace="1"}</a>
   {/if}
   <div class="fg-tip">
-    <h4>Tip</h4>
+    <h4>{tr}Tip{/tr}</h4>
     <p>{tr}Be careful to set the right permissions on the files you link to{/tr}.</p>
   </div>
   
@@ -78,7 +78,7 @@
   {/if}
 
 	<div class="fg-galleries">
-		<div class="fg-pane">Galleries</div>
+		<div class="fg-pane">{tr}Galleries{/tr}</div>
 		<div class="fg-toolbar">
 			<div class="fg-toolbar-left">
 				<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?filegals_manager={$filegals_manager}&view={$view}')"><img src="images/file_gallery/icon-home.gif" border="0" alt="{tr}Home{/tr}" title="{tr}Home{/tr}"/></a>
@@ -93,12 +93,12 @@
 			</div>
 		</div>
 		<div class="fg-galleries-list">
-			<h3>File galleries</h3>
+			<h3>{tr}File galleries{/tr}</h3>
 			{include file='file_galleries.tpl'}
 		</div>
 	</div>
 	<div class="fg-files">
-		<div class="fg-pane">Media</div>
+		<div class="fg-pane">{tr}Media{/tr}</div>
 		<div class="fg-toolbar">
 			<div class="fg-toolbar-left">
 				<h2>{$name}</h2>
@@ -109,18 +109,18 @@
 			</div>
 		</div>
 		<div class="fg-files-tools">
-			<div class="fg-files-stats">{$countgalleries} folders, {$countfiles} files</div>
+			<div class="fg-files-stats">{$countgalleries} {tr}folders{/tr}, {$countfiles} {tr}files{/tr}</div>
 			<div class="fg-files-count">
-				Number of displayed rows
+				{tr}Number of displayed rows{/tr}
 				<input id="fg-files-count-input" type="text" value="{$maxRecords}" onkeypress="FileGallery.limit(event,this.value,'{$view}','{$galleryId}','{$filegals_manager}')"/>
 			</div>
 		</div>
 		<div class="fg-files-buttons">
 			<a class="fg-files-button-mode" onclick="FileGallery.open('{$altmode}')">
 				{if $view eq 'browse'}
-					List files
+					{tr}List files{/tr}
 				{else}
-					Browse by image
+					{tr}Browse by image{/tr}
 				{/if}
 			</a>
 			<a class="fg-files-button-upload" onclick="FileGallery.upload.show('{$galleryId}','{$filegals_manager}')">{tr}Upload files{/tr}</a>

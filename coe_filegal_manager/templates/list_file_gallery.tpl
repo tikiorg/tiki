@@ -26,7 +26,7 @@
 		<div class="fg-pager">
 			<!-- if $maxRecords > 20 and $cant>$maxRecords -->
 			{if $cant>$maxRecords}
-				<span style="float:left;display:block;padding-right:5px">page</span>
+				<span style="float:left;display:block;padding-right:5px">{tr}page{/tr}</span>
 				{pagination_links cant=$cant step=$maxRecords offset=$offset next='n' prev='n' template='tiki-empty.tpl' htmlelement='fg-jquery-dialog'}{/pagination_links}
 			{/if}
 		</div>

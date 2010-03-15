@@ -2,15 +2,15 @@
 
 {if $files[changes].isgal eq 1}
 	{if $files[changes].perms.tiki_p_view_file_gallery eq 'y'}
-		{self_link _icon='folder_go' _menu_text=$menu_text _menu_icon=$menu_icon galleryId=$files[changes].id}{tr}Go to{/tr}{/self_link}
+		{self_link _icon='folder_go' _menu_text=$menu_text _menu_icon=$menu_icon galleryId=$files[changes].id _onclick='FileGallery.open(this.href);return false;'}{tr}Go to{/tr}{/self_link}
 	{/if}
 
 	{if $files[changes].perms.tiki_p_create_file_galleries eq 'y'}
-		{self_link _icon='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon edit_mode=1 galleryId=$files[changes].id}{tr}Properties{/tr}{/self_link}
+		{self_link _icon='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon edit_mode=1 galleryId=$files[changes].id _onclick='FileGallery.editGallery(this.href);return false;'}{tr}Properties{/tr}{/self_link}
 	{/if}
 
 	{if $files[changes].perms.tiki_p_upload_files eq 'y' and ( $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or ($user and $files[changes].user eq $user) or $files[changes].public eq 'y' ) }
-		<a href="tiki-upload_file.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='upload'}</a>
+		<a href="tiki-upload_file.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}"{if $filegals_manager neq ''} onclick="FileGallery.upload.edit(this.href);return false;"{/if}>{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='upload'}</a>
 	{/if}
 
 	{if $files[changes].perms.tiki_p_assign_perm_file_gallery eq 'y'}
@@ -100,7 +100,7 @@
 				
 			{/if}
 
-			<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt='{tr}Properties{/tr}'}</a>
+			<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}"{if $filegals_manager neq ''} onclick="FileGallery.upload.edit(this.href);return false;"{/if}>{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt='{tr}Properties{/tr}'}</a>
 			{/if}
 
 			{if $gal_info.lockable eq 'y' and $files[changes].isgal neq 1}

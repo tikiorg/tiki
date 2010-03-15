@@ -145,19 +145,19 @@
 	
 	{if $extra eq '1'}
 	<div class="fg-insert-choose">
-		<a id="fg-insert-mode-image" onclick="FileGallery.upload.switchto('image')"{if $as='image'} class="fg-insert-active"{/if}>Insert as an image</a>
-		<a id="fg-insert-mode-link" onclick="FileGallery.upload.switchto('link')"{if $as<>'image'} class="fg-insert-active"{/if}>Insert as a link</a>
+		<a id="fg-insert-mode-image" onclick="FileGallery.upload.switchto('image')"{if $as='image'} class="fg-insert-active"{/if}>{tr}Insert as an image{/tr}</a>
+		<a id="fg-insert-mode-link" onclick="FileGallery.upload.switchto('link')"{if $as<>'image'} class="fg-insert-active"{/if}>{tr}Insert as a link{/tr}</a>
 	</div>
 	<div class="fg-insert-form">
 		<div id="fg-insert-as-image">
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td><input type="radio" name="x" id="fg-insert-link-x1"/></td>
-				<td><label for="fg-insert-link-x1">Original size</label></td>
+				<td><label for="fg-insert-link-x1">{tr}Original size{/tr}</label></td>
 			</tr>
 			<tr>
 				<td><input type="radio" name="x" id="fg-insert-link-x2"/></td>
-				<td><label for="fg-insert-link-x2">Thumbnail</label></td>
+				<td><label for="fg-insert-link-x2">{tr}Thumbnail{/tr}</label></td>
 			</tr>
 			<tr>
 				<td></td>
@@ -168,7 +168,7 @@
 		<div id="fg-insert-as-link" style="display:none">
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td><label for="fg-insert-title">Link title</label></td>
+				<td><label for="fg-insert-title">{tr}Link title{/tr}</label></td>
 				<td><input type="text" id="fg-insert-title"/></td>
 			</tr>
 			</table>
@@ -182,6 +182,9 @@
 	{if $prefs.javascript_enabled eq 'y' and !$editFileId}
 		<input id="fg-upload-submit" type="button" onclick="FileGallery.upload.upload('0', 'loader_0')" value="{tr}Upload{/tr}"/>
 		<!--input type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr}Add File{/tr}"/-->
+	{/if}
+	{if $editFileId}
+		<input id="fg-upload-submit" type="submit" value="{tr}Save{/tr}"/>
 	{/if}
 	
 	<div class="fg-upload-hint">
