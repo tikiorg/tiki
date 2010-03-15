@@ -2,7 +2,7 @@
 
 <!-- FileGallery.upload.insertImage('{$file}',document.getElementById('fg-insert-link-x1').checked,$('#fg-insert-size-width').val(),$('fg-insert-size-height').val()) -->
 
-<form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
+<form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} {if $filegals_manager neq '' and $editFileId neq ''} onsubmit='FileGallery.open(this.action,this.id);FileGallery.upload.close();return false;'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 <input type="hidden" name="formId" value="0"/>
 {if $filegals_manager neq ''}
 	<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>
@@ -18,7 +18,7 @@
 				<input type="hidden" name="galleryId" value="{$galleryId}"/>
 			{/if}
 {if $prefs.javascript_enabled eq 'y'}
-<input type="hidden" name="upload" />
+<input type="hidden" name="upload" {if $editFileId neq ''} value="1"{/if}/>
 {/if}
 
 <script src="lib/filegals/file_gallery.js" language="JavaScript"></script>

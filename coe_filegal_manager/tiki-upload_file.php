@@ -353,7 +353,7 @@ if (isset($_REQUEST["upload"])) {
 		die;
 	}
 	if (!empty($editFileId) and count($errors) == 0) {
-		header("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0]);
+		header("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0].($_REQUEST["filegals_manager"]?"&filegals_manager=".$_REQUEST["filegals_manager"]:""));
 		die;
 	}
 } else {

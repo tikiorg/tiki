@@ -38,7 +38,7 @@ function check_ticket($area) {
 
 // new valid function for ticketing :
 
-function key_get($area, $confirmation_text = '', $confirmaction='') {
+function key_get($area, $confirmation_text = '', $confirmaction='', $popup='') {
 //confirmaction actin must be set if the param are not transfer via the URI
 	global $tikilib,$smarty,$prefs,$user;
 	if ($prefs['feature_ticketlib2'] == 'y') {
@@ -63,10 +63,11 @@ function key_get($area, $confirmation_text = '', $confirmaction='') {
 		$smarty->assign('post',$_POST);
 		$smarty->assign('dblclickedit','n');
 		$smarty->assign('print_page','n');
+		$smarty->assign('popup', $popup);
 		$smarty->assign('confirmation_text', $confirmation_text);
 		$smarty->assign('confirmaction', $confirmaction);
 		$smarty->assign('mid','confirm.tpl');
-		$smarty->display("tiki.tpl");
+		$smarty->display($popup ? "tiki-empty.tpl" : "tiki.tpl");
 		die();
 	}
 }

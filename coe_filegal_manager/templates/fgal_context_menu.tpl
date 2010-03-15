@@ -34,7 +34,7 @@
 			{* This form tag is needed when placed in a popup box through the popup function.
 			If placed in a column, there is already a form tag around the whole table *}
 
-			<form class="upform" name="form{$files[changes].fileId}" method="post" action="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data">
+			<form class="upform" name="form{$files[changes].fileId}" method="post" action="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}&view={$view}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data" target="">
 
 		{/if}
 		{if $menu_text neq 'y'}
@@ -45,7 +45,7 @@
 	{/if}
 
 	{if $files[changes].type|truncate:6:'':true eq 'image/' }
-		<a href="{$files[changes].id|sefurl:display}">
+		<a href="{$files[changes].id|sefurl:display}" target="_blank">
 		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 		</a>
 	{/if}
@@ -85,7 +85,7 @@
 				{if $menu_text neq 'y'}</div>{/if}
 				
 				<div class="upspan {if $menu_text eq 'y'}upspantext{/if}" style="display: inline; position:relative{if $menu_text eq 'y'}; position:absolute{else}; float:left{/if}; overflow:hidden" title="{$replace_action_title}">
-					<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer" name="upfile{$files[changes].id}" onchange="this.form.submit(); return false;"/>
+					<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer" name="upfile{$files[changes].id}" onchange="FileGallery.replacefile(this.form); return false;"/>
 					<a href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}</a>
 				</div>
 
@@ -126,7 +126,12 @@
 
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y')) }
-			{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon _ajax='n' remove=$files[changes].fileId}{tr}Delete{/tr}{/self_link}
+			{if $filegals_manager eq ''}
+				{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon _ajax='n' remove=$files[changes].fileId}{tr}Delete{/tr}{/self_link}
+			{/if}
+			{if $filegals_manager neq ''}
+				{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon _ajax='n' remove=$files[changes].fileId _onclick='return fastdel(this.href);'}{tr}Delete{/tr}{/self_link}
+			{/if}
 	{/if}
 
 	{if $prefs.javascript_enabled eq 'y'}

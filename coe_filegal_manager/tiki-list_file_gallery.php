@@ -205,7 +205,7 @@ if (!empty($_REQUEST['remove'])) {
 		key_check($area);
 		$filegallib->remove_file($info, $gal_info);
 	} else {
-		key_get($area, tra('Remove file: ') . (!empty($info['name']) ? $info['name'] . ' - ' : '') . $info['filename']);
+		key_get($area, tra('Remove file: ') . (!empty($info['name']) ? $info['name'] . ' - ' : '') . $info['filename'], '', $_REQUEST["dialog"]);
 	}
 }
 

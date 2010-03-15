@@ -1,12 +1,25 @@
 var FileGallery = {
 	dialogmode: true,
 	form: function(id) {
+		var counters = { };
 		var form = $('form#'+id);
 		var data = {};
 		$('input[name]', form).each(function(){
-			if ($(this).attr('type')=="radio" && $(this).attr('checked') || $(this).attr('type')!="radio")
-				if ($(this).val())
-					data[$(this).attr('name')] = $(this).val();
+			if (($(this).attr('type')=="radio" || $(this).attr('type')=="checkbox") && $(this).attr('checked') || $(this).attr('type')!="radio" && $(this).attr('type')!="checkbox") {
+				if ($(this).val()) {
+					var name = $(this).attr('name');
+					if (name.substr(name.length-2)=="[]") {
+						var subname = name.substr(0,name.length-2);
+						if (typeof counters[subname] != "undefined")
+							name = subname+"["+(++counters[subname])+"]";
+						else {
+							name = subname+"[0]";
+							counters[subname] = 0;
+						}
+					}
+					data[name] = $(this).val();
+				}
+			}
 		});
 		$('textarea[name]', form).each(function(){
 			data[$(this).attr('name')] = $(this).val();
@@ -16,7 +29,7 @@ var FileGallery = {
 		});
 		return data;
 	},
-	open: function(url, form) {
+	open: function(url, form, post) {
 		if (!this.dialogmode) {
 			if (form)
 				return true;
@@ -35,7 +48,7 @@ var FileGallery = {
 			});
 			$('.ui-draggable').draggable({handle:'h1'});
 		}
-		var data = '';
+		var data = post ? post : '';
 		if (form)
 			data = this.form(form);
 		$('#fg-jquery-dialog').load(url, data, function() {
@@ -55,17 +68,37 @@ var FileGallery = {
 		$("#fg-files-content").load(url);
 	},
 	tree: function() {
+		var rowstep = 0;
 		if ($(".fg-galleries").hasClass("fg-galleries-hidden")) {
 			$(".fg-galleries").removeClass("fg-galleries-hidden");
 			$(".fg-files").removeClass("fg-files-wide");
 			$(".fg-galleries > .fg-toolbar > .fg-toolbar-right").append($(".fg-files > .fg-toolbar > .fg-toolbar-left > .fg-toolbar-icon"));
 			$(".fg-galleries > .fg-toolbar > .fg-toolbar-right > .fg-toolbar-icon > img").attr("src", "images/file_gallery/icon-hidegalleries.gif");
+			rowstep = 3;
 		} else {
 			$(".fg-galleries").addClass("fg-galleries-hidden");
 			$(".fg-files").addClass("fg-files-wide");
 			$(".fg-galleries > .fg-toolbar > .fg-toolbar-right > .fg-toolbar-icon > img").attr("src", "images/file_gallery/icon-showgalleries.gif");
 			$(".fg-files > .fg-toolbar > .fg-toolbar-left").prepend($(".fg-galleries > .fg-toolbar > .fg-toolbar-right > .fg-toolbar-icon"));
+			rowstep = 4;
 		}
+
+		var tds = [ ];
+		$(".fg-gallery-view tr").each(function(a,b) {
+			$(b).find("td").each(function(c,d) {
+				tds.push(d);
+			});
+			$(b).addClass("fg-tmp-delete");
+		});
+		
+		for (var i=0; i<tds.length; i+=rowstep) {
+			var tr = $("<tr/>");
+			for (var j=i; j<i+rowstep; j++)
+				tr.append(tds[j]);
+			tr.appendTo($(".fg-gallery-view"));
+		}
+		
+		$(".fg-tmp-delete").remove();
 	},
 	limit: function(event, count, view, galleryId, fm) {
 		if (!event)
@@ -96,10 +129,11 @@ var FileGallery = {
 			$("#fg-jquery-gallery-dialog").dialog({
 				autoOpen: false,
 				width: 500,
-				modal: false,
+				modal: true,
 				resizable: false,
 				draggable: true,
-				stack: false 
+				stack: false,
+				dialogClass: "smalltitlebar"
 			});
 //			$("#fg-jquery-gallery-dialog").dialog('option','height','auto');
 //			$("#fg-jquery-gallery-dialog").dialog('option','width','504');
@@ -114,8 +148,45 @@ var FileGallery = {
 			$("#fg-jquery-gallery-dialog").html(data);
 		});
 	},
+	replacefile: function(form) {
+		var tmpname = "hiddeniframe"+(Math.round(Math.random()*10000));
+		$("<iframe/>")
+			.width(1)
+			.height(1)
+			.css("opacity","0")
+			.attr("name", tmpname)
+			.attr("id", tmpname)
+			.appendTo($("body"));
+		$(form).attr("target", tmpname);
+		form.submit();
+		$("iframe[name="+tmpname+"]").bind('load',function() {
+			FileGallery.open(form.action);
+		});
+	},
 	closeGallery: function() {
 		$("#fg-jquery-gallery-dialog").dialog("close");
+	},
+	showDialog: function(url) {
+		var xdiv = $("<div/>")
+			.appendTo($("body")).dialog({
+				autoOpen: false,
+				width: 402,
+				height: 142,
+				modal: false,
+				resizable: false,
+				draggable: true,
+				stack: false,
+				dialogClass: "smalltitlebar fg-customdialog"
+			})
+			.draggable({handle:'h1'});
+		$("<div/>")
+			.addClass("fg-custom-dialog")
+			.appendTo(xdiv)
+			.load(url, { dialog: 1 });
+		xdiv.dialog("open");
+	},
+	closeDialog: function() {
+		$(".fg-customdialog").remove();
 	}
 }
 
@@ -133,12 +204,21 @@ FileGallery.upload = {
 			width: 587,
 			resizable: false,
 			draggable: true,
-			stack: false 
+			stack: false,
+			modal: true,
+			dialogClass: "smalltitlebar"
 		});
 	},
 	show: function(gallery, fm) {
 		this.dialog();
 		$("#fg-jquery-upload-dialog").load("tiki-upload_file.php?galleryId="+gallery+"&filegals_manager="+fm+"&fgspecial=1", function() {
+			$("#fg-jquery-upload-dialog").dialog("option", "height", "auto");
+			$("#fg-jquery-upload-dialog").dialog("open")
+		});
+	},
+	edit: function(url) {
+		this.dialog();
+		$("#fg-jquery-upload-dialog").load(url, function() {
 			$("#fg-jquery-upload-dialog").dialog("option", "height", "auto");
 			$("#fg-jquery-upload-dialog").dialog("open")
 		});
@@ -223,7 +303,7 @@ FileGallery.upload = {
 		}
 		
 		if (textarea.selectionStart<=textarea.selectionEnd && textarea.selectionEnd>0 && textarea.selectionStart>=0) {
-		alert(textarea.selectionStart);
+//		alert(textarea.selectionStart);
 			textarea.value = textarea.value.substr(0, textarea.selectionStart)+text+textarea.value.substr(textarea.selectionEnd);
 			textarea.selectionStart = 0;
 			textarea.selectionEnd = 0;
@@ -233,3 +313,10 @@ FileGallery.upload = {
 	}
 }
 
+
+function fastdel(url) {
+	FileGallery.showDialog(url);
+//	url += "&daconfirm=y";
+//	FileGallery.open(url, '', { daconfirm: 'y' });
+	return false;
+}
