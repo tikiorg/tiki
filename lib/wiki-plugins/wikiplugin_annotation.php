@@ -434,8 +434,8 @@ JS;
 		<form method="post" action="" onsubmit="endEdit('$cid',true);return false;">
 			<div>Label</div>
 			<div><input type="text" name="label" id="$cid-label" style="width:96%" onkeyup="handleCancel(event, '$cid')"/></div>
-			<div>Link</div>
-			<div><input type="text" name="link" id="$cid-link" style="width:96%" onkeyup="handleCancel(event, '$cid')"/></div>
+			<div style="display:none">Link</div>
+			<div style="display:none"><input type="text" name="link" id="$cid-link" style="width:96%" onkeyup="handleCancel(event, '$cid')"/></div>
 			<div><input type="submit" value="Save"/></div>
 		</form>
 	</div>
