@@ -121,7 +121,7 @@
 		<ul>
 			{foreach from=$info.files item=newsletterfile key=fileid}
 				<li>
-					{$newsletterfile.name|escape} ({$newsletterfile.type|escape}, {$newsletterfile.size|escape} {tr}octets{/tr})
+					{$newsletterfile.name|escape} ({$newsletterfile.type|escape}, {$newsletterfile.size|escape} {tr}bytes{/tr})
 				</li>
 			{/foreach}
 		</ul>
