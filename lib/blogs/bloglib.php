@@ -223,7 +223,7 @@ class BlogLib extends TikiLib
 			// If blog is configured with 'Allow other user to post in this blog', then also if user has tiki_p_blog_post or is owner of this blog
 			if ( ($tiki_p_admin != 'y')
 			     and ($tiki_p_blog_admin != 'y')
-			     and ($blog_data["public"] != 'y' || $tiki_p_blog_post != 'y')
+			     and ( (! isset($blog_data["public"])) || $blog_data["public"] != 'y' || $tiki_p_blog_post != 'y')
 			     and ($blog_data["public"] != 'y' || $ownsblog != 'y') ) {
 				if ( isset($user) ) {
 					$mid[] = "(tbp.`priv`!='y' or tbp.`user`=?)";
