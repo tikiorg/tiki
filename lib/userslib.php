@@ -2365,8 +2365,8 @@ class UsersLib extends TikiLib
 	}
 
 	function change_user_waiting($user, $who) {
-		$query = 'update `users_users` set `waiting`=?, `currentLogin`=?, `lastLogin`=? where `login`=?';
-		$this->query($query, array($who, NULL, NULL, $user));
+		$query = 'update `users_users` set `waiting`=?, `currentLogin`=? where `login`=?';
+		$this->query($query, array($who, NULL, $user));
 	}
 
 	function add_user($user, $pass, $email, $provpass = '', $pass_first_login = false, $valid = NULL, $openid_url = NULL, $waiting=NULL) {
