@@ -234,7 +234,7 @@ function wikiplugin_trackerlist_info() {
 			'rdelim' => array(
 				'required' => false,
 				'name' => tra('Right Deliminator'),
-				'description' => tra('Smarty reft delimiter'),
+				'description' => tra('Smarty right delimiter'),
 			),
 			'list_mode' => array(
 				'required' => false,

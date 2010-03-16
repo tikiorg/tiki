@@ -1,1 +1,0 @@
-{* $Id$ *} {tr}Theme{/tr}: Skeleton

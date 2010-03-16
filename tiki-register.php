@@ -21,6 +21,11 @@ if (!empty($user)) {
 	die;
 }
 $smarty->assign('showmsg', 'n');
+// ensure ssl
+if (!$https_mode && $prefs['https_login'] == 'required') {
+	header('Location: ' . $base_url_https . 'tiki-register.php');
+	die;
+}
 // novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
 if (!isset($_REQUEST['novalidation'])) {
 	if (!empty($_REQUEST['trackit'])) $novalidation = 'yes'; // the user has already confirmed manually that SnowCheck is not working
