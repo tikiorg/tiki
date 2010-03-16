@@ -1214,6 +1214,7 @@ function get_default_prefs() {
 		'feature_endbody_code' => '',
 		'feature_custom_html_head_content' => '',
 		'users_prefs_theme' => '',
+		'feature_fixed_width' => 'y',
 
 		// layout
 		'feature_left_column' => 'y',

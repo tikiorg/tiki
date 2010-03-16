@@ -1684,5 +1684,10 @@ function prefs_feature_list() {
 			'name' => tra('WebDAV access to Tiki'),
 			'type' => 'flag',
 		),
+		'feature_fixed_width' => array(
+			'name' => tra('Fixed width'),
+			'type' => 'flag',
+			'description' => tra('Constrains the site display to 990px wide.'),
+		),
 	);
 }
