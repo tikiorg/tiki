@@ -8,10 +8,10 @@
 			<a class="linkmodule" href="{$modLastBlogPosts[ix].postId|sefurl:blogpost}" title="{$modLastBlogPosts[ix].created|tiki_short_datetime}, {tr}by{/tr} {if $modLastBlogPosts[ix].user ne ''}{$modLastBlogPosts[ix].user|username}{else}{tr}Anonymous{/tr}{/if}">
 				{if $blogid eq '-1'}{$modLastBlogPosts[ix].blogTitle|escape}: {/if}
 					{$modLastBlogPosts[ix].title|escape} {if $modLastBlogPosts[ix].priv eq 'y'}({tr}private{/tr}){/if}
-				{if !isset($module_params.nodate) or $module_params.nodate neq 'y'}
-					<small class="description">{$modLastBlogPosts[ix].created|tiki_short_date}</small>
-				{/if}
 			</a>
+			{if $nodate neq 'y'}
+				<div class="date">{$modLastBlogPosts[ix].created|tiki_short_datetime}</div>
+			{/if}
 		</li>
 		{/section}
 	{if $nonums neq 'y'}	</ol>{else}	</ul>{/if}

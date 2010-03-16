@@ -41,7 +41,9 @@
 						{$item.user|userlink}
 					{/if}
 				</a>
-				<div style="text-align:right;">{$item.currentLogin|tiki_short_datetime}</div>
+				{if $nodate neq 'y'}
+					<div class="date">{$item.currentLogin|tiki_short_datetime}</div>
+				{/if}
 				{if $showavatars eq 'y'}
 							</td>
 						</tr>

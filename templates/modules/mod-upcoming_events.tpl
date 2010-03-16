@@ -1,4 +1,5 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="upcoming_events" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{if $modUpcomingEvents[0] neq ''}
 	{if isset($module_params.date_format)}
 		{assign var=date_format value=$module_params.date_format}
 	{else}
@@ -39,6 +40,10 @@
 		{/if}
 	{/section}
 	</table>
+{else}
+      <em>{tr}No records to display{/tr}</em>
+{/if}
+
 {if $tiki_p_add_events eq 'y' && (empty($module_params.showaction) || $module_params.showaction ne 'n')}
 	<p><a href="tiki-calendar_edit_item.php"><img src="pics/icons/add.png" alt="" /> {tr}Add Event{/tr}</a></p>
 {/if}

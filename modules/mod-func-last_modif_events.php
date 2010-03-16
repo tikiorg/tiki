@@ -25,6 +25,10 @@ function module_last_modif_events_info() {
 				'name' => tra('Maximum length'),
 				'description' => tra('Maximum number of characters in event names allowed before truncating.'),
 				'filter' => 'int'
+			),
+			'nodate' => array(
+				'name' => tra("Don't show date"),
+				'description' => tra('If set to "y", it will hide date.'),
 			)
 		),
 		'common_params' => array('nonums', 'rows')
@@ -39,4 +43,5 @@ function module_last_modif_events( $mod_reference, $module_params ) {
 	
 	$smarty->assign('modLastEvents', $events);
 	$smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
+	$smarty->assign('nodate', isset($module_params["nodate"]) ? $module_params["nodate"] : 'n');
 }

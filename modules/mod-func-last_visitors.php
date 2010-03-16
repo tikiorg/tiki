@@ -24,6 +24,10 @@ function module_last_visitors_info() {
 				'name' => tra('Maximum length'),
 				'description' => tra('Maximum number of characters in user names allowed before truncating.'),
 				'filter' => 'int'
+			),
+			'nodate' => array(
+				'name' => tra("Don't show date"),
+				'description' => tra('If set to "y", it will hide date.'),
 			)
 		),
 		'common_params' => array('nonums', 'rows'),
@@ -38,4 +42,5 @@ function module_last_visitors( $mod_reference, $module_params ) {
 	$smarty->assign('modLastVisitors', $last_visitors['data']);
 	$smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
 	$smarty->assign('showavatars', isset($module_params["showavatars"]) ? $module_params["showavatars"] : 'n');
+	$smarty->assign('nodate', isset($module_params["nodate"]) ? $module_params["nodate"] : 'n');
 }
