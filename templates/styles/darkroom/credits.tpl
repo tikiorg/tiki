@@ -1,1 +1,1 @@
-{tr}Theme{/tr}: Darkroom
+{tr}Theme{/tr}: Darkroom {if $prefs.style_option}{$prefs.style_option|replace:'.css':''|replace:'None':''|ucwords}{/if}
