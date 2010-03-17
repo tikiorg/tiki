@@ -41,9 +41,10 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	
 	// Get image parameters
 	list($iwidth, $iheight, $itype, $iattr) = getimagesize($_FILES['userfile1']['tmp_name']);	
+	$itype = image_type_to_mime_type($itype);
 	// Store full-size file gallery image if that is required
 	if ($prefs["user_store_file_gallery_picture"] == 'y') {
-		$fgImageId = $userprefslib->set_file_gallery_image($userwatch, $name, $size, image_type_to_mime_type($itype), $data);
+		$fgImageId = $userprefslib->set_file_gallery_image($userwatch, $name, $size, $itype, $data);
 	}
 	// Store small avatar
 	if (($iwidth == 45 and $iheight <= 45) || ($iwidth <= 45 and $iheight == 45)) {
