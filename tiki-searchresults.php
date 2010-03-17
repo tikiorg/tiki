@@ -38,7 +38,7 @@ if (!empty($_REQUEST["highlight"])) {
 if ($prefs['feature_search_stats'] == 'y') {
 	$searchlib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');
 }
-if (!isset($_REQUEST["where"])) {
+if (empty($_REQUEST["where"])) {
 	$where = 'pages';
 } else {
 	$where = $_REQUEST["where"];
@@ -145,6 +145,8 @@ if (!isset($_REQUEST["words"]) || empty($_REQUEST["words"])) {
 	}
 	if ($where == 'wikis') {
 		$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST['date'], $searchLang, $categId);
+	} elseif ($where == 'articles' || $find_where == 'find_pages') {
+		$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST['date'], $categId, $searchLang);
 	} else {
 		$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST['date'], $categId);
 	}
@@ -184,7 +186,7 @@ if ($prefs['feature_articles'] == 'y') {
 if ($prefs['feature_trackers'] == 'y') {
 	$where_list['trackers'] = tra('Trackers');
 }
-if ($where == 'wikis' && $prefs['feature_multilingual'] == 'y') {
+if (($where == 'wikis' || $where == 'articles') && $prefs['feature_multilingual'] == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages(false, 'y');
 	$smarty->assign_by_ref('languages', $languages);

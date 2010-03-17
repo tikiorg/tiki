@@ -502,7 +502,7 @@ if (!empty($_FILES)) {
 			} elseif (!move_uploaded_file($v['tmp_name'], $tmp_dest)) {
 				$msg = tra('Errors detected');
 			} elseif (!($fp = fopen($tmp_dest, 'rb'))) {
-				$msg = tra('Cannot read file:') . ' ' . $tmp_dest;
+				$msg = tra('Cannot read the file:') . ' ' . $tmp_dest;
 			}
 			if ($msg != '') {
 				$smarty->assign('msg', $msg);

@@ -45,7 +45,7 @@
 						{/section}
 					</select>
 				</label>
-				{if $prefs.feature_multilingual eq 'y' and $where eq 'wikis'}
+				{if $prefs.feature_multilingual eq 'y' and ($where eq 'wikis' || $where eq 'articles')}
 					<label class="searchLang" for="searchLang">
 						   <select id="searchLang" name="searchLang">
 						   <option value="" >{tr}any language{/tr}</option>
@@ -198,7 +198,7 @@
 				</span>
 			{/if}
 
-			<div class="searchdesc">{$results[search].data|strip_tags|truncate:250:'...'|escape}</div>
+			<div class="searchdesc">{if $prefs.search_parsed_snippet == 'y'}{$results[search].data}{else}{$results[search].data|strip_tags|escape}{/if}</div>
 			{if $prefs.feature_search_show_last_modification eq 'y'}
 				<div class="searchdate">{tr}Last modification:{/tr} {$results[search].lastModif|tiki_long_datetime}</div>
 			{/if}

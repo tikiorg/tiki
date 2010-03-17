@@ -301,7 +301,7 @@ if (isset($_REQUEST["upload"])) {
 
 			$fp = fopen($tmp_dest, "rb");
 			if (!$fp) {
-				$errors[] = tra('Cannot read file:') . ' ' . $tmp_dest;
+				$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
 			}
 			$data = '';
 			$fhash = '';

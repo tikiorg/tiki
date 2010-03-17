@@ -34,8 +34,9 @@ function module_last_blog_posts( $mod_reference, $module_params ) {
 	global $smarty, $bloglib;
 	include_once ('lib/blogs/bloglib.php');
 
-	$blogId = isset($module_params["blogid"]) ? $module_params["blogid"] : -1;
+	$blogId = isset($module_params["blogid"]) ? $module_params["blogid"] : 0;
 	$smarty->assign('blogid', $blogId);
 	$ranking = $bloglib->list_blog_posts($blogId, true, 0, $mod_reference["rows"], 'created_desc');
 	$smarty->assign('modLastBlogPosts', $ranking["data"]);
+	$smarty->assign('nodate', isset($module_params["nodate"]) ? $module_params["nodate"] : 'n');
 }
