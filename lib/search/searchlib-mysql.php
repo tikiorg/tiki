@@ -553,7 +553,7 @@ class SearchLib extends TikiLib
 		return $res;
 	}
 
-	function find_articles($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_articles($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0, $lang = '')
 	{
 		static $search_articles = array(
 			'from' => '`tiki_articles` a',
@@ -570,6 +570,9 @@ class SearchLib extends TikiLib
 			'objectKey'=>'`articleId`'
 		);
 
+		if (!empty($lang)) {
+			$search_articles['filter'] = " a.`lang`='$lang'";
+		}
 		$res = $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Article'), $searchDate, $categId);
 		$ret = array('cant'=>$res['cant'], 'data'=>array());
 		global $user, $smarty;
@@ -660,7 +663,7 @@ class SearchLib extends TikiLib
 		return array('cant'=> count($retFinal), 'data'=> $retFinal);
 	}
 
-	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0, $lang = '')
 	{
 		$data = array();
 
@@ -669,7 +672,7 @@ class SearchLib extends TikiLib
 		global $prefs, $tiki_p_view_directory, $tiki_p_read_article, $tiki_p_view_faqs, $tiki_p_view_trackers;
 		
 		if ($prefs['feature_wiki'] == 'y') {
-			$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, '', $categId);
+			$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $lang, $categId);
 		
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
@@ -718,7 +721,7 @@ class SearchLib extends TikiLib
 		}
 		
 		if ($prefs['feature_articles'] == 'y' && $tiki_p_read_article == 'y') {
-			$rv = $this->find_articles($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId);
+			$rv = $this->find_articles($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $searchDate, $categId, $lang);
 
 			$data = array_merge($data, $rv['data']);
 			$cant += $rv['cant'];
