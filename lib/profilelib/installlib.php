@@ -1515,7 +1515,7 @@ class Tiki_Profile_InstallHandler_WebmailAccount extends Tiki_Profile_InstallHan
 
 		$accountId = $webmaillib->new_webmail_account($data['account'], $data['pop'], $data['port'], $data['username'],
 				$data['pass'], $data['msgs'], $data['smtp'], $data['useAuth'], $data['smtpPort'], $data['flagsPublic'],
-				$data['autoRefresh'], $data['imap'], $data['mbox'], $data['maildir'], $data['useSSL'], $data['useSSL']);
+				$data['autoRefresh'], $data['imap'], $data['mbox'], $data['maildir'], $data['useSSL'], $data['useSSL'], $data['fromEmail']);
 
 		return $accountId;
 	}
