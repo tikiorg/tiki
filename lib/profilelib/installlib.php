@@ -34,6 +34,7 @@ class Tiki_Profile_Installer
 		'datachannel' => 'Tiki_Profile_InstallHandler_DataChannel',
 		'transition' => 'Tiki_Profile_InstallHandler_Transition',
 		'calendar' => 'Tiki_Profile_InstallHandler_Calendar',
+		'webmail_account' => 'Tiki_Profile_InstallHandler_WebmailAccount',
 	);
 
 	private static $typeMap = array(
@@ -1455,6 +1456,68 @@ class Tiki_Profile_InstallHandler_PluginAlias extends Tiki_Profile_InstallHandle
 		$tikilib->plugin_alias_store( $name, $data );
 
 		return $name;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_WebmailAccount extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'account' => '',
+			'pop' => '', 
+			'port' => '', 
+			'username' => '', 
+			'pass' => '', 
+			'msgs' => '', 
+			'smtp' => '', 
+			'useAuth' => '', 
+			'smtpPort' => '', 
+			'flagsPublic' => '', 
+			'autoRefresh' => '', 
+			'imap' => '',
+			'mbox' => '', 
+			'maildir' => '', 
+			'useSSL' => '', 
+			'fromEmail' => '',
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['account']) || (!isset($data['pop']) && !isset($data['imap']) && !isset($data['mbox']) && !isset($data['maildir'] ))) {
+			return false;
+		}
+		
+		return true;
+	}
+
+	function _install()
+	{
+		global $tikilib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		global $webmaillib; require_once 'lib/webmail/webmaillib.php';
+
+		$accountId = $webmaillib->new_webmail_account($data['account'], $data['pop'], $data['port'], $data['username'],
+				$data['pass'], $data['msgs'], $data['smtp'], $data['useAuth'], $data['smtpPort'], $data['flagsPublic'],
+				$data['autoRefresh'], $data['imap'], $data['mbox'], $data['maildir'], $data['useSSL'], $data['useSSL']);
+
+		return $accountId;
 	}
 } // }}}
 
