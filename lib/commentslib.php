@@ -1753,8 +1753,8 @@ class Comments extends TikiLib
 		} else {
 			$ret = $this->fetchAll($query, array_merge($bind_mid, $bind_time));
 			$cant = $this->getOne($query_cant, array_merge($bind_mid_cant, $bind_time));
-			foreach ( $ret as $row ) {
-				$this->add_comments_extras($row);
+			foreach ( $ret as $i=>$row ) {
+				$this->add_comments_extras($ret[$i]);
 			}
 		}
 
