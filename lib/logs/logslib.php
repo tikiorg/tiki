@@ -1390,6 +1390,9 @@ class LogsLib extends TikiLib
 	
 	function get_who_viewed($mystuff, $anonymous = true)
 	{
+		if (!$mystuff) {
+			return false;
+		}
 		global $prefs;
 		$bindvars = array();
 		$mid = '';
