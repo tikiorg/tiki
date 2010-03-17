@@ -141,6 +141,15 @@ tr.diffheader {
 	background: #eb6b81;
 }
 
+/* Quote plugin */
+div.quoteheader {
+	border-bottom: 2px solid #f6cdd2;
+}
+
+div.quotebody {
+	border-left: 8px solid #f6cdd2;
+}
+
 .postbody-title {
 	background: #e31e40 url(watermelon/header.png) -650px -90px;
 }

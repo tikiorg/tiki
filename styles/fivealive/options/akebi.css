@@ -133,6 +133,7 @@ textarea {
 	border-color: #b4f3fb #fff #fff #b4f3fb;
 }
 
+.titlebar,
 .rbox-title, 
 .rbox-data {
 	border: #18a3bb;
@@ -164,6 +165,15 @@ tr.diffheader {
 
 .tabcontent {
 	background: #18a3bb;	
+}
+
+/* Quote plugin */
+div.quoteheader {
+	border-bottom: 2px solid #cbf4f6;
+}
+
+div.quotebody {
+	border-left: 8px solid #cbf4f6;
 }
 
 .postbody-title {

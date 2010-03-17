@@ -135,6 +135,15 @@ tr.diffheader {
 	background: #fdbb09;	
 }
 
+/* Quote plugin */
+div.quoteheader {
+	border-bottom: 2px solid #fcebbc;
+}
+
+div.quotebody {
+	border-left: 8px solid #fcebbc;
+}
+
 .postbody-title {
 	background: #fec008 url(lemon/header.png) -650px -90px;
 }

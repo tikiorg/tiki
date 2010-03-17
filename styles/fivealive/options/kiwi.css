@@ -132,6 +132,15 @@ tr.diffheader {
 	background: #d8ca14;
 }
 
+/* Quote plugin */
+div.quoteheader {
+	border-bottom: 2px solid #f5f6c1;
+}
+
+div.quotebody {
+	border-left: 8px solid #f5f6c1;
+}
+
 .postbody-title {
 	background: #e1d518 url(kiwi/header.png) -650px -90px;
 }

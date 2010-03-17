@@ -132,6 +132,15 @@ tr.diffheader {
 	background: #e77d4f;	
 }
 
+/* Quote plugin */
+div.quoteheader {
+	border-bottom: 2px solid #f4d6cc;
+}
+
+div.quotebody {
+	border-left: 8px solid #f4d6cc;
+}
+
 .postbody-title {
 	background: #e75f23 url(orange/header.png) -650px -90px;
 }
