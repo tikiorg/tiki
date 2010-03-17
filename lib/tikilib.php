@@ -5193,6 +5193,13 @@ class TikiLib extends TikiDb_Bridge
 
 		} // while
 		// print "<pre>real done data: :".htmlspecialchars( $data ) .":</pre>";
+		
+		// if plugins are to be stripped, clear all data
+		if (isset($options['stripplugins']) && $options['stripplugins']) {
+			foreach ($preparsed["data"] as &$n) {
+				$n = '';
+			}
+		}
 	}
 
 	function plugin_get_list( $includeReal = true, $includeAlias = true ) {
@@ -5907,6 +5914,7 @@ class TikiLib extends TikiDb_Bridge
 		$options['absolute_links'] = $absolute_links = isset($options['absolute_links']) ? $options['absolute_links'] : false;
 		$options['language'] = $language = isset($options['language']) ? $options['language'] : '';
 		$options['noparseplugins'] = $noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
+		$options['stripplugins'] = $stripplugins = isset($options['stripplugins']) ? $options['stripplugins'] : false;
 		$options['noheaderinc'] = $noheaderinc = isset($options['noheaderinc']) ? $options['noheaderinc'] : false;
 		$options['page'] = isset($options['page']) ? $options['page'] : $page;
 		$options['print'] = isset($options['print']) ? $options['print'] : false;
@@ -5951,7 +5959,7 @@ class TikiLib extends TikiDb_Bridge
 		// Handle pre- and no-parse sections and plugins
 		$preparsed = array('data'=>array(),'key'=>array());
 		$noparsed = array('data'=>array(),'key'=>array());
-		if (!$noparseplugins) {
+		if (!$noparseplugins || $stripplugins) {
 			$this->parse_first($data, $preparsed, $noparsed, $options);
 			$this->parse_wiki_argvariable($data, $options);
 		}
@@ -8122,7 +8130,7 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 		if ($prefs['search_parsed_snippet'] == 'y') {
 			$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
-			$data = $this->parse_data($data, array('is_html' => $is_html, 'noparseplugins' => true, 'parsetoc' => true));
+			$data = $this->parse_data($data, array('is_html' => $is_html, 'stripplugins' => true, 'parsetoc' => true));
 			$data = strip_tags($data, '<b><i><em><strong><pre><code><br>');
 		}
 		if (function_exists('mb_substr')) 
