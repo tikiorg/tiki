@@ -611,12 +611,12 @@ class ModLib extends TikiLib
 				$smarty->assign('module_type','cssmenu');
 			}
 
-			$smarty->assign('user_title', tra($info['title']));
-
 			if (isset($info['parse']) && $info['parse'] == 'y') {
 				$info['data'] = $tikilib->parse_data($info['data']);
+				$info['title'] = $tikilib->parse_data($info['title'], array('noparseplugins' => true));
 			}
 
+			$smarty->assign('user_title', tra($info['title']));
 			$smarty->assign_by_ref('user_data', $info['data']);
 			$smarty->assign_by_ref('user_module_name', $info['name']);
 
