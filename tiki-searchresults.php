@@ -38,7 +38,7 @@ if (!empty($_REQUEST["highlight"])) {
 if ($prefs['feature_search_stats'] == 'y') {
 	$searchlib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');
 }
-if (!isset($_REQUEST["where"])) {
+if (empty($_REQUEST["where"])) {
 	$where = 'pages';
 } else {
 	$where = $_REQUEST["where"];
