@@ -1,7 +1,6 @@
 /*
  * The Darkroom theme for TikiWiki CMS/Groupware.
- * Released under the LGPL license. For use with default Tiki templates.
- * Imports lite/lite.css. Be sure the file is available for proper layout. 
+ * Released under the LGPL license. 
  * For more information on Darkroom, please visit http://themes.tikiwiki.org.
  */
  
@@ -21,7 +20,7 @@ html {
 }
 
 body {
-	background: #000;
+	background: #474747 url(darkroom/474747_5e5e5e_40.png);
 	color: #d8d8d8;
 	font: 74% "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
 }
@@ -232,6 +231,7 @@ ol {
 #main {
 	margin: 0;
 	font-size: 1em;
+	background: #0c0c0c;
 }
 
 #header {
