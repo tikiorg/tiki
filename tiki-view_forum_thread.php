@@ -12,6 +12,9 @@ $access->check_feature('feature_forums');
 
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
+if (!isset($_REQUEST['comments_parentId']) && isset($_REQUEST['threadId'])) {
+	$_REQUEST['comments_parentId'] = $_REQUEST['threadId'];
+}
 if (!isset($_REQUEST['comments_parentId'])) {
 	$smarty->assign('msg', tra("No thread indicated"));
 	$smarty->display("error.tpl");
