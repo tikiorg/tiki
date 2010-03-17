@@ -45,7 +45,7 @@
 						{/section}
 					</select>
 				</label>
-				{if $prefs.feature_multilingual eq 'y' and $where eq 'wikis'}
+				{if $prefs.feature_multilingual eq 'y' and ($where eq 'wikis' || $where eq 'articles')}
 					<label class="searchLang" for="searchLang">
 						   <select id="searchLang" name="searchLang">
 						   <option value="" >{tr}any language{/tr}</option>
