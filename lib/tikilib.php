@@ -5781,9 +5781,13 @@ class TikiLib extends TikiDb_Bridge
 
 	function protect_email($name, $domain, $sep = '@') {
         for ($x=0; $x < strlen($sep); $x++) {
-            $sep_encode = '%' . bin2hex($sep[$x]);
+            $sep_encode .= '%' . bin2hex($sep[$x]);
         }
-		return "<script language=\"Javascript\" type=\"text/javascript\">document.write('<a class=\"wiki\" href=\"mailto:$name'+unescape('$sep_encode')+'$domain\">$name'+unescape('$sep_encode')+'$domain</a>');</script><noscript>$name ".tra("at","",true)." $domain</noscript>";
+        $mt = "mailto:";
+		for ($x=0; $x < strlen($mt); $x++) {
+            $mt_encode .= '%' . bin2hex($mt[$x]);
+        }
+		return "<script language=\"Javascript\" type=\"text/javascript\">document.write('<a class=\"wiki\" href=\"'+unescape('$mt_encode')+'$name'+unescape('$sep_encode')+'$domain\">$name'+unescape('$sep_encode')+'$domain</a>');</script><noscript>$name ".tra("at","",true)." $domain</noscript>";
 	}
 	
 	//Updates a dynamic variable found in some object
