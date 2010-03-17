@@ -19,11 +19,28 @@ function wikiplugin_datachannel_info()
 				'name' => tra('Channel Name'),
 				'description' => tra('Name of the channel as registered by the administrator.'),
 			),
+			'returnURI' => array(
+				'required' => false,
+				'name' => tra('Return URI'),
+				'description' => tra('URI to go to after data channel has run. Defaults to current page.'),
+				'filter' => 'pagename',
+			),
+			'buttonLabel' => array(
+				'required' => false,
+				'name' => tra('Button Label'),
+				'description' => tra('Label for the submit button. Default: "Go".'),
+			),
+			'class' => array(
+				'required' => false,
+				'name' => tra('Class'),
+				'description' => tra('CSS class for this form'),
+			),
 			'debug' => array(
 				'required' => false,
-				'name' => tra('debug'),
-				'description' => 'y | n'.tra('Be careful, if debug is on, the page will not be refreshed and previous modules can be obsolete'),
-				'default' => 'n'
+				'name' => tra('Debug'),
+				'description' => '(y | n) '.tra('Be careful, if debug is on, the page will not be refreshed and previous modules can be obsolete'),
+				'default' => 'n',
+				'filter' => 'word',
 			),
 		),
 	);
@@ -80,15 +97,18 @@ function wikiplugin_datachannel( $data, $params )
 			}
 			$installer->install( $profile );
 
+			if (empty($params['returnURI'])) { $params['returnURI'] = $_SERVER['HTTP_REFERER']; }	// default to return to same page
 			if (empty($params['debug']) || $params['debug'] != 'y') {
-				header( 'Location: ' . $_SERVER['REQUEST_URI'] );
+				header( 'Location: ' . $params['returnURI'] );
 				die;
 			}
 			$smarty->assign('datachannel_feedbacks', array_merge($installer->getFeedback(), $profile->getFeedback()) );
 		}
 		$smarty->assign( 'datachannel_fields', $fields );
 		$smarty->assign( 'datachannel_execution', $executionId );
-
+		$smarty->assign( 'button_label', !empty($params['buttonLabel']) ? $params['buttonLabel'] : 'Go');
+		$smarty->assign( 'form_class_attr', !empty($params['class']) ? ' class="' . $params['class'] . '"' : '');
+		
 		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_datachannel.tpl' ) . '~/np~';
 	}
 }
