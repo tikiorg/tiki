@@ -40,7 +40,7 @@ div.box-data {
 
 /** Other boxes **/
 div.cbox {
-	background: url(shadows/box_shadow.png) 100% 100% !important;
+	background: url(shadows/box_shadow.png) no-repeat 100% 100% !important;
 	padding: 0 8px 9px 0;
 	margin: 6px !important;
 	border: none;
@@ -76,7 +76,7 @@ div.cbox-data hr {
 }
 
 div.article {
-	background: url(shadows/box_shadow.png) 100% 100%;
+	background: url(shadows/box_shadow.png) no-repeat 100% 100%;
 	padding: 0 8px 9px 0;
 	margin: 6px 6px 40px 6px !important
 	margin-bottom: 15px;
@@ -93,7 +93,7 @@ div.articletopline {
 
 /***** Forums *****/
 .post {
-	background: url(shadows/box_shadow.png) 100% 100%;
+	background: url(shadows/box_shadow.png) no-repeat 100% 100%;
 	padding: 0 8px 9px 0;
 	margin: 6px !important;
 }
