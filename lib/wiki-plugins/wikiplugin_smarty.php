@@ -24,6 +24,7 @@ function wikiplugin_smarty_info() {
 				'required' => false,
 				'name' => tra('Name of the smarty function'),
 				'description' => 'button',
+				'filter' => 'word',
 			),
 		),
 	);
