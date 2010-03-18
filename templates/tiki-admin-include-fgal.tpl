@@ -84,7 +84,12 @@
 	{preference name='feature_file_galleries_author'}
 
 	{preference name='fgal_delete_after'}
-	{preference name='fgal_delete_after_email'}
+	<div class="adminoptionboxchild" id="fgal_delete_after_childcontainer">
+		 {remarksbox type="warning" title="Cron"}
+		 		{tr}A cron job must be set up in order to delete the files.{/tr}
+		 {/remarksbox}
+		 {preference name='fgal_delete_after_email'}
+	</div>
 </fieldset>
 
 <fieldset>
