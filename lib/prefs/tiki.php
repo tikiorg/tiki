@@ -49,7 +49,7 @@ function prefs_tiki_list() {
 			'description' => tra('Custom HTTP header to use when a session is active.'),
 			'type' => 'text',
 			'filter' => 'striptags',
-			'hint' => 'Example: no-cache, pre-check=0, post-check=0'
+			'hint' => tra('Example: no-cache, pre-check=0, post-check=0'),
 		),
 		'tiki_cachecontrol_nosession' => array(
 			'name' => tra('Cache-Control header (no session)'),

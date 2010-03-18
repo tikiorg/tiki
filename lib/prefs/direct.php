@@ -12,7 +12,7 @@ function prefs_direct_list() {
 			'type' => 'flag',
 		),
 		'direct_pagination_max_middle_links' => array(
-			'name' => 'Max. number of links around the current item',
+			'name' => tra('Max. number of links around the current item'),
 			'type' => 'text',
 			'size' => '4',
 		),

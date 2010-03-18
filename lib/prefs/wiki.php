@@ -134,7 +134,7 @@ function prefs_wiki_list() {
 			'name' => tra('Enable edit plugin icons'),
 			'description' => tra('Permits editing of a plugin, via a popup form, without needing to edit the whole page.'),
 			'type' => 'flag',
-			'hint' => 'Requires javascript',
+			'hint' => tra('Requires javascript'),
 		),
 		'wiki_badchar_prevent' => array(
 			'name' => tra('Prevent special characters in page names'),
@@ -380,7 +380,7 @@ function prefs_wiki_list() {
 			'type' => 'flag',
 		),
 		'wiki_3d_width' => array(
-			'name' => 'Browser width',
+			'name' => tra('Browser width'),
 			'type' => 'text',
 			'size' => '3',
 			'filter' => 'digits',

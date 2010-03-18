@@ -1388,7 +1388,7 @@ function prefs_feature_list() {
 		'feature_wikiwords' => array(
 			'name' => tra('WikiWords'),
 			'type' => 'flag',
-			'description' => ('Automatically convert words with UpPeR and LoWeR-case letters into wiki links.'),
+			'description' => tra('Automatically convert words with UpPeR and LoWeR-case letters into wiki links.'),
 		),
 		'feature_wiki_plurals' => array(
 			'name' => tra('Link plural WikiWords to their singular forms'),
