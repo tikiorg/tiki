@@ -8,7 +8,7 @@
 function prefs_blog_list() {
 	return array(
 		'blog_spellcheck' => array(
-			'name' => 'Spell cheking',
+			'name' => tra('Spell cheking'),
 			'hint' => tra('Requires a separate download'),
 			'type' => 'flag',
 			'help' => 'Spellcheck',
@@ -19,7 +19,7 @@ function prefs_blog_list() {
 			'size' => '3',
 		),
 		'blog_comments_default_ordering' => array(
-			'name' => 'Default ordering',
+			'name' => tra('Default ordering'),
 			'type' => 'list',
 			'options' => array(
 				'commentDate_desc' => tra('Newest first'),
@@ -28,7 +28,7 @@ function prefs_blog_list() {
 			),
 		),
 		'blog_list_order' => array(
-			'name' => 'Default ordering',
+			'name' => tra('Default ordering'),
 			'type' => 'list',
 			'options' => array(
 				'created_desc' => tra('Creation Date (desc)'),
@@ -40,7 +40,7 @@ function prefs_blog_list() {
 			),
 		),
 		'blog_list_title' => array(
-			'name' => 'Title',
+			'name' => tra('Title'),
 			'type' => 'flag',
 		),
 		'blog_list_title_len' => array(
@@ -49,19 +49,19 @@ function prefs_blog_list() {
 			'size' => '3',
 		),
 		'blog_list_description' => array(
-			'name' => 'Description',
+			'name' => tra('Description'),
 			'type' => 'flag',
 		),
 		'blog_list_created' => array(
-			'name' => 'Creation date',
+			'name' => tra('Creation date'),
 			'type' => 'flag',
 		),
 		'blog_list_lastmodif' => array(
-			'name' => 'Last modified',
+			'name' => tra('Last modified'),
 			'type' => 'flag',
 		),
 		'blog_list_user' => array(
-			'name' => 'User',
+			'name' => tra('User'),
 			'type' => 'list',
 			'options' => array(
 				'disabled' => tra('Disabled'),
@@ -71,15 +71,15 @@ function prefs_blog_list() {
 			),
 		),
 		'blog_list_posts' => array(
-			'name' => 'Posts',
+			'name' => tra('Posts'),
 			'type' => 'flag',
 		),
 		'blog_list_visits' => array(
-			'name' => 'Visits',
+			'name' => tra('Visits'),
 			'type' => 'flag',
 		),
 		'blog_list_activity' => array(
-			'name' => 'Activity',
+			'name' => tra('Activity'),
 			'type' => 'flag',
 		),
 		'blog_sharethis_publisher' => array(

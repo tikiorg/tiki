@@ -927,19 +927,19 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_blog_rankings' => array(
-			'name' => 'Rankings',
+			'name' => tra('Rankings'),
 			'type' => 'flag',
 		),
 		'feature_blog_heading' => array(
-			'name' => 'Custom blog headings',
+			'name' => tra('Custom blog headings'),
 			'type' => 'flag',
 		),
 		'feature_blog_comments' => array(
-			'name' => 'Blog-level',
+			'name' => tra('Blog-level'),
 			'type' => 'flag',
 		),
 		'feature_blogposts_comments' => array(
-			'name' => 'Post-level',
+			'name' => tra('Post-level'),
 			'type' => 'flag',
 		),
 		'feature_trackbackpings' => array(
@@ -947,11 +947,11 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_blogposts_pings' => array(
-			'name' => 'Post-level',
+			'name' => tra('Post-level'),
 			'type' => 'flag',
 		),
 		'feature_blog_sharethis' => array(
-			'name' => 'ShareThis buttons',
+			'name' => tra('ShareThis buttons'),
 			'type' => 'flag',
 			'hint' => tra('Insert a ShareThis button from www.sharethis.com.'),
 		),
@@ -1157,7 +1157,7 @@ function prefs_feature_list() {
 			),
 		),
 		'feature_right_column' => array(
-			'name' => 'Right Column',
+			'name' => tra('Right Column'),
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
