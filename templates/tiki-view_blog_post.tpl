@@ -81,7 +81,7 @@
 	<div class="status"> {* renamed to match forum footer layout *}
 		<a href='tiki-print_blog_post.php?postId={$postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
 		{if $prefs.feature_blog_sharethis eq "y"}
-			{capture name=shared_title}{tr}Commissioner for Human Rights{/tr}{/capture}
+			{capture name=shared_title}{tr}Share This{/tr}{/capture}
 			{capture name=shared_link_title}{tr}ShareThis via AIM, social bookmarking and networking sites, etc.{/tr}{/capture}
 			{wiki}{literal}<script language="javascript" type="text/javascript">
 				//Create your sharelet with desired properties and set button element to false
