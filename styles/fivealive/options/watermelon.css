@@ -137,7 +137,8 @@ tr.diffheader {
 	background: #eb6b81;
 }
 
-.tabcontent {
+.tabcontent,
+form.admin fieldset {
 	background: #eb6b81;
 }
 
@@ -152,4 +153,9 @@ div.quotebody {
 
 .postbody-title {
 	background: #e31e40 url(watermelon/header.png) -650px -90px;
+}
+
+.post .author,
+div.dirsite {
+	background: #f6cdd2;
 }

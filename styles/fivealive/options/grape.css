@@ -139,7 +139,8 @@ tr.diffheader {
 	background: #c53089;
 }
 
-.tabcontent {
+.tabcontent,
+form.admin fieldset {
 	background: #c53089;	
 }
 
@@ -154,4 +155,9 @@ div.quotebody {
 
 .postbody-title {
 	background: #97286e url(grape/header.png) -650px -90px;
+}
+
+.post .author,
+div.dirsite {
+	background: #e4afd3;
 }

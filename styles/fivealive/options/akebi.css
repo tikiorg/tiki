@@ -163,7 +163,8 @@ tr.diffheader {
 	background: #18a3bb;
 }
 
-.tabcontent {
+.tabcontent,
+form.admin fieldset {
 	background: #18a3bb;	
 }
 
@@ -178,4 +179,9 @@ div.quotebody {
 
 .postbody-title {
 	background: #169fb5 url(akebi/header.png) -650px -90px;
+}
+
+.post .author,
+div.dirsite {
+	background: #77d6e5;
 }

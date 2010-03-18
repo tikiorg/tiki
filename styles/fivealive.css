@@ -110,7 +110,8 @@ h2 {
 	line-height: 110%;
 }
 
-pre {
+pre,
+tt {
 	font-size: 1.2em;
 }
 
@@ -612,7 +613,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 .postbody-title {
 	padding: .5em .3em .3em 1em
 	position: relative;
-	border: 1px solid #aaa;
+/*	border: 1px solid #aaa;*/
 	background: url(fivealive/options/blueberry/header.png) -650px -90px;
 	color: #222;
 	font-weight: bold;
@@ -625,6 +626,24 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	color: #fff;
 }
 
+.post .postbody .content {
+	float: none;
+	width: auto;
+	padding: 0;
+}
+
+.post .author,
+div.dirsite {
+	background: #c2eef8;
+	float: none;
+	margin: 0 0 6px;
+	text-align: left;
+}
+
+.postbody-content {
+	margin: 0;
+}
+
 /**** Image Galleries ****/
 /***** File Galleries *****/
 /***** Trackers *****/
@@ -635,6 +654,10 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 /***** Quizzes *****/
 /***** Shoutbox *****/
 /***** Directory *****/
+a.dirsitelink,
+a.dirsublink {
+	font-weight: bold;
+}
 /***** Messages *****/
 /***** TikiSheets *****/
 /***** Calendar *****/
