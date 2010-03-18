@@ -90,6 +90,11 @@ span.button.highlight a {
 	background: #972269;
 }
 
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #da65ab !important;
+}
+
 .cssmenu_vert .sf-sub-indicator {
 	background: url(grape/arrows-8e286a.png) no-repeat 10px 0;
 }

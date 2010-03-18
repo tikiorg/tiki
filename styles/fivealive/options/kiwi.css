@@ -89,6 +89,12 @@ span.button.highlight a {
 	background: #e1d516;
 }
 
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #efe350 !important;
+}
+
+
 .cssmenu_vert .sf-sub-indicator {
 	background: url(kiwi/arrows-638637.png) no-repeat 10px 0;
 }
