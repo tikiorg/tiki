@@ -100,9 +100,12 @@ function tra_impl($content, $lg='', $no_interactive = false, $args = array()) {
 		}
 	}
 
-	if (isset($prefs['record_untranslated']) && $prefs['record_untranslated'] == 'y') {
-		$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
-		$tikilib->query($query, array($content,$lg),-1,-1,false);
+	if (isset($prefs['record_untranslated']) && $prefs['record_untranslated'] == 'y' && !empty($content) && $lg != 'en') {
+		$query = 'select `id` from `tiki_untranslated` where `source`=? and `lang`=?';
+		if (!$tikilib->getOne($query, array($content,$lg))) {
+			$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
+			$tikilib->query($query, array($content,$lg),-1,-1,false);
+		}
 	}
 
 	return tr_replace( $content, $args );

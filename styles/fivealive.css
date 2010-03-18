@@ -109,7 +109,13 @@ h1,
 h2 {
 	line-height: 110%;
 }
-	
+
+pre,
+tt {
+	font-size: 1.2em;
+}
+
+
 legend {
 	color: #000;
 }
@@ -158,6 +164,10 @@ textarea,
 	color: #000;
 	border: 1px solid;
 	border-color: #9ae8fa #e3f7fb #e3f7fb #9ae8fa;
+}
+
+select[multiple="multiple"] {
+	height: 120px;
 }
 
 /***** Site Header & Identity *****/
@@ -413,6 +423,14 @@ a.login_link {
 	padding-bottom: 3px;
 }
 
+.cssmenu_vert .sf-sub-indicator {
+	background: url(fivealive/options/blueberry/arrows-1174a5.png) no-repeat 10px 0;
+}
+
+.cssmenu_vert li ul li a .sf-sub-indicator {
+	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
+}
+
 /***** Boxes *****/
 .cbox {
 	border: none;
@@ -545,6 +563,48 @@ fieldset.admin label,
 	padding: 1px 8px;
 }
 	
+div.code {
+	padding: 3px;
+	border: 1px dashed #a9a9a9;
+	background: #f5f5f5;
+	font: 90% "Courier New", Courier, monospace;
+}
+
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	padding: 10px;
+	background: #f5f5f5;
+	margin: 4px 0;
+	border: 1px dashed #696969;
+	overflow: auto;
+}
+
+.codecaption {
+	font-size: 90%;
+	padding: 0 10px;
+	position: relative;
+	bottom: -5px;
+	display: inline;
+	border: 1px solid #696969;
+	border-bottom: 0;
+	margin: 0;
+	color: #696969;
+	background: #f5f5f5;
+	font-weight: bold;
+}
+
+/* Quote plugin */
+div.quoteheader {
+	margin-left: 30px;
+	border-bottom: 2px solid #c2eef8;
+}
+
+div.quotebody {
+	margin: 0 15px 10px 30px;
+	font-style: italic;
+	border-left: 8px solid #c2eef8;
+	padding-left: 6px;
+}
 
 /***** Articles ****/
 body.tiki_cms h1 a.pagetitle,
@@ -565,7 +625,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 .postbody-title {
 	padding: .5em .3em .3em 1em
 	position: relative;
-	border: 1px solid #aaa;
+/*	border: 1px solid #aaa;*/
 	background: url(fivealive/options/blueberry/header.png) -650px -90px;
 	color: #222;
 	font-weight: bold;
@@ -578,6 +638,24 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	color: #fff;
 }
 
+.post .postbody .content {
+	float: none;
+	width: auto;
+	padding: 0;
+}
+
+.post .author,
+div.dirsite {
+	background: #c2eef8;
+	float: none;
+	margin: 0 0 6px;
+	text-align: left;
+}
+
+.postbody-content {
+	margin: 0;
+}
+
 /**** Image Galleries ****/
 /***** File Galleries *****/
 /***** Trackers *****/
@@ -588,6 +666,10 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 /***** Quizzes *****/
 /***** Shoutbox *****/
 /***** Directory *****/
+a.dirsitelink,
+a.dirsublink {
+	font-weight: bold;
+}
 /***** Messages *****/
 /***** TikiSheets *****/
 /***** Calendar *****/

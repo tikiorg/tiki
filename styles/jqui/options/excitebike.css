@@ -100,12 +100,17 @@ body.wikitext {
 }
 
 #tiki-top .cssmenu_horiz li:hover a,
-#tiki-top .cssmenu_horiz li ul li a:hover {
+#tiki-top .cssmenu_horiz li ul li a:hover,
+#secondary_site_menu .cssmenu_horiz li:hover a,
+#secondary_site_menu .cssmenu_horiz li:hover ul li a:hover {
 	text-decoration: underline;
 }
 
+#secondary_site_menu .cssmenu_horiz li:hover ul li a {
+	text-decoration: none;
+} 
+
 .cssmenu_horiz li ul li,
-/*.cssmenu_horiz li ul li,*/
 .cssmenu_vert li ul li,
 #secondary_site_menu .cssmenu_horiz li:hover ul li,
 #secondary_site_menu .cssmenu_horiz li.sfHover ul li {
@@ -118,13 +123,6 @@ body.wikitext {
 .cssmenu_vert li:hover ul li a,
 .cssmenu_vert li.sfHover ul li a {
 	color: #fff;
-}
-
-#secondary_site_menu .cssmenu_horiz li:hover ul li:hover a,
-#secondary_site_menu .cssmenu_horiz li.sfHover ul li:hover a {
-	color: #fff;
-	background: #e69700;
-	text-decoration: underline;
 }
 
 #tiki-top .cssmenu_horiz li:hover ul ul,

@@ -89,6 +89,16 @@ span.button.highlight a {
 	background: #e1d516;
 }
 
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #efe350 !important;
+}
+
+
+.cssmenu_vert .sf-sub-indicator {
+	background: url(kiwi/arrows-638637.png) no-repeat 10px 0;
+}
+
 select,
 option,
 input[type="text"],
@@ -128,10 +138,25 @@ tr.diffheader {
 	background: #d8ca14;
 }
 
-.tabcontent {
+.tabcontent,
+form.admin fieldset {
 	background: #d8ca14;
+}
+
+/* Quote plugin */
+div.quoteheader {
+	border-bottom: 2px solid #f5f6c1;
+}
+
+div.quotebody {
+	border-left: 8px solid #f5f6c1;
 }
 
 .postbody-title {
 	background: #e1d518 url(kiwi/header.png) -650px -90px;
+}
+
+.post .author,
+div.dirsite {
+	background: #f5f6c1;
 }

@@ -20,6 +20,11 @@ function module_forums_last_posts_info() {
 			'topics' => array(
 				'name' => tra('Topics only'),
 				'description' => tra('If set to "y", only displays topics.') . " " . tr('Not set by default.')
+							  ),
+			'forumId' => array(
+				'name' => tra('List of forum IDs'),
+				'description' => tra('Post only from this forum'),
+				'separator' => ':'
 			)
 		),
 		'common_params' => array('nonums', 'rows')
@@ -29,8 +34,12 @@ function module_forums_last_posts_info() {
 function module_forums_last_posts( $mod_reference, $module_params ) {
 	global $smarty;
 	global $ranklib; include_once ('lib/rankings/ranklib.php');
-	
-	$ranking = $ranklib->forums_ranking_last_posts($mod_reference["rows"], isset($module_params['topics']) && $module_params['topics'] == 'y');
+	$default = array('forumId'=>'', 'topics' => false);
+	$module_params = array_merge($default, $module_params);
+	if (!empty($module_params['forumId'])) {
+		$module_params['forumId'] = explode(':', $module_params['forumId']);
+	}
+	$ranking = $ranklib->forums_ranking_last_posts($mod_reference['rows'], $module_params['topics'], $module_params['forumId']);
 	
 	$replyprefix = tra("Re:");
 	

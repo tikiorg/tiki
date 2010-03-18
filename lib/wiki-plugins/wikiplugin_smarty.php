@@ -24,6 +24,7 @@ function wikiplugin_smarty_info() {
 				'required' => false,
 				'name' => tra('Name of the smarty function'),
 				'description' => 'button',
+				'filter' => 'word',
 			),
 		),
 	);
@@ -36,7 +37,10 @@ function wikiplugin_smarty($data, $params) {
 	}
 	$path = 'lib/smarty_tiki/function.'.$params['name'].'.php';
 	if (!file_exists($path)) {
-		return tra('Incorrect param');
+		$path = 'lib/smarty/libs/plugins/function.'.$params['name'].'.php';
+		if(!file_exists($path)){
+			return tra('Incorrect param');
+		}
 	}
 	include_once($path);
 	$func = 'smarty_function_'.$params['name'];

@@ -746,15 +746,13 @@ class FileGalLib extends TikiLib
 
 	function notify ($galleryId, $name, $filename, $description, $action, $user, $fileId=false) {
 		global $prefs;
-                if ($prefs['feature_user_watches'] == 'y') {
+		if ($prefs['feature_user_watches'] == 'y') {
                         //  Deal with mail notifications.
-                        include_once('lib/notifications/notificationemaillib.php');
-                        $foo = parse_url($_SERVER["REQUEST_URI"]);
-                        $machine = $this->httpPrefix( true ). dirname( $foo["path"]);
+			include_once('lib/notifications/notificationemaillib.php');
 			$galleryName = $this->getOne("select `name` from `tiki_file_galleries` where `galleryId`=?",array($galleryId));
 
-                        sendFileGalleryEmailNotification('file_gallery_changed', $galleryId, $galleryName, $name, $filename, $description, $action, $user, $fileId);
-                }
+			sendFileGalleryEmailNotification('file_gallery_changed', $galleryId, $galleryName, $name, $filename, $description, $action, $user, $fileId);
+		}
 	}
 	/* lock a file */
 	function lock_file($fileId, $user) {
@@ -1508,6 +1506,35 @@ class FileGalLib extends TikiLib
 	function getGalleryId($name, $parentId) {
 		$query = 'select `galleryId` from `tiki_file_galleries` where `name`=? and `parentId`=?';
 		return $this->getOne($query, array($name, $parentId));
+	}
+	function deleteOldFiles() {
+		global $prefs, $tikilib, $smarty;
+		include_once('lib/webmail/tikimaillib.php');
+		$query = 'select * from `tiki_files` where `deleteAfter` < '.$this->now.' - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
+		$files = $this->fetchAll($query, array());
+		foreach ($files as $fileInfo) {
+			if (empty($galInfo) || $galInfo['galleryId'] != $fileInfo['galleryId']) {
+				$galInfo = $this->get_file_gallery_info($fileInfo['galleryId']);
+				if (!empty($prefs['fgal_delete_after_email'])) {
+					$smarty->assign_by_ref('galInfo', $galInfo);
+				}
+			}
+			if (!empty($prefs['fgal_delete_after_email'])) {
+				$smarty->assign_by_ref('fileInfo', $fileInfo);
+				$mail = new TikiMail();
+				$mail->setSubject(tra('Old File deleted:', $prefs['site_language']).' '.$fileInfo['filename']);
+				$mail->setText($smarty->fetchLang($prefs['site_language'], 'mail/fgal_old_file_deleted.tpl'));
+				if ($this->isPodCastGallery($galInfo['galleryId'], $galInfo)) {
+					$fileInfo['data'] = file_get_contents($prefs['fgal_podcast_dir'].$fileInfo['path']);
+				} elseif (!empty($fileInfo['path'])) {
+					$fileInfo['data'] = file_get_contents($prefs['fgal_use_dir'].$fileInfo['path']);
+				}
+				$mail->addAttachment($fileInfo['data'], $fileInfo['filename'], $fileInfo['filetype']);
+				$to = preg_split('/ *, */', $prefs['fgal_delete_after_email']);
+				$mail->send($to);
+			}
+			$this->remove_file($fileInfo, $galInfo, false);
+		}
 	}
 }
 $filegallib = new FileGalLib;

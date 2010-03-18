@@ -8,7 +8,7 @@ body {
 
 a:link,
 a:visited {
-	color: #b51360;
+	color: #c21e3b;
 }
  
 a:active,
@@ -89,6 +89,15 @@ span.button.highlight a {
 	background: #e71e40;
 }
 
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #e22848 !important;
+}
+
+.cssmenu_vert .sf-sub-indicator {
+	background: url(watermelon/arrows-c21e3b.png) no-repeat 10px 0;
+}
+
 select,
 option,
 input[type="text"],
@@ -137,10 +146,25 @@ tr.diffheader {
 	background: #eb6b81;
 }
 
-.tabcontent {
+.tabcontent,
+form.admin fieldset {
 	background: #eb6b81;
+}
+
+/* Quote plugin */
+div.quoteheader {
+	border-bottom: 2px solid #f6cdd2;
+}
+
+div.quotebody {
+	border-left: 8px solid #f6cdd2;
 }
 
 .postbody-title {
 	background: #e31e40 url(watermelon/header.png) -650px -90px;
+}
+
+.post .author,
+div.dirsite {
+	background: #f6cdd2;
 }

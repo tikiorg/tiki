@@ -89,6 +89,15 @@ span.button.highlight a {
 	background: #e35c29;
 }
 
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #e88357 !important;
+}
+
+.cssmenu_vert .sf-sub-indicator {
+	background: url(orange/arrows-c74b23.png) no-repeat 10px 0;
+}
+
 select,
 option,
 input[type="text"],
@@ -128,10 +137,25 @@ tr.diffheader {
 	background: #e77d4f;
 }
 
-.tabcontent {
+.tabcontent,
+form.admin fieldset {
 	background: #e77d4f;	
+}
+
+/* Quote plugin */
+div.quoteheader {
+	border-bottom: 2px solid #f4d6cc;
+}
+
+div.quotebody {
+	border-left: 8px solid #f4d6cc;
 }
 
 .postbody-title {
 	background: #e75f23 url(orange/header.png) -650px -90px;
+}
+
+.post .author,
+div.dirsite {
+	background: #f4d6cc;
 }

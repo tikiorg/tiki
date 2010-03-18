@@ -117,6 +117,10 @@ span.button.highlight a {
 	color: #fff !important;
 }
 
+.cssmenu_vert .sf-sub-indicator {
+	background: url(akebi/arrows-0b8a98.png) no-repeat 10px 0;
+}
+
 select,
 option,
 input[type="text"],
@@ -133,6 +137,7 @@ textarea {
 	border-color: #b4f3fb #fff #fff #b4f3fb;
 }
 
+.titlebar,
 .rbox-title, 
 .rbox-data {
 	border: #18a3bb;
@@ -162,10 +167,25 @@ tr.diffheader {
 	background: #18a3bb;
 }
 
-.tabcontent {
+.tabcontent,
+form.admin fieldset {
 	background: #18a3bb;	
+}
+
+/* Quote plugin */
+div.quoteheader {
+	border-bottom: 2px solid #cbf4f6;
+}
+
+div.quotebody {
+	border-left: 8px solid #cbf4f6;
 }
 
 .postbody-title {
 	background: #169fb5 url(akebi/header.png) -650px -90px;
+}
+
+.post .author,
+div.dirsite {
+	background: #77d6e5;
 }

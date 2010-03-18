@@ -5764,7 +5764,7 @@ class TikiLib extends TikiDb_Bridge
 		$replacements[] = "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>";
 		$patterns[] = "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i";
 		if ($prefs['feature_wiki_protect_email'] == 'y')
-			$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">document.write(protectEmail('\\2', '\\3', '@'));</script><noscript>\\2 ".tra("at","",true)." \\3</noscript>";
+			$replacements[] = "\\1" . $this->protect_email("\\2", "\\3");
 		else
 			$replacements[] = "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>";
 		$patterns[] = "#([\n ])magnet\:\?([^,< \n\r]+)#i";
@@ -5779,7 +5779,18 @@ class TikiLib extends TikiDb_Bridge
 		//		}
 	}
 
-
+	function protect_email($name, $domain, $sep = '@') {
+		$sep_encode = $mt_encode = '';
+		for ($x=0; $x < strlen($sep); $x++) {
+			$sep_encode .= '%' . bin2hex($sep[$x]);
+		}
+		$mt = "mailto:";
+		for ($x=0; $x < strlen($mt); $x++) {
+			$mt_encode .= '%' . bin2hex($mt[$x]);
+		}
+		return "<script language=\"Javascript\" type=\"text/javascript\">document.write('<a class=\"wiki\" href=\"'+unescape('$mt_encode')+'$name'+unescape('$sep_encode')+'$domain\">$name'+unescape('$sep_encode')+'$domain</a>');</script><noscript>$name ".tra("at","",true)." $domain</noscript>";
+	}
+	
 	//Updates a dynamic variable found in some object
 	/*Shared*/
 	function update_dynamic_variable($name,$value, $lang = null) {

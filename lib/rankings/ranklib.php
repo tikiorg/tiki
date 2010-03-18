@@ -181,7 +181,7 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 	
-	function forums_ranking_last_posts($limit, $toponly)
+	function forums_ranking_last_posts($limit, $toponly, $forumId='')
 	{
 		global $user, $commentslib; require_once 'lib/commentslib.php';
 		if (! $commentslib) {
@@ -190,14 +190,14 @@ class RankLib extends TikiLib
 		$offset=0;
 		$count = 0;
 		$ret = array();
-		$result = $commentslib->get_all_comments('forum', 0, $limit, 'commentDate_desc');
+		$result = $commentslib->get_all_comments('forum', 0, $limit, 'commentDate_desc', '', '', '', false, $forumId);
 		$result['data'] = Perms::filter(array('type' => 'forum'), 'object', $result['data'], array('object' => 'forumId', 'forum_read'));
 		foreach ($result['data'] as $res) {
 			$aux['name'] = $res['name'] . ': ' . $res['title'];
 			$aux['title'] = $res['title'];
 			$tmp = $res['parentId'];
 			if ($tmp == 0) $tmp = $res['threadId'];
-			$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $tmp;
+			$aux['href'] = $res['href'];
 			$aux['hits'] = $this->get_long_datetime($res['commentDate']);
 			$tmp = $res['parentId'];
 			if ($tmp == 0) $tmp = $res['threadId'];

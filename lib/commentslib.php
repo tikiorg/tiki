@@ -1420,7 +1420,7 @@ class Comments extends TikiLib
 		$bind = array();
 		$query = '';
 		if($type == 'article') {
-			$query = "SELECT count(*),`tiki_articles`.`articleId`,`tiki_articles`.`title` FROM `tiki_comments` INNER JOIN `tiki_articles` ON `tiki_comments`.`object`=`tiki_articles`.`articleId` WHERE `tiki_comments`.`objectType`='article'";
+			$query = "SELECT count(*),`tiki_articles`.`articleId`,`tiki_articles`.`title` FROM `tiki_comments` INNER JOIN `tiki_articles` ON `tiki_comments`.`object`=`tiki_articles`.`articleId` WHERE `tiki_comments`.`objectType`='article' and `tiki_comments`.`approved`='y'";
 		
 			if($lang != ''){
 				$query = $query. " and `tiki_articles`.`lang`=?";
@@ -1432,11 +1432,11 @@ class Comments extends TikiLib
 		else {
 		
 			if($type == 'blog'){		
-				$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='post' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+				$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
 			}
 			else {
 				//Default to Wiki
-				$query = "SELECT count(*),`tiki_pages`.`pageName` FROM `tiki_comments` INNER JOIN `tiki_pages` ON `tiki_comments`.`object`=`tiki_pages`.`pageName` WHERE `tiki_comments`.`objectType`='wiki page'";
+				$query = "SELECT count(*),`tiki_pages`.`pageName` FROM `tiki_comments` INNER JOIN `tiki_pages` ON `tiki_comments`.`object`=`tiki_pages`.`pageName` WHERE `tiki_comments`.`objectType`='wiki page' and `tiki_comments`.`approved`='y'";
 		
 				if($lang != ''){
 					$query = $query. " and `tiki_pages`.`lang`=?";
@@ -1753,8 +1753,8 @@ class Comments extends TikiLib
 		} else {
 			$ret = $this->fetchAll($query, array_merge($bind_mid, $bind_time));
 			$cant = $this->getOne($query_cant, array_merge($bind_mid_cant, $bind_time));
-			foreach ( $ret as $row ) {
-				$this->add_comments_extras($row);
+			foreach ( $ret as $i=>$row ) {
+				$this->add_comments_extras($ret[$i]);
 			}
 		}
 
@@ -1848,7 +1848,7 @@ class Comments extends TikiLib
 
 	/* administrative functions to get all the comments of some types + enlarge find
 	 * no perms checked as it is only for admin */
-	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='', $toponly=false) {
+	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='', $toponly=false, $objectId='') {
 		$join = '';
 		if ( empty($type) ) {
 			// If no type has been specified, get all comments except those used for forums which must not be handled here
@@ -1882,6 +1882,15 @@ class Comments extends TikiLib
 		if ( ! empty($approved) ) {
 			$mid .= ' and tc.`approved`=?';
 			$bindvars[] = $approved;
+		}
+		if (!empty($objectId)) {
+			if (is_array($objectId)) {
+				$mid .= ' and `object` in ('.implode(',', array_fill(0, count($objectId), '?')).')';
+				$bindvars = array_merge($bindvars, $objectId);
+			} else {
+				$mid .= ' and `object`=?';
+				$bindvars[] = $objectId;
+			}
 		}
 
 		if ($parent!='') {

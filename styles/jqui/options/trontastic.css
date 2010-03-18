@@ -117,6 +117,22 @@ body.wikitext {
 	border-top: none;
 }
 
+.sf-sub-indicator {
+	background: url(trontastic/arrows-000000.png) no-repeat -10px -100px;
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 1.2em}
+
+#tiki-top .cssmenu_horiz li ul li  a .sf-sub-indicator {
+	background: url(trontastic/arrows-000000.png) no-repeat;
+	top: 0.5em;
+}
+
+#secondary_site_menu .cssmenu_horiz li ul li a .sf-sub-indicator,
+.cssmenu_vert .sf-sub-indicator {
+	background: url(trontastic/arrows-b8ec79.png) no-repeat 10px 0;
+}
+
 .wikitext {
 	padding: .2em;
 	margin: 0 .5em 10px;
@@ -206,8 +222,7 @@ li.even {
 .tabs {
 	border: 1px solid #d3d3d3;
 	background:#9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
-
-	}
+}
 
 .tabmark {
 	border: 1px solid #1b1613;
