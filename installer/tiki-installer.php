@@ -586,7 +586,7 @@ if (
 		)
 	) && isset($_REQUEST['dbinfo'])
 ) {
-	$dbTiki = &ADONewConnection($_REQUEST['db']);
+	$dbTiki = ADONewConnection($_REQUEST['db']);
 	$db = new TikiDb_Adodb( $dbTiki );
 	$db->setErrorHandler( new InstallerDatabaseErrorHandler );
 	TikiDb::set( $db );
