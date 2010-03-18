@@ -266,7 +266,7 @@ div.error {
 }
 
 #tiki-top .cssmenu_horiz li.menuSection a {
-	padding-right: 20px;
+	padding-right: 24px;
 }
 
 /* left column width */
@@ -300,18 +300,22 @@ div.error {
 }
 
 a .sf-sub-indicator {
-	top: 0.5em;
+	top: 8px;
 }
 
 .sf-sub-indicator {
-	background: url(thenews/arrows-005faa.png) no-repeat -10px -100px;
+	background: url(jqui/arrows-1174a5.png) no-repeat -10px -100px;
 }
 
-#tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 1.2em}
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 16px}
 
 #tiki-top .cssmenu_horiz li ul li  a .sf-sub-indicator {
-	background: url(thenews/arrows-005faa.png) no-repeat;
-	top: 0.5em;
+	background: url(jqui/arrows-1174a5.png) no-repeat;
+	top: 7px;
+}
+
+#secondary_site_menu a .sf-sub-indicator {
+	top: 8px;
 }
 
 /***** Boxes *****/
