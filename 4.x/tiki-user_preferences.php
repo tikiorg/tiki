@@ -301,6 +301,17 @@ if (isset($_REQUEST['chgadmin'])) {
 		$tikifeedback[] = array('num' => 1, 'mes' => sprintf(tra('Password has been changed')));
 	}
 }
+if (isset($_REQUEST['deleteaccount']) && $tiki_p_delete_account == 'y') {
+   check_ticket('user-prefs');
+   if (!isset($_REQUEST['deleteaccountconfirm']) || $_REQUEST['deleteaccountconfirm'] != '1') {
+      $smarty->assign('msg', tra("If you really want to delete you're account, you must check the checkbox"));
+      $smarty->display("error.tpl");
+      die;
+   }
+   $userlib->remove_user($user);
+   header('Location: tiki-logout.php');
+   die();
+} 
 $tikilib->get_user_preference($userwatch, 'mytiki_pages', 'y');
 $tikilib->get_user_preference($userwatch, 'mytiki_blogs', 'y');
 $tikilib->get_user_preference($userwatch, 'mytiki_gals', 'y');
