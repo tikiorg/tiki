@@ -581,6 +581,11 @@ div#loadstats {}
 	z-index: 1023;
 }
 
+.error .rbox-data .adminoption,
+.error .rbox-data .adminoptionlabel {
+	display: inline;
+}
+
 /** off-screen **/
 ul.jumplinks {
 	font-size: 0.8em;

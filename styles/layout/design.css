@@ -395,17 +395,30 @@ div.help_section {
 .tip .rbox-title,
 .tip .rbox-data {}
 
-.errors .rbox-title, .warning .rbox-title {
+.error .rbox-title,
+.errors .rbox-title,
+.warning .rbox-title {
 	background: #ffc;
 	color: #000;
 	border-color: #f00;
 	border-bottom-color: #ffc;
 }
 
-.errors .rbox-data, .warning .rbox-data {
+.error .rbox-data,
+.errors .rbox-data,
+.warning .rbox-data {
 	background: #ffc;
 	color: #000;
 	border-color: #f00;
+}
+
+.error .rbox-data label {
+	color: #000;
+}
+
+#error {
+	background: yellow;
+	color: red;
 }
 
 .warning a,

@@ -357,18 +357,17 @@ span.moduleflip-vert {
 	display: inline;
 }
 
-.error,
-#error {
-	background: yellow;
-	color: red;
-}
-
 #show-errors-button {
 	z-index: 1024;
 }
 
 #errors {
 	z-index: 1023;
+}
+
+.error .rbox-data .adminoption,
+.error .rbox-data .adminoptionlabel {
+	display: inline;
 }
 
 /** off-screen **/
