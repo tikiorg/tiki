@@ -8,7 +8,7 @@ body {
 
 a:link,
 a:visited {
-	color: #b51360;
+	color: #c21e3b;
 }
  
 a:active,
@@ -87,6 +87,15 @@ span.button.highlight a {
 #header .cssmenu_horiz li ul a:hover,
 #tiki-top .cssmenu_horiz li ul a:hover  {
 	background: #e71e40;
+}
+
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #e22848 !important;
+}
+
+.cssmenu_vert .sf-sub-indicator {
+	background: url(watermelon/arrows-c21e3b.png) no-repeat 10px 0;
 }
 
 select,

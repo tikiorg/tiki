@@ -89,6 +89,10 @@ span.button.highlight a {
 	background: #e1d516;
 }
 
+.cssmenu_vert .sf-sub-indicator {
+	background: url(kiwi/arrows-638637.png) no-repeat 10px 0;
+}
+
 select,
 option,
 input[type="text"],

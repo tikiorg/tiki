@@ -90,6 +90,10 @@ span.button.highlight a {
 	background: #972269;
 }
 
+.cssmenu_vert .sf-sub-indicator {
+	background: url(grape/arrows-8e286a.png) no-repeat 10px 0;
+}
+
 select,
 option,
 input[type="text"],

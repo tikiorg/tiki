@@ -91,6 +91,15 @@ span.button.highlight a {
 	background: #f68c1a;
 }
 
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
+	color: #fdca41 !important;
+}
+
+.cssmenu_vert .sf-sub-indicator {
+	background: url(lemon/arrows-c75a28.png) no-repeat 10px 0;
+}
+
 select,
 option,
 input[type="text"],

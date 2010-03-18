@@ -117,6 +117,10 @@ span.button.highlight a {
 	color: #fff !important;
 }
 
+.cssmenu_vert .sf-sub-indicator {
+	background: url(akebi/arrows-0b8a98.png) no-repeat 10px 0;
+}
+
 select,
 option,
 input[type="text"],

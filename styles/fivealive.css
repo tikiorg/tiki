@@ -166,6 +166,10 @@ textarea,
 	border-color: #9ae8fa #e3f7fb #e3f7fb #9ae8fa;
 }
 
+select[multiple="multiple"] {
+	height: 120px;
+}
+
 /***** Site Header & Identity *****/
 #header {
 	background: url(fivealive/options/blueberry/header.png) -375px 0 no-repeat;
@@ -417,6 +421,14 @@ a.login_link {
 #col2 .cssmenu_vert li a {
 	padding-top: 3px;
 	padding-bottom: 3px;
+}
+
+.cssmenu_vert .sf-sub-indicator {
+	background: url(fivealive/options/blueberry/arrows-1174a5.png) no-repeat 10px 0;
+}
+
+.cssmenu_vert li ul li a .sf-sub-indicator {
+	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
 }
 
 /***** Boxes *****/
