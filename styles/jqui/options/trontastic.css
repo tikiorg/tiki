@@ -222,8 +222,7 @@ li.even {
 .tabs {
 	border: 1px solid #d3d3d3;
 	background:#9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
-
-	}
+}
 
 .tabmark {
 	border: 1px solid #1b1613;
