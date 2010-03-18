@@ -6,13 +6,20 @@
 // $Id$
 
 function prefs_style_list() {
+	global $tikilib, $prefs;
+
+	$style_options = array();
+	foreach ($tikilib->list_style_options($prefs['site_style']) as $opt) {
+		$style_options[$opt] = $opt;
+	}
+
 	return array(
-
-	// Used in templates/tiki-admin-include-look.tpl
-	'style_option' => array(
-			'name' => '',
-			'type' => '',
-			),
-
+		'style_option' => array(
+			'name' => tra('Theme options'),
+			'type' => 'list',
+			'help' => 'Theme options',
+			'description' => tra('Style options'),
+			'options' => $style_options,
+		),
 	);	
 }

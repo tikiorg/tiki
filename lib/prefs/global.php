@@ -6,15 +6,30 @@
 // $Id$
 
 function prefs_global_list() {
-	global $tikilib;
+	global $tikilib, $prefs;
+
+	$all_styles = $tikilib->list_styles();
+	$styles = array();
+
+	foreach ($all_styles as $style) {
+		$styles[$style] = substr( $style, 0, strripos($style, '.css'));
+	}
+	
 	$languages = $tikilib->list_languages( false, null, true);
 	$map = array();
-	
+
 	foreach( $languages as $lang ) {
 		$map[ $lang['value'] ] = $lang['name'];
 	}
 
 	return array(
+		'style' => array(
+			'name' => tra('Theme'),
+			'type' => 'list',
+			'help' => 'Themes',
+			'description' => tra('Style of the site, sometimes called a skin or CSS. See http://themes.tikiwiki.org for more Tiki themes.'),
+			'options' => $styles,
+		),
 		'browsertitle' => array(
 			'name' => tra('Browser title'),
 			'description' => tra('Label visible in the browser\'s title bar on all pages. Also appears in search engines.'),

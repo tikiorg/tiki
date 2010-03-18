@@ -6,39 +6,7 @@
 // $Id$
 
 function prefs_site_list() {
-	global $tikilib, $prefs;
-
-	$all_styles = $tikilib->list_styles();
-	$styles = array();
-
-	foreach ($all_styles as $style) {
-		$styles[$style] = substr( $style, 0, strripos($style, '.css'));
-	}
-	
-	$astyle = $prefs["site_style"];
-	if (isset($_REQUEST["site_style"]) && $_REQUEST["site_style"] != '') {
-		$a_style = $_REQUEST["site_style"];
-	}
-	$style_options = array();
-	foreach ($tikilib->list_style_options($a_style) as $opt) {
-		$style_options[$opt] = $opt;
-	}
-
 	return array (
-		'site_style' => array(
-			'name' => tra('Theme'),
-			'type' => 'list',
-			'help' => 'Themes',
-			'description' => tra('Style of the site, sometimes called a skin or CSS. See http://themes.tikiwiki.org for more Tiki themes.'),
-			'options' => $styles,
-		),
-		'site_style_option' => array(
-			'name' => tra('Theme options'),
-			'type' => 'list',
-			'help' => 'Theme options',
-			'description' => tra('Style options'),
-			'options' => $style_options,
-		),
 		'site_closed' => array(
 			'name' => tra('Close site (except for those with permission)'),
 			'description' => tra('Close site (except for those with permission)'),

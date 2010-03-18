@@ -9,7 +9,7 @@
 	{tabset name="admin_look"}
 		{tab name="{tr}Theme{/tr}"}
 
-			{preference name=site_style}
+			{preference name=style default=$prefs.site_style}
 			<div class="adminoptionbox">
 				{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
 					<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
@@ -17,17 +17,7 @@
 			</div>
 
 			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="general-theme-options">{tr}Theme options{/tr}:</label>
-					<select name="site_style_option" id="general-theme-options" {if !$style_options}disabled="disabled"{/if}>
-						{if !$style_options}
-							<option value="">{tr}None{/tr}</option>
-						{/if}
-						{section name=ix loop=$style_options}
-							<option value="{$style_options[ix]|escape}"{if $prefs.style_option eq $style_options[ix]} selected="selected"{/if}>{$style_options[ix]}</option>
-						{/section}
-					</select>	
-				</div>
+				{preference name=style_option default=$prefs.site_style_option}
 				{if $prefs.change_theme eq 'y' and ($user_prefs.theme neq '' and $prefs.site_style neq $user_prefs.theme) or ($prefs.style neq '' and $prefs.site_style neq $prefs.style)}
 					{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The "users can change theme" feature will override the theme displayed.{/tr}{/remarksbox}
 				{/if}

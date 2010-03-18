@@ -1237,8 +1237,6 @@ function get_default_prefs() {
 		'site_favicon_type' => 'image/png',
 		'style' => 'strasa.css',
 		'style_option' => 'fixed_width.css',
-		'site_style' => 'strasa.css',
-		'site_style_option' => 'fixed_width.css',
 		'use_context_menu_icon' => 'y',
 		'use_context_menu_text' => 'y',
 		'feature_site_report' => 'n',
@@ -1670,7 +1668,7 @@ function get_default_prefs() {
 
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
-$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
+$user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
 
 // Check if prefs needs to be reloaded
 if (isset($_SESSION['s_prefs'])) {
