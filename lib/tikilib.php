@@ -1185,7 +1185,7 @@ class TikiLib extends TikiDb_Bridge
 					global $tikidomain;
 					$files = glob( "temp/public/$tikidomain/avatar_$user.*" );
 
-					if( count( $files ) ) {
+					if( !empty( $files[0] ) ) {
 						$path = $files[0];
 					}
 				}
