@@ -420,7 +420,7 @@
 						{if $menus}
 							<tr>
 								<td class="form">
-									<label for="list_menus">{tr}Menus:{/tr}</label>
+									<label for="list_menus">{tr}Default Tiki menus:{/tr}</label>
 								</td>
 								<td>
 									<select name="menus" id='list_menus'>
@@ -433,13 +433,33 @@
 									<a class="link" href="javascript:setUserModuleFromCombo('list_menus', 'um_data');" title="{tr}Use Menu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
 								</td>
 								<td class="form">
-									<a {popup text="Params: id= structureId= css= link_on_section=y type=vert|horiz translate=y|n menu_cookie=y|n" width=100 center=true}>{icon _id='help'}</a>
+									<a {popup text="Params:<br />id=<br />structureId=<br />css=<br />link_on_section=y <i>or</i> n<br />type=vert <i>or</i> horiz<br />translate=y <i>or</i> n<br />menu_cookie=y <i>or</i> n" width=120 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
+							{if $prefs.feature_cssmenus eq "y"}
+								<tr>
+									<td class="form">
+										<label for="list_cssmenus">{tr}CSS menus:{/tr}</label>
+									</td>
+									<td>
+										<select name="cssmenus" id='list_cssmenus'>
+											{section name=ix loop=$menus}
+												<option value="{literal}{{/literal}menu id={$menus[ix].menuId} css=y type= {literal}}{/literal}">{$menus[ix].name}</option>
+											{/section}
+										</select>
+									</td>
+									<td class="form">
+										<a class="link" href="javascript:setUserModuleFromCombo('list_cssmenus', 'um_data');" title="{tr}Use CSS menu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+									</td>
+									<td class="form">
+										<a {popup text="Params:<br />id=<br />type=horiz <i>or</i> vert<br />sectionLevel=<br />toLevel= " width=100 center=true}>{icon _id='help'}</a>
+									</td>
+								</tr>
+							{/if}							
 							{if $prefs.feature_phplayers eq "y"}
 								<tr>
 									<td class="form">
-										<label for="list_phpmenus">{tr}phpLayersMenus:{/tr}</label>
+										<label for="list_phpmenus">{tr}PHP Layers menus:{/tr}</label>
 									</td>
 									<td>
 										<select name="phpmenus" id='list_phpmenus'>
@@ -452,7 +472,7 @@
 										<a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus', 'um_data');" title="{tr}Use phplayermenu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
 									</td>
 									<td class="form">
-										<a {popup text="Params: id= type=tree|phptree|plain|horiz|vert file= sectionLevel=" width=100 center=true}>{icon _id='help'}</a>
+										<a {popup text="Params:<br />id=<br />type=tree <i>or</i> phptree <i>or</i> plain <i>or</i> horiz <i>or</i> vert<br />file=<br />sectionLevel=" width=100 center=true}>{icon _id='help'}</a>
 									</td>
 								</tr>
 							{/if}
@@ -500,23 +520,25 @@
 					</table>
 					{pagination_links cant=$maximum step=$maxRecords offset=$offset }{/pagination_links}
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}
+							{tr}To use a default Tiki menu:{/tr}
+							<ul>
+								<li>{literal}{menu id=X}{/literal}</li>
+							</ul>
+						{if $prefs.feature_cssmenus eq 'y'}
+							{tr}To use a <a target="tikihelp" href="http://users.tpg.com.au/j_birch/plugins/superfish/">CSS (Superfish) menu</a>, use one of these syntaxes:{/tr}
+							<ul>
+								<li>{literal}{menu id=X css=y type=vert}{/literal}</li>
+								<li>{literal}{menu id=X css=y type=horiz}{/literal}</li>
+							</ul>
+						{/if}
 						{if $prefs.feature_phplayers eq "y"}
-						{tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr}
+						{tr}To use a <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">PHP Layers menu</a>, use one of these syntaxes (Note: PHP Layers menus are being replaced by CSS menus and may have only basic styling in newer themes.):{/tr}
 						<ul>
 							<li>{literal}{phplayers id=X}{/literal}</li>
 							<li>{literal}{phplayers id=X type=horiz}{/literal}</li>
 							<li>{literal}{phplayers id=X type=vert}{/literal}</li>
 						</ul>
-						{tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}
 						<br />
-						{/if}
-						{tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}<br />
-						{if $prefs.feature_cssmenus eq 'y'}
-							{tr}To use menu in a css/suckerfish format:{/tr}
-							<ul>
-								<li>{literal}{menu id=X css=y type=vert}{/literal}</li>
-								<li>{literal}{menu id=X css=y type=horiz}{/literal}</li>
-							</ul>
 						{/if}
 					{/remarksbox}
 				</td>
