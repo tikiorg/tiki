@@ -252,8 +252,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_page_title' => array(
-			'name' => tra('Display page title'),
-			'description' => tra('Display the page name at the top of each page. If not enabled, the content must be structured to contain a header.'),
+			'name' => tra('Display page name as page title'),
+			'description' => tra('Display the page name at the top of each page as page title. If not enabled, the page content should be structured to contain a header.'),
 			'type' => 'flag',
 		),
 		'feature_wiki_pageid' => array(

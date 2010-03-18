@@ -53,6 +53,7 @@ function get_default_prefs() {
 		'feature_listorphanPages' => 'n',
 		'feature_listorphanStructure' => 'n',
 		'feature_page_title' => 'y',
+		'wiki_page_name_above' => 'n',
 		'feature_sandbox' => 'n',
 		'feature_warn_on_edit' => 'y',
 		'feature_wiki_1like_redirection' => 'y',

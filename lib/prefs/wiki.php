@@ -38,6 +38,11 @@ function prefs_wiki_list() {
 			'description' => tra('Display the page version information when viewing the page.'),
 			'type' => 'flag',
 		),
+		'wiki_page_name_above' => array(
+			'name' => tra('Display page name above page'),
+			'description' => tra('Display page name above page instead of inside page.'),
+			'type' => 'flag',
+		),
 		'wiki_pagename_strip' => array(
 			'name' => tra('Page name display stripper'),
 			'description' => tra('Character to use as a delimiter in the page name. The portion of the name after this character will not be displayed.'),
