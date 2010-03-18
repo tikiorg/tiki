@@ -31,6 +31,12 @@ if (($article_data['publishDate'] > $tikilib->now) && ($tiki_p_admin != 'y' && $
 	$smarty->display("error.tpl");
 	die;
 }
+
+if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($article_data["lang"])) {
+	$_SESSION['s_prefs']['language'] = $article_data["lang"];
+	$prefs['language'] = $article_data["lang"];
+}
+
 global $statslib;
 include_once ('lib/stats/statslib.php');
 global $artlib;
