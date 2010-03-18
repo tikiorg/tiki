@@ -581,9 +581,18 @@ a.phplmselected:hover {
 	color: #909090;
 }
 
-#tiki-top > .cssmenu_horiz > li {
+#tiki-top .cssmenu_horiz li {
 	background: url(darkroom/button.png) repeat-x;
 }
+
+#tiki-top .cssmenu_horiz li ul li {
+	background: #474747;
+}
+
+#tiki-top .cssmenu_horiz li ul li:hover {
+	background: #b2b2b2;
+}
+
 
 #tiki-top .cssmenu_horiz li a {
 	border: 1px solid transparent;
