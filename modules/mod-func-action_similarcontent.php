@@ -68,14 +68,14 @@ function module_action_similarcontent( $mod_reference, $module_params ) {
 	if(isset($contentId)) {
 		
 		$tags = $freetaglib->get_tags_on_object($contentId, $currentContentType);
-		
+		$allTags = array();
 		foreach($tags['data'] as $tag){
 			$allTags[] = $tag['tag'];
 		}
 		
 			
 		$similarContent = $freetaglib->get_objects_with_tag_combo($allTags, $filterType, '', 0, $mod_reference['rows'], 'name_asc', '', $broaden);
-			
+		$relatedExclusiveContent = array();	
 		foreach($similarContent['data'] as $item){
 			if($item['type'] != $currentContentType){
 				$relatedExclusiveContent[] = $item;
