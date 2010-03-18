@@ -82,5 +82,10 @@ function prefs_blog_list() {
 			'name' => 'Activity',
 			'type' => 'flag',
 		),
+		'blog_sharethis_publisher' => array(
+			'name' => tra('Your ShareThis publisher identifier (optional)'),
+			'type' => 'text',
+			'size' => '40',
+		),
 	);
 }

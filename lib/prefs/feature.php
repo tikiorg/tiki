@@ -950,6 +950,11 @@ function prefs_feature_list() {
 			'name' => 'Post-level',
 			'type' => 'flag',
 		),
+		'feature_blog_sharethis' => array(
+			'name' => 'ShareThis buttons',
+			'type' => 'flag',
+			'hint' => tra('Insert a ShareThis button from www.sharethis.com.'),
+		),
 		'feature_file_galleries_rankings' =>array(
 			'name' => tra('Rankings'),
 			'type' => 'flag',

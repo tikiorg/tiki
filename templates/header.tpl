@@ -96,6 +96,14 @@
 		<link rel="alternate" type="application/rss+xml" title='{$prefs.title_rss_calendar|escape|default:"{tr}RSS Calendars{/tr}"}' href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version|escape:'url'}" />
 {/if}
 
+{if $prefs.feature_blogs eq 'y' and $prefs.feature_blog_sharethis eq "y"}
+	{if $prefs.blog_sharethis_publisher neq ""}
+		<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#publisher={$prefs.blog_sharethis_publisher}&amp;type=website&amp;buttonText=&amp;onmouseover=false&amp;send_services=aim"></script>
+	{else}
+		<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#type=website&amp;buttonText=&amp;onmouseover=false&amp;send_services=aim"></script>
+	{/if}
+{/if}
+
 {if $headerlib}		{$headerlib->output_headers()}{/if}
 
 {if $prefs.feature_custom_html_head_content}
