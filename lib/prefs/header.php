@@ -24,8 +24,8 @@ function prefs_header_list() {
 			'size' => 5,
 		),
 		'header_custom_js' => array(
-			'name' => tra('Custom Javascript'),
-			'description' => tra('Includes a custom block of inline Javascript in all pages.'),
+			'name' => tra('Custom JavaScript'),
+			'description' => tra('Includes a custom block of inline JavaScript in all pages.'),
 			'type' => 'textarea',
 			'size' => 5,
 		),
