@@ -118,6 +118,7 @@ RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [L]
 RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA,L]
 </IfModule>
+# End of rewrite rules
 
 # Error pages, handled by Apache (not by Tiki)
 # Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors bypass Tiki and must be handled by Apache (ex.: impossiblepagename.php) 
@@ -127,4 +128,9 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 # to activate the error display, uncomment the following line
 #php_flag display_errors on
 
-# End of rewrite rules
+
+# if you want to use the Web Server Auth
+#AuthType Basic
+#AuthName "Restricted Access"
+#AuthUserFile /etc/httpd/passwords
+#Require valid-user 
