@@ -676,6 +676,9 @@ function wikiplugin_trackerlist($data, $params) {
 								} else {
 									$exactvalue[] = array('not'=>$l);
 								}
+							} elseif (preg_match('/(less|greater|lessequal|greaterequal)\((.+)\)/', $evs[$i], $matches)) {
+								$conv = array('less'=>'<', 'greater'=>'>', 'lessequal'=>'<=', 'greaterequal'=>'>=');
+								$exactvalue[] = array($conv[$matches[1]]=>$matches[2]);
 							} else {
 								$exactvalue[] = $evs[$i];
 							}
