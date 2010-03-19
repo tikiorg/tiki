@@ -263,6 +263,14 @@ if ($prefs['javascript_enabled'] == 'y') {
 	}
 }	// end if $prefs['javascript_enabled'] == 'y'
 
+if( ! empty( $prefs['header_custom_css'] ) ) {
+	$headerlib->add_css( $prefs['header_custom_css'] );
+}
+
+if( ! empty( $prefs['header_custom_js'] ) ) {
+	$headerlib->add_js( $prefs['header_custom_js'] );
+}
+
 if( session_id() ) {
 	if( $prefs['tiki_cachecontrol_session'] ) {
 		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_session'] );
@@ -272,3 +280,4 @@ if( session_id() ) {
 		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_nosession'] );
 	}
 }
+

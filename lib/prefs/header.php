@@ -17,5 +17,17 @@ function prefs_header_list() {
 			'type' => 'textarea',
 			'size' => '2',
 		),
+		'header_custom_css' => array(
+			'name' => tra('Custom CSS'),
+			'description' => tra('Includes a custom block of CSS inline in all pages.'),
+			'type' => 'textarea',
+			'size' => 5,
+		),
+		'header_custom_js' => array(
+			'name' => tra('Custom Javascript'),
+			'description' => tra('Includes a custom block of inline Javascript in all pages.'),
+			'type' => 'textarea',
+			'size' => 5,
+		),
 	);	
 }

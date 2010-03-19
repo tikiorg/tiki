@@ -294,6 +294,12 @@
 					<em>{tr}Examples{/tr}: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em>
 				</div>
 			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Custom Code{/tr}</legend>
+				{preference name="header_custom_css"}
+				{preference name="header_custom_js"}
+			</fieldset>
 		{/tab}
 	{/tabset}
 

@@ -1255,6 +1255,8 @@ function get_default_prefs() {
 		'box_shadow_start' => '',
 		'box_shadow_end' => '',
 		'feature_custom_center_column_header' => '',
+		'header_custom_css' => '',
+		'header_custom_js' => '',
 
 		// mods
 		'feature_mods_provider' => 'n',
