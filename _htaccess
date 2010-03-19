@@ -22,8 +22,12 @@
 	FileEtag None
 </FilesMatch>
 
-# By default don't use ETags if not specified. If you got some ETags specified comment out or remove the following line.
+# Using ETags will lower the YSlow scores
 FileETag none
+
+<IfModule deflate_module>
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript
+</IfModule>
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
