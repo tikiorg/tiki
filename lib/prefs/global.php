@@ -269,9 +269,14 @@ function prefs_global_list() {
 			),
 		),
 		'urlIndex' => array(
-			'name' => tra('Use different URL as home page'),
+			'name' => tra('Use different URL as homepage'),
 			'type' => 'text',
 			'size' => 50,
+		),
+		'useUrlIndex' => array(
+			'name' => tra('or'),
+			'description' => tra('Use a Tikiwiki feature homepage or another homepage'),
+			'type' => 'flag',
 		),
 		'tikiIndex' => array(
 			'name' => tra('Use TikiWiki feature as homepage'),

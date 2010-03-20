@@ -12,5 +12,9 @@ function prefs_permission_list() {
 			'type' => 'text',
 			'size' => '50',
 		),
+		'permission_denied_login_box' => array(
+			'name' => tra('On permission denied, display login module (for Anonymous)'),
+			'type' => 'flag',
+		),
 	);
 }
