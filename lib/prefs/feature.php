@@ -20,13 +20,20 @@ function prefs_feature_list() {
 		$catree['-1'] = tra('None');
 		$catree['0'] = tra('All');
 
-		foreach ($all_categs as $categ)
-		{
+		foreach ($all_categs as $categ) {
 			$catree[$categ['categId']] = $categ['categpath'];
 		}
 	}
-	
+
 	return array(
+		'feature_blog_mandatory_category' => array(
+			'name' => tra('Force and limit categorization to within subtree of'),
+			'type' => 'list',
+			'options' => $catree,
+			'dependencies' => array(
+				'feature_categories',
+			),
+		),
 		'feature_wiki' => array(
 			'name' => tra('Wiki'),
 			'description' => tra('Collaboratively authored documents with history of changes.'),

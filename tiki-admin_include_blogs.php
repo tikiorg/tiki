@@ -10,20 +10,11 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
-if (isset($_REQUEST["blogfeatures"])) {
-	check_ticket('admin-inc-blogs');
-	simple_set_value('feature_blog_mandatory_category');
-}
 if (isset($_REQUEST['bloglistconf'])) {
 	check_ticket('admin-inc-blogs');
 }
 if (isset($_REQUEST['blogcomprefs'])) {
 	check_ticket('admin-inc-blogs');
-}
-if ($prefs['feature_categories'] == 'y') {
-	include_once ('lib/categories/categlib.php');
-	$catree = $categlib->get_all_categories();
-	$smarty->assign('catree', $catree);
 }
 ask_ticket('admin-inc-blogs');
 $smarty->assign_by_ref('blogs', $blogs['data']);

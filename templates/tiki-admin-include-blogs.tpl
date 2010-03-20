@@ -22,18 +22,7 @@
 				{preference name=feature_blog_heading}
 
 				{if $prefs.feature_categories eq 'y'}
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="blog_mandatory_category"> {tr}Force and limit categorization to within subtree of{/tr}:</label>
-							<select name="feature_blog_mandatory_category" id="blog_mandatory_category">
-								<option value="-1" {if $prefs.feature_blog_mandatory_category eq -1 or $prefs.feature_blog_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
-								<option value="0" {if $prefs.feature_blog_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
-								{section name=ix loop=$catree}
-									<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $prefs.feature_blog_mandatory_category}selected="selected"{/if}>{$catree[ix].categpath}</option>
-								{/section}
-							</select>
-						</div>
-					</div>
+					{preference name=feature_blog_mandatory_category}
 				{/if}
 			</fieldset>
 
