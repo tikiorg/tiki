@@ -6,23 +6,20 @@
 // $Id$
 
 // This script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-	header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
 	exit;
 }
 
-if (isset($_REQUEST["userfeatures"])) {
+if (isset($_REQUEST['userfeatures'])) {
 	check_ticket('admin-inc-community');
-	simple_set_value("user_list_order");
 }
 
 // Users Defaults
 if (isset($_REQUEST['users_defaults'])) {
 	check_ticket('admin-inc-login');
-	// numerical and text values
 	$_prefs = array(
 		'users_prefs_language',
-		'users_prefs_mailCharset',
 	);
 
 	foreach($_prefs as $pref) {
@@ -30,13 +27,6 @@ if (isset($_REQUEST['users_defaults'])) {
 	}
 }
 
-// Users Defaults
-$mailCharsets = array(
-	'utf-8',
-	'iso-8859-1'
-);
-
-$smarty->assign_by_ref('mailCharsets', $mailCharsets);
 // Get list of available languages
 $languages = array();
 $languages = $tikilib->list_languages(false, null, true);

@@ -75,5 +75,37 @@ function prefs_user_list() {
 				'user_who_viewed_my_stuff',
 			),
 		),
+		'user_list_order' => array(
+			'name' => tra('Sort Order'),
+			'type' => 'list',
+			'options' => UserListOrder(),
+		),
 	);
+}
+
+/**
+ * UserListOrder computes the value list for user_list_order preference
+ * 
+ * @access public
+ * @return array : list of values
+ */
+function UserListOrder()
+{
+	global $prefs;
+	$options = array();
+
+	if ($prefs['feature_community_list_score'] == 'y') {
+		$options['score_asc'] = tra('Score ascending');
+		$options['score_desc'] = tra('Score descending');
+	}
+	
+	if ($prefs['feature_community_list_name'] == 'y') {
+		$options['pref:realname_asc'] = tra('Name ascending');
+		$options['pref:realname_desc'] = tra('Name descending');
+	}
+
+	$options['login_asc'] = tra('Login ascending');
+	$options['login_desc'] = tra('Login descending');
+
+	return $options;
 }

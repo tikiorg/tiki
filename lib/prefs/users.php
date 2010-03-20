@@ -191,5 +191,14 @@ function prefs_users_list() {
 				'feature_trackers',
 			),
 		),
+		'users_prefs_mailCharset' => array(
+			'name' => tra('Character set for mail'),
+			'type' => 'list',
+			'options' => array(
+				'' => 'default',
+				'utf-8' => 'utf-8',
+				'iso-8859-1' => 'iso-8859-1',
+			),
+		),
 	);
 }

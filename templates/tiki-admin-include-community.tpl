@@ -83,17 +83,7 @@
 					{tr}Default user preferences{/tr}
 					{help url="UsersDefaultPrefs" desc="{tr}Users Default Preferences{/tr}"}
 				</legend>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="users_prefs_mailCharset">{tr}Character set for mail{/tr}: </label>
-					<select name="users_prefs_mailCharset" id="users_prefs_mailCharset">
-						<option value=''>{tr}default{/tr}</option>
-						{section name=ix loop=$mailCharsets}
-							<option value="{$mailCharsets[ix]|escape}" {if $prefs.users_prefs_mailCharset eq $mailCharsets[ix]|escape}selected="selected"{/if}>{$mailCharsets[ix]}</option>
-						{/section}
-					</select>
-				</div>
-			</div>
+				{preference name=users_prefs_mailCharset}
 			{if $prefs.change_theme eq 'y'}
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
@@ -172,25 +162,7 @@
 					{tr}Select which items to display when listing users{/tr}.
 				</div>
 			</div>
-		
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="user_list_order">{tr}Sort order{/tr}:</label>
-					<select name="user_list_order" id="user_list_order">
-						{if $prefs.feature_community_list_score eq 'y'}
-							<option value="score_asc" {if $prefs.user_list_order=="score_asc"}selected="selected"{/if}>{tr}Score ascending{/tr}</option>
-							<option value="score_desc" {if $prefs.user_list_order=="score_desc"}selected="selected"{/if}>{tr}Score descending{/tr}</option>
-						{/if}
-						{if $prefs.feature_community_list_name eq 'y'}
-							<option value="pref:realName_asc" {if $prefs.user_list_order=="pref:realName_asc"}selected="selected"{/if}>{tr}Name ascending{/tr}</option>
-							<option value="pref:realName_desc" {if $prefs.user_list_order=="pref:realName_desc"}selected="selected"{/if}>{tr}Name descending{/tr}</option>
-						{/if}
-						<option value="login_asc" {if $prefs.user_list_order=="login_asc"}selected="selected"{/if}>{tr}Login ascending{/tr}</option>
-						<option value="login_desc" {if $prefs.user_list_order=="login_desc"}selected="selected"{/if}>{tr}Login descending{/tr}</option>
-					</select>
-				</div>
-			</div>
-
+			{preference name=user_list_order}
 			{preference name=feature_community_list_name}
 			{preference name=feature_community_list_score}
 			{preference name=feature_community_list_country}
