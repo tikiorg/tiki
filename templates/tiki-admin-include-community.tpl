@@ -72,22 +72,9 @@
 					{help url="UsersDefaultPrefs" desc="{tr}Users Default Preferences{/tr}"}
 				</legend>
 				{preference name=users_prefs_mailCharset}
-
-			{if $prefs.change_language eq 'y'}
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="users_prefs_language">{tr}Language{/tr}:</label>
-						<select name="users_prefs_language" id="users_prefs_language">
-							<option value=''>{tr}default{/tr}</option>
-							{section name=ix loop=$languages}
-								{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-									<option value="{$languages[ix].value|escape}"	{if $users_prefs_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
-								{/if}
-							{/section}
-						</select>
-					</div>
-				</div>
-			{/if}
+				{if $prefs.change_language eq 'y'}
+					{preference name=users_prefs_language}
+				{/if}
 
 			{preference name=users_prefs_userbreadCrumb}
 			{preference name=users_prefs_display_timezone}

@@ -18,20 +18,10 @@ if (isset($_REQUEST['userfeatures'])) {
 // Users Defaults
 if (isset($_REQUEST['users_defaults'])) {
 	check_ticket('admin-inc-login');
-	$_prefs = array(
-		'users_prefs_language',
-	);
 
 	foreach($_prefs as $pref) {
 		simple_set_value($pref);
 	}
 }
 
-$listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
-$smarty->assign('listgroups', $listgroups['data']);
-
-// Get list of available languages
-$languages = array();
-$languages = $tikilib->list_languages(false, null, true);
-$smarty->assign_by_ref('languages', $languages);
 ask_ticket('admin-inc-community');
