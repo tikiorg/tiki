@@ -17,6 +17,7 @@ function prefs_user_list() {
 			'name' => tra('Display UserTracker information on the user information page'),
 			'description' => tra('Display UserTracker information on the user information page'),
 			'help' => 'User+Tracker',
+			'hint' => tra('Use the format: trackerId, fieldId1, fieldId2, ...'),
 			'type' => 'text',
 			'size' => '50',
 			'dependencies' => array(

@@ -66,6 +66,4 @@ if (!empty($_REQUEST['testMail'])) {
 		 add_feedback( 'testMail', tra('Test mail sent to').' '.$_REQUEST['testMail'], 3 );
 	}
 }
-$listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
-$smarty->assign('listgroups', $listgroups['data']);
 ask_ticket('admin-inc-general');

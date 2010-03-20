@@ -35,21 +35,9 @@
 
 		{tab name="{tr}General Settings{/tr}"}
 			{preference name=user_show_realnames}
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="highlight_group">{tr}Highlight group{/tr}:</label>
-					<select name="highlight_group" id="highlight_group">
-						<option value="0">{tr}None{/tr}</option>
-						{foreach key=g item=gr from=$listgroups}
-							<option value="{$gr.groupName|escape}" {if $gr.groupName eq $prefs.highlight_group} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
-						{/foreach}
-					</select>
-					{help url="Groups"}
-				</div>
-			</div>
+			{preference name=highlight_group}
 			{preference name=feature_display_my_to_others}
 			{preference name=user_tracker_infos}
-			<em>{tr}Use the format: trackerId, fieldId1, fieldId2, ...{/tr}</em>
 
 			{preference name=user_who_viewed_my_stuff}
 			{preference name=user_who_viewed_my_stuff_days}

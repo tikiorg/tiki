@@ -27,6 +27,9 @@ if (isset($_REQUEST['users_defaults'])) {
 	}
 }
 
+$listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
+$smarty->assign('listgroups', $listgroups['data']);
+
 // Get list of available languages
 $languages = array();
 $languages = $tikilib->list_languages(false, null, true);
