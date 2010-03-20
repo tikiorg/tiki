@@ -72,21 +72,7 @@
 					{help url="UsersDefaultPrefs" desc="{tr}Users Default Preferences{/tr}"}
 				</legend>
 				{preference name=users_prefs_mailCharset}
-			{if $prefs.change_theme eq 'y'}
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="users_prefs_theme">{tr}Theme{/tr}:</label>
-						<select name="users_prefs_theme" id="users_prefs_theme">
-							<option value='' >{tr}default{/tr}</option>
-							{section name=ix loop=$styles}
-								{if count($prefs.available_styles) == 0 || in_array($styles[ix], $prefs.available_styles)}
-									<option value="{$styles[ix]|escape}" {if $users_prefs_theme eq $styles[ix]|escape}selected="selected"{/if}>{$styles[ix]}</option>
-								{/if}
-							{/section}
-						</select>
-					</div>
-				</div>
-			{/if}
+
 			{if $prefs.change_language eq 'y'}
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">
