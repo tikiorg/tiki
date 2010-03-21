@@ -105,7 +105,7 @@ if (isset($_REQUEST["rebuild"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	$smarty->assign('advice', 'You must clear your browser cache.'); //get_strings tra('You must clear your browser cache.');
+	$smarty->assign('advice', tra('You must clear your browser cache.')); //get_strings tra('You must clear your browser cache.');
 	$imagegallib->rebuild_thumbnails($_REQUEST["rebuild"]);
 }
 if (isset($_REQUEST["rotateright"])) {
