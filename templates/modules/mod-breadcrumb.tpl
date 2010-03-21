@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="breadcrumb" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	{if $nonums != 'y'}<ol>{else}<ul>{/if}
+{modules_list list=$breadCrumb nonums=$nonums}
 	{section name=ix loop=$breadCrumb}
 		<li>
 			<a class="linkmodule" href="{$breadCrumb[ix]|sefurl}">
@@ -13,5 +13,5 @@
 			</a>
 		</li>
 	{/section}
-	{if $nonums != 'y'}</ol>{else}</ul>{/if}
+{/modules_list}
 {/tikimodule}

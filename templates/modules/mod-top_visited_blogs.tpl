@@ -2,8 +2,8 @@
 {* $Id$ *}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="top_visited_blogs" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-{if $nonums != 'y'}<ol>{else}<ul>{/if}
-{section name=ix loop=$modTopVisitedBlogs}
+{modules_list list=$modTopVisitedBlogs nonums=$nonums}
+	{section name=ix loop=$modTopVisitedBlogs}
 	<li>
 		{if $module_params.showlastpost eq 'y'}
 			<a class="linkmodule" href="{$modTopVisitedBlogs[ix].blogId|sefurl:blog}">
@@ -23,7 +23,7 @@
 			</a>
 		{/if}
 	</li>
-{/section}
-{if $nonums != 'y'}</ol>{else}</ul>{/if}
+	{/section}
+{/modules_list}
 {/tikimodule}
 {/strip}
