@@ -271,6 +271,7 @@ $lang=Array(
 "right modules" => "Module rechts",
 "edit/create" => "hinzufügen/bearbeiten",
 "clear cache" => "Cache leeren",
+"You must clear your browser cache." => "Sie müssen Ihren Browser-Cache leeren.",
 "assign" => "zuweisen",
 "left" => "links",
 "right" => "rechts",
