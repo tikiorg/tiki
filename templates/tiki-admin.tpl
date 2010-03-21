@@ -8,7 +8,7 @@
 		{tr}This search feature and the <a href="tiki-edit_perspective.php">perspectives GUI</a> need <a href="http://dev.tikiwiki.org/Dynamic+Preferences">http://dev.tikiwiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
 	{/remarksbox}
 	<p>
-		<label>Configuration search: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>
+		<label>{tr}Configuration search{/tr}: <input type="text" name="lm_criteria" value="{$lm_criteria|escape}"/>
 		<input type="submit" value="{tr}Search{/tr}"/></label>
 	</p>
 </form>
