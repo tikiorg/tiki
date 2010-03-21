@@ -251,6 +251,16 @@ function prefs_global_list() {
 			'hint' => tra("The group will be named identical to the user's username"),
 			'help' => 'Groups',
 		),
+		'rememberme' => array(
+			'name' => tra('Remember me'),
+			'type' => 'list',
+			'help' => 'Login+Config#Remember_Me',
+			'options' => array(
+				'disabled'=> tra('Disabled'),
+				'all'			=> tra("User's choice"),
+				'always'	=> tra('Always'),
+			),
+		),
 		'remembertime' => array(
 			'name' => tra('Duration'),
 			'type' => 'list',

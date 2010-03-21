@@ -72,20 +72,9 @@
 					{preference name=https_port}
 					{preference name=https_external_links_for_users}
 				</div>
-	
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="rememberme">{tr}Remember me:{/tr}</label>
-						<select name="rememberme" id="rememberme" onchange="hidedisabled('remembermeoptions',this.value);">
-							<option value="disabled" {if $prefs.rememberme eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
-							<option value="all" {if $prefs.rememberme eq 'all'} selected="selected"{/if}>{tr}User's choice{/tr}</option>
-							<option value="always" {if $prefs.rememberme eq 'always'} selected="selected"{/if}>{tr}Always{/tr}</option>
-						</select>
-				 	{help url="Login+Config#Remember_Me"}
-					</div>
-				</div>
-	
-				<div id="remembermeoptions" style="clear:both;margin-left:2.5em;display:{if $prefs.rememberme eq 'disabled'}none{else}block{/if}">
+
+				{preference name=rememberme}
+				<div class="adminoptionboxchild rememberme_childcontainer all always">
 					{preference name=remembertime}
 				</div>
 	
