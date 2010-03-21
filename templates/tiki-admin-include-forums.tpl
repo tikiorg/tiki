@@ -10,23 +10,7 @@
 
 	{tabset name="admin_forums"}
 		{tab name="{tr}General Settings{/tr}"}
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="home_forum">{tr}Home Forum (main forum){/tr}</label>
-					<select name="home_forum" id="home_forum">
-						{section name=ix loop=$forums}
-							<option value="{$forums[ix].forumId|escape}" {if $forums[ix].forumId eq $prefs.home_forum}selected="selected"{/if}>{$forums[ix].name|truncate:20:"...":true|escape}</option>
-						{sectionelse}
-							<option value="">{tr}None{/tr}</option>
-						{/section}
-					</select>
-					{if $forums}
-						<input type="submit" name="homeforumprefs" value="{tr}Set{/tr}" />
-					{else}
-						<a href="tiki-admin_forums.php" class="button" title="{tr}Create a forum{/tr}"> {tr}Create a forum{/tr} </a>
-					{/if}
-				</div>
-			</div>
+			{preference name=home_forum}
 
 			<fieldset>
 				<legend>

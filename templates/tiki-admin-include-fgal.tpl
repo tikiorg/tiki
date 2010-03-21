@@ -22,37 +22,22 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=fgal" method="post">
-<div class="heading input_submit_container" style="text-align: right">
-	<input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
-</div>
-
-{tabset name="fgal_admin"}
-	{tab name="{tr}General Settings{/tr}"}
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label>{tr}Home Gallery (main gallery){/tr}</label>
-	<select name="home_file_gallery">
-              {section name=ix loop=$file_galleries}
-                <option value="{$file_galleries[ix].galleryId|escape}" {if $file_galleries[ix].galleryId eq $prefs.home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"...":true}</option>
-			  {sectionelse}
-			  <option value="">{tr}None{/tr}</option>
-				{/section}
-	</select>
-	{if $file_galleries|@count ge '1'}
-	<input type="submit" name="filegalset" value="{tr}Set{/tr}" />
-	{else}
-	{button href="tiki-list_file_gallery.php" _text="{tr}Create a Gallery{/tr}"}
-	{/if}
+	<div class="heading input_submit_container" style="text-align: right">
+		<input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
 	</div>
-</div>
 
-	{preference name='fgal_use_db'}
-	<div class="adminoptionboxchild" {*id="fgal_use_db_childcontainer_1"*}>
-		 {preference name='fgal_use_dir'}
-	</div>
-	{button href="tiki-admin.php?page=fgal&amp;move=to_fs" _text="{tr}Move files from database to directory{/tr}"}
-	{button href="tiki-admin.php?page=fgal&amp;move=to_db" _text="{tr}Move files from directory to database{/tr}"}
+	{tabset name="fgal_admin"}
+		{tab name="{tr}General Settings{/tr}"}
+		
+			{preference name=home_file_gallery}
+			{preference name='fgal_use_db'}
+			<div class="adminoptionboxchild" {*id="fgal_use_db_childcontainer_1"*}>
+				{preference name='fgal_use_dir'}
+			</div>
+			{button href="tiki-admin.php?page=fgal&amp;move=to_fs" _text="{tr}Move files from database to directory{/tr}"}
+			{button href="tiki-admin.php?page=fgal&amp;move=to_db" _text="{tr}Move files from directory to database{/tr}"}
 
-	{preference name='fgal_podcast_dir'}
+			{preference name='fgal_podcast_dir'}
 
 <input type="hidden" name="filegalfeatures" />
 

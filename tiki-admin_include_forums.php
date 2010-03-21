@@ -6,14 +6,13 @@
 // $Id$
 
 // This script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-	header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
 	exit;
 }
 
 if (isset($_REQUEST["homeforumprefs"]) && isset($_REQUEST["home_forum"])) {
 	check_ticket('admin-inc-forums');
-	simple_set_value('home_forum');
 }
 
 if (isset($_REQUEST["forumprefs"])) {
@@ -26,8 +25,4 @@ if (isset($_REQUEST["forumlistprefs"])) {
 if (isset($_REQUEST["forumthreadprefs"])) {
 	check_ticket('admin-inc-forums');
 }
-include_once ("lib/commentslib.php");
-$commentslib = new Comments($dbTiki);
-$forums = $commentslib->list_forums(0, -1, 'name_desc', '');
-$smarty->assign_by_ref('forums', $forums["data"]);
 ask_ticket('admin-inc-forums');
