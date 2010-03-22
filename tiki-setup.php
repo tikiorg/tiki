@@ -161,7 +161,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 	
 	if( $prefs['feature_jquery_ui'] == 'y' ) {
 		if( $prefs['javascript_cdn'] == 'google' ) {
-			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js', 'external' );
+			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js', 'external' );
 		} else {
 			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
 		}
