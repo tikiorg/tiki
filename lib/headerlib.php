@@ -438,6 +438,7 @@ class HeaderLib
 
 		$pre = '';
 		foreach( $parts[1] as $f ) {
+			$f = ltrim( $f, '/' );
 			$pre .= $this->minify_css( $f );
 		}
 
