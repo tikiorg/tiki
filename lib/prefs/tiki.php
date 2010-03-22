@@ -22,22 +22,22 @@ function prefs_tiki_list() {
 		),
 		'tiki_minify_javascript' => array(
 			'name' => tra('Minify javascript'),
-			'description' => tra('Compress javascript files used in the page into a single file to be distributed statically. Changes to javascript files will require cache to be cleared.'),
+			'description' => tra('Compress javascript files used in the page into a single file to be distributed statically. Changes to javascript files will require cache to be cleared. Uses http://code.google.com/p/minify/'),
 			'type' => 'flag',
 			'perspective' => false,
 		),
 		'tiki_minify_css' => array(
 			'name' => tra('Minify CSS'),
-			'description' => tra('Compress CSS files by removing additional spaces and grouping multiple files into one. Changes to CSS files will require cache to be cleared.'),
+			'description' => tra('Compress CSS files by removing additional spaces and grouping multiple files into one. Changes to CSS files will require cache to be cleared. Uses http://code.google.com/p/minify/'),
 			'type' => 'flag',
 			'perspective' => false,
 		),
 		'tiki_minify_css_single_file' => array(
 			'name' => tra('Minify CSS into a single file'),
-			'description' => tra('In addition to reducing the size of the CSS, reduce the amount of included files.'),
+			'description' => tra('In addition to reducing the size of the CSS, reduce the number of included files.'),
 			'type' => 'flag',
 			'perspective' => false,
-			'warning' => tra('This setting may not work out of the box for all styles.'),
+			'warning' => tra('This setting may not work out of the box for all styles. import needs to use @import url("...") and not @import "..."'),
 		),
 		'tiki_same_day_time_only' => array(
 			'name' => tra('Skip date for same day'),
