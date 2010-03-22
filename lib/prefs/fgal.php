@@ -88,7 +88,7 @@ function prefs_fgal_list() {
 		),
 		'fgal_use_db' => array(
 			'name' => tra('Storage'),
-			'type' => 'radio',
+			'type' => 'list',
 			'perspective' => false,
 			'options' => array(
 				'y' => tra('Store in database'),

@@ -34,7 +34,7 @@
 		
 			{preference name=home_file_gallery}
 			{preference name='fgal_use_db'}
-			<div class="adminoptionboxchild" {*id="fgal_use_db_childcontainer_1"*}>
+			<div class="adminoptionboxchild fgal_use_db_childcontainer n">
 				{preference name='fgal_use_dir'}
 			</div>
 			{button href="tiki-admin.php?page=fgal&amp;move=to_fs" _text="{tr}Move files from database to directory{/tr}"}
