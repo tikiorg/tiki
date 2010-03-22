@@ -438,7 +438,6 @@ class HeaderLib
 
 		$pre = '';
 		foreach( $parts[1] as $f ) {
-			$f = ltrim( $f, '/' );
 			$pre .= $this->minify_css( $f );
 		}
 
@@ -451,21 +450,22 @@ class HeaderLib
 	private function minify_css( $file ) {
 		global $tikipath, $tikiroot;
 		if (strpos($file, $tikiroot) === 0) {
-			$currentdir = dirname( $file );
-			$content = file_get_contents( str_replace( $tikiroot, $tikipath, $file)) ;
-		} else {
-			if ( $file[0] == '/' ) {
-				$file = $tikipath.$file;
-			}
-			$currentdir = str_replace($tikipath, $tikiroot, str_replace('\\', '/', dirname(realpath( $file ))));
-			$content = file_get_contents( $file );
+			$file = substr( $file, strlen( $tikiroot ) );
 		}
+
+		$currentdir = str_replace($tikipath, $tikiroot, str_replace('\\', '/', dirname(realpath( $file ))));
+		if ( $file[0] == '/' ) {
+			$file = $tikipath . $file;
+		}
+
+		$content = file_get_contents( $file );
 
 		return Minify_CSS::minify( $content, array(
 			'prependRelativePath' => $currentdir.'/',
 			'bubbleCssImports' => true,
 		) );
 	}
+
 
 	private function collect_css_files() {
 		global $tikipath, $tikidomain, $style_base;
