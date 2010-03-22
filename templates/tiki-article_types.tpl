@@ -35,7 +35,7 @@
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 	{section name=user loop=$types}
 <h3>{tr}{$types[user].type|escape}{/tr}</h3>
-<a class="link" href="tiki-view_articles.php?type={$types[user].type|escape:url}">view articles with this type</a>
+<a class="link" href="tiki-view_articles.php?type={$types[user].type|escape:url}">{tr}view articles with this type{/tr}</a>
 	<table class="normal">
 		<tr>
 			<th>{tr}Articles{/tr}</th>

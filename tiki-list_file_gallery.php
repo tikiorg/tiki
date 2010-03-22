@@ -787,8 +787,8 @@ include_once ('fgal_listing_conf.php');
 
 $find_durations = array();
 if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
-	$find_durations[] = array('label'=>'Not modified since', 'prefix'=>'find_lastModif', 'default'=>empty($_REQUEST['find_lastModif'])?'':$_REQUEST['find_lastModif'], 'default_unit'=>empty($_REQUEST['find_lastModif_unit'])?'week':$_REQUEST['find_lastModif_unit']);
-	$find_durations[] = array('label'=>'Not downloaded since', 'prefix'=>'find_lastDownload', 'default'=>empty($_REQUEST['find_lastDownload'])?'':$_REQUEST['find_lastDownload'], 'default_unit'=>empty($_REQUEST['find_lastDownload_unit'])?'week':$_REQUEST['find_lastDownload_unit']);
+	$find_durations[] = array('label'=>tra('Not modified since'), 'prefix'=>'find_lastModif', 'default'=>empty($_REQUEST['find_lastModif'])?'':$_REQUEST['find_lastModif'], 'default_unit'=>empty($_REQUEST['find_lastModif_unit'])?'week':$_REQUEST['find_lastModif_unit']);
+	$find_durations[] = array('label'=>tra('Not downloaded since'), 'prefix'=>'find_lastDownload', 'default'=>empty($_REQUEST['find_lastDownload'])?'':$_REQUEST['find_lastDownload'], 'default_unit'=>empty($_REQUEST['find_lastDownload_unit'])?'week':$_REQUEST['find_lastDownload_unit']);
 	foreach ($fgal_listing_conf as $k=>$v) {
 		if ( $k == 'type' ) $show_k = 'icon';
 		elseif ( $k == 'lastModif' ) $show_k = 'modified';
