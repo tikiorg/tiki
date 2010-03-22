@@ -1700,6 +1700,7 @@ function prefs_feature_list() {
 			'name' => tra('Fixed width'),
 			'type' => 'flag',
 			'description' => tra('Constrains the site display to 990px wide.'),
+			'warning' => tra('You can modify at styles/layout/fixed_width.css'),
 		),
 	);
 }
