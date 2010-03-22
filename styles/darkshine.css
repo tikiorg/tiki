@@ -7,10 +7,10 @@ Dark Shine theme for TikiWiki CMS/Groupware. This is an adaptation
 */
  
 /* Import the default layout properties file: */
-@import "layout/layout.css";
+@import url("layout/layout.css");
 
 /* And design defaults: */
-@import "layout/design.css";
+@import url("layout/design.css");
  
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/ 
