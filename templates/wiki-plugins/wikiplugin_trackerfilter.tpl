@@ -3,10 +3,10 @@
 {if $msgTrackerFilter}
 <div class="simplebox highlight">{$msgTrackerFilter|escape}</div>
 {/if}
-{if $line ne 'y' and $prefs.javascript_enabled eq 'y'}
+{if $line ne 'y' and $prefs.javascript_enabled eq 'y' and $noflipflop ne 'y'}
 {button _text="{tr}Filters{/tr}" _flip_id="trackerFilter$iTrackerFilter"}
 {/if}
-<div id="trackerFilter{$iTrackerFilter}" style="display:{if $open eq 'y' or $line eq 'y' or $prefs.javascript_enabled ne 'y'}block{else}none{/if}">
+<div id="trackerFilter{$iTrackerFilter}" style="display:{if $open eq 'y' or $line eq 'y' or $prefs.javascript_enabled ne 'y' and $noflipflop ne 'y'}block{else}none{/if}">
 {if empty($inForm)}<form method="post">{/if}
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <table class="normal">

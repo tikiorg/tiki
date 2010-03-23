@@ -35,6 +35,11 @@ function wikiplugin_trackerfilter_info() {
 			'name' => tra('Line'),
 			'description' => 'y|n - displays all the filter on the same line',
 		),
+		'noflipflop' => array(
+			'required' => false,
+			'name' => tra('Always displays the window without flip flop'),
+			'description' => 'y|n',
+		),
 	) );
 
 return array(
@@ -54,6 +59,8 @@ function wikiplugin_trackerfilter($data, $params) {
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
+	$default = array('noflipflop'=>'n', 'action'=>'Filter');//tra('Filter')
+	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
 	if (isset($_REQUEST['msgTrackerFilter'])) {
@@ -152,10 +159,8 @@ function wikiplugin_trackerfilter($data, $params) {
 		$open = 'n';
 	}
 	$smarty->assign_by_ref('open', $open);
-	if (!isset($action)) {
-		$action = 'Filter';//tra('Filter')
-	}
 	$smarty->assign_by_ref('action', $action);
+	$smarty->assign_by_ref('noflipflop', $noflipflop);
 	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
 
 	static $first = true;
