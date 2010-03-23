@@ -1587,6 +1587,7 @@ function get_default_prefs() {
 		'tiki_minify_css_single_file' => 'n',
 		'tiki_cachecontrol_session' => '',
 		'tiki_cachecontrol_nosession' => '',
+		'tiki_cdn' => '',
 
 		// Token Access
 		'auth_token_access' => 'n',

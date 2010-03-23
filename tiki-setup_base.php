@@ -45,6 +45,7 @@ $needed_prefs = array(
 	'session_storage' => 'default',
 	'session_silent' => 'n',
 	'session_cookie_name' => session_name(),
+	'tiki_cdn' => '',
 	'language' => 'en',
 	'lang_use_db' => 'n',
 	'feature_pear_date' => 'y',
@@ -117,7 +118,17 @@ if (isset($_GET[session_name()]) && $tikilib->get_ip_address() == '127.0.0.1') {
 	session_id($_GET[session_name()]);
 }
 
-if ( $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] ) ) {
+$start_session = $prefs['session_silent'] != 'y' or isset( $_COOKIE[session_name()] );
+
+// If called from the CDN, do not start the session
+if( $prefs['tiki_cdn'] ) {
+	$host = parse_url( $prefs['tiki_cdn'], PHP_URL_HOST );
+	if( $host == $_SERVER['HTTP_HOST'] ) {
+		$start_session = false;
+	}
+}
+
+if ( $start_session ) {
 	// enabing silent sessions mean a session is only started when a cookie is presented
 	$session_params = session_get_cookie_params();
 	session_set_cookie_params($session_params['lifetime'], $tikiroot);
