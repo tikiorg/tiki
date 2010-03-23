@@ -4921,6 +4921,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 
 			$value = rtrim( $value, "\n\t\r\0, " );
+			$value = strip_tags($value);
 			$arguments[$name] = $value;
 		}
 
