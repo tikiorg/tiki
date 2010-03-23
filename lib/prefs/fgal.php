@@ -88,7 +88,7 @@ function prefs_fgal_list() {
 		),
 		'fgal_use_db' => array(
 			'name' => tra('Storage'),
-			'type' => 'radio',
+			'type' => 'list',
 			'perspective' => false,
 			'options' => array(
 				'y' => tra('Store in database'),
@@ -109,10 +109,11 @@ function prefs_fgal_list() {
 			'name' => tra('Automatic deletion of old files'),
 			'description' => tra('The user will have an option when uploading a file to specify the time after which the file is deleted'),
 			'type' => 'flag',
+			'help' => 'File+Gallery+Config',
 		),
 		'fgal_delete_after_email' => array(
-			'name' => tra('Deletion email notification'),
-			'description' => tra('This email will receive a copy of each deleted file'),
+			'name' => tra('Deletion emails notification'),
+			'description' => tra('These emails will receive a copy of each deleted file. Emails are separated with comma'),
 			'type' => 'text',
 		),
 	);

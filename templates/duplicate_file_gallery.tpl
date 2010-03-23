@@ -18,7 +18,7 @@
     </tr>
     <tr class="formcolor"><td><label for="dupCateg">{tr}Duplicate categories{/tr}:</label></td><td><input type="checkbox" id="dupCateg" name="dupCateg" /></td></tr>
     <tr class="formcolor"><td><label for="dupPerms">{tr}Duplicate permissions{/tr}:</label></td><td><input type="checkbox" id="dupPerms" name="dupPerms" /></td></tr>
-    <tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}duplicate{/tr}" /></td></tr>
+    <tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}Duplicate{/tr}" /></td></tr>
   </table>
 </form>
 {/if}

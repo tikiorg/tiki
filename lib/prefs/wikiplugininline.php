@@ -14,8 +14,8 @@ function prefs_wikiplugininline_list() {
 		$info = $tikilib->plugin_info( $plugin );
 
 		$prefs['wikiplugininline_' . $plugin] = array(
-			'name' => tr( 'Inline plugin %0 (hide plugin edit icon)', $info['name'] ),
-			'description' => tr('When inlined, the plugin edit icon will not appear.'),
+			'name' => tra('Inline plugin %0 (hide plugin edit icon)', $info['name'] ),
+			'description' => tra('When inlined, the plugin edit icon will not appear.'),
 			'type' => 'flag',
 		);
 	}

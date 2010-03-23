@@ -17,7 +17,9 @@
 if ($jq('.{{$p.preference|escape}}_childcontainer').length) {
 	$jq('#{{$p.id|escape}}').change( function( e ) {
 		$jq('.{{$p.preference|escape}}_childcontainer').hide();
-		$jq('.{{$p.preference|escape}}_childcontainer.' + $jq(this).val()).show();
+		if( $jq(this).val().length ) {
+			$jq('.{{$p.preference|escape}}_childcontainer.' + $jq(this).val()).show();
+		}
 	} ).change();
 }
 	{/jq}

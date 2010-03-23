@@ -1672,4 +1672,20 @@ a.admbox.off:active {
 .button .iconmenu {
 	display: inline;
 }
+
+/* fixed-width rules */
+body.fixed_width {
+	background: #e6f3f6;
+}
+
+body.fixed_width #main {
+	background: #fff;
+}
+
+body.fixed_width #main[id] {
+	border: 1px solid #006669;
+	margin-top: 18px;
+	margin-bottom: 5px;
+}
+
 /* end of css file */

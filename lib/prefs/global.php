@@ -6,15 +6,30 @@
 // $Id$
 
 function prefs_global_list() {
-	global $tikilib;
+	global $tikilib, $prefs;
+
+	$all_styles = $tikilib->list_styles();
+	$styles = array();
+
+	foreach ($all_styles as $style) {
+		$styles[$style] = substr( $style, 0, strripos($style, '.css'));
+	}
+	
 	$languages = $tikilib->list_languages( false, null, true);
 	$map = array();
-	
+
 	foreach( $languages as $lang ) {
 		$map[ $lang['value'] ] = $lang['name'];
 	}
 
 	return array(
+		'style' => array(
+			'name' => tra('Theme'),
+			'type' => 'list',
+			'help' => 'Themes',
+			'description' => tra('Style of the site, sometimes called a skin or CSS. See http://themes.tikiwiki.org for more Tiki themes.'),
+			'options' => $styles,
+		),
 		'browsertitle' => array(
 			'name' => tra('Browser title'),
 			'description' => tra('Label visible in the browser\'s title bar on all pages. Also appears in search engines.'),
@@ -236,6 +251,16 @@ function prefs_global_list() {
 			'hint' => tra("The group will be named identical to the user's username"),
 			'help' => 'Groups',
 		),
+		'rememberme' => array(
+			'name' => tra('Remember me'),
+			'type' => 'list',
+			'help' => 'Login+Config#Remember_Me',
+			'options' => array(
+				'disabled'=> tra('Disabled'),
+				'all'			=> tra("User's choice"),
+				'always'	=> tra('Always'),
+			),
+		),
 		'remembertime' => array(
 			'name' => tra('Duration'),
 			'type' => 'list',
@@ -254,9 +279,14 @@ function prefs_global_list() {
 			),
 		),
 		'urlIndex' => array(
-			'name' => tra('Use different URL as home page'),
+			'name' => tra('Use different URL as homepage'),
 			'type' => 'text',
 			'size' => 50,
+		),
+		'useUrlIndex' => array(
+			'name' => tra('or'),
+			'description' => tra('Use a Tikiwiki feature homepage or another homepage'),
+			'type' => 'flag',
 		),
 		'tikiIndex' => array(
 			'name' => tra('Use TikiWiki feature as homepage'),

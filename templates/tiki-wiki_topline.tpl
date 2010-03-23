@@ -2,6 +2,11 @@
 	<div class="content">
 		{if !$hide_page_header}
 		<div class="wikiinfo" style="float: left">
+
+{if $prefs.wiki_page_name_above eq 'y' and $print_page ne 'y'}
+	<a href="tiki-index.php?page={$page|escape:"url"}" class="titletop">{$page}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
+{/if}
+
 {if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
 			<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}

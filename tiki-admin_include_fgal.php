@@ -5,9 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-	header("location: index.php");
+// This script may only be included - so its better to die if called directly.
+if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
+	header('location: index.php');
 	exit;
 }
 include_once ('lib/filegals/filegallib.php');
@@ -53,7 +53,8 @@ if (!empty($_REQUEST['move'])) {
 	}
 	if (!empty($feedbacks)) {
 		$smarty->assign_by_ref('feedbacks', $feedbacks);
-	}}
+	}
+}
 
 if (isset($_REQUEST["filegallistprefs"])) {
 	check_ticket('admin-inc-fgal');
@@ -146,7 +147,4 @@ ksort($handlers);
 $smarty->assign("fgal_handlers", $handlers);
 $missingHandlers = $filegallib->getFiletype(array_keys($handlers));
 $smarty->assign_by_ref('missingHandlers', $missingHandlers);
-include_once ('fgal_listing_conf.php');
-$file_galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
-$smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
 ask_ticket('admin-inc-fgal');

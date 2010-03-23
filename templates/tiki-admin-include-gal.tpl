@@ -7,20 +7,11 @@
 {/remarksbox}
 
 <fieldset class="admin">
-<legend>{tr}Home Gallery{/tr}</legend>
-<form action="tiki-admin.php?page=gal" method="post">
-<table class="admin">
-<tr class="form"><td><label>{tr}Home Gallery (main gallery){/tr}</label></td><td>
-{if count($galleries) eq 0}{tr}No Gallery exists{/tr}{/if}
-{section name=ix loop=$galleries}
-{if $smarty.section.ix.first}<select name="home_gallery">{/if}
-<option value="{$galleries[ix].galleryId|escape}" {if $galleries[ix].galleryId eq $prefs.home_gallery}selected="selected"{/if}>{$galleries[ix].name|truncate:20:"...":true|escape}</option>
-{if $smarty.section.ix.last}</select>{/if}
-{/section}
-</td>
-<td><input type="submit" name="galset" value="{tr}OK{/tr}" /></td></tr>
-</table>
-</form>
+	<legend>{tr}Home Gallery{/tr}</legend>
+	<form action="tiki-admin.php?page=gal" method="post">
+		{preference name=home_gallery}
+		<input type="submit" name="galset" value="{tr}OK{/tr}" />
+	</form>
 </fieldset>
 
 <fieldset class="admin">

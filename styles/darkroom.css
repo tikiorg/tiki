@@ -16,11 +16,11 @@
 /***** XHTML Elements ******/ 
 
 html {
-	background: #474747;
+	background: #474747 url(darkroom/474747_5e5e5e_40.png);
 }
 
 body {
-	background: #474747 url(darkroom/474747_5e5e5e_40.png);
+	background: #474747;
 	color: #d8d8d8;
 	font: 74% "Trebuchet MS", "Bitstream Vera Sans", sans-serif;
 }
@@ -28,6 +28,10 @@ body {
 body.wikitext {
 	color: #d8d8d8;
 	background: #474747;
+}
+
+body.fixed_width {
+	background: #474747 url(darkroom/474747_5e5e5e_40.png);
 }
 
 a,
@@ -2162,4 +2166,5 @@ div.multiselect li.even {
 .categflipper {
 	float: right;
 }
+
 /* end of css file */

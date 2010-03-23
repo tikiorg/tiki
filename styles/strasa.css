@@ -15,7 +15,7 @@
 html {
 	display: block;
 	height: 100%;
-	background: #2e3035;
+	background: /*#2e3035*/#214d68;
 }
 
 body {
@@ -2113,5 +2113,42 @@ a.admbox.off:focus,
 a.admbox.off:active {
 	border: 1px solid #a9a9a9;
 }
+
+/* Fixed-width styles */
+
+body.fixed_width {
+	background: #214d68 url(strasa/body-bg_fw.png) repeat-x !important
+}
+
+body.fixed_width #c1c2 #wrapper .marginleft {
+ margin-left: 180px;
+}
+
+body.fixed_width #c1c2 #wrapper .marginright {
+	margin-right: 180px;
+}
+
+body.fixed_width #c1c2 #col2 {
+	width: 180px;
+	background: url(strasa/box_top_fw.gif) no-repeat 100% 0;
+}
+
+body.fixed_width #c1c2 #col2 .content {
+	margin-left: 0;
+	background: url(strasa/box_bottom_fw.gif) no-repeat 100% 100%;
+}
+
+body.fixed_width #col3 {
+	margin-left: -180px;
+	width: 180px;
+}
+
+body.fixed_width #col3 .content {
+	margin-right: 0;
+}
+
+body.fixed_width #main[id] {border:1px solid #2E3035; margin-top: 18px; margin-bottom: 5px;}
+
+
 
 /* end of file */

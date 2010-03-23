@@ -14,24 +14,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 $a_style = $prefs['site_style'];
 if (isset($_REQUEST["looksetup"])) {
 	ask_ticket('admin-inc-look');
-	if (isset($_REQUEST["site_style"])) {
+	if (isset($_REQUEST['style'])) {
 		check_ticket('admin-inc-general');
-		simple_set_value('site_style', 'style');
-		simple_set_value('site_style', 'site_style');
 
-		if (!isset($_REQUEST["site_style_option"]) || $_REQUEST["site_style_option"] == tra('None')) { // style has no options
-			$_REQUEST["site_style_option"] = '';
+		if (!isset($_REQUEST['style_option']) || $_REQUEST['style_option'] == tra('None')) { // style has no options
+			$_REQUEST['style_option'] = '';
 		}
 		check_ticket('admin-inc-general');
-		simple_set_value("site_style_option", "style_option");
-		simple_set_value("site_style_option", "site_style_option");
 	}
 	foreach($pref_byref_values as $britem) {
 		byref_set_value($britem);
 	}
 } else { // just changed theme menu, so refill options
-	if (isset($_REQUEST["site_style"]) && $_REQUEST["site_style"] != '') {
-		$a_style = $_REQUEST["site_style"];
+	if (isset($_REQUEST['style']) && $_REQUEST['style'] != '') {
+		$a_style = $_REQUEST['style'];
 	}
 }
 $styles = $tikilib->list_styles();
@@ -85,20 +81,20 @@ $js
 
 \$jq(document).ready( function() {
 	// pick up theme drop-down change
-	\$jq('select[name=site_style]').change( function() {
-		var ops = style_options[\$jq('select[name=site_style]').val()];
+	\$jq('select[name=style]').change( function() {
+		var ops = style_options[\$jq('select[name=style]').val()];
 		var none = true;
-		\$jq('select[name=site_style_option]').empty().attr('disabled','').attr('selectedIndex', 0);
+		\$jq('select[name=style_option]').empty().attr('disabled','').attr('selectedIndex', 0);
 		\$jq.each(ops[1], function(i, val) {
-			\$jq('select[name=site_style_option]').append(\$jq(document.createElement('option')).attr('value',i).text(i));
+			\$jq('select[name=style_option]').append(\$jq(document.createElement('option')).attr('value',i).text(i));
 			none = false;
 		});
 		if (none) {
-			\$jq('select[name=site_style_option]').empty().attr('disabled','disabled').
+			\$jq('select[name=style_option]').empty().attr('disabled','disabled').
 					append(\$jq(document.createElement('option')).attr('value',"$none").text("$none"));
 		}
 		
-		var t = \$jq('select[name=site_style]').val();
+		var t = \$jq('select[name=style]').val();
 		var f = style_options[t][0];
 		if (f) {
 			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
@@ -106,9 +102,9 @@ $js
 			\$jq('#style_thumb').animate({'opacity': 0.3}, 'fast');
 		}
 	});
-	\$jq('select[name=site_style_option]').change( function() {
-		var t = \$jq('select[name=site_style]').val();
-		var o = \$jq('select[name=site_style_option]').val();
+	\$jq('select[name=style_option]').change( function() {
+		var t = \$jq('select[name=style]').val();
+		var o = \$jq('select[name=style_option]').val();
 		var f = style_options[t][1][o];
 		if (f) {
 			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
@@ -123,7 +119,7 @@ JS
 
 if (isset($_REQUEST["looksetup"])) {
 	for ($i = 0, $count_feedback = count($tikifeedback); $i < $count_feedback; $i++) {
-		if (substr($tikifeedback[$i]['name'], 0, 10) == 'site_style') { // if site_style or site_style_option
+		if (substr($tikifeedback[$i]['name'], 0, 5) == 'style') { // if style or style_option
 			// If the theme has changed, reload the page to use the new theme
 			$location = 'location: tiki-admin.php?page=look';
 			if ($prefs['feature_tabs'] == 'y') {

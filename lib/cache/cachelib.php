@@ -110,7 +110,7 @@ class Cachelib
 			}
 
 			while (false !== ($file = readdir($dir))) {
-				if (substr($file,0,1) == "." or $file == 'CVS' or $file == '.svn' or $file == "index.php" or $file == "README" or ($virtuals && in_array($file, $virtuals)) ) continue;
+				if (substr($file,0,1) == "." or $file == 'CVS' or $file == '.svn' or $file == "index.php" or $file == "README" or $file == "web.config" or ($virtuals && in_array($file, $virtuals)) ) continue;
 				if (is_dir($path."/".$file)) {
 					$this->erase_dir_content($path."/".$file);
 					rmdir($path."/".$file);

@@ -35,21 +35,9 @@
 
 		{tab name="{tr}General Settings{/tr}"}
 			{preference name=user_show_realnames}
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="highlight_group">{tr}Highlight group{/tr}:</label>
-					<select name="highlight_group" id="highlight_group">
-						<option value="0">{tr}None{/tr}</option>
-						{foreach key=g item=gr from=$listgroups}
-							<option value="{$gr.groupName|escape}" {if $gr.groupName eq $prefs.highlight_group} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
-						{/foreach}
-					</select>
-					{help url="Groups"}
-				</div>
-			</div>
+			{preference name=highlight_group}
 			{preference name=feature_display_my_to_others}
 			{preference name=user_tracker_infos}
-			<em>{tr}Use the format: trackerId, fieldId1, fieldId2, ...{/tr}</em>
 
 			{preference name=user_who_viewed_my_stuff}
 			{preference name=user_who_viewed_my_stuff_days}
@@ -83,47 +71,10 @@
 					{tr}Default user preferences{/tr}
 					{help url="UsersDefaultPrefs" desc="{tr}Users Default Preferences{/tr}"}
 				</legend>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="users_prefs_mailCharset">{tr}Character set for mail{/tr}: </label>
-					<select name="users_prefs_mailCharset" id="users_prefs_mailCharset">
-						<option value=''>{tr}default{/tr}</option>
-						{section name=ix loop=$mailCharsets}
-							<option value="{$mailCharsets[ix]|escape}" {if $prefs.users_prefs_mailCharset eq $mailCharsets[ix]|escape}selected="selected"{/if}>{$mailCharsets[ix]}</option>
-						{/section}
-					</select>
-				</div>
-			</div>
-			{if $prefs.change_theme eq 'y'}
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="users_prefs_theme">{tr}Theme{/tr}:</label>
-						<select name="users_prefs_theme" id="users_prefs_theme">
-							<option value='' >{tr}default{/tr}</option>
-							{section name=ix loop=$styles}
-								{if count($prefs.available_styles) == 0 || in_array($styles[ix], $prefs.available_styles)}
-									<option value="{$styles[ix]|escape}" {if $users_prefs_theme eq $styles[ix]|escape}selected="selected"{/if}>{$styles[ix]}</option>
-								{/if}
-							{/section}
-						</select>
-					</div>
-				</div>
-			{/if}
-			{if $prefs.change_language eq 'y'}
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="users_prefs_language">{tr}Language{/tr}:</label>
-						<select name="users_prefs_language" id="users_prefs_language">
-							<option value=''>{tr}default{/tr}</option>
-							{section name=ix loop=$languages}
-								{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-									<option value="{$languages[ix].value|escape}"	{if $users_prefs_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
-								{/if}
-							{/section}
-						</select>
-					</div>
-				</div>
-			{/if}
+				{preference name=users_prefs_mailCharset}
+				{if $prefs.change_language eq 'y'}
+					{preference name=users_prefs_language}
+				{/if}
 
 			{preference name=users_prefs_userbreadCrumb}
 			{preference name=users_prefs_display_timezone}
@@ -172,25 +123,7 @@
 					{tr}Select which items to display when listing users{/tr}.
 				</div>
 			</div>
-		
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="user_list_order">{tr}Sort order{/tr}:</label>
-					<select name="user_list_order" id="user_list_order">
-						{if $prefs.feature_community_list_score eq 'y'}
-							<option value="score_asc" {if $prefs.user_list_order=="score_asc"}selected="selected"{/if}>{tr}Score ascending{/tr}</option>
-							<option value="score_desc" {if $prefs.user_list_order=="score_desc"}selected="selected"{/if}>{tr}Score descending{/tr}</option>
-						{/if}
-						{if $prefs.feature_community_list_name eq 'y'}
-							<option value="pref:realName_asc" {if $prefs.user_list_order=="pref:realName_asc"}selected="selected"{/if}>{tr}Name ascending{/tr}</option>
-							<option value="pref:realName_desc" {if $prefs.user_list_order=="pref:realName_desc"}selected="selected"{/if}>{tr}Name descending{/tr}</option>
-						{/if}
-						<option value="login_asc" {if $prefs.user_list_order=="login_asc"}selected="selected"{/if}>{tr}Login ascending{/tr}</option>
-						<option value="login_desc" {if $prefs.user_list_order=="login_desc"}selected="selected"{/if}>{tr}Login descending{/tr}</option>
-					</select>
-				</div>
-			</div>
-
+			{preference name=user_list_order}
 			{preference name=feature_community_list_name}
 			{preference name=feature_community_list_score}
 			{preference name=feature_community_list_country}

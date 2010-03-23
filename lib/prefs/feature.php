@@ -20,13 +20,20 @@ function prefs_feature_list() {
 		$catree['-1'] = tra('None');
 		$catree['0'] = tra('All');
 
-		foreach ($all_categs as $categ)
-		{
+		foreach ($all_categs as $categ) {
 			$catree[$categ['categId']] = $categ['categpath'];
 		}
 	}
-	
+
 	return array(
+		'feature_blog_mandatory_category' => array(
+			'name' => tra('Force and limit categorization to within subtree of'),
+			'type' => 'list',
+			'options' => $catree,
+			'dependencies' => array(
+				'feature_categories',
+			),
+		),
 		'feature_wiki' => array(
 			'name' => tra('Wiki'),
 			'description' => tra('Collaboratively authored documents with history of changes.'),
@@ -252,8 +259,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_page_title' => array(
-			'name' => tra('Display page title'),
-			'description' => tra('Display the page name at the top of each page. If not enabled, the content must be structured to contain a header.'),
+			'name' => tra('Display page name as page title'),
+			'description' => tra('Display the page name at the top of each page as page title. If not enabled, the page content should be structured to contain a header.'),
 			'type' => 'flag',
 		),
 		'feature_wiki_pageid' => array(
@@ -927,19 +934,19 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_blog_rankings' => array(
-			'name' => 'Rankings',
+			'name' => tra('Rankings'),
 			'type' => 'flag',
 		),
 		'feature_blog_heading' => array(
-			'name' => 'Custom blog headings',
+			'name' => tra('Custom blog headings'),
 			'type' => 'flag',
 		),
 		'feature_blog_comments' => array(
-			'name' => 'Blog-level',
+			'name' => tra('Blog-level'),
 			'type' => 'flag',
 		),
 		'feature_blogposts_comments' => array(
-			'name' => 'Post-level',
+			'name' => tra('Post-level'),
 			'type' => 'flag',
 		),
 		'feature_trackbackpings' => array(
@@ -947,8 +954,13 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_blogposts_pings' => array(
-			'name' => 'Post-level',
+			'name' => tra('Post-level'),
 			'type' => 'flag',
+		),
+		'feature_blog_sharethis' => array(
+			'name' => tra('ShareThis buttons'),
+			'type' => 'flag',
+			'hint' => tra('Insert a ShareThis button from www.sharethis.com.'),
 		),
 		'feature_file_galleries_rankings' =>array(
 			'name' => tra('Rankings'),
@@ -1152,7 +1164,7 @@ function prefs_feature_list() {
 			),
 		),
 		'feature_right_column' => array(
-			'name' => 'Right Column',
+			'name' => tra('Right Column'),
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
@@ -1383,7 +1395,7 @@ function prefs_feature_list() {
 		'feature_wikiwords' => array(
 			'name' => tra('WikiWords'),
 			'type' => 'flag',
-			'description' => ('Automatically convert words with UpPeR and LoWeR-case letters into wiki links.'),
+			'description' => tra('Automatically convert words with UpPeR and LoWeR-case letters into wiki links.'),
 		),
 		'feature_wiki_plurals' => array(
 			'name' => tra('Link plural WikiWords to their singular forms'),
@@ -1688,6 +1700,7 @@ function prefs_feature_list() {
 			'name' => tra('Fixed width'),
 			'type' => 'flag',
 			'description' => tra('Constrains the site display to 990px wide.'),
+			'warning' => tra('You can modify at styles/layout/fixed_width.css'),
 		),
 	);
 }

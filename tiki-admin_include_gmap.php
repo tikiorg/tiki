@@ -10,13 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-if (isset($_REQUEST["gmapsetup"])) {
-	check_ticket('admin-inc-gmap');
-	simple_set_value("gmap_key");
-	simple_set_value("gmap_defaultx");
-	simple_set_value("gmap_defaulty");
-	simple_set_value("gmap_defaultz");
-}
+
 if (isset($prefs['gmap_key']) and strlen($prefs['gmap_key']) == '86') {
 	$smarty->assign('show_map', 'y');
 } else {

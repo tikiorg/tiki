@@ -4,9 +4,9 @@
 */
  
 /* Import foundation CSS files. */
-@import "lite/lite.css";
-@import "layout/layout.css";
-@import "layout/design.css";
+@import url("lite/lite.css");
+@import url("layout/layout.css");
+@import url("layout/design.css");
 
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/ 
@@ -518,7 +518,8 @@ fieldset.admin label,
 	-moz-border-radius-topright: 4px;
 }
 
-.tabmark a {
+.tabmark a,
+.tabmark a:visited {
 	padding: 0.5em 1em;
 	color: #fff;
 	font-weight: normal;
@@ -623,7 +624,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 	margin: 5px 0;
 }
 .postbody-title {
-	padding: .5em .3em .3em 1em
+	padding: .5em .3em .3em 1em;
 	position: relative;
 /*	border: 1px solid #aaa;*/
 	background: url(fivealive/options/blueberry/header.png) -650px -90px;

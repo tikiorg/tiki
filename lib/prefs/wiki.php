@@ -38,6 +38,11 @@ function prefs_wiki_list() {
 			'description' => tra('Display the page version information when viewing the page.'),
 			'type' => 'flag',
 		),
+		'wiki_page_name_above' => array(
+			'name' => tra('Display page name above page'),
+			'description' => tra('Display page name above page instead of inside page.'),
+			'type' => 'flag',
+		),
 		'wiki_pagename_strip' => array(
 			'name' => tra('Page name display stripper'),
 			'description' => tra('Character to use as a delimiter in the page name. The portion of the name after this character will not be displayed.'),
@@ -129,7 +134,7 @@ function prefs_wiki_list() {
 			'name' => tra('Enable edit plugin icons'),
 			'description' => tra('Permits editing of a plugin, via a popup form, without needing to edit the whole page.'),
 			'type' => 'flag',
-			'hint' => 'Requires javascript',
+			'hint' => tra('Requires javascript'),
 		),
 		'wiki_badchar_prevent' => array(
 			'name' => tra('Prevent special characters in page names'),
@@ -375,7 +380,7 @@ function prefs_wiki_list() {
 			'type' => 'flag',
 		),
 		'wiki_3d_width' => array(
-			'name' => 'Browser width',
+			'name' => tra('Browser width'),
 			'type' => 'text',
 			'size' => '3',
 			'filter' => 'digits',

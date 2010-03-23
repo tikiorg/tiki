@@ -41,5 +41,24 @@ function prefs_zend_list() {
 				'tls' => tra('TLS'),
 			),
 		),
+		'zend_mail_handler' => array(
+			'name' => tra('Mail Sender'),
+			'type' => 'list',
+			'options' => array(
+				'sendmail' => tra('Sendmail'),
+				'smtp' => tra('SMTP'),
+			),
+		),
+		'zend_mail_smtp_auth' => array(
+			'name' => tra('Authentication'),
+			'description' => tra('Mail server authentication'),
+			'type' => 'list',
+			'options' => array(
+				'' => tra('None'),
+				'login' => tra('LOGIN'),
+				'plain' => tra('PLAIN'),
+				'crammd5' => tra('CRAM-MD5'),
+			),
+		),
 	);
 }

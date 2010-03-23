@@ -53,6 +53,7 @@ function get_default_prefs() {
 		'feature_listorphanPages' => 'n',
 		'feature_listorphanStructure' => 'n',
 		'feature_page_title' => 'y',
+		'wiki_page_name_above' => 'n',
 		'feature_sandbox' => 'n',
 		'feature_warn_on_edit' => 'y',
 		'feature_wiki_1like_redirection' => 'y',
@@ -503,6 +504,8 @@ function get_default_prefs() {
 		'blog_list_activity' => 'n',
 		'feature_blog_mandatory_category' => '-1',
 		'feature_blog_heading' => 'y',
+		'feature_blog_sharethis' => 'n',
+		'blog_sharethis_publisher' => '',
 
 		// filegals
 		'feature_file_galleries' => 'y',
@@ -1213,7 +1216,6 @@ function get_default_prefs() {
 		'feature_bot_logo' => 'n',
 		'feature_endbody_code' => '',
 		'feature_custom_html_head_content' => '',
-		'users_prefs_theme' => '',
 		'feature_fixed_width' => 'y',
 
 		// layout
@@ -1234,8 +1236,6 @@ function get_default_prefs() {
 		'site_favicon_type' => 'image/png',
 		'style' => 'strasa.css',
 		'style_option' => 'fixed_width.css',
-		'site_style' => 'strasa.css',
-		'site_style_option' => 'fixed_width.css',
 		'use_context_menu_icon' => 'y',
 		'use_context_menu_text' => 'y',
 		'feature_site_report' => 'n',
@@ -1254,6 +1254,8 @@ function get_default_prefs() {
 		'box_shadow_start' => '',
 		'box_shadow_end' => '',
 		'feature_custom_center_column_header' => '',
+		'header_custom_css' => '',
+		'header_custom_js' => '',
 
 		// mods
 		'feature_mods_provider' => 'n',
@@ -1667,7 +1669,7 @@ function get_default_prefs() {
 
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
-$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
+$user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
 
 // Check if prefs needs to be reloaded
 if (isset($_SESSION['s_prefs'])) {

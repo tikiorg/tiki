@@ -2011,4 +2011,20 @@ a.admbox.off:focus,
 a.admbox.off:active {
 	border: 1px solid #a9a9a9;
 }
+
+/* Fixed-width rules */
+body.fixed_width {
+	background: #ccdceb;
+}
+
+body.fixed_width #main {
+	background: #fff;
+}
+
+body.fixed_width #main[id] {
+	border: 1px solid #527ca6;
+	margin-top: 18px;
+	margin-bottom: 5px;
+}
+
 /* end of file */

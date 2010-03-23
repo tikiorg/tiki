@@ -22,17 +22,11 @@ if (isset($_REQUEST['new_prefs'])) {
 	}
 	check_ticket('admin-inc-general');
 	$pref_toggles = array(
-		'useUrlIndex',
-		'permission_denied_login_box',
 		'feature_wiki_1like_redirection',
 	);
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
-	$pref_simple_values = array(
-		'zend_mail_handler',
-		'zend_mail_smtp_auth',
-	);
 	foreach($pref_simple_values as $svitem) {
 		simple_set_value($svitem);
 	}
@@ -66,6 +60,4 @@ if (!empty($_REQUEST['testMail'])) {
 		 add_feedback( 'testMail', tra('Test mail sent to').' '.$_REQUEST['testMail'], 3 );
 	}
 }
-$listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
-$smarty->assign('listgroups', $listgroups['data']);
 ask_ticket('admin-inc-general');

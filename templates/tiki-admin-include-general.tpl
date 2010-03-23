@@ -54,27 +54,12 @@
 				<legend>{tr}Mail{/tr}</legend>
 				{preference name=default_mail_charset}
 				{preference name=mail_crlf}
-
-				<div class="adminoptionbox">
-					<label for="zend_mail_handler">{tr}Mail Sender{/tr}</label>
-					<select name="zend_mail_handler" id="zend_mail_handler" onchange="if( this.value == 'smtp' ) show('smtp_options'); else hide('smtp_options');">
-						<option value="sendmail" {if $prefs.zend_mail_handler eq 'sendmail'}selected="selected"{/if}>{tr}Sendmail{/tr}</option>
-						<option value="smtp" {if $prefs.zend_mail_handler eq 'smtp'}selected="selected"{/if}>{tr}SMTP{/tr}</option>
-					</select>
-				</div>
-				<div class="adminoptionboxchild" id="smtp_options" {if $prefs.zend_mail_handler neq 'smtp'} style="display: none;" {/if}>
+				{preference name=zend_mail_handler}
+				<div class="adminoptionboxchild zend_mail_handler_childcontainer smtp">
 					{preference name=zend_mail_smtp_server}
 
-					<div class="adminoptionbox">
-						<label for="zend_mail_smtp_auth">{tr}Authentication{/tr}</label>
-						<select name="zend_mail_smtp_auth" id="zend_mail_smtp_auth" onchange="if( this.value == '' ) hide('smtp_auth_options'); else show('smtp_auth_options');">
-							<option value="" {if $prefs.zend_mail_smtp_auth eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
-							<option value="login" {if $prefs.zend_mail_smtp_auth eq 'login'}selected="selected"{/if}>LOGIN</option>
-							<option value="plain" {if $prefs.zend_mail_smtp_auth eq 'plain'}selected="selected"{/if}>PLAIN</option>
-							<option value="crammd5" {if $prefs.zend_mail_smtp_auth eq 'crammd5'}selected="selected"{/if}>CRAM-MD5</option>
-						</select>
-					</div>
-					<div class="adminoptionboxchild" id="smtp_auth_options" {if $prefs.zend_mail_smtp_auth eq ''} style="display: none;" {/if}>
+					{preference name=zend_mail_smtp_auth}
+					<div class="adminoptionboxchild zend_mail_smtp_auth_childcontainer login plain crammd5">
 						<p>{tr}These values will be stored in plain text in the database.{/tr}</p>
 						{preference name=zend_mail_smtp_user}
 						{preference name=zend_mail_smtp_pass}
@@ -180,37 +165,23 @@
 				
 				{preference name=tikiIndex defaul=$prefs.site_tikiIndex}
 
+				{preference name=useUrlIndex}
 				<div class="adminoptionboxchild">
-					{tr}or{/tr}
-					<div class="adminoption">
-						<input type="checkbox" name="useUrlIndex" id="general-uri" {if $prefs.useUrlIndex eq 'y'}checked="checked" {/if}onclick="flip('tiki_home_page');" />
-					</div>
 					{preference name=urlIndex}
 				</div>
 			</fieldset>
 
 			<fieldset>
 				<legend>{tr}Redirects{/tr}</legend>
-				<div class="adminoptionbox">
-					{preference name=feature_redirect_on_error}
-					{preference name='feature_wiki_1like_redirection'}
-					<div class="adminoptionbox">
-						<div class="adminoption">
-							<input id="permission_denied_login_box" type="checkbox" name="permission_denied_login_box"{if $prefs.permission_denied_login_box eq 'y'} checked="checked"{/if} onclick="flip('urlonerror');" />
-						</div>
-						<div class="adminoptionlabel">
-							<label for="permission_denied_login_box">{tr}On permission denied, display login module (for Anonymous){/tr}.</label>
-						</div>
-						<div class="adminoptionlabel" id="urlonerror" style="display:{if $prefs.permission_denied_login_box eq 'y'}none{else}block{/if};">
-							{tr}or{/tr}
-							<br />
-							{preference name=permission_denied_url}
-						</div>
-
-					{preference name='url_after_validation'}	
-
-					</div>
+				{preference name=feature_redirect_on_error}
+				{preference name='feature_wiki_1like_redirection'}
+				{preference name='permission_denied_login_box' mode='invert'}
+				<div class="adminoptionboxchild" id="permission_denied_login_box_childcontainer">
+					{tr}or{/tr}
+					<br />
+					{preference name=permission_denied_url}
 				</div>
+				{preference name='url_after_validation'}	
 			</fieldset>
 
 			<fieldset>

@@ -165,7 +165,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 	
 	if( $prefs['feature_jquery_ui'] == 'y' ) {
 		if( $prefs['javascript_cdn'] == 'google' ) {
-			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js', 'external' );
+			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js', 'external' );
 		} else {
 			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
 		}
@@ -233,7 +233,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 		$headerlib->add_jsfile( 'lib/jquery/infinitecarousel/jquery.infinitecarousel2.js' );
 	}
 
-	$headerlib->add_jsfile( 'lib/jquery/jquery.cookie.js' );
+	$headerlib->add_jsfile( 'lib/jquery/jquery-ui/external/jquery.cookie.js' );
 	$headerlib->add_jsfile( 'lib/jquery/jquery.async.js', 10 );
 	$headerlib->add_jsfile( 'lib/jquery/treeTable/src/javascripts/jquery.treeTable.js' );
 	$headerlib->add_cssfile( 'lib/jquery/treeTable/src/stylesheets/jquery.treeTable.css' );
@@ -267,6 +267,14 @@ if ($prefs['javascript_enabled'] == 'y') {
 	}
 }	// end if $prefs['javascript_enabled'] == 'y'
 
+if( ! empty( $prefs['header_custom_css'] ) ) {
+	$headerlib->add_css( $prefs['header_custom_css'] );
+}
+
+if( ! empty( $prefs['header_custom_js'] ) ) {
+	$headerlib->add_js( $prefs['header_custom_js'] );
+}
+
 if( session_id() ) {
 	if( $prefs['tiki_cachecontrol_session'] ) {
 		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_session'] );
@@ -276,3 +284,4 @@ if( session_id() ) {
 		header( 'Cache-Control: ' . $prefs['tiki_cachecontrol_nosession'] );
 	}
 }
+

@@ -9,9 +9,9 @@
 */
  
 /* Import the default layout properties files: */
-@import "lite/lite.css";
-@import "layout/layout.css";
-@import "layout/design.css";
+@import url("lite/lite.css");
+@import url("layout/layout.css");
+@import url("layout/design.css");
  
 /***** XHTML Elements (body tag here,
 			others follow Layout) *****/ 

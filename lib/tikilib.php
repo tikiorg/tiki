@@ -1185,7 +1185,7 @@ class TikiLib extends TikiDb_Bridge
 					global $tikidomain;
 					$files = glob( "temp/public/$tikidomain/avatar_$user.*" );
 
-					if( count( $files ) ) {
+					if( !empty( $files[0] ) ) {
 						$path = $files[0];
 					}
 				}
@@ -2280,20 +2280,20 @@ class TikiLib extends TikiDb_Bridge
 		$midvars = array();
 		if ( $find ) {
 			$findesc = '%'.$find.'%';
-			$mid = ' (upper(tab.`name`) LIKE upper(?) OR upper(tab.`description`) LIKE upper(?) OR upper(tab.`filename`) LIKE upper(?))';
+			$mid = ' (upper(tf.`name`) LIKE upper(?) OR upper(tf.`description`) LIKE upper(?) OR upper(tf.`filename`) LIKE upper(?))';
 			$midvars = array($findesc, $findesc, $findesc);
 		}
 		if ( !empty($filter['creator']) ) {
-				$f_query .= ' AND tf.`user` = ? ';
-				$bindvars[] = $filter['creator'];
+			$f_query .= ' AND tf.`user` = ? ';
+			$bindvars[] = $filter['creator'];
 		}
 		if ( !empty($filter['lastModif']) ) {
-				$f_query .= ' AND tf.`lastModif` < ? ';
-				$bindvars[] = $filter['lastModif'];
+			$f_query .= ' AND tf.`lastModif` < ? ';
+			$bindvars[] = $filter['lastModif'];
 		}
 		if ( !empty($filter['lastDownload']) ) {
-				$f_query .= ' AND (tf.`lastDownload` < ? or tf.`lastDownload` is NULL)';
-				$bindvars[] = $filter['lastDownload'];
+			$f_query .= ' AND (tf.`lastDownload` < ? or tf.`lastDownload` is NULL)';
+			$bindvars[] = $filter['lastDownload'];
 		}
 		$galleryId_str = '';
 		if ( is_array($galleryId) ) {

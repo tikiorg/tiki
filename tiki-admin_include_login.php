@@ -12,10 +12,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 if (isset($_REQUEST['loginprefs'])) {
 	check_ticket('admin-inc-login');
-	simple_set_value('auth_method');
-	simple_set_value('https_login');
-	simple_set_toggle('login_is_email');
-	simple_set_value('rememberme');
 
 	if (isset($_REQUEST['registration_choices'])) {
 		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');

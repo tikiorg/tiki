@@ -27,7 +27,7 @@ function module_months_links_info() {
 				'description' => tra('Identifier of an object with children to link to.') . ' ' .tra('This is required for the blog Object type.') . " " . tra('Example values:') . ' 3, 14.' . tra('For example, an identifier of 3 and a blogs Object type will show links to the blog posts in the blog with identifier 3.')
 			)
 		),
-		'common_params' => array('rows')
+		'common_params' => array('nonums','rows')
 	);
 }
 
@@ -80,7 +80,7 @@ function module_months_links( $mod_reference, $module_params ) {
 			$timestamp_month_start = $tikilib->make_time(0, 0, 0, $current_month_num, 1, $current_year);
 			$posts_of_month = $bloglib->list_blog_posts($module_params['id'],true,0,-1,'created_desc','',$timestamp_month_start,$timestamp_month_end);
 			if( $posts_of_month["cant"] > 0 ) {
-				$months[$month_name." (".$posts_of_month["cant"].")"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
+				$months[$month_name." [".$posts_of_month["cant"]."]"] = sprintf($link, $timestamp_month_start, $timestamp_month_end);
 			}
 		}
 		$title = ucwords($sections[$module_params['feature']][$object_key]).' - '.tra('List by month');

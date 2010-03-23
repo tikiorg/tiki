@@ -30,6 +30,10 @@ function smarty_function_html_body_attributes($params, &$smarty) {
 		$class .= 'tiki '.$section_class;
 	}
 	
+	if ($prefs['feature_fixed_width'] == 'y') {
+		$class .= ' fixed_width ';
+	}
+	
 	if (!empty($_REQUEST['filegals_manager'])) {
 		$class .= ' filegal_popup ';
 	}
