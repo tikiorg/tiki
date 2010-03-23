@@ -2239,8 +2239,17 @@ div.adminanchors {
 	background: #e9ecef !important;
 }
 
-/***** Ajax, jquery. etc. *****/
-/***** Ajax *****/
+/* Fixed-width rules */
+body.fixed_width {
+	background: #f4f4f4;
+}
 
-/***** New (unsorted) *****/
+body.fixed_width #main {
+	background: #fff;
+}
+
+body.fixed_width #main[id] {
+	border: 1px solid #aaaaaa;
+}
+
 /* end of file */

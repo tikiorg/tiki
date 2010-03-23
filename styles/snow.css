@@ -1345,6 +1345,15 @@ a.admbox.off:hover,
 a.admbox.off:focus,
 a.admbox.off:active {border: 1px solid #9f9f9f}
 
-/***** Ajax, jquery. etc. *****/
-/***** Ajax *****/
+/* Fixed-width rules */
+
+body.fixed_width {
+	background: url(snow/flakesptn2.jpg);
+}
+body.fixed_width #main[id] {
+	border: 1px solid #6c7b8c;
+	background: #b1c1db url(snow/flakesptn.jpg) repeat;
+}
+
+
 /* End of File */

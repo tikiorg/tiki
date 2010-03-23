@@ -1786,4 +1786,17 @@ body.tiki_mytiki #tiki-center form {
 	padding: 10px;
 }
 
+/* Fixed-width rules */
+body.fixed_width {
+	background: #f4f4f4;
+}
+
+body.fixed_width #main {
+	background: #fff;
+}
+
+body.fixed_width #main[id] {
+	border: 1px solid #aaa;
+}
+
 /* end of css file */

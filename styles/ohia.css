@@ -1263,10 +1263,16 @@ a.admbox.off:hover,
 a.admbox.off:focus,
 a.admbox.off:active {border: 1px solid #a9a9a9}
 
-/***** Ajax, jquery. etc. *****/
-/***** Ajax *****/
-/***** New (unsorted) *****/
+/* Fixed-width rules */
 
-/***** End New (unsorted) *****/
+body.fixed_width {
+	background: #242424;
+}
+
+body.fixed_width #main[id] {
+	border: 1px solid #4c4c4c;
+	margin-top: 18px;
+	margin-bottom: 5px;
+}
 
 /* End of File */
