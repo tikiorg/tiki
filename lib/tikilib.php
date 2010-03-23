@@ -2178,6 +2178,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$f_jail_bind = array();
 		$g_jail_bind = array();
+		$f_where = '';
 
 		if ( ( ! $with_files && ! $with_subgals ) || ( $parent_is_file && $galleryId <= 0 ) ) return array();
 
@@ -2258,6 +2259,12 @@ class TikiLib extends TikiDb_Bridge
 			$f_table .= ' LEFT JOIN `tiki_file_backlinks` tfb ON (tf.`fileId` = tfb.`fileId`)';
 			$f_group_by = ' GROUP BY tf.`fileId`';
 		}
+		if ( !empty($filter['orphan']) && $filter['orphan'] == 'y' ) {
+			$f_where .= ' AND tfb.`objectId` IS NULL';
+			if (!$with_backlink) {
+				$f_table .= 'LEFT JOIN `tiki_file_backlinks` tfb ON (tf.`fileId`=tfb.`fileId`)';
+			}
+		}
 
 		if( !empty($filter['categId']) ) {
 			$jail = $filter['categId'];
@@ -2273,7 +2280,7 @@ class TikiLib extends TikiDb_Bridge
 			$f_jail_bind = array();
 		}
 
-		$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.$f_jail_join.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' ) . $f_jail_where;
+		$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.$f_jail_join.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' ) . $f_jail_where . $f_where;
 		$bindvars = array();
 
 		$mid = '';

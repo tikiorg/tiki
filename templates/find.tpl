@@ -18,6 +18,7 @@
 	*		find_categId          : categories selected value
 	* find_show_num_rows    : If value = 'y' adds maxRecords field. Value: maxRecords
 	* find_show_date_range  : If value = 'y' adds date range to filter within
+	* find_show_orphans		: If value = 'y' adds a checkbox orphan
 	* filters               : array( filter_field1 => array( option1_value => option1_text, ... ), filter_field2 => ... )
 	*		filter_names          : array( filter_field1 => filter_field1_name, ... )
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
@@ -189,6 +190,13 @@
 		{html_select_duration prefix=$duration.prefix default=$duration.default default_unit=$duration.default_unit}
 		</label>
 	{/foreach}
+{/if}
+
+{if !empty($show_find_orphans) and $show_find_orphans eq 'y'}
+	<label class="find_orphans" for="find_orphans">
+		   {tr}Orphans{/tr}
+		   <input type="checkbox" name="find_orphans" id="find_orphans" {if $find_orphans eq 'y'}checked="checked"{/if}/>
+	</label>
 {/if}
 
 {if $find_show_num_rows eq 'y'}

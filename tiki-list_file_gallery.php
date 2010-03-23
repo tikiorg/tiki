@@ -652,6 +652,10 @@ if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
 	$find['categId'] = $_REQUEST['categId'];
 	$smarty->assign('find_categId', $_REQUEST['categId']);
 }
+if (!empty($_REQUEST['find_orphans']) && ($_REQUEST['find_orphans'] == 'on' || $_REQUEST['find_orphans'] == 'y')) {
+	$find['orphan'] = 'y';
+	$smarty->assign('find_orphans', 'y');
+}
 
 if (isset($_GET['slideshow'])) {
 	$_REQUEST['maxRecords'] = $maxRecords = - 1;
@@ -795,6 +799,7 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 		else $show_k = $k;
 		$gal_info['show_'.$show_k] = $prefs['fgal_list_'.$k.'_admin'];
 	}
+	$smarty->assign('show_find_orphans', 'y');
 }
 $smarty->assign_by_ref('find_durations', $find_durations);
 $smarty->assign_by_ref('gal_info', $gal_info);
