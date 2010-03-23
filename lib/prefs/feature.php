@@ -284,6 +284,7 @@ function prefs_feature_list() {
 			'description' => tra('PhpLayers Dynamic menus.'),
 			'help' => 'http://themes.tikiwiki.org/PhpLayersMenu',
 			'type' => 'flag',
+			'warning' => tra('Will eventually be removed from Tiki. Use CSS menus instead.'),
 		),
 		'feature_htmlpurifier_output' => array(
 			'name' => tra('Output should be HTML Purified'),
