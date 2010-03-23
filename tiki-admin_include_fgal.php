@@ -147,4 +147,5 @@ ksort($handlers);
 $smarty->assign("fgal_handlers", $handlers);
 $missingHandlers = $filegallib->getFiletype(array_keys($handlers));
 $smarty->assign_by_ref('missingHandlers', $missingHandlers);
+include_once ('fgal_listing_conf.php');
 ask_ticket('admin-inc-fgal');
