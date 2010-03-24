@@ -3769,6 +3769,10 @@ class TikiLib extends TikiDb_Bridge
 					}
 
 					$join_bindvars = array_merge(array('wiki page'), $categories);
+				} elseif ($type == 'noCateg') {
+					$join_tables .= ' left join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) left join `tiki_categorized_objects` as tcdo on (tcdo.`catObjectId`=tob.`objectId`) left join `tiki_category_objects` as tco on (tcdo.`catObjectId`=tco.`catObjectId`)';
+					$join_bindvars[] = 'wiki page';
+					$tmp_mid[] = '(tco.`categId` is null)';
 				} elseif ($type == 'lang') {
 					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
