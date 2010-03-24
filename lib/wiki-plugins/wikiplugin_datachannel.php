@@ -11,7 +11,9 @@ function wikiplugin_datachannel_info()
 		'name' => tra('Data Channel'),
 		'description' => tra('Displays a form to trigger data channels.'),
 		'prefs' => array('wikiplugin_datachannel'),
-		'body' => tra('List of fields to display. One field per line. Comma delimited: fieldname,label'),
+		'body' => tra('List of fields to display. One field per line. Comma delimited: fieldname,label') . '<br /><br />' .
+					tra('To use values from other forms on the same page as parameters for the data-channel use "fieldname, external=fieldid".') . ' ' .
+					tra('Where "fieldid" is the id (important) of the external input to use, and "fieldname" is the name of the parameter in the data-channel'),
 		'extraparams' => true,
 		'params' => array(
 			'channel' => array(
@@ -35,6 +37,22 @@ function wikiplugin_datachannel_info()
 				'name' => tra('Class'),
 				'description' => tra('CSS class for this form'),
 			),
+			'emptyCache' => array(
+				'required' => false,
+				'name' => tra('Empty Caches'),
+				'description' => tra('Which caches to empty. Default "Clear all Tiki caches"'),
+				'default' => 'all',
+				'filter' => 'word',
+				'options' => array(
+					array('text' => tra('Clear all Tiki caches'), 'value' => 'all'), 
+					array('text' => tra('./templates_c/'), 'value' => 'templates_c'),
+					array('text' => tra('./modules/cache/'), 'value' => 'modules_cache'),
+					array('text' => tra('./temp/cache/'), 'value' => 'temp_cache'),
+					array('text' => tra('./temp/public/'), 'value' => 'temp_public'),
+					array('text' => tra('All user prefs sessions'), 'value' => 'prefs'),
+					array('text' => tra('None'), 'value' => 'none'),
+				),
+			),
 			'debug' => array(
 				'required' => false,
 				'name' => tra('Debug'),
@@ -49,22 +67,35 @@ function wikiplugin_datachannel_info()
 function wikiplugin_datachannel( $data, $params )
 {
 	static $execution = 0;
-	global $prefs, $smarty;
+	global $prefs, $smarty, $headerlib;
 	$executionId = 'datachannel-exec-' . ++$execution;
 
 	$fields = array();
+	$inputfields = array();
 	$lines = explode( "\n", $data );
 	$lines = array_map( 'trim', $lines );
 	$lines = array_filter( $lines );
+	$js = '';
 
 	foreach( $lines as $line ) {
 		$parts = explode( ',', $line, 2 );
 
 		if( count($parts) == 2 ) {
-			$fields[ $parts[0] ] = $parts[1];
+			if (strpos( $parts[1], 'external') === 0) {	// e.g. "fieldid,external=fieldname"
+				$moreparts = explode('=', trim($parts[1]));
+				if (count($moreparts) < 2) {
+					$moreparts[1] = $parts[0];	// no fieldname supplied so use same as fieldid
+				}
+				$fields[ $moreparts[0] ] = array('fieldname' => $parts[0], 'fieldid' => $moreparts[1]);
+				$js .= "\n".'$jq("input[name=\'' . $parts[0] . '\']").val($jq("#' . $moreparts[1] . '").val());';
+				$inputfields[ $parts[0] ] = 'external';
+			} else {
+				$fields[ $parts[0] ] = $parts[1];
+				$inputfields[ $parts[0] ] = $parts[1];
+			}
 		}
 	}
-
+	
 	require_once 'lib/profilelib/profilelib.php';
 	require_once 'lib/profilelib/channellib.php';
 	require_once 'lib/profilelib/installlib.php';
@@ -77,7 +108,7 @@ function wikiplugin_datachannel( $data, $params )
 			&& isset( $_POST['datachannel_execution'] ) 
 			&& $_POST['datachannel_execution'] == $executionId ) {
 
-			$input = array_intersect_key( $_POST, $fields );
+			$input = array_intersect_key( $_POST, $inputfields );
 			$static = $params;
 			unset( $static['channel'] );
 
@@ -95,7 +126,8 @@ function wikiplugin_datachannel( $data, $params )
 			if (empty($params['debug']) || $params['debug'] != 'y') {
 				$installer->setDebug();
 			}
-			$installer->install( $profile );
+			$params['emptyCache'] = isset($params['emptyCache']) ? $params['emptyCache'] : 'all';
+			$installer->install( $profile, $params['emptyCache'] );
 
 			if (empty($params['returnURI'])) { $params['returnURI'] = $_SERVER['HTTP_REFERER']; }	// default to return to same page
 			if (empty($params['debug']) || $params['debug'] != 'y') {
@@ -109,6 +141,13 @@ function wikiplugin_datachannel( $data, $params )
 		$smarty->assign( 'button_label', !empty($params['buttonLabel']) ? $params['buttonLabel'] : 'Go');
 		$smarty->assign( 'form_class_attr', !empty($params['class']) ? ' class="' . $params['class'] . '"' : '');
 		
+		if (!empty($js)) {
+			$headerlib->add_js( 'function datachannel_form_submit' . $execution .'() {' . $js .'return true;}');
+			$smarty->assign( 'datachannel_form_onsubmit', ' onsubmit="return datachannel_form_submit' . $execution .'()"' );
+		} else {
+			$smarty->assign( 'datachannel_form_onsubmit', '');
+		}
+
 		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_datachannel.tpl' ) . '~/np~';
 	}
 }
