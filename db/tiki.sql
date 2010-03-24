@@ -1542,6 +1542,10 @@ CREATE TABLE `tiki_newsletters` (
   `frequency` int(14) default NULL,
   `allowTxt` char(1) default 'y',
   `author` varchar(200) default NULL,
+  `allowArticleClip` char(1) default 'y',
+  `autoArticleClip` char(1) default 'n',
+  `articleClipTypes` text  default '',
+  `articleClipRange` int(14) default NULL,
   PRIMARY KEY (`nlId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

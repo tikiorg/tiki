@@ -29,9 +29,12 @@ if ($perms->admin_newsletters != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+$defaultArticleClipRange = 3600 * 24; // one day
 if ($_REQUEST["nlId"]) {
 	$info = $nllib->get_newsletter($_REQUEST["nlId"]);
 	$update = "";
+	$info["articleClipTypes"] = unserialize($info["articleClipTypes"]);
+	$info["articleClipRangeDays"] = $info["articleClipRange"] / 3600 / 24;
 } else {
 	$info = array(
 		'nlId' => 0,
@@ -41,7 +44,12 @@ if ($_REQUEST["nlId"]) {
 		'allowAnySub' => 'n',
 		'unsubMsg' => 'y',
 		'validateAddr' => 'y',
-		'allowTxt' => 'y'
+		'allowTxt' => 'y',
+		'allowArticleClip' => 'y',
+		'autoArticleClip' => 'n',
+		'articleClipRange' => $defaultArticleClipRange,
+		'articleClipRangeDays' => $defaultArticleClipRange / 3600 / 24,
+		'articleClipTypes' => array()
 	);
 	$update = "y";
 }
@@ -77,7 +85,27 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$_REQUEST["allowTxt"] = 'n';
 	}
-	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"],$_REQUEST["allowTxt"],$_REQUEST["frequency"],$_REQUEST["author"]);
+	if (isset($_REQUEST["allowArticleClip"]) && $_REQUEST["allowArticleClip"] == 'on') {
+		$_REQUEST["allowArticleClip"] = 'y';
+	} else {
+		$_REQUEST["allowArticleClip"] = 'n';
+	}
+	if (isset($_REQUEST["autoArticleClip"]) && $_REQUEST["autoArticleClip"] == 'on') {
+		$_REQUEST["autoArticleClip"] = 'y';
+	} else {
+		$_REQUEST["autoArticleClip"] = 'n';
+	}
+	if (isset($_REQUEST["articleClipRangeDays"]) && $_REQUEST["articleClipRangeDays"]) {
+		$articleClipRange = 3600 * 24 * $_REQUEST["articleClipRangeDays"];
+	} else {
+		$articleClipRange = $defaultArticleClipRange; // default to 1 day
+	}
+	if (!empty($_REQUEST["articleClipTypes"])) {
+		$articleClipTypes = serialize($_REQUEST["articleClipTypes"]);
+	} else {
+		$articleClipTypes = '';
+	}
+	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"],$_REQUEST["allowTxt"],$_REQUEST["frequency"],$_REQUEST["author"], $_REQUEST["allowArticleClip"], $_REQUEST["autoArticleClip"], $articleClipRange, $articleClipTypes );
 	
 	$info = array(
 		'nlId' => 0,
@@ -113,6 +141,18 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $nllib->list_newsletters($offset, $maxRecords, $sort_mode, $find, $update, array(
 	"tiki_p_admin_newsletters"
 ));
+
+// get Article types for clippings feature
+$articleTypes = array();
+if ($prefs["feature_articles"] == 'y') {
+	include_once ('lib/articles/artlib.php');
+	$allTypes = $artlib->list_types();
+	foreach ($allTypes as $t) {
+		$articleTypes[] = $t["type"];
+	}
+}
+$smarty->assign('articleTypes', $articleTypes);
+
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
 include_once ('tiki-section_options.php');

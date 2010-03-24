@@ -115,6 +115,34 @@
 			</td>
 		</tr>
 		<tr>
+			<td class="formcolor">{tr}Allow clipping of articles into newsletter{/tr}</td>
+			<td class="formcolor">
+				<input type="checkbox" name="allowArticleClip" {if $info.allowArticleClip eq 'y'}checked="checked"{/if} />
+			</td>
+		</tr>
+		<tr>
+			<td class="formcolor">{tr}Automatically clip articles into newsletter{/tr}</td>
+			<td class="formcolor">
+				<input type="checkbox" name="autoArticleClip" {if $info.autoArticleClip eq 'y'}checked="checked"{/if} />
+			</td>
+		</tr>
+		<tr>
+			<td class="formcolor">{tr}Clip articles published in the past number of days{/tr}</td>
+			<td class="formcolor">
+				<input type="text" size="4" name="articleClipRangeDays" value="{$info.articleClipRangeDays|escape}" />
+			</td>
+		</tr>
+		<tr>
+			<td class="formcolor">{tr}Article types to clip{/tr}</td>
+			<td class="formcolor">
+				<select name="articleClipTypes[]" size="5" multiple="multiple">
+					{section name=type loop=$articleTypes}
+      					<option value="{$articleTypes[type]}" {if in_array($articleTypes[type], $info.articleClipTypes)}selected="selected"{/if}>{$articleTypes[type]|escape}</option>
+      				{/section}
+				</select>
+			</td>
+		</tr>
+		<tr>
 			<td class="formcolor">&nbsp;</td>
 			<td class="formcolor">
 				<input type="submit" name="save" value="{tr}Save{/tr}" />

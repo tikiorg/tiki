@@ -15,7 +15,7 @@ include_once ('lib/webmail/tikimaillib.php');
 
 class NlLib extends TikiLib
 {
-	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr,$allowTxt, $frequency , $author) {
+	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr,$allowTxt, $frequency , $author, $allowArticleClip = 'y', $autoArticleClip = 'n', $articleClipRange = null, $articleClipTypes = '') {
 		if ($nlId) {
 			$query = "update `tiki_newsletters` set `name`=?, 
 								`description`=?, 
@@ -24,8 +24,18 @@ class NlLib extends TikiLib
 								`allowAnySub`=?, 
 								`unsubMsg`=?, 
 								`validateAddr`=?, 
-								`frequency`=? where `nlId`=?";
-			$result = $this->query($query, array($name, $description, $allowUserSub, $allowTxt, $allowAnySub, $unsubMsg, $validateAddr, $frequency, (int)$nlId));
+								`frequency`=?, 
+								`allowArticleClip`=?,
+								`autoArticleClip`=?,
+								`articleClipRange`=?,
+								`articleClipTypes`=?																
+								where `nlId`=?";
+			$result = $this->query($query, array($name, $description, $allowUserSub, $allowTxt, $allowAnySub, $unsubMsg, $validateAddr, $frequency,
+							$allowArticleClip,
+							$autoArticleClip,
+							$articleClipRange,
+							$articleClipTypes,
+							(int)$nlId));
 		} else {
 			$query = "insert into `tiki_newsletters`(
 								`name`,
@@ -40,9 +50,13 @@ class NlLib extends TikiLib
 								`unsubMsg`,
 								`validateAddr`,
 								`frequency`,
-								`author`
+								`author`,
+								`allowArticleClip`,
+								`autoArticleClip`,
+								`articleClipRange`,
+								`articleClipTypes`
 								) ";
-      $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query, array($name,
 							$description,
 							(int)$this->now,
@@ -55,7 +69,12 @@ class NlLib extends TikiLib
 							$unsubMsg,
 							$validateAddr,
 							NULL,
-							$author));
+							$author,
+							$allowArticleClip,
+							$autoArticleClip,
+							$articleClipRange,
+							$articleClipTypes
+							));
 			$queryid = "select max(`nlId`) from `tiki_newsletters` where `created`=?";
 			$nlId = $this->getOne($queryid, array((int)$this->now));
 		}
