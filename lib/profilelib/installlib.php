@@ -192,9 +192,9 @@ class Tiki_Profile_Installer
 		return $final;
 	} // }}}
 
-	function install( Tiki_Profile $profile ) // {{{
+	function install( Tiki_Profile $profile, $empty_cache = 'all' ) // {{{
 	{
-		global $cachelib;
+		global $cachelib, $tikidomain, $tikilib;
 		require_once 'lib/cache/cachelib.php';
 
 		try {
@@ -207,7 +207,19 @@ class Tiki_Profile_Installer
 			if (count($this->getFeedback()) == count($profiles)) {
 				$this->setFeedback(tra('Nothing was changed, please check profile for errors'));
 			}
-			$cachelib->empty_full_cache();
+			if ($empty_cache == 'all') {
+				$cachelib->empty_full_cache();
+			} elseif ($empty_cache == 'templates_c') {
+				$cachelib->erase_dir_content("templates_c/$tikidomain");
+			} elseif ($empty_cache == 'temp_cache') {
+				$cachelib->erase_dir_content("temp/cache/$tikidomain");
+			} elseif ($empty_cache == 'temp_public') {
+				$cachelib->erase_dir_content("temp/public/$tikidomain");
+			} elseif ($empty_cache == 'modules_cache') {
+				$cachelib->erase_dir_content("modules/cache/$tikidomain");
+			} elseif ($empty_cache == 'prefs') {
+				$tikilib->set_lastUpdatePrefs();
+			}
 			return true;
 		
 		} catch(Exception $e) {
