@@ -76,16 +76,42 @@ function wikiplugin_snarf_info() {
 				'description' => tra('Cache time in minutes (0 for no cache, -1 for site preference'),
 				'default' => -1,
 			),
-
+			'ajax' => array(
+				'required' => false,
+				'name' => tra('Text to click on to fetch the url via ajax'),
+				'description' => tra('Label'),
+				'default' => -1,
+			),
 		),
 	);
 }
 
 function wikiplugin_snarf($data, $params)
 {
-    global $tikilib, $prefs;
+    global $tikilib, $prefs, $smarty;
 	static $url=''; static $snarf; static $isFresh = true;
+	static $iSnarf = 0;
+	++$iSnarf;
+	if (empty($params['url'])) {
+		return '';
+	}
 	
+	if (!empty($params['ajax'])) {
+		$params['iSnarf'] = $iSnarf;
+		$params['href'] = '';
+		$params['link'] = '-';
+		foreach ($params as $key=>$value) {
+			if ($key == 'ajax' || $key == 'href') {
+				continue;
+			}
+			if (!empty($params['href'])) {
+				$params['href'] .= '&';
+			}
+			$params['href'] .= $key.'='.$value;
+		}
+		$smarty->assign('snarfParams', $params);
+		return $smarty->fetch('wiki-plugins/wikiplugin_snarf.tpl');
+	}
 	if ($url != $params['url']) { // already fetch in the page
 		if (isset($_REQUEST['snarf_refresh']) && $_REQUEST['snarf_refresh'] == $params['url']) {
 			$cachetime = 0;
@@ -121,9 +147,10 @@ function wikiplugin_snarf($data, $params)
 	}
 
 	include_once('lib/wiki-plugins/wikiplugin_code.php');
+	$code_defaults = array();
 	$ret = wikiplugin_code($snarf, $code_defaults);
 
-	if (!$isFresh) {
+	if (!$isFresh && empty($params['link'])) {
 		global $smarty;
 		include_once('lib/smarty_tiki/block.self_link.php');
 		$icon = '<div style="text-align:right">'.smarty_block_self_link(array('_icon' => 'arrow_refresh', 'snarf_refresh'=>$params['url']), '', $smarty).'</div>';
