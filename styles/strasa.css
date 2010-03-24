@@ -15,12 +15,16 @@
 html {
 	display: block;
 	height: 100%;
-	background: /*#2e3035*/#214d68;
+	background-color: #214d68;
+}
+
+html[dir=ltr] {	/* for fck editor */
+	background-color: #fff;
 }
 
 body {
 	font: 12px/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background: #fff;
+	background-color: #fff;
 }
 
 a,
