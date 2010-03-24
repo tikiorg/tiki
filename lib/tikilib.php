@@ -2402,14 +2402,16 @@ class TikiLib extends TikiDb_Bridge
 			$fgal_perms = array();
 		}
 		foreach( $result as $res ) {
-			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
-			if (isset($fgal_perms[$res['id']])) {
-				$res['perms'] = $fgal_perms[$res['id']];
+			// there are no permission for individual files, so if $res is a file we use galleryId to check for permissions
+			$galleryId = $res['isgal'] == 1 ? $res['id'] : $res['galleryId'];
+			
+			if (isset($fgal_perms[$galleryId])) {
+				$res['perms'] = $fgal_perms[$galleryId];
 			} else {
-				$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
+				$fgal_perms[$galleryId] = $res['perms'] = $this->get_perm_object($galleryId, 'file gallery', array(), false);
 			}
 			if ($galleryId <=0) {
-				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$res['id'].'_');
+				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$galleryId.'_');
 			}
 			// Don't return the current item, if :
 			//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
