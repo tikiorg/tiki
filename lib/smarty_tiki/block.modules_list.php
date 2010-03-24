@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: block.tabset.php 25992 2010-03-08 16:46:30Z jonnybradley $
+// $Id$
 
 // this script may only be included - so it's better to die if called directly
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -32,6 +32,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_modules_list($params, $content, &$smarty, &$repeat) {
 	global $prefs;
+	$ret = '';
 	if( count($params["list"]) > 0 ){
 		if( $params["nonums"] == "y")
 			$ret .= "<ul>";

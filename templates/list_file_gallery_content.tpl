@@ -312,7 +312,7 @@
   {if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'}
 		<tr>
 			<td colspan="{$nbCols}">
-				{select_all checkbox_names='file[], subgal[]' label="{tr}Select All{/tr}"}
+				{select_all checkbox_names='file[],subgal[]' label="{tr}Select All{/tr}"}
 			</td>
 		</tr>
   {/if}

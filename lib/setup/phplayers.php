@@ -8,9 +8,11 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
+global $headerlib;
+
 $phplayers_headers = <<<EOS
-<link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css" />
-<link rel="StyleSheet" href="lib/phplayers/layerstreemenu-hidden.css" type="text/css" />
+<link rel="StyleSheet" href="{$headerlib->convert_cdn('lib/phplayers/layerstreemenu.css')}" type="text/css" />
+<link rel="StyleSheet" href="{$headerlib->convert_cdn('lib/phplayers/layerstreemenu-hidden.css')}" type="text/css" />
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 var numl;var toBeHidden;

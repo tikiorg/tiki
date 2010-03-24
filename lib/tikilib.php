@@ -2178,6 +2178,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$f_jail_bind = array();
 		$g_jail_bind = array();
+		$f_where = '';
 
 		if ( ( ! $with_files && ! $with_subgals ) || ( $parent_is_file && $galleryId <= 0 ) ) return array();
 
@@ -2258,6 +2259,12 @@ class TikiLib extends TikiDb_Bridge
 			$f_table .= ' LEFT JOIN `tiki_file_backlinks` tfb ON (tf.`fileId` = tfb.`fileId`)';
 			$f_group_by = ' GROUP BY tf.`fileId`';
 		}
+		if ( !empty($filter['orphan']) && $filter['orphan'] == 'y' ) {
+			$f_where .= ' AND tfb.`objectId` IS NULL';
+			if (!$with_backlink) {
+				$f_table .= 'LEFT JOIN `tiki_file_backlinks` tfb ON (tf.`fileId`=tfb.`fileId`)';
+			}
+		}
 
 		if( !empty($filter['categId']) ) {
 			$jail = $filter['categId'];
@@ -2273,7 +2280,7 @@ class TikiLib extends TikiDb_Bridge
 			$f_jail_bind = array();
 		}
 
-		$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.$f_jail_join.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' ) . $f_jail_where;
+		$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.$f_jail_join.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' ) . $f_jail_where . $f_where;
 		$bindvars = array();
 
 		$mid = '';
@@ -2395,14 +2402,16 @@ class TikiLib extends TikiDb_Bridge
 			$fgal_perms = array();
 		}
 		foreach( $result as $res ) {
-			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
-			if (isset($fgal_perms[$res['id']])) {
-				$res['perms'] = $fgal_perms[$res['id']];
+			// there are no permission for individual files, so if $res is a file we use galleryId to check for permissions
+			$galleryId = $res['isgal'] == 1 ? $res['id'] : $res['galleryId'];
+			
+			if (isset($fgal_perms[$galleryId])) {
+				$res['perms'] = $fgal_perms[$galleryId];
 			} else {
-				$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
+				$fgal_perms[$galleryId] = $res['perms'] = $this->get_perm_object($galleryId, 'file gallery', array(), false);
 			}
 			if ($galleryId <=0) {
-				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$res['id'].'_');
+				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$galleryId.'_');
 			}
 			// Don't return the current item, if :
 			//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
@@ -3760,6 +3769,10 @@ class TikiLib extends TikiDb_Bridge
 					}
 
 					$join_bindvars = array_merge(array('wiki page'), $categories);
+				} elseif ($type == 'noCateg') {
+					$join_tables .= ' left join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) left join `tiki_categorized_objects` as tcdo on (tcdo.`catObjectId`=tob.`objectId`) left join `tiki_category_objects` as tco on (tcdo.`catObjectId`=tco.`catObjectId`)';
+					$join_bindvars[] = 'wiki page';
+					$tmp_mid[] = '(tco.`categId` is null)';
 				} elseif ($type == 'lang') {
 					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
@@ -4914,6 +4927,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 
 			$value = rtrim( $value, "\n\t\r\0, " );
+			$value = strip_tags($value);
 			$arguments[$name] = $value;
 		}
 

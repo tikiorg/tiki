@@ -153,9 +153,9 @@ if( $prefs['feature_fixed_width'] == 'y' ) {
 	$headerlib->add_cssfile( 'styles/layout/fixed_width.css' );
 }
 
-if ($prefs['javascript_enabled'] == 'y') {
+if ($prefs['javascript_enabled'] != 'n') {
 	
-	if( $prefs['javascript_cdn'] == 'google' ) {
+	if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'external' );
 	} else {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
@@ -164,7 +164,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
 	
 	if( $prefs['feature_jquery_ui'] == 'y' ) {
-		if( $prefs['javascript_cdn'] == 'google' ) {
+		if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js', 'external' );
 		} else {
 			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
@@ -265,7 +265,7 @@ if ($prefs['javascript_enabled'] == 'y') {
 			$headerlib->add_jsfile('lib/ajax/autosave.js');
 		}
 	}
-}	// end if $prefs['javascript_enabled'] == 'y'
+}	// end if $prefs['javascript_enabled'] != 'n'
 
 if( ! empty( $prefs['header_custom_css'] ) ) {
 	$headerlib->add_css( $prefs['header_custom_css'] );

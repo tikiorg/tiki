@@ -34,6 +34,16 @@ class HeaderLib
 		$this->hasDoneOutput = false;
 	}
 
+	function convert_cdn( $file ) {
+		global $prefs, $tikiroot;
+	
+		if( $prefs['tiki_cdn'] && 'http' != substr( $file, 0, 4 ) ) {
+			$file = $prefs['tiki_cdn'] . $tikiroot . $file;
+		}
+
+		return $file;
+	}
+
 	function set_title($string) {
 		$this->title = urlencode($string);
 	}
@@ -149,21 +159,21 @@ class HeaderLib
 
 		// Handle theme's special CSS file for IE6 hacks
 		$back .= "<!--[if lt IE 7]>\n"
-				.'<link rel="stylesheet" href="css/ie6.css" type="text/css" />'."\n";
+				.'<link rel="stylesheet" href="' . $this->convert_cdn('css/ie6.css') . '" type="text/css" />'."\n";
 		if ( $style_ie6_css != '' ) {
-			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($style_ie6_css).'" type="text/css" />'."\n";
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie6_css)).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 7]>\n"
 				.'<link rel="stylesheet" href="css/ie7.css" type="text/css" />'."\n";
 		if ( $style_ie7_css != '' ) {
-			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($style_ie7_css).'" type="text/css" />'."\n";
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie7_css)).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 8]>\n"
 				.'<link rel="stylesheet" href="css/ie8.css" type="text/css" />'."\n";
 		if ( $style_ie8_css != '' ) {
-			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($style_ie8_css).'" type="text/css" />'."\n";
+			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie8_css)).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 
@@ -171,7 +181,7 @@ class HeaderLib
 			foreach ($this->rssfeeds as $x=>$rssf) {
 				$back.= "<!-- rss $x -->\n";
 				foreach ($rssf as $rsstitle=>$rssurl) {
-					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"".smarty_modifier_escape($rsstitle)."\" href=\"".smarty_modifier_escape($rssurl)."\" />\n";
+					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"".smarty_modifier_escape($this->convert_cdn($rsstitle))."\" href=\"".smarty_modifier_escape($rssurl)."\" />\n";
 				}
 			}
 			$back.= "\n";
@@ -213,6 +223,7 @@ class HeaderLib
 			foreach ($jsfiles as $x=>$jsf) {
 				$back.= "<!-- jsfile $x -->\n";
 				foreach ($jsf as $jf) {
+					$jf = $this->convert_cdn( $jf );
 					$back.= "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($jf)."\"></script>\n";
 				}
 			}
@@ -384,6 +395,7 @@ class HeaderLib
 		}
 
 		foreach( $files as $file ) {
+			$file = $this->convert_cdn( $file );
 			$back.= "<link rel=\"stylesheet\" href=\"" . smarty_modifier_escape($file) . "\" type=\"text/css\" media=\"" . smarty_modifier_escape($media) . "\" />\n";
 		}
 

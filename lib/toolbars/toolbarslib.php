@@ -345,7 +345,8 @@ abstract class Toolbar
 	
 	function getIconHtml() // {{{
 	{
-		return '<img src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
+		global $headerlib;
+		return '<img src="' . htmlentities($headerlib->convert_cdn($this->icon), ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
 	} // }}}
 	
 	function getSelfLink( $click, $title, $class ) { // {{{
@@ -677,9 +678,10 @@ class ToolbarPicker extends Toolbar
 			$prefs[] = 'feature_smileys';
 
 			$list = array();
+			global $headerlib;
 			foreach( $rawList as $smiley ) {
 				$tra = htmlentities( tra($smiley), ENT_QUOTES, 'UTF-8' );
-				$list["(:$smiley:)"] = '<img src="img/smiles/icon_' .$smiley . '.gif" alt="' . $tra . '" title="' . $tra . '" border="0" width="15" height="15" />';
+				$list["(:$smiley:)"] = '<img src="' . $headerlib->convert_cdn('img/smiles/icon_' .$smiley . '.gif') . '" alt="' . $tra . '" title="' . $tra . '" border="0" width="15" height="15" />';
 			}
 			break;
 		case 'color':

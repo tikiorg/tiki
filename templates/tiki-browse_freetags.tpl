@@ -120,7 +120,8 @@
 					{/if}
 				
 					{assign var=thistype value=$objectType|escape:'url'}
-					{button _text="{tr}$feature_label{/tr}" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype"}
+					{capture name="fl"}{tr}{$feature_label}{/tr}{/capture}
+					{button _text="`$smarty.capture.fl`" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype"}
 					{assign var=cpt value=$cpt+1}
 				{/if}
 
@@ -145,7 +146,8 @@
 					{/if}
 
 					{assign var=thistype value=$objectType|escape:'url'}
-					{button _text="{tr}$feature_label{/tr}" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype"}
+					{capture name="fl"}{tr}{$feature_label}{/tr}{/capture}
+					{button _text="`$smarty.capture.fl`" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype"}
 					{assign var=cpt value=$cpt+1}
 				{/if}
 			{/foreach}

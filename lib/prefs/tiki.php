@@ -58,5 +58,13 @@ function prefs_tiki_list() {
 			'filter' => 'striptags',
 			'dependencies' => array( 'session_silent' ),
 		),
+		'tiki_cdn' => array(
+			'name' => tra('Content Delivery Network'),
+			'description' => tra('Use an alternate domain name to serve static files from tikiwiki to avoid sending cookies, improve local caching and generally improve user experience performance.'),
+			'hint' => tra('Prefix to include before the static files, for example: http//cdn.example.com'),
+			'type' => 'text',
+			'size' => 40,
+			'filter' => 'url',
+		),
 	);
 }

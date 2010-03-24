@@ -33,21 +33,27 @@ function wikiplugin_catorphans_info() {
 				'name' => tra('Objects'),
 				'description' => tra('wiki|article|blog|faq|fgal|forum|igal|newsletter|poll|quizz|survey|tracker'),
 			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('max'),
+				'description' => tra('Maximum number of items').' '.tra('-1 for unlimited'),
+			),
+			'offset' => array(
+				'required' => false,
+				'name' => tra('Result Offset'),
+				'description' => tra('Result number at which the listing should start.'),
+			),
 		),
 	);
 }
 
 function wikiplugin_catorphans($data, $params) {
-	global $dbTiki, $smarty, $tikilib, $prefs, $categlib;
+	global $dbTiki, $smarty, $tikilib, $prefs, $access;
+	$access->check_feature('feature_categories');
+	global $categlib; require_once ('lib/categories/categlib.php');
 
-	if (!is_object($categlib)) {
-		require_once ("lib/categories/categlib.php");
-	}
-
-	if ($prefs['feature_categories'] != 'y') {
-		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
-	}
-
+	$default = array('offset'=>0, 'max'=>$prefs['maxRecords'], 'objects'=>'wiki');
+	$params = array_merge($default, $params);
 	extract ($params,EXTR_SKIP);
 
 	// array for converting long type names (as in database) to short names (as used in plugin)
@@ -82,25 +88,17 @@ function wikiplugin_catorphans($data, $params) {
 		"tracker" => "Trackers",
 		"wiki page" => "Wiki"
 	);
-
-	// default object is 'wiki'
-	if (!isset($objects)or $objects != 'wiki') {
-		$objects = 'wiki';
+	if (!empty($_REQUEST['offset'])) {
+		$offset = $_REQUEST['offset'];
 	}
-
-	$orphans = '';
 
 	// currently only supports display of wiki pages
 	if ($objects == 'wiki') {
-		$listpages = $tikilib->list_pageNames(0, -1, 'pageName_asc', '');
-
-		foreach ($listpages['data'] as $page) {
-			if (!$categlib->is_categorized('wiki page', $page['pageName'])) {
-				//				$orphans .= '<a href="tiki-index.php?page='.$page['pageName'].'">'.$page['pageName'].'</a><br />';
-				$orphans .= '((' . $page['pageName'] . '))<br />';
-			}
-		}
+		$listpages = $tikilib->list_pages($offset, $max, 'pageName_asc', '', '', true, true, false, false, array('noCateg' => true));
+		$smarty->assign_by_ref('pages', $listpages['data']);
+		$smarty->assign('pagination', array('cant'=>$listpages['cant'], 'step'=>$max, 'offset'=>$offset));
+		return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_catorphans.tpl').'~/np~';		
 	}
+	return '';
 
-	return $orphans;
 }

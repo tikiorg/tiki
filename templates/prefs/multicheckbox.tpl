@@ -1,4 +1,4 @@
-<div style="text-align: left;">
+<div class="adminoptionbox" style="text-align: left;">
 	<label for="{$p.id|escape}">{$p.name|escape}:</label>
 		{foreach from=$p.options key=value item=label}
 			<span><input type="checkbox" name="{$p.preference|escape}[]" value="{$value|escape}"{if in_array($value, $p.value)} checked="checked"{/if}>{$label|escape}</span>

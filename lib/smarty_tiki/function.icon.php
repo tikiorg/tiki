@@ -181,6 +181,8 @@ function smarty_function_icon($params, &$smarty) {
 					$html .= ' '.htmlspecialchars($k, ENT_QUOTES, 'UTF-8').'="'.htmlspecialchars($v, ENT_QUOTES, 'UTF-8').'"';
 				}
 			}
+			global $headerlib;
+			$params['file'] = $headerlib->convert_cdn( $params['file'] );
 			switch ( $tag ) {
 			case 'input_image': $html = '<input type="image"'.$html.' />'; break;
 			case 'img': default: $html = smarty_function_html_image($params, $smarty);
