@@ -63,6 +63,8 @@ class ObjectList // {{{
 			
 			foreach( $this->customIndexes as $key => & $data ) {
 				if( $prop = $renderer->getIndexValue($key) ) {
+					$prop = strtolower( $prop );
+
 					if( isset( $data[$prop] ) ) {
 						$data[$prop][] = $index;
 					} else {
