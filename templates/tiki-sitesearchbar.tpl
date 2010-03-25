@@ -8,12 +8,14 @@
 									where=$prefs.search_default_where
 									searchNoResults="false"
 									searchStyle="menu"
+									iSearch=1
 									searchOrientation="horiz"}
 		{else}
 		{include file='tiki-searchindex.tpl'
 									where=$prefs.search_default_where
 									searchNoResults="false"
 									searchStyle="menu"
+									iSearch=2
 									searchOrientation="horiz"}
 		{/if}
 		</div>
