@@ -377,6 +377,11 @@ div#sitelogo {
 	padding-left: 100px;
 }
 
+#customcode.floatright {
+	margin-top: 30px;
+	margin-right: 120px;
+}
+
 #siteloginbar {
 	position: static;
 	float: right;
