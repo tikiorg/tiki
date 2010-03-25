@@ -250,11 +250,11 @@ class Tiki_Profile
 
 		$this->data = array();
 
-		while( false !== $base = strpos( $content, '{CODE(caption=>YAML', $pos ) )
+		while( false !== $base = $this->findNextPluginStart($content, $pos) )
 		{
 			$begin = strpos( $content, ')}', $base ) + 2;
 			$end = strpos( $content, '{CODE}', $base );
-			$pos = $end;
+			$pos = $end + 6;
 
 			if( false === $base || false === $begin || false === $end )
 				return false;
@@ -275,6 +275,16 @@ class Tiki_Profile
 		$this->fetchExternals();
 		$this->getObjects();
 	} // }}}
+	
+	private function findNextPluginStart($content, $pos) {
+		preg_match('/\{CODE\(\s*caption\s*=[>]?\s*[\'"]?YAML/', substr($content, $pos), $matches);
+		if (count($matches) > 0) {
+			$pattern = $matches[0];
+		} else {
+			$pattern = '{CODE(caption=>YAML';
+		}
+		return strpos( $content, $pattern, $pos );
+	}
 
 	private function fetchExternals() // {{{
 	{
