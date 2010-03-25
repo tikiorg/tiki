@@ -34,7 +34,7 @@
 			{if $module_params.advanced_search_option eq 'y'}
 				<label for="boolean">{tr}Advanced:{/tr}<input type="checkbox" name="boolean" id="boolean"{if $module_params.advanced_search eq "y"} checked="checked"{/if} /></label>
 			{else}
-				{if $module_params.advanced_search="y"}<input type="hidden" name="boolean" value="on" />{/if}
+				{if $module_params.advanced_search eq "y"}<input type="hidden" name="boolean" value="on" />{/if}
 			{/if}
 			<input type="hidden" name="boolean_last" value="{$module_params.advanced_search}" />
 			{if $module_params.advanced_search_help eq 'y'}
@@ -46,7 +46,6 @@
 				{/add_help}
 			{/if}
 		{/if}
-		{var_dump var="module_params"}
 	    {if $module_params.show_search_button eq 'y'}
 	    	<input type = "submit" class = "wikiaction{if $module_params.default_button eq 'search'} button_default{/if}"
 	    			name = "search" value = "{tr}{$module_params.search_submit}{/tr}"
