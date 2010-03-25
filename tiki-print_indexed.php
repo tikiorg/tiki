@@ -341,7 +341,7 @@ case 'glossary':
 
 	if( isset( $_GET['categId'] ) ) {
 		$access->check_feature('feature_categories');
-		$filter['categId'] = (int) $_GET['categId'];
+		$filter['categId'] = $_GET['categId'];
 	}
 
 	$pages = $tikilib->list_pages( 0, -1, 'pageName_asc', '', '', true, true, false, false, $filter );
