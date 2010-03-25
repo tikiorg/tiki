@@ -80,12 +80,20 @@ class ObjectList // {{{
 	}
 
 	function render( $smarty, $key, $options ) {
-		foreach( $this->customIndexes[$key] as $indexes ) {
-			foreach( $indexes as $index ) {
-				$renderer = $this->renderers[$index];
+		if( is_null( $key ) ) {
+			foreach( $this->renderers as $index => $renderer ) {
 				$smarty->assign( 'index', $index );
 
 				$renderer->render( $smarty, $options );
+			}
+		} else {
+			foreach( $this->customIndexes[$key] as $indexes ) {
+				foreach( $indexes as $index ) {
+					$renderer = $this->renderers[$index];
+					$smarty->assign( 'index', $index );
+
+					$renderer->render( $smarty, $options );
+				}
 			}
 		}
 	}
@@ -356,7 +364,7 @@ foreach($indexPages as $page) {
 }
 
 // Display all data
-$objectList->render( $smarty, 'title', array(
+$objectList->render( $smarty, null, array(
 	'decorator' => 'indexed',
 	'display' => 'object',
 ) );
