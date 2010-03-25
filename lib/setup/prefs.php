@@ -836,6 +836,7 @@ function get_default_prefs() {
 		'search_refresh_index_mode' => 'normal',
 		'search_parsed_snippet' => 'y',
 		'search_default_where' => '',
+		'search_autocomplete' => 'n',
 
 		// webmail
 		'feature_webmail' => 'n',

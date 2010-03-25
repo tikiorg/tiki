@@ -22,9 +22,14 @@
 	{if $prefs.feature_search_show_search_box eq 'y'}
 		<form action="tiki-searchresults.php" method="get" id="search-form" class="findtable" role="search">
 			<label class="findtitle">
-				{tr}Find{/tr} <input name="highlight" size="14" type="text" accesskey="s" value="{$words|escape}" />
+				{tr}Find{/tr} <input id="highlight{$iSearch}" name="highlight" size="14" type="text" accesskey="s" value="{$words|escape}" />
 			</label>
-			{if !( $searchStyle eq "menu" )}
+			{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $prefs.search_autocomplete eq 'y'}
+				{jq}
+					$jq("#highlight{{$iSearch}}").tiki("autocomplete", "pagename");
+				{/jq}
+			{/if}			
+				{if !( $searchStyle eq "menu" )}
 				<label class="searchboolean" for="boolean">
 					{tr}Advanced search:{/tr}<input type="checkbox" name="boolean" id="boolean" {if $boolean eq 'y'} checked="checked"{/if} />
 				</label>

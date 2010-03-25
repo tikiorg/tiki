@@ -14,8 +14,13 @@
 	{if $prefs.feature_search_show_search_box eq 'y'}
 		<form action="tiki-searchindex.php" method="get" id="search-form" class="findtable" role="search">
 			<label class="findtitle">
-				{tr}Find{/tr} <input name="highlight" size="14" type="text" accesskey="s" value="{$words}" />
+				{tr}Find{/tr} <input id="highlight{$iSearch}" name="highlight" size="14" type="text" accesskey="s" value="{$words}" />
 			</label>
+			{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $prefs.search_autocomplete eq 'y'}
+				{jq}
+					$jq("#highlight{{$iSearch}}").tiki("autocomplete", "pagename");
+				{/jq}
+			{/if}			
 			{if $prefs.feature_search_show_object_filter eq 'y'}
 				{if $searchStyle eq "menu" }
 					<span class='searchMenu'>
