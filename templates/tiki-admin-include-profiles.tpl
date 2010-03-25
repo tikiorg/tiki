@@ -317,7 +317,7 @@ function showDetails( id, domain, profile ) { // {{{
 											<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
 												<select multiple="multiple" name="categories[]" id="categories">
 												{foreach item=cat from=$category_list}
-													<option value="{$cat|escape}"{if in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
+													<option value="{$cat|escape}"{if !empty($categories) and  in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
 												{/foreach}
 												</select>
 											</div>

@@ -76,16 +76,16 @@ class Tiki_Profile_List
 		foreach( $sources as $s )
 		{
 			if( $source && $s['url'] != $source )
-                                continue;
+				continue;
 				
 			if( !$s['lastupdate'] )
-                                continue;
+				continue;
 
-                        $fp = fopen( $this->getCacheLocation( $s['url'] ), 'r' );
+			$fp = fopen( $this->getCacheLocation( $s['url'] ), 'r' );
 
-                        while( false !== $row = fgetcsv( $fp, 200, "\t" ) )
-                        {
-				list( $c, $t, $i ) = $row;
+			while( false !== $row = fgetcsv( $fp, 200, "\t" ) )
+			{
+				$c = $row[0];
 				if ($c) $category_list[] = $c;
 			}
 		}
@@ -143,6 +143,7 @@ class Tiki_Profile_List
 			// Apply category filter
 			foreach ($list as $pkey => $profile) {
 				$in = true; // If there are no required categories, don't filter anything.
+				if (!empty($categories)) {
 				foreach ($categories as $category) {
 					$in = false; // Start assuming this required category isn't in this profile's categories
 					foreach ($profile['categories'] as $pcategory) {
@@ -154,6 +155,7 @@ class Tiki_Profile_List
 					if (!$in) {
 						break;
 					}
+				}
 				}
 				if (!$in) {
 					unset($list[$pkey]);
