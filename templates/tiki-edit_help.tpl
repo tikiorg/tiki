@@ -17,9 +17,6 @@
 		{tr}Wiki Syntax{/tr} {icon _id='help' style="vertical-align:middle"}
 	</a>
 </p>
-{if $prefs.javascript_enabled eq 'y'} <p>	
-	{tr}Also available here:{/tr} <a onclick="$jq('#help_sections').accordion( 'activate' , 1 )[0].scrollTop=0;return false;">{tr}Plugins help{/tr}  {icon _id='plugin'}</a>
-</p>{/if}
 {/if}
  
 <table width="95%" class="normal">
