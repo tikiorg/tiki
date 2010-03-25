@@ -131,13 +131,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (isset($_GET['list'])) { // {{{
 	$params = array_merge(array(
 		'repository' => '',
-		'category' => '',
+		'categories' => '',
 		'profile' => ''
 	) , $_GET);
 	$smarty->assign('categories', $params['categories']);
 	$smarty->assign('profile', $params['profile']);
 	$smarty->assign('repository', $params['repository']);
-	if ($_GET['preloadlist'] && $params['repository']) $list->refreshCache($params['repository']);
+	if (isset($_GET['preloadlist']) && $params['repository']) $list->refreshCache($params['repository']);
 	$profiles = $list->getList($params['repository'], $params['categories'], $params['profile']);
 	foreach ($profiles as &$profile) {
 		$profile['categoriesString'] = "";
