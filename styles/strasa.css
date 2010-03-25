@@ -18,10 +18,6 @@ html {
 	background-color: #214d68;
 }
 
-html[dir=ltr] {	/* for fck editor */
-	background-color: #fff;
-}
-
 body {
 	font: 12px/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background-color: #fff;
@@ -95,6 +91,10 @@ body.wikitext {
 
 body.wikitext {
 	height: 100%;	/* for FCKEditor */
+}
+
+html[dir=ltr] {	/* for fck editor */
+	background-color: #F3FCFE;
 }
 
 select {
