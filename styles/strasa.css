@@ -93,6 +93,10 @@ body.wikitext {
 	height: 100%;	/* for FCKEditor */
 }
 
+html[dir=ltr] {	/* for fck editor */
+	background-color: #F3FCFE;
+}
+
 select {
 	margin: 0 2px;
 }
