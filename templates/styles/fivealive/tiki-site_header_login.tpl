@@ -1,6 +1,6 @@
 {* $Id$ *}
-{* site header login form *}<div id="siteloginbar"><a href="tiki-register.php" class="register_link"><span>{tr}Register{/tr}</span></a><a href="tiki-login.php" class="login_link"><span>{tr}Log in{/tr}</span></a></div>
-{*{strip}
+{* site header login form *}{*<div id="siteloginbar"><a href="tiki-register.php" class="register_link"><span>{tr}Register{/tr}</span></a><a href="tiki-login.php" class="login_link"><span>{tr}Log in{/tr}</span></a></div>*}
+{strip}
 {if $filegals_manager eq '' and $print_page ne 'y'}
 	{if $prefs.feature_site_login eq 'y'}
 		{if !empty($user)}
@@ -51,4 +51,4 @@
 </div>
 	{/if}
 {/if}
-{/strip}*}
+{/strip}
