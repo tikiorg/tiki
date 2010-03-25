@@ -68,45 +68,16 @@ function showDetails( id, domain, profile ) { // {{{
 
 				row.appendChild( cell );
 				cell.colSpan = 3;
-
-				if( data.already )
-				{
-					var p = document.createElement( 'p' );
-					p.innerHTML = "A version of this profile is already applied.";
-					p.style.fontWeight = 'bold';
-					cell.appendChild(p);
-
-					var form = document.createElement( 'form' );
-					var p = document.createElement('p');
-					var submit = document.createElement('input');
-					var pd = document.createElement('input');
-					var pp = document.createElement('input');
-					form.method = 'post';
-					form.action = document.location.href;
-
-					form.appendChild(p);
-					submit.type = 'submit';
-					submit.name = 'forget';
-					submit.value = 'Forget and Re-apply';
-					p.appendChild(submit);
-					pd.type = 'hidden';
-					pd.name = 'pd';
-					pd.value = domain;
-					p.appendChild(pd);
-					pp.type = 'hidden';
-					pp.name = 'pp';
-					pp.value = profile;
-					p.appendChild(pp);
-
-					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to apply the profile{/tr}{literal} ' + profile + '?\");' );
-					
-					cell.appendChild(form);
-				}
-				else if( data.installable )
-				{	
+				
+				if( data.installable || data.already ) {
+				
 					var pStep = document.createElement('p');
 					pStep.style.fontWeight = 'bold';
-					pStep.innerHTML = "Step 3: Click on Apply Now to apply Profile";
+					if( data.installable ) {
+						pStep.innerHTML = "Step 3: Click on Apply Now to apply Profile";
+					} else if ( data.already ) {
+						pStep.innerHTML = "A version of this profile is already applied.";
+					}
 					
 					var form = document.createElement( 'form' );
 					var p = document.createElement('p');				
@@ -145,8 +116,16 @@ function showDetails( id, domain, profile ) { // {{{
 					form.appendChild(p);
 
 					submit.type = 'submit';
-					submit.name = 'install';
-					submit.value = 'Apply Now';
+					if( data.installable ) {
+						submit.name = 'install';
+						submit.value = 'Apply Now';
+						form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to apply the profile{/tr}{literal} ' + profile + '?\");' );
+					} else if ( data.already ) {
+						submit.name = 'forget';
+						submit.value = 'Forget and Re-apply';
+						form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to re-apply the profile{/tr}{literal} ' + profile + '?\");' );
+					}					
+					
 					p.appendChild(submit);
 					pd.type = 'hidden';
 					pd.name = 'pd';
@@ -157,8 +136,6 @@ function showDetails( id, domain, profile ) { // {{{
 					pp.name = 'pp';
 					pp.value = profile;
 					p.appendChild(pp);
-
-					form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to apply the profile{/tr}{literal} ' + profile + '?\");' );
 
 					cell.appendChild(form);
 				}

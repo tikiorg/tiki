@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 		$dependencies = array();
 		$userInput = array();
-		foreach($deps as $d) if (!$installer->isInstalled($d)) {
+		foreach($deps as $d) {
 			$dependencies[] = $d->pageUrl;
 			$userInput = array_merge($userInput, $d->getRequiredInput());
 		}
