@@ -30,7 +30,6 @@ class MultilingualLib extends TikiLib
 	 */
 	function insertTranslation($type, $srcId, $srcLang, $objId, $objLang) {
 		global $prefs;
-//		echo "<pre>-- multilinguallib.insertTranslation: \$type='$type', \$srcId='$srcId', \$srcLang='$srcLang', \$objId='$objId', \$objLang='$objLang'</pre>\n";
 		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {
 			$srcPageName = $this->get_page_name_from_id($srcId);
 			$objPageName = $this->get_page_name_from_id($objId);
@@ -231,29 +230,23 @@ class MultilingualLib extends TikiLib
 	 */
 	function preferredLangs($langContext = null,$include_browser_lang=TRUE) {
 		global $user, $prefs, $tikilib;
-//		 echo "<pre>-- multilinguallib.preferredLangs: \$langContext='$langContext', \$include_browser_lang='$include_browser_lang'</pre>\n";
 		$langs = array();
 
 		if ($langContext) {
-			// echo "<pre>-- multilinguallib.preferredLangs: looking at language context</pre>\n";
 			$langs[] = $langContext;
 			if (strchr($langContext, "-")) // add en if en-uk
 				$langs[] = $this->rootLang($langContext);
 		}
-//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 		
 		if ($prefs['language'] && !in_array($prefs['language'], $langs)) {
-//			 echo "<pre>-- multilinguallib.preferredLangs: looking at prefs['language']</pre>\n";
 			$langs[] = $prefs['language'];
 			$l = $this->rootLang($prefs['language']);
 			if (!in_array($l, $langs))
 				$langs[] = $l;
 		}
-//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 
 		if (isset($prefs['read_language'])) {
 			$tok = strtok($prefs['read_language'], ' ');
-//			 echo "<pre>-- multilinguallib.preferredLangs: looking at prefs['read_language']</pre>\n";
 			while (false !== $tok) {
 				if (!in_array($tok, $langs) )
 					$langs[] = $tok;
@@ -264,11 +257,9 @@ class MultilingualLib extends TikiLib
 				$tok = strtok(' ');
 			}
 		}
-//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 
 		if (($include_browser_lang)&&(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))) {
 			$ls = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE'])); // browser
-//			 echo "<pre>-- multilinguallib.preferredLangs: looking at browser langs['read_language']</pre>\n";			
 			foreach ($ls as $l) {
 				if (!in_array($l, $langs)) {
 					$langs[] = $l;
@@ -278,27 +269,20 @@ class MultilingualLib extends TikiLib
 				}
 			}
 		}
-//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 
 		$l = $prefs['site_language'];
 		if (!in_array($l, $langs)) {
-//			 echo "<pre>-- multilinguallib.preferredLangs: looking at site language</pre>\n";			
 			$langs[] = $l; // site language
 			$l = $this->rootLang($l);
 			if (!in_array($l, $langs))
 				$langs[] = $l;
 		}
-//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
 
 		if( $prefs['available_languages'] && $prefs['language_inclusion_threshold'] >= count($prefs['available_languages']) ) {
-//			 echo "<pre>-- multilinguallib.preferredLangs: looking at available languages</pre>\n";			
 			foreach( array_diff( $prefs['available_languages'], $langs ) as $lang ) {
 				$langs[] = $lang;
 			}
 		}
-//		 echo "<pre>-- multilinguallib.preferredLangs: \$langs is now: "; var_dump($langs); echo "</pre>\n";
-		
-//		 echo "<pre>-- multilinguallib.preferredLangs: returning \$langs="; var_dump($langs); echo "</pre>\n";
 
 		return $langs;	
 	}
@@ -314,7 +298,6 @@ class MultilingualLib extends TikiLib
 		if (!$listObjs || count($listObjs) <= 1)
 			return $listObjs;
 		$langs = $this->preferredLangs($langContext);
-//echo "<pre>";print_r($langs);echo "</pre>";
 		$max = count($listObjs);
 		for ($i = 0; $i < $max; ++$i) {
 			if (!isset($listObjs[$i]) || !isset($listObjs[$i]['lang']))
@@ -390,20 +373,12 @@ class MultilingualLib extends TikiLib
 		 * (as expressed in either its Tiki or browser language preferences).
 		 */
 		global $prefs, $_REQUEST;
-//		echo "<pre>-- multilinguallib.useBestLanguage: \$prefs['feature_multilingual']=".$prefs['feature_multilingual']."</pre>\n";
-//		echo "<pre>-- multilinguallib.useBestLanguage: \$prefs['feature_best_language']=".$prefs['feature_best_language']."</pre>\n";
-//		echo "<pre>-- multilinguallib.useBestLanguage: \$prefs['feature_detect_language']=".$prefs['feature_detect_language']."</pre>\n";
-//		echo "<pre>-- multilinguallib.useBestLanguage: \$_REQUEST['bl']=".$_REQUEST['bl']."</pre>\n";
-//		echo "<pre>-- multilinguallib.useBestLanguage: \$_REQUEST['best_lang']=".$_REQUEST['best_lang']."</pre>\n";
-//		echo "<pre>-- multilinguallib.useBestLanguage: \$_REQUEST['switchLang']=".$_REQUEST['switchLang']."</pre>\n";
 		
 		if ($prefs['feature_multilingual'] == 'n') {
-//			echo "<pre>-- multilinguallib.useBestLanguage: returning false cause of feature_multilingual</pre>\n";
 			return false;
 		}
 		if ($prefs['feature_best_language'] == 'n' && !isset($_REQUEST['bl'])) {
 			// If bl is explicitly set then for backward compatibility reasons let through even if feature is off.
-//			echo "<pre>-- multilinguallib.useBestLanguage: returning false cause of feature_best_language or feature_detect_language</pre>\n";
 		    return false;
 		} 
 		
@@ -438,24 +413,19 @@ class MultilingualLib extends TikiLib
 		 *  -- extra note by nkoth: I've cleaned this up - so all the checking is done here now.
  		 */
 		
-//		echo "<pre>-- multilinguallib.useBestLanguage: returning true</pre>\n";
 		return true;
 	}
 	
 	function  setUrlNoBestLanguageArg($url, $no_bl_value) {
-//		echo "<pre>-- multilinguallib.setUrlBestLanguageArg: \$url='$url', \$no_bl_value='$no_bl_value'</pre>\n";
 		if (preg_match('/[?&]no_bl=/', $url)) {
-//			echo "<pre>-- multilinguallib.setUrlBestLanguageArg: changing existing no_bl arg</pre>\n";
 			$url = preg_replace('/([?&])no_bl=[yn]{0,1}/', '$1no_bl=$no_bl_value', $url);
 		} elseif (!preg_match('/[?&]lang=/', $url)) {
-//			echo "<pre>-- multilinguallib.setUrlBestLanguageArg: ADDING no_bl arg</pre>\n";
 			if (strstr($url, '?')) {
 				$url.= '&no_bl=$no_bl_value';
 			} else {
 				$url.= '?no_bl=$no_bl_value';
 			}
 		}
-//			echo "<pre>-- multilinguallib.setUrlBestLanguageArg: returning \$url='$url'</pre>\n";
 		
 		return $url;
 	}
