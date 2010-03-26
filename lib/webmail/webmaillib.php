@@ -247,6 +247,23 @@ class WebMailLib extends TikiLib
 	}
 	
 	/**
+	 * @param string $user
+	 * @param string $accountName
+	 * @return int accountId or 0 if no single account with that name
+	 */
+	function get_webmail_account_by_name($user, $accountName) {
+
+		$query = "select accountId from `tiki_user_mail_accounts` where `account`=? and (`user`=? or `flagsPublic`='y')";
+		$result = $this->fetchAll($query, array( $accountName, $user));
+
+		if (count($result) == 1) {
+			return (int) $result[0]['accountId'];
+		} else {
+			return 0;
+		}
+	}
+	
+	/**
 	 * @param $user			current user
 	 * @param $accountid	can be 0 (uses current account)
 	 * @param $reload		force reload from mail server?
