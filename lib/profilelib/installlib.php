@@ -1479,21 +1479,22 @@ class Tiki_Profile_InstallHandler_WebmailAccount extends Tiki_Profile_InstallHan
 			return $this->data;
 
 		$defaults = array(
-			'account' => '',
-			'pop' => '', 
-			'port' => '', 
+			'mode' => 'create',		// 'create' or 'update' account with same name (i.e. 'account')
+			'account' => '',		// * required
+			'pop' => '', 			// * one of pop, imap, mbox or maildir required
+			'port' => 110, 			// default for pop3
 			'username' => '', 
 			'pass' => '', 
-			'msgs' => '', 
+			'msgs' => '', 			// messages per page
 			'smtp' => '', 
-			'useAuth' => '', 
-			'smtpPort' => '', 
-			'flagsPublic' => '', 
-			'autoRefresh' => '', 
-			'imap' => '',
-			'mbox' => '', 
-			'maildir' => '', 
-			'useSSL' => '', 
+			'useAuth' => 'n', 		// y|n (default null? = n)
+			'smtpPort' => 25, 
+			'flagsPublic' => 'n',	// y|n (default n)
+			'autoRefresh' => 0, 	// seconds (default 0)
+			'imap' => '',			// *? see pop
+			'mbox' => '', 			// *? see pop
+			'maildir' => '', 		// *? see pop
+			'useSSL' => 'n',			// y|n (default n)
 			'fromEmail' => '',
 		);
 
@@ -1501,7 +1502,12 @@ class Tiki_Profile_InstallHandler_WebmailAccount extends Tiki_Profile_InstallHan
 			$defaults,
 			$this->obj->getData()
 		);
-
+		
+		$data['useAuth'] = $data['useAuth'] !== 'n' ? 'y' : 'n';	// should be unecessary surely, but can't find where to stop it (looked for ages!)
+		$data['flagsPublic'] = $data['flagsPublic'] !== 'n' ? 'y' : 'n';
+		$data['useSSL'] = $data['useSSL'] !== 'n' ? 'y' : 'n';
+		$data['overwrite'] = $data['overwrite'] !== 'n' ? 'y' : 'n';
+		
 		return $this->data = $data;
 	}
 
@@ -1518,16 +1524,22 @@ class Tiki_Profile_InstallHandler_WebmailAccount extends Tiki_Profile_InstallHan
 
 	function _install()
 	{
-		global $tikilib;
+		global $tikilib, $user;
 		$data = $this->getData();
 
 		$this->replaceReferences( $data );
 
 		global $webmaillib; require_once 'lib/webmail/webmaillib.php';
+		
+		if ($data['mode'] == 'update') {
+			$accountId = $webmaillib->get_webmail_account_by_name( $user, $data['account']);
+		} else {
+			$accountId = 0;
+		}	
 
-		$accountId = $webmaillib->new_webmail_account($data['account'], $data['pop'], $data['port'], $data['username'],
-				$data['pass'], $data['msgs'], $data['smtp'], $data['useAuth'], $data['smtpPort'], $data['flagsPublic'],
-				$data['autoRefresh'], $data['imap'], $data['mbox'], $data['maildir'], $data['useSSL'], $data['useSSL'], $data['fromEmail']);
+		$accountId = $webmaillib->replace_webmail_account($accountId, $user, $data['account'], $data['pop'], (int) $data['port'], $data['username'],
+				$data['pass'], (int) $data['msgs'], $data['smtp'], $data['useAuth'], (int) $data['smtpPort'], $data['flagsPublic'],
+				(int) $data['autoRefresh'], $data['imap'], $data['mbox'], $data['maildir'], $data['useSSL'], $data['fromEmail']);
 
 		return $accountId;
 	}
