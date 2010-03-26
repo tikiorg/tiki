@@ -137,7 +137,7 @@
 </td>
 <td class="{cycle}">
 &nbsp;&nbsp;<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
->{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
+>{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 </td>
 </tr>
 {sectionelse}

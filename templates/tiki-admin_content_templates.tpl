@@ -159,7 +159,7 @@
 				{section name=ix loop=$channels[user].sections}
 					{$channels[user].sections[ix]} 
 					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" >
-						{icon _id='cross' alt='{tr}Remove section{/tr}'}
+						{icon _id='cross' alt="{tr}Remove section{/tr}"}
 					</a>
 					&nbsp;&nbsp;
 				{/section}
@@ -171,7 +171,7 @@
 				</a> 
 				&nbsp;
 				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
-					{icon _id='cross' alt='{tr}Delete{/tr}'}
+					{icon _id='cross' alt="{tr}Delete{/tr}"}
 				</a>
 			</td>
 		</tr>

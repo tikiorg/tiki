@@ -16,11 +16,11 @@
 	{if $files[changes].perms.tiki_p_assign_perm_file_gallery eq 'y'}
             <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">
             {if $files[changes].public neq 'y'}
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_private' alt='{tr}Private Gallery{/tr}'}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_private' alt="{tr}Private Gallery{/tr}"}
             {elseif $files[changes].perms.has_special_perm eq 'y'}
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_active' alt='{tr}Active Perms{/tr}'}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_active' alt="{tr}Active Perms{/tr}"}
             {else}
-                {icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key' alt='{tr}Perms{/tr}'}
+                {icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key' alt="{tr}Perms{/tr}"}
             {/if}
 						</a>
         {/if}
@@ -62,7 +62,7 @@
 		{else}
 			<a href="{$files[changes].id|sefurl:file}">
 		{/if}
-		{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk' alt='{tr}Download{/tr}'}</a> 
+		{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk' alt="{tr}Download{/tr}"}</a> 
 	{/if}
 
 	{if $gal_info.archives gt -1}
@@ -70,7 +70,7 @@
 			{assign var=nb_archives value=$files[changes].nbArchives}
 			<a href="tiki-file_archives.php?fileId={$files[changes].fileId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple' alt="{tr}Archives{/tr} ($nb_archives)"}</a>
 		{else}
-			{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple_gray' alt='{tr}Archives{/tr}'}
+			{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple_gray' alt="{tr}Archives{/tr}"}
 		{/if}
 		{assign var=replace_action_title value="{tr}Upload New Version{/tr}"}
 	{else}
@@ -101,11 +101,11 @@
 
 			{else}
 				{* for the moment, no-javascript version is simply a link to the edit page where you can also upload *}
-				<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
+				<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt="{tr}Upload New Version{/tr}"}</a>
 				
 			{/if}
 
-			<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt='{tr}Properties{/tr}'}</a>
+			<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Properties{/tr}"}</a>
 			{/if}
 
 			{if $gal_info.lockable eq 'y' and $files[changes].isgal neq 1}
@@ -115,12 +115,12 @@
 					{if $prefs.javascript_enabled eq 'y'}
 
 					{* with javascript, the main page will be reloaded to lock the file and change it's lockedby informations *}
-					<a href="#" onclick="window.open('{$files[changes].fileId|sefurl:file}&lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[changes].fileId lock=y}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
+					<a href="#" onclick="window.open('{$files[changes].fileId|sefurl:file}&lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[changes].fileId lock=y}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a>
 
 					{else}
 
 					{* without javascript, the lockedby informations won't be refreshed until the user do it itself *}
-					<a href="{$files[changes].fileId|sefurl:file}&amp;lock=y">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
+					<a href="{$files[changes].fileId|sefurl:file}&amp;lock=y">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a>
 
 					{/if}
 					{self_link _icon='lock_add' _menu_text=$menu_text _menu_icon=$menu_icon lock='y' fileId=$files[changes].fileId}{tr}Lock{/tr}{/self_link}

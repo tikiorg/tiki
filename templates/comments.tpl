@@ -426,7 +426,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				{/if}
 				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"
 				{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
-					{assign var='file_preview_warning' value='{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}'}
+					{assign var='file_preview_warning' value="{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}"}
 					onclick="
 					{if empty($user)}
 						setCookie('anonymous_name',$jq('#anonymous_name').val());
