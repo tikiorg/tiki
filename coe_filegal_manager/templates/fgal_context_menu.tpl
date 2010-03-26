@@ -128,8 +128,7 @@
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y')) }
 			{if $filegals_manager eq ''}
 				{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon _ajax='n' remove=$files[changes].fileId}{tr}Delete{/tr}{/self_link}
-			{/if}
-			{if $filegals_manager neq ''}
+			{else}
 				{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon _ajax='n' remove=$files[changes].fileId _onclick='return fastdel(this.href);'}{tr}Delete{/tr}{/self_link}
 			{/if}
 	{/if}

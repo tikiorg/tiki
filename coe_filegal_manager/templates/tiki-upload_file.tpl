@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-<!-- FileGallery.upload.insertImage('{$file}',document.getElementById('fg-insert-link-x1').checked,$('#fg-insert-size-width').val(),$('fg-insert-size-height').val()) -->
-
 <form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} {if $filegals_manager neq '' and $editFileId neq ''} onsubmit='FileGallery.open(this.action,this.id);FileGallery.upload.close();return false;'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 <input type="hidden" name="formId" value="0"/>
 {if $filegals_manager neq ''}
@@ -194,51 +192,3 @@
 </div>
 
 </form>
-
-
-
-
-
-<!--
-{if count($uploads) > 0}
-
-	<table border="0" cellspacing="4" cellpadding="4">
-	{section name=ix loop=$uploads}
-		<tr>
-			<td class="{cycle values="odd,even"}" style="text-align: center">
-				<img src="{$uploads[ix].fileId|sefurl:thumbnail}" />
-			</td>
-			<td>
-				{if $filegals_manager neq ''}
-					{assign var=seturl value=$uploads[ix].fileId|sefurl:display}
-					
-					{* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
-					<a href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
-				{else}
-					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
-				{/if}
-				{button href="#" _flip_id="uploadinfos`$uploads[ix].fileId`" _text="{tr}Additional Info{/tr}"}
-				<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$uploads[ix].fileId}">
-					{tr}You can download this file using{/tr}: <div class="code"><a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].fileId|sefurl:file}</a></div>
-					{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[{$uploads[ix].fileId|sefurl:file}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>
-					{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="{$uploads[ix].fileId|sefurl:preview}" link="{$uploads[ix].fileId|sefurl:file}" alt="{$uploads[ix].name} ({$uploads[ix].size|kbsize})"}</div>
-					{if $prefs.feature_shadowbox eq 'y'}
-						{tr}Or using as a thumbnail with ShadowBox{/tr}: <div class="code">&#x7b;img src="{$uploads[ix].fileId|sefurl:thumbnail}" link="{$uploads[ix].fileId|sefurl:preview}" rel="shadowbox[gallery];type=img" alt="{$name} ({$uploads[ix].size|kbsize})"}</div>
-					{/if}
-					{tr}You can link to the file from an HTML page using{/tr}: <div class="code">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</div>
-				</div>
-			</td>
-		</tr>
-	{/section}
-	</table>
-	<br />
-
-	<h2>{tr}Upload File{/tr}</h2>
-{elseif isset($fileChangedMessage)}
-	<div align="center">
-		<div class="wikitext">
-			{$fileChangedMessage}
-		</div>
-	</div>
-{/if}
--->
