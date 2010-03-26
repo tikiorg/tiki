@@ -454,9 +454,6 @@ if ($nl_info["allowArticleClip"] == 'y' && !$articleClip) {
 		if (!$info["datatxt"] && isset($_REQUEST["datatxt"])) {
 			$info["datatxt"] = $_REQUEST["datatxt"];
 		}
-		if (!$info["data"] && isset($_REQUEST["data"])) {
-			$info["data"] = $_REQUEST["data"];
-		}
 		if (!$info["subject"] && isset($_REQUEST["subject"])) {
 			$info["subject"] = $_REQUEST["subject"];
 		}		
