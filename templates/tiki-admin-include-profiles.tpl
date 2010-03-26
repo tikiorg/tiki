@@ -245,17 +245,17 @@ function showDetails( id, domain, profile ) { // {{{
 				{/if}
 					
 				<fieldset><legend>{tr}Profiles{/tr}</legend>
-				<form method="get" action="tiki-admin.php#profile-results">
+				<form method="get" action="tiki-admin.php">
 					<div class="adminoptionbox">
 						<b>Step 1: Use the Quick or Manual Filter option to see a list of Profiles you can apply</b>
 						<table class="normal">
 							<tr>
-								<th width="50%">{tr}Option 1: Quick Filter{/tr}</th>
+								<th width="50%" class="quickmode_notes">{tr}Option 1: Quick Filter{/tr}</th>
 	
 								<th width="50%">{tr}Option 2: Manual Filter{/tr}</th>
 							</tr>
 							<tr>
-								<td>
+								<td class="quickmode_notes">
 									<br/>
 									{assign var=profilesFilterUrlStart value='tiki-admin.php?profile=&categories%5B%5D='}
 									{assign var=profilesFilterUrlMid value='x&categories%5B%5D='}
@@ -287,28 +287,45 @@ function showDetails( id, domain, profile ) { // {{{
 		
 								</td>
 								<td>
-									<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
 									<div class="adminoptionboxchild">
-									<div class="adminoptionlabel"><label for="profile">{tr}Profile:{/tr} </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
-										{if isset($category_list) and count($category_list) gt 0}
-											<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
-												<select multiple="multiple" name="categories[]" id="categories">
-												{foreach item=cat from=$category_list}
-													<option value="{$cat|escape}"{if in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
+										<div class="adminoptionlabel">{tr}Filter the list of profiles:{/tr}</div>
+										<div class="adminoptionlabel">
+											<label for="profile">{tr}Profile:{/tr} </label>
+											<input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
+											{if isset($category_list) and count($category_list) gt 0}
+												<div class="adminoptionlabel"><label for="categories">{tr}Categories:{/tr} </label>
+													<select multiple="multiple" name="categories[]" id="categories" style="max-height: 10em">
+													{foreach item=cat from=$category_list}
+														<option value="{$cat|escape}"{if in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
+													{/foreach}
+													</select>
+												</div>
+											{/if}
+		
+										<div class="adminoptionlabel"><label for="repository">{tr}Repository:{/tr} </label>
+											<select name="repository" id="repository">
+												<option value="">{tr}All{/tr}</option>
+												{foreach item=source from=$sources}
+													<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
 												{/foreach}
-												</select>
-											</div>
-										{/if}
-	
-									<div class="adminoptionlabel"><label for="repository">{tr}Repository:{/tr} </label>
-										<select name="repository" id="repository">
-											<option value="">{tr}All{/tr}</option>
-											{foreach item=source from=$sources}
-												<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
-											{/foreach}
-										</select>
-									</div>
-									<input type="hidden" name="page" value="profiles"/>
+											</select>
+										</div>
+										<input type="hidden" name="page" value="profiles"/>
+										{jq}
+if ($jq("#profile-0").length > 0) {
+	$jq(".quickmode_notes").hide();
+	$jq(window).scrollTop($jq("a[name=step2]").offset().top);
+} else {
+	$jq(".quickmode_notes").show();
+}
+$jq("#repository, #categories").change(function(){
+	if ($jq(this).val()) {
+		$jq(".quickmode_notes").hide(400);
+	} else {
+		$jq(".quickmode_notes").show(400);
+	}
+});
+										{/jq}
 									</div>
 								<div align="center"><input type="submit" name="list" value="{tr}List{/tr}" /></div>
 							</td>
