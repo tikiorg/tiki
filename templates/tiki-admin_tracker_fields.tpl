@@ -43,11 +43,11 @@
 <th>{self_link _sort_arg='sort_mode' _sort_field='options'}{tr}Options{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isMandatory'}{tr}Mandatory{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isTblVisible' _title='{tr}Is column visible when listing tracker items?{/tr}'}{tr}Tbl vis{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isMain' _title='{tr}Column links to edit/view item?{/tr}'}{tr}isMain{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isTblVisible' _title="{tr}Is column visible when listing tracker items?{/tr}"}{tr}Tbl vis{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isMain' _title="{tr}Column links to edit/view item?{/tr}"}{tr}isMain{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multilingual{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isSearchable'}{tr}Searchable{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isPublic' _title='{tr}Field is public? (viewed in trackerlist plugin){/tr}'}{tr}Public{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isPublic' _title="{tr}Field is public? (viewed in trackerlist plugin){/tr}"}{tr}Public{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isHidden'}{tr}Hidden{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
 <th>{select_all checkbox_names='action[]'}</th>
@@ -59,16 +59,16 @@
 {self_link _icon='page_edit' cookietab='2' _anchor="anchor2" fieldId=$channels[user].fieldId}{tr}Edit{/tr}{/self_link}
 {/if}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-{self_link cookietab='2' _anchor="anchor2" fieldId=$channels[user].fieldId _title='{tr}Edit{/tr}'}{$channels[user].fieldId}{/self_link}{else}{$channels[user].fieldId}{/if}</td>
+{self_link cookietab='2' _anchor="anchor2" fieldId=$channels[user].fieldId _title="{tr}Edit{/tr}"}{$channels[user].fieldId}{/self_link}{else}{$channels[user].fieldId}{/if}</td>
 <td>{$channels[user].name|escape}</td>
 <td>{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
 <td>{$channels[user].options|truncate:42:"..."|escape}</td>
 <td>{$channels[user].position}</td>
 <td>{if $channels[user].isMandatory eq 'y'}<a title="{tr}Mandatory{/tr}">*</a>{else}-{/if}</td>
-<td>{if $channels[user].isTblVisible eq 'y'}{icon _id='table' title='{tr}Is column visible when listing tracker items?{/tr}'}{else}-{/if}</td>
+<td>{if $channels[user].isTblVisible eq 'y'}{icon _id='table' title="{tr}Is column visible when listing tracker items?{/tr}"}{else}-{/if}</td>
 <td>{$channels[user].isMain}</td>
 <td>{$channels[user].isMultilingual}</td>
-<td>{if $channels[user].isSearchable eq 'y'}{icon _id='magnifier' title='{tr}Searchable{/tr}'}{else}-{/if}</td>
+<td>{if $channels[user].isSearchable eq 'y'}{icon _id='magnifier' title="{tr}Searchable{/tr}"}{else}-{/if}</td>
 <td>{$channels[user].isPublic}</td>
 <td>{$channels[user].isHidden}
 {if !empty($channels[user].visibleBy)}<br />{icon _id=magnifier width=10 height=10}{foreach from=$channels[user].visibleBy item=g}{$g|escape} {/foreach}{/if}
@@ -99,9 +99,9 @@
 {/tab}
 
 {if $fieldId eq "0"}
-{assign var='title' value='{tr}New tracker field{/tr}'}
+{assign var='title' value="{tr}New tracker field{/tr}"}
 {else}
-{assign var='title' value='{tr}Edit tracker field{/tr}'}
+{assign var='title' value="{tr}Edit tracker field{/tr}"}
 {/if}
 {tab name=$title}
 {if $error}
@@ -135,7 +135,7 @@
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Tracker+Field+Type" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
-{icon _id='help' alt='{tr}help{/tr}'}</a>{/if}
+{icon _id='help' alt="{tr}help{/tr}"}</a>{/if}
 
 <div  id='z' {if $showit}style="display:block;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" size="50" /></div>
 </td></tr>
