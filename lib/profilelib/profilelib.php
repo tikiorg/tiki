@@ -293,13 +293,16 @@ class Tiki_Profile
 	
 	private function traverseForExternals( &$data ) // {{{
 	{
-		if( is_array( $data ) )
-			foreach( $data as &$value )
+		if( is_array( $data ) ) {
+			foreach( $data as &$value ) {
 				$this->traverseForExternals( $value );
-		elseif( 0 === strpos( $data, 'wikicontent:' ) )
-		{
+			}
+		} else if ( 0 === strpos( $data, 'wikicontent:' ) ) {
 			$pageName = substr( $data, strlen('wikicontent:') );
 			$data = $this->getPageContent( $pageName );
+		} else if ( 0 === strpos( $data, 'wikiparsed:' ) ) {
+			$pageName = substr( $data, strlen('wikiparsed:') );
+			$data = $this->getPageParsed( $pageName );
 		}
 	} // }}}
 
@@ -325,6 +328,27 @@ class Tiki_Profile
 			return substr( $content, $begin + 2 );
 		else
 			return null;
+	} // }}}
+
+	public function getPageParsed( $pageName ) // {{{
+	{
+		if ($this->domain == 'tiki://local' || strpos($this->domain, 'localhost') === 0) {
+			global $tikilib;
+			$info = $tikilib->get_page_info($pageName);
+			if (empty($info)) {
+				$this->setFeedback(tra('Page cannot be found').' '.$pageName);
+				return null;
+			}
+			return $tikilib->parse_data($info['data']);
+		}
+		$pageUrl = dirname( $this->url ) . '/tiki-index_raw.php?'
+			. http_build_query( array( 'page' => $pageName ) );
+
+		$content = TikiLib::httprequest( $pageUrl );
+		// index_raw replaces index.php with itself, so undo that here
+		$content = str_replace( 'tiki-index_raw.php', 'tiki-index.php', $content );
+
+		return $content;
 	} // }}}
 
 	function mergeData( $old, $new ) // {{{
