@@ -876,10 +876,14 @@ if ($_REQUEST['locSection'] == 'compose') {
 	if (!isset($_REQUEST['subject']))
 		$_REQUEST['subject'] = '';
 
+	if (!isset($_REQUEST['useHTML']))
+		$_REQUEST['useHTML'] = 'n';
+
 	$smarty->assign('cc', $_REQUEST['cc']);
 	$smarty->assign('to', $_REQUEST['to']);
 	$smarty->assign('bcc', $_REQUEST['bcc']);
 	$smarty->assign('body', $_REQUEST['body']);
+	$smarty->assign('useHTML', $_REQUEST['useHTML']);
 	$smarty->assign('subject', $_REQUEST['subject']);
 	$smarty->assign('attach1', $_REQUEST['attach1']);
 	$smarty->assign('attach2', $_REQUEST['attach2']);
