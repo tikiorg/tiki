@@ -149,7 +149,35 @@ $smarty->assign('status_types', $status_types);
 if (count($status_types) == 0) {
 	$tracker_info["showStatus"] = 'n';
 }
-$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
+$filterFields = array('isSearchable'=>'y', 'isTblVisible'=>'y');
+if (!isset($_REQUEST["sort_mode"])) {
+	if (isset($tracker_info['defaultOrderKey'])) {
+		if ($tracker_info['defaultOrderKey'] == - 1) $sort_mode = 'lastModif';
+		elseif ($tracker_info['defaultOrderKey'] == - 2) $sort_mode = 'created';
+		elseif ($tracker_info['defaultOrderKey'] == - 3) $sort_mode = 'itemId';
+		elseif ($orderkey) {
+			$sort_mode = 'f_' . $tracker_info['defaultOrderKey'];
+			$filterFields['fieldId'] = $tracker_info['defaultOrderKey'];
+		} else {
+			$sort_mode = 'lastModif';
+		}
+		if (isset($tracker_info['defaultOrderDir'])) {
+			$sort_mode.= "_" . $tracker_info['defaultOrderDir'];
+		} else {
+			$sort_mode.= "_asc";
+		}
+	} else {
+		$sort_mode = '';
+	}
+} else {
+	$sort_mode = $_REQUEST["sort_mode"];
+	if (preg_match('/f_([0-9]+_/', $sort_mode, $matches)) {
+			$filterFields['fieldId'] = $matches[1];
+	}
+}
+$smarty->assign_by_ref('sort_mode', $sort_mode);
+
+$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '', true, array('or'=> $filterFields));
 if (!empty($tracker_info['showPopup'])) {
 	$popupFields = explode(',', $tracker_info['showPopup']);
 	$smarty->assign_by_ref('popupFields', $popupFields);
@@ -332,10 +360,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 			// Get flags here
 			if (isset($fields["data"][$i]["options_array"][1]) && $fields["data"][$i]["options_array"][1] == 1) {
 				$fields["data"][$i]['flags'] = $trklib->get_flags(true, true, false); // Sort in english names order
-				
 			} else {
 				$fields["data"][$i]['flags'] = $trklib->get_flags(true, true, true); // Sort in translated names order (default)
-				
 			}
 			$fields["data"][$i]['defaultvalue'] = 'None';
 		} else {
@@ -549,28 +575,6 @@ if (isset($_REQUEST['import'])) {
 		}
 	}
 }
-if (!isset($_REQUEST["sort_mode"])) {
-	if (isset($tracker_info['defaultOrderKey'])) {
-		if ($tracker_info['defaultOrderKey'] == - 1) $sort_mode = 'lastModif';
-		elseif ($tracker_info['defaultOrderKey'] == - 2) $sort_mode = 'created';
-		elseif ($tracker_info['defaultOrderKey'] == - 3) $sort_mode = 'itemId';
-		elseif ($orderkey) {
-			$sort_mode = 'f_' . $tracker_info['defaultOrderKey'];
-		} else {
-			$sort_mode = 'lastModif';
-		}
-		if (isset($tracker_info['defaultOrderDir'])) {
-			$sort_mode.= "_" . $tracker_info['defaultOrderDir'];
-		} else {
-			$sort_mode.= "_asc";
-		}
-	} else {
-		$sort_mode = '';
-	}
-} else {
-	$sort_mode = $_REQUEST["sort_mode"];
-}
-$smarty->assign_by_ref('sort_mode', $sort_mode);
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
