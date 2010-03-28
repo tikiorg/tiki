@@ -394,7 +394,9 @@
 		{if $field_value.isMandatory ne 'y' || empty($field_value.value)}
 			<option value=""{if $field_value.value eq '' or $field_value.value eq 'None'} selected="selected"{/if}>&nbsp;</option>
 		{/if}
-		<option value="Other"{if $field_value.value eq 'None'} selected="selected"{/if}{if $field_value.options_array[0] ne '1'} style="background-image:url('img/flags/Other.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{tr}Other{/tr}</option>
+		{if empty($field_value.itemChoices)}
+			<option value="Other"{if $field_value.value eq 'None'} selected="selected"{/if}{if $field_value.options_array[0] ne '1'} style="background-image:url('img/flags/Other.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{tr}Other{/tr}</option>
+		{/if}
 		{foreach key=icon item=flag from=$field_value.flags}
 			 {if $icon ne 'None' and $icon ne 'Other' and ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($icon, $field_value.itemChoices) )}
 				 <option value="{$icon|escape}" {if $field_value.value eq $icon}selected="selected"{elseif $icon eq $field_value.defaultvalue}selected="selected"{/if}{if $field_value.options_array[0] ne '1'} style="background-image:url('img/flags/{$icon}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$flag|escape}</option>
