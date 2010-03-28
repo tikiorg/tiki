@@ -320,11 +320,11 @@ div#siteloginbar {
 } 	
 
 #tiki-top .cssmenu_horiz li ul {
-	top: 3em;
+	margin-top: 5px;
 }
 
 #tiki-top .cssmenu_horiz li ul li ul {
-	top: -1px;
+	margin-top: -1px;
 }
 	
 /* left column width */
