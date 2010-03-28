@@ -278,18 +278,6 @@ div.error {
 	padding-right: 20px;
 }
 
-/* next 2, top compensation for tiki-top padding */
-#tiki-top .cssmenu_horiz li ul,
-#tiki-top .cssmenu_horiz li.sfHover ul {
-	top: 33px;
-}
-
-#tiki-top .cssmenu_horiz li ul ul,
-#tiki-top .cssmenu_horiz li.sfHover ul ul,
-.cssmenu_vert li ul ul {
-	top: 0;
-}
-
 /* next 5, left column width */
 #col2 ul.cssmenu_vert {
 	padding-left: 0;
