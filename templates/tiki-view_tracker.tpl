@@ -419,16 +419,9 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 
 {* -------------------- country selector -------------------- *}
 {elseif $field_value.type eq 'y'}
-<select name="{$field_value.ins_id}">
-<option value=""{if $field_value.value eq '' or $field_value.value eq 'None'} selected="selected"{/if}>&nbsp;</option>
-{foreach key=flag_filename item=flag_displayed from=$field_value.flags}
-{if $flag_displayed ne 'None' and ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($flag_filename, $field_value.itemChoices) )}
-<option value="{$flag_filename|escape}" {if $input_err}{if $field_value.value eq $flag_filename}selected="selected"{/if}{elseif $flag_filename eq $field_value.defaultvalue}selected="selected"{/if}{if $field_value.options_array[0] ne '1'} style="background-image:url('img/flags/{$flag_filename}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$flag_displayed}</option>
+{include file='tracker_item_field_input.tpl'}
 {/if}
-{/foreach}
-</select>
 
-{/if}
 {if $field_value.type ne 'S'}
 {if $field_value.description}
 <br />{if $field_value.descriptionIsParsed eq 'y'}{wiki}{$field_value.description}{/wiki}{else}<em>{$field_value.description|escape}</em>{/if}
