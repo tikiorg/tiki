@@ -47,7 +47,7 @@
 						&nbsp;
 					{/if}
 					{if $channels[user].tiki_p_admin_newsletters eq 'y'}
-						<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+						<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					{else}
 						&nbsp;
 					{/if}

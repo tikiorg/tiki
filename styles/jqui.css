@@ -360,7 +360,7 @@ h3.box-title,
 /*	-moz-background-clip: border;
 	-moz-background-inline-policy: continuous;
 	-moz-background-origin :padding;*/
-	background: #fbf9eee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 50%;
+	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 50%;
 	border: 1px solid #fcefa1;
 	color: #363636;
 }
@@ -486,7 +486,7 @@ li.even {
 	border-bottom-width: 0;
 	padding-bottom: 1px;
 	border: 1px solid #aaa;
-	background: #fff url (../lib/jquery/jquery-ui/themes/smoothness/images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+	background: #fff url(../lib/jquery/jquery-ui/themes/smoothness/images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
 	font-weight: normal;
 	color: #212121;
 	outline: none;
@@ -498,7 +498,7 @@ li.even {
 /***** Articles ****/
 body.tiki_cms h1 a.pagetitle,
 body.tiki_cms h1 a.pagetitle:visited,
-body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
+body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 
 	
 div.articletrailer span {
@@ -526,7 +526,7 @@ div.articletrailer span {
 	margin: 5px 0;
 }
 .postbody-title {
-	padding: .5em .3em .3em 1em
+	padding: .5em .3em .3em 1em;
 	position: relative;
 	border: 1px solid #aaa;
 	background: #ccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;

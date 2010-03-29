@@ -794,13 +794,7 @@ function wikiplugin_tracker($data, $params)
 							$flds['data'][$i]['displayedList'] = array_unique($trklib->concat_all_items_from_fieldslist($f['options_array'][0], $f['options_array'][3], isset($f['options_array'][4])?$f['options_array'][4]:'poc'));
 						}
 					} elseif ($f['type'] == 'y') {
-						$flds['data'][$i]['flags'] = $tikilib->get_flags();
-						if ($prefs['language'] != 'en') {
-							foreach ($flags as $flag) {
-								$flagsTranslated[] = $tikilib->take_away_accent(tra($flag));
-							}
-							array_multisort($flagsTranslated, $flds['data'][$i]['flags']);
-						}
+						$flds['data'][$i]['flags'] = $tikilib->get_flags(true, true, isset($f['options_array'][1])&&$f['options_array'][1]==1?false:true);
 					} elseif ($f['type'] == 'u') {
 						if ($perms['tiki_p_admin_trackers'] == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2))
 							$flds['data'][$i]['list'] = $userlib->list_all_users();

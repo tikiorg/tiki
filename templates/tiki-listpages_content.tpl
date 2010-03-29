@@ -59,15 +59,15 @@
 			{assign var='cntcol' value=$cntcol+1}
 			<th>
 				{assign var='lastmod_sortfield' value='lastModif'}
-				{assign var='lastmod_shorttitle' value='{tr}Last mod{/tr}'}
+				{assign var='lastmod_shorttitle' value="{tr}Last mod{/tr}"}
 				{if $prefs.wiki_list_lastmodif eq 'y' and $prefs.wiki_list_comment eq 'y'}
-					{assign var='lastmod_title' value='{tr}Last modification{/tr} / {tr}Comment{/tr}'}
+					{assign var='lastmod_title' value="{tr}Last modification{/tr} / {tr}Comment{/tr}"}
 				{elseif $prefs.wiki_list_lastmodif eq 'y'}
-					{assign var='lastmod_title' value='{tr}Last modification{/tr}'}
+					{assign var='lastmod_title' value="{tr}Last modification{/tr}"}
 				{else}
-					{assign var='lastmod_title' value='{tr}Comment{/tr}'}
+					{assign var='lastmod_title' value="{tr}Comment{/tr}"}
 					{assign var='lastmod_sortfield' value='comment'}
-					{assign var='lastmod_shorttitle' value='{tr}Comment{/tr}'}
+					{assign var='lastmod_shorttitle' value="{tr}Comment{/tr}"}
 				{/if}
 				{self_link _sort_arg='sort_mode' _sort_field=$lastmod_sortfield _title=$lastmod_title}{$lastmod_shorttitle}{/self_link}
 			</th>
@@ -76,21 +76,21 @@
 		{if $prefs.wiki_list_creator eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>
-				{self_link _sort_arg='sort_mode' _sort_field='creator' _title='{tr}Page creator{/tr}'}{tr}Creator{/tr}{/self_link}
+				{self_link _sort_arg='sort_mode' _sort_field='creator' _title="{tr}Page creator{/tr}"}{tr}Creator{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_user eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>
-				{self_link _sort_arg='sort_mode' _sort_field='user' _title='{tr}Last author{/tr}'}{tr}Last author{/tr}{/self_link}
+				{self_link _sort_arg='sort_mode' _sort_field='user' _title="{tr}Last author{/tr}"}{tr}Last author{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_lastver eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>
-				{self_link _sort_arg='sort_mode' _sort_field='version' _title='{tr}Last version{/tr}'}{tr}Last ver.{/tr}{/self_link}
+				{self_link _sort_arg='sort_mode' _sort_field='version' _title="{tr}Last version{/tr}"}{tr}Last ver.{/tr}{/self_link}
 			</th>
 		{/if}
 
@@ -104,35 +104,35 @@
 		{if $prefs.wiki_list_versions eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>
-				{self_link _sort_arg='sort_mode' _sort_field='versions' _title='{tr}Versions{/tr}'}{tr}Vers.{/tr}{/self_link}
+				{self_link _sort_arg='sort_mode' _sort_field='versions' _title="{tr}Versions{/tr}"}{tr}Vers.{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_links eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>
-				{self_link _sort_arg='sort_mode' _sort_field='links' _title='{tr}Links to other items in page{/tr}'}{tr}Links{/tr}{/self_link}
+				{self_link _sort_arg='sort_mode' _sort_field='links' _title="{tr}Links to other items in page{/tr}"}{tr}Links{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_backlinks eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>
-				{self_link _sort_arg='sort_mode' _sort_field='backlinks' _title='{tr}Links to this page in other pages{/tr}'}{tr}Backl.{/tr}{/self_link}
+				{self_link _sort_arg='sort_mode' _sort_field='backlinks' _title="{tr}Links to this page in other pages{/tr}"}{tr}Backl.{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_size eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>
-				{self_link _sort_arg='sort_mode' _sort_field='size' _title='{tr}Page size{/tr}'}{tr}Size{/tr}{/self_link}
+				{self_link _sort_arg='sort_mode' _sort_field='size' _title="{tr}Page size{/tr}"}{tr}Size{/tr}{/self_link}
 			</th>
 		{/if}
 
 		{if $prefs.wiki_list_language eq 'y'}
 			{assign var='cntcol' value=$cntcol+1}
 			<th>
-				{self_link _sort_arg='sort_mode' _sort_field='lang' _title='{tr}Language{/tr}'}{tr}Lang.{/tr}{/self_link}
+				{self_link _sort_arg='sort_mode' _sort_field='lang' _title="{tr}Language{/tr}"}{tr}Lang.{/tr}{/self_link}
 			</th>
 		{/if}
 
@@ -234,9 +234,9 @@
 		{if $prefs.wiki_list_status eq 'y'}
 			<td style="text-align:center;" class="{cycle advance=false}">
 				{if $listpages[changes].flag eq 'locked'}
-					{icon _id='lock' alt='{tr}Locked{/tr}'}
+					{icon _id='lock' alt="{tr}Locked{/tr}"}
 				{else}
-					{icon _id='lock_break' alt='{tr}unlocked{/tr}'}
+					{icon _id='lock_break' alt="{tr}unlocked{/tr}"}
 				{/if}
 			</td>
 		{/if}
@@ -308,17 +308,17 @@
 				{/if}
 
 				{if $prefs.feature_history eq 'y' and $listpages[changes].perms.tiki_p_wiki_view_history eq 'y'}
-					<a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_white_stack' alt='{tr}History{/tr}'}</a>
+					<a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_white_stack' alt="{tr}History{/tr}"}</a>
 				{/if}
 
 				{if $listpages[changes].perms.tiki_p_assign_perm_wiki_page eq 'y'}
 					<a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}">
-						{icon _id='key' alt='{tr}Perms{/tr}'}
+						{icon _id='key' alt="{tr}Perms{/tr}"}
 					</a>
 				{/if}
 
 				{if $listpages[changes].perms.tiki_p_remove eq 'y'}
-					<a class="link" href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+					<a class="link" href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				{/if}
 			</td>
 		{/if}

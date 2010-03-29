@@ -14,7 +14,7 @@
   </td><td class="formcolor" align="right">
     <input type="submit" name="editcopyright" value="{tr}Edit{/tr}" /><br />
     <a title="{tr}Delete{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" 
->{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}">{icon _id='resultset_up'}</a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}">{icon _id='resultset_down'}</a>
     </form>

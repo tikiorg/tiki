@@ -75,7 +75,7 @@
 {if $trackerId}
 	{capture assign='tabeditcreatetrk_admtrk'}{tr}Edit Tracker{/tr} <i>{$name|escape} (#{$trackerId})</i>{/capture}
 {else}
-	{assign var='tabeditcreatetrk_admtrk' value='{tr}Create Tracker{/tr}'}
+	{assign var='tabeditcreatetrk_admtrk' value="{tr}Create Tracker{/tr}"}
 {/if}
 	
 {tab name=$tabeditcreatetrk_admtrk}
@@ -89,7 +89,7 @@
 					{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
 					{tr}There are individual permissions set for this tracker{/tr}
 				{else}
-					{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
+					{icon _id='key_active' alt="{tr}Active Perms{/tr}"}</a>
 					{tr}No individual permissions. Global permissions apply.{/tr}
 				{/if}
 		</div>

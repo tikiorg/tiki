@@ -90,7 +90,7 @@
     {assign var=nbCols value=`$nbCols+1`}
     <th style="width:1%">
     {if $other_columns neq ''}
-      <a href='#' {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"} title='{tr}Other Sorts{/tr}'>{/if}{icon _id='timeline_marker' alt='{tr}Other Sorts{/tr}' title=''}{if $other_columns neq ''}</a>
+      <a href='#' {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">{/if}{icon _id='timeline_marker' alt="{tr}Other Sorts{/tr}" title=''}{if $other_columns neq ''}</a>
     {/if}
     </th>
   {/if}
@@ -180,7 +180,7 @@
       
   {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
     <td style="white-space: nowrap" class="{cycle advance=false}">
-      <a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
+      <a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt="{tr}Actions{/tr}"}</a>
     </td>
   {/if}
       
@@ -291,7 +291,7 @@
     <td class="{cycle advance=false}">
     {if $show_infos eq 'y'}
       {if $over_infos eq ''}
-        {icon _id='information_gray' class='' alt='{tr}No information{/tr}'}
+        {icon _id='information_gray' class='' alt="{tr}No information{/tr}"}
       {else}
         <a class="fgalname" href="#" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html" left=true} style="cursor:help">{icon _id='information' class='' title=''}</a>
       {/if}

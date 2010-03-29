@@ -256,7 +256,7 @@
 	{if !empty($field_value.value) and $field_value.value ne 'None'}
 		{assign var=o_opt value=$field_value.options_array[0]}
 		{capture name=flag}
-		{tr}{$field_value.value}{/tr}
+		{tr}{$field_value.value|replace:'_':' '}{/tr}
 		{/capture}
 		{if $o_opt ne '1' and $list_mode ne 'csv'}<img src="img/flags/{$field_value.value}.gif" title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}" />{/if}
 		{if $o_opt ne '1' and $o_opt ne '2' and $list_mode ne 'csv'}&nbsp;{/if}

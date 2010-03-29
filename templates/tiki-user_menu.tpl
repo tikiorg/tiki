@@ -99,27 +99,3 @@
 {assign var=opensec value=0}
 {/if}
 
-{* --------------------Dynamic menus *}
-{if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
-{jq}
-	{{foreach key=pos item=chdata from=$menu_channels}}
-		{{if $chdata.type ne 'o' and $chdata.type ne '-'}}
-			{{if $menu_cookie eq 'n'}}
-				{{if $chdata.selected eq '1' or $chdata.selectedAscendant eq '1'}}
-					status = 'o';
-				{{else}}
-					status = 'c';
-				{{/if}}
-			{{else}}
-				status = '';
-			{{/if}}
-			{{*if $prefs.feature_menusfolderstyle eq 'y'}}
-				setfolderstate('menu{{$menu_info.menuId|cat:'__'|cat:$chdata.position}}', '{{$menu_info.type}}', '', status);
-			{{else}}
-				setsectionstate('menu{{$menu_info.menuId|cat:'__'|cat:$chdata.position}}', '{{$menu_info.type}}', '', status);
-			{{/if*}}
-		{{/if}}
-	{{/foreach}}
-{/jq}
-{/if}
-

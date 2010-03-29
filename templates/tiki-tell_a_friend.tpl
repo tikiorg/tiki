@@ -58,8 +58,8 @@
     </tr>
 
     <tr class="formcolor">
-      <td class="formcolor">{tr}Your email{/tr}</td>
-      <td class="formcolor"><input style="width:95%;" type="text" name="email" value="{$email}" /></td>
+      <td class="formcolor">{tr}Your email{/tr}{if empty($email)} <strong class="mandatory_star">*</strong>{/if}</td>
+      <td class="formcolor"><div class="mandatory_field"><input style="width:95%;" type="text" name="email" value="{$email}" /></div></td>
     </tr>
 
     <tr class="formcolor">

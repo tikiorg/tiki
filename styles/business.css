@@ -344,13 +344,13 @@ hr {
 /* top compensation for tiki-top padding */
 #tiki-top .cssmenu_horiz li ul,
 #tiki-top .cssmenu_horiz li.sfHover ul {
-	top: 42px;
+	margin-top: 12px;
 }
 
 #tiki-top .cssmenu_horiz li ul ul,
 #tiki-top .cssmenu_horiz li.sfHover ul ul,
 .cssmenu_vert li ul ul {
-	top: -1px;
+	margin-top: -1px;
 }
 
 /* left column width */

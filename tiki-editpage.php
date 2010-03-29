@@ -1203,6 +1203,9 @@ $cat_type = 'wiki page';
 $cat_objid = $_REQUEST["page"];
 $cat_lang = $pageLang;
 $cat_object_exists = $tikilib->page_exists( $_REQUEST['page'] );
+if (!$cat_object_exists)
+	$cookietab = 1;
+
 $smarty->assign('section',$section);
 include_once ('tiki-section_options.php');
 if ($prefs['feature_freetags'] == 'y') {

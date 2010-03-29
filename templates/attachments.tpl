@@ -59,7 +59,7 @@ or (!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.w_displayed_d
   <a title="{tr}View{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}" target="_blank">{icon _id='monitor' alt="{tr}View{/tr}"}</a>
   <a title="{tr}Download{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y">{icon _id='disk' alt="{tr}Download{/tr}"}</a> &nbsp;
  {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-  <a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}{if !empty($sort_mode)}&amp;sort_mode={$sort_mode}{/if}"{if !empty($target)} target="{$target}"{/if}>{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+  <a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}{if !empty($sort_mode)}&amp;sort_mode={$sort_mode}{/if}"{if !empty($target)} target="{$target}"{/if}>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
  {/if}
  </td>
  <td class="{cycle advance=false}"><small>{$atts[ix].comment}</small></td>

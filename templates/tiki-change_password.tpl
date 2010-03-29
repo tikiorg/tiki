@@ -61,7 +61,7 @@
 </tr>
 {/if}     
 <tr>
-  <td class="formcolor"><label for="pass">{tr}New password:{/tr}</label></td>
+  <td class="formcolor"><label for="pass1">{tr}New password:{/tr}</label></td>
   <td class="formcolor">
 						<div style="float:right;width:175px;margin-left:5px;">
 							<div id="mypassword_text"></div>

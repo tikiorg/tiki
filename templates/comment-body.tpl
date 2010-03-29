@@ -27,7 +27,7 @@
 			{/if}
 			{if $forum_info.ui_level eq 'y' and $comment.user_level}
 			<span class="author_stars">
-				<img src="img/icons/{$comment.user_level}stars.gif" alt='{$comment.user_level} {tr}stars{/tr}' title='{tr}User Level{/tr}' />
+				<img src="img/icons/{$comment.user_level}stars.gif" alt='{$comment.user_level} {tr}stars{/tr}' title="{tr}User Level{/tr}" />
 			</span>
 			{/if}
 
@@ -44,9 +44,9 @@
 			<span class="infos">
 			{if $forum_info.ui_online eq 'y'}
 				{if $comment.user_online eq 'y'}
-				{icon _id='user_red' alt='{tr}user online{/tr}'}
+				{icon _id='user_red' alt="{tr}user online{/tr}"}
 				{elseif $comment.user_online eq 'n'}
-			  	{icon _id='user_gray' alt='{tr}user offline{/tr}'}
+			  	{icon _id='user_gray' alt="{tr}user offline{/tr}"}
 				{/if}
 			{/if}
 			{if $forum_info.ui_flag eq 'y' and $comment.userName|countryflag}
@@ -72,7 +72,7 @@
 <div class="attachments">
 	{section name=ix loop=$comment.attachments}
 	<a class="link" href="tiki-download_forum_attachment.php?attId={$comment.attachments[ix].attId}">
-	{icon _id='attach' alt='{tr}Attachment{/tr}'}
+	{icon _id='attach' alt="{tr}Attachment{/tr}"}
 	{$comment.attachments[ix].filename} ({$comment.attachments[ix].filesize|kbsize})</a>
 	{if $tiki_p_admin_forum eq 'y'}
 	<a class="link"
@@ -81,7 +81,7 @@
 		{else}
 		href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;thread_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"
 		{/if}
-	>{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+	>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 	{/if}
 	<br />
 	{/section}

@@ -8137,20 +8137,25 @@ class TikiLib extends TikiDb_Bridge
 
 		if ( $with_names ) {
 			$ret = array();
+			$names = array();
 			foreach ( $flags as $f ) {
 				$ret[$f] = strtr($f, '_', ' ');
 				if ( $translate ) {
 					$ret[$f] = tra($ret[$f]);
 				}
+				if ($sort_names) {
+					$names[$f] = strtolower($this->take_away_accent($ret[$f]));
+				}
 			}
 			if ( $sort_names ) {
-				asort($ret, SORT_STRING);
+				array_multisort($names, $ret);
 			}
 			return $ret;
 		}
 		return $flags;
 	}
 
+	
 	function get_snippet($data, $is_html='n', $highlight='', $length=240) {
 		global $prefs;
 		if ($prefs['search_parsed_snippet'] == 'y') {

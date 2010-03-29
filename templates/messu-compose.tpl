@@ -9,10 +9,10 @@
 
 
 {if $sent}
-<div class="simplebox highlight">{if (strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}'))}{icon _id=delete alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}{else}{icon _id=accept alt="{tr}Send{/tr}" style="vertical-align:middle"} {/if}{$message}</div>
+<div class="simplebox highlight">{if (strstr($message, "{tr}ERROR{/tr}")) or (strstr($message, "{tr}Invalid{/tr}"))}{icon _id=delete alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}{else}{icon _id=accept alt="{tr}Send{/tr}" style="vertical-align:middle"} {/if}{$message}</div>
 {/if}
 
-{if (!$sent) or ((strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}')))}
+{if (!$sent) or ((strstr($message, "{tr}ERROR{/tr}")) or (strstr($message, "{tr}Invalid{/tr}")))}
 {jq}$jq(".username").tiki("autocomplete", "username", {multiple: true, multipleSeparator: ";"});{/jq}
 <form action="messu-compose.php" method="post">
 <table class="normal" >

@@ -78,14 +78,14 @@
           {if !isset($file_info)}
             {if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
             {if $tiki_p_admin_file_galleries eq 'y'}
-              {icon _id='arrow_right' _tag='input_image' name='movesel' alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' style='vertical-align: middle;'}
+              {icon _id='arrow_right' _tag='input_image' name='movesel' alt="{tr}Move{/tr}" title="{tr}Move Selected Files{/tr}" style='vertical-align: middle;'}
             {/if}
           {/if}
           {if $tiki_p_admin_file_galleries eq 'y'}
-            {icon _id='cross' _tag='input_image' _confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;'}
-			{icon _id='arrow_refresh' _tag='input_image' _confirm='{tr}Are you sure you want to reset the default gallery list table settings?{/tr}' name='defaultsel' alt='{tr}Reset to default gallery list table settings{/tr}' style='vertical-align: middle;'}
+            {icon _id='cross' _tag='input_image' _confirm="{tr}Are you sure you want to delete the selected files?{/tr}" name='delsel' alt="{tr}Delete{/tr}" style='vertical-align: middle;'}
+			{icon _id='arrow_refresh' _tag='input_image' _confirm="{tr}Are you sure you want to reset the default gallery list table settings?{/tr}" name='defaultsel' alt="{tr}Reset to default gallery list table settings{/tr}" style='vertical-align: middle;'}
           {/if}
-          {icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt='{tr}Download the zip{/tr}' style='vertical-align: middle;'}
+          {icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt="{tr}Download the zip{/tr}" style='vertical-align: middle;'}
           {if $tiki_p_assign_perm_file_gallery eq 'y'}
              {icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign Permissions{/tr}" title="{tr}Assign Permissions{/tr}" style='vertical-align: middle;'}
           {/if}
@@ -98,7 +98,7 @@
                   <option value="{$all_galleries[ix].id}">{$all_galleries[ix].label|escape}</option>
               {/section}
             </select>
-            <input type='submit' name='movesel' value='{tr}Move{/tr}' />
+            <input type='submit' name='movesel' value="{tr}Move{/tr}" />
           </div>
           {/if}
         </div>

@@ -266,7 +266,7 @@ class MenuLib extends TikiLib
 	// sectionLevel ->shows only the list of submenus where the url is find in this level
 	// toLevel -> do not show more than this level
 	// also sets setion open/close according to javascript and cookies
-	function setSelected($channels, $sectionLevel='', $toLevel='', $menu_id = 0)
+	function setSelected($channels, $sectionLevel='', $toLevel='', $params='')
 	{
 		if (is_numeric($sectionLevel)) { // must extract only the submenu level sectionLevel where the current url is
 			$findUrl = false;
@@ -363,12 +363,16 @@ class MenuLib extends TikiLib
 			$channels = array('data'=>$subMenu, 'cant'=>$cant);
 		}
 		// set sections open/close according to cookie
-		if ($menu_id > 0) {
+		if (!empty($params['id'])) {
 			global $prefs;
 			foreach ($channels['data'] as $position => &$option) {
 				$option['open'] = false;
-				if ($option['type'] == 's') {
-					$ck = getCookie('menu'.$menu_id.'__'.$option['position'], 'menu', 'o');
+				if (!empty($params['menu_cookie']) && $params['menu_cookie'] == 'n') {
+					if (!empty($option['selected']) || !empty($option['selectedAscendant'])) {
+						$option['open'] = true;
+					}
+				} elseif ($option['type'] == 's') {
+					$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu', 'o');
 					$option['open'] = ($prefs['javascript_enabled'] == 'n' || $ck == 'o');
 				}
 			}

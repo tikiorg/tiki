@@ -73,11 +73,11 @@ if (isset($_REQUEST['send'])) {
 		}
 	}
 	if (empty($_REQUEST['email'])) {
-		$from = $prefs['sender_email'];
+		$errors[] = tra('Your email is mandatory');
 	} else {
 		$smarty->assign_by_ref('email', $_REQUEST['email']);
 		if (validate_email($_REQUEST['email'])) {
-			$from = $_REQUEST['email'];
+			$from = str_replace(array("\r", "\n"), '', $_REQUEST['email']);
 		} else {
 			$errors[] = tra('Invalid email') . ': ' . $_REQUEST['email'];
 		}

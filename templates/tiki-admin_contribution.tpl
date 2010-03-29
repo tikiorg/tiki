@@ -60,7 +60,7 @@
 <td class="{cycle advance=false}">{$contributions[ix].description|truncate|escape}</td>
 <td class="{cycle}">
 <a class="link" href="tiki-admin_contribution.php?contributionId={$contributions[ix].contributionId}">{icon _id='shape_square_edit'}</a> &nbsp;
-<a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+<a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}

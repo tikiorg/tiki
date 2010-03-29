@@ -277,6 +277,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
 				break;
 			case 'd': // drop down list
+			case 'y': // country
 				$formats[$fieldId] = 'd';
 				break;
 			case 'R': // radio
@@ -384,6 +385,9 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				foreach ($res as $val) {
 					$opt['id'] = $val;
 					$opt['name'] = $val;
+					if ($field['type'] == 'y') { // country
+						$opt['name'] = str_replace('_', ' ', $opt['name']);
+					}
 					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
 						$opt['selected'] = 'y';
 						$selected = true;
