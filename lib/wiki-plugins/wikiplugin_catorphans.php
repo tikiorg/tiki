@@ -31,7 +31,7 @@ function wikiplugin_catorphans_info() {
 			'objects' => array(
 				'required' => false,
 				'name' => tra('Objects'),
-				'description' => tra('wiki|article|blog|faq|fgal|forum|igal|newsletter|poll|quizz|survey|tracker'),
+				'description' => tra('wiki|article|blog|faq|fgal|forum<br />|igal|newsletter|poll|quizz<br />|survey|tracker'),
 			),
 			'max' => array(
 				'required' => false,

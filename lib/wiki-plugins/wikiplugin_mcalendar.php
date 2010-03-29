@@ -171,8 +171,8 @@ function wikiplugin_mcalendar_info() {
                              'Tzolkin: %tzolkin13%, %tzolkin20%, %tzolkin20name%;<br/>'.
                              'Haab: %haabkin%, %haabwinal%, %haabwinalname%;<br/>'.
                              'Misc: %longkin%, %julianday%.<br/><br/>'.
-                             'Example: template "%baktun%.%katun%.%tun%.%winal%.%kin%, %tzolkin13% %tzolkin20name%, %haabkin% %haabwinalname%" for 22.05.2009 will return 12.19.16.6.11, 8 CHUEN, 9 SIP.<br/>'.
-                             'Default template: %baktun%.%katun%.%tun%.%winal%.%kin% %tzolkin13% %tzolkin20name% %haabkin% %haabwinalname%'),
+                             'Example: template "%baktun%.%katun%.%tun%<br />.%winal%.%kin%, %tzolkin13% %tzolkin20name%, %haabkin% %haabwinalname%" for 22.05.2009 will return 12.19.16.6.11, 8 CHUEN, 9 SIP.<br/>'.
+                             'Default template: %baktun%.%katun%<br />.%tun%.%winal%.%kin% %tzolkin13% %tzolkin20name% %haabkin% %haabwinalname%'),
 			),
 			'grdate' => array(
 				'required' => false,
