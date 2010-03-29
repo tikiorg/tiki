@@ -480,13 +480,13 @@ class RankLib extends TikiLib
 	function cms_ranking_top_articles($limit)
 	{
 		global $user;
-		$query = "select * from `tiki_articles` order by `nbreads` desc";
+		$query = "select `tiki_articles`.*, `tiki_article_types`.`show_pre_publ` from `tiki_articles` inner join `tiki_article_types` on `tiki_articles`.`type` = `tiki_article_types`.`type` order by `nbreads` desc";
 
 		$result = $this->query($query, array(), $limit, 0);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			if ($this->user_has_perm_on_object($user, $res['articleId'], 'article', 'tiki_p_read_article') && ($res["show_pre_publ"] == 'y' or $this->now < $res["publishDate"])) {
+			if ($this->user_has_perm_on_object($user, $res['articleId'], 'article', 'tiki_p_read_article') && ($res["show_pre_publ"] == 'y' or $this->now > $res["publishDate"])) {
 				$aux["name"] = $res["title"];
 				$aux["hits"] = $res["nbreads"];
 				$aux["href"] = 'tiki-read_article.php?articleId=' . $res["articleId"];
