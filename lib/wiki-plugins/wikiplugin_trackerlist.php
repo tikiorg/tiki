@@ -578,7 +578,8 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		}
 		if (isset($view) && $view == 'page' && isset($_REQUEST['page'])) {
-			if ($f = $trklib->get_field_id_from_type($trackerId, 'k')) {
+			if (($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%')) || ($f = $trklib->get_field_id_from_type($trackerId, 'k', '%,1%')) || ($f =  $trklib->get_field_id_from_type(
+$trackerId, 'k'))) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
 				$exactvalue[] = $_REQUEST['page'];
