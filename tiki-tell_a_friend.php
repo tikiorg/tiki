@@ -77,7 +77,7 @@ if (isset($_REQUEST['send'])) {
 	} else {
 		$smarty->assign_by_ref('email', $_REQUEST['email']);
 		if (validate_email($_REQUEST['email'])) {
-			$from = str_replace(array('\r', '\n'), '', $_REQUEST['email']);
+			$from = str_replace(array("\r", "\n"), '', $_REQUEST['email']);
 		} else {
 			$errors[] = tra('Invalid email') . ': ' . $_REQUEST['email'];
 		}
