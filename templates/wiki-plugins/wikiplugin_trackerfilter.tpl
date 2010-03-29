@@ -35,6 +35,11 @@
 				{capture name=i_f}f_{$filters[if].fieldId}{/capture}
 				{initials_filter_links _initial=$smarty.capture.i_f}
 			{/if}
+			{if $filters[if].type eq 'f' and $prefs.feature_jquery_ui eq 'y'}
+				{jq}
+					$jq("#f_{{$filters[if].fieldId}}").tiki("datepicker");
+				{/jq}
+			{/if}
 			<input id="f_{$filters[if].fieldId}" type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
 {*------sqlsearch *}
 		{elseif $filters[if].format eq 'sqlsearch'}

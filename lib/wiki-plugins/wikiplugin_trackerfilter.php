@@ -203,7 +203,7 @@ function wikiplugin_trackerFilter_split_filters($filters) {
 }
 
 function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $formats='') {
-	global $tiki_p_admin_trackers, $smarty;
+	global $tiki_p_admin_trackers, $smarty, $tikilib;
 	global $trklib;	include_once('lib/trackers/trackerlib.php');
 	$filters = array();
 	if (empty($trackerId) && !empty($listfields[0])) {
@@ -236,7 +236,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 		if ($field['type'] == 'i' || $field['type'] == 'h' || $field['type'] == 'G' || $field['type'] == 'x') {
 			continue;
 		}
-		if ($field['type'] == 'f') { // to be done
+		if ($field['type'] == 'f' && $formats[$fieldId] != 't') { // non text input for dates: to be done
 			continue;
 		}
 		$fieldId = $field['fieldId'];
@@ -297,6 +297,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 			case '*': // stars
 				$cumul = '';
 				foreach ($field['options_array'] as $val) {
+					$val = strip_tags($tikilib->parse_data($val));
 					$opt['id'] = $val;
 					if ($field['type'] == '*') {
 						$cumul = $opt['name'] = "$cumul*";
@@ -351,6 +352,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 					$res = $trklib->list_tracker_field_values($trackerId, $fieldId);
 				}
 				foreach ($res as $val) {
+					$val = strip_tags($tikilib->parse_data($val));
 					$opt['id'] = $val;
 					$opt['name'] = $val;
 					if ($field['type'] == 'y') { // country
@@ -370,7 +372,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				return tra('tracker field type not processed yet').' '.$field['type'];
 			}
 		}
-		$filters[] = array('name' => $field['name'], 'fieldId' => $fieldId, 'format'=>$formats[$fieldId], 'opts' => $opts, 'selected'=>$selected);
+		$filters[] = array('name' => $field['name'], 'fieldId' => $fieldId, 'format'=>$formats[$fieldId], 'opts' => $opts, 'selected'=>$selected, 'type' => $field['type']);
 	}
 	return $filters;
 }
