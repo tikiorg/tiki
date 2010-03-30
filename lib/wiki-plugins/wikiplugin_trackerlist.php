@@ -767,7 +767,7 @@ $trackerId, 'k'))) {
 		$smarty->assign_by_ref('filterfield',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
-		if (!empty($export) && $tiki_p_export_tracker == 'y') {
+		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
 			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";
 			if (!empty($fields)) 
 				$exportUrl .= "&amp;displayedFields=$fields";
