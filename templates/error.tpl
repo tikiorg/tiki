@@ -52,6 +52,11 @@ close();
 							{include file='tiki-searchindex.tpl' searchNoResults="true"	searchStyle="menu" searchOrientation="horiz" words="$page"}
 						{/if}
 					{/if}
+					{if $prefs.feature_likePages ne 'y' and !($prefs.feature_search eq 'y' && $tiki_p_search eq 'y')}
+						{remarksbox type='errors' title=$errortitle}
+							{tr}Page not found{/tr} <br />{$page|escape}
+						{/remarksbox}
+					{/if}
 				{else}
 					{if $errortype eq 401 && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 						{remarksbox type='errors' title=$errortitle}
