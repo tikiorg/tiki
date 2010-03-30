@@ -1684,10 +1684,12 @@ class TrackerLib extends TikiLib
 			refresh_index('tracker_items', $itemId);
 		}
 		$parsed = '';
-		if ($ins_fields['data'][$i]['type'] == 'a') {
-			$parsed .= $ins_fields['data'][$i]['value']."\n";
-			foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue) {
-				$parsed .= $linvalue['value']."\n";
+		foreach($ins_fields["data"] as $i=>$array) {
+			if ($ins_fields['data'][$i]['type'] == 'a') {
+				$parsed .= $ins_fields['data'][$i]['value']."\n";
+				foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue) {
+					$parsed .= $linvalue['value']."\n";
+				}
 			}
 		}
 		if (!empty($parsed)) {
