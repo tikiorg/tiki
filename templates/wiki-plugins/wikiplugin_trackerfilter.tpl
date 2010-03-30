@@ -7,7 +7,7 @@
 {button _text="{tr}Filters{/tr}" _flip_id="trackerFilter$iTrackerFilter"}
 {/if}
 <div id="trackerFilter{$iTrackerFilter}" style="display:{if $open eq 'y' or $line eq 'y' or $prefs.javascript_enabled ne 'y'}block{else}none{/if}">
-{if empty($inForm)}<form method="post">{/if}
+{if empty($inForm)}<form action="#" method="post">{/if}
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <table class="normal">
 {if $line eq 'y'}<tr>{/if}
