@@ -15,5 +15,9 @@ function prefs_url_list() {
 				'allowRegister',
 			),
 		),
+		'url_anonymous_page_not_found' => array(
+			'name' => tra('Url an anonymous is redirected when page not found'),
+			'type' => 'text',
+		),
 	);
 }

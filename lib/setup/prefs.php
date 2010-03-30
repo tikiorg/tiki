@@ -1389,6 +1389,7 @@ function get_default_prefs() {
 		'feature_projects' => 'n',
 		'feature_ranking' => 'n',
 		'feature_redirect_on_error' => 'n',
+		'url_anonymous_page_not_found' => '',
 		'feature_referer_highlight' => 'n',
 		'feature_referer_stats' => 'n',
 		'feature_score' => 'n',
