@@ -543,7 +543,9 @@ function wikiplugin_trackerlist($data, $params) {
 		$tr_sort_mode = $sort_mode;
 		$smarty->assign_by_ref('tr_sort_mode', $tr_sort_mode);
 		
-		if (!isset($max)) {
+		if (isset($compute)) {
+			$max = -1; // to avoid confusion compute is on what you see or all the items
+		} elseif (!isset($max)) {
 			$max = $prefs['maxRecords'];
 		}
 
@@ -853,7 +855,10 @@ $trackerId, 'k'))) {
 					$computedFields[$fieldId][] = array_merge(array('operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
 				}
 				$smarty->assign_by_ref('computedFields', $computedFields);
+			} else {
+				$smarty->assign('computedFields', '');
 			}
+
 			if (!isset($tpl) && !empty($wiki)) {
 				$tpl = "wiki:$wiki";
 			} elseif (empty($tpl)) {
