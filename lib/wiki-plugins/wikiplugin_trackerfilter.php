@@ -236,7 +236,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 		if ($field['type'] == 'i' || $field['type'] == 'h' || $field['type'] == 'G' || $field['type'] == 'x') {
 			continue;
 		}
-		if ($field['type'] == 'f' && $formats[$fieldId] != 't') { // non text input for dates: to be done
+		if ($field['type'] == 'f') { // to be done
 			continue;
 		}
 		$fieldId = $field['fieldId'];
