@@ -578,7 +578,8 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		}
 		if (isset($view) && $view == 'page' && isset($_REQUEST['page'])) {
-			if ($f = $trklib->get_field_id_from_type($trackerId, 'k')) {
+			if (($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%')) || ($f = $trklib->get_field_id_from_type($trackerId, 'k', '%,1%')) || ($f =  $trklib->get_field_id_from_type(
+$trackerId, 'k'))) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
 				$exactvalue[] = $_REQUEST['page'];
@@ -781,7 +782,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('filterfield',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
-		if (!empty($export) && $tiki_p_export_tracker == 'y') {
+		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
 			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";
 			if (!empty($fields)) 
 				$exportUrl .= "&amp;displayedFields=$fields";

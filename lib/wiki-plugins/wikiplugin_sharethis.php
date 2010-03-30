@@ -100,35 +100,35 @@ function wikiplugin_sharethis($data, $params) {
 	// load setting options from $params
 
 	// set post services that appear upon widget opening
-	if($postfirst)
+	if(!empty($postfirst))
 	{
 		$sharethis_options['postfirst'] = str_replace('|',$comma,$postfirst);
 	}
 	// limit send services that will appear
-	if($sendsvcs)
+	if(!empty($sendsvcs))
 	{
 		$sharethis_options['sendsvcs'] = str_replace('|',$comma,$sendsvcs);
 	}
 	// set icon style
-	if($rotateimage)
+	if(!empty($rotateimage))
 	{
 		if($rotateimage == 'y'){
 			$sharethis_options['style'] = 'rotate';
 		}
 	}
 	// set button text
-	if($buttontext)
+	if(!empty($buttontext))
 	{
 		$sharethis_options['buttontext'] = $buttontext;
 	}
 	// set header title text. If header title is set by user, then set background color and text color
-	if($headertitle)
+	if(!empty($headertitle))
 	{
 		$sharethis_options['headertitle'] = str_replace(' ',$sp,$headertitle);
-			if($headerbg) {
+			if(!empty($headerbg)) {
 			$sharethis_options['headerbg'] = $headerbg;
 			}
-			if($headertxtcolor) {
+			if(!empty($headertxtcolor)) {
 			$sharethis_options['headertxtcolor'] = $headertxtcolor;
 			}
 		} else {
@@ -136,17 +136,17 @@ function wikiplugin_sharethis($data, $params) {
 			$sharethis_options['headertxtcolor'] = '';
 		}
 	// set link text color for services shown in popup
-	if($linkfg)
+	if(!empty($linkfg))
 	{
 		$sharethis_options['linkfg'] = $linkfg;
 	}
 	// set popup
-	if($popup)
+	if(!empty($popup))
 	{
 		$sharethis_options['popup'] = $popup;
 	}
 	// set embed
-	if($embed)
+	if(!empty($embed))
 	{
 		$sharethis_options['embed'] = $embed;
 	}

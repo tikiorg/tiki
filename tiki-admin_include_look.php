@@ -22,9 +22,6 @@ if (isset($_REQUEST["looksetup"])) {
 		}
 		check_ticket('admin-inc-general');
 	}
-	foreach($pref_byref_values as $britem) {
-		byref_set_value($britem);
-	}
 } else { // just changed theme menu, so refill options
 	if (isset($_REQUEST['style']) && $_REQUEST['style'] != '') {
 		$a_style = $_REQUEST['style'];

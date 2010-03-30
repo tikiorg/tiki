@@ -95,6 +95,10 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	if( ! isset( $params['tracker'] ) )
 		return "^" . tr("Missing parameter: %0", 'tracker') . "^";
 
+	$default = array('scale1'=>'hour');
+	$params = array_merge($default, $params);
+	$formats = array('hour'=>'H:i', 'day'=>'j', 'month'=>'m', 'year'=>'y');
+
 	$start = strtotime( $params['lower'] );
 	$end = strtotime( $params['upper'] );
 	$size = $end - $start;
@@ -138,8 +142,8 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		$detail['lend'] = min( $end, $detail['end'] );
 		$detail['lsize'] = round( ( $detail['lend'] - $detail['lstart'] ) / $size * 80 );
 
-		$detail['fstart'] = date( 'H:i', $detail['start'] );
-		$detail['fend'] = date( 'H:i', $detail['end'] );
+		$detail['fstart'] = date( $formats[$params['scale1']], $detail['start'] );
+		$detail['fend'] = date( $formats[$params['scale1']], $detail['end'] );
 		$detail['psummary'] = $tikilib->parse_data( $detail['summary'] );
 
 		$detail['encoded'] = json_encode( $detail );

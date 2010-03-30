@@ -6774,7 +6774,8 @@ class TikiLib extends TikiDb_Bridge
 							$thisid = 'id' . preg_replace('/[^a-zA-z0-9]/', '',urlencode($options['page'])) .$nb_hdrs;
 							$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
 							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
-							$aclose2 = $aclose2 . '<script type="text/javascript">'."\n".'<!--//--><![CDATA[//><!--'."\n".'setheadingstate(\''. $thisid .'\')'."\n".' //--><!]]>'."\n".'</script>';
+							global $headerlib;
+							$headerlib->add_jq_onready( "setheadingstate('$thisid');" );
 							array_unshift($divdepth, $hdrlevel);
 							$addremove += 1;
 						}
