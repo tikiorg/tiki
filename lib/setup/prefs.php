@@ -86,7 +86,7 @@ function get_default_prefs() {
 		'feature_wiki_ratings' => 'n',
 		'wiki_simple_ratings' => 'n',
 		'wiki_simple_ratings_options' => range( 1, 5 ),
-		'feature_wiki_replace' => 'n',
+		'feature_wiki_replace' => 'y',
 		'feature_wiki_show_hide_before' => 'n',
 		'feature_wiki_tables' => 'new',
 		'feature_wiki_templates' => 'n',
