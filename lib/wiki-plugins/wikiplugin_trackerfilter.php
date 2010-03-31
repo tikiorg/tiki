@@ -113,6 +113,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		}
 		foreach ($_REQUEST as $key =>$val) {
 			if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
+				$val = urldecode($val);
 				$fieldId = substr($key, 2);
 				if (!is_numeric($fieldId)) { // composite filter
 					$ffs[] = array('sqlsearch'=>explode(':', str_replace(array('(', ')'), '', $fieldId)));
@@ -358,7 +359,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 					if ($field['type'] == 'y') { // country
 						$opt['name'] = str_replace('_', ' ', $opt['name']);
 					}
-					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
+					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && urldecode($_REQUEST['f_'.$fieldId]) == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
 						$opt['selected'] = 'y';
 						$selected = true;
 					} else {
