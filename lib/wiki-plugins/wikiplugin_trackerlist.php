@@ -321,7 +321,21 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		global $trklib; require_once("lib/trackers/trackerlib.php");
-		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+		if (!empty($fields)) {
+			$listfields = $fields;
+			if ($sort == 'y') {
+				$allfields = $trklib->sort_fields($allfields, $listfields);
+			}
+		} elseif (!empty($wiki) || !empty($tpl)) {
+				if (!empty($wiki)) {
+					$listfields = $trklib->get_pretty_fieldIds($wiki, 'wiki');
+				} else {
+					$listfields = $trklib->get_pretty_fieldIds($tpl, 'tpl');
+				}
+		} else {
+			$listfields = '';
+		}
+		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $listfields);
 
 		if (!empty($_REQUEST['itemId']) && $tiki_p_tracker_vote_ratings == 'y' && $user) {
 			$hasVoted = false;
@@ -369,18 +383,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign('showrss', 'y');
 		}
 
-		if (!empty($fields)) {
-			$listfields = $fields;
-			if ($sort == 'y') {
-				$allfields = $trklib->sort_fields($allfields, $listfields);
-			}
-		} elseif (!empty($wiki) || !empty($tpl)) {
-				if (!empty($wiki)) {
-					$listfields = $trklib->get_pretty_fieldIds($wiki, 'wiki');
-				} else {
-					$listfields = $trklib->get_pretty_fieldIds($tpl, 'tpl');
-				}
-		} else {
+		if (empty($listfields)) {
 			foreach($allfields['data'] as $f) {
 				$listfields[] = $f['fieldId'];
 			}
@@ -580,8 +583,7 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		}
 		if (isset($view) && $view == 'page' && isset($_REQUEST['page'])) {
-			if (($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%')) || ($f = $trklib->get_field_id_from_type($trackerId, 'k', '%,1%')) || ($f =  $trklib->get_field_id_from_type(
-$trackerId, 'k'))) {
+			if (($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%')) || ($f = $trklib->get_field_id_from_type($trackerId, 'k', '%,1%')) || ($f =  $trklib->get_field_id_from_type($trackerId, 'k'))) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
 				$exactvalue[] = $_REQUEST['page'];
@@ -858,7 +860,6 @@ $trackerId, 'k'))) {
 			} else {
 				$smarty->assign('computedFields', '');
 			}
-
 			if (!isset($tpl) && !empty($wiki)) {
 				$tpl = "wiki:$wiki";
 			} elseif (empty($tpl)) {

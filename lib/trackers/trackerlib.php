@@ -2269,7 +2269,7 @@ class TrackerLib extends TikiLib
 	}
 
 	// Lists all the fields for an existing tracker
-	function list_tracker_fields($trackerId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $tra_name=true, $filter='') {
+	function list_tracker_fields($trackerId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $tra_name=true, $filter='', $fields='') {
 		global $prefs;
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -2278,6 +2278,10 @@ class TrackerLib extends TikiLib
 		} else {
 			$mid = " where `trackerId`=? ";
 			$bindvars=array((int) $trackerId);
+		}
+		if (!empty($fields)) {
+			$mid .= " AND `fieldId` in (".implode(',', array_fill(0,count($fields),'?')).')';
+			$bindvars = array_merge($bindvars, $fields);
 		}
 
 		if (!empty($filter)) {
