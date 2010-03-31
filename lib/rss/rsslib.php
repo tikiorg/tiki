@@ -592,7 +592,12 @@ class RSSLib extends TikiLib
 				) );
 
 				$data['guid'] = $guid;
-				$data['publication_date'] = $entry->getDateCreated()->get( Zend_Date::TIMESTAMP );
+				if (function_exists($entry->getDateCreated())) {
+					$data['publication_date'] = $entry->getDateCreated()->get( Zend_Date::TIMESTAMP );
+				} else {
+					global $tikilib;
+					$data['publication_date'] = $tikilib->now;
+				}
 
 				$this->insert_item( $rssId, $data, $actions );
 			}
