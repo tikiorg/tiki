@@ -335,7 +335,6 @@ function wikiplugin_tracker($data, $params)
 				$outf = array_merge($outf, $trklib->get_field_id_from_type($trackerId, array('q', 'k', 'u', 'g'), '', false));
 			}
 			$flds = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $outf);
-			echo 'DDD'.$flds['cant'];
 			$bad = array();
 			$embeddedId = false;
 			$onemandatory = false;
