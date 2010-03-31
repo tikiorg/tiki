@@ -321,8 +321,10 @@ function wikiplugin_tracker($data, $params)
 			if ((!empty($tracker['start']) && $tikilib->now < $tracker['start']) || (!empty($tracker['end']) && $tikilib->now > $tracker['end']))
 				return;
 			$flds = $trklib->list_tracker_fields($trackerId, 0, -1, "position_asc", "");
-			if (empty($fields) && (!empty($wiki) || !empty($tpl))) {
-				if (!empty($wiki)) {
+			if (!empty($fields)  || !empty($wiki) || !empty($tpl)) {
+				if (!empty($fields)) {
+					$outf = preg_split('/ *: */', $fields);$fields;
+				} elseif (!empty($wiki)) {
 					$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki');
 				} else {
 					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl');
