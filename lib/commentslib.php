@@ -1417,9 +1417,11 @@ class Comments extends TikiLib
 	
 	
 	function order_comments_by_count($type = 'wiki', $lang = '', $maxRecords = -1) {
+		global $prefs;
 		$bind = array();
-		$query = '';
-		if($type == 'article') {
+		if ($type == 'article') {
+			if ($prefs['feature_articles'] != 'y')
+				return false;
 			$query = "SELECT count(*),`tiki_articles`.`articleId`,`tiki_articles`.`title` FROM `tiki_comments` INNER JOIN `tiki_articles` ON `tiki_comments`.`object`=`tiki_articles`.`articleId` WHERE `tiki_comments`.`objectType`='article' and `tiki_comments`.`approved`='y'";
 		
 			if($lang != ''){
@@ -1429,22 +1431,23 @@ class Comments extends TikiLib
 			
 			$query = $query. " GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
 		}
+		elseif ($type == 'blog') {
+			if ($prefs['feature_blog'] != 'y')
+				return false;
+			$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+		}
 		else {
-		
-			if($type == 'blog'){		
-				$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
+			//Default to Wiki
+			if ($prefs['feature_wiki'] != 'y')
+				return false;
+			$query = "SELECT count(*),`tiki_pages`.`pageName` FROM `tiki_comments` INNER JOIN `tiki_pages` ON `tiki_comments`.`object`=`tiki_pages`.`pageName` WHERE `tiki_comments`.`objectType`='wiki page' and `tiki_comments`.`approved`='y'";
+	
+			if($lang != ''){
+				$query = $query. " and `tiki_pages`.`lang`=?";
+				$bind[] = $lang;
 			}
-			else {
-				//Default to Wiki
-				$query = "SELECT count(*),`tiki_pages`.`pageName` FROM `tiki_comments` INNER JOIN `tiki_pages` ON `tiki_comments`.`object`=`tiki_pages`.`pageName` WHERE `tiki_comments`.`objectType`='wiki page' and `tiki_comments`.`approved`='y'";
 		
-				if($lang != ''){
-					$query = $query. " and `tiki_pages`.`lang`=?";
-					$bind[] = $lang;
-				}
-			
-				$query = $query. " GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
-			}
+			$query = $query. " GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
 		}
 		
 		$ret = $this->fetchAll($query, $bind, $maxRecords);

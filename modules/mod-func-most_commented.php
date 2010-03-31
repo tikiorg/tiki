@@ -9,12 +9,16 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function module_most_commented_info()  {
 	return array(
 		'name' => tra('Most commented'),
-		'description' => tra('Displays the most commented objects. Can be used for Wiki Pages, Blog Posts or Articles'),
-		'prefs' => array( 'feature_articles' ),
+		'description' => tra('Displays the most commented objects of a certain type.'),
+		'prefs' => array( ),
 		'params' => array(
 			'objectType' => array(
-				'name' => tra('Content Type'),
-				'description' => tra('used to identify which type of content you want. Default is Wiki Pages, Options are: wiki, blog, article') 
+				'name' => tra('Object Type'),
+				'description' => tra('Type of objects to consider.') . ' ' . tra('Possible values: wiki (Wiki pages), blog (blog posts), article (articles).') . ' ' . tra('Default:') . ' wiki'
+			),
+			'objectLanguageFilter' => array(
+				'name' => tra('Object language filter'),
+				'description' => tra('If set to a RFC1766 language tag, restricts the objects considered to those in the specified language.') 
 			)
 		),
 		'common_params' => array('nonums', 'rows')
@@ -23,11 +27,10 @@ function module_most_commented_info()  {
 
 function module_most_commented( $mod_reference, $module_params ) {
 	global $smarty;
-	global $dbTiki;
 	global $commentslib;
 	if(!isset($commentslib)){
 		include_once ('lib/commentslib.php');
-		$commentslib = new Comments($dbTiki);
+		$commentslib = new Comments();
 	}
 	$type = 'wiki';
 	if(isset($module_params['objectType'])){
@@ -38,15 +41,11 @@ function module_most_commented( $mod_reference, $module_params ) {
 		}
 	}
 	
-	$lang = '';
-	if(isset($module_params['lang'])){
-		$lang = $module_params['lang'];
+	$result = $commentslib->order_comments_by_count($type, isset($module_params['objectLanguageFilter']) ? $module_params['objectLanguageFilter'] : '', $mod_reference['rows']);
+	if ($result === false) {
+		$smarty->assign('module_error', tra('Feature disabled'));
+		return;
 	}
-	
-	
-	$result = $commentslib->order_comments_by_count($type, $lang, $mod_reference['rows']);
 	$smarty->assign('modMostCommented', $result['data']);
 	$smarty->assign('modContentType', $type);
-	$smarty->assign('nonums', $module_params['nonums']);
-	
 }

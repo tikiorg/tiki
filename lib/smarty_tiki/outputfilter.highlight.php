@@ -29,6 +29,9 @@ function smarty_outputfilter_highlight($source, &$smarty) {
 	if (empty($_REQUEST['highlight'])) {
 		return $source;
 	}
+	if (!strstr($source, 'id="tiki-center"')) {
+		return $source;
+	}
 	$highlight = $_REQUEST['highlight'];
 
 	if (isset($_REQUEST['boolean']) && ($_REQUEST['boolean'] == 'on' || $_REQUEST['boolean'] == 'y')) {
@@ -52,8 +55,8 @@ function smarty_outputfilter_highlight($source, &$smarty) {
 	$matches = array();
 
 	$end = 0;
-	if ( $end = strrpos($source, 'id="col3"') ) $stop_pattern = '(<div[^>]*\s+id="col3".*)';
-	elseif ( $end = strrpos($source, 'id="col2"') ) $stop_pattern = '(<div[^>]*\s+id="col2".*)';
+	if ( $end = strrpos($source, 'id="col2"') ) $stop_pattern = '(<div[^>]*\s+id="col2".*)';
+	elseif ( $end = strrpos($source, 'id="col3"') ) $stop_pattern = '(<div[^>]*\s+id="col3".*)';
 	else $stop_pattern = '';
 
 	$result = false;

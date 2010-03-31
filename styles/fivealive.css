@@ -555,6 +555,11 @@ fieldset.admin label,
 	color: #fff;
 }
 
+fieldset.admin .adminoptionbox label,
+fieldset.admin .adminoptionlabel {
+	color: #000;
+}
+
 /***** Wiki *****/
 .titlebar {
 	border: #2098cd;
