@@ -183,6 +183,7 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 	global $trklib;
 	foreach ($input as $key =>$val) {
 		if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
+			$val = urldecode($val);
 			$fieldId = substr($key, 2);
 			if (preg_match('/([0-9]+)(Month|Day|Year|Hour|Minute|Second)/', $fieldId, $matches)) { // a date
 				if (!in_array($matches[1], $ffs)) {
@@ -328,12 +329,12 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 			case '*': // stars
 				$cumul = '';
 				foreach ($field['options_array'] as $val) {
-					$val = strip_tags($tikilib->parse_data($val));
+					$sval = strip_tags($tikilib->parse_data($val));
 					$opt['id'] = $val;
 					if ($field['type'] == '*') {
 						$cumul = $opt['name'] = "$cumul*";
 					} else {
-						$opt['name'] = $val;
+						$opt['name'] = $sval;
 					}
 					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
 						$opt['selected'] = 'y';
@@ -383,13 +384,13 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 					$res = $trklib->list_tracker_field_values($trackerId, $fieldId);
 				}
 				foreach ($res as $val) {
-					$val = strip_tags($tikilib->parse_data($val));
+					$sval = strip_tags($tikilib->parse_data($val));
 					$opt['id'] = $val;
-					$opt['name'] = $val;
+					$opt['name'] = $sval;
 					if ($field['type'] == 'y') { // country
 						$opt['name'] = str_replace('_', ' ', $opt['name']);
 					}
-					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
+					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && urldecode($_REQUEST['f_'.$fieldId]) == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
 						$opt['selected'] = 'y';
 						$selected = true;
 					} else {

@@ -23,8 +23,8 @@
 			<select id="f_{$filter.fieldId}" name="f_{$filter.fieldId}{if $filter.format eq "m"}[]{/if}" {if $filter.format eq "m"} size="5" multiple="multiple"{/if}> 
 			<option value=""{if !$filter.selected} selected="selected"{/if}>{tr}Any{/tr}</option>
 			{section name=io loop=$filter.opts}
-				<option value="{$filter.opts[io].id|escape}"{if $filter.opts[io].selected eq "y"} selected="selected"{/if}>
-					{$filter.opts[io].name|tr_if}
+				<option value="{$filter.opts[io].id|escape:url}"{if $filter.opts[io].selected eq "y"} selected="selected"{/if}>
+					{$filter.opts[io].name|tr_if|escape}
 				</option>
 			{/section}
 			</select>
@@ -72,7 +72,7 @@
 			{section name=io loop=$filter.opts}
 				<input {if $filter.format eq "c"}type="checkbox"{else}type="radio"{/if}
 						name="f_{$filter.fieldId}{if $filter.format eq "c"}[]{/if}"
-						value="{$filter.opts[io].id|escape}"
+						value="{$filter.opts[io].id|escape:url}"
 						{if $filter.opts[io].selected eq "y"} checked="checked"{/if} />
 				{$filter.opts[io].name|tr_if}
 				{if $line ne 'y'}<br />{/if}
