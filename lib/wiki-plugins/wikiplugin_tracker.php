@@ -320,7 +320,7 @@ function wikiplugin_tracker($data, $params)
 			$tracker = array_merge($tracker, $trklib->get_tracker_options($trackerId));
 			if ((!empty($tracker['start']) && $tikilib->now < $tracker['start']) || (!empty($tracker['end']) && $tikilib->now > $tracker['end']))
 				return;
-			$flds = $trklib->list_tracker_fields($trackerId, 0, -1, "position_asc", "");
+			$outf = array();
 			if (!empty($fields)  || !empty($wiki) || !empty($tpl)) {
 				if (!empty($fields)) {
 					$outf = preg_split('/ *: */', $fields);$fields;
@@ -329,15 +329,13 @@ function wikiplugin_tracker($data, $params)
 				} else {
 					$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl');
 				}
-				$ret = array();
-				foreach($flds['data'] as $field) {
-					if ($field['type'] == 'q' || $field['type'] == 'k' || $field['type'] == 'u' || $field['type'] == 'g' || in_array($field['fieldId'], $outf) || (!empty($autosavefields) && in_array($field['fieldId'], $autosavefields))) {
-						$ret[] = $field;
-					}
+				if (!empty($autosavefields)) {
+					$outf = array_merge($outf, $autosavefields);
 				}
-				$flds['cant'] = count($ret);
-				$flds['data'] = $ret;
+				$outf = array_merge($outf, $trklib->get_field_id_from_type($trackerId, array('q', 'k', 'u', 'g'), '', false));
 			}
+			$flds = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $outf);
+			echo 'DDD'.$flds['cant'];
 			$bad = array();
 			$embeddedId = false;
 			$onemandatory = false;
