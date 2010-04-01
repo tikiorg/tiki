@@ -594,12 +594,16 @@ ul.toc * {
 .diffadded {
 	background: #ccffcc;
 	color: #000;
+	word-wrap:break-word;
+	max-width: 400px;
 }
 
 .diffdeleted {
 	background: #ffcccc;
 	color: #000;
 	text-decoration: line-through;
+	word-wrap:break-word;
+	max-width: 400px;
 }
 
 .diffinldel {
