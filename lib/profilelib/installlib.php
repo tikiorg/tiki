@@ -1629,10 +1629,10 @@ class Tiki_Profile_InstallHandler_Webmail extends Tiki_Profile_InstallHandler //
 		if (!$data['html']) {
 			$data['body'] = strip_tags($data['body']);
 		}
-		$data['to']      = trim(html_entity_decode(strip_tags($data['to'])), ' ,');
-		$data['cc']      = trim(html_entity_decode(strip_tags($data['cc'])), ' ,');
-		$data['bcc']     = trim(html_entity_decode(strip_tags($data['bcc'])), ' ,');
-		$data['subject'] = trim(html_entity_decode(strip_tags($data['subject'])));
+		$data['to']      = trim(str_replace(array("\n","\r"), "", html_entity_decode(strip_tags($data['to']))), ' ,');
+		$data['cc']      = trim(str_replace(array("\n","\r"), "", html_entity_decode(strip_tags($data['cc']))), ' ,');
+		$data['bcc']     = trim(str_replace(array("\n","\r"), "", html_entity_decode(strip_tags($data['bcc']))), ' ,');
+		$data['subject'] = trim(str_replace(array("\n","\r"), "", html_entity_decode(strip_tags($data['subject']))));
 		
 		$webmailUrl = $tikilib->tikiUrl('tiki-webmail.php',  array(
 				'locSection' => 'compose', 'to' => $data['to'], 'cc' => $data['cc'], 'bcc' => $data['bcc'],
