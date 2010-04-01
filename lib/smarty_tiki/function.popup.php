@@ -121,8 +121,8 @@ function smarty_function_popup($params, &$smarty)
 		$append .= ',\'' . $trigger . '\'';
 	}
 
-    $text = preg_replace(array('/\\\\r\n/','/\\\\n/','/\\\\r/'), "\n", $text);	// fix newlines
-    $retval = $trigger . '="return convertOverlib(this,\''.urlencode(TikiLib::htmldecode($text)).'\'';
+	$text = preg_replace(array('/\\\\r\n/','/\\\\n/','/\\\\r/'), "", $text);	// Remove newlines to avoid JavaScript statement over several lines
+	$retval = $trigger . '="return convertOverlib(this,\''.$text.'\'';
 	$append = trim($append, ',');
     $retval .= ',[' . $append . ']);"';
 
