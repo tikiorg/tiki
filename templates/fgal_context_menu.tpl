@@ -77,7 +77,7 @@
 		{assign var=replace_action_title value="{tr}Replace{/tr}"}
 	{/if}
 
-	{* can edit if I am admin or the owner of the file or the locker of the file or if I have the perm to edit file on this gall *}
+	{* can edit if I am admin or the owner of the file or the locker of the file or if I have the perm to edit file on this gallery *}
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
 		or ($files[changes].lockedby and $files[changes].lockedby eq $user)
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y')) }
@@ -132,6 +132,10 @@
 	{if $prefs.feature_webdav eq 'y'}
 		{assign var=virtual_path value=$files[changes].fileId|virtual_path}
 		{self_link _icon="tree_folder_open" _menu_text=$menu_text _menu_icon=$menu_icon _script="javascript:open_webdav('$virtual_path')" _noauto="y" _ajax="n"}{tr}Open in WebDAV{/tr}{/self_link}
+	{/if}
+
+	{if $prefs.feature_tell_a_friend eq 'y' and $tiki_p_tell_a_friend eq 'y'}
+		<a href="tiki-tell_a_friend.php?url={$tikiroot}{$files[changes].id|sefurl:file|escape:'url'}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='email_go' alt="{tr}Email a link to this file{/tr}"}</a>
 	{/if}
 
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
