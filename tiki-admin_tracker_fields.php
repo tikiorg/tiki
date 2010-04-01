@@ -244,7 +244,13 @@ $smarty->assign('find', $find);
 if (isset($_REQUEST["max"])) {
 	$max = $_REQUEST["max"];
 } else {
-	$max = $maxRecords;
+	$channels = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, 0);
+	if ($channels['cant'] > $maxRecords && $channels['cant'] < $maxRecords * 2) {
+		// if there's a page and a half of fields show them all
+		$max = $channels['cant'];
+	} else {
+		$max = $maxRecords;
+	}
 }
 $smarty->assign('max', $max);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
