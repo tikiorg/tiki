@@ -4609,6 +4609,18 @@ class TikiLib extends TikiDb_Bridge
 		return $ret;
 	}
 
+	function get_page_print_info($pageName) {
+		$query = "SELECT `pageName`, `data` as `parsed`, `is_html` FROM `tiki_pages` WHERE `pageName`=?";
+		$result = $this->query($query, array($pageName));
+		if ( ! $result->numRows() ) {
+			return false;
+		} else {
+			$page_info = $result->fetchRow();
+			$page_info['parsed'] = $this->parse_data($page_info['parsed'], array('is_html' => $page_info['is_html'], 'print'=>'y'));
+		}
+		return $page_info;
+	}
+
 	function get_page_info($pageName, $retrieve_datas = true, $skipCache = false) {
 		$pageNameEncode = urlencode($pageName);
 		if ( !$skipCache && isset($this->cache_page_info[$pageNameEncode])
