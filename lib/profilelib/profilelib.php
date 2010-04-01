@@ -241,6 +241,11 @@ class Tiki_Profile
 
 		return true;
 	} // }}}
+	
+	public function refreshYaml() {
+		$this->objects = null;
+		$this->loadYaml($this->pageContent);
+	}
 
 	private function loadYaml( $content ) // {{{
 	{
@@ -334,7 +339,7 @@ class Tiki_Profile
 	{
 		if ($this->domain == 'tiki://local' || strpos($this->domain, 'localhost') === 0) {
 			global $tikilib;
-			$info = $tikilib->get_page_info($pageName);
+			$info = $tikilib->get_page_info($pageName, true, true);
 			if (empty($info)) {
 				$this->setFeedback(tra('Page cannot be found').' '.$pageName);
 				return null;
@@ -831,6 +836,11 @@ class Tiki_Profile_Object
 	public function replaceReferences( &$data, $suppliedUserData = false ) // {{{
 	{
 		$this->profile->replaceReferences( $data, $suppliedUserData );
+	} // }}}
+
+	public function refreshExternals() // {{{
+	{
+		$this->profile->refreshYaml();
 	} // }}}
 
 	private function traverseForReferences( $value ) // {{{

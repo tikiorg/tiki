@@ -1562,6 +1562,7 @@ class Tiki_Profile_InstallHandler_Webmail extends Tiki_Profile_InstallHandler //
 			'subject' => '',
 			'body' => '',
 			'html' => 'y',
+			'reload' => 'y',		// reload the profile to update external refs
 		);
 
 		$data = array_merge(
@@ -1594,7 +1595,19 @@ class Tiki_Profile_InstallHandler_Webmail extends Tiki_Profile_InstallHandler //
 	{
 		global $tikilib, $user;
 		$data = $this->getData();
-
+		
+		if ($data['reload']) {
+			// must be fresh data as the profile may have altered stuff since canInstall was run
+			$this->obj->refreshExternals();
+			foreach($this->obj->getProfile()->getObjects() as $obj) {
+				if ($obj->getRef() == $this->obj->getRef()) {
+					$this->obj = $obj;
+				}
+			}
+			$this->data = null;	
+			$data = $this->getData();
+		}
+		
 		$this->replaceReferences( $data );
 
 		global $webmaillib; require_once 'lib/webmail/webmaillib.php';
