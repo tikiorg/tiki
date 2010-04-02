@@ -9,8 +9,11 @@ function prefs_style_list() {
 	global $tikilib, $prefs;
 
 	$style_options = array();
-	foreach ($tikilib->list_style_options($prefs['site_style']) as $opt) {
-		$style_options[$opt] = $opt;
+	$list = $tikilib->list_style_options($prefs['site_style']);
+	if (!empty($list)) {
+		foreach ($list as $opt) {
+			$style_options[$opt] = $opt;
+		}
 	}
 
 	return array(
