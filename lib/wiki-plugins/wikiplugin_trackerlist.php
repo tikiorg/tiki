@@ -659,9 +659,19 @@ function wikiplugin_trackerlist($data, $params) {
 								} else {
 									$exactvalue[] = array('not'=>$prefs[$matches[2]]);
 								}
-							} elseif (preg_match('/(not)?field\(([0-9]+)(,([0-9]+))?\)/', $evs[$i], $matches)) {
-								if (empty($matches[4]) && !empty($_REQUEST['itemId'])) {
+							} elseif (preg_match('/(not)?field\(([0-9]+)(,([0-9]+|user)(,([0-9]+))?)?\)/', $evs[$i], $matches)) { // syntax field(fieldId, user, trackerId) or field(fieldId)(need the REQUEST['itemId'] or field(fieldId, itemId) or field(fieldId, user)
+								if (empty($matches[4]) && !empty($_REQUEST['itemId'])) { // user the itemId of the url
 									$matches[4] = $_REQUEST['itemId'];
+								}
+								if (!empty($matches[4]) && $matches[4] == 'user') {
+									if (!empty($matches[6])) { // pick the user item of this tracker
+										$t_i = $trklib->get_tracker($matches[6]);
+										$matches[4] = $trklib->get_user_item($matches[6], $t_i, $user);
+									} elseif ($prefs['userTracker'] == 'y') { //pick the generic user tracker
+										global $userlib;
+										$utid = $userlib->get_tracker_usergroup($user);
+										$matches[4] = $trklib->get_item_id($utid['usersTrackerId'], $utid['usersFieldId'], $user);
+									}
 								}
 								if (!empty($matches[4])) {
 									$l = $trklib->get_item_value(0, $matches[4], $matches[2]);
