@@ -1903,6 +1903,12 @@ class Comments extends TikiLib
 		if( $toponly ) {
 			$mid .= ' and parentId = 0 ';
 		}
+		if ($type == 'forum') {
+			$join .= ' left join `tiki_forums` tf on (tf.`forumId`=tc.`object`)';
+			$left = ', tf.`name` as parentTitle';
+		} else {
+			$left = ', tc.`title` as parentTitle';
+		}
 
 		global $categlib; require_once 'lib/categories/categlib.php';
 		if( $jail = $categlib->get_jail() ) {
@@ -1913,7 +1919,7 @@ class Comments extends TikiLib
 			$jail_bind = array();
 		}
 
-		$query = "select tc.*, tc.`title` as parentTitle from `tiki_comments` tc $join $jail_join where $mid $jail_where order by ".$this->convertSortMode($sort_mode);
+		$query = "select tc.* $left from `tiki_comments` tc $join $jail_join where $mid $jail_where order by ".$this->convertSortMode($sort_mode);
 		$ret = $this->fetchAll($query, array_merge( $bindvars, $jail_bind ), $maxRecords, $offset);
 		$query = "select count(*) from `tiki_comments` tc $jail_join where $mid $jail_where";
 		$cant = $this->getOne($query, array_merge( $bindvars, $jail_bind ));
