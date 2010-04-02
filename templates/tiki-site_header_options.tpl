@@ -2,6 +2,7 @@
 {* site identity options: logo, site title and subtitle, banner ad, custom code *}
 		
 {* ------- Custom code, and site logo left or right, and sitead or not. ------- *}
+{capture name=sitelogobg}{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="{if $prefs.sitelogo_bgcolor ne ''}background-color: {$prefs.sitelogo_bgcolor};{/if} {if strstr($prefs.sitelogo_bgstyle , 'background')===false}background:{/if}{$prefs.sitelogo_bgstyle};"{/if}{/capture}
 {if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 	{if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align neq 'center'}
 		<div class="clearfix" id="sioptions">
@@ -14,7 +15,7 @@
 						{eval var=$prefs.sitemycode}
 					</div>
 				{/if}
-				<div id="sitelogo" class="floatleft"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
+				<div id="sitelogo" class="floatleft"{$smarty.capture.sitelogobg}>
 					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 				</div>
 				{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
@@ -43,7 +44,7 @@
 						</div>
 					</div>
 				{/if}
-				<div id="sitelogo" class="floatright"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
+				<div id="sitelogo" class="floatright"{$smarty.capture.sitelogobg}>
 					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 				</div>
 			{/if}
@@ -64,7 +65,7 @@
 			{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 				<div id="customcode" class="floatleft">{eval var=$prefs.sitemycode}</div>
 			{/if}
-			<div id="sitelogo"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
+			<div id="sitelogo"{$smarty.capture.sitelogobg}>
 				{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 			</div>
 			{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
@@ -99,7 +100,7 @@
 				{if $prefs.feature_banners eq 'y' && $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 					<div id="sitead" class="floatright">{eval var=$prefs.sitead}</div>
 				{/if}
-				<div id="sitelogo" class="floatleft"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
+				<div id="sitelogo" class="floatleft"{$smarty.capture.sitelogobg}>
 					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 				</div>
 				{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
@@ -119,7 +120,7 @@
 						<div id="sitesubtitle">{if !empty($prefs.sitesubtitle)}{tr}{$prefs.sitesubtitle}{/tr}{/if}</div>
 					</div>
 				{/if}
-				<div id="sitelogo" class="floatright"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
+				<div id="sitelogo" class="floatright"{$smarty.capture.sitelogobg}>
 					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 				</div>
 			{/if}
@@ -134,7 +135,7 @@
 			{if $prefs.feature_banners eq 'y' && $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 				<div id="sitead" class="floatleft" {*style="width: 300px"*}>{eval var=$prefs.sitead}</div>
 			{/if}
-			<div id="sitelogo"{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="background-color: {$prefs.sitelogo_bgcolor}; {$prefs.sitelogo_bgstyle};"{/if}>
+			<div id="sitelogo"{$smarty.capture.sitelogobg}>
 				{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 			</div>
 			{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
