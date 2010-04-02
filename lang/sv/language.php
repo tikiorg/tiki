@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*-
+﻿<?php // -*- coding:utf-8 -*-
 // (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -3459,7 +3459,7 @@ $lang=Array(
 // "Permission denied: the specified wiki page cannot be used as Smarty template resource" => "Permission denied: the specified wiki page cannot be used as Smarty template resource",
 // "First day of week: Sunday (its ID is 0) - translators you need to localize this string" => "First day of week: Sunday (its ID is 0) - translators you need to localize this string",
 // "Use this tree to copy the structure" => "Use this tree to copy the structure",
-// "Table of contents" => "Table of contents",
+"Table of contents" => "Innehållsförteckning",
 // "You have to make %d choice(s) for the question" => "You have to make %d choice(s) for the question",
 // "You have to make at least %d choice(s) for the question" => "You have to make at least %d choice(s) for the question",
 // "You have to make less than %d choice(s) for the question" => "You have to make less than %d choice(s) for the question",
