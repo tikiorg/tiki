@@ -1,7 +1,19 @@
 {* $Id$ *}
 {* site identity options: logo, site title and subtitle, banner ad, custom code *}
 		
-{capture name=sitelogobg}{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="{if $prefs.sitelogo_bgcolor ne ''}background-color: {$prefs.sitelogo_bgcolor};{/if} {if strstr($prefs.sitelogo_bgstyle , 'background')===false}background:{/if}{$prefs.sitelogo_bgstyle};"{/if}{/capture}
+{capture name=sitelogobg}
+	{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="{if $prefs.sitelogo_bgcolor ne ''}background-color: {$prefs.sitelogo_bgcolor};{/if} {if strstr($prefs.sitelogo_bgstyle , 'background')===false}background:{/if}{$prefs.sitelogo_bgstyle};"{/if}
+{/capture}
+{assign var=logohref value='./'}
+
+{capture name=sitetitle}
+	<div id="sitetitle">
+		{if !empty($prefs.sitetitle)}<a href="{$logohref}">{tr}{$prefs.sitetitle}{/tr}</a>{/if}
+	</div>
+	<div id="sitesubtitle">
+		 {if !empty($prefs.sitesubtitle)}{tr}{$prefs.sitesubtitle}{/tr}{/if}
+	</div>
+{/capture}
 
 {* ------- Custom code, and site logo left or right, and sitead or not. ------- *}
 {if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
@@ -17,16 +29,11 @@
 					</div>
 				{/if}
 				<div id="sitelogo" class="floatleft"{$smarty.capture.sitelogobg}>
-					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
+					{if $prefs.sitelogo_src}<a href="{$logohref}" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 				</div>
 				{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
 					<div id="sitetitles" class="floatleft">
-						<div id="sitetitle">{if !empty($prefs.sitetitle)}<a href="index.php">{tr}{$prefs.sitetitle}{/tr}</a>{/if}</div>
-						<div id="sitesubtitle">
-							{if !empty($prefs.sitesubtitle)}
-								{tr}{$prefs.sitesubtitle}{/tr}
-							{/if}
-						</div>
+						{$smarty.capture.sitetitle}
 					</div>
 				{/if}
 			{/if}
@@ -40,16 +47,11 @@
 				{/if}
 				{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
 					<div id="sitetitles" class="floatright">
-						<div id="sitetitle">
-							 {if !empty($prefs.sitetitle)}<a href="index.php">{tr}{$prefs.sitetitle}{/tr}</a>{/if}
-						</div>
-						<div id="sitesubtitle">{if !empty($prefs.sitesubtitle)}
-							{tr}{$prefs.sitesubtitle}{/tr}{/if}
-						</div>
+						{$smarty.capture.sitetitle}
 					</div>
 				{/if}
 				<div id="sitelogo" class="floatright"{$smarty.capture.sitelogobg}>
-					{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
+					{if $prefs.sitelogo_src}<a href="{$logohref}" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 				</div>
 			{/if}
 		</div>
@@ -70,13 +72,11 @@
 				<div id="customcode" class="floatleft">{eval var=$prefs.sitemycode}</div>
 			{/if}
 			<div id="sitelogo"{$smarty.capture.sitelogobg}>
-				{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
+				{if $prefs.sitelogo_src}<a href="{$logohref}" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 			</div>
 			{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
 				<div id="sitetitles">
-					<div id="sitetitle">
-						{if !empty($prefs.sitetitle)}<a href="index.php">{tr}{$prefs.sitetitle}{/tr}</a>{/if}</div>
-					<div id="sitesubtitle">{if !empty($prefs.sitesubtitle)}{tr}{$prefs.sitesubtitle}{/tr}{/if}</div>
+					{$smarty.capture.sitetitle}
 				</div>
 			{/if}
 		</div>
@@ -105,12 +105,11 @@
 				<div id="sitead" class="floatright">{eval var=$prefs.sitead}</div>
 			{/if}
 			<div id="sitelogo" class="floatleft"{$smarty.capture.sitelogobg}>
-				{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
+				{if $prefs.sitelogo_src}<a href="{$logohref}" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 			</div>
 			{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
 				<div id="sitetitles" class="floatleft">
-					<div id="sitetitle">{if !empty($prefs.sitetitle)}<a href="index.php">{tr}{$prefs.sitetitle}{/tr}</a>{/if}</div>
-					<div id="sitesubtitle">{if !empty($prefs.sitesubtitle)}{tr}{$prefs.sitesubtitle}{/tr}{/if}</div>
+					{$smarty.capture.sitetitle}
 				</div>
 			{/if}
 		{/if}
@@ -120,12 +119,11 @@
 			{/if}
 			{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
 				<div id="sitetitles" class="floatright">
-					<div id="sitetitle">{if !empty($prefs.sitetitle)}<a href="index.php">{tr}{$prefs.sitetitle}{/tr}</a>{/if}</div>
-					<div id="sitesubtitle">{if !empty($prefs.sitesubtitle)}{tr}{$prefs.sitesubtitle}{/tr}{/if}</div>
+					{$smarty.capture.sitetitle}
 				</div>
 			{/if}
 			<div id="sitelogo" class="floatright"{$smarty.capture.sitelogobg}>
-				{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
+				{if $prefs.sitelogo_src}<a href="{$logohref}" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 			</div>
 		{/if}
 	</div>
@@ -141,12 +139,11 @@
 			<div id="sitead" class="floatleft" {*style="width: 300px"*}>{eval var=$prefs.sitead}</div>
 		{/if}
 		<div id="sitelogo"{$smarty.capture.sitelogobg}>
-			{if $prefs.sitelogo_src}<a href="./" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
+			{if $prefs.sitelogo_src}<a href="{$logohref}" title="{tr}{$prefs.sitelogo_title}{/tr}"><img src="{$prefs.sitelogo_src}" alt="{tr}{$prefs.sitelogo_alt}{/tr}" /></a>{/if}
 		</div>
 		{if !empty($prefs.sitetitle) or !empty($prefs.sitesubtitle)}
 			<div id="sitetitles">
-				<div id="sitetitle">{if !empty($prefs.sitetitle)}<a href="index.php">{tr}{$prefs.sitetitle}{/tr}</a>{/if}</div>
-				<div id="sitesubtitle">{if !empty($prefs.sitesubtitle)}{tr}{$prefs.sitesubtitle}{/tr}{/if}</div>
+				{$smarty.capture.sitetitle}
 			</div>
 		{/if}
 	</div>
