@@ -33,7 +33,7 @@
 	<li><a href="#translate_updates">{tr}Translate updates made on this page or one of its translations{/tr}</a></li>
 	<li><a href="#new_translation">{tr}Translate this page to a new language{/tr}</a></li>
 	<li><a href="#attach_detach_translations">{tr}Attach or detach existing translations of this page{/tr}</a></li>
-	<li><a href="#change_language">{tr}Change language of this page{/tr}</a></li>
+	<li><a href="#change_language">{tr}Change language for this page{/tr}</a></li>
 </ul>
 
 <hr>
