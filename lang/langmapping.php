@@ -29,6 +29,7 @@ $langmapping = array(
     'gl' => array(  'Galego',    tra("Galician")       ),
     'he' => array(  'עברית',    tra("Hebrew")       ),
     'hr' => array(  'Hrvatski',     tra("Croatian")   ),
+    'is' => array(  'Íslenska',     tra("Icelandic")      ),           
     'it' => array(  'Italiano',     tra("Italian")      ),
     'ja' => array(  '日本語',    tra("Japanese")     ),
     'ko' => array(  '한국말',    tra("Korean")     ),
