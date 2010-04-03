@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*-
+﻿<?php // -*- coding:utf-8 -*-
 // (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -7348,7 +7348,6 @@ $lang=Array(
 // "Translate updates made on this page or one of its translations" => "Translate updates made on this page or one of its translations",
 // "Translate this page to a new language" => "Translate this page to a new language",
 // "Attach or detach existing translations of this page" => "Attach or detach existing translations of this page",
-// "Change language of this page" => "Change language of this page",
 // "Translate updates to this page or its translations" => "Translate updates to this page or its translations",
 // "Select language to translate to" => "Select language to translate to",
 // "Unspecified" => "Unspecified",

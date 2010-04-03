@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*-
+﻿<?php // -*- coding:utf-8 -*-
 // (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10511,7 +10511,6 @@ $lang=Array(
 "Translate updates made on this page or one of its translations" => "Traduire les mises à jour de cette page ou de ses traductions",
 "Translate this page to a new language" => "Traduire cette page dans une nouvelle langue",
 "Attach or detach existing translations of this page" => "Attacher ou de détacher les traductions existantes de cette page",
-"Change language of this page" => "Changer la langue de cette page",
 "Unspecified" => "Non spécifié",
 "Below, assign categories to this new translation (Note: they should probably be the same as the categories of the page being translate)" => "Ci-dessous, assigner des catégories à cette nouvelle traduction (note: ils doivent probablement être les mêmes que les catégories de la page en cours de traduction)",
 "Create translation" => "Créer la traduction",

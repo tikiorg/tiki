@@ -7208,7 +7208,6 @@ $lang=Array(
 // "Translate updates made on this page or one of its translations" => "Translate updates made on this page or one of its translations",
 // "Translate this page to a new language" => "Translate this page to a new language",
 // "Attach or detach existing translations of this page" => "Attach or detach existing translations of this page",
-// "Change language of this page" => "Change language of this page",
 // "Translate updates to this page or its translations" => "Translate updates to this page or its translations",
 // "Select language to translate to" => "Select language to translate to",
 // "Unspecified" => "Unspecified",
