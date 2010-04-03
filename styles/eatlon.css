@@ -36,6 +36,11 @@ div#fixedwidth {
 *:first-child+html #c1c2 {
 	margin-left: 0;
 	padding-left: 0} 
+	
+#main[id] {
+	margin-bottom:0;
+	margin-top: 0;
+}
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
@@ -219,11 +224,15 @@ tt {font-size: 1.2em}
 div#header {position: static}
 	
 div#header-top {
-	height: 140px;
-	background: url(eatlon/banner.gif) no-repeat right}
+	min-height: 140px;
+	background: url(eatlon/banner.gif) no-repeat 100% 100%}
 
 #sioptions  {padding: 1em}
+
+#sitelogo a,
+#sitelogo a:visited,
 #sitelogo a:hover {border-bottom: 0}
+
 #sitead.floatright {padding-right: 10px}
 #sitead.floatleft {padding-left: 10px}
 .floatright img {margin-right: 10px}
@@ -264,10 +273,15 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 	min-height: 78px;
 	background: url(eatlon/menu_bg.png) no-repeat;
 	padding-right: 10px;
+	padding-top: 0;
+	margin-top: 0;
 	margin-right: 30px}
+	
+#tiki-top .wrapper .navigation {
+
+}
 
 #sitesearchbar {
-	margin-top: 7px;
 	color: white}
 
 input#fuser,
@@ -281,7 +295,7 @@ input#fuser,
 #sitesearchbar input[type="submit"] {
 	background: url(eatlon/menu_bg.png) 1000px -15px;
 	color: #fff}
-
+	
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
@@ -292,32 +306,32 @@ input#fuser,
 }
 
 /* left column width */
-td#leftcolumn ul.cssmenu_vert {
+#col2 ul.cssmenu_vert {
 	padding-left: 0;
 }
 
-td#leftcolumn .cssmenu_vert,
-td#leftcolumn .cssmenu_vert li {
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
 	width: 170px;
 }
 
 /* offset from left column (matches above) */
-td#leftcolumn .cssmenu_vert li:hover ul,
-td#leftcolumn .cssmenu_vert li.sfHover ul {
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
 	left: 170px;
 }
 
 /* return ul ul ... to default */
-td#leftcolumn .cssmenu_vert li:hover ul,
-td#leftcolumn .cssmenu_vert li.sfHover ul,
-td#leftcolumn .cssmenu_vert li:hover ul li,
-td#leftcolumn .cssmenu_vert li.sfHover ul li {
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
 	width: 10em;
 }
 
 /* return ul ul ... to default */
-td#leftcolumn .cssmenu_vert li li:hover ul,
-td#leftcolumn .cssmenu_vert li li.sfHover ul {
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
 	left: 10em;
 }
 
@@ -347,9 +361,19 @@ td#leftcolumn .cssmenu_vert li li.sfHover ul {
 	font-weight: normal;
 	padding-top: 3px;
 	padding-bottom: 3px}
+	
+#secondary_site_menu li.menuLevel0 a:hover {
+	color: #506887;
+}
+
+#secondary_site_menu li.menuLevel0 ul li a {
+	color: #fff;
+}
+
 
 .cssmenu_vert li ul li a:hover,
-#tiki-top .cssmenu_horiz li a:hover {
+#tiki-top .cssmenu_horiz li a:hover,
+#secondary_site_menu .cssmenu_horiz ul li a:hover {
 	color: #d7e5f3
 }
 
