@@ -36,6 +36,8 @@ class WikiPluginPluginManager extends PluginsLib
 					'plugin' => '', 
 					'singletitle' => 'table',
         			'titletag' => 'h3',
+        			'start' => '',
+        			'limit' => '',
         		);
     }
     function getName() {
@@ -69,11 +71,49 @@ class WikiPluginPluginManager extends PluginsLib
 	        	foreach ($userlist as $useritem) {
 	        		$aPlugins[] = 'wikiplugin_' . $useritem . '.php';
 	        	}
+        	} elseif (strpos($plugin, '-') !== false) {
+        		$userrange = explode('-',$plugin);
+        		$aPlugins = $wikilib->list_plugins();
+        		$begin = array_search('wikiplugin_' . $userrange[0] . '.php', $aPlugins);
+        		$end = array_search('wikiplugin_' . $userrange[1] . '.php', $aPlugins);
+        		$beginerror = '';
+        		$enderror = '';
+        		if ($begin === false || $end === false) {
+        			if ($begin === false) {
+        				$beginerror = $userrange[0];
+        			} 
+        			if ($end === false) {
+        				$enderror = $userrange[1];
+        				!empty($beginerror) ? $and = ' and ' : $and = '';
+        			}
+        			return tra('^Plugin Manager error: ') . $beginerror . $and . $enderror . tra(' not found^');
+        		} elseif ($end > $begin) {
+        			$aPlugins = array_slice($aPlugins, $begin, $end-$begin+1);
+        		} else {
+        			$aPlugins = array_slice($aPlugins, $end, $begin-$end+1);
+        		}     		
+        	} elseif (!empty($limit)) { 
+        		$aPlugins = $wikilib->list_plugins();
+        		$begin = array_search('wikiplugin_' . $plugin . '.php', $aPlugins); 
+        		if ($begin === false) {
+        			return tra('^Plugin manager error: ') . $begin . tra(' not found^');
+        		} else {
+        			$aPlugins = array_slice($aPlugins, $begin, $limit);
+        		}
         	} else {
-        	$aPlugins[] = 'wikiplugin_' . $plugin . '.php';
+        		$aPlugins[] = 'wikiplugin_' . $plugin . '.php';
         	}
         } else {
         	$aPlugins = $wikilib->list_plugins();
+        	if (!empty($start) || !empty($limit)) {
+        		if (!empty($start) && !empty($limit)) {
+        			$aPlugins = array_slice($aPlugins, $start-1, $limit);
+        		} elseif (!empty($start)) {
+        			$aPlugins = array_slice($aPlugins, $start-1);
+        		} else {			
+        			$aPlugins = array_slice($aPlugins, 0, $limit);
+        		}
+        	}
         }
         
         $aData=array();
@@ -251,7 +291,7 @@ function wikiplugin_pluginmanager_info() {
 			'plugin' => array(
     			'required' => false,
     			'name' => tra('Plugin'),
-    			'description' => tra('Name of a plugin (e.g., backlinks), or list separated by |'),
+    			'description' => tra('Name of a plugin (e.g., backlinks), or list separated by |, or range separated by "-". Single plugin can be used with limit parameter.'),
     			'filter' => 'striptags',
     			'default' => 'none',
     			'since' => '',    				
@@ -261,7 +301,7 @@ function wikiplugin_pluginmanager_info() {
     			'name' => tra('Single Title'),
     			'description' => tra('Set placement of plugin name and description when displaying information for only one plugin'),
     			'filter' => 'alpha', 
-    			'default' => 'top',
+    			'default' => 'table',
     			'since' => '5.1', 
     			'options' => array(
 					array('text' => tra('Top'), 'value' => 'top'), 
@@ -275,6 +315,22 @@ function wikiplugin_pluginmanager_info() {
     			'description' => tra('Sets the heading size for the title, e.g., h2.'),
     			'filter' => 'striptags',
     			'default' => 'h3',
+    			'since' => '5.1',    				
+    		),
+    		'start' => array(
+    			'required' => false,
+    			'name' => tra('Start'),
+    			'description' => tra('Start with this plugin record number (must be an integer 1 or greater).'),
+    			'filter' => 'digits',
+    			'default' => '',
+    			'since' => '5.1',    				
+    		),
+    		'limit' => array(
+    			'required' => false,
+    			'name' => tra('Limit'),
+    			'description' => tra('Number of plugins to show. Can be used either with start or plugin as the starting point. Must be an integer 1 or greater.'),
+    			'filter' => 'digits',
+    			'default' => '',
     			'since' => '5.1',    				
     		),
     	),
