@@ -226,6 +226,10 @@ select[multiple="multiple"] {
 	font-size: 0;
 }
 
+#sioptions {
+	clear: right;
+}
+
 div#sitelogo img {
 	margin-top: 24px;
 }
