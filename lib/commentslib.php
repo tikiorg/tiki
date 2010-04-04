@@ -744,6 +744,9 @@ class Comments extends TikiLib
 		if ($reply_state == 'none') {
 			$query .= ' HAVING `replies` = 0 ';
 		}
+		if (strstr($sort_mode, 'commentDate')) {
+			$sort_mode = str_replace('commentDate', 'a.commentDate', $sort_mode);
+		}
 		$query .="order by `sticky` desc, ".$this->convertSortMode($sort_mode).", `threadId`";
 
 		if( $forumId ) {
