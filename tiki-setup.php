@@ -41,6 +41,27 @@ require_once ('lib/setup/absolute_urls.php');
 if (($prefs['feature_wysiwyg'] != 'n' && $prefs['feature_wysiwyg'] != 'y') || $prefs['case_patched'] == 'n') require_once ('lib/setup/patches.php');
 require_once ('lib/setup/sections.php');
 require_once ('lib/headerlib.php');
+
+if( $prefs['tiki_domain_prefix'] == 'strip' ) {
+	if( substr( $_SERVER['HTTP_HOST'], 0, 4 ) == 'www.' ) {
+		$prefix = $tikilib->httpPrefix();
+		$prefix = str_replace( '://www.', '://', $prefix );
+		$url = $prefix . $_SERVER['REQUEST_URI'];
+
+		$access->redirect( $url );
+		exit;
+	}
+} elseif( $prefs['tiki_domain_prefix'] == 'force' ) {
+	if( substr( $_SERVER['HTTP_HOST'], 0, 4 ) != 'www.' ) {
+		$prefix = $tikilib->httpPrefix();
+		$prefix = str_replace( '://', '://www.', $prefix );
+		$url = $prefix . $_SERVER['REQUEST_URI'];
+
+		$access->redirect( $url, null, 301 );
+		exit;
+	}
+}
+
 if (isset($_REQUEST['PHPSESSID'])) $tikilib->setSessionId($_REQUEST['PHPSESSID']);
 elseif (function_exists('session_id')) $tikilib->setSessionId(session_id());
 require_once ('lib/setup/cookies.php');

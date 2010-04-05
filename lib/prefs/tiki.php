@@ -66,5 +66,15 @@ function prefs_tiki_list() {
 			'size' => 40,
 			'filter' => 'url',
 		),
+		'tiki_domain_prefix' => array(
+			'name' => tra('Domain prefix handling'),
+			'description' => tra('Strip or automatically add the www. prefix on domain names to unify URLs.'),
+			'type' => 'list',
+			'options' => array(
+				'unchanged' => tra('Leave as-is'),
+				'strip' => tra('Remove the www'),
+				'force' => tra('Add the www'),
+			),
+		),
 	);
 }

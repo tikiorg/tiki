@@ -289,7 +289,7 @@ class TikiAccessLib extends TikiLib
 	 * @param string The target web address
 	 * @param string an optional message to display
 	 */
-	function redirect( $url='', $msg='' ) {
+	function redirect( $url='', $msg='', $code = 302 ) {
 		global $prefs;
 		if( $url == '' ) $url = $prefs['tikiIndex'];
 		if (trim( $msg )) {
@@ -309,7 +309,7 @@ class TikiAccessLib extends TikiLib
 			echo "<script>document.location.href='$url';</script>\n";
 		} else {
 			@ob_end_clean(); // clear output buffer
-			header("HTTP/1.0 302 Found");
+			header("HTTP/1.0 $code Found");
 			header( "Location: $url" );
 		}
 		exit();
