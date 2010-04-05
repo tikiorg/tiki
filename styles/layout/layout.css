@@ -1482,7 +1482,7 @@ a.categpath {
 	padding: 0;
 }
 
-.catfeatures li {
+.catfeatures .catitems li {
 	display: inline;
 	margin-right: 7px;
 }
