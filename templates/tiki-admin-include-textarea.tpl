@@ -179,6 +179,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					{/foreach}
 					<div align="center">
 						<input type="submit" name="enable" value="{tr}Enable Plugins{/tr}"/>
+						<input type="submit" name="delete" value="{tr}Delete Plugins{/tr}"/>
 					</div>
 				</div>
 			</fieldset>
