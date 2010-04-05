@@ -64,7 +64,7 @@ h6 {
 	font-size: 1.05em;
 }
 
-.wikitext h1 {color: #000}
+.wikitext h1 {color: #000; line-height: .9em;}
 .wikitext h2 {color: #309FC0; line-height: .9em; border-bottom: solid 1px #3090C0; text-transform: uppercase}
 .wikitext h3 {color: #303030; line-height: .8em; font-style: italic}
 .wikitext h4 {border-bottom: dashed 1px #CCF0FF; color: #3F3F3F}
