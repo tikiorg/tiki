@@ -8,12 +8,12 @@
     {/foreach}
   </div>
   <div class="catlists">
-    <ul class="{if $params.showtype ne 'n'}catfeatures{else}catitems{/if}">
+    <ul class="{if $params.showtype ne 'n'}catfeatures{elseif $params.one eq 'y'}catitemsone{else}catitems{/if}">
    {foreach key=t item=i from=$listcat}
    	{if $params.showtype ne 'n'}
       <li>
       {tr}{$t}{/tr}:
-      <ul class="catitems">
+      <ul class="{if $params.one eq 'y'}catitemsone{else}catitems{/if}">
 	{/if}
         {section name=o loop=$i}
         <li>

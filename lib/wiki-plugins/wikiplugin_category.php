@@ -89,7 +89,13 @@ function wikiplugin_category_info() {
 				'default' => 'y',
 				'filter' => 'alpha',
 			),
-		
+			'one' => array(
+				'required' => false,
+				'name' => tra('Show one object per line'),
+				'description' => 'y|n',
+				'default' => 'n',
+				'filter' => 'alpha',
+			),		
 		),
 	);
 }
@@ -105,6 +111,7 @@ function wikiplugin_category($data, $params) {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 
+	$default = array('one' => 'y');
 	extract ($params,EXTR_SKIP);
 
 	// TODO: use categ name instead of id (alternative)
