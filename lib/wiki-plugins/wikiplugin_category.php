@@ -111,7 +111,8 @@ function wikiplugin_category($data, $params) {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 
-	$default = array('one' => 'y');
+	$default = array('one' => 'n');
+	$params = array_merge($default, $params);
 	extract ($params,EXTR_SKIP);
 
 	// TODO: use categ name instead of id (alternative)
