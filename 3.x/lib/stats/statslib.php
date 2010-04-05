@@ -149,9 +149,12 @@ class StatsLib extends TikiLib {
 	}
 
 	function site_stats() {
+		global $tikilib;
 		$stats = array();
-		$stats["started"] = $this->getOne("select min(`day`) from `tiki_pageviews`",array());
-		$stats["days"] = $this->getOne("select count(*) from `tiki_pageviews`",array());
+		$date = $this->getOne("select min(`install_date`) from `tiki_schema`",array());
+		preg_match('/([0-9]*)\-([0-9]*)\-([0-9]*)/', $date, $matches);
+		$stats['started'] = TikiLib::make_time(0,0,0, $matches[2], $matches[3], $matches[1]);
+		$stats['days'] = floor(($tikilib->now - $stats['started'])/86400);
 		$stats["pageviews"] = $this->getOne("select sum(`pageviews`) from `tiki_pageviews`");
 		$stats["ppd"] = ($stats["days"] ? $stats["pageviews"] / $stats["days"] : 0);
 		$stats["bestpvs"] = $this->getOne("select max(`pageviews`) from `tiki_pageviews`",array());
