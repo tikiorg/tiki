@@ -1,4 +1,4 @@
-{tikimodule title={tr}Cart{/tr} name="cart"}
+{tikimodule error=$module_params.error title=$tpl_module_title name="cart" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	<form method="post" action="">
 	<table>
 		<tr>
