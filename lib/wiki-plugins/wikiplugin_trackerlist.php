@@ -335,6 +335,9 @@ function wikiplugin_trackerlist($data, $params) {
 		} else {
 			$listfields = '';
 		}
+		if (!empty($filterfield)) {
+			$listfields = array_unique(array_merge($listfields, $filterfield));
+		}
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $listfields);
 
 		if (!empty($_REQUEST['itemId']) && $tiki_p_tracker_vote_ratings == 'y' && $user) {
