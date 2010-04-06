@@ -96,8 +96,6 @@ if ((!isset($_REQUEST["thumb"])) && (!isset($_REQUEST["nocount"]))) {
 
 $type = $imagegallib->filetype;
 
-//echo"<pre>";print_r(get_defined_vars());echo"</pre>";
-
 // close the session for speedup
 session_write_close();
 
@@ -118,4 +116,3 @@ header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"')
 //} else {
 echo $imagegallib->image;
 //}
-// ????? echo $data;
