@@ -143,9 +143,10 @@ class NlLib extends TikiLib
 						$res['email'] = $res['login'];
 					} else continue;
 				}
+				$res['email'] = strtolower($res['email']);
 				$all_users[$res['email']] = array(
 					'nlId' => (int)$nlId,
-					'email' => strtolower($res['email']),
+					'email' => $res['email'],
 					'code' => $this->genRandomString($res['login']),
 					'valid' => 'y',
 					'subscribed' => $this->now,
@@ -204,7 +205,7 @@ class NlLib extends TikiLib
 				//   (e.g. to keep information of users that subscribed themselves)
 				//
 				if ( $res['isUser'] == 'y' || $res['isUser'] == 'g' ) {
-					$res['email'] = $userlib->get_user_email($res['db_email']);
+					$res['email'] = strtolower($userlib->get_user_email($res['db_email']));
 				}
 
 				// Add new subscribers to $all_users, or replace the information that was already there from group users
