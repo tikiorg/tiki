@@ -24,9 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit;
 	} // }}}
 	if (isset($_POST['forget'], $_POST['pp'], $_POST['pd'])) { // {{{
+		$data = array();
+		foreach($_POST as $key => $value) if ($key != 'url' && $key != 'forget') $data[str_replace('_', ' ', $key) ] = $value;
+		$installer = new Tiki_Profile_Installer;
+		$installer->setUserData($data);
 		$profile = Tiki_Profile::fromNames($_POST['pd'], $_POST['pp']);
 		$profile->removeSymbols();
-		$installer = new Tiki_Profile_Installer;
 		$installer->install($profile);
 		if ($target = $profile->getInstructionPage()) {
 			global $wikilib;
