@@ -460,7 +460,7 @@ $smarty = new Smarty_Tikiwiki_Installer($tikidomain);
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
-$smarty->assign('style', 'strasa.css');
+$smarty->assign('style', 'fivealive.css');
 $smarty->assign('virt', isset($virt) ? $virt : null );
 $smarty->assign('multi', isset($multi) ? $multi : null );
 $smarty->assign('lang', $language);
@@ -857,8 +857,7 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 
 
 include "lib/headerlib.php";
-$headerlib->add_cssfile('styles/strasa.css');
-$headerlib->add_cssfile('styles/strasa/options/fixed_width.css');
+$headerlib->add_cssfile('styles/fivealive.css');
 
 $smarty->assign_by_ref('headerlib',$headerlib);
 

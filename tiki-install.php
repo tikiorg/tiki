@@ -109,8 +109,7 @@ function createPage($title, $content){
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" rel="stylesheet" href="styles/strasa.css" />
-		<link type="text/css" rel="stylesheet" href="styles/strasa/options/fixed_width.css" />
+		<link type="text/css" rel="stylesheet" href="styles/fivealive.css" />
 		<style type="text/css" media="screen">
 html {
 	background-color: #fff;
