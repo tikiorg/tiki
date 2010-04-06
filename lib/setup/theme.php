@@ -10,7 +10,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 if ( isset($_SESSION['try_style']) ) {
 	$prefs['style'] = $_SESSION['try_style'];
-} elseif ( $prefs['change_theme'] != 'y' ) {
+} elseif ( $prefs['change_theme'] != 'y' && !isset($_SESSION['current_perspective'])) {
 	// Use the site value instead of the user value if the user is not allowed to change the theme
 	$prefs['style'] = $prefs['site_style'];
 	$prefs['style_option'] = $prefs['site_style_option'];
