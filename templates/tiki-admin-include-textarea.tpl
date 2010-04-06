@@ -69,16 +69,20 @@
 			{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
 			{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr}
 			{/remarksbox}
-			{if empty($disabled)}
+			{if !isset($disabled)}
 				{button href="?page=textarea&disabled=y" _text="{tr}Check disabled plugins used in wiki pages{/tr}"}
 				<br /><br />
 			{else}
 				{remarksbox type=errors title="{tr}Disabled used plugins{/tr}"}
-				<ul>
-				{foreach from=$disabled item=plugin}
-					<li>{$plugin|lower|escape}</li>
-				{/foreach} 
-				</ul>
+					{if empty($disabled)}
+						{tr}None{/tr}
+					{else}
+						<ul>
+						{foreach from=$disabled item=plugin}
+							<li>{$plugin|lower|escape}</li>
+						{/foreach} 
+						</ul>
+					{/if}
 				{/remarksbox}
 			{/if}
 
