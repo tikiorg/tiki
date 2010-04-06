@@ -390,7 +390,6 @@ if (isset($_REQUEST['graph'])) {
 	$widthUser = 70 * $userContributions['nbCols'] + 100 + $legendWidth + $yTickWidth;
 	$widthGroup = 70 * count($groupContributions) + 100 + $legendWidth + $yTickWidth;
 	$space = 20;
-	//echo "$legendWidth _ $xUserTickWidth _ $xGroupTickWidth _ $yTickWidth _$widthWeek _ $widthTotal _ $widthUser _ $widthGroup";die;
 	if ($prefs['feature_jpgraph'] == 'y') {
 		require_once ('lib/jpgraph/src/jpgraph.php');
 		require_once ('lib/jpgraph/src/jpgraph_bar.php');
@@ -428,7 +427,6 @@ if (isset($_REQUEST['graph'])) {
 				} else {
 					$title = sprintf(tra('%s Contributions: Addition') , $user);
 				}
-			//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
 				if ($prefs['feature_jpgraph'] == 'y') {
 					$graph = new Graph($widthUser, $height + $xUserTickWidth);
 					$graph->img->SetImgFormat($ext);
@@ -464,7 +462,6 @@ if (isset($_REQUEST['graph'])) {
 				} else {
 					$title = sprintf(tra('%s Contributions: Suppression') , $user);
 				}
-				//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
 				if ($prefs['feature_jpgraph'] == 'y') {
 					$graph = new Graph($widthUser, $height + $xUserTickWidth);
 					$graph->img->SetImgFormat($ext);
@@ -502,7 +499,6 @@ if (isset($_REQUEST['graph'])) {
 					$title = tra('Total Contributions Addition per Week');
 					$title2 = tra('Weeks');
 				}
-				//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
 				if ($prefs['feature_jpgraph'] == 'y') {
 					$graph = new Graph($widthWeek, $height);
 					$graph->img->SetImgFormat($ext);
@@ -537,7 +533,6 @@ if (isset($_REQUEST['graph'])) {
 					$title = tra('Total Contributions Suppression per Week');
 					$title2 = tra('Weeks');
 				}
-				//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
 				if ($prefs['feature_jpgraph'] == 'y') {
 					$graph = new Graph($widthWeek, $height);
 					$graph->img->SetImgFormat($ext);
@@ -566,7 +561,6 @@ if (isset($_REQUEST['graph'])) {
 			$series = $logslib->draw_contribution_vol($contributionStat, 'add', $contributions);
 			if ($series['totalVol']) {
 				$title = tra('Total Contributions: Addition');
-				//echo "<pre>";print_r($contributionStat);print_r($series);die;
 				if ($prefs['feature_jpgraph'] == 'y') {
 					$graph = new Graph($widthTotal, $height);
 					$graph->img->SetImgFormat($ext);
@@ -593,7 +587,6 @@ if (isset($_REQUEST['graph'])) {
 			$series = $logslib->draw_contribution_vol($contributionStat, 'del', $contributions);
 			if ($series['totalVol']) {
 				$title = tra('Total Contributions: Suppression');
-				//echo "<pre>";print_r($contributionStat);print_r($series);die;
 				if ($prefs['feature_jpgraph'] == 'y') {
 					$graph = new Graph($widthTotal, $height);
 					$graph->img->SetImgFormat($ext);
@@ -620,7 +613,6 @@ if (isset($_REQUEST['graph'])) {
 			$series = $logslib->draw_contribution_group($groupContributions, 'add', $contributions);
 			if ($series['totalVol']) {
 				$title = tra('Groups Contributions: Addition');
-				//echo "<pre>";print_r($groupContributions);print_r($series);die;
 				if ($prefs['feature_jpgraph'] == 'y') {
 					$graph = new Graph($widthGroup, $height + $xGroupTickWidth);
 					$graph->img->SetImgFormat($ext);
@@ -650,7 +642,6 @@ if (isset($_REQUEST['graph'])) {
 			$series = $logslib->draw_contribution_group($groupContributions, 'del', $contributions);
 			if ($series['totalVol']) {
 				$title = tra('Groups Contributions: Suppression');
-				//echo "<pre>";print_r($groupContributions);print_r($series);die;
 				if ($prefs['feature_jpgraph'] == 'y') {
 					$graph = new Graph($widthGroup, $height + $xGroupTickWidth);
 					$graph->img->SetImgFormat($ext);

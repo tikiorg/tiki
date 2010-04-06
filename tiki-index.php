@@ -172,12 +172,8 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 		$url = 'tiki-index.php?page='.$prefs['feature_wiki_userpage_prefix'].$user;
 		if ($prefs['feature_sefurl'] == 'y') {
 			include_once('tiki-sefurl.php');
-			// echo "<pre>-- tiki-index.php: header 1, location='".urlencode(filter_out_sefurl($url, $smarty, 'wiki'))."'</pre>\n";
-			// die("-- dying so you can see the traces go by");
 			header('location: '. urlencode(filter_out_sefurl($url, $smarty, 'wiki')));
 		} else {
-			// echo "<pre>-- tiki-index.php: header 2, location='".$url."'</pre>\n";
-			// die("-- dying so you can see the traces go by");
 			header("Location: $url");
 		}
 		die;
@@ -198,8 +194,6 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 
 
 if (empty($info) && $user && $prefs['feature_wiki_userpage'] == 'y' && (strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0 || strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0 )) {	
-	// echo "<pre>-- tiki-index.php: header 2, location='".'tiki-editpage.php?page='.$prefs['feature_wiki_userpage_prefix'].$user."'</pre>\n";
-	// die("-- dying so you can see the traces go by");	
 	
 	header('Location: tiki-editpage.php?page='.$prefs['feature_wiki_userpage_prefix'].$user);
     	die;
@@ -255,8 +249,6 @@ if( ! $pageRenderer->canView ) {
 // Convert page to structure
 if (isset($_REQUEST['convertstructure']) && isset($structs) && count($structs) == 0) {
 	$page_ref_id = $structlib->s_create_page(0, null, $page);
-	// echo "<pre>-- tiki-index.php: header 3, location='".'tiki-index.php?page_ref_id='.$page_ref_id."'</pre>\n";
-	// die;
 	header('Location: tiki-index.php?page_ref_id='.$page_ref_id );
 	exit;
 }

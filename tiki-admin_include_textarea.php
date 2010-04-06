@@ -52,6 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 		foreach(glob('temp/cache/wikiplugin_*') as $file) unlink($file);
 	}
+	if (isset($_POST['delete'])) {
+		if (!is_array($_POST['enabled'])) $_POST['enabled'] = array();
+		foreach($pluginsAlias as $name) {
+			$tikilib->plugin_alias_delete( $name );
+		}
+		$pluginsAlias = $tikilib->plugin_get_list(false, true);
+	}
 	if (isset($_POST['textareasetup']) && !in_array($_POST['plugin_alias'], $pluginsReal) && isset($_REQUEST["plugin_alias"]) && (!isset($_COOKIE['tab']) || $_COOKIE['tab'] == 3)) { // tab=3 is plugins alias tab (TODO improve)
 		$info = array(
 			'implementation' => $_POST['implementation'],
@@ -135,6 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$tikilib->plugin_alias_store($_POST['plugin_alias'], $info);
 		if (!in_array($_POST['plugin_alias'], $pluginsAlias)) $pluginAlias[] = $_POST['plugins'];
 		foreach(glob('temp/cache/wikiplugin_*') as $file) unlink($file);
+		$pluginsAlias = $tikilib->plugin_get_list(false, true);
 	}
 }
 if (isset($_REQUEST['plugin_alias']) && $pluginInfo = $tikilib->plugin_alias_info($_REQUEST['plugin_alias'])) {

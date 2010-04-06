@@ -115,7 +115,7 @@ ul.cssmenu_vert ul {
 	height: 10px;
 	text-indent: -999em;
 	overflow: hidden;
-	background: url(../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only */
+	background: url(../lib/jquery/superfish/images/arrows-ffffff.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only. use url(arrows-000000.png) for black arrows */
 }
 
 a > .sf-sub-indicator {  /* give all except IE6 the correct values */

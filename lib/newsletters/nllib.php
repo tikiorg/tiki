@@ -162,6 +162,7 @@ class NlLib extends TikiLib
 						$res['email'] = $res['login'];
 					} else continue;
 				}
+				$res['email'] = strtolower($res['email']);
 				$all_users[$res['email']] = array(
 					'nlId' => (int)$nlId,
 					'email' => $res['email'],
@@ -209,6 +210,7 @@ class NlLib extends TikiLib
 		$query = "select * from `tiki_newsletter_subscriptions` where `nlId`=?";
 		$result = $this->query($query, array((int)$nlId));
 		while ( $res = $result->fetchRow() ) {
+			$res['email'] = strtolower($res['email']);
 			if ( ( $res['included'] != 'y' || $res['valid'] == 'x' ) && ((
 					$res['valid'] != 'n' && ( $res['isUser'] != 'g' || $res['valid'] == 'x' ) )
 					|| ( $res['isUser'] == 'g' && in_array($res['email'], $group_users) )
@@ -222,7 +224,7 @@ class NlLib extends TikiLib
 				//   (e.g. to keep information of users that subscribed themselves)
 				//
 				if ( $res['isUser'] == 'y' || $res['isUser'] == 'g' ) {
-					$res['email'] = $userlib->get_user_email($res['db_email']);
+					$res['email'] = strtolower($userlib->get_user_email($res['db_email']));
 				}
 
 				// Add new subscribers to $all_users, or replace the information that was already there from group users

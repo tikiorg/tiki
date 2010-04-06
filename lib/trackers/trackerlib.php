@@ -2686,13 +2686,20 @@ class TrackerLib extends TikiLib
 		return $this->getOne("select `fieldId` from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int)$trackerId,$name));
 	}
 
-	function get_field_id_from_type($trackerId, $type, $option=NULL) {
+	function get_field_id_from_type($trackerId, $type, $option=NULL, $first=true) {
 		static $memo;
 		if (isset($memo[$trackerId][$type][$option])) {
 			return $memo[$trackerId][$type][$option];
 		}
-		$mid = ' `trackerId`=? and `type`=? ';
-		$bindvars = array((int)$trackerId, $type);
+		if (is_array($type)) {
+			$mid = '`type` in ('.implode(',', array_fill(0,count($type),'?')).')';
+			$bindvars = $type;
+		} else {
+			$mid = '`type`=? ';
+			$bindvars[] = $type;
+		}
+		$mid .= ' and `trackerId`=?';
+		$bindvars[] = (int)$trackerId;
 		if (!empty($option)) {
 			if (strstr($option, '%') === false) {
 				$mid .= ' and `options`=? ';
@@ -2701,9 +2708,15 @@ class TrackerLib extends TikiLib
 			}
 			$bindvars[] = $option;
 		}
-		$fieldId = $this->getOne("select `fieldId` from `tiki_tracker_fields` where $mid",$bindvars);
-		$memo[$trackerId][$type][$option] = $fieldId;
-		return $fieldId;
+		$query = "select `fieldId` from `tiki_tracker_fields` where $mid";
+		if ($first) {
+			$fieldId = $this->getOne($query, $bindvars);
+			$memo[$trackerId][$type][$option] = $fieldId;
+			return $fieldId;
+		} else {
+			$fields = $this->fetchAll($query, $bindvars);
+			return $fields;
+		}
 	}
 
 /*

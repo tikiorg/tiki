@@ -44,9 +44,7 @@ if (isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 			$smarty->display("error.tpl");
 			die;
 		}
-		$page_info = $tikilib->get_page_info($page);
-		$page_info['parsed'] = $tikilib->parse_data($page_info['data'], array('is_html' => $page_info['is_html'], 'print'=>'y'));
-		$pages[] = $page_info;
+		$pages[] = $tikilib->get_page_print_info($page);
 	}
 	foreach($printstructures as $structureId) {
 		$struct = $structlib->get_subtree($structureId);
@@ -54,8 +52,7 @@ if (isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 			global $page_ref_id;
 			$page_ref_id = $struct_page['page_ref_id']; //to interpret {toc}
 			if ($struct_page['pos'] != '' && $struct_page['last'] == 1) continue;
-			$page_info = $tikilib->get_page_info($struct_page['pageName']);
-			$page_info['parsed'] = $tikilib->parse_data($page_info['data'], array('is_html' => $page_info['is_html'], 'print' => 'y'));
+			$page_info = $tikilib->get_page_print_info($struct_page['pageName']);
 			$page_info['pos'] = $struct_page['pos'];
 			$page_info['h'] = empty($struct_page['pos']) ? 0 : count(explode('.', $struct_page['pos']));
 			$h = $page_info['h'] + 5;
@@ -78,6 +75,7 @@ if (isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 		}
 	}
 }
+
 $smarty->assign_by_ref('pages', $pages);
 ask_ticket('multiprint');
 // disallow robots to index page:

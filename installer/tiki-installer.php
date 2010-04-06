@@ -381,6 +381,23 @@ function update_preferences( $dbTiki, &$prefs ) {
 	return false;
 }
 
+function fix_admin_account( $account ) {
+	global $installer;
+
+	$result = $installer->query( 'SELECT `id` FROM `users_groups` WHERE `groupName` = "Admins"' );
+	if( ! $row = $result->fetchRow() ) {
+		$installer->query( 'INSERT INTO `users_groups` (`groupName`) VALUES("Admins")' );
+	}
+	
+	$installer->query( 'INSERT IGNORE INTO `users_grouppermissions` (`groupName`, `permName`) VALUES("Admins", "tiki_p_admin")' );
+
+	$result = $installer->query( 'SELECT `userId` FROM `users_users` WHERE `login` = ?', array( $account ) );
+	if( $row = $result->fetchRow() ) {
+		$id = $row['userId'];
+		$installer->query( 'INSERT IGNORE INTO `users_usergroups` (`userId`, `groupName`) VALUES(?, "Admins")', array( $id ) );
+	}
+}
+
 // -----------------------------------------------------------------------------
 // end of functions .. now starts the processing
 
@@ -832,6 +849,10 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 
 	$installer->query($query);
 	$installer->query("UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1");
+
+	if( isset( $_REQUEST['admin_account'] ) && ! empty( $_REQUEST['admin_account'] ) ) {
+		fix_admin_account( $_REQUEST['admin_account'] );
+	}
 }
 
 

@@ -34,6 +34,8 @@ function get_default_prefs() {
 		'tiki_version_check_frequency' => 604800,
 		'lastUpdatePrefs' => 1,
 
+		'tiki_domain_prefix' => 'unchanged',
+
 		'feature_print_indexed' => 'n', 
 
 		'groups_are_emulated' => 'n',

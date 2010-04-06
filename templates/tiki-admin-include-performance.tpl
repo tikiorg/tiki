@@ -10,6 +10,7 @@
 
 		<fieldset>
 			<legend>{tr}Performance{/tr}</legend>
+			{preference name=feature_bot_bar_debug}
 			{preference name=tiki_minify_javascript}
 			{preference name=javascript_cdn}
 			{preference name=tiki_cdn}

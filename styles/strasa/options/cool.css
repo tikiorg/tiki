@@ -156,10 +156,7 @@ ul.jumplinks a:active {
 /*** Error page ***/
 
 /* Site Header & Identity */
-div#sioptions,
-#sioptionscentered,
-#customcode,
-#customcodewith_ad {
+#header-top {
 	background: #f5f5f5 url(cool/headerbg.jpg) repeat-x 0 100%;
 }
 
@@ -317,16 +314,20 @@ a.phplmselected:hover {
 
 .cssmenu_vert li ul li,
 .cssmenu_horiz li ul li,
-#tiki-top .cssmenu_horiz li ul li {
+#header .cssmenu_horiz li ul li {
 	border: 1px solid #aaa;
 	background: #f5f5f5;
 	border-top: 0;
 	margin-bottom: -1px;
 }
 
+#header .cssmenu_horiz li:hover {
+	background: #cce5ff;
+}
+
 .cssmenu_horiz li ul li:first-child,
 .cssmenu_vert li ul li:first-child,
-#tiki-top .cssmenu_horiz li ul li:first-child {
+#header .cssmenu_horiz li ul li:first-child {
 	border-top: 1px solid #aaa;
 }
 
@@ -359,24 +360,24 @@ a.phplmselected:hover {
 	color: #000000;
 }
 
-#tiki-top .cssmenu_horiz a,
-#tiki-top .cssmenu_horiz  a:visited {
+#header .cssmenu_horiz a,
+#header .cssmenu_horiz  a:visited {
 	color: #1E7EA6;
 	border: none;
 }
 
-#tiki-top .cssmenu_horiz a:hover {
+#header .cssmenu_horiz a:hover {
 	color: #1E7EA6;
 	background: #cce5ff;
 	border: none;
 }
 
 /* special arrows and arrow top padding */
-#tiki-top .cssmenu_horiz li a .sf-sub-indicator {
+#header .cssmenu_horiz li a .sf-sub-indicator {
 	background: url(../arrows-467aa7.png) no-repeat 0 -100px;
 }
 
-#tiki-top .cssmenu_horiz li ul li a .sf-sub-indicator {
+#header .cssmenu_horiz li ul li a .sf-sub-indicator {
 	background-position: -10px 0;
 }
 

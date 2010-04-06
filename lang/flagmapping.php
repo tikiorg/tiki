@@ -28,6 +28,7 @@ $flagmapping = array(
     'gl' 	=> array(  ''),
     'he' 	=> array(  'Israel'),
     'hr' 	=> array(  'Croatia'),
+    'is'     => array(  'Iceland'),  
     'it' 	=> array(  'Italy'),
     'ja' 	=> array(  'Japan'),
     'ko' 	=> array(  ''),

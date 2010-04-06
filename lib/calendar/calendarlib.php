@@ -324,7 +324,7 @@ class CalendarLib extends TikiLib
 				/*	'time' => $tstart, /* user time */
 				/*	'end' => $tend, /* user time */
 
-				$ret[$i][$j]['group_description'] = $res['name'].'<span class="calgrouptime">, '.$head.'</span>';
+				$ret[$i][$j]['group_description'] = htmlspecialchars($res['name']) . '<span class="calgrouptime">, '.$head.'</span>';
 			}
 		}
 		return $ret;

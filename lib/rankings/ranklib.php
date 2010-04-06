@@ -191,7 +191,7 @@ class RankLib extends TikiLib
 		$count = 0;
 		$ret = array();
 		$result = $commentslib->get_all_comments('forum', 0, $limit, 'commentDate_desc', '', '', '', false, $forumId);
-		$result['data'] = Perms::filter(array('type' => 'forum'), 'object', $result['data'], array('object' => 'forumId', 'forum_read'));
+		$result['data'] = Perms::filter(array('type' => 'forum'), 'object', $result['data'], array('object' => 'forumId'), 'forum_read');
 		foreach ($result['data'] as $res) {
 			$aux['name'] = $res['name'] . ': ' . $res['title'];
 			$aux['title'] = $res['title'];

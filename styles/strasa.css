@@ -64,7 +64,7 @@ h6 {
 	font-size: 1.05em;
 }
 
-.wikitext h1 {color: #000}
+.wikitext h1 {color: #000; line-height: .9em;}
 .wikitext h2 {color: #309FC0; line-height: .9em; border-bottom: solid 1px #3090C0; text-transform: uppercase}
 .wikitext h3 {color: #303030; line-height: .8em; font-style: italic}
 .wikitext h4 {border-bottom: dashed 1px #CCF0FF; color: #3F3F3F}
@@ -704,7 +704,7 @@ a.phplmselected:hover {
 	border-top: 1px solid #233039;
 }
 
-#tiki-top .cssmenu_horiz li:hover {
+#header .cssmenu_horiz li:hover {
 	background: #1b3a50;
 }
 
@@ -784,8 +784,8 @@ a.phplmselected:hover {
 	text-align: left;
 }
 
-#tiki-top .cssmenu_horiz a,
-#tiki-top .cssmenu_horiz a:visited {
+#header .cssmenu_horiz a,
+#header .cssmenu_horiz a:visited {
 	padding: 3px 3px 6px 3px;
 	text-decoration: none;
 	font: normal 1em Verdana, Helvetica, Arial, Sans-Serif;
@@ -797,11 +797,11 @@ a.phplmselected:hover {
 	text-align: center;
 }
 
-#tiki-top .cssmenu_horiz li.menuSection a {
+#header .cssmenu_horiz li.menuSection a {
 	padding-right: 2em;
 }
 
-#tiki-top .cssmenu_horiz a:hover {
+#header .cssmenu_horiz a:hover {
 	text-decoration: none;
 	background: url(strasa/headermenuitem-hover.png) bottom center repeat-x;
 	border-color: #336699;
@@ -810,36 +810,35 @@ a.phplmselected:hover {
 	color: #fff;
 }
 
-#tiki-top .cssmenu_horiz li ul li a,
-#tiki-top .cssmenu_horiz li ul li a:link,
-#tiki-top .cssmenu_horiz li ul li a:visited,
-#tiki-top .cssmenu_horiz li ul li a:hover {
+#header .cssmenu_horiz li ul li a,
+#header .cssmenu_horiz li ul li a:link,
+#header .cssmenu_horiz li ul li a:visited,
+#header .cssmenu_horiz li ul li a:hover {
 	text-align: left;
 	border: 0;
 }
 
-#tiki-top .cssmenu_horiz li ul li a:hover {
+#header .cssmenu_horiz li ul li a:hover {
 	background: none;	
 }
 
-#tiki-top .cssmenu_horiz li ul li,
-#tiki-top .cssmenu_vert li ul li {
+#header .cssmenu_horiz li ul li {
 	border: 1px solid #08698f;
 	background: #1b3a50;
 	border-top: 0;
 	margin-bottom: -1px
 }
 
-#tiki-top .cssmenu_horiz li ul li:first-child,
-#tiki-top .cssmenu_vert li ul li:first-child {
+#header .cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
 	border-top: 1px solid #08698f;
 }
 
-/*#tiki-top */.cssmenu_horiz li ul {
+.cssmenu_horiz li ul {
 	margin-top: -7px;
 }
 
-/*#tiki-top */.cssmenu_horiz li ul ul {
+.cssmenu_horiz li ul ul {
 	margin-top: -1px;
 }
 
@@ -849,7 +848,7 @@ a.phplmselected:hover {
 	top: .3em;
 }
 
-/*#tiki-top */.cssmenu_horiz li a .sf-sub-indicator {
+.cssmenu_horiz li a .sf-sub-indicator {
 	background: url(strasa/arrows-a2ecff.png) no-repeat -10px -100px;
 	top: 6px;
 }

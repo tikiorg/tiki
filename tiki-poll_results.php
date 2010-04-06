@@ -69,7 +69,6 @@ foreach($pollIds as $pK => $pId) { // iterate each poll
 		$vote_from_date = $vote_to_date = 0;
 	}
 	$options = $polllib->list_poll_options($pId, $vote_from_date, $vote_to_date);
-	//echo '<pre>'; print_r($options); echo '</pre>';
 	$poll_info_arr[$pK] = $poll_info;
 	if ($vote_from_date != 0) {
 		$poll_info_arr[$pK]['votes'] = 0;
@@ -101,7 +100,7 @@ foreach($pollIds as $pK => $pId) { // iterate each poll
 	$poll_info_arr[$pK]['options'] = $options;
 	$poll_info_arr[$pK]['total'] = $total;
 } // end iterate each poll
-//echo '<pre>'; print_r($poll_info_arr); echo '</pre>';
+
 function scoresort($a, $b) {
 	if (isset($_REQUEST['scoresort_asc'])) {
 		$i = $_REQUEST['scoresort_asc'];

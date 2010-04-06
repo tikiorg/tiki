@@ -430,7 +430,7 @@
 <tr class="formcolor"><td>
 {tr}Priority{/tr}</td><td>
 {if $edit}
-<select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;width:40%;"
+<select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;"
 onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {foreach item=it from=$listpriorities}
 <option value="{$it}" style="background-color:#{$listprioritycolors[$it]};"{if $calitem.priority eq $it} selected="selected"{/if}>{$it}</option>
@@ -531,9 +531,9 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <td>
 {if $edit}
 	{if $preview or $changeCal}
-		<input type="text" name="save[organizers]" value="{$calitem.organizers}" style="width:90%;" />
+		<input type="text" name="save[organizers]" value="{$calitem.organizers|escape}" style="width:90%;" />
 	{else}
-		<input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers name=organizers}{if $org neq ''}{$org}{if !$smarty.foreach.organizers.last},{/if}{/if}{/foreach}" style="width:90%;" />
+		<input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers name=organizers}{if $org neq ''}{$org|escape}{if !$smarty.foreach.organizers.last},{/if}{/if}{/foreach}" style="width:90%;" />
 	{/if}
 {else}
 {foreach item=org from=$calitem.organizers}

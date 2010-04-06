@@ -447,12 +447,23 @@
 </div>
 </fieldset>
 <br />
-<fieldset><legend>{tr}Administrator{/tr}</legend>
-<div style="padding:5px"><label for="admin_email">{tr}Admin email:{/tr}</label>
-	<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}" />
-	<br /><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
-</div>
-</fieldset>
+	<fieldset><legend>{tr}Administrator{/tr}</legend>
+		<div style="padding:5px"><label for="admin_email">{tr}Admin email:{/tr}</label>
+			<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}" />
+			<br /><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
+		</div>
+	</fieldset>
+	<fieldset>
+		<legend>{icon _id=error} {tr}Upgrade fix{/tr}</legend>
+		<p>{tr}Experiencing problems with the upgrade? Your administrator account lost its privileges? This may occur if you upgraded since a very old version of Tikiwiki.</p>
+		<p>We can fix it! Doing so will:{/tr}</p>
+		<ol>
+			<li>{tr}Create the <em>Admins</em> group, if missing{/tr}</li>
+			<li>{tr}Grant <em>tiki_p_admin</em> to the group, if missing{/tr}</li>
+			<li>{tr}Add the administrator account to the group, if missing{/tr}</li>
+		</ol>
+		<p>Administrator account (optional): <input type="text" name="admin_account"/> <em>The default account is <strong>admin</strong></em></p>
+	</fieldset>
 </div>
 
 <div align="center" style="margin-top:1em;">

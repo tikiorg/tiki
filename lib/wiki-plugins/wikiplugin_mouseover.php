@@ -77,6 +77,13 @@ function wikiplugin_mouseover_info() {
 				'description' => tra('y|n, parse the body of the plugin as wiki content. (Default to y)'),
 				'filter' => 'alpha',
 			),
+			'parselabel' => array(
+				'required' => false,
+				'name' => tra('Parse Label'),
+				'description' => 'y|n '.tra('parse label'),
+				'filter' => 'alpha',
+				'default' => 'y',
+			),
 			'class' => array(
 				'required' => false,
 				'name' => tra('CSS Class'),
@@ -138,6 +145,8 @@ function wikiplugin_mouseover_info() {
 function wikiplugin_mouseover( $data, $params ) {
 	global $smarty, $tikilib;
 
+	$default = array('parse'=>'y', 'parselabel'=>'y');
+	$params = array_merge($default, $params);
 	if( ! isset($params['url']) ) {
 		$url = 'javascript:void(0)';
 	} else {
@@ -165,12 +174,19 @@ function wikiplugin_mouseover( $data, $params ) {
 	$text = trim($text);
 	
 	if (empty($text)) {
-		return $label;
+		if ($params['parselabel'] == 'y') {
+			return $label;
+		} else {
+			return "~np~$label~/np~";
+		}
 	}
 
 	if( $parse ) {
 		// Default output of the plugin is in ~np~, so escape it if content has to be parsed.
 		$text = "~/np~$text~np~";
+	}
+	if( $params['parselabel'] == 'y' ) {
+		$label = "~/np~$label~np~";
 	}
 
 	static $lastval = 0;

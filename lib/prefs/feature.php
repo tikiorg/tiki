@@ -1230,6 +1230,7 @@ function prefs_feature_list() {
 		'feature_bot_bar_debug' => array(
 			'name' => tra('Bottom bar debug'),
 			'type' => 'flag',
+			'description' => tra('Indicate various debug-related information in the footer of the site (Execution time, Memory usage, etc.)'),
 		),
 		'feature_bot_bar_rss' => array(
 			'name' => tra('Bottom bar (RSS)'),

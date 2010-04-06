@@ -4609,6 +4609,18 @@ class TikiLib extends TikiDb_Bridge
 		return $ret;
 	}
 
+	function get_page_print_info($pageName) {
+		$query = "SELECT `pageName`, `data` as `parsed`, `is_html` FROM `tiki_pages` WHERE `pageName`=?";
+		$result = $this->query($query, array($pageName));
+		if ( ! $result->numRows() ) {
+			return false;
+		} else {
+			$page_info = $result->fetchRow();
+			$page_info['parsed'] = $this->parse_data($page_info['parsed'], array('is_html' => $page_info['is_html'], 'print'=>'y'));
+		}
+		return $page_info;
+	}
+
 	function get_page_info($pageName, $retrieve_datas = true, $skipCache = false) {
 		$pageNameEncode = urlencode($pageName);
 		if ( !$skipCache && isset($this->cache_page_info[$pageNameEncode])
@@ -5347,8 +5359,28 @@ class TikiLib extends TikiDb_Bridge
 
 		foreach( glob( 'temp/cache/wikiplugin_*' ) as $file )
 			unlink( $file );
+
 		global $cachelib;
 		$cachelib->invalidate('plugindesc');
+	}
+
+	function plugin_alias_delete( $name ) {
+		$name = strtolower( $name );
+		$prefName = "pluginalias_$name";
+
+		// Remove from list
+		$list = $this->get_preference( 'pluginaliaslist', array(), true );
+		$list = array_diff( $list, array( $name ) );
+		$this->set_preference( 'pluginaliaslist', serialize($list) );
+
+		// Remove the definition
+		$this->delete_preference( $prefName );
+
+		// Clear cache
+		global $cachelib;
+		$cachelib->invalidate('plugindesc');
+		foreach( glob( 'temp/cache/wikiplugin_*' ) as $file )
+			unlink( $file );
 	}
 
 	function plugin_enabled( $name, & $output ) {

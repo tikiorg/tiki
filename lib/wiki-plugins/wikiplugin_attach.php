@@ -122,10 +122,9 @@ function wikiplugin_attach_info() {
 function wikiplugin_attach($data, $params) {
 	global $atts;
 	global $mimeextensions;
-	global $wikilib;
+	global $wikilib; include_once('lib/wiki/wikilib.php');
 	global $tikilib;
 	global $user, $section;
-	include_once('lib/wiki/wikilib.php');
 
 	extract ($params,EXTR_SKIP);
 
@@ -138,6 +137,7 @@ function wikiplugin_attach($data, $params) {
 
 		// See if we're being called from a tracker page.
 		if( $section == 'trackers' ) {
+			global $trklib; include_once('lib/trackers/trackerlib.php');
 			$atts_item_name = $_REQUEST["itemId"];
 			$tracker_info = $trklib->get_tracker($atts_item_name);
 			$tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($atts_item_name));
