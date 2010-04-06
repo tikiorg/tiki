@@ -4953,7 +4953,7 @@ class TikiLib extends TikiDb_Bridge
 			if (empty($plugin)) {
 				break;
 			}
-			if (empty($only) || in_array($plugin[1], $only) || in_array(strtoupper($plugin[1]), $only)) {
+			if (empty($only) || in_array($plugin[1], $only) || in_array(strtoupper($plugin[1]), $only) || in_array(strtolower($plugin[1]), $only)) {
 				$plugins[] = $plugin;
 			}
 			$pos = strpos( $data, $plugin[0] );
