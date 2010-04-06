@@ -747,7 +747,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $lang;
 	private $translations;
 	private $message;
-
+	private $structure;
+	
 	private $mode = 'create_or_update';
 	private $exists;
 
@@ -775,6 +776,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			&& array_key_exists( 'translations', $data )
 			&& is_array( $data['translations'] ) )
 			$this->translations = $data['translations'];
+		if( array_key_exists( 'structure', $data ) )
+			$this->structure = $data['structure'];
 	}
 
 	function canInstall()
@@ -827,7 +830,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->lang );
 		$this->replaceReferences( $this->translations );
 		$this->replaceReferences( $this->message );
-
+		$this->replaceReferences( $this->structure );
+		
 		$this->mode = $this->convertMode();
 
 		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
@@ -870,6 +874,11 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			if( $target && $target['lang'] && $target['lang'] != $this->lang ) {
 				$multilinguallib->insertTranslation( 'wiki page', $current, $this->lang, $target['page_id'], $target['lang'] );
 			}
+		}
+		
+		if (!empty($this->structure)) {
+			global $structlib; include_once 'lib/structures/structlib.php';
+			$structlib->s_create_page($this->structure, 0, $this->name);
 		}
 
 		return $this->name;
