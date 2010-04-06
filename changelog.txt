@@ -23,6 +23,646 @@ Version 5.0
 ------------------
 
 ----------------------------------------------
+r26480 | sylvieg | 2010-04-06 15:17:32 +0200 (Tue, 06 Apr 2010) | 1 line
+
+[FIX]newsletter: fix db error if newsletter = 2 newsletters where a user is subscribed in 1 and the user email in the other one with not the same case
+----------------------------------------------
+r26478 | changi67 | 2010-04-06 15:06:56 +0200 (Tue, 06 Apr 2010) | 1 line
+
+[MOD] Just remove <pre> and <die>. Better for release
+----------------------------------------------
+r26476 | sylvieg | 2010-04-06 14:40:12 +0200 (Tue, 06 Apr 2010) | 1 line
+
+[FIX]newsletter: fix error db for a newsletter = 2 newsletters where an email is in both but in different case
+----------------------------------------------
+r26474 | nkoth | 2010-04-06 08:18:04 +0200 (Tue, 06 Apr 2010) | 2 lines
+
+[FIX] Perspective theme switching not working, after recent refactoring to style/style option etc... (which is good) but this fix needed to allow it to work.
+
+----------------------------------------------
+r26473 | lphuberdeau | 2010-04-06 00:01:46 +0200 (Tue, 06 Apr 2010) | 1 line
+
+[FIX]?\194?\160Adding an option in the installer to fix permissions when upgrading from an old version, resulting in admin account not having admin privileges anymore
+----------------------------------------------
+r26472 | sylvieg | 2010-04-05 23:40:55 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[FIX]strase: h1 title on 2 lines had no space between lines
+----------------------------------------------
+r26471 | lphuberdeau | 2010-04-05 23:27:47 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[FIX] Remove invisible characters inconveniently inserted before <?php and breaking the installer
+----------------------------------------------
+r26470 | sylvieg | 2010-04-05 23:22:20 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[FIX]global
+----------------------------------------------
+r26469 | lphuberdeau | 2010-04-05 21:53:39 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[NEW] Switch to add or remove the www. Default leaves as-is
+----------------------------------------------
+r26468 | lphuberdeau | 2010-04-05 20:19:56 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[NEW] Adding plugin alias delete controls
+----------------------------------------------
+r26467 | sylvieg | 2010-04-05 17:45:45 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[FIX]CATEGORY: display inline only if in catitems(one=y)
+----------------------------------------------
+r26466 | sylvieg | 2010-04-05 17:33:50 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[FIX]CATEGORY: proper default to one param
+----------------------------------------------
+r26465 | sylvieg | 2010-04-05 17:29:59 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[FIX]CATEGORY: the option one object per line began to be lost in commit 13395
+----------------------------------------------
+r26464 | sylvieg | 2010-04-05 16:16:05 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[FIX]TRACKERLIST: fix optimization 26395 - need also to pick the filterfield
+----------------------------------------------
+r26463 | sylvieg | 2010-04-05 15:54:22 +0200 (Mon, 05 Apr 2010) | 1 line
+
+merge 26457
+----------------------------------------------
+r26462 | marclaporte | 2010-04-05 08:13:53 +0200 (Mon, 05 Apr 2010) | 1 line
+
+stray echo
+----------------------------------------------
+r26460 | chibaguy | 2010-04-05 05:48:29 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[ENH] Enable standard module parameters (flip, notitle, decorations, nobox). 
+----------------------------------------------
+r26458 | lindonb | 2010-04-05 04:46:14 +0200 (Mon, 05 Apr 2010) | 1 line
+
+[FIX] Using number of tiki_pageviews records for days online wasn't accurate and didn't match with date started
+----------------------------------------------
+r26456 | sylvieg | 2010-04-04 15:22:14 +0200 (Sun, 04 Apr 2010) | 1 line
+
+[FIX]forum : avoid mysql error when sorted parm commentDate
+----------------------------------------------
+r26455 | sylvieg | 2010-04-04 14:55:12 +0200 (Sun, 04 Apr 2010) | 1 line
+
+manual merge 26452
+----------------------------------------------
+r26454 | chibaguy | 2010-04-04 09:58:49 +0200 (Sun, 04 Apr 2010) | 1 line
+
+[FIX] Site header custom content should clear secondary site menu (start below it).
+----------------------------------------------
+r26451 | chibaguy | 2010-04-03 13:53:59 +0200 (Sat, 03 Apr 2010) | 1 line
+
+[SVN] Revert to re-add fixed_width.css. I forgot this file was used by installer.
+----------------------------------------------
+r26450 | frank_p | 2010-04-03 13:10:52 +0200 (Sat, 03 Apr 2010) | 1 line
+
+[MOD] remove "Change language of this page"
+----------------------------------------------
+r26449 | frank_p | 2010-04-03 13:08:16 +0200 (Sat, 03 Apr 2010) | 1 line
+
+[MOD] changed "Change language of this page" to "Change language for this page"
+----------------------------------------------
+r26448 | chibaguy | 2010-04-03 09:28:28 +0200 (Sat, 03 Apr 2010) | 1 line
+
+[KIL] Fixed width theme option stylesheet is redundant.
+----------------------------------------------
+r26447 | chibaguy | 2010-04-03 09:21:35 +0200 (Sat, 03 Apr 2010) | 1 line
+
+[MOD] One minor formatting change.
+----------------------------------------------
+r26445 | chibaguy | 2010-04-03 08:32:24 +0200 (Sat, 03 Apr 2010) | 1 line
+
+[FIX] Better support for secondary site menu; improve theme options in fixed-width view (some background images missing). 
+----------------------------------------------
+r26443 | chibaguy | 2010-04-03 07:34:30 +0200 (Sat, 03 Apr 2010) | 1 line
+
+[MOD] Support for secondary site menu, etc.
+----------------------------------------------
+r26442 | chibaguy | 2010-04-03 05:41:58 +0200 (Sat, 03 Apr 2010) | 1 line
+
+[FIX] Keep in sync with default file.
+----------------------------------------------
+r26441 | sylvieg | 2010-04-03 00:32:32 +0200 (Sat, 03 Apr 2010) | 1 line
+
+[FIX]category: add the nb object + move watch before for better align (todo: a clear cache in missing
+----------------------------------------------
+r26439 | chealer | 2010-04-02 23:49:05 +0200 (Fri, 02 Apr 2010) | 2 lines
+
+[FIX] HTML special chars escaping
+don't force width on priority field; 40% would make the dropdown ridiculously large
+----------------------------------------------
+r26438 | sylvieg | 2010-04-02 23:25:37 +0200 (Fri, 02 Apr 2010) | 1 line
+
+[FIX]last forum post: regression since 20573: the parenttitle was the forum name, not the parent post
+----------------------------------------------
+r26437 | frank_p | 2010-04-02 23:22:07 +0200 (Fri, 02 Apr 2010) | 1 line
+
+[MOD] translating
+----------------------------------------------
+r26435 | marclaporte | 2010-04-02 22:04:14 +0200 (Fri, 02 Apr 2010) | 1 line
+
+backport of 26026: [MOD]TRACKERLIST: possibility to filter on the value of a field in the user tracker item. ex: filterfield=1, exactvalue=field(2,user,3) means list the items that have the field 1 equals to the value of the field 2 of the user item of the tracker 3   Tested by Martin Latulippe, who confirmed that there are no regressions. This is needed to build CRM profile.
+----------------------------------------------
+r26434 | sylvieg | 2010-04-02 21:27:04 +0200 (Fri, 02 Apr 2010) | 1 line
+
+oops notice
+----------------------------------------------
+r26433 | sylvieg | 2010-04-02 21:15:20 +0200 (Fri, 02 Apr 2010) | 1 line
+
+[FIX]ranking: fix perm on forum
+----------------------------------------------
+r26432 | sylvieg | 2010-04-02 21:04:46 +0200 (Fri, 02 Apr 2010) | 1 line
+
+[ENH]tpl: kill duplicated code for easier customisation
+----------------------------------------------
+r26431 | sylvieg | 2010-04-02 18:12:36 +0200 (Fri, 02 Apr 2010) | 1 line
+
+[MOD]css menu: add black arrows - will be supportive to copy the arrows_ffff from jquery lib to img for independence
+----------------------------------------------
+r26430 | sylvieg | 2010-04-02 17:07:49 +0200 (Fri, 02 Apr 2010) | 1 line
+
+[FIX]header: center logo with no custom code was not appearing
+----------------------------------------------
+r26429 | sylvieg | 2010-04-02 15:22:56 +0200 (Fri, 02 Apr 2010) | 1 line
+
+[FIX]style: add background key if not in the prefs + kill duplicated code
+----------------------------------------------
+r26427 | marclaporte | 2010-04-02 00:15:13 +0200 (Fri, 02 Apr 2010) | 1 line
+
+[ENH] Add tell a friend link for file download in the contextual menu. This links exists in the template for all URLs, however, since downloading a file is just a download and doesn't have the regular tiki.tpl interface, you can never get to it
+----------------------------------------------
+r26426 | chealer | 2010-04-02 00:10:34 +0200 (Fri, 02 Apr 2010) | 4 lines
+
+Smarty popup function:
+Simplify treatment of $text param. Newlines in $text would cause an issue with JavaScript but were removed in convertOverlib(), so remove them in smarty_function_popup() instead and get rid of URL encoding and decoding.
+[FIX] Encoding issues in calendar popups
+[FIX] Backslashes stripped in convertOverlib() (no apparent reason why)
+----------------------------------------------
+r26424 | sylvieg | 2010-04-01 22:42:50 +0200 (Thu, 01 Apr 2010) | 1 line
+
+[FIX]print: some optimization in print multiple - still not enough for doc :-(
+----------------------------------------------
+r26416 | xavidp | 2010-04-01 12:17:04 +0200 (Thu, 01 Apr 2010) | 1 line
+
+[FIX][bp/r26415]Provide also link to "show all articles of this same topic" at the own image uploaded by users for that article, instead of the former (useless, imho) self link.
+----------------------------------------------
+r26414 | xavidp | 2010-04-01 11:35:41 +0200 (Thu, 01 Apr 2010) | 1 line
+
+[FIX][bp/r26410]List just the topic name of that article post, and not all article topics.
+----------------------------------------------
+r26406 | xavidp | 2010-04-01 10:42:27 +0200 (Thu, 01 Apr 2010) | 1 line
+
+[FIX][bp/r26405]Avoid showing article-topic image when user selected "use own image" and no image uploaded to tiki, to allow the use case of that user providing the image from a different source through the img tag in the heading and/or body of the article. Show article-topic name instead with a link to show all articles of this same topic.
+----------------------------------------------
+r26404 | marclaporte | 2010-03-31 22:51:56 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[DOC] Dynamic prefs
+----------------------------------------------
+r26403 | chealer | 2010-03-31 21:11:58 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX] "Uncaught exception: TypeError: Cannot convert 'local_dates' to object" on certain platforms where Date.toLocateString doesn't return a timezone. match() returns null instead of an empty array if it matches nothing.
+----------------------------------------------
+r26401 | sylvieg | 2010-03-31 18:53:12 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX]MOUSEOVER: regression 16238, label was parsed - new param parselabel with default to y + fix parsing of label if no text
+----------------------------------------------
+r26398 | sylvieg | 2010-03-31 17:44:05 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX]TRACKER: optimization for tracker with a lot of fields - fetch only the fields info that are needed
+----------------------------------------------
+r26397 | sylvieg | 2010-03-31 16:41:29 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX]TRACKER: when giving list of fields, restrict the fields to this list otherwise le checkbox are lost
+----------------------------------------------
+r26396 | sylvieg | 2010-03-31 16:00:26 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX]rss: patch - for unknown reason zend do not provide always the function getDateCreated->todo find why
+----------------------------------------------
+r26395 | sylvieg | 2010-03-31 15:21:27 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX]tracker: optimization for tracker with a lot of fields - fetch only the fields info that are needed
+----------------------------------------------
+r26394 | sylvieg | 2010-03-31 15:12:50 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX]hightlight: avoid scanning text if not the main tpl + do not hightlight col2
+----------------------------------------------
+r26393 | jonnybradley | 2010-03-31 14:42:17 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX] Search and set selected on input correctly with urlencoded values
+----------------------------------------------
+r26392 | chibaguy | 2010-03-31 12:54:06 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX] Text/background contrast.
+----------------------------------------------
+r26391 | sylvieg | 2010-03-31 00:34:51 +0200 (Wed, 31 Mar 2010) | 1 line
+
+[FIX]TRACKERLIST: stop the debate about compute shows only the compute about what it is shown or the whole tracker - no max if compute is on
+----------------------------------------------
+r26390 | sylvieg | 2010-03-30 23:04:08 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX]tracker: fix global change status - bug introduced in 23795 - thx chealer
+----------------------------------------------
+r26389 | jonnybradley | 2010-03-30 19:52:25 +0200 (Tue, 30 Mar 2010) | 2 lines
+
+[FIX] More on trackerfilter fields with wiki syntax in. Only striptags from the option label (name), but url encode the value for the form.
+Still doesn't find the items as it should, but doesn't completely break the html select etc as it did before.
+----------------------------------------------
+r26388 | chealer | 2010-03-30 19:47:16 +0200 (Tue, 30 Mar 2010) | 3 lines
+
+[FIX] lang parameter
+[FIX] HTML special chars escaping
+[FIX] feature check
+----------------------------------------------
+r26385 | sylvieg | 2010-03-30 19:00:33 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX]error: display an error if page not found and no like feature and no search feature
+----------------------------------------------
+r26384 | jonnybradley | 2010-03-30 18:56:20 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX] Correct action for a form the can be on any page
+----------------------------------------------
+r26383 | sylvieg | 2010-03-30 18:54:11 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX]error: do not display 2 notice boxes when page not found and like and search on + search only if perm
+----------------------------------------------
+r26382 | jonnybradley | 2010-03-30 18:44:48 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX] <form> requires an action
+----------------------------------------------
+r26381 | sylvieg | 2010-03-30 18:25:05 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX]trace: comment the trace
+----------------------------------------------
+r26380 | jonnybradley | 2010-03-30 18:19:23 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX] Default feature_wiki_replace to y (should have been removed in 4.x as you can edit the toolbar to remove the button instead - TODO in trunk)
+----------------------------------------------
+r26379 | jonnybradley | 2010-03-30 18:16:58 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX] If show/hide/flip fns called bafore page is properly set up, then just do simple show/hide without effects (which casued a JS error occasionally)
+----------------------------------------------
+r26378 | sylvieg | 2010-03-30 18:09:04 +0200 (Tue, 30 Mar 2010) | 1 line
+
+notice (leftover from 23288
+----------------------------------------------
+r26377 | jonnybradley | 2010-03-30 18:08:11 +0200 (Tue, 30 Mar 2010) | 1 line
+
+FIX] Notices
+----------------------------------------------
+r26376 | jonnybradley | 2010-03-30 17:19:18 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX] Move flip with sign setheadingstate JS call to doc onready
+----------------------------------------------
+r26375 | jonnybradley | 2010-03-30 16:15:19 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX] Partial rollback part 2 of r26366 (datetime fields don't generate a filter field at all - yet. TODO in trunk)
+----------------------------------------------
+r26374 | sylvieg | 2010-03-30 15:12:51 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX]TRACKERTIMELINE: to have the detail adjusted to the scale
+----------------------------------------------
+r26373 | jonnybradley | 2010-03-30 11:12:58 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX] $export is set to 'n' (if empty) before this
+----------------------------------------------
+r26372 | jonnybradley | 2010-03-30 11:12:35 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[MOD] Restore anti-aliased versions of the small admin section icons (IE6 users should upgrade or use feature_iepngfix)
+----------------------------------------------
+r26370 | jonnybradley | 2010-03-30 10:55:56 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX] Incorrect comparison [bp/r26318]
+----------------------------------------------
+r26369 | sylvieg | 2010-03-30 00:38:58 +0200 (Tue, 30 Mar 2010) | 1 line
+
+[FIX]tracker; homegenize behavior for page selector create and auto
+----------------------------------------------
+r26367 | jonnybradley | 2010-03-29 21:23:25 +0200 (Mon, 29 Mar 2010) | 1 line
+
+[FIX] minor rollback of jq ui datepicker for trackerfilter (unreliable - will get it right for 5.1 hopefully)
+----------------------------------------------
+r26366 | jonnybradley | 2010-03-29 20:22:01 +0200 (Mon, 29 Mar 2010) | 1 line
+
+[FIX] strip_tags on value and names for tracker filter inputs such as drpdowns and radios. Also don't prevent datetime fields to have a simple text input (with datepicker if jq ui enabled)
+----------------------------------------------
+r26364 | chealer | 2010-03-29 18:04:49 +0200 (Mon, 29 Mar 2010) | 2 lines
+
+[FIX] cms_ranking_top_articles(): Top articles only showing unpublished articles (r24448 regression)
+oooops. thanks Ben Eason
+----------------------------------------------
+r26363 | sylvieg | 2010-03-29 17:08:26 +0200 (Mon, 29 Mar 2010) | 1 line
+
+[FIX]clean email
+----------------------------------------------
+r26357 | sylvieg | 2010-03-28 22:47:50 +0200 (Sun, 28 Mar 2010) | 1 line
+
+[FIX]TRACKERFILTER: translate country with space
+----------------------------------------------
+r26356 | sylvieg | 2010-03-28 22:27:24 +0200 (Sun, 28 Mar 2010) | 1 line
+
+[FIX]tracker: do not show other countries when countries are limitted
+----------------------------------------------
+r26355 | sylvieg | 2010-03-28 22:19:28 +0200 (Sun, 28 Mar 2010) | 1 line
+
+[FIX]tracker: kill duplicated code + sort country name without accent
+----------------------------------------------
+r26353 | chibaguy | 2010-03-28 17:06:55 +0200 (Sun, 28 Mar 2010) | 1 line
+
+[FIX] Typo.
+----------------------------------------------
+r26352 | chibaguy | 2010-03-28 17:05:12 +0200 (Sun, 28 Mar 2010) | 1 line
+
+[FIX] Typos.
+----------------------------------------------
+r26350 | chibaguy | 2010-03-28 14:12:49 +0200 (Sun, 28 Mar 2010) | 1 line
+
+[FIX] CSS menu dropdown 'top' property caused dropdown 'preview' while page loads, so replaced by margin-top. 
+----------------------------------------------
+r26349 | chibaguy | 2010-03-28 13:56:42 +0200 (Sun, 28 Mar 2010) | 1 line
+
+[FIX] CSS menu dropdown 'top' property unneeded and caused dropdown 'preview' while page loads. 
+----------------------------------------------
+r26348 | chibaguy | 2010-03-28 11:46:48 +0200 (Sun, 28 Mar 2010) | 1 line
+
+[FIX] Correct image name.
+----------------------------------------------
+r26347 | chibaguy | 2010-03-28 11:43:55 +0200 (Sun, 28 Mar 2010) | 1 line
+
+[NEW] Retro Tiki style returns as Arcturus theme and theme options. 
+----------------------------------------------
+r26341 | Jyhem | 2010-03-27 16:05:25 +0100 (Sat, 27 Mar 2010) | 1 line
+
+[FIX] It used to be that only the real name of countries needed translation but it seems the underscored version also needs a translation
+----------------------------------------------
+r26338 | sylvieg | 2010-03-26 20:10:46 +0100 (Fri, 26 Mar 2010) | 1 line
+
+[FIX]tell a friend: user email is mandatory because people are suprised to receive a mail from a friend that is not a friend
+----------------------------------------------
+r26334 | sylvieg | 2010-03-26 17:29:13 +0100 (Fri, 26 Mar 2010) | 1 line
+
+[FIX]smarty: all the params that contains {tr} must be enclosed with double quotes in case the translation contains a single quote
+----------------------------------------------
+r26331 | sylvieg | 2010-03-26 16:45:39 +0100 (Fri, 26 Mar 2010) | 1 line
+
+[FIX]Menu: fix option menu_cookie broken since 25503
+----------------------------------------------
+r26329 | nkoth | 2010-03-26 15:04:19 +0100 (Fri, 26 Mar 2010) | 1 line
+
+[FIX] Fix call to undefined function smarty_modifier_escape(), specifically when trying to send a newsletter.
+----------------------------------------------
+r26328 | sylvieg | 2010-03-26 12:15:14 +0100 (Fri, 26 Mar 2010) | 1 line
+
+manual merge
+----------------------------------------------
+r26326 | lphuberdeau | 2010-03-26 00:58:15 +0100 (Fri, 26 Mar 2010) | 1 line
+
+[FIX] Regression introduced when cleaning up indent
+----------------------------------------------
+r26325 | lphuberdeau | 2010-03-26 00:41:55 +0100 (Fri, 26 Mar 2010) | 1 line
+
+[FIX]?\194?\160Sorting was done case-sensitive, causing inconsistencies when irregular naming conventions were used
+----------------------------------------------
+r26324 | lphuberdeau | 2010-03-26 00:28:33 +0100 (Fri, 26 Mar 2010) | 1 line
+
+[FIX]?\194?\160Unordered 'page' numbers made lookup experience less than optimal
+----------------------------------------------
+r26323 | lphuberdeau | 2010-03-26 00:14:18 +0100 (Fri, 26 Mar 2010) | 1 line
+
+[INDENT] Why did I have to re-indent my own code after someone recklessly took off all the carefully placed spaced and blank lines? Thank you for wasting my time.
+----------------------------------------------
+r26313 | marclaporte | 2010-03-25 18:11:10 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[MOD] minor cosmetic change to make http://doc.tikiwiki.org/Print+Indexed look better.
+----------------------------------------------
+r26312 | sylvieg | 2010-03-25 17:54:50 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[FIX]prefs: hide the child if the option is not selected (was lost in 24192)
+----------------------------------------------
+r26309 | ricks99 | 2010-03-25 16:31:17 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[MOD]minor UI improvements -- no functionality changes
+----------------------------------------------
+r26307 | ricks99 | 2010-03-25 16:25:56 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[MOD]removed accordion control for plugin. no longer needed, since now using tabs instead.
+----------------------------------------------
+r26306 | ricks99 | 2010-03-25 16:16:26 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[FIX]fixed the id for the NEW PASSWORD field for a11y
+----------------------------------------------
+r26305 | ricks99 | 2010-03-25 16:13:11 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[ENH]corrected ids for security precaution entry fields for a11y compliance
+----------------------------------------------
+r26304 | changi67 | 2010-03-25 14:18:36 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[TRA] Just a get_strings on fr to make it cleaner
+----------------------------------------------
+r26303 | jonnybradley | 2010-03-25 13:53:10 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[FIX] FCKEditor background colour
+----------------------------------------------
+r26301 | sylvieg | 2010-03-25 13:43:46 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[FIX]wiki: for a new page go always in the edit page tab and not the categ tab - it can be disturbing for new users
+----------------------------------------------
+r26300 | chibaguy | 2010-03-25 08:37:39 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[MOD] Popup form isn't functional yet so use standard login (theme file essentially is a clone of default for now).
+----------------------------------------------
+r26299 | chibaguy | 2010-03-25 08:27:11 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[FIX] Prevent interference when both site logo/site site titles and site header custom code are used. In this case, custom code is floated to side opposite the logo/titles.
+----------------------------------------------
+r26297 | chibaguy | 2010-03-25 05:20:33 +0100 (Thu, 25 Mar 2010) | 1 line
+
+[FIX] Add wrapper div to increase layout and style possibilities.
+----------------------------------------------
+r26296 | changi67 | 2010-03-24 22:40:17 +0100 (Wed, 24 Mar 2010) | 1 line
+
+[TRA] Some other french trad
+----------------------------------------------
+r26294 | changi67 | 2010-03-24 21:32:54 +0100 (Wed, 24 Mar 2010) | 1 line
+
+[TRA] French trad
+----------------------------------------------
+r26288 | sylvieg | 2010-03-24 15:34:07 +0100 (Wed, 24 Mar 2010) | 1 line
+
+[FIX]CATORPHAN: pagination by default (sorry if you want all you will have to put -1) to avoid not enough memory on tw.org
+----------------------------------------------
+r26287 | changi67 | 2010-03-24 14:25:06 +0100 (Wed, 24 Mar 2010) | 1 line
+
+[FIX]tra: to have the button translated - another one thx sylvieg
+----------------------------------------------
+r26286 | sylvieg | 2010-03-24 14:04:36 +0100 (Wed, 24 Mar 2010) | 1 line
+
+[FIX]tra: to have the button translated
+----------------------------------------------
+r26285 | jonnybradley | 2010-03-24 11:17:13 +0100 (Wed, 24 Mar 2010) | 1 line
+
+[FIX] Change test for javascript_enabled in case not set for anon users (also fixed a couple of notices)
+----------------------------------------------
+r26284 | changi67 | 2010-03-24 08:52:15 +0100 (Wed, 24 Mar 2010) | 1 line
+
+[MOD] Just add svn keywords
+----------------------------------------------
+r26283 | sampaioprimo | 2010-03-24 06:15:34 +0100 (Wed, 24 Mar 2010) | 2 lines
+
+[FIX] list files in a gallery even if user does not have global permission to view galleries but has permission to view a single gallery
+
+----------------------------------------------
+r26282 | sampaioprimo | 2010-03-24 06:06:48 +0100 (Wed, 24 Mar 2010) | 2 lines
+
+[FIX] select all was not working for sub-galleries because of extra white space
+
+----------------------------------------------
+r26279 | jonnybradley | 2010-03-23 21:19:54 +0100 (Tue, 23 Mar 2010) | 1 line
+
+[FIX] Partial rollback of r26237 to restore listings prefs
+----------------------------------------------
+r26278 | lphuberdeau | 2010-03-23 17:17:30 +0100 (Tue, 23 Mar 2010) | 1 line
+
+[ENH] Allow to specify a CDN prefix to serve static files from a cookie-less domain. Although quite a few places are affected, no behavior change will be made on sites without the preference.
+----------------------------------------------
+r26277 | sylvieg | 2010-03-23 16:02:29 +0100 (Tue, 23 Mar 2010) | 1 line
+
+[FIX]parsing: strip html tags in plugin param values when not quoted - to work with wysiwyg and <br> in list of params
+----------------------------------------------
+r26276 | sylvieg | 2010-03-23 15:14:30 +0100 (Tue, 23 Mar 2010) | 1 line
+
+[MOD]fgal: find on orphan
+----------------------------------------------
+r26275 | marclaporte | 2010-03-23 14:07:21 +0100 (Tue, 23 Mar 2010) | 1 line
+
+[DOC] Dynamic pref note
+----------------------------------------------
+r26274 | lphuberdeau | 2010-03-23 13:28:03 +0100 (Tue, 23 Mar 2010) | 1 line
+
+[FIX]?\194?\160All preference templates must have an adminoptionbox class to work in perspective editor
+----------------------------------------------
+r26272 | chibaguy | 2010-03-23 08:47:54 +0100 (Tue, 23 Mar 2010) | 1 line
+
+[FIX] Reinstate theme-specific fixed-width styles.
+----------------------------------------------
+r26271 | chibaguy | 2010-03-23 07:39:12 +0100 (Tue, 23 Mar 2010) | 1 line
+
+[KIL] Remove fixed_width file that is made obsolete thanks to new site_width checkbox in admin panel (rules and images moved to parent theme).
+----------------------------------------------
+r26270 | chibaguy | 2010-03-23 06:48:21 +0100 (Tue, 23 Mar 2010) | 1 line
+
+[ENH] Add class "fixed_width" to body tag when fixed width preference is active, as some themes have special/alternative CSS needs in fixed-width state.
+----------------------------------------------
+r26269 | lphuberdeau | 2010-03-22 23:49:47 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[ENH] Reduce the amount of junk generated by zip when compressing
+----------------------------------------------
+r26268 | lphuberdeau | 2010-03-22 23:25:36 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[ENH]?\194?\160Strip comments from language files before packaging
+----------------------------------------------
+r26267 | marclaporte | 2010-03-22 22:38:20 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[MOD] Moving gmap prefs to dynamic preferences
+----------------------------------------------
+r26266 | lphuberdeau | 2010-03-22 20:45:13 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[FIX] Good to keep external version and local versions in sync
+----------------------------------------------
+r26265 | marclaporte | 2010-03-22 19:35:38 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[KIL] Remove various fixed_width files that are made obsolete thanks to new site_width checkbox in admin panel
+----------------------------------------------
+r26264 | marclaporte | 2010-03-22 19:05:59 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[DOC] clarify how to tweak fixed width
+----------------------------------------------
+r26263 | marclaporte | 2010-03-22 19:00:33 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[DOC] clarify doc for admin performance options
+----------------------------------------------
+r26262 | lphuberdeau | 2010-03-22 18:38:13 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[FIX] Removing these absurd conditions and sanitizing the data instead
+----------------------------------------------
+r26261 | lphuberdeau | 2010-03-22 18:17:18 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[FIX]?\194?\160Complete import declaration to be compatible with minify
+----------------------------------------------
+r26260 | marclaporte | 2010-03-22 18:02:38 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[FIX] No longer delete web.config files when cleaning cache.
+----------------------------------------------
+r26259 | lphuberdeau | 2010-03-22 17:54:33 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[FIX] Imports using relative paths should not be mistaken with absolute paths
+----------------------------------------------
+r26256 | jonnybradley | 2010-03-22 17:40:48 +0100 (Mon, 22 Mar 2010) | 2 lines
+
+[MOD] Update for jQuery.sheet/jQuery UI updates.
+(using jquery.cookie.js from jQuery UI now, significantly updated)
+----------------------------------------------
+r26253 | lphuberdeau | 2010-03-22 16:54:12 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[FIX] Empty options would cause jquery to send an incredibly subtle and undescriptive error
+----------------------------------------------
+r26252 | lphuberdeau | 2010-03-22 16:52:53 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[FIX] Switch preference from radio to list, because radio dynamic selection of divs does not appear to work
+----------------------------------------------
+r26250 | sylvieg | 2010-03-22 15:26:54 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[FIX]fgal: sql error when using find
+----------------------------------------------
+r26249 | changi67 | 2010-03-22 14:30:50 +0100 (Mon, 22 Mar 2010) | 1 line
+
+[TRA] Some french trad + some untranslated string in code
+----------------------------------------------
+r26248 | frank_p | 2010-03-21 22:40:45 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[ADD] "You must clear your browser cache." line 274
+----------------------------------------------
+r26247 | frank_p | 2010-03-21 22:37:12 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[MOD] not translate message 'You must clear your browser cache.'
+----------------------------------------------
+r26246 | changi67 | 2010-03-21 22:32:30 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[ENH] Deploy new smarty plugin modules_list
+----------------------------------------------
+r26245 | changi67 | 2010-03-21 22:29:23 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[ENH] Create a new smarty plugin for modules list to refactor code
+----------------------------------------------
+r26244 | frank_p | 2010-03-21 21:37:34 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[FIX] syntax
+----------------------------------------------
+r26243 | frank_p | 2010-03-21 21:27:25 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[MOD] translate; [ADD] 'Configuration search' line 6309
+----------------------------------------------
+r26242 | frank_p | 2010-03-21 20:27:18 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[MOD] 'Configuration search' not translated by tag {tr} {/tr}
+----------------------------------------------
+r26241 | pkdille | 2010-03-21 16:26:10 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[MOD] no changes - indenting
+----------------------------------------------
+r26240 | pkdille | 2010-03-21 16:10:23 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[MOD] lesser magic: one more pref in admin login template
+----------------------------------------------
+r26238 | chibaguy | 2010-03-21 10:53:40 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[FIX] Typo and link contrast problem.
+----------------------------------------------
+r26237 | pkdille | 2010-03-21 09:08:07 +0100 (Sun, 21 Mar 2010) | 1 line
+
+[MOD] lesser magic: move all the homepages prefs into dynamic prefs
+----------------------------------------------
+r26236 | pkdille | 2010-03-20 19:03:29 +0100 (Sat, 20 Mar 2010) | 1 line
+
+[MOD] lesser magic: some more prefs in admin general template
+----------------------------------------------
 r26079 | sylvieg | 2010-03-12 15:47:25 +0100 (Fri, 12 Mar 2010) | 1 line
 
 [FIX]calendar module: try to be able to have the same display in calendar module than the old one
