@@ -98,7 +98,7 @@ class XmlLib extends TikiLib
 	/* export one page */
 	function export_page($page)
 	{
-		global $tikilib, $prefs, $smarty, $tikidomain
+		global $tikilib, $prefs, $smarty, $tikidomain;
 		
 		$info = $tikilib->get_page_info($page);
 		if (empty($info)) {
