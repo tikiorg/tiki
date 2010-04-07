@@ -99,6 +99,11 @@
 						{preference name=w_use_dir}
 						{button href="tiki-admin.php?page=wikiatt" _text="{tr}Manage attachments{/tr}"}
 					</div>
+					{if !empty($prefs.w_use_dir)}
+						{tr}If you change storage, it is better to move all the files for easy backup...{/tr}
+						{button href="tiki-admin.php?page=wikiatt&all2db=1" _text="{tr}Change all to db{/tr}"}
+						{button href="tiki-admin.php?page=wikiatt&all2file=1" _text="{tr}Change all to file{/tr}"}
+					{/if}
 			</div>
 
 			{preference name=feature_dump}
