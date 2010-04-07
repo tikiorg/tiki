@@ -98,7 +98,7 @@ class XmlLib extends TikiLib
 	/* export one page */
 	function export_page($page)
 	{
-		global $tikilib, $prefs, $smarty;
+		global $tikilib, $prefs, $smarty, $tikidomain
 		
 		$info = $tikilib->get_page_info($page);
 		if (empty($info)) {
@@ -129,10 +129,11 @@ class XmlLib extends TikiLib
 				$args = $tikilib->plugin_split_args($match);
 				if (empty($args['src'])) {
 				} elseif (preg_match('|img/wiki_up/(.*)|', $args['src'], $m)) {
+					$file = empty($tikidomain)?$args['src']: str_replace('img/wiki_up/', "img/wiki_up/$tikidomain/", $args['src']);
 					$image = array('filename' => $m[1], 'where' => 'wiki', 'zip'=>"$dir/images/wiki/".$m[1], 'wiki'=>$args['src']);
-					if (!$this->zip->addFile($args['src'], $image['zip'])) {
-						$this->errors[] = 'Can not add the image';
-						$this->errorsArgs[] = $m[1];
+					if (!$this->zip->addFile($file, $image['zip'])) {
+						$this->errors[] = 'Can not add the image ';
+						$this->errorsArgs[] = $file;
 						return false;
 					}
 				} elseif (preg_match('|show_image.php\?(.*)|', $args['src'], $m)) {
