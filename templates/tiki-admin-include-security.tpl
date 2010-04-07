@@ -27,8 +27,10 @@
 	
 		<fieldset>
 			<legend>{tr}Spam protection{/tr}</legend>
+			{preference name=rnd_num_reg}
 			{preference name=feature_antibot}
 			{preference name=feature_wiki_protect_email}
+			{preference name=feature_wiki_ext_rel_nofollow}
 		</fieldset>		
 	
 		<fieldset>
