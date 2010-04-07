@@ -1223,7 +1223,7 @@ function get_default_prefs() {
 		// layout
 		'feature_left_column' => 'y',
 		'feature_right_column' => 'y',
-		'feature_top_bar' => 'n',
+		'feature_top_bar' => 'y',
 		'feature_bot_bar' => 'y',
 		'feature_bot_bar_icons' => 'n',
 		'feature_bot_bar_debug' => 'n',
