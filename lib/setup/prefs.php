@@ -1237,6 +1237,7 @@ function get_default_prefs() {
 		'site_favicon' => 'favicon.png',
 		'site_favicon_type' => 'image/png',
 		'style' => 'fivealive.css',
+		'style_option' => '',
 		'use_context_menu_icon' => 'y',
 		'use_context_menu_text' => 'y',
 		'feature_site_report' => 'n',
