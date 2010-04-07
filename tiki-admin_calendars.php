@@ -147,6 +147,7 @@ if ($_REQUEST["calendarId"]) {
 	$info["show_language"] = 'n';
 	$info["show_participants"] = 'n';
 	$info["show_url"] = 'n';
+	$info['show_status'] = 'n';
 	$info["user"] = "$user";
 	$info["personal"] = 'n';
 	$info["startday"] = '25200';
