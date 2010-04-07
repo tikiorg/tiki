@@ -873,4 +873,4 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
-$smarty->display("tiki-print.tpl");
+$smarty->display("tiki-install_screens.tpl");

@@ -1,11 +1,14 @@
 <div id="fixedwidth"> {* enables fixed-width layouts *}
 	<div id="main">
-<div id="siteheader" class="clearfix">
-	<div id="header-top">
-		<div id="sitelogo" style="padding-left:70px"><h1><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tikisitelogo.{if isset($ie6)}gif{else}png{/if}" />
-			<span style="vertical-align:middle">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
+<div id="header">
+	<div id="siteheader" class="clearfix">
+		<div id="header-top">
+			<div id="sitelogo" style="padding-left:0; padding-top: 40px"><h1 style="margin: 0"><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tikisitelogo.{if isset($ie6)}gif{else}png{/if}" />
+				<span style="vertical-align:middle">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
+			</div>
 		</div>
 	</div>
+	<div id="tiki-top"></div> {* added for background image consistency *}
 </div>
 
 <div id="middle" class="clearfix">
@@ -37,7 +40,7 @@
 		{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 	</form>
 </div>
-<div align="center" style="margin-top:1em;">
+<div align="center" style="margin-top: 1em;">
 	<form action="tiki-install.php" method="post">
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
@@ -68,18 +71,18 @@
 	<br />
 	<h2>{tr}Memory{/tr}</h2>
 {if $php_memory_limit <= 0}
-	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
+	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki has not detected your PHP memory_limit.{/tr} {tr}This probably means you have no set limit (all is well).{/tr} </p>
 	</div>	
 {elseif $php_memory_limit < 32 * 1024 * 1024}
-	<div style="border-style: solid; border-width: 1; padding: 5px; background: #FF0000">
+	<div style="background: #ffffcc; border: 2px solid #ff0000; color:#000;">
 		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory limit at:{/tr} {$php_memory_limit|kbsize:true:0}</p>
 	</div>
 	<p>{tr}Tiki requires <strong>at least</strong> 32MB of PHP memory for script execution.{/tr} {tr}Allocating too little memory will cause Tiki to display blank pages.{/tr}</p>
 	<p>{tr}To change the memory limit, use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver.{/tr}</p>
 
 {else}
-	<div style="border: solid 1px #000; padding: 4px; background-color: #a9ff9b;">
+	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
 		<p align="center">
 		  <span style="font-size: large; padding: 4px;">
 		  <img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory_limit at:{/tr} {$php_memory_limit|kbsize:true:0}. 
@@ -117,12 +120,12 @@
 {else}
 	
 {if $mail_test eq 'y'}
-	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
+	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki was able to send a test message to{/tr} {$email_test_to}.</p>
 	</div>
 	<p>&nbsp;</p>
 {else}
-	<div style="border: solid 1px #000; padding: 5px; background: #FF0000">
+	<div style="background: #ffffcc; border: 2px solid #ff0000; color:#000;">
 		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to send a test message.{/tr} {tr}Review your mail log for details.{/tr}</p>
 	</div>
 	<p>{tr}Review the mail settings in your <strong>php.ini</strong> file (for example: confirm that the <strong>sendmail_path</strong> is correct).{/tr} {tr}If your host requires SMTP authentication, additional configuration may be necessary.{/tr}</p>
@@ -131,18 +134,18 @@
 	<br />
 	<h2>{tr}Image Processing{/tr}</h2>
 {if $gd_test eq 'y'}
-	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
+	<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki detected:{/tr} <strong>GD {$gd_info}</strong>.</p>
 {if $sample_image eq 'y'}
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki can create images.{/tr}</p>
 {else}
-	<div style="border: solid 1px #000; padding: 5px; background: #FF0000">
+	<div style="background: #ffffcc; border: 2px solid #ff0000; color:#000;">
 		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to create a sample image. Please check your GD library configuration.{/tr}.</p>
 	</div>
 {/if}
 	</div>
 {else}
-	<div style="border: solid 1px #000; padding: 5px; background: #FF0000">
+	<div style="background: #ffffcc; border: 2px solid #ff0000; color:#000;">
 		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to detect the GD library.{/tr}</p>
 	</div>
 	<p>&nbsp;</p>
@@ -339,7 +342,7 @@
 
 {elseif $install_step eq '5' or ($dbdone ne 'n')}
 <h1>{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}</h1>
-		<div style="margin: 10px 0 5px 0; border: solid 1px #000; padding: 5px; background: #a9ff9b;">
+		<div style="background: #c2eef8; border: 2px solid #2098cd; color:#000; padding: 4px;">
 		<p style="text-align:center; font-size: large;">{if isset($smarty.post.update)}{tr}Upgrade complete{/tr}{else}{tr}Installation complete{/tr}{/if}.</p>
 		<p>{tr}Your database has been configured and Tiki is ready to run!{/tr} 
       {if isset($smarty.post.scratch)}
