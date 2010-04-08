@@ -35,7 +35,7 @@
 											{$display_msg|escape}
 										{/remarksbox}
 									{/if}
-									<div id="role_main">
+									<div role="main" id="role_main">
 										{$mid_data}
 									</div>
 									{show_help}
