@@ -176,15 +176,102 @@ class TikiDate
 	}
 
 	function setTZbyID($tz_id) {
-		if (!empty($tz_id)) {
-			$this->date->setTimeZone(new DateTimeZone($tz_id));
+		$dtz = null;
+		while (!$dtz) {
+			try {
+				$dtz = new DateTimeZone($tz_id);
+			} catch(Exception $e) {
+				$tz_id = $this->convertMissingTimezone($tz_id);
+			}
 		}
+		$this->date->setTimeZone($dtz);
 	}
 
+	// TODO delete in Tiki 6 (if really unused)
 	function convertTZbyID($tz_id) {
-		if (!empty($tz_id)) {
-			$this->date->setTimeZone(new DateTimeZone($tz_id));
+		$this->setTZbyID($tz_id);
+	}
+	
+	function convertMissingTimezone($tz_id) {
+		switch ($tz_id) {		// Convert timezones not in PHP 5
+			case 'A':
+				$tz_id = 'Etc/GMT+1';		// military A to Z
+				break;
+			case 'B':
+				$tz_id = 'Etc/GMT+2';
+				break;
+			case 'C':
+				$tz_id = 'Etc/GMT+3';
+				break;
+			case 'D':
+				$tz_id = 'Etc/GMT+4';
+				break;
+			case 'E':
+				$tz_id = 'Etc/GMT+5';
+				break;
+			case 'F':
+				$tz_id = 'Etc/GMT+6';
+				break;
+			case 'G':
+				$tz_id = 'Etc/GMT+7';
+				break;
+			case 'H':
+				$tz_id = 'Etc/GMT+8';
+				break;
+			case 'I':
+				$tz_id = 'Etc/GMT+9';
+				break;
+			case 'K':
+				$tz_id = 'Etc/GMT+10';
+				break;
+			case 'L':
+				$tz_id = 'Etc/GMT+11';
+				break;
+			case 'M':
+				$tz_id = 'Etc/GMT+12';
+				break;
+			case 'N':
+				$tz_id = 'Etc/GMT-1';
+				break;
+			case 'O':
+				$tz_id = 'Etc/GMT-2';
+				break;
+			case 'P':
+				$tz_id = 'Etc/GMT-3';
+				break;
+			case 'Q':
+				$tz_id = 'Etc/GMT-4';
+				break;
+			case 'R':
+				$tz_id = 'Etc/GMT-5';
+				break;
+			case 'S':
+				$tz_id = 'Etc/GMT-6';
+				break;
+			case 'T':
+				$tz_id = 'Etc/GMT-7';
+				break;
+			case 'U':
+				$tz_id = 'Etc/GMT-8';
+				break;
+			case 'V':
+				$tz_id = 'Etc/GMT-9';
+				break;
+			case 'W':
+				$tz_id = 'Etc/GMT-10';
+				break;
+			case 'X':
+				$tz_id = 'Etc/GMT-11';
+				break;
+			case 'Y':
+				$tz_id = 'Etc/GMT-12';
+				break;
+			case 'Z':
+				$tz_id = 'Etc/GMT';
+			default:
+				$tz_id = 'UTC';
 		}
+		return $tz_id;
 	}
 
 	function getTimezoneId() {
