@@ -1224,7 +1224,7 @@ function get_default_prefs() {
 		// layout
 		'feature_left_column' => 'y',
 		'feature_right_column' => 'y',
-		'feature_top_bar' => 'n',
+		'feature_top_bar' => 'y',
 		'feature_bot_bar' => 'y',
 		'feature_bot_bar_icons' => 'n',
 		'feature_bot_bar_debug' => 'n',
@@ -1237,8 +1237,8 @@ function get_default_prefs() {
 		'slide_style' => 'slidestyle.css',
 		'site_favicon' => 'favicon.png',
 		'site_favicon_type' => 'image/png',
-		'style' => 'strasa.css',
-		'style_option' => 'fixed_width.css',
+		'style' => 'fivealive.css',
+		'style_option' => '',
 		'use_context_menu_icon' => 'y',
 		'use_context_menu_text' => 'y',
 		'feature_site_report' => 'n',
@@ -1309,7 +1309,7 @@ function get_default_prefs() {
 		'toolbar_global_comments' => '
 			bold, italic, strike , - , link, smiley | help
 		',
-		'toobar_sheet' => 'addrow, addrowmulti, deleterow, -, addcolumn, addcolumnmulti, deletecolumn, -, sheetgetrange, -,
+		'toolbar_sheet' => 'addrow, addrowmulti, deleterow, -, addcolumn, addcolumnmulti, deletecolumn, -, sheetgetrange, -,
 			sheetsave, sheetrefresh, sheetfind, -,
 			bold, italic, strike, center,-, color, bgcolor, -, tikilink, nonparsed|sheetclose/',
 

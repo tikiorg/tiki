@@ -7,6 +7,12 @@
 
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
+if (!empty($_REQUEST['w_use_dir'])) {
+	if (substr($_REQUEST['w_use_dir'], -1) != "\\" && substr($_REQUEST['w_use_dir'], -1) != "/") {
+		$_REQUEST['w_use_dir'] .= '/';
+	}
+	simple_set_value('w_use_dir');
+}
 if (isset($_REQUEST["dump"])) {
 	check_ticket('admin-inc-wiki');
 	include ("lib/tar.class.php");

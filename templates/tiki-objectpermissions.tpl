@@ -15,6 +15,7 @@
 	<h2>{tr}Edit Permissions{/tr}</h2>
 		{/if}
 	<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
+		{capture name="notices"}
 		{if empty($filegals_manager)}
 			{if $objectType eq 'global'}
 				{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -39,7 +40,8 @@
 				{/remarksbox}
 			{/if}
 		{/if}
-	
+		{/capture}
+		{$smarty.capture.notices}
 	<hr />
 		<h2>{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to this object{/tr}{/if} {icon _id="img/loading-light.gif" id="perms_busy" style="vertical-align:top; display:none;"}</h2>
 
@@ -144,15 +146,11 @@ if ($jq("#assignstructure").attr("checked")) {
 
 		{tab name="{tr}Quick Permissions{/tr}"}
 
-			{if $prefs.feature_tabs neq 'y'}
-		<h2>{tr}Quick Permissions{/tr}</h2>
-			{/if}
+		{if $prefs.feature_tabs neq 'y'}
+			<h2>{tr}Quick Permissions{/tr}</h2>
+		{/if}
 
-			{if empty($filegals_manager)}
-				{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
-					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
-				{/remarksbox}
-			{/if}
+		{$smarty.capture.notices}
 
 		<h2>{tr}Assign Quick-Permissions to this object{/tr}</h2>
 
@@ -193,6 +191,13 @@ if ($jq("#assignstructure").attr("checked")) {
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 		</div>
 		
+		{if empty($filegals_manager)}
+			{remarksbox type="note" icon="bricks" title="{tr}Experimental{/tr}"}
+				{tr}<em>Quick permissions</em> should be considered as an experimental feature.{/tr}<br/>
+				{tr}Although permissions will be set as expected using this form, it doesn't necessarily show the current permissions reliably.{/tr}<br /><br />
+				{tr}There is also no undo - <strong>Use with care!</strong>{/tr}
+			{/remarksbox}
+		{/if}
 	{/tab}
 </form>
 	{/if}

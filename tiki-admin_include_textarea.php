@@ -173,3 +173,31 @@ if (isset($_REQUEST['plugin_alias']) && $pluginInfo = $tikilib->plugin_alias_inf
 }
 $smarty->assign('plugins_alias', $pluginsAlias);
 $smarty->assign('plugins_real', $pluginsReal);
+
+if (isset($_REQUEST['disabled']) && $tiki_p_admin == 'y') {
+	$offset = 0;
+	$disabled = array();
+	foreach($tikilib->plugin_get_list() as $name) {
+		if ($prefs["wikiplugin_$name"] == 'n') {
+			$allDisabled[] = $name;
+		}
+	}
+	do {
+		$pages = $tikilib->list_pages($offset, $prefs['maxRecords'], 'pageName_asc');
+		if (empty($pages['data'])) {
+			break;
+		}
+		$offset += $prefs['maxRecords'];
+		foreach ($pages['data'] as $page) {
+			$plugins = $tikilib->getPlugins($page['data'], $allDisabled);
+			if (!empty($plugins)) {
+				foreach ($plugins as $plugin) {
+					if (!in_array($plugin[1], $disabled)) {
+						$disabled[] = $plugin[1];
+					}
+				}
+			}
+		}
+	} while (true);
+	$smarty->assign_by_ref('disabled', $disabled);
+}

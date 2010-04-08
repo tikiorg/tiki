@@ -633,6 +633,9 @@ function wikiplugin_img_info() {
 		//Set the variables for height, width and iptc data
 		$fwidth = '';
 		$fheight = '';
+		//set to null because Image class will place exif_thumbnail dimensions here if thumbnail exists
+		$imageObj->height = NULL;
+		$imageObj->width = NULL;
 		if (is_object($imageObj)) {
 			$fwidth = $imageObj->get_width();
 			$fheight = $imageObj->get_height();

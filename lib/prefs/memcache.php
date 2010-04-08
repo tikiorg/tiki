@@ -63,8 +63,10 @@ function prefs_memcache_serialize_servers( $data ) {
 		$data = unserialize( $data );
 	}
 	$out = '';
-	foreach( $data as $row ) {
-		$out .= "{$row['host']}:{$row['port']} ({$row['weight']})\n";
+	if (is_array($data)) {
+		foreach( $data as $row ) {
+			$out .= "{$row['host']}:{$row['port']} ({$row['weight']})\n";
+		}
 	}
 
 	return trim( $out );

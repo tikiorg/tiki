@@ -210,7 +210,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <select name="batchaction">
 <option value="">{tr}...{/tr}</option>
 <option value="delete">{tr}Delete{/tr}</option>
-{if $tracker_info.showStatus eq 'y'}
+{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 <option value="c">{tr}Close{/tr}</option>
 <option value="o">{tr}Open{/tr}</option>
 <option value="p">{tr}Pending{/tr}</option>

@@ -101,10 +101,12 @@ span.button.highlight a {
 }
 
 select,
-option,
 input[type="text"],
+input[type="password"],
+input[type="file"],
 input#login-pass,
-textarea {
+textarea,
+.adminoptionbox option {
 	background: #fdf1d0;
 	border-color: #fee194 #fdfae9 #fdfae9 #fee194;
 }
@@ -137,12 +139,17 @@ tr.diffheader {
 .tabinactive:hover,
 .tabactive {
 	border: 1px solid #ffc506;
-	background: #fdbb09;
+	background: #fde197;
+}
+
+.tabinactive:hover a,
+.tabactive a {
+	color: #c74b23;	
 }
 
 .tabcontent,
 form.admin fieldset {
-	background: #fdbb09;	
+	background: #fde197;	
 }
 
 /* Quote plugin */

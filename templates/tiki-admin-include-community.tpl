@@ -30,6 +30,7 @@
 				{preference name=feature_userlevels}
 				{preference name=feature_groupalert}
 				{preference name=change_theme}
+				{preference name=auth_token_tellafriend}
 			</div>
 		{/tab}
 
@@ -84,7 +85,7 @@
 			{preference name=users_prefs_show_mouseover_user_info}
 			{preference name=users_prefs_tasks_maxRecords}
 
-			{preference name=auth_token_tellafriend}
+
 		</fieldset>
 
 		{* *** User Messages *** *}

@@ -377,20 +377,20 @@ function prefs_feature_list() {
 		),
 		'feature_sefurl' => array(
 			'name' => tra('Search engine friendly url'),
-			'description' => tra('Search engine friendly url'),
+			'description' => tra('If you are using Apache, you can rename _htaccess to .htaccess to get Short URLs'),
 			'help' => 'Rewrite+Rules',
 			'perspective' => false,
 			'type' => 'flag',
 		),
 		'feature_sheet' => array(
 			'name' => tra('SpreadSheet'),
-			'description' => tra('SpreadSheet'),
+			'description' => tra('Datasheets with calculations and charts'),
 			'help' => 'SpreadSheet',
 			'type' => 'flag',
 		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
-			'description' => tra('Wysiwyg editor'),
+			'description' => tra('WYSIWYG is an acronym for What You See Is What You Get. Uses CKEditor.'),
 			'help' => 'Wysiwyg',
 			'type' => 'flag',
 		),
@@ -413,7 +413,7 @@ function prefs_feature_list() {
 		),	
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura'),
-			'description' => tra('Kaltura'),
+			'description' => tra('Collaborative video editing'),
 			'help' => 'Kaltura',
 			'type' => 'flag',
 		),
@@ -1312,6 +1312,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'JQuery#Sheet',
 			'description' => tra('Experimental implementation of jQuery.sheet - data remains compatible with previous Tiki Sheets'),
+			'dependencies' => array(
+				'feature_sheet',
+			),
 		),
 		'feature_jquery_jqs5' => array(
 			'name' => tra('JQuery JQS5'),

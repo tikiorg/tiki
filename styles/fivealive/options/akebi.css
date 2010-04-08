@@ -122,16 +122,12 @@ span.button.highlight a {
 }
 
 select,
-option,
 input[type="text"],
-textarea {
-	background: #ddf8f9;
-	border-color: #b9f2fb #f1fbfc #f1fbfc #b9f2fb;
-}
-
-input[type="text"],
+input[type="password"],
+input[type="file"],
 input#login-pass,
-textarea {
+textarea,
+.adminoptionbox option {
 	background: #ddf8f9;
 	color: #000;
 	border-color: #b4f3fb #fff #fff #b4f3fb;
@@ -164,12 +160,17 @@ tr.diffheader {
 .tabinactive:hover,
 .tabactive {
 	border: 1px solid #77d6e5;
-	background: #18a3bb;
+	background: #a8e2ec;
+}
+
+.tabinactive:hover a,
+.tabactive a {
+	color: #168294;	
 }
 
 .tabcontent,
 form.admin fieldset {
-	background: #18a3bb;	
+	background: #a8e2ec;	
 }
 
 /* Quote plugin */

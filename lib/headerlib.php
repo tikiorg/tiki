@@ -37,7 +37,7 @@ class HeaderLib
 	function convert_cdn( $file ) {
 		global $prefs, $tikiroot;
 	
-		if( $prefs['tiki_cdn'] && 'http' != substr( $file, 0, 4 ) ) {
+		if( !empty($prefs['tiki_cdn']) && 'http' != substr( $file, 0, 4 ) ) {
 			$file = $prefs['tiki_cdn'] . $tikiroot . $file;
 		}
 
