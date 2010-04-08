@@ -55,5 +55,5 @@ function smarty_function_phplayers($params, &$smarty) {
 	$return = $tikiphplayers->mkMenu($params['output'], 'usermenu'.$params['id'], $params['type'], $params['file'], $params['curOption']);
 	if ( $use_items_icons ) $return = str_replace('class="mdkverbar"', 'class="mdkverbar mdkverbar-with-icons"', $return);
 
-	return '<div role="navigation">' . $return . '</div>';
+	return '<div>' . $return . '</div>';
 }

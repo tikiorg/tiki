@@ -92,7 +92,7 @@ function smarty_function_menu($params, &$smarty)
 	$data = $smarty->fetch($tpl);
 	$data = preg_replace('/<ul>\s*<\/ul>/', '', $data);
 	$data = preg_replace('/<ol>\s*<\/ol>/', '', $data);
-	return '<div role="navigation">' . $data . '</div>';
+	return '<div>' . $data . '</div>';
 }
 
 function compare_menu_options($a, $b) { return strcmp(tra($a['name']), tra($b['name'])); }
