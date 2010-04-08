@@ -239,7 +239,7 @@ class XmlLib extends TikiLib
 			return false;
 		}
 
-		if (!($this->xml = $this->zip->getFromName(WIKI_XML))) {
+		if (($this->xml = $this->zip->getFromName(WIKI_XML)) === false) {
 			$this->errors[] = 'Can not unzip';
 			$this->errorsArgs[] = WIKI_XML;
 			return false;
@@ -272,7 +272,7 @@ class XmlLib extends TikiLib
 		global $tikilib, $wikilib, $prefs, $tiki_p_wiki_attach_files, $user, $tiki_p_edit_comments, $dbTiki, $tikidomain;
 
 		$dir = $info['name'];
-		if (!($info['data'] = $this->zip->getFromName($info['zip']))) {
+		if (($info['data'] = $this->zip->getFromName($info['zip'])) === false) {
 			$this->errors[] = 'Can not unzip';
 			$this->errorsArgs[] = $info['zip'];
 			return false;			
@@ -292,13 +292,13 @@ class XmlLib extends TikiLib
 					$reply_info = $commentslib->get_comment($parentd);
 					$in_reply_to = $reply_info['message_id'];
 				}
-				$newThreadIds[$comment['threadId']] = $commentslib->post_new_comment('wiki page:'.$info['name'], $parentId, $config['fromUser']? $config['fromUser']: $comment['user'], $comment['title'], $comment['data'], $message_id, $reply_to);
+				$newThreadIds[$comment['threadId']] = $commentslib->post_new_comment('wiki page:'.$info['name'], $parentId, $config['fromUser']? $config['fromUser']: $comment['user'], $comment['title'], $comment['data'], $message_id, $reply_to, 'n', '', '', '', '', $comment['date']);
 			}
 		}
 		if ($prefs['feature_wiki_attachments'] == 'y' && $tiki_p_wiki_attach_files == 'y' && !empty($info['attachments'])) {
 			foreach ($info['attachments'] as $attachment) {
-				if (!($attachment['data'] = $this->zip->getFromName($attachment['zip']))) {
-					$this->errors[] = 'Can not unzip attachement';
+				if (($attachment['data'] = $this->zip->getFromName($attachment['zip'])) === false) {
+					$this->errors[] = 'Can not unzip attachment';
 					$this->errorsArgs[] = $attachment['zip'];
 					return false;	
 				}
@@ -330,7 +330,7 @@ class XmlLib extends TikiLib
 				if (empty($image['zip'])) {//external link to image
 					continue;
 				}
-				if (!($image['data'] = $this->zip->getFromName($image['zip']))) {
+				if (($image['data'] = $this->zip->getFromName($image['zip'])) === false) {
 					$this->errors[] = 'Can not unzip image';
 					$this->errorsArgs[] = $image['zip'];
 					return false;
@@ -352,7 +352,7 @@ class XmlLib extends TikiLib
 				$maxVersion = 0;
 			}
 			foreach ($info['history'] as $version) {
-				if (!($version['data'] = $this->zip->getFromName($version['zip']))) {
+				if (($version['data'] = $this->zip->getFromName($version['zip'])) === false) {
 					$this->errors[] = 'Can not unzip history';
 					$this->errorsArgs[] = $version['version'];
 					return false;	
