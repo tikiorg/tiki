@@ -12,19 +12,24 @@ $access->check_feature('feature_wiki');
 $access->check_permission('tiki_p_admin');
 
 if (isset($_REQUEST['import'])) {
-	if (is_uploaded_file($_FILES['zip']['tmp_name'])) {
-		check_ticket('import_xml_zip');
+	check_ticket('import_xml_zip');
+	if (isset($_REQUEST['local'])) {
+		$zipFile = $_REQUEST['local'];
+	} elseif (is_uploaded_file($_FILES['zip']['tmp_name'])) {
+		$zipFile = $_FILES['zip']['tmp_name'];
+	} else {
+		$smarty->assign('error', tra('Error'));
+		$zipFile = '';
+	}
+	if ($zipFile) {
 		include_once('lib/wiki/xmllib.php');
 		$xmllib = new XmlLib;
-		$zipFile = $_FILES['zip']['tmp_name'];
 		$config = array();
 		if ($xmllib->import_pages($zipFile, $config)) {
 			$smarty->assign('msg', tra('Operations executed successfully'));
 		} else {
 			$smarty->assign('error', $xmllib->get_error());
 		}
-	} else {
-		$smarty->assign('error', tra('Error'));
 	}
 }
 ask_ticket('import_xml_zip');

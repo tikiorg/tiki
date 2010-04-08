@@ -1,13 +1,13 @@
 <page zip="{$info.zip}">
-<name><![CDATA[{$info.pageName}]]></name>
-{if $info.description}<description><![CDATA[{$info.description}]]></description>{/if}
-{if $info.comment}<comment><![CDATA[{$info.comment}]]></comment>{/if}
-<creator><![CDATA[{$info.creator}]]></creator>
+<name><![CDATA[{$info.pageName|escape:'html'}]]></name>
+{if $info.description}<description><![CDATA[{$info.description|escape:'html'}]]></description>{/if}
+{if $info.comment}<comment><![CDATA[{$info.comment|escape:'html'}]]></comment>{/if}
+<creator><![CDATA[{$info.creator|escape:'html'}]]></creator>
 <user><![CDATA[{$info.user|escape:"html"}]]></user>
 {if $info.lang}<lang>{$info.lang}</lang>{/if}
 <is_html>{$info.is_html}</is_html>
 <wysiwyg>{$info.wysiwyg}</wysiwyg>
-{*<data><![CDATA[{$info.data}]]></data>*}
+{*<data><![CDATA[{$info.data|escape:'html'}]]></data>*}
 {if $config.comments and !empty($comments)}
 <comments>
 {foreach from=$comments item=comment}
@@ -20,22 +20,22 @@
 {foreach from=$images item=img}
 	<image zip="{$img.zip}"
 	{if $img.filename} filename="{$img.filename}"{/if}
-	{if $img.name} name="{$img.name}"{/if}
+	{if $img.name} name="{$img.name|escape:'html'}"{/if}
 	{if $img.galleryId} galleryId="{$img.galleryId}"{/if}
 	{if $img.id} id="{$img.id}"{/if}
 	{if $img.where} where="{$img.where}"{/if}
-	><wiki><![CDATA[{$img.wiki}]]></wiki></image>
+	><wiki><![CDATA[{$img.wiki|escape:'html'}]]></wiki></image>
 {/foreach}
 </images>
 {/if}
 {if $config.attachments and !empty($attachments)}
 <attachments>
 {foreach from=$attachments item=att}
-	<attachment filename="{$att.filename}" attId="{$att.attId}" zip="{$att.zip}">
+	<attachment filename="{$att.filename|escape:'html'}" attId="{$att.attId}" zip="{$att.zip}">
 		<filesize>{$att.filesize}</filesize>
 		<filetype>{$att.filetype}</filetype>
-		<user><![CDATA[{$att.user}]]></user>
-		{if $att.comment}<comment><![CDATA[{$att.comment}]]></comment>{/if}
+		<user><![CDATA[{$att.user|escape:'html'}]]></user>
+		{if $att.comment}<comment><![CDATA[{$att.comment|escape:'html'}]]></comment>{/if}
 	</attachment>
 {/foreach}
 </attachments>
@@ -44,9 +44,9 @@
 <history>
 {foreach from=$history item=hist}
 	<version version="{$hist.version}" zip="{$hist.zip}">
-		  <user><![CDATA[{$hist.user}]]></user>
-		  {if $hist.description}<description><![CDATA[{$hist.description}]]></description>{/if}
-		  {if $hist.comment}<comment><![CDATA[{$hist.comment}]]></comment>{/if}
+		  <user><![CDATA[{$hist.user|escape:'html'}]]></user>
+		  {if $hist.description}<description><![CDATA[{$hist.description|escape:'html'}]]></description>{/if}
+		  {if $hist.comment}<comment><![CDATA[{$hist.comment|escape:'html'}]]></comment>{/if}
 	</version>
 {/foreach}
 </history>
