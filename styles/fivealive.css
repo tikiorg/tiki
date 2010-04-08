@@ -157,6 +157,8 @@ span.button.highlight a {
 
 select,
 input[type="text"],
+input[type="password"],
+input[type="file"],
 input#login-pass,
 textarea,
 .adminoptionbox option {
@@ -178,6 +180,7 @@ select[multiple="multiple"] {
 #header-top {
 	height: 203px;
 	position: relative;
+	overflow: hidden;
 }
 
 #secondary_site_menu {
@@ -534,11 +537,16 @@ fieldset.admin label,
 	border-bottom-width: 0;
 	padding-bottom: 1px;
 	border: 1px solid #aaaaaa;
-	background: #74c0e2;
+	background: #a9d6eb;
+}
+
+.tabinactive:hover a,
+.tabactive a {
+	color: #12365a;	
 }
 
 .tabcontent {
-	background: #74c0e2;
+	background: #a9d6eb;
 	border: none;
 	border-top: none !important;
 }
@@ -692,10 +700,10 @@ a.dirsublink {
 .calodd, .caleven {border: }
 .calodd .calfocus {background: }
 .caleven .calfocus, .caleven .calfocuson {background: }
-
+*/
 .caltable .days {
 	color: #fff;
-}*/
+}
 
 /***** Admin *****/
 /*body.tiki_admin .simplebox,

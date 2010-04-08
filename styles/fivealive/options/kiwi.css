@@ -26,7 +26,7 @@ fieldset {
 }
 
 #footer {
-	background: #597831;
+	background: #445b25;
 	color: #f0e884;
 }
 
@@ -100,10 +100,12 @@ span.button.highlight a {
 }
 
 select,
-option,
 input[type="text"],
+input[type="password"],
+input[type="file"],
 input#login-pass,
-textarea {
+textarea,
+.adminoptionbox option  {
 	background: #f8f9d4;
 	border-color: #f5fb86 #fbfbee #fbfbee #f5fb86;
 }
@@ -135,12 +137,17 @@ tr.diffheader {
 .tabinactive:hover,
 .tabactive {
 	border: 1px solid #f0e884;
-	background: #d8ca14;
+	background: #ece7a8;
+}
+
+.tabinactive:hover a,
+.tabactive a {
+	color: #648637;	
 }
 
 .tabcontent,
 form.admin fieldset {
-	background: #d8ca14;
+	background: #ece7a8;
 }
 
 /* Quote plugin */
