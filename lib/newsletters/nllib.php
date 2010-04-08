@@ -315,6 +315,11 @@ class NlLib extends TikiLib
 				return false;
 			return true;
 		} else {
+			if (!empty($res) && $res["valid"] == 'n') {
+				$query = "update `tiki_newsletter_subscriptions` set `valid` = 'y' where `nlId` = ? and `email` = ? and `isUser` = ?";
+				$this->query($query,array((int)$nlId,$add,$isUser));
+				return true; 
+			}
 			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) values(?,?,?,?,?,?,?)";
 			$result = $this->query($query,array((int)$nlId,$add,$code,'y',(int)$this->now,$isUser,'n'));
 			return true;
