@@ -69,8 +69,7 @@ if ($prefs['feature_tabs'] == 'y') {
 		// AJAX call (probably) and same URI, reset cookietab if changed "page"
 		if ($prefs['feature_ajax'] == 'y' && isset($_POST['xjxfun'])) {
 			if (isset($_COOKIE['tab_last_query']) && $_COOKIE['tab_last_query'] != $_SERVER['QUERY_STRING']) {
-				setcookie('tab', '1');
-				$_COOKIE['tab'] = '1';
+				$cookietab = '1';
 			}
 			setcookie('tab_last_query', $_SERVER['QUERY_STRING']);
 		}
@@ -78,7 +77,7 @@ if ($prefs['feature_tabs'] == 'y') {
 	} elseif (isset($_SERVER['HTTP_REFERER']) && preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
 		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['REQUEST_URI'], $q_match);	// TODO replace with better way to get a param?
 		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['HTTP_REFERER'], $ref_match);
-		if ($q_match == $ref_match) {	// for admin includes when staying on same panel
+		if (count($q_match) == 0 || $q_match == $ref_match) {	// for admin includes when staying on same panel
 			$cookietab = $_COOKIE['tab'];
 		}
 	}
@@ -86,6 +85,8 @@ if ($prefs['feature_tabs'] == 'y') {
 		$cookietab = '1';
 	}
 	$smarty->assign('cookietab',$cookietab);
+	setcookie('tab', "$cookietab");
+	$_COOKIE['tab'] = "$cookietab";
 	
 	// add JS to set up current tab
 	$max_tikitabs = 50;
