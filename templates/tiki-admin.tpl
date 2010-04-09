@@ -25,6 +25,8 @@
 		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}"/>
 	</form>
 </fieldset>
+{elseif $lm_criteria}
+	{remarksbox type="warning" title="{tr}No results{/tr}"}{tr}No preferences were found for your search query.{/tr}{/remarksbox}
 {/if}
 {/if}
 
