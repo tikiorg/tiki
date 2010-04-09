@@ -460,7 +460,6 @@ $smarty = new Smarty_Tikiwiki_Installer($tikidomain);
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
-$smarty->assign('style', 'fivealive.css');
 $smarty->assign('virt', isset($virt) ? $virt : null );
 $smarty->assign('multi', isset($multi) ? $multi : null );
 $smarty->assign('lang', $language);
@@ -858,6 +857,9 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 
 include "lib/headerlib.php";
 $headerlib->add_cssfile('styles/fivealive.css');
+$headerlib->add_jsfile( 'lib/tiki-js.js' );
+$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
+$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
 
 $smarty->assign_by_ref('headerlib',$headerlib);
 
