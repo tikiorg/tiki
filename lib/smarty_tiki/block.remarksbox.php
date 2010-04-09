@@ -17,7 +17,7 @@
  * \endcode
  *
  * \params
- *  - type		"tip|comment|note|warning|errors" default=tip
+ *  - type		"tip|comment|note|warning|errors|feedback|confirm default=tip
  *  - title		Text as a label. Leave out for no label (or icon)
  *  - highlight	"y|n" default=n
  *  - icon		Override default icons. See function.icon.php for more info
@@ -51,7 +51,7 @@ function smarty_block_remarksbox($params, $content, &$smarty) {
 			$icon='book_open';
 		} else if ($type=='comment') {//get_strings tra('comment')
 			$icon='comments';
-		} else if ($type=='warning') {//get_strings tra('warning')
+		} else if ($type=='warning' || $type == 'confirm') {//get_strings tra('warning') tra('confirm')
 			$icon='exclamation';
 		} else if ($type=='note') {//get_strings tra('note')
 			$icon='information';

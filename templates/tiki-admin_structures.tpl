@@ -2,55 +2,61 @@
 {title help="Structures"}{tr}Structures{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
-	{button href='tiki-import_xml_zip.php' _text='{tr}XML Zip Import{/tr}'}
+	<div class="navbar">
+		{button href='tiki-import_xml_zip.php' _text='{tr}XML Zip Import{/tr}'}
+	</div>
 {/if}
 
 {if $just_created neq 'n' && $tiki_p_edit_structures == 'y'}
-<br />
+{remarksbox type='feedback' title="{tr}Feedback{/tr}"}
 {tr}The structure{/tr} <a class='tablename' href='tiki-edit_structure.php?page_ref_id={$just_created}'>{$just_created_name|escape}</a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$just_created_name|escape:"url"}' title="{tr}View{/tr}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>&nbsp;&nbsp;{tr}has just been created.{/tr}
-<br /><br />
+{/remarksbox}
 {/if}
 
 {if $askremove eq 'y'}
-<div class="simplebox highlight">
+{remarksbox type='confirm' title="{tr}Please Confirm{/tr}"}
 {tr}You will remove structure{/tr}: {$removename|escape}<br />
 {button href="?rremove=$remove&amp;page=$removename" _text='{tr}Destroy the structure leaving the wiki pages{/tr}'}
 {if $tiki_p_remove == 'y'}
 {button href="?rremovex=$remove&amp;page=$removename" _text='{tr}Destroy the structure and remove the pages{/tr}'}
-</div>
 {/if}
+{/remarksbox}
 {/if}
 
 {if count($alert_in_st) > 0}
+{remarksbox type='warning' title="{tr}Warning{/tr}"}
 {tr}Note that the following pages are also part of another structure. Make sure that access permissions (if any) do not conflict:{/tr}
 {foreach from=$alert_in_st item=thest}
 &nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thest|escape:"url"}' target="_blank">{$thest}</a>
 {/foreach}
-<br /><br />
+{/remarksbox}
 {/if}
 
 {if count($alert_categorized) > 0}
+{remarksbox type='feedback' title="{tr}Feedback{/tr}"}
 {tr}The following pages have automatically been categorized with the same categories as the structure:{/tr}
 {foreach from=$alert_categorized item=thecat}
 &nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
 {/foreach}
-<br /><br />
+{/remarksbox}
 {/if}
 
 {if count($alert_to_remove_cats) > 0}
+{remarksbox type='warning' title="{tr}Warning{/tr}"}
 {tr}The following pages have categories but the structure has none. You may wish to uncategorize them to be consistent:{/tr}
 {foreach from=$alert_to_remove_cats item=thecat}
 &nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
 {/foreach}
-<br /><br />
+{/remarksbox}
 {/if}
 
 {if count($alert_to_remove_extra_cats) > 0}
+{remarksbox type='warning' title="{tr}Warning{/tr}"}
 {tr}The following pages are in categories that the structure is not in. You may wish to recategorize them in order to be consistent:{/tr}
 {foreach from=$alert_to_remove_extra_cats item=theextracat}
 &nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$theextracat|escape:"url"}' target="_blank">{$theextracat}</a>
 {/foreach}
-<br /><br />
+{/remarksbox}
 {/if}
 
 {tabset}
@@ -100,7 +106,7 @@
 </tr>
 {sectionelse}
 <tr>
-  <td colspan="2" class="odd">{tr}No records found.{/tr}<td>
+  <td colspan="{if $tiki_p_admin eq 'y'}3{else}2{/if}" class="odd">{tr}No records found.{/tr}<td>
 </tr>
 {/section}
 </table>
