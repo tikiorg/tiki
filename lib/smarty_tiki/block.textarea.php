@@ -306,7 +306,7 @@ function switchEditor(mode, form) {
 }';
 		}
 		
-		if ( $params['_wysiwyg'] != 'y') {	// show hidden parent before applying resizable
+		if ( $prefs['feature_jquery_ui'] == 'y' && $params['_wysiwyg'] != 'y') {	// show hidden parent before applying resizable
 			$js_editconfirm .= "
 var hiddenParents = \$jq('#$as_id').parents('fieldset:hidden:last');
 if (hiddenParents.length) { hiddenParents.show(); }
