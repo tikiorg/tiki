@@ -1219,6 +1219,10 @@ body.tiki_forums table.normal {
 	float: right;
 	text-align: right;
 }
+.post .postfooter .rating {
+	display: inline;
+}
+
 
 .post .postfooter .actions,
 .post .postfooter .status {
