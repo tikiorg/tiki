@@ -2220,7 +2220,7 @@ class Comments extends TikiLib
 						0, 0, ?, ?, 0, 0, ?, ?, 
 						?, ?, ?, ?, ?, 'n')";
 			$result = $this->query($query, 
-					array( $object[0], (string) $object[1],(int) $this->now, $userName,
+					array( $object[0], (string) $object[1],(int) $postDate, $userName,
 						$title, $data, $hash, (int) $parentId, $type,
 						$summary, $smiley, $this->get_ip_address(),
 						$message_id, (string) $in_reply_to, $approved)
