@@ -8,10 +8,6 @@
 // Wiki plugin to display a SWF file
 // damian aka damosoft 30 March 2004
 
-function wikiplugin_flash_help() {
-        return tra("Displays a Flash (.swf) file in the wiki page").":<br />~np~{FLASH(movie=\"url_to_flash\",width=>xx,height=>xx,quality=>high)}{FLASH}~/np~";
-}
-
 function wikiplugin_flash_info() {
 	return array(
 		'name' => tra('Flash video'),

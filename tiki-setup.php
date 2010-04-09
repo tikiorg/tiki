@@ -171,6 +171,8 @@ if( $prefs['feature_fixed_width'] == 'y' ) {
 }
 
 if ($prefs['javascript_enabled'] != 'n') {
+
+	$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 	
 	if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'external' );
