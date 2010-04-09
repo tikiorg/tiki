@@ -7,14 +7,14 @@
 </div>
 
 {if $error}
-	<div class="simplebox highlight">
+	{remarksbox type='errors' title="{tr}Errors{/tr}"}
 		 {$error}
-	</div>
+	{/remarksbox}
 {/if}
 {if $msg}
-	<div class="simplebox highlight">
+	{remarksbox type='feedback' title="{tr}Feedback{/tr}"}
 		 {$msg}
-	</div>
+	{/remarksbox}
 {/if}
 <form enctype='multipart/form-data' method="post" action="{$smarty.server.PHP_SELF}">
 	  <div><input type="file" name="zip" /></div>
