@@ -11,8 +11,9 @@ include_once('lib/wiki/wikilib.php');
 include_once 'lib/wiki/semanticlib.php';
 include_once ('lib/multilingual/multilinguallib.php');
 
-make_sure_prerequisite_features_are_enabled();
-make_sure_user_has_sufficient_privileges();
+$access->check_feature( array( 'feature_wiki', 'feature_multilingual' ) );
+$access->check_permission( 'tiki_p_edit' );
+
 compute_relevant_languages();
 create_pages_if_necessary();
 display();
@@ -129,11 +130,6 @@ function check_for_existence_of_pages($pages_to_create) {
 	return array($non_existant_pages, $existing_pages);
 }
 
-function make_sure_prerequisite_features_are_enabled() {
-	check_this_feature('feature_wiki', 'tiki-admin.php?page=features');
-	check_this_feature('feature_multilingual', 'tiki-admin.php?page=features');
-}
-
 function set_smarty_page_links($page_names) {
 	global $wikilib, $smarty;
 	
@@ -146,19 +142,6 @@ function set_smarty_page_links($page_names) {
 	}
 	$smarty->assign('page_links', $page_links);
 }	
-
-function check_this_feature($feature_name, $enabling_url) {
-	global $prefs, $smarty;	
-	if (!isset($prefs[$feature_name]) || $prefs[$feature_name] != 'y') {
-		$smarty->assign('msg', 
-			tra('This feature is disabled').
-			": $feature_name"."<P>\n".
-			tra('To enable this feature, go to:').
-			" <a href=\"$enabling_url\">".tra('Admin Feature').'</a>. '.tra('If you do not have privileges to activate this feature, ask the site admin to do it.').'</a>');
-		$smarty->display('error.tpl');
-		die;
-	}	
-}
 
 function display() {
 	global $smarty;
@@ -184,7 +167,3 @@ function strip_country_code_from_lang_ids($lang_ids_with_country_code) {
 	return $lang_ids;
 }
 
-function make_sure_user_has_sufficient_privileges() {
-	global $user;
-	// TODO: Figure out how to make sure that user has page creation permissions.
-}
