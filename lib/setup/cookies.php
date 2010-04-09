@@ -65,22 +65,18 @@ global $cookietab;
 if ($prefs['feature_tabs'] == 'y') {
 	if( isset($_REQUEST['cookietab'])) {
 		$cookietab = $_REQUEST['cookietab'];
-	} elseif (count($_POST) > 0 and preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
-		// AJAX call (probably) and same URI, reset cookietab if changed "page"
-		if ($prefs['feature_ajax'] == 'y' && isset($_POST['xjxfun'])) {
-			if (isset($_COOKIE['tab_last_query']) && $_COOKIE['tab_last_query'] != $_SERVER['QUERY_STRING']) {
-				$cookietab = '1';
-			}
-			setcookie('tab_last_query', $_SERVER['QUERY_STRING']);
-		}
-		$cookietab = $_COOKIE['tab'];
+
 	} elseif (isset($_SERVER['HTTP_REFERER']) && preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
-		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['REQUEST_URI'], $q_match);	// TODO replace with better way to get a param?
+
+		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['REQUEST_URI'], $q_match);	// admin & wiki pages
 		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['HTTP_REFERER'], $ref_match);
-		if (count($q_match) == 0 || $q_match == $ref_match) {	// for admin includes when staying on same panel
+		
+		if ((!isset($_COOKIE['tab_last_query']) || $_COOKIE['tab_last_query'] == $_SERVER['QUERY_STRING']) && (count($q_match) == 0 || $q_match == $ref_match)) {	// for admin includes when staying on same panel
 			$cookietab = $_COOKIE['tab'];
 		}
 	}
+	setcookie('tab_last_query', $_SERVER['QUERY_STRING']);
+	
 	if (empty($cookietab)) {
 		$cookietab = '1';
 	}
