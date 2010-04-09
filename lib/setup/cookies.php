@@ -71,11 +71,11 @@ if ($prefs['feature_tabs'] == 'y') {
 		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['REQUEST_URI'], $q_match);	// admin & wiki pages
 		preg_match('/[\?\&]page=([^\&]*)/', $_SERVER['HTTP_REFERER'], $ref_match);
 		
-		if ((!isset($_COOKIE['tab_last_query']) || $_COOKIE['tab_last_query'] == $_SERVER['QUERY_STRING']) && (count($q_match) == 0 || $q_match == $ref_match)) {	// for admin includes when staying on same panel
+		if ((isset($_COOKIE['tab_last_query']) && $_COOKIE['tab_last_query'] == $_SERVER['SCRIPT_NAME '] . serialize($_GET)) || (count($q_match) == 0 || $q_match == $ref_match)) {	// for admin includes when staying on same panel
 			$cookietab = $_COOKIE['tab'];
 		}
 	}
-	setcookie('tab_last_query', $_SERVER['QUERY_STRING']);
+	setcookie('tab_last_query', $_SERVER['SCRIPT_NAME '] . serialize($_GET));
 	
 	if (empty($cookietab)) {
 		$cookietab = '1';
