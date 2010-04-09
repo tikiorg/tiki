@@ -8,8 +8,8 @@
 require_once ('tiki-setup.php');
 include_once ('lib/minical/minicallib.php');
 
-$acces->check_feature('feature_minical', '');
-$acces->check_permission('tiki_p_minical');
+$access->check_feature('feature_minical', '');
+$access->check_permission('tiki_p_minical');
 
 if (!$user) die;
 if (!isset($_REQUEST["topicId"])) {
