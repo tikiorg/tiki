@@ -16,7 +16,7 @@ function prefs_wikiplugin_list() {
 		$dependencies = array_diff( $info['prefs'], array( 'wikiplugin_' . $plugin ) );
 
 		$prefs['wikiplugin_' . $plugin] = array(
-			'name' => tra( 'Enable plugin %0', $info['name'] ),
+			'name' => tr( 'Enable plugin %0', $info['name'] ),
 			'description' => $info['description'],
 			'type' => 'flag',
 			'help' => 'Plugin' . $plugin,
