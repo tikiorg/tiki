@@ -39,7 +39,6 @@
 	<fieldset>
 		<legend>{tr}Permissions{/tr}</legend>
 		{preference name=feature_search_show_forbidden_cat}
-		{preference name=feature_category_reinforce}
 	</fieldset>
 
 	<div class="input_submit_container clear" style="text-align: center;">

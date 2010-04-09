@@ -1116,7 +1116,6 @@ function get_default_prefs() {
 		'feature_categories' => 'n',
 		'feature_categoryobjects' => 'n',
 		'feature_categorypath' => 'n',
-		'feature_category_reinforce' => 'y',
 		'feature_category_use_phplayers' => 'n',
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',

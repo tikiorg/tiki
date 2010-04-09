@@ -869,11 +869,6 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'WYSIWYCA+Search',
 		),
-		'feature_category_reinforce' => array(
-			'name' => tra("Permission to all (not just any) of an object's categories is required for access"),
-			'type' => 'flag',
-			'perspective' => false,
-		),
 		'feature_listPages' => array(
 			'name' => tra('List pages'),
 			'type' => 'flag',
