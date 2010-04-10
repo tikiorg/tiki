@@ -569,6 +569,11 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			'mandatory' => 'n',
 			'multilingual' => 'n',
 			'order' => 1,
+			'choices' => '',   //just adding this as a placeholder
+			'errordesc' => '',
+			'visby' => '',     //just adding this as a placeholder for now - format seems quite complex
+			'editby' => '',    //just adding this as a placeholder for now - format seems quite complex
+			'descparsed' => 'n',			
 		);
 	} // }}}
 
@@ -656,7 +661,12 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 			$data['order'],
 			$data['options'],
 			$data['description'],
-			$data['multilingual'] );
+			$data['multilingual'],
+			$data['choices'],
+			$data['errordesc'],
+			$data['visby'],
+			$data['editby'],
+			$data['descparsed'] );
 	}
 } // }}}
 
