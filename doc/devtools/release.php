@@ -876,6 +876,10 @@ function display_howto() {
    http://dev.tikiwiki.org/SVNTips#Handling_branches
    
 1/ Preliminary manual tasks
+   - check DB structure to make sure fresh install and upgrade from previous version have the same structure
+   -- Checkout a fresh Tiki 4.0, upgrade to Tiki5.0 
+   -- Checkout a fresh Tiki5.0
+   -- Compare the mysqldump files of each and resolve any differences 
    - run the tiki installer and correct anything obviously wrong
    - the "function update_readme_file" in this script will output to the top-level README:
    -- check if anyone has committed anything manually to README that needs to be brought back into this script
