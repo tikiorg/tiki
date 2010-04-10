@@ -788,7 +788,7 @@ class ToolbarPicker extends Toolbar
 		if( ! $pickerAdded ) {
 			$headerlib->add_js( <<<JS
 window.pickerData = [];
-var pickerDiv;
+var pickerDiv, displayPicker, displayDialog;
 
 displayPicker = function( closeTo, list, areaname ) {
 	if (pickerDiv) {

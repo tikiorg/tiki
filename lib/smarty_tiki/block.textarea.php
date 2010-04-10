@@ -273,6 +273,7 @@ function confirmExit() {
 	if (window.needToConfirm && window.editorDirty) {
 		return '".tra('You are about to leave this page. Changes since your last save will be lost. Are you sure you want to exit this page?')."';
 	}
+	return null;
 }
 
 window.onbeforeunload = confirmExit;

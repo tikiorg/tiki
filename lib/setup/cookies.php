@@ -8,7 +8,7 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-$headerlib->add_js("tiki_cookie_jar=new Array();");
+$headerlib->add_js("var tiki_cookie_jar=new Array();");
 
 if ( isset($_SESSION['tiki_cookie_jar']) ) {
 	$cookielist = array();
