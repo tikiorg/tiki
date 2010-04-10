@@ -25,11 +25,11 @@
 {cycle values="odd,even" print=false advance=false}
 <table class="normal">
 	<tr class="{cycle}">
-		<td>{tr}Started{/tr}</td>
+		<td>{tr}Date of first pageview{/tr}</td>
 		<td style="text-align:right;">{$site_stats.started|tiki_long_date}</td>
 	</tr>
 	<tr class="{cycle}">
-		<td>{tr}Days online{/tr}</td>
+		<td>{tr}Days since first pageview{/tr}</td>
 		<td style="text-align:right;">{$site_stats.days}</td>
 	</tr>
 	<tr class="{cycle}">
