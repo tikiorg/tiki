@@ -876,21 +876,22 @@ function display_howto() {
    http://dev.tikiwiki.org/SVNTips#Handling_branches
    
 1/ Preliminary manual tasks
-   - check DB structure to make sure fresh install and upgrade from previous version have the same structure
+   - Check that all JavaScript can be safely minified with [http://www.jslint.com/|JSLint]
+   - Check DB structure to make sure fresh install and upgrade from previous version have the same structure
    -- Checkout a fresh Tiki 4.0, upgrade to Tiki5.0 
    -- Checkout a fresh Tiki5.0
    -- Compare the mysqldump files of each and resolve any differences 
-   - run the tiki installer and correct anything obviously wrong
-   - the "function update_readme_file" in this script will output to the top-level README:
-   -- check if anyone has committed anything manually to README that needs to be brought back into this script
-   -- check links
-   - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
+   - Run the tiki installer and correct anything obviously wrong
+   - The "function update_readme_file" in this script will output to the top-level README:
+   -- Check if anyone has committed anything manually to README that needs to be brought back into this script
+   -- Check links
+   - Run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
    - in lib/setup/twversion.class.php
      - increment the version number in the constructor
      - update list of valid releases in getVersions()
 		- Make sure you add all Tiki versions (not just the one you are doing now). Ex.: when 5.0 is released, 4.2 will probably exist, and this was added to branches/4.x but not merged by script. 
      - change the version branch to "unstable", "stable", or "head" as explained in that file
-   - commit your changes with this commit message (change \$VERSION by the version of the release):
+   - Commit your changes with this commit message (change \$VERSION by the version of the release):
 	[REL] Preparing \$VERSION release
 
 2/ Create and test pre-release packages by executing the script with the release
