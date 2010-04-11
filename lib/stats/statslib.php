@@ -167,15 +167,14 @@ class StatsLib extends TikiLib
 			$stats['worstday'] = $tikilib->get_long_date($this->getOne("select `day` from `tiki_pageviews` where `pageviews`=?",array((int)$stats['worstpvs'])))
 									. ' (' . $stats['worstpvs'] . ' ' . tra('pvs') . ')';
 		} else {
-			$stats['started'] = 'No pageviews yet';
-			$stats['dateformat'] = '';
-			$stats['days'] = 'n/a';
-			$stats['pageviews'] = 'n/a';
-			$stats['ppd'] = 'n/a';
-			$stats['bestpvs'] = 'n/a';
-			$stats['bestday'] = 'n/a';
-			$stats['worstpvs'] = 'n/a';
-			$stats['worstday'] = 'n/a';
+			$stats['started'] = tra('No pageviews yet');
+			$stats['days'] = tra('n/a');
+			$stats['pageviews'] = tra('n/a');
+			$stats['ppd'] = tra('n/a');
+			$stats['bestpvs'] = tra('n/a');
+			$stats['bestday'] = tra('n/a');
+			$stats['worstpvs'] = tra('n/a');
+			$stats['worstday'] = tra('n/a');
 		}
 		return $stats;
 	}
