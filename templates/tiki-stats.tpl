@@ -41,11 +41,11 @@
 		<td style="text-align:right;">{$site_stats.ppd}</td>
 	</tr>
 	<tr class="{cycle}">
-		<td>{tr}Best day{/tr}</td>
+		<td>{$site_stats.bestdesc}</td>
 		<td style="text-align:right;">{$site_stats.bestday}</td>
 	</tr>
 	<tr class="{cycle}">
-		<td>{tr}Worst day{/tr}</td><td style="text-align:right;">{$site_stats.worstday}</td>
+		<td>{$site_stats.worstdesc}</td><td style="text-align:right;">{$site_stats.worstday}</td>
 	</tr>
 </table>
 
