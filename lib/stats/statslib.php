@@ -153,14 +153,30 @@ class StatsLib extends TikiLib
 	function site_stats() {
 		global $tikilib;
 		$stats = array();
-		$stats['started'] = $this->getOne("select min(`day`) from `tiki_pageviews`",array());
-		$stats['days'] = floor(($tikilib->now - $stats['started'])/86400);
-		$stats["pageviews"] = $this->getOne("select sum(`pageviews`) from `tiki_pageviews`");
-		$stats["ppd"] = ($stats["days"] ? $stats["pageviews"] / $stats["days"] : 0);
-		$stats["bestpvs"] = $this->getOne("select max(`pageviews`) from `tiki_pageviews`",array());
-		$stats["bestday"] = $this->getOne("select `day` from `tiki_pageviews` where `pageviews`=?",array((int)$stats["bestpvs"]));
-		$stats["worstpvs"] = $this->getOne("select min(`pageviews`) from `tiki_pageviews`",array());
-		$stats["worstday"] = $this->getOne("select `day` from `tiki_pageviews` where `pageviews`=?",array((int)$stats["worstpvs"]));
+		$stats['viewrows'] = $this->getOne("select count(*) from `tiki_pageviews`",array());
+		if ($stats['viewrows'] > 0) {
+			$timestamp = $this->getOne("select min(`day`) from `tiki_pageviews`",array());
+			$stats['started'] = $tikilib->get_long_date($timestamp);
+			$stats['days'] = floor(($tikilib->now - $timestamp)/86400);
+			$stats['pageviews'] = $this->getOne("select sum(`pageviews`) from `tiki_pageviews`");
+			$stats['ppd'] = sprintf("%.2f", ($stats['days'] ? $stats['pageviews'] / $stats['days'] : 0));
+			$stats['bestpvs'] = $this->getOne("select max(`pageviews`) from `tiki_pageviews`",array());
+			$stats['bestday'] = $tikilib->get_long_date($this->getOne("select `day` from `tiki_pageviews` where `pageviews`=?",array((int)$stats['bestpvs'])))
+									. ' (' . $stats['bestpvs'] . ' ' . tra('pvs') . ')';
+			$stats['worstpvs'] = $this->getOne("select min(`pageviews`) from `tiki_pageviews`",array());
+			$stats['worstday'] = $tikilib->get_long_date($this->getOne("select `day` from `tiki_pageviews` where `pageviews`=?",array((int)$stats['worstpvs'])))
+									. ' (' . $stats['worstpvs'] . ' ' . tra('pvs') . ')';
+		} else {
+			$stats['started'] = 'No pageviews yet';
+			$stats['dateformat'] = '';
+			$stats['days'] = 'n/a';
+			$stats['pageviews'] = 'n/a';
+			$stats['ppd'] = 'n/a';
+			$stats['bestpvs'] = 'n/a';
+			$stats['bestday'] = 'n/a';
+			$stats['worstpvs'] = 'n/a';
+			$stats['worstday'] = 'n/a';
+		}
 		return $stats;
 	}
 	
