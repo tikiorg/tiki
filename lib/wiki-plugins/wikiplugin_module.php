@@ -58,6 +58,7 @@ function wikiplugin_module_info() {
 		'description' => tra("Displays a module inline in a wiki page. More parameters can be added, not supported by UI."),
 		'prefs' => array( 'wikiplugin_module' ),
 		'validate' => 'all',
+		'icon' => 'pics/icons/module.png',
 		'extraparams' =>true,
 		'params' => array(
 			'module' => array(

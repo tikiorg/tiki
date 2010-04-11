@@ -498,7 +498,7 @@ class ToolbarInline extends Toolbar
 			$syntax = '--text--';
 			break;
 		case 'nonparsed':
-			$label = tra('Non-parsed');
+			$label = tra('Non-parsed (Wiki syntax does not apply)');
 			$icon = tra('pics/icons/noparse.png');
 			$wysiwyg = null;
 			$syntax = '~np~text~/np~';
