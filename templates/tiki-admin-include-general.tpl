@@ -106,7 +106,7 @@
 			</fieldset>		
 
 			<fieldset>
-				<legend>{tr}MultiDomain{/tr}</legend>
+				<legend>{tr}Multi-domain{/tr}</legend>
 				{preference name=multidomain_active}
 				<div class="adminoptionboxchild" id="multidomain_active_childcontainer">
 					{preference name=multidomain_config}
@@ -141,7 +141,7 @@
 		{tab name="{tr}Navigation{/tr}"}
 			<fieldset>
 				<legend>{tr}Menus{/tr}</legend>
-				<em>Create and edit menus </em><a href="tiki-admin_menus.php"><em>here</em></a>
+				<em>{tr}Create and edit menus {/tr}</em><a href="tiki-admin_menus.php"><em>{tr}here{/tr}</em></a>
 				<div class="adminoptionbox">
 					{preference name=feature_phplayers}
 					{preference name=feature_cssmenus}
