@@ -25,11 +25,11 @@
 {cycle values="odd,even" print=false advance=false}
 <table class="normal">
 	<tr class="{cycle}">
-		<td>{tr}Started{/tr}</td>
-		<td style="text-align:right;">{$site_stats.started|tiki_long_date}</td>
+		<td>{tr}Date of first pageview{/tr}</td>
+		<td style="text-align:right;">{$site_stats.started}</td>
 	</tr>
 	<tr class="{cycle}">
-		<td>{tr}Days online{/tr}</td>
+		<td>{tr}Days since first pageview{/tr}</td>
 		<td style="text-align:right;">{$site_stats.days}</td>
 	</tr>
 	<tr class="{cycle}">
@@ -38,14 +38,14 @@
 	</tr>
 	<tr class="{cycle}">
 		<td>{tr}Average pageviews per day{/tr} ({tr}pvs{/tr})</td>
-		<td style="text-align:right;">{$site_stats.ppd|string_format:"%.2f"}</td>
+		<td style="text-align:right;">{$site_stats.ppd}</td>
 	</tr>
 	<tr class="{cycle}">
 		<td>{tr}Best day{/tr}</td>
-		<td style="text-align:right;">{$site_stats.bestday|tiki_long_date} ({$site_stats.bestpvs} {tr}pvs{/tr})</td>
+		<td style="text-align:right;">{$site_stats.bestday}</td>
 	</tr>
 	<tr class="{cycle}">
-		<td>{tr}Worst day{/tr}</td><td style="text-align:right;">{$site_stats.worstday|tiki_long_date} ({$site_stats.worstpvs} {tr}pvs{/tr})</td>
+		<td>{tr}Worst day{/tr}</td><td style="text-align:right;">{$site_stats.worstday}</td>
 	</tr>
 </table>
 
