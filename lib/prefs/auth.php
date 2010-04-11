@@ -64,7 +64,7 @@ function prefs_auth_list() {
 			'perspective' => false,
 		),
 		'auth_phpbb_skip_admin' => array(
-			'name' => tra('Skip admin user'),
+			'name' => tra('Use Tiki authentication for Admin login'),
 			'type' => 'flag',
 			'perspective' => false,
 		),
