@@ -29,7 +29,7 @@ function wikiplugin_chart_info() {
 			'type' => array(
 				'required' => true,
 				'name' => tra('Chart Type'),
-				'description' => tra('BarStackGraphic|MultibarGraphic|MultilineGraphic|PieChartGraphic'),
+				'description' => tra('BarStackGraphic | MultibarGraphic | MultilineGraphic | PieChartGraphic'),
 			),
 			'width' => array(
 				'required' => true,
