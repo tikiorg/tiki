@@ -168,7 +168,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_quizzes' => array(
-			'name' => tra('Quizzes '),
+			'name' => tra('Quizzes'),
 			'description' => tra('Timed questionnaire with recorded scores.'),
 			'help' => 'Quizzes',
 			'type' => 'flag',
