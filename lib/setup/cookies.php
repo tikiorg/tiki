@@ -75,7 +75,7 @@ if ($prefs['feature_tabs'] == 'y') {
 			$cookietab = $_COOKIE['tab'];
 		}
 	}
-	setcookie('tab_last_query', $_SERVER['SCRIPT_NAME '] . serialize($_GET));
+	setcookie('tab_last_query', $_SERVER['SCRIPT_NAME'] . serialize($_GET));
 	
 	if (empty($cookietab)) {
 		$cookietab = '1';
