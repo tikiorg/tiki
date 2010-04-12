@@ -3609,7 +3609,7 @@ class TrackerLib extends TikiLib
 				$this->replace_pretty_tracker_refs( $v );
 			}
 		} else {
-			$value = preg_replace_callback('/\{\$(f_\d+)\}/', 'self::_pretty_tracker_replace_value', $value);
+			$value = preg_replace_callback('/\{\$(f_\d+)\}/', 'TrackerLib::_pretty_tracker_replace_value', $value);
 		}
 	}
 	
