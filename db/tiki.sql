@@ -1490,7 +1490,7 @@ CREATE TABLE `tiki_modules` (
   `title` varchar(255) default NULL,
   `cache_time` int(14) default NULL,
   `rows` int(4) default NULL,
-  `params` text default NULL,
+  `params` text,
   `groups` text,
   PRIMARY KEY (`name`(100), `position`, `ord`, `params`(140)),
   KEY `positionType` (position, type),
