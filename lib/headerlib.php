@@ -371,6 +371,39 @@ class HeaderLib
 	function hasOutput() {
 		return $this->hasDoneOutput;
 	}
+	
+	
+	/**
+	 * Get JavaScript tags from html source - used for AJAX responses and cached pages
+	 * 
+	 * @param string $html - source to search for JavaScript
+	 * @param bool $switch_fn_definition - if set converts 'function fName ()' to 'fName = function()' for AJAX
+	 * 
+	 * @return array of JavaScript strings
+	 */
+	function getJsFromHTML( $html, $switch_fn_definition = false ) {
+		$jsarr = array();
+		$js_script = array();
+		
+		preg_match_all('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', $html, $jsarr);
+		if (count($jsarr) > 1 && is_array($jsarr[1]) && count($jsarr[1]) > 0) {
+			$js = preg_replace('/\s*?<\!--\/\/--><\!\[CDATA\[\/\/><\!--\s*?/Umis', '', $jsarr[1]);	// strip out CDATA XML wrapper if there
+			$js = preg_replace('/\s*?\/\/--><\!\]\]>\s*?/Umis', '', $js);
+
+			if ($switch_fn_definition) {
+				$js = preg_replace('/function (.*)\(/Umis', "$1 = function(", $js);
+			}
+
+			$js_script = array_merge($js_script, $js);
+		}
+		// this is very probably possible as a single regexp, maybe a preg_replace_callback
+		// but it was stopping the CDATA group being returned (and life's too short ;)
+		// the one below should work afaics but just doesn't! :(
+		// preg_match_all('/<script.*type=[\'"]?text\/javascript[\'"]?.*>(\s*<\!--\/\/--><\!\[CDATA\[\/\/><\!--)?\s*?(.*)(\s*\/\/--><\!\]\]>\s*)?<\/script>/imsU', $html, $js);
+		
+		return $js_script;
+	}
+	
 
 	private function output_css_files() {
 		$files = $this->collect_css_files();

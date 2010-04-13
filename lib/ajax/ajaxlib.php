@@ -195,25 +195,8 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		// take out javascript from the html response because it needs to be sent specifically as javascript
 		// using $objResponse->script($s) below
 
-		preg_match_all('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', $content, $jsarr);
-		if (count($jsarr) > 1 && is_array($jsarr[1])) {
-			$js = preg_replace('/\s*?<\!--\/\/--><\!\[CDATA\[\/\/><\!--\s*?/Umis', '', $jsarr[1]);	// strip out CDATA XML wrapper if there
-			$js = preg_replace('/\s*?\/\/--><\!\]\]>\s*?/Umis', '', $js);
-
-			// change 'function fName (' to 'fName = function(' (as it seems to work then)
-			$js = preg_replace('/function (.*)\(/Umis', "$1 = function(", $js);
-			//taginsert = function (
-
-			if (!isset($js_script)) {
-				$js_script = array();
-			}
-			$js_script = array_merge($js_script, $js);
-		}
-		// this is very probably possible as a single regexp, maybe a preg_replace_callback
-		// but it was stopping the CDATA group being returned (and life's too short ;)
-		// the one below should work afaics but just doesn't! :(
-		// preg_match_all('/<script.*type=[\'"]?text\/javascript[\'"]?.*>(\s*<\!--\/\/--><\!\[CDATA\[\/\/><\!--)?\s*?(.*)(\s*\/\/--><\!\]\]>\s*)?<\/script>/imsU', $content, $js);
-
+		$js_script = $headerlib->getJsFromHTML( $content, true );
+		
 		// do included files too...
 		$js_files = array();
 		preg_match_all('/<script[^>]*src=[\'"]??(.*)[\'"]??>\s*<\/script>/Umis', $content, $jsarr);
