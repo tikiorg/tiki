@@ -124,9 +124,16 @@ class PreferencesLib
 			$handled = array_intersect( $handled, $limitation );
 		}
 
+		$resets = isset( $data['lm_reset'] ) ? (array) $data['lm_reset'] : array();
+
 		$changes = array();
 		foreach( $handled as $pref ) {
-			$value = $this->formatPreference( $pref, $data );
+			if( in_array( $pref, $resets ) ) {
+				$defaults = get_default_prefs();
+				$value = $defaults[$pref];
+			} else {
+				$value = $this->formatPreference( $pref, $data );
+			}
 
 			if( $tikilib->get_preference( $pref ) != $value ) {
 				$tikilib->set_preference( $pref, $value );

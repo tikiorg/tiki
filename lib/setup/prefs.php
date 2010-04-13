@@ -1117,7 +1117,6 @@ function get_default_prefs() {
 		'feature_categories' => 'n',
 		'feature_categoryobjects' => 'n',
 		'feature_categorypath' => 'n',
-		'feature_category_reinforce' => 'y',
 		'feature_category_use_phplayers' => 'n',
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',
@@ -1303,8 +1302,8 @@ function get_default_prefs() {
 			wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, - ,
 			find, replace,-,  removeformat, specialchar, smiley | help, switcheditor
 			/
-			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_html, outdent, indent, 
-			- , table, -, wikiplugin_code, source, showblocks | fullscreen
+			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_mouseover, wikiplugin_module, wikiplugin_html, outdent, indent, 
+			- , table, -, wikiplugin_code, source, nonparsed, showblocks | fullscreen
 		',
 		'toolbar_global_comments' => '
 			bold, italic, strike , - , link, smiley | help

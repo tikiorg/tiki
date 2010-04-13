@@ -5129,7 +5129,11 @@ class TikiLib extends TikiDb_Bridge
 							$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 
 							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
-								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
+								if (isset($options['stripplugins']) && $options['stripplugins']) {
+									$ret = '';	
+								} else {
+									$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
+								}
 							} else {
 								global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
 								$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
@@ -8194,7 +8198,7 @@ class TikiLib extends TikiDb_Bridge
 		if ($prefs['search_parsed_snippet'] == 'y') {
 			$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
 			$data = $this->parse_data($data, array('is_html' => $is_html, 'stripplugins' => true, 'parsetoc' => true));
-			$data = strip_tags($data, '<b><i><em><strong><pre><code><br>');
+			$data = strip_tags($data, '<b><i><em><strong><pre><code>');
 		}
 		if (function_exists('mb_substr')) 
 			return mb_substr($data, 0, $length);
@@ -8316,8 +8320,8 @@ function get_wiki_section($data, $hdr) {
 			$js = <<<JS
 swfobject.embedSWF( $movie, $div, $width, $height, $version, 'lib/swfobject/expressInstall.swf', $flashvars, $params, {} );
 JS;
-			$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
-			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div><script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n$js\n//--><!]]>\n</script>\n";
+			$headerlib->add_js( $js );
+			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div>";
 		} else { // link on the movie will not work with IE6
 			extract ($params,EXTR_SKIP);
 			$asetup = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$width\" height=\"$height\">";

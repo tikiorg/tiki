@@ -223,8 +223,13 @@ abstract class TikiDb
 			$part = '`' . $part . '`';
 		$field = implode('.', $parts);
 		$bindvars = array_merge( $bindvars, $values );
-		$values = rtrim( str_repeat( '?,', count( $values ) ), ',' );
-		return " $field IN( $values ) ";
+
+		if( count( $values ) > 0 ) {
+			$values = rtrim( str_repeat( '?,', count( $values ) ), ',' );
+			return " $field IN( $values ) ";
+		} else {
+			return " 0 ";
+		}
 	} // }}}
 
 	function parentObjects(&$objects, $table, $childKey, $parentKey) // {{{

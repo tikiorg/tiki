@@ -188,7 +188,7 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Alternate text'),
 				'filter' => 'text',
-				'description' => tra('Alternate text that displays when image does not load.'),
+				'description' => tra('Alternate text that displays when image does not load. Set to "Image" by default.'),
 			),
 			'default' => array(
 				'required' => false,
@@ -899,6 +899,8 @@ function wikiplugin_img_info() {
 	//alt
 	if( !empty($imgdata['alt']) ) {
 		$replimg .= ' alt="' . $imgdata['alt'] . '"';
+	} else {
+		$replimg .= ' alt="Image"';
 	}
 	//usemap
 	if ( !empty($imgdata['usemap']) ) {

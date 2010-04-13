@@ -1,4 +1,4 @@
-<div class="wikitopline" style="clear: both;">
+<div class="wikitopline clearfix" style="clear: both;">
 	<div class="content">
 		{if !$hide_page_header}
 		<div class="wikiinfo" style="float: left">
@@ -120,7 +120,6 @@
 			</div>
 	{/if}
 		</div>
-		<br class="clear" style="clear: both" />
 {/if} {* <-- end of if $print_page ne 'y' *}
 {/if} {*hide_page_header*}
 	</div> {* div.content *}

@@ -101,12 +101,7 @@ class TikiAccessLib extends TikiLib
 				$smarty->assign('required_preferences', $features);
 			}
 				
-			$msg = tra('This feature is disabled') . ': <b>' . $feature . "</b>\n<P>\n"
-									. tra('To enable this feature, go to:')
-									.	" <a href=\"tiki-admin.php?page=$relevant_admin_panel\">" . tra('Admin Feature') . '</a>. ' 
-									. "\n<P>\n"
-									. tra('If you do not have privileges to activate this feature, ask the site admin to do it.')
-									;
+			$msg = tr('Required features: <b>%0</b>. If you do not have the privileges to activate these features, ask the site administrator.', implode( ', ', $features ) );
 
 			$this->display_error('', $msg, '503' );
 		}		

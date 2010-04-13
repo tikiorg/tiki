@@ -47,7 +47,7 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 		$title = tra('Help');
 		
 		$headerlib->add_js('
-openEditHelp = function() {
+var openEditHelp = function() {
 	var opts, edithelp_pos = getCookie("edithelp_position");
 	opts = { width: 460, height: 500, title: "' . $title . '", autoOpen: false, beforeclose: function(event, ui) {
 		var off = $jq(this).offsetParent().offset();

@@ -119,7 +119,7 @@
 
 				<fieldset>
 					<legend class="heading">{icon _id="information_gray"}<span>{tr}Will be phased out{/tr}</span></legend>
-					<span class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology{/tr}</span>
+					<span class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology.{/tr}</span>
 						{preference name=feature_html_pages}
 						{preference name=feature_galleries}
 						{preference name=feature_faqs}
@@ -141,7 +141,7 @@
 
 				<fieldset>
 					<legend class="heading">{icon _id="error"}<span>{tr}Need polish{/tr}</span></legend>
-					<span class="description">{tr}These features are generally known to have issues, and/or need admin help and/or user patience to work{/tr}</span>
+					<span class="description">{tr}These features are generally known to have issues, and/or need admin help and/or user patience to work.{/tr}</span>
 						{preference name=feature_ajax}
 						{preference name=feature_intertiki}
 						{preference name=feature_sheet}

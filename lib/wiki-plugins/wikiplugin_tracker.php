@@ -332,7 +332,7 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($autosavefields)) {
 					$outf = array_merge($outf, $autosavefields);
 				}
-				$outf = array_merge($outf, $trklib->get_field_id_from_type($trackerId, array('q', 'k', 'u', 'g'), '', false));
+				$outf = array_merge($outf, $trklib->get_field_id_from_type($trackerId, array('q', 'k', 'u', 'g', 'I', 'C', 'n', 'j', 'f'), '', false));
 			}
 			$flds = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $outf);
 			$bad = array();

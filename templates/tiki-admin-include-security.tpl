@@ -37,7 +37,6 @@
 		<fieldset>
 			<legend>{tr}Category{/tr}</legend>
 				{preference name=feature_search_show_forbidden_cat}
-				{preference name=feature_category_reinforce}
 		</fieldset>		
 
 		<fieldset>

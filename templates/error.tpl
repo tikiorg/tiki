@@ -70,18 +70,18 @@ close();
 					{else}
 						{remarksbox type='errors' title=$errortitle}
 							{$msg}
+							{if !empty($required_preferences)}
+								{remarksbox type='note' title="{tr}Change them here{/tr}"}
+								<form method="post" action="tiki-admin.php">
+									{foreach from=$required_preferences item=pref}
+										{preference name=$pref}
+									{/foreach}
+									<input type="submit" value="{tr}Set{/tr}"/>
+								</form>
+								{/remarksbox}
+							{/if}
 						{/remarksbox}
 					{/if}
-				{/if}
-				{if !empty($required_preferences)}
-					{remarksbox type='errors' title=$errortitle}
-					<form method="post" action="tiki-admin.php">
-						{foreach from=$required_preferences item=pref}
-							{preference name=$pref}
-						{/foreach}
-						<input type="submit" value="{tr}Set{/tr}"/>
-					</form>
-					{/remarksbox}
 				{/if}
 				{if isset($extraButton)}
 					{remarksbox type='errors' title=$errortitle}

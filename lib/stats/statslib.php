@@ -153,16 +153,59 @@ class StatsLib extends TikiLib
 	function site_stats() {
 		global $tikilib;
 		$stats = array();
-		$date = $this->getOne("select min(`install_date`) from `tiki_schema`",array());
-		preg_match('/([0-9]*)\-([0-9]*)\-([0-9]*)/', $date, $matches);
-		$stats['started'] = TikiLib::make_time(0,0,0, $matches[2], $matches[3], $matches[1]);
-		$stats['days'] = floor(($tikilib->now - $stats['started'])/86400);
-		$stats["pageviews"] = $this->getOne("select sum(`pageviews`) from `tiki_pageviews`");
-		$stats["ppd"] = ($stats["days"] ? $stats["pageviews"] / $stats["days"] : 0);
-		$stats["bestpvs"] = $this->getOne("select max(`pageviews`) from `tiki_pageviews`",array());
-		$stats["bestday"] = $this->getOne("select `day` from `tiki_pageviews` where `pageviews`=?",array((int)$stats["bestpvs"]));
-		$stats["worstpvs"] = $this->getOne("select min(`pageviews`) from `tiki_pageviews`",array());
-		$stats["worstday"] = $this->getOne("select `day` from `tiki_pageviews` where `pageviews`=?",array((int)$stats["worstpvs"]));
+		$rows = $this->getOne("select count(*) from `tiki_pageviews`",array());
+		if ($rows > 0) {
+			//get max pageview number
+			//sum by day as there are sometimes multiple unixstamps per day
+			$max = $this->fetchAll("SELECT SUM(`pageviews`) AS views, `day` AS unixtime
+									FROM `tiki_pageviews`
+									GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')
+									ORDER BY views DESC 
+									LIMIT 1");
+			$maxvar = $max[0]['views'];
+			//get min pageview number
+			$min = $this->fetchAll("SELECT SUM(`pageviews`) AS views, `day` AS unixtime
+									FROM `tiki_pageviews`
+									GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')
+									ORDER BY views ASC 
+									LIMIT 1");
+			$minvar = $min[0]['views'];
+			//pull all dates with max or min because there may be more than one for each
+			$views = $this->fetchAll("SELECT SUM(`pageviews`) AS views, FROM_UNIXTIME(`day`, '%Y-%m-%d') AS date, `day` AS unixtime
+									FROM `tiki_pageviews`
+									GROUP BY FROM_UNIXTIME(`day`, '%Y-%m-%d')
+									HAVING views = '$maxvar' OR views = '$minvar'
+									ORDER BY date ASC");
+			$start = $this->getOne("select min(`day`) from `tiki_pageviews`",array());
+			$stats['started'] = $tikilib->get_long_date($start);
+			$stats['days'] = floor(($tikilib->now - $start)/86400);
+			$stats['pageviews'] = $this->getOne("select sum(`pageviews`) from `tiki_pageviews`");
+			$stats['ppd'] = sprintf("%.2f", ($stats['days'] ? $stats['pageviews'] / $stats['days'] : 0));
+			$b = 0;
+			$w = 0;
+			//for each in case there's more than one max day and more than one min day
+			foreach ($views as $view) {
+				if ($view['views'] == $maxvar) {
+					$stats['bestday'] .= $tikilib->get_long_date($view['unixtime']) . ' (' . $maxvar . ' ' . tra('pvs') . ')<br />';
+					$b > 0 ? $stats['bestdesc'] = tra('Days with the most pageviews') : $stats['bestdesc'] = tra('Day with the most pageviews');
+					$b++;
+				} 
+				if ($view['views'] == $minvar) {
+					$stats['worstday'] .= $tikilib->get_long_date($view['unixtime']) . ' (' . $minvar . ' ' . tra('pvs') . ')<br />';
+					$w > 0 ? $stats['worstdesc'] = tra('Days with the least pageviews') : $stats['worstdesc'] = tra('Day with the least pageviews');
+					$w++;
+				}
+			}
+		} else {
+			$stats['started'] = tra('No pageviews yet');
+			$stats['days'] = tra('n/a');
+			$stats['pageviews'] = tra('n/a');
+			$stats['ppd'] = tra('n/a');
+			$stats['bestpvs'] = tra('n/a');
+			$stats['bestday'] = tra('n/a');
+			$stats['worstpvs'] = tra('n/a');
+			$stats['worstday'] = tra('n/a');
+		}
 		return $stats;
 	}
 	

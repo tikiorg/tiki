@@ -164,7 +164,7 @@
 						<label for="groups_defcat">{tr}Default category assigned to uncategorized objects edited by a user with this default group:{/tr}</label>
 					</td>
 					<td>
-						<select name="defcat" id="groups_defcat" size="8">
+						<select name="defcat" id="groups_defcat">
 							<option value="" {if ($groupdefcat eq "") or ($groupdefcat eq 0)} selected="selected"{/if}>{tr}none{/tr}</option>
 							{section name=ix loop=$categories}
 								<option value="{$categories[ix].categId|escape}" {if $categories[ix].categId eq $groupdefcat}selected="selected"{/if}>{$categories[ix].categpath|escape}</option>

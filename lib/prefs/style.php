@@ -16,6 +16,15 @@ function prefs_style_list() {
 		}
 	}
 
+	$all = glob( 'styles/*/options/*.css' );
+	foreach( $all as $location ) {
+		$option = basename( $location );
+
+		if( ! isset( $style_options[$option] ) ) {
+			$style_options[$option] = "X - $option";
+		}
+	}
+
 	return array(
 		'style_option' => array(
 			'name' => tra('Theme options'),

@@ -28,6 +28,7 @@ function wikiplugin_mouseover_info() {
 		'description' => tra('Create a mouseover feature on some text'),
 		'prefs' => array( 'wikiplugin_mouseover' ),
 		'body' => tra('Mouseover text if param label exists. Page text if text param exists'),
+		'icon' => 'pics/icons/comment_add.png',
 		'params' => array(
 			'label' => array(
 				'required' => true,

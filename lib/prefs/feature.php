@@ -168,7 +168,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_quizzes' => array(
-			'name' => tra('Quizzes '),
+			'name' => tra('Quizzes'),
 			'description' => tra('Timed questionnaire with recorded scores.'),
 			'help' => 'Quizzes',
 			'type' => 'flag',
@@ -868,11 +868,6 @@ function prefs_feature_list() {
 			'hint' => tra('Will improve performance, but may show forbidden results'),
 			'type' => 'flag',
 			'help' => 'WYSIWYCA+Search',
-		),
-		'feature_category_reinforce' => array(
-			'name' => tra("Permission to all (not just any) of an object's categories is required for access"),
-			'type' => 'flag',
-			'perspective' => false,
 		),
 		'feature_listPages' => array(
 			'name' => tra('List pages'),

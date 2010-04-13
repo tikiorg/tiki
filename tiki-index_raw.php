@@ -165,8 +165,12 @@ ask_ticket('index-raw');
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');
 
-$smarty->assign('mid','tiki-show_page_raw.tpl');
-// use tiki_full to include css etc
-$smarty->display("tiki_full.tpl");
-
-//$smarty->display("tiki-show_page_raw.tpl");
+// add &full to URL to output the whole html head and body
+if (isset($_REQUEST['full']) && $_REQUEST['full'] != 'n') {
+	$smarty->assign('mid','tiki-show_page_raw.tpl');
+	// use tiki_full to include include CSS and JavaScript
+	$smarty->display("tiki_full.tpl");
+} else {
+	// otherwise just the contents of the page without body etc
+	$smarty->display("tiki-show_page_raw.tpl");
+}

@@ -162,7 +162,7 @@ if( $prefs['rating_advanced'] == 'y' && $prefs['rating_recalculation'] == 'rando
 	$ratinglib->attempt_refresh();
 }
 
-$headerlib->add_jsfile( 'lib/tiki-js.js' );	// tiki-js.js gets included even if javascript_enabled==n for the js test
+$headerlib->add_jsfile( 'lib/tiki-js.js' );
 
 if( $prefs['feature_cssmenus'] == 'y' ) {
 	$headerlib->add_cssfile( 'css/cssmenus.css' );
@@ -175,6 +175,8 @@ if( $prefs['feature_fixed_width'] == 'y' ) {
 }
 
 if ($prefs['javascript_enabled'] != 'n') {
+
+	$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 	
 	if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'external' );

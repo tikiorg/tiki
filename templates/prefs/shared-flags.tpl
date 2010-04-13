@@ -12,4 +12,26 @@
 		{icon _id=error alt=''}
 	</a>
 {/if}
+
+<input class="pref-reset system" type="checkbox" name="lm_reset[]" value="{$p.preference|escape}"/>
+
+{jq}
+$jq('.pref-reset')
+	.change( function() {
+		$jq(this).closest('.adminoptionbox').find(':input')
+			.not('.system').attr( 'disabled', $jq(this).attr('checked') );
+	} )
+	.hide()
+	.wrap('<span/>')
+	.closest('span')
+		.append('{{icon _id=shading alt="{tr}Reset to default{/tr}" href=#}}')
+		.find('a')
+			.click( function() {
+				var box = $jq(this).closest('span').find(':checkbox');
+
+				box.attr('checked', box.filter(':checked').length == 0).change();
+				return false;
+			} );
+{/jq}
+
 {$p.pages}

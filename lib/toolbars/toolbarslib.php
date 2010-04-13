@@ -498,7 +498,7 @@ class ToolbarInline extends Toolbar
 			$syntax = '--text--';
 			break;
 		case 'nonparsed':
-			$label = tra('Non-parsed');
+			$label = tra('Non-parsed (Wiki syntax does not apply)');
 			$icon = tra('pics/icons/noparse.png');
 			$wysiwyg = null;
 			$syntax = '~np~text~/np~';
@@ -788,7 +788,7 @@ class ToolbarPicker extends Toolbar
 		if( ! $pickerAdded ) {
 			$headerlib->add_js( <<<JS
 window.pickerData = [];
-var pickerDiv;
+var pickerDiv, displayPicker, displayDialog;
 
 displayPicker = function( closeTo, list, areaname ) {
 	if (pickerDiv) {

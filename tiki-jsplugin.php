@@ -62,7 +62,7 @@ else
 ob_start();
 
 ?>
-if( typeof tiki_plugins == 'undefined' ) { tiki_plugins = {}; }
+if( typeof tiki_plugins == 'undefined' ) { var tiki_plugins = {}; }
 <?php foreach( $plugins as $plugin ):
 	if( ! $info = $tikilib->plugin_info( $plugin ) )
 		continue;

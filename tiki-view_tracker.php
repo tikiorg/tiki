@@ -149,7 +149,7 @@ $smarty->assign('status_types', $status_types);
 if (count($status_types) == 0) {
 	$tracker_info["showStatus"] = 'n';
 }
-$filterFields = array('isSearchable'=>'y', 'isTblVisible'=>'y');
+$filterFields = array('isSearchable'=>'y', 'isTblVisible'=>'y', 'type'=>array('q','u','g','I','C','n','j','f'));
 if (!isset($_REQUEST["sort_mode"])) {
 	if (isset($tracker_info['defaultOrderKey'])) {
 		if ($tracker_info['defaultOrderKey'] == - 1) $sort_mode = 'lastModif';
