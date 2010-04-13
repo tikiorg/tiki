@@ -2711,6 +2711,9 @@ class TrackerLib extends TikiLib
 			return $fieldId;
 		} else {
 			$fields = $this->fetchAll($query, $bindvars);
+			foreach ($fields as $k=>$f) {
+				$fields[$k] = $f['fieldId'];
+			}
 			return $fields;
 		}
 	}
