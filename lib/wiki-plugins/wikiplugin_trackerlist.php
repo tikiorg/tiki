@@ -340,6 +340,37 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $listfields);
 
+		if (!empty($filterfield)) {
+			if (is_array($filterfield)) {
+				foreach ($filterfield as $ff) {
+					unset($filterfieldok);
+					if (is_array($ff)) {// already checked in trackerfilter
+						$filterfieldok=true;
+						break;
+					} else {
+						foreach ($allfields['data'] as $f) {
+							if ($f['fieldId'] == $ff) {
+								$filterfieldok=true;
+								break;
+							}
+						}
+					}
+					if (!isset($filterfieldok))
+						break;
+				}
+			} else {
+				foreach ($allfields['data'] as $f) {
+					if ($f['fieldId'] == $filterfield) {
+						$filterfieldok=true;
+						break;
+					}
+				}
+			}
+			if (!isset($filterfieldok)) {
+				return tra('incorrect filterfield');
+			}
+		}
+
 		if (!empty($_REQUEST['itemId']) && $tiki_p_tracker_vote_ratings == 'y' && $user) {
 			$hasVoted = false;
 			foreach ($allfields['data'] as $f) {
@@ -692,34 +723,6 @@ function wikiplugin_trackerlist($data, $params) {
 						}
 					}
 				}
-			}
-			if (is_array($filterfield)) {
-				foreach ($filterfield as $ff) {
-					unset($filterfieldok);
-					if (is_array($ff)) {// already checked in trackerfilter
-						$filterfieldok=true;
-						break;
-					} else {
-						foreach ($allfields['data'] as $f) {
-							if ($f['fieldId'] == $ff) {
-								$filterfieldok=true;
-								break;
-							}
-						}
-					}
-					if (!isset($filterfieldok))
-						break;
-				}
-			} else {
-				foreach ($allfields['data'] as $f) {
-					if ($f['fieldId'] == $filterfield) {
-						$filterfieldok=true;
-						break;
-					}
-				}
-			}
-			if (!isset($filterfieldok)) {
-				return tra('incorrect filterfield');
 			}
 		}
 		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] == 'y' && $user && $userCreatorFieldId) { //patch this should be in list_items
