@@ -1116,7 +1116,6 @@ div.quotebody {
 
 /* wikiplugin_tracker */
 .mandatory_note {
-	display: block;
 	font-style: italic;
 	margin-top: 10px;
 }
