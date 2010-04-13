@@ -5129,7 +5129,11 @@ class TikiLib extends TikiDb_Bridge
 							$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 
 							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
-								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
+								if (isset($options['stripplugins']) && $options['stripplugins']) {
+									$ret = '';	
+								} else {
+									$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
+								}
 							} else {
 								global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
 								$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
