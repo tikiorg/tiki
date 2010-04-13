@@ -1525,7 +1525,7 @@ function get_default_prefs() {
 		'feature_jquery_sheet' => 'n',			// spreadsheet
 		'feature_jquery_jqs5' => 'n',			// slide-show TODO: implement (more)
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
-		'feature_jquery_carousel' => 'y',		// slideshow/carousel for file gals etc
+		'feature_jquery_carousel' => 'n',		// slideshow/carousel for file gals etc
 
 		// SefUrl
 		'feature_sefurl' => 'n',
