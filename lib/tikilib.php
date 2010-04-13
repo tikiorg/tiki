@@ -8198,7 +8198,7 @@ class TikiLib extends TikiDb_Bridge
 		if ($prefs['search_parsed_snippet'] == 'y') {
 			$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
 			$data = $this->parse_data($data, array('is_html' => $is_html, 'stripplugins' => true, 'parsetoc' => true));
-			$data = strip_tags($data, '<b><i><em><strong><pre><code><br>');
+			$data = strip_tags($data, '<b><i><em><strong><pre><code>');
 		}
 		if (function_exists('mb_substr')) 
 			return mb_substr($data, 0, $length);
