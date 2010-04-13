@@ -1935,7 +1935,6 @@ class TrackerLib extends TikiLib
 				$str .= '"'.$field['name'].' -- '.$field['fieldId'].'",';
 			}
 		}
-		echo $str;
 		
 		// prepare queries
 		$mid = ' WHERE tti.`trackerId` = ? ';
@@ -2077,6 +2076,11 @@ class TrackerLib extends TikiLib
 					;
 				} elseif ($f['type'] == 'c' && (empty($f['value']) || $f['value'] == 'n')) {
 					$mandatory_fields[] = $f;
+				} elseif ($f['type'] == 'A' && !empty($itemId) && empty($f['value'])) {
+					$val = $this->get_item_value($trackerId, $itemId, $f['fieldId']);
+					if (empty($val)) {
+						$mandatory_fields[] = $f;
+					}
 				} elseif (!isset($f['value']) or strlen($f['value']) == 0) {
 					$mandatory_fields[] = $f;
 				}
