@@ -8,6 +8,7 @@
 class PreferencesLib
 {
 	private $data = array();
+	private $usageArray;
 
 	function getPreference( $name, $deps = true, $source = null, $get_pages = false ) {
 		global $prefs;
@@ -74,20 +75,7 @@ class PreferencesLib
 			}
 			
 			if ($get_pages) {
-				global $prefs_usage_array;
-				
-				$pages = array();
-				foreach($prefs_usage_array as $pg => $pfs) {
-					foreach ($pfs as $pf) {
-						if ($pf == $name) {
-							$pages[] = $pg;
-						}
-					}
-				}
-				if (count($pages) == 0 && strpos($name, 'plugin') !== false) {
-					$pages[] = 'textarea';	// plugins are included in textarea admin dynamically
-				}
-				$info['pages'] = $pages;
+				$info['pages'] = $this->getPreferenceLocations( $name );
 			}
 			
 			$info = array_merge($defaults, $info);
@@ -226,37 +214,13 @@ class PreferencesLib
 	}
 
 	private function getIndex() {
-		global $prefs, $prefs_usage_array;
+		global $prefs;
 		if( $prefs['language'] == 'en' ) {
 			require_once 'StandardAnalyzer/Analyzer/Standard/English.php';
 			Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 				new StandardAnalyzer_Analyzer_Standard_English() );
 		}
 
-		// check for or create array of where each pref is used
-		$file = 'temp/cache/preference-usage-index';
-		if ( !file_exists( $file ) ) {
-			$prefs_usage_array = array();
-			$fp = opendir('templates/');
-			
-			while(false !== ($f = readdir($fp))) {
-				preg_match('/^tiki-admin-include-(.*)\.tpl$/', $f, $m);
-				if (count($m) > 0) {
-					$page = $m[1];
-					$c = file_get_contents('templates/'.$f);
-					preg_match_all('/{preference.*name=[\'"]?(\w*)[\'"]?.*}/i', $c, $m2);
-					if (count($m2) > 0) {
-						$prefs_usage_array[$page] = $m2[1];
-					}
-				}
-			}
-			$wfp = fopen($file, 'w');
-			fwrite($wfp, serialize($prefs_usage_array));
-			
-		} else {
-			$prefs_usage_array = unserialize(file_get_contents($file));
-		}
-		
 		$file = 'temp/cache/preference-index-' . $prefs['language'];
 
 		require_once 'Zend/Search/Lucene.php';
@@ -278,6 +242,54 @@ class PreferencesLib
 		}
 
 		return Zend_Search_Lucene::open( $file );
+	}
+
+	public function getPreferenceLocations( $name ) {
+		if( ! $this->usageArray ) {
+			$this->loadPreferenceLocations();
+		}
+
+		$pages = array();
+		foreach($this->usageArray as $pg => $pfs) {
+			foreach ($pfs as $pf) {
+				if ($pf == $name) {
+					$pages[] = $pg;
+				}
+			}
+		}
+
+		if (count($pages) == 0 && strpos($name, 'plugin') !== false) {
+			$pages[] = 'textarea';	// plugins are included in textarea admin dynamically
+		}
+
+		return $pages;
+	}
+
+	private function loadPreferenceLocations() {
+		// check for or create array of where each pref is used
+		$file = 'temp/cache/preference-usage-index';
+		if ( !file_exists( $file ) ) {
+			$prefs_usage_array = array();
+			$fp = opendir('templates/');
+			
+			while(false !== ($f = readdir($fp))) {
+				preg_match('/^tiki-admin-include-(.*)\.tpl$/', $f, $m);
+				if (count($m) > 0) {
+					$page = $m[1];
+					$c = file_get_contents('templates/'.$f);
+					preg_match_all('/{preference.*name=[\'"]?(\w*)[\'"]?.*}/i', $c, $m2);
+					if (count($m2) > 0) {
+						$prefs_usage_array[$page] = $m2[1];
+					}
+				}
+			}
+			file_put_contents($file, serialize($prefs_usage_array));
+			
+		} else {
+			$prefs_usage_array = unserialize(file_get_contents($file));
+		}
+
+		$this->usageArray = $prefs_usage_array;
 	}
 
 	private function indexPreference( $pref, $info ) {
