@@ -414,9 +414,10 @@ class LogsLib extends TikiLib
 					}
 				} 
 				// For tiki logs
-				if ( $res['objectType'] === 'system' and $res['object'] === 'system' ) {
+				if ( $res['objectType'] === 'system' ) {
+					$what = $res['object'] === 'system' ? '':$res['object'].' : ';
 					$res['object'] = $res['action'];
-					$res['action'] = $res['comment'];
+					$res['action'] = $what.$res['comment'];
 				}
 				$ret[] = $res;
 			}
