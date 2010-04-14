@@ -192,8 +192,8 @@ class TrackerLib extends TikiLib
 			$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,";
 			$query.= "`comment`,`path`,`version`,`longdesc`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query,array((int) $itemId,$filename,$size,$type,$data,(int) $now,0,$user,$comment,$fhash,$version,$longdesc));
-			$query = 'select `attId` from `tiki_tracker_item_attachments` where `itemId`=? and `user`=? and `created`=? and `filename`=?';
-			$attId = $this->getOne($query, array($itemId, $user, $now, $filename));
+			$query = 'select `attId` from `tiki_tracker_item_attachments` where `itemId`=?  and `created`=? and `filename`=?';
+			$attId = $this->getOne($query, array($itemId, $now, $filename));
 		} elseif (empty($filename)) {
 			$query = "update `tiki_tracker_item_attachments` set `comment`=?,`user`=?,`version`=?,`longdesc`=? where `attId`=?";
 			$result = $this->query($query,array($comment, $user, $version, $longdesc, $attId));
@@ -1943,7 +1943,6 @@ class TrackerLib extends TikiLib
 				$str .= '"'.$field['name'].' -- '.$field['fieldId'].'",';
 			}
 		}
-		echo $str;
 		
 		// prepare queries
 		$mid = ' WHERE tti.`trackerId` = ? ';
@@ -2085,6 +2084,11 @@ class TrackerLib extends TikiLib
 					;
 				} elseif ($f['type'] == 'c' && (empty($f['value']) || $f['value'] == 'n')) {
 					$mandatory_fields[] = $f;
+				} elseif ($f['type'] == 'A' && !empty($itemId) && empty($f['value'])) {
+					$val = $this->get_item_value($trackerId, $itemId, $f['fieldId']);
+					if (empty($val)) {
+						$mandatory_fields[] = $f;
+					}
 				} elseif (!isset($f['value']) or strlen($f['value']) == 0) {
 					$mandatory_fields[] = $f;
 				}
@@ -2715,6 +2719,9 @@ class TrackerLib extends TikiLib
 			return $fieldId;
 		} else {
 			$fields = $this->fetchAll($query, $bindvars);
+			foreach ($fields as $k=>$f) {
+				$fields[$k] = $f['fieldId'];
+			}
 			return $fields;
 		}
 	}

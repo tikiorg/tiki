@@ -111,7 +111,7 @@ function wikiplugin_countdown($data, $params) {
 	//  (the string was specified using the user timezone)
 	$tikidate->setTZbyID($tikilib->get_display_timezone());
 	$tikidate->setDate($then);
-	$tikidate->convertTZByID('UTC');
+	$tikidate->setTZbyID('UTC');
 	$then = $tikidate->getTime();
 
 	$difference = $then - $tikilib->now;

@@ -277,11 +277,12 @@ class XmlLib extends TikiLib
 			$this->errorsArgs[] = $info['zip'];
 			return false;			
 		}
-
 		if ($this->page_exists($info['name'])) {
+			$old = true;
 			$tikilib->update_page($info['name'], $info['data'], 'Updated from import', !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], 0, isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL);
 		} else {
-			$tikilib->create_page($info['name'], 0, $info['data'], $this->now, $info['comment'], !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL);
+			$old = false;
+			$tikilib->create_page($info['name'], 0, $info['data'], $info['lastModif'], $info['comment'], !empty($this->config['fromUser'])? $this->config['fromUser']: $info['user'], !empty($this->config['fromSite'])?$this->config['fromSite']: $info['ip'], $info['description'], isset($info['lang'])?$info['lang']:'', isset($info['is_html'])?$info['is_html']:false, null, isset($info['wysiwyg'])?$info['wysiwyg']:NULL, '', 0, $info['created']);
 		}
 
 		if ($prefs['feature_wiki_comments'] == 'y' && $tiki_p_edit_comments == 'y' && !empty($info['comments'])) {
@@ -319,7 +320,7 @@ class XmlLib extends TikiLib
 					}
 				}
 				global $wikilib; include_once('lib/wiki/wikilib.php');
-				$wikilib->wiki_attach_file($info['name'], $attachment['filename'], $attachment['filetype'], $attachment['filesize'], $attachment['data'], $attachment['comment'], $attachment['user'], $fhash);
+				$wikilib->wiki_attach_file($info['name'], $attachment['filename'], $attachment['filetype'], $attachment['filesize'], $attachment['data'], $attachment['comment'], $attachment['user'], $fhash, $attachment['created']);
 				//change the page data attach is needed $res['attId']
 				//$res = $wikilib->get_wiki_attach_file($info['name'], $attachment['filename'], $attachment['type'], $attachment['size']);
 			}
@@ -358,7 +359,7 @@ class XmlLib extends TikiLib
 					return false;	
 				}
 				$query = 'insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)';
-				$this->query($query, array($info['name'], $version['version']+$maxVersion, $tikilib->now, $version['user'], $version['ip'], $version['comment'], $version['data'], $version['description']));
+				$this->query($query, array($info['name'], $version['version']+$maxVersion, $old?$tikilib->now: $version['lastModif'], $version['user'], $version['ip'], $version['comment'], $version['data'], $version['description']));
 			}
 		}
 		if ($prefs['feature_wiki_structure'] == 'y' && !empty($info['structure'])) {

@@ -7,6 +7,8 @@
 {if $info.lang}<lang>{$info.lang}</lang>{/if}
 <is_html>{$info.is_html}</is_html>
 <wysiwyg>{$info.wysiwyg}</wysiwyg>
+<created>{$info.created}</created>
+<lastModif>{$info.lastModif}</lastModif>
 {*<data><![CDATA[{$info.data|escape:'html'}]]></data>*}
 {if $config.comments and !empty($comments)}
 <comments>
@@ -36,6 +38,7 @@
 		<filetype>{$att.filetype}</filetype>
 		<user><![CDATA[{$att.user|escape:'html'}]]></user>
 		{if $att.comment}<comment><![CDATA[{$att.comment|escape:'html'}]]></comment>{/if}
+		<created>{$att.created}</created>
 	</attachment>
 {/foreach}
 </attachments>
@@ -47,6 +50,7 @@
 		  <user><![CDATA[{$hist.user|escape:'html'}]]></user>
 		  {if $hist.description}<description><![CDATA[{$hist.description|escape:'html'}]]></description>{/if}
 		  {if $hist.comment}<comment><![CDATA[{$hist.comment|escape:'html'}]]></comment>{/if}
+		  <lastModif>{$hist.lastModif}</lastModif>
 	</version>
 {/foreach}
 </history>

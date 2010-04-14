@@ -184,7 +184,7 @@ class TikiDate
 				$tz_id = $this->convertMissingTimezone($tz_id);
 			}
 		}
-		$this->date->setTimeZone($dtz);
+		$this->date->setTimezone($dtz);
 	}
 
 	// TODO delete in Tiki 6 (if really unused)

@@ -66,6 +66,12 @@ class PreferencesLib
 			if( isset( $info['extensions'] ) ) {
 				$info['available'] = $this->checkExtensions( $info['extensions'] );
 			}
+			$defprefs = get_default_prefs();
+			if ($info['value'] == $defprefs[$name]) {
+				$info['is_default'] = true;
+			} else {
+				$info['is_default'] = false;
+			}
 			
 			if ($get_pages) {
 				global $prefs_usage_array;

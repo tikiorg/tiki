@@ -32,14 +32,21 @@
 {elseif $field_value.type eq 'u'}
 	{if empty($field_value.options_array) or ($field_value.options_array[0] !=1 and $field_value.options_array[0] !=2) or $tiki_p_admin_trackers eq 'y'}
 		<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-		<option value="">{tr}None{/tr}</option>
+		{if $field_value.isMandatory ne 'y'}
+			<option value=""{if empty($field_value.value) && !empty($item.itemId)} selected="selected"{/if}>{tr}None{/tr}</option>
+		{/if}
 		{foreach key=id item=one from=$field_value.list}
 			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
-				{if $field_value.options_array[0] ne 2 && !empty($field_value.value)}
-					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username}</option>
-				{else}
-					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one|username}</option>
-				{/if}
+				<option value="{$one|escape}"
+				{if empty($item.itemId) and $one eq $user}
+					selected="selected"
+				{elseif $field_value.options_array[0] eq 2 and $one eq $user}
+					selected="selected"
+				{elseif $one eq $field_value.value}
+					selected="selected"
+				{/if}>
+					{$one|username}
+				</option>
 			{/if}
 		{/foreach}
 		</select>
@@ -110,7 +117,9 @@
 	{if $field_value.value ne ''}
 		<br />
 		<img src="{$field_value.value}" alt="" width="{$field_value.options_array[2]}" height="{$field_value.options_array[3]}" />
-		<a href="{$smarty.server.PHP_SELF}?{query removeImage='y' fieldId=`$field_value.fieldId` itemId=`$item.itemId` trackerId=`$item.trackerId` fieldName=`$field_value.name`}">{icon _id='cross' alt='{tr}Remove Image{/tr}'}</a>
+		{if $field_value.isMandatory ne 'y'}
+			<a href="{$smarty.server.PHP_SELF}?{query removeImage='y' fieldId=`$field_value.fieldId` itemId=`$item.itemId` trackerId=`$item.trackerId` fieldName=`$field_value.name`}">{icon _id='cross' alt='{tr}Remove Image{/tr}'}</a>
+		{/if}
    {/if}
 
 
@@ -121,11 +130,11 @@
 	{else}
 		<input type="file" name="{$field_value.ins_id}"{if isset($input_err)} value="{$field_value.value}"{/if} />
 	{/if}
-	{if !isset($input_err) and $field_value.value ne ''}
+	{if $field_value.value ne ''}
 		<br />
 		{$field_value.info.filename}&nbsp;
 		<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
-		{if $tiki_p_admin_trackers eq 'y' or $field_value.info.user eq $user}
+		{if ($tiki_p_admin_trackers eq 'y' or $field_value.info.user eq $user) and $field_value.isMandatory ne 'y'}
 			<a href="{$smarty.server.PHP_SELF}?{query removeattach=$field_value.value}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 		{/if}
 	{/if}

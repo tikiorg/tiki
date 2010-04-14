@@ -530,6 +530,9 @@ foreach($xfields["data"] as $i => $array) {
 						$data.= fread($fp, 8192 * 16);
 					}
 					fclose($fp);
+					if (!empty($_REQUEST['itemId'])) {
+						$ins_fields['data'][$i]['old_value'] = $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'], $fields['data'][$i]['fieldId']);
+					}
 					$ins_fields["data"][$i]["value"] = $data;
 					//$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
 					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type']; //mime_content_type( $_FILES["$ins_id"]['tmp_name'] );
