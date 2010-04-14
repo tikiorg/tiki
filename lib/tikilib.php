@@ -7777,7 +7777,6 @@ class TikiLib extends TikiDb_Bridge
 				$s .= '.css';
 			}
 			sort($sty);
-			array_unshift ( $sty, tra('None'));
 			return $sty;
 		} else {
 			return false;
