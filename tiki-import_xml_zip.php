@@ -13,7 +13,7 @@ $access->check_permission('tiki_p_admin');
 
 if (isset($_REQUEST['import'])) {
 	check_ticket('import_xml_zip');
-	if (isset($_REQUEST['local'])) {
+	if (!empty($_REQUEST['local'])) {
 		$zipFile = $_REQUEST['local'];
 	} elseif (is_uploaded_file($_FILES['zip']['tmp_name'])) {
 		$zipFile = $_FILES['zip']['tmp_name'];

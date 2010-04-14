@@ -406,9 +406,9 @@ class WikiLib extends TikiLib
 		$result = $this->query($query);
 	}
 
-	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
+	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash, $date='') {
 		$comment = strip_tags($comment);
-		$now = $this->now;
+		$now = empty($date)? $this->now: $date;
 		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,`comment`,`path`) values(?,?,?,?,?,?,?,?,?,?)";
 		//$this->blob_encode($data);
 		$result = $this->query($query,array($page, $name, (int)$size, $type, $data, (int)$now, 0, $user, $comment, $fhash));

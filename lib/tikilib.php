@@ -4458,7 +4458,7 @@ class TikiLib extends TikiDb_Bridge
 	/** Create a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0) {
+	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0, $created='') {
 		global $smarty, $prefs, $dbTiki, $quantifylib;
 		include_once ("lib/commentslib.php");
 
@@ -4495,7 +4495,7 @@ class TikiLib extends TikiDb_Bridge
 			$edit_data = HTMLPurifier($edit_data);
 		}
 		$mid = ''; $midvar = '';
-		$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $minor, $user, $ip, $description, $user, (int)strlen($data), $html, $this->now, $wysiwyg, $wiki_authors_style);
+		$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $minor, $user, $ip, $description, $user, (int)strlen($data), $html, empty($created)?$this->now:$created, $wysiwyg, $wiki_authors_style);
 		if ($lang) {
 			$mid .= ',`lang`';
 			$midvar .= ',?';
