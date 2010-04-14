@@ -22,7 +22,7 @@ function prefs_multidomain_list() {
 			'description' => tra('Comma-separated values mapping the domain name to the perspective ID.'),
 			'type' => 'textarea',
 			'size' => 10,
-			'hint' => tra('One domain per line. Comma separated with perspective ID.'),
+			'hint' => tra('One domain per line. Comma separated with perspective ID. Ex.: tikiwiki.org,1'),
 		),
 	);
 }
