@@ -887,7 +887,7 @@ function get_default_prefs() {
 		// calendar
 		'feature_calendar' => 'n',
 		'feature_default_calendars' => 'n',
-		'calendar_sticky_popup' => 'y',
+		'calendar_sticky_popup' => 'n',
 		'default_calendars' => array(),
 		'calendar_view_mode' => 'month',
 		'calendar_view_tab' => 'n',
