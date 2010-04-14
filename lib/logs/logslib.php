@@ -46,7 +46,7 @@ class LogsLib extends TikiLib
 
 	function list_logs($type='', $user='', $offset=0, $maxRecords=-1, $sort_mode='lastModif_desc', $find='', $min=0, $max=0)
 	{
-		$actions =  $this->list_actions($type, 'system', $user, $offset, $maxRecords, $sort_mode, $find, $min, $max);
+		$actions =  $this->list_actions($type, 'system', $user, $offset, $maxRecords, $sort_mode, $find, $min, $max,'', true);
 		return $actions;
 	}
 
@@ -302,7 +302,7 @@ class LogsLib extends TikiLib
 
 	function list_actions($action='', $objectType='', $user='', $offset=0
 		, $maxRecords=-1, $sort_mode='lastModif_desc', $find='', $start=0
-		, $end=0, $categId=''
+		, $end=0, $categId='', $all=false
 	)	{
 		global $prefs, $section, $tikilib, $contributionlib;
 		include_once('lib/contribution/contributionlib.php');
@@ -368,7 +368,7 @@ class LogsLib extends TikiLib
 				$bindvars[] = $categId;
 			}
 		}
-		$amid[] = " a.`action` like c.`action` and a.`objectType` = c.`objectType` and (c.`status` = 'y' or c.`status` = 'v')";
+		$amid[] = " a.`action` like c.`action` and a.`objectType` = c.`objectType`".($all? "":" and (c.`status` = 'y' or c.`status` = 'v')");
 
 		if (count($amid)) {
 			$mid = implode(" and ",$amid);
@@ -387,7 +387,7 @@ class LogsLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			if ($this->action_is_viewed($res['action'], $res['objectType'])) {
+			if ($all || $this->action_is_viewed($res['action'], $res['objectType'])) {
 				if ($prefs['feature_contribution'] == 'y' && ($res['action'] == 'Created' || $res['action'] == 'Updated' || $res['action'] == 'Posted' || $res['action'] == 'Replied')) {
 					if  ($res['objectType'] == 'wiki page') {
 						$res['contributions'] = $this->get_action_contributions($res['actionId']);
