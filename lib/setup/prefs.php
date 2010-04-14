@@ -1734,10 +1734,12 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 // Disabled by default so it has to be modified
 if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' ) {
-	require_once 'lib/perspectivelib.php';
-	if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
-		$changes = $perspectivelib->get_preferences( $persp );
-		$modified = array_merge( $modified, $changes );
+	if( ! isset( $section ) || $section != 'admin' ) {
+		require_once 'lib/perspectivelib.php';
+		if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
+			$changes = $perspectivelib->get_preferences( $persp );
+			$modified = array_merge( $modified, $changes );
+		}
 	}
 }
 
