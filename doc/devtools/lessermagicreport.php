@@ -1,4 +1,8 @@
 <?php
+
+// Usage: From the command line:
+// php doc/devtools/lessermagicreport.php > lessermagicreport.htm
+
 require_once 'tiki-setup.php';
 
 $defaultValues = get_default_prefs();
