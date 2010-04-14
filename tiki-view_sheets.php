@@ -160,23 +160,21 @@ $jq("#edit_button").click( function () {
 	return false;
 });
 $jq("#save_button").click( function () {
-	var dummySaveButtonVar;
 	jS.evt.cellEditDone();
-	$jq.sheet.saveSheet();
+	$jq.sheet.saveSheet(true);
 	return false;
 }).hide();
 
-window.showFeedback = function(message, delay) {
+window.showFeedback = function(message, delay, redirect) {
 	if (typeof delay == "undefined") { delay = 2000; }
+	if (typeof redirect == "undefined") { redirect = false; }
 	$fbsp = $jq("#feedback span");
 	$fbsp.html(message).show();
 	window.setTimeout( function () { $fbsp.fadeOut("slow", function () { $fbsp.html("&nbsp;"); }); }, delay);
-	// if called from save button then exit edit page mode
-	f = window.showFeedback;
-	while((f = f.caller) !== null) {
-		if (f.toString().indexOf("dummySaveButtonVar") > -1) {
-			window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
-		}
+	// if called from save button via saveSheet:success, then exit edit page mode
+	if (redirect) {
+		window.setTimeout( function () { $fbsp.html("Redirecting...").show(); }, 1000);
+		window.setTimeout( function () { window.location.replace(window.location.href.replace("parse=edit", "parse=y")); }, 1500);
 	}
 };
 
