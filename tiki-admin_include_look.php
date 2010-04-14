@@ -72,37 +72,40 @@ if ($prefs['feature_jquery'] == 'y') {
 	$js.= '};';
 	// JS to handle theme/option changes client-side
 	// the var (style_options) has to be declared in the same block for AJAX call scope 
-	$none = tr('None');
+	$none = json_encode( tr('None') );
 	$headerlib->add_js(<<<JS
 $js
 
 \$jq(document).ready( function() {
+	var optionDropDown = \$jq('select[name=style_option]');
+	var styleDropDown = \$jq('select[name=style]');
 	// pick up theme drop-down change
-	\$jq('select[name=style]').change( function() {
-		var ops = style_options[\$jq('select[name=style]').val()];
+	styleDropDown.change( function() {
+		var ops = style_options[styleDropDown.val()];
 		var none = true;
-		\$jq('select[name=style_option]').empty().attr('disabled','').attr('selectedIndex', 0);
+		var current = optionDropDown.val();
+		optionDropDown.empty().attr('disabled',false)
+			.append(\$jq('<option/>').attr('value',$none).text($none));
 		\$jq.each(ops[1], function(i, val) {
-			\$jq('select[name=style_option]').append(\$jq(document.createElement('option')).attr('value',i).text(i));
+			optionDropDown.append(\$jq('<option/>').attr('value',i).text(i));
 			none = false;
 		});
+		optionDropDown.val(current);
 		if (none) {
-			\$jq('select[name=style_option]').empty().attr('disabled','disabled').
-					append(\$jq(document.createElement('option')).attr('value',"$none").text("$none"));
+			optionDropDown.attr('disabled',true);
 		}
 		
-		var t = \$jq('select[name=style]').val();
-		var f = style_options[t][0];
-		if (f) {
-			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
-		} else {
-			\$jq('#style_thumb').animate({'opacity': 0.3}, 'fast');
-		}
-	});
-	\$jq('select[name=style_option]').change( function() {
-		var t = \$jq('select[name=style]').val();
-		var o = \$jq('select[name=style_option]').val();
+		optionDropDown.change();
+	}).change();
+	optionDropDown.change( function() {
+		var t = styleDropDown.val();
+		var o = optionDropDown.val();
 		var f = style_options[t][1][o];
+
+		if( ! f ) {
+			f = style_options[t][0];
+		}
+
 		if (f) {
 			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
 		} else {
