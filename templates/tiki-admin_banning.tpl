@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
-{jq}
+{jq notonready=true}
 	function CheckAll() {
 		for (var i = 0; i < document.banningform.elements.length; i++) {
 			var e = document.banningform.elements[i];
@@ -121,11 +121,11 @@
 </td>
 <td class="{cycle advance=false}">
 <a href="tiki-admin_banning.php?banId={$items[user].banId}" class="link">
-{$items[user].title}</a>
+{$items[user].title|escape}</a>
 </td>
 <td style="text-align:right;" class="{cycle advance=false}">
 {if $items[user].mode eq 'user'}
-	{$items[user].user}
+	{$items[user].user|escape}
 {else}
 	{$items[user].ip1}.{$items[user].ip2}.{$items[user].ip3}.{$items[user].ip4}
 {/if}
