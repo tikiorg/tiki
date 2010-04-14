@@ -206,21 +206,7 @@
 		{/tab}
 	
 		{tab name="{tr}Date and Time Formats{/tr}"}
-			{preference name=feature_pear_date}
-	
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="general-timezone">{tr}Default timezone:{/tr}</label>
-					<br />
-					<select name="server_timezone" id="general-timezone">
-						{foreach key=tz item=tzinfo from=$timezones}
-							{math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
-							<option value="{$tz}"{if $prefs.server_timezone eq $tz} selected="selected"{/if}>{$tz|escape:"html"} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
-						{/foreach}
-					</select>
-				</div>
-			</div>
-
+			{preference name=server_timezone}
 			{preference name=users_prefs_display_timezone}
 			{preference name=long_date_format}
 			<em>{tr}Sample:{/tr} {$now|tiki_long_date}</em>
