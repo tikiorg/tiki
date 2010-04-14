@@ -1,6 +1,12 @@
 # for an installation in a subdirectory, you have to copy this file in your root of your domain and add  /subdir/ on each line
 User-agent: *
+# Uncomment the following line to indicate to robots __not__ to crawl your site.
+# Disallow: /
+#
+# This is to slow down any crawling so as not to put pressure on your server
 Crawl-Delay: 30
+#
+# The following are what we normally don't want to be crawled
 Disallow: /CVS/
 Disallow: /lib/
 Disallow: /doc/
