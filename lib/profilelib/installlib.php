@@ -1248,9 +1248,23 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 		foreach( $data['items'] as $item )
 			$menulib->replace_menu_option( $menuId, 0, $item['name'], $item['url'], $item['type'], $item['position'], $item['section'], implode( ',', $item['permissions'] ), implode( ',', $item['groups'] ), $item['level'] );
 
+		// Set module title to menu_nn if it is not set by a parameter
+		if( !isset($data['title']) )
+		{
+		$modtitle = "menu_$menuId";
+		} else {
+		$modtitle = $data['title'];
+		}		
+		
+		// Set up module only as a user module if position is set to 'none'
+		if( $data['position'] == 'none' )
+		{
+			$content = "{menu id=$menuId$extra}";
+			$modlib->replace_user_module( $data['name'], $modtitle, $content );
+		}
 
-		// Set as side menu if position and order are specified
-		if( isset( $data['position'], $data['order'] ) )
+		// Set module as side menu if both position and order are specified and position is not 'none'
+		elseif( isset( $data['position'], $data['order'] ) )
 		{
 			if( $data['position'] == 'left' )
 				$column = 'l';
@@ -1264,7 +1278,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 
 			$content = "{menu id=$menuId$extra}";
 
-			$modlib->replace_user_module( "menu_$menuId", $data['name'], $content );
+			$modlib->replace_user_module( $data['name'], $modtitle, $content );
 			$modlib->assign_module( 0, "menu_$menuId", null, $column, $data['order'], $data['cache'], 10, $data['groups'], '' );
 		}
 
