@@ -79,18 +79,19 @@
 				  			{if count($categories) gt 0}
 								{$cat_tree}
 								<div class="clear">
-								{if $tiki_p_admin_categories eq 'y'}
-				    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
-								{/if}
-								{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
+									{if $tiki_p_admin_categories eq 'y'}
+										<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+									{/if}
+									{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
+								</div>
 							{else}
 								<div class="clear">
-				 				{if $tiki_p_admin_categories eq 'y'}
-				    				<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
-				 				{/if}
-				    			{tr}No categories defined{/tr}
+									{if $tiki_p_admin_categories eq 'y'}
+										<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+									{/if}
+									{tr}No categories defined{/tr}
+								</div>
 				  			{/if}
-							</div> {* end .clear *}
 						</div> {* end #multiselect *}
 					</div> {* end #category_multiselect_find *}
 				{/if}
