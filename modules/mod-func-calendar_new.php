@@ -110,9 +110,9 @@ function module_calendar_new( $mod_reference, $module_params ) {
 
 	$_REQUEST['gbi'] = 'y';
 	if ( !empty($module_params['viewlist']) ) {
-		$_REQUEST['viewlist'] = $module_params['viewlist'];
+		$_REQUEST['viewlistmodule'] = $module_params['viewlist'];
 	} else {
-		$_REQUEST['viewlist'] = 'table';
+		$_REQUEST['viewlistmodule'] = 'table';
 	}
 
 	foreach ($calIds as $i=>$cal_id) {
