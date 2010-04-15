@@ -52,6 +52,11 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 	$custom_js = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.js');
 	if (!empty($custom_js)) {
 		$headerlib->add_jsfile($custom_js, 50);
+	} else {															// there's no custom.js in the current style or option
+		$custom_js = $tikilib->get_style_path('', '', 'custom.js');		// so use one in the root of /styles if there
+		if (!empty($custom_js)) {
+			$headerlib->add_jsfile($custom_js, 50);
+		}
 	}
 	
 	$js = '
