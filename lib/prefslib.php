@@ -315,7 +315,7 @@ class PreferencesLib
 	private function _getTextValue( $info, $data ) {
 		$name = $info['preference'];
 
-		if( isset($info['separator']) ) {
+		if( isset($info['separator']) && is_string( $data[$name] ) ) {
 			$value = explode( $info['separator'], $data[$name] );
 		} else {
 			$value = $data[$name];
