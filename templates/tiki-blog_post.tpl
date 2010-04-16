@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 
-{title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if} - {$blog_data.title|escape}{/title}
+{title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if} - {$blog_data.title|escape}{/title}
 
 <div class="navbar">
 	{if $blogId gt 0 }
@@ -103,9 +103,7 @@
 			<td>{tr}Publish Date{/tr}</td>
 			<td>
 				{html_select_date prefix="publish_" time=$created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
-				<span dir="ltr">{html_select_time prefix="publish_" time=$created display_seconds=false}
-					
-				</span>
+				{html_select_time prefix="publish_" time=$created display_seconds=false}
 			</td>
 </tr>
 {if $prefs.blog_spellcheck eq 'y'}
