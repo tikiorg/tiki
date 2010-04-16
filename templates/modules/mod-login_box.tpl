@@ -1,7 +1,5 @@
 {* $Id$ *}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-{literal}
+{jq notonready=true}
 function capLock(e){
  kc = e.keyCode?e.keyCode:e.which;
  sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
@@ -10,9 +8,7 @@ function capLock(e){
  else
   document.getElementById('divCapson').style.visibility = 'hidden';
 }
-{/literal}
-//--><!]]>
-</script>
+{/jq}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Log in{/tr}"}{/if}{* Left for performance, since tiki-login_scr.php includes this template directly. *}
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $user}
