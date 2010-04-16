@@ -310,7 +310,7 @@ class Tiki_Profile_Installer
 				$userlib->assign_permission_to_group( $perm, $groupName );
 			else
 				$userlib->remove_permission_from_group( $perm, $groupName );
-			$this->setFeedback(sprintf(tra('Modifed permission %s for %s'), $perm, $groupName));
+			$this->setFeedback(sprintf(tra('Modified permission %s for %s'), $perm, $groupName));
 		}
 
 		foreach( $objects as $data )
@@ -325,7 +325,7 @@ class Tiki_Profile_Installer
 					$userlib->assign_object_permission( $groupName, $data['id'], $data['type'], $perm );
 				else
 					$userlib->remove_object_permission( $groupName, $data['id'], $data['type'], $perm );
-				$this->setFeedback(sprintf(tra('Modifed permission %s on %s/%s for %s'), $perm, $data['type'], $data['id'], $groupName));
+				$this->setFeedback(sprintf(tra('Modified permission %s on %s/%s for %s'), $perm, $data['type'], $data['id'], $groupName));
 			}
 
 		global $user;
