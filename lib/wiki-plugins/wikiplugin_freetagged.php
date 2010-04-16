@@ -63,7 +63,7 @@ function wikiplugin_freetagged_info() {
 			'sort_mode' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'description' => tra('Default: type_asc,name_asc'),
+				'description' => tra('Choose from:  objectId, type, itemId, description, created, name, href, hits, comments_locked (Default: created_desc)'),
 				'filter' => 'text',
 			),
 			'find' => array(
@@ -84,6 +84,18 @@ function wikiplugin_freetagged_info() {
 				'description' => tra('Default: 3'),
 				'filter' => 'text',
 			),
+			'titles_only' => array(
+				'required' => false,
+				'name' => tra('Show titles only'),
+				'description' => tra('Default: n'),
+				'filter' => 'text',
+			),
+			'max_image_size' => array(
+				'required' => false,
+				'name' => tra('Maximum Image Size'),
+				'description' => tra('Height or width in pixels. Default = 0 (no maximum)'),
+				'filter' => 'text',
+			),
 		),
 	);
 }
@@ -97,15 +109,19 @@ function wikiplugin_freetagged($data, $params) {
         'type' => null,
 		'offset' => 0,
 		'maxRecords' => -1,
-		'sort_mode' => 'type_asc,name_asc',
+		'sort_mode' => 'created_desc',
 		'find' => '',
 		'broaden' => 'n',
 		'h_level' => '3',
+		'titles_only' => 'n',
+		'max_image_size' => 0,
 	);
 	
 	extract (array_merge($defaults, $params), EXTR_SKIP);
 	
 	if ($type == tra('all')) { $type = null; }
+	
+	$sort_mode = str_replace('created', 'o.`created`', $sort_mode);
 	
 	if ( !$tags && $object = current_object() ) {
 		$tagArray = array();
@@ -125,42 +141,73 @@ function wikiplugin_freetagged($data, $params) {
 	}
 	
 	foreach($objects as &$obj) {
-		switch ($obj['type']) {
-			case  'article':
-				global $artlib; include_once('lib/articles/artlib.php');
-				$info = $artlib->get_article($obj['itemId']);
-				$obj['date'] = $info['publishDate'];
-				$obj['description'] = $tikilib->parse_data( $info['heading']);
-				if ($info['useImage'] == 'y') {
-					$obj['image'] = 'article_image.php?id='.$obj['itemId'];
-				} else if (!empty($info['topicId'])) {
-					$obj['image'] = 'article_image.php?image_type=topic&amp;id='.$info['topicId'];
-				}
-				if (isset($obj['image'])) {
-					$obj['img'] = '<img  src="'.$obj['image'] . (!empty($info['image_x']) ? ' width="'.$info['image_x'].'"' : '') .
-						 (!empty($info['image_y']) ? ' height="'.$info['image_x'].'"' : '') .'"/>';
-				}
-				break;
-			case 'file':
-				global $filegallib; include_once('lib/filegals/filegallib.php');
-				$info = $filegallib->get_file($obj['itemId']);
-				$obj['description'] = $info['description'];
-				$obj['date'] = $info['lastModif'];
-				include_once 'lib/wiki-plugins/wikiplugin_img.php';
-				$obj['img'] = wikiplugin_img( '', array('fileId' => $obj['itemId'], 'thumb' => 'y', 'rel' => 'box[g]'), 0 );
-				$obj['img'] = str_replace('~np~', '', $obj['img']);	// don't nest ~np~
-				$obj['img'] = str_replace('~/np~', '', $obj['img']);
-				break;
-			case 'wiki page':
-				$info = $tikilib->get_page_info($obj['name'], false);
-				$obj['description'] = $info['description'];
-				$obj['date'] = $info['lastModif'];
-				$obj['image'] = '';
-				break;
-			default:
-				$obj['description'] = '';
-				$obj['image'] = '';
-				$obj['date'] = '';
+		if ($titles_only == 'n') {
+			switch ($obj['type']) {
+				case  'article':
+					global $artlib; include_once('lib/articles/artlib.php');
+					$info = $artlib->get_article($obj['itemId']);
+					$obj['date'] = $info['publishDate'];
+					$obj['description'] = $tikilib->parse_data( $info['heading']);
+					if ($info['useImage'] == 'y') {
+						$obj['image'] = 'article_image.php?id='.$obj['itemId'];
+					} else if (!empty($info['topicId'])) {
+						$obj['image'] = 'article_image.php?image_type=topic&amp;id='.$info['topicId'];
+					}
+					if (isset($obj['image'])) {
+						if (!empty($info['image_x'])) {
+							$w = $info['image_x'];
+						} else {
+							$w = 0;
+						}
+						if (!empty($info['image_y'])) {
+							$h = $info['image_y'];
+						} else {
+							$h = 0;
+						}
+						if ($max_image_size > 0) {
+							if ($w > $h && $w > $max_image_size) {
+								$w = $max_image_size;
+								$h = floor($w * $h / $info['image_x']);
+							} else if ($h > $max) {
+								$h = $max_image_size;
+								$w = floor($h * $w / $info['image_y']);	
+							}
+							
+						}
+						$obj['img'] = '<img  src="'.$obj['image'] . ($w ? ' width="'.$w.'"' : '') . ($h ? ' height="'.$h.'"' : '') .'"/>';
+					}
+					break;
+				case 'file':
+					global $filegallib; include_once('lib/filegals/filegallib.php');
+					$info = $filegallib->get_file($obj['itemId']);
+					$obj['description'] = $info['description'];
+					$obj['date'] = $info['lastModif'];
+					include_once 'lib/wiki-plugins/wikiplugin_img.php';
+					$imgparams = array('fileId' => $obj['itemId'], 'rel' => 'box[g]');
+					$imgparams['thumb'] = 'y';
+					if ($max_image_size > 0) {
+						$imgparams['max'] = $max_image_size;
+					}
+					
+					$obj['img'] = wikiplugin_img( '', $imgparams, 0 );
+					$obj['img'] = str_replace('~np~', '', $obj['img']);	// don't nest ~np~
+					$obj['img'] = str_replace('~/np~', '', $obj['img']);
+					break;
+				case 'wiki page':
+					$info = $tikilib->get_page_info($obj['name'], false);
+					$obj['description'] = $info['description'];
+					$obj['date'] = $info['lastModif'];
+					$obj['image'] = '';
+					break;
+				default:
+					$obj['description'] = '';
+					$obj['image'] = '';
+					$obj['date'] = '';
+			}
+		} else {
+			$obj['description'] = '';
+			$obj['image'] = '';
+			$obj['date'] = '';
 		}
 	}
 
