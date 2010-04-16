@@ -27,7 +27,7 @@ function outputGrid() {
 	$handler = new TikiSheetOutputHandler(null, ($grid->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
 	ob_start();
 	$grid->export($handler);
-	$smarty->assign('grid_content', ob_get_contents());
+	$smarty->assign('grid_content', $smarty->get_template_vars('grid_content') . ob_get_contents());
 	ob_end_clean();
 }
 
@@ -44,7 +44,9 @@ if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_pe
 }
 if (!isset($_REQUEST['parse'])) {
 	$_REQUEST['parse'] = 'y';
-} else if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
+}
+
+if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
 if (typeof ajaxLoadingShow == "function") {
@@ -52,6 +54,8 @@ if (typeof ajaxLoadingShow == "function") {
 }
 setTimeout (function () { $jq("#edit_button").click(); }, 500);
 ', 500);
+} else {
+	$headerlib->add_jq_onready('$jq("div.tiki_sheet").tiki("sheet", "", {editable:false});', 500);
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
@@ -59,6 +63,7 @@ $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists
 // Init smarty variables to blank values
 //$smarty->assign('theme','');
 $info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
+$subsheets = $sheetlib->get_sheet_subsheets($_REQUEST["sheetId"]);
 if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) $tiki_p_edit_sheet = 'y';
 else $tiki_p_edit_sheet = 'n';
 $smarty->assign('tiki_p_edit_sheet', $tiki_p_edit_sheet);
@@ -66,7 +71,7 @@ $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 $smarty->assign('page_mode', 'view');
 // Process the insertion or modification of a gallery here
-$grid = new TikiSheet;
+$grid = new TikiSheet($_REQUEST["sheetId"]);
 if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && $tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
 	$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
 	$smarty->display("error.tpl");
@@ -79,14 +84,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		die;
 	}
 	if (!empty($_REQUEST['s'])) {	// ajax save request from jQuery.sheet
-		$handler = new TikiSheetHTMLTableHandler($_REQUEST['s']);
-		$res = $grid->import($handler);
-		// Save the changes
-		if ($res) {
-			$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-			$grid->export($handler);
+		$data =  json_decode($_REQUEST['s']);
+		$rc =  '';
+		if (is_array($data)) {
+			foreach ($data as $d) {
+				$handler = new TikiSheetHTMLTableHandler($d);
+				$res = $grid->import($handler);
+				// Save the changes
+				$rc .= strlen($rc) === 0 ? '' : ', ';
+				if ($res) {
+					$id = $d->metadata->sheetId;
+					if (!$id) {
+						$id = $sheetlib->replace_sheet( 0, 'subsheet of sheet ' . $_REQUEST["sheetId"], '', $user, $_REQUEST["sheetId"] );
+						$rc .= tra('new') . ' ';
+					}
+					if ($id) {
+						$handler = new TikiSheetDatabaseHandler($id);
+						$grid->export($handler);
+						$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=$id)";
+					} 
+				}
+			}
 		}
-		die($res ? tra('Saved') . ' ' . $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') : tra('Save failed'));
+		die($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
 	}
 	
 	// Load data from the form
@@ -122,7 +142,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			include_once ('contribution.php');
 		}
 	} else {
+		$smarty->assign('grid_content', '');
 		outputGrid();
+		if (count($subsheets) > 0) {
+			foreach ($subsheets as $sub) {
+				$handler = new TikiSheetDatabaseHandler($sub['sheetId']);
+				$handler->setReadDate($date);
+				$grid = new TikiSheet($sub['sheetId'], true);
+				$grid->import($handler);
+				outputGrid();
+			}
+		}
+		$smarty->assign('subsheet_cant', count($subsheets));
+		$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
+		$grid->import($handler);
 	}
 }
 if ($prefs['feature_jquery_sheet'] == 'y') {
