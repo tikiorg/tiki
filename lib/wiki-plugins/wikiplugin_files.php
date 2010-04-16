@@ -375,5 +375,6 @@ function wikiplugin_files($data, $params) {
 		$info['lockable'] = $gal_info['lockable'];
 		$info['id'] = $info['fileId'];
 		$info['parentName'] = $gal_info['name'];
+		$info['size'] = $info['filesize'];
 		return $info;
 	}
