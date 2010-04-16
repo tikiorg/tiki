@@ -13,7 +13,7 @@ $auto_query_args = array(
 	'page'
     );
 $access->check_permission('tiki_p_admin');
-
+global $logslib; include_once('lib/logs/logslib.php');
 /**
  * Display feedback on prefs changed
  * 
@@ -33,18 +33,21 @@ function add_feedback( $name, $message, $st, $num = null ) {
 	);
 }
 function simple_set_toggle($feature) {
-	global $_REQUEST, $tikilib, $smarty, $prefs;
+	global $_REQUEST, $tikilib, $smarty, $prefs, $logslib;
 	if (isset($_REQUEST[$feature]) && $_REQUEST[$feature] == "on") {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'y')) {
 			// not yet set at all or not set to y
 			$tikilib->set_preference($feature, 'y');
 			add_feedback( $feature, tr('%0 enabled', $feature), 1, 1 );
+			$logslib->add_action('feature', $feature, 'system', 'enabled');
+
 		}
 	} else {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'n')) {
 			// not yet set at all or not set to n
 			$tikilib->set_preference($feature, 'n');
 			add_feedback($feature, tr('%0 disabled', $feature), 0, 1);
+			$logslib->add_action('feature', $feature, 'system', 'disabled');
 		}
 	}
 	global $cachelib;
@@ -52,7 +55,7 @@ function simple_set_toggle($feature) {
 	$cachelib->invalidate('allperms');
 }
 function simple_set_value($feature, $pref = '', $isMultiple = false) {
-	global $_REQUEST, $tikilib, $prefs;
+	global $_REQUEST, $tikilib, $prefs, $logslib;
 	$old = $prefs[$feature];
 	if (isset($_REQUEST[$feature])) {
 		if ($pref != '') {
@@ -73,23 +76,25 @@ function simple_set_value($feature, $pref = '', $isMultiple = false) {
 	}
 	if (isset($_REQUEST[$feature]) && $old != $_REQUEST[$feature]) {
 		add_feedback( $feature, ($_REQUEST[$feature]) ? tr('%0 set', $feature) : tr('%0 unset', $feature), 2 );
+		$logslib->add_action('feature', $feature, 'system', isset($_REQUEST['feature'])?$_REQUEST['feature']:'');
 	}
 	global $cachelib;
 	require_once ("lib/cache/cachelib.php");
 	$cachelib->invalidate('allperms');
 }
 function simple_set_int($feature) {
-	global $_REQUEST, $tikilib, $prefs;
+	global $_REQUEST, $tikilib, $prefs, $logslib;
 	if (isset($_REQUEST[$feature]) && is_numeric($_REQUEST[$feature])) {
 		$old = $prefs[$feature];
 		if ($old != $_REQUEST[$feature]) {
 			$tikilib->set_preference($feature, $_REQUEST[$feature]);
 			add_feedback( $feature, tr('%0 set', $feature), 2 );
+			$logslib->add_action('feature', $feature, 'system', $_REQUEST['feature']);
 		}
 	}
 }
 function byref_set_value($feature, $pref = "") {
-	global $_REQUEST, $tikilib, $smarty;
+	global $_REQUEST, $tikilib, $smarty, $logslib;
 	simple_set_value($feature, $pref);
 }
 $crumbs[] = new Breadcrumb(tra('Administration') , tra('Sections') , 'tiki-admin.php', 'Admin+Home', tra('Help on Configuration Sections', '', true));
@@ -107,10 +112,13 @@ if( isset( $_REQUEST['lm_preference'] ) ) {
 	foreach( $changes as $pref => $value ) {
 		if( $value == 'y' ) {
 			add_feedback( $pref, tr('%0 enabled', $pref), 1, 1 );
+			$logslib->add_action('feature', $pref, 'system', 'enabled');
 		} elseif( $value == 'n' ) {
 			add_feedback( $pref, tr('%0 disabled', $pref), 0, 1 );
+			$logslib->add_action('feature', $pref, 'system', 'disabled');
 		} else {
 			add_feedback( $pref, tr('%0 set', $pref), 1, 1 );
+			$logslib->add_action('feature', $pref, 'system', $value);
 		}
 	}
 }

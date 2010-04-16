@@ -40,8 +40,6 @@ if (isset($_REQUEST['new_prefs'])) {
 	// Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
 	
 }
-// Get list of time zones
-$smarty->assign('timezones', TikiDate::getTimeZoneList());
 $smarty->assign('now', $tikilib->now);
 
 if (!empty($_REQUEST['testMail'])) {

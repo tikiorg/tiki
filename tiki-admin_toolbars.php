@@ -143,8 +143,9 @@ foreach( $qtlist as $name ) {
 			$qt_w_list[] = $name;
 		}
 	}
+	$label = htmlspecialchars($label);
 	$label .= '<input type="hidden" name="token" value="'.$tag->getWysiwygToken().'" />';
-	$label .= '<input type="hidden" name="syntax" value="'.$tag->getSyntax().'" />';
+	$label .= '<input type="hidden" name="syntax" value="' . htmlspecialchars($tag->getSyntax()) . '" />';
 	$label .= '<input type="hidden" name="type" value="'.$tag->getType().'" />';
 	if ($tag->getType() == 'Wikiplugin') {
 		$label .= '<input type="hidden" name="plugin" value="'.$tag->getPluginName().'" />';

@@ -8,6 +8,10 @@
 # $Id$
 
 User-agent: *
+# Uncomment the following line to indicate to robots __not__ to crawl your site.
+# Disallow: /
+#
+# This is to slow down any crawling so as not to put pressure on your server
 Crawl-Delay: 30
 Disallow: /backups/
 Disallow: /css/

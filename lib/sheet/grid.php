@@ -145,6 +145,8 @@ class TikiSheet
 	var $errorFlag;
 
 	var $contributions;
+	var $sheetId;
+	var $isSubSheet;
 	// }}}2
 	
 	/** getHandlerList {{{2
@@ -166,8 +168,10 @@ class TikiSheet
 	/** TikiSheet {{{2
 	 * Initializes the data container.
 	 */
-	function TikiSheet()
+	function TikiSheet( $sheetId = 0, $isSubSheet = false )
 	{
+		$this->sheetId = $sheetId;
+		$this->isSubSheet = $isSubSheet;
 		$this->dataGrid = array();
 		$this->calcGrid = array();
 		$this->cellInfo = array();
@@ -1635,7 +1639,9 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			return false;
 
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
-		echo "<table{$class}>\n";
+		$id = empty( $sheet->sheetId ) ? '' : " rel='sheetId{$sheet->sheetId}'";
+		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
+		echo "<table{$class}{$id}{$sub}>\n";
 
 		if( !is_null( $this->heading ) )
 			echo "	<caption>{$this->heading}</caption>\n";
@@ -1707,7 +1713,13 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				
 				if ($this->parseOutput && $sheet->parseValues == 'y') {
 					global $tikilib;
-					$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+					$data = trim($tikilib->parse_data($data, array('suppress_icons' => true)));
+					if (strpos($data, '<p>') === 0) {	// remove containing <p> tag
+						$data = substr($data, 3);
+						if (strrpos($data, '</p>') === strlen($data) - 4) {
+							$data = substr($data, 0, -4);
+						}
+					}
 				}
 				echo "			<td$append>$data</td>\n";
 			}
@@ -1851,16 +1863,20 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 //		$parser->parse('<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>'.$this->data.'</body>/head>');
 //		$res = $parser->getData();
 
-		$d = json_decode($this->data);
+		$d = $this->data;
 		
 		$rows = (int) $d->metadata->rows;
 		$cols = (int) $d->metadata->columns;
 		
-		for ($r = 0; $r <= $rows; $r++) {
-			for ($c = 0; $c <= $cols; $c++) {
+		for ($r = 0; $r < $rows; $r++) {
+			for ($c = 0; $c < $cols; $c++) {
 				$ri = 'r'.$r;
 				$ci = 'c'.$c;
-				$val = $d->data->$ri->$ci->value;
+				if (isset($d->data->$ri->$ci->value)) {
+					$val = $d->data->$ri->$ci->value;
+				} else {
+					$val = 'qwe';
+				}
 				
 				$sheet->initCell( $r, $c );
 				$sheet->setValue( $val );
@@ -1913,6 +1929,13 @@ class SheetLib extends TikiLib
 		$result = $this->query( "SELECT `className`, `headerRow`, `footerRow`, `parseValues` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND `end` IS NULL", array( $sheetId ) );
 
 		return $result->fetchRow();
+	}
+	
+	function get_sheet_subsheets( $sheetId ) // {{{2
+	{
+		$result = $this->fetchAll( "SELECT `sheetId` FROM `tiki_sheets` WHERE `parentSheetId` = ?", array( $sheetId ) );
+
+		return $result;
 	}
 	
 	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '' ) // {{{2
