@@ -39,8 +39,9 @@ $jq('.pref-reset')
 		.find('a')
 			.click( function() {
 				var box = $jq(this).closest('span').find(':checkbox');
-
 				box.attr('checked', box.filter(':checked').length == 0).change();
+				var $i = $jq(this).find("img");
+				$i.attr("src", $i.attr("src").indexOf("undo") > -1 ? $i.attr("src").replace("undo", "redo") :  $i.attr("src").replace("redo", "undo"));
 				return false;
 			} );
 {/jq}
