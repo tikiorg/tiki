@@ -31,6 +31,7 @@ $jq('.pref-reset')
 			var temp = $jq("[name=" + $jq(this).val() + "]").val();
 			$el.val( defval );
 			$jq("#" + $jq(this).val() + "_default").val( temp );
+			if ($el.attr("nodeName") == "SELECT") {$el.change();}
 		}
 	} )
 	.wrap('<span/>')
