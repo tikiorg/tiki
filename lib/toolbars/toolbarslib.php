@@ -848,7 +848,7 @@ displayPicker = function( closeTo, list, areaname ) {
 		}
 	};
 
-	for( var i in window.pickerData[list] ) {
+	for( var i = 0; i < window.pickerData[list].length; i++ ) {
 		var chr = window.pickerData[list][i];
 		var link = document.createElement( 'a' );
 
@@ -1304,7 +1304,7 @@ displayDialog = function( closeTo, list, areaname ) {
 	}
 	\$jq(dialogDiv).empty();
 	
-	for( i in window.dialogData[list] ) {
+	for( i = 0; i < window.dialogData[list].length; i++ ) {
 		item = window.dialogData[list][i];
 		if (item.indexOf("<") == 0) {	// form element
 			el = \$jq(item);
