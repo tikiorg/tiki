@@ -123,7 +123,7 @@ function module_calendar_new( $mod_reference, $module_params ) {
 
 	if ( !empty($calIds) ) {
 		$tc_infos = $calendarlib->getCalendar($calIds, $viewstart, $viewend, 'day');
-		if ($_REQUEST['viewlist'] == 'list') {
+		if ($_REQUEST['viewlistmodule'] == 'list') {
 			foreach ($tc_infos['listevents'] as $i=>$e) {
 				$tc_infos['listevents'][$i]['head'] = '';
 				$tc_infos['listevents'][$i]['group_description'] ='';
