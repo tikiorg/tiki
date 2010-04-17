@@ -263,7 +263,7 @@ var editTimerWarnings = 0;
 		$js_editconfirm .= "
 function confirmExit() {
 	if (window.needToConfirm && typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
-		for(ed in fckEditorInstances) {
+		for(var ed = 0; ed < fckEditorInstances.length; ed++) {
 			if (fckEditorInstances[ed].IsDirty()) {
 				window.editorDirty = true;
 				break;
