@@ -265,7 +265,7 @@
 					   			toggleSpan('duratione');
 					   			toggleSpan('durminplus');
 					   			toggleSpan('durminminus');"
-					   value="true" {if $calitem.allday} checked="checked" {/if} /> {tr}All-Day{/tr}</label>
+					   value="true" {if $calitem.allday} checked="checked" {/if} /> {tr}All day{/tr}</label>
 			</td>
 		</tr>
 		<tr>

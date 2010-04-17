@@ -24,7 +24,7 @@
 {if $group_by_item ne 'y'}
 <strong{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>
 {if $allday}
-	{tr}All-Day{/tr}
+	{tr}All day{/tr}
 {else}
   {if ($cellend - $cellstart < 86400)}
 	{$cellstart|tiki_date_format:"%H:%M"} &gt; {$cellend|tiki_date_format:"%H:%M"}

@@ -12,7 +12,7 @@
 <tr class="{cycle}{if $event.start <= $smarty.now and $event.end >= $smarty.now} selected{/if} vevent">
 <td>
 <abbr class="dtstart" title="{$event.start|tiki_short_date}"><a href="{$myurl}?todate={$event.start}" title="{tr}Change Focus{/tr}">{$event.start|tiki_short_date}</a></abbr><br />
-{if $event.allday} {tr}All-Day{/tr} {else} {$event.start|tiki_short_time} {/if}
+{if $event.allday} {tr}All day{/tr} {else} {$event.start|tiki_short_time} {/if}
 </td>
 <td>
 {if $event.start|tiki_short_date ne $event.end|tiki_short_date}<abbr class="dtend" title="{$event.end|tiki_short_date}"><a href="{$myurl}?todate={$event.end}" title="{tr}Change Focus{/tr}">{$event.end|tiki_short_date}</a></abbr> {/if}<br />

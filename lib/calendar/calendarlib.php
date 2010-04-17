@@ -299,7 +299,7 @@ class CalendarLib extends TikiLib
 			for ( $i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop) ) {
 				/* $head is in user time */
 				if ($res['allday'] == '1') {
-					$head = tra('All Day');
+					$head = tra('All day');
 				} elseif ($dstart == $dend) {
 					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " - " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
 				} elseif ($i == $dstart) {
