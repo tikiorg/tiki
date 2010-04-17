@@ -116,5 +116,10 @@ function prefs_fgal_list() {
 			'description' => tra('These emails will receive a copy of each deleted file. Emails are separated with comma'),
 			'type' => 'text',
 		),
+		'fgal_keep_fileId' => array(
+			'name' => tra('Keep always the same fileId when replacing a file with archive'),
+			'description' => tra('Keep always the same fileId when replacing a file with archive'),
+			'type' => 'flag',
+		),
 	);
 }

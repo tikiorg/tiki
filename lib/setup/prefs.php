@@ -576,7 +576,7 @@ function get_default_prefs() {
 		'fgal_list_lastDownload_admin' => 'n',
 		'fgal_list_lockedby_admin' => 'n',
 		'fgal_list_backlinks_admin' => 'y',
-
+		'fgal_keep_fileId' => 'n',
 
 		// imagegals
 		'feature_galleries' => 'n',
