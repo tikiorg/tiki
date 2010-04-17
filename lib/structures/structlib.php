@@ -209,7 +209,11 @@ class StructLib extends TikiLib
 				// the others
 				$query = 'update `tiki_structures` set `pos`=`pos`+1 where `pos`>? and `parent_id`=?';
 				$result = $this->query($query,array((int)$max, (int)$parent_id));
+				
+			} else {	// default to adding at end of structure
+				$max = $this->getOne('select max(`pos`) from `tiki_structures` where `parent_id`=?',array((int)$parent_id));
 			}
+			// 	
             //Create a new structure entry
 			$max++;
 			$query = 'insert into `tiki_structures`(`parent_id`,`page_id`,`page_alias`,`pos`, `structure_id`) values(?,?,?,?,?)';
