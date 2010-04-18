@@ -270,6 +270,7 @@ function get_default_prefs() {
 		'wikiplugin_myspace' => 'n',
 		'wikiplugin_objecthits' => 'n',
 		'wikiplugin_payment' => 'y',
+		'wikiplugin_perm' => 'n',
 		'wikiplugin_picture' => 'n',  // Old syntax for images
 		'wikiplugin_pluginmanager' => 'n',
 		'wikiplugin_poll' => 'y',
@@ -405,6 +406,7 @@ function get_default_prefs() {
 		'wikiplugininline_myspace' => 'n',
 		'wikiplugininline_objecthits' => 'n',
 		'wikiplugininline_payment' => 'n',
+		'wikiplugininline_perm' => 'y',
 		'wikiplugininline_picture' => 'n',  // Old syntax for images
 		'wikiplugininline_pluginmanager' => 'n',
 		'wikiplugininline_poll' => 'n',
