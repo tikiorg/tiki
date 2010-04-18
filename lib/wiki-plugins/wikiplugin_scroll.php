@@ -21,36 +21,24 @@
  * wiki page.
  */
 function wikiplugin_scroll_help() {
-	return tra("Scroll").":<br />~np~{SCROLL(width=> height=> speed=> left=> top=>)}".tra("text")."{SCROLL}~/np~";
+	return tra("Scroll").":<br />~np~{SCROLL(width=> height=> speed=>)}".tra("text")."{SCROLL}~/np~";
 }
 function wikiplugin_scroll($data, $params) {
 	extract ($params, EXTR_SKIP);
 //minimum parameters
 	if (!isset($width)) {
-		return ("<b>missing  width parameter for plugin</b><br/>");
+		return ("<b>missing width parameter for plugin</b><br/>");
 	}
 
 	if (!isset($height)) {
 		return ("<b>missing height parameter for plugin</b><br/>");
 	}
 	
-//optionals parameters
+//optional parameters
 	if (!isset($speed)) {
 		$speed=8;
-		}
-  if (!isset($left)) {
-		$left="10px";
-		$left_l=substr($left,0,-2);
-		} else {
-				if (substr($left,-1) == "x") {
-     			$left_l=substr($left,0,-2);
-				} else {
-		 			return ("<b>Warning the value of the left parameters must be set using px  (ex: 600px ) for plugin</b><br/>");
-				}
-		}		
-		if (!isset($top)) {
-		$top=0;
-		}
+	}
+
 
 // margin requierd for ilayer scrolling on mozilla
    $margin=40;
