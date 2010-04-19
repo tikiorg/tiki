@@ -13,7 +13,7 @@ function prefs_bigbluebutton_list() {
 			'description' => tra('Full URL to the BigBlueButton installation.'),
 			'type' => 'text',
 			'filter' => 'url',
-			'hint' => tra('http://host.example.com/bigbluebutton/'),
+			'hint' => tra('http://host.example.com/'),
 			'keywords' => 'big blue button',
 			'size' => 40,
 		),
