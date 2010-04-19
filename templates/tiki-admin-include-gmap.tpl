@@ -1,5 +1,5 @@
 {remarksbox type="note" title="{tr}Note{/tr}"}
-{tr}To use Google Maps, you must generate a Google Maps API Key for your web site. See <a href="http://www.google.com/apis/maps/signup.html">http://www.google.com/apis/maps/signup.html</a> for details.{/tr}
+{tr}To use Google Maps, you must generate a Google Maps API Key for your web site. See <a href="http://code.google.com/intl/fr/apis/maps/signup.html">http://code.google.com/intl/fr/apis/maps/signup.html</a> for details.{/tr}
 {/remarksbox}
 
 
