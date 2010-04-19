@@ -11,7 +11,7 @@ a:link,
 a:visited {
 	color: #8e286a;
 }
- 
+
 a:active,
 a:hover {
 	color: #a02871;
@@ -46,7 +46,9 @@ button,
 input[type="reset"],
 input[type="submit"],
 span.button input,
-.calbuttonBox a {
+.calbuttonBox a,
+span#genPass span.button a,
+span#genPass span.button a:visited {
 	color: #fff;
 	background: #a82a76;
 	border-color: #a82a76 #69285c #69285c #a82a76;
@@ -58,7 +60,8 @@ button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 span.button input:hover,
-.calbuttonBox:hover {
+.calbuttonBox:hover,
+span#genPass span.button a:hover {
 	background: #9b286f;
 	border-color: #69285c #a82a76 #a82a76 #69285c;
 }
@@ -105,7 +108,7 @@ input[type="password"],
 input[type="file"],
 input#login-pass,
 textarea,
-.adminoptionbox optionn {
+.adminoptionbox option {
 	background: #f4dded;
 	border-color: #e4afd3 #faf1f8 #faf1f8 #e4afd3;
 }
@@ -140,6 +143,10 @@ tr.diffheader {
 	color: #fff;
 }
 
+#siteloginbar_popup .tabmark {
+	border-color: #696969;
+}
+
 .tabmark a {
 	color: #fff;
 }
@@ -156,8 +163,9 @@ tr.diffheader {
 }
 
 .tabcontent,
-form.admin fieldset {
-	background: #e9aad0;	
+form.admin fieldset,
+#siteloginbar_popup .cssmenu_horiz ul li {
+	background: #e9aad0;
 }
 
 /* Quote plugin */
