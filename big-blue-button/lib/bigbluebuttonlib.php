@@ -28,6 +28,26 @@ class BigBlueButtonLib
 		return $meetings;
 	}
 
+	public function roomExists( $room ) {
+		foreach( $this->getMeetings() as $meeting ) {
+			if( $meeting['meetingID'] == $room ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function createRoom( $room ) {
+		global $tikilib, $cachelib;
+		$this->performRequest( 'create', array(
+			'name' => $room,
+			'meetingID' => $room,
+			'logoutURL' => $tikilib->tikiUrl(''),
+		) );
+		$cachelib->invalidate( 'bbb_meetinglist' );
+	}
+
 	public function joinMeeting( $room ) {
 		$name = $this->getAttendeeName();
 		$password = $this->getAttendeePassword( $room );

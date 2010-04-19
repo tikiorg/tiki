@@ -25,29 +25,37 @@ function wikiplugin_bigbluebutton_info() {
 
 function wikiplugin_bigbluebutton( $data, $params ) {
 	global $smarty, $prefs, $user, $u_info;
+	global $bigbluebuttonlib; require_once 'lib/bigbluebuttonlib.php';
 	$name = $params['name'];
-	$perms = Perms::get( 'bigbluebutton', $name );
+
+	$smarty->assign( 'bbb_name', $name );
+	$smarty->assign( 'bbb_image', rtrim( $prefs['bigbluebutton_server_location'], '/' ) . '/images/bbb_logo.png' );
+
+	if( ! $bigbluebuttonlib->roomExists( $name ) ) {
+		if( isset($_POST['bbb']) && $_POST['bbb'] == $name && Perms::get()->bigbluebutton_create ) {
+			$bigbluebuttonlib->createRoom( $name );
+		} else {
+			return $smarty->fetch( 'wiki-plugins/wikiplugin_bigbluebutton_create.tpl' );
+		}
+	}
 
 	if( ! isset($params['prefix']) ) {
 		$params['prefix'] = '';
 	}
 
+	$perms = Perms::get( 'bigbluebutton', $name );
 	if( $perms->bigbluebutton_join ) {
 		if( isset($_POST['bbb']) && $_POST['bbb'] == $name ) {
 			if( ! $user && isset($_POST['bbb_name']) && ! empty($_POST['bbb_name']) ) {
 				$u_info['prefs']['realName'] = $params['prefix'] . $_POST['bbb_name'];
 			}
 
-			global $bigbluebuttonlib; require_once 'lib/bigbluebuttonlib.php';
 			$bigbluebuttonlib->joinMeeting( $name );
 		}
 
 		if( isset( $u_info['prefs']['realName'] ) ) {
 			$smarty->assign( 'bbb_username', $u_info['prefs']['realName'] );
 		}
-
-		$smarty->assign( 'bbb_name', $name );
-		$smarty->assign( 'bbb_image', rtrim( $prefs['bigbluebutton_server_location'], '/' ) . '/images/bbb_logo.png' );
 
 		return $smarty->fetch( 'wiki-plugins/wikiplugin_bigbluebutton.tpl' );
 	}
