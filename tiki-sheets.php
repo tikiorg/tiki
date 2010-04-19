@@ -11,6 +11,8 @@ require_once ('lib/sheet/grid.php');
 
 $access->check_feature('feature_sheet');
 
+$auto_query_args = array('sheetId');
+
 if (!isset($_REQUEST["sheetId"])) {
 	$_REQUEST["sheetId"] = 0;
 	$info = array();
@@ -103,7 +105,7 @@ if (isset($_REQUEST["removesheet"])) {
 	$sheetlib->remove_sheet($_REQUEST["sheetId"]);
 }
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'title_desc';
+	$sort_mode = 'title_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }

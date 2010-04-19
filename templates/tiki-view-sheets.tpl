@@ -95,6 +95,11 @@
 				{button parse="y" _text="{tr}Parse{/tr}"  _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _auto_args="*"}
 			{/if}
 		{/if}
+		{if $smarty.request.simple eq 'y'}
+			{button simple="n" _text="{tr}Spreadsheet{/tr}"  _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _auto_args="*"}
+		{else}
+			{button simple="y" _text="{tr}Simple{/tr}"  _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _auto_args="*"}
+		{/if}
 
 		{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
 			{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}History{/tr}"}

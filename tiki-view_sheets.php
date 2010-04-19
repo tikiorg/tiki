@@ -12,7 +12,8 @@ $auto_query_args = array(
 	'sheetId',
 	'readdate',
 	'mode',
-	'parse'
+	'parse',
+	'simple',
 );
 $access->check_feature('feature_sheet');
 
@@ -54,7 +55,7 @@ if (typeof ajaxLoadingShow == "function") {
 }
 setTimeout (function () { $jq("#edit_button").click(); }, 500);
 ', 500);
-} else {
+} else if (!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') {
 	$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") {
 	ajaxLoadingShow("role_main");
 }
@@ -87,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	if (!empty($_REQUEST['s'])) {	// ajax save request from jQuery.sheet
+	if (!empty($_REQUEST['s'])) {					// ********* AJAX save request from jQuery.sheet
 		$data =  json_decode($_REQUEST['s']);
 		$rc =  '';
 		if (is_array($data)) {
@@ -99,14 +100,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 				if ($res) {
 					$id = $d->metadata->sheetId;
 					if (!$id) {
-						$id = $sheetlib->replace_sheet( 0, 'subsheet of sheet ' . $_REQUEST["sheetId"], '', $user, $_REQUEST["sheetId"] );
+						$id = $sheetlib->replace_sheet( 0, $info['title'] . ' subsheet' . $_REQUEST["sheetId"], '', $user, $_REQUEST["sheetId"] );
 						$rc .= tra('new') . ' ';
 					}
 					if ($id) {
 						$handler = new TikiSheetDatabaseHandler($id);
 						$grid->export($handler);
 						$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=$id)";
-					} 
+					}
+					if (!empty($d->metadata->title)) {
+						$sheetlib->set_sheet_title($id, $d->metadata->title);
+					}
 				}
 			}
 		}
@@ -178,7 +182,7 @@ $jq("#edit_button").click( function () {
 	if ($a.text() != editSheetButtonLabel2) {
 		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
 		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {
-			options.buildSheet = "2x1";	// new sheet
+			options.buildSheet = "5x5";	// new sheet
 		}
 		$jq("div.tiki_sheet").tiki("sheet", "", options);
 
