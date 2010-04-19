@@ -150,7 +150,18 @@
 						{preference name=feature_wiki_save_draft}
 						{preference name=feature_webdav}
 				</fieldset>
+				
+				<fieldset>
+					<legend class="heading">{icon _id="new"}<span>{tr}Fresh out of the stove{/tr}</span><legend>
 
+					{preference name=bigbluebutton_feature}
+				</fieldset>
+
+			</div>
+
+			<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
+				{preference name=bigbluebutton_server_location}
+				{preference name=bigbluebutton_server_salt}
 			</div>
 {/tab}
 {/tabset}

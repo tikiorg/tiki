@@ -205,6 +205,7 @@ function get_default_prefs() {
 		'wikiplugin_back' => 'n',
 		'wikiplugin_backlinks' => 'n',
 		'wikiplugin_banner' => 'n',
+		'wikiplugin_bigbluebutton' => 'y',
 		'wikiplugin_bloglist' => 'n',
 		'wikiplugin_box' => 'y',
 		'wikiplugin_calendar' => 'y',
@@ -342,6 +343,7 @@ function get_default_prefs() {
 		'wikiplugininline_back' => 'n',
 		'wikiplugininline_backlinks' => 'n',
 		'wikiplugininline_banner' => 'n',
+		'wikiplugininline_bigbluebutton' => 'n',
 		'wikiplugininline_bloglist' => 'n',
 		'wikiplugininline_box' => 'n',
 		'wikiplugininline_calendar' => 'n',
@@ -1338,6 +1340,11 @@ function get_default_prefs() {
 		'kcwUIConf' => '36200',
 		'kseUIConf' => '36300',
 		'kaeUIConf' => '1000865',
+
+		// BigBlueButton
+		'bigbluebutton_feature' => 'n',
+		'bigbluebutton_server_location' => '',
+		'bigbluebutton_server_salt' => '',
 
 		// unsorted features
 		'anonCanEdit' => 'n',
