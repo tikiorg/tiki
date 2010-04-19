@@ -19,6 +19,8 @@
 				{/foreach}
 			</ol>
 		</div>
+	{else}
+		<p>{tr}No attendees at this time.{/tr}</p>
 	{/if}
 
 	{if ! $user }
