@@ -6,12 +6,12 @@ class BigBlueButtonLib
 		global $cachelib;
 
 		if( ! $meetings = $cachelib->getSerialized( 'bbb_meetinglist' ) ) {
-			$dom = $this->performRequest( 'getMeetings', array( 'random' => 1 ) );
-
 			$meetings = array();
 
-			foreach( $dom->getElementsByTagName( 'meeting' ) as $node ) {
-				$meetings[] = $this->grabValues( $node );
+			if( $dom = $this->performRequest( 'getMeetings', array( 'random' => 1 ) ) ) {
+				foreach( $dom->getElementsByTagName( 'meeting' ) as $node ) {
+					$meetings[] = $this->grabValues( $node );
+				}
 			}
 
 			$cachelib->cacheItem( 'bbb_meetinglist', serialize( $meetings ) );
