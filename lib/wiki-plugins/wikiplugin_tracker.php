@@ -102,7 +102,7 @@ function wikiplugin_tracker_info()
 			'preview' => array(
 				'required' => false,
 				'name' => tra('Preview'),
-				'description' => tra('Label for the preview button. Default:').' "'. tra('Preview') . '"'),
+				'description' => tra('Label for the preview button. Default:').' "'. tra('Preview') . '"',
 			),
 			'reset' => array(
 				'required' => false,
