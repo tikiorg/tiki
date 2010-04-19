@@ -11,21 +11,40 @@ class BigBlueButtonLib
 			$meetings = array();
 
 			foreach( $dom->getElementsByTagName( 'meeting' ) as $node ) {
-				$meeting = array();
-
-				foreach( $node->childNodes as $n ) {
-					if( $n instanceof DOMElement ) {
-						$meeting[$n->tagName] = $n->textContent;
-					}
-				}
-
-				$meetings[] = $meeting;
+				$meetings[] = $this->grabValues( $node );
 			}
 
 			$cachelib->cacheItem( 'bbb_meetinglist', serialize( $meetings ) );
 		}
 
 		return $meetings;
+	}
+
+	public function getAttendees( $room ) {
+		if( $meeting = $this->getMeeting( $room ) ) {
+			if( $dom = $this->performRequest( 'getMeetingInfo', array( 'meetingID' => $room, 'password' => $meeting['moderatorPW'] ) ) ) {
+
+				$attendees = array();
+
+				foreach( $dom->getElementsByTagName( 'attendee' ) as $node ) {
+					$attendees[] = $this->grabValues( $node );
+				}
+
+				return $attendees;
+			}
+		}
+	}
+
+	private function grabValues( $node ) {
+		$values = array();
+
+		foreach( $node->childNodes as $n ) {
+			if( $n instanceof DOMElement ) {
+				$values[$n->tagName] = $n->textContent;
+			}
+		}
+
+		return $values;
 	}
 
 	public function roomExists( $room ) {
@@ -70,18 +89,23 @@ class BigBlueButtonLib
 	}
 
 	private function getAttendeePassword( $room ) {
+		if( $meeting = $this->getMeeting( $room ) ) {
+			$perms = Perms::get( 'bigbluebutton', $room );
+
+			if( $perms->bigbluebutton_moderate ) {
+				return $meeting['moderatorPW'];
+			} else {
+				return $meeting['attendeePW'];
+			}
+		}
+	}
+
+	private function getMeeting( $room ) {
 		$meetings = $this->getMeetings();
-		$meetings = Perms::filter( array( 'type' => 'bigbluebutton' ), 'object', $meetings, array( 'object' => 'meetingID' ), 'bigbluebutton_join' );
 
 		foreach( $meetings as $meeting ) {
 			if( $meeting['meetingID'] == $room ) {
-				$perms = Perms::get( 'bigbluebutton', $room );
-
-				if( $perms->bigbluebutton_moderate ) {
-					return $meeting['moderatorPW'];
-				} else {
-					return $meeting['attendeePW'];
-				}
+				return $meeting;
 			}
 		}
 	}

@@ -53,9 +53,7 @@ function wikiplugin_bigbluebutton( $data, $params ) {
 			$bigbluebuttonlib->joinMeeting( $name );
 		}
 
-		if( isset( $u_info['prefs']['realName'] ) ) {
-			$smarty->assign( 'bbb_username', $u_info['prefs']['realName'] );
-		}
+		$smarty->assign( 'bbb_attendees', $bigbluebuttonlib->getAttendees( $name ) );
 
 		return $smarty->fetch( 'wiki-plugins/wikiplugin_bigbluebutton.tpl' );
 	}
