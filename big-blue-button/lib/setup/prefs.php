@@ -1338,6 +1338,11 @@ function get_default_prefs() {
 		'kseUIConf' => '36300',
 		'kaeUIConf' => '1000865',
 
+		// BigBlueButton
+		'bigbluebutton_feature' => 'n',
+		'bigbluebutton_server_location' => '',
+		'bigbluebutton_server_salt' => '',
+
 		// unsorted features
 		'anonCanEdit' => 'n',
 		'cacheimages' => 'n',
