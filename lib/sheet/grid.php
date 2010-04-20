@@ -1861,14 +1861,7 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 	}
 
 	// _load {{{2
-	function _load( &$sheet ) {
-
-		
-// Unfortunately the output of jQuery.sheet seems not to be valid enough for this approach :(
-//		include_once 'lib/pear/PEAR/XMLParser.php';
-//		$parser = new PEAR_XMLParser();
-//		$parser->parse('<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>'.$this->data.'</body>/head>');
-//		$res = $parser->getData();
+	function _load( TikiSheet &$sheet ) {
 
 		$d = $this->data;
 		
@@ -1882,18 +1875,23 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 				if (isset($d->data->$ri->$ci->value)) {
 					$val = $d->data->$ri->$ci->value;
 				} else {
-					$val = 'qwe';
+					$val = '';
 				}
 				
 				$sheet->initCell( $r, $c );
+				if (isset($d->data->$ri->$ci->width) || isset($d->data->$ri->$ci->height)) {
+					$sheet->setSize( isset($d->data->$ri->$ci->width) ? $d->data->$ri->$ci->width : 1,  isset($d->data->$ri->$ci->height) ? $d->data->$ri->$ci->height : 1 );
+				} else {
+					$sheet->setSize( 1, 1 );
+				}
 				$sheet->setValue( $val );
-				$sheet->setSize( 1, 1 );
 				if (isset($d->data->$ri->$ci->formula)) {
 					$formula = substr($d->data->$ri->$ci->formula, 1, strlen($d->data->$ri->$ci->formula)-1);
 					if (!empty($formula)) {
 						$sheet->setCalculation($formula);
 					}
 				}
+				
 			}
 		}
 		
