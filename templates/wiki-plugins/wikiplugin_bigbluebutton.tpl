@@ -6,7 +6,7 @@
 
 	<h2>{$bbb_name|escape}</h2>
 	
-	{permission key=bigbluebutton object=$bbb_name name=bigbluebutton_moderate}
+	{permission type=bigbluebutton object=$bbb_name name=tiki_p_assign_perm_bigbluebutton}
 		{button href="tiki-objectpermissions.php?objectId=$bbb_name&amp;objectName=$bbb_name&amp;objectType=bigbluebutton&amp;permType=bigbluebutton"	_text="{tr}Permissions{/tr}"}
 	{/permission}
 
