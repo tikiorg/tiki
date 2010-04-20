@@ -1492,9 +1492,9 @@ CREATE TABLE `tiki_modules` (
   `rows` int(4) default NULL,
   `params` text,
   `groups` text,
-  PRIMARY KEY (`name`(100), `position`, `ord`, `params`(140)),
+  PRIMARY KEY (`moduleId`),
   KEY `positionType` (position, type),
-  KEY `moduleId` (`moduleId`)
+  KEY `namePosOrdParam` (`name`(100), `position`, `ord`, `params`(140))
 ) ENGINE=MyISAM;
 
 INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('Application Menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
