@@ -14,6 +14,7 @@ if ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && !em
 	header("location: index.php");
 	die;
 }
+$smarty->assign('allowRegister', 'y'); // Used for OpenID associations
 // NOTE that this is not a standard access check, it checks for the opposite of that, i.e. whether logged in already
 if (!empty($user)) {
 	$smarty->assign('msg', tra('You are already logged in'));

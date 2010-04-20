@@ -72,14 +72,14 @@ function filterExistingInformation(&$data, &$messages) // {{{
 } // }}}
 function displayRegisatrationForms($data, $messages) // {{{
 {
-	global $smarty, $userlib;
+	global $smarty, $userlib, $prefs;
 	// Default values for the registration form
 	$smarty->assign('username', $data['nickname']);
 	$smarty->assign('email', $data['email']);
 	// Changing some system values to get the login box to display properly in the context
 	$smarty->assign('rememberme', 'disabled');
 	$smarty->assign('forgotPass', 'n');
-	$smarty->assign('allowRegister', 'n');
+	$smarty->assign('allowRegister', ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']))) ? 'n' : 'y');
 	$smarty->assign('change_password', 'n');
 	$smarty->assign('auth_method', 'tiki');
 	$smarty->assign('feature_switch_ssl_mode', 'n');
