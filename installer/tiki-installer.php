@@ -860,6 +860,30 @@ $headerlib->add_cssfile('styles/fivealive.css');
 $headerlib->add_jsfile( 'lib/tiki-js.js' );
 $headerlib->add_jsfile( 'lib/jquery/jquery.js' );
 $headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
+	$js = '
+// JS Object to hold prefs for jq
+var jqueryTiki = new Object();
+jqueryTiki.ui = false;
+jqueryTiki.ui_theme = "";
+jqueryTiki.tooltips = false;
+jqueryTiki.autocomplete = false;
+jqueryTiki.superfish = false;
+jqueryTiki.replection = false;
+jqueryTiki.tablesorter = false;
+jqueryTiki.colorbox = false;
+jqueryTiki.cboxCurrent = "{current} / {total}";
+jqueryTiki.sheet = false;
+jqueryTiki.carousel = false;
+jqueryTiki.jqs5 = false;
+
+jqueryTiki.effect = "";
+jqueryTiki.effect_direction = "";
+jqueryTiki.effect_speed = 400;
+jqueryTiki.effect_tabs = "";
+jqueryTiki.effect_tabs_direction = "";
+jqueryTiki.effect_tabs_speed = 400;
+';
+	$headerlib->add_js($js, 100);	
 
 $smarty->assign_by_ref('headerlib',$headerlib);
 
