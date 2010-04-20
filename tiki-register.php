@@ -284,5 +284,6 @@ function chkRegEmail($mail) {
 
 if (empty($module) || !$module) {
 	$smarty->assign('mid', 'tiki-register.tpl');
+	$smarty->assign('openid_associate', 'n');
 	$smarty->display('tiki.tpl');
 }

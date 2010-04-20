@@ -26,9 +26,18 @@
 		});
 {/jq}
 
-{title admpage='login'}{tr}Registration{/tr}{/title}
-	
-	<div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
+{if $openid_associate eq 'n'}
+	{title admpage='login'}{tr}Registration{/tr}{/title}
+{else}
+	<h1>{tr}Your OpenID identity is valid{/tr}</h1>
+	<p>{tr}However, no account is associated to the OpenID identifier.{/tr}</p>
+	<table width="100%">
+		<col width="50%"/>
+		<col width="50%"/>
+		<tr>
+			<td>
+{/if}	
+<div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 
 {if $prefs.feature_ajax eq 'y'}
 		<script src="lib/registration/register_ajax.js" type="text/javascript"></script>
@@ -86,6 +95,7 @@
 				</tr>
 	{/if}
  
+	{if $openid_associate eq 'n'}
 				<tr>
 					<td class="formcolor"><label for="pass1">{tr}Password:{/tr}</label></td>
 					<td class="formcolor">
@@ -123,6 +133,7 @@
 						{/if}
 					</td>
 				</tr>
+	{/if}
 
 	{if $prefs.login_is_email ne 'y'}
 				<tr>
@@ -182,4 +193,16 @@
 		{remarksbox type="note"  title="{tr}Note{/tr}"}
 			{tr}Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
 		{/remarksbox}
+
+{if $openid_associate eq 'y'}
+		</td>
+		<td>
+			<p>
+				{tr}Associate OpenID with an existing Tikiwiki account{/tr}
+			</p>
+			{include file="modules/mod-login_box.tpl"}
+		</td>
+	</tr>
+	</table>
+{/if}
 {/if}

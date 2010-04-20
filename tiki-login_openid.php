@@ -102,7 +102,8 @@ function displayRegisatrationForms($data, $messages) // {{{
 	}
 
 	// Display
-	$smarty->assign('mid', 'tiki-openid_register.tpl');
+	$smarty->assign('mid', 'tiki-register.tpl');
+	$smarty->assign('openid_associate', 'y');
 	$smarty->assign('registration', 'y');
 	$smarty->display('tiki.tpl');
 	exit;
