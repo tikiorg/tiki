@@ -155,7 +155,7 @@ function capLock(e){
 			{/if}
       </form>
     {/if}
-	{if $prefs.auth_method eq 'openid' and !$user}
+	{if $prefs.auth_method eq 'openid' and !$user and $registration eq 'n'}
 		<form method="get" action="tiki-login_openid.php">
 			<fieldset>
 				<legend>{tr}OpenID Log in{/tr}</legend>
