@@ -9,7 +9,7 @@
 	  <div style="position:relative">
 	<strong{if $evt.status eq '2'} style="text-decoration:line-through"{/if}>
 	{if $evt.result.allday}
-		{tr}All-Day{/tr}
+		{tr}All day{/tr}
 	{else}
 	  {if ($evt.endTimeStamp - $evt.startTimeStamp < 86400)}
 		{$evt.startTimeStamp|tiki_date_format:"%H:%M"} &gt {$evt.endTimeStamp|tiki_date_format:"%H:%M"}

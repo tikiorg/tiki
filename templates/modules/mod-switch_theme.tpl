@@ -15,6 +15,7 @@
 		</select>
 		{if $style_options}
 		<select name="theme-option" onchange="this.form.submit();"{if !empty($tc_theme)} disabled="disabled"{/if}>
+				<option value="">{tr}None{/tr}</option>
 			{section name=ix loop=$style_options}
 				<option value="{$style_options[ix]|escape}"{if $prefs.style_option eq $style_options[ix]} selected="selected"{/if}>{$style_options[ix]|replace:'.css':''|truncate:15|ucwords}</option>
 			{/section}

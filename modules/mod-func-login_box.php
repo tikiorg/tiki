@@ -27,5 +27,6 @@ function module_login_box_info() {
 }
 
 function module_login_box( $mod_reference, $module_params ) {
-	// all done in mod-login_box.tpl
+	global $smarty;
+	$smarty->assign('registration', 'n');
 }

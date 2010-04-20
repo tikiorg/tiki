@@ -26,7 +26,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_icon($params, &$smarty) {
 	if ( ! is_array($params) ) $params = array();
-	global $prefs, $tc_theme, $tc_theme_option;
+	global $prefs, $tc_theme, $tc_theme_option, $cachelib;
 	
 	if (empty($tc_theme)) {
 		$current_style = $prefs['style'];
@@ -36,8 +36,9 @@ function smarty_function_icon($params, &$smarty) {
 		$current_style_option = !empty($tc_theme_option) ? $tc_theme_option : '';
 	}
 	$serialized_params = serialize(array_merge($params, array($current_style, $current_style_option)));
-	if ( isset($_SESSION['icons'][$serialized_params]) ) {
-		return $_SESSION['icons'][$serialized_params];
+	$cache_key = 'icons_' . md5( $serialized_params );
+	if( $cached = $cachelib->getCached( $cache_key ) ) {
+		return $cached;
 	}
 
 	$basedirs = array('pics/icons', 'images', 'img/icons', 'pics/icons/mime');
@@ -196,6 +197,6 @@ function smarty_function_icon($params, &$smarty) {
 
 	}
 
-	$_SESSION['icons'][$serialized_params] = $html;
-	return $_SESSION['icons'][$serialized_params];
+	$cachelib->cacheItem( $cache_key, $html );
+	return $html;
 }

@@ -12,7 +12,8 @@ $auto_query_args = array(
 	'sheetId',
 	'readdate',
 	'mode',
-	'parse'
+	'parse',
+	'simple',
 );
 $access->check_feature('feature_sheet');
 
@@ -50,12 +51,16 @@ if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit') {	// edit button 
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
 if (typeof ajaxLoadingShow == "function") {
-	ajaxLoadingShow("tiki-center");
+	ajaxLoadingShow("role_main");
 }
 setTimeout (function () { $jq("#edit_button").click(); }, 500);
 ', 500);
-} else {
-	$headerlib->add_jq_onready('$jq("div.tiki_sheet").tiki("sheet", "", {editable:false});', 500);
+} else if (!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') {
+	$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") {
+	ajaxLoadingShow("role_main");
+}
+setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 500);
+', 500);
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
@@ -77,13 +82,13 @@ if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && $tiki_p_edit_shee
 	$smarty->display("error.tpl");
 	die;
 }
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 	if ($tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
 		$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
 		$smarty->display("error.tpl");
 		die;
 	}
-	if (!empty($_REQUEST['s'])) {	// ajax save request from jQuery.sheet
+	if (!empty($_REQUEST['s'])) {					// ********* AJAX save request from jQuery.sheet
 		$data =  json_decode($_REQUEST['s']);
 		$rc =  '';
 		if (is_array($data)) {
@@ -95,14 +100,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				if ($res) {
 					$id = $d->metadata->sheetId;
 					if (!$id) {
-						$id = $sheetlib->replace_sheet( 0, 'subsheet of sheet ' . $_REQUEST["sheetId"], '', $user, $_REQUEST["sheetId"] );
+						$id = $sheetlib->replace_sheet( 0, $info['title'] . ' subsheet' . $_REQUEST["sheetId"], '', $user, $_REQUEST["sheetId"] );
 						$rc .= tra('new') . ' ';
 					}
 					if ($id) {
 						$handler = new TikiSheetDatabaseHandler($id);
 						$grid->export($handler);
 						$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=$id)";
-					} 
+					}
+					if (!empty($d->metadata->title)) {
+						$sheetlib->set_sheet_title($id, $d->metadata->title);
+					}
 				}
 			}
 		}
@@ -164,7 +172,7 @@ if ($prefs['feature_jquery_sheet'] == 'y') {
 			include_once ('contribution.php');
 		}
 	// need to be in non-parsed mode to edit the sheet
-	if ($grid->parseValues == 'y' && $_REQUEST['parse'] == 'y') {
+	if ($_REQUEST['parse'] == 'y') {
 		$smarty->assign('editReload', true);
 	} else {
 		$smarty->assign('editReload', false);
@@ -174,7 +182,7 @@ $jq("#edit_button").click( function () {
 	if ($a.text() != editSheetButtonLabel2) {
 		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
 		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {
-			options.buildSheet = "2x1";	// new sheet
+			options.buildSheet = "5x5";	// new sheet
 		}
 		$jq("div.tiki_sheet").tiki("sheet", "", options);
 
@@ -199,7 +207,7 @@ $jq("#save_button").click( function () {
 }).hide();
 
 window.showFeedback = function(message, delay, redirect) {
-	if (typeof delay == "undefined") { delay = 2000; }
+	if (typeof delay == "undefined") { delay = 5000; }
 	if (typeof redirect == "undefined") { redirect = false; }
 	$fbsp = $jq("#feedback span");
 	$fbsp.html(message).show();

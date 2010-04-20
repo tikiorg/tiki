@@ -26,7 +26,7 @@
           <param name="quality" value="high">
           <param name="bgcolor" value="#FFFFFF">
           <param name="FlashVars" value="csConfigFile=tikimovies/{$movie|replace:".swf":".xml"}">
-          <embed src="tikimovies/controller.swf?csConfigFile=tikimovies/{$movie|replace:".swf":".xml"}" FlashVars="csConfigFile=tikimovies/{$movie|replace:".swf":".xml"}" quality="high" bgcolor="#FFFFFF" width="{$movieWidth}" height="{$movieHeight}" type="application/x-shockwave-flash" pluginspace="http://www.macromedia.com/go/getflashplayer">
+          <embed src="tikimovies/controller.swf?csConfigFile=tikimovies/{$movie|replace:".swf":".xml"}" FlashVars="csConfigFile=tikimovies/{$movie|replace:".swf":".xml"}" quality="high" bgcolor="#FFFFFF" width="{$movieWidth}" height="{$movieHeight}" type="application/x-shockwave-flash" pluginspace="http://get.adobe.com/fr/flashplayer/">
           </embed>
         </object>
       </center>

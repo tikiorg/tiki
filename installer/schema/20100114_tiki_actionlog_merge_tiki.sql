@@ -1,6 +1,6 @@
 #2010-01-14 sept_7
 #change ip to store ipv6 addresses
-ALTER TABLE `tiki_actionlog` CHANGE `ip` `ip` VARCHAR( 40 );
+ALTER TABLE `tiki_actionlog` CHANGE `ip` `ip` VARCHAR( 39 );
 #add client to store USER_AGENT
 ALTER TABLE `tiki_actionlog` ADD `client` VARCHAR( 200 ) NULL DEFAULT NULL;
 #change actionlog config

@@ -41,6 +41,12 @@ span.button input,
 	padding: 1px 4px;
 }
 
+span#genPass span.button a,
+span#genPass span.button a:visited,
+span#genPass span.button a:hover {
+	padding: 1px 4px !important;
+}
+
 input[type=reset],
 input[type=submit],
 input[type=reset]:hover,

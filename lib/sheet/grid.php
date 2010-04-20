@@ -435,6 +435,12 @@ class TikiSheet
 		return $this->rowCount;
 	}
 	
+	function getTitle() {
+		global $sheetlib;
+		$info = $sheetlib->get_sheet_info($this->sheetId);
+		return $info['title'];
+	}
+	
 	/** import {{{2
 	 * Fills the content of the calculation sheet with
 	 * data from the given handler.
@@ -1635,13 +1641,14 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
-		if( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
-			return false;
+//		if( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
+//			return false;
 
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		$id = empty( $sheet->sheetId ) ? '' : " rel='sheetId{$sheet->sheetId}'";
+		$title = " title='{$sheet->getTitle()}'";
 		$sub = $sheet->isSubSheet ? ' style="display:none;"' : '';
-		echo "<table{$class}{$id}{$sub}>\n";
+		echo "<table{$class}{$id}{$sub}{$title}>\n";
 
 		if( !is_null( $this->heading ) )
 			echo "	<caption>{$this->heading}</caption>\n";
@@ -2006,6 +2013,8 @@ class SheetLib extends TikiLib
 	function replace_sheet( $sheetId, $title, $description, $author, $parentSheetId = null ) // {{{2
 	{
 		global $prefs;
+		
+		if (!$parentSheetId) { $parentSheetId = null; }
 
 		if( $sheetId == 0 )
 		{
@@ -2021,7 +2030,7 @@ class SheetLib extends TikiLib
 		}
 		else
 		{
-			$this->query( "UPDATE `tiki_sheets` SET `title` = ?, `description` = ?, `author` = ?, `parentSheetId` = ? WHERE `sheetId` = ?", array( $title, $description, $author, $sheetId, $parentSheetId ) );
+			$this->query( "UPDATE `tiki_sheets` SET `title` = ?, `description` = ?, `author` = ?, `parentSheetId` = ? WHERE `sheetId` = ?", array( $title, $description, $author, (int) $parentSheetId, (int) $sheetId ) );
 		}
 		return $sheetId;
 	}
@@ -2048,6 +2057,12 @@ class SheetLib extends TikiLib
 												array( $sheetId, $stamp, $className, (int)$headerRow, (int)$footerRow, $parseValues ) );
 
 		return true;
+	}
+	
+	function set_sheet_title( $sheetId, $title ) {
+		if ( $sheetId ) {
+			$this->query( "UPDATE `tiki_sheets` SET `title` = ? WHERE `sheetId` = ?", array( $title, $sheetId ) );
+		}
 	}
 	
 } // }}}1

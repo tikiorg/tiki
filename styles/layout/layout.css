@@ -113,6 +113,10 @@ div#sitead {
 	margin: auto;
 }
 
+div.sl-login {
+	display: inline;
+}
+
 #siteloginbar #register,
 #siteloginbar #pass {
 	float: right;
@@ -126,6 +130,112 @@ div#sitead {
 #siteloginbar form {
 	padding-right: 0;
 }
+
+/* Sitelogin Popup */
+.tiki_register_login {
+	bottom: 3px;
+	position: absolute;
+	right: 10px;
+}
+
+#siteloginbar_popup {
+	bottom: 0;
+	position: absolute;
+	right: 4em;
+}
+
+#siteloginbar_popup .tabcontent fieldset {
+	margin: 0;
+	margin-left: -4px;
+	border: none;
+}
+
+#siteloginbar_popup h1 {
+	display: none;
+}
+
+li#register_link {
+	margin-right: 5px;
+}
+
+.tabmark a.register_link,
+.tabmark a.login_link {
+	padding-right: 26px !important;
+}
+
+#siteloginbar_popup .cssmenu_horiz #register_link ul {
+/*	margin-top: 6px;*/
+	margin-left: -5.5em;
+}
+
+#siteloginbar_popup .cssmenu_horiz #login_link ul {
+/*	margin-top: 6px;*/
+	margin-left: -9em;
+}
+
+#siteloginbar_popup .cssmenu_horiz li#logout_link ul {
+/*	margin-top: 6px;*/
+	margin-left: -2.5em;
+}
+
+#siteloginbar_popup #siteloginbar {
+	bottom: auto;
+	font-size: auto;
+	position: static;
+	right: auto;
+	text-align: left;
+}
+
+#siteloginbar_popup #siteloginbar * {
+	white-space: normal;
+}
+
+#siteloginbar_popup .cssmenu_horiz ul li {
+	width: 100%;
+	font-size: auto;
+}
+
+#siteloginbar_popup form {
+	text-align: left;
+	width: auto;
+	white-space: normal !important;
+}
+
+#siteloginbar_popup .sl-login,
+#siteloginbar_popup span.pass {
+	display: block;
+	width: auto;
+	margin-bottom: 4px;
+}
+
+span.pass a,
+span.pass a:visited,
+span.pass a:hover,
+span.register a,
+span.register a:visited,
+span.register a:hover,
+div.logged-in a,
+li.login_link ul li a {
+	background: none !important;
+}
+	
+li#login_link span.register {
+	display: none;
+}
+
+li#logout_link a {
+	padding-right: 40px;
+}
+
+#siteloginbar_popup input[type="text"],
+#siteloginbar_popup input[type="password"] {
+	width: 65%;	
+}
+/*
+#siteloginbar_popup input[type="submit"] {
+	float: right;
+}*/
+/* end Sitelogin Popup */
 
 #sitesearchbar {
 	float: right;
@@ -842,14 +952,14 @@ tr.diffheader {
 .tabcontent {
 	z-index: 1;
 	position: relative;
-	padding: 2px;
-	padding-top: 21px;
+	padding: 4px;
+/*	padding-top: 21px;
 	margin-bottom: 25px;
-	margin-top: -1px;
+	margin-top: -1px;*/
 }
 
 .tabcontent table {
-	margin: 1% auto 2% auto; 
+/*	margin: 1% auto 2% auto; */
 	text-align: left;
 	width: 95%;
 	background: transparent;

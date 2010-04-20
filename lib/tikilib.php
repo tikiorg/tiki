@@ -4251,7 +4251,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		$cond_query = '';
-		if (empty($query_cond)) {
+		if (empty($query_cond) && empty($needed)) {
 			$query_cond = 'TRUE';
 		}
 		$result = null;

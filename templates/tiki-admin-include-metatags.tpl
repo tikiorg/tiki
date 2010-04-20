@@ -20,7 +20,7 @@
 
 	<fieldset>
 		<legend>
-			{tr}Geo URL{/tr} {if $prefs.feature_help eq 'y'}<a target="_blank" href="http://www.geourl.org/">{icon _id='help'}</a>{/if}
+			{tr}Geo URL{/tr} {if $prefs.feature_help eq 'y'}<a target="_blank" href="http://geourl.org/">{icon _id='help'}</a>{/if}
 		</legend>
 		{preference name=metatag_geoposition}
 		{preference name=metatag_georegion}
