@@ -5,7 +5,6 @@
 	<a menu="menuView">View</a>
 	<a menu="menuEdit">Edit</a>
 	<!--a menu="menuStyle">Style</a-->
-	<a menu="menuTestMethods">Test Methods</a>
 	<a onclick="window.setEditable(false); if (!jS.openSheetURL('lib/jquery/jquery.sheet/documentation.html')) { window.setEditable(true); }">Help</a>
 </div>
 
@@ -19,6 +18,8 @@
 <div id="menuView" class="menu">
 	<a onclick="jS.viewSource(true);" title="Shows the HTML that makes up the current spreadsheet.">Pretty Source</a>
 	<a onclick="jS.viewSource(false);" title="Shows the compact HTML that makes up the current spreadsheet.">Compact Source</a>
+	<a onclick="jS.print(jS.HTMLtoPrettySource(jQuery(jS.exportSheet.xml(true))[0]));">As XML</a>
+	<a onclick="jS.print(jS.exportSheet.json());">As JSON</a>
 	<a menu="menuViewFunctionReference">Function Reference</a>
 </div>
 
@@ -51,53 +52,63 @@
 </div>
 
 <div id="menuEdit" class="menu">
+	<a onclick="jS.merge();">Merge</a>
+	<a onclick="jS.unmerge();">Un-Merge</a>
 	<a menu="menuEditColumn">Column</a>
 	<a menu="menuEditRow">Row</a>
 	<a menu="menuEditSheet">Sheet</a>
 	<a onclick="jS.cellFind();">Find</a>
-	<a onclick="jS.getTdRange();">Get Cell Range</a>
+	<a onclick="jS.appendToFormula(jS.getTdRange());">Get Cell Range</a>
+	<a menu="menuEditGetCellRangeAndWrap">Get Cell Range And Wrap With Function</a>
 </div>
 
 <div id="menuEditColumn" class="menu">
-	<a onclick="jS.controlFactory.addColumn();" title="Adds an additional column to the right of the spreadsheet.">Add Column</a>
+	<a onclick="jS.controlFactory.addColumn(null, null, ':last');" title="Adds an additional column to the right of the spreadsheet.">Add Column</a>
 	<a onclick="jS.controlFactory.addColumnMulti();" title="Adds an additional columns to the right of the spreadsheet.">Add Multi-Columns</a>
-	<a onclick="jS.controlFactory.deleteColumn();" title="Deletes the current column thats highlighted.">Delete Column</a>
-	<a onclick="jS.controlFactory.addColumn(true, true);" title="Inserts an additional column after currently selected column.">Insert Column Before</a>
-	<a onclick="jS.controlFactory.addColumn(true);" title="Inserts an additional column after currently selected column.">Insert Column After</a>
+	<a onclick="jS.deleteColumn();" title="Deletes the current column thats highlighted.">Delete Column</a>
+	<a onclick="jS.controlFactory.addColumn(null, true);" title="Inserts an additional column after currently selected column.">Insert Column Before</a>
+	<a onclick="jS.controlFactory.addColumn();" title="Inserts an additional column after currently selected column.">Insert Column After</a>
+	<a onclick="jS.fillUpOrDown();" title="Fill down current cell value.">Fill Down</a>
+	<a onclick="jS.fillUpOrDown(true);" title="Fill up current cell value.">Fill Up</a>
 	<!--<a onclick="jS.toggleHide.columnAll();" title="Unhides all the hidden columns.">Show All</a>
 	<a onclick="jS.toggleHide.column();" title="Hides or shows the currently selected column.">Toggle Hide Column</a>-->
 </div>
 <div id="menuEditRow" class="menu">
-	<a onclick="jS.controlFactory.addRow();" title="Adds an additional row to bottom of the spreadsheet.">Add Row</a>
+	<a onclick="jS.controlFactory.addRow(null, null, ':last');" title="Adds an additional row to bottom of the spreadsheet.">Add Row</a>
 	<a onclick="jS.controlFactory.addRowMulti();" title="Adds an additional rows to bottom of the spreadsheet.">Add Multi-Rows</a>
-	<a onclick="jS.controlFactory.deleteRow();" title="Delets the current row thats highlighted.">Delete Row</a>
-	<a onclick="jS.controlFactory.addRow(true, true);" title="Inserts an additional row after currently selected row.">Insert Row Before</a>
-	<a onclick="jS.controlFactory.addRow(true);" title="Inserts an additional row after currently selected row.">Insert Row After</a>
+	<a onclick="jS.deleteRow();" title="Delets the current row thats highlighted.">Delete Row</a>
+	<a onclick="jS.controlFactory.addRow(null, true);" title="Inserts an additional row after currently selected row.">Insert Row Before</a>
+	<a onclick="jS.controlFactory.addRow();" title="Inserts an additional row after currently selected row.">Insert Row After</a>
 	<!--<a onclick="jS.toggleHide.rowAll();" title="Unhides all the hidden rows.">Show All</a>
 	<a onclick="jS.toggleHide.row();" title="Hides or shows the currently selected row.">Toggle Hide Row</a>-->
 </div>
 <div id="menuEditSheet" class="menu">
 	<a onclick="jS.addSheet();" title="Add new spreadsheet.">Add Spreadsheet</a>
+	<a onclick="jS.deleteSheet();" title="Delete the current spreadsheet.">Delete Spreadsheet</a>
 	<a onclick="jS.calc(jS.obj.tableBody());" title="Recompiles the current sheet">Refresh Calculations</a>
 	<a onclick="jS.sheetTitle();" title="Change the title of the sheet.">Title</a>
 </div>
 
-<div id="menuStyle" class="menu">
-	<a class="cellStyleToggle styleBold" onclick="jS.cellStyleToggle('styleBold');">Bold</a>
-	<a class="cellStyleToggle styleItalics" onclick="jS.cellStyleToggle('styleItalics');">Italics</a>
-	<a class="cellStyleToggle styleUnderline" onclick="jS.cellStyleToggle('styleUnderline');">Underline</a>
-	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleLeft', 'styleCenter,styleRight');">Left</a>
-	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleCenter', 'styleLeft,styleRight');">Center</a>
-	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleRight', 'styleLeft,styleCenter');">Right</a>
-	<a class="cellStyleToggle styleUpper" onclick="jS.cellStyleToggle('styleUpper', 'styleCapital,styleLower');">Uppercase</a>
-	<a class="cellStyleToggle styleCapital" onclick="jS.cellStyleToggle('styleCapital', 'styleUpper,styleLower');">Capitalize</a>
-	<a class="cellStyleToggle styleLower" onclick="jS.cellStyleToggle('styleLower', 'styleCapital,styleUpper');">Lowercase</a>
-	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleTop', 'styleMiddle,styleBottom');">Top</a>
-	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleMiddle', 'styleTop,styleBottom');">Middle</a>
-	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleBottom', 'styleTop,styleMiddle');">Bottom</a>
+<div id="menuEditGetCellRangeAndWrap" class="menu">
+	<a onclick="jS.appendToFormula('SUM(' + jS.getTdRange() + ')');" title="Wrap with SUM">SUM()</a>
+	<a onclick="jS.appendToFormula('CEILING(' + jS.getTdRange() + ')');" title="Wrap with CEILING">CEILING()</a>
+	<a onclick="jS.appendToFormula('COUNT(' + jS.getTdRange() + ')');" title="Wrap with COUNT">COUNT()</a>
+	<a onclick="jS.appendToFormula('MAX(' + jS.getTdRange() + ')');" title="Wrap with MAX">MAX()</a>
+	<a onclick="jS.appendToFormula('MIN(' + jS.getTdRange() + ')');" title="Wrap with MIN">MIN()</a>
 </div>
 
-<div id="menuTestMethods" class="menu">
-	<a onclick="jS.exportSheet.xml();">Export to xml</a>
-	<a onclick="jS.exportSheet.json();">Export to json</a>
+<div id="menuStyle" class="menu">
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleBold', );">Bold</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleItalics');">Italics</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleUnderline, 'styleLineThrough');">Underline</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleLineThrough', 'styleUnderline');">Strikethrough</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleLeft', 'styleCenter styleRight');">Left</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleCenter', 'styleLeft styleRight');">Center</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleRight', 'styleLeft styleCenter');">Right</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleUpper', 'styleCapital styleLower');">Uppercase</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleCapital', 'styleUpper styleLower');">Capitalize</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleLower', 'styleCapital styleUpper');">Lowercase</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleTop', 'styleMiddle styleBottom');">Top</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleMiddle', 'styleTop styleBottom');">Middle</a>
+	<a class="cellStyleToggle" onclick="jS.cellStyleToggle('styleBottom', 'styleTop styleMiddle');">Bottom</a>
 </div>
