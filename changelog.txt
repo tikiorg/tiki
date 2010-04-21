@@ -23,6 +23,443 @@ Version 5.0
 ------------------
 
 ----------------------------------------------
+r26728 | nkoth | 2010-04-21 20:20:51 +0200 (Wed, 21 Apr 2010) | 2 lines
+
+[FIX] Use default zoom level if not set for particular item (so that at least it shows)
+
+----------------------------------------------
+r26727 | ohertel | 2010-04-21 19:51:40 +0200 (Wed, 21 Apr 2010) | 1 line
+
+[fix] remove didn't work here, we have no $galleryId at this point
+----------------------------------------------
+r26726 | lphuberdeau | 2010-04-21 19:50:08 +0200 (Wed, 21 Apr 2010) | 1 line
+
+[ENH] Improvement of the positionning of the attendee list, especially when in a module
+----------------------------------------------
+r26725 | ohertel | 2010-04-21 19:44:12 +0200 (Wed, 21 Apr 2010) | 1 line
+
+[fix] wrong variable used, enabling 'fixed' for left column made the right column fixed.
+----------------------------------------------
+r26724 | lphuberdeau | 2010-04-21 19:38:21 +0200 (Wed, 21 Apr 2010) | 1 line
+
+[FIX]?\194?\160No real change, but make sure the security script does not catch a false positive
+----------------------------------------------
+r26723 | lphuberdeau | 2010-04-21 18:40:53 +0200 (Wed, 21 Apr 2010) | 1 line
+
+[ENH] Usability testing demonstrated that most people don't see the big blue button as clickable. Adding a separate join button.
+----------------------------------------------
+r26722 | lphuberdeau | 2010-04-21 18:12:06 +0200 (Wed, 21 Apr 2010) | 1 line
+
+[ENH] Now with more parameters for BigBlueButton.
+----------------------------------------------
+r26721 | lphuberdeau | 2010-04-21 17:29:41 +0200 (Wed, 21 Apr 2010) | 1 line
+
+[FIX]?\194?\160BBB server does not keep rooms forever, leaving integration issues
+----------------------------------------------
+r26720 | jonnybradley | 2010-04-21 16:00:51 +0200 (Wed, 21 Apr 2010) | 1 line
+
+[FIX] Missing include check
+----------------------------------------------
+r26719 | chibaguy | 2010-04-21 06:58:26 +0200 (Wed, 21 Apr 2010) | 1 line
+
+[FIX] Allow for OpenID option in site header login popup.
+----------------------------------------------
+r26714 | jonnybradley | 2010-04-20 21:12:40 +0200 (Tue, 20 Apr 2010) | 1 line
+
+[FIX] Save merged cell info (colSpan only implemented in .sheet so far)
+----------------------------------------------
+r26712 | chealer | 2010-04-20 19:41:19 +0200 (Tue, 20 Apr 2010) | 2 lines
+
+[FIX] OpenID association allows registration even if turned off
+
+----------------------------------------------
+r26710 | chealer | 2010-04-20 19:09:24 +0200 (Tue, 20 Apr 2010) | 2 lines
+
+uniformize OpenID and Tiki registrations
+
+----------------------------------------------
+r26707 | lphuberdeau | 2010-04-20 18:18:04 +0200 (Tue, 20 Apr 2010) | 1 line
+
+[FIX] Incorrect permission check
+----------------------------------------------
+r26706 | lphuberdeau | 2010-04-20 17:56:02 +0200 (Tue, 20 Apr 2010) | 1 line
+
+[FIX] Recently introduced bug causes all prefs to be retrieved in first pass rather than only the essential ones.
+----------------------------------------------
+r26705 | jonnybradley | 2010-04-20 17:10:30 +0200 (Tue, 20 Apr 2010) | 1 line
+
+[MOD] Changes to reflect recent jquery.sheet update
+----------------------------------------------
+r26703 | jonnybradley | 2010-04-20 16:19:32 +0200 (Tue, 20 Apr 2010) | 2 lines
+
+[FIX] Reorganise tiki_modules indexes hopefully to fix MySQL4 error on params length in key.
+Added to existing script as it needs to happen before the change of params column type.
+----------------------------------------------
+r26702 | jonnybradley | 2010-04-20 15:51:43 +0200 (Tue, 20 Apr 2010) | 1 line
+
+[FIX] Set up jqueryTiki prefs object with everything "off" (fixes JS error after r26558)
+----------------------------------------------
+r26701 | chealer | 2010-04-20 04:42:59 +0200 (Tue, 20 Apr 2010) | 3 lines
+
+[FIX] OpenID input field displaying in OpenID registration/association 
+page
+
+----------------------------------------------
+r26700 | chibaguy | 2010-04-20 02:08:03 +0200 (Tue, 20 Apr 2010) | 1 line
+
+[ENH] Site header login popup for FiveAlive theme. Uses CSS menu superfish functionality unless this should be changed/improved. Effectively no change in tiki-site_header_login.tpl. Having a tiki-site_header_top.tpl that includes tiki-site_header_login_popup.tpl enables login popup in any theme. This could be a preference later.
+----------------------------------------------
+r26699 | lphuberdeau | 2010-04-19 22:38:48 +0200 (Mon, 19 Apr 2010) | 1 line
+
+[NEW] Integration with BigBlueButton.
+----------------------------------------------
+r26696 | changi67 | 2010-04-19 22:13:32 +0200 (Mon, 19 Apr 2010) | 1 line
+
+[FIX] 39 is enough
+----------------------------------------------
+r26692 | changi67 | 2010-04-19 21:54:00 +0200 (Mon, 19 Apr 2010) | 1 line
+
+[MOD] French trad
+----------------------------------------------
+r26689 | jonnybradley | 2010-04-19 20:39:42 +0200 (Mon, 19 Apr 2010) | 1 line
+
+[FIX] Correct params on update sheet, allow non-jquery.sheet view, allow rename of sheet titles in jquery.sheet
+----------------------------------------------
+r26687 | lphuberdeau | 2010-04-19 19:42:34 +0200 (Mon, 19 Apr 2010) | 1 line
+
+[FIX]?\194?\160PHP 101, sessions is not a place to store large amounts of data. Doing so will slow down all requests to the site.
+----------------------------------------------
+r26686 | jonnybradley | 2010-04-19 18:44:37 +0200 (Mon, 19 Apr 2010) | 1 line
+
+[FIX] Typo (sorry)
+----------------------------------------------
+r26685 | jonnybradley | 2010-04-19 17:21:29 +0200 (Mon, 19 Apr 2010) | 2 lines
+
+[NEW] Freetagged plugin (backported from trunk for consistency)
+Disabled by default.
+----------------------------------------------
+r26684 | jonnybradley | 2010-04-19 17:13:29 +0200 (Mon, 19 Apr 2010) | 1 line
+
+[MOD] Param description
+----------------------------------------------
+r26680 | lphuberdeau | 2010-04-19 16:06:48 +0200 (Mon, 19 Apr 2010) | 1 line
+
+[FIX] Missing none option for theme option in the switch theme module
+----------------------------------------------
+r26679 | chealer | 2010-04-18 20:35:14 +0200 (Sun, 18 Apr 2010) | 3 lines
+
+[NEW] PERM plugin
+imported from mods, contributed by lfagundes
+By default, the permission check is non-global, which is known to be fragile
+----------------------------------------------
+r26678 | chealer | 2010-04-18 20:31:07 +0200 (Sun, 18 Apr 2010) | 1 line
+
+SCROLL plugin: cleanup removing unused left and top parameters
+----------------------------------------------
+r26677 | jonnybradley | 2010-04-17 22:26:35 +0200 (Sat, 17 Apr 2010) | 1 line
+
+[FIX] Sheets AJAX stuff (double experimental)
+----------------------------------------------
+r26676 | jonnybradley | 2010-04-17 22:25:16 +0200 (Sat, 17 Apr 2010) | 1 line
+
+[FIX] JS Notice
+----------------------------------------------
+r26675 | chealer | 2010-04-17 21:58:19 +0200 (Sat, 17 Apr 2010) | 3 lines
+
+[FIX] fr: "All Day" translated to "Tous les jours". thanks R?\195?\169gis Barondeau
+[FIX] fr: truncated OpenID string
+Uniformize strings "All Day" and "All-Day". Russian now has two translations, please check which is best.
+----------------------------------------------
+r26674 | jonnybradley | 2010-04-17 21:03:55 +0200 (Sat, 17 Apr 2010) | 1 line
+
+[FIX] Always refresh page before editing, even if not wiki parsed
+----------------------------------------------
+r26673 | jonnybradley | 2010-04-17 20:49:21 +0200 (Sat, 17 Apr 2010) | 1 line
+
+[FIX] Prefs reset: Checkboxes need change event too, and other inputs don't seem to mind.
+----------------------------------------------
+r26672 | jonnybradley | 2010-04-17 20:14:49 +0200 (Sat, 17 Apr 2010) | 1 line
+
+[FIX] Send change event to selects in case it has other handlers (e.g. "style" populates "style-options")
+----------------------------------------------
+r26671 | jonnybradley | 2010-04-17 19:46:09 +0200 (Sat, 17 Apr 2010) | 1 line
+
+[ENH] Show "undo" icon when pref reset
+----------------------------------------------
+r26670 | jonnybradley | 2010-04-17 19:33:03 +0200 (Sat, 17 Apr 2010) | 1 line
+
+[FIX] Move ajax JS includes earlier in the list to prevent "loadComponent not defined" errors on AJAX links.
+----------------------------------------------
+r26669 | jonnybradley | 2010-04-17 19:29:58 +0200 (Sat, 17 Apr 2010) | 1 line
+
+[FIX] Reset prefs now shows the default value correctly
+----------------------------------------------
+r26666 | jonnybradley | 2010-04-17 18:05:15 +0200 (Sat, 17 Apr 2010) | 3 lines
+
+[FIX] A dozen or so IE JS fixes. IE7/8 doesn't agree with using "for (.. in ..)" loops with indexed arrays, so changed most of them to more normal "for (i;i<l;i++)" ones.
+Also fixed creation of proper text labels for plugin form option drop-downs in IE.
+
+----------------------------------------------
+r26662 | chealer | 2010-04-17 00:27:08 +0200 (Sat, 17 Apr 2010) | 1 line
+
+[FIX] HTML entity for ampersand
+----------------------------------------------
+r26659 | jonnybradley | 2010-04-16 20:21:10 +0200 (Fri, 16 Apr 2010) | 1 line
+
+[FIX]/[ENH] Spreadsheets: Fix saving multiple sheets, use jquery.sheet also when not editing, plus many other small fixes.
+----------------------------------------------
+r26657 | sylvieg | 2010-04-16 17:12:25 +0200 (Fri, 16 Apr 2010) | 1 line
+
+[FIX]FILES: missing size
+----------------------------------------------
+r26656 | jonnybradley | 2010-04-16 16:54:08 +0200 (Fri, 16 Apr 2010) | 1 line
+
+[FIX] Remove return value in onbeforeunload() as IE seems to interpret null as a string, and pops up the dialog saying something like "Do you want to leave this page: null?".
+----------------------------------------------
+r26655 | jonnybradley | 2010-04-16 16:29:46 +0200 (Fri, 16 Apr 2010) | 2 lines
+
+[FIX] Text selection fixes for IE - tested in IE8
+(and IE8's "v7 compatibility" modes)
+----------------------------------------------
+r26654 | sylvieg | 2010-04-16 16:23:04 +0200 (Fri, 16 Apr 2010) | 1 line
+
+[FIX]FILES: when using category filter, use the default column configuration + show the id, fgal_name + new param fileId : TODO: check individual perm like category on individual files - to be done also in get_files since 26283)
+----------------------------------------------
+r26653 | jonnybradley | 2010-04-16 15:47:44 +0200 (Fri, 16 Apr 2010) | 1 line
+
+[FIX] No need for onready JS to show plugin edit icons, but hide them using style attribute if wiki_edit_icons_toggle pref set.
+----------------------------------------------
+r26652 | jonnybradley | 2010-04-16 15:20:59 +0200 (Fri, 16 Apr 2010) | 1 line
+
+[FIX] Stop menu sections reloading the page when first clicked. Used to close all menu sections which were rendered open, despite being defined as "collapsed". This has been broken for a long time, although it was still refreshing the page for no apparent reason. Commented code left there in case someone wants to try another fix.
+----------------------------------------------
+r26650 | pkdille | 2010-04-16 14:42:55 +0200 (Fri, 16 Apr 2010) | 1 line
+
+[FIX] typo modifed -> modified
+----------------------------------------------
+r26649 | jonnybradley | 2010-04-16 14:37:44 +0200 (Fri, 16 Apr 2010) | 1 line
+
+[FIX] Use {jq} for JavaScript function definition
+----------------------------------------------
+r26648 | jonnybradley | 2010-04-16 13:42:06 +0200 (Fri, 16 Apr 2010) | 2 lines
+
+[FIX] Some fixes for the Firefox flickering page issue(s).
+It seems Firefox is very sentitive as to where elements in the DOM can be added invisibly. At the end of the body (after all the JS now) seems to cause the flicker, so cluetip and convertOverlib now create their divs just before the main #fixedwidth div and seem to flicker less (for me).
+----------------------------------------------
+r26647 | sylvieg | 2010-04-15 21:38:26 +0200 (Thu, 15 Apr 2010) | 1 line
+
+[FIX]calendar: calendar module must not interfer with the calendar view in session
+----------------------------------------------
+r26646 | lphuberdeau | 2010-04-15 18:40:15 +0200 (Thu, 15 Apr 2010) | 1 line
+
+[FIX] Prevent attempt to split value on separator twice. Apparently, multiple paths lead there with different input.
+----------------------------------------------
+r26645 | jonnybradley | 2010-04-15 17:04:59 +0200 (Thu, 15 Apr 2010) | 1 line
+
+[FIX] Use custom.js in the root of /styles if there and there isn't one in the current style or option dir.
+----------------------------------------------
+r26643 | sylvieg | 2010-04-14 23:57:06 +0200 (Wed, 14 Apr 2010) | 1 line
+
+regression? at least 3 people complain about the lost of the item calendar popup when upgrading from 2. so better to show them there is a popup than to say you need to change the feature
+----------------------------------------------
+r26642 | sylvieg | 2010-04-14 22:54:09 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[NEW]log: add an optional setting to record feature change in log - default: on (in 5 for Marc)
+----------------------------------------------
+r26640 | lphuberdeau | 2010-04-14 21:56:17 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX]?\194?\160No None option when switching style. Also trigger on load to remove the options not available on the selected style (while keeping them when off-context) and fixing a few issues that came up along the way to do so. Removed some duplication.
+----------------------------------------------
+r26639 | marclaporte | 2010-04-14 21:20:26 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[DOC] How to use new lessermagicreport.php
+----------------------------------------------
+r26638 | marclaporte | 2010-04-14 21:18:58 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[DOC] doc link for Multi-Domain
+----------------------------------------------
+r26637 | marclaporte | 2010-04-14 21:18:05 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[DOC] doc about how to use robots.txt
+----------------------------------------------
+r26635 | xavidp | 2010-04-14 21:05:20 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX][bp/r26634]Fix the url to read an article event online after it was posted and notified by email
+----------------------------------------------
+r26633 | lphuberdeau | 2010-04-14 20:33:55 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[ENH] No need for comments to explain what gets closed when tags are balanced and indented.
+----------------------------------------------
+r26632 | lphuberdeau | 2010-04-14 20:21:50 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[ENH] Adding data in the report
+----------------------------------------------
+r26631 | lphuberdeau | 2010-04-14 20:21:21 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[ENH] Refactor the code gathering preference location to make it usable in other contexts
+----------------------------------------------
+r26630 | sylvieg | 2010-04-14 19:55:41 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX]log: fix 24869 to preserve existing: all system action are recorded + tiki_syslog.php shows all system actions even if not displayed in action log (please people that unchecked the system actions since 02/05/10 - please redo your setting)
+----------------------------------------------
+r26629 | chealer | 2010-04-14 19:54:24 +0200 (Wed, 14 Apr 2010) | 3 lines
+
+[FIX] Check / Uncheck All ("CheckAll is not defined", r24794 regression)
+[FIX] HTML special chars escaping
+Thanks Marc Laporte and luciash
+----------------------------------------------
+r26628 | lphuberdeau | 2010-04-14 19:42:36 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX] Abusive CPU and memory usage when building list of timezones in the admin panel (18% total CPU + memory exhausts allocating 3M blocks), moved preference to lesser magic, removed the offset calculation and the excessive {math} smarty plugin calls (yes, they are expensive) - removed the pear date option from the admin panel as it is not used
+----------------------------------------------
+r26627 | lphuberdeau | 2010-04-14 18:50:12 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[ENH] Make sure the None option is available when the theme has no options
+----------------------------------------------
+r26625 | jonnybradley | 2010-04-14 18:42:08 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX] jquery.sheet save button fix
+----------------------------------------------
+r26623 | sylvieg | 2010-04-14 18:27:20 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX]tracker: if user selector field is empty, do not set it to current user when editing
+----------------------------------------------
+r26622 | lphuberdeau | 2010-04-14 17:18:50 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX]?\194?\160Do not load perspective when in an admin area to avoid collision with global preferences in admin panels
+----------------------------------------------
+r26621 | jonnybradley | 2010-04-14 17:14:28 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[MOD] Change calls to convertTZByID over to use setTZbyID (as these functions have been identical since before php 5)
+----------------------------------------------
+r26620 | jonnybradley | 2010-04-14 17:12:12 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX] Lowercase z in setTimezone
+----------------------------------------------
+r26619 | sylvieg | 2010-04-14 15:48:46 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX]xmlzip: reimport with the previous date except if the page already exists
+----------------------------------------------
+r26618 | marclaporte | 2010-04-14 15:04:34 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[DOC] clearer instructions for multi-domain
+----------------------------------------------
+r26617 | jonnybradley | 2010-04-14 14:00:34 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[MOD] New jQuery UI themes (arrive in 1.8) and some more help text on jQuery features.
+----------------------------------------------
+r26616 | changi67 | 2010-04-14 10:10:55 +0200 (Wed, 14 Apr 2010) | 1 line
+
+[FIX] Security if your documentroot is a checkout
+----------------------------------------------
+r26615 | sylvieg | 2010-04-13 23:27:19 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX]TRACKER: fix agfain optimization 26395
+----------------------------------------------
+r26614 | sylvieg | 2010-04-13 21:29:51 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX]tracker: attachment field for anonymous (confusiopn between is null and ='')
+----------------------------------------------
+r26613 | jonnybradley | 2010-04-13 20:08:47 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX] Experimental feature_jquery_carousel=n (so far still unused within tiki)
+----------------------------------------------
+r26612 | jonnybradley | 2010-04-13 20:06:13 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[ENH] Improvements to prefs reset to defaults: Better icon, apply to selects and textareas too and only appear for prefs set to non-default values.
+----------------------------------------------
+r26611 | sylvieg | 2010-04-13 19:45:35 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX]TRACKER: do not keep the old attachment in the list when remplacing an attachment
+----------------------------------------------
+r26610 | sylvieg | 2010-04-13 18:50:11 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX]thenews: the <em> can be followed by charaters (see mandatory field
+----------------------------------------------
+r26609 | jonnybradley | 2010-04-13 18:43:24 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX] Cache JavaScript generated in page content by plugins etc and extract into headerlib upon retrieval.
+----------------------------------------------
+r26608 | jonnybradley | 2010-04-13 18:40:30 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[MOD] Move code to get JavaScript from HTML into headerlib so can be used elsewhere. No functional change detected or anticipated (JS doesn't get rendered into the page anymore, so possibly not needed in AJAX now anyway?)
+----------------------------------------------
+r26607 | sylvieg | 2010-04-13 18:36:36 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX]tracker: attachment field: delete old version when replace field + fix mandatory check if attachment already in + no delete if attachment is mandatory
+----------------------------------------------
+r26606 | sylvieg | 2010-04-13 17:28:55 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX]cookie: typo
+----------------------------------------------
+r26605 | jonnybradley | 2010-04-13 16:13:03 +0200 (Tue, 13 Apr 2010) | 2 lines
+
+[FIX] Some BOM removals in fckeditor_tiki files and one small JS fix in the tikilink plugin.
+Heopfully will help with some of the WYSIWYG issues.
+----------------------------------------------
+r26604 | sylvieg | 2010-04-13 15:51:50 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX]registration: link to the login page
+----------------------------------------------
+r26603 | sylvieg | 2010-04-13 14:40:28 +0200 (Tue, 13 Apr 2010) | 1 line
+
+[FIX]TRACKERLIST: move the test of filterfield validity before adding the user filter that is not always in the fields list (fix optimization 26395)
+----------------------------------------------
+r26600 | nkoth | 2010-04-13 07:02:16 +0200 (Tue, 13 Apr 2010) | 2 lines
+
+[FIX] Snippets should not contain line breaks
+
+----------------------------------------------
+r26599 | nkoth | 2010-04-13 06:50:44 +0200 (Tue, 13 Apr 2010) | 2 lines
+
+[FIX] Prevent plugin execution if stripplugins is being requested
+
+----------------------------------------------
+r26598 | chealer | 2010-04-13 06:43:47 +0200 (Tue, 13 Apr 2010) | 2 lines
+
+[FIX] Calendar names looking partly struck in popups with thenews (r15918 regression)
+Cf: http://article.gmane.org/gmane.comp.cms.tiki.cvs/54522
+----------------------------------------------
+r26597 | sylvieg | 2010-04-12 22:56:17 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[FIX]tracker: field like itemId, user, group must be fetched even if not seen - will probably rollback 26395
+----------------------------------------------
+r26596 | lphuberdeau | 2010-04-12 19:57:51 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[NEW] Script to generate a report of dynamic preferences highlighting bad descriptions
+----------------------------------------------
+r26595 | lphuberdeau | 2010-04-12 19:56:15 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[ENH] Removing redundant words making some words impossible to search
+----------------------------------------------
+r26593 | lphuberdeau | 2010-04-12 18:51:20 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[NEW]?\194?\160Preference reset on dynamic preferences. When icon is clicked, the control is disabled and when saving the value, it will be set back to tiki's default.
+----------------------------------------------
+r26592 | sylvieg | 2010-04-12 18:02:40 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[FIX]layout: replace br with clearfix in order not to have space at the top
+----------------------------------------------
+r26589 | sylvieg | 2010-04-12 14:34:33 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[FIX]logo: restore logo for anonymous on fresh install
+----------------------------------------------
+r26588 | changi67 | 2010-04-12 14:27:25 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[TRA] French typo
+----------------------------------------------
+r26587 | sylvieg | 2010-04-12 14:02:34 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[FIX]db: same order of fields between upgrade and new db
+----------------------------------------------
+r26586 | changi67 | 2010-04-12 13:55:58 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[TRA] French trads
+----------------------------------------------
+r26585 | jonnybradley | 2010-04-12 13:30:47 +0200 (Mon, 12 Apr 2010) | 1 line
+
+[FIX] BLOB and TEXT columns cannot have default values
+----------------------------------------------
 r26480 | sylvieg | 2010-04-06 15:17:32 +0200 (Tue, 06 Apr 2010) | 1 line
 
 [FIX]newsletter: fix db error if newsletter = 2 newsletters where a user is subscribed in 1 and the user email in the other one with not the same case
