@@ -151,7 +151,9 @@ div.sl-login {
 }
 
 #siteloginbar_popup h1 {
-	display: none;
+	font-size: 1em;
+	font-weight: normal;
+	margin: auto;
 }
 
 li#register_link {
@@ -164,17 +166,14 @@ li#register_link {
 }
 
 #siteloginbar_popup .cssmenu_horiz #register_link ul {
-/*	margin-top: 6px;*/
 	margin-left: -5.5em;
 }
 
 #siteloginbar_popup .cssmenu_horiz #login_link ul {
-/*	margin-top: 6px;*/
 	margin-left: -9em;
 }
 
 #siteloginbar_popup .cssmenu_horiz li#logout_link ul {
-/*	margin-top: 6px;*/
 	margin-left: -2.5em;
 }
 
@@ -231,10 +230,7 @@ li#logout_link a {
 #siteloginbar_popup input[type="password"] {
 	width: 65%;	
 }
-/*
-#siteloginbar_popup input[type="submit"] {
-	float: right;
-}*/
+
 /* end Sitelogin Popup */
 
 #sitesearchbar {

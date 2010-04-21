@@ -5,7 +5,13 @@
 			<li class="login_link tabmark" id="register_link"><a href="tiki-register.php" class="register_link"><span>{tr}Register{/tr}</span></a>
 				<ul>
 					<li> 
-						<div class="tabcontent">{include file='tiki-register.tpl'}</div>
+						<div class="tabcontent">
+							{if $prefs.auth_method eq 'openid'}
+								{include file='tiki-openid_register.tpl'}
+							{else}
+								{include file='tiki-register.tpl'}
+							{/if}
+						</div>
 					</li>
 				</ul>		
 			</li>
