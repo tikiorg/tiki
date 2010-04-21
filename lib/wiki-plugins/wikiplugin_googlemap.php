@@ -319,7 +319,9 @@ function wikiplugin_googlemap($data, $params) {
 		}
 		if ( isset($attributes['tiki.geo.google.zoom']) ) {
 			$pointz = $attributes['tiki.geo.google.zoom'];
-		}
+		} else {
+			$pointz = $prefs["gmap_defaultz"]; 
+		}	
 		if ($type == 'locator') {
 			$ajaxlib->registerFunction('saveGmapItem');
 		}			
