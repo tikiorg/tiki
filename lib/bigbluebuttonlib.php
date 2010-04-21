@@ -57,13 +57,33 @@ class BigBlueButtonLib
 		return false;
 	}
 
-	public function createRoom( $room ) {
+	public function createRoom( $room, array $params = array() ) {
 		global $tikilib, $cachelib;
-		$this->performRequest( 'create', array(
+
+		$params = array_merge( array(
+			'logout' => $tikilib->tikiUrl(''),
+		), $params );
+
+		$request = array(
 			'name' => $room,
 			'meetingID' => $room,
-			'logoutURL' => $tikilib->tikiUrl(''),
-		) );
+			'logoutURL' => $params['logout'],
+		);
+
+		if( isset( $params['welcome'] ) ) {
+			$request['welcome'] = $params['welcome'];
+		}
+		if( isset( $params['number'] ) ) {
+			$request['dialNumber'] = $params['number'];
+		}
+		if( isset( $params['logout'] ) ) {
+			$request['logoutURL'] = $params['logout'];
+		}
+		if( isset( $params['max'] ) ) {
+			$request['maxParticipants'] = $params['max'];
+		}
+
+		$this->performRequest( 'create', $request );
 		$cachelib->invalidate( 'bbb_meetinglist' );
 	}
 
