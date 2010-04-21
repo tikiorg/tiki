@@ -10,7 +10,7 @@
   {* --- tab with structures -- *}
       {if $printstructures}
         <h2>{tr}Selected Structures{/tr}</h2>
-        <form method="post" action="tiki-print_multi_pages.php">
+        <form method="get" action="tiki-print_multi_pages.php">
           <input type="hidden" name="printstructures" value="{$form_printstructures|escape}" />
           <input type="hidden" name="find" value="{$find|escape}" />
         <ul>
@@ -93,7 +93,7 @@
 </form>
 {if $printpages}
 <div style="float:right;margin-right:20%;">
-    <form method="post" action="tiki-print_multi_pages.php">
+    <form method="get" action="tiki-print_multi_pages.php">
       <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
 	  <p><input type="submit" name="print" title="{tr}Print{/tr}" value="{tr}Print{/tr}" /></p>
 	</form>
@@ -171,7 +171,7 @@
 		</td>
 		<td>&nbsp;</td>
 		<td width="45%">
-    <form method="post" action="tiki-print_multi_pages.php">
+    <form method="get" action="tiki-print_multi_pages.php">
       <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
       <input type="hidden" name="find" value="{$find|escape}" />
       <h2>{tr}Selected Pages{/tr}:</h2>
