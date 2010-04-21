@@ -57,6 +57,12 @@ function wikiplugin_rss_info() {
 				'filter' => 'url',
 				'description' => 'url to a favicon to put before each entry',
 			),
+			'showtitle' => array(
+				'required' => false,
+				'name' => tra('Show Title'),
+				'filter' => 'int',
+				'description' => 'Set to 0 to not show the title for the feed (1 to show, which is also the default)',
+			),
 		),
 	);
 }
@@ -71,6 +77,7 @@ function wikiplugin_rss($data,$params) {
 		'desc' => 0,
 		'author' => 0,
 		'icon' => '',
+                'showtitle' => 1,
 	), $params );
 
 	if ( ! isset( $params['id'] ) ) {
@@ -97,9 +104,10 @@ function wikiplugin_rss($data,$params) {
 	$smarty->assign( 'title', $title );
 	$smarty->assign( 'items', $items );
 	$smarty->assign( 'showdate', $params['date'] > 0 );
+	$smarty->assign( 'showtitle', $params['showtitle'] > 0 );
 	$smarty->assign( 'showdesc', $params['desc'] > 0 );
 	$smarty->assign( 'showauthor', $params['author'] > 0 );
-	$smarty->assign( 'showicon', $params['icon'] != "" );
+	$smarty->assign( 'icon', $params['icon'] );
 	return $smarty->fetch( 'wiki-plugins/wikiplugin_rss.tpl' );
 }
 
