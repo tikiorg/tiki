@@ -13,7 +13,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 global $tikilib, $prefs, $tikiroot, $user_overrider_prefs, $tiki_p_trust_input;	// globals are required here for tiki-setup_base.php
 include_once('tiki-setup_base.php');
 
-function upgrade_20100118_image_plugins_kill_tiki( $installer ) {
+// ABOUT THE NUMBERING:
+//
+// Because this script calls tiki-setup_base.php , which does very
+// complicated things like checking if users are logged in and so
+// on, this script depends on every other script, because
+// tiki-setup_base.php does.
+
+
+function upgrade_99999999_image_plugins_kill_tiki( $installer ) {
 	global $tikilib, $installer;
 
 	include_once ('lib/profilelib/profilelib.php');
