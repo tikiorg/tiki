@@ -5,6 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 function post_20091214_perspective_management_tiki( $installer ) {
 	$result = $installer->query( 'SELECT perspectiveId, pref, value FROM tiki_perspective_preferences' );
 	while( $row = $result->fetchRow() ) {
