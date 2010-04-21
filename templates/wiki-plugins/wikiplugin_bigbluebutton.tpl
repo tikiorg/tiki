@@ -29,6 +29,10 @@
 			<input type="text" name="bbb_name"/>
 			<input type="submit" value="{tr}Join{/tr}"/>
 		</div>
+	{else}
+		<div>
+			<input type="submit" value="{tr}Join{/tr}"/>
+		</div>
 	{/if}
 
 	<div class="clear"></div>
