@@ -76,6 +76,9 @@ class BigBlueButtonLib
 		if( isset( $params['number'] ) ) {
 			$request['dialNumber'] = $params['number'];
 		}
+		if( isset( $params['voicebridge'] ) ) {
+			$request['voiceBridge'] = $params['voicebridge'];
+		}
 		if( isset( $params['logout'] ) ) {
 			$request['logoutURL'] = $params['logout'];
 		}

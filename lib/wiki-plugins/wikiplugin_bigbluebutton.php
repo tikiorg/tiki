@@ -31,6 +31,12 @@ function wikiplugin_bigbluebutton_info() {
 				'description' => tra('The phone-in support number to join from traditional phones.'),
 				'filter' => 'text',
 			),
+			'voicebridge' => array(
+				'required' => false,
+				'name' => tra('Voice Bridge'),
+				'description' => tra('Code to enter for phone attendees to join the room.'),
+				'filter' => 'digits',
+			),
 			'logout' => array(
 				'required' => false,
 				'name' => tra('Logout URL'),
