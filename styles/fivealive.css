@@ -625,6 +625,22 @@ fieldset.admin label,
 	color: #fff;
 }
 
+tr.even a:link,
+tr.even a:visited,
+tr.odd a:link,
+tr.odd a:visited {
+	color: #1174a5;
+	text-decoration: none;
+}
+ 
+tr.even a:active,
+tr.even a:hover,
+tr.odd a:active,
+tr.odd a:hover {
+	color: #26a6dd;
+	text-decoration: none;
+}
+
 fieldset.admin .adminoptionbox label,
 fieldset.admin .adminoptionlabel {
 	color: #000;

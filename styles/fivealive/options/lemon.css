@@ -8,11 +8,19 @@ body {
 }
 
 a:link,
-a:visited {
+a:visited,
+tr.even a:link,
+tr.even a:visited,
+tr.odd a:link,
+tr.odd a:visited {
 	color: #c75a28;
 }
  
-a:active, a:hover {
+a:active, a:hover,
+tr.even a:active,
+tr.even a:hover,
+tr.odd a:active,
+tr.odd a:hover {
 	color: #f9a013;
 }
 
