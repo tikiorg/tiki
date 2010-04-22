@@ -564,7 +564,7 @@ p.editdate {
 
 /* img plugin */
 div.imgbox {
-	    border: 1px solid darkgray;
+	    border: 1px solid #a9a9a9;
         background-color: #f9f9f9;
 }
 
@@ -1120,7 +1120,7 @@ table.treeTable .parent td {
 	right: 0;
 	top: 0;
 	height: 40px;
-	background-color: lightblue;
+	background-color: #add8e6;
 }
 
 #intertrans-form {
@@ -1130,7 +1130,7 @@ table.treeTable .parent td {
 	left: 10%;
 	right: 10%;
 	overflow: auto;
-	background-color: lightgreen;
+	background-color: #90ee90;
 	display: none;
 }
 #intertrans-form table {
