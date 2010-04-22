@@ -122,8 +122,8 @@ function Ok() {
 <br />
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 {foreach item=page from=$listpages}
-<tr><td><a href="#" onclick="javascript:document.getElementById('txtTitle').value = '{$page.pageName|escape:'javascript'}'; javascript:document.getElementById('txtPage').value = '{$page.pageName|escape:'javascript'}';" 
-title="{if $page.description}{$page.description}{else}{$page.pageName}{/if}" class="wikilink">{$page.pageName}</a>
+<tr><td><a href="#" onclick="javascript:document.getElementById('txtTitle').value = '{$page.pageName|escape|escape:'javascript'}'; javascript:document.getElementById('txtPage').value = '{$page.pageName|escape|escape:'javascript'}';" 
+title="{if $page.description}{$page.description}{else}{$page.pageName|escape}{/if}" class="wikilink">{$page.pageName|escape}</a>
 </td><td style="color:#999;">
 {$page.description}
 </td></tr>
