@@ -2228,6 +2228,18 @@ CREATE TABLE `tiki_tracker_item_fields` (
   FULLTEXT KEY `ft` (value)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_tracker_item_field_logs`;
+CREATE TABLE `tiki_tracker_item_field_logs` (
+  `version` int(12) NOT NULL,
+  `itemId` int(12) NOT NULL default '0',
+  `fieldId` int(12) NOT NULL default '0',
+  `value` text,
+  `lang` char(16) default NULL,
+  INDEX `version` (`version`),
+  INDEX `itemId` (`itemId`),
+  INDEX `fieldId` (`itemId`)
+) ENGINE=MyISAM;
+
 DROP TABLE IF EXISTS `tiki_tracker_items`;
 CREATE TABLE `tiki_tracker_items` (
   `itemId` int(12) NOT NULL auto_increment,
@@ -3161,6 +3173,8 @@ INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Re
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Viewed', 'article', 'n');
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('%', 'system', 'y');
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('feature', 'system', 'y');
+INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Updated', 'trackeritem', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Created', 'trackeritem', 'n');
 
 DROP TABLE IF EXISTS `tiki_freetags`;
 CREATE TABLE `tiki_freetags` (
