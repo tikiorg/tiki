@@ -167,8 +167,9 @@
 			{/jq}
 		{/if}
 	{else}
-    	{foreach from=$field_value.lingualvalue item=ling}
-    		<label for="{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}">{$ling.lang|langname}</label><br />
+    	{foreach from=$field_value.lingualvalue item=ling name=multi}
+    		<label for="{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}">{$ling.lang|langname}</label>
+			<br />
             {*prepend*}{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
         	<input type="text" id="{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" value="{$ling.value|escape}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} /> {*@@ missing value*}
         	{*append*}{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
@@ -183,6 +184,7 @@
 					 });
 				{/jq}
 			{/if}
+			{if !$smarty.foreach.multi.last}<br />{/if}
 		{/foreach}
 	{/if}
 
