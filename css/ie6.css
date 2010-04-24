@@ -16,6 +16,10 @@ span.button a:visited {
 
 #sitetitle {}
 
+#siteloginbar_popup {
+	width: 300px;
+}
+
 #tiki-top {
 	font-size: 11px;
 }
@@ -27,25 +31,7 @@ div.upspantext {
 form.upform {
 	width: 100px;
 }
-/*
-.cssmenu ul li {
-	float: left;
-	width: 100%;
-}
 
-.cssmenu h2,
-.cssmenu li {
-	height: 1%;
-}
-
-.cssmenu a,
-.cssmenu h2 {
-	font: bold 1em/1.4em arial, helvetica, sans-serif;}
-
-.cssmenu {
-	border-bottom: 1px solid #bbb;
-}
-*/
 #tiki-center {
 	font-size: 1em;
 }
@@ -88,6 +74,20 @@ img.flipmodimage {
 
 .box-data ul {
 	padding-left: .5em;
+}
+
+.box-data ul.cssmenu_vert {
+	margin-left: 0;
+	margin-top: 0;
+	padding-left: 0;
+}
+
+.box-data ul.cssmenu_vert li a {
+	padding-left: 0;
+}
+
+.box-data ul.cssmenu_vert li ul li a {
+	padding-left: 1em;
 }
 
 table.normal, 
