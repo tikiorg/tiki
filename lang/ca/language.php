@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*-
+Ne<?php // -*- coding:utf-8 -*-
 // Parameters:
 
 // lang=xx    : only translates language 'xx',
@@ -2183,6 +2183,7 @@ $lang=Array(
 "Your account request have been stored and will be activated by the admin as soon as possible." => "La teva petició de compte ha estat arxivada i serà activada per la persona administradora tan aviat com li sigui possible.",
 "New article post: {\$mail_title} by {\$mail_user} at {\$mail_date|tiki_short_datetime}" => "Publicació d'un nou article: {\$mail_title} per {\$mail_user} el dia {\$mail_date|tiki_short_datetime}",
 "New article post at %s" => "Nova publicació d'article a %s",
+"New article post at" => "Nova publicació d'article a",
 "Syntax highlighting" => "sintaxi resaltada",
 "Mini calendar" => "Mini calendari",
 "User list" => "Llista d'usuaris",
@@ -4738,7 +4739,7 @@ $lang=Array(
 // "Your personal access to" => "Your personal access to",
 // "{\$mail_action} article post" => "{\$mail_action} article post",
 // "{\$mail_title} by {\$mail_user} at" => "{\$mail_title} by {\$mail_user} at",
-// "New article post" => "New article post",
+"New article post" => "Nou publicació d'article",
 // "Edited article post" => "Edited article post",
 // "Deleted article post" => "Deleted article post",
 // "{\$mail_action} article post at" => "{\$mail_action} article post at",
@@ -5263,7 +5264,7 @@ $lang=Array(
 // "Feed for wiki" => "Feed for wiki",
 // "Individual forums" => "Individual forums",
 // "Individual trackers items" => "Individual trackers items",
-// "Calendar events" => "Calendar events",
+"Calendar events" => "Esdeveniments del calendari",
 // "Feed for directory" => "Feed for directory",
 // "Map files" => "Map files",
 // "Feed for maps" => "Feed for maps",
@@ -5818,8 +5819,8 @@ $lang=Array(
 // "Prefix the checked" => "Prefix the checked",
 // "Postfix the checked" => "Postfix the checked",
 // "Blogs Post" => "Blogs Post",
-// "Calendar Items" => "Calendar Items",
-// "Please Confirm" => "Please Confirm",
+"Calendar Items" => "Items del calendari",
+"Please Confirm" => "Si us plau, confirma-ho",
 // "octets" => "octets",
 // "Attached Files" => "Attached Files",
 // "To add a file, click here" => "To add a file, click here",
