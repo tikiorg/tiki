@@ -95,7 +95,7 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 	}
 }
 
-$access->check_permission( array('tiki_p_view_trackers', 'tiki_p_create_tracker_items') );
+$access->check_permission_either( array('tiki_p_view_trackers', 'tiki_p_create_tracker_items') );
 
 if ($tiki_p_view_trackers != 'y') {
 	$userCreatorFieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
