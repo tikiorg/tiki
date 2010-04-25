@@ -65,8 +65,14 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 		}
 
 		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_memberpayment.tpl' ) . '~/np~';
+	} elseif ($info['expireAfter'] == 0 && $params['group'] == $info['groupName']) {
+		return '{REMARKSBOX(type=warning, title=Plugin Memberpayment Error)}' . tra('The group ') . '<em>' . $info['groupName'] 
+				. '</em>' . tra(' does not have a membership term.') . tra(' Go to ') . '<em>' . tra('Admin > Groups') . '</em>' 
+				. tra(' to specify a term for this group by automatically unassigning users after a certain number of days.') 
+				. '{REMARKSBOX}';
 	} else {
-		return tra('Group does not exist: ' . $params['group']);
+		return '{REMARKSBOX(type=warning, title=Plugin Memberpayment Error)}' . tra('The group ') . '<em>' . $params['group'] 
+				. '</em>' . tra(' does not exist') . '{REMARKSBOX}';
 	}
 }
 
