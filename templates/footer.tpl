@@ -3,7 +3,7 @@
 {if (! isset($display) or $display eq '')}
 	{if count($phpErrors)}
 		{button _ajax="n" _id="show-errors-button" _onclick="flip('errors');return false;" _text="{tr}Show php error messages{/tr}"}
-		<div id="errors" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_errors) and $smarty.session.tiki_cookie_jar.show_errors eq 'y') or $prefs.javascript_enabled ne 'y'}block{else}none{/if};">
+		<div id="errors" class="rbox warning" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_errors) and $smarty.session.tiki_cookie_jar.show_errors eq 'y') or $prefs.javascript_enabled ne 'y'}block{else}none{/if};">
 			&nbsp;{listfilter selectors='#errors>div'}
 			{foreach item=err from=$phpErrors}
 				{$err}

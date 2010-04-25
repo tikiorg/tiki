@@ -194,7 +194,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	case E_COMPILE_WARNING:
 	case E_PARSE:
 	case E_RECOVERABLE_ERROR:
-		$back = "<div style='padding:4px;border:1px solid #000;background-color:#F66;font-size:10px;'>";
+		$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
 		$back.= "<b>PHP (".PHP_VERSION.") ERROR (".$err[$errno]."):</b><br />";
 		$back.= "<tt><b>File:</b></tt> $errfile<br />";
 		$back.= "<tt><b>Line:</b></tt> $errline<br />";
@@ -210,7 +210,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 		if ( ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile) ) {
 			if ($prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
 				break;
-			$back = "<div style='padding:4px;border:1px solid #000;background-color:#FF6;font-size:10px;'>";
+			$back = "<div class='rbox-data' style='font-size:10px;border:1px solid'>";
 			$back.= "<b>PHP (".PHP_VERSION.") NOTICE ($err[$errno]):</b><br />";
 			$back.= "<tt><b>File:</b></tt> $errfile<br />";
 			$back.= "<tt><b>Line:</b></tt> $errline<br />";
