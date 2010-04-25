@@ -41,13 +41,13 @@
 
 				<fieldset>
 					<label for="amount">{tr}Amount{/tr}:</label>
-					<input type="text" id="amount" name="amount"/>
+					<input type="text" id="amount" name="amount" class="right"/>
 					{$prefs.payment_currency|escape}
 				</fieldset>
 
 				<fieldset>
 					<label for="payable">{tr}Payable within{/tr}:</label>
-					<input type="text" id="payable" name="payable" value="{$prefs.payment_default_delay|escape}"/>
+					<input type="text" id="payable" class="right" name="payable" value="{$prefs.payment_default_delay|escape}"/>
 					{tr}days{/tr}
 				</fieldset>
 				
