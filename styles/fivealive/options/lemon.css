@@ -37,15 +37,24 @@ fieldset {
 	text-shadow: #c85a28 3px 2px 0;
 }
 
-#footer {
-	background: #c35627;
-	color: #ffe075;
+#footer .container {
+	border-top: 1px solid #ffc805;
+	border-bottom: 1px solid #ffc805;
 }
 
-#footer a,
-#footer a:visited {
-	color: #fff;
+#footer h3 {
+	border-bottom: 1px dotted #ffc805;
 }
+
+#loadstats {
+	background: #ffc805;
+	color: #955208;
+}
+
+#power a {
+	color: #ffc805;
+}
+
 
 span.button a,
 span.button a:visited,
@@ -128,6 +137,10 @@ textarea,
 	color: #c85a28;
 }
 
+table.normal {
+	border: 2px solid #fdbb09;
+}
+
 th,
 td.heading,
 tr.diffheader {
@@ -152,7 +165,8 @@ tr.diffheader {
 }
 
 .tabinactive:hover a,
-.tabactive a {
+.tabactive a,
+.tabactive a:visited {
 	color: #c74b23;	
 }
 

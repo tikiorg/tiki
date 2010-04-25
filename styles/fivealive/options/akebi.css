@@ -37,9 +37,26 @@ fieldset {
 #sitesubtitle {
 	text-shadow: #005064 3px 2px 0;
 }
-
+/*
 #footer {
 	background: #004758;
+}*/
+#footer .container {
+	border-top: 1px solid #19a5be;
+	border-bottom: 1px solid #19a5be;
+}
+
+#footer h3 {
+	border-bottom: 1px dotted #19a5be;
+}
+
+#loadstats {
+	background: #19a5be;
+	color: #005659;
+}
+
+#power a {
+	color: #19a5be;
 }
 
 span.button a,
@@ -131,6 +148,10 @@ textarea,
 	color: #000;
 }
 
+table.normal {
+	border: 2px solid #1296a9;
+}
+
 th,
 td.heading,
 tr.diffheader {
@@ -154,7 +175,8 @@ tr.diffheader {
 }
 
 .tabinactive:hover a,
-.tabactive a {
+.tabactive a,
+.tabactive a:visited {
 	color: #168294;	
 }
 

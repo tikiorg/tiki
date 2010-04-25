@@ -217,10 +217,10 @@ div.logged-in a,
 li.login_link ul li a {
 	background: none !important;
 }
-	
+	/*
 li#login_link span.register {
 	display: none;
-}
+}*/
 
 li#logout_link a {
 	padding-right: 40px;
@@ -957,7 +957,7 @@ tr.diffheader {
 .tabcontent table {
 /*	margin: 1% auto 2% auto; */
 	text-align: left;
-	width: 95%;
+	width: auto;
 	background: transparent;
 }
 

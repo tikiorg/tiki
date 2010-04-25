@@ -38,15 +38,24 @@ fieldset {
 	text-shadow: #781437 3px 2px 0;
 }
 
-#footer {
-	background: #6a1231;
-	color: #e298c5;
+#footer .container {
+	border-top: 1px solid #a52873;
+	border-bottom: 1px solid #a52873;
 }
 
-#footer a,
-#footer a:visited {
-	color: #fff;
+#footer h3 {
+	border-bottom: 1px dotted #a52873;
 }
+
+#loadstats {
+	background: #a52873;
+	color: #511938;
+}
+
+#power a {
+	color: #a52873;
+}
+
 
 span.button a,
 span.button a:visited,
@@ -138,6 +147,10 @@ tr.diffheader a:visited {
 	color: #8b1932;
 }
 
+table.normal {
+	border: 2px solid #a82a76;
+}
+
 th,
 td.heading,
 tr.diffheader {
@@ -146,7 +159,7 @@ tr.diffheader {
 }
 
 .tabmark {
-	border: 1px solid #11597e;
+	border: 1px solid #a82a76;
 	background: #722860;
 	color: #fff;
 }
@@ -166,7 +179,8 @@ tr.diffheader {
 }
 
 .tabinactive:hover a,
-.tabactive a {
+.tabactive a,
+.tabactive a:visited {
 	color: #69285c;	
 }
 
