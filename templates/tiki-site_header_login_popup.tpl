@@ -2,18 +2,7 @@
 <div id="siteloginbar_popup">
 	<ul class="clearfix cssmenu_horiz">
 		{if $prefs.allowRegister eq 'y' and !($user)}
-			<li class="login_link tabmark" id="register_link"><a href="tiki-register.php" class="register_link"><span>{tr}Register{/tr}</span></a>
-				<ul>
-					<li> 
-						<div class="tabcontent">
-							{if $prefs.auth_method eq 'openid'}
-								{include file='tiki-openid_register.tpl'}
-							{else}
-								{include file='tiki-register.tpl'}
-							{/if}
-						</div>
-					</li>
-				</ul>		
+			<li class="login_link tabmark" id="register_link"><a href="tiki-register.php" class="register_link" title="{tr}Click here to register{/tr}"><span>{tr}Register{/tr}</span></a>
 			</li>
 		{/if}
 		{if $filegals_manager eq '' and $print_page ne 'y'}
