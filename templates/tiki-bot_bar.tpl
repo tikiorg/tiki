@@ -1,4 +1,4 @@
-{if $prefs.feature_bot_logo eq 'y'}{eval var=$prefs.bot_logo_code}{/if}
+{if $prefs.feature_bot_logo eq 'y'}<div id="custom_site_footer">{eval var=$prefs.bot_logo_code}</div>{/if}
 {if ($prefs.feature_site_report eq 'y' && $tiki_p_site_report eq 'y') || ($prefs.feature_site_send_link eq 'y' and $prefs.feature_tell_a_friend eq 'y' and $tiki_p_tell_a_friend eq 'y')}
 	<div id="site_report">
 		{if $prefs.feature_site_report eq 'y'}
