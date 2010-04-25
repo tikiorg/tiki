@@ -10,6 +10,7 @@
  * \author zaufi <zaufi@sendmail.ru>
  */
 
+global $smarty;
 /// Result not available
 define('NO_RESULT', 0);
 $smarty->assign('NO_RESULT', 0);
