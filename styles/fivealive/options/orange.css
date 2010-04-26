@@ -136,6 +136,15 @@ textarea,
 	color: #942f20;
 }
 
+.cbox {
+	background: #f4d6cc;
+	color: #942f20;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #e7713e;
+}
+
 table.normal {
 	border: 2px solid #e77d4f;
 }

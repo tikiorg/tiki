@@ -137,6 +137,15 @@ textarea,
 	color: #648637;
 }
 
+.cbox {
+	background: #f5f6c1;
+	color: #648637;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #bcb923;
+}
+
 table.normal {
 	border: 2px solid #dbd11a;
 }
@@ -146,6 +155,10 @@ td.heading,
 tr.diffheader {
 	background: #dbd11a;
 	color: #f8f9d4;
+}
+
+.wikicell {
+	border: 2px solid #f5f6c1;
 }
 
 .tabmark {

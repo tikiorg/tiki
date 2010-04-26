@@ -147,6 +147,15 @@ tr.diffheader a:visited {
 	color: #8b1932;
 }
 
+.cbox {
+	background: #efcde5;
+	color: #8b1932;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #a82a76;
+}
+
 table.normal {
 	border: 2px solid #a82a76;
 }
@@ -156,6 +165,10 @@ td.heading,
 tr.diffheader {
 	background: #a82a76;
 	color: #f4dded;
+}
+
+.wikicell {
+	border: 2px solid #efcde5;
 }
 
 .tabmark {

@@ -145,7 +145,16 @@ textarea,
 .rbox-data {
 	border: #18a3bb;
 	background: #cbf4f6;
-	color: #000;
+	color: #005064;
+}
+
+.cbox {
+	background: #cbf4f6;
+	color: #005064;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #18a3bb;
 }
 
 table.normal {
@@ -157,6 +166,10 @@ td.heading,
 tr.diffheader {
 	background: #1296a9;
 	color: #ddf8f9;
+}
+
+.wikicell {
+	border: 2px solid #cbf4f6;
 }
 
 .tabmark {
