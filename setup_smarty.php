@@ -254,6 +254,7 @@ class Smarty_Tikiwiki extends Smarty
 	}
 }
 
+if (!isset($tikidomain)) { $tikidomain = ''; }
 $smarty = new Smarty_Tikiwiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('pre', 'jq');
