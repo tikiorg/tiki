@@ -8,12 +8,19 @@ body {
 }
 
 a:link,
-a:visited {
+a:visited,tr.even a:link,
+tr.even a:visited,
+tr.odd a:link,
+tr.odd a:visited {
 	color: #c74b23;
 }
  
 a:active,
-a:hover {
+a:hover,
+tr.even a:active,
+tr.even a:hover,
+tr.odd a:active,
+tr.odd a:hover {
 	color: #ed6223;
 }
 
@@ -30,15 +37,23 @@ fieldset {
 	text-shadow: #942f20 3px 2px 0;
 }
 
-#footer {
-	background: #852a1c;
-	color: #ebac91;
+#footer .container {
+	border-top: 1px solid #f06423;
+	border-bottom: 1px solid #f06423;
 }
 
-#footer a,
-#footer a:visited {
-	color: #fff;
+#footer h3 {
+	border-bottom: 1px dotted #f06423;
 }
+
+#loadstats {
+	background: #f06423;
+}
+
+#power a {
+	color: #f06423;
+}
+
 
 span.button a,
 span.button a:visited,
@@ -121,6 +136,19 @@ textarea,
 	color: #942f20;
 }
 
+.cbox {
+	background: #f4d6cc;
+	color: #942f20;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #e7713e;
+}
+
+table.normal {
+	border: 2px solid #e77d4f;
+}
+
 th,
 td.heading,
 tr.diffheader {
@@ -144,7 +172,8 @@ tr.diffheader {
 }
 
 .tabinactive:hover a,
-.tabactive a {
+.tabactive a,
+.tabactive a:visited {
 	color: #852a1c;	
 }
 

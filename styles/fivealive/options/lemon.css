@@ -8,11 +8,19 @@ body {
 }
 
 a:link,
-a:visited {
+a:visited,
+tr.even a:link,
+tr.even a:visited,
+tr.odd a:link,
+tr.odd a:visited {
 	color: #c75a28;
 }
  
-a:active, a:hover {
+a:active, a:hover,
+tr.even a:active,
+tr.even a:hover,
+tr.odd a:active,
+tr.odd a:hover {
 	color: #f9a013;
 }
 
@@ -29,15 +37,24 @@ fieldset {
 	text-shadow: #c85a28 3px 2px 0;
 }
 
-#footer {
-	background: #c35627;
-	color: #ffe075;
+#footer .container {
+	border-top: 1px solid #ffc805;
+	border-bottom: 1px solid #ffc805;
 }
 
-#footer a,
-#footer a:visited {
-	color: #fff;
+#footer h3 {
+	border-bottom: 1px dotted #ffc805;
 }
+
+#loadstats {
+	background: #ffc805;
+	color: #955208;
+}
+
+#power a {
+	color: #ffc805;
+}
+
 
 span.button a,
 span.button a:visited,
@@ -120,11 +137,28 @@ textarea,
 	color: #c85a28;
 }
 
+.cbox {
+	background: #fcebbc;
+	color: #c85a28;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #f0af02;
+}
+
+table.normal {
+	border: 2px solid #fdbb09;
+}
+
 th,
 td.heading,
 tr.diffheader {
 	background: #fdbb09;
 	color: #fdf1d0;
+}
+
+.wikicell {
+	border: 2px solid #fcebbc;
 }
 
 .tabmark {
@@ -144,7 +178,8 @@ tr.diffheader {
 }
 
 .tabinactive:hover a,
-.tabactive a {
+.tabactive a,
+.tabactive a:visited {
 	color: #c74b23;	
 }
 

@@ -8,12 +8,20 @@ body {
 }
 
 a:link,
-a:visited {
+a:visited,
+tr.even a:link,
+tr.even a:visited,
+tr.odd a:link,
+tr.odd a:visited {
 	color: #0b8a98;
 }
  
 a:active,
-a:hover {
+a:hover,
+tr.even a:active,
+tr.even a:hover,
+tr.odd a:active,
+tr.odd a:hover {
 	color: #18a3bb;
 }
 
@@ -29,9 +37,26 @@ fieldset {
 #sitesubtitle {
 	text-shadow: #005064 3px 2px 0;
 }
-
+/*
 #footer {
 	background: #004758;
+}*/
+#footer .container {
+	border-top: 1px solid #19a5be;
+	border-bottom: 1px solid #19a5be;
+}
+
+#footer h3 {
+	border-bottom: 1px dotted #19a5be;
+}
+
+#loadstats {
+	background: #19a5be;
+	color: #005659;
+}
+
+#power a {
+	color: #19a5be;
 }
 
 span.button a,
@@ -120,7 +145,20 @@ textarea,
 .rbox-data {
 	border: #18a3bb;
 	background: #cbf4f6;
-	color: #000;
+	color: #005064;
+}
+
+.cbox {
+	background: #cbf4f6;
+	color: #005064;
+}
+
+.cbox-title {
+	border-bottom: 3px solid #18a3bb;
+}
+
+table.normal {
+	border: 2px solid #1296a9;
 }
 
 th,
@@ -128,6 +166,10 @@ td.heading,
 tr.diffheader {
 	background: #1296a9;
 	color: #ddf8f9;
+}
+
+.wikicell {
+	border: 2px solid #cbf4f6;
 }
 
 .tabmark {
@@ -146,7 +188,8 @@ tr.diffheader {
 }
 
 .tabinactive:hover a,
-.tabactive a {
+.tabactive a,
+.tabactive a:visited {
 	color: #168294;	
 }
 

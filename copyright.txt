@@ -12,8 +12,8 @@ This is how we implement the Tiki Social Contract.
 http://tikiwiki.org/Social+Contract
 
 List of members of the Community
-As of 2010-04-06, the community has:
-  * 469 members on SourceForge.net,
+As of 2010-04-21, the community has:
+  * 471 members on SourceForge.net,
   * 230 of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
@@ -349,15 +349,15 @@ SF Role: Developer
 Nickname: changi67
 Name: Jean-FranÃ§ois  B.
 First Commit: 2009-04-23
-Last Commit: 2010-04-06
-Number of Commits: 165
+Last Commit: 2010-04-21
+Number of Commits: 182
 SF Role: Packager (.rpm, .deb etc)
 
 Nickname: chealer
 Name: Philippe Cloutier
 First Commit: 2003-09-27
-Last Commit: 2010-04-03
-Number of Commits: 662
+Last Commit: 2010-04-21
+Number of Commits: 674
 SF Role: Developer
 
 Nickname: chessy
@@ -367,8 +367,8 @@ SF Role: Developer
 Nickname: chibaguy
 Name: Gary Cunningham-Lee
 First Commit: 2006-02-04
-Last Commit: 2010-04-05
-Number of Commits: 1213
+Last Commit: 2010-04-21
+Number of Commits: 1220
 SF Role: Web Designer
 
 Nickname: chris_holman
@@ -589,8 +589,8 @@ SF Role: Developer
 
 Nickname: eromneg
 First Commit: 2009-06-07
-Last Commit: 2010-02-26
-Number of Commits: 26
+Last Commit: 2010-04-20
+Number of Commits: 29
 
 Nickname: essele
 Name: Lee Essen
@@ -1077,8 +1077,8 @@ SF Role: Developer
 Nickname: jonnybradley
 Name: jonny Bradley
 First Commit: 2007-08-15
-Last Commit: 2010-04-06
-Number of Commits: 1660
+Last Commit: 2010-04-21
+Number of Commits: 1737
 SF Role: Developer
 
 Nickname: jorgercosta
@@ -1260,8 +1260,8 @@ SF Role: Developer
 
 Nickname: lindonb
 First Commit: 2009-05-10
-Last Commit: 2010-04-05
-Number of Commits: 76
+Last Commit: 2010-04-12
+Number of Commits: 86
 
 Nickname: llunax
 Name: Lluna
@@ -1287,8 +1287,8 @@ Name: Jon
 Nickname: lphuberdeau
 Name: Louis-Philippe Huberdeau
 First Commit: 2004-04-10
-Last Commit: 2010-04-06
-Number of Commits: 1569
+Last Commit: 2010-04-21
+Number of Commits: 1611
 SF Role: Developer
 
 Nickname: lrargerich
@@ -1362,8 +1362,8 @@ SF Role: Developer
 Nickname: marclaporte
 Name: Marc Laporte
 First Commit: 2003-11-28
-Last Commit: 2010-04-05
-Number of Commits: 832
+Last Commit: 2010-04-14
+Number of Commits: 847
 SF Role: Project Manager
 
 Nickname: marcmont
@@ -1638,8 +1638,8 @@ Number of Commits: 3
 Nickname: nkoth
 Name: Nelson
 First Commit: 2007-05-17
-Last Commit: 2010-04-06
-Number of Commits: 591
+Last Commit: 2010-04-21
+Number of Commits: 596
 SF Role: Developer
 
 Nickname: normandaoust
@@ -1673,11 +1673,14 @@ Last Commit: 2009-09-26
 Number of Commits: 16
 SF Role: Developer
 
+Nickname: oc73
+Name: Omniscient Colossus
+
 Nickname: ohertel
 Name: Oliver Hertel
 First Commit: 2003-03-16
-Last Commit: 2009-12-13
-Number of Commits: 381
+Last Commit: 2010-04-21
+Number of Commits: 383
 SF Role: Developer
 
 Nickname: oliland
@@ -1807,8 +1810,8 @@ Number of Commits: 1
 
 Nickname: pkdille
 First Commit: 2007-03-14
-Last Commit: 2010-03-26
-Number of Commits: 1134
+Last Commit: 2010-04-16
+Number of Commits: 1141
 SF Role: Developer
 
 Nickname: plillevold
@@ -1917,8 +1920,8 @@ SF Role: Developer
 Nickname: reiknir
 Name: Olafur Gunnlaugsson
 First Commit: 2010-04-03
-Last Commit: 2010-04-05
-Number of Commits: 2
+Last Commit: 2010-04-10
+Number of Commits: 4
 
 Nickname: renoirb
 Name: Renoir Boulanger
@@ -1969,8 +1972,8 @@ SF Role: Developer
 Nickname: rlpowell
 Name: Robin Powell
 First Commit: 2003-09-17
-Last Commit: 2010-02-13
-Number of Commits: 186
+Last Commit: 2010-04-21
+Number of Commits: 189
 SF Role: Developer
 
 Nickname: robferguson
@@ -2043,8 +2046,8 @@ Number of Commits: 3
 Nickname: sampaioprimo
 Name: Rodrigo Sampaio Primo
 First Commit: 2005-10-17
-Last Commit: 2010-03-25
-Number of Commits: 173
+Last Commit: 2010-04-08
+Number of Commits: 174
 SF Role: Developer
 
 Nickname: scarle
@@ -2085,6 +2088,9 @@ Name: Chris White
 
 Nickname: sideshow_bob
 Name: Flo Wunderle
+
+Nickname: siegfried1e
+Name: Stephan Champagne
 
 Nickname: sikko23
 Name: Sikko
@@ -2168,8 +2174,8 @@ SF Role: Developer
 Nickname: sylvieg
 Name: Sylvie Greverend
 First Commit: 2003-05-28
-Last Commit: 2010-04-06
-Number of Commits: 5666
+Last Commit: 2010-04-17
+Number of Commits: 5708
 SF Role: Developer
 
 Nickname: syracine
@@ -2355,8 +2361,8 @@ SF Role: Developer
 Nickname: xavidp
 Name: Xavier de Pedro
 First Commit: 2005-07-08
-Last Commit: 2010-04-01
-Number of Commits: 234
+Last Commit: 2010-04-14
+Number of Commits: 237
 SF Role: All-Hands Person
 
 Nickname: xbtheria

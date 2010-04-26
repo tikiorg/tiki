@@ -21,7 +21,7 @@
  * wiki page.
  */
 function wikiplugin_sheet_help() {
-	return tra("TikiSheet").":<br />~np~{SHEET(id=>)}".tra("Sheet Heading")."{SHEET}~/np~";
+	return tra("TikiSheet").":<br />~np~{SHEET(id=>x, simple=>n)}".tra("Sheet Heading")."{SHEET}~/np~";
 }
 
 function wikiplugin_sheet_info() {
@@ -36,6 +36,11 @@ function wikiplugin_sheet_info() {
 				'required' => true,
 				'name' => tra('Sheet ID'),
 				'description' => tra('Internal ID of the TikiSheet.'),
+			),
+			'simple' => array(
+				'required' => false,
+				'name' => tra('Simple'),
+				'description' => tra('Simple table view y/n (Default: n = jquery.sheet view if feature enabled).'),
 			),
 		),
 	);
@@ -96,7 +101,7 @@ EOF;
 	}
 
 	// Build required objects
-	$sheet = new TikiSheet;
+	$sheet = new TikiSheet($id);
 	$db = new TikiSheetDatabaseHandler( $id );
 	$out = new TikiSheetOutputHandler( $data );
 
@@ -109,8 +114,20 @@ EOF;
 	$ret = ob_get_contents();
 	ob_end_clean();
 
-	if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y')
-		$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&readdate=" . time() . "&mode=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
-	
+	if ($prefs['feature_jquery_sheet'] == 'y') {
+		if (!isset($simple) || $simple != 'y') {
+			global $headerlib;
+			$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") { ajaxLoadingShow("role_main"); }
+setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 100);', 500);
+		}
+		$ret = '<div class="tiki_sheet">' . $ret . '</div>';
+		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
+			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&readdate=" . time() . "&parse=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
+		}
+	} else {
+		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
+			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&readdate=" . time() . "&mode=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
+		}
+	}
 	return $ret;
 }

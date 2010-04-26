@@ -467,7 +467,7 @@ if (!empty($_REQUEST['removegal'])) {
 		die;
 	}
 	$access->check_authenticity(tra('Remove file gallery: ') . ' ' . htmlspecialchars($gal_info['name']));
-	$filegallib->remove_file_gallery($_REQUEST['removegal'], $galleryId);
+	$filegallib->remove_file_gallery($_REQUEST['removegal'], $_REQUEST['removegal']);
 }
 // Process upload of a file version
 if (!empty($_FILES)) {

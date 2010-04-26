@@ -133,7 +133,7 @@ if ( $start_session ) {
 	$session_params = session_get_cookie_params();
 	session_set_cookie_params($session_params['lifetime'], $tikiroot);
 	unset($session_params);
-	session_start();
+	@session_start();
 }
 
 // Moved here from tiki-setup.php because smarty use a copy of session

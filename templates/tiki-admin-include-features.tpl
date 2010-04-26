@@ -152,7 +152,7 @@
 				</fieldset>
 				
 				<fieldset>
-					<legend class="heading">{icon _id="new"}<span>{tr}Fresh out of the stove{/tr}</span><legend>
+					<legend class="heading">{icon _id="new"}<span>{tr}Fresh out of the stove{/tr}</span></legend>
 
 					{preference name=bigbluebutton_feature}
 				</fieldset>

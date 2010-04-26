@@ -27,7 +27,7 @@
 	</div>
 {/if}
 {if $prefs.feature_bot_bar_rss eq 'y'}
-	<div id="rss" style="text-align: center">
+	<div id="rss">
 		{if $prefs.feature_wiki eq 'y' and $prefs.rss_wiki eq 'y' and $tiki_p_view eq 'y'}
 				<a title="{tr}Wiki RSS{/tr}" href="tiki-wiki_rss.php?ver={$prefs.rssfeed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 				<small>{tr}Wiki{/tr}</small>
@@ -71,7 +71,19 @@
 {/if}
 <div id="power">
 	{if $prefs.feature_bot_bar_power_by_tw ne 'n'}
-		{tr}Powered by{/tr} <a href="http://info.tikiwiki.org" title="&#169; 2002&#8211;{$smarty.now|date_format:"%Y"} {tr}The TikiWiki Community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a> {if $prefs.feature_topbar_version eq 'y'} v{$tiki_version} {if $tiki_uses_svn eq 'y'} (SVN){/if} -{$tiki_star}- {/if} | 
+		<span id="poweredby">{tr}Powered by{/tr}</span> <a href="http://info.tikiwiki.org" title="&#169; 2002&#8211;{$smarty.now|date_format:"%Y"} {tr}The TikiWiki Community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a> {if $prefs.feature_topbar_version eq 'y'} v{$tiki_version} {if $tiki_uses_svn eq 'y'} (SVN){/if} -{$tiki_star}- {/if} 
+	{/if}
+</div>
+<div id="credits_svnrev">
+	{if !empty($lastup) or !empty($svnrev)}
+		<div class="cvsup">
+			{if !empty($lastup)}
+				{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
+			{/if}
+			{if !empty($svnrev)}
+				 - REV {$svnrev}
+			{/if}
+		</div>
 	{/if}
 	<div id="credits">
 		{include file='credits.tpl'}
@@ -82,11 +94,4 @@
 <div id="loadstats" style="text-align: center">
 	<small>[ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; [ {tr}Memory usage{/tr}: {memusage} ] &nbsp; [ {$num_queries} {tr}database queries used in {/tr} {$elapsed_in_db|truncate:3:''} {tr}secs{/tr} ]{if $server_load and $server_load ne '?'} &nbsp; [ {tr}Server load{/tr}: {$server_load} ]{/if}</small>
 </div>
-{/if}
-
-{if !empty($lastup)}
-<div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
-{/if}
-{if !empty($svnrev)}
- - REV {$svnrev}
 {/if}

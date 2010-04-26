@@ -20,7 +20,7 @@ foreach( $allperms['data'] as $row ) {
 		$valid = true;
 	} else {
 		foreach( explode( ',', $row['feature_check'] ) as $feature ) {
-			if( $prefs[$feature] == 'y' ) {
+			if( isset($prefs[$feature]) && $prefs[$feature] == 'y' ) {
 				$valid = true;
 				break;
 			}

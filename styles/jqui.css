@@ -200,7 +200,6 @@ div.error {
 
 #tiki-top {
 	padding: .5em .3em .3em 1em;
-	position: relative;
 	border: 1px solid #aaaaaa;
 	background: #cccccc url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
 	color: #222222;
@@ -656,8 +655,8 @@ div.freetagitemlist {
 .tabs,
 .tabmark,
 .postbody-title {
-	border-radius-topleft: 4px;
-	border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
 	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-topright: 4px;
 	-webkit-border-radius-topleft: 4px;

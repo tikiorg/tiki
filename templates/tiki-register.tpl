@@ -26,9 +26,20 @@
 		});
 {/jq}
 
-{title admpage='login'}{tr}Registration{/tr}{/title}
-	
-	<div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
+{if $openid_associate eq 'n'}
+	{title admpage='login'}{tr}Registration{/tr}{/title}
+{else}
+	<h1>{tr}Your OpenID identity is valid{/tr}</h1>
+	<p>{tr}However, no account is associated to the OpenID identifier.{/tr}</p>
+	{if $allowRegister eq 'y'}
+	<table width="100%">
+		<col width="50%"/>
+		<col width="50%"/>
+		<tr>
+			<td>
+	{/if}
+{/if}	
+<div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 
 {if $prefs.feature_ajax eq 'y'}
 		<script src="lib/registration/register_ajax.js" type="text/javascript"></script>
@@ -42,7 +53,7 @@
 {elseif $userTrackerData}
 	{$userTrackerData}
 
-{elseif $email_valid eq 'n'}
+{elseif $email_valid eq 'n' and $allowRegister eq 'y'}
 	<label for="email">{icon _id=error style="vertical-align:middle" align="left"} {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}</label>
  		<form action="tiki-register.php" method="post">
 			<input type="text" name="email" id="email" value="{$smarty.post.email}"/>
@@ -56,6 +67,7 @@
 		</form>
 
 {else}
+	{if $allowRegister eq 'y'}
 
 		<form action="tiki-register.php" method="post" name="RegForm">
 		<fieldset><legend>{tr}Register as a new user{/tr}</legend>
@@ -86,6 +98,7 @@
 				</tr>
 	{/if}
  
+	{if $openid_associate eq 'n'}
 				<tr>
 					<td class="formcolor"><label for="pass1">{tr}Password:{/tr}</label></td>
 					<td class="formcolor">
@@ -123,6 +136,7 @@
 						{/if}
 					</td>
 				</tr>
+	{/if}
 
 	{if $prefs.login_is_email ne 'y'}
 				<tr>
@@ -182,4 +196,20 @@
 		{remarksbox type="note"  title="{tr}Note{/tr}"}
 			{tr}Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
 		{/remarksbox}
+	{/if}
+	{if $openid_associate eq 'y'}
+		{if $allowRegister eq 'y'}
+			</td>
+			<td>
+		{/if}
+				<p>
+					{tr}Associate OpenID with an existing Tikiwiki account{/tr}
+				</p>
+				{include file="modules/mod-login_box.tpl"}
+		{if $allowRegister eq 'y'}
+			</td>
+		</tr>
+		</table>
+		{/if}
+	{/if}
 {/if}
