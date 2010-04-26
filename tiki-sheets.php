@@ -71,6 +71,9 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('creator', $user);
 		$smarty->assign('parentSheetId', 0);
 	}
+	$cat_type = 'sheet';
+	$cat_objid = $_REQUEST['sheetId'];
+	include_once ('categorize_list.php');
 }
 // Process the insertion or modification of a sheet here
 if (isset($_REQUEST["edit"])) {
@@ -119,14 +122,10 @@ if (!isset($_REQUEST["offset"])) {
 	$offset = $_REQUEST["offset"];
 }
 $smarty->assign_by_ref('offset', $offset);
-// Get the list of libraries available for this user (or public galleries)
-// GET ALL GALLERIES SINCE ALL GALLERIES ARE BROWSEABLE
+// Get the list of sheets available for this user (or public galleries)
 $sheets = $sheetlib->list_sheets($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant_pages', $sheets["cant"]);
 $smarty->assign_by_ref('sheets', $sheets["data"]);
-//$cat_type = 'sheet';
-//$cat_objid = $_REQUEST["sheetId"];
-//include_once ("categorize_list.php");
 include_once ('tiki-section_options.php');
 ask_ticket('sheet');
 // Display the template
