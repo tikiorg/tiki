@@ -7677,6 +7677,15 @@ class TikiLib extends TikiDb_Bridge
 	function get_short_datetime($timestamp, $user = false) {
 		return $this->date_format($this->get_short_datetime_format(), $timestamp, $user);
 	}
+	
+	function format_sql_date($sqlstamp) {
+		global $user, $tikilib;
+		$tz = $tikilib->get_display_timezone($user);
+		$unixstamp = strtotime($sqlstamp . $tz);
+		$format = $tikilib->get_short_date_format();
+		$date = strftime($format, $unixstamp);
+		return $date;
+	}
 
 	/**
 		Per http://www.w3.org/TR/NOTE-datetime
