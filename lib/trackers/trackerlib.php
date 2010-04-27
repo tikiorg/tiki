@@ -1935,6 +1935,7 @@ class TrackerLib extends TikiLib
 				$str .= '"'.$field['name'].' -- '.$field['fieldId'].'",';
 			}
 		}
+		echo $str;
 		
 		// prepare queries
 		$mid = ' WHERE tti.`trackerId` = ? ';
