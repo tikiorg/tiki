@@ -23,7 +23,7 @@ body {
 /*#fixedwidth*/
 
 #fixedwidth {
-	width: auto;
+	width: auto !important;
 }
 
 #header,
