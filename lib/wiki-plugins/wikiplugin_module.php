@@ -113,6 +113,7 @@ function wikiplugin_module($data, $params) {
 	$out = '';
 	
 	if (isset($params['inside_pretty']) && $params['inside_pretty'] == 'y') {
+		require_once("lib/trackers/trackerlib.php");
 		$trklib->replace_pretty_tracker_refs($params);
 	}
 	
