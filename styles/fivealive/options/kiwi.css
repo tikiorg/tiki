@@ -205,3 +205,23 @@ div.quotebody {
 div.dirsite {
 	background: #f5f6c1;
 }
+
+/* cluptip tooltips */
+
+.cluetip-default {
+	background: #F8F9D5;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #F8F9D5;
+}
+.cluetip-default h3#cluetip-title {
+	background: #B1AE2B;
+	color: #fff;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #F8F9D5;
+}
+  

@@ -21,6 +21,11 @@ body {
  /***** Layout *****/
 
 /*#fixedwidth*/
+
+#fixedwidth {
+	width: auto !important;
+}
+
 #header,
 #middle {
 	display: table;
@@ -267,7 +272,7 @@ span#genPass span.button a:visited {
 	line-height: 150%;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
-	-webkit-border-radius-topleft: 4px;
+	-webkit-border-radius: 4px;
 }
 
 span.button a:hover,
@@ -428,10 +433,10 @@ div#sitelogo img {
 #siteloginbar_popup .tabmark {
 	border: 1px solid #696969;
 	border-bottom: 0;
-	border-radius-topleft: 5px;
-	border-radius-topright: 5px;
-	-webkit-border-radius-topleft: 5px;
-	-webkit-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
 	-moz-border-radius-topleft: 5px;
 	-moz-border-radius-topright: 5px;
 }
@@ -718,8 +723,8 @@ fieldset.admin label,
 	color: #fff;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
-	-webkit-border-radius-topleft: 4px;
-	-webkit-border-radius-topright: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
 	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-topright: 4px;
 }
@@ -961,6 +966,28 @@ a.qt-inline {
 	color: ;
 }*/
 /***** New (unsorted) *****/
+
+/* cluptip tooltips */
+
+.cluetip-default {
+	background: #CBF4FA;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #CBF4FA;
+}
+.cluetip-default h3#cluetip-title {
+	background: #006891;
+	color: #fff;
+	font-weight: bold;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #CBF4FA;
+}
+  
+
 
 /***** End New (unsorted) *****/
 

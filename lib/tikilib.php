@@ -8207,17 +8207,26 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	
-	function get_snippet($data, $is_html='n', $highlight='', $length=240) {
+	function get_snippet($data, $is_html='n', $highlight='', $length=240, $start='', $end='') {
 		global $prefs;
 		if ($prefs['search_parsed_snippet'] == 'y') {
 			$_REQUEST['redirectpage'] = 'y'; //do not interpret redirect
 			$data = $this->parse_data($data, array('is_html' => $is_html, 'stripplugins' => true, 'parsetoc' => true));
 			$data = strip_tags($data, '<b><i><em><strong><pre><code>');
 		}
-		if (function_exists('mb_substr')) 
-			return mb_substr($data, 0, $length);
-		else
-			return substr($data, 0, $length);
+		if ($length > 0) {
+			if (function_exists('mb_substr')) 
+				return mb_substr($data, 0, $length);
+			else
+				return substr($data, 0, $length);
+		}
+		if (!empty($start) && ($i = strpos($data, $start))) {
+			$data = substr($data, $i+strlen($start));
+		}
+		if (!empty($end) && ($i = strpos($data, $end))) {
+			$data = substr($data, 0, $i);
+		}
+		return $data;
 	}
 
 	static function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
