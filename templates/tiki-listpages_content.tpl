@@ -181,6 +181,9 @@
 						{$listpages[changes].description|truncate:$prefs.wiki_list_description_len:"...":true}
 					</div>
 				{/if}
+				{if !empty($listpages[changes].snippet)}
+					<div class="subcomment">{$listpages[changes].snippet}</div>
+				{/if}
 			</td>
 		{/if}
 

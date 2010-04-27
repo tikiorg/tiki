@@ -96,6 +96,21 @@ function wikiplugin_listpages_info() {
 				'name' => tra('Sort'),
 				'description' => 'lastModif_desc'.tra('or').'pageName_asc',
 			),
+			'start' => array(
+				'required' => false,
+				'name' => tra('Start'),
+				'description' => tra('When only a portion of the page should be included, specify the marker from which inclusion should start.'),
+			),
+			'end' => array(
+				'required' => false,
+				'name' => tra('Stop'),
+				'description' => tra('When only a portion of the page should be included, specify the marker at which inclusion should end.'),
+			),
+			'length' => array(
+				'required' => false,
+				'name' => tra('Length'),
+				'description' => tra('Number of characters to display'),
+			),
 		),
 	);
 }
@@ -115,9 +130,10 @@ function wikiplugin_listpages($data, $params) {
 	if ( $feature_wiki != 'y' || $feature_listPages != 'y' || $tiki_p_view != 'y') {
 		// the feature is disabled or the user can't read wiki pages
 		return '';
-	} 
+	}
+	$default = array('offset'=>0, 'max'=>-1, 'sort'=>'pageName_asc', 'find'=>'', 'start'=>'', 'end'=>'', 'length'=>-1, 'translations'=>null);
+	$params = array_merge($default, $params);
 	extract($params,EXTR_SKIP);
-	if( !isset($translations) ) $translations = null;
 	$filter = array();
 	if (!isset($initial)) {
 		if (isset($_REQUEST['initial'])) {
@@ -149,24 +165,11 @@ function wikiplugin_listpages($data, $params) {
 	} elseif (is_array($translations)) {
 		$lang = $filter['lang'] = reset($translations);
 	}
-	if (!isset($offset)) {
-		$offset = 0;
-	}
-	if (!isset($max)) {
-		$max = -1;
-	}
-	if (!isset($sort)) {
-		$sort = 'pageName_asc';
-	}
-	if (!isset($find)) {
-		$find = '';
-	}
 	$exact_match = ( isset($exact_match) && $exact_match == 'y' );
 	$only_name = ( isset($showNameOnly) && $showNameOnly == 'y' );
 	$only_orphan_pages = ( isset($only_orphan_pages) && $only_orphan_pages == 'y' );
 	$for_list_pages = ( isset($for_list_pages) && $for_list_pages == 'y' );
 	$only_cant = false;
-
 	$listpages = $tikilib->list_pages($offset, $max, $sort, $find, $initial, $exact_match, $only_name, $for_list_pages, $only_orphan_pages, $filter, $only_cant);
 
 	if ( is_array( $translations ) ) {
@@ -191,6 +194,11 @@ function wikiplugin_listpages($data, $params) {
 	if (isset($showNameOnly) && $showNameOnly == 'y') {
 		$ret = $smarty->fetch('wiki-plugins/wikiplugin_listpagenames.tpl');
 	} else {
+		if (!empty($start) || !empty($end) || $length > 0) {
+			foreach ($listpages['data'] as $i=>$page) {
+				$listpages['data'][$i]['snippet'] = $tikilib->get_snippet($page['data'], $page['is_html'], '', $length, $start, $end);
+			}
+		}
 		$ret = $smarty->fetch('tiki-listpages_content.tpl');
 	}
 
