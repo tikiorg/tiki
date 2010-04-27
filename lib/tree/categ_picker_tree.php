@@ -89,17 +89,17 @@ class CatPickerTreeMaker extends TreeMaker
 
 	//
 	function node_data_start_code($nodeinfo) {
-		return '<!-- START_NODE_DATA -->';
+		return '';
 	}
 
 	//
 	function node_data_end_code($nodeinfo) {
-		return '<!-- END_NODE_DATA -->'."\n";
+		return "\n";
 	}
 
 	//
 	function node_child_start_code($nodeinfo) {
-		return '<ul class="tree" id="' . $this->itemID . '" >';
+		return '<ul class="tree" id="' . $this->itemID . '">';
 	}
 
 	//
