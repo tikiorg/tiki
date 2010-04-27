@@ -1598,9 +1598,11 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 			$targetCategories = $this->get_object_categories( $objType, $objId, -1, false );
 
 			if( $objType == 'wiki page' ) {
-				$translations = $multilinguallib->getTranslations( $objType, $this->get_page_id_from_name( $objId ) );
+				$translations = $multilinguallib->getTranslations( $objType, $this->get_page_id_from_name( $objId ), $objId );
+				$objectIdKey = 'objName';
 			} else {
 				$translations = $multilinguallib->getTranslations( $objType, $objId );
+				$objectIdKey = 'objId';
 			}
 			
 			$subset = $prefs['category_i18n_synced'];
@@ -1609,17 +1611,19 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 			}
 
 			foreach( $translations as $tr ) {
-				$manip = new Category_Manipulator( $objType, $tr['objName'] );
-				$manip->setNewCategories( $targetCategories );
-				$manip->overrideChecks();
-
-				if( $prefs['category_i18n_sync'] == 'whitelist' ) {
-					$manip->setManagedCategories( $subset );
-				} elseif( $prefs['category_i18n_sync'] == 'blacklist' ) {
-					$manip->setUnmanagedCategories( $subset );
+				if (!empty($tr[$objectIdKey]) && $tr[$objectIdKey] != $objId) {
+					$manip = new Category_Manipulator( $objType, $tr[$objectIdKey] );
+					$manip->setNewCategories( $targetCategories );
+					$manip->overrideChecks();
+	
+					if( $prefs['category_i18n_sync'] == 'whitelist' ) {
+						$manip->setManagedCategories( $subset );
+					} elseif( $prefs['category_i18n_sync'] == 'blacklist' ) {
+						$manip->setUnmanagedCategories( $subset );
+					}
+	
+					$this->applyManipulator( $manip, $objType, $tr[$objectIdKey] );
 				}
-
-				$this->applyManipulator( $manip, $objType, $tr['objName'] );
 			}
 		}
 
