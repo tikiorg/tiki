@@ -21,6 +21,11 @@ body {
  /***** Layout *****/
 
 /*#fixedwidth*/
+
+#fixedwidth {
+	width: auto;
+}
+
 #header,
 #middle {
 	display: table;
