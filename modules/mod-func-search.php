@@ -71,7 +71,7 @@ function module_search_info() {
 				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . ' ' . tra('Search')
 			),
 			'go_action' => array(
-				'name' => 'Edit Form Action',
+				'name' => 'Go Form Action',
 				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . " " . tra('Default:') . ' tiki-editpage.php'
 			),
 			'go_submit' => array(
@@ -131,6 +131,8 @@ function module_search( $mod_reference, & $module_params ) {	// modifies $module
 	} else if ($prefs['feature_search_fulltext'] == 'n' && $module_params['tiki_search'] != 'y') {
 		$module_params['tiki_search'] = 'y';
 	}
+	
+	if ($module_params['go_action'] == 'ti') { unset($module_params['go_action']); }	// temporary fix for 5.0 in case params were truncated in the db
 	
 	// set up other param defaults
 	$defaults = array(
