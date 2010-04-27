@@ -14,7 +14,6 @@
 								<div class="tabcontent">{$user|userlink} | <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a></div>
 							</li>
 						</ul>
-					</li>					
 				{else}
 					<li class="login_link tabmark" id="login_link"><a href="tiki-login.php" class="login_link"><span>{tr}Log in{/tr}</span></a>
 				{/if}
