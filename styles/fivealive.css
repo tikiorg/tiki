@@ -385,6 +385,8 @@ select {
 
 #sitesearchbar form input[type="text"] {
 	width: 150px;
+	font-size:18px;
+	height:22px;
 }
 
 #sitesearchbar form input[type="submit"] {
