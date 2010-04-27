@@ -8415,7 +8415,7 @@ JS;
 	function isValidIP($ip, $ver = 4) {
 		$result = false;
 	
-		$octets = explode("\.", $ip);
+		$octets = explode('.', $ip);
 		if (count($octets) == 4) {
 			for ($c = 0; $c < 4; $c++) {
 				if ($octets[$c] < 0 || $octets[$c] > 255) {
