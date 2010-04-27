@@ -122,7 +122,7 @@ setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false
 		}
 		$ret = '<div class="tiki_sheet">' . $ret . '</div>';
 		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
-			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&readdate=" . time() . "&parse=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
+			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&parse=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
 		}
 	} else {
 		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
