@@ -1009,6 +1009,7 @@ td.mods_update {
 .cluetip-default h3#cluetip-title {
 	background: #1b3a50;
 	color: #fff;
+	font-weight: bold;
 }
 
 .cluetip-default #cluetip-title a {

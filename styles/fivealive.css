@@ -967,6 +967,28 @@ a.qt-inline {
 }*/
 /***** New (unsorted) *****/
 
+/* cluptip tooltips */
+
+.cluetip-default {
+	background: #CBF4FA;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #CBF4FA;
+}
+.cluetip-default h3#cluetip-title {
+	background: #006891;
+	color: #fff;
+	font-weight: bold;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #CBF4FA;
+}
+  
+
+
 /***** End New (unsorted) *****/
 
 /* End of File */
