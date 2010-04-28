@@ -3662,6 +3662,10 @@ class TrackerLib extends TikiLib
 		$fields[$refFieldId]['http_request'][7] .= $fields[$refFieldId]['value'];
 		$fields[$refFieldId]['http_request'][8] .= ($fields[$refFieldId]['http_request'][8] ? "," : "") . $field['value'];
 	}
+	function test_field_type($fields, $types) {
+		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($fields),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
+		return $this->getOne($query, array_merge($fields, $types));
+	}
 
 }
 
