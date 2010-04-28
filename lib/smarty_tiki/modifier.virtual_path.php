@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: modifier.tr_if.php 25310 2010-02-17 15:04:56Z sept_7 $
+// $Id$
 
 // Translate only if feature_multilingual is on
 
