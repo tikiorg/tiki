@@ -23,6 +23,36 @@
 function wikiplugin_scroll_help() {
 	return tra("Scroll").":<br />~np~{SCROLL(width=> height=> speed=>)}".tra("text")."{SCROLL}~/np~";
 }
+function wikiplugin_scroll_info() {
+	return array(
+		'name' => tra('Scroll'),
+		'documentation' => 'PluginScroll',
+		'description' => tra(''),
+		'prefs' => array('wikiplugin_scroll'),
+		'body' => tra('text'),
+		'params' => array(
+			'width' => array(
+				'required' => true,
+				'name' => tra('Width'),
+				'description' => tra('Width'),
+				'filter' => 'striptags',
+			),
+			'height' => array(
+				'required' => true,
+				'name' => tra('Height'),
+				'description' => tra('Height'),
+				'filter' => 'striptags',
+			),
+			'speed' => array(
+				'required' => false,
+				'name' => tra('Speed'),
+				'description' => tra('Speed'),
+				'filter' => 'int',
+			),
+		)
+	);
+}
+
 function wikiplugin_scroll($data, $params) {
 	extract ($params, EXTR_SKIP);
 //minimum parameters
