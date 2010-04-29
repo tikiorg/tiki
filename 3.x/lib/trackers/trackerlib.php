@@ -1763,7 +1763,7 @@ class TrackerLib extends TikiLib {
 						.' INNER JOIN `tiki_tracker_fields` ttf ON ttf.`fieldId` = ttif.`fieldId`'
 						.')'
 						.$mid
-						.' ORDER BY tti.`itemId` ASC, ttif.`fieldId` ASC';
+						.' ORDER BY tti.`itemId` ASC, ttf.`position` ASC';
 		$base_tables = '('
 			.' `tiki_tracker_items` tti'
 			.' INNER JOIN `tiki_tracker_item_fields` ttif ON tti.`itemId` = ttif.`itemId`'
