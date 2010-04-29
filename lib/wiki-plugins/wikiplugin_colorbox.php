@@ -51,13 +51,20 @@ function wikiplugin_colorbox_info() {
 				'filter' => 'alpha',
 				'default' => 'n',
 			),
+			'showallthumbs' => array(
+				'required' => false,
+				'name' => tra('Show all thumbs'),
+				'description' => 'y|n '. tra('Show all thumbs'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
 		),
 	);
 }
 function wikiplugin_colorbox($data, $params) {
 	global $tikilib, $smarty, $user, $prefs;
 	static $iColorbox;
-	$default = array('showfilename' => 'n', 'showtitle'=>'n', 'thumb'=>'y');
+	$default = array('showfilename' => 'n', 'showtitle'=>'n', 'thumb'=>'y', 'showallthumbs'=>'n');
 	$params = array_merge($default, $params);
 
 	if (!empty($params['fgalId'])) {
@@ -73,6 +80,8 @@ function wikiplugin_colorbox($data, $params) {
 		$smarty->assign('colorboxColumn', 'id');
 		if ($params['thumb'] != 'n') {
 			$smarty->assign('colorboxThumb', 'thumbnail');
+		} else {
+			$smarty->assign('colorboxThumb', 'display');
 		}
 	} elseif (!empty($params['galId'])) {
 		if ($prefs['feature_galleries'] != 'y') {
