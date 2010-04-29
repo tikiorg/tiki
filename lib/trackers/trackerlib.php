@@ -3200,9 +3200,9 @@ class TrackerLib extends TikiLib
 		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
 		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	}
-	function move_up_last_fields($trackerId, $position, $delta=1) {
-		$query = 'update `tiki_tracker_fields`set `position`= `position`+ ? where `trackerId` = ? and `position` >= ?';
-		$result = $this->query( $query, array((int)$delta, (int)$trackerId, (int)$position) );
+	function move_up_last_fields($trackerId, $fieldId, $delta=1) {
+		$query = 'update `tiki_tracker_fields`set `position`= `position`+ ? where `trackerId` = ? and `fieldId` = ?';
+		$result = $this->query( $query, array((int)$delta, (int)$trackerId, (int)$fieldId) );
 	}
 	/* list all the values of a field
 	 */

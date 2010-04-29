@@ -81,7 +81,7 @@ if ($_REQUEST["fieldId"]) {
 }
 if (isset($_REQUEST['up']) && $_REQUEST['fieldId']) {
 	if (empty($_REQUEST['delta'])) $_REQUEST['delta'] = 1;
-	$trklib->move_up_last_fields($_REQUEST['trackerId'], $info['position'], $_REQUEST['delta']);
+	$trklib->move_up_last_fields($_REQUEST['trackerId'], $_REQUEST["fieldId"], $_REQUEST['delta']);
 	$info['position']+= $_REQUEST['delta'];
 }
 $smarty->assign('name', $info["name"]);

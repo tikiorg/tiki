@@ -76,8 +76,9 @@
 </td>
 <td>{$channels[user].description|truncate:14|escape}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
+{self_link trackerId=$trackerId fieldId=$channels[user].fieldId up=1 delta=-1}{icon _id='resultset_up'}{/self_link}
+{self_link trackerId=$trackerId fieldId=$channels[user].fieldId up=1}{icon _id='resultset_down'}{/self_link}
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> 
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}">{icon _id='resultset_down'}</a>
 <input type="checkbox" name="action[]" value='{$channels[user].fieldId}' />
 {/if}</td>
 </tr>
