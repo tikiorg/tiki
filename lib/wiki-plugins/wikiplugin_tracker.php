@@ -428,11 +428,13 @@ function wikiplugin_tracker($data, $params)
 						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
 					} else {
 						$flds['data'][$cpt]['value'] = '';
-						if ($fl['type'] == 'c') {
-							$_REQUEST['track'][$fl['fieldId']] = 'n';
-						} elseif ($fl['type'] == 'R' && $fl['isMandatory'] == 'y') {
-							// if none radio is selected, there will be no value and no error if mandatory
-							$_REQUEST['track'][$fl['fieldId']] = '';
+						if (empty($itemId)) {
+							if ($fl['type'] == 'c') {
+								$_REQUEST['track'][$fl['fieldId']] = 'n';
+							} elseif ($fl['type'] == 'R' && $fl['isMandatory'] == 'y') {
+								// if none radio is selected, there will be no value and no error if mandatory
+								$_REQUEST['track'][$fl['fieldId']] = '';
+							}
 						}
 					}
 					if (!empty($_REQUEST['other_track'][$fl['fieldId']])) {
