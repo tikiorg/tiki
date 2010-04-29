@@ -971,23 +971,6 @@ class TrackerLib extends TikiLib
 			case 'a':
 				$fopt['pvalue'] = $this->parse_data(trim($fopt['value']));
 				break;
-			case 'C':
-				$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $fopt['options']);
-				eval('$computed = '.$calc.';');
-				$fopt['value'] = $computed;
-				$fil[$fieldId] = $computed;
-				preg_match('/#([0-9]+)/', $fopt['options'], $matches);
-				foreach ($matches as $k=>$match) {
-					if (!$k) continue;
-					if ($listfields[$match]['type'] == 'f' || $listfields[$match]['type'] == 'j') {
-						if (!$fil[$match])
-							$fopt['value'] = '';
-						$fopt['computedtype'] = 'f';
-						$fopt['options_array'] = $listfields[$match]['options_array'];
-						break;
-					}
-				}
-				break;
 			case 's':
 			case '*':
 				$this->update_star_field($trackerId, $itemId, $fopt);
