@@ -28,6 +28,7 @@ function wikiplugin_colorbox_info() {
 				'required' => false,
 				'name' => tra('Thumb'),
 				'description' => tra('The image in the page is displayed or not in mode thumb:'). 'y|n',
+				'default' => 'y',
 				'filter' => 'alpha'
 			),
 			'sort_mode' => array(
@@ -56,7 +57,7 @@ function wikiplugin_colorbox_info() {
 function wikiplugin_colorbox($data, $params) {
 	global $tikilib, $smarty, $user, $prefs;
 	static $iColorbox;
-	$default = array('showfilename' => 'n', 'showtitle'=>'n');
+	$default = array('showfilename' => 'n', 'showtitle'=>'n', 'thumb'=>'y');
 	$params = array_merge($default, $params);
 
 	if (!empty($params['fgalId'])) {
