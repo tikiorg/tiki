@@ -1082,6 +1082,7 @@ function prefs_feature_list() {
 			'description' => tra('Use to inclue custom <meta> or <link> tags.'),
 			'type' => 'textarea',
 			'size' => '6',
+			'filter' => 'rawhtml_unsafe',
 		),
 		'feature_sitemycode' => array(
 			'name' => tra('Custom Site Header'),
