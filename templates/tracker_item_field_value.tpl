@@ -106,6 +106,8 @@
 			{$field_value.value|username:true:true:false|truncate:255:"..."|escape|default:"&nbsp;"}
 		{elseif !empty($field_value.value) || $is_link eq 'y'}			
 			{$field_value.value|truncate:255:"..."|escape|default:"&nbsp;"}
+		{elseif empty($field_value.value) && ($field_value.type eq 'n' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f'))}
+			{$field_value.value}
 		{/if}		
 	{elseif $list_mode eq 'csv'}
 		{$field_value.value}

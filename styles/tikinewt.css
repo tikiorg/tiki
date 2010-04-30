@@ -1,20 +1,9 @@
 /* Tikinewt theme stylesheet (tikinewt.css);
  (imports lite.css, layout.css and design.css) 
 
-	Theme CSS is comprised of these sections:
-	XHTML elements, Siteheader & Identity; Menus, Links;
-	Misc. Center Col.; Misc. Global; Boxes; Tables, Tabs;
-	Wiki (inc. plugins, etc.); Articles; Blogs; Forums;
-	Galleries; Trackers; Categories, Tags; Polls; FAQs;
-	Quizzes; Shoutbox; Directory; Messages; TikiSheets;
-	Calendar; Admin; and Ajax, jquery, etc. */
-/* Import layout foundation CSS file. */
+/* Import layout and default styles: */
 @import url("lite/lite.css");
-
-/* Then import the default layout properties file: */
 @import url("layout/layout.css");
-
-/* And design defaults: */
 @import url("layout/design.css");
  
 /***** XHTML Elements (body tag here,
@@ -351,6 +340,19 @@ div#sitelogo {
 
 #siteloginbar div {
 	text-align: right;
+}
+
+#siteloginbar_popup {
+	bottom: 4px;
+}
+
+#siteloginbar_popup li.login_link {
+	border: 1px solid #8cacbb;
+	padding: 0;
+}
+
+#siteloginbar_popup .cssmenu_horiz li ul {
+	margin-top: -4px;
 }
 
 #tiki-top {

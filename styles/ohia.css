@@ -212,6 +212,10 @@ div#sitead {margin: auto}
 #siteloginbar a,
 #siteloginbar a:visited {color: #f4f4f4}
 
+#siteloginbar_popup {
+	bottom: 9px;
+}
+
 #sitelocbar {float: left}
 #customcodewith_ad {width: 400px}
 
@@ -475,6 +479,10 @@ img.flipmodimage:hover {
 	background: #5e0000;
 	border-color: #990000;
 	color: #fff}
+	
+.rbox-title {
+	border-bottom: none;
+}
 	
 div.simplebox {
 	background: #030511;

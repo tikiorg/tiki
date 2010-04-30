@@ -700,15 +700,21 @@ span.toolbar-list {
 
 .toolbars-picker {
 	position: absolute;
-	width: 300px;
+	width: 288px;
 	z-index: 300;
 	background-color: #fff;
 	color: #000;
+	line-height: 12px;
 }
 
 .toolbars-picker a {
-	padding: 4px 2px;
+	padding: 0;
 	display: inline-block;
+	border: #fff 1px solid;
+}
+
+.toolbars-picker a:hover {
+	border: #f00 1px solid;
 }
 
 .fckeditzone {

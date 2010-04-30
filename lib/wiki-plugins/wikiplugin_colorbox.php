@@ -28,6 +28,7 @@ function wikiplugin_colorbox_info() {
 				'required' => false,
 				'name' => tra('Thumb'),
 				'description' => tra('The image in the page is displayed or not in mode thumb:'). 'y|n',
+				'default' => 'y',
 				'filter' => 'alpha'
 			),
 			'sort_mode' => array(
@@ -36,12 +37,36 @@ function wikiplugin_colorbox_info() {
 				'description' => tra('Sort Mode'),
 				'filter' => 'word'
 			),
+			'showtitle' => array(
+				'required' => false,
+				'name' => tra('Show file title'),
+				'description' => 'y|n '. tra('Show file title'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
+			'showfilename' => array(
+				'required' => false,
+				'name' => tra('Show file name'),
+				'description' => 'y|n '. tra('Show file name'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
+			'showallthumbs' => array(
+				'required' => false,
+				'name' => tra('Show all thumbs'),
+				'description' => 'y|n '. tra('Show all thumbs'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
 		),
 	);
 }
 function wikiplugin_colorbox($data, $params) {
 	global $tikilib, $smarty, $user, $prefs;
 	static $iColorbox;
+	$default = array('showfilename' => 'n', 'showtitle'=>'n', 'thumb'=>'y', 'showallthumbs'=>'n');
+	$params = array_merge($default, $params);
+
 	if (!empty($params['fgalId'])) {
 		if ($prefs['feature_file_galleries'] != 'y') {
 			return tra('This feature is disabled') . ': feature_file_galleries';
@@ -55,6 +80,8 @@ function wikiplugin_colorbox($data, $params) {
 		$smarty->assign('colorboxColumn', 'id');
 		if ($params['thumb'] != 'n') {
 			$smarty->assign('colorboxThumb', 'thumbnail');
+		} else {
+			$smarty->assign('colorboxThumb', 'display');
 		}
 	} elseif (!empty($params['galId'])) {
 		if ($prefs['feature_galleries'] != 'y') {
@@ -76,6 +103,7 @@ function wikiplugin_colorbox($data, $params) {
 	}
 	$smarty->assign('iColorbox', $iColorbox++);
 	$smarty->assign_by_ref('colorboxFiles', $files);
+	$smarty->assign_by_ref('params', $params);
 	return $smarty->fetch('wiki-plugins/wikiplugin_colobox.tpl');
 }
 /* 

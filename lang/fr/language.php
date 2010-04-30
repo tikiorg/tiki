@@ -9481,7 +9481,7 @@ $lang=Array(
 "Default size" => "Taille par défaut",
 "External links will be identified with" => "Les liens externes seront identifiés par",
 "About plugins" => "A propos des plugins",
-"About plugin aliases" => "A propos du \"plugin aliases\"",
+"About plugin aliases" => "A propos du 'plugin aliases'",
 "This page is designed to work with JQuery {icon _id=\"arrow_right\" href=\"tiki-admin.php?page=features\"}" => "Cette page a été conçue pour fonctionner avec JQuery {icon _id=\"arrow_right\" href=\"tiki-admin.php?page=features\"}",
 "General Information" => "Informations générales",
 "Plugin Name" => "Nom du plugin",

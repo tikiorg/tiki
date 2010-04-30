@@ -346,10 +346,22 @@ function wikiplugin_trackerlist($data, $params) {
 		} else {
 			$listfields = '';
 		}
-		if (!empty($filterfield)) {
-			$listfields = array_unique(array_merge($listfields, $filterfield));
+		if (!empty($compute) && !empty($listfields)) {
+			if (preg_match_all('/[0-9.]+/', $compute, $matches)) {
+				foreach ($matches[0] as $f) {
+					if (!in_array($f, $listfields))
+						$listfields[] = $f;
+				}
+			}
 		}
-		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $listfields);
+		$limit = $listfields;
+		if (!empty($filterfield) && !empty($limit)) {
+			$limit = array_unique(array_merge($limit, $filterfield));
+		}
+		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
+			$limit = '';
+		}
+		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $limit);
 
 		if (!empty($filterfield)) {
 			if (is_array($filterfield)) {
@@ -886,7 +898,7 @@ function wikiplugin_trackerlist($data, $params) {
 					eval('$value='.implode('+', $l).';');
 					if ($oper == 'avg')
 						$value = round($value / count($l));
-					$computedFields[$fieldId][] = array_merge(array('operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
+					$computedFields[$fieldId][] = array_merge(array('computedtype' => 'n', 'operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
 				}
 				$smarty->assign_by_ref('computedFields', $computedFields);
 			} else {

@@ -979,23 +979,6 @@ class TrackerLib extends TikiLib
 			case 'a':
 				$fopt['pvalue'] = $this->parse_data(trim($fopt['value']));
 				break;
-			case 'C':
-				$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $fopt['options']);
-				eval('$computed = '.$calc.';');
-				$fopt['value'] = $computed;
-				$fil[$fieldId] = $computed;
-				preg_match('/#([0-9]+)/', $fopt['options'], $matches);
-				foreach ($matches as $k=>$match) {
-					if (!$k) continue;
-					if ($listfields[$match]['type'] == 'f' || $listfields[$match]['type'] == 'j') {
-						if (!$fil[$match])
-							$fopt['value'] = '';
-						$fopt['computedtype'] = 'f';
-						$fopt['options_array'] = $listfields[$match]['options_array'];
-						break;
-					}
-				}
-				break;
 			case 's':
 			case '*':
 				$this->update_star_field($trackerId, $itemId, $fopt);
@@ -1989,7 +1972,7 @@ class TrackerLib extends TikiLib
 						.' INNER JOIN `tiki_tracker_fields` ttf ON ttf.`fieldId` = ttif.`fieldId`'
 						.')'
 						.$mid
-						.' ORDER BY tti.`itemId` ASC, ttif.`fieldId` ASC';
+						.' ORDER BY tti.`itemId` ASC, ttf.`position` ASC';
 		$base_tables = '('
 			.' `tiki_tracker_items` tti'
 			.' INNER JOIN `tiki_tracker_item_fields` ttif ON tti.`itemId` = ttif.`itemId`'
@@ -3254,9 +3237,9 @@ class TrackerLib extends TikiLib
 		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
 		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	}
-	function move_up_last_fields($trackerId, $position, $delta=1) {
-		$query = 'update `tiki_tracker_fields`set `position`= `position`+ ? where `trackerId` = ? and `position` >= ?';
-		$result = $this->query( $query, array((int)$delta, (int)$trackerId, (int)$position) );
+	function move_up_last_fields($trackerId, $fieldId, $delta=1) {
+		$query = 'update `tiki_tracker_fields`set `position`= `position`+ ? where `trackerId` = ? and `fieldId` = ?';
+		$result = $this->query( $query, array((int)$delta, (int)$trackerId, (int)$fieldId) );
 	}
 	/* list all the values of a field
 	 */
@@ -3752,6 +3735,10 @@ class TrackerLib extends TikiLib
 	function remove_item_log($itemId) {
 		$query = 'delete from `tiki_tracker_item_field_logs` where `itemId`=?';
 		$this->query($query, $itemId); 
+	}
+	function test_field_type($fields, $types) {
+		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($fields),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
+		return $this->getOne($query, array_merge($fields, $types));
 	}
 
 }

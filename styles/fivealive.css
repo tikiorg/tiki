@@ -22,8 +22,8 @@ body {
 
 /*#fixedwidth*/
 
-#fixedwidth {
-	width: auto !important;
+body.fixed_width #fixedwidth {
+	width: 100%;
 }
 
 #header,
@@ -92,6 +92,7 @@ body {
 	color: #696969;
 	padding: 1px 0 2px 0;
 	text-align: center;
+	width: 100%;
 }
 
 .footerbgtrap {
