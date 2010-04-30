@@ -81,15 +81,17 @@ tr#midrow {background: #fff}
 
 
 #footer {
-	background: #fff url(eatlon/bottom_bg.png) no-repeat right;
-	height: 163px}
+	background: #fff url(eatlon/bottom_bg.png) no-repeat 100% 100%;
+	min-height: 163px}
 
 #footer .content {
-	background: url(eatlon/bottom_bg.png) no-repeat left;
-	height: 163px;
+	background: url(eatlon/bottom_bg.png) no-repeat 0 100%;
+	min-height: 163px;
  	text-align: center;
  	font-size: .9em;
-	margin-right: 50px}
+	margin-right: 50px;
+	padding-bottom: 30px;
+}
 
 /***** XHTML Elements (other than body tag) ******/
 a,
@@ -242,6 +244,15 @@ input[id="sl-login-user"],
 input[id="sl-login-pass"] {background: #e1e1e2}
 
 #siteloginbar input.wikiaction {cursor: pointer}
+
+#siteloginbar_popup {
+	bottom: 2px;
+}
+
+#siteloginbar_popup .tabcontent a,
+#siteloginbar_popup .tabcontent a:visited {
+	color: #6d819d;
+}
 
 #sitetitle,
 #sitesubtitle {margin-left: 30px}
@@ -590,24 +601,48 @@ td.form,
 * body th {font-size: 12px}
 
 /** Tabs **/
+/* reset what's in layout.css */
+
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
 .tabs {
-	margin: 10px 1px -20px 0 !important;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	position: relative;
+	padding: .2em .2em 0;
+	margin:0 0.2em 1px 0;
 	border-bottom: 1px solid #ccc}
+	
+.tabs br {
+	display: none;
+}
+
+.tabs span {
+	display: block;
+	float: left;
+}
 
 .tabmark {
+	list-style-image: none;
+	float: left;
 	background: #afafaf url(eatlon/menu_bg.png) 1000px -15px;
-	color: #fff}
+	color: #fff;
+	border-bottom-width: 0 !important;
+	margin: 0 .2em -1px 0;}
 
 .tabmark a {
 	border-top: 1px solid #f3f3f4;
 	border-left: 1px solid #f3f3f4;
 	border-right: 1px solid #878689;
-	/*border-bottom: 1px solid #878689;*/
 	color: #fff}
 
-.tabmark a:active {
+/*.tabmark a:active {
 	background: url(eatlon/menu_bg.png) 1000px -15px;
-	color: red}
+	color: red}*/
 
 .tabmark a:hover {
 	background: url(eatlon/menu_bg.png) 1000px 0;
@@ -620,8 +655,9 @@ td.form,
 	border-right: 1px solid #696969;
 	border-bottom: 1px solid #696969;
 	background: #ECECEC;
-	padding: 26px 2px 2px 2px;
-	margin-bottom: 25px}
+	color: #8f8f8f;
+	padding: 2px;
+}
 
 form fieldset.tabcontent {
 	border: 1px solid #225566;

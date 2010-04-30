@@ -1,16 +1,11 @@
 /* $Id$
 	Business theme stylesheet (business.css) for Tikiwiki CMS/Groupware,
-	based on the original by Eatlon.com (http://eatlon.com/work/business/), 
-	and released under the GPL license.
+	based on the original by Eatlon.com (http://eatlon.com/work/business/).
 	Visit http://themes.tikiwiki.org for more information.
 
-/* Import basic layout file: */
+/* Import basic layout files: */
 @import url("lite/lite.css");
-
-/* Then import the default layout properties file: */
 @import url("layout/layout.css");
-
-/* And design defaults: */
 @import url("layout/design.css");
 
 /***** XHTML Elements (body tag here, others follow Layout) *****/
@@ -247,7 +242,7 @@ hr {
 	margin: 0;
 	margin-top: -10px;
 	margin-right: 0 !important;
-	background: url(business/magnify.gif) no-repeat 0 -1px;
+	background: url(business/magnify.png) no-repeat 0 -1px;
 	padding-left: 29px;
 	color: #fff;
 	position: relative;
@@ -276,14 +271,19 @@ hr {
 	right: 10px;
 }
 
+#siteloginbar_popup .tabmark {
+	background: none;
+	border: none;
+}
+
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
 /* default and topbar dropdown typography (colors) and padding */
 .cssmenu_horiz a,
 .cssmenu_vert a,
-#tiki-top .cssmenu_horiz li ul li a,
-#tiki-top .cssmenu_horiz li:hover ul li a {
+#header .cssmenu_horiz li ul li a,
+#header .cssmenu_horiz li:hover ul li a {
 	color: #0082e0;
 	background: #fff;
 	font-weight: normal;
@@ -293,16 +293,16 @@ hr {
 
 .cssmenu_horiz a:hover,
 .cssmenu_vert a:hover,
-#tiki-top .cssmenu_horiz li ul li a:hover {
+#header .cssmenu_horiz li ul li a:hover {
 	text-decoration: underline;
 	color: #0082e0;
 }
 
 /* default backgrounds */
-.cssmenu_horiz li,
+/*.cssmenu_horiz li,*/
 .cssmenu_vert li,
-#tiki-top .cssmenu_horiz li:hover ul li,
-#tiki-top .cssmenu_horiz li:hover ul li a {
+#header .cssmenu_horiz li:hover ul li,
+#header .cssmenu_horiz li:hover ul li a {
 	background: #fff;
 }
 
@@ -314,7 +314,7 @@ hr {
 	margin-left: 48px;
 }
 
-#tiki-top .cssmenu_horiz li a {
+#header .cssmenu_horiz li a {
 	text-decoration: none;
 	color: #fff;
 	font-size: 10px;
@@ -326,29 +326,29 @@ hr {
 	text-transform: uppercase;
 }
 
-#tiki-top .cssmenu_horiz li:hover a {
+#header .cssmenu_horiz li:hover a {
 	color: #fff;
 	background: url(business/nav_h.gif) repeat-x;
 	text-decoration: none;
 }
 
-#tiki-top .cssmenu_horiz li.menuSection a {
+#header .cssmenu_horiz li.menuSection a {
 	padding-right: 20px !important;
 }
 
-#tiki-top .cssmenu_horiz li ul li a {
+#header .cssmenu_horiz li ul li a {
 	border-left: 0;
 	border-right: 0;
 }
 
 /* top compensation for tiki-top padding */
-#tiki-top .cssmenu_horiz li ul,
-#tiki-top .cssmenu_horiz li.sfHover ul {
+#header .cssmenu_horiz li ul,
+#header .cssmenu_horiz li.sfHover ul {
 	margin-top: 12px;
 }
 
-#tiki-top .cssmenu_horiz li ul ul,
-#tiki-top .cssmenu_horiz li.sfHover ul ul,
+#header .cssmenu_horiz li ul ul,
+#header .cssmenu_horiz li.sfHover ul ul,
 .cssmenu_vert li ul ul {
 	margin-top: -1px;
 }
@@ -398,11 +398,11 @@ hr {
 }
 
 /* theme-specific arrows and arrow top padding */
-#tiki-top .cssmenu_horiz span.sf-sub-indicator {
+#header .cssmenu_horiz span.sf-sub-indicator {
 	top: 1.8em;
 }
 
-#tiki-top .cssmenu_horiz li ul li .sf-sub-indicator {
+#header .cssmenu_horiz li ul li .sf-sub-indicator {
 	top: .5em;
 	background: url(business/arrows-467aa7.png) no-repeat;
 }
