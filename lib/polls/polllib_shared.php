@@ -96,27 +96,17 @@ class PollLibShared extends TikiLib
 		return $retval;
   }
 
-	function poll_vote($user, $pollId, $optionId) {
-		global $smarty;
-		$previous_vote = $this->get_user_vote("poll$pollId",$user);
-		$poll = $this->get_poll($pollId);
-		if( $poll['active'] == 'x' )
-		{
-		    $smarty->assign('msg', tra("This poll is closed."));
-		    $smarty->display("error.tpl");
-		    die;
-		} else {
-		    if (!$previous_vote || $previous_vote == 0) {
+  function poll_vote($user, $pollId, $optionId, $previous_vote) {
+		if (!$previous_vote || $previous_vote == 0) {
 			$query = "update `tiki_polls` set `votes`=`votes`+1 where `pollId`=?";
 			$result = $this->query($query,array((int)$pollId));
 			$query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
 			$result = $this->query($query,array((int)$optionId));
-		    } elseif ($previous_vote != $optionId) {
+		} elseif ($previous_vote != $optionId) {
 			$query = "update `tiki_poll_options` set `votes`=`votes`-1 where `optionId`=?";
 			$result = $this->query($query,array((int)$previous_vote));
 			$query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
 			$result = $this->query($query,array((int)$optionId));
-		    }
 		}
 	}
 
