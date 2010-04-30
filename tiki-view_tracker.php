@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 
 $access->check_feature('feature_trackers');
 
-include_once ('lib/trackers/trackerlib.php');
+global $trklib; include_once ('lib/trackers/trackerlib.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
@@ -171,7 +171,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 	}
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
-	if (preg_match('/f_([0-9]+_/', $sort_mode, $matches)) {
+	if (preg_match('/f_([0-9]+)_/', $sort_mode, $matches)) {
 			$filterFields['fieldId'] = $matches[1];
 	}
 }

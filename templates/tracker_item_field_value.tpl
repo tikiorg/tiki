@@ -42,6 +42,9 @@
 {* ******************** field handling emptiness in a specific way  ******************** *}
 {* -------------------- category -------------------- *}
 {if $field_value.type eq 'e'}
+	{if !empty($field_value.value) and $history == 'y'} {*history*}
+		{$field_value.value|escape}
+	{/if}
 	{foreach from=$field_value.categs item=categ name=fcategs}
 		{$categ.name|tr_if}
 		{if !$smarty.foreach.fcategs.last}<br />{/if}

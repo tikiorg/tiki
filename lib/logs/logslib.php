@@ -108,6 +108,27 @@ class LogsLib extends TikiLib
 	 * type = 'wiki page', 'category', 'article', 'image gallery', 'tracker', 'forum thread'
 	 * TODO: merge $param and $contributions together into a hash and but everything in actionlog_params
 	*/
+	function object_must_be_logged($action, $object, $objectType) {
+		global $prefs;
+		if ($objectType == 'wiki page' && $action != 'Viewed') {
+			$logObject = true; // to have the tiki_my_edit, history and mod-last_modif_pages
+		} else {
+			$logObject = $this->action_must_be_logged($action, $objectType);
+		}
+		$logCateg = $prefs['feature_categories'] == 'y'? $this->action_must_be_logged('*', 'category'): false;
+		if (!$logObject && !$logCateg) {
+			return 0;
+		}
+		if ($logCateg) {
+			global $categlib; include_once('lib/categories/categlib.php');
+			if ($objectType == 'comment') {
+				preg_match('/type=([^&]*)/', $param, $matches);
+				$categs = $categlib->get_object_categories($matches[1], $object);
+			} else {
+				$categs = $categlib->get_object_categories($objectType, $object);
+			}
+		}
+	}
 	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='', $contributions='', $hash='')
 	{
 		global $user, $prefs;
