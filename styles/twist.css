@@ -20,11 +20,15 @@ body {
 div#fixedwidth {
 	display: table; 
 	margin: auto; 
-	margin-top: 21px;
+	margin-top: 0;
 	margin-bottom: 20px;
 	width: 800px;
 	background: #fff;
 } 
+
+#main[id] {
+	margin-top: 0;
+}
 
 *:first-child+html #c1c2 {
 	margin-left: 0;
@@ -201,14 +205,15 @@ select[name="theme"] {width: 125px}
 	height: 82px;
 	margin: 0;
 	padding: 0;
-	overflow: hidden}
+}
 	
 #siteheader  {
 	background: url(twist/header.jpg) no-repeat 0 0;
 	margin: 0;
-	padding-left: 30px}
-	
-#siteheader {margin-right: 22px}
+	padding-left: 30px;
+	margin-right: 22px;
+}
+
 #sioptionscentered {margin: 1em}
 #sitelogo {padding: 0}
 
@@ -239,6 +244,24 @@ select[name="theme"] {width: 125px}
 	background: #185981;
 	color: #fff;
 	border: 1px solid #083c6e;
+}
+
+#siteloginbar_popup li {
+	background: #eee;
+}
+
+#siteloginbar_popup .cssmenu_horiz li ul {
+	margin-top: -6px;
+}
+
+#siteloginbar_popup ul ul li a,
+#siteloginbar_popup ul ul li a:visited {
+	color: #990066;
+}
+
+#siteloginbar_popup li.login_link,
+#siteloginbar_popup li.login_link a:hover {
+	background: none;
 }
 
 #sitesearchbar select option {
@@ -822,7 +845,7 @@ table.findtable {
 
 .tabcontent {
 	border: 1px solid #abcdef;
-	background: #f0f9ff}
+}
 
 /***** Wiki *****/
 h1 a.pagetitle,
