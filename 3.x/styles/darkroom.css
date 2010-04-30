@@ -94,7 +94,7 @@ input[type=radio] {border: 0}
 input[type=text],
 input[type=password] {
 	border: solid 1px #aaa;
-	background: #292929;
+	background-color: #292929;
 	color: #F5F5F5;
 	font-size: 0.9em;
 	cursor: text}
@@ -736,7 +736,7 @@ div#edithelpzone {display: none}
 
 /* OpenID  */
 .openid_url {
-	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
+	background: #fff url(../img/icons/login-OpenID-bg.gif) no-repeat;
 	padding-left: 18px}
 
 .bannertext {

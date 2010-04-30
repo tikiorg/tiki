@@ -855,7 +855,7 @@ div#edithelpzone {	display: none;}
 
 /* OpenID  */
 .openid_url {
-	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
+	background: #fff url(../img/icons/login-OpenID-bg.gif) no-repeat;
 	padding-left: 18px}
 
 /* Banners, text type */
