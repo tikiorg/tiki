@@ -186,10 +186,12 @@
 				{/if}
 
 				<tr class="formcolor">
-					<td class="formcolor">
+					<td colspan="2" class="formcolor">
 						{tr}Data HTML:{/tr}
 					</td>
-					<td class="formcolor">
+				</tr>
+				<tr>
+					<td colspan="2" class="formcolor">
 						{textarea name='data' id='editwiki'}{$info.data}{/textarea}
 						{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} />
 					</td>
