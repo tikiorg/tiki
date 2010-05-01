@@ -3572,7 +3572,8 @@ class TrackerLib extends TikiLib
 				$f = $wiki_info['data'];
 			}
 		} else {
-			$f = $smarty->get_filename($tpl);
+			$resource_name = $smarty->get_filename($resource);
+			$f = $smarty->_read_file($resource_name);
 		}
 		if (!empty($f)) {
 			preg_match_all('/\$f_([0-9]+)/', $f, $matches);
