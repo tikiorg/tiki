@@ -4328,14 +4328,14 @@ class TikiLib extends TikiDb_Bridge
 		if ( $my_user == $user ) {
 			$prefs[$name] = $value;
 			$_SESSION['s_prefs'][$name] = $value;
-			if ( $name == 'theme' ) { // FIXME: Remove this exception
+			if ( $name == 'theme' && $prefs['change_theme'] != 'y' ) { // FIXME: Remove this exception
 				$prefs['style'] = $value;
 				$_SESSION['s_prefs']['style'] = $value;
 				if ( $value == '' ) {
 					$prefs['style'] = $prefs['site_style'];
 					$_SESSION['s_prefs']['style'] = $prefs['site_style'];
 				}
-			} elseif ( $name == 'theme-option' ) { // FIXME: Remove this exception as well?
+			} elseif ( $name == 'theme-option' && $prefs['change_theme'] != 'y' ) { // FIXME: Remove this exception as well?
 				$prefs['style_option'] = $value;
 				$_SESSION['s_prefs']['style_option'] = $value;
 				if ( $value == '' ) {
