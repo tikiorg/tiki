@@ -3621,30 +3621,43 @@ class TrackerLib extends TikiLib
 	/* $fields are all the fields, $field is the dynamic item list field('w') */
 	function prepare_dynamic_items_list($field, &$fields) {
 		$refFieldId = $field['options_array'][2];
+        $refFieldOnTheForm = false;
+		$fieldIdx = 0;
 		foreach ($fields as $i=>$ff) { // get the item link field
 			if ($ff['fieldId'] == $refFieldId) {
+				$refFieldOnTheForm = true;
 				$refFieldId = $i;
 			}
-		}
-		if (!isset($fields[$refFieldId]['http_request'])) {
-			$fields[$refFieldId]['http_request'] = array('', '', '', '', '', '', '', '', '');
-		}
-		for ($i = 0; $i < 5; $i++) {
-			if (!empty($fields[$refFieldId]['http_request'][$i])) {
-				$fields[$refFieldId]['http_request'][$i] .= ',';
-			}
-			if (!empty($field['options_array'][$i])) {
-				$fields[$refFieldId]['http_request'][$i] .= $field['options_array'][$i];
+			if ($ff['fieldId'] == $field['fieldId']) {
+				$fieldIdx = $i;
 			}
 		}
-		$fields[$refFieldId]['http_request'][5] .=
-				($fields[$refFieldId]['http_request'][5] ? ",":"") .
-				$field['fieldId'];
-		$fields[$refFieldId]['http_request'][6] .=
-				($fields[$refFieldId]['http_request'][6] ? "," : "") .
-				$field['isMandatory'];
-		$fields[$refFieldId]['http_request'][7] .= $fields[$refFieldId]['value'];
-		$fields[$refFieldId]['http_request'][8] .= ($fields[$refFieldId]['http_request'][8] ? "," : "") . $field['value'];
+        if (!$refFieldOnTheForm) {
+            // we pretend it was an item list
+			// the $fields[$fieldIdx]['list'] is to be filled in
+			$fields[$fieldIdx]['type'] = 'r';
+		}
+		else {
+			if (!isset($fields[$refFieldId]['http_request'])) {
+				$fields[$refFieldId]['http_request'] = array('', '', '', '', '', '', '', '', '');
+			}
+			for ($i = 0; $i < 5; $i++) {
+				if (!empty($fields[$refFieldId]['http_request'][$i])) {
+					$fields[$refFieldId]['http_request'][$i] .= ',';
+				}
+				if (!empty($field['options_array'][$i])) {
+					$fields[$refFieldId]['http_request'][$i] .= $field['options_array'][$i];
+				}
+			}
+			$fields[$refFieldId]['http_request'][5] .=
+					($fields[$refFieldId]['http_request'][5] ? ",":"") .
+					$field['fieldId'];
+			$fields[$refFieldId]['http_request'][6] .=
+					($fields[$refFieldId]['http_request'][6] ? "," : "") .
+					$field['isMandatory'];
+			$fields[$refFieldId]['http_request'][7] .= $fields[$refFieldId]['value'];
+			$fields[$refFieldId]['http_request'][8] .= ($fields[$refFieldId]['http_request'][8] ? "," : "") . $field['value'];
+		}
 	}
 	function test_field_type($fields, $types) {
 		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($fields),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
