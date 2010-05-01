@@ -879,6 +879,9 @@ function wikiplugin_tracker($data, $params)
 					if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 						$onemandatory = true;
 					}
+					if ($f['type'] == 'A') {
+						$smarty->assign_by_ref('tiki_p_attach_trackers', $perms['tiki_p_attach_trackers']);
+					}
 					if (!empty($tpl) || !empty($wiki)) {
 						$smarty->assign_by_ref('field_value', $f);
 						if (isset($item)) {
