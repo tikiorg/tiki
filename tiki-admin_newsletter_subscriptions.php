@@ -58,6 +58,7 @@ if (isset($_REQUEST["remove"])) {
 	elseif (isset($_REQUEST["subuser"])) $nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["subuser"], "y");
 	elseif (isset($_REQUEST["group"])) $nllib->remove_newsletter_group($_REQUEST["remove"], $_REQUEST["group"]);
 	elseif (isset($_REQUEST["included"])) $nllib->remove_newsletter_included($_REQUEST["remove"], $_REQUEST["included"]);
+	elseif (isset($_REQUEST['page'])) $nllib->remove_newsletter_page($_REQUEST['remove'], $_REQUEST['page']);
 }
 if (isset($_REQUEST["valid"])) {
 	check_ticket('admin-nl-subsriptions');
@@ -95,21 +96,32 @@ if (isset($_REQUEST["add"]) && isset($_REQUEST['group']) && $_REQUEST['group'] !
 	check_ticket('admin-nl-subsriptions');
 	$nllib->add_group_users($_REQUEST["nlId"], $_REQUEST['group'], $confirmEmail, $addEmail);
 }
-if (isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription']) && $tiki_p_batch_subscribe_email == 'y' && $tiki_p_subscribe_email == 'y') {
+if (((isset($_REQUEST["addbatch"]) && isset($_FILES['batch_subscription'])) || (isset($_REQUEST['importPage']) && !empty($_REQUEST['wikiPageName']))) && $tiki_p_batch_subscribe_email == 'y' && $tiki_p_subscribe_email == 'y') {
 	check_ticket('admin-nl-subscription');
 	// array with success and errors
 	$ok = array();
 	$error = array();
-	if (!$emails = file($_FILES['batch_subscription']['tmp_name'])) {
-		$smarty->assign('msg', tra("Error opening uploaded file"));
-		$smarty->display("error.tpl");
-		die;
+	if (isset($_REQUEST["addbatch"])) {
+		if (!$emails = file($_FILES['batch_subscription']['tmp_name'])) {
+			$smarty->assign('msg', tra("Error opening uploaded file"));
+			$smarty->display("error.tpl");
+			die;
+		}
+	} else if (isset($_REQUEST["importPage"])) {
+		
+		$emails = $nllib->get_emails_from_page($_REQUEST['wikiPageName']);
+		
+		if (!$emails) {
+			$smarty->assign('msg', tra('Error importing from wiki page: ') . $_REQUEST['wikiPageName']);
+			$smarty->display('error.tpl');
+			die;
+		}
 	}
 	
 	foreach($emails as $email) {
 		$email = trim($email);
 		if (empty($email)) continue;
-		if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $email, 'n', '', 'y')) {
+		if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $email, 'n', $confirmEmail, 'y')) {
 			$ok[] = $email;
 		} else {
 			$error[] = $email;
@@ -123,6 +135,10 @@ if (isset($_REQUEST["addgroup"]) && isset($_REQUEST['group']) && $_REQUEST['grou
 if (isset($_REQUEST["addincluded"]) && isset($_REQUEST['included']) && $_REQUEST['included'] != "") {
 	check_ticket('admin-nl-subsriptions');
 	$nllib->add_included($_REQUEST["nlId"], $_REQUEST['included']);
+}
+if (isset($_REQUEST["addPage"]) && !empty($_REQUEST['wikiPageName'])) {
+	check_ticket('admin-nl-subsriptions');
+	$nllib->add_page($_REQUEST["nlId"], $_REQUEST['wikiPageName'], empty($_REQUEST['noConfirmEmail']) ? 'y' : 'n', empty($_REQUEST['noSubscribeEmail']) ? 'y' : 'n');
 }
 if (isset($_REQUEST['export'])) {
 	check_ticket('admin-nl-subsriptions');
@@ -185,6 +201,9 @@ $smarty->assign("nb_groups", $groups_g["cant"]);
 $included_n = $nllib->list_newsletter_included($_REQUEST["nlId"], 0, -1);
 $smarty->assign('included_n', $included_n);
 $smarty->assign('nb_included', count($included_n));
+$pages = $nllib->list_newsletter_pages($_REQUEST["nlId"], 0, -1);
+$smarty->assign('pages', $pages['data']);
+$smarty->assign('nb_pages', $pages['cant']);
 // Fill array with possible number of questions per page
 $freqs = array();
 for ($i = 0; $i < 90; $i++) {

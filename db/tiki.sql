@@ -1526,6 +1526,15 @@ CREATE TABLE `tiki_newsletter_included` (
   PRIMARY KEY (`nlId`,`includedId`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS `tiki_newsletter_pages`;
+CREATE TABLE `tiki_newsletter_pages` (
+	`nlId` INT( 12 ) NOT NULL ,
+	`wikiPageName` VARCHAR( 160 ) NOT NULL ,
+	`validateAddrs` CHAR( 1 ) NOT NULL DEFAULT 'n',
+	`addToList` CHAR( 1 ) NOT NULL DEFAULT 'n',
+	PRIMARY KEY ( `nlId` , `wikiPageName` )
+) ENGINE = MYISAM ;
+
 DROP TABLE IF EXISTS `tiki_newsletters`;
 CREATE TABLE `tiki_newsletters` (
   `nlId` int(12) NOT NULL auto_increment,
