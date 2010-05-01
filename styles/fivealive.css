@@ -16,6 +16,11 @@ body {
 	background: #fff url(fivealive/options/blueberry/body.png) no-repeat 50% 0;
 }
 
+body.filegal_popup {
+	background-image: none;
+	padding: 0 2em;
+}
+
 *:first-child+html body {font-size: 74% !important}
 
  /***** Layout *****/
