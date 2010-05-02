@@ -843,6 +843,11 @@ function wikiplugin_tracker($data, $params)
 					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {
 						$flds['data'][$i]['value'] = $tikilib->now;
 					}
+
+					if (!empty($f['value'])) {
+						// if it has an original or a suggested value, then set it as the default value
+						$flds['data'][$i]['defaultvalue'] = $f['value'];
+					}
 				}
 			}
 			if (!empty($showstatus) && $showstatus == 'y') {
