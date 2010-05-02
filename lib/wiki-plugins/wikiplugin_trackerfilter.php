@@ -129,7 +129,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		if (empty($params['trackerId'] )) {
 			$params['trackerId'] = $trackerId;
 		}
-		unset($params['filterfield']); unset($params['filtervalue']); unset($params['exactrvalue']);
+		unset($params['filterfield']); unset($params['filtervalue']); unset($params['exactvalue']);
 		if (!empty($ffs)) {
 			$params['filterfield'] = $ffs;
 			$params['exactvalue'] = $exactValues;
