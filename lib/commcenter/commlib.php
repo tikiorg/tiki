@@ -74,7 +74,7 @@ class CommLib extends TikiLib
 		return true;
 	}
 
-	function list_received_articles($offset, $maxRecords, $sort_mode = 'publishDate_desc', $find) {
+	function list_received_articles($offset, $maxRecords, $find, $sort_mode = 'publishDate_desc') {
 		$bindvars = array();
 		if ($find) {
 			$findesc = '%' . $find . '%';
