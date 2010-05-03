@@ -144,7 +144,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 
 	$smarty->assign_by_ref('sortchoice', $sortchoice);
-	$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats);
+	$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats, $status);
 	if (!is_array($filters)) {
 		return $filters;
 	}
@@ -233,7 +233,7 @@ function wikiplugin_trackerFilter_split_filters($filters) {
 	return $list;
 }
 
-function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $formats='') {
+function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $formats='', $status='opc') {
 	global $tiki_p_admin_trackers, $smarty, $tikilib;
 	global $trklib;	include_once('lib/trackers/trackerlib.php');
 	$filters = array();
