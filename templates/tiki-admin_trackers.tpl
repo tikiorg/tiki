@@ -334,7 +334,7 @@
 			<tr class="formcolor" id="showLastModifUser" {if $showLastModifView ne 'y'}style="display:none;"{/if}>
 				<td class="sub" colspan="2">
 					{tr}Identify lastModif user in tracker item?{/tr}
-					<input type="checkbox" name="showLastModifBy" {if $showLastModifBy eq 'y'}checked="checked"{/if} "/>
+					<input type="checkbox" name="showLastModifBy" {if $showLastModifBy eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
 			<tr class="formcolor">
