@@ -2440,7 +2440,7 @@ class UsersLib extends TikiLib
 	function set_user_default_preferences($user) {
 		global $prefs;
 		foreach( $prefs as $pref => $value ) {
-			if ( ! ereg('^users_prefs_', $pref) ) continue;
+			if ( ! preg_match('/^users_prefs_/', $pref) ) continue;
 			if ($pref == 'users_prefs_email_is_public') {
 				$pref_name = 'email is public';
 			} else {
