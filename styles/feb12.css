@@ -1452,11 +1452,12 @@ html>body .galtable {
 }
 
 .calfocuson {
-	font-size: 90%;
+	font-size: 100%;
 	background: #F3E498;
 }
 
 .calfocuson a {
+	font-size: 90%;
 	text-decoration: none;
 	font-weight: normal;
 	color: #000000;
@@ -1543,7 +1544,7 @@ html>body .galtable {
 .caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
-	background: #a8cce2;
+	background: #F3E498;
 }
 
 .caltable .calfocuson a {
@@ -1559,6 +1560,10 @@ html>body .galtable {
 	background: #a8cce2;
 }
 
+div#calscreen td.calfocuson {
+	border-bottom: none;
+}
+
 .calbuttonbox a {
 	color: #F5F5F5;
 	text-decoration: none;
@@ -1568,6 +1573,11 @@ html>body .galtable {
 	color: #794A93 !important;
 	text-decoration: none;
 }
+
+.calHeadingOn, .calHeadingOn a {
+	background: #f3e498;
+}
+
 
 /*****  Polls  *****/
 div.pollresults {

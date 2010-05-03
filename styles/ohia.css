@@ -1199,6 +1199,11 @@ table.default td {
 .box-data td a.today {
 	background: #5e0000;
 	border: solid 1px #990000}
+	
+.caltable .calfocuson {
+	color: #ffffff;
+	background: #5e0000;
+}
 
 #caltable .calfocuson a {color: #000}
 
@@ -1206,6 +1211,10 @@ table.default td {
 #caltable .calfocuson a {
 	text-decoration: none;
 	color: #fff}
+	
+.caltable .calfocuson a {
+	color: #ffffff;
+}
 
 .calfocus,
 .calfocuson {border-bottom: 0}
@@ -1242,6 +1251,23 @@ table.default td {
 	border: 1px dotted #5e0000}
 
 .caldark .calfocus {background: #000}
+
+div#calscreen td.calfocuson {
+	background: #5e0000;
+}
+
+.calfocuson {
+	font-size: 100%;
+	border-bottom: 0px;
+}
+
+.calfocuson a {
+	font-size: 90%;
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #5e0000;
+}
 
 .daterow {
 	background-color: #313131;

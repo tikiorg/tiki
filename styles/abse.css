@@ -1210,8 +1210,6 @@ table.default	td {
 	font-size: 90%;
 	background: inherit}
 
-.calfocuson {font-size: 90%}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -1244,7 +1242,7 @@ table.default	td {
 .box-data td a.today {
 	background: #586858 url(abse/titlebgoff.png) repeat-x;
 	color: #b3b3b3}
-
+	
 #caltable .calfocuson a {color: #000}
 
 #caltable .calfocus a,
@@ -1276,6 +1274,27 @@ table.default	td {
 .caldark {background: #3f3f3f}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #3f3f3f}
+
+.calfocuson {
+	font-size: 100%; 
+	color: #636f65; 
+	font-weight: bold;
+	background: #f3e498;
+}
+
+div#calscreen td.calfocuson {
+	border-bottom: none;
+}
+
+.calfocuson a {
+	font-size: 90%; 
+	color: #0c2809
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #f3e498;
+	color: #636f65;
+}
 
 .daterow {
 	background: #586858 url(abse/titlebgoff.png) repeat-x 0 1px;

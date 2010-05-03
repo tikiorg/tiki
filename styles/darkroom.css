@@ -1923,7 +1923,7 @@ td.calodd, td.caleven {
 	border: solid 1px #696969;
 }
 
-.caltable .calfocuson a {
+.caltable, .calfocuson a {
 	color: #d8d8d8;
 }
 
@@ -1935,6 +1935,7 @@ td.calodd, td.caleven {
 .calinput {
 	background: #3f3f3f;
 }
+
 
 .calfocus,
 .calfocuson {
@@ -1983,6 +1984,12 @@ td.calodd, td.caleven {
 .caldark .calfocus {
 	background: #696969;
 }
+
+
+.calfocuson, /*.calfocuson a,*/ .calHeadingOn {
+	background: #292929;
+}
+
 
 .daterow {
 	margin: 2px;

@@ -927,6 +927,23 @@ a.dirsublink {
 	color: #fff;
 }
 
+.calfocuson {
+	font-size: 100%; 
+	background: #f3e498;
+}
+
+.calfocuson a {
+	font-size: 90%; 
+}
+
+div#calscreen td.calfocuson {
+	border: none;
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #f3e498;
+}
+
 /***** Admin *****/
 /*body.tiki_admin .simplebox,
 a.admbox,

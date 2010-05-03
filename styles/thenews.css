@@ -1566,17 +1566,39 @@ caltrack a:visited {
 	padding: 0;
 }
 
+div#calscreen td.calfocuson {
+	background: #D4D0C8;
+}
+
+.calfocuson {
+	font-size: 100%;
+	border-bottom: 0px;
+}
+
+.calfocuson a {
+	font-size: 90%;
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #D4D0C8;
+}
+
+
+/*
 .calfocus {
 	font-size: 90%;
 	background: inherit;
 }
 
+*/
 .caldark .calfocus {
 	background: inherit;
 }
 
+/*
 .calodd .calfocuson,
 .caleven .calfocuson,
+*/
 .calfocuson + .calcontent {
 	background: #e6eff8;
 }
@@ -1624,11 +1646,14 @@ caltrack a:visited {
 	font-size: 90%;
 }
 
-.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
+}
+
+.caltable .calfocuson {
+	background: #D4D0C8;
 }
 
 .buttonon a,

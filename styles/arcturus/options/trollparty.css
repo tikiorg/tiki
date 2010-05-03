@@ -474,3 +474,8 @@ a.admbox:active {
 	color: #fff;
 	text-decoration: underline;
 }
+
+.calHeadingOn a, .calfocuson, .calfocuson a {
+	color: #4477cc;
+}
+
