@@ -890,7 +890,7 @@ div.freetagitemlist {
 }
 
 div#calscreen td.calfocuson {
-	border: none;
+	border-bottom: none;
 }
 
 .calfocuson a {

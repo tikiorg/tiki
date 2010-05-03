@@ -937,7 +937,7 @@ a.dirsublink {
 }
 
 div#calscreen td.calfocuson {
-	border: none;
+	border-bottom: none;
 }
 
 .calHeadingOn, .calHeadingOn a {

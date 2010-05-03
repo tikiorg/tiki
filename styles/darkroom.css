@@ -1986,7 +1986,7 @@ td.calodd, td.caleven {
 }
 
 
-.calfocuson, /*.calfocuson a,*/ .calHeadingOn {
+.calfocuson, .calHeadingOn {
 	background: #292929;
 }
 
