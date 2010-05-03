@@ -31,12 +31,12 @@ if (isset($_REQUEST["remind"])) {
 			$smarty->assign('msg', tra('Invalid or unknown username') . ': ' . $_REQUEST['name']);
 		} else {
 			$info = $userlib->get_user_info($_REQUEST["name"]);
-			if (!empty($info['valid']) && ($prefs['validateRegistration'] == 'y' || $prefs['validateUsers'] == 'y')) {
-				$showmsg = 'e';
-				$userlib->send_validation_email($_REQUEST["name"], $info['valid'], $info['email'], 'y');
-			} elseif (empty($info['email'])) { //only renew if i can mail the pass
+			if (empty($info['email'])) { //only renew if i can mail the pass
 				$showmsg = 'e';
 				$smarty->assign('msg', tra('Unable to send mail. User has not configured email'));
+			} elseif (!empty($info['valid']) && ($prefs['validateRegistration'] == 'y' || $prefs['validateUsers'] == 'y')) {
+				$showmsg = 'e';
+				$userlib->send_validation_email($_REQUEST["name"], $info['valid'], $info['email'], 'y');
 			} else {
 				$_REQUEST['email'] = $info['email'];
 			}
