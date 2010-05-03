@@ -586,7 +586,11 @@ function wikiplugin_tracker($data, $params)
 					}
 					if (empty($url)) {
 						if (!empty($page)) {
-							$url = "tiki-index.php?page=".urlencode($page)."&ok=y&iTRACKER=$iTRACKER";
+							$url = "tiki-index.php?page=".urlencode($page);
+							if (!empty($itemId)) {
+								$url .= "&itemId=".$itemId;
+							}
+							$url .= "&ok=y&iTRACKER=$iTRACKER";
 							$url .= "#wikiplugin_tracker$iTRACKER";
 							header("Location: $url");
 							die;
