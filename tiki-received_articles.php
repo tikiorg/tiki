@@ -136,7 +136,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $commlib->list_received_articles($offset, $maxRecords, $find, $sort_mode);
+$channels = $commlib->list_received_articles($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('cant', $channels["cant"]);
 $topics = $artlib->list_topics();
