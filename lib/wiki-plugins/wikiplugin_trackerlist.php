@@ -278,12 +278,6 @@ function wikiplugin_trackerlist_info() {
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
-			'inside_pretty' => array(
-				'required' => false,
-				'name' => tra('Inside Pretty Tracker'),
-				'description' => tra('Set to y to use inside a pretty tracker with field reference replacement (default=n)'),
-				'filter' => 'alpha'
-			),
 		),
 	);
 }
@@ -295,10 +289,6 @@ function wikiplugin_trackerlist($data, $params) {
 	static $iTRACKERLIST = 0;
 	++$iTRACKERLIST;
 	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
-	
-	if (isset($params['inside_pretty']) && $params['inside_pretty'] == 'y') {
-		$trklib->replace_pretty_tracker_refs($params);
-	}
 	
 	extract ($params,EXTR_SKIP);
 
