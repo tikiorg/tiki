@@ -266,6 +266,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('subject', $_REQUEST["subject"]);
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
+	$smarty->assign_by_ref('subscribers_list', $subscribers);
 	$smarty->assign('info', $info);
 	if (!empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
