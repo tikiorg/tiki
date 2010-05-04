@@ -892,7 +892,16 @@ class NlLib extends TikiLib
 			$pageContent = strip_tags($pageContent);
 			$pageContent = preg_replace('/[\\n\\r]/', "\n", $pageContent);	// in case there are MS lineends
 			$pageContent = preg_replace('/\\n\\n/', "\n", $pageContent);	// remove blank lines
-			$emails = explode("\n", $pageContent);
+			$ary = explode("\n", $pageContent);
+			$emails = array();
+			foreach($ary as $a) {
+				preg_match('/[a-z0-9\-_.]+?@[\w\-\.]+/i', $a, $m);
+				if (count($m) > 0) {
+					if (validate_email($m[0])) {
+						$emails[] = $m[0];
+					}
+				}
+			}
 		}
 		
 		return $emails;
