@@ -5602,6 +5602,11 @@ class TikiLib extends TikiDb_Bridge
 			return $this->convert_plugin_output( $output, '', $outputFormat, $parseOptions );
 		}
 
+		if (isset($parseOptions['inside_pretty']) && $parseOptions['inside_pretty'] == 'y') {
+			global $trklib; require_once('lib/trackers/trackerlib.php');
+			$trklib->replace_pretty_tracker_refs($args);
+		}
+		
 		require_once 'lib/core/lib/WikiParser/PluginOutput.php';
 
 		$func_name = 'wikiplugin_' . $name;
