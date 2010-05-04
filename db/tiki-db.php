@@ -166,6 +166,8 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 				include_once('lib/ajax/xajax/xajax_core/xajaxAIO.inc.php');
 				if ($ajaxlib && $ajaxlib->canProcessRequest()) {
 					// this was a xajax request -> return a xajax answer
+					global $logslib; include_once('lib/logs/logslib.php');
+					$logslib->add_log('system', $msg.' - '.$q);
 					$page = $smarty->fetch( 'database-connection-error.tpl' );
 					$objResponse = new xajaxResponse();
 					$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
@@ -176,6 +178,8 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 				}
 			}
 
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_log('system', $msg.' - '.$q);
 			$smarty->display('database-connection-error.tpl');
 			unset($_SESSION['fatal_error']);
 			die;
