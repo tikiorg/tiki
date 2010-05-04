@@ -889,9 +889,9 @@ class NlLib extends TikiLib
 		$prefs['feature_autolinks'] = $o2;
 		
 		if (!empty($pageContent)) {
-			$pageContent = preg_replace('/<br \/>\\n/', "\n", $pageContent);
-			$pageContent = preg_replace('/[\\n\\r]/', "\n", $pageContent);
-			$pageContent = preg_replace('/\\n\\n/', "\n", $pageContent);
+			$pageContent = strip_tags($pageContent);
+			$pageContent = preg_replace('/[\\n\\r]/', "\n", $pageContent);	// in case there are MS lineends
+			$pageContent = preg_replace('/\\n\\n/', "\n", $pageContent);	// remove blank lines
 			$emails = explode("\n", $pageContent);
 		}
 		
