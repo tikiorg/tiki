@@ -132,7 +132,7 @@ function module_search( $mod_reference, & $module_params ) {	// modifies $module
 		$module_params['tiki_search'] = 'y';
 	}
 	
-	if ($module_params['go_action'] == 'ti') { unset($module_params['go_action']); }	// temporary fix for 5.0 in case params were truncated in the db
+	if (isset($module_params['go_action']) && $module_params['go_action'] == 'ti') { unset($module_params['go_action']); }	// temporary fix for 5.0 in case params were truncated in the db
 	
 	// set up other param defaults
 	$defaults = array(

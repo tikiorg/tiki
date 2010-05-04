@@ -122,24 +122,7 @@ hr {
 	background: #bdcec3}
 
 legend {color: #a9a9a9}
-/*
-button,
-input {
-	background: #586858 url(abse/titlebgoff.png) repeat-x 0 1px;
-	color: #BDCEC3;
-	font-weight: normal;
-	vertical-align: middle}
 
-button:hover {
-	color: #ccccff;
-	text-decoration: none;
-	background: #586858}
-
-input#fuser {
-	border: 0;
-	padding: 0;
-	background: #586858 !important}
-*/
 input[type=text],
 input[type=password] {
 	background: #586858;
@@ -170,20 +153,13 @@ button,
 span.button input,
 .submitbutton,
 .calbuttonBox,
-input[type=submit] {
+input[type=submit],
+input[type=reset] {
 	background: #424248 url(abse/titlebgoff.png) repeat-x;
 	border: 1px solid;
 	border-color: #b5b5c3 #5a5a62 #5a5a62 #b5b5c3;
 	color: #b2b2b2;
 	font-size: .95em;
-	font-weight: normal;
-	padding: 0 4px}
-
-input[type=reset] {
-	background: #586858;
-	border: 1px solid;
-	border-color: #5a5a62 #b5b5c3 #b5b5c3 #5a5a62;
-	color: #b2b2b2;
 	font-weight: normal;
 	padding: 0 4px}
 
@@ -220,7 +196,7 @@ option:hover,
 input[type=reset]:hover,
 input[type=submit]:hover {
 	background: url(abse/titlebgon.png) repeat-x 0 1px;
-	color: #fff/*#BDCEC3*/;
+	color: #fff;
 	text-decoration: none;
 	padding: 0 4px
 }
@@ -277,7 +253,15 @@ div#sioptions {
 
 #sitead.floatright {padding-right: 100px}
 #sitead.floatleft {padding-left: 100px}
-#siteloginbar {bottom: 4px}
+#siteloginbar,
+#siteloginbar_popup {bottom: 4px}
+
+#siteloginbar_popup ul.cssmenu_horiz li ul {
+	padding: 0;
+	background: none;
+	margin-top: -12px;
+}
+
 #sitetitles {padding-left: 20px}
 
 #sitetitle {
@@ -292,7 +276,6 @@ div#sioptions {
 	padding-left: 3em}
 
 #sitesearchbar {
-/*	max-width: 300px;*/
 	margin-right: 10px;
 	font-size: 90%}
 	
@@ -555,6 +538,7 @@ img.flipmodimage:hover {border: 1px solid #55914E !important}
 	background: #415d44;
 	text-align: left;
 	border-color: #ccccff;
+	border-bottom: none;
 	font-size: 1em;
 	line-height: 1.4em}
 
@@ -606,33 +590,62 @@ td.heading {
 	text-align: center}
 
 /** Tabs **/
+/** Tabs **/
+/* reset what's in layout.css */
+
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
 .tabs {
-	border-bottom: solid 1px #3f6041 !important;
-	margin-bottom: -18px}
+	border: solid 1px #3f6041;
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	position: relative;
+	padding: .2em .2em 0;
+	margin:0 0.2em 1px 0;}
+	
+.tabs br {
+	display: none;
+}
 
-.tabmark {
+.tabs span {
+	display: block;
+	float: left;
+}
+
+.tabmark,
+li.tabmark {
+	list-style-image: none;
+	float: left;
 	font-size: 1em;
-	background: #0e1d10;
 	border: 1px solid #666;
-	margin: 0 3px;
-	padding: 0}
-
-.tabmark a {
-	background: #586858 url(abse/titlebgoff.png) repeat-x 0 1px;
+	outline: none;
+	border-bottom-width: 0 !important;
+	margin: 0 .2em -1px 0;
+	background: #404046 url(abse/titlebgoff.png) repeat-x;
 	color: #b3b3b3;
-	padding: 1px 5px}
+}
 
 .tabmark a:active {color: #636466}
 
-.tabmark a:hover {
+
+.tabmark a:hover,
+.tabactive {
 	color: #ccccff;
 	text-decoration: none;
-	background: url(abse/titlebgon.png) repeat-x 0 1px}
+	background: #3c473c url(abse/titlebgon.png) repeat-x !important;}
 
+#sitelogin_popup ul.cssmenu_horiz li {
+	background: none;
+}	
+	
 .tabcontent {
-	padding: 20px 2px 2px 2px;
-	margin-bottom: 25px;
-	background: #192f1c}
+	padding: 2px;
+	background: #192f1c;
+}
 
 /***** Wiki *****/
 div#description,
@@ -1197,8 +1210,6 @@ table.default	td {
 	font-size: 90%;
 	background: inherit}
 
-.calfocuson {font-size: 90%}
-
 .calprio1 a,
 .calprio2 a,
 .calprio3 a,
@@ -1231,7 +1242,7 @@ table.default	td {
 .box-data td a.today {
 	background: #586858 url(abse/titlebgoff.png) repeat-x;
 	color: #b3b3b3}
-
+	
 #caltable .calfocuson a {color: #000}
 
 #caltable .calfocus a,
@@ -1263,6 +1274,27 @@ table.default	td {
 .caldark {background: #3f3f3f}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #3f3f3f}
+
+.calfocuson {
+	font-size: 100%; 
+	color: #636f65; 
+	font-weight: bold;
+	background: #f3e498;
+}
+
+div#calscreen td.calfocuson {
+	border-bottom: none;
+}
+
+.calfocuson a {
+	font-size: 90%; 
+	color: #0c2809
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #f3e498;
+	color: #636f65;
+}
 
 .daterow {
 	background: #586858 url(abse/titlebgoff.png) repeat-x 0 1px;

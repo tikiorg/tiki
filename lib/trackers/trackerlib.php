@@ -3613,7 +3613,8 @@ class TrackerLib extends TikiLib
 				$f = $wiki_info['data'];
 			}
 		} else {
-			$f = $smarty->get_filename($tpl);
+			$resource_name = $smarty->get_filename($resource);
+			$f = $smarty->_read_file($resource_name);
 		}
 		if (!empty($f)) {
 			preg_match_all('/\$f_([0-9]+)/', $f, $matches);
@@ -3691,32 +3692,43 @@ class TrackerLib extends TikiLib
 	/* $fields are all the fields, $field is the dynamic item list field('w') */
 	function prepare_dynamic_items_list($field, &$fields) {
 		$refFieldId = $field['options_array'][2];
+        $refFieldOnTheForm = false;
+		$fieldIdx = 0;
 		foreach ($fields as $i=>$ff) { // get the item link field
 			if ($ff['fieldId'] == $refFieldId) {
+				$refFieldOnTheForm = true;
 				$refFieldId = $i;
-				break;
+			}
+			if ($ff['fieldId'] == $field['fieldId']) {
+				$fieldIdx = $i;
 			}
 		}
-		if (!isset($fields[$refFieldId]['http_request'])) {
-			$fields[$refFieldId]['http_request'] = array('', '', '', '', '', '', '', '', '');
+        if (!$refFieldOnTheForm) {
+            // we pretend it was an item list
+			// the $fields[$fieldIdx]['list'] is to be filled in
+			$fields[$fieldIdx]['type'] = 'r';
 		}
-		for ($i = 0; $i < 5; $i++) {
-			if (!empty($fields[$refFieldId]['http_request'][$i])) {
-				$fields[$refFieldId]['http_request'][$i] .= ',';
+		else {
+			if (!isset($fields[$refFieldId]['http_request'])) {
+				$fields[$refFieldId]['http_request'] = array('', '', '', '', '', '', '', '', '');
 			}
-			if (!empty($field['options_array'][$i])) {
-				$fields[$refFieldId]['http_request'][$i] .= $field['options_array'][$i];
+			for ($i = 0; $i < 5; $i++) {
+				if (!empty($fields[$refFieldId]['http_request'][$i])) {
+					$fields[$refFieldId]['http_request'][$i] .= ',';
+				}
+				if (!empty($field['options_array'][$i])) {
+					$fields[$refFieldId]['http_request'][$i] .= $field['options_array'][$i];
+				}
 			}
+			$fields[$refFieldId]['http_request'][5] .=
+					($fields[$refFieldId]['http_request'][5] ? ",":"") .
+					$field['fieldId'];
+			$fields[$refFieldId]['http_request'][6] .=
+					($fields[$refFieldId]['http_request'][6] ? "," : "") .
+					$field['isMandatory'];
+			$fields[$refFieldId]['http_request'][7] .= $fields[$refFieldId]['value'];
+			$fields[$refFieldId]['http_request'][8] .= ($fields[$refFieldId]['http_request'][8] ? "," : "") . $field['value'];
 		}
-		$fields[$refFieldId]['http_request'][5] .=
-				($fields[$refFieldId]['http_request'][5] ? ",":"") .
-				$field['fieldId'];
-		$fields[$refFieldId]['http_request'][6] .=
-				($fields[$refFieldId]['http_request'][6] ? "," : "") .
-				$field['isMandatory'];
-		$fields[$refFieldId]['http_request'][7] = $fields[$refFieldId]['value'];
-		$fields[$refFieldId]['http_request'][8] .= ($fields[$refFieldId]['http_request'][8] ? "," : "") . $field['value'];
-
 		/* the list of potential value is calculated by a javascript call to selectValues at the end of the tpl */
 	}
 	function log($version, $itemId, $fieldId, $value='', $lang='') {

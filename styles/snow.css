@@ -1265,7 +1265,7 @@ Caltrack a:visited {color: #00BD02}
 
 .calfocus {font-size: 90%}
 
-.calfocuson {font-size: 90%}
+.calfocuson {font-size: 100%}
 
 .calprio1 a,
 .calprio2 a,
@@ -1297,6 +1297,10 @@ Caltrack a:visited {color: #00BD02}
 	background: #cde4f3;
 	border: 1px solid #d3e6f4;
 	border-collapse: collapse}
+	
+.caltable .calfocuson {
+	background: #cde4f3;
+}
 
 #caltable .calfocuson a {
   color:#000}
@@ -1323,6 +1327,24 @@ Caltrack a:visited {color: #00BD02}
 .box-data .viewmode {
 	line-height: 1.3;
 }
+
+div#calscreen td.calfocuson {
+	background: #cde4f3;
+}
+
+.calfocuson {
+	font-size: 100%;
+	border-bottom: 0px;
+}
+
+.calfocuson a {
+	font-size: 90%;
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #cde4f3;
+}
+
 /***** Admin *****/
 a.admbox {
 	border: 1px solid #aaa;

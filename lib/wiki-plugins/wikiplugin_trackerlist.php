@@ -724,6 +724,11 @@ function wikiplugin_trackerlist($data, $params) {
 								}
 								if (!empty($matches[4])) {
 									$l = $trklib->get_item_value(0, $matches[4], $matches[2]);
+									$field = $trklib->get_tracker_field($matches[2]);
+									if ($field['type'] == 'r') {
+										$refItemId = $trklib->get_item_id($field['options_array'][0], $field['options_array'][1], $l);
+										$l = $trklib->get_item_value($field['options_array'][0], $refItemId, $field['options_array'][3]);
+									}
 								}
 								if (empty($matches[1])) {
 									$exactvalue[] = $l;

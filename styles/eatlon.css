@@ -1089,6 +1089,10 @@ Caltrack a:visited {color: #00BD02}
 .box-data td a.today {
 	background: #d2d9e3;
 	border: 0}
+	
+.caltable .calfocuson {
+	background: #d2d9e3;
+}
 
 #caltable .calfocuson a {color:#000}
 
@@ -1122,6 +1126,23 @@ td.event {background: whitesmoke}
 .caldark .calfocus {background: #c4cdda}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #c4cdda}
+
+div#calscreen td.calfocuson {
+	background: #d2d9e3;
+}
+
+.calfocuson {
+	font-size: 100%;
+	border-bottom: 0px;
+}
+
+.calfocuson a {
+	font-size: 90%;
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #d2d9e3;
+}
 
 .daterow {
 	display: block;

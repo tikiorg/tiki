@@ -212,6 +212,8 @@ $curtikidate->setLocalTime($dloop,$mloop,$yloop,0,0,0,0);
 
 $smarty->assign('display_tz', $display_tz);
 
+$smarty->assign('day', $daystart);
+
 $firstDay = false;
 
 for ($i = 0; $i <= $numberofweeks; $i++) {

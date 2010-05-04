@@ -884,6 +884,23 @@ div.freetagitemlist {
 	background: #f9f9f9;
 }
 
+.calfocuson {
+	font-size: 100%; 
+	background: #f3e498;
+}
+
+div#calscreen td.calfocuson {
+	border-bottom: none;
+}
+
+.calfocuson a {
+	font-size: 90%;
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #f3e498;
+}
+
 /***** Admin *****/
 a.admbox {
 	background: #3778c9 no-repeat center center;

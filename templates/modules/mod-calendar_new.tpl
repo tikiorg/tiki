@@ -26,7 +26,8 @@
 					{else}
 						{cycle values="caldark" print=false}
 					{/if}
-					<td class="{if $cell[w][d].day eq $smarty.session.CalendarFocusDate}calfocuson{else}{cycle advance=false}{/if}{if isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" || $cell[w][d].items[0].visible eq 'y')} focus{/if}" width="14%" style="text-align:center; font-size:0.8em;">
+					<td class="{cycle advance=false}{if $cell[w][d].day eq $today} calfocuson{/if}{if isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" 
+								|| $cell[w][d].items[0].visible eq 'y')} focus{/if}" width="14%" style="text-align:center; font-size:0.8em;">
 
 						{if isset($cell[w][d].items[0])}
 							{assign var=over value=$cell[w][d].items[0].over}{else}{assign var=over value=""}

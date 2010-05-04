@@ -1834,7 +1834,7 @@ div.multiselect {
 }
 
 .calfocuson {
-	font-size: 90%;
+	font-size: 100%;
 }
 
 .calprio1 a,
@@ -1950,11 +1950,14 @@ div.multiselect {
 	font-weight: bold;
 }
 
-.caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969;
+}
+
+.caltable .calfocuson {
+	background: #D4D0C8;
 }
 
 .caltable .calfocuson a {
@@ -1972,6 +1975,23 @@ div.multiselect {
 
 .calfocuson + .calcontent {
 	background: #F5F5F5;
+}
+
+div#calscreen td.calfocuson {
+	background: #D4D0C8;
+}
+
+.calfocuson {
+	font-size: 100%;
+	border-bottom: 0px;
+}
+
+.calfocuson a {
+	font-size: 90%;
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #D4D0C8;
 }
 
 .days {

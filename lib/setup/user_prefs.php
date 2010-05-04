@@ -40,11 +40,13 @@ if ( $user ) {
 
 	// Copy some user prefs that doesn't have the same name as the related site pref
 	//   in order to symplify the overriding and the use 
-	if ( isset($prefs['theme']) && $prefs['theme'] != '' ) {
-		$prefs['style'] = $prefs['theme'];
-	}
-	if ( isset($prefs['theme-option']) && $prefs['theme-option'] != '' ) {
-		$prefs['style_option'] = $prefs['theme-option'];
+	if ( $prefs['change_theme'] != 'y') {
+		if ( !empty($prefs['theme']) ) {
+			$prefs['style'] = $prefs['theme'];
+		}
+		if ( !empty($prefs['theme-option']) ) {
+			$prefs['style_option'] = $prefs['theme-option'];
+		}
 	}
 
 	// Set the userPage name for this user since other scripts use this value.
