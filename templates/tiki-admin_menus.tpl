@@ -34,8 +34,7 @@
 <a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=menus&amp;permType=menus&amp;objectId={$channels[user].menuId}">
 {icon _id='key' alt="{tr}Permissions{/tr}"}</a>{/if}
 &nbsp;
-{* strange validation doesnot work with ajax FIXME *}
-{self_link _ajax='n' remove=$channels[user].menuId _title="{tr}Delete{/tr}"}{icon _id='cross' alt='{tr}Delete{/tr}'}{/self_link}
+{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}"}{icon _id='cross' alt='{tr}Delete{/tr}'}{/self_link}
 </td>
 </tr>
 {sectionelse}

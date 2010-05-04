@@ -86,7 +86,7 @@
       {if $tiki_p_admin_file_galleries eq 'y'}
          {button _text="{tr}Admin View{/tr}" href="?view=admin&amp;galleryId=$galleryId"}
       {/if}
-      {button _text="{tr}Browse Images{/tr}" href="?view=browse&amp;galleryId=$galleryId" _ajax='n'} {* no AJAX to make shadowbox work in browse view *}
+      {button _text="{tr}Browse Images{/tr}" view="browse" galleryId=$galleryId} {* no AJAX to make shadowbox work in browse view *}
     {/if}
   {/if}
 
