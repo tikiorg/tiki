@@ -5,12 +5,11 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta content="noindex, nofollow" name="robots">
 {literal}	
-<script type="text/javascript" src="fcktikilink.js"></script>
 <script type="text/javascript">
 <!--
-var oEditor			= window.parent.InnerDialogLoaded(); 
-var FCK					= oEditor.FCK; 
-var FCKConfig		= oEditor.FCKConfig ;
+var oEditor		= window.parent.InnerDialogLoaded(); 
+var FCK			= oEditor.FCK; 
+var FCKConfig	= oEditor.FCKConfig ;
 var FCKTikiLinks = oEditor.FCKTikiLinks ;
  
 // oLink: The actual selected link in the editor.
@@ -23,7 +22,7 @@ window.onload = function ()	{
 	LoadSelected();							//See function below 
 	window.parent.SetOkButton( true );		//Show the "Ok" button. 
 	window.parent.SetAutoSize( true ) ;
-} 
+};
  
 //If an anchor (A) object is currently selected, load the properties into the dialog 
 function LoadSelected()	{
@@ -122,7 +121,7 @@ function Ok() {
 <br />
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 {foreach item=page from=$listpages}
-<tr><td><a href="#" onclick="javascript:document.getElementById('txtTitle').value = '{$page.pageName|escape|escape:'javascript'}'; javascript:document.getElementById('txtPage').value = '{$page.pageName|escape|escape:'javascript'}';" 
+<tr><td><a href="#" onclick="if ( document.getElementById('txtTitle').value == '' || document.getElementById('txtTitle').value == document.getElementById('txtPage').value ) document.getElementById('txtTitle').value = '{$page.pageName|escape|escape:'javascript'}'; document.getElementById('txtPage').value = '{$page.pageName|escape|escape:'javascript'}'; return false;" 
 title="{if $page.description}{$page.description}{else}{$page.pageName|escape}{/if}" class="wikilink">{$page.pageName|escape}</a>
 </td><td style="color:#999;">
 {$page.description}
