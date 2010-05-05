@@ -157,14 +157,3 @@
 		</div>
 	{/if}
 {/if}
-<div class="clearfix" id="topcontent">
-	{include file='tiki-sitesearchbar.tpl'}
-	{* Dynamic content block holds links *}
-	{content id=1}
-</div>
-	{* Top Bar Custom Code goes here *}
-	{if $prefs.feature_siteidentity eq 'y' and $prefs.feature_topbar_custom_code}
-		{eval var=$prefs.feature_topbar_custom_code}
-	{/if}
-
-

@@ -6,10 +6,8 @@ Dark Shine theme for TikiWiki CMS/Groupware. This is an adaptation
 	http://themes.tikiwiki.org.
 */
  
-/* Import the default layout properties file: */
+/* Import default layout properties: */
 @import url("layout/layout.css");
-
-/* And design defaults: */
 @import url("layout/design.css");
  
 /***** XHTML Elements (body tag here,
@@ -36,6 +34,11 @@ body.fullscreen #tiki-center {
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
 table#main {text-align: center}
+
+#main[id] {
+	margin-top: 0;
+	margin-bottom: 0;
+}
 
 td#leftmargin {
 	width: 10%;
@@ -77,13 +80,16 @@ td#footer {
 	text-decoration: underline}
 
 /***** XHTML Elements (other than body tag) ******/
-a {
+a,
+a:visited,
+#siteloginbar_popup .tabmark .tabcontent a,
+#siteloginbar_popup .tabmark .tabcontent a:visited {
 	color: #600000;
 	font-weight: bold;
 	text-decoration: none}
 
-a:visited {color: #000}
-a:hover {color: #90140C}
+a:hover,
+#siteloginbar_popup .tabmark .tabcontent a:hover {color: #90140C}
 
 dt {font-weight: bold}
 
@@ -129,7 +135,7 @@ span.button a,
 span.button a:visited,
 button,
 input[type="reset"],
-/*input[type="submit"],*/
+input[type="submit"],
 span.button input,
 .submitbutton,
 .calbuttonBox a/*,
@@ -141,7 +147,7 @@ select*/ {
 	font-weight: bold}
 	
 input[type="reset"],
-/*input[type="submit"]*/ {
+input[type="submit"] {
 	background:#FD9339 url(darkshine/hover_list.jpg) repeat-x scroll 0 0;
 	color: #fff;
 	border: 1px solid #783C1C;
@@ -167,7 +173,6 @@ tt {font-size: 110%}
 
 /***** Site Header & Identity *****/
 #header-top {
-	height: 101px;
 	margin-top: 66px;
 	text-align: center}
 
@@ -226,7 +231,55 @@ div#tiki-top {
 	margin: auto;
 	text-align: left;
 	white-space: normal}
+	
+#siteloginbar,
+#siteloginbar_popup {
+	position: static;
+	float: right;
+	height: 28px !important;
+	padding: 0 4px;
+}
 
+#siteloginbar {
+	background: url(darkshine/orange.jpg) repeat-x;	
+}
+
+#siteloginbar_popup #siteloginbar {
+	background: #f3f3f3;
+	color: #000;
+	height: auto !important;
+}
+
+#siteloginbar_popup .tabcontent {
+	border: none;
+}
+
+#siteloginbar_popup #siteloginbar a {
+	color: #600000;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+li#register_link {
+	margin-right: 0;
+}
+
+#siteloginbar_popup .tabmark {
+	border: 0;
+	background: none;
+}
+
+#siteloginbar_popup .tabmark a {
+	background: url(darkshine/orange.jpg) repeat-x;	
+	border: none;
+	padding: 7px 7px 3px 7px;
+	line-height: normal;
+	color: #fff;
+}
+
+#sitesearchbar .findtable {
+	margin: 0 !important;
+}
 
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
@@ -285,12 +338,13 @@ td#leftcolumn .cssmenu_vert li li.sfHover ul {
 #tiki-top ul.cssmenu_horiz li ul a:hover,
 #listcontainer ul.cssmenu_horiz li ul a:hover {color: #fff}
 
-#tiki-top ul.cssmenu_horiz li.menuSection a {padding-right: 20px}
-#tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 1.8em}
+#tiki-top ul.cssmenu_horiz li.menuSection a {padding-right: 26px}
+#tiki-top .cssmenu_horiz li.menuSection a .sf-sub-indicator {top: 14px}
 td#leftcolumn .cssmenu_vert a .sf-sub-indicator {top: 0.6em}
 
 /* special arrows and arrow top padding */
-.cssmenu_vert li a .sf-sub-indicator {
+.cssmenu_vert li a .sf-sub-indicator,
+.cssmenu_horiz ul li a .sf-sub-indicator {
 	background: url(darkshine/arrows-000000.png) no-repeat 0 0;
 }
 
@@ -298,6 +352,31 @@ td#leftcolumn .cssmenu_vert a .sf-sub-indicator {top: 0.6em}
 .cssmenu_horiz li:hover ul,
 .cssmenu_horiz li.sfHover ul {
 	top: 3.2em;
+}
+
+#secondary_site_menu .cssmenu_horiz li a,
+#secondary_site_menu .cssmenu_horiz li a:visited {
+	color: #fff;
+	background: none;
+	padding: 7px 1em 3px;
+}
+
+#secondary_site_menu .cssmenu_horiz li.menuSection a {
+	padding-right: 20px;
+}
+
+#secondary_site_menu ul.cssmenu_horiz ul li a,
+#secondary_site_menu ul.cssmenu_horiz ul li a:visited {
+	color: #000;
+}
+
+#secondary_site_menu .cssmenu_horiz li ul,
+#siteloginbar_popup .cssmenu_horiz li ul {
+	margin-top: -7px;
+}
+
+#secondary_site_menu .cssmenu_horiz li ul ul {
+	margin-top: 0;
 }
 
 /** PHP Layers Menus **/
@@ -434,9 +513,6 @@ div.separator:hover,
 .menuSection .option {padding-left: 22px}
 
 /***** Dark Shine-specific page top *****/
-/*div#topbar_custom_code {
-	border-left: 15px solid #600000;
-	border-right: 15px solid #600000}*/
 
 div#topbar_custom_code .wrapper {
 	/*height: 246px;*/
@@ -468,17 +544,12 @@ border: 3px solid #FEE5C6}
 	font: bold 11px arial, verdana, helvetica;
 	margin-top: 10px;
 	color: #000}
-	
-ul.topcontent {
-	float: right;
-	margin: 0;
-	padding: 0}
 
 ul.topcontent li {float: left}
 
 div#topcontent_items {
 	float: left;
-	overflow: hidden}
+}
 
 span#ticker {
 	color: #fff;
@@ -490,11 +561,11 @@ span#ticker {
 	border-collapse: collapse;
 	border-bottom: 0;
 	height: 28px;
-	overflow: hidden;
 	background: #000 url(darkshine/stripes_small.gif) repeat-x;
 	color: #fff;
-	text-align: right;
-	font: normal 10px/32px arial, verdana, helvetica, sans-serif}
+	font: normal 10px/32px arial, verdana, helvetica, sans-serif;
+	text-align: left;
+}
 	
 * html #topcontent {height: 43px}
 
@@ -503,57 +574,48 @@ span#ticker {
 	margin-left: 2px;
 	margin-right: 6px}
 
-#contenttop span {
-	display: inline;
-	margin-left: 10px;
-	float: left;
-	clear: 0}
-
-#contenttop ul {
-	position: absolute;
-	left: 0;
-	top: 0}
 
 #contenttop ul li a, #contenttop ul li,
 #topcontent li {
-	display: block;
-	float: left;
-	width: 78px;
-	height: 28px;
-	text-align: center;
 	text-decoration: none;
-	color: #fff;
-	font: bold 12px/32px arial, verdana, helvetica, sans-serif;
-	overflow: hidden}
-
-#contenttop ul li a:hover {color: #000}
+/*	color: #fff;*/
+	font: bold 12px/normal arial, verdana, helvetica, sans-serif;
+}
+/*
+#contenttop ul li a:hover {color: #000}*/
 
 #topcontent li#blue a,
 #topcontent li#blue a:visited {
 	display: block;
-	background: #0086EE url(darkshine/blue.jpg) no-repeat}
+	background: #0086EE url(darkshine/blue.png) no-repeat}
 
 #topcontent li#red a,
 #topcontent li#red a:visited {
 	display: block;
-	background: #F41100 url(darkshine/red.jpg) no-repeat}
+	background: #F41100 url(darkshine/red.png) no-repeat}
 
 #topcontent li#orange a,
 #topcontent li#orange a:visited {
 	display: block;
-	background: #ED700D url(darkshine/orange.jpg) no-repeat}
+	background: #ED700D url(darkshine/orange.png) no-repeat}
 
 #search a,
 #sitesearchbar {
-	background: #199B2C url(darkshine/green.jpg) no-repeat;
+	background: #199B2C url(darkshine/green.png) no-repeat;
+	border-right: 2px solid #000;
 	float: right;
-	width: 78px;
 	height: 28px;
 	text-align: center;
 	text-decoration: none;
 	color: #fff;
-	font: bold 12px/32px arial, verdana, helvetica, sans-serif;
-	display: block}
+	font: bold 12px/normal arial, verdana, helvetica, sans-serif;
+	display: block;
+}
+
+#sitesearchbar {
+	padding: 0 4px;
+	line-height: 28px;
+}
 
 input[id="fuser"],
 select[name="where"],
@@ -562,14 +624,13 @@ select[name="where"],
 	color: #fff}
 
 #adspace {	
-	/*height: 67px;*/
 	background: #71201b url(darkshine/ad.gif) repeat-x;
 	border: 15px solid #600000;
 	border-top: 0;
 	border-bottom: 0;
 	text-align: center;
 	overflow: hidden;
-	/*height: 100%*/}
+}
 
 #adspace .wrapper {
 	border-left: 1px solid #A5514B;
@@ -674,11 +735,9 @@ div.simplebox {
 /***** Tables, Tabs *****/
 /** Tables **/
 
-table.normal/*, 
-table.admin*/ {
+table.normal {
 	border: solid 1px #909090;
 	width: 100%}
-
 
 th, td.heading {
 	background: #DCDCDC;
@@ -704,16 +763,43 @@ td.even {
 td.form {padding: 0.2em}
 
 /** Tabs **/
+
+/* reset what's in layout.css */
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
 .tabs {
-	margin: 10px 3px -18px 3px !important;
-	border-bottom: solid 1px #8f8e91 !important}
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	position: relative;
+	padding: .2em .2em 0;
+	margin:0 0.2em 1px 0;
+	border: solid 1px #8f8e91;
+}
+
+.tabs br {
+	display: none;
+}
+
+.tabs span {
+	display: block;
+	float: left;
+}
 
 .tabmark {
+	list-style-image: none;
+	float: left;
 	background: #ececec;
 	border: 1px solid #666;
-	padding: 2px 0}
+	border-bottom-width: 0 !important;
+	margin: 0 .2em -1px 0;
+}
 	
 .tabmark a {
+	padding: 0.5em 1em;
 	color: #666;
 	font-weight: bold}
 
@@ -721,18 +807,16 @@ td.form {padding: 0.2em}
 .tabmark a:hover {color: black}
 	
 .tabactive {
-	border-color: #7c7b7d !important;
-	border-width: 1px !important}
-
-.tabinactive {
-	border-color: #bbbbbb !important;
-	border-width: 1px !important}
+	padding-bottom: 1px;
+	border: 1px solid #7c7b7d;
+	border-bottom-width: 0;
+}
 
 .tabcontent {
-	padding-top: 26px;
-	margin-bottom: 25px;
 	border: 1px solid #7c7b7d;
-	background: #ececec}
+	background: #ececec;
+	color: #000;
+}
 
 table.admin tr td div#page-bar {
 	margin-left: 5px;
@@ -749,21 +833,10 @@ a.pagetitle {
 	margin-bottom: 20px;
 	text-decoration: none}
 
-.wikitopline {}
-
 div#description {
 	font-size: .9em;
 	font-style: italic}
 
-#pageid {
-	float: left;
-	clear: both}
-
-#cachedpage {
-	float: right;
-	font-size: small}
-
-.categpath {}
 .wikitext {line-height: 1.5em}
 
 .wikitext h1, 
@@ -780,15 +853,6 @@ div#description {
 	border-bottom: 1px solid #999;
 	margin:10px 0 10px 0}
  
-.wikitext ul li {} 
-.wikitext ul li ul li {}
-.wikitext ol{}
-
-/* From Tikineat */
-.wikitext div.box {}
-.wikitopline table {}
-html>body .wikitopline table {}
-/* End from Tikineat */
 
 table.wikitable {
 	border: 1px solid #a9a9a9;
@@ -799,66 +863,7 @@ td.wikicell {
 	border: 1px solid #999;
 	border-collapse: collapse}
 
-.editdate {padding-bottom: 5px}
-
-div#page-bar {
-	display: block;
-	margin-top: 0}
-
-ul.floatleft {
-	display: block;
-	list-style: 0;
-	padding: 0;
-	text-align: left;
-	height: 20px;
-	margin-top: 0}
-
-ul.floatleft li {
-	float: left;
-	padding: 4px 2px}
-
-.editdate ul.floatleft {margin-top: 8px}
-
-span.button2,
-div.button2, .button3 {
-	margin-right: 5px}
-
-/* First of these from han.css - Check ?? */
-.navbar .linkbut:hover,
-div.button2 a:hover, .button3 a:hover {}
-
-/* From han.css - Check ?? */
-#page-bar p span.button2 {} 
-#page-bar table a.linkbut {}
-
-.linkbut {
-	/*font-size:90%;*/
-}
-
-.wiki-edithelp {display: 0}
-.linkbut:hover {}
-div.cache {}
-div.cachedpage {}
-.wikicache, .wikicache:visited {}
-.wikicache:hover {}
-.wiki {}
-.wikinew {}
-.wiki-edithelp {display: 0}
-#wikihelp-tab table{}
-#wikihelp-tab table td {padding: 2px}
-textarea.wikiedit {}
-p.editdate {}
-div.wiki-edithelp {}
-img.externallink {}
-
-/* Needed esp. for light-on-dark theme */
-div.quicktag {}
-div.quicktag img,
-#wikihelp-tab td img {}
-div#helptool {}
-
 /* Wiki plugins */
-
 /* Code plugin  */
 div.code {
 	font-size: 90%;
@@ -887,8 +892,6 @@ div.code {
 
 /* Quote plugin */
 div.quoteheader {margin-left: 20px}
-div.quotebody {}
-table.wikiplugin-split {border: 0}
 
 /** Wiki tocs **/
 div.tocnav {
@@ -909,16 +912,6 @@ ul.toc {
 	margin-bottom: 4px}
 
 ul.toc * {border: 0}
-
-/* Wiki diff styles */
-.diff td {}
-.diff div {}
-.diffheader {}
-.diffadded {}
-.diffdeleted {}
-.diffinldel {}
-.diffbody {}
-.diffchar {}
 
 
 /***** Articles ****/
@@ -971,7 +964,6 @@ div.articlesource {
 	font-style: italic;
 	font-size: 90%}
 
-
 /***** Blogs *****/
 div.blogheading {
 	display: block;
@@ -1001,17 +993,6 @@ div.blogtools {
 	padding: 3px;
 	text-align: right}
 
-.blogpost {}
-
-/*.postinfo div a img,*/
-a.blogt,
-a.blog:visited {}
-a.blogt:hover {}
-
-/* Check - How do these differ?? */
-.postinfo a {}
-div.postinfo a.linkmodule {}
-
 .postinfo div {margin-top: 30%}
 
 div.posthead {
@@ -1023,15 +1004,10 @@ div.posthead {
 	margin-top: 10px;
 	font-size: 1.2em}
 
-.postinfo a {}
-.small {} /* Check ?? (from fluidindex */
-
 span.posthead {
 	display: block;
 	font-weight: bold;
 	letter-spacing: .4pt}
- 
-div.posthead h3 {}
  
 div.postbody {
 	margin-right: 8px;
@@ -1045,8 +1021,6 @@ div.postfooter {
 
 /***** Forums *****/
 body.tiki_forums table.normal {margin: auto}
-#forumpost {display: 0}
-#forumpostopen {display: block}
 .post {width: 100%}
 
 .post .postbody {
@@ -1065,8 +1039,6 @@ body.tiki_forums table.normal {margin: auto}
 	text-align: left;
 	color: #000;
 	background: #f3f3f3 !important}
-	
-#col1 .post .postbody .content p {}
 
 .post .postbody-title {
 	display: block;
@@ -1092,7 +1064,7 @@ body.tiki_forums table.normal {margin: auto}
 .postbody-title .title a:visited {color: #000}
 	
 .post .postbody-title .title a.link {}
-.postbody-title br.clear {display: 0}
+.postbody-title br.clear {display: none}
 
 .post .author {
 	float: left;
@@ -1201,12 +1173,10 @@ body.tiki_forums table.normal {margin: auto}
 
 /* Comments */
 #comzone {
-	display: 0;
 	margin: 5px 0;
 	padding: 0}
  
 #comzoneopen {
-	display: block;
 	margin: 5px 0;
 	padding: 0}
  
@@ -1232,16 +1202,9 @@ td.eventhumb img {
 	margin-left: 6px;
 	margin-right: 6px}
 
-div.thumbnails {}
-
 img.athumb {
 	border: 0;
 	margin: auto}
-
-.caption {}
-p.norecords {}
-div.imagetitle {}
-div.gallerylink {}
 
 div#browse_image {width: 100%}/* Check - from fluidindex ?? */
 
@@ -1249,23 +1212,6 @@ div.showimage {
 	width: 100%;
 	text-align: center;
 	padding: 6px}
-
-div.imgaldescr {}
-.sorttitle {}
-
-/***** File Galleries *****/
-
-/***** Trackers *****/
-
-/***** Categories, Tags *****/
-
-/***** Tags (freetags) *****/
-	
-/*****  Polls  *****/
-
-/***** FAQs *****/
-
-/***** Quizzes *****/
 
 /***** Shoutbox *****/
 textarea.tshoutbox{width: 162px}
@@ -1472,12 +1418,6 @@ Caltrack a:visited {color:#00BD02}
 	
 #caltable .calfocuson a:hover {text-decoration: underline }
 
-.day, .day:visited {}
-.today {}
-.nav {}
-.changedate {}
-.date {}
-
 .calinput {background: #82e641}
 .calfocuson + .calcontent {background: #fff}
 
@@ -1522,11 +1462,11 @@ Caltrack a:visited {color:#00BD02}
 
 a.admbox {
 	border: 1px solid #aaa;
-	background: #90140c;
+	background-color: #90140c;
 	color: #f3f3f3}
 
 a.admbox:hover, a.admbox:focus, a.admbox:active  {
-	background: #600000;
+	background-color: #600000;
 	color: #f3f3f3;
 	border: 1px solid #292929}
 
@@ -1537,69 +1477,6 @@ a.admbox.off:focus,
 a.admbox.off:active {
 	border: 1px solid #9f9f9f}
 /***** Ajax, jquery. etc. *****/
-/***** Ajax *****/
-div#ajaxLoading {
-	display: 0;
-	position: absolute;
-	top: 50px;
-	right: 50%;
-	padding: 3px;
-	font-family: Verdana;
-	font-size: 90%;
-	background: url(../lib/shadowbox/images/loading.gif) no-repeat;
-	height: 42px;
-	width: 32px}
-
-
-#shadowbox_title {
-	height: auto !important;
-	padding: 0;
-	overflow: visible}
-
-#shadowbox_title_inner {
-	height: auto !important;
-	font-size: 1em !important;
-	line-height: 1em !important;
-	white-space: normal !important;
-	padding: 5px 0 4px 8px}
-	
-/* MyTiki preferences Ajax */
-
-.tab-wrapper {
-	border: 1px solid #eee;
-	padding: 0}
-
-.tab-menu  {
-	list-style: 0; 
-	padding: 2px 0; 
-	clear:  both}
-
-.tab-menu li {
-	width: 200px; 
-	display: inline; 
-	margin: 0 2px}
-
-.tab-menu li img {
-	vertical-align: middle}
-
-.tab-menu li a {
-	padding: 1px 5px; 
-	background: #f5f5f5; 
-	text-decoration: none;
-	border: 1px solid #783C1C;
-	border-width: 1px 0;
-	white-space: nowrap} 
-
-.tab-menu li a:hover, 
-.tab-menu li a:focus {
-	background: #FAEC8F; 
-	border-color: #999} 
-
-.tab-menu li a:hover {
-	background: #FD9339 url(darkshine/hover_list.jpg) repeat-x;
-	color: #fff}
-	 
-.tab-menu li.tab-selected a {background: #BCEC8F}
 
 /***** New (unsorted) *****/
 
