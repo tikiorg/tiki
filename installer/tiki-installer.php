@@ -555,7 +555,7 @@ if (!file_exists($local)) {
 		$db->setErrorHandler(new InstallerDatabaseErrorHandler);
 		TikiDb::set($db);
 
-		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+		if (! $test = $dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 			$dbcon = false;
 			$smarty->assign('dbcon', 'n');
 			$tikifeedback[] = array('num'=>1, 'mes'=>$dbTiki->ErrorMsg());
