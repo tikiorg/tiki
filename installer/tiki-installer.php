@@ -856,6 +856,7 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 
 
 include "lib/headerlib.php";
+$headerlib->add_js("var tiki_cookie_jar=new Array();");
 $headerlib->add_cssfile('styles/fivealive.css');
 $headerlib->add_jsfile( 'lib/tiki-js.js' );
 $headerlib->add_jsfile( 'lib/jquery/jquery.js' );
@@ -883,7 +884,8 @@ jqueryTiki.effect_tabs = "";
 jqueryTiki.effect_tabs_direction = "";
 jqueryTiki.effect_tabs_speed = 400;
 ';
-	$headerlib->add_js($js, 100);	
+$headerlib->add_js($js, 100);
+
 
 $smarty->assign_by_ref('headerlib',$headerlib);
 
