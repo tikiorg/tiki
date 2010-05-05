@@ -459,7 +459,7 @@
 	{if $install_type ne "scratch"}
 		<fieldset>
 			<legend>{icon _id=error} {tr}Upgrade fix{/tr}</legend>
-			<p>{tr}Experiencing problems with the upgrade? Your administrator account lost its privileges? This may occur if you upgraded since a very old version of Tikiwiki.</p>
+			<p>{tr}Experiencing problems with the upgrade? Your administrator account lost its privileges? This may occur if you upgraded since a very old version of Tiki.</p>
 			<p>We can fix it! Doing so will:{/tr}</p>
 			<ol>
 				<li>{tr}Create the <em>Admins</em> group, if missing{/tr}</li>
@@ -586,7 +586,7 @@
 			<div class="box">
 				<h3 class="box-title">{tr}Help{/tr}</h3>
 				<div class="clearfix box-data">
-				<p><img src="favicon.png" alt="{tr}Tiki Icon{/tr}" style="vertical-align:middle" /> <a href="http://tikiwiki.org" target="_blank">{tr}TikiWiki Project Web Site{/tr}</a></p>
+				<p><img src="favicon.png" alt="{tr}Tiki Icon{/tr}" style="vertical-align:middle" /> <a href="http://tikiwiki.org" target="_blank">{tr}Tiki Project Web Site{/tr}</a></p>
 				<p><img src="pics/icons/book_open.png" alt="{tr}Documentation{/tr}" style="vertical-align:middle" /> <a href="http://doc.tikiwiki.org" target="_blank">{tr}Documentation{/tr}</a></p>
 				<p><img src="pics/icons/group.png" alt="{tr}Forums{/tr}" style="vertical-align:middle" /> <a href="http://tikiwiki.org/forums" target="_blank">{tr}Support Forums{/tr}</a></p>
 				</div>
