@@ -8657,7 +8657,7 @@ function detect_browser_language() {
 function validate_email($email) {
 	global $prefs;
 	require_once 'lib/core/lib/Zend/Validate/EmailAddress.php';
-	$validate = new Zend_Validate_EmailAddress;
+	$validate = new Zend_Validate_EmailAddress( Zend_Validate_Hostname::ALLOW_ALL );
 	
 	return $validate->isValid( $email );
 }

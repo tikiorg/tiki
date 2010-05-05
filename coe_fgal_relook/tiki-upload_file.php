@@ -31,7 +31,7 @@ function print_msg($msg, $id) {
 	global $prefs;
 	if ($prefs['javascript_enabled'] == 'y') {
 		echo "<script type='text/javascript'><!--//--><![CDATA[//><!--\n";
-		echo "parent.progress('$id','" . htmlentities($msg, ENT_QUOTES, "UTF-8") . "')\n";
+		echo "parent.FileGallery.upload.progress('$id','" . htmlentities($msg, ENT_QUOTES, "UTF-8") . "')\n";
 		echo "//--><!]]></script>\n";
 		ob_flush();
 	}
@@ -463,7 +463,7 @@ if (isset($_REQUEST["upload"])) {
 		die;
 	}
 	if (!empty($editFileId) and count($errors) == 0) {
-		header("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0]);
+		header("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0].($_REQUEST["filegals_manager"]?"&filegals_manager=".$_REQUEST["filegals_manager"]:""));
 		die;
 	}
 } else {
@@ -478,6 +478,8 @@ if (isset($_REQUEST['galleryId']) && is_numeric($_REQUEST['galleryId'])) {
 } else {
 	$smarty->assign('galleryId', '');
 }
+$smarty->assign('extra', $_REQUEST['extra']);
+$smarty->assign('fgspecial', $_REQUEST['fgspecial']);
 if (empty($_REQUEST['fileId'])) {
 	global $cachelib;
 	include_once ('lib/cache/cachelib.php');
@@ -508,9 +510,9 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 if ($prefs['javascript_enabled'] != 'y' or !isset($_REQUEST["upload"])) {
 	$smarty->assign('mid', 'tiki-upload_file.tpl');
-	if (!empty($_REQUEST['filegals_manager'])) {
+	if (!empty($_REQUEST['filegals_manager']) || $_REQUEST["fgspecial"]) {
 		$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
-		$smarty->display("tiki_full.tpl");
+		$smarty->display("tiki-empty.tpl");
 	} else {
 		$smarty->display("tiki.tpl");
 	}

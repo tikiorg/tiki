@@ -188,13 +188,13 @@ class TikiAccessLib extends TikiLib
 	 * @access public
 	 * @return void
 	 */
-	function check_authenticity($confirmation_text = '') {
+	function check_authenticity($confirmation_text = '', $popup = '') {
 		global $prefs;
 		if ($prefs['feature_ticketlib2'] == 'y') {
 			if (isset($_REQUEST['daconfirm'])) {
 				key_check();
 			} else {
-				key_get(null, $confirmation_text);
+				key_get(null, $confirmation_text, '', $popup);
 			}
 		}
 	}

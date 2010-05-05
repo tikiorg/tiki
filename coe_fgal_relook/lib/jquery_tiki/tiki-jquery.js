@@ -166,7 +166,7 @@ function convertOverlib(element, tip, params) {	// process modified overlib even
 			$el.width($jq(window).width() * 0.8);
 		}
 		options.width = $el.width();
-		$jq(document.body).remove($el[0]);
+//		$jq(document.body).remove($el[0]);
 		
 		element.tipWidth = options.width;
 	}

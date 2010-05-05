@@ -10,7 +10,7 @@
 {assign var=alink value=''}
 {/if}
 {capture name=msg assign=msg}
-<table border="0" cellspacing="4" cellpadding="4">
+<!--table border="0" cellspacing="4" cellpadding="4">
 	<tr>
 		<td style="text-align: center">
 			<a {$alink}><img src="{$fileId|sefurl:thumbnail}" /></a>
@@ -42,8 +42,29 @@
 			</div>{/if}
 		</td>
 	</tr>
-</table>
+</table-->
 {/capture}
 <script type='text/javascript'><!--//--><![CDATA[//><!--
-	parent.progress('{$FormId}','{$msg|escape:"javascript"}');
+	parent.FileGallery.upload.progress('{$FormId}','{$msg|escape:"javascript"}');
 //--><!]]></script>
+
+{assign var=seturl value=$fileId|sefurl:display}
+<script>
+{if $filegals_manager neq ''}
+	if (parent.FileGallery.upload.asimage)
+		parent.FileGallery.upload.insertImage('{$fileId}',parent.FileGallery.upload.dimoriginal,parent.FileGallery.upload.dimwidth,parent.FileGallery.upload.dimheight);
+	else if (parent.FileGallery.upload.aslink)
+		parent.FileGallery.upload.insertLink('{$fileId}',parent.FileGallery.upload.linktitle);
+	else
+		parent.FileGallery.upload.insert('{$fileId}');
+	if (!parent.document.getElementById("fg-insert-as-image"))
+		parent.FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&filegals_manager={$filegals_manager}');
+{else}
+	{if $fgspecial neq ''}
+		parent.FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&filegals_manager={$filegals_manager}');
+		parent.FileGallery.upload.close();
+	{else}
+		parent.location = 'tiki-list_file_gallery.php?galleryId={$galleryId}';
+	{/if}
+{/if}
+</script>

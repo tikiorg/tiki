@@ -1434,7 +1434,7 @@ class ToolbarFileGallery extends Toolbar
 		global $smarty;
 		
 		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
-		return $this->getSelfLink('openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_name'=>$areaName), $smarty)).'\');',
+		return $this->getSelfLink('FileGallery.open(\''.htmlentities(smarty_function_filegal_manager_url(array('area_name'=>$areaName), $smarty)).'\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-filegal');
 	} // }}}
 

@@ -74,8 +74,10 @@ $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 $smarty->assign('reindex_file_id', -1);
 // Execute batch actions
+$refreshgallery = false;
 if ($tiki_p_admin_file_galleries == 'y') {
 	if (isset($_REQUEST['delsel_x'])) {
+		$refreshgallery = true;
 		check_ticket('fgal');
 		if (isset($_REQUEST['file'])) {
 			foreach(array_values($_REQUEST['file']) as $file) {
@@ -85,12 +87,14 @@ if ($tiki_p_admin_file_galleries == 'y') {
 			}
 		}
 		if (isset($_REQUEST['subgal'])) {
+			$refreshgallery = true;
 			foreach(array_values($_REQUEST['subgal']) as $subgal) {
 				$filegallib->remove_file_gallery($subgal, $galleryId);
 			}
 		}
 	}
 	if (isset($_REQUEST['movesel'])) {
+		$refreshgallery = true;
 		check_ticket('fgal');
 		if (isset($_REQUEST['file'])) {
 			foreach(array_values($_REQUEST['file']) as $file) {
@@ -130,12 +134,14 @@ if (isset($_REQUEST['zipsel_x']) && $tiki_p_upload_files == 'y') {
 	die;
 }
 if (isset($_REQUEST['permsel_x']) && $tiki_p_assign_perm_file_gallery == 'y') {
+	$refreshgallery = true;
 	$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'file galleries');
 	$smarty->assign_by_ref('perms', $perms['data']);
 	$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 	$smarty->assign_by_ref('groups', $groups['data']);
 }
 if (isset($_REQUEST['permsel']) && $tiki_p_assign_perm_file_gallery == 'y' && isset($_REQUEST['subgal'])) {
+	$refreshgallery = true;
 	check_ticket('fgal');
 	foreach($_REQUEST['subgal'] as $id) {
 		foreach($_REQUEST['groups'] as $group) {
@@ -147,6 +153,7 @@ if (isset($_REQUEST['permsel']) && $tiki_p_assign_perm_file_gallery == 'y' && is
 }
 // Lock a file
 if (isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0) {
+	$refreshgallery = true;
 	if (!$fileInfo = $filegallib->get_file_info($_REQUEST['fileId'])) {
 		$smarty->assign('msg', tra('Incorrect param'));
 		$smarty->display("error.tpl");
@@ -183,6 +190,7 @@ if (isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId'
 }
 // Delete a file
 if (!empty($_REQUEST['remove'])) {
+	$refreshgallery = true;
 	// To remove an image the user must be the owner or the file or the gallery or admin
 	if (!$info = $filegallib->get_file_info($_REQUEST['remove'])) {
 		$smarty->assign('msg', tra('Incorrect param'));
@@ -204,7 +212,7 @@ if (!empty($_REQUEST['remove'])) {
 		$smarty->assign('file_backlinks_title', 'WARNING: The file is used in:');//get_strings tra('WARNING: The file is used in:')
 		$smarty->assign('confirm_detail', $smarty->fetch('file_backlinks.tpl'));
 	}
-	$access->check_authenticity(tra('Remove file: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename']);
+	$access->check_authenticity(tra('Remove file: ') . (!empty($info['name']) ? htmlspecialchars($info['name']) . ' - ' : '') . $info['filename'], $_REQUEST["dialog"]);
 	$filegallib->remove_file($info, $gal_info);
 }
 $foo = parse_url($_SERVER['REQUEST_URI']);
@@ -422,7 +430,20 @@ if (isset($_REQUEST['edit'])) {
 			$categlib->build_cache();
 		}
 		if (isset($_REQUEST['viewitem'])) {
-			header('Location: tiki-list_file_gallery.php?galleryId=' . $fgid.(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
+			print 
+				'<script>
+				FileGallery.open("tiki-list_file_gallery.php?galleryId=' . $fgid.(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:'').'"); 
+				jQuery("#fg-jquery-upload-dialog").dialog("close");
+				</script>';
+//			header('Location: tiki-list_file_gallery.php?galleryId=' . $fgid.(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
+			die;
+		} else {
+			print
+				'<script> 
+				FileGallery.open("tiki-list_file_gallery.php?'.($_REQUEST["galleryId"]? 'galleryId=' . $_REQUEST["galleryId"] : ($_REQUEST["parentId"]? 'galleryId='.$_REQUEST["parentId"] : "")).(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:'').'"); 
+				jQuery("#fg-jquery-upload-dialog").dialog("close");
+				</script>';
+//			header('Location: tiki-list_file_gallery.php?'.($_REQUEST["galleryId"]? 'galleryId=' . $_REQUEST["galleryId"] : ($_REQUEST["parentId"]? 'galleryId='.$_REQUEST["parentId"] : "")).(!empty($_REQUEST['filegals_manager'])?'&filegals_manager='.$_REQUEST['filegals_manager']:''));
 			die;
 		}
 		$smarty->assign('edit_mode', 'y');
@@ -690,6 +711,18 @@ if (isset($_GET['slideshow'])) {
 	$smarty->assign('mid', 'tiki-list_file_gallery.tpl');
 }
 
+$countfiles = $countgalleries = 0;
+if ($xf = $tikilib->get_files(0, 1000000000000, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true)) {
+	foreach ($xf['data'] as $fl) {
+		if ($fl['isgal'])
+			$countgalleries ++;
+		else
+			$countfiles ++;
+	}
+}
+$smarty->assign("countfiles", $countfiles);
+$smarty->assign("countgalleries", $countgalleries);
+
 // Browse view
 $smarty->assign('thumbnail_size', 120);
 $smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n');
@@ -753,7 +786,7 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 	}
 	sort($gals);
 	$smarty->assign_by_ref('all_galleries', $gals);
-
+	
 	if ( ! empty($all_galleries) && is_array($all_galleries) && $all_galleries['cant'] > 0) {
 		$phplayersTreeData = $filegallib->getFilegalsTreePhplayers( $galleryId );
 
@@ -804,11 +837,14 @@ if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
 $smarty->assign_by_ref('find_durations', $find_durations);
 $smarty->assign_by_ref('gal_info', $gal_info);
 
-$smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
+$view = isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value'];
+$smarty->assign('view', $view);
+$other = (isset($_REQUEST['view'])&&$_REQUEST['view']=='browse'?'list':'browse');
+$smarty->assign('altmode', $_SERVER['PHP_SELF']."?view=".$other."&filegals_manager=".$_REQUEST["filegals_manager"].(isset($_REQUEST["galleryId"])?"&galleryId=".$_REQUEST["galleryId"]:""));
 // Display the template
-if (!empty($_REQUEST['filegals_manager'])) {
+if (!empty($_REQUEST['filegals_manager']) || !empty($_REQUEST["edit_mode"])) {
 	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
-	$smarty->display('tiki_full.tpl');
+	$smarty->display('tiki-empty.tpl');
 } else {
 	$smarty->display('tiki.tpl');
 }

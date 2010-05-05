@@ -140,7 +140,7 @@
 	{if isset($pos)}<input type="hidden" name="pos" value="{$pos}" />{/if}
 	{if $current_page_id}<input type="hidden" name="current_page_id" value="{$current_page_id}" />{/if}
 	{if $add_child}<input type="hidden" name="add_child" value="true" />{/if}
-	
+
 	{if ( $preview && $staging_preview neq 'y' ) or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
 		<div class='top_actions'>
 			{include file='wiki_edit_actions.tpl'}

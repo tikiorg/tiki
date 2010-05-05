@@ -187,6 +187,9 @@ class HeaderLib
 			}
 			$back.= "\n";
 		}
+
+		$back .= '<script type="text/javascript" src="lib/filegals/file_gallery.js"></script>' . "\n"; /* FIXME */
+
 		$this->hasDoneOutput = true;
 		return $back;
 	}

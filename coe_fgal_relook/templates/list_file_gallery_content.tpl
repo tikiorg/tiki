@@ -1,6 +1,7 @@
 {* $Id$ *}
 {if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
-<table class="normal">
+
+<table class="normal fg-list-view" cellspacing="0" cellpadding="0">
   <tr>
   {if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
     {assign var=nbCols value=`$nbCols+1`}
@@ -184,7 +185,7 @@
     </td>
   {/if}
       
-  {if $show_parentName eq 'y'}<td class="{cycle advance=false}"><a href="tiki-list_file_gallery.php?galleryId={$files[changes].galleryId}">{$files[changes].parentName|escape}</a></td>{/if}
+  {if $show_parentName eq 'y'}<td class="{cycle advance=false}"><a href="javascript:void(0)" onclick="FileGallery.open('tiki-list_file_gallery.php?galleryId={$files[changes].galleryId}');return false;">{$files[changes].parentName|escape}</a></td>{/if}
   {foreach from=$fgal_listing_conf item=item key=propname}
     {if isset($item.key)}
       {assign var=key_name value=$item.key}
@@ -195,15 +196,17 @@
       {assign var=propval value=$files[changes].$propname|escape}
   
       {* build link *}
+<!--href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();"  title="{tr}Click Here to Insert in Wiki Syntax{/tr}"-->
+<!--href="javascript:if (typeof SetMyUrl != 'undefined') SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else SetUrl('{$tikiroot}{$seturl}'); void($('#fg-jquery-dialog').dialog('close'));"  title="{tr}Click Here to Insert in Wiki Syntax{/tr}"-->
       {capture assign=link}{strip}
         {if $files[changes].isgal eq 1}
-          href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}"
+          onclick="FileGallery.open('tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&filegals_manager={$filegals_manager|escape}{/if}')"
         {else}
           {if $filegals_manager neq ''}
             {assign var=seturl value=$files[changes].id|sefurl:display}
 
             {* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
-            href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();"  title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
+			onclick="javascript:FileGallery.upload.insert('{$files[changes].id}');return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
 
           {elseif $tiki_p_download_files eq 'y'}
             {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
@@ -273,7 +276,7 @@
         {assign var=other_columns_selected_val value=$propval}
       {else}
         {if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) }
-          <td class="{cycle advance=false}">{$propval}</td>
+          <td class="{cycle advance=false} fg-file-{$propname}">{$propval}</td>
         {/if}
       {/if}
     {/if}
