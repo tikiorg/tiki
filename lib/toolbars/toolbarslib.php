@@ -1325,12 +1325,8 @@ displayDialog = function( closeTo, list, areaname ) {
 		}
 	}
 	
-	// quick fix for Firefox 3.5 losing selection on changes to popup
-	textarea = getElementById( areaname);
-	if (typeof textarea.selectionStart != 'undefined') {
-		var tempSelectionStart = textarea.selectionStart;
-        	var tempSelectionEnd = textarea.selectionEnd; 
-	}
+	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
+	saveTASelection(areaname);
 
 	if (!obj) { obj = {}; }
 	if (!obj.width) { obj.width = 210; }
@@ -1338,13 +1334,8 @@ displayDialog = function( closeTo, list, areaname ) {
 	obj.autoOpen - false;
 	\$jq(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
 
-	// quick fix for Firefox 3.5 losing selection on changes to popup
-	if (textarea.selectionStart != tempSelectionStart) {
-                textarea.selectionStart = tempSelectionStart;
-        }
-        if (textarea.selectionEnd != tempSelectionEnd) {
-                textarea.selectionEnd = tempSelectionEnd;
-        }
+	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
+	restoreTASelection(areaname);
 	
 	return false;
 }
