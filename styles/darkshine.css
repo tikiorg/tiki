@@ -804,7 +804,11 @@ td.form {padding: 0.2em}
 	font-weight: bold}
 
 .tabmark a:active {color: #636466}
-.tabmark a:hover {color: black}
+
+.tabmark a:hover,
+.tabactive a {
+	color: #000;
+}
 	
 .tabactive {
 	padding-bottom: 1px;
