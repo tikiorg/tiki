@@ -30,7 +30,6 @@
 				{/if}
 			</div>
 			{preference name=tiki_cachecontrol_session}
-			{preference name=tiki_cachecontrol_nosession}
 		</fieldset>
 		
 		<fieldset>
@@ -88,7 +87,6 @@
 				{preference name=session_lifetime}
 				{preference name=session_cookie_name}
 				{preference name=session_silent}
-				{preference name=tiki_cachecontrol_session}
 				{preference name=tiki_cachecontrol_nosession}
 		</fieldset>
 		
