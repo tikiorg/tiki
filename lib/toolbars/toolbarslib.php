@@ -902,7 +902,7 @@ class ToolbarDialog extends Toolbar
 						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
 						'{"open": function () {
 $jq("#tbWLinkPage").tiki("autocomplete", "pagename");
-var s = getSelection($jq(getElementById(areaname))[0]);
+var s = getTASelection($jq(getElementById(areaname))[0]);
 var m = /\((.*)\(([^\|]*)\|?([^\|]*)\|?([^\|]*)\|?\)\)/g.exec(s);
 if (m && m.length > 4) {
 	if ($jq("#tbWLinkRel")) { $jq("#tbWLinkRel").val(m[1]); }
@@ -964,7 +964,7 @@ if (typeof textarea.selectionEnd != "undefined" && textarea.selectionEnd != temp
 						$prefs['cachepages'] == 'y' ? '<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />' : '',
 						'{"width": 300, "open": function () {
 $jq("#tbWLinkPage").tiki("autocomplete", "pagename");
-var s = getSelection($jq(getElementById(areaname))[0]);
+var s = getTASelection($jq(getElementById(areaname))[0]);
 var m = /\[([^\|]*)\|?([^\|]*)\|?([^\|]*)\]/g.exec(s);
 if (m && m.length > 3) {
 	$jq("#tbLinkURL").val(m[1]);
@@ -1024,7 +1024,7 @@ if (textarea.selectionEnd != tempSelectionEnd) {
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
 						'{"open": function () {
-var s = getSelection($jq(getElementById(areaname))[0]);
+var s = getTASelection($jq(getElementById(areaname))[0]);
 var m = /\|\|([\s\S]*?)\|\|/mg.exec(s);
 var vals = [], rows=3, cols=3, c, r, i, j;
 if (m) {
@@ -1175,7 +1175,7 @@ if (textarea.selectionEnd != tempSelectionEnd) {
 						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'{"open": function() {
-	var s = getSelection($jq(getElementById(areaname))[0]);
+	var s = getTASelection($jq(getElementById(areaname))[0]);
 	$jq("#tbFindSearch").val(s);
 						  },'.
 						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
@@ -1225,7 +1225,7 @@ if (textarea.selectionEnd != tempSelectionEnd) {
 						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'{"open": function() {
-	var s = getSelection($jq(getElementById(areaname))[0]);
+	var s = getTASelection($jq(getElementById(areaname))[0]);
 	$jq("#tbReplaceSearch").val(s);
 						  },'.
 						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
