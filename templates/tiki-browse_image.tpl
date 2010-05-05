@@ -155,7 +155,7 @@
     {elseif !$resultscale}
     <tt style="color: brown;line-height: 200%">&lt;img src="{$url_show}?id={$imageId}&amp;scalesize=0" /&gt;</tt><br />
     {else}
-    <tt style="color: brown;line-height: 200%">&lt;img src="{$url_show}?id={$imageId}&amp;scalesize={$resultscale}" /&gt;</tt?<br />
+    <tt style="color: brown;line-height: 200%">&lt;img src="{$url_show}?id={$imageId}&amp;scalesize={$resultscale}" /&gt;</tt><br />
     {/if}
     </small>
     </td>
