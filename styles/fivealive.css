@@ -500,9 +500,7 @@ li.login_link ul li a {
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li:hover ul a,
-#tiki-top .cssmenu_horiz li ul a,
-#tiki-top .cssmenu_horiz li:hover ul a {
+#header .cssmenu_horiz li:hover ul a {
 	background: #1172a3;
 	font-weight: normal;
 	text-decoration: none;
@@ -511,8 +509,7 @@ li.login_link ul li a {
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover,
-#tiki-top .cssmenu_horiz li ul a:hover {
+#header .cssmenu_horiz li ul a:hover {
 	background: #128bc9;
 	text-decoration: none;
 	border-right: none;
@@ -524,13 +521,16 @@ li.login_link ul li a {
 	padding: .75em 1em;
 }
 
-#tiki-top .cssmenu_horiz li a {
-	padding: 20px 1em;
-	font-size: 13px;
+#header .cssmenu_horiz li a {
 	font-weight: bold;
 	text-decoration: none;
 	text-transform: uppercase;
 	color: #fff;
+}
+
+#tiki-top .cssmenu_horiz li a {
+	font-size: 13px;
+	padding: 20px 1em;
 	background: url(fivealive/menu_divider.png) 100% 50% no-repeat;
 }
 
@@ -550,29 +550,29 @@ li.login_link ul li a {
 	padding-right: 30px;
 }
 
-#header .cssmenu_horiz ul li a,
-#tiki-top .cssmenu_horiz ul li a {
+#header .cssmenu_horiz ul li a {
 	text-transform: none;
 }
 
-#tiki-top .cssmenu_horiz ul li:hover a {
+#header .cssmenu_horiz ul li:hover a {
 	text-decoration: none;
 }
 
 #tiki-top .cssmenu_horiz li a > .sf-sub-indicator {top: 30px}
-#tiki-top .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
+#header .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
 #col2 .cssmenu_vert li a > .sf-sub-indicator {top: 5px}
 
+#header .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
 .cssmenu_vert li.selected a {
-	font-style: normal;
-	color: #28aae1 !important;
+	color: #c2eef8;
 }
 
+#header .cssmenu_horiz li.selected li a,
 .cssmenu_horiz li.selected li a,
 .cssmenu_vert li.selected li a {
 	font-style: normal;
-	color: #fff !important;
+	color: #fff;
 }
 
 .cssmenu_vert a {

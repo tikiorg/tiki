@@ -78,7 +78,7 @@ input[type="submit"]:hover,
 span.button input:hover,
 .calbuttonBox:hover,
 span#genPass span.button a:hover {
-	background: #b1ae22;
+	background: #baba25;
 	border-color: #b2a713 #f0e884 #f0e884 #b2a713;
 }
 
@@ -96,22 +96,33 @@ span.button.highlight a {
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li:hover ul a,
-#tiki-top .cssmenu_horiz li ul a,
-#tiki-top .cssmenu_horiz li:hover ul a  {
+#header .cssmenu_horiz li:hover ul a  {
 	background: #bcb923;
 }
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover,
-#tiki-top .cssmenu_horiz li ul a:hover  {
-	background: #e1d516;
+#header .cssmenu_horiz li ul a:hover  {
+	background: #e1d518;
 }
 
+.cssmenu_vert li ul a:hover,
+.cssmenu_horiz li ul a:hover,
+#header .cssmenu_horiz li ul a:hover {
+	background: #dbd11a;
+}
+
+#header .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
 .cssmenu_vert li.selected a {
-	color: #efe350 !important;
+	color: #f0e884;
+}
+
+#header .cssmenu_horiz li.selected li a,
+.cssmenu_horiz li.selected li a,
+.cssmenu_vert li.selected li a {
+	font-style: normal;
+	color: #fff;
 }
 
 .cssmenu_vert .sf-sub-indicator {
@@ -163,7 +174,7 @@ tr.diffheader {
 
 .tabmark {
 	border: 1px solid #f0e884;
-	background: #bcbb25;
+	background: #baba25;
 }
 
 .tabmark a {
@@ -217,7 +228,7 @@ div.dirsite {
 	background: #F8F9D5;
 }
 .cluetip-default h3#cluetip-title {
-	background: #B1AE2B;
+	background: #baba25;
 	color: #fff;
 }
 
