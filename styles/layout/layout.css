@@ -1855,7 +1855,9 @@ table.webmail_message_headers th {
 
 /* treeTable definitions - used in object-perms so far */
 
-table.treeTable {}
+table.treeTable {
+	padding-left: 19px;
+}
 
 table.treeTable .checkBoxHeader {
 	font-size: .8em;
