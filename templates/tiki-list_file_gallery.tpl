@@ -192,7 +192,7 @@ if (getCookie("fgalKeepOpen")) {
   {include file='duplicate_file_gallery.tpl'}
 
 {else}
-  {include file='find.tpl' find_show_num_rows = 'y' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations}
+  {include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations}
 
 {if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
 	<div class="findtable">
