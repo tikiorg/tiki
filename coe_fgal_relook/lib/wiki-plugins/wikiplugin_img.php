@@ -176,13 +176,13 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Caption'),
 				'filter' => 'text',
-				'description' => tra('Image caption. "desc" or "name" for tiki images, "idesc" or "ititle" for iptc data, otherwise enter your own description.'),
+				'description' => tra('Image caption. "desc" or "name" or "namedesc" for tiki images, "idesc" or "ititle" for iptc data, otherwise enter your own description.'),
 			),
 			'title' => array(
 				'required' => false,
 				'name' => tra('Link title'),
 				'filter' => 'text',
-				'description' => tra('Title text.'),
+				'description' => tra('Title text. "desc" or "name" or "namedesc", otherwise enter your own title.'),
 			),
 			'alt' => array(
 				'required' => false,
@@ -939,6 +939,9 @@ function wikiplugin_img_info() {
 				case 'ititle':
 					$desconly = $ititle;
 					break;
+				case 'namedesc':
+					$desconly = $imgname.((!empty($imgname) && !empty($desc))?' - ':'').$desc;
+					break;
 				default:
 					$desconly = $imgdata['desc'];
 			}
@@ -949,7 +952,19 @@ function wikiplugin_img_info() {
 		if ( !empty($imgdata['title']) || !empty($desconly)) {
 			$imgtitle = ' title="';
 			if ( !empty($imgdata['title']) ) {
-				$titleonly = $imgdata['title'];
+				switch ($imgdata['title']) {
+				case 'desc':
+					$titleonly = $desc;
+					break;
+				case 'name':
+					$titleonly = $imgname;
+					break;
+				case 'namedesc':
+					$titleonly = $imgname.((!empty($imgname) && !empty($desc))?' - ':'').$desc;
+					break;
+				default:
+					$titleonly = $imgdata['title'];
+				}
 			//use desc setting for title if title is empty
 			} else {										
 				$titleonly = $desconly;

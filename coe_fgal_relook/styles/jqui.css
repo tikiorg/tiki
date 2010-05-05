@@ -632,6 +632,24 @@ div.freetagitemlist {
 .caleven {
 	background: #d4d4d4;
 }
+
+.calfocuson {
+	font-size: 100%; 
+	background: #f3e498;
+}
+
+.calfocuson a {
+	font-size: 90%; 
+}
+
+div#calscreen td.calfocuson {
+	border-bottom: none;
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #f3e498;
+}
+
 /*.calodd .calfocus, .calodd .calfocuson*/
 /*.caleven .calfocus, .caleven .calfocuson {background: ;}*/
 

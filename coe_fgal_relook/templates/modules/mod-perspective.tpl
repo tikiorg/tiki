@@ -1,13 +1,15 @@
 {if $perspectives|@count gt 0}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="perspective" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 		<form method="get" action="tiki-switch_perspective.php">
-			<select name="perspective">
+			<select name="perspective" onchange="this.form.submit();">
 				<option>{tr}Default{/tr}</option>
 				{foreach from=$perspectives item=persp}
 					<option value="{$persp.perspectiveId|escape}"{if $persp.perspectiveId eq $current_perspective} selected="selected"{/if}>{$persp.name|escape}</option>
 				{/foreach}
 			</select>
-			<input type="submit" value="{tr}Go{/tr}"/>
+			<noscript>
+				<input type="submit" value="{tr}Go{/tr}"/>
+			</noscript>
 		</form>
 		{if $tiki_p_perspective_admin eq 'y'}
 			<div align="center">

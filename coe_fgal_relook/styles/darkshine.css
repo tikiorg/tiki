@@ -1416,10 +1416,6 @@ Caltrack a:visited {color:#00BD02}
 	font-weight: normal;
 	color: #000}
 
-.calfocuson {
-	font-size: 90%;
-	background: #F3E498}
-
 .calfocuson a {
 	text-decoration: none;
 	font-weight: normal;
@@ -1510,6 +1506,14 @@ Caltrack a:visited {color:#00BD02}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #dcdcdc}
 .calfocus, .calfocuson {border-bottom: 0}
+/*today focus*/
+.calfocuson {
+	font-size: 100%;
+	background: #f3e498}
+	
+.calHeadingOn, .calHeadingOn a {
+	background: #f3e498;
+}
 
 .daterow {}
 .daterow:hover {}

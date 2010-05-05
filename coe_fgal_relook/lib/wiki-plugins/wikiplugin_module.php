@@ -97,25 +97,14 @@ function wikiplugin_module_info() {
 				'name' => tra('notitle'),
 				'description' => 'y|n',
 			),
-			'inside_pretty' => array(
-				'required' => false,
-				'name' => tra('Inside Pretty Tracker'),
-				'description' => tra('Set to y to use inside a pretty tracker with field reference replacement (default=n)'),
-				'filter' => 'alpha'
-			),
 		),
 	);
 }
 
 function wikiplugin_module($data, $params) {
-	global $tikilib, $cache_time, $smarty, $dbTiki, $prefs, $ranklib, $tikidomain, $user, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib, $module_params, $trklib;
+	global $tikilib, $cache_time, $smarty, $dbTiki, $prefs, $ranklib, $tikidomain, $user, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib, $module_params;
 
 	$out = '';
-	
-	if (isset($params['inside_pretty']) && $params['inside_pretty'] == 'y') {
-		require_once("lib/trackers/trackerlib.php");
-		$trklib->replace_pretty_tracker_refs($params);
-	}
 	
 	extract ($params,EXTR_SKIP);
 

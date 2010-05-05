@@ -69,9 +69,9 @@ if ( $isPre ) {
 $mainversion = $version{0};
 
 include_once('lib/setup/twversion.class.php');
-$check_version = strtolower($version.$subrelease);
+$check_version = $version.$subrelease;
 $TWV = new TWVersion();
-if ( strtolower($TWV->version) != $check_version ) {
+if ( $TWV->version != $check_version ) {
 	error("The version in the code ".strtolower($TWV->version)." differs from the version provided to the script $check_version.\nThe version should be modified in lib/setup/twversion.class.php to match the released version.");
 }
 

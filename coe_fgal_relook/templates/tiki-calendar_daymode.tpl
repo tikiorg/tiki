@@ -1,7 +1,7 @@
 <div style="position:relative">
   <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
 	<tr valign="middle" style="height:36px">
-	  <td id="month_title" style="text-align:center"><strong>{$focusdate|tiki_long_date}</strong></td>
+	  <td id="month_title" {if $day eq $today}class="calfocuson"{/if} style="text-align:center; border:none; padding-top:4px"><strong>{$focusdate|tiki_long_date}</strong></td>
 	</tr>
   </table>
   <table border="0" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;border:1px solid #ccc">

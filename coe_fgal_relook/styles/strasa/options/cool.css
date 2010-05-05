@@ -3,6 +3,10 @@
    released under LPGL license. For more information, visit http://themes.tikiwiki.org. */
 
 /***** XHTML Elements ******/
+html {
+	background-color:#fff;
+}
+
 body {
 	background: #fff;
 }

@@ -371,7 +371,7 @@
 		{/if}
 		{foreach key=id item=label from=$field_value.list}
 			<option value="{$label|escape}" {if $field_value.value eq $label or $defaultvalues.$fid eq $label or $field_value.defaultvalue eq $label}selected="selected"{/if}>
-				{if $field_value.displayedList.$id eq ''}{$label}{else}{$field_value.displayedList.$id}{/if}
+				{if $field_value.listdisplay[$id] eq ""}{$label}{else}{$field_value.listdisplay[$id]}{/if}
 			</option>
 		{/foreach}
 	</select>

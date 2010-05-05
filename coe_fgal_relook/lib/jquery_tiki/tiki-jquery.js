@@ -1,5 +1,5 @@
 // $Id$
-// JavaScript glue for JQuery (1.3.2) in TikiWiki (3.0)
+// JavaScript glue for JQuery (1.3.2) in TikiWiki (3.0+)
 
 var $jq = jQuery.noConflict();
 
@@ -159,7 +159,7 @@ function convertOverlib(element, tip, params) {	// process modified overlib even
 		// hack to calculate div width
 		var $el = $jq("<div />")
 			.css('display', 'none')
-			.insertBefore("#fixedwidth")
+			.insertBefore("#main")
 			.html(tip);
 		
 		if ($el.width() > $jq(window).width()) {
@@ -200,11 +200,11 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	if (jqueryTiki.tooltips) {	// apply "cluetips" to all .tips class anchors
 		
 		var ctOptions = { splitTitle: '|', cluezIndex: 400, width: 'auto', fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true };
-		$jq.cluetip.setup( { insertionType: 'insertBefore', insertionElement: '#fixedwidth' } );
+		$jq.cluetip.setup( { insertionType: 'insertBefore', insertionElement: '#main' } );
 		
-		$jq('.tips').cluetip($jq.extend( ctOptions, {showTitle: false }));	//, width: '150px'
-		$jq('.titletips').cluetip($jq.extend( ctOptions, {}));
-		$jq('.tikihelp').cluetip($jq.extend( ctOptions, {splitTitle: ':' }));	// , width: '150px'
+		$jq('.tips[title!=""]').cluetip($jq.extend( ctOptions, {}));
+		$jq('.titletips[title!=""]').cluetip($jq.extend( ctOptions, {}));
+		$jq('.tikihelp[title!=""]').cluetip($jq.extend( ctOptions, {splitTitle: ':' }));	// , width: '150px'
 		$jq('.stickytips').cluetip($jq.extend( ctOptions, { showTitle: false, sticky: false, local: true, hideLocal: true, activation: 'click', cluetipClass: 'fullhtml'}));
 		
 		// repeats for "tiki" buttons as you cannot set the class and title on the same element with that function (it seems?)

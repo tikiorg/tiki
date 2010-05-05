@@ -19,7 +19,7 @@ if (!isset($_REQUEST["nlId"])) {
 	$_REQUEST["nlId"] = 0;
 }
 $smarty->assign('nlId', $_REQUEST["nlId"]);
-$newsletters = $nllib->list_newsletters(0, -1, 'created_desc', '', '', array("tiki_p_admin_newsletters", "tiki_p_send_newsletters"));
+$newsletters = $nllib->list_newsletters(0, -1, 'created_desc', '', '', array("tiki_p_admin_newsletters", "tiki_p_send_newsletters"), 'n');
 if (!$newsletters['cant']) {
 	$smarty->assign('msg', tra("No newsletters available."));
 	$smarty->display("error.tpl");
@@ -266,6 +266,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('subject', $_REQUEST["subject"]);
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
+	$smarty->assign_by_ref('subscribers_list', $subscribers);
 	$smarty->assign('info', $info);
 	if (!empty($_REQUEST['replyto'])) {
 		$smarty->assign('replyto', $_REQUEST['replyto']);
@@ -319,13 +320,13 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
 	$sent = array();
 	$unsubmsg = '';
 	$errors = array();
-	$logFileName = $prefs['tmpDir'] . '/newsletter-log-' . $_REQUEST["sendingUniqId"] . '.txt';
+	$logFileName = $prefs['tmpDir'] . '/public/newsletter-log-' . $_REQUEST["sendingUniqId"] . '.txt';
 	$logFileHandle = @fopen( $logFileName, 'a' );
 
 	if (isset($_REQUEST['errorEditionId'])) {
 		$users = $nllib->get_edition_errors($_REQUEST['errorEditionId']);
 	} else {
-		$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"]);
+		$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"] == 'y');
 	}
 
 	$nllib->memo_subscribers_edition($editionId, $users);
@@ -362,10 +363,10 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
 		}
 		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject
 		$languageEmail = !$userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
-		if ($nl_info["unsubMsg"] == 'y') {
+		if ($nl_info["unsubMsg"] == 'y' && !empty($us["code"])) {
 			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
 			if (stristr($html, "</body>") === false) {
-				$msg = $html . nl2br($unsubmsg);
+				$msg = $html . $unsubmsg;
 			} else {
 				$msg = str_replace("</body>", nl2br($unsubmsg) . "</body>", $html);
 			}

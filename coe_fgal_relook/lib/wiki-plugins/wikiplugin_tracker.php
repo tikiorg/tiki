@@ -428,11 +428,13 @@ function wikiplugin_tracker($data, $params)
 						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
 					} else {
 						$flds['data'][$cpt]['value'] = '';
-						if ($fl['type'] == 'c') {
-							$_REQUEST['track'][$fl['fieldId']] = 'n';
-						} elseif ($fl['type'] == 'R' && $fl['isMandatory'] == 'y') {
-							// if none radio is selected, there will be no value and no error if mandatory
-							$_REQUEST['track'][$fl['fieldId']] = '';
+						if (empty($itemId)) {
+							if ($fl['type'] == 'c') {
+								$_REQUEST['track'][$fl['fieldId']] = 'n';
+							} elseif ($fl['type'] == 'R' && $fl['isMandatory'] == 'y') {
+								// if none radio is selected, there will be no value and no error if mandatory
+								$_REQUEST['track'][$fl['fieldId']] = '';
+							}
 						}
 					}
 					if (!empty($_REQUEST['other_track'][$fl['fieldId']])) {
@@ -584,7 +586,11 @@ function wikiplugin_tracker($data, $params)
 					}
 					if (empty($url)) {
 						if (!empty($page)) {
-							$url = "tiki-index.php?page=".urlencode($page)."&ok=y&iTRACKER=$iTRACKER";
+							$url = "tiki-index.php?page=".urlencode($page);
+							if (!empty($itemId)) {
+								$url .= "&itemId=".$itemId;
+							}
+							$url .= "&ok=y&iTRACKER=$iTRACKER";
 							$url .= "#wikiplugin_tracker$iTRACKER";
 							header("Location: $url");
 							die;
@@ -831,8 +837,20 @@ function wikiplugin_tracker($data, $params)
 						$flds['data'][$i]['value'] = $trklib->get_join_values($trackerId, $itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields, ' ', empty($f['options_array'][5])?'':$f['options_array'][5]);
 					} elseif ($f['type'] == 'w') {
 						$trklib->prepare_dynamic_items_list($f, $flds['data']);
+						if ($flds['data'][$i]['type'] == 'r') {
+							// we prentended it was an item link
+							$bindingValue = $trklib->get_item_value($trackerId, $itemId, $f['options_array'][2]);
+							$bindingItemLinkField = $trklib->get_tracker_field($f['options_array'][2]);
+							$bindingValueIndex = $trklib->get_item_id($bindingItemLinkField['options_array'][0], $bindingItemLinkField['options_array'][3], $bindingValue);
+							$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValueIndex, $f['options_array'][3]);
+						}
 					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {
 						$flds['data'][$i]['value'] = $tikilib->now;
+					}
+
+					if (!empty($f['value'])) {
+						// if it has an original or a suggested value, then set it as the default value
+						$flds['data'][$i]['defaultvalue'] = $f['value'];
 					}
 				}
 			}
@@ -876,6 +894,9 @@ function wikiplugin_tracker($data, $params)
 				if (in_array($f['fieldId'], $outf)) {
 					if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 						$onemandatory = true;
+					}
+					if ($f['type'] == 'A') {
+						$smarty->assign_by_ref('tiki_p_attach_trackers', $perms['tiki_p_attach_trackers']);
 					}
 					if (!empty($tpl) || !empty($wiki)) {
 						$smarty->assign_by_ref('field_value', $f);

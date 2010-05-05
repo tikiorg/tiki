@@ -592,7 +592,7 @@ class RSSLib extends TikiLib
 				) );
 
 				$data['guid'] = $guid;
-				if (function_exists($entry->getDateCreated())) {
+				if( method_exists( $entry, 'getDateCreated' ) ) {
 					$data['publication_date'] = $entry->getDateCreated()->get( Zend_Date::TIMESTAMP );
 				} else {
 					global $tikilib;

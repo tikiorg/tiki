@@ -49,7 +49,7 @@
 
 {if $presend eq 'y'}
 	<div id="confirmArea">
-	{remarksbox type='warning' title="{tr}Please Confirm{/tr}"}
+	{remarksbox type='note' title="{tr}Please Confirm{/tr}"}
 		<b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
 		<br />
 		{tr}Reply to:{/tr} {if empty($replyto)}{$prefs.sender_email|escape} ({tr}default{/tr}){else}{$replyto|escape}{/if}
@@ -87,14 +87,41 @@
 	{/if}
 	
 	<h3>{tr}Files{/tr}</h3>
-	<ul>
-		{foreach from=$info.files item=newsletterfile key=fileid}
-			<li>
-				{$newsletterfile.name|escape} ({$newsletterfile.type|escape}, {$newsletterfile.size|escape} {tr}bytes{/tr})
-			</li>
-		{/foreach}
-	</ul>
+	<div class="simplebox wikitext">
+		{if $info.file|@count gt 0}
+			<ul>
+				{foreach from=$info.files item=newsletterfile key=fileid}
+					<li>
+						{$newsletterfile.name|escape} ({$newsletterfile.type|escape}, {$newsletterfile.size|escape} {tr}bytes{/tr})
+					</li>
+				{/foreach}
+			</ul>
+		{else}
+			{tr}None{/tr}
+		{/if}
+	</div>
 
+	{if $subscribers gt 0}
+		<h3>{tr}Recipients{/tr} <a id="flipperrecipients" href="javascript:flipWithSign('recipients')">[+]</a></h3>
+		<div id="recipients" class="simplebox" style="display:none; max-height: 250px; overflow: auto;">
+			<table class="small normal">
+				<tr>
+					<th>{tr}Email{/tr}</th>
+					<th>{tr}Validated{/tr}</th>
+					<th>{tr}Is user{/tr}</th>
+				</tr>
+				{cycle values="even,odd" print=false}
+				{foreach from=$subscribers_list item=sub key=ix}
+					<tr>
+						<td class="{cycle advance=false}">{$sub.email|escape}</td>
+						<td class="{cycle advance=false}">{$sub.valid}</td>
+						<td class="{cycle}">{$sub.isUser}</td>
+					</tr>
+				{/foreach}
+			</table>
+		</div>
+	{/if}
+	
 	</div>
 
 	<div id="sendingArea" style="display:none">
@@ -186,10 +213,12 @@
 				{/if}
 
 				<tr class="formcolor">
-					<td class="formcolor">
+					<td colspan="2" class="formcolor">
 						{tr}Data HTML:{/tr}
 					</td>
-					<td class="formcolor">
+				</tr>
+				<tr>
+					<td colspan="2" class="formcolor">
 						{textarea name='data' id='editwiki'}{$info.data}{/textarea}
 						{tr}Must be wiki parsed:{/tr} <input type="checkbox" name="wikiparse" {if empty($info.wikiparse) or $info.wikiparse eq 'y'} checked="checked"{/if} />
 					</td>

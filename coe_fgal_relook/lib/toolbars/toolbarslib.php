@@ -690,7 +690,7 @@ class ToolbarPicker extends Toolbar
 			$icon = tra('pics/icons/palette.png');
 			$rawList = array();
 			
-			$hex = array('0', '3', '6', '9', 'c', 'f');
+			$hex = array('0', '3', '6', '9', 'C', 'F');
 			$count_hex = count($hex);
 
 			for ($r = 0; $r < $count_hex; $r++){ // red
@@ -703,9 +703,9 @@ class ToolbarPicker extends Toolbar
 			}
 			$list = array();
 			foreach( $rawList as $color) {
-				$list["~~#$color:text~~"] = "<div style='background-color: #$color' title='$color' />&nbsp;</div>";
+				$list["~~#$color:text~~"] = "<span style='background-color: #$color' title='#$color' />&nbsp;</span>";
 			}
-			$headerlib->add_css('.toolbars-picker div {width: 17px; height:16px}');
+			$headerlib->add_css('.toolbars-picker span {display: block; width: 14px; height: 12px}');
 			break;
 
 		case 'bgcolor':
@@ -713,7 +713,7 @@ class ToolbarPicker extends Toolbar
 			$icon = tra('pics/icons/palette_bg.png');
 			$wysiwyg = 'BGColor';
 
-			$hex = array('0', '3', '6', '9', 'c', 'f');
+			$hex = array('0', '3', '6', '9', 'C', 'F');
 			$count_hex = count($hex);
 
 			for ($r = 0; $r < $count_hex; $r++){ // red
@@ -726,9 +726,9 @@ class ToolbarPicker extends Toolbar
 			}
 			$list = array();
 			foreach( $rawList as $color) {
-				$list["~~black,#$color:text~~"] = "<div style='background-color: #$color' title='$color' />&nbsp;</div>";
+				$list["~~black,#$color:text~~"] = "<span style='background-color: #$color' title='#$color' />&nbsp;</span>";
 			}
-			$headerlib->add_css('.toolbars-picker div {width: 17px; height:16px}');
+			$headerlib->add_css('.toolbars-picker span {display: block; width: 14px; height: 12px}');
 			break;
 
 		default:
@@ -786,6 +786,7 @@ class ToolbarPicker extends Toolbar
 		global $headerlib;
 
 		if( ! $pickerAdded ) {
+			$pickerAdded = true;
 			$headerlib->add_js( <<<JS
 window.pickerData = [];
 var pickerDiv, displayPicker, displayDialog;
@@ -796,18 +797,18 @@ displayPicker = function( closeTo, list, areaname ) {
 		pickerDiv = false;
 		return;
 	}
-	pickerDiv = document.createElement('div');
-	document.body.appendChild( pickerDiv );
-
-	var coord = \$jq(closeTo).offset();
-	coord.bottom = coord.top + \$jq(closeTo).height();
-
 	textarea = getElementById( areaname);
 	// quick fix for Firefox 3.5 losing selection on changes to popup
 	if (typeof textarea.selectionStart != 'undefined') {
 		var tempSelectionStart = textarea.selectionStart;
 		var tempSelectionEnd = textarea.selectionEnd;
 	}		
+	pickerDiv = document.createElement('div');
+	document.body.appendChild( pickerDiv );
+
+	var coord = \$jq(closeTo).offset();
+	coord.bottom = coord.top + \$jq(closeTo).height();
+
 	pickerDiv.className = 'toolbars-picker';
 	pickerDiv.style.left = coord.left + 'px';
 	pickerDiv.style.top = (coord.bottom + 8) + 'px';
@@ -815,12 +816,14 @@ displayPicker = function( closeTo, list, areaname ) {
 	// quick fix for Firefox 3.5 losing selection on changes to popup
 	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
 		textarea.selectionStart = tempSelectionStart;
-       	}
+	}
 	if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
-                textarea.selectionEnd = tempSelectionEnd;
-       	}  
+		textarea.selectionEnd = tempSelectionEnd;
+	}  
 
 	var prepareLink = function( link, ins, disp ) {
+		if (!link) return;
+		
 		link.innerHTML = disp;
 		link.href = 'javascript:void(0)';
 		link.onclick = function() {
@@ -828,33 +831,33 @@ displayPicker = function( closeTo, list, areaname ) {
 	
 			textarea = getElementById( areaname);	
 			// quick fix for Firefox 3.5 losing selection on changes to popup
-                        if (typeof textarea.selectionStart != 'undefined') {
+			if (typeof textarea.selectionStart != 'undefined') {
 				var tempSelectionStart = textarea.selectionStart;
-                        	var tempSelectionEnd = textarea.selectionEnd;	
+				var tempSelectionEnd = textarea.selectionEnd;	
 			}
 
 			\$jq('div.toolbars-picker').remove();
 			pickerDiv = false;
 
 			// quick fix for Firefox 3.5 losing selection on changes to popup
-        		if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
-            		    textarea.selectionStart = tempSelectionStart;
-     		   	}
+        	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+                textarea.selectionStart = tempSelectionStart;
+     		}
 			if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
-                		textarea.selectionEnd = tempSelectionEnd;
-       			}
+            	textarea.selectionEnd = tempSelectionEnd;
+       		}
 
 			return false;
 		}
 	};
 
-	for( var i = 0; i < window.pickerData[list].length; i++ ) {
+	for( var i in window.pickerData[list] ) {
 		var chr = window.pickerData[list][i];
 		var link = document.createElement( 'a' );
 
-		pickerDiv.appendChild( link );
-		pickerDiv.appendChild( document.createTextNode(' ') );
+		//pickerDiv.appendChild( document.createTextNode(' ') );
 		prepareLink( link, i, chr );
+		pickerDiv.appendChild( link );
 	}
 }
 
@@ -1292,6 +1295,7 @@ if (textarea.selectionEnd != tempSelectionEnd) {
 		global $headerlib;
 
 		if( ! $dialogAdded ) {
+			$dialogAdded = true;
 			$headerlib->add_js( <<<JS
 window.dialogData = [];
 var dialogDiv;

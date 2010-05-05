@@ -16,14 +16,19 @@ body {
 	background: #fff url(fivealive/options/blueberry/body.png) no-repeat 50% 0;
 }
 
+body.filegal_popup {
+	background-image: none;
+	padding: 0 2em;
+}
+
 *:first-child+html body {font-size: 74% !important}
 
  /***** Layout *****/
 
 /*#fixedwidth*/
 
-#fixedwidth {
-	width: auto !important;
+body.fixed_width #fixedwidth {
+	width: 100%;
 }
 
 #header,
@@ -92,6 +97,7 @@ body {
 	color: #696969;
 	padding: 1px 0 2px 0;
 	text-align: center;
+	width: 100%;
 }
 
 .footerbgtrap {
@@ -919,6 +925,23 @@ a.dirsublink {
 */
 .caltable .days {
 	color: #fff;
+}
+
+.calfocuson {
+	font-size: 100%; 
+	background: #f3e498;
+}
+
+.calfocuson a {
+	font-size: 90%; 
+}
+
+div#calscreen td.calfocuson {
+	border-bottom: none;
+}
+
+.calHeadingOn, .calHeadingOn a {
+	background: #f3e498;
 }
 
 /***** Admin *****/

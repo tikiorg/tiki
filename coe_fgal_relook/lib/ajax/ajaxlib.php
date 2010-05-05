@@ -38,7 +38,7 @@ class TikiAjax extends xajax
 		function __construct() {
 			parent::__construct();
 
-			$this->aTemplates = array();
+			$this->aTemplates = array( 'confirm.tpl' => 1, 'error.tpl' => 1);
 			$this->deniedFunctions = array();
 
 			$this->configure('waitCursor',true);

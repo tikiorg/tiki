@@ -4,7 +4,7 @@
     <td id="topLeft" class="calHeading" width="9%"><strong>{$viewstart|tiki_date_format:"%Y"}</strong></td>
 {section name=dn loop=$daysnames}
 	{if in_array($smarty.section.dn.index,$viewdays) }
-    <td id="top_{$smarty.section.dn.index}" class="calHeading{if $smarty.session.CalendarFocusDate eq $viewWeekDays[dn]}On{/if}" width="13%">
+    <td id="top_{$smarty.section.dn.index}" class="calHeading{if $today eq $viewWeekDays[dn]}On{/if}" width="13%">
 	  <a href="{$myurl}?viewmode=day&amp;todate={$viewWeekDays[dn]}" title="{tr}View this Day{/tr}">{$daysnames[dn]}</a><br />
 {* test display_field_order and use %d/%m or %m/%d on each day 'cell' *}
 	{if ($prefs.display_field_order eq 'DMY') || ($prefs.display_field_order eq 'DYM') || ($prefs.display_field_order eq 'YDM')}	

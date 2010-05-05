@@ -42,6 +42,9 @@
 {* ******************** field handling emptiness in a specific way  ******************** *}
 {* -------------------- category -------------------- *}
 {if $field_value.type eq 'e'}
+	{if !empty($field_value.value) and $history == 'y'} {*history*}
+		{$field_value.value|escape}
+	{/if}
 	{foreach from=$field_value.categs item=categ name=fcategs}
 		{$categ.name|tr_if}
 		{if !$smarty.foreach.fcategs.last}<br />{/if}
@@ -106,6 +109,8 @@
 			{$field_value.value|username:true:true:false|truncate:255:"..."|escape|default:"&nbsp;"}
 		{elseif !empty($field_value.value) || $is_link eq 'y'}			
 			{$field_value.value|truncate:255:"..."|escape|default:"&nbsp;"}
+		{elseif empty($field_value.value) && ($field_value.type eq 'n' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f'))}
+			{$field_value.value}
 		{/if}		
 	{elseif $list_mode eq 'csv'}
 		{$field_value.value}

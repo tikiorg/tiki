@@ -10,7 +10,7 @@
 */
 function smarty_function_quotabar( $params, $smarty ) {
 	extract($params, EXTR_SKIP);
-	if (empty($length)) {
+	if (!isset($length)) {
 		$length = 100;
 	}
 	if (!isset($value)) {

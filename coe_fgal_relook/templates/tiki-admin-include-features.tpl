@@ -119,7 +119,7 @@
 
 				<fieldset>
 					<legend class="heading">{icon _id="information_gray"}<span>{tr}Will be phased out{/tr}</span></legend>
-					<span class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology.{/tr}</span>
+					<p class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology.{/tr}</p>
 						{preference name=feature_html_pages}
 						{preference name=feature_galleries}
 						{preference name=feature_faqs}
@@ -127,7 +127,7 @@
 
 				<fieldset>
 					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok but...{/tr}</span></legend>
-					<span class="description">{tr}These features are not reported to be broken, but they are not actively developed and/or widely used.{/tr}</span>
+					<p class="description">{tr}These features are not reported to be broken, but they are not actively developed and/or widely used.{/tr}</p>
 						{preference name=feature_mobile}
 						{preference name=feature_morcego}
 						{preference name=feature_comm}
@@ -141,12 +141,12 @@
 
 				<fieldset>
 					<legend class="heading">{icon _id="error"}<span>{tr}Need polish{/tr}</span></legend>
-					<span class="description">{tr}These features are generally known to have issues, and/or need admin help and/or user patience to work.{/tr}</span>
+					<p class="description">{tr}These features are generally known to have issues, and/or need admin help and/or user patience to work.{/tr}</p>
 						{preference name=feature_ajax}
 						{preference name=feature_intertiki}
+						{preference name=feature_ajax_autosave}
 						{preference name=feature_sheet}
 						{preference name=feature_wysiwyg}
-						{preference name=feature_ajax_autosave}
 						{preference name=feature_wiki_save_draft}
 						{preference name=feature_webdav}
 				</fieldset>

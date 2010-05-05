@@ -2465,7 +2465,7 @@ class UsersLib extends TikiLib
 	function set_user_default_preferences($user) {
 		global $prefs;
 		foreach( $prefs as $pref => $value ) {
-			if ( ! ereg('^users_prefs_', $pref) ) continue;
+			if ( ! preg_match('/^users_prefs_/', $pref) ) continue;
 			if ($pref == 'users_prefs_email_is_public') {
 				$pref_name = 'email is public';
 			} else {
@@ -2474,6 +2474,10 @@ class UsersLib extends TikiLib
 			$this->set_user_preference($user, $pref_name, $value);
 		}
 	}
+	function change_user_email_only($user, $email) {
+		$query = 'update `users_users` set `email`=? where binary `login`=?';
+		$result = $this->query($query, array($email, $user));
+	}
 
 	function change_user_email($user, $email, $pass=null) {
 		// Need to change the email-address for notifications, too
@@ -2481,12 +2485,7 @@ class UsersLib extends TikiLib
 		$oldMail = $this->get_user_email($user);
 		$notificationlib->update_mail_address($user, $oldMail, $email);
 
-		$query = "update `users_users` set `email`=? where binary `login`=?";
-
-		$result = $this->query($query, array(
-			$email,
-			$user
-		));
+		$this->change_user_email_only($user, $email);
 
 		// that block stays here for a time (compatibility)
 		// lfagundes - only if pass is provided, admin doesn't need it

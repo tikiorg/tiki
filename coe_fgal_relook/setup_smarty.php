@@ -248,7 +248,7 @@ class Smarty_Tikiwiki extends Smarty
   		} elseif (is_file($this->template_dir.'/styles/'.$style_base.'/'.$template)) {
 			$file = "/styles/$style_base/";
   		} else {
-    			$file = '';
+    			$file = '/';
   		}
 		return $this->template_dir.$file.$template;
 	}

@@ -23,9 +23,17 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 			$smarty->assign('msg_poll', tra('You have mistyped the anti-bot verification code; please try again.'));
 			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
 		} else {
-			if( $tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId'], array(), $prefs['feature_poll_revote'] == 'y' ) ) {
-				global $polllib; include_once('lib/polls/polllib_shared.php');
-				$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
+			global $polllib; include_once('lib/polls/polllib_shared.php');
+			$poll = $polllib->get_poll($_REQUEST['polls_pollId']);
+			if( empty($poll) || $poll['active'] == 'x' ) {
+				$ok = false;
+				$smarty->assign('msg_poll', tra('This poll is closed.'));
+				$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
+			} else {
+				$previous_vote = $polllib->get_user_vote('poll' . $_REQUEST['polls_pollId'], $user);
+				if( $tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId'], array(), $prefs['feature_poll_revote'] == 'y' )) {
+					$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId'], $previous_vote);
+				}
 			}
 		}
 	}

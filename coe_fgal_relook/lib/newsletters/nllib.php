@@ -139,6 +139,7 @@ class NlLib extends TikiLib
 		$all_users = array();
 		$group_users = array();
 		$included_users = array();
+		$page_included_emails = array();
 
 		// Get list of the root groups (groups explicitely subscribed to this newsletter)
 		//
@@ -236,6 +237,31 @@ class NlLib extends TikiLib
 				}
 			}
 		}
+		
+		$page_emails = $this->list_newsletter_pages( $nlId );
+		if ($page_emails['cant'] > 0) {
+			foreach ( $page_emails['data'] as $page) {
+				$emails = $this->get_emails_from_page($page['wikiPageName']);
+				foreach ( $emails as $email ) {
+					if (!empty($email)) {
+						$res = array(
+							'valid' => $page['validateAddrs'] == 'y' ? 'n' : 'y',
+							'subscribed' => $this->now,
+							'isUser' => 'n',
+							'db_email' => $email,
+							'email' => $email,
+							'included' => 'n',
+						);
+						
+						if ($page['addToList'] == 'y') {
+							$res['code'] = $this->genRandomString($email);
+							$all_users[$email] = $res;
+						}
+						$page_included_emails[$email] = $res;
+					}
+				}
+			}
+		}
 
 		// Update database if requested
 		//
@@ -259,6 +285,8 @@ class NlLib extends TikiLib
 		foreach ( $all_users as $r ) {
 			if ( $r['valid'] == 'y' ) $return[] = $r;
 		}
+		
+		$return = array_merge($all_users, $page_included_emails);
 
 		return $return;
 	}
@@ -842,5 +870,79 @@ class NlLib extends TikiLib
 		}
 		return $articleClip;
 	}
+
+	// functions for getting email addresses from wiki pages
+	
+	function get_emails_from_page($wikiPageName) {
+		global $prefs, $wikilib;
+		
+		include_once 'lib/wiki/wikilib.php';
+		$emails = false;
+		
+		$canBeRefreshed = false;
+		$o1 = $prefs['feature_wiki_protect_email'];
+		$o2 = $prefs['feature_autolinks'];
+		$prefs['feature_wiki_protect_email'] = 'n';
+		$prefs['feature_autolinks'] = 'n';
+		$pageContent = $wikilib->get_parse($wikiPageName, $canBeRefreshed);
+		$prefs['feature_wiki_protect_email'] = $o1;
+		$prefs['feature_autolinks'] = $o2;
+		
+		if (!empty($pageContent)) {
+			$pageContent = strip_tags($pageContent);
+			$pageContent = preg_replace('/[\\n\\r]/', "\n", $pageContent);	// in case there are MS lineends
+			$pageContent = preg_replace('/\\n\\n/', "\n", $pageContent);	// remove blank lines
+			$ary = explode("\n", $pageContent);
+			$emails = array();
+			foreach($ary as $a) {
+				preg_match('/[a-z0-9\-_.]+?@[\w\-\.]+/i', $a, $m);
+				if (count($m) > 0) {
+					if (validate_email($m[0])) {
+						$emails[] = $m[0];
+					}
+				}
+			}
+		}
+		
+		return $emails;
+	}
+	
+	function add_page($nlId, $wikiPageName, $validate = 'n', $addToList = 'n') {
+		$query = "delete from `tiki_newsletter_pages` where `nlId`=? and `wikiPageName`=?";
+		$this->query($query, array( (int)$nlId, $wikiPageName), -1, -1, false);
+		$query = "insert into `tiki_newsletter_pages` (`nlId`,`wikiPageName`,`validateAddrs`,`addToList`) values(?,?,?,?)";
+		$this->query($query, array( (int)$nlId, $wikiPageName, $validate, $addToList));
+	}
+	
+	function remove_newsletter_page($nlId, $wikiPageName) {
+		$query = "delete from `tiki_newsletter_pages` where `nlId`=? and `wikiPageName`=?";
+		$this->query($query, array( (int)$nlId, $wikiPageName), -1, -1, false);
+	}
+
+	function list_newsletter_pages($nlId, $offset=-1, $maxRecords=-1, $sort_mode='wikiPageName_asc', $find='') {
+		$bindvars = array((int)$nlId);
+		if ($find) {
+			$findesc = '%' . $find . '%';
+			$mid = " where `nlId`=? and `wikiPageName` like ?";
+			$bindvars[] = $findesc;
+		} else {
+			$mid = " where `nlId`=? ";
+		}
+
+		$query = "select * from `tiki_newsletter_pages` $mid order by ".$this->convertSortMode("$sort_mode");
+		$query_cant = "select count(*) from `tiki_newsletter_pages` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
+	}
+
 }
 $nllib = new NlLib;

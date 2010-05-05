@@ -1,9 +1,9 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: mod-func-search_box.php 25259 2010-02-16 14:32:47Z changi67 $
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -63,7 +63,7 @@ function module_search_info() {
 			),
 			// initially from quick-edit
 			'search_action' => array(
-				'name' => 'Search Form Acion',
+				'name' => 'Search Form Action',
 				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . " " . tra('Default:') . ' tiki-searchresults.php or tiki-searchindex.php (for Tiki search)'
 			),
 			'search_submit' => array(
@@ -71,7 +71,7 @@ function module_search_info() {
 				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . ' ' . tra('Search')
 			),
 			'go_action' => array(
-				'name' => 'Edit Form Acion',
+				'name' => 'Go Form Action',
 				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . " " . tra('Default:') . ' tiki-editpage.php'
 			),
 			'go_submit' => array(
@@ -79,7 +79,7 @@ function module_search_info() {
 				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . ' ' . tra('Go')
 			),
 			'edit_action' => array(
-				'name' => 'Edit Form Acion',
+				'name' => 'Edit Form Action',
 				'description' => tra("If set, send the form to the given location (relative to Tiki's root) for processing.") . " " . tra('Default:') . ' tiki-editpage.php'
 			),
 			'edit_submit' => array(
@@ -131,6 +131,8 @@ function module_search( $mod_reference, & $module_params ) {	// modifies $module
 	} else if ($prefs['feature_search_fulltext'] == 'n' && $module_params['tiki_search'] != 'y') {
 		$module_params['tiki_search'] = 'y';
 	}
+	
+	if (isset($module_params['go_action']) && $module_params['go_action'] == 'ti') { unset($module_params['go_action']); }	// temporary fix for 5.0 in case params were truncated in the db
 	
 	// set up other param defaults
 	$defaults = array(

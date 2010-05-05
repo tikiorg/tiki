@@ -118,6 +118,14 @@
 					<i>{tr}txt file, one e-mail per line{/tr}</i>
 				</td>
 			</tr> 	 
+			{if $nl_info.validateAddr eq "y"}
+				<td class="formcolor" width="30%">
+					{tr}Don't send confirmation mails{/tr}
+				</td>
+				<td colspan="2" class="formcolor">
+					<input type="checkbox" name="confirmEmail" />
+				</td>
+			{/if}
 			<tr>
 				<td class="formcolor">&nbsp;</td>
 				<td class="formcolor" colspan="2">
@@ -125,7 +133,38 @@
 				</td>
 			</tr> 	 
 		</table> 	 
-	</form> 	 
+	</form>
+	<h2>{tr}Batch subscribe from wiki page{/tr}</h2>
+	<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+		<input type="hidden" name="nlId" value="{$nlId|escape}" /> 
+		<table class="normal">
+			<tr>
+				<td class="formcolor" width="30%">Wiki page</td>
+				<td class="formcolor" colspan="2">
+					<input type="text" name="wikiPageName" value=""  />
+					<br />
+					<i>{tr}Wiki page, one e-mail per line{/tr}</i>
+				</td>
+			</tr>
+			{if $nl_info.validateAddr eq "y"}
+				<tr>
+					<td class="formcolor" width="30%">
+						{tr}Don't send confirmation mails{/tr}
+					</td>
+					<td colspan="2" class="formcolor">
+						<input type="checkbox" name="confirmEmail" />
+					</td>
+				</tr>
+			{/if}
+			<tr>
+				<td class="formcolor" width="30%">&nbsp;</td>
+				<td class="formcolor" colspan="2">
+					<input type="submit" name="importPage" value="Add" width="30" />
+				</td>
+			</tr>
+		</table>
+	</form>
+		 
 {/if}
 
 <h2>{tr}Export Subscriber Emails{/tr}</h2>
@@ -192,6 +231,44 @@
 	</table>
 </form>
 
+<h2>{tr}Subscribe wiki page{/tr}</h2>
+<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+	<input type="hidden" name="nlId" value="{$nlId|escape}" /> 
+	<table class="normal">
+		<tr>
+			<td class="formcolor" width="30%">Wiki page</td>
+			<td class="formcolor" colspan="2">
+				<input type="text" name="wikiPageName" value=""  />
+				<br />
+				<i>{tr}Wiki page which will be added at each newsletter sending, one e-mail per line{/tr}</i>
+				{jq}$jq("input[name=wikiPageName]").tiki("autocomplete", "pagename");{/jq}
+			</td>
+		</tr>
+		<tr>
+			<td class="formcolor" width="30%">
+				{tr}Don't send confirmation mails{/tr}
+			</td>
+			<td colspan="2" class="formcolor">
+				<input type="checkbox" name="noConfirmEmail" checked="checked" />
+			</td>
+		</tr>
+		<tr>
+			<td class="formcolor" width="30%">
+				{tr}Don't subscribe emails{/tr}
+			</td>
+			<td colspan="2" class="formcolor">
+				<input type="checkbox" name="noSubscribeEmail" checked="checked" />
+			</td>
+		</tr>
+		<tr>
+			<td class="formcolor" width="30%">&nbsp;</td>
+			<td class="formcolor" colspan="2">
+				<input type="submit" name="addPage" value="Add" width="30" />
+			</td>
+		</tr>
+	</table>
+</form>
+
 <h2>{tr}Subscriptions{/tr}</h2>
 {* groups------------------------------------ *}
 {if $nb_groups > 0}
@@ -208,6 +285,7 @@
 				<td class="{cycle advance=false}">{$groups_g[ix].groupName|escape}</td>
 				<td class="{cycle}">
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$groups_g[ix].nlId|urlencode}&amp;group={$groups_g[ix].groupName|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+				</td>
 			</tr>
 		{/section}
 	</table>
@@ -237,6 +315,30 @@
 	</table>
 {/if}
 {* /included------------------------------------ *}
+
+{* pages------------------------------------ *}
+{if $nb_pages > 0}
+	<table class="normal">
+		<tr>
+			<th>{tr}Wiki Page Name{/tr}</th>
+			<th>{tr}Validate Addresses{/tr}</th>
+			<th>{tr}Add To List{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle values="odd,even" print=false}
+		{section name=ix loop=$pages}
+			<tr>
+				<td class="{cycle advance=false}"><a href="{$pages[ix].wikiPageName|sefurl}">{$pages[ix].wikiPageName|escape}</a></td>
+				<td class="{cycle advance=false}">{$pages[ix].validateAddrs|escape}</td>
+				<td class="{cycle advance=false}">{$pages[ix].addToList|escape}</td>
+				<td class="{cycle}">
+					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;remove={$pages[ix].nlId|urlencode}&amp;page={$pages[ix].wikiPageName|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+				</td>
+			</tr>
+		{/section}
+	</table>
+{/if}
+{* /pages------------------------------------ *}
 
 {include file='find.tpl'}
 

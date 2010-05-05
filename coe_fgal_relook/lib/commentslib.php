@@ -104,7 +104,7 @@ class Comments extends TikiLib
 	}
 
 	/* Add an attachment to a post in a forum */
-	function add_thread_attachment( $forum_info, $threadId, &$errors, $fp = '', $data = '', $name, $type, $size, $inbound_mail = 0, $qId=0 ) {
+	function add_thread_attachment( $forum_info, $threadId, &$errors, $name, $type, $size, $inbound_mail = 0, $qId=0, $fp = '', $data = '') {
 		global $smarty, $tiki_p_admin_forum, $tiki_p_forum_attach, $smarty;
 
 		if( !($forum_info['att'] == 'att_all'
@@ -467,10 +467,10 @@ class Comments extends TikiLib
 							} else {
 								$part_name = "Unnamed File";
 							}
-							$this->add_thread_attachment($forum_info, $threadid, $errors, '', $part['body'],	$part_name, $part['type'], strlen( $part['body'] ),	1 );
+							$this->add_thread_attachment($forum_info, $threadid, $errors,	$part_name, $part['type'], strlen( $part['body'] ),	1, '', $part['body'] );
 						} elseif ($part['disposition'] == 'inline') {
 							foreach ($part['parts'] as $p) {
-								$this->add_thread_attachment($forum_info, $threadid, $errors, '', $p['body'], '-', $p['type'], strlen( $p['body'] ),	1 );
+								$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen( $p['body'] ),	1, '', $p['body'] );
 							}
 						}
 					}
@@ -2606,7 +2606,7 @@ class Comments extends TikiLib
 			if (isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
 				if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 					$fp = fopen($_FILES['userfile1']['tmp_name'], 'rb');
-					$ret = $this->add_thread_attachment($forum_info, $threadId, $errors, $fp, '',	$_FILES['userfile1']['name'], $_FILES['userfile1']['type'],	$_FILES['userfile1']['size'], 0, $qId );
+					$ret = $this->add_thread_attachment($forum_info, $threadId, $errors,	$_FILES['userfile1']['name'], $_FILES['userfile1']['type'],	$_FILES['userfile1']['size'], 0, $qId, $fp, '' );
 					fclose($fp);
 				} else {
 					$errors[] = $this->uploaded_file_error($_FILES['userfile1']['error']);

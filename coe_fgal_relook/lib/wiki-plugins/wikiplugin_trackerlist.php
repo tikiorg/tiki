@@ -278,12 +278,6 @@ function wikiplugin_trackerlist_info() {
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
-			'inside_pretty' => array(
-				'required' => false,
-				'name' => tra('Inside Pretty Tracker'),
-				'description' => tra('Set to y to use inside a pretty tracker with field reference replacement (default=n)'),
-				'filter' => 'alpha'
-			),
 		),
 	);
 }
@@ -295,10 +289,6 @@ function wikiplugin_trackerlist($data, $params) {
 	static $iTRACKERLIST = 0;
 	++$iTRACKERLIST;
 	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
-	
-	if (isset($params['inside_pretty']) && $params['inside_pretty'] == 'y') {
-		$trklib->replace_pretty_tracker_refs($params);
-	}
 	
 	extract ($params,EXTR_SKIP);
 
@@ -346,10 +336,22 @@ function wikiplugin_trackerlist($data, $params) {
 		} else {
 			$listfields = '';
 		}
-		if (!empty($filterfield)) {
-			$listfields = array_unique(array_merge($listfields, $filterfield));
+		if (!empty($compute) && !empty($listfields)) {
+			if (preg_match_all('/[0-9.]+/', $compute, $matches)) {
+				foreach ($matches[0] as $f) {
+					if (!in_array($f, $listfields))
+						$listfields[] = $f;
+				}
+			}
 		}
-		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $listfields);
+		$limit = $listfields;
+		if (!empty($filterfield) && !empty($limit)) {
+			$limit = array_unique(array_merge($limit, $filterfield));
+		}
+		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
+			$limit = '';
+		}
+		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $limit);
 
 		if (!empty($filterfield)) {
 			if (is_array($filterfield)) {
@@ -722,6 +724,11 @@ function wikiplugin_trackerlist($data, $params) {
 								}
 								if (!empty($matches[4])) {
 									$l = $trklib->get_item_value(0, $matches[4], $matches[2]);
+									$field = $trklib->get_tracker_field($matches[2]);
+									if ($field['type'] == 'r') {
+										$refItemId = $trklib->get_item_id($field['options_array'][0], $field['options_array'][1], $l);
+										$l = $trklib->get_item_value($field['options_array'][0], $refItemId, $field['options_array'][3]);
+									}
 								}
 								if (empty($matches[1])) {
 									$exactvalue[] = $l;
@@ -886,7 +893,7 @@ function wikiplugin_trackerlist($data, $params) {
 					eval('$value='.implode('+', $l).';');
 					if ($oper == 'avg')
 						$value = round($value / count($l));
-					$computedFields[$fieldId][] = array_merge(array('operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
+					$computedFields[$fieldId][] = array_merge(array('computedtype' => 'n', 'operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
 				}
 				$smarty->assign_by_ref('computedFields', $computedFields);
 			} else {

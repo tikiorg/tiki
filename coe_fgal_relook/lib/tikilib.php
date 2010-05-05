@@ -4328,14 +4328,14 @@ class TikiLib extends TikiDb_Bridge
 		if ( $my_user == $user ) {
 			$prefs[$name] = $value;
 			$_SESSION['s_prefs'][$name] = $value;
-			if ( $name == 'theme' ) { // FIXME: Remove this exception
+			if ( $name == 'theme' && $prefs['change_theme'] != 'y' ) { // FIXME: Remove this exception
 				$prefs['style'] = $value;
 				$_SESSION['s_prefs']['style'] = $value;
 				if ( $value == '' ) {
 					$prefs['style'] = $prefs['site_style'];
 					$_SESSION['s_prefs']['style'] = $prefs['site_style'];
 				}
-			} elseif ( $name == 'theme-option' ) { // FIXME: Remove this exception as well?
+			} elseif ( $name == 'theme-option' && $prefs['change_theme'] != 'y' ) { // FIXME: Remove this exception as well?
 				$prefs['style_option'] = $value;
 				$_SESSION['s_prefs']['style_option'] = $value;
 				if ( $value == '' ) {
@@ -5602,6 +5602,11 @@ class TikiLib extends TikiDb_Bridge
 			return $this->convert_plugin_output( $output, '', $outputFormat, $parseOptions );
 		}
 
+		if (isset($parseOptions['inside_pretty']) && $parseOptions['inside_pretty'] == 'y') {
+			global $trklib; require_once('lib/trackers/trackerlib.php');
+			$trklib->replace_pretty_tracker_refs($args);
+		}
+		
 		require_once 'lib/core/lib/WikiParser/PluginOutput.php';
 
 		$func_name = 'wikiplugin_' . $name;

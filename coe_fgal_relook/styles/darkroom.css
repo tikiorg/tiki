@@ -368,7 +368,8 @@ div#sitead {
 	font-size: 1.6em;
 }
 
-#siteloginbar {
+#siteloginbar,
+#siteloginbar_popup {
 	bottom: 2px;
 }
 
@@ -383,6 +384,14 @@ div#sitead {
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {
 	font-size: 1.1em;
+}
+
+#siteloginbar_popup ul.cssmenu_horiz li ul {
+	margin-top: -6px;
+}
+
+#siteloginbar_popup .tabcontent {
+	margin: 0;
 }
 
 #tiki-top {
@@ -891,15 +900,17 @@ img.flipmodimage:hover {
 	text-align: left;
 	padding: 3px;
 	font-weight: bold;
-	background: transparent;
+	color: #fffff0;
+	background: #000;
 	border: 1px solid #606060;
-	border-bottom: 0;
+	border-bottom: none;
 	margin-bottom: -1px;
 }
 
 .rbox-data {
 	padding: 3px;
-	background: transparent;
+	color: #fffff0;
+	background: #000;
 	border: 1px solid #606060;
 }
 
@@ -1912,7 +1923,7 @@ td.calodd, td.caleven {
 	border: solid 1px #696969;
 }
 
-.caltable .calfocuson a {
+.caltable, .calfocuson a {
 	color: #d8d8d8;
 }
 
@@ -1924,6 +1935,7 @@ td.calodd, td.caleven {
 .calinput {
 	background: #3f3f3f;
 }
+
 
 .calfocus,
 .calfocuson {
@@ -1972,6 +1984,12 @@ td.calodd, td.caleven {
 .caldark .calfocus {
 	background: #696969;
 }
+
+
+.calfocuson, .calHeadingOn {
+	background: #292929;
+}
+
 
 .daterow {
 	margin: 2px;

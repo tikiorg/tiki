@@ -2502,7 +2502,7 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler // {{
 	{
 		if ($this->canInstall())
 		{
-			global $userlib; if (!$userlib) require_once 'lib/userlib.php';
+			global $userlib; if (!$userlib) require_once 'lib/userslib.php';
 
 			$data = $this->getData();
 			

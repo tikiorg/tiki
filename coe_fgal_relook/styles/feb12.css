@@ -1,13 +1,9 @@
 /* Feb12 theme for TikiWiki CMS/Groupware, released under LGPL license.
  * See http://themes.tikwiki.org for more information. -- */
 
-/* import *lite as the base: */
+/* import default layout and styles: */
 @import url("lite/lite.css"); 
-
-/* Then import the default layout properties file: */
 @import url("layout/layout.css");
-
-/* And design defaults: */
 @import url("layout/design.css");
 
 /* XHTML Elements */ 
@@ -313,6 +309,14 @@ div#sitead {
 
 #siteloginbar div {
 	text-align: right;
+}
+
+#siteloginbar_popup ul li ul {
+	margin-top: -14px;
+}
+
+#siteloginbar_popup .tabcontent {
+	background: none;
 }
 
 /* Site title and subtitle */
@@ -808,17 +812,32 @@ tr.diffheader {
 }
 
 /** Tabs **/
-.tabs {
-	margin: 0 !important;
-}
+/* reset what's in layout.css */
 
 .tabactive,
 .tabinactive,
 [class].tabactive,
-[class].tabinactive {top: 1px !important}
+[class].tabinactive {top: 0 !important}
 
+.tabs {
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	position: relative;
+	padding: .2em .2em 0;
+	margin:0 0.2em -1px 0;
+}
 
-.tabactive {
+.tabs br {
+	display: none;
+}
+
+.tabs span {
+	display: block;
+	float: left;
+}
+
+/*.tabactive {
 	border: solid 1px #225566 !important;
 	border-bottom-color: #f0f9ff !important;
 }
@@ -829,27 +848,42 @@ tr.diffheader {
 
 .tabinactive {
 	border: solid 1px #666 !important;
-}
+}*/
 
-.tabmark {
+.tabmark,
+#siteloginbar_popup .tabmark {
+	list-style-image: none;
+	float: left;
+	margin: 0 .2em -1px 0;
 	font-size: 85%;
-	background: #abcdef;
+	background: url(feb12/header.jpg) repeat-x;
+	color: #F5F5F5;
 	border: 1px solid #abcdef;
+	border-bottom-width: 0 !important;
 }
 
 .tabmark a {
-	color: #000;
+	color: #a8cce2;
+	border: none;
 }
 
 .tabmark a:hover {
-	color: black;
-	background: #f0f9ff;
+	background: url(feb12/header.jpg) repeat-x 0 100%;
+	color: #eee !important;
 	text-decoration: none;
+}
+
+.tabactive {
+	border-bottom-width: 0;
+	padding-bottom: 1px;
+	background: #f0f9ff;
+	font-weight: normal;
+	color: #212121;
+	outline: none;
 }
 
 .tabcontent {
 	padding: 6px 2px 2px 2px;
-	margin: 1px 0 25px 0 !important;
 	background: #f0f9ff;
 	border: 1px solid #225566;
 }
@@ -1418,11 +1452,12 @@ html>body .galtable {
 }
 
 .calfocuson {
-	font-size: 90%;
+	font-size: 100%;
 	background: #F3E498;
 }
 
 .calfocuson a {
+	font-size: 90%;
 	text-decoration: none;
 	font-weight: normal;
 	color: #000000;
@@ -1509,7 +1544,7 @@ html>body .galtable {
 .caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
-	background: #a8cce2;
+	background: #F3E498;
 }
 
 .caltable .calfocuson a {
@@ -1525,6 +1560,10 @@ html>body .galtable {
 	background: #a8cce2;
 }
 
+div#calscreen td.calfocuson {
+	border-bottom: none;
+}
+
 .calbuttonbox a {
 	color: #F5F5F5;
 	text-decoration: none;
@@ -1534,6 +1573,11 @@ html>body .galtable {
 	color: #794A93 !important;
 	text-decoration: none;
 }
+
+.calHeadingOn, .calHeadingOn a {
+	background: #f3e498;
+}
+
 
 /*****  Polls  *****/
 div.pollresults {
