@@ -28,6 +28,9 @@ window.onload = function ()	{
 function LoadSelected()	{
 	var sSelected;
 	var oLink = FCK.Selection.GetSelectedElement() ;
+	if (!oLink) {
+		oLink = FCK.Selection.MoveToAncestorNode('A');
+	}
 	if ( oEditor.FCKBrowserInfo.IsIE && oLink != null ) {
 		document.getElementById( 'txtPage' ).value = oLink.getAttribute( '_wikilink' ) ;
 		document.getElementById( 'txtTitle' ).value = oLink.getAttribute( 'innerHTML' ) ;
@@ -39,7 +42,7 @@ function LoadSelected()	{
 		}
 		if ( sSelected != "" ) {
 			var listen = document.getElementById( 'txtTitle' );
-			listen.value = sSelected;
+			listen.value = sSelected.toString();
 			var listen1 = document.getElementById( 'txtPage' );
 			if ( oLink != null ) { listen1.value = oLink.getAttribute( 'href' ) ; }
 		}
