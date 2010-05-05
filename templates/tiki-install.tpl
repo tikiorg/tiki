@@ -375,14 +375,20 @@
 <p><img src="pics/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle" /> <strong>{tr}Operations failed:{/tr}</strong> {$installer->failures|@count} {tr}SQL queries.{/tr}
 <a href="javascript:sql_failed()">{tr}Display details.{/tr}</a>
 
+<form action="tiki-install.php" method="post">
+
 <div id="sql_failed_log" style="display:none">
  <p>{tr}During an upgrade, it is normal to have SQL failures resulting with <strong>Table already exists</strong> messages.{/tr}</p>
-    		<textarea rows="15" cols="80">
+{assign var='patch' value=''} 
 {foreach from=$installer->failures item=item}
+{if $patch ne $item[2]}{if $patch ne ''}</textarea>{/if}<p><input type="checkbox" name="validPatches[]" value={$item[2]|escape} />{$item[2]|escape}</p>
+<textarea rows="6" cols="80">{assign var='patch' value=$item[2]}{/if}
 {$item[0]}
 {$item[1]}
+
 {/foreach}
-    		</textarea>
+</textarea>
+<p>If you think that the errors of a patch can be ignored, please check the checkbox associated to it before clicking on continue.</p>
 
 </div>
 {/if}
@@ -395,7 +401,6 @@
 
 <p>&nbsp;</p>
 <div align="center">
-<form action="tiki-install.php" method="post">
 	<input type="hidden" name="install_step" value="6" />
 	<input type="hidden" name="install_type" value="{$install_type}" />
 	<input type="submit" value=" {tr}Continue{/tr} " />

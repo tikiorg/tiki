@@ -825,6 +825,11 @@ if ($install_step == '2') {
 		} else {
 		$gd_test = 'n'; }
 	$smarty->assign('gd_test', $gd_test);
+} elseif ($install_step == 6 && !empty($_REQUEST['validPatches'])) {
+	foreach ($_REQUEST['validPatches'] as $patch) {
+		global $installer;
+		$installer->recordPatch($patch);
+	}
 }
 
 unset($TWV);
