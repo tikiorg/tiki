@@ -171,7 +171,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 	}
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
-	if (preg_match('/f_([0-9]+_/', $sort_mode, $matches)) {
+	if (preg_match('/f_([0-9]+)_/', $sort_mode, $matches)) {
 			$filterFields['fieldId'] = $matches[1];
 	}
 }
