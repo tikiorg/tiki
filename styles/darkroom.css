@@ -1937,8 +1937,7 @@ td.calodd, td.caleven {
 }
 
 
-.calfocus,
-.calfocuson {
+.calfocus {
 	border-bottom: none;
 }
 

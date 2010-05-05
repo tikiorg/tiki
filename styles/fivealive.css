@@ -936,10 +936,6 @@ a.dirsublink {
 	font-size: 90%; 
 }
 
-div#calscreen td.calfocuson {
-	border-bottom: none;
-}
-
 .calHeadingOn, .calHeadingOn a {
 	background: #f3e498;
 }

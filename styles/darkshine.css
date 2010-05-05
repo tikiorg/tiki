@@ -1505,7 +1505,7 @@ Caltrack a:visited {color:#00BD02}
 .caldark {background: #dcdcdc}
 * html .caldark {padding: 0}
 .caldark .calfocus {background: #dcdcdc}
-.calfocus, .calfocuson {border-bottom: 0}
+.calfocus {border-bottom: 0}
 /*today focus*/
 .calfocuson {
 	font-size: 100%;

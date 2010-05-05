@@ -1338,10 +1338,6 @@ calodd {background: #efefef}
 	font-size: 90%; 
 }
 
-div#calscreen td.calfocuson {
-	border-bottom: none;
-}
-
 .calHeadingOn, .calHeadingOn a {
 	background: #D4D0C8;
 }
