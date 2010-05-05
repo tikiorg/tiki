@@ -98,7 +98,7 @@ $tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
 $re = false;
 if ( file_exists($local_php) ) $re = include($local_php);
 if ( $re === false ) {
-	if ( $in_installer != 1) {
+	if ( ! isset($in_installer) || $in_installer != 1) {
 		header('location: tiki-install.php');
 		exit;
 	} else {
