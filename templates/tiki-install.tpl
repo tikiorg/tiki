@@ -406,8 +406,8 @@
 	<input type="submit" value=" {tr}Continue{/tr} " />
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
-</form>
 </div>
+</form>
 
 
 {elseif $install_step eq '6'}
