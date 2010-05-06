@@ -1216,7 +1216,6 @@ function get_default_prefs() {
 		'feature_sitemenu_custom_code' => '',
 		'feature_secondary_sitemenu_custom_code' => '',
 		'feature_topbar_version' => 'n',
-		'feature_topbar_debug' => 'n',
 		'feature_topbar_id_menu' => '42',
 		'feature_topbar_custom_code' => '',
 		'feature_sitetitle' => 'y',

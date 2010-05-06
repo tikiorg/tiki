@@ -116,7 +116,6 @@
 					{preference name=feature_topbar_id_menu}
 				</div>
 				{preference name=feature_topbar_version}
-				{preference name=feature_topbar_debug}
 				{preference name=feature_sitesearch}
 				{preference name=feature_topbar_custom_code}
 			</div>

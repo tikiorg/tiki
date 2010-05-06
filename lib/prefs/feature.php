@@ -1100,10 +1100,6 @@ function prefs_feature_list() {
 			'name' => tra('Login Bar'),
 			'type' => 'flag',
 		),
-		'feature_topbar_debug' => array(
-			'name' => tra('Debugger Console'),
-			'type' => 'flag',
-		),
 		'feature_topbar_custom_code' => array(
 			'name' => tra('Custom code'),
 			'type' => 'textarea',
