@@ -3,23 +3,23 @@
 
 
 {* Display command results if we have smth to show... *}
-{if $result_type ne NO_RESULT}
+{if $result_type ne NO_RESULT }
 
   <pre>&gt;&nbsp;{$command|escape:"html"}</pre>
 
-  {if    $result_type == TEXT_RESULT }
+  {if    $result_type == 1}{*TEXT_RESULT*}
 
     {* Show text in PRE section *}
     <pre>{strip}
       {$command_result|escape:"html"|wordwrap:90:"\n":true|replace:"\n":"<br />"}
     {/strip}</pre>
 
-  {elseif $result_type == HTML_RESULT }
+  {elseif $result_type == 2}{*HTML_RESULT*}
 
     {* Type HTML as is *}
     {$command_result}
 
-  {elseif $result_type == TPL_RESULT && strlen($result_tpl) > 0}
+  {elseif $result_type == 3{*TPL_RESULT*} && strlen($result_tpl) > 0}
 
     {* Result have its own template *}
     {include file=$result_tpl}
