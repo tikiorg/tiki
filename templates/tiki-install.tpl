@@ -363,6 +363,7 @@
 {else}
 	<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> <span style="font-weight: bold">{tr}Database was left unchanged.{/tr}</span></p>
 {/if}
+<form action="tiki-install.php" method="post">
 {if $installer->failures|@count > 0}
 	<script type='text/javascript'><!--//--><![CDATA[//><!--
 				{literal}
@@ -375,7 +376,6 @@
 <p><img src="pics/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle" /> <strong>{tr}Operations failed:{/tr}</strong> {$installer->failures|@count} {tr}SQL queries.{/tr}
 <a href="javascript:sql_failed()">{tr}Display details.{/tr}</a>
 
-<form action="tiki-install.php" method="post">
 
 <div id="sql_failed_log" style="display:none">
  <p>{tr}During an upgrade, it is normal to have SQL failures resulting with <strong>Table already exists</strong> messages.{/tr}</p>
