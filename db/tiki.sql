@@ -84,7 +84,7 @@ CREATE TABLE `tiki_actionlog` (
   `ip` varchar(39) default NULL,
   `comment` varchar(200) default NULL,
   `categId` int(12) NOT NULL default '0',
-	`client` VARCHAR( 200 ) NULL DEFAULT NULL,
+    `client` VARCHAR( 200 ) NULL DEFAULT NULL,
   PRIMARY KEY (`actionId`),
   KEY `lastModif` (`lastModif`),
   KEY `object` (`object`(100), `objectType`, `action`(100))
@@ -373,8 +373,8 @@ CREATE TABLE `tiki_calendar_items` (
   KEY `calendarId` (`calendarId`),
   FULLTEXT KEY `ft` (`name`,`description`),
   CONSTRAINT `fk_calitems_recurrence`
-	FOREIGN KEY (`recurrenceId`) REFERENCES `tiki_calendar_recurrence`(`recurrenceId`)
-	ON UPDATE CASCADE ON DELETE SET NULL
+    FOREIGN KEY (`recurrenceId`) REFERENCES `tiki_calendar_recurrence`(`recurrenceId`)
+    ON UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_calendar_locations`;
@@ -416,10 +416,10 @@ CREATE TABLE `tiki_calendars` (
 
 DROP TABLE IF EXISTS `tiki_calendar_options`;
 CREATE TABLE `tiki_calendar_options` (
-	`calendarId` int(14) NOT NULL default 0,
-	`optionName` varchar(120) NOT NULL default '',
-	`value` varchar(255),
-	PRIMARY KEY (`calendarId`,`optionName`)
+    `calendarId` int(14) NOT NULL default 0,
+    `optionName` varchar(120) NOT NULL default '',
+    `value` varchar(255),
+    PRIMARY KEY (`calendarId`,`optionName`)
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS `tiki_categories`;
@@ -1528,11 +1528,11 @@ CREATE TABLE `tiki_newsletter_included` (
 
 DROP TABLE IF EXISTS `tiki_newsletter_pages`;
 CREATE TABLE `tiki_newsletter_pages` (
-	`nlId` INT( 12 ) NOT NULL ,
-	`wikiPageName` VARCHAR( 160 ) NOT NULL ,
-	`validateAddrs` CHAR( 1 ) NOT NULL DEFAULT 'n',
-	`addToList` CHAR( 1 ) NOT NULL DEFAULT 'n',
-	PRIMARY KEY ( `nlId` , `wikiPageName` )
+    `nlId` INT( 12 ) NOT NULL ,
+    `wikiPageName` VARCHAR( 160 ) NOT NULL ,
+    `validateAddrs` CHAR( 1 ) NOT NULL DEFAULT 'n',
+    `addToList` CHAR( 1 ) NOT NULL DEFAULT 'n',
+    PRIMARY KEY ( `nlId` , `wikiPageName` )
 ) ENGINE = MYISAM ;
 
 DROP TABLE IF EXISTS `tiki_newsletters`;
@@ -1553,7 +1553,7 @@ CREATE TABLE `tiki_newsletters` (
   `author` varchar(200) default NULL,
   `allowArticleClip` char(1) default 'y',
   `autoArticleClip` char(1) default 'n',
-  `articleClipTypes` text  default '',
+  `articleClipTypes` text,
   `articleClipRange` int(14) default NULL,
   PRIMARY KEY (`nlId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -2355,10 +2355,10 @@ CREATE TABLE `tiki_user_bookmarks_urls` (
 
 DROP TABLE IF EXISTS `tiki_user_login_cookies`;
 CREATE TABLE `tiki_user_login_cookies` (
-	`userId` INT NOT NULL,
-	`secret` CHAR(64) NOT NULL,
-	`expiration` TIMESTAMP NOT NULL,
-	PRIMARY KEY (`userId`, `secret`)
+    `userId` INT NOT NULL,
+    `secret` CHAR(64) NOT NULL,
+    `expiration` TIMESTAMP NOT NULL,
+    PRIMARY KEY (`userId`, `secret`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `tiki_user_mail_accounts`;
@@ -2375,8 +2375,8 @@ CREATE TABLE `tiki_user_mail_accounts` (
   `smtp` varchar(255) default NULL,
   `useAuth` char(1) default NULL,
   `smtpPort` int(4) default NULL,
-  `flagsPublic` char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
-  `autoRefresh` int(4) NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none',
+  `flagsPublic` char(1) default 'n',                -- COMMENT 'MatWho - Shared Group Mail box if y',
+  `autoRefresh` int(4) NOT NULL default 0,        -- COMMENT 'seconds for mail list to refresh, 0 = none',
   `imap` varchar( 255 ) default NULL,
   `mbox` varchar( 255 ) default NULL,
   `maildir` varchar( 255 ) default NULL,
@@ -3511,97 +3511,97 @@ CREATE TABLE `tiki_perspective_preferences` (
 
 DROP TABLE IF EXISTS `tiki_transitions`;
 CREATE TABLE `tiki_transitions` (
-	`transitionId` int NOT NULL AUTO_INCREMENT,
-	`preserve` int(1) NOT NULL DEFAULT 0,
-	`name` varchar(50),
-	`type` varchar(20) NOT NULL,
-	`from` varchar(255) NOT NULL,
-	`to` varchar(255) NOT NULL,
-	`guards` text,
-	PRIMARY KEY(`transitionId`),
-	KEY `transition_lookup` (`type`, `from`)
+    `transitionId` int NOT NULL AUTO_INCREMENT,
+    `preserve` int(1) NOT NULL DEFAULT 0,
+    `name` varchar(50),
+    `type` varchar(20) NOT NULL,
+    `from` varchar(255) NOT NULL,
+    `to` varchar(255) NOT NULL,
+    `guards` text,
+    PRIMARY KEY(`transitionId`),
+    KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_auth_tokens`;
 CREATE TABLE `tiki_auth_tokens` (
-	`tokenId` INT NOT NULL AUTO_INCREMENT,
-	`creation` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`timeout` INT NOT NULL DEFAULT 0,
-	`hits` INT NOT NULL DEFAULT 1,
-	`token` CHAR(32),
-	`entry` VARCHAR(50),
-	`parameters` VARCHAR(255),
-	`groups` VARCHAR(255),
-	PRIMARY KEY( `tokenId` ),
-	KEY `tiki_auth_tokens_token` (`token`)
+    `tokenId` INT NOT NULL AUTO_INCREMENT,
+    `creation` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `timeout` INT NOT NULL DEFAULT 0,
+    `hits` INT NOT NULL DEFAULT 1,
+    `token` CHAR(32),
+    `entry` VARCHAR(50),
+    `parameters` VARCHAR(255),
+    `groups` VARCHAR(255),
+    PRIMARY KEY( `tokenId` ),
+    KEY `tiki_auth_tokens_token` (`token`)
 );
 
 DROP TABLE IF EXISTS `metrics_assigned`;
 CREATE TABLE `metrics_assigned` (
-	`assigned_id` int(11) NOT NULL AUTO_INCREMENT,
-	`metric_id` int(11) NOT NULL,
-	`tab_id` int(11) NOT NULL,
-	PRIMARY KEY (`assigned_id`),
-	KEY `metric_id` (`metric_id`),
-	KEY `tab_id` (`tab_id`)
+    `assigned_id` int(11) NOT NULL AUTO_INCREMENT,
+    `metric_id` int(11) NOT NULL,
+    `tab_id` int(11) NOT NULL,
+    PRIMARY KEY (`assigned_id`),
+    KEY `metric_id` (`metric_id`),
+    KEY `tab_id` (`tab_id`)
 );
 
 DROP TABLE IF EXISTS `metrics_metric`;
 CREATE TABLE `metrics_metric` (
-	`metric_id` int(11) NOT NULL AUTO_INCREMENT,
-	`metric_name` varchar(255) NOT NULL,
-	`metric_range` varchar(1) NOT NULL DEFAULT '+' COMMENT 'values: + (daily), @ (monthly&weekly), - (weekly)',
-	`metric_datatype` varchar(1) NOT NULL DEFAULT 'i' COMMENT 'values: i(nteger), %(percentage), f(loat), L(ist)',
-	`metric_lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`metric_query` text,
-	`metric_dsn` VARCHAR(200) NOT NULL DEFAULT 'local',
-	PRIMARY KEY (`metric_id`),
-	UNIQUE KEY `metric_name` (`metric_name`)
+    `metric_id` int(11) NOT NULL AUTO_INCREMENT,
+    `metric_name` varchar(255) NOT NULL,
+    `metric_range` varchar(1) NOT NULL DEFAULT '+' COMMENT 'values: + (daily), @ (monthly&weekly), - (weekly)',
+    `metric_datatype` varchar(1) NOT NULL DEFAULT 'i' COMMENT 'values: i(nteger), %(percentage), f(loat), L(ist)',
+    `metric_lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `metric_query` text,
+    `metric_dsn` VARCHAR(200) NOT NULL DEFAULT 'local',
+    PRIMARY KEY (`metric_id`),
+    UNIQUE KEY `metric_name` (`metric_name`)
 );
 
 DROP TABLE IF EXISTS `metrics_tab`;
 CREATE TABLE `metrics_tab` (
-	`tab_id` int(11) NOT NULL AUTO_INCREMENT,
-	`tab_name` varchar(255) NOT NULL,
-	`tab_order` int(11) NOT NULL DEFAULT '0',
-	`tab_content` longtext NOT NULL,
-	PRIMARY KEY (`tab_id`),
-	UNIQUE KEY `tab_name` (`tab_name`)
+    `tab_id` int(11) NOT NULL AUTO_INCREMENT,
+    `tab_name` varchar(255) NOT NULL,
+    `tab_order` int(11) NOT NULL DEFAULT '0',
+    `tab_content` longtext NOT NULL,
+    PRIMARY KEY (`tab_id`),
+    UNIQUE KEY `tab_name` (`tab_name`)
 );
 
 DROP TABLE IF EXISTS `tiki_file_backlinks`;
 CREATE TABLE `tiki_file_backlinks` (
-	   `fileId` int(14) NOT NULL,
-	   `objectId` int(12) NOT NULL,
-	   KEY `objectId` (`objectId`),
-	   KEY `fileId` (`fileId`)
+       `fileId` int(14) NOT NULL,
+       `objectId` int(12) NOT NULL,
+       KEY `objectId` (`objectId`),
+       KEY `fileId` (`fileId`)
 );
 
 DROP TABLE IF EXISTS `tiki_payment_requests`;
 CREATE TABLE `tiki_payment_requests` (
-	`paymentRequestId` INT NOT NULL AUTO_INCREMENT,
-	`amount` DECIMAL(7,2) NOT NULL,
-	`amount_paid` DECIMAL(7,2) NOT NULL DEFAULT 0.0,
-	`currency` CHAR(3) NOT NULL,
-	`request_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`due_date` TIMESTAMP NOT NULL,
-	`cancel_date` TIMESTAMP NULL,
-	`description` VARCHAR(100) NOT NULL,
-	`actions` TEXT,
-	`detail` TEXT,
-	PRIMARY KEY( `paymentRequestId` )
+    `paymentRequestId` INT NOT NULL AUTO_INCREMENT,
+    `amount` DECIMAL(7,2) NOT NULL,
+    `amount_paid` DECIMAL(7,2) NOT NULL DEFAULT 0.0,
+    `currency` CHAR(3) NOT NULL,
+    `request_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `due_date` TIMESTAMP NOT NULL,
+    `cancel_date` TIMESTAMP NULL,
+    `description` VARCHAR(100) NOT NULL,
+    `actions` TEXT,
+    `detail` TEXT,
+    PRIMARY KEY( `paymentRequestId` )
 );
 
 DROP TABLE IF EXISTS `tiki_payment_received`;
 CREATE TABLE `tiki_payment_received` (
-	`paymentReceivedId` INT NOT NULL AUTO_INCREMENT,
-	`paymentRequestId` INT NOT NULL,
-	`payment_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	`amount` DECIMAL(7,2),
-	`type` VARCHAR(15),
-	`details` TEXT,
-	PRIMARY KEY(`paymentReceivedId`),
-	KEY `payment_request_ix` (`paymentRequestId`)
+    `paymentReceivedId` INT NOT NULL AUTO_INCREMENT,
+    `paymentRequestId` INT NOT NULL,
+    `payment_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `amount` DECIMAL(7,2),
+    `type` VARCHAR(15),
+    `details` TEXT,
+    PRIMARY KEY(`paymentReceivedId`),
+    KEY `payment_request_ix` (`paymentRequestId`)
 );
 DROP TABLE IF EXISTS `tiki_translations_in_progress`;
 CREATE TABLE IF NOT EXISTS `tiki_translations_in_progress` (
@@ -3614,58 +3614,58 @@ CREATE TABLE IF NOT EXISTS `tiki_translations_in_progress` (
 
 DROP TABLE IF EXISTS `tiki_rss_items`;
 CREATE TABLE `tiki_rss_items` (
-	`rssItemId` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`rssId` INT NOT NULL,
-	`guid` VARCHAR(255) NOT NULL,
-	`url` VARCHAR(255) NOT NULL,
-	`publication_date` INT UNSIGNED NOT NULL,
-	`title` VARCHAR(255) NOT NULL,
-	`author` VARCHAR(255),
-	`description` TEXT,
-	`content` TEXT,
-	KEY `tiki_rss_items_rss` (`rssId`),
-	UNIQUE `tiki_rss_items_item` (`rssId`, `guid`)
+    `rssItemId` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `rssId` INT NOT NULL,
+    `guid` VARCHAR(255) NOT NULL,
+    `url` VARCHAR(255) NOT NULL,
+    `publication_date` INT UNSIGNED NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `author` VARCHAR(255),
+    `description` TEXT,
+    `content` TEXT,
+    KEY `tiki_rss_items_rss` (`rssId`),
+    UNIQUE `tiki_rss_items_item` (`rssId`, `guid`)
 );
 
 DROP TABLE IF EXISTS `tiki_object_attributes`;
 CREATE TABLE `tiki_object_attributes` (
-	`attributeId` INT PRIMARY KEY AUTO_INCREMENT,
-	`type` varchar(50) NOT NULL,
-	`itemId` varchar(255) NOT NULL,
-	`attribute` varchar(25) NOT NULL,
-	`value` varchar(100),
-	UNIQUE `item_attribute_uq` ( `type`, `itemId`, `attribute` ),
-	KEY `attribute_lookup_ix` (`attribute`, `value`)
+    `attributeId` INT PRIMARY KEY AUTO_INCREMENT,
+    `type` varchar(50) NOT NULL,
+    `itemId` varchar(255) NOT NULL,
+    `attribute` varchar(25) NOT NULL,
+    `value` varchar(100),
+    UNIQUE `item_attribute_uq` ( `type`, `itemId`, `attribute` ),
+    KEY `attribute_lookup_ix` (`attribute`, `value`)
 );
 
 DROP TABLE IF EXISTS `tiki_rating_configs`;
 CREATE TABLE `tiki_rating_configs` (
-	`ratingConfigId` INT PRIMARY KEY AUTO_INCREMENT,
-	`name` VARCHAR(50) NOT NULL,
-	`expiry` INT NOT NULL DEFAULT 3600,
-	`formula` TEXT NOT NULL,
-	`callbacks` TEXT
+    `ratingConfigId` INT PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL,
+    `expiry` INT NOT NULL DEFAULT 3600,
+    `formula` TEXT NOT NULL,
+    `callbacks` TEXT
 );
 
 DROP TABLE IF EXISTS `tiki_rating_obtained`;
 CREATE TABLE `tiki_rating_obtained` (
-	`ratingId` INT PRIMARY KEY AUTO_INCREMENT,
-	`ratingConfigId` INT NOT NULL,
-	`type` VARCHAR(50) NOT NULL,
-	`object` INT NOT NULL,
-	`expire` INT NOT NULL,
-	`value` FLOAT NOT NULL,
-	UNIQUE `tiki_obtained_rating_uq` (`type`, `object`, `ratingConfigId`)
+    `ratingId` INT PRIMARY KEY AUTO_INCREMENT,
+    `ratingConfigId` INT NOT NULL,
+    `type` VARCHAR(50) NOT NULL,
+    `object` INT NOT NULL,
+    `expire` INT NOT NULL,
+    `value` FLOAT NOT NULL,
+    UNIQUE `tiki_obtained_rating_uq` (`type`, `object`, `ratingConfigId`)
 );
 
 DROP TABLE IF EXISTS `tiki_object_relations`;
 CREATE TABLE `tiki_object_relations` (
-	`relationId` INT PRIMARY KEY AUTO_INCREMENT,
-	`relation` varchar(25) NOT NULL,
-	`source_type` varchar(50) NOT NULL,
-	`source_itemId` varchar(255) NOT NULL,
-	`target_type` varchar(50) NOT NULL,
-	`target_itemId` varchar(255) NOT NULL,
-	KEY `relation_source_ix` (`source_type`, `source_itemId`),
-	KEY `relation_target_ix` (`target_type`, `target_itemId`)
+    `relationId` INT PRIMARY KEY AUTO_INCREMENT,
+    `relation` varchar(25) NOT NULL,
+    `source_type` varchar(50) NOT NULL,
+    `source_itemId` varchar(255) NOT NULL,
+    `target_type` varchar(50) NOT NULL,
+    `target_itemId` varchar(255) NOT NULL,
+    KEY `relation_source_ix` (`source_type`, `source_itemId`),
+    KEY `relation_target_ix` (`target_type`, `target_itemId`)
 );
