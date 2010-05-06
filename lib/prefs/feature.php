@@ -120,8 +120,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_search' => array(
-			'name' => tra('Search'),
-			'description' => tra('Enables searching for content on the website.'),
+			'name' => tra('Tiki-indexed Search'),
+			'description' => tra('Enables searching for content on the website, using Tiki-managed index.'),
+			'hint' => tra('Unless you have a reason to, you should use MySQL Full-Text Search feature instead.'),
 			'help' => 'Search',
 			'type' => 'flag',
 		),
@@ -885,8 +886,8 @@ function prefs_feature_list() {
 			'hint' => 'tiki-orphan_pages.php',
 		),
 		'feature_search_fulltext' => array(
-			'name' => tra('Database search'),
-			'hint' => tra('This search uses the MySQL Full-Text feature. The indexation is always updated.'),
+			'name' => tra('MySQL Full-Text Search'),
+			'description' => tra('This search uses the MySQL Full-Text Search feature. The indexation is continuously updated.'),
 			'type' => 'flag',
 			'help' => 'Search',
 		),
@@ -1023,7 +1024,7 @@ function prefs_feature_list() {
 			),
 		),
 		'feature_forum_local_tiki_search' => array(
-			'name' => tra('Use Tiki (database-independent) search.'),
+			'name' => tra('Tiki-indexed search.'),
 			'type' => 'flag',
 		),
 		'feature_forum_local_search' => array(
@@ -1095,6 +1096,9 @@ function prefs_feature_list() {
 		'feature_sitesearch' => array(
 			'name' => tra('Search Bar'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_search_fulltext',
+			),
 		),
 		'feature_site_login' => array(
 			'name' => tra('Login Bar'),
