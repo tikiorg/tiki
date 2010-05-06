@@ -879,10 +879,16 @@ function wikiplugin_trackerlist($data, $params) {
 					} else {
 						$oper = 'sum';
 					}
-					$l = $trklib->list_tracker_field_values($trackerId, $fieldId, $tr_status, 'n');
-					foreach ($l as $i=>$ll) {
-						if (preg_match('/^ *$/', $ll) || !is_numeric($ll))
-							$l[$i] = '0';
+					foreach ($items['data'] as $i=>$item) {
+						foreach ($item['field_values'] as $field) {
+							if ($field['fieldId'] == $fieldId) {
+								if (preg_match('/^ *$/', $field['value']) || !is_numeric($field['value']))
+									$l[$i] = '0';
+								else
+									$l[$i] = $field['value'];
+								break;
+							}
+						}
 					}
 					eval('$value='.implode('+', $l).';');
 					if ($oper == 'avg')
