@@ -32,13 +32,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_modules_list($params, $content, &$smarty, &$repeat) {
 	global $prefs;
-	$ret = '';
 	if( count($params["list"]) > 0 ){
-		if( $params["nonums"] == "y")
-			$ret .= "<ul>";
-		else
-			$ret .= "<ol>";
-		$ret .= $content;
+		if( $params["nonums"] == "y") {
+			$ret = '<ul>' . $content . '</ul>';
+		} else {
+			$ret = '<ol>' . $content . '</ol>';
+		}
 	}else{
 		$ret .= "<em>".tra("No records to display")."</em>";
 	}		
