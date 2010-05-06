@@ -1108,6 +1108,7 @@ function prefs_feature_list() {
 			'name' => tra('Custom code'),
 			'type' => 'textarea',
 			'size' => '6',
+			'filter' => 'rawhtml_unsafe',
 		),
 		'feature_topbar_version' => array(
 			'name' => tra('Display current Tiki version'),
@@ -1214,6 +1215,7 @@ function prefs_feature_list() {
 			'hint' => tra('Example:') . ' ' . "{wiki}{literal}{GOOGLEANALYTICS(account=xxxx) /}{/literal}{/wiki}",
 			'type' => 'textarea',
 			'size' => '6',
+			'filter' => 'rawhtml_unsafe',
 		),
 		'feature_bot_bar' => array(
 			'name' => tra('Bottom bar'),
