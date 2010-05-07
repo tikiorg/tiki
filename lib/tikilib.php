@@ -8358,6 +8358,8 @@ JS;
 			$asetup .= "<param name=\"movie\" value=\"$movie\" />";
 			$asetup .= "<param name=\"quality\" value=\"$quality\" />";
 			$asetup .= "<param name=\"wmode\" value=\"transparent\" />";
+			if (!empty($params['allowscriptaccess']))
+				$asetup .= "<param name=\"allowscriptaccess\" value=\"always\" />";
 			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
 			return $asetup;
 		}
