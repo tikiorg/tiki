@@ -10,20 +10,15 @@
  * \author zaufi <zaufi@sendmail.ru>
  */
 
-global $smarty;
 /// Result not available
 define('NO_RESULT', 0);
-$smarty->assign('NO_RESULT', 0);
 
 /// Command returns text/plain. execute() must return string type.
 define('TEXT_RESULT', 1);
-$smarty->assign('TEXT_RESULT', 1);
 /// Command returns text/html. execute() must return string type.
 define('HTML_RESULT', 2);
-$smarty->assign('HTML_RESULT', 2);
 /// Command need tpl file to display result. execute() may return any type.
 define('TPL_RESULT', 3);
-$smarty->assign('TPL_RESULT', 3);
 
 /**
  * \brief Every command and debugger itself have a result type.
