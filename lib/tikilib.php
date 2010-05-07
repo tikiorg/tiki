@@ -5615,7 +5615,7 @@ class TikiLib extends TikiDb_Bridge
 			return $this->convert_plugin_output( $output, '', $outputFormat, $parseOptions );
 		}
 
-		if (isset($parseOptions['inside_pretty']) && $parseOptions['inside_pretty'] == 'y') {
+		if (isset($parseOptions['inside_pretty']) && $parseOptions['inside_pretty'] === true) {
 			global $trklib; require_once('lib/trackers/trackerlib.php');
 			$trklib->replace_pretty_tracker_refs($args);
 		}
@@ -6007,6 +6007,7 @@ class TikiLib extends TikiDb_Bridge
 		$options['preview_mode'] = isset($options['preview_mode']) ? (bool)$options['preview_mode'] : false;
 		$options['suppress_icons'] = isset($options['suppress_icons']) ? (bool)$options['suppress_icons'] : false;
 		$options['parsetoc'] = isset($options['parsetoc']) ? (bool)$options['parsetoc'] : true;
+		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
 		
 		
 		// if simple_wiki is true, disable some wiki syntax
