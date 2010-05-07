@@ -868,8 +868,12 @@ JS
 
 	function getWikiHtml( $areaName ) // {{{
 	{
-		global $headerlib;
+		global $headerlib, $prefs;
 		$headerlib->add_js( "window.pickerData['$this->name'] = " . json_encode($this->list) . ";" );
+		if ($prefs['feature_jquery_ui'] != 'y') {
+			$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
+			$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
+		}
 		
 		return $this->getSelfLink($this->getSyntax($areaName),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
