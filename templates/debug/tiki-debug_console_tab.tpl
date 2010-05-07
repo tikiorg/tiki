@@ -19,7 +19,7 @@
     {* Type HTML as is *}
     {$command_result}
 
-  {elseif $result_type == 3{*TPL_RESULT*} && strlen($result_tpl) > 0}
+  {elseif $result_type == 3 && strlen($result_tpl) > 0}{*TPL_RESULT*}
 
     {* Result have its own template *}
     {include file=$result_tpl}
