@@ -40,12 +40,12 @@ if ( $user ) {
 
 	// Copy some user prefs that doesn't have the same name as the related site pref
 	//   in order to symplify the overriding and the use 
-	if ( $prefs['change_theme'] != 'y') {
+	if ( $prefs['change_theme'] == 'y') {
 		if ( !empty($prefs['theme']) ) {
 			$prefs['style'] = $prefs['theme'];
-		}
-		if ( !empty($prefs['theme-option']) ) {
-			$prefs['style_option'] = $prefs['theme-option'];
+			if ( isset($prefs['theme-option']) ) {
+				$prefs['style_option'] = $prefs['theme-option'];
+			}
 		}
 	}
 

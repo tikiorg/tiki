@@ -39,7 +39,7 @@ if (isset($_REQUEST['theme-option'])) {
 	$new_theme_option = $_REQUEST['theme-option'];
 	if ($prefs['change_theme'] == 'y') {
 		if ($user && ($prefs['feature_userPreferences'] == 'y' || $tikilib->get_user_preference($user, 'theme-option') ) && empty($group_style)) {
-			  $tikilib->set_user_preference($user, 'theme-option', $new_theme_option);
+			  $tikilib->set_user_preference($user, 'theme-option', empty($new_theme_option) ? 'None' : $new_theme_option);
 			  $prefs['style_option'] = $new_theme_option;
 		} else {
 			  $prefs['style_option'] = $new_theme_option;
