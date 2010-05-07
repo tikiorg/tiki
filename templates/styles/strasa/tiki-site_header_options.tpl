@@ -61,6 +61,7 @@
 	{* Site logo centered, and sitead: to work in small vertical space, ad (halfbanner) is floated left; a second bannerzone is floated right. *}
 	{if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'center'}
 		<div class="clearfix" id="sioptionscentered">
+		{include file='tiki-top_bar.tpl'}
 			{if $prefs.feature_banners eq 'y' && $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 				<div class="floatright">
 					<div id="bannertopright">{banner zone='topright'}</div>
@@ -101,6 +102,7 @@
 {* ------- No custom code, and site logo left or right, and sitead or not. -------- *}
 {if !($prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')) && $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align neq 'center'}
 	<div class="clearfix" id="sioptions">
+	{include file='tiki-top_bar.tpl'}
 		{if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'left'}
 			{if $prefs.feature_banners eq 'y' && $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 				<div id="sitead" class="floatright">{eval var=$prefs.sitead}</div>
@@ -133,6 +135,7 @@
 {* Site logo centered, and sitead: to work in small vertical space, ad (halfbanner) is floated left; a second bannerzone is floated right. *}
 {if !($prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')) && $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'center'}
 	<div class="clearfix" id="sioptionscentered">
+	{include file='tiki-top_bar.tpl'}
 		{if $prefs.feature_banners eq 'y' && $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 			<div class="floatright"><div id="bannertopright">{banner zone='topright'}</div></div>
 		{/if}
