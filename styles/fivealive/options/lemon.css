@@ -38,21 +38,21 @@ fieldset {
 }
 
 #footer .container {
-	border-top: 1px solid #ffc805;
-	border-bottom: 1px solid #ffc805;
+	border-top: 1px solid #ffc506;
+	border-bottom: 1px solid #ffc506;
 }
 
 #footer h3 {
-	border-bottom: 1px dotted #ffc805;
+	border-bottom: 1px dotted #ffc506;
 }
 
 #loadstats {
-	background: #ffc805;
+	background: #ffc506;
 	color: #955208;
 }
 
 #power a {
-	color: #ffc805;
+	color: #ffc506;
 }
 
 
@@ -66,7 +66,7 @@ span.button input,
 span#genPass span.button a,
 span#genPass span.button a:visited {
 	color: #fff;
-	background: #f0af02;
+	background: #ffc506;
 	border-color: #ffc506 #c35627 #c35627 #ffc506;
 	font-weight: bold;
 }
@@ -96,23 +96,29 @@ span.button.highlight a {
 .cssmenu_vert li ul a,
 .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li ul a,
-#header .cssmenu_horiz li:hover ul a,
-#tiki-top .cssmenu_horiz li ul a,
-#tiki-top .cssmenu_horiz li:hover ul a  {
-	background: #fdbb09;
+#header .cssmenu_horiz li:hover ul a  {
+	background: #ffc506;
 }
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover,
-#tiki-top .cssmenu_horiz li ul a:hover  {
+#header .cssmenu_horiz li ul a:hover  {
 	background: #f68c1a;
 }
 
+#header .cssmenu_horiz li.selected a,
 .cssmenu_horiz li.selected a,
 .cssmenu_vert li.selected a {
-	color: #fdca41 !important;
+	color: #fcebbc;
 }
+
+#header .cssmenu_horiz li.selected li a,
+.cssmenu_horiz li.selected li a,
+.cssmenu_vert li.selected li a {
+	font-style: normal;
+	color: #fff;
+}
+
 
 .cssmenu_vert .sf-sub-indicator {
 	background: url(lemon/arrows-c75a28.png) no-repeat 10px 0;
@@ -132,7 +138,7 @@ textarea,
 .titlebar,
 .rbox-title, 
 .rbox-data {
-	border: #f0af02;
+	border: #ffc506;
 	background: #fcebbc;
 	color: #c85a28;
 }
@@ -143,17 +149,17 @@ textarea,
 }
 
 .cbox-title {
-	border-bottom: 3px solid #f0af02;
+	border-bottom: 3px solid #ffc506;
 }
 
 table.normal {
-	border: 2px solid #fdbb09;
+	border: 2px solid #ffc506;
 }
 
 th,
 td.heading,
 tr.diffheader {
-	background: #fdbb09;
+	background: #ffc506;
 	color: #fdf1d0;
 }
 
@@ -199,7 +205,7 @@ div.quotebody {
 }
 
 .postbody-title {
-	background: #fec008 url(lemon/header.png) -650px -90px;
+	background: #ffc506 url(lemon/header.png) -650px -90px;
 }
 
 .post .author,

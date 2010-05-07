@@ -20,15 +20,9 @@
 					{tr}Search type{/tr}{help url="Search+Admin"}
 				</legend>
 				{preference name=feature_search_fulltext}
+				{preference name=feature_search}
 
-				<div class="adminoption">
-					<input type="checkbox"{if $prefs.feature_search eq 'y'} checked="checked"{/if} onclick="flip('searchrefresh');flip('autosearchrefresh');"/>
-				</div>
-				<div class="adminoptionlabel">
-					<label>{tr}Tiki search{/tr}</label>
-				</div>
-
-				<div class="adminoptionboxchild" id="autosearchrefresh" style="display:{if $prefs.feature_search eq 'y'}block{else}none{/if};">
+			<div class="adminoptionboxchild" id="feature_search_childcontainer">				
 					{tr}Specify the Tiki search settings{/tr}:
 					
 					{preference name=search_refresh_index_mode}
@@ -38,9 +32,7 @@
 					{preference name=search_syll_age}
 					{preference name=search_lru_purge_rate}
 					{preference name=search_lru_length}
-				</div>	
-						
-				<div class="adminoptionboxchild" id="searchrefresh">
+
 					<em>{tr}The Tiki search indexes must be refreshed if you turn the Tiki search on{/tr}:</em>
 					{if $refresh_index_all_now neq 'y'}
 						<br />
@@ -64,9 +56,9 @@
 
 			<fieldset>
 				<legend>{tr}Features{/tr}</legend>
+				{preference name=feature_sitesearch}
 				{preference name=feature_referer_highlight}
 				{preference name=search_parsed_snippet}
-
 				{preference name=feature_search_stats}
 				{preference name=search_autocomplete}
 			</fieldset>

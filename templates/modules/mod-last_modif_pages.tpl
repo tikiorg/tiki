@@ -19,6 +19,6 @@
 			</a>
 		</li>
 	{/section}
-	<a class="linkmodule" style="margin-left: 20px" href="{$url}">...{tr}more{/tr}</a>
 {/modules_list}
+<a class="linkmodule" style="margin-left: 20px" href="{$url}">...{tr}more{/tr}</a>
 {/tikimodule}

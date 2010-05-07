@@ -5,12 +5,11 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta content="noindex, nofollow" name="robots">
 {literal}	
-<script type="text/javascript" src="fcktikilink.js"></script>
 <script type="text/javascript">
 <!--
-var oEditor			= window.parent.InnerDialogLoaded(); 
-var FCK					= oEditor.FCK; 
-var FCKConfig		= oEditor.FCKConfig ;
+var oEditor		= window.parent.InnerDialogLoaded(); 
+var FCK			= oEditor.FCK; 
+var FCKConfig	= oEditor.FCKConfig ;
 var FCKTikiLinks = oEditor.FCKTikiLinks ;
  
 // oLink: The actual selected link in the editor.
@@ -23,12 +22,15 @@ window.onload = function ()	{
 	LoadSelected();							//See function below 
 	window.parent.SetOkButton( true );		//Show the "Ok" button. 
 	window.parent.SetAutoSize( true ) ;
-} 
+};
  
 //If an anchor (A) object is currently selected, load the properties into the dialog 
 function LoadSelected()	{
 	var sSelected;
 	var oLink = FCK.Selection.GetSelectedElement() ;
+	if (!oLink) {
+		oLink = FCK.Selection.MoveToAncestorNode('A');
+	}
 	if ( oEditor.FCKBrowserInfo.IsIE && oLink != null ) {
 		document.getElementById( 'txtPage' ).value = oLink.getAttribute( '_wikilink' ) ;
 		document.getElementById( 'txtTitle' ).value = oLink.getAttribute( 'innerHTML' ) ;
@@ -40,7 +42,7 @@ function LoadSelected()	{
 		}
 		if ( sSelected != "" ) {
 			var listen = document.getElementById( 'txtTitle' );
-			listen.value = sSelected;
+			listen.value = sSelected.toString();
 			var listen1 = document.getElementById( 'txtPage' );
 			if ( oLink != null ) { listen1.value = oLink.getAttribute( 'href' ) ; }
 		}
@@ -122,7 +124,7 @@ function Ok() {
 <br />
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 {foreach item=page from=$listpages}
-<tr><td><a href="#" onclick="javascript:document.getElementById('txtTitle').value = '{$page.pageName|escape|escape:'javascript'}'; javascript:document.getElementById('txtPage').value = '{$page.pageName|escape|escape:'javascript'}';" 
+<tr><td><a href="#" onclick="if ( document.getElementById('txtTitle').value == '' || document.getElementById('txtTitle').value == document.getElementById('txtPage').value ) document.getElementById('txtTitle').value = '{$page.pageName|escape|escape:'javascript'}'; document.getElementById('txtPage').value = '{$page.pageName|escape|escape:'javascript'}'; return false;" 
 title="{if $page.description}{$page.description}{else}{$page.pageName|escape}{/if}" class="wikilink">{$page.pageName|escape}</a>
 </td><td style="color:#999;">
 {$page.description}

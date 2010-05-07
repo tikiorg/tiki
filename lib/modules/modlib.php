@@ -293,8 +293,11 @@ class ModLib extends TikiLib
 
 		$params = $module['params'];
 
-		if( isset( $params['perspective'] ) && ! in_array( $_SESSION['current_perspective'], $params['perspective'] ) ) {
-			return false;
+		if( $prefs['feature_perspective'] == 'y' ) {
+			global $perspectivelib; require_once 'lib/perspectivelib.php';
+			if( isset( $params['perspective'] ) && ! in_array( $perspectivelib->get_current_perspective(), (array) $params['perspective'] ) ) {
+				return false;
+			}
 		}
 
 		if( isset( $params["lang"] ) && ! in_array( $prefs['language'], (array) $params["lang"]) ) {
@@ -684,7 +687,7 @@ class ModLib extends TikiLib
 			}
 
 			if( isset( $params[$name] ) && ! empty( $params[$name] ) ) {
-				if( isset( $def['separator'] )  && strstr($def['separator'], $params[$name]) ) {
+				if( isset( $def['separator'] ) && strstr($def['separator'], $params[$name]) ) {
 					$parts = explode( $def['separator'], $params[$name] );
 					
 					if( $filter ) {

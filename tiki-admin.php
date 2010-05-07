@@ -118,7 +118,7 @@ if( isset( $_REQUEST['lm_preference'] ) ) {
 			$logslib->add_action('feature', $pref, 'system', 'disabled');
 		} else {
 			add_feedback( $pref, tr('%0 set', $pref), 1, 1 );
-			$logslib->add_action('feature', $pref, 'system', $value);
+			$logslib->add_action('feature', $pref, 'system', is_array($value)?implode($value, ','):$value);
 		}
 	}
 }

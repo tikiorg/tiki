@@ -198,6 +198,10 @@ div.error {
 	margin-top: 10px;
 }
 
+#siteloginbar_popup {
+	bottom: 1px;
+}
+
 #tiki-top {
 	padding: .5em .3em .3em 1em;
 	border: 1px solid #aaaaaa;
@@ -640,10 +644,6 @@ div.freetagitemlist {
 
 .calfocuson a {
 	font-size: 90%; 
-}
-
-div#calscreen td.calfocuson {
-	border-bottom: none;
 }
 
 .calHeadingOn, .calHeadingOn a {

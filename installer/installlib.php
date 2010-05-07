@@ -158,7 +158,7 @@ class Installer extends TikiDb_Bridge
 					$display_errors = ini_get('display_errors');
 					ini_set('display_errors', 'Off');
 
-					if ($this->query($statement) === false) {
+					if ($this->query($statement, array(), -1, -1, true, $file) === false) {
 						$status = false;
 					}
 					ini_set('display_errors', $display_errors);
@@ -170,7 +170,7 @@ class Installer extends TikiDb_Bridge
 		return $status;
 	} // }}}
 
-	function query( $query = null, $values = array(), $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
+	function query( $query = null, $values = array(), $numrows = -1, $offset = -1, $reporterrors = true, $patch ='' ) // {{{
 	{
 		$error = '';
 		$result = $this->queryError( $query, $error, $values );
@@ -179,7 +179,7 @@ class Installer extends TikiDb_Bridge
 			$this->success[] = $query;
 			return $result;
 		} else {
-			$this->failures[] = array( $query, $error );
+			$this->failures[] = array( $query, $error, substr( basename( $patch ), 0, -4 ) );
 			return false;
 		}
 	} // }}}

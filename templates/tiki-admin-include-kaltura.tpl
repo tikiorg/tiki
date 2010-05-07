@@ -7,9 +7,9 @@
 <div class="adminoptionlabel">
 <label for="partnerId">{tr}Partner Id{/tr}: </label><input type="text" name="partnerId" id="partnerId" value="{$partnerId|escape}" /></div>
 <div class="adminoptionlabel">
-<label for="secret">{tr}User Secret{/tr}: </label><input type="text" name="secret" id="secret" value="{$secret|escape}" /></div>
+<label for="secret">{tr}User Secret{/tr}: </label><input type="text" name="secret" id="secret" value="{$secret|escape}" size=45 /></div>
 <div class="adminoptionlabel">
-<label for="adminSecret">{tr}Admin Secret{/tr}: </label><input type="text" name="adminSecret" id="adminSecret" value="{$adminSecret|escape}" /></div>
+<label for="adminSecret">{tr}Admin Secret{/tr}: </label><input type="text" name="adminSecret" id="adminSecret" value="{$adminSecret|escape}" size=45 /></div>
 </fieldset>
 
 <br/>

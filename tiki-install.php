@@ -130,7 +130,7 @@ html {
 		</div>
 		<div id="tiki-main">
 			<div id="tiki-center" style="text-align:center; padding-top: 60px;">
-				<h1>$title</h1>
+				<h1 style="position: absolute; left: 50%; top: 80px;">$title</h1>
 				$content
 			</div>
 			<div id="tiki-bot" align="center" style="padding-bottom: 20px">

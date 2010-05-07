@@ -114,8 +114,9 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 	if ($displayList == 'y' || isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) {
 	  
-		if (!isset($fields)) {
-			$smarty->assign('msg', tra("missing parameters"));
+		if (empty($fields)) {
+			$msg =  tra('missing parameters');
+			$smarty->assign('msg', $msg);
 			return $msg;
 		}
 

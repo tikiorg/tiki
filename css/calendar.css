@@ -518,8 +518,8 @@ select[name=start_Hour], select[name=start_Minute], select[name=end_Hour], selec
 .calfocus a:hover { background: transparent; }
 .calfocuson a:hover { background: transparent; }
 a.addevent:hover {}
-.calfocus, .calfocuson { border-bottom: 1px dotted #8CACBB; padding-bottom: 4px; }
-.calfocus { background: #b4d0ec; }
+.calfocus, .calfocuson { padding-bottom: 4px; }
+.calfocus { border-bottom: 1px dotted #8CACBB; background: #b4d0ec; }
 .caldark a { display: none; }
 .caldark { border: 1px dotted #8CACBB; background: transparent; }
 .caldark .calfocus { background: #def; }

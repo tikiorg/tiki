@@ -118,6 +118,25 @@ class TikiLib extends TikiDb_Bridge
 		return $this->getOne("select `dsn`  from `tiki_dsn` where `name`='$name'");
 	}
 
+	function get_dsn_info($name) {
+		$info = array();
+
+		$dsnsqlplugin = $this->get_dsn_by_name($name);
+
+		$parsedsn = $dsnsqlplugin;
+		$info['driver'] = strtok( $parsedsn, ":" );
+		$parsedsn = substr( $parsedsn, strlen($info['driver']) + 3 );
+		$info['user'] = strtok( $parsedsn, ":" );
+		$parsedsn = substr( $parsedsn, strlen($info['user']) + 1 );
+		$info['password'] = strtok( $parsedsn, "@" );
+		$parsedsn = substr( $parsedsn, strlen($info['password']) + 1 );
+		$info['host'] = strtok( $parsedsn, "/" );
+		$parsedsn = substr( $parsedsn, strlen($info['host']) + 1 );
+		$info['database'] = $parsedsn;
+
+		return $info;
+	}
+
 	function get_db_by_name( $name ) {
 		include_once ('tiki-setup.php');
 		if( $name == 'local' || empty($name) ) {
@@ -128,18 +147,12 @@ class TikiLib extends TikiDb_Bridge
 			if( ! isset( $connectionMap[$name] ) ) {
 				$connectionMap[$name] = false;
 
-				$dsnsqlplugin = $this->get_dsn_by_name($name);
-
-				$parsedsn = $dsnsqlplugin;
-				$dbdriver = strtok( $parsedsn, ":" );
-				$parsedsn = substr( $parsedsn, strlen($dbdriver) + 3 );
-				$dbuserid = strtok( $parsedsn, ":" );
-				$parsedsn = substr( $parsedsn, strlen($dbuserid) + 1 );
-				$dbpassword = strtok( $parsedsn, "@" );
-				$parsedsn = substr( $parsedsn, strlen($dbpassword) + 1 );
-				$dbhost = strtok( $parsedsn, "/" );
-				$parsedsn = substr( $parsedsn, strlen($dbhost) + 1 );
-				$database = $parsedsn;
+				$info = $this->get_dsn_info( $name );
+				$dbdriver = $info['driver'];
+				$dbuserid = $info['user'];
+				$dbpassword = $info['password'];
+				$dbhost = $info['host'];
+				$database = $info['database'];
 				
 				$api_tiki = null;
 				require 'db/local.php';				
@@ -8657,7 +8670,7 @@ function detect_browser_language() {
 function validate_email($email) {
 	global $prefs;
 	require_once 'lib/core/lib/Zend/Validate/EmailAddress.php';
-	$validate = new Zend_Validate_EmailAddress;
+	$validate = new Zend_Validate_EmailAddress( Zend_Validate_Hostname::ALLOW_ALL );
 	
 	return $validate->isValid( $email );
 }

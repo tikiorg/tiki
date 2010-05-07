@@ -1,4 +1,4 @@
-{title help="Tiki+Importer"}TikiWiki importer{/title}
+{title help="Tiki+Importer"}Tiki Importer{/title}
 
 <br />
 
@@ -6,9 +6,9 @@
     {remarksbox type="warning" title="{tr}Warning:{/tr}"}
         {tr}If you are NOT running a new Tiki installation, make a backup of your database before using this importer!{/tr}
     {/remarksbox}
-    {if ini_get('safe_mode')}
+    {if $safe_mode ne ''}
         {remarksbox type="warning" title="{tr}Warning:{/tr}"}
-            {tr}Your PHP is running with safe mode enabled. This might cause problems to the import process as safe mode limits the possibly to change in run time some PHP settings (like max_execution_time). It is recommended to run this script without safe mode.{/tr}
+            {tr}Your PHP is running with safe mode enabled. This might cause problems to the import process as safe mode limits the possibility to change in run time some PHP settings (like max_execution_time). It is recommended to run this script without safe mode.{/tr}
         {/remarksbox}
     {/if}
     {remarksbox type="note" title="{tr}Note:{/tr}"}

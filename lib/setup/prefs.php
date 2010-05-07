@@ -832,7 +832,7 @@ function get_default_prefs() {
 		// search
 		'feature_search_stats' => 'n',
 		'feature_search' => 'n',
-		'feature_search_fulltext' => 'y',
+		'feature_search_fulltext' => 'n',
 		'feature_search_show_forbidden_obj' => 'n',
 		'feature_search_show_forbidden_cat' => 'n',
 		'feature_search_show_object_filter' => 'n',

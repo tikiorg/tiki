@@ -271,11 +271,11 @@
 {/jq}
 								<fieldset>
 									<legend>{tr}Regex search:{/tr}</legend>
-									<input style="width:100;" class="wikiedit" type="text" id="search"/>
+									<input style="width:100;" class="wikiedit" type="text" id="search" />
 									<label>{tr}Replace with:{/tr}
-									<input style="width:100;" class="wikiedit" type="text" id="replace"/></label>
+									<input style="width:100;" class="wikiedit" type="text" id="replace" /></label>
 									<label><input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}</label>
-									<input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();">
+									<input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();" />
 								</fieldset>
 							{/if}
 							{if $prefs.wiki_spellcheck eq 'y'}

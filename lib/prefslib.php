@@ -135,10 +135,13 @@ class PreferencesLib
 	}
 
 	function formatPreference( $pref, $data ) {
-		$info = $this->getPreference( $pref );
-		$function = '_get' . ucfirst( $info['type'] ) . 'Value';
-		$value = $this->$function( $info, $data );
-		return $value;
+		if( false !== $info = $this->getPreference( $pref ) ) {
+			$function = '_get' . ucfirst( $info['type'] ) . 'Value';
+			$value = $this->$function( $info, $data );
+			return $value;
+		} else {
+			return $data[$pref];
+		}
 	}
 	
 	function getInput( JitFilter $filter, $preferences = array(), $environment ) {

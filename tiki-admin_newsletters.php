@@ -105,6 +105,7 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$articleClipTypes = '';
 	}
+	if (!isset($_REQUEST['frequency'])) $_REQUEST['frequency'] = 0;
 	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"],$_REQUEST["allowTxt"],$_REQUEST["frequency"],$_REQUEST["author"], $_REQUEST["allowArticleClip"], $_REQUEST["autoArticleClip"], $articleClipRange, $articleClipTypes );
 	
 	$info = array(

@@ -889,10 +889,6 @@ div.freetagitemlist {
 	background: #f3e498;
 }
 
-div#calscreen td.calfocuson {
-	border-bottom: none;
-}
-
 .calfocuson a {
 	font-size: 90%;
 }

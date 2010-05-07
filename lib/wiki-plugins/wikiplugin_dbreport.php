@@ -1531,45 +1531,22 @@ function wikiplugin_dbreport($data, $params) {
 	}
 	// open the database
 	if (isset($dsn)) {
-		require 'db/local.php';				
-		if (isset($api_tiki) &&  $api_tiki == 'adodb') {
-			// open database dsn connection
-			$ado =& ADONewConnection($dsn);
-			if (!$ado) {
+		// open database dsn connection
+		require_once ('lib/adodb/adodb.inc.php');
+		$ado = ADONewConnection($dsn);
+		if (!$ado) {
+			$ret .= wikiplugin_dbreport_error_box($ado->ErrorMsg());
+			return $ret;
+		} else {
+			// execute sql query
+			$ado->SetFetchMode(ADODB_FETCH_NUM);
+			$query =& $ado->Execute($report->sql, $bindvars); 
+			$field_count = $query->FieldCount();
+			$fetchfield = 'FetchField';
+			if (!$query) {
 				$ret .= wikiplugin_dbreport_error_box($ado->ErrorMsg());
 				return $ret;
-			} else {
-				// execute sql query
-				$ado->SetFetchMode(ADODB_FETCH_NUM);
-	   			$query =& $ado->Execute($report->sql, $bindvars); 
-	   			$field_count = $query->FieldCount();
-	   			$fetchfield = 'FetchField';
-				if (!$query) {
-	       			$ret .= wikiplugin_dbreport_error_box($ado->ErrorMsg());
-					return $ret;
-				}
 			}
-		} else {
-			//duplicates part of get_db_by_name function in tikilib TODO
-			$parsedsn = $dsn;
-			$dbdriver = strtok( $parsedsn, ":" );
-			$parsedsn = substr( $parsedsn, strlen($dbdriver) + 3 );
-			$dbuserid = strtok( $parsedsn, ":" );
-			$parsedsn = substr( $parsedsn, strlen($dbuserid) + 1 );
-			$dbpassword = strtok( $parsedsn, "@" );
-			$parsedsn = substr( $parsedsn, strlen($dbpassword) + 1 );
-			$dbhost = strtok( $parsedsn, "/" );
-			$parsedsn = substr( $parsedsn, strlen($dbhost) + 1 );
-			$database = $parsedsn;
-
-//			require_once ('lib/core/lib/TikiDb/Pdo.php');
-			$dbcon = new PDO("$dbdriver:host=$dbhost;dbname=$database", $dbuserid, $dbpassword);
-			$query = $dbcon->prepare($report->sql);
-			$query->execute($bindvars);
-			$field_count = $query->columnCount();
-//			$pdo = new TikiDb_Pdo( $dbcon );
-//			$query =& $pdo->query($report->sql, $bindvars);
-			$fetchfield = 'fetchColumn';	
 		}
 	} else {
 		return (tra('No DSN connection string found!'));

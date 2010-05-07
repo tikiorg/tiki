@@ -555,7 +555,7 @@ if (!file_exists($local)) {
 		$db->setErrorHandler(new InstallerDatabaseErrorHandler);
 		TikiDb::set($db);
 
-		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+		if (! $test = $dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 			$dbcon = false;
 			$smarty->assign('dbcon', 'n');
 			$tikifeedback[] = array('num'=>1, 'mes'=>$dbTiki->ErrorMsg());
@@ -825,6 +825,11 @@ if ($install_step == '2') {
 		} else {
 		$gd_test = 'n'; }
 	$smarty->assign('gd_test', $gd_test);
+} elseif ($install_step == 6 && !empty($_REQUEST['validPatches'])) {
+	foreach ($_REQUEST['validPatches'] as $patch) {
+		global $installer;
+		$installer->recordPatch($patch);
+	}
 }
 
 unset($TWV);
@@ -856,6 +861,7 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 
 
 include "lib/headerlib.php";
+$headerlib->add_js("var tiki_cookie_jar=new Array();");
 $headerlib->add_cssfile('styles/fivealive.css');
 $headerlib->add_jsfile( 'lib/tiki-js.js' );
 $headerlib->add_jsfile( 'lib/jquery/jquery.js' );
@@ -883,7 +889,8 @@ jqueryTiki.effect_tabs = "";
 jqueryTiki.effect_tabs_direction = "";
 jqueryTiki.effect_tabs_speed = 400;
 ';
-	$headerlib->add_js($js, 100);	
+$headerlib->add_js($js, 100);
+
 
 $smarty->assign_by_ref('headerlib',$headerlib);
 

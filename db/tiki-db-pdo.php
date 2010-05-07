@@ -39,7 +39,10 @@ try {
 } catch( PDOException $e ) {
 	require_once 'setup_smarty.php';
 
-	$smarty->assign( 'msg', $e->getMessage() );
+	$msg = $e->getMessage();
+	$smarty->assign_by_ref( 'msg', $msg );
+	global $logslib; include_once('lib/logs/logslib.php');
+	$logslib->add_log('system', $msg);
 	echo $smarty->fetch( 'database-connection-error.tpl' );
 	exit;
 }

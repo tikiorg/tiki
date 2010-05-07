@@ -20,6 +20,8 @@
 		{/remarksbox}
 		{preference name=modseparateanon}
 		{preference name=modhideanonadmin}
+		{preference name=feature_left_column}
+		{preference name=feature_right_column}
 
 		</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">

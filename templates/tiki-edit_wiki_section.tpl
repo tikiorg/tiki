@@ -31,7 +31,7 @@
 {if isset($cell)}<input type="hidden" name="cell" value="{$cell}" />{/if}
 {if isset($hdr)}<input type="hidden" name="hdr" value="{$hdr}" />{/if}
 {if $prefs.feature_ajax_autosave eq "y"}
-	{button _title="{tr}Preview your changes in a separate window.{/tr}" _class="wikiaction tips" _text="{tr}AJAX Preview{/tr}" _ajax="n" _onclick="ajax_preview(); return false;"}&nbsp;&nbsp;
+	{button _title="{tr}Preview your changes in a separate window.{/tr}" _class="wikiaction tips" _text="{tr}Live Preview{/tr}" _ajax="n" _onclick="ajax_preview(); return false;"}&nbsp;&nbsp;
 {/if}
 <input type="submit" title="{tr}Preview your changes.{/tr}" class="wikiaction tips" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;
 <input type="submit"  title="{tr}Save the page.{/tr}" class="wikiaction tips" name="save" value="{tr}Save{/tr}" />&nbsp;&nbsp;

@@ -31,7 +31,7 @@
 						border="0"
 		  			alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
 					  title="{tr}click on the map to zoom or pan, do not drag{/tr}"
-					  style="z-index:20;position:relative"/> 
+					  style="z-index:20;position:relative" /> 
 			</div>		  
 		  <script type="text/javascript">	
 		    var minx={$minx};
