@@ -58,17 +58,8 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign("use", $info["which"]);
 	$smarty->assign("zone", $info["zone"]);
 	if ($info["which"] == 'useFlash') {
-		if (preg_match('/(swfobject|SWFFix)\.embedSWF\([\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*/m', $info['HTMLData'], $matches)) {
-			$smarty->assign("movieUrl", $matches[2]);
-			$smarty->assign("movieId", $matches[3]);
-			$smarty->assign("movieWidth", $matches[4]);
-			$smarty->assign("movieHeight", $matches[5]);
-			$smarty->assign("movieVersion", $matches[6]);
-		} else if (preg_match('/width="*([0-9]*).*height="*([0-9]*).*"([^"]\.swf"/mi', $info['HTMLData'], $matches)) {
-			$smarty->assign("movieUrl", $matches[3]);
-			$smarty->assign("movieWidth", $matches[1]);
-			$smarty->assign("movieHeight", $matches[2]);
-		}
+		$movie = unserialize($info['HTMLData']);
+		$smarty->assign_by_ref('movie', $movie);
 	}
 	$smarty->assign("HTMLData", $info["HTMLData"]);
 	$smarty->assign("fixedURLData", $info["fixedURLData"]);
@@ -289,12 +280,17 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 
 	if (!isset($_REQUEST["create_zone"])) {
 		if ($_REQUEST["use"] == "useFlash") {
+			$params = array(
+						  'width' => 425,
+						  'height' => 350,
+						  'quality' => 'high',
+						  'version' => '9.0.0',
+						  );
 			$params['movie'] = $_REQUEST['movieUrl'];
 			if (!empty($_REQUEST['movieWidth'])) $params['width'] = $_REQUEST['movieWidth'];
 			if (!empty($_REQUEST['movieHeight'])) $params['height'] = $_REQUEST['movieHeight'];
 			if (!empty($_REQUEST['movieVersion'])) $params['version'] = $_REQUEST['movieVersion'];
-			$_REQUEST['HTMLData'] = $tikilib->embed_flash($params, 'y');
-			$_REQUEST['textData'] = $tikilib->embed_flash($params, 'n');
+			$_REQUEST['HTMLData'] = serialize($params);
 		}
 		$bannerId = $bannerlib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '',
 			'', $_REQUEST["use"], $_REQUEST["imageData"], $_REQUEST["imageType"], $_REQUEST["imageName"], $_REQUEST["HTMLData"],
