@@ -14,7 +14,7 @@ if (!function_exists('mod_last_podcasts_help')) {
 // Module special params:
 // - galleryId: list of file galleries IDs. If none, all file galleries will be scanned
 // - width: width of player. Default: : width=190
-// - height: height of player. Default: : width=190
+// - height: height of player. Default: : height=20
 // - link_url: Url for a link at bottom of module.
 // - link_text: Text for link if link_url is set, otherwise 'More Podcasts'
 // - verbose: (y/n) Display description of podcast below player if 'y', and on title mouseover if 'n'. Default is 'y'
