@@ -1415,6 +1415,7 @@ function get_default_prefs() {
 		'feature_top_banner' => 'n',
 		'feature_usability' => 'n',
 		'feature_use_quoteplugin' => 'n',
+		'feature_use_three_colon_centertag' => 'n',
 		'feature_user_watches' => 'n',
 		'feature_group_watches' => 'n',
 		'feature_user_watches_translations' => 'n',

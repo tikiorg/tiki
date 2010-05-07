@@ -260,8 +260,13 @@ class EditLib
 							if( isset($c[$i]['pars']) 
 								&& isset($c[$i]['pars']['style']) 
 								&& $c[$i]['pars']['style']['value'] == 'text-align: center;' ) {
-								$src .= "\n::";
-								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n"); 
+									if ($prefs['feature_use_three_colon_centertag'] == 'y') {
+										$src .= "\n:::";
+										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n");
+									} else {
+										$src .= "\n::";
+										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n");
+									}
 							} else {
 								$src .= "\n";
 								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n"); 
@@ -299,7 +304,15 @@ class EditLib
 						case "u": $src .= "=="; $p['stack'][] = array('tag' => 'u', 'string' => "=="); break;
 						case "strike": $src .= "--"; $p['stack'][] = array('tag' => 'strike', 'string' => "--"); break;
 						case "del": $src .= "--"; $p['stack'][] = array('tag' => 'del', 'string' => "--"); break;
-						case "center": $src .= '::'; $p['stack'][] = array('tag' => 'center', 'string' => '::'); break;
+						case "center":
+							if ($prefs['feature_use_three_colon_centertag'] == 'y') {
+								$src .= ':::';
+								$p['stack'][] = array('tag' => 'center', 'string' => ':::');
+							} else {
+								$src .= '::';
+								$p['stack'][] = array('tag' => 'center', 'string' => '::');
+							}
+							break;
 						case "code": $src .= '-+'; $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
 						case "dd": $src .= ':'; $p['stack'][] = array('tag' => 'dd', 'string' => "\n"); break;
 						case "dt": $src .= ';'; $p['stack'][] = array('tag' => 'dt', 'string' => ''); break;

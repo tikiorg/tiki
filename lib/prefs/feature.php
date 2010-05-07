@@ -1620,6 +1620,10 @@ function prefs_feature_list() {
 				'wikiplugin_quote',
 			),
 		),
+		'feature_use_three_colon_centertag' => array(
+			'name' => tra('Use three colons instead of two to center text. Avoids conflict with C++ resolution scope operator.'),
+			'type' => 'flag',
+		),
 		'feature_community_gender' => array(
 			'name' => tra('Users can choose to show their gender'),
 			'type' => 'flag',

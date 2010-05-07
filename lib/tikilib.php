@@ -6157,7 +6157,11 @@ class TikiLib extends TikiDb_Bridge
 			// Underlined text
 			$data = preg_replace("/===(.+?)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
 			// Center text
-			$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
+			if ($prefs['feature_use_three_colon_centertag'] == 'y') {
+				$data = preg_replace("/:::(.+?):::/", "<div style=\"text-align: center;\">$1</div>", $data);
+			} else {
+				$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
+			}
 		}
 
 		// definitively put out the protected words ))protectedWord((

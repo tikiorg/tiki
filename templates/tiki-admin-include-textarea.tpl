@@ -41,6 +41,7 @@
 					{preference name=feature_hotwords_nw}
 				</div>
 				{preference name=feature_use_quoteplugin}
+				{preference name=feature_use_three_colon_centertag}
 			</fieldset>
 
 			<fieldset>
