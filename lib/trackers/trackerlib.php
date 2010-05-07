@@ -3581,6 +3581,36 @@ class TrackerLib extends TikiLib
 		}
 		return array();
 	}
+	
+	/**
+	 * @param mixed $value		string or array to process
+	 */
+	function replace_pretty_tracker_refs( &$value ) {
+		global $smarty;
+		
+		if( is_array( $value ) ) {
+			foreach( $value as &$v ) {
+				$this->replace_pretty_tracker_refs( $v );
+			}
+		} else {
+			$value = preg_replace_callback('/\{\$(f_\d+)\}/', 'TrackerLib::_pretty_tracker_replace_value', $value);
+		}
+	}
+	
+	static function _pretty_tracker_replace_value($matches) {
+		global $smarty;
+		$s_var = null;
+		if (!empty($matches[1])) { 
+			$s_var = $smarty->get_template_vars($matches[1]);
+		}
+		if (!is_null($s_var)) {
+			$r = $s_var;
+		} else {
+			$r = $matches[0];
+		}
+		return $r;
+	}
+
 	function nbComments($user) {
 		$query = 'select count(*) from `tiki_tracker_item_comments` where `user`=?';
 		return $this->getOne($query, array($user));
