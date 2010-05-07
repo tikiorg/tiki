@@ -8327,6 +8327,9 @@ function get_wiki_section($data, $hdr) {
 						  'version' => '9.0.0',
 						  );
 		$params = array_merge( $defaults, $params );
+		if (preg_match('/^(\/|https?:)/', $params['movie'])) {
+			$params['allowscriptaccess'] = 'always';
+		}
 		
 		if ( ((empty($javascript) && $prefs['javascript_enabled'] == 'y') || $javascript == 'y')) {
 			$myId = (!empty($params['id'])) ? ($params['id']) : 'wp-flash-' . md5($params['movie']);
