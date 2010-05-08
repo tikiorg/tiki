@@ -28,15 +28,31 @@ function wikiplugin_sharethis_info() {
 				'name' => tra('Send services'),
 				'description' => tra('By default, email, aim and sms are available. Input one or two of the services separated by a | to limit the choice of send services.'),
 			),
-			'postfirst' => array(
+			'style' => array(
 				'required' => false,
-				'name' => tra('First post services shown'),
-				'description' => tra('Input a list of post services (like facebook, myspace, digg, etc.) separated by a | to customize the services that are shown in the opening panel of the widget.'),
+				'name' => tra('Button style'),
+				'description' => tra('Horizontal, vertical or rotate.'),
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''), 
+					array('text' => tra('Horizontal'), 'value' => 'horizontal'), 
+					array('text' => tra('Vertical'), 'value' => 'vertical'), 
+					array('text' => tra('Rotate'), 'value' => 'rotate'), 
+					),
 			),
 			'rotateimage' => array(
 				'required' => false,
 				'name' => tra('Rotate image'),
 				'description' => tra('A value of y will cause the button icon to rotate every 3 seconds between a few icons, cycling through twice before stopping.'),
+			),
+			'multiple' => array(
+				'required' => false,
+				'name' => tra('Multiple icons'),
+				'description' => tra('Enter list: email | facebook | twitter | sharethis, depending on which icons you\'d like.'),
+			),
+			'postfirst' => array(
+				'required' => false,
+				'name' => tra('First post services shown'),
+				'description' => tra('Input a list of post services (like facebook, myspace, digg, etc.) separated by a | to customize the services that are shown in the opening panel of the widget.'),
 			),
 			'buttontext' => array(
 				'required' => false,
@@ -110,12 +126,43 @@ function wikiplugin_sharethis($data, $params) {
 		$sharethis_options['sendsvcs'] = str_replace('|',$comma,$sendsvcs);
 	}
 	// set icon style
-	if(!empty($rotateimage))
-	{
-		if($rotateimage == 'y'){
+	if(!empty($rotateimage) || !empty($style)) {
+		if ($rotateimage == 'y' || $style == 'rotate') {
 			$sharethis_options['style'] = 'rotate';
+		} elseif ($style == 'horizontal') {
+			$sharethis_options['style'] = 'horizontal';
+		} elseif ($style == 'vertical') {
+			$sharethis_options['style'] = 'vertical';
 		}
 	}
+	if (!empty($multiple)) {
+		$iconcode = '<style type="text/css">
+					body {font-family:helvetica,sans-serif;font-size:12px;}
+					a.stbar.chicklet img {border:0;height:16px;width:16px;margin-right:3px;vertical-align:middle;}
+					a.stbar.chicklet {height:16px;line-height:16px;}
+					</style>';
+		$icons = explode('|',$multiple);
+		foreach ($icons as $icon) {
+			$iconcode .= '<a id="ck_' . $icon . '" class="stbar chicklet" href="javascript:void(0);">' 
+							. '<img src="http://w.sharethis.com/chicklets/' . $icon . '.gif" style="margin-right:3px;" />';
+			if ($icon == 'sharethis') {
+				$iconcode .= 'ShareThis';
+			}
+			$iconcode .= '</a>'; 
+		}
+		$iconcode .= '<script type="text/javascript">
+						var shared_object = SHARETHIS.addEntry({
+						title: document.title,
+						url: document.location.href
+					});
+					
+					shared_object.attachButton(document.getElementById("ck_sharethis"));
+					shared_object.attachChicklet("email", document.getElementById("ck_email"));
+					shared_object.attachChicklet("facebook", document.getElementById("ck_facebook"));
+					shared_object.attachChicklet("twitter", document.getElementById("ck_twitter"));
+					</script>';
+	}
+	
 	// set button text
 	if(!empty($buttontext))
 	{
@@ -167,8 +214,9 @@ function wikiplugin_sharethis($data, $params) {
 	if(!empty($sharethis_options['headerbg'])) $sharethiscode .= $sep."headerbg=".$lb.$sharethis_options['headerbg'];	
 	if(!empty($sharethis_options['linkfg'])) $sharethiscode .= $sep."linkfg=".$lb.$sharethis_options['linkfg'];
 	if(!empty($sharethis_options['headertitle'])) $sharethiscode .= $sep."headerTitle=".$sharethis_options['headertitle'];
-
-	$sharethiscode .= "\"></script>";
+	if(!empty($iconcode)) $sharethiscode .= ';button=false';
+	$sharethiscode .= "\"></script>\n";
+	if(!empty($iconcode)) $sharethiscode .= $iconcode;	
 	$sharethiscode .= "~hc~ ))ShareThis(( Bookmark Button END ~/hc~";
 
 $result = $sharethiscode;
