@@ -150,6 +150,7 @@ class TaskLib extends TikiLib
 		}
 		$result = $this->query($query,$values_select); 
 		$entries = $result->fetchRow();
+		// not needed anymore ? // Sept
 		for($index=0; array_key_exists($index, $entries); $index++) // Hack since PDO fetchRow returns 2 indexes per DB field
 			unset($entries[$index]);
 

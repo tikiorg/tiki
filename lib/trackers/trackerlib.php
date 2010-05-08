@@ -325,7 +325,7 @@ class TrackerLib extends TikiLib
 		return $retval;
 	}
 
-	function list_last_comments($trackerId = 0, $itemId = 0, $offset, $maxRecords) {
+	function list_last_comments($trackerId = 0, $itemId = 0, $offset = -1, $maxRecords = -1) {
 		global $user;
 	    $mid = "1=1";
 	    $bindvars = array();
@@ -3364,7 +3364,7 @@ class TrackerLib extends TikiLib
 	function get_nb_items($trackerId) {
 		return $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
 	}
-	function duplicate_tracker($trackerId, $name, $description='', $descriptionIsParsed) {
+	function duplicate_tracker($trackerId, $name, $description = '', $descriptionIsParsed = 'n') {
 		$tracker_info = $this->get_tracker($trackerId);
 		if ($t = $this->get_tracker_options($trackerId))
 			$tracker_info = array_merge($tracker_info,$t);
@@ -3504,7 +3504,7 @@ class TrackerLib extends TikiLib
 		$where[] = " t0.`itemId`=?";
 		$bindVars[] = $itemId;
 		$mid = '';
-		for ($i = 0; $i < count($fieldIds)-1; $i = $i+2) {
+		for ($i = 0, $tmp_count = count($fieldIds) - 1 ; $i < $tmp_count ; $i += 2) {
 			$j = $i + 1;
 			$k = $j + 1;
 			$select[] = "`tiki_tracker_item_fields` t$j";
@@ -3547,11 +3547,11 @@ class TrackerLib extends TikiLib
 	}
 	function get_left_join_sql($fieldIds) {
 		$sql = '';
-		for ($i = 0; $i < count($fieldIds); $i = $i+3) {
+		for ($i = 0, $tmp_count = count($fieldIds); $i < $tmp_count; $i += 3) {
 			$j = $i + 1;
 			$k = $j + 1;
-			$tti = $i?"t$i": 'tti';
-			$sttif = $k<count($fieldIds)-1?"t$k": 'sttif';
+			$tti = $i ? "t$i" : 'tti';
+			$sttif = $k < $tmp_count - 1 ? "t$k" : 'sttif';
 			$sql .= " LEFT JOIN (`tiki_tracker_item_fields` t$i) ON ($tti.`itemId`= t$i.`itemId` and t$i.`fieldId`=".$fieldIds[$i].")";
 			$sql .= " LEFT JOIN (`tiki_tracker_item_fields` t$j) ON (t$i.`value`= t$j.`value` and t$j.`fieldId`=".$fieldIds[$j].")";
 			$sql .= " LEFT JOIN (`tiki_tracker_item_fields` $sttif) ON (t$j.`itemId`= $sttif.`itemId` and $sttif.`fieldId`=".$fieldIds[$k].")";

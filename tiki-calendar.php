@@ -513,7 +513,7 @@ if ($calendarViewMode == 'day') {
 	foreach($concurrencies as $key=>$value)
 		$concurrencies[$key]['offset'] = $value['offset'] * 100 / $value['value'];
 	foreach(array_keys($hrows) as $anHour) {
-		for($i=0 ; $i < count($hrows[$anHour]) ; $i++) {
+		for($i=0, $tmp_count = count($hrows[$anHour]) ; $i < $tmp_count ; $i++) {
 			// setting number of simulaneous events foreach event, so that we can figure out its width without overwriting
 			$hrows[$anHour][$i]['concurrences'] = $concurrencies[$hrows[$anHour][$i]['calitemId']]['value'];
 			// setting duration of the event within the day
@@ -611,7 +611,7 @@ if ($calendarViewMode == 'day') {
 	}
 	foreach(array_keys($hrows) as $aDay) {
 		foreach(array_keys($hrows[$aDay]) as $anHour) {
-			for($i=0 ; $i < count($hrows[$aDay][$anHour]) ; $i++) {
+			for($i=0, $tmp_count = count($hrows[$aDay][$anHour]) ; $i < $tmp_count ; $i++) {
 				if (!$manyEvents[$aDay]['tooMany'] && $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] <= $maxSimultaneousWeekViewEvents) {
 					$hrows[$aDay][$anHour][$i]['concurrences'] = $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'];
 					$hrows[$aDay][$anHour][$i]['duree'] = $eventHoraires[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['duree'] * 24;

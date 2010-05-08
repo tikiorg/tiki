@@ -66,7 +66,7 @@ $showBoxCheck = "
 	var allowTxt = new Array();
 	var allowArticleClip = new Array();
 	";
-for ($i = 0; $i < count($newsletters['data']); $i++) {
+for ($i = 0, $tmp_count = count($newsletters['data']); $i < $tmp_count; $i++) {
 $showBoxCheck .= "allowTxt[$i] = '" . $newsletters['data'][$i]['allowTxt'] . "';
 	allowArticleClip[$i] = '" . $newsletters['data'][$i]['allowArticleClip'] . "';
 	";

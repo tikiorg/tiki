@@ -361,7 +361,7 @@ class SearchLib extends TikiLib
 		return ($a['relevance'] > $b['relevance']) ? -1 : (($a['relevance'] < $b['relevance']) ? 1 : 0);
 	}
 
-	function find_calendars($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_calendars($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
 		static $search_calendar = array(
 			'from' => '`tiki_calendar_items` c',
@@ -384,7 +384,7 @@ class SearchLib extends TikiLib
 		return $this->_find($search_calendar, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Calendar item'), $searchDate, $categId);
 	}
 
-	function find_galleries($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_galleries($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
 		static $search_galleries = array(
 			'from' => '`tiki_galleries` g',
@@ -405,7 +405,7 @@ class SearchLib extends TikiLib
 		return $this->_find($search_galleries, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Gallery'), $searchDate, $categId);
 	}
 
-	function find_faqs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_faqs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
 		$search_faqs = array(
 			'from' => '`tiki_faq_questions` q, `tiki_faqs` f',
@@ -426,7 +426,7 @@ class SearchLib extends TikiLib
 		return $this->_find($search_faqs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('FAQ'), $searchDate, $categId);
 	}
 
-	function find_directory($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_directory($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
 		static $search_directory = array(
 			'from' => '`tiki_directory_sites` d',
@@ -450,7 +450,7 @@ class SearchLib extends TikiLib
 		return $this->_find($search_directory, $words, $offset, $maxRecords, $fulltext, $filter, $boolean,tra('Directory'), $searchDate, $categId);
 	}
 
-	function find_images($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_images($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
 		static $search_images = array(
 			'from' => '`tiki_images` i',
@@ -472,7 +472,7 @@ class SearchLib extends TikiLib
  		return $this->_find($search_images, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Image'), $searchDate, $categId);
 	}
 
-	function find_forums($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_forums($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
 		$search_forums = array(
 			'from' => '`tiki_comments` c, `tiki_forums` f',
@@ -498,7 +498,7 @@ class SearchLib extends TikiLib
 		return $this->_find($search_forums, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Forum'), $searchDate, $categId);
 	}
 
-	function find_files($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate)
+	function find_files($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0)
 	{
 		static $search_files = array(
 			'from' => '`tiki_files` f',
@@ -525,7 +525,7 @@ class SearchLib extends TikiLib
 		return $this->_find($search_files, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('File Gallery'), $searchDate);
 	}
 
-	function find_blogs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_blogs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
 		static $search_blogs = array(
 			'from' => '`tiki_blogs` b',
@@ -553,7 +553,7 @@ class SearchLib extends TikiLib
 		return $res;
 	}
 
-	function find_articles($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0, $lang = '')
+	function find_articles($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0, $lang = '')
 	{
 		static $search_articles = array(
 			'from' => '`tiki_articles` a',
@@ -590,7 +590,7 @@ class SearchLib extends TikiLib
 		return $ret;
 	}
 
-	function find_posts($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_posts($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
 	  global $user;
 
@@ -621,7 +621,7 @@ class SearchLib extends TikiLib
 		return $this->_find($search_posts, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog post'), $searchDate, $categId);
 	}
 
-	function find_trackers($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0)
+	function find_trackers($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0)
 	{
 		global $trklib; require_once('lib/trackers/trackerlib.php');
 		global $tiki_p_view_trackers_pending; global $tiki_p_view_trackers_closed;
@@ -663,7 +663,7 @@ class SearchLib extends TikiLib
 		return array('cant'=> count($retFinal), 'data'=> $retFinal);
 	}
 
-	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate, $categId = 0, $lang = '')
+	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate = 0, $categId = 0, $lang = '')
 	{
 		$data = array();
 

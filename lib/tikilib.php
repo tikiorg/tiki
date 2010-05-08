@@ -784,10 +784,10 @@ class TikiLib extends TikiDb_Bridge
 		}
 	}
 
-	function list_quizzes($offset, $maxRecords, $sort_mode = 'name_desc', $find) {
+	function list_quizzes($offset, $maxRecords, $sort_mode = 'name_desc', $find = null) {
 		$bindvars = array();
 		$mid = '';
-		if ($find) {
+		if ( ! empty($find) ) {
 			$findesc = '%' . $find . '%';
 			$mid = " where (`name` like ? or `description` like ?)";
 			$bindvars = array($findesc, $findesc);
@@ -2578,7 +2578,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/*shared*/
-	function list_visible_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
+	function list_visible_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user = '', $find = null) {
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
 
 		$old_sort_mode = '';
@@ -2602,7 +2602,7 @@ class TikiLib extends TikiDb_Bridge
 			$bindvars[] = "y";
 		}
 
-		if ($find) {
+		if (! empty($find) ) {
 			$findesc = '%' . $find . '%';
 			$whuser .= " and (`name` like ? or `description` like ?)";
 			$bindvars[] = $findesc;
@@ -3592,9 +3592,9 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/*shared*/
-	function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
+	function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user = '', $find = null) {
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
-		global $tiki_p_admin_galleries;
+		global $tiki_p_admin_galleries, $tiki_p_admin;
 
 		$old_sort_mode = '';
 
@@ -3612,15 +3612,15 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		// If the user is not admin then select `it` 's own galleries or public galleries
-		if (($tiki_p_admin_galleries == 'y') or ($user == 'admin')) {
+		if ( $tiki_p_admin_galleries === 'y' or $tiki_p_admin === 'y') {
 			$whuser = "";
-			$bindvars=array();
+			$bindvars = array();
 		} else {
 			$whuser = "where `user`=? or public=?";
-			$bindvars=array($user,'y');
+			$bindvars = array($user,'y');
 		}
 
-		if ($find) {
+		if ( ! empty($find) ) {
 			$findesc = '%' . $find . '%';
 
 			if (empty($whuser)) {
@@ -5762,7 +5762,7 @@ class TikiLib extends TikiDb_Bridge
 			&& !$this->plugin_is_inline( $name ) ;
 	}
 
-	function quotesplit( $splitter=',', $repl_string ) {
+	function quotesplit( $splitter = ',', $repl_string = '' ) {
 		$matches = preg_match_all( '/"[^"]*"/', $repl_string, $quotes );
 
 		$quote_keys = array();
