@@ -719,7 +719,11 @@ function prefs_feature_list() {
 		'feature_wiki_ext_icon' => array(
 			'name' => tra('External link icon'),
 			'type' => 'flag',
-			'description' => tra('External links will be identifed with an icon. Use the ../img/icons/external_link.gif image to customize the icon.')
+			'description' => tra('External links will be identifed with an icon.')
+		),
+		'feature_wiki_ext_icon_src' => array(
+			'name' => tra('External link icon source (image path)'),
+			'type' => 'text',
 		),
 		'feature_wiki_ext_rel_nofollow' => array(
 			'name' => tra('Add "rel=nofollow" on external links'),

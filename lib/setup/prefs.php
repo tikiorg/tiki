@@ -1472,6 +1472,7 @@ function get_default_prefs() {
 		'feature_forums_search' => 'n',
 		'feature_trackbackpings' => 'n',
 		'feature_wiki_ext_icon' => 'y',
+		'feature_wiki_ext_icon_src' => 'img/icons/external_link.gif',
 		'feature_wiki_ext_rel_nofollow' => 'y',
 		'feature_wiki_mandatory_category' => -1,
 		'feature_intertiki_imported_groups' => '',

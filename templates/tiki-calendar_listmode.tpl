@@ -24,7 +24,7 @@
 <span class="summary">{$event.name|escape}</span></a><br />
 <span class="description" style="font-style:italic">{$event.parsed}</span>
 {if $event.web}
-<br /><a href="{$event.web}" target="_other" class="calweb" title="{$event.web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
+<br /><a href="{$event.web}" target="_other" class="calweb" title="{$event.web}"><img src="{$prefs.feature_wiki_ext_icon_src}" width="7" height="7" alt="&gt;" /></a>
 {if $infocals.$calendarId.customfgcolor ne ''}</span>{/if}
 {/if}
 </td>

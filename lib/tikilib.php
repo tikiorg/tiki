@@ -5821,7 +5821,7 @@ class TikiLib extends TikiDb_Bridge
 			$attrib .= 'target="_blank" ';
 		if ($prefs['feature_wiki_ext_icon'] == 'y') {
 			$attrib .= 'class="wiki external" ';
-			$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
+			$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"{$prefs['feature_wiki_ext_icon_src']}\" alt=\" (external link)\" />";
 		} else {
 			$attrib .= 'class="wiki" ';
 			$ext_icon = "";
@@ -6265,7 +6265,7 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			$class = 'class="wiki external"';
 			if ($prefs['feature_wiki_ext_icon'] == 'y' && !$options['suppress_icons']) {
-				$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
+				$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"{$prefs['feature_wiki_ext_icon_src']}\" alt=\" (external link)\" />";
 			}
 			$rel='external';
 			if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
