@@ -73,6 +73,26 @@
 			{/foreach}
 		</form>
 	</p>
+	{if $subscribers gt 0}
+		<h3>{tr}Recipients{/tr} <a id="flipperrecipients" href="javascript:flipWithSign('recipients')">[+]</a></h3>
+		<div id="recipients" class="simplebox" style="display:none; max-height: 250px; overflow: auto;">
+			<table class="small normal">
+				<tr>
+					<th>{tr}Email{/tr}</th>
+					<th>{tr}Validated{/tr}</th>
+					<th>{tr}Is user{/tr}</th>
+				</tr>
+				{cycle values="even,odd" print=false}
+				{foreach from=$subscribers_list item=sub key=ix}
+					<tr>
+						<td class="{cycle advance=false}">{$sub.email|escape}</td>
+						<td class="{cycle advance=false}">{$sub.valid}</td>
+						<td class="{cycle}">{$sub.isUser}</td>
+					</tr>
+				{/foreach}
+			</table>
+		</div>
+	{/if}	
 	<h2>{tr}Preview{/tr}</h2>
 	<h3>{tr}Subject{/tr}</h3>
 	<div class="simplebox wikitext">{$subject|escape}</div>
@@ -101,26 +121,7 @@
 		{/if}
 	</div>
 
-	{if $subscribers gt 0}
-		<h3>{tr}Recipients{/tr} <a id="flipperrecipients" href="javascript:flipWithSign('recipients')">[+]</a></h3>
-		<div id="recipients" class="simplebox" style="display:none; max-height: 250px; overflow: auto;">
-			<table class="small normal">
-				<tr>
-					<th>{tr}Email{/tr}</th>
-					<th>{tr}Validated{/tr}</th>
-					<th>{tr}Is user{/tr}</th>
-				</tr>
-				{cycle values="even,odd" print=false}
-				{foreach from=$subscribers_list item=sub key=ix}
-					<tr>
-						<td class="{cycle advance=false}">{$sub.email|escape}</td>
-						<td class="{cycle advance=false}">{$sub.valid}</td>
-						<td class="{cycle}">{$sub.isUser}</td>
-					</tr>
-				{/foreach}
-			</table>
-		</div>
-	{/if}
+
 	
 	</div>
 
