@@ -147,7 +147,7 @@ function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload 
 	return $objResponse;
 }
 
-function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
+function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1) {
 	global $prefs, $trklib, $user, $webmaillib, $contactlib, $dbTiki, $tikilib, $categlib, $module_params;
 	
 	include_once ('lib/webmail/webmaillib.php');
@@ -252,7 +252,7 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 	return $objResponse;
 }
 
-function putBackGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
+function putBackGroupMail($destDiv = 'mod-webmail_inbox', $msgId = 1) {
 	global $prefs, $trklib, $user, $webmaillib, $dbTiki, $module_params;
 	
 	if (!isset($webmaillib)) { include_once ('lib/webmail/webmaillib.php'); }
