@@ -1718,6 +1718,8 @@ function prefs_feature_list() {
 		),
 		'feature_webdav' => array(
 			'name' => tra('WebDAV access to Tiki'),
+			'help' => tra('Allow to acces File Galleries with WebDAV'),
+			'description' => tra('use tiki-webdav.php as the URI of the WebDAV repository'),
 			'type' => 'flag',
 		),
 		'feature_fixed_width' => array(
