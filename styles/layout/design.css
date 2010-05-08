@@ -65,6 +65,11 @@ span.button.highlight {
 	background: inherit;
 }
 
+div.highlight {
+	display: inline;
+	padding: 0 .3em;
+}
+
 input[type=checkbox],
 input[type=radio] {
 	border: 0;

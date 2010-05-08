@@ -66,6 +66,12 @@ span.button.highlight {
 	background: inherit;
 }
 
+/* Highlight effect is just visual distinction, so no need for block element. */
+div.highlight {
+	display: inline;
+	padding: 0 .3em;
+}
+
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
