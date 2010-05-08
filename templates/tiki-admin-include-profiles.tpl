@@ -241,7 +241,7 @@ function showDetails( id, domain, profile ) { // {{{
 {/literal}
 {/jq}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}TikiWiki Profiles{/tr}</a>{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}Tiki Profiles{/tr}</a>{/remarksbox}
 
 {if $profilefeedback}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -259,7 +259,7 @@ function showDetails( id, domain, profile ) { // {{{
 {tabset name='tabs_admin-profiles'}
 	{tab name="{tr}Apply Profiles{/tr}"}
 	
-		<h3>Configure TikiWiki in 3 easy steps using Profiles</h3>
+		<h3>Configure Tiki in 3 easy steps using Profiles</h3>
 		{if $prefs.javascript_enabled eq 'y'}
 				{if $openSources == 'some'}
 					{remarksbox type="warning" title="{tr}A Friendly Warning{/tr}"}
@@ -287,7 +287,7 @@ function showDetails( id, domain, profile ) { // {{{
 									<p>
 										{assign var=profilesFilterUrlFeaturedProfiles value='Featured+profiles'}
 										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlFeaturedProfiles}{$profilesFilterUrlEnd}">Featured Profiles</a>
-										<br />Featured Profiles is a list of applications that are maintained by the TikiWiki community and are a great way to get started.
+										<br />Featured Profiles is a list of applications that are maintained by the Tiki community and are a great way to get started.
 									</p>
 									
 									<p>
@@ -305,7 +305,7 @@ function showDetails( id, domain, profile ) { // {{{
 									<p>
 										{assign var=profilesFilterUrlLearningProfiles value='Learning+profile+(just+to+show+off+feature)'}
 										<a href="{$profilesFilterUrlStart}{$tikiMajorVersion}{$profilesFilterUrlMid}{$profilesFilterUrlLearningProfiles}{$profilesFilterUrlEnd}">Learning Profiles</a>
-										<br />Learning Profiles will allow you to quickly evaluate specific features in TikiWiki.
+										<br />Learning Profiles will allow you to quickly evaluate specific features in Tiki.
 									</p>
 		
 								</td>
