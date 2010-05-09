@@ -51,8 +51,9 @@ if (isset($_REQUEST['download']))
 else
 	header ("Content-Disposition: filename=\"$file\"");
 
+// No reason to make everything uncacheable
+header ("Expires: ".date("D, d M Y H:i:s T", time()+86400));
 // Added March04 Damian, Akira123 reported test
-header ("Expires: 0");
 header ("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header ("Pragma: public");
 
