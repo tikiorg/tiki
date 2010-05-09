@@ -49,6 +49,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $_SERVE
 	require_once 'lib/TikiWebdav/Auth/Default.php';
 
 	$server = TikiWebdav_Server::getInstance();
+	$server->options->realm = tra('Tiki WebDAV access');
 	$pathFactory = new TikiWebdav_PathFactories_File;
 	$backend = new TikiWebdav_Backends_File;
 
