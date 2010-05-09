@@ -35,7 +35,7 @@
 			{if $tiki_p_add_events eq 'y' and count($listcals) > 0 and $displayedcals|@count > 0 }
 			<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}" class="addevent">{icon _id='calendar_add' alt="{tr}+{/tr}" title="{tr}Add Event{/tr}"}</a>
 			{/if}
-			<a class="viewthisday" href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}View this Day{/tr}">{icon _id='{$prefs.feature_wiki_ext_icon_src}' width=7 height=8 alt="{tr}o{/tr}" title="{tr}View this Day{/tr}"}</a>
+			<a class="viewthisday" href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}View this Day{/tr}">{icon _id='img/icons/external_link.gif' width=7 height=8 alt="{tr}o{/tr}" title="{tr}View this Day{/tr}"}</a>
 		  </td>
 		  {/if}
 		</tr>
@@ -67,10 +67,10 @@
 			{/if}
 			>{$cell[w][d].items[item].name|truncate:$trunc:".."|escape|default:"..."}</a>
 			{if $cell[w][d].items[item].web}
-			<a href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="{$prefs.feature_wiki_ext_icon_src}" width="7" height="7" alt="&gt;" /></a>
+			<a href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
 			{/if}
 			{if $cell[w][d].items[item].nl}
-			<a href="tiki-newsletters.php?nlId={$cell[w][d].items[item].nl}&info=1" class="calweb" title="Subscribe"><img src="{$prefs.feature_wiki_ext_icon_src}" width="7" height="7" alt="&gt;" /></a>
+			<a href="tiki-newsletters.php?nlId={$cell[w][d].items[item].nl}&info=1" class="calweb" title="Subscribe"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
 			{/if}
 			{else}&nbsp;
 			{/if}
