@@ -1907,4 +1907,12 @@ table.treeTable .parent td {
 	background-color: #eee;
 } 
 
+.podcast {
+	margin-left: -25px;
+}
+
+.podcast div.moduledescription {
+	margin-left: 25px;
+}
+
 /* End of File */

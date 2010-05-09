@@ -57,8 +57,8 @@ class BannerLib extends TikiLib
 	}
 
 
-	function select_banner($zone, $target='_blank') {
-		global $prefs;
+	function select_banner($zone, $target='_blank', $id='') {
+		global $prefs, $tikilib;
 
 		// Things to check
 		// UseDates and dates
@@ -67,7 +67,9 @@ class BannerLib extends TikiLib
 		// zone
 		// maxImpressions and impressions
 
-		$id = $this->select_banner_id( $zone );
+		if (!empty($zone)) {
+			$id = $this->select_banner_id( $zone );
+		}
 		$res = $this->get_banner( $id );
 		$class = 'banner' . str_replace(' ','_',$zone);
 
@@ -81,9 +83,8 @@ class BannerLib extends TikiLib
 			if ($prefs['javascript_enabled'] == 'y') {
 				global $headerlib; include_once('lib/headerlib.php');
 				$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
-				$raw = $res['HTMLData'];
-			} else
-				$raw = $res['textData'];
+			}
+			$raw = $tikilib->embed_flash(unserialize($res['HTMLData']));
 			break;
 
 

@@ -13,21 +13,17 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_banner($params, &$smarty)
 {
-    global $tikilib;
-    global $dbTiki;
     global $bannerlib;include_once('lib/banners/bannerlib.php');
+	$default = array('zone'=>'', 'target'=>'', 'id'=>'');
+	$params = array_merge($default, $params);
 
     extract($params);
-    // Param = zone
 
-    if (empty($zone)) {
+    if (empty($zone) && empty($id)) {
         $smarty->trigger_error("assign: missing 'zone' parameter");
         return;
     }
-	if (empty($target)) {
-		$banner = $bannerlib->select_banner($zone);
-	} else {
-		$banner = $bannerlib->select_banner($zone, $target);
-	}
+	$banner = $bannerlib->select_banner($zone, $target, $id);
+
     print($banner);
 }

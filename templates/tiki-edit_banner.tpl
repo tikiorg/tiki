@@ -129,13 +129,13 @@
   <table>
   {if $use eq 'useFlash'}
   <tr><td colspan=2>
-  {banner zone="$zone"}
+  {banner id="$bannerId"}
   </td></tr>
   {/if}
   <tr> <td>
-      {tr}Movie URL{/tr} <input type="text" size="50" name="movieUrl" value="{$movieUrl|escape}" /><br />
-      {tr}Movie Size:{/tr} <input type="text" size="4" name="movieWidth" value="{$movieWidth|escape}" /> {tr}Pixels{/tr} x <input type="text" size="4" name="movieHeight" value="{$movieHeight|escape}" /> {tr}Pixels{/tr} <br />
-      {tr}FlashPlugin min version:{/tr} <input type="text" name="movieVersion" value="{$movieVersion|escape}" />({tr}ex:{/tr}8.0.0)<br />
+      {tr}Movie URL{/tr} <input type="text" size="50" name="movieUrl" value="{$movie.movie|escape}" /><br />
+      {tr}Movie Size:{/tr} <input type="text" size="4" name="movieWidth" value="{$movie.width|escape}" /> {tr}Pixels{/tr} x <input type="text" size="4" name="movieHeight" value="{$movie.height|escape}" /> {tr}Pixels{/tr} <br />
+      {tr}FlashPlugin min version:{/tr} <input type="text" name="movieVersion" value="{$movie.version|escape}" />({tr}ex:{/tr}9.0.0)<br />
      	Note: To be managed with tiki , your flash banner link should be: <a class="link" href="banner_click.php?id={$bannerId}&amp;url={$url}">banner_click.php?id={$bannerId}&amp;url={$url}</a> 
       </td>
   </tr>

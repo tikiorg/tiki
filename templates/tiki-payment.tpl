@@ -36,7 +36,7 @@
 
 				<fieldset>
 					<label for="detail">{tr}Detail{/tr}:</label>
-					<textarea id="detail" name="detail" style="width: 100%;" rows="10"/></textarea>
+					<textarea id="detail" name="detail" style="width: 100%;" rows="10"></textarea>
 				</fieldset>
 
 				<fieldset>

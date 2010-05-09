@@ -23,6 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _menu_icon: if set to 'n', will not show icon image when _menu_text is 'y'.
  *  - _confirm: text to use in a popup requesting the user to confirm it's action (yet only available with javascript)
  *  - _defaultdir: directory to use when the _id param does not include the path
+ *  - _extension: Filename extension - default 'png'
  */
 function smarty_function_icon($params, &$smarty) {
 	if ( ! is_array($params) ) $params = array();
@@ -42,7 +43,7 @@ function smarty_function_icon($params, &$smarty) {
 	}
 
 	$basedirs = array('pics/icons', 'images', 'img/icons', 'pics/icons/mime');
-	$icons_extension = '.png';
+	$icons_extension = empty($params['_extension']) ? '.png' : '.' . $params['_extension'];
 	$tag = 'img';
 	$notag = false;
 	$default_class = 'icon';

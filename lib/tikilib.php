@@ -4341,14 +4341,14 @@ class TikiLib extends TikiDb_Bridge
 		if ( $my_user == $user ) {
 			$prefs[$name] = $value;
 			$_SESSION['s_prefs'][$name] = $value;
-			if ( $name == 'theme' && $prefs['change_theme'] != 'y' ) { // FIXME: Remove this exception
+			if ( $name == 'theme' && $prefs['change_theme'] == 'y' ) { // FIXME: Remove this exception
 				$prefs['style'] = $value;
 				$_SESSION['s_prefs']['style'] = $value;
 				if ( $value == '' ) {
 					$prefs['style'] = $prefs['site_style'];
 					$_SESSION['s_prefs']['style'] = $prefs['site_style'];
 				}
-			} elseif ( $name == 'theme-option' && $prefs['change_theme'] != 'y' ) { // FIXME: Remove this exception as well?
+			} elseif ( $name == 'theme-option' && $prefs['change_theme'] == 'y' ) { // FIXME: Remove this exception as well?
 				$prefs['style_option'] = $value;
 				$_SESSION['s_prefs']['style_option'] = $value;
 				if ( $value == '' ) {
@@ -5813,7 +5813,7 @@ class TikiLib extends TikiDb_Bridge
 
 	// Make plain text URIs in text into clickable hyperlinks
 	function autolinks($text) {
-		global $prefs;
+		global $prefs, $smarty;
 		//	check to see if autolinks is enabled before calling this function
 		//		if ($prefs['feature_autolinks'] == "y") {
 		$attrib = '';
@@ -5821,7 +5821,9 @@ class TikiLib extends TikiDb_Bridge
 			$attrib .= 'target="_blank" ';
 		if ($prefs['feature_wiki_ext_icon'] == 'y') {
 			$attrib .= 'class="wiki external" ';
-			$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"{$prefs['feature_wiki_ext_icon_src']}\" alt=\" (external link)\" />";
+			include_once('lib/smarty_tiki/function.icon.php');
+			$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
+									
 		} else {
 			$attrib .= 'class="wiki" ';
 			$ext_icon = "";
@@ -6265,7 +6267,9 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			$class = 'class="wiki external"';
 			if ($prefs['feature_wiki_ext_icon'] == 'y' && !$options['suppress_icons']) {
-				$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"{$prefs['feature_wiki_ext_icon_src']}\" alt=\" (external link)\" />";
+				global $smarty;
+				include_once('lib/smarty_tiki/function.icon.php');
+				$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
 			}
 			$rel='external';
 			if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
@@ -8346,6 +8350,9 @@ function get_wiki_section($data, $hdr) {
 						  'version' => '9.0.0',
 						  );
 		$params = array_merge( $defaults, $params );
+		if (preg_match('/^(\/|https?:)/', $params['movie'])) {
+			$params['allowscriptaccess'] = 'always';
+		}
 		
 		if ( ((empty($javascript) && $prefs['javascript_enabled'] == 'y') || $javascript == 'y')) {
 			$myId = (!empty($params['id'])) ? ($params['id']) : 'wp-flash-' . md5($params['movie']);
@@ -8374,6 +8381,8 @@ JS;
 			$asetup .= "<param name=\"movie\" value=\"$movie\" />";
 			$asetup .= "<param name=\"quality\" value=\"$quality\" />";
 			$asetup .= "<param name=\"wmode\" value=\"transparent\" />";
+			if (!empty($params['allowscriptaccess']))
+				$asetup .= "<param name=\"allowscriptaccess\" value=\"always\" />";
 			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
 			return $asetup;
 		}
