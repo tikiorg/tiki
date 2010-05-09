@@ -5813,7 +5813,7 @@ class TikiLib extends TikiDb_Bridge
 
 	// Make plain text URIs in text into clickable hyperlinks
 	function autolinks($text) {
-		global $prefs;
+		global $prefs, $smarty;
 		//	check to see if autolinks is enabled before calling this function
 		//		if ($prefs['feature_autolinks'] == "y") {
 		$attrib = '';
@@ -5821,7 +5821,9 @@ class TikiLib extends TikiDb_Bridge
 			$attrib .= 'target="_blank" ';
 		if ($prefs['feature_wiki_ext_icon'] == 'y') {
 			$attrib .= 'class="wiki external" ';
-			$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
+			include_once('lib/smarty_tiki/function.icon.php');
+			$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
+									
 		} else {
 			$attrib .= 'class="wiki" ';
 			$ext_icon = "";
@@ -6261,7 +6263,9 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			$class = 'class="wiki external"';
 			if ($prefs['feature_wiki_ext_icon'] == 'y' && !$options['suppress_icons']) {
-				$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
+				global $smarty;
+				include_once('lib/smarty_tiki/function.icon.php');
+				$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
 			}
 			$rel='external';
 			if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
