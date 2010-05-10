@@ -1,4 +1,4 @@
-{* $Id: mod-last_files.tpl 17630 2009-03-26 03:37:22Z luciash $ *}
+{* $Id$ *}
 
 {if $prefs.feature_file_galleries eq 'y'}
 	{if !isset($tpl_module_title)}
