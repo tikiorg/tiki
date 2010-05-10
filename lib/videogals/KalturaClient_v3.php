@@ -3470,7 +3470,6 @@ class KalturaMixingService extends KalturaServiceBase
 		$resultObject = $this->client->doQueue();
 		$this->client->throwExceptionIfError($resultObject);
 		$this->client->validateObjectType($resultObject, "KalturaMixEntry");
-echo $resultObject;
 		return $resultObject;
 	}
 
