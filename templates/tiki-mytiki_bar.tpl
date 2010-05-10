@@ -58,5 +58,9 @@
 	{button _icon="img/mytiki/gnome-vumeter.png" _text="{tr}Action Log{/tr}" href="tiki-admin_actionlog.php?selectedUsers[]=$user" _menu_text="y}
 {/if}
 
+{if $prefs.feature_socialnetworks == 'y' and !empty($user) and ($tiki_p_socialnetworks eq 'y' or $tiki_p_admin_socialnetworks eq 'y')}
+	{button _icon="img/mytiki/socialnetworks_32.png" _text="{tr}Social networks{/tr}" href="tiki-socialnetworks.php" _menu_text="y}
+{/if}
+
 </div>
 <br/>

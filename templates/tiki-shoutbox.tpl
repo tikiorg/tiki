@@ -35,6 +35,9 @@
 				<td class="formcolor">{tr}Message{/tr}:</td>
 				<td class="formcolor">
 					<textarea rows="4" cols="60" name="message">{$message|escape}</textarea>
+				{if $prefs.feature_socialnetworks eq 'y' && $user neq '' && $prefs.socialnetworks_twitter_consumer_key neq ''}
+					<br /><input type="checkbox" name="tweet" id="tweet" value='1' /> {tr}Tweet with twitter{/tr}<br />
+				{/if}
 				</td>
 			</tr>
 			{if $prefs.feature_antibot eq 'y' && $user eq ''}

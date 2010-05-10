@@ -140,6 +140,10 @@
 {self_link page="kaltura" _class="icon tips" _title="{tr}Kaltura{/tr}|{tr}Kaltura video configuration{/tr}"}{icon _id="pics/large/kaltura.png" alt="{tr}Kaltura{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
+{if $prefs.feature_socialnetworks eq 'y'}
+{self_link page="socialnetworks" _class="icon tips" _title="{tr}Social networks{/tr}|{tr}Configure social networks integration{/tr}"}{icon _id="img/mytiki/socialnetworks_32.png" alt="{tr}Social networks{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{/if}
+
 {if $prefs.feature_ajax eq 'y' and $prefs.feature_jquery_reflection eq 'y'}{jq}$jq('img.reflect').reflect({});{/jq}{/if}{* for ajax *}
 {if $prefs.feature_ajax eq 'y' and $prefs.feature_jquery_tooltips eq 'y'}{jq}$jq('.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, fx: {open: 'fadeIn', openSpeed: 'fast'} });{/jq}{/if}
 <br class="clear" />

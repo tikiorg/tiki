@@ -358,8 +358,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_sefurl.php');
 	} else if ($adminPage == "kaltura") {
 		$admintitle = "Kaltura";//get_strings tra("Kaltura")
-		$helpUrl = "Kaltura+Config";
-		$description = "Kaltura settings";//get_strings tra("Kaltura settings")
+		$helpUrl = "Kaltura+Config";		$description = "Kaltura settings";//get_strings tra("Kaltura settings")
 		include_once ('tiki-admin_include_kaltura.php');
 	} else if ($adminPage == "connect") {
 		$admintitle = "Connect";
@@ -371,6 +370,11 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Advanced+Rating";
 		$description = "Advanced Rating";
 		include_once ('tiki-admin_include_rating.php');
+	} else if ($adminPage == "socialnetworks") {
+		$admintitle = "Social Networks";
+		$helpUrl = "Social+Networks";
+		$description = "Settings for social networks integration";
+		include_once ('tiki-admin_include_socialnetworks.php');
 	} else {
 		$helpUrl = '';
 	}

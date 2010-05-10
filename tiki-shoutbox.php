@@ -46,7 +46,7 @@ if ($tiki_p_post_shoutbox == 'y') {
 			$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
 			if (!empty($_REQUEST['message'])) $smarty->assign_by_ref('message', $_REQUEST['message']);
 		} else {
-			$shoutboxlib->replace_shoutbox($_REQUEST['msgId'], $owner, $_REQUEST['message']);
+			$shoutboxlib->replace_shoutbox($_REQUEST['msgId'], $owner, $_REQUEST['message'], ($_REQUEST['tweet']==1));
 			$smarty->assign('msgId', '0');
 			$smarty->assign('message', '');
 		}
@@ -76,7 +76,7 @@ function processShout($formValues, $destDiv = 'mod-shoutbox') {
 			$smarty->assign('shout_error', tra('You have mistyped the anti-bot verification code; please try again.'));
 			$smarty->assign_by_ref('shout_msg', $formValues['shout_msg']);
 		} else {
-			$shoutboxlib->replace_shoutbox(0, $user, $formValues['shout_msg']);
+			$shoutboxlib->replace_shoutbox(0, $user, $formValues['shout_msg'], ($formValues['shout_tweet']==1));
 		}
 	} else if (array_key_exists('shout_remove', $formValues) && $formValues['shout_remove'] > 0) {
 		$info = $shoutboxlib->get_shoutbox($formValues['shout_remove']);

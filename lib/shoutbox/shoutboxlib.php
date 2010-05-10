@@ -11,6 +11,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+require_once 'lib/socialnetworkslib.php';
+
 class ShoutboxLib extends TikiLib
 {
 	function list_shoutbox($offset, $maxRecords, $sort_mode, $find) {
@@ -60,7 +62,20 @@ class ShoutboxLib extends TikiLib
 		return $retval;
 	}
 
-	function replace_shoutbox($msgId, $user, $message) {
+	function tweet($message, $user, $msgId) {
+		global $prefs, $socialnetworkslib;
+		
+		$id=$socialnetworkslib->tweet($message,$user);
+		if ($id>0) {
+		    $query="update `tiki_shoutbox` set `tweetId`=? where `user`=? and `msgId`=?";
+		    $bindvars=array($id,$user,$msgId);
+		    $this->query($query,$bindvars);
+		}
+		return $id;
+	}
+
+	function replace_shoutbox($msgId, $user, $message, $tweet=false) {
+
 		$message = strip_tags($message);
 
 		// Check Message for containing bad/banned words
@@ -98,10 +113,19 @@ class ShoutboxLib extends TikiLib
 		}
 
 		$result = $this->query($query,$bindvars);
+		if ($tweet) {
+			$msgId=$this->lastInsertId();
+			$this->tweet($message,$user, $msgId);
+		}
 		return true;
 	}
 
 	function remove_shoutbox($msgId) {
+		global $socialnetworkslib, $user;
+		$tweetId=$this->getOne("select `tweetId` from `tiki_shoutbox` where `msgId`=?",array($msgId));
+		if ($tweetId>0) {
+			$socialnetworkslib->destroyTweet($tweetId,$user);
+		}
 		$query = "delete from `tiki_shoutbox` where `msgId`=?";
 		$result = $this->query($query,array((int)$msgId));
 		return true;

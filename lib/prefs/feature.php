@@ -1724,5 +1724,11 @@ function prefs_feature_list() {
 			'description' => tra('Constrains the site display to 990px wide.'),
 			'warning' => tra('You can modify at styles/layout/fixed_width.css'),
 		),
+		'feature_socialnetworks' => array(
+			'name' => tra('Social networks'),
+			'description' => tra('Integration with different social networks like twitter or facebook'),
+			'type' => 'flag',
+			'keywords' => 'social networks',
+		),
 	);
 }
