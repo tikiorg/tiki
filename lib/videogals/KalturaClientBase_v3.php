@@ -230,18 +230,19 @@ class KalturaClientBase
 		$formattedData = http_build_query($params , "", "&");
 		$params = array('http' => array(
 					"method" => "POST",
-					"Accept-language: en\r\n".
-					"Content-type: application/x-www-form-urlencoded\r\n",
+					'header' => 
+						"Accept-language: en\r\n"
+						. "Content-type: application/x-www-form-urlencoded\r\n",
 					"content" => $formattedData
 		          ));
 
 		$ctx = stream_context_create($params);
-		$fp = @fopen($url, 'rb', false, $ctx);
+		$fp = fopen($url, 'rb', false, $ctx);
 		if (!$fp) {
 			$phpErrorMsg = "";
 			throw new Exception("Problem with $url, $phpErrorMsg");
 		}
-		$response = @stream_get_contents($fp);
+		$response = stream_get_contents($fp);
 		if ($response === false) {
 		   throw new Exception("Problem reading data from $url, $phpErrorMsg");
 		}
