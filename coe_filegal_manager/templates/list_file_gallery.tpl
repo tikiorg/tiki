@@ -4,6 +4,7 @@
 <form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" onsubmit="return FileGallery.open(this.action, this.id);">
 	<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
 	<input type="hidden" name="find" value="{$find|escape}" />
+	<input type="hidden" name="xtarget" value=""/>
 	{if $prefs.fgal_asynchronous_indexing eq 'y'}<input type="hidden" name="fast" value="y" />{/if} 
 	{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 	{if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId|escape}" />{/if}
@@ -38,15 +39,15 @@
 				{if !isset($file_info)}
 					{if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
 					{if $tiki_p_admin_file_galleries eq 'y'}
-						<a class="fg-actions-icon">{icon _id='arrow_right' _tag='input_image' name='movesel' alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' style='vertical-align: middle;' onclick='document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"movesel_x=1"'}</a>
+						<a class="fg-actions-icon">{icon _id='arrow_right' _tag='input_image' name='movesel' alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' style='vertical-align: middle;' onclick='document.forms.fgalform.action=document.forms.fgalform.action.replace(/(del|zip|move|perm)sel_x/,"tmp");document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"movesel_x=1"'}</a>
 					{/if}
 				{/if}
 				{if $tiki_p_admin_file_galleries eq 'y'}
-					<a class="fg-actions-icon">{icon _id='cross' _tag='input_image' ____confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;' onclick='if(!confirm("{tr}Are you sure you want to delete the selected files?{/tr}"))return false;document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"delsel_x=1"'}</a>
+					<a class="fg-actions-icon">{icon _id='cross' _tag='input_image' ____confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;' onclick='if(!confirm("{tr}Are you sure you want to delete the selected files?{/tr}"))return false;document.forms.fgalform.action=document.forms.fgalform.action.replace(/(del|zip|move|perm)sel_x/,"tmp");document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"delsel_x=1"'}</a>
 				{/if}
-				<a class="fg-actions-icon">{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt='{tr}Download the zip{/tr}' style='vertical-align: middle;'}</a>
+				<a class="fg-actions-icon" onclick='document.forms.fgalformid.xtarget.value="fgiframe";document.forms.fgalform.action=document.forms.fgalform.action.replace(/(del|zip|move|perm)sel_x/,"tmp");document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"zipsel_x=1"'>{icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt='{tr}Download the zip{/tr}' style='vertical-align: middle;'}</a>
 				{if $tiki_p_assign_perm_file_gallery eq 'y'}
-					<a class="fg-actions-icon">{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign Permissions{/tr}" title="{tr}Assign Permissions{/tr}" style='vertical-align: middle;' onclick='document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"permsel_x=1"'}</a>
+					<a class="fg-actions-icon">{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign Permissions{/tr}" title="{tr}Assign Permissions{/tr}" style='vertical-align: middle;' onclick='document.forms.fgalform.action=document.forms.fgalform.action.replace(/(del|zip|move|perm)sel_x/,"tmp");document.forms.fgalformid.action+=(document.forms.fgalformid.action.indexOf("?")>0?"&":"?")+"permsel_x=1"'}</a>
 				{/if}
 			</div>
 			{/if}

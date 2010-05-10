@@ -9,8 +9,8 @@
 		<div class="fg-insert-thumb"><img src="{$file|sefurl:thumbnail}" border="0"/></div>
 		<div class="fg-insert-details">
 			<h3>{tr}File{/tr}</h3>
-			{tr}Size{/tr}: <b>15.71 Kb</b><br/>
-			{tr}Created/uploaded{/tr}: <b>Thu, Dec 05, 2009</b>
+			{tr}Size{/tr}: <b>{$filesize}</b><br/>
+			{tr}Created/uploaded{/tr}: <b>{$filedate}</b>
 		</div>
 		<div id="fg-insert-as-image"{if $as<>image} style="display:none"{/if}>
 			<table border="0" cellspacing="0" cellpadding="0">

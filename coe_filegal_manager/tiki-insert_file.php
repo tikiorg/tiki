@@ -18,6 +18,21 @@ if ($prefs['feature_groupalert'] == 'y') {
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
 $auto_query_args = array('as', 'file');
 
+$fileinfo = $tikilib->get_file($_REQUEST["file"]);
+$filesize = $fileinfo["filesize"];
+$filedate = date("D, M d, Y", $fileinfo["created"]);
+
+if ($filesize>1000*1000*1000) 
+	$filesize = round($filesize/(1024*1024*1024),2)."Gb";
+else if ($filesize>1000*1000) 
+	$filesize = round($filesize/(1024*1024),2)."Mb";
+else if ($filesize>1000) 
+	$filesize = round($filesize/(1024))."Kb";
+else
+	$filesize = $filesize."b";
+
 $smarty->assign("file", $_REQUEST["file"]);
+$smarty->assign("filesize", $filesize);
+$smarty->assign("filedate", $filedate);
 $smarty->assign("as", $_REQUEST["as"]);
 $smarty->display("insert.tpl");

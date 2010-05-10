@@ -1,3 +1,4 @@
+
 {* $Id$ *}
 <div class="cbox">
 	{if !empty($confirmation_text)}

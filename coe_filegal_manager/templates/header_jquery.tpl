@@ -1,3 +1,4 @@
+ 
 {* $Id$ *}
 {if $prefs.feature_use_minified_scripts == 'y'}{assign var=minified value='.min'}{assign var=minidir value='minified'}{else}{assign var=minified value=''}{assign var=minidir value=''}{/if}
 <!--  start jquery-tiki -->

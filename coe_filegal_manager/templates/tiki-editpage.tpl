@@ -1,5 +1,5 @@
 {* $Id$ *}
-
+ 
 
 <script type="text/javascript" src="lib/filegals/file_gallery.js"></script>
 {if $prefs.feature_ajax == 'y'}

@@ -105,7 +105,7 @@
 			</div>
 			<div class="fg-toolbar-right">
 				<input class="fg-toolbar-search-input" id="fg-toolbar-search-input" type="text" onkeypress="FileGallery.search(event,false,'{$view}','{$filegals_manager}')" value="{$find}"/>
-				<a class="fg-toolbar-search-submit" onclick="FileGallery.search(null,true,'{$view}')"><img src="images/file_gallery/icon-search.gif" border="0"/></a>
+				<a class="fg-toolbar-search-submit" onclick="FileGallery.search(null,true,'{$view}','{$filegals_manager}')"><img src="images/file_gallery/icon-search.gif" border="0"/></a>
 			</div>
 		</div>
 		<div class="fg-files-tools">

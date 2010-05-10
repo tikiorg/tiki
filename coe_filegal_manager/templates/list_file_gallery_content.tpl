@@ -1,3 +1,4 @@
+ 
 {if empty($sort_arg)}{assign var='sort_arg' value='sort_mode'}{/if}
 
 <table class="normal fg-list-view" cellspacing="0" cellpadding="0">

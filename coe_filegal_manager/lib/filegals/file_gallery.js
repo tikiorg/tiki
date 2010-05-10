@@ -49,8 +49,17 @@ var FileGallery = {
 			$('.ui-draggable').draggable({handle:'h1'});
 		}
 		var data = post ? post : '';
-		if (form)
+		if (form) {
 			data = this.form(form);
+			if (document.forms[form].elements.xtarget && document.forms[form].elements.xtarget.value!='') {
+				document.forms[form].target = document.forms[form].elements.xtarget.value;
+				document.forms[form].onsubmit = function() { }
+				document.forms[form].submit();
+				document.forms[form].elements.xtarget.value = '';
+				document.forms[form].onsubmit = function() { return FileGallery.open(document.forms[form].action, document.forms[form].id) };
+				return;
+			}
+		}
 		$('#fg-jquery-dialog').load(url, data, function() {
 			if (FileGallery.dialogmode) {
 				$('#fg-jquery-dialog').dialog('option','height','auto');
@@ -146,6 +155,7 @@ var FileGallery = {
 		url += (url.indexOf("?") ? "&" : "?")+params;
 		$.post(url, null, function(data) {
 			$("#fg-jquery-gallery-dialog").html(data);
+			$("#fg-jquery-gallery-dialog").dialog("close");
 		});
 	},
 	replacefile: function(form) {

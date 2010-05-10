@@ -611,7 +611,7 @@ if (isset($_GET['slideshow'])) {
 }
 
 $countfiles = $countgalleries = 0;
-if ($xf = $tikilib->get_files(0, 1000000000000, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true)) {
+if ($xf = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true)) {
 	foreach ($xf['data'] as $fl) {
 		if ($fl['isgal'])
 			$countgalleries ++;
