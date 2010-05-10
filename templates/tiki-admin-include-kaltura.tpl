@@ -19,7 +19,9 @@
 <div class="adminoptionlabel">
 <label for="kdpUIConf">{tr}KDP UI Configuration Id{/tr}: </label><input type="text" name="kdpUIConf" id="kdpUIConf" value="{$kdpUIConf|escape}" /></div>
 <div class="adminoptionlabel">
-<label for="kdpWidget">{tr}KDP Widget Id{/tr}: </label><input type="text" name="kdpWidget" id="kdpWidget" value="{$kdpWidget|escape}" /></div>
+<label for="kdpWidget">{tr}KDP Widget Id{/tr}: </label><input type="text" name="kdpWidget" id="kdpWidget" value="{$kdpWidget|escape}" />
+<div>{tr}If you don't know better, use <strong>_yourPartnerId</strong>{/tr}</div>
+</div>
 </fieldset>
 
 <br/>
