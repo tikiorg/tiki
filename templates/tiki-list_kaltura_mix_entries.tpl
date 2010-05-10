@@ -20,7 +20,7 @@
 			<td><input type="checkbox" name="mixId[]" value="{$item->id}" /></td>
 			<td><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}>
 				<img class="athumb" src={$item->thumbnailUrl} alt="{$item->description}"  height="80" width="120"/></a></td>
-			<td><a href={$item->downloadUrl}>{$item->name}</a></td>
+			<td><a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}"><img src="pics/icons/application_form_magnify.png" class="icon" /> {$item->name}</a></td>
 			<td>{$item->createdAt}<br/><br/>Created By: {$item->userId}</td>
 			<td height="100">{$item->tags}</td>
 			<td>{$modifiedAt[$key]}<br/><br/>			
