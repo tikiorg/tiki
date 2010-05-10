@@ -312,7 +312,7 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
 	}
 	if (stristr($html, '<base') === false) {
 		if (stristr($html, '<header') === false) {
-			$html = str_ireplace('<html>', "<html><header><base href=\"$base_host\" /></header>", $html);
+			$html = str_ireplace('<html>', "<html><header><base href=\"$base_host\" /><style type=\"text/css\">" . $headerlib->get_all_css_content() . "</style></header>", $html);
 		} else {
 			$html = str_ireplace('<header>', "<header><base href=\"$base_host\" />", $html);
 		}
