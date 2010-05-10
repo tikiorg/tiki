@@ -299,6 +299,59 @@ function prefs_global_list() {
 			'type' => 'flag',
 			'description' => tra('Disable javascript for testing purpose even if the browser allows it'),
 		),
+
+		// Kaltura
+		'partnerId' => array(
+			'name' => tra('Partner Id'),
+			'description' => tra('Kaltura Partner ID'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 10,
+		),
+		'secret' => array(
+			'name' => tra('User secret'),
+			'description' => tra('Kaltura parner setting user secret.'),
+			'type' => 'text',
+			'size' => 45,
+			'filter' => 'alnum',
+		),
+		'adminSecret' => array(
+			'name' => tra('Admin secret'),
+			'description' => tra('Kaltura partner setting admin secret.'),
+			'type' => 'text',
+			'size' => 45,
+			'filter' => 'alnum',
+		),
+		'kdpUIConf' => array(
+			'name' => tra('KDP UI Configuration Id'),
+			'description' => tra('Kaltura Dynamic Player (KDP) user interface configuration Id'),
+			'type' => 'text',
+			'size' => 20,
+		),
+		'kdpWidget' => array(
+			'name' => tra('KDP Widget Id'),
+			'description' => tra('Kaltura Dynamic Player (KDP) Widget Id. This configuration is specific to your account.'),
+			'hint' => tra("If you don't know better, use '_yourPartnerId'"),
+			'type' => 'text',
+			'size' => 20,
+		),
+		'kcwUIConf' => array(
+			'name' => tra('KCW UI Configuration ID'),
+			'description' => tra('Kaltura Configuration Wizard (KCW) user interface configuration Id'),
+			'type' => 'text',
+			'size' => 20,
+		),
+		'kseUIConf' => array(
+			'name' => tra('Kaltura Simple Editor UI Configuration Id'),
+			'type' => 'text',
+			'size' => 20,
+		),
+		'kaeUIConf' => array(
+			'name' => tra('Kaltura Advanced Editor UI Configuration Id'),
+			'type' => 'text',
+			'size' => 20,
+		),
+		// End Kaltura
 	);
 }
 
