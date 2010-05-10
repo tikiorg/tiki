@@ -218,7 +218,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_webmail.php');
 	} else if ($adminPage == "rss") {
 		$admintitle = "Feeds"; //get_strings tra("Feeds")
-		$helpUrl = "Feeds User";
+		$helpUrl = "Feeds";
 		$description = "Feeds settings"; //get_strings tra("Feeds settings")
 		include_once ('tiki-admin_include_rss.php');
 	} else if ($adminPage == "directory") {
@@ -339,12 +339,12 @@ if (isset($_REQUEST["page"])) {
 	} else if ($adminPage == "plugins") {
 		$admintitle = "Plugin Alias";
 		$description = "Create shortcut syntaxes to plugins.";
-		$helpUrl = "Plugin Alias";
+		$helpUrl = "Plugin+Alias";
 		include_once ('tiki-admin_include_plugins.php');
 	} else if ($adminPage == "semantic") {
 		$admintitle = "Semantic Wiki Links";
 		$description = "Manage semantic tokens used throughout the wiki.";
-		$helpUrl = "Semantic+Admin";
+		$helpUrl = "Semantic";
 		include_once ('tiki-admin_include_semantic.php');
 	} else if ($adminPage == "webservices") {
 		$admintitle = "Webservice Registration";
@@ -358,7 +358,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_sefurl.php');
 	} else if ($adminPage == "kaltura") {
 		$admintitle = "Kaltura";//get_strings tra("Kaltura")
-		$helpUrl = "Kaltura+Config";
+		$helpUrl = "Kaltura";
 		$description = "Kaltura settings";//get_strings tra("Kaltura settings")
 		include_once ('tiki-admin_include_kaltura.php');
 	} else if ($adminPage == "connect") {
