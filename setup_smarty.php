@@ -79,6 +79,35 @@ class Smarty_Tikiwiki extends Smarty
 			$_SESSION['last_mid_template'] = $tpl;
 			$_SESSION['last_mid_php'] = $_SERVER['REQUEST_URI'];
 
+			// set the first part of the browser title for admin pages
+			if (!isset($this->_tpl_vars['headtitle'])) {
+				$script_name = basename($_SERVER['SCRIPT_NAME']);
+				if ($script_name != 'tiki-admin.php' && strpos($script_name, 'tiki-admin') === 0) {
+					$str = substr($script_name, 10, strpos($script_name, '.php') - 10);
+					$str = ucwords(trim(str_replace('_', ' ', $str)));
+					$this->assign('headtitle', tra('Admin ' . $str));
+					// get_strings tra('Admin Calendar') tra('Admin Actionlog') tra('Admin Banners') tra('Admin Calendars') tra('Admin Categories') tra('Admin Content Templates')
+					//			tra('Admin Contribution') tra('Admin Cookies') tra('Admin Dsn') tra('Admin External Wikis') tra('Admin Forums') tra('Admin Hotwords') tra('Admin Html Page Content') 
+					//			tra('Admin Html Pages') tra('Admin Integrator Rules') tra('Admin Integrator') tra('Admin Keywords') tra('Admin Layout') tra('Admin Links') tra('Admin Mailin')
+					//			tra('Admin Menu Options') tra('Admin Menus') tra('Admin Metrics') tra('Admin Modules') tra('Admin Newsletter Subscriptions') tra('Admin Newsletters') tra('Admin Notifications') 
+					//			tra('Admin Poll Options') tra('Admin Polls') tra('Admin Rssmodules') tra('Admin Security') tra('Admin Shoutbox Words') tra('Admin Structures') tra('Admin Survey Questions')
+					//			tra('Admin Surveys') tra('Admin System') tra('Admin Toolbars') tra('Admin Topics') tra('Admin Tracker Fields') tra('Admin Trackers')
+				} else if (strpos($script_name, 'tiki-list') === 0) {
+					$str = substr($script_name, 9, strpos($script_name, '.php') - 9);
+					$str = ucwords(trim(str_replace('_', ' ', $str)));
+					$this->assign('headtitle', tra('List ' . $str));
+					// get_strings tra('List Articles') tra('List Banners') tra('List Blogs') tra('List Cache') tra('List Comments') tra('List Contents') tra('List Faqs') tra('List File Gallery')
+					//			tra('List Gallery') tra('List Integrator Repositories') tra('List Kaltura Entries') tra('List Object Permissions') tra('List Posts') tra('List Quizzes') tra('List Submissions')
+					//			tra('List Surveys') tra('List Trackers') tra('List Users') tra('List Pages')
+				} else if (strpos($script_name, 'tiki-view') === 0) {
+					$str = substr($script_name, 9, strpos($script_name, '.php') - 9);
+					$str = ucwords(trim(str_replace('_', ' ', $str)));
+					$this->assign('headtitle', tra('View ' . $str));
+					// get_strings tra('View Articles') tra('View Banner') tra('View Blog Post Image') tra('View Blog Post') tra('View Blog') tra('View Cache') tra('View Faq') tra('View Forum Thread')
+					//			 tra('View Minical Topic') tra('View Sheets') tra('View Tracker Item') tra('View Tracker More Info') tra('View Tracker')
+				}
+			}
+			
 			// Enable Template Zoom
 			if ( $prefs['feature_template_zoom'] == 'y' && isset($zoom_templates) ) {
 				if ( ! isset($_REQUEST['zoom']) && isset($_REQUEST['zoom_value']) && isset($_REQUEST['zoom_x']) && isset($_REQUEST['zoom_y']) ) {
