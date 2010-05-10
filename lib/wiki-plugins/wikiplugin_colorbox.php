@@ -63,7 +63,7 @@ function wikiplugin_colorbox_info() {
 }
 function wikiplugin_colorbox($data, $params) {
 	global $tikilib, $smarty, $user, $prefs;
-	static $iColorbox;
+	static $iColorbox = 0;
 	$default = array('showfilename' => 'n', 'showtitle'=>'n', 'thumb'=>'y', 'showallthumbs'=>'n');
 	$params = array_merge($default, $params);
 
