@@ -163,7 +163,7 @@
 							{if $users[user].currentLogin eq ''}
 								{tr}Never{/tr} <em>({tr}Registered{/tr} {$users[user].age|duration_short} {tr}ago{/tr})</em>
 							{else}
-								{$users[user].currentLogin|dbg|tiki_long_datetime}
+								{$users[user].currentLogin|tiki_long_datetime}
 							{/if}
 					
 							{if $users[user].waiting eq 'u'}
