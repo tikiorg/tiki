@@ -221,9 +221,9 @@ class Comments extends TikiLib
 				case 'text/plain':
 				case 'TEXT/PLAIN':
 					if (!empty($obj->disposition)AND $obj->disposition == 'attachment') {
-						$names = split(';', $obj->headers["content-disposition"]);
+						$names = explode(';', $obj->headers["content-disposition"]);
 
-						$names = split('=', $names[1]);
+						$names = explode('=', $names[1]);
 						$aux['name'] = $names[1];
 						$aux['content-type'] = $obj->headers["content-type"];
 						$aux['part'] = $i;
@@ -242,9 +242,9 @@ class Comments extends TikiLib
 				case 'text/html':
 				case 'TEXT/HTML':
 					if (!empty($obj->disposition)AND $obj->disposition == 'attachment') {
-						$names = split(';', $obj->headers["content-disposition"]);
+						$names = explode(';', $obj->headers["content-disposition"]);
 
-						$names = split('=', $names[1]);
+						$names = explode('=', $names[1]);
 						$aux['name'] = $names[1];
 						$aux['content-type'] = $obj->headers["content-type"];
 						$aux['part'] = $i;
@@ -256,9 +256,9 @@ class Comments extends TikiLib
 					break;
 
 				default:
-					$names = split(';', $obj->headers["content-disposition"]);
+					$names = explode(';', $obj->headers["content-disposition"]);
 
-					$names = split('=', $names[1]);
+					$names = explode('=', $names[1]);
 					$aux['name'] = $names[1];
 					$aux['content-type'] = $obj->headers["content-type"];
 					$aux['part'] = $i;

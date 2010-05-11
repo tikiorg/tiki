@@ -515,7 +515,7 @@ class TrkWithMirrorTablesLib extends TrackerLib
 				$colId = $this->get_col_id($csort_mode, $explicit);
 				$mid.= "and $tableId.$colId like ?";
 			} else {
-				list($a,$csort_mode,$corder) = split('_',$sort_mode);
+				list($a,$csort_mode,$corder) = explode('_',$sort_mode);
 				$colId = $this->get_col_id($csort_mode, $explicit);
 				if($colId == "") {
 					$colId = $this->first_field_name($trackerId);
@@ -523,7 +523,7 @@ class TrkWithMirrorTablesLib extends TrackerLib
 			}
 			
 			if (substr($sort_mode,0,2) == "f_") {
-				list($a,$asort_mode,$aorder) = split('_',$sort_mode);
+				list($a,$asort_mode,$aorder) = explode('_',$sort_mode);
 			}
 			
 			// if you select an initial letter
@@ -621,7 +621,7 @@ class TrkWithMirrorTablesLib extends TrackerLib
 				if ($fopt["type"] == 'r') {
 					$fopt["links"] = array();
 					if (!$opts) {
-						$opts = split(',',$fopt['options']);
+						$opts = explode(',',$fopt['options']);
 					}
 					$fopt["linkId"] = $this->get_item_id($opts[0],$opts[1],$fopt["value"]);
 					
@@ -648,7 +648,7 @@ class TrkWithMirrorTablesLib extends TrackerLib
 					}
 					$fopt['categs'] = $cats;	
 				} elseif ($fopt["type"] == 'l') {
-					$optsl = split(',',$fopt['options']);
+					$optsl = explode(',',$fopt['options']);
 					$fopt["links"] = array();
 					$lst = $last[$optsl[2]];
 					if ($lst) {
@@ -660,7 +660,7 @@ class TrkWithMirrorTablesLib extends TrackerLib
 					}
 				}
 				if (isset($fopt["options"])) {
-					$fopt["options_array"] = split(',',$fopt["options"]);
+					$fopt["options_array"] = explode(',',$fopt["options"]);
 				}
 				if (empty($asort_mode) || ($fieldId == $asort_mode)) {
 					$kx = $fopt["value"].'.'.$itid;

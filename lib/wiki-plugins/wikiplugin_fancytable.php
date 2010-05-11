@@ -137,7 +137,7 @@ function wikiplugin_fancytable($data, $params) {
 		$data = str_replace('|', '~|~', $data);
 		$data = preg_replace($patterns, $replace , $data);
 	}	
-	$lines = split("\n", $data);
+	$lines = explode("\n", $data);
 	$colsw = isset($colwidths) ?  explode('|', $colwidths) : '';
 	$caligns = isset($colaligns) ?  explode('|', $colaligns) : '';
 	$cvaligns = isset($colvaligns)?  explode('|', $colvaligns) : '';

@@ -217,7 +217,7 @@ class Importer extends Comments
 					// Do a rudimentary parsing of what generally would be
 					// record boundaries, such that each element in $records
 					// represents an SQL record or row.
-					$records = split('\),\(', $c);
+					$records = preg_split('/\),\(/', $c);
 					if (count($records) < 1) { $records[0] = $c; }
 					for ($count = 0, $count_records = count($records); $count < $count_records; $count++) {
 						// Each proper record should begin with a numeric value

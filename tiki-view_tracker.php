@@ -716,7 +716,7 @@ if ($tiki_p_export_tracker == 'y') {
 	$smarty->assign_by_ref('filters', $filters);
 	if (!empty($_REQUEST['displayedFields'])) {
 		if (is_string($_REQUEST['displayedFields'])) {
-			$smarty->assign('displayedFields', split('[:,]', $_REQUEST['displayedFields']));
+			$smarty->assign('displayedFields', preg_split('/[:,]/', $_REQUEST['displayedFields']));
 		} else {
 			$smarty->assign_by_ref('displayedFields', $_REQUEST['displayedFields']);
 		}

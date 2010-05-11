@@ -560,7 +560,7 @@ class SearchLib extends TikiLib
 									($res['status'] == 'c' && $tiki_p_view_trackers_closed == 'y')))
 							{
 						++$cant2;
-						list($itemId, $fieldId) = split('#', $res['page']);
+						list($itemId, $fieldId) = explode('#', $res['page']);
 						$href = 'tiki-view_tracker_item.php?trackerId=' . urlencode($res['trackerId']) . '&amp;itemId=' . urlencode($itemId);
 						$ret2[] = array(
 							'pageName' => '(#' . $itemId . ') ' . $trklib->get_isMain_value($res['trackerId'], $res['page']),

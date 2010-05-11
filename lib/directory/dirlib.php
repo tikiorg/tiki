@@ -545,7 +545,7 @@ class DirLib extends TikiLib
 	function dir_search($words, $how = 'or', $offset = 0, $maxRecords = -1, $sort_mode = 'hits_desc') {
 		// First of all split the words by whitespaces building the query string
 		// we'll search by name, url, description and cache, the relevance will be calculated using hits
-		$words = split(' ', $words);
+		$words = explode(' ', $words);
 
 		$bindvars = array('y');
 		for ($i = 0, $icount_words = count($words); $i < $icount_words; $i++) {
@@ -586,7 +586,7 @@ class DirLib extends TikiLib
 	function dir_search_cat($parent, $words, $how = 'or', $offset = 0, $maxRecords = -1, $sort_mode = 'hits_desc') {
 		// First of all split the words by whitespaces building the query string
 		// we'll search by name, url, description and cache, the relevance will be calculated using hits
-		$words = split(' ', $words);
+		$words = explode(' ', $words);
 		$bindvars = array('y',(int)$parent);
 		for ($i = 0, $icount_words = count($words); $i < $icount_words; $i++) {
 			$words[$i] = trim($words[$i]);

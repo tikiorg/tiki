@@ -798,7 +798,7 @@ function MimeifyPageRevision($page)
 	$out = MimeContentTypeHeader('application', 'x-tikiwiki', $params);
 	$out .= sprintf("Content-Transfer-Encoding: %s\r\n", 'binary');
 	$out .= "\r\n";
-	$lines = split("\n", $page["data"]);
+	$lines = explode("\n", $page["data"]);
 
 	foreach ($lines as $line) {
 		// This is a dirty hack to allow saving binary text files. See above.

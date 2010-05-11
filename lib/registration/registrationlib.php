@@ -57,7 +57,7 @@ class RegistrationLib extends TikiLib
     // $Domain : ebeecomm.com
     // list function reference : http://www.php.net/manual/en/function.list.php
     // split function reference : http://www.php.net/manual/en/function.split.php
-    list ($Username, $Domain) = split ("@", $Email);
+    list ($Username, $Domain) = explode ("@", $Email);
 	
 	if($prefs['validateEmail'] == 'n') {
 		$Return[0]=true;

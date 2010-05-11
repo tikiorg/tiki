@@ -1067,7 +1067,7 @@ class ArtLib extends TikiLib
 				$connect = ' and ';
 			}
 			$add = '';
-			$rest = split ('\+', $topicId);
+			$rest = explode ('+', $topicId);
 			foreach ($rest as $topicId) {
 				if ($add == '') {
 					if ($mid) {

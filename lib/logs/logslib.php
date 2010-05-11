@@ -318,7 +318,7 @@ class LogsLib extends TikiLib
 
 	function decode_actionlog_conf($string)
 	{
-		return split('_', str_replace('0', ' ', $conf));
+		return explode('_', str_replace('0', ' ', $conf));
 	}
 
 	function list_actions($action='', $objectType='', $user='', $offset=0

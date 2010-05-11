@@ -40,7 +40,7 @@ if (isset($_REQUEST['dump_tracker'])) {
 $filters = array();
 if (!empty($_REQUEST['listfields'])) {
 	if (is_string($_REQUEST['listfields'])) {
-		$filters['fieldId'] = split('[,:]', $_REQUEST['listfields']);
+		$filters['fieldId'] = preg_split('/[,:]/', $_REQUEST['listfields']);
 	} elseif (is_array($_REQUEST['listfields'])) {
 		$filters['fieldId'] = $_REQUEST['listfields'];
 	}

@@ -132,7 +132,7 @@ function wikiplugin_trackerstat($data, $params)
 		}
 	}
 	if (!empty($fields)) {
-		$listFields = split(':',$fields);
+		$listFields = explode(':',$fields);
 	} else {
 		foreach($allFields['data'] as $f) {
 			$listFields[] = $f['fieldId'];

@@ -919,7 +919,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   		fwrite($fw,$data);
   		fclose($fw);
   		unset($dat);
-  		$page_words = split("[^A-Za-z0-9\-_]",$res['data']);
+  		$page_words = preg_split("/[^A-Za-z0-9\-_]/",$res['data']);
   		foreach($page_words as $word) {
     		$word=strtolower($word);
     		if(strlen($word)>3 && preg_match("/^[A-Za-z][A-Za-z0-9\_\-]*[A-Za-z0-9]$/",$word)) {

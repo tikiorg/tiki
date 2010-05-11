@@ -714,7 +714,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 			$mail->setText($_REQUEST['body']);
 		}
 
-		$to_array_1 = split('[, ;]', $_REQUEST['to']);
+		$to_array_1 = preg_split('/[, ;]/', $_REQUEST['to']);
 		$to_array = array();
 
 		foreach ($to_array_1 as $to_1) {

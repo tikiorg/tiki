@@ -206,13 +206,13 @@ class TikiModInfo extends TikiModAvailable
 				$this->sql_remove[] = trim($line);
 				break;
 			case 'configuration':
-				$this->configuration[] = split(',',trim($line));
+				$this->configuration[] = explode(',',trim($line));
 				break;
 			case 'configuration help':
-				$this->configuration_help[] = split(',',trim($line));
+				$this->configuration_help[] = explode(',',trim($line));
 				break;
 			case 'files':
-				$this->files[] = split(' +',trim($line));
+				$this->files[] = preg_split('/ +/',trim($line));
 				break;
 			case 'contributor':
 				$this->contributor[] = trim(preg_replace('/\$[^:]*:([^\$]*)\$/',"$1",trim($line)));
@@ -597,7 +597,7 @@ class ModsLib
 			while (!feof($fp)) {
 				$line = fgets($fp,4096);
 				if (trim($line) and substr(trim($line),0,1) == "'") {
-					$str = split("','",substr($line,1,strlen($line)-3));
+					$str = explode("','",substr($line,1,strlen($line)-3));
 					if (count($str) < 4) continue; // line must have at least 4 elements
 					if (empty($str[0]) || empty($str[1]) || empty($str[2])) continue; // theses field must be not empty
 
@@ -1028,8 +1028,8 @@ class ModsLib
 }
 
 function newer($a,$b) {
-	$aa = split('\.',$a);
-	$bb = split('\.',$b);
+	$aa = explode('.',$a);
+	$bb = explode('.',$b);
 	for ($i=0, $max_counts = max(count($aa), count($bb)); $i<$max_counts; $i++) {
 		if (!isset($bb[$i])) { $bb[$i] = '0'; }
 		if (!isset($aa[$i])) { $aa[$i] = '0'; }

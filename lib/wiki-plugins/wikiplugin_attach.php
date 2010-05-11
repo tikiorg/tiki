@@ -148,7 +148,7 @@ function wikiplugin_attach($data, $params) {
 				$attextra = 'y';
 			}
 
-			$attfields = split(',',strtok($tracker_info["orderAttachments"],'|'));
+			$attfields = explode(',',strtok($tracker_info["orderAttachments"],'|'));
 
 			$atts = $trklib->list_item_attachments($atts_item_name, 0, -1, 'comment_asc', '');
 		}

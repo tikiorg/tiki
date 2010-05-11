@@ -63,7 +63,7 @@ class cssLib extends TikiLib
 		$res = preg_replace($find, $repl, $meat);
 		return array(
 			"error" => '',
-			"content" => split("\n", $res)
+			"content" => explode("\n", $res)
 		);
 	}
 
@@ -91,7 +91,7 @@ class cssLib extends TikiLib
 				} elseif (($type == "items") and ($line == "{")) {
 					$type = "attributes";
 				} elseif ($type == "items") {
-					$li = split(",", $line);
+					$li = explode(',', $line);
 
 					foreach ($li as $l) {
 						$l = trim($l);
@@ -107,7 +107,7 @@ class cssLib extends TikiLib
 					$back["$index"]["items"] = array();
 					$back["$index"]["attributes"] = array();
 				} elseif ($type == "attributes") {
-					$parts = split(":", str_replace(";", "", $line));
+					$parts = explode(':', str_replace(";", "", $line));
 
 					if (isset($parts[0]) && isset($parts[1])) {
 						$obj = trim($parts[0]);
@@ -115,7 +115,7 @@ class cssLib extends TikiLib
 						$back["$index"]["attributes"]["$obj"] = trim($parts[1]);
 					}
 				} else {
-					$li = split(",", $line);
+					$li = explode(',', $line);
 
 					foreach ($li as $l) {
 						$l = trim($l);
