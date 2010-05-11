@@ -826,19 +826,9 @@ if ($_REQUEST["itemId"]) {
 					eval('$computed = ' . $calc . ';');
 					$ins_fields["data"][$i]["value"] = $computed;
 					$info[$fields['data'][$i]['fieldId']] = $computed; // in case a computed field use this one
-					preg_match('/#([0-9]+)/', $fields["data"][$i]['options_array'][0], $matches);
-					foreach($matches as $k => $match) {
-						if (!$k) continue;
-						foreach($fields['data'] as $k => $f) {
-							if ($f['fieldId'] == $match && ($f['type'] == 'f' || $f['type'] == 'j')) {
-								if (!$info[$match]) $ins_fields['data'][$i]['value'] = '';
-								$ins_fields['data'][$i]['computedtype'] = 'f';
-								$ins_fields['data'][$i]['options_array'] = $f['options_array'];
-								$k = - 1;
-								break;
-							}
-						}
-						if ($k == - 1) break;
+					$infoComputed = $trklib->get_computed_info($fields["data"][$i]['options_array'][0], $_REQUEST['trackerId'], $fields['data']);
+					if (!empty($infoComputed)) {
+						$ins_fields['data'][$i] = array_merge($infoComputed, $ins_fields['data'][$i]);
 					}
 				} elseif ($fields["data"][$i]["type"] == 'g') {
 					if (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 2 and !$info["$fid"]) {

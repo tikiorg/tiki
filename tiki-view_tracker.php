@@ -227,6 +227,13 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$parentId = $listfields[$fid]['options_array'][0];
 			$listfields[$fid]['categories'] = $categlib->get_viewable_child_categories($parentId);
 		}
+		if ($listfields[$fid]['type'] == 'C') {
+			$allfields=null;
+			$infoComputed = $trklib->get_computed_info($listfields[$fid]['options'], $_REQUEST['trackerId'], $allfields);
+			if (!empty($infoComputed)) {
+				$listfields[$fid] = array_merge($infoComputed , $listfields[$fid]);
+			}
+		}
 		if (isset($xfields['data'][$i]['otherField'])) {
 			$listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
 		}
