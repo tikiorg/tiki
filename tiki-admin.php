@@ -339,7 +339,7 @@ if (isset($_REQUEST["page"])) {
 	} else if ($adminPage == "plugins") {
 		$admintitle = "Plugin Alias";
 		$description = "Create shortcut syntaxes to plugins.";
-		$helpUrl = "Plugin Alias";
+		$helpUrl = "Plugin+Alias";
 		include_once ('tiki-admin_include_plugins.php');
 	} else if ($adminPage == "semantic") {
 		$admintitle = "Semantic Wiki Links";
@@ -358,7 +358,8 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_sefurl.php');
 	} else if ($adminPage == "kaltura") {
 		$admintitle = "Kaltura";//get_strings tra("Kaltura")
-		$helpUrl = "Kaltura+Config";		$description = "Kaltura settings";//get_strings tra("Kaltura settings")
+		$helpUrl = "Kaltura+Config";
+		$description = "Kaltura settings";//get_strings tra("Kaltura settings")
 		include_once ('tiki-admin_include_kaltura.php');
 	} else if ($adminPage == "connect") {
 		$admintitle = "Connect";

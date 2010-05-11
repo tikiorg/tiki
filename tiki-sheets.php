@@ -16,6 +16,7 @@ $auto_query_args = array('sheetId');
 if (!isset($_REQUEST["sheetId"])) {
 	$_REQUEST["sheetId"] = 0;
 	$info = array();
+	$smarty->assign('headtitle', tra('Spreadsheets'));
 } else {
 	$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
 	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) $tiki_p_view_sheet = 'y';
@@ -27,6 +28,7 @@ if (!isset($_REQUEST["sheetId"])) {
 	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet_history')) $tiki_p_view_sheet_history = 'y';
 	else $tiki_p_view_sheet_history = 'n';
 	$smarty->assign('tiki_p_view_sheet_history', $tiki_p_view_sheet_history);
+	$smarty->assign('headtitle', tra('Spreadsheet - ') . $info['title']);
 }
 
 $access->check_permission('tiki_p_view_sheet');

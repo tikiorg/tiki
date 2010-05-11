@@ -5,6 +5,7 @@
 <div class="navbar">
 	{button href="tiki-list_surveys.php" _text="{tr}List Surveys{/tr}"}
 	{button href="tiki-survey_stats.php" _text="{tr}Survey Stats{/tr}"}
+	{button surveyId=0 cookietab=2 _auto_args="surveyId,cookietab" _text="{tr}Create Survey{/tr}"}
 </div>
 
 {tabset}
@@ -92,7 +93,7 @@
 		</tr>
 		<tr class="formcolor">
 			<td>{tr}Description{/tr}:</td>
-			<td>{textarea name="description" rows="6" cols="80" _toolbars='y' _zoom='n'}{$info.description}{/textarea}</td>
+			<td>{textarea name="description" rows="6" cols="80" _toolbars='y' _zoom='n' _simple='y' comments='y'}{$info.description}{/textarea}</td>
 		</tr>
 		{include file='categorize.tpl'}
 		<tr class="formcolor">

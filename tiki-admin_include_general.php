@@ -27,9 +27,6 @@ if (isset($_REQUEST['new_prefs'])) {
 	foreach($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
-	foreach($pref_simple_values as $svitem) {
-		simple_set_value($svitem);
-	}
 	$pref_byref_values = array(
 		'server_timezone',
 	);

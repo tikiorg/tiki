@@ -16,6 +16,8 @@ $partner_id = $prefs['partnerId'];
 $SESSION_ADMIN = 2;
 $SESSION_USER = 0;
 
+try {
+
 $kconf = new KalturaConfiguration($partner_id);
 $kclient = new KalturaClient($kconf);
 $ksession = $kclient->session->start($secret,$user,$SESSION_USER,$partner_id,null,"edit:*");
@@ -213,13 +215,13 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		$smarty->assign('mode', 'view');
 		if($kentryType == "mix"){
 			$kentry = $kclient->mixing->get($videoId[0]);
-	}
+		}
 	
-	if($kentryType == "media"){
-		$kentry = $kclient->media->get($videoId[0]);	
-	}
-	$smarty->assign_by_ref('videoId',$videoId[0]);
-	$smarty->assign_by_ref('videoInfo',$kentry);
+		if($kentryType == "media"){
+			$kentry = $kclient->media->get($videoId[0]);	
+		}
+		$smarty->assign_by_ref('videoId',$videoId[0]);
+		$smarty->assign_by_ref('videoInfo',$kentry);
 	}
 	$smarty->assign_by_ref('entryType',$kentryType);
 }
@@ -227,3 +229,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 // Display the template
 $smarty->assign('mid','tiki-kaltura_video.tpl');
 $smarty->display("tiki.tpl");
+
+} catch( Exception $e ) {
+	$access->display_error( '', tr('Communication error'), 500, true, tr('Invalid response provided by the kaltura server. Please retry.') );
+}

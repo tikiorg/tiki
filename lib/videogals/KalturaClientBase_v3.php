@@ -1,9 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
-// 
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// From Kaltura client libraries
 
 class KalturaClientBase
 {
@@ -230,18 +226,19 @@ class KalturaClientBase
 		$formattedData = http_build_query($params , "", "&");
 		$params = array('http' => array(
 					"method" => "POST",
-					"Accept-language: en\r\n".
-					"Content-type: application/x-www-form-urlencoded\r\n",
+					'header' => 
+						"Accept-language: en\r\n"
+						. "Content-type: application/x-www-form-urlencoded\r\n",
 					"content" => $formattedData
 		          ));
 
 		$ctx = stream_context_create($params);
-		$fp = @fopen($url, 'rb', false, $ctx);
+		$fp = fopen($url, 'rb', false, $ctx);
 		if (!$fp) {
 			$phpErrorMsg = "";
 			throw new Exception("Problem with $url, $phpErrorMsg");
 		}
-		$response = @stream_get_contents($fp);
+		$response = stream_get_contents($fp);
 		if ($response === false) {
 		   throw new Exception("Problem reading data from $url, $phpErrorMsg");
 		}
