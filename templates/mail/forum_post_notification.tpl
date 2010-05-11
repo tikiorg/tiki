@@ -2,7 +2,8 @@
 {tr}A new message was posted to forum{/tr}: {$mail_forum}
 
 {tr}New topic:{/tr} {$mail_topic}
-{tr}Author{/tr}: {if $mail_author}"{$mail_author}"{else}{tr}An anonymous user{/tr}{/if}
+{tr}Author{/tr}: {if $mail_author}"{$mail_author}"
+{else}{tr}An anonymous user{/tr}{/if}
 {tr}Title{/tr}: {$mail_title}
 {tr}Date{/tr}: {$mail_date|tiki_short_datetime}
 {$mail_machine}/tiki-view_forum_thread.php?forumId={$forumId}&comments_parentId={$topicId}{if $threadId}#threadId{$threadId}{/if}
