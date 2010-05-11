@@ -191,7 +191,7 @@ if ($_REQUEST['locSection'] == 'read') {
 			}
 		}
 	
-		if (isset($aux['cc']) || ereg(',', $aux['to'])) {
+		if (isset($aux['cc']) || preg_match('/,/', $aux['to'])) {
 			$cc_addresses = '';
 	
 			if (isset($aux['cc']))

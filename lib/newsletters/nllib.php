@@ -791,13 +791,13 @@ class NlLib extends TikiLib
 		if (is_dir("templates/$tikidomain/newsletters/")) {
 			$h = opendir("templates/$tikidomain/newsletters/");
  			while ($file = readdir($h)) {
-				if (ereg("\.tpl$", $file))
+				if (preg_match('/\.tpl$/', $file))
 					$tpls[] = $file;
 			}
 		} elseif (is_dir("templates/newsletters/")) {
 			$h = opendir("templates/newsletters/");
  			while ($file = readdir($h)) {
-				if (ereg("\.tpl$", $file))
+				if (preg_match('/\.tpl$/', $file))
 					$tpls[] = $file;
 			}
 		}

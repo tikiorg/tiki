@@ -134,7 +134,7 @@ function encodeString($string, $charset="utf-8") {
 }
 
 function decode_subject_utf8($string){
-	if (ereg('=\?.*\?.*\?=', $string) === false)
+	if (preg_match('/=\?.*\?.*\?=/', $string) === false)
 		return $string;
 	$string = explode('?', $string);
 	$str = strtolower($string[2]) == 'q' ?quoted_printable_decode($string[3]):base64_decode($string[3]);

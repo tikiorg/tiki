@@ -45,7 +45,7 @@ function wikiplugin_sql($data, $params) {
 	$data = html_entity_decode($data);
 	if ($nb = preg_match_all("/\?/", $data, $out)) {
 		foreach($params as $key => $value) {
-			if (ereg("^[0-9]*$", $key)) {
+			if (preg_match('/^[0-9]*$/', $key)) {
 				if (strpos($value, "$") === 0) {
 					$value = substr($value, 1);
 					global $$value;

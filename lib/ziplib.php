@@ -887,8 +887,9 @@ function ParseMimeMultipart($data, $boundary)
 			$parts = array(); // First time through: discard leading chaff
 		else {
 			if ($content = ParseMimeifiedPages($match[1]))
-				for (reset($content); $p = current($content); next($content))
+				foreach($content as $p ) {
 					$parts[] = $p;
+				}
 		}
 
 		if ($match[2])

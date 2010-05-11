@@ -311,7 +311,7 @@ function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cache
             return $data["data"];
 
         // Get file content to string
-        if ( ereg('^https?://', $file) ) {
+        if ( preg_match('#^https?://#', $file) ) {
 		$data = $tikilib->httprequest($file);
 	} else {
 		$data = @file_get_contents($file);

@@ -939,7 +939,7 @@ function setSelectedItemByUrl($menu_name, $url)
 function setSelectedItemByUrlEregi($menu_name, $url_eregi)
 {
 	for ($cnt=$this->_firstItem[$menu_name]; $cnt<=$this->_lastItem[$menu_name]; $cnt++) {  // this counter scans all nodes of the new menu
-		if (eregi($url_eregi, $this->tree[$cnt]['parsed_href'])) {
+		if (preg_match('/'.$url_eregi.'/i', $this->tree[$cnt]['parsed_href'])) {
 			$this->tree[$cnt]['selected'] = true;
 			break;
 		}

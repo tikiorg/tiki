@@ -33,7 +33,7 @@ function setupFromAddress() // {{{
 	// Remember where the page was requested from (from tiki-login.php)
 	if (!isset($_SESSION['loginfrom'])) {
 		$_SESSION['loginfrom'] = (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $prefs['tikiIndex']);
-		if (!ereg('^http', $_SESSION['loginfrom'])) {
+		if (!preg_match('/^http/', $_SESSION['loginfrom'])) {
 			if ($_SESSION['loginfrom'] {
 				0
 			} == '/') $_SESSION['loginfrom'] = $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') . $_SESSION['loginfrom'];

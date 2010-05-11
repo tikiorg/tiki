@@ -95,7 +95,7 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		die;
 	}
 	if ($prefs['lowercase_username'] == 'y') {
-		if (ereg("[[:upper:]]", $_REQUEST["name"])) {
+		if (preg_match('/[[:upper:]]/', $_REQUEST["name"])) {
 			$smarty->assign('msg', tra("Username cannot contain uppercase letters"));
 			$smarty->display("error.tpl");
 			die;
@@ -275,7 +275,7 @@ function chkRegEmail($mail) {
 	$objResponse = new xajaxResponse();
 	if (empty($mail)) {
 		$objResponse->assign("ajax_msg_mail", "innerHTML", $pre_no.tra("Missing Email"));
-	} elseif (!eregi("^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$", $mail)) {
+	} elseif (!preg_match('/^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$/i', $mail)) {
 		$objResponse->assign("ajax_msg_mail", "innerHTML", $pre_no.tra('This is not a valid mail adress'));
 	} else {
 		$objResponse->assign("ajax_msg_mail", "innerHTML", $pre_yes.tra("Valid Email"));

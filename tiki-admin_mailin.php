@@ -77,7 +77,7 @@ $smarty->assign('info', $info);
 $accounts = $mailinlib->list_mailin_accounts(0, -1, 'account_asc', '');
 $smarty->assign('accounts', $accounts["data"]);
 if (isset($_REQUEST["mailin_autocheck"])) {
-	if ($_REQUEST["mailin_autocheck"] == 'y' && !(ereg("[0-9]+", $_REQUEST["mailin_autocheckFreq"]) && $_REQUEST["mailin_autocheckFreq"] > 0)) {
+	if ($_REQUEST["mailin_autocheck"] == 'y' && !(preg_match('/[0-9]+/', $_REQUEST["mailin_autocheckFreq"]) && $_REQUEST["mailin_autocheckFreq"] > 0)) {
 		$smarty->assign('msg', tra("Frequency should be a positive integer!"));
 		$smarty->display("error.tpl");
 		die;

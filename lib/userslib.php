@@ -255,9 +255,9 @@ class UsersLib extends TikiLib
 			$url = $prefs['site_tikiIndex'];
 		}
 		// RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
-		if (!eregi('^https?\:', $url)) {
+		if (!preg_match('/^https?\:/i', $url)) {
 			global $url_scheme, $url_host, $url_port, $base_url;
-			$url = (ereg('^/', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
+			$url = (preg_match('#^/#', $url) ? $url_scheme . '://' . $url_host . (($url_port != '') ? ":$url_port" : '') : $base_url) . $url;
 		}
 		if (SID) $url.= '?' . SID;
 

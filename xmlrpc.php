@@ -70,7 +70,7 @@ function newPost($params) {
   $passp=$params->getParam(5); $publish=$passp->scalarval();
   
   // Fix for w.bloggar
-  ereg("<title>(.*)</title>",$content, $title);
+  preg_match('/<title>(.*)</title>/',$content, $title);
   $title = $title[1];
   $content = ereg_replace("<title>(.*)</title>","",$content);
   // Now check if the user is valid and if the user can post a submission
@@ -113,7 +113,7 @@ function editPost($params) {
   $passp=$params->getParam(5); $publish=$passp->scalarval();
   
   // Fix for w.bloggar
-  ereg("<title>(.*)</title>",$content, $title);
+  preg_match('/<title>(.*)</title>/',$content, $title);
   $title = $title[1];
   $content = ereg_replace("<title>(.*)</title>","",$content);
   // Now check if the user is valid and if the user can post a submission
