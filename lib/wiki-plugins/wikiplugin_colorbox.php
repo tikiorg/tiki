@@ -58,13 +58,20 @@ function wikiplugin_colorbox_info() {
 				'filter' => 'alpha',
 				'default' => 'n',
 			),
+			'parsedescriptions' => array(
+				'required' => false,
+				'name' => tra('Parse descriptions'),
+				'description' => 'y|n '. tra('Wiki parse the file descriptions'),
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
 		),
 	);
 }
 function wikiplugin_colorbox($data, $params) {
 	global $tikilib, $smarty, $user, $prefs;
 	static $iColorbox = 0;
-	$default = array('showfilename' => 'n', 'showtitle'=>'n', 'thumb'=>'y', 'showallthumbs'=>'n');
+	$default = array('showfilename' => 'n', 'showtitle'=>'n', 'thumb'=>'y', 'showallthumbs'=>'n', 'parsedescriptions'=>'n');
 	$params = array_merge($default, $params);
 
 	if (!empty($params['fgalId'])) {
@@ -101,10 +108,36 @@ function wikiplugin_colorbox($data, $params) {
 	} else {
 		return tra('Incorrect param');
 	}
+	foreach ($files['data'] as &$file) {
+		$str = '';
+		if ($params['showtitle'] == 'y' && !empty($file['name'])) {
+			$str .= '<strong>' . $file['name'] . '</strong>';
+		}
+		if ($params['showfilename'] == 'y' && !empty($file['filename'])) {
+			$str .= empty($str) ? '' : '<br />';
+			$str .= $file['filename'];
+		}
+		if (!empty($file['description'])) {
+			global $tikilib, $prefs;
+			$str .= empty($str) ? '' : '<br />';
+			if ($params['parsedescriptions'] == 'y') {
+				$op = $prefs['feature_wiki_paragraph_formatting'];
+				$op2 = $prefs['feature_wiki_paragraph_formatting_add_br'];
+				$prefs['feature_wiki_paragraph_formatting'] = 'n';
+				$prefs['feature_wiki_paragraph_formatting_add_br'] = 'n';
+				$str .= $tikilib->parse_data($file['description'], array( 'suppress_icons' => true ));
+				$prefs['feature_wiki_paragraph_formatting'] = $op;
+				$prefs['feature_wiki_paragraph_formatting_add_br'] = $op2;
+			} else {
+				$str .= preg_replace('/[\n\r]/', '', nl2br($file['description']));
+			}
+		}
+		$file['elTitle'] = $str;
+	}
 	$smarty->assign('iColorbox', $iColorbox++);
 	$smarty->assign_by_ref('colorboxFiles', $files);
 	$smarty->assign_by_ref('params', $params);
-	return $smarty->fetch('wiki-plugins/wikiplugin_colobox.tpl');
+	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_colobox.tpl').'~/np~';
 }
 /* 
 {img src=tiki-download_file.php?fileId=1&amp;thumbnail link=tiki-download_file.php?fileId=1&amp;display rel="shadowbox[gallery];type=img"}
