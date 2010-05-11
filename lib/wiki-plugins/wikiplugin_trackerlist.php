@@ -321,6 +321,7 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		global $trklib; require_once("lib/trackers/trackerlib.php");
+		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $limit);
 		if (!empty($fields)) {
 			$listfields = $fields;
 			if ($sort == 'y') {
@@ -350,7 +351,6 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
 			$limit = '';
 		}
-		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $limit);
 
 		if (!empty($filterfield)) {
 			if (is_array($filterfield)) {
