@@ -406,6 +406,7 @@ select {
 
 div#sitelogo img {
 	margin-top: 24px;
+	margin-left: -16px;
 }
 
 #sitetitles {
