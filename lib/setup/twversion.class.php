@@ -115,8 +115,8 @@ class TWVersion
 				'4.1',
 				'4.2',
 				'5.0alpha',
-				'5.0beta1'
-				'5.0beta2'
+				'5.0beta1',
+				'5.0beta2',
 				'5.0RC1'
 				);
 	}
