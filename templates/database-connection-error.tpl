@@ -15,7 +15,7 @@
 		{rdelim}
 	</style>
 </head>
-<body class="tiki_wiki">
+<body class="tiki_wiki db_error">
 <div id="fixedwidth"> {* enables fixed-width layouts *}
 	<div id="main">
 	<div id="siteheader">
@@ -68,7 +68,7 @@
 						{/if}
 					</div>
 				
-					<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 30%;">
+					<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
 						<p>Things to check:</p>
 						<ol class="fancylist">
 							<li><p>Is your database up and running?</p></li>
