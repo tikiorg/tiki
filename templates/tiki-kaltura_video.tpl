@@ -98,7 +98,6 @@
 				<td class="odd">{$videoInfo->plays}</td>
 				</tr>
 				{/if}
-						<input type="hidden" name="{$entryType}Id" value="{$videoInfo->id}"/>
 	</table>
 
 		</div>
@@ -119,9 +118,10 @@
 	{if $mode eq 'edit'}
 	<div id="form">
 	<form  action='tiki-kaltura_video.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
-	{$edit_info}
-	<input type="hidden" name="action" value="edit">
-	<input name="update" type="submit" value="{tr}Save{/tr}"/>
+		{$edit_info}
+		<input type="hidden" name="action" value="edit">
+		<input type="hidden" name="{$entryType}Id" value="{$videoInfo->id}"/>
+		<input name="update" type="submit" value="{tr}Save{/tr}"/>
 	</form>
 	</div>
 	{elseif $mode eq 'view'}
