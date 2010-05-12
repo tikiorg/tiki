@@ -646,6 +646,11 @@ li.login_link ul li a {
 	background: url(../lib/jquery/superfish/images/arrows-ffffff.png);
 }
 
+/***** Icons *****/
+img.icon {
+	margin: 1px 2px 2px 1px;
+}
+
 /***** Boxes *****/
 .cbox {
 	border: none;
