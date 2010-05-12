@@ -3,7 +3,7 @@
 <div id="header">
 	<div id="siteheader" class="clearfix">
 		<div id="header-top">
-			<div id="sitelogo" style="padding-left:0; padding-top: 40px"><h1 style="margin: 0"><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tikisitelogo.{if isset($ie6)}gif{else}png{/if}" />
+			<div id="sitelogo" style="padding-left:0; padding-top: 40px"><h1 style="margin: 0"><img style="border:medium none; vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
 				<span style="vertical-align:middle">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
 			</div>
 		</div>

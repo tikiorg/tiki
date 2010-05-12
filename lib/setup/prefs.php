@@ -1199,7 +1199,7 @@ function get_default_prefs() {
 		'sitelogo_bgstyle' => '',
 		'sitelogo_align' => 'left',
 		'sitelogo_title' => 'Tiki powered site',
-		'sitelogo_src' => 'img/tiki/tikisitelogo.png',
+		'sitelogo_src' => 'img/tiki/Tiki_WCG.png',
 		'sitelogo_alt' => 'Site Logo',
 		'feature_siteloc' => 'y',
 		'feature_sitenav' => 'n',
