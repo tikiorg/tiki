@@ -344,7 +344,7 @@ select {
 
 /***** Site Header & Identity *****/
 #header {
-	background: url(fivealive/options/blueberry/header.png) -330px 0 no-repeat;
+	background: url(fivealive/options/blueberry/header.png) -350px 0 no-repeat;
 }
 
 #header-top {
@@ -405,7 +405,7 @@ select {
 }
 
 div#sitelogo img {
-	margin-top: 24px;
+	margin-top: 0;
 }
 
 #sitetitles {
