@@ -52,12 +52,12 @@ a {
 	text-decoration: none;
 }
 
-a:hoverÅ@{
+a:hover {
 	color: #000000;
 	text-decoration: none;
 }
 
-a:visitedÅ@{
+a:visited {
 	color: #114499;
 	text-decoration: none;
 }
