@@ -121,10 +121,10 @@ html {
 		<title>$title</title>
 	</head>
 	<body class="tiki_wiki" style="text-align: center;">
-		<div id="header" style="background:url(styles/fivealive/options/blueberry/header.png) no-repeat scroll -325px 0; height: 204px;">
+		<div id="header" style="background:url(styles/fivealive/options/blueberry/header.png) no-repeat scroll -300px 0; height: 204px;">
 			<div id="siteheader">
 				<div id="sitelogo" style="text-align: left; padding-left: 30px; padding-top: 30px;">
-					<img alt="Site Logo" src="img/tiki/tikisitelogo.png" />
+					<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" />
 				</div>
 			</div>
 		</div>
@@ -134,7 +134,7 @@ html {
 				$content
 			</div>
 			<div id="tiki-bot" align="center" style="padding-bottom: 20px">
-				<a title="This is TikiWiki CMS/Groupware" href="http://info.tikiwiki.org" target="_blank"><img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" /></a>
+				<a title="This is Tiki Wiki CMS Groupware" href="http://info.tikiwiki.org" target="_blank"><img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" /></a>
 			</div>
 		</div>
 	</body>
