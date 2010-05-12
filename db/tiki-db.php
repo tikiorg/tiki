@@ -172,14 +172,21 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 					$objResponse->script("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
 							"bugwin.document.write('$page');");
 					echo $objResponse->getOutput();
+					$this->log($msg.' - '.$q);
 					die();
 				}
 			}
 
 			$smarty->display('database-connection-error.tpl');
 			unset($_SESSION['fatal_error']);
+			$this->log($msg.' - '.$q);
 			die;
 		}
+	} // }}}
+	function log($msg) {
+		global $user, $tikilib;
+		$query = 'insert into `tiki_actionlog` (`objectType`,`action`,`object`,`user`,`ip`,`lastModif`, `comment`) values (?,?,?,?,?,?,?)';
+		$result = $tikilib->query($query, array('system', 'db error', 'system', $user, $tikilib->get_ip_address(),  $tikilib->now, $msg));
 	} // }}}
 }
 
