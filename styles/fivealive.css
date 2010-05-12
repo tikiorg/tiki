@@ -352,6 +352,19 @@ select {
 	position: relative;
 }
 
+#quickadmin {
+	background: #fff;
+	border: 1px solid #696969;
+	border-top: 0;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	padding: 0 6px 2px 0;
+}
+
 #secondary_site_menu {
 	height: 30px;
 	line-height: 30px;
