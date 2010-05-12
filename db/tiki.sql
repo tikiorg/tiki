@@ -1485,8 +1485,8 @@ DROP TABLE IF EXISTS `tiki_modules`;
 CREATE TABLE `tiki_modules` (
   `moduleId` int(8) NOT NULL auto_increment,
   `name` varchar(200) NOT NULL default '',
-  `position` char(1) default NULL,
-  `ord` int(4) default NULL,
+  `position` char(1) NOT NULL DEFAULT '',
+  `ord` int(4) NOT NULL DEFAULT '0',
   `type` char(1) default NULL,
   `title` varchar(255) default NULL,
   `cache_time` int(14) default NULL,
