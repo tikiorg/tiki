@@ -80,8 +80,10 @@
 
 					<p>Please see <a target="_blank" href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 				</div>
+			{elseif $where eq 'connection'}
+				<p>{tr}Tiki is unable to connect to the database{/tr}</p>
 			{else}
-				<p>An error occured while performing the request.</p>
+				<p>{tr}An error occured while performing the request.{/tr}</p>
 			{/if}
 
 			<hr/>

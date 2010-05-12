@@ -29,6 +29,7 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 	require_once 'setup_smarty.php';
 
 	$smarty->assign( 'msg', $dbTiki->ErrorMsg() );
+	$smarty->assign( 'where', 'connection');
 	echo $smarty->fetch( 'database-connection-error.tpl' );
 	exit;
 }
