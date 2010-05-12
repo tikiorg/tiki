@@ -23,12 +23,11 @@
 <div id="tiki-listpages-content">
 	{if $aliases}
 		<div class="aliases">
-			<b>{tr}Page aliases found:{/tr}</b>
+			<strong>{tr}Page aliases found:{/tr}</strong>
 			{foreach from=$aliases item=alias}
 				<a href="{$alias.toPage|sefurl}" title="{$alias.fromPage|escape}" class="alias">{$alias.toPage|escape};</a>
 			{/foreach}
 		</div>
-		<p>
 	{/if}
 	{include file='tiki-listpages_content.tpl' clean='n'}
 </div>
@@ -37,13 +36,13 @@
 {/tab}
 {if $tiki_p_edit == 'y'}
 {tab name="{tr}Create a Wiki Page{/tr}"}
-<center>
-<b>{tr}Insert name of the page you wish to create{/tr}</b>
+<div class="center" style="text-align: center">
+<strong>{tr}Insert name of the page you wish to create{/tr}</strong>
 <form method="get" action="tiki-editpage.php">
 <input id="pagename" type="text" size="30" name="page" /><br />
-<input type="submit" name="quickedit" value="{tr}Create Page{/tr}" />
+<input class="submit button" type="submit" name="quickedit" value="{tr}Create Page{/tr}" />
 </form>
-</center>
+</div>
 {/tab}
 {/if}
 {/tabset}
