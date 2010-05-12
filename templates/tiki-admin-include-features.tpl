@@ -106,9 +106,16 @@
 						{preference name=feature_webservices}
 						{preference name=feature_webmail}
 						{preference name=feature_sefurl}
+						{preference name=feature_sheet}
+						{preference name=feature_webdav}
+						{preference name=bigbluebutton_feature}
+						<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
+							{preference name=bigbluebutton_server_location}
+							{preference name=bigbluebutton_server_salt}
+						</div>						
+
 				</fieldset>
 			</div>
-
 
 {/tab}
 
@@ -137,32 +144,20 @@
 						{preference name=feature_copyright}
 						{preference name=feature_actionlog}
 						{preference name=feature_contribution}
+						{preference name=feature_intertiki}
 				</fieldset>
 
 				<fieldset>
 					<legend class="heading">{icon _id="error"}<span>{tr}Need polish{/tr}</span></legend>
 					<p class="description">{tr}These features are generally known to have issues, and/or need admin help and/or user patience to work.{/tr}</p>
 						{preference name=feature_ajax}
-						{preference name=feature_intertiki}
 						{preference name=feature_ajax_autosave}
-						{preference name=feature_sheet}
 						{preference name=feature_wysiwyg}
 						{preference name=feature_wiki_save_draft}
-						{preference name=feature_webdav}
+						
 				</fieldset>
 				
-				<fieldset>
-					<legend class="heading">{icon _id="new"}<span>{tr}Fresh out of the stove{/tr}</span></legend>
 
-					{preference name=bigbluebutton_feature}
-				</fieldset>
-
-			</div>
-
-			<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
-				{preference name=bigbluebutton_server_location}
-				{preference name=bigbluebutton_server_salt}
-			</div>
 {/tab}
 {/tabset}
 
