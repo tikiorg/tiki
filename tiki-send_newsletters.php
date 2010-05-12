@@ -302,9 +302,10 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
 
 	$mail = new TikiMail();
 	if (stristr($_REQUEST["dataparsed"], "<body") === false) {
-		$html = "<html><body>" . $tikilib->parse_data($_REQUEST["dataparsed"], array('absolute_links' => true, 'suppress_icons' => true)) . "</body></html>";
+		$html = "<html><body><div id='tiki-center' class='clearfix content'><div class='wikitext'>" . $tikilib->parse_data($_REQUEST["dataparsed"], array('absolute_links' => true, 'suppress_icons' => true)) . "</div></div></body></html>";
 	} else {
-		$html = $_REQUEST["dataparsed"];
+		$html = str_ireplace('<body>','<body><div id="tiki-center" class="clearfix content"><div class="wikitext">',$_REQUEST["dataparsed"]);
+		$html = str_ireplace('</body>','</div></div></body>', $html);
 	}
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
@@ -312,9 +313,9 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
 	}
 	if (stristr($html, '<base') === false) {
 		if (stristr($html, '<header') === false) {
-			$html = str_ireplace('<html>', "<html><header><base href=\"$base_host\" /><style type=\"text/css\">" . $headerlib->get_all_css_content() . "</style></header>", $html);
+			$html = str_ireplace('<html>', "<html><header><base href=\"$base_url\" /><style type=\"text/css\">" . $headerlib->get_all_css_content() . "</style></header>", $html);
 		} else {
-			$html = str_ireplace('<header>', "<header><base href=\"$base_host\" />", $html);
+			$html = str_ireplace('<header>', "<header><base href=\"$base_url\" />", $html);
 		}
 	}
 	$sent = array();
