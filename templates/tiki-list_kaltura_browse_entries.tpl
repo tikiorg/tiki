@@ -41,10 +41,10 @@ $jq(document).ready( function() {
 <br>
 	{if $entryType eq "mix"}
 	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
-	{button _text="{tr}List Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix" }
+	{button _text="{tr}List{/tr}" href="tiki-list_kaltura_entries.php?list=mix" }
 	{else}
 	{button _text="{tr}Mix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix" }
-	{button _text="{tr}List Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
+	{button _text="{tr}List{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
 	{/if}
 	<br><br>	
 	<table>	

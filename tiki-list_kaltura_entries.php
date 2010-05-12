@@ -39,6 +39,9 @@ try {
 	$smarty->display('error.tpl');
 	die;
 }
+
+try {
+
 $kclient->setKs($ksession);
 
 if(isset($_REQUEST['action'])){
@@ -235,5 +238,9 @@ $smarty->assign_by_ref('view', $_REQUEST['view']);
 $smarty->assign_by_ref('offset',$offset);
 $smarty->assign_by_ref('maxRecords',$page_size);
 // Display the template
-	$smarty->assign('mid', 'tiki-list_kaltura_entries.tpl');
-	$smarty->display("tiki.tpl");
+$smarty->assign('mid', 'tiki-list_kaltura_entries.tpl');
+$smarty->display("tiki.tpl");
+
+} catch( Exception $e ) {
+	$access->display_error( '', tr('Communication error'), 500, true, tr('Invalid response provided by the kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>' );
+}
