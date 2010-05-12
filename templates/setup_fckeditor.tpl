@@ -82,6 +82,22 @@ FCKConfig.Plugins.Add( 'dragresizetable' );
    FCKConfig.ajaxAutoSaveSensitivity = 2 ;
 {/if}
 
+/*
+ * FCKeditor Extension for MediaWiki specific settings.
+*/
+
+{if $prefs.wysiwyg_htmltowiki eq 'y'}
+	// When using the modified image dialog you must set this variable. It must
+	// correspond to $wgScriptPath in LocalSettings.php.
+	FCKConfig.mwScriptPath = '' ;     
+	// Load the extension plugins.
+	FCKConfig.Plugins.Add( 'tikiwiki', 'en,pl',  _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
+	FCKConfig.ForcePasteAsPlainText = true ;
+	FCKConfig.FontFormats  = 'p;h1;h2;h3;h4;h5;h6;pre' ;
+	FCKConfig.AutoDetectLanguage   = true ;
+	// FCKConfig.DisableObjectResizing = true ;
+{/if}
+
 // as tikiwiki, we prefer <br> instead of <p> for newlines
 FCKConfig.EnterMode = 'br' ;			// p | div | br
 FCKConfig.ShiftEnterMode = 'p' ;	// p | div | br

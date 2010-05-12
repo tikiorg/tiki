@@ -16,6 +16,7 @@
 		{preference name=wysiwyg_memo}
 		{preference name=wysiwyg_wiki_parsed}
 		{preference name=wysiwyg_wiki_semi_parsed}
+		{preference name=wysiwyg_htmltowiki}
 		{preference name=wysiwyg_toolbar_skin}
 		
 		<div class="adminoptionbox">

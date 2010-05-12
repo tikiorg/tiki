@@ -482,6 +482,7 @@ function get_default_prefs() {
 		'wysiwyg_wiki_semi_parsed' => 'n',
 		'wysiwyg_toolbar_skin' => 'default',
 		'wysiwyg_ckeditor' => 'n',
+		'wysiwyg_htmltowiki' => 'n',
 
 		// wiki3d
 		'wiki_feature_3d' => 'n',

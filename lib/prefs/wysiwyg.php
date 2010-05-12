@@ -47,5 +47,13 @@ function prefs_wysiwyg_list() {
 			'description' => tra('Experimental, new in Tiki 5: Use New CKEditor instead of previous FCKEditor'),
 			'type' => 'flag',
 		),
+		'wysiwyg_htmltowiki' => array(
+			'name' => tra('Use Wiki syntax in WYSIWYG'),
+			'description' => tra('Experimental, new : Allow to keep the wiki syntax with the WYSIWYG editor. WARNING: plugin edit is not working in that case in WYSIWYG mode, use the Source mode instead '),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_ajax',
+			),
+		),
 	);
 }

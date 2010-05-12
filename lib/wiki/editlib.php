@@ -193,25 +193,33 @@ class EditLib
 	}
 
 	function parseToWiki(&$inData) {
-		// Parsing page data as first time seeing html page in normal editor
-		$parsed = '';
-		$parsed = $this->parse_html($inData);
+		global $prefs;
+		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+			$parsed = $inData;
+		} else {
+			// Parsing page data as first time seeing html page in normal editor
+			$parsed = $this->parse_html($inData);
+		}
 		$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
 		return $parsed;
 	}
 	
 	function parseToWysiwyg(&$inData) {
-		global $tikilib, $tikiroot;
+		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
-		$parsed = $tikilib->parse_data($parsed,array('absolute_links'=>true, 'parseimgonly'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
+		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+			$parsed = $tikilib->parse_data($parsed,array('absolute_links'=>true, 'noparseplugins'=>false,'noheaderinc'=>true, 'fck' => 'y'));
+		} else {
+			$parsed = $tikilib->parse_data($parsed,array('absolute_links'=>true, 'parseimgonly'=>true,'noheaderinc'=>true));
+		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 		$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
 		$parsed = str_replace( 
-			array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
-			array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
-			$parsed );
+				array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
+				array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
+				$parsed );
 		return $parsed;
 	}
 	
