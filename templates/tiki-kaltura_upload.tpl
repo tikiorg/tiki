@@ -13,7 +13,7 @@
 <br>		
 <div id="kcwFlashObject"></div>
 
-{jq}
+{jq onready=true}
 	var params = {
        	allowScriptAccess: "always",
        	allowNetworking: "all",

@@ -166,24 +166,27 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 				include_once('lib/ajax/xajax/xajax_core/xajaxAIO.inc.php');
 				if ($ajaxlib && $ajaxlib->canProcessRequest()) {
 					// this was a xajax request -> return a xajax answer
-					global $logslib; include_once('lib/logs/logslib.php');
-					$logslib->add_log('system', $msg.' - '.$q);
 					$page = $smarty->fetch( 'database-connection-error.tpl' );
 					$objResponse = new xajaxResponse();
 					$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
 					$objResponse->script("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
 							"bugwin.document.write('$page');");
 					echo $objResponse->getOutput();
+					$this->log($msg.' - '.$q);
 					die();
 				}
 			}
 
-			global $logslib; include_once('lib/logs/logslib.php');
-			$logslib->add_log('system', $msg.' - '.$q);
 			$smarty->display('database-connection-error.tpl');
 			unset($_SESSION['fatal_error']);
+			$this->log($msg.' - '.$q);
 			die;
 		}
+	} // }}}
+	function log($msg) {
+		global $user, $tikilib;
+		$query = 'insert into `tiki_actionlog` (`objectType`,`action`,`object`,`user`,`ip`,`lastModif`, `comment`) values (?,?,?,?,?,?,?)';
+		$result = $tikilib->query($query, array('system', 'db error', 'system', $user, $tikilib->get_ip_address(),  $tikilib->now, $msg));
 	} // }}}
 }
 

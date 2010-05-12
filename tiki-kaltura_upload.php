@@ -23,13 +23,14 @@ if (empty($partner_id) || !is_numeric($partner_id) || empty($secret) || empty($a
 	$smarty->display('error.tpl');
 	die;
 }
+$smarty->assign('headtitle', tra('Kalture Upload'));
 
-$kconf = new KalturaConfiguration($partner_id);
-$kclient = new KalturaClient($kconf);
-$ksession = $kclient->session->start($secret,$user,$SESSION_USER);
-
-if(!isset($ksession)) {
-	$smarty->assign('msg', tra("Could not establish Kaltura session. Try again"));
+try {
+	$kconf = new KalturaConfiguration($partner_id);
+	$kclient = new KalturaClient($kconf);
+	$ksession = $kclient->session->start($secret,$user,$SESSION_USER);
+} catch (Exception $e) {
+	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br /><em>' . $e->getMessage() . '</em>');
 	$smarty->display('error.tpl');
 	die;
 }
@@ -38,11 +39,11 @@ $kclient->setKs($ksession);
 $cwflashVars = array();
 $cwflashVars["uid"]               = $user;
 $cwflashVars["partnerId"]         = $partner_id;
-$cwflashVars["ks"]                  = $ksession;
+$cwflashVars["ks"]                = $ksession;
 $cwflashVars["afterAddEntry"]     = "afterAddEntry";
-$cwflashVars["close"]       = "onContributionWizardClose";
+$cwflashVars["close"]             = "onContributionWizardClose";
 $cwflashVars["showCloseButton"]   = false;
-$cwflashVars["Permissions"]       = 1; 
+$cwflashVars["Permissions"]       = 1;		// 1=public, 2=private, 3=group, 4=friends
 
 $smarty->assign_by_ref('cwflashVars',json_encode($cwflashVars));
 
@@ -52,5 +53,5 @@ if($_REQUEST['kcw']){
 	$smarty->assign_by_ref('count',$count);
 }
 // Display the template
-	$smarty->assign('mid','tiki-kaltura_upload.tpl');
-	$smarty->display("tiki.tpl");
+$smarty->assign('mid','tiki-kaltura_upload.tpl');
+$smarty->display("tiki.tpl");

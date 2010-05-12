@@ -1286,7 +1286,8 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Last Changes','tiki-lastchanges.php',205,'feature_wiki,feature_lastChanges','tiki_p_view','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Dump','dump/new.tar',210,'feature_wiki,feature_dump','tiki_p_view','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Rankings','tiki-wiki_rankings.php',215,'feature_wiki,feature_wiki_rankings','tiki_p_view','',0);
-INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Pages','tiki-listpages.php',220,'feature_wiki,feature_listPages','tiki_p_view','',0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','List Pages','tiki-listpages.php',220,'feature_wiki,feature_listPages','tiki_p_view','',0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Create a Wiki Page','tiki-listpages.php?cookietab=2#tab2',222,'feature_wiki,feature_listPages','tiki_p_view,tiki_p_edit','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Orphan Pages','tiki-orphan_pages.php',225,'feature_wiki,feature_listorphanPages','tiki_p_view','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Sandbox','tiki-editpage.php?page=sandbox',230,'feature_wiki,feature_sandbox','tiki_p_view','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Multiple Print','tiki-print_pages.php',235,'feature_wiki,feature_wiki_multiprint','tiki_p_view','',0);
@@ -1484,8 +1485,8 @@ DROP TABLE IF EXISTS `tiki_modules`;
 CREATE TABLE `tiki_modules` (
   `moduleId` int(8) NOT NULL auto_increment,
   `name` varchar(200) NOT NULL default '',
-  `position` char(1) default NULL,
-  `ord` int(4) default NULL,
+  `position` char(1) NOT NULL DEFAULT '',
+  `ord` int(4) NOT NULL DEFAULT '0',
   `type` char(1) default NULL,
   `title` varchar(255) default NULL,
   `cache_time` int(14) default NULL,
@@ -2406,7 +2407,7 @@ CREATE TABLE `tiki_user_modules` (
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('Application Menu', 'Menu', '{menu id=42}', 'n');
+INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('Application Menu', 'Menu', '{menu id=42 css=y type=vert}', 'n');
 
 DROP TABLE IF EXISTS `tiki_user_notes`;
 CREATE TABLE `tiki_user_notes` (

@@ -29,7 +29,7 @@
 	{if $view ne "browse"}
 	<form action='tiki-list_kaltura_entries.php?list=mix' method="post">	
 	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
-	{button _text="{tr}Browse Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix&view=browse" } 
+	{button _text="{tr}Browse{/tr}" href="tiki-list_kaltura_entries.php?list=mix&view=browse" } 
 	<input type="submit" name="action" value="Delete"/>
 	<br><br>
     {include file=tiki-list_kaltura_mix_entries.tpl}
@@ -39,14 +39,24 @@
     {/if}
 {else}
 	{if $view ne "browse"}
-	<form action="tiki-list_kaltura_entries.php?list=media" method="post" class="normal">
+	<form action="tiki-list_kaltura_entries.php?list=media" method="post" class="normal" id="videoAction">
 	{button _text="{tr}Mix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix" }
-	{button _text="{tr}Browse Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media&view=browse" }
+	{button _text="{tr}Browse{/tr}" href="tiki-list_kaltura_entries.php?list=media&view=browse" }
 	<input type="submit" name="action" value="Create Remix"/> 
 	<input type="submit" name="action" value="Delete"/>
 	<br><br>
 	{include file=tiki-list_kaltura_media_entries.tpl}
 	</form>
+	{jq}
+$jq("#videoAction").submit(function () {
+	if ($jq(this).find("input[name='mediaId[]']:checked").length === 0) {
+		alert("{tr}Please select some media entries to use{/tr}");
+		return false;
+	} else {
+		return true;
+	}
+});
+	{/jq}
 	{else}
 	{include file="tiki-list_kaltura_browse_entries.tpl"}
 	{/if}

@@ -322,6 +322,13 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		global $trklib; require_once("lib/trackers/trackerlib.php");
+		$limit = $fields;
+		if (!empty($filterfield) && !empty($limit)) {
+			$limit = array_unique(array_merge($limit, $filterfield));
+		}
+		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
+			$limit = '';
+		}
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $limit);
 		if (!empty($fields)) {
 			$listfields = $fields;
@@ -345,14 +352,6 @@ function wikiplugin_trackerlist($data, $params) {
 				}
 			}
 		}
-		$limit = $listfields;
-		if (!empty($filterfield) && !empty($limit)) {
-			$limit = array_unique(array_merge($limit, $filterfield));
-		}
-		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
-			$limit = '';
-		}
-
 		if (!empty($filterfield)) {
 			if (is_array($filterfield)) {
 				foreach ($filterfield as $ff) {
@@ -784,8 +783,13 @@ function wikiplugin_trackerlist($data, $params) {
 				$perms = array_merge($perms, $trklib->get_special_group_tracker_perm($tracker_info));
 			}
 		}
-
 		for ($i = 0, $count_allf = count($allfields['data']); $i < $count_allf; $i++) {
+			if ($allfields['data'][$i]['type'] == 'C') {
+				$infoComputed = $trklib->get_computed_info($allfields['data'][$i]['options_array'][0], $trackerId, $allfields['data']);
+				if (!empty($infoComputed)) {
+					$allfields['data'][$i] = array_merge($infoComputed, $allfields['data'][$i]);
+				}
+			}
 			if ((in_array($allfields["data"][$i]['fieldId'],$listfields) or in_array($allfields["data"][$i]['fieldId'],$popupfields))and $allfields["data"][$i]['isPublic'] == 'y') {
 				$passfields["{$allfields["data"][$i]['fieldId']}"] = $allfields["data"][$i];
 			}

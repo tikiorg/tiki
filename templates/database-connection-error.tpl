@@ -15,12 +15,12 @@
 		{rdelim}
 	</style>
 </head>
-<body class="tiki_wiki">
+<body class="tiki_wiki db_error">
 <div id="fixedwidth"> {* enables fixed-width layouts *}
 	<div id="main">
 	<div id="siteheader">
 			<div id="sitelogo" style="text-align: center; padding-left: 70px;">
-				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikisitelogo.png" />
+				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/Tiki_WCG.png" />
 			</div>
 	</div>
 
@@ -68,7 +68,7 @@
 						{/if}
 					</div>
 				
-					<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 30%;">
+					<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
 						<p>Things to check:</p>
 						<ol class="fancylist">
 							<li><p>Is your database up and running?</p></li>
@@ -80,15 +80,17 @@
 
 					<p>Please see <a target="_blank" href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 				</div>
+			{elseif $where eq 'connection'}
+				<p>{tr}Tiki is unable to connect to the database{/tr}</p>
 			{else}
-				<p>An error occured while performing the request.</p>
+				<p>{tr}An error occured while performing the request.{/tr}</p>
 			{/if}
 
 			<hr/>
 
 			<p align="center">
-				<a target="_blank" href="http://www.tikiwiki.org" title="TikiWiki CMS/Groupware">
-				<img src="img/tiki/tikibutton2.png" alt="TikiWiki CMS/Groupware" border="0" height="31" width="80"/>
+				<a target="_blank" href="http://www.tikiwiki.org" title="Tiki Wiki CMS Groupware">
+				<img src="img/tiki/tikibutton2.png" alt="Tiki Wiki CMS Groupware" border="0" height="31" width="80"/>
 				</a>
 			</p>
 		</div>

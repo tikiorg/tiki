@@ -944,7 +944,6 @@ class TrackerLib extends TikiLib
 				$itemUser = isset($fil[$fieldId]) ? $fil[$fieldId] : '';
 			}
 		}
-
 		foreach ( $listfields as $fieldId =>$fopt ) {
 			if (empty($fopt['fieldId'])) // to accept listfield as a simple table
 				$fopt['fieldId'] = $fieldId;
@@ -3811,6 +3810,40 @@ class TrackerLib extends TikiLib
 	function test_field_type($fields, $types) {
 		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($fields),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
 		return $this->getOne($query, array_merge($fields, $types));
+	}
+	function get_computed_info($options, $trackerId=0, &$fields=null) {
+		preg_match('/#([0-9]+)/', $options, $matches);
+		$need_recur = false;
+		foreach($matches as $k => $match) {
+			if (!$k) continue;
+			if (empty($fields)) {
+				$allfields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+				$fields = $allfields['data'];
+			}
+			foreach($fields as $k => $field) {
+				if ($field['fieldId'] == $match && ($field['type'] == 'f' || $field['type'] == 'j')) {
+					return array('computedtype'=>'f', 'options'=>$field['options'] ,'options_array'=>$field['options_array']);
+				}
+				if ($field['fieldId'] == $match && $field['type'] == 'C') {
+					$need_recur = true;
+				}
+			}
+		}
+		if ($need_recur) {
+			foreach($matches as $k => $match) {
+				if (!$k) continue;
+				foreach($fields as $k => $field) {
+					if ($field['fieldId'] == $match && ($field['type'] == 'C')) {
+						$res = $this->get_computed_info($field['options'], $trackerId, $fields);
+						if (!empty($res)) {
+							return $res;
+						}
+						break;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 }

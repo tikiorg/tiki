@@ -22,11 +22,14 @@ $kconf = new KalturaConfiguration($partner_id);
 $kclient = new KalturaClient($kconf);
 $ksession = $kclient->session->start($secret,$user,$SESSION_USER,$partner_id,null,"edit:*");
 
-if(!isset($ksession)) {
-	$smarty->assign('msg', tra("Could not establish Kaltura session. Try again"));
+} catch (Exception $e) {
+	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br /><em>' . $e->getMessage() . '</em>');
 	$smarty->display('error.tpl');
 	die;
 }
+
+try {
+$smarty->assign('headtitle', tra('Kalture Video'));
 $kclient->setKs($ksession);
 
 $kentryType = "";
@@ -52,8 +55,8 @@ if(!empty($_REQUEST['mediaId'])){
 if(!empty($videoId) && isset($_REQUEST['action'])){
 
 	$mode = $_REQUEST['action'];
-	$smarty->assign_by_ref('mode',$mode);
-	$smarty->assign_by_ref('entryType',$kentryType);
+	$smarty->assign('kmode',$mode);
+	$smarty->assign('entryType',$kentryType);
 	
 	switch($mode){
 	
@@ -162,6 +165,11 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 				$kentry->views = null;
 				$kentry->duration = null;
 				$kentry->hasRealThumbnail = null;
+				$kentry->accessControlId = null;
+				$kentry->moderationStatus = null;
+				$kentry->moderationCount = null;
+				$kentry->searchText = null;
+				$kentry->msDuration = null;
 				$knewentry = $kclient->mixing->update($videoId[0],$kentry);
 			}
 		}
@@ -212,7 +220,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 }else{
 	if(isset($videoId[0])){
 		$access->check_permission(array('tiki_p_view_videos'));
-		$smarty->assign('mode', 'view');
+		$smarty->assign('kmode', 'view');
 		if($kentryType == "mix"){
 			$kentry = $kclient->mixing->get($videoId[0]);
 		}
@@ -231,5 +239,5 @@ $smarty->assign('mid','tiki-kaltura_video.tpl');
 $smarty->display("tiki.tpl");
 
 } catch( Exception $e ) {
-	$access->display_error( '', tr('Communication error'), 500, true, tr('Invalid response provided by the kaltura server. Please retry.') );
+	$access->display_error( '', tr('Communication error'), 500, true, tr('Invalid response provided by the kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>' );
 }

@@ -10,6 +10,15 @@ body {
 	width: 100%;
 }
 
+body.db_error {
+	background: none;
+}
+
+body.db_error #tiki-main {
+	max-width: 800px;
+	margin: 1em auto;
+}
+
 html[dir=ltr]>body {
 	display: block;
 	padding: 1em;

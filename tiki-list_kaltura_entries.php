@@ -29,16 +29,18 @@ if (empty($partner_id) || !is_numeric($partner_id) || empty($secret) || empty($a
 	die;
 }
 
-$kconf = new KalturaConfiguration($partner_id);
-$kclient = new KalturaClient($kconf);
-$ksession = $kclient->session->start($secret, $user, $SESSION_USER, $partner_id);
-// Initialize kaltura session
-
-if (!isset($ksession)) {
-	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again'));
+try {
+	$kconf = new KalturaConfiguration($partner_id);
+	$kclient = new KalturaClient($kconf);
+	$ksession = $kclient->session->start($secret, $user, $SESSION_USER, $partner_id);
+	// Initialize kaltura session
+} catch (Exception $e) {
+	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br />' . $e->getMessage());
 	$smarty->display('error.tpl');
 	die;
 }
+
+try {
 $kclient->setKs($ksession);
 
 if (isset($_REQUEST['action'])) {
@@ -234,3 +236,7 @@ $smarty->assign_by_ref('maxRecords', $page_size);
 // Display the template
 $smarty->assign('mid', 'tiki-list_kaltura_entries.tpl');
 $smarty->display('tiki.tpl');
+} catch( Exception $e ) {
+	$access->display_error( '', tr('Communication error'), 500, true, tr('Invalid response provided by the kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>' );
+}
+

@@ -15,7 +15,7 @@ function module_search_wiki_page_info() {
 	return array(
 		'name' => tra('Search Wiki Page'),
 		'description' => tra('Search for a wiki page by name.'),
-		'prefs' => array('feature_search'),
+		'prefs' => array('feature_wiki'),
 	);
 }
 

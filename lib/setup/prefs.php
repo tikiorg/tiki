@@ -973,7 +973,7 @@ function get_default_prefs() {
 		'rssfeed_creator' => '',
 		'rssfeed_css' => 'y',
 		'rssfeed_publisher' => '',
-		'rssfeed_img' => 'img/tiki/tikilogo.png',
+		'rssfeed_img' => 'img/tiki/Tiki_WCG.png',
 		'rss_basic_auth' => 'n',
 		'rss_maps' => 'n',
 		'showAuthor_rss_blogs' => 'n',
@@ -1200,8 +1200,8 @@ function get_default_prefs() {
 		'sitelogo_bgcolor' => 'transparent',
 		'sitelogo_bgstyle' => '',
 		'sitelogo_align' => 'left',
-		'sitelogo_title' => 'Tikiwiki powered site',
-		'sitelogo_src' => 'img/tiki/tikisitelogo.png',
+		'sitelogo_title' => 'Tiki powered site',
+		'sitelogo_src' => 'img/tiki/Tiki_WCG.png',
 		'sitelogo_alt' => 'Site Logo',
 		'feature_siteloc' => 'y',
 		'feature_sitenav' => 'n',
@@ -1274,7 +1274,7 @@ function get_default_prefs() {
 		'feature_experimental' => 'n',
 
 		// Action logs
-		'feature_actionlog' => 'y',
+		'feature_actionlog' => 'n',
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
@@ -1598,7 +1598,7 @@ function get_default_prefs() {
 		'multidomain_config' => '',
 
 		'tiki_minify_javascript' => 'y',
-		'tiki_minify_css' => 'y',
+		'tiki_minify_css' => 'n',
 		'tiki_minify_css_single_file' => 'n',
 		'tiki_cachecontrol_session' => '',
 		'tiki_cachecontrol_nosession' => '',
