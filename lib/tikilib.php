@@ -4627,7 +4627,7 @@ class TikiLib extends TikiDb_Bridge
 			return false;
 		} else {
 			$page_info = $result->fetchRow();
-			$page_info['parsed'] = $this->parse_data($page_info['parsed'], array('is_html' => $page_info['is_html'], 'print'=>'y'));
+			$page_info['parsed'] = $this->parse_data($page_info['parsed'], array('is_html' => $page_info['is_html'], 'print'=>'y', 'page'=>$pageName));
 		}
 		return $page_info;
 	}
