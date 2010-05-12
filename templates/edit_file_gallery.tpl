@@ -47,7 +47,7 @@
             <option value="{$prefs.fgal_root_id}"{if $parentId eq $prefs.fgal_root_id} selected="selected"{/if}>{tr}none{/tr}</option>
             {foreach from=$all_galleries key=key item=item}
 							{if $galleryId neq $item.id}
-              <option value="{$item.id}"{if $parentId eq $item.id} selected="selected"{/if}>{$item.label|escape}</option>
+              <option value="{$item.id}"{if $parentId eq $item.id} selected="selected"{/if}>{if $item.parentName}{$item.parentName|escape} &gt; {/if}{$item.name|escape}</option>
 							{/if}
             {/foreach}
           </select>
