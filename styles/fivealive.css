@@ -286,7 +286,7 @@ button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 span.button input:hover,
-.calbuttonBoxÅ@a:hover,
+.calbuttonBox a:hover,
 span#genPass span.button a:hover {
 	background: #1173a5;
 	border: 1px solid #11597e;
