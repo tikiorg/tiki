@@ -78,7 +78,7 @@ switch($_REQUEST['action']){
 			$kmixEntry->editorType = 1;
 			$kmixEntry = $kclient->mixing->add($kmixEntry);		
 			for($i=0;$i<count($videoId);$i++){
-				$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id,$videoId[0]);
+				$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id,$videoId[$i]);
 			}
 		}
 		header ('Location: tiki-kaltura_video.php?action=remix&mixId='.$kmixEntry->id);
