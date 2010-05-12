@@ -20,7 +20,7 @@
 	<div id="main">
 	<div id="siteheader">
 			<div id="sitelogo" style="text-align: center; padding-left: 70px;">
-				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikisitelogo.png" />
+				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/Tiki_WCG.png" />
 			</div>
 	</div>
 
@@ -87,8 +87,8 @@
 			<hr/>
 
 			<p align="center">
-				<a target="_blank" href="http://www.tikiwiki.org" title="TikiWiki CMS/Groupware">
-				<img src="img/tiki/tikibutton2.png" alt="TikiWiki CMS/Groupware" border="0" height="31" width="80"/>
+				<a target="_blank" href="http://www.tikiwiki.org" title="Tiki Wiki CMS Groupware">
+				<img src="img/tiki/tikibutton2.png" alt="Tiki Wiki CMS Groupware" border="0" height="31" width="80"/>
 				</a>
 			</p>
 		</div>
