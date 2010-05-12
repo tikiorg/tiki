@@ -30,7 +30,7 @@
 				<h1 class="center">
 					{tr}System error.{/tr}
 				</h1>
-				{if $prefs.error_reporting_level or ( $tiki_p_admin eq 'y' and $prefs.error_reporting_adminonly eq 'y' )}
+				{if $prefs.error_reporting_level and ( $tiki_p_admin eq 'y' or $prefs.error_reporting_adminonly ne 'y' )}
 					<div class="left">
 						<p>{tr}The following error message was returned:{/tr}</p>
 						<strong>
