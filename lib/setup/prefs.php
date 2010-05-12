@@ -1273,7 +1273,7 @@ function get_default_prefs() {
 		'feature_experimental' => 'n',
 
 		// Action logs
-		'feature_actionlog' => 'y',
+		'feature_actionlog' => 'n',
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
