@@ -2381,7 +2381,7 @@ CREATE TABLE `tiki_user_modules` (
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('Application Menu', 'Menu', '{menu id=42}', 'n');
+INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('Application Menu', 'Menu', '{menu id=42 css=y type=vert}', 'n');
 
 DROP TABLE IF EXISTS `tiki_user_notes`;
 CREATE TABLE `tiki_user_notes` (
