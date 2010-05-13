@@ -1006,6 +1006,7 @@ class ArtLib extends TikiLib
 												, $topic = ''
 												, $categId = ''
 												, $creator = ''
+												, $group = ''
 												, $lang = ''
 												, $min_rating = ''
 												, $max_rating = ''

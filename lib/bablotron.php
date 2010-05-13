@@ -48,7 +48,7 @@ class bablotron extends TikiLib
 		return $results;
 	}
 
-	function quick_spellcheck_text($text) {
+	function quick_spellcheck_text($text, $threshold = 5) {
 		$words = preg_split("/\s/", $text);
 
 		$results = array();

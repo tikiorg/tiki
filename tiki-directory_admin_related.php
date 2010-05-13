@@ -61,7 +61,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign_by_ref('offset', $offset);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $smarty->assign('find', $find);
-$items = $dirlib->dir_list_related_categories($_REQUEST["parent"], $offset, $maxRecords);
+$items = $dirlib->dir_list_related_categories($_REQUEST["parent"], $offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant_pages', $items["cant"]);
 $smarty->assign_by_ref('items', $items["data"]);
 $categs = $dirlib->dir_get_all_categories_np(0, -1, 'name_asc', $find, $_REQUEST["parent"]);

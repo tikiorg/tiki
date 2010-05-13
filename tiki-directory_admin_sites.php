@@ -123,7 +123,7 @@ if ($all) {
 }
 $smarty->assign_by_ref('cant_pages', $items["cant"]);
 $smarty->assign_by_ref('items', $items["data"]);
-$categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name_asc', $find, $_REQUEST["siteId"]);
+$categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name asc', $find, $_REQUEST["siteId"]);
 $smarty->assign('categs', $categs);
 $countries = $tikilib->get_flags();
 $smarty->assign_by_ref('countries', $countries);

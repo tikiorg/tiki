@@ -70,7 +70,7 @@ function module_article_archives( $mod_reference, $module_params ) {
 	
 	foreach ( $urlParams as $p => $v ) $smarty->assign($p, $$p);
 	
-	$ranking = $artlib->list_articles(0, -1, 'publishDate_desc', '', '', date("U"), '', $type, $topicId, 'y', $topic, $categId, '', $langfilter);
+	$ranking = $artlib->list_articles(0, -1, 'publishDate_desc', '', '', date("U"), '', $type, $topicId, 'y', $topic, $categId, '', '', $langfilter);
 	
 	// filter the month from the data
 	$artc_archive = array();

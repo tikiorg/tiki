@@ -329,11 +329,11 @@ class BlogLib extends TikiLib
 	 * @param int $maxRecords
 	 * @param string $sort_mode
 	 * @param string $find
+	 * @param string $date
 	 * @access public
 	 * @return void
 	 */
-	function list_all_blog_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '')
-	{
+	function list_all_blog_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '', $ref='') {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -549,11 +549,12 @@ class BlogLib extends TikiLib
 	 * @param string $user
 	 * @param string $title
 	 * @param string $contributions
+	 * @param string $old_data
 	 * @param string $priv
 	 * @access public
 	 * @return void
 	 */
-	function update_post($postId, $blogId, $data, $user, $title = '', $contributions = '', $priv='n', $created = 0) {
+	function update_post($postId, $blogId, $data, $user, $title = '', $contributions = '', $old_data = '', $priv='n', $created = 0) {
 		global $prefs;
 		
 		if(!$created) {

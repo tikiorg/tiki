@@ -93,7 +93,7 @@ if ($categ_info['allowSites'] == 'y') {
 }
 include_once ('tiki-section_options.php');
 // Related categs
-$related = $dirlib->dir_list_related_categories($_REQUEST['parent'], 0, -1);
+$related = $dirlib->dir_list_related_categories($_REQUEST['parent'], 0, -1, 'name_asc', '');
 $smarty->assign_by_ref('related', $related['data']);
 $stats = $dirlib->dir_stats();
 $smarty->assign_by_ref('stats', $stats);

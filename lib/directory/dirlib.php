@@ -344,8 +344,7 @@ class DirLib extends TikiLib
 			$mid = "";
 		}
 	
-		$query = "select * from `tiki_directory_categories` where `allowSites`=? $mid order by " . $this->convertSortMode($sort_mode);
-
+		$query = "select * from `tiki_directory_categories` where `allowSites`=? $mid ";
 		$query_cant = "select count(*) from `tiki_directory_categories` where `allowSites`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -497,8 +496,7 @@ class DirLib extends TikiLib
 		$this->query($query,array((int)$parent,(int)$related));
 	}
 
-	function dir_list_related_categories($parent, $offset, $maxRecords) 
-	{
+	function dir_list_related_categories($parent, $offset, $maxRecords, $soet_mode, $find) {
 		$query = "select * from `tiki_related_categories` where `categId`=?";
 		$query_cant = "select count(*) from `tiki_related_categories` where `categId`=?";
 		$result = $this->query($query,array((int)$parent),$maxRecords,$offset);
@@ -514,7 +512,6 @@ class DirLib extends TikiLib
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
-		die;
 	}
 
 	function dir_add_categ_rel($parent, $categ) {
@@ -572,7 +569,7 @@ class DirLib extends TikiLib
 		}
 
 		$words = implode($how, $words);
-		$query = "select * from `tiki_directory_sites` where `isValid`=? and $words order by " . $this->convertSortMode($sort_mode);
+		$query = "select * from `tiki_directory_sites` where `isValid`=? and $words  order by ".$this->convertSortMode($sort_mode);
 		$cant = $this->getOne("select count(*) from tiki_directory_sites where `isValid`=? and $words", $bindvars);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
