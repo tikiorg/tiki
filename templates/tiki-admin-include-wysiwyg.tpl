@@ -1,6 +1,9 @@
 {* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Wysiwyg means What You See Is What You Get, and is handled in Tikiwiki by <a href="http://fckeditor.net">FCKeditor</a>{/tr}.{/remarksbox}
+<div class="navbar">
+{button href="tiki-admin_toolbars.php" _text="{tr}Toolbars{/tr}"}
+</div>
 
 <form action="tiki-admin.php?page=wysiwyg" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
