@@ -57,10 +57,10 @@ class GridBasedGraphic extends Graphic // {{{1
 		switch( $layout["grid-$type-scale"] )
 		{
 		case 'linear':
-			$this->$type = &new LinearGridScale( $type, $layout, $this->_getMinValue( $type ), $this->_getMaxValue( $type ) );
+			$this->$type = new LinearGridScale( $type, $layout, $this->_getMinValue( $type ), $this->_getMaxValue( $type ) );
 			break;
 		case 'static':
-			$this->$type = &new StaticGridScale( $type, $layout, $this->_getLabels( $type ) );
+			$this->$type = new StaticGridScale( $type, $layout, $this->_getLabels( $type ) );
 			break;
 		}
 
