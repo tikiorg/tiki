@@ -19,7 +19,7 @@
 
 SVNROOT="https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki"
 WORKDIR="$HOME/tikipack"
-MODULE="tikiwiki"
+MODULE="tiki"
 
 # end of configuration
 # ############################################################
