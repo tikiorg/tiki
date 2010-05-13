@@ -177,9 +177,9 @@ function command_list($goption, $coption, $cparams) {
 
 
 	foreach($merged as $k => $meat) {
-		ksort(&$merged[$k]);
+		ksort($merged[$k]);
 	}
-	ksort(&$merged);
+	ksort($merged);
 	foreach($merged as $type => $meat) {
 		echo $type.":\n";
 		foreach($meat as $name => $submeat) {

@@ -36,7 +36,7 @@ class Image extends ImageAbstract
 
 	function _resize($x, $y) {
 		if ($this->data) {
-			return imagick_scale(&$this->data, $x, $y);
+			return imagick_scale($this->data, $x, $y);
 		}
 	}
 
@@ -63,7 +63,7 @@ class Image extends ImageAbstract
 		$this->_load_data();
 		$this->format = $format;
 		if ($this->data) {
-			imagick_convert(&$this->data, strtoupper(trim($format)));
+			imagick_convert($this->data, strtoupper(trim($format)));
 		}
 	}
 
@@ -81,7 +81,7 @@ class Image extends ImageAbstract
 	function rotate($angle) {
 		$this->_load_data();
 		if ($this->data) {
-			imagick_rotate(&$this->data, -$angle);
+			imagick_rotate($this->data, -$angle);
 			return true;
 		} else {
 			return false;
