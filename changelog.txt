@@ -23,6 +23,632 @@ Version 5.0
 ------------------
 
 ----------------------------------------------
+r27157 | jonnybradley | 2010-05-13 18:40:13 +0200 (Thu, 13 May 2010) | 1 line
+
+[FIX] Kaltura: Use server_name/http_host for Kaltura "user" identifier, so all entries are shared between all users (with suitable perms)
+----------------------------------------------
+r27156 | changi67 | 2010-05-13 18:30:07 +0200 (Thu, 13 May 2010) | 1 line
+
+[FIX] Assigning the return value of new by reference is deprecated - Preparing RC1
+----------------------------------------------
+r27154 | jonnybradley | 2010-05-13 17:43:33 +0200 (Thu, 13 May 2010) | 1 line
+
+[FIX] Prevent PHP error (parse module params failing somehow)
+----------------------------------------------
+r27153 | jonnybradley | 2010-05-13 17:05:35 +0200 (Thu, 13 May 2010) | 1 line
+
+[FIX] Kaltura: Refresh page after upload and show files uploaded (JS fix)
+----------------------------------------------
+r27151 | jonnybradley | 2010-05-13 16:34:07 +0200 (Thu, 13 May 2010) | 1 line
+
+[FIX] Kaltura: Tidied up entry lists (and add Media Id to info popup)
+----------------------------------------------
+r27139 | sylvieg | 2010-05-13 14:31:18 +0200 (Thu, 13 May 2010) | 1 line
+
+[ENH]wysiwyg: add a button to toolbar to help people coming from 3 where the toolbar setting was there
+----------------------------------------------
+r27137 | sylvieg | 2010-05-12 23:48:15 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX]forgotten file for 27107
+----------------------------------------------
+r27135 | sylvieg | 2010-05-12 22:28:44 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX]muti print: must setup option page too for TRACKERLIST(filter={{page}})
+----------------------------------------------
+r27134 | jonnybradley | 2010-05-12 21:17:16 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] Kaltura: Use the for loop var (you were right sept7)
+----------------------------------------------
+r27133 | luciash | 2010-05-12 20:58:45 +0200 (Wed, 12 May 2010) | 1 line
+
+czech language: some more translated
+----------------------------------------------
+r27132 | luciash | 2010-05-12 20:37:03 +0200 (Wed, 12 May 2010) | 1 line
+
+remove reverted unreleased change from upgrades
+----------------------------------------------
+r27130 | jonnybradley | 2010-05-12 19:40:26 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] Kaltura: More exception handling & button label text change
+----------------------------------------------
+r27129 | jonnybradley | 2010-05-12 19:01:51 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] Kaltura: Numerous small fixes - better exception handling, jquery notonready settings, JS validation for remix/delete buttons & other small improvements
+----------------------------------------------
+r27124 | luciash | 2010-05-12 16:03:57 +0200 (Wed, 12 May 2010) | 1 line
+
+[ENH] fivealive theme: some space around icons is good
+----------------------------------------------
+r27123 | luciash | 2010-05-12 15:53:42 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] fivealive theme: some styling for db/tiki.sqlquickadmin
+----------------------------------------------
+r27122 | luciash | 2010-05-12 15:23:39 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] fivealive theme: better tabs position - no 1px space under them
+----------------------------------------------
+r27121 | luciash | 2010-05-12 15:13:20 +0200 (Wed, 12 May 2010) | 1 line
+
+fivealive theme: oops, sitelogo is dependent on topmost menu bar on or off
+----------------------------------------------
+r27120 | luciash | 2010-05-12 14:58:44 +0200 (Wed, 12 May 2010) | 1 line
+
+fivealive theme: better fix to accomodate the new TWCG logo
+----------------------------------------------
+r27119 | sylvieg | 2010-05-12 14:49:54 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX]log: log database error only when connection done(26892, 27105)  +rollback 26545 (error are log now)
+----------------------------------------------
+r27118 | changi67 | 2010-05-12 14:36:08 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] Difference between upgrade and fresh
+----------------------------------------------
+r27117 | marclaporte | 2010-05-12 14:31:14 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] rogue characters
+----------------------------------------------
+r27115 | jonnybradley | 2010-05-12 14:10:59 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] Installer: Quick fix for logo in fivealive theme installer
+----------------------------------------------
+r27114 | marclaporte | 2010-05-12 14:09:03 +0200 (Wed, 12 May 2010) | 1 line
+
+[MOD] one more logo change
+----------------------------------------------
+r27113 | marclaporte | 2010-05-12 14:00:38 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] action log can't be experimental and on by default
+----------------------------------------------
+r27110 | marclaporte | 2010-05-12 13:55:50 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] delete rogue character in css
+----------------------------------------------
+r27109 | jonnybradley | 2010-05-12 13:46:08 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] Kaltura: Move rogue hidden input into the nearest form
+----------------------------------------------
+r27108 | marclaporte | 2010-05-12 13:44:23 +0200 (Wed, 12 May 2010) | 1 line
+
+[MOD] moving features around in admin panel
+----------------------------------------------
+r27107 | sylvieg | 2010-05-12 13:38:29 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX]error: use a different error message when enable to connect to db in non verbose mode
+----------------------------------------------
+r27106 | jonnybradley | 2010-05-12 13:11:47 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] Cosmetics for error page
+----------------------------------------------
+r27105 | jonnybradley | 2010-05-12 12:55:53 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] Rollback r26892 : Don't try to log database errors in the database that has the error.
+----------------------------------------------
+r27103 | jonnybradley | 2010-05-12 12:30:36 +0200 (Wed, 12 May 2010) | 1 line
+
+[MOD] Put ancient, ugly "bloginfo" default blog header code in a comment so it doesn't show on blogs, but is there as an example if needed.
+----------------------------------------------
+r27102 | marclaporte | 2010-05-12 12:30:25 +0200 (Wed, 12 May 2010) | 1 line
+
+[MOD] name & logo change
+----------------------------------------------
+r27101 | marclaporte | 2010-05-12 12:17:27 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] harmonizing fivealive options with the main one
+----------------------------------------------
+r27100 | marclaporte | 2010-05-12 11:58:40 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] make top big enough for new logo
+----------------------------------------------
+r27099 | marclaporte | 2010-05-12 11:37:35 +0200 (Wed, 12 May 2010) | 1 line
+
+[MOD] new name & logo in installer
+----------------------------------------------
+r27098 | marclaporte | 2010-05-12 11:36:10 +0200 (Wed, 12 May 2010) | 1 line
+
+[MOD] changing to new logo, better fix for more space in top section
+----------------------------------------------
+r27097 | marclaporte | 2010-05-12 10:59:40 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] quick hack so logo doesn't overlap with header. background image needs adjusting.
+----------------------------------------------
+r27096 | marclaporte | 2010-05-12 10:32:00 +0200 (Wed, 12 May 2010) | 1 line
+
+[MOD] change a few defaults a) minify css is reported to cause issues on some installs so better let people activate it.   b) New logo
+----------------------------------------------
+r27095 | luciash | 2010-05-12 03:53:09 +0200 (Wed, 12 May 2010) | 1 line
+
+[ENH] main application menu: give the menu modern and nicer look using the vert type CSS menus by default for fresh installs (feel free to rollback if you will find it problematic)
+----------------------------------------------
+r27094 | luciash | 2010-05-12 03:30:38 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] wiki list pages: better XHTML
+----------------------------------------------
+r27092 | luciash | 2010-05-12 02:25:54 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] Fivealive theme: change of "Tikiwiki" to "Tiki" in the theme specific tpl + official project name should not be translatable
+----------------------------------------------
+r27091 | luciash | 2010-05-12 01:28:05 +0200 (Wed, 12 May 2010) | 1 line
+
+[FIX] main application menu: reverting back unclear "Pages" menu item to "List Pages" (rb of 24435) + [NEW] menu item "Create a Wiki Page" linking to the second tab of the tiki-list_pages.php
+----------------------------------------------
+r27087 | jonnybradley | 2010-05-11 23:54:03 +0200 (Tue, 11 May 2010) | 1 line
+
+[FIX] Remove debug modifier
+----------------------------------------------
+r27085 | sylvieg | 2010-05-11 21:56:13 +0200 (Tue, 11 May 2010) | 1 line
+
+[FIX]search_wiki_page: does not need search feature
+----------------------------------------------
+r27084 | sylvieg | 2010-05-11 21:49:58 +0200 (Tue, 11 May 2010) | 1 line
+
+[FIX]tracker: fix computed on date (as all the fields are no more loaded)
+----------------------------------------------
+r27081 | jonnybradley | 2010-05-11 19:29:50 +0200 (Tue, 11 May 2010) | 1 line
+
+[FIX] Colorbox plugin - correctly escape links etc inside title attribute, and allow wiki parsing for the descriptions. (Had to move most of the logic from the smarty template back into the php to make sense of it). Also fixed missing caption on the first image.
+----------------------------------------------
+r27080 | ricks99 | 2010-05-11 19:25:25 +0200 (Tue, 11 May 2010) | 1 line
+
+[FIX]Reformatted author name & subject. Should be separate lines. (good catch xavi!)
+----------------------------------------------
+r27078 | jonnybradley | 2010-05-11 17:41:16 +0200 (Tue, 11 May 2010) | 1 line
+
+[FIX] Show odd/even row colours
+----------------------------------------------
+r27077 | jonnybradley | 2010-05-11 17:31:17 +0200 (Tue, 11 May 2010) | 1 line
+
+[FIX] Set $allfields var before it is used.
+----------------------------------------------
+r27075 | marclaporte | 2010-05-11 01:38:58 +0200 (Tue, 11 May 2010) | 1 line
+
+[DOC] fix some links to the doc site
+----------------------------------------------
+r27074 | marclaporte | 2010-05-11 01:08:39 +0200 (Tue, 11 May 2010) | 1 line
+
+[DOC] clearer admin panel for Kaltura
+----------------------------------------------
+r27072 | sampaioprimo | 2010-05-10 21:40:17 +0200 (Mon, 10 May 2010) | 2 lines
+
+Undoing change committed in r26283 (see http://dev.tikiwiki.org/Tiki5#Blocker_code_)
+
+----------------------------------------------
+r27071 | jonnybradley | 2010-05-10 20:10:58 +0200 (Mon, 10 May 2010) | 1 line
+
+[MOD] Fix jQuery external lib revision to r27069 (in case we forget later)
+----------------------------------------------
+r27070 | lphuberdeau | 2010-05-10 20:05:15 +0200 (Mon, 10 May 2010) | 1 line
+
+[MOD] Lesser magic for kaltura preferences. They will need to have a prefix at some point, but too late for 5.x
+----------------------------------------------
+r27067 | lphuberdeau | 2010-05-10 19:45:08 +0200 (Mon, 10 May 2010) | 1 line
+
+[ENH] Changing link on video name to the view page
+----------------------------------------------
+r27066 | lphuberdeau | 2010-05-10 19:37:32 +0200 (Mon, 10 May 2010) | 1 line
+
+[FIX] Oops.
+----------------------------------------------
+r27065 | lphuberdeau | 2010-05-10 19:30:09 +0200 (Mon, 10 May 2010) | 1 line
+
+[DOC] Documenting a Kaltura configuration
+----------------------------------------------
+r27064 | lphuberdeau | 2010-05-10 19:03:04 +0200 (Mon, 10 May 2010) | 1 line
+
+[LEGAL] We don't have copyright on those files, they are from Kaltura distribution
+----------------------------------------------
+r27063 | lphuberdeau | 2010-05-10 18:39:25 +0200 (Mon, 10 May 2010) | 1 line
+
+[ENH] Catching exceptions thrown by the kaltura library when network errors occur
+----------------------------------------------
+r27062 | lphuberdeau | 2010-05-10 18:38:34 +0200 (Mon, 10 May 2010) | 1 line
+
+[FIX] Removing debug information causing an invalid object to string conversion
+----------------------------------------------
+r27061 | lphuberdeau | 2010-05-10 18:37:47 +0200 (Mon, 10 May 2010) | 1 line
+
+[FIX] Improper formatting of the stream context parameters causing headers not to be sent
+----------------------------------------------
+r27059 | lphuberdeau | 2010-05-10 18:04:58 +0200 (Mon, 10 May 2010) | 1 line
+
+[FIX] Error, no longer used
+----------------------------------------------
+r27058 | jonnybradley | 2010-05-10 17:51:11 +0200 (Mon, 10 May 2010) | 2 lines
+
+[FIX] Prevent "are you sure?" dialog when saving survey (also add a create survey button and get the right tab to show more often)
+[wish3172] Thanks Chealer
+----------------------------------------------
+r27057 | Jyhem | 2010-05-10 17:03:05 +0200 (Mon, 10 May 2010) | 1 line
+
+[FIX] Add missing keywords
+----------------------------------------------
+r27055 | jonnybradley | 2010-05-10 16:28:43 +0200 (Mon, 10 May 2010) | 1 line
+
+[FIX] Make basic Colorbox viewer work in side columns (but without all the extra shadowbox compatility parsing)
+----------------------------------------------
+r27054 | jonnybradley | 2010-05-10 15:38:46 +0200 (Mon, 10 May 2010) | 1 line
+
+[MOD] headtitle for sheets page
+----------------------------------------------
+r27053 | jonnybradley | 2010-05-10 15:38:04 +0200 (Mon, 10 May 2010) | 1 line
+
+[FIX] Calculate headtitle var if not set. Many pages had erroneous or no browser title, often picking up a tracker or aticle name used in a module or plugin. So for 'admin', 'list' and 'view' pages, this uses the file name to create a suitable title.
+----------------------------------------------
+r27051 | marclaporte | 2010-05-10 15:11:56 +0200 (Mon, 10 May 2010) | 1 line
+
+[ENH] New logos for fivealive.css Special Thanks to Simon Lussier and Sebastien Lord-Jette
+----------------------------------------------
+r27050 | jonnybradley | 2010-05-10 14:21:23 +0200 (Mon, 10 May 2010) | 1 line
+
+[MOD] A couple of better default prefs for filegals - show title if there is one, and show id in info popup (useful for plugin data)
+----------------------------------------------
+r27049 | jonnybradley | 2010-05-10 14:10:54 +0200 (Mon, 10 May 2010) | 1 line
+
+[FIX] A couple of fixes for COLORBOX plugin: Use cluetip for tooltips to avoid <br /> tags. Initialise $iColorbox var properly and (incidental) fix for convertOverlib with no params.
+----------------------------------------------
+r27048 | jonnybradley | 2010-05-10 12:53:14 +0200 (Mon, 10 May 2010) | 1 line
+
+[FIX] Fix popup plugin edit form when not in edit page mode (sorry for breaking it)
+----------------------------------------------
+r27031 | lphuberdeau | 2010-05-09 23:17:19 +0200 (Sun, 09 May 2010) | 1 line
+
+[FIX] Missing parameter
+----------------------------------------------
+r27028 | jonnybradley | 2010-05-09 17:54:00 +0200 (Sun, 09 May 2010) | 1 line
+
+[MOD] Use smarty {icon} function for external_link icons so they can be overridden in themes, including an example icon for strasa.
+----------------------------------------------
+r27027 | jonnybradley | 2010-05-09 17:48:44 +0200 (Sun, 09 May 2010) | 1 line
+
+[MOD] Add file extension parameter for {icon} (default png as before)
+----------------------------------------------
+r27026 | sept_7 | 2010-05-09 15:25:04 +0200 (Sun, 09 May 2010) | 2 lines
+
+[EHN/bp27025] WebDAV : change login/pass popup screen from "Ez components" to "Tiki WebDAV access"
+
+----------------------------------------------
+r27022 | marclaporte | 2010-05-08 23:11:06 +0200 (Sat, 08 May 2010) | 1 line
+
+[FIX] update project name
+----------------------------------------------
+r27002 | sept_7 | 2010-05-08 20:09:24 +0200 (Sat, 08 May 2010) | 2 lines
+
+[EHN/bp27001] add some hint on how to acces the Tiki WebDAV
+
+----------------------------------------------
+r26999 | Jyhem | 2010-05-08 19:55:29 +0200 (Sat, 08 May 2010) | 1 line
+
+[FIX] New module format
+----------------------------------------------
+r26994 | sept_7 | 2010-05-08 16:34:34 +0200 (Sat, 08 May 2010) | 2 lines
+
+[ENH/bp 26993] Code clean up pointed by quality.tikiwiki.org
+
+----------------------------------------------
+r26992 | luciash | 2010-05-08 15:35:36 +0200 (Sat, 08 May 2010) | 1 line
+
+TikiWiki ?\226?\134?\146 Tiki
+----------------------------------------------
+r26990 | chibaguy | 2010-05-08 11:46:14 +0200 (Sat, 08 May 2010) | 2 lines
+
+[ENH] Highlight effect is just visual distinction, so no need for block element (i.e., to have 100% width).
+
+----------------------------------------------
+r26986 | lindonb | 2010-05-08 06:10:18 +0200 (Sat, 08 May 2010) | 1 line
+
+[FIX] Updated ShareThis options
+----------------------------------------------
+r26984 | lindonb | 2010-05-08 02:21:22 +0200 (Sat, 08 May 2010) | 1 line
+
+[FIX] Delete line keeping tablesort from being able to sort back and forth
+----------------------------------------------
+r26982 | jonnybradley | 2010-05-08 00:23:58 +0200 (Sat, 08 May 2010) | 1 line
+
+[FIX] More selection fixes (in popupPluginForm)
+----------------------------------------------
+r26981 | jonnybradley | 2010-05-08 00:22:45 +0200 (Sat, 08 May 2010) | 1 line
+
+[FIX] Toolbar dialog tools require jquery-ui
+----------------------------------------------
+r26980 | jonnybradley | 2010-05-08 00:21:15 +0200 (Sat, 08 May 2010) | 1 line
+
+[FIX] Textarea selection fixes (mainly for Firefox)
+----------------------------------------------
+r26979 | jonnybradley | 2010-05-08 00:13:57 +0200 (Sat, 08 May 2010) | 1 line
+
+[FIX] Minor typo (self closing tag)
+----------------------------------------------
+r26976 | Jyhem | 2010-05-07 21:08:35 +0200 (Fri, 07 May 2010) | 1 line
+
+[NEW] A module for displaying podcasts
+----------------------------------------------
+r26975 | jonnybradley | 2010-05-07 20:48:12 +0200 (Fri, 07 May 2010) | 2 lines
+
+[FIX] Parse pretty tracker variables in plugin parameters (makes trackerlist plugin etc work as expected in pretty trackers).
+[bp/r26590, r26881 & r26974]
+----------------------------------------------
+r26973 | sylvieg | 2010-05-07 18:51:45 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX]flash banner: fix also non js version
+----------------------------------------------
+r26972 | sylvieg | 2010-05-07 18:35:11 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX]flash: the links in the flash are no clickable when the movie url is not local to the server
+----------------------------------------------
+r26971 | sylvieg | 2010-05-07 18:24:16 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX]flash banner: broken since 26557: the js was no more put in the db. the js must be recalculated each time and add to th header + show in edit banner the banner not the zone
+----------------------------------------------
+r26969 | jonnybradley | 2010-05-07 17:46:58 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX] Switch theme (logic typos). Also fixed setting theme option to "None"
+----------------------------------------------
+r26966 | jonnybradley | 2010-05-07 15:40:50 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX] Nested smarty comment
+----------------------------------------------
+r26964 | luciash | 2010-05-07 14:48:46 +0200 (Fri, 07 May 2010) | 1 line
+
+czech language: various translation fixes
+----------------------------------------------
+r26960 | chibaguy | 2010-05-07 13:36:39 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX] tiki-top_bar includes needed for other site logo align options.
+----------------------------------------------
+r26959 | chibaguy | 2010-05-07 12:51:11 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX] Keep in sync with default file (which was changed at r26589). (Strasa file is exactly like default except for having tiki-top_bar.tpl include.)
+----------------------------------------------
+r26958 | luciash | 2010-05-07 12:38:35 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX] Tiki Importer: moved ini_get() check from tpl to PHP file
+----------------------------------------------
+r26956 | marclaporte | 2010-05-07 09:04:15 +0200 (Fri, 07 May 2010) | 1 line
+
+[MOD] more prefs related to modules
+----------------------------------------------
+r26953 | lindonb | 2010-05-07 04:13:06 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX] Undo typo fix from r26914 - turned events on calendar days to code garbage
+----------------------------------------------
+r26952 | marclaporte | 2010-05-07 03:36:41 +0200 (Fri, 07 May 2010) | 1 line
+
+[KIL] Dead code 
+----------------------------------------------
+r26951 | marclaporte | 2010-05-07 03:09:05 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX] Adding standard help & admin links to Kaltura
+----------------------------------------------
+r26950 | luciash | 2010-05-07 02:54:22 +0200 (Fri, 07 May 2010) | 1 line
+
+[ENH] czech language: installer completely translated to Czech
+----------------------------------------------
+r26949 | marclaporte | 2010-05-07 02:43:53 +0200 (Fri, 07 May 2010) | 1 line
+
+[MOD] increase Kaltura admin panel fields to correspond to size of typical entry
+----------------------------------------------
+r26947 | jonnybradley | 2010-05-07 00:43:18 +0200 (Fri, 07 May 2010) | 1 line
+
+[FIX] Numerous small XHTML fixes: modules, user menu and textarea
+----------------------------------------------
+r26946 | sylvieg | 2010-05-06 23:44:48 +0200 (Thu, 06 May 2010) | 1 line
+
+[FIX]logs: missing pagination
+----------------------------------------------
+r26944 | sylvieg | 2010-05-06 23:24:15 +0200 (Thu, 06 May 2010) | 1 line
+
+[FIX]debug: smarty can not compile the define and so the javascripts are not loaded (perhaps touch only php5.3) - does not bug anymore but still showing nothing
+----------------------------------------------
+r26943 | marclaporte | 2010-05-06 23:06:53 +0200 (Thu, 06 May 2010) | 1 line
+
+[MOD] 1- Attempting to reduce the confusion between the two search engines. 2- Turning off search by default 3- Promoting MYSQL-search as the best search.  Still todo: A- have highlighted search logo on tiki-admin.php?page=search to use feature_search_fulltext B- How to have feature_sitesearch have a dependency of feature_search_fulltext OR feature_search (missing commit)
+----------------------------------------------
+r26942 | marclaporte | 2010-05-06 23:06:25 +0200 (Thu, 06 May 2010) | 1 line
+
+[MOD] 1- Attempting to reduce the confusion between the two search engines. 2- Turning off search by default 3- Promoting MYSQL-search as the best search.  Still todo: A- have highlighted search logo on tiki-admin.php?page=search to use feature_search_fulltext B- How to have feature_sitesearch have a dependency of feature_search_fulltext OR feature_search
+----------------------------------------------
+r26938 | Jyhem | 2010-05-06 18:27:19 +0200 (Thu, 06 May 2010) | 1 line
+
+[NEW] This module displays the last videos of any given Youtube playlist
+----------------------------------------------
+r26937 | jonnybradley | 2010-05-06 16:52:38 +0200 (Thu, 06 May 2010) | 2 lines
+
+[FIX] Filters for code prefs (so they can be used in perspectives)
+
+----------------------------------------------
+r26936 | sylvieg | 2010-05-06 16:37:16 +0200 (Thu, 06 May 2010) | 1 line
+
+[FIX]log: the pref value can be an array
+----------------------------------------------
+r26934 | sylvieg | 2010-05-06 15:58:06 +0200 (Thu, 06 May 2010) | 1 line
+
+[FIX]trackerfilter: when using compute, compute only on the filtered items not all the items
+----------------------------------------------
+r26933 | lphuberdeau | 2010-05-06 15:35:40 +0200 (Thu, 06 May 2010) | 1 line
+
+[FIX] Perspective filter broken by change in the expected input format
+----------------------------------------------
+r26932 | lphuberdeau | 2010-05-06 15:28:10 +0200 (Thu, 06 May 2010) | 1 line
+
+[FIX] When a profile attempts to set an undeclared preference, a fatal error occured instead of just setting the value as plain text (past behavior lost with added intelligence in pref management)
+----------------------------------------------
+r26931 | luciash | 2010-05-06 05:38:26 +0200 (Thu, 06 May 2010) | 1 line
+
+czech language: more translations for the installer
+----------------------------------------------
+r26928 | sylvieg | 2010-05-06 00:29:55 +0200 (Thu, 06 May 2010) | 1 line
+
+[FIX]tracker: regexp syntax
+----------------------------------------------
+r26926 | sylvieg | 2010-05-05 23:28:00 +0200 (Wed, 05 May 2010) | 1 line
+
+[ENH]install: give the possibility to force a patch validation that gives errors
+----------------------------------------------
+r26925 | nyloth | 2010-05-05 23:06:43 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] email validation : emails with 'localhost' domains also have to be valid, especially since the admin email is mandatory in the installation process...
+----------------------------------------------
+r26924 | nyloth | 2010-05-05 23:03:21 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] installer : in_installer variable may not be initialized...
+----------------------------------------------
+r26923 | pkdille | 2010-05-05 22:38:09 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] list_file_gallery: remove duplicated argument in find.tpl (comes from r25120)
+----------------------------------------------
+r26922 | nyloth | 2010-05-05 22:29:38 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] installer : fix code that is obviously incompatible with last versions of PHP 5.3 ;-P
+----------------------------------------------
+r26921 | pkdille | 2010-05-05 21:12:17 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] html tag
+----------------------------------------------
+r26920 | lphuberdeau | 2010-05-05 21:02:14 +0200 (Wed, 05 May 2010) | 1 line
+
+[ENH] Moving the header of the login page to the header area
+----------------------------------------------
+r26919 | jonnybradley | 2010-05-05 20:38:57 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Some more JS Lint warning fixes (various)
+----------------------------------------------
+r26918 | jonnybradley | 2010-05-05 20:24:46 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Some more JS Lint warning fixes (mostly jquery.sheet related)
+----------------------------------------------
+r26916 | jonnybradley | 2010-05-05 19:59:55 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Some JS Lint warning fixes (auto_save related)
+----------------------------------------------
+r26915 | marclaporte | 2010-05-05 19:50:15 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] prefs can't repeat on same page. Tks LPH
+----------------------------------------------
+r26914 | jonnybradley | 2010-05-05 19:43:24 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] More small typos - mainly missing closing tags
+----------------------------------------------
+r26912 | lphuberdeau | 2010-05-05 19:27:08 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Second attempt, avoiding method call on non-object for when the method exists but returns null
+----------------------------------------------
+r26911 | jonnybradley | 2010-05-05 19:19:49 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Installer reset connection: Missing tiki_cookie_jar JS
+----------------------------------------------
+r26910 | lphuberdeau | 2010-05-05 19:03:41 +0200 (Wed, 05 May 2010) | 1 line
+
+[ENH] Minor refactoring to help reuse
+----------------------------------------------
+r26909 | jonnybradley | 2010-05-05 18:57:19 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Textarea in IE: fix setSelection offset due to line-end differences
+----------------------------------------------
+r26908 | marclaporte | 2010-05-05 18:37:11 +0200 (Wed, 05 May 2010) | 1 line
+
+[MOD] shorten a bit
+----------------------------------------------
+r26907 | jonnybradley | 2010-05-05 18:01:30 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] FCKEditor - tikilink: Some fixes for Safari/Chrome - Firefox still more or less unusable sadly.
+----------------------------------------------
+r26906 | lphuberdeau | 2010-05-05 17:59:07 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] The PDO compatibility layer just never worked. AdoDB and PDO do not have compatible APIs
+----------------------------------------------
+r26905 | jonnybradley | 2010-05-05 17:07:25 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Toolbar dialog tools: Store the selection in attributes for Firefox
+----------------------------------------------
+r26904 | chibaguy | 2010-05-05 14:05:59 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] CSS menu selected link color, etc.
+----------------------------------------------
+r26903 | jonnybradley | 2010-05-05 12:48:38 +0200 (Wed, 05 May 2010) | 2 lines
+
+[bp/r26717][FIX] JS function getSelection name change; avoids conflict with other systems (e.g. FCKEditor).
+Thanks rlpowell
+----------------------------------------------
+r26902 | jonnybradley | 2010-05-05 12:17:00 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] FCK TikiLink plugin: Stop selecting a page from the list from clearing link label field if set, plus some other small fixes.
+----------------------------------------------
+r26901 | jonnybradley | 2010-05-05 12:10:32 +0200 (Wed, 05 May 2010) | 1 line
+
+[KIL] Mystifying extra JS files in fck tiki plugin dirs. Identical copies of the previously FCK defined function SetAttribute, which is then not used in the plugins.
+----------------------------------------------
+r26900 | jonnybradley | 2010-05-05 12:05:13 +0200 (Wed, 05 May 2010) | 1 line
+
+[MOD] Button label: "What is A-J-A-X Preview?" i was asked yesterday. Any improvement on "Live Preview"?
+----------------------------------------------
+r26899 | chibaguy | 2010-05-05 08:01:51 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Keep span.expander (with its -19px margin-left) inside the table and the center column. 
+----------------------------------------------
+r26898 | chibaguy | 2010-05-05 07:26:10 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Update for site login popup (tab was overlapping topbar).
+----------------------------------------------
+r26897 | chibaguy | 2010-05-05 07:12:05 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Style for active tab.
+----------------------------------------------
+r26896 | chibaguy | 2010-05-05 06:53:03 +0200 (Wed, 05 May 2010) | 1 line
+
+[KIL] Committed by mistake.
+----------------------------------------------
+r26895 | chibaguy | 2010-05-05 06:50:32 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Updated, especially for secondary site menu, tabs, and site login popup.
+----------------------------------------------
+r26894 | lindonb | 2010-05-05 04:54:54 +0200 (Wed, 05 May 2010) | 1 line
+
+[FIX] Avoid missing bottom border by removing border in calendar.css rather than in individual style css settings. Also fix font color in ohia.
+----------------------------------------------
+r26893 | luciash | 2010-05-05 00:39:36 +0200 (Wed, 05 May 2010) | 1 line
+
+czech language: some translations for the installer
+----------------------------------------------
+r26892 | sylvieg | 2010-05-05 00:08:51 +0200 (Wed, 05 May 2010) | 1 line
+
+[ENH]log: log the database error
+----------------------------------------------
+r26891 | chealer | 2010-05-04 21:56:28 +0200 (Tue, 04 May 2010) | 2 lines
+
+[FIX] involuntarily commited local change. this seems to break the installer in some way (r26837 regression)
+sorry and thanks to Marc Laporte
+----------------------------------------------
+r26890 | jonnybradley | 2010-05-04 19:26:13 +0200 (Tue, 04 May 2010) | 1 line
+
+[MOD] jquery.sheet: add 1.1.0 menu items (undo/redo - not yet functioning?)
+----------------------------------------------
+r26887 | jonnybradley | 2010-05-04 18:51:45 +0200 (Tue, 04 May 2010) | 1 line
+
+ [bp/r26883][FIX] Typo (userslib.php not userlib.php)
+----------------------------------------------
+r26886 | jonnybradley | 2010-05-04 18:49:51 +0200 (Tue, 04 May 2010) | 1 line
+
+[FIX] Set html background colours for strasa options
+----------------------------------------------
 r26728 | nkoth | 2010-04-21 20:20:51 +0200 (Wed, 21 Apr 2010) | 2 lines
 
 [FIX] Use default zoom level if not set for particular item (so that at least it shows)
