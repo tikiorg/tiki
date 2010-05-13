@@ -9,14 +9,6 @@ error_reporting( CUSTOM_ERROR_LEVEL );
 
 ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . "." . PATH_SEPARATOR . "../core/lib" . PATH_SEPARATOR . "../.." . PATH_SEPARATOR . "core");
 
-function tr( $string ) {
-	return $string;
-}
-
-function tra( $string ) {
-	return $string;
-}
-
 function __autoload( $name ) {
 	$path = str_replace( '_', '/', $name );
 	require_once( $path . '.php' );
@@ -41,6 +33,9 @@ require_once 'setup_smarty.php';
 require_once 'lib/cache/cachelib.php';
 require_once 'lib/tikilib.php';
 require_once 'lib/userslib.php';
+require_once 'lib/headerlib.php';
+require_once 'lib/init/tra.php';
+
 $tikilib = new TikiLib;
 $userlib = new UsersLib;
 $_SESSION = array(
