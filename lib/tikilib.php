@@ -5600,6 +5600,7 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array() ) {
+		global $prefs;
 		$outputFormat = 'wiki';
 		if( isset($parseOptions['context_format']) ) {
 			$outputFormat = $parseOptions['context_format'];
