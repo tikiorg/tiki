@@ -18,6 +18,7 @@
 		{preference name=wysiwyg_wiki_semi_parsed}
 		{preference name=wysiwyg_htmltowiki}
 		{preference name=wysiwyg_toolbar_skin}
+		{preference name="wysiwyg_fonts"}
 		
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">

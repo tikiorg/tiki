@@ -55,5 +55,10 @@ function prefs_wysiwyg_list() {
 				'feature_ajax',
 			),
 		),
+		'wysiwyg_fonts' => array(
+			'name' => tra('Font names'),
+			'description' => tra('List of font names separated by;'),
+			'type' => 'text',
+		),
 	);
 }

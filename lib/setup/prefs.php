@@ -483,6 +483,7 @@ function get_default_prefs() {
 		'wysiwyg_toolbar_skin' => 'default',
 		'wysiwyg_ckeditor' => 'n',
 		'wysiwyg_htmltowiki' => 'n',
+		'wysiwyg_fonts' => 'sans serif;serif;monospace;Arial;Century Gothic;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana',
 
 		// wiki3d
 		'wiki_feature_3d' => 'n',

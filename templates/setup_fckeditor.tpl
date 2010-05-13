@@ -7,7 +7,7 @@ var _QuickUploadLanguage      = 'php' ;
 var _FileBrowserExtension     = 'php' ;
 
 FCKConfig.BodyClass = 'wikitext';
-FCKConfig.FontNames = 'sans serif;serif;monospace;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
+FCKConfig.FontNames = $prefs.wysiwyg_fonts;
 
 FCKConfig.ToolbarSets["Tiki"] = [ 
 {if $prefs.feature_ajax == 'y' and $prefs.feature_ajax_autosave eq 'y'}
