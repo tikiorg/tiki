@@ -15,7 +15,7 @@
 			</tr>
 			<tr>
 				<td><strong>{tr}Media Id{/tr}</strong>:</td>
-				<td>{$item->id}</td>
+				<td><pre style="margin:0">{$item->id}</pre></td>
 			</tr>
 			<tr>
 				<td><strong>{tr}Duration{/tr}</strong>:</td>
