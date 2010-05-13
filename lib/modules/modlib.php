@@ -255,7 +255,6 @@ class ModLib extends TikiLib
 		global $prefs;
 
 		TikiLib::parse_str( $module['params'], $module_params );
-
 		$default_params = array(
 			'decorations' => 'y',
 			'overflow' => 'n',
@@ -264,6 +263,10 @@ class ModLib extends TikiLib
 			'error' => '',
 			'flip' => ( $prefs['user_flip_modules'] == 'module' ) ? 'n' : $prefs['user_flip_modules'],
 		);
+
+		if (!is_array($module_params)) {
+			$module_params = array();
+		}
 
 		$module_params = array_merge( $default_params, $module_params );
 

@@ -383,7 +383,7 @@ class absOOo extends ErrorManager {
 		$currentNode   = & $this->xml->documentElement;
 		
 		for($i=1; $i < count($arrPath); $i++){
-			$nodeListTemp =& new DOMIT_NodeList();
+			$nodeListTemp = new DOMIT_NodeList();
 			$currentNode->getNamedElements($nodeListTemp, $arrPath[$i]);
 			
 			if ($nodeListTemp->getLength() == 0) {
@@ -565,7 +565,7 @@ class absOOo extends ErrorManager {
 		
 		for($i=1; $i < count($arrPath); $i++){
 			
-			$nodeListTemp =& new DOMIT_NodeList();
+			$nodeListTemp = new DOMIT_NodeList();
 			$currentNode->getNamedElements($nodeListTemp, $arrPath[$i]);
 			
 			if ($nodeListTemp->getLength() == 0) {

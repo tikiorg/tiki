@@ -245,7 +245,7 @@ class XmlLib extends TikiLib
 			return false;
 		}
 
-		$parser = &new page_Parser();
+		$parser = new page_Parser();
 		$parser->setInput($this->xml);
 		$ok = $parser->parse();
 		if (PEAR::isError($ok)) {

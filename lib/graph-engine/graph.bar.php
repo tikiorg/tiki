@@ -136,10 +136,10 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 			switch( $this->independant->orientation )
 			{
 			case 'vertical':
-				$ren = &new Fake_GRenderer( $renderer, 0, $range[0], 1, $range[1] );
+				$ren = new Fake_GRenderer( $renderer, 0, $range[0], 1, $range[1] );
 				break;
 			case 'horizontal':
-				$ren = &new Fake_GRenderer( $renderer, $range[0], 0, $range[1], 1 );
+				$ren = new Fake_GRenderer( $renderer, $range[0], 0, $range[1], 1 );
 				break;
 			}
 			$positions = $this->_drawColumn( $ren, $values, $zero );

@@ -11,7 +11,7 @@ $access->check_permission( array('tiki_p_list_videos') );
 
 include_once ('lib/videogals/KalturaClient_v3.php');
 
-global $user;
+//global $user;
 
 $mediaTypeAsString['2'] = 'Image';
 $mediaTypeAsString['1'] = 'Video';
@@ -22,6 +22,7 @@ $admin_secret = $prefs['adminSecret'];
 $partner_id = $prefs['partnerId'];
 $SESSION_ADMIN = 2;
 $SESSION_USER = 0;
+$kuser = $url_host;
 
 if (empty($partner_id) || !is_numeric($partner_id) || empty($secret) || empty($admin_secret)) {
 	$smarty->assign('msg', tra('You need to set your Kaltura account details: ') . '<a href="tiki-admin.php?page=kaltura">' . tra('here') . '</a>');
@@ -32,7 +33,7 @@ if (empty($partner_id) || !is_numeric($partner_id) || empty($secret) || empty($a
 try {
 	$kconf = new KalturaConfiguration($partner_id);
 	$kclient = new KalturaClient($kconf);
-	$ksession = $kclient->session->start($secret, $user, $SESSION_USER, $partner_id);
+	$ksession = $kclient->session->start($secret, $kuser, $SESSION_USER, $partner_id);
 	// Initialize kaltura session
 } catch (Exception $e) {
 	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br />' . $e->getMessage());
@@ -150,7 +151,7 @@ if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
 	$kpager->pageSize = $page_size;
 
 	$kfilter = new KalturaMixEntryFilter();
-	$kfilter->userIdEqual = $user;
+	$kfilter->userIdEqual = $kuser;
 	$kfilter->orderBy = $sort_mode;
 	$kfilter->nameMultiLikeOr = $find;
 
@@ -200,7 +201,7 @@ if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
 if ($_REQUEST['list'] == 'media') {
 
 	$kfilter = new KalturaMediaEntryFilter();
-	$kfilter->userIdEqual = $user;
+	$kfilter->userIdEqual = $kuser;
 	$kfilter->orderBy = $sort_mode;
 	$kfilter->nameMultiLikeOr = $find;
 
@@ -213,7 +214,6 @@ if ($_REQUEST['list'] == 'media') {
 		$kmedialist = $kclient->media->listAction($kfilter, $kpager);
 
 		for ($i =0 ; $i < $kmedialist->totalCount; $i++) {
-			$kmedialist->objects[$i]->createdAt = date('d M Y h:i A', $kmedialist->objects[$i]->createdAt);
 			$kmedialist->objects[$i]->mediaType = $mediaTypeAsString[$kmedialist->objects[$i]->mediaType];
 		}
 	} else {

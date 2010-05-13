@@ -1234,8 +1234,8 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	{
 		global $tikilib, $user, $prefs;
 		// Load the current database state {{{3
-		$current = &new TikiSheet;
-		$handler = &new TikiSheetDatabaseHandler( $this->sheetId );
+		$current = new TikiSheet;
+		$handler = new TikiSheetDatabaseHandler( $this->sheetId );
 		$current->import( $handler );
 
 		// Find differences {{{3
@@ -1367,7 +1367,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 	// _load {{{2
 	function _load( &$sheet )
 	{
-		$document = &new Spreadsheet_Excel_Reader();
+		$document = new Spreadsheet_Excel_Reader();
 
 		if( !$document->read( $this->file ) )
 			return false;
@@ -1405,7 +1405,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
-		$book = &new Spreadsheet_Excel_Writer;
+		$book = new Spreadsheet_Excel_Writer;
 
         header("Content-type: application/vnd.ms-excel");
         header("Content-Disposition: attachment; filename=export.xls");

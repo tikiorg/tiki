@@ -15,12 +15,13 @@ $admin_secret = $prefs['adminSecret'];
 $partner_id = $prefs['partnerId'];
 $SESSION_ADMIN = 2;
 $SESSION_USER = 0;
+$kuser = $url_host;
 
 try {
 
 $kconf = new KalturaConfiguration($partner_id);
 $kclient = new KalturaClient($kconf);
-$ksession = $kclient->session->start($secret,$user,$SESSION_USER,$partner_id,null,"edit:*");
+$ksession = $kclient->session->start($secret,$kuser,$SESSION_USER,$partner_id,null,"edit:*");
 
 } catch (Exception $e) {
 	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br /><em>' . $e->getMessage() . '</em>');
@@ -62,7 +63,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 	
 	case 'remix':
 		$access->check_permission(array('tiki_p_remix_videos'));
-		$seflashVars = 'uid=' .$user.
+		$seflashVars = 'uid=' .$kuser.
 			'&ks=' .$ksession. 
 			'&partner_id=' . $partner_id .
 			'&subp_id=' . $partner_id .'00'.

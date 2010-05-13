@@ -1,36 +1,39 @@
-	{capture name=add_info}{strip}
-	<div class='opaque'>
-			<div class='box-title'><b>{tr}Additional Info{/tr}</b></div>
-      			<div class='box-data'>
-
-          			{if $item->description eq ''}
-           				 {assign var=propval value="No Description"}
-          			{else}
-           				 {assign var=propval value=$item->description}
-          			{/if}
-           				 <b>Description</b>: {$propval}<br />
-            
-          			{if $item->duration eq ''}
-          				 {assign var=propval value=0}
-         			{else}
-           				 {assign var=propval value=$item->duration}
-          			{/if}
-            			 <b>Duration</b>: {$propval}s<br />
-            
-          			{if $item->views eq ''}
-            			 {assign var=propval value=0}
-          			{else}
-            			 {assign var=propval value=$item->views}
-          			{/if}
-            			 <b>Views</b>: {$propval}<br />
-            
-          			{if $item->plays eq ''}
-            			 {assign var=propval value=0}
-          			{else}
-            			 {assign var=propval value=$item->plays}
-          			{/if}
-            			 <b>Plays</b>: {$propval}<br />
-
-				</div>
+{capture name=add_info}{strip}
+<div class='opaque'>
+	<div class='box-title'><strong>{tr}Additional Info{/tr}</strong></div>
+	<div class='box-data'>
+		<table>
+			{if !empty($item->description)}
+				<tr>
+					<td><strong>{tr}Description{/tr}</strong>:</td>
+					<td>{$item->description}</td>
+				</tr>
+			{/if}
+			<tr>
+				<td><strong>{tr}Created by{/tr}</strong>:</td>
+				<td>{$item->userId}</td>
+			</tr>
+			<tr>
+				<td><strong>{tr}Media Id{/tr}</strong>:</td>
+				<td><pre style="margin:0">{$item->id}</pre></td>
+			</tr>
+			<tr>
+				<td><strong>{tr}Duration{/tr}</strong>:</td>
+				<td>{$item->duration}s</td>
+			</tr>
+			<tr>
+				<td><strong>{tr}Version{/tr}</strong>:</td>
+				<td>{$item->version}</td>
+			</tr>
+			<tr>
+				<td><strong>{tr}Views{/tr}</strong>:</td>
+				<td>{$item->views}</td>
+			</tr>
+			<tr>
+				<td><strong>{tr}Plays{/tr}</strong>:</td>
+				<td>{$item->plays}</td>
+			</tr>
+		</table>
 	</div>
-	{/strip}{/capture}
+</div>
+{/strip}{/capture}

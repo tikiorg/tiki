@@ -40,6 +40,7 @@ try {
 	require_once 'setup_smarty.php';
 
 	$smarty->assign( 'msg', $e->getMessage() );
+	$smarty->assign( 'where', 'connection');
 	echo $smarty->fetch( 'database-connection-error.tpl' );
 	exit;
 }
