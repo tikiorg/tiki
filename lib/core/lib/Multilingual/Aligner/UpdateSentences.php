@@ -132,9 +132,9 @@ class Multilingual_Aligner_UpdateSentences1
 	public function text_diff($unchangedSentence_array,$changedSentence_array)
 	{
 	$changed_diff_unchanged=array();
-	$diff = &new Text_Diff($unchangedSentence_array,$changedSentence_array);
+	$diff = new Text_Diff($unchangedSentence_array,$changedSentence_array);
 	$context=count($unchangedSentence_array);
-	$renderer = &new Text_Diff_Renderer_unified($context);
+	$renderer = new Text_Diff_Renderer_unified($context);
 	$arr=$renderer->render($diff);
 	$kk=0;
 	$body=0;
