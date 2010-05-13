@@ -108,7 +108,7 @@ function module_articles( $mod_reference, $module_params ) {
 	$smarty->assign('min_rating', $min_rating);
 	$smarty->assign('max_rating', $max_rating);
 	
-	$ranking = $artlib->list_articles($start, $mod_reference['rows'], $sort, '', '', '', $user, $type, $topicId, 'y', $topic, $categId, '', '', $langfilter, $min_rating, $max_rating);
+	$ranking = $artlib->list_articles($start, $mod_reference['rows'], $sort, '', '', '', $user, $type, $topicId, 'y', $topic, $categId, '', $langfilter, $min_rating, $max_rating);
 	
 	$smarty->assign_by_ref('urlParams', $urlParams);
 	$smarty->assign('modArticles', $ranking["data"]);

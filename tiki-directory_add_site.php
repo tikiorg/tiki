@@ -145,7 +145,7 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 $smarty->assign_by_ref('items', $items["data"]);
-$categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name asc', $find, $_REQUEST["siteId"]);
+$categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name_asc', $find, $_REQUEST["siteId"]);
 if (isset($_REQUEST["save"]) && $msg != "" && isset($_REQUEST["siteCats"])) { // an error occured, the chosen categs have to be set again
 	$temp_max = count($categs);
 	foreach($_REQUEST["siteCats"] as $acat) {

@@ -305,23 +305,42 @@ class AdminLib extends TikiLib
 		return $ret;
 	}
 
-	// This function can be used to store the set of actual pages in the "tags"
-	// table preserving the state of the wiki under a tag name.
-	function create_tag($tagname, $comment = '') {
+	/**
+	 * This function can be used to store the set of actual pages in the "tags"
+	 * table preserving the state of the wiki under a tag name.
+	 *
+	 * @param string $tagname 
+	 * @access public
+	 * @return boolean : true
+	 */
+	function create_tag($tagname)
+	{
 		global $prefs;
 
 		$query = "select * from `tiki_pages`";
 		$result = $this->query($query,array());
 
 		while ($res = $result->fetchRow()) {
-			$data = $res["data"];
-			$pageName = $res["pageName"];
-			$description = $res["description"];
-			$query = "delete from `tiki_tags`where `tagName`=? and `pageName`=?";
-			$this->query($query,array($tagname,$pageName),-1,-1,false);
-			$query = "insert into `tiki_tags`(`tagName`,`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`flag`,`description`)
-                		values(?,?,?,?,?,?,?,?,?,?,?)";
-			$result2 = $this->query($query,array($tagname,$pageName,$res["hits"],$data,$res["lastModif"],$res["comment"],$res["version"],$res["user"],$res["ip"],$res["flag"],$description));
+			$data = $res['data'];
+			$pageName = $res['pageName'];
+			$description = $res['description'];
+			$query = 'delete from `tiki_tags`where `tagName`=? and `pageName`=?';
+			$this->query($query, array($tagname, $pageName), -1, -1, false);
+			$query = 'insert into `tiki_tags`(`tagName`, `pageName`, `hits`, `data`, `lastModif`, `comment`, `version`, `user`, `ip`, `flag`, `description`)'
+                . ' values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+			$result2 = $this->query($query, array($tagname
+																					, $pageName
+																					, $res['hits']
+																					, $data
+																					, $res['lastModif']
+																					, $res['comment']
+																					, $res['version']
+																					, $res['user']
+																					, $res['ip']
+																					, $res['flag']
+																					, $description)
+																				);
 		}
 
 		global $logslib; include_once('lib/logs/logslib.php');
