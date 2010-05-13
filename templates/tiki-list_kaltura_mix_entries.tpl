@@ -7,7 +7,6 @@
 			<th width="100"><a href="tiki-list_kaltura_entries.php?list={$entryType}offset={$offset}&amp;sort_mode={if $sort_mode eq '-created_at'}asc_created_at{else}desc_created_at{/if}">{tr}Created{/tr}</a></th>
 			<th><a>{tr}Tags{/tr}</a></th>
 			<th width="100"><a href="tiki-list_kaltura_entries.php?list={$entryType}offset={$offset}&amp;sort_mode={if $sort_mode eq '-modified_at'}asc_modified{else}desc_modified_at{/if}">{tr}Modified{/tr}</a></th>
-			<th width="100"><a>{tr}Version{/tr}</a></th>
 			<th width="20"><a href='#'{popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.other_sorts|escape:"javascript"|escape:"html"} title='{tr}Other Sorts{/tr}'>{icon _id='timeline_marker' alt='{tr}Other Sorts{/tr}' title=''}</a></th>
 		</tr>
 		
@@ -21,13 +20,12 @@
 			<td><a href="#" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}>
 				<img class="athumb" src={$item->thumbnailUrl} alt="{$item->description}"  height="80" width="120"/></a></td>
 			<td><a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}"><img src="pics/icons/application_form_magnify.png" class="icon" /> {$item->name}</a></td>
-			<td>{$item->createdAt}<br/><br/>Created By: {$item->userId}</td>
+			<td>{$item->createdAt}</td>
 			<td height="100">{$item->tags}</td>
 			<td>{$modifiedAt[$key]}<br/><br/>			
 			Modified By: {$modifiedBy[$key]}</td>
-			<td>{$item->version}</td>
 			{include file=tiki-list_kaltura_entries_add_info.tpl}
-			<td><a href="#" {popup trigger="onmouseover" fullhtml="1" text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
+			<td><a href="#" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
 		</tr>
 		{/if}
 		{/foreach}

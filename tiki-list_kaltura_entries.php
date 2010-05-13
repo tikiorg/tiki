@@ -159,7 +159,6 @@ if($_REQUEST['view'] != "browse"){
 $kmixlist = $kclient->mixing->listAction($kfilter,$kpager);
 
 for($i =0 ; $i < $kmixlist->totalCount;$i++) {
-	$kmixlist->objects[$i]->createdAt = date('d M Y h:i A',$kmixlist->objects[$i]->createdAt);
 	$domdoc = new DOMDocument;
  	$domdoc->loadXML($kmixlist->objects[$i]->dataContent); 
  	$xpath = new DOMXpath($domdoc);
@@ -215,7 +214,6 @@ if($_REQUEST['view'] != "browse"){
 $kmedialist = $kclient->media->listAction($kfilter,$kpager);
 
 for($i =0 ; $i < $kmedialist->totalCount;$i++) {
-	$kmedialist->objects[$i]->createdAt = date('d M Y h:i A',$kmedialist->objects[$i]->createdAt);
 	$kmedialist->objects[$i]->mediaType = $mediaTypeAsString[$kmedialist->objects[$i]->mediaType];
 }
 }else{
