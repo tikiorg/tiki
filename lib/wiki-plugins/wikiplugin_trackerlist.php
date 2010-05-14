@@ -940,7 +940,15 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('msg', tra("Error in tracker ID"));
 				return "~np~".$smarty->fetch("error_simple.tpl")."~/np~";
 			} else {
-				return "~np~".$smarty->fetch('tiki-plugin_trackerlist.tpl')."~/np~";
+				if (!empty($wiki)) {					// pretty tracker needs to compile fresh for each item
+					$save_fc = $smarty->force_compile;
+					$smarty->force_compile = true;
+				}
+				$str = $smarty->fetch('tiki-plugin_trackerlist.tpl');
+				if (!empty($wiki)) {
+					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
+				}
+				return "~np~".$str."~/np~";
 			}
 		} else {
 			$smarty->assign('msg', tra("No field indicated"));
