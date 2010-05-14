@@ -1,13 +1,14 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="cart" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-	<form method="post" action="">
+	<form method="post" action="{query _keepall='y' _type='relative'}">
 	<table>
 		<tr>
 			<th>{tr}Product{/tr}</th>
-			<th>{tr}Unit cost{/tr}</th>
-			<th>{tr}Qty{/tr}</th>
+			<th style="width:5em;">{tr}Unit cost{/tr}</th>
+			<th style="width:2em;">{tr}Qty{/tr}</th>
 		</tr>
+		{cycle values="odd,even" print=false}
 		{foreach from=$cart_content item=item}
-			<tr>
+			<tr class="{cycle}">
 				<td>
 					{if $item.href}
 						<a href="{$item.href|escape}">{$item.description|escape}</a>
@@ -15,14 +16,13 @@
 						{$item.description|escape}
 					{/if}
 				</td>
-				<td>{$item.price|escape}</td>
-				<td><input type="text" name="cart[{$item.code|escape}]" size="3" value="{$item.quantity|escape}"/></td>
+				<td style="width:5em;" align="right">{$item.price|escape}</td>
+				<td style="width:2em;"><input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}"/></td>
 			</tr>
 		{/foreach}
 		<tr>
 			<td></td>
-			<td></td>
-			<td><input type="submit" name="update" value="{tr}Update{/tr}"/></td>
+			<td colspan="2" align="right"><input type="submit" name="update" value="{tr}Update{/tr}"/></td>
 		</tr>
 	</table>
 	</form>
