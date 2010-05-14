@@ -37,6 +37,12 @@ function wikiplugin_addtocart_info() {
 				'description' => tra('URL of the product\'s information. The URL may be relative or absolute (begin with http://).'),
 				'filter' => 'url',
 			),
+			'label' => array(
+				'required' => false,
+				'name' => tra('Button label'),
+				'description' => tra('Text for the submit button. default: "Add to cart"'),
+				'filter' => 'text',
+			),
 		),
 	);
 }
@@ -53,6 +59,9 @@ function wikiplugin_addtocart( $data, $params ) {
 	if( ! isset( $params['href'] ) ) {
 		$params['href'] = null;
 	}
+	if (! isset($params['label'])) {
+		$params['label'] = tra('Add to cart');
+	}
 
 	foreach($params as &$p) {
 		$p = trim($p);			// remove some line ends picked up in pretty tracker
@@ -63,13 +72,12 @@ function wikiplugin_addtocart( $data, $params ) {
 	
 	$code = smarty_modifier_escape( $params['code'] );
 	$price = preg_replace( '/[^\d^\.^,]/', '', $params['price']);
-	$add_label = smarty_modifier_escape( tra('Add to cart') );
+	$add_label = smarty_modifier_escape( $params['label'] );
 	$return_uri = smarty_function_query( array('_type' => 'relative', '_keepall' => 'y'), $smarty);
 	
 	$form = <<<FORM
 <form method="post" action="$return_uri" style="display: inline;">
 	<input type="hidden" name="code" value="$code"/>
-	<input type="hidden" name="price" value="$price"/>
 	<input type="text" name="quantity" value="1" size="2"/>
 	<input type="submit" value="$add_label"/>
 </form>
