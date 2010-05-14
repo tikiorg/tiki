@@ -313,6 +313,21 @@ if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and
 	$smarty->display("error.tpl");
 	die;
 }
+
+if (!empty($_REQUEST['moveto'])) { // mo to another tracker fields with same name
+	$perms = Perms::get('tracker', $_REQUEST['moveto']);
+	if ($perms->create_tracker_items) {
+		$trklib->move_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $_REQUEST['moveto']);
+		header('Location: '.filter_out_sefurl('tiki-view_tracker_item.php?itemId=' . $_REQUEST['itemId']));
+		exit;
+	} else {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("Permission denied"));
+		$smarty->display("error.tpl");
+		die;
+	}
+}
+
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 $fields = array();
@@ -1099,6 +1114,11 @@ if ($tracker_info["useAttachments"] == 'y') {
 	$smarty->assign('attCount', $atts["cant"]);
 	$smarty->assign('attfields', $attfields);
 	$smarty->assign('attextra', $attextra);
+}
+if (isset($_REQUEST['moveto']) && empty($_REQUEST['moveto'])) {
+	$trackers = $tikilib->list_trackers();
+	$smarty->assign_by_ref('trackers', $trackers['data']);
+	$_REQUEST['show'] = 'mod';
 }
 if (isset($_REQUEST['show'])) {
 	if ($_REQUEST['show'] == 'view') {

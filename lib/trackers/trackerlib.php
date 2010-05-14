@@ -2373,8 +2373,8 @@ class TrackerLib extends TikiLib
 				$query = "update `tiki_trackers` set `name`=?,`description`=?,`descriptionIsParsed`=?,`lastModif`=? where `trackerId`=?";
 				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId));
 			} else {
-				$query = "insert into `tiki_trackers` (`name`,`description`,`descriptionIsParsed`,`lastModif`,`trackerId`) values (?,?,?,?,?)";
-				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId));
+				$query = "insert into `tiki_trackers` (`name`,`description`,`descriptionIsParsed`,`lastModif`,`trackerId`, `items`) values (?,?,?,?,?,?)";
+				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId, 0));
 			}
 		} else {
 			$query = "insert into `tiki_trackers`(`name`,`description`,`descriptionIsParsed`,`created`,`lastModif`) values(?,?,?,?,?)";
@@ -3844,6 +3844,32 @@ class TrackerLib extends TikiLib
 			}
 		}
 		return null;
+	}
+	function move_item($trackerId, $itemId, $newTrackerId) {
+		global $tikilib;
+		$now = $tikilib->now;
+		$newFields = $this->list_tracker_fields($newTrackerId, 0, -1, 'name_asc');
+		foreach ($newFields['data'] as $field) {
+			$translation[$field['name']] = $field;
+		}
+		$query = 'update `tiki_tracker_items` set `trackerId`=? where `itemId`=?';
+		$this->query($query, array($newTrackerId, $itemId));
+		$query = 'update `tiki_trackers` set `items`=`items`-1, `lastModif`=? where `trackerId`=?';
+		$this->query($query, array($now, $trackerId));
+		$query = 'update `tiki_trackers` set `items`=`items`+1, `lastModif`=? where `trackerId`=?';
+		$this->query($query, array($now, $newTrackerId));
+		$newFields = $this->list_tracker_fields($newTrackerId, 0, -1, 'name_asc');
+		$query = 'select ttif.*, ttf.`name`, ttf.`type`, ttf.`options` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.itemId=? and ttif.`fieldId`=ttf.`fieldId`';
+		$fields = $this->fetchAll($query, array($itemId));
+		$delete = 'delete from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?';
+		$move = 'update `tiki_tracker_item_fields` set `fieldId`=? where `itemId`=? and `fieldId`=?';
+		foreach ($fields as $field) {
+			if (empty($translation[$field['name']]) || $field['type'] != $translation[$field['name']]['type'] || $field['options'] != $translation[$field['name']]['options']) { // delete the field
+				$this->query($delete, array($field['itemId'], $field['fieldId']));
+			} else { // transfer
+				$this->query($move, array($translation[$field['name']]['fieldId'], $field['itemId'], $field['fieldId']));
+			}
+		}
 	}
 
 }

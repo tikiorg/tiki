@@ -181,6 +181,21 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {if ($tiki_p_modify_tracker_items eq 'y' and $item_info.status ne 'p' and $item_info.status ne 'c') or ($tiki_p_modify_tracker_items_pending eq 'y' and $item_info.status eq 'p') or ($tiki_p_modify_tracker_items_closed eq 'y' and $item_info.status eq 'c')or $special}
 {tab name="{tr}Edit/Delete{/tr}"}
 <h2>{tr}Edit Item{/tr}</h2>
+
+{if !empty($trackers)}	
+	<form>
+	<input type="hidden" name="itemId" value="{$itemId}" />
+	<select name="moveto">
+		{foreach from=$trackers item=tracker}
+		{if $tracker.trackerId ne $trackerId}
+			<option value="{$tracker.trackerId}">{$tracker.name|escape}</option>
+		{/if}
+		{/foreach}
+	</select>
+	<input type="submit" name="go" value="{tr}Move to another tracker{/tr}" />
+	</form>
+{/if}
+
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
 {if $special}
 <input type="hidden" name="view" value=" {$special}" />
@@ -500,6 +515,9 @@ or $cur_field.type eq 'i'}
 {/if}
 {if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>{/if}
 <a class="link" href="tiki-tracker_view_history.php?itemId={$itemId}" title="{tr}History{/tr}">{icon _id='database' alt="{tr}History{/tr}"}</a>
+{if empty($trackers)}
+	<a class="link" href="tiki-view_tracker_item.php?itemId={$itemId}&moveto" title="{tr}Move to another tracker{/tr}">{icon _id='arrow_right' alt="{tr}Move to another tracker{/tr}"}</a>
+{/if}
 </td></tr>
 </table>
 {query _type='form_input' itemId=NULL trackerId=NULL}
