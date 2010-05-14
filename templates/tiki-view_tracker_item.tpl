@@ -182,7 +182,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {tab name="{tr}Edit/Delete{/tr}"}
 <h2>{tr}Edit Item{/tr}</h2>
 
-{if !empty($trackers)}	
+{if  $tiki_p_admin_trackers eq 'y' and !empty($trackers)}	
 	<form>
 	<input type="hidden" name="itemId" value="{$itemId}" />
 	<select name="moveto">
@@ -515,7 +515,7 @@ or $cur_field.type eq 'i'}
 {/if}
 {if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>{/if}
 <a class="link" href="tiki-tracker_view_history.php?itemId={$itemId}" title="{tr}History{/tr}">{icon _id='database' alt="{tr}History{/tr}"}</a>
-{if empty($trackers)}
+{if $tiki_p_admin_trackers eq 'y' && empty($trackers)}
 	<a class="link" href="tiki-view_tracker_item.php?itemId={$itemId}&moveto" title="{tr}Move to another tracker{/tr}">{icon _id='arrow_right' alt="{tr}Move to another tracker{/tr}"}</a>
 {/if}
 </td></tr>
