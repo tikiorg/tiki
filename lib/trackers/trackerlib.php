@@ -3633,7 +3633,8 @@ class TrackerLib extends TikiLib
 				$this->replace_pretty_tracker_refs( $v );
 			}
 		} else {
-			$value = preg_replace_callback('/\{\$(f_\d+)\}/', 'TrackerLib::_pretty_tracker_replace_value', $value);
+			// array syntax for callback function needed for some versions of PHP (5.2.0?) - thanks to mariush on http://php.net/preg_replace_callback
+			$value = preg_replace_callback('/\{\$(f_\d+)\}/', array( &$this, '_pretty_tracker_replace_value'), $value);
 		}
 	}
 	
