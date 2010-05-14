@@ -1,4 +1,5 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="cart" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{if !empty($cart_content)}
 	<form method="post" action="{query _keepall='y' _type='relative'}">
 	<table>
 		<tr>
@@ -30,4 +31,7 @@
 	<form method="post" action="">
 		<p><input type="submit" name="checkout" value="{tr}Check-out{/tr}"/></p>
 	</form>
+{else}
+	<p>{tr}Your cart is empty{/tr}</p>
+{/if}
 {/tikimodule}
