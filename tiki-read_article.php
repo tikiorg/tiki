@@ -26,7 +26,7 @@ if (!$article_data) {
 	$smarty->display("error.tpl");
 	die;
 }
-if (($article_data['publishDate'] > $tikilib->now) && ($tiki_p_admin != 'y' && $tiki_p_admin_cms != 'y') && ($article_data['type'] != 'Event')) {
+if (($article_data['publishDate'] > $tikilib->now) && ($article_data['author'] != $user && $tiki_p_admin != 'y' && $tiki_p_admin_cms != 'y') && ($article_data['type'] != 'Event')) {
 	$smarty->assign('msg', tra("Article is not published yet"));
 	$smarty->display("error.tpl");
 	die;
