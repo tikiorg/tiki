@@ -59,8 +59,7 @@ $unallowed_uri_chars_encoded = array_merge($unallowed_uri_chars_encoded, array_m
 $_SERVER['PHP_SELF'] = str_replace($unallowed_uri_chars, $unallowed_uri_chars_encoded, $_SERVER['PHP_SELF']);
 
 // Note: need to susbsitute \ for / for windows.
-//$tikiroot = str_replace('\\','/',dirname($_SERVER['PHP_SELF']));
-$tikiroot = dirname($_SERVER['PHP_SELF']);
+$tikiroot = str_replace('\\','/',dirname($_SERVER['PHP_SELF']));
 $tikipath = dirname($tiki_script_filename);
 $tikiroot_relative = '';
 
