@@ -2819,7 +2819,7 @@ class TrackerLib extends TikiLib
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
 				<dt>Usage: <strong>toolbars,width,height,max,listmax,wordmax,distinct</strong>
-				<dt>Example: 0,80,5,30,200
+				<dt>Example: 0,80,5,200,30
 				<dt>Description:
 				<dd><strong>[toolbars]</strong> enables toolbars if a 1 is specified;
 				<dd><strong>[width]</strong> is the width of the box, in chars;
