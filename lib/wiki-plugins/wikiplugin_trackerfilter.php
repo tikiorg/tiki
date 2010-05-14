@@ -148,7 +148,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	$smarty->assign_by_ref('trackerId', $trackerId);
 	$smarty->assign_by_ref('line', $line);
 	$smarty->assign('iTrackerFilter', $iTrackerFilter++);
-	if ($displayList == 'n' || !empty($_REQUEST['filter'])) {
+	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y') {
 		$open = 'y';
 	} else {
 		$open = 'n';
