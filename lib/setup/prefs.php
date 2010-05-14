@@ -1594,7 +1594,7 @@ function get_default_prefs() {
 		'multidomain_active' => 'n',
 		'multidomain_config' => '',
 
-		'tiki_minify_javascript' => 'y',
+		'tiki_minify_javascript' => 'n',
 		'tiki_minify_css' => 'n',
 		'tiki_minify_css_single_file' => 'n',
 		'tiki_cachecontrol_session' => '',
