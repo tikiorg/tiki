@@ -76,7 +76,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 			}
 			// Complete _script path if needed (not empty, not an anchor, ...)
 			if ( !empty($params['_script']) && $params['_script'][0] != '#' && $params['_script'] != 'javascript:void(0)' ) {
-				if ( $params['_script'] != '' && $_SERVER['PHP_SELF'][0] == '/' && strpos($params['_script'], '/') === false ) {
+				if ( $_SERVER['PHP_SELF'][0] == '/' && strpos($params['_script'], '/') === false ) {
 					$self_dir = dirname($_SERVER['PHP_SELF']);
 					$params['_script'] = ( $self_dir == '/' ? '' : $self_dir ).'/'.$params['_script'];
 				}
