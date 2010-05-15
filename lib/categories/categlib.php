@@ -1731,7 +1731,7 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 	}
 	//assign all objects of a categ to another one
 	function assign_all_objects($from, $to) {
-		$query = 'insert `tiki_category_objects` (`catObjectId`, `categId`) select `catObjectId`, \'?\' from `tiki_category_objects` where `categId`=?';
+		$query = 'insert `tiki_category_objects` (`catObjectId`, `categId`) select `catObjectId`, ? from `tiki_category_objects` where `categId`=?';
 		echo $query.' '.$to. ' '.$from;
 		$this->query($query, array((int)$to, (int)$from));
 	}
