@@ -7,6 +7,12 @@
 			<a class="linkmodule" href="{if $absurl == 'y'}{$base_url}{/if}tiki-directory_redirect.php?siteId={$modLastdirSites[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target="_new"{/if}>
 				{$modLastdirSites[ix].name|escape}
 			</a>
+		{if $desc eq 'y'}:
+			{if $maxdesc ge '1'}{$modLastdirSites[ix].description|truncate:$maxdesc:"...":"true"}
+			{else}{$modLastdirSites[ix].description|escape}
+			{/if}
+		{/if}	
+			
 		</li>
 	{/section}
 {/modules_list}
