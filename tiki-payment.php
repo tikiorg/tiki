@@ -45,12 +45,19 @@ if( isset( $ipn_data ) ) {
 	require_once 'lib/payment/paypallib.php';
 
 	$invoice = $paypallib->get_invoice( $ipn_data );
+	if (!is_numeric($invoice) || $invoice < 1) {
+		echo 'Payment response was not correctly formatted';
+		exit;
+	}
 	$info = $paymentlib->get_payment( $invoice );
 
 	// Important to check with paypal first
 	if( $paypallib->is_valid( $ipn_data, $info ) && $info ) {
 		$amount = $paypallib->get_amount( $ipn_data );
 		$paymentlib->enter_payment( $invoice, $amount, 'paypal', $ipn_data );
+	} else {
+		echo 'Payment "%0" was not verified';
+		exit;
 	}
 
 	exit;
