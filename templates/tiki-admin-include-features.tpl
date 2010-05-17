@@ -156,7 +156,7 @@
 						{preference name=feature_wiki_save_draft}
 						
 				</fieldset>
-				
+			</div>
 
 {/tab}
 {/tabset}
