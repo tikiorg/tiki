@@ -9,6 +9,8 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="wysiwygfeatures" value="{tr}Change preferences{/tr}" />
 	</div>
+	{if $prefs.feature_wysiwyg ne 'y'}{preference name=feature_wysiwyg}{/if}
+
 	<fieldset class="admin">
 		<legend>{tr}Wysiwyg Editor Features{/tr}</legend>
 		{preference name=wysiwyg_optional}
