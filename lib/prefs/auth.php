@@ -95,7 +95,7 @@ function prefs_auth_list() {
 		),
 		'auth_phpbb_dbpasswd' => array(
 			'name' => tra('phpBB Database Password'),
-			'type' => 'text',
+			'type' => 'password',
 			'size' => 40,
 			'perspective' => false,
 		),

@@ -1557,8 +1557,8 @@ class ToolbarSheet extends Toolbar
 			case 'addrow':
 				$label = tra('Add Row');
 				$icon = tra('pics/icons/sheet_row_add.png');
-				$syntax = 'jS.controlFactory.addRow(true);';	// add row after current or at end if none selected
-				break;
+				$syntax = 'jS.controlFactory.addRow(null, null, ":last");';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
+				break;														// TODO fix properly for 5.1
 			case 'addrowmulti':
 				$label = tra('Add Multi-Rows');
 				$icon = tra('pics/icons/sheet_row_add_multi.png');

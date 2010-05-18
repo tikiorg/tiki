@@ -4,6 +4,7 @@
 	</div>
 	{tabset name="admin_freetags"}
 		{tab name="{tr}General Settings{/tr}"}
+			{if $prefs.feature_freetags ne 'y'}{preference name=feature_freetags}{/if}
 			<fieldset>
 				<legend>{tr}Freetags{/tr}{help url="Tags"}</legend>
 				<input type="hidden" name="freetagsfeatures" />

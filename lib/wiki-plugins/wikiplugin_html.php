@@ -30,6 +30,7 @@ function wikiplugin_html_info() {
 				'required' => false,
 				'name' => tra('Wiki syntax'),
 				'description' => tra('0|1, parse wiki syntax within the html code.'),
+				'filter' => 'int',
 			),
 		),
 	);
@@ -37,9 +38,10 @@ function wikiplugin_html_info() {
 
 function wikiplugin_html($data, $params) {
 	$ret = '';
-	$wiki = '';
+	//$wiki = '';
 	// extract parameters
 	extract ($params,EXTR_SKIP);
+	$wiki = ( isset($wiki) && $wiki == 1 );
 	// parse the report definition
 	$parse_fix = isset($_REQUEST['preview']) && ($_SESSION['s_prefs']['tiki_release']=='2.2');
 	if($parse_fix) {
