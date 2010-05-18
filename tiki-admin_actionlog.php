@@ -82,6 +82,7 @@ if ($tiki_p_admin == 'y') {
 		global $actionlogConf; unset($actionlogConf);
 		$confs = $logslib->get_all_actionlog_conf();
 		$action_log_conf_selected = $logslib->get_actionlog_conf($action_log_type);
+		$cookietab = 1;
 	}
 } else {
 	if (isset($_REQUEST['save'])) {
@@ -99,6 +100,7 @@ if ($tiki_p_admin == 'y') {
 		$confs = $logslib->get_all_actionlog_conf();
 		$action_log_conf_selected = $logslib->get_actionlog_conf($action_log_type);
 		$tikilib->set_user_preference($user, 'actionlog_conf', $_prefs);
+		$cookietab = 1;
 	} else {
 		$_prefs = $tikilib->get_user_preference($user, 'actionlog_conf', '');
 		if (!empty($_prefs)) {
@@ -118,6 +120,13 @@ foreach($confs as $conf) {
 	}
 }
 $smarty->assign('nbViewedConfs', $nbViewedConfs);
+if (empty($nbViewedConfs)) {
+	$cookietab = 2;
+}
+if (!empty($cookietab)) {
+	setcookie('tab', $cookietab);
+	$smarty->assign('cookietab', $cookietab);
+}
 $smarty->assign_by_ref('actionlogConf', $confs);
 
 if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {

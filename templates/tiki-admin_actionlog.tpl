@@ -8,7 +8,7 @@
 	<form method="get" action="tiki-admin_actionlog.php#Report">
 		<h2>{tr}Filter{/tr}</h2>
 		{if empty($nbViewedConfs)}
-			<div class="simplebox highlight">{tr}Please select some actions to view.{/tr}</div>
+			{button _text="{tr}Please select some actions to be reported.{/tr}" href="tiki-admin_actionlog.php?cookietab=2"}
 		{else}
 		<fieldset>
 			<legend>{tr}Date{/tr}</legend>
@@ -150,12 +150,12 @@
 			</form>
 		{/if}
 
-		{if $actionlogs}
-			{button _anchor="Statistics" _text="{tr}See Statistics{/tr}"}
+		{if isset($actionlogs)}
+		{if !empty($actionlogs)}
+			{button href="#Statistics" _auto_args="*" _text="{tr}See Statistics{/tr}"}
 		{/if}
 
-		<a name="List" />
-		<h2>{tr}List{/tr}
+		<h2 id="List">{tr}List{/tr}
 			{if $selectedUsers}
 				&nbsp;&mdash;&nbsp;
 				{tr}User:{/tr}
@@ -177,7 +177,6 @@
 			{/if}
 		</h2>
 		
-		{if $actionlogs}
 			{if $maxRecords gt 0}
 				{if $cant gt $maxRecords}
 					{self_link max=-1}{tr}All{/tr}{/self_link}
@@ -317,8 +316,8 @@
 			</form>
 		{/if}
 
-		<a name="Statistics" />
-		<h2>{tr}Statistics{/tr}
+		{if isset($userActions)}
+		<h2 id="Statistics">{tr}Statistics{/tr}
 			{if $selectedUsers}
 				&nbsp;&mdash;&nbsp;
 				{tr}User:{/tr}
@@ -598,6 +597,7 @@
 				{/foreach}
 			</table>
 		{/if}
+		{/if}
 
 {/tab}
 
@@ -606,11 +606,10 @@
 {tab name="{tr}Settings{/tr}"}
 	<a name="Setting" ></a>
 	<h2>{tr}Setting{/tr}</h2>
+		{remarksbox type="tip" title="{tr}How{/tr}"}
+		{tr}You need to check out the recorded box for each action type we may be interested to have some report later. To see a report of some action types, select the reported checkboxes of these action types, goto the Report tab and select additional filters. The report will only contains the actions that occured since the action type has been set to recorded.{/tr} {tr}Wiki page actions except viewed will always be recorded but can be not reported.{/tr}
+		{/remarksbox}
 	<form method="post" action="tiki-admin_actionlog.php">
-				<span class="input_submit_container" style="float: right">
-					<input type="submit" name="save" value="{tr}Set{/tr}" />
-				</span>
-				<br class="clearfix" />
 		{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 		<fieldset>
 		<legend>{tr}Filter{/tr}</legend>
@@ -629,16 +628,21 @@
 				<option value="{$action}" {if $type eq $action_log_action} selected="selected" {/if}>{$action}</option>
 			{/foreach}
 		</select>
-				<span class="input_submit_container">
-					<input type="submit" name="search" value="{tr}Search{/tr}" />
-				</span>
-		</fieldset>	
+			<span class="input_submit_container">
+				<input type="submit" name="search" value="{tr}Search{/tr}" />
+			</span>
+		</fieldset>
+		<br />
+		<span class="input_submit_container" style="float: right">
+			<input type="submit" name="save" value="{tr}Set{/tr}" />
+		</span>
+				<br class="clearfix" />
 		<table class="smallnormal">
 			<tr>
 				{if $tiki_p_admin eq 'y'}
-					<th>{tr}recorded{/tr}</th>
+					<th>{tr}Recorded{/tr}</th>
 				{/if}
-				<th>{tr}viewed{/tr}</th>
+				<th>{tr}Reported{/tr}</th>
 				<th>{tr}Action{/tr}</th>
 				<th>{tr}Type{/tr}</th>
 			</tr>
@@ -665,7 +669,6 @@
 				</td>
 			</tr>
 		</table>
-		<div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
 	</form>
 
 	{/tab}
