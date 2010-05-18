@@ -615,15 +615,15 @@
 		<legend>{tr}Filter{/tr}</legend>
 		<label for="action_log_type">{tr}Type{/tr}</label>
 		<select id="action_log_type" name="action_log_type">
-				<option value="" {if $action_log_type eq ''} selected="selected" {/if}>{tr}All{/tr}</option>
+				<option value="" {if empty($action_log_type)} selected="selected" {/if}>{tr}All{/tr}</option>
 			{foreach from=$action_log_types item=type}
-				<option value="{$type}" {if $type eq $action_log_type} selected="selected" {/if}>{$type}</option>
+				<option value="{$type}" {if !empty($action_log_type) && $type eq $action_log_type} selected="selected" {/if}>{$type}</option>
 			{/foreach}
 		</select>
 		<label for="action_log_action">{tr}Action{/tr}</label>
 		<select id="action_log_action" name="action_log_action">
-				<option value="" {if $action_log_action eq ''} selected="selected" {/if}>{tr}All{/tr}</option>
-				<option value="\%" {if $action_log_action eq '\%'} selected="selected" {/if}>*</option>
+				<option value="" {if empty($action_log_action)} selected="selected" {/if}>{tr}All{/tr}</option>
+				<option value="\%" {if !empty($action_log_action) && $action_log_action eq '\%'} selected="selected" {/if}>*</option>
 			{foreach from=$action_log_actions item=action}
 				<option value="{$action}" {if $type eq $action_log_action} selected="selected" {/if}>{$action}</option>
 			{/foreach}
