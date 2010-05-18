@@ -98,12 +98,6 @@ if (isset($_REQUEST["current_page_id"])) {
 		die;
 	}
 
-	if ($tikilib->page_exists($_REQUEST['page'])) {
-		$smarty->assign('msg', $_REQUEST['page'] . " " . tra("page not added (Exists)"));
-		$smarty->display("error.tpl");
-		die;
-	}
-
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['current_page_id']);
 	if ($tiki_p_edit_structures != 'y' || !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
 		$smarty->assign('errortype', 401);
