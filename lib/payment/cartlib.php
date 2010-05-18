@@ -86,7 +86,8 @@ class CartLib
 				$paymentlib->register_behavior( $invoice, $behavior['event'], $behavior['behavior'], $behavior['arguments'] );
 			}
 
-			$_SESSION['cart'] = array();
+			//$_SESSION['cart'] = array();
+			// don't empty cart when going to choose payment, but when should it be cleared?
 
 			return $invoice;
 		}
