@@ -114,7 +114,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 				$fcked->Config['AutoDetectLanguage'] = false;
 			}
 			$fcked->Config['DefaultLanguage'] = $prefs['language'];
-			$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php'.(isset($params['_section']) ? '?section='.urlencode($params['_section']) : '');
+			$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php?page=' . $_REQUEST['page']
+						.(isset($params['_section']) ? '&section='.urlencode($params['_section']) : '');
 			
 			// this JS needs to be there before the iframe always - at end of page is too late
 			

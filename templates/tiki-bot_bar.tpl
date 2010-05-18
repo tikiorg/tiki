@@ -12,9 +12,9 @@
 {/if}
 {if $prefs.feature_bot_bar_icons eq 'y'}
 	<div id="power_icons">
-		<a href="http://tikiwiki.org/" title="Tikiwiki"><img alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>
-		<a href="http://www.php.net/" title="PHP"><img alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
-		<a href="http://www.smarty.net/" title="Smarty"><img alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
+		<a href="http://tikiwiki.org/" title="Tiki"><img alt="{tr}Powered by{/tr} Tiki" src="img/tiki/tikibutton2.png" /></a>
+		<a href="http://php.net/" title="PHP"><img alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
+		<a href="http://smarty.net/" title="Smarty"><img alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
 		<a href="http://adodb.sourceforge.net/" title="ADOdb"><img alt="{tr}Powered by{/tr} ADOdb" src="img/adodb.png" /></a>
 		<a href="http://www.w3.org/Style/CSS/" title="CSS"><img alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
 		<a href="http://www.w3.org/RDF/" title="RDF"><img alt="{tr}Powered by{/tr} RDF" src="img/rdf.gif"  /></a>

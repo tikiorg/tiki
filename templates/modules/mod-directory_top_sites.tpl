@@ -12,6 +12,7 @@
 			{else}{$modTopdirSites[ix].description|escape}
 			{/if}
 		{/if}	
+			
 		</li>
 	{/section}
 {/modules_list}

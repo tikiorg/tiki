@@ -22,6 +22,7 @@
 
 {preference name=language default=$prefs.site_language}
 {preference name=wiki_page_regex}
+{preference name=default_mail_charset}
 
 <div class="adminoptionbox">
 	{preference name=feature_multilingual}
@@ -62,7 +63,6 @@
 {preference name=record_untranslated}
 	
 {preference name=feature_machine_translation}
-
 </div>
 {/tab}
 

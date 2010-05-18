@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -51,6 +51,7 @@ if ($output["data"]=="EMPTY") {
 	$changes = $tikilib -> list_pages(0, $prefs['max_rss_wiki'], 'lastModif_desc', '', '', true, false, false, false, '', false, 'y');
 	$tmp = array();
 	foreach ($changes["data"] as $data) {
+		$result = '';
 		if ($tiki_p_view != 'y') {
 			$data['sefurl'] = $wikilib->sefurl($data['pageName']);
 			unset($data['data']);
@@ -75,17 +76,16 @@ if ($output["data"]=="EMPTY") {
 		require_once('lib/diff/difflib.php');
 		$diff = diff2($prev_page_p , $curr_page_p, "unidiff");
 	
-		$result = "<style TYPE=\"text/css\"> .diffchar { color:red; } </style>";
 		
 		foreach ($diff as $part) {
 			if ($part["type"]=="diffdeleted") {
 				foreach ($part["data"] as $chunk) {
-					$result.="- ".$chunk;
+					$result.="<blockquote>- $chunk</blockquote>";
 				}
 			}
 			if ($part["type"]=="diffadded") {
 				foreach ($part["data"] as $chunk) {
-					$result.="+ ".$chunk;
+					$result.="<blockquote>+ $chunk</blockquote>";
 				}
 			}
 		}

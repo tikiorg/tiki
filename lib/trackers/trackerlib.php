@@ -2393,7 +2393,7 @@ class TrackerLib extends TikiLib
 				$showratings = $opt;
 			}
 		}
-		$ratingId = $this->get_field_id_from_type($trackerId, 's', 'Rating');
+		$ratingId = $this->get_field_id_from_type($trackerId, 's', null, true, 'Rating');
 		if ($rating) {
 			if (!$ratingId) $ratingId = 0;
 			if (!isset($ratingoptions)) $ratingoptions = '';
@@ -2706,7 +2706,7 @@ class TrackerLib extends TikiLib
 		return $this->getOne("select `fieldId` from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int)$trackerId,$name));
 	}
 
-	function get_field_id_from_type($trackerId, $type, $option=NULL, $first=true) {
+	function get_field_id_from_type($trackerId, $type, $option=NULL, $first=true, $name=null) {
 		static $memo;
 		if (isset($memo[$trackerId][$type][$option])) {
 			return $memo[$trackerId][$type][$option];
@@ -2727,6 +2727,10 @@ class TrackerLib extends TikiLib
 				$mid .= ' and `options` like ? ';
 			}
 			$bindvars[] = $option;
+		}
+		if (!empty($name)) {
+			$mid .= ' and `name`=?';
+			$bindvars[] = $name;
 		}
 		$query = "select `fieldId` from `tiki_tracker_fields` where $mid";
 		if ($first) {

@@ -51,22 +51,22 @@ class Text_Diff_Renderer_character extends Tiki_Text_Diff_Renderer
     {
     	if ($type == 'context') {
 	        foreach ($lines as $line) {
-			$this->orig .= $line;
-			$this->final .= $line;
+			$this->orig .= htmlspecialchars($line);
+			$this->final .= htmlspecialchars($line);
 	        }
     	} elseif ($type == 'added' || $type == 'change-added') {
 	        $l = "";
 	        foreach ($lines as $line) {
-			$l .= $line;
+			$l .= htmlspecialchars($line);
 		 }
 	        if (!empty($l))
-	            $this->final .= '<span class="diffchar">'.$l."</span>";
+	            $this->final .= '<ins class="diffchar inserted" style="color: green; text-decoration: none"><strong>'.$l."</strong></ins>";
     	} elseif ($type == 'deleted' || $type == 'change-deleted') {
 	        $l = "";
 	        foreach ($lines as $line)
-			$l .= $line;
+			$l .= htmlspecialchars($line);
 	        if (!empty($l))
-	            $this->orig .= '<span class="diffchar">'.$l."</span>";
+	            $this->orig .= '<del class="diffchar deleted" style="color: red; text-decoration: none"><strong>'.$l."</strong></del>";
       }
     }
 

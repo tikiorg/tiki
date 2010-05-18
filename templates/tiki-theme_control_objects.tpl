@@ -46,6 +46,7 @@
   </td>
   <td class="formcolor">
     <select name="theme-option">
+	  <option value="">{tr}None{/tr}</option>
       {section name=ix loop=$style_options}
       <option value="{$style_options[ix]|escape}">{$style_options[ix]}</option>
       {/section}

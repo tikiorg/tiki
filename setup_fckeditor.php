@@ -14,11 +14,27 @@ $access->check_feature('feature_wysiwyg');
 
 include_once 'lib/toolbars/toolbarslib.php';
 
-global $tikilib;
-$smarty->assign('fckstyle',$tikilib->get_style_path('', '', $prefs['style']));
-$smarty->assign('fckstyleoption',$tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']));
+global $tikilib, $tc_theme, $tc_theme_option, $cat_type, $cat_objid;
 
-$section = isset($_GET['section']) ? $_GET['section'] : 'wiki page';
+$section = isset($_REQUEST['section']) ? $_REQUEST['section'] : 'wiki page';
+$cat_type = isset($cat_type) ? isset($cat_type) : $section;
+if ($section == 'wiki page' && !isset($cat_objid)) {
+	$cat_objid = $_REQUEST['page'];
+}
+if ($prefs['feature_theme_control']) {
+	include_once 'tiki-tc.php';
+}
+
+if (!empty($tc_theme)) {
+	$smarty->assign('fckstyle',$tikilib->get_style_path('', '', $tc_theme));
+	if (!empty($tc_theme_option)) {
+		$smarty->assign('fckstyleoption',$tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option));
+	}
+} else {
+	$smarty->assign('fckstyle',$tikilib->get_style_path('', '', $prefs['style']));
+	$smarty->assign('fckstyleoption',$tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']));
+}
+
 $toolbars = ToolbarsList::fromPreference( $section );
 //file_put_contents('temp/cache/foo', print_r($toolbars->getWysiwygArray(), true));
 

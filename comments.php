@@ -225,8 +225,9 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 						$nots[] = array("user"=>"", "hash"=>"", "email"=>$email);
 				}
 				foreach ($nots as $not) {
-					if ($prefs['wiki_watch_editor'] != 'y' && $not['user'] == $user)
-						break;
+					if ($prefs['wiki_watch_editor'] != 'y' && $not['user'] == $user) {
+						continue;
+					}
 					if (!$isBuilt) {
 						$isBuilt = true;
 						$smarty->assign('mail_page', $_REQUEST["page"]);
