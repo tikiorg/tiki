@@ -252,11 +252,16 @@
 		{/tab}
 		{tab name="{tr}phpBB{/tr}"}
 			<fieldset>
-				<legend>{tr}phpBB{/tr}{help url="AuthphpBB" desc="{tr}phpBB User Database Authentication {/tr}"}</legend>
+				<legend>{tr}phpBB{/tr}{help url="phpBB+Authentication" desc="{tr}phpBB User Database Authentication {/tr}"}</legend>
 				<input type="hidden" name="auth_phpbb" />
 				{if $prefs.auth_method ne 'phpbb'}
 					<div style="padding:0.5em;clear:both" class="simplebox">
 						<div>{icon _id=information} {tr}You must change the Authentication Method to phpBB for these changes to take effect{/tr}.</div>
+					</div>
+				{/if}
+				{if $prefs.allowRegister ne 'n'}
+					<div style="padding:0.5em;clear:both" class="simplebox">
+						<div>{icon _id=information} {tr}You must turn Users can register off for phpBB Authentication to function properly{/tr}.</div>
 					</div>
 				{/if}
 				{preference name=auth_phpbb_create_tiki}
