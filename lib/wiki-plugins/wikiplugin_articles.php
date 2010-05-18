@@ -26,10 +26,16 @@ function wikiplugin_articles_info()
 		'description' => tra('Inserts a list of articles in the page.'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
 		'params' => array(
+			'usePagination' => array(
+				'required' => false,
+				'name' => tra('Use Pagination'),
+				'description' => tra('Activate pagination when articles listing are long. Default is n') . ' (n|y)',
+				'filter' => 'alpha',
+			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Articles displayed'),
-				'description' => tra('The number of articles to display in the list.'),
+				'description' => tra('The number of articles to display in the list.') . tra('If Pagination is set to true, this will determine the amount of artilces per page'),
 				'filter' => 'int',
 			),
 			'topic' => array(
@@ -89,7 +95,7 @@ function wikiplugin_articles_info()
 			'start' => array(
 				'required' => false,
 				'name' => tra('Starting article'),
-				'description' => tra('The article number that the list should start with.'),
+				'description' => tra('The article number that the list should start with.') . tra('This will not work if Pagination is used.'),
 				'filter' => 'int',
 			),
 			'dateStart' => array(
@@ -132,6 +138,25 @@ function wikiplugin_articles($data, $params)
 	}
 	if(!isset($max))		$max = -1;
 	if(!isset($start))		$start = 0;
+
+	if(!isset($usePagination)){
+		$usePagination = 'n';	
+	}
+	
+	if($usePagination == 'y')
+	{
+		//Set offset when pagniation is used
+		if (!isset($_REQUEST["offset"])) {
+			$start = 0;
+		} else {
+			$start = $_REQUEST["offset"];
+		}
+		
+		//Default to 10 when pagination is used
+		if(($max == -1)){
+			$countPagination = 10;
+		}
+	}
 
 	if(!isset($topicId))	$topicId='';
 	if(!isset($topic))		$topic='';
@@ -205,7 +230,13 @@ function wikiplugin_articles($data, $params)
 	if (!empty($type) && !strstr($type, '!') && !strstr($type, '+')) {
 		$smarty->assign_by_ref('type', $type);
 	}
-
+	
+	if($usePagination == 'y'){
+		$smarty->assign('maxArticles', $max);
+		$smarty->assign_by_ref('offset', $start);
+		$smarty->assign_by_ref('cant', $listpages['cant']);
+	}
+	
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 
 	if (isset($titleonly) && $titleonly == 'y') {
