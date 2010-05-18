@@ -8,12 +8,12 @@
 class PaymentLib extends TikiDb_Bridge
 {
 	function request_payment( $description, $amount, $paymentWithin, $detail = null ) {
-		global $prefs;
+		global $prefs, $user;
 
 		$description = substr( $description, 0, 100 );
 
-		$query = 'INSERT INTO `tiki_payment_requests` ( `amount`, `amount_paid`, `currency`, `request_date`, `due_date`, `description`, `detail` ) VALUES( ?, 0, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? DAY), ?, ? )';
-		$bindvars = array( $amount, $prefs['payment_currency'], (int) $paymentWithin, $description, $detail );
+		$query = 'INSERT INTO `tiki_payment_requests` ( `amount`, `amount_paid`, `currency`, `request_date`, `due_date`, `description`, `detail`, `user` ) VALUES( ?, 0, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? DAY), ?, ?, ? )';
+		$bindvars = array( $amount, $prefs['payment_currency'], (int) $paymentWithin, $description, $detail, $user );
 
 		$this->query( $query, $bindvars );
 
@@ -21,9 +21,12 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	private function get_payments( $conditions, $offset, $max ) {
+		 
+		$conditions .= $this->get_user_sql_condition();
+
 		$count = 'SELECT COUNT(*) FROM `tiki_payment_requests` WHERE ' . $conditions;
 		$data = 'SELECT * FROM `tiki_payment_requests` WHERE ' . $conditions;
-
+		
 		$all = $this->fetchAll( $data, array(), $max, $offset );
 
 		return array(
@@ -60,7 +63,7 @@ class PaymentLib extends TikiDb_Bridge
 
 	function get_payment( $id ) {
 		global $tikilib, $prefs, $user;
-		$info = reset( $this->fetchAll( 'SELECT * FROM `tiki_payment_requests` WHERE `paymentRequestId` = ?', array( $id ) ) );
+		$info = reset( $this->fetchAll( 'SELECT * FROM `tiki_payment_requests` WHERE `paymentRequestId` = ?' .  $this->get_user_sql_condition(), array( $id ) ) );
 
 		if( $info ) {
 			$info['state'] = $this->find_state( $info );
@@ -76,7 +79,7 @@ class PaymentLib extends TikiDb_Bridge
 			) );
 
 			$info['payments'] = array();
-			$payments = $this->fetchAll( 'SELECT * FROM `tiki_payment_received` WHERE `paymentRequestId` = ? ORDER BY `payment_date` DESC', array( $id ) );
+			$payments = $this->fetchAll( 'SELECT * FROM `tiki_payment_received` WHERE `paymentRequestId` = ?' .  $this->get_user_sql_condition() . 'ORDER BY `payment_date` DESC', array( $id ) );
 			include_once 'lib/tikilib.php';
 			foreach( $payments as $payment ) {
 				$payment['details'] = json_decode( $payment['details'], true );
@@ -89,6 +92,15 @@ class PaymentLib extends TikiDb_Bridge
 
 			return $info;
 		}
+	}
+	
+	private function get_user_sql_condition() {
+		global $user, $tiki_p_admin, $tiki_p_payment_admin;
+		$conditions = '';
+		if ($tiki_p_admin != 'y' || $tiki_p_payment_admin != 'y') {
+			$conditions .= " AND `user`='$user';";
+		}
+		return $conditions;
 	}
 
 	private function find_state( $info ) {
@@ -119,16 +131,18 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	function enter_payment( $invoice, $amount, $type, array $data ) {
+		global $user;
+		
 		if( $info = $this->get_payment( $invoice ) ) {
 			if( $info['state'] != 'past' && $info['state'] != 'canceled' && $info['amount_remaining_raw'] - $amount <= 0 ) {
 				$this->run_behaviors( $info, 'complete' );
 			}
 
 			$data = json_encode( $data );
-			$this->query( 'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details` ) VALUES( ?, NOW(), ?, ?, ? )', array(
-				$invoice, $amount, $type, $data
+			$this->query( 'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details`, `user` ) VALUES( ?, NOW(), ?, ?, ? )', array(
+				$invoice, $amount, $type, $data, $user
 			) );
-			$this->query( 'UPDATE `tiki_payment_requests` SET `amount_paid` = `amount_paid` + ? WHERE `paymentRequestId` = ?', array( $amount, $invoice ) );
+			$this->query( 'UPDATE `tiki_payment_requests` SET `amount_paid` = `amount_paid` + ? WHERE `paymentRequestId` = ?' .  $this->get_user_sql_condition(), array( $amount, $invoice ) );
 		}
 	}
 
