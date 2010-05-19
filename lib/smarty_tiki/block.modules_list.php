@@ -39,7 +39,7 @@ function smarty_block_modules_list($params, $content, &$smarty, &$repeat) {
 			$ret = '<ol>' . $content . '</ol>';
 		}
 	}else{
-		$ret .= "<em>".tra("No records to display")."</em>";
+		$ret = '<em>'.tra('No records to display').'</em>';
 	}		
 	return $ret;
 }
