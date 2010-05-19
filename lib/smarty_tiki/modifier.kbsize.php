@@ -23,8 +23,18 @@ function smarty_modifier_kbsize($string, $bytes = false, $nb_decimals = 2)
 {
   if ( $string == '' ) return '';
 
+  // 1024 x 1024 x 1024 x 1024 = 1099511627776
+  if ( $string > 1099511627776 ) { 
+   $string = number_format($string/1099511627776,$nb_decimals);
+   $kb_string = 'T';
+  } 
+  // 1024 x 1024 x 1024 = 1073741824
+  elseif ( $string > 1073741824 ) { 
+   $string = number_format($string/1073741824,$nb_decimals);
+   $kb_string = 'G';
+  } 
   // 1024 x 1024 = 1048576
-  if ( $string > 1048576 ) { 
+  elseif ( $string > 1048576 ) { 
    $string = number_format($string/1048576,$nb_decimals);
    $kb_string = 'M';
   } 
