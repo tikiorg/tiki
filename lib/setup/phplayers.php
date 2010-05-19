@@ -28,3 +28,5 @@ EOS;
 global $LayersMenu, $TreeMenu, $PHPTreeMenu, $PlainMenu;
 $smarty->assign_by_ref('phplayers_LayersMenu', $LayersMenu);
 $smarty->assign('phplayers_headers', $phplayers_headers);
+
+$headerlib->add_jq_onready('phplayersmenu_loaded = 1;');

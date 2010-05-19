@@ -277,7 +277,6 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile( 'lib/phplayers/libjs/layersmenu-library.js' );
 		$headerlib->add_jsfile( 'lib/phplayers/libjs/layersmenu.js' );
 		$headerlib->add_jsfile( 'lib/phplayers/libjs/layerstreemenu-cookies.js' );
-		$headerlib->add_jsfile( 'lib/phplayers_tiki/footer.js' );
 	}
 	
 	if( $prefs['wikiplugin_flash'] == 'y' ) {
