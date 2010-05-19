@@ -294,6 +294,10 @@ function wikiplugin_tracker($data, $params)
 			}
 		}
 	}
+	if (!empty($itemId)) {
+		global $logslib; include_once('lib/logs/logslib.php');
+		$logslib->add_action('Viewed', $itemId, 'trackeritem');
+	}
 
 	if (isset($_REQUEST['removeattach']) && $tracker['useAttachments'] == 'y') {
 		$owner = $trklib->get_item_attachment_owner($_REQUEST['removeattach']);

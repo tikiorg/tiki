@@ -327,6 +327,8 @@ if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to ano
 		die;
 	}
 }
+global $logslib; include_once('lib/logs/logslib.php');
+$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
 
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
