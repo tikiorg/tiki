@@ -327,8 +327,6 @@ if (!empty($_REQUEST['moveto']) && $tiki_p_admin_trackers == 'y') { // mo to ano
 		die;
 	}
 }
-global $logslib; include_once('lib/logs/logslib.php');
-$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
 
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
@@ -1153,6 +1151,9 @@ if ($prefs['feature_ajax'] == 'y') {
 	$ajaxlib->registerTemplate('tiki-view_tracker_item.tpl');
 	$ajaxlib->processRequests();
 }
+global $logslib; include_once('lib/logs/logslib.php');
+$logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
+
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 
