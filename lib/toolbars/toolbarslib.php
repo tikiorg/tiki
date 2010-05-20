@@ -74,6 +74,7 @@ abstract class Toolbar
 			'-',
 			'bold',
 			'italic',
+			'underline',
 			'strike',
 			'sub',
 			'sup',
@@ -114,7 +115,6 @@ abstract class Toolbar
 			'full',
 			'indent',
 			'outdent',
-			'underline',
 			'unlink',
 			'style',
 			'fontname',
@@ -460,8 +460,6 @@ class ToolbarFckOnly extends Toolbar
 			return new self( 'Indent' );
 		case 'outdent':
 			return new self( 'Outdent' );
-		case 'underline':
-			return new self( 'Underline' );
 		case 'unlink':
 			return new self( 'Unlink' );
 		case 'style':
@@ -510,6 +508,12 @@ class ToolbarInline extends Toolbar
 			$icon = tra('pics/icons/text_italic.png');
 			$wysiwyg = 'Italic';
 			$syntax = "''text''";
+			break;
+		case 'underline':
+			$label = tra('Underline');
+			$icon = tra('pics/icons/text_underline.png');
+			$wysiwyg = 'Underline';
+			$syntax = "===text===";
 			break;
 		case 'strike':
 			$label = tra('Strikethrough');
