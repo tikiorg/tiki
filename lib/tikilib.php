@@ -2300,7 +2300,8 @@ class TikiLib extends TikiDb_Bridge
 		$midvars = array();
 		if ( $find ) {
 			$findesc = '%'.$find.'%';
-			$mid = ' (upper(tab.`name`) LIKE upper(?) OR upper(tab.`description`) LIKE upper(?) OR upper(tab.`filename`) LIKE upper(?))';
+			$tab = $with_subgals?'tab':'tf';
+			$mid = " (upper($tab.`name`) LIKE upper(?) OR upper($tab.`description`) LIKE upper(?) OR upper($tab.`filename`) LIKE upper(?))";
 			$midvars = array($findesc, $findesc, $findesc);
 		}
 		if ( !empty($filter['creator']) ) {
