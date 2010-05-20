@@ -1,13 +1,12 @@
 <?php
 
 $file = $_SERVER['argv'][1];
-
 $tokens = token_get_all( file_get_contents( $file ) );
 
 $out = array();
 
 foreach( $tokens as $token ) {
-	if( ! is_array( $token ) || $token[0] !== 365 ) {
+	if( ! is_array( $token ) || $token[0] !== T_COMMENT ) {
 		$out[] = $token;
 	}
 }

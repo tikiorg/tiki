@@ -173,7 +173,7 @@ abstract class Toolbar
 	public static function saveTool($name, $label, $icon = 'pics/icons/shading.png', $token = '', $syntax = '', $type = 'Inline', $plugin = '') {
 		global $prefs, $tikilib;
 		
-		$name = strtolower( preg_replace('/[\s,\/\|]+/', '_', $name) );
+		$name = strtolower( preg_replace('/[\s,\/\|]+/', '_', $tikilib->take_away_accent( $name )) );
 
 		$prefName = "toolbar_tool_$name";
 		$data = array('name'=>$name, 'label'=>$label, 'icon'=>$icon, 'token'=>$token, 'syntax'=>$syntax, 'type'=>$type, 'plugin'=>$plugin);
