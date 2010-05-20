@@ -3,9 +3,9 @@
 <div class="catblock clearfix">
   <div class="cattitle">
     <span class="label">{tr}Category{/tr}: </span>{foreach name=for key=id item=title from=$titles}
-    {if $params.showlinks ne 'n'}<a href="tiki-browse_categories.php?parentId={$id}">{/if}
+    {if $params.categoryshowlink ne 'n'}<a href="tiki-browse_categories.php?parentId={$id}">{/if}
 		{$title|tr_if}
-	{if $params.showlinks ne 'n'}</a>{/if}
+	{if $params.categoryshowlink ne 'n'}</a>{/if}
     {if !$smarty.foreach.for.last} &amp; {/if}
     {/foreach}
   </div>

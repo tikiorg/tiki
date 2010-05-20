@@ -98,7 +98,14 @@ function wikiplugin_category_info() {
 			),		
 			'showlinks' => array(
 				'required' => false,
-				'name' => tra('Show Links'),
+				'name' => tra('Show children category links'),
+				'description' => 'y|n',
+				'default' => 'y',
+				'filter' => 'alpha',
+			),		
+			'categoryshowlink' => array(
+				'required' => false,
+				'name' => tra('Show top category link'),
 				'description' => 'y|n',
 				'default' => 'y',
 				'filter' => 'alpha',
@@ -118,7 +125,7 @@ function wikiplugin_category($data, $params) {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 
-	$default = array('one' => 'n', 'showlinks' => 'y');
+	$default = array('one' => 'n', 'showlinks' => 'y', 'categoryshowlink'=>'y');
 	$params = array_merge($default, $params);
 	extract ($params,EXTR_SKIP);
 
