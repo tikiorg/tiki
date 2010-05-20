@@ -56,18 +56,20 @@ abstract class Toolbar
 			return $tag;
 	} // }}}
 
-	public static function getList() // {{{
+	public static function getList( $include_custom = true ) // {{{
 	{
 		global $tikilib;
 		$plugins = $tikilib->plugin_get_list();
 		
-		$custom = Toolbar::getCustomList();
-		
-		foreach( $plugins as & $name )
+		foreach( $plugins as & $name ) {
 			$name = "wikiplugin_$name";
+		}
 		
-		$plugins = array_merge($plugins, $custom);
-
+		if ($include_custom) {
+			$custom = Toolbar::getCustomList();
+			$plugins = array_merge($plugins, $custom);
+		}
+		
 		return array_unique (array_merge( array(
 			'-',
 			'bold',
@@ -174,19 +176,25 @@ abstract class Toolbar
 		global $prefs, $tikilib;
 		
 		$name = strtolower( preg_replace('/[\s,\/\|]+/', '_', $tikilib->take_away_accent( $name )) );
+		$standard_names = Toolbar::getList(false);
+		$custom_list = Toolbar::getCustomList();
+		if (in_array($name, $standard_names)) {		// don't allow custom tools with the same name as standard ones
+			$c = 1;
+			while(in_array($name . '_' . $c, $custom_list)) {
+				$c++;
+			}
+			$name = $name . '_' . $c;
+		}
 
 		$prefName = "toolbar_tool_$name";
 		$data = array('name'=>$name, 'label'=>$label, 'icon'=>$icon, 'token'=>$token, 'syntax'=>$syntax, 'type'=>$type, 'plugin'=>$plugin);
 		
 		$tikilib->set_preference( $prefName, serialize( $data ) );
 		
-		$list = array();
-		if( isset($prefs['toolbar_custom_list']) ) {
-			$list = unserialize($prefs['toolbar_custom_list']);
-		}
-		if( !in_array( $name, $list ) ) {
-			$list[] = $name;
-			$tikilib->set_preference( 'toolbar_custom_list', serialize($list) );
+		if( !in_array( $name, $custom_list ) ) {
+			$custom_list[] = $name;
+			$tikilib->set_preference( 'toolbar_custom_list', serialize($custom_list) );
+			$tikilib->set_lastUpdatePrefs();
 		}
 	}
 
@@ -210,6 +218,18 @@ abstract class Toolbar
 	
 		}
 	}
+
+	public static function deleteAllCustomTools() {
+		global $tikilib;
+		
+		$tikilib->query('DELETE FROM `tiki_preferences` WHERE `name` LIKE \'toolbar_tool_%\'');
+		$tikilib->query('DELETE FROM `tiki_preferences` WHERE `name` = \'toolbar_custom_list\'');
+		
+		//global $cachelib; require_once("lib/cache/cachelib.php");
+		//$cachelib->invalidate('tiki_preferences_cache');
+		$tikilib->set_lastUpdatePrefs();
+	}
+	
 
 	public static function fromData( $tagName, $data ) { // {{{
 		
