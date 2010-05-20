@@ -9,8 +9,12 @@ require_once ('tiki-setup.php');
 
 $access->check_feature('change_password');
 
-if (!isset($_REQUEST["user"]))
-	$_REQUEST["user"] = '';
+if (empty($_REQUEST['user']) || !$userlib->user_exists($_REQUEST['user'])) {
+	$smarty->assign('msg', tra('Invalid username'));
+	$smarty->assign('errortype', 'login');
+	$smarty->display("error.tpl");
+	die;
+}
 
 if (!isset($_REQUEST["oldpass"]))
 	$_REQUEST["oldpass"] = '';
@@ -56,7 +60,7 @@ if (isset($_REQUEST["change"])) {
 	// Check that provided user name could log in with old password, otherwise display error and exit
 	list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["oldpass"], '', '');
 	if (!$isvalid) {
-		$smarty->assign('msg', tra("Invalid old password or unknown user"));
+		$smarty->assign('msg', tra("Invalid old password"));
 		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display("error.tpl");
 		die;
