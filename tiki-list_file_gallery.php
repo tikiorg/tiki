@@ -748,6 +748,12 @@ if (!empty($_REQUEST['find_orphans']) && ($_REQUEST['find_orphans'] == 'on' || $
 	$find['orphan'] = 'y';
 	$smarty->assign('find_orphans', 'y');
 }
+if (!empty($_REQUEST['find_sub']) && ($_REQUEST['find_sub'] == 'on' || $_REQUEST['find_sub'] == 'y')) {
+	$find_sub = true;
+	$smarty->assign('find_sub', 'y');
+} else {
+	$find_sub = false;
+}
 
 if (isset($_GET['slideshow'])) {
 	$_REQUEST['maxRecords'] = $maxRecords = - 1;
@@ -790,8 +796,8 @@ if (isset($_GET['slideshow'])) {
 	die();
 } else {
 	if (!isset($_REQUEST["edit_mode"]) && !isset($_REQUEST["edit"])) {
-		$recursive = (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin');
-		$with_subgals = !(isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin');
+		$recursive = (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') || $find_sub;
+		$with_subgals = !((isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') || $find_sub);
 		// Get list of files in the gallery
 		$files = $tikilib->get_files( $_REQUEST['offset']
 																, $_REQUEST['maxRecords']

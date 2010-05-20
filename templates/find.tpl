@@ -19,6 +19,7 @@
 	* find_show_num_rows    : If value = 'y' adds maxRecords field. Value: maxRecords
 	* find_show_date_range  : If value = 'y' adds date range to filter within
 	* find_show_orphans		: If value = 'y' adds a checkbox orphan
+	* find_show_sub	: If value = 'y' add a checkbox in all the tree
 	* filters               : array( filter_field1 => array( option1_value => option1_text, ... ), filter_field2 => ... )
 	*		filter_names          : array( filter_field1 => filter_field1_name, ... )
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
@@ -46,6 +47,13 @@
 	<label class="findexactmatch" for="findexactmatch">
 			{tr}Exact&nbsp;match{/tr}
 		<input type="checkbox" name="exact_match" id="findexactmatch" {if $exact_match ne 'n'}checked="checked"{/if}/>
+	</label>
+{/if}
+
+{if !empty($find_show_sub) and $find_show_sub eq 'y'}
+	<label class="findsub">
+		{tr}and all the sub-objects{/tr}
+		<input type="checkbox" name="find_sub" id="find_sub" {if $find_sub eq 'y'}checked="checked"{/if}/>
 	</label>
 {/if}
 
