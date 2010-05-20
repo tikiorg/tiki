@@ -421,12 +421,12 @@
 							<span id="genPass">{button href="#" _onclick="genPass('genepass');runPassword(document.RegForm.genepass.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');return false;" _text="{tr}Generate a password{/tr}"}</div>
 						</td></tr>
 					{/if}
-					{if $userinfo.login neq 'admin' and empty($userinfo.userId)}
+					{if $userinfo.login neq 'admin'}
 						<tr class="formcolor">
 							<td>&nbsp;</td>
 							<td>
 								<label><input type="checkbox" name="pass_first_login"{if $userinfo.pass_confirm eq '0'} checked="checked"{/if} /> 
-								{tr}User must change password at first login{/tr}.</label>
+								{tr}User must change password at next login{/tr}.</label>
 							</td>
 						</tr>
 					{/if}

@@ -2663,24 +2663,24 @@ class UsersLib extends TikiLib
 		return "";
 	}
 
-	function change_user_password($user, $pass) {
+	function change_user_password($user, $pass, $pass_first_login=false) {
 		global $prefs;
 
 		$hash = $this->hash_pass($pass);
 		$new_pass_confirm = $this->now;
+		$provpass = $pass;
 
 		if ($prefs['feature_clear_passwords'] == 'n') {
 			$pass = '';
 		}
 
-		$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=? where binary `login`=?";
-		$result = $this->query($query, array(
-			$hash,
-			$pass,
-			$new_pass_confirm,
-			"",
-			$user
-		));
+		if ($pass_first_login) {
+			$query = 'update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=?, `pass_confirm`=? where binary `login`=?';
+			$this->query($query, array($hash, $pass, $new_pass_confirm, $provpass, 0, $user));
+		} else {
+			$query = "update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=? where binary `login`=?";
+			$this->query($query, array($hash, $pass, $new_pass_confirm, '',	$user));
+		}
 		// invalidate the cache so that after a fresh install, the admin (who has no user details at the install) can log in
 		global $cachelib; require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('user_details_'.$user);

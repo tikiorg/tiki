@@ -89,7 +89,7 @@ function batchImportUsers() {
 					$local[] = discardUser($u, tra('Password is required'));
 				}
 			}
-			if (empty($u['email']) && !$pass_first_login) {
+			if (empty($u['email'])) {
 				$local[] = discardUser($u, tra("Email is required"));
 			}
 		}
@@ -531,7 +531,8 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 					$smarty->display("error.tpl");
 					die;
 				}
-				if ($userlib->change_user_password($userinfo['login'], $newPass)) {
+				$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on');
+				if ($userlib->change_user_password($userinfo['login'], $newPass, $pass_first_login)) {
 					$tikifeedback[] = array(
 						'num' => 0,
 						'mes' => sprintf(tra("%s modified successfully.") , tra("password"))
