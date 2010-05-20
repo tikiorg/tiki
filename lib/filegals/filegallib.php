@@ -884,7 +884,7 @@ class FileGalLib extends TikiLib
 	 * @param Array &$subtree Output - The children Ids are appended
 	 * @param int $parentId The parent whichs children are to be listed
 	 */
-	function _getGalleryChildrenIdsTree( &$allIds, &$subtree, $parentId ) {
+	function _getGalleryChildrenIdsTree( $allIds, &$subtree, $parentId ) {
 		foreach ( $allIds as $v ) {
 			if ( $v['parentId'] == $parentId ) {
 				$galleryId = $v['galleryId'];
