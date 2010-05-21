@@ -37,6 +37,12 @@ if( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
 
 $smarty->assign('view_mode', isset($_REQUEST['view_mode']) ? $_REQUEST['view_mode'] : '');
 
+if (!empty($_REQUEST['reset_all_custom_tools'])) {
+	$access->check_authenticity(tra('Are you sure you want to delete all your custom tools?'));
+	Toolbar::deleteAllCustomTools();
+	$access->redirect('tiki-admin_toolbars.php');
+}
+
 if( isset($_REQUEST['save'], $_REQUEST['pref']) ) {
 	$prefName = 'toolbar_' . $section . ($comments ? '_comments' : '');
 	$tikilib->set_preference( $prefName, $_REQUEST['pref'] );
@@ -58,6 +64,8 @@ if( isset($_REQUEST['reset_global']) && $section == 'global' ) {
 
 if ( !empty($_REQUEST['save_tool']) && !empty($_REQUEST['tool_name'])) {	// input from the tool edit form
 	Toolbar::saveTool($_REQUEST['tool_name'], $_REQUEST['tool_label'], $_REQUEST['tool_icon'], $_REQUEST['tool_token'], $_REQUEST['tool_syntax'], $_REQUEST['tool_type'], $_REQUEST['tool_plugin']);
+	require_once($smarty->_get_plugin_filepath('function', 'query'));
+	header('location: ?'. smarty_function_query(array('_urlencode'=>'n'), $smarty));
 }
 
 $current = $tikilib->get_preference( 'toolbar_' . $section . ($comments ? '_comments' : '') );

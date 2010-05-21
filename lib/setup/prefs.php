@@ -1305,7 +1305,7 @@ function get_default_prefs() {
 		// full list in lib/toolbars/toolbarslib.php Toolbar::getList()
 		// cannot contain spaces, commas, forward-slash or pipe chars
 		'toolbar_global' => '
-			bold, italic, strike, - , color, - ,
+			bold, italic, underline, strike, - , color, - ,
 			wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, - ,
 			find, replace,-,  removeformat, specialchar, smiley | help, switcheditor
 			/
@@ -1313,11 +1313,11 @@ function get_default_prefs() {
 			- , table, -, wikiplugin_code, source, nonparsed, showblocks | fullscreen
 		',
 		'toolbar_global_comments' => '
-			bold, italic, strike , - , link, smiley | help
+			bold, italic, underline, strike , - , link, smiley | help
 		',
 		'toolbar_sheet' => 'addrow, addrowmulti, deleterow, -, addcolumn, addcolumnmulti, deletecolumn, -, sheetgetrange, -,
 			sheetsave, sheetrefresh, sheetfind, -,
-			bold, italic, strike, center,-, color, bgcolor, -, tikilink, nonparsed|sheetclose/',
+			bold, italic, underline, strike, center,-, color, bgcolor, -, tikilink, nonparsed|sheetclose/',
 
 		// pagination
 		'direct_pagination' => 'y',

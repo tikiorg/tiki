@@ -80,11 +80,11 @@
 	<div class="lists">
 		<div id="toolbar_edit_div" style="display:none">
 			<form name="toolbar_edit_form" method="post" action="tiki-admin_toolbars.php">
-				<h2>{tr}Edit tool{/tr} (work in progress)</h2>
+				<h2>{tr}Edit tool{/tr}</h2>
 				<fieldset>
-					<label for="tool_name">{tr}Name{/tr}:</label>
+					<label for="tool_name">{tr}Name{/tr}:<small class="dialog_tips error">&nbsp;</small></label>
 					<input type="text" name="tool_name" id="tool_name" class="text ui-widget-content ui-corner-all" />
-					<label for="tool_label">{tr}Label{/tr}:</label>
+					<label for="tool_label">{tr}Label{/tr}:<small class="dialog_tips error">&nbsp;</small></label><small class="dialog_tips error">&nbsp;</small>
 					<input type="text" name="tool_label" id="tool_label" class="text ui-widget-content ui-corner-all" />
 					<label for="tool_icon">{tr}Icon{/tr}:</label>
 					<input type="text" name="tool_icon" id="tool_icon" class="text ui-widget-content ui-corner-all" />
@@ -107,7 +107,7 @@
 						<option value="Wikiplugin">Wikiplugin</option>
 					</select>
 					<label for="tool_plugin">{tr}Plugin name{/tr}:</label>
-					<select name="tool_plugin" id="tool_plugin" class="select ui-widget-content ui-corner-all">
+					<select name="tool_plugin" id="tool_plugin" class="select ui-widget-content ui-corner-all" style="margin-bottom:0.5em">
 						<option value="">{tr}None{/tr}</option>
 						{foreach from=$plugins key=plugin item=info}
 							<option value="{$plugin|escape}">{$info.name|escape}</option>
@@ -135,5 +135,10 @@
 Drag icons back from the toolbar rows onto the full list to remove them.<br />
 Icons with <strong>bold</strong> labels are for wiki text areas, those that are <em>italic</em> are for WYSIWYG mode, and those that are <strong><em>bold and italic</em></strong> are for both.<br />
 To save the current set use the dropdown (and optionally check the comments checkbox) at the bottom of the page to set where you want these toolbars to appear, and click Save.{/tr}
+{/remarksbox}
+{remarksbox title='Note' type='note'}
+	{tr}If you are experiencing problems with this page after upgrading from Tiki 4 please use this link to delete all your customised tools:{/tr}
+	<strong>{self_link reset_all_custom_tools=y}{tr}Delete all custom tools{/tr}{/self_link}</strong>
+	<em>{tr}Warning: There is no undo!{/tr}</em>
 {/remarksbox}
 </div>
