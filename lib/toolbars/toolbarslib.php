@@ -405,7 +405,7 @@ class ToolbarSeparator extends Toolbar
 
 class ToolbarFckOnly extends Toolbar
 {
-	private function __construct( $token, $icon = '' ) // {{{
+	function __construct( $token, $icon = '' ) // {{{
 	{
 		$fck_icon_path = 'lib/fckeditor_tiki/fckeditor-icons/';
 		if (empty($icon)) {
