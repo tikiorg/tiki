@@ -177,7 +177,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '', true, array('or'=> $filterFields));
+$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc');
 if (!empty($tracker_info['showPopup'])) {
 	$popupFields = explode(',', $tracker_info['showPopup']);
 	$smarty->assign_by_ref('popupFields', $popupFields);
