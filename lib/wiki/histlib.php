@@ -417,6 +417,15 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 			$old['data'] = histlib_strip_irrelevant( $old['data'] );
 			$new['data'] = histlib_strip_irrelevant( $new['data'] );
 		}
+
+                # If the user doesn't have permission to view 
+                # source, strip out all tiki-source-based comments
+                global $tiki_p_wiki_view_source;
+                if ($tiki_p_wiki_view_source != 'y' && $_REQUEST["diff_style"] != "htmldiff") {
+                  $old["data"] = preg_replace(';~tc~(.*?)~/tc~;s', '', $old["data"]);
+                  $new["data"] = preg_replace(';~tc~(.*?)~/tc~;s', '', $new["data"]);
+                }
+
 		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);
 		$smarty->assign_by_ref('diffdata', $html);
 	}
