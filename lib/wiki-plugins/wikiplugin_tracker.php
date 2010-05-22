@@ -296,7 +296,7 @@ function wikiplugin_tracker($data, $params)
 	}
 	if (!empty($itemId)) {
 		global $logslib; include_once('lib/logs/logslib.php');
-		$logslib->add_action('Viewed', $itemId, 'trackeritem');
+		$logslib->add_action('Viewed', $itemId, 'trackeritem', $_SERVER['REQUEST_URI']);
 	}
 
 	if (isset($_REQUEST['removeattach']) && $tracker['useAttachments'] == 'y') {
