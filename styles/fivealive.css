@@ -533,6 +533,10 @@ li.login_link ul li a {
 	background: url(fivealive/topbar.jpg) repeat-x;
 }
 
+#tiki-top ul.cssmenu_horiz  {
+	margin-top: 2px;
+}
+
 /****** Menus, Links ******/
 /** CSS (suckerfish) menus **/
 
@@ -583,14 +587,18 @@ li.login_link ul li a {
 
 #tiki-top .cssmenu_horiz li a {
 	font-size: 13px;
-	padding: 17px 1em 13px;
+	padding: 17px 1em 15px;
 	background: url(fivealive/menu_divider.png) 100% 50% no-repeat;
+}
+
+#tiki-top .cssmenu_horiz li a:hover {
+	background: #1d1d1d;
 }
 
 /* ul ul top compensation for padding */
 #tiki-top .cssmenu_horiz li:hover ul,
 #tiki-top .cssmenu_horiz li.sfHover ul {
-	top: 50px;
+	top: 48px;
 }
 
 /* ul ul ul top compensation for padding */
@@ -610,6 +618,7 @@ li.login_link ul li a {
 #header .cssmenu_horiz ul li:hover a {
 	text-decoration: none;
 }
+
 #secondary_site_menu .cssmenu_horiz li a > .sf-sub-indicator {top: 13px}
 #tiki-top .cssmenu_horiz li a > .sf-sub-indicator {top: 24px}
 #header .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
