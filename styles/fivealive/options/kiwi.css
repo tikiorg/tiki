@@ -3,8 +3,8 @@
 	TikiWiki CMS/Groupware.
 */
 
-body {
-	background: #fff url(kiwi/body.png) no-repeat 50% 0;
+#header-top {
+	background: url(kiwi/siteheader.png) no-repeat -250px 0
 }
 
 a:link,
@@ -30,7 +30,7 @@ fieldset {
 }
 
 #header {
-	background: url(kiwi/header.png) -330px 0 no-repeat;
+	background: url(kiwi/siteheadertile.png) 900px 0 no-repeat;
 }
 
 #sitetitle,
@@ -97,19 +97,13 @@ span.button.highlight a {
 .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li:hover ul a  {
-	background: #bcb923;
+	background: #658838;
 }
 
 .cssmenu_vert li ul a:hover,
 .cssmenu_horiz li ul a:hover,
 #header .cssmenu_horiz li ul a:hover  {
 	background: #e1d518;
-}
-
-.cssmenu_vert li ul a:hover,
-.cssmenu_horiz li ul a:hover,
-#header .cssmenu_horiz li ul a:hover {
-	background: #dbd11a;
 }
 
 #header .cssmenu_horiz li.selected a,
