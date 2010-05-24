@@ -101,21 +101,21 @@
 
 			{else}
 				{* for the moment, no-javascript version is simply a link to the edit page where you can also upload *}
-				<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt="{tr}Upload New Version{/tr}"}</a>
+				<a href="tiki-upload_file.php?galleryId={$files[changes].galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt="{tr}Upload New Version{/tr}"}</a>
 				
 			{/if}
 
-			<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Properties{/tr}"}</a>
+			<a href="tiki-upload_file.php?galleryId={$files[changes].galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Properties{/tr}"}</a>
 			{/if}
 
 			{if $gal_info.lockable eq 'y' and $files[changes].isgal neq 1}
 				{if $files[changes].lockedby}
-					{self_link _icon='lock_delete' _menu_text=$menu_text _menu_icon=$menu_icon lock='n' fileId=$files[changes].fileId}{tr}Unlock{/tr}{/self_link}
+					{self_link _icon='lock_delete' _menu_text=$menu_text _menu_icon=$menu_icon lock='n' fileId=$files[changes].fileId galleryId=$files[changes].galleryId}{tr}Unlock{/tr}{/self_link}
 				{else}
 					{if $prefs.javascript_enabled eq 'y'}
 
 					{* with javascript, the main page will be reloaded to lock the file and change it's lockedby informations *}
-					<a href="#" onclick="window.open('{$files[changes].fileId|sefurl:file}&lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[changes].fileId lock=y}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a>
+					<a href="#" onclick="window.open('{$files[changes].fileId|sefurl:file}&lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[changes].fileId lock=y galleryId=$files[changes].galleryId}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a>
 
 					{else}
 
@@ -123,7 +123,7 @@
 					<a href="{$files[changes].fileId|sefurl:file}&amp;lock=y">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a>
 
 					{/if}
-					{self_link _icon='lock_add' _menu_text=$menu_text _menu_icon=$menu_icon lock='y' fileId=$files[changes].fileId}{tr}Lock{/tr}{/self_link}
+					{self_link _icon='lock_add' _menu_text=$menu_text _menu_icon=$menu_icon lock='y' fileId=$files[changes].fileId galleryId=$files[changes].galleryId}{tr}Lock{/tr}{/self_link}
 				{/if}
 			{/if}
 		{/if}
@@ -140,7 +140,7 @@
 
 	{if $files[changes].perms.tiki_p_admin_file_galleries eq 'y'
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $files[changes].perms.tiki_p_edit_gallery_file eq 'y')) }
-			{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon _ajax='n' remove=$files[changes].fileId}{tr}Delete{/tr}{/self_link}
+			{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon _ajax='n' remove=$files[changes].fileId galleryId=$files[changes].galleryId}{tr}Delete{/tr}{/self_link}
 	{/if}
 
 	{if $prefs.javascript_enabled eq 'y'}
