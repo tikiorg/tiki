@@ -113,6 +113,12 @@ class TransitionLib
 			array( $label, $from, $to, (int) $preserve, (int) $transitionId ) );
 	}
 
+	function updateGuards( $transitionId, array $guards ) {
+		$db = TikiDb::get();
+		$db->query( 'UPDATE `tiki_transitions` SET `guards` = ? WHERE `transitionId` = ?',
+			array( json_encode( $guards ), (int) $transitionId ) );
+	}
+
 	function removeTransition( $transitionId ) {
 		$db = TikiDb::get();
 

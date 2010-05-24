@@ -24,6 +24,7 @@ if( isset( $_SESSION['transition'] ) ) {
 }
 
 $selected_transition = null;
+$to_add = array();
 
 // Action handling
 
@@ -63,6 +64,27 @@ case 'edit':
 		$selected_transition = $transitionlib->getTransition( (int) $_REQUEST['transitionId'] );
 	}
 	break;
+case 'addguard':
+	$transitionlib = new TransitionLib( $transition_mode );
+	$selected_transition = $transitionlib->getTransition( (int) $_REQUEST['transitionId'] );
+
+	if( $selection = $jitPost->states->asArray() ) {
+		$selected_transition['guards'][] = array(
+			$_REQUEST['type'],
+			(int) $_REQUEST['count'],
+			$selection,
+		);
+		$transitionlib->updateGuards( (int) $selected_transition['transitionId'], $selected_transition['guards'] );
+	}
+	break;
+case 'removeguard':
+	$transitionlib = new TransitionLib( $transition_mode );
+	$selected_transition = $transitionlib->getTransition( (int) $_REQUEST['transitionId'] );
+
+	unset( $selected_transition['guards'][ (int) $_REQUEST['guard'] ] );
+	$selected_transition['guards'] = array_values( $selected_transition['guards'] );
+	$transitionlib->updateGuards( (int) $selected_transition['transitionId'], $selected_transition['guards'] );
+	break;
 case 'remove':
 	$transitionlib = new TransitionLib( $transition_mode );
 	check_ticket('remove_transition');
@@ -79,6 +101,15 @@ $cat_tree = $categlib->generate_cat_tree( $categories, true, array_keys( $availa
 $transitionlib = new TransitionLib( $transition_mode );
 $transitions = $transitionlib->listTransitions( array_keys( $available_states ) );
 
+if( $selected_transition ) {
+	// When a transition is selected, make sure all of its endpoints are listed in the edit panel
+	$to_add = array( $selected_transition['from'], $selected_transition['to'] );
+
+	foreach( $selected_transition['guards'] as $guard ) {
+		$to_add = array_merge( $to_add, $guard[2] );
+	}
+}
+
 foreach( $transitions as & $trans ) {
 	$trans['from_label'] = transition_label_finder( $trans['from'] );
 	$trans['to_label'] = transition_label_finder( $trans['to'] );
@@ -90,18 +121,25 @@ $_SESSION['transition'] = array(
 	'states' => $available_states,
 );
 
-// When a transition is selected, make sure all of its endpoints are listed in the edit panel
-if( $selected_transition ) {
-	$vals = array( $selected_transition['from'], $selected_transition['to'] );
+foreach( $to_add as $v ) {
+	$available_states[ $v ] = transition_label_finder( $v );
+}
 
-	foreach( $vals as $v ) {
-		$available_states[ $v ] = transition_label_finder( $v );
+$guards = array();
+if( $selected_transition ) {
+	foreach( $selected_transition['guards'] as $guard ) {
+		$guards[] = array(
+			'type' => $guard[0],
+			'count' => $guard[1],
+			'members' => array_map( 'transition_label_finder', $guard[2] ),
+		);
 	}
 }
 
 $smarty->assign( 'transition_mode', $transition_mode );
 $smarty->assign( 'available_states', $available_states );
 $smarty->assign( 'transitions', $transitions );
+$smarty->assign( 'guards', $guards );
 $smarty->assign( 'selected_transition', $selected_transition );
 
 $smarty->assign('cat_tree', $cat_tree );

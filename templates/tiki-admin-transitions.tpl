@@ -151,5 +151,73 @@
 			</p>
 		</form>
 	{/tab}
+
+	{if $selected_transition}
+		{tab name="{tr}Guards{/tr}"}
+			<table class="data">
+				<thead>
+					<tr>
+						<th>{tr}Type{/tr}</th>
+						<th>{tr}Count{/tr}</th>
+						<th>{tr}Members{/tr}</th>
+						<th>{tr}Actions{/tr}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach from=$guards item=guard key=key}
+						<tr>
+							<td>{$guard.type|escape}</td>
+							<td>{$guard.count|escape}</td>
+							<td>
+								<ul>
+									{foreach from=$guard.members item=name}
+										<li>{$name|escape}</li>
+									{/foreach}
+								</ul>
+							</td>
+							<td>
+								{self_link transitionId=$selected_transition.transitionId action=removeguard guard=$key cookietab=4}{icon _id=cross}{/self_link}
+							</td>
+						</tr>
+					{foreachelse}
+						<tr>
+							<td colspan="4">{tr}No guards on this transition.{/tr}</td>
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<form method="post" action="tiki-admin_transitions.php?action=addguard&amp;transitionId={$selected_transition.transitionId|escape}&amp;cookietab=4" style="text-align: left;">
+				<h2>{tr}New Guard{/tr}</h2>
+				<fieldset>
+					<legend>{tr}General{/tr}</legend>
+					<p>
+						<label for="guard-type">{tr}Type{/tr}</label>
+						<select id="guard-type" name="type">
+							<option value="exactly">{tr}Exactly{/tr}</option>
+							<option value="atLeast">{tr}At Least{/tr}</option>
+							<option value="atMost">{tr}At Most{/tr}</option>
+						</select>
+					</p>
+					<p>
+						<label for="guard-count">{tr}Count{/tr}</label>
+						<input type="text" name="count"/>
+					</p>
+				</fieldset>
+				<fieldset>
+					<legend>{tr}States{/tr}</legend>
+					{foreach from=$available_states item=label key=value}
+						<p>
+							<input type="checkbox" name="states[]" value="{$value|escape}" id="guard-state-{$value|escape}"/>
+							<label for="guard-state-{$value|escape}">{$label|escape}</label>
+						</p>
+					{/foreach}
+				</fieldset>
+				<p>
+					<input type="submit" value="{tr}Add{/tr}"/>
+				</p>
+			</form>
+		{/tab}
+	{/if}
+
 	{/if}
 {/tabset}
