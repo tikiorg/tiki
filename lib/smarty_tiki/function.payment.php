@@ -6,16 +6,24 @@
 // $Id$
 
 function smarty_function_payment( $params, $smarty ) {
-	global $tikilib, $user;
+	global $tikilib, $user, $prefs;
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	$invoice = (int) $params['id'];
 
 	$objectperms = Perms::get( 'payment', $invoice );
 	$info = $paymentlib->get_payment( $invoice );
-
+	
 	// Unpaid payments can be seen by anyone as long as they know the number
 	// Just like your bank account, anyone can drop money in it.
 	if( $info && $info['state'] == 'outstanding' || $info['state'] == 'overdue' || $objectperms->payment_view ) {
+		if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && $_POST['cclite_payment_amount'] == $info['amount_remaining']) {
+			global $cclitelib; require_once 'lib/payment/cclitelib.php';
+			
+			$cclitelib->pay_invoice($invoice, $info['amount'], $info['currency']);
+			$smarty->assign('ccresult', tr('Payment sent but verification not currently available. (Work in progress)'));
+		}
+
+		
 		$info['fullview'] = $objectperms->payment_view;
 		//format for display based on user short display format and timezone
 		include_once 'lib/tikilib.php';

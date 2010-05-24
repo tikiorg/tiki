@@ -13,6 +13,17 @@ function prefs_payment_list() {
 			'type' => 'flag',
 			'help' => 'Payment',
 		),
+		'payment_system' => array(
+			'name' => tra('Payment System'),
+			'description' => tra('Currently a choice between PayPal, and Cclite (in development).'),
+			'hint' => tra('PayPal: see PayPal.com - Cclite: Community currency'),
+			'type' => 'list',
+			'options' => array(
+				'paypal' => tra('PayPal'),
+				'cclite' => tra('Cclite'),
+			),
+			'dependencies' => array( 'payment_feature' ),
+		),
 		'payment_paypal_business' => array(
 			'name' => tra('Paypal Business ID'),
 			'description' => tra('Enable payments through paypal.'),
@@ -30,12 +41,13 @@ function prefs_payment_list() {
 				'https://www.paypal.com/cgi-bin/webscr' => tra('Production'),
 				'https://www.sandbox.paypal.com/cgi-bin/webscr' => tra('Sandbox'),
 			),
-			'dependencies' => array( 'payment_feature' ),
+			'dependencies' => array( 'payment_paypal_business' ),
 		),
 		'payment_paypal_ipn' => array(
 			'name' => tra('Paypal Instant Payment Notification (IPN)'),
 			'description' => tra('Enable IPN for automatic payment completion. When enabled, Paypal will ping back the site when a payment is confirmed. The payment will then be entered automatically. This may not be possible if the server is not on a public server.'),
 			'type' => 'flag',
+			'dependencies' => array( 'payment_paypal_business' ),
 		),
 		'payment_currency' => array(
 			'name' => tra('Currency'),
@@ -51,6 +63,60 @@ function prefs_payment_list() {
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
+		),
+		'payment_cclite_registry' => array(
+			'name' => tra('Cclite Registry'),
+			'description' => tra('Enable payments through Cclite.'),
+			'hint' => tra('Registry name in Cclite'),
+			'type' => 'text',
+			'dependencies' => array( 'payment_feature' ),
+			'size' => 10,
+		),
+		'payment_cclite_gateway' => array(
+			'name' => tra('Cclite Server URL'),
+			'description' => tra('Full URL of the repository.'),
+			'shorthint' => tra('e.g. https://cclite.yourdomain.org/cclite/'),
+			'type' => 'text',
+			'dependencies' => array( 'payment_cclite_registry' ),
+		),
+		'payment_cclite_merchant_key' => array(
+			'name' => tra('Cclite Merchant Key'),
+			'description' => tra('Corresponds with Merchant Key setting in Cclite'),
+			'type' => 'text',
+			'dependencies' => array( 'payment_cclite_registry' ),
+		),
+		'payment_cclite_merchant_user' => array(
+			'name' => tra('Cclite Merchant User'),
+			'description' => tra('User name in Cclite representing "the management". Defaults to "manager"'),
+			'type' => 'text',
+			'dependencies' => array( 'payment_cclite_registry' ),
+		),
+		'payment_cclite_mode' => array(
+			'name' => tra('Cclite Enable Payments'),
+			'description' => tra('Test or Live operation'),
+			'type' => 'list',
+			'options' => array(
+				'live' => tra('Live'),
+				'test' => tra('Test'),
+			),
+			'dependencies' => array( 'payment_cclite_registry' ),
+		),
+		'payment_cclite_hashing_algorithm' => array(
+			'name' => tra('Hashing Algorithm'),
+			'description' => tra('Encryption type'),
+			'type' => 'list',
+			'options' => array(
+				'sha1' => tra('SHA1'),
+				'sha256' => tra('SHA256'),
+				'sha512' => tra('SHA512'),
+			),
+			'dependencies' => array( 'payment_cclite_registry' ),
+		),
+		'payment_cclite_notify' => array(
+			'name' => tra('Cclite Payment Notification'),
+			'description' => tra('TODO'),
+			'type' => 'flag',
+			'dependencies' => array( 'payment_cclite_registry' ),
 		),
 	);
 }

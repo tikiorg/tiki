@@ -6,7 +6,7 @@
 	</tr>
 	{foreach from=$payments.data item=payment}
 		<tr>
-			<td>{$payment.description|escape}</td>
+			<td>{if $payment.paymentRequestId eq $smarty.request.invoice}<strong>{$payment.description|escape}</strong>{else}{$payment.description|escape}{/if}</td>
 			<td class="right">{$payment.amount|escape}&nbsp;{$payment.currency|escape}</td>
 			<td class="center">
 				{self_link invoice=$payment.paymentRequestId}{icon _id=page class=titletips title='{tr}View payment request{/tr}' alt='{tr}Invoice{/tr}'}{/self_link}

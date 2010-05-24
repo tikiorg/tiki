@@ -25,6 +25,14 @@ $inputConfiguration = array( array(
 		'cancel' => 'digits',
 		'note' => 'striptags',
 		'detail' => 'wikicontent',
+		'cclite_payment_amount' => 'text',	// params for cart module
+		'checkout' => 'text',
+		'update' => 'word',
+		'daconfirm' => 'word',				// ticketlib
+		'ticket' => 'word',
+	),
+	'staticKeyFiltersForArrays' => array(
+		'cart' => 'digits',	// params for cart module
 	),
 	'catchAllUnset' => null,
 ) );
@@ -46,7 +54,7 @@ if( isset( $ipn_data ) ) {
 
 	$invoice = $paypallib->get_invoice( $ipn_data );
 	if (!is_numeric($invoice) || $invoice < 1) {
-		echo 'Payment response was not correctly formatted';
+		echo 'Payment response was not correctly formatted';	// goes back to PayPal server - for debugging mainly
 		exit;
 	}
 	$info = $paymentlib->get_payment( $invoice );
@@ -56,7 +64,7 @@ if( isset( $ipn_data ) ) {
 		$amount = $paypallib->get_amount( $ipn_data );
 		$paymentlib->enter_payment( $invoice, $amount, 'paypal', $ipn_data );
 	} else {
-		echo 'Payment "%0" was not verified';
+		echo 'Payment '.$invoice.' was not verified';	// goes back to PayPal server
 		exit;
 	}
 
@@ -102,7 +110,7 @@ if( isset( $_REQUEST['cancel'] ) ) {
 	$objectperms = Perms::get( 'payment', $_REQUEST['cancel'] );
 
 	if( $objectperms->payment_admin ) {
-		ask_ticket( 'cancel_payment' );
+		$access->check_authenticity( tr('Cancel payment %0?', $_REQUEST['cancel'] ));
 		$paymentlib->cancel_payment( $_REQUEST['cancel'] );
 		$access->redirect( 'tiki-payment.php?invoice=' . $_REQUEST['cancel'], tra('Payment canceled.') );
 	}

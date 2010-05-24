@@ -1629,11 +1629,19 @@ function get_default_prefs() {
 
 		// Payment
 		'payment_feature' => 'n',
+		'payment_system' => 'paypal',
 		'payment_currency' => 'USD',
 		'payment_default_delay' => 30,
 		'payment_paypal_business' => '',
 		'payment_paypal_environment' => 'https://www.paypal.com/cgi-bin/webscr',
 		'payment_paypal_ipn' => 'y',
+		'payment_cclite_registry' => '',
+	 	'payment_cclite_gateway' => '',
+		'payment_cclite_merchant_key' => '',
+		'payment_cclite_merchant_user' => 'manager',
+		'payment_cclite_mode' => 'test',
+		'payment_cclite_notify' => 'y',
+		'payment_cclite_hashing_algorithm' => '',
 
 		// Rating
 		'rating_advanced' => 'n',
