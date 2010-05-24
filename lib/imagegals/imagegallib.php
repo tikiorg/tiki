@@ -1069,7 +1069,7 @@ where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 				if (!$sort_mode) {
 					// first image in default gallery sortorder
 					$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
-					$result=$this->query($query2,$bindvars);
+					$result=$this->query($query2, array($galleryId));
 					$res = $result->fetchRow();
 					$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
 				}

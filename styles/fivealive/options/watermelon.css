@@ -3,8 +3,8 @@
 	TikiWiki CMS/Groupware.
 */
 
-body {
-	background: #fff url(watermelon/body.png) no-repeat 50% 0;
+#header-top {
+	background: url(watermelon/siteheader.png) no-repeat -250px 0
 }
 
 a:link,
@@ -30,7 +30,7 @@ fieldset {
 }
 
 #header {
-	background: /*#7f172d*/ url(watermelon/header.png) -330px 0 no-repeat;
+	background: url(watermelon/siteheadertile.png) 900px 0 no-repeat;
 }
 
 #sitetitle,
@@ -96,7 +96,7 @@ span.button.highlight a {
 .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li:hover ul a  {
-	background: #eb6b81;
+	background: #8c1832;
 }
 
 .cssmenu_vert li ul a:hover,

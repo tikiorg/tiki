@@ -824,10 +824,9 @@ class ArtLib extends TikiLib
 		return $ret;
 	}
 
-	function list_types_byname()
-	{
-		$query = 'select * from `tiki_article_types`';
-		$result = $this->query($query, array());
+	function list_types_byname() {
+		$query = "select * from `tiki_article_types` order by `type` asc";
+		$result = $this->query($query,array());
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {

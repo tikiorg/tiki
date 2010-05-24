@@ -13,7 +13,6 @@
 body {
 	font: 76%/1.5em Arial, Helvetica, sans-serif;
 	color: #000;
-	background: #fff url(fivealive/options/blueberry/body.png) no-repeat 50% 0;
 }
 
 body.filegal_popup {
@@ -31,7 +30,12 @@ body.fixed_width #fixedwidth {
 	width: 100%;
 }
 
-#header,
+#header {
+	background: url(fivealive/options/blueberry/headertile.png) 900px 0 no-repeat;
+}
+
+/*#header-top,*/
+#tiki-top .wrapper,
 #middle {
 	display: table;
 	margin: auto;
@@ -41,8 +45,16 @@ body.fixed_width #fixedwidth {
 	background: transparent;
 }
 
-/*#fixedwidth[id]*/
-#header[id],
+#header-top {
+/*	display: table;*/
+	margin: auto;
+	margin-top: 0;
+	margin-bottom: 0;
+	width: 990px;
+	background: transparent;
+}
+
+#fixedwidth[id]
 #middle[id] {
 	height: auto;
 }
@@ -111,7 +123,7 @@ body.fixed_width #fixedwidth {
 #loadstats small {
 	text-align: left !important;
 	margin: auto;
-	width: 990px;
+	width: 980px;
 	display: block;
 }
 
@@ -355,13 +367,11 @@ select {
 }
 
 /***** Site Header & Identity *****/
-#header {
-	background: url(fivealive/options/blueberry/header.png) -350px 0 no-repeat;
-}
 
 #header-top {
-	height: 203px;
+	min-height: 170px;
 	position: relative;
+	background: url(fivealive/options/blueberry/siteheader.jpg) no-repeat -250px 0;
 }
 
 #quickadmin {
@@ -394,13 +404,14 @@ select {
 
 #sitesearchbar {
 	color: #fff;
-	height: 60px;
-	line-height: 60px;
+	height: 45px;
+	line-height: 45px;
 	width: 200px;
+	margin-right: 10px;
 }
 
 #sitesearchbar form {
-	background: url(fivealive/searchbar.png) no-repeat 100% 16px;
+	background: url(fivealive/searchform.png) no-repeat 100% 12px;
 }
 
 #sitesearchbar label.findtitle {
@@ -430,13 +441,13 @@ select {
 }
 
 div#sitelogo img {
-	margin-top: 24px; /* if you use top most menu bar, override this in your custom CSS code with margin-top: 0 */
+	margin-top: 0;
 }
 
 #sitetitles {
 	position: absolute;
-	top: 90px;
-	left: 365px;
+	top: 75px;
+	left: 415px;
 	font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
 }
 
@@ -462,6 +473,10 @@ div#sitelogo img {
 }
 
 /* Sitelogin Popup */
+
+#siteloginbar_popup {
+	right: 10px;
+}
 
 #siteloginbar_popup .tabmark {
 	border: 1px solid #696969;
@@ -514,8 +529,12 @@ li.login_link ul li a {
 /* end Sitelogin Popup */
 
 #tiki-top {
-	height: 72px;
-	background: url(fivealive/tiki-top.png) repeat-x;
+	height: 50px;
+	background: url(fivealive/topbar.jpg) repeat-x;
+}
+
+#tiki-top ul.cssmenu_horiz  {
+	margin-top: 2px;
 }
 
 /****** Menus, Links ******/
@@ -526,7 +545,7 @@ li.login_link ul li a {
 .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li ul a,
 #header .cssmenu_horiz li:hover ul a {
-	background: #1172a3;
+	background: #153c64;
 	font-weight: normal;
 	text-decoration: none;
 	padding: 8px 1em;
@@ -553,16 +572,33 @@ li.login_link ul li a {
 	color: #fff;
 }
 
+#header #secondary_site_menu .cssmenu_horiz li a {
+	font-weight: 400;
+	padding: 8px .7em;
+}
+
+#header #secondary_site_menu .cssmenu_horiz li.menuSection a {
+	padding-right: 25px;
+}
+
+#secondary_site_menu .cssmenu_horiz li.menuSection:last-child ul {
+	margin-left: -.5em;
+}
+
 #tiki-top .cssmenu_horiz li a {
 	font-size: 13px;
-	padding: 20px 1em;
+	padding: 17px 1em 15px;
 	background: url(fivealive/menu_divider.png) 100% 50% no-repeat;
+}
+
+#tiki-top .cssmenu_horiz li a:hover {
+	background: #1d1d1d;
 }
 
 /* ul ul top compensation for padding */
 #tiki-top .cssmenu_horiz li:hover ul,
 #tiki-top .cssmenu_horiz li.sfHover ul {
-	top: 57px;
+	top: 48px;
 }
 
 /* ul ul ul top compensation for padding */
@@ -583,7 +619,8 @@ li.login_link ul li a {
 	text-decoration: none;
 }
 
-#tiki-top .cssmenu_horiz li a > .sf-sub-indicator {top: 30px}
+#secondary_site_menu .cssmenu_horiz li a > .sf-sub-indicator {top: 13px}
+#tiki-top .cssmenu_horiz li a > .sf-sub-indicator {top: 24px}
 #header .cssmenu_horiz li li a > .sf-sub-indicator {top: 9px}
 #col2 .cssmenu_vert li a > .sf-sub-indicator {top: 5px}
 

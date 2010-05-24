@@ -1730,5 +1730,15 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'keywords' => 'social networks',
 		),
+		'feature_group_transition' => array(
+			'name' => tra('Group Transition'),
+			'description' => tra('Enables transitions for users between different groups. Transitions will create a user approval workflow.'),
+			'type' => 'flag',
+		),
+		'feature_category_transition' => array(
+			'name' => tra('Category Transition'),
+			'description' => tra('Enables transitions on objects between different categories. Transitions will create a document workflow.'),
+			'type' => 'flag',
+		),
 	);
 }

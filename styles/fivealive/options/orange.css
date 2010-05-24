@@ -3,8 +3,8 @@
 	TikiWiki CMS/Groupware.
 */
 
-body {
-	background: #fff url(orange/body.png) no-repeat 50% 0;
+#header-top {
+	background: url(orange/siteheader.png) no-repeat -250px 0
 }
 
 a:link,
@@ -29,7 +29,7 @@ fieldset {
 }
 
 #header {
-	background: url(orange/header.png) -330px 0 no-repeat;
+	background: url(orange/siteheadertile.png) 900px 0 no-repeat;
 }
 
 #sitetitle,

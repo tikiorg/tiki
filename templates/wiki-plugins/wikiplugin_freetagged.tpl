@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if isset($objects) && count($objects) gt 0}
-<ul class="freetagged">
+<ul class="freetagged clearfix">
 	{foreach item=row from=$objects}
 		<li class="{$row.type|stringfix:' ':'_'}">
 			<h{$h_level}><a href="{$row.href|escape}">{$row.name|escape}</a></h{$h_level}>
