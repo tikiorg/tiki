@@ -43,10 +43,5 @@ function module_forums_last_posts( $mod_reference, $module_params ) {
 	
 	$replyprefix = tra("Re:");
 	
-	if ($ranking) {
-		foreach ($ranking["data"] as &$post)
-			if (isset($post))
-				$post["name"] = str_replace($replyprefix, "", $post["name"]);
-	}
 	$smarty->assign('modForumsLastPosts', $ranking["data"]);
 }

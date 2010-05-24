@@ -2,7 +2,7 @@
 {modules_list list=$modForumsLastPosts nonums=$nonums}
 	{section name=ix loop=$modForumsLastPosts}
 		<li>
-			<a class="linkmodule" href="{$modForumsLastPosts[ix].href}" title="{$modForumsLastPosts[ix].date|tiki_short_datetime}, {tr}by{/tr} {if $modForumsLastPosts[ix].user ne ''}{$modForumsLastPosts[ix].user}{else}{tr}Anonymous{/tr}{/if}">
+			<a class="linkmodule" href="{$modForumsLastPosts[ix].href}" title="{$modForumsLastPosts[ix].date|tiki_short_datetime}, {tr}by{/tr} {if $modForumsLastPosts[ix].user ne ''}{$modForumsLastPosts[ix].user}{else}{tr}Anonymous{/tr}{/if}{if !empty($modForumsLastPosts[ix].title) ne ''} - {$modForumsLastPosts[ix].title}{/if}">
 				{$modForumsLastPosts[ix].name|escape}
 			</a>
 		</li>
