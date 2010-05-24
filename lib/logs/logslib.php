@@ -145,7 +145,12 @@ class LogsLib extends TikiLib
 			$date = $this->now;
 		}
 		if ($who == '') {
-			$who = $user;
+			global $tokenlib;
+			if ($prefs['auth_token_access'] == 'y' && empty($user) && !empty($tokenlib) && $tokenlib->ok) {
+				$user = '§TOKEN§';
+			} else {
+				$who = $user;
+			}
 		}
 		if ($ip == '') {
 			$ip = $this->get_ip_address();

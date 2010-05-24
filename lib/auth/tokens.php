@@ -11,6 +11,7 @@ class AuthTokens
 	private $db;
 	private $maxTimeout = 3600;
 	private $maxHits = 1;
+	public $ok = false;
 
 	public static function build( $prefs ) {
 		return new AuthTokens( TikiDb::get(), array(
@@ -47,6 +48,7 @@ class AuthTokens
 		}
 
 		$this->db->query( 'UPDATE `tiki_auth_tokens` SET `hits` = `hits` - 1 WHERE `tokenId` = ?', array( $data['tokenId'] ) );
+		$this->ok = true;
 		return (array) json_decode( $data['groups'], true );
 	}
 
