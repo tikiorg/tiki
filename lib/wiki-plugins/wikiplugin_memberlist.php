@@ -121,7 +121,7 @@ function wikiplugin_memberlist_get_group_details( $groups ) {
 			if( $perms->group_view_members ) {
 				$validGroups[$groupName]['members'] = wikiplugin_memberlist_get_members( $groupName );
 
-				if( $prefs['feature_group_transition'] ) {
+				if( $prefs['feature_group_transition'] == 'y' ) {
 					require_once 'lib/transitionlib.php';
 					$transitionlib = new TransitionLib( 'group' );
 					$validGroups[$groupName]['transitions'] = array();
