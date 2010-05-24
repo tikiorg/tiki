@@ -79,7 +79,7 @@ class PaymentLib extends TikiDb_Bridge
 			) );
 
 			$info['payments'] = array();
-			$payments = $this->fetchAll( 'SELECT * FROM `tiki_payment_received` WHERE `paymentRequestId` = ?' .  $this->get_user_sql_condition() . 'ORDER BY `payment_date` DESC', array( $id ) );
+			$payments = $this->fetchAll( 'SELECT * FROM `tiki_payment_received` WHERE `paymentRequestId` = ?' .  $this->get_user_sql_condition() . ' ORDER BY `payment_date` DESC', array( $id ) );
 			include_once 'lib/tikilib.php';
 			foreach( $payments as $payment ) {
 				$payment['details'] = json_decode( $payment['details'], true );
