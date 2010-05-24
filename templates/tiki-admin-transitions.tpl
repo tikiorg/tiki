@@ -22,7 +22,21 @@
 
 			<fieldset id="transition-group-selection">
 				<legend>{tr}Group Selection{/tr}</legend>
-				TODO
+				<ul id="transition-group-list">
+					{if $transition_mode eq 'group'}
+						{foreach from=$available_states item=state}
+							<li>
+								<input type="hidden" name="groups[]" value="{$state|escape}"/>
+								{$state|escape}
+								{icon _id=cross class="removeitem"}
+							</li>
+						{/foreach}
+					{/if}
+				</ul>
+				<p>
+					<label for="transition-group-auto">{tr}Group name{/tr}</label>
+					<input type="text" id="transition-group-auto"/>
+				</p>
 			</fieldset>
 
 			<p>
@@ -37,6 +51,27 @@
 					blocks.filter( '#transition-' + $jq(this).val() + '-selection' ).show();
 				}
 			} ).change();
+
+			$jq('#transition-group-auto')
+				.tiki('autocomplete','groupname')
+				.keypress( function( e ) {
+					if( e.which !== 13 ) {
+						return;
+					}
+					e.preventDefault();
+					if( $jq(this).val() === '' ) {
+						return;
+					}
+					$jq('#transition-group-list').append( 
+						$jq('<li/>').text( $jq(this).val() )
+							.append( $jq('<input type="hidden" name="groups[]"/>').val( $jq(this).val() ) )
+							.append( $jq('{{icon _id=cross class="removeitem"}}') )
+					);
+					$jq(this).val('');
+				} );
+			$jq('#transition-group-list .removeitem').live( 'click', function( e ) {
+				$jq(this).parent().remove();
+			} );
 		{/jq}
 	{/tab}
 	{if $available_states|@count > 0}
@@ -57,7 +92,7 @@
 						<td>{$trans.from_label|escape} {if $trans.preserve} - <em>{tr}preserved{/tr}</em>{/if}</td>
 						<td>{$trans.to_label|escape}</td>
 						<td>
-							{self_link transitionId=$trans.transitionId action=edit}{icon _id=page_edit alt="{tr}Edit{/tr}"}{/self_link}
+							{self_link transitionId=$trans.transitionId action=edit cookietab=3}{icon _id=page_edit alt="{tr}Edit{/tr}"}{/self_link}
 							{self_link transitionId=$trans.transitionId action=remove}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
 						</td>
 					</tr>
@@ -68,8 +103,10 @@
 				{/foreach}
 			</tbody>
 		</table>
+	{/tab}
 		
-		<form method="post" action="tiki-admin_transitions.php?action={if $selected_transition}edit{else}new{/if}" style="text-align: left;">
+	{tab name="{tr}New / Edit{/tr}"}
+		<form method="post" action="tiki-admin_transitions.php?action={if $selected_transition}edit{else}new{/if}&amp;cookietab=2" style="text-align: left;">
 			{if $selected_transition}
 				<h2>
 					{tr 0=$selected_transition.name}Edit <em>%0</em>{/tr}

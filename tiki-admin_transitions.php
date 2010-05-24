@@ -42,7 +42,12 @@ case 'subset':
 			$available_states = array();
 		}
 	} else {
-		// TODO
+		$jitPost->replaceFilter( 'groups', 'groupname' );
+		if( $selection = $jitPost->groups->asArray() ) {
+			$available_states = array_combine( $selection, $selection );
+		} else {
+			$available_states = array();
+		}
 	}
 	break;
 case 'new':
