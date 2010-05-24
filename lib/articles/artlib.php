@@ -586,7 +586,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 	}
 
 	function list_types_byname() {
-		$query = "select * from `tiki_article_types`";
+		$query = "select * from `tiki_article_types` order by `type` asc";
 		$result = $this->query($query,array());
 		$ret = array();
 

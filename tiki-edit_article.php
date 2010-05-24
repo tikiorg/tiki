@@ -75,7 +75,6 @@ $smarty->assign('image_y', $prefs['article_image_size_y']);
 $smarty->assign('heading', '');
 $smarty->assign('body', '');
 $smarty->assign('author', '');
-$smarty->assign('type', 'Article');
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
 $smarty->assign('emails', '');
@@ -465,6 +464,14 @@ $smarty->assign_by_ref('topics', $topics);
 
 // get list of valid types
 $types = $artlib->list_types_byname();
+if (array($types)) {
+	foreach ($types as $type=>$val) {
+		break;
+	}
+} else {
+	$type = '';
+}
+$smarty->assign('type', $type);
 if ($prefs["article_custom_attributes"] == 'y') {
 	$article_attributes = $artlib->get_article_attributes($_REQUEST["articleId"]);	
 	$smarty->assign('article_attributes', $article_attributes);
