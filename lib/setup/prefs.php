@@ -231,6 +231,7 @@ function get_default_prefs() {
 		'wikiplugin_fancylist' => 'y',
 		'wikiplugin_fancytable' => 'y',
 		'wikiplugin_file' => 'y',
+		'wikiplugin_filelink' => 'y',
 		'wikiplugin_files' => 'y',
 		'wikiplugin_flash' => 'y',
 		'wikiplugin_footnote' => 'n',
