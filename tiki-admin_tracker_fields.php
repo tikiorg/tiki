@@ -103,6 +103,7 @@ $smarty->assign_by_ref('visibleBy', $info['visibleBy']);
 $smarty->assign_by_ref('editableBy', $info['editableBy']);
 $smarty->assign('validation', $info['validation']);
 $smarty->assign('validationParam', $info['validationParam']);
+$smarty->assign('validationMessage', $info['validationMessage']);
 if (isset($_REQUEST["remove"]) and ($tracker_info['useRatings'] != 'y' or $info['name'] != 'Rating')) {
 	$access->check_authenticity();
 	$trklib->remove_tracker_field($_REQUEST["remove"], $_REQUEST["trackerId"]);
@@ -183,7 +184,7 @@ function replace_tracker_from_request($tracker_info) {
 		$_REQUEST['itemChoices'] = '';
 	}
 	//$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
-	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description'], $isMultilingual, $_REQUEST["itemChoices"], $_REQUEST['errorMsg'], $_REQUEST['visibleBy'], $_REQUEST['editableBy'], $_REQUEST['descriptionIsParsed'], $_REQUEST['validation'], $_REQUEST['validationParam']);
+	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description'], $isMultilingual, $_REQUEST["itemChoices"], $_REQUEST['errorMsg'], $_REQUEST['visibleBy'], $_REQUEST['editableBy'], $_REQUEST['descriptionIsParsed'], $_REQUEST['validation'], $_REQUEST['validationParam'], $_REQUEST['validationMessage']);
 	$logslib->add_log('admintrackerfields', 'changed or created tracker field ' . $_REQUEST["name"] . ' in tracker ' . $tracker_info['name']);
 	$smarty->assign('fieldId', 0);
 	$smarty->assign('name', '');
@@ -205,6 +206,7 @@ function replace_tracker_from_request($tracker_info) {
 	$smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"]) + 1);
 	$smarty->assign('validation', '');
 	$smarty->assign('validationParam', '');
+	$smarty->assign('validationMessage', '');
 }
 if (isset($_REQUEST['refresh']) && isset($_REQUEST['exportAll'])) {
 	$smarty->assign('export_all', 'y');

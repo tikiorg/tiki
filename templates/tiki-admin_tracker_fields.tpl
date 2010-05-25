@@ -168,6 +168,7 @@
 </select>
 </td></tr>
 <tr class="formcolor"><td>{tr}Validation parameter{/tr}:</td><td><input type="text" size="30" name="validationParam" value="{$validationParam}" /></td></tr>
+<tr class="formcolor"><td>{tr}Validation error message{/tr}:</td><td><input type="text" size="40" name="validationMessage" value="{$validationMessage}" /></td></tr>
 
 <tr class="formcolor"><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>

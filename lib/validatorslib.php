@@ -22,13 +22,13 @@ class Validators
 		}
 	}
 	
-	function validateInput( $validator, $parameter ) {
+	function validateInput( $validator, $parameter, $message = '' ) {
 		include_once('lib/validators/validator_' . $validator . '.php');
 		if (!function_exists("validator_$validator") || !isset($this->input)) {
 			return false;
 		}
 		$func_name = "validator_$validator";
-		$result = $func_name($this->input, $parameter);
+		$result = $func_name($this->input, $parameter, $message);
 		return $result;
 	}
 	
@@ -57,6 +57,7 @@ class Validators
 					$validationjs .= 'data: { ';
 					$validationjs .= 'validator: "' .$field_value['validation'].'", ';
 					$validationjs .= 'parameter: "' .$field_value['validationParam'].'", ';
+					$validationjs .= 'message: "' .$field_value['validationMessage'].'", ';
 					$validationjs .= 'input: function() { ';
 					$validationjs .= 'return $jq("#'.$prefix.$field_value['fieldId'].'").val(); ';
 					$validationjs .= '} } } ';
