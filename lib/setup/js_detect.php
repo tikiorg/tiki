@@ -74,6 +74,7 @@ jqueryTiki.cboxCurrent = "{current} / {total}";
 jqueryTiki.sheet = '.($prefs['feature_jquery_sheet'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.carousel = '.($prefs['feature_jquery_carousel'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.jqs5 = '.($prefs['feature_jquery_jqs5'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.validate = '.($prefs['feature_jquery_validation'] == 'y' ? 'true' : 'false') . ';
 
 jqueryTiki.effect = "'.$prefs['jquery_effect'].'";				// Default effect
 jqueryTiki.effect_direction = "'.$prefs['jquery_effect_direction'].'";	// "horizontal" | "vertical" etc

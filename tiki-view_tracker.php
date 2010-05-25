@@ -750,6 +750,15 @@ if (isset($tracker_info['useRatings']) && $tracker_info['useRatings'] == 'y' && 
 setcookie('tab', $cookietab);
 $smarty->assign('cookietab', $cookietab);
 ask_ticket('view-trackers');
+
+// Generate validation js
+if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
+	global $validatorslib;
+	include_once('lib/validatorslib.php');
+	$validationjs = $validatorslib->generateTrackerValidateJS( $fields['data'] );
+	$smarty->assign('validationjs', $validationjs);
+}
+
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker.tpl');
 $smarty->display("tiki.tpl");

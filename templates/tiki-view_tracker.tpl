@@ -230,7 +230,14 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {if $tiki_p_create_tracker_items eq 'y'}
 {tab name="{tr}Insert New Item{/tr}"}
 {* --------------------------------------------------------------------------------- tab with edit --- *}
-<form enctype="multipart/form-data" action="tiki-view_tracker.php" method="post">
+{jq}
+$jq("#newItemForm").validate({
+	rules: {
+		{{$validationjs}}
+	}
+});
+{/jq}
+<form enctype="multipart/form-data" action="tiki-view_tracker.php" id="newItemForm" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 
 <h2>{tr}Insert New Item{/tr}</h2>

@@ -210,6 +210,7 @@
 					{preference name=feature_jquery_reflection}
 					{preference name=feature_jquery_ui}
 					{preference name=feature_jquery_ui_theme}
+					{preference name=feature_jquery_validation}
 
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">

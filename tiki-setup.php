@@ -264,6 +264,10 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile( 'lib/jquery/infinitecarousel/jquery.infinitecarousel2.js' );
 	}
 
+	if( $prefs['feature_jquery_validation'] == 'y' ) {
+		$headerlib->add_jsfile( 'lib/jquery/jquery-validate/jquery.validate.min.js' );
+	}
+	
 	$headerlib->add_jsfile( 'lib/jquery/jquery-ui/external/jquery.cookie.js' );
 	$headerlib->add_jsfile( 'lib/jquery/jquery.async.js', 10 );
 	$headerlib->add_jsfile( 'lib/jquery/treeTable/src/javascripts/jquery.treeTable.js' );

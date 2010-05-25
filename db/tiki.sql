@@ -2192,6 +2192,8 @@ CREATE TABLE `tiki_tracker_fields` (
   `visibleBy` text,
   `editableBy` text,
   `descriptionIsParsed` char(1) default 'n',
+  `validation` varchar(255) default '',
+  `validationParam` varchar(255) default '',
   PRIMARY KEY (`fieldId`),
   INDEX `trackerId` (`trackerId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;

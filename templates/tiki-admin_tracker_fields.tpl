@@ -159,6 +159,16 @@
 {/foreach}
 </td></tr>
 
+<tr class="formcolor"><td>{tr}Validation{/tr}:</td><td>
+<select name="validation">
+<option value="" {if $validation eq ''} selected="selected"{/if}>{tr}None{/tr}</option>
+{foreach item=validator from=$validators}
+<option value="{$validator|escape}" {if $validation eq $validator} selected="selected"{/if}>{$validator|escape}</option>
+{/foreach}
+</select>
+</td></tr>
+<tr class="formcolor"><td>{tr}Validation parameter{/tr}:</td><td><input type="text" size="30" name="validationParam" value="{$validationParam}" /></td></tr>
+
 <tr class="formcolor"><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Is column visible when listing tracker items?{/tr}</td><td><input type="checkbox" name="isTblVisible" {if empty($fieldId) || $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>

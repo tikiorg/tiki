@@ -347,6 +347,13 @@ function wikiplugin_tracker($data, $params)
 
 			if ($thisIsThePlugin) {
 				/* ------------------------------------- Recup all values from REQUEST -------------- */
+				foreach ($flds['data'] as $fl) {
+					// First convert track_xx to array (need to be up here before setting autosave fields)
+					$incomingTrackName = 'track_' . $fl["fieldId"];
+					if (isset($_REQUEST[$incomingTrackName])) {
+						$_REQUEST['track'][$fl["fieldId"]] = $_REQUEST[$incomingTrackName];
+					}
+				}
 				if (!empty($_REQUEST['autosavefields'])) {
 					$autosavefields = explode(':', $_REQUEST['autosavefields']);
 					$autosavevalues = explode(':', $_REQUEST['autosavevalues']);
@@ -738,7 +745,15 @@ function wikiplugin_tracker($data, $params)
 			if (!empty($page))
 				$back .= '~np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
-			$back.= '<form enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			$smarty->assign('trackerEditFormId', $iTRACKER);
+			if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
+				global $validatorslib;
+				include_once('lib/validatorslib.php');
+				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], "track_" );
+				$smarty->assign('validationjs', $validationjs);
+				$back .= $smarty->fetch('wiki-plugins/tracker_validator.tpl');
+			}
+			$back .= '<form id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
 			$back .= '<input type="hidden" name="refresh" value="1" />';
 			if (isset($_REQUEST['page']))
@@ -786,7 +801,7 @@ function wikiplugin_tracker($data, $params)
 			}
 			foreach ($flds['data'] as $i=>$f) { // collect additional infos
 				if (in_array($f['fieldId'], $outf)) {
-					$flds['data'][$i]['ins_id'] = ($f['type'] == 'e')?'ins_cat_'.$f['fieldId']: (($f['type'] == 'f')?'track_'.$f['fieldId']: 'track['.$f['fieldId'].']');
+					$flds['data'][$i]['ins_id'] = ($f['type'] == 'e')?'ins_cat_'.$f['fieldId']: 'track_'.$f['fieldId'];
 					if ($f['isHidden'] == 'c' && !empty($itemId) && !isset($item['creator'])) {
 						$item['creator'] = $trklib->get_item_creator($trackerId, $itemId);
 					}

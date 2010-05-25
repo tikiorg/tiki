@@ -1318,6 +1318,12 @@ function prefs_feature_list() {
 				'vader' => 'vader',
 			), 
 		),
+		'feature_jquery_validation' => array(
+			'name' => tra('Validation'),
+			'type' => 'flag',
+			'description' => tra('Provides various validation possibilities like in Trackers.'),
+			'help' => 'JQuery#Validation',
+		),
 		'feature_jquery_sheet' => array(
 			'name' => tra('JQuery Sheet'),
 			'type' => 'flag',

@@ -182,6 +182,14 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {tab name="{tr}Edit/Delete{/tr}"}
 <h2>{tr}Edit Item{/tr}</h2>
 
+{jq}
+$jq("#editItemForm").validate({
+	rules: {
+		{{$validationjs}}
+	}
+});
+{/jq}
+
 {if  $tiki_p_admin_trackers eq 'y' and !empty($trackers)}	
 	<form>
 	<input type="hidden" name="itemId" value="{$itemId}" />
@@ -196,7 +204,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 	</form>
 {/if}
 
-<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
+<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post" id="editItemForm">
 {if $special}
 <input type="hidden" name="view" value=" {$special}" />
 {else}

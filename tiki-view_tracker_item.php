@@ -1154,6 +1154,14 @@ if ($prefs['feature_ajax'] == 'y') {
 global $logslib; include_once('lib/logs/logslib.php');
 $logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
 
+// Generate validation js
+if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
+	global $validatorslib;
+	include_once('lib/validatorslib.php');
+	$validationjs = $validatorslib->generateTrackerValidateJS( $fields['data'] );
+	$smarty->assign('validationjs', $validationjs);
+}
+
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 

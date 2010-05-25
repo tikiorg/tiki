@@ -1542,6 +1542,7 @@ function get_default_prefs() {
 		'feature_jquery_jqs5' => 'n',			// slide-show TODO: implement (more)
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
 		'feature_jquery_carousel' => 'n',		// slideshow/carousel for file gals etc
+		'feature_jquery_validation' => 'y',		// validation on Trackers etc
 
 		// SefUrl
 		'feature_sefurl' => 'n',
