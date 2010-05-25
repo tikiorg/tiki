@@ -1326,7 +1326,7 @@ function prefs_feature_list() {
 			'name' => tra('JQuery Sheet'),
 			'type' => 'flag',
 			'help' => 'JQuery#Sheet',
-			'description' => tra('Experimental implementation of jQuery.sheet - data remains compatible with previous Tiki Sheets'),
+			'description' => tra('Experimental implementation of jQuery.sheet spreadsheet - data remains compatible with previous Tiki Sheets'),
 			'dependencies' => array(
 				'feature_sheet',
 			),
