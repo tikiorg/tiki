@@ -115,10 +115,7 @@ function wikiplugin_fancytable($data, $params) {
 			$head = preg_replace($patterns, $replace , $head);	
 		}	
 		if (!empty($headclass)) {
-			if (strpos($headclass,'"')) {
-				$headclass = str_replace('"',"'",$class);
-			}
-			$tdhdr = "\r\t\t\t<th $headclass\"";
+			$tdhdr = "\r\t\t\t<th class=\"$headclass\"";
 		} else {
 			$tdhdr = "\r\t\t\t<th";
 		}
