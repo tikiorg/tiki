@@ -73,27 +73,34 @@ class CCLiteLib extends TikiDb_Bridge
 	}
 
 	function pay_invoice($invoice, $amount, $currency = '') {
-		global $user, $prefs;
+		global $user, $prefs, $paymentlib;
+		require_once 'lib/payment/paymentlib.php';
 
 		if (empty($currency)) {
 			$currency = $prefs['payment_currency'];
 		}
 		$res = $this->cclite_send_request('pay', $prefs['payment_cclite_merchant_user'], $prefs['payment_cclite_registry'], $amount, $currency);
+		
+		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
+			$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
+		}
 
 		return $res;
 	}
 
 	/**
 	 * Adapted from cclite 0.7 drupal gateway (example)
-	 * @arg_list[0] = mode {recentsummary|block|pay|adduser|modifyuser}
-	 * @arg_list[1] = user
-	 * @arg_list[2] = registry
-	 * @arg_list[3] = ammount
-	 * @arg_list[4] = currency
-	 * @arg_list[5] = other?
-	 *
-	 * @return ??
+	 * 
+	 * @command		recent|summary|pay|adduser|modifyuser|debit
+	 * @other_user	destination for payment etc
+	 * @registry	cclite registry
+	 * @amount		amount
+	 * @currency	currency (same as currency "name" in cclite (not "code" yet)
+	 * @other		unused
+	 * 
+	 * @return		result from cclite server
 	 */
+
 	private function cclite_send_request( $command, $other_user = '', $registry = '', $amount = 0, $currency = '', $other = '') {
 		global $user, $prefs;
 		$username = $user;
@@ -134,11 +141,6 @@ class CCLiteLib extends TikiDb_Bridge
 			case 'summary':
 				$copt_url = "$cclite_base_url/summary";
 				break;
-
-			case 'block':
-				$copt_url = "$cclite_base_url/summary";
-				break;
-
 			case 'pay':
 				//if (! user_access('make payments')) {
 				//    return "$username not authorised to make payments" ;

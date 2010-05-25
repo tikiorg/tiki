@@ -95,6 +95,10 @@ class CartLib
 		return 0;
 	}
 
+	function empty_cart() {
+		$_SESSION['cart'] = array();
+	}
+
 	private function get_behaviors() {
 		$behaviors = array();
 

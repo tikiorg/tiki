@@ -139,7 +139,7 @@ class PaymentLib extends TikiDb_Bridge
 			}
 
 			$data = json_encode( $data );
-			$this->query( 'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details`, `user` ) VALUES( ?, NOW(), ?, ?, ? )', array(
+			$this->query( 'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details`, `user` ) VALUES( ?, NOW(), ?, ?, ?, ? )', array(
 				$invoice, $amount, $type, $data, $user
 			) );
 			$this->query( 'UPDATE `tiki_payment_requests` SET `amount_paid` = `amount_paid` + ? WHERE `paymentRequestId` = ?' .  $this->get_user_sql_condition(), array( $amount, $invoice ) );

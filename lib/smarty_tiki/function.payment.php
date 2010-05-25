@@ -12,15 +12,26 @@ function smarty_function_payment( $params, $smarty ) {
 
 	$objectperms = Perms::get( 'payment', $invoice );
 	$info = $paymentlib->get_payment( $invoice );
+	$smarty->assign('ccresult_ok', false);
 	
 	// Unpaid payments can be seen by anyone as long as they know the number
 	// Just like your bank account, anyone can drop money in it.
 	if( $info && $info['state'] == 'outstanding' || $info['state'] == 'overdue' || $objectperms->payment_view ) {
 		if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && $_POST['cclite_payment_amount'] == $info['amount_remaining']) {
-			global $cclitelib; require_once 'lib/payment/cclitelib.php';
+			global $access, $cclitelib, $cartlib;
+			require_once 'lib/payment/cclitelib.php';
+			require_once 'lib/payment/cartlib.php';
 			
-			$cclitelib->pay_invoice($invoice, $info['amount'], $info['currency']);
-			$smarty->assign('ccresult', tr('Payment sent but verification not currently available. (Work in progress)'));
+			//$access->check_authenticity( tr('Transfer currency? %0 %1?', $info['amount'], $info['currency'] ));
+			
+			$result = $cclitelib->pay_invoice($invoice, $info['amount'], $info['currency']);
+			if (!empty($result)) {
+				$smarty->assign('ccresult', $result);
+				$smarty->assign('ccresult_ok', (strpos($result, 'Transaction Accepted') !== false));
+				$cartlib->empty_cart();
+			} else {
+				$smarty->assign('ccresult', tr('Payment sent but verification not currently available. (Work in progress)'));
+			}
 		}
 
 		

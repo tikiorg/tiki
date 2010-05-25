@@ -12,25 +12,40 @@
 		{if ( $payment_info.state eq 'outstanding' || $payment_info.state eq 'overdue' )}
 			{if $prefs.payment_system eq 'paypal' && $prefs.payment_paypal_business neq ''}
 				<form action="{$prefs.payment_paypal_environment|escape}" method="post">
-					<input type="hidden" name="business" value="{$prefs.payment_paypal_business|escape}"/>
-					<input type="hidden" name="cmd" value="_xclick"/>
-					<input type="hidden" name="item_name" value="{$payment_info.description|escape}"/>
-					<input type="hidden" name="amount" value="{$payment_info.amount_remaining_raw|escape}"/>
-					<input type="hidden" name="currency_code" value="{$prefs.payment_currency|escape}"/>
-					<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}"/>
-					<input type="hidden" name="return" value="{$payment_info.url|escape}"/>
+					<input type="hidden" name="business" value="{$prefs.payment_paypal_business|escape}" />
+					<input type="hidden" name="cmd" value="_xclick" />
+					<input type="hidden" name="item_name" value="{$payment_info.description|escape}" />
+					<input type="hidden" name="amount" value="{$payment_info.amount_remaining_raw|escape}" />
+					<input type="hidden" name="currency_code" value="{$prefs.payment_currency|escape}" />
+					<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
+					<input type="hidden" name="return" value="{$payment_info.url|escape}" />
 					{if $prefs.payment_paypal_ipn eq 'y'}
-						<input type="hidden" name="notify_url" value="{$payment_info.paypal_ipn|escape}"/>
+						<input type="hidden" name="notify_url" value="{$payment_info.paypal_ipn|escape}" />
 					{/if}
-					<input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal - The safer, easier way to pay online"/>
+					<input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal - The safer, easier way to pay online" />
 				</form>
 			{elseif $prefs.payment_system eq 'cclite' && $prefs.payment_cclite_gateway neq ''}
-				<form action="{query _type='relative'}" method="post">
-					<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}"/>
-					<input type="hidden" name="cclite_payment_amount" value="{$payment_info.amount_remaining|escape}" />
-					<input type="submit" value="{tr}Transfer currency now{/tr}" />
-					{if !empty($ccresult)}{$ccresult}{/if}
-				</form>
+				{if !empty($ccresult) and $ccresult_ok}
+					<form action="{query _type='relative'}" method="post">
+						<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
+						<input type="hidden" name="cookietab" value="1" />
+						<input type="submit" value="{tr}Refresh page{/tr}" />
+					</form>
+					{remarksbox title="{tr}Payment info{/tr}" type="info"}
+						{$ccresult}
+					{/remarksbox}
+				{else}
+					<form action="{query _type='relative'}" method="post">
+						<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
+						<input type="hidden" name="cclite_payment_amount" value="{$payment_info.amount_remaining|escape}" />
+						<input type="submit" value="{tr}Transfer currency now{/tr}" />
+					</form>
+					{if !empty($ccresult)}
+						{remarksbox title="{tr}Payment problem{/tr}" type="info"}
+							{$ccresult}
+						{/remarksbox}
+					{/if}
+				{/if}
 			{/if}
 		{/if}
 	</p>
@@ -44,6 +59,8 @@
 						{include file=tiki-payment-user.tpl payment=$payment currency=$payment_info.currency}
 					{elseif $payment.type eq 'paypal'}
 						{include file=tiki-payment-paypal.tpl payment=$payment}
+					{elseif $payment.type eq 'cclite'}
+						{include file=tiki-payment-cclite.tpl payment=$payment}
 					{/if}
 				</li>
 			{/foreach}
@@ -57,10 +74,10 @@
 				<fieldset>
 					<legend>{tr}Manual payment entry{/tr}</legend>
 
-					<p><input type="text" name="manual_amount" class="right"/>&nbsp;{$payment_info.currency|escape}</p>
+					<p><input type="text" name="manual_amount" class="right" />&nbsp;{$payment_info.currency|escape}</p>
 					<p><label for="payment-note">{tr}Note{/tr}</label></p>
 					<p><textarea id="payment-note" name="note" style="width: 98%;" rows="6"></textarea></p>
-					<p><input type="submit" value="{tr}Enter payment{/tr}"/><input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}"/></p>
+					<p><input type="submit" value="{tr}Enter payment{/tr}" /><input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" /></p>
 				</fieldset>
 			</form>
 		{/permission}

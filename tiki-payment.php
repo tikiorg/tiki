@@ -108,8 +108,9 @@ if( isset( $_POST['request'] ) && $globalperms->request_payment ) {
 
 if( isset( $_REQUEST['cancel'] ) ) {
 	$objectperms = Perms::get( 'payment', $_REQUEST['cancel'] );
+	$info = $paymentlib->get_payment( $_REQUEST['cancel'] );
 
-	if( $objectperms->payment_admin ) {
+	if( $objectperms->payment_admin || $info['user'] == $user ) {
 		$access->check_authenticity( tr('Cancel payment %0?', $_REQUEST['cancel'] ));
 		$paymentlib->cancel_payment( $_REQUEST['cancel'] );
 		$access->redirect( 'tiki-payment.php?invoice=' . $_REQUEST['cancel'], tra('Payment canceled.') );
