@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Permission"}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}{/title}
+{title help="Permission"}{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}{/if}{/title}
 
 <div class="navbar">
 {if !empty($referer)}{button href="$referer" _text="{tr}Back{/tr}"}{/if}
@@ -43,7 +43,7 @@
 		{/capture}
 		{$smarty.capture.notices}
 	<hr />
-		<h2>{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to this object{/tr}{/if} {icon _id="img/loading-light.gif" id="perms_busy" style="vertical-align:top; display:none;"}</h2>
+		<h2>{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{elseif $objectType eq 'category'}{tr}Assign permissions to this category{/tr}{else}{tr}Assign permissions to this object{/tr}{/if} {icon _id="img/loading-light.gif" id="perms_busy" style="vertical-align:top; display:none;"}</h2>
 
 		<input type="hidden" name="referer" value="{$referer|escape}" />
 		<input type="hidden" name="objectName" value="{$objectName|escape}" />
@@ -55,7 +55,7 @@
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
-				<input type="submit" name="remove" value="{tr}Reset to Global Perms{/tr}" class="tips" title="{tr}Reset Perms{/tr}|{if $objectType neq 'category'}{tr}This will remove all the settings here and permissions will be reset to inherit any category permissions that are set, or the global sitewide permissions.{/tr}{else}{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}{/if}"/>
+				<input type="submit" name="remove" value="{if $objectType eq 'category'}{tr}Delete category permissions{/tr}{else}{tr}Delete object permissions{/tr}{/if}" class="tips" title="{tr}Reset Perms{/tr}|{if $objectType neq 'category'}{tr}This will remove all the settings here and permissions will be reset to inherit any category permissions that are set, or the global sitewide permissions.{/tr}{else}{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}{/if}"/>
 			{/if}
 			<input type="submit" name="copy" value="{tr}Copy{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Copy the permissions set here{/tr}" />
 			{if !empty($perms_clipboard_source)}<input type="submit" name="paste" value="{tr}Paste{/tr}" class="tips" title="{tr}Permissions Clipboard{/tr}|{tr}Paste copied permissions from {/tr}<em>{$perms_clipboard_source}</em>" />{/if}
@@ -88,7 +88,7 @@ if ($jq("#assignstructure").attr("checked")) {
 		<div class="input_submit_container" style="text-align: center">
 			<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 			{if $permissions_displayed eq 'direct' and $objectType neq 'global'}
-				<input type="submit" name="remove" value="{tr}Reset to Global Perms{/tr}" class="tips" title="{tr}Reset Perms{/tr}|{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}"/>
+				<input type="submit" name="remove" value="{if $objectType eq 'category'}{tr}Delete category permissions{/tr}{else}{tr}Delete object permissions{/tr}{/if}" class="tips" title="{tr}Reset Perms{/tr}|{tr}This will remove all the settings here and permissions will be reset to inherit the global sitewide permissions.{/tr}"/>
 			{/if}
 		</div>
 	</form>
