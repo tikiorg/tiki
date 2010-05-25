@@ -150,9 +150,9 @@ function wikiplugin_fancytable($data, $params) {
 			$wret .= tra('The feature must be activated:').' feature_jquery_tablesorter';
 		}
 		if (empty($sortList)) {
-			$js = '$jq("#fancytable_'.$iFancytable.'").tablesorter();';
+			$js = '$jq("#fancytable_'.$iFancytable.'").tablesorter({widgets: ["zebra"]});';
 		} else {
-			$js = '$jq("#fancytable_'.$iFancytable.'").tablesorter({sortList:['.$sortList.']});';
+			$js = '$jq("#fancytable_'.$iFancytable.'").tablesorter({sortList:['.$sortList.'], widgets: ["zebra"]});';
 		}
 		global $headerlib;
 		$headerlib->add_jq_onready($js);
