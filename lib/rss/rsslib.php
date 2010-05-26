@@ -215,39 +215,24 @@ class RSSLib extends TikiLib
 		}
 
 		$urlarray = parse_url($_SERVER["REQUEST_URI"]);
-
-		/* 
-                   this gets the correct directory name aka dirname
-                   when tikiwiki is on the main directory, i mean
-                   when ur site is www.yoursite.com, the dirname of your site
-                   is "/" and when tikiwiki is not on main directory, i mean
-                   www.yoursite.com/tiki, the dirname returns "/tiki".
-                   so, on URLs, we just need to add a extra slash when the
-                   tikiwiki isnt on the main directory, what means,
-                   dirname($urlarray["path"]) equals to "/tiki", otherwise
-                   we can ommit them.
-
-                   This is a quick hack to solve the infamous double-slash 
-                   problem, which was introduced somewhen after 1.9.0 release 
-                   http://dev.tikiwiki.org/tiki-view_tracker_item.php?trackerId=5&itemId=291
-
-
-		*/
-
-		$dirname = (dirname($urlarray["path"]) != "/" ? "/" : "");
-
+		$rawPath = str_replace('\\','/', dirname($urlarray["path"]));
+		$URLPrefix = $this->httpPrefix() . $rawPath;
+		if ($rawPath != "/") {
+			$URLPrefix .= "/"; // Append a slash unless Tiki is in the document root. dirname() removes a slash except in that case.
+		}
+		
 		if ($prefs['index_rss_'.$feed]!='') {
 			$url = $prefs['index_rss_'.$feed];
 		} else {
 			$url = htmlspecialchars($this->httpPrefix().$_SERVER["REQUEST_URI"]);
 		}
 
-		$home = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname.$prefs['tikiIndex']);
-		$img = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname.$prefs['rssfeed_img']);
+		$home = htmlspecialchars($URLPrefix.$prefs['tikiIndex']);
+		$img = htmlspecialchars($URLPrefix.$prefs['rssfeed_img']);
 
 		$title = htmlspecialchars($title);
 		$desc = htmlspecialchars($desc);
-		$read = $this->httpPrefix().dirname($urlarray["path"]).$dirname.$itemurl;
+		$read = $URLPrefix.$itemurl;
 
 		// different stylesheets for atom and rss	
 		$cssStyleSheet = "";
@@ -261,11 +246,11 @@ class RSSLib extends TikiLib
 
 		switch ($rss_version) {
 			case "1": // RSS 1.0
-				$cssStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] ).$dirname."lib/rss/rss-style.css";
+				$cssStyleSheet = $URLPrefix."lib/rss/rss-style.css";
 			break;
 			case "2": // RSS 2.0
-				$cssStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] ).$dirname."lib/rss/rss-style.css";
-				$xslStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] ).$dirname."lib/rss/rss20.xsl";
+				$cssStyleSheet = $URLPrefix."lib/rss/rss-style.css";
+				$xslStyleSheet = $URLPrefix."lib/rss/rss20.xsl";
 			break;
 			case "3": // PIE 0.1
 				// plain RDF file
@@ -274,10 +259,10 @@ class RSSLib extends TikiLib
 				$contenttype = "text/plain";
 			break;
 			case "5": // ATOM0.3
-				$cssStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] ).$dirname."lib/rss/atom-style.css";
+				$cssStyleSheet = $URLPrefix."lib/rss/atom-style.css";
 			break;
 			case "6": // OPML
-				$xslStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] ).$dirname."lib/rss/opml.xsl";
+				$xslStyleSheet = $URLPrefix."lib/rss/opml.xsl";
 			break;
 			case "7": // HTML
 				$contenttype = "text/plain";
@@ -286,7 +271,7 @@ class RSSLib extends TikiLib
 				$contenttype = "text/javascript";
 			break;
 			case "9": // RSS 0.91
-				$cssStyleSheet = $this->httpPrefix().dirname( $urlarray["path"] ).$dirname."lib/rss/rss-style.css";
+				$cssStyleSheet = $URLPrefix."lib/rss/rss-style.css";
 			break;
 			case "a": // RSS 0.9
 				// plain RDF file
@@ -334,7 +319,7 @@ class RSSLib extends TikiLib
 			$item = new FeedItem(); 
 			$item->title = $data["$titleId"]; 
 			if (isset($data['sefurl'])) {
-				$item->link = $this->httpPrefix().dirname($urlarray["path"]).$dirname.$data['sefurl'];
+				$item->link = $URLPrefix.$data['sefurl'];
 			} elseif ($urlparam<>'') {			// 2 parameters to replace
 				$item->link = sprintf($read, urlencode($data["$id"]), urlencode($data["$urlparam"]));
 			} else {

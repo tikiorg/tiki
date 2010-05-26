@@ -28,10 +28,10 @@ function wikiplugin_regex_info() {
 		'prefs' => array( 'wikiplugin_regex' ),
 		'body' => tra('one data per line'),
 		'params' => array(
-			'search' => array(
+			'pageName' => array(
 				'required' => true,
-				'name' => tra('Search'),
-				'description' => tra('Page name containing the regular expression.'),
+				'name' => tra('Page name'),
+				'description' => tra('Page name containing the regular expression search and replace patterns.'),
 			),
 		),
 	);
@@ -41,15 +41,17 @@ function wikiplugin_regex($data, $params) {
 global $tikilib;
 
 extract ($params,EXTR_SKIP);
-$pageName = (isset($pageName)) ? $pageName : "pageName";//gets a page
+$pageName = (isset($pageName)) ? $pageName : 'pageName';//gets a page
 $info = $tikilib->get_page_info($pageName);
-$content=$info["data"]; 
+$content=$info['data']; 
 $lines = explode("\n", $content); // separate lines into array no emtpy lines at beginning mid or end
+$i = 0;
 foreach($lines as $line){
-list($search[],$replace[])=explode("::",$line);// use two colons to separate your find and replace
+list($pattern[$i],$replace[$i])=explode("::",$line);// use two colons to separate your find and replace
+$i++;
 }
 
-$data=preg_replace($search,$replace,$data);
+$data=preg_replace($pattern,$replace,$data);
 	$data = trim($data);
 	return $data;
 }

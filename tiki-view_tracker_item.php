@@ -37,7 +37,7 @@ $special = false;
 if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_REQUEST['user'])) {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' user') {
 		if (empty($user)) {
-			$smarty->assign(tra("You are not logged in"));
+			$smarty->assign('msg', tra("You are not logged in"));
 			$smarty->assign('errortype', '402');
 			$smarty->display("error.tpl");
 			die;

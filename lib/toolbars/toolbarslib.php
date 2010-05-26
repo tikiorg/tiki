@@ -853,7 +853,7 @@ displayPicker = function( closeTo, list, areaname ) {
 	var prepareLink = function( link, ins, disp ) {
 		if (!link) return;
 		
-		link.innerHTML = disp;
+		link.innerHTML = disp.replace('\/', '/');
 		link.href = 'javascript:void(0)';
 		link.onclick = function() {
 			insertAt( areaname, ins );
@@ -898,7 +898,7 @@ JS
 	function getWikiHtml( $areaName ) // {{{
 	{
 		global $headerlib, $prefs;
-		$headerlib->add_js( "window.pickerData['$this->name'] = " . json_encode($this->list) . ";" );
+		$headerlib->add_js( "window.pickerData['$this->name'] = " . str_replace('\/', '/', json_encode($this->list)) . ";" );
 		if ($prefs['feature_jquery_ui'] != 'y') {
 			$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
 			$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );

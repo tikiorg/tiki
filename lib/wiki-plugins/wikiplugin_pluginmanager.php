@@ -294,7 +294,7 @@ function wikiplugin_pluginmanager_info() {
     			'description' => tra('Name of a plugin (e.g., backlinks), or list separated by |, or range separated by "-". Single plugin can be used with limit parameter.'),
     			'filter' => 'striptags',
     			'default' => 'none',
-    			'since' => '',    				
+    			'since' => '5.0',    				
     		),
     		'singletitle' => array(
     			'required' => false,
@@ -302,7 +302,7 @@ function wikiplugin_pluginmanager_info() {
     			'description' => tra('Set placement of plugin name and description when displaying information for only one plugin'),
     			'filter' => 'alpha', 
     			'default' => 'table',
-    			'since' => '5.1', 
+    			'since' => '5.0', 
     			'options' => array(
 					array('text' => tra('Top'), 'value' => 'top'), 
 					array('text' => tra('Table'), 'value' => 'table'), 
@@ -315,7 +315,7 @@ function wikiplugin_pluginmanager_info() {
     			'description' => tra('Sets the heading size for the title, e.g., h2.'),
     			'filter' => 'striptags',
     			'default' => 'h3',
-    			'since' => '5.1',    				
+    			'since' => '5.0',    				
     		),
     		'start' => array(
     			'required' => false,
@@ -323,7 +323,7 @@ function wikiplugin_pluginmanager_info() {
     			'description' => tra('Start with this plugin record number (must be an integer 1 or greater).'),
     			'filter' => 'digits',
     			'default' => '',
-    			'since' => '5.1',    				
+    			'since' => '5.0',    				
     		),
     		'limit' => array(
     			'required' => false,
@@ -331,7 +331,7 @@ function wikiplugin_pluginmanager_info() {
     			'description' => tra('Number of plugins to show. Can be used either with start or plugin as the starting point. Must be an integer 1 or greater.'),
     			'filter' => 'digits',
     			'default' => '',
-    			'since' => '5.1',    				
+    			'since' => '5.0',    				
     		),
     	),
     );

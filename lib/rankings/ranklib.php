@@ -181,7 +181,7 @@ class RankLib extends TikiLib
 		return $retval;
 	}
 	
-	function forums_ranking_last_posts($limit, $toponly, $forumId='')
+	function forums_ranking_last_posts($limit, $toponly=false, $forumId='')
 	{
 		global $user, $commentslib; require_once 'lib/commentslib.php';
 		if (! $commentslib) {
@@ -190,11 +190,11 @@ class RankLib extends TikiLib
 		$offset=0;
 		$count = 0;
 		$ret = array();
-		$result = $commentslib->get_all_comments('forum', 0, $limit, 'commentDate_desc', '', '', '', false, $forumId);
+		$result = $commentslib->get_all_comments('forum', 0, $limit, 'commentDate_desc', '', '', '', $toponly, $forumId);
 		$result['data'] = Perms::filter(array('type' => 'forum'), 'object', $result['data'], array('object' => 'forumId'), 'forum_read');
 		foreach ($result['data'] as $res) {
-			$aux['name'] = $res['name'] . ': ' . $res['title'];
-			$aux['title'] = $res['title'];
+			$aux['name'] = $res['title'];
+			$aux['title'] = $res['parentTitle'];
 			$tmp = $res['parentId'];
 			if ($tmp == 0) $tmp = $res['threadId'];
 			$aux['href'] = $res['href'];
