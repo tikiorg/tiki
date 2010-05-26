@@ -5,21 +5,23 @@
 {/if}
 
 {tabset}
-	{tab name="{tr}Outstanding{/tr}"}
-		{if $overdue.cant > 0}
-			<p>{tr}Overdue{/tr}</p>
-			{include file=tiki-payment-list.tpl payments=$overdue cancel=1}
-		{/if}
-
-		<p>{tr}Outstanding{/tr}</p>
-		{include file=tiki-payment-list.tpl payments=$outstanding cancel=1}
-	{/tab}
-	{tab name="{tr}Past{/tr}"}
-		{include file=tiki-payment-list.tpl payments=$past}
-	{/tab}
-	{tab name="{tr}Cancelled{/tr}"}
-		{include file=tiki-payment-list.tpl payments=$canceled}
-	{/tab}
+	{permission name=payment_view}
+		{tab name="{tr}Outstanding{/tr}"}
+			{if $overdue.cant > 0}
+				<p>{tr}Overdue{/tr}</p>
+				{include file=tiki-payment-list.tpl payments=$overdue cancel=1}
+			{/if}
+	
+			<p>{tr}Outstanding{/tr}</p>
+			{include file=tiki-payment-list.tpl payments=$outstanding cancel=1}
+		{/tab}
+		{tab name="{tr}Past{/tr}"}
+			{include file=tiki-payment-list.tpl payments=$past}
+		{/tab}
+		{tab name="{tr}Cancelled{/tr}"}
+			{include file=tiki-payment-list.tpl payments=$canceled}
+		{/tab}
+	{/permission}
 	{permission name=payment_request}
 		{tab name="{tr}Request{/tr}"}
 			<form method="post" action="">
