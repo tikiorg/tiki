@@ -126,6 +126,9 @@
 						<td>
 							{self_link transitionId=$trans.transitionId action=edit cookietab=3}{icon _id=page_edit alt="{tr}Edit{/tr}"}{/self_link}
 							{self_link transitionId=$trans.transitionId action=remove}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
+							<a class="link" href="tiki-objectpermissions.php?objectName={$trans.name|escape:url}&amp;objectType=transition&amp;permType=transition&amp;objectId={$trans.transitionId|escape:"url"}">
+								{icon _id='key' class=titletips title='{tr}Assign permissions for transition{/tr}' alt='{tr}Permissions{/tr}'}
+							</a>
 						</td>
 					</tr>
 				{foreachelse}
