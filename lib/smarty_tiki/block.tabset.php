@@ -45,6 +45,10 @@ function smarty_block_tabset($params, $content, &$smarty, &$repeat) {
 		global $smarty_tabset_name, $smarty_tabset;
 		return;
 	} else {
+		$content = trim($content);
+		if (empty($content)) {
+			return '';
+		}
 		$ret = '';
 		//closing
 		if ( $prefs['feature_tabs'] == 'y') {
