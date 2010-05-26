@@ -168,17 +168,24 @@ function wikiplugin_mcalendar_info() {
 				'name' => tra('Template'),
 				'description' => tra('You must use the variable substitution.')
 											. '<br />'
-											. tra('LongCount: %baktun%, %katun%, %tun%, %winal%, %kin%;')
+											. tra('LongCount: ')
+											. '~np~%baktun%, %katun%, %tun%, %winal%, %kin%~/np~'
 											. '<br />'
-											. tra('Tzolkin: %tzolkin13%, %tzolkin20%, %tzolkin20name%;')
+											. tra('Tzolkin: ') 
+											. '~np~%tzolkin13%, %tzolkin20%, %tzolkin20name%~/np~'
 											. '<br />'
-											. tra('Haab: %haabkin%, %haabwinal%, %haabwinalname%;')
+											. tra('Haab: ')
+											. '~np~%haabkin%, %haabwinal%, %haabwinalname%~/np~'
 											. '<br />'
-											. tra('Misc: %longkin%, %julianday%.')
+											. tra('Misc: ')
+											. '~np~%longkin%, %julianday%~/np~'
 											. '<br /><br />'
-											. tra('Example: template "%baktun%.%katun%.%tun%.%winal%.%kin%, %tzolkin13% %tzolkin20name%, %haabkin% %haabwinalname%" for 22.05.2009 will return 12.19.16.6.11, 8 CHUEN, 9 SIP.')
-											. '<br />'
-											. tra('Default template: %baktun%.%katun%.%tun%.%winal%.%kin% %tzolkin13% %tzolkin20name% %haabkin% %haabwinalname%'),
+											. tra('Example: template ')
+											. '~np~"%baktun%.%katun%.%tun%.%winal%.%kin%, %tzolkin13% %tzolkin20name%, %haabkin% %haabwinalname%" ~/np~' 
+											. tra('for 22.05.2009 will return 12.19.16.6.11, 8 CHUEN, 9 SIP.')
+											. '<br /><br />'
+											. tra('Default template: ')
+											. '~np~%baktun%.%katun%.%tun%.%winal%.%kin% %tzolkin13% %tzolkin20name% %haabkin% %haabwinalname%~/np~',
 			),
 			'grdate' => array(
 				'required' => false,
