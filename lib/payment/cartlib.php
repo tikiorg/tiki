@@ -74,13 +74,14 @@ class CartLib
 	}
 
 	function request_payment() {
-		global $prefs;
+		global $prefs, $user;
 		global $paymentlib; require_once 'lib/payment/paymentlib.php';
 
 		$total = $this->get_total();
 
 		if( $total > 0 ) {
-			$invoice = $paymentlib->request_payment( tra('Cart Check-Out'), $total, $prefs['payment_default_delay'], $this->get_description() );
+			$description = tra('Cart Check-Out') . (empty($user) ? '' : " ($user)" );
+			$invoice = $paymentlib->request_payment( $description, $total, $prefs['payment_default_delay'], $this->get_description() );
 
 			foreach( $this->get_behaviors() as $behavior ) {
 				$paymentlib->register_behavior( $invoice, $behavior['event'], $behavior['behavior'], $behavior['arguments'] );
