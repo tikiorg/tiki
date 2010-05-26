@@ -12014,7 +12014,7 @@ $lang=Array(
 "Permission denied you cannot view the calendar" => "Droit d'accès refusé&nbsp;: vous ne pouvez pas voir le calendrier",
 "You need to <a href=\"tiki-admin_calendars.php\">create a calendar</a>" => "Vous devez <a href=\"tiki-admin_calendars.php\">créer un calendrier</a>",
 "event without name" => "évènement sans nom",
-"Permission denied you can not view this page" => "Droit d'accès refuséi&nbsp;: Vous ne pouvez pas voir cette page.",
+"Permission denied you can not view this page" => "Droit d'accès refusé&nbsp;: Vous ne pouvez pas voir cette page.",
 "Su" => "Di",
 "%H:%M %Z" => "%Hh%M",
 "Mo" => "Lu",
