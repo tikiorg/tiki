@@ -129,8 +129,8 @@ function wikiplugin_snarf($data, $params)
 	// If content is HTML, keep only the content of the body
 	if ( isset($params['ishtml']) && $params['ishtml'] == 1 ) {
 		// Not using preg_replace due to its limitations to 100.000 characters
-		$snarf = eregi_replace('^.*<\s*body[^>]*>', '', $snarf);
-		$snarf = eregi_replace('<\s*\/body[^>]*>.*$', '', $snarf);
+		$snarf = preg_replace('/^.*<\s*body[^>]*>/i', '', $snarf);
+		$snarf = preg_replace('/<\s*\/body[^>]*>.*$/i', '', $snarf);
 	}
 
 	// If the user specified a more specialized regex

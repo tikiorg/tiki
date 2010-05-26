@@ -72,7 +72,7 @@ function newPost($params) {
   // Fix for w.bloggar
   preg_match('/<title>(.*)</title>/',$content, $title);
   $title = $title[1];
-  $content = ereg_replace("<title>(.*)</title>","",$content);
+  $content = preg_replace('#<title>(.*)</title>#','',$content);
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
   if(!$ok) {
@@ -115,7 +115,7 @@ function editPost($params) {
   // Fix for w.bloggar
   preg_match('/<title>(.*)</title>/',$content, $title);
   $title = $title[1];
-  $content = ereg_replace("<title>(.*)</title>","",$content);
+  $content = preg_replace('#<title>(.*)</title>#','',$content);
   // Now check if the user is valid and if the user can post a submission
   list($ok, $username, $e) = $userlib->validate_user($username,$password,'','');
   if(!$ok) {

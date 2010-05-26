@@ -332,7 +332,7 @@ function sendEmailNotification($list, $type, $subjectTpl, $subjectParam, $txtTpl
 			$mail_data = $smarty->fetchLang($languageEmail, "mail/".$subjectTpl);
 			if ($subjectParam)
 				$mail_data = sprintf($mail_data, $subjectParam);
-			$mail_data = ereg_replace("\%[sd]", "", $mail_data);// partial cleaning if param not supply and %s in text
+			$mail_data = preg_replace('/%[sd]/', '', $mail_data);// partial cleaning if param not supply and %s in text
 			$mail->setSubject($mail_data);
 		}
 		else

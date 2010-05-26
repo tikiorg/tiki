@@ -97,7 +97,7 @@ foreach($accs['data'] as $acc) {
 					preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/', $aux["From"], $mail);
 					$email_from = $mail[1];
 					$aux["msgid"] = $i;
-					$aux["realmsgid"] = ereg_replace("[<>]", "", $aux["Message-ID"]);
+					$aux["realmsgid"] = preg_replace('/[<>]/', '', $aux["Message-ID"]);
 					$message = $pop3->getMsg($i);
 					$output = mime::decode($message);
 					//mailin_parse_output($output, $parts, 0);

@@ -31,7 +31,7 @@ $feed = "articles";
 if (isset($_REQUEST["topic"])) {
     $topic = $_REQUEST["topic"];
     $uniqueid = $feed.".".$topic;
-    $topic = (int) ereg_replace("[^0-9]","", $topic);
+    $topic = (int) preg_replace('/[^0-9]/','', $topic);
 } elseif (isset($_REQUEST['topicname'])) {
 	global $artlib; require_once 'lib/articles/artlib.php';
 	$topic = $artlib->fetchtopicId($_REQUEST['topicname']);

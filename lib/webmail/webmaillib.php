@@ -337,7 +337,7 @@ class WebMailLib extends TikiLib
 				$wmail['sender']['name'] = htmlspecialchars($wmail['sender']['name']);
 
 				if (!empty($headers['message-id'])) {
-					$wmail['realmsgid'] = ereg_replace('[<>]','', $headers['message-id']);
+					$wmail['realmsgid'] = preg_replace('/[<>]/','', $headers['message-id']);
 				} else {
 					$wmail['realmsgid'] = $wmail['timestamp'].'.'.$wmail['sender']['email'];	// TODO better?
 				}

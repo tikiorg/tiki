@@ -861,7 +861,7 @@ class UsersLib extends TikiLib
 			// If the user has logged out from the CAS server
 			// continue as Anonymous
 			$user = null;
-			$cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $prefs['cookie_name']);
+			$cookie_site = preg_replace('/[^a-zA-Z0-9]/', '', $prefs['cookie_name']);
 			$user_cookie_site = 'tiki-user-' . $cookie_site;
 			$_SESSION[$user_cookie_site] = null;
 			header('Location: '.$_SESSION['cas_redirect']);

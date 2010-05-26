@@ -103,8 +103,8 @@ function test_callback($buffer) {
 error_reporting(E_ALL);
 
   $data = $dom->createElement('data');
-	$tikitestheader = "<!-- StartTikiTestRemoveMe -->.*<!-- EndTikiTestRemoveMe -->";
-	$cdata = $dom->createCDATASection(ereg_replace($tikitestheader,"",$buffer));
+	$tikitestheader = '/<!-- StartTikiTestRemoveMe -->.*<!-- EndTikiTestRemoveMe -->/';
+	$cdata = $dom->createCDATASection(preg_replace($tikitestheader,'',$buffer));
 	$data->appendChild($cdata);
 	$url->appendChild($data);
 	$element_test->appendChild($url);

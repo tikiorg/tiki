@@ -107,7 +107,7 @@ if ($_REQUEST['locSection'] == 'read') {
 	if (isset($_REQUEST['msgid'])) {
 		$message = $mail->getMessage($_REQUEST['msgid']);
 		$aux = $message->getHeaders();
-		$realmsgid = ereg_replace('[<>]','',$aux['message-id']);
+		$realmsgid = preg_replace('/[<>]/','',$aux['message-id']);
 		$smarty->assign('msgid', $_REQUEST['msgid']);
 		$smarty->assign('realmsgid', $realmsgid);
 		$webmaillib->set_mail_flag($current['accountId'], $user, $realmsgid, 'isRead', 'y');

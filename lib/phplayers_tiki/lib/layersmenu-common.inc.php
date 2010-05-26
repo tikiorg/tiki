@@ -473,7 +473,7 @@ function setMenuStructureFile($tree_file)
 	}
 	$this->menuStructure = '';
 	while ($buffer = fgets($fd, 4096)) {
-		$buffer = ereg_replace(chr(13), '', $buffer);	// Microsoft Stupidity Suppression
+		$buffer = str_replace(chr(13), '', $buffer);	// Microsoft Stupidity Suppression
 		$this->menuStructure .= $buffer;
 	}
 	fclose($fd);

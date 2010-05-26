@@ -32,7 +32,7 @@ if (!isset($_REQUEST['replyto_hash'])) $_REQUEST['replyto_hash'] = '';
 if (!isset($_REQUEST['priority'])) $_REQUEST['priority'] = 3;
 // Strip Re:Re:Re: from subject
 if (!empty($_REQUEST['reply']) || !empty($_REQUEST['replyall'])) {
-	$_REQUEST['subject'] = tra("Re:") . ereg_replace("^(" . tra("Re:") . ")+", "", $_REQUEST['subject']);
+	$_REQUEST['subject'] = tra("Re:") . preg_replace('/^(' . tra('Re:') . ')+/', '', $_REQUEST['subject']);
 	$smarty->assign('reply', 'y');
 }
 foreach(array(

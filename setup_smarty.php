@@ -202,7 +202,7 @@ class Smarty_Tikiwiki extends Smarty
 			include ('lang/'.$prefs['language'].'/language.php');
 		}
 
-		return ereg_replace("^[ \t]*", '', $res);
+		return preg_replace("/^[ \t]*/", '', $res);
 	}
 	function is_cached($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null) {
 		global $prefs, $style_base, $tikidomain;

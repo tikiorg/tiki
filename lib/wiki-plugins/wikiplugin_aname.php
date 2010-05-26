@@ -46,7 +46,7 @@ function wikiplugin_aname($data, $params)
         
     // the following replace is necessary to maintain compliance with XHTML 1.0 Transitional
 	// and the same behavior as tikilib.php and ALINK. This will change when the world arrives at XHTML 1.0 Strict.
-	$data = ereg_replace('[^a-zA-Z0-9]+', '_', $data);
+	$data = preg_replace('/[^a-zA-Z0-9]+/', '_', $data);
 
 	return "<a id=\"$data\"></a>";
 }

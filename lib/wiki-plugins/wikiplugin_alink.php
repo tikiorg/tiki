@@ -68,7 +68,7 @@ function wikiplugin_alink($data, $params)
 
 	// the following replace is necessary to maintain compliance with XHTML 1.0 Transitional
 	// and the same behavior as tikilib.php. This will change when the world arrives at XHTML 1.0 Strict.
-	$aname = ereg_replace('[^a-zA-Z0-9]+', '_', $aname);
+	$aname = preg_replace('/[^a-zA-Z0-9]+/', '_', $aname);
 		
 	if( isset($pagename) && $pagename ) {
 	    // Stolen, with some modifications, from tikilib.php line 4717-4723
