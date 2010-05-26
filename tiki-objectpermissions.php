@@ -501,7 +501,7 @@ function get_assign_permissions() {
 	if( isset( $_REQUEST['old_perm'] ) ) {
 		foreach( $_REQUEST['old_perm'] as $group => $gperms ) {
 			foreach( $gperms as $perm ) {
-				if (!in_array($perm, $_REQUEST['perm'][$group])) {
+				if (!isset($_REQUEST['perm'][$group]) || !in_array($perm, $_REQUEST['perm'][$group])) {
 					$currentPermissions->remove( $group, $perm );
 				}
 			}
