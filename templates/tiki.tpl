@@ -12,7 +12,7 @@
 
 {if $prefs.feature_community_mouseover eq 'y'}		{popup_init src="lib/overlib.js"}{/if}
 
-{if $prefs.feature_fullscreen eq 'y' and isset($filegals_manager) and $filegals_manager eq '' and $print_page ne 'y'}
+{if $prefs.feature_fullscreen eq 'y' and empty($filegals_manager)  and $print_page ne 'y'}
 	{if $smarty.session.fullscreen eq 'n'}
 		{self_link fullscreen="y" _class="fullscreenbutton" _ajax='n' _icon=application_get _title="{tr}Fullscreen{/tr}"}{/self_link}
 	{else}
