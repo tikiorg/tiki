@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: list-tracker_field_values_ajax.php 25072 2010-02-11 15:18:57Z changi67 $
+// $Id$
 
 require_once('tiki-setup.php');
 
