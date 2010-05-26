@@ -566,8 +566,8 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
         // Prepend the COLINFO records if they exist
         if (!empty($this->_colinfo))
         {
-            for ($i=0; $i < count($this->_colinfo); $i++) {
-                $this->_storeColinfo($this->_colinfo[$i]);
+            foreach($this->_colinfo as $colinfo) {
+                $this->_storeColinfo($colinfo);
             }
             $this->_storeDefcol();
         }
@@ -1315,7 +1315,7 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
         $row     = $match[2];
     
         // Convert base26 column string to number
-        $chars = split('', $col);
+        $chars = explode('', $col);
         $expn  = 0;
         $col   = 0;
     
@@ -2023,13 +2023,13 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
         // Determine if the link contains a sheet reference and change some of the
         // parameters accordingly.
         // Split the dir name and sheet name (if it exists)
-        list($dir_long , $sheet) = split('/\#/', $url);
+        list($dir_long , $sheet) = explode('#', $url);
         $link_type               = 0x01 | $absolute;
     
         if (isset($sheet)) {
             $link_type |= 0x08;
             $sheet_len  = pack("V", strlen($sheet) + 0x01);
-            $sheet      = join("\0", split('', $sheet));
+            $sheet      = join("\0", explode('', $sheet));
             $sheet     .= "\0\0\0";
         }
         else {
@@ -2048,7 +2048,7 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
         $dir_short   = preg_replace('/\.\.\\/', '', $dir_long) . "\0";
     
         // Store the long dir name as a wchar string (non-null terminated)
-        $dir_long       = join("\0", split('', $dir_long));
+        $dir_long       = join("\0", explode('', $dir_long));
         $dir_long       = $dir_long . "\0";
     
         // Pack the lengths of the dir strings
@@ -2870,11 +2870,11 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
    
         // Calculate the maximum column outline level. The equivalent calculation
         // for the row outline level is carried out in setRow().
-        for ($i=0; $i < count($this->_colinfo); $i++)
+        foreach ($this->_colinfo as $colinfo)
         {
            // Skip cols without outline level info.
            if (count($col_level) >= 6) {
-              $col_level = max($this->_colinfo[$i][5], $col_level);
+              $col_level = max($colinfo[5], $col_level);
            }
         }
    

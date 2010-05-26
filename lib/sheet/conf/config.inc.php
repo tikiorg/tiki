@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 /*Information sur la configuration des chemins*/
 @define("APATH_ROOT_WIN", 		str_replace(basename(dirname(__FILE__)), "", dirname(__FILE__)));
-@define("APATH_ROOT", 			ereg_replace("//","/",join('/',preg_split("/[\/\\\]/",APATH_ROOT_WIN))."/"));
+@define("APATH_ROOT", 			preg_replace('#//#','/',join('/',preg_split('/[\/\\\]/',APATH_ROOT_WIN)).'/'));
 @define("APICO_ROOT", 			"http://".$_SERVER["HTTP_HOST"].str_replace($_SERVER["DOCUMENT_ROOT"], "", APATH_ROOT));
 @define("CACHE_PATH", 			APATH_ROOT."repository");
 @define("APIC_LIBRARY_PATH", 	APATH_ROOT."include/");

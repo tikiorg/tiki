@@ -6,7 +6,7 @@
  */
 
 class Category_ManipulatorTest extends TikiTestCase
-{	
+{
 	function testSimpleManipulation()
 	{
 		$perms = new Perms;
