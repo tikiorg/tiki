@@ -175,8 +175,8 @@ foreach($_SESSION['CalendarViewGroups'] as $calendar) {
 	$info = $calendarlib->get_calendar($calendar);
 	$viewdays = array_merge($info['viewdays'],$viewdays);
 }
-$viewdays = array_map("correct_start_day", array_unique($viewdays, SORT_NUMERIC));
-sort($viewdays);
+sort($viewdays, SORT_NUMERIC);
+$viewdays = array_map("correct_start_day", array_unique($viewdays));
 $viewdays2 = array_values($viewdays);
 
 if (isset($_REQUEST['sort_mode'])) $sort_mode = $_REQUEST['sort_mode'];
