@@ -14,11 +14,11 @@ if (isset($_REQUEST['img']))
   $im_url = $_REQUEST['img'];
   unset($im);
 
-  if (ereg(".gif$", $im_url) || ereg(".GIF$", $im_url))
+  if (preg_match('/.gif$/i', $im_url))
     $im = @ImageCreateFromGIF($im_url); // not all PHP installations support GIF!
-  elseif (ereg(".jpg$", $im_url) || ereg(".JPG$", $im_url))
+  elseif (preg_match('/.jpg$/i', $im_url))
     $im = @ImageCreateFromJPEG($im_url);
-  elseif (ereg(".png$", $im_url) || ereg(".PNG$", $im_url))
+  elseif (preg_match('/.png$/i', $im_url))
     $im = @ImageCreateFromPNG($im_url);
   else
   {

@@ -198,7 +198,7 @@ function HAWTIKI_index($info)
 
   // try to determine calling party number in case of voice browser request
   if (!isset($_SESSION['calling_party_number']) &&
-      ereg("session.callerid=([^&]*)", $_SERVER['REQUEST_URI'], $matches))
+      preg_match('/session.callerid=([^&]*)/', $_SERVER['REQUEST_URI'], $matches))
   {
     // request from Voxeo voice browser
     // ==> store calling party number in session
