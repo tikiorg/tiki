@@ -1583,6 +1583,7 @@ function prefs_feature_list() {
 		),
 		'feature_wiki_paragraph_formatting' => array(
 			'name' => tra('Wiki paragraph formatting'),
+			'description' => tra('Because the Wiki paragraph formatting feature is on, all groups of non-blank lines are collected into paragraphs.  Lines can be of any length, and will be wrapped together with the next line.  Paragraphs are separated by blank lines.').' '.tra('Because the Wiki paragraph formatting feature is off, each line will be presented as you write it.  This means that if you want paragraphs to be wrapped properly, a paragraph should be all together on one line.'),
 			'type' => 'flag',
 		),
 		'feature_wiki_paragraph_formatting_add_br' => array(
