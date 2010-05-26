@@ -35,7 +35,7 @@
 		{elseif $viewmode eq "semester"}
 			{self_link _ajax=$ajax _class="next" todate=$semesterbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax _class="next" todate=$yearbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$yearbefore _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_previous"}{/self_link}
 		{/if}
 		</div>
 
@@ -74,7 +74,7 @@
 		{elseif $viewmode eq "semester"}
 			{self_link _ajax=$ajax _class="next" todate=$semesterafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax _class="next" todate=$yearafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$yearafter _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_next"}{/self_link}
 		{/if}
 		</div>
 		{/strip}</span>
@@ -98,7 +98,7 @@
 		{elseif $viewmode eq "semester"}
 			{self_link _ajax=$ajax todate=$semesterbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax todate=$yearbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax todate=$yearbefore _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_previous"}{/self_link}
 		{/if}
 	{/if}
 
@@ -131,7 +131,7 @@
 		{elseif $viewmode eq "semester"}
 			{self_link _ajax=$ajax _class="next" todate=$semesterafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax _class="next" todate=$yearafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$yearafter _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_next"}{/self_link}
 		{/if}
 	{/if}
 </div>
