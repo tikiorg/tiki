@@ -80,6 +80,7 @@
 		<a href="#" id="graph-draw" class="button">{tr}Draw Transition Diagram{/tr}</a>
 		{jq}
 		$jq('#graph-draw').click( function( e ) {
+			e.preventDefault();
 			$jq(this).hide();
 			var width = $jq('#graph-canvas').width();
 			var height = Math.ceil( width * 9 / 16 );
@@ -111,6 +112,7 @@
 					<th>{tr}Label{/tr}</th>
 					<th>{tr}From{/tr}</th>
 					<th>{tr}To{/tr}</th>
+					<th>{tr}Guards{/tr}</th>
 					<th>{tr}Actions{/tr}</th>
 				</tr>
 			</thead>
@@ -120,6 +122,7 @@
 						<td>{$trans.name|escape}</td>
 						<td>{$trans.from_label|escape} {if $trans.preserve} - <em>{tr}preserved{/tr}</em>{/if}</td>
 						<td>{$trans.to_label|escape}</td>
+						<td>{self_link transitionId=$trans.transitionId action=edit cookietab=4}{$trans.guards|@count|escape}{/self_link}</td>
 						<td>
 							{self_link transitionId=$trans.transitionId action=edit cookietab=3}{icon _id=page_edit alt="{tr}Edit{/tr}"}{/self_link}
 							{self_link transitionId=$trans.transitionId action=remove}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
