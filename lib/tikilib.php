@@ -8059,7 +8059,7 @@ class TikiLib extends TikiDb_Bridge
 	function get_attach_hash_file_name($file_name) {
 		global $prefs;
 		do {
-			$fhash = '§'.md5($file_name.date('U').rand()).'§';
+			$fhash = md5($file_name.date('U').rand());
 		} while (file_exists($prefs['w_use_dir'].$fhash));
 		return $fhash;
 		}

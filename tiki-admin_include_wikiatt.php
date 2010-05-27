@@ -19,7 +19,7 @@ if (isset($_REQUEST['action']) and isset($_REQUEST['attId'])) {
 	if ($_REQUEST['action'] == 'move2db') {
 		$wikilib->file_to_db($prefs['w_use_dir'] . $item['path'], $_REQUEST['attId']);
 	} elseif ($_REQUEST['action'] == 'move2file') {
-		$wikilib->db_to_file($prefs['w_use_dir'] . md5($item['filename']) , $_REQUEST['attId']);
+		$wikilib->db_to_file($prefs['w_use_dir'] . $item['filename'] , $_REQUEST['attId']);
 	}
 }
 if (!isset($_REQUEST["find"])) {
@@ -51,7 +51,7 @@ if (isset($_REQUEST["all2db"])) {
 	$attachements = $wikilib->list_all_attachements();
 	for ($i = 0; $i < $attachements['cant']; $i++) {
 		if (!$attachements['data'][$i]['path']) {
-			$wikilib->db_to_file($prefs['w_use_dir'] . md5($attachements['data'][$i]['filename']) , $attachements['data'][$i]['attId']);
+			$wikilib->db_to_file($prefs['w_use_dir'] . $attachements['data'][$i]['filename'] , $attachements['data'][$i]['attId']);
 		}
 	}
 }

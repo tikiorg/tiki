@@ -496,15 +496,17 @@ class WikiLib extends TikiLib
 	}
 
 	function db_to_file($path,$attId) {
-		$fw = fopen($path,'wb');
+		global $prefs;
+		$file_name = md5($file_name.date('U').rand());
+		$fw = fopen($prefs['w_use_dir'].$file_name,'wb');
 		$data = $this->getOne("select `data` from `tiki_wiki_attachments` where `attId`=?",array((int)$attId));
 		if ($data) {
 			fwrite($fw, $data);
 		}
 		fclose ($fw);
-		if (is_file($path)) {
+		if (is_file($prefs['w_use_dir'].$file_name)) {
 			$query = "update `tiki_wiki_attachments` set `data`=?,`path`=? where `attId`=?";
-			$this->query($query,array('',basename($path),(int)$attId));
+			$this->query($query,array('',$file_name,(int)$attId));
 		}
 	}
 
