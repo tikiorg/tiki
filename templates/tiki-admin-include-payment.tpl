@@ -1,3 +1,7 @@
+{* $Id$ *}
+<div class="navbar">
+	 {button href="tiki-payment.php" _text="{tr}Payments{/tr}"}
+</div>
 <form action="tiki-admin.php?page=payment" method="post">
 	<fieldset class="admin">
 		<legend>{tr}Payment{/tr}</legend>
