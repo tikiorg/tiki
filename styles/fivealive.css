@@ -911,7 +911,7 @@ form.admin fieldset {
 }
 
 legend.heading {
-	background: #fff;
+	background: transparent;
 }
 /*	
 table.admin a.link,
