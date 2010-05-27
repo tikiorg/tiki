@@ -240,7 +240,7 @@ class DecodeMessage
             $parts[] = $best;
           endif;
         else :
-          if (eregi("(message)", $content["type"])) :
+          if (preg_match('/(message)/i', $content["type"])) :
             $messages[] = $this->fullmessage;
           elseif (chop($this->body) != '') :
             $parts[] = $this->fullmessage;
@@ -261,7 +261,7 @@ class DecodeMessage
             $ct = $this->ContentType();
             $cd = $this->ContentDisposition();
 
-            if (eregi("text/html", $ct["type"]) AND count($contentid > 0)) :
+            if (preg_match('#text/html#i', $ct["type"]) AND count($contentid > 0)) :
 
               for ($k=0;$k<count($contentid);$k++) {
                 if (ini_get(file_uploads) AND $attachments_view == 1) {
@@ -276,11 +276,11 @@ class DecodeMessage
               }
             endif;
             if ($this->auto_decode
-              AND eregi("attachment", $cd["type"])
-              OR eregi("base64", $this->Headers("Content-Transfer-Encoding"))
+              AND preg_match('/attachment/i', $cd["type"])
+              OR preg_match('/base64/i', $this->Headers("Content-Transfer-Encoding"))
               ) :
                 $filename = chop($ct["name"]) ? $ct["name"] : $cd["filename"];
-                if (eregi("base64", $this->Headers("Content-Transfer-Encoding"))) :
+                if (preg_match('/base64/i', $this->Headers("Content-Transfer-Encoding"))) :
                   $file = base64_decode($this->body);
                 elseif (preg_match('/quoted-printable/i', $this->Headers("Content-Transfer-Encoding"))) :
                   $file = quoted_printable_decode($this->body);
