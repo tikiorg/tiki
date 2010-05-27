@@ -98,7 +98,7 @@ class Multilingual_Aligner_UpdateSentences1
 	{
 		$num=0;
 		$val=preg_replace ('/<span class="diffchar">/', '', $val );
-		$val=ereg_replace ('#</span>#', '', $val );
+		$val=preg_replace ('#</span>#', '', $val );
 		$new_val=explode('<br />',$val);
 		foreach($new_val as $nn)
 		{
