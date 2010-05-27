@@ -68,11 +68,10 @@ class Validators
 		$validationjs .= '}, ';
 		$validationjs .= 'messages: { ';
 		foreach ($fields_data as $field_value) {
-			if ($field_value['validationMessage'] && ($field_value['validation'] || $field_value['isMandatory'] == 'y')) {	
-				if ($field_value['isMandatory'] == 'y') {
-					$validationjs .= 'required: "' .$field_value['validationMessage'].'", ';
-				}
-				$validationjs .= $prefix . $field_value['fieldId'] . ': "' .$field_value['validationMessage'].'", ';
+			if ($field_value['validationMessage'] && $field_value['isMandatory'] == 'y') {
+				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
+				$validationjs .= 'required: "' .$field_value['validationMessage'].'", ';
+				$validationjs .= '}, ';	
 			}
 		}
 		$validationjs .= '}, ';		
