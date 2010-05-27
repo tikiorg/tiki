@@ -50,7 +50,8 @@
  * @link http://code.google.com/p/jsmin-php/
  */
 
-class JSMin {
+class JSMin
+{
     const ORD_LF            = 10;
     const ORD_SPACE         = 32;
     const ACTION_KEEP_A     = 1;
@@ -309,6 +310,12 @@ class JSMin {
     }
 }
 
-class JSMin_UnterminatedStringException extends Exception {}
-class JSMin_UnterminatedCommentException extends Exception {}
-class JSMin_UnterminatedRegExpException extends Exception {}
+class JSMin_UnterminatedStringException extends Exception
+{
+}
+class JSMin_UnterminatedCommentException extends Exception
+{
+}
+class JSMin_UnterminatedRegExpException extends Exception
+{
+}
