@@ -184,9 +184,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 
 {jq}
 $jq("#editItemForm").validate({
-	rules: {
-		{{$validationjs}}
-	}
+	{{$validationjs}}
 });
 {/jq}
 

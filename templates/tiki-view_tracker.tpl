@@ -232,9 +232,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {* --------------------------------------------------------------------------------- tab with edit --- *}
 {jq}
 $jq("#newItemForm").validate({
-	rules: {
-		{{$validationjs}}
-	}
+	{{$validationjs}}
 });
 {/jq}
 <form enctype="multipart/form-data" action="tiki-view_tracker.php" id="newItemForm" method="post">
