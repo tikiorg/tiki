@@ -371,6 +371,11 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Advanced+Rating";
 		$description = "Advanced Rating";
 		include_once ('tiki-admin_include_rating.php');
+	} else if ($adminPage == 'payment') {
+		$admintitle = 'Payment';
+		$helpUrl = 'Payment';
+		$description = 'Payment';
+		include_once ('tiki-admin_include_payment.php');
 	} else {
 		$helpUrl = '';
 	}
