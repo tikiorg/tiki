@@ -497,6 +497,69 @@ div#sitelogo img {
 #siteloginbar_popup .cssmenu_horiz #logout_link {
 	background-color: #070707;
 }
+#siteloginbar_popup #logout_link .cbox {
+	text-align: center;
+}
+#siteloginbar_popup .cssmenu_horiz div {
+	
+}
+#siteloginbar_popup .cssmenu_horiz div a {
+	display: inline;
+}
+#siteloginbar_popup .cbox {
+	padding: 10px;
+	margin: 2px 2px 3px 1px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+#siteloginbar_popup .cbox * {
+	line-height: 14px;
+	margin: 2px;
+}
+#siteloginbar_popup .cbox label {
+	clear: both; float: left;
+}
+#siteloginbar_popup .cbox div {
+	clear: both;
+}
+#sl-login-user, #sl-login-pass {
+	background-color: #fff;
+	float: right;
+}
+#siteloginbar_popup .rme {
+	display: block;
+	padding: 5px 0;
+	text-align: right;
+}
+#siteloginbar_popup span.pass {
+	display: inline;
+}
+#siteloginbar_popup .pass a {
+	float: left;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	width: 30%;
+}
+#siteloginbar_popup .register a {
+	float: right;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	width: 30%;
+}
+#siteloginbar_popup .wikiaction {
+	clear: both; float: right;
+}
+
+/*** CSS menus shadows for all but IE6 ***/
+ul.sf-shadow ul {
+	-moz-border-radius-bottomleft: 16px;
+	-moz-border-radius-topright: 16px;
+	-webkit-border-top-right-radius: 16px;
+	-webkit-border-bottom-left-radius: 16px;
+}
 
 a.register_link,
 a.login_link {
@@ -705,13 +768,13 @@ img.icon {
 	border: none;
 	background: #d6f3fa;
 	color: #2098cd;
+	padding: 10px;
 }
 
 .cbox-title {
 	border-bottom: 3px solid #74c0e2;
 	font-weight: bold;
 }
-
 .rbox-title, 
 .rbox-data {
 	border: #2098cd;
@@ -837,6 +900,9 @@ a.register_link {
 	background: #a9d6eb;
 	border: none;
 	border-top: none !important;
+	border-top-right-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
 	padding: 4px;
 }
 	
