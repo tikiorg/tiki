@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
+//if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
 // performance collecting:
 //require_once ('lib/tikidblib-debug.php');
@@ -7644,11 +7644,11 @@ class TikiLib extends TikiDb_Bridge
 		return $short_datetime_format;
 	}
 
-	static function date_format2($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
+	static function date_format2($format, $timestamp = false, $_user = false, $input_format = 5/*DATE_FORMAT_UNIXTIME*/) {
 		return TikiLib::date_format($format, $timestamp, $_user, $input_format, false);
 	}
 
-	static function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME, $is_strftime_format = true) {
+	static function date_format($format, $timestamp = false, $_user = false, $input_format = 5/*DATE_FORMAT_UNIXTIME*/, $is_strftime_format = true) {
 		global $tikidate, $tikilib;
 		if ( ! $timestamp ) {
 			$timestamp = time();
