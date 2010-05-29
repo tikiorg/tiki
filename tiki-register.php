@@ -29,8 +29,7 @@ if (!$https_mode && $prefs['https_login'] == 'required') {
 }
 // novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
 if (!isset($_REQUEST['novalidation'])) {
-	if (!empty($_REQUEST['trackit'])) $novalidation = 'yes'; // the user has already confirmed manually that SnowCheck is not working
-	else $novalidation = '';
+	$novalidation = '';
 } else {
 	$novalidation = $_REQUEST['novalidation'];
 }
@@ -54,7 +53,8 @@ if ($nbChoiceGroups) {
 		$smarty->assign_by_ref('theChoiceGroup', $theChoiceGroup);
 	}
 }
-if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST['pass']) || isset($_SESSION['openid_url']))) {
+
+if (isset($_REQUEST['register'])) {
 	check_ticket('register');
 	$cookie_name = $prefs['session_cookie_name'];
 
@@ -65,7 +65,18 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 	}
 
 	$smarty->assign('errortype', 'no_redirect_login');
-	if ($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"]) and !isset($_SESSION['openid_url'])) {
+	
+	if (empty($_REQUEST['name'])) {
+		$smarty->assign('msg', tra("Username is required"));
+		$smarty->display("error.tpl");
+		die;	
+	}
+	if (empty($_REQUEST['pass']) && !isset($_SESSION['openid_url'])) {
+		$smarty->assign('msg', tra("Password is required"));
+		$smarty->display("error.tpl");
+		die;	
+	}
+	if ($novalidation != 'yes' and ($_REQUEST["pass"] != $_REQUEST["passAgain"]) and !isset($_SESSION['openid_url'])) {
 		$smarty->assign('msg', tra("The passwords don't match"));
 		$smarty->display("error.tpl");
 		die;
@@ -75,7 +86,7 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		$smarty->display("error.tpl");
 		die;
 	}
-	if (!$user && $prefs['rnd_num_reg'] == 'y' && !isset($_SESSION['in_tracker'])) {
+	if (!$user && $prefs['rnd_num_reg'] == 'y') {
 		if (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode']) {
 			$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
 			$smarty->display("error.tpl");
@@ -147,18 +158,6 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 	$email_valid = 'y';
 	if (!validate_email($_REQUEST["email"], $prefs['validateEmail'])) {
 		$email_valid = 'n';
-	} elseif ($prefs['userTracker'] == 'y') {
-		$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');
-		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
-			include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
-			$_SESSION['in_tracker'] = true;
-			$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n'));
-			$smarty->assign('userTrackerData', $userTrackerData);
-			if (!isset($_REQUEST['trackit']) || (isset($_REQUEST['error']) && $_REQUEST['error'] == 'y')) {
-				$email_valid = 'n'; // first pass or error
-				
-			}
-		}
 	}
 	if ($email_valid == 'y') {
 		if (isset($_SESSION['openid_url'])) {
@@ -180,11 +179,10 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		}
 		if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
 			$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
-		} elseif (empty($_REQUEST['chosenGroup']) && isset($_SESSION['in_tracker'])) {
+		} elseif (empty($_REQUEST['chosenGroup'])) {
 			$userlib->set_default_group($_REQUEST['name'], 'Registered'); // to have tiki-user_preferences links par default to the registration tracker
 		}
 		$userlib->set_email_group($_REQUEST['name'], $_REQUEST['email']);
-		unset($_SESSION['in_tracker']);
 		// save default user preferences
 		$tikilib->set_user_preference($_REQUEST['name'], 'theme', $prefs['style']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'userbreadCrumb', $prefs['users_prefs_userbreadCrumb']);
@@ -228,6 +226,24 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		}
 	}
 }
+
+if ($prefs['userTracker'] == 'y') {
+	$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');
+	if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
+		include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
+		if ($prefs["user_register_prettytracker"] == 'y' && !empty($prefs["user_register_prettytracker_tpl"])) {
+			if (substr($prefs["user_register_prettytracker_tpl"], -4) == ".tpl") {
+				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'tpl' => $prefs["user_register_prettytracker_tpl"]));
+			} else {
+				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'wiki' => $prefs["user_register_prettytracker_tpl"]));
+			}	
+		} else {
+			$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y'));
+		}
+		$smarty->assign('userTrackerData', $userTrackerData);
+	}
+}
+
 $smarty->assign('email_valid', $email_valid);
 ask_ticket('register');
 $_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");

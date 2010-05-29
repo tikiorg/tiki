@@ -156,6 +156,12 @@ function wikiplugin_tracker_info()
 				'filter' => 'text',
 				'separator' => ':'
 			),
+			'registration' => array(
+				'required' => false,
+				'name' => tra('Add registration fields'),
+				'description' => tra('y|n Add registration fields such as Username and Password'),
+				'filter' => 'alpha'
+			),
 		),
 	);
 }
@@ -521,7 +527,7 @@ function wikiplugin_tracker($data, $params)
 				/* ------------------------------------- Check field values for each type and presence of mandatory ones ------------------- */
 				$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields, $trackerId, empty($itemId)?'':$itemId);
 
-				if (empty($user) && $prefs['feature_antibot'] == 'y' && !$_SESSION['in_tracker']) {
+				if (empty($user) && $prefs['feature_antibot'] == 'y' && $registration != 'y') {
 					// in_tracker session var checking is for tiki-register.php
 					if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 						$field_errors['err_antibot'] = 'y';
@@ -753,7 +759,7 @@ function wikiplugin_tracker($data, $params)
 				$smarty->assign('validationjs', $validationjs);
 				$back .= $smarty->fetch('wiki-plugins/tracker_validator.tpl');
 			}
-			$back .= '<form id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			$back .= '<form name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
 			$back .= '<input type="hidden" name="refresh" value="1" />';
 			if (isset($_REQUEST['page']))
@@ -889,11 +895,18 @@ function wikiplugin_tracker($data, $params)
 				$status_input = $smarty->fetch('tracker_status_input.tpl');
 			}
 
+			if ($registration == "y") {
+				$back .= '<input type="hidden" name="register" value="Register" />';
+			}
+			
 			// Loop on tracker fields and display form
 			if (empty($tpl) && empty($wiki)) {
 				$back.= '<table class="wikiplugin_tracker">';
 				if (!empty($showstatus) && $showstatus == 'y') {
 					$back .= '<tr><td>'.tra('Status').'</td><td>'.$status_input.'</td></tr>';
+				}
+				if ($registration == 'y') {
+					$back .= $smarty->fetch('register-form.tpl');
 				}
 			} else {
 				$back .= '<div class="wikiplugin_tracker">';
@@ -988,7 +1001,7 @@ function wikiplugin_tracker($data, $params)
 				$smarty->security = true;
 				$back .= $smarty->fetch('wiki:'.$wiki);
 			}
-			if ($prefs['feature_antibot'] == 'y' && empty($user) && !$_SESSION['in_tracker']) {
+			if ($prefs['feature_antibot'] == 'y' && empty($user) && ($registration != 'y' || $prefs['rnd_num_reg'] == 'y')) {
 				// in_tracker session var checking is for tiki-register.php
 				$back .= $smarty->fetch('antibot.tpl');
 			}
