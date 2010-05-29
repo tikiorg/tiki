@@ -114,7 +114,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		}
 		foreach ($_REQUEST as $key =>$val) {
 			if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
-				$val = urldecode($val);
+				if (!is_array($val)) { $val = urldecode($val); }
 				$fieldId = substr($key, 2);
 				if (!is_numeric($fieldId)) { // composite filter
 					$ffs[] = array('sqlsearch'=>explode(':', str_replace(array('(', ')'), '', $fieldId)));
