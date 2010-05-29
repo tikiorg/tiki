@@ -61,20 +61,27 @@ class Validators
 					$validationjs .= 'input: function() { ';
 					$validationjs .= 'return $jq("#'.$prefix.$field_value['fieldId'].'").val(); ';
 					$validationjs .= '} } } ';
+				} else {
+					// remove last comma (not supported in IE7)
+                			$validationjs = rtrim($validationjs, " ,");
 				}
 				$validationjs .= '}, ';
 			}
 		}
+		// remove last comma (not supported in IE7)
+		$validationjs = rtrim($validationjs, " ,"); 
 		$validationjs .= '}, ';
 		$validationjs .= 'messages: { ';
 		foreach ($fields_data as $field_value) {
 			if ($field_value['validationMessage'] && $field_value['isMandatory'] == 'y') {
 				$validationjs .= $prefix . $field_value['fieldId'] . ': { ';
-				$validationjs .= 'required: "' .$field_value['validationMessage'].'", ';
+				$validationjs .= 'required: "' .$field_value['validationMessage'].'" ';
 				$validationjs .= '}, ';	
 			}
 		}
-		$validationjs .= '}, ';		
+		// remove last comma (not supported in IE7)
+                $validationjs = rtrim($validationjs, " ,");
+		$validationjs .= '} ';		
 		return $validationjs;
 	}
 }
