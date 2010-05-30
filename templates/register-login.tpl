@@ -1,3 +1,6 @@
+{if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl}
+	<input type="text" name="name" id="name" />
+{else}
 <tr>
 	<td class="formcolor"><label for="name">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</label>{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}</td>
 	<td class="formcolor">
@@ -11,3 +14,4 @@
 		{/if}
 	</td>
 </tr>
+{/if}

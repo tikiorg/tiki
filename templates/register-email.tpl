@@ -1,4 +1,7 @@
-{if $prefs.login_is_email ne 'y'}
+{if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl}
+	<input type="text" id="email" name="email" />
+{else}
+	{if $prefs.login_is_email ne 'y'}
 				<tr>
 					<td class="formcolor"><label for="email">{tr}Email:{/tr}</label>{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}</td>
 					<td class="formcolor"><input type="text" id="email" name="email" {if $prefs.feature_ajax eq 'y'}onkeyup="return check_mail()" onblur="return check_mail()"{/if}/>
@@ -8,4 +11,5 @@
 						{/if}
 					</td>
 				</tr>
+	{/if}
 {/if}

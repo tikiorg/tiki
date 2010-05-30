@@ -61,6 +61,12 @@
 					</div>
 				</div>
 				{preference name=userTracker}
+				<div class="adminoptionboxchild" id="userTracker_childcontainer">
+				{preference name=user_register_prettytracker}
+					<div class="adminoptionboxchild" id="user_register_prettytracker_childcontainer">
+					{preference name=user_register_prettytracker_tpl}
+					</div>
+				</div>
 				{preference name=groupTracker}
 				{preference name=email_due}
 				{preference name=unsuccessful_logins}

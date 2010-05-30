@@ -332,6 +332,14 @@ function wikiplugin_tracker($data, $params)
 				return;
 			$outf = array();
 			if (!empty($fields)  || !empty($wiki) || !empty($tpl)) {
+				if ($registration == 'y' && $prefs["user_register_prettytracker"] == 'y' && !empty($prefs["user_register_prettytracker_tpl"])) {
+					$smarty->assign('register_login', $smarty->fetch('register-login.tpl'));
+					$smarty->assign('register_email', $smarty->fetch('register-email.tpl'));
+					$smarty->assign('register_pass', $smarty->fetch('register-pass.tpl'));
+					$smarty->assign('register_pass2', $smarty->fetch('register-pass2.tpl'));
+					$smarty->assign('register_passcode', $smarty->fetch('register-passcode.tpl'));
+					$smarty->assign('register_groupchoice', $smarty->fetch('register-groupchoice.tpl'));
+				}
 				if (!empty($fields)) {
 					$outf = preg_split('/ *: */', $fields);$fields;
 				} elseif (!empty($wiki)) {
