@@ -763,7 +763,44 @@ function wikiplugin_tracker($data, $params)
 			if ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_validation'] == 'y') {
 				global $validatorslib;
 				include_once('lib/validatorslib.php');
-				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], "track_" );
+				$customvalidation = '';
+				$customvalidation_m = '';
+				if ($registration == 'y') {
+					// email validation
+					$customvalidation .= 'email: { ';
+					$customvalidation .= 'required: true, ';
+					$customvalidation .= 'email: true }, ';
+					$customvalidation_m .= 'email: { email: "'. tra("Invalid email") .  '"}, ';
+					// password validation
+					$customvalidation .= 'pass: { ';
+					$customvalidation .= 'required: true, ';
+					$customvalidation .= 'remote: { ';
+					$customvalidation .= 'url: "validate-ajax.php", ';
+					$customvalidation .= 'type: "post", ';
+					$customvalidation .= 'data: { ';
+					$customvalidation .= 'validator: "password", ';
+					$customvalidation .= 'input: function() { ';
+					$customvalidation .= 'return $jq("#pass1").val(); ';
+					$customvalidation .= '} } } ';
+					$customvalidation .= '}, ';
+					// password repeat validation
+					$customvalidation .= 'passAgain: { equalTo: "#pass1" }, ';
+					$customvalidation_m .= 'passAgain: { equalTo: "'. tra("Passwords do not match") .  '"}, ';
+					// username validation
+					$customvalidation .= 'name: { ';
+					$customvalidation .= 'required: true, ';
+					$customvalidation .= 'remote: { ';
+					$customvalidation .= 'url: "validate-ajax.php", ';
+					$customvalidation .= 'type: "post", ';
+					$customvalidation .= 'data: { ';
+					$customvalidation .= 'validator: "username", ';
+					$customvalidation .= 'input: function() { ';
+					$customvalidation .= 'return $jq("#name").val(); ';
+					$customvalidation .= '} } } ';
+					$customvalidation .= '}, ';
+				}
+				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], "track_", $customvalidation, $customvalidation_m );
+
 				$smarty->assign('validationjs', $validationjs);
 				$back .= $smarty->fetch('wiki-plugins/tracker_validator.tpl');
 			}

@@ -22,7 +22,7 @@ class Validators
 		}
 	}
 	
-	function validateInput( $validator, $parameter, $message = '' ) {
+	function validateInput( $validator, $parameter = '', $message = '' ) {
 		include_once('lib/validators/validator_' . $validator . '.php');
 		if (!function_exists("validator_$validator") || !isset($this->input)) {
 			return false;
@@ -42,7 +42,7 @@ class Validators
 		return $validators;
 	}
 	
-	function generateTrackerValidateJS( $fields_data, $prefix = "ins_" ) {
+	function generateTrackerValidateJS( $fields_data, $prefix = "ins_", $custom_rules = '', $custom_messages = '' ) {
 		$validationjs = 'rules: { ';
 		foreach ($fields_data as $field_value) {
 			if ($field_value['validation'] || $field_value['isMandatory'] == 'y') {				
@@ -68,6 +68,7 @@ class Validators
 				$validationjs .= '}, ';
 			}
 		}
+		$validationjs .= $custom_rules;
 		// remove last comma (not supported in IE7)
 		$validationjs = rtrim($validationjs, " ,"); 
 		$validationjs .= '}, ';
@@ -79,6 +80,7 @@ class Validators
 				$validationjs .= '}, ';	
 			}
 		}
+		$validationjs .= $custom_messages;
 		// remove last comma (not supported in IE7)
                 $validationjs = rtrim($validationjs, " ,");
 		$validationjs .= '} ';		

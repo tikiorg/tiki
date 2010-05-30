@@ -12,9 +12,17 @@ if ($prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_validation'] != 'y
 	exit;
 }
 
-if (empty($_REQUEST['validator']) || empty($_REQUEST["input"]) || empty($_REQUEST["parameter"])) {
+if (empty($_REQUEST['validator']) || empty($_REQUEST["input"])) {
 	echo '{}';
 	exit;
+}
+
+if (empty($_REQUEST["parameter"])) {
+	$_REQUEST["parameter"] = '';
+}
+
+if (empty($_REQUEST["message"])) {
+	$_REQUEST["message"] = '';
 }
 
 global $validatorslib;
