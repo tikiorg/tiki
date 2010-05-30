@@ -497,60 +497,16 @@ div#sitelogo img {
 #siteloginbar_popup .cssmenu_horiz #logout_link {
 	background-color: #070707;
 }
-#siteloginbar_popup #logout_link .cbox {
-	text-align: center;
-}
-#siteloginbar_popup .cssmenu_horiz div {
-	
-}
-#siteloginbar_popup .cssmenu_horiz div a {
-	display: inline;
-}
+
 #siteloginbar_popup .cbox {
-	padding: 10px;
-	margin: 2px 2px 3px 1px;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
-#siteloginbar_popup .cbox * {
-	line-height: 14px;
-	margin: 2px;
-}
-#siteloginbar_popup .cbox label {
-	clear: both; float: left;
-}
-#siteloginbar_popup .cbox div {
-	clear: both;
-}
+
 #sl-login-user, #sl-login-pass {
-	background-color: #fff;
-	float: right;
-}
-#siteloginbar_popup .rme {
-	display: block;
-	padding: 5px 0;
-	text-align: right;
-}
-#siteloginbar_popup span.pass {
-	display: inline;
-}
-#siteloginbar_popup .pass a {
-	float: left;
-	margin: 0;
-	padding: 0;
-	text-align: center;
-	width: 30%;
-}
-#siteloginbar_popup .register a {
-	float: right;
-	margin: 0;
-	padding: 0;
-	text-align: center;
-	width: 30%;
-}
-#siteloginbar_popup .wikiaction {
-	clear: both; float: right;
+	background: #fff;
+
 }
 
 /*** CSS menus shadows for all but IE6 ***/
