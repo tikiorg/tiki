@@ -13,7 +13,7 @@
 		{tr}Wiki Page Editor{/tr} {icon _id='help' style="vertical-align:middle"}
 	</a>
 	{tr}and{/tr}
-	<a href="{$prefs.helpurl}Wiki+Syntax" target="tikihelp" class="tikihelp" title="{tr}Wiki Syntax{/tr}: {tr}The syntax system used for creating pages in TikiWiki{/tr}">
+	<a href="{$prefs.helpurl}Wiki+Syntax" target="tikihelp" class="tikihelp" title="{tr}Wiki Syntax{/tr}: {tr}The syntax system used for creating pages in Tiki{/tr}">
 		{tr}Wiki Syntax{/tr} {icon _id='help' style="vertical-align:middle"}
 	</a>
 </p>

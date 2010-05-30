@@ -603,6 +603,6 @@
 	  	</div>
 </div>
 <hr />
-<p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware Project{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}Powered by TikiWiki{/tr}" style="width:80px; height:31px; border:0" /></a></p>
+<p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMSGroupware Project{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}Powered by Tiki{/tr}" style="width:80px; height:31px; border:0" /></a></p>
 		</div>{* -- END of main -- *}
 	</div> {* -- END of fixedwidth -- *}

@@ -47,7 +47,7 @@
 </table>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To disallow a function, add a disable_functions=exec,passthru for instance in your php.ini{/tr}{/remarksbox}
 <br />
-<h2>{tr}TikiWiki settings{/tr}</h2>
+<h2>{tr}Tiki settings{/tr}</h2>
 <table class="normal">
 <tr><th>{tr}Tiki variable{/tr}</th>
 <th>{tr}Setting{/tr}</th>

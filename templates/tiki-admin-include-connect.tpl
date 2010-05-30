@@ -1,5 +1,5 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-		{tr}TikiWiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr} <a href="http://info.tikiwiki.org/Join+the+community">{tr}Join the community!{/tr}</a>
+		{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr} <a href="http://info.tikiwiki.org/Join+the+community">{tr}Join the community!{/tr}</a>
 {/remarksbox}
 
 <div class="adminoptionbox">
