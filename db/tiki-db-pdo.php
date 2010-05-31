@@ -58,9 +58,20 @@ try {
 	}
 
 	if ( ! $conn ) {
-		$dbTiki = new PDO( "$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki,
-			array( PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET $client_charset" )
-		);
+	
+		$charset_query = "SET CHARACTER SET $client_charset";
+		if ( defined('PDO::MYSQL_ATTR_NIT_COMMAND' ) ) {
+			$dbTiki = new PDO( "$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki,
+				array( PDO::MYSQL_ATTR_INIT_COMMAND => $charset_query )
+			);
+		} else {
+			// PHP 5.3.0 seems buggy and may need this query - see http://bugs.php.net/bug.php?id=47224
+			//   but this method is just a workaround because it may not work if PHP tries to reconnect to the DB after loosing the connection
+			//
+			$dbTiki = new PDO( "$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki );
+			$dbTiki->exec( $charset_query );
+		}
+		unset( $charset_query );
 
 		$dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
 		$dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
