@@ -1,5 +1,5 @@
 {if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl}
-	<input type="text" id="email" name="email" />&nbsp;<strong class='mandatory_star'>*</strong>
+	<input type="text" id="email" name="email" /><strong class='mandatory_star'>*</strong>
 {else}
 	{if $prefs.login_is_email ne 'y'}
 				<tr>

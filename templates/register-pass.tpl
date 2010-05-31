@@ -1,5 +1,5 @@
 {if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl}
-	<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" />&nbsp;<strong class='mandatory_star'>*</strong>	
+	<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" /><strong class='mandatory_star'>*</strong>	
 {else}
 	{if $openid_associate neq 'y'}
 				<tr>
