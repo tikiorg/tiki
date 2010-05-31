@@ -65,7 +65,7 @@ try {
 	if ( ! $conn ) {
 	
 		$charset_query = "SET CHARACTER SET $client_charset";
-		if ( defined('PDO::MYSQL_ATTR_NIT_COMMAND' ) ) {
+		if ( defined('PDO::MYSQL_ATTR_INIT_COMMAND' ) ) {
 			$dbTiki = new PDO( "$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki,
 				array( PDO::MYSQL_ATTR_INIT_COMMAND => $charset_query )
 			);
