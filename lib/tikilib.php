@@ -2408,6 +2408,7 @@ class TikiLib extends TikiDb_Bridge
 		$n = -1;
 		$need_everything = ( $with_subgals_size && ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) );
 		global $cachelib; include_once('lib/cache/cachelib.php');
+		//TODO: perms cache for file perms (now we are using cache only for file gallery perms)
 		$cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
 		$cacheType = 'fgals_perms_'.$galleryId."_";
 		if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
@@ -2417,14 +2418,22 @@ class TikiLib extends TikiDb_Bridge
 		}
 		foreach( $result as $res ) {
 			$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
-			if (isset($fgal_perms[$res['id']])) {
-				$res['perms'] = $fgal_perms[$res['id']];
+			$galleryId = $res['isgal'] == 1 ? $res['id'] : $res['galleryId'];
+
+			// if file is categorized uses category permisions, otherwise uses parent file gallery permissions
+			// note that the file will not be displayed if categorized but its categories has no file gallery related permissions
+			if ($object_type == 'file' && $categlib->is_categorized($object_type, $res['id'])) {
+				$res['perms'] = $this->get_perm_object($res['id'], 'file', array(), false);
+			} else if (isset($fgal_perms[$galleryId])) {
+				$res['perms'] = $fgal_perms[$galleryId];
 			} else {
-				$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
+				$fgal_perms[$galleryId] = $res['perms'] = $this->get_perm_object($galleryId, 'file gallery', array(), false);
 			}
+			
 			if ($galleryId <=0) {
-				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$res['id'].'_');
+				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$galleryId.'_');
 			}
+
 			// Don't return the current item, if :
 			//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
 			if ( ( $res['perms']['tiki_p_view_file_gallery'] != 'y' && ! $this->user_has_perm_on_object($user,$res['id'], $object_type, 'tiki_p_view_file_gallery') )
