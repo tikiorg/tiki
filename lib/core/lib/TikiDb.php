@@ -65,11 +65,18 @@ abstract class TikiDb
 	function getOne( $query, $values = null, $reporterrors = true, $offset = 0 ) // {{{
 	{
 		$result = $this->query( $query, $values, 1, $offset, $reporterrors );
-		$res = $result->fetchRow();
-		if (empty($res)) {
-			return $res;
+
+		if ( $result ) {
+			$res = $result->fetchRow();
+
+			if ( empty( $res ) ) {
+				return $res;
+			}
+		
+			return reset( $res );
 		}
-		return reset( $res );
+
+		return false;
 	} // }}}
 
 	function fetchAll( $query = null, $values = null, $numrows = -1, $offset = -1, $reporterrors = true ) // {{{
@@ -255,5 +262,163 @@ abstract class TikiDb
 		$s = implode(',',$arr);
 		if (strlen($s) > 0) return "CONCAT($s)";
 		else return '';
+	} // }}}
+
+	function getCharsetVariables() // {{{
+	{
+		$return = array();
+
+		foreach ( array( 'character_set%', 'collation%' ) as $varName ) {
+			$result = $this->query( "show variables like '$varName'" );
+			while ( $res = $result->fetchRow() ) {
+				$return[ $res['Variable_name'] ] = $res['Value'];
+			}
+		}
+
+		return $return;
+	} // }}}
+
+	function getDefaultConfigCharsets() { // {{{
+		$return = false;
+
+		global $api_tiki;
+		if ( $api_tiki == 'pdo' ) {
+			global $local_php;
+			if ( ! empty( $local_php ) && file_exists( $local_php ) ) {
+				include( $local_php );
+
+				$db_hoststring = "host=$host_tiki";
+				if ( $db_tiki == 'mysqli' ) {
+					$db_tiki = 'mysql';
+					if ( isset( $socket_tiki ) ) {
+						$db_hoststring = "unix_socket=$socket_tiki";
+					}
+				}
+
+				if ( $db_tiki == 'mysql' ) {
+					$return = array();
+
+					// Create another PDO connection, to use the "PDO::MYSQL_ATTR_READ_DEFAULT_GROUP" attribute, which allows to get MySQL default config from my.cnf file
+					$tmpPdo = new PDO("$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki, array(PDO::MYSQL_ATTR_READ_DEFAULT_GROUP => true) );
+			                if ( $result = $tmpPdo->query( "show variables like 'character_set_%'" ) ) {
+						while ( $res = $result->fetch() ) {
+							$return[ $res['Variable_name'] ] = $res['Value'];
+						}
+			                }
+				}
+			}
+		}
+
+		return $return;
+	} // }}}
+
+	function detectContentCharset( &$errorMsg, $dbCharsetVariables = null, $dbDefaultConfigCharsets = null, $previousDbApi = null ) { // {{{
+
+		if ( $dbCharsetVariables === null ) {
+			$dbCharsetVariables = $this->getCharsetVariables();
+		}
+		if ( empty( $previousDbApi ) ) {
+			$previousDbApi = $api_tiki;
+		}
+
+		$dbCharset = $dbCharsetVariables['character_set_database'];
+		$utf8DbCharset = ( substr( strtoupper($dbCharset), 0, 3 ) == 'UTF' );
+
+		$dbConnectionCharset = $dbCharsetVariables['character_set_connection'];
+		$utf8ConnectionCharset = ( substr( strtoupper($dbConnectionCharset), 0, 3 ) == 'UTF' );
+
+		if ( $previousDbApi == 'adodb' && $api_tiki != 'adodb' ) {
+			// We are updating Tiki from AdoDB to PDO abstraction layer...
+			//  ... this is why we have to check AdoDB Connection Charset instead
+
+			if ( $dbDefaultConfigCharsets === null ) {
+				$dbDefaultConfigCharsets = $this->getDefaultConfigCharsets();
+			}
+			$utf8ConnectionCharset = ( substr( strtoupper($dbDefaultConfigCharsets['character_set_connection']), 0, 3 ) == 'UTF' );
+		}
+
+		if ( $utf8ConnectionCharset && $utf8DbCharset ) {
+			// FULL UTF-8 installation (UTF-8 DB + UTF-8 connection)
+			return 'utf8';
+		} elseif ( $dbConnectionCharset == $dbCharset ) {
+			// DB is not in UTF-8, but MySQL will try to convert on-the-fly if possible
+			return $dbCharset;
+		} else {
+			// either DB is in UTF-8, but data is wrongly reencoded
+			// or connection is in UTF-8, but DB is in another charset
+			return false;
+		}
+
+		return false;
+	} // }}}
+
+	function detectBestClientCharset( $dbCharsetVariables = null, $dbDefaultConfigCharsets = null, $previousDbApi = null ) { // {{{
+		global $api_tiki;
+
+		if ( empty( $dbCharsetVariables ) ) {
+			$dbCharsetVariables = $this->getCharsetVariables();
+		}
+		if ( empty( $previousDbApi ) ) {
+			$previousDbApi = $api_tiki;
+		}
+
+		$dbClientCharset = $dbCharsetVariables['character_set_client'];
+		$adodbUtf8ClientCharset = $utf8ClientCharset = ( substr( strtoupper($dbClientCharset), 0, 3 ) == 'UTF' );
+
+		if ( $previousDbApi == 'adodb' && $api_tiki != 'adodb' ) {
+			if ( $dbDefaultConfigCharsets === null ) {
+				$dbDefaultConfigCharsets = $this->getDefaultConfigCharsets();
+			}
+			$adodbUtf8ClientCharset = ( substr( strtoupper($dbDefaultConfigCharsets['character_set_client']), 0, 3 ) == 'UTF' );
+		}
+
+		if ( $utf8ClientCharset ) {
+			// The current connection is using UTF-8 for ClientCharset
+			if ( $api_tiki == 'pdo' ) {
+				// The current DB abstraction layer is PDO
+				if ( $previousDbApi == 'pdo' ) {
+					// The data in DB has been stored using PDO
+					return 'utf8';
+				} else {
+					// The data in DB has been stored using AdoDB
+					// (we are most probably in the upgrade process from 4.x to 5.x)
+					if ( $adodbUtf8ClientCharset ) {
+						// AdoDB was using an UTF-8 Client Charset
+						return 'utf8';
+					} else {
+						// AdoDB was using a wrong Client Charset
+						return $dbDefaultConfigCharsets['character_set_client'];
+					}
+				}
+			} else {
+				// The current DB abstraction layer is AdoDB
+				return 'utf8';
+			}
+		} else {
+			// The current connection is using a wrong Client Charset
+			if ( $api_tiki == 'pdo' ) {
+				// The current DB abstraction layer is PDO
+				if ( $previousDbApi == 'pdo' ) {
+					// The data in DB has been stored using PDO
+					return $dbClientCharset;
+				} else {
+					// The data in DB has been stored using AdoDB
+					// (we are most probably in the upgrade process from 4.x to 5.x)
+					if ( $adodbUtf8ClientCharset ) {
+						// AdoDB was using an UTF-8 Client Charset
+						return 'utf8';
+					} else {
+						// AdoDB was using a wrong Client Charset
+						return $dbDefaultConfigCharsets['character_set_client'];
+					}
+				}
+			} else {
+				// The current DB abstraction layer is AdoDB
+				// => ClientCharset can't be forced unless a data reencoding is done
+				return $dbClientCharset;
+			}
+		}
+
+		return false;
 	} // }}}
 }

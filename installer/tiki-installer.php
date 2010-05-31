@@ -20,6 +20,7 @@ require_once( 'tiki-filter-base.php' );
 require_once ( 'lib/smarty/libs/Smarty.class.php');
 require_once ('installer/installlib.php');
 
+$dbTiki = false;
 $commands = array();
 @ini_set('magic_quotes_runtime',0);
 
@@ -57,14 +58,10 @@ function has_tiki_db_20()
 	return $installer->tableExists('tiki_pages_translation_bits');
 }
 
-function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $dbversion_tiki='') {
-	global $local, $db_tiki, $tiki_pdo_utf8;
-	
+function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset = '', $api_tiki = '', $dbversion_tiki = '5.0') {
+	global $local;
+	global $db_tiki;
 	if ($dbs_tiki && $user_tiki) {
-		if (empty($dbversion_tiki)) {
-			$TWV = new TWVersion;
-			$dbversion_tiki = $TWV->getBaseVersion();
-		}
 		$db_tiki = addslashes($dbb_tiki);
 		$host_tiki = addslashes($host_tiki);
 		$user_tiki = addslashes($user_tiki);
@@ -74,11 +71,14 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$filetowrite = "<?php\n";
 		$filetowrite .= "\$db_tiki='" . $db_tiki . "';\n";
 		$filetowrite .= "\$dbversion_tiki='" . $dbversion_tiki . "';\n";
-		$filetowrite .= "\$tiki_pdo_utf8=" . ($tiki_pdo_utf8 ? 'true' : 'false') . ";\n";
 		$filetowrite .= "\$host_tiki='" . $host_tiki . "';\n";
 		$filetowrite .= "\$user_tiki='" . $user_tiki . "';\n";
 		$filetowrite .= "\$pass_tiki='" . $pass_tiki . "';\n";
 		$filetowrite .= "\$dbs_tiki='" . $dbs_tiki . "';\n";
+		if ( ! empty( $api_tiki ) ) {
+			$filetowrite .= "\$api_tiki='" . $api_tiki . "';\n";
+		}
+		$filetowrite .= "\$client_charset='" . "$client_charset" . "';\n";
 		fwrite($fw, $filetowrite);
 		fclose($fw);
 	}
@@ -333,29 +333,28 @@ $PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
 
 
-function has_admin() {
-        // Try to see if we have an admin account
-	global $dbTiki;
-	global $admin_acc;
+// Try to see if we have an admin account
+function has_admin( $dbTiki, $api_tiki ) {
         $query = "select hash from users_users where login='admin'";
+	$res = false;
 
-        @$result = $dbTiki->Execute($query);
+	if ( $api_tiki == 'pdo' ) {
+		if ( @ ( $result = $dbTiki->prepare($query) ) && $result->execute() ) {
+			$res = $result->fetch( PDO::FETCH_ASSOC );
+		}
+	} else {
+	        if ( @ ( $result = $dbTiki->Execute($query) ) && $result->numRows() ) {
+			$res = $result->fetchRow();
+		}
+	}
 
-        if (!$result) {
-                $admin_acc = 'n';
-        } else {
-                if ($result->numRows()) {
-                        $res = $result->fetchRow();
+	if ( $res && isset( $res['hash'] ) ) {
+		$admin_acc = 'y';
+	} else {
+		$admin_acc = 'n';
+	}
 
-                        if (isset($res['hash'])) {
-                                $admin_acc = 'y';
-                        } else {
-                                $admin_acc = 'n';
-                        }
-                } else {
-                        $admin_acc = 'n';
-                }
-        }
+	return $admin_acc;
 }
 
 function get_admin_email( $dbTiki ) {
@@ -401,6 +400,53 @@ function fix_admin_account( $account ) {
 		$id = $row['userId'];
 		$installer->query( 'INSERT IGNORE INTO `users_usergroups` (`userId`, `groupName`) VALUES(?, "Admins")', array( $id ) );
 	}
+}
+
+function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_charset, &$dbTiki ) {
+	global $tikifeedback;
+	$dbcon = false;
+
+	if ( ( isset($api) && $api == 'adodb' ) || ! extension_loaded('pdo') ) {
+		$api = 'adodb';
+		$dbTiki = ADONewConnection( $driver );
+		$db = new TikiDb_Adodb( $dbTiki );
+		if ( $dbcon = (bool) @$dbTiki->Connect($host, $user, $pass, $dbname) ) {
+			$tikifeedback[] = array( 'num' => 1, 'mes' => $dbTiki->ErrorMsg() );
+		}
+	} else {
+		$dbcon = true;
+		$db_hoststring = "host=$host";
+
+		if ( $driver == 'mysqli' ) {
+			$driver = 'mysql';
+			if ( isset( $socket_tiki ) ) {
+				$db_hoststring = "unix_socket=$socket_tiki";
+			}
+		}
+
+		try {
+			if ( empty( $client_charset ) ) {
+				$dbTiki = new PDO( "$driver:$db_hoststring;dbname=$dbname", $user, $pass );
+			} else {
+				$dbTiki = new PDO( "$driver:$db_hoststring;dbname=$dbname", $user, $pass,
+					array( PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET $client_charset" )
+				);
+			}
+		} catch ( PDOException $e ) {
+			$dbcon = false;
+			$tikifeedback[] = array( 'num' => 1, 'mes'=> $e->getMessage() );
+		}
+		if ( $dbcon ) {
+			$db = new TikiDb_Pdo( $dbTiki );
+		}
+	}
+
+	if ( $dbcon ) {
+		$db->setErrorHandler(new InstallerDatabaseErrorHandler);
+		TikiDb::set($db);
+	}
+
+	return $dbcon;
 }
 
 // -----------------------------------------------------------------------------
@@ -530,65 +576,72 @@ $smarty->assign_by_ref("languages", $languages);
 
 // next block checks if there is a local.php and if we can connect through this.
 // sets $dbcon to false if there is no valid local.php
-if (!file_exists($local)) {
-	$dbcon = false;
-	$smarty->assign('dbcon', 'n');
-	$tiki_pdo_utf8 = true;				// clean install, use UTF-8
-} else {
+$dbcon = false;
+if ( file_exists($local) ) {
 	// include the file to get the variables
+	$default_api_tiki = $api_tiki;
+	$api_tiki = '';
+	unset($client_charset);
 	include $local;
+	if ( ! $client_charset_forced = isset($client_charset) ) {
+		$client_charset = '';
+	}
+	$previousDbApi = $api_tiki;
+	if ( empty( $api_tiki ) ) {
+		$api_tiki_forced = false;
+		$api_tiki = $default_api_tiki;
+		if ( ! empty( $dbversion_tiki ) && $dbversion_tiki[0] < 4 ) {
+			$previousDbApi = 'adodb'; // AdoDB was the default DB abstraction layer before 4.0
+		}
+	} else {
+		$api_tiki_forced = true;
+	}
+
+	unset( $default_api_tiki );
+
 	// In case of replication, ignore it during installer.
 	unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
 	if ($dbversion_tiki == '1.10') {
 		$dbversion_tiki = '2.0';
 	}
-	if ($dbversion_tiki != '4.0' && !isset($tiki_pdo_utf8)) {	// don't use PDO UTF-8 to avoid double encoding if existing data
-		$tiki_pdo_utf8 = true;		// unless it's an upgrade from 3.x which used ADODB and therefore existing data is already UTF-8
-		write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki);
-	}
-	
+
 	if (!isset($db_tiki)) {
 		// if no db is specified, use the first db that this php installation can handle
 		$db_tiki = reset($dbservers);
-		write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki);
+		write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, ($api_tiki_forced ? $api_tiki : ''), $dbversion_tiki);
 	}
 
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
-	// avoid errors in ADONewConnection() (wrong darabase driver etc...)
-	if (!isset($dbservers[$db_tiki])) {
-		$dbcon = false;
-		$smarty->assign('dbcon', 'n');
-	} else {
-		$dbTiki = ADONewConnection($db_tiki);
-		$db = new TikiDb_Adodb($dbTiki);
-		$db->setErrorHandler(new InstallerDatabaseErrorHandler);
-		TikiDb::set($db);
+	$dbcon = false;
+	if ( isset( $dbservers[$db_tiki] ) ) { // avoid errors in ADONewConnection() (wrong darabase driver etc...)
+		if ( $dbcon = initTikiDB( $api_tiki, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, $dbTiki ) ) {
+			$smarty->assign( 'resetdb', isset($_REQUEST['reset']) ? 'y' : 'n' );
 
-		if (! $test = $dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
-			$dbcon = false;
-			$smarty->assign('dbcon', 'n');
-			$tikifeedback[] = array('num'=>1, 'mes'=>$dbTiki->ErrorMsg());
-		} else {
-			$dbcon = true;
 			$installer = new Installer;
 			$installer->setServerType($db_tiki);
-			if (!isset($_REQUEST['reset'])) {
-				$smarty->assign('dbcon', 'y');
-				$smarty->assign('resetdb', 'n');
-			} else {
-				$smarty->assign('dbcon', 'y');
-				$smarty->assign('resetdb', 'y');
+
+			if ( ! $client_charset_forced ) {
+
+				$dbCharsetVariables = $installer->getCharsetVariables();
+				$client_charset = $installer->detectBestClientCharset( $dbCharsetVariables, null, $previousDbApi );
+
+				write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, ($api_tiki_forced ? $api_tiki : ''), $dbversion_tiki);
+
+				// Try to reconnect to the DB using the detected client_charset if not the same as the current one
+				if ( ! empty($client_charset) && $client_charset != $dbCharsetVariables['character_set_client'] ) {
+					$dbcon = initTikiDB( $api_tiki, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, $dbTiki );
+				}
 			}
 		}
 	}
 }
 
-if ($dbcon) {
-	has_admin();
+if ( $dbcon ) {
+	$admin_acc = has_admin( $dbTiki, $api_tiki );
 }
 
-if ($admin_acc == 'n') {
+if ( $admin_acc == 'n' ) {
 	$smarty->assign('noadmin', 'y');
 } else {
 	$smarty->assign('noadmin', 'n');
@@ -612,38 +665,31 @@ if (
 		)
 	) && isset($_REQUEST['dbinfo'])
 ) {
-	$dbTiki = ADONewConnection($_REQUEST['db']);
-	$db = new TikiDb_Adodb( $dbTiki );
-	$db->setErrorHandler( new InstallerDatabaseErrorHandler );
-	TikiDb::set( $db );
-
-	// try to connect to database and write db information
-	if (isset($_REQUEST['name']) && $_REQUEST['name']) {
-		if (!@$dbTiki->Connect($_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'])) {
-			$dbcon = false;
-			$smarty->assign('dbcon', 'n');
-			$tikifeedback[] = array('num'=>1, 'mes'=>$dbTiki->ErrorMsg());
-		} else {
-			$dbcon = true;
-			$smarty->assign('dbcon', 'y');
-			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
-			include $local;
-			// In case of replication, ignore it during installer.
-			unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
-			$installer = new Installer;
-			$installer->setServerType($db_tiki);
-		}
+	if ( ! empty($_REQUEST['name']) ) {
+		$client_charset = 'utf8';
+		$dbcon = initTikiDB( $api_tiki, $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset, $dbTiki );
+		write_local_php( $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset );
+		include $local;
+		// In case of replication, ignore it during installer.
+		unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
+		$installer = new Installer;
+		$installer->setServerType($db_tiki);
 	} else {
 		$dbcon = false;
-		$smarty->assign('dbcon', 'n');
 		$tikifeedback[] = array('num'=>1, 'mes'=>tra("No database name specified"));
 	}
+}
+
+if ( $dbcon ) {
+	$smarty->assign('dbcon', 'y');
+} else {
+	$smarty->assign('dbcon', 'n');
 }
 
 if ($dbcon) {
 	$has_tiki_db = has_tiki_db();
 	$smarty->assign('tikidb_created', $has_tiki_db);
-	$oldPerms = $dbTiki->getOne('SELECT COUNT(*) FROM `users_permissions` WHERE `permDesc` = \'Can view categorized items\'');
+	$oldPerms = $installer->getOne('SELECT COUNT(*) FROM `users_permissions` WHERE `permDesc` = \'Can view categorized items\'');
 	$smarty->assign('tikidb_oldPerms', $oldPerms);
 	
 	if ($install_step == '6' && $has_tiki_db) {
@@ -735,14 +781,6 @@ if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
 	$userlib->user_logout($user, false, $u);	// logs out then redirects to home page or $u
 	exit;
 }
-
-// unused? (4.x)
-//if( isset( $_GET['lockchange'] ) )
-//{
-//	touch( 'db/lock' );
-//	header( 'Location: tiki-change_password.php?user=admin' );
-//	exit;
-//}
 
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 

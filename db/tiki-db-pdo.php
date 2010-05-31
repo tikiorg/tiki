@@ -26,21 +26,48 @@ if ($db_tiki == 'mysqli') {
 		}
 }
 
-if (isset($tiki_pdo_utf8) && $tiki_pdo_utf8) {
-	$extra_params = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
-} else {
-	$extra_params = array();
-}
-	
 try {
-	//$dbTiki = new PDO("$db_tiki:host=$host_tiki;dbname=$dbs_tiki", $user_tiki, $pass_tiki);
-	$dbTiki = new PDO("$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki, $extra_params);
-	$dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
-	$dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
-	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);
+/*
+	$pdoDriverOptions = empty( $client_charset )
+		? array( PDO::MYSQL_ATTR_READ_DEFAULT_GROUP => true )
+		: array( PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET $client_charset" );
 
+	$dbTiki = new PDO("$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki, $pdoDriverOptions);
+*/
 	require_once 'lib/core/lib/TikiDb/Pdo.php';
-	TikiDb::set( new TikiDb_Pdo( $dbTiki ) );
+
+	$conn = false;
+	if ( ! isset( $client_charset ) ) {
+		// This case should not happen if Tiki was correctly updated with the web installer
+
+		$dbTiki = new PDO( "$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki );
+		$dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
+		$dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+		$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);
+		TikiDb::set( new TikiDb_Pdo( $dbTiki ) );
+
+		$tempDb = TikiDb::get();
+		$dbCharsetVariables = $tempDb->getCharsetVariables();
+		$client_charset = $tempDb->detectBestClientCharset( $dbCharsetVariables );
+		unset( $tempDb );
+
+		$conn = ( ! empty($client_charset) && $client_charset == $dbCharsetVariables['character_set_client'] );
+	}
+	if ( empty( $client_charset ) ) {
+		$client_charset = 'utf8';
+	}
+
+	if ( ! $conn ) {
+		$dbTiki = new PDO( "$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki,
+			array( PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET $client_charset" )
+		);
+
+		$dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
+		$dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+		$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);
+
+		TikiDb::set( new TikiDb_Pdo( $dbTiki ) );
+	}
 
 } catch( PDOException $e ) {
 	require_once 'setup_smarty.php';
