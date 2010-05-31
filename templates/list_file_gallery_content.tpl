@@ -212,7 +212,7 @@
               href="{$files[changes].id|sefurl:file}" title="{tr}Download{/tr}"
             {/if}
           {/if}
-          {if $smarty.capture.over_preview neq ''}
+          {if $smarty.capture.over_preview neq '' and $files[changes].perms.tiki_p_download_files eq 'y'}
             {literal} {/literal}{popup fullhtml="1" text=$smarty.capture.over_preview|escape:"javascript"|escape:"html"}
           {/if}
         {/if}
