@@ -26,9 +26,15 @@ if ($db_tiki == 'mysqli') {
 		}
 }
 
+if (isset($tiki_pdo_utf8) && $tiki_pdo_utf8) {
+	$extra_params = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
+} else {
+	$extra_params = array();
+}
+	
 try {
 	//$dbTiki = new PDO("$db_tiki:host=$host_tiki;dbname=$dbs_tiki", $user_tiki, $pass_tiki);
-	$dbTiki = new PDO("$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki);
+	$dbTiki = new PDO("$db_tiki:$db_hoststring;dbname=$dbs_tiki", $user_tiki, $pass_tiki, $extra_params);
 	$dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
 	$dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
 	$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);

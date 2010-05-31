@@ -57,10 +57,14 @@ function has_tiki_db_20()
 	return $installer->tableExists('tiki_pages_translation_bits');
 }
 
-function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $dbversion_tiki="4.0") {
-	global $local;
-	global $db_tiki;
+function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $dbversion_tiki='') {
+	global $local, $db_tiki, $tiki_pdo_utf8;
+	
 	if ($dbs_tiki && $user_tiki) {
+		if (empty($dbversion_tiki)) {
+			$TWV = new TWVersion;
+			$dbversion_tiki = $TWV->getBaseVersion();
+		}
 		$db_tiki = addslashes($dbb_tiki);
 		$host_tiki = addslashes($host_tiki);
 		$user_tiki = addslashes($user_tiki);
@@ -70,6 +74,7 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$filetowrite = "<?php\n";
 		$filetowrite .= "\$db_tiki='" . $db_tiki . "';\n";
 		$filetowrite .= "\$dbversion_tiki='" . $dbversion_tiki . "';\n";
+		$filetowrite .= "\$tiki_pdo_utf8=" . ($tiki_pdo_utf8 ? 'true' : 'false') . ";\n";
 		$filetowrite .= "\$host_tiki='" . $host_tiki . "';\n";
 		$filetowrite .= "\$user_tiki='" . $user_tiki . "';\n";
 		$filetowrite .= "\$pass_tiki='" . $pass_tiki . "';\n";
@@ -528,6 +533,7 @@ $smarty->assign_by_ref("languages", $languages);
 if (!file_exists($local)) {
 	$dbcon = false;
 	$smarty->assign('dbcon', 'n');
+	$tiki_pdo_utf8 = true;				// clean install, use UTF-8
 } else {
 	// include the file to get the variables
 	include $local;
@@ -536,7 +542,11 @@ if (!file_exists($local)) {
 	if ($dbversion_tiki == '1.10') {
 		$dbversion_tiki = '2.0';
 	}
-
+	if ($dbversion_tiki != '4.0' && !isset($tiki_pdo_utf8)) {	// don't use PDO UTF-8 to avoid double encoding if existing data
+		$tiki_pdo_utf8 = true;		// unless it's an upgrade from 3.x which used ADODB and therefore existing data is already UTF-8
+		write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki);
+	}
+	
 	if (!isset($db_tiki)) {
 		// if no db is specified, use the first db that this php installation can handle
 		$db_tiki = reset($dbservers);
