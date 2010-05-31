@@ -1278,7 +1278,7 @@ function get_default_prefs() {
 
 		// admin
 		'browsertitle' => '',
-		'site_title_location' => 'after',
+		'site_title_location' => 'none',
 		'site_title_breadcrumb' => 'invertfull',
 		'tmpDir' => 'temp',
 
