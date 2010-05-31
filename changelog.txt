@@ -23,6 +23,354 @@ Version 5.0
 ------------------
 
 ----------------------------------------------
+r27404 | nyloth | 2010-05-31 18:45:35 +0200 (Mon, 31 May 2010) | 1 line
+
+[FIX] utf8 : wrong const name...
+----------------------------------------------
+r27403 | changi67 | 2010-05-31 18:10:18 +0200 (Mon, 31 May 2010) | 1 line
+
+[FIX] utf8 : better handle upgrades done through shell.php (and not through the web installer)
+----------------------------------------------
+r27402 | sampaioprimo | 2010-05-31 17:04:18 +0200 (Mon, 31 May 2010) | 2 lines
+
+[FIX] new attempt to fix issue with object permissions and file galleries (see thread "Problem with File galleries and object permission in Tiki 4.2" in devel list)
+
+----------------------------------------------
+r27401 | nyloth | 2010-05-31 16:33:24 +0200 (Mon, 31 May 2010) | 1 line
+
+[FIX] workaround for specifying client charset with PDO and PHP 5.3.0
+----------------------------------------------
+r27400 | sylvieg | 2010-05-31 16:12:59 +0200 (Mon, 31 May 2010) | 1 line
+
+[FIX]browser title: on a fresh install, do not display 2 times the sites name. The browser title has beeing set in install  and breadcrumf invertfull already displays the site title
+----------------------------------------------
+r27399 | nyloth | 2010-05-31 15:43:11 +0200 (Mon, 31 May 2010) | 10 lines
+
+[FIX] Deeper change to fix PDO charset problem. Now uses UTF-8 for clean installs and upgrades from 3.x and before. Upgrades from 4.0 remain unfixed to avoid data corruption/double encoding.
+The MySQL charset client can be changed by setting it inside db/local.php (e.g. $client_charset='utf8'; )
+Please test - will roll-back before release if this makes things worse.
+
+Compared to the previous fix from Jonny, this fix is in the same spirit but :
+  - uses PDO for the installer, instead of AdoDB, because AdoDB is not 100% fine regarding charsets (AdoDB will use the charset defined in MySQL my.cnf config, which may be wrong too)
+  - uses "SET CHARACTER SET" instead of "SET NAMES" because only the client charset has to be defined
+  - also test on $db_version, but don't fallback on "$TWV = new TWVersion;" because this will always be the current version (5.x) of the code, not the version of the previous code
+
+
+----------------------------------------------
+r27398 | sylvieg | 2010-05-31 15:32:28 +0200 (Mon, 31 May 2010) | 1 line
+
+[FIX]i18n: switch language was not working anymore when wiki discussion was on (language.php was read befoire tra->init)
+----------------------------------------------
+r27397 | jonnybradley | 2010-05-31 12:57:16 +0200 (Mon, 31 May 2010) | 3 lines
+
+[FIX] Simplest possible fix for PDO charset problem. Now uses UTF-8 for clean installs and upgrades from 3.x and before. Upgrades from 4.0 remain unfixed to avoid data corruption/double encoding.
+Problems may exist updating 5.x pre-release data - it can be disabled by setting $tiki_pdo_utf8=false in local.php.
+Please test - will roll-back before release if this makes things worse.
+----------------------------------------------
+r27396 | jonnybradley | 2010-05-31 12:43:25 +0200 (Mon, 31 May 2010) | 1 line
+
+[FIX] tiki_menu_options insert already done (twice) in tiki_1.9to2.0.sql so often produces an error in the installer on upgrades
+----------------------------------------------
+r27395 | sampaioprimo | 2010-05-31 05:28:25 +0200 (Mon, 31 May 2010) | 2 lines
+
+[FIX] insert code for mouseover image preview only if user has permission to view the image
+
+----------------------------------------------
+r27390 | chibaguy | 2010-05-30 05:23:05 +0200 (Sun, 30 May 2010) | 1 line
+
+[MOD] Because any theme can use site login popup, layout-related (not specific to theme style) r27359 mods moved from from fivealive.css to layout/layout.css.  
+----------------------------------------------
+r27386 | changi67 | 2010-05-29 22:17:30 +0200 (Sat, 29 May 2010) | 1 line
+
+[TRA] Some more french trad
+----------------------------------------------
+r27385 | jonnybradley | 2010-05-29 18:34:51 +0200 (Sat, 29 May 2010) | 1 line
+
+[FIX] Trackerfilter: urldecode was breaking array values (e.g. from checkboxes)
+----------------------------------------------
+r27384 | sylvieg | 2010-05-28 23:23:35 +0200 (Fri, 28 May 2010) | 1 line
+
+[FIX]calendar: wrong documentation - a module in column must set viewlist to table (and not calendar) to be displayed always as table
+----------------------------------------------
+r27382 | sylvieg | 2010-05-28 22:22:30 +0200 (Fri, 28 May 2010) | 1 line
+
+[FIX]admin general pannel: fix 26628: seems that not all the php has the class DateTime
+----------------------------------------------
+r27381 | changi67 | 2010-05-28 22:09:52 +0200 (Fri, 28 May 2010) | 1 line
+
+[TRA] Some french trad
+----------------------------------------------
+r27380 | sylvieg | 2010-05-28 21:13:55 +0200 (Fri, 28 May 2010) | 1 line
+
+[FIX]notice: was bugging the article_image.php for instance: the var is define in lib/pear/Date.php but tikilib can be called before Date. So it is useless to do only on one side
+----------------------------------------------
+r27378 | nkoth | 2010-05-28 02:19:52 +0200 (Fri, 28 May 2010) | 1 line
+
+[FIX] jsut cleaning up for clarity (should not have any effect in practise)
+----------------------------------------------
+r27377 | jacmoe2 | 2010-05-28 02:11:47 +0200 (Fri, 28 May 2010) | 1 line
+
+[FIX] Fix for my previous fix: $wikilib::file_to_db: $path, not $file_name
+----------------------------------------------
+r27376 | luciash | 2010-05-28 00:25:57 +0200 (Fri, 28 May 2010) | 1 line
+
+just a little fix for legend.heading, my bad
+----------------------------------------------
+r27375 | luciash | 2010-05-28 00:00:10 +0200 (Fri, 28 May 2010) | 1 line
+
+created better matching icon for payment (rotated 25 degrees, outlined, source http://findicons.com/icon/28790/credit_card) - 32x32 version
+----------------------------------------------
+r27374 | luciash | 2010-05-27 23:57:19 +0200 (Thu, 27 May 2010) | 1 line
+
+created better matching icon for payment (rotated 25 degrees, outlined, source http://findicons.com/icon/28790/credit_card)
+----------------------------------------------
+r27371 | sylvieg | 2010-05-27 23:04:45 +0200 (Thu, 27 May 2010) | 1 line
+
+[FIX]lang: upstream is commit 27286
+----------------------------------------------
+r27370 | sylvieg | 2010-05-27 22:54:39 +0200 (Thu, 27 May 2010) | 1 line
+
+[FIX]payment: at list a link to the interface - too late for 5 to put in the menu
+----------------------------------------------
+r27368 | sylvieg | 2010-05-27 22:29:26 +0200 (Thu, 27 May 2010) | 1 line
+
+[FIX]payment: icon in admin
+----------------------------------------------
+r27367 | jacmoe2 | 2010-05-27 21:53:40 +0200 (Thu, 27 May 2010) | 1 line
+
+[FIX] Removing unicode character padding from attachment path field/filename
+----------------------------------------------
+r27364 | sampaioprimo | 2010-05-27 19:05:19 +0200 (Thu, 27 May 2010) | 2 lines
+
+[FIX] category permission check for wiki page menu option not working in some cases (see http://dev.tikiwiki.org/bug3197)
+
+----------------------------------------------
+r27363 | nkoth | 2010-05-27 18:16:12 +0200 (Thu, 27 May 2010) | 1 line
+
+[FIX] add global perms overiding, otherwise category perms not applying to template leading to possible body not appearing
+----------------------------------------------
+r27362 | sylvieg | 2010-05-27 16:53:23 +0200 (Thu, 27 May 2010) | 1 line
+
+[FIX]subscribenewsletter: sometimes the thansk needs to be parsed - not the button
+----------------------------------------------
+r27359 | luciash | 2010-05-27 05:49:57 +0200 (Thu, 27 May 2010) | 1 line
+
+fivealive theme: some fixes to the appearance of the site header login pop-up
+----------------------------------------------
+r27357 | xavidp | 2010-05-27 00:01:18 +0200 (Thu, 27 May 2010) | 1 line
+
+[FIx][bp/r27354]from sept_7 - Calendar fix pb reported by Xavi with PHP 5.2.6 and array_unique: Wrong parameter count for array_unique(). Thanks sept_7 for fixing and sylvieg & luciash for feedback and previous fix proposal
+----------------------------------------------
+r27356 | sylvieg | 2010-05-26 23:49:37 +0200 (Wed, 26 May 2010) | 1 line
+
+[FIX]prefs: put the description found in help in the description of feature_wiki_paragraph_formatting (to know what at least this veryvery strange feature is doing
+----------------------------------------------
+r27352 | changi67 | 2010-05-26 23:12:19 +0200 (Wed, 26 May 2010) | 1 line
+
+[TRA] Some french trad - oups a little mistake
+----------------------------------------------
+r27349 | ricks99 | 2010-05-26 22:46:27 +0200 (Wed, 26 May 2010) | 1 line
+
+[FIX] corrected the calendar navigation link for YEAR
+----------------------------------------------
+r27342 | sylvieg | 2010-05-26 19:18:41 +0200 (Wed, 26 May 2010) | 1 line
+
+[FIX]mail: some user can haev an empty mail
+----------------------------------------------
+r27328 | jonnybradley | 2010-05-26 13:41:10 +0200 (Wed, 26 May 2010) | 1 line
+
+[FIX] Replace \ chars in file paths for smilies etc, as some browser/s (not Firefox/Safari/IE) don't seem to do that properly, causing dozens of File not found server errors every page load.
+----------------------------------------------
+r27327 | jonnybradley | 2010-05-26 13:35:00 +0200 (Wed, 26 May 2010) | 2 lines
+
+[FIX] better fix for r27256 with properly defined regexp pattern (Deprecated split now preg_split).
+Thanks to all who commented
+----------------------------------------------
+r27322 | lindonb | 2010-05-26 07:10:44 +0200 (Wed, 26 May 2010) | 1 line
+
+[FIX] Go back to more intuitive parameter name.
+----------------------------------------------
+r27321 | lindonb | 2010-05-26 06:23:34 +0200 (Wed, 26 May 2010) | 1 line
+
+[FIX] Fixed various errors that were causing the plugin not to work.
+----------------------------------------------
+r27320 | lindonb | 2010-05-26 02:09:27 +0200 (Wed, 26 May 2010) | 1 line
+
+[FIX] Keep certain text in plugin information from being wiki-parsed.
+----------------------------------------------
+r27319 | lindonb | 2010-05-26 01:51:06 +0200 (Wed, 26 May 2010) | 1 line
+
+[FIX] Correct version to avoid confusion on doc site.
+----------------------------------------------
+r27318 | sylvieg | 2010-05-25 22:34:04 +0200 (Tue, 25 May 2010) | 1 line
+
+[FIX]fancytable: fix correctly 26984 23915:respect alternative lines colors when sorting
+----------------------------------------------
+r27317 | sylvieg | 2010-05-25 21:57:20 +0200 (Tue, 25 May 2010) | 1 line
+
+[FIX]fancytable: fix header style
+----------------------------------------------
+r27316 | sylvieg | 2010-05-25 20:12:57 +0200 (Tue, 25 May 2010) | 1 line
+
+[FIX]fancytable: fix when headclass param value is not quoted
+----------------------------------------------
+r27315 | jonnybradley | 2010-05-25 18:44:46 +0200 (Tue, 25 May 2010) | 2 lines
+
+[MOD] Add the word 'spreadsheet' to jquery.sheet pref description so it comes up in LM search with feature_sheet
+
+----------------------------------------------
+r27308 | sylvieg | 2010-05-25 16:02:13 +0200 (Tue, 25 May 2010) | 1 line
+
+[FIX]tracker: missing param
+----------------------------------------------
+r27307 | chibaguy | 2010-05-25 14:34:10 +0200 (Tue, 25 May 2010) | 1 line
+
+[FIX] Remove display:inline property from div.highlight since it had bad effects on remarks box. Thanks to luci for noticing.
+----------------------------------------------
+r27306 | chealer | 2010-05-25 07:36:12 +0200 (Tue, 25 May 2010) | 1 line
+
+[FIX] RSS feed broken by backslash if Tiki in document root on Windows (Closes: #923)
+----------------------------------------------
+r27300 | sylvieg | 2010-05-25 00:13:15 +0200 (Tue, 25 May 2010) | 1 line
+
+[FIX]forums_last_posts: fix the module for topiconly
+----------------------------------------------
+r27297 | sylvieg | 2010-05-24 21:06:06 +0200 (Mon, 24 May 2010) | 1 line
+
+[FIX]fgal: need to pass the galleryId param as view=admin gives back files of diferent fgals
+----------------------------------------------
+r27293 | lphuberdeau | 2010-05-24 19:37:11 +0200 (Mon, 24 May 2010) | 1 line
+
+[FIX] Incorrect check and missing preference definition
+----------------------------------------------
+r27292 | sylvieg | 2010-05-24 19:27:45 +0200 (Mon, 24 May 2010) | 1 line
+
+[FIX]pdo: pdo does not like negative offset
+----------------------------------------------
+r27289 | sylvieg | 2010-05-24 16:55:44 +0200 (Mon, 24 May 2010) | 1 line
+
+[FIX]article: Article can not exist
+----------------------------------------------
+r27285 | jonnybradley | 2010-05-24 13:41:58 +0200 (Mon, 24 May 2010) | 1 line
+
+[FIX] Freetagged plugin: fix layout problems
+----------------------------------------------
+r27284 | chibaguy | 2010-05-23 15:28:46 +0200 (Sun, 23 May 2010) | 1 line
+
+[FIX] Hover style for topbar menu.
+----------------------------------------------
+r27283 | chibaguy | 2010-05-23 15:09:13 +0200 (Sun, 23 May 2010) | 1 line
+
+[FIX] Put main menu back inside fixed width. 
+----------------------------------------------
+r27282 | chibaguy | 2010-05-23 14:38:35 +0200 (Sun, 23 May 2010) | 1 line
+
+[FIX] Put footer content back inside fixed width. 
+----------------------------------------------
+r27281 | chibaguy | 2010-05-23 05:52:07 +0200 (Sun, 23 May 2010) | 1 line
+
+[FIX] Too-large site header and other details fixed as indicated at http://branding.tikiwiki.org/FiveAlive+Adjustments
+----------------------------------------------
+r27279 | sylvieg | 2010-05-21 23:37:33 +0200 (Fri, 21 May 2010) | 1 line
+
+[FIX]tracker: field non table visible, non searcheable.. was not showing in input
+----------------------------------------------
+r27277 | chealer | 2010-05-21 18:30:35 +0200 (Fri, 21 May 2010) | 2 lines
+
+[FIX] "Fatal error: Call to private ToolbarFckOnly::__construct() from context 'Toolbar' in ...lib/toolbars/toolbarslib.php on line 258" when putting WYSIWYG-only tool in custom tools
+make ToolbarFckOnly->__construct() public
+----------------------------------------------
+r27274 | sylvieg | 2010-05-21 14:40:15 +0200 (Fri, 21 May 2010) | 1 line
+
+[FIX]img: db error
+----------------------------------------------
+r27272 | jonnybradley | 2010-05-21 12:54:57 +0200 (Fri, 21 May 2010) | 3 lines
+
+[FIX] Don't set view_mode to both as WYSIWYG might be off - first option will automatically be selected, which is fine.
+
+
+----------------------------------------------
+r27269 | chealer | 2010-05-21 01:22:34 +0200 (Fri, 21 May 2010) | 2 lines
+
+[RESUSCITATE] Underline tool for non-WYSIWYG mode, executed before Tiki 4
+Thanks Opossum
+----------------------------------------------
+r27268 | jonnybradley | 2010-05-21 01:12:25 +0200 (Fri, 21 May 2010) | 4 lines
+
+[FIX] Several critical fixes for toolbar custom tools:
+Don't allow tools with the same name as the standard set (causes mayhem)
+Don't allow tools with empty names to be saved (also chaos) and
+add a link to remove all custom tools to get rid of malformed tools created before upgrading from 4.x which may be causing JS errors and preventing the page from working
+----------------------------------------------
+r27263 | changi67 | 2010-05-20 22:19:43 +0200 (Thu, 20 May 2010) | 1 line
+
+[FIX] Set link in remarksbox to the group currently editing and not only Anonymous
+----------------------------------------------
+r27262 | changi67 | 2010-05-20 22:03:07 +0200 (Thu, 20 May 2010) | 1 line
+
+[TRA] Add some translation
+----------------------------------------------
+r27261 | changi67 | 2010-05-20 20:46:05 +0200 (Thu, 20 May 2010) | 1 line
+
+[FIX] Print UTF-8 text
+----------------------------------------------
+r27259 | luciash | 2010-05-20 19:46:46 +0200 (Thu, 20 May 2010) | 1 line
+
+oops, better margin top value
+----------------------------------------------
+r27258 | luciash | 2010-05-20 19:43:48 +0200 (Thu, 20 May 2010) | 1 line
+
+[FIX] fivealive theme: some styling for Development/tikibranch5/doc/devtools/stripcomments.phpshow-errors-button (PHP errors) to enhance usability
+----------------------------------------------
+r27256 | jonnybradley | 2010-05-20 19:16:38 +0200 (Thu, 20 May 2010) | 3 lines
+
+[FIX] Deprecated split (now preg_split)
+
+
+----------------------------------------------
+r27255 | jonnybradley | 2010-05-20 19:03:22 +0200 (Thu, 20 May 2010) | 3 lines
+
+[FIX] Toolbars: Custom tools: Filter out accented characters in tool names that cause JS and other problems
+
+
+----------------------------------------------
+r27253 | sylvieg | 2010-05-20 17:29:29 +0200 (Thu, 20 May 2010) | 1 line
+
+[FIX]fgal: rollback27252/26250: find in mode list and mode admin must use different tables
+----------------------------------------------
+r27252 | sylvieg | 2010-05-20 14:20:15 +0200 (Thu, 20 May 2010) | 1 line
+
+[FIX]fgal: rollback 26250: fix the find in simple list fgals: do not remember the case fixed with 26250: be prepared to have another bug
+----------------------------------------------
+r27250 | bubi | 2010-05-20 07:51:49 +0200 (Thu, 20 May 2010) | 1 line
+
+[FIX] TrackerID: #3183  Tree View of File Gallery now not only shows the 1st Level of Galleries on older PHP versions (for _getGelleryChildrenIdsTree(), too)
+----------------------------------------------
+r27249 | bubi | 2010-05-20 07:50:32 +0200 (Thu, 20 May 2010) | 1 line
+
+[FIX] TrackerID: #3183  Tree View of File Gallery now not only shows the 1st Level of Galleries on older PHP versions
+----------------------------------------------
+r27247 | changi67 | 2010-05-19 22:20:14 +0200 (Wed, 19 May 2010) | 1 line
+
+[TRA] Add some missing translation
+----------------------------------------------
+r27245 | changi67 | 2010-05-19 22:05:07 +0200 (Wed, 19 May 2010) | 1 line
+
+[FIX] Some missing translated text
+----------------------------------------------
+r27244 | lphuberdeau | 2010-05-19 21:33:47 +0200 (Wed, 19 May 2010) | 1 line
+
+[FIX] Token value changes from version to version
+----------------------------------------------
+r27240 | jonnybradley | 2010-05-19 14:16:01 +0200 (Wed, 19 May 2010) | 2 lines
+
+[FIX] Slightly cleaner fix for phplayersmenus, same effect but one less file.
+Thanks sylvieg.
+----------------------------------------------
+r27237 | changi67 | 2010-05-19 10:59:45 +0200 (Wed, 19 May 2010) | 1 line
+
+[FIX] avoid broken display with too large columns due to big filegal sizes
+----------------------------------------------
 r27157 | jonnybradley | 2010-05-13 18:40:13 +0200 (Thu, 13 May 2010) | 1 line
 
 [FIX] Kaltura: Use server_name/http_host for Kaltura "user" identifier, so all entries are shared between all users (with suitable perms)
