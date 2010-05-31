@@ -48,7 +48,12 @@ try {
 
 		$tempDb = TikiDb::get();
 		$dbCharsetVariables = $tempDb->getCharsetVariables();
-		$client_charset = $tempDb->detectBestClientCharset( $dbCharsetVariables );
+		if ( $api_tiki_forced || ( isset( $dbversion_tiki ) && $dbversion_tiki[0] >= 4 ) ) {
+			$previousApi = $api_tiki;
+		} else {
+			$previousApi = 'adodb';
+		}
+		$client_charset = $tempDb->detectBestClientCharset( $dbCharsetVariables, null, $previousApi );
 		unset( $tempDb );
 
 		$conn = ( ! empty($client_charset) && $client_charset == $dbCharsetVariables['character_set_client'] );

@@ -96,7 +96,12 @@ if (is_file('db/virtuals.inc')) {
 $tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
 
 $re = false;
+$default_api_tiki = $api_tiki;
+$api_tiki = '';
 if ( file_exists($local_php) ) $re = include($local_php);
+$api_tiki_forced = ! empty( $api_tiki );
+$api_tiki = $default_api_tiki;
+
 if ( $re === false ) {
 	if ( ! isset($in_installer) || $in_installer != 1) {
 		header('location: tiki-install.php');
