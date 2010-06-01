@@ -469,7 +469,7 @@ function wikiplugin_trackerlist($data, $params) {
 			} else {
 				$sort_mode = '';
 			}
-		} elseif ($sort_mode != 'created_asc' && $sort_mode != 'lastModif_asc' && $sort_mode != 'created_desc' && $sort_mode != 'lastModif_des' && !preg_match('/f_[0-9]+_(asc|desc)/', $sort_mode)) {
+		} elseif ($sort_mode != 'created_asc' && $sort_mode != 'lastModif_asc' && $sort_mode != 'created_desc' && $sort_mode != 'lastModif_desc' && !preg_match('/f_[0-9]+_(asc|desc)/', $sort_mode)) {
 			return tra('Incorrect param').' sort_mode';
 		}
 		$tr_sort_mode = $sort_mode;
