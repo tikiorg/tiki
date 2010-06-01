@@ -99,8 +99,12 @@ $re = false;
 $default_api_tiki = $api_tiki;
 $api_tiki = '';
 if ( file_exists($local_php) ) $re = include($local_php);
-$api_tiki_forced = ! empty( $api_tiki );
-$api_tiki = $default_api_tiki;
+if ( empty( $api_tiki ) ) {
+	$api_tiki_forced = false;
+	$api_tiki = $default_api_tiki;
+} else {
+	$api_tiki_forced = true;
+}
 
 if ( $re === false ) {
 	if ( ! isset($in_installer) || $in_installer != 1) {
