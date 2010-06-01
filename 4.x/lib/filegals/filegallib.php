@@ -793,15 +793,7 @@ class FileGalLib extends TikiLib {
 		return $this->fetchAll( 'SELECT `galleryId`, `parentId` FROM `tiki_file_galleries`' );
 	}
 
-	/**
-	 * Recursively returns all ids of the children of the specifified parent
-	 * as a linear array (list).
-	 * 
-	 * @param Array $allIds All ids of the Gallery
-	 * @param Array &$subtree Output - The children Ids are appended
-	 * @param int $parentId The parent whichs children are to be listed
-	 */
-	function _getGalleryChildrenIdsList( $allIds, &$subtree, $parentId ) {
+	function _getGalleryChildrenIdsList( &$allIds, &$subtree, $parentId ) {
 		foreach ( $allIds as $k => $v ) {
 			if ( $v['parentId'] == $parentId ) {
 				$galleryId = $v['galleryId'];
@@ -811,15 +803,6 @@ class FileGalLib extends TikiLib {
 		}
 	}
 
-	/**
-	 * Recursively returns all Ids of the Children of the specifified parent
-	 * as a tree-array (sub-galleries are array as an element of the parent array).
-	 * Thus the structure of the child galleries are preserved.
-	 * 
-	 * @param Array $allIds All ids of the Gallery
-	 * @param Array &$subtree Output - The children Ids are appended
-	 * @param int $parentId The parent whichs children are to be listed
-	 */
 	function _getGalleryChildrenIdsTree( &$allIds, &$subtree, $parentId ) {
 		foreach ( $allIds as $v ) {
 			if ( $v['parentId'] == $parentId ) {
