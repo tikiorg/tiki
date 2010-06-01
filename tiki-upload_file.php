@@ -67,6 +67,8 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+} elseif (isset($_REQUEST['galleryId']) && !is_array($_REQUEST['galleryId'])) {
+	$_REQUEST['galleryId'] = array($_REQUEST['galleryId']);
 }
 
 if (isset($_REQUEST['galleryId'][0])) {
