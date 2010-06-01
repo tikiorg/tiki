@@ -82,12 +82,16 @@
 						{if $hasImage eq 'y'}
 							<a href="#" title="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Article image{/tr}{/if}"><img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Article image{/tr}{/if}" src="article_image.php?image_type=article&amp;id={$articleId}"{if $image_x > 0} width="{$image_x}"{/if}{if $image_y > 0 } height="{$image_y}"{/if} /></a>
 						{else}
-							<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
+							{section name=user loop=$topics}
+								<a class="link" href="tiki-view_articles.php?topic={$topics[user].topicId}" title="{tr}List all articles of this same topic{/tr}">{$topics[user].name|escape}</a>
+							{sectionelse}
+							    {* no topic = do nothing *}
+							{/section}
 						{/if}
 					{else}
 						{section name=it loop=$topics}
 							{if ($topics[it].topicId eq $topicId) and ($topics[it].image_size > 0)}
-								<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{$topicName}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
+								<a class="link" href="tiki-view_articles.php?topic={$topics[it].topicId}" title="{tr}List all articles of this same topic{/tr}"><img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{$topicName}" src="article_image.php?image_type=topic&amp;id={$topicId}" /></a>
 							{/if}
 						{/section}
 					{/if}
