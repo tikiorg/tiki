@@ -389,7 +389,6 @@ if (isset($_REQUEST["comments_previewComment"]) || !empty($errors)) {
 	$comments_show = 'y';
 	$smarty->assign('comments_preview_data', $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"])));
 	$smarty->assign('comment_title', $_REQUEST["comments_title"]);
-	$smarty->assign('anonymous_name_preview', $_REQUEST["anonymous_name"]);
 	$smarty->assign('comment_rating', $_REQUEST["comment_rating"]);		
 	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
 	if (isset($_REQUEST["comments_previewComment"]))
