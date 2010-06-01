@@ -20,7 +20,7 @@ if (empty($info)) {
 }
 
 $perms = Perms::get( array( 'type' => 'wiki page', 'object' => $info['page'] ) );
-if (!$perms->view && !$perms->wiki_view_attachments && !$perms->wiki_admin_attachments) {
+if ((!$perms->view || !$perms->wiki_view_attachments) && !$perms->wiki_admin_attachments) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
