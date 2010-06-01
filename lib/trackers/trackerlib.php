@@ -955,7 +955,7 @@ class TrackerLib extends TikiLib
 			}
 			$fopt['linkId'] = '';
 			if (!empty($fopt['options'])) {
-				$fopt['options_array'] = preg_split('/,/', $fopt['options']);
+				$fopt['options_array'] = preg_split('/\s*,\s*/', $fopt['options']);
 			}
 			if ($fopt['isHidden'] == 'c' && empty($itemUser)) { // need itemUser
 				$itemUser = $this->get_item_creator($trackerId, $itemId);
