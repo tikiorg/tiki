@@ -124,7 +124,7 @@ class PreferencesLib
 			} else {
 				$value = $this->formatPreference( $pref, $data );
 			}
-			$realPref = ($pref == 'language')? 'site_language': $pref;
+			$realPref = in_array($pref, $user_overrider_prefs)? "site_$pref": $pref;
 
 			if( $tikilib->get_preference( $realPref ) != $value ) {
 				$tikilib->set_preference( $pref, $value );
