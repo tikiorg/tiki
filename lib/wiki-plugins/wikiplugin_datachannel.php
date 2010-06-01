@@ -7,6 +7,7 @@
 
 function wikiplugin_datachannel_info()
 {
+	global $prefs;
 	return array(
 		'name' => tra('Data Channel'),
 		'description' => tra('Displays a form to trigger data channels.'),
@@ -52,6 +53,13 @@ function wikiplugin_datachannel_info()
 					array('text' => tra('All user prefs sessions'), 'value' => 'prefs'),
 					array('text' => tra('None'), 'value' => 'none'),
 				),
+			),
+			'price' => array(
+				'required' => false,
+				'name' => tra('Price'),
+				'description' => tr('Price to execute the datachannel (%0).', $prefs['payment_currencey']),
+				'prefs' => array('payment_feature'),
+				'filter' => 'text',
 			),
 			'debug' => array(
 				'required' => false,
@@ -112,6 +120,21 @@ function wikiplugin_datachannel( $data, $params )
 			$static = $params;
 			unset( $static['channel'] );
 
+			if (!empty($params['price'])) {
+				global $paymentlib; require_once 'lib/payment/paymentlib.php';
+				$desc = tr( 'Datachannel:', $prefs['site_language'] ) . ' ' . $params['channel'];
+				$posts = array();
+				foreach ($input as $key => $post) {
+					$posts[$key] = $post;
+					$desc .= '/' . $post;
+				}
+				$id = $paymentlib->request_payment( $desc, $params['price'], $prefs['payment_default_delay'] );
+				$paymentlib->register_behavior( $id, 'complete', 'execute_datachannel', array( $data, $params, $posts, $executionId ) );
+				require_once 'lib/smarty_tiki/function.payment.php';
+			return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
+				
+			}
+
 			$userInput = array_merge( $input, $static );
 
 			Tiki_Profile::useUnicityPrefix(uniqid());
@@ -151,3 +174,4 @@ function wikiplugin_datachannel( $data, $params )
 		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_datachannel.tpl' ) . '~/np~';
 	}
 }
+
