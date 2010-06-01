@@ -731,7 +731,7 @@ div#edithelpzone {display: none}
 .attention {color: red}
 
 .openid_url {
-	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
+	background: #fff url(../img/icons/login-OpenID-bg.gif) no-repeat;
 	padding-left: 18px}
 
 .bannertext {
