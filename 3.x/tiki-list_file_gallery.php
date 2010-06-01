@@ -31,7 +31,7 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 	$tikilib->get_perm_object('', 'file gallery');
 	$_REQUEST['galleryId'] = 0;
 
-	// Initialize listing fields with default values (used for the main gallery listing)
+		// Initialize listing fields with default values (used for the main gallery listing)
 	$gal_info = array(
 			'name' => '',
 			'show_id' => $prefs['fgal_list_id'],
@@ -60,8 +60,6 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 			'visible' =>'y',
 			'archives' => -1,
 			'type' => 'default',
-			'image_max_size_x' => '0',
-			'image_max_size_y' => '0',
 			'description' => '',
 	);
 } elseif ( $gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId']) ) {
@@ -379,7 +377,7 @@ if ( isset($_REQUEST['edit']) ) {
 
 	// Everything is ok so we proceed to edit the file or gallery
 
-	$request_vars = array('name', 'fname', 'description', 'fdescription', 'max_desc', 'fgal_type', 'maxRows', 'rowImages', 'thumbSizeX', 'thumbSizeY', 'parentId', 'creator', 'image_max_size_x', 'image_max_size_y');
+	$request_vars = array('name', 'fname', 'description', 'fdescription', 'max_desc', 'fgal_type', 'maxRows', 'rowImages', 'thumbSizeX', 'thumbSizeY', 'parentId', 'creator');
 	foreach ( $request_vars as $v ) {
 		if ( isset($_REQUEST[$v]) ) {
 			$smarty->assign_by_ref($v, $_REQUEST[$v]);
@@ -444,9 +442,7 @@ if ( isset($_REQUEST['edit']) ) {
 			'show_explorer' => ( isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n' ),
 			'show_path' => ( isset($_REQUEST['fgal_show_path']) ? 'y' : 'n' ),
 			'show_slideshow' => ( isset($_REQUEST['fgal_show_slideshow']) ? 'y' : 'n' ),
-			'default_view' => $_REQUEST['fgal_default_view'],
-			'image_max_size_x' => $_REQUEST['image_max_size_x'],
-			'image_max_size_y' => $_REQUEST['image_max_size_y']
+			'default_view' => $_REQUEST['fgal_default_view']
 		);
 		$fgal_diff = array_diff_assoc($gal_info,$old_gal_info);
 		unset($fgal_diff['created']);

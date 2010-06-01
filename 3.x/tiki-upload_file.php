@@ -223,96 +223,14 @@ if (isset($_REQUEST["upload"])) {
 				}
 			}
 
-			$size = $_FILES["userfile"]['size'][$key];
-			$type = $_FILES["userfile"]['type'][$key];
-			$name = stripslashes($_FILES["userfile"]['name'][$key]);
-
 			$file_name = $_FILES["userfile"]["name"][$key];
 			$file_tmp_name = $_FILES["userfile"]["tmp_name"][$key];
 			$tmp_dest = $prefs['tmpDir'] . "/" . $file_name.".tmp";
-
-			// Handle per gallery image size limits
-			$ratio = 0;
-			list(,$subtype)=explode('/',$type);
-			// If it's an image format we can handle and gallery has limits on image sizes
-			if ( (in_array($subtype, array("jpg","jpeg","gif","png","bmp","wbmp"))) 
-				&& ( ($gal_info["image_max_size_x"]) || ($gal_info["image_max_size_y"]) && (!$podCastGallery) ) ) {
-				$image_size_info = getimagesize($file_tmp_name);
-				$image_x = $image_size_info[0];
-				$image_y = $image_size_info[1];
-				if($gal_info["image_max_size_x"]) {
-					$rx=$image_x/$gal_info["image_max_size_x"];
-				}else{
-					$rx=0;
-				}
-				if($gal_info["image_max_size_y"]) {
-					$ry=$image_y/$gal_info["image_max_size_y"];
-				}else{
-					$ry=0;
-				}
-				$ratio=max($rx,$ry);
-
-				if($ratio>1) {
-					$image_new_x=$image_x/$ratio;
-					$image_new_y=$image_y/$ratio;
-					$resized_file = $tmp_dest;
-					$image_resized_p = imagecreatetruecolor($image_new_x, $image_new_y);
-					switch($subtype) {
-						case "gif":
-							$image_p = imagecreatefromgif($file_tmp_name);
-							break;
-						case "png":
-							$image_p = imagecreatefrompng($file_tmp_name);
-							break;
-						case "bmp":
-						case "wbmp":
-							$image_p = imagecreatefromwbmp($file_tmp_name);
-							break;
-						case "jpg":
-						case "jpeg":
-							$image_p = imagecreatefromjpeg($file_tmp_name);
-							break;
-					}
-					if(!imagecopyresampled($image_resized_p, $image_p, 0, 0, 0, 0, $image_new_x, $image_new_y, $image_x, $image_y)) {
-						$errors[] = tra('Cannot resize the file:') . ' ' . $resized_file;
-					}
-					switch($subtype) {
-						case "gif":
-							if (!imagegif($image_resized_p, $resized_file)){
-								$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
-							}
-							break;
-						case "png":
-							if (!imagepng($image_resized_p, $resized_file)){
-								$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
-							}
-							break;
-						case "bmp":
-						case "wbmp":
-							if (!image2wbmp($image_resized_p, $resized_file)){
-								$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
-							}
-							break;
-						case "jpg":
-						case "jpeg":
-							if (!imagejpeg($image_resized_p, $resized_file)){
-								$errors[] = tra('Cannot write the file:') . ' ' . $resized_file;
-							}
-							break;
-					}
-					unlink($image_p);
-					$feedback_message = sprintf(tra('Image was reduced: %s x %s -> %s x %s'),$image_x, $image_y, (int)$image_new_x, (int)$image_new_y);
-					$size = filesize($resized_file);
-				}
+			if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+				$errors[] = tra('Errors detected');
+				continue;
 			}
 
-			if ($ratio <=1) {
-				// No resizing
-				if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
-					$errors[] = tra('Errors detected');
-					continue;
-				}
-			}
 			$fp = fopen($tmp_dest, "rb");
 
 			if (!$fp) {
@@ -321,9 +239,10 @@ if (isset($_REQUEST["upload"])) {
 
 			$data = '';
 			$fhash = '';
-			$extension = '';
+
 			if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 				$fhash = md5($name = $_FILES["userfile"]['name'][$key]);
+				$extension = '';
 
 				// for podcast galleries add the extension so the
 				// file can be called directly if name is known,
@@ -365,6 +284,11 @@ if (isset($_REQUEST["upload"])) {
 				fclose ($fw);
 				$data = '';
 			}
+
+			$size = $_FILES["userfile"]['size'][$key];
+			$name = stripslashes($_FILES["userfile"]['name'][$key]);
+
+			$type = $_FILES["userfile"]['type'][$key];
 
 			if (preg_match('/.flv$/',$name)) { $type="video/x-flv"; }
 
@@ -438,7 +362,6 @@ if (isset($_REQUEST["upload"])) {
 						$smarty->assign("fileId",$aux['fileId']);
 						$smarty->assign("dllink",$aux['dllink']);
 						$smarty->assign("nextFormId",$_REQUEST['formId']+1);
-						$smarty->assign("feedback_message",$feedback_message);
 						print_progress($smarty->fetch("tiki-upload_file_progress.tpl"));
 					}
 				}

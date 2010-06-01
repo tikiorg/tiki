@@ -80,10 +80,6 @@
 	{/if}
 
 	{/if}
-
-		<tr><td class="formcolor">{tr}Maximum width for images in gallery{/tr}:</td><td class="formcolor"><input size="5" type="text" name="image_max_size_x" value="{$gal_info.image_max_size_x|escape}" /> px<br /><i>{tr}If an image is wider than this, it will be resized.{/tr} (0={tr}unlimited{/tr})</i></td></tr>
-		<tr><td class="formcolor">{tr}Maximum height for images in gallery{/tr}:</td><td class="formcolor"><input size="5" type="text" name="image_max_size_y" value="{$gal_info.image_max_size_y|escape}" /> px<br /><i>{tr}If an image is higher than this, it will be resized.{/tr} (0={tr}unlimited{/tr})</i></td></tr>
-
      {include file='categorize.tpl'}
 
 				</table>

@@ -6,9 +6,6 @@
 		</td>
 		<td>
 			<b>{$name} ({$size|kbsize})</b>
-			{if $feedback_message != ''}
-				<div class="upload_note">{$feedback_message}</div>
-			{/if}
 			<div>
 			{button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="{tr}Additional Info{/tr}"}
 			<span id="close_uploadinfos{$fileId}" style="display:none">
