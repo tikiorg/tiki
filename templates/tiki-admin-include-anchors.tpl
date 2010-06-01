@@ -140,6 +140,10 @@
 {self_link page="kaltura" _class="icon tips" _title="{tr}Kaltura{/tr}|{tr}Kaltura video configuration{/tr}"}{icon _id="pics/large/kaltura.png" alt="{tr}Kaltura{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}
 
+{if $prefs.payment_feature eq 'y'}
+{self_link page="payment" _class="icon tips" _title="{tr}Payment{/tr}|{tr}Payment{/tr}"}{icon _id="pics/large/payment.png" alt="{tr}Payment{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{/if}
+
 {if $prefs.feature_socialnetworks eq 'y'}
 {self_link page="socialnetworks" _class="icon tips" _title="{tr}Social networks{/tr}|{tr}Configure social networks integration{/tr}"}{icon _id="img/mytiki/socialnetworks_32.png" alt="{tr}Social networks{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 {/if}

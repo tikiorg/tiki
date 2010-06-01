@@ -736,7 +736,7 @@ $smarty->assign('uses_tabs', 'y');
 $smarty->assign('show_filters', 'n');
 if (count($fields['data']) > 0) {
 	foreach($fields['data'] as $it) {
-		if ($it['isSearchable'] == 'y' and $it['isTblVisible'] == 'y') {
+		if ($it['isSearchable'] == 'y') {
 			$smarty->assign('show_filters', 'y');
 			break;
 		}

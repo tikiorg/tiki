@@ -93,5 +93,8 @@
 
 	{self_link page="kaltura" _class="admbox" _style="background-image: url('pics/large/kaltura48x48.png')" _selected="'`$prefs.feature_kaltura`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Kaltura{/tr}" title="{tr}Kaltura{/tr}{if $prefs.feature_kaltura ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Kaltura{/tr}</span>{/self_link}
 
+	{self_link page="payment" _class="admbox" _style="background-image: url('pics/large/payment48x48.png')" _selected="'`$prefs.payment_feature`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Payment{/tr}" title="{tr}Payment{/tr}{if $prefs.payment_feature ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Payment{/tr}</span>{/self_link}
+
 	{self_link page="socialnetworks" _class="admbox" _style="background-image: url('img/mytiki/socialnetworks_32.png')" _selected="'`$prefs.feature_socialnetworks`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Social Networks{/tr}" title="{tr}Social networks{/tr}{if $prefs.feature_socialnetworks ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Social networks{/tr}</span>{/self_link}
+
 </div>

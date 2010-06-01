@@ -10,8 +10,11 @@ function prefs_server_list() {
 	// Generating it is extremely costly in terms of memory.
 	if( class_exists( 'DateTimeZone' ) ) {
 		$timezones = DateTimeZone::listIdentifiers();
-	} else {
+	} elseif ( class_exists('DateTime')) {
 		$timezones = array_keys( DateTime::getTimeZoneList() );
+	} else {
+		$timezones = TikiDate::getTimeZoneList();
+		$timezones = array_keys($timezones);
 	}
 
 	sort( $timezones );

@@ -21,14 +21,20 @@ function wikiplugin_subscribenewsletter_info() {
 			),
 			'thanks' => array(
 				'required' => false,
-				'name' => tra('Confirmation message after posting form'),
+				'name' => tra('Confirmation message after posting form. The plugin body is then the button label.'),
 				'filter' => 'wikicontent',
 			),
+			'button' => array(
+				'required' => false,
+				'name' => tra('Button label. The plugin body is then the confirmation message'),
+				'filter' => 'wikicontent',
+			),
+
 		),
 	);
 }
 function wikiplugin_subscribenewsletter($data, $params) {
-	global $prefs, $user, $userlib, $smarty;
+	global $prefs, $user, $userlib, $smarty, $tikilib;
 	global $nllib; include_once('lib/newsletters/nllib.php');
 	extract($params, EXTR_SKIP);
 	if ($prefs['feature_newsletters'] != 'y') {
@@ -55,11 +61,11 @@ function wikiplugin_subscribenewsletter($data, $params) {
 	if (isset($_REQUEST['wpSubscribe']) && $_REQUEST['wpNlId'] == $nlId) {
 		if ($nllib->newsletter_subscribe($nlId, $user, 'y', 'n')) {
 			$wpSubscribe = 'y';
-			$smarty->assign('subscribeThanks', isset($thanks)?$thanks:'');
+			$smarty->assign('subscribeThanks', empty($thanks)?$data: $thanks);
 		}
 	}
 	$smarty->assign_by_ref('wpSubscribe', $wpSubscribe);
-	$smarty->assign_by_ref('subcribeMessage', $data);
+	$smarty->assign('subcribeMessage', empty($button)?$data: $button);
 	$smarty->assign_by_ref('subscribeInfo', $info);
 	$res = $smarty->fetch('wiki-plugins/wikiplugin_subscribenewsletter.tpl');
 	return '~np~'.$res.'~/np~';

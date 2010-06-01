@@ -178,7 +178,7 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 	global $trklib;
 	foreach ($input as $key =>$val) {
 		if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
-			$val = urldecode($val);
+			if (!is_array($val)) { $val = urldecode($val); }
 			$fieldId = substr($key, 2);
 			if (preg_match('/([0-9]+)(Month|Day|Year|Hour|Minute|Second)/', $fieldId, $matches)) { // a date
 				if (!in_array($matches[1], $ffs)) {

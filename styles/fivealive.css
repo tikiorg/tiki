@@ -498,6 +498,25 @@ div#sitelogo img {
 	background-color: #070707;
 }
 
+#siteloginbar_popup .cbox {
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+#sl-login-user, #sl-login-pass {
+	background: #fff;
+
+}
+
+/*** CSS menus shadows for all but IE6 ***/
+ul.sf-shadow ul {
+	-moz-border-radius-bottomleft: 16px;
+	-moz-border-radius-topright: 16px;
+	-webkit-border-top-right-radius: 16px;
+	-webkit-border-bottom-left-radius: 16px;
+}
+
 a.register_link,
 a.login_link {
 	color: #fff !important;
@@ -705,13 +724,13 @@ img.icon {
 	border: none;
 	background: #d6f3fa;
 	color: #2098cd;
+	padding: 10px;
 }
 
 .cbox-title {
 	border-bottom: 3px solid #74c0e2;
 	font-weight: bold;
 }
-
 .rbox-title, 
 .rbox-data {
 	border: #2098cd;
@@ -837,6 +856,9 @@ a.register_link {
 	background: #a9d6eb;
 	border: none;
 	border-top: none !important;
+	border-top-right-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
 	padding: 4px;
 }
 	
@@ -845,7 +867,7 @@ form.admin fieldset {
 }
 
 legend.heading {
-	background: #fff;
+	background: transparent;
 }
 /*	
 table.admin a.link,

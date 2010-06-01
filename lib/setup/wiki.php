@@ -27,13 +27,6 @@ if ( file_exists($dump_path.'/new.tar') ) {
 }
 $smarty->assign('wiki_dump_exists', $wiki_dump_exists);
 
-// Wiki discussion
-
-if ( $prefs['feature_wiki_discuss'] == 'y' ) {
-	$wiki_discussion_string = $smarty->fetchLang($prefs['language'], 'wiki-discussion.tpl');
-	$smarty->assign('wiki_discussion_string', $wiki_discussion_string);
-}
-
 // find out the page name if url=tiki-index_x.php (can be needed in module)
 if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php') || strstr($_SERVER['SCRIPT_NAME'], 'tiki-index_p.php') || strstr($_SERVER['SCRIPT_NAME'], 'tiki-index_raw.php')) {
 	$check = false;

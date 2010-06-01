@@ -28,9 +28,9 @@ function module_calendar_new_info() {
 			),
 			'viewlist' => array(
 				'name' => tra('View type'),
-				'description' => tra('Determines how to show events.') . ' ' . tra('Possible values:') . ' ' . 'calendar, list. ',
+				'description' => tra('Determines how to show events.') . ' ' . tra('Possible values:') . ' ' . 'table, list. ',
 				'filter' => 'word',
-				'default' => 'calendar',
+				'default' => 'the url param viewlist, otherwise table',
 			),
 			'viewmode' => array(
 				'name' => tra('Calendar view type time span'),

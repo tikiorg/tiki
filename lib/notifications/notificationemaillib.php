@@ -280,6 +280,7 @@ function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comm
 	    }
 
 	    foreach ($nots as $not) {
+			if (empty($not['email'])) continue;
 		    $smarty->assign('watchId', $not['watchId']);
 
 			$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed_subject.tpl");

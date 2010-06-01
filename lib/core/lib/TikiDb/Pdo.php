@@ -18,7 +18,7 @@ class TikiDb_Pdo_Result
 	}
 
 	function fetchRow() {
-		return array_shift($this->result);
+		return is_array($this->result) ? array_shift($this->result) : 0;
 	}
 
 	function numRows() {
