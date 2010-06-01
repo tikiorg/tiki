@@ -82,11 +82,7 @@
 						{if $hasImage eq 'y'}
 							<a href="#" title="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Article image{/tr}{/if}"><img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Article image{/tr}{/if}" src="article_image.php?image_type=article&amp;id={$articleId}"{if $image_x > 0} width="{$image_x}"{/if}{if $image_y > 0 } height="{$image_y}"{/if} /></a>
 						{else}
-							{section name=user loop=$topics}
-								<a class="link" href="tiki-view_articles.php?topic={$topics[user].topicId}" title="{tr}List all articles of this same topic{/tr}">{$topics[user].name|escape}</a>
-							{sectionelse}
-							    {* no topic = do nothing *}
-							{/section}
+								<a class="link" href="tiki-view_articles.php?topic={$topicId}" title="{tr}List all articles of this same topic{/tr}">{$topics[$topicId].name|escape}</a>
 						{/if}
 					{else}
 						{section name=it loop=$topics}
