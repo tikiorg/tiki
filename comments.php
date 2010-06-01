@@ -232,8 +232,9 @@ if (isset($_REQUEST['comments_postComment']) || isset($_REQUEST['comments_postCo
 						$nots[] = array("user"=>"", "hash"=>"", "email"=>$email);
 				}
 				foreach ($nots as $not) {
-					if ($prefs['wiki_watch_editor'] != 'y' && $not['user'] == $user)
-						break;
+					if ($prefs['wiki_watch_editor'] != 'y' && $not['user'] == $user) {
+						continue;
+					}
 					if (!$isBuilt) {
 						$isBuilt = true;
 						$smarty->assign('mail_page', $_REQUEST["page"]);
@@ -388,6 +389,7 @@ if (isset($_REQUEST["comments_previewComment"]) || !empty($errors)) {
 	$comments_show = 'y';
 	$smarty->assign('comments_preview_data', $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"])));
 	$smarty->assign('comment_title', $_REQUEST["comments_title"]);
+	$smarty->assign('anonymous_name_preview', $_REQUEST["anonymous_name"]);
 	$smarty->assign('comment_rating', $_REQUEST["comment_rating"]);		
 	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
 	if (isset($_REQUEST["comments_previewComment"]))
