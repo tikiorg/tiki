@@ -18,7 +18,7 @@ if (!isset($prefs['email_due']) || $prefs['email_due'] < 0) {
 if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 	if ($userlib->confirm_email($_REQUEST['user'], $_REQUEST['pass'])) {
 		$_SESSION["$user_cookie_site"] = $user = $_REQUEST['user'];
-		header('Location: tiki-information.php?msg='.urlencode('Account validated successfully.'));
+		header('Location: tiki-information.php?msg='.urlencode(tra('Account validated successfully.')));
 		die;
 	}
 }
