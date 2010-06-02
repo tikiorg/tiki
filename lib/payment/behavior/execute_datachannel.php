@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: extend_membership.php 25244 2010-02-16 06:26:12Z changi67 $
+// $Id$
 
 function payment_behavior_execute_datachannel( $data, $params, $posts, $executionId ) {
 	include 'lib/wiki-plugins/wikiplugin_datachannel.php';
