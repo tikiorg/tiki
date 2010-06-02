@@ -6959,7 +6959,7 @@ class TikiLib extends TikiDb_Bridge
 									// A normal in-paragraph line or a consecutive blank line.
 									// Leave it as is.
 								}
-							} elseif (empty($options['is_html']) || !$options['is_html']) {
+							} else {
 								$line .= '<br />';
 							}
 						}
