@@ -26,23 +26,33 @@ function wikiplugin_memberpayment_info() {
 				'description' => tr('Price per period (%0).', $prefs['payment_currency']),
 				'filter' => 'text',
 			),
+			'currentuser' => array(
+				'required' => false,
+				'name' => tra('Membership only for the current user'),
+				'description' => 'y|n',
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
 		),
 	);
 }
 
 function wikiplugin_memberpayment( $data, $params, $offset ) {
-	global $smarty, $userlib, $prefs;
+	global $smarty, $userlib, $prefs, $user;
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
 
 	$params['price'] = floatval( $params['price'] );
+	$default = array( 'currentuser'=>'n' );
+	$params = array_merge( $default, $params );
 
 	if( ( $info = $userlib->get_group_info( $params['group'] ) ) && $info['expireAfter'] > 0 ) {
 		$smarty->assign( 'wp_member_offset', $offset );
 		$smarty->assign( 'wp_member_price', $params['price'] );
 		$smarty->assign( 'wp_member_group', $info );
+		$smarty->assign( 'wp_member_currentuser', $params['currentuser'] );
 
 		if( isset($_POST['wp_member_offset']) && $_POST['wp_member_offset'] == $offset ) {
-			$users = explode( '|', $_POST['wp_member_users'] );
+			$users = $params['currentuser'] == 'y'? array($user): explode( '|', $_POST['wp_member_users'] );
 			$users = array_map( 'trim', $users );
 			$users = array_filter( $users, array( $userlib, 'user_exists' ) );
 			$users = array_filter( $users );
