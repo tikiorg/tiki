@@ -6648,7 +6648,7 @@ class TikiLib extends TikiDb_Bridge
 			// check if we are inside an ul TOC list, if so, ignore monospaced and do
 			// not insert <br />
 			$inTOC += substr_count(strtolower($line), "<ul class=\"toc");
-			$inTOC -= substr_count(strtolower($line), "</ul");
+			$inTOC -= substr_count(strtolower($line), "</ul><!--toc-->");
 
 			// check if we are inside a script not insert <br />
 			$inScript += substr_count(strtolower($line), "<script ");
@@ -6940,7 +6940,7 @@ class TikiLib extends TikiDb_Bridge
 						 *
 						 * @since Version 1.9
 						 */
-						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 && $inScript == 0
+						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 &&  $inScript == 0
 								// Don't put newlines at comments' end!
 								&& ! substr_count(strtolower($line), "-->")
 							 ) {
@@ -7088,7 +7088,10 @@ class TikiLib extends TikiDb_Bridge
 						}
 					}
 					$maketoc = $this->parse_data($maketoc);
-					$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
+					if (preg_match("/^<ul>/", $maketoc)) {
+						$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
+						$maketoc .= '<!--toc-->';
+					}
 
 					if ( $link_class != 'link' ) {
 						$maketoc = preg_replace("/'link'/", "'$link_class'", $maketoc);
