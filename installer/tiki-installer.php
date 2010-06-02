@@ -292,7 +292,7 @@ function error_and_exit() {
         ob_end_clean();
 */
 
-        print "<html><body>\n<h2><IMG SRC=\"img/tiki/tikilogo.png\" ALT=\"\" BORDER=0><br /\>
+        print "<html><body>\n<h2><IMG SRC=\"img/tiki/Tiki_WCG.png\" ALT=\"\" BORDER=0><br /\>
 	<font color='red'>Tiki Installer cannot proceed</font></h2>\n<pre>\n$errors";
 
         if (!isWindows()) {
