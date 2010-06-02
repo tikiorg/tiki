@@ -186,6 +186,7 @@ class Tiki_Profile
 
 		$info = $tikilib->get_page_info( $pageName );
 		$content = html_entity_decode( $info['data'] );
+		$tikilib->parse_wiki_argvariable($content);
 		$profile->loadYaml( $content );
 
 		return $profile;
