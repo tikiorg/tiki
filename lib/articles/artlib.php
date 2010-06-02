@@ -844,12 +844,13 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 		}
 
 		global $categlib; require_once('lib/categories/categlib.php');
-		if( empty( $categId ) ) {
-			$categId = $categlib->get_jail();
+		if ( $categId ) {
+			$jail = $categId;
+		} else {
+			$jail = $categlib->get_jail();
 		}
-
-		if ($categId) {
-			$categlib->getSqlJoin($categId, 'article', '`tiki_articles`.`articleId`', $fromSql, $mid2, $bindvars);
+		if ($jail) {
+			$categlib->getSqlJoin($jail, 'article', '`tiki_articles`.`articleId`', $fromSql, $mid2, $bindvars);
 		}
 
 		if( $prefs['rating_advanced'] == 'y' ) {
