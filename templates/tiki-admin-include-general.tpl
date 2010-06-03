@@ -130,6 +130,17 @@
 			</fieldset>
 		
 			<fieldset>
+				<legend>{tr}Print{/tr}</legend>
+				{preference name=print_pdf_from_url}
+				<div class="adminoptionboxchild print_pdf_from_url_childcontainer webkit">
+					{preference name=print_pdf_webkit_path}
+				</div>
+				<div class="adminoptionboxchild print_pdf_from_url_childcontainer webservice">
+					{preference name=print_pdf_webservice_url}
+				</div>
+			</fieldset>
+
+			<fieldset>
 				<legend>{tr}Miscellaneous{/tr}</legend>
 				{preference name=feature_help}
 				<div class="adminoptionboxchild" id="feature_help_childcontainer">
