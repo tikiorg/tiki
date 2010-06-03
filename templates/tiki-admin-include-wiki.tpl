@@ -11,7 +11,7 @@
 
 	{tabset name="admin_wiki"}
 		{tab name="{tr}General Preferences{/tr}"}
-			{preference name=wikiHomePage}
+			{preference name=wikiHomePage default=$prefs.site_wikiHomePage}
 
 			<fieldset>
 				<legend>{tr}Page display{/tr}</legend>
