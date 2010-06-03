@@ -6034,6 +6034,9 @@ class TikiLib extends TikiDb_Bridge
 
 		$this->parse_wiki_argvariable($data, $options);
 
+		// Handle comment sections - before plugins in case plugins in the comment
+		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
+
 		/* <x> XSS Sanitization handling */
 
 		// Converts &lt;x&gt; (<x> tag using HTML entities) into the tag <x>. This tag comes from the input sanitizer (XSS filter).
@@ -6107,7 +6110,7 @@ class TikiLib extends TikiDb_Bridge
 			$data = preg_replace("#(?<!<!|//)--([^\s>].+?)--#", "<del>$1</del>", $data);
 		}
 
-		// Handle comment sections
+		// Handle comment sections after plugin - in case plugins output comments
 		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
 		$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
 		// Replace special characters
