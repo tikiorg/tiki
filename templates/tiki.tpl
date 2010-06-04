@@ -7,7 +7,7 @@
 	</head>
 	<body{html_body_attributes}>
 		<ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
-			<li><a href="#tiki-center">{tr}Jump to Content{/tr}</a></li>
+			<li><a href="#tiki-center" title="tr}Jump to Content{/tr}">{tr}Jump to Content{/tr}</a></li>
 		</ul>
 
 {if $prefs.feature_community_mouseover eq 'y'}		{popup_init src="lib/overlib.js"}{/if}
@@ -55,12 +55,12 @@
 							<div class="clearfix" id="showhide_columns">
 		{if  $prefs.feature_left_column eq 'fixed' or ($prefs.feature_left_column eq 'user' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n')}
 								<div style="text-align:left;float:left;">
-									<a class="flip" href="#" onclick="toggleCols('col2','left'); return false">{icon _name=oleftcol _id="oleftcol" class="colflip" alt="[{tr}Show/Hide Left Column{/tr}]"}</a>
+									<a class="flip" title="{tr}Show/Hide Left Column{/tr}" href="#" onclick="toggleCols('col2','left'); return false">{icon _name=oleftcol _id="oleftcol" class="colflip" alt="[{tr}Show/Hide Left Column{/tr}]"}</a>
 								</div>
 		{/if}
 		{if  $prefs.feature_right_column eq 'fixed' or ($prefs.feature_right_column eq 'user'&& $right_modules|@count > 0 && $show_columns.right_modules ne 'n')}
 								<div class="clearfix" style="text-align:right;float:right">
-									<a class="flip" href="#" onclick="toggleCols('col3','right'); return false">{icon _name=orightcol _id="orightcol" class="colflip" alt="[{tr}Show/Hide Right Column{/tr}]"}</a>
+									<a class="flip" title="{tr}Show/Hide Right Column{/tr}" href="#" onclick="toggleCols('col3','right'); return false">{icon _name=orightcol _id="orightcol" class="colflip" alt="[{tr}Show/Hide Right Column{/tr}]"}</a>
 								</div>
 		{/if}
 								<br style="clear:both" />
@@ -70,7 +70,7 @@
 
 {if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}
 							<div class="tellafriend">
-								<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
+								<a title="{tr}Email this page{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
 							</div>
 {/if}
 
