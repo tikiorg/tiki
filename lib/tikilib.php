@@ -5635,7 +5635,7 @@ class TikiLib extends TikiDb_Bridge
 		
 		if( ! $validationPerformed ) {
 			$info = $this->plugin_info( $name );
-			$default = TikiFilter::get('xss');
+			$default = TikiFilter::get( isset( $info['defaultfilter'] ) ? $info['defaultfilter'] : 'xss');
 
 			// Apply filters on the body
 			$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
