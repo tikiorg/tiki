@@ -34,7 +34,7 @@ function smarty_function_preference( $params, $smarty ) {
 			$pages_string = substr($pages_string, 0, strlen($pages_string) - 2);
 			$pages_string .= ')';
 			} else {
-				$pages_string = tra('Not found');
+				$pages_string = tra('(not found in an admin panel)');
 			}
 		} else {
 			$pages_string = '';

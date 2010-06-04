@@ -65,23 +65,29 @@ class TikiDb_Pdo extends TikiDb
 
 		$starttime=$this->startTimer();
 
-		$pq = $this->db->prepare($query);
+		$result = false;
+		if ( @ $pq = $this->db->prepare($query) ) {
 
-		if ($values and !is_array($values)) {
-			$values = array($values);
-		}
-		if ($values) {
-			$result = $pq->execute( $values );
-		} else {
-			$result = $pq->execute();
+			if ($values and !is_array($values)) {
+				$values = array($values);
+			}
+			if ($values) {
+				$result = $pq->execute( $values );
+			} else {
+				$result = $pq->execute();
+			}
 		}
 
 		$this->stopTimer($starttime);
 
-		if (!$result) {
-			$tmp = $pq->errorInfo();
+		if ( ! $result ) {
+			if ( ! $pq ) {
+				$tmp = $this->db->errorInfo();
+			} else {
+				$tmp = $pq->errorInfo();
+				$pq->closeCursor();
+			}
 			$this->setErrorMessage( $tmp[2] );
-			$pq->closeCursor();
 			return false;
 		} else {
 			$this->setErrorMessage( "" );

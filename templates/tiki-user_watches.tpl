@@ -24,7 +24,7 @@
 			<p><input type="checkbox" name="use_daily_reports" value="true" {if $report_preferences != false}checked{/if}/> {tr}Use reports{/tr}</p>
 		
 			<p>
-			{tr}Interval in witch you want to get the reports{/tr}
+			{tr}Interval in which you want to get the reports{/tr}
 			<select name="interval">
 					<option value="daily" {if $report_preferences.interval eq "daily"}selected{/if}>{tr}Daily{/tr}</option>
 					<option value="weekly" {if $report_preferences.interval eq "weekly"}selected{/if}>{tr}Weekly{/tr}</option>

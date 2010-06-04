@@ -6051,6 +6051,9 @@ class TikiLib extends TikiDb_Bridge
 
 		$this->parse_wiki_argvariable($data, $options);
 
+		// Handle comment sections - before plugins in case plugins in the comment
+		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
+
 		/* <x> XSS Sanitization handling */
 
 		// Converts &lt;x&gt; (<x> tag using HTML entities) into the tag <x>. This tag comes from the input sanitizer (XSS filter).
@@ -6124,7 +6127,7 @@ class TikiLib extends TikiDb_Bridge
 			$data = preg_replace("#(?<!<!|//)--([^\s>].+?)--#", "<del>$1</del>", $data);
 		}
 
-		// Handle comment sections
+		// Handle comment sections after plugin - in case plugins output comments
 		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
 		$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
 		// Replace special characters
@@ -6684,7 +6687,7 @@ class TikiLib extends TikiDb_Bridge
 			// check if we are inside an ul TOC list, if so, ignore monospaced and do
 			// not insert <br />
 			$inTOC += substr_count(strtolower($line), "<ul class=\"toc");
-			$inTOC -= substr_count(strtolower($line), "</ul");
+			$inTOC -= substr_count(strtolower($line), "</ul><!--toc-->");
 
 			// check if we are inside a script not insert <br />
 			$inScript += substr_count(strtolower($line), "<script ");
@@ -6984,7 +6987,7 @@ class TikiLib extends TikiDb_Bridge
 						 *
 						 * @since Version 1.9
 						 */
-						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 && $inScript == 0
+						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 &&  $inScript == 0
 								// Don't put newlines at comments' end!
 								&& ! substr_count(strtolower($line), "-->")
 							 ) {
@@ -7133,7 +7136,10 @@ class TikiLib extends TikiDb_Bridge
 							}
 						}
 						$maketoc = $this->parse_data($maketoc);
-						$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
+						if (preg_match("/^<ul>/", $maketoc)) {
+							$maketoc = preg_replace("/^<ul>/", '<ul class="toc">', $maketoc);
+							$maketoc .= '<!--toc-->';
+						}
 
 						if ( $link_class != 'link' ) {
 							$maketoc = preg_replace("/'link'/", "'$link_class'", $maketoc);

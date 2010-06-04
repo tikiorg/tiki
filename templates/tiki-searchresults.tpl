@@ -210,7 +210,7 @@
 			{/if}
 		</li>
 		{sectionelse}
-			{tr}No pages matched the search criteria{/tr}
+		<li>	{tr}No pages matched the search criteria{/tr}</li>
 		{/section}
 	</ul>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}

@@ -369,7 +369,8 @@ li#logout_link a {
 	clear: both;
 }
 
-#sl-login-user, #sl-login-pass {
+#siteloginbar_popup #sl-login-user, 
+#siteloginbar_popup #sl-login-pass {
 	float: right;
 }
 
