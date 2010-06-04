@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: paymentlib.php 27343 2010-05-26 18:10:12Z jonnybradley $
+// $Id$
 
 function wikiplugin_transclude_info() {
 	return array(
