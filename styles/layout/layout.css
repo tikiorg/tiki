@@ -182,7 +182,7 @@ li#register_link {
 	margin-left: -9em;
 }
 
-#siteloginbar_popup .cssmenu_horiz li#logout_link ul {
+#siteloginbar_popup .cssmenu_horiz #logout_link ul {
 	margin-left: -2.5em;
 }
 
@@ -239,11 +239,6 @@ li#logout_link a {
 	padding-right: 40px;
 }
 
-#siteloginbar_popup input[type="text"],
-#siteloginbar_popup input[type="password"] {
-	width: 65%;	
-}
-
 /* from r27359 */
 #siteloginbar_popup #logout_link .cbox {
 	text-align: center;
@@ -278,6 +273,7 @@ li#logout_link a {
 #siteloginbar_popup #sl-login-user,
 #siteloginbar_popup #sl-login-pass {
 	float: right;
+	width: 60%;
 }
 
 #siteloginbar_popup .rme {

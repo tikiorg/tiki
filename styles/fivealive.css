@@ -506,7 +506,6 @@ div#sitelogo img {
 
 #sl-login-user, #sl-login-pass {
 	background: #fff;
-
 }
 
 /*** CSS menus shadows for all but IE6 ***/
@@ -533,7 +532,13 @@ a.login_link {
 }
 
 #siteloginbar_popup .cssmenu_horiz #login_link ul {
-	margin-left: -10em;
+	margin-left: -10.5em;
+	width: 18em !important; /* to override the hardcoded in-line style width 17.5em */
+}
+
+#siteloginbar_popup .cssmenu_horiz #logout_link ul {
+	margin-left: -11.5em;
+	width: 20em !important; /* to override the hardcoded in-line style width */
 }
 
 #siteloginbar_popup .tabmark .tabcontent {
