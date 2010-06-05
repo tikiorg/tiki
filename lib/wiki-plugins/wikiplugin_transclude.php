@@ -56,7 +56,7 @@ function wikiplugin_transclude( $data, $params ) {
 		$lines = explode("\n", $data);
 		$data = '';
 		foreach ($lines as $line) {
-			$data .= $line . "<br/>";
+			$data .= $line . "\n";
 		}
 		$pass = $parts[0] . $data . $parts[1];
 		return preg_replace_callback(
