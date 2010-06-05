@@ -41,6 +41,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Action'),
 				'description' => tra('Label on the submit button'),
+				'separator' => ':',
 			),
 			'showtitle' => array(
 				'required' => false,
@@ -81,7 +82,8 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('URL used for the field links'),
-				'filter' => 'url'
+				'filter' => 'url',
+				'separator' => ':',
 			),
 			'target' => array(
 				'required' => false,
@@ -240,7 +242,7 @@ function wikiplugin_tracker($data, $params)
 		$sort = 'n';
 	}
 	if (!isset($action)) {
-		$action = 'Save';
+		$action[0] = 'Save';
 	}
 	if (isset($preview)) {
 		if (empty($preview)) {
@@ -623,10 +625,16 @@ function wikiplugin_tracker($data, $params)
 							return '';
 						}
 					} else {
-						if (strstr($url, 'itemId')) {
-							$url = str_replace('itemId', 'itemId='.$rid, $url);
+						$key = 0;
+						foreach ($action as $key=>$act) {
+							if (!empty($_REQUEST["action$key"])) {
+								break;
+							}
 						}
-						header("Location: $url");
+						if (strstr($url[$key], 'itemId')) {
+							$url[$key] = str_replace('itemId', 'itemId='.$rid, $url);
+						}
+						header("Location: $url[$key]");
 						die;
 					}
 					/* ------------------------------------- end save the item ---------------------------------- */
@@ -1063,7 +1071,9 @@ function wikiplugin_tracker($data, $params)
 			if (!empty($preview)) {
 				$back .= "<input class='button submit preview' type='submit' name='tr_preview' value='".tra($preview)."' />";
 			}
-			$back .= "	<input class='button submit' type='submit' name='action' value='".tra($action)."' />";
+			foreach ($action as $key=>$act) {
+				$back .= "	<input class='button submit' type='submit' name='action$key' value='".tra($act)."' />";
+			}
 			$back .= '</div>';
 			if ($showmandatory == 'y' and $onemandatory) {
 				$back.= "<em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em>";
