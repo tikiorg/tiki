@@ -10,7 +10,6 @@ function wikiplugin_transclude_info() {
 		'name' => tra('Transclusion'),
 		'description' => tra('Includes the content of a wiki page and replaces values in the body of the included page. All additional parameters will be replaced. For example %%%title%%% will be replaced with the parameter title in the plugin.'),
 		'prefs' => array('wikiplugin_transclude', 'feature_wiki'),
-		'filter' => 'alpha',
 		'extraparams' => true,
 		'defaultfilter' => 'text',
 		'params' => array(
@@ -53,10 +52,17 @@ function wikiplugin_transclude( $data, $params ) {
 	}
 
 	if( $info = $tikilib->get_page_info( $page ) ) {
+		$parts = preg_split('/%%%text%%%/', $info['data']);
+		$lines = explode("\n", $data);
+		$data = '';
+		foreach ($lines as $line) {
+			$data .= $line . "<br/>";
+		}
+		$pass = $parts[0] . $data . $parts[1];
 		return preg_replace_callback(
-			'/%%%([\w-]+)%%%/',
+			'/%%%([A-z0-9]+)%%%/',
 			array( new WikiPlugin_Transclude_Replacer( $params ), 'callback' ),
-			$info['data']
+			$pass
 		);
 	} else {
 		return WikiParser_PluginOutput::error( tr('Page not found'), tr('Page named "%0" does not exist at this time.', $page ) );
