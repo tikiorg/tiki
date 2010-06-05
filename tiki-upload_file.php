@@ -220,6 +220,11 @@ if (isset($_REQUEST["upload"])) {
 			// Handle per gallery image size limits
 			$ratio = 0;
 			list(,$subtype)=explode('/',strtolower($type));
+			if ($subtype == "pjpeg")	// supress ie non-mime type (ie sends non standard mime-type for jpeg)
+			{
+				$subtype = "jpeg";
+				$type = "image/jpeg";
+			}
 			// If it's an image format we can handle and gallery has limits on image sizes
 			if ( (in_array($subtype, array("jpg","jpeg","gif","png","bmp","wbmp"))) 
 				&& ( ($gal_info["image_max_size_x"]) || ($gal_info["image_max_size_y"]) && (!$podCastGallery) ) ) {
