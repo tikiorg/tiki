@@ -427,14 +427,39 @@ select {
 
 #sitesearchbar form input[type="text"] {
 	width: 150px;
-	font-size:18px;
-	height:22px;
+	font-size: 18px;
+	height: 22px;
 }
 
 #sitesearchbar form input[type="submit"] {
 	color: #d1d2d4;
-	font-size: 0;
+	text-indent: -2000px;
+	height: 24px;
+	width: 30px;
+	margin-left: 8px;
+	margin-top: 12px;
 }
+/* search form filter dropdown */
+#tiki-top #sitesearchbar form .cssmenu_horiz li a {
+	background: none;
+	width: 138px;
+	padding-top: 11px;
+	padding-left: 4px;
+}
+
+#tiki-top #sitesearchbar form .cssmenu_horiz li a input[type="text"] {
+	font: bolder 12px Verdana, Geneva, Arial, Helvetica, sans-serif !important;
+}
+
+#tiki-top #sitesearchbar form .cssmenu_horiz li ul {
+	width: 9em !important;
+}
+
+#tiki-top #sitesearchbar form .cssmenu_horiz li ul li {
+	background: #e3f7fb;
+	height: 210px !important;
+	color: #000;
+} /* end search form filter dropdown */
 
 #sioptions {
 	clear: right;
