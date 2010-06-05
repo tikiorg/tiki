@@ -53,12 +53,8 @@ function wikiplugin_transclude( $data, $params ) {
 
 	if( $info = $tikilib->get_page_info( $page ) ) {
 		$parts = preg_split('/%%%text%%%/', $info['data']);
-		$lines = explode("\n", $data);
-		$data = '';
-		foreach ($lines as $line) {
-			$data .= $line . "\n";
-		}
-		$pass = $parts[0] . $data . $parts[1];
+		$data = $tikilib->parse_data($data);
+                $pass = $parts[0] . $data . $parts[1];
 		return preg_replace_callback(
 			'/%%%([A-z0-9]+)%%%/',
 			array( new WikiPlugin_Transclude_Replacer( $params ), 'callback' ),
