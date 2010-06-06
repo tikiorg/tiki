@@ -151,5 +151,6 @@ function wikiplugin_include($data, $params) {
 		}	
 		$text = implode("\n", $explText);
 	}
+	$tikilib->parse_wiki_argvariable($text);
 	return $text;
 }
