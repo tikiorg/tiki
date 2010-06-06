@@ -264,6 +264,12 @@ if (isset($_REQUEST["upload"])) {
 			$size = $_FILES["userfile"]['size'][$key];
 			$name = stripslashes($_FILES["userfile"]['name'][$key]);
 			$type = $_FILES["userfile"]['type'][$key];
+			list(,$subtype)=explode('/',strtolower($type));
+			if ($subtype == "pjpeg")	// supress ie non-mime type (ie sends non standard mime-type for jpeg)
+			{
+				$subtype = "jpeg";
+				$type = "image/jpeg";
+			}
 			if (preg_match('/.flv$/', $name)) {
 				$type = "video/x-flv";
 			}
