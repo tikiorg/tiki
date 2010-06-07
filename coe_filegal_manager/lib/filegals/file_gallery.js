@@ -311,9 +311,18 @@ FileGallery.upload = {
 			textarea.selectionStart = stored_range.text.length - range.text.length;
 			textarea.selectionEnd = textarea.selectionStart + range.text.length;
 		}
+
+//		if (!textarea.selectionStart && textarea.getAttribute("x-selection-start"))
+//			textarea.selectionStart = parseInt(textarea.getAttribute("x-selection-start"));
+//		if (!textarea.selectionEnd && textarea.getAttribute("x-selection-end"))
+//			textarea.selectionEnd = parseInt(textarea.getAttribute("x-selection-end"));
 		
-		if (textarea.selectionStart<=textarea.selectionEnd && textarea.selectionEnd>0 && textarea.selectionStart>=0) {
-//		alert(textarea.selectionStart);
+		if (textarea.getAttribute("x-selection-start") && textarea.getAttribute("x-selection-end")) {
+			var start = parseInt(textarea.getAttribute("x-selection-start"));
+			var end = parseInt(textarea.getAttribute("x-selection-end"));
+			textarea.value = textarea.value.substr(0, start)+text+textarea.value.substr(end);
+		} else if (textarea.selectionStart<=textarea.selectionEnd && textarea.selectionEnd>0 && textarea.selectionStart>=0) {
+//		alert(textarea.value.substr(0, textarea.selectionStart)+"\n------\n"+text+"\n------\n"+textarea.value.substr(textarea.selectionEnd));
 			textarea.value = textarea.value.substr(0, textarea.selectionStart)+text+textarea.value.substr(textarea.selectionEnd);
 			textarea.selectionStart = 0;
 			textarea.selectionEnd = 0;
@@ -329,4 +338,23 @@ function fastdel(url) {
 //	url += "&daconfirm=y";
 //	FileGallery.open(url, '', { daconfirm: 'y' });
 	return false;
+}
+
+window.onload = function() {
+	var ctrl = document.getElementById("editwiki");
+	if (ctrl) {
+		ctrl.onblur = function() {
+			if( document.selection && document.selection.createRange().text.length ) {
+				var range = document.selection.createRange();
+				var stored_range = range.duplicate();
+				stored_range.moveToElementText( this );
+				stored_range.setEndPoint( 'EndToEnd', range );
+				this.selectionStart = stored_range.text.length - range.text.length;
+				this.selectionEnd = this.selectionStart + range.text.length;
+			}
+			
+			this.setAttribute("x-selection-start", this.selectionStart ? this.selectionStart : "");
+			this.setAttribute("x-selection-end", this.selectionEnd ? this.selectionEnd : "");
+		}
+	}
 }
