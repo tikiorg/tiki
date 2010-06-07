@@ -54,6 +54,18 @@ if ($jq.ui) {
 }{/jq}
 		</div>
 	</fieldset>
+	<fieldset>
+		<legend>{tr}Shipping{/tr}</legend>
+		{preference name=shipping_service}
+
+		{preference name=shipping_fedex_enable}
+		<div class="adminoptionboxchild" id="shipping_fedex_enable_childcontainer">
+			{preference name=shipping_fedex_key}
+			{preference name=shipping_fedex_password}
+			{preference name=shipping_fedex_account}
+			{preference name=shipping_fedex_meter}
+		</div>
+	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" name="faqcomprefs" value="{tr}Change settings{/tr}" />
 	</div>
