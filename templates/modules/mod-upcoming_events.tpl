@@ -9,7 +9,7 @@
 		{section name=ix loop=$modUpcomingEvents}
 			{assign var=date_value value=$modUpcomingEvents[ix].start|tiki_date_format:$date_format}
 			{assign var=calendarId value=$modUpcomingEvents[ix].calendarId}
-			{if $smarty.section.ix.first}</td></tr>{/if}<tr>
+			{if !$smarty.section.ix.first}</td></tr>{/if}<tr>
 			{if $nonums != 'y'}
 				<td class="module" valign="top">{$smarty.section.ix.index_next})&nbsp;</td>
 			{/if}
