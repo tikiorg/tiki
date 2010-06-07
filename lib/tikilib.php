@@ -7670,7 +7670,11 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		$tikidate->setTZbyID('UTC');
-		$tikidate->setDate($timestamp, $input_format);
+		try {
+			$tikidate->setDate($timestamp, $input_format);
+		} catch (Exception $e) {
+			return $e->getMessage();
+		}
 
 		$tz = $tikilib->get_display_timezone($_user);
 
