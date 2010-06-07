@@ -1,6 +1,6 @@
 {title}{tr}Contact Us{/tr}{/title}
 
-{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' or $prefs.contact_anon eq 'y'}
 	{if $message}<br />
 		<div class="simplebox highlight">{if $sent ne '1'}{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}{else}{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;"}{/if} {$message}</div>
 		<br />
