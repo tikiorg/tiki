@@ -12,6 +12,8 @@ function wikiplugin_transclude_info() {
 		'prefs' => array('wikiplugin_transclude', 'feature_wiki'),
 		'extraparams' => true,
 		'defaultfilter' => 'text',
+		'body' => tra('Value of %%%text%%%, which may be multiline'),
+		'filter' => 'text',
 		'params' => array(
 			'page' => array(
 				'required' => true,
@@ -45,6 +47,9 @@ function wikiplugin_transclude( $data, $params ) {
 	$page = $params['page'];
 	unset( $params['page'] );
 
+	// Body defined as the 'text' key
+	$params['text'] = $data;
+
 	global $tikilib;
 
 	if( ! Perms::get( 'wiki page', $page )->view ) {
@@ -52,13 +57,10 @@ function wikiplugin_transclude( $data, $params ) {
 	}
 
 	if( $info = $tikilib->get_page_info( $page ) ) {
-		$parts = preg_split('/%%%text%%%/', $info['data']);
-		$data = $tikilib->parse_data($data);
-                $pass = $parts[0] . $data . $parts[1];
 		return preg_replace_callback(
 			'/%%%([A-z0-9]+)%%%/',
 			array( new WikiPlugin_Transclude_Replacer( $params ), 'callback' ),
-			$pass
+			$info['data']
 		);
 	} else {
 		return WikiParser_PluginOutput::error( tr('Page not found'), tr('Page named "%0" does not exist at this time.', $page ) );
