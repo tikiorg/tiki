@@ -690,7 +690,7 @@ class ModLib extends TikiLib
 			}
 
 			if( isset( $params[$name] ) && ! empty( $params[$name] ) ) {
-				if( isset( $def['separator'] ) && strstr($def['separator'], $params[$name]) ) {
+				if( isset( $def['separator'] ) && strpos($params[$name], $def['separator']) !== false ) {
 					$parts = explode( $def['separator'], $params[$name] );
 					
 					if( $filter ) {
