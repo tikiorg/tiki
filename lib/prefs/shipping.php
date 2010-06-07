@@ -6,11 +6,13 @@ function prefs_shipping_list() {
 			'name' => tra('Shipping Service'),
 			'description' => tra('Expose a JSON shipping rate estimation service. Accounts from providers may be required (FedEx, UPS, ...).'),
 			'type' => 'flag',
+			'help' => 'Shipping',
 		),
 		'shipping_fedex_enable' => array(
 			'name' => tra('FedEx API'),
 			'description' => tra('Enable shipping rate calculation through FedEx APIs'),
 			'type' => 'flag',
+			'help' => 'Shipping',
 		),
 		'shipping_fedex_key' => array(
 			'name' => tra('FedEx Key'),
