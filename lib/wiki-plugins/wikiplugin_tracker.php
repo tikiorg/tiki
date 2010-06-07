@@ -632,9 +632,9 @@ function wikiplugin_tracker($data, $params)
 							}
 						}
 						if (strstr($url[$key], 'itemId')) {
-							$url[$key] = str_replace('itemId', 'itemId='.$rid, $url);
+							$url[$key] = str_replace('itemId', 'itemId='.$rid, $url[$key]);
 						}
-						header("Location: $url[$key]");
+						header('Location: '.$url[$key]);
 						die;
 					}
 					/* ------------------------------------- end save the item ---------------------------------- */
