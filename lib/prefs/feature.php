@@ -1527,6 +1527,8 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Wiki+Page+Staging+and+Approval',
 			'perspective' => false,
+			'warning' => tra('This feature is experimental'),
+			'description' => tra('Allows wiki pages to be staged (drafted) before they are approved (published)'),
 		),
 		'feature_listorphanStructure' => array(
 			'name' => tra('Pages not in structure'),
