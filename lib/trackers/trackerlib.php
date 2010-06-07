@@ -3876,6 +3876,62 @@ class TrackerLib extends TikiLib
 			}
 		}
 	}
+	/* copy the fields of one item ($from) to another one ($to) of the same tracker - except/only for some fields */
+	/* note: can not use the generic function as they return not all the multilingual fields */
+	function copy_item($from, $to, $except=null, $only=null) {
+		global $user, $prefs;
+		$query = 'select * from `tiki_tracker_items` where `itemId`=?';
+		$result = $this->query($query, array($from));
+		$res = $result->fetchRow();
+		$trackerId = $res['trackerId'];
+		$query = 'select ttif.*, ttf.`type`, ttf.`options` from `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.`fieldId` = ttf.`fieldId`) where `itemId`=?';
+		$result = $this->query($query, array($from));
+		if ($prefs['feature_categories'] == 'y') {
+			global $categlib; include_once('lib/categories/categlib.php');
+			$cats = $categlib->get_object_categories('trackeritem', $from);
+		}
+		$clean = array();
+		while ($res = $result->fetchRow()) {
+			$res['options_array'] = preg_split('/\s*,\s*/', $res['options']);
+			if ($prefs['feature_categories'] == 'y' && $res['type'] == 'e') {//category
+				if ((!empty($except) && in_array($res['fieldId'], $except))
+					|| (!empty($only) && !in_array($res['fieldId'], $only))) {// take away the categories from $cats
+					$childs = $categlib->get_child_categories($res['options_array'][0]);
+					$local = array();
+					foreach ($childs as $child) {
+						$local[] = $child['categId'];
+					}
+					$cats = array_diff($cats, $local);
+				}
+			}
+			
+			if ((!empty($except) && in_array($res['fieldId'], $except))
+				|| (!empty($only) && !in_array($res['fieldId'], $only))
+				|| ($res['type'] == 'u' && $res['options_array'][0] == 1)
+				|| ($res['type'] == 'g' && $res['options_array'][0] == 1)
+				|| ($res['type'] == 'I' && $res['options_array'][0] == 1)
+				|| ($res['type'] == 'q')
+				) {
+				continue;
+			}
+			if ($res['type'] == 'A' || $res['type'] == 'N') {// attachment - image
+				continue; //not done yet
+			}
+			//echo "duplic".$res['fieldId'].' '. $res['value'].'<br>';
+			if (!in_array($res['fieldId'], $clean)) {
+				$this->query('delete from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?', array($to, $res['fieldId']));
+				$clean[] = $res['fieldId'];
+			}
+			if (empty($res['lang'])) {
+				$this->query('insert into `tiki_tracker_item_fields` (`itemId`,`fieldId`,`value`) values(?,?,?)', array($to, $res['fieldId'], $res['value']));
+			} else {
+				$this->query('insert into `tiki_tracker_item_fields` (`itemId`,`fieldId`,`value`, `lang`) values(?,?,?,?)', array($to, $res['fieldId'], $res['value'], $res['lang']));
+			}
+		}
+		if (!empty($cats)) {
+			$this->categorized_item($trackerId, $to, "item $to", $cats);
+		}
+	}
 
 }
 
