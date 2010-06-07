@@ -656,7 +656,7 @@ class Tiki_Profile
 		{
 			// Circular dependency found... give what we have
 			if( $counter++ > count($objects) * 2 ) {
-				$this->setFeedback(tra('Circular reference'));
+				$this->setFeedback( tra('Circular reference') . ': ' . implode( ', ', array_unique( $refs ) ) );
 				break;
 			}
 
