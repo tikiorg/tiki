@@ -1353,6 +1353,13 @@ function get_default_prefs() {
 		'bigbluebutton_server_location' => '',
 		'bigbluebutton_server_salt' => '',
 
+		'shipping_service' => 'n',
+		'shipping_fedex_enable' => 'n',
+		'shipping_fedex_key' => '',
+		'shipping_fedex_password' => '',
+		'shipping_fedex_meter' => '',
+		'shipping_fedex_account' => '',
+
 		// unsorted features
 		'anonCanEdit' => 'n',
 		'cacheimages' => 'n',

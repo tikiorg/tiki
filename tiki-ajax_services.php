@@ -72,8 +72,11 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		}
 		read_icon_dir($dir, $icons, $max);
 		$access->output_serialized($icons);
-	}
+	} elseif( $_REQUEST['listonly'] == 'shipping' && $prefs['shipping_service'] == 'y' ) {
+		global $shippinglib; require_once 'lib/shipping/shippinglib.php';
 
+		$access->output_serialized( $shippinglib->getRates( $_REQUEST['from'], $_REQUEST['to'], $_REQUEST['packages'] ) );
+	}
 }
 
 function read_icon_dir($dir, &$icons, $max) {
