@@ -117,7 +117,7 @@
 
 	<tr class="{cycle}">
 			{if $checkbox}
-		<td><input type="checkbox" name="{$checkbox.name}[]" value="{$items[user].field_values[$checkbox.ix].value}" /></td>
+		<td><input type="checkbox" name="{$checkbox.name}[]" value="{if isset($items[user].field_values[$checkbox.ix])}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}" /></td>
 			{/if}
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 		<td class="auto" style="width:20px;">
