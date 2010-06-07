@@ -23,6 +23,132 @@ Version 5.0
 ------------------
 
 ----------------------------------------------
+r27526 | jonnybradley | 2010-06-07 20:00:21 +0200 (Mon, 07 Jun 2010) | 2 lines
+
+[FIX] Module params: strstr parameters should be $haystack, $needle, not the other way around.
+Also changed it for "the faster and less memory intensive function strpos()" as recommended.
+----------------------------------------------
+r27525 | jonnybradley | 2010-06-07 19:47:12 +0200 (Mon, 07 Jun 2010) | 1 line
+
+[FIX] date_format: catch exception from malformed timestamps
+----------------------------------------------
+r27523 | marclaporte | 2010-06-07 18:39:49 +0200 (Mon, 07 Jun 2010) | 1 line
+
+[DOC] Add a warning and a description
+----------------------------------------------
+r27519 | nkoth | 2010-06-07 17:04:12 +0200 (Mon, 07 Jun 2010) | 2 lines
+
+[FIX] Contact form should show once contact_anon feature is on, even if tiki_p_messages is not assigned to anonymous, since the sending does work...
+
+----------------------------------------------
+r27518 | sylvieg | 2010-06-07 16:17:08 +0200 (Mon, 07 Jun 2010) | 1 line
+
+[bp/r 27257 27254][NEW]CATEGORY: parameter showlinks parameter categoryshowlink (for Sebastien)
+----------------------------------------------
+r27516 | lphuberdeau | 2010-06-07 15:17:11 +0200 (Mon, 07 Jun 2010) | 1 line
+
+[ENH] Improved reporting for profile circular references. Indicate the references involved to help troubleshooting.
+----------------------------------------------
+r27512 | sylvieg | 2010-06-07 00:07:06 +0200 (Mon, 07 Jun 2010) | 1 line
+
+[FIX]INCLUDE: need to parse {{xxx}} as it is done before plugin parsing
+----------------------------------------------
+r27511 | xavidp | 2010-06-06 15:47:03 +0200 (Sun, 06 Jun 2010) | 1 line
+
+[ENH]Some new strings translated
+----------------------------------------------
+r27508 | xavidp | 2010-06-06 11:48:34 +0200 (Sun, 06 Jun 2010) | 1 line
+
+[FIX]Usability improvement: find tiki_p_trust_input when filtering for plugin in the global and object permissions filter box
+----------------------------------------------
+r27506 | bubi | 2010-06-05 22:33:48 +0200 (Sat, 05 Jun 2010) | 1 line
+
+#3212 suppress non-standard mime-type from internet explorer ("image/pjpeg" instead "image/jpeg")
+----------------------------------------------
+r27505 | chibaguy | 2010-06-05 18:29:14 +0200 (Sat, 05 Jun 2010) | 1 line
+
+[ENH] clearfix class added to rbox div to enable floating title and data divs to left and right instead of tabbed (for mediawiki style).
+----------------------------------------------
+r27501 | chibaguy | 2010-06-05 10:51:39 +0200 (Sat, 05 Jun 2010) | 1 line
+
+[FIX] Oops, module title relative position is needed for module open|close icon to work.
+----------------------------------------------
+r27500 | chibaguy | 2010-06-05 08:41:12 +0200 (Sat, 05 Jun 2010) | 1 line
+
+[FIX] Filter put in cssmenu dropdown to cope with narrow width of fivealive site search form.
+----------------------------------------------
+r27499 | chibaguy | 2010-06-05 04:59:05 +0200 (Sat, 05 Jun 2010) | 1 line
+
+[FIX] IE7 doesn't need an explicit width for cssmenu dropdown li's.
+----------------------------------------------
+r27498 | chibaguy | 2010-06-05 04:32:27 +0200 (Sat, 05 Jun 2010) | 1 line
+
+[FIX] Relative position for module title was causing title text to show through menu dropdowns in IE7. Rather than add a rule for IE7, I removed this property which doesn't seem to be needed.
+----------------------------------------------
+r27494 | jonnybradley | 2010-06-04 17:05:21 +0200 (Fri, 04 Jun 2010) | 2 lines
+
+[FIX] Colorbox: {img} plugin with title param set puts the title on both the img and the surrounding anchor, so params from the parent (achor) need to be copied over.
+Thanks jacmoe & lindon
+----------------------------------------------
+r27492 | luciash | 2010-06-04 14:26:20 +0200 (Fri, 04 Jun 2010) | 1 line
+
+[FIX] small sitelogin and sitelogout popup adjustments
+----------------------------------------------
+r27491 | luciash | 2010-06-04 12:36:55 +0200 (Fri, 04 Jun 2010) | 1 line
+
+small quick xhtml fix
+----------------------------------------------
+r27488 | sylvieg | 2010-06-03 19:52:31 +0200 (Thu, 03 Jun 2010) | 1 line
+
+[FIX]parsing: parse 2 times ~tc~ because plugins can be in ~tc~ and do not need to be parsed and plugins can produce ~tc~
+----------------------------------------------
+r27486 | nkoth | 2010-06-03 15:23:04 +0200 (Thu, 03 Jun 2010) | 2 lines
+
+[FIX] Prevent wiki home page setting from getting replaced with group homepage if set at the time the "admin" changes the admin...wiki settings.
+
+----------------------------------------------
+r27485 | sylvieg | 2010-06-03 14:20:12 +0200 (Thu, 03 Jun 2010) | 1 line
+
+[FIX]prefs: add the print settings in a panel
+----------------------------------------------
+r27484 | sylvieg | 2010-06-03 13:56:18 +0200 (Thu, 03 Jun 2010) | 1 line
+
+[FIX]pref: a little less confusing message
+----------------------------------------------
+r27482 | xavidp | 2010-06-03 10:54:19 +0200 (Thu, 03 Jun 2010) | 2 lines
+
+[FIX]For some reason, some users upgrading from 2.1 reported that this fix was missing for them, and it seems to be slightly different from other schemas (upper case and backtikcs). For more info, see http://tikiwiki.org/tiki-view_forum_thread.php?forumId=6&comments_parentId=37355&amp;thread_sort_mode=commentDate_asc#comments . I'm not mysql guru but this also works for me, and it looks more standard mysql syntax in tiki schemas.
+
+----------------------------------------------
+r27481 | nkoth | 2010-06-03 08:32:05 +0200 (Thu, 03 Jun 2010) | 2 lines
+
+[FIX] Fix spelling
+
+----------------------------------------------
+r27478 | changi67 | 2010-06-02 21:37:52 +0200 (Wed, 02 Jun 2010) | 1 line
+
+[FIX] spelling mistake
+----------------------------------------------
+r27477 | sylvieg | 2010-06-02 21:14:47 +0200 (Wed, 02 Jun 2010) | 1 line
+
+[FIX]parsing: After a FANCYTABLE with a cell containing <ul><li> the paragraph <p> are no more generated because the inTOC is decremented as tehrhe is a </ul. Solution : mark the closing ul of a toc
+----------------------------------------------
+r27476 | xavidp | 2010-06-02 20:10:27 +0200 (Wed, 02 Jun 2010) | 1 line
+
+[FIX]Last reference to old log updated to new logo
+----------------------------------------------
+r27475 | sylvieg | 2010-06-02 18:40:21 +0200 (Wed, 02 Jun 2010) | 1 line
+
+[FIX] rollback - sorry has side effect
+----------------------------------------------
+r27474 | sylvieg | 2010-06-02 18:27:12 +0200 (Wed, 02 Jun 2010) | 1 line
+
+[BP/r 27355][FIX]parsing: leave alone and do not add <br /> the is_html data - the defautl feature_wiki_paragraph_formatting and feature_wiki_paragraph_formatting_add_br should work now for both wysiwyg and tiki
+----------------------------------------------
+r27471 | jonnybradley | 2010-06-02 11:03:02 +0200 (Wed, 02 Jun 2010) | 1 line
+
+[FIX] Make jailroot when categId is supplied consistent with the rest of Tiki (e.g. if categId is not in your jail it shows nothing)
+----------------------------------------------
 r27404 | nyloth | 2010-05-31 18:45:35 +0200 (Mon, 31 May 2010) | 1 line
 
 [FIX] utf8 : wrong const name...
