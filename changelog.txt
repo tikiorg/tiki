@@ -18,6 +18,233 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 3.6
+<http://tikiwiki.org/ReleaseNotes36>
+------------------
+
+----------------------------------------------
+r27470 | pkdille | 2010-06-02 00:18:39 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27226 | xavidp | 2010-05-18 19:37:11 +0200 (Tue, 18 May 2010) | 1 line
+[FIX][bp/r27224] Bring back earlier behavior in structures, so that existing pages can be added to structures easily from within the header in previous pages of that structure. (a clear use case is in big structures such as in doc.tw.o/Documentation )
+
+
+----------------------------------------------
+r27469 | pkdille | 2010-06-02 00:18:16 +0200 (Wed, 02 Jun 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r27213 | jonnybradley | 2010-05-17 20:29:32 +0200 (Mon, 17 May 2010) | 2 lines
+[bp/r20164][FIX]tracker: get the field value for an existing item that is only visible for admin and creator (when the user selector is not in the list of fields)
+(already in 4.x)
+
+
+----------------------------------------------
+r27468 | pkdille | 2010-06-02 00:17:58 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27200 | Jyhem | 2010-05-16 16:24:12 +0200 (Sun, 16 May 2010) | 1 line
+[FIX] Ooops, 'anonymous_name' may not be set (partial rollback of 27199)
+
+
+----------------------------------------------
+r27467 | pkdille | 2010-06-02 00:17:38 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27199 | Jyhem | 2010-05-16 16:02:30 +0200 (Sun, 16 May 2010) | 1 line
+[FIX] Only skip the author, not everybody after the author. Plus pass anonymous name to preview
+
+
+----------------------------------------------
+r27466 | pkdille | 2010-06-02 00:17:14 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26836 | chealer | 2010-04-30 20:03:09 +0200 (Fri, 30 Apr 2010) | 1 line
+[FIX] OpenID logo not showing in OpenID URL input field on feb12, thenews, darkroom and coelesce (I know the logo is ugly in darkroom)
+
+
+----------------------------------------------
+r27465 | pkdille | 2010-06-02 00:16:42 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26819 | jonnybradley | 2010-04-29 19:54:41 +0200 (Thu, 29 Apr 2010) | 1 line
+[bp/r 26818][FIX] Tracker dump: Order items in same order as fields (by position)
+
+
+----------------------------------------------
+r27464 | pkdille | 2010-06-02 00:16:12 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26804 | xavidp | 2010-04-27 23:20:30 +0200 (Tue, 27 Apr 2010) | 1 line
+[bp/r26755][ENH]Locate article text after the heading and set links/urls at the bottom for better readability of the article post
+
+
+----------------------------------------------
+r27463 | pkdille | 2010-06-02 00:14:23 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26575 | lindonb | 2010-04-11 07:40:30 +0200 (Sun, 11 Apr 2010) | 1 line
+[FIX] Rollback of commit 26459 and backport of 5x commits 26572 and 26573 and 4x commit 26574. Count pagviews from date of first pageview and avoid unexpected results when there are no pageviews.
+
+
+----------------------------------------------
+r27462 | pkdille | 2010-06-02 00:13:27 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26459 | lindonb | 2010-04-05 05:09:38 +0200 (Mon, 05 Apr 2010) | 1 line
+[FIX] Stats for day started and days online weren't in sync.
+
+
+----------------------------------------------
+r27461 | pkdille | 2010-06-02 00:11:36 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26418 | xavidp | 2010-04-01 12:26:31 +0200 (Thu, 01 Apr 2010) | 1 line
+[FIX][bp/r26415]Provide also link to "show all articles of this same topic" at the own image uploaded by users for that article, instead of the former (useless, imho) self link.
+
+
+----------------------------------------------
+r27460 | pkdille | 2010-06-02 00:11:17 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26412 | xavidp | 2010-04-01 11:32:27 +0200 (Thu, 01 Apr 2010) | 1 line
+[FIX][bp/r26410]List just the topic name of that article post, and not all article topics.
+
+
+----------------------------------------------
+r27459 | pkdille | 2010-06-02 00:10:56 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26408 | xavidp | 2010-04-01 10:56:53 +0200 (Thu, 01 Apr 2010) | 1 line
+[FIX][bp/r26405]Avoid showing article-topic image when user selected "use own image" and no image uploaded to tiki, to allow the use case of that user providing the image from a different source through the img tag in the heading and/or body of the article. Show article-topic name instead with a link to show all articles of this same topic.
+
+
+----------------------------------------------
+r27458 | pkdille | 2010-06-02 00:10:13 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26343 | Jyhem | 2010-03-27 16:06:36 +0100 (Sat, 27 Mar 2010) | 1 line
+[FIX] It used to be that only the real name of countries needed translation but it seems the underscored version also needs a translation (trunk r26341)
+
+
+----------------------------------------------
+r27457 | pkdille | 2010-06-02 00:09:48 +0200 (Wed, 02 Jun 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r26229 | pkdille | 2010-03-20 00:12:56 +0100 (Sat, 20 Mar 2010) | 4 lines
+[bp/r22781] [FIX] group_exists() caching prevented group removal and renaming
+Closes: #2837
+
+
+----------------------------------------------
+r27456 | pkdille | 2010-06-02 00:09:31 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26076 | ricks99 | 2010-03-12 13:41:23 +0100 (Fri, 12 Mar 2010) | 1 line
+[ENH]access stats for specific surveys directly from the admin listing of all surveys. backport of 26075 from 5.x
+
+
+----------------------------------------------
+r27455 | pkdille | 2010-06-02 00:08:50 +0200 (Wed, 02 Jun 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r26064 | jonnybradley | 2010-03-11 18:15:08 +0100 (Thu, 11 Mar 2010) | 2 lines
+[bp/r24576] [FIX] If theme control finds more than one theme to apply set by an object's categories then ignore them all.
+[bp/r24593] [FIX] Theme control: don't count categories with no theme (properly)
+
+
+----------------------------------------------
+r27454 | pkdille | 2010-06-02 00:06:42 +0200 (Wed, 02 Jun 2010) | 11 lines
+
+[QT] Quality Team Backport
+
+r26052 | jonnybradley | 2010-03-10 17:29:32 +0100 (Wed, 10 Mar 2010) | 6 lines
+[bp/r25883] in 4.x
+[bp/r25749] [NEW] Tracker dump. Allows an entire tracker to be exported as CSV. Overrides existing permissions so has it's own new perm, and saves raw values only (so far).
+Tested with up to 15,000 items with 20 fields each.
+Faster with more memory assigned but tested successfully down to around 45M.
+[bp/r25758] [FIX] Add test for admin on dump tracker
+[bp/r25771] [FIX] Correct quoting on item info and reduce database call to fields actually used
+
+
+----------------------------------------------
+r27452 | pkdille | 2010-06-02 00:05:14 +0200 (Wed, 02 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26014 | Jyhem | 2010-03-09 15:09:07 +0100 (Tue, 09 Mar 2010) | 1 line
+[ENH] Accept natural syntax in list of emails
+
+
+----------------------------------------------
+r27442 | pkdille | 2010-06-01 23:32:46 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25970 | Jyhem | 2010-03-07 21:05:27 +0100 (Sun, 07 Mar 2010) | 1 line
+[FIX] Allow upload according to local perms (already in trunk)
+
+
+----------------------------------------------
+r27441 | pkdille | 2010-06-01 23:32:28 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25964 | Jyhem | 2010-03-07 17:00:14 +0100 (Sun, 07 Mar 2010) | 1 line
+[FIX] Message was not translated (bug not in trunk)
+
+
+----------------------------------------------
+r27440 | pkdille | 2010-06-01 23:32:12 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25963 | Jyhem | 2010-03-07 16:55:13 +0100 (Sun, 07 Mar 2010) | 1 line
+[FIX] Message was not translated (trunk 25962)
+
+
+----------------------------------------------
+r27439 | pkdille | 2010-06-01 23:31:53 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25922 | chealer | 2010-03-05 03:29:31 +0100 (Fri, 05 Mar 2010) | 1 line
+[bp/r20557] [FIX] check for feature_search_fulltext instead of feature_search
+
+
+----------------------------------------------
+r26778 | xavidp | 2010-04-27 00:58:23 +0200 (Tue, 27 Apr 2010) | 1 line
+
+[FIX]Typo. Thanks changi for reporting.
+----------------------------------------------
+r26757 | xavidp | 2010-04-25 13:59:11 +0200 (Sun, 25 Apr 2010) | 1 line
+
+[bp/r26755][ENH]Locate article text after the heading and set links/urls at the bottom for better readability of the article post
+----------------------------------------------
+r26754 | xavidp | 2010-04-25 13:47:29 +0200 (Sun, 25 Apr 2010) | 1 line
+
+[ENH]A few strings re-localized
+----------------------------------------------
+r25973 | Jyhem | 2010-03-07 21:50:22 +0100 (Sun, 07 Mar 2010) | 1 line
+
+[ENH] Improve translations, including those related to proposed 25972
+----------------------------------------------
 Version 3.5
 <http://tikiwiki.org/ReleaseNotes35>
 ------------------
