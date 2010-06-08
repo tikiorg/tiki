@@ -1,7 +1,7 @@
 <?php
 
 if (array_key_exists('SHELL', $_ENV)) {
-	$tikiversion='3.5';
+	$tikiversion='3.6';
 } else {
 	$tikiversion='1.9';
 

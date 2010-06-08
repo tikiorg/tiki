@@ -9,7 +9,7 @@
 # sh convertsqls.sh domain.com/subdomain/
 #
 
-VERSION="3.5"
+VERSION="3.6"
 
 if [ "$1" = "-h" ]; then
 	echo "Usage: ./convertsqls.sh <host> <tikiversion> or .//convertsqls.sh -h for this help"
