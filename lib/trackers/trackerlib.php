@@ -814,9 +814,12 @@ class TrackerLib extends TikiLib
 						if (in_array($keys[0], array('<', '>', '<=', '>='))) {
 							$mid .= " AND ttif$i.`value`".$keys[0].'?';
 							$bindvars[] = $ev[$keys[0]];
+						} elseif ($keys[0] == 'not') {
+							$mid .= " AND ttif$i.`value` not in (".implode(',', array_fill(0,count($ev),'?')).")";
+							$bindvars = array_merge($bindvars, array_values($ev));
 						} else {
 							$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($ev),'?')).")";
-							$bindvars = array_merge($bindvars, $ev);
+							$bindvars = array_merge($bindvars, array_values($ev));
 						}
 					} elseif (is_array($ff['sqlsearch'])) {
 						$mid .= " AND MATCH(ttif$i.`value`) AGAINST(? IN BOOLEAN MODE)";
