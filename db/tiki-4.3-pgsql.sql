@@ -3637,6 +3637,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","f
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_upload_screencast', 'Can upload screencasts to wiki pages', 'basic', 'registered', NULL, 'feature_wiki_screencasts');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin","feature_check") VALUES ('tiki_p_tracker_dump', 'Can save a CSV backup of entire trackers', 'admin', 'trackers', NULL, 'feature_trackers');
 
 
 DROP TABLE IF EXISTS "users_usergroups";
