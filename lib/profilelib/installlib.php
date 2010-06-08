@@ -483,16 +483,19 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 	{
 		$data = $this->getData();
 
+		// Check for mandatory fields
+		if( !isset( $data['name'] ) ) {
+			$ref = $this->obj->getRef();
+			throw (new Exception('No name for tracker:' . (empty($ref) ? '' : ' ref=' . $ref)));
+		}
+		
 		// Check for unknown fields
 		$optionMap = $this->getOptionMap();
 		$remain = array_diff( array_keys( $data ), array_keys( $optionMap ) );
-		if( count( $remain ) )
-			return false;
-
-		// Check for mandatory fields
-		if( !isset( $data['name'] ) )
-			return false;
-
+		if( count( $remain ) ) {
+			throw (new Exception('Cannot map object options: "' . implode('","', $remain) . '" for tracker:' . $data['name']));
+		}
+		
 		return true;
 	} // }}}
 
