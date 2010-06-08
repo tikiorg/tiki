@@ -111,6 +111,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 		convertOverlib = function (element, tip, params) {	// process modified overlib event fn to cluetip from {popup} smarty func
 			
 			if (element.processed) { return false; }
+			tip = decodeURIComponent(unescape(tip.replace(/\+/g,'%20')));
 			
 			var options = {};
 			for (var param in params) {
