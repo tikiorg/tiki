@@ -1147,9 +1147,9 @@ div.box {
 }
 
 h3.box-title {
-	position: relative;
 	display: block;
 	padding-top: 0;
+	position: relative; /* Needed for module shading icon to work. */
 }
 
 .box-title a,

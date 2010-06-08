@@ -846,9 +846,9 @@ div.help_sections > div {
 }
 
 h3.box-title {
-	position: relative;
 	display: block;
 	padding-top: 0;
+	position: relative;
 }
 
 span.moduleflip,

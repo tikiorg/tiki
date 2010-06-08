@@ -118,7 +118,8 @@ class TWVersion
 				'5.0beta1',
 				'5.0beta2',
 				'5.0RC1',
-				'5.0RC2'
+				'5.0RC2',
+				'5.0'
 				);
 	}
 
