@@ -95,6 +95,13 @@ function wikiplugin_tracker_info()
 				'name' => tra('Values'),
 				'description' => tra('Colon-separated list of values.').' '.tra('Note that plugin arguments can be enclosed with double quotes "; this allows them to contain , or :'),
 			),
+			'overwrite' => array(
+				'required' => false,
+				'name' => tra('Overwrite the fields with values'),
+				'description' => 'y|n '.tra('Overwrite the existing field values existing or not with the param values'),
+				'filter' => 'alpha',
+				'default' => 'n'
+			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort'),
@@ -642,7 +649,7 @@ function wikiplugin_tracker($data, $params)
 					$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 				}
 
-			} else if (empty($itemId) && !empty($values) || (!empty($_REQUEST['values']) and empty($_REQUEST['prefills']))) { // assign default values for each filedId specify
+			} else if ((empty($itemId) || $overwrite == 'y') && !empty($values) || (!empty($_REQUEST['values']) and empty($_REQUEST['prefills']))) { // assign default values for each filedId specify
 				if (empty($values)) { // url with values[]=x&values[] witouth the list of fields
 					$values = $_REQUEST['values'];
 				}
