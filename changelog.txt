@@ -18,6 +18,220 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 4.3
+<http://tikiwiki.org/ReleaseNotes43>
+------------------
+
+----------------------------------------------
+r27544 | pkdille | 2010-06-08 21:02:27 +0200 (Tue, 08 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27509 | bubi | 2010-06-06 12:31:50 +0200 (Sun, 06 Jun 2010) | 1 line
+[FIX] #3212 now images which are uploaded with IE are shown in colorbox (before the showed as tiny white boxes)
+
+
+----------------------------------------------
+r27543 | pkdille | 2010-06-08 21:01:52 +0200 (Tue, 08 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27483 | xavidp | 2010-06-03 10:55:37 +0200 (Thu, 03 Jun 2010) | 2 lines
+[br/r27482][FIX]For some reason, some users upgrading from 2.1 reported that this fix was missing for them, and it seems to be slightly different from other schemas (upper case and backtikcs). For more info, see http://tikiwiki.org/tiki-view_forum_thread.php?forumId=6&comments_parentId=37355&amp;thread_sort_mode=commentDate_asc#comments . I'm not mysql guru but this also works for me, and it looks more standard mysql syntax in tiki schemas.
+
+
+----------------------------------------------
+r27450 | pkdille | 2010-06-01 23:54:52 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27225 | xavidp | 2010-05-18 19:33:53 +0200 (Tue, 18 May 2010) | 1 line
+[FIX][bp/r27224] Bring back earlier behavior in structures, so that existing pages can be added to structures easily from within the header in previous pages of that structure. (a clear use case is in big structures such as in doc.tw.o/Documentation )
+
+
+----------------------------------------------
+r27449 | pkdille | 2010-06-01 23:54:34 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27136 | sylvieg | 2010-05-12 22:31:49 +0200 (Wed, 12 May 2010) | 1 line
+[bp/r 27135][FIX]muti print: must setup option page too for TRACKERLIST(filter={{page}})
+
+
+----------------------------------------------
+r27448 | pkdille | 2010-06-01 23:54:07 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27128 | sylvieg | 2010-05-12 18:30:48 +0200 (Wed, 12 May 2010) | 1 line
+[bp/r 24242][fix] when editing file galeries, the list of possible parent galeries did not display the names of the galeries in the drop down list. (thx: gadget+misnyo)
+
+
+----------------------------------------------
+r27447 | pkdille | 2010-06-01 23:53:49 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26756 | xavidp | 2010-04-25 13:58:30 +0200 (Sun, 25 Apr 2010) | 1 line
+[bp/r26755][ENH]Locate article text after the heading and set links/urls at the bottom for better readability of the article post
+
+
+----------------------------------------------
+r27446 | pkdille | 2010-06-01 23:53:28 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26636 | xavidp | 2010-04-14 21:07:10 +0200 (Wed, 14 Apr 2010) | 1 line
+[FIX][bp/r26634]Fix the url to read an article event online after it was posted and notified by email
+
+
+----------------------------------------------
+r27445 | pkdille | 2010-06-01 23:50:53 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26574 | lindonb | 2010-04-11 06:45:56 +0200 (Sun, 11 Apr 2010) | 1 line
+[FIX] Backport of 5x commits 26572 and 26573. Avoid unexpected results when there are no pageviews. Move small amount of formatting to php to avoid if statements in smarty.
+
+
+----------------------------------------------
+r27444 | pkdille | 2010-06-01 23:50:28 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26566 | lindonb | 2010-04-10 06:39:46 +0200 (Sat, 10 Apr 2010) | 1 line
+[FIX] Rollback of commit 26461 and change to start pageview stats on day of first pageview
+
+
+----------------------------------------------
+r27443 | pkdille | 2010-06-01 23:49:57 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26461 | lindonb | 2010-04-05 06:57:01 +0200 (Mon, 05 Apr 2010) | 1 line
+[FIX] Days online and day started weren't in sync on stats page. Committed to trunk in commit 26458; committed to proposals/3.x in commit 26459.
+
+
+----------------------------------------------
+r27438 | pkdille | 2010-06-01 23:25:15 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26417 | xavidp | 2010-04-01 12:19:56 +0200 (Thu, 01 Apr 2010) | 1 line
+[FIX][bp/r26415]Provide also link to "show all articles of this same topic" at the own image uploaded by users for that article, instead of the former (useless, imho) self link.
+
+
+----------------------------------------------
+r27437 | pkdille | 2010-06-01 23:25:01 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26413 | xavidp | 2010-04-01 11:34:31 +0200 (Thu, 01 Apr 2010) | 1 line
+[FIX][bp/r26410]List just the topic name of that article post, and not all article topics.
+
+
+----------------------------------------------
+r27436 | pkdille | 2010-06-01 23:24:46 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26407 | xavidp | 2010-04-01 10:54:05 +0200 (Thu, 01 Apr 2010) | 1 line
+[FIX][bp/r26405]Avoid showing article-topic image when user selected "use own image" and no image uploaded to tiki, to allow the use case of that user providing the image from a different source through the img tag in the heading and/or body of the article. Show article-topic name instead with a link to show all articles of this same topic.
+
+
+----------------------------------------------
+r27435 | pkdille | 2010-06-01 23:24:21 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26342 | Jyhem | 2010-03-27 16:06:09 +0100 (Sat, 27 Mar 2010) | 1 line
+[FIX] It used to be that only the real name of countries needed translation but it seems the underscored version also needs a translation (trunk r26341)
+
+
+----------------------------------------------
+r27434 | pkdille | 2010-06-01 23:23:52 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26213 | changi67 | 2010-03-18 21:32:23 +0100 (Thu, 18 Mar 2010) | 1 line
+[bp/r 26209] [FIX] bring back the possibility to delete your own account (fix 3082) thx chealer
+
+
+----------------------------------------------
+r27433 | pkdille | 2010-06-01 23:23:24 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26130 | sylvieg | 2010-03-15 20:09:44 +0100 (Mon, 15 Mar 2010) | 1 line
+[bp/r 24935][FIX] wikiplugin trackerlist: typo caused sort_mode=lastModif_desc to return Incorrect param error
+
+
+----------------------------------------------
+r27432 | pkdille | 2010-06-01 23:22:35 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r26076 | ricks99 | 2010-03-12 13:41:23 +0100 (Fri, 12 Mar 2010) | 1 line
+[ENH]access stats for specific surveys directly from the admin listing of all surveys. backport of 26075 from 5.x
+
+
+----------------------------------------------
+r27431 | pkdille | 2010-06-01 23:22:04 +0200 (Tue, 01 Jun 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r25960 | xavidp | 2010-03-06 19:20:44 +0100 (Sat, 06 Mar 2010) | 1 line
+[FIX][bp/r25948]Users without the perm to download attachments in wiki pages are not allowed to download them again after this fix (thanks sylvieg)
+
+
+----------------------------------------------
+r27430 | pkdille | 2010-06-01 23:20:47 +0200 (Tue, 01 Jun 2010) | 11 lines
+
+[QT] Quality Team Backport
+
+r25883 | jonnybradley | 2010-03-03 17:02:53 +0100 (Wed, 03 Mar 2010) | 7 lines
+[bp/r25749] [NEW] Tracker dump. Allows an entire tracker to be exported as CSV. Overrides existing permissions so has it's own new perm, and saves raw values only (so far).
+Tested with up to 15,000 items with 20 fields each.
+Faster with more memory assigned but tested successfully down to around 45M.
+[bp/r25758] [FIX] Add test for admin on dump tracker
+[bp/r25771] [FIX] Correct quoting on item info and reduce database call to fields actually used
+(backport note: performance doesn't seem as good as on trunk, i think due to a seemingly small fix made to the fetchAll function)
+
+
+----------------------------------------------
+r27426 | xavidp | 2010-06-01 20:22:21 +0200 (Tue, 01 Jun 2010) | 1 line
+
+[ENH]A few more strings translated. Still need to add them to 5.x
+----------------------------------------------
+r27286 | reiknir | 2010-05-24 14:13:55 +0200 (Mon, 24 May 2010) | 1 line
+
+Update to Icelandic translation
+----------------------------------------------
+r27127 | sylvieg | 2010-05-12 18:27:16 +0200 (Wed, 12 May 2010) | 1 line
+
+[ROLLBACK] 27126 - not the right branch
+----------------------------------------------
+r27126 | sylvieg | 2010-05-12 18:19:31 +0200 (Wed, 12 May 2010) | 1 line
+
+[bp/r 24242][fix] when editing file galeries, the list of possible parent galeries did not display the names of the galeries in the drop down list. (thx: gadget+misnyo)
+----------------------------------------------
+r26563 | reiknir | 2010-04-10 00:38:17 +0200 (Sat, 10 Apr 2010) | 1 line
+
+Updated Icelandic translation
+----------------------------------------------
+r26457 | reiknir | 2010-04-05 01:21:54 +0200 (Mon, 05 Apr 2010) | 1 line
+
+Updated Icelandic Translation
+----------------------------------------------
+r26428 | sylvieg | 2010-04-02 13:22:23 +0200 (Fri, 02 Apr 2010) | 1 line
+
+[bp/r 24604 partial][FIX]users: fix add user (a param was missing ... was still working because of leftover of code about clear password suppression)
+----------------------------------------------
+r26202 | sampaioprimo | 2010-03-18 17:57:49 +0100 (Thu, 18 Mar 2010) | 2 lines
+
+pt-br translation fix
+
+----------------------------------------------
 Version 4.2
 <http://tikiwiki.org/ReleaseNotes42>
 ------------------
