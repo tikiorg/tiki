@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: cartlib.php 27348 2010-05-26 19:09:44Z jonnybradley $
+// $Id$
 
 interface ShippingProvider
 {
