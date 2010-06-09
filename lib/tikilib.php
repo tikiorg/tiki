@@ -432,7 +432,7 @@ class TikiLib extends TikiDb_Bridge
 				$mids[] = "`object`=?";
 				$bindvars[] = $page['objName'];
 			}
-			$mid .= 'and ('.implode(' or ', $mids).')';
+			$mid .= ' and ('.implode(' or ', $mids).')';
 		} elseif ( $prefs['feature_user_watches_translations'] == 'y' 
 			&& $event == 'wiki_page_created' ) {
 			$page_info = $this->get_page_info( $object );
