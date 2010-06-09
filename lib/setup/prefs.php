@@ -1471,6 +1471,7 @@ function get_default_prefs() {
 		'log_mail' => 'n',
 		'log_tpl' => 'n',
 		'disableJavascript' => 'n',
+		'feature_socialnetworks' => 'n',
 
 		'case_patched' => 'n',
 		'site_closed' => 'n',
