@@ -307,8 +307,11 @@ class Tiki_Profile_Installer
 	{
 		global $userlib;
 
-		if( ! $userlib->group_exists( $groupName ) )
+		if( ! $userlib->group_exists( $groupName ) ) {
 			$userlib->add_group( $groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracker'], implode( ':', $info['registration_fields'] ), $info['user_signup'], $info['default_category'], $info['theme'], $info['user_tracker_field'], $info['group_tracker_field'] );
+		} else {
+			$userlib->change_group($groupName, $groupName,  $info['description'], $info['home'], $info['user_tracker'], $info['group_tracker'], $info['user_tracker_field'], $info['group_tracker_field'], implode( ':', $info['registration_fields'] ), $info['user_signup'], $info['default_category'], $info['theme'] );
+		}
 
 		if( count( $info['include'] ) )
 		{
