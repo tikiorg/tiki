@@ -109,7 +109,7 @@ class CCLiteLib extends TikiDb_Bridge
 		//  debug arguments passed
 		$stuff = "|" . implode("-", $arg_list) . "|";
 		// construct the payment url from configuration information
-		$cclite_base_url = $prefs['payment_cclite_gateway'];
+		$cclite_base_url = rtrim($prefs['payment_cclite_gateway'], '/');
 		$copt_url = '';
 		$ch = curl_init();
 		if ($command != 'adduser') {
@@ -186,7 +186,7 @@ class CCLiteLib extends TikiDb_Bridge
 
 			$params = $this->get_gateway_variables();
 			
-			if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' || empty($prefs['payment_cclite_test_ip'])) {
+			if (($_SERVER['SERVER_ADDR'] != '127.0.0.1' && $_SERVER['SERVER_ADDR'] != '::1') || empty($prefs['payment_cclite_test_ip'])) {
 				$api_hash = hash( $params['hashtype'] , ( $params['key'] . $_SERVER['SERVER_ADDR']), 'true');
 			} else {
 				// debug SERVER_ADDR for local testing - REMOVE REMOVE REMOVE (but slightly better than an IP hard-coded in!)
@@ -194,7 +194,7 @@ class CCLiteLib extends TikiDb_Bridge
 			}
 			$api_hash = CCLiteLib::urlsafe_b64encode($api_hash);
 			// payment url from configuration information
-			$cclite_base_url = $params['gateway'];
+			$cclite_base_url = rtrim($params['gateway'], '/');
 			$registry = $params['registry'];
 			$REST_url = "$cclite_base_url/logon/$user/$registry";	// /$api_hash
 			$ch = curl_init();
