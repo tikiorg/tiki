@@ -68,7 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} // }}}
 	if (isset($_POST['test'], $_POST['profile_tester'], $_POST['profile_tester_name'])) { // {{{
 		$installer = new Tiki_Profile_Installer;
-		$profile = Tiki_Profile::fromString($_POST['profile_tester'], $_POST['profile_tester_name']);
+		$test_source = $_POST['profile_tester'];
+		if (strpos($test_source, '{CODE}') === false) {	// wrap in CODE tags if none there
+			$test_source = "{CODE(caption=>YAML)}\n$test_source\n{CODE}";
+		}
+		$smarty->assign('test_source', $test_source);
+		$smarty->assign('profile_tester_name', $_POST['profile_tester_name']);
+		$profile = Tiki_Profile::fromString($test_source, $_POST['profile_tester_name']);
 		$profile->removeSymbols();
 		$installer->install($profile);
 		if ($target = $profile->getInstructionPage()) {

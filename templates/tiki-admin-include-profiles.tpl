@@ -416,15 +416,15 @@ $jq("#repository, #categories").change(function(){
 	<fieldset><legend>{tr}Profile tester{/tr}</legend>
 		<form action="tiki-admin.php?page=profiles" method="post">
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}
-			Paste or type wiki markup and YAML (including the {literal}{CODE}{/literal} tags) into the text area below<br />
+			{tr}Paste or type wiki markup and YAML (with or without the {literal}{CODE}{/literal} tags) into the text area below{/tr}<br />
 			<em><strong>{tr}This will run the profile and make potentially unrecoverable changes in your database!{/tr}</strong></em>
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
 					<label for="profile_tester_name">{tr}Test Profile Name:{/tr} </label>
-					<input type="text" name="profile_tester_name" id="profile_tester_name" value="Test" />
+					<input type="text" name="profile_tester_name" id="profile_tester_name" value="{if isset($profile_tester_name)}{$profile_tester_name}{else}Test{/if}" />
 				</div>
 				<div>
-					<textarea id="profile_tester" name="profile_tester" rows="5" cols="40" style="width:95%;"></textarea>
+					<textarea id="profile_tester" name="profile_tester" rows="5" cols="40" style="width:95%;">{if isset($test_source)}{$test_source}{/if}</textarea>
 				</div>
 			</div>
 			<div align="center" style="padding:1em;"><input type="submit" name="test" value="{tr}Test{/tr}" /></div>
