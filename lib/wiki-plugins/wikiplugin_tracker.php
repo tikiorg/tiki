@@ -194,6 +194,8 @@ function wikiplugin_tracker($data, $params)
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	include_once('lib/trackers/trackerlib.php');
+	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'n');
+	$params = array_merge($default, $params);
 	
 	//var_dump($_REQUEST);
 	extract ($params, EXTR_SKIP);
@@ -236,18 +238,7 @@ function wikiplugin_tracker($data, $params)
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-	if (!isset($embedded)) {
-		$embedded = "n";
-	}
-	if (!isset($showtitle)) {
-		$showtitle = "n";
-	}
-	if (!isset($showdesc)) {
-		$showdesc = "n";
-	}
-	if (!isset($sort)) {
-		$sort = 'n';
-	}
+
 	if (!isset($action)) {
 		$action[0] = 'Save';
 	}
@@ -264,9 +255,6 @@ function wikiplugin_tracker($data, $params)
 		}
 	} else {
 		unset($_REQUEST['tr_reset']);
-	}
-	if (!isset($showmandatory)) {
-		$showmandatory = 'y';
 	}
 	$smarty->assign('showmandatory',  empty($wiki) && empty($tpl)? 'n': $showmandatory); 
 	if (!empty($wiki)) $wiki = trim($wiki);
@@ -688,9 +676,8 @@ function wikiplugin_tracker($data, $params)
 						$filter2[$f['fieldId']] = $f;
 					}
 					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter2, $itemUser);
-
 				}
-
+				// todo: apply the values for fields with no values
 			} else {
 				if (isset($_REQUEST['values']) && isset($_REQUEST['prefills'])) { //url:prefields=1:2&values[]=x&values[]=y
 					if (!is_array($_REQUEST['values']))
