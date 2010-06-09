@@ -433,6 +433,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 			'restrict_start' => 'start',
 			'restrict_end' =>  'end',
 			'hide_list_empty_fields' => 'doNotShowEmptyField',
+			'allow_one_item_per_user' => 'oneUserItem',
 		);
 	} // }}}
 
