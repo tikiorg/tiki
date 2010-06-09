@@ -203,6 +203,10 @@ $jq("#save_button").click( function () {
 	return false;
 }).hide();
 
+window.toggleFullScreen = function(areaname) {
+	$jq.sheet.instance[0].toggleFullScreen();
+}
+
 window.showFeedback = function(message, delay, redirect) {
 	if (typeof delay == "undefined") { delay = 5000; }
 	if (typeof redirect == "undefined") { redirect = false; }

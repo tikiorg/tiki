@@ -132,5 +132,5 @@
 		{/if}
 
 	</div>
-	<div id="sheetTools" style="display: none;">{toolbars area_name="jSheetControls_formula_0"}</div>
+	<div id="sheetTools" style="display: none;"><div style="text-align: left;">{toolbars area_name="jSheetControls_formula_0"}</div></div>
 {/if}
