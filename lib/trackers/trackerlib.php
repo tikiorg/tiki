@@ -2667,7 +2667,7 @@ class TrackerLib extends TikiLib
 
 	function get_field_id_from_type($trackerId, $type, $option=NULL, $first=true, $name=null) {
 		static $memo;
-		if (isset($memo[$trackerId][$type][$option])) {
+		if (!is_array($type) && isset($memo[$trackerId][$type][$option])) {
 			return $memo[$trackerId][$type][$option];
 		}
 		if (is_array($type)) {
