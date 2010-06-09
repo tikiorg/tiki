@@ -9,7 +9,7 @@
 {if $field_value.isHidden eq 'y' and $tiki_p_admin_trackers ne 'y'}
 
 {* ---- visible by admin and creator --- *}
-{elseif $field_value.isHidden eq 'c' and $tiki_p_admin_trackers ne 'y' and isset($item) and $user ne $item.creator}
+{elseif $field_value.isHidden eq 'c' and $tiki_p_admin_trackers ne 'y' and isset($item) and $user ne $item.creator and $user ne $item.createdBy}
 	
 {* ---- editable admin only ---- *}
 {elseif $field_value.isHidden eq 'p' and $tiki_p_admin_trackers ne 'y'}
