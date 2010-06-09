@@ -181,9 +181,6 @@ $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != editSheetButtonLabel2) {
 		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
-		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {
-			options.buildSheet = "5x5";	// new sheet
-		}
 		$jq("div.tiki_sheet").tiki("sheet", "", options);
 
 		$a.attr("temp", $a.text());
