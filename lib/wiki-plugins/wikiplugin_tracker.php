@@ -240,7 +240,10 @@ function wikiplugin_tracker($data, $params)
 	}
 
 	if (!isset($action)) {
-		$action[0] = 'Save';
+		$action = array('Save');
+	}
+	if (!is_array($action)) {
+		$action = array( $action );
 	}
 	if (isset($preview)) {
 		if (empty($preview)) {
