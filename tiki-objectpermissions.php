@@ -110,6 +110,8 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 			$permissionApplier->addObject( $sub );
 		}
 	}
+	global $cachelib; include_once('lib/cache/cachelib.php');
+	$cachelib->empty_type_cache('menu_'); $cachelib->empty_type_cache('structure_');
 }
 
 if( $_REQUEST['objectType'] == 'category' && isset($_REQUEST['propagate_category']) ) {
