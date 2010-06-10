@@ -2220,7 +2220,7 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 			return $this->data;
 
 		$defaults = array(
-			'sections' => array( 'wiki page' ),
+			'sections' => array( 'wiki' ),
 			'type' => 'static',
 		);
 
@@ -2239,7 +2239,7 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 		$data = $this->getData();
 		if( ! isset( $data['name'] ) )
 			return false;
-		if( ! isset( $data['content'] ) )
+		if( ! isset( $data['content'] ) && ! isset( $data['page'] ) )
 			return false;
 		if( ! isset( $data['sections'] ) || ! is_array( $data['sections'] ) )
 			return false;
@@ -2255,6 +2255,11 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler /
 		$data = $this->getData();
 
 		$this->replaceReferences( $data );
+
+		if( isset( $data['page'] ) ) {
+			$data['content'] = 'page:' . $data['page'];
+			$data['type'] = 'page';
+		}
 
 		$templateId = $templateslib->replace_template( null, $data['name'], $data['content'], $data['type'] );
 		foreach( $data['sections'] as $section ) {
