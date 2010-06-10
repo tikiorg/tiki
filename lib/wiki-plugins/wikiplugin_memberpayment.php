@@ -48,6 +48,9 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 	if( ( $info = $userlib->get_group_info( $params['group'] ) ) && $info['expireAfter'] > 0 ) {
 		$smarty->assign( 'wp_member_offset', $offset );
 		$smarty->assign( 'wp_member_price', $params['price'] );
+		if (($info['expireAfter']/365)*365 == $info['expireAfter']) {
+			$info['expireAfterYear'] = $info['expireAfter']/365;
+		}
 		$smarty->assign( 'wp_member_group', $info );
 		$smarty->assign( 'wp_member_currentuser', $params['currentuser'] );
 
