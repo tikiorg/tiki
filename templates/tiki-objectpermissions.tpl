@@ -104,6 +104,12 @@ if ($jq("#assignstructure").attr("checked")) {
 			{if isset($groupsFiltered)}
 				{remarksbox type="warning" title="{tr}Note{/tr}"}
 					{tr}Some of your groups have been automatically hidden.<br /> Select the groups below to assign permissions for.{/tr}
+					{tr}These groups are not the groups that have permissions on the object. It is only the groups you can see in the columns of the first tab.{/tr}
+				{/remarksbox}
+			{else}
+				{remarksbox type="warning" title="{tr}Note{/tr}"}
+					{tr}Some of your groups have been automatically hidden.<br /> Select the groups below to assign permissions for.{/tr}
+					{tr}These groups are not the groups that have permissions on the object. It is only the groups you can see in the columns of the first tab.{/tr}
 				{/remarksbox}
 			{/if}
 
