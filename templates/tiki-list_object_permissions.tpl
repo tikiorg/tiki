@@ -10,10 +10,10 @@
 {tabset name='tabs_list_object_permissions'}
 {foreach from=$res key=type item=content}
 	{tab name="{tr}$type{/tr}"}		
-	<h2 id="{$type}">{tr}{$type}{/tr}</h2>
+	<h2 id="{$type}">{tr}{$type|ucfirst}{/tr}</h2>
 
-	<h3>{tr}{$type}{/tr}:{tr}Default{/tr}</h3>
-{remarksbox}{tr}If an object is not in the special section, then only the default perms are on{/tr}{/remarksbox}
+	<h3>{tr}{$type|ucfirst}{/tr}: {tr}global permissions{/tr}</h3>
+{remarksbox}{tr}If an object is not listed in the section below, then only the global perms are on{/tr}{/remarksbox}
 	<table class="normal">
 	<tr><th>{tr}Group{/tr}</th><th>{tr}Permission{/tr}</th></tr>
 	{cycle values="even,odd" print=false}
@@ -22,8 +22,8 @@
 	{/foreach}
 	</table>
 
-	<h3>{tr}{$type}{/tr}: {tr}Special{/tr}</h3>
-{remarksbox}{tr}If an object is not in the special section, then only the default perms are on{/tr}{/remarksbox}
+	<h3>{tr}{$type|ucfirst}{/tr}: {tr}category or object permissions{/tr}</h3>
+{remarksbox}{tr}If an object is not listed in this section, then only the global perms are on{/tr}{/remarksbox}
 	<table class="normal">
 	<tr><th>{tr}Object{/tr}</th><th>{tr}Group{/tr}</th><th>{tr}Permission{/tr}</th><th>{tr}Reason{/tr}</th></tr>
 	{foreach from=$content.objects item=object}
@@ -35,9 +35,9 @@
 					<td>{$special.perm|escape}</td>
 					<td>
 						{if !empty($special.objectId)}
-							<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{$special.reason|escape}</a>
+							<a href="tiki-objectpermissions.php?objectId={$special.objectId}&amp;objectType={$special.objectType}&amp;objectName={$special.objectName|escape}">{tr}{$special.reason|escape}{/tr}</a>
 						{else}
-							{$special.reason|escape}
+							{tr}{$special.reason|escape}{/tr}
 						{/if}
 						{if !empty($special.detail)}({$special.detail|escape}){/if}
 					</td>

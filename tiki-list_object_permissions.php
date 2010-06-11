@@ -25,7 +25,7 @@ function list_perms($objectId, $objectType, $objectName) {
 	$perms = $userlib->get_object_permissions($objectId, $objectType);
 	if (!empty($perms)) {
 		foreach($perms as $perm) {
-			$ret[] = array('group' => $perm['groupName'], 'perm' => $perm['permName'], 'reason' => 'Special',
+			$ret[] = array('group' => $perm['groupName'], 'perm' => $perm['permName'], 'reason' => 'Object',
 					'objectId' => $objectId, 'objectType' => $objectType, 'objectName' => $objectName);
 		}
 	} elseif ($prefs['feature_categories'] == 'y') {
