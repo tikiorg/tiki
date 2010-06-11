@@ -5147,7 +5147,8 @@ class TikiLib extends TikiDb_Bridge
 						} else {
 							
 							// Handle nested plugins.
-							$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
+							// Comment : in a case like {TRACKERITEMFIELD(test)}{INCLUDE() /}{TRACKERITEMFIELD}. INCLUDE Must not be interpreted if TRACKERITEMFIELD return false
+							//$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 
 							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
 								if (isset($options['stripplugins']) && $options['stripplugins']) {
