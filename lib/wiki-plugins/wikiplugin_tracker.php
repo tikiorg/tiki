@@ -386,6 +386,11 @@ function wikiplugin_tracker($data, $params)
 						} else {
 							$newItemRate = NULL;
 						}
+					
+					} elseif ($flds["data"][$cpt]["type"] == 'c') {
+						if (!isset($_REQUEST['track'][$fl['fieldId']])) {
+							$_REQUEST['track'][$fl['fieldId']] = 'n';
+						}	
 					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && empty($_REQUEST['track'][$fl['fieldId']])) {
 						if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
 							if ($flds['data'][$cpt]['type'] == 'u') {
