@@ -395,7 +395,7 @@ class LogsLib extends TikiLib
 				$bindvars[] = $categId;
 			}
 		}
-		$amid[] = " a.`action` like c.`action` and a.`objectType` = c.`objectType`".($all? "":" and (c.`status` = 'y' or c.`status` = 'v')");
+		$amid[] = " a.`action` like c.`action` and a.`objectType` = c.`objectType`".($all? "":" and (c.`status` = 'v')");
 
 		if (count($amid)) {
 			$mid = implode(" and ",$amid);
@@ -414,7 +414,6 @@ class LogsLib extends TikiLib
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			if ($all || $this->action_is_viewed($res['action'], $res['objectType'])) {
 				if ($prefs['feature_contribution'] == 'y' && ($res['action'] == 'Created' || $res['action'] == 'Updated' || $res['action'] == 'Posted' || $res['action'] == 'Replied')) {
 					if  ($res['objectType'] == 'wiki page') {
 						$res['contributions'] = $this->get_action_contributions($res['actionId']);
@@ -447,7 +446,6 @@ class LogsLib extends TikiLib
 					$res['action'] = $what.$res['comment'];
 				}
 				$ret[] = $res;
-			}
 		}
 		return array('data' => $ret, 'cant' => $cant);
 	}
