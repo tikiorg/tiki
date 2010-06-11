@@ -168,7 +168,7 @@ function wikiplugin_code($data, $params) {
 		.(( $parse_wiki ) ? '' : '~/np~')
 		.'</pre>'
 		.(($cpy && ($code_count < 1)) ? '<script type="text/javascript" src="lib/ZeroClipboard.js"></script>' : '')
-		.(( $cpy ) ? '<script language="JavaScript">var clip = new ZeroClipboard.Client();var elem = document.getElementById ("'.$id.'");var thetext = elem.innerText || elem.textContent;clip.setText( thetext );clip.glue( \'d_clip_button'.$id.'\' );clip.addEventListener( \'complete\', function(client, text) {alert("The code has been copied to the clipboard.");} );</script>' : '');
+		.(( $cpy ) ? '<script language="JavaScript">var clip = new ZeroClipboard.Client();var elem = document.getElementById ("'.$id.'");clip.setText( elem.innerText || elem.textContent );clip.glue( \'d_clip_button'.$id.'\' );clip.addEventListener( \'complete\', function(client, text) {alert("The code has been copied to the clipboard.");} );</script>' : '');
 
 		$out = '<div class="plugincode">'.((isset($caption)) ? '<div class="codecaption">'.$caption.'</div>' : '').(( $cpy ) ? '<div class="codecaption" id="d_clip_button'.$id.'">Copy To Clipboard</div>' : '').$out.'</div>';
 	$code_count++;
