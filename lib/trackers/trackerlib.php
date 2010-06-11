@@ -3305,7 +3305,7 @@ class TrackerLib extends TikiLib
 		return $ret;
 	}
 	/* look if a tracker has only one item per user and if an item has already being created for the user  or the IP*/
-	function get_user_item(&$trackerId, $trackerOptions, $userparam=null, $user= null) {
+	function get_user_item(&$trackerId, $trackerOptions, $userparam=null, $user= null, $status='') {
 		global $IP, $prefs;
 		if (empty($user)) {
 			$user = $GLOBALS['user'];
@@ -3318,18 +3318,17 @@ class TrackerLib extends TikiLib
 			}
 			return $itemId;
 		}
-
 		$userreal=$userparam!=null?$userparam:$user;
 		if (!empty($userreal)) {
 			if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1%')) { // user creator field
 				$value = $userreal;
-				$items = $this->get_items_list($trackerId, $fieldId, $value, '');
+				$items = $this->get_items_list($trackerId, $fieldId, $value, $status);
 				if ($items)
 					return $items[0];
 			}
 		}
 		if ($fieldId = $this->get_field_id_from_type($trackerId, 'I', '1')) { // IP creator field
-			$items = $this->get_items_list($trackerId, $fieldId, $IP);
+			$items = $this->get_items_list($trackerId, $fieldId, $IP, $status);
 			if ($items)
 				return $items[0];
 			else
