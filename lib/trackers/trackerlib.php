@@ -441,7 +441,7 @@ class TrackerLib extends TikiLib
 	function get_items_list($trackerId, $fieldId, $value, $status='o') {
 		$query = "select distinct tti.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
 		$query.= " where tti.`itemId`=ttif.`itemId` and ttif.`fieldId`=? and ttif.`value`=?";
-		$bindVars = array((int)$trackerId, (int)$fieldId, $value);
+		$bindVars = array((int)$fieldId, $value);
 		if (!empty($status)) {
 			$query .= ' and tti.`status`=?';
 			$bindVars[] = $status;
