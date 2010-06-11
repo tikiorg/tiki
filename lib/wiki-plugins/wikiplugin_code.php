@@ -7,7 +7,7 @@
 
 // Displays a snippet of code
 function wikiplugin_code_help() {
-	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|html|sql|javascript|css|java|c|doxygen|delphi|...,caption=>caption text,wrap=>1,wiki=>1,rtl=>1)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
+	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|html|sql|javascript|css|java|c|doxygen|delphi|...,caption=>caption text,wrap=>1,wiki=>1,rtl=>1,cpy=>0)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
 	return tra($help);
 }
 
@@ -55,11 +55,17 @@ function wikiplugin_code_info() {
 				'name' => tra('Content is HTML'),
 				'description' => tra('0|1, display the content as is instead of escaping HTML special chars'),
 			),
+			'cpy' => array(
+				'required' => false,
+				'name' => tra('Copy To Clipboard'),
+				'description' => tra('0|1, copy the contents of the code box to the clipboard'),
+			),
 		),
 	);
 }
 
 function wikiplugin_code($data, $params) {
+	static $code_count;
 	if ( is_array($params) ) {
 		extract($params, EXTR_SKIP);
 	}
@@ -67,6 +73,8 @@ function wikiplugin_code($data, $params) {
 
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
 	$escape_html = ( ! isset($ishtml) || $ishtml != 1 );
+	$id = 'codebox'.$code_count;
+	$boxid = " id=\"$id\" ";
 
 	// Detect if GeSHI (Generic Syntax Highlighter) is available
 	$geshi_paths = array(
@@ -101,7 +109,7 @@ function wikiplugin_code($data, $params) {
 
 		// Remove first <pre> tag
 		if ( $out != '' ) {
-			$out = preg_replace('/^<pre[^>]*>(.*)</pre>$/', '\\1', $out);
+			$out = ereg_replace('^<pre[^>]*>(.*)</pre>$', '\\1', $out);
 			$out = trim($out);
 		}
 
@@ -113,13 +121,13 @@ function wikiplugin_code($data, $params) {
 
 		// Convert &nbsp; into spaces and <br /> tags into real line breaks, since it will be displayed in a <pre> tag
 		$out = str_replace('&nbsp;', ' ', $out);
-		$out = preg_replace('/<br[^>]+>/i', "\n", $out);
+		$out = eregi_replace('<br[^>]+>', "\n", $out);
 
 		// Remove first <code> tag
-		$out = preg_replace("#^\s*<code[^>]*>(.*)</code>$#i", '\\1', $out);
+		$out = eregi_replace('^\s*<code[^>]*>(.*)</code>$', '\\1', $out);
 
 		// Remove spaces after the first tag and before the start of the code
-		$out = preg_replace("/^\s*(<[^>]+>)\n/", '\\1', $out);
+		$out = ereg_replace("^\s*(<[^>]+>)\n", '\\1', $out);
 		$out = trim($out);
 
 		if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
@@ -154,15 +162,15 @@ function wikiplugin_code($data, $params) {
 		$pre_style = 'overflow:auto;';
 	}
 
-	$out = '<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'">'
+	$out = '<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'"'.$boxid.'>'
 		.(( $parse_wiki ) ? '' : '~np~')
 		.$out
 		.(( $parse_wiki ) ? '' : '~/np~')
-		.'</pre>';
+		.'</pre>'
+		.(($cpy && ($code_count < 1)) ? '<script type="text/javascript" src="lib/ZeroClipboard.js"></script>' : '')
+		.(( $cpy ) ? '<script language="JavaScript">var clip = new ZeroClipboard.Client();var elem = document.getElementById ("'.$id.'");clip.setText( elem.textContent );clip.glue( \'d_clip_button'.$id.'\' );clip.addEventListener( \'complete\', function(client, text) {alert("The code has been copied to the clipboard.");} );</script>' : '');
 
-	if ( isset($caption) ) {
-		$out = '<div class="plugincode"><div class="codecaption">'.$caption.'</div>'.$out.'</div>';
-	}
-
+		$out = '<div class="plugincode">'.((isset($caption)) ? '<div class="codecaption">'.$caption.'</div>' : '').(( $cpy ) ? '<div class="codecaption" id="d_clip_button'.$id.'">Copy To Clipboard</div>' : '').$out.'</div>';
+	$code_count++;
 	return $out;
 }
