@@ -3626,7 +3626,7 @@ CREATE TABLE `tiki_rss_items` (
     `rssItemId` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `rssId` INT NOT NULL,
     `guid` VARCHAR(255) NOT NULL,
-    `url` VARCHAR(255) NOT NULL,
+    `url` TEXT NOT NULL,
     `publication_date` INT UNSIGNED NOT NULL,
     `title` VARCHAR(255) NOT NULL,
     `author` VARCHAR(255),
