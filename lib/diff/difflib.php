@@ -122,7 +122,7 @@ function diff2($page1, $page2, $type='sidediff') {
 		} else if ($type == 'sidediff') {
 			require_once('renderer_sidebyside.php');
 			$renderer = new Text_Diff_Renderer_sidebyside($context, $words);
-		} else if ($type == 'bytes' && $prefs['feature_actionlog_bytes'] != 'y') {
+		} else if ($type == 'bytes' && $prefs['feature_actionlog_bytes'] == 'y') {
 			require_once('renderer_bytes.php');
 			$renderer = new Text_Diff_Renderer_bytes();
 		} else if ($type == 'htmldiff') {
