@@ -123,6 +123,11 @@ function wikiplugin_tracker_info()
 				'name' => tra('View'),
 				'description' => tra('user|page'),
 			),
+			'status' => array(
+				'required' => false,
+				'name' => tra('Status'),
+				'description' => tra('Status of the item used in combination with:').' view=user',
+			),
 			'itemId' =>array(
 				'required' => false,
 				'name' => tra('itemId'),
@@ -194,7 +199,7 @@ function wikiplugin_tracker($data, $params)
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	include_once('lib/trackers/trackerlib.php');
-	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'n');
+	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'n', 'status' => '');
 	$params = array_merge($default, $params);
 	
 	//var_dump($_REQUEST);
@@ -217,7 +222,7 @@ function wikiplugin_tracker($data, $params)
 			$usertracker = true;
 		}
 	} elseif (!empty($trackerId) && !empty($view) && $view == 'user') {// the user item of a tracker
-		$itemId = $trklib->get_user_item($trackerId, $tracker);
+		$itemId = $trklib->get_user_item($trackerId, $tracker, null, null, $status);
 		$usertracker = true;
 	} elseif (!empty($trackerId) && !empty($view) && $view == 'page' && !empty($_REQUEST['page']) && (($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%')) || ($f = $trklib->get_field_id_from_type($trackerId, 'k', '%,1%')) || ($f =  $trklib->get_field_id_from_type($trackerId, 'k')))) {// the page item
 		$itemId = $trklib->get_item_id($trackerId, $f, $_REQUEST['page']);
