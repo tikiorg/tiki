@@ -7207,8 +7207,9 @@ class TikiLib extends TikiDb_Bridge
 
 				if ($this->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
 					$wkurl = $this->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
-
-					$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
+					
+					$linktext = ($description) ? $description : $wexs[1];
+					$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $linktext . '</a>';
 					return $wkurl;
 				}
 			}
