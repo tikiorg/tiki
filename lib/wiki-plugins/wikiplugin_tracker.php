@@ -274,12 +274,13 @@ function wikiplugin_tracker($data, $params)
 		}
 	}
 
-	if (empty($_SERVER['SCRIPT_NAME']) || !strstr($_SERVER['SCRIPT_NAME'], 'tiki-register.php')) {
+	$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker, false);
+	
+	if (empty($_SERVER['SCRIPT_NAME']) || strpos($_SERVER['SCRIPT_NAME'], 'tiki-register.php') === false) {
 		if (!empty($itemId) && $tracker['writerCanModify'] == 'y' && isset($usertracker) && $usertracker) { // user tracker he can modify
 		} elseif (!empty($itemId) && $tracker['writerCanModify'] == 'y' && $user && (($itemUser = $trklib->get_item_creator($trackerId, $itemId)) == $user || ($tracker['userCanTakeOwnership'] == 'y' && empty($itemUser)))) {
 		} elseif (!empty($itemId) && isset($grouptracker) && $grouptracker) {
 		} else {
-			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker, false);
 			if ($perms['tiki_p_create_tracker_items'] == 'n' && empty($itemId)) {
 				return '<b>'.tra("You do not have permission to insert an item").'</b>';
 			} elseif (!empty($itemId)) {
