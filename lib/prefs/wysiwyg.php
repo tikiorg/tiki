@@ -43,7 +43,7 @@ function prefs_wysiwyg_list() {
 			),
 		),
 		'wysiwyg_ckeditor' => array(
-			'name' => tra('Use CKEditor 3.1'),
+			'name' => tra('Use CKEditor'),
 			'description' => tra('Experimental, new in Tiki 5: Use New CKEditor instead of previous FCKEditor'),
 			'type' => 'flag',
 		),
