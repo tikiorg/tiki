@@ -24,19 +24,19 @@
 {if $group_by_item ne 'y'}
 <strong{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>
 {if $allday}
-	{tr}All day{/tr}
+	{$cellstart|tiki_short_date} ({tr}All day{/tr})
 {else}
   {if ($cellend - $cellstart < 86400)}
-	{$cellstart|tiki_date_format:"%H:%M"} &gt; {$cellend|tiki_date_format:"%H:%M"}
+	{$cellstart|tiki_date_format:"%H:%M"} &ndash; {$cellend|tiki_date_format:"%H:%M"}
   {else}
-	{$cellstart|tiki_date_format:"%e %B (%H:%M)"} &gt; {$cellend|tiki_date_format:"%e %B (%H:%M)"}
+	{$cellstart|tiki_date_format:"%e %B (%H:%M)"} &ndash; {$cellend|tiki_date_format:"%e %B (%H:%M)"}
   {/if}
 {/if}
 </strong>
 <br />
 {/if}
 <a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}"{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>{$cellname|escape}</a><br />
-{if $show_description eq 'y'}<div class="box-data">{$celldescription}</div><br />{/if}
+{if $show_description eq 'y'}<div class="box-data">{$celldescription|truncate:250:'...'}</div><br />{/if}
 {if $show_participants eq 'y' and $cellparticipants}
 <span class="box-title">{tr}Organized by:{/tr}</span> {$cellorganizers}<br />
 <span class="box-title">{tr}Participants:{/tr}</span> {$cellparticipants}<br />
