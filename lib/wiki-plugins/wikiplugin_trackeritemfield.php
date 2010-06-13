@@ -70,7 +70,14 @@ function wikiplugin_trackeritemfield($data, $params) {
 	extract ($params, EXTR_SKIP);
 
 	if (empty($itemId) && !empty($_REQUEST['itemId'])) {
-		$itemId = $_REQUEST['itemId'];
+		if (!empty($trackerId)) {
+			$info = $trklib->get_item_info($_REQUEST['itemId']);
+			if (!empty($info) && $info['trackerId'] == $trackerId) {
+				$itemId = $_REQUEST['itemId'];
+			}
+		} else {
+			$itemId = $_REQUEST['itemId'];
+		}
 	}
 
 	if (empty($itemId) && !empty($trackerId) && ($tracker_info = $trklib->get_tracker($trackerId))) {
