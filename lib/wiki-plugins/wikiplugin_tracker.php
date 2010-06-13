@@ -134,6 +134,13 @@ function wikiplugin_tracker_info()
 				'description' => tra('itemId if you want to edit an item'),
 				'filter' => 'digits'
 			),
+			'ignoreRequestItemId' => array(
+				'required' => false,
+				'name' => tra('Do not filter on the param itemId if in the url'),
+				'description' => 'y|n',
+				'filter' => 'alpha',
+				'default' => 'n',
+			),
 			'tpl' => array(
 				'required' => false,
 				'name' => tra('Template File'),
@@ -228,7 +235,7 @@ function wikiplugin_tracker($data, $params)
 		$itemId = $trklib->get_item_id($trackerId, $f, $_REQUEST['page']);
 	} elseif (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
 		$itemId = $trklib->get_user_item($trackerId, $tracker, $_REQUEST['view_user']);
-	} elseif (!empty($_REQUEST['itemId'])) {
+	} elseif (!empty($_REQUEST['itemId']) && (empty($ignoreRequestItemId) || $ignoreRequestItemId != 'y')) {
 		$itemId = $_REQUEST['itemId'];
 		$item = $trklib->get_tracker_item($itemId);
 		$trackerId = $item['trackerId'];
@@ -355,7 +362,8 @@ function wikiplugin_tracker($data, $params)
 				if (!empty($autosavefields)) {
 					$outf = array_merge($outf, $autosavefields);
 				}
-				$outf = array_merge($outf, $trklib->get_field_id_from_type($trackerId, array('q', 'k', 'u', 'g', 'I', 'C', 'n', 'j', 'f'), '', false));
+			$outf = array_merge($outf, $trklib->get_field_id_from_type($trackerId, array('q', 'k', 'u', 'g', 'I', 'C', 'n', 'j', 'f'), '', false));
+				//q=auto-increment, k=page selector, u=user selector, g=group selector, I=Ip selector, C=computed, n=numeric, j=calendar, f=date
 			}
 			$flds = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $outf);
 			$bad = array();
