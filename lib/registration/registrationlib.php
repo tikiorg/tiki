@@ -369,7 +369,8 @@ class RegistrationLib extends TikiLib
 	}
 }
 
-class RegistrationError {
+class RegistrationError
+{
 	var $field;
 	var $msg;
 
