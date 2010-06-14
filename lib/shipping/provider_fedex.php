@@ -49,6 +49,7 @@ class ShippingProvider_Fedex implements ShippingProvider
 				$out[] = array(
 					'provider' => 'FedEx',
 					'service' => $option->ServiceType,
+					'readable' => tra( $option->ServiceType ),
 					'cost' => number_format( $charge->Amount, 2, '.', '' ),
 					'currency' => $charge->Currency,
 				);

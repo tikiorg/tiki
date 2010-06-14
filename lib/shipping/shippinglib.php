@@ -82,3 +82,12 @@ if( $prefs['shipping_fedex_enable'] == 'y' ) {
 	) ) );
 }
 
+if( $prefs['shipping_ups_enable'] == 'y' ) {
+	require_once 'lib/shipping/provider_ups.php';
+	$shippinglib->addProvider( new ShippingProvider_Ups( array(
+		'username' => $prefs['shipping_ups_username'],
+		'password' => $prefs['shipping_ups_password'],
+		'license' => $prefs['shipping_ups_license'],
+	) ) );
+}
+

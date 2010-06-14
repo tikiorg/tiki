@@ -39,6 +39,29 @@ function prefs_shipping_list() {
 			'size' => 10,
 			'filter' => 'digits',
 		),
+		'shipping_ups_enable' => array(
+			'name' => tra('UPS API'),
+			'description' => tra('Enable shipping rate calculation using the UPS carrier.'),
+			'type' => 'flag',
+			'help' => 'Shipping',
+		),
+		'shipping_ups_username' => array(
+			'name' => tra('UPS Username'),
+			'description' => tra('UPS credentials'),
+			'type' => 'text',
+			'size' => 15,
+		),
+		'shipping_ups_password' => array(
+			'name' => tra('UPS Password'),
+			'description' => tra('UPS credentials'),
+			'type' => 'text',
+			'size' => 25,
+		),
+		'shipping_ups_license' => array(
+			'name' => tra('UPS Access Key'),
+			'type' => 'text',
+			'size' => 25,
+		),
 	);
 }
 

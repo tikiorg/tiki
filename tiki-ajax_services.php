@@ -10,15 +10,7 @@
 require_once ('tiki-setup.php');
 //require_once ('lib/ajax/ajaxlib.php');
 
-if ($prefs['feature_jquery'] != 'y' || $prefs['feature_jquery_autocomplete'] != 'y') {
-	header("location: index.php");
-	exit;
-}
-
-if (!$user) {	// only registered users so far - pending proper perms control TODO!
-	header("location: index.php");
-	exit;
-}
+$access->check_feature( array( 'feature_jquery', 'feature_jquery_autocomplete' ) );
 
 if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	$sep = '|';
