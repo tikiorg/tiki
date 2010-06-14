@@ -343,7 +343,9 @@ if (isset($_REQUEST["upload"])) {
 					if (($data = fread($fp, 8192 * 16)) === false) {
 						$errors[] = tra('Cannot read the file:') . ' ' . $tmp_dest;
 					}
-					fwrite($fw, $data);
+					if (fwrite($fw, $data) === false) {
+						$errors[] = tra('Cannot write to this file:') . $savedir . $fhash;
+					}
 				}
 			}
 			fclose($fp);
