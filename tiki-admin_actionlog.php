@@ -59,13 +59,17 @@ if (isset($_REQUEST["find"])) {
   $find = '';
 }
 $smarty->assign('find', $find);
-if (!isset($_REQUEST["offset"])) {
+if ( !isset($_REQUEST['offset']) || !empty($_REQUEST['export']) ) {
   $offset = 0;
 } else {
   $offset = $_REQUEST["offset"];
 }
-if (isset($_REQUEST["max"])) {
-  $maxRecords = $_REQUEST["max"];
+if ( !empty($_REQUEST['export']) ) {
+	$maxRecords = -1;
+} elseif (isset($_REQUEST['max'])) {
+	$maxRecords = $_REQUEST['max'];
+} else {
+	$maxRecords = $prefs['maxRecords'];
 }
 
 if ($tiki_p_admin == 'y') {
