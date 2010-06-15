@@ -179,6 +179,10 @@ if (isset($_GET['plain'])) {
 }
 
 function add_watch_icons($descendants, $usercatwatches, $requestid, $categid, $deep, $user) {
+	global $prefs;
+	if (!$user || $prefs["feature_user_watches"] != 'y') {
+		 return false;
+	}
 	global $prefsgroups, $tiki_p_admin_users, $tiki_p_admin, $categlib;
 	$section = 'categories';
 	require_once ('tiki-setup.php');
