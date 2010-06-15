@@ -3934,6 +3934,22 @@ class TrackerLib extends TikiLib
 			$this->categorized_item($trackerId, $to, "item $to", $cats);
 		}
 	}
+	function export_attachment($itemId, $archive) {
+		global $prefs;
+		$files = $this->list_item_attachments( $itemId, 0, -1, 'attId_asc' );
+		if (!empty($files['cant'])) {
+			$archive->addEmptyDir($itemId);
+		}
+		foreach( $files['data'] as $file ) {
+			$localZip = "item_$itemId/".$file['filename'];
+			$complete = $this->get_item_attachment( $file['attId'] );
+			if (!empty($complete['path']) && file_exists($prefs['t_use_dir'].$complete['path'])) {
+				$archive->addFile($prefs['t_use_dir'].$complete['path'], $localZip);
+			} else {
+				$archive->addFromString($localZip, $complete['data']);
+			}
+		}
+	}
 
 }
 
