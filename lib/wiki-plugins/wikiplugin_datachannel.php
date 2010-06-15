@@ -57,7 +57,7 @@ function wikiplugin_datachannel_info()
 			'price' => array(
 				'required' => false,
 				'name' => tra('Price'),
-				'description' => tr('Price to execute the datachannel (%0).', $prefs['payment_currencey']),
+				'description' => tr('Price to execute the datachannel (%0).', $prefs['payment_currency']),
 				'prefs' => array('payment_feature'),
 				'filter' => 'text',
 			),
