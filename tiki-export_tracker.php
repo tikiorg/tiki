@@ -234,7 +234,11 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecord
 	}
 	if ($tracker_info['useAttachments'] == 'y' && !empty($_REQUEST['zip'])) {
 		foreach ($items['data'] as $v) {
-			$trklib->export_attachment($v['itemId'], $archive);
+			if (!$trklib->export_attachment($v['itemId'], $archive)) {
+				$smarty->assign('msg', tra('Problem zip'));
+				$smarty->display('error.tpl');
+				die;
+			}
 		}
 	}
 }
