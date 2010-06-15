@@ -1479,6 +1479,8 @@ function get_default_prefs() {
 		'log_tpl' => 'n',
 		'disableJavascript' => 'n',
 		'feature_socialnetworks' => 'n',
+		'socialnetworks_twitter_consumer_key' =>'',
+		'socialnetworks_twitter_consumer_secret' => '',
 
 		'case_patched' => 'n',
 		'site_closed' => 'n',

@@ -27,7 +27,7 @@ class SocialNetworksLib extends TikiLib
 	function getURL() {
 		$url='http';
 		$port='';
-		if ($_SERVER['HTTPS']=='on') {
+		if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {
 			$url.="s";
 			if ($_SERVER['SERVER_PORT']!=443) $port=":".$_SERVER['SERVER_PORT'];
 		} else {
