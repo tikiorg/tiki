@@ -94,7 +94,7 @@
 		</td>
 	</tr>
 {/if}
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" id="export_button" value="{tr}Export{/tr}" /></td>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" id="export_button" value="{tr}Export{/tr}" /> <input type="submit" name="zip" id="zip_button" value="{if $info.useAttachmnet eq 'y'}{tr}Zip export with attachments{/tr}{else}{tr}Zip Export{/tr}{/if}" /></td>
 </tr>
 </table>
 </form>
