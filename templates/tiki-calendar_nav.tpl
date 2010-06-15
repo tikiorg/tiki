@@ -58,7 +58,7 @@
 		{if $module neq 'y'}
 			{button _ajax=$ajax href="?viewmode=quarter" _title="{tr}Quarter{/tr}" _text="{tr}Quarter{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'quarter'"}
 			{button href="?viewmode=semester" _title="{tr}Semester{/tr}" _text="{tr}Semester{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'semester'"}
-			{button _ajax=$ajax viewmode=year _title="{tr}Year{/tr}" _text="{tr}Year{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'year'"}
+			{button href="?viewmode=year" _ajax=$ajax viewmode=year _title="{tr}Year{/tr}" _text="{tr}Year{/tr}" _selected_class="buttonon" _selected="'$viewmode' == 'year'"}
 		{/if}
 
 {*next*}

@@ -152,10 +152,13 @@
 </select>
 </td></tr>
 <tr class="formcolor"><td>{tr}Start of day{/tr}:</td><td>
-<select name="startday_Hour">{foreach item=h from=$hours}<option value="{$h}"{if $h eq $startday} selected="selected"{/if}>{$h}</option>{/foreach}</select>{tr}h{/tr}
+<select name="startday_Hour">{foreach key=h item=d from=$hours}<option 
+value="{$h}"{if $h eq $startday} 
+selected="selected"{/if}>{$d}</option>{/foreach
+}</select>
 </td></tr>
 <tr class="formcolor"><td>{tr}End of day{/tr}:</td><td>
-<select name="endday_Hour">{foreach item=h from=$hours}<option value="{$h}"{if $h eq $endday} selected="selected"{/if}>{$h}</option>{/foreach}</select>{tr}h{/tr}
+<select name="endday_Hour">{foreach key=h item=d from=$hours}<option value="{$h}"{if $h eq $endday} selected="selected"{/if}>{$d}</option>{/foreach}</select>
 </td></tr>
 <tr class="formcolor"><td>{tr}Days to display{/tr}:</td><td>
 {section name="viewdays" start=0 loop=7}
