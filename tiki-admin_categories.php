@@ -360,6 +360,22 @@ if( $prefs['feature_blogs'] == 'y' ) {
 
 if( $prefs['feature_wiki'] == 'y' ) {
 	$pages = $tikilib->list_pageNames($offset, $maxRecords, 'pageName_asc', $find_objects);
+	//TODO for all other object types
+	$pages_not_in_cat = array();
+	foreach($pages['data'] as $pg) {
+		$found = false;
+		foreach ($objects['data'] as $obj) {
+			if ($obj['type'] == 'wiki page' && $obj['itemId'] == $pg['pageName']) {
+				$found = true;
+				break;
+			} 
+		}
+		if (!$found) {
+			$pages_not_in_cat[] = $pg;
+		}
+	}
+	$pages['data'] = $pages_not_in_cat;
+	$pages['cant'] = count($pages_not_in_cat);
 }
 
 if( $prefs['feature_faqs'] == 'y' ) {
