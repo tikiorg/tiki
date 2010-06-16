@@ -133,7 +133,13 @@ if ( $start_session ) {
 	$session_params = session_get_cookie_params();
 	session_set_cookie_params($session_params['lifetime'], $tikiroot);
 	unset($session_params);
-	@session_start();
+
+	try {
+		require_once "Zend/Session.php";
+		Zend_Session::start();
+	} catch( Zend_Session_Exception $e ) {
+		// Ignore
+	}
 }
 
 // Moved here from tiki-setup.php because smarty use a copy of session
