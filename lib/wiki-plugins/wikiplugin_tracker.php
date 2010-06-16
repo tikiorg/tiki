@@ -202,7 +202,7 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors)
 
 function wikiplugin_tracker($data, $params)
 {
-	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin_trackers, $smarty, $prefs, $trklib, $tiki_p_view;
+	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin_trackers, $smarty, $prefs, $trklib, $tiki_p_view, $captchalib;
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	include_once('lib/trackers/trackerlib.php');
@@ -556,7 +556,7 @@ function wikiplugin_tracker($data, $params)
 
 				if (empty($user) && $prefs['feature_antibot'] == 'y' && $registration != 'y') {
 					// in_tracker session var checking is for tiki-register.php
-					if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+					if (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha'])) {
 						$field_errors['err_antibot'] = 'y';
 					}
 				}

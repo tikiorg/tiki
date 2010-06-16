@@ -199,7 +199,7 @@ class RegistrationLib extends TikiLib
 	 */
 	/*private*/
 	function local_check_registration($registration) {
-		global $_SESSION, $prefs, $user, $userlib;
+		global $_SESSION, $prefs, $user, $userlib, $captchalib;
 
 		if (empty($registration['name']))
 			return new RegistrationError('name', tra("Username is required"));
@@ -214,8 +214,8 @@ class RegistrationLib extends TikiLib
 			return new RegistrationError('name', tra("User already exists"));
 		
 		if (!$user && $prefs['rnd_num_reg'] == 'y') {
-			if (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $registration['antibotcode'])
-				return new RegistrationError('antibotcode', tra("You have mistyped the anti-bot verification code; please try again."));
+			if (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))
+				return new RegistrationError('antibotcode', tra("You have mistyped the anti-bot verification code. Please try again."));
 		}
 		
 		// VALIDATE NAME HERE

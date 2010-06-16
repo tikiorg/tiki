@@ -62,10 +62,10 @@ function module_shoutbox_info() {
 }
 
 function doProcessShout($inFormValues) {
-	global $shoutboxlib, $user, $smarty, $prefs;
+	global $shoutboxlib, $user, $smarty, $prefs, $captchalib;
 	
 	if (array_key_exists('shout_msg',$inFormValues) && strlen($inFormValues['shout_msg']) > 2) {
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $inFormValues['antibotcode'])) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
 			$smarty->assign('shout_error', tra('You have mistyped the anti-bot verification code; please try again.'));
 			$smarty->assign_by_ref('shout_msg', $inFormValues['shout_msg']);
 		} else {

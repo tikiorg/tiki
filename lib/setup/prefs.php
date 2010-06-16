@@ -1367,6 +1367,11 @@ function get_default_prefs() {
 		'shipping_ups_password' => '',
 		'shipping_ups_license' => '',
 
+		// ReCaptcha
+		'recaptcha_enabled' => 'n',
+		'recaptcha_pubkey' => '',
+		'recaptcha_privkey' => '',
+
 		// unsorted features
 		'anonCanEdit' => 'n',
 		'cacheimages' => 'n',

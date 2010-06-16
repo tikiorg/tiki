@@ -18,7 +18,7 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 			$ok = false;
 			$smarty->assign('msg_poll', tra('For you to vote, cookies must be allowed'));
 			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
-		} elseif (($prefs['feature_antibot'] == 'y' && empty($user)) && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		} elseif (($prefs['feature_antibot'] == 'y' && empty($user)) && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
 			$ok = false;
 			$smarty->assign('msg_poll', tra('You have mistyped the anti-bot verification code; please try again.'));
 			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);

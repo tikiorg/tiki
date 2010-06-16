@@ -2465,7 +2465,7 @@ class Comments extends TikiLib
  	 * @return the threadId
 	 * @return $feedbacks, $errors */
 	function post_in_forum($forum_info, &$params, &$feedbacks, &$errors) {
-		global $smarty, $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tiki_p_forum_post, $prefs, $user, $tiki_p_forum_autoapp;
+		global $smarty, $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tiki_p_forum_post, $prefs, $user, $tiki_p_forum_autoapp, $captchalib;
 
 		if (!empty($params['comments_grandParentId'])) {
 			$parent_id = $params['comments_grandParentId'];
@@ -2490,7 +2490,7 @@ class Comments extends TikiLib
 			die;
 		}
 
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $params['antibotcode'])) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
 		if ($forum_info['controlFlood'] == 'y' && !$this->user_can_post_to_forum($user, $forumId) ) {
@@ -2628,7 +2628,7 @@ class Comments extends TikiLib
 	 * @return the threadId
 	 * @return $feedbacks, $errors */
 	function post_in_object($comments_objectId, &$params, &$feedbacks, &$errors) {
-		global $smarty, $tiki_p_admin, $tiki_p_post_comments, $tiki_p_edit_comments, $prefs, $user;
+		global $smarty, $tiki_p_admin, $tiki_p_post_comments, $tiki_p_edit_comments, $prefs, $user, $captchalib;
 
 		if (!empty($params['comments_grandParentId'])) {
 			$parent_id = $params['comments_grandParentId'];
@@ -2665,7 +2665,7 @@ class Comments extends TikiLib
 			}
 		}
 
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $params['antibotcode'])) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
 

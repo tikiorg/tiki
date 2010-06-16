@@ -59,7 +59,7 @@ if ($user) {
 $smarty->assign('email', $user_email);
 if ($tiki_p_subscribe_newsletters == 'y') {
 	if (isset($_REQUEST["subscribe"])) {
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha'])) {
 			$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
 			$smarty->assign('errortype', 'no_redirect_login');
 			$smarty->display("error.tpl");

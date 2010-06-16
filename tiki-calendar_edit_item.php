@@ -188,7 +188,7 @@ if (isset($save['start']) && isset($save['end'])) {
 
 if (isset($_POST['act'])) {
 	// Check antibot code if anonymous and allowed
-	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
 		$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
 		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display("error.tpl");
@@ -331,7 +331,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	die;
 }  elseif (isset($_REQUEST['duplicate']) and $tiki_p_add_events == 'y') {
 	// Check antibot code if anonymous and allowed
-	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
 		$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
 		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display("error.tpl");
