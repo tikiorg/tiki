@@ -247,6 +247,21 @@ if (!empty($_SESSION['perms_clipboard'])) {
 
 $displayedPermissions = get_displayed_permissions();
 
+if (isset($_REQUEST['used_groups'])) {
+	$group_filter = array();
+	foreach ( $displayedPermissions->getPermissionArray() as $group => $perms ) {
+		$group_filter[] = $group;
+		$group_filter = array_merge($group_filter, $userlib->get_including_groups($group, 'y'));
+	}
+	if (empty($group_filter)) {
+		$group_filter = array('Anonymous', 'Registered', 'Admins');
+	}
+	foreach ( $group_filter as $i=>$group) {
+		$ginfo = $userlib->get_group_info($group);
+		$group_filter[$i] = $ginfo['id'];
+	}
+	$cookietab = 1;
+}
 
 //Quickperms {{{
 //Test to map permissions of ile galleries into read write admin admin levels.

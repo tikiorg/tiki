@@ -112,6 +112,9 @@ if ($jq("#assignstructure").attr("checked")) {
 					{tr}These groups are not the groups that have permissions on the object. It is only the groups you can see in the columns of the first tab.{/tr}
 				{/remarksbox}
 			{/if}
+			<div class=navbar">
+				 <input type="submit" name="used_groups" value="{tr}Select only groups that have a perm with the object{/tr}" />
+			</div>
 
 			<h2>{tr}Groups{/tr}</h2>
 			
