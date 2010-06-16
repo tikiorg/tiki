@@ -35,7 +35,7 @@
       {if $structure_path[ix].page_alias}
         {$structure_path[ix].page_alias}
 	  {else}
-        {$structure_path[ix].pageName}
+        {$structure_path[ix].pageName|pageName}
 	  {/if}
 	  </a>
 	{/section}
