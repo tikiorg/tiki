@@ -1313,9 +1313,9 @@ function get_default_prefs() {
 		'toolbar_global_comments' => '
 			bold, italic, underline, strike , - , link, smiley | help
 		',
-		'toolbar_sheet' => 'addrow, addrowmulti, deleterow, -, addcolumn, addcolumnmulti, deletecolumn, -, sheetgetrange, -,
-			sheetsave, sheetrefresh, sheetfind, -,
-			bold, italic, underline, strike, center,-, color, bgcolor, -, tikilink, nonparsed|sheetclose/',
+		'toolbar_sheet' => 'addrow,addrowmulti,deleterow,-,addcolumn,addcolumnmulti,deletecolumn,-,
+							sheetgetrange,sheetrefresh,-,sheetfind,-|sheetsave,sheetclose/
+							bold,italic,underline,strike,center,-,color,bgcolor,-,tikilink,nonparsed,-|fullscreen/',
 
 		// pagination
 		'direct_pagination' => 'y',

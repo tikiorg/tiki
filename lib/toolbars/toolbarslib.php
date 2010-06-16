@@ -1576,47 +1576,47 @@ class ToolbarSheet extends Toolbar
 			case 'addrow':
 				$label = tra('Add Row');
 				$icon = tra('pics/icons/sheet_row_add.png');
-				$syntax = 'jS.controlFactory.addRow(null, null, ":last");';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
+				$syntax = '$jq.sheet.instance[0].controlFactory.addRow(null, null, ":last");';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
 				break;														// TODO fix properly for 5.1
 			case 'addrowmulti':
 				$label = tra('Add Multi-Rows');
 				$icon = tra('pics/icons/sheet_row_add_multi.png');
-				$syntax = 'jS.controlFactory.addRowMulti();';
+				$syntax = '$jq.sheet.instance[0].controlFactory.addRowMulti();';
 				break;
 			case 'deleterow':
 				$label = tra('Delete Row');
 				$icon = tra('pics/icons/sheet_row_delete.png');
-				$syntax = 'jS.deleteRow();';
+				$syntax = '$jq.sheet.instance[0].deleteRow();';
 				break;
 			case 'addcolumn':
 				$label = tra('Add Column');
 				$icon = tra('pics/icons/sheet_col_add.png');
-				$syntax = 'jS.controlFactory.addColumn(true);';	// add col after current or at end if none selected
+				$syntax = '$jq.sheet.instance[0].controlFactory.addColumn(true);';	// add col after current or at end if none selected
 				break;
 			case 'deletecolumn':
 				$label = tra('Delete Column');
 				$icon = tra('pics/icons/sheet_col_delete.png');
-				$syntax = 'jS.deleteColumn();';
+				$syntax = '$jq.sheet.instance[0].deleteColumn();';
 				break;
 			case 'addcolumnmulti':
 				$label = tra('Add Multi-Columns');
 				$icon = tra('pics/icons/sheet_col_add_multi.png');
-				$syntax = 'jS.controlFactory.addColumnMulti();';
+				$syntax = '$jq.sheet.instance[0].controlFactory.addColumnMulti();';
 				break;
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');
 				$icon = tra('pics/icons/sheet_get_range.png');
-				$syntax = 'jS.appendToFormula(jS.getTdRange());';
+				$syntax = '$jq.sheet.instance[0].appendToFormula($jq.sheet.instance[0].getTdRange());';
 				break;
 			case 'sheetfind':
 				$label = tra('Find');
 				$icon = tra('pics/icons/find.png');
-				$syntax = 'jS.cellFind();';
+				$syntax = '$jq.sheet.instance[0].cellFind();';
 				break;
 			case 'sheetrefresh':
 				$label = tra('Refresh Calculations');
 				$icon = tra('pics/icons/arrow_refresh.png');
-				$syntax = 'jS.calc(jS.obj.tableBody());';
+				$syntax = '$jq.sheet.instance[0].calc($jq.sheet.instance[0].obj.tableBody());';
 				break;
 			case 'sheetclose':
 				$label = tra('Finish Editing');

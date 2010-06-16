@@ -181,9 +181,6 @@ $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != editSheetButtonLabel2) {
 		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
-		if ($jq("div.tiki_sheet").find("td").length < 2 && $jq("div.tiki_sheet").find("td").text() === "")  {
-			options.buildSheet = "5x5";	// new sheet
-		}
 		$jq("div.tiki_sheet").tiki("sheet", "", options);
 
 		$a.attr("temp", $a.text());
@@ -194,17 +191,21 @@ $jq("#edit_button").click( function () {
 			ajaxLoadingHide();
 		}
 	} else {
-		if (!jS.isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
+		if (!$jq.sheet.instance[0].isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
 			window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
 		}
 	}
 	return false;
 });
 $jq("#save_button").click( function () {
-	jS.evt.cellEditDone();
+	$jq.sheet.instance[0].evt.cellEditDone();
 	$jq.sheet.saveSheet(true);
 	return false;
 }).hide();
+
+window.toggleFullScreen = function(areaname) {
+	$jq.sheet.instance[0].toggleFullScreen();
+}
 
 window.showFeedback = function(message, delay, redirect) {
 	if (typeof delay == "undefined") { delay = 5000; }
@@ -220,7 +221,7 @@ window.showFeedback = function(message, delay, redirect) {
 };
 
 window.setEditable = function(isEditable) {
-	jS.s.editable = isEditable;
+	$jq.sheet.instance[0].s.editable = isEditable;
 	if (isEditable) {
 		$jq("#save_button").show();
 		//$jq("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
