@@ -66,9 +66,10 @@ function wikiplugin_code_info() {
 
 function wikiplugin_code($data, $params) {
 	static $code_count;
-	if ( is_array($params) ) {
-		extract($params, EXTR_SKIP);
-	}
+	$default = array('cpy' => 0);
+	$params = array_merge($default, $params);
+	extract($params, EXTR_SKIP);
+
 	$code = trim($data);
 
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
