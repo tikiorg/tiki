@@ -236,6 +236,9 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jquery.scrollTo-min.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/jgcharts.min.js' );
 	}
+	if( $prefs['feature_jquery_media'] == 'y' ) {
+		$headerlib->add_jsfile( 'lib/jquery/jquery.media.js');
+	}
 	if( $prefs['feature_jquery_jqs5'] == 'y' ) {
 		if (strpos($_SERVER['PHP_SELF'], 'tiki-index_raw.php') !== false && isset($_REQUEST['format']) && $_REQUEST['format'] == 'jqs5') {
 			$headerlib->add_cssfile( 'lib/jquery/jqs5/jqs5.css' );
