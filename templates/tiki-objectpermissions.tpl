@@ -101,6 +101,7 @@ if ($jq("#assignstructure").attr("checked")) {
 
 	{tab name="{tr}Select groups{/tr}"}
 		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
+			<input type="hidden" name="referer" value="{$referer|escape}" />
 			{if isset($groupsFiltered)}
 				{remarksbox type="warning" title="{tr}Note{/tr}"}
 					{tr}Some of your groups have been automatically hidden.<br /> Select the groups below to assign permissions for.{/tr}
@@ -124,6 +125,7 @@ if ($jq("#assignstructure").attr("checked")) {
 	
 	{tab name="{tr}Select features{/tr}"}
 		<form method="post" action="{$smarty.server.PHP_SELF}?{query}">
+			<input type="hidden" name="referer" value="{$referer|escape}" />
 			{if isset($featuresFiltered)}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
 					{tr}Some of your features have been automatically hidden.<br /> Select the features below to assign permissions for.{/tr}

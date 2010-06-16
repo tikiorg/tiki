@@ -214,9 +214,14 @@ function current_object() {
 				'object' => $_REQUEST[ $info['itemkey'] ],
 			);
 		} elseif( isset( $info['key'], $info['objectType'], $_REQUEST[ $info['key'] ] ) ) {
+			if (is_array($_REQUEST[ $info['key'] ])) {	// galleryId is an array here when in tiki-upload_file.php
+				$k = $_REQUEST[ $info['key'] ][0];
+			} else {
+				$k = $_REQUEST[ $info['key'] ];
+			}
 			return array(
 				'type' => $info['objectType'],
-				'object' => $_REQUEST[ $info['key'] ],
+				'object' => $k,
 			);
 		}
 	}
