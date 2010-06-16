@@ -1349,7 +1349,13 @@ function prefs_feature_list() {
 			'name' => tra('JQuery Sortable Tables'),
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
-			'description' => tra('As it turns out, an unused experiment...'),
+			'description' => tra('Sort in fancytable plugin'),
+		),
+		'feature_jquery_media' => array(
+			'name' => tra('JQuery Media'),
+			'type' => 'flag',
+			'help' => 'JQuery#Media',
+			'description' => tra('Media player'),
 		),
 		'feature_tabs' => array(
 			'name' => tra('Use Tabs'),

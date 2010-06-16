@@ -211,6 +211,7 @@
 					{preference name=feature_jquery_ui}
 					{preference name=feature_jquery_ui_theme}
 					{preference name=feature_jquery_validation}
+					{preference name=feature_jquery_media}
 
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">

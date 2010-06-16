@@ -44,6 +44,12 @@ function wikiplugin_mediaplayer_info() {
 				'description' => tra('Complete URL to the flv to include.'),
 				'filter' => 'url'
 			),
+			'src' => array(
+				'required' => false,
+				'name'=> tra('URL'),
+				'description' => tra('Complete URL to the media to include.'). ' asx, asf, avi, flv, mov, mpg, mpeg, mp4, qt, ra, smil, swf, wmv, 3g2, 3gp,aif, aac, au, gsm, mid, midi, mov, mp3, m4a, snd, ra, ram, rm, wav, wma, bmp, html, pdf, psd, qif, qtif, qti, tif, tiff, xaml',
+				'filter' => 'url'
+			),
 			'style' => array(
 				'required' => false,
 				'name' => tra('Style'),
@@ -88,8 +94,15 @@ function wikiplugin_mediaplayer_info() {
 	);
 }
 function wikiplugin_mediaplayer($data, $params) {
-	if (empty($params['mp3']) && empty($params['flv'])) {
+	global $prefs, $access;
+	static $iMEDIAPLAYER = 0;
+	$id = 'mediaplayer'.++$iMEDIAPLAYER;
+
+	if (empty($params['mp3']) && empty($params['flv']) && empty($params['src'])) {
 		return;
+	}
+	if (!empty($params['src'])) {
+		$access->check_feature('feature_jquery_media');
 	}
 	$defaults_mp3 = array(
 		'width' => 200,
@@ -103,10 +116,23 @@ function wikiplugin_mediaplayer($data, $params) {
 		'player' => 'player_flv.swf',
 		'where' => 'http://flv-player.net/medias/',
 	);
+	$defaults = array(
+		'width' => 320,
+		'height' => 240,
+	);
 	if (!empty($params['flv'])) {
 		$params = array_merge($defaults_flv, $params );
-	} else {
+	} elseif (!empty($params['mp3'])) {
 		$params = array_merge($defaults_mp3, $params );
+	} else {
+		$params = array_merge($defaults, $params );
+	}
+	if (!empty($params['src'])) {
+		global $headerlib; include_once('lib/headerlib.php');
+		extract ($params,EXTR_SKIP);
+		$js = "\$jq('#$id').media( {width: $width, height: $height} );";
+		$headerlib->add_jq_onready($js);
+		return "~np~<a href=\"$src\" id=\"$id\"></a>~/np~";
 	}
 	$styles = array('normal', 'mini', 'maxi', 'multi');
 	if (empty($params['style']) || $params['style'] == 'normal' || !in_array($params['style'], $styles)) {

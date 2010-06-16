@@ -1564,6 +1564,7 @@ function get_default_prefs() {
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
 		'feature_jquery_carousel' => 'n',		// slideshow/carousel for file gals etc
 		'feature_jquery_validation' => 'y',		// validation on Trackers etc
+		'feature_jquery_media' => 'n',	
 
 		// SefUrl
 		'feature_sefurl' => 'n',
