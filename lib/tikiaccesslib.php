@@ -244,6 +244,9 @@ class TikiAccessLib extends TikiLib
 		if( $this->is_serializable_request() ) {
 			$this->output_serialized( $detail );
 		} else {
+			if (($errortype == 401 || $errortype == 403) && empty($user) && ($prefs['permission_denied_login_box'] == 'y' || !empty($prefs['permission_denied_url']))) {
+				$_SESSION['loginfrom'] = $_SERVER['REQUEST_URI'];
+			}
 			$smarty->assign('errortitle', $detail['errortitle']);
 			$smarty->assign('msg', $detail['message']);
 			$smarty->assign('errortype', $detail['code']);

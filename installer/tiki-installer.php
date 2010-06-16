@@ -79,6 +79,15 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 			$filetowrite .= "\$api_tiki='" . $api_tiki . "';\n";
 		}
 		$filetowrite .= "\$client_charset='" . "$client_charset" . "';\n";
+		$filetowrite .= "// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters) \n";
+		if ($client_charset == 'utf8') {
+			$filetowrite .= "// you should try changing the line above to \"\$client_charset='latin1';\"\n";
+		} else if ($client_charset == 'latin1') {
+			$filetowrite .= "// you should try changing the line above to \"\$client_charset='utf8';\"\n";
+		} else {
+			$filetowrite .= "// you should try changing the line above to \"\$client_charset='utf8';\" or \"\$client_charset='latin1';\"\n";
+		}
+		$filetowrite .= "// See http://tikiwiki.org/ReleaseNotes5.0#Known_Issues and http://doc.tikiwiki.org/UTF-8 for more info\n\n";
 		fwrite($fw, $filetowrite);
 		fclose($fw);
 	}
