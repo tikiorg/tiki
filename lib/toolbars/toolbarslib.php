@@ -928,52 +928,9 @@ class ToolbarDialog extends Toolbar
 						$prefs['wikiplugin_alink'] == 'y' ? '<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
 						$prefs['feature_semantic'] == 'y' ? '<label for="tbWLinkRel">Semantic relation:</label>' : '',
 						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
-						'{"open": function () {
-$jq("#tbWLinkPage").tiki("autocomplete", "pagename");
-var s = getTASelection($jq(getElementById(areaname))[0]);
-var m = /\((.*)\(([^\|]*)\|?([^\|]*)\|?([^\|]*)\|?\)\)/g.exec(s);
-if (m && m.length > 4) {
-	if ($jq("#tbWLinkRel")) { $jq("#tbWLinkRel").val(m[1]); }
-	$jq("#tbWLinkPage").val(m[2]);
-	if (m[4]) {
-		if ($jq("#tbWLinkAnchor")) { $jq("#tbWLinkAnchor").val(m[3]); }
-		$jq("#tbWLinkDesc").val(m[4]);
-	} else {
-		$jq("#tbWLinkDesc").val(m[3]);
-	}
-} else {
-	$jq("#tbWLinkDesc").val(s);
-	if ($jq("#tbWLinkAnchor")) { $jq("#tbWLinkAnchor").val(""); }
-}
-						},
-						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
-						'"Insert": function() {
-var s = "(";
-if ($jq("#tbWLinkRel") && $jq("#tbWLinkRel").val()) { s += $jq("#tbWLinkRel").val(); }
-s += "(" + $jq("#tbWLinkPage").val();
-if ($jq("#tbWLinkAnchor") && $jq("#tbWLinkAnchor").val()) { s += "|" + ($jq("#tbWLinkAnchor").val().indexOf("#") != 0 ? "#" : "") + $jq("#tbWLinkAnchor").val(); }
-if ($jq("#tbWLinkDesc").val()) { s += "|" + $jq("#tbWLinkDesc").val(); }
-s += "))";
-insertAt(areaname, s, false, false, true); 
-
-textarea = getElementById( areaname);
-// quick fix for Firefox 3.5 losing selection on changes to popup
-if (typeof textarea.selectionStart != "undefined") {
-	var tempSelectionStart = textarea.selectionStart;
-	var tempSelectionEnd = textarea.selectionEnd;
-}
-
-$jq(this).dialog("close");
-
-// quick fix for Firefox 3.5 losing selection on changes to popup
-if (typeof textarea.selectionStart != "undefined" && textarea.selectionStart != tempSelectionStart) {
-        textarea.selectionStart = tempSelectionStart;
-}
-if (typeof textarea.selectionEnd != "undefined" && textarea.selectionEnd != tempSelectionEnd) {
-        textarea.selectionEnd = tempSelectionEnd;
-}
-
-}}}'
+						'{"open": function () { dialogInternalLinkOpen(areaname); },
+						"buttons": { "Cancel": function() { dialogSharedClose(areaname,this); },'.
+									'"Insert": function() { dialogInternalLinkInsert(areaname,this); }}}'
 					);
 
 			break;
@@ -990,59 +947,9 @@ if (typeof textarea.selectionEnd != "undefined" && textarea.selectionEnd != temp
 						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						$prefs['cachepages'] == 'y' ? '<br /><label for="tbLinkNoCache" style="display:inline;">No cache:</label>' : '',
 						$prefs['cachepages'] == 'y' ? '<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />' : '',
-						'{"width": 300, "open": function () {
-$jq("#tbWLinkPage").tiki("autocomplete", "pagename");
-var s = getTASelection($jq(getElementById(areaname))[0]);
-var m = /\[([^\|]*)\|?([^\|]*)\|?([^\|]*)\]/g.exec(s);
-if (m && m.length > 3) {
-	$jq("#tbLinkURL").val(m[1]);
-	$jq("#tbLinkDesc").val(m[2]);
-	if (m[3]) {
-		if ($jq("#tbLinkNoCache") && m[3] == "nocache") {
-			$jq("#tbLinkNoCache").attr("checked", "checked");
-		} else {
-			$jq("#tbLinkRel").val(m[3]);
-		}			
-	} else {
-		$jq("#tbWLinkDesc").val(m[3]);
-	}
-} else {
-	if (s.match(/(http|https|ftp)([^ ]+)/ig) == s) {	// v simple URL match
-		$jq("#tbLinkURL").val(s);
-	} else {
-		$jq("#tbLinkDesc").val(s);
-	}
-}
-if (!$jq("#tbLinkURL").val()) {
-	$jq("#tbLinkURL").val("http://");
-}
-						},
-						"buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
-						'"Insert": function() {
-var s = "[" + $jq("#tbLinkURL").val();
-if ($jq("#tbLinkDesc").val()) { s += "|" + $jq("#tbLinkDesc").val(); }
-if ($jq("#tbLinkRel").val()) { s += "|" + $jq("#tbLinkRel").val(); }
-if ($jq("#tbLinkNoCache") && $jq("#tbLinkNoCache").attr("checked")) { s += "|nocache"; }
-s += "]";
-insertAt(areaname, s, false, false, true); 
-
-textarea = getElementById( areaname);
-// quick fix for Firefox 3.5 losing selection on changes to popup
-if (typeof textarea.selectionStart != "undefined") {
-	var tempSelectionStart = textarea.selectionStart;
-	var tempSelectionEnd = textarea.selectionEnd;
-}
-$jq(this).dialog("close");
-
-// quick fix for Firefox 3.5 losing selection on changes to popup
-if (textarea.selectionStart != tempSelectionStart) {
-        textarea.selectionStart = tempSelectionStart;
-}
-if (textarea.selectionEnd != tempSelectionEnd) {
-        textarea.selectionEnd = tempSelectionEnd;
-}
-
-}}}'
+						'{"width": 300, "open": function () { dialogExternalLinkOpen( areaname ) },
+						"buttons": { "Cancel": function() { dialogSharedClose(areaname,this); },'.
+						'"Insert": function() { dialogExternalLinkInsert(areaname,this) }}}'
 					);
 			break;
 
@@ -1051,145 +958,9 @@ if (textarea.selectionEnd != tempSelectionEnd) {
 			$wysiwyg = 'Table';
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
-						'{"open": function () {
-var s = getTASelection($jq(getElementById(areaname))[0]);
-var m = /\|\|([\s\S]*?)\|\|/mg.exec(s);
-var vals = [], rows=3, cols=3, c, r, i, j;
-if (m) {
-	m = m[1];
-	m = m.split("\n");
-	rows = 0;
-	cols = 1;
-	for(i = 0; i < m.length; i++) {
-		var a2 = m[i].split("|");
-		var a = [];
-		for (j = 0; j < a2.length; j++) {	// links can have | chars in
-			if (a2[j].indexOf("[") > -1 && a2[j].indexOf("[[") == -1 && a2[j].indexOf("]") == -1 ) {	// external link
-				a[a.length] = a2[j];
-				j++;
-				var k = true;
-				while ( j < a2.length && k ) {
-					a[a.length-1] += "|" + a2[j];
-					if (a2[j].indexOf("]") > -1) {	// closed
-						k = false;
-					} else {
-						j++;
-					}
-				}
-			} else if (a2[j].search(/\(\S*\(/) > -1 && a2[j].indexOf("))") == -1) {
-				a[a.length] = a2[j];
-				j++;
-				var k = true;
-				while ( j < a2.length && k ) {
-					a[a.length-1] += "|" + a2[j];
-					if (a2[j].indexOf("))") > -1) {	// closed
-						k = false;
-					} else {
-						j++;
-					}
-				}
-			} else {
-				a[a.length] = a2[j];
-			}
-		}
-		vals[vals.length] = a;
-		if (a.length > cols) { cols = a.length; }
-		if (a.length) { rows++; }
-	}
-}
-for (r = 1; r <= rows; r++) {
-	for (c = 1; c <= cols; c++) {
-		var v = "";
-		if (vals.length) {
-			if (vals[r-1] && vals[r-1][c-1]) {
-				v = vals[r-1][c-1];
-			} else {
-				v = "   ";
-			}
-		} else {
-			v = "   ";	//row " + r + ",col " + c + "";
-		}
-		var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:" + (90/cols) + "%\" />");
-		$jq(this).append(el);
-	}
-	if (r == 1) {
-		el = $jq("<img src=\"pics/icons/add.png\" />");
-		$jq(this).append(el);
-		el.click(function () {
-			var pr = $jq(this).parent();
-			$jq(pr).attr("cols", $jq(pr).attr("cols")+1);
-			for (r = 1; r <= $jq(pr).attr("rows"); r++) {
-				v = "   ";	//"row " + r + ",col " + $jq(pr).attr("cols") + "";
-				var el = $jq("<input type=\"text\" id=\"tbTableR" + r + "C" + $jq(pr).attr("cols") + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:" + (90/$jq(pr).attr("cols")) + "%\" />");
-				$jq("#tbTableR" + r + "C" + ($jq(pr).attr("cols")-1)).after(el);
-			}
-			$jq(pr).find("input").width(90/$jq(pr).attr("cols") + "%");
-		});
-	}
-	$jq(this).append($jq("<br />"));
-}
-el = $jq("<img src=\"pics/icons/add.png\" />");
-$jq(this).append(el);
-el.click(function () {
-	var pr = $jq(this).parent();
-	$jq(pr).attr("rows", $jq(pr).attr("rows")+1);
-	for (c = 1; c <= $jq(pr).attr("cols"); c++) {
-		v = "   ";	//"row " + $jq(pr).attr("rows") + ",col " + c + "";
-		var el = $jq("<input type=\"text\" id=\"tbTableR" + $jq(pr).attr("rows") + "C" + c + "\" class=\"ui-widget-content ui-corner-all\" size=\"10\" value=\"" + v + "\" style=\"width:" + (90/$jq(pr).attr("cols")) + "%\" />");
-		$jq(this).before(el);
-	}
-	$jq(this).before("<br />");
-$jq(pr).dialog("option", "height", ($jq(pr).attr("rows")+1) * 1.2 * $jq("#tbTableR1C1").height() + 130);
-});
-
-this.rows = rows; this.cols = cols;
-$jq(this).dialog("option", "width", (cols+1) * 120 + 50);
-$jq(this).dialog("option", "position", "center");
-						},
-						"width": 320, "buttons": { "Cancel": function() { $jq(this).dialog("close"); },'.
-						'"Insert": function() {
-var s = "||", rows, cols, c, r, rows2=1, cols2=1;
-rows = this.rows ? this.rows : 3;
-cols = this.cols ? this.cols : 3;
-for (r = 1; r <= rows; r++) {
-	for (c = 1; c <= cols; c++) {
-		if ($jq("#tbTableR" + r + "C" + c).val()) {
-			if (r > rows2) {
-				rows2 = r;
-			}
-			if (c > cols2) {
-				cols2 = c;
-			}
-		}
-	}
-}
-for (r = 1; r <= rows2; r++) {
-	for (c = 1; c <= cols2; c++) {
-		s += $jq("#tbTableR" + r + "C" + c).val();
-		if (c < cols2) { s += "|"; }
-	}
-	if (r < rows2) {  s += "\n"; }
-}
-s += "||";
-insertAt(areaname, s, false, false, true);
-
-// quick fix for Firefox 3.5 losing selection on changes to popup
-textarea = getElementById( areaname);
-if (typeof textarea.selectionStart != "undefined") {
-	var tempSelectionStart = textarea.selectionStart;
-	var tempSelectionEnd = textarea.selectionEnd;
-}
-$jq(this).dialog("close");
-
-// quick fix for Firefox 3.5 losing selection on changes to popup
-if (textarea.selectionStart != tempSelectionStart) {
-        textarea.selectionStart = tempSelectionStart;
-}
-if (textarea.selectionEnd != tempSelectionEnd) {
-        textarea.selectionEnd = tempSelectionEnd;
-}
-
-}}}'
+						'{"open": function () { dialogTableOpen(areaname,this); },
+						"width": 320, "buttons": { "Cancel": function() { dialogSharedClose(areaname,this); },'.
+						'"Insert": function() { dialogTableInsert(areaname,this); }}}'
 					);
 			break;
 
@@ -1202,37 +973,9 @@ if (textarea.selectionEnd != tempSelectionEnd) {
 						'<input type="text" id="tbFindSearch" class="ui-widget-content ui-corner-all" />',
 						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'{"open": function() {
-	var s = getTASelection($jq(getElementById(areaname))[0]);
-	$jq("#tbFindSearch").val(s);
-						  },'.
-						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
-						  '"Find": function() {
-	var s, opt, ta, str, re, p = 0, m;
-	s = $jq("#tbFindSearch").removeClass("ui-state-error").val();
-	opt = "";
-	if ($jq("#tbFindCase").attr("checked")) {
-		opt += "i";
-	}
-	ta = $jq(getElementById(areaname));
-	str = ta.val();
-	re = new RegExp(s,opt);
-	p = getCaretPos(ta[0]);
-	if (p && p < str.length) {
-		m = re.exec(str.substring(p));
-	} else {
-		p = 0;
-	}
-	if (!m) {
-		m = re.exec(str);
-		p = 0;
-	}
-	if (m) {
-		setSelectionRange(ta[0], m.index + p, m.index + s.length + p);
-	} else {
-		$jq("#tbFindSearch").addClass("ui-state-error");
-	}
-}}}'
+						'{"open": function() { dialogFindOpen(areaname); },'.
+						 '"buttons": { "Close": function() { dialogSharedClose(areaname,this); },'.
+						  '"Find": function() { dialogFindFind(areaname); }}}'
 					);
 
 			break;
@@ -1252,25 +995,9 @@ if (textarea.selectionEnd != tempSelectionEnd) {
 						'<input type="checkbox" id="tbReplaceCase" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'{"open": function() {
-	var s = getTASelection($jq(getElementById(areaname))[0]);
-	$jq("#tbReplaceSearch").val(s);
-						  },'.
-						 '"buttons": { "Close": function() { $jq(this).dialog("close"); },'.
-						'"Replace": function() {
-	var s = $jq("#tbReplaceSearch").val();
-	var r = $jq("#tbReplaceReplace").val();
-	var opt = "";
-	if ($jq("#tbReplaceAll").attr("checked")) {
-		opt += "g";
-	}
-	if ($jq("#tbReplaceCase").attr("checked")) {
-		opt += "i";
-	}
-	var str = $jq(getElementById(areaname)).val();
-	var re = new RegExp(s,opt);
-	$jq(getElementById(areaname)).val(str.replace(re,r));
-}}}'
+						'{"open": function() { dialogReplaceOpen(areaname); },'.
+						 '"buttons": { "Close": function() { dialogSharedClose(areaname,this); },'.
+						'"Replace": function() { dialogReplaceReplace(areaname); }}}'
 					);
 
 			break;
@@ -1324,52 +1051,6 @@ if (textarea.selectionEnd != tempSelectionEnd) {
 
 		if( ! $dialogAdded ) {
 			$dialogAdded = true;
-			$headerlib->add_js( <<<JS
-window.dialogData = [];
-var dialogDiv;
-
-displayDialog = function( closeTo, list, areaname ) {
-	var i, item, el, obj, tit = "";
-	if (!dialogDiv) {
-		dialogDiv = document.createElement('div');
-		document.body.appendChild( dialogDiv );
-	}
-	\$jq(dialogDiv).empty();
-	
-	for( i = 0; i < window.dialogData[list].length; i++ ) {
-		item = window.dialogData[list][i];
-		if (item.indexOf("<") == 0) {	// form element
-			el = \$jq(item);
-			\$jq(dialogDiv).append( el );
-		} else if (item.indexOf("{") == 0) {
-			try {
-				//obj = JSON.parse(item);	// safer, but need json2.js lib
-				obj = eval("("+item+")");
-			} catch (e) {
-				alert(e.name + ' - ' + e.message);
-			}
-		} else {
-			tit = item;
-		}
-	}
-	
-	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
-	saveTASelection(areaname);
-
-	if (!obj) { obj = {}; }
-	if (!obj.width) { obj.width = 210; }
-	obj.bgiframe = true;
-	obj.autoOpen - false;
-	\$jq(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
-
-	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
-	restoreTASelection(areaname);
-	
-	return false;
-}
-
-JS
-, 0 );
 		}
 	}
 
