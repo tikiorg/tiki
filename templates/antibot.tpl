@@ -4,9 +4,18 @@
 	<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 		<td{if !empty($td_style)} class="{$td_style}"{/if}>
 			{tr}Anti-Bot verification code{/tr}:<br />
-			<a id="captchaRegenerate">{tr}(regenerate anti-bot code){/tr}</a>
+			{if $captchalib->type eq 'default'}
+				<a id="captchaRegenerate">{tr}(regenerate anti-bot code){/tr}</a>
+			{/if}
 		</td>
-		<td id="captcha" {if !empty($td_style)} class="{$td_style}"{/if}><img id="captchaImg" src="img/spinner.gif" alt="{tr}Anti-Bot verification code image{/tr}" /></td> {* src replaced with ajax call to antibot.php *}
+		<td id="captcha" {if !empty($td_style)} class="{$td_style}"{/if}>
+			{if $captchalib->type eq 'default'}
+				{$captchalib->generate()}
+				<img id="captchaImg" src="{$captchalib->getPath()}" alt="{tr}Anti-Bot verification code image{/tr}" /> {* src replaced with ajax call to antibot.php *}
+			{else}
+				{$captchalib->render()}
+			{/if}
+		</td>
 	</tr>
 	<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 		<td{if !empty($td_style)} class="{$td_style}"{/if}><label for="antibotcode">{tr}Enter the code you see above{/tr}{if $showmandatory eq 'y'}*{/if}:</label></td>

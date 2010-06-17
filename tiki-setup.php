@@ -118,7 +118,9 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 	$smarty->assign_by_ref('wysiwyg', $_SESSION['wysiwyg']);
 }
 if ($prefs['feature_phplayers'] == 'y') require_once ('lib/setup/phplayers.php');
+
 require_once('lib/captcha/captchalib.php');
+$smarty->assign_by_ref('captchalib', $captchalib);
 
 require_once ('lib/setup/smarty.php');
 $smarty->assign_by_ref('phpErrors', $phpErrors);
