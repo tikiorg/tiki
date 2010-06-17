@@ -758,6 +758,11 @@ class TrackerLib extends TikiLib
 				}
 				$filter = $this->get_tracker_field($ff);
 
+				// Determine if field is an item list field and postpone filtering till later if so
+				if ($filter["type"] == 'l' && isset($filter['options_array'][2]) && isset($filter['options_array'][2]) && isset($filter['options_array'][3]) ) {
+					$linkfilter[] = array('filterfield' => $ff, 'exactvalue' => $ev, 'filtervalue' => $fv);
+					continue;
+				}
 				$j = ( $i > 0 ) ? '0' : '';
 				$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON (ttif$i.`itemId` = ttif$j.`itemId`)";
 
@@ -900,6 +905,23 @@ class TrackerLib extends TikiLib
 					if ($field['fieldId'] == $asort_mode ) {
 						$kx = $field['value'].'.'.$res['itemId'];
 				}
+			}
+			if (isset($linkfilter) && $linkfilter) {
+				$filterout = false;
+				foreach ($res['field_values'] as $i=>$field) {
+					foreach ($linkfilter as $lf) {
+						if ($field['fieldId'] == $lf["filterfield"]) {
+							if ($lf["filtervalue"] && strpos(implode(',',$field['links']), $lf["filtervalue"]) === false
+							|| $lf["exactvalue"] && implode(',',$field['links']) != $lf["exactvalue"] && implode(':',$field['links']) != $lf["exactvalue"] ) {
+								$filterout = true;
+								break 2;
+							}
+						}
+					}	
+				}
+				if ($filterout) {
+					continue;
+				}	
 			}
 			if (empty($kx)) // ex: if the sort field is non visible, $kx is null
 				$ret[] = $res;
