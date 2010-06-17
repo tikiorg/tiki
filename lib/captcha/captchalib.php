@@ -51,11 +51,12 @@ class Captcha {
 			));
 			$this->type = 'recaptcha';
 		} else {
-			$this->captcha = new Zend_Captcha_Image(array(
+			$this->captcha = new Zend_Captcha_Image_Tiki(array(
 				'wordLen' => 6,
 				'timeout' => 600,
 				'font' => __DIR__ . '/arial.ttf',
-				'imgdir' => 'lib/captcha/captchas'
+				'imgdir' => 'temp/public/',
+				'suffix' => '.captcha.png',
 			));
 			$this->type = 'default';
 		}
@@ -106,6 +107,36 @@ class Captcha {
 	function getPath() {
 		return $this->captcha->getImgDir() . $this->captcha->getId() .  $this->captcha->getSuffix();
 	}
+
+}
+
+/**
+ * extending Zend_Captcha_Image to replace function _gc()
+ * while the issue with the garbage collector is not fixed in
+ * the Zend Framework itself (see issue http://framework.zend.com/issues/browse/ZF-10006)
+ */
+class Zend_Captcha_Image_Tiki extends Zend_Captcha_Image {
+	
+	protected function _gc()
+    {
+        $expire = time() - $this->getExpiration();
+        $imgdir = $this->getImgDir();
+        if(!$imgdir || strlen($imgdir) < 2) {
+            // safety guard
+            return;
+        }
+        foreach (new DirectoryIterator($imgdir) as $file) {
+            if (!$file->isDot() && !$file->isDir()) {
+				if ($file->getMTime() < $expire) {
+	                $len = strlen($this->_suffix);
+                    // only deletes files ending with $this->_suffix
+                    if (substr($file->getFilename(), -($len), $len) == $this->_suffix) {
+                        unlink($file->getPathname());
+                    }
+                }
+            }
+        }
+    }
 
 }
 
