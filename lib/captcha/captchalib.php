@@ -109,7 +109,6 @@ class Captcha {
 
 }
 
-if (!isset($captchalib))
-	$captchalib = new Captcha;
+global $captchalib;
+$captchalib = new Captcha;
 
-?>
