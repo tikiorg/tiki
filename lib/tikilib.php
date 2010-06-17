@@ -4605,7 +4605,9 @@ class TikiLib extends TikiDb_Bridge
 			refresh_index('pages', $name);
 		}
 
-		$this->syncParsedText($data, array('type'=> 'wiki page', 'object'=> $name, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$name"));
+		$this->object_post_save( array( 'type'=> 'wiki page', 'object'=> $name, 'description'=> $description, 'name'=>$page, 'href'=>"tiki-index.php?page=$name" ), array(
+			'content' => $data,
+		) );
 
 		return true;
 	}
@@ -5635,47 +5637,7 @@ class TikiLib extends TikiDb_Bridge
 		$func_name = 'wikiplugin_' . $name;
 		
 		if( ! $validationPerformed ) {
-			$info = $this->plugin_info( $name );
-			$default = TikiFilter::get( isset( $info['defaultfilter'] ) ? $info['defaultfilter'] : 'xss');
-
-			// Apply filters on the body
-			$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
-			$data = $this->htmldecode($data);
-			$data = $filter->filter($data);
-
-			// Make sure all arguments are declared
-			$params = $info['params'];
-
-			if( ! isset( $info['extraparams'] ) && is_array($params) ) {
-				$args = array_intersect_key( $args, $params );
-			}
-
-			// Apply filters on values individually
-			if (!empty($args)) {
-				foreach( $args as $argKey => &$argValue ) {
-					if (!isset($params[$argKey])) {
-						continue;// extra params
-					}
-					$paramInfo = $params[$argKey];
-					$filter = isset($paramInfo['filter']) ? TikiFilter::get($paramInfo['filter']) : $default;
-					$argValue = $this->htmldecode($argValue);
-
-					if( isset($paramInfo['separator']) ) {
-						$vals = array();
-
-						foreach( explode( $paramInfo['separator'], $argValue ) as $val ) {
-							$vals[] = $filter->filter($val);
-						}
-
-						$vals = array_map( 'trim', $vals );
-						$vals = array_filter( $vals );
-
-						$argValue = array_values( $vals );
-					} else {
-						$argValue = $filter->filter($argValue);
-					}
-				}
-			}
+			$this->plugin_apply_filters( $name, $data, $args );
 		}
 
 		if ($prefs['wysiwyg_htmltowiki'] === 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] === 'y' ) {
@@ -5702,38 +5664,52 @@ class TikiLib extends TikiDb_Bridge
 			} else {
 				return $plugin_result;
 			}
-		} elseif( $info = $this->plugin_alias_info( $name ) ) {
-			$name = $info['implementation'];
+		} elseif( $this->plugin_find_implementation( $name, $data, $args ) ) {
+			return $this->plugin_execute( $name, $data, $args, $offset, $validationPerformed, $parseOptions );
+		}
+	}
 
-			// Do the body conversion
-			if( isset($info['body']) ) {
-				if( ( isset($info['body']['input']) && $info['body']['input'] == 'ignore' )
-					|| empty( $data ) )
-					$data = isset($info['body']['default']) ? $info['body']['default'] : '';
+	private function plugin_apply_filters( $name, & $data, & $args ) {
+		$info = $this->plugin_info( $name );
+		$default = TikiFilter::get( isset( $info['defaultfilter'] ) ? $info['defaultfilter'] : 'xss');
 
-				if( isset($info['body']['params']) )
-					$data = $this->plugin_replace_args( $data, $info['body']['params'], $args );
-			} else {
-				$data = '';
-			}
+		// Apply filters on the body
+		$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
+		$data = $this->htmldecode($data);
+		$data = $filter->filter($data);
 
-			// Do parameter conversion
-			$params = array();
-			if( isset($info['params']) ) {
-				foreach( $info['params'] as $key => $value ) {
-					if( is_array( $value ) && isset($value['pattern']) && isset($value['params']) ) {
-						$params[$key] = $this->plugin_replace_args( $value['pattern'], $value['params'], $args );
-					} else {
-						// Handle simple values
-						if( isset($args[$key]) )
-							$params[$key] = $args[$key];
-						else
-							$params[$key] = $value;
+		// Make sure all arguments are declared
+		$params = $info['params'];
+
+		if( ! isset( $info['extraparams'] ) && is_array($params) ) {
+			$args = array_intersect_key( $args, $params );
+		}
+
+		// Apply filters on values individually
+		if (!empty($args)) {
+			foreach( $args as $argKey => &$argValue ) {
+				if (!isset($params[$argKey])) {
+					continue;// extra params
+				}
+				$paramInfo = $params[$argKey];
+				$filter = isset($paramInfo['filter']) ? TikiFilter::get($paramInfo['filter']) : $default;
+				$argValue = $this->htmldecode($argValue);
+
+				if( isset($paramInfo['separator']) ) {
+					$vals = array();
+
+					foreach( explode( $paramInfo['separator'], $argValue ) as $val ) {
+						$vals[] = $filter->filter($val);
 					}
+
+					$vals = array_map( 'trim', $vals );
+					$vals = array_filter( $vals );
+
+					$argValue = array_values( $vals );
+				} else {
+					$argValue = $filter->filter($argValue);
 				}
 			}
-
-			return $this->plugin_execute( $name, $data, $params, $offset, $validationPerformed, $parseOptions );
 		}
 	}
 	
@@ -7593,14 +7569,92 @@ class TikiLib extends TikiDb_Bridge
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('pages', $pageName);
 		}
-		$this->syncParsedText($edit_data, array('type'=>'wiki page', 'object'=>$pageName));
+
+		$this->object_post_save( array( 'type' => 'wiki page', 'object' => $pageName ), array(
+			'content' => $edit_data,
+		) );
 	}
-	function syncParsedText($text, $context) {
+
+	function object_post_save( $context, $data ) {
 		global $prefs;
-		if ( $prefs['feature_file_galleries'] == 'y') {
+
+		if ( isset( $data['content'] ) && $prefs['feature_file_galleries'] == 'y') {
 			global $filegallib; require_once 'lib/filegals/filegallib.php';
-			$filegallib->syncFileBacklinks($text, $context);
+			$filegallib->syncFileBacklinks( $data['content'], $context );
 		}
+
+		if( isset( $data['content'] ) ) {
+			$this->apply_plugin_save_handlers( $context, $data );
+		}
+	}
+
+	private function apply_plugin_save_handlers( $context, $data ) {
+		require_once 'WikiParser/PluginMatcher.php';
+		require_once 'WikiParser/PluginArgumentParser.php';
+
+		$argumentParser = new WikiParser_PluginArgumentParser;
+
+		$matcher = new WikiParser_PluginMatcher;
+		$matches = $matcher->match( $data['content'] );
+
+		foreach( $matches as $match ) {
+			$implementation = $match->getName();
+			$body = $match->getBody();
+			$arguments = $argumentParser->parse( $match->getArguments() );
+
+			if( $this->plugin_enabled( $implementation ) ) {
+				$this->plugin_find_implementation( $implementation, $body, $arguments );
+
+				$func_name = 'wikiplugin_' . $implementation . '_save';
+
+				if( function_exists( $func_name ) ) {
+					$func_name( $context, $body, $arguments );
+				}
+			}
+		}
+	}
+
+	private function plugin_find_implementation( & $implementation, & $body, & $args ) {
+		if( $info = $this->plugin_alias_info( $implementation ) ) {
+			$implementation = $info['implementation'];
+
+			// Do the body conversion
+			if( isset($info['body']) ) {
+				if( ( isset($info['body']['input']) && $info['body']['input'] == 'ignore' )
+					|| empty( $data ) )
+					$data = isset($info['body']['default']) ? $info['body']['default'] : '';
+
+				if( isset($info['body']['params']) )
+					$data = $this->plugin_replace_args( $data, $info['body']['params'], $args );
+			} else {
+				$data = '';
+			}
+
+			// Do parameter conversion
+			$params = array();
+			if( isset($info['params']) ) {
+				foreach( $info['params'] as $key => $value ) {
+					if( is_array( $value ) && isset($value['pattern']) && isset($value['params']) ) {
+						$params[$key] = $this->plugin_replace_args( $value['pattern'], $value['params'], $args );
+					} else {
+						// Handle simple values
+						if( isset($args[$key]) )
+							$params[$key] = $args[$key];
+						else
+							$params[$key] = $value;
+					}
+				}
+			}
+
+			$args = $params;
+
+			// Attempt to find recursively
+			$this->plugin_find_implementation( $implementation, $data, $args );
+
+			return true;
+		}
+
+		return false;
 	}
 
 	function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang='') {
