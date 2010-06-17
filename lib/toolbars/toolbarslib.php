@@ -949,7 +949,7 @@ class ToolbarDialog extends Toolbar
 						$prefs['cachepages'] == 'y' ? '<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />' : '',
 						'{"width": 300, "open": function () { dialogExternalLinkOpen( areaname ) },
 						"buttons": { "Cancel": function() { dialogSharedClose(areaname,this); },'.
-						'"Insert": function() { dialogExternalLinkInsert(areaname,this) }}}'
+									'"Insert": function() { dialogExternalLinkInsert(areaname,this) }}}'
 					);
 			break;
 
@@ -960,7 +960,7 @@ class ToolbarDialog extends Toolbar
 			$list = array('Table Builder',
 						'{"open": function () { dialogTableOpen(areaname,this); },
 						"width": 320, "buttons": { "Cancel": function() { dialogSharedClose(areaname,this); },'.
-						'"Insert": function() { dialogTableInsert(areaname,this); }}}'
+												  '"Insert": function() { dialogTableInsert(areaname,this); }}}'
 					);
 			break;
 
@@ -975,7 +975,7 @@ class ToolbarDialog extends Toolbar
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'{"open": function() { dialogFindOpen(areaname); },'.
 						 '"buttons": { "Close": function() { dialogSharedClose(areaname,this); },'.
-						  '"Find": function() { dialogFindFind(areaname); }}}'
+									  '"Find": function() { dialogFindFind(areaname); }}}'
 					);
 
 			break;
@@ -997,7 +997,7 @@ class ToolbarDialog extends Toolbar
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'{"open": function() { dialogReplaceOpen(areaname); },'.
 						 '"buttons": { "Close": function() { dialogSharedClose(areaname,this); },'.
-						'"Replace": function() { dialogReplaceReplace(areaname); }}}'
+									  '"Replace": function() { dialogReplaceReplace(areaname); }}}'
 					);
 
 			break;
