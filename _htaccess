@@ -131,6 +131,7 @@ RewriteRule ^poll([0-9]+)(.*)      tiki-poll_form.php?pollId=$1$2           [QSA
 RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^show:(~?)(.+)$        tiki-slideshow.php?page=$1$2             [QSA,L]
+RewriteRule ^user([0-9]+)(.*)      tiki-user_information.php?userId=$1$2    [QSA,L]
 RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 
 RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [L]
