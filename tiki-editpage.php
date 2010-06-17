@@ -197,7 +197,7 @@ if ($tiki_p_edit !== 'y') {
 }
 // Anti-bot feature: if enabled, anon user must type in a code displayed in an image
 if (isset($_REQUEST['save']) && (!$user || $user === 'anonymous') && $prefs['feature_antibot'] === 'y') {
-	if(!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha'])) {
+	if(!$captchalib->validate()) {
 		$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
 		$smarty->display("error.tpl");
 		die;

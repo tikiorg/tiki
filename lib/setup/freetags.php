@@ -16,7 +16,7 @@ if ( isset($section) and isset($sections[$section])) {
 		if ( ! isset($user) ) $userid = 0;
 		else $userid = $userlib->get_user_id($user);
 
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$smarty->assign('freetag_error', tra('You have mistyped the anti-bot verification code; please try again.'));
 			$smarty->assign_by_ref('freetag_msg', $_POST['addtags']);
 		} elseif ( $object = current_object() ) {

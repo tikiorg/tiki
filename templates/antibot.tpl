@@ -8,7 +8,7 @@
 			{/if}
 		</td>
 		<td id="captcha" {if !empty($td_style)} class="{$td_style}"{/if}>
-			{if $capchalib->type eq 'recaptcha'}
+			{if $captchalib->type eq 'recaptcha'}
 				{$captchalib->render()}
 			{else}
 				{$captchalib->generate()}

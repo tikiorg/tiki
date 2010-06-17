@@ -46,7 +46,7 @@ include_once ("textareasize.php");
 $errors = array();
 if (isset($_REQUEST['send'])) {
 	check_ticket('tell-a-friend');
-	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 		$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 	}
 	if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {

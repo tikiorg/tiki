@@ -42,7 +42,7 @@ class Captcha {
 	 */
 	function Captcha() {
 		global $prefs;
-		$prefs['recaptcha_enabled'] = 'n';
+		
 		if ($prefs['recaptcha_enabled'] == 'y' && !empty($prefs['recaptcha_privkey']) && !empty($prefs['recaptcha_pubkey'])) {
 			$this->captcha = new Zend_Captcha_ReCaptcha(array(
 				'privkey' => $prefs['recaptcha_privkey'],
@@ -94,12 +94,18 @@ class Captcha {
 	/**
 	 * Validate user input for the captcha
 	 *
-	 * @param string $input User input for the captcha
 	 * @return bool true or false 
 	 *
 	 */
-	function validate($input) {
-		return $this->captcha->isValid($input);
+	function validate() {
+		if ($this->type == 'recaptcha') {
+			return $this->captcha->isValid(array(
+				'recaptcha_challenge_field' => $_REQUEST['recaptcha_challenge_field'],
+				'recaptcha_response_field' => $_REQUEST['recaptcha_response_field']
+			));
+		} else {
+			return $this->captcha->isValid($_REQUEST['captcha']);
+		}
 	}
 
 	/**

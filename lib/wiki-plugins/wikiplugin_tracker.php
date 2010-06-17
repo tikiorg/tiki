@@ -556,7 +556,7 @@ function wikiplugin_tracker($data, $params)
 
 				if (empty($user) && $prefs['feature_antibot'] == 'y' && $registration != 'y') {
 					// in_tracker session var checking is for tiki-register.php
-					if (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha'])) {
+					if (!$captchalib->validate()) {
 						$field_errors['err_antibot'] = 'y';
 					}
 				}

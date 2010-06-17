@@ -2490,7 +2490,7 @@ class Comments extends TikiLib
 			die;
 		}
 
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
 		if ($forum_info['controlFlood'] == 'y' && !$this->user_can_post_to_forum($user, $forumId) ) {
@@ -2665,7 +2665,7 @@ class Comments extends TikiLib
 			}
 		}
 
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
 

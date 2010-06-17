@@ -214,7 +214,7 @@ class RegistrationLib extends TikiLib
 			return new RegistrationError('name', tra("User already exists"));
 		
 		if (!$user && $prefs['rnd_num_reg'] == 'y') {
-			if (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))
+			if (!$captchalib->validate())
 				return new RegistrationError('antibotcode', tra("You have mistyped the anti-bot verification code. Please try again."));
 		}
 		

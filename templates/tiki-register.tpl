@@ -92,8 +92,8 @@
 		{if $userTrackerData}
 			{$userTrackerData}
 		{else}
-			<table class="form">
 			<form action="tiki-register.php" method="post" name="RegForm">
+			<table class="form">
 			{include file="register-form.tpl"}
 			{if $prefs.rnd_num_reg eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
 			<tr>
