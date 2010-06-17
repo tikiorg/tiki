@@ -1430,8 +1430,8 @@ class TrackerLib extends TikiLib
 					} elseif ($itemId) {
 						$result = $this->query('select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?',array((int) $itemId,(int) $fieldId));
 						if ($row = $result->fetchRow()) {
+							$old_value = $row['value'];
 							if ($is_visible) {
-								$old_value = $row['value'];
 								if ($is_date) {
 									$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
 									$old_value = $this->date_format($dformat, (int)$old_value);
@@ -1455,6 +1455,7 @@ class TrackerLib extends TikiLib
 
 							$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
 							$this->query($query,array($value,(int) $itemId,(int) $fieldId));
+							$this->update_item_link_value($trackerId, $fieldId, $old_value, $value);
 						} else {
 							if ($is_visible) {
 								if ($is_date) {
@@ -3753,7 +3754,27 @@ class TrackerLib extends TikiLib
 		}
 		return null;
 	}
-
+	function update_item_link_value($trackerId, $fieldId, $old, $new) {
+		if ($old == $new) {
+			return;
+		}
+		static $fields_used_in_item_links;
+		if (!isset($fields_used_in_item_links)) {
+			$query = 'select `fieldId`, `options` from `tiki_tracker_fields` where `type`=?';
+			$fields = $this->fetchAll($query, array('r'));
+			foreach ($fields as $field) {
+				$field['options_array'] = preg_split('/\s*,\s*/', $field['options']);
+				$fields_used_in_item_links[$field['options_array'][1]][] = $field['fieldId'];
+			}
+		}
+		if (empty($fields_used_in_item_links[$fieldId])) {// field not use in a ref of item link
+			return;
+		}
+		$query = 'update `tiki_tracker_item_fields` set `value`=? where `value`=? and `fieldId` in ('.implode(',', array_fill(0, count($fields_used_in_item_links[$fieldId]), '?')).')';
+		$bindvars = array($new, $old);
+		$bindvars = array_merge($bindvars, $fields_used_in_item_links[$fieldId]);
+		$this->query($query, $bindvars);
+	}
 }
 
 global $dbTiki, $tikilib, $prefs;
