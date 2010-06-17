@@ -21,6 +21,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 function smarty_function_obj_in_cat($params, &$smarty) 
 {					
 	global $categlib;
+	include_once ('lib/categories/categlib.php');
 	extract ($params, EXTR_SKIP);
 	if	( !isset($object) ) {
 		return ('<b>missing object parameter for Smarty function testing whether object is in a category</b><br/>');
