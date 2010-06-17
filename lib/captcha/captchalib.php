@@ -10,7 +10,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 require_once('lib/core/lib/Zend/Captcha/Image.php');
 require_once('lib/core/lib/Zend/Captcha/ReCaptcha.php');
-require_once('lib/core/lib/Zend/Loader.php');
+require_once('lib/core/lib/Zend/Captcha/Dumb.php');
 
 /**
  * A simple class to switch between Zend_Captcha_Image and
@@ -50,7 +50,7 @@ class Captcha {
 				'theme' => 'clean'
 			));
 			$this->type = 'recaptcha';
-		} else {
+		} else if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox')) {
 			$this->captcha = new Zend_Captcha_Image_Tiki(array(
 				'wordLen' => 6,
 				'timeout' => 600,
@@ -59,6 +59,9 @@ class Captcha {
 				'suffix' => '.captcha.png',
 			));
 			$this->type = 'default';
+		} else {
+			$this->captcha = new Zend_Captcha_Dumb;
+			$this->type = 'dumb';
 		}
 	}
 
