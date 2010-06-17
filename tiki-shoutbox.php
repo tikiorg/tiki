@@ -42,7 +42,7 @@ if ($tiki_p_admin_shoutbox == 'y' || $user == $owner) {
 if ($tiki_p_post_shoutbox == 'y') {
 	if (isset($_REQUEST["save"]) && !empty($_REQUEST['message'])) {
 		check_ticket('shoutbox');
-		if (($prefs['feature_antibot'] == 'y' && empty($user)) && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha'])) {
+		if (($prefs['feature_antibot'] == 'y' && empty($user)) && (!isset($_REQUEST['captcha']) || !$captchalib->validate($_REQUEST['captcha']))) {
 			$smarty->assign('msg', tra("You have mistyped the anti-bot verification code; please try again."));
 			if (!empty($_REQUEST['message'])) $smarty->assign_by_ref('message', $_REQUEST['message']);
 		} else {
