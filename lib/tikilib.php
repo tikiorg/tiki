@@ -3838,6 +3838,12 @@ class TikiLib extends TikiDb_Bridge
 			$mid .= 'tl.`toPage` IS NULL and ts.`page_id` IS NULL';
 		}
 
+		if ( $prefs['rating_advanced'] == 'y' ) {
+			global $ratinglib; require_once 'lib/rating/ratinglib.php';
+			$join_tables .= $ratinglib->convert_rating_sort($sort_mode, 'wiki page', '`page_id`');
+		}
+
+
 		if (!empty($join_bindvars)) {
 			$bindvars = empty($bindvars)? $join_bindvars : array_merge($join_bindvars, $bindvars);
 		}
