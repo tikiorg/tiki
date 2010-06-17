@@ -71,6 +71,20 @@ DOC;
 		$this->assertEquals( $parser->parse( $equivalent ), $parser->parse( $documented ) );
 	}
 
+	function testWithZero() {
+		$parser = new Math_Formula_Parser;
+		$element = new Math_Formula_Element( 'add', array( 
+			new Math_Formula_Element( 'default', array( 0 ) ),
+			new Math_Formula_Element( 'attribute' ),
+		) );
+
+		$this->assertEquals( $element, $parser->parse( '
+		(add
+			(default 0)
+			(attribute)
+		)' ) );
+	}
+
 	function badStrings() {
 		return array(
 			'noOpening' => array( 'test' ),
