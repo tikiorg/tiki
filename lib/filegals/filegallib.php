@@ -1296,6 +1296,10 @@ class FileGalLib extends TikiLib
 			return $matches[2];
 		}
 	}
+	private function syncParsedText( $data, $context ) {
+		// Compatbility function
+		$this->object_post_save( $context, array( 'content' => $data ) );
+	}
 	function refreshBacklinks() {
 		$query = 'select `data`, `description`, `pageName` from `tiki_pages`';
 		$result = $this->query($query, array());

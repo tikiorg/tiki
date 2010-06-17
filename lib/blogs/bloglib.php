@@ -162,7 +162,7 @@ class BlogLib extends TikiLib
 			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_author`=?,`add_date`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=?,`always_owner`=? where `blogId`=?";
 
 			$result = $this->query($query, array($title, $description, $user, $public, $this->now, $maxPosts, $heading, $use_title, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $blogId));
-			$this->syncParsedText($heading, array('type'=>'blog', 'object'=>$blogId));
+			$this->object_post_save( array('type'=>'blog', 'object'=>$blogId), array('content'=>$heading) );
 		} else {
 			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_author`,`add_date`,`use_find`,`allow_comments`,`show_avatar`,`always_owner`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -173,7 +173,7 @@ class BlogLib extends TikiLib
 			if ($prefs['feature_score'] == 'y') {
 				$this->score_event($user, 'blog_new');
 			}
-			$this->syncParsedText($heading, array('type'=>'blog', 'object'=>$blogId, 'description'=>$description, 'name'=>$title, 'href'=>"tiki-view_blog.php?blogId=$blogId"));
+			$this->object_post_save(array('type'=>'blog', 'object'=>$blogId, 'description'=>$description, 'name'=>$title, 'href'=>"tiki-view_blog.php?blogId=$blogId"), array( 'content' => $heading ));
 		}
 
 		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
@@ -458,7 +458,7 @@ class BlogLib extends TikiLib
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('blog_posts', $id);
 		}
-		$this->syncParsedText($data, array('type'=>'blog post', 'object'=>$id, 'description'=>substr($edit_data, 0, 200), 'name'=>$title, 'href'=>"tiki-view_blog_post.php?postId=$id"));
+		$this->object_post_save(array('type'=>'blog post', 'object'=>$id, 'description'=>substr($data, 0, 200), 'name'=>$title, 'href'=>"tiki-view_blog_post.php?postId=$id"), array('content' => $data));
 		return $id;
 	}
 

@@ -1740,7 +1740,7 @@ class TrackerLib extends TikiLib
 			}
 		}
 		if (!empty($parsed)) {
-			$this->syncParsedText($parsed, array('type'=>'trackeritem', 'object'=>$itemId, 'name' => "Tracker Item $itemId", 'href'=>"tiki-view_tracker_item.php?itemId=$itemId"));
+			$this->object_post_save( array('type'=>'trackeritem', 'object'=>$itemId, 'name' => "Tracker Item $itemId", 'href'=>"tiki-view_tracker_item.php?itemId=$itemId"), array( 'content' => $parsed ));
 		}
 		$logslib->add_action('Modified', $itemId, 'trackeritem', $version);
 
@@ -2435,7 +2435,7 @@ class TrackerLib extends TikiLib
 			refresh_index('trackers', $trackerId);
 		}
 		if ($descriptionIsParsed == 'y') {
-			$this->syncParsedText($description, array('type'=>'tracker', 'object'=>$trackerId, 'href'=>"tiki-view_tracker.php?trackerId=$trackerId", 'description'=>$description));
+			$this->object_post_save(array('type'=>'tracker', 'object'=>$trackerId, 'href'=>"tiki-view_tracker.php?trackerId=$trackerId", 'description'=>$description), array( 'content' => $description ));
 		}
 
 		return $trackerId;

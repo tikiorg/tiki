@@ -361,13 +361,15 @@ class ArtLib extends TikiLib
 				sendEmailNotification($emails, 'watch', 'submission_notification_subject.tpl', $_SERVER['SERVER_NAME'], 'submission_notification.tpl');
 			}
 		}
-		$this->syncParsedText($heading . "\n" .$body, array('type' => 'submission'
-																											, 'object' => $id
-																											, 'description' => substr($heading, 0, 200)
-																											, 'name' => $title
-																											, 'href' => "tiki-edit_submission.php?subId=$id"
-																											)
-																										);
+		$this->object_post_save( array(
+			'type' => 'submission',
+			'object' => $id,
+			'description' => substr($heading, 0, 200), 
+			'name' => $title,
+			'href' => "tiki-edit_submission.php?subId=$id",
+			),
+			array( 'content' => $heading . "\n" .$body )
+		);
 
 		return $id;
 	}
@@ -574,13 +576,15 @@ class ArtLib extends TikiLib
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('articles', $articleId);
 		}
-		$this->syncParsedText($body . "\n" . $heading, array( 'type' => 'article'
-																												, 'object' => $articleId
-																												, 'description' => substr($heading, 0, 200)
-																												, 'name' => $title
-																												, 'href' => "tiki-read_article.php?articleId=$articleId"
-																												)
-																											);
+		$this->object_post_save( array(
+			'type' => 'article',
+			'object' => $articleId,
+			'description' => substr($heading, 0, 200),
+			'name' => $title,
+			'href' => "tiki-read_article.php?articleId=$articleId"
+			),
+			array( 'content' => $body . "\n" . $heading )
+		);
 
 		return $articleId;
 	}
