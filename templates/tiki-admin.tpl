@@ -52,7 +52,7 @@ Add a value in first check when you create a new admin page. *}
 "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs",
 "trackers", "webmail", "rss", "directory", "userfiles", "maps",
 "metatags", "performance", "security", "wikiatt", "score", "community", "messages",
-"calendar", "intertiki", "kaltura", "freetags", "gmap",
+"calendar", "intertiki", "video", "freetags", "gmap",
 "i18n", "wysiwyg", "copyright", "category", "module", "look", "textarea",
  "ads", "profiles", "semantic", "plugins", "webservices",
 'sefurl', 'connect', 'metrics', 'payment', 'rating', 'socialnetworks'))}

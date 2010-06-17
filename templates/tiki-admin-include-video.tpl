@@ -1,6 +1,7 @@
-<form action="tiki-admin.php?page=kaltura" method="post">
+<form action="tiki-admin.php?page=video" method="post">
 
-<br/>
+{tabset name="admin_video"}
+{tab name="{tr}Kaltura{/tr}"}
 {remarksbox type="info" title="{tr}Kaltura Registration{/tr}" }{tr}If you don't have a Kaltura Partner Id, {/tr}<a href="http://corp.kaltura.com/about/signup">{tr}click here{/tr}</a> {tr}to register.{/tr}{/remarksbox}
 
 <fieldset class="admin">
@@ -42,3 +43,9 @@
 
 <div align="center" style="padding:1em;"><input type="submit" name="kaltura" value="{tr}Save{/tr}" /></div>
 </form>
+{/tab}
+{tab name="{tr}Ustream Watershed{/tr}"}
+{remarksbox type="info" title="{tr}Ustream Watershed Registration{/tr}" }{tr}If you don't have a Watershed account, {/tr}<a href="https://watershed.ustream.tv/">{tr}you can find out more about it here{/tr}.</a>{/remarksbox}
+Feature coming soon...
+{/tab}
+{/tabset}

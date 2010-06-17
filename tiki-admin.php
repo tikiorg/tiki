@@ -356,11 +356,11 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = "Rewrite+Rules";
 		include_once ('tiki-admin_include_sefurl.php');
-	} else if ($adminPage == "kaltura") {
-		$admintitle = "Kaltura";//get_strings tra("Kaltura")
+	} else if ($adminPage == "video") {
+		$admintitle = "Video";//get_strings tra("Video")
 		$helpUrl = "Kaltura+Config";
-		$description = "Kaltura settings";//get_strings tra("Kaltura settings")
-		include_once ('tiki-admin_include_kaltura.php');
+		$description = "Settings for video streaming integration";//get_strings tra("Settings for video streaming integration")
+		include_once ('tiki-admin_include_video.php');
 	} else if ($adminPage == "connect") {
 		$admintitle = "Connect";
 		$helpUrl = "Connect";
