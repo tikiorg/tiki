@@ -1,1 +1,0 @@
-{tr}An object was removed from category{/tr} {$categoryName}
