@@ -1,6 +1,5 @@
 {if empty($user)}
 	{$headerlib->add_jsfile('lib/captcha/captchalib.js')}
-	<input type="hidden" name="captcha[id]" id="captchaId" value=""> {* value filled with ajax call to antibot.php *}
 	<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 		<td{if !empty($td_style)} class="{$td_style}"{/if}>
 			{tr}Anti-Bot verification code{/tr}:<br />
@@ -11,7 +10,8 @@
 		<td id="captcha" {if !empty($td_style)} class="{$td_style}"{/if}>
 			{if $captchalib->type eq 'default'}
 				{$captchalib->generate()}
-				<img id="captchaImg" src="{$captchalib->getPath()}" alt="{tr}Anti-Bot verification code image{/tr}" /> {* src replaced with ajax call to antibot.php *}
+				<input type="hidden" name="captcha[id]" id="captchaId" value="{$captchalib->getId()}">
+				<img id="captchaImg" src="{$captchalib->getPath()}" alt="{tr}Anti-Bot verification code image{/tr}" />
 			{else}
 				{$captchalib->render()}
 			{/if}
