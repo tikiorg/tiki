@@ -1,0 +1,93 @@
+/* BiDi specific layout modifications */
+
+/* GENERAL LAYOUT EXPLANATION
+ *
+ * BiDi layout modifications relay on the fact that the Tiki application is 
+ * enclosed as a whole in tiki-main or tiki-clean. Thus it mirrors the entire
+ * output by setting the directionality property of this DIV element.
+ * Other modifications include overriding all left text-alignments and
+ * turning them into right text-alignments.
+ *
+ */
+
+table {
+	width: 100%;
+}
+
+/* This div encloses the whole Tiki application */
+DIV#tiki-main {
+	direction: rtl !important
+}
+
+/* This div encloses the "clean" Tiki screens */
+DIV#tiki-clean {
+	direction: rtl !important
+}
+
+/* When modules display a list of items each item is enclosed in a cell with the following style */
+TD.module {
+	text-align: right !important
+}
+
+/* Cells in forms without background color (inside a div for example) */
+TD.form {
+	text-align: right !important
+}
+
+/* Cells in forms using a background color */
+TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+	text-align: right !important
+}
+
+/* Odd rows in several listings */
+TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
+	td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
+	td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,
+	td.bloglistcreatedodd, td.bloglistlastModifodd, td.bloglistuserodd, td.bloglistpublicodd, td.bloglistpostsodd,
+	td.bloglistvisitsodd, td.bloglistactivityodd, td.bloglistactionsodd, td.listfgalnameodd, td.listfgaldescriptionodd,
+	td.listfgalcreatedodd, td.listfgallastModifodd, td.listfgaluserodd, td.listfgalfilesodd, td.listfgalvisitsodd,
+	td.listfgalactionsodd, td.listfilesnameodd, td.listfilesdescriptionodd, td.listfilesidodd, td.listfilesfilenameodd,
+	td.listfilesfilesizeodd, td.listfilescreatedodd, td.listfilesdlsodd, td.listfilesnameodd, td.listfilesuserodd,
+	td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd,
+	td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
+	td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd,
+	td.topicauthorodd {
+	text-align: right !important
+}
+
+/* Even rows in several listings */
+TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven,
+	td.gallistimageseven, td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven,
+	td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven,
+	td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven,
+	td.bloglistvisitseven, td.bloglistactivityeven, td.bloglistactionseven, td.listfgalnameeven, td.listfgaldescriptioneven,
+	td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven,
+	td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven,
+	td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven,
+	td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven,
+	td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven,
+	td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven,
+	td.topiclastposteven, td.topicauthoreven {
+	text-align: right !important
+}
+
+TD.third {
+	text-align: right !important
+}
+
+/* Browsing an image */
+td.imageinfo {
+	text-align: right !important
+}
+
+/* Inside chat */
+td.tdchatform {
+	text-align: right !important
+}
+.tellafriend {text-align:right;}
+
+.highlight_word_0{color:black;background-color: #ffff66;}
+.highlight_word_1{color:black;background-color: #ff9999;}
+.highlight_word_2{color:black;background-color: #A0FFFF;}
+.highlight_word_3{color:black;background-color: #ff66ff;}
+.highlight_word_4{color:black;background-color: #99ff99;}

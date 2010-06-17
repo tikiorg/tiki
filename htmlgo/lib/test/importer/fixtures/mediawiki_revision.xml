@@ -1,0 +1,22 @@
+<mediawiki>
+  <revision>
+    <id>1399198</id>
+    <timestamp>2006-02-05T06:11:47Z</timestamp>
+    <contributor>
+      <ip>201.6.123.86</ip>
+    </contributor>
+    <comment>fim da tradução</comment>
+    <text xml:space="preserve">Some text</text>
+  </revision>
+  <revision>
+   <id>5661434</id>
+   <timestamp>2007-04-14T02:21:43Z</timestamp>
+   <contributor>
+     <username>Girino</username>
+     <id>58814</id>
+   </contributor>
+   <comment>Revert to revision 5661385</comment>
+   <text xml:space="preserve">Some text</text>
+  </revision>
+</mediawiki>
+ 
