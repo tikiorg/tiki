@@ -846,5 +846,32 @@ $request_year, $dayend, $myurl;
 			'trunc' => $trunc
 		);
 	}
+	function update_participants($calitemId, $adds=null, $dels=null) {
+		if (!empty($dels)) {
+			foreach ($dels as $del) {
+				$this->query('delete from `tiki_calendar_roles` where `calitemId`=? and `username`=?', array($calitemId, $del));
+			}
+		}
+		if (!empty($adds)) {
+			$all = $this->fetchAll('select * from `tiki_calendar_roles` where `calitemId`=?', array($calitemId));
+			foreach ($adds as $add) {
+				if (!isset($add['role'])) {
+					$add['role'] = 0;
+				}
+				$found = false;
+				foreach ($all as $u) {
+					if ($u['username'] == $add['name']) {
+						if ($u['role'] != $add['role'])
+							$this->query('update `tiki_calendar_roles` set `role`=? where `calitemId`=? and `username`=?'. array($add['role'], $calitemId, $add['name']));
+						$found = true;
+						break;
+					}
+				}
+				if (!$found) {
+					$this->query('insert into `tiki_calendar_roles`(`calitemId`, `username`, `role`) values(?, ? ,?)', array($calitemId, $add['name'], $add['role']));
+				}
+			}
+		}
+	}
 }
 $calendarlib = new CalendarLib;

@@ -293,6 +293,22 @@ if (isset($_POST['act'])) {
 	}
 }
 
+if (!empty($_REQUEST['viewcalitemId']) && isset($_REQUEST['del_me']) && $tiki_p_calendar_add_my_particip == 'y') {
+	$calendarlib->update_participants($_REQUEST['viewcalitemId'], null, array($user));
+}
+
+if (!empty($_REQUEST['viewcalitemId']) && isset($_REQUEST['add_me']) && $tiki_p_calendar_add_my_particip == 'y') {
+	$calendarlib->update_participants($_REQUEST['viewcalitemId'], array(array('name'=>$user)), null);
+}
+
+if (!empty($_REQUEST['viewcalitemId']) && !empty($_REQUEST['guests']) && isset($_REQUEST['add_guest']) && $tiki_p_calendar_add_guest_particip == 'y') {
+	$guests = preg_split('/ *, */', $_REQUEST['guests']);
+	foreach ($guests as $i=>$guest) {
+		$guests[$i] = array('name'=>$guest);
+	}
+	$calendarlib->update_participants($_REQUEST['viewcalitemId'], $guests);
+}
+
 if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"]) and $tiki_p_change_events == 'y') {
 	// There is no check for valid antibot code if anonymous allowed to delete events since this comes from a JS button at the tpl and bots are not know to use JS
 	$access->check_authenticity();

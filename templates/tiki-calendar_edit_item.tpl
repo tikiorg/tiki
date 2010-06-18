@@ -559,7 +559,22 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {else}
 {foreach item=ppl from=$calitem.participants}
 {$ppl.name|userlink} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />
+{if $ppl.name eq $user}{assign var='in_particip' value='y'}{/if}
 {/foreach}
+{if $tiki_p_calendar_add_my_particip eq 'y'}
+	{if $in_particip eq 'y'}
+		{button _text="{tr}Withdraw me from the list of participants{/tr}" href="?del_me=y&viewcalitemId=$id"}
+	{else}
+		{button _text="{tr}Add me to the list of participants{/tr}" href="?add_me=y&viewcalitemId=$id"}
+	{/if}
+{/if}
+{if $tiki_p_calendar_add_guest_particip eq 'y'}
+	<form action="tiki-calendar_edit_item.php" method="post">
+	<input type ="hidden" name="viewcalitemId" value="{$id}" />
+	<input type="text" name="guests" />{help desc='{tr}Format{/tr}: {tr}Participant names separated by comma{/tr}' url='calendar'}
+	<input type="submit" name="add_guest" value="Add guests" />
+	</form>
+{/if}
 {/if}
 </td>
 </tr>
