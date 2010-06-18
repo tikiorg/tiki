@@ -53,6 +53,9 @@
       <table class="normal">
         <tr>
           <th>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=user_{if $sort_mode eq 'attId'}asc{else}desc{/if}">{tr}ID{/tr}</a>
+          </th>
+          <th>
             <a href="tiki-admin.php?page=trackers&amp;sort_mode=user_{if $sort_mode eq 'user'}asc{else}desc{/if}">{tr}User{/tr}</a>
           </th>
           <th>
@@ -81,6 +84,7 @@
         
         {section name=x loop=$attachements}
         <tr class={cycle}>
+          <td><a href="tiki-download_item_attachment.php?attId={$attachements[x].attId}" title="{tr}Download{/tr}">{$attachements[x].attId}</a></td>
           <td>{$attachements[x].user}</td>
           <td>{$attachements[x].filename}</td>
           <td>{$attachements[x].filesize|kbsize}</td>
