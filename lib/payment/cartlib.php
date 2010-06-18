@@ -87,8 +87,7 @@ class CartLib
 				$paymentlib->register_behavior( $invoice, $behavior['event'], $behavior['behavior'], $behavior['arguments'] );
 			}
 
-			//$_SESSION['cart'] = array();
-			// don't empty cart when going to choose payment, but when should it be cleared?
+			$_SESSION['cart'] = array();
 
 			return $invoice;
 		}
@@ -104,9 +103,11 @@ class CartLib
 		$behaviors = array();
 
 		foreach( $this->get_content() as $item ) {
-			foreach( $item['behaviors'] as $behavior ) {
-				for( $i = 0; $item['quantity'] > $i; ++$i ) {
-					$behaviors[] = $behavior;
+			if( isset( $item['behaviors'] ) ) {
+				foreach( $item['behaviors'] as $behavior ) {
+					for( $i = 0; $item['quantity'] > $i; ++$i ) {
+						$behaviors[] = $behavior;
+					}
 				}
 			}
 		}
