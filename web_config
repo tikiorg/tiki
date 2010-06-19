@@ -337,7 +337,6 @@
                     <action type="Rewrite" url="tiki-slideshow.php?page={R:1}{R:2}" appendQueryString="true" />
                 </rule>
                 <rule name="UserInformation" stopProcessing="true">
-                 <conditions logicalGrouping="MatchAll" />
                     <match url="^user([0-9]+)(.*)" ignoreCase="false" />
                     <conditions logicalGrouping="MatchAll" />
                     <action type="Rewrite" url="tiki-user_information.php?itemId={R:1}{R:2}" appendQueryString="true" />
