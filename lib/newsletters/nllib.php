@@ -127,7 +127,7 @@ class NlLib extends TikiLib
 		$query = "select `groupName` from `tiki_newsletter_groups` where `nlId`=?";
 		$result = $this->query($query, array((int)$nlId));
 		while ( $res = $result->fetchRow() ) {
-			$groups = array_merge($groups, array($res["groupName"]), $this->get_included_groups($res["groupName"]));
+			$groups = array_merge($groups, array($res["groupName"]), $userlib->get_including_groups($res["groupName"]));
 		}
 
 		// If some groups are subscribed to this newsletter, get the list of users from those groups to be able to add them as subscribers
