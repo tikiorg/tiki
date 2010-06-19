@@ -273,6 +273,12 @@ $jq("#'.$id.'_openall").click( function () {
 				if (!empty($treeType) && !in_array($treeTypeId, $treeSectionsAdded)) {
 					$html .= '<tr id="'.$id.'_'.$treeTypeId.'"><td colspan="'.(count($_columns) + count($_checkbox)).'">';
 					$html .= $treeType.'</td></tr>'.$nl;
+					
+					// Courtesy message to help category perms configurators
+					if ($treeType == 'category') {
+						$html .= '<tr class="subHeader'.$childRowClass.'"><td colspan="'.(count($_columns) + count($_checkbox)).'">';
+						$html .= tra('You might want to also set the tiki_p_modify_object_categories permission under the tiki section') . '</td></tr>'.$nl;
+					}
 					$treeSectionsAdded[] = $treeTypeId;
 					
 					// write a sub-header
