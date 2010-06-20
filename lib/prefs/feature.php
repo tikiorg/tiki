@@ -1755,5 +1755,10 @@ function prefs_feature_list() {
 			'description' => tra('Enables transitions on objects between different categories. Transitions will create a document workflow.'),
 			'type' => 'flag',
 		),
+		'feature_watershed' => array(
+			'name' => tra('Ustream Watershed'),
+			'description' => tra('Integration to Ustream Watershed live video streaming.'),
+			'type' => 'flag',
+		),
 	);
 }

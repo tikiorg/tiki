@@ -91,7 +91,7 @@
 
 	{self_link page="sefurl" _class="admbox" _style="background-image: url('pics/large/goto48x48.png')" _selected="'`$prefs.feature_sefurl`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Search engine friendly url{/tr}" title="{tr}Search engine friendly url{/tr}{if $prefs.feature_sefurl ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Search engine friendly url{/tr}</span>{/self_link}
 
-	{self_link page="video" _class="admbox" _style="background-image: url('pics/large/gnome-camera-video-48.png')" _selected="'`$prefs.feature_kaltura`' != 'y' && '`$prefs.feature_kaltura`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Video{/tr}" title="{tr}Video streaming integration{/tr}{if $prefs.feature_kaltura ne 'y' && $prefs.feature_watershed ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Video{/tr}</span>{/self_link}
+	{self_link page="video" _class="admbox" _style="background-image: url('pics/large/gnome-camera-video-48.png')" _selected="'`$prefs.feature_kaltura`' != 'y' && '`$prefs.feature_watershed`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Video{/tr}" title="{tr}Video streaming integration{/tr}{if $prefs.feature_kaltura ne 'y' && $prefs.feature_watershed ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Video{/tr}</span>{/self_link}
 
 	{self_link page="payment" _class="admbox" _style="background-image: url('pics/large/payment48x48.png')" _selected="'`$prefs.payment_feature`' != 'y'" _selected_class="admbox off"}<img src="pics/trans.png" alt="{tr}Payment{/tr}" title="{tr}Payment{/tr}{if $prefs.payment_feature ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Payment{/tr}</span>{/self_link}
 
