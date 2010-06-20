@@ -64,7 +64,7 @@
 
 <fieldset class="admin">
 <legend>{tr}Archive settings{/tr}</legend>
-{remarksbox type="info" title="{tr}Tracker{/tr}" }{tr}Information on archived clips are stored in a tracker. Tracker item view permissions will determine which archives users will be able to view.{/tr}{/remarksbox}
+{remarksbox type="info" title="{tr}Tracker{/tr}" }{tr}Information on archived clips are stored in a tracker. Tracker item view permissions will determine which archives users will be able to view. Note that recordings set to private in the broadcaster are not added to Tiki. Also, there is a delay for information to be received which could be quite long (30 min).{/tr}{/remarksbox}
 	{preference name=watershed_archive_trackerId}
 	{preference name=watershed_archive_fieldId}
 	{preference name=watershed_archive_brand_fieldId}
@@ -80,6 +80,13 @@
 	{preference name=watershed_archive_filesize_fieldId}
 	{preference name=watershed_archive_title_fieldId}
 	{preference name=watershed_archive_desc_fieldId}
+	{preference name=watershed_archive_tags_fieldId}
+</fieldset>
+
+<fieldset class="admin">
+<legend>{tr}Flash Media Encoder{/tr}</legend>
+{remarksbox type="info" title="{tr}Flash Media Encoder{/tr}" }{tr}This is only needed if you are using Flash Media Encoder for higher-quality broadcasting which support only shared secret authentication.{/tr}{/remarksbox}
+	{preference name=watershed_fme_key}
 </fieldset>
 
 <div align="center" style="padding:1em;"><input type="submit" name="video" value="{tr}Save{/tr}" /></div>

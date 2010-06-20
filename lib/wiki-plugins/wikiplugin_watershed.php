@@ -10,7 +10,7 @@ function wikiplugin_watershed_info() {
 			'type' => array(
 				'required' => false,
 				'name' => tra('Type (viewer, broadcaster, chat)'),
-				'description' => tra('Specify viewer, broadcaster or chat'),
+				'description' => tra('Specify viewer, broadcaster, archive or chat'),
 				'filter' => 'text',
 			),
 			'channelCode' => array(
@@ -29,6 +29,12 @@ function wikiplugin_watershed_info() {
 				'required' => false,
 				'name' => tra('Brand prefix specified in chat embed'),
 				'description' => tra('Copy the prefix from the chat embed, e.g. Name-of-Brand-'),
+				'filter' => 'text',
+			),
+			'videoId' => array(
+				'required' => false,
+				'name' => tra('Video ID of archive'),
+				'description' => tra('Video ID of archive which can be found in the tracker'),
 				'filter' => 'text',
 			),
 			'locale' => array(
@@ -65,12 +71,23 @@ function wikiplugin_watershed( $data, $params ) {
 	}
 	if (!$channels) {
 		return '';	
-	} else if (count($channels) > 1) {
+	} else if (count($channels) > 1 && $params["type"] != 'archive') {
 		return tra("More than one channel found for specified criteria. Please be more specific.");	
 	}
 	
+	if ($params["type"] == 'archive') {
+		if (isset($params["videoId"])) {
+			// check archive whether viewable by status or channel
+			if (!$watershedlib->checkArchiveViewable($params["videoId"], $channels)) {
+				return '';
+			}
+		} else {
+			return tra("No videoId specified for archive.");
+		}
+	}
+	
 	if (!$user) {
-		$sessionId = md5('watershedpublicsession');
+		$sessionId = md5('watershedpublicsession' . $tikilib->now . rand(100000,999999));
 	} else {
 		$sessionId = $watershedlib->getSessionId($user);
 		if (!$sessionId) {
@@ -101,6 +118,9 @@ function wikiplugin_watershed( $data, $params ) {
 		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedbroadcaster.tpl' );		
 	} else if ($params['type'] == 'chat') {
 		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedchat.tpl' );
+	} else if ($params['type'] == 'archive') {
+		$smarty->assign('wsd_videoId', $params["videoId"]);
+		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedarchive.tpl' );
 	} else {
 		return $smarty->fetch( 'wiki-plugins/wikiplugin_watershedviewer.tpl' );
 	}

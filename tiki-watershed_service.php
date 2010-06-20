@@ -17,10 +17,10 @@ $server->setClass( 'Watershed_SoapServer' );
 $input = file_get_contents( 'php://input' );
 
 // Debugging SOAP request
-$myFile = "soaplog.txt";
-$fh = fopen($myFile, 'a');
-fwrite($fh, $input);
-fclose($fh);
+//$myFile = "soaplog.txt";
+//$fh = fopen($myFile, 'a');
+//fwrite($fh, $input);
+//fclose($fh);
 
 if ( $input ) {
 	$server->handle( $input );

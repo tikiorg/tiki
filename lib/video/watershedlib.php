@@ -95,18 +95,100 @@ class watershedLib
 		return $ret;
 	}
 
+	function checkArchiveViewable( $videoId, $channels ) {
+		global $prefs, $tikilib;
+		global $trklib; include_once ('lib/trackers/trackerlib.php');
+		$archive = $trklib->get_item( $prefs["watershed_archive_trackerId"], $prefs['watershed_archive_fieldId'], $videoId);
+		$archiveChannelCode = $archive[$prefs["watershed_archive_channel_fieldId"]];
+		$validchannel = false;
+		foreach ($channels as $c) {
+			if ($c["channelCode"] == $archiveChannelCode) {
+				$validchannel = true;
+			}
+		}
+		if (!$validchannel) {
+			return false;
+		}
+		$tracker_info = $trklib->get_tracker($prefs["watershed_archive_trackerId"]);
+		if ($t = $trklib->get_tracker_options($prefs["watershed_archive_trackerId"])) {
+			$tracker_info = array_merge($tracker_info, $t);
+		}
+		$perms = $tikilib->get_perm_object($prefs["watershed_archive_trackerId"], 'tracker', $tracker_info, false);
+		if ($perms['tiki_p_view_trackers'] == 'y' && $archive["status"] != 'p' && $archive["status"] != 'c'
+			|| $perms['tiki_p_view_trackers_pending'] == 'y' && $archive["status"] == 'p'
+			|| $perms['tiki_p_view_trackers_closed'] == 'y' && $archive["status"] == 'c') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function storeArchive( $recording ) {
+		global $prefs;
+		global $trklib; include_once ('lib/trackers/trackerlib.php');
+		$fields = array();
+		if (empty($prefs['watershed_archive_trackerId'])) {
+			return false;
+		}
+		if ($recording->videoAttributes->isPrivate) {
+			// Handling of private videos is not a feature yet, so simply do not add into Tiki
+			return false;
+		}
+		if (!empty($prefs['watershed_archive_fieldId'])) {
+			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_fieldId'], 'value' => $recording->videoId );	
+		} else {
+			return false;
+		}
+		if (!empty($prefs['watershed_archive_brand_fieldId'])) {
+			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_brand_fieldId'], 'value' => $recording->brandId );
+		} else {
+			return false;
+		}
+		if (!empty($prefs['watershed_archive_channel_fieldId'])) {
+			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_channel_fieldId'], 'value' => $recording->channelCode );
+		} else {
+			return false;
+		}
+		if (!empty($prefs['watershed_archive_rtmpurl_fieldId'])) {
+			$fields[] = array('type' => 'L', 'fieldId' => $prefs['watershed_archive_rtmpurl_fieldId'], 'value' => $recording->videoAttributes->rtmpUrl );
+		} else {
+			return false;
+		}
+		if (!empty($prefs['watershed_archive_flvurl_fieldId'])) {
+			$fields[] = array('type' => 'L', 'fieldId' => $prefs['watershed_archive_flvurl_fieldId'], 'value' => $recording->videoAttributes->flvUrl );
+		} else {
+			return false;
+		}
+		// optional fields
+		if (!empty($prefs['watershed_archive_date_fieldId'])) {
+			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_date_fieldId'], 'value' => $recording->createdAt );
+		} 
+		if (!empty($prefs['watershed_archive_duration_fieldId'])) {
+			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_duration_fieldId'], 'value' => $recording->videoAttributes->duration );
+		}
+		if (!empty($prefs['watershed_archive_desc_fieldId'])) {
+			$fields[] = array('type' => 'a', 'fieldId' => $prefs['watershed_archive_desc_fieldId'], 'value' => $recording->videoAttributes->description );
+		}
+		if (!empty($prefs['watershed_archive_title_fieldId'])) {
+			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_title_fieldId'], 'value' => $recording->videoAttributes->title );
+		}
+		if (!empty($prefs['watershed_archive_filesize_fieldId'])) {
+			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_filesize_fieldId'], 'value' => $recording->videoAttributes->fileSize );
+		}
+		if (!empty($prefs['watershed_archive_tags_fieldId'])) {
+			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_tags_fieldId'], 'value' => implode(",",unserialize($recording->videoAttributes->tags)) );
+		}
+		$ins_fields["data"] = $fields;
+		$rid = $trklib->replace_item($prefs['watershed_archive_trackerId'], '', $ins_fields);
+		$ins_categs = array(); // No categorization for now
+		$mainfield = ''; // categorize link as just itemId for now
+		$trklib->categorized_item($prefs['watershed_archive_trackerId'], $rid, $mainfield, $ins_categs);
+		return true;
+	}
 }
 	
 	
 // SOAP Types {{{
-
-class Watershed_SoapServer_Acknowledge
-{
-	public $processed;
-	function __construct() {
-        $this->processed = true;
-    }
-}
 
 class Watershed_SoapServer_validateBroadcasterSession
 {
@@ -131,8 +213,8 @@ class Watershed_SoapServer_notifySystemMessage
 class Watershed_SoapServer_AcknowledgeResponse
 {
 	public $acknowledged;
-	function __construct() {
-        $this->acknowledged = new Watershed_SoapServer_Acknowledge;
+	function __construct( $processed = true ) {
+        $this->acknowledged = array('processed' => $processed);
     }
 }
 
@@ -144,6 +226,13 @@ class Watershed_SoapServer_loginBroadcaster
 }
 
 class Watershed_SoapServer_loginBroadcasterResponse
+{
+	public $sessionId;
+	public $authMessage;
+	public $channels;
+}
+
+class Watershed_SoapServer_loginBroadcasterByChannelTokenResponse
 {
 	public $sessionId;
 	public $authMessage;
@@ -196,9 +285,6 @@ class Watershed_SoapServer_notifyRecordingCompleted
 	public $videoId;
 	public $createdAt;
 	public $videoAttributes;
-	function __construct() {
-        $videoAttributes = new Watershed_SoapServer_videoAttributes;
-    }
 }
 
 class Watershed_SoapServer_videoAttributes
@@ -223,15 +309,9 @@ class Watershed_SoapServer_checkStreamUserTimeLimit
 class Watershed_SoapServer_checkStreamUserTimeLimitResponse
 {
 	public $timeLimit;
-    function __construct() {
-        $timeLimit = new Watershed_SoapServer_TimeControlModule;
+    function __construct($userTimeLeft = 0, $shouldCheckAgain = false) {
+        $this->$timeLimit = array('userTimeLeft' => $userTimeLeft, 'shouldCheckAgain' => $shouldCheckAgain);
     }
-}
-
-class Watershed_SoapServer_TimeControlModule
-{
-	public $userTimeLeft;
-	public $shouldCheckAgain;
 }
 
 class Watershed_SoapServer_registerRemainderStreamUserTime
@@ -263,7 +343,7 @@ class Watershed_SoapServer // {{{
 			'loginBroadcasterRequest"' => 'Watershed_SoapServer_loginBroadcaster',
 			'loginBroadcasterResponse' => 'Watershed_SoapServer_loginBroadcasterResponse',
 			'loginBroadcasterByChannelTokenRequest' => 'Watershed_SoapServer_loginBroadcasterByChannelToken',
-			'loginBroadcasterByChannelTokenResponse' => 'Watershed_SoapServer_loginBroadcasterResponse',
+			'loginBroadcasterByChannelTokenResponse' => 'Watershed_SoapServer_loginBroadcasterByChannelTokenResponse',
 			'notifyChannelStatusChangedRequest' => 'Watershed_SoapServer_notifyChannelStatusChanged',
 			'notifyChannelStatusChangedResponse' => 'Watershed_SoapServer_AcknowledgeResponse',
 			'validateViewerSessionRequest' => 'Watershed_SoapServer_validateViewerSession',
@@ -389,19 +469,52 @@ class Watershed_SoapServer // {{{
 	}
 
 	function loginBroadcaster( Watershed_SoapServer_loginBroadcaster $broadcaster ) {
-		// Password broadcaster auth not implemented
+		// Service is supposedly used only for trying to login from mobile, so not tested
 		$this->initiateEnv();
 		$ret = new Watershed_SoapServer_loginBroadcasterResponse;
-		$ret->sessionId = 'tikisession';
-		$ret->authMessage = "Sorry, failed Tiki broadcaster auth";
+		global $watershedlib, $prefs, $tikilib;
+		// Note that these prefs do not exist by default, but if they do should give access to all anonymous viewable channels
+		if (isset($prefs["watershed_mobile_user"]) && isset($prefs["watershed_mobile_pw"]) && $broadcaster->userName == $prefs["watershed_mobile_user"] && $broadcaster->password == $prefs["watershed_mobile_pw"]) {
+			$channels = $watershedlib->getAllViewableChannels( '', $broadcaster->brandId);
+			if ($channels) {
+				$ret->sessionId = md5('watershedmobileuser' . $tikilib->now . rand(100000,999999));
+				$ret->authMessage = tra("Successfully logged in mobile broadcaster");
+				$outc = array();
+				foreach ($channels as $c) {
+					$outc[] = array('title' => $c["channelCode"], 'channelCode' => $c["channelCode"]); 
+				}
+				$ret->channels = $outc;  
+			} else {
+				$ret->sessionId = null;
+				$ret->authMessage = tra("No viewable channels available for mobile");
+			}
+		} else {
+			$ret->sessionId = null;
+			$ret->authMessage = tra("Failed to log in mobile broadcaster");
+		} 
+		if ($prefs["watershed_log_errors"] == 'y') {
+			global $logslib;
+			$logslib->add_log('watershed', $ret->authMessage );
+		}
 		return $ret;
 	}
 	
 	function loginBroadcasterByChannelToken( Watershed_SoapServer_loginBroadcasterByChannelToken $token ) {
-		// Flash Media Encoder shared secret auth not implemented
-		$ret = new Watershed_SoapServer_loginBroadcasterResponse;
-		$ret->sessionId = 'tikisession';
-		$ret->authMessage = "Sorry, failed Tiki broadcaster auth";
+		// This is used for Flash Media Encoder shared secret authentication only
+		$this->initiateEnv();
+		global $prefs, $watershedlib, $tikilib;
+		$ret = new Watershed_SoapServer_loginBroadcasterByChannelTokenResponse;
+		if (isset($prefs["watershed_fme_key"]) && $token->channelToken == $prefs["watershed_fme_key"]) {
+			$ret->sessionId = md5('watershedfmeuser' . $tikilib->now . rand(100000,999999));
+			$ret->authMessage = tra("Successfully logged in FME");
+		} else {
+			$ret->sessionId = null;
+			$ret->authMessage = tra("Failed to log in FME");
+		}
+		if ($prefs["watershed_log_errors"] == 'y') {
+			global $logslib;
+			$logslib->add_log('watershed', $ret->authMessage );
+		}
 		return $ret;	
 	}
 	
@@ -455,20 +568,29 @@ class Watershed_SoapServer // {{{
 	}
 	
 	function notifyRecordingCompleted( Watershed_SoapServer_notifyRecordingCompleted $recording) {
-		// TODO
+		$this->initiateEnv();
+		global $prefs, $watershedlib;
+		
+		if ($watershedlib->storeArchive($recording)) {
+			$error = tra('Successfully stored archive in tracker');
+		} else {
+			$error = tra('Failed to stored archive in tracker');
+		}
+		
+		if ($prefs["watershed_log_errors"] == 'y') {
+			global $logslib;
+			$logslib->add_log('watershed', $error );
+		}
 		return new Watershed_SoapServer_AcknowledgeResponse;
 	}
 	
 	function checkStreamUserTimeLimit( Watershed_SoapServer_checkStreamUserTimeLimit $session ) {
-		// Not implemented because not documented 
-		$ret = new Watershed_SoapServer_checkStreamUserTimeLimitResponse;
-		$ret->timeLimit->userTimeLeft = 9000000;
-		$ret->timeLimit->shouldCheckAgain = false;
-		return $ret;
+		// Not implemented because not documented but is here returning positive userTimeLeft in case called
+		return new Watershed_SoapServer_checkStreamUserTimeLimitResponse(9999999);
 	}
 	
 	function registerRemainderStreamUserTime ( Watershed_SoapServer_registerRemainderStreamUserTime $session ) {
-		// Not implemented because not documented
+		// Not implemented because not documented but is here in case called
 		return new Watershed_SoapServer_AcknowledgeResponse;
 	}
 	
