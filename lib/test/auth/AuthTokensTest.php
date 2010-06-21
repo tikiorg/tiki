@@ -161,5 +161,14 @@ class AuthTokensTest extends PHPUnit_Framework_TestCase
 		$this->assertRegExp( '/TOKEN=[a-z0-9]{32}/i', $new );
 		$this->assertContains( 'http://example.com/tiki-index.php', $new );
 	}
+
+	function testWithFragment() {
+		$lib = new AuthTokens( $this->db );
+
+		$url = 'http://example.com/tiki-index.php#Test';
+		$new = $lib->includeToken( $url );
+
+		$this->assertRegExp( '/TOKEN=[a-z0-9]{32}#Test/i', $new );
+	}
 }
 

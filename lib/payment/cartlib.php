@@ -87,7 +87,7 @@ class CartLib
 				$paymentlib->register_behavior( $invoice, $behavior['event'], $behavior['behavior'], $behavior['arguments'] );
 			}
 
-			$_SESSION['cart'] = array();
+			$this->empty_cart();
 
 			return $invoice;
 		}
