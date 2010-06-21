@@ -70,7 +70,7 @@ function wikiplugin_subscribenewsletter($data, $params) {
 			$wpError = tra('Invalid Email');
 			$subscribeEmail = $_REQUEST['wpEmail'];
 		} elseif (($user && $nllib->newsletter_subscribe($nlId, $user, 'y', 'n'))
-			|| (!$user && $nllib->newsletter_subscribe($nlId, $_REQUEST['wpEmail'], 'n', 'n'))) {
+			|| (!$user && $nllib->newsletter_subscribe($nlId, $_REQUEST['wpEmail'], 'n', $info['validateAddr']))) {
 			$wpSubscribe = 'y';
 			$smarty->assign('subscribeThanks', empty($thanks)?$data: $thanks);
 		} else {
