@@ -176,7 +176,7 @@ class watershedLib
 			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_filesize_fieldId'], 'value' => $recording->videoAttributes->fileSize );
 		}
 		if (!empty($prefs['watershed_archive_tags_fieldId'])) {
-			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_tags_fieldId'], 'value' => implode(" ",unserialize($recording->videoAttributes->tags)) );
+			$fields[] = array('type' => 'F', 'fieldId' => $prefs['watershed_archive_tags_fieldId'], 'value' => implode(" ",unserialize($recording->videoAttributes->tags)) );
 		}
 		$ins_fields["data"] = $fields;
 		$rid = $trklib->replace_item($prefs['watershed_archive_trackerId'], '', $ins_fields);
