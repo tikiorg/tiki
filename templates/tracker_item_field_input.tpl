@@ -422,6 +422,25 @@
 	<input type="hidden" name="{$field_value.ins_id}" value="{$field_field.value|escape}" />
 	{include file='tracker_item_field_value.tpl'}
 
+{* -------------------- freetags -------------------- *}
+
+{elseif $field_value.type eq 'F'}
+	{if $field_value.options_array[1] neq 'y'}{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes.{/tr}{/if}
+	<br />
+	<input type="text" id="{$field_value.ins_id|replace:'[':'_'|replace:']':''}" name="{$field_value.ins_id}" {if $field_value.options_array[0]}size="{$field_value.options_array[0]}"{/if} value="{$field_value.value|escape}" />
+	{if $field_value.options_array[2] neq 'y'}
+	<br />
+	{foreach from=$field_value.tag_suggestion item=t}
+		{jq notonready=true}
+		function addTag{{$field_value.ins_id|replace:"[":"_"|replace:"]":""}}(tag) {
+			document.getElementById('{{$field_value.ins_id|replace:"[":"_"|replace:"]":""}').value = document.getElementById('{$field_value.ins_id|replace:"[":"_"|replace:"]":""}}').value + ' ' + tag;
+		}
+		{/jq}
+		{capture name=tagurl}{if (strstr($t, ' '))}"{$t}"{else}{$t}{/if}{/capture}
+		<a href="javascript:addTag{$field_value.ins_id|replace:"[":"_"|replace:"]":""}('{$smarty.capture.tagurl|escape:'javascript'|escape}');" onclick="javascript:needToConfirm=false">{$t|escape}</a>&nbsp;&nbsp; 
+	{/foreach}
+	{/if}
+		
 {* -------------------- in group -------------------- *}
 {elseif $field_value.type eq 'N'}
 	{include file='tracker_item_field_value.tpl'}

@@ -886,6 +886,14 @@ if ($_REQUEST["itemId"]) {
 					}
 				} elseif ($fields['data'][$i]['type'] == 'N' && !empty($itemUser)) {
 					$ins_fields['data'][$i]['value'] = $trklib->in_group_value($fields['data'][$i], $itemUser);
+				} elseif ($fields['data'][$i]['type'] == 'F') {
+					$ins_fields["data"][$i]["value"] = $info["$fid"];
+					global $freetaglib;
+					if (!is_object($freetaglib)) {
+						include_once('lib/freetag/freetaglib.php');
+					}
+					$ins_fields['data'][$i]["freetags"] = $freetaglib->_parse_tag($info["$fid"]);
+					$ins_fields['data'][$i]["tag_suggestion"] = $freetaglib->get_tag_suggestion($ins_fields['data'][$i]["freetags"],$prefs['freetags_browse_amount_tags_suggestion']);
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				}

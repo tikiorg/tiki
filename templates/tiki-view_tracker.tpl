@@ -423,6 +423,10 @@ $jq("#newItemForm").validate({
 {elseif $field_value.type eq 'G'}
 {include file='tracker_item_field_input.tpl'}
 
+{* -------------------- freetags -------------------- *}
+{elseif $field_value.type eq 'F'}
+{include file='tracker_item_field_input.tpl'}
+
 {* -------------------- country selector -------------------- *}
 {elseif $field_value.type eq 'y'}
 {include file='tracker_item_field_input.tpl'}

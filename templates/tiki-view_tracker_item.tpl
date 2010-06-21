@@ -429,6 +429,10 @@ or $cur_field.type eq 'i'}
 {elseif $cur_field.type eq 'y'}
 {include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
+{* -------------------- freetags -------------------- *}
+{elseif $cur_field.type eq 'F'}
+{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
+
 {* -------------------- Multimedia -------------------- *}
 {elseif $cur_field.type eq 'M'}
 {if ($cur_field.options_array[0] > '2')}

@@ -945,6 +945,13 @@ function wikiplugin_tracker($data, $params)
 						}
 					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {
 						$flds['data'][$i]['value'] = $tikilib->now;
+					} elseif ($f['type'] == 'F') {
+						global $freetaglib;
+						if (!is_object($freetaglib)) {
+							include_once('lib/freetag/freetaglib.php');
+						}
+						$flds['data'][$i]["freetags"] = $freetaglib->_parse_tag($f['value']);
+						$flds['data'][$i]["tag_suggestion"] = $freetaglib->get_tag_suggestion($flds['data'][$i]["freetags"],$prefs['freetags_browse_amount_tags_suggestion']);
 					}
 
 					if (!empty($f['value'])) {

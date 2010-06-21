@@ -198,6 +198,13 @@ function wikiplugin_trackeritemfield($data, $params) {
 			$test = false;
 
 		if (($val = $trklib->get_item_value($trackerId, $itemId, $fieldId)) !== false) {
+			if ($field['type'] == 'F') {
+				global $freetaglib;
+				if (!is_object($freetaglib)) {
+					include_once('lib/freetag/freetaglib.php');
+				}
+				$field['freetags'] = $freetaglib->_parse_tag($val);
+			}
 			if ($field['type'] == 'c' && !empty($value)) {
 				if (strtolower($value) == 'on')
 					$value = 'y';

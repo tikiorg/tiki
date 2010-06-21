@@ -1076,6 +1076,12 @@ class TrackerLib extends TikiLib
 				$fopt['y'] = $vals[1];
 				$fopt['z'] = $vals[2];
 				break;
+			case 'F':
+				global $freetaglib;
+				if (!is_object($freetaglib)) {
+					include_once('lib/freetag/freetaglib.php');
+				}
+				$fopt["freetags"] = $freetaglib->_parse_tag($fopt['value']);
 			default:
 				break;
 			}
@@ -1327,6 +1333,17 @@ class TrackerLib extends TikiLib
 				}
 			}
 
+			// Handle freetagging
+			if ($ins_fields["data"][$i]["type"] == 'F') {
+				if ($prefs['feature_freetags'] == 'y') {
+    				global $freetaglib;
+    				if (!is_object($freetaglib)) {
+						include_once('lib/freetag/freetaglib.php');
+    				}
+    				$freetaglib->update_tags($user, $itemId ? $itemId : $new_itemId, 'trackeritem', $ins_fields["data"][$i]["value"]);
+    			}
+			}
+			
 				// ---------------------------
                 if (isset($ins_fields["data"][$i]["fieldId"]))
 				   $fieldId = $ins_fields["data"][$i]["fieldId"];
@@ -3207,6 +3224,19 @@ class TrackerLib extends TikiLib
 				<dd><strong>[listview]</strong> may be one of [n|t|s|u|m] on their own or in any combination (n, t, ns, nts), allowing you to see the attachment in the item list view as its name (n), its type (t), its size (n), the username of the uploader (u), or the mediaplayer plugin(m);
 				note that this option will cost an extra query to the database for each attachment and can severely impact performance with several attachments.
 				<dd>
+				</dl>'));
+		$type['F'] = array(
+			'label'=>tra('freetags'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Allows freetags to be shown or added for tracker item
+				<dt>Usage: <strong>size</strong>
+				<dt>Example: 80,n,n
+				<dt>Description:
+				<dd><strong>[size]</strong> is the visible length of the field in characters;
+				<dd><strong>[hidehelp]</strong> if y, do not show help text when entering tags;
+				<dd><strong>[hidesuggest]</strong> if y, do not show suggested tags when entering tags;  
+				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['N'] = array(
 			'label'=>tra('in group'),
