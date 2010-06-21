@@ -67,7 +67,7 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 } else {
 	// If we are not in a forum (e.g. wiki page comments, ...), we use other fallback values
 	if ( ! isset($comments_per_page) ) $comments_per_page = 10;
-	if ( ! isset($thread_sort_mode) ) $thread_sort_mode = 'commentDate_desc';
+	if ( ! isset($thread_sort_mode) ) $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
 	if ( ! isset($thread_style) ) $thread_style = 'commentStyle_threaded';	
 }
 
@@ -416,10 +416,12 @@ if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]
 $threadId_if_reply = $_REQUEST["comments_reply_threadId"];
 else
 $threadId_if_reply = 0;
-if (empty($thread_sort_mode) && !empty($_REQUEST['thread_sort_mode'])) {
-	$thread_sort_mode = $_REQUEST['thread_sort_mode'];
-} else {
-	$thread_sort_mode = 'commentDate_asc';
+if (empty($thread_sort_mode)) {
+	if( !empty($_REQUEST['thread_sort_mode'])) {
+		$thread_sort_mode = $_REQUEST['thread_sort_mode'];
+	} else {
+		$thread_sort_mode = 'commentDate_asc';
+	}
 }
 
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
