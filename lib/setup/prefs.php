@@ -656,6 +656,7 @@ function get_default_prefs() {
 		'feature_cms_rankings' => 'n',
 		'feature_cms_print' => 'y',
 		'feature_cms_emails' => 'n',
+		'art_sort_mode' => 'publishDate_desc',
 		'art_list_title' => 'y',
 		'art_list_title_len' => '50',
 		'art_list_id' => 'y',

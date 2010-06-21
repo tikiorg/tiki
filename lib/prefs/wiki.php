@@ -20,11 +20,8 @@ function prefs_wiki_list() {
 		}
 	}
 
-	if( $prefs['rating_advanced'] == 'y' ) {
-		$advanced_columns = TikiDb::get()->fetchMap( "SELECT CONCAT('adv_rating_', ratingConfigId), name FROM tiki_rating_configs" );
-	} else {
-		$advanced_columns = array();
-	}
+	global $prefslib;
+	$advanced_columns = $prefslib->getExtraSortColumns();
 
 	$wiki_sort_columns = array_merge( array(
 		'pageName' => tra('Name'),

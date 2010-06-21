@@ -30,7 +30,7 @@ if (isset($_REQUEST["remove"])) {
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today
 if (empty($_REQUEST["sort_mode"])) {
-	$sort_mode = 'publishDate_desc';
+	$sort_mode = $prefs['art_sort_mode'];
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }

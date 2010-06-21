@@ -6,7 +6,25 @@
 // $Id$
 
 function prefs_art_list() {
+	$article_sort_orders = array(
+		'publishDate_desc' => tra('Newest first'),
+	);
+
+	global $prefslib;
+	$advanced_columns = $prefslib->getExtraSortColumns();
+
+	foreach( $advanced_columns as $key => $label ) {
+		$article_sort_orders[ $key . '_asc' ] = $label . ' ' . tr('ascending');
+		$article_sort_orders[ $key . '_desc' ] = $label . ' ' . tr('descending');
+	}
+
 	return array(
+		'art_sort_mode' => array(
+			'name' => tra('Article ordering'),
+			'description' => tra('Default sort mode for the articles on the article listing'),
+			'type' => 'list',
+			'options' => $article_sort_orders,
+		),
 		'art_home_title' => array(
 			'name' => tra('Title of articles home page'),
 			'type' => 'list',

@@ -169,6 +169,15 @@ class PreferencesLib
 		return $out;
 	}
 
+	function getExtraSortColumns() {
+		global $prefs;
+		if( $prefs['rating_advanced'] == 'y' ) {
+			return TikiDb::get()->fetchMap( "SELECT CONCAT('adv_rating_', ratingConfigId), name FROM tiki_rating_configs" );
+		} else {
+			return array();
+		}
+	}
+
 	private function loadData( $name ) {
 		if( false !== $pos = strpos( $name, '_' ) ) {
 			$file = substr( $name, 0, $pos );

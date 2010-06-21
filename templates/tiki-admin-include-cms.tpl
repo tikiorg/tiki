@@ -88,6 +88,8 @@
 			</div>
 			<input type="hidden" name="artlist" />
 
+			{preference name=art_sort_mode}
+
 			{preference name=art_list_title}
 			<div class="adminoptionboxchild" id="art_list_title_childcontainer">
 				{preference name=art_list_title_len}

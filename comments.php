@@ -66,8 +66,20 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 
 } else {
 	// If we are not in a forum (e.g. wiki page comments, ...), we use other fallback values
-	if ( ! isset($comments_per_page) ) $comments_per_page = 10;
-	if ( ! isset($thread_sort_mode) ) $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
+	if ( ! isset($comments_per_page) ) {
+		if( isset( $prefs[$section . '_comments_per_page'] ) ) {
+			$comments_per_page = (int) $prefs[$section . '_comments_per_page'];
+		} else {
+			$comments_per_page = 10;
+		}
+	}
+	if ( ! isset($thread_sort_mode) ) {
+		if( isset( $prefs[$section . '_comments_default_ordering'] ) ) {
+			$thread_sort_mode = $prefs[$section . '_comments_default_ordering'];
+		} else {
+			$thread_sort_mode = 'commentDate_asc';
+		}
+	}
 	if ( ! isset($thread_style) ) $thread_style = 'commentStyle_threaded';	
 }
 
