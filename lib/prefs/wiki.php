@@ -13,12 +13,38 @@ function prefs_wiki_list() {
 	if ($prefs['feature_forums'] == 'y') {
 		$all_forums = TikiDb::get()->fetchMap( 'SELECT `forumId`, `name` FROM `tiki_forums` ORDER BY `name` ASC' );
 
-
 		if ( count( $all_forums ) ) {
 			$wiki_forums = $all_forums;
 		} else {
 			$wiki_forums[''] = tra('None');
 		}
+	}
+
+	if( $prefs['rating_advanced'] == 'y' ) {
+		$advanced_columns = TikiDb::get()->fetchMap( "SELECT CONCAT('adv_rating_', ratingConfigId), name FROM tiki_rating_configs" );
+	} else {
+		$advanced_columns = array();
+	}
+
+	$wiki_sort_columns = array_merge( array(
+		'pageName' => tra('Name'),
+		'lastModif' => tra('LastModif'),
+		'created' => tra('Created'),
+		'creator' => tra('Creator'),
+		'hits' => tra('Hits'),
+		'user' => tra('Last editor'),
+		'page_size' => tra('Size'),
+	), $advanced_columns );
+
+	$comment_sort_orders = array(
+		'commentDate_desc' => tra('Newest first'),
+		'commentDate_asc' => tra('Oldest first'),
+		'points_desc' => tra('Points'),
+	);
+
+	foreach( $advanced_columns as $key => $label ) {
+		$comment_sort_orders[ $key . '_asc' ] = $label . ' ' . tr('ascending');
+		$comment_sort_orders[ $key . '_desc' ] = $label . ' ' . tr('descending');
 	}
 
 	return array(
@@ -225,11 +251,7 @@ function prefs_wiki_list() {
 		'wiki_comments_default_ordering' => array(
 			'name' => tra('Default Ordering'),
 			'type' => 'list',
-			'options' => array(
-				'commentDate_desc' => tra('Newest first'),
-				'commentDate_asc' => tra('Oldest first'),
-				'points_desc' => tra('Points'),
-			),
+			'options' => $comment_sort_orders,
 		),
 		'wiki_uses_slides' => array(
 			'name' => tra('Slideshows'),
@@ -353,15 +375,7 @@ function prefs_wiki_list() {
 		'wiki_list_sortorder' => array(
 			'name' => tra('Default sort order'),
 			'type' => 'list',
-			'options' => array(
-				'pageName' => tra('Name'),
-				'lastModif' => tra('LastModif'),
-				'created' => tra('Created'),
-				'creator' => tra('Creator'),
-				'hits' => tra('Hits'),
-				'user' => tra('Last editor'),
-				'page_size' => tra('Size'),
-			),
+			'options' => $wiki_sort_columns,
 		),
 		'wiki_list_sortdirection' => array(
 			'name' => tra('Sort Direction'),
