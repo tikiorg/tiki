@@ -549,7 +549,7 @@
 	<br />
 {/if}
 
-<div id="page-bar">
+<div id="page-bar" class="clearfix">
 	{button href="javascript:flip('filteroptions');" _flip_id="filteroptions" _text="{tr}Filter Posts{/tr}"}
 	{if $prefs.feature_forum_quickjump eq 'y' and count($all_forums) > 1}
 		<form id='quick' method="post" action="tiki-view_forum.php" style="float:right;">

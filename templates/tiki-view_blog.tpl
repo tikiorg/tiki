@@ -90,7 +90,7 @@
 				{/if}
 				
 				{if $add_date eq 'y'}
-				{tr}at{/tr} {$listpages[ix].created|tiki_short_datetime}
+				 {$listpages[ix].created|tiki_short_datetime}
 				{/if}
 				
 				{if $show_avatar eq 'y'}

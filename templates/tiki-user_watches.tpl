@@ -11,8 +11,8 @@
 {/if}
 
 {tabset name="user_watches"}
-	{tab name="{tr}Report Preferences{/tr}"}
 	{if $prefs.feature_daily_report_watches eq 'y'}
+	{tab name="{tr}Report Preferences{/tr}"}
 		{if $remove_user_watch_error}
 			{remarksbox type="error" title="{tr}Error{/tr}"}{tr}You are not allowed to remove this notification !{/tr}{/remarksbox}
 		{else}
@@ -46,11 +46,9 @@
 			
 			<p><input type="submit" name="submit" value=" {tr}Apply{/tr} "></p>
 		</form>
-	{else}
-		<p>{tr}Reports are disabled, only standard reporting is available{/tr}</p>
-	{/if}
 	{/tab}
-	{tab name="{tr}Sites you are watching{/tr}"}
+	{/if}
+	{tab name="{tr}My watches{/tr}"}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
 
