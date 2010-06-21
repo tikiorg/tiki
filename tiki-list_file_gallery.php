@@ -450,7 +450,8 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 	if (isset($_REQUEST['dupPerms']) && $_REQUEST['dupPerms'] == 'on') {
 		$userlib->copy_object_permissions($galleryId, $newGalleryId, 'file gallery');
 	}
-	$_REQUEST['galleryId'] = $newGalleryId;
+	header('Location: tiki-list_file_gallery.php?galleryId='.$newGalleryId);
+	die;
 }
 // Process removal of a gallery
 if (!empty($_REQUEST['removegal'])) {
