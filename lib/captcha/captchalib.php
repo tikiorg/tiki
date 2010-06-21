@@ -149,25 +149,25 @@ class Captcha {
 class Zend_Captcha_Image_Tiki extends Zend_Captcha_Image {
 	
 	protected function _gc()
-    {
-        $expire = time() - $this->getExpiration();
-        $imgdir = $this->getImgDir();
-        if(!$imgdir || strlen($imgdir) < 2) {
-            // safety guard
-            return;
-        }
-        foreach (new DirectoryIterator($imgdir) as $file) {
-            if (!$file->isDot() && !$file->isDir()) {
+	{
+		$expire = time() - $this->getExpiration();
+		$imgdir = $this->getImgDir();
+		if(!$imgdir || strlen($imgdir) < 2) {
+			// safety guard
+			return;
+		}
+		foreach (new DirectoryIterator($imgdir) as $file) {
+			if (!$file->isDot() && !$file->isDir()) {
 				if ($file->getMTime() < $expire) {
-	                $len = strlen($this->_suffix);
-                    // only deletes files ending with $this->_suffix
-                    if (substr($file->getFilename(), -($len), $len) == $this->_suffix) {
-                        unlink($file->getPathname());
-                    }
-                }
-            }
-        }
-    }
+					$len = strlen($this->_suffix);
+					// only deletes files ending with $this->_suffix
+					if (substr($file->getFilename(), -($len), $len) == $this->_suffix) {
+						unlink($file->getPathname());
+					}
+				}
+			}
+		}
+	}
 
 }
 
