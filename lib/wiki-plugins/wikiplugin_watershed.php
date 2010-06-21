@@ -49,7 +49,7 @@ function wikiplugin_watershed_info() {
 
 function wikiplugin_watershed( $data, $params ) {
 	global $smarty, $prefs, $user, $tikilib;
-	global $watershedlib; require_once 'lib/video/watershedlib.php';
+	global $watershedlib; require_once 'lib/videogals/watershedlib.php';
 	
 	if (!empty($params['locale'])) {
 		$locale = $params['locale'];
