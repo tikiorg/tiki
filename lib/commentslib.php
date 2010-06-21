@@ -1465,7 +1465,7 @@ class Comments extends TikiLib
 	}
 	
 	function get_comment_replies($id, $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold = 0, $find = '', $message_id = "", $forum = 0, $approved = 'y' ) {
-		global $tiki_p_admin_comments;
+		global $tiki_p_admin_comments, $prefs;
 		$retval = array();
 
 		if( $maxRecords <= 0 && $orig_maxRecords != 0)
@@ -1483,6 +1483,12 @@ class Comments extends TikiLib
 		}
 
 		$query = "select `threadId` from `tiki_comments`";
+
+		$initial_sort_mode = $sort_mode;
+		if ( $prefs['rating_advanced'] == 'y' ) {
+			global $ratinglib; require_once 'lib/rating/ratinglib.php';
+			$query .= $ratinglib->convert_rating_sort($sort_mode, 'comment', '`threadId`');
+		}
 
 		if( $forum )
 		{
@@ -1544,12 +1550,12 @@ class Comments extends TikiLib
 			{
 				$res['replies_info'] =
 					$this->get_comment_replies($res['parentId'],
-							$sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find,
+							$initial_sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find,
 							$res['message_id'], $forum);
 			} else {
 				$res['replies_info'] =
 					$this->get_comment_replies($res['threadId'],
-							$sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find);
+							$initial_sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find);
 			}
 
 			if( $offset >= 0 && $orig_offset != 0 )
@@ -1660,7 +1666,7 @@ class Comments extends TikiLib
 	}
 
 	function get_comments($objectId, $parentId, $offset = 0, $maxRecords = 0, $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0, $approved='y') {
-		global $userlib, $tiki_p_admin_comments;
+		global $userlib, $tiki_p_admin_comments, $prefs;
 
 		// $start_time = microtime(true);
 		// Turn maxRecords into maxRecords + offset, so we can increment it without worrying too much.
@@ -1726,6 +1732,15 @@ class Comments extends TikiLib
 			$bind_mid[] = $approved;
 		}
 
+		$initial_sort_mode = $sort_mode;
+		if ( $prefs['rating_advanced'] == 'y' ) {
+			global $ratinglib; require_once 'lib/rating/ratinglib.php';
+			$join = $ratinglib->convert_rating_sort($sort_mode, 'comment', '`tc1`.`threadId`');
+		} else {
+			$join = '';
+		}
+
+
 		if( $object[0] == "forum" && $style != 'commentStyle_plain' )
 		{
 			$query = "select `message_id` from `tiki_comments` where `threadId` = ?";
@@ -1735,17 +1750,18 @@ class Comments extends TikiLib
 				left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
 				and tc1.`parentId` = ?
 				and tc2.`parentId` = ?
+				$join
 				$mid 
 				and (tc1.`in_reply_to` = ?
 						or (tc2.`in_reply_to` = '' or tc2.`in_reply_to` is null or tc2.`message_id` is null or tc2.`parentId` = 0))
-				$time_cond order by tc1.".$this->convertSortMode($sort_mode).", tc1.`threadId`";
+				$time_cond order by ".$this->convertSortMode($sort_mode).", tc1.`threadId`";
 			$bind_mid_cant = $bind_mid;
 			$bind_mid = array_merge(array($parentId, $parentId), $bind_mid, array($parent_message_id));
 
 			$query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
 		} else {
 			$query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
-			$query = "select * from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convertSortMode($sort_mode).",`threadId`";
+			$query = "select * from `tiki_comments` as tc1 $join $mid $time_cond order by ".$this->convertSortMode($sort_mode).",`threadId`";
 			$bind_mid_cant = $bind_mid;
 		}
 
@@ -1802,10 +1818,10 @@ class Comments extends TikiLib
 							$ret[$key]['replies_info']['numReplies'] = 0;
 							$ret[$key]['replies_info']['totalReplies'] = 0;
 						} else {
-							$ret[$key]['replies_info'] = $this->get_comment_replies($res["parentId"], $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find, $res["message_id"], 1);
+							$ret[$key]['replies_info'] = $this->get_comment_replies($res["parentId"], $initial_sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find, $res["message_id"], 1);
 						}
 					} else {
-						$ret[$key]['replies_info'] = $this->get_comment_replies($res["threadId"], $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find );
+						$ret[$key]['replies_info'] = $this->get_comment_replies($res["threadId"], $initial_sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find );
 					}
 
 					/* Trim to maxRecords, including replies! */
