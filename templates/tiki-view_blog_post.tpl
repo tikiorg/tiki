@@ -25,7 +25,7 @@
 			{/if}
 			
 			{if $blog_data.add_date eq 'y'}
-				{tr}at{/tr} {$post_info.created|tiki_short_datetime}
+				 {$post_info.created|tiki_short_datetime}
 			{/if}
 			
 			{if $blog_data.show_avatar eq 'y'}
