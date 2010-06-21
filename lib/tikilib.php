@@ -2182,7 +2182,7 @@ class TikiLib extends TikiDb_Bridge
 	 * @param string $my_user use another user than the current one
 	 * @param bool $keep_subgals_together do not mix files and subgals when sorting (if true, subgals will always be at the top)
 	 * @param bool $parent_is_file use $galleryId param as $fileId (to return only archives of the file)
-	 * @param array filter: creator, categId, lastModif, lastDownload
+	 * @param array filter: creator, categId, lastModif, lastDownload, fileId
 	 * @return array of found files and subgals
 	 */
 	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='') {
@@ -2315,6 +2315,10 @@ class TikiLib extends TikiDb_Bridge
 		if ( !empty($filter['lastDownload']) ) {
 			$f_query .= ' AND (tf.`lastDownload` < ? or tf.`lastDownload` is NULL)';
 			$bindvars[] = $filter['lastDownload'];
+		}
+		if (!empty($filter['fileId'])) {
+			$f_query .= ' AND tf.`fileId` in ('.implode(',',array_fill(0, count($filter['fileId']),'?')).')';
+			$bindvars = array_merge($bindvars, $filter['fileId']);
 		}
 		$galleryId_str = '';
 		if ( is_array($galleryId) ) {
