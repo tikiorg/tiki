@@ -9,8 +9,6 @@
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 require_once('lib/core/lib/Zend/Captcha/Image.php');
-require_once('lib/core/lib/Zend/Captcha/ReCaptcha.php');
-require_once('lib/core/lib/Zend/Captcha/Dumb.php');
 
 /**
  * A simple class to switch between Zend_Captcha_Image and
@@ -40,10 +38,11 @@ class Captcha {
 	 *
 	 * @return null
 	 */
-	function Captcha() {
+	function __construct() {
 		global $prefs;
 		
 		if ($prefs['recaptcha_enabled'] == 'y' && !empty($prefs['recaptcha_privkey']) && !empty($prefs['recaptcha_pubkey'])) {
+			require_once('lib/core/lib/Zend/Captcha/ReCaptcha.php');
 			$this->captcha = new Zend_Captcha_ReCaptcha(array(
 				'privkey' => $prefs['recaptcha_privkey'],
 				'pubkey' => $prefs['recaptcha_pubkey'],
@@ -63,6 +62,7 @@ class Captcha {
 			));
 			$this->type = 'default';
 		} else {
+			require_once('lib/core/lib/Zend/Captcha/Dumb.php');
 			$this->captcha = new Zend_Captcha_Dumb;
 			$this->type = 'dumb';
 		}
