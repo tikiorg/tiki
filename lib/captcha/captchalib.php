@@ -49,7 +49,10 @@ class Captcha {
 				'pubkey' => $prefs['recaptcha_pubkey'],
 				'theme' => 'clean'
 			));
+
 			$this->type = 'recaptcha';
+
+			$this->recaptchaCustomTranslations();
 		} else if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox')) {
 			$this->captcha = new Zend_Captcha_Image_Tiki(array(
 				'wordLen' => 6,
@@ -117,6 +120,25 @@ class Captcha {
 		return $this->captcha->getImgDir() . $this->captcha->getId() .  $this->captcha->getSuffix();
 	}
 
+	/**
+	 * Custom translation for ReCaptcha
+	 */
+	function recaptchaCustomTranslations() {
+		$recaptchaService = $this->captcha->getService();
+		$recaptchaService->setOption('custom_translations',
+			array(
+				'visual_challenge' => tra('Get a visual challenge'),
+				'audio_challenge' => tra('Get an audio challenge'),
+				'refresh_btn' => tra('Get a new challenge'),
+				'instructions_visual' => tra('Type the two words'),
+				'instructions_audio' => tra('Type what you hear'),
+				'help_btn' => tra('Help'),
+				'play_again' => tra('Play sound again'),
+				'cant_hear_this' => tra('Download sound as MP3'),
+				'incorrect_try_again' => tra('Incorrect. Try again.')
+			)
+		);
+	}
 }
 
 /**
