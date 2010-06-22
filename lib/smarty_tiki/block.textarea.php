@@ -178,9 +178,9 @@ $jq( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 			
 			$headerlib->add_js('
 var fckEditorInstances = new Array();
-function CKeditor_OnComplete( editorInstance ) {
-	fckEditorInstances[fckEditorInstances.length] = editorInstance;
-//	editorInstance.resetDirty(); // doesnt work
+function CKeditor_OnComplete() {
+	fckEditorInstances[fckEditorInstances.length] = this;
+	this.resetDirty();
 };');
 			
 		}	// end both wysiwyg setups
@@ -262,8 +262,9 @@ var editTimerWarnings = 0;
 		$js_editconfirm .= "
 function confirmExit() {
 	if (window.needToConfirm && typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
+		var version2 = (typeof CKeditor_OnComplete == 'undefined');
 		for(var ed = 0; ed < fckEditorInstances.length; ed++) {
-			if (fckEditorInstances[ed].IsDirty()) {
+			if ((version2 && fckEditorInstances[ed].IsDirty()) || (!version2 && fckEditorInstances[ed].checkDirty())) {
 				window.editorDirty = true;
 				break;
 			}
