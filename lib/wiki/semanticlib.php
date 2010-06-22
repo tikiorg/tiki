@@ -310,18 +310,34 @@ class SemanticLib
 
 	function getAliasContaining( $query, $exact_match = false, $in_lang = NULL ) // {{{
 	{
-		global $tikilib;
+		global $tikilib, $prefs;
 		$orig_query = $query;
 		if (!$exact_match) {
 			$query = "%$query%";
 		}
-		$result = $tikilib->query( "SELECT `fromPage`, `toPage`, `reltype` FROM `tiki_links` WHERE `toPage` LIKE ? AND `reltype` IS NOT NULL", array($query) );
+		
+		$mid = "(`toPage` LIKE ?";
+		$bindvars = array($query);
+		
+		$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
+		$haveprefixes = false;
+		foreach ($prefixes as $p) {
+			if (strlen($p) > 0 && strtolower(substr($query, 0, strlen($p))) == strtolower($p)) {
+				$mid .= " OR `toPage` LIKE ?";
+				$bindvars[] = "$p%";
+				$haveprefixes = true;
+			}
+		}
+		 
+		$mid .= ")";
+		$querystring = "SELECT `fromPage`, `toPage`, `reltype` FROM `tiki_links` WHERE $mid AND `reltype` IS NOT NULL";
+		$result = $tikilib->query( $querystring, $bindvars );
 
 		$aliases = array();
 		while( $row = $result->fetchRow() ) {
 			$types = explode( ',', $row['reltype'] );
 
-			if( in_array( 'alias', $types ) ) {
+			if( in_array( 'alias', $types ) || $haveprefixes && in_array( 'prefixalias', $types ) ) {
 				unset( $row['reltype'] );
 				$aliases[] = $row;
 			}

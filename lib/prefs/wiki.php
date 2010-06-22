@@ -539,5 +539,15 @@ function prefs_wiki_list() {
 			'separator' => ',',
 			'filter' => 'int',
 		),
+		'wiki_prefixalias_tokens' => array(
+			'name' => tra('Redirect pages using these prefix alias semantic links'),
+			'description' => tra('Comma separated list of prefixes of which pages will be redirected to page with semantic link'),
+			'type' => 'text',
+			'help' => 'Semantic+Alias',
+			'size' => '30',
+			'dependencies' => array(
+				'feature_wiki_1like_redirection',
+			),
+		),		
 	);
 }

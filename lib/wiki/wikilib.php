@@ -619,9 +619,20 @@ class WikiLib extends TikiLib
 		if( $prefs['feature_wiki_pagealias'] == 'y' ) {
 			require_once 'lib/wiki/semanticlib.php';
 
+			$toPage = $page;
+			$tokens = explode( ',', $prefs['wiki_pagealias_tokens'] ); 
+					
+			$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
+			foreach ($prefixes as $p) {
+				if (strlen($p) > 0 && strtolower(substr($page, 0, strlen($p))) == strtolower($p)) {
+					$toPage = $p;
+					$tokens = 'prefixalias';
+				}
+			}
+					
 			$links = $semanticlib->getLinksUsing(
-				explode( ',', $prefs['wiki_pagealias_tokens'] ),
-				array( 'toPage' => $page ) );
+				$tokens,
+				array( 'toPage' => $toPage ) );
 
 			if( count($links) > 0 ) {
 				$likepages = array();

@@ -4441,11 +4441,22 @@ class TikiLib extends TikiDb_Bridge
 				if ( $prefs['feature_wiki_pagealias'] == 'y' ) {
 					require_once 'lib/wiki/semanticlib.php';
 
+					$toPage = $pageName;
+					$tokens = explode( ',', $prefs['wiki_pagealias_tokens'] ); 
+					
+					$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
+					foreach ($prefixes as $p) {
+						if (strlen($p) > 0 && strtolower(substr($pageName, 0, strlen($p))) == strtolower($p)) {
+							$toPage = $p;
+							$tokens = 'prefixalias';
+						}
+					}
+					 
 					$links = $semanticlib->getLinksUsing(
-						explode( ',', $prefs['wiki_pagealias_tokens'] ),
-						array( 'toPage' => $pageName ) );
+						$tokens,
+						array( 'toPage' => $toPage ) );
 
-					if ( count($links) > 0 ) {
+					if ( count($links) > 1 ) {
 					    // There are multiple aliases for this page. Need to disambiguate.
 					    //
 						// When feature_likePages is set, trying to display the alias itself will
@@ -4456,14 +4467,24 @@ class TikiLib extends TikiDb_Bridge
 						// If feature_likePages is not set, then the user will only see that the page does not
 						// exist. So it's better to just pick the first one.
 						//													
-						if ($prefs['feature_likePages'] = 'y') {
-							$desc = true;
+						if ($prefs['feature_likePages'] == 'y' || $tokens == 'prefixalias') {
+							// Even if there is more then one match, if prefix is being redirected then better
+							// to fail than to show possibly wrong page
+							return true;
 						} else {
-							// If feature_likePages is NOT set, then trying to display the 
+							// If feature_likePages is NOT set, then trying to display the first one is fine
+							// $pageName is by ref so it does get replaced 
 							$pageName = $links[0]['fromPage'];
-							$desc = $this->page_exists_desc( $pageName );
+							return $this->page_exists_desc( $pageName );
 						}
-						return $desc;
+					} elseif (count($links)) {
+						// there is exactly one match
+						if ($prefs['feature_wiki_1like_redirection'] == 'y') {
+							return true;
+						} else {
+							$pageName = $links[0]['fromPage'];
+							return $this->page_exists_desc( $pageName );
+						} 
 					}
 				}
 			}

@@ -146,6 +146,7 @@ function get_default_prefs() {
 		'wiki_list_sortorder' => 'pageName',
 		'wiki_list_sortdirection' => 'asc',
 		'wiki_pagealias_tokens' => 'alias',
+		'wiki_prefixalias_tokens' => '',
 		'wiki_page_regex' => 'complete',
 		'wiki_page_separator' => '...page...',
 		'wiki_page_navigation_bar' => 'bottom',

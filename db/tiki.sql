@@ -3335,6 +3335,7 @@ CREATE TABLE `tiki_semantic_tokens` (
 ) ENGINE=MyISAM ;
 
 INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias');
+INSERT INTO tiki_semantic_tokens (token, label) VALUES('prefixalias', 'Page Prefix Alias');
 
 
 DROP TABLE IF EXISTS `tiki_webservice`;

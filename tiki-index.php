@@ -185,7 +185,26 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 	$likepages = $wikilib->get_like_pages($page);
 	/* if we have exactly one match, redirect to it */
 	if($prefs['feature_wiki_1like_redirection'] == 'y' && count($likepages) == 1  && !$isUserPage) {
-		$access->redirect( 'tiki-index.php?page='.urlencode($likepages[0]) );
+		if ($prefs['feature_sefurl'] == 'y') {
+			$url = $wikilib->sefurl($likepages[0]);
+		} else {
+			$url = 'tiki-index.php?page='.urlencode($likepages[0]);
+		}
+		// Process prefix alias with itemId append for pretty tracker pages
+		$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
+		foreach ($prefixes as $p) {
+			if (strlen($p) > 0 && strtolower(substr($page, 0, strlen($p))) == strtolower($p)) {
+				$suffix = substr($page, strlen($p));
+				if (ctype_digit($suffix)) {
+					if ($prefs['feature_sefurl'] == 'y') {
+						$url = $url . "?itemId=" . $suffix;
+					} else {
+						$url = $url . "&itemId=" . $suffix;
+					}
+				}
+			}
+		}
+		$access->redirect( $url );
 	}
 	$smarty->assign_by_ref('likepages', $likepages);
 	$smarty->assign('create', $isUserPage? 'n': 'y');
