@@ -22,6 +22,7 @@ $smarty->assign('mid', 'tiki-contact.tpl');
 
 $email = $userlib->get_user_email($prefs['contact_user']);
 if ($email == '') $email = $userlib->get_admin_email();
+$smarty->assign('email0', $email);
 $email = scrambleEmail($email, $tikilib->get_user_preference('admin', "email is public"));
 $smarty->assign('email', $email);
 
