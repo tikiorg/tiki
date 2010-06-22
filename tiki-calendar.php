@@ -291,7 +291,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				foreach ( $organizers as $org ) {
 					if ( $org == '' ) continue;
 					if ( $cellorganizers != '' ) $cellorganizers .= ', ';
-					$cellorganizers .= smarty_modifier_userlink(trim($org));
+					$cellorganizers .= smarty_modifier_userlink(trim($org), 'link', 'not_set', '', 0, 'n');
 				}
 				$smarty->assign('cellorganizers', $cellorganizers);
 
@@ -299,7 +299,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				foreach ( $le['result']['participants'] as $parti ) {
 					if ( empty($parti) || $parti['name'] == '' ) continue;
 					if ( $cellparticipants != '' ) $cellparticipants .= ', ';
-					$cellparticipants .= smarty_modifier_userlink(trim($parti['name']));
+					$cellparticipants .= smarty_modifier_userlink(trim($parti['name']), 'link', 'not_set', '', 0, 'n');
 				}
 				$smarty->assign('cellparticipants', $cellparticipants);
 

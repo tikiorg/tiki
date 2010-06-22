@@ -30,10 +30,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * Example: {$userinfo.login|userlink:'link':::25}
  */
 
-function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set', $fullname='', $max_length=0) {
+function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set', $fullname='', $max_length=0, $popup='y') {
 	global $tikilib, $userlib, $cachelib, $user, $prefs, $userprefslib;
 
-	$show_mouseover = $prefs['feature_community_mouseover'] == 'y' && $userlib->get_user_preference($user, 'show_mouseover_user_info','y') == 'y';
+	$show_mouseover = $popup != 'n' && $prefs['feature_community_mouseover'] == 'y' && $userlib->get_user_preference($user, 'show_mouseover_user_info','y') == 'y';
 	$show_friends = $prefs['feature_friends'] == 'y' && $tikilib->verify_friendship($user, $other_user);
 
 	if( $show_mouseover || $show_friends ) {
