@@ -4446,6 +4446,7 @@ class TikiLib extends TikiDb_Bridge
 					
 					$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
 					foreach ($prefixes as $p) {
+						$p = trim($p);
 						if (strlen($p) > 0 && strtolower(substr($pageName, 0, strlen($p))) == strtolower($p)) {
 							$toPage = $p;
 							$tokens = 'prefixalias';

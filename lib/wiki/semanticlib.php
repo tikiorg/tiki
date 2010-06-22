@@ -322,6 +322,7 @@ class SemanticLib
 		$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
 		$haveprefixes = false;
 		foreach ($prefixes as $p) {
+			$p = trim($p);
 			if (strlen($p) > 0 && strtolower(substr($query, 0, strlen($p))) == strtolower($p)) {
 				$mid .= " OR `toPage` LIKE ?";
 				$bindvars[] = "$p%";

@@ -624,6 +624,7 @@ class WikiLib extends TikiLib
 					
 			$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
 			foreach ($prefixes as $p) {
+				$p = trim($p);
 				if (strlen($p) > 0 && strtolower(substr($page, 0, strlen($p))) == strtolower($p)) {
 					$toPage = $p;
 					$tokens = 'prefixalias';

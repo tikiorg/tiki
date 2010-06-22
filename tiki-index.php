@@ -193,6 +193,7 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 		// Process prefix alias with itemId append for pretty tracker pages
 		$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
 		foreach ($prefixes as $p) {
+			$p = trim($p);
 			if (strlen($p) > 0 && strtolower(substr($page, 0, strlen($p))) == strtolower($p)) {
 				$suffix = trim(substr($page, strlen($p)));
 				if (!ctype_digit($suffix) && $suffix) {
