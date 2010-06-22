@@ -11,6 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+if (!define('ROLE_ORGANIZER')) define('ROLE_ORGANIZER', '6');
 if (!defined('weekInSeconds')) define('weekInSeconds', 604800);
 
 class CalendarLib extends TikiLib
@@ -353,7 +354,7 @@ class CalendarLib extends TikiLib
 		$org = array();
 
 		while ($rez = $rezult->fetchRow()) {
-			if ($rez["role"] == '6') {
+			if ($rez["role"] == ROLE_ORGANIZER) {
 				$org[] = $rez["username"];
 			} elseif ($rez["username"]) {
 				$ppl[] = array('name'=>$rez["username"],'role'=>$rez["role"]);
@@ -417,7 +418,7 @@ class CalendarLib extends TikiLib
 				$orgs = explode(',', $data["organizers"]);
 				foreach ($orgs as $o) {
 					if (trim($o)) {
-						$roles['6'][] = trim($o);
+						$roles[ROLE_ORGANIZER][] = trim($o);
 					}
 				}
 			}
@@ -849,20 +850,20 @@ $request_year, $dayend, $myurl;
 	function update_participants($calitemId, $adds=null, $dels=null) {
 		if (!empty($dels)) {
 			foreach ($dels as $del) {
-				$this->query('delete from `tiki_calendar_roles` where `calitemId`=? and `username`=?', array($calitemId, $del));
+				$this->query('delete from `tiki_calendar_roles` where `calitemId`=? and `username`=? and `role`!=?', array($calitemId, $del, ROLE_ORGANIZER));
 			}
 		}
 		if (!empty($adds)) {
 			$all = $this->fetchAll('select * from `tiki_calendar_roles` where `calitemId`=?', array($calitemId));
 			foreach ($adds as $add) {
-				if (!isset($add['role'])) {
+				if (!isset($add['role']) || $add['role'] == ROLE_ORGANIZER) {
 					$add['role'] = 0;
 				}
 				$found = false;
 				foreach ($all as $u) {
-					if ($u['username'] == $add['name']) {
+					if ($u['username'] == $add['name'] && $u['role'] != ROLE_ORGANIZER) {
 						if ($u['role'] != $add['role'])
-							$this->query('update `tiki_calendar_roles` set `role`=? where `calitemId`=? and `username`=?'. array($add['role'], $calitemId, $add['name']));
+							$this->query('update `tiki_calendar_roles` set `role`=? where `calitemId`=? and `username`=?', array($add['role'], $calitemId, $add['name']));
 						$found = true;
 						break;
 					}
