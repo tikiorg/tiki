@@ -194,7 +194,30 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 		$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
 		foreach ($prefixes as $p) {
 			if (strlen($p) > 0 && strtolower(substr($page, 0, strlen($p))) == strtolower($p)) {
-				$suffix = substr($page, strlen($p));
+				$suffix = trim(substr($page, strlen($p)));
+				if (!ctype_digit($suffix) && $suffix) {
+					global $semanticlib;
+					if (!is_object($semanticlib)) {
+						require_once 'lib/wiki/semanticlib.php';		
+					}
+					$items = $semanticlib->getItemsFromTracker($likepages[0], $suffix);
+					if (count($items) > 1) {
+						$msg = tra("There are more than one item in the tracker with this title");
+						foreach ($items as $i) {
+							$msg .= '<br /><a href="tiki-index.php?page=' . urlencode($likepages[0]) . '&itemId=' . $i . '">' . $i . '</a>';
+						}
+						$smarty->assign('msg', $msg);
+						$smarty->display('error.tpl');
+						die;
+					} else if (count($items)) {
+						$suffix = $items[0];
+					} else {
+						$msg = tra("There are no items in the tracker with this title");
+						$smarty->assign('msg', $msg);
+						$smarty->display('error.tpl');
+						die;
+					}
+				}
 				if (ctype_digit($suffix)) {
 					if ($prefs['feature_sefurl'] == 'y') {
 						$url = $url . "?itemId=" . $suffix;

@@ -363,6 +363,20 @@ class SemanticLib
 //		echo "<pre>-- onlyKeepAliasesFromPageInLanguage: exiting</pre>\n";
 		return $aliasesInCorrectLanguage;
 	}
+	
+	function getItemsFromTracker($page, $suffix) {
+		$t_links = $this->getLinksUsing('trackerid', array( 'fromPage' => $page ) );
+		$f_links = $this->getLinksUsing('titlefieldid', array( 'fromPage' => $page ) );
+		$ret = array();
+		if (count($t_links) && count($f_links) && ctype_digit($t_links[0]['toPage']) && ctype_digit($f_links[0]['toPage'])) {
+			global $trklib; include_once ('lib/trackers/trackerlib.php');
+			$items = $trklib->list_items($t_links[0]['toPage'], 0, -1, '', '', $f_links[0]['toPage'], '', '', '', $suffix);
+			foreach ($items["data"] as $i) {
+				$ret[] = $i["itemId"];
+			}
+		}
+		return $ret;
+	}
 }
 
 global $semanticlib;
