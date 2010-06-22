@@ -139,6 +139,11 @@ class watershedLib
 		} else {
 			return false;
 		}
+		// Check if already sent before
+		$items = $trklib->list_items($prefs["watershed_archive_trackerId"], 0, -1, '', '', $prefs['watershed_archive_fieldId'], '', '', '', $recording->videoId);
+		if (!$items["cant"]) {
+			return false;
+		}
 		if (!empty($prefs['watershed_archive_brand_fieldId'])) {
 			$fields[] = array('type' => 't', 'fieldId' => $prefs['watershed_archive_brand_fieldId'], 'value' => $recording->brandId );
 		} else {
