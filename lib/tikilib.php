@@ -7337,6 +7337,16 @@ class TikiLib extends TikiDb_Bridge
 	function get_pages($data,$withReltype = false) {
 		global $page_regex, $prefs;
 
+		require_once 'WikiParser/PluginMatcher.php';
+		$matches = WikiParser_PluginMatcher::match( $data );
+		foreach( $matches as $match ) {
+			if( $match->getName() == 'code' ) {
+				$match->replaceWith( '' );
+			}
+		}
+
+		$data = $matches->getText();
+
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $normal);
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\|(.+?)\)\)/", $data, $withDesc);
 
@@ -7626,8 +7636,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$argumentParser = new WikiParser_PluginArgumentParser;
 
-		$matcher = new WikiParser_PluginMatcher;
-		$matches = $matcher->match( $data['content'] );
+		$matches = WikiParser_PluginMatcher::match( $data['content'] );
 
 		foreach( $matches as $match ) {
 			$implementation = $match->getName();
