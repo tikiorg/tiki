@@ -7389,19 +7389,18 @@ class TikiLib extends TikiDb_Bridge
 	function clear_links($page) {
 		$query = "delete from `tiki_links` where `fromPage`=?";
 		$result = $this->query($query, array($page));
+
+		$query = "delete from `tiki_object_relations` where `source_type` = 'wiki page' AND `source_itemId`=? AND `target_type` = 'wiki page' AND `relation` LIKE 'tiki.link.%'";
+		$result = $this->query($query, array($page));
 	}
 
 	function replace_link($pageFrom, $pageTo, $types = array()) {
-		$query = "delete from `tiki_links` where `fromPage`=? and `toPage`=?";
+		$query = "insert ignore into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
 		$result = $this->query($query, array($pageFrom,$pageTo));
 
-		if( count($types) == 0 ) {
-			$query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
-			$result = $this->query($query, array($pageFrom,$pageTo));
-		} else {
-			sort($types);
-			$query = "insert into `tiki_links`(`fromPage`,`toPage`, `reltype`) values(?, ?, ?)";
-			$result = $this->query($query, array( $pageFrom, $pageTo, implode(',', $types) ));
+		global $relationlib; require_once 'lib/attributes/relationlib.php';
+		foreach( $types as $type ) {
+			$relationlib->add_relation( "tiki.link.$type", 'wiki page', $pageFrom, 'wiki page', $pageTo );
 		}
 	}
 

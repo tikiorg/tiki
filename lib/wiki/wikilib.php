@@ -161,18 +161,12 @@ class WikiLib extends TikiLib
 		$this->query($query, array( $newName, $tmpName ) );
 
 		// get pages linking to the old page
-		$query = "select `fromPage`, `reltype` from `tiki_links` where `toPage`=?";
+		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
 		$result = $this->query($query, array( $oldName ) );
 
 		$linksToOld=array();
 		while ($res = $result->fetchRow()) {			
 			$page = $res['fromPage'];
-			$types = $res['reltype'];
-
-			$semantics = array();
-			if( ! empty($types) ) {
-				$semantics = explode(',', $types );
-			}
 
 			$is_wiki_page = true;
 			if (substr($page,0,11) == 'objectlink:') {
@@ -194,7 +188,8 @@ class WikiLib extends TikiLib
 				$data = $comment_info['data'];
 			}
 			$quotedOldName = preg_quote( $oldName, '/' );
-			foreach( $semantics as $sem ) {
+			global $semanticlib; require_once 'lib/wiki/semanticlib.php';
+			foreach( $semanticlib->getAllTokens() as $sem ) {
 				$data = str_replace( "($sem($oldName", "($sem($newName", $data );
 			}
 
