@@ -2,7 +2,7 @@
 {section name=ix loop=$listpages}
 	<div class="articletitle">
 		<span class="newsitem">
-			<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}">{$listpages[ix].title}</a>
+			<a href="{$listpages[ix].articleId|sefurl:article}">{$listpages[ix].title|escape}</a>
 		</span>
 		<br />
 	</div>
