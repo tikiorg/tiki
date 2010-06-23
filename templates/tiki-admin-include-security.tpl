@@ -28,10 +28,12 @@
 		<fieldset>
 			<legend>{tr}Spam protection{/tr}</legend>
 			{preference name=feature_antibot}
-			{preference name=recaptcha_enabled}
-			<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
-				{preference name=recaptcha_privkey}
-				{preference name=recaptcha_pubkey}
+			<div class="adminoptionboxchild" id="feature_antibot_childcontainer">
+				{preference name=recaptcha_enabled}
+				<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
+					{preference name=recaptcha_privkey}
+					{preference name=recaptcha_pubkey}
+				</div>
 			</div>
 			{preference name=feature_wiki_protect_email}
 			{preference name=feature_wiki_ext_rel_nofollow}
