@@ -622,6 +622,17 @@ if ($prefs['feature_wiki_footnotes'] === 'y') {
 		}
 	}
 }
+if ( isset($_REQUEST["customTip"]) && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
+	$smarty->assign('customTip', $_REQUEST['customTip']);
+	if ( isset($_REQUEST["customTipTitle"]) ) {
+		$smarty->assign('customTipTitle', tra($_REQUEST["customTipTitle"]));
+	} else {
+		$smarty->assign('customTipTitle', tra('Tip'));
+	}
+}
+if ( isset($_REQUEST["wikiHeaderTpl"]) && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
+	$smarty->assign('wikiHeaderTpl', $_REQUEST['wikiHeaderTpl']);
+}
 if ((isset($_REQUEST["template_name"]) || isset($_REQUEST["templateId"])) && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
 	$templateLang = isset( $_REQUEST['lang'] ) ? $_REQUEST['lang'] : null;

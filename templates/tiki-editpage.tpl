@@ -7,6 +7,14 @@
 	{/if}
 	{/remarksbox}
 {/if}
+{if $customTip}
+	{remarksbox type='tip' title=$customTipTitle}
+	{tr}{$customTip|escape}{/tr}
+	{/remarksbox}
+{/if}
+{if $wikiHeaderTpl}
+	{include file="wiki:$wikiHeaderTpl"}
+{/if}
 	
 {if $translation_mode eq 'n'}
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}

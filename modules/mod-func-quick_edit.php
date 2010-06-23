@@ -41,6 +41,18 @@ function module_quick_edit_info() {
 				'name' => tra('Category identifier'),
 				'description' => tra('If set to a category identifier, pages created through the module are automatically categorized in the specified category.') . " " . tra('Not set by default.')
 			),
+			'customTip' => array(
+				'name' => tra('Tip to be shown'),
+				'description' => tra('Custom text to be shown as a tip at the top of the edit page'),
+			),
+			'customTipTitle' => array(
+				'name' => tra('Title of tip to be shown'),
+				'description' => tra('Custom title to be shown for the tip at the top of the edit page'),
+			),
+			'headerwiki' => array(
+				'name' => tra('Custom header template'),
+				'description' => tra('Wiki page to be used as a template to show content on top of edit page'),
+			),
 		)
 	);
 }
@@ -81,6 +93,25 @@ function module_quick_edit( $mod_reference, $module_params ) {
 	} else {
 		$categId = '';
 	}
+	if (isset($module_params["customTip"])) {
+		$customTip = $module_params["customTip"];
+	} else {
+		$customTip = '';
+	}
+	if (isset($module_params["customTipTitle"])) {
+		$customTipTitle = $module_params["customTipTitle"];
+	} else {
+		$customTipTitle = '';
+	}
+	if (isset($module_params["headerwiki"])) {
+		$wikiHeaderTpl = $module_params["headerwiki"];
+	} else {
+		$wikiHeaderTpl = '';
+	}
+	
+	$smarty->assign('wikiHeaderTpl', $wikiHeaderTpl);
+	$smarty->assign('customTip', $customTip);
+	$smarty->assign('customTipTitle', $customTipTitle);
 	$smarty->assign('categId', $categId);
 	$smarty->assign('size', $size);
 	$smarty->assign('mod_quickedit_heading', $mod_quickedit_heading);
