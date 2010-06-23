@@ -32,8 +32,13 @@ class Tiki_Formula_Function_Attribute extends Math_Formula_Function
 		}
 
 		global $attributelib; require_once 'lib/attributes/attributelib.php';
-		global $tikilib;
-		$values = $attributelib->get_attributes( $type, $tikilib->get_page_name_from_id( $object ) );
+
+		if( $type == 'wiki page' ) {
+			global $tikilib;
+			$object = $tikilib->get_page_name_from_id( $object );
+		}
+
+		$values = $attributelib->get_attributes( $type, $object );
 
 		if( isset( $values[$property] ) ) {
 			return $values[$property];
