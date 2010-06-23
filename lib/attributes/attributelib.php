@@ -26,8 +26,13 @@ class AttributeLib extends TikiDb_Bridge
 			return false;
 		}
 
-		$this->query( 'INSERT INTO `tiki_object_attributes` (`type`, `itemId`, `attribute`, `value`) VALUES( ?, ?, ?, ? ) ON DUPLICATE KEY UPDATE `value` = ?',
-			array( $type, $objectId, $name, $value, $value ) );
+		if( $value == '' ) {
+			$this->query( 'DELETE FROM `tiki_object_attributes` WHERE `type` = ? AND `itemId` = ? AND `attribute` = ?',
+				array( $type, $objectId, $name ) );
+		} else {
+			$this->query( 'INSERT INTO `tiki_object_attributes` (`type`, `itemId`, `attribute`, `value`) VALUES( ?, ?, ?, ? ) ON DUPLICATE KEY UPDATE `value` = ?',
+				array( $type, $objectId, $name, $value, $value ) );
+		}
 
 
 		return true;

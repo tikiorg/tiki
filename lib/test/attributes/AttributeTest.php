@@ -72,5 +72,13 @@ class AttributeTest extends TikiTestCase
 			'tiki.test.aaabbb' => 121.22,
 		), $lib->get_attributes( 'test', 'HelloWorld' ) );
 	}
+
+	function testRemoveEmpty() {
+		$lib = new AttributeLib;
+		$lib->set_attribute( 'test', 'HelloWorld', 'tiki.test.abc', 121.22 );
+		$lib->set_attribute( 'test', 'HelloWorld', 'tiki.test.abc', "" );
+
+		$this->assertEquals( array(), $lib->get_attributes( 'test', 'HelloWorld' ) );
+	}
 }
 
