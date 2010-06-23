@@ -95,7 +95,7 @@
 			<form action="tiki-register.php" method="post" name="RegForm">
 			<table class="form">
 			{include file="register-form.tpl"}
-			{if $prefs.rnd_num_reg eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
+			{if $prefs.feature_antibot eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
 			<tr>
 			<td class="formcolor">&nbsp;</td>
 			<td class="formcolor"><input type="submit" name="register" value="{tr}Register{/tr}" /></td>

@@ -27,7 +27,6 @@
 	
 		<fieldset>
 			<legend>{tr}Spam protection{/tr}</legend>
-			{preference name=rnd_num_reg}
 			{preference name=feature_antibot}
 			{preference name=recaptcha_enabled}
 			<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">

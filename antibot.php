@@ -1,7 +1,7 @@
 <?
 
 require_once ('tiki-setup.php');
-if ($prefs['feature_antibot'] == 'n' || $prefs['rnd_num_reg'] == 'n') {
+if (!$prefs['feature_antibot'] == 'y') {
 	die;
 }
 

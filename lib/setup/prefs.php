@@ -1037,7 +1037,6 @@ function get_default_prefs() {
 		'pass_due' => -1,
 		'email_due' => -1,
 		'unsuccessful_logins' => 20,
-		'rnd_num_reg' => 'y',
 		'generate_password' => 'n',
 		'auth_method' => 'tiki',
 		'auth_pear' => 'tiki',

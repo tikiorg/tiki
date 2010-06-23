@@ -1077,7 +1077,7 @@ function wikiplugin_tracker($data, $params)
 				$smarty->security = true;
 				$back .= $smarty->fetch('wiki:'.$wiki);
 			}
-			if ($prefs['feature_antibot'] == 'y' && empty($user) && ($registration != 'y' || $prefs['rnd_num_reg'] == 'y')) {
+			if ($prefs['feature_antibot'] == 'y' && empty($user) && $registration != 'y') {
 				// in_tracker session var checking is for tiki-register.php
 				$back .= $smarty->fetch('antibot.tpl');
 			}

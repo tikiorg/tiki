@@ -35,7 +35,6 @@
 						{preference name=registerPasscode}
 					</div>
 
-					{preference name=rnd_num_reg}
 					{if $gd_lib_found neq 'y'}
 						<div class="highlight">
 							{icon _id=information} {tr}Requires PHP GD library{/tr}.
