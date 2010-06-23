@@ -47,7 +47,7 @@ $errors = array();
 if (isset($_REQUEST['send'])) {
 	check_ticket('tell-a-friend');
 	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
-		$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
+		$errors[] = $captchalib->getErrors();
 	}
 	if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 		$emails = explode(',', str_replace(' ', '', $_REQUEST['addresses']));

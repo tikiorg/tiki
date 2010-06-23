@@ -66,6 +66,8 @@ class Captcha {
 			$this->captcha = new Zend_Captcha_Dumb;
 			$this->type = 'dumb';
 		}
+
+		$this->setErrorMessages();
 	}
 
 	/**
@@ -121,7 +123,38 @@ class Captcha {
 	}
 
 	/**
-	 * Custom translation for ReCaptcha
+	 * Translate Zend_Captcha_Image, Zend_Captcha_Dumb and Zend_Captcha_ReCaptcha
+	 * default error messages
+	 *
+	 * @return void
+	 */
+	function setErrorMessages() {
+		$errors = array(
+			'missingValue' => tra('Empty captcha value'),
+			'badCaptcha' => tra('You have mistyped the anti-bot verification code. Please try again.')
+		);
+
+		if ($this->type == 'recaptcha')
+			$errors['errCaptcha'] = tra('Failed to validate captcha');
+		else
+			$errors['missingID'] = tra('Captcha ID field is missing');
+
+		$this->captcha->setMessages($errors);
+	}
+
+	/**
+	 * Convert the errors array into a string and return it
+	 *
+	 * @return string error messages
+	 */
+	function getErrors() {
+		return implode('<br />', $this->captcha->getMessages());
+	}
+
+	/**
+	 * Custom translation for ReCaptcha interface
+	 *
+	 * @return void
 	 */
 	function recaptchaCustomTranslations() {
 		$recaptchaService = $this->captcha->getService();

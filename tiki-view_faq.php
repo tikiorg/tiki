@@ -49,7 +49,7 @@ if (isset($_REQUEST["sugg"])) {
 	check_ticket('view-faq');
 	if ($tiki_p_suggest_faq == 'y') {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
-			$error = tra('You have mistyped the anti-bot verification code; please try again.');
+			$error = $captchalib->getErrors();
 			$smarty->assign('error', $error);
 			// Save the pending question and answer if antibot code is wrong
 			$smarty->assign('pendingquestion', $_REQUEST["suggested_question"]);

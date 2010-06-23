@@ -215,7 +215,7 @@ class RegistrationLib extends TikiLib
 		
 		if (!$user && $prefs['rnd_num_reg'] == 'y') {
 			if (!$captchalib->validate())
-				return new RegistrationError('antibotcode', tra("You have mistyped the anti-bot verification code. Please try again."));
+				return new RegistrationError('antibotcode', $captchalib->getErrors());
 		}
 		
 		// VALIDATE NAME HERE

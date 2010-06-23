@@ -2507,7 +2507,7 @@ class Comments extends TikiLib
 		}
 
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
-			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
+			$errors[] = $captchalib->getErrors();
 		}
 		if ($forum_info['controlFlood'] == 'y' && !$this->user_can_post_to_forum($user, $forumId) ) {
 			$errors = sprintf(tra('Please wait %d seconds between posts'). $forum_info['floodInterval']);
@@ -2682,7 +2682,7 @@ class Comments extends TikiLib
 		}
 
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
-			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
+			$errors[] = $captchalib->getErrors();
 		}
 
 		if ($prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_comment'] == 'y' && empty($params['contributions'])) {

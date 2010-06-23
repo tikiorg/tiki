@@ -773,7 +773,7 @@ function wikiplugin_tracker($data, $params)
 			}
 			if (isset($field_errors['err_antibot'])) {
 				$back.= '<div class="simplebox highlight"><img src="pics/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
-				$back .= tra('You have mistyped the anti-bot verification code; please try again.');
+				$back .= $captchalib->getErrors();
 				$back.= '</div><br />';
 				$_REQUEST['error'] = 'y';
 			}

@@ -66,7 +66,7 @@ function doProcessShout($inFormValues) {
 	
 	if (array_key_exists('shout_msg',$inFormValues) && strlen($inFormValues['shout_msg']) > 2) {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!$captchalib->validate())) {
-			$smarty->assign('shout_error', tra('You have mistyped the anti-bot verification code; please try again.'));
+			$smarty->assign('shout_error', $captchalib->getErrors());
 			$smarty->assign_by_ref('shout_msg', $inFormValues['shout_msg']);
 		} else {
 			

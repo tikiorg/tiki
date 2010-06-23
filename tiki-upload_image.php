@@ -50,7 +50,7 @@ if (isset($_REQUEST["upload"])) {
 	}
 	$error_msg = '';
 	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
-		$error_msg = tra('You have mistyped the anti-bot verification code; please try again.');
+		$error_msg = $captchalib->getErrors();
 		$smarty->assign('errortype', 'no_redirect_login');
 	}
 	if (!empty($_REQUEST["url"])) {

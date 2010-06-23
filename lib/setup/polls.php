@@ -20,7 +20,7 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
 		} elseif (($prefs['feature_antibot'] == 'y' && empty($user)) && (!$captchalib->validate())) {
 			$ok = false;
-			$smarty->assign('msg_poll', tra('You have mistyped the anti-bot verification code; please try again.'));
+			$smarty->assign('msg_poll', $captchalib->getErrors());
 			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
 		} else {
 			global $polllib; include_once('lib/polls/polllib_shared.php');
