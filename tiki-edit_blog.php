@@ -145,6 +145,10 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('maxPosts', $_REQUEST["maxPosts"]);
 	$smarty->assign('heading', $heading);
 	$smarty->assign('creator', $_REQUEST["creator"]);
+
+	// display heading preview
+	$_SESSION['tiki_cookie_jar']['show_blog_heading_preview'] = 'y';
+	$cookietab = 2;
 }
 
 

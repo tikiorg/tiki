@@ -119,8 +119,8 @@
             <tr class="editblogform">
               <td></td>
               <td>
-                {button href="#" _flip_id='blog_heading_preview' _class='link' _text="{tr}Blog heading preview{/tr}" _flip_default_open='n'}
-                <div id="blog_heading_preview" style="display: none;">
+                {button href="#" _flip_id='blog_heading_preview' _class='link' _text="{tr}Heading preview{/tr}" _flip_default_open='n'}
+                <div id="blog_heading_preview" style="display: {if isset($smarty.session.tiki_cookie_jar.show_blog_heading_preview) and $smarty.session.tiki_cookie_jar.show_blog_heading_preview eq 'y'}block{else}none{/if};">
                   {eval var=$heading}
                 </div>
               </td>
@@ -131,7 +131,7 @@
       </table>
     {/tab}
   {/tabset}
-  <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
+  <input type="submit" class="wikiaction" name="preview" value="{tr}Heading preview{/tr}" />
   <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 </form>
 <br />
