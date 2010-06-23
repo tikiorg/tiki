@@ -19,12 +19,6 @@
 	{/remarksbox}
 {/if}
 
-<h2>{tr}Current heading{/tr}</h2>
-
-{if strlen($heading) > 0}
-  {eval var=$heading}
-{/if}
-
 {if $individual eq 'y'}
   <a class="link" href="tiki-objectpermissions.php?objectName={$title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are individual permissions set for this blog{/tr}</a>
 {/if}
@@ -118,7 +112,6 @@
       </td>
     </tr>
 
-
     {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
       <tr class="editblogform">
         <td>
@@ -130,6 +123,19 @@
           <textarea name="heading" id="blogs-heading" rows='10' cols='{$cols}'>{$heading|escape}</textarea>
         </td>
       </tr>
+
+      {if strlen($heading) > 0 and $blogId > 0}
+        <tr class="editblogform">
+          <td></td>
+          <td>
+            {button href="#" _flip_id='blog_heading_preview' _class='link' _text="{tr}Blog heading preview{/tr}" _flip_default_open='n'}
+
+            <div id="blog_heading_preview" style="display: none;">
+              {eval var=$heading}
+            </div>
+          </td>
+        </tr>
+      {/if}
     {/if}
 
     {include file='categorize.tpl'}
