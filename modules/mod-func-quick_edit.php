@@ -39,7 +39,11 @@ function module_quick_edit_info() {
 			),
 			'categId' => array(
 				'name' => tra('Category identifier'),
-				'description' => tra('If set to a category identifier, pages created through the module are automatically categorized in the specified category.') . " " . tra('Not set by default.')
+				'description' => tra('If set to a category identifier, pages created through the module are automatically categorized only in the specified category.') . " " . tra('Not set by default.')
+			),
+			'addcategId' => array(
+				'name' => tra('Category to preselect'),
+				'description' => tra('If set, pages created through the module have this category prechecked to be categorized in.') . " " . tra('Not set by default.')
 			),
 			'customTip' => array(
 				'name' => tra('Tip to be shown'),
@@ -93,6 +97,11 @@ function module_quick_edit( $mod_reference, $module_params ) {
 	} else {
 		$categId = '';
 	}
+	if (isset($module_params["addcategId"])) {
+		$addcategId = $module_params["addcategId"];
+	} else {
+		$addcategId = '';
+	}
 	if (isset($module_params["customTip"])) {
 		$customTip = $module_params["customTip"];
 	} else {
@@ -113,6 +122,7 @@ function module_quick_edit( $mod_reference, $module_params ) {
 	$smarty->assign('customTip', $customTip);
 	$smarty->assign('customTipTitle', $customTipTitle);
 	$smarty->assign('categId', $categId);
+	$smarty->assign('addcategId', $addcategId);
 	$smarty->assign('size', $size);
 	$smarty->assign('mod_quickedit_heading', $mod_quickedit_heading);
 	$smarty->assign('templateId', $templateId);
