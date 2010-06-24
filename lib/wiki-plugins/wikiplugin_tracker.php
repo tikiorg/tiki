@@ -418,8 +418,10 @@ function wikiplugin_tracker($data, $params)
 						}
 						if (preg_match('/categories\(([0-9]+)\)/', $autosavevalues[$i], $matches)) {
 							global $categlib; include_once('lib/categories/categlib.php');
-							$categs = $categlib->list_categs($matches[1]);
-							$_REQUEST["ins_cat_$f"][] = $categs[0]['categId'];
+							$categs = $categlib->list_categs($f);
+							if (in_array($matches[1], $categs)) {
+								$_REQUEST["ins_cat_$f"][] = $matches[1];
+							}
 						} elseif (preg_match('/preference\((.*)\)/', $autosavevalues[$i], $matches)) {
 							$_REQUEST["$ins_id_$f"] = $prefs[$matches[1]];
 						} elseif ($ff['type'] == 'e') {
