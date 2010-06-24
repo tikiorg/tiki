@@ -4434,65 +4434,6 @@ class TikiLib extends TikiDb_Bridge
 	
 		$page_info = $this->get_page_info($pageName, false);
 		
-		if ( $page_info === false ) {
-			if ( $searchAlias ) {
-				global $semanticlib, $prefs;
-
-				if ( $prefs['feature_wiki_pagealias'] == 'y' ) {
-					require_once 'lib/wiki/semanticlib.php';
-
-					$toPage = $pageName;
-					$tokens = explode( ',', $prefs['wiki_pagealias_tokens'] ); 
-					
-					$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
-					foreach ($prefixes as $p) {
-						$p = trim($p);
-						if (strlen($p) > 0 && strtolower(substr($pageName, 0, strlen($p))) == strtolower($p)) {
-							$toPage = $p;
-							$tokens = 'prefixalias';
-						}
-					}
-					 
-					$links = $semanticlib->getLinksUsing(
-						$tokens,
-						array( 'toPage' => $toPage ) );
-
-					if ( count($links) > 1 ) {
-					    // There are multiple aliases for this page. Need to disambiguate.
-					    //
-						// When feature_likePages is set, trying to display the alias itself will
-						// display an error page with the list of aliased pages in the "like pages" section.
-						// This allows the user to pick the appropriate alias.
-						// So, leave the $pageName to the alias.
-						// 
-						// If feature_likePages is not set, then the user will only see that the page does not
-						// exist. So it's better to just pick the first one.
-						//													
-						if ($prefs['feature_likePages'] == 'y' || $tokens == 'prefixalias') {
-							// Even if there is more then one match, if prefix is being redirected then better
-							// to fail than to show possibly wrong page
-							return true;
-						} else {
-							// If feature_likePages is NOT set, then trying to display the first one is fine
-							// $pageName is by ref so it does get replaced 
-							$pageName = $links[0]['fromPage'];
-							return $this->page_exists_desc( $pageName );
-						}
-					} elseif (count($links)) {
-						// there is exactly one match
-						if ($prefs['feature_wiki_1like_redirection'] == 'y') {
-							return true;
-						} else {
-							$pageName = $links[0]['fromPage'];
-							return $this->page_exists_desc( $pageName );
-						} 
-					}
-				}
-			}
-
-			return false;
-		}
-
 		return empty($page_info['description']) ? $pageName : $page_info['description'];
 	}
 
@@ -7189,6 +7130,12 @@ class TikiLib extends TikiDb_Bridge
 
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
 		global $prefs, $wikilib, $semanticlib;
+
+		// Fetch all externals once
+		static $externals = false;
+		if( false === $externals ) {
+			$externals = $this->fetchMap( 'SELECT `name`, `extwiki` FROM `tiki_extwiki`' );
+		}
 		
 		$displayLink = $pageLink;
 
@@ -7206,81 +7153,87 @@ class TikiLib extends TikiDb_Bridge
 		if( array_key_exists( 'plural', $extra ) )
 			$processPlural = (boolean) $extra['plural'];
 
-		// Replace links to external wikis
-		if (strpos($pageLink, ':')) {
-			$wexs = explode(':', $pageLink);
+		require_once 'WikiParser/OutputLink.php';
+		$link = new WikiParser_OutputLink;
+		$link->setIdentifier( $pageLink );
+		$link->setQualifier( $reltype );
+		$link->setDescription( $description );
+		$link->setWikiLookup( array( $this, 'parser_helper_wiki_info_getter' ) );
+		$link->setWikiLinkBuilder( array( $this, 'parser_helper_wiki_link_builder' ) );
+		$link->setExternals( $externals );
+		$link->setHandlePlurals( $processPlurals );
 
-			if (count($wexs) == 2) {
-				$wkname = $wexs[0];
+		if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) ) {
+			$link->setLanguage( $GLOBALS['pageLang'] );
+		}
 
-				if ($this->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-					$wkurl = $this->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
-					
-					$linktext = ($description) ? $description : $wexs[1];
-					$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $linktext . '</a>';
-					return $wkurl;
+		return $link->getHtml();
+	}
+
+	function parser_helper_wiki_link_builder( $pageLink ) {
+		global $wikilib;
+		return $wikilib->bestlang( $wikilib->sefurl($pageLink) );
+	}
+
+	function parser_helper_wiki_info_getter( $pageName ) {
+		global $prefs;
+		$page_info = $this->get_page_info($pageName, false);
+		
+		if ( $page_info !== false ) {
+			return $page_info;
+		}
+
+		// If page does not exist directly, attempt to find an alias
+		if ( $prefs['feature_wiki_pagealias'] == 'y' ) {
+			global $semanticlib; require_once 'lib/wiki/semanticlib.php';
+
+			$toPage = $pageName;
+			$tokens = explode( ',', $prefs['wiki_pagealias_tokens'] ); 
+			
+			$prefixes = explode( ',', $prefs["wiki_prefixalias_tokens"]);
+			foreach ($prefixes as $p) {
+				$p = trim($p);
+				if (strlen($p) > 0 && strtolower(substr($pageName, 0, strlen($p))) == strtolower($p)) {
+					$toPage = $p;
+					$tokens = 'prefixalias';
 				}
 			}
-		}
+			 
+			$links = $semanticlib->getLinksUsing(
+				$tokens,
+				array( 'toPage' => $toPage ) );
 
-		// 24-Jun-2003, by zaufi
-		// TODO: future optimize: get page description and modification time at once.
-		// text[0] = link description (previous format)
-		// text[1] = timeout in seconds (new field)
-		// text[2..N] = drop
-		$text = explode("|", $description);
-
-		if ($desc = $this->page_exists_desc($pageLink, true)) {
-			// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
-			$uri_ref = $wikilib->bestlang( $wikilib->sefurl($pageLink) );
-		
-			// check to see if desc is blank in ((page|desc))
-			if (strlen(trim($text[0])) > 0) {
-				$linktext = $text[0];
-			} elseif ($desc != $pageLink && $description !== null) {
-				// desc is blank; use the page description instead
-				$linktext = $displayLink . ': ' . $desc;
-			} else {
-				// there is no page description
-				$linktext = $displayLink;
-			}
-
-			$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki ' . $reltype . '">' . $linktext . '</a>';
-
-			// Check is timeout expired?
-			if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pageLink))) < intval($text[1])) {
-				// Append small 'new' image. TODO: possible 'updated' image more suitable...
-				$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new","",true).'" />';
-			}
-
-			return $repl;
-		}
-
-		if( $processPlural ) {
-			$plural_tmp = $pageLink;
-			// Plurals like policy / policies
-			$plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
-			// Plurals like address / addresses
-			$plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
-			// Plurals like box / boxes
-			$plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
-			// Others, excluding ending ss like address(es)
-			$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
-
-			if($desc = $this->page_exists_desc($plural_tmp, true)) {
-				$repl = "<a title='".$desc."' href='".$wikilib->bestlang( $wikilib->sefurl($plural_tmp) )."' class='wiki'>$displayLink</a>";
-				return $repl;
+			if ( count($links) > 1 ) {
+				// There are multiple aliases for this page. Need to disambiguate.
+				//
+				// When feature_likePages is set, trying to display the alias itself will
+				// display an error page with the list of aliased pages in the "like pages" section.
+				// This allows the user to pick the appropriate alias.
+				// So, leave the $pageName to the alias.
+				// 
+				// If feature_likePages is not set, then the user will only see that the page does not
+				// exist. So it's better to just pick the first one.
+				//													
+				if ($prefs['feature_likePages'] == 'y' || $tokens == 'prefixalias') {
+					// Even if there is more then one match, if prefix is being redirected then better
+					// to fail than to show possibly wrong page
+					return true;
+				} else {
+					// If feature_likePages is NOT set, then trying to display the first one is fine
+					// $pageName is by ref so it does get replaced 
+					$pageName = $links[0]['fromPage'];
+					return $this->get_page_info( $pageName );
+				}
+			} elseif (count($links)) {
+				// there is exactly one match
+				if ($prefs['feature_wiki_1like_redirection'] == 'y') {
+					return true;
+				} else {
+					$pageName = $links[0]['fromPage'];
+					return $this->get_page_info( $pageName );
+				} 
 			}
 		}
-
-		$uri_ref = "tiki-editpage.php?page=" . urlencode($pageLink);
-		if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) ) {
-			$uri_ref .= '&amp;lang=' . urlencode($GLOBALS['pageLang']);
-		}
-
-		$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pageLink) . '<a href="'.$uri_ref.'" title="'.tra("Create page:","",true)." ".urlencode($pageLink).'" class="wiki wikinew">?</a>';
-
-		return $repl;
 	}
 
 	function parse_smileys($data) {
