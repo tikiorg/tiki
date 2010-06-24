@@ -183,6 +183,24 @@ function wikiplugin_tracker_info()
 				'description' => tra('y|n Add registration fields such as Username and Password'),
 				'filter' => 'alpha'
 			),
+			'outputtowiki' => array(
+				'required' => false,
+				'name' => tra('Output to wiki using fieldId'),
+				'description' => tra('Output result to a new wiki page with the name taken from the input for the specified fieldId'),
+				'filter' => 'digits'
+			),
+			'discarditem' => array(
+				'required' => false,
+				'name' => tra('Discard tracker item after wiki output'),
+				'description' => tra('y|n Used when results are output to a wiki page to discard the tracker item itself once the wiki page is created'),
+				'filter' => 'alpha'
+			),
+			'outputwiki' => array(
+				'required' => false,
+				'name' => tra('Wiki template for wiki output'),
+				'description' => tra('Name of the wiki page containing the template to format the output to wiki page'),
+				'filter' => 'pagename'
+			),
 		),
 	);
 }
@@ -561,7 +579,33 @@ function wikiplugin_tracker($data, $params)
 					}
 				}
 
-				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && !isset($_REQUEST['tr_preview'])) {
+				// check valid page name for wiki output if requested
+				if (isset($outputtowiki) && !empty($outputwiki)) {
+					$newpagename = '';
+					foreach ($ins_fields["data"] as $fl) {
+						if ($fl["fieldId"] == $outputtowiki) {
+							$newpagename = $fl["value"];
+						}
+						if ($fl["type"] == 'F') {
+							$newpagefreetags = $fl["value"];
+						}
+						$newpagefields[] = $fl["fieldId"];
+					}
+					if ($newpagename) {
+						if ($tikilib->page_exists($newpagename)) {
+							$field_errors['err_outputwiki'] = tra('The page to output the results to already exists. Try another name.');
+						}
+						$page_badchars_display = ":/?#[]@!$&'()*+,;=<>";
+						$page_badchars = "/[:\/?#\[\]@!$&'()*+,;=<>]/";
+						$matches = preg_match($page_badchars, $newpagename);
+						if ($matches) {
+							$field_errors['err_outputwiki'] = tra("The page to output the results to contains the following prohibited characters: $page_badchars_display. Try another name.");
+						} 
+					} else {
+						unset($outputtowiki);
+					}
+				}
+				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && empty($field_errors['err_outputwiki']) && !isset($_REQUEST['tr_preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
 					if (!isset($itemId) && $tracker['oneUserItem'] == 'y') {
 						$itemId = $trklib->get_user_item($trackerId, $tracker);
@@ -580,6 +624,39 @@ function wikiplugin_tracker($data, $params)
 					if (isset($newItemRate)) {
 						$trklib->replace_rating($trackerId, $rid, $newItemRateField, $user, $newItemRate);
 					}
+					// now for wiki output if desired
+					if (isset($outputtowiki) && !empty($outputwiki)) {
+						// note that values will be raw - that is the limit of the capability of this feature for now
+						$newpageinfo = $tikilib->get_page_info($outputwiki);
+						$wikioutput = $newpageinfo["data"];
+						$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki');
+						foreach($newpagefields as $lf) {
+							$wikioutput = str_replace('{$f_' . $lf . '}', $trklib->get_item_value($trackerId, $rid, $lf), $wikioutput);
+						}
+						$tikilib->create_page($newpagename, 0, $wikioutput, $tikilib->now, '', $user, $tikilib->get_ip_address());
+						$cat_desc = '';
+						$cat_type = 'wiki page';
+						$cat_name = $newpagename;
+						$cat_objid = $newpagename;
+						$cat_href = "tiki-index.php?page=".urlencode($newpagename);
+						if (count($ins_categs)) {
+							$_REQUEST['cat_categories'] = $ins_categs;
+							$_REQUEST['cat_categorize'] = 'on';
+							include_once("categorize.php");
+						}
+						if (isset($newpagefreetags) && $newpagefreetags) {
+							$_REQUEST['freetag_string'] = $newpagefreetags;
+							include_once("freetag_apply.php");
+						}
+						if ($discarditem == 'y') {
+							$trklib->remove_tracker_item($rid);
+						}
+						if (empty($url)) {
+							global $wikilib;
+							$url[0] = $wikilib->sefurl($newpagename);
+						}
+					}
+					// end wiki output
 					if (!empty($email)) {
 						$emailOptions = preg_split("#\|#", $email);
 						if (is_numeric($emailOptions[0])) {
@@ -777,7 +854,13 @@ function wikiplugin_tracker($data, $params)
 				$back.= '</div><br />';
 				$_REQUEST['error'] = 'y';
 			}
-			if (count($field_errors['err_mandatory']) > 0 || count($field_errors['err_value']) > 0 || isset($field_errors['err_antibot'])) {
+			if (isset($field_errors['err_outputwiki'])) {
+				$back.= '<div class="simplebox highlight"><img src="pics/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
+				$back .= $field_errors['err_outputwiki'];
+				$back.= '</div><br />';
+				$_REQUEST['error'] = 'y';
+			}
+			if (count($field_errors['err_mandatory']) > 0 || count($field_errors['err_value']) > 0 || isset($field_errors['err_antibot']) || isset($field_errors['err_outputwiki'])) {
 				$smarty->assign('input_err', 'y');
 			}
 			if (!empty($page))
