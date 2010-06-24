@@ -119,8 +119,10 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 }
 if ($prefs['feature_phplayers'] == 'y') require_once ('lib/setup/phplayers.php');
 
-require_once('lib/captcha/captchalib.php');
-$smarty->assign_by_ref('captchalib', $captchalib);
+if ($prefs['feature_antibot'] == 'y') {
+	require_once('lib/captcha/captchalib.php');
+	$smarty->assign_by_ref('captchalib', $captchalib);
+}
 
 require_once ('lib/setup/smarty.php');
 $smarty->assign_by_ref('phpErrors', $phpErrors);
