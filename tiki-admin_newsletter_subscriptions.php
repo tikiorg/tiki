@@ -19,8 +19,14 @@ $auto_query_args = array(
 );
 $access->check_feature('feature_newsletters');
 if (!isset($_REQUEST["nlId"])) {
-	$smarty->assign('msg', tra("No newsletter indicated"));
-	$smarty->display("error.tpl");
+	$smarty->assign('msg', tra('No newsletter indicated'));
+	$smarty->display('error.tpl');
+	die;
+}
+$info = $nllib->get_newsletter($_REQUEST["nlId"]);
+if (empty($info)) {
+	$smarty->assign('msg', tra('Newsletter does not exist'));
+	$smarty->display('error.tpl');
 	die;
 }
 $smarty->assign('nlId', $_REQUEST["nlId"]);
@@ -42,15 +48,7 @@ if ($userlib->object_has_one_permission($_REQUEST["nlId"], 'newsletter')) {
 	}
 }
 $access->check_permission('tiki_p_admin_newsletters');
-if ($_REQUEST["nlId"]) {
-	$info = $nllib->get_newsletter($_REQUEST["nlId"]);
-} else {
-	$info = array();
-	$info["name"] = '';
-	$info["description"] = '';
-	$info["allowAnySub"] = 'n';
-	$info["frequency"] = 7 * 24 * 60 * 60;
-}
+
 $smarty->assign('nl_info', $info);
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();

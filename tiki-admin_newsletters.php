@@ -31,6 +31,11 @@ if ($perms->admin_newsletters != 'y') {
 }
 if ($_REQUEST["nlId"]) {
 	$info = $nllib->get_newsletter($_REQUEST["nlId"]);
+	if (empty($info)) {
+		$smarty->assign('msg', tra('Newsletter does not exist'));
+		$smarty->display('error.tpl');
+		die;
+	}
 	$update = "";
 } else {
 	$info = array(
