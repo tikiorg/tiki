@@ -201,13 +201,6 @@ function wikiplugin_tracker_info()
 				'description' => tra('Name of the wiki page containing the template to format the output to wiki page'),
 				'filter' => 'pagename'
 			),
-			'addcategories'  => array(
-				'required' => false,
-				'name' => tra('Categories to add item into'),
-				'description' => tra('Category IDs separated by : to categorize item in'),
-				'filter' => 'digits',
-				'separator' => ':'
-			),
 		),
 	);
 }
@@ -573,11 +566,6 @@ function wikiplugin_tracker($data, $params)
 							$categorized_fields[] = $m[1];
 						}
 					}
-		 		}
-		 		if (isset($addcategories)) {
-		 			foreach ($addcategories as $ac) {
-		 				$ins_categs[] = $ac;
-		 			}
 		 		}
 				/* ------------------------------------- End recup all values from REQUEST -------------- */
 
