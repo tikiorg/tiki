@@ -465,6 +465,7 @@ $smarty->assign_by_ref('topics', $topics);
 // get list of valid types
 $types = $artlib->list_types_byname();
 if (array($types)) {
+if (empty($article_data)) {
 	foreach ($types as $type=>$val) {
 		break;
 	}
@@ -472,6 +473,7 @@ if (array($types)) {
 	$type = '';
 }
 $smarty->assign('type', $type);
+}
 if ($prefs["article_custom_attributes"] == 'y') {
 	$article_attributes = $artlib->get_article_attributes($_REQUEST["articleId"]);	
 	$smarty->assign('article_attributes', $article_attributes);
