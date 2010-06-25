@@ -33,16 +33,32 @@ function wikiplugin_memberpayment_info() {
 				'filter' => 'alpha',
 				'default' => 'n',
 			),
-		),
+			'inputtitle' => array(
+				'required' => false,
+				'name' => tra('Title of the input form.'),
+				'description' => tra('Title of the input form.').' '. tra('Use %0 for the group name.').' '.tra('Support wiki syntax'),
+				'filter' => 'text',
+				'default' => 'Membership to %0 for %1 (x%2)',
+			),
+			'howtitle' => array(
+				'required' => false,
+				'name' => tra('Title of the how to pay pannel.'),
+				'description' => tra('Title of the input form.').' '. tra('Use %0 for the group name, %4 for the number of days or %5 for the number of years').' '.tra('Support wiki syntax'),
+				'filter' => 'text',
+				'default' => 'Membership to %0 for %1 (x%2)',
+			),		),
 	);
 }
 
 function wikiplugin_memberpayment( $data, $params, $offset ) {
-	global $smarty, $userlib, $prefs, $user;
+	global $smarty, $userlib, $prefs, $user, $headerlib;
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
+	static $iPluginMemberpayment = 0;
 
+	$iPluginMemberpayment++;
+	$smarty->assign('iPluginMemberpayment', $iPluginMemberpayment);
 	$params['price'] = floatval( $params['price'] );
-	$default = array( 'currentuser'=>'n' );
+	$default = array( 'currentuser'=>'n', 'inputtitle'=>'');
 	$params = array_merge( $default, $params );
 
 	if( ( $info = $userlib->get_group_info( $params['group'] ) ) && $info['expireAfter'] > 0 ) {
@@ -63,7 +79,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 			$periods = max( 1, (int) $_POST['wp_member_periods'] );
 
 			if( count($users) == 1 ) {
-				$desc = tr('Membership to %0 for %1x%2', $params['group'], reset( $users ), $periods );
+				$desc = tr('Membership to %0 for %1 (x%2)', $params['group'], reset( $users ), $periods );
 			} else {
 				$desc = tr('Membership to %0 for %1 users (x%2)', $params['group'], count( $users ), $periods );
 			}
@@ -73,10 +89,12 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 			$id = $paymentlib->request_payment( $desc, $cost, $prefs['payment_default_delay'] );
 			$paymentlib->register_behavior( $id, 'complete', 'extend_membership', array( $users, $params['group'], $periods ) );
 
+			$smarty->assign( 'wp_member_title', $params['howtitle'] );
 			require_once 'lib/smarty_tiki/function.payment.php';
 			return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
 		}
 
+		$smarty->assign( 'wp_member_title', $params['inputtitle'] );
 		return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_memberpayment.tpl' ) . '~/np~';
 	} elseif ($info['expireAfter'] == 0 && $params['group'] == $info['groupName']) {
 		return '{REMARKSBOX(type=warning, title=Plugin Memberpayment Error)}' . tra('The group ') . '<em>' . $info['groupName'] 

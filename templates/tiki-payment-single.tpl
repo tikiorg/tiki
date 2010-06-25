@@ -1,5 +1,9 @@
-<div class="payment">
-	<h2>{$payment_info.description|escape}</h2>
+<div {if isset($iPluginMemberpayment)}id="pluginMemberpayment{$iPluginMemberpayment}" {/if}class="payment">
+	{if isset($wp_member_title)}
+		{wiki}{tr 0=$wp_member_group.groupName 4=$wp_member_group.expireAfter 5=$wp_member_group.expireAfterYear}{$wp_member_title}{/tr}{/wiki}
+	{else} 
+		<h2>{$payment_info.description|escape}</h2>
+	{/if}
 	<p>{tr}Status{/tr}: <strong>{$payment_info.state|escape}</strong></p>
 	{if $payment_info.fullview}
 		<div class="clearfix wikitext">
@@ -22,7 +26,7 @@
 					{if $prefs.payment_paypal_ipn eq 'y'}
 						<input type="hidden" name="notify_url" value="{$payment_info.paypal_ipn|escape}" />
 					{/if}
-					<input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal - The safer, easier way to pay online" />
+					{tr}Pay with Paypal:{/tr} <input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal" title="{tr}Pay with Paypal{/tr}"/> 
 				</form>
 			{elseif $prefs.payment_system eq 'cclite' && $prefs.payment_cclite_gateway neq ''}
 				{if !empty($ccresult) and $ccresult_ok}
@@ -46,6 +50,9 @@
 						{/remarksbox}
 					{/if}
 				{/if}
+			{/if}
+			{if !empty($prefs.payment_manual)}
+				{$prefs.payment_manual}{include file='wiki:`$prefs.payment_manual`'}
 			{/if}
 		{/if}
 	</p>

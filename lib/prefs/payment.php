@@ -118,6 +118,11 @@ function prefs_payment_list() {
 			'type' => 'flag',
 			'dependencies' => array( 'payment_cclite_registry' ),
 		),
+		'payment_manual' => array(
+			'name' => tra('Wiki page containing the instruction to send manual payment like check'),
+			'description' => tra('Wiki page'),
+			'type' => 'text',
+		),
 	);
 }
 

@@ -1675,6 +1675,7 @@ function get_default_prefs() {
 		'payment_cclite_mode' => 'test',
 		'payment_cclite_notify' => 'y',
 		'payment_cclite_hashing_algorithm' => '',
+		'payment_manual' => '',
 
 		// Rating
 		'rating_advanced' => 'n',

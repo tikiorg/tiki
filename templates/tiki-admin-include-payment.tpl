@@ -8,7 +8,7 @@
 		{preference name=payment_feature}
 		
 		{remarksbox title="{tr}Choose payment system{/tr}"}
-			{tr}You can only use one payment system per Tiki, so only enter info into one section or another.{/tr}<br />
+			{tr}You can only use one payment Paypal or Cclite{/tr}<br />
 			{tr}Only PayPal is working at the moment. See PayPal.com{/tr}<br />
 			{tr}Cclite: Community currency accounting for local exchange trading systems (LETS). See {/tr}<a href="http://sourceforge.net/projects/cclite/">{tr}sourceforge.net{/tr}</a>
 		{/remarksbox}
@@ -18,6 +18,7 @@
 				{preference name=payment_system}
 				{preference name=payment_currency}
 				{preference name=payment_default_delay}
+				{preference name=payment_manual}
 			</fieldset>
 			<div id="payment_systems">
 				<h2>{tr}PayPal{/tr}</h2>
