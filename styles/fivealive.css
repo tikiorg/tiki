@@ -984,8 +984,7 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 .postbody-title {
 	padding: .5em .3em .3em 1em;
 	position: relative;
-/*	border: 1px solid #aaa;*/
-	background: url(fivealive/options/blueberry/header.png) -650px -90px;
+	background: url(fivealive/options/blueberry/siteheader.jpg) -550px -90px;
 	color: #222;
 	font-weight: bold;
 	font-size: 1.1em;
