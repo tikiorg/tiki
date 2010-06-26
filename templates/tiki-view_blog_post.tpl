@@ -143,7 +143,7 @@
   || $tiki_p_post_comments == 'y'
   || $tiki_p_edit_comments == 'y')
 }
-  <div id="page-bar">
+  <div id="page-bar" class="clearfix">
   	{include file='comments_button.tpl'}   
   </div>
   {include file='comments.tpl'}
