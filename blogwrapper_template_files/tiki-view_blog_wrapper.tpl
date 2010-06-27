@@ -1,10 +1,9 @@
 {* $Id$ *}
 <div class="clearfix postbody">
 	{include file='tiki-view_blog_actions.tpl'}
-	{*include file='tiki-view_blog_author_info.tpl'*} {* for Vacomm theme, moved below title *}
+	{include file='tiki-view_blog_author_info.tpl'}
 	<a name="postId{$listpages[ix].postId}"></a> {* ?? *}
 	{include file='tiki-view_blog_postbody_title.tpl'}
-	{include file='tiki-view_blog_author_info.tpl'}
 	<div class="postbody-content">
 		{$listpages[ix].parsed_data}
 		{if $listpages[ix].pages > 1}
