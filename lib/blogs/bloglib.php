@@ -666,4 +666,6 @@ class BlogLib extends TikiLib
 		return $this->getOne($query, array((int)$blogId));
 	}
 }
+
+global $bloglib;
 $bloglib = new BlogLib;
