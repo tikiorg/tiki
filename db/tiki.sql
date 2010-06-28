@@ -3603,6 +3603,7 @@ CREATE TABLE `tiki_payment_requests` (
     `description` VARCHAR(100) NOT NULL,
     `actions` TEXT,
     `detail` TEXT,
+	`userId` int(8),
     PRIMARY KEY( `paymentRequestId` )
 );
 
@@ -3614,6 +3615,7 @@ CREATE TABLE `tiki_payment_received` (
     `amount` DECIMAL(7,2),
     `type` VARCHAR(15),
     `details` TEXT,
+	`userId` int(8),
     PRIMARY KEY(`paymentReceivedId`),
     KEY `payment_request_ix` (`paymentRequestId`)
 );

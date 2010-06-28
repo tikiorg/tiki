@@ -1,15 +1,19 @@
 <table class="data">
 	<tr>
+		<th>{tr}ID{/tr}</th>
 		<th>{tr}Description{/tr}</th>
 		<th>{tr}Amount{/tr}</th>
 		<th>{tr}Request Date{/tr}</th>
+		{if $tiki_p_admin eq 'y'}<th>{tr}User{/tr}</th>{/if}
 		<th>{tr}Actions{/tr}</th>
 	</tr>
 	{foreach from=$payments.data item=payment}
 		<tr>
+			<td>{$payment.paymentRequestId}</td>
 			<td>{if $payment.paymentRequestId eq $smarty.request.invoice}<strong>{$payment.description|escape}</strong>{else}{$payment.description|escape}{/if}</td>
 			<td class="right">{$payment.amount|escape}&nbsp;{$payment.currency|escape}</td>
 			<td>{$payment.request_date|escape}</td>
+			{if $tiki_p_admin eq 'y'}<td>{$payment.user|userlink}</td>{/if}
 			<td class="center">
 				{self_link invoice=$payment.paymentRequestId}{icon _id=page class=titletips title='{tr}View payment request{/tr}' alt='{tr}Invoice{/tr}'}{/self_link}
 				{permission type=payment object=$payment.paymentRequestId name=payment_admin}

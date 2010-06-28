@@ -8,12 +8,12 @@
 class PaymentLib extends TikiDb_Bridge
 {
 	function request_payment( $description, $amount, $paymentWithin, $detail = null ) {
-		global $prefs, $user;
+		global $prefs, $userlib, $user;
 
 		$description = substr( $description, 0, 100 );
 
-		$query = 'INSERT INTO `tiki_payment_requests` ( `amount`, `amount_paid`, `currency`, `request_date`, `due_date`, `description`, `detail`, `user` ) VALUES( ?, 0, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? DAY), ?, ?, ? )';
-		$bindvars = array( $amount, $prefs['payment_currency'], (int) $paymentWithin, $description, $detail, $user );
+		$query = 'INSERT INTO `tiki_payment_requests` ( `amount`, `amount_paid`, `currency`, `request_date`, `due_date`, `description`, `detail`, `userId` ) VALUES( ?, 0, ?, NOW(), DATE_ADD(NOW(), INTERVAL ? DAY), ?, ?, ? )';
+		$bindvars = array( $amount, $prefs['payment_currency'], (int) $paymentWithin, $description, $detail, $userlib->get_user_id($user) );
 
 		$this->query( $query, $bindvars );
 
@@ -22,7 +22,7 @@ class PaymentLib extends TikiDb_Bridge
 
 	private function get_payments( $conditions, $offset, $max ) {
 		$count = 'SELECT COUNT(*) FROM `tiki_payment_requests` WHERE ' . $conditions;
-		$data = 'SELECT * FROM `tiki_payment_requests` WHERE ' . $conditions;
+		$data = 'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) WHERE ' . $conditions;
 
 		$all = $this->fetchAll( $data, array(), $max, $offset );
 
@@ -125,8 +125,8 @@ class PaymentLib extends TikiDb_Bridge
 			}
 
 			$data = json_encode( $data );
-			$this->query( 'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details` ) VALUES( ?, NOW(), ?, ?, ? )', array(
-				$invoice, $amount, $type, $data
+			$this->query( 'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details`, `userId` ) VALUES( ?, NOW(), ?, ?, ?, ? )', array(
+																																												   $invoice, $amount, $type, $data, $info['userId']
 			) );
 			$this->query( 'UPDATE `tiki_payment_requests` SET `amount_paid` = `amount_paid` + ? WHERE `paymentRequestId` = ?', array( $amount, $invoice ) );
 		}
