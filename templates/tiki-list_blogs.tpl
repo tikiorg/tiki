@@ -97,6 +97,9 @@
 			{/if}
 		{/if}
 	{/if}
+	{if $tiki_p_blog_admin eq 'y' and $listpages[changes].allow_comments eq 'y'}
+		<a class='icon' href='tiki-list_comments.php?blogId={$listpages[changes].blogId}'>{icon _id='comments' alt='{tr}List all comments{/tr}' title='{tr}List all comments{/tr}'}</a>
+	{/if}
 	{if $tiki_p_admin eq 'y' || $tiki_p_assign_perm_blog eq 'y'}
 	    {if $listpages[changes].individual eq 'y'}
 		<a class="icon" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>

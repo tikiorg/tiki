@@ -1907,10 +1907,10 @@ class Comments extends TikiLib
 		}
 		if (!empty($objectId)) {
 			if (is_array($objectId)) {
-				$mid .= ' and `object` in ('.implode(',', array_fill(0, count($objectId), '?')).')';
+				$mid .= ' and tc.`object` in ('.implode(',', array_fill(0, count($objectId), '?')).')';
 				$bindvars = array_merge($bindvars, $objectId);
 			} else {
-				$mid .= ' and `object`=?';
+				$mid .= ' and tc.`object`=?';
 				$bindvars[] = $objectId;
 			}
 		}
@@ -1920,7 +1920,7 @@ class Comments extends TikiLib
 		}
 
 		if( $toponly ) {
-			$mid .= ' and parentId = 0 ';
+			$mid .= ' and tc.`parentId` = 0 ';
 		}
 		if ($type == 'forum') {
 			$join .= ' left join `tiki_forums` tf on (tf.`forumId`=tc.`object`)';

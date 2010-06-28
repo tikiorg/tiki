@@ -117,7 +117,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				{/if}
 				<span class="infos">
 				{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
-					<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n">{tr}queued:{/tr}{$queued}</a>
+					<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n{if isset($blogId)}&amp;blogId={$blogId}{/if}">{tr}queued:{/tr} {$queued}</a>
 					&nbsp;&nbsp;
 				{/if}
 				{if $prefs.feature_comments_locking eq 'y'}

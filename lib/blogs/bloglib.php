@@ -665,6 +665,34 @@ class BlogLib extends TikiLib
 		$query = 'select `title` from `tiki_blogs` where `blogId`=?';
 		return $this->getOne($query, array((int)$blogId));
 	}
+
+	/**
+	 * Return true if blog exist or false if not
+	 *
+	 * @param int $blogId
+	 * @return bool true or false depending if blog exist or not
+	 */
+	function blog_exists($blogId) {
+		$query = 'SELECT `blogId` FROM `tiki_blogs` WHERE `blogId`=?';
+
+		if (is_null($this->getOne($query, array($blogId))))
+			return false;
+		else
+			return true;
+	}
+
+	/**
+	 * Returns a list of posts that belongs to a particular blog
+	 *
+	 * @param int $blogId
+	 * @return array list of post ids
+	 */
+	function get_blog_posts_ids($blogId) {
+		$query = 'SELECT `postId` FROM `tiki_blog_posts` WHERE `blogId`=?';
+		$result = $this->fetchMap($query, array($blogId));
+
+		return array_keys($result);
+	}
 }
 
 global $bloglib;
