@@ -58,7 +58,7 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 	$iPluginMemberpayment++;
 	$smarty->assign('iPluginMemberpayment', $iPluginMemberpayment);
 	$params['price'] = floatval( $params['price'] );
-	$default = array( 'currentuser'=>'n', 'inputtitle'=>'');
+	$default = array( 'currentuser'=>'n', 'inputtitle'=>'', 'howtitle' => '');
 	$params = array_merge( $default, $params );
 
 	if( ( $info = $userlib->get_group_info( $params['group'] ) ) && $info['expireAfter'] > 0 ) {

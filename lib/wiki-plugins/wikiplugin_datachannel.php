@@ -59,6 +59,14 @@ function wikiplugin_datachannel_info()
 				'name' => tra('Price'),
 				'description' => tr('Price to execute the datachannel (%0).', $prefs['payment_currency']),
 				'prefs' => array('payment_feature'),
+				'default' => '',
+				'filter' => 'text',
+			),
+			'paymentlabel' => array(
+				'required' => false,
+				'name' => tra('Payment label'),
+				'prefs' => array('payment_feature'),
+				'default' => '',
 				'filter' => 'text',
 			),
 			'debug' => array(
@@ -122,7 +130,7 @@ function wikiplugin_datachannel( $data, $params )
 
 			if (!empty($params['price'])) {
 				global $paymentlib; require_once 'lib/payment/paymentlib.php';
-				$desc = tr( 'Datachannel:', $prefs['site_language'] ) . ' ' . $params['channel'];
+				$desc = empty($params['paymentlabel'])? tr( 'Datachannel:', $prefs['site_language'] ) . ' ' . $params['channel'] : $params['paymentlabel'];
 				$posts = array();
 				foreach ($input as $key => $post) {
 					$posts[$key] = $post;

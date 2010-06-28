@@ -1,4 +1,4 @@
-<div {if isset($iPluginMemberpayment)}id="pluginMemberpayment{$iPluginMemberpayment}" {/if}class="payment">
+<div {if isset($iPluginMemberpayment)}id="pluginMemberpayment{$iPluginMemberpayment}" {elseif isset($datachannel_execution)}id="{$datachannel_execution}" {/if}class="payment">
 	{if isset($wp_member_title)}
 		{wiki}{tr 0=$wp_member_group.groupName 4=$wp_member_group.expireAfter 5=$wp_member_group.expireAfterYear}{$wp_member_title}{/tr}{/wiki}
 	{else} 
@@ -52,7 +52,8 @@
 				{/if}
 			{/if}
 			{if !empty($prefs.payment_manual)}
-				{$prefs.payment_manual}{include file='wiki:`$prefs.payment_manual`'}
+				{capture name=wp_payment_manual}wiki:{$prefs.payment_manual}{/capture}
+				{include file=$smarty.capture.wp_payment_manual}
 			{/if}
 		{/if}
 	</p>
