@@ -682,6 +682,24 @@ class BlogLib extends TikiLib
 	}
 
 	/**
+	 * Check if a blog exists
+	 *
+	 * @param int $blogId
+	 * @return bool true or false if blog exists or not
+	 */
+	function check_blog_exists($blogId) {
+		global $smarty;
+
+		require_once('lib/blogs/bloglib.php');
+		if (!$this->blog_exists($blogId)) {
+			$msg = tra('Blog cannot be found');
+			$smarty->assign('msg', $msg);
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
+
+	/**
 	 * Returns a list of posts that belongs to a particular blog
 	 *
 	 * @param int $blogId

@@ -10,9 +10,10 @@ include_once ('lib/commentslib.php');
 $auto_query_args = array('types_section', 'types', 'show_types', 'sort_mode', 'offset', 'find', 'findfilter_approved');
 
 if (isset($_REQUEST['blogId'])) {
+	require_once('lib/blogs/bloglib.php');
 	$blogId = $_REQUEST['blogId'];
 	$access->check_feature('feature_blogs');
-	$access->check_blog_exists($blogId);
+	$bloglib->check_blog_exists($blogId);
 	$tikilib->get_perm_object('blog', $blogId);
 
 	if ($tiki_p_blog_admin != 'y') {
@@ -29,7 +30,6 @@ $title = tra('Comments');
 $sections_keys = array('objectType' => 'commentsFeature', 'itemObjectType' => 'itemCommentsFeature');
 
 if (isset($blogId)) {
-	require_once('lib/blogs/bloglib.php');
 	$title .= ' - ' . $bloglib->get_title($blogId);
 } else if (isset($_REQUEST['types_section']) && isset($sections_enabled[$_REQUEST['types_section']])) {
 	// types_section is used to limit the user to only one section (e.g. 'blogs')

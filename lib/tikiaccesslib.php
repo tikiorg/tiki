@@ -158,24 +158,6 @@ class TikiAccessLib extends TikiLib
 	}
 
 	/**
-	 * Check if a blog exists
-	 *
-	 * @param int $blogId
-	 * @return bool true or false if blog exists or not
-	 */
-	function check_blog_exists($blogId) {
-		global $smarty;
-
-		require_once('lib/blogs/bloglib.php');
-		if (!$bloglib->blog_exists($blogId)) {
-			$msg = tra('Blog cannot be found');
-			$smarty->assign('msg', $msg);
-			$smarty->display('error.tpl');
-			die;
-		}
-	}
-
-	/**
 	 *  Check whether script was called directly or included
 	 *  err and die if called directly
 	 *  Typical usage: $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
