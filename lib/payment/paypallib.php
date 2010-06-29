@@ -8,7 +8,8 @@
 class PaypalLib extends TikiDb_Bridge
 {
 	function get_invoice( $ipn_data ) {
-		return isset( $ipn_data['invoice'] ) ? $ipn_data['invoice'] : 0;
+		global $prefs;
+		return isset( $ipn_data['invoice'] ) ? str_replace( $prefs['payment_invoice_prefix'], '', $ipn_data['invoice'] ) : 0;
 	}
 
 	function get_amount( $ipn_data ) {
