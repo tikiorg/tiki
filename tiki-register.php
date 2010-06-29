@@ -152,7 +152,9 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 			include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
 			$_SESSION['in_tracker'] = true;
+			$user = $_REQUEST['name']; // so that one can set user preferences at registration time
 			$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n'));
+			$user = ''; // reset $user for security reasons
 			$smarty->assign('userTrackerData', $userTrackerData);
 			if (!isset($_REQUEST['trackit']) || (isset($_REQUEST['error']) && $_REQUEST['error'] == 'y')) {
 				$email_valid = 'n'; // first pass or error
@@ -185,35 +187,7 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 			
 		}
 		unset($_SESSION['in_tracker']);
-		// save default user preferences
-		$tikilib->set_user_preference($_REQUEST['name'], 'theme', $prefs['style']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'userbreadCrumb', $prefs['users_prefs_userbreadCrumb']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'language', $prefs['users_prefs_language']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'display_timezone', $prefs['users_prefs_display_timezone']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'user_information', $prefs['users_prefs_user_information']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'user_dbl', $prefs['users_prefs_user_dbl']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'diff_versions', $prefs['users_prefs_diff_versions']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'show_mouseover_user_info', $prefs['users_prefs_show_mouseover_user_info']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'email is public', $prefs['users_prefs_email_is_public']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mailCharset', $prefs['users_prefs_mailCharset']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'realName', '');
-		$tikilib->set_user_preference($_REQUEST['name'], 'homePage', '');
-		$tikilib->set_user_preference($_REQUEST['name'], 'lat', floatval(0));
-		$tikilib->set_user_preference($_REQUEST['name'], 'lon', floatval(0));
-		$tikilib->set_user_preference($_REQUEST['name'], 'country', '');
-		$tikilib->set_user_preference($_REQUEST['name'], 'mess_maxRecords', $prefs['users_prefs_mess_maxRecords']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mess_archiveAfter', $prefs['users_prefs_mess_archiveAfter']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mess_sendReadStatus', $prefs['users_prefs_mess_sendReadStatus']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'minPrio', $prefs['users_prefs_minPrio']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'allowMsgs', $prefs['users_prefs_allowMsgs']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_pages', $prefs['users_prefs_mytiki_pages']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_blogs', $prefs['users_prefs_mytiki_blogs']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_articles', $prefs['users_prefs_mytiki_articles']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_gals', $prefs['users_prefs_mytiki_gals']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_msgs', $prefs['users_prefs_mytiki_msgs']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_tasks', $prefs['users_prefs_mytiki_tasks']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_items', $prefs['users_prefs_mytiki_items']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'tasks_maxRecords', $prefs['users_prefs_tasks_maxRecords']);
+		// no need for saving default user preferences, because the add_user call takes care of that
 		// Custom fields
 		foreach($customfields as $custpref => $prefvalue) {
 			if (isset($_REQUEST[$customfields[$custpref]['prefName']])) $tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
