@@ -1676,6 +1676,7 @@ function get_default_prefs() {
 		'payment_cclite_notify' => 'y',
 		'payment_cclite_hashing_algorithm' => '',
 		'payment_manual' => '',
+		'payment_invoice_prefix' => '',
 
 		// Rating
 		'rating_advanced' => 'n',

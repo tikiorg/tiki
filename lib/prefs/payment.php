@@ -122,6 +122,15 @@ function prefs_payment_list() {
 			'name' => tra('Wiki page containing the instruction to send manual payment like check'),
 			'description' => tra('Wiki page'),
 			'type' => 'text',
+			'dependencies' => array( 'payment_feature' ),
+			'default' => '',
+		),
+		'payment_invoice_prefix' => array(
+			'name' => tra('Prefix to the invoice'),
+			'description' => tra('Prefix must be set and unique if the same paypal account is used for different tiki sites as paypal checks that the invoice is not paid twice'),
+			'type' => 'text',
+			'dependencies' => array( 'payment_feature' ),
+			'default' => '',
 		),
 	);
 }

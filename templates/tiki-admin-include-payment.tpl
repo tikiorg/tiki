@@ -29,6 +29,7 @@
 						{preference name=payment_paypal_environment}
 						{preference name=payment_paypal_ipn}
 					</div>
+					{preference name=payment_invoice_prefix}
 				</div>
 				<h2>{tr}Cclite{/tr}</h2>
 				<div class="admin payment">
