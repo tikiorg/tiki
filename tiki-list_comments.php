@@ -125,6 +125,11 @@ $objectsIds = '';
 
 if (isset($blogId)) {
 	$objectsIds = $bloglib->get_blog_posts_ids($blogId);
+
+	// do not display object type column if only listing blog comments
+	unset($headers['objectType']);
+
+	$smarty->assign('blogId', $blogId);
 }
 
 $comments = $commentslib->get_all_comments($selected_types, $offset, $maxRecords, $sort_mode, $find, 'y', $_REQUEST['findfilter_approved'], false, $objectsIds);
