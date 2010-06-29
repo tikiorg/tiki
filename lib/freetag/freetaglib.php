@@ -635,7 +635,7 @@ class FreetagLib extends ObjectLib
 			return true;
 		}
 
-		$tagId = $this->find_or_create_tag( $tag, $lang );
+		$tagId = $this->find_or_create_tag( $tag, $lang, false );
 
 		$objectId = $this->add_object($type, $itemId);
 

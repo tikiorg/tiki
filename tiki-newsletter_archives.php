@@ -11,6 +11,11 @@ $access->check_feature('feature_newsletters');
 if (!empty($_REQUEST['nlId'])) {
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
 	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
+	if (empty($nl_info)) {
+		$smarty->assign('msg', tra('Newsletter does not exist'));
+		$smarty->display('error.tpl');
+		die;
+	}
 	$smarty->assign_by_ref('nl_info', $nl_info);
 }
 if (isset($_REQUEST['remove']) && !empty($_REQUEST['nlId'])) {

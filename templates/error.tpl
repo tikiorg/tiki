@@ -1,3 +1,4 @@
+{strip}
 {if isset($close_window) and $close_window eq 'y'}
 {jq}
 close();
@@ -107,3 +108,4 @@ close();
 {else}
 {include file='tiki.tpl'}
 {/if}
+{/strip}

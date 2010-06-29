@@ -32,6 +32,11 @@ if ($perms->admin_newsletters != 'y') {
 $defaultArticleClipRange = 3600 * 24; // one day
 if ($_REQUEST["nlId"]) {
 	$info = $nllib->get_newsletter($_REQUEST["nlId"]);
+	if (empty($info)) {
+		$smarty->assign('msg', tra('Newsletter does not exist'));
+		$smarty->display('error.tpl');
+		die;
+	}
 	$update = "";
 	$info["articleClipTypes"] = unserialize($info["articleClipTypes"]);
 	$info["articleClipRangeDays"] = $info["articleClipRange"] / 3600 / 24;

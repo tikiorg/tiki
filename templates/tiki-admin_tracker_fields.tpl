@@ -173,6 +173,7 @@
 <tr class="formcolor"><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Is column visible when listing tracker items?{/tr}</td><td><input type="checkbox" name="isTblVisible" {if empty($fieldId) || $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td colspan="2">{remarksbox type="info" title="{tr}Important note{/tr}"}{tr}The first field in the tracker to have column links to edit/view item (i.e. isMain) will be what is shown as the name of the item in category and search listings{/tr}{/remarksbox}</td></tr>
 <tr class="formcolor"><td>{tr}Column links to edit/view item?{/tr}</td><td><input type="checkbox" name="isMain" {if empty($fieldId) ||$isMain eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor" id='multilabelRow'{if $type neq 'a' && $type neq 't' && $type neq 'o' && $type neq '' && $type neq 'C'} style="display:none;"{/if}><td>{tr}Multilingual content{/tr}:</td><td><input type="checkbox" name="isMultilingual" {if $isMultilingual eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Column is searchable?{/tr}</td><td><input type="checkbox" name="isSearchable" {if $isSearchable eq 'y'}checked="checked"{/if} /></td></tr>
