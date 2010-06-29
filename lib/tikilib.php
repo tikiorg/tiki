@@ -4671,66 +4671,10 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	function plugin_split_args( $params_string ) {
-		// the following str_replace line is to decode the &gt; char when html is turned off
-		// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
-		$params_string = str_replace('&gt;', '>', $params_string);
-		$params_string = str_replace('&lt;', '<', $params_string);
-		$params_string = str_replace('&quot;', '"', $params_string);
-		$params_string = str_replace('&apos;', "'", $params_string);
-		$params_string = str_replace('&amp;', '&', $params_string);
+		require_once 'WikiParser/PluginArgumentParser.php';
+		$parser = new WikiParser_PluginArgumentParser;
 
-		$arguments = array();
-
-		// Handle parameters one by one
-		while( false !== $pos = strpos( $params_string, '=' ) ) {
-			$name = substr( $params_string, 0, $pos );
-			$name = trim(ltrim( $name, ', ' ));
-			$value = '';
-
-			// Consider =>
-			if( isset($params_string{$pos + 1}) && $params_string{$pos + 1} == '>' )
-				$pos++;
-
-			// Cut off the name part
-			$params_string = substr( $params_string, $pos + 1 );
-			$params_string = ltrim( $params_string );
-
-			if( !empty($params_string) && ($params_string{0} == '"' || $params_string{0} == "'") ) {
-				$quote = 0;
-				// Parameter between quotes, find closing quote not escaped by a \
-				while( false !== $quote = strpos( $params_string, $params_string{0}, $quote + 1 ) ) {
-					if( $params_string{$quote - 1} != "\\" )
-						break;
-				}
-
-				// Closing quote found
-				if( $quote !== false ) {
-					$value = substr( $params_string, 1, $quote - 1 );
-					$arguments[$name] = str_replace( array('\"', "\\'"), array('"', "'"), $value );
-
-					$params_string = substr( $params_string, $quote + 1 );
-					continue;
-				}
-
-				// Not found, fallback as if opening quote was part of the string
-			}
-
-			// If last parameter, consider next as end of string
-			if( preg_match( "/[\s,]\w+=/", $params_string, $parts ) ) {
-				$end = strpos( $params_string, $parts[0] );
-				$value = substr( $params_string, 0, $end );
-				$params_string = substr( $params_string, $end );
-			} else {
-				$value = $params_string;
-				$params_string = '';
-			}
-
-			$value = rtrim( $value, "\n\t\r\0, " );
-			$value = strip_tags($value);
-			$arguments[$name] = $value;
-		}
-
-		return $arguments;
+		return $parser->parse( $params_string );
 	}
 	// get all the plugins of a text- can be limitted only to some
 	function getPlugins($data, $only=null) {
