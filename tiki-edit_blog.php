@@ -49,7 +49,7 @@ if (!isset($lastModif)) {
 
 if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	// Check permission
-	$data = $tikilib->get_blog($_REQUEST["blogId"]);
+	$data = $bloglib->get_blog($_REQUEST["blogId"]);
 
 	if ($data["user"] != $user || !$user) {
 		if ($tiki_p_blog_admin != 'y') {

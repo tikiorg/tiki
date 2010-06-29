@@ -115,9 +115,9 @@ function listforum_pref()
  */
 function listblog_pref()
 {
-	global $tikilib;
+	require_once('lib/blogs/bloglib.php');
 
-	$allblogs = $tikilib->list_blogs(0, -1, 'created_desc', '');
+	$allblogs = $bloglib->list_blogs(0, -1, 'created_desc', '');
 	$listblogs = array();
 
 	if ($allblogs['cant'] > 0) {

@@ -45,7 +45,7 @@ $smarty->assign('individual', 'n');
 $tikilib->get_perm_object($_REQUEST["blogId"], 'blog');
 $access->check_permission('tiki_p_read_blog');
 
-$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
+$blog_data = $bloglib->get_blog($_REQUEST["blogId"]);
 $ownsblog = 'n';
 if ($user && $user == $blog_data["user"]) {
 	$ownsblog = 'y';

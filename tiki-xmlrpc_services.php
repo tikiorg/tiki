@@ -108,7 +108,8 @@ function newPost($params) {
 			return new XML_RPC_Response(0, 101, "User is not allowed to post");
 		}
 
-		$blog_info = $tikilib->get_blog($blogid);
+		require_once('lib/blogs/bloglib.php');
+		$blog_info = $bloglib->get_blog($blogid);
 
 		if ($blog_info["public"] != 'y') {
 			if ($username != $blog_info["user"]) {
@@ -337,7 +338,8 @@ function getUserBlogs($params) {
 
 	$arrayVal = array();
 
-	$blogs = $tikilib->list_user_blogs($username, true);
+	require_once('lib/blogs/bloglib.php');
+	$blogs = $bloglib->list_user_blogs($username, true);
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
 	$foo1 = $tikilib->httpPrefix(). str_replace("xmlrpc", "tiki-view_blog", $foo["path"]);
 

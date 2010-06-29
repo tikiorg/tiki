@@ -22,8 +22,9 @@ function module_last_created_blogs_info() {
 }
 
 function module_last_created_blogs( $mod_reference, $module_params ) {
-	global $tikilib, $smarty;
-	$ranking = $tikilib->list_blogs(0, $mod_reference["rows"], 'created_desc', '', 'blog');
+	global $smarty;
+	require_once('lib/blogs/bloglib.php');
+	$ranking = $bloglib->list_blogs(0, $mod_reference["rows"], 'created_desc', '', 'blog');
 	
 	$smarty->assign('modLastCreatedBlogs', $ranking["data"]);
 }

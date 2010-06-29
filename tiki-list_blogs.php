@@ -16,7 +16,7 @@ $access->check_feature('feature_blogs');
 $access->check_permission('tiki_p_read_blog');
 if (isset($_REQUEST["remove"])) {
 	// Check if it is the owner
-	$data = $tikilib->get_blog($_REQUEST["remove"]);
+	$data = $bloglib->get_blog($_REQUEST["remove"]);
 	if ($data["user"] != $user) {
 		if ($tiki_p_blog_admin != 'y') {
 			$smarty->assign('errortype', 401);
@@ -54,7 +54,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_blogs($offset, $maxRecords, $sort_mode, $find);
+$listpages = $bloglib->list_blogs($offset, $maxRecords, $sort_mode, $find);
 Perms::bulk( array( 'type' => 'blog' ), 'object', $listpages['data'], 'blogId' );
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {

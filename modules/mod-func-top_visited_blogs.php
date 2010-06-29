@@ -35,7 +35,8 @@ function module_top_visited_blogs_info() {
 }
 
 function module_top_visited_blogs( $mod_reference, $module_params ) {
-	global $tikilib, $smarty;
+	global $smarty;
+	require_once('lib/blogs/bloglib.php');
 	$with = '';
 	if (isset($mod_reference['params']['showlastpost']) && $mod_reference['params']['showlastpost'] == 'y') {
 		$with = array('showlastpost'=>'y');
@@ -43,7 +44,7 @@ function module_top_visited_blogs( $mod_reference, $module_params ) {
 	if (empty($mod_reference['sort_mode'])) {
 		$mod_reference['sort_mode'] = 'hits_desc';
 	}
-	$ranking = $tikilib->list_blogs(0, $mod_reference['rows'], $mod_reference['sort_mode'], '', 'blog', $with);
+	$ranking = $bloglib->list_blogs(0, $mod_reference['rows'], $mod_reference['sort_mode'], '', 'blog', $with);
 	
 	$smarty->assign('modTopVisitedBlogs', $ranking['data']);
 }

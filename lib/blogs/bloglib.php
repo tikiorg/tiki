@@ -23,6 +23,263 @@ include_once('lib/reportslib.php');
  */
 class BlogLib extends TikiLib
 {
+	/**
+	 * List all blogs
+	 *
+	 * @param int $offset
+	 * @param int $maxRecords
+	 * @param string @sort_mode
+	 * @param string $find
+	 * @param string $ref
+	 * @param string $with
+	 *
+	 * @return array
+	 */
+	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $ref='', $with = '') {
+		global $categlib; if (!$categlib) require_once 'lib/categories/categlib.php';
+		$bindvars = array();
+		$join = '';
+		$where = '';
+
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'blog', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
+		}	
+
+		if ($find) {
+			$findesc = '%' . $find . '%';
+			$where .= ' and (`tiki_blogs`.`title` like ? or `tiki_blogs`.`description` like ?) ';
+			$bindvars = array_merge($bindvars, array($findesc, $findesc));
+		}
+		if (isset($with['showlastpost'])) {
+			$query = "SELECT tb.*, tbp.`postId`, tbp.`created` as postCreated,  tbp.`user` as postUser, tbp.`title` as postTitle, tbp.`data` as postData FROM `tiki_blogs` tb, `tiki_blog_posts` tbp  $join where tb.`blogId` = tbp.`blogId` and tbp.`created` = (select max(`created`) from `tiki_blog_posts` tbp2 where tbp2.`blogId`=tb.`blogId` order by `created` desc) $where order by tb.".$this->convertSortMode($sort_mode);
+		} else {
+			$query = "select * from `tiki_blogs` $join WHERE 1=1 $where order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
+		}
+		$result = $this->fetchAll($query, $bindvars);
+
+		$ret = array();
+		$cant = 0;
+		$nb = 0;
+		$i = 0;
+		//FIXME Perm:filter ?
+		foreach ( $result as $res ) {
+			global $user;
+			if ($objperm = $this->get_perm_object($res['blogId'], 'blog', '', false)) {
+				if ( $objperm['tiki_p_read_blog'] == 'y' || ($ref == 'post' && $objperm['tiki_p_blog_post_view_ref'] == 'y') || ($ref == 'blog' && $objperm['tiki_p_blog_view_ref'] == 'y')) {
+				  ++$cant;
+				  if ($maxRecords == - 1 || ($i >= $offset && $nb < $maxRecords)) {
+					$ret[] = $res;
+					++$nb;
+				  }
+				++$i;
+			  }
+			}
+		}
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
+	}
+
+
+	/**
+	 * Return all blog information
+	 *
+	 * @param int $blogId
+	 * @return array
+	 */
+	function get_blog($blogId) {
+		global $prefs, $user, $categlib; if (!$categlib) require_once 'lib/categories/categlib.php'; 
+
+		$bindvars = array();
+
+		if( $jail = $categlib->get_jail() ) {
+			$categlib->getSqlJoin($jail, 'blog', '`tiki_blogs`.`blogId`', $join, $where, $bindvars);
+		} else {
+			$join = '';
+			$where = '';
+		}
+		array_push( $bindvars, $blogId );
+		if (!empty($where)) $where = '1=1 '.$where.' AND ';
+		$query = "SELECT * FROM `tiki_blogs` $join WHERE $where `blogId`=?";
+		$result = $this->query($query, $bindvars);
+		if ($result->numRows()) {
+			$res = $result->fetchRow();
+		} else {
+			return false;
+		}
+
+		if ($prefs['feature_score'] == 'y' && $user != $res['user']) {
+			$this->score_event($user, 'blog_read', $blogId);
+			$this->score_event($res['user'], 'blog_is_read', "$user:$blogId");
+		}
+
+		return $res;
+	}
+
+	/**
+	 * Return a blog by its title
+	 *
+	 * @param string $blogTitle
+	 * @return array or false if no blog is found
+	 */
+	function get_blog_by_title($blogTitle) {
+		global $prefs, $user;
+
+	 	// Avoiding select by name so as to avoid SQL injection problems.
+		$query = "select `title`, `blogId` from `tiki_blogs` where `use_title` = 'y' ";
+		$result = $this->fetchAll($query);
+		if ( !empty($result) ) {
+			foreach ( $result as $res ) {
+				if( strtolower($res['title']) == strtolower($blogTitle) ) {
+					return $this->get_blog($res['blogId']);
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns an array of blogs that belong to the user with the given name,
+	 * or which are public, if $include_public is set to true.
+	 * A blog is represented by an array like a tiki_blogs record.
+	 *
+	 * @param string $user
+	 * @param bool $include_public wheter or include public blogs (that belongs to other users)
+	 * @return array
+	 */
+	function list_user_blogs($user, $include_public = false) {
+		$query = "select * from `tiki_blogs` where `user`=? ";
+		$bindvars=array($user);
+		if ($include_public) {
+			$query .= " or `public`=?";
+			$bindvars[]='y';
+		}
+		$query .= "order by `title` asc";
+		$result = $this->fetchAll($query,$bindvars);
+		$ret = array();
+
+		//FIXME Perm::filter ?
+		foreach ( $result as $res ) {
+			if ($this->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_read_blog')) {
+				$ret[] = $res;
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	 * Return a list of blogs that the user has permission to post
+	 *
+	 * @return array
+	 */
+	function list_blogs_user_can_post() {
+		global $tiki_p_blog_admin, $user;
+		$query = "select * from `tiki_blogs` order by `title` asc";
+		$result = $this->fetchAll($query);
+		$ret = array();
+
+		//FIXME Perm:filter ?
+		foreach ( $result as $res ) {
+			if( (!empty($user) and $user == $res['user']) || $tiki_p_blog_admin == 'y' || ($res['public'] == 'y' && $this->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post'))) 
+				$ret[] = $res;
+		}
+		return $ret;
+	}
+
+	/**
+	 * List all posts
+	 *
+	 * @param int $offset
+	 * @param int $maxRecords
+	 * @param string $sort_mode
+	 * @param string $find
+	 * @param int $filterByBlogId
+	 * @param string $author
+	 * @param string $ref
+	 * @param int $date_min
+	 * @param int $data_max
+	 * @return array
+	 */
+	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='', $ref='', $date_min = 0, $date_max = 0) {
+
+		$authorized_blogs = $this->list_blogs(0, -1, 'created_desc', '', $ref);
+		$permit_blogs = array();
+		for ($i = 0; $i < $authorized_blogs["cant"] ; $i++) {
+			$permit_blogs[] = $authorized_blogs["data"][$i]['blogId'];
+		}
+
+		if ($filterByBlogId >= 0) {
+			// get posts for a given blogId:
+			$mid = " where ( `blogId` = ? ) ";
+			$bindvars = array($filterByBlogId);
+		} else {
+			// get posts from all blogs
+			$mid = '';
+			$bindvars = array();
+		}
+
+		if ($find) {
+			$findesc = '%' . $find . '%';
+			if ($mid == "") {
+				$mid = " where ";
+			} else {
+				$mid .= " and ";
+			}
+			$mid .= " ( `data` like ? ) ";
+			$bindvars[] = $findesc;
+		}
+		if ($date_min !== 0 || $date_max !== 0) {
+			if ( $date_max <= 0 ) {
+				// show articles published today
+				$date_max = $this->now;
+			}
+			if ($mid == '') {
+				$mid = ' where ';
+			} else {
+				$mid .= ' and ';
+			}
+			$mid .= '(`created`>=? and `created`<=?)';
+			$bindvars[] = $date_min;
+			$bindvars[] = $date_max;
+		}
+		if (!empty($author)) {
+			if ($mid == '') {
+				$mid = ' where ';
+			} else {
+				$mid .= ' and ';
+			}
+			$mid .= 'user =?';
+			$bindvars[] = $author;
+		}
+
+		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convertSortMode($sort_mode);
+		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
+		$result = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+
+		foreach ( $result as $res ) {
+			$blogId = $res["blogId"];
+
+			if ( ! in_array($blogId, $permit_blogs) ) {
+				continue;
+			}
+			$query = "select `title`  from `tiki_blogs` where `blogId`=?";
+			$cant_com = $this->getOne("select count(*) from
+					`tiki_comments` where `object`=? and `objectType` = ?",
+					array((string) $res["postId"],'blog'));
+			$res["comments"] = $cant_com;
+			$res["blogTitle"] = $this->getOne($query,array((int)$blogId));
+			$res["size"] = strlen($res["data"]);
+			$ret[] = $res;
+		}
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
+	}
 
 	/**
 	 * get_number_of_pages Returns the number of pages
@@ -222,9 +479,9 @@ class BlogLib extends TikiLib
 			// user has tiki_p_admin or tiki_p_blog_admin or has written the post
 			// If blog is configured with 'Allow other user to post in this blog', then also if user has tiki_p_blog_post or is owner of this blog
 			if ( ($tiki_p_admin != 'y')
-			     and ($tiki_p_blog_admin != 'y')
-			     and ( (! isset($blog_data["public"])) || $blog_data["public"] != 'y' || $tiki_p_blog_post != 'y')
-			     and ($blog_data["public"] != 'y' || $ownsblog != 'y') ) {
+				  and ($tiki_p_blog_admin != 'y')
+				  and ( (! isset($blog_data["public"])) || $blog_data["public"] != 'y' || $tiki_p_blog_post != 'y')
+				  and ($blog_data["public"] != 'y' || $ownsblog != 'y') ) {
 				if ( isset($user) ) {
 					$mid[] = "(tbp.`priv`!='y' or tbp.`user`=?)";
 					$bindvars[] = "$user";

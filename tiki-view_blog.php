@@ -23,7 +23,7 @@ if ($prefs['feature_categories'] == 'y') {
 $access->check_feature('feature_blogs');
 
 if (isset($_REQUEST["blogTitle"])) {
-	$blog_data = $tikilib->get_blog_by_title(trim(trim($_REQUEST["blogTitle"]) , "\x22\x27"));
+	$blog_data = $bloglib->get_blog_by_title(trim(trim($_REQUEST["blogTitle"]) , "\x22\x27"));
 	if ((!empty($blog_data)) && (!empty($blog_data["blogId"]))) {
 		$_REQUEST["blogId"] = $blog_data["blogId"];
 	}
@@ -38,7 +38,7 @@ $tikilib->get_perm_object( $_REQUEST["blogId"], 'blog' );
 
 $access->check_permission('tiki_p_read_blog');
 
-$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
+$blog_data = $bloglib->get_blog($_REQUEST["blogId"]);
 $ownsblog = 'n';
 if ($user && $user == $blog_data["user"]) {
 	$ownsblog = 'y';

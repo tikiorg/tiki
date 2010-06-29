@@ -377,7 +377,8 @@ function feature_home_pages()
 	// Blog
 	if ($prefs['feature_blogs'] == 'y') {
 		if ( $prefs['home_blog'] != '0' ) {
-			$hbloginfo = $tikilib->get_blog($prefs['home_blog']);
+			require_once('lib/blogs/bloglib.php');
+			$hbloginfo = $bloglib->get_blog($prefs['home_blog']);
 			$home_blog_name = substr($hbloginfo['title'], 0, 20);
 		} else {
 			$home_blog_name = tra('Set blogs homepage first');

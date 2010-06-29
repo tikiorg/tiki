@@ -57,7 +57,8 @@ switch ($_REQUEST['type']) {
 		break;
 
 	case 'blog':
-		$objects = $tikilib->list_blogs(0, -1, 'title_asc', $find_objects);
+		require_once('lib/blogs/bloglib.php');
+		$objects = $bloglib->list_blogs(0, -1, 'title_asc', $find_objects);
 		$smarty->assign_by_ref('objects', $objects["data"]);
 		$objects = $objects['data'];
 		correct_array($objects, 'blogId', 'title');

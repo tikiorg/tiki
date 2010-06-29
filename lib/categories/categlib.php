@@ -748,8 +748,9 @@ class CategLib extends ObjectLib
 		$catObjectId = $this->is_categorized('blog', $blogId);
 
 		if (!$catObjectId) {
+			require_once('lib/blogs/bloglib.php');
 			// The page is not cateorized
-			$info = $this->get_blog($blogId);
+			$info = $bloglib->get_blog($blogId);
 
 			$href = 'tiki-view_blog.php?blogId=' . $blogId;
 			$catObjectId = $this->add_categorized_object('blog', $blogId, $info["description"], $info["title"], $href);

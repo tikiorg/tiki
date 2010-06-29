@@ -355,7 +355,8 @@ if( $prefs['feature_polls'] == 'y' ) {
 }
 
 if( $prefs['feature_blogs'] == 'y' ) {
-	$blogs = $tikilib->list_blogs($offset, $maxRecords, 'title_asc', $find_objects);
+	require_once('lib/blogs/bloglib.php');
+	$blogs = $bloglib->list_blogs($offset, $maxRecords, 'title_asc', $find_objects);
 }
 
 if( $prefs['feature_wiki'] == 'y' ) {

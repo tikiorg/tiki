@@ -55,7 +55,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_posts($offset, $maxRecords, $sort_mode, $find);
+$listpages = $bloglib->list_posts($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant', $listpages["cant"]);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);

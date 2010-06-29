@@ -24,7 +24,7 @@ if ($prefs['feature_freetags'] == 'y') {
 }
 if (isset($_REQUEST['blogId'])) {
 	$blogId = $_REQUEST['blogId'];
-	$blog_data = $tikilib->get_blog($blogId);
+	$blog_data = $bloglib->get_blog($blogId);
 } else {
 	$blogId = 0;
 }
@@ -196,7 +196,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 
 	if ($_REQUEST["postId"] > 0) {
 		$data = $bloglib->get_post($_REQUEST["postId"]);
-		$blog_data = $tikilib->get_blog($data["blogId"]);
+		$blog_data = $bloglib->get_blog($data["blogId"]);
 		if (!$user || ($data["user"] != $user && $user != $blog_data["user"] && !($blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post')))) {
 			if ($tiki_p_blog_admin != 'y') {
 				$smarty->assign('errortype', 401);

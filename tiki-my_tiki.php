@@ -45,7 +45,8 @@ if ($prefs['feature_wiki'] == 'y') {
 if ($prefs['feature_blogs'] == 'y') {
 	$mytiki_blogs = $tikilib->get_user_preference($user, 'mytiki_blogs', 'y');
 	if ($mytiki_blogs == 'y') {
-		$user_blogs = $tikilib->list_user_blogs($userwatch, false);
+		require_once('lib/blogs/bloglib.php');
+		$user_blogs = $bloglib->list_user_blogs($userwatch, false);
 		$smarty->assign_by_ref('user_blogs', $user_blogs);
 		$smarty->assign('mytiki_blogs', 'y');
 	}

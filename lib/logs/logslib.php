@@ -1392,7 +1392,8 @@ class LogsLib extends TikiLib
 		case 'blog':
 
 			if (!isset($blogNames)) {
-				$objects = $tikilib->list_blogs();
+				require_once('lib/blogs/bloglib.php');
+				$objects = $bloglib->list_blogs();
 				foreach ($objects['data'] as $object) {
 					$blogNames[$object['blogId']] = $object['title'];
 				}
