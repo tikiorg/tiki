@@ -938,10 +938,6 @@ function prefs_feature_list() {
 			'name' => tra('Custom blog headings'),
 			'type' => 'flag',
 		),
-		'feature_blog_comments' => array(
-			'name' => tra('Blog-level'),
-			'type' => 'flag',
-		),
 		'feature_blogposts_comments' => array(
 			'name' => tra('Post-level'),
 			'type' => 'flag',

@@ -29,7 +29,6 @@
 			<fieldset>
 				<legend>{tr}Comments{/tr}</legend>
 				<input type="hidden" name="blogcomprefs" />
-				{preference name=feature_blog_comments}
 				{preference name=feature_blogposts_comments}
 				{preference name=blog_comments_per_page}
 				{preference name=blog_comments_default_ordering}

@@ -507,7 +507,6 @@ function get_default_prefs() {
 		'blog_list_order' => 'created_desc',
 		'home_blog' => 0,
 		'feature_blog_rankings' => 'n',
-		'feature_blog_comments' => 'n',
 		'blog_comments_default_ordering' => 'points_desc',
 		'blog_comments_per_page' => 10,
 		'feature_blogposts_comments' => 'n',

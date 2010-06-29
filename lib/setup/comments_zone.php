@@ -19,7 +19,6 @@ if ( $comzone == 'show' ) {
 	if ( strstr($_SERVER['REQUEST_URI'], 'tiki-view_faq') and $prefs['feature_faq_comments'] == 'y' ) $prefs['show_comzone'] = 'y';
 	if ( strstr($_SERVER['REQUEST_URI'], 'tiki-browse_gallery') and $prefs['feature_image_galleries_comments'] == 'y' ) $prefs['show_comzone'] = 'y';
 	if ( strstr($_SERVER['REQUEST_URI'], 'tiki-list_file_gallery') and $prefs['feature_file_galleries_comments'] == 'y' ) $prefs['show_comzone'] = 'y';
-	if ( strstr($_SERVER['REQUEST_URI'], 'tiki-view_blog') and $prefs['feature_blog_comments'] == 'y' ) $prefs['show_comzone'] = 'y';
 	if ( strstr($_SERVER['REQUEST_URI'], 'tiki-view_blog_post') and $prefs['feature_blogposts_comments'] == 'y' ) $prefs['show_comzone'] = 'y';
 	if ( strstr($_SERVER['REQUEST_URI'], 'tiki-map') and $prefs['feature_map_comments'] == 'y' ) $prefs['show_comzone'] = 'y';
 	if ( $prefs['show_comzone'] == 'y' ) $smarty->assign('show_comzone', 'y');

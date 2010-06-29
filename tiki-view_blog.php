@@ -124,16 +124,6 @@ $smarty->assign('maxRecords', $maxRecords);
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 $smarty->assign_by_ref('cant', $listpages["cant"]);
-if ($prefs['feature_blog_comments'] == 'y') {
-	$comments_per_page = $prefs['blog_comments_per_page'];
-	$thread_sort_mode = $prefs['blog_comments_default_ordering'];
-	$comments_vars = array(
-		'blogId'
-	);
-	$comments_prefix_var = 'blog:';
-	$comments_object_var = 'blogId';
-	include_once ("comments.php");
-}
 include_once ('tiki-section_options.php');
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'blog';
