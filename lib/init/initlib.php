@@ -207,7 +207,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	case E_USER_NOTICE:
 	case E_DEPRECATED:
 	case E_USER_DEPRECATED:
-		if ( ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile) ) {
+		if (!  defined('THIRD_PARTY_LIBS_PATTERN') ||  ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile) ) {
 			if ($prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
 				break;
 			$back = "<div style='padding:4px;border:1px solid #000;background-color:#FF6;font-size:10px;'>";
