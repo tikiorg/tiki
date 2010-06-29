@@ -65,16 +65,23 @@ foreach($sections_enabled as $k => $info) {
 		}
 	}
 }
+
 // No need to show types choices if there is only one choice that is already choosed
 if (count($show_types) == 1 && count($selected_types) == 1) $show_types = array();
-$headers = array('title' => 'Title', 'objectType' => 'Type', 'object' => 'Object', 'userName' => 'Author', 'user_ip' => 'IP', 'commentDate' => 'Date', 'data' => 'Comment',);
+
+$headers = array('title' => 'Title', 'objectType' => 'Type', 'object' => 'Object', 'userName' => 'Author', 'commentDate' => 'Date', 'data' => 'Comment',);
+$more_info_headers = array('user_ip' => 'IP');
+
 if (count($selected_types) == 1) {
 	unset($headers['objectType']);
 	$headers['object'] = tra(ucwords($selected_types[0]));
 }
+
 $smarty->assign_by_ref('show_types', $show_types);
 $smarty->assign_by_ref('selected_types', $selected_types);
 $smarty->assign_by_ref('headers', $headers);
+$smarty->assign_by_ref('more_info_headers', $more_info_headers);
+
 // Handle actions
 if (isset($_REQUEST['checked'])) {
 	check_ticket('list_comments');

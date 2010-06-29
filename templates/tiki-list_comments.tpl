@@ -19,6 +19,7 @@
 				{select_all checkbox_names='checked[]'}
 			{/if}
 		</th>
+		<th></th>
 	
 		{foreach key=headerKey item=headerName from=$headers}
 			<th>
@@ -33,13 +34,47 @@
 				{self_link _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
 			</th>
 		{/if}
-		<th>{tr}Actions{/tr}</th>
+		<th></th>
 	</tr>
 	
 	{cycle values="even,odd" print=false}
 	{section name=ix loop=$comments}{assign var=id value=$comments[ix].threadId}
+		{capture name=over_actions}
+			{strip}
+				<div class='opaque'>
+					<div class='box-title'>{tr}Actions{/tr}</div>
+					<div class='box-data'>
+						<a href="{$comments[ix].href}#threadId{$id}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
+						<a href="{$comments[ix].href|cat:"&amp;comments_threadId=`$id`&amp;edit_reply=1#form"}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+						{self_link remove=1 checked=$id _icon='cross'}{tr}Delete{/tr}{/self_link}
+					</div>
+				</div>
+			{/strip}
+		{/capture}
+
+		{capture name=over_more_info}
+			{strip}
+				<div class='opaque'>
+					<div class='box-title'>{tr}More info{/tr}</div>
+					<div class='box-data'>
+						<div>
+							{foreach from=$more_info_headers key=headerKey item=headerName}
+								{assign var=val value=$comments[ix].$headerKey}
+								<b>{tr}{$headerName}{/tr}</b>: {$val}
+								<br />
+							{/foreach}
+						</div>
+					</div>
+				</div>
+			{/strip}
+		{/capture}
+
 		<tr{if $prefs.feature_comments_moderation eq 'y'} class="post-approved-{$comments[ix].approved}"{/if}>
 			<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$id}"/></td>
+			<td class="{cycle advance=false}">
+				<a title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt="{tr}Actions{/tr}"}</a>
+			</td>
+
 			{foreach key=headerKey item=headerName from=$headers}{assign var=val value=$comments[ix].$headerKey}
 				<td class="{cycle advance=false}" {if $headerKey eq 'data'}{popup caption=$comments[ix].title|escape:"javascript"|escape:"html"	text=$comments[ix].parsed|escape:"javascript"|escape:"html"}{/if}>
 					<span> {* span is used for some themes CSS opacity on some cells content *}
@@ -47,8 +82,10 @@
 							<a href="{$comments[ix].href}#threadId{$id}" title="{$val}">{$val|truncate:50:"...":true|escape}</a>
 						{elseif $headerKey eq 'objectType'}
 							{tr}{$val|ucwords}{/tr}
-						{elseif $headerKey eq 'object' or $headerKey eq 'data'}
+						{elseif $headerKey eq 'object'}
 							{$val|truncate:50:"...":true|escape}
+						{elseif $headerKey eq 'data'}
+							{$val|truncate:90:"...":true|escape}
 						{elseif $headerKey eq 'commentDate'}
 							{$val|tiki_short_datetime}
 						{elseif $headerKey eq 'userName'}
@@ -74,9 +111,7 @@
 			{/if}
 
 			<td class="{cycle advance=false}">
-				<a href="{$comments[ix].href}#threadId{$id}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
-				<a href="{$comments[ix].href|cat:"&amp;comments_threadId=`$id`&amp;edit_reply=1#form"}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
-				{self_link remove=1 checked=$id _icon='cross'}{tr}Delete{/tr}{/self_link}
+				<a title="{tr}More info{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_more_info|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='information' alt="{tr}More info{/tr}"}</a>
 			</td>
 
 			{cycle print=false}
