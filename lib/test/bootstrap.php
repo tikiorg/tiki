@@ -7,11 +7,20 @@ require_once(dirname(__FILE__) . '/TikiTestCase.php');
 ini_set( 'display_errors', 'on' );
 error_reporting( CUSTOM_ERROR_LEVEL );
 
-ini_set( 'include_path', ini_get('include_path') . PATH_SEPARATOR . "." . PATH_SEPARATOR . "../core/lib" . PATH_SEPARATOR . "../.." . PATH_SEPARATOR . "core");
+$paths = array(
+	ini_get('include_path'),
+	realpath('.'),
+	realpath('../core/lib'),
+	realpath('../..'),
+	realpath('core'),
+	realpath('../pear'),
+);
+
+ini_set( 'include_path', implode( PATH_SEPARATOR, $paths ) );
 
 function __autoload( $name ) {
-	$path = str_replace( '_', '/', $name );
-	require_once( $path . '.php' );
+	$path = str_replace( '_', '/', $name ) . '.php';
+	@ include_once( $path );
 }
 
 $tikidomain = '';

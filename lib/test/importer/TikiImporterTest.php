@@ -25,7 +25,7 @@ class TikiImporter_Test extends TikiImporter_TestCase
     {
         TikiImporter::changePhpSettings();
         $this->assertEquals(E_ALL, ini_get('error_reporting'), 'Should change the value of the error reporting');
-        $this->assertEquals(1, ini_get('display_errors'), 'Should change the value of display_errors');
+        $this->assertEquals('on', ini_get('display_errors'), 'Should change the value of display_errors');
         $this->assertEquals(360, ini_get('max_execution_time'), 'Should change the value of max_execution_time');
     }
 
