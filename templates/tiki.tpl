@@ -82,7 +82,7 @@
 	{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
 {/if}
 <div id="role_main">
-{$mid_data}
+{$mid_data}  {* You can modify mid_data using tiki-show_page.tpl *}
 </div>
 {show_help}
 							</div>{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
