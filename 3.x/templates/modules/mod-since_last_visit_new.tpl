@@ -7,7 +7,7 @@
 	{capture name=module_title}{tr}{$slvn_info.label}{/tr}{/capture}
 	{tikimodule error=$module_params.error title=$smarty.capture.module_title name="since_last_visit_new" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	<div style="margin-bottom: 5px; text-align:center;">
-		{if $prefs.feature_calendar eq 'y'}
+		{if $prefs.feature_calendar eq 'y' && $date_as_link eq 'y'}
 			<a class="linkmodule" href="tiki-calendar.php?todate={$slvn_info.lastLogin}" title="{tr}click to edit{/tr}">
 		{/if}
 		<b>{$slvn_info.lastLogin|tiki_short_date}</b>
@@ -25,15 +25,15 @@
 				{assign var=showcname value=show_$cname}
 
              	{if $pos eq 'trackers' or $pos eq 'utrackers'}
-					<div id="{$cname}" style="display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}block{else}none{/if};">
+					<div id="{$cname}" style="display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}{$default_folding}{else}{$opposite_folding}{/if};">
 
                 {****** Parse out the trackers *****}
 					{foreach key=tp item=tracker from=$slvn_item.tid}
 						{assign var=tcname value=$tracker.cname}
-						<div class="separator"  style="margin-left: 10px; display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}block{else}none{/if};">
+						<div class="separator" style="margin-left: 10px; display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}{$default_folding}{else}{$opposite_folding}{/if};">
 							{assign var=showtcname value=show_$tcname}
 							<a class="separator" href="javascript:flip('{$tcname}');">{$tracker.count}&nbsp;{tr}{$tracker.label}{/tr}</a>
-							<div id="{$tcname}" style="display:{if !isset($cookie.$showtcname) or $cookie.$showtcname eq 'y'}block{else}none{/if};"> 
+							<div id="{$tcname}" style="display:{if !isset($cookie.$showtcname) or $cookie.$showtcname eq 'y'}{$default_folding}{else}{$opposite_folding}{/if};">
 								{if $nonums != 'y'}<ol>{else}<ul>{/if}
 								{section name=xx loop=$tracker.list}
 									<li><a  class="linkmodule"
@@ -50,7 +50,7 @@
 					</div>
 
 				{else}
-					<div id="{$cname}" style="display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}block{else}none{/if};">
+					 <div id="{$cname}" style="display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}{$default_folding}{else}{$opposite_folding}{/if};">
 						{if $nonums != 'y'}<ol>{else}<ul>{/if}
 						{section name=ix loop=$slvn_item.list}
 							<li>
@@ -67,7 +67,5 @@
 			{/if}
 		{/foreach}
 	{/if}
-{*	<div style="color:#aaaaaa; text-align:right; font-size:8px; margin-bottom: 0;">SLV{$slvn_info.version}</div> *}
 	{/tikimodule}
 {/if}
-      

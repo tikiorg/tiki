@@ -17,7 +17,7 @@ require_once('lib/smarty_tiki/modifier.userlink.php');
 
 if (!function_exists('mod_since_last_visit_new_help')) {
 	function mod_since_last_visit_new_help() {
-		return "showuser=n&showtracker=n&calendar_focus=ignore";
+		return "showuser=n&showtracker=n&calendar_focus=ignore&date_as_link=y&fold_sections=n";
 	}
 }
 
@@ -26,6 +26,23 @@ function since_last_visit_new($user, $params = null) {
 	global $smarty;
 	include_once('tiki-sefurl.php');
 	if (!$user) return false;
+
+	if (!isset($params['date_as_link']) || $params['date_as_link'] != 'n') {
+		$smarty->assign('date_as_link', 'y');
+	} else {
+		$smarty->assign('date_as_link', 'n');
+	}
+
+	if (!isset($params['fold_sections']) || $params['fold_sections'] != 'y') {
+		$smarty->assign('default_folding', 'block');
+		$smarty->assign('opposite_folding', 'none');
+	} else {
+		$smarty->assign('default_folding', 'none');
+		$smarty->assign('opposite_folding', 'block');
+	}
+
+	
+	$resultCount = $mod_reference['rows'];
 
 	global $tikilib, $userlib, $prefs;
 	$ret = array();
