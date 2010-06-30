@@ -1018,7 +1018,7 @@ function get_default_prefs() {
 		'feature_crypt_passwords' => (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash',
 		'feature_challenge' => 'n',
 		'min_user_length' => 1,
-		'min_pass_length' => 1,
+		'min_pass_length' => 5,
 		'pass_chr_num' => 'n',
 		'pass_due' => -1,
 		'email_due' => -1,
