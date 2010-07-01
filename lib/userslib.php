@@ -2456,13 +2456,13 @@ class UsersLib extends TikiLib
 			$this->assign_user_to_group($user, $user);
 		}
 
-		$this->set_user_default_preferences($user);
+		$this->set_user_default_preferences($user, false); // do not force
 
 		$cachelib->invalidate('userslist');
 		return true;
 	}
 
-	function set_user_default_preferences($user) {
+	function set_user_default_preferences($user, $force=true) {
 		global $prefs;
 		foreach( $prefs as $pref => $value ) {
 			if ( ! preg_match('/^users_prefs_/', $pref) ) continue;
@@ -2471,7 +2471,9 @@ class UsersLib extends TikiLib
 			} else {
 				$pref_name = substr( $pref, 12 );
 			}
-			$this->set_user_preference($user, $pref_name, $value);
+			if ($force || is_null($this->get_user_preference($user, $pref_name))) {
+				$this->set_user_preference($user, $pref_name, $value);
+			}
 		}
 	}
 	function change_user_email_only($user, $email) {

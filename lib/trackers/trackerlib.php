@@ -668,7 +668,7 @@ class TrackerLib extends TikiLib
 	 * allfields is only for performance issue - check if one field is a category
 	 */
 	function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='', $allfields=null) {
-		// echo '<pre>FILTERFIELD:'; print_r($filterfield); echo '<br />FILTERVALUE:';print_r($filtervalue); echo '<br />EXACTVALUE:'; print_r($exactvalue); echo '<br />STATUS:'; print_r($status); echo '</pre>';
+		//echo '<pre>FILTERFIELD:'; print_r($filterfield); echo '<br />FILTERVALUE:';print_r($filtervalue); echo '<br />EXACTVALUE:'; print_r($exactvalue); echo '<br />STATUS:'; print_r($status); echo '<br />FILTER:'; print_r($filter); echo '</pre>';
 		global $prefs;
 
 		$cat_table = '';
@@ -2755,7 +2755,7 @@ class TrackerLib extends TikiLib
 			return $memo[$trackerId][$type][$option];
 		}
 		if (is_array($type)) {
-			$mid = '`type` in ('.implode(',', array_fill(0,count($type),'?')).')';
+			$mid = 'binary `type` in ('.implode(',', array_fill(0,count($type),'?')).')';
 			$bindvars = $type;
 		} else {
 			$mid = '`type`=? ';
