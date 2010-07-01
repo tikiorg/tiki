@@ -38,6 +38,10 @@ class ShippingLib
 	}
 
 	private function completeAddressInformation( $address ) {
+		if( isset( $address['zip'] ) ) {
+			$address['zip'] = strtoupper( $address['zip'] );
+		}
+
 		if( ! isset( $address['country'] ) ) {
 			foreach( $this->formats as $pattern => $country ) {
 				if( preg_match( $pattern, $address['zip'] ) ) {

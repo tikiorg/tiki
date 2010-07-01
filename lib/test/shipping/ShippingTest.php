@@ -43,6 +43,16 @@ class ShippingTest extends TikiTestCase implements ShippingProvider
 		$this->assertEquals( 'CA', $this->to['country'] );
 	}
 
+	function testZipUpperCased() {
+		$lib = new ShippingLib;
+		$lib->addProvider( $this );
+
+		$lib->getRates( array( 'zip' => '12345' ), array( 'zip' => 'a1b 2c3' ), array( array( 'weight' => 5 ) ) );
+
+		$this->assertEquals( 'A1B 2C3', $this->to['zip'] );
+		$this->assertEquals( 'CA', $this->to['country'] );
+	}
+
 	function testUnknownFormat() {
 		$lib = new ShippingLib;
 		$lib->addProvider( $this );
