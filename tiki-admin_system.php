@@ -19,10 +19,12 @@ if (isset($_GET['do'])) {
 		$cachelib->erase_dir_content("temp/public/$tikidomain");
 		$cachelib->erase_dir_content("temp/cache/$tikidomain");
 		$cachelib->erase_dir_content("modules/cache/$tikidomain");
+		$cachelib->flush_opcode_cache();
 		$tikilib->set_lastUpdatePrefs();
 		$logslib->add_log('system', 'erased all Tiki cache content');
 	} elseif ($_GET['do'] == 'templates_c') {
 		$cachelib->erase_dir_content("templates_c/$tikidomain");
+		$cachelib->flush_opcode_cache();
 		$logslib->add_log('system', 'erased templates_c content');
 	} elseif ($_GET['do'] == 'temp_cache') {
 		$cachelib->erase_dir_content("temp/cache/$tikidomain");

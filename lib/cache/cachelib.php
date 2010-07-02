@@ -97,6 +97,12 @@ class Cachelib
 		return $back;
 	}
 
+	function flush_opcode_cache() {
+		if( function_exists( 'apc_clear_cache' ) ) {
+			apc_clear_cache();
+		}
+	}
+
 	function erase_dir_content($path) {
 		global $tikidomain;
 
