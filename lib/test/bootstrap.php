@@ -38,7 +38,7 @@ $db->setServerType( $db_tiki );
 
 $pwd = getcwd();
 chdir( dirname(__FILE__) . '/../..' );
-require_once 'setup_smarty.php';
+require_once 'lib/init/smarty.php';
 require_once 'lib/cache/cachelib.php';
 require_once 'lib/tikilib.php';
 require_once 'lib/userslib.php';

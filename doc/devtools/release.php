@@ -311,7 +311,7 @@ function check_smarty_syntax(&$error_msg) {
 	);
 
 	// Load Tiki Smarty
-	require_once 'setup_smarty.php';
+	require_once 'lib/init/smarty.php';
 
 	$templates_dir = $smarty->template_dir;
 	$templates_dir_length = strlen($templates_dir);

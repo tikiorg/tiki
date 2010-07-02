@@ -86,7 +86,7 @@ try {
 	}
 
 } catch( PDOException $e ) {
-	require_once 'setup_smarty.php';
+	require_once 'lib/init/smarty.php';
 
 	$smarty->assign( 'msg', $e->getMessage() );
 	$smarty->assign( 'where', 'connection');

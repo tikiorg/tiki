@@ -141,7 +141,7 @@ class Cachelib
 					if ($ext=="tpl") {
 						$file=substr($path."/".$file,10);
 						$comppath=$smarty->_get_compile_path($file);
-						//rewrite the language thing, see setup_smarty.php
+						//rewrite the language thing, see lib/init/smarty.php
 						if ($smarty->use_sub_dirs) {
 							$comppath=preg_replace("#/".$oldlang."/#","/".$newlang."/",$comppath,1);
 						} else {
