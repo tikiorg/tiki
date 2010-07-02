@@ -6,7 +6,7 @@
 // $Id$
 
 $section = 'sheet';
-$style = '';
+$tiki_sheet_div_style = '';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 $auto_query_args = array(
@@ -15,6 +15,7 @@ $auto_query_args = array(
 	'mode',
 	'parse',
 	'simple',
+	'height',
 );
 $access->check_feature('feature_sheet');
 
@@ -49,11 +50,11 @@ if (!isset($_REQUEST['parse'])) {
 }
 
 if (isset($_REQUEST['height'])) {
-	$style .= 'height:'.$_REQUEST['height'].';';
+	 $tiki_sheet_div_style .= 'height:'.$_REQUEST['height'].';';
 }
 
-if ($style) {
-	$smarty->assign('style', $style);
+if ( $tiki_sheet_div_style) {
+	$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);
 }
 
 if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode

@@ -55,7 +55,10 @@
 	{/jq}
 
 {else}
-	<div class="tiki_sheet" style="{$style}">{$grid_content}</div>
+	<div class="tiki_sheet"
+		{if !empty($tiki_sheet_div_style)} 
+			style="{$tiki_sheet_div_style}"
+		{/if}>{$grid_content}</div>
 	<div id="feedback" style="height: 1.5em; margin-left: .2em"><span></span></div>
 	<div class="navbar">
 		{if $tiki_p_view_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
