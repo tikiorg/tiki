@@ -175,6 +175,10 @@ if ($prefs['feature_jquery_sheet'] == 'y') {
 $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != editSheetButtonLabel2) {
+
+		if ($jq.sheet.instance.length > 0 && $jq.sheet.instance[0].s.allowToggleState) {
+			$jq.sheet.instance = [];
+		}
 		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
 		$jq("div.tiki_sheet").tiki("sheet", "", options);
 
@@ -194,7 +198,7 @@ $jq("#edit_button").click( function () {
 });
 $jq("#save_button").click( function () {
 	$jq.sheet.instance[0].evt.cellEditDone();
-	$jq.sheet.saveSheet(true);
+	$jq.sheet.saveSheet(0, true);
 	return false;
 }).hide();
 
