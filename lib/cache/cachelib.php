@@ -101,6 +101,12 @@ class Cachelib
 		if( function_exists( 'apc_clear_cache' ) ) {
 			apc_clear_cache();
 		}
+
+		if( function_exists( 'xcache_clear_cache' ) && ! ini_get( 'xcache.admin.enable_auth' ) ) {
+			foreach( range( 0, xcache_count( XC_TYPE_PHP ) - 1 ) as $index ) {
+				xcache_clear_cache( XC_TYPE_PHP, $index );
+			}
+		}
 	}
 
 	function erase_dir_content($path) {
