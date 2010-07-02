@@ -36,7 +36,7 @@ function module_top_visited_blogs_info() {
 
 function module_top_visited_blogs( $mod_reference, $module_params ) {
 	global $smarty;
-	require_once('lib/blogs/bloglib.php');
+	global $bloglib; require_once('lib/blogs/bloglib.php');
 	$with = '';
 	if (isset($mod_reference['params']['showlastpost']) && $mod_reference['params']['showlastpost'] == 'y') {
 		$with = array('showlastpost'=>'y');

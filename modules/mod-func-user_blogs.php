@@ -25,7 +25,7 @@ function module_user_blogs_info() {
 function module_user_blogs( $mod_reference, $module_params ) {
 	global $user, $tikilib, $smarty;
 	if ($user) {
-		require_once('lib/blogs/bloglib.php');
+		global $bloglib; require_once('lib/blogs/bloglib.php');
 		$ranking = $bloglib->list_user_blogs($user, false);
 		
 		$smarty->assign('modUserBlogs', $ranking);

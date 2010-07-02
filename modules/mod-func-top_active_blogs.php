@@ -23,7 +23,7 @@ function module_top_active_blogs_info() {
 
 function module_top_active_blogs( $mod_reference, $module_params ) {
 	global $smarty;
-	require_once('lib/blogs/bloglib.php');
+	global $bloglib; require_once('lib/blogs/bloglib.php');
 	$ranking = $bloglib->list_blogs(0, $mod_reference["rows"], 'activity_desc', '');
 	
 	$smarty->assign('modTopActiveBlogs', $ranking["data"]);
