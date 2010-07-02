@@ -30,6 +30,7 @@
 				{/if}
 			</div>
 			{preference name=tiki_cachecontrol_session}
+			{preference name=smarty_compilation}
 		</fieldset>
 		
 		<fieldset>

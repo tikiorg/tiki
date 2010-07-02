@@ -1386,6 +1386,7 @@ function get_default_prefs() {
 		'error_reporting_level' => 0,
 		'smarty_notice_reporting' => 'n',
 		'smarty_security' => 'y',
+		'smarty_compilation' => 'modified',
 		'feature_htmlpurifier_output' => 'n',
 		'feature_ajax' => 'n',
 		'feature_ajax_autosave' => 'n',
@@ -1803,11 +1804,3 @@ if( isset($modified['feature_perspective']) && $modified['feature_perspective'] 
 
 $prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
 
-if ( isset($smarty) ) {
-	// Assign the prefs array in smarty, by reference
-	$smarty->assign_by_ref('prefs', $prefs);
-
-	// Define the special maxRecords global var
-	$maxRecords = $prefs['maxRecords'];
-	$smarty->assign_by_ref('maxRecords', $maxRecords);
-}

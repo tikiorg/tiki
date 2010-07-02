@@ -19,5 +19,15 @@ function prefs_smarty_list() {
 			'type' => 'flag',
 			'perspective' => false,
 		),
+		'smarty_compilation' => array(
+			'name' => tra('Smarty Compilation'),
+			'description' => tra('Indicates when the template cache should be refreshed.'),
+			'type' => 'list',
+			'options' => array(
+				'modified' => tra('Modified'),
+				'never' => tra('Never check (performance)'),
+				'always' => tra('Always (development, slow)'),
+			),
+		),
 	);
 }

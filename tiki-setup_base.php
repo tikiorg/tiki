@@ -146,14 +146,10 @@ if ( $start_session ) {
 if ($prefs['feature_fullscreen'] == 'y') {
 	require_once ('lib/setup/fullscreen.php');
 }
-// Smarty needs session since 2.6.25
-require_once ('setup_smarty.php');
 // Retrieve all preferences
 require_once ('lib/setup/prefs.php');
-// Handle Smarty Security
-if ($prefs['smarty_security'] == 'y') {
-	$smarty->security = true;
-}
+// Smarty needs session since 2.6.25
+require_once ('setup_smarty.php');
 require_once ('lib/userslib.php'); global $userlib;
 $userlib = new UsersLib;
 require_once ('lib/tikiaccesslib.php');

@@ -18,17 +18,22 @@ class Smarty_Tikiwiki extends Smarty
 {
 	function Smarty_Tikiwiki($tikidomain = '') {
 		parent::Smarty();
+		global $prefs;
+
 		if ($tikidomain) { $tikidomain.= '/'; }
 		$this->template_dir = realpath('templates/');
 		$this->compile_dir = realpath("templates_c/$tikidomain");
 		$this->config_dir = realpath('configs/');
 		$this->cache_dir = realpath("templates_c/$tikidomain");
 		$this->caching = 0;
+		$this->compile_check = ( $prefs['smarty_compilation'] != 'never' );
+		$this->force_compile = ( $prefs['smarty_compilation'] == 'always' );
 		$this->assign('app_name', 'Tikiwiki');
 		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
 			TIKI_SMARTY_DIR,
 			SMARTY_DIR.'plugins'
 		);
+		$smarty->security = ( $prefs['smarty_security'] == 'y' );
 
 		// In general, it's better that use_sub_dirs = false
 		// If ever you are on a very large/complex/multilingual site and your
@@ -290,3 +295,11 @@ $smarty->load_filter('pre', 'jq');
 
 include_once('lib/smarty_tiki/resource.wiki.php');
 $smarty->register_resource('wiki', array('smarty_resource_wiki_source', 'smarty_resource_wiki_timestamp', 'smarty_resource_wiki_secure', 'smarty_resource_wiki_trusted'));
+
+global $prefs;
+// Assign the prefs array in smarty, by reference
+$smarty->assign_by_ref('prefs', $prefs);
+
+// Define the special maxRecords global var
+$maxRecords = $prefs['maxRecords'];
+$smarty->assign_by_ref('maxRecords', $maxRecords);
