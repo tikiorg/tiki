@@ -6,6 +6,7 @@
 // $Id$
 
 $section = 'sheet';
+$style = '';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 $auto_query_args = array(
@@ -45,6 +46,14 @@ if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_pe
 }
 if (!isset($_REQUEST['parse'])) {
 	$_REQUEST['parse'] = 'y';
+}
+
+if (isset($_REQUEST['height'])) {
+	$style .= 'height:'.$_REQUEST['height'].';';
+}
+
+if ($style) {
+	$smarty->assign('style', $style);
 }
 
 if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode

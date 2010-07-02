@@ -21,7 +21,7 @@
  * wiki page.
  */
 function wikiplugin_sheet_help() {
-	return tra("TikiSheet").":<br />~np~{SHEET(id=>x, simple=>n)}".tra("Sheet Heading")."{SHEET}~/np~";
+	return tra("TikiSheet").":<br />~np~{SHEET(id=>x, simple=>n, height=>h)}".tra("Sheet Heading")."{SHEET}~/np~";
 }
 
 function wikiplugin_sheet_info() {
@@ -42,6 +42,11 @@ function wikiplugin_sheet_info() {
 				'name' => tra('Simple'),
 				'description' => tra('Simple table view y/n (Default: n = jquery.sheet view if feature enabled).'),
 			),
+			'height' => array(
+				'required' => false,
+				'name' => tra('Height'),
+				'description' => tra('In pixels or percentage. Default value is complete spreadsheet height.'),
+			),
 		),
 	);
 }
@@ -49,7 +54,9 @@ function wikiplugin_sheet_info() {
 function wikiplugin_sheet($data, $params) {
 	global $dbTiki, $tiki_p_edit_sheet, $tiki_p_edit, $tiki_p_admin_sheet, $tiki_p_admin, $prefs, $user, $sheetlib, $page, $tikilib;
 	extract ($params,EXTR_SKIP);
-
+	$style = (isset($height)) ? "height: $height;" : "";
+	$urlHeight = (isset($height)) ? "&height=$height" : "";
+	
 	if( !class_exists( 'TikiSheet' ) )
 		require "lib/sheet/grid.php";
 
@@ -113,16 +120,18 @@ EOF;
 	$sheet->export( $out );
 	$ret = ob_get_contents();
 	ob_end_clean();
-
+	
 	if ($prefs['feature_jquery_sheet'] == 'y') {
 		if (!isset($simple) || $simple != 'y') {
 			global $headerlib;
 			$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") { ajaxLoadingShow("role_main"); }
 setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 100);', 500);
 		}
-		$ret = '<div class="tiki_sheet">' . $ret . '</div>';
+
+		$ret = '<div class="tiki_sheet" style="' . $style . '">' . $ret . '</div>';
+		
 		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
-			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&parse=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
+			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight' class='linkbut'>" . tra("Edit Sheet") . "</a>";
 		}
 	} else {
 		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
