@@ -50,7 +50,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td><label for="max">{tr}Max time the discount can be used:{/tr}</label></td>
+		<td><label for="max">{tr}Max time the discount can be used in the first phase of payment:{/tr}</label></td>
 		<td><input type="text" id="max" name="max" {if !empty($info.max)} value="{$info.max|escape}"{/if}/>{tr}-1 for illimited{/tr}</td>
 	</tr>
 	<tr>

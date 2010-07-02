@@ -31,10 +31,10 @@ class DiscountLib extends TikiDb_Bridge
 		if (empty($info) || $info['max'] == 0) {
 			return false;
 		} elseif ($info['max'] > 0) {
-			$query = 'update `tiki_discount` set `max`=min(0, `max`-1) where `code`=?';
+			$query = 'update `tiki_discount` set `max`=`max`-1 where `code`=?';
 			$this->query($query, array($code));
 		}
-		return true;
+		return $info['value'];
 	}
 	function find_discount($code, $notid=0) {
 		$query = 'select * from `tiki_discount` where `code`=? and `id` !=?';

@@ -14,7 +14,8 @@ $tab = 1;
 
 if (!empty($_REQUEST['save']) && !empty($_REQUEST['code'])) {
 	if (empty($_REQUEST['value']) && !empty($_REQUEST['percent'])) {
-		$_REQUEST['value'] = intval($_REQUEST['percent']).'%';
+		$_REQUEST['percent'] = min(100, intval($_REQUEST['percent']));
+		$_REQUEST['value'] = $_REQUEST['percent'].'%';
 	} elseif (!empty($_REQUEST['value'])) {
 		$_REQUEST['value'] = intval($_REQUEST['value']);
 	}
