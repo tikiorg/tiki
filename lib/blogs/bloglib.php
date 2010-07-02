@@ -10,7 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-
 include_once('lib/reportslib.php');
 
 /**
@@ -957,7 +956,6 @@ class BlogLib extends TikiDb_Bridge
 	function check_blog_exists($blogId) {
 		global $smarty;
 
-		require_once('lib/blogs/bloglib.php');
 		if (!$this->blog_exists($blogId)) {
 			$msg = tra('Blog cannot be found');
 			$smarty->assign('msg', $msg);

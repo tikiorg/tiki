@@ -748,7 +748,7 @@ class CategLib extends ObjectLib
 		$catObjectId = $this->is_categorized('blog', $blogId);
 
 		if (!$catObjectId) {
-			require_once('lib/blogs/bloglib.php');
+			global $bloglib; require_once('lib/blogs/bloglib.php');
 			// The page is not cateorized
 			$info = $bloglib->get_blog($blogId);
 

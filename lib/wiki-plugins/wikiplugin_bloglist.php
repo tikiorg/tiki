@@ -91,7 +91,7 @@ function wikiplugin_bloglist($data, $params) {
 	$smarty->assign('container_class', $params['containerClass']);
 	
 	if ($params['simpleList'] == 'y') {
-		require_once('lib/blogs/bloglib.php');
+		global $bloglib; require_once('lib/blogs/bloglib.php');
 		$blogItems = $bloglib->list_posts($params['offset'], $params['Items'], $params['sort_mode'], $params['find'], $params['Id'], $params['author'], '', $dateStartTS, $dateEndTS);
 		$smarty->assign_by_ref('blogItems', $blogItems['data']);
 		$template = 'wiki-plugins/wikiplugin_bloglist.tpl';

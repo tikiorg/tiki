@@ -115,7 +115,7 @@ function listforum_pref()
  */
 function listblog_pref()
 {
-	require_once('lib/blogs/bloglib.php');
+	global $bloglib; require_once('lib/blogs/bloglib.php');
 
 	$allblogs = $bloglib->list_blogs(0, -1, 'created_desc', '');
 	$listblogs = array();
