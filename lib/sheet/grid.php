@@ -284,6 +284,15 @@ class TikiSheet
 	{
 		return $handler->_save( $this );
 	}
+	
+	function getTableHtml() {
+		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
+		ob_start();
+		$this->export($handler);
+		$data = ob_get_contents();
+		ob_end_clean();
+		return $data;
+	}
 
 	/** finalize {{{2
 	 * Analyses the content of the sheet and complete the

@@ -19,21 +19,6 @@ $auto_query_args = array(
 );
 $access->check_feature('feature_sheet');
 
-/**
- * Write the sheet out to the smarty var
- * 
- * @return void
- */
-function outputGrid() {
-	global $grid, $handler, $smarty;
-	
-	$handler = new TikiSheetOutputHandler(null, ($grid->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
-	ob_start();
-	$grid->export($handler);
-	$smarty->assign('grid_content', $smarty->get_template_vars('grid_content') . ob_get_contents());
-	ob_end_clean();
-}
-
 if (!isset($_REQUEST['sheetId'])) {
 	$smarty->assign('msg', tra("A SheetId is required."));
 	$smarty->display("error.tpl");
@@ -57,7 +42,7 @@ if ( $tiki_sheet_div_style) {
 	$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);
 }
 
-if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
+if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit' && $prefs['feature_jquery_sheet'] == 'y') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
 if (typeof ajaxLoadingShow == "function") {
@@ -65,7 +50,7 @@ if (typeof ajaxLoadingShow == "function") {
 }
 setTimeout (function () { $jq("#edit_button").click(); }, 500);
 ', 500);
-} else if (!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') {
+} else if ((!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') && $prefs['feature_jquery_sheet'] == 'y') {
 	$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") {
 	ajaxLoadingShow("role_main");
 }
@@ -136,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 	// Load the layout settings from the database
 	$grid = new TikiSheet;
 	$grid->import($handler);
-	outputGrid();
+	$smarty->assign('grid_content', $grid->getTableHtml());
 } else {
 	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	$date = time();
@@ -160,17 +145,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 			include_once ('contribution.php');
 		}
 	} else {
-		$smarty->assign('grid_content', '');
-		outputGrid();
+		$html = $grid->getTableHtml();
 		if (count($subsheets) > 0) {
 			foreach ($subsheets as $sub) {
 				$handler = new TikiSheetDatabaseHandler($sub['sheetId']);
 				$handler->setReadDate($date);
 				$grid = new TikiSheet($sub['sheetId'], true);
 				$grid->import($handler);
-				outputGrid();
+				$html .= $grid->getTableHtml();
 			}
 		}
+		$smarty->assign('grid_content', $html);
 		$smarty->assign('subsheet_cant', count($subsheets));
 		$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 		$grid->import($handler);
