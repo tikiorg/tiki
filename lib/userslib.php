@@ -1843,9 +1843,9 @@ class UsersLib extends TikiLib
 		return $this->get_user_info($user, $inclusion, 'userId');
 	}
 
-	// this is not being used anywhere until now in remote.php
+	// UNRELIABLE. In particular, lastLogin and currentLogin aren't properly maintained due to missing user_details_ cache invalidation
 	// refactoring to use new cachelib instead of global var in memory - batawata 2006-02-07
-	function get_user_details($login, $item = false) {
+	function get_user_details($login) {
 		global $cachelib;
 		require_once("lib/cache/cachelib.php");
 
