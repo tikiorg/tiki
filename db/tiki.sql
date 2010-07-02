@@ -3619,6 +3619,16 @@ CREATE TABLE `tiki_payment_received` (
     PRIMARY KEY(`paymentReceivedId`),
     KEY `payment_request_ix` (`paymentRequestId`)
 );
+DROP TABLE IF EXISTS `tiki_discount`;
+CREATE TABLE `tiki_discount`( 
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`code` VARCHAR(255),
+	`value` VARCHAR(255),
+	`max` INT,
+	`comment` TEXT,
+	PRIMARY KEY(`id`),
+	KEY `code` (`code`)
+);
 DROP TABLE IF EXISTS `tiki_translations_in_progress`;
 CREATE TABLE IF NOT EXISTS `tiki_translations_in_progress` (
    `page_id` int(14) NOT NULL,
