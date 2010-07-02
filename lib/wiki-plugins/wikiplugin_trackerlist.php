@@ -563,6 +563,8 @@ function wikiplugin_trackerlist($data, $params) {
 				$check['action'] = $cb[4];
 			if (isset($cb[5]))
 				$check['tpl'] = $cb[5];
+			if (isset($cb[6]) && $cb[6] == 'radio')
+				$check['radio'] = 'y';
 			$smarty->assign_by_ref('checkbox', $check);
 		}	
 
