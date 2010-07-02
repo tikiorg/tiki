@@ -303,3 +303,12 @@ $smarty->assign_by_ref('prefs', $prefs);
 // Define the special maxRecords global var
 $maxRecords = $prefs['maxRecords'];
 $smarty->assign_by_ref('maxRecords', $maxRecords);
+
+if ($prefs['log_tpl'] == 'y') {
+	$smarty->load_filter('pre', 'log_tpl');
+}
+if ( $prefs['feature_sefurl_filter'] == 'y' ) {
+  require_once ('tiki-sefurl.php');
+  $smarty->register_outputfilter('filter_out_sefurl');
+}
+
