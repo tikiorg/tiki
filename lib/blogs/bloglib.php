@@ -205,6 +205,7 @@ class BlogLib extends TikiDb_Bridge
 	 * @return array
 	 */
 	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='', $ref='', $date_min = 0, $date_max = 0) {
+		global $tikilib;
 
 		$authorized_blogs = $this->list_blogs(0, -1, 'created_desc', '', $ref);
 		$permit_blogs = array();
@@ -235,7 +236,7 @@ class BlogLib extends TikiDb_Bridge
 		if ($date_min !== 0 || $date_max !== 0) {
 			if ( $date_max <= 0 ) {
 				// show articles published today
-				$date_max = time();
+				$date_max = $tikilib->now;
 			}
 			if ($mid == '') {
 				$mid = ' where ';
@@ -420,14 +421,14 @@ class BlogLib extends TikiDb_Bridge
 		if ($blogId) {
 			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_author`=?,`add_date`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=?,`always_owner`=? where `blogId`=?";
 
-			$result = $this->query($query, array($title, $description, $user, $public, time(), $maxPosts, $heading, $use_title, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $blogId));
+			$result = $this->query($query, array($title, $description, $user, $public, $tikilib->now, $maxPosts, $heading, $use_title, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $blogId));
 			$tikilib->object_post_save( array('type'=>'blog', 'object'=>$blogId), array('content'=>$heading) );
 		} else {
 			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_author`,`add_date`,`use_find`,`allow_comments`,`show_avatar`,`always_owner`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query, array((int) time(), (int) time(), $title, $description, $user, $public, 0, (int) $maxPosts, 0, $heading, $use_title, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner));
+			$result = $this->query($query, array((int) $tikilib->now, (int) $tikilib->now, $title, $description, $user, $public, 0, (int) $maxPosts, 0, $heading, $use_title, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner));
 			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
-			$blogId = $this->getOne($query2, array((int) time()));
+			$blogId = $this->getOne($query2, array((int) $tikilib->now));
 
 			if ($prefs['feature_score'] == 'y') {
 				$tikilib->score_event($user, 'blog_new');
@@ -652,7 +653,7 @@ class BlogLib extends TikiDb_Bridge
 		global $smarty, $tikilib, $prefs, $reportslib;
 		
 		if(!$created) {
-			$created = time();	
+			$created = $tikilib->now;	
 		}
 		
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
@@ -685,7 +686,7 @@ class BlogLib extends TikiDb_Bridge
 				$smarty->assign('mail_post_title', $title);
 				$smarty->assign('mail_blogid', $blogId);
 				$smarty->assign('mail_postid', $id);
-				$smarty->assign('mail_date', time());
+				$smarty->assign('mail_date', $tikilib->now);
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_data', $data);
 
@@ -823,7 +824,7 @@ class BlogLib extends TikiDb_Bridge
 		global $tikilib, $prefs;
 		
 		if(!$created) {
-			$created = time();	
+			$created = $tikilib->now;	
 		}
 		$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`created`=?,`user`=?,`title`=?, `priv`=? where `postId`=?";
 		$result = $this->query($query, array($blogId, $data, $created,$user, $title, $priv, $postId));
