@@ -90,6 +90,40 @@
 				{preference name=session_silent}
 				{preference name=tiki_cachecontrol_nosession}
 		</fieldset>
+
+		<fieldset>
+			<legend>{tr}Alternate PHP Cache (APC){/tr}</legend>
+			{if $apc_used}
+				<p>{tr}These stats affect all PHP applications running on the server.{/tr}</p>
+
+				<p>
+					<img src="http://chart.apis.google.com/chart?cht=p3&amp;chs=250x100&amp;chd=t:{$apc_stats.memory_used},{$apc_stats.memory_avail}&amp;chl={tr}Used{/tr}|{tr}Available{/tr}&amp;chtt={tr}Memory{/tr}" width="250" height="100"/>
+					<img src="http://chart.apis.google.com/chart?cht=p3&amp;chs=250x100&amp;chd=t:{$apc_stats.hit_hit},{$apc_stats.hit_miss}&amp;chl={tr}Hit{/tr}|{tr}Miss{/tr}&amp;chtt={tr}Cache Hits{/tr}" width="250" height="100"/>
+				</p>
+
+				{if $apc_stats.warning_fresh}
+					<p>{tr}Few hits recorded. Server might not be warm yet. Statistics may not be representative.{/tr}</p>
+				{/if}
+
+				{if $apc_stats.warning_ratio}
+					<p>{tr}Low hit ratio. APC may be misconfigured and not used.{/tr}</p>
+				{/if}
+
+				{if $apc_stats.warning_starve}
+					<p>{tr}Little memory available. Thrashing likely to occur.{/tr}</p>
+				{/if}
+
+				{if $apc_stats.warning_low}
+					<p>{tr}Small amount of memory allocated to APC. Verify the configuration.{/tr}</p>
+				{/if}
+
+				{if $apc_stats.warning_check}
+					<p>{tr}Configuration <em>apc.stat</em> is enabled. Disabling modification checks can improve performance, but will require manual clear on file updates.{/tr}</p>
+				{/if}
+			{else}
+				{tr}APC is not used.{/tr} {tr}Using a bytecode cache is highly recommended for production environments.{/tr}
+			{/if}
+		</fieldset>
 		
 		
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
