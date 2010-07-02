@@ -56,7 +56,7 @@ class Captcha {
 			$this->captcha = new Zend_Captcha_Image_Tiki(array(
 				'wordLen' => 6,
 				'timeout' => 600,
-				'font' => __DIR__ . '/DejaVuSansMono.ttf',
+				'font' => dirname(__FILE__) . '/DejaVuSansMono.ttf',
 				'imgdir' => 'temp/public/',
 				'suffix' => '.captcha.png',
 			));
