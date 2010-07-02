@@ -95,10 +95,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 				if ($res) {
 					$id = $d->metadata->sheetId;
 					if (!$id) {
-						$id = $sheetlib->replace_sheet( 0, $info['title'] . ' subsheet' . $_REQUEST["sheetId"], '', $user, $_REQUEST["sheetId"] );
+						if (!empty($d->metadata->title)) {
+							$t = $d->metadata->title;
+						} else {
+							$t = $info['title'] . ' subsheet'; 
+						}
+						$id = $sheetlib->replace_sheet( 0, $t, '', $user, $_REQUEST["sheetId"] );
 						$rc .= tra('new') . ' ';
+						$handler = new TikiSheetHTMLTableHandler($d);
+						$res = $grid->import($handler);
 					}
-					if ($id) {
+					if ($id && $res) {
 						$handler = new TikiSheetDatabaseHandler($id);
 						$grid->export($handler);
 						$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=$id)";
@@ -176,7 +183,7 @@ $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != editSheetButtonLabel2) {
 
-		if ($jq.sheet.instance.length > 0 && $jq.sheet.instance[0].s.allowToggleState) {
+		if ($jq.sheet.instance && $jq.sheet.instance.length > 0) {
 			$jq.sheet.instance = [];
 		}
 		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
