@@ -35,8 +35,9 @@
 		</fieldset>		
 	
 		<fieldset>
-			<legend>{tr}Category{/tr}</legend>
+			<legend>{tr}Search results{/tr}</legend>
 				{preference name=feature_search_show_forbidden_cat}
+				{preference name=feature_search_show_forbidden_obj}
 		</fieldset>		
 
 		<fieldset>
