@@ -10,6 +10,7 @@ class WikiParser_PluginArgumentParser
 	function parse( $data )
 	{
 		$arguments = array();
+		$data = TikiLib::htmldecode($edit_data, ENT_QUOTES);	// need to get &quot; converted back to " etc
 
 		// Handle parameters one by one
 		while( false !== $pos = strpos( $data, '=' ) ) {
