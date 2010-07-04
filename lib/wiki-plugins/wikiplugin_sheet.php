@@ -42,10 +42,20 @@ function wikiplugin_sheet_info() {
 				'name' => tra('Simple'),
 				'description' => tra('Simple table view y/n (Default: n = jquery.sheet view if feature enabled).'),
 			),
+			'width' => array(
+				'required' => false,
+				'name' => tra('Width'),
+				'description' => tra('In pixels or percentage. Default value is page width. e.g. "200px" or "100%"'),
+			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('In pixels or percentage. Default value is complete spreadsheet height.'),
+			),
+			'editable' => array(
+				'required' => false,
+				'name' => tra('Editable'),
+				'description' => tra('y/n. Show edit button. Default \'y\' depending on user\'s permissions.'),
 			),
 		),
 	);
@@ -54,8 +64,11 @@ function wikiplugin_sheet_info() {
 function wikiplugin_sheet($data, $params) {
 	global $dbTiki, $tiki_p_edit_sheet, $tiki_p_edit, $tiki_p_admin_sheet, $tiki_p_admin, $prefs, $user, $sheetlib, $page, $tikilib, $smarty;
 	extract ($params,EXTR_SKIP);
-	$style = (isset($height)) ? "height: $height;" : "";
-	$urlHeight = (isset($height)) ? "&height=$height" : "";
+	$style = (isset($height)) ? "height: $height !important;" : '';
+	$style .= (isset($width)) ? "width: $width;" : '';
+	$urlHeight = (isset($height)) ? "&height=$height" : '';
+	$urlHeight .= (isset($width)) ? "&width=$width" : '';
+	$editable = isset($editable) && $editable == 'n' ? false : true;
 	
 	if( !class_exists( 'TikiSheet' ) )
 		require "lib/sheet/grid.php";
@@ -125,9 +138,9 @@ EOF;
 setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 100);', 500);
 		}
 
-		$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet" style="' . $style . '">' . $ret . '</div>';
+		$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
 		
-		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
+		if( $editable && ($tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y')) {
 			require_once $smarty->_get_plugin_filepath('function','button');
 			$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight");
 			$ret .= smarty_function_button( $button_params, $smarty);
