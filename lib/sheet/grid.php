@@ -147,6 +147,8 @@ class TikiSheet
 	var $contributions;
 	var $sheetId;
 	var $isSubSheet;
+	var $instance;
+	
 	// }}}2
 	
 	/** getHandlerList {{{2
@@ -170,6 +172,8 @@ class TikiSheet
 	 */
 	function TikiSheet( $sheetId = 0, $isSubSheet = false )
 	{
+		static $instanceCounter = -1;
+		
 		$this->sheetId = $sheetId;
 		$this->isSubSheet = $isSubSheet;
 		$this->dataGrid = array();
@@ -188,6 +192,11 @@ class TikiSheet
 		$this->footerRow = 0;
 		$this->parseValues = 'n';
 		$this->className = '';
+		
+		if (!$this->isSubSheet) {
+			$instanceCounter++;
+	 		$this->instance = $instanceCounter;
+		}
 	}
 	
 	/** configureLayout {{{2
@@ -285,12 +294,29 @@ class TikiSheet
 		return $handler->_save( $this );
 	}
 	
-	function getTableHtml() {
+	function getTableHtml( $date = null ) {
+		global $prefs, $sheetlib;
+		
 		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
 		ob_start();
 		$this->export($handler);
 		$data = ob_get_contents();
 		ob_end_clean();
+		
+		if (!$this->isSubSheet && $prefs['feature_jquery_sheet'] == 'y') {
+			$subsheets = $sheetlib->get_sheet_subsheets($this->sheetId);
+			if (count($subsheets) > 0) {
+				foreach ($subsheets as $sub) {
+					$handler = new TikiSheetDatabaseHandler($sub['sheetId']);
+					if ($date) {
+						$handler->setReadDate($date);
+					}
+					$subsheet = new TikiSheet($sub['sheetId'], true);
+					$subsheet->import($handler);
+					$data .= $subsheet->getTableHtml();
+				}
+			}
+		}
 		return $data;
 	}
 
@@ -448,6 +474,10 @@ class TikiSheet
 		global $sheetlib;
 		$info = $sheetlib->get_sheet_info($this->sheetId);
 		return $info['title'];
+	}
+	
+	function getInstance() {
+		return $this->instance;
 	}
 	
 	/** import {{{2
@@ -1729,7 +1759,10 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				
 				if ($this->parseOutput && $sheet->parseValues == 'y') {
 					global $tikilib;
-					$data = trim($tikilib->parse_data($data, array('suppress_icons' => true)));
+					// only parse if we have non-alphanumeric or space chars
+					if (mb_ereg_match('[^A-Za-z0-9\s]', $data)) {	// needs to be multibyte regex here
+						$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+					}
 					if (strpos($data, '<p>') === 0) {	// remove containing <p> tag
 						$data = substr($data, 3);
 						if (strrpos($data, '</p>') === strlen($data) - 4) {

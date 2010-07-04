@@ -59,11 +59,8 @@ setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
-// Individual permissions are checked because we may be trying to edit the gallery
-// Init smarty variables to blank values
-//$smarty->assign('theme','');
+// Individual permissions are checked because we may be trying to edit the sheet
 $info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
-$subsheets = $sheetlib->get_sheet_subsheets($_REQUEST["sheetId"]);
 if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) $tiki_p_edit_sheet = 'y';
 else $tiki_p_edit_sheet = 'n';
 $smarty->assign('tiki_p_edit_sheet', $tiki_p_edit_sheet);
@@ -152,27 +149,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 			include_once ('contribution.php');
 		}
 	} else {
-		$html = $grid->getTableHtml();
-		if (count($subsheets) > 0) {
-			foreach ($subsheets as $sub) {
-				$handler = new TikiSheetDatabaseHandler($sub['sheetId']);
-				$handler->setReadDate($date);
-				$grid = new TikiSheet($sub['sheetId'], true);
-				$grid->import($handler);
-				$html .= $grid->getTableHtml();
-			}
-		}
+		$html = $grid->getTableHtml( $date );
 		$smarty->assign('grid_content', $html);
-		$smarty->assign('subsheet_cant', count($subsheets));
 		$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 		$grid->import($handler);
 	}
 }
 if ($prefs['feature_jquery_sheet'] == 'y') {
-		if ($prefs['feature_contribution'] == 'y') {
-			$contributionItemId = $_REQUEST['sheetId'];
-			include_once ('contribution.php');
-		}
+	if ($prefs['feature_contribution'] == 'y') {
+		$contributionItemId = $_REQUEST['sheetId'];
+		include_once ('contribution.php');
+	}
 	// need to be in non-parsed mode to edit the sheet
 	if ($_REQUEST['parse'] == 'y') {
 		$smarty->assign('editReload', true);

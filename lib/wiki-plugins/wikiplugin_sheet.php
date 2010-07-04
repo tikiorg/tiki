@@ -52,7 +52,7 @@ function wikiplugin_sheet_info() {
 }
 
 function wikiplugin_sheet($data, $params) {
-	global $dbTiki, $tiki_p_edit_sheet, $tiki_p_edit, $tiki_p_admin_sheet, $tiki_p_admin, $prefs, $user, $sheetlib, $page, $tikilib;
+	global $dbTiki, $tiki_p_edit_sheet, $tiki_p_edit, $tiki_p_admin_sheet, $tiki_p_admin, $prefs, $user, $sheetlib, $page, $tikilib, $smarty;
 	extract ($params,EXTR_SKIP);
 	$style = (isset($height)) ? "height: $height;" : "";
 	$urlHeight = (isset($height)) ? "&height=$height" : "";
@@ -116,10 +116,7 @@ EOF;
 	$sheet->import( $db );
 	
 	// Grab sheet output
-	ob_start();
-	$sheet->export( $out );
-	$ret = ob_get_contents();
-	ob_end_clean();
+	$ret = $sheet->getTableHtml();
 	
 	if ($prefs['feature_jquery_sheet'] == 'y') {
 		if (!isset($simple) || $simple != 'y') {
@@ -128,15 +125,17 @@ EOF;
 setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 100);', 500);
 		}
 
-		$ret = '<div class="tiki_sheet" style="' . $style . '">' . $ret . '</div>';
+		$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet" style="' . $style . '">' . $ret . '</div>';
 		
 		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
-			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight' class='linkbut'>" . tra("Edit Sheet") . "</a>";
+			require_once $smarty->_get_plugin_filepath('function','button');
+			$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight");
+			$ret .= smarty_function_button( $button_params, $smarty);
 		}
-	} else {
+	} else {	// non jQuery.sheet behaviour
 		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
 			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&readdate=" . time() . "&mode=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
 		}
 	}
-	return $ret;
+	return '~np~' . $ret . '~/np~';
 }
