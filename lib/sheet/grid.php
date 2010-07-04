@@ -149,6 +149,24 @@ class TikiSheet
 	var $isSubSheet;
 	var $instance;
 	
+	var $rangeBeginRow = -1;
+	var $rangeEndRow   = -1;
+	var $rangeBeginCol = -1;
+	var $rangeEndCol = -1;
+	
+	function getRangeBeginRow() {
+		return $this->rangeBeginRow > -1 ? $this->rangeBeginRow : 0;
+	}
+	function getRangeEndRow() {
+		return $this->rangeEndRow > -1 ? $this->rangeEndRow : $this->getRowCount();
+	}
+	function getRangeBeginCol() {
+		return $this->rangeBeginCol > -1 ? $this->rangeBeginCol : 0;
+	}
+	function getRangeEndCol() {
+		return $this->rangeEndCol > -1 ? $this->rangeEndCol : $this->getColumnCount();
+	}
+	
 	// }}}2
 	
 	/** getHandlerList {{{2
@@ -294,7 +312,11 @@ class TikiSheet
 		return $handler->_save( $this );
 	}
 	
-	function getTableHtml( $date = null ) {
+	/**
+	 * @param bool $incsubs Include sub-sheets
+	 * @param timestamp $date Date (revision) to read sub-sheets from
+	 */
+	function getTableHtml( $incsubs = true, $date = null ) {
 		global $prefs, $sheetlib;
 		
 		$handler = new TikiSheetOutputHandler(null, ($this->parseValues == 'y' && $_REQUEST['parse'] != 'n'));
@@ -303,7 +325,7 @@ class TikiSheet
 		$data = ob_get_contents();
 		ob_end_clean();
 		
-		if (!$this->isSubSheet && $prefs['feature_jquery_sheet'] == 'y') {
+		if ($incsubs && !$this->isSubSheet && $prefs['feature_jquery_sheet'] == 'y') {
 			$subsheets = $sheetlib->get_sheet_subsheets($this->sheetId);
 			if (count($subsheets) > 0) {
 				foreach ($subsheets as $sub) {
@@ -313,7 +335,7 @@ class TikiSheet
 					}
 					$subsheet = new TikiSheet($sub['sheetId'], true);
 					$subsheet->import($handler);
-					$data .= $subsheet->getTableHtml();
+					$data .= $subsheet->getTableHtml( false );
 				}
 			}
 		}
@@ -431,7 +453,7 @@ class TikiSheet
 	 */
 	function getRange( $range )
 	{
-		if( preg_match( "/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/", $range, $parts ) )
+		if( preg_match( '/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/', strtoupper($range), $parts ) )
 		{
 			$beginRow = $parts[2] - 1;
 			$endRow = $parts[4] - 1;
@@ -462,6 +484,20 @@ class TikiSheet
 		else
 			return false;
 	}
+	
+	/** setRange {{{2
+	 * Limits display (so far)
+	 * a given range (ex: A1:B9)
+	 */
+	function setRange( $range ) {
+		if( preg_match( '/^([A-Z]+)([0-9]+):([A-Z]+)([0-9]+)$/', strtoupper($range), $parts ) ) {
+			$this->rangeBeginRow = $parts[2] - 1;
+			$this->rangeEndRow = $parts[4] - 1;
+			$this->rangeBeginCol = $this->getColumnNumber( $parts[1] );
+			$this->rangeEndCol = $this->getColumnNumber( $parts[3] );
+		}
+	}
+	
 	/** getRowCount {{{2
 	 * Returns the row count.
 	 */
@@ -1683,6 +1719,20 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 //		if( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
 //			return false;
 
+		if ($sheet->getRangeBeginRow() > -1 &&
+			$sheet->getRangeBeginRow() == $sheet->getRangeEndRow() &&
+			$sheet->getRangeBeginCol() == $sheet->getRangeEndCol()) {
+				if( isset( $sheet->dataGrid[$sheet->getRangeBeginRow()][$sheet->getRangeBeginCol()] ) ) {
+					$data =  $sheet->dataGrid[$sheet->getRangeBeginRow()][$sheet->getRangeBeginCol()];
+					if ($sheet->parseValues == 'y' && mb_ereg_match('[^A-Za-z0-9\s]', $data)) {	// needs to be multibyte regex here
+						global $tikilib;
+						$data = $tikilib->parse_data($data, array('suppress_icons' => true));
+					}
+					echo $data;
+					return;
+				}
+			}
+
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		$id = empty( $sheet->sheetId ) ? '' : " rel='sheetId{$sheet->sheetId}'";
 		$title = " title='{$sheet->getTitle()}'";
@@ -1692,7 +1742,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		if( !is_null( $this->heading ) )
 			echo "	<caption>{$this->heading}</caption>\n";
 		
-		if( $sheet->headerRow > 0 )
+		if( $sheet->headerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
 			echo "	<thead>\n";
 			$this->drawRows( $sheet, 0, $sheet->headerRow );
@@ -1700,10 +1750,11 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		}
 
 		echo "	<tbody>\n";
-		$this->drawRows( $sheet, $sheet->headerRow, $sheet->getRowCount() - $sheet->footerRow );
+		$this->drawRows( $sheet, $sheet->getRangeBeginRow() < 0 ? $sheet->headerRow : $sheet->getRangeBeginRow(),
+								 $sheet->getRangeEndRow() < 0 ? $sheet->getRowCount() - $sheet->footerRow : $sheet->getRangeEndRow() + 1 );
 		echo "	</tbody>\n";
 		
-		if( $sheet->footerRow > 0 )
+		if( $sheet->footerRow > 0 && $sheet->getRangeBeginRow() < 0 )
 		{
 			echo "	<tfoot>\n";
 			$this->drawRows( $sheet, $sheet->getRowCount() - $sheet->footerRow, $sheet->getRowCount() );
@@ -1727,7 +1778,8 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		{
 			echo "		<tr>\n";
 
-			for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
+			$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol() + 1;
+			for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
 			{
 				$width = $height = '';
 				extract( $sheet->cellInfo[$i][$j] );

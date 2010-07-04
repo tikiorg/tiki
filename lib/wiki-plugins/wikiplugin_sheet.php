@@ -57,6 +57,22 @@ function wikiplugin_sheet_info() {
 				'name' => tra('Editable'),
 				'description' => tra('y/n. Show edit button. Default \'y\' depending on user\'s permissions.'),
 			),
+			'subsheets' => array(
+				'required' => false,
+				'name' => tra('Show subsheets'),
+				'description' => tra('y/n. Show multi-sheets. Default \'y\'.'),
+			),
+			'range' => array(
+				'required' => false,
+				'name' => tra('Range'),
+				'description' => tra('Show a range of cells (or single cell). Default shows all. e.g. "D1:F3" (or "e14:e14")'),
+			),
+			'class' => array(
+				'required' => false,
+				'name' => tra('CSS Class'),
+				'description' => tra('Apply custom CSS class to the containing div.'),
+				'filter' => 'text',
+			),
 		),
 	);
 }
@@ -69,6 +85,8 @@ function wikiplugin_sheet($data, $params) {
 	$urlHeight = (isset($height)) ? "&height=$height" : '';
 	$urlHeight .= (isset($width)) ? "&width=$width" : '';
 	$editable = isset($editable) && $editable == 'n' ? false : true;
+	$subsheets = isset($subsheets) && $subsheets == 'n' ? false : true;
+	$class = (isset($class)) ? " $class"  : '';
 	
 	if( !class_exists( 'TikiSheet' ) )
 		require "lib/sheet/grid.php";
@@ -128,17 +146,26 @@ EOF;
 	// Fetch sheet from database
 	$sheet->import( $db );
 	
+	if (!empty($range)) {
+		$r = $sheet->setRange($range);
+		if (!isset($simple)) {
+			$simple = 'y';
+		}
+	}
+	
 	// Grab sheet output
-	$ret = $sheet->getTableHtml();
+	$ret = $sheet->getTableHtml( $subsheets );
 	
 	if ($prefs['feature_jquery_sheet'] == 'y') {
 		if (!isset($simple) || $simple != 'y') {
 			global $headerlib;
 			$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") { ajaxLoadingShow("role_main"); }
-setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 100);', 500);
+setTimeout (function () { $jq("#tiki_sheet' . $sheet->instance . '").tiki("sheet", "",{editable:false});}, 0);', 500 + $sheet->instance);
+		} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
+			return $ret;	// return a single cell raw
 		}
-
-		$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
+	
+		$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
 		
 		if( $editable && ($tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y')) {
 			require_once $smarty->_get_plugin_filepath('function','button');
