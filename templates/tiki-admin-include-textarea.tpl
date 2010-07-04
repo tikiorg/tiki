@@ -90,6 +90,7 @@
 			<fieldset class="admin">
 				<legend>{tr}Edit plugin icons{/tr}</legend>
 				{preference name=wiki_edit_plugin}
+				{preference name=wiki_edit_icons_toggle}
 			</fieldset>
 			
 			<fieldset class="admin">
