@@ -247,7 +247,7 @@ function wikiplugin_tracker($data, $params)
 			$usertracker = true;
 		}
 	} elseif (!empty($trackerId) && !empty($view) && $view == 'user') {// the user item of a tracker
-		$itemId = $trklib->get_user_item($trackerId, $tracker, null, null, $status);
+		$itemId = $trklib->get_user_item($trackerId, $tracker, null, null, strlen($status) == 1 ? $status : '');
 		$usertracker = true;
 	} elseif (!empty($trackerId) && !empty($view) && $view == 'page' && !empty($_REQUEST['page']) && (($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%')) || ($f = $trklib->get_field_id_from_type($trackerId, 'k', '%,1%')) || ($f =  $trklib->get_field_id_from_type($trackerId, 'k')))) {// the page item
 		$itemId = $trklib->get_item_id($trackerId, $f, $_REQUEST['page']);
