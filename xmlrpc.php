@@ -89,7 +89,7 @@ function newPost($params) {
     if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
       return new XML_RPC_Response(0, 101, "User is not allowed to post");
     }
-    require_once('lib/blogs/bloglib.php');
+    global $bloglib; require_once('lib/blogs/bloglib.php');
     $blog_info = $bloglib->get_blog($blogid);
     if($blog_info["public"]!='y') {
       if($username != $blog_info["user"]) {

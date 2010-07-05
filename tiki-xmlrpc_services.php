@@ -338,7 +338,7 @@ function getUserBlogs($params) {
 
 	$arrayVal = array();
 
-	require_once('lib/blogs/bloglib.php');
+	global $bloglib; require_once('lib/blogs/bloglib.php');
 	$blogs = $bloglib->list_user_blogs($username, true);
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
 	$foo1 = $tikilib->httpPrefix(). str_replace("xmlrpc", "tiki-view_blog", $foo["path"]);
