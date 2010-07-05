@@ -517,6 +517,10 @@ or $cur_field.type eq 'i'}
 </tr>
 {/if}
 
+{* -------------------- antibot code -------------------- *}
+{if $prefs.feature_antibot eq 'y' && $user eq ''}
+{include file='antibot.tpl' tr_style="formcolor"}
+{/if}
 <tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to return to tracker list after saving --------- *}

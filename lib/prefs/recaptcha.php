@@ -16,12 +16,14 @@ function prefs_recaptcha_list() {
 		'recaptcha_pubkey' => array(
 			'name' => tra('Pubkey'),
             'type' => 'text',
-            'size' => 40,
+            'description' => tra('Go to google.com/recaptcha to generate your keys.'),
+        	'size' => 40,
 		),
 		'recaptcha_privkey' => array(
 			'name' => tra('Privkey'),
 			'type' => 'text',
-            'size' => 40,
+            'description' => tra('Go to google.com/recaptcha to generate your keys.'),
+			'size' => 40,
 		),
 	);
 }

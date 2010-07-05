@@ -609,6 +609,13 @@ if ($tiki_p_admin_trackers == 'y' || ($tiki_p_modify_tracker_items == 'y' && $it
 }
 if (($tiki_p_modify_tracker_items == 'y' && $item_info['status'] != 'p' && $item_info['status'] != 'c') || ($tiki_p_modify_tracker_items_pending == 'y' && $item_info['status'] == 'p') || ($tiki_p_modify_tracker_items_closed == 'y' && $item_info['status'] == 'c') || $special) {
 	if (isset($_REQUEST["save"]) || isset($_REQUEST["save_return"])) {
+		global $captchalib; include_once 'lib/captcha/captchalib.php';
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate($_REQUEST['captcha'])) {
+			$smarty->assign('msg', $captchalib->getErrors());
+			$smarty->assign('errortype', 'no_redirect_login');
+			$smarty->display("error.tpl");
+			die;
+		}
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
 		$err_fields = array();
