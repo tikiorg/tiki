@@ -816,6 +816,9 @@ if ($_REQUEST["itemId"]) {
 					$ins_fields["data"][$i]["x"] = substr($ins_fields["data"][$i]["value"], 0, $first_comma);
 					$ins_fields["data"][$i]["y"] = substr($ins_fields["data"][$i]["value"], $first_comma + 1, $second_comma - $first_comma - 1);
 					$ins_fields["data"][$i]["z"] = substr($ins_fields["data"][$i]["value"], $second_comma + 1);
+					if (empty($ins_fields["data"][$i]["z"])) {
+						$ins_fields["data"][$i]["z"] = 1;
+					}
 				} elseif ($fields["data"][$i]["type"] == 'U') {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 					$temp = $userlib->get_user_info($user);

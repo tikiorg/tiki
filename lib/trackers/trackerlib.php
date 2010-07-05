@@ -1074,7 +1074,7 @@ class TrackerLib extends TikiLib
 				$vals = preg_split('/ *, */', $fopt['value']);
 				$fopt['x'] = $vals[0];
 				$fopt['y'] = $vals[1];
-				$fopt['z'] = $vals[2];
+				$fopt['z'] = empty($vals[2]) ? 1 : $vals[2];
 				break;
 			case 'F':
 				global $freetaglib;
