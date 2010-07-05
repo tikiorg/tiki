@@ -90,6 +90,7 @@ if (!isset($pointx)) {
 	$pointy = isset($prefs['gmap_defy'])? $prefs['gmap_defy']: $prefs['gmap_defaulty'];
 	$pointz = isset($prefs['gmap_defz'])? $prefs['gmap_defz']: $prefs['gmap_defaultz'];
 }
+if (!isset($pointz)) { $pointz = 11; }	// trackers cope with only x & y
 $smarty->assign_by_ref('pointx',$pointx);
 $smarty->assign_by_ref('pointy',$pointy);
 $smarty->assign_by_ref('pointz',$pointz);
