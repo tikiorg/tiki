@@ -44,7 +44,7 @@
 {/if}
 
 <div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
-{jq}
+{jq notonready=true}
 var map = null;
 var geocoder = null;
 function load() {literal}{{/literal}
