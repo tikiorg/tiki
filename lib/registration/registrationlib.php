@@ -231,7 +231,6 @@ class RegistrationLib extends TikiLib
 			return new RegistrationError('name', tra("Username cannot contain uppercase letters"));
 		}
 
-		//FALTA DEFINIR VALORES PADR¬Å’ES PARA AS DUAS VARI¬Å¡VEIS!!!
 		if (strlen($registration['name']) < $prefs['min_username_length'])
 			return new RegistrationError('name', tra("Username must be at least") . ' ' . $prefs['min_username_length'] . ' ' . tra("characters long"));
 			
