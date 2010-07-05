@@ -12,7 +12,7 @@
 			<td>{$payment.paymentRequestId}</td>
 			<td>{if $payment.paymentRequestId eq $smarty.request.invoice}<strong>{$payment.description|escape}</strong>{else}{$payment.description|escape}{/if}</td>
 			<td class="right">{$payment.amount|escape}&nbsp;{$payment.currency|escape}</td>
-			<td>{$payment.request_date|escape}</td>
+			<td>{$payment.request_date|tiki_short_date|escape}</td>
 			{if $tiki_p_admin eq 'y'}<td>{$payment.user|userlink}</td>{/if}
 			<td class="center">
 				{self_link invoice=$payment.paymentRequestId}{icon _id=page class=titletips title='{tr}View payment request{/tr}' alt='{tr}Invoice{/tr}'}{/self_link}

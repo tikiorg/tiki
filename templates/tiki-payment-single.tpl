@@ -57,7 +57,7 @@
 			{/if}
 		{/if}
 	</p>
-	<p>{tr 0=$payment_info.frequest_date 1=$payment_info.fdue_date}Payment request was sent on %0 and is due by %1.{/tr}
+	<p>{tr 0=$payment_info.request_date|tiki_short_date 1=$payment_info.due_date|tiki_short_date}Payment request was sent on %0 and is due by %1.{/tr}
 
 	{if $payment_info.fullview && $payment_info.payments|@count}
 		<ol>

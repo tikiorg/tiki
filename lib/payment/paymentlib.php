@@ -59,7 +59,7 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	function get_payment( $id ) {
-		global $tikilib, $prefs, $user;
+		global $tikilib, $prefs;
 		$info = reset( $this->fetchAll( 'SELECT * FROM `tiki_payment_requests` WHERE `paymentRequestId` = ?', array( $id ) ) );
 
 		if( $info ) {
@@ -77,11 +77,9 @@ class PaymentLib extends TikiDb_Bridge
 
 			$info['payments'] = array();
 			$payments = $this->fetchAll( 'SELECT * FROM `tiki_payment_received` WHERE `paymentRequestId` = ? ORDER BY `payment_date` DESC', array( $id ) );
-			include_once 'lib/tikilib.php';
 			foreach( $payments as $payment ) {
 				$payment['details'] = json_decode( $payment['details'], true );
 				$payment['amount_paid'] = number_format( $payment['amount'], 2, '.', ',' );
-				$payment['fpayment_date'] = $tikilib->format_sql_date($payment['payment_date']);
 				$info['payments'][] = $payment;
 			}
 

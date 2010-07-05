@@ -6,7 +6,7 @@
 // $Id$
 
 function smarty_function_payment( $params, $smarty ) {
-	global $tikilib, $user, $prefs;
+	global $tikilib, $prefs;
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	$invoice = (int) $params['id'];
 
@@ -36,10 +36,6 @@ function smarty_function_payment( $params, $smarty ) {
 
 		
 		$info['fullview'] = $objectperms->payment_view;
-		//format for display based on user short display format and timezone
-		include_once 'lib/tikilib.php';
-		$info['frequest_date'] = $tikilib->format_sql_date($info['request_date']);
-		$info['fdue_date'] = $tikilib->format_sql_date($info['due_date']);
 		$smarty->assign( 'payment_info', $info );
 		$smarty->assign( 'payment_detail', $tikilib->parse_data( htmlspecialchars($info['detail']) ) );
 		return $smarty->fetch( 'tiki-payment-single.tpl' );
