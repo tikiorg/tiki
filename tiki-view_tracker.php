@@ -524,7 +524,7 @@ if (isset($_REQUEST['import'])) {
 } elseif (isset($_REQUEST["save"])) {
 	if ($tiki_p_create_tracker_items == 'y') {
 		global $captchalib; include_once 'lib/captcha/captchalib.php';
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate($_REQUEST['captcha'])) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$smarty->assign('msg', $captchalib->getErrors());
 			$smarty->assign('errortype', 'no_redirect_login');
 			$smarty->display("error.tpl");
