@@ -13,6 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 if (isset($prefs['gmap_key']) and strlen($prefs['gmap_key']) == '86') {
 	$smarty->assign('show_map', 'y');
+	$headerlib->add_jsfile('http://maps.google.com/maps?file=api&amp;v=2&key=' . $prefs['gmap_key']);
 } else {
 	$smarty->assign('show_map', 'n');
 }

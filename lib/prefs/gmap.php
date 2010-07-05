@@ -45,8 +45,12 @@ function prefs_gmap_list() {
 				13 => 13,
 				14 => 14,
 				15 => 15,
-				16 => 16,
-				17 => tra('max zoom'),			)
+				16 => tra('village size'),
+				17 => 17,
+				18 => 18,
+				19 => 19,
+				20 => tra('max zoom'),
+			)
 		),
 	);	
 }

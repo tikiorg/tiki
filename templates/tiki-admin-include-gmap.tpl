@@ -29,7 +29,6 @@
 </form>
 
 {if $prefs.feature_gmap eq 'y' and $show_map eq 'y'}
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}"></script>
 <div class="wikitext">
 	<div id="map" style="width: 500px; height: 400px;border: 1px solid #000;"></div>
 </div>
@@ -41,15 +40,15 @@ function load() {literal}{{/literal}
   map.setCenter(new GLatLng({$prefs.gmap_defaulty}, {$prefs.gmap_defaultx}), {$prefs.gmap_defaultz});
 
   GEvent.addListener(map, "zoomend", function(gold, gnew) {literal}{{/literal}
-    document.getElementById('gmap_defaultz').selectedIndex = gnew;
+    document.getElementsByName('gmap_defaultz')[0].selectedIndex = gnew;
   {literal}});{/literal}
 
   GEvent.addListener(map, "moveend", function() {literal}{{/literal}
-    document.getElementById('gmap_defaultx').value = map.getCenter().x;
-    document.getElementById('gmap_defaulty').value = map.getCenter().y;
+    document.getElementsByName('gmap_defaultx')[0].value = map.getCenter().x;
+    document.getElementsByName('gmap_defaulty')[0].value = map.getCenter().y;
   {literal}});{/literal}
 
 {literal}}{/literal}
-window.onload=load;
+load();
 {/jq}
 {/if}
