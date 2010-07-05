@@ -398,6 +398,10 @@ function wikiplugin_tracker($data, $params)
 					$incomingTrackName = 'track_' . $fl["fieldId"];
 					if (isset($_REQUEST[$incomingTrackName])) {
 						$_REQUEST['track'][$fl["fieldId"]] = $_REQUEST[$incomingTrackName];
+					} else if (isset($_FILES[$incomingTrackName])) {	// also for uploaded files
+						foreach ($_FILES[$incomingTrackName] as $lbl => $val) {
+							$_FILES['track'][$lbl][$fl["fieldId"]] = $val;
+						}
 					}
 				}
 				if (!empty($_REQUEST['autosavefields'])) {
