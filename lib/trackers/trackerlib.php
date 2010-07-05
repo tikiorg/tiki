@@ -3376,13 +3376,13 @@ class TrackerLib extends TikiLib
 			if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1%')) { // user creator field
 				$value = $userreal;
 				$items = $this->get_items_list($trackerId, $fieldId, $value, $status);
-				if ($items)
+				if (!empty($items))
 					return $items[0];
 			}
 		}
 		if ($fieldId = $this->get_field_id_from_type($trackerId, 'I', '1')) { // IP creator field
 			$items = $this->get_items_list($trackerId, $fieldId, $IP, $status);
-			if ($items)
+			if (!empty($items))
 				return $items[0];
 			else
 				return 0;
