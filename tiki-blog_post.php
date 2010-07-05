@@ -93,18 +93,6 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 }
 if ($postId) {
 	check_ticket('blog');
-	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-		$data = '';
-		while (!feof($fp)) {
-			$data.= fread($fp, 8192 * 16);
-		}
-		fclose($fp);
-		$size = $_FILES['userfile1']['size'];
-		$name = $_FILES['userfile1']['name'];
-		$type = $_FILES['userfile1']['type'];
-		$bloglib->insert_post_image($postId, $name, $size, $type, $data);
-	}
 	$post_images = $bloglib->get_post_images($postId);
 	$smarty->assign_by_ref('post_images', $post_images);
 	$cat_type = 'blog post';

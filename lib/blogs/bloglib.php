@@ -331,22 +331,6 @@ class BlogLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * insert_post_image Add an image to a post
-	 *
-	 * @param int $postId
-	 * @param string $filename
-	 * @param int $filesize
-	 * @param string $filetype
-	 * @param blob $data
-	 * @access public
-	 * @return void
-	 */
-	function insert_post_image($postId, $filename, $filesize, $filetype, $data) {
-		$query = "insert into `tiki_blog_posts_images`(`postId`,`filename`,`filesize`,`filetype`,`data`) values(?,?,?,?,?)";
-		$this->query($query, array($postId, $filename, $filesize, $filetype, $data));
-	}
-
-	/**
 	 * get_post_image Returns the image $imgId
 	 *
 	 * @param mixed $imgId
