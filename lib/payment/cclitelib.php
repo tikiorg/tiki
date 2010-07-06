@@ -146,10 +146,10 @@ class CCLiteLib extends TikiDb_Bridge
 		$ch = curl_init();
 		if ($command != 'adduser') {
 			$logon_result = $this->cclite_remote_logon($username, $registry);
-			if (strlen($logon_result[1])) {
+			if ($logon_result[0] != 'failed' && strlen($logon_result[1])) {
 				curl_setopt($ch, CURLOPT_COOKIE, $logon_result[1]);
 			} else {
-				return tr('Logon to cclite server %0 failed for %1', $cclite_base_url, $user);
+				return tr('Connection to cclite server %0 failed for %1<br />"%2"', $cclite_base_url, $user, $logon_result[1]);
 			}
 		}
 		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
@@ -180,13 +180,13 @@ class CCLiteLib extends TikiDb_Bridge
 				break;
 		case 'adduser':
 			// direct/adduser/dalston/test1/email using the merchant key, without using individual logon
-			$REST_url = "$cclite_base_url/direct/adduser/$other_user/$registry/$amount";
+			$REST_url = "$cclite_base_url/direct/adduser/$registry/" . urlencode($other_user . '/' . $amount);
 			curl_setopt($ch, CURLOPT_COOKIE, 'merchant_key_hash=' . $this->key_hash);
 			break;
 		case 'modifyuser':
 			// direct/modifyuser/dalston/test1/email using the merchant key, without using individual logon
 			// non-working at present...
-			$REST_url = "$cclite_base_url/direct/modifyuser/$other_user/$registry/$amount";
+			$REST_url = "$cclite_base_url/direct/modifyuser/$registry/" . urlencode($other_user . '/' . $amount);
 			curl_setopt($ch, CURLOPT_COOKIE, 'merchant_key_hash=' . $this->key_hash);
 			break;
 		case 'debit':
@@ -232,20 +232,33 @@ class CCLiteLib extends TikiDb_Bridge
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 			curl_setopt($ch, CURLOPT_URL, $REST_url);
+			
 			$logon = curl_exec($ch);
+			
+			$results = array();	// for response & cookies on success
+			$err_msg = '';		// error message on failure
+			
 			if ($logon) {
-				preg_match("/login failed for $username at $registry/", $logon, $results);
-				if ($results) {	// no user there?
+				// e.g. login failed for jonny_tiki at c2c1:  <a href="http://c2c.ourproject.org/cgi-bin/cclite.cgi">Try again?</a>
+				if (preg_match('/^(login failed for '.$username.'.*'.$registry.'.*)$/mi', $logon, $results)) {	// no user there?
 					$email = $userlib->get_user_email($username);
 					if ($email) {	// required
-						$results = $this->cclite_send_request('adduser', $email, $username, $registry);
-						if ($results) {
-							$logon = curl_exec($ch);
+						$res = $this->cclite_send_request('adduser', $email, $username, $registry);	// not currently working cclite 0.7.0
+						if ($res && !preg_match('/404 Not Found/', $res)) {							// seems to return a 404 :(
+							$logon = curl_exec($ch);	// retry login
+						} else {
+							$err_msg = $results[0];
+							$logon = 'failed';
 						}
 					}
 				}
+				// e.g. test_user at test_reg is not active: confirm or contact the administrator <a href="http://c2c.ourproject.org/cgi-bin/cclite.cgi">Try again?</a>
+				if (preg_match('/^(.*?'.$username.'.*'.$registry.'.*)$/mi', $logon, $results)) {		// check for other errors
+					$err_msg = $results[0];
+					$logon = 'failed';	// error in $results[0]
+				}
 			}
-			if ($logon) {
+			if ($logon && $logon != 'failed') {
 				curl_close($ch);
 				$ch = null;
 				preg_match_all('|Set-Cookie: (.*);|U', $logon, $results);
@@ -257,7 +270,7 @@ class CCLiteLib extends TikiDb_Bridge
 			curl_close($ch);
 		}
 		// fall through failed
-		return array('failed', array());
+		return array('failed', $err_msg);
 	}
 
 	// used to transport merchant key hash - probably duplicates of tiki fns REFACTOR?
