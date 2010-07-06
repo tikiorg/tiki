@@ -6051,9 +6051,6 @@ class TikiLib extends TikiDb_Bridge
 				$data = $handler($data);
 			}
 		}
-		// do not want to parse plugin in tc section
-		$data = preg_replace('|~tc~(?!~np~)|', '~tc~~np~', $data);
-		$data = preg_replace('|(?<!~/np~)~/tc~|', '~/np~~/tc~', $data);	
 
 		// Handle pre- and no-parse sections and plugins
 		$preparsed = array('data'=>array(),'key'=>array());
