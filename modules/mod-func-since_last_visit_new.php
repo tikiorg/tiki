@@ -76,8 +76,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$last = $_SESSION["slvn_last_login"];
 		$smarty->assign('tpl_module_title', tra('Changes since'));
 	} else {
-		$details = $userlib->get_user_details($user);
-		$last = $details['info']['lastLogin'];
+		$last = $tikilib->getOne("select `lastLogin` from `users_users` where `login`=?",array($user));
 		if (!$last) $last = time();
 		$smarty->assign('tpl_module_title', tra('Since your last visit...'));
 	}
