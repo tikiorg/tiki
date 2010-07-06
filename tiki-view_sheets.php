@@ -6,7 +6,7 @@
 // $Id$
 
 $section = 'sheet';
-$style = '';
+$tiki_sheet_div_style = '';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 $auto_query_args = array(
@@ -15,6 +15,7 @@ $auto_query_args = array(
 	'mode',
 	'parse',
 	'simple',
+	'height',
 );
 $access->check_feature('feature_sheet');
 
@@ -49,14 +50,14 @@ if (!isset($_REQUEST['parse'])) {
 }
 
 if (isset($_REQUEST['height'])) {
-	$style .= 'height:'.$_REQUEST['height'].';';
+	 $tiki_sheet_div_style .= 'height:'.$_REQUEST['height'].';';
 }
 
-if ($style) {
-	$smarty->assign('style', $style);
+if ( $tiki_sheet_div_style) {
+	$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);
 }
 
-if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
+if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit' && $prefs['feature_jquery_sheet'] == 'y') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
 if (typeof ajaxLoadingShow == "function") {
@@ -64,7 +65,7 @@ if (typeof ajaxLoadingShow == "function") {
 }
 setTimeout (function () { $jq("#edit_button").click(); }, 500);
 ', 500);
-} else if (!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') {
+} else if ((!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') && $prefs['feature_jquery_sheet'] == 'y') {
 	$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") {
 	ajaxLoadingShow("role_main");
 }
@@ -73,11 +74,8 @@ setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
-// Individual permissions are checked because we may be trying to edit the gallery
-// Init smarty variables to blank values
-//$smarty->assign('theme','');
+// Individual permissions are checked because we may be trying to edit the sheet
 $info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
-$subsheets = $sheetlib->get_sheet_subsheets($_REQUEST["sheetId"]);
 if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) $tiki_p_edit_sheet = 'y';
 else $tiki_p_edit_sheet = 'n';
 $smarty->assign('tiki_p_edit_sheet', $tiki_p_edit_sheet);
@@ -109,10 +107,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 				if ($res) {
 					$id = $d->metadata->sheetId;
 					if (!$id) {
-						$id = $sheetlib->replace_sheet( 0, $info['title'] . ' subsheet' . $_REQUEST["sheetId"], '', $user, $_REQUEST["sheetId"] );
+						if (!empty($d->metadata->title)) {
+							$t = $d->metadata->title;
+						} else {
+							$t = $info['title'] . ' subsheet'; 
+						}
+						$id = $sheetlib->replace_sheet( 0, $t, '', $user, $_REQUEST["sheetId"] );
 						$rc .= tra('new') . ' ';
+						$handler = new TikiSheetHTMLTableHandler($d);
+						$res = $grid->import($handler);
 					}
-					if ($id) {
+					if ($id && $res) {
 						$handler = new TikiSheetDatabaseHandler($id);
 						$grid->export($handler);
 						$rc .= $grid->getColumnCount() . ' x ' . $grid->getRowCount() . ' ' . tra('sheet') . " (id=$id)";
@@ -159,6 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 			include_once ('contribution.php');
 		}
 	} else {
+		$subsheets = $sheetlib->get_sheet_subsheets($_REQUEST["sheetId"]);
 		$smarty->assign('grid_content', '');
 		outputGrid();
 		if (count($subsheets) > 0) {
@@ -176,10 +182,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 	}
 }
 if ($prefs['feature_jquery_sheet'] == 'y') {
-		if ($prefs['feature_contribution'] == 'y') {
-			$contributionItemId = $_REQUEST['sheetId'];
-			include_once ('contribution.php');
-		}
+	if ($prefs['feature_contribution'] == 'y') {
+		$contributionItemId = $_REQUEST['sheetId'];
+		include_once ('contribution.php');
+	}
 	// need to be in non-parsed mode to edit the sheet
 	if ($_REQUEST['parse'] == 'y') {
 		$smarty->assign('editReload', true);
@@ -189,6 +195,10 @@ if ($prefs['feature_jquery_sheet'] == 'y') {
 $jq("#edit_button").click( function () {
 	var $a = $jq(this).find("a");
 	if ($a.text() != editSheetButtonLabel2) {
+
+		if ($jq.sheet.instance && $jq.sheet.instance.length > 0) {
+			$jq.sheet.instance = [];
+		}
 		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
 		$jq("div.tiki_sheet").tiki("sheet", "", options);
 
