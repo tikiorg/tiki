@@ -1,6 +1,6 @@
 {tr}A category was updated{/tr}:
 
-{tr}Updated by{/tr}: {$author}
+{tr}Updated by{/tr}: {$author|username}
 {tr}Date{/tr}: {$mail_date|tiki_short_datetime}
 
 {tr}Old{/tr}:

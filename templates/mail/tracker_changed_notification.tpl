@@ -7,7 +7,7 @@
 	{tr}View the tracker item at:{/tr} {$mail_machine_raw}/tiki-view_tracker_item.php?trackerId={$mail_trackerId}&offset=0&sort_mode=lastModif_desc&itemId={$mail_itemId}
 {/if}
 
-{tr}Author{/tr}: {$mail_user}
+{tr}Author{/tr}: {$mail_user|username}
 {tr}Date{/tr}: {$mail_date|tiki_short_datetime}
 
 {$mail_data|replace:'-[':''|replace:']-':''}{* TODO: translate these -[...]- marked strings in $mail_data by watcher language *}

@@ -1,7 +1,7 @@
-{if $mail_action eq 'new'}{tr}The page {$mail_page} was created by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
-{elseif $mail_action eq 'delete'}{tr}The page {$mail_page} was deleted by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{if $mail_action eq 'new'}{tr}The page {$mail_page} was created by {$mail_user|username} at {$mail_date|tiki_short_datetime}{/tr}
+{elseif $mail_action eq 'delete'}{tr}The page {$mail_page} was deleted by {$mail_user|username} at {$mail_date|tiki_short_datetime}{/tr}
 {elseif $mail_action eq 'attach'}{tr}A file was attached to {$mail_page}{/tr}
-{else}{tr}The page {$mail_page} was changed by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{else}{tr}The page {$mail_page} was changed by {$mail_user|username} at {$mail_date|tiki_short_datetime}{/tr}
 {/if}
 
 {if $mail_comment}{tr}Comment:{/tr} {$mail_comment}

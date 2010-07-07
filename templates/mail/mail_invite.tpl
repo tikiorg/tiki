@@ -1,4 +1,4 @@
-{tr}You are invited by:{/tr} {$user|escape}
+{tr}You are invited by:{/tr} {$user|username}
 {if !empty($groups)}
 	{tr}You join this group:{/tr}
 	{foreach from=$groups item=group}

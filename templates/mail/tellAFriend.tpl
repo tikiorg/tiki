@@ -5,4 +5,4 @@
 {/if}
 {$url_for_friend|replace:' ':'+'}
 
-{$name}
+{$name|username}

@@ -1,4 +1,4 @@
-{tr}The map {$mail_page} was changed by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{tr}The map {$mail_page} was changed by {$mail_user|username} at {$mail_date|tiki_short_datetime}{/tr}
 
 {tr}You can view the updated map following this link:{/tr}
 {$mail_machine_raw}/tiki-map.php?mapfile={$mail_page}
