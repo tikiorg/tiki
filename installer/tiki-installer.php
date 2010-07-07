@@ -58,7 +58,7 @@ function has_tiki_db_20()
 	return $installer->tableExists('tiki_pages_translation_bits');
 }
 
-function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset = '', $api_tiki = '', $dbversion_tiki = '5.0') {
+function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset = '', $api_tiki = '', $dbversion_tiki = 'current') {
 	global $local;
 	global $db_tiki;
 	if ($dbs_tiki && $user_tiki) {
@@ -70,6 +70,11 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$fw = fopen($local, 'w');
 		$filetowrite = "<?php\n";
 		$filetowrite .= "\$db_tiki='" . $db_tiki . "';\n";
+		if ($dbversion_tiki == 'current') {
+			require_once 'lib/setup/twversion.class.php';
+			$twversion = new TWVersion();
+			$dbversion_tiki = $twversion->getVersion(); 
+		}
 		$filetowrite .= "\$dbversion_tiki='" . $dbversion_tiki . "';\n";
 		$filetowrite .= "\$host_tiki='" . $host_tiki . "';\n";
 		$filetowrite .= "\$user_tiki='" . $user_tiki . "';\n";
