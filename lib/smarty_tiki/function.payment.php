@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+// @param numeric $id: id of the payment
+// @params url $returnurl: optional return url
 function smarty_function_payment( $params, $smarty ) {
 	global $tikilib, $prefs;
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
@@ -36,6 +38,9 @@ function smarty_function_payment( $params, $smarty ) {
 
 		
 		$info['fullview'] = $objectperms->payment_view;
+		if (!empty($params['returnurl'])) {
+			$info['url'] = preg_match('|^https?://|', $params['returnurl'])? $params['returnurl']: $tikilib->tikiUrl($params['returnurl']);
+		}
 		$smarty->assign( 'payment_info', $info );
 		$smarty->assign( 'payment_detail', $tikilib->parse_data( htmlspecialchars($info['detail']) ) );
 		return $smarty->fetch( 'tiki-payment-single.tpl' );
