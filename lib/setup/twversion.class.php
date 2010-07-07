@@ -133,7 +133,7 @@ class TWVersion
 
 	// Determines the currently-running version of Tikiwiki.
 	function getVersion() {
-		return $version;
+		return $this->version;
 	}
 
 	// Pulls the list of releases in the current branch of Tikiwiki from
