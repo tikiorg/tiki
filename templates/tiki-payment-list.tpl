@@ -5,6 +5,7 @@
 		<th>{tr}Amount{/tr}</th>
 		<th>{tr}Request Date{/tr}</th>
 		{if $tiki_p_admin eq 'y'}<th>{tr}User{/tr}</th>{/if}
+		{if $showtype eq 'y'}<th>{tr}Type{/tr}</th>{/if}
 		<th>{tr}Actions{/tr}</th>
 	</tr>
 	{foreach from=$payments.data item=payment}
@@ -14,6 +15,7 @@
 			<td class="right">{$payment.amount|escape}&nbsp;{$payment.currency|escape}</td>
 			<td>{$payment.request_date|tiki_short_date|escape}</td>
 			{if $tiki_p_admin eq 'y'}<td>{$payment.user|userlink}</td>{/if}
+			{if $showtype eq 'y'}<td>{$payment.type|escape}</td>{/if}
 			<td class="center">
 				{self_link invoice=$payment.paymentRequestId}{icon _id=page class=titletips title='{tr}View payment request{/tr}' alt='{tr}Invoice{/tr}'}{/self_link}
 				{permission type=payment object=$payment.paymentRequestId name=payment_admin}

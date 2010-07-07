@@ -16,7 +16,7 @@
 			{include file=tiki-payment-list.tpl payments=$outstanding cancel=1}
 		{/tab}
 		{tab name="{tr}Past{/tr}"}
-			{include file=tiki-payment-list.tpl payments=$past}
+			{include file=tiki-payment-list.tpl payments=$past showtype=y}
 		{/tab}
 		{tab name="{tr}Cancelled{/tr}"}
 			{include file=tiki-payment-list.tpl payments=$canceled}
