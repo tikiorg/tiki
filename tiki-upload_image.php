@@ -121,7 +121,11 @@ if (isset($_REQUEST["upload"])) {
 				$file_tmp_name = $_FILES['userfile1']['tmp_name'];
 				$tmp_dest = $prefs['tmpDir'] . '/' . $file_name . '.tmp'; // add .tmp to not overwrite existing files (like index.php)
 				if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
-					$smarty->assign('msg', tra('Errors detected'));
+					if ($tiki_p_admin == 'y') {
+						$smarty->assign('msg', tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest);
+					}	else	{
+						$smarty->assign('msg', tra('Errors detected'));
+					}
 					$smarty->assign('errortype', 'no_redirect_login');
 					$smarty->display("error.tpl");
 					die();
