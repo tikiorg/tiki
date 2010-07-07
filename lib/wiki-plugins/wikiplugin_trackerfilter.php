@@ -113,7 +113,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 	if (($displayList == 'y' || isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) &&
-				isset($_REQUEST['iTrackerFilter']) && $_REQUEST['iTrackerFilter'] == $iTrackerFilter) {
+				(!isset($_REQUEST['iTrackerFilter']) || $_REQUEST['iTrackerFilter'] == $iTrackerFilter)) {
 	  
 		$ffs = array();
 		$values = array();
