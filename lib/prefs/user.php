@@ -99,6 +99,25 @@ function prefs_user_list() {
 				'user_register_pretty_tracker',
 			),
 		),
+		'user_trackersync_trackers' => array(
+			'name' => tra('User tracker IDs to sync prefs from'),
+			'description' => tra('Enter the IDs separated by commas of trackers to sync user prefs from'),
+			'type' => 'text',
+			'size' => '10',
+			'dependencies' => array(
+				'userTracker',
+			),
+		),
+		'user_trackersync_realname' => array(
+			'name' => tra('Tracker field IDs to sync Real Name pref from'),
+			'description' => tra('Enter the IDs separated by commas in priority of being chosen, each item can concatenate multiple fields using +, e.g. 2+3,4'),
+			'type' => 'text',
+			'size' => '10',
+			'dependencies' => array(
+				'userTracker',
+				'user_trackersync_trackers',
+			),
+		),
 	);
 }
 

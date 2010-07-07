@@ -720,6 +720,8 @@ function get_default_prefs() {
 		'user_who_viewed_my_stuff_show_others' => 'n',
 		'user_register_prettytracker' => 'n',
 		'user_register_prettytracker_tpl' => '',
+		'user_trackersync_trackers' => '',
+		'user_trackersync_realname' => '',
 		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',

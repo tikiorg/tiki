@@ -65,6 +65,8 @@
 					<div class="adminoptionboxchild" id="user_register_prettytracker_childcontainer">
 					{preference name=user_register_prettytracker_tpl}
 					</div>
+				{preference name=user_trackersync_trackers}
+				{preference name=user_trackersync_realname}
 				</div>
 				{preference name=groupTracker}
 				{preference name=email_due}
