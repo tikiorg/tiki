@@ -82,8 +82,8 @@
 		</td>
 		{if $line ne 'y'}</tr>{else} {/if}
 {/foreach}
-{if $line ne 'y' and $action}<tr>{/if}
-{if $action}
+{if $line ne 'y' and $action and $action neq " "}<tr>{/if}
+{if $action and $action neq " "}
 <td>&nbsp;</td><td><input class="button submit" type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" /></td>
 {/if}
 {if !empty($sortchoice)}

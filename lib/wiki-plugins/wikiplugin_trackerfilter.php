@@ -23,7 +23,7 @@ function wikiplugin_trackerfilter_info() {
 		'action' => array(
 			'required' => false,
 			'name' => tra('Action'),
-			'description' => tra('Label on the submit button'),
+			'description' => tra('Label on the submit button. Default: "Filter". Use a space character to omit the button (for use in datachannels etc)'),
 		),
 		'displayList' => array(
 			'required' => false,
