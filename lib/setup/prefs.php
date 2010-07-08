@@ -926,8 +926,8 @@ function get_default_prefs() {
 		'server_timezone' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',
 		'long_date_format' => '%A %d of %B, %Y',
 		'long_time_format' => '%H:%M:%S %Z',
-		'short_date_format' => '%a %d of %b, %Y',
-		'short_time_format' => '%H:%M %Z',
+		'short_date_format' => '%Y-%m-%d',
+		'short_time_format' => '%H:%M',
 		'display_field_order' => 'MDY',
 		'tiki_same_day_time_only' => 'y',
 
