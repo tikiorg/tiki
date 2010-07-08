@@ -38,7 +38,7 @@ function smarty_function_payment( $params, $smarty ) {
 
 		
 		$info['fullview'] = $objectperms->payment_view;
-		if (!empty($params['returnurl'])) {
+		if (!empty($params['returnurl']) && empty($result)) {
 			$info['url'] = preg_match('|^https?://|', $params['returnurl'])? $params['returnurl']: $tikilib->tikiUrl($params['returnurl']);
 		}
 		$smarty->assign( 'payment_info', $info );

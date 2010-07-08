@@ -36,17 +36,18 @@ function wikiplugin_memberpayment_info() {
 			'inputtitle' => array(
 				'required' => false,
 				'name' => tra('Title of the input form.'),
-				'description' => tra('Title of the input form.').' '. tra('Use %0 for the group name.').' '.tra('Support wiki syntax'),
+				'description' => tra('Title of the input form.').' '. tra('Use %0 for the group name.').' '.tra('Supports wiki syntax'),
 				'filter' => 'text',
 				'default' => 'Membership to %0 for %1 (x%2)',
 			),
 			'howtitle' => array(
 				'required' => false,
-				'name' => tra('Title of the how to pay pannel.'),
-				'description' => tra('Title of the input form.').' '. tra('Use %0 for the group name, %4 for the number of days or %5 for the number of years').' '.tra('Support wiki syntax'),
+				'name' => tra('Title of the how to pay panel.'),
+				'description' => tra('Title of the input form.').' '. tra('Use %0 for the group name, %4 for the number of days or %5 for the number of years').' '.tra('Supports wiki syntax'),
 				'filter' => 'text',
 				'default' => 'Membership to %0 for %1 (x%2)',
-			),		),
+			),
+		),
 	);
 }
 
@@ -92,6 +93,9 @@ function wikiplugin_memberpayment( $data, $params, $offset ) {
 			$smarty->assign( 'wp_member_title', $params['howtitle'] );
 			require_once 'lib/smarty_tiki/function.payment.php';
 			return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
+		} else if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && isset($_POST['invoice'])) {
+			require_once 'lib/smarty_tiki/function.payment.php';
+			return '^~np~' . smarty_function_payment( array( 'id' => $_POST['invoice'] ), $smarty ) . '~/np~^';
 		}
 
 		$smarty->assign( 'wp_member_title', $params['inputtitle'] );
