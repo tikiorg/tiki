@@ -29,14 +29,15 @@
 					{tr}Pay with Paypal:{/tr} <input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_paynow_LG.gif" alt="PayPal" title="{tr}Pay with Paypal{/tr}"/> 
 				</form>
 			{elseif $prefs.payment_system eq 'cclite' && $prefs.payment_cclite_gateway neq ''}
-				{if !empty($ccresult) and $ccresult_ok}
+				{if (!empty($ccresult) or !empty($ccresult2)) and $ccresult_ok}
 					<form action="{query _type='relative'}" method="post">
 						<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
 						<input type="hidden" name="cookietab" value="1" />
 						<input type="submit" value="{tr}Refresh page{/tr}" />
 					</form>
 					{remarksbox title="{tr}Payment info{/tr}" type="info"}
-						{$ccresult}
+						{$ccresult}<br />
+						{$ccresult2}
 					{/remarksbox}
 				{else}
 					<form action="{query _type='relative'}" method="post">
@@ -44,9 +45,10 @@
 						<input type="hidden" name="cclite_payment_amount" value="{$payment_info.amount_remaining|escape}" />
 						<input type="submit" value="{tr}Transfer currency now{/tr}" />
 					</form>
-					{if !empty($ccresult)}
+					{if (!empty($ccresult) or !empty($ccresult2))}
 						{remarksbox title="{tr}Payment problem{/tr}" type="info"}
-							{$ccresult}
+							{$ccresult}<br />
+							{$ccresult2}
 						{/remarksbox}
 					{/if}
 				{/if}

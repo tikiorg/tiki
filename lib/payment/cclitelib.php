@@ -80,21 +80,48 @@ class CCLiteLib extends TikiDb_Bridge
 	}
 
 	/**
+	 * Pays $amount from logged in (or source_user TODO) user to manager account
+	 * 
 	 * @param int $invoice
 	 * @param decimal $amount
 	 * @param string $currency
 	 * @param string $registry
+	 * @param string $source_user
 	 * 
 	 * @return string result from cclite
 	 */
-	public function pay_invoice($invoice, $amount, $currency = '', $registry = '', $destination_user = '') {
+	public function pay_invoice($invoice, $amount, $currency = '', $registry = '', $source_user = '') {
 		global $user, $prefs, $paymentlib;
 		require_once 'lib/payment/paymentlib.php';
 		
-		$res = $this->cclite_send_request('pay', $amount, $destination_user, $registry, $currency);
+		$res = $this->cclite_send_request('pay', $amount, '', $currency, $registry);
 		
 		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
 			$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
+		}
+
+		return $res;
+	}
+
+	/**
+	 * Pays $amount from logged in (or source_user TODO) user to manager account
+	 * 
+	 * @param int $invoice
+	 * @param decimal $amount
+	 * @param string $currency
+	 * @param string $registry
+	 * @param string $destination_user
+	 * 
+	 * @return string result from cclite
+	 */
+	public function pay_user($invoice, $amount, $currency = '', $registry = '', $destination_user = '') {
+		global $user, $prefs, $paymentlib;
+		require_once 'lib/payment/paymentlib.php';
+		
+		$res = $this->cclite_send_request('pay', $amount, $destination_user, $currency, $registry, $this->merchant_user);
+		
+		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
+//			$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
 		}
 
 		return $res;
@@ -124,14 +151,14 @@ class CCLiteLib extends TikiDb_Bridge
 	 * @command		recent|summary|pay|adduser|modifyuser|debit
 	 * @amount		amount
 	 * @other_user	destination for payment etc
-	 * @registry	cclite registry
 	 * @currency	currency (same as currency "name" in cclite (not "code" yet)
+	 * @registry	cclite registry
 	 * @other		unused
 	 * 
 	 * @return		result from cclite server (html hopefully)
 	 */
 
-	private function cclite_send_request( $command, $amount = 0, $other_user = '', $registry = '', $currency = '', $other = '') {
+	private function cclite_send_request( $command, $amount = 0, $other_user = '', $currency = '', $registry = '', $main_user = '') {
 		global $user, $prefs;
 		
 		if (empty($other_user)) { $other_user = $this->merchant_user; }
@@ -145,7 +172,7 @@ class CCLiteLib extends TikiDb_Bridge
 		$REST_url = '';
 		$ch = curl_init();
 		if ($command != 'adduser') {
-			$logon_result = $this->cclite_remote_logon($username, $registry);
+			$logon_result = $this->cclite_remote_logon($main_user, $registry);
 			if ($logon_result[0] != 'failed' && strlen($logon_result[1])) {
 				curl_setopt($ch, CURLOPT_COOKIE, $logon_result[1]);
 			} else {
@@ -247,14 +274,14 @@ class CCLiteLib extends TikiDb_Bridge
 						if ($res && !preg_match('/404 Not Found/', $res)) {							// seems to return a 404 :(
 							$logon = curl_exec($ch);	// retry login
 						} else {
-							$err_msg = $results[0];
+							$err_msg = substr($results[0], 0, strpos($results[0], '<'));	// remove cclite link
 							$logon = 'failed';
 						}
 					}
 				}
 				// e.g. test_user at test_reg is not active: confirm or contact the administrator <a href="http://c2c.ourproject.org/cgi-bin/cclite.cgi">Try again?</a>
 				if (preg_match('/^(.*?'.$username.'.*'.$registry.'.*)$/mi', $logon, $results)) {		// check for other errors
-					$err_msg = $results[0];
+					$err_msg = substr($results[0], 0, strpos($results[0], '<'));	// remove cclite link
 					$logon = 'failed';	// error in $results[0]
 				}
 			}
