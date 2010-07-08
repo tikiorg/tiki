@@ -165,7 +165,7 @@
 			
 			{preference name=rss_directories}
 			<div class="adminoptionboxchild" id="rss_directories_childcontainer">
-				<a href="tiki-directories_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
+				<a href="tiki-directories_rss.php" title="{tr}Feed for directories{/tr}."> {icon _id=feed}</a>
 				{preference name=title_rss_directories}
 				{preference name=desc_rss_directories}
 				{preference name=max_rss_directories}
@@ -175,12 +175,22 @@
 
 			{preference name=rss_maps}
 			<div class="adminoptionboxchild" id="rss_maps_childcontainer">
-				<a href="tiki-maps_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
+				<a href="tiki-maps_rss.php" title="{tr}Feed for maps{/tr}."> {icon _id=feed}</a>
 				{preference name=title_rss_maps}
 				{preference name=desc_rss_maps}
 				{preference name=max_rss_maps}
 				{preference name=showAuthor_rss_maps}
 				{preference name=index_rss_maps}
+			</div>
+
+			{preference name=rss_shoutbox}
+			<div class="adminoptionboxchild" id="rss_shoutbox_childcontainer">
+				<a href="tiki-maps_rss.php" title="{tr}Feed for shoutbox{/tr}."> {icon _id=feed}</a>
+				{preference name=title_rss_shoutbox}
+				{preference name=desc_rss_shoutbox}
+				{preference name=max_rss_shoutbox}
+				{preference name=showAuthor_rss_shoutbox}
+				{preference name=index_rss_shoutbox}
 			</div>
 		{/tab}
 	{/tabset}

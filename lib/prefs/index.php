@@ -77,6 +77,10 @@ function prefs_index_list() {
 			'type' => 'text',
 			'size' => '60',
 		),
-
+		'index_rss_shoutbox' => array(
+			'name' => tra('Homepage URL'),
+			'type' => 'text',
+			'size' => '60',
+		),
 	);
 }

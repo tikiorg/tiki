@@ -97,6 +97,11 @@ function prefs_desc_list() {
 			'type' => 'textarea',
 			'size' => 2,
 		),
-
+		'desc_rss_shoutbox' => array(
+			'name' => tra('Shoutbox RSS Description'),
+			'description' => tra('Description to be published as part of the RSS feed for shoutbox messages.'),
+			'type' => 'textarea',
+			'size' => 2,
+		),
 	);
 }

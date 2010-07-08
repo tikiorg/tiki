@@ -67,6 +67,9 @@ function prefs_showAuthor_list() {
 			'name' => tra('Show Author'),
 			'type' => 'flag',
 		),
-
+		'showAuthor_rss_shoutbox' => array(
+			'name' => tra('Show Author'),
+			'type' => 'flag',
+		),
 	);
 }

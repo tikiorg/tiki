@@ -82,6 +82,10 @@ function prefs_title_list() {
 			'type' => 'text',
 			'size' => '80',
 		),
-
+		'title_rss_shoutbox' => array(
+			'name' => tra('Title'),
+			'type' => 'text',
+			'size' => '80',
+		),
 	);
 }

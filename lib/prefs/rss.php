@@ -140,6 +140,14 @@ function prefs_rss_list() {
 				'feature_maps',
 			),
 		),
+		'rss_shoutbox' => array(
+			'name' => tra('Shoutbox'),
+			'description' => tra('RSS feed for shoutbox'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_shoutbox',
+			),
+		),
 	);
 }
 

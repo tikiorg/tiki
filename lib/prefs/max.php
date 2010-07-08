@@ -103,6 +103,11 @@ function prefs_max_list() {
 			'size' => 5,
 			'filter' => 'digits',
 		),
-
+		'max_rss_shoutbox' => array(
+			'name' => tra('Maximum number of items to display'),
+			'type' => 'text',
+			'size' => 5,
+			'filter' => 'digits',
+		),
 	);	
 }
