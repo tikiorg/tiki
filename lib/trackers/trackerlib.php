@@ -1054,6 +1054,9 @@ class TrackerLib extends TikiLib
 				} elseif ($fopt['options_array'][0] == 'email' && !empty($itemUser)) {
 					global $userlib;
 					$fopt['value'] = $userlib->get_user_email($itemUser);
+				} elseif ($fopt['options_array'][0] == 'language' && !empty($itemUser)) {
+					global $userlib;
+					$fopt['value'] = $userlib->get_language($itemUser);
 				} elseif (!empty($itemUser)) {
 					global $userlib;
 					$fopt['value'] = $userlib->get_user_preference($itemUser, $fopt['options_array'][0]);
@@ -1488,6 +1491,7 @@ class TrackerLib extends TikiLib
 						if (!empty($ins_fields['data'][$i]['value']) && $prefs['change_password'] == 'y' && ($e = $userlib->check_password_policy($ins_fields['data'][$i]['value'])) == '') {
 							$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 						}
+						// CHANGE LANG
 						if (!empty($itemId)) {
 						   $this->log($version, $itemId, $ins_fields['data'][$i]['fieldId'], '?');
 						}
@@ -2392,7 +2396,7 @@ class TrackerLib extends TikiLib
 
 	// Lists all the fields for an existing tracker
 	function list_tracker_fields($trackerId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $tra_name=true, $filter='', $fields='') {
-		global $prefs;
+		global $prefs, $smarty;
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$mid = " where `trackerId`=? and (`name` like ?)";
@@ -2447,6 +2451,9 @@ class TrackerLib extends TikiLib
 				if (!empty($fieldId)) {
 					$res['otherField'] = $this->get_tracker_field($fieldId);
 				}
+			}
+			if ($res['type'] == 'p' && $res['options_array'][0] == 'language') {
+				$smarty->assign('languages', $this->list_languages());	
 			}
 			$ret[] = $res;
 		}
@@ -3262,7 +3269,7 @@ class TrackerLib extends TikiLib
 				<dt>Usage: <strong>type</strong>
 				<dt>Example: password
 				<dt>Description:
-				<dd><strong>[type]</strong> if value is password, will allow to change the user password, if value is email, will display/allow to change the user email;
+				<dd><strong>[type]</strong> if value is password, will allow to change the user password, if value is email, will display/allow to change the user email, other values possible: language;
 				</dl>'));
 		$type['A'] = array(
 			'label'=>tra('attachment'),

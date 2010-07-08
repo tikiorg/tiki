@@ -186,6 +186,8 @@
 {elseif $field_value.type eq 'p'}
 	{if $list_mode eq 'csv'}
 		{$field_value.value}
+	{elseif $field_value.options_array[0] == 'language'}
+		{$field_value.value|langname} ({$field_value.value|escape})
 	{else}
 		{$field_value.value|escape}
 	{/if}
