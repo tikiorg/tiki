@@ -1505,7 +1505,7 @@ class TrackerLib extends TikiLib
 					} else {
 						$old_value = $tikilib->get_user_preference($user, $ins_fields['data'][$i]['options_array'][0]);
 						$tikilib->set_user_preference($user, $ins_fields['data'][$i]['options_array'][0], $ins_fields['data'][$i]['value']);
-						if (!empty($iemId) && $old_value != $ins_fields['data'][$i]['value']) {
+						if (!empty($itemId) && $old_value != $ins_fields['data'][$i]['value']) {
 						   $this->log($version, $itemId, $ins_fields['data'][$i]['fieldId'], $ins_fields['data'][$i]['value']);
 						}
 					}
