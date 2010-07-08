@@ -20,7 +20,7 @@ $userslib = new Userslib($dbTiki);
 
 global $rss_cache_time;
 
-class RSSLib extends TikiLib
+class RSSLib extends TikiDb_Bridge
 {
 
 	// ------------------------------------
@@ -146,8 +146,7 @@ class RSSLib extends TikiLib
 	/* check for cached rss feed data */
 	function get_from_cache($uniqueid, $rss_version="9")
 	{
-		global $user;
-		global $rss_cache_time;
+		global $tikilib, $user, $rss_cache_time;
 
 		$rss_version=$this->get_current_rss_version();
 		
@@ -176,7 +175,7 @@ class RSSLib extends TikiLib
 		  $refresh = $rss_cache_time; // global cache time currently
 		  $lastUpdated = $res["lastUpdated"];
 		  // up to date? if not, then set trigger to reload data:
-		  if ($this->now - $lastUpdated >= $refresh ) { $output["data"]="EMPTY"; }
+		  if ($tikilib->now - $lastUpdated >= $refresh ) { $output["data"]="EMPTY"; }
 		}
 		return $output;
 	}
@@ -184,7 +183,7 @@ class RSSLib extends TikiLib
 	/* put to cache */
 	function put_to_cache($uniqueid, $rss_version="9", $output)
 	{
-		global $user;
+		global $user, $tikilib;
 		// caching rss data for anonymous users only		
 		if (isset($user) && $user<>"") return;
 		if ($output=="" || $output=="EMPTY") return;
@@ -194,7 +193,7 @@ class RSSLib extends TikiLib
 		// update cache with new generated data if data not empty
 
 		$query = "update `tiki_rss_feeds` set `cache`=?, `lastUpdated`=? where `name`=? and `rssVer`=?";
-		$bindvars = array($output, (int) $this->now, $uniqueid, $rss_version);
+		$bindvars = array($output, (int) $tikilib->now, $uniqueid, $rss_version);
 		$result = $this->query($query, $bindvars);
 	}
 
@@ -202,7 +201,7 @@ class RSSLib extends TikiLib
 		, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId
 		, $fromcache=false
 	) {
-		global $prefs, $userslib, $rss_cache_time;
+		global $tikilib, $prefs, $userslib, $rss_cache_time;
 		
 		$rss_version=$this->get_current_rss_version();
 
@@ -216,7 +215,7 @@ class RSSLib extends TikiLib
 
 		$urlarray = parse_url($_SERVER["REQUEST_URI"]);
 		$rawPath = str_replace('\\','/', dirname($urlarray["path"]));
-		$URLPrefix = $this->httpPrefix() . $rawPath;
+		$URLPrefix = $tikilib->httpPrefix() . $rawPath;
 		if ($rawPath != "/") {
 			$URLPrefix .= "/"; // Append a slash unless Tiki is in the document root. dirname() removes a slash except in that case.
 		}
@@ -224,7 +223,7 @@ class RSSLib extends TikiLib
 		if ($prefs['index_rss_'.$feed]!='') {
 			$url = $prefs['index_rss_'.$feed];
 		} else {
-			$url = htmlspecialchars($this->httpPrefix().$_SERVER["REQUEST_URI"]);
+			$url = htmlspecialchars($tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
 		}
 
 		$home = htmlspecialchars($URLPrefix.$prefs['tikiIndex']);
@@ -360,10 +359,10 @@ class RSSLib extends TikiLib
 						$item->author = $data["$authorId"];
 						// only use realname <email> if existing and
 						$tmp = "";
-						if ($this->get_user_preference($data["$authorId"], 'user_information', 'private')=='public') {
-							$tmp = $this->get_user_preference($data["$authorId"], "realName");
+						if ($tikilib->get_user_preference($data["$authorId"], 'user_information', 'private')=='public') {
+							$tmp = $tikilib->get_user_preference($data["$authorId"], "realName");
 						}
-						$epublic = $this->get_user_preference($data["$authorId"], 'email is public', 'n');
+						$epublic = $tikilib->get_user_preference($data["$authorId"], 'email is public', 'n');
 						if ($epublic!='n') {
 							$res = $userslib->get_user_info($data["$authorId"], false);
 							if ($tmp<>"") $tmp .= ' ';
@@ -521,12 +520,13 @@ class RSSLib extends TikiLib
 	}
 
 	private function update_feeds( $feeds, $force = false ) {
+		global $tikilib;
 
 		if( $force ) {
 			$bindvars = array();
 			$result = $this->fetchAll( 'SELECT `rssId`, `url`, `actions` FROM `tiki_rss_modules` WHERE ' . $this->in( 'rssId', $feeds, $bindvars ), $bindvars );
 		} else {
-			$bindvars = array( $this->now );
+			$bindvars = array( $tikilib->now );
 			$result = $this->fetchAll( 'SELECT `rssId`, `url`, `actions` FROM `tiki_rss_modules` WHERE (`lastUpdated` < ? - `refresh`) AND ' . $this->in( 'rssId', $feeds, $bindvars ), $bindvars );
 		}
 
@@ -536,6 +536,7 @@ class RSSLib extends TikiLib
 	}
 
 	private function update_feed( $rssId, $url, $actions ) {
+		global $tikilib;
 		require_once 'Zend/Feed/Reader.php';
 
 		$filter = new DeclFilter;
@@ -553,14 +554,14 @@ class RSSLib extends TikiLib
 			$feed = Zend_Feed_Reader::import( $url );
 		} catch( Zend_Exception $e ) {
 			$this->query( 'UPDATE `tiki_rss_modules` SET `lastUpdated` = ?, `sitetitle` = ?, `siteurl` = ? WHERE `rssId` = ?',
-				array( $this->now, 'N/A', '#', $rssId ) );
+				array( $tikilib->now, 'N/A', '#', $rssId ) );
 			return;
 		}
 		$siteTitle = TikiFilter::get('striptags')->filter( $feed->getTitle() );
 		$siteUrl = TikiFilter::get('url')->filter( $feed->getLink() );
 
 		$this->query( 'UPDATE `tiki_rss_modules` SET `lastUpdated` = ?, `sitetitle` = ?, `siteurl` = ? WHERE `rssId` = ?',
-			array( $this->now, $siteTitle, $siteUrl, $rssId ) );
+			array( $tikilib->now, $siteTitle, $siteUrl, $rssId ) );
 
 		foreach( $feed as $entry ) {
 			$guid = $guidFilter->filter( $entry->getId() );
@@ -615,11 +616,11 @@ class RSSLib extends TikiLib
 	}
 
 	private function process_action_article( $configuration, $data ) {
-		global $artlib; require_once 'lib/articles/artlib.php';
+		global $tikilib, $artlib; require_once 'lib/articles/artlib.php';
 		$publication = $data['publication_date'];
 
 		if( $configuration['future_publish'] > 0 ) {
-			$publication = $this->now + $configuration['future_publish']*60;
+			$publication = $tikilib->now + $configuration['future_publish']*60;
 		}
 
 		$expire = $publication + 3600*24*$configuration['expiry'];
