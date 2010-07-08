@@ -1491,7 +1491,6 @@ class TrackerLib extends TikiLib
 						if (!empty($ins_fields['data'][$i]['value']) && $prefs['change_password'] == 'y' && ($e = $userlib->check_password_policy($ins_fields['data'][$i]['value'])) == '') {
 							$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 						}
-						// CHANGE LANG
 						if (!empty($itemId)) {
 						   $this->log($version, $itemId, $ins_fields['data'][$i]['fieldId'], '?');
 						}
