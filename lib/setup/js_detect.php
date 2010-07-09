@@ -48,6 +48,12 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 
 	$prefs['feature_jquery'] = 'y';	// just in case
 	
+	// load translations lang object from /lang/xx/language.js if there
+	if ($prefs['feature_multilingual'] == 'y' && file_exists('lang/' . $prefs['language'] . '/language.js')) {
+		// after the usual lib includes (up to 10) but before custom.js (50)
+		$headerlib->add_jsfile('lang/' . $prefs['language'] . '/language.js', 25);
+	}
+
 	/** Use custom.js in styles or options dir if there **/
 	$custom_js = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.js');
 	if (!empty($custom_js)) {

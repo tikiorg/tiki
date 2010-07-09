@@ -1,4 +1,4 @@
-<FilesMatch ".*">
+<FilesMatch ".^(js)$">
 	order deny,allow
 	deny from all
 </FilesMatch>
