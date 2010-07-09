@@ -14,6 +14,7 @@ lang = {
 "Average" : "Intermitja",
 "Weak" : "Fluixa",
 "Very Weak" : "Molt fluixa",
-"Strength" : "Força"
+"Strength" : "Força",
+"Passwords match" : "Les contrasenyes coincideixen"
 
 };
