@@ -20,9 +20,9 @@ class PaymentLib extends TikiDb_Bridge
 		return $this->lastInsertId();
 	}
 
-	private function get_payments( $conditions, $offset, $max ) {
+	private function get_payments( $conditions, $offset, $max, $what='' ) {
 		$count = 'SELECT COUNT(*) FROM `tiki_payment_requests` WHERE ' . $conditions;
-		$data = 'SELECT tpr.*, uu.`login` as `user` FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) WHERE ' . $conditions;
+		$data = 'SELECT tpr.*, uu.`login` as `user` '.$what.' FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) WHERE ' . $conditions;
 
 		$all = $this->fetchAll( $data, array(), $max, $offset );
 
@@ -37,7 +37,16 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	function get_past( $offset, $max ) {
-		return $this->get_payments( '`amount` <= `amount_paid` AND `cancel_date` IS NULL', $offset, $max );
+		$conditions = 'tpr.`amount` <= tpr.`amount_paid` AND tpr.`cancel_date` IS NULL';
+		$count = 'SELECT COUNT(*) FROM `tiki_payment_requests` tpr WHERE ' . $conditions;
+		$data = 'SELECT tpr.*, uu.`login` as `user`, tp.`type`, tp.`payment_date`, tp.`details` as `payment_detail`, uup.`login` as `payer`FROM `tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`) LEFT JOIN `tiki_payment_received` tp ON (tp.`paymentRequestId`=tpr.`paymentRequestId`) LEFT JOIN `users_users` uup ON (uup.`userId` = tp.`userId`) WHERE ' . $conditions;
+
+		$all = $this->fetchAll( $data, array(), $max, $offset );
+
+		return array(
+			'cant' => $this->getOne( $count ),
+			'data' => Perms::filter( array( 'type' => 'payment' ), 'object', $all, array( 'object' => 'paymentRequestId' ), 'payment_view' ),
+		);
 	}
 
 	function get_overdue( $offset, $max ) {
