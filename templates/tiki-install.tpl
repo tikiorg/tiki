@@ -464,7 +464,7 @@
 	{if $upgradefix eq 'y'}
 		<fieldset>
 			<legend>{icon _id=error} {tr}Upgrade fix{/tr}</legend>
-			<p>{tr}Experiencing problems with the upgrade? Your administrator account lost its privileges? This may occur if you upgraded since a very old version of Tiki.</p>
+			<p>{tr}Experiencing problems with the upgrade? Your administrator account lost its privileges? This may occur if you upgraded from a very old version of Tiki.</p>
 			<p>We can fix it! Doing so will:{/tr}</p>
 			<ol>
 				<li>{tr}Create the <em>Admins</em> group, if missing{/tr}</li>
