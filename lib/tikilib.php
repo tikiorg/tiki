@@ -4145,6 +4145,11 @@ class TikiLib extends TikiDb_Bridge
 		require_once("lib/cache/cachelib.php");
 		$cachelib->invalidate('user_details_'.$my_user);
 
+		if ($name == "realName") {
+			// attempt to invalidate userlink cache (does not cover all options - only the default)
+			$cachelib->invalidate('userlink.'.$user.'.'.$my_user.'0');
+			$cachelib->invalidate('userlink.'.$my_user.'0');
+		}
 		$user_preferences[$my_user][$name] = $value;
 
 		if ( $my_user == $user ) {
