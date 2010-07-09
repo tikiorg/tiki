@@ -3150,14 +3150,14 @@ class TrackerLib extends TikiLib
 			'help'=>tra('<dl>
 				<dt>Function: Provides a way to choose a value from another tracker (eventually with a link).
 				<dt>Usage: <strong>trackerId,fieldId,linkToItem,displayedFieldsList</strong>
-				<dt>Example: 3,5,1,6|8,opc,PageName
+				<dt>Example: 3,5,0,6|8,opc,PageName
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
 				<dd><strong>[fieldId]</strong> is the field in [trackerId] from which you can select a value among all the field values of the items of [trackerId];
 				<dd><strong>[linkToItem]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to the item in the other tracker;
 				<dd><strong>[displayedFieldsList]</strong> is a list of fields in [trackerId] to display instead of [fieldId], multiple fields can be separated with a |;
 				<dd><strong>[status]</strong> filter on status (o, p, c, op, oc, pc or opc);
-				<dd><strong>[linkPage]</strong> is the name of the page to link to with trackerlist plugin; 
+				<dd><strong>[linkPage]</strong> is the name of the wiki page to link to with trackerlist plugin in it; 
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['l'] = array(
