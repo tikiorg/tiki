@@ -213,6 +213,8 @@ function wikiplugin_trackeritemfield($data, $params) {
 				$smarty->assign('showlinks', 'n');
 				return $smarty->fetch('tracker_item_field_value.tpl');
 			}
+		} elseif ($test) { // testing the value of a field that does not exist yet
+			return $dataelse;
 		}
 	}
 	return $data;
