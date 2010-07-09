@@ -279,6 +279,7 @@
 	<tr>
 		<td valign="top">
 			<fieldset><legend>{tr}Install{/tr}</legend>
+				{if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr}This will destroy your current database.{/tr}</p>{/if}
 				{if $tikidb_created}
 				<script type='text/javascript'><!--//--><![CDATA[//><!--
 				{literal}
@@ -289,15 +290,12 @@
 				{/literal}
 				//--><!]]></script>
 				<div id="install-link">
-				
 				<p style="text-align:center"><a style="color: #1174a5;" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
-				<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr}If the database contains a Tiki site, it will be deleted.{/tr}</p>
 				</div>
 				<div id="install-table" style="visibility:hidden">
 				{else}
 				<div id="install-table">
 				{/if}
-				{if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning:{/tr}</strong> {tr}This will destroy your current database.{/tr}</p>{/if}
 				<p align="center">
 					<input type="submit" name="scratch" value=" {if $tikidb_created}{tr}Reinstall{/tr}{else}{tr}Install{/tr}{/if} " style="margin: 32px;" />
 				</p>
