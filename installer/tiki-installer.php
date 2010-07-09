@@ -709,6 +709,7 @@ if ($dbcon) {
 	if ($install_step == '6' && $has_tiki_db) {
 		update_preferences($dbTiki, $prefs);
 		$smarty->assign('admin_email', get_admin_email($dbTiki));
+		$smarty->assign('upgradefix', (empty($dbversion_tiki) || $dbversion_tiki[0] < 3) ? 'y' : 'n');
 	}
 	$smarty->assign('tikidb_is20',  has_tiki_db_20());
 }

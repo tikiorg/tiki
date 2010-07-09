@@ -461,7 +461,7 @@
 			<br /><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
 		</div>
 	</fieldset>
-	{if $install_type ne "scratch"}
+	{if $upgradefix eq 'y'}
 		<fieldset>
 			<legend>{icon _id=error} {tr}Upgrade fix{/tr}</legend>
 			<p>{tr}Experiencing problems with the upgrade? Your administrator account lost its privileges? This may occur if you upgraded since a very old version of Tiki.</p>
