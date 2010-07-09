@@ -382,8 +382,12 @@ $jq("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMa
 	{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
 {elseif $cur_field.type eq 'k'}
-        <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}"{/if} />
-
+        <input type="text" id="page_selector_{$cur_field.id}" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}"{/if} />
+        {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $cur_field.isMandatory ne 'y'} {* since autocomplete allows blank entry it can't be used for mandatory selection. *}
+			{jq}
+			$jq("#page_selector_{{$cur_field.id}}").tiki("autocomplete", "pagename" );
+			{/jq}
+        {/if}
 {elseif $cur_field.type eq 'n'}
 {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
