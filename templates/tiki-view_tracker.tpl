@@ -286,6 +286,13 @@ $jq("#newItemForm").validate({
 {* -------------------- user selector -------------------- *}
 {if $field_value.type eq 'u'}
 {if !$field_value.options_array[0] or empty($field_value.options_array[0]) or $tiki_p_admin_trackers eq 'y'}
+{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $users|@count > $prefs.tracker_jquery_user_selector_threshold and $field_value.isMandatory ne 'y'}
+{* since autocomplete allows blank entry it can't be used for mandatory selection. *}
+	<input id="user_selector_{$field_value.fieldId}" type="text" size="20" name="{$field_value.ins_id}" value="{if $field_value.options_array[0] eq '2'}{$user}{else}{$field_value.value}{/if}" />
+	{jq}
+		$jq("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "username", {mustMatch: true});
+	{/jq}
+{else}
 <select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
@@ -299,6 +306,7 @@ $jq("#newItemForm").validate({
 {/foreach}
 
 </select>
+{/if}
 {else}
 {$user}
 {/if}

@@ -31,6 +31,13 @@
 {* -------------------- user selector -------------------- *}
 {elseif $field_value.type eq 'u'}
 	{if empty($field_value.options_array) or ($field_value.options_array[0] !=1 and $field_value.options_array[0] !=2) or $tiki_p_admin_trackers eq 'y'}
+		{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $field_value.list|@count > $prefs.tracker_jquery_user_selector_threshold and $field_value.isMandatory ne 'y'}
+			{* since autocomplete allows blank entry it can't be used for mandatory selection. *}
+			<input id="user_selector_{$field_value.fieldId}" type="text" size="20" name="{$field_value.ins_id}" value="{if $field_value.options_array[0] eq '2'}{$user}{else}{$field_value.value}{/if}" />
+			{jq}
+				$jq("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "username", {mustMatch: true});
+			{/jq}
+		{else}
 		<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 		{if $field_value.isMandatory ne 'y'}
 			<option value=""{if empty($field_value.value) && !empty($item.itemId)} selected="selected"{/if}>{tr}None{/tr}</option>
@@ -50,6 +57,7 @@
 			{/if}
 		{/foreach}
 		</select>
+		{/if}
 	{else}
 		{$user|username}
 	{/if}
