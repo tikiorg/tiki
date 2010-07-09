@@ -1219,7 +1219,7 @@ class UsersLib extends TikiLib
 
 	function get_users_names($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '') {
 
-		// Return an array of users indicating name, email, last changed pages, versions, lastLogin
+		// This function gets an array of user login names.
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$mid = " where `login` like ?";
