@@ -1117,7 +1117,7 @@ function wikiplugin_img_info() {
 			if ($imgdata['align'] == 'center') {
 				$alignbox = $center;
 			} else {
-				$alignbox = 'float:' . $imgdata['align'] . ';';
+				$alignbox = 'float:' . $imgdata['align'] . '; margin-' . ($imgdata['align'] == 'left'? 'right': 'left') .':5px;';
 			}
 		}
 		//first set stylebox string if style box is set
