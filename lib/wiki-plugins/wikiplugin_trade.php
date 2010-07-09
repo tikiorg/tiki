@@ -70,7 +70,7 @@ function wikiplugin_trade( $data, $params, $offset ) {
 	$iPluginTrade++;
 	$smarty->assign('iPluginTrade', $iPluginTrade);
 	
-	$params['price'] = floatval( $params['price'] );
+	$params['price'] = floatval( preg_replace('/^\D*([\d\.]*)/', '$1', $params['price'] ));
 	$smarty->assign( 'wp_trade_other_user_set', empty($params['other_user']) ? 'n' : 'y' );
 	$smarty->assign( 'wp_trade_action', $params['action']);
 	
@@ -105,7 +105,7 @@ function wikiplugin_trade( $data, $params, $offset ) {
 			$params['inputtitle'] = 'Request payment of %0 %1 to user %2 from %3';
 		}
 	}
-	$desc = tr($params['inputtitle'], $params['price'], $prefs['payment_currency'], $user, $params['other_user'] );
+	$desc = tr($params['inputtitle'], number_format($params['price'], 2), $prefs['payment_currency'], $user, $params['other_user'] );
 	
 	if( ( !empty($info) && $info['waiting'] == null )) {
 

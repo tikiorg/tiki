@@ -1,7 +1,7 @@
 <form method="post" action="#pluginTrade{$iPluginTrade}">
 	<div id="pluginTradeDiv{$iPluginTrade}" class="pluginTradeDiv">
 		{if !empty($wp_trade_title)}
-			{$wp_trade_title}
+			{wiki}{$wp_trade_title}{/wiki}
 		{/if}
 		<input type="hidden" name="wp_trade_offset" value="{$wp_trade_offset|escape}"/>
 		{if $wp_trade_other_user_set eq "n"}
