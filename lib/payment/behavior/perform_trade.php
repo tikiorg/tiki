@@ -3,11 +3,22 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: extend_membership.php 25244 2010-02-16 06:26:12Z changi67 $
+// $Id$
 
-// $user, $params['other_user'], $params['price'], $prefs['payment_currency'], $params['wanted']
 
-function payment_behavior_perform_trade( $main_user, $other_user, $price, $currency, $wanted = 'n' ) {
+/**
+ * Performs the second half of a trade - "offer mode" only and also cclite only
+ * The payment system does the first half ($user to manager account), this does manager to destination
+ * 
+ * Work in progress
+ * 
+ * @param string $main_user
+ * @param string $other_user
+ * @param float $price
+ * @param string $currency
+ * @param string $wanted = 'n'
+ */
+function payment_behavior_perform_trade( $main_user, $other_user, $price, $currency = '', $wanted = 'n' ) {
 	global $userlib, $paymentlib, $prefs, $cclitelib, $smarty;
 	require_once 'lib/payment/cclitelib.php';
 	$smarty->assign('ccresult_ok', false);
@@ -24,7 +35,7 @@ function payment_behavior_perform_trade( $main_user, $other_user, $price, $curre
 		$smarty->assign('ccresult2', "Perform Trade: price not set");
 	}
 	
-	$result = $cclitelib->pay_user($invoice, $price, $currency = '', $registry = '', $other_user);
+	$result = $cclitelib->pay_user( $price, $currency, '', $other_user );
 	
 	if (!empty($result)) {
 		$smarty->assign('ccresult2', $result);

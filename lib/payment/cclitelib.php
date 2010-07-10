@@ -99,7 +99,8 @@ class CCLiteLib extends TikiDb_Bridge
 		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
 			$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
 		}
-
+		$r = $this->cclite_send_request('logoff');
+		
 		return $res;
 	}
 
@@ -114,16 +115,17 @@ class CCLiteLib extends TikiDb_Bridge
 	 * 
 	 * @return string result from cclite
 	 */
-	public function pay_user($invoice, $amount, $currency = '', $registry = '', $destination_user = '') {
+	public function pay_user( $amount, $currency = '', $registry = '', $destination_user = '') {
 		global $user, $prefs, $paymentlib;
 		require_once 'lib/payment/paymentlib.php';
 		
 		$res = $this->cclite_send_request('pay', $amount, $destination_user, $currency, $registry, $this->merchant_user);
 		
-		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
+//		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
 //			$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
-		}
-
+//		}
+		$r = $this->cclite_send_request('logoff');
+		
 		return $res;
 	}
 
@@ -158,7 +160,7 @@ class CCLiteLib extends TikiDb_Bridge
 	 * @return		result from cclite server (html hopefully)
 	 */
 
-	private function cclite_send_request( $command, $amount = 0, $other_user = '', $currency = '', $registry = '', $main_user = '') {
+	function cclite_send_request( $command, $amount = 0, $other_user = '', $currency = '', $registry = '', $main_user = '') {
 		global $user, $prefs;
 		
 		if (empty($other_user)) { $other_user = $this->merchant_user; }
@@ -194,6 +196,10 @@ class CCLiteLib extends TikiDb_Bridge
 		switch ($command) {
 			case 'recent':
 				$REST_url = "$cclite_base_url/recent/transactions";
+				//curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+				//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+				//curl_setopt($ch, CURLOPT_HEADER, true);
+				//curl_setopt($ch, CURLOPT_FAILONERROR, true);
 				break;
 			case 'summary':
 				$REST_url = "$cclite_base_url/summary";
@@ -219,6 +225,10 @@ class CCLiteLib extends TikiDb_Bridge
 		case 'debit':
 			// non-working at present...
 			$REST_url = "$cclite_base_url/debit/$other_user/$registry/$amount/$currency";
+			break;
+		case 'logoff':
+			// non-working at present...
+			$REST_url = "$cclite_base_url/logoff";
 			break;
 		default:
 			return "No cclite function selected use <a title=\"cclite passthrough help\" href=\"/$cclite_base_url/help\">help</a>" ;
