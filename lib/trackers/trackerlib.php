@@ -3716,6 +3716,15 @@ class TrackerLib extends TikiLib
 			$fields[$refFieldId]['http_request'][8] .= ($fields[$refFieldId]['http_request'][8] ? "," : "") . $field['value'];
 		}
 	}
+	/* Ensures that a dynamic list item gets its referred type */
+	/* $field is the dynamic item list field('w') */
+	function resolve_if_dynamic_list_type(&$field) {
+		if ($field['type'] == 'w') {
+			$refFieldId = $field['options_array'][3];
+			$refField = $this->get_tracker_field($refFieldId);
+			$field['type'] = $refField['type'];
+		}
+	}
 	function test_field_type($fields, $types) {
 		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($fields),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
 		return $this->getOne($query, array_merge($fields, $types));

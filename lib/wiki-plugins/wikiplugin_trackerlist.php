@@ -785,6 +785,8 @@ function wikiplugin_trackerlist($data, $params) {
 					$allfields['data'][$i] = array_merge($infoComputed, $allfields['data'][$i]);
 				}
 			}
+			$trklib->resolve_if_dynamic_list_type($allfields["data"][$i]);
+			
 			if ((in_array($allfields["data"][$i]['fieldId'],$listfields) or in_array($allfields["data"][$i]['fieldId'],$popupfields))and $allfields["data"][$i]['isPublic'] == 'y') {
 				$passfields["{$allfields["data"][$i]['fieldId']}"] = $allfields["data"][$i];
 			}
