@@ -299,8 +299,13 @@ if (isset($_REQUEST["upload"])) {
 			if ($ratio <=1) {
 				// No resizing
 				if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
-					$errors[] = tra('Errors detected');
-					continue;
+					if ($tiki_p_admin == 'y') {
+						$errors[] = tra('Errors detected').'. '.tra('Check that these paths exist and are writable by the web server').': '.$file_tmp_name.' '.$tmp_dest;
+						continue;
+					}	else	{
+						$errors[] = tra('Errors detected');
+						continue;
+					}
 				}
 			}
 

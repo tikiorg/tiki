@@ -34,6 +34,15 @@ $prefs = array(
 // Which step of the installer
 if (empty($_REQUEST['install_step'])) {
 	$install_step = '0';
+	
+	if (isset($_REQUEST['setdbversion'])) {
+		// Sets dbversion_tiki when installing the WebDeploy package
+		$db = fopen('db/local.php', 'a');
+		require_once 'lib/setup/twversion.class.php';
+		$TWV = new TWVersion();
+		fwrite($db, "\n\$dbversion_tiki='" . $TWV->getVersion() . "';\n");
+		fclose($db);
+	}
 } else {
 	$install_step = $_REQUEST['install_step'];
 }

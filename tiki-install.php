@@ -33,7 +33,7 @@ if (file_exists('db/lock')) {
 	createPage($title, $content);
 }
 
-$tikiroot = dirname($_SERVER['PHP_SELF']);
+$tikiroot = str_replace('\\','/',dirname($_SERVER['PHP_SELF']));
 $session_params = session_get_cookie_params();
 session_set_cookie_params($session_params['lifetime'], $tikiroot);
 unset($session_params);
@@ -90,7 +90,7 @@ if (isset($_SESSION['accessible'])) {
 							<p>You are attempting to run the Tiki Installer. For your protection, this installer can be used only by a site administrator.</p>
 							<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (database username and password) here.</p>
 							<p>If you have forgotten your database credentials, find the directory where you have unpacked your Tiki and have a look inside the <strong><code>db</code></strong> folder into the <strong><code>local.php</code></strong> file.</p>
-							<form method="post" action="tiki-install.php">
+							<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">
 								<p><label for="dbuser">Database username</label>: <input type="text" id="dbuser" name="dbuser" /></p>
 								<p><label for="dbpass">Database password</label>: <input type="password" id="dbpass" name="dbpass" /></p>
 								<p><input type="submit" value=" Validate and Continue " /></p>

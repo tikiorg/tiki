@@ -30,6 +30,10 @@ if (isset($_REQUEST["articleId"])) {
 	$articleId = 0;
 }
 
+if (isset($_REQUEST['cancel_edit']) && $articleId) {
+	header ("location: tiki-read_article.php?articleId=$articleId");
+	die;
+}
 // We need separate numbering of previews, since we access preview images by this number
 if (isset($_REQUEST["previewId"])) {
 	$previewId = $_REQUEST["previewId"];
