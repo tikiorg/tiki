@@ -139,7 +139,7 @@
 				<td><label for="userfile">{tr}Upload from disk:{/tr}</label></td>
 				<td>
 					{if $editFileId}{$fileInfo.filename|escape}{/if}
-					<input id="userfile" name="userfile[]" type="file" size="15"/>
+					<input id="userfile" name="userfile[]" type="file" size="40"/>
 				</td>
 				{/if}
 			</tr>

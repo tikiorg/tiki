@@ -193,40 +193,45 @@
 {/if}
 
 <table class="normal noslideshow">
-<tr>
-      <td class="even">
-      <small>
-  {tr}You can view this gallery's configured image (first, random, etc.) in your browser using{/tr}:<br /><br />
-  <a class="gallink" href="{$base_url}show_image.php?galleryId={$galleryId}">{$base_url}show_image.php?galleryId={$galleryId}</a><br />
-  </small>
-  </td>
-</tr>
-<tr>
-  <td class="even">
-  <small>
-  {tr}You can include the gallery's image in an HTML page using one of these lines{/tr}:<br /><br />
-  {if $resultscale == $defaultscale}
-  &lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;<br />
-  {elseif !$resultscale}
-  &lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;<br />
-  {else}
-  &lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;<br />
-  {/if}
-  </small>
-  </td>
-</tr>
-<tr>
-  <td class="even">
-  <small>
-  {tr}You can include the image in a tiki page using one of these lines{/tr}:<br /><br />
-  {if $resultscale == $defaultscale}
-  {literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
-  {elseif !$resultscale}
-  {literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
-  {else}
-  {literal}{{/literal}img src={$base_url}show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
-  {/if}
-  </small>
-  </td>
-</tr>
+	<tr>
+		<td class="even" colspan="2" style="border:0px; font-size:x-small">
+			{tr}You can view this gallery's configured image (first, random, etc.) in your browser using{/tr}:
+		</td>
+	<tr>
+		<td width="6px" style="border:0px">
+		</td>
+		<td style="border:0px; font-size:x-small">
+			<a class="gallink" href="{$base_url}show_image.php?galleryId={$galleryId}">
+				{$base_url}show_image.php?galleryId={$galleryId}
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="even" style="border-bottom:0px; font-size:x-small" colspan="2">
+			{tr}You can include the gallery's image in an HTML page using{/tr}:
+		</td>
+	</tr>
+	<tr>
+		<td style="border:0px" width="6px"></td>
+		<td style="border:0px; font-size:x-small">
+			<span class="inline_syntax">
+				&lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;
+			</span>
+		</td>
+	</tr>
+	<tr>
+  		<td class="even" style="border-bottom:0px; font-size:x-small" colspan="2">
+			{tr}You can include the image in a tiki page using{/tr}:
+		</td>
+	<tr>
+		<td width="6px" style="border:0px">
+		</td>
+		<td class="inline_syntax" style="border:0px; font-size:x-small">
+			{if $resultscale == $defaultscale or !$resultscale}
+				{literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
+			{else}
+				{literal}{{/literal}img src={$base_url}show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
+			{/if}
+  		</td>
+	</tr>
 </table>

@@ -248,6 +248,11 @@ ul.categories li {
 	padding: 0;
 }
 
+.inline_syntax {
+	font-family: "Lucida Console";
+	color: brown;
+}
+
 /* New Toolbars */
 
 .textarea-toolbar > div {
