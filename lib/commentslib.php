@@ -1435,7 +1435,7 @@ class Comments extends TikiLib
 			$query = $query. " GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
 		}
 		elseif ($type == 'blog') {
-			if ($prefs['feature_blog'] != 'y')
+			if ($prefs['feature_blogs'] != 'y')
 				return false;
 			$query = "SELECT count(*),`tiki_blog_posts`.`postId`,`tiki_blog_posts`.`title` FROM `tiki_comments` INNER JOIN `tiki_blog_posts` ON `tiki_comments`.`object`=`tiki_blog_posts`.`postId` WHERE `tiki_comments`.`objectType`='post' and `tiki_comments`.`approved`='y' GROUP BY `tiki_comments`.`object` ORDER BY count(*) DESC";
 		}
