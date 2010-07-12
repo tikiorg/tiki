@@ -869,20 +869,36 @@ class CategLib extends ObjectLib
 	}
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
-	function get_child_categories($categId) {
+	function get_child_categories($categId, $all_descends = false) {
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		global $prefs;
 		if (!$categId) $categId = "0"; // avoid wrong cache
 		if( ! $ret = $cachelib->getSerialized("childcategs$categId") ) {
-			$query = "select * from `tiki_categories` where `parentId`=? order by name";
-			$ret = $this->fetchAll($query,array($categId));
+			if ($all_descends == true) {
+				//find length of $categId name to delete later
+				$name = $this->get_category_name($categId);
+				$cut = strlen($name) +2;
+				$ids_array = $this->get_category_descendants($categId);
+				$length = count($ids_array);
+				$ids_array = array_slice($ids_array, 1, $length, true);
+				$ids_string = implode(", ", $ids_array); 
+				$query = "select * from `tiki_categories` where `categId` in (" . $ids_string . ") order by name";		
+			} else {
+				$query = "select * from `tiki_categories` where `parentId`=? order by name";
+			}
+				$ret = $this->fetchAll($query,array($categId));
 			foreach ( $ret as &$res ) {
 				$id = $res["categId"];
 				$query = "select count(*) from `tiki_categories` where `parentId`=?";
 				$res["children"] = $this->getOne($query,array($id));
 				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
 				$res["objects"] = $this->getOne($query,array($id));
-				$res['name']=$this->get_category_name($id);
+				if ($all_descends == true) {
+					$res['name'] = $this->get_category_path_string($id);
+					$res['name'] = substr($res['name'], $cut);
+				} else {
+					$res['name']=$this->get_category_name($id);
+				}
 			}
 			$cachelib->cacheItem("childcategs$categId",serialize($ret));
 		}
@@ -893,8 +909,13 @@ class CategLib extends ObjectLib
 		}
 		return $ret;
 	}
-	function get_viewable_child_categories($categId) {
-		$alls = $this->get_child_categories($categId);
+	//set $all_descends to true to get all descendent categories, otherwise only first level children
+	function get_viewable_child_categories($categId, $all_descends = false) {
+		if ($all_descends == true) {
+			$alls = $this->get_child_categories($categId, true);
+		} else {
+			$alls = $this->get_child_categories($categId);
+		}
 		if (empty($alls)) {
 			return $alls;
 		}

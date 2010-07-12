@@ -739,7 +739,12 @@ if ($_REQUEST["itemId"]) {
 					global $categlib;
 					include_once ('lib/categories/categlib.php');
 					$k = $fields["data"][$i]['options_array'][0];
-					$ins_fields["data"][$i]["$k"] = $categlib->get_viewable_child_categories($k);
+					if ($fields["data"][$i]['options_array'][3] == 1) {
+						$all_descends = true;
+					} else {
+						$all_descends = false;
+					}
+					$ins_fields["data"][$i]["$k"] = $categlib->get_viewable_child_categories($k, $all_descends);
 					if (!isset($cat)) {
 						$cat = $categlib->get_object_categories('trackeritem', $_REQUEST['itemId']);
 					}
