@@ -1,5 +1,11 @@
 {title help="Menus"}{tr}Admin Menus{/tr}{/title}
 
+{if $tiki_p_admin eq 'y'}
+	<div class="navbar">
+		{button href="tiki-admin_modules.php" _text="{tr}Admin Modules{/tr}"}
+	</div>
+{/if}
+
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
 	<hr />
