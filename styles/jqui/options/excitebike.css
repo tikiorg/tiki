@@ -194,7 +194,9 @@ h3.box-title {
 .box-data a,
 .box-data a:visited,
 .wikitext a,
-.wikitext a:visited  {
+.wikitext a:visited, 
+table.normal a.link,
+table.normal a {
 	color: #e69700;
 }
 
@@ -202,7 +204,7 @@ h3.box-title {
 .rbox-data {
 	background: url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-small_25_c5ddfc_40x40.png) repeat scroll 50% 50%;
 	border: 1px solid #E69700;
-	color: #fff;
+	color: #e8a119;
 }	
 	
 .rbox-title {
@@ -247,11 +249,6 @@ td.heading a:visited,
 .caltable .days {
 	color: #fff;
 	font-weight: bold;
-}
-
-table.normal a.link,
-table.normal a {
-	
 }
 
 tr.odd td,

@@ -143,7 +143,7 @@ body.wikitext {
 #col3 input[type="text"],
 #col3 input[type="password"] {width: 90%}
 
-input[type="file"] {color: #000}
+input[type="file"] {color: #cfcfcf}
 
 
 span.button a,
@@ -423,6 +423,10 @@ a.flip:hover,
 .tellafriend a:hover {color: #f4f4f4}
 
 /****** Misc. Global ****/
+
+.inline_syntax {
+	color: orange;
+}
 
 /***** Boxes *****/
 /** Modules **/

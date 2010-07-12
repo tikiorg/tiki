@@ -792,7 +792,14 @@ function wikiplugin_trackerlist($data, $params) {
 				if (!empty($infoComputed)) {
 					$allfields['data'][$i] = array_merge($infoComputed, $allfields['data'][$i]);
 				}
-			}
+			} elseif ($allfields["data"][$i]['type'] == 'w') {
+				/* keep track of dynamic list items referring to user selectors */
+				$refFieldId = $allfields["data"][$i]['options_array'][3];
+				$refField = $trklib->get_tracker_field($refFieldId);
+				if ($refField['type'] == 'u') {
+					$allfields["data"][$i]['type'] = $refField['type'];
+				}
+			} 
 			if ((in_array($allfields["data"][$i]['fieldId'],$listfields) or in_array($allfields["data"][$i]['fieldId'],$popupfields))and $allfields["data"][$i]['isPublic'] == 'y') {
 				$passfields["{$allfields["data"][$i]['fieldId']}"] = $allfields["data"][$i];
 			}

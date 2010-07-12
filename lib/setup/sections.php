@@ -194,8 +194,15 @@ if ( ! empty($section_class) ) {
 }
 
 function current_object() {
-	global $section, $sections, $cat_type, $cat_objid;
+	global $section, $sections, $cat_type, $cat_objid, $postId;
 
+	if ($section == 'blogs' && !empty($postId)) { // blog post check the category on the blog - but freetags are on blog post
+		return array(
+			'type' => 'blog post',
+			'object' => $postId,
+		);
+	}
+		
 	if( $cat_type && $cat_objid ) {
 		return array(
 			'type' => $cat_type,

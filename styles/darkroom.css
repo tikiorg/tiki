@@ -810,6 +810,10 @@ a.tikihelp:hover {
 	float: right;
 }
 
+.inline_syntax {
+	color: orange;
+}
+
 /**** Boxes *****/
 /** Modules **/
 
