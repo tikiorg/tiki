@@ -51,5 +51,5 @@
 				{/if}
 			</li>
 		{/foreach}
-	{if ($nonums eq 'y') or ($showavatars eq 'y')}</ul>{else}<ol>{/if}
+	{if ($nonums eq 'y') or ($showavatars eq 'y')}</ul>{else}</ol>{/if}
 {/tikimodule}
