@@ -11,15 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once ('lib/userslib.php');
-include_once ('lib/userprefs/scrambleEmail.php');
-include_once ('lib/feedcreator/feedcreator.class.php');
-
-global $dbTiki;
-$userslib = new Userslib($dbTiki);
-
-global $rss_cache_time;
-
 class RSSLib extends TikiDb_Bridge
 {
 
@@ -27,128 +18,49 @@ class RSSLib extends TikiDb_Bridge
 	// functions for rss feeds we syndicate
 	// ------------------------------------
 
-	function get_rss_version($ver)
+	/**
+	 * Return the feed format name
+	 *
+	 * @return string feed format name
+	 */
+	function get_current_feed_format_name()
+	{
+		$ver = $this->get_current_feed_format();
+
+		if ($ver == '2') {
+			$name = 'rss';
+		} else if ($ver == '5') {
+			$name = 'atom';
+		}
+
+		return $name;
+	}
+
+	/**
+	 * Return the feed format code (2 for rss and 5 for atom)
+	 * we currently use (user param or default value)
+	 *
+	 * @return int $ver
+	 */
+	function get_current_feed_format()
 	{
 		global $prefs;
-		if ($ver=='') {
-			// get default rss feed version from database or set to 0.91 if none in there
+
+		if (isset($_REQUEST['ver'])) {
+			$ver = $_REQUEST['ver'];
+		} else {
 			$ver = $prefs['rssfeed_default_version'];
 		}
 
-		$rss_version=$ver;
-		
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, PODCAST
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,       i
-		switch ($ver) {
-			case "ATOM0.3":
-			   $rss_version=5;
-			   break;
-			case "HTML":
-			   $rss_version=7;
-			   break;
-			case "JS":
-			   $rss_version=8;
-			   break;
-			case "MBOX":
-			   $rss_version=4;
-			   break;
-			case "OPML":
-			   $rss_version=6;
-			   break;
-			case "PODCAST":
-			   $rss_version="i";
-			   break;
-			case "PIE0.1":
-			   $rss_version=3;
-			   break;
-			case "RSS0.9":
-			   $rss_version="a";
-			   break;
-			case "RSS0.91":
-			   $rss_version=9;
-			   break;
-			case "RSS1.0":
-			   $rss_version=1;
-			   break;
-			case "RSS2.0":
-			   $rss_version=2;
-			   break;
-		}
-		return $rss_version;
-	}
-
-	function get_rss_version_name($ver)
-	{
-		global $prefs;
-		if ($ver=='') {
-			// get default rss feed version from database or set to 0.91 if none in there
-			$ver = $prefs['rssfeed_default_version'];
-		}
-
-		$rss_version_name=$ver;
-
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, PODCAST
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,       i
-		switch ($ver) {
-			case "1":
-			   $rss_version_name="RSS1.0";
-			   break;
-			case "2":
-			   $rss_version_name="RSS2.0";
-			   break;
-			case "3":
-			   $rss_version_name="PIE0.1";
-			   break;
-			case "4":
-			   $rss_version_name="MBOX";
-			   break;
-			case "5":
-			   $rss_version_name="ATOM0.3";
-			   break;
-			case "6":
-			   $rss_version_name="OPML";
-			   break;
-			case "7":
-			   $rss_version_name="HTML";
-			   break;
-			case "8":
-			   $rss_version_name="JS";
-			   break;
-			case "9":
-			   $rss_version_name="RSS0.91";
-			   break;
-			case "a":
-			   $rss_version_name="RSS0.9";
-			   break;
-			case "i":
-			   $rss_version_name="PODCAST";
-			   break;
-		}
-		return $rss_version_name;
-	}
-
-	/* return the rss version we currently have to use (user param or default value) */
-	function get_current_rss_version()
-	{
-		global $rss_version;
-		if ($rss_version=='') {
-			// override version if set as request parameter
-			if (isset($_REQUEST["ver"])) {
-				$ver = $_REQUEST["ver"];
-				$rss_version = $this->get_rss_version($ver);
-			} else {
-				$rss_version = 9; // default to RSS 0.91
-			}
-		} else $rss_version = $this->get_rss_version($rss_version);
-		return $rss_version;
+		return $ver;
 	}
 
 	/* check for cached rss feed data */
 	function get_from_cache($uniqueid, $rss_version="9")
 	{
-		global $tikilib, $user, $rss_cache_time;
+		global $tikilib, $user, $prefs;
 
-		$rss_version=$this->get_current_rss_version();
+		$rss_version=$this->get_current_feed_format();
 		
 		$output = array();
 		$output["content-type"] = "application/xml";
@@ -165,14 +77,14 @@ class RSSLib extends TikiDb_Bridge
 		if (!$result->numRows()) {
 		  // nothing found, then insert empty row for this feed+rss_ver
 		  $query = "insert into `tiki_rss_feeds`(`name`,`rssVer`,`refresh`,`lastUpdated`,`cache`) values(?,?,?,?,?)";
-		  $bindvars=array($uniqueid, $rss_version,(int) $rss_cache_time , 1, "-");
+		  $bindvars=array($uniqueid, $rss_version,(int) $prefs['rss_cache_time'] , 1, "-");
 		  $result = $this->query($query, $bindvars);
 		} else {
 		  // entry found in db:
 		  $res = $result->fetchRow();
 		  $output["data"] = $res["cache"];
 		  // $refresh = $res["refresh"]; // global cache time currently
-		  $refresh = $rss_cache_time; // global cache time currently
+		  $refresh = $prefs['rss_cache_time']; // global cache time currently
 		  $lastUpdated = $res["lastUpdated"];
 		  // up to date? if not, then set trigger to reload data:
 		  if ($tikilib->now - $lastUpdated >= $refresh ) { $output["data"]="EMPTY"; }
@@ -188,7 +100,7 @@ class RSSLib extends TikiDb_Bridge
 		if (isset($user) && $user<>"") return;
 		if ($output=="" || $output=="EMPTY") return;
 
-		$rss_version=$this->get_current_rss_version();
+		$rss_version=$this->get_current_feed_format();
 
 		// update cache with new generated data if data not empty
 
@@ -197,20 +109,42 @@ class RSSLib extends TikiDb_Bridge
 		$result = $this->query($query, $bindvars);
 	}
 
-	function generate_feed($feed, $uniqueid, $rss_version, $changes, $itemurl
+	/**
+	 * Generate a feed (ATOM 1.0 or RSS 2.0 using Zend_Feed_Writer_Feed
+	 *
+	 * @param string $section Tiki feature the feed is related to
+	 * @param string $uniqueid
+	 * @param string $feed_version DEPRECATED
+	 * @param array $changes the content that will be used to generate the feed
+	 * @param string $itemurl base url for items (e.g. "tiki-view_blog_post.php?postId=%s")
+	 * @param string $urlparam
+	 * @param string $id name of the id field used to identify each feed item (e.g. "postId")
+	 * @param string $title title for the feed
+	 * @param string $titleId name of the key in the $changes array with the title of each item
+	 * @param string $desc description for the feed
+	 * @param string $descId name of the key in the $changes array with the description of each item
+	 * @param string $dateId name of the key in the $changes array with the date of each item
+	 * @param string $authorId name of the key in the $changes array with the author of each item
+	 * @param bool $fromcache if true recover the feed from cache
+	 * 
+	 * @return array the generated feed
+	 */
+	function generate_feed($section, $uniqueid, $feed_version, $changes, $itemurl
 		, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId
 		, $fromcache=false
 	) {
-		global $tikilib, $prefs, $userslib, $rss_cache_time;
-		
-		$rss_version=$this->get_current_rss_version();
+		global $tikilib, $prefs, $userlib, $prefs;
+		require_once('lib/core/lib/Zend/Feed/Writer/Feed.php');
 
-		if ($rss_cache_time < 1) $fromcache=false;
+		$feed_format = $this->get_current_feed_format();
+		$feed_format_name = $this->get_current_feed_format_name();
+
+		if ($prefs['rss_cache_time'] < 1) $fromcache=false;
 
 		// only get cache data if rss cache is enabled
 		if ($fromcache) {
-			$output = $this->get_from_cache($uniqueid, $rss_version);
-			if ($output["data"]<>"EMPTY") return $output;
+			$output = $this->get_from_cache($uniqueid, $feed_format);
+			if ($output['data'] != 'EMPTY') return $output;
 		}
 
 		$urlarray = parse_url($_SERVER["REQUEST_URI"]);
@@ -220,8 +154,8 @@ class RSSLib extends TikiDb_Bridge
 			$URLPrefix .= "/"; // Append a slash unless Tiki is in the document root. dirname() removes a slash except in that case.
 		}
 		
-		if ($prefs['index_rss_'.$feed]!='') {
-			$url = $prefs['index_rss_'.$feed];
+		if ($prefs['index_rss_'.$section]!='') {
+			$url = $prefs['index_rss_'.$section];
 		} else {
 			$url = htmlspecialchars($tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
 		}
@@ -233,154 +167,86 @@ class RSSLib extends TikiDb_Bridge
 		$desc = htmlspecialchars($desc);
 		$read = $URLPrefix.$itemurl;
 
-		// different stylesheets for atom and rss	
-		$cssStyleSheet = "";
-		$xslStyleSheet = "";
-
-		$encoding = "UTF-8";
-		$contenttype = "application/xml";
-
-		// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS, RSS0.9, PODCAST
-		// valid format ids        :    9   ,   1   ,    2  ,   3   ,  4  ,   6 ,    5   ,  7  ,  8,   a,       i
-
-		switch ($rss_version) {
-			case "1": // RSS 1.0
-				$cssStyleSheet = $URLPrefix."lib/rss/rss-style.css";
-			break;
-			case "2": // RSS 2.0
-				$cssStyleSheet = $URLPrefix."lib/rss/rss-style.css";
-				$xslStyleSheet = $URLPrefix."lib/rss/rss20.xsl";
-			break;
-			case "3": // PIE 0.1
-				// plain RDF file
-			break;
-			case "4": // MBOX
-				$contenttype = "text/plain";
-			break;
-			case "5": // ATOM0.3
-				$cssStyleSheet = $URLPrefix."lib/rss/atom-style.css";
-			break;
-			case "6": // OPML
-				$xslStyleSheet = $URLPrefix."lib/rss/opml.xsl";
-			break;
-			case "7": // HTML
-				$contenttype = "text/plain";
-			break;
-			case "8": // JS
-				$contenttype = "text/javascript";
-			break;
-			case "9": // RSS 0.91
-				$cssStyleSheet = $URLPrefix."lib/rss/rss-style.css";
-			break;
-			case "a": // RSS 0.9
-				// plain RDF file
-			break;
-			case "i": // PODCAST
-				// plain RDF file
-			break;
-		}
-
-		$rss = new UniversalFeedCreator(); 
-		$rss->title = $title;
-		$rss->description = $desc;
+		$feed = new Zend_Feed_Writer_Feed(); 
+		$feed->setTitle($title);
+		$feed->setDescription($desc);
+		$feed->setLanguage($prefs['rssfeed_language']);
 		
-		//optional
-		$rss->descriptionTruncSize = 500;
-		$rss->descriptionHtmlSyndicated = true;
-		$rss->cssStyleSheet = htmlspecialchars($cssStyleSheet);
-		$rss->xslStyleSheet = htmlspecialchars($xslStyleSheet);
-		$rss->encoding = $encoding;
-		
-		$rss->language = $prefs['rssfeed_language'];
-		$rss->editor = $prefs['rssfeed_editor'];
-		$rss->webmaster = $prefs['rssfeed_webmaster'];
-		
-		$rss->link = $url;
-		$rss->feedURL = $url;
-		
-		$image = new FeedImage();
+		$feed->setLink($url);
+		$feed->setFeedLink($tikilib->httpPrefix() . $_SERVER['REQUEST_URI'], $feed_format_name);
+		$feed->setDateModified($tikilib->now);
+
+		//TODO: extend Zend_Feed_Writer to support image
+		/* $image = new FeedImage();
 		$image->title = $prefs['browsertitle'];
 		$image->url = $img;
 		$image->link = $home;
 		$image->description = sprintf(tra('Feed provided by %s. Click to visit.'), $prefs['browsertitle']);
 	
-		//optional
-		$image->descriptionTruncSize = 500;
-		$image->descriptionHtmlSyndicated = true;
-		
-		$rss->image = $image; 
+		$feed->image = $image;*/
 
-		global $dbTiki;
-		if (!isset($userslib)) 
-			$userslib = new Userslib($dbTiki);
-		
 		foreach ($changes["data"] as $data)  {
-			$item = new FeedItem(); 
-			$item->title = $data["$titleId"]; 
+			$item = $feed->createEntry(); 
+			$item->setTitle($data[$titleId]); 
+
 			if (isset($data['sefurl'])) {
-				$item->link = $URLPrefix.$data['sefurl'];
-			} elseif ($urlparam<>'') {			// 2 parameters to replace
-				$item->link = sprintf($read, urlencode($data["$id"]), urlencode($data["$urlparam"]));
+				$item->setLink($URLPrefix.$data['sefurl']);
+			} elseif ($urlparam != '') {			// 2 parameters to replace
+				$item->setlink(sprintf($read, urlencode($data["$id"]), urlencode($data["$urlparam"])));
 			} else {
-				$item->link = sprintf($read, urlencode($data["$id"]));
+				$item->setLink(sprintf($read, urlencode($data["$id"])));
 			}
 
-			if (isset($data["$descId"])) {			
-				$item->description = $data["$descId"]; 
-			} else {
-				$item->description = ""; 
+			if (isset($data[$descId])) {			
+				$item->setDescription($data[$descId]); 
 			}
 
-			// for file galleries and podcasts
-			if (isset($data["filesize"])) {
-				$item->size = $data["filesize"]; 
-			} else {
-				$item->size = 0;
-			}
-			// for file galleries and podcasts
-			if (isset($data["filetype"])) {
-				$item->mimetype = $data["filetype"]; 
-			} else {
-				$item->mimetype = "";
-			}
-	
-			//optional
-			//item->descriptionTruncSize = 500;
-			$item->descriptionHtmlSyndicated = true;
-			
-			$item->date = (int) $data["$dateId"]; 
-	
-			$item->source = $url; 
+			$item->setDateCreated($data[$dateId]); 
+			$item->setDateModified($data[$dateId]); 
 
-			$item->author = "";
-			if ($authorId<>"") {
-				if ($prefs['showAuthor_rss_'.$feed] == 'y') {
-					if ($userslib->user_exists($data["$authorId"])) {
-						$item->author = $data["$authorId"];
-						// only use realname <email> if existing and
-						$tmp = "";
-						if ($tikilib->get_user_preference($data["$authorId"], 'user_information', 'private')=='public') {
-							$tmp = $tikilib->get_user_preference($data["$authorId"], "realName");
-						}
-						$epublic = $tikilib->get_user_preference($data["$authorId"], 'email is public', 'n');
-						if ($epublic!='n') {
-							$res = $userslib->get_user_info($data["$authorId"], false);
-							if ($tmp<>"") $tmp .= ' ';
-							$tmp .= "<".scrambleEmail($res['email'], $epublic).">";
-						}
-						if ($tmp<>"") $item->author = $tmp;
-					} else $item->author = $data["$authorId"];
-				}
+			if ($authorId != '' && $prefs['showAuthor_rss_'.$section] == 'y') {
+				$author = $this->process_item_author($data[$authorId]);
+				$item->addAuthor($author);
 			}
-			$rss->addItem($item); 
-		} 
-		$data = $rss->createFeed($this->get_rss_version_name($rss_version));
-		$this->put_to_cache($uniqueid, $rss_version, $data);
+
+			$feed->addEntry($item); 
+		}
+
+		$data = $feed->export($feed_format_name);
+		$this->put_to_cache($uniqueid, $feed_format, $data);
+
 		$output = array();
 		$output["data"] = $data;
-		$output["content-type"] = $contenttype;
-		$output["encoding"] = $encoding;
+		$output["content-type"] = 'application/xml';
+
 		return $output;
+	}
+
+	/**
+	 * Return information about the user acording to its preferences
+	 *
+	 * @param string $login
+	 * @return array author data (can be the login name or the realName if set and email if public)
+	 */
+	function process_item_author($login) {
+		global $userlib, $tikilib;
+
+		$author = array();
+
+		if ($userlib->user_exists($login) && $tikilib->get_user_preference($login, 'user_information', 'private') == 'public') {
+			// if realName is not set use $login
+			$author['name'] = $tikilib->get_user_preference($login, 'realName', $login);
+
+			if ($tikilib->get_user_preference($login, 'email is public', 'n') != 'n') {
+				$res = $userlib->get_user_info($login, false);
+				require_once('lib/userprefs/scrambleEmail.php');
+				$author['email'] = scrambleEmail($res['email']);
+			}
+		} else {
+			$author['name'] = $login;
+		}
+
+		return $author;
 	}
 
 	// --------------------------------------------

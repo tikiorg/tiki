@@ -13,14 +13,11 @@
 			{preference name=rssfeed_default_version}
 			<em>
 				{tr}Specification{/tr}
-				<a href="http://www.w3.org/TR/rdf-schema/" target="tikihelp" class="tikihelp" title="{tr}Specification:{/tr} RDF 1.0">RDF 1.0</a>,
-				<a href="http://blogs.law.harvard.edu/tech/rss" target="tikihelp" class="tikihelp" title="{tr}Specification:{/tr} RDF 2.0">RDF 2.0</a>,
-				<a href="http://bitworking.org/rfc/draft-gregorio-07.html" target="tikihelp" class="tikihelp" title="{tr}Specification:{/tr} Atom 0.3">Atom 0.3</a>.
+				<a href="http://blogs.law.harvard.edu/tech/rss" target="tikihelp" class="tikihelp" title="{tr}Specification:{/tr} RSS 2.0">RSS 2.0</a>,
+				<a href="http://www.atomenabled.org/developers/syndication/atom-format-spec.php" target="tikihelp" class="tikihelp" title="{tr}Specification:{/tr} Atom 1.0">Atom 1.0</a>.
 			</em>
 
 			{preference name=rssfeed_language}
-			{preference name=rssfeed_editor}
-			{preference name=rssfeed_webmaster}
 			{preference name=rssfeed_img}
 			{preference name=rss_cache_time}
 
