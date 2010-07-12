@@ -64,7 +64,7 @@ if ($output["data"] == "EMPTY") {
 	}
 	$changes["data"] = $tmp;
 	$tmp = null;
-	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $id, '', $title, $titleId, $desc, $descId, $dateId, $authorId);
+	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: " . $output["content-type"]);
 print $output["data"];
