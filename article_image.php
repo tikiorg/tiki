@@ -53,6 +53,7 @@ switch ($_REQUEST["image_type"]) {
 $cachefile = $prefs['tmpDir'];
 if ($tikidomain) { $cachefile.= "/$tikidomain"; }
 $cachefile.= "/$image_cache_prefix.".$_REQUEST["id"];
+if (!empty($_REQUEST['width'])) $cachefile .= '_'.$_REQUEST['width'];
 
 // If "reload" parameter is set, recreate the cached image file from database values.
 // This does not make sense if "image_type" is "preview".
@@ -82,7 +83,13 @@ if ( (isset($_REQUEST["reload"])) || (!is_file($cachefile))) {
 	}
 	$type = $storedData["image_type"];
 	$data = $storedData["image_data"];
-	if ($data["image_data"]) {
+	if (!empty($_REQUEST['width'])) {
+		require('lib/images/images.php');
+		$image = new Image($data);
+		$image->resizemax($_REQUEST['width']);
+		$data =& $image->display();
+	}
+	if ($data) {
 		$fp = fopen($cachefile,"wb");
 		fputs($fp,$data);
 		fclose($fp);

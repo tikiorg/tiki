@@ -63,8 +63,8 @@
 												title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}">
 											<img  {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 													alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"
-													src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}"
-													{if !empty($prefs.art_view_img_width)} width="{$prefs.art_view_img_width}"{elseif $listpages[ix].image_x > 0} width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 } height="{$listpages[ix].image_y}"{/if} />
+													src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}{if !empty($prefs.art_view_img_width)}&amp;width={$prefs.art_view_img_width|escape}{/if}"
+													{if $listpages[ix].image_x > 0} width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 } height="{$listpages[ix].image_y}"{/if} />
 										</a>
 									{else}
 										{* Intentionally left blank to allow user add an image from somewhere else through the img tag and no other extra image *}
