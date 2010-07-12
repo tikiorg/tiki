@@ -33,9 +33,14 @@ function wikiplugin_sheet_info() {
 		'body' => tra('Sheet Heading'),
 		'params' => array(
 			'id' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Sheet ID'),
-				'description' => tra('Internal ID of the TikiSheet.'),
+				'description' => tra('Internal ID of the TikiSheet.  Either id or url MUST be used.'),
+			),
+			'url' => array(
+				'required' => false,
+				'name' => tra('Sheet Url Location'),
+				'description' => tra('Internal URL of the Table to use as a spreadsheet.  Either id or url MUST be used.'),
 			),
 			'simple' => array(
 				'required' => false,
@@ -94,7 +99,7 @@ function wikiplugin_sheet($data, $params) {
 	static $index = 0;
 	++$index;
 
-	if (!isset($id)) {
+	if (!isset($id) && !isset($url)) {
 		if( $tiki_p_edit_sheet != 'y' || $tiki_p_edit != 'y' ) {
 			return ("<b>missing id parameter for plugin</b><br />");
 		} else {
@@ -160,7 +165,7 @@ EOF;
 		if (!isset($simple) || $simple != 'y') {
 			global $headerlib;
 			$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") { ajaxLoadingShow("role_main"); }
-setTimeout (function () { $jq("#tiki_sheet' . $sheet->instance . '").tiki("sheet", "",{editable:false});}, 0);', 500 + $sheet->instance);
+setTimeout (function () { $jq("#tiki_sheet' . $sheet->instance . '").tiki("sheet", "",{editable:false'. ( isset($url) ? ',urlGet: "'.$url.'",buildSheet: false': '' ) .'});}, 0);', 500 + $sheet->instance);
 		} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
 			return $ret;	// return a single cell raw
 		}
