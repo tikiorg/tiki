@@ -93,5 +93,10 @@ function prefs_art_list() {
 			'name' => tra('Id'),
 			'type' => 'flag',
 		),
+		'art_view_img_width' => array(
+			'name' => tra('Width in pixels'),
+			'description' => tra('Width of the article image'),
+			'type' => 'text',
+		),
 	);
 }

@@ -82,30 +82,37 @@
 		{/tab}
 
 		{tab name="{tr}Articles Listing{/tr}"}
-			<div class="adminoptionbox">
-				{tr}Select which items to display when listing articles{/tr}: 	  
-				<a class="rbox-link" href="tiki-list_articles.php">tiki-list_articles.php</a>
-			</div>
-			<input type="hidden" name="artlist" />
+			<fieldset>
+				<legend>{tr}List Articles{/tr}</legend>
+				<div class="adminoptionbox">
+					{tr}Select which items to display when listing articles{/tr}: 	  
+					<a class="rbox-link" href="tiki-list_articles.php">tiki-list_articles.php</a>
+				</div>
+				<input type="hidden" name="artlist" />
 
-			{preference name=art_sort_mode}
+				{preference name=art_sort_mode}
 
-			{preference name=art_list_title}
-			<div class="adminoptionboxchild" id="art_list_title_childcontainer">
-				{preference name=art_list_title_len}
-			</div>
-			{preference name=art_list_id}
-			{preference name=art_list_type}
-			{preference name=art_list_topic}
-			{preference name=art_list_date}
-			{preference name=art_list_expire}
-			{preference name=art_list_visible}
-			{preference name=art_list_lang}
-			{preference name=art_list_author}
-			{preference name=art_list_rating}
-			{preference name=art_list_reads}
-			{preference name=art_list_size}
-			{preference name=art_list_img}
+				{preference name=art_list_title}
+				<div class="adminoptionboxchild" id="art_list_title_childcontainer">
+					{preference name=art_list_title_len}
+				</div>
+				{preference name=art_list_id}
+				{preference name=art_list_type}
+				{preference name=art_list_topic}
+				{preference name=art_list_date}
+				{preference name=art_list_expire}
+				{preference name=art_list_visible}
+				{preference name=art_list_lang}
+				{preference name=art_list_author}
+				{preference name=art_list_rating}
+				{preference name=art_list_reads}
+				{preference name=art_list_size}
+				{preference name=art_list_img}
+			</fieldset>
+			<fieldset>
+				<legend>{tr}Articles plugin{/tr} - {tr}Articles Home{/tr}</legend>
+				{preference name=art_view_img_width}
+			</fieldset>
 		{/tab}
 	{/tabset}
 	<div class="input_submit_container clear" style="text-align: center;">
