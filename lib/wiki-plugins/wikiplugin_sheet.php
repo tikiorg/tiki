@@ -174,7 +174,12 @@ setTimeout (function () { $jq("#tiki_sheet' . $sheet->instance . '").tiki("sheet
 		
 		if( $editable && ($tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y')) {
 			require_once $smarty->_get_plugin_filepath('function','button');
-			$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight");
+			
+			//If you've given the sheet a url, you can't edit it, disable if not possible
+			if (!isset($url)) {
+				$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight");
+			}
+			
 			$ret .= smarty_function_button( $button_params, $smarty);
 		}
 	} else {	// non jQuery.sheet behaviour
