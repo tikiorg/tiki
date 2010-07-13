@@ -31,8 +31,8 @@ $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-	$title = (!empty($feed_forums_title)) ? $feed_forums_title :  tra("Tiki RSS feed for forums");
-	$desc = (!empty($feed_forums_desc)) ? $feed_forums_desc : tra("Last topics in forums.");
+	$title = (!empty($prefs['feed_forums_title'])) ? $prefs['feed_forums_title'] :  tra("Tiki RSS feed for forums");
+	$desc = (!empty($prefs['feed_forums_desc'])) ? $prefs['feed_forums_desc'] : tra("Last topics in forums.");
 	$id = 'object';
 	$param = "threadId";
 	$descId = "data";
