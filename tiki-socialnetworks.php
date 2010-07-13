@@ -9,8 +9,9 @@ $section = 'mytiki';
 require_once ('tiki-setup.php');
 require_once ('lib/socialnetworkslib.php');
 
+
 // Feature available?
-if ($prefs['feature_socialnetworks'] !='y' || $prefs['socialnetworks_twitter_consumer_key']=='' || $prefs['socialnetworks_twitter_consumer_secret']=='') {
+if ($prefs['feature_socialnetworks'] !='y') {
 	$smarty->assign('msg', tra("This feature is disabled") . ": feature_socialnetworks");
 	$smarty->display("error.tpl");
 	die;
@@ -35,9 +36,31 @@ if (isset($_REQUEST['remove_twitter'])) {
 	$tikilib->set_user_preference($user, 'twitter_token','');
 	$smarty->assign('show_removal',true);
 }
-
 $token=$tikilib->get_user_preference($user, 'twitter_token', '');
 $smarty->assign('twitter', ($token!=''));
+
+if (isset($_REQUEST['request_facebook'])) {
+	if (!isset($_REQUEST['code'])) {
+		// user asked to give us access to twitter
+		$socialnetworkslib->getFacebookRequestToken();
+	} else {
+		if ($tikilib->get_user_preference($user, 'facebook_token', '')=='') {
+			// this is the callback from twitter
+			check_ticket('socialnetworks');
+			$socialnetworkslib->getFacebookAccessToken($user,$_REQUEST['code']);
+		} // otherwise it is just a reload of this page
+	}
+}
+if (isset($_REQUEST['remove_facebook'])) {
+	// remove user token from tiki
+	$tikilib->set_user_preference($user, 'facebook_token','');
+	$smarty->assign('show_removal',true);
+}
+$token=$tikilib->get_user_preference($user, 'facebook_token', '');
+$smarty->assign('facebook', ($token!=''));
+$smarty->assign('twitterRegistered',$socialnetworkslib->twitterRegistered());
+$smarty->assign('facebookRegistered',$socialnetworkslib->facebookRegistered());
+
 ask_ticket('socialnetworks');
 $smarty->assign('mid', 'tiki-socialnetworks.tpl');
 $smarty->display("tiki.tpl");
