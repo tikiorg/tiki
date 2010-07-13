@@ -50,15 +50,9 @@ if ($output["data"] == "EMPTY") {
 	include_once ('tiki-sefurl.php');
 	foreach($changes["data"] as $data) {
 		global $bloglib;
-		if ($prefs['summary_rss_blogs'] == "y") {
-			$data["$descId"] = $tikilib->parse_data($bloglib->get_page($data[$descId], 1) , array(
-				'print' => true
-			));
-		} else {
-			$data["$descId"] = $tikilib->parse_data($data[$descId], array(
-				'print' => true
-			));
-		}
+		$data["$descId"] = $tikilib->parse_data($data[$descId], array(
+			'print' => true
+		));
 		$data['sefurl'] = filter_out_sefurl(sprintf($readrepl, $data['postId'], $data['blogId']) , $smarty, 'blogpost', $data['title']);
 		$tmp[] = $data;
 	}
