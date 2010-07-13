@@ -14,11 +14,12 @@ function smarty_function_payment( $params, $smarty ) {
 
 	$objectperms = Perms::get( 'payment', $invoice );
 	$info = $paymentlib->get_payment( $invoice );
+	$theguy = $info['userId'] == $userlib->get_user_id($user);
 	$smarty->assign('ccresult_ok', false);
 	
 	// Unpaid payments can be seen by anyone as long as they know the number
 	// Just like your bank account, anyone can drop money in it.
-	if( $info && $info['state'] == 'outstanding' || $info['state'] == 'overdue' || $objectperms->payment_view || $info['userId'] == $userlib->get_user_id($user) ) {
+	if( $info && $info['state'] == 'outstanding' || $info['state'] == 'overdue' || $objectperms->payment_view || $theguy ) {
 		if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && $_POST['cclite_payment_amount'] == $info['amount_remaining']) {
 			global $access, $cclitelib, $cartlib;
 			require_once 'lib/payment/cclitelib.php';
@@ -37,7 +38,7 @@ function smarty_function_payment( $params, $smarty ) {
 		}
 
 		
-		$info['fullview'] = $objectperms->payment_view;
+		$info['fullview'] = $objectperms->payment_view || $theguy;
 		if (!empty($params['returnurl']) && empty($result)) {
 			$info['url'] = preg_match('|^https?://|', $params['returnurl'])? $params['returnurl']: $tikilib->tikiUrl($params['returnurl']);
 			$info['url'] .= (strstr($params['returnurl'], '.php?') || !strstr($params['returnurl'],'.php')? '&':'?')."invoice=$invoice";
