@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 function wikiplugin_googlemap_help() {
-	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user|item|objectlist, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14, setdefaultxyz=1|0, locateitemtype=wiki page|..., locateitemid=xxx, hideifnone=0|1, togglehidden=0|1, starthidden=0|1, autozoom=14)}{GOOGLEMAP}~/np~";
+	return tra("googlemap").":~np~{GOOGLEMAP(type=locator|user|item|objectlist,trackerfield, mode=normal|satellite|hybrid, key=XXXXX name=xxx, width=500, height=400, frameborder=1|0, defaultx=-79.4, defaulty=43.707, defaultz=14, setdefaultxyz=1|0, locateitemtype=wiki page|..., locateitemid=xxx, hideifnone=0|1, togglehidden=0|1, starthidden=0|1, autozoom=14, controls=n, trackerfieldid=xxx)}{GOOGLEMAP}~/np~";
 }
 
 function wikiplugin_googlemap_info() {
@@ -123,7 +123,19 @@ function wikiplugin_googlemap_info() {
 				'required' => false,
 				'name' => tra('Auto zoom to this level on address find'),
 				'description' => tra('An integer between 0 and 19'),
-			),		
+			),
+			'controls' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Show controls'),
+				'description' => tra('y|n'),
+			),
+			'trackerfieldid' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('ID of tracker field'),
+				'description' => tra('Field ID of tracker field if type is trackerfield'),
+			),
 		),
 	);
 }
@@ -151,7 +163,7 @@ function wikiplugin_googlemap($data, $params) {
 	} else {
 		return tra("Google Maps API key not set");
 	}
-	
+
 	if (isset($params["name"]) && $params["name"]) {
 		$gmapname = str_replace(' ', '', $params["name"]);
 	} else {
@@ -175,6 +187,10 @@ function wikiplugin_googlemap($data, $params) {
 		$smarty->assign( 'gmap_defaultz', $params["defaultz"] );
 	} else {
 		$smarty->assign( 'gmap_defaultz', $prefs["gmap_defaultz"] );
+	}
+	
+	if (isset($params["controls"])) {
+		$smarty->assign( 'gmap_controls', $params["controls"] );
 	}
 	
 	if (isset($params["setdefaultxyz"]) && $params["setdefaultxyz"]) {
@@ -206,7 +222,7 @@ function wikiplugin_googlemap($data, $params) {
 	} else {
 		$smarty->assign( 'gmapframeborder', 0 );
 	}
-	
+
 	if (isset($params["locateitemtype"]) && $params["locateitemtype"]) {
 		$locateitemtype = $params["locateitemtype"];
 	} else {
@@ -269,7 +285,6 @@ function wikiplugin_googlemap($data, $params) {
 		global $ajaxlib;
 		include_once ('lib/ajax/ajaxlib.php');
 	}
-	
 	if ($type != 'objectlist' && $locateitemtype == 'user') {
 		$smarty->assign('gmapitemtype', 'user');
 		global $userlib, $user, $tiki_p_admin;
@@ -311,17 +326,38 @@ function wikiplugin_googlemap($data, $params) {
 		$smarty->assign('gmapitem', $locateitemid);
 		$smarty->assign('gmapitemtype', $locateitemtype);
 		$attributes = $attributelib->get_attributes( $locateitemtype, $locateitemid );
-		if ( isset($attributes['tiki.geo.lon']) ) {
-			$pointx = $attributes['tiki.geo.lon'];
-		}
-		if ( isset($attributes['tiki.geo.lat']) ) {
-			$pointy = $attributes['tiki.geo.lat'];
-		}
-		if ( isset($attributes['tiki.geo.google.zoom']) ) {
-			$pointz = $attributes['tiki.geo.google.zoom'];
+		if ($type == 'trackerfield' && $locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"])) {
+			// There could be more than one googlemap field in trackers, thus we are not using object attributes for this purpose
+			global $trklib;
+			if (!is_object($trklib)) {
+				include_once('lib/trackers/trackerlib.php');
+			}
+			$item = $trklib->get_tracker_item($locateitemid);
+			$f_value = explode(',',$item[$params["trackerfieldid"]]);
+			if ( !empty($f_value[0]) ) {
+				$pointx = $f_value[0];
+			}
+			if ( !empty($f_value[1]) ) {
+				$pointy = $f_value[1];
+			}
+			if ( !empty($f_value[2]) ) {
+				$pointz = $f_value[2];
+			} else {
+				$pointz = $prefs["gmap_defaultz"];
+			}
 		} else {
-			$pointz = $prefs["gmap_defaultz"]; 
-		}	
+			if ( isset($attributes['tiki.geo.lon']) ) {
+				$pointx = $attributes['tiki.geo.lon'];
+			}
+			if ( isset($attributes['tiki.geo.lat']) ) {
+				$pointy = $attributes['tiki.geo.lat'];
+			}
+			if ( isset($attributes['tiki.geo.google.zoom']) ) {
+				$pointz = $attributes['tiki.geo.google.zoom'];
+			} else {
+				$pointz = $prefs["gmap_defaultz"]; 
+			}
+		}
 		if ($type == 'locator') {
 			$ajaxlib->registerFunction('saveGmapItem');
 		}			
