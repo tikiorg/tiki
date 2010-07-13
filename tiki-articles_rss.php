@@ -12,7 +12,7 @@ require_once ('lib/rss/rsslib.php');
 
 $access->check_feature('feature_articles');
 
-if ($prefs['rss_articles'] != 'y') {
+if ($prefs['feed_articles'] != 'y') {
 	$errmsg=tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
@@ -50,7 +50,7 @@ if (isset($_REQUEST["type"])) {
 
 if (isset($_REQUEST['lang'])) {
 	$articleLang = $_REQUEST['lang'];
-	$prefs['rssfeed_language'] = $articleLang;
+	$prefs['feed_language'] = $articleLang;
 } else {
 	$articleLang = '';
 }
@@ -66,9 +66,9 @@ $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
 	$tmp = tra("Tiki RSS feed for articles");
-	$title = (!empty($title_rss_articles)) ? $title_rss_articles : $tmp;
+	$title = (!empty($feed_articles_title)) ? $feed_articles_title : $tmp;
 	$tmp = tra("Last articles.");
-	$desc = (!empty($desc_rss_articles)) ? $desc_rss_articles : $tmp;
+	$desc = (!empty($feed_articles_desc)) ? $feed_articles_desc : $tmp;
 	$id = "articleId";
 	$titleId = "title";
 	$descId = "heading";
@@ -76,12 +76,12 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "author";
 	$readrepl = "tiki-read_article.php?$id=%s";
 
-	$tmp = $prefs['title_rss_'.$feed];
+	$tmp = $prefs['feed__'.$feed.'_title'];
 	if ($tmp<>'') $title = $tmp;
-	$tmp = $prefs['desc_rss_'.$feed];
+	$tmp = $prefs['feed_'.$feed.'_desc'];
 	if ($desc<>'') $desc = $tmp;
 
-	$changes = $artlib -> list_articles(0, $prefs['max_rss_articles'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', '', '', '', $articleLang);
+	$changes = $artlib -> list_articles(0, $prefs['feed_articles_max'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', '', '', '', $articleLang);
 	$tmp = array();
 	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data)  {

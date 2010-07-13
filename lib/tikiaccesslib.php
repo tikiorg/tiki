@@ -342,7 +342,7 @@ class TikiAccessLib extends TikiLib
 		}
 
 		// deny if no basic auth allowed.
-		if($prefs['rss_basic_auth'] != 'y') {
+		if($prefs['feed_basic_auth'] != 'y') {
 			return $result;
 		}
 

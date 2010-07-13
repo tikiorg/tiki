@@ -36,7 +36,7 @@
 		{button href="tiki-show_all_images.php?id=$galleryId" _text="{tr}All Images{/tr}"}
 	{/if}
 
-	{if $prefs.rss_image_gallery eq 'y'}
+	{if $prefs.feed_image_gallery eq 'y'}
 		{button href="tiki-image_gallery_rss.php?galleryId=$galleryId" _text="{tr}RSS{/tr}"}
 	{/if}
 	

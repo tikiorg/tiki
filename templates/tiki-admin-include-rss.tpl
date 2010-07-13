@@ -10,184 +10,184 @@
 
 	{tabset name="admin_rss"}
 		{tab name="{tr}General Preferences{/tr}"}
-			{preference name=rssfeed_default_version}
+			{preference name=feed_default_version}
 			<em>
 				{tr}Specification{/tr}
 				<a href="http://blogs.law.harvard.edu/tech/rss" target="tikihelp" class="tikihelp" title="{tr}Specification:{/tr} RSS 2.0">RSS 2.0</a>,
 				<a href="http://www.atomenabled.org/developers/syndication/atom-format-spec.php" target="tikihelp" class="tikihelp" title="{tr}Specification:{/tr} Atom 1.0">Atom 1.0</a>.
 			</em>
 
-			{preference name=rssfeed_language}
-			{preference name=rssfeed_img}
-			{preference name=rss_cache_time}
+			{preference name=feed_language}
+			{preference name=feed_img}
+			{preference name=feed_cache_time}
 
 			{remarksbox type="Note" title="{tr}Note{/tr}"}
 				{tr}Enabling caching will override existing permissions - all content will be public. Enable this option <strong>only</strong> if your syndicated content should be public.{/tr}
 			{/remarksbox}	
 				
-			{preference name=rss_basic_auth}
+			{preference name=feed_basic_auth}
 		{/tab}
 
 		{tab name="{tr}Feeds{/tr}"}
 
-			{preference name=rss_articles}
-			<div class="adminoptionboxchild" id="rss_articles_childcontainer">
+			{preference name=feed_articles}
+			<div class="adminoptionboxchild" id="feed_articles_childcontainer">
 				<a href="tiki-articles_rss.php" title="{tr}Feed for articles{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_articles}
-				{preference name=desc_rss_articles}
-				{preference name=max_rss_articles}
-				{preference name=showAuthor_rss_articles}
-				{preference name=index_rss_articles}
+				{preference name=feed_articles_title}
+				{preference name=feed_articles_desc}
+				{preference name=feed_articles_max}
+				{preference name=feed_articles_showAuthor}
+				{preference name=feed_articles_homepage}
 			</div>
 
-			{preference name=rss_blogs}
-			<div class="adminoptionboxchild" id="rss_blogs_childcontainer">
+			{preference name=feed_blogs}
+			<div class="adminoptionboxchild" id="feed_blogs_childcontainer">
 				<a href="tiki-blogs_rss.php" title="{tr}Feed for blogs{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_blogs}
-				{preference name=desc_rss_blogs}
-				{preference name=max_rss_blogs}
-				{preference name=showAuthor_rss_blogs}
-				{preference name=index_rss_blogs}
+				{preference name=feed_blogs_title}
+				{preference name=feed_blogs_desc}
+				{preference name=feed_blogs_max}
+				{preference name=feed_blogs_showAuthor}
+				{preference name=feed_blogs_homepage}
 			</div>
 
-			{preference name=rss_blog}
-			<div class="adminoptionboxchild" id="rss_blog_childcontainer">
+			{preference name=feed_blog}
+			<div class="adminoptionboxchild" id="feed_blog_childcontainer">
 				<a href="tiki-blog_rss.php" title="{tr}Feed for individual blogs{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_blog}
-				{preference name=desc_rss_blog}
-				{preference name=max_rss_blog}
-				{preference name=showAuthor_rss_blog}
-				{preference name=index_rss_blog}
+				{preference name=feed_blog_title}
+				{preference name=feed_blog_desc}
+				{preference name=feed_blog_max}
+				{preference name=feed_blog_showAuthor}
+				{preference name=feed_blog_homepage}
 			</div>
 
-			{preference name=rss_image_galleries}
-			<div class="adminoptionboxchild" id="rss_image_galleries_childcontainer">
+			{preference name=feed_image_galleries}
+			<div class="adminoptionboxchild" id="feed_image_galleries_childcontainer">
 				<a href="tiki-image_galleries_rss.php" title="{tr}Feed for image galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_image_galleries}
-				{preference name=desc_rss_image_galleries}
-				{preference name=max_rss_image_galleries}
-				{preference name=showAuthor_rss_image_galleries}
-				{preference name=index_rss_image_galleries}
+				{preference name=feed_image_galleries_title}
+				{preference name=feed_image_galleries_desc}
+				{preference name=feed_image_galleries_max}
+				{preference name=feed_image_galleries_showAuthor}
+				{preference name=feed_image_galleries_homepage}
 			</div>
 
-			{preference name=rss_image_gallery}
-			<div class="adminoptionboxchild" id="rss_image_gallery_childcontainer">
+			{preference name=feed_image_gallery}
+			<div class="adminoptionboxchild" id="feed_image_gallery_childcontainer">
 				<a href="tiki-image_gallery_rss.php" title="{tr}Feed for individual image galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_image_gallery}
-				{preference name=desc_rss_image_gallery}
-				{preference name=max_rss_image_gallery}
-				{preference name=showAuthor_rss_image_gallery}
-				{preference name=index_rss_image_gallery}
+				{preference name=feed_image_gallery_title}
+				{preference name=feed_image_gallery_desc}
+				{preference name=feed_image_gallery_max}
+				{preference name=feed_image_gallery_showAuthor}
+				{preference name=feed_image_gallery_homepage}
 			</div>
 
-			{preference name=rss_file_galleries}
-			<div class="adminoptionboxchild" id="rss_file_galleries_childcontainer">
+			{preference name=feed_file_galleries}
+			<div class="adminoptionboxchild" id="feed_file_galleries_childcontainer">
 				<a href="tiki-file_galleries_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_file_galleries}
-				{preference name=desc_rss_file_galleries}
-				{preference name=max_rss_file_galleries}
-				{preference name=showAuthor_rss_file_galleries}
-				{preference name=index_rss_file_galleries}
+				{preference name=feed_file_galleries_title}
+				{preference name=feed_file_galleries_desc}
+				{preference name=feed_file_galleries_max}
+				{preference name=feed_file_galleries_showAuthor}
+				{preference name=feed_file_galleries_homepage}
 			</div>
 
-			{preference name=rss_file_gallery}
-			<div class="adminoptionboxchild" id="rss_file_gallery_childcontainer">
+			{preference name=feed_file_gallery}
+			<div class="adminoptionboxchild" id="feed_file_gallery_childcontainer">
 				<a href="tiki-file_gallery_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_file_gallery}
-				{preference name=desc_rss_file_gallery}
-				{preference name=max_rss_file_gallery}
-				{preference name=showAuthor_rss_file_gallery}
-				{preference name=index_rss_file_gallery}
+				{preference name=feed_file_gallery_title}
+				{preference name=feed_file_gallery_desc}
+				{preference name=feed_file_gallery_max}
+				{preference name=feed_file_gallery_showAuthor}
+				{preference name=feed_file_gallery_homepage}
 			</div>
 
-			{preference name=rss_wiki}
-			<div class="adminoptionboxchild" id="rss_wiki_childcontainer">
+			{preference name=feed_wiki}
+			<div class="adminoptionboxchild" id="feed_wiki_childcontainer">
 				<a href="tiki-wiki_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_wiki}
-				{preference name=desc_rss_wiki}
-				{preference name=max_rss_wiki}
-				{preference name=showAuthor_rss_wiki}
-				{preference name=index_rss_wiki}
+				{preference name=feed_wiki_title}
+				{preference name=feed_wiki_desc}
+				{preference name=feed_wiki_max}
+				{preference name=feed_wiki_showAuthor}
+				{preference name=feed_wiki_homepage}
 			</div>
 
-			{preference name=rss_forums}
-			<div class="adminoptionboxchild" id="rss_forums_childcontainer">
+			{preference name=feed_forums}
+			<div class="adminoptionboxchild" id="feed_forums_childcontainer">
 				<a href="tiki-forums_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_forums}
-				{preference name=desc_rss_forums}
-				{preference name=max_rss_forums}
-				{preference name=showAuthor_rss_forums}
-				{preference name=index_rss_forums}
+				{preference name=feed_forums_title}
+				{preference name=feed_forums_desc}
+				{preference name=feed_forums_max}
+				{preference name=feed_forums_showAuthor}
+				{preference name=feed_forums_homepage}
 			</div>
 			
-			{preference name=rss_forum}
-			<div class="adminoptionboxchild" id="rss_forum_childcontainer">
+			{preference name=feed_forum}
+			<div class="adminoptionboxchild" id="feed_forum_childcontainer">
 				<a href="tiki-forum_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_forum}
-				{preference name=desc_rss_forum}
-				{preference name=max_rss_forum}
-				{preference name=showAuthor_rss_forum}
-				{preference name=index_rss_forum}
+				{preference name=feed_forum_title}
+				{preference name=feed_forum_desc}
+				{preference name=feed_forum_max}
+				{preference name=feed_forum_showAuthor}
+				{preference name=feed_forum_homepage}
 			</div>
 
-			{preference name=rss_trackers}
-			<div class="adminoptionboxchild" id="rss_trackers_childcontainer">
+			{preference name=feed_trackers}
+			<div class="adminoptionboxchild" id="feed_trackers_childcontainer">
 				<a href="tiki-trackers_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_trackers}
-				{preference name=desc_rss_trackers}
-				{preference name=max_rss_trackers}
-				{preference name=showAuthor_rss_trackers}
-				{preference name=index_rss_trackers}
+				{preference name=feed_trackers_title}
+				{preference name=feed_trackers_desc}
+				{preference name=feed_trackers_max}
+				{preference name=feed_trackers_showAuthor}
+				{preference name=feed_trackers_homepage}
 			</div>
 
-			{preference name=rss_tracker}
-			<div class="adminoptionboxchild" id="rss_tracker_childcontainer">
+			{preference name=feed_tracker}
+			<div class="adminoptionboxchild" id="feed_tracker_childcontainer">
 				<a href="tiki-tracker_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_tracker}
-				{preference name=desc_rss_tracker}
-				{preference name=max_rss_tracker}
-				{preference name=showAuthor_rss_tracker}
-				{preference name=index_rss_tracker}
+				{preference name=feed_tracker_title}
+				{preference name=feed_tracker_desc}
+				{preference name=feed_tracker_max}
+				{preference name=feed_tracker_showAuthor}
+				{preference name=feed_tracker_homepage}
 			</div>
 
-			{preference name=rss_calendar}
-			<div class="adminoptionboxchild" id="rss_calendar_childcontainer">
+			{preference name=feed_calendar}
+			<div class="adminoptionboxchild" id="feed_calendar_childcontainer">
 				<a href="tiki-calendar_rss.php" title="{tr}Feed for file galleries{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_calendar}
-				{preference name=desc_rss_calendar}
-				{preference name=max_rss_calendar}
-				{preference name=showAuthor_rss_calendar}
-				{preference name=index_rss_calendar}
+				{preference name=feed_calendar_title}
+				{preference name=feed_calendar_desc}
+				{preference name=feed_calendar_max}
+				{preference name=feed_calendar_showAuthor}
+				{preference name=feed_calendar_homepage}
 			</div>
 			
-			{preference name=rss_directories}
-			<div class="adminoptionboxchild" id="rss_directories_childcontainer">
+			{preference name=feed_directories}
+			<div class="adminoptionboxchild" id="feed_directories_childcontainer">
 				<a href="tiki-directories_rss.php" title="{tr}Feed for directories{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_directories}
-				{preference name=desc_rss_directories}
-				{preference name=max_rss_directories}
-				{preference name=showAuthor_rss_directories}
-				{preference name=index_rss_directories}
+				{preference name=feed_directories_title}
+				{preference name=feed_directories_desc}
+				{preference name=feed_directories_max}
+				{preference name=feed_directories_showAuthor}
+				{preference name=feed_directories_homepage}
 			</div>
 
-			{preference name=rss_maps}
-			<div class="adminoptionboxchild" id="rss_maps_childcontainer">
+			{preference name=feed_maps}
+			<div class="adminoptionboxchild" id="feed_maps_childcontainer">
 				<a href="tiki-maps_rss.php" title="{tr}Feed for maps{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_maps}
-				{preference name=desc_rss_maps}
-				{preference name=max_rss_maps}
-				{preference name=showAuthor_rss_maps}
-				{preference name=index_rss_maps}
+				{preference name=feed_maps_title}
+				{preference name=feed_maps_desc}
+				{preference name=feed_maps_max}
+				{preference name=feed_maps_showAuthor}
+				{preference name=feed_maps_homepage}
 			</div>
 
-			{preference name=rss_shoutbox}
-			<div class="adminoptionboxchild" id="rss_shoutbox_childcontainer">
+			{preference name=feed_shoutbox}
+			<div class="adminoptionboxchild" id="feed_shoutbox_childcontainer">
 				<a href="tiki-maps_rss.php" title="{tr}Feed for shoutbox{/tr}."> {icon _id=feed}</a>
-				{preference name=title_rss_shoutbox}
-				{preference name=desc_rss_shoutbox}
-				{preference name=max_rss_shoutbox}
-				{preference name=showAuthor_rss_shoutbox}
-				{preference name=index_rss_shoutbox}
+				{preference name=feed_shoutbox_title}
+				{preference name=feed_shoutbox_desc}
+				{preference name=feed_shoutbox_max}
+				{preference name=feed_shoutbox_showAuthor}
+				{preference name=feed_shoutbox_homepage}
 			</div>
 		{/tab}
 	{/tabset}

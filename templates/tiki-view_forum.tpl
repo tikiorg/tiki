@@ -36,7 +36,7 @@
 			</td>
 			
 			<td style="text-align:right;">
-				{if $prefs.rss_forum eq 'y'}
+				{if $prefs.feed_forum eq 'y'}
 					<a href="tiki-forum_rss.php?forumId={$forumId}" title='{tr}RSS feed{/tr}'>{icon _id="feed" alt='{tr}RSS feed{/tr}'}</a>
 				{/if}
 

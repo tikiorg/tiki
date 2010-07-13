@@ -13,7 +13,7 @@
 			<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}">{icon _id='pencil_add' alt='{tr}Post{/tr}'}</a>
 			{/if}
 			{/if}
-			{if $prefs.rss_blog eq "y"}
+			{if $prefs.feed_blog eq "y"}
 			<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}">{icon _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 			{/if}
 			{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}

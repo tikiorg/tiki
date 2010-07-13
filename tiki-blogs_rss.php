@@ -11,7 +11,7 @@ require_once ('lib/blogs/bloglib.php');
 require_once ('lib/rss/rsslib.php');
 $access->check_feature('feature_blogs');
 
-if ($prefs['rss_blogs'] != 'y') {
+if ($prefs['feed_blogs'] != 'y') {
 	$errmsg = tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
@@ -32,8 +32,8 @@ $feed = "blogs";
 $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
-	$title = (!empty($title_rss_blogs)) ? $title_rss_blogs : tra("Tiki RSS feed for weblogs");
-	$desc = (!empty($desc_rss_blogs)) ? $desc_rss_blogs : tra("Last posts to weblogs.");
+	$title = (!empty($feed_blogs_title)) ? $feed_blogs_title : tra("Tiki RSS feed for weblogs");
+	$desc = (!empty($feed_blogs_desc)) ? $feed_blogs_desc : tra("Last posts to weblogs.");
 	$now = date("U");
 	$id = "postId";
 	$descId = "data";
@@ -41,11 +41,11 @@ if ($output["data"] == "EMPTY") {
 	$titleId = "title";
 	$authorId = "user";
 	$readrepl = "tiki-view_blog_post.php?postId=%s";
-	$tmp = $prefs['title_rss_' . $feed];
+	$tmp = $prefs['feed_' . $feed . '_title'];
 	if ($tmp <> '') $title = $tmp;
-	$tmp = $prefs['desc_rss_' . $feed];
+	$tmp = $prefs['feed_' . $feed . '_desc'];
 	if ($desc <> '') $desc = $tmp;
-	$changes = $bloglib->list_all_blog_posts(0, $prefs['max_rss_blogs'], $dateId . '_desc', '', $now);
+	$changes = $bloglib->list_all_blog_posts(0, $prefs['feed_blogs_max'], $dateId . '_desc', '', $now);
 	$tmp = array();
 	include_once ('tiki-sefurl.php');
 	foreach($changes["data"] as $data) {

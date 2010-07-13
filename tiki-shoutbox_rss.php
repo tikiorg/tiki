@@ -11,7 +11,7 @@ require_once ('lib/rss/rsslib.php');
 
 $access->check_feature('feature_shoutbox');
 
-if ($prefs['rss_shoutbox'] != 'y') {
+if ($prefs['feed_shoutbox'] != 'y') {
 	$errmsg=tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
@@ -30,8 +30,8 @@ $feed = "shoutbox";
 $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"]=="EMPTY") {
-	$title = (!empty($title_rss_articles)) ? $title_rss_articles : tra("Tiki RSS feed for shoutbox messages");
-	$desc = (!empty($desc_rss_articles)) ? $desc_rss_articles : tra("Last shoutbox messages.");
+	$title = (!empty($feed_articles_title)) ? $feed_articles_title : tra("Tiki RSS feed for shoutbox messages");
+	$desc = (!empty($feed_articles_desc)) ? $feed_articles_desc : tra("Last shoutbox messages.");
 	
 	$id = "msgId";
 	$titleId = "msgId";
@@ -40,12 +40,12 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "user";
 	$readrepl = "tiki-shoutbox.php?get=%s";
 
-	$tmp = $prefs['title_rss_'.$feed];
+	$tmp = $prefs['feed_'.$feed.'_title'];
 	if ($tmp<>'') $title = $tmp;
-	$tmp = $prefs['desc_rss_'.$feed];
+	$tmp = $prefs['feed_'.$feed.'_desc'];
 	if ($desc<>'') $desc = $tmp;
 
-	$changes = $shoutboxlib -> list_shoutbox(0, $prefs['max_rss_articles'], $id.'_desc');
+	$changes = $shoutboxlib -> list_shoutbox(0, $prefs['feed_articles_max'], $id.'_desc');
 	$tmp = null;
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }

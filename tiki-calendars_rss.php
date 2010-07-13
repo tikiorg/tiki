@@ -10,7 +10,7 @@ require_once ('lib/tikilib.php');
 require_once ('lib/rss/rsslib.php');
 require_once ('lib/calendar/calendarlib.php');
 
-if (!isset($prefs['rss_calendar']) || $prefs['rss_calendar'] != 'y') {
+if (!isset($prefs['feed_calendar']) || $prefs['feed_calendar'] != 'y') {
 	$errmsg=tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
@@ -49,9 +49,9 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "user";
 	$readrepl = "tiki-calendar_edit_item.php?viewcalitemId=%s";
 
-        $tmp = $prefs['title_rss_'.$feed];
+        $tmp = $prefs['feed_'.$feed.'_title'];
         if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['desc_rss_'.$feed];
+        $tmp = $prefs['feed_'.$feed.'_desc'];
         if ($desc<>'') $desc = $tmp;
 
 	$allCalendars = $calendarlib->list_calendars();
@@ -81,7 +81,7 @@ if ($output["data"]=="EMPTY") {
 	    }
 	}
 
-	$maxCalEntries = $prefs['max_rss_calendar'];
+	$maxCalEntries = $prefs['feed_calendar_max'];
 	$cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
 	$items = $calendarlib->list_raw_items($calendars, "", $tikilib->now, $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0]+1), 0, $maxCalEntries);
 

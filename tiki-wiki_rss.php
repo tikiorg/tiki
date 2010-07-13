@@ -13,7 +13,7 @@ require_once ('lib/rss/rsslib.php');
 
 $access->check_feature('feature_wiki');
 
-if ($prefs['rss_wiki'] != 'y') {
+if ($prefs['feed_wiki'] != 'y') {
 	$errmsg=tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
@@ -33,8 +33,8 @@ $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-	$title = (!empty($prefs['title_rss_wiki'])) ? $prefs['title_rss_wiki'] : tra("Tiki RSS feed for the wiki pages");
-	$desc = (!empty($prefs['desc_rss_wiki'])) ? $prefs['desc_rss_wiki'] : tra("Last modifications to the Wiki.");
+	$title = (!empty($prefs['feed_wiki_title'])) ? $prefs['feed_wiki_title'] : tra("Tiki RSS feed for the wiki pages");
+	$desc = (!empty($prefs['feed_wiki_desc'])) ? $prefs['feed_wiki_desc'] : tra("Last modifications to the Wiki.");
 	$id = "pageName";
 	$titleId = "pageName";
 	$descId = "data";
@@ -48,7 +48,7 @@ if ($output["data"]=="EMPTY") {
 	}
 	$param = "previous";
 	
-	$changes = $tikilib -> list_pages(0, $prefs['max_rss_wiki'], 'lastModif_desc', '', '', true, false, false, false, '', false, 'y');
+	$changes = $tikilib -> list_pages(0, $prefs['feed_wiki_max'], 'lastModif_desc', '', '', true, false, false, false, '', false, 'y');
 	$tmp = array();
 	foreach ($changes["data"] as $data) {
 		$result = '';

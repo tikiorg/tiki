@@ -9,7 +9,7 @@ require_once('tiki-setup.php');
 require_once('lib/tikilib.php');
 require_once ('lib/rss/rsslib.php');
 
-if ($prefs['rss_forum'] != 'y') {
+if ($prefs['feed_forum'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
 }
@@ -48,12 +48,12 @@ if ($output["data"]=="EMPTY") {
 	$titleId = "title";
 	$readrepl = "tiki-view_forum_thread.php?$id=%s&comments_parentId=%s";
 
-        $tmp = $prefs['title_rss_'.$feed];
+        $tmp = $prefs['feed_'.$feed.'_title'];
         if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['desc_rss_'.$feed];
+        $tmp = $prefs['feed_'.$feed.'_desc'];
         if ($desc<>'') $desc = $tmp;
 
-	$changes = $tikilib->list_forum_topics($_REQUEST["$id"],0, $prefs['max_rss_forum'], $dateId.'_desc', '');
+	$changes = $tikilib->list_forum_topics($_REQUEST["$id"],0, $prefs['feed_forum_max'], $dateId.'_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $param, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: ".$output["content-type"]);

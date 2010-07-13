@@ -49,7 +49,7 @@ class RSSLib extends TikiDb_Bridge
 		if (isset($_REQUEST['ver'])) {
 			$ver = $_REQUEST['ver'];
 		} else {
-			$ver = $prefs['rssfeed_default_version'];
+			$ver = $prefs['feed_default_version'];
 		}
 
 		return $ver;
@@ -77,14 +77,14 @@ class RSSLib extends TikiDb_Bridge
 		if (!$result->numRows()) {
 		  // nothing found, then insert empty row for this feed+rss_ver
 		  $query = "insert into `tiki_rss_feeds`(`name`,`rssVer`,`refresh`,`lastUpdated`,`cache`) values(?,?,?,?,?)";
-		  $bindvars=array($uniqueid, $rss_version,(int) $prefs['rss_cache_time'] , 1, "-");
+		  $bindvars=array($uniqueid, $rss_version,(int) $prefs['feed_cache_time'] , 1, "-");
 		  $result = $this->query($query, $bindvars);
 		} else {
 		  // entry found in db:
 		  $res = $result->fetchRow();
 		  $output["data"] = $res["cache"];
 		  // $refresh = $res["refresh"]; // global cache time currently
-		  $refresh = $prefs['rss_cache_time']; // global cache time currently
+		  $refresh = $prefs['feed_cache_time']; // global cache time currently
 		  $lastUpdated = $res["lastUpdated"];
 		  // up to date? if not, then set trigger to reload data:
 		  if ($tikilib->now - $lastUpdated >= $refresh ) { $output["data"]="EMPTY"; }
@@ -139,7 +139,7 @@ class RSSLib extends TikiDb_Bridge
 		$feed_format = $this->get_current_feed_format();
 		$feed_format_name = $this->get_current_feed_format_name();
 
-		if ($prefs['rss_cache_time'] < 1) $fromcache=false;
+		if ($prefs['feed_cache_time'] < 1) $fromcache=false;
 
 		// only get cache data if rss cache is enabled
 		if ($fromcache) {
@@ -154,14 +154,14 @@ class RSSLib extends TikiDb_Bridge
 			$URLPrefix .= "/"; // Append a slash unless Tiki is in the document root. dirname() removes a slash except in that case.
 		}
 		
-		if ($prefs['index_rss_'.$section]!='') {
-			$url = $prefs['index_rss_'.$section];
+		if ($prefs['feed_'.$section.'_index']!='') {
+			$url = $prefs['feed_'.$section.'_index'];
 		} else {
 			$url = htmlspecialchars($tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
 		}
 
 		$home = htmlspecialchars($URLPrefix.$prefs['tikiIndex']);
-		$img = htmlspecialchars($URLPrefix.$prefs['rssfeed_img']);
+		$img = htmlspecialchars($URLPrefix.$prefs['feed_img']);
 
 		$title = htmlspecialchars($title);
 		$desc = htmlspecialchars($desc);
@@ -170,7 +170,7 @@ class RSSLib extends TikiDb_Bridge
 		$feed = new Zend_Feed_Writer_Feed(); 
 		$feed->setTitle($title);
 		$feed->setDescription($desc);
-		$feed->setLanguage($prefs['rssfeed_language']);
+		$feed->setLanguage($prefs['feed_language']);
 		
 		$feed->setLink($url);
 		$feed->setFeedLink($tikilib->httpPrefix() . $_SERVER['REQUEST_URI'], $feed_format_name);
@@ -204,7 +204,7 @@ class RSSLib extends TikiDb_Bridge
 			$item->setDateCreated($data[$dateId]); 
 			$item->setDateModified($data[$dateId]); 
 
-			if ($authorId != '' && $prefs['showAuthor_rss_'.$section] == 'y') {
+			if ($authorId != '' && $prefs['feed_'.$section.'_showAuthor'] == 'y') {
 				$author = $this->process_item_author($data[$authorId]);
 				$item->addAuthor($author);
 			}

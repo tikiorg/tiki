@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/blogs/bloglib.php');
 require_once ('lib/rss/rsslib.php');
-if ($prefs['rss_blogs'] != 'y' && $prefs['rss_blog'] != 'y') {
+if ($prefs['feed_blogs'] != 'y' && $prefs['feed_blog'] != 'y') {
 	$errmsg = tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
@@ -31,16 +31,16 @@ $uniqueid = "$feed.$id=" . $_REQUEST["$id"];
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
 	$tmp = $bloglib->get_blog($_REQUEST["$id"]);
-	$title = (!empty($prefs['title_rss_' . $feed])) ? $prefs['title_rss_' . $feed] : tra('Tiki RSS feed for blog: ');
+	$title = (!empty($prefs['feed_' . $feed . '_title'])) ? $prefs['feed_' . $feed . '_title'] : tra('Tiki RSS feed for blog: ');
 	$title.= $tmp['title'];
-	$desc.= (!empty($prefs['desc_rss_' . $feed])) ? $prefs['desc_rss_' . $feed] : tra('Last modifications to the blog.');
+	$desc.= (!empty($prefs['feed_' . $feed . '_desc'])) ? $prefs['feed_' . $feed . '_desc'] : tra('Last modifications to the blog.');
 	$desc.= $tmp["description"];
 	$descId = "data";
 	$dateId = "created";
 	$authorId = "user";
 	$titleId = "title";
 	$readrepl = "tiki-view_blog_post.php?postId=%s";
-	$changes = $bloglib->list_blog_posts($_REQUEST["$id"], false, 0, $prefs['max_rss_blog'], $dateId . '_desc', '', '', $tikilib->now);
+	$changes = $bloglib->list_blog_posts($_REQUEST["$id"], false, 0, $prefs['feed_blog_max'], $dateId . '_desc', '', '', $tikilib->now);
 	$tmp = array();
 	include_once ('tiki-sefurl.php');
 	foreach($changes["data"] as $data) {

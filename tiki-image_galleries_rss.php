@@ -12,7 +12,7 @@ require_once ('lib/rss/rsslib.php');
 
 $access->check_feature('feature_galleries');
 
-if ($prefs['rss_image_galleries'] != 'y') {
+if ($prefs['feed_image_galleries'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
 }
@@ -32,8 +32,8 @@ $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-	$title = (!empty($title_rss_image_galleries)) ? $title_rss_image_galleries : tra("Tiki RSS feed for image galleries");
-	$desc = (!empty($desc_rss_image_galleries)) ? $desc_rss_image_galleries : tra("Last images uploaded to the image galleries.");
+	$title = (!empty($feed_image_galleries_title)) ? $feed_image_galleries_title : tra("Tiki RSS feed for image galleries");
+	$desc = (!empty($feed_image_galleries_desc)) ? $feed_image_galleries_desc : tra("Last images uploaded to the image galleries.");
 	
 	$id = "imageId";
 	$titleId = "name";
@@ -42,12 +42,12 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "user";
 	$readrepl = "tiki-browse_image.php?imageId=%s";
 	
-        $tmp = $prefs['title_rss_'.$feed];
+        $tmp = $prefs['feed_'.$feed.'_title'];
         if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['desc_rss_'.$feed];
+        $tmp = $prefs['feed__'.$feed.'_desc'];
         if ($desc<>'') $desc = $tmp;
 	
-	$changes = $imagegallib->list_images(0,$prefs['max_rss_image_galleries'],$dateId.'_desc', '');
+	$changes = $imagegallib->list_images(0,$prefs['feed_image_galleries_max'],$dateId.'_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: ".$output["content-type"]);
