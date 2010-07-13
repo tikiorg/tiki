@@ -40,6 +40,7 @@ function smarty_function_payment( $params, $smarty ) {
 		$info['fullview'] = $objectperms->payment_view;
 		if (!empty($params['returnurl']) && empty($result)) {
 			$info['url'] = preg_match('|^https?://|', $params['returnurl'])? $params['returnurl']: $tikilib->tikiUrl($params['returnurl']);
+			$info['url'] .= (strstr($params['returnurl'], '.php?') || !strstr($params['returnurl'],'.php')? '&':'?')."invoice=$invoice";
 		}
 		$smarty->assign( 'payment_info', $info );
 		$smarty->assign( 'payment_detail', $tikilib->parse_data( htmlspecialchars($info['detail']) ) );
