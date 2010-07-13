@@ -1244,8 +1244,8 @@ class TrackerLib extends TikiLib
 						continue;
 					}
 				} elseif ($ins_fields['data'][$i]['type'] == 'A') { //attachment
-					global $tiki_p_attach_trackers;
-					if ($tiki_p_attach_trackers == 'y' && !empty($ins_fields['data'][$i]['file_name'])) {
+					$perms = $tikilib->get_perm_object($trackerId, 'tracker', '', false);
+					if ($perms['tiki_p_attach_trackers'] == 'y' && !empty($ins_fields['data'][$i]['file_name'])) {
 						if ($prefs['t_use_db'] == 'n') {
 							$fhash = md5($ins_fields['data'][$i]['file_name'].$this->now);
 							if (!$fw = fopen($prefs['t_use_dir'] . $fhash, 'wb')) {
