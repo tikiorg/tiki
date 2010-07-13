@@ -49,7 +49,7 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 	$prefs['feature_jquery'] = 'y';	// just in case
 	
 	// load translations lang object from /lang/xx/language.js if there
-	if ($prefs['feature_multilingual'] == 'y' && file_exists('lang/' . $prefs['language'] . '/language.js')) {
+	if (file_exists('lang/' . $prefs['language'] . '/language.js')) {
 		// after the usual lib includes (up to 10) but before custom.js (50)
 		$headerlib->add_jsfile('lang/' . $prefs['language'] . '/language.js', 25);
 	}
