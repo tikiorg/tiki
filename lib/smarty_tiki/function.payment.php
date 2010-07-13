@@ -8,7 +8,7 @@
 // @param numeric $id: id of the payment
 // @params url $returnurl: optional return url
 function smarty_function_payment( $params, $smarty ) {
-	global $tikilib, $prefs;
+	global $tikilib, $prefs, $userlib, $user;
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	$invoice = (int) $params['id'];
 
@@ -18,7 +18,7 @@ function smarty_function_payment( $params, $smarty ) {
 	
 	// Unpaid payments can be seen by anyone as long as they know the number
 	// Just like your bank account, anyone can drop money in it.
-	if( $info && $info['state'] == 'outstanding' || $info['state'] == 'overdue' || $objectperms->payment_view ) {
+	if( $info && $info['state'] == 'outstanding' || $info['state'] == 'overdue' || $objectperms->payment_view || $info['userId'] == $userlib->get_user_id($user) ) {
 		if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && $_POST['cclite_payment_amount'] == $info['amount_remaining']) {
 			global $access, $cclitelib, $cartlib;
 			require_once 'lib/payment/cclitelib.php';
