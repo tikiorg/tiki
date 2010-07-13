@@ -32,4 +32,4 @@
 		</tr>
 	{/foreach}
 </table>
-{pagination_links cant=$payments.cant step=$payments.max offset=$payments.offset}{/pagination_links}
+{pagination_links cant=$payments.cant step=$payments.max offset=$payments.offset offset_arg=$payments.offset_arg}{/pagination_links}
