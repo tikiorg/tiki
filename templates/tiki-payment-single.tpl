@@ -9,10 +9,15 @@
 		<div class="clearfix wikitext">
 			{$payment_detail}
 		</div>
-		<p>{tr}Initial amount{/tr}: {$payment_info.amount_original|escape} {$payment_info.currency|escape}</p>
 	{/if}
 	<p>
-		{tr}Amount remaining{/tr}: <strong>{$payment_info.amount_remaining|escape} {$payment_info.currency|escape}</strong>
+		{if $payment_info.state eq 'past'}
+			{tr}Paid amount{/tr}: {$payment_info.amount_original|escape} {$payment_info.currency|escape}<br />
+		{else}
+			{tr}Initial amount{/tr}: {$payment_info.amount_original|escape} {$payment_info.currency|escape}<br />
+			{tr}Amount remaining{/tr}: <strong>{$payment_info.amount_remaining|escape} {$payment_info.currency|escape}</strong><br />
+			{tr 0=$payment_info.request_date|tiki_short_date 1=$payment_info.due_date|tiki_short_date}Payment request was sent on %0 and is due by %1.{/tr}<br />
+		{/if}
 		{if ( $payment_info.state eq 'outstanding' || $payment_info.state eq 'overdue' )}
 			{if $prefs.payment_system eq 'paypal' && $prefs.payment_paypal_business neq ''}
 				<form action="{$prefs.payment_paypal_environment|escape}" method="post">
@@ -53,17 +58,16 @@
 						{/remarksbox}
 					{/if}
 				{/if}
-				{if !empty($prefs.payment_manual)}
-					{capture name=wp_payment_manual}wiki:{$prefs.payment_manual}{/capture}
-					{include file=$smarty.capture.wp_payment_manual}
-				{/if}
+			{/if}
+			{if !empty($prefs.payment_manual)}
+				{capture name=wp_payment_manual}wiki:{$prefs.payment_manual}{/capture}
+				{include file=$smarty.capture.wp_payment_manual}
 			{/if}
 		{/if}
 	</p>
-	<p>{tr 0=$payment_info.request_date|tiki_short_date 1=$payment_info.due_date|tiki_short_date}Payment request was sent on %0 and is due by %1.{/tr}
 
 	{if $payment_info.fullview && $payment_info.payments|@count}
-		<ol>
+		{if count($payment_info.payments) ne 1}<ol>{else}<ul>{/if}
 			{foreach from=$payment_info.payments item=payment}
 				<li>
 					{if $payment.type eq 'user'}
@@ -75,7 +79,7 @@
 					{/if}
 				</li>
 			{/foreach}
-		</ol>
+		{if count($payment_info.payments) ne 1}</ol>{else}</ul>{/if}
 	{/if}
 
 	{if $payment_info.state eq 'outstanding' || $payment_info.state eq 'overdue'}
