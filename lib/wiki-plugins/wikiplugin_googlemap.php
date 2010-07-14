@@ -192,22 +192,23 @@ function wikiplugin_googlemap($data, $params) {
 	$smarty->assign( 'gmapname',  $gmapname);
 	
 	if (isset($params["defaultx"])) {
-		$smarty->assign( 'gmap_defaultx', $params["defaultx"] );
+		$defaultx = $params["defaultx"];
 	} else {
-		$smarty->assign( 'gmap_defaultx', $prefs["gmap_defaultx"] );
+		$defaultx = $prefs["gmap_defaultx"];
 	}
-	
 	if (isset($params["defaulty"])) {
-		$smarty->assign( 'gmap_defaulty', $params["defaulty"] );
+		$defaulty = $params["defaulty"];
 	} else {
-		$smarty->assign( 'gmap_defaulty', $prefs["gmap_defaulty"] );
+		$defaulty = $prefs["gmap_defaulty"];
 	}
-	
 	if (isset($params["defaultz"])) {
-		$smarty->assign( 'gmap_defaultz', $params["defaultz"] );
+		$defaultz = $params["defaultz"];
 	} else {
-		$smarty->assign( 'gmap_defaultz', $prefs["gmap_defaultz"] );
+		$defaultz = $prefs["gmap_defaultz"];
 	}
+	$smarty->assign( 'gmap_defaultx', $defaultx );
+	$smarty->assign( 'gmap_defaulty', $defaulty );
+	$smarty->assign( 'gmap_defaultz', $defaultz );
 	
 	if (isset($params["controls"])) {
 		$smarty->assign( 'gmap_controls', $params["controls"] );
@@ -381,16 +382,17 @@ function wikiplugin_googlemap($data, $params) {
 				}
 			}
 			$f_value = explode(',',$item[$params["trackerfieldid"]]);
-			if ( !empty($f_value[0]) ) {
+			if ( !empty($f_value[0]) && !empty($f_value[1]) ) {
 				$pointx = $f_value[0];
-			}
-			if ( !empty($f_value[1]) ) {
 				$pointy = $f_value[1];
+			} else {
+				$pointx = $defaultx;
+				$pointy = $defaulty;
 			}
 			if ( !empty($f_value[2]) ) {
 				$pointz = $f_value[2];
 			} else {
-				$pointz = $prefs["gmap_defaultz"];
+				$pointz = $defaultz;
 			}
 			$fields = $trklib->list_tracker_fields($item['trackerId']);
 			foreach ($fields["data"] as $f) {
@@ -404,16 +406,17 @@ function wikiplugin_googlemap($data, $params) {
 				$markers[] = array($pointy,$pointx,$markertext);
 			}
 		} else {
-			if ( isset($attributes['tiki.geo.lon']) ) {
+			if ( isset($attributes['tiki.geo.lon']) && isset($attributes['tiki.geo.lat']) ) {
 				$pointx = $attributes['tiki.geo.lon'];
-			}
-			if ( isset($attributes['tiki.geo.lat']) ) {
 				$pointy = $attributes['tiki.geo.lat'];
+			} else {
+				$pointx = $defaultx;
+				$pointy = $defaulty;
 			}
 			if ( isset($attributes['tiki.geo.google.zoom']) ) {
 				$pointz = $attributes['tiki.geo.google.zoom'];
 			} else {
-				$pointz = $prefs["gmap_defaultz"]; 
+				$pointz = $defaultz; 
 			}
 		}
 		if ($type == 'locator') {
