@@ -134,7 +134,7 @@ function wikiplugin_googlemap_info() {
 				'safe' => true,
 				'required' => false,
 				'name' => tra('ID of tracker field'),
-				'description' => tra('Field ID of tracker field if type is trackerfield'),
+				'description' => tra('Field ID of tracker field if type is trackerfield or locator and locateitemtype is trackeritem'),
 			),
 		),
 	);
@@ -326,13 +326,25 @@ function wikiplugin_googlemap($data, $params) {
 		$smarty->assign('gmapitem', $locateitemid);
 		$smarty->assign('gmapitemtype', $locateitemtype);
 		$attributes = $attributelib->get_attributes( $locateitemtype, $locateitemid );
-		if ($type == 'trackerfield' && $locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"])) {
+		if ($locateitemtype == 'trackeritem' && !empty($params["trackerfieldid"])) {
 			// There could be more than one googlemap field in trackers, thus we are not using object attributes for this purpose
 			global $trklib;
 			if (!is_object($trklib)) {
 				include_once('lib/trackers/trackerlib.php');
 			}
 			$item = $trklib->get_tracker_item($locateitemid);
+			// double check tracker perms
+			if ($item['status'] == 'p' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_view_trackers_pending')
+				|| $item['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_view_trackers_closed')
+				|| $item['status'] == 'o' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_view_trackers')) {
+					return '';
+			}
+			// if no perm to edit, even if type is set to locator, locator is disabled
+			if ($item['status'] == 'p' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items_pending')
+				|| $item['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items_closed')
+				|| $item['status'] == 'o' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items')) {
+					$type = 'item';
+			} 
 			$f_value = explode(',',$item[$params["trackerfieldid"]]);
 			if ( !empty($f_value[0]) ) {
 				$pointx = $f_value[0];
