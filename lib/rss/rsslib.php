@@ -170,7 +170,10 @@ class RSSLib extends TikiDb_Bridge
 		$feed = new Zend_Feed_Writer_Feed(); 
 		$feed->setTitle($title);
 		$feed->setDescription($desc);
-		$feed->setLanguage($prefs['feed_language']);
+
+		if (!empty($prefs['feed_language'])) {
+			$feed->setLanguage($prefs['feed_language']);
+		}
 		
 		$feed->setLink($tikilib->tikiUrl());
 		$feed->setFeedLink($feedLink, $feed_format_name);
