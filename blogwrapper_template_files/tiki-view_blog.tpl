@@ -14,11 +14,14 @@
 			<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}">{icon _id='pencil_add' alt='{tr}Post{/tr}'}</a>
 			{/if}
 			{/if}
-			{if $prefs.rss_blog eq "y"}
+			{if $prefs.feed_blog eq "y"}
 			<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}">{icon _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 			{/if}
 			{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
 			<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{icon _id='page_edit' alt='{tr}Edit Blog{/tr}'}</a>
+				{if $allow_comments eq 'y'}
+					<a class='bloglink' href='tiki-list_comments.php?blogId={$blogId}'>{icon _id='comments' alt='{tr}List all comments{/tr}' title='{tr}List all comments{/tr}'}</a>
+				{/if}
 			{/if}
 			
 			{if $user and $prefs.feature_user_watches eq 'y'}
