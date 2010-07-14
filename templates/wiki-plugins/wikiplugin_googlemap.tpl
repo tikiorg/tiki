@@ -103,7 +103,7 @@ function loadgmap{$gmapname|escape}() {literal}{{/literal}
   geocoder = new GClientGeocoder();
 
 {foreach key=i item=u from=$gmapmarkers}
-	marker{$i} = new GMarker(new GLatLng({$u[0]},{$u[1]}));
+	var marker{$i} = new GMarker(new GLatLng({$u[0]},{$u[1]}));
 	gmap{$gmapname|escape}map.addOverlay(marker{$i});
 	GEvent.addListener(marker{$i},"click", function() {literal}{{/literal}
 		marker{$i}.openInfoWindowHtml('{$u[2]}');

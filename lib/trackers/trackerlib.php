@@ -1252,6 +1252,23 @@ class TrackerLib extends TikiLib
 						}
 					}
 				}
+			}
+			if ($ins_fields['data'][$i]['type'] == 'G' && isset($ins_fields['data'][$i]['options_array'][0]) && $ins_fields['data'][$i]['options_array'][0] == 'y') {
+				// Set geo attributes if google map field is set as item
+				global $attributelib;
+				if (!is_object($attributelib)) {
+					include_once('lib/attributes/attributelib.php');
+				}
+				$geo = explode(',', $ins_fields['data'][$i]['value']);
+				if (isset($geo[0])) {
+					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lon', $geo[0]);
+				}
+				if (isset($geo[1])) {
+					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lat', $geo[1]);
+				}
+				if (isset($geo[2])) {
+					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.google.zoom', $geo[2]);
+				}
 			}				
 			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
 				// system type, do nothing
@@ -3251,10 +3268,15 @@ class TrackerLib extends TikiLib
 				</dl>'));
 		$type['G'] = array(
 			'label'=>tra('Google Maps'),
-			'opt'=>false,
+			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Use Google Maps.
 				<dt>Will display a Google Maps around a point.
+				<dt>Usage: <strong>use_as_item_location,bubble_fieldId</strong>
+				<dt>Example: y,23
+				<dt>Description:
+				<dd><strong>[use_as_item_location]</strong> if set to y, this google map field will be used as item location and object geo attributes are set when field value is changed.
+				<dd><strong>[bubble_fieldid]</strong> is the fieldId that contains the text that will be displayed in the bubble of the map marker.
 				</dl>'));
 		$type['s'] = array(
 			'label'=>tra('system'),

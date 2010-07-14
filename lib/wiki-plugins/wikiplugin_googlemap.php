@@ -365,6 +365,7 @@ function wikiplugin_googlemap($data, $params) {
 				include_once('lib/trackers/trackerlib.php');
 			}
 			$item = $trklib->get_tracker_item($locateitemid);
+				
 			// double check tracker perms
 			if ($item['status'] == 'p' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_view_trackers_pending')
 				|| $item['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_view_trackers_closed')
@@ -390,6 +391,17 @@ function wikiplugin_googlemap($data, $params) {
 				$pointz = $f_value[2];
 			} else {
 				$pointz = $prefs["gmap_defaultz"];
+			}
+			$fields = $trklib->list_tracker_fields($item['trackerId']);
+			foreach ($fields["data"] as $f) {
+				if ($f["fieldId"] == $params["trackerfieldid"]) {
+					$options_array = $f["options_array"];
+					break;
+				}
+			}
+			if (!empty($options_array[1]) && !empty($item[$options_array[1]])) {
+				$markertext = htmlspecialchars($item[$options_array[1]]);
+				$markers[] = array($pointy,$pointx,$markertext);
 			}
 		} else {
 			if ( isset($attributes['tiki.geo.lon']) ) {
@@ -509,13 +521,20 @@ function saveGmapItem($feedback, $pointx, $pointy, $pointz, $type, $itemId, $fie
 			include_once('lib/trackers/trackerlib.php');
 		}
 		$item = $trklib->get_tracker_item($itemId);
+		$fields = $trklib->list_tracker_fields($item['trackerId']);
+		foreach ($fields["data"] as $f) {
+			if ($f["fieldId"] == $fieldId) {
+				$options_array = $f["options_array"];
+				break;
+			}
+		}
 		if ($item['status'] == 'p' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items_pending')
 			|| $item['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items_closed')
 			|| $item['status'] == 'o' && !$tikilib->user_has_perm_on_object($user, $item['trackerId'], 'tracker', 'tiki_p_modify_tracker_items')) {
 				$objResponse->assign($feedback, "innerHTML", tra("You cannot edit this object or no such object"));
 				return $objResponse;
 		}
-		$ins_fields["data"][$fieldId] = array('value' => "$pointx,$pointy,$pointz", 'type' => 'G');
+		$ins_fields["data"][$fieldId] = array('fieldId' => $fieldId, 'options_array' => $options_array, 'value' => "$pointx,$pointy,$pointz", 'type' => 'G');
 		$res = $trklib->replace_item($item['trackerId'], $itemId, $ins_fields); 
 	} elseif (!$tikilib->user_has_perm_on_object($user, $itemid, $type, $editPermNeeded)) {
 		$objResponse->assign($feedback, "innerHTML", tra("You cannot edit this object or no such object"));
