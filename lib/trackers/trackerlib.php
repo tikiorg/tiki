@@ -1193,12 +1193,17 @@ class TrackerLib extends TikiLib
 			$version = 0;
 		}
 
-		if ($prefs['feature_categories'] == 'y' && is_array($ins_categs)) {
+		if ($prefs['feature_categories'] == 'y') {
 			$old_categs = $categlib->get_object_categories('trackeritem', $itemId ? $itemId : $new_itemId);
-
-			$new_categs = array_diff($ins_categs, $old_categs);
-			$del_categs = array_diff($old_categs, $ins_categs);
-			$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
+			if (is_array($ins_categs)) {
+				$new_categs = array_diff($ins_categs, $old_categs);
+				$del_categs = array_diff($old_categs, $ins_categs);
+				$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
+			} else {
+				$new_categs = array();
+				$del_categs = array();
+				$remain_categs = $old_categs;
+			}
 		}
 		if (!empty($oldStatus) || !empty($status)) {
 			$the_data = '-[Status]-: ';
