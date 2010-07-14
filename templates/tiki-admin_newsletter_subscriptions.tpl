@@ -24,7 +24,7 @@
 	</tr>
 </table>
 
-<h2>{tr}Add a subscription newsletters{/tr}</h2>
+<h2>{tr}Add subscribers{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 	<input type="hidden" name="nlId" value="{$nlId|escape}" />
 	<table class="normal">
@@ -68,7 +68,7 @@
 			<td class="formcolor"><input type="checkbox" name="addall" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Group users:{/tr}</td>
+			<td class="formcolor">{tr}Users from group:{/tr}</td>
 			<td class="formcolor">
 				<select name="group">
 					<option value="">---</option>
@@ -106,7 +106,7 @@
 </form>
 
 {if $tiki_p_batch_subscribe_email eq "y" && $tiki_p_subscribe_email eq "y"} 	 
-	<h2>{tr}Batch e-mail subscribe{/tr}</h2> 	 
+	<h2>{tr}Import emails from file{/tr}</h2> 	 
 	<form action="tiki-admin_newsletter_subscriptions.php" method="post" enctype="multipart/form-data"> 	 
 		<input type="hidden" name="nlId" value="{$nlId|escape}" /> 	 
 		<table class="normal"> 	 
@@ -134,14 +134,14 @@
 			</tr> 	 
 		</table> 	 
 	</form>
-	<h2>{tr}Batch subscribe from wiki page{/tr}</h2>
+	<h2>{tr}Import emails from wiki page{/tr}</h2>
 	<form action="tiki-admin_newsletter_subscriptions.php" method="post">
 		<input type="hidden" name="nlId" value="{$nlId|escape}" /> 
 		<table class="normal">
 			<tr>
 				<td class="formcolor" width="30%">Wiki page</td>
 				<td class="formcolor" colspan="2">
-					<input type="text" name="wikiPageName" value=""  />
+					<input type="text" name="wikiPageName" value="" size="60"  />
 					<br />
 					<i>{tr}Wiki page, one e-mail per line{/tr}</i>
 				</td>
@@ -167,19 +167,6 @@
 		 
 {/if}
 
-<h2>{tr}Export Subscriber Emails{/tr}</h2>
-<form action="tiki-admin_newsletter_subscriptions.php" method="post">
-	<input type="hidden" name="nlId" value="{$nlId|escape}" /> 
-	<table class="normal">
-		<tr>
-			<td class="formcolor" width="30%">&nbsp;</td>
-			<td class="formcolor" colspan="2">
-				<input type="submit" name="export" value="{tr}Export{/tr}" />
-			</td>
-		</tr>
-	</table>
-</form>
-
 <h2>{tr}Subscribe group{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 	<input type="hidden" name="nlId" value="{$nlId|escape}" />
@@ -204,7 +191,7 @@
 	</table>
 </form>
 
-<h2>{tr}Add subscribers of another newsletter{/tr}</h2>
+<h2>{tr}Use subscribers of another newsletter{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 	<input type="hidden" name="nlId" value="{$nlId|escape}" />
 	<table class="normal">
@@ -231,16 +218,16 @@
 	</table>
 </form>
 
-<h2>{tr}Subscribe wiki page{/tr}</h2>
+<h2>{tr}Use emails from wiki page{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 	<input type="hidden" name="nlId" value="{$nlId|escape}" /> 
 	<table class="normal">
 		<tr>
 			<td class="formcolor" width="30%">Wiki page</td>
 			<td class="formcolor" colspan="2">
-				<input type="text" name="wikiPageName" value=""  />
+				<input type="text" name="wikiPageName" value="" size="60" />
 				<br />
-				<i>{tr}Wiki page which will be added at each newsletter sending, one e-mail per line{/tr}</i>
+				<i>{tr}Emails on a wiki page which will be added at each newsletter sending, one e-mail per line{/tr}</i>
 				{jq}$jq("input[name=wikiPageName]").tiki("autocomplete", "pagename");{/jq}
 			</td>
 		</tr>
@@ -377,3 +364,17 @@
 </table>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+
+<h2>{tr}Export Subscriber Emails{/tr}</h2>
+<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+	<input type="hidden" name="nlId" value="{$nlId|escape}" /> 
+	<table class="normal">
+		<tr>
+			<td class="formcolor" width="30%">&nbsp;</td>
+			<td class="formcolor" colspan="2">
+				<input type="submit" name="export" value="{tr}Export{/tr}" />
+			</td>
+		</tr>
+	</table>
+</form>
+
