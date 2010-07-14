@@ -1145,7 +1145,7 @@ class TrackerLib extends TikiLib
 		return $value;
 	}
 
-	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false, $tracker_info='') {
+	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = 0, $bulk_import = false, $tracker_info='') {
 		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers, $userlib, $tikilib;
 		include_once('lib/categories/categlib.php');
 		include_once('lib/notifications/notificationlib.php');
@@ -1193,7 +1193,7 @@ class TrackerLib extends TikiLib
 			$version = 0;
 		}
 
-		if ($prefs['feature_categories'] == 'y') {
+		if ($prefs['feature_categories'] == 'y' && is_array($ins_categs)) {
 			$old_categs = $categlib->get_object_categories('trackeritem', $itemId ? $itemId : $new_itemId);
 
 			$new_categs = array_diff($ins_categs, $old_categs);
