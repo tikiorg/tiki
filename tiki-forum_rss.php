@@ -39,19 +39,14 @@ $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
 	$tmp = $commentslib->get_forum($_REQUEST["forumId"]);
-	$title = tra("Tiki RSS feed for forum: ").$tmp["name"];
-	$desc = $tmp["description"];
+	$title = $prefs['feed_forum_title'].$tmp["name"];
+	$desc = $prefs['feed_forum_desc'] . $tmp["description"];
 	$param = "threadId";
 	$descId = "data";
 	$dateId = "commentDate";
 	$authorId = "userName";
 	$titleId = "title";
 	$readrepl = "tiki-view_forum_thread.php?$id=%s&comments_parentId=%s";
-
-        $tmp = $prefs['feed_'.$feed.'_title'];
-        if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['feed_'.$feed.'_desc'];
-        if ($desc<>'') $desc = $tmp;
 
 	$changes = $tikilib->list_forum_topics($_REQUEST["$id"],0, $prefs['feed_forum_max'], $dateId.'_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $param, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);

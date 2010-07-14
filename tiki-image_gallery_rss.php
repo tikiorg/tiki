@@ -34,19 +34,14 @@ $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
 	$tmp = $imagegallib->get_gallery($_REQUEST["galleryId"]);
-	$title = tra("Tiki RSS feed for the image gallery: ").$tmp["name"];
-	$desc = $tmp["description"]; // TODO: make configurable
+	$title = $prefs['feed_image_gallery_title'].$tmp["name"];
+	$desc = $prefs['feed_image_gallery_desc'] . $tmp["description"];
 	$id = "imageId";
 	$titleId = "name";
 	$descId = "description";
 	$authorId = "user";
 	$dateId = "created";
 	$readrepl = "tiki-browse_image.php?imageId=%s";
-	
-        $tmp = $prefs['feed_'.$feed.'_title'];
-        if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['feed_'.$feed.'_desc'];
-        if ($desc<>'') $desc = $tmp;
 	
 	$changes = $imagegallib->get_images( 0,$prefs['feed_image_gallery_max'],$dateId.'_desc', '', $_REQUEST["galleryId"]);
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);

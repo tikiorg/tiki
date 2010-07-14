@@ -32,8 +32,8 @@ $feed = "blogs";
 $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
-	$title = (!empty($prefs['feed_blogs_title'])) ? $prefs['feed_blogs_title'] : tra("Tiki RSS feed for weblogs");
-	$desc = (!empty($prefs['feed_blogs_desc'])) ? $prefs['feed_blogs_desc'] : tra("Last posts to weblogs.");
+	$title = $prefs['feed_blogs_title'];
+	$desc = $prefs['feed_blogs_desc'];
 	$now = date("U");
 	$id = "postId";
 	$descId = "data";

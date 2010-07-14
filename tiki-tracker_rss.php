@@ -39,8 +39,8 @@ if (isset($_REQUEST['sort_mode'])) {
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
 	$tmp = $tikilib->get_tracker($_REQUEST["$id"]);
-	$title = tra("Tiki RSS feed for individual trackers: ") . $tmp["name"];
-	$desc = $tmp["description"];
+	$title = $prefs['feed_tracker_title'] . $tmp["name"];
+	$desc = $prefs['feed_tracker_desc'] . $tmp["description"];
 	$tmp = null;
 	$tmp = $prefs['feed_' . $feed . '_title'];
 	if ($tmp <> '') $title = $tmp;

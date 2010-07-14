@@ -21,19 +21,14 @@ $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-	$title = (!empty($feed_file_galleries_title)) ? $feed_file_galleries_title : tra("Tiki RSS feed for file galleries");
-	$desc = (!empty($feed_file_galleries_desc)) ? $feed_file_galleries_desc : tra("Last files uploaded to the file galleries.");
+	$title = $prefs['feed_file_galleries_title'];
+	$desc = $prefs['feed_file_galleries_desc'];
 	$id = "fileId";
 	$descId = "description";
 	$dateId = "lastModif";
 	$authorId = "lastModifUser";
 	$titleId = "filename";
 	$readrepl = "tiki-download_file.php?$id=%s";
-
-        $tmp = $prefs['feed_'.$feed.'_title'];
-        if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['feed_'.$feed.'_desc'];
-        if ($desc<>'') $desc = $tmp;
 
 	$changes = $tikilib->list_files(0, $prefs['feed_file_galleries_max'], $dateId.'_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);

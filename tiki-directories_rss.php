@@ -32,8 +32,8 @@ $feed = "directories";
 $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
-	$title = (!empty($feed_directories_desc)) ? $feed_directories_desc : tra("Tiki RSS feed for directory sites");
-	$desc = (!empty($feed_directories_desc)) ? $feed_directories_desc : tra("Last sites.");
+	$title = $prefs['feed_directories_title'];
+	$desc = $prefs['feed_directories_desc'];
 	$id = "siteId";
 	$titleId = "name";
 	$descId = "description";

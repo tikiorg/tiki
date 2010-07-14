@@ -30,8 +30,8 @@ $feed = "shoutbox";
 $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"]=="EMPTY") {
-	$title = (!empty($prefs['feed_articles_title'])) ? $prefs['feed_articles_title'] : tra("Tiki RSS feed for shoutbox messages");
-	$desc = (!empty($prefs['feed_articles_desc'])) ? $prefs['feed_articles_desc'] : tra("Last shoutbox messages.");
+	$title = $prefs['feed_shoutbox_title'];
+	$desc = $prefs['feed_shoutbox_desc'];
 	
 	$id = "msgId";
 	$titleId = "msgId";
@@ -39,11 +39,6 @@ if ($output["data"]=="EMPTY") {
 	$dateId = "timestamp";
 	$authorId = "user";
 	$readrepl = "tiki-shoutbox.php?get=%s";
-
-	$tmp = $prefs['feed_'.$feed.'_title'];
-	if ($tmp<>'') $title = $tmp;
-	$tmp = $prefs['feed_'.$feed.'_desc'];
-	if ($desc<>'') $desc = $tmp;
 
 	$changes = $shoutboxlib -> list_shoutbox(0, $prefs['feed_articles_max'], $id.'_desc');
 	$tmp = null;

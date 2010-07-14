@@ -32,8 +32,8 @@ $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-	$title = (!empty($prefs['feed_image_galleries_title'])) ? $prefs['feed_image_galleries_title'] : tra("Tiki RSS feed for image galleries");
-	$desc = (!empty($prefs['feed_image_galleries_desc'])) ? $prefs['feed_image_galleries_desc'] : tra("Last images uploaded to the image galleries.");
+	$title = $prefs['feed_image_galleries_title'];
+	$desc = $prefs['feed_image_galleries_desc'];
 	
 	$id = "imageId";
 	$titleId = "name";
@@ -41,11 +41,6 @@ if ($output["data"]=="EMPTY") {
 	$dateId = "created";
 	$authorId = "user";
 	$readrepl = "tiki-browse_image.php?imageId=%s";
-	
-        $tmp = $prefs['feed_'.$feed.'_title'];
-        if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['feed__'.$feed.'_desc'];
-        if ($desc<>'') $desc = $tmp;
 	
 	$changes = $imagegallib->list_images(0,$prefs['feed_image_galleries_max'],$dateId.'_desc', '');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);

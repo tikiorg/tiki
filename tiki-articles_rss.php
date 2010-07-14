@@ -65,10 +65,8 @@ if ($topic and !$tikilib->user_has_perm_on_object($user,$topic,'topic','tiki_p_t
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-	$tmp = tra("Tiki RSS feed for articles");
-	$title = (!empty($feed_articles_title)) ? $feed_articles_title : $tmp;
-	$tmp = tra("Last articles.");
-	$desc = (!empty($feed_articles_desc)) ? $feed_articles_desc : $tmp;
+	$title = $prefs['feed_articles_title'];
+	$desc = $prefs['feed_articles_desc'];
 	$id = "articleId";
 	$titleId = "title";
 	$descId = "heading";

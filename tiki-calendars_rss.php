@@ -40,19 +40,14 @@ if (isset($_REQUEST["calendarIds"])) {
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-	$title = tra("Tiki RSS feed for calendars");
-	$desc = tra("Upcoming events.");
+	$title = $prefs['feed_'.$feed.'_title'];
+	$desc = $prefs['feed_'.$feed.'_desc'];
 	$id = "calitemId";
 	$titleId = "name";
 	$descId = "body";
 	$dateId = "start";
 	$authorId = "user";
 	$readrepl = "tiki-calendar_edit_item.php?viewcalitemId=%s";
-
-        $tmp = $prefs['feed_'.$feed.'_title'];
-        if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['feed_'.$feed.'_desc'];
-        if ($desc<>'') $desc = $tmp;
 
 	$allCalendars = $calendarlib->list_calendars();
 

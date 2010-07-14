@@ -31,9 +31,9 @@ $uniqueid = "$feed.$id=" . $_REQUEST["$id"];
 $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
 	$tmp = $bloglib->get_blog($_REQUEST["$id"]);
-	$title = (!empty($prefs['feed_' . $feed . '_title'])) ? $prefs['feed_' . $feed . '_title'] : tra('Tiki RSS feed for blog: ');
+	$title = $prefs['feed_' . $feed . '_title'];
 	$title.= $tmp['title'];
-	$desc.= (!empty($prefs['feed_' . $feed . '_desc'])) ? $prefs['feed_' . $feed . '_desc'] : tra('Last modifications to the blog.');
+	$desc.= $prefs['feed_' . $feed . '_desc'];
 	$desc.= $tmp["description"];
 	$descId = "data";
 	$dateId = "created";

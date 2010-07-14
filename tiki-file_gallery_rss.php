@@ -39,9 +39,10 @@ $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"]=="EMPTY") {
 	if (count($galleryIds) == 1) {
 		$tmp = $tikilib->get_file_gallery($galleryIds[0]);
-		$title = empty($prefs['feed_file_gallery_title'])? tra("Tiki RSS feed for the file gallery: "): $prefs['feed_file_gallery_title'];
+		$title = $prefs['feed_file_gallery_title'];
 		$title .= $tmp['name'];
-        	$desc = empty($tmp['description'])? $prefs['feed_file_gallery_desc']: $tmp['description'];
+		$desc = $prefs['feed_file_gallery_desc'];
+		$desc .= $tmp['description'];
 	} else {
 		$title = (!empty($prefs['feed_file_galleries_title'])) ? $prefs['feed_file_galleries_title'] : tra("Tiki RSS feed for file galleries");
 		$desc = (!empty($prefs['feed_file_galleries_desc'])) ? $prefs['feed_file_galleries_desc'] : tra("Last files uploaded to the file galleries.");
@@ -60,15 +61,6 @@ if ($output["data"]=="EMPTY") {
 		$id = "fileId";
 		$titleId = "filename";
 		$readrepl = "tiki-download_file.php?$id=%s";
-	}
-
-	if ($title=="") {
-        	$tmp = $prefs['feed_'.$feed.'_title'];
-       		if ($tmp<>'') $title = $tmp;
-	}
-	if ($desc=="") {
-        	$tmp = $prefs['feed_'.$feed.'_desc'];
-	        if ($desc<>'') $desc = $tmp;
 	}
 
 	$changes = $tikilib->get_files( 0, $prefs['feed_file_gallery_max'], $dateId.'_desc', '', $galleryIds);
