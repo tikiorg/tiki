@@ -11,19 +11,53 @@ function prefs_feed_list() {
 			'name' => tra('Default feed format'),
 			'type' => 'list',
 			'options' => array(
-				'2' => tra('RSS 2.0'),
 				'5' => tra('ATOM 1.0'),
+				'2' => tra('RSS 2.0'),
 			),
+		),
+
+		// atom specific preferences
+		'feed_atom_author_name' => array(
+			'name' => tra('Feed author name'),
+			'type' => 'text',
+			'size' => '40',
+			'hint' => tra('This field is mandatory unless both feed author email and homepage are empty.'),
+		),
+		'feed_atom_author_email' => array(
+			'name' => tra('Feeed author email'),
+			'type' => 'text',
+			'size' => '40',
+		),
+		'feed_atom_author_url' => array(
+			'name' => tra('Feed author homepage'),
+			'type' => 'text',
+			'size' => '40',
+		),
+
+		// rss specific preferences
+		'feed_rss_editor_email' => array(
+			'name' => tra('Feed editor email'),
+			'description' => tra('Email address for person responsible for editorial content.'),
+			'type' => 'text',
+			'size' => '40',
+		),
+		'feed_rss_webmaster_email' => array(
+			'name' => tra('Feed webmaster email'),
+			'description' => tra('Email address for person responsible for technical issues relating to channel.'),
+			'type' => 'text',
+			'size' => '40',
+		),
+
+		'feed_img' => array(
+			'name' => tra('Image path'),
+			'description' => tra('Specifies a GIF, JPEG or PNG image that can be displayed with the feed.'),
+			'type' => 'text',
+			'size' => '40',
 		),
 		'feed_language' => array(
 			'name' => tra('Language'),
 			'type' => 'text',
 			'size' => '10',
-		),
-		'feed_img' => array(
-			'name' => tra('Image path'),
-			'type' => 'text',
-			'size' => '40',
 		),
 		'feed_basic_auth' => array(
 			'name' => tra('RSS basic Authentication'),

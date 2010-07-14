@@ -940,7 +940,12 @@ function get_default_prefs() {
 		'feed_basic_auth' => 'n',
 		'feed_cache_time' => '0', // 0 = disabled (default)
 		'feed_default_version' => '5',
+		'feed_atom_author_name' => '',
+		'feed_atom_author_email' => '',
+		'feed_atom_author_url' => '',
 		'feed_img' => 'img/tiki/Tiki_WCG.png',
+		'feed_rss_editor_email' => '',
+		'feed_rss_webmaster_email' => '',
 		'feed_language' =>  'en-us',
 		'feed_articles' => 'n',
 		'feed_articles_desc' => tra('Last articles.'),

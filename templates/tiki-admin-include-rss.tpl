@@ -11,14 +11,23 @@
 	{tabset name="admin_rss"}
 		{tab name="{tr}General Preferences{/tr}"}
 			{preference name=feed_default_version}
-			<em>
+			<div class="adminoptionboxchild feed_default_version_childcontainer 5">
+				{preference name=feed_atom_author_name}
+				{preference name=feed_atom_author_email}
+				{preference name=feed_atom_author_url}
+			</div>
+			<div class="adminoptionboxchild feed_default_version_childcontainer 2">
+				{preference name=feed_rss_editor_email}
+				{preference name=feed_rss_webmaster_email}
+			</div>
+			{remarksbox type="Note" title="{tr}Note{/tr}"}
 				{tr}Specification{/tr}
-				<a href="http://blogs.law.harvard.edu/tech/rss" target="tikihelp" class="tikihelp" title="{tr}Specification:{/tr} RSS 2.0">RSS 2.0</a>,
-				<a href="http://www.atomenabled.org/developers/syndication/atom-format-spec.php" target="tikihelp" class="tikihelp" title="{tr}Specification:{/tr} Atom 1.0">Atom 1.0</a>.
-			</em>
+				<a href="http://blogs.law.harvard.edu/tech/rss" title="{tr}Specification:{/tr} RSS 2.0">RSS 2.0</a>
+				<a href="http://www.atomenabled.org/developers/syndication/atom-format-spec.php" title="{tr}Specification:{/tr} Atom 1.0">Atom 1.0</a>.
+			{/remarksbox}
 
-			{preference name=feed_language}
 			{preference name=feed_img}
+			{preference name=feed_language}
 			{preference name=feed_cache_time}
 
 			{remarksbox type="Note" title="{tr}Note{/tr}"}

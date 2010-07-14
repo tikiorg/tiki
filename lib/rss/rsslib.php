@@ -133,7 +133,7 @@ class RSSLib extends TikiDb_Bridge
 		, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId
 		, $fromcache=false
 	) {
-		global $tikilib, $prefs, $userlib, $prefs;
+		global $tikilib, $prefs, $userlib, $prefs, $smarty;
 		require_once('lib/core/lib/Zend/Feed/Writer/Feed.php');
 
 		$feed_format = $this->get_current_feed_format();
@@ -160,14 +160,13 @@ class RSSLib extends TikiDb_Bridge
 			$feedLink = htmlspecialchars($tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
 		}
 
-		$home = htmlspecialchars($URLPrefix.$prefs['tikiIndex']);
 		$img = htmlspecialchars($URLPrefix.$prefs['feed_img']);
 
 		$title = htmlspecialchars($title);
 		$desc = htmlspecialchars($desc);
 		$read = $URLPrefix.$itemurl;
 
-		$feed = new Zend_Feed_Writer_Feed(); 
+		$feed = new Zend_Feed_Writer_Feed();
 		$feed->setTitle($title);
 		$feed->setDescription($desc);
 
@@ -179,14 +178,50 @@ class RSSLib extends TikiDb_Bridge
 		$feed->setFeedLink($feedLink, $feed_format_name);
 		$feed->setDateModified($tikilib->now);
 
-		//TODO: extend Zend_Feed_Writer to support image
-		/* $image = new FeedImage();
-		$image->title = $prefs['browsertitle'];
-		$image->url = $img;
-		$image->link = $home;
-		$image->description = sprintf(tra('Feed provided by %s. Click to visit.'), $prefs['browsertitle']);
-	
-		$feed->image = $image;*/
+		if ($feed_format_name == 'atom') {
+			$author = array();
+
+			if (!empty($prefs['feed_atom_author_name'])) {
+				$author['name'] = $prefs['feed_atom_author_name'];
+			}
+			if (!empty($prefs['feed_atom_author_email'])) {
+				$author['email'] = $prefs['feed_atom_author_email'];
+			}
+			if (!empty($prefs['feed_atom_author_url'])) {
+				$author['url'] = $prefs['feed_atom_author_url'];
+			}
+			
+			if (!empty($author)) {
+				if (empty($author['name'])) {
+					$msg = tra('If you set feed author email or url you have to set feed author name.');
+					$smarty->assign('msg', $msg);
+					$smarty->display('error.tpl');
+					die;
+				}
+				$feed->addAuthor($author);
+			}
+		} else {
+			$authors = array();
+
+			if (!empty($prefs['feed_rss_editor_email'])) {
+				$authors[]['name'] = $prefs['feed_rss_editor_email'];
+			}
+			if (!empty($prefs['feed_rss_webmaster_email'])) {
+				$authors[]['name'] = $prefs['feed_rss_webmaster_email'];
+			}
+			
+			if (!empty($authors)) {
+				$feed->addAuthors($authors);
+			}
+		}
+
+		if (!empty($prefs['feed_img'])) {
+			$image = array();
+			$image['uri'] = $tikilib->tikiUrl() . $prefs['feed_img'];
+			$image['title'] = tra('Feed logo');
+			$image['link'] = $tikilib->tikiUrl();
+			$feed->setImage($image);
+		}
 
 		foreach ($changes["data"] as $data)  {
 			$item = $feed->createEntry(); 
