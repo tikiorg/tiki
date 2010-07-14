@@ -10,9 +10,9 @@
 {if $gmaptype eq 'locator'}
 <input type="text" size="{$gmapaddresslength}" name="address" value="{tr}enter address{/tr}" />
 <input type="submit" name="cancel" value="{tr}Find address{/tr}" onclick="showAddress{$gmapname|escape}(this.form.address.value);return false;" /><br />
-{tr}Lon.{/tr}: <input type="text" name="point[x]" value="{$pointx}" id="pointx" size="6" />
-{tr}Lat.{/tr}: <input type="text" name="point[y]" value="{$pointy}" id="pointy" size="6" />
-{tr}Zoom{/tr}: <input type="text" name="point[z]" value="{$pointz}" id="pointz" size="2" />
+{tr}Lon.{/tr}: <input type="text" name="point[x]" value="{$pointx}" id="{$gmapname|escape}pointx" size="6" />
+{tr}Lat.{/tr}: <input type="text" name="point[y]" value="{$pointy}" id="{$gmapname|escape}pointy" size="6" />
+{tr}Zoom{/tr}: <input type="text" name="point[z]" value="{$pointz}" id="{$gmapname|escape}pointz" size="2" />
 {/if}
 {if $gmap_defaultset && $user}
 <input type="submit" name="cancel" onclick="document.getElementById('gmap{$gmapname|escape}_ajax_msg').innerHTML = '{tr}saving...{/tr}';saveGmapDefaultxyz{$gmapname|escape}();return false;" value="{tr}Save current map view as user default{/tr}" />
@@ -38,9 +38,9 @@ function showAddress{$gmapname|escape}(address) {literal}{{/literal}
         if (!point) {literal}{{/literal}
           alert(address + " not found!");
         {literal}} else {{/literal}
-          document.getElementById('pointx').value = point.x;
-          document.getElementById('pointy').value = point.y;
-          document.getElementById('pointz').value = gmap{$gmapname|escape}map.getZoom();
+          document.getElementById('{$gmapname|escape}pointx').value = point.x;
+          document.getElementById('{$gmapname|escape}pointy').value = point.y;
+          document.getElementById('{$gmapname|escape}pointz').value = gmap{$gmapname|escape}map.getZoom();
           {if isset($gmapautozoom)}
           gmap{$gmapname|escape}map.setCenter(point,{$gmapautozoom});
           {else}
@@ -63,15 +63,15 @@ function saveGmapDefaultxyz{$gmapname|escape}() {literal}{{/literal}
 
 function saveGmapUser{$gmapname|escape}() {literal}{{/literal}
 	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
-	xajax_saveGmapUser('gmap{$gmapname|escape}_ajax_msg', document.getElementById('pointx').value, document.getElementById('pointy').value, document.getElementById('pointz').value, '{$gmapitem}');
+	xajax_saveGmapUser('gmap{$gmapname|escape}_ajax_msg', document.getElementById('{$gmapname|escape}pointx').value, document.getElementById('{$gmapname|escape}pointy').value, document.getElementById('{$gmapname|escape}pointz').value, '{$gmapitem}');
 {literal}}{/literal}
 
 function saveGmapItem{$gmapname|escape}() {literal}{{/literal}
 	{if $gmaptrackerinputid}
-	document.getElementById('{$gmaptrackerinputid|escape}').value = document.getElementById('pointx').value + ',' + document.getElementById('pointy').value + ',' + document.getElementById('pointz').value;
+	document.getElementById('{$gmaptrackerinputid|escape}').value = document.getElementById('{$gmapname|escape}pointx').value + ',' + document.getElementById('{$gmapname|escape}pointy').value + ',' + document.getElementById('{$gmapname|escape}pointz').value;
 	{/if}
 	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
-	xajax_saveGmapItem('gmap{$gmapname|escape}_ajax_msg', document.getElementById('pointx').value, document.getElementById('pointy').value, document.getElementById('pointz').value, '{$gmapitemtype}', '{$gmapitem}', '{$gmaptrackerfieldid}');
+	xajax_saveGmapItem('gmap{$gmapname|escape}_ajax_msg', document.getElementById('{$gmapname|escape}pointx').value, document.getElementById('{$gmapname|escape}pointy').value, document.getElementById('{$gmapname|escape}pointz').value, '{$gmapitemtype}', '{$gmapitem}', '{$gmaptrackerfieldid}');
 {literal}}{/literal}
 
 {/jq}
@@ -115,9 +115,9 @@ function loadgmap{$gmapname|escape}() {literal}{{/literal}
     if (marker) {literal}{{/literal}
       gmap{$gmapname|escape}map.removeOverlay(marker);
     {literal}} else {{/literal}
-      document.getElementById('pointx').value = point.x;
-      document.getElementById('pointy').value = point.y;
-      document.getElementById('pointz').value = gmap{$gmapname|escape}map.getZoom();
+      document.getElementById('{$gmapname|escape}pointx').value = point.x;
+      document.getElementById('{$gmapname|escape}pointy').value = point.y;
+      document.getElementById('{$gmapname|escape}pointz').value = gmap{$gmapname|escape}map.getZoom();
       gmap{$gmapname|escape}map.clearOverlays();
       gmap{$gmapname|escape}map.addOverlay(new GMarker(point));
     {literal}}{/literal}
