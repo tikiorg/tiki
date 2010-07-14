@@ -120,6 +120,7 @@ function wikiplugin_datachannel( $data, $params )
 
 	$config = Tiki_Profile_ChannelList::fromConfiguration( $prefs['profile_channels'] );
 	if( $config->canExecuteChannels( array( $params['channel'] ), $groups ) ) {
+		$smarty->assign( 'datachannel_execution', $executionId );
 		if( $_SERVER['REQUEST_METHOD'] == 'POST' 
 			&& isset( $_POST['datachannel_execution'] ) 
 			&& $_POST['datachannel_execution'] == $executionId ) {
@@ -168,7 +169,6 @@ function wikiplugin_datachannel( $data, $params )
 			$smarty->assign('datachannel_feedbacks', array_merge($installer->getFeedback(), $profile->getFeedback()) );
 		}
 		$smarty->assign( 'datachannel_fields', $fields );
-		$smarty->assign( 'datachannel_execution', $executionId );
 		$smarty->assign( 'button_label', !empty($params['buttonLabel']) ? $params['buttonLabel'] : 'Go');
 		$smarty->assign( 'form_class_attr', !empty($params['class']) ? ' class="' . $params['class'] . '"' : '');
 		
