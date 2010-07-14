@@ -46,6 +46,10 @@ if (isset($_REQUEST["remove"])) {
 	$trklib->remove_tracker($_REQUEST["remove"]);
 	$logslib->add_log('admintrackers', 'removed tracker ' . $_REQUEST["remove"]);
 }
+if (isset($_REQUEST['deltransition'])) {
+	include_once('lib/transitionlib.php');
+	TransitionLib::removeTransition($_REQUEST['deltransition']);
+}
 $cat_type = 'tracker';
 $cat_objid = $_REQUEST["trackerId"];
 if (isset($_REQUEST["save"])) {
@@ -313,6 +317,15 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options['descriptionIsParsed'] = 'n';
 	}
 	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST['trackerId'], $_REQUEST['name'], $_REQUEST['description'], $tracker_options, isset($_REQUEST['descriptionIsParsed']) ? 'y' : '');
+	if (!empty($_REQUEST['transition_from']) && !empty($_REQUEST['transition_from'])) {
+		require_once 'lib/transitionlib.php';
+		if (!empty($_REQUEST['transition_what'])) {
+			include('lib/smarty_tiki/function.html_select_duration.php');
+			$guards[] = array($_REQUEST['transition_what'], compute_select_duration($_REQUEST, 'transition_after'));
+		}
+		$transitionlib = new TransitionLib( 'trackeritem' );
+		$transitionlib->addTransition( $_REQUEST['transition_from'], $_REQUEST['transition_to'], 'Status change', false, $guards, $_REQUEST['trackerId'], 'y' );
+	}
 	$groupalertlib->AddGroup('tracker', $_REQUEST['trackerId'], !empty($_REQUEST['groupforAlert'])?$_REQUEST['groupforAlert']:'', !empty($_REQUEST['showeachuser']) ? $_REQUEST['showeachuser'] : 'n');
 	$logslib->add_log('admintrackers', 'changed or created tracker ' . $_REQUEST["name"]);
 	$cat_desc = $_REQUEST["description"];
@@ -379,6 +392,9 @@ $info['autoAssignGroupItem'] = '';
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info, $tikilib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info, $trklib->get_tracker_options($_REQUEST["trackerId"]));
+	require_once 'lib/transitionlib.php';
+	$transitionlib = new TransitionLib( 'trackeritem' );
+	$info['transitions'] = $transitionlib->listTransitionsObject($_REQUEST['trackerId'], 'trackeritem');
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 	$smarty->assign('action', '');
 	include_once ('lib/wiki-plugins/wikiplugin_trackerfilter.php');

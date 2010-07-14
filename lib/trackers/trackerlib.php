@@ -899,7 +899,9 @@ class TrackerLib extends TikiLib
 
 		foreach ($ret1 as $res) {
 			$res['itemUser'] = '';
-			$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
+			if ($listfields !== null) {
+				$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
+			}
 			if (!empty($asort_mode)) {
 				foreach ($res['field_values'] as $i=>$field)
 					if ($field['fieldId'] == $asort_mode ) {
@@ -2375,6 +2377,7 @@ class TrackerLib extends TikiLib
 	// array('or'=>array('isSearchable'=>'y', 'isTplVisible'=>'y')) for fields that are visible ou searchable
 	// array('not'=>array('isHidden'=>'y')) for fields that are not hidden
 	function parse_filter($filter, &$mids, &$bindvars) {
+		global $tikilib;
 		foreach ($filter as $type=>$val) {
 			if ($type == 'or') {
 				$midors = array();
@@ -2384,6 +2387,12 @@ class TrackerLib extends TikiLib
 				$midors = array();
 				$this->parse_filter($val, $midors, $bindvars);
 				$mids[] = '!('.implode(' and ', $midors).')';
+			} elseif ($type == 'createdBefore') {
+				$mids[] = 'tti.`created` < ?';
+				$bindvars[] = $tikilib->now - $val;
+			} elseif ($type == 'lastModifBefore') {
+				$mids[] = 'tti.`lastModif` < ?';
+				$bindvars[] = $tikilib->now - $val;
 			} elseif (is_array($val)) {
 				if (count($val) > 0) {
 					if (!strstr($type, '`')) $type = "`$type`";
@@ -3853,6 +3862,17 @@ class TrackerLib extends TikiLib
 			$fields[$refFieldId]['http_request'][8] .= ($fields[$refFieldId]['http_request'][8] ? "," : "") . $field['value'];
 		}
 		/* the list of potential value is calculated by a javascript call to selectValues at the end of the tpl */
+	}
+	function change_status($items, $status) {
+		if (!count($items)) {
+			return;
+		}
+		$bindvars[] = $status;
+		$query = 'update `tiki_tracker_items` set `status`=? where `itemId` in ('.implode(',', array_fill(0,count($items),'?')).')';
+		foreach ($items as $item) {
+			$bindvars[] = $item['itemId'];
+		}
+		$this->query($query, $bindvars);
 	}
 	function log($version, $itemId, $fieldId, $value='', $lang='') {
 		if (empty($version)) {

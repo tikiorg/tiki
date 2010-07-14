@@ -21,65 +21,21 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_modifier_duration($string, $long=true)
 {
-  $result=Array();
-  if($string >= 60*60*24) {
-    $days = floor($string/(60*60*24));
-    if ($days > 1) {
-	$s = tra('days');
-    } else {
-	$s = tra('day');
-    }
-    if ($long) {
-	$s = " $s";
-    } else {
-	$s = substr($s, 0, 1);
-    }
-    $result[]="$days$s";
-    $string = $string % (60*60*24);
-  }
-  if($string >= 60*60) {
-    $hours = floor($string/(60*60));
-    if ($hours > 1) {
-	$s = tra('hours');
-    } else {
-	$s = tra('hour');
-    }
-    if ($long) {
-	$s = " $s";
-    } else {
-	$s = substr($s, 0, 1);
-    }
-    $result[]="$hours$s";
-    $string = $string % (60*60);
-  }
-  if($string >= 60 && ($long || (!$long && empty($days)))) {
-    $mins = floor($string/(60));
-    if ($mins > 1) {
-	$s = tra('mins');
-    } else {
-	$s = tra('min');
-    }
-    if ($long) {
-	$s = " $s";
-    } else {
-	$s = substr($s, 0, 1);
-    }
-    $result[]="$mins$s";
-    $string = $string % (60);
-  }
-  if($string > 0 && ($long || (!$long && empty($days) && empty($hours)))) {
-    if ($string > 1) {
-	$s = tra('secs');
-    } else {
-	$s = tra('sec');
-    }
-    if ($long) {
-	$s = " $s";
-    } else {
-	$s = substr($s, 0, 1);
-    }
-    $result[]="$string$s";
-  }
-  
-  return implode(' ',$result);
+	if (!is_int($string)) {
+		return $string;
+	}
+	$values = array(31536000, 2628000, 604800, 86400, 3600, 60, 1);
+	$output = array(tra('year'), tra('month'), tra('week'), tra('day'), tra('hour'), tra('minute'), tra('second'));
+	$ouputs = array(tra('years'), tra('months'), tra('weeks'), tra('days'), tra('hours'), tra('minutes'), tra('seconds'));
+	$result = array();
+	foreach ($values as $i=>$value) {
+		if ($string >= $value) {
+			$nb = floor($string / $value);
+			$s = ($nb > 1)?$ouputs[$i]: $output[$i];
+			$s = $long? " $s": substr($s, 0, 1);
+			$string = $string % $value;
+			$result[] = "$nb$s";
+		}
+	}
+	return implode(' ',$result);
 }

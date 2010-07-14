@@ -3529,11 +3529,15 @@ CREATE TABLE `tiki_transitions` (
     `preserve` int(1) NOT NULL DEFAULT 0,
     `name` varchar(50),
     `type` varchar(20) NOT NULL,
+	`objectId` int(12) DEFAULT NULL,
     `from` varchar(255) NOT NULL,
     `to` varchar(255) NOT NULL,
     `guards` text,
+    `batch` char(1) DEFAULT NULL,
     PRIMARY KEY(`transitionId`),
-    KEY `transition_lookup` (`type`, `from`)
+    KEY `transition_lookup` (`type`, `from`),
+	KEY `batch` (`batch`),
+	KEY `objectId` (`objectId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_auth_tokens`;

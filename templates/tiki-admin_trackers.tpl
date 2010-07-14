@@ -497,6 +497,54 @@
 			</tr>
 
 			<tr class="formcolor">
+				<td>{tr}Transition{/tr}</td>
+				<td>
+					{if !empty($info.transitions)}
+						<table class="normal">
+						<tr><th>{tr}From{/tr}</th><th>{tr}To{/tr}</th><th>{tr}Guards{/tr}</th><th>{tr}Action{/tr}</th></tr>
+						{foreach from=$info.transitions item=transition}
+							<tr>
+								<td>{$transition.from|escape}</td><td>{$transition.to|escape}</td>
+								<td>
+								{foreach from=$transition.guards item=guard}
+									{foreach name=g from=$guard item=g}
+										{$g|duration|escape}
+										{if $smarty.foreach.g.last}<br />{else} {/if}
+									{/foreach}
+								{/foreach}
+								</td>
+								<td><a title="{tr}Delete transition{/tr}" class="link" href="tiki-admin_trackers.php?trackerId={$trackerId}&amp;deltransition={$transition.transitionId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td>
+							</tr>
+						{/foreach}
+						</table>
+					{/if}
+					<label>
+						{tr}From{/tr}
+						<select name="transition_from">
+							<option value="" />
+							{foreach key=st item=stdata from=$status_types}
+								<option value="{$st}">{$stdata.label|escape}</option>
+							{/foreach}
+						</select>
+					</label>
+					<label>
+						{tr}To{/tr}
+						<select name="transition_to">
+							<option value="" />
+							{foreach key=st item=stdata from=$status_types}
+								<option value="{$st}">{$stdata.label|escape}</option>
+							{/foreach}
+						</select>
+					</label>
+						{html_select_duration prefix='transition_after'}
+						<select name="transition_what">
+							<option value="after creation">{tr}After creation{/tr}</option>
+							<option value="after last modification">{tr}After last modification{/tr}</option>
+						</select>
+				</td>
+			</tr>
+				
+			<tr class="formcolor">
 				<td></td>
 				<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 			</tr>
