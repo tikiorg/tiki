@@ -1179,7 +1179,7 @@ ask_ticket('view-trackers-items');
 if ($prefs['feature_ajax'] == 'y') {
 	require_once ("lib/ajax/ajaxlib.php");
 	$ajaxlib->registerTemplate('tiki-view_tracker_item.tpl');
-	$ajaxlib->processRequests();
+	//$ajaxlib->processRequests();
 }
 global $logslib; include_once('lib/logs/logslib.php');
 $logslib->add_action('Viewed', $_REQUEST['itemId'], 'trackeritem');
