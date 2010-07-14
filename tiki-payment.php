@@ -128,6 +128,7 @@ function fetch_payment_list( $type ) {
 
 	$data = $paymentlib->$method( $offset, $max );
 	$data['offset'] = $offset;
+	$data['offset_arg'] = "offset_$type";
 	$data['max'] = $max;
 
 	$smarty->assign( $type, $data );
