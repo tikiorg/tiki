@@ -182,7 +182,7 @@ function wikiplugin_googlemap($data, $params) {
 		return tra("Google Maps API key not set");
 	}
 
-	$headerlib->add_jsfile("http://maps.google.com/maps?file=api&amp;v=2&amp;key=$gmapkey");
+	$headerlib->add_jsfile("http://maps.google.com/maps?file=api&v=2&key=$gmapkey");
 	
 	if (isset($params["name"]) && $params["name"]) {
 		$gmapname = str_replace(' ', '', $params["name"]);
