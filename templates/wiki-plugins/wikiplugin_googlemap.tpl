@@ -1,4 +1,3 @@
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$gmapkey}"></script>
 {if $gmaptoggle}
 <div class="tellafriend">
 <a href="#" onclick="toggle('gmap{$gmapname|escape}container');return false;">{tr}Toggle location map{/tr}</a>

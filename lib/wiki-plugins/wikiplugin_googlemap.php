@@ -154,7 +154,7 @@ function wikiplugin_googlemap_info() {
 
 function wikiplugin_googlemap($data, $params) {
 
-	global $prefs, $smarty, $tikilib, $access, $ajaxlib;
+	global $prefs, $smarty, $tikilib, $access, $ajaxlib, $headerlib;
 
 	$access->check_feature('feature_gmap');
 	
@@ -175,13 +175,15 @@ function wikiplugin_googlemap($data, $params) {
 	}
 	
 	if (isset($params["key"]) && $params["key"]) {
-		$smarty->assign( 'gmapkey', $params["key"] );
+		$gmapkey = $params["key"];
 	} elseif ($prefs["gmap_key"]) {
-		$smarty->assign( 'gmapkey', $prefs["gmap_key"] );
+		$gmapkey = $prefs["gmap_key"];
 	} else {
 		return tra("Google Maps API key not set");
 	}
 
+	$headerlib->add_jsfile("http://maps.google.com/maps?file=api&amp;v=2&amp;key=$gmapkey");
+	
 	if (isset($params["name"]) && $params["name"]) {
 		$gmapname = str_replace(' ', '', $params["name"]);
 	} else {
