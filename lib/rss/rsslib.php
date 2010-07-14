@@ -154,10 +154,10 @@ class RSSLib extends TikiDb_Bridge
 			$URLPrefix .= "/"; // Append a slash unless Tiki is in the document root. dirname() removes a slash except in that case.
 		}
 		
-		if ($prefs['feed_'.$section.'_index']!='') {
-			$url = $prefs['feed_'.$section.'_index'];
+		if ($prefs['feed_'.$section.'_index'] != '') {
+			$feedLink = $prefs['feed_'.$section.'_index'];
 		} else {
-			$url = htmlspecialchars($tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
+			$feedLink = htmlspecialchars($tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
 		}
 
 		$home = htmlspecialchars($URLPrefix.$prefs['tikiIndex']);
@@ -172,8 +172,8 @@ class RSSLib extends TikiDb_Bridge
 		$feed->setDescription($desc);
 		$feed->setLanguage($prefs['feed_language']);
 		
-		$feed->setLink($url);
-		$feed->setFeedLink($tikilib->httpPrefix() . $_SERVER['REQUEST_URI'], $feed_format_name);
+		$feed->setLink($tikilib->tikiUrl());
+		$feed->setFeedLink($feedLink, $feed_format_name);
 		$feed->setDateModified($tikilib->now);
 
 		//TODO: extend Zend_Feed_Writer to support image
