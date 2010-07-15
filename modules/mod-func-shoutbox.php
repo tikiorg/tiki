@@ -63,7 +63,7 @@ function doProcessShout($inFormValues) {
 
 function module_shoutbox( $mod_reference, $module_params ) {
 	global $tikilib; require_once ('lib/tikilib.php');
-	global $shoutboxlib, $prefs, $user, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $base_url, $smarty;
+	global $shoutboxlib, $prefs, $user, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $base_url, $smarty, $access;
 	include_once ('lib/shoutbox/shoutboxlib.php');
 
 	if ($tiki_p_view_shoutbox == 'y') {
