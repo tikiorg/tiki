@@ -48,16 +48,18 @@ class PreferencesLib
 			} else {
 				$info['value'] = $value;
 			}
+
 			$info['raw'] = $source[$name];
 			$info['id'] = 'pref-' . ++$id;
+
 			if( isset( $info['help'] ) && $prefs['feature_help'] == 'y' ) {
-				
-				if ( preg_match('/^https?:/i', $info['help']) ) 
-				// If help is an url, return it without adding $helpurl 
+				if( preg_match('/^https?:/i', $info['help']) ) {
 					$info['helpurl'] = $info['help'];
-				else
+				} else {
 					$info['helpurl'] = $prefs['helpurl'] . $info['help'];
+				}
 			}
+
 			if( $deps && isset( $info['dependencies'] ) ) {
 				$info['dependencies'] = $this->getDependencies( $info['dependencies'] );
 			}

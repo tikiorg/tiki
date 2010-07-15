@@ -5828,14 +5828,15 @@ class TikiLib extends TikiDb_Bridge
 			$this->parse_htmlchar($data);
 		}
 
-		// Extract [link] sections (to be re-inserted later)
-		$noparsedlinks = array();
-
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
 			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:(.*)\~\~/Ums", "<span style=\"color:$1; background:$3\">$4</span>", $data);
 		}
+
+		// Extract [link] sections (to be re-inserted later)
+		$noparsedlinks = array();
+
 		// This section matches [...].
 		// Added handling for [[foo] sections.  -rlpowell
 		if (!$simple_wiki) {
@@ -5892,6 +5893,56 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
+		$data = $this->parse_data_wikilinks( $data, $simple_wiki );
+
+		// reinsert hash-replaced links into page
+		foreach ($noparsedlinks as $np) {
+			$data = str_replace($np["key"], $np["data"], $data);
+		}
+
+		$data = $this->parse_data_externallinks( $data, $options );
+
+		$data = $this->parse_data_tables( $data );
+
+		if (!$simple_wiki && $options['parsetoc']) {
+			$this->parse_data_process_maketoc( $data, $options);
+
+		} // closing if ($simple_wiki)
+
+		// Close BiDi DIVs if any
+		for ($i = 0; $i < $bidiCount; $i++) {
+			$data .= "</div>";
+		}
+
+		// Put removed strings back.
+		$this->replace_preparse($data, $preparsed, $noparsed);
+
+		// Process pos_handlers here
+		foreach ($this->pos_handlers as $handler) {
+			$data = $handler($data);
+		}
+		return $data;
+	}
+
+	function parse_data_simple( $data ) {
+		global $prefs;
+		$words = array();
+
+		if ( $prefs['feature_hotwords'] == 'y' ) {
+			// Get list of HotWords
+			$words = $this->get_hotwords();
+		}
+
+		$data = $this->parse_data_wikilinks( $data, true );
+		$data = $this->parse_data_externallinks( $data, array( 'suppress_icons' => true ) );
+		$data = $this->parse_data_inline_syntax( $data, $words );
+
+		return $data;
+	}
+
+	private function parse_data_wikilinks( $data, $simple_wiki ) {
+		global $page_regex, $prefs;
+
 		// definitively put out the protected words ))protectedWord((
 		if ($prefs['feature_wikiwords'] == 'y' ) {
 			preg_match_all("/\)\)(\S+?)\(\(/", $data, $matches);
@@ -5907,9 +5958,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		// New syntax for wiki pages ((name|desc)) Where desc can be anything
-		// preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
-		// match ((name|desc)) as well as ((name|))
+		// Links with description
 		preg_match_all("/\(([a-z0-9-]+)?\(($page_regex)\|([^\)]*?)\)\)/", $data, $pages);
 
 		$temp_max = count($pages[1]);
@@ -5922,7 +5971,7 @@ class TikiLib extends TikiDb_Bridge
 			$data = str_replace($exactMatch, $replacement, $data);
 		}
 
-		// New syntax for wiki pages ((name)) Where name can be anything
+		// Wiki page syntax without description
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $pages);
 
 		foreach ($pages[2] as $idx => $page_parse) {
@@ -5960,10 +6009,11 @@ class TikiLib extends TikiDb_Bridge
 			$data = str_replace($noParseWikiLinksK, $noParseWikiLinksT, $data);
 		}
 
-		// reinsert hash-replaced links into page
-		foreach ($noparsedlinks as $np) {
-			$data = str_replace($np["key"], $np["data"], $data);
-		}
+		return $data;
+	}
+
+	private function parse_data_externallinks( $data, $options ) {
+		global $prefs;
 
 		// *****
 		// This section handles external links of the form [url] and such.
@@ -5990,56 +6040,164 @@ class TikiLib extends TikiDb_Bridge
 			}
 			if (empty($_SERVER['SERVER_NAME']) || strstr($link, $_SERVER["SERVER_NAME"]) || !strstr($link, '://')) {
 				$target = '';
-		} else {
-			$class = 'class="wiki external"';
-			if ($prefs['feature_wiki_ext_icon'] == 'y' && !$options['suppress_icons']) {
-				global $smarty;
-				include_once('lib/smarty_tiki/function.icon.php');
-				$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
-			}
-			$rel='external';
-			if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
-				$rel .= ' nofollow';
-			}
-		}
-
-		// The (?<!\[) stuff below is to give users an easy way to
-		// enter square brackets in their output; things like [[foo]
-		// get rendered as [foo]. -rlpowell
-
-		if ($prefs['cachepages'] == 'y' && $this->is_cached($link)) {
-			//use of urlencode for using cached versions of dynamic sites
-			$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
-
-			$link2 = str_replace("/", "\/", preg_quote($link));
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; //< last param expected here is always nocache
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is used for relation (rel) attribute (e.g. shadowbox) or nocache
-			preg_match($pattern, $data, $matches);
-			if (isset($matches[2]) && $matches[2]=='nocache') {
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
 			} else {
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
+				$class = 'class="wiki external"';
+				if ($prefs['feature_wiki_ext_icon'] == 'y' && !$options['suppress_icons']) {
+					global $smarty;
+					include_once('lib/smarty_tiki/function.icon.php');
+					$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
+				}
+				$rel='external';
+				if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
+					$rel .= ' nofollow';
+				}
 			}
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
-			$pattern = "/(?<!\[)\[$link2\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
-		} else {
-			$link2 = str_replace("/", "\/", preg_quote($link));
-			$data = str_replace("|nocache", "", $data);
 
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
-			$pattern = "/(?<!\[)\[$link2\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon", $data);
-		}
+			// The (?<!\[) stuff below is to give users an easy way to
+			// enter square brackets in their output; things like [[foo]
+			// get rendered as [foo]. -rlpowell
+
+			if ($prefs['cachepages'] == 'y' && $this->is_cached($link)) {
+				//use of urlencode for using cached versions of dynamic sites
+				$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
+
+				$link2 = str_replace("/", "\/", preg_quote($link));
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; //< last param expected here is always nocache
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is used for relation (rel) attribute (e.g. shadowbox) or nocache
+				preg_match($pattern, $data, $matches);
+				if (isset($matches[2]) && $matches[2]=='nocache') {
+					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
+				} else {
+					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
+				}
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
+				$pattern = "/(?<!\[)\[$link2\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
+			} else {
+				$link2 = str_replace("/", "\/", preg_quote($link));
+				$data = str_replace("|nocache", "", $data);
+
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
+				$pattern = "/(?<!\[)\[$link2\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon", $data);
+			}
 		}
 
 		// Handle double square brackets.  -rlpowell
 		$data = str_replace( "[[", "[", $data );
+
+		// *****
+		// This section handles external links of the form [url] and such.
+		// *****
+
+		$links = $this->get_links($data);
+		$notcachedlinks = $this->get_links_nocache($data);
+		$cachedlinks = array_diff($links, $notcachedlinks);
+		$this->cache_links($cachedlinks);
+
+		// Note that there're links that are replaced
+		foreach ($links as $link) {
+			$target = '';
+			$class = 'class="wiki"';
+			$ext_icon = '';
+			$rel='';
+
+			if ($prefs['popupLinks'] == 'y') {
+				$target = 'target="_blank"';
+			}
+
+			if (!isset($_SERVER['SERVER_NAME']) && isset($_SERVER['HTTP_HOST'])) {
+				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
+			}
+			if (empty($_SERVER['SERVER_NAME']) || strstr($link, $_SERVER["SERVER_NAME"]) || !strstr($link, '://')) {
+				$target = '';
+			} else {
+				$class = 'class="wiki external"';
+				if ($prefs['feature_wiki_ext_icon'] == 'y' && !$options['suppress_icons']) {
+					global $smarty;
+					include_once('lib/smarty_tiki/function.icon.php');
+					$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
+				}
+				$rel='external';
+				if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
+					$rel .= ' nofollow';
+				}
+			}
+
+			// The (?<!\[) stuff below is to give users an easy way to
+			// enter square brackets in their output; things like [[foo]
+			// get rendered as [foo]. -rlpowell
+
+			if ($prefs['cachepages'] == 'y' && $this->is_cached($link)) {
+				//use of urlencode for using cached versions of dynamic sites
+				$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
+
+				$link2 = str_replace("/", "\/", preg_quote($link));
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; //< last param expected here is always nocache
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is used for relation (rel) attribute (e.g. shadowbox) or nocache
+				preg_match($pattern, $data, $matches);
+				if (isset($matches[2]) && $matches[2]=='nocache') {
+					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
+				} else {
+					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
+				}
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
+				$pattern = "/(?<!\[)\[$link2\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
+			} else {
+				$link2 = str_replace("/", "\/", preg_quote($link));
+				$data = str_replace("|nocache", "", $data);
+
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
+				$pattern = "/(?<!\[)\[$link2\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon", $data);
+			}
+		}
+
+		// Handle double square brackets.  -rlpowell
+		$data = str_replace( "[[", "[", $data );
+
+		return $data;
+	}
+
+	private function parse_data_inline_syntax( $line, $words ) {
+		global $prefs;
+
+		if ($prefs['feature_hotwords'] == 'y') {
+			// Replace Hotwords before begin
+			$line = $this->replace_hotwords($line, $words);
+		}
+
+		// Make plain URLs clickable hyperlinks
+		if ($prefs['feature_autolinks'] == 'y') {
+			$line = $this->autolinks($line);
+		}
+
+		// Replace monospaced text
+		$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "$1<code>$2</code>", $line);
+		// Replace bold text
+		$line = preg_replace("/__(.*?)__/", "<strong>$1</strong>", $line);
+		// Replace italic text
+		$line = preg_replace("/\'\'(.*?)\'\'/", "<em>$1</em>", $line);
+		// Replace definition lists
+		$line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+		$line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+
+		return $line;
+	}
+
+	private function parse_data_tables( $data ) {
+		global $prefs;
 
 		/*
 		 * Wiki Tables syntax
@@ -6137,23 +6295,6 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		if (!$simple_wiki && $options['parsetoc']) {
-			$this->parse_data_process_maketoc( $data, $options);
-
-		} // closing if ($simple_wiki)
-
-		// Close BiDi DIVs if any
-		for ($i = 0; $i < $bidiCount; $i++) {
-			$data .= "</div>";
-		}
-
-		// Put removed strings back.
-		$this->replace_preparse($data, $preparsed, $noparsed);
-
-		// Process pos_handlers here
-		foreach ($this->pos_handlers as $handler) {
-			$data = $handler($data);
-		}
 		return $data;
 	}
 
@@ -6274,6 +6415,7 @@ class TikiLib extends TikiDb_Bridge
 		// HotWords will be replace only in ordinal text
 		// It looks __really__ goofy in Headers or Titles
 
+		$words = array();
 		if ( $prefs['feature_hotwords'] == 'y' ) {
 			// Get list of HotWords
 			$words = $this->get_hotwords();
@@ -6390,25 +6532,7 @@ class TikiLib extends TikiDb_Bridge
 				$line = '<tt>' . $line . '</tt>';
 			}
 
-			if ($prefs['feature_hotwords'] == 'y') {
-				// Replace Hotwords before begin
-				$line = $this->replace_hotwords($line, $words);
-			}
-
-			// Make plain URLs clickable hyperlinks
-			if ($prefs['feature_autolinks'] == 'y') {
-				$line = $this->autolinks($line);
-			}
-
-			// Replace monospaced text
-			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "$1<code>$2</code>", $line);
-			// Replace bold text
-			$line = preg_replace("/__(.*?)__/", "<strong>$1</strong>", $line);
-			// Replace italic text
-			$line = preg_replace("/\'\'(.*?)\'\'/", "<em>$1</em>", $line);
-			// Replace definition lists
-			$line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
-			$line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+			$line = $this->parse_data_inline_syntax( $line, $words );
 
 			// This line is parseable then we have to see what we have
 			if (substr($line, 0, 3) == '---') {

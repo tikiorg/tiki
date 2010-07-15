@@ -8,10 +8,10 @@
 	{$p.detail|escape}
 	{include file=prefs/shared-flags.tpl}
 	{if $p.shorthint}
-		<em>{$p.shorthint|escape}</em>
+		<em>{$p.shorthint|simplewiki}</em>
 	{/if}
 	{if $p.hint}
-		<br/><em>{$p.hint|escape}</em>
+		<br/><em>{$p.hint|simplewiki}</em>
 	{/if}
 	{include file=prefs/shared-dependencies.tpl}
 </div>

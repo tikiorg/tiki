@@ -9,20 +9,21 @@ function prefs_recaptcha_list() {
     return array (
 		'recaptcha_enabled' => array(
             'name' => tra('Use ReCaptcha'),
-            'description' => tra('Use ReCaptcha instead of default CAPTCHA'),
+            'description' => tra('Use ReCaptcha, a specialized captcha service, instead of default CAPTCHA'),
+			'hint' => tra('You will need to register at [http://www.google.com/recaptcha]'),
 			'help' => 'Spam+protection',
 			'type' => 'flag',
         ),
 		'recaptcha_pubkey' => array(
 			'name' => tra('Pubkey'),
             'type' => 'text',
-            'description' => tra('Go to google.com/recaptcha to generate your keys.'),
+            'description' => tra('ReCaptcha public key.'),
         	'size' => 40,
 		),
 		'recaptcha_privkey' => array(
 			'name' => tra('Privkey'),
 			'type' => 'text',
-            'description' => tra('Go to google.com/recaptcha to generate your keys.'),
+            'description' => tra('ReCaptcha private key.'),
 			'size' => 40,
 		),
 	);

@@ -6,7 +6,7 @@
 		<label for="{$p.id|escape}">{$p.name|escape}</label>
 		{include file=prefs/shared-flags.tpl}
 		{if $p.hint}
-			<br/><em>{$p.hint|escape}</em>
+			<br/><em>{$p.hint|simplewiki}</em>
 		{/if}
 	</div>
 	{include file=prefs/shared-dependencies.tpl}
