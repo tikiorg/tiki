@@ -33,7 +33,7 @@ class Smarty_Tikiwiki extends Smarty
 			TIKI_SMARTY_DIR,
 			SMARTY_DIR.'plugins'
 		);
-		$smarty->security = ( $prefs['smarty_security'] == 'y' );
+		$this->security = ( $prefs['smarty_security'] == 'y' );
 
 		// In general, it's better that use_sub_dirs = false
 		// If ever you are on a very large/complex/multilingual site and your
