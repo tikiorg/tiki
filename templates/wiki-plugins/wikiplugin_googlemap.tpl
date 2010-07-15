@@ -70,8 +70,10 @@ function saveGmapItem{$gmapname|escape}() {literal}{{/literal}
 	{if $gmaptrackerinputid}
 	document.getElementById('{$gmaptrackerinputid|escape}').value = document.getElementById('{$gmapname|escape}pointx').value + ',' + document.getElementById('{$gmapname|escape}pointy').value + ',' + document.getElementById('{$gmapname|escape}pointz').value;
 	{/if}
+	{if $gmapitem}
 	xajax.config.requestURI = '{$smarty.server.REQUEST_URI}';
 	xajax_saveGmapItem('gmap{$gmapname|escape}_ajax_msg', document.getElementById('{$gmapname|escape}pointx').value, document.getElementById('{$gmapname|escape}pointy').value, document.getElementById('{$gmapname|escape}pointz').value, '{$gmapitemtype}', '{$gmapitem}', '{$gmaptrackerfieldid}');
+	{/if}
 {literal}}{/literal}
 
 {/jq}

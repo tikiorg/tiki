@@ -423,12 +423,15 @@
 {elseif $field_value.type eq 'G'}
 	<input type="text" name="{$field_value.ins_id}" id="{$field_value.ins_id}" value="{$field_value.value}" size="60" />
 	<br />{tr}Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19.{/tr}
-	{if isset($item.trackerId)}
-		{if $prefs.feature_ajax eq 'y'}
-			{wikiplugin _name=googlemap type=locator trackerinputid=`$field_value.ins_id` trackerfieldid=`$field_value.fieldId` locateitemtype=trackeritem locateitemid=`$item.itemId` name=locator_`$item.itemId`_`$field_value.fieldId` in_form=1}{/wikiplugin}	
+
+	{if $prefs.feature_ajax eq 'y'}
+		{if isset($item.trackerId)}
+			{wikiplugin _name=googlemap type=locator trackerinputid=`$field_value.ins_id` trackerfieldid=`$field_value.fieldId` locateitemtype=trackeritem locateitemid=`$item.itemId` name=locator_`$item.itemId`_`$field_value.fieldId` in_form=1}{/wikiplugin}
 		{else}
-			{tr}You can use{/tr} <a href="tiki-gmap_locator.php?for=item&amp;itemId={$item.itemId}&amp;trackerId={$item.trackerId}&amp;fieldId={$field_value.fieldId}">{tr}Google Map Locator{/tr}</a>.
-		{/if}
+			{wikiplugin _name=googlemap type=locator trackerinputid=`$field_value.ins_id` trackerfieldid=`$field_value.fieldId` locateitemtype=trackeritem locateitemid=0 name=locator_0_`$field_value.fieldId` in_form=1}{/wikiplugin}
+		{/if}	
+	{elseif isset($item.trackerId)}
+		{tr}You can use{/tr} <a href="tiki-gmap_locator.php?for=item&amp;itemId={$item.itemId}&amp;trackerId={$item.trackerId}&amp;fieldId={$field_value.fieldId}">{tr}Google Map Locator{/tr}</a>.
 	{/if}
 
 {* -------------------- country selector -------------------- *}
