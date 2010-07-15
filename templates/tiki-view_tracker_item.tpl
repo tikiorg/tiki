@@ -293,7 +293,7 @@ $jq("#editItemForm").validate({
 {elseif $cur_field.type eq 'u'}
 {if !$cur_field.options_array[0] or $tiki_p_admin_trackers eq 'y'}
 
-	{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $users|@count > $prefs.tracker_jquery_user_selector_threshold and $cur_field.isMandatory ne 'y'}
+	{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $users|@count > $prefs.user_selector_threshold and $cur_field.isMandatory ne 'y'}
 {* this is jquery entry field for performance enhancement - since it allows blank entry it can't be used for mandatory user selection. *}
 <input id="user_selector_{$cur_field.id}" type="text" size="20" name="ins_{$cur_field.id}" value="{if $cur_field.options_array[0] eq '2'}{$user}{else}{$cur_field.value}{/if}" />
 {jq}

@@ -181,6 +181,7 @@
 		{/tab}
 
 		{tab name="{tr}Pagination links{/tr}"}
+			{preference name=user_selector_threshold}
 			{preference name=maxRecords}
 			{preference name=nextprev_pagination}
 			{preference name=direct_pagination}
