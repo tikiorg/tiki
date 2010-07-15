@@ -2,6 +2,21 @@
 
 class BigBlueButtonLib
 {
+	private function getVersion() {
+		if( $version = $this->performRequest( '', array() ) ) {
+			$values = $this->grabValues( $version->documentElement );
+			$version = $values['version'];
+
+			if( false !== $pos = strpos( $version, '-' ) ) {
+				$version = substr( $version, 0, $pos );
+			}
+			
+			return $version;
+		} else {
+			return '0.6';
+		}
+	}
+
 	public function getMeetings() {
 		global $cachelib;
 
@@ -91,6 +106,8 @@ class BigBlueButtonLib
 	}
 
 	public function joinMeeting( $room ) {
+		$version = $this->getVersion();
+
 		$name = $this->getAttendeeName();
 		$password = $this->getAttendeePassword( $room );
 
@@ -163,8 +180,11 @@ class BigBlueButtonLib
 
 	private function buildUrl( $action, array $parameters ) {
 		global $prefs;
-		if( $checksum = $this->generateChecksum( $parameters ) ) {
-			$parameters['checksum'] = $checksum;
+
+		if( $action ) {
+			if( $checksum = $this->generateChecksum( $action, $parameters ) ) {
+				$parameters['checksum'] = $checksum;
+			}
 		}
 
 		$base = rtrim( $prefs['bigbluebutton_server_location'], '/' );
@@ -172,12 +192,19 @@ class BigBlueButtonLib
 		return "$base/bigbluebutton/api/$action?" . http_build_query( $parameters, '', '&' );
 	}
 
-	private function generateChecksum( array $parameters ) {
+	private function generateChecksum( $action, array $parameters ) {
 		global $prefs;
 
 		if( $prefs['bigbluebutton_server_salt'] ) {
 			$query = http_build_query( $parameters, '', '&' );
-			return sha1( $query . $prefs['bigbluebutton_server_salt'] );
+
+			$version = $this->getVersion();
+
+			if( -1 === version_compare( $version, '0.7' ) ) {
+				return sha1( $query . $prefs['bigbluebutton_server_salt'] );
+			} else {
+				return sha1( $action . $query . $prefs['bigbluebutton_server_salt'] );
+			}
 		}
 	}
 }
