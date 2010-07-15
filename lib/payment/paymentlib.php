@@ -126,6 +126,7 @@ class PaymentLib extends TikiDb_Bridge
 	}
 
 	function enter_payment( $invoice, $amount, $type, array $data ) {
+		global $user, $userlib;
 		if( $info = $this->get_payment( $invoice ) ) {
 			if( $info['state'] != 'past' && $info['state'] != 'canceled' && $info['amount_remaining_raw'] - $amount <= 0 ) {
 				$this->run_behaviors( $info, 'complete' );
@@ -133,7 +134,7 @@ class PaymentLib extends TikiDb_Bridge
 
 			$data = json_encode( $data );
 			$this->query( 'INSERT INTO `tiki_payment_received` ( `paymentRequestId`, `payment_date`, `amount`, `type`, `details`, `userId` ) VALUES( ?, NOW(), ?, ?, ?, ? )', array(
-																																												   $invoice, $amount, $type, $data, $info['userId']
+																																												   $invoice, $amount, $type, $data, empty($user)? $info['userId']: $userlib->get_user_id($user)
 			) );
 			$this->query( 'UPDATE `tiki_payment_requests` SET `amount_paid` = `amount_paid` + ? WHERE `paymentRequestId` = ?', array( $amount, $invoice ) );
 		}
