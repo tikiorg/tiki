@@ -42,15 +42,15 @@ class Tiki_Formula_Function_ArticleInfo extends Math_Formula_Function
 
 				switch( $property ) {
 				case 'age-hour':
-					return floor( $age / 3600 );
+					return max(0,floor( $age / 3600 ));
 				case 'age-day':
-					return floor( $age / (3600*24) );
+					return max(0,floor( $age / (3600*24) ));
 				case 'age-week':
-					return floor( $age / (3600*24*7) );
+					return max(0,floor( $age / (3600*24*7) ));
 				case 'age-month':
-					return floor( $age / (3600*24*30) );
+					return max(0,floor( $age / (3600*24*30) ));
 				default:
-					return $age;
+					return max(0,$age);
 				}
 			}
 		} elseif( $type !== 0 ) {
