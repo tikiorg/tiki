@@ -3774,7 +3774,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		$ret2 = $this->get_local_perms($user, $objectId, $objectType, $info, true);s
+		$ret2 = $this->get_local_perms($user, $objectId, $objectType, $info, true);
 		if ($ret2) {
 			$ret = $ret2;
 		}
