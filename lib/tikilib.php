@@ -3758,7 +3758,7 @@ class TikiLib extends TikiDb_Bridge
 	 * global = true set the global perm and smarty var, otherwise return an array of perms
 	 */
 	function get_perm_object($objectId, $objectType, $info='', $global=true) {
-		global $smarty, $userlib;
+		global $smarty, $userlib, $user;
 		$perms = Perms::get( array( 'type' => $objectType, 'object' => $objectId ) );
 		$permDescs = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 
@@ -3774,6 +3774,11 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
+		$ret2 = $this->get_local_perms($user, $objectId, $objectType, $info, true);s
+		if ($ret2) {
+			$ret = $ret2;
+		}
+		
 		return $ret;
 	}
 

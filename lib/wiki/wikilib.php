@@ -693,8 +693,15 @@ class WikiLib extends TikiLib
 		if ($perms->admin_wiki) {
 			return true;
 		}
-
-		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
+		if ( $prefs['wiki_creator_admin'] == 'y' && !empty($user) && $info['creator'] == $user ) {
+			return true;
+		}
+		if ($prefs['feature_wiki_userpage'] == 'y' && !empty($user) && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0) {
+			if (strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) == 0) {
+				return true;
+			}
+		}
+		if ($prefs['feature_wiki_userpage'] == 'y' && strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
 			return false;
 		if (!$perms->edit )
 			return false;
