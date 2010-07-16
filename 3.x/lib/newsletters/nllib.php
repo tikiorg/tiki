@@ -487,16 +487,17 @@ class NlLib extends TikiLib {
 		$bindvars = array();
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where (`name` like ? or `description` like ?)";
+			$mid = " where (tn.`name` like ? or tn.`description` like ?)";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		} else {
 			$mid = " ";
 		}
 
-		$query = "select * from `tiki_newsletters` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$mid2 = ( empty( $mid ) ? ' WHERE ' : $mid . ' AND ' ) . ' tn.`nlId` = tsn.`nlId`';
+		$query = "select tn.*, max(tsn.`sent`) as lastSent from `tiki_newsletters` as tn, `tiki_sent_newsletters` as tsn $mid2 group by tn.`nlId` order by ".$this->convert_sortmode("$sort_mode");
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$query_cant = "select count(*) from  `tiki_newsletters` $mid";
+		$query_cant = "select count(*) from  `tiki_newsletters` as tn $mid";
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
