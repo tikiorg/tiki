@@ -446,7 +446,8 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
 }
 
 // Article Clipping
-if ($nl_info["allowArticleClip"] == 'y' && !$articleClip) {
+$articleClip = '';
+if ($nl_info["allowArticleClip"] == 'y' && empty($articleClip)) {
 	if ($nl_info["autoArticleClip"] == 'y' || isset($_REQUEST["clipArticles"])) {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
 		// prevent clearing of keyed in info if any
@@ -462,8 +463,6 @@ if ($nl_info["allowArticleClip"] == 'y' && !$articleClip) {
 	} elseif (isset($_REQUEST["articleClip"]) && $_REQUEST["articleClip"]) {
 		$articleClip = $_REQUEST["articleClip"];
 	}
-} else {
-	$articleClip = '';
 }
 $smarty->assign('articleClip', $articleClip);
 
@@ -541,7 +540,7 @@ $smarty->assign_by_ref('drafts', $drafts["data"]);
 $smarty->assign_by_ref('cant_editions', $editions["cant"]);
 $smarty->assign_by_ref('cant_drafts', $drafts["cant"]);
 $smarty->assign('url', "tiki-send_newsletters.php");
-if ($tiki_p_use_content_templates == 'y') {
+if (!empty($tiki_p_use_content_templates) && $tiki_p_use_content_templates == 'y') {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
 	$templates = $templateslib->list_templates('newsletters', 0, -1, 'name_asc', '');
 }
