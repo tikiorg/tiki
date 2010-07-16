@@ -246,6 +246,9 @@ class HeaderLib
 			$minified .= JSMin::minify( $complete );
 
 			file_put_contents( $file, $minified );
+			global $smarty;
+			chmod($file, $smarty->_file_perms);
+			
 		}
 
 		return array(
@@ -409,8 +412,8 @@ class HeaderLib
 		$minified = '';
 		foreach( $files['screen'] as $file) {
 			$minified .= $this->minify_css( $file );
-     }
-    $minified = $this->handle_css_imports( $minified );
+		}
+		$minified = $this->handle_css_imports( $minified );
 
 		return $minified;
 	}
@@ -455,6 +458,8 @@ class HeaderLib
 
 			if( ! file_exists( $min ) ) {
 				file_put_contents( $min, $this->minify_css( $file ) );
+				global $smarty;
+				chmod($file, $smarty->_file_perms);
 			}
 
 			$out[] = $min;
@@ -479,6 +484,8 @@ class HeaderLib
 			$minified = $this->handle_css_imports( $minified );
 
 			file_put_contents( $file, $minified );
+			global $smarty;
+			chmod($file, $smarty->_file_perms);
 		}
 
 		return array( $file );
