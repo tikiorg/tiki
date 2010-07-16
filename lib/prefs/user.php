@@ -87,7 +87,7 @@ function prefs_user_list() {
 			'type' => 'text',
 			'size' => '5',
 			'dependencies' => array('feature_jquery_autocomplete'),
-		)
+		),
 		'user_register_prettytracker' => array(
 			'name' => tra('Use pretty trackers for registration form'),
 			'help' => 'Pretty+Trackers',
