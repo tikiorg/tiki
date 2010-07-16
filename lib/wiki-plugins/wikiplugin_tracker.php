@@ -1081,17 +1081,13 @@ function wikiplugin_tracker($data, $params)
 			foreach ($flds['data'] as $f) {
 				if ($f['type'] == 'u' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
-				}
-				if ($f['type'] == 'I' and $f['options_array'][0] == '1') {
+				} elseif ($f['type'] == 'I' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authoripid" value="'.$f['fieldId'].'" />';
-				}
-				if ($f['type'] == 'g' and $f['options_array'][0] == '1') {
+				} elseif ($f['type'] == 'g' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authorgroupfieldid" value="'.$f['fieldId'].'" />';
-				}
-				if ($f['type'] == 'q') {
+				} elseif ($f['type'] == 'q') {
 					$back .= '<input type="hidden" name="track['.$f['fieldId'].']" />';
-				}
-				if (in_array($f['fieldId'], $outf)) {
+				} elseif (in_array($f['fieldId'], $outf)) {
 					if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 						$onemandatory = true;
 					}
