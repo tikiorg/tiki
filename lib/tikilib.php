@@ -5907,7 +5907,7 @@ class TikiLib extends TikiDb_Bridge
 
 		$data = $this->parse_data_externallinks( $data, $options );
 
-		$data = $this->parse_data_tables( $data );
+		$data = $this->parse_data_tables( $data, $simple_wiki );
 
 		if (!$simple_wiki && $options['parsetoc']) {
 			$this->parse_data_process_maketoc( $data, $options);
@@ -6201,7 +6201,7 @@ class TikiLib extends TikiDb_Bridge
 		return $line;
 	}
 
-	private function parse_data_tables( $data ) {
+	private function parse_data_tables( $data, $simple_wiki ) {
 		global $prefs;
 
 		/*
