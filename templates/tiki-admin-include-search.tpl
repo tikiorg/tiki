@@ -42,11 +42,11 @@
 						<br />
 						<a href="tiki-admin.php?page=search&amp;refresh_index_now=y" class="button" title="{tr}Refresh wiki search index now{/tr}">{tr}Refresh wiki search index now{/tr}</a>
 					{/if}
-					{if $refresh_tracker_index_now neq 'y' and $prefs.trk_with_mirror_tables neq 'y'}
+					{if $refresh_tracker_index_now neq 'y'}
 						<br />
 						<a href="tiki-admin.php?page=search&amp;refresh_tracker_index_now=y" class="button" title="{tr}Refresh trackers search index now{/tr}">{tr}Refresh tracker search index now{/tr}</a>
 					{/if}
-					{if $refresh_files_index_now neq 'y' and $prefs.trk_with_mirror_tables neq 'y'}
+					{if $refresh_files_index_now neq 'y'}
 						<br />
 						<a href="tiki-admin.php?page=search&amp;refresh_files_index_now=y" class="button" title="{tr}Refresh files search index now{/tr}">{tr}Refresh files search index now{/tr}</a>
 					{/if}

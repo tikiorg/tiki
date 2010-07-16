@@ -4133,12 +4133,5 @@ class TrackerLib extends TikiLib
 	}
 }
 
-global $dbTiki, $tikilib, $prefs;
-
-if ( $prefs['trk_with_mirror_tables'] == 'y' ) {
-	include_once ("trkWithMirrorTablesLib.php");
-	$trklib = new TrkWithMirrorTablesLib;
-}
-else {
-	$trklib = new TrackerLib;
-}
+global $trklib;
+$trklib = new TrackerLib;

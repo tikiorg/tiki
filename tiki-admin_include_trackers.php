@@ -19,22 +19,6 @@ if (isset($_REQUEST["trkset"])) {
 	}
 	$tikilib->set_preference('t_use_dir', $_REQUEST["t_use_dir"]);
 }
-// You can switch between old and new trackers
-// only when no trackers exist.
-if (isset($_REQUEST["trkMirrorTables"])) {
-	if (isset($_REQUEST["trk_with_mirror_tables"])) {
-		$_REQUEST["trk_with_mirror_tables"] = 'y';
-	} else {
-		$_REQUEST["trk_with_mirror_tables"] = 'n';
-	}
-	if (!$trklib->getOne("select * from tiki_trackers")) {
-		$tikilib->set_preference('trk_with_mirror_tables', $_REQUEST["trk_with_mirror_tables"]);
-	} elseif ($prefs['trk_with_mirror_tables'] != $_REQUEST['trk_with_mirror_tables']) {
-		$smarty->assign('msg', tra("You cannot mix old and new trackers"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
 if (isset($_REQUEST['action']) and isset($_REQUEST['attId'])) {
 	$item = $trklib->get_item_attachment($_REQUEST['attId']);
 	if ($_REQUEST['action'] == 'move2db') {

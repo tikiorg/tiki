@@ -707,7 +707,6 @@ function get_default_prefs() {
 		't_use_dir' => '',
 		'groupTracker' => 'n',
 		'userTracker' => 'n',
-		'trk_with_mirror_tables' => 'n',
 		'trackerCreatorGroupName' => ' ',
 
 		// user

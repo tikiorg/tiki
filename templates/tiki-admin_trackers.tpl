@@ -179,19 +179,6 @@
 				</tr>
 			{/if}
 
-			{if $prefs.trk_with_mirror_tables eq 'y'}
-				<tr class="formcolor">
-					<td>
-						{tr}Use "explicit" names in the mirror table{/tr}
-						<br />
-						<em>{tr}tracker name must be unique, field names must be unique for a tracker and they must be valid in SQL{/tr}</em>
-					</td>
-					<td>
-						<input type="checkbox" name="useExplicitNames" {if $useExplicitNames eq 'y'}checked="checked"{/if} />
-					</td>
-				</tr>
-			{/if}
-
 			<tr class="formcolor">
 				<td>{tr}Show status{/tr}</td>
 				<td><input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td>
