@@ -193,8 +193,7 @@ class CacheLibFileSystem
 		$fw = fopen($this->folder."/$key","w+");
 		fwrite($fw,$data);
 		fclose($fw);
-		global $smarty;
-		chmod($this->folder."/$key", $smarty->_file_perms);
+		chmod($this->folder."/$key", 0644);
 		return true;
 	}
 
