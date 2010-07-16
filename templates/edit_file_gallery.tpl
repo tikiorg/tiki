@@ -73,9 +73,7 @@
 							<tr>
 								<td class="formcolor"><label for="user">{tr}Owner of the gallery{/tr}:</label></td>
 								<td class="formcolor">
-									<select name="user" id="user">
-										{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login} selected="selected"{/if}>{$users[ix].login|username}</option>{/section}
-									</select>
+									{user_selector user=$creator id='user'}
 								</td>
 							</tr>
 

@@ -2,7 +2,7 @@
 
 <fieldset class="admin">
     <form action="tiki-admin.php?page=trackers" method="post">
-	{preference name=tracker_jquery_user_selector_threshold}
+	{preference name=user_selector_threshold}
    	<div class="heading input_submit_container" style="text-align: right">
 	<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
 	</div> 

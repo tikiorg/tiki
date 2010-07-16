@@ -581,7 +581,6 @@ function get_default_prefs() {
 		'fgal_list_lockedby_admin' => 'n',
 		'fgal_list_backlinks_admin' => 'y',
 
-
 		// imagegals
 		'feature_galleries' => 'n',
 		'feature_gal_batch' => 'n',
@@ -694,9 +693,9 @@ function get_default_prefs() {
 		'userTracker' => 'n',
 		'trk_with_mirror_tables' => 'n',
 		'trackerCreatorGroupName' => ' ',
-		'tracker_jquery_user_selector_threshold' => 50,
 
 		// user
+		'user_selector_threshold' => 50,
 		'feature_userlevels' => 'n',
 		'userlevels' => function_exists('tra') ? array('1'=>tra('Simple'),'2'=>tra('Advanced')) : array('1'=>'Simple','2'=>'Advanced'),
 		'userbreadCrumb' => 4,
