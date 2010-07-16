@@ -1109,13 +1109,13 @@ function wikiplugin_tracker($data, $params)
 						if (!empty($colwidth)){
 							$back .= " width='".$colwidth."'";
 						}
-						$back .= ">".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
+						$back .= ">".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
 						}
 						$back.= "</td><td>";
 						} else {
-						$back .= "<tr><th colspan='2'>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
+						$back .= "<tr><th colspan='2'>".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
 						}
 						$smarty->assign_by_ref('field_value', $f);
 						if (isset($item)) {
