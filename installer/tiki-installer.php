@@ -87,6 +87,9 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		if ( ! empty( $api_tiki ) ) {
 			$filetowrite .= "\$api_tiki='" . $api_tiki . "';\n";
 		}
+		if( ! empty( $client_charset ) ) {
+			$filetowrite .= "\$client_charset='$client_charset';\n";
+		}
 		$filetowrite .= "// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters) \n";
 		$filetowrite .= "// \$client_charset='latin1';\n";
 		$filetowrite .= "// \$client_charset='utf8';\n";
@@ -662,6 +665,12 @@ if (
 	) && isset($_REQUEST['dbinfo'])
 ) {
 	if ( ! empty($_REQUEST['name']) ) {
+		if( isset( $_REQUEST['force_utf8'] ) ) {
+			$client_charset = 'utf8';
+		} else {
+			$client_charset = '';
+		}
+
 		$dbcon = initTikiDB( $api_tiki, $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset, $dbTiki );
 		write_local_php( $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset );
 		include $local;

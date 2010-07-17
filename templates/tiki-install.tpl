@@ -247,6 +247,12 @@
 		</div>
 		</fieldset>
 		<input type="hidden" name="resetdb" value="y" />
+		<fieldset>
+			<legend>{tr}Character set{/tr}</legend>
+			<p>{tr}Highly recommended for new installations{/tr}</p>
+			<input type="checkbox" name="force_utf8" id="force_utf8" value="y" checked="checked"/>
+			<label for="force_utf8">{tr}Always force connection to use UTF-8{/tr}</label>
+		</fieldset>
 		<div align="center" style="margin-top:1em;"><input type="submit" name="dbinfo" value=" {tr}Continue{/tr} " /></div>	 
 	</form>
 </div>
