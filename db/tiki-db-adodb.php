@@ -35,8 +35,8 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 }
 
 // Set the Client Charset
-if ( ! empty( $client_charset ) ) {
-	@ $dbTiki->Execute("SET CHARACTER SET '$client_charset'");
+if ( isset( $client_charset ) ) {
+	@ $dbTiki->Execute("SET CHARACTER SET $client_charset");
 }
 
 if (!@$dbTiki->Execute('select login from users_users limit 1')) {
