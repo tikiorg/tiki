@@ -32,6 +32,7 @@ $langmapping = array(
     'id' => array(  'Indonesian',     tra("Indonesian")      ),
     'is' => array(  'Íslenska',     tra("Icelandic")      ),           
     'it' => array(  'Italiano',     tra("Italian")      ),
+    'iu' => array(  'ᐃᓄᒃᑎᑐᑦ',     tra("Inuktitut")      ),
     'ja' => array(  '日本語',    tra("Japanese")     ),
     'hu' => array(  'Magyar',   tra("Hungarian")   ),
     'lt' => array(  'Lithuanian',   tra("Lithuanian")   ),
