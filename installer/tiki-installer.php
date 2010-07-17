@@ -92,15 +92,12 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		if ( ! empty( $api_tiki ) ) {
 			$filetowrite .= "\$api_tiki='" . $api_tiki . "';\n";
 		}
-		$filetowrite .= "\$client_charset='" . "$client_charset" . "';\n";
-		$filetowrite .= "// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters) \n";
-		if ($client_charset == 'utf8') {
-			$filetowrite .= "// you should try changing the line above to \"\$client_charset='latin1';\"\n";
-		} else if ($client_charset == 'latin1') {
-			$filetowrite .= "// you should try changing the line above to \"\$client_charset='utf8';\"\n";
-		} else {
-			$filetowrite .= "// you should try changing the line above to \"\$client_charset='utf8';\" or \"\$client_charset='latin1';\"\n";
+		if( ! empty( $client_charset ) ) {
+			$filetowrite .= "\$client_charset='$client_charset';\n";
 		}
+		$filetowrite .= "// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters) \n";
+		$filetowrite .= "// \$client_charset='latin1';\n";
+		$filetowrite .= "// \$client_charset='utf8';\n";
 		$filetowrite .= "// See http://tikiwiki.org/ReleaseNotes5.0#Known_Issues and http://doc.tikiwiki.org/UTF-8 for more info\n\n";
 		fwrite($fw, $filetowrite);
 		fclose($fw);
@@ -358,18 +355,12 @@ $PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
 // Try to see if we have an admin account
 function has_admin( $dbTiki, $api_tiki ) {
-        $query = "select hash from users_users where login='admin'";
+	$query = "select hash from users_users where login='admin'";
 	$res = false;
 
-	if ( $api_tiki == 'pdo' ) {
-		if ( @ ( $result = $dbTiki->prepare($query) ) && $result->execute() ) {
-			$res = $result->fetch( PDO::FETCH_ASSOC );
-		}
-	} else {
-	        if ( @ ( $result = $dbTiki->Execute($query) ) && $result->numRows() ) {
-			$res = $result->fetchRow();
-		}
-	}
+	$db = TikiDb::get();
+	$result = $db->fetchAll( $query );
+	$res = reset( $result );
 
 	if ( $res && isset( $res['hash'] ) ) {
 		$admin_acc = 'y';
@@ -437,7 +428,6 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 			$tikifeedback[] = array( 'num' => 1, 'mes' => $dbTiki->ErrorMsg() );
 		}
 	} else {
-		$dbcon = true;
 		$db_hoststring = "host=$host";
 
 		if ( $driver == 'mysqli' ) {
@@ -448,24 +438,22 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		}
 
 		try {
-			if ( empty( $client_charset ) ) {
-				$dbTiki = new PDO( "$driver:$db_hoststring;dbname=$dbname", $user, $pass );
-			} else {
-				$dbTiki = new PDO( "$driver:$db_hoststring;dbname=$dbname", $user, $pass,
-					array( PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET $client_charset" )
-				);
-			}
+			$dbTiki = new PDO( "$driver:$db_hoststring;dbname=$dbname", $user, $pass );
+			$db = new TikiDb_Pdo( $dbTiki );
+			$dbcon = true;
 		} catch ( PDOException $e ) {
 			$dbcon = false;
 			$tikifeedback[] = array( 'num' => 1, 'mes'=> $e->getMessage() );
-		}
-		if ( $dbcon ) {
-			$db = new TikiDb_Pdo( $dbTiki );
 		}
 	}
 
 	if ( $dbcon ) {
 		$db->setErrorHandler(new InstallerDatabaseErrorHandler);
+
+		if( ! empty( $client_charset ) ) {
+			$db->query("SET CHARACTER SET $client_charset");
+		}
+
 		TikiDb::set($db);
 	}
 
@@ -522,6 +510,8 @@ if (!empty($multi)) {
 
 $tikidomain = $multi;
 $tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
+
+$title = tra('Tiki Installer');
 
 include 'lib/cache/cachelib.php';
 $cachelib->empty_full_cache();
@@ -597,6 +587,8 @@ include('lib/tikilib.php');
 $languages = TikiLib::list_languages(false, null, true);
 $smarty->assign_by_ref("languages", $languages);
 
+$client_charset = '';
+
 // next block checks if there is a local.php and if we can connect through this.
 // sets $dbcon to false if there is no valid local.php
 $dbcon = false;
@@ -604,7 +596,6 @@ if ( file_exists($local) ) {
 	// include the file to get the variables
 	$default_api_tiki = $api_tiki;
 	$api_tiki = '';
-	unset($client_charset);
 	include $local;
 	if ( ! $client_charset_forced = isset($client_charset) ) {
 		$client_charset = '';
@@ -646,15 +637,7 @@ if ( file_exists($local) ) {
 
 			if ( ! $client_charset_forced ) {
 
-				$dbCharsetVariables = $installer->getCharsetVariables();
-				$client_charset = $installer->detectBestClientCharset( $dbCharsetVariables, null, $previousDbApi );
-
 				write_local_php($db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, ($api_tiki_forced ? $api_tiki : ''), $dbversion_tiki);
-
-				// Try to reconnect to the DB using the detected client_charset if not the same as the current one
-				if ( ! empty($client_charset) && $client_charset != $dbCharsetVariables['character_set_client'] ) {
-					$dbcon = initTikiDB( $api_tiki, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $client_charset, $dbTiki );
-				}
 			}
 		}
 	}
@@ -689,7 +672,12 @@ if (
 	) && isset($_REQUEST['dbinfo'])
 ) {
 	if ( ! empty($_REQUEST['name']) ) {
-		$client_charset = 'utf8';
+		if( isset( $_REQUEST['force_utf8'] ) ) {
+			$client_charset = 'utf8';
+		} else {
+			$client_charset = '';
+		}
+
 		$dbcon = initTikiDB( $api_tiki, $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset, $dbTiki );
 		write_local_php( $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset );
 		include $local;
@@ -975,7 +963,17 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 	$smarty->assign('ie6', true);
 }
 
+if( $install_step == '4' ) {
+	$result = $installer->fetchAll( 'show variables like "character_set_database"' );
+	$res = reset( $result );
+	$variable = array_shift( $res );
+	$value = array_shift( $res );
+
+	$smarty->assign( 'database_charset', $value );
+}
+
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
+$smarty->assign( 'title', $title );
 $smarty->display("tiki-install_screens.tpl");

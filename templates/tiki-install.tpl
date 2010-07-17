@@ -247,6 +247,12 @@
 		</div>
 		</fieldset>
 		<input type="hidden" name="resetdb" value="y" />
+		<fieldset>
+			<legend>{tr}Character set{/tr}</legend>
+			<p>{tr}Highly recommended for new installations{/tr}</p>
+			<input type="checkbox" name="force_utf8" id="force_utf8" value="y" checked="checked"/>
+			<label for="force_utf8">{tr}Always force connection to use UTF-8{/tr}</label>
+		</fieldset>
 		<div align="center" style="margin-top:1em;"><input type="submit" name="dbinfo" value=" {tr}Continue{/tr} " /></div>	 
 	</form>
 </div>
@@ -267,6 +273,12 @@
 	{tr}A new install will populate the database.{/tr}
 {/if}
 </p>
+	  {if $database_charset neq 'utf8'}
+	  	{remarksbox icon=error title="{tr}Encoding Issue{/tr}"}
+			{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
+			<p><a href="http://doc.tikiwiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
+		{/remarksbox}
+	  {/if}
 	  {if $dbdone eq 'n'}
 		  {if $logged eq 'y'}
 		    {* we are logged if no admin account is found or if the admin user is logged in*}
