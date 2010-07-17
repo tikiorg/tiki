@@ -491,6 +491,11 @@ td.form {
 caption {
 	font-weight: bold;
 }
+
+td.numeric {
+	text-align: right;
+	padding-right: 10px;
+}
 /** Tabs **/
 
 .tabactive {

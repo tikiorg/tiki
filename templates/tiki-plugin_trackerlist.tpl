@@ -53,9 +53,10 @@
 		<th class="auto" style="width:20px;">&nbsp;</th>
 			{/if}
 			{if $showitemrank eq 'y'}<th>{tr}Rank{/tr}</th>{/if}
-
 			{foreach key=jx item=ix from=$fields}
-				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') 
+					and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') 
+					and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 					{if $ix.type eq 'l'}
 		<th class="auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</th>
 					{elseif $ix.type eq 's' and $ix.name eq "Rating"}
@@ -133,7 +134,7 @@
 			{if !isset($list_mode)}{assign var=list_mode value="y"}{/if}
 			{section name=ix loop=$items[user].field_values}
 				{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $items[user].field_values[ix].isHidden eq 'c' or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and in_array($items[user].field_values[ix].fieldId, $listfields) and ($items[user].field_values[ix].type ne 'p' or $items[user].field_values[ix].options_array[0] ne 'password') and (empty($items[user].field_values[ix].visibleBy) or in_array($default_group, $items[user].field_values[ix].visibleBy) or $tiki_p_admin_trackers eq 'y')}
-		<td class="auto">
+		<td class={if $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'q'}"numeric"{else}"auto"{/if}>
 					{if $items[user].field_values[ix].isHidden eq 'c' and $items[user].itemUser ne $user and $tiki_p_admin_trackers ne 'y'}
 					{elseif isset($perms)}
 						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode
@@ -182,16 +183,20 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
 			{if $showitemrank eq 'y'}<td></td>{/if}
 			{foreach key=jx item=ix from=$fields}
-				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}	
-			<td>
+				{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' 
+					and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) 
+					or $tiki_p_admin_trackers eq 'y')}	
 					{if isset($computedFields[$ix.fieldId])}
+						<td class="numeric">
 						{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
-							{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Sum{/tr}{/if}<br />
-							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$computedField list_mode=$list_mode}
-							{if !$smarty.foreach.computedField.last}<br />{/if}
+							{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Sum{/tr}{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$computedField list_mode=$list_mode}<br />
+							{if !$smarty.foreach.computedField.last}{/if}
 						{/foreach}
+						</td>
+					{else}
+						<td></td>
 					{/if}
-			</td>
 				{/if}
 			{/foreach}
 			{if $showcreated eq 'y'}<td></td>{/if}
