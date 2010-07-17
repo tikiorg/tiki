@@ -88,7 +88,7 @@ function tiki_mail_setup() {
 function tiki_get_basic_mail() {
 	tiki_mail_setup();
 
-	return new Zend_Mail();
+	return new Zend_Mail('UTF-8');
 }
 
 function tiki_get_admin_mail() {
