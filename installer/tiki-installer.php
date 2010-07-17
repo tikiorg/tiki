@@ -957,6 +957,15 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 	$smarty->assign('ie6', true);
 }
 
+if( $install_step == '4' ) {
+	$result = $installer->fetchAll( 'show variables like "character_set_database"' );
+	$res = reset( $result );
+	$variable = array_shift( $res );
+	$value = array_shift( $res );
+
+	$smarty->assign( 'database_charset', $value );
+}
+
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
