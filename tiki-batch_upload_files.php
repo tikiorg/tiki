@@ -113,10 +113,12 @@ function buildFileList() {
 	$smarty->assign('totalsize', $totalsize);
 	$smarty->assign('filestring', $filestring);
 }
+
 if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array($_REQUEST['files'])) {
 	// default is: file names from request
 	$fileArray = $_REQUEST['files'];
 	$totfiles = count($fileArray);
+
 	// if ALL is given, get all the files from the filesystem (stored in $a_file[] already)
 	if ($totfiles == 1) {
 		if ($fileArray[0] == "ALL") {
@@ -131,6 +133,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 	if (isset($_REQUEST["subdirTosubgal"])) {
 		$subgals = $filegallib->get_subgalleries(0, 9999, "name_asc", '', $_REQUEST["galleryId"]);
 	}
+
 	// cycle through all files to upload
 	for ($x = 0; $x < $totfiles; $x++) {
 		$error = false;
@@ -145,6 +148,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 				$fileArray[$x] = substr($fileArray[$x], strrpos($fileArray[$x], "/") + 1);
 			}
 		}
+
 		$filepath = $filedir . $filePathArray[$x] . $fileArray[$x];
 		$filesize = @filesize($filepath);
 		// type is string after last dot
@@ -153,6 +157,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		$sizeArray[$x] = 0;
 		$typeArray[$x] = "";
 		$savedir = '';
+
 		$fp = @fopen($filepath, 'r');
 		if (!$fp) {
 			$feedback[] = "!!!" . sprintf(tra('Could not read file %s.') , $filepath);
@@ -161,10 +166,12 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		}
 		$data = '';
 		$fhash = '';
+
 		$path_parts = pathinfo($filepath);
 		$ext = strtolower($path_parts["extension"]);
 		include_once ('lib/mime/mimetypes.php');
 		$typeArray[$x] = $mimetypes["$ext"];
+
 		if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 			$fhash = md5($name = $fileArray[$x]);
 			$fhash = md5(uniqid($fhash));
@@ -186,7 +193,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 			}
 			@$fw = @fopen($savedir . $fhash, "wb");
 			if (!$fw) {
-				$feedback[] = "!!!" . sprintf(tra('Could not write to file %s.') . $savedir . $fhash);
+				$feedback[] = "!!!" . sprintf(tra('Could not write to file %s.'), $savedir . $fhash);
 				$error = true;
 			}
 		}
