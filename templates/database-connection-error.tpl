@@ -66,20 +66,37 @@
 					</div>
 				
 				</div>
+				<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
+					<p>Things to check:</p>
+					<ol class="fancylist">
+						<li><p>Is your database up and running?</p></li>
+						<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tikiwiki.org/Repair+Database">how to repair your database</a></p></li>					
+						<li><p>Are your database credentials accurate? (username, database name, etc in db/local.php)</p></li>
+						{if $where neq 'connection'}
+							<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
+						{/if}
+					</ol>
+				</div>
 			{elseif $where eq 'connection'}
 				<h1>{tr}Tiki is unable to connect to the database{/tr}</h1>
+				<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
+					<p>Things to check:</p>
+					<ol class="fancylist">
+						<li><p>Is your database up and running?</p></li>
+						<li><p>Are your database credentials accurate? (username, database name, etc in db/local.php)</p></li>
+					</ol>
+				</div>
 			{else}
 				<h1>{tr}An error occured while performing the request.{/tr}</h1>
+				<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
+					<p>Things to check:</p>
+					<ol class="fancylist">
+						<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
+						<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tikiwiki.org/Repair+Database">how to repair your database</a></p></li>					
+						<li><p>Are your database credentials accurate? (username, database name, etc in db/local.php)</p></li>
+					</ol>
+				</div>
 			{/if}
-			<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
-				<p>Things to check:</p>
-				<ol class="fancylist">
-					<li><p>Is your database up and running?</p></li>
-					<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tikiwiki.org/Repair+Database">how to repair your database</a></p></li>					
-					<li><p>Are your database credentials (username, database name, etc) accurate?</p></li>
-					<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
-				</ol>
-			</div>
 
 			<p>Please see <a target="_blank" href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 
