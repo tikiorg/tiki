@@ -7,8 +7,8 @@
 
 function wikiplugin_profile_info() {
 	return array(
-		'name' => tra('Profile Installer'),
-		'description' => tra('Adds controls required to install a profile.'),
+		'name' => tra('Profile application'),
+		'description' => tra('Adds controls required to apply a profile.'),
 		'prefs' => array( 'wikiplugin_profile' ),
 		'validate' => 'all',
 		'inline' => true,
