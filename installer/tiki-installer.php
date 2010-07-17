@@ -355,7 +355,10 @@ function has_admin( $dbTiki, $api_tiki ) {
 
 	$db = TikiDb::get();
 	$result = $db->fetchAll( $query );
-	$res = reset( $result );
+
+	if (is_array($result)){
+		$res = reset( $result );
+	}
 
 	if ( $res && isset( $res['hash'] ) ) {
 		$admin_acc = 'y';
