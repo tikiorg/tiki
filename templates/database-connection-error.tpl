@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -18,8 +17,8 @@
 <body class="tiki_wiki db_error">
 <div id="fixedwidth"> {* enables fixed-width layouts *}
 	<div id="main">
-	<div id="siteheader">
-			<div id="sitelogo" style="text-align: center; padding-left: 70px;">
+	<div id="siteheader" style="margin: 1em auto; max-width: 800px">
+			<div id="sitelogo">
 				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/Tiki_WCG.png" />
 			</div>
 	</div>
@@ -27,10 +26,8 @@
 	<div id="tiki-main">
 		<div id="tiki-mid">
 			<div style="margin:10px 30px;">
-				<h1 class="center">
-					{tr}System error.{/tr}
-				</h1>
 				{if $prefs.error_reporting_level and ( $tiki_p_admin eq 'y' or $prefs.error_reporting_adminonly ne 'y' )}
+					<h1>{tr}System error.{/tr}</h1>
 					<div class="left">
 						<p>{tr}The following error message was returned:{/tr}</p>
 						<strong>
@@ -68,23 +65,23 @@
 						{/if}
 					</div>
 				
-					<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
-						<p>Things to check:</p>
-						<ol class="fancylist">
-							<li><p>Is your database up and running?</p></li>
-							<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tikiwiki.org/Repair+Database">how to repair your database</a></p></li>					
-							<li><p>Are your database credentials (username, database name, etc) accurate?</p></li>
-							<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
-						</ol>
-					</div>
-
-					<p>Please see <a target="_blank" href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 				</div>
 			{elseif $where eq 'connection'}
-				<p>{tr}Tiki is unable to connect to the database{/tr}</p>
+				<h1>{tr}Tiki is unable to connect to the database{/tr}</h1>
 			{else}
-				<p>{tr}An error occured while performing the request.{/tr}</p>
+				<h1>{tr}An error occured while performing the request.{/tr}</h1>
 			{/if}
+			<div class="wikitext" style="border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 90%;">
+				<p>Things to check:</p>
+				<ol class="fancylist">
+					<li><p>Is your database up and running?</p></li>
+					<li><p>Is your database corrupt? Please see <a target="_blank" href="http://doc.tikiwiki.org/Repair+Database">how to repair your database</a></p></li>					
+					<li><p>Are your database credentials (username, database name, etc) accurate?</p></li>
+					<li><p>Did you complete the <a href="tiki-install.php">Tiki Installer?</a></p></li>
+				</ol>
+			</div>
+
+			<p>Please see <a target="_blank" href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 
 			<hr/>
 
