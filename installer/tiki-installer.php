@@ -674,12 +674,15 @@ if (
 		}
 
 		$dbcon = initTikiDB( $api_tiki, $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset, $dbTiki );
-		write_local_php( $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset );
-		include $local;
-		// In case of replication, ignore it during installer.
-		unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
-		$installer = new Installer;
-		$installer->setServerType($db_tiki);
+	
+		if ($dbcon) {
+			write_local_php( $_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'], $client_charset );
+			include $local;
+			// In case of replication, ignore it during installer.
+			unset( $shadow_dbs, $shadow_user, $shadow_pass, $shadow_host );
+			$installer = new Installer;
+			$installer->setServerType($db_tiki);
+		}
 	} else {
 		$dbcon = false;
 		$tikifeedback[] = array('num'=>1, 'mes'=>tra("No database name specified"));

@@ -30,7 +30,7 @@
 
 	<form action="tiki-install.php" method="post">
 		<label>{tr}Select your language:{/tr}
-		<select name="lang" id="general-lang" onchange="javascript:submit()" title="{tr}Select your language:{/tr}">
+		<select name="lang" id="general-lang" onchange="this.form.submit();" title="{tr}Select your language:{/tr}">
 			{section name=ix loop=$languages}
 				<option value="{$languages[ix].value|escape}"
 					{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
@@ -174,13 +174,18 @@
 	</div>
 {else}
 	<div align="center" style="padding:1em">
-		<img src="pics/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align:middle" /> {tr}Tiki found an existing database connection in your local.php file.{/tr}
-	<form action="tiki-install.php" method="post">
-		<input type="hidden" name="install_step" value="4" />
-{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
-{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
-		<input type="submit" value=" {tr}Use Existing Connection{/tr} " />
-	</form>
+		<p>
+			<img src="pics/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align: bottom;" />
+			{tr}Tiki found an existing database connection in your local.php file.{/tr}
+		</p>
+		<form action="tiki-install.php" method="post">
+			<input type="hidden" name="install_step" value="4" />
+			{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
+			{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
+			<input type="submit" value=" {tr}Use Existing Connection{/tr} " />
+		</form>
+		or<br />
+		<a href="#" onclick="$jq('#installer_3_new_db_form').toggle();return false;" class="button">{tr}Modify database connection{/tr}</a>
 	</div>
 {/if}		
 	
@@ -192,6 +197,7 @@
 	</div>
 {/section}
 {/if}
+  <div id="installer_3_new_db_form"{if $dbcon eq 'y'} style="display:none;"{/if}>
 	<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tikiwiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tikiwiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></p>
 	<form action="tiki-install.php" method="post">
 		<input type="hidden" name="install_step" value="4" />
@@ -255,6 +261,7 @@
 		</fieldset>
 		<div align="center" style="margin-top:1em;"><input type="submit" name="dbinfo" value=" {tr}Continue{/tr} " /></div>	 
 	</form>
+  </div>
 </div>
 
 {elseif $install_step eq '4'}
