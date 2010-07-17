@@ -60,7 +60,7 @@ function init_language( $lg ) {
 			include_once("lang/$lg/$tikidomain/custom.php");
 		}
 
-		if( $prefs['lang_use_db'] == 'y' ) {
+		if( isset( $prefs['lang_use_db'] ) && $prefs['lang_use_db'] == 'y' ) {
 			global $tikilib;
 
 			$query = "select `source`, `tran` from `tiki_language` where `lang`=?";

@@ -506,6 +506,8 @@ if (!empty($multi)) {
 $tikidomain = $multi;
 $tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
 
+$title = tra('Tiki Installer');
+
 include 'lib/cache/cachelib.php';
 $cachelib->empty_full_cache();
 
@@ -958,4 +960,5 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
+$smarty->assign( 'title', $title );
 $smarty->display("tiki-install_screens.tpl");
