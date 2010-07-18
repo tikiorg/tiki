@@ -258,6 +258,7 @@
 			<p>{tr}Highly recommended for new installations{/tr}</p>
 			<input type="checkbox" name="force_utf8" id="force_utf8" value="y" checked="checked"/>
 			<label for="force_utf8">{tr}Always force connection to use UTF-8{/tr}</label>
+		<p><a href="http://doc.tikiwiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
 		</fieldset>
 		<div align="center" style="margin-top:1em;"><input type="submit" name="dbinfo" value=" {tr}Continue{/tr} " /></div>	 
 	</form>
