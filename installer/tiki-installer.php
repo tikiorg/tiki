@@ -929,13 +929,20 @@ if ( isset($_REQUEST['general_settings']) && $_REQUEST['general_settings'] == 'y
 	$switch_ssl_mode = ( isset($_REQUEST['feature_switch_ssl_mode']) && $_REQUEST['feature_switch_ssl_mode'] == 'on' ) ? 'y' : 'n';
 	$show_stay_in_ssl_mode = ( isset($_REQUEST['feature_show_stay_in_ssl_mode']) && $_REQUEST['feature_show_stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
 
-	$installer->query("DELETE FROM `tiki_preferences` WHERE `name` IN ('browsertitle', 'sender_email', 'https_login', 'https_port', 'feature_switch_ssl_mode', 'feature_show_stay_in_ssl_mode', 'language')");
+	$installer->query("DELETE FROM `tiki_preferences` WHERE `name` IN " .
+		"('browsertitle', 'sender_email', 'https_login', 'https_port', ".
+		"'feature_switch_ssl_mode', 'feature_show_stay_in_ssl_mode', 'language',".
+		"'error_reporting_level', 'error_reporting_adminonly', 'smarty_notice_reporting', 'log_tpl')");
 
 	$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES"
 		. " ('browsertitle', '" . $_REQUEST['browsertitle'] . "'),"
 		. " ('sender_email', '" . $_REQUEST['sender_email'] . "'),"
 		. " ('https_login', '" . $_REQUEST['https_login'] . "'),"
 		. " ('https_port', '" . $_REQUEST['https_port'] . "'),"
+		. " ('error_reporting_level', '" . $_REQUEST['error_reporting_level'] . "'),"
+		. " ('error_reporting_adminonly', '" . (isset($_REQUEST['error_reporting_adminonly']) && $_REQUEST['error_reporting_adminonly'] == 'on' ? 'y' : 'n') . "'),"
+		. " ('smarty_notice_reporting', '" . (isset($_REQUEST['smarty_notice_reporting']) && $_REQUEST['smarty_notice_reporting'] == 'on' ? 'y' : 'n') . "'),"
+		. " ('log_tpl', '" . (isset( $_REQUEST['log_tpl']) && $_REQUEST['log_tpl'] == 'on' ? 'y' : 'n') . "'),"
 		. " ('feature_switch_ssl_mode', '$switch_ssl_mode'),"
 		. " ('feature_show_stay_in_ssl_mode', '$show_stay_in_ssl_mode'),"
 		. " ('language', '$language')";
