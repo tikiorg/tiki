@@ -549,14 +549,51 @@
 	{if $double_encode_fix_attempted eq 'y'}
 		<p>{tr}Cross your fingers and access the site.{/tr}</p>
 	{else}
-		<form method="post" action="" style="padding-top: 100px;">
+		<form method="post" action="#" onsubmit="return confirm('{tr}Are you sure you want to attempt to fix the encoding of your entire database?{/tr}');" style="padding-top: 100px;">
 			<fieldset>
 				<legend>{tr}Upgrading and running into encoding issues?{/tr}</legend>
 				<p>{tr}We can try to fix it, but <strong>make sure you have backups, and can restore them</strong>.{/tr}</p>
 				{if $client_charset_in_file eq 'utf8'}
 					<p>
 						{tr}Previous table encoding{/tr}:
-						<input type="text" name="previous_encoding" value="latin1" size="6"/>
+						<select name="previous_encoding" id="previous_encoding">
+							<option value="">{tr}Please select{/tr}</option>
+							<option value="armscii8" title="Armenian, Binary">armscii8</option>
+							<option value="ascii" title="West European (multilingual), Binary">ascii</option>
+							<option value="big5" title="Traditional Chinese, Binary">big5</option>
+							<option value="binary" title="Binary">binary</option>
+							<option value="cp1250" title="Central European (multilingual), Binary">cp1250</option>
+							<option value="cp1251" title="Cyrillic (multilingual), Binary">cp1251</option>
+							<option value="cp1256" title="Arabic, Binary">cp1256</option>
+							<option value="cp1257" title="Baltic (multilingual), Binary">cp1257</option>
+							<option value="cp850" title="West European (multilingual), Binary">cp850</option>
+							<option value="cp852" title="Central European (multilingual), Binary">cp852</option>
+							<option value="cp866" title="Russian, Binary">cp866</option>
+							<option value="cp932" title="Japanese, Binary">cp932</option>
+							<option value="dec8" title="West European (multilingual), Binary">dec8</option>
+							<option value="eucjpms" title="Japanese, Binary">eucjpms</option>
+							<option value="euckr" title="Korean, Binary">euckr</option>
+							<option value="gb2312" title="Simplified Chinese, Binary">gb2312</option>
+							<option value="gbk" title="Simplified Chinese, Binary">gbk</option>
+							<option value="geostd8" title="Georgian, Binary">geostd8</option>
+							<option value="greek" title="Greek, Binary">greek</option>
+							<option value="hebrew" title="Hebrew, Binary">hebrew</option>
+							<option value="hp8" title="West European (multilingual), Binary">hp8</option>
+							<option value="keybcs2" title="Czech-Slovak, Binary">keybcs2</option>
+							<option value="koi8r" title="Russian, Binary">koi8r</option>
+							<option value="koi8u" title="Ukrainian, Binary">koi8u</option>
+							<option value="latin1" title="West European (multilingual), Binary">latin1</option>
+							<option value="latin2" title="Central European (multilingual), Binary">latin2</option>
+							<option value="latin5" title="Turkish, Binary">latin5</option>
+							<option value="latin7" title="Baltic (multilingual), Binary">latin7</option>
+							<option value="macce" title="Central European (multilingual), Binary">macce</option>
+							<option value="macroman" title="West European (multilingual), Binary">macroman</option>
+							<option value="sjis" title="Japanese, Binary">sjis</option>
+							<option value="swe7" title="Swedish, Binary">swe7</option>
+							<option value="tis620" title="Thai, Binary">tis620</option>
+							<option value="ucs2" title="Unicode (multilingual), Binary">ucs2</option>
+							<option value="ujis" title="Japanese, Binary">ujis</option>
+						</select>
 						<input type="submit" name="fix_double_encoding" value="{tr}Dangerous: Fix double encoding{/tr}"/>
 						<input type="hidden" name="install_step" value="7"/>
 					</p>
