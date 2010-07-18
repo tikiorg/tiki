@@ -1394,7 +1394,7 @@ function get_default_prefs() {
 		'feature_newsletters' => 'n',
 		'feature_obzip' => 'n',
 		'feature_perspective' => 'n', // If enabling by default, update further in this file
-		'feature_phplayers' => 'y', // Enabled by default for a better file gallery tree explorer
+		'feature_phplayers' => 'n',
 		'feature_cssmenus' => 'y',
 		'feature_projects' => 'n',
 		'feature_ranking' => 'n',
