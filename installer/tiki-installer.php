@@ -463,6 +463,26 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 	return $dbcon;
 }
 
+function convert_database_to_utf8( $dbname ) {
+	$db = TikiDb::get();
+
+	$db->query( "ALTER DATABASE `$dbname` CHARACTER SET utf8 COLLATE utf8_general_ci" );
+
+	foreach( $db->fetchAll( 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?', $dbname ) as $row ) {
+		$db->query( "ALTER TABLE `{$row['TABLE_NAME']}` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci" );
+	}
+}
+
+function fix_double_encoding( $dbname, $previous ) {
+	$db = TikiDb::get();
+
+	$text_fields = $db->fetchAll( "SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND CHARACTER_SET_NAME IS NOT NULL", array($dbname) );
+
+	foreach( $text_fields as $field ) {
+		$db->query( "UPDATE `{$field['TABLE_NAME']}` SET `{$field['COLUMN_NAME']}` = CONVERT(CONVERT(CONVERT(CONVERT(`{$field['COLUMN_NAME']}` USING binary) USING utf8) USING $previous) USING binary)" );
+	}
+}
+
 // -----------------------------------------------------------------------------
 // end of functions .. now starts the processing
 
@@ -967,6 +987,19 @@ $smarty->assign('detected_https',isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] =
 
 if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 	$smarty->assign('ie6', true);
+}
+
+$client_charset = '';
+include $local;
+$smarty->assign( 'client_charset_in_file', $client_charset );
+
+if( isset( $_POST['convert_to_utf8'] ) ) {
+	convert_database_to_utf8( $dbs_tiki );
+}
+
+if( isset( $_POST['fix_double_encoding'] ) ) {
+	fix_double_encoding( $dbs_tiki, $_POST['previous_encoding'] );
+	$smarty->assign('double_encode_fix_attempted', 'y');
 }
 
 if( $install_step == '4' ) {

@@ -285,6 +285,17 @@
 	  	{remarksbox icon=error title="{tr}Encoding Issue{/tr}"}
 			{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
 			<p><a href="http://doc.tikiwiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
+
+			<form method="post" action="">
+				<fieldset>
+					<legend>{tr}Experimental Conversion{/tr}</legend>
+					<p>{tr}Use at your own risk. If the data in the database currently contains improperly converted data, this may make matters worse. Suitable for new installations. Requires ALTER privilege on the database.{/tr}</p>
+					<p>
+						<input type="submit" name="convert_to_utf8" value="{tr}Convert database and tables to UTF-8{/tr}"/>
+						<input type="hidden" name="install_step" value="4"/>
+					</p>
+				</fieldset>
+			</form>
 		{/remarksbox}
 	  {/if}
 	  {if $dbdone eq 'n'}
@@ -356,6 +367,7 @@
 
 		  {/if}
 {/if}
+
 </div>
 
 {elseif $install_step eq '5' or ($dbdone ne 'n')}
@@ -532,6 +544,26 @@
 {/if}
 
 </div>
+	{if $double_encode_fix_attempted eq 'y'}
+		<p>{tr}Cross your fingers and access the site.{/tr}</p>
+	{else}
+		<form method="post" action="" style="padding-top: 100px;">
+			<fieldset>
+				<legend>{tr}Upgrading and running into encoding issues?{/tr}</legend>
+				<p>{tr}We can try to fix it, but <strong>make sure you have backups, and can restore them</strong>.{/tr}</p>
+				{if $client_charset_in_file eq 'utf8'}
+					<p>
+						{tr}Previous table encoding{/tr}:
+						<input type="text" name="previous_encoding" value="latin1" size="6"/>
+						<input type="submit" name="fix_double_encoding" value="{tr}Dangerous: Fix double encoding{/tr}"/>
+						<input type="hidden" name="install_step" value="7"/>
+					</p>
+				{else}
+					<p>{tr}Oops. You need to make sure client charset is forced to UTF-8. Reset the database connection to continue.{/tr}</p>
+				{/if}
+			</fieldset>
+		</form>
+	{/if}
 {/if}
 </div>
 			</div>
