@@ -461,10 +461,14 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 function convert_database_to_utf8( $dbname ) {
 	$db = TikiDb::get();
 
-	$db->query( "ALTER DATABASE `$dbname` CHARACTER SET utf8 COLLATE utf8_general_ci" );
+	if( $result = $db->fetchAll( 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?', $dbname ) ) {
+		$db->query( "ALTER DATABASE `$dbname` CHARACTER SET utf8 COLLATE utf8_general_ci" );
 
-	foreach( $db->fetchAll( 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?', $dbname ) as $row ) {
-		$db->query( "ALTER TABLE `{$row['TABLE_NAME']}` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci" );
+		foreach( $result as $row ) {
+			$db->query( "ALTER TABLE `{$row['TABLE_NAME']}` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci" );
+		}
+	} else {
+		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation.');
 	}
 }
 
@@ -473,8 +477,12 @@ function fix_double_encoding( $dbname, $previous ) {
 
 	$text_fields = $db->fetchAll( "SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ? AND CHARACTER_SET_NAME IS NOT NULL", array($dbname) );
 
-	foreach( $text_fields as $field ) {
-		$db->query( "UPDATE `{$field['TABLE_NAME']}` SET `{$field['COLUMN_NAME']}` = CONVERT(CONVERT(CONVERT(CONVERT(`{$field['COLUMN_NAME']}` USING binary) USING utf8) USING $previous) USING binary)" );
+	if( $text_fields ) {
+		foreach( $text_fields as $field ) {
+			$db->query( "UPDATE `{$field['TABLE_NAME']}` SET `{$field['COLUMN_NAME']}` = CONVERT(CONVERT(CONVERT(CONVERT(`{$field['COLUMN_NAME']}` USING binary) USING utf8) USING $previous) USING binary)" );
+		}
+	} else {
+		die('MySQL INFORMATION_SCHEMA not available. Your MySQL version is too old to perform this operation.');
 	}
 }
 
@@ -996,13 +1004,14 @@ if( isset( $_POST['convert_to_utf8'] ) ) {
 	convert_database_to_utf8( $dbs_tiki );
 }
 
-if( isset( $_POST['fix_double_encoding'] ) ) {
+if( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding']) ) {
 	fix_double_encoding( $dbs_tiki, $_POST['previous_encoding'] );
 	$smarty->assign('double_encode_fix_attempted', 'y');
 }
 
-if( $installer && $install_step == '4' ) {
-	$result = $installer->fetchAll( 'show variables like "character_set_database"' );
+if( $install_step == '4' ) {
+	$db = TikiDB::get();
+	$result = $db->fetchAll( 'show variables like "character_set_database"' );
 	$res = reset( $result );
 	$variable = array_shift( $res );
 	$value = array_shift( $res );
