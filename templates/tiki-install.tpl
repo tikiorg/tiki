@@ -285,6 +285,17 @@
 	  	{remarksbox icon=error title="{tr}Encoding Issue{/tr}"}
 			{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
 			<p><a href="http://doc.tikiwiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
+
+			<form method="post" action="">
+				<fieldset>
+					<legend>{tr}Experimental Conversion{/tr}</legend>
+					<p>{tr}Use at your own risk. If the data in the database currently contains improperly converted data, this may make matters worse. Suitable for new installations. Requires ALTER privilege on the database.{/tr}</p>
+					<p>
+						<input type="submit" name="convert_to_utf8" value="{tr}Convert database and tables to UTF-8{/tr}"/>
+						<input type="hidden" name="install_step" value="4"/>
+					</p>
+				</fieldset>
+			</form>
 		{/remarksbox}
 	  {/if}
 	  {if $dbdone eq 'n'}

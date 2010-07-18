@@ -458,6 +458,16 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 	return $dbcon;
 }
 
+function convert_database_to_utf8( $dbname ) {
+	$db = TikiDb::get();
+
+	$db->query( "ALTER DATABASE `$dbname` CHARACTER SET utf8 COLLATE utf8_general_ci" );
+
+	foreach( $db->fetchAll( 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?', $dbname ) as $row ) {
+		$db->query( "ALTER TABLE `{$row['TABLE_NAME']}` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci" );
+	}
+}
+
 // -----------------------------------------------------------------------------
 // end of functions .. now starts the processing
 
@@ -961,6 +971,11 @@ $smarty->assign('detected_https',isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] =
 
 if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 	$smarty->assign('ie6', true);
+}
+
+if( isset( $_POST['convert_to_utf8'] ) ) {
+	include $local;
+	convert_database_to_utf8( $dbs_tiki );
 }
 
 if( $install_step == '4' ) {
