@@ -858,22 +858,11 @@ if (empty($parsed)) {
 $smarty->assign('pagedata', $parsed);
 
 // apply the optional post edit filters before preview
-if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] === 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] === 'on')) {
+if(isset($_REQUEST["preview"])) {
 	$parsed = $tikilib->apply_postedit_handlers($parsed);
 	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
 } else {
 	$parsed = "";
-}
-
-/* SPELLCHECKING INITIAL ATTEMPT */
-//This nice function does all the job!
-if ($prefs['wiki_spellcheck'] === 'y') {
-	if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] === 'on') {
-		$parsed = $tikilib->spellcheckreplace($edit_data, $parsed, $prefs['language'], 'editwiki');
-		$smarty->assign('spellcheck', 'y');
-	} else {
-		$smarty->assign('spellcheck', 'n');
-	}
 }
 
 $smarty->assign_by_ref('parsed', $parsed);
@@ -1351,7 +1340,6 @@ $smarty->assign('edittimeout', ini_get('session.gc_maxlifetime'));
 if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates === 'y') ||
 	($prefs['feature_wiki_usrlock'] === 'y' && ($tiki_p_lock === 'y' || $tiki_p_admin_wiki === 'y')) ||
 	($prefs['feature_wiki_replace'] === 'y' && $_SESSION['wysiwyg'] !== 'y') ||
-	$prefs['wiki_spellcheck'] === 'y' ||
 	($prefs['feature_wiki_allowhtml'] === 'y' && $tiki_p_use_HTML === 'y' && $_SESSION['wysiwyg'] !== 'y') ||
 	$prefs['feature_wiki_import_html'] === 'y' ||
 	$prefs['wiki_comments_allow_per_page'] !== 'n' ||

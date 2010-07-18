@@ -233,17 +233,6 @@
 			</td>
 		</tr>
 
-		{if $prefs.cms_spellcheck eq 'y'}
-			<tr class="formcolor">
-				<td>
-					{tr}Spellcheck:{/tr}
-				</td>
-				<td>
-					<input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/>
-				</td>
-			</tr>
-		{/if}
-
 		<tr id='show_pubdate' {if $types.$type.show_pubdate eq 'y' || $types.$type.show_pre_publ ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
 			<td>{tr}Publish Date{/tr}</td>
 			<td>

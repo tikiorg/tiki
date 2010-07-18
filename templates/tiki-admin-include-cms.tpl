@@ -42,7 +42,6 @@
 					{preference name=article_comments_default_ordering}
 				</div>
 
-				{preference name=cms_spellcheck}
 				{preference name=feature_cms_templates}
 				{preference name=feature_cms_print}
 				{preference name=feature_cms_emails}

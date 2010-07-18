@@ -290,16 +290,6 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	$parsed_body = $tikilib->parse_data($body);
 	$parsed_heading = $tikilib->parse_data($heading);
 
-	if ($prefs['cms_spellcheck'] == 'y') {
-		if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
-			$parsed_body = $tikilib->spellcheckreplace($body, $parsed_body, $prefs['language'], 'subbody');
-			$parsed_heading = $tikilib->spellcheckreplace($heading, $parsed_heading, $prefs['language'], 'subheading');
-			$smarty->assign('spellcheck', 'y');
-		} else {
-			$smarty->assign('spellcheck', 'n');
-		}
-	}
-
 	$smarty->assign('parsed_body', $parsed_body);
 	$smarty->assign('parsed_heading', $parsed_heading);
 

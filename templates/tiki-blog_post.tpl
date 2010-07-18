@@ -101,9 +101,6 @@
 				{html_select_time prefix="publish_" time=$created display_seconds=false}
 			</td>
 </tr>
-{if $prefs.blog_spellcheck eq 'y'}
-<tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if} /></td></tr>
-{/if}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
   {include file='freetag.tpl'}
 {/if}

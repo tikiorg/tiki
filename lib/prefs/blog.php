@@ -7,12 +7,6 @@
 
 function prefs_blog_list() {
 	return array(
-		'blog_spellcheck' => array(
-			'name' => tra('Spell cheking'),
-			'hint' => tra('Requires a separate download'),
-			'type' => 'flag',
-			'help' => 'Spellcheck',
-		),
 		'blog_comments_per_page' => array(
 			'name' => tra('Default number per page'),
 			'type' => 'text',

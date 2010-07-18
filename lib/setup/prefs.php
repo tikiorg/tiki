@@ -701,7 +701,6 @@ function get_default_prefs() {
 		'cms_left_column' => 'y',
 		'cms_right_column' => 'y',
 		'cms_top_bar' => 'n',
-		'cms_spellcheck' => 'n',
 		'art_home_title' => '',
 
 		// trackers
@@ -1730,14 +1729,6 @@ function get_default_prefs() {
 		'rating_recalculation_odd' => '100',
 		'rating_recalculation_count' => '100',
 	);
-
-	// spellcheck
-	if ( file_exists('lib/bablotron.php') ) {
-		$prefs['lib_spellcheck'] = 'y';
-		$prefs['wiki_spellcheck'] = 'n';
-		$prefs['cms_spellcheck'] = 'n';
-		$prefs['blog_spellcheck'] = 'n';
-	}
 
 		$prefs['cas_create_user_tiki'] = 'n';
 		$prefs['cas_create_user_tiki_ldap'] = 'n';

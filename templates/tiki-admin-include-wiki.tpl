@@ -45,7 +45,6 @@
 			<fieldset>
 				<legend>{tr}Edit{/tr}</legend>
 
-				{preference name=wiki_spellcheck}
 				{preference name=feature_wiki_templates}
 				{preference name=feature_warn_on_edit}
 				{preference name=warn_on_edit_time}

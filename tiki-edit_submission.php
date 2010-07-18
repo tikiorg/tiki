@@ -66,7 +66,6 @@ $smarty->assign('body', '');
 $smarty->assign('type', 'Article');
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
-$smarty->assign('spellcheck', 'n');
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 	global $templateslib; require_once 'lib/templates/templateslib.php';
@@ -252,17 +251,6 @@ if (isset($_REQUEST["preview"])) {
 
 	$parsed_body = $tikilib->parse_data($body);
 	$parsed_heading = $tikilib->parse_data($heading);
-
-	if ($prefs['cms_spellcheck'] == 'y') {
-		if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
-			$parsed_body = $tikilib->spellcheckreplace($body, $parsed_body, $prefs['language'], 'subbody');
-
-			$parsed_heading = $tikilib->spellcheckreplace($heading, $parsed_heading, $prefs['language'], 'subheading');
-			$smarty->assign('spellcheck', 'y');
-		} else {
-			$smarty->assign('spellcheck', 'n');
-		}
-	}
 
 	$smarty->assign('parsed_body', $parsed_body);
 	$smarty->assign('parsed_heading', $parsed_heading);

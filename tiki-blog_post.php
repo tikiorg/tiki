@@ -146,14 +146,6 @@ if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
 if (isset($_REQUEST["preview"])) {
 	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
 	$parsed_data = $tikilib->parse_data($parsed_data);
-	if ($prefs['blog_spellcheck'] == 'y') {
-		if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
-			$parsed_data = $tikilib->spellcheckreplace($edit_data, $parsed_data, $prefs['language'], 'blogedit');
-			$smarty->assign('spellcheck', 'y');
-		} else {
-			$smarty->assign('spellcheck', 'n');
-		}
-	}
 	$smarty->assign('data', $edit_data);
 	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);

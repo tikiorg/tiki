@@ -286,12 +286,6 @@
 									<input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();" />
 								</fieldset>
 							{/if}
-							{if $prefs.wiki_spellcheck eq 'y'}
-								<fieldset>
-									<legend>{tr}Spellcheck:{/tr}</legend>
-									<input type="checkbox" id="spellcheck"name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/>
-								</fieldset>
-							{/if}
 							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 								<fieldset>
 									<legend>{tr}Allow HTML:{/tr}</legend>

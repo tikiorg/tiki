@@ -205,12 +205,6 @@ function prefs_wiki_list() {
 				'feature_multilingual',
 			),
 		),
-		'wiki_spellcheck' => array(
-			'name' => tra('Spell checking'),
-			'type' => 'flag',
-			'help' => 'Spellcheck',
-			'hint' => tra('Requires a separate download'),
-		),
 		'wiki_edit_section' => array(
 			'name' => tra('Edit section'),
 			'type' => 'flag',

@@ -18,7 +18,6 @@
 				</legend>
 				<input type="hidden" name="blogfeatures" />
 				{preference name=feature_blog_rankings}
-				{preference name=blog_spellcheck}
 				{preference name=feature_blog_heading}
 
 				{if $prefs.feature_categories eq 'y'}
