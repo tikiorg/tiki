@@ -9,7 +9,7 @@ function prefs_lang_list() {
 	return array(
 		'lang_use_db' => array(
 			'name' => tra('Use database for translation'),
-			'description' => tra('Verify for available translations in the database.'),
+			'description' => tra('Use the database to store the translated strings and allow using interactive translation'),
 			'type' => 'flag',
 			'help' => 'Translating+Tiki+interface',
 		),
