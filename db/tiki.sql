@@ -2549,15 +2549,6 @@ CREATE TABLE `tiki_userpoints` (
   `voted` int(8) default NULL
 ) ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_users`;
-CREATE TABLE `tiki_users` (
-  `user` varchar(200) NOT NULL default '',
-  `password` varchar(40) default NULL,
-  `email` varchar(200) default NULL,
-  `lastLogin` int(14) default NULL,
-  PRIMARY KEY (`user`)
-) ENGINE=MyISAM;
-
 DROP TABLE IF EXISTS `tiki_webmail_contacts`;
 CREATE TABLE `tiki_webmail_contacts` (
   `contactId` int(12) NOT NULL auto_increment,
