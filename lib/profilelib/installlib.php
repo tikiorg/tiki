@@ -34,6 +34,7 @@ class Tiki_Profile_Installer
 		'datachannel' => 'Tiki_Profile_InstallHandler_DataChannel',
 		'transition' => 'Tiki_Profile_InstallHandler_Transition',
 		'calendar' => 'Tiki_Profile_InstallHandler_Calendar',
+		'extwiki' => 'Tiki_Profile_InstallHandler_ExtWiki',
 	);
 
 	private static $typeMap = array(
@@ -2194,6 +2195,38 @@ class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler
 		$id = $transitionlib->addTransition( $data['from'], $data['to'], $data['name'], $data['preserve'] == 'y', $data['guards'] );
 
 		return $id;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_ExtWiki extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		$data = $this->obj->getData();
+
+		return $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'], $data['url'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $adminlib; require_once 'lib/admin/adminlib.php';
+
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		$adminlib->replace_extwiki( null, $data['url'], $data['name'] );
+
+		return $data['name'];
 	}
 } // }}}
 

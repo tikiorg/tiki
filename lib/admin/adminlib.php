@@ -116,12 +116,11 @@ class AdminLib extends TikiLib
 			$query = "update `tiki_extwiki` set `extwiki`=?,`name`=? where `extwikiId`=?";
 			$result = $this->query($query,array($extwiki,$name,$extwikiId));
 		} else {
-			$query = "delete from `tiki_extwiki` where `name`=? and `extwiki`=?";
-			$bindvars=array($name,$extwiki);
-			$result = $this->query($query,$bindvars);
+			$query = "delete from `tiki_extwiki` where `name`=?";
+			$result = $this->query($query,array($name));
 			$query = "insert into `tiki_extwiki`(`name`,`extwiki`)
                 		values(?,?)";
-			$result = $this->query($query,$bindvars);
+			$result = $this->query($query,array($name, $extwiki));
 		}
 
 		// And now replace the perm if not created
