@@ -1728,18 +1728,20 @@ function get_default_prefs() {
 		'rating_recalculation' => 'vote',
 		'rating_recalculation_odd' => '100',
 		'rating_recalculation_count' => '100',
+
+		// CAS
+		'cas_create_user_tiki' => 'n',
+		'cas_create_user_tiki_ldap' => 'n',
+		'cas_skip_admin' => 'n',
+		'cas_show_alternate_login' => 'y',
+		'cas_version' => '1.0',
+		'cas_hostname' => '',
+		'cas_port' => '',
+		'cas_path' => '',
+		'cas_extra_param' => '',
+		'cas_authentication_timeout' => '0',
 	);
 
-		$prefs['cas_create_user_tiki'] = 'n';
-		$prefs['cas_create_user_tiki_ldap'] = 'n';
-		$prefs['cas_skip_admin'] = 'n';
-		$prefs['cas_show_alternate_login'] = 'y';
-		$prefs['cas_version'] = '1.0';
-		$prefs['cas_hostname'] = '';
-		$prefs['cas_port'] = '';
-		$prefs['cas_path'] = '';
-		$prefs['cas_extra_param'] = '';
-		$prefs['cas_authentication_timeout'] = '0';
 
 	// Special default values
 
