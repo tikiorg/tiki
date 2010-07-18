@@ -912,9 +912,20 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || is
 		if ( $prefs['fgal_show_path'] == 'y' ) {
 			$smarty->assign('gallery_path', $phplayersTreeData['path']);
 		}
-
-		$smarty->assign_by_ref('tree', $phplayersTreeData['tree']);
-		$smarty->assign_by_ref('expanded', $phplayersTreeData['expanded']);
+	
+		if ($prefs['feature_phplayers'] == 'y') {
+			
+			$smarty->assign_by_ref('tree', $phplayersTreeData['tree']);
+			$smarty->assign_by_ref('expanded', $phplayersTreeData['expanded']);
+			
+		} else if ($prefs['javascript_enabled'] != 'n') {
+			$tree_array = array('data' => $all_galleries['data'],
+				'name' => $phplayersTreeData['tree']['name'],
+				'link' => $phplayersTreeData['tree']['link']
+			);
+			$smarty->assign_by_ref('tree', $tree_array);
+			$smarty->assign('expanded', '');
+		}
 	}
 }
 

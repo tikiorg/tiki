@@ -391,6 +391,14 @@ li#logout_link a {
 	width: 16px;
 	height: 18px;
 }
+
+ul.tree {
+	list-style-type: none;
+}
+
+ul.tree li {
+	white-space: nowrap;
+}
 	
 /** Links in other menus **/
 
