@@ -984,7 +984,11 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 }
 
 $client_charset = '';
-include $local;
+
+if( file_exists( $local ) ) {
+	include $local;
+}
+
 $smarty->assign( 'client_charset_in_file', $client_charset );
 
 if( isset( $_POST['convert_to_utf8'] ) ) {
