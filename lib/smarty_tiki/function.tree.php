@@ -21,9 +21,36 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_tree($params, &$smarty) {
 	global $prefs;
 
-	if ( $prefs['feature_phplayers'] != 'y' || $prefs['javascript_enabled'] == 'n' ) {
-	  // If PHP Layers and/or JavaScript are disabled, force the php version of the tree
-	  $params['type'] = 'phptree';
+	if ( $prefs['javascript_enabled'] == 'n' ) {
+		// If JavaScript is disabled, force the php version of the tree
+		$params['type'] = 'phptree';
+	} else if ($prefs['feature_phplayers'] != 'y') {
+		// no phplayers - use category-style ones (for now)
+		require_once ('lib/tree/categ_browse_tree.php');
+		$link = $params['data']['link'];
+		$name = $params['data']['name'];
+		$link_id = 'id';
+		$link_var = 'galleryId';
+		require_once $smarty->_get_plugin_filepath('function', 'icon');
+		$icon = '&nbsp;' . smarty_function_icon(array('_id' => 'folder'), $smarty) . '&nbsp;';
+		
+		$tree_nodes = array(
+			array(
+				'id' => 1,
+				'parent' => 0,
+				'data' => '<a class="fgalname" href="' . $link . '">' . $icon . htmlspecialchars($name) .'</a>', 
+			)
+		);
+		foreach($params['data']['data'] as $d) {
+			$tree_nodes[] = array(
+				'id' => $d['id'],
+				'parent' => $d['parentId'],
+				'data' => '<a class="fgalname" href="' . $link . '?' . $link_var . '=' . $d[$link_id] . '">' . $icon . htmlspecialchars($d['name']) .'</a>', 
+			);
+		}
+		$tm = new CatBrowseTreeMaker('categ');
+		$res = $tm->make_tree( 1, $tree_nodes);
+		return $res;
 	}
 
 	global $tikiphplayers;
