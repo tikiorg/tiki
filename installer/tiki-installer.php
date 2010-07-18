@@ -610,6 +610,7 @@ $client_charset = '';
 // next block checks if there is a local.php and if we can connect through this.
 // sets $dbcon to false if there is no valid local.php
 $dbcon = false;
+$installer = null;
 if ( file_exists($local) ) {
 	// include the file to get the variables
 	$default_api_tiki = $api_tiki;
@@ -1000,7 +1001,7 @@ if( isset( $_POST['fix_double_encoding'] ) ) {
 	$smarty->assign('double_encode_fix_attempted', 'y');
 }
 
-if( $install_step == '4' ) {
+if( $installer && $install_step == '4' ) {
 	$result = $installer->fetchAll( 'show variables like "character_set_database"' );
 	$res = reset( $result );
 	$variable = array_shift( $res );
