@@ -3242,9 +3242,10 @@ class TikiLib extends TikiDb_Bridge
 			$return = unserialize($cachelib->getCached($cacheKey));
 		} else {
 			$query = "select * from `tiki_user_modules` where `name`=?";
-			$result = $this->query($query, array($name));
-			$return = $result->fetchRow();
-			$cachelib->cacheItem($cacheKey, serialize($return));
+			if( $result = $this->query($query, array($name)) ) {
+				$return = $result->fetchRow();
+				$cachelib->cacheItem($cacheKey, serialize($return));
+			}
 		}
 
 		return $return;
