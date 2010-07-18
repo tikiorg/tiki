@@ -369,6 +369,7 @@
 
 		  {/if}
 {/if}
+
 </div>
 
 {elseif $install_step eq '5' or ($dbdone ne 'n')}
@@ -545,6 +546,26 @@
 {/if}
 
 </div>
+	{if $double_encode_fix_attempted eq 'y'}
+		<p>{tr}Cross your fingers and access the site.{/tr}</p>
+	{else}
+		<form method="post" action="" style="padding-top: 100px;">
+			<fieldset>
+				<legend>{tr}Upgrading and running into encoding issues?{/tr}</legend>
+				<p>{tr}We can try to fix it, but <strong>make sure you have backups, and can restore them</strong>.{/tr}</p>
+				{if $client_charset_in_file eq 'utf8'}
+					<p>
+						{tr}Previous table encoding{/tr}:
+						<input type="text" name="previous_encoding" value="latin1" size="6"/>
+						<input type="submit" name="fix_double_encoding" value="{tr}Dangerous: Fix double encoding{/tr}"/>
+						<input type="hidden" name="install_step" value="7"/>
+					</p>
+				{else}
+					<p>{tr}Oops. You need to make sure client charset is forced to UTF-8. Reset the database connection to continue.{/tr}</p>
+				{/if}
+			</fieldset>
+		</form>
+	{/if}
 {/if}
 </div>
 			</div>
