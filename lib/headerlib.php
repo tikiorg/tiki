@@ -246,6 +246,7 @@ class HeaderLib
 			$minified .= JSMin::minify( $complete );
 
 			file_put_contents( $file, $minified );
+			chmod($file, 0644);
 		}
 
 		return array(
@@ -447,6 +448,7 @@ class HeaderLib
 
 			if( ! file_exists( $min ) ) {
 				file_put_contents( $min, $this->minify_css( $file ) );
+			chmod($min, 0644);
 			}
 
 			$out[] = $min;
@@ -471,6 +473,7 @@ class HeaderLib
 			$minified = $this->handle_css_imports( $minified );
 
 			file_put_contents( $file, $minified );
+			chmod($file, 0644);
 		}
 
 		return array( $file );

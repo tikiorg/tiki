@@ -181,6 +181,7 @@ class CacheLibFileSystem
 		$fw = fopen($this->folder."/$key","w+");
 		fwrite($fw,$data);
 		fclose($fw);
+		chmod($this->folder."/$key", 0644);
 		return true;
 	}
 
