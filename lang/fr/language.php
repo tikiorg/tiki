@@ -168,7 +168,6 @@ $lang=Array(
 "Advertisement channel, as optionally provided by Google" => "Advertisement channel, as optionally provided by Google",
 "After argument validation by an editor, the execution of this plugin was denied. This plugin will eventually be removed or corrected" => "After argument validation by an editor, the execution of this plugin was denied. This plugin will eventually be removed or corrected",
 "aid?" => "aide ?",
-"ajax and mootools features mandatory for that feature" => "les fonctionnalités ajax et mootools sont obligatoires pour cette fonctionnalité",
 "Aligns the box containing the image" => "Aligne la boîte contenant l'image",
 "Aligns the image itself. If the image is inside a box (because of other settings), use the align parameter to align the box" => "Aligns the image itself. If the image is inside a box (because of other settings), use the align parameter to align the box",
 "Allocating too little memory will cause TikiWiki to display blank pages" => "Une trop faible allocation de mémoire provoque l'affichage de pages blanches",
