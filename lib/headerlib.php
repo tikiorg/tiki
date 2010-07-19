@@ -457,7 +457,7 @@ class HeaderLib
 
 			if( ! file_exists( $min ) ) {
 				file_put_contents( $min, $this->minify_css( $file ) );
-				chmod($file, 0644);
+				chmod($min, 0644);
 			}
 
 			$out[] = $min;
