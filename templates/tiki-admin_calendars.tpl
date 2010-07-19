@@ -107,7 +107,7 @@
 {tr}Show in popup box{/tr}
 <input type="checkbox" name="show[participants]" value="on"{if $show_participants eq 'y'} checked="checked"{/if} />
 </td></tr>
-<tr class="formcolor"><td>{tr}Custom Categories{/tr}:</td><td>
+<tr class="formcolor"><td>{tr}Custom Classifications{/tr}:</td><td>
 <select name="customcategories">
 <option value='y' {if $customcategories eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
 <option value='n' {if $customcategories eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>

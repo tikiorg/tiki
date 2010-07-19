@@ -443,7 +443,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </td></tr>
 {/if}
 <tr class="formcolor" style="display:{if $calendar.customcategories eq 'y'}tablerow{else}none{/if};" id="calcat">
-<td>{tr}Category{/tr}</td>
+<td>{tr}Classification{/tr}</td>
 <td>
 {if $edit}
 {if count($listcats)}

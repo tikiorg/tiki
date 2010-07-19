@@ -43,7 +43,7 @@
 <br />
 {/if}
 {if $infocals.$cellcalendarId.custompriorities eq 'y' and $cellprio}<span class='box-title'>{tr}Priority:{/tr}</span> {$cellprio}<br />{/if}
-{if $show_category eq 'y' and $infocals.$cellcalendarId.customcategories eq 'y' and $cellcategory}<span class='box-title'>{tr}Category:{/tr}</span> {$cellcategory|escape}<br />{/if}
+{if $show_category eq 'y' and $infocals.$cellcalendarId.customcategories eq 'y' and $cellcategory}<span class='box-title'>{tr}Classification:{/tr}</span> {$cellcategory|escape}<br />{/if}
 {if $show_location eq 'y' and $infocals.$cellcalendarId.customlocations eq 'y' and $celllocation}<span class='box-title'>{tr}Location:{/tr}</span> {$celllocation|escape}<br />{/if}
 {if $show_url eq 'y' and $infocals.$cellcalendarId.customurl eq 'y' and $cellurl}<span class='box-title'>{tr}Website:{/tr}</span> <a href="{$cellurl|escape:'url'}" title="{$cellurl|escape:'url'}">{$cellurl|truncate:32:'...'}</a><br />{/if}
 {if $show_calname eq 'y' and $cellcalname}<span class='box-title'>{tr}Calendar:{/tr}</span>
