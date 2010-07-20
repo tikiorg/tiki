@@ -2943,6 +2943,9 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_socialnetworks', 'user can use social network integration', 'registered', 'socialnetworks', NULL, 'feature_socialnetworks');
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_admin_socialnetworks', 'user can register this site with socialnetworks', 'admin', 'socialnetworks', 'y', 'feature_socialnetworks');
 
+
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_page-contribution_view', 'Can view contributions to a page', 'basic', 'wiki', NULL, 'feature_wiki');
+
 DROP TABLE IF EXISTS `users_usergroups`;
 CREATE TABLE `users_usergroups` (
   `userId` int(8) NOT NULL default '0',

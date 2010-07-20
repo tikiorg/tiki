@@ -336,6 +336,7 @@ function get_default_prefs() {
 		'wikiplugin_wantedpages' => 'n',
 		'wikiplugin_webservice' => 'n',
 		'wikiplugin_youtube' => 'y',
+		'wikiplugin_author' => 'y',
 
 		// Inline wiki plugins have their edit plugin icon disabled
 		'wikiplugininline_addtocart' => 'n',
@@ -480,6 +481,7 @@ function get_default_prefs() {
 		'wikiplugininline_wantedpages' => 'n',
 		'wikiplugininline_webservice' => 'n',
 		'wikiplugininline_youtube' => 'n',
+		'wikiplugininline_author' => 'n',
 
 		// webservices
 		'webservice_consume_defaultcache' => 300, // 5 min

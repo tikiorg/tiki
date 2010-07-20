@@ -61,6 +61,10 @@
 			{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 				{button href="tiki-pagehistory.php?page=$thispage" _text="{tr}History{/tr}"}
 			{/if}
+
+			{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
+				{button href="tiki-page-contribution.php?page=$thispage" _text="{tr}Contributions by author{/tr}"}
+			{/if}
 		{/if}
 
 		{if $prefs.feature_likePages eq 'y' and $tiki_p_wiki_view_similar eq 'y'}
