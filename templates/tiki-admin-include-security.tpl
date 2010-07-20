@@ -31,8 +31,8 @@
 			<div class="adminoptionboxchild" id="feature_antibot_childcontainer">
 				{preference name=recaptcha_enabled}
 				<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
-					{preference name=recaptcha_privkey}
 					{preference name=recaptcha_pubkey}
+					{preference name=recaptcha_privkey}
 				</div>
 			</div>
 			{preference name=feature_wiki_protect_email}

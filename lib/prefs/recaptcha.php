@@ -15,16 +15,16 @@ function prefs_recaptcha_list() {
 			'type' => 'flag',
         ),
 		'recaptcha_pubkey' => array(
-			'name' => tra('Pubkey'),
+			'name' => tra('Public Key'),
             'type' => 'text',
             'description' => tra('ReCaptcha public key.'),
-        	'size' => 40,
+        	'size' => 60,
 		),
 		'recaptcha_privkey' => array(
-			'name' => tra('Privkey'),
+			'name' => tra('Private Key'),
 			'type' => 'text',
             'description' => tra('ReCaptcha private key.'),
-			'size' => 40,
+			'size' => 60,
 		),
 	);
 }
