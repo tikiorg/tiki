@@ -35,7 +35,7 @@ function payment_behavior_perform_trade( $main_user, $other_user, $price, $curre
 		$smarty->assign('ccresult2', "Perform Trade: price not set");
 	}
 	
-	$result = $cclitelib->pay_user( $price, $currency, '', $other_user );
+	$result = $cclitelib->pay_user( $price, $currency, '', $other_user, $main_user );
 	
 	if (!empty($result)) {
 		$smarty->assign('ccresult2', $result);

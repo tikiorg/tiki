@@ -80,7 +80,8 @@ class CCLiteLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * Pays $amount from logged in (or source_user TODO) user to manager account
+	 * This function just calls $paymentlib->enter_payment() which then triggers the behaviours
+	 * The behaviours the do the transfer of currency
 	 * 
 	 * @param int $invoice
 	 * @param decimal $amount
@@ -94,12 +95,8 @@ class CCLiteLib extends TikiDb_Bridge
 		global $user, $prefs, $paymentlib;
 		require_once 'lib/payment/paymentlib.php';
 		
-		$res = $this->cclite_send_request('pay', $amount, '', $currency, $registry);
-		
-		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
-			$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
-		}
-		$r = $this->cclite_send_request('logoff');
+		$res = true;
+		$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
 		
 		return $res;
 	}
@@ -115,11 +112,14 @@ class CCLiteLib extends TikiDb_Bridge
 	 * 
 	 * @return string result from cclite
 	 */
-	public function pay_user( $amount, $currency = '', $registry = '', $destination_user = '') {
+	public function pay_user( $amount, $currency = '', $registry = '', $destination_user = '', $source_user = '') {
 		global $user, $prefs, $paymentlib;
 		require_once 'lib/payment/paymentlib.php';
+		if (empty($source_user)) {
+			$source_user = $this->merchant_user;
+		}
 		
-		$res = $this->cclite_send_request('pay', $amount, $destination_user, $currency, $registry, $this->merchant_user);
+		$res = $this->cclite_send_request('pay', $amount, $destination_user, $currency, $registry, $source_user);
 		
 //		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
 //			$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );

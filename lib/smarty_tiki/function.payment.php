@@ -28,10 +28,10 @@ function smarty_function_payment( $params, $smarty ) {
 			//$access->check_authenticity( tr('Transfer currency? %0 %1?', $info['amount'], $info['currency'] ));
 			
 			$result = $cclitelib->pay_invoice($invoice, $info['amount'], $info['currency']);
-			if (!empty($result)) {
-				$smarty->assign('ccresult', $result);
-				$smarty->assign('ccresult_ok', (strpos($result, 'Transaction Accepted') !== false));
-				$cartlib->empty_cart();
+			if ($result) {
+				// ccresults are set in smarty by the perform_trade behaviour
+				//$smarty->assign('ccresult', $result);
+				$smarty->assign('ccresult_ok', $result);
 			} else {
 				$smarty->assign('ccresult', tr('Payment sent but verification not currently available. (Work in progress)'));
 			}
