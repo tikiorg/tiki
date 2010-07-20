@@ -342,6 +342,7 @@ class XmlLib extends TikiLib
 						$wiki_up.= "$tikidomain/";
 					$name = str_replace('img/wiki_up/', '', $image['wiki']);
 					file_put_contents( $wiki_up.$name, $image['data']);
+					chmod($wiki_up.$name, 0644);
 				}
 			}
 		}

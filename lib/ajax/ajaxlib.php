@@ -277,6 +277,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	$tmp_jsfile = 'temp/public/'.$tikidomainslash.md5($jscontent).'.js';
 	if ( ! file_exists( $tmp_jsfile) ) {
 		file_put_contents( $tmp_jsfile, $jscontent );
+		chmod($tmp_jsfile, 0644);
 	}
 	$objResponse->includeScript($tmp_jsfile);
 	
