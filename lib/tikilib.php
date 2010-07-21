@@ -5307,6 +5307,7 @@ class TikiLib extends TikiDb_Bridge
 
 		if( function_exists( $func_name ) ) {
 			$pluginFormat = 'wiki';
+			$info = $this->plugin_info( $name );
 			if( isset( $info['format'] ) ) {
 				$pluginFormat = $info['format'];
 			}
