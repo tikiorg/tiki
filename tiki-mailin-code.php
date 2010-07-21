@@ -51,7 +51,11 @@ global $debugger;
 if (defined($debugger)) $debugger->msg("tiki-mailin-code.php");
 // Get a list of ACTIVE emails accounts configured for mailin procedures
 $accs = $mailinlib->list_active_mailin_accounts(0, -1, 'account_desc', '');
-//print ('<a href="tiki-admin_mailin.php">Admin</a><br /><br />');
+
+if (empty($accs['data'])) {
+	$content = '';
+	return;
+}
 $content = '<br /><br />';
 // foreach account
 foreach($accs['data'] as $acc) {
