@@ -58,7 +58,8 @@ class TodoLib
 		$query = 'DELETE FROM `tiki_todo` WHERE `todoId`=? OR (`objectId`=? AND `objectType`=?)';
 		$db->query($query, array($id, $id, 'todo'));
 	}
-	function delObjectTodo($id)
+	function delObjectTodo($id) {
+	}
 	// apply a todo
 	function applyTodo($todo) {
 		switch ($todo['objectType']) {
