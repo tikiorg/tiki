@@ -905,7 +905,7 @@ class CategLib extends ObjectLib
 					$res['name']=$this->get_category_name($id);
 				}
 			}
-			$cachelib->cacheItem("childcategs$categId",serialize($ret));
+			$cachelib->cacheItem($cachekey,serialize($ret));
 		}
 		if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
 			foreach ($ret as $key=>$res) {
