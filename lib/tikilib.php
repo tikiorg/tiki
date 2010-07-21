@@ -6965,7 +6965,7 @@ class TikiLib extends TikiDb_Bridge
 		$link->setWikiLookup( array( $this, 'parser_helper_wiki_info_getter' ) );
 		$link->setWikiLinkBuilder( array( $this, 'parser_helper_wiki_link_builder' ) );
 		$link->setExternals( $externals );
-		$link->setHandlePlurals( $processPlurals );
+		$link->setHandlePlurals( $processPlural );
 
 		if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) ) {
 			$link->setLanguage( $GLOBALS['pageLang'] );
