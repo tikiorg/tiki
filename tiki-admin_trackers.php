@@ -46,12 +46,15 @@ if (isset($_REQUEST["remove"])) {
 	$trklib->remove_tracker($_REQUEST["remove"]);
 	$logslib->add_log('admintrackers', 'removed tracker ' . $_REQUEST["remove"]);
 }
-if (isset($_REQUEST['deltransition'])) {
-	include_once('lib/transitionlib.php');
-	TransitionLib::removeTransition($_REQUEST['deltransition']);
+if (isset($_REQUEST['deltodo'])) {
+	include_once('lib/todolib.php');
+	TodoLib::delTodo($_REQUEST['deltodo']);
 }
 $cat_type = 'tracker';
 $cat_objid = $_REQUEST["trackerId"];
+$status_types = $trklib->status_types();
+$smarty->assign('status_types', $status_types);
+
 if (isset($_REQUEST["save"])) {
 	if (isset($_REQUEST['import']) and isset($_REQUEST['rawmeat'])) {
 		$raw = $tikilib->read_raw($_REQUEST['rawmeat']);
@@ -317,14 +320,17 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options['descriptionIsParsed'] = 'n';
 	}
 	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST['trackerId'], $_REQUEST['name'], $_REQUEST['description'], $tracker_options, isset($_REQUEST['descriptionIsParsed']) ? 'y' : '');
-	if (!empty($_REQUEST['transition_from']) && !empty($_REQUEST['transition_from'])) {
-		require_once 'lib/transitionlib.php';
-		if (!empty($_REQUEST['transition_what'])) {
-			include('lib/smarty_tiki/function.html_select_duration.php');
-			$guards[] = array($_REQUEST['transition_what'], compute_select_duration($_REQUEST, 'transition_after'));
+	if (!empty($_REQUEST['todo_event']) && !empty($_REQUEST['todo_after']) ) {
+		include_once('lib/todolib.php');
+		if (!function_exists('compute_select_duration')) include('lib/smarty_tiki/function.html_select_duration.php');
+		$todoId = TodoLib::addTodo($todo_after = compute_select_duration($_REQUEST, 'todo_after'), $_REQUEST['todo_event'], 'tracker', $_REQUEST['trackerId'], array('status'=>$_REQUEST['todo_from']), array('status'=>$_REQUEST['todo_to']));
+		if (!empty($_REQUEST['todo_notif'])) {
+			$todo_notif = compute_select_duration($_REQUEST, 'todo_notif');
+			$todo_detail = array('mail'=>'creator', 'before'=>$todo_notif);
+			if (!empty($_REQUEST['todo_subject'])) $todo_detail['subject'] = $_REQUEST['todo_subject'];
+			if (!empty($_REQUEST['todo_body'])) $todo_detail['body'] = $_REQUEST['todo_body'];
+			TodoLib::addTodo($todo_after - $todo_notif, $_REQUEST['todo_event'], 'todo', $todoId, '', $todo_detail);
 		}
-		$transitionlib = new TransitionLib( 'trackeritem' );
-		$transitionlib->addTransition( $_REQUEST['transition_from'], $_REQUEST['transition_to'], 'Status change', false, $guards, $_REQUEST['trackerId'], 'y' );
 	}
 	$groupalertlib->AddGroup('tracker', $_REQUEST['trackerId'], !empty($_REQUEST['groupforAlert'])?$_REQUEST['groupforAlert']:'', !empty($_REQUEST['showeachuser']) ? $_REQUEST['showeachuser'] : 'n');
 	$logslib->add_log('admintrackers', 'changed or created tracker ' . $_REQUEST["name"]);
@@ -335,8 +341,6 @@ if (isset($_REQUEST["save"])) {
 	include_once ("categorize.php");
 }
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
-$status_types = $trklib->status_types();
-$smarty->assign('status_types', $status_types);
 $info = array();
 $fields = array(
 	'data' => array()
@@ -392,9 +396,8 @@ $info['autoAssignGroupItem'] = '';
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info, $tikilib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info, $trklib->get_tracker_options($_REQUEST["trackerId"]));
-	require_once 'lib/transitionlib.php';
-	$transitionlib = new TransitionLib( 'trackeritem' );
-	$info['transitions'] = $transitionlib->listTransitionsObject($_REQUEST['trackerId'], 'trackeritem');
+	require_once 'lib/todolib.php';
+	$info['todos'] = $todolib->listTodoObject('tracker', $_REQUEST['trackerId']);
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 	$smarty->assign('action', '');
 	include_once ('lib/wiki-plugins/wikiplugin_trackerfilter.php');

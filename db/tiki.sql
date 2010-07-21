@@ -3688,3 +3688,24 @@ CREATE TABLE `tiki_object_relations` (
     KEY `relation_source_ix` (`source_type`, `source_itemId`),
     KEY `relation_target_ix` (`target_type`, `target_itemId`)
 );
+
+DROP TABLE IF EXISTS `tiki_todo`;
+CREATE TABLE `tiki_todo` (
+	`todoId` INT(12) NOT NULL auto_increment,
+	`after` INT(12) NOT NULL,
+	`event` ENUM('creation', 'modification', 'upload'),
+	`objectType` VARCHAR(50),
+	`objectId` VARCHAR(255) default NULL,
+	`from` VARCHAR(255) default NULL,
+	`to` VARCHAR(255) default NULL,
+	PRIMARY KEY (`todoId`),
+	KEY `what` (`objectType`, `objectId`),
+	KEY `after` (`after`)
+);
+DROP TABLE IF EXISTS `tiki_todo_notif`;
+CREATE TABLE `tiki_todo_notif` (
+	`todoId` INT(12) NOT NULL,
+	`objectId` VARCHAR(255) default NULL,
+	KEY `todoId` (`todoId`),
+	KEY `objectId` (`objectId`)
+);

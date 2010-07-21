@@ -21,7 +21,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_modifier_duration($string, $long=true)
 {
-	if (!is_int($string)) {
+	if (!is_numeric($string)) {
 		return $string;
 	}
 	$values = array(31536000, 2628000, 604800, 86400, 3600, 60, 1);

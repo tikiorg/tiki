@@ -483,52 +483,67 @@
 				<br /><em>{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}</td>
 			</tr>
 
-			<tr class="formcolor">
-				<td>{tr}Transition{/tr}</td>
-				<td>
-					{if !empty($info.transitions)}
+			{if !empty($info.todos)}
+				<tr class="formcolor">
+					<td>{tr}Status changes list{/tr}</td>
+					<td>
+						{cycle values="odd,even" print=false}
 						<table class="normal">
-						<tr><th>{tr}From{/tr}</th><th>{tr}To{/tr}</th><th>{tr}Guards{/tr}</th><th>{tr}Action{/tr}</th></tr>
-						{foreach from=$info.transitions item=transition}
-							<tr>
-								<td>{$transition.from|escape}</td><td>{$transition.to|escape}</td>
+						<tr><th>{tr}From{/tr}</th><th>{tr}To{/tr}</th><th>{tr}Delay{/tr}</th><th>{tr}After{/tr}</th><th>{tr}Notification{/tr}</th><th>{tr}Action{/tr}</th></tr>
+						{foreach from=$info.todos item=todo}
+							<tr class="{cycle}">
+								<td>{$todo.from.status|escape}</td>
+								<td>{$todo.to.status|escape}</td>
+								<td>{$todo.after|duration|escape}</td>
+								<td>{tr}{$todo.event}{/tr}</td>
 								<td>
-								{foreach from=$transition.guards item=guard}
-									{foreach name=g from=$guard item=g}
-										{$g|duration|escape}
-										{if $smarty.foreach.g.last}<br />{else} {/if}
+									{foreach from=$todo.notifs item=notif name=notif}
+										{if !$smarty.foreach.notif.first}<br />{/if}
+										{foreach from=$notif.to key=i item=j name=notif2}
+											{if !$smarty.foreach.notif2.first}<br />{/if}
+											{$i|escape}: {if $i eq 'before'}{$j|duration|escape}{else}{$j|escape}{/if}
+										{/foreach}
 									{/foreach}
-								{/foreach}
 								</td>
-								<td><a title="{tr}Delete transition{/tr}" class="link" href="tiki-admin_trackers.php?trackerId={$trackerId}&amp;deltransition={$transition.transitionId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td>
+								<td><a title="{tr}Delete todo{/tr}" class="link" href="tiki-admin_trackers.php?trackerId={$trackerId}&amp;deltodo={$todo.todoId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td>
 							</tr>
 						{/foreach}
 						</table>
-					{/if}
+					</td>
+				</tr>
+			{/if}
+			<tr class="formcolor">
+				<td>{tr}Status changes{/tr}</td>
+				<td>			
 					<label>
 						{tr}From{/tr}
-						<select name="transition_from">
+						<select name="todo_from">
 							<option value="" />
 							{foreach key=st item=stdata from=$status_types}
-								<option value="{$st}">{$stdata.label|escape}</option>
+								<option value="{$st|escape}">{$stdata.label|escape}</option>
 							{/foreach}
 						</select>
 					</label>
 					<label>
 						{tr}To{/tr}
-						<select name="transition_to">
+						<select name="todo_to">
 							<option value="" />
 							{foreach key=st item=stdata from=$status_types}
-								<option value="{$st}">{$stdata.label|escape}</option>
+								<option value="{$st|escape}">{$stdata.label|escape}</option>
 							{/foreach}
 						</select>
-					</label>
-						{html_select_duration prefix='transition_after'}
-						<select name="transition_what">
-							<option value="after creation">{tr}After creation{/tr}</option>
-							<option value="after last modification">{tr}After last modification{/tr}</option>
-						</select>
-				</td>
+					</label><br />
+					{html_select_duration prefix='todo_after'}
+					<select name="todo_event">
+						<option value="creation">{tr}After creation{/tr}</option>
+						<option value="modification">{tr}After last modification{/tr}</option>
+					</select>
+					<fieldset>
+						<legend>{tr}Notification{/tr}</legend>
+						{tr}Notify creator the change{/tr}{html_select_duration prefix='todo_notif'}{tr}before change{/tr}<br />
+						<label>{tr}Mail subject text{/tr}<input type="text" name="todo_subject" /><br />
+						</label> <label>{tr}Mail body ressource{/tr}<input type="text" name="todo_body" /></label>
+					</fieldset>
 			</tr>
 				
 			<tr class="formcolor">
