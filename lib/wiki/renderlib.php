@@ -75,7 +75,7 @@ class WikiRenderer
 		return $objectperms;
 	} // }}}
 
-	function applyLocalPerms($objectperms, $permsDescs) // {{{
+	function applyLocalPerms($objectperms, $permDescs) // {{{
 	{
 		// This function is a kludge until a better more generic solution is found for "user specific" checking perms
 		global $prefs;
