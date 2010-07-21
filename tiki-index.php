@@ -197,6 +197,8 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 			if (strlen($p) > 0 && strtolower(substr($page, 0, strlen($p))) == strtolower($p)) {
 				$suffix = trim(substr($page, strlen($p)));
 				if (!ctype_digit($suffix) && $suffix) {
+					// allow escaped numerics as text
+					$suffix = stripslashes($suffix);
 					global $semanticlib;
 					if (!is_object($semanticlib)) {
 						require_once 'lib/wiki/semanticlib.php';		
