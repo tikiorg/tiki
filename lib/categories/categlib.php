@@ -873,7 +873,12 @@ class CategLib extends ObjectLib
 		global $cachelib; include_once('lib/cache/cachelib.php');
 		global $prefs;
 		if (!$categId) $categId = "0"; // avoid wrong cache
-		if( ! $ret = $cachelib->getSerialized("childcategs$categId") ) {
+		if ($all_descends) {
+			$cachekey = "allchildcategs$categId";
+		} else {
+			$cachekey = "childcategs$categId";
+		}
+		if( ! $ret = $cachelib->getSerialized("$cachekey") ) {
 			if ($all_descends == true) {
 				//find length of $categId name to delete later
 				$name = $this->get_category_name($categId);
@@ -1685,8 +1690,53 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 			$catObjectId = $this->add_categorized_object($objType, $objId, $desc, $name, $href);
 		}
 
+		global $prefs;
+		if ($prefs["category_autogeocode_within"]) {
+			$geocats = $this->get_child_categories($prefs["category_autogeocode_within"], true);
+		} else {
+			$geocats = false;
+		}
+
 		foreach ($new_categories as $category) {
 			$this->categorize($catObjectId, $category);
+			// Auto geocode if feature is on
+			if ($geocats) {
+				foreach ($geocats as $g) {
+					if ($category == $g["categId"]) {
+						$geonames = explode('::', $g["name"]);
+						$geonames = array_reverse($geonames);
+						$geoloc = implode(',', $geonames);
+						global $geolib;
+						if (!is_object($geolib)) {
+							include_once('lib/geo/geolib.php');
+						}
+						$geocode = $geolib->geocode($geoloc);
+						if ($geocode) {
+							global $attributelib;
+							if (!is_object($attributelib)) {
+								include_once('lib/attributes/attributelib.php');	
+							}
+							if ($prefs["category_autogeocode_replace"] != 'y') {
+								$attributes = $attributelib->get_attributes( $objType, $objId );
+								if ( !isset($attributes['tiki.geo.lon']) || !isset($attributes['tiki.geo.lat']) ) {
+									$geonotexists = true;
+								}
+							}
+							if ($prefs["category_autogeocode_replace"] == 'y' || isset($geonotexists) && $geonotexists) {
+								if ($prefs["category_autogeocode_fudge"] == 'y') {
+									$geocode = $geolib->geofudge($geocode);
+								}
+								$attributelib->set_attribute($objType, $objId, 'tiki.geo.lon', $geocode["lon"]);
+								$attributelib->set_attribute($objType, $objId, 'tiki.geo.lat', $geocode["lat"]);
+								if ($objType == 'trackeritem') {
+									$geolib->setTrackerGeo($objId, $geocode);
+								}
+							}
+						}
+						break;
+					}
+				}
+			}
 		}
 
 		foreach ($removed_categories as $category) {

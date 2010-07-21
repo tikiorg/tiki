@@ -42,6 +42,23 @@ function prefs_category_list() {
 			'filter' => 'digits',
 			'separator' => ',',
 		),
+		'category_autogeocode_within' => array(
+			'name' => tra('Automatically geocode items when categorized in'),
+			'description' => tra('Automatically geocode items based on category name when categorized in the sub-categories of this category ID'),
+			'type' => 'text',
+			'filter' => 'digits',
+			'size' => 3,
+		),
+		'category_autogeocode_replace' => array(
+			'name' => tra('Replace existing geocode if any'),
+			'description' => tra('When automatically geocoding items based on category name, replace existing geocode if any'),
+			'type' => 'flag',		
+		),
+		'category_autogeocode_fudge' => array(
+			'name' => tra('Use approximate geocode location'),
+			'description' => tra('When automatically geocoding items based on category name, use randomly approximated location instead of precise location'),
+			'type' => 'flag',		
+		),
 	);
 }
 
