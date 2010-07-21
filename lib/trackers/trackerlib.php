@@ -1260,13 +1260,11 @@ class TrackerLib extends TikiLib
 					include_once('lib/attributes/attributelib.php');
 				}
 				$geo = explode(',', $ins_fields['data'][$i]['value']);
-				if (isset($geo[0])) {
+				if (!empty($geo[0]) && !empty($geo[1])) {
 					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lon', $geo[0]);
-				}
-				if (isset($geo[1])) {
 					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lat', $geo[1]);
 				}
-				if (isset($geo[2])) {
+				if (!empty($geo[2])) {
 					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.google.zoom', $geo[2]);
 				}
 			}				
