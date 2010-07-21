@@ -82,40 +82,6 @@ class TransitionLib
 		return true;
 	}
 
-	function batchTransitions( $type='' ) {
-		$db = TikiDb::get();
-		$bindvars = array('y');
-		$query = 'SELECT * FROM `tiki_transitions` WHERE `batch` = ?';
-		if (!empty($type)) {
-			$query .= ' AND `type`=?';
-			$bindvars[] = $type;
-		}
-		$transitions = $db->fetchAll( $query, $bindvars );
-		foreach( $transitions as $tr ) {
-			$tr = $this->expandGuards( $tr );
-			$this->applyTransition($tr);
-		}
-	}
-
-	function applyTransition ($transition) {
-		switch ($transition['type']) {
-		case 'trackeritem':
-			global $trklib; include_once('lib/trackers/trackerlib.php');
-			if ($transition['guards'][0][0] == 'after creation') {
-				$filter = array('createdBefore' => $transition['guards'][0][1]);
-			} elseif ($transition['guards'][0][0] == 'after last modification') {
-				$filter = array('lastModifBefore' => $transition['guards'][0][1]);
-			} else {
-				$filter = '';
-			}
-			$objects = $trklib->list_items($transition['objectId'], 0, -1, 'created_asc', null, '', '', $transition[$from], '', '', $filter);
-			if (!empty($objects['data'])) {
-				$trklib->change_status($objects['data'], $transition['to']);
-			}
-			break;
-		}
-	}
-
 	function listTransitions( $states ) {
 		$db = TikiDb::get();
 
