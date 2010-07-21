@@ -902,6 +902,7 @@ class ToolbarDialog extends Toolbar
 						'<input type="text" id="tbFindSearch" class="ui-widget-content ui-corner-all" />',
 						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
+						'<p class="description">Note: Uses regular expressions</p>',	// TODO add option to not
 						'{"open": function() { dialogFindOpen(areaname); },'.
 						 '"buttons": { "Close": function() { dialogSharedClose(areaname,this); },'.
 									  '"Find": function() { dialogFindFind(areaname); }}}'
@@ -924,6 +925,7 @@ class ToolbarDialog extends Toolbar
 						'<input type="checkbox" id="tbReplaceCase" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
+						'<p class="description">Note: Uses regular expressions</p>',	// TODO add option to not
 						'{"open": function() { dialogReplaceOpen(areaname); },'.
 						 '"buttons": { "Close": function() { dialogSharedClose(areaname,this); },'.
 									  '"Replace": function() { dialogReplaceReplace(areaname); }}}'
