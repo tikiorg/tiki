@@ -160,6 +160,11 @@ $page = $_REQUEST["page"];
 $smarty->assign('page', $page);
 $info = $tikilib->get_page_info($page);
 
+//if $_REQUEST['copypaste'] is set from QuickEdit module this is the copy/paste field
+if (isset($_REQUEST['copypaste']) and $_REQUEST['copypaste']!='') {
+	$_REQUEST['edit']=$info['data']."\n".$_REQUEST['copypaste'];
+}
+
 // 2010-01-26: Keep in active until translation refactoring is done.
  if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
  	$editlib->prepareTranslationData();
