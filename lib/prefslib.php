@@ -37,7 +37,7 @@ class PreferencesLib
 			}
 		
 			$value = $source[$name];
-			if( !empty($value) && is_string( $value ) && $value{0} == ':' && false !== $unserialized = unserialize( $value ) ) {
+			if( !empty($value) && is_string( $value ) && ($value{0} == ':' || $value{1} == ':') && false !== $unserialized = unserialize( $value ) ) {
 				$value = $unserialized;
 			}
 
