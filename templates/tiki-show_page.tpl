@@ -277,7 +277,41 @@
 	};
 })($jq);
 
+var annote = $jq('<a href="">{tr}Comment{/tr}</a>')
+	.css('background','white')
+	.click( function( e ) {
+		e.preventDefault();
+		var annotation = $jq(this).attr('annotation');
+
+		$jq('#editpostform textarea').val(';note:' + annotation + "\n\n").focus().scroll();
+	} )
+	.appendTo(document.body);
+
 $jq('.postbody dt:contains("note")')
 	.closest('.postbody')
 	.addnotes( $jq('#top') );
+$jq('#top').mouseup( function( e ) {
+	var range;
+	if( window.getSelection ) {
+		range = window.getSelection().getRangeAt(0);
+	} else if( window.selection ) {
+		range = window.selection.getRangeAt(0);
+	}
+
+	if( range ) {
+		var string = $jq.trim( range.toString() );
+
+		if( string.length && -1 === string.indexOf( "\n" ) ) {
+			annote.attr('annotation', string);
+			annote.show().position( {
+				of: e,
+				at: 'bottom left',
+				my: 'top left',
+				offset: '10 10'
+			} );
+		} else {
+			annote.hide();
+		}
+	}
+} );
 {/jq}
