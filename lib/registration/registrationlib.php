@@ -208,7 +208,7 @@ class RegistrationLib extends TikiLib
 			return new RegistrationError('pass', tra("Password is required"));
 		
 		if ($novalidation != 'yes' and ($registration["pass"] != $registration["passAgain"]) and !isset($_SESSION['openid_url']))
-			new RegistrationError('passAgain', tra("The passwords don't match"));
+			return new RegistrationError('passAgain', tra("The passwords don't match"));
 		
 		if ($userlib->user_exists($registration['name']))
 			return new RegistrationError('name', tra("User already exists"));
