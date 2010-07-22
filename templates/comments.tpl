@@ -415,7 +415,9 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 						.click( function( e ) {
 							e.preventDefault();
 							var annotation = $jq(this).attr('annotation');
+							$jq(this).hide();
 
+							$jq('#editpostform').parents().show();
 							$jq('#editpostform textarea').val(';note:' + annotation + "\n\n").focus().scroll();
 						} )
 						.appendTo(document.body);
