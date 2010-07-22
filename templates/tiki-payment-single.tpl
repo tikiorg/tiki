@@ -5,7 +5,7 @@
 		<h2>{$payment_info.description|escape}</h2>
 	{/if}
 	<p>{tr}Status{/tr}: <strong>{$payment_info.state|escape}</strong></p>
-	{if $payment_info.fullview}
+	{if $payment_info.fullview and !empty($payment_detail)}
 		<div class="clearfix wikitext">
 			{$payment_detail}
 		</div>
@@ -49,7 +49,7 @@
 					<form action="{query _type='relative'}" method="post">
 						<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
 						<input type="hidden" name="cclite_payment_amount" value="{$payment_info.amount_remaining|escape}" />
-						<input type="submit" value="{tr}Transfer currency now{/tr}" />
+						<input type="submit" value="{tr}Trade with Cclite{/tr}" />
 					</form>
 					{if (!empty($ccresult) or !empty($ccresult2))}
 						{remarksbox title="{tr}Payment problem{/tr}" type="info"}
