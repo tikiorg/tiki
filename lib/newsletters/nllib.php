@@ -242,6 +242,8 @@ class NlLib extends TikiLib
 		if ($page_emails['cant'] > 0) {
 			foreach ( $page_emails['data'] as $page) {
 				$emails = $this->get_emails_from_page($page['wikiPageName']);
+				if (!is_array($emails))
+					continue;
 				foreach ( $emails as $email ) {
 					if (!empty($email)) {
 						$res = array(
