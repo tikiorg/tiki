@@ -241,3 +241,43 @@
 		{include file=tiki-page_bar.tpl}
 	{/if}
 {/if}
+{jq}
+
+(function($) {
+	$.fn.addnotes = function( container ) {
+		return this.each(function(){
+			var comment = this;
+			var text = $('dt:contains("note")', comment).next('dd').text();
+			var author = $('.author_info', comment).clone();
+			var body = $('.postbody-content', comment).clone();
+			body.find('dt:contains("note")').closest('dl').remove();
+
+			if( text.length > 0 ) {
+				var parents = container.find(':contains("' + text + '")').parent();
+				var node = container.find(':contains("' + text + '")').not(parents)
+					.addClass('highlight')
+					.each( function() {
+						var child = $('dl.note-list',this);
+						if( ! child.length ) {
+							child = $('<dl class="note-list"/>')
+								.appendTo(this)
+								.hide();
+
+							$(this).click( function() {
+								child.toggle();
+							} );
+						}
+
+						child.append( $('<dt/>')
+							.append(author) )
+							.append( $('<dd/>').append(body) );
+					} );
+			}
+		});
+	};
+})($jq);
+
+$jq('.postbody dt:contains("note")')
+	.closest('.postbody')
+	.addnotes( $jq('#top') );
+{/jq}

@@ -1165,3 +1165,11 @@ table.treeTable .parent td {
  /* wikiplugin_tracker */
 .trackerCategoryName {white-space:nowrap;}
 /* End of file */
+
+dl.note-list {
+	padding: 5px;
+	margin: 5px;
+	background: white;
+	color: black;
+	border: solid thin black;
+}
