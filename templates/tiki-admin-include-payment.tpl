@@ -37,7 +37,8 @@
 						{tr}Cclite is for creating and managing alternative or complementary trading currencies and groups{/tr}
 						{tr}Work in progress for Tiki 6{/tr}
 					{/remarksbox}
-					{preference name=payment_cclite_registry}
+					{preference name=payment_cclite_registries}
+					{preference name=payment_cclite_currencies}
 					<div class="adminoptionboxchild">
 						{preference name=payment_cclite_gateway}
 						{preference name=payment_cclite_merchant_user}

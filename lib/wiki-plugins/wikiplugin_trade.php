@@ -20,12 +20,18 @@ function wikiplugin_trade_info() {
 				'description' => tr('Price.', $prefs['payment_currency']),
 				'filter' => 'text',
 			),
-//			'quantity' => array(
-//				'required' => false,
-//				'name' => tra('Quantity'),
-//				'description' => tra('Number of items to trade.') . ' ' . tra('Leave empty to display an input box.') . ' ' . tra('Use negative numbers for input box default (otherwise default is 1).'),
-//				'filter' => 'int',
-//			),
+			'registry' => array(
+				'required' => false,
+				'name' => tra('Registry'),
+				'description' => tr('Registry to trade in. Default: site preference (or first in list when more than one)'),
+				'filter' => 'text',
+			),
+			'currency' => array(
+				'required' => false,
+				'name' => tra('Currency'),
+				'description' => tr('Currency to trade in. Default: Cclite currency preference for registry set above'),
+				'filter' => 'text',
+			),
 			'other_user' => array(
 				'required' => false,
 				'name' => tra('Other user'),
@@ -61,11 +67,18 @@ function wikiplugin_trade_info() {
 
 function wikiplugin_trade( $data, $params, $offset ) {
 	global $smarty, $userlib, $prefs, $user, $headerlib;
+	global $cclitelib; require_once 'lib/payment/cclitelib.php';
 	global $paymentlib; require_once 'lib/payment/paymentlib.php';
 	static $iPluginTrade = 0;
 
-	$default = array( 'currentuser'=>'y', 'inputtitle'=>'', 'howtitle' => '', 'wanted' => 'n', 'action' => tra('Continue'), 'quantity' => -1);
+	$default = array( 'inputtitle'=>'', 'wanted' => 'n', 'action' => tra('Continue'), 'registry' => '', 'currency' => '' );
 	$params = array_merge( $default, $params );
+	if (empty($params['registry'])) {
+		$params['registry'] = $cclitelib->get_registry();
+	}
+	if (empty($params['currency'])) {
+		$params['currency'] = $cclitelib->get_currency($params['registry']);
+	}
 	
 	$iPluginTrade++;
 	$smarty->assign('iPluginTrade', $iPluginTrade);
@@ -109,10 +122,19 @@ function wikiplugin_trade( $data, $params, $offset ) {
 	
 	if( ( !empty($info) && $info['waiting'] == null )) {
 
+		// user clicked "continue" (probably)
 		if( isset($_POST['wp_trade_offset']) && $_POST['wp_trade_offset'] == $offset ) {
 
 			$id = $paymentlib->request_payment( $desc, $params['price'], $prefs['payment_default_delay'] );
-			$paymentlib->register_behavior( $id, 'complete', 'perform_trade', array( $user, $params['other_user'], $params['price'], $prefs['payment_currency'], $params['wanted'] ) );
+
+			if (empty($user)) {
+				return '{REMARKSBOX(type=warning, title=Plugin Trade Error)}' .
+					tra('Please log in.') . '{REMARKSBOX}';
+			} else {
+				$params['main_user'] = $user;
+			}
+			$params['invoice'] = $id;
+			$paymentlib->register_behavior( $id, 'complete', 'perform_trade', array($params) );
 
 			//$smarty->assign( 'wp_trade_title', $desc );
 			require_once 'lib/smarty_tiki/function.payment.php';
@@ -122,7 +144,7 @@ function wikiplugin_trade( $data, $params, $offset ) {
 			return '^~np~' . smarty_function_payment( array( 'id' => $_POST['invoice'] ), $smarty ) . '~/np~^';
 		}
 
-	} elseif ($info['waiting'] != null) {
+	} else if ($info['waiting'] != null) {
 		return '{REMARKSBOX(type=warning, title=Plugin Trade Error)}' . tra('The user ') . '<em>' . $info['login'] 
 				. '</em>' . tra(' needs to validate their account.')
 				. '{REMARKSBOX}';

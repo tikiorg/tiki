@@ -10,16 +10,22 @@ class CCLiteLib extends TikiDb_Bridge
 	// member vars (defaults from prefs)
 	private $gateway;
 	private $key_hash;
-	private $registry;
-	private $currency;
+	private $registries;
+	private $currencies;
 	private $merchant_user;
 	
 	function __construct() {
-		global $prefs;
+		global $prefs, $access;
+		// check for essential prefs
+		$access->check_feature('payment_feature');
+		// need to add a check for empty, not just y/n - TODO one day
+		//$access->check_feature('payment_cclite_registries');
+		//$access->check_feature('payment_cclite_gateway');
+		//$access->check_feature('payment_cclite_merchant_key');
 		
 		$this->gateway = rtrim($prefs['payment_cclite_gateway'], '/');
-		$this->registry = $prefs['payment_cclite_registry'];
-		$this->currency = $prefs['payment_currency'];
+		$this->registries = unserialize( $prefs['payment_cclite_registries'] );
+		$this->currencies = unserialize($prefs['payment_cclite_currencies']);
 		$this->merchant_user = $prefs['payment_cclite_merchant_user'];
 				
 		if (($prefs['payment_cclite_mode'] == 'test' && $_SERVER['SERVER_ADDR'] != '127.0.0.1' && $_SERVER['SERVER_ADDR'] != '::1') || empty($prefs['payment_cclite_test_ip'])) {
@@ -30,6 +36,50 @@ class CCLiteLib extends TikiDb_Bridge
 		}
 		$api_hash = hash( $prefs['payment_cclite_hashing_algorithm'] , ( $prefs['payment_cclite_merchant_key'] . $ip), 'true');
 		$this->key_hash = CCLiteLib::urlsafe_b64encode($api_hash);
+	}
+	
+	public function get_registries() {
+		return $this->registries;
+	}
+	
+	public function get_registry() {
+		if (!empty($this->registries)) {
+			return $this->registries[0];	// default if not specified in plugins etc
+		} else {
+			global $access, $page;
+			$access->display_error($page, tra('Cclite error'), '500', true, tra('No registries specified in admin/payment/cclite.'));
+		}
+	}
+	
+	public function get_currencies() {
+		return $this->currencies;
+	}
+	
+	/**
+	 * @param string $reg Registry to find currency for (uses registries[0] if not specified)
+	 */
+	public function get_currency($reg = '') {
+		global $prefs;
+		
+		if (empty($reg)) {
+			$reg = $this->get_registry();
+		}
+		
+		$i = array_search($reg, $this->registries);
+		
+		if ($i !== false) {
+			return $this->currencies[$i];
+		} else {
+			return $prefs['payment_currency'];
+		}
+	}
+	
+	public function get_currency_for_resgistry() {
+		if (!empty($this->currencies)) {
+			return $this->currencies[0];
+		} else {
+			return $prefs['payment_currency'];
+		}
 	}
 	
 	public function get_invoice( $ipn_data ) {
@@ -81,7 +131,7 @@ class CCLiteLib extends TikiDb_Bridge
 
 	/**
 	 * This function just calls $paymentlib->enter_payment() which then triggers the behaviours
-	 * The behaviours the do the transfer of currency
+	 * The behaviours the do the actual transfer of currency
 	 * 
 	 * @param int $invoice
 	 * @param decimal $amount
@@ -92,13 +142,14 @@ class CCLiteLib extends TikiDb_Bridge
 	 * @return string result from cclite
 	 */
 	public function pay_invoice($invoice, $amount, $currency = '', $registry = '', $source_user = '') {
-		global $user, $prefs, $paymentlib;
+		global $user, $prefs, $paymentlib, $tikilib;
 		require_once 'lib/payment/paymentlib.php';
 		
-		$res = true;
-		$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
+		$msg = tr('Cclite payment initiated on %0', $tikilib->get_short_datetime($tikilib->now));
 		
-		return $res;
+		$paymentlib->enter_payment( $invoice, $amount, 'cclite', array('info' => $msg));
+		
+		return $msg;
 	}
 
 	/**
@@ -119,7 +170,7 @@ class CCLiteLib extends TikiDb_Bridge
 			$source_user = $this->merchant_user;
 		}
 		
-		$res = $this->cclite_send_request('pay', $amount, $destination_user, $currency, $registry, $source_user);
+		$res = $this->cclite_send_request('pay', $destination_user, $registry, $amount, $currency, $source_user);
 		
 //		if (strpos($res, 'Transaction Accepted') !== false) {	// e.g. "Transaction Accepted<br/>Ref:&nbsp;hpnUKZZ4BMG4IXDHVmfxXdubtsk"
 //			$paymentlib->enter_payment( $invoice, $amount, 'cclite', array($res) );
@@ -151,16 +202,17 @@ class CCLiteLib extends TikiDb_Bridge
 	 * Adapted from cclite 0.7 drupal gateway (example)
 	 * 
 	 * @command		recent|summary|pay|adduser|modifyuser|debit
-	 * @amount		amount
-	 * @other_user	destination for payment etc
-	 * @currency	currency (same as currency "name" in cclite (not "code" yet)
+	 * @other_user	destination for payment - uses merchant_user if empty
 	 * @registry	cclite registry
-	 * @other		unused
+	 * @amount		amount (decimal/float for cost, or email for adduser command)
+	 * @currency	currency (same as currency "name" in cclite (not "code" yet)
+	 * 				defaults to registry currency
+	 * @main_user	source of payment - uses logged in user if empty
 	 * 
 	 * @return		result from cclite server (html hopefully)
 	 */
 
-	function cclite_send_request( $command, $amount = 0, $other_user = '', $currency = '', $registry = '', $main_user = '') {
+	function cclite_send_request( $command, $other_user = '', $registry = '', $amount = 0, $currency = '', $main_user = '') {
 		global $user, $prefs;
 		
 		if (empty($other_user)) { $other_user = $this->merchant_user; }
@@ -213,6 +265,7 @@ class CCLiteLib extends TikiDb_Bridge
 				break;
 		case 'adduser':
 			// direct/adduser/dalston/test1/email using the merchant key, without using individual logon
+			// email passed in as $amount
 			$REST_url = "$cclite_base_url/direct/adduser/$registry/" . urlencode($other_user . '/' . $amount);
 			curl_setopt($ch, CURLOPT_COOKIE, 'merchant_key_hash=' . $this->key_hash);
 			break;
@@ -280,7 +333,7 @@ class CCLiteLib extends TikiDb_Bridge
 				if (preg_match('/^(login failed for '.$username.'.*'.$registry.'.*)$/mi', $logon, $results)) {	// no user there?
 					$email = $userlib->get_user_email($username);
 					if ($email) {	// required
-						$res = $this->cclite_send_request('adduser', $email, $username, $registry);	// not currently working cclite 0.7.0
+						$res = $this->cclite_send_request('adduser', $username, $registry, $email);	// not currently working cclite 0.7.0
 						if ($res && !preg_match('/404 Not Found/', $res)) {							// seems to return a 404 :(
 							$logon = curl_exec($ch);	// retry login
 						} else {

@@ -18,24 +18,28 @@
  * @param string $currency
  * @param string $wanted = 'n'
  */
-function payment_behavior_perform_trade( $main_user, $other_user, $price, $currency = '', $wanted = 'n' ) {
+function payment_behavior_perform_trade( $params ) {
 	global $userlib, $paymentlib, $prefs, $cclitelib, $smarty;
 	require_once 'lib/payment/cclitelib.php';
+	
+	$default = array( 'wanted' => 'n', 'registry' => '', 'currency' => '' );
+	$params = array_merge( $default, $params );
+	
 	$smarty->assign('ccresult_ok', false);
 	
 	
-	if (!$userlib->user_exists( $main_user)) {
-		$smarty->assign('ccresult2', "Perform Trade: Main user $main_user not found");
+	if (!$userlib->user_exists( $params['main_user'])) {
+		$smarty->assign('ccresult2', "Perform Trade: Main user {$params['main_user']} not found");
 	}
-	if (!$userlib->user_exists( $other_user)) {
-		$smarty->assign('ccresult2', "Perform Trade: Other user $other_user not found");
+	if (!$userlib->user_exists( $params['other_user'])) {
+		$smarty->assign('ccresult2', "Perform Trade: Other user {$params['other_user']} not found");
 	}
 	
-	if (!$price || (int) $price === 0) {
+	if (!$params['price'] || (int) $params['price'] === 0) {
 		$smarty->assign('ccresult2', "Perform Trade: price not set");
 	}
 	
-	$result = $cclitelib->pay_user( $price, $currency, '', $other_user, $main_user );
+	$result = $cclitelib->pay_user( $params['price'], $params['currency'], $params['registry'], $params['other_user'], $params['main_user'] );
 	
 	if (!empty($result)) {
 		$smarty->assign('ccresult2', $result);
@@ -43,6 +47,6 @@ function payment_behavior_perform_trade( $main_user, $other_user, $price, $curre
 	} else {
 		$smarty->assign('ccresult2', tr('Payment sent but verification not currently available. (Work in progress)'));
 	}
-	
+	return $result;
 }
 

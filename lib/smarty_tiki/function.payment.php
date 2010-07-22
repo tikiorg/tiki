@@ -27,10 +27,11 @@ function smarty_function_payment( $params, $smarty ) {
 			
 			//$access->check_authenticity( tr('Transfer currency? %0 %1?', $info['amount'], $info['currency'] ));
 			
+			// no notification callback in cclite yet, so have to assume true for now (pending checking in perform_trade)
 			$result = $cclitelib->pay_invoice($invoice, $info['amount'], $info['currency']);
 			if ($result) {
 				// ccresults are set in smarty by the perform_trade behaviour
-				//$smarty->assign('ccresult', $result);
+				$smarty->assign('ccresult', $result);
 				$smarty->assign('ccresult_ok', $result);
 			} else {
 				$smarty->assign('ccresult', tr('Payment sent but verification not currently available. (Work in progress)'));

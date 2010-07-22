@@ -29,6 +29,12 @@ function wikiplugin_cclite_info() {
 					array('text' => tra('Validate account'), 'value' => 'validate'), 
 				),
 			),
+			'registry' => array(
+				'required' => false,
+				'name' => tra('Registry'),
+				'description' => tr('Registry to query. Default: site preference (or first in list when more than one)'),
+				'filter' => 'text',
+			),
 		),
 	);
 }
@@ -43,7 +49,10 @@ function wikiplugin_cclite( $data, $params, $offset ) {
 				. '{REMARKSBOX}';
 	}
 	
-	$default = array( 'mode'=>'summary' );
+	$default = array( 'mode'=>'summary', 'registry' => '' );
+	if (is_array($default['registry']) && !empty($default['registry'])) {
+		$default['registry'] = $default['registry'][0];
+	}
 	$params = array_merge( $default, $params );
 	
 	switch ($params['mode']) {
