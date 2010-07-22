@@ -355,7 +355,7 @@ class UsersLib extends TikiLib
 		$shib_skip_admin = ($prefs['shib_skip_admin'] == 'y');
 
 		if ( strlen($pass) < $prefs['min_pass_length'] and ($user === 'admin' or (!$auth_cas and !$auth_shib )) ) {
-			return false;
+			return array(false, $user, $this->user_exists($user)?PASSWORD_INCORRECT:USER_NOT_FOUND);
 		}
 
 		// first attempt a login via the standard Tiki system

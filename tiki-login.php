@@ -321,16 +321,15 @@ if ($isvalid) {
 			}
 			$userlib->set_unsuccessful_logins($user, $nb_bad_logins + 1);
 		}
-		unset($user);
 		unset($isvalid);
 		switch ($error) {
 			case PASSWORD_INCORRECT:
-				$error = 'Invalid password';
-				break;
-
 			case USER_NOT_FOUND:
-				$error = 'Invalid username';
-				break;
+				$smarty->assign('error_login', $error);
+				$smarty->assign('mid', 'tiki-login.tpl');
+				$smarty->assign('error_user', $user);
+				$smarty->display('tiki.tpl');
+				exit;
 
 			case ACCOUNT_DISABLED:
 				$error = 'Account disabled';
@@ -352,7 +351,6 @@ if ($isvalid) {
 			default:
 				$error = 'Invalid username or password';
 		}
-		if (isset($user) and $prefs['feature_score'] == 'y') $tikilib->score_event($user, 'login');
 		if (isset($extraButton)) $smarty->assign_by_ref('extraButton', $extraButton);
 		$smarty->assign('msg', tra($error));
 		$smarty->display('error.tpl');

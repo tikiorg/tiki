@@ -89,9 +89,16 @@ function capLock(e){
 	 {if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
         <fieldset>
           <legend>{tr}Log in as{/tr}&hellip;</legend>
+		  {if !empty($error_login)}
+			{remarksbox type='errors' title='{tr}Error{/tr}'}
+				{if $error_login == -5 {*USER_NOT_FOUND (define does not work on old php)*}}{tr}Invalid username{/tr}
+				{elseif $error_login == -3 {*PASSWORD_INCORRECT*}}{tr}Invalid password{/tr}
+				{else}{$error_login|escape}{/if}
+			{/remarksbox}
+		  {/if}
             <div><label for="login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</label><br />
 		{if $loginuser eq ''}
-              <input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+              <input type="text" name="user" id="login-user" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" {if !empty($error_login)} value="{$error_user|escape}"{/if} />
 	  <script type="text/javascript">document.getElementById('login-user').focus();</script>
 		{else}
 		      <input type="hidden" name="user" id="login-user" value="{$loginuser}" /><b>{$loginuser}</b>
