@@ -60,3 +60,10 @@ Disallow: /tiki-tell_a_friend.php
 Disallow: /tiki-user_information.php
 Disallow: /tiki-view_cache.php
 
+# Disallow mobile
+Disallow: /tiki-*.php?*mode=mobile*
+Disallow: /*&mode=mobile*
+
+# Disallow fullscreen mode
+Disallow: /tiki-*.php?*fullscreen=y*
+Disallow: /*&fullscreen=y*
