@@ -39,7 +39,9 @@ $map = array(
 	"intertiki.logout" => array("function"=>"logout"),
 	"intertiki.cookiecheck" => array("function"=>"cookie_check"),
 	"intertiki.version" => array("function"=>"get_version"),
-	'intertiki.getUserInfo' => array('function' => 'get_user_info')
+	'intertiki.getUserInfo' => array('function' => 'get_user_info'),
+	'intertiki.getRegistrationPrefs' => array('function' => 'get_registration_prefs'),
+	'intertiki.registerUser' => array('function' => 'register_user')
 );
 $s = new XML_RPC_Server($map);
 
@@ -94,7 +96,7 @@ function validate($params) {
 }
 
 function set_user_info($params) {
-	global $userlib, $prefs;
+	global $tikilib, $userlib, $prefs;
 	if ($prefs['feature_userPreferences'] != 'y') {
 		return new XML_RPC_Response(new XML_RPC_Value(1, 'boolean'));
 	}
@@ -111,7 +113,7 @@ function set_user_info($params) {
 }
 
 function logout($params) {
-	global $userlib,$logslib,$prefs;
+	global $tikilib, $userlib,$logslib,$prefs;
 	$key = $params->getParam(0); $key = $key->scalarval();
 	$login = $params->getParam(1); $login = $login->scalarval();
 	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
@@ -129,7 +131,7 @@ function logout($params) {
 }
 
 function cookie_check($params) {
-	global $userlib,$prefs;
+	global $tikilib, $userlib,$prefs;
 	$key = $params->getParam(0); $key = $key->scalarval();
 	$hash = $params->getParam(1); $hash = $hash->scalarval();
 	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
@@ -153,7 +155,7 @@ function get_version($params) {
 }
 
 function get_user_info($params) {
-	global $prefs, $userlib;
+	global $tikilib, $prefs, $userlib;
 	$key = $params->getParam(0); $key = $key->scalarval(); 
 	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
 		$msg = tra('Invalid server key');
@@ -177,3 +179,44 @@ function get_user_info($params) {
 	$ret['email'] = new XML_RPC_Value($email, "string");
 	return new XML_RPC_Response(new XML_RPC_Value($ret, "struct"));
 }
+
+function get_registration_prefs($params) {
+	global $tikilib, $prefs, $registrationlib, $logslib;
+
+	$key = $params->getParam(0); $key = $key->scalarval();
+	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
+		$msg = tra('Invalid server key');
+		if ($prefs['intertiki_errfile']) logit($prefs['intertiki_errfile'],$msg,$key,INTERTIKI_BADKEY,$prefs['known_hosts'][$key]['name']);
+		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
+		return new XML_RPC_Response(0, 101, $msg);
+	}
+
+	if (!isset($prefs['known_hosts'][$key]['allowusersregister']) || ($prefs['known_hosts'][$key]['allowusersregister'] != 'y'))
+		return new XML_RPC_Response(0, 101, "Users are not allowed to register via intertiki on this master.");
+
+	require_once 'lib/registration/registrationlib.php';
+
+	return new XML_RPC_Response(XML_RPC_encode($registrationlib->merged_prefs));
+}
+
+function register_user($params) {
+	global $tikilib, $prefs, $registrationlib, $logslib;
+
+	$key = $params->getParam(0); $key = $key->scalarval(); 
+	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
+		$msg = tra('Invalid server key');
+		if ($prefs['intertiki_errfile']) logit($prefs['intertiki_errfile'],$msg,$key,INTERTIKI_BADKEY,$prefs['known_hosts'][$key]['name']);
+		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
+		return new XML_RPC_Response(0, 101, $msg);
+	}
+
+	if (!isset($prefs['known_hosts'][$key]['allowusersregister']) || ($prefs['known_hosts'][$key]['allowusersregister'] != 'y'))
+		return new XML_RPC_Response(0, 101, "Users are not allowed to register via intertiki on this master.");
+
+	require_once 'lib/registration/registrationlib.php';
+
+	$result=$registrationlib->register_new_user_from_intertiki(XML_RPC_decode($params->getParam(1)));
+
+	return new XML_RPC_Response(XML_RPC_encode($result));
+}
+

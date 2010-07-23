@@ -7,10 +7,12 @@
 
 require_once ('tiki-setup.php');
 require_once ('lib/registration/registrationlib.php');
+if (is_a($registrationlib->merged_prefs, "RegistrationError")) register_error($registrationlib->merged_prefs->msg);
+$smarty->assign_by_ref('merged_prefs', $registrationlib->merged_prefs);
 
 $smarty->assign('headtitle', tra('Register'));
 // Permission: needs p_register and not to be a slave
-if ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']))) {
+if ($prefs['allowRegister'] != 'y') {
 	header("location: index.php");
 	die;
 }
@@ -27,32 +29,19 @@ if (!$https_mode && $prefs['https_login'] == 'required') {
 	header('Location: ' . $base_url_https . 'tiki-register.php');
 	die;
 }
-// novalidation is set to yes if a user confirms his email is correct after tiki fails to validate it
-if (!isset($_REQUEST['novalidation'])) {
-	$novalidation = '';
-} else {
-	$novalidation = $_REQUEST['novalidation'];
-}
 //get custom fields
 $customfields = $registrationlib->get_customfields();
 $smarty->assign_by_ref('customfields', $customfields);
-$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-$nbChoiceGroups = 0;
-$mandatoryChoiceGroups = true;
-foreach($listgroups['data'] as $gr) {
-	if ($gr['registrationChoice'] == 'y') {
-		++$nbChoiceGroups;
-		$theChoiceGroup = $gr['groupName'];
-		if ($gr['groupName'] == 'Registered') $mandatoryChoiceGroups = false;
-	}
-}
-if ($nbChoiceGroups) {
-	$smarty->assign('listgroups', $listgroups['data']);
-	if ($nbChoiceGroups == 1) {
-		$smarty->assign_by_ref('theChoiceGroup', $theChoiceGroup);
-	}
+
+//groups choice
+if (count($registrationlib->merged_prefs['choosable_groups'])) {
+    $smarty->assign('listgroups', $registrationlib->merged_prefs['choosable_groups']);
+    if (count($registrationlib->merged_prefs['choosable_groups']) == 1) {
+	$smarty->assign_by_ref('theChoiceGroup', $registrationlib->merged_prefs['choosable_groups'][0]['groupName']);
+    }
 }
 
+$email_valid='y';
 if (isset($_REQUEST['register'])) {
 	check_ticket('register');
 	$cookie_name = $prefs['session_cookie_name'];
@@ -62,9 +51,8 @@ if (isset($_REQUEST['register'])) {
 
 	$smarty->assign('errortype', 'no_redirect_login');
 
-	$email_valid='y';
 	$result=$registrationlib->register_new_user($_REQUEST);
-	if (is_a($result, 'RegistrationError')) {
+	if (is_a($result,"RegistrationError")) {
 		if ($result->field == 'email' && $result->field == 'email_not_valid') // i'm not sure why email is a special case..
 			$email_valid='n';
 		else
@@ -76,15 +64,15 @@ if (isset($_REQUEST['register'])) {
 
 }
 
-if ($prefs['userTracker'] == 'y') {
+if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 	$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup']) ? $_REQUEST['chosenGroup'] : 'Registered');
 	if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 		include_once ('lib/wiki-plugins/wikiplugin_tracker.php');
-		if ($prefs["user_register_prettytracker"] == 'y' && !empty($prefs["user_register_prettytracker_tpl"])) {
-			if (substr($prefs["user_register_prettytracker_tpl"], -4) == ".tpl") {
-				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'tpl' => $prefs["user_register_prettytracker_tpl"]));
+		if ($registrationlib->merged_prefs["user_register_prettytracker"] == 'y' && !empty($registrationlib->merged_prefs["user_register_prettytracker_tpl"])) {
+			if (substr($registrationlib->merged_prefs["user_register_prettytracker_tpl"], -4) == ".tpl") {
+				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'tpl' => $registrationlib->merged_prefs["user_register_prettytracker_tpl"]));
 			} else {
-				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'wiki' => $prefs["user_register_prettytracker_tpl"]));
+				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'wiki' => $registrationlib->merged_prefs["user_register_prettytracker_tpl"]));
 			}	
 		} else {
 			$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y'));
@@ -96,10 +84,10 @@ if ($prefs['userTracker'] == 'y') {
 $smarty->assign('email_valid', $email_valid);
 ask_ticket('register');
 $_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");
-$smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $prefs['min_username_length'], "0-9,a-z,A-Z"));
-$smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $prefs['min_pass_length'], "0-9,a-z,A-Z"));
-$smarty->assign('min_username_length', $prefs['min_username_length']);
-$smarty->assign('min_pass_length', $prefs['min_pass_length']);
+$smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $registrationlib->merged_prefs['min_username_length'], "0-9,a-z,A-Z"));
+$smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $registrationlib->merged_prefs['min_pass_length'], "0-9,a-z,A-Z"));
+$smarty->assign('min_username_length', $registrationlib->merged_prefs['min_username_length']);
+$smarty->assign('min_pass_length', $registrationlib->merged_prefs['min_pass_length']);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // xajax
@@ -151,6 +139,7 @@ function chkRegEmail($mail) {
 function register_error($msg) {
 	global $smarty;
 	$smarty->assign('msg', $msg);
+	$smarty->assign('errortype', 0);
 	$smarty->display("error.tpl");
 	die;
 }

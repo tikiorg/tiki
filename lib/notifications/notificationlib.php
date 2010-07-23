@@ -80,4 +80,4 @@ class NotificationLib extends TikiLib
 	}
 
 }
-$notificationlib = new NotificationLib;
+$GLOBALS['notificationlib'] = new NotificationLib;
