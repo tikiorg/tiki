@@ -204,11 +204,17 @@ table.normal a {
 .rbox-data {
 	background: url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-small_25_c5ddfc_40x40.png) repeat scroll 50% 50%;
 	border: 1px solid #E69700;
-	color: #e8a119;
+	color: #0086E4;
+}	
+	
+.rbox-title a, 
+.rbox-data a {
+	color: #003564;
 }	
 	
 .rbox-title {
 	border-bottom: none !important;
+	color: #003564;
 }
 	
 .errors .rbox-title,

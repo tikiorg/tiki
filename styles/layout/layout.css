@@ -936,8 +936,9 @@ span.moduleflip,
 	bottom: -1px;
 }
 	
-.rbox img {
-	vertical-align: middle;
+.rbox-title .icon {
+	padding: 0 .35em 0 0;
+	vertical-align: top;
 }
 	
 .rbox-data {

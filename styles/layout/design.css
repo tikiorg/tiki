@@ -396,8 +396,7 @@ div.help_section {
 
 .rbox-title {
 	border-bottom-color: #eee;
-	padding-top: .1em;
-	padding-bottom: .1em;
+	padding: 0.35em 0.9em 0.1em;
 	font-weight: bold;
 }
 	

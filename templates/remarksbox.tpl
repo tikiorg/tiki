@@ -9,7 +9,7 @@
 	<div class="rbox-title">
 {if $remarksbox_icon ne 'none'}
 	{capture name='alt'}{tr}{$remarksbox_type}{/tr}{/capture}
-	{icon _id=$remarksbox_icon style='vertical-align: middle' alt=$smarty.capture.alt}
+	{icon _id=$remarksbox_icon alt=$smarty.capture.alt}
 {/if}
 		<span>{$remarksbox_title}</span>
 	</div>

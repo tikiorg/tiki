@@ -364,8 +364,8 @@ h3.box-title,
 /*	-moz-background-clip: border;
 	-moz-background-inline-policy: continuous;
 	-moz-background-origin :padding;*/
-	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 50%;
-	border: 1px solid #fcefa1;
+	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x scroll 50% 50%;
+	border: 1px solid #ccc;
 	color: #363636;
 }
 
