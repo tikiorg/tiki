@@ -3705,6 +3705,7 @@ CREATE TABLE `tiki_todo` (
 DROP TABLE IF EXISTS `tiki_todo_notif`;
 CREATE TABLE `tiki_todo_notif` (
 	`todoId` INT(12) NOT NULL,
+	`objectType` VARCHAR(50),
 	`objectId` VARCHAR(255) default NULL,
 	KEY `todoId` (`todoId`),
 	KEY `objectId` (`objectId`)
