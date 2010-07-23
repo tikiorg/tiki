@@ -45,9 +45,9 @@ if (isset($_REQUEST['request_facebook'])) {
 		$socialnetworkslib->getFacebookRequestToken();
 	} else {
 		if ($tikilib->get_user_preference($user, 'facebook_token', '')=='') {
-			// this is the callback from twitter
+			// this is the callback from facebook
 			check_ticket('socialnetworks');
-			$socialnetworkslib->getFacebookAccessToken($user,$_REQUEST['code']);
+			$socialnetworkslib->getFacebookAccessToken($user);
 		} // otherwise it is just a reload of this page
 	}
 }
