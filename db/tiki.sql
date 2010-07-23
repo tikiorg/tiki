@@ -3526,7 +3526,7 @@ CREATE TABLE `tiki_transitions` (
     `from` varchar(255) NOT NULL,
     `to` varchar(255) NOT NULL,
     `guards` text,
-    PRIMARY KEY(`transitionId`),
+    PRIMARY KEY(`transitionId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_auth_tokens`;
