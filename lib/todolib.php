@@ -37,6 +37,7 @@ class TodoLib
 			$bindvars[] = $todoId;
 		}
 		if (!empty($where)) $query .= ' WHERE ' . implode(' AND ', $where);
+		$query .= 'ORDER BY `todoId` asc';// so that actions arrive before notification
 		$todos = $db->fetchAll($query, $bindvars);
 		foreach( $todos as $i=>$todo ) {
 			$todos[$i]['from'] = json_decode($todo['from'], true);
@@ -57,13 +58,22 @@ class TodoLib
 		$db = TikiDb::get();
 		$query = 'DELETE FROM `tiki_todo` WHERE `todoId`=? OR (`objectId`=? AND `objectType`=?)';
 		$db->query($query, array($id, $id, 'todo'));
+		TodoLib::cleanNotif();
 	}
-	function delObjectTodo($id) {
+	function delObjectTodo($objectType, $objectId) {
+		$db = TikiDb::get();
+		$query = 'DELETE FROM `tiki_todo_notif` WHERE `objectType`=? AND `objectId` = ?';
+		$db->query($query, array($objectType, $objectId));
+		$query = 'DELETE FROM `tiki_todo` WHERE `objectType`=? AND `objectId`=?';
+		$db->query($query, array($objectType, $objectId));
+		TodoLib::cleanNotif();
 	}
 	// apply a todo
 	function applyTodo($todo) {
 		switch ($todo['objectType']) {
 		case 'todo':
+			// echo '<pre>ALREADY';print_r($this->alreadyNotif($todo['todoId'])); echo '</pre>';
+			$todo['for']['after'] = $todo['after'];
 			$objects = $this->listObjectsTodo($todo['for'], $this->alreadyNotif($todo['todoId']));
 
 			if (!empty($objects)) {
@@ -73,10 +83,11 @@ class TodoLib
 				}
 				$this->$func($todo, $objects);
 			}
-			//echo '<pre>';print_r($objects); echo '</pre>';
+			// echo '<pre>MAIL';print_r($objects); echo '</pre>';
 			break;
 		default:
 			$objects = $this->listObjectsTodo($todo);
+			// echo '<pre>';print_r($objects); echo '</pre>';
 			if (!empty($objects)) {
 				$func = 'applyTodo_'.$todo['objectType'];
 				if (!method_exists($this, $func)) {
@@ -99,17 +110,24 @@ class TodoLib
 		$db = TikiDb::get();
 		$query = 'SELECT `objectId` FROM `tiki_todo_notif` WHERE `todoId`=?';
 		$objects = $db->fetchAll($query, array($todoId));
+		foreach ($objects as $i=>$object) {
+			$objects[$i] = $object['objectId'];
+		}
 		return $objects;
 	}
-	function addNotif($todoId, $objectId) {
+	function addNotif($todoId, $objectType, $objectId) {
 		$db = TikiDb::get();
-		$query = 'INSERT INTO `tiki_todo_notif` (`todoId`, `objectId`) VALUES(?,?)';
-		$db->query($query, array($todoId, $objectId));
+		$query = 'INSERT INTO `tiki_todo_notif` (`todoId`, `objectType`, `objectId`) VALUES(?,?,?)';
+		$db->query($query, array($todoId, $objectType, $objectId));
 	}
 	function delNotif($todoId) {
 		$db = TikiDb::get();
 		$query = 'DELETE FROM `tiki_todo_notif` WHERE `todoId`=?';
 		$db->query($query, array($todoId));
+	}
+	function cleanNotif() {
+		$db = TikiDb::get();
+		$query = 'DELETE FROM `tiki_todo_notif` WHERE `todoId` NOT IN (SELECT `todoId` FROM `tiki_todo`)';
 	}
 	function mailTodo($todo, $to, $default_subject='Change notification', $default_body='') {
 		global $userlib, $tikilib, $prefs, $smarty;
@@ -153,7 +171,7 @@ class TodoLib
 		if (empty($except))
 			return $objects['data'];
 		$res = array();
-		foreach ($ojects['data'] as $object) {
+		foreach ($objects['data'] as $object) {
 			if (!in_array($object['itemId'], $except)) {
 				$res[] = $object;
 			}
@@ -183,7 +201,7 @@ class TodoLib
 			// mail creator
 			$this->mailTodo($todo, array('user'=>$u), 'Tracker item status will be changed');
 			//register as been mailed
-			$this->addNotif($todo['todoId'], $object['itemId']);
+			$this->addNotif($todo['todoId'], 'trackeritem', $object['itemId']);
 		}
 	}
 }

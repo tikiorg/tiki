@@ -480,7 +480,7 @@
 			<tr class="formcolor">
 				<td>{tr}Wiki page to display an item{/tr}</td>
 				<td><input type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}" />
-				<br /><em>{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}</td>
+				<br /><em>{tr}wiki:pageName for a wiki page or tplName.tpl for a template{/tr}</em></td>
 			</tr>
 
 			{if !empty($info.todos)}
@@ -541,8 +541,8 @@
 					<fieldset>
 						<legend>{tr}Notification{/tr}</legend>
 						{tr}Notify creator the change{/tr}{html_select_duration prefix='todo_notif'}{tr}before change{/tr}<br />
-						<label>{tr}Mail subject text{/tr}<input type="text" name="todo_subject" /><br />
-						</label> <label>{tr}Mail body ressource{/tr}<input type="text" name="todo_body" /></label>
+						<label>{tr}Mail subject text{/tr}<input type="text" name="todo_subject" /></label><br />
+						<label>{tr}Mail body ressource{/tr}<input type="text" name="todo_body" /></label><em>{tr}wiki:pageName for a wiki page or tplName.tpl for a template{/tr}</em>
 					</fieldset>
 			</tr>
 				
