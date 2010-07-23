@@ -2385,6 +2385,8 @@ class TrackerLib extends TikiLib
 			$userlib->remove_group($groupName);
 		}
 		$this->remove_item_log($itemId);
+		global $todolib; include_once('lib/todolib.php');
+		$todolib->delObjectTodo('trackeritem', $itemId);
 		return true;
 	}
 
@@ -2738,12 +2740,14 @@ class TrackerLib extends TikiLib
 
 		$this->clear_tracker_cache($trackerId);
 
-                $options=$this->get_tracker_options($trackerId);
+		$options=$this->get_tracker_options($trackerId);
 		if (isset ($option) && isset($option['autoCreateCategories']) && $option['autoCreateCategories']=='y') {
-
-		$currentCategId=$categlib->get_category_id("Tracker $trackerId");
-		$categlib->remove_category($currentCategId);
+			global $categlib; include_once('lib/categories/categlib.php');
+			$currentCategId=$categlib->get_category_id("Tracker $trackerId");
+			$categlib->remove_category($currentCategId);
 		}
+		global $todolib; include_once('lib/todolib.php');
+		$todolib->delObjectTodo('trackeritem', $itemId);
 		return true;
 	}
 
