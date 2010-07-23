@@ -73,13 +73,7 @@ function wikiplugin_trade( $data, $params, $offset ) {
 
 	$default = array( 'inputtitle'=>'', 'wanted' => 'n', 'action' => tra('Continue'), 'registry' => '', 'currency' => '' );
 	$params = array_merge( $default, $params );
-	if (empty($params['registry'])) {
-		$params['registry'] = $cclitelib->get_registry();
-	}
-	if (empty($params['currency'])) {
-		$params['currency'] = $cclitelib->get_currency($params['registry']);
-	}
-	
+
 	$iPluginTrade++;
 	$smarty->assign('iPluginTrade', $iPluginTrade);
 	

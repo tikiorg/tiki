@@ -65,8 +65,8 @@ function wikiplugin_cclite( $data, $params, $offset ) {
 			break;
 			
 	}
-	$r = $cclitelib->cclite_send_request('logoff');
-	$result = 'In development';
+	//$r = $cclitelib->cclite_send_request('logoff');
+	$result = 'In development...<br />' . strip_tags($result);
 	$smarty->assign( 'wp_cclite_result', $result );
 	return '~np~' . $smarty->fetch( 'wiki-plugins/wikiplugin_cclite.tpl' ) . '~/np~';
 }

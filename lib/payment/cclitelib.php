@@ -338,9 +338,9 @@ class CCLiteLib extends TikiDb_Bridge
 				if (preg_match('/^(.*?'.$username.'.*'.$registry.'[^<]*)/mi', $logon, $results)) {		// check for other errors & remove cclite link
 					$err_msg = trim($results[0]);
 					$logon = 'failed';	// error in $results[0]
-				} else if (preg_match('/<BODY.*?>(.*)<\/BODY>/mis', $logon, $results)) {
+				} else if (preg_match('/HTTP\/1.1 302/mis', $logon) && preg_match('/<BODY.*?>(.*)<\/BODY>/mis', $logon, $results)) {
 					$err_msg = trim(strip_tags($results[0], '<br />'));
-					$logon = 'failed';
+					//$logon = 'failed';
 				}
 			}
 			if ($logon && $logon != 'failed') {
