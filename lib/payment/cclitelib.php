@@ -74,14 +74,6 @@ class CCLiteLib extends TikiDb_Bridge
 		}
 	}
 	
-	public function get_currency_for_resgistry() {
-		if (!empty($this->currencies)) {
-			return $this->currencies[0];
-		} else {
-			return $prefs['payment_currency'];
-		}
-	}
-	
 	public function get_invoice( $ipn_data ) {
 		return isset( $ipn_data['invoice'] ) ? $ipn_data['invoice'] : 0;
 	}
@@ -216,8 +208,8 @@ class CCLiteLib extends TikiDb_Bridge
 		global $user, $prefs;
 		
 		if (empty($other_user)) { $other_user = $this->merchant_user; }
-		if (empty($registry)) { $registry = $this->registry; }
-		if (empty($currency)) { $currency = $this->currency; }
+		if (empty($registry)) { $registry = $this->get_registry(); }
+		if (empty($currency)) { $currency = $this->get_currency( $registry ); }
 		
 		$result = '';
 
@@ -305,7 +297,7 @@ class CCLiteLib extends TikiDb_Bridge
 		// not worth trying if no user name
 		if (!empty($username)) {
 			
-			if (empty($registry)) { $registry = $this->registry; }
+			if (empty($registry)) { $registry = $this->get_registry(); }
 			$cclite_base_url = $this->gateway;
 			
 			// payment url from configuration information
@@ -330,22 +322,25 @@ class CCLiteLib extends TikiDb_Bridge
 			
 			if ($logon) {
 				// e.g. login failed for jonny_tiki at c2c1:  <a href="http://c2c.ourproject.org/cgi-bin/cclite.cgi">Try again?</a>
-				if (preg_match('/^(login failed for '.$username.'.*'.$registry.'.*)$/mi', $logon, $results)) {	// no user there?
+				if (preg_match('/^(login failed for '.$username.'.*'.$registry.'[^<]*)/mi', $logon, $results)) {	// no user there?
 					$email = $userlib->get_user_email($username);
 					if ($email) {	// required
 						$res = $this->cclite_send_request('adduser', $username, $registry, $email);	// not currently working cclite 0.7.0
 						if ($res && !preg_match('/404 Not Found/', $res)) {							// seems to return a 404 :(
 							$logon = curl_exec($ch);	// retry login
 						} else {
-							$err_msg = substr($results[0], 0, strpos($results[0], '<'));	// remove cclite link
+							$err_msg = trim($results[0]);
 							$logon = 'failed';
 						}
 					}
 				}
 				// e.g. test_user at test_reg is not active: confirm or contact the administrator <a href="http://c2c.ourproject.org/cgi-bin/cclite.cgi">Try again?</a>
-				if (preg_match('/^(.*?'.$username.'.*'.$registry.'.*)$/mi', $logon, $results)) {		// check for other errors
-					$err_msg = substr($results[0], 0, strpos($results[0], '<'));	// remove cclite link
+				if (preg_match('/^(.*?'.$username.'.*'.$registry.'[^<]*)/mi', $logon, $results)) {		// check for other errors & remove cclite link
+					$err_msg = trim($results[0]);
 					$logon = 'failed';	// error in $results[0]
+				} else if (preg_match('/<BODY.*?>(.*)<\/BODY>/mis', $logon, $results)) {
+					$err_msg = trim(strip_tags($results[0], '<br />'));
+					$logon = 'failed';
 				}
 			}
 			if ($logon && $logon != 'failed') {
