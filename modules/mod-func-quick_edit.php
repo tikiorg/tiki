@@ -87,7 +87,8 @@ function module_quick_edit_info() {
 }
 
 function module_quick_edit( $mod_reference, $module_params ) {
-	global $smarty, $prefs, $categlib;
+	global $smarty, $prefs;
+	global $categlib; include_once 'lib/categories/categlib.php';
 	
 	$smarty->assign('tpl_module_title', tra("Quick Edit a Wiki Page"));
 	
@@ -154,7 +155,6 @@ function module_quick_edit( $mod_reference, $module_params ) {
 	}
 		if (isset($module_params["chooseCateg"])) {
 		$chooseCateg=$module_params["chooseCateg"];
-		require_once 'lib/categories/categlib.php';
 		$cats=$categlib->list_categs();
 		$smarty->assign('qcats',$cats);
 	} else {

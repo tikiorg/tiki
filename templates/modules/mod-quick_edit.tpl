@@ -12,15 +12,15 @@
 {if $enterdescription==1}{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 <div>
 {if $prefs.metatag_pagedesc eq 'y'}</div><legend>{tr}Description (used for metatags):{/tr}</legend>{else}<legend>{tr}Description:{/tr}</legend>{/if}
-<a id="flipperqdescription" href="javascript:flipWithSign('qdescription')">[+]</a>
-<input id="qdescription" style="display: none;" type="text" size="{$size}" name="description" />
+{if $prefs.disableJavascript != 'y'}<a id="flipperqdescription" href="javascript:flipWithSign('qdescription')">[+]</a>{/if}
+<input id="qdescription" {if $prefs.disableJavascript != 'y'}style="display: none;" {/if}type="text" size="{$size}" name="description" />
 </div>{/if}{/if}
 {if $chooseCateg==1}
 <div>
 <input type="hidden" name="cat_categorize" value="on" />
 <label>{tr}Category{/tr}</label>
-<a id="flipperqcat" href="javascript:flipWithSign('qcat')">[+]</a>
-<select id="qcat" style="display: none;" name="cat_categories[]">
+{if $prefs.disableJavascript != 'y'}<a id="flipperqcat" href="javascript:flipWithSign('qcat')">[+]</a>{/if}
+<select id="qcat" {if $prefs.disableJavascript != 'y'}style="display: none;" {/if}name="cat_categories[]">
 <option></option>
 {foreach from=$qcats item="cat"}<option value="{$cat.categId}"{if $cat.categId=$categId} selected="selected"{/if}>{$cat.name}</option>
 {/foreach}
