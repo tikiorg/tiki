@@ -7,7 +7,7 @@
 
 require_once ('tiki-setup.php');
 $access->check_feature('feature_banners');
-$access->check_permission('$tiki_p_admin_banners');
+$access->check_permission('tiki_p_admin_banners');
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_banner.tpl');
