@@ -213,12 +213,12 @@
 					{preference name=feature_jquery_ui_theme}
 					{preference name=feature_jquery_validation}
 					{preference name=feature_jquery_media}
+					{preference name=feature_jquery_sheet}
 
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">
 							<em>{tr}Experimental{/tr}:</em> {icon _id=bug_error}
 							<div class="adminoptionboxchild">	
-								{preference name=feature_jquery_sheet}
 								{preference name=feature_jquery_tablesorter}
 								{preference name=feature_jquery_carousel}
 								{preference name=feature_jquery_jqs5}
