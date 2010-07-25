@@ -596,6 +596,10 @@ categories = {$catsdump}
 				</tr>
 			</table>
 		</form>
+		Notes: <br />
+		- The order of the fields does not matter, but you need to add a header with the field names.<br />
+		- Add " -- " to the end of the fields in the header that you would like to import! <br />
+		- Auto-incremented itemid fields shall be included with no matter what values.
 		</div>
 	{/if}
 {/tab}
