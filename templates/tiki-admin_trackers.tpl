@@ -493,7 +493,7 @@
 			<tr class="formcolor">
 				<td>{tr}Wiki page to display an item{/tr}</td>
 				<td><input type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}" />
-				<br /><em>{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}</td>
+				<br /><em>{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}</em></td>
 			</tr>
 
 			<tr class="formcolor">
@@ -596,10 +596,13 @@ categories = {$catsdump}
 				</tr>
 			</table>
 		</form>
-		Notes: <br />
-		- The order of the fields does not matter, but you need to add a header with the field names.<br />
-		- Add " -- " to the end of the fields in the header that you would like to import! <br />
-		- Auto-incremented itemid fields shall be included with no matter what values.
+		{remarksbox type="note" title="{tr}Note{/tr}"}
+			<ul>
+				<li>{tr}The order of the fields does not matter, but you need to add a header with the field names{/tr}</li>
+				<li>{tr}Add " -- " to the end of the fields in the header that you would like to import!{/tr}</li>
+				<li>{tr}Auto-incremented itemid fields shall be included with no matter what values{/tr}</li>
+			</ul>
+		{/remarksbox}
 		</div>
 	{/if}
 {/tab}
