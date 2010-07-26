@@ -1884,7 +1884,6 @@ $lang=Array(
 "Add Users" => "Afegeix Usuaris",
 "Add to List" => "Afegeix a la Llista",
 "Share Page" => "Comparteix pàgina",
-"ajax and mootools features mandatory for that feature" => "les funcionalitats ajax i mootools són necessàries per a aquesta funcionalitat",
 "name already exists" => "ja existeix el nom",
 "Then rerun the installer using tiki_1.9to1.10." => "Llavors torna a executar l'instal·lador emprant tiki_1.9to1.10.",
 "A wildcard pattern of originating pages to be ignored.<br />" => "Un patró de comodí per pàgines originàries a ser ignorades.<br />",

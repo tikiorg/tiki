@@ -247,7 +247,6 @@ class HeaderLib
 
 			file_put_contents( $file, $minified );
 			chmod($file, 0644);
-			
 		}
 
 		return array(

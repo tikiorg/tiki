@@ -676,7 +676,7 @@ if (isset($_REQUEST['comment']) && $_REQUEST['comment'] != '' && isset($_REQUEST
 }
 
 // load categories for find
-if ($prefs['feature_categories'] == 'y') {
+if ($prefs['feature_categories'] == 'y' && !isset($_REQUEST['edit_mode'])) {
 	global $categlib;
 	include_once ('lib/categories/categlib.php');
 	$categories = $categlib->get_all_categories_respect_perms(null, 'view_category');

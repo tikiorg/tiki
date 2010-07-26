@@ -1249,10 +1249,11 @@ function get_default_prefs() {
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
 		'feature_sitemycode' => 'y',
-		'sitemycode' => '{if $user eq "admin"}
+		'sitemycode' => '{if $tiki_p_admin == "y"}
 <div id="quickadmin" style="text-align: left; padding-left: 12px;"><small>{tr}Quick Admin{/tr}</small>:
 {icon _id=database_refresh title="{tr}Clear all Tiki caches{/tr}" href="tiki-admin_system.php?do=all"}
-{icon _id=wrench title="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}" href="tiki-admin.php?page=look&amp;cookietab=2"}
+{icon _id=wrench title="{tr}Modify the look &amp; feel (logo, theme, etc.){/tr}" href="tiki-admin.php?page=look&amp;cookietab=2"} 
+{if $prefs.lang_use_db eq "y"}{icon _id=world_edit title="{tr}Show interactive translation settings{/tr}" href="tiki-edit_languages.php?interactive_translation_mode=on"}{/if}
 </div>  
 {/if}',
 		'sitemycode_publish' => 'n',
@@ -1476,7 +1477,7 @@ function get_default_prefs() {
 		'feature_newsletters' => 'n',
 		'feature_obzip' => 'n',
 		'feature_perspective' => 'n', // If enabling by default, update further in this file
-		'feature_phplayers' => 'n', // Not enabled by default so we make a better file gallery tree explorer in the future
+		'feature_phplayers' => 'n',
 		'feature_cssmenus' => 'y',
 		'feature_projects' => 'n',
 		'feature_ranking' => 'n',

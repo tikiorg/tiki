@@ -2032,6 +2032,8 @@ class TrackerLib extends TikiLib
 								list($d, $m, $y) = preg_split('#/#', $data[$i]);
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
 							}
+						} elseif ($field['type'] == 'q') {
+							$data[$i] = $itemId;
 						}
 						if ($this->get_item_value($trackerId, $itemId, $field['fieldId']) !== false) {
 							$this->query($query2, array($data[$i], (int)$itemId,(int)$field['fieldId']));	// update

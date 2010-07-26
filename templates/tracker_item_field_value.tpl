@@ -142,22 +142,6 @@
 		<img src="img/icons/na_pict.gif" alt="n/a" />
 	{/if}
 
-{* -------------------- Multimedia -------------------- *}
-{elseif $field_value.type eq 'M'}
-	{if $field_value.value ne ''}	
-	{if isset($cur_field.options_array[1]) and $field_value.options_array[1] ne '' }
-		{assign var='Height' value=$prefs.MultimediaDefaultHeight}
-	{else}
-		{assign var='Height' value=$field_value.options_array[1]}
-	{/if}
-	{if isset($cur_field.options_array[2]) and $field_value.options_array[2] ne '' }
-		{assign var='Length' value=$field_value.options_array[2]}
-	{else}
-		{assign var='Length' value=$prefs.MultimediaDefaultLength}
-	{/if}
-	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-	{include file='multiplayer.tpl' url=$field_value.value w=$Length h=$Height video=$ModeVideo}
-	{/if}
 
 {* -------------------- file -------------------- *}
 {elseif $field_value.type eq 'A'}
