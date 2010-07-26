@@ -3983,38 +3983,34 @@ class TrackerLib extends TikiLib
 		return $this->getOne($query, array_merge($fields, $types));
 	}
 	function get_computed_info($options, $trackerId=0, &$fields=null) {
-		preg_match('/#([0-9]+)/', $options, $matches);
-		$need_recur = false;
-		foreach($matches as $k => $match) {
-			if (!$k) continue;
+		preg_match_all('/#([0-9]+)/', $options, $matches);
+		$nbDates = 0;
+		foreach($matches[1] as $k => $match) {
 			if (empty($fields)) {
 				$allfields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 				$fields = $allfields['data'];
 			}
 			foreach($fields as $k => $field) {
 				if ($field['fieldId'] == $match && ($field['type'] == 'f' || $field['type'] == 'j')) {
-					return array('computedtype'=>'f', 'options'=>$field['options'] ,'options_array'=>$field['options_array']);
-				}
-				if ($field['fieldId'] == $match && $field['type'] == 'C') {
-					$need_recur = true;
-				}
-			}
-		}
-		if ($need_recur) {
-			foreach($matches as $k => $match) {
-				if (!$k) continue;
-				foreach($fields as $k => $field) {
-					if ($field['fieldId'] == $match && ($field['type'] == 'C')) {
-						$res = $this->get_computed_info($field['options'], $trackerId, $fields);
-						if (!empty($res)) {
-							return $res;
-						}
+					++$nbDates;
+					$info = $field;
+					break;
+				} else if ($field['fieldId'] == $match && $field['type'] == 'C') {
+					$info = $this-> get_computed_info($field['options'], $trackerId, $fields);
+					if (!empty($info) && ($info['computedtype'] == 'f' || $info['computedtype'] == 'j')) {
+						++$nbDates;
 						break;
 					}
 				}
 			}
 		}
-		return null;
+		if ($nbDates == 0) {
+			return null;
+		} elseif ($nbDates % 2 == 0) {
+			return array('computedtype'=>'duration', 'options'=>$info['options'] ,'options_array'=>$info['options_array']);
+		} else {
+			return array('computedtype'=>'f', 'options'=>$info['options'] ,'options_array'=>$info['options_array']);
+		}
 	}
 	function move_item($trackerId, $itemId, $newTrackerId) {
 		global $tikilib;
