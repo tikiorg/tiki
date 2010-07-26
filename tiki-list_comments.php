@@ -127,10 +127,6 @@ $objectsIds = '';
 
 if (isset($blogId)) {
 	$objectsIds = $bloglib->get_blog_posts_ids($blogId);
-
-	// do not display object type column if only listing blog comments
-	unset($headers['objectType']);
-
 	$smarty->assign('blogId', $blogId);
 }
 
