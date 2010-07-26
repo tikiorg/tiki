@@ -1828,6 +1828,10 @@ table.pollresults {
 /***** Messages *****/
 
 /***** TikiSheets *****/
+.tiki_sheet table td {
+	padding: 0;
+}
+
 .plugin-desc {
 	padding: 5px;
 }

@@ -1170,7 +1170,7 @@ class ArtLib extends TikiLib
 
 		$fromSql .= ' inner join `tiki_article_types` on `tiki_articles`.`type` = `tiki_article_types`.`type` ';
 		
-		$query = "select `tiki_articles`.*,
+		$query = "select distinct `tiki_articles`.*,
 			`tiki_article_types`.`use_ratings`,
 			`tiki_article_types`.`show_pre_publ`,
 			`tiki_article_types`.`show_post_expire`,
@@ -1194,7 +1194,7 @@ class ArtLib extends TikiLib
 				$mid $mid2 order by " . $this->convertSortMode($sort_mode);
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$query_cant = "select count(*) from `tiki_articles` $fromSql $mid $mid2";
+		$query_cant = "select distinct count(*) from `tiki_articles` $fromSql $mid $mid2";
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {

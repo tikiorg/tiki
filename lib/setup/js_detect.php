@@ -77,7 +77,7 @@ jqueryTiki.replection = '.($prefs['feature_jquery_reflection'] == 'y' ? 'true' :
 jqueryTiki.tablesorter = '.($prefs['feature_jquery_tablesorter'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.colorbox = '.($prefs['feature_shadowbox'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.cboxCurrent = "{current} / {total}";
-jqueryTiki.sheet = '.($prefs['feature_jquery_sheet'] == 'y' ? 'true' : 'false') . ';
+jqueryTiki.sheet = '.($prefs['feature_sheet'] == 'y' && $prefs['feature_jquery_sheet'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.carousel = '.($prefs['feature_jquery_carousel'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.jqs5 = '.($prefs['feature_jquery_jqs5'] == 'y' ? 'true' : 'false') . ';
 jqueryTiki.validate = '.($prefs['feature_jquery_validation'] == 'y' ? 'true' : 'false') . ';
