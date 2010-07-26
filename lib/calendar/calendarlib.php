@@ -690,6 +690,71 @@ class CalendarLib extends TikiLib
 		$query = "delete from `tiki_calendar_items` where ".implode(' and ', $mid);
 		$tikilib->query($query, $bindvars);
 	}
+	// Compute a table view of dates (one line per week)
+	// $firstWeekDay = 0 (Synday), 1 (Monday)
+	function getTableViewCells($focusDate, $view='month', $firstWeekDay = 0) {
+		$focus = array (
+			'day' => intval(TikiLib::date_format('%d', $focusDate)),
+			'month' => intval(TikiLib::date_format('%m', $focusDate)),
+			'year' => TikiLib::date_format('%Y', $focusDate),
+			'date' => $focusDate
+		);
+		// start of the period
+		$start = array(
+			'day' => 1,
+			'month' => $focus['month'],
+			'year' => $focus['year'],
+		);
+		$start['date'] =  TikiLib::make_time(0, 0, 0, $start['month'], $start['day'], $start['year']);
+		$start['weekDay'] = TikiLib::date_format('%w', $start['date']); // in (0, 6)
+		// start of the view
+		$nbBackDays = $start['weekDay'] < $firstWeekDay? 6: $start['weekDay'] - $firstWeekDay;
+		if ($nbBackDays == 0) {
+			$viewStart = $start;
+		} else {
+			$viewStart = array(
+				'month' => $start['month'] == 1? 12: $start['month'] - 1,
+				'year' => $start['month'] == 1? $start['year'] -1 : $start['year']
+			);
+			$d = Date_Calc::daysInMonth($viewStart['month'], $viewStart['year']);
+			$viewStart['day'] = $d - $nbBackDays + 1;
+			$viewStart['date'] = TikiLib::make_time(0, 0, 0, $viewStart['month'], $viewStart['day'], $viewStart['year']);
+			$viewStart['daysInMonth'] = $d;
+		}
+		//echo '<br/>VIEWSTART'; print_r($viewStart);
+		// end of the period
+		$nbMonths = array('month' => 1, 'trimester' => 3, 'quarter' => 4, 'semester' => 6, 'year' => 12);
+		$end['date'] = TikiLib::make_time(0, 0, 0, $start['month'] + $nbMonths[$view], $start['day'], $start['year']);
+		$cell = array();
+		for ($ilign = 0, $icol = 0, $loop = $viewStart; ; ) {
+			if ($loop['date'] >= $end['date'] && $icol == 0) {
+				break;
+			}
+			$cell[$ilign][$icol] = $loop;
+			$cell[$ilign][$icol]['focus'] = $loop['date'] < $start['date'] || $loop['date'] >= $end['date']? false: true;
+			if ($icol >= 6) {
+				++$ilign;
+				$icol = 0;
+			} else {
+				++$icol;
+			}
+			if ($loop['day'] >= $loop['daysInMonth']) {
+				$loop['day'] = 1;
+				if ($loop['month'] == 12) {
+					$loop['month'] = 1;
+					$loop['year'] += 1;
+				} else {
+					$loop['month'] += 1;
+				}
+				$loop['daysInMonth'] = Date_Calc::daysInMonth($loop['month'], $loop['year']);
+			} else {
+				$loop['day'] = $loop['day'] + 1;
+			}
+			$loop['date'] = TikiLib::make_time(0, 0, 0, $loop['month'], $loop['day'], $loop['year']);
+		}
+		// echo '<pre>CELL'; print_r($cell); echo '<pre>';
+		return $cell;
+	}
 	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'events') {
 		global $user, $prefs, $smarty;
 
