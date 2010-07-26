@@ -45,19 +45,14 @@ if (isset($_REQUEST['types'])) {
 	$default_list_value = 'y';
 }
 $smarty->assign_by_ref('title', $title);
+
 $show_types = array();
 $selected_types = array();
 foreach($sections_enabled as $k => $info) {
 	if (isset($_REQUEST['types_section']) && $k != $_REQUEST['types_section']) continue;
 	foreach($sections_keys as $stype => $sfeature) {
 		if (isset($info[$sfeature]) && $prefs[$info[$sfeature]] == 'y' && isset($info[$stype])) {
-			// Blog hack, needed because both objectType and itemObjectType of blogs are currently defined as 'blog post'
-			if ($info[$stype] == 'blog post' && $stype == 'objectType') {
-				$comment_type = 'blog';
-				if (isset($requested_types[$info[$stype]])) {
-					$requested_types[] = $comment_type;
-				}
-			} else $comment_type = $info[$stype];
+			$comment_type = $info[$stype];
 			$show_types[$comment_type] = ucwords($comment_type);
 			if ($default_list_value == 'y' || in_array($comment_type, $requested_types)) {
 				$selected_types[] = $comment_type;
