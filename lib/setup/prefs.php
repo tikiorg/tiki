@@ -1550,11 +1550,9 @@ function get_default_prefs() {
 		'site_busy_msg' => 'Server is currently too busy; please come back later.',
 
 		'bot_logo_code' => '',
-		'feature_blogposts_pings' => 'n',
 		'feature_create_webhelp' => 'n',
 		'page_n_times_in_a_structure' => 'n',
 		'feature_forums_search' => 'n',
-		'feature_trackbackpings' => 'n',
 		'feature_wiki_ext_icon' => 'y',
 		'feature_wiki_ext_rel_nofollow' => 'y',
 		'feature_wiki_mandatory_category' => -1,

@@ -98,42 +98,12 @@
 	</div>
 	<div class="actions"> {* renamed to match forum footer layout *}
 <a class="link" href="{$postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
-{if $post_info.trackbacks_from_count}
-  ({tr}referenced by{/tr}: {$post_info.trackbacks_from_count}
-{/if}
-{if $post_info.trackbacks_to_count}
-  {tr}Posts{/tr} {tr}references{/tr}: {$post_info.trackbacks_to_count} {tr}Posts{/tr})
-{/if}
 {if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}View Comments{/tr}</a>]
 {/if}
 	</div>
 </div>
-{if $post_info.trackbacks_from_count > 0}
-<h3>{tr}Trackback pings{/tr}:</h3>
-{cycle values="odd,even" print=false}
-<table class="normal">
-<tr>
-	<th>{tr}Title{/tr}</th>
-	<th>{tr}URI{/tr}</th>
-	<th>{tr}Blog name{/tr}</th>
-{if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
-	<th>{tr}Action{/tr}</th>
-{/if}
-</tr>
-{foreach from=$post_info.trackbacks_from key=key item=item}
-<tr>
-  <td class="{cycle advance=false}">{$item.title|htmlentities}</td>
-  <td class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"|htmlentities}</a></td>
-  <td class="{cycle}">{$item.blog_name|htmlentities}</td>
-  {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
-    <td  class="{cycle advance=false}"><a href="tiki-view_blog_post.php?postId={$postId}&amp;deltrack={$key|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
-  {/if}
-</tr>
-{/foreach}
-</table>
-{/if}
 </div>
 {if $prefs.feature_blogposts_comments == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 'c')

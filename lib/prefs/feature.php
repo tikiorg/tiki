@@ -942,14 +942,6 @@ function prefs_feature_list() {
 			'name' => tra('Post-level'),
 			'type' => 'flag',
 		),
-		'feature_trackbackpings' => array(
-			'name' => tra('Blog-level'),
-			'type' => 'flag',
-		),
-		'feature_blogposts_pings' => array(
-			'name' => tra('Post-level'),
-			'type' => 'flag',
-		),
 		'feature_blog_sharethis' => array(
 			'name' => tra('ShareThis buttons'),
 			'type' => 'flag',
