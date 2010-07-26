@@ -13,23 +13,6 @@
 					<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1">{icon _id='disk' alt='{tr}Save to notepad{/tr}'}</a>
 				{/if}
 			</div>
-			<div class="author_info">
-				{if $blog_data.use_author eq 'y' || $blog_data.add_date eq 'y'}
-					{tr}Published {/tr}
-				{/if}
-				
-				{if $blog_data.use_author eq 'y'}
-					{tr}by{/tr} {$post_info.user|userlink} 
-				{/if}
-				
-				{if $blog_data.add_date eq 'y'}
-					 {$post_info.created|tiki_short_datetime}
-				{/if}
-				
-				{if $blog_data.show_avatar eq 'y'}
-						{$post_info.avatar}
-				{/if}
-			</div>
 		</div>
 		<div class="clearfix postbody-title">
 			{if $blog_data.use_title eq 'y'}
@@ -37,7 +20,8 @@
 					<h2>{$post_info.title|escape}</h2>
 				</div>
 			{/if}
-		
+
+	
 			{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 				{if $tags.data|@count >0}
 					<div class="freetaglist">
@@ -50,6 +34,25 @@
 				{/if}
 			{/if}
 		</div>
+
+		<div class="author_info">
+			{if $blog_data.use_author eq 'y' || $blog_data.add_date eq 'y'}
+				{tr}Published {/tr}
+			{/if}
+			
+			{if $blog_data.use_author eq 'y'}
+				{tr}by{/tr} {$post_info.user|userlink} 
+			{/if}
+			
+			{if $blog_data.add_date eq 'y'}
+				 {$post_info.created|tiki_short_datetime}
+			{/if}
+			
+			{if $blog_data.show_avatar eq 'y'}
+					{$post_info.avatar}
+			{/if}
+		</div>
+
 		{$parsed_data}
 		{if $pages > 1}
 			<div align="center">
