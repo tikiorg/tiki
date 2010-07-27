@@ -31,6 +31,9 @@ class Tiki_Profile_Installer
 		'template' => 'Tiki_Profile_InstallHandler_Template',
 		'perspective' => 'Tiki_Profile_InstallHandler_Perspective',
 		'users' => 'Tiki_Profile_InstallHandler_User',
+		// keeping 'users' as well as 'user' that was the previous behaviour (up to Tiki 6)
+		// so as to support existing profiles
+		'user' => 'Tiki_Profile_InstallHandler_User',
 		'datachannel' => 'Tiki_Profile_InstallHandler_DataChannel',
 		'transition' => 'Tiki_Profile_InstallHandler_Transition',
 		'calendar' => 'Tiki_Profile_InstallHandler_Calendar',
@@ -2522,7 +2525,37 @@ class Tiki_Profile_InstallHandler_Calendar extends Tiki_Profile_InstallHandler /
 	}
 } // }}}
 
-//THIS HANDLER IS ONLY FOR TESTING PURPOSES!!! So don't use it in a production server. 
+/**
+ * Adding users with this handler is not recommended for production servers
+ * as it may be insecure. Use for generating examples and test data only.
+ * 
+ * Assigning existing users to groups should be fine though...
+ * 
+ * Example (Tiki 6+):
+ * =====================================
+ 
+ objects:
+# assign existing user to existing group
+ -
+  type: user
+  data: 
+    name: testit
+    groups: [ Test Group ]
+
+# add new user with email and initial password defaulting to username
+# doesn't need to change password on first login (defaults to y)
+# finally assigned to Test Group
+ -
+  type: user 
+  data: 
+    name: tester
+    email: tester@example.com
+    change: n
+    groups: [ Test Group ]
+
+ * =====================================
+ * 
+ */
 class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler // {{{
 {
 	function getData()
@@ -2549,25 +2582,25 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler // {{
 		{
 			global $userlib; if (!$userlib) require_once 'lib/userslib.php';
 
-			$data = $this->getData();
-			
-			foreach ($data as $user)
-			{
-				if (!$userlib->user_exists($user['name']))
-				{
-					$pass = isset($user['pass']) ? $user['pass'] : $user['name'];
-					$userlib->add_user($user['name'], $pass, '');
-				}
+			$user = $this->getData();
 				
-				if (isset($user['groups']))
-					foreach ($user['groups'] as $group) 
-					{
-						//if ($userlib->add_group($group));
-						$userlib->assign_user_to_group($user['name'], $group);
-					}
+			if (!$userlib->user_exists($user['name'])) {
+				$pass = isset($user['pass']) ? $user['pass'] : $user['name'];
+				$email = isset($user['email']) ? $user['email'] : '';
+				if (isset($user['change']) && $user['change'] === false) {
+					$userlib->add_user($user['name'], $pass, $email);
+				} else {
+					$userlib->add_user($user['name'], $pass, $email, $pass, true);
+				}
 			}
-			
-			return 1;
+
+			if (isset($user['groups'])) {
+				foreach ($user['groups'] as $group) {
+					$userlib->assign_user_to_group($user['name'], $group);
+				}
+			}
+				
+			return $userlib->get_user_id($user['name']);
 		}
 	}
 } // }}}
