@@ -124,9 +124,6 @@ if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mo
 	include_once ("lib/hawhaw/hawtikilib.php");
 	HAWTIKI_view_blog_post($post_info);
 }
-if (isset($_REQUEST['show_comments']) && $_REQUEST['show_comments'] == 1) {
-	$smarty->assign('show_comments', 1);
-}
 if ($prefs['feature_freetags'] == 'y') {
 	// Get Tags
 	include_once ('lib/freetag/freetaglib.php');

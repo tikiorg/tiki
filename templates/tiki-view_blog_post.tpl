@@ -111,8 +111,6 @@
 	&& $comments_cant != 0)
 	|| $tiki_p_post_comments == 'y'
 	|| $tiki_p_edit_comments == 'y')}
-	<div id="page-bar" class="clearfix">
-		{include file='comments_button.tpl'}
-	</div>
+	{assign var='show_comzone' value='y'}
 	{include file='comments.tpl'}
 {/if}
