@@ -302,7 +302,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{if $forum_mode eq 'y'}
 			{if $comments_threadId > 0}{tr}Editing reply{/tr}{elseif $comment_preview eq 'y'}{tr}Preview{/tr}{elseif $parent_com}{tr}Reply to the selected post{/tr}{else}{tr}Post new message{/tr}{/if}
 		{else}
-			{if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Comment on the selected post{/tr}{else}{tr}Post new comment{/tr}{/if}
+			{if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Reply to the selected comment{/tr}{else}{tr}Post new comment{/tr}{/if}
 		{/if}
 		</h2>
 	</div>
@@ -343,10 +343,23 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{/section}
 
 	<table class="normal">
+		{if !$user}
+			<tr>
+				<td class="formcolor"><label for="anonymous_name">{tr}Name{/tr}</span></label></td>
+				<td class="formcolor"><input type="text" maxlength="50" id="anonymous_name" name="anonymous_name" /></td>
+			</tr>
+			{if $forum_mode eq 'y'}
+				<tr>
+					<td class="formcolor"><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}</label></td>
+					<td class="formcolor"><input type="text" size="30" id="anonymous_email" name="anonymous_email" /></td>
+				</tr>
+			{/if}
+		{/if}
+
 		{if ( $forum_mode != 'y' and $prefs.wiki_comments_notitle neq 'y' ) or $prefs.forum_reply_notitle neq 'y' && $forum_mode == 'y'}
 			<tr>
 				<td class="formcolor">
-					<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
+					<label for="comments-title">{tr}Title{/tr} <span class="attention">*</span> </label>
 				</td>
 				<td class="formcolor">
 				{* 
@@ -395,7 +408,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{if $prefs.section_comments_parse eq 'y' && $forum_mode neq 'y' || $prefs.feature_forum_parse eq 'y' && $forum_mode eq 'y'}
 	        {assign var=toolbars_html value=true}{* can't find where this gets set in ui-revamp project *}
 	        <tr>
-	    		<td class="formcolor"><label>{tr}Toolbars{/tr}</label></td>
+	    		<td class="formcolor"></td>
 	            <td class="formcolor">
 	            	{toolbars area_name='editpost2' comments='y'}
 	            </td>
@@ -403,7 +416,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{/if}
 		<tr>
 			<td class="formcolor">
-				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">({tr}required{/tr})</span>{/if}</label>
+				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">*</span>{/if}</label>
 			</td>
 			<td class="formcolor">
 				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
@@ -472,27 +485,16 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{/if}
 
 		{if $prefs.feature_antibot eq 'y'}
+			{assign var='showmandatory' value='y'}
 			{include file='antibot.tpl' td_style="formcolor"}
 		{/if}
 
-		{if !$user}
-			<tr>
-				<td class="formcolor"><label for="anonymous_name">{tr}Enter your name{/tr} ({tr}optional{/tr})</span></label></td>
-				<td class="formcolor"><input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" /></td>
-			</tr>
-			{if $forum_mode eq 'y'}
-				<tr>
-					<td class="formcolor"><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}</label></td>
-					<td class="formcolor"><input type="text" size="30" id="anonymous_email" name="anonymous_email" /></td>
-				</tr>
-			{/if}
-		{/if}
 		<tr>
 			<td class="formcolor">
 			{if $parent_coms}
 				{tr}Reply to parent post{/tr}
 			{else}
-				{if $forum_mode eq 'y'}{tr}Post new reply{/tr}{else}{tr}Post new comment{/tr}{/if}
+				{if $forum_mode eq 'y'}{tr}Post new reply{/tr}{/if}
 			{/if}
 			</td>
 

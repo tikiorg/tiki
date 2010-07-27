@@ -1,15 +1,11 @@
 {if empty($user)}
 	{$headerlib->add_jsfile('lib/captcha/captchalib.js')}
 	{if $antibot_table ne 'y'}
-	<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
+		<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 		<td{if !empty($td_style)} class="{$td_style}"{/if}>
 	{else}
 		<div class="antibot1">
 	{/if}
-			{tr}Anti-Bot verification code{/tr}:<br />
-			{if $captchalib->type eq 'default'}
-				<a id="captchaRegenerate">{tr}(regenerate anti-bot code){/tr}</a>
-			{/if}
 	{if $antibot_table ne 'y'}
 		</td>
 		<td id="captcha" {if !empty($td_style)} class="{$td_style}"{/if}>
@@ -42,7 +38,10 @@
 		{else}
 			<div class="antibot3">
 		{/if}
-				<label for="antibotcode">{tr}Enter the code you see above{/tr}{if $showmandatory eq 'y'}*{/if}:</label>
+			<label for="antibotcode">{tr}Enter the code you see above{/tr}{if $showmandatory eq 'y'}<span class="attention"> *</span>{/if}</label><br />
+			{if $captchalib->type eq 'default'}
+				<a id="captchaRegenerate" href="#antibot">{tr}(try another code){/tr}</a>
+			{/if}
 		{if $antibot_table ne 'y'}
 			</td>
 			<td{if !empty($td_style)} class="{$td_style}"{/if}>
@@ -50,7 +49,7 @@
 			</div>
 			<div class="antibot4">
 		{/if}
-				<input type="text" maxlength="8" size="8" name="captcha[input]" id="antibotcode" />
+				<input type="text" maxlength="8" size="22" name="captcha[input]" id="antibotcode" />
 		{if $antibot_table ne 'y'}
 			</td>
 		</tr>
