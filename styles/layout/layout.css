@@ -1326,6 +1326,10 @@ span.posthead {
 	display: block;
 }
 
+body.tiki_blogs .post_single {
+	padding-bottom: 30px;
+}
+
 body.tiki_blogs .post .postfooter {
 	clear: both;
 	float: right;

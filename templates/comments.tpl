@@ -108,6 +108,11 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{/if}
 
 	{if $forum_mode neq 'y' or $prefs.forum_thread_user_settings eq 'y'}
+	{if $comments_cant > 0 and $section eq 'blogs'}
+		{* displaying just for blogs only because I'm not sure if this is useful for other sections *}
+		{capture name=comments_cant_title}{if $comments_cant == 1}{tr}{$comments_cant} comment so far{/tr}{else}{tr}{$comments_cant} comments so far{/tr}{/if}{/capture}
+		<h2>{$smarty.capture.comments_cant_title}</h2>
+	{/if}
 	<div class="forum_actions">
 		{if $forum_mode neq 'y'}
 			<div class="headers">
