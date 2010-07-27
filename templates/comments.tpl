@@ -424,7 +424,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 
 					$jq('#top').mouseup( function( e ) {
 						var range;
-						if( window.getSelection ) {
+						if( window.getSelection && window.getSelection().rangeCount ) {
 							range = window.getSelection().getRangeAt(0);
 						} else if( window.selection ) {
 							range = window.selection.getRangeAt(0);
