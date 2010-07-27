@@ -74,23 +74,6 @@
 						<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{icon _id='disk' alt='{tr}Save to notepad{/tr}'}</a>
 					{/if}
 				</div>
-				<div class="author_info">
-					{if $use_author eq 'y' || $add_date eq 'y'}
-						{tr}Published {/tr}
-					{/if}
-					
-					{if $use_author eq 'y'}
-						{tr}by{/tr} {$listpages[ix].user|userlink} 
-					{/if}
-					
-					{if $add_date eq 'y'}
-						{$listpages[ix].created|tiki_short_datetime}
-					{/if}
-					
-					{if $show_avatar eq 'y'}
-						{$listpages[ix].avatar}
-					{/if}
-				</div>
 			</div>
 
 			<a name="postId{$listpages[ix].postId}"></a> {* ?? *}
@@ -113,6 +96,25 @@
 					{/if}
 				{/if}
 			</div> <!-- posthead -->
+
+			<div class="author_info">
+				{if $use_author eq 'y' || $add_date eq 'y'}
+					{tr}Published {/tr}
+				{/if}
+				
+				{if $use_author eq 'y'}
+					{tr}by{/tr} {$listpages[ix].user|userlink} 
+				{/if}
+				
+				{if $add_date eq 'y'}
+					{$listpages[ix].created|tiki_short_datetime}
+				{/if}
+				
+				{if $show_avatar eq 'y'}
+					{$listpages[ix].avatar}
+				{/if}
+			</div>
+
 			{$listpages[ix].parsed_data}
 			{if $listpages[ix].pages > 1}
 				<a class="link more" href="{$listpages[ix].postId|sefurl:blogpost}">

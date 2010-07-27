@@ -690,6 +690,10 @@ body.tiki_blogs .post .postfooter {
 	margin-bottom: 2em;
 }
 
+body.tiki_blogs div.author_info {
+	padding: 5px 0px 15px 0px;
+}
+
 /**** Image Galleries ****/
 
 p.norecords {
