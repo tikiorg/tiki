@@ -59,10 +59,12 @@ function wikiplugin_trackerfilter($data, $params) {
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-	$default = array('noflipflop'=>'n', 'action'=>'Filter');//tra('Filter')
+	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n'); //tra('Filter')
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
+	$iTrackerFilter++;
+	
 	if (isset($_REQUEST['msgTrackerFilter'])) {
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
 	}
@@ -80,14 +82,8 @@ function wikiplugin_trackerfilter($data, $params) {
 			$formats[$f] = '';
 		}
 	}
-	if (!isset($displayList)) {
-		$displayList = 'n';
-	}
 	if (empty($trackerId) && !empty($_REQUEST['trackerId'])) {
 		 $trackerId = $_REQUEST['trackerId'];
-	}
-	if (!isset($line)) {
-		$line = 'n';
 	}
 	if (empty($_REQUEST['filter'])) { // look if not coming from an initial
 		foreach ($_REQUEST as $key =>$val) {
@@ -148,7 +144,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	//echo '<pre>';print_r($filters); echo '</pre>';
 	$smarty->assign_by_ref('trackerId', $trackerId);
 	$smarty->assign_by_ref('line', $line);
-	$smarty->assign('iTrackerFilter', $iTrackerFilter++);
+	$smarty->assign('iTrackerFilter', $iTrackerFilter);
 	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y') {
 		$open = 'y';
 	} else {
