@@ -40,6 +40,12 @@ function wikiplugin_trackerfilter_info() {
 			'name' => tra('Always displays the window without flip flop'),
 			'description' => 'y|n',
 		),
+		'other_filters' => array(
+			'required' => false,
+			'name' => tra('Other Trackerfilters'),
+			'description' => tra('List of colon separated tracker id\'s to also POST data for so multiple trackerfilers can be used on one page.' .
+								 ' Each trackerfilter is assigned an id, e.g. "#iTrackerFilter1" onwards, as the page is rendered. (requires javascript)'),
+		),
 	) );
 
 return array(
@@ -59,7 +65,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n'); //tra('Filter')
+	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n', 'other_filters' => ''); //tra('Filter')
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
@@ -68,6 +74,34 @@ function wikiplugin_trackerfilter($data, $params) {
 	if (isset($_REQUEST['msgTrackerFilter'])) {
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
 	}
+	
+	if (!empty($other_filters)) {
+		$other_filters = explode(':', $other_filters);
+		global $headerlib; include_once 'lib/headerlib.php';
+		foreach($other_filters as $of) {
+			$headerlib->add_jq_onready("maintain_trackerfilter_state( $iTrackerFilter, $of );");
+		}
+	}
+	
+	if (!empty($_REQUEST['other_filters']) && count($_REQUEST['other_filters']) > 0) {
+		foreach ($_REQUEST['other_filters'] as $of_vals) {
+			parse_str(urldecode($of_vals), $vals);
+			foreach( $vals as $k => $v) {
+				// if it's me and i had some items
+				if ($k == 'iTrackerFilter' && $v == $iTrackerFilter && isset($vals['count_item']) && $vals['count_item'] > 0) {
+					// unset request params for all the plugins (my one will be array_merged below)
+					foreach($_REQUEST['other_filters'] as $of_vals2) {
+						parse_str(urldecode($of_vals2), $vals2);
+						foreach( $vals2 as $k2 => $v2) {
+							unset($GLOBALS['_REQUEST'][$k2]);
+						}
+					}
+			 		$_REQUEST = array_merge($_REQUEST, $vals);
+				}
+			}
+		}
+	}
+	
 	if (!isset($filters)) {
 		return tra('missing parameters').' filters';
 	}
