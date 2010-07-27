@@ -1253,7 +1253,11 @@ function prefs_feature_list() {
 		),
 		'feature_site_send_link' => array(
 			'name' => tra('Email this page'),
+			'description' => tra('Add a link at the bottom is set, otherwise add a link at the top'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_tell_a_friend',
+			),
 		),
 		'feature_layoutshadows' => array(
 			'name' => tra('Shadow layer'),
