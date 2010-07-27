@@ -7,11 +7,11 @@
 {if $customTipTitle}<input type="hidden" name="customTipTitle" value="{$customTipTitle}" />{/if}
 {if $wikiTplHeader}<input type="hidden" name="wikiTplHeader" value="{$wikiTplHeader}" />{/if}
 {if $mod_quickedit_heading}<div class="box-data">{$mod_quickedit_heading}</div>{/if}
-{if $enterdescription==1 or $chooseCateg==1 or $pastetext==1}<legend>{tr}Page name{/tr}</legend>{/if}
+{if $enterdescription==1 or $chooseCateg==1 or $pastetext==1}<label>{tr}Page name{/tr}</label>{/if}
 <input id="{$qefield}" type="text" size="{$size}" name="page" />
 {if $enterdescription==1}{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 <div>
-{if $prefs.metatag_pagedesc eq 'y'}</div><legend>{tr}Description (used for metatags):{/tr}</legend>{else}<legend>{tr}Description:{/tr}</legend>{/if}
+<label>{if $prefs.metatag_pagedesc eq 'y'}{tr}Description (used for metatags):{/tr}{else}{tr}Description:{/tr}{/if}</label>
 {if $prefs.disableJavascript != 'y'}<a id="flipperqdescription" href="javascript:flipWithSign('qdescription')">[+]</a>{/if}
 <input id="qdescription" {if $prefs.disableJavascript != 'y'}style="display: none;" {/if}type="text" size="{$size}" name="description" />
 </div>{/if}{/if}
