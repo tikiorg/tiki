@@ -5,6 +5,9 @@
 		{if $prefs.feature_site_report eq 'y'}
 			<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to Webmaster{/tr}</a>
 		{/if}
+		{if $prefs.feature_promote_page eq 'y'}
+			<a href="tiki-promote.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Promote this page{/tr}</a>
+		{/if}
 		{if $prefs.feature_site_send_link eq 'y'}
 			<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
 		{/if}
@@ -63,6 +66,10 @@
 		{if $prefs.feature_calendar eq 'y' and $prefs.feed_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
 				<a href="tiki-calendars_rss.php?ver={$prefs.feed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 				<small>{tr}Calendars{/tr}</small>
+		{/if}
+		{if $prefs.feature_shoutbox eq 'y' and $prefs.feed_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
+				<a href="tiki-shoutbox_rss.php?ver={$prefs.feed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt='{tr}RSS feed{/tr}'}</a>
+				<small>{tr}Shoutbox{/tr}</small>
 		{/if}
 	</div>
 {/if}

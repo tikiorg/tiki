@@ -60,10 +60,14 @@ class SocialNetworksLib extends LogsLib
 		$this->options['consumerKey']=$prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret']=$prefs['socialnetworks_twitter_consumer_secret'];
 		
-		$consumer = new Zend_Oauth_Consumer($this->options);
-		$token = $consumer->getRequestToken();
-		$_SESSION['TWITTER_REQUEST_TOKEN'] = serialize($token);
-		$consumer->redirect();
+		try {
+			$consumer = new Zend_Oauth_Consumer($this->options);
+			$token = $consumer->getRequestToken();
+			$_SESSION['TWITTER_REQUEST_TOKEN'] = serialize($token);
+			$consumer->redirect();
+		} catch (Zend_Http_Client_Exception $e) {
+			return false;
+		}
 	}
 
 	function getTwitterAccessToken($user) {
@@ -253,12 +257,27 @@ class SocialNetworksLib extends LogsLib
 		return $ret[1];
 	}
 	
-	function facebookWallPublish($user, $message, $url='', $text='', $privacy='') {
-		$params=array(
-			'message' => $message,
-		);
+	function facebookWallPublish($user, $message, $url='', $text='', $caption='', $privacy='') {
+		$params=array();
+		if ($url!='') {
+			$params['link']=$url;
+			if ($text!='') {
+				$params['name']=$text;
+			}
+			if ($caption!='') {
+				$params['caption']=$caption;	
+			}
+			$params['description']=$message;
+		} else {
+			$params['message']=substr($message,0,400);
+		}
 		$ret=$this->facebookGraph($user, 'me/feed/', $params);
-		return $ret;
+		$result=json_decode($ret);
+		if(isset($result->id)) {
+			return $result->id;
+		} else {
+			return false;
+		}
 	}
 }
 

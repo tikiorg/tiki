@@ -1346,6 +1346,7 @@ function get_default_prefs() {
 
 		// tell a friend
 		'feature_tell_a_friend' => 'n',
+		'feature_promote_page' => 'n',
 
 		// copyright
 		'feature_copyright' => 'n',
@@ -1693,7 +1694,8 @@ function get_default_prefs() {
 		'auth_token_access_maxtimeout' => 3600*24*7,
 		'auth_token_access_maxhits' => 10,
 		'auth_token_tellafriend' => 'n',
-
+		'auth_token_promote' => 'n',
+	
 		// PDF
 		'print_pdf_from_url' => 'none',
 		'print_pdf_webkit_path' => '',

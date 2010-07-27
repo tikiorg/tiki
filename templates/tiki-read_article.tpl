@@ -63,6 +63,9 @@
 		{if $prefs.feature_cms_print eq 'y'}
 			<a class="icon" href="tiki-print_article.php?articleId={$articleId}">{icon _id='printer' alt='{tr}Print{/tr}'}</a>
 		{/if}
+		{if $prefs.feature_promote_page eq 'y' && $tiki_p_promote_page eq 'y'}
+			<a title="{tr}Promote page{/tr}" href="tiki-promote.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='promote_link' alt="{tr}Promote this page{/tr}"}</a>
+		{/if}
 		{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
 			<a title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='email_link' alt="{tr}Send a link{/tr}"}</a>
 		{/if}

@@ -217,6 +217,12 @@ function prefs_feature_list() {
 			'help' => 'Tell+a+Friend',
 			'type' => 'flag',
 		),
+		'feature_promote_page' => array(
+			'name' => tra('Promote this page'),
+			'description' => tra('Add a link "Promote this page" in all the pages'),
+			'help' => 'Promote-Page',
+			'type' => 'flag',
+		),
 		'feature_html_pages' => array(
 			'name' => tra('HTML pages'),
 			'description' => tra('Static and dynamic HTML content'),

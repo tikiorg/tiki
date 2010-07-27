@@ -28,6 +28,7 @@ tiki-admin-include-anchors.tpl  pics/large/intertiki.png        InterTiki
 tiki-admin-include-anchors.tpl  pics/large/vcard.png        Freetags
 tiki-admin-include-anchors.tpl  pics/large/google_maps.png        Google Maps
 tiki-admin-include-anchors.tpl  pics/large/i18n.png        i18n
+tiki-admin-imclude-anchors.tpl	pics/large/socialnetworks.png	Social networks
 tiki-admin-include-list-sections.tpl  pics/large/boot48x48.png        Features
 tiki-admin-include-list-sections.tpl  pics/large/icon-configuration48x48.png        General
 tiki-admin-include-list-sections.tpl  pics/large/stock_quit48x48.png        Login
@@ -55,3 +56,4 @@ tiki-admin-include-list-sections.tpl  pics/large/intertiki48x48.png        Inter
 tiki-admin-include-list-sections.tpl  pics/large/vcard48x48.png        Freetags
 tiki-admin-include-list-sections.tpl  pics/large/google_maps48x48.png        Google Maps
 tiki-admin-include-list-sections.tpl  pics/large/i18n48x48.png        i18n
+tiki-admin-include-list-sections.tpl  pics/large/socialnetworks.png Social networks

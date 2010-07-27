@@ -21,7 +21,7 @@
 	<fieldset class="admin">
 		<legend>{tr}Facebook Settings{/tr}</legend>
 		{remarksbox type="note" title="{tr}Note{/tr}"}
-		<p>{tr}To use Facebook integration, you must register this site as an application at <a href="http://developers.facebook.com/setup/" target="_blank">http://twitter.com/oauth_clients/</a> and allow write access for the application.{/tr}</p>
+		<p>{tr}To use Facebook integration, you must register this site as an application at <a href="http://developers.facebook.com/setup/" target="_blank">http://developers.facebook.com/setup/</a> and allow extended access for the application.{/tr}</p>
 		<p>{tr}Enter &lt;your site URL&gt;tiki-socialnetworks.php as connect URL{/tr}</p>
 		{/remarksbox}
 		<div class="adminoptionbox">

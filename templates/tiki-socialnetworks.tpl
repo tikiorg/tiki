@@ -29,7 +29,7 @@
 <fieldset>
  <legend>Facebook</legend>
  {if $facebookRegistered==0}{remarksbox type="note" title="{tr}Note{/tr}"}
-  <p>{tr}To use Facebook integration, you must register this site as an application at <a href="http://developers.facebook.com/setup/" target="_blank">http://twitter.com/oauth_clients/</a> and allow write access for the application.{/tr}</p>
+  <p>{tr}To use Facebook integration, the site admin must register this site as an application at <a href="http://developers.facebook.com/setup/" target="_blank">http://developers.facebook.com/setup/</a> first.{/tr}</p>
  {/remarksbox}{else}
 {if $facebook}
 {button href="tiki-socialnetworks.php?remove_facebook=true" _text="{tr}Remove{/tr}"}

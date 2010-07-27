@@ -58,6 +58,16 @@ function prefs_auth_list() {
 				'feature_tell_a_friend',
 			),
 		),
+		'auth_token_promote' => array(
+			'name' => tra('Share access rights with friends'),
+			'description' => tra('Allow users to share their access rights on the current page with a friend when sending the link by email/twitter/facebook. Lifespan of the links is defined by the site.'),
+			'type' => 'flag',
+			'perspective' => false,
+			'dependencies' => array(
+				'auth_token_access',
+				'feature_promote_page',
+			),
+		),
 		'auth_phpbb_create_tiki' => array(
 			'name' => tra('Create user if not in Tiki'),
 			'type' => 'flag',
