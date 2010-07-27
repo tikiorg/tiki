@@ -74,8 +74,7 @@ class ShoutboxLib extends TikiLib
 		return $id;
 	}
 
-	function replace_shoutbox($msgId, $user, $message, $tweet=false) {
-
+	function replace_shoutbox($msgId, $user, $message, $tweet=false, $facebook=false) {
 		$message = strip_tags($message);
 
 		// Check Message for containing bad/banned words
@@ -116,6 +115,10 @@ class ShoutboxLib extends TikiLib
 		if ($tweet) {
 			$msgId=$this->lastInsertId();
 			$this->tweet($message,$user, $msgId);
+		}
+		if ($facebook) {
+			global $socialnetworkslib; require_once('lib/socialnetworkslib.php');
+			$fbreply=$socialnetworkslib->facebookWallPublish($user,$message);
 		}
 		return true;
 	}

@@ -68,15 +68,22 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
+if (isset($_REQUEST["get"])) {
+	$get=$_REQUEST["get"];
+} else {
+	$get=0;
+}
 /* additions for ajax (formerly shoutjax) */
 function processShout($formValues, $destDiv = 'mod-shoutbox') {
 	global $shoutboxlib, $user, $smarty, $prefs, $ajaxlib, $tiki_p_admin_shoutbox;
+	$smarty->assign('tweet',$formValues['tweet']);
+	$smarty->assign('facebook',$formValues['facebook']);
 	if (array_key_exists('shout_msg', $formValues) && strlen($formValues['shout_msg']) > 2) {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 			$smarty->assign('shout_error', $captchalib->getErrors());
 			$smarty->assign_by_ref('shout_msg', $formValues['shout_msg']);
 		} else {
-			$shoutboxlib->replace_shoutbox(0, $user, $formValues['shout_msg'], ($formValues['shout_tweet']==1));
+			$shoutboxlib->replace_shoutbox(0, $user, $formValues['shout_msg'], ($formValues['shout_tweet']==1), ($formValues['shout_facebook']==1));
 		}
 	} else if (array_key_exists('shout_remove', $formValues) && $formValues['shout_remove'] > 0) {
 		$info = $shoutboxlib->get_shoutbox($formValues['shout_remove']);
@@ -86,7 +93,7 @@ function processShout($formValues, $destDiv = 'mod-shoutbox') {
 	}
 	$ajaxlib->registerTemplate('mod-shoutbox.tpl');
 	include ('lib/wiki-plugins/wikiplugin_module.php');
-	$data = wikiplugin_module('', Array('module' => 'shoutbox', 'max' => 10, 'np' => 0, 'nobox' => 'y', 'notitle' => 'y'));
+	$data = wikiplugin_module('', Array('module' => 'shoutbox', 'max' => 10, 'np' => 0, 'nobox' => 'y', 'notitle' => 'y', 'tweet'=>$formValues['tweet']));
 	$objResponse = new xajaxResponse();
 	$objResponse->assign($destDiv, "innerHTML", $data);
 	return $objResponse;
@@ -101,7 +108,14 @@ if ($prefs['feature_ajax'] == 'y') {
 /* end additions for ajax */
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $shoutboxlib->list_shoutbox($offset, $maxRecords, $sort_mode, $find);
+if ($get) {
+	$data=$shoutboxlib->get_shoutbox($get);
+	$channels['data']=array($data);
+	$channels['cant']=1;
+} else {
+	$channels = $shoutboxlib->list_shoutbox($offset, $maxRecords, $sort_mode, $find);
+	print_r($channels);
+}
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('shoutbox');

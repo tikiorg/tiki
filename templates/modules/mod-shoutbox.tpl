@@ -45,9 +45,14 @@
 		{if $prefs.feature_antibot eq 'y' && $user eq ''}
 			<table>{include file="antibot.tpl"}</table>
 		{/if}
-		{if $prefs.feature_socialnetworks eq 'y' && $user neq '' && $prefs.socialnetworks_twitter_consumer_key neq '' && $tweet eq '1'}
-			<input type="checkbox" name="tweet" value='1' /> {tr}Tweet with twitter{/tr}<br />
-                {/if}
+		{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}
+			{if $prefs.socialnetworks_twitter_consumer_key neq '' && $tweet }
+			<div><input type="hidden" name="tweet" value="-1" /><input type="checkbox" name="shout_tweet" value='1' /> {tr}Tweet with twitter{/tr}</div>
+            {/if}
+			{if $prefs.socialnetworks_facebook_application_id neq '' && $facebook }
+			<div><input type="hidden" name="facebook" value="-1" /><input type="checkbox" name="shout_facebook" value='1' /> {tr}Post on my facebook wall{/tr}</div>
+            {/if}
+        {/if}
 	    <input type="submit" id="shout_send" name="shout_send" value="{$buttontext}" />
       </div>
       </form>
