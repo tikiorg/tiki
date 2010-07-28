@@ -164,7 +164,7 @@
 			<div class="actions"> {* renamed to match forum footer layout *}
 				<a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
 				{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
-					| <a class="link" href="tiki-view_blog_post.php?find={$find|escape:url}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1#comments">
+					| <a class="link" href="tiki-view_blog_post.php?find={$find|escape:url}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;comzone=show#comments">
 					{$listpages[ix].comments}
 					{if $listpages[ix].comments == 1}
 						{tr}comment{/tr}

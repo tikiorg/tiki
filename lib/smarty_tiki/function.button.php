@@ -112,7 +112,7 @@ function smarty_function_button($params, &$smarty) {
 			if ( ! isset($params['_flip_hide_text']) || $params['_flip_hide_text'] != 'n' ) {
 				$cookie_key = 'show_' . $params['_flip_id'];
 				$params['_text'] .= '<span id="'.$params['_flip_id'].'_close" style="display:'
-					. ( ((isset($_SESSION['tiki_cookie_jar'][$cookie_key]) && $_SESSION['tiki_cookie_jar'][$cookie_key] == 'y') || (!isset($_SESSION['tiki_cookie_jar'][$cookie_key]) && isset($params['_flip_default_open']) && $params['_flip_default_open'] == 'y')) ? 'inline' : 'none' )
+					. ( ((isset($_SESSION['tiki_cookie_jar'][$cookie_key]) && $_SESSION['tiki_cookie_jar'][$cookie_key] == 'y') || (isset($params['_flip_default_open']) && $params['_flip_default_open'] == 'y')) ? 'inline' : 'none' )
 					. ';"> (' . tra('Hide') . ')</span>';
 			}
 		}

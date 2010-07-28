@@ -16,7 +16,7 @@
 {else}
 	{assign var=thisflipid value="comzone"}
 {/if}
-{if $comments_show eq 'y'}
+{if $comments_show eq 'y' or $show_comzone eq 'y'}
 	{assign var=flip_open value='y'}
 <noscript>
 	{button comzone="hide" _anchor="comments" _auto_args="comzone,*" _class=$thisbuttonclass _text=$thistext _flip_hide_text='y' _flip_default_open=$flip_open}
@@ -34,4 +34,6 @@
 {/if}
 {if $prefs.javascript_enabled eq "y"}
 	{button href="#comments" _auto_args="*" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$flip_open}
+{else}
+	{button href="#comments" _auto_args="*" _class=$thisbuttonclass _text=$thistext}
 {/if}

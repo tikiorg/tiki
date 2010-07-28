@@ -22,9 +22,11 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 {else}
 	id="comzone"
 {/if}
-{if (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key neq 'y')} {* cookie gets stored here with JS only *}
+{if $show_comzone eq 'y' or $comments_show eq 'y'} {* force it *}
+	style="display: block;"
+{elseif (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key neq 'y')} {* cookie gets stored here with JS only *}
 	style="display: none;"
-{elseif ((!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.wiki_comments_displayed_default neq 'y' and $show_comzone neq 'y' and $comments_show neq 'y'))}
+{elseif ((!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.wiki_comments_displayed_default neq 'y'))}
 	style="display: none;"
 {else}
 	style="display: block;"
