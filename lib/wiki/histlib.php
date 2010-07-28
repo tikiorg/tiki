@@ -737,7 +737,9 @@ class Document {
 				$author='';
 				$deleted=0;
 				$deleted_by='';
+
 				foreach ($this->_document as $word) {
+					$skip=false;
 					$d=isset($word['deleted_by'])?$word['deleted_by']:'';
 					if($author!=$word['author'] or $deleted!=$word['deleted'] or $deleted_by!=$d) {
 						if ($text!='') $text.='{AUTHOR}';
@@ -745,11 +747,23 @@ class Document {
 						$deleted=$word['deleted'];
 						$deleted_by=$d;
 						$text.="{AUTHOR(author=\"$author\"".($deleted?",deleted_by=\"$deleted_by\"":'').',visible="1", popup="1")}';
+					} else {
+						if ($this->_parsed and !$this->_nohtml) { // skipping popups for links
+							if (substr($word['word'],0,3)=='<a ') {
+								$text.='{AUTHOR}';
+							}
+							if (substr($word['word'],-4)=='</a>') {
+								$text.=$word."{AUTHOR(author=\"$author\"".($deleted?",deleted_by=\"$deleted_by\"":'').',visible="1", popup="1")}';
+								$skip=true;
+							}
+						}
 					}
 					if (strlen($word['word'])==0 and !$this->_parsed) {
 						$text.="\n";
 					} else {				
-						$text.=$word['word'];
+						if (!$skip) {
+							$text.=$word['word'];	
+						}
 					}
 				}
 				$text.="{AUTHOR}";
