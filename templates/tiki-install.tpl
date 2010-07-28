@@ -723,6 +723,9 @@
 	  	</div>
 </div>
 <hr />
-<p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware Project{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}Powered by TikiWiki{/tr}" style="width:80px; height:31px; border:0" /></a></p>
+
+{* Can be restored when we'll have a new http://branding.tikiwiki.org/Badge
+<p align="center"><a href="http://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}" style="width:80px; height:31px; border:0" /></a></p>
+*}
 		</div>{* -- END of main -- *}
 	</div> {* -- END of fixedwidth -- *}
