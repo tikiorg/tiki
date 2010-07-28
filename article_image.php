@@ -22,7 +22,7 @@ require_once 'lib/articles/artlib.php';
 $access->check_feature('feature_articles');
 
 // Now check permissions to access this page
-$access->check_permission(array('tiki_p_read_article','tiki_p_articles_read_heading'));
+$access->check_permission_either(array('tiki_p_read_article','tiki_p_articles_read_heading'));
 
 if (!isset($_REQUEST["id"])) {
 	die;

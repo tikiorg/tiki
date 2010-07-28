@@ -15,12 +15,10 @@
 {/if}
 {if $prefs.feature_bot_bar_icons eq 'y'}
 	<div id="power_icons">
-		<a href="http://tikiwiki.org/" title="Tiki"><img alt="{tr}Powered by{/tr} Tiki" src="img/tiki/tikibutton2.png" /></a>
+		<a href="http://tiki.org/" title="Tiki"><img alt="{tr}Powered by{/tr} Tiki" src="img/tiki/tikibutton2.png" /></a>
 		<a href="http://www.php.net/" title="PHP"><img alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
 		<a href="http://www.smarty.net/" title="Smarty"><img alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
-		<a href="http://adodb.sourceforge.net/" title="ADOdb"><img alt="{tr}Powered by{/tr} ADOdb" src="img/adodb.png" /></a>
 		<a href="http://www.w3.org/Style/CSS/" title="CSS"><img alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
-		<a href="http://www.w3.org/RDF/" title="RDF"><img alt="{tr}Powered by{/tr} RDF" src="img/rdf.gif"  /></a>
 		{if $prefs.feature_phplayers eq 'y'}
 		<a href="http://phplayersmenu.sourceforge.net/" title="PHP Layers Menu"><img alt="{tr}powered by{/tr} The PHP Layers Menu System" src="lib/phplayers/LOGOS/powered_by_phplm.png"  /></a>		
 		{/if}
@@ -78,7 +76,7 @@
 {/if}
 <div id="power">
 	{if $prefs.feature_bot_bar_power_by_tw ne 'n'}
-		<span id="poweredby">{tr}Powered by{/tr}</span> <a href="http://info.tikiwiki.org" title="&#169; 2002&#8211;{$smarty.now|date_format:"%Y"} {tr}The Tiki Community{/tr}">Tiki Wiki CMS Groupware</a> {if $prefs.feature_topbar_version eq 'y'} v{$tiki_version} {if $tiki_uses_svn eq 'y'} (SVN){/if} -{$tiki_star}- {/if} 
+		<span id="poweredby">{tr}Powered by{/tr}</span> <a href="http://tiki.org" title="&#169; 2002&#8211;{$smarty.now|date_format:"%Y"} {tr}The Tiki Community{/tr}">Tiki Wiki CMS Groupware</a> {if $prefs.feature_topbar_version eq 'y'} v{$tiki_version} {if $tiki_uses_svn eq 'y'} (SVN){/if} -{$tiki_star}- {/if} 
 	{/if}
 </div>
 <div id="credits_svnrev">

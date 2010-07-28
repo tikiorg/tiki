@@ -3892,6 +3892,61 @@ class TrackerLib extends TikiLib
 		}
 		/* the list of potential value is calculated by a javascript call to selectValues at the end of the tpl */
 	}
+	function test_field_type($fields, $types) {
+		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($fields),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
+		return $this->getOne($query, array_merge($fields, $types));
+	}
+	function get_computed_info($options, $trackerId=0, &$fields=null) {
+		preg_match_all('/#([0-9]+)/', $options, $matches);
+		$nbDates = 0;
+		foreach($matches[1] as $k => $match) {
+			if (empty($fields)) {
+				$allfields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+				$fields = $allfields['data'];
+			}
+			foreach($fields as $k => $field) {
+				if ($field['fieldId'] == $match && ($field['type'] == 'f' || $field['type'] == 'j')) {
+					++$nbDates;
+					$info = $field;
+					break;
+				} else if ($field['fieldId'] == $match && $field['type'] == 'C') {
+					$info = $this-> get_computed_info($field['options'], $trackerId, $fields);
+					if (!empty($info) && ($info['computedtype'] == 'f' || $info['computedtype'] == 'j')) {
+						++$nbDates;
+						break;
+					}
+				}
+			}
+		}
+		if ($nbDates == 0) {
+			return null;
+		} elseif ($nbDates % 2 == 0) {
+			return array('computedtype'=>'duration', 'options'=>$info['options'] ,'options_array'=>$info['options_array']);
+		} else {
+			return array('computedtype'=>'f', 'options'=>$info['options'] ,'options_array'=>$info['options_array']);
+		}
+	}
+	function update_item_link_value($trackerId, $fieldId, $old, $new) {
+		if ($old == $new) {
+			return;
+		}
+		static $fields_used_in_item_links;
+		if (!isset($fields_used_in_item_links)) {
+			$query = 'select `fieldId`, `options` from `tiki_tracker_fields` where `type`=?';
+			$fields = $this->fetchAll($query, array('r'));
+			foreach ($fields as $field) {
+				$field['options_array'] = preg_split('/\s*,\s*/', $field['options']);
+				$fields_used_in_item_links[$field['options_array'][1]][] = $field['fieldId'];
+			}
+		}
+		if (empty($fields_used_in_item_links[$fieldId])) {// field not use in a ref of item link
+			return;
+		}
+		$query = 'update `tiki_tracker_item_fields` set `value`=? where `value`=? and `fieldId` in ('.implode(',', array_fill(0, count($fields_used_in_item_links[$fieldId]), '?')).')';
+		$bindvars = array($new, $old);
+		$bindvars = array_merge($bindvars, $fields_used_in_item_links[$fieldId]);
+		$this->query($query, $bindvars);
+	}
 	function change_status($items, $status) {
 		if (!count($items)) {
 			return;
@@ -3979,40 +4034,6 @@ class TrackerLib extends TikiLib
 			++$i;
 		}
 		return $history;	
-	}
-	function test_field_type($fields, $types) {
-		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($fields),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
-		return $this->getOne($query, array_merge($fields, $types));
-	}
-	function get_computed_info($options, $trackerId=0, &$fields=null) {
-		preg_match_all('/#([0-9]+)/', $options, $matches);
-		$nbDates = 0;
-		foreach($matches[1] as $k => $match) {
-			if (empty($fields)) {
-				$allfields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
-				$fields = $allfields['data'];
-			}
-			foreach($fields as $k => $field) {
-				if ($field['fieldId'] == $match && ($field['type'] == 'f' || $field['type'] == 'j')) {
-					++$nbDates;
-					$info = $field;
-					break;
-				} else if ($field['fieldId'] == $match && $field['type'] == 'C') {
-					$info = $this-> get_computed_info($field['options'], $trackerId, $fields);
-					if (!empty($info) && ($info['computedtype'] == 'f' || $info['computedtype'] == 'j')) {
-						++$nbDates;
-						break;
-					}
-				}
-			}
-		}
-		if ($nbDates == 0) {
-			return null;
-		} elseif ($nbDates % 2 == 0) {
-			return array('computedtype'=>'duration', 'options'=>$info['options'] ,'options_array'=>$info['options_array']);
-		} else {
-			return array('computedtype'=>'f', 'options'=>$info['options'] ,'options_array'=>$info['options_array']);
-		}
 	}
 	function move_item($trackerId, $itemId, $newTrackerId) {
 		global $tikilib;
@@ -4113,27 +4134,6 @@ class TrackerLib extends TikiLib
 		return true;
 	}
 
-	function update_item_link_value($trackerId, $fieldId, $old, $new) {
-		if ($old == $new) {
-			return;
-		}
-		static $fields_used_in_item_links;
-		if (!isset($fields_used_in_item_links)) {
-			$query = 'select `fieldId`, `options` from `tiki_tracker_fields` where `type`=?';
-			$fields = $this->fetchAll($query, array('r'));
-			foreach ($fields as $field) {
-				$field['options_array'] = preg_split('/\s*,\s*/', $field['options']);
-				$fields_used_in_item_links[$field['options_array'][1]][] = $field['fieldId'];
-			}
-		}
-		if (empty($fields_used_in_item_links[$fieldId])) {// field not use in a ref of item link
-			return;
-		}
-		$query = 'update `tiki_tracker_item_fields` set `value`=? where `value`=? and `fieldId` in ('.implode(',', array_fill(0, count($fields_used_in_item_links[$fieldId]), '?')).')';
-		$bindvars = array($new, $old);
-		$bindvars = array_merge($bindvars, $fields_used_in_item_links[$fieldId]);
-		$this->query($query, $bindvars);
-	}
 }
 
 global $trklib;

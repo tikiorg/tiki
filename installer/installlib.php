@@ -32,11 +32,9 @@ class Installer extends TikiDb_Bridge
 		$this->buildScriptList();
 	} // }}}
 
-	function cleanInstall( $runtikisql = true ) // {{{
+	function cleanInstall() // {{{
 	{
-		if ($runtikisql) { // Don't run tiki.sql on alternative installers
-			$this->runFile( dirname(__FILE__) . '/../db/tiki.sql' );
-		}
+		$this->runFile( dirname(__FILE__) . '/../db/tiki.sql' );
 		$this->buildPatchList();
 		$this->buildScriptList();
 
