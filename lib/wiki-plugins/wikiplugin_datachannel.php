@@ -102,7 +102,7 @@ function wikiplugin_datachannel( $data, $params )
 				if (count($moreparts) < 2) {
 					$moreparts[1] = $parts[0];	// no fieldname supplied so use same as fieldid
 				}
-				$fields[ $moreparts[0] ] = array('fieldname' => $parts[0], 'fieldid' => $moreparts[1]);
+				$fields[ $parts[0] ] = $moreparts[0];
 				$js .= "\n".'$jq("input[name=\'' . $parts[0] . '\']").val( unescape($jq("#' . $moreparts[1] . '").val()));';
 				$inputfields[ $parts[0] ] = 'external';
 			} else {
