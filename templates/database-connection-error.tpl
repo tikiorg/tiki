@@ -102,11 +102,13 @@
 
 			<hr/>
 
+{* Can be restored when we'll have a new http://branding.tikiwiki.org/Badge
 			<p align="center">
-				<a target="_blank" href="http://www.tikiwiki.org" title="Tiki Wiki CMS Groupware">
+				<a target="_blank" href="http://www.tiki.org" title="Tiki Wiki CMS Groupware">
 				<img src="img/tiki/tikibutton2.png" alt="Tiki Wiki CMS Groupware" border="0" height="31" width="80"/>
 				</a>
 			</p>
+*}
 		</div>
 	</div>
 		</div>{* -- END of main -- *}
