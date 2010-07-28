@@ -46,31 +46,31 @@ function wikiplugin_tracker_info()
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
-				'description' => 'y|n',
+				'description' => 'y|n' . ' ' . tra('Default=n'),
 				'filter' => 'alpha'
 			),
 			'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show Description'),
-				'description' => 'y|n',
+				'description' => 'y|n' . ' ' . tra('Default=n'),
 				'filter' => 'alpha'
 			),
 			'showmandatory' => array(
 				'required' => false,
 				'name' => tra('Show Mandatory'),
-				'description' => 'y|n',
+				'description' => 'y|n' . ' ' . tra('Default=y'),
 				'filter' => 'alpha'
 			),
 			'showstatus' => array(
 				'required' => false,
 				'name' => tra('Show Status'),
-				'description' => 'y|n',
+				'description' => 'y|n' . ' ' . tra('Default=n'),
 				'filter' => 'alpha'
 			),
 			'embedded' => array(
 				'required' => false,
 				'name' => tra('Embedded'),
-				'description' => 'y|n',
+				'description' => 'y|n' . ' ' . tra('Default=n'),
 				'filter' => 'alpha'
 			),
 			'email' => array(
@@ -224,7 +224,7 @@ function wikiplugin_tracker($data, $params)
 	static $iTRACKER = 0;
 	++$iTRACKER;
 	include_once('lib/trackers/trackerlib.php');
-	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'n', 'status' => '');
+	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '');
 	$params = array_merge($default, $params);
 	
 	//var_dump($_REQUEST);
