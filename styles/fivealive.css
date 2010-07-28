@@ -254,8 +254,15 @@ span#show-errors-button a {
 	color: #004b78;
 }
 
+.highlight,
+span.button.highlight a,
+td.calfocuson {
+	background: #fad5e0;
+	
+}
+
 /***** XHTML Elements (other than body tag) ******/
-a:link,
+a,
 a:visited {
 	color: #1174a5;
 	text-decoration: none;
@@ -280,6 +287,11 @@ tt {
 	font-size: 1.2em;
 }
 
+hr {
+	background: #74c0e2;
+	color: #74c0e2;
+	height: 2px;
+}
 
 legend,
 label {
@@ -294,7 +306,8 @@ input[type="submit"],
 span.button input,
 .calbuttonBox a,
 span#genPass span.button a,
-span#genPass span.button a:visited {
+span#genPass span.button a:visited,
+span.daterow {
 	color: #fff;
 	background: #2098cd;
 	border: 1px solid #11597e;
@@ -311,7 +324,8 @@ input[type="reset"]:hover,
 input[type="submit"]:hover,
 span.button input:hover,
 .calbuttonBox a:hover,
-span#genPass span.button a:hover {
+span#genPass span.button a:hover,
+span.daterow:hover {
 	background: #1173a5;
 	border: 1px solid #11597e;
 	text-decoration: none;
@@ -772,6 +786,14 @@ div.error {
 	background: none;
 }
 
+.simplebox {
+	border: 2px solid #74c0e2;
+}
+
+.adminanchors {
+	background: #74c0e2;
+}
+
 /***** Tables, Tabs *****/
 /** Tables **/
 
@@ -786,13 +808,28 @@ form table.normal,
 	border: none;
 }
 
+.calodd,
+.caleven,
 .wikicell {
 	border: 2px solid #c2eef8;
 }
+
+.odd,
+.calodd {
+	background: #e3f7fb;
+}
+
+.even,
+.caleven {
+	background: #d6f3fa;
+}
+
 	  
 th,
 td.heading,
-tr.diffheader {
+tr.diffheader,
+.calHeading,
+.weeks {
 	background: #1d90c5;
 	color: #d6f3fa;
 }
