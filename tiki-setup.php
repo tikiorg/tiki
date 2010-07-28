@@ -72,10 +72,20 @@ require_once ('lib/setup/wiki.php');
 if ($prefs['feature_polls'] == 'y') require_once ('lib/setup/polls.php');
 if ($prefs['feature_mailin'] == 'y') require_once ('lib/setup/mailin.php');
 if ($prefs['useGroupHome'] == 'y') require_once ('lib/setup/default_homepage.php');
-if ($prefs['feature_sefurl'] == 'y' && $prefs['tikiIndex'] == 'tiki-index.php' && $prefs['wikiHomePage']) {
-	include_once('lib/wiki/wikilib.php');
-	$prefs['tikiIndex'] = $wikilib->sefurl($prefs['wikiHomePage']);
+
+// change $prefs['tikiIndex'] if feature_sefurl is enabled (e.g. tiki-index.php?page=HomePage becomes HomePage)
+if ($prefs['feature_sefurl'] == 'y') {
+	//TODO: need a better way to know which is the type of the tikiIndex URL (wiki page, blog, file gallery etc)
+	//TODO: implement support for types other than wiki page and blog
+	if ($prefs['tikiIndex'] == 'tiki-index.php' && $prefs['wikiHomePage']) {
+		include_once('lib/wiki/wikilib.php');
+		$prefs['tikiIndex'] = $wikilib->sefurl($prefs['wikiHomePage']);
+	} else if (substr($prefs['tikiIndex'], 0, strlen('tiki-view_blog.php')) == 'tiki-view_blog.php') {
+		include_once('tiki-sefurl.php');
+		$prefs['tikiIndex'] = filter_out_sefurl($prefs['tikiIndex'], $smarty, 'blog');
+	}
 }
+
 require_once ('lib/setup/theme.php');
 if ($prefs['feature_babelfish'] == 'y' || $prefs['feature_babelfish_logo'] == 'y') require_once ('lib/setup/babelfish.php');
 if (!empty($varcheck_errors)) {
