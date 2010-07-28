@@ -60,7 +60,7 @@ class Text_Diff_Renderer_character extends Tiki_Text_Diff_Renderer
 			$l .= htmlspecialchars($line);
 		 }
 	        if (!empty($l))
-	            $this->final .= '<ins class="diffchar inserted" style="color: green; text-decoration: none"><strong>'.$l."</strong></ins>";
+	            $this->final .= '<ins class="diffchar inserted" style="color: blue; text-decoration: none"><strong>'.$l."</strong></ins>";
     	} elseif ($type == 'deleted' || $type == 'change-deleted') {
 	        $l = "";
 	        foreach ($lines as $line)
