@@ -453,7 +453,10 @@ function wikiplugin_tracker($data, $params)
 							$_REQUEST['track'][$fl['fieldId']] = 'n';
 						}	
 					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && empty($_REQUEST['track'][$fl['fieldId']])) {
-						if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
+						if ($tiki_p_admin_trackers) {	// admins can override user fields
+							$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['authorfieldid'];
+							
+						} else if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
 							if ($flds['data'][$cpt]['type'] == 'u') {
 								$_REQUEST['track'][$fl['fieldId']] = empty($user)?(empty($_REQUEST['name'])? '':$_REQUEST['name']):$user;
 							} elseif ($flds['data'][$cpt]['type'] == 'g') {
@@ -964,7 +967,7 @@ function wikiplugin_tracker($data, $params)
 			foreach ($flds['data'] as $i=>$f) { // collect additional infos
 				if (in_array($f['fieldId'], $outf)) {
 					$flds['data'][$i]['ins_id'] = ($f['type'] == 'e')?'ins_cat_'.$f['fieldId']: 'track_'.$f['fieldId'];
-					if ($f['isHidden'] == 'c' && !empty($itemId) && !isset($item['creator'])) {
+					if (($f['isHidden'] == 'c' || $f['isHidden'] == 'p') && !empty($itemId) && !isset($item['creator'])) {
 						$item['creator'] = $trklib->get_item_creator($trackerId, $itemId);
 					}
 					if ($f['type'] == 's' && ($f['name'] == 'Rating' || $f['name'] == tra('Rating')) && $perms['tiki_p_tracker_vote_ratings'] == 'y' && isset($item)) {
@@ -1080,7 +1083,16 @@ function wikiplugin_tracker($data, $params)
 			$backLength0 = strlen($back);
 			foreach ($flds['data'] as $f) {
 				if ($f['type'] == 'u' and $f['options_array'][0] == '1') {
-					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
+					//$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
+					include_once $smarty->_get_plugin_filepath('function', 'user_selector');
+					$back .= '<tr><td>' . wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors) . '</td><td>';
+					$back .= smarty_function_user_selector(array(
+						'user' => $f['value'],
+						'name' => 'authorfieldid',
+						'id' => 'authorfieldid',
+						'editable' => $tiki_p_admin_trackers,
+					), $smarty);
+					$back .= '</td></tr>';
 				} elseif ($f['type'] == 'I' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authoripid" value="'.$f['fieldId'].'" />';
 				} elseif ($f['type'] == 'g' and $f['options_array'][0] == '1') {
