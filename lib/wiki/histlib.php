@@ -384,7 +384,7 @@ class Document {
 	/**
 	 * @var string	regex for splitting page text into an array of words;
 	 */
-	private $_search="#((~np~\{.*?\}~/np~)|<[^>]+>|[,\"':\s]+|[^\s,\"':<]+|</[^>]+>)#";
+	private $_search="#(\[[^\[].*?\]|\(\(.*?\)\)|(~np~\{.*?\}~/np~)|<[^>]+>|[,\"':\s]+|[^\s,\"':<]+|</[^>]+>)#";
 	
 	/**
 	 * @var array	Page info
@@ -449,8 +449,13 @@ class Document {
 			$index=$next;
 		}
 		$source=$this->removeText($this->_data[$index]['data']);
-		if ($this->_parsed) $source=$histlib->parse_data($source);
-		if ($this->_nohtml) $source=strip_tags($source);
+		$source=preg_replace(array('/\{AUTHOR\(.+?\)\}/','/{AUTHOR\}/','/\{INCLUDE\(.+?\)\}\{INCLUDE\}/'), ' ~np~$0~/np~', $source);
+		if ($this->_parsed) {
+			$source=$histlib->parse_data($source, array('suppress_icons'=>true));	
+		}
+		if ($this->_nohtml) {
+			$source=strip_tags($source);
+		}
 		preg_match_all($this->_search,$source,$out,PREG_PATTERN_ORDER);
 		$words=$out[0];
 		$this->_document=$this->addWords($this->_document,$words, $author);
@@ -740,8 +745,12 @@ class Document {
 						$deleted=$word['deleted'];
 						$deleted_by=$d;
 						$text.="{AUTHOR(author=\"$author\"".($deleted?",deleted_by=\"$deleted_by\"":'').',visible="1", popup="1")}';
-					}					
-					$text.=$word['word'];
+					}
+					if (strlen($word['word'])==0 and !$this->_parsed) {
+						$text.="\n";
+					} else {				
+						$text.=$word['word'];
+					}
 				}
 				$text.="{AUTHOR}";
 				return $text;
@@ -844,7 +853,7 @@ class Document {
 		$deleted_by='';
 		$page=preg_replace(array('/\{AUTHOR\(.+?\)\}/','/{AUTHOR\}/','/\{INCLUDE\(.+?\)\}\{INCLUDE\}/'), ' ~np~$0~/np~', $newpage);
 		if ($this->_parsed) {
-			$page=$tikilib->parse_data($page);
+			$page=$tikilib->parse_data($page, array('suppress_icons'=>true));
 			$page=preg_replace(array('/\{AUTHOR\(.+?\)\}/','/{AUTHOR\}/','/\{INCLUDE\(.+?\)\}\{INCLUDE\}/'), ' ~np~$0~/np~', $page);
 		}
 		if ($this->_nohtml) {
