@@ -9,7 +9,6 @@ $section = 'blogs';
 require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
 
-$smarty->assign('headtitle',tra('Create Blog'));
 $access->check_feature('feature_blogs');
 $access->check_permission('tiki_p_create_blogs');
 
@@ -17,6 +16,7 @@ if (isset($_REQUEST["blogId"])) {
 	$blogId = $_REQUEST["blogId"];
 } else {
 	$blogId = 0;
+	$smarty->assign('headtitle',tra('Create Blog'));
 }
 
 $smarty->assign('individual', 'n');
@@ -61,6 +61,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 		}
 	}
 
+	$smarty->assign('headtitle', tra('Edit blog:') . ' ' . $data['title']);
 	$smarty->assign('title', $data["title"]);
 	$smarty->assign('description', $data["description"]);
 	$smarty->assign('public', $data["public"]);

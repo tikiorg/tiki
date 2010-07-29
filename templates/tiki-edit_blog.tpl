@@ -83,7 +83,7 @@
     {tab name='{tr}Display Options{/tr}'}
       <table class="normal">
         <tr class="editblogform">
-          <td><label for="blogs-number">{tr}Number of posts to show{/tr}</label></td>
+          <td><label for="blogs-number">{tr}Number of posts to show per page{/tr}</label></td>
           <td><input type="text" name="maxPosts" id="blogs-number" value="{$maxPosts|escape}" /></td>
         </tr>
         <tr class="editblogform">
