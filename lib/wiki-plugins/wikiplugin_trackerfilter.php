@@ -108,8 +108,13 @@ function wikiplugin_trackerfilter($data, $params) {
 		}
 	}
 	
-	if (!isset($filters) && empty($export_action)) {
-		return tra('missing parameters').' filters';
+	if (!isset($filters)) {
+		if (empty($export_action)) {
+			return tra('missing parameters').' filters';
+		} else {
+			$filters = array();
+			$formats = array();
+		}
 	}
 	
 	$listfields = wikiplugin_trackerFilter_split_filters($filters);
