@@ -108,7 +108,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		}
 	}
 	
-	if (!isset($filters)) {
+	if (!isset($filters) && empty($export_action)) {
 		return tra('missing parameters').' filters';
 	}
 	
@@ -257,6 +257,9 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 }
 
 function wikiplugin_trackerFilter_split_filters($filters) {
+	if (empty($filters)) {
+		return array();
+	}
 	$in = false;
 	for ($i=0, $max=strlen($filters); $i < $max; ++$i) {
 		if ($filters[$i] == '(') {
@@ -278,6 +281,9 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 	global $tiki_p_admin_trackers, $smarty, $tikilib;
 	global $trklib;	include_once('lib/trackers/trackerlib.php');
 	$filters = array();
+	if (empty($listfields)) {
+		return $filters;
+	}
 	if (empty($trackerId) && !empty($listfields[0])) {
 		$field = $trklib->get_tracker_field($listfields[0]);
 		$trackerId = $field['trackerId'];
