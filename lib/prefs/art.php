@@ -94,9 +94,19 @@ function prefs_art_list() {
 			'type' => 'flag',
 		),
 		'art_view_img_width' => array(
-			'name' => tra('Width in pixels'),
-			'description' => tra('Width of the article image'),
+			'name' => tra('Image width in pixels'),
+			'description' => tra('Image width in pixels'),
 			'type' => 'text',
+		),
+		'art_trailer_pos' => array(
+			'name' => tra('Trailer position'),
+			'description' => tra('Trailer position'),
+			'type' => 'list',
+			'options' => array(
+				'top' => tra('Top'),
+				'between' => tra('Between heading and body'),
+			),
+			'default' => 'top'
 		),
 	);
 }

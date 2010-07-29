@@ -112,6 +112,10 @@
 				<legend>{tr}Articles plugin{/tr} - {tr}Articles Home{/tr}</legend>
 				{preference name=art_view_img_width}
 			</fieldset>
+			<fieldset>
+				<legend>{tr}Article View{/tr}</legend>
+				{preference name=art_trailer_pos}
+			</fieldset>
 		{/tab}
 	{/tabset}
 	<div class="input_submit_container clear" style="text-align: center;">
