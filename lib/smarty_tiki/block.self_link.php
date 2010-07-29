@@ -86,7 +86,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 			}
 
 			$params['_type'] = $default_type;
-			if ( $params['_ajax'] == 'y') unset ($params['_anchor']);
+			if ( $prefs['feature_ajax'] == 'y' && $params['_ajax'] == 'y') unset ($params['_anchor']);
 			$ret = smarty_function_query($params, $smarty);
 		}
 
