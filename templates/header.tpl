@@ -59,8 +59,6 @@
 			{$title|escape}
 		{elseif !empty($thread_info.title)}
 			{$thread_info.title|escape}
-		{elseif !empty($post_info.title)}
-			{$post_info.title|escape}
 		{elseif !empty($forum_info.name)}
 			{$forum_info.name|escape}
 		{elseif !empty($categ_info.name)}

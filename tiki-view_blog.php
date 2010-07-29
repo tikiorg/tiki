@@ -52,6 +52,7 @@ if (!$blog_data) {
 $bloglib->add_blog_hit($_REQUEST["blogId"]);
 $smarty->assign('blogId', $_REQUEST["blogId"]);
 $smarty->assign('title', $blog_data["title"]);
+$smarty->assign('headtitle', $blog_data['title']);
 $smarty->assign('heading', $blog_data["heading"]);
 $smarty->assign('use_title', $blog_data["use_title"]);
 $smarty->assign('use_author', $blog_data["use_author"]);

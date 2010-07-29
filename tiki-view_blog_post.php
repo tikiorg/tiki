@@ -63,6 +63,7 @@ $smarty->assign('post_info', $post_info);
 $smarty->assign('postId', $postId);
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);
+$smarty->assign('headtitle', $post_info['title'] . ' : ' . $blog_data['title']);
 //Build absolute URI for this
 $parts = parse_url($_SERVER['REQUEST_URI']);
 $uri = $tikilib->httpPrefix() . $parts['path'] . '?blogId=' . $blogId . '&postId=' . $postId;
