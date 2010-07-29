@@ -147,12 +147,19 @@ if (isset($_REQUEST["preview"])) {
 	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
 	$parsed_data = $tikilib->parse_data($parsed_data);
 	$smarty->assign('data', $edit_data);
+	$smarty->assign('parsed_data', $parsed_data);
+
+	$post_info = array();
+	$post_info['title'] = $_REQUEST['title'];
+	$post_info['user'] = isset($data) ? $data['user'] : $user;
+	$post_info['created'] = isset($data) ? $data['created'] : time();
+	$post_info['avatar'] = isset($data) ? $data['avatar'] : '';
+	$smarty->assign('post_info', $post_info);
+
 	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
 	}
-	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
-	$smarty->assign('author', isset($data) ? $data["user"] : $user);
-	$smarty->assign('parsed_data', $parsed_data);
+
 	$smarty->assign('preview', 'y');
 }
 // remove images (permissions!)

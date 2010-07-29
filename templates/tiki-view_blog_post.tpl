@@ -2,79 +2,20 @@
 <a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_blog.php?blogId={$post_info.blogId}">{$blog_data.title|escape}</a> {$prefs.site_crumb_seper} {$post_info.title|escape}
 
 <div class="post post_single">
-	<div class="postbody">
-		<div class="author_actions clearfix">
-			<div class="actions">
-				{if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
-					<a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}">{icon _id='page_edit'}</a>
-					<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-				{/if}
-				{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-					<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1">{icon _id='disk' alt='{tr}Save to notepad{/tr}'}</a>
-				{/if}
-			</div>
-		</div>
-		<div class="clearfix postbody-title">
-			{if $blog_data.use_title eq 'y'}
-				<div class="title">
-					<h2>{$post_info.title|escape}</h2>
-				</div>
+	<div class="author_actions clearfix">
+		<div class="actions">
+			{if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
+				<a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}">{icon _id='page_edit'}</a>
+				<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 			{/if}
-
-	
-			{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
-				{if $tags.data|@count >0}
-					<div class="freetaglist">
-						 {tr}Tags:{/tr}&nbsp;
-						{foreach from=$tags.data item=tag}
-							{capture name=tagurl}{if (strstr($tag.tag, ' '))}"{$tag.tag}"{else}{$tag.tag}{/if}{/capture}
-							<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$tag.tag}</a> 
-						{/foreach}
-					</div>
-				{/if}
+			{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+				<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1">{icon _id='disk' alt='{tr}Save to notepad{/tr}'}</a>
 			{/if}
 		</div>
-
-		<div class="author_info">
-			{if $blog_data.use_author eq 'y' || $blog_data.add_date eq 'y'}
-				{tr}Published {/tr}
-			{/if}
-			
-			{if $blog_data.use_author eq 'y'}
-				{tr}by{/tr} {$post_info.user|userlink} 
-			{/if}
-			
-			{if $blog_data.add_date eq 'y'}
-				 {tr}on{/tr} {$post_info.created|tiki_short_date}
-			{/if}
-			
-			{if $blog_data.show_avatar eq 'y'}
-					{$post_info.avatar}
-			{/if}
-		</div>
-
-		{$parsed_data}
-		{if $pages > 1}
-			<div align="center">
-				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$first_page}">{icon _id='resultset_first' alt='{tr}First page{/tr}'}</a>
-				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$prev_page}">{icon _id='resultset_previous' alt='{tr}Previous page{/tr}'}</a>
-				<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
-				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$next_page}">{icon _id='resultset_next' alt='{tr}Next page{/tr}'}</a>
-				<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$last_page}">{icon _id='resultset_last' alt='{tr}Last page{/tr}'}</a>
-			</div>
-		{/if}
-
-		{capture name='copyright_section'}
-			{include file='show_copyright.tpl'}
-		{/capture}
-		
-		{* When copyright section is not empty show it *}
-		{if $smarty.capture.copyright_section neq ''}
-			<p class="editdate">
-				{$smarty.capture.copyright_section}
-			</p>
-		{/if}
 	</div>
+
+	{include file='tiki-view_blog_post_content.tpl'}
+
 	<div class="postfooter">
 		<div class="status"> {* renamed to match forum footer layout *}
 			<a href='tiki-print_blog_post.php?postId={$postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>

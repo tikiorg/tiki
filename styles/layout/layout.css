@@ -1335,6 +1335,10 @@ body.tiki_blogs .post .postfooter {
 	float: right;
 }
 
+body.tiki_blogs div.author_actions {
+	float: right;
+}
+
 /***** Forums *****/
 body.tiki_forums table.normal {
 	margin: auto;

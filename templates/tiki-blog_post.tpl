@@ -20,18 +20,8 @@
 	{/remarksbox}
 {/if}
 {if $preview eq 'y'}
-	{include file='tiki-preview_post.tpl'}
-{/if}
-
-{if $wysiwyg ne 'y'}
-{remarksbox type="tip" title="{tr}Tip{/tr}"}
-  {if $prefs.feature_filegals_manager == 'y'}{tr}Images should now be uploaded via the editor toolbar icon instead of the old and soon to be replaced "Upload image for this post" field.{/tr}{/if}
-  {if !$postId} {tr}Uploading images the old way to new posts require saving first, perhaps after setting a future Publish Date, and then reediting it to be able to add images.{/tr}{/if}
-  <hr />
-  {if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}
-    {tr}Use ...page... to separate pages in a multi-page post{/tr}
-  {/if}
-{/remarksbox}
+	<div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
+	{include file='tiki-view_blog_post_content.tpl'}
 {/if}
 
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
