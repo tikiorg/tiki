@@ -142,8 +142,8 @@ function module_shoutbox( $mod_reference, $module_params ) {
 		$smarty->assign('tooltip', isset($module_params['tooltip']) ? $module_params['tooltip'] : 0);
 		$smarty->assign('buttontext', isset($module_params['buttontext']) ? $module_params['buttontext'] : tra('Post'));
 		$smarty->assign('waittext', isset($module_params['waittext']) ? $module_params['waittext'] : tra('Please wait...'));
-		$smarty->assign('tweet', $module_params['tweet'] &&($tikilib->get_user_preference($user,'twitter_token')!='') ? $module_params['tweet'] : "0");
-		$smarty->assign('facebook', $module_params['facebook'] &&($tikilib->get_user_preference($user,'facebook_token')!='') ? $module_params['facebook'] : "0");
+		$smarty->assign('tweet', isset($module_params['tweet']) &&($tikilib->get_user_preference($user,'twitter_token')!='') ? $module_params['tweet'] : "0");
+		$smarty->assign('facebook', isset($module_params['facebook']) &&($tikilib->get_user_preference($user,'facebook_token')!='') ? $module_params['facebook'] : "0");
 		if ($prefs['feature_ajax'] == 'y') {
 			if (!isset($_REQUEST['xajax'])) {
 				$ajaxlib->registerTemplate('mod-shoutbox.tpl');
