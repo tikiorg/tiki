@@ -133,6 +133,10 @@ function wikiplugin_trackerlist_info() {
 				'filter' => 'int'
 			),
 			'offset' => array(
+				'required' => false,
+				'name' => tra('Offset'),
+				'description' => tra('Offset of first item'),
+				'filter' => 'int'
 			),
 			'showpagination' => array(
 				'required' => false,
@@ -603,6 +607,8 @@ function wikiplugin_trackerlist($data, $params) {
 
 		if (isset($_REQUEST['tr_offset'])) {
 			$tr_offset = $_REQUEST['tr_offset'];
+		} else if (isset($offset) && $offset >= 0) {
+			$tr_offset = $offset;
 		} else {
 			$tr_offset = 0;
 		}
