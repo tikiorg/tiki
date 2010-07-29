@@ -84,9 +84,9 @@ foreach ($_REQUEST as $key =>$val) {
 		$filterFields[] = $fieldId;
 		if (isset($_REQUEST["x_$fieldId"]) && $_REQUEST["x_$fieldId"] == 't' ) {
 			$exactValues[] = '';
-			$values[] = $val;
+			$values[] = urldecode($val);
 		} else {
-			$exactValues[] = $val;
+			$exactValues[] = urldecode($val);
 			$values[] = '';
 		}
 	}
