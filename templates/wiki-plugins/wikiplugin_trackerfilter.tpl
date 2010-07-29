@@ -7,7 +7,14 @@
 {button _text="{tr}Filters{/tr}" _flip_id="trackerFilter$iTrackerFilter"}
 {/if}
 <div id="trackerFilter{$iTrackerFilter}" style="display:{if $open eq 'y' or $line eq 'y' or $prefs.javascript_enabled ne 'y' and $noflipflop ne 'y'}block{else}none{/if}">
-{if empty($inForm)}<form action="{$smarty.server.PHP_SELF}?{query}" method="post">{/if}
+{if empty($inForm)}
+	{if empty($export_action)}
+		<form action="{$smarty.server.PHP_SELF}?{query}" method="post">
+	{else}
+		<form action="tiki-export_tracker.php" method="post">
+			{query _type='form_input' listfields=$export_fields showItemId=$export_itemid showStatus=$export_status showCreated=$export_created showLastModif=$export_modif encoding=$export_charset}
+	{/if}
+{/if}
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <input type="hidden" name="iTrackerFilter" value="{$iTrackerFilter}" />
 {if !empty($count_item)}<input type="hidden" name="count_item" value="{$count_item}" />{/if}
@@ -84,8 +91,17 @@
 		{if $line ne 'y'}</tr>{else} {/if}
 {/foreach}
 {if $line ne 'y' and $action and $action neq " "}<tr>{/if}
-{if $action and $action neq " "}
-<td>&nbsp;</td><td><input class="button submit" type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" /></td>
+{if ($action and $action neq " ") or !empty($export_action)}
+<td>&nbsp;</td>
+<td>
+	{if !empty($export_action)}
+		<input class="button submit" type="submit" name="export_filter" value="{tr}{$export_action}{/tr}" />
+	{elseif $action and $action neq " "}
+		<input class="button submit" type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" />
+	{else}
+		&nbsp;
+	{/if}
+</td>
 {/if}
 {if !empty($sortchoice)}
 	{if $line ne 'y'}<tr>{/if}

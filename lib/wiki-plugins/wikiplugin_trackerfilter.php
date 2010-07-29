@@ -46,6 +46,11 @@ function wikiplugin_trackerfilter_info() {
 			'description' => tra('List of colon separated tracker id\'s to also POST data for so multiple trackerfilers can be used on one page.' .
 								 ' Each trackerfilter is assigned an id, e.g. "#iTrackerFilter1" onwards, as the page is rendered. (requires javascript)'),
 		),
+		'export_action' => array(
+			'required' => false,
+			'name' => tra('Export CSV.'),
+			'description' => 'Label for an export button. Leave blank to show the usual "Filter" button instead.',
+		),
 	) );
 
 return array(
@@ -65,7 +70,8 @@ function wikiplugin_trackerfilter($data, $params) {
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n', 'other_filters' => ''); //tra('Filter')
+	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n', 'other_filters' => '', 'export_action' => '',
+					 'export_itemid' => 'y', 'export_status' => 'n', 'export_created' => 'n', 'export_modif' => 'n', 'export_charset' => 'UTF-8');
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
@@ -119,7 +125,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	if (empty($trackerId) && !empty($_REQUEST['trackerId'])) {
 		 $trackerId = $_REQUEST['trackerId'];
 	}
-	if (empty($_REQUEST['filter'])) { // look if not coming from an initial
+	if (empty($_REQUEST['filter']) && empty($export_action)) { // look if not coming from an initial and not exporting
 		foreach ($_REQUEST as $key =>$val) {
 			if (substr($key, 0, 2) == 'f_') {
 				$_REQUEST['filter'] = 'y';
@@ -179,6 +185,15 @@ function wikiplugin_trackerfilter($data, $params) {
 	$smarty->assign_by_ref('trackerId', $trackerId);
 	$smarty->assign_by_ref('line', $line);
 	$smarty->assign('iTrackerFilter', $iTrackerFilter);
+	if (!empty($export_action)) {
+		$smarty->assign('export_action', $export_action);
+		$smarty->assign('export_fields', implode(':', $fields));
+		$smarty->assign('export_itemid', $export_itemid == 'y' ? 'on' : '');
+		$smarty->assign('export_status', $export_status == 'y' ? 'on' : '');
+		$smarty->assign('export_created', $export_created == 'y' ? 'on' : '');
+		$smarty->assign('export_modif', $export_modif == 'y' ? 'on' : '');
+		$smarty->assign('export_charset', $export_charset);
+	}
 	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y') {
 		$open = 'y';
 	} else {
