@@ -46,6 +46,7 @@
 			{if $forum_mode neq 'y'}
 				{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment.parentId`&comments_parentId=`$comment.threadId`&thread_style=`$thread_style`#form"
 								_auto_args='*'
+								_ajax='n'
 								_text="{tr}Reply{/tr}"
 				}
 								
