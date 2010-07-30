@@ -11,7 +11,16 @@
 	{if empty($export_action)}
 		<form action="{$smarty.server.PHP_SELF}?{query}" method="post">
 	{else}
-		<form action="tiki-export_tracker.php" method="post">
+		{jq notonready=true}
+function tf_export_submit(fm) {
+//	setTimeout(function(){
+//		$jq(fm).hide(400);
+//	}, 5000);
+	$jq("input[name=export_filter]").attr("disabled", "disabled").css("opacity", 0.5);
+	return true;
+}
+		{/jq}
+		<form action="tiki-export_tracker.php" method="post" onsubmit="tf_export_submit(this);">
 			{query _type='form_input' listfields=$export_fields showItemId=$export_itemid showStatus=$export_status showCreated=$export_created showLastModif=$export_modif encoding=$export_charset}
 			{foreach from=$f_fields item=f_v key=f_k}
 				<input type="hidden" name="{$f_k}" value="{$f_v}" />
