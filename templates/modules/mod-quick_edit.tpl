@@ -8,19 +8,19 @@
 {if $wikiTplHeader}<input type="hidden" name="wikiTplHeader" value="{$wikiTplHeader}" />{/if}
 {if $mod_quickedit_heading}<div class="box-data">{$mod_quickedit_heading}</div>{/if}
 {if $enterdescription==1 or $chooseCateg==1 or $pastetext==1}<label>{tr}Page name{/tr}</label>{/if}
-<input id="{$qefield}" type="text" size="{$size}" name="page" />
+<input id="{$qefield}" type="text" style="width:95%;" name="page" />
 {if $enterdescription==1}{if $prefs.feature_wiki_description eq 'y' or $prefs.metatag_pagedesc eq 'y'}
 <div>
 <label>{if $prefs.metatag_pagedesc eq 'y'}{tr}Description (used for metatags):{/tr}{else}{tr}Description:{/tr}{/if}</label>
 {if $prefs.disableJavascript != 'y'}<a id="flipperqdescription" href="javascript:flipWithSign('qdescription')">[+]</a>{/if}
-<input id="qdescription" {if $prefs.disableJavascript != 'y'}style="display: none;" {/if}type="text" size="{$size}" name="description" />
+<input id="qdescription" style="width:95%;{if $prefs.disableJavascript != 'y'} display: none;{/if}" type="text" size="{$size}" name="description" />
 </div>{/if}{/if}
 {if $chooseCateg==1}
 <div>
 <input type="hidden" name="cat_categorize" value="on" />
 <label>{tr}Category{/tr}</label>
 {if $prefs.disableJavascript != 'y'}<a id="flipperqcat" href="javascript:flipWithSign('qcat')">[+]</a>{/if}
-<select id="qcat" {if $prefs.disableJavascript != 'y'}style="display: none;" {/if}name="cat_categories[]">
+<select id="qcat" style="width:95%;{if $prefs.disableJavascript != 'y'} display: none;{/if}" name="cat_categories[]">
 <option></option>
 {foreach from=$qcats item="cat"}<option value="{$cat.categId}"{if $cat.categId=$categId} selected="selected"{/if}>{$cat.name}</option>
 {/foreach}
@@ -31,8 +31,8 @@
 {/if}
 {if $addcategId}<input type="hidden" name="cat_categories[]" value="{$addcategId}" />
 <input type="hidden" name="cat_categorize" value="on" />{/if}
-{if $pastetext==1}<label>{tr}Paste content here{/tr}</label><textarea name="copypaste" cols="{$size}" rows="2"></textarea>{/if}
-<input type="submit" name="qedit" value="{$submit}" />
+{if $pastetext==1}<label>{tr}Paste content here{/tr}</label><textarea name="copypaste" style="width:95%;" rows="2"></textarea>{/if}
+<input type="submit" name="qedit" style="width:95%;" value="{$submit}" />
 </form>
 {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 {jq}
