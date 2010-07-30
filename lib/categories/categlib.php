@@ -1772,7 +1772,7 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 		global $prefs;
 		if( $this->get_jail() ) {
 			// Default categories are not the entire jail including the sub-categories but only the "root" categories
-			return $prefs['category_jail'];
+			return is_array($prefs['category_jail'])? $prefs['category_jail']: array($prefs['category_jail']);
 		} else {
 			return array();
 		}
