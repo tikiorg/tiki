@@ -54,6 +54,7 @@ function wikiplugin_author($data, $params) {
 	static $color=0;
 	static $id=0;
 	
+	$blocktags='/(<+\/?address.*?>|<+\/?blockcode.*?>|<+\/?blockquote.*?>|<+\/?div.*?>|<+\/?h1.*?>|<+\/?h2.*?>|<+\/?h3.*?>|<+\/?h4.*?>|<+\/?h5.*?>|<+\/?h6.*?>|<+\/?hr.*?>|<+\/?h.*?>|<+\/?pre.*?>|<+\/?p.*?>|<+\/?section.*?>)/';
 	$default = array('popup' => 0);
 	$params = array_merge($default, $params);
 	if(!is_array($authors)) $authors=array();
@@ -69,39 +70,51 @@ function wikiplugin_author($data, $params) {
 		);
 		$color++;
 	}
-	if ($params['visible']==1 or $params['popup']==1) {
-		$html='<a id="author'.$id.'-link" ';
-	}
-	if ($params['visible']==1) {
-		$html.='style="color: ' . $authors[$author]['color'] . '; background-color: ' . $authors[$author]['background'] .';';
-		if (isset($params['deleted_by'])) {
-			$html.=' text-decoration: line-through;';
-		} else {
-			$html.=' text-decoration: none;';
-		}
-		$html.='"';
-	}
-	if($params['popup']==1) {
-		$html.=' onclick="javascript:void()"';
-	}
-	if ($params['visible']==1 or $params['popup']==1) {
-		$html.=">$data</a>";
-	} else {
-		$html=$data;
-	}
 	
-	if($params['popup']==1) {
-		//Mouseover for detailed info
-		$js = "\$jq('#author$id-link').mouseover(function(event) {
-			\$jq('#author$id').css('left', event.pageX).css('top', event.pageY);
-			showJQ('#author$id', '', '');
-			1000
-		});";
-		$js .= "\$jq('#author$id-link').mouseout(function(event) { setTimeout(function() {hideJQ('#author$id', '', '')}, 1000); });";
-		$headerlib->add_jq_onready($js);
-		$html.="<span id=\"author$id\" class=\"plugin-mouseover\" style=\"width: 200px; height: 80px; padding: 2px \">" . 
-			tra('Author') . ": $author" . (isset($params['deleted_by'])?"<br />" . tra('deleted by') . ': '.$params['deleted_by']:'') . "</span>";
-	}
-	$id++;
+	$content=preg_split($blocktags, $data, -1, PREG_SPLIT_DELIM_CAPTURE);
+	$html='';
+	foreach ($content as $data) {
+		if ($data!='') {
+			if (preg_match($blocktags,$data)>0) {
+				$html.=$data;
+
+			} else {
+				if ($params['visible']==1 or $params['popup']==1) {
+					$html.='<span id="author'.$id.'-link" ';
+				}
+				if ($params['visible']==1) {
+					$html.='style="color: ' . $authors[$author]['color'] . '; background-color: ' . $authors[$author]['background'] .';';
+					if (isset($params['deleted_by'])) {
+						$html.=' text-decoration: line-through;';
+					} else {
+						$html.=' text-decoration: none;';
+					}
+					$html.='"';
+				}
+				if($params['popup']==1) {
+					$html.=' onclick="javascript:void()"';
+				}
+				if ($params['visible']==1 or $params['popup']==1) {
+					$html.=">\n$data</span>\n";
+				} else {
+					$html.=$data;
+				}
+				
+				if($params['popup']==1) {
+					//Mouseover for detailed info
+					$js = "\$jq('#author$id-link').mouseover(function(event) {
+						\$jq('#author$id').css('left', event.pageX).css('top', event.pageY);
+						showJQ('#author$id', '', '');
+						1000
+					});";
+					$js .= "\$jq('#author$id-link').mouseout(function(event) { setTimeout(function() {hideJQ('#author$id', '', '')}, 1000); });";
+					$headerlib->add_jq_onready($js);
+					$html.="<span id=\"author$id\" class=\"plugin-mouseover\" style=\"width: 200px; height: 80px; padding: 2px \">" . 
+						tra('Author') . ": $author" . (isset($params['deleted_by'])?"<br />" . tra('deleted by') . ': '.$params['deleted_by']:'') . "</span>\n";
+				}
+				$id++;
+			} // content is not a block tag
+		} // content <>""
+	} // foreach
 	return $html;
 }

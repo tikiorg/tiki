@@ -753,7 +753,7 @@ class Document {
 								$text.='{AUTHOR}';
 							}
 							if (substr($word['word'],-4)=='</a>') {
-								$text.=$word."{AUTHOR(author=\"$author\"".($deleted?",deleted_by=\"$deleted_by\"":'').',visible="1", popup="1")}';
+								$text.=$word['word']."{AUTHOR(author=\"$author\"".($deleted?",deleted_by=\"$deleted_by\"":'').',visible="1", popup="1")}';
 								$skip=true;
 							}
 						}

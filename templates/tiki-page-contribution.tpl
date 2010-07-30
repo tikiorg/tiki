@@ -1,6 +1,7 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-index.php?page={$page}">{tr}Contributions to{/tr} {$page}
-({if $lastversion==0}{tr}current version{/tr}{else}{tr}version{/tr} {$lastversion}{/if})</a></h1>
+<div id="top" class="wikitext clearfix">
+<h1 class="pagetitle"><strong><a href="tiki-index.php?page={$page}">{tr}Contributions to{/tr} {$page}
+({if $lastversion==0}{tr}current version{/tr}{else}{tr}version{/tr} {$lastversion}{/if})</a></strong></h1>
 <h2>{tr}Settings{/tr}</h2>
 {include file='tiki-page-contribution_form.tpl'}
 <h2>{tr}Statistics{/tr}</h2>
@@ -63,4 +64,5 @@
  </tr>
 </table>
 <h2>Page changes</h2>
-<div class="wikitext">{$parsed}</div>
+{$parsed}
+</div>
