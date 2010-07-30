@@ -95,7 +95,7 @@ function wikiplugin_author($data, $params) {
 					$html.=' onclick="javascript:void()"';
 				}
 				if ($params['visible']==1 or $params['popup']==1) {
-					$html.=">\n$data</span>\n";
+					$html.=">$data</span>";
 				} else {
 					$html.=$data;
 				}
@@ -110,7 +110,7 @@ function wikiplugin_author($data, $params) {
 					$js .= "\$jq('#author$id-link').mouseout(function(event) { setTimeout(function() {hideJQ('#author$id', '', '')}, 1000); });";
 					$headerlib->add_jq_onready($js);
 					$html.="<span id=\"author$id\" class=\"plugin-mouseover\" style=\"width: 200px; height: 80px; padding: 2px \">" . 
-						tra('Author') . ": $author" . (isset($params['deleted_by'])?"<br />" . tra('deleted by') . ': '.$params['deleted_by']:'') . "</span>\n";
+						tra('Author') . ": $author" . (isset($params['deleted_by'])?"<br />" . tra('deleted by') . ': '.$params['deleted_by']:'') . "</span>";
 				}
 				$id++;
 			} // content is not a block tag
