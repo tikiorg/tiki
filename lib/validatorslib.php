@@ -61,7 +61,11 @@ class Validators
 					$validationjs .= 'type: "post", ';
 					$validationjs .= 'data: { ';
 					$validationjs .= 'validator: "' .$field_value['validation'].'", ';
-					$validationjs .= 'parameter: "' .$field_value['validationParam'].'", ';
+					if ($field_value['validation'] == 'distinct' && empty($field_value['validationParam'])) {
+						$validationjs .= 'parameter: "trackerId=' .$field_value['trackerId'].'&fieldId=' .$field_value['fieldId'].'", ';
+					} else {
+						$validationjs .= 'parameter: "' .$field_value['validationParam'].'", ';
+					}
 					$validationjs .= 'message: "' .$field_value['validationMessage'].'", ';
 					$validationjs .= 'input: function() { ';
 					if ( $prefix == 'ins_' && $field_value['type'] == 'a') {
