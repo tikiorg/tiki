@@ -8437,9 +8437,11 @@ JS;
 			if( $prefs['expanded_category_jail_key'] != $key ) {
 				$additional = array();
 
-				foreach( $categories as $categId ) {
-					$desc = $categlib->get_category_descendants( $categId );
-					$additional = array_merge( $additional, $desc );
+				if (!empty($categories)) {
+					foreach( $categories as $categId ) {
+						$desc = $categlib->get_category_descendants( $categId );
+						$additional = array_merge( $additional, $desc );
+					}
 				}
 
 				$prefs['expanded_category_jail'] =
