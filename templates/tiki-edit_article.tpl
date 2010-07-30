@@ -150,6 +150,7 @@
 			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 				<input name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;"/>
+				{icon _id='help' alt='{tr}If not the topic image{/tr}'}
 			</td>
 		</tr>
 		{if $hasImage eq 'y'}
@@ -183,23 +184,25 @@
 			</td>
 		</tr>
 		<tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
-			<td>{tr}Own image size x{/tr}</td>
+			<td>{tr}View mode{/tr}</td>
 			<td>
-				<input type="text" name="image_x" value="{$image_x|escape}" />
-				{tr}pixels{/tr}
+				<label>{tr}Image width{/tr}</label> <input type="text" name="image_x"{if $image_x > 0} value="{$image_x|escape}"{/if} /> {tr}pixels{/tr}
+				{icon _id='help' alt='{tr}If different than the uploaded image{/tr}'}<br />
+				<label>{tr}Image height{/tr} <input type="text" name="image_y"{if $image_y > 0} value="{$image_y|escape}"{/if} /></label> {tr}pixels{/tr}
 			</td>
 		</tr>
 		<tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
-			<td>{tr}Own image size y{/tr}</td>
+			<td>{tr}List mode{/tr}</td>
 			<td>
-				<input type="text" name="image_y" value="{$image_y|escape}" />
-				{tr}pixels{/tr}
+				<label>{tr}Image width{/tr}</label> <input type="text" name="list_image_x" value="{$list_image_x|escape}" /> {tr}pixels{/tr}
+				{icon _id='help' alt='{tr}If different than in view mode{/tr}'}
 			</td>
 		</tr>
 		<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
 			<td>{tr}Image caption{/tr} *</td>
 			<td>
 				<input type="text" name="image_caption" value="{$image_caption|escape}" size="80" />
+				{icon _id='help' alt='{tr}If not the topic name{/tr}'}
 			</td>
 		</tr>
 

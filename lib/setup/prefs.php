@@ -687,7 +687,6 @@ function get_default_prefs() {
 		'art_view_reads' => 'y',
 		'art_view_size' => 'n',
 		'art_view_img' => 'y',
-		'art_view_img_width' =>'',
 		'art_list_lang' => 'n',
 		'art_trailer_pos' => 'top',
 		'feature_article_comments' => 'n',

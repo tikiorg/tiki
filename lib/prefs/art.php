@@ -93,11 +93,6 @@ function prefs_art_list() {
 			'name' => tra('Id'),
 			'type' => 'flag',
 		),
-		'art_view_img_width' => array(
-			'name' => tra('Image width in pixels'),
-			'description' => tra('Image width in pixels'),
-			'type' => 'text',
-		),
 		'art_trailer_pos' => array(
 			'name' => tra('Trailer position'),
 			'description' => tra('Trailer position'),

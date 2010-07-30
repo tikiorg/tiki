@@ -122,11 +122,11 @@ function wikiplugin_articles_info()
 				'description' => tra('CSS Class to add to the container DIV.article. (Default="wikiplugin_articles")'),
 				'filter' => 'striptags',
 			),
-			'widthimgexcept1' => array(
+			'largefirstimage' => array(
 				'required' => false,
-				'name' => tra('Max image width in pixels'),
-				'description' => tra('Max image width in pixels except for the first'),
-				'filter' => 'int',
+				'name' => tra('Large first image'),
+				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 		),
 	);
@@ -136,7 +136,7 @@ function wikiplugin_articles($data, $params)
 {
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 	global $artlib; require_once 'lib/articles/artlib.php';
-	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'widthimgexcept1' => '');
+	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n');
 	$params = array_merge($default, $params);
 
 	extract($params, EXTR_SKIP);
@@ -176,7 +176,7 @@ function wikiplugin_articles($data, $params)
 		$smarty->assign('fullbody', 'n');
 		$fullbody = 'n';
 	}
-	$smarty->assign('widthimgexcept1', $widthimgexcept1);
+	$smarty->assign('largefirstimage', $largefirstimage);
 	if (!isset($overrideDates))	$overrideDates = 'n';
 	
 	include_once("lib/commentslib.php");

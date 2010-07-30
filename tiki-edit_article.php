@@ -121,6 +121,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$smarty->assign('image_data', urlencode($article_data["image_data"]));
 	$smarty->assign('image_x', $article_data["image_x"]);
 	$smarty->assign('image_y', $article_data["image_y"]);
+	$smarty->assign('list_image_x', $article_data['list_image_x']);
 	$smarty->assign('reads', $article_data["nbreads"]);
 	$smarty->assign('type', $article_data["type"]);
 	$smarty->assign('author', $article_data["author"]);
@@ -236,6 +237,7 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	$smarty->assign('image_size', $_REQUEST["image_size"]);
 	$smarty->assign('image_x', $_REQUEST["image_x"]);
 	$smarty->assign('image_y', $_REQUEST["image_y"]);
+	$smarty->assign('image_x', $_REQUEST['list_image_x']);
 	$smarty->assign('useImage', $useImage);
 	$smarty->assign('isfloat', $isfloat);
 	$smarty->assign('type', $_REQUEST["type"]);
@@ -415,6 +417,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 																		, $isfloat
 																		, $emails
 																		, $_REQUEST['from']
+																		, $_REQUEST['list_image_x']
 																		);
 
 	$cat_type = 'article';
