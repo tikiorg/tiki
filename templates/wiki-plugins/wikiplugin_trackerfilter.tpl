@@ -13,6 +13,9 @@
 	{else}
 		<form action="tiki-export_tracker.php" method="post">
 			{query _type='form_input' listfields=$export_fields showItemId=$export_itemid showStatus=$export_status showCreated=$export_created showLastModif=$export_modif encoding=$export_charset}
+			{foreach from=$f_fields item=f_v key=f_k}
+				<input type="hidden" name="{$f_k}" value="{$f_v}" />
+			{/foreach}
 	{/if}
 {/if}
 <input type="hidden" name="trackerId" value="{$trackerId}" />
