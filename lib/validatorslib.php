@@ -64,7 +64,11 @@ class Validators
 					$validationjs .= 'parameter: "' .$field_value['validationParam'].'", ';
 					$validationjs .= 'message: "' .$field_value['validationMessage'].'", ';
 					$validationjs .= 'input: function() { ';
-					$validationjs .= 'return $jq("#'.$prefix.$field_value['fieldId'].'").val(); ';
+					if ( $prefix == 'ins_' && $field_value['type'] == 'a') {
+						$validationjs .= 'return $jq("#area_'.$field_value['fieldId'].'").val(); ';
+					} else {
+						$validationjs .= 'return $jq("#'.$prefix.$field_value['fieldId'].'").val(); ';
+					}
 					$validationjs .= '} } } ';
 				} else {
 					// remove last comma (not supported in IE7)
