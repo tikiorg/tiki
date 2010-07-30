@@ -1336,7 +1336,8 @@ body.tiki_blogs .post .postfooter {
 }
 
 body.tiki_blogs div.author_actions {
-	float: right;
+	width: 100%;
+	text-align: right;
 }
 
 /***** Forums *****/

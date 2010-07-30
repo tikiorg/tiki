@@ -14,7 +14,11 @@
 					 {tr}Tags:{/tr}&nbsp;
 					{foreach from=$tags.data item=tag}
 						{capture name=tagurl}{if (strstr($tag.tag, ' '))}"{$tag.tag}"{else}{$tag.tag}{/if}{/capture}
-						<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$tag.tag}</a> 
+						{if isset($preview) and $preview eq 'y'}
+							<a class="freetag" href="#">{$tag.tag}</a>
+						{else}
+							<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$tag.tag}</a>
+						{/if}
 					{/foreach}
 				</div>
 			{/if}

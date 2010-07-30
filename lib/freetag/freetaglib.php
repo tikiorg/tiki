@@ -1508,6 +1508,32 @@ class FreetagLib extends ObjectLib
 
 		return $tags;
 	}
+
+	/**
+	 * Used to parse the tag string when previewing an object. Simulates
+	 * the final result without saving anything in the database.
+	 *
+	 * @param string $tagString
+	 * @access public
+	 * @return array tags
+	 */
+	function dumb_parse_tags($tagString) {
+		if (!is_string($tagString) || empty($tagString)) {
+			return array();
+		}
+
+		$tagArray = $this->_parse_tag($tagString);
+
+		$tags = array();
+
+		foreach ($tagArray as $tag) {
+			$tags['data'][]['tag'] = $this->normalize_tag($tag);
+		}
+
+		$tags['cant'] = count($tags['data']);
+
+		return $tags;
+	}
 }
 
 $freetaglib = new FreetagLib;

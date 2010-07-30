@@ -160,7 +160,9 @@ if (isset($_REQUEST["preview"])) {
 	$post_info['avatar'] = isset($data) ? $data['avatar'] : '';
 	$smarty->assign('post_info', $post_info);
 
-	if ($prefs['feature_freetags'] == 'y') {
+	if ($prefs['feature_freetags'] == 'y' && isset($_REQUEST['freetag_string'])) {
+		$tags = $freetaglib->dumb_parse_tags($_REQUEST['freetag_string']);
+		$smarty->assign('tags', $tags);
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
 	}
 
