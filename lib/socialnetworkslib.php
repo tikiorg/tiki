@@ -15,10 +15,17 @@ require_once ('lib/core/lib/Zend/Service/Twitter.php');
 require_once ('lib/logs/logslib.php');
 
 
-// bundling social networks functionality
+/**
+ * this class bundles several social networks functions (twitter, facebook ...)
+ * @author cdrwhite
+ * @since 6.0
+ */
 class SocialNetworksLib extends LogsLib
 {
 
+	/**
+	 * @var	array	options for Twitter Zend functions
+	 */
 	public $options = array(
 		'callbackUrl'    => '',
 		'siteUrl'        => 'http://twitter.com/oauth',
@@ -26,6 +33,10 @@ class SocialNetworksLib extends LogsLib
 		'consumerSecret' => '',
 	);
 
+	/**
+	 * retrieves the URL for the current page
+	 * @return string	URL for the current page
+	 */
 	function getURL() {
 		$url='http';
 		$port='';
@@ -43,15 +54,22 @@ class SocialNetworksLib extends LogsLib
 		return $url;
 	}
 	
+	/**
+	 * checks if the site is registered with twitter (consumer key and secret are set)
+	 * @return bool	true, if this site is registered with twitter as an application
+	 */
 	function twitterRegistered() {
 		global $prefs;
 		return ($prefs['socialnetworks_twitter_consumer_key']!='' and $prefs['socialnetworks_twitter_consumer_secret']!='');
 	}
 
+	/**
+	 * if this site is registered with twitter, it redirects to twitter to ask for a request token
+	 */
 	function getTwitterRequestToken() {
 		global $prefs;
 
-		if($prefs['socialnetworks_twitter_consumer_key']=='' or $prefs['socialnetworks_twitter_consumer_secret']=='') {
+		if(!$this->twitterRegistered()) {
 			return false;
 		}
 
@@ -70,6 +88,12 @@ class SocialNetworksLib extends LogsLib
 		}
 	}
 
+	/**
+	 * When the user confirms the request token, twitter redirects back to our site providing us with a request token.
+	 * This function receives a permanent access token for the given user and stores it in his preferences
+	 * @param string $user  user Id of the user to store the access token for
+	 * @return bool 		true on success
+	 */
 	function getTwitterAccessToken($user) {
 		global $prefs;
 
@@ -88,14 +112,21 @@ class SocialNetworksLib extends LogsLib
 		return true;
 	}
 
+	/**
+	 * checks if the site is registered with facebook (application id , api key and secret are set)
+	 * @return bool	true, if this site is registered with facebook as an application
+	 */
 	function facebookRegistered() {
 		global $prefs;
 		return ($prefs['socialnetworks_facebook_application_id']!='' and $prefs['socialnetworks_facebook_api_key']!='' and $prefs['socialnetworks_facebook_application_secr']!='');
 	}
 	
+	/**
+	 * if this site is registered with facebook, it redirects to facebook to ask for a request token
+	 */
 	function getFacebookRequestToken() {
 		global $prefs;
-		if($prefs['socialnetworks_facebook_application_id']=='' or $prefs['socialnetworks_facebook_api_key']=='' or $prefs['socialnetworks_facebook_application_secr']=='') {
+		if(!$this->facebookRegistered()) {
 			return false;
 		}
 		$url=$this->getURL();
@@ -109,6 +140,12 @@ class SocialNetworksLib extends LogsLib
 		die();
 	}
 
+	/**
+	 * When the user confirms the request token, facebook redirects back to our site providing us with a request token.
+	 * This function receives a permanent access token for the given user and stores it in his preferences
+	 * @param string $user  user Id of the user to store the access token for
+	 * @return bool 		true on success
+	 */
 	function getFacebookAccessToken($user) {
 		global $prefs;
 		if($prefs['socialnetworks_facebook_application_id']=='' or $prefs['socialnetworks_facebook_api_key']=='' or $prefs['socialnetworks_facebook_application_secr']=='') {
@@ -148,6 +185,14 @@ class SocialNetworksLib extends LogsLib
 		}
 	}
 	
+	/**
+	 * Sends a tweet via Twitter
+	 * @param string	$message	Message to send
+	 * @param string	$user		UserId of the user to send the message for
+	 * @param bool		$cutMessage	Should the message be cut if it is longer than 140 characters, if set to false, an error will be returned if the message is longer than 140 characters
+	 * @return int					-1 if the user did not authorize the site with twitter, -2, if the message is longer than 140 characters, a negative number corresponding to the HTTP response codes from twitter (http://dev.twitter.com/pages/streaming_api_response_codes)
+	 *  							or a positive tweet id of the message
+	 */
 	function tweet($message, $user, $cutMessage=false) {
 		global $prefs;
 		$token=$this->get_user_preference($user, 'twitter_token', '');
@@ -191,6 +236,12 @@ class SocialNetworksLib extends LogsLib
 		}
 	}
 
+	/**
+	 * Deletes a tweet with the given tweet id
+	 * @param int		$id		Id of the tweet to delete
+	 * @param string	$user		UserId of the user who sent the tweet
+	 * @return bool					true on success
+	 */
 	function destroyTweet($id, $user) {
 		global $prefs;
 		$token=$this->get_user_preference($user, 'twitter_token', '');
@@ -213,9 +264,17 @@ class SocialNetworksLib extends LogsLib
 		return true;
 	}
 	
+	/**
+	 * Talking to Facebook via the graph api at "https://graph.facebook.com/" using fsockopen
+	 * @param	string	$user		userId of the user to send the request for
+	 * @param	string	$action		directory/file part of the graph api URL
+	 * @param	array	$params		parameters for the api call, each entry is one element submitted in the request
+	 * @param	bool	$addtoken	should the access token be added to the parameters if the calling function did not pass this parameter
+	 * @return	string				body of the response page (json encoded object)
+	 */
 	function facebookGraph($user, $action, $params, $addtoken=true) {
 		global $prefs;
-		if($prefs['socialnetworks_facebook_application_id']=='' or $prefs['socialnetworks_facebook_api_key']=='' or $prefs['socialnetworks_facebook_application_secr']=='') {
+		if(!$this->facebookRegistered()) {
 			$this->add_log('facebookGraph','application not set up');
 			return false;
 		}
@@ -257,6 +316,17 @@ class SocialNetworksLib extends LogsLib
 		return $ret[1];
 	}
 	
+	/**
+	 * 
+	 * publish a message (status or link with more options) on facebook
+	 * @param string	$user		userId of the user to send for
+	 * @param string	$message	message/main text to send
+	 * @param string	$url		optional URL to pass along
+	 * @param string	$text		optional text to show for the URL
+	 * @param string	$caption	optional caption of the message accompanying the url
+	 * @param string	$privacy	currently unused as I did not find the docu on how to use the privacy settings
+	 * @return	string|bool			false on error, object Id of the message on success
+	 */
 	function facebookWallPublish($user, $message, $url='', $text='', $caption='', $privacy='') {
 		$params=array();
 		if ($url!='') {
