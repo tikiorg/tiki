@@ -97,7 +97,11 @@ if ($postId) {
 	$smarty->assign_by_ref('post_images', $post_images);
 	$cat_type = 'blog post';
 	$cat_objid = $postId;
-	$cat_lang = $_REQUEST['lang'];
+
+	if (isset($_REQUEST['lang'])) {
+		$cat_lang = $_REQUEST['lang'];
+	}
+
 	include_once ('freetag_list.php');
 }
 $smarty->assign('preview', 'n');
