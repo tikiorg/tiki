@@ -60,7 +60,8 @@ return array(
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerfilter' ),
 		'body' => tra('notice'),
 		'params' => $params,
-	);
+		'extraparams' => true,
+);
 }
 
 function wikiplugin_trackerfilter($data, $params) {
@@ -198,6 +199,18 @@ function wikiplugin_trackerfilter($data, $params) {
 		$smarty->assign('export_created', $export_created == 'y' ? 'on' : '');
 		$smarty->assign('export_modif', $export_modif == 'y' ? 'on' : '');
 		$smarty->assign('export_charset', $export_charset);
+		
+		if (empty($filters) && !empty($filterfield)) {	// convert param filters to export params
+			$f_fields = array();
+			for($i = 0; $i < count($filterfield); $i++) {
+				if (!empty($exactvalue[$i])) {
+					$f_fields['f_' . $filterfield[$i]] = $exactvalue[$i];
+				} else if (!empty($exactValues[$i])) {
+					$f_fields['f_' . $filterfield[$i]] = $filtervalue[$i];
+				}
+			}
+			$smarty->assign_by_ref('f_fields', $f_fields);
+		}
 	}
 	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y') {
 		$open = 'y';
