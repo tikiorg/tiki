@@ -28,8 +28,14 @@
 {if $prefs.metatag_geoplacename ne ''}
 	<meta name="geo.placename" content="{$prefs.metatag_geoplacename|escape}" />
 {/if}
-{if $prefs.metatag_robots ne ''}
-	<meta name="robots" content="{$prefs.metatag_robots|escape}" />
+{if $prefs.metatag_robots ne '' && $metatag_robots eq '' }
+        <meta name="robots" content="{$prefs.metatag_robots|escape}" />
+{/if}
+{if $prefs.metatag_robots eq '' && $metatag_robots ne '' }
+        <meta name="robots" content="{$metatag_robots|escape}" />
+{/if}
+{if $prefs.metatag_robots eq '' && $metatag_robots eq '' }
+        <meta name="robots" content="{$prefs.metatag_robots|escape}, {$metatag_robots|escape}" />
 {/if}
 {if $prefs.metatag_revisitafter ne ''}
 	<meta name="revisit-after" content="{$prefs.metatag_revisitafter|escape}" />
