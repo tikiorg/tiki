@@ -91,7 +91,8 @@
 	{/if}
 
 {* -------------------- empty field -------------------- *}
-{elseif empty($field_value.value) and $field_value.value != '0' and $field_value.type ne 'U' and $field_value.type ne '*' and $field_value.type ne 's' and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
+{elseif empty($field_value.value) and $field_value.value != '0' and $field_value.type ne 'U' and $field_value.type ne '*' and $field_value.type ne 's' 
+	and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
 	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
@@ -101,9 +102,24 @@
 	{else}
 		{$field_value.value|tr_if}
 	{/if}
+	
+{* -------------------- numeric ------------*}
+{elseif $field_value.type eq 'n'}
+	{if empty($field_value.options_array[4]) and empty($field_value.options_array[5])}
+		{if empty($field_value.options_array[6])}
+			{$field_value.value|escape}
+		{else}
+			{$field_value.value|number_format}
+		{/if}
+	{else}
+		{$field_value.value|number_format:$field_value.options_array[4]:$field_value.options_array[5]:$field_value.options_array[6]}
+	{/if}
+
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
-{elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f' and $field_value.computedtype ne 'duration' )}
+{elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' 
+	or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' 
+	or ($field_value.type eq 'C' and $field_value.computedtype ne 'f' and $field_value.computedtype ne 'duration' )}
 	{if $list_mode eq 'y'}
 		{if $field_value.type eq 'u' }
 			{$field_value.value|username:true:true:false|truncate:255:"..."|escape|default:"&nbsp;"}
@@ -121,7 +137,6 @@
 			{$field_value.value|escape}
 		{/if}		
 	{/if}
-
 
 
 {* -------------------- image -------------------- *}

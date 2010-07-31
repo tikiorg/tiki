@@ -2987,13 +2987,17 @@ class TrackerLib extends TikiLib
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Provides a one-line field for numeric input only.  Prepend or append values may be alphanumeric.
-				<dt>Usage: <strong>samerow,size,prepend,append</strong>
+				<dt>Usage: <strong>samerow,size,prepend,append,decimals,dec_point,thousands</strong>
 				<dt>Example: 0,60,,hours
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
 				<dd><strong>[size]</strong> is the visible size of the field in characters;
 				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
 				<dd><strong>[append]</strong> is text that will be displayed just after the field;
+				<dd><strong>[decimals]</strong> sets the number of decimal places;
+				<dd><strong>[dec_point]</strong> sets the separator for the decimal point (decimals must also be set). Use c for comma and s for space;
+				<dd><strong>[thousands]</strong> sets the thousands separator. Use c for comma and s for space. Setting only commas will result in no decimals 
+													and commas as the thousands seprator;<br/><br/>
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['d'] = array(
