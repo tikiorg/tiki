@@ -31,7 +31,7 @@ function module_quick_edit_info() {
 			),
 			'size' => array(
 				'name' => 'INPUT SIZE',
-				'description' => tra('Size attribute (horizontal, in characters) of the text input field for page names.') . " " . tra('Default:') . " 15"
+				'description' => tra('Size attribute (horizontal, in characters) of the text input fields for page names and description. The other fields size depend on the module size.') . " " . tra('Default:') . " 15"
 			),
 			'mod_quickedit_heading' => array(
 				'name' => tra('Heading'),
