@@ -31,30 +31,34 @@ if (isset($_REQUEST['process'])) {
 	$process=1;
 }
 $smarty->assign('process', $process);
+
 if (isset($_REQUEST['lastversion'])) {
 	$lastversion=$_REQUEST['lastversion'];
 } else {
 	$lastversion=0;
 }
 $smarty->assign('lastversion', $lastversion);
+
 if(isset($_REQUEST['showstatistics'])) {
 	$showstatistics=$_REQUEST['showstatistics'];
 } else {
 	$showstatistics=1;
 }
 $smarty->assign('showstatistics', $showstatistics);
+
 if(isset($_REQUEST['showpage'])) {
 	$showpage=$_REQUEST['showpage'];
 } else {
 	$showpage=1;
 }
 $smarty->assign('showpage', $showpage);
+
+
 if(isset($_REQUEST['showpopups'])) {
 	$showpopups=$_REQUEST['showpopups'];
-} else {
-	$showpopups=1;
 }
 $smarty->assign('showpopups', $showpopups);
+
 if(isset($_REQUEST['escape'])) {
 	$escape=$_REQUEST['escape'];
 } else {
@@ -64,7 +68,6 @@ $smarty->assign('escape', $escape);
 $getOptions=array('showpopups' => ($showpopups==1),
 				  'escape' => ($escape==1),
 				 );
-
 $document = new Document($page, $lastversion, $process);
 $smarty->assign('info',$document->getInfo());
 $history=$document->getHistory();
