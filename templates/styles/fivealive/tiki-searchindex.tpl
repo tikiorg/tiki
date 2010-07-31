@@ -2,7 +2,7 @@
 
 <div class="nohighlight">
 	{if $searchStyle neq "menu" && $prefs.feature_search_show_object_filter eq 'y'}
-		{title admpage="search" help="Search+User"}{tr}Search{/tr}{/title}
+		{title admpage="search" help="Search"}{tr}Search{/tr}{/title}
 		<div class="navbar">
 			{tr}Search in{/tr}:
 			{foreach item=name key=k from=$where_list}
