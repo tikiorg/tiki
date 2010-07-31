@@ -362,12 +362,12 @@ class Document {
 	private $_process=1;
 		
 	/**
-	 * @var string	should the page contents be parsed (HTML instead of WIKI text) 
+	 * @var bool	should the page contents be parsed (HTML instead of WIKI text) 
 	 */
 	private $_parsed;
 	
 	/**
-	 * @var string	should the html tags be stripped from the parsed contents 
+	 * @var bool	should the html tags be stripped from the parsed contents 
 	 */
 	private $_nohtml;
 	
@@ -405,7 +405,7 @@ class Document {
 	 * @param string	$start		start marker (all text will be skipped, including this marker which must be at the beginning of a line)
 	 * @param string	$end		end marker (all text will be skipped from this marker on, including this marker which must be at the beginning of a line)
 	 */
-	function __construct($page, $lastversion=0, $process=1, $startmarker='', $endmarker='') {
+	function __construct($page, $lastversion=0, $process=1, $showpopups=true, $startmarker='', $endmarker='') {
 		global $histlib;		
 
 		$this->_document=array();
@@ -413,6 +413,7 @@ class Document {
 		$this->_filter='/([[:blank:]]|[[:cntrl:]]|[[:punct:]]|[[:space:]])/';		
 		$this->_parsed=true;
 		$this->_nohtml=false;
+		$this->_showpopups=$showpopups;
 		switch($process) {
 			case 0: $this->_parsed=false;
 					$this->_process=0;
@@ -689,13 +690,13 @@ class Document {
 		//calculate percentages
 		foreach($this->_statistics as &$author) {
 			$author['words_percent']=$author['words']/$this->_total['words'];
-			$author['deleted_words_percent']=$author['deleted_words']/$this->_total['deleted_words'];
+			$author['deleted_words_percent']=($this->_total['deleted_words']!=0?$author['deleted_words']/$this->_total['deleted_words']:0);
 			$author['whitespaces_percent']=$author['whitespaces']/$this->_total['whitespaces'];
-			$author['deleted_whitespaces_percent']=$author['deleted_whitespaces']/$this->_total['deleted_whitespaces'];
+			$author['deleted_whitespaces_percent']=($this->_total['deleted_whitespaces']!=0?$author['deleted_whitespaces']/$this->_total['deleted_whitespaces']:0);
 			$author['characters_percent']=$author['characters']/$this->_total['characters'];
-			$author['deleted_characters_percent']=$author['deleted_characters']/$this->_total['deleted_characters'];
+			$author['deleted_characters_percent']=($this->_total['deleted_characters']!=0?$author['deleted_characters']/$this->_total['deleted_characters']:0);
 			$author['printables_percent']=$author['printables']/$this->_total['printables'];
-			$author['deleted_printables_percent']=$author['deleted_printables']/$this->_total['deleted_printables'];
+			$author['deleted_printables_percent']=($this->_total['deleted_printables']!=0?$author['deleted_printables']/$this->_total['deleted_printables']:0);
 		}
 		return $this->_statistics;
 	}
@@ -714,9 +715,15 @@ class Document {
 	 * 
 	 * Retrieves the document data in different formats, 
 	 * @param string $type		can be one of 'words' (array of words/whitespaces), 'text' (unformatted string), 'wiki' (string with wikiplugin AUTHOR tags to show the authors) or the default empty string '' (returns the internal document structure)
+	 * @param array	 $options	array containing the filter specific options:
+	 * <table>
+	 * <tr><th>Type</th><th>Name</th><th>Applicable for</th><th>Purpose</th></tr>
+	 * <tr><td>bool</td><td>showpopups</td><td>wiki</td><td>renders popups, defaults to true</td></tr>
+	 * <tr><td>bool</td><td>escape</td><td>text/wiki</td><td>Escapes brackets and htmlspecialchars</td></tr>
+	 * </table> 
 	 * @return	array|string	depending on the parameter $type, a string or array containing the documents words
 	 */
-	function get($type='') {
+	function get($type='',$options=array()) {
 		switch($type) {
 			case 'words':
 				$words=array();
@@ -731,40 +738,79 @@ class Document {
 					$text.=$word['word'];
 				}
 				return $text;
+				if ($options['escape']) {
+					if (!$this->_parsed) {
+						$text='~np~' . 
+						      preg_replace(array('/\~np\~/', '//\~\/np\~/'), array('&#126;np&#126;','&#126;/np&#126;;'), $text) . 
+						      '~/np~';
+					}
+					$text=preg_replace(array('/</','/>/'), array('&lt;','&gt;'), $text);
+				}
 				break;
 			case 'wiki':
 				$text='';
 				$author='';
 				$deleted=0;
 				$deleted_by='';
-
+				if (isset($options['showpopups'])) {
+					$showpopups=$options['showpopups'];
+				} else {
+					$showpopups=true;
+				}
 				foreach ($this->_document as $word) {
 					$skip=false;
 					$d=isset($word['deleted_by'])?$word['deleted_by']:'';
+					$w=$word['word'];
 					if($author!=$word['author'] or $deleted!=$word['deleted'] or $deleted_by!=$d) {
-						if ($text!='') $text.='{AUTHOR}';
+						if ($text!='') {
+							if ($options['escape']) {
+								$text.='~/np~';
+							}
+							$text.='{AUTHOR}';	
+						}
 						$author=$word['author'];
 						$deleted=$word['deleted'];
 						$deleted_by=$d;
-						$text.="{AUTHOR(author=\"$author\"".($deleted?",deleted_by=\"$deleted_by\"":'').',visible="1", popup="1")}';
+						$text.="{AUTHOR(author=\"$author\"" . 
+								($deleted?",deleted_by=\"$deleted_by\"":'') .
+								',visible="1"' . 
+								($showpopups?', popup="1"':'') . 
+								')}';
+						if ($options['escape']) {
+							$text.="~np~";
+						}
 					} else {
-						if ($this->_parsed and !$this->_nohtml) { // skipping popups for links
-							if (substr($word['word'],0,3)=='<a ') {
-								$text.='{AUTHOR}';
+						if (!$options['escape']) {
+							if ($this->_parsed and !$this->_nohtml) { // skipping popups for links
+								if (substr($w,0,3)=='<a ') {
+									$text.='{AUTHOR}';
+								}
+								if (substr($w,-4)=='</a>') {
+									$text.=$w . "{AUTHOR(author=\"$author\"" . 
+										   ($deleted?",deleted_by=\"$deleted_by\"":'') . 
+										   ',visible="1", ' .
+										   ($showpopups?', popup="1"':'') .
+										   ')}';
+									$skip=true;
+								}
 							}
-							if (substr($word['word'],-4)=='</a>') {
-								$text.=$word['word']."{AUTHOR(author=\"$author\"".($deleted?",deleted_by=\"$deleted_by\"":'').',visible="1", popup="1")}';
-								$skip=true;
+						} else { //escape existing tags
+							if (!$this->_parsed) { 
+						      	$w=preg_replace(array('/\~np\~/', '/\~\/np\~/'), array('&#126;np&#126;','&#126;/np&#126;'), $w);
 							}
+							$w=preg_replace(array('/</','/>/'), array('&amp;lt;','&amp;gt;'), $w); //double encode!							
 						}
 					}
-					if (strlen($word['word'])==0 and !$this->_parsed) {
+					if (strlen($w)==0 and !$this->_parsed) {
 						$text.="\n";
 					} else {				
 						if (!$skip) {
-							$text.=$word['word'];	
+							$text.=$w;	
 						}
 					}
+				} // foreach
+				if ($options['escape']) {
+					$text.="~/np~";
 				}
 				$text.="{AUTHOR}";
 				return $text;
@@ -959,7 +1005,7 @@ class Document {
 				if (isset($params['stop'])) {
 					$stop=$params['stop'];	
 				}
-				$subdoc=new Document($params['page'], 0, $this->_process, $start, $stop);
+				$subdoc=new Document($params['page'], 0, $this->_process, $this->_showpopups, $start, $stop);
 				$newdoc=array_merge($newdoc,$subdoc->get());				
 			} else { //normal word
 				if ($author!='') {

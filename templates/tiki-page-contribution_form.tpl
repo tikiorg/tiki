@@ -9,10 +9,17 @@
 		  <input type="radio" name="process" id="process1" value="1"{if $process!=0 and $process!=2} checked="checked"{/if} />{tr}Parsed Text (HTML){/tr}<br />
 		  <input type="radio" name="process" id="process2" value="2"{if $process==2} checked="checked"{/if} />{tr}Output text only (No HTML tags){/tr}<br />
 		 </td>
+		 <td>{tr}Options{/tr}</td>
+		 <td>
+		  <input type="checkbox" name="showstatistics" value="1"{if $showstatistics==1} checked="checked"{/if} /><label>{tr}Show statistics{/tr}</label><br />
+		  <input type="checkbox" name="showpage" value="1"{if $showpage==1} checked="checked"{/if} /><label>{tr}Visualize page changes{/tr}</label><br />		  
+		  <input type="checkbox" name="showpopups" value="1" {if $showpopups==1} checked="checked"{/if} /><label>{tr}Show popups{/tr}</label><br />		  
+		  <input type="checkbox" name="escape" value="1" {if $escape==1} checked="checked"{/if} /><label>{tr}Escape HTML / Wiki syntax in page changes{/tr}</label><br />		  
+		 </td>
 		</tr>
 		<tr>
 		 <td>{tr}Version{/tr}</td>
-		 <td>
+		 <td colspan="3">
 		  <table class="normal">
 			<tr>
 			  <th>{tr}Version{/tr}</th>

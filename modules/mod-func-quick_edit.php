@@ -30,7 +30,7 @@ function module_quick_edit_info() {
 				'description' => tra('The label on the button to submit the form.') . " " . tra('Default:') . " " . tra("Create/Edit")
 			),
 			'size' => array(
-				'name' => 'INPUT SIZE',
+				'name' => tra('INPUT SIZE'),
 				'description' => tra('Size attribute (horizontal, in characters) of the text input fields for page names and description. The other fields size depend on the module size.') . " " . tra('Default:') . " 15"
 			),
 			'mod_quickedit_heading' => array(
@@ -43,7 +43,7 @@ function module_quick_edit_info() {
 			),
 			'addcategId' => array(
 				'name' => tra('Category to preselect'),
-				'description' => tra('If set, pages created through the module have this category prechecked to be categorized in.') . " " . tra('Not set by default.')
+				'description' => tra('Iok, f set, pages created through the module have this category prechecked to be categorized in.') . " " . tra('Not set by default.')
 			),
 			'customTip' => array(
 				'name' => tra('Tip to be shown'),
@@ -61,26 +61,14 @@ function module_quick_edit_info() {
 				'name' => tra('input field for copy/paste'),
 				'description' => tra('Add a text area for copy/paste page content'),
 				'filter' => 'int',
-				'options' => array(
-					array('text' => tra('No'), 'value' => 0), 
-					array('text' => tra('Yes'), 'value' => 1), 
-				),
 			),
 			'enterdescription' => array(
 				'name' => tra('show description field'),
 				'description' => tra('Add a text field to enter the page description (requires feature_wiki_description'),
-				'options' => array(
-					array('text' => tra('No'), 'value' => 0), 
-					array('text' => tra('Yes'), 'value' => 1), 
-				),
 			),
 			'chooseCateg' => array(
 				'name' => tra('choose category'),
 				'description' => tra('Allows the user to choose a category instead of preselecting one'),
-				'options' => array(
-					array('text' => tra('No'), 'value' => 0), 
-					array('text' => tra('Yes'), 'value' => 1), 
-				),
 			),
 		)
 	);

@@ -1,9 +1,8 @@
 {* $Id$ *}
-<div id="top" class="wikitext clearfix">
 <h1 class="pagetitle"><strong><a href="tiki-index.php?page={$page}">{tr}Contributions to{/tr} {$page}
 ({if $lastversion==0}{tr}current version{/tr}{else}{tr}version{/tr} {$lastversion}{/if})</a></strong></h1>
-<h2>{tr}Settings{/tr}</h2>
 {include file='tiki-page-contribution_form.tpl'}
+{if $showstatistics==1}
 <h2>{tr}Statistics{/tr}</h2>
 <table class="normal">
  <tr>
@@ -63,6 +62,10 @@
   <td class="{cycle values="odd,even"}" style="text-align: right;"><strong>(100 %)</strong></td>
  </tr>
 </table>
-<h2>Page changes</h2>
+{/if}
+{if $showpage==1}
+<h2>{tr}Page changes{/tr}</h2>
+<div id="top" class="content wikitext clearfix">
 {$parsed}
 </div>
+{/if}

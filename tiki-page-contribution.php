@@ -37,20 +37,53 @@ if (isset($_REQUEST['lastversion'])) {
 	$lastversion=0;
 }
 $smarty->assign('lastversion', $lastversion);
+if(isset($_REQUEST['showstatistics'])) {
+	$showstatistics=$_REQUEST['showstatistics'];
+} else {
+	$showstatistics=1;
+}
+$smarty->assign('showstatistics', $showstatistics);
+if(isset($_REQUEST['showpage'])) {
+	$showpage=$_REQUEST['showpage'];
+} else {
+	$showpage=1;
+}
+$smarty->assign('showpage', $showpage);
+if(isset($_REQUEST['showpopups'])) {
+	$showpopups=$_REQUEST['showpopups'];
+} else {
+	$showpopups=1;
+}
+$smarty->assign('showpopups', $showpopups);
+if(isset($_REQUEST['escape'])) {
+	$escape=$_REQUEST['escape'];
+} else {
+	$escape=0;
+}
+$smarty->assign('escape', $escape);
+$getOptions=array('showpopups' => ($showpopups==1),
+				  'escape' => ($escape==1),
+				 );
 
 $document = new Document($page, $lastversion, $process);
 $smarty->assign('info',$document->getInfo());
 $history=$document->getHistory();
 $smarty->assign('history',$history);	
 
-$data=$document->get('wiki');
-$data=$tikilib->parse_data($data);
-$smarty->assign('parsed',$data);
-$authors=$document->getStatistics();
-$smarty->assign('authors',$authors);
-$smarty->assign('total',$document->getTotal());
-$smarty->assign('colors',array('black', 'blue',  'red',   'green', 'maroon', 'yellow', 'aqua', 'fuchsia', 'teal',  'purple', 'white', 'olive', 'gray',  'navy',  'silver', 'lime'));
-$smarty->assign('backgrounds',array('white', 'white', 'white', 'white', 'white',  'gray',   'gray', 'gray',    'white', 'white',  'blue',  'white', 'white', 'white', 'navy',   'gray'));
-
+if ($showstatistics==1) {
+	$authors=$document->getStatistics();
+	$smarty->assign('authors',$authors);
+	$smarty->assign('total',$document->getTotal());
+}
+if ($showpage==1) {
+	$data=$document->get('wiki', $getOptions);
+	$data=$tikilib->parse_data($data);
+	if ($escape==1) { // make breaks visible again
+		$data=preg_replace('/[\n]/', "<br />\n", $data);
+	}
+	$smarty->assign('parsed',$data);
+	$smarty->assign('colors',array('black', 'blue',  'red',   'green', 'maroon', 'yellow', 'aqua', 'fuchsia', 'teal',  'purple', 'white', 'olive', 'gray',  'navy',  'silver', 'lime'));
+	$smarty->assign('backgrounds',array('white', 'white', 'white', 'white', 'white',  'gray',   'gray', 'gray',    'white', 'white',  'blue',  'white', 'white', 'white', 'navy',   'gray'));
+}
 $smarty->assign('mid','tiki-page-contribution.tpl');
 $smarty->display("tiki.tpl");
