@@ -134,9 +134,6 @@ html {
 				<h1 style="position: absolute; left: 50%; top: 80px;">$title</h1>
 				$content
 			</div>
-			<div id="tiki-bot" align="center" style="padding-bottom: 20px">
-				<a title="This is Tiki Wiki CMS Groupware" href="http://info.tikiwiki.org" target="_blank"><img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" /></a>
-			</div>
 		</div>
 	</body>
 </html>
