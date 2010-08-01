@@ -447,6 +447,7 @@ function prefs_feed_list() {
 		),
 		'feed_blog_title' => array(
 			'name' => tra('Title'),
+			'desc' => tra('Title to be prepended to the blog title for all blogs. If this field is empty only the blog title will be used.'),
 			'type' => 'text',
 			'size' => '80',
 		),
@@ -529,7 +530,7 @@ function prefs_feed_list() {
 		),
 		'feed_blog_desc' => array(
 			'name' => tra('Blog RSS Description'),
-			'description' => tra('Description to be published as part of the RSS feed for individual blogs.'),
+			'description' => tra('Description to be prepended to the blog description and published as part of the RSS feed for individual blogs. If this field is empty only the blog description will be used.'),
 			'type' => 'textarea',
 			'size' => 2,
 		),
