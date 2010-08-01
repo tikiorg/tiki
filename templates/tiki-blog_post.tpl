@@ -18,8 +18,8 @@
 	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
 		<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
 	{/remarksbox}
-{/if
-}
+{/if}
+
 {if $preview eq 'y'}
 	<div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
 	{include file='tiki-view_blog_post_content.tpl'}
