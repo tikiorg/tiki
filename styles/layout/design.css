@@ -491,9 +491,8 @@ caption {
 	font-weight: bold;
 }
 
-td.numeric {
+.numeric, td.numeric {
 	text-align: right;
-	padding-right: 10px;
 }
 /** Tabs **/
 

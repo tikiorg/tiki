@@ -133,12 +133,17 @@
 {* ------------------------------------ *}
 			{if !isset($list_mode)}{assign var=list_mode value="y"}{/if}
 			{section name=ix loop=$items[user].field_values}
-				{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $items[user].field_values[ix].isHidden eq 'c' or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and in_array($items[user].field_values[ix].fieldId, $listfields) and ($items[user].field_values[ix].type ne 'p' or $items[user].field_values[ix].options_array[0] ne 'password') and (empty($items[user].field_values[ix].visibleBy) or in_array($default_group, $items[user].field_values[ix].visibleBy) or $tiki_p_admin_trackers eq 'y')}
-		<td class={if $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'q'}"numeric"{else}"auto"{/if}>
+				{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $items[user].field_values[ix].isHidden eq 'c' 
+					or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' 
+					and in_array($items[user].field_values[ix].fieldId, $listfields) and ($items[user].field_values[ix].type ne 'p' or $items[user].field_values[ix].options_array[0] ne 'password') 
+					and (empty($items[user].field_values[ix].visibleBy) or in_array($default_group, $items[user].field_values[ix].visibleBy) or $tiki_p_admin_trackers eq 'y')}
+		<td class={if $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'q' or $items[user].field_values[ix].type eq 'b'}"numeric"{else}"auto"{/if}
+					{if $items[user].field_values[ix].type eq 'b'} style="padding-right:5px"{/if}>
 					{if $items[user].field_values[ix].isHidden eq 'c' and $items[user].itemUser ne $user and $tiki_p_admin_trackers ne 'y'}
 					{elseif isset($perms)}
 						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode
-		tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
+						tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending 
+						tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
 					{else}
 						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode}
 					{/if}
@@ -169,7 +174,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		</td>
 			{/if}
 	</tr>
-
+		{assign var=itemoff value=$itemoff+1}
 		{else}{* a pretty tpl *}
 {* ------------------------------------ *}
    			{include file='tracker_pretty_item.tpl' fields=$items[user].field_values item=$items[user] wiki=$tpl}
@@ -178,6 +183,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 
 	{if empty($tpl)}
 		{if !empty($computedFields) and $items|@count gt 0}
+		{assign var=itemoff value=0}
 		<tr class='compute'>
 			{if $checkbox}<td></td>{/if}
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
@@ -187,7 +193,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 					and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) 
 					or $tiki_p_admin_trackers eq 'y')}	
 					{if isset($computedFields[$ix.fieldId])}
-						<td class="numeric">
+						<td class="numeric" style="padding-right:2px">
 						{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
 							{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Sum{/tr}{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$computedField list_mode=$list_mode}<br />

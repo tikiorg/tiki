@@ -31,8 +31,8 @@
 {if $is_link eq 'y'}
 	<a class="tablename" href="{$urll}{if $offset}&amp;offset={$offset}{/if}{if isset($reloff)}&amp;reloff={$reloff}{/if}{if $item_count}&amp;cant={$item_count}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup}{/if}>
 {/if}
-{* ******************** field with preprend ******************** *}
-{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') and !empty($field_value.options_array[2]) and $field_value.value != ''}
+{* ******************** field with prepend ******************** *}
+{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c' or $field_value.type eq 'b') and !empty($field_value.options_array[2]) and $field_value.value != ''}
 	<span class="formunit">{$field_value.options_array[2]}</span>
 {/if}
 {if $field_value.type eq 'q' and !empty($field_value.options_array[1])}
@@ -114,10 +114,32 @@
 	{else}
 		{$field_value.value|number_format:$field_value.options_array[4]:$field_value.options_array[5]:$field_value.options_array[6]}
 	{/if}
-
+	
+{* -------------------- currency amount ------------*}
+{elseif $field_value.type eq 'b'}
+	{if empty($field_value.options_array[4])}
+		{assign var=locale value='en_US'}
+	{else}
+		{assign var=locale value=$field_value.options_array[4]}
+	{/if}
+	{if empty($field_value.options_array[5])}
+		{assign var=part1a value='%(!#10n'}	
+		{assign var=part1b value='%(#10n'}
+	{else}
+		{assign var=part1a value='%(!#10'}	
+		{assign var=part1b value='%(#10'}	
+	{/if}		
+	{if $itemoff gt 0 and $field_value.options_array[6] ne 1}
+		{assign var=format value=$part1a|cat:$field_value.options_array[5]}
+		{$field_value.value|money_format:$locale:$format:0}
+	{else}
+		{assign var=format value=$part1b|cat:$field_value.options_array[5]}
+		{$field_value.value|money_format:$locale:$format:1}
+	{/if}
+		
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
-{elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' 
+{elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'b' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' 
 	or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' 
 	or ($field_value.type eq 'C' and $field_value.computedtype ne 'f' and $field_value.computedtype ne 'duration' )}
 	{if $list_mode eq 'y'}
@@ -125,7 +147,7 @@
 			{$field_value.value|username:true:true:false|truncate:255:"..."|escape|default:"&nbsp;"}
 		{elseif !empty($field_value.value) || $is_link eq 'y'}			
 			{$field_value.value|truncate:255:"..."|escape|default:"&nbsp;"}
-		{elseif empty($field_value.value) && ($field_value.type eq 'n' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f'))}
+		{elseif empty($field_value.value) && ($field_value.type eq 'n' or $field_value.type eq 'b' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f'))}
 			{$field_value.value}
 		{/if}		
 	{elseif $list_mode eq 'csv'}
@@ -444,7 +466,7 @@
 {/if}
 
 {* ******************** append ******************** *}
-{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') and $field_value.options_array[3] and $field_value.value != ''}
+{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c' or $field_value.type eq 'b') and $field_value.options_array[3] and $field_value.value != ''}
 	<span class="formunit">{$field_value.options_array[3]}</span>
 {/if}
 {if $field_value.type eq 'q' and !empty($field_value.options_array[2])}

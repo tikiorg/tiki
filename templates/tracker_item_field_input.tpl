@@ -229,12 +229,18 @@
 {elseif $field_value.type eq 'L'}
 	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value|escape}" />
 
-{* -------------------- numeric field -------------------- *}
-{elseif $field_value.type eq 'n'}
-	{*prepend*}{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
+{* -------------------- numeric and currency -------------------- *}
+{elseif $field_value.type eq 'n' or $field_value.type eq 'b'}
+	{*prepend*}
+	{if $field_value.options_array[2]}
+		<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>
+	{/if}
 	<input type="text" class="numeric" name="{$field_value.ins_id}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" 
-		maxlength="{$field_value.options_array[1]}"{/if} value="{$field_value.value|escape}" />
-	{*append*}{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
+		 maxlength="{$field_value.options_array[1]}"{/if} value="{$field_value.value|escape}" />
+	{*append*}
+	{if $field_value.options_array[3]}
+		<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>
+	{/if}
 
 {* -------------------- static text -------------------- *}
 {elseif $field_value.type eq 'S'}

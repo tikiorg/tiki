@@ -155,7 +155,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 		if ($tracker_info['defaultOrderKey'] == - 1) $sort_mode = 'lastModif';
 		elseif ($tracker_info['defaultOrderKey'] == - 2) $sort_mode = 'created';
 		elseif ($tracker_info['defaultOrderKey'] == - 3) $sort_mode = 'itemId';
-		elseif ($orderkey) {
+		elseif (isset($orderkey) && $orderkey) {
 			$sort_mode = 'f_' . $tracker_info['defaultOrderKey'];
 			$filterFields['fieldId'] = $tracker_info['defaultOrderKey'];
 		} else {

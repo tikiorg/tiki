@@ -147,7 +147,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 	{if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' 
 		or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') 
 		and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')}
-		<td class={if $field_value.type eq 'n' or $field_value.type eq 'q'}"numeric"{else}"auto"{/if}>
+		<td class={if $field_value.type eq 'n' or $field_value.type eq 'q' or $field_value.type eq 'b'}"numeric"{else}"auto"{/if}>
 			{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' 
 			 or ($tiki_p_modify_tracker_items eq 'y' and $item.status ne 'p' and $item.status ne 'c')
 			 or ($tiki_p_modify_tracker_items_pending eq 'y' and $item.status eq 'p')
@@ -258,7 +258,7 @@ $jq("#newItemForm").validate({
 <h2>{$field_value.name|escape}</h2>
 <table class="normal">
 {else}
-{if ($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n') and $field_value.options_array[0] eq '1'}
+{if ($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'b') and $field_value.options_array[0] eq '1'}
 <tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td class="formcontent">
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td >
@@ -377,6 +377,10 @@ $jq("#newItemForm").validate({
 {elseif $field_value.type eq 'n'}
 {include file='tracker_item_field_input.tpl'}
 
+{* -------------------- currency amount -------------------- *}
+{elseif $field_value.type eq 'b'}
+{include file='tracker_item_field_input.tpl'}
+
 {* -------------------- static text -------------------- *}
 {elseif $field_value.type eq 'S'}
 {include file='tracker_item_field_input.tpl'}
@@ -445,7 +449,7 @@ $jq("#newItemForm").validate({
 {/if}
 {/if}
 </td>
-{if (($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n') and $field_value.options_array[0]) eq '1' and $stick ne 'y'}
+{if (($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'b') and $field_value.options_array[0]) eq '1' and $stick ne 'y'}
 {assign var=stick value="y"}
 {else}
 </tr>{assign var=stick value="n"}

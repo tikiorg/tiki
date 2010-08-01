@@ -3000,6 +3000,24 @@ class TrackerLib extends TikiLib
 													and commas as the thousands seprator;<br/><br/>
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
+		$type['b'] = array(
+			'label'=>tra('currency amount'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Provides a one-line field for numeric input only.  Prepend or append values may be alphanumeric.
+				<dt>Usage: <strong>samerow,size,prepend,append,locale,symbol,first</strong>
+				<dt>Example: 0,60,,per item
+				<dt>Description:
+				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
+				<dd><strong>[size]</strong> is the visible size of the field in characters;
+				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
+				<dd><strong>[append]</strong> is text that will be displayed just after the field;
+				<dd><strong>[locale]</strong> set locale for currency formatting, for example en_US or en_US.UTF-8 or en_US.ISO-8559-1 (default=en_US);
+				<dd><strong>[symbol]</strong> i for international symbol, n for local (default=n);
+				<dd><strong>[all_symbol]</strong> set to 1 to show symbol for every item (default only shows currency symbol on first item in a list) ;
+				<br/><br/>
+				<dd>multiple options must appear in the order specified, separated by commas.
+				</dl>'));
 		$type['d'] = array(
 			'label'=>tra('drop down'),
 			'opt'=>true,

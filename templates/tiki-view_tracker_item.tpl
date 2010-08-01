@@ -90,7 +90,7 @@
 		{/if}
 		</td>
 
-		{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1'}
+		{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1'}
 			{assign var=stick value="y"}
 		{else}
 			{assign var=stick value="n"}
@@ -266,7 +266,7 @@ $jq("#editItemForm").validate({
 <h2>{$cur_field.name}</h2>
 <table class="normal">
 {else}
-{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1'}
+{if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1'}
 <tr class="formcolor"><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td><td >
 {elseif $stick eq 'y'}
 <td class="formlabel right" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'}<em class='mandatory_star'> *</em>{/if}</td><td >
@@ -388,14 +388,20 @@ $jq("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMa
 			$jq("#page_selector_{{$cur_field.id}}").tiki("autocomplete", "pagename" );
 			{/jq}
         {/if}
-{elseif $cur_field.type eq 'n'}
-{if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
-<input type="text" class="numeric" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
-{if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
+        
+{elseif $cur_field.type eq 'n' or $cur_field.type eq 'b'}
+	{if $cur_field.options_array[2]}
+		<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>
+	{/if}
+	<input type="text" class="numeric" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" 
+		{if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
+	{if $cur_field.options_array[3]}
+		<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>
+	{/if}
 
 {elseif $cur_field.type eq 'q'}
-<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" size="6" maxlength="6" />
-{$cur_field.value|escape}
+	<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" size="6" maxlength="6" />
+	{$cur_field.value|escape}
 
 {* -------------------- static text -------------------- *}
 {elseif $cur_field.type eq 'S'}
@@ -471,7 +477,7 @@ or $cur_field.type eq 'i'}
 {/if}
 {/if}
 </td>
-{if (($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1') and $stick ne 'y'}
+{if (($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n' or $cur_field.type eq 'b') and $cur_field.options_array[0] eq '1') and $stick ne 'y'}
 {assign var=stick value="y"}
 {else}
 </tr>{assign var=stick value="n"}
