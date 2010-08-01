@@ -53,7 +53,6 @@ switch ($_REQUEST["image_type"]) {
 $cachefile = $prefs['tmpDir'];
 if ($tikidomain) { $cachefile.= "/$tikidomain"; }
 $cachefile.= "/$image_cache_prefix.".$_REQUEST["id"];
-if (!empty($_REQUEST['width'])) $cachefile .= '_'.$_REQUEST['width'];
 
 // If "reload" parameter is set, recreate the cached image file from database values.
 // This does not make sense if "image_type" is "preview".
@@ -82,28 +81,25 @@ if ( isset($_REQUEST["reload"]) || !$useCache || !is_file($cachefile) ) {
 		die;
 	}
 	$type = $storedData["image_type"];
-	$data = $storedData["image_data"];
+	$data =& $storedData["image_data"];
+	header ("Content-type: ".$type);
 	if (!empty($_REQUEST['width'])) {
-		require('lib/images/images.php');
+		require_once('lib/images/images.php');
 		$image = new Image($data);
-		$image->resizemax($_REQUEST['width']);
+		$image->resize($_REQUEST['width'], 0);
 		$data =& $image->display();
+		if (empty($data)) die;
 	}
 	if ($useCache && $data) {
 		$fp = fopen($cachefile,"wb");
 		fputs($fp,$data);
 		fclose($fp);
 	}
+	echo $data;
+	die;
 }
 
-// If cached file exists, display cached file
-if ($useCache && is_file($cachefile)) {
-	$size = getimagesize($cachefile);
-	header ("Content-type: ".$size['mime']);
-	readfile($cachefile);
-} else {
-	// Just in case creation of cache file failed, but data was
-	// retrieved from database
-	header ("Content-type: ".$type);
-	echo $data;
-}
+$size = getimagesize($cachefile);
+header ("Content-type: ".$size['mime']);
+readfile($cachefile);
+
