@@ -252,7 +252,12 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 		} elseif ($fields["data"][$i]["type"] == 'e' && $prefs['feature_categories'] == 'y') { // category
 			$parentId = $fields["data"][$i]['options_array'][0];
-			$fields["data"][$i]['categories'] = $categlib->get_viewable_child_categories($parentId);
+			if ($fields["data"][$i]['options_array'][3] == 1) {
+				$all_descends = true;
+			} else {
+				$all_descends = false;
+			}
+			$fields["data"][$i]['categories'] = $categlib->get_viewable_child_categories($parentId, $all_descends);
 			$categId = "ins_cat_$fid";
 			if (isset($_REQUEST[$categId])) {
 				if (is_array($_REQUEST[$categId])) {
