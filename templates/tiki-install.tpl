@@ -578,7 +578,7 @@
 
 </div>
 	{if $double_encode_fix_attempted eq 'y'}
-		<p>{tr}You can now access the site normally. Report back any issues that you might find (if any)to the Tiki forums or bug tracker{/tr}</p>
+		<p>{tr}You can now access the site normally. Report back any issues that you might find (if any) to the Tiki forums or bug tracker{/tr}</p>
 	{else}
 		<form method="post" action="#" onsubmit="return confirm('{tr}Are you sure you want to attempt to fix the encoding of your entire database?{/tr}');" style="padding-top: 100px;">
 			<fieldset>
