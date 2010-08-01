@@ -36,13 +36,12 @@ if (count($blogs) == 0) {
 
 if ($blogId > 0) {
 	$blog_data = $bloglib->get_blog($blogId);
+	$smarty->assign_by_ref('blog_data', $blog_data);
 }
 
 $postId = isset($_REQUEST["postId"]) ? $_REQUEST["postId"] : 0;
 
 if ($postId > 0) {
-	$smarty->assign_by_ref('blog_data', $blog_data);
-
 	$data = $bloglib->get_post($_REQUEST["postId"]);
 
 	// If the blog is public and the user has posting permissions then he can edit
@@ -100,11 +99,10 @@ if (isset($_REQUEST['remove_image'])) {
 if ($postId > 0) {
 	if (empty($data["data"])) $data["data"] = '';
 
-	$smarty->assign('data', $data["data"]);
-	$smarty->assign('title', $data["title"]);
-	$smarty->assign('created', $data["created"]);
-	$smarty->assign('parsed_data', $tikilib->parse_data($data["data"]));
-	$smarty->assign('blogpriv', $data["priv"]);
+	$smarty->assign('post_info', $data);
+	$smarty->assign('data', $data['data']);
+	$smarty->assign('parsed_data', $tikilib->parse_data($data['data']));
+	$smarty->assign('blogpriv', $data['priv']);
 
 	check_ticket('blog');
 	$post_images = $bloglib->get_post_images($postId);

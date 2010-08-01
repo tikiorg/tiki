@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 
-{title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if} - {$blog_data.title|escape}{/title}
+{title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}New Post{/tr}{/if}{if !empty($blog_data.title)} - {$blog_data.title|escape}{/if}{/title}
 
 <div class="navbar">
 	{if $blogId gt 0 }
@@ -48,7 +48,7 @@
 
 			<tr>
 				<td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
-					<input type="text" size="80" name="title" value="{$title|escape}" />
+					<input type="text" size="80" name="title" value="{$post_info.title|escape}" />
 				</td>
 			</tr>
 
@@ -94,8 +94,8 @@
 			<tr id='show_pubdate' class="formcolor">
 				<td>{tr}Publish Date{/tr}</td>
 				<td>
-					{html_select_date prefix="publish_" time=$created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
-					{html_select_time prefix="publish_" time=$created display_seconds=false}
+					{html_select_date prefix="publish_" time=$post_info.created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
+					{html_select_time prefix="publish_" time=$post_info.created display_seconds=false}
 				</td>
 			</tr>
 			{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
