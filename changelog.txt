@@ -18,6 +18,610 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 5.1
+<http://tikiwiki.org/ReleaseNotes51>
+------------------
+
+----------------------------------------------
+r28257 | luciash | 2010-08-02 15:22:41 +0100 (Mon, 02 Aug 2010) | 1 line
+
+[FIX] import/export lang: add the UTF-8 encoding to the header for the exported language
+----------------------------------------------
+r28256 | jonnybradley | 2010-08-02 15:12:46 +0100 (Mon, 02 Aug 2010) | 2 lines
+
+[FIX] TikiDb: Add test for valid results to fetchAll().
+Reveals errors in installer (e.g. 'Your MySQL version is too old to perform this operation') on some operations and should also help expose other mystery WSoD errors.
+----------------------------------------------
+r28255 | luciash | 2010-08-02 15:12:21 +0100 (Mon, 02 Aug 2010) | 1 line
+
+[FIX] interactive translation should be on top above all when displayed
+----------------------------------------------
+r28254 | luciash | 2010-08-02 14:50:19 +0100 (Mon, 02 Aug 2010) | 1 line
+
+[ENH] Czech language: some more translated
+----------------------------------------------
+r28253 | luciash | 2010-08-02 14:39:11 +0100 (Mon, 02 Aug 2010) | 1 line
+
+[FIX] edit languages: double entities in translations problem - it is not wanted to put htmlentities and strip tags - edit languages is alowed by trusted users anyway... caused just trouble
+----------------------------------------------
+r28252 | jonnybradley | 2010-08-02 14:29:05 +0100 (Mon, 02 Aug 2010) | 1 line
+
+[FIX] Installer: Only offer to fix encoding if the database exists.
+----------------------------------------------
+r28251 | luciash | 2010-08-02 13:55:32 +0100 (Mon, 02 Aug 2010) | 1 line
+
+[FIX] import/export lang: fix PHP error and allow to re-import if the lang was already imported before, changed string Included to Imported and made it translantable; TODO: handle delete and currently used lang cannot be imported
+----------------------------------------------
+r28250 | jonnybradley | 2010-08-02 13:03:20 +0100 (Mon, 02 Aug 2010) | 1 line
+
+[FIX] Installer: Check if database really exists before using it (thanks marclaporte)
+----------------------------------------------
+r28234 | marclaporte | 2010-07-31 22:50:39 +0100 (Sat, 31 Jul 2010) | 1 line
+
+[DOC] update doc links and reduce to a smaller number of gateway pages
+----------------------------------------------
+r28231 | marclaporte | 2010-07-31 21:00:23 +0100 (Sat, 31 Jul 2010) | 1 line
+
+[MOD] Removing old badge which mismatches with new logo
+----------------------------------------------
+r28225 | sylvieg | 2010-07-30 22:22:46 +0100 (Fri, 30 Jul 2010) | 1 line
+
+[FIX]module: specify it is perpespective ID
+----------------------------------------------
+r28192 | xavidp | 2010-07-29 14:37:38 +0100 (Thu, 29 Jul 2010) | 1 line
+
+[FIX]Quickfix as a workaround for the broken js features (like wiki edit help box, plugin helpers, ...) in some cases with languages with single quotes in the translated strings. A proper fix is still due in the whole Tiki code to avoid these recurrent problems when Tiki is used in some languages with single quotes as apostrophes.
+----------------------------------------------
+r28187 | sylvieg | 2010-07-28 20:45:10 +0100 (Wed, 28 Jul 2010) | 1 line
+
+[FIX]comment: fix flip/flop when comming from LAST_COMMENTS or the comment button from ARTICLES or view_blog , display the comment zone - whatever is in the cookie jar. Do not change the cookie jar - to have the feature working when not coming from imposed comment view
+----------------------------------------------
+r28182 | marclaporte | 2010-07-28 16:47:50 +0100 (Wed, 28 Jul 2010) | 1 line
+
+[KIL] removing this badge 1- logo is outdated and 2- I never undertood what it was doing there
+----------------------------------------------
+r28181 | marclaporte | 2010-07-28 16:44:59 +0100 (Wed, 28 Jul 2010) | 1 line
+
+[FIX] partial cleanup of the badges. 1-ADOdb is no longer the default  TODO: update Tiki badge, add jQuery and Zend Framework
+----------------------------------------------
+r28178 | marclaporte | 2010-07-28 16:15:47 +0100 (Wed, 28 Jul 2010) | 1 line
+
+[MOD] removing badge until it is updated to new branding. Besides, it looks a little weird to have a badge here.
+----------------------------------------------
+r28175 | marclaporte | 2010-07-28 13:58:05 +0100 (Wed, 28 Jul 2010) | 1 line
+
+[FIX] restoring color back to blue for text additions in wiki diff (Apparently unintentional change in revision 27211). Green text on green background (even though used on Wikipedia) is not very intuitive. It's clearer with blue on green (and the removed text is strikethough on red background). It feels like this should be handled only by css but perhaps because of the wiki diff in RSS feeds, it can't
+----------------------------------------------
+r28171 | xavidp | 2010-07-28 08:39:09 +0100 (Wed, 28 Jul 2010) | 1 line
+
+[MOD]Change the "cross your fingers" message (even in some brand new installations) for some less scary message
+----------------------------------------------
+r28170 | chibaguy | 2010-07-28 04:38:47 +0100 (Wed, 28 Jul 2010) | 1 line
+
+[MOD] Additional style details for FiveAlive and theme options.
+----------------------------------------------
+r28159 | chealer | 2010-07-27 18:09:24 +0100 (Tue, 27 Jul 2010) | 1 line
+
+remove unused condition (since r27924)
+----------------------------------------------
+r28152 | sylvieg | 2010-07-27 15:28:22 +0100 (Tue, 27 Jul 2010) | 1 line
+
+[FIX]pref: some description
+----------------------------------------------
+r28147 | marclaporte | 2010-07-26 22:43:38 +0100 (Mon, 26 Jul 2010) | 1 line
+
+[MOD] better favicon, more inline with new branding
+----------------------------------------------
+r28143 | sylvieg | 2010-07-26 20:11:20 +0100 (Mon, 26 Jul 2010) | 1 line
+
+[FIX]article: tiki_p_articles_read_heading is not mandatory to see articles iamges
+----------------------------------------------
+r28142 | sylvieg | 2010-07-26 19:23:37 +0100 (Mon, 26 Jul 2010) | 1 line
+
+backport 28132
+----------------------------------------------
+r28140 | jonnybradley | 2010-07-26 19:06:18 +0100 (Mon, 26 Jul 2010) | 1 line
+
+[FIX] Sheets: Padding fix for sheet plugin
+----------------------------------------------
+r28139 | jonnybradley | 2010-07-26 18:49:09 +0100 (Mon, 26 Jul 2010) | 1 line
+
+[FIX] Articles: Don't return repeats of articles in multiple categories (when in perspectives especially)
+----------------------------------------------
+r28138 | jonnybradley | 2010-07-26 18:33:06 +0100 (Mon, 26 Jul 2010) | 1 line
+
+[FIX] Add checks for feature_sheet when checking for feature_jquery_sheet before including JS etc
+----------------------------------------------
+r28130 | marclaporte | 2010-07-26 01:29:22 +0100 (Mon, 26 Jul 2010) | 1 line
+
+[KIL] leftover code for old Multimedia tracker field type
+----------------------------------------------
+r28129 | pkdille | 2010-07-25 20:51:21 +0100 (Sun, 25 Jul 2010) | 1 line
+
+[MOD] admin trackers: add remarksbox and string translation to the section added in r28127
+----------------------------------------------
+r28127 | minger0 | 2010-07-25 13:44:41 +0100 (Sun, 25 Jul 2010) | 1 line
+
+[FIX] 3500 csv import, notes on use, and added support for auto-increment with itemid -  http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=3500&trackerId=5&show=view
+----------------------------------------------
+r28126 | xavidp | 2010-07-25 10:36:46 +0100 (Sun, 25 Jul 2010) | 1 line
+
+[MOD]Allow any full admin, and not only user 'admin', to see the Quick_admin in the custom code section
+----------------------------------------------
+r28120 | xavidp | 2010-07-23 23:14:32 +0100 (Fri, 23 Jul 2010) | 1 line
+
+[MOD]Add shortcut with icon and link in Quick_Admin (sitemycode) for admins to show the settings for interactive translation when "use database for translation" is enabled (otherwise many clicks needed to reach that place). Thanks jonnyb and luci for tips on where to see the icons and the right syntax to make it work.
+----------------------------------------------
+r28093 | sampaioprimo | 2010-07-22 00:41:06 +0100 (Thu, 22 Jul 2010) | 2 lines
+
+[FIX] avoid conflict between $cat_tree for find.tpl and $cat_tree for categorization while editing a file gallery
+
+----------------------------------------------
+r28072 | xavidp | 2010-07-19 18:03:54 +0100 (Mon, 19 Jul 2010) | 1 line
+
+[MOD][bp/r28020+r28070]Fixes problem of minified css and js cache files not being world readable on some servers (possibly due to suexec and/or mod_sec)
+----------------------------------------------
+r28066 | marclaporte | 2010-07-19 01:24:06 +0100 (Mon, 19 Jul 2010) | 1 line
+
+[KIL] mootools long gone
+----------------------------------------------
+r28065 | marclaporte | 2010-07-19 00:36:28 +0100 (Mon, 19 Jul 2010) | 1 line
+
+[FIX] turning off PHPlayersmenu by default, as it is slated to be removed from Tiki6. This lib has not been updated since 2004. Everyone: make sure jQuery CSS menus do everything you need. Ex.: Jonny made the File Gallery tree explorer be nice without PHPlayersmenu.
+----------------------------------------------
+r28064 | marclaporte | 2010-07-18 23:54:28 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[MOD] favicon with new branding
+----------------------------------------------
+r28062 | jonnybradley | 2010-07-18 16:48:41 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[ENH] Installer: Add logging & reporting prefs to the installer's general settings page to assist troubleshooting.
+----------------------------------------------
+r28061 | lphuberdeau | 2010-07-18 16:38:52 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[ENH] Error when INFORMATION_SCHEMA is not available and attempting to fix the database
+----------------------------------------------
+r28060 | xavidp | 2010-07-18 16:36:52 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[MOD]Add "interactive translation" words to the description of the "use db for translation" checkbox in admin panels, so that it can be found when searched through "lesser magic"
+----------------------------------------------
+r28059 | lphuberdeau | 2010-07-18 16:25:39 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[FIX]?\194?\160Under unexplainable conditions, the installer is not initialized at step 4
+----------------------------------------------
+r28058 | lphuberdeau | 2010-07-18 16:17:50 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[FIX] Prevent error if user module is not found
+----------------------------------------------
+r28055 | jonnybradley | 2010-07-18 15:45:28 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[MOD] Installer: Add menu of previous possible encodings and confirm dialogue box on double encoding fix form
+----------------------------------------------
+r28054 | lphuberdeau | 2010-07-18 15:36:31 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[FIX] Error when db/local.php did not exist
+----------------------------------------------
+r28052 | lphuberdeau | 2010-07-18 14:56:57 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[NEW] Procedure to de-double-encode from the installer
+----------------------------------------------
+r28051 | jonnybradley | 2010-07-18 14:47:23 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[FIX] gd warning: Check file is really a file before using it.
+----------------------------------------------
+r28050 | lphuberdeau | 2010-07-18 13:43:22 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[NEW] Adding a procedure to convert the database to UTF-8
+----------------------------------------------
+r28048 | xavidp | 2010-07-18 13:10:44 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[ENH]Improve the text and tips shown to admins when they upgrade or migrate and using the tiki-install.php to write the local.php in the new location or server.
+----------------------------------------------
+r28045 | marclaporte | 2010-07-18 12:25:27 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[DOC] help link
+----------------------------------------------
+r28044 | jonnybradley | 2010-07-18 12:25:08 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[FIX] File galleries explorer when  feature_phplayers is off no longer posts back to the server when opening/closing nodes.
+----------------------------------------------
+r28043 | lphuberdeau | 2010-07-18 10:59:41 +0100 (Sun, 18 Jul 2010) | 1 line
+
+[NEW] External wiki profile handler
+----------------------------------------------
+r28041 | marclaporte | 2010-07-17 19:40:01 +0100 (Sat, 17 Jul 2010) | 1 line
+
+[NEW] Addition of the Inuktitut language. Please note that you may need special fonts available from http://en.wikipedia.org/wiki/Inuktitut 
+----------------------------------------------
+r28040 | marclaporte | 2010-07-17 19:06:44 +0100 (Sat, 17 Jul 2010) | 1 line
+
+[FIX] to avoid a warning during the install. Tks Jonny
+----------------------------------------------
+r28039 | jonnybradley | 2010-07-17 16:45:39 +0100 (Sat, 17 Jul 2010) | 3 lines
+
+[FIX] Installer: No WSoD when new database connection fails.
+Hide connection edit form by default when existing connection found.
+Small fix for Firefox language switch.
+----------------------------------------------
+r28034 | jonnybradley | 2010-07-17 15:12:44 +0100 (Sat, 17 Jul 2010) | 1 line
+
+[FIX] Zend_Mail: Use UTF-8 for sending (as the data is UTF-8 already)
+----------------------------------------------
+r28032 | lphuberdeau | 2010-07-17 14:51:47 +0100 (Sat, 17 Jul 2010) | 1 line
+
+[ENH] Detecting the database encoding and providing some advise
+----------------------------------------------
+r28031 | jonnybradley | 2010-07-17 14:44:14 +0100 (Sat, 17 Jul 2010) | 2 lines
+
+[br/r27952] [FIX] Timezone pref: Set server_timezone to UTC if server is set to GMT, otherwise Admin/General/Date & Time was showing Africa/Abidjan (the first one) as current setting.
+(Also added svn Id keyword & copyright)
+----------------------------------------------
+r28030 | jonnybradley | 2010-07-17 14:32:15 +0100 (Sat, 17 Jul 2010) | 1 line
+
+[MOD] Error handler: Separate suggestion lists for each scenario.
+----------------------------------------------
+r28029 | jonnybradley | 2010-07-17 13:55:27 +0100 (Sat, 17 Jul 2010) | 1 line
+
+[MOD] Restore help and link to installer in error handler, and some layout improvements.
+----------------------------------------------
+r28028 | lphuberdeau | 2010-07-17 13:47:45 +0100 (Sat, 17 Jul 2010) | 1 line
+
+[ENH] Setting the browser title so it does not say tiki-install.php
+----------------------------------------------
+r28027 | lphuberdeau | 2010-07-17 13:04:24 +0100 (Sat, 17 Jul 2010) | 1 line
+
+[ENH] For new installations, propose to force the connection encoding to UTF-8, because that is what tiki will send anyway. Good connection encoding will make sure the data will be understood by MySQL. However, changing the connection encoding on existing installations will cause issues.
+----------------------------------------------
+r28026 | lphuberdeau | 2010-07-17 12:20:50 +0100 (Sat, 17 Jul 2010) | 6 lines
+
+[MOD] Removing the charset autodetection. Unless explicitly specified, the charset issues will be handled the way MySQL is configured like, preserving backward compatibility. No attempt to figure out how it's configured. When specified in db/local.php, client charset is specified. Installer will not attempt to define it automatically.
+[FIX] PDO charset not initialized the same way in normal use and installer. Some exception with PHP 5.3 documented as a comment was not replicated in the installer.
+[FIX] AdoDB connection in tiki did not use the exact same query as PDO (with extra quotes)
+[FIX] AdoDB connection in the installer did not set the charset at all (which was introduced in tiki in r27423)
+[ENH] Generally reduced the amount of code paths causing confusion
+
+----------------------------------------------
+r28013 | jonnybradley | 2010-07-16 13:50:15 +0100 (Fri, 16 Jul 2010) | 4 lines
+
+[br/r28002,3 & 8]
+[MOD] User selector: Rename tracker_jquery_user_selector_threshold as user_selector_threshold so it can be used elsewhere. Also repeat pref in admin/look next to max list size for convenience.
+[NEW] smarty_function_user_selector to simplify use of user_selector_threshold to show autocomplete box when there are too many users, and deployment of it in filegal edit.
+[MOD] User selector: Schema update script just in case
+----------------------------------------------
+r28001 | lphuberdeau | 2010-07-15 15:57:26 +0100 (Thu, 15 Jul 2010) | 1 line
+
+[B/P] r28000 Support for BigBlueButton 0.7
+----------------------------------------------
+r27998 | sylvieg | 2010-07-15 14:44:05 +0100 (Thu, 15 Jul 2010) | 1 line
+
+[FIX]rss: when incorrect trackerId displays error page instead of bugging the reader
+----------------------------------------------
+r27987 | minger0 | 2010-07-14 19:53:35 +0100 (Wed, 14 Jul 2010) | 1 line
+
+[FIX] tracker auto-assigned fields shown in the tracker plugin (or not assigned if not listed in the fields param) http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=3200&trackerId=5&show=view
+----------------------------------------------
+r27967 | minger0 | 2010-07-14 00:27:45 +0100 (Wed, 14 Jul 2010) | 1 line
+
+[FIX] tracker lib saving attachments does not respect the object perms
+----------------------------------------------
+r27957 | sylvieg | 2010-07-13 19:10:33 +0100 (Tue, 13 Jul 2010) | 1 line
+
+[FIX]payment: fix pagination offset
+----------------------------------------------
+r27942 | sylvieg | 2010-07-12 14:11:45 +0100 (Mon, 12 Jul 2010) | 1 line
+
+[FIX]freetags_moerlikethis: fix number
+----------------------------------------------
+r27941 | sylvieg | 2010-07-12 14:10:01 +0100 (Mon, 12 Jul 2010) | 1 line
+
+[FIX]html
+----------------------------------------------
+r27939 | sylvieg | 2010-07-12 12:50:59 +0100 (Mon, 12 Jul 2010) | 1 line
+
+[FIX]most commented module: fix blog
+----------------------------------------------
+r27937 | frank_p | 2010-07-12 11:12:52 +0100 (Mon, 12 Jul 2010) | 1 line
+
+[TRA] more translate
+----------------------------------------------
+r27936 | chibaguy | 2010-07-12 10:44:51 +0100 (Mon, 12 Jul 2010) | 1 line
+
+[FIX] Bad text color contrast for links in table.normal. Thanks to Xavi for pointing out the problem.
+----------------------------------------------
+r27934 | sylvieg | 2010-07-11 22:48:47 +0100 (Sun, 11 Jul 2010) | 1 line
+
+[FIX]freetags: fix module freetags_morelikethis for blog post - the current_object function needs to rewritten...
+----------------------------------------------
+r27933 | sylvieg | 2010-07-11 22:13:35 +0100 (Sun, 11 Jul 2010) | 1 line
+
+[FIX]tracker: fix 'Do not show empty fields in item view?' for static field and item lists bug3208
+----------------------------------------------
+r27932 | minger0 | 2010-07-11 13:46:53 +0100 (Sun, 11 Jul 2010) | 1 line
+
+pass itemUser in pretty tracker
+----------------------------------------------
+r27931 | minger0 | 2010-07-11 01:16:08 +0100 (Sun, 11 Jul 2010) | 2 lines
+
+[FIX] conflict between tracker dynamic list items and the use real name feature in the trackerlist plugin, correction and simplification to the previous change list
+
+----------------------------------------------
+r27930 | minger0 | 2010-07-11 00:54:37 +0100 (Sun, 11 Jul 2010) | 1 line
+
+[FIX] conflict between tracker dynamic list items and the use real name feature in the trackerlist plugin
+----------------------------------------------
+r27929 | lindonb | 2010-07-11 00:09:26 +0100 (Sun, 11 Jul 2010) | 1 line
+
+[FIX] Use CSS for inline syntax formatting used in file and image gallery syntax help so that it is legible in all themes. Other small formatting changes to these interfaces.
+----------------------------------------------
+r27926 | jonnybradley | 2010-07-10 14:21:57 +0100 (Sat, 10 Jul 2010) | 1 line
+
+[FIX] Include JS in print page so tabs, headings etc work
+----------------------------------------------
+r27925 | chealer | 2010-07-09 23:38:06 +0100 (Fri, 09 Jul 2010) | 1 line
+
+Installer: allow to start with an incomplete local.php and set dbversion_tiki, for WebDeploy package
+----------------------------------------------
+r27924 | chealer | 2010-07-09 23:35:17 +0100 (Fri, 09 Jul 2010) | 1 line
+
+scrap postinst for WebDeploy package; it will used the standard installer in the end
+----------------------------------------------
+r27921 | chealer | 2010-07-09 22:27:12 +0100 (Fri, 09 Jul 2010) | 1 line
+
+[FIX] fr: "R?\195?\169installez la base de donn?\195?\169es" => "R?\195?\169installer la base de donn?\195?\169es"
+----------------------------------------------
+r27920 | chealer | 2010-07-09 22:17:33 +0100 (Fri, 09 Jul 2010) | 1 line
+
+[FIX] fr: "?\195?\138tes-vous en train d'ugrader une site Tiki existant" -> "?\195?\138tes-vous en train de mettre ?\195?\160 jour un site Tiki existant"
+----------------------------------------------
+r27918 | sylvieg | 2010-07-09 20:34:15 +0100 (Fri, 09 Jul 2010) | 1 line
+
+[FIX]TRACKERITEMFIELD: fix testing the value of a field that does not exist yet
+----------------------------------------------
+r27913 | xavidp | 2010-07-09 18:23:22 +0100 (Fri, 09 Jul 2010) | 1 line
+
+[ENH]Added Spanish translation for basic js strings in tiki-js.js
+----------------------------------------------
+r27912 | xavidp | 2010-07-09 18:17:43 +0100 (Fri, 09 Jul 2010) | 1 line
+
+[ENH]Adding the translation code and string for passwords match (it was between html tags). Thanks Jonnyb
+----------------------------------------------
+r27911 | xavidp | 2010-07-09 17:59:01 +0100 (Fri, 09 Jul 2010) | 1 line
+
+[ENH][bp/r27909]Simple translation system for JavaScript strings, modelled on existing language.php and tr()/{tr} method for php/smarty. Only one example translation file included so far (lang/ca/language.js) and translations of password strength strings in tiki-js.js added (thanks Xavi)
+----------------------------------------------
+r27907 | chealer | 2010-07-09 08:48:16 +0100 (Fri, 09 Jul 2010) | 3 lines
+
+[FIX] Installer on Microsoft Windows when installing directly in document root
+Fixes #3015 (r19122 regression)
+Thanks sipiptel
+----------------------------------------------
+r27897 | sylvieg | 2010-07-08 23:00:53 +0100 (Thu, 08 Jul 2010) | 1 line
+
+[ENH]article: cancel edit button
+----------------------------------------------
+r27888 | chealer | 2010-07-07 20:47:54 +0100 (Wed, 07 Jul 2010) | 1 line
+
+Web PI post-install: fill database, lock installers
+----------------------------------------------
+r27887 | xavidp | 2010-07-07 20:24:47 +0100 (Wed, 07 Jul 2010) | 1 line
+
+[ENH]Show paths for temp files if tiki_p_admin when short message 'Errors detected' was to be shown (useful if leftover temp dir setting was there, when migrating that Tiki to a new server)
+----------------------------------------------
+r27886 | chealer | 2010-07-07 19:32:51 +0100 (Wed, 07 Jul 2010) | 1 line
+
+[FIX] getVersion(). oops
+----------------------------------------------
+r27879 | chealer | 2010-07-07 07:58:10 +0100 (Wed, 07 Jul 2010) | 1 line
+
+Web PI post-install: set dbversion_tiki
+----------------------------------------------
+r27878 | chealer | 2010-07-07 05:36:18 +0100 (Wed, 07 Jul 2010) | 1 line
+
+[ENH] Post-install for alternative installers, currently Microsoft Web Platform Installer
+----------------------------------------------
+r27874 | jonnybradley | 2010-07-06 15:40:06 +0100 (Tue, 06 Jul 2010) | 5 lines
+
+[bp/r27845, r27842, r27834] Backports from trunk for jquery.sheet
+[FIX] Sheets: Correct saving of subsheets created within jquery.sheet
+[FIX] Sheet: Save broken when using feature_ajax. Also prep for multi-instance saves (more to come)
+[FIX] Changed $style variable that gave height to div for sheet plugin to $tiki_sheet_div_style and added height to $auto_query_args
+
+----------------------------------------------
+r27873 | sylvieg | 2010-07-06 12:58:14 +0100 (Tue, 06 Jul 2010) | 1 line
+
+[FIX]rollback 27872: no simple solution without rewriting plugin parsing: please use ~np~ in ~tc~ when you do not want to shorten parsing
+----------------------------------------------
+r27872 | sylvieg | 2010-07-05 23:44:11 +0100 (Mon, 05 Jul 2010) | 1 line
+
+[FIX]parsing: a little better to 27871 - 27488: if ~tc~ is not parsed .. so add ~np~ for those who forget
+----------------------------------------------
+r27871 | sylvieg | 2010-07-05 22:52:06 +0100 (Mon, 05 Jul 2010) | 1 line
+
+[FIX]rollback 27488: It is true that pluging in ~tc~ should not be interpreted but ~tc~ must be preserved when in CODE or ~np~ -> user most but ~tc~~np if they use plugins in tc
+----------------------------------------------
+r27846 | marclaporte | 2010-07-03 17:20:33 +0100 (Sat, 03 Jul 2010) | 1 line
+
+[FIX] more complete admin panel
+----------------------------------------------
+r27843 | chealer | 2010-07-02 22:32:35 +0100 (Fri, 02 Jul 2010) | 5 lines
+
+[FIX] Since last visit module showing old stuff. cached lastLogin is not properly maintained
+r23192 regression, worsened in r25341
+Ref: http://tikiwiki.org/tiki-view_forum_thread.php?forumId=4&comments_parentId=37611
+https://sourceforge.net/mailarchive/forum.php?thread_name=4B7983EE.3040006%40prager.ws&forum_name=tikiwiki-devel
+Thanks Bernd Prager and Emmett
+----------------------------------------------
+r27825 | jonnybradley | 2010-07-02 14:38:16 +0100 (Fri, 02 Jul 2010) | 1 line
+
+[bp/r27821 & r27822][ENH] Added height parameter to wikiplugin_sheet.php & Added heights to sheets if edited from a page, for a smoother user interface
+----------------------------------------------
+r27824 | jonnybradley | 2010-07-02 14:30:55 +0100 (Fri, 02 Jul 2010) | 2 lines
+
+[FIX][MOD] A few more fixes for Firefox & IE textarea selection problems, also some refactoring of JS code from toolbarslib to tiki-jquery.js.
+More to do on IE (still)
+----------------------------------------------
+r27817 | marclaporte | 2010-06-30 22:50:47 +0100 (Wed, 30 Jun 2010) | 1 line
+
+[MOD] more sensible default min length for passwords
+----------------------------------------------
+r27812 | sylvieg | 2010-06-30 15:26:03 +0100 (Wed, 30 Jun 2010) | 1 line
+
+[FIX]tracker: when filtering on field type need to do in a binary mode as there are 'C' and 'c' type
+----------------------------------------------
+r27811 | sylvieg | 2010-06-30 12:28:00 +0100 (Wed, 30 Jun 2010) | 1 line
+
+[FIX]tracker: translate also the input of radio button
+----------------------------------------------
+r27810 | marclaporte | 2010-06-30 03:53:59 +0100 (Wed, 30 Jun 2010) | 1 line
+
+[DOC] Help theme designers with in-context documentation.
+----------------------------------------------
+r27809 | minger0 | 2010-06-29 23:48:52 +0100 (Tue, 29 Jun 2010) | 1 line
+
+[FIX] #3449 - User preference tracker field realName does not work at registration - http://dev.tikiwiki.org/tiki-view_tracker_item.php?trackerId=5&itemId=3449
+----------------------------------------------
+r27798 | lphuberdeau | 2010-06-29 16:09:48 +0100 (Tue, 29 Jun 2010) | 1 line
+
+[FIX] Feature all languages allowed to view all translations regardless of the permissions. Permission was not checked for tiki_p_view on individual pages.
+----------------------------------------------
+r27797 | lphuberdeau | 2010-06-29 16:04:14 +0100 (Tue, 29 Jun 2010) | 1 line
+
+[FIX]?\194?\160Notice in error reporting code
+----------------------------------------------
+r27787 | marclaporte | 2010-06-28 17:13:01 +0100 (Mon, 28 Jun 2010) | 1 line
+
+[DOC] doc about suprising file
+----------------------------------------------
+r27780 | chibaguy | 2010-06-27 04:31:41 +0100 (Sun, 27 Jun 2010) | 1 line
+
+[FIX] No cssmenu dropdown to contain object filter select unless feature search show object filter is enabled.
+----------------------------------------------
+r27778 | chealer | 2010-06-26 19:04:53 +0100 (Sat, 26 Jun 2010) | 1 line
+
+[FIX] Minify CSS, modules cache and FCKEditor on IIS (name conflicts in web.config rules from r26000-26001)
+----------------------------------------------
+r27777 | chibaguy | 2010-06-26 11:27:14 +0100 (Sat, 26 Jun 2010) | 1 line
+
+[FIX] Blog/forum title background missing for Fivealive - theme option None (wrong file name in fivealive.css). Thanks to jetgraphic (bug report 3452).
+----------------------------------------------
+r27776 | chibaguy | 2010-06-26 08:21:07 +0100 (Sat, 26 Jun 2010) | 1 line
+
+[ENH] clearfix class added to div id="page-bar" so floated buttons are contained.
+----------------------------------------------
+r27774 | nkoth | 2010-06-25 23:00:20 +0100 (Fri, 25 Jun 2010) | 1 line
+
+[FIX] Preven repeated index db error in the case where a tag in lang1 exist already, and you try and put the same tag in lang2 (some languages have the same word for the same thing) for the page (since it is in lang1).
+----------------------------------------------
+r27771 | aproulx | 2010-06-25 16:09:10 +0100 (Fri, 25 Jun 2010) | 1 line
+
+Correction of my own correction -  thanks to Sylvie 
+----------------------------------------------
+r27770 | aproulx | 2010-06-25 15:35:32 +0100 (Fri, 25 Jun 2010) | 1 line
+
+[FIX] fixing problem about '' variable being reassigned when editing an article
+----------------------------------------------
+r27765 | sylvieg | 2010-06-24 18:44:03 +0100 (Thu, 24 Jun 2010) | 1 line
+
+[FIX]newsletter: message when newsletter does not exist
+----------------------------------------------
+r27764 | sylvieg | 2010-06-24 15:27:26 +0100 (Thu, 24 Jun 2010) | 1 line
+
+[FIX]error: when redirecting better to ouptut no space
+----------------------------------------------
+r27763 | sylvieg | 2010-06-24 14:29:56 +0100 (Thu, 24 Jun 2010) | 1 line
+
+[FIX]banning: missing index
+----------------------------------------------
+r27756 | sylvieg | 2010-06-23 22:33:14 +0100 (Wed, 23 Jun 2010) | 1 line
+
+[FIX]article: sefurl
+----------------------------------------------
+r27744 | sylvieg | 2010-06-22 18:35:25 +0100 (Tue, 22 Jun 2010) | 1 line
+
+[FIX]contact: when scramble email, set the correct email in the mail popup
+----------------------------------------------
+r27743 | sampaioprimo | 2010-06-22 14:59:53 +0100 (Tue, 22 Jun 2010) | 2 lines
+
+[FIX] consider the file tiki_p_download_files instead of global tiki_p_download_files to decide whether or not to display the download link in the gallery listing
+
+----------------------------------------------
+r27742 | sylvieg | 2010-06-22 13:32:28 +0100 (Tue, 22 Jun 2010) | 1 line
+
+[FIX]calendar: do not show mouseover on user in the event popup
+----------------------------------------------
+r27738 | chealer | 2010-06-22 06:56:44 +0100 (Tue, 22 Jun 2010) | 1 line
+
+[FIX] changes loss protection with CKEditor (3)
+----------------------------------------------
+r27736 | chealer | 2010-06-22 06:37:39 +0100 (Tue, 22 Jun 2010) | 1 line
+
+[FIX] inconsistent form method/enctype
+----------------------------------------------
+r27729 | nkoth | 2010-06-21 18:59:04 +0100 (Mon, 21 Jun 2010) | 2 lines
+
+[FIX] Provide courtesy message on the significance of the isMain "column links to view/edit item" in defining name of item in search and category listings
+
+----------------------------------------------
+r27724 | sylvieg | 2010-06-21 17:13:29 +0100 (Mon, 21 Jun 2010) | 1 line
+
+[FIX]subscribenewsletter: get also the user subscribe via a group
+----------------------------------------------
+r27723 | sylvieg | 2010-06-21 16:47:52 +0100 (Mon, 21 Jun 2010) | 1 line
+
+[FIX]fgal: goto the new fgal after duplic
+----------------------------------------------
+r27713 | marclaporte | 2010-06-21 07:46:09 +0100 (Mon, 21 Jun 2010) | 1 line
+
+[FIX] Don't tell end users about a feature their admin hasn't picked
+----------------------------------------------
+r27712 | lindonb | 2010-06-21 04:14:41 +0100 (Mon, 21 Jun 2010) | 1 line
+
+[FIX] Get rid of "at" in published by info since it isn't always correct grammar and isn't needed
+----------------------------------------------
+r27710 | chibaguy | 2010-06-20 09:14:18 +0100 (Sun, 20 Jun 2010) | 1 line
+
+[FIX] divs containing floated items need clearfix class, for items to be contained.
+----------------------------------------------
+r27709 | pkdille | 2010-06-20 08:11:20 +0100 (Sun, 20 Jun 2010) | 1 line
+
+[bp/r27600][FIX] external RSS: An url with more than 256 chars can happen
+----------------------------------------------
+r27707 | sylvieg | 2010-06-19 22:55:55 +0100 (Sat, 19 Jun 2010) | 1 line
+
+[FIX]newsletter: when a group is subscribed to a newsletter - only add the including groups (that inherits the perms of the initial group) and not the included groups (Registered is often an included group)
+----------------------------------------------
+r27704 | nkoth | 2010-06-19 19:31:18 +0100 (Sat, 19 Jun 2010) | 2 lines
+
+[FIX] Add courtesy message to category configurators otherwise category perms isn't going to work as expected by most normal people
+
+----------------------------------------------
+r27703 | sylvieg | 2010-06-18 17:37:36 +0100 (Fri, 18 Jun 2010) | 1 line
+
+[ENH]tracker: link to download
+----------------------------------------------
+r27702 | jonnybradley | 2010-06-18 17:29:22 +0100 (Fri, 18 Jun 2010) | 1 line
+
+[FIX] dialogSelectElement: include start and end of range
+----------------------------------------------
+r27696 | nkoth | 2010-06-18 00:48:53 +0100 (Fri, 18 Jun 2010) | 1 line
+
+[FIX] maxlength should correspond to the setting for max that can be saved, not visible field length
+----------------------------------------------
+r27695 | nkoth | 2010-06-17 23:44:06 +0100 (Thu, 17 Jun 2010) | 2 lines
+
+[FIX] Prevent weird situation when neither of "View inserted item" or "Insert new item" is checked leading to strange confusing prefilling of insert new item tab with values of just inserted item.
+
+----------------------------------------------
+r27689 | sylvieg | 2010-06-17 21:01:33 +0100 (Thu, 17 Jun 2010) | 1 line
+
+[FIX]tracker: when changing a value, update all the item link field (as item link contains value and not ref)
+----------------------------------------------
+r27668 | jonnybradley | 2010-06-17 13:44:01 +0100 (Thu, 17 Jun 2010) | 3 lines
+
+[ENH] Toolbars: Select the whole element when using dialog tools (internal and external links, tables and plugins), so now you just need to put the cursor inside the thing you want to edit, and it should all get selected.
+Also some fixes for table dialog.
+
+----------------------------------------------
 Version 5.0
 <http://tikiwiki.org/ReleaseNotes50>
 ------------------
