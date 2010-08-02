@@ -31,6 +31,8 @@ define( 'LICENSE_FILENAME', 'license.txt' );
 define( 'ERROR_REPORTING_LEVEL', E_ALL | E_STRICT );
 error_reporting( ERROR_REPORTING_LEVEL );
 
+chdir(ROOT .'/');
+
 require_once ROOT . '/lib/setup/third_party.php';
 require_once TOOLS . '/svntools.php';
 
@@ -312,6 +314,7 @@ function check_smarty_syntax(&$error_msg) {
 
 	// Load Tiki Smarty
 	require_once 'setup_smarty.php';
+	set_error_handler('check_smarty_syntax_error_handler');
 
 	$templates_dir = $smarty->template_dir;
 	$templates_dir_length = strlen($templates_dir);
@@ -326,25 +329,40 @@ function check_smarty_syntax(&$error_msg) {
 	for ( $i = 0 ; $i < $nbEntries ; $i++ ) {
 		display_progress_percentage($i, $nbEntries, '%d%% of files passed the Smarty syntax check');
 
-		ob_start();
-		$template_file = substr($entries[$i], $templates_dir_length + 1);
-		$smarty->_compile_resource($template_file, $temp_compile_file);
-		$compilation_output = ob_get_clean();
+		try {
+			ob_start();
+			$template_file = substr($entries[$i], $templates_dir_length + 1);
+			$smarty->_compile_resource($template_file, $temp_compile_file);
+			$compilation_output = ob_get_clean();
 
-		unlink($temp_compile_file);
+			unlink($temp_compile_file);
 
+		} catch (Exception $e) {
+			$msg = $e->getMessage();
+			if (strpos($msg, 'tiki-mods.tpl') !== false && strpos($msg, 'revision_compare') !== false) {
+				print(color("\nNote: ignoring error in tiki-mods.tpl:\n        $msg", 'yellow'));
+			} else {
+				$compilation_output = "\n*** " . $e->getMessage();
+			}
+		}
+		
 		if ( ! empty($compilation_output) ) {
 			$error_msg = "\nError while compiling {$entries[$i]}."
 				. "\nThis may happen if one of the tiki smarty plugins (located in lib/smarty_tiki)"
 				. " used in the template outputs something when loaded (using php include)."
-				. "\nFor example, a white space after the PHP closing TAG of a smarty plugin can cause this."
+				. "\nFor example, a white space after the PHP closing TAG of a smarty plugin can cause this.\n"
 				. trim($compilation_output);
 			return false;
 		}
 	}
+	restore_error_handler();
 
 	echo "\n";
 	return true;
+}
+
+function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errline = 0, $errcontext = array()) {
+	throw new Exception($errstr);
 }
 
 function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings, $retry = 10) {
