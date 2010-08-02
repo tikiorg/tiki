@@ -50,7 +50,7 @@ function prefs_socialnetworks_list() {
 			'size' => 60,
 		),
 		'socialnetworks_bitly_key' => array(
-			'name' => tra('bit.ly Login'),
+			'name' => tra('bit.ly Key'),
 			'description' => tra('Site wide API key for bit.ly'),
 			'keywords' => 'social networks',
 			'type' => 'text',

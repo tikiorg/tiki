@@ -5,7 +5,7 @@
 		{if $prefs.feature_site_report eq 'y'}
 			<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to Webmaster{/tr}</a>
 		{/if}
-		{if $prefs.feature_promote_page eq 'y' }
+		{if $prefs.feature_share eq 'y' }
 			<a href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Share this page{/tr}</a>
 		{/if}
 		{if $prefs.feature_site_send_link eq 'y'}

@@ -56,6 +56,16 @@ if (isset($_REQUEST['remove_facebook'])) {
 	$tikilib->set_user_preference($user, 'facebook_token','');
 	$smarty->assign('show_removal',true);
 }
+
+if (isset($_REQUEST['accounts'])) {
+	$tikilib->set_user_preference($user, 'bitly_login', $_REQUEST['bitly_login']);
+	$smarty->assign('bitly_login',$_REQUEST['bitly_login']);		
+	$tikilib->set_user_preference($user, 'bitly_key', $_REQUEST['bitly_key']);
+	$smarty->assign('bitly_key',$_REQUEST['bitly_key']);		
+} else {
+	$smarty->assign('bitly_login',$tikilib->get_user_preference($user, 'bitly_login',''));
+	$smarty->assign('bitly_key',$tikilib->get_user_preference($user, 'bitly_key',''));
+}
 $token=$tikilib->get_user_preference($user, 'facebook_token', '');
 $smarty->assign('facebook', ($token!=''));
 $smarty->assign('twitterRegistered',$socialnetworkslib->twitterRegistered());

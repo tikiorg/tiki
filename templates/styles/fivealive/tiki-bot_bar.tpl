@@ -29,7 +29,7 @@
 {/if}
 {if $prefs.feature_bot_bar_rss eq 'y'}
 	<div id="rss">
-		{if $prefs.feature_wiki eq 'y' and $pr./templates/styles/fivealive/tiki-bot_bar.tpl:efs.feed_wiki eq 'y' and $tiki_p_view eq 'y'}
+		{if $prefs.feature_wiki eq 'y' and $prefs.feed_wiki eq 'y' and $tiki_p_view eq 'y'}
 				<a title="{tr}Wiki RSS{/tr}" href="tiki-wiki_rss.php?ver={$prefs.feed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 				<small>{tr}Wiki{/tr}</small>
 		{/if}
