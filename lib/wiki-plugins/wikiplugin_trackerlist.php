@@ -282,6 +282,12 @@ function wikiplugin_trackerlist_info() {
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
+			'googlemap' => array(
+				'required' => false,
+				'name' => tra('Show Google Map of Results'),
+				'description' => 'y|n',
+				'filter' => 'alpha'
+			),
 		),
 	);
 }
@@ -939,6 +945,28 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign_by_ref('items', $items["data"]);
 			$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
 			
+			if ($params["googlemap"] == 'y') {
+				$smarty->assign('trackerlistmapview', true);
+				$smarty->assign('trackerlistmapname', "trackerlistgmap_$iTRACKERLIST");
+				// Generate Google map plugin data
+				global $gmapobjectarray;
+				$gmapobjectarray = array();
+				foreach ($items["data"] as $i) {
+					if (!empty($params["url"])) {
+						$href = str_replace('itemId', $i["itemId"], $params["url"]);
+					} else {
+						$href = 'tiki-view_tracker_item.php?itemId=' . $i["itemId"];
+					}
+					$gmapobjectarray[] = array('type' => 'trackeritem',
+						'id' => $i["itemId"],
+						'title' => $i["value"],
+						'href' => $href,
+					);
+				}
+			} else {
+				$smarty->assign('trackerlistmapview', false);
+			}
+
 			$tracker = $tikilib->get_tracker($trackerId,0,-1);
 			/*foreach ($query_array as $k=>$v) {
 				if (!is_array($v)) { //only to avoid an error: eliminate the params that are not simple (ex: if you have in the same page a tracker list plugin and a tracker plugin, filling the tracker plugin interfers with the tracker list. In any case this is buggy if two tracker list plugins in the same page and if one needs the query value....
