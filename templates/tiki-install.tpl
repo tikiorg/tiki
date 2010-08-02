@@ -281,7 +281,7 @@
 	{tr}A new install will populate the database.{/tr}
 {/if}
 </p>
-	  {if $database_charset neq 'utf8'}
+	  {if $database_charset neq 'utf8' and $tikidb_created}
 	  	{remarksbox icon=error title="{tr}Encoding Issue{/tr}"}
 			{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
 			<p><a href="http://doc.tikiwiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
