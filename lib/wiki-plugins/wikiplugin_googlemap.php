@@ -442,7 +442,16 @@ function wikiplugin_googlemap($data, $params) {
 			} else {
 				$lat = '';
 			}
-			$popup = '<a href="' . $obj['href']  . '">' . htmlspecialchars($obj['title']) . '</a>';
+			
+			$popup = '';
+			if (!empty($obj['href'])) {
+				$popup .= '<a href="' . $obj['href']  . '">';
+			}
+			$popup .= htmlspecialchars($obj['title']);
+			if (!empty($obj['href'])) {
+				$popup .= '</a>';	
+			}
+			
 			if ($lat && $lon) { 
 				$markers[] = array($lat,$lon,$popup);
 			}
