@@ -17,7 +17,7 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<fieldset>
 				<legend>
-					{tr}Search type{/tr}{help url="Search+Admin"}
+					{tr}Search type{/tr}{help url="Search"}
 				</legend>
 				{preference name=feature_search_fulltext}
 				{preference name=feature_search}

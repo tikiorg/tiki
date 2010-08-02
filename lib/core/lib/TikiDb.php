@@ -84,10 +84,12 @@ abstract class TikiDb
 		$result = $this->query( $query, $values, $numrows, $offset, $reporterrors );
 
 		$rows = array();
-		while( $row = $result->fetchRow() ) {
-			$rows[] = $row;
+		
+		if ($result) {
+			while( $row = $result->fetchRow() ) {
+				$rows[] = $row;
+			}
 		}
-
 		return $rows;
 	} // }}}
 

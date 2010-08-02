@@ -1,4 +1,4 @@
-{title help="Feeds+User"}{tr}Admin External Feeds{/tr}{/title}
+{title help="Feeds"}{tr}Admin External Feeds{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tips{/tr}"}
 	{tr}This page is to configure settings of external feeds read/imported by Tiki. To generate/export feeds, look for "Feeds" on the admin panel, or{/tr}

@@ -461,7 +461,7 @@ class ModLib extends TikiLib
 			),
 			'perspective' => array(
 				'name' => tra('Perspective'),
-				'description' => tra('Only display the module if in one of the listed perspectives. Semi-colon separated.'),
+				'description' => tra('Only display the module if in one of the listed perspective IDs. Semi-colon separated.'),
 				'separator' => ';',
 				'filter' => 'digits',
 			),

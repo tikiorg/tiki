@@ -41,9 +41,23 @@ if (isset($_REQUEST["exp_language"])) {
 // Import
 if (isset($_REQUEST["import"])) {
 	check_ticket('import-lang');
+	// TODO: check if the lang to import to db is not the same as the currently used one, otherwise the import fails with PHP error "Variable passed to each() is not an array or object"
+	
+	// first delete each record from language db table where the lang matches (if any)
+	$query = "select `source` from `tiki_language` where `lang`=?";
+	$result = $tikilib->query($query, array($imp_language));
+	while ($res = $result->fetchRow()) {
+		$query = "delete from `tiki_language` where `lang`=?";
+		$result = $tikilib->query($query, array($imp_language));
+	}
+	// delete also record for the lang from the languages db table
+	$query = "delete from `tiki_languages` where `lang`=?";
+	$result = $tikilib->query($query, array($imp_language));
+	
+	// now we can start the import
 	include_once ('lang/' . $imp_language . '/language.php');
 
-	$impmsg = "Included lang/" . $imp_language . "/language.php";
+	$impmsg = tra("Imported:")." lang/$imp_language/language.php";
 	$query = "insert into `tiki_languages` values (?,?)";
 	$result = $tikilib->query($query, array($imp_language,''), -1, -1, false);
 
@@ -73,10 +87,16 @@ if (isset($_REQUEST["export"])) {
 	$data = $data . ");\n?>";
 	header ("Content-type: application/unknown");
 	header ("Content-Disposition: inline; filename=language.php");
+	header ("Content-encoding: UTF-8");
 	echo $data;
 	exit (0);
 	$smarty->assign('expmsg', $expmsg);
 }
+
+// Delete
+if (isset($_REQUEST["delete"])) {
+	/* TODO: the delete lang code from the import part should go probably here instead with confirmation step and related changes in the tpl */
+} 
 
 // edit source string
 if (isset($_REQUEST["edit_source"])) {

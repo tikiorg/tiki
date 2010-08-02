@@ -281,7 +281,7 @@
 	{tr}A new install will populate the database.{/tr}
 {/if}
 </p>
-	  {if $database_charset neq 'utf8'}
+	  {if $database_charset neq 'utf8' and $tikidb_created}
 	  	{remarksbox icon=error title="{tr}Encoding Issue{/tr}"}
 			{tr 0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
 			<p><a href="http://doc.tikiwiki.org/Understanding+Encoding">{tr}More information{/tr}</a></p>
@@ -576,7 +576,7 @@
 
 </div>
 	{if $double_encode_fix_attempted eq 'y'}
-		<p>{tr}You can now access the site normally. Report back any issues that you might find (if any)to the Tiki forums or bug tracker{/tr}</p>
+		<p>{tr}You can now access the site normally. Report back any issues that you might find (if any) to the Tiki forums or bug tracker{/tr}</p>
 	{else}
 		<form method="post" action="#" onsubmit="return confirm('{tr}Are you sure you want to attempt to fix the encoding of your entire database?{/tr}');" style="padding-top: 100px;">
 			<fieldset>

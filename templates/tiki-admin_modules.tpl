@@ -1,7 +1,7 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {strip}
-{title help="Modules+Admin" admpage="module"}{tr}Admin Modules{/tr}{/title}
+{title help="Modules" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-admin_modules.php?clear_cache=1" _text="{tr}Clear Cache{/tr}"}

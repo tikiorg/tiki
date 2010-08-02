@@ -1153,6 +1153,7 @@ table.treeTable .parent td {
 	overflow: auto;
 	background-color: #90ee90;
 	display: none;
+	z-index: 2000;
 }
 #intertrans-form table {
 	width: 98%;

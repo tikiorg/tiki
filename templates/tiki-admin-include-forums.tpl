@@ -14,7 +14,7 @@
 
 			<fieldset>
 				<legend>
-					{tr}Features{/tr}{help url="Forum+Admin"}
+					{tr}Features{/tr}{help url="Forum"}
 				</legend>
 				<input type="hidden" name="forumprefs" />
 				{preference name=feature_forum_rankings}
