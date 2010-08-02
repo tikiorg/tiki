@@ -83,8 +83,10 @@ if (isset($_REQUEST["add_tran"])) {
 	$add_tran_tran = $_REQUEST["add_tran_tran"];
 
 	if (strlen($add_tran_source) != 0 && strlen($add_tran_tran) != 0) {
-		$add_tran_source = htmlentities(strip_tags($add_tran_source), ENT_NOQUOTES, "UTF-8");
-		$add_tran_tran = htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES, "UTF-8");
+#		$add_tran_source = htmlentities(strip_tags($add_tran_source), ENT_NOQUOTES, "UTF-8");
+		$add_tran_source = strip_tags($add_tran_source);
+#		$add_tran_tran = htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES, "UTF-8"); // we don't want htmlentities() here (converts e.g. é to &eauml;) -- luci
+		$add_tran_tran = strip_tags($add_tran_tran);
 		$query = "delete from `tiki_language` where `source` = ? and `lang` = ?";
 		$tikilib->query($query,array($add_tran_source,$edit_language));
 		$query = "insert into `tiki_language` values (?,?,?)";
@@ -111,8 +113,6 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			// Handle edits in translate recorded
 			if (isset($_REQUEST["edit_rec_$i"])) {
 				if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
-					$_REQUEST["edit_rec_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_rec_source_$i"]), ENT_NOQUOTES, "UTF-8");
-					$_REQUEST["edit_rec_tran_$i"] = htmlentities(strip_tags($_REQUEST["edit_rec_tran_$i"]), ENT_NOQUOTES, "UTF-8");
 					$query = "insert into `tiki_language` values(?,?,?)";
 					$result = $tikilib->query($query,array($_REQUEST["edit_rec_source_$i"],$edit_language,$_REQUEST["edit_rec_tran_$i"]));
 					$query = "delete from `tiki_untranslated` where `source`=? and lang=?";
@@ -122,8 +122,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			} elseif (isset($_REQUEST["edt_tran_$i"])) {
 				// Handle edits in edit translations
 				if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
-					$_REQUEST["edit_edt_tran_$i"] = htmlentities(strip_tags($_REQUEST["edit_edt_tran_$i"]), ENT_NOQUOTES, "UTF-8");
-					$_REQUEST["edit_edt_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_edt_source_$i"]), ENT_NOQUOTES, "UTF-8");
+#					$_REQUEST["edit_edt_tran_$i"] = strip_tags($_REQUEST["edit_edt_tran_$i"]); // yes, we even don't want striptags() for existing translations as some already have html tags included and we want to keep them, right ?
 					$query = "update `tiki_language` set `tran`=? where `source`=binary ? and `lang`=?";
 					$result = $tikilib->query($query,array($_REQUEST["edit_edt_tran_$i"],$_REQUEST["edit_edt_source_$i"],$edit_language));
 
@@ -136,7 +135,6 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			} elseif (isset($_REQUEST["del_tran_$i"])) {
 				// Handle deletes here
 				if (strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
-					$_REQUEST["edit_edt_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_etd_source_$i"]), ENT_NOQUOTES, "UTF-8");
 					$query = "delete from `tiki_language` where `source`=? and `lang`=?";
 					$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language));
 				}
@@ -176,8 +174,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	$bindvars2 = array($edit_language);
 
 	if (isset($_REQUEST["tran_search"])) {
-		$tran_search = htmlentities(strip_tags($_REQUEST["tran_search"]), ENT_NOQUOTES, "UTF-8");
-
+		$tran_search = $_REQUEST['tran_search'];
 		if (strlen($tran_search) > 0) {
 			$smarty->assign('tran_search', $tran_search);
 			$transe = "%".$tran_search."%";
