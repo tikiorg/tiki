@@ -13,7 +13,7 @@ http://tikiwiki.org/Social+Contract
 
 List of members of the Community
 As of 2010-08-02, the community has:
-  * 481 members on SourceForge.net,
+  * 482 members on SourceForge.net,
   * 234 of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
@@ -344,8 +344,8 @@ SF Role: Developer
 Nickname: cdrwhite
 Name: JÃ¶rn Ott
 First Commit: 2010-05-10
-Last Commit: 2010-07-31
-Number of Commits: 22
+Last Commit: 2010-08-02
+Number of Commits: 23
 SF Role: Developer
 
 Nickname: cdx
@@ -1095,7 +1095,7 @@ Nickname: jonnybradley
 Name: jonny Bradley
 First Commit: 2007-08-15
 Last Commit: 2010-08-02
-Number of Commits: 2063
+Number of Commits: 2065
 SF Role: Developer
 
 Nickname: jorgercosta
@@ -1325,6 +1325,9 @@ SF Role: Developer
 Nickname: lucamarletta
 Name: Luca Marletta
 SF Role: Developer
+
+Nickname: lucas
+Name: Lucas Eduardo
 
 Nickname: lucasemanoel
 Name: Lucas Emanoel
