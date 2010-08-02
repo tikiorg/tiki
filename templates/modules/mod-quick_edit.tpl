@@ -22,7 +22,7 @@
 {if $prefs.disableJavascript != 'y'}<a id="flipperqcat" href="javascript:flipWithSign('qcat')">[+]</a>{/if}
 <select id="qcat" style="width:97%;{if $prefs.disableJavascript != 'y'} display: none;{/if}" name="cat_categories[]">
 <option></option>
-{foreach from=$qcats item="cat"}<option value="{$cat.categId}"{if $cat.categId=$categId} selected="selected"{/if}>{$cat.name}</option>
+{foreach from=$qcats item="cat"}<option value="{$cat.categId}"{if $cat.categId==$categId} selected="selected"{/if}>{$cat.name}</option>
 {/foreach}
 </select>
 </div>
