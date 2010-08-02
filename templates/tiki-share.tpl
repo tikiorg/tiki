@@ -1,8 +1,10 @@
 {* $Id: $ *}
-{title}{tr}Promote this page{/tr}{/title}
+{title}{tr}Share this page{/tr}{/title}
 
 {if isset($sent)}
-<div class="simplebox highlight">{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}{tr}Page promoted:{/tr}<br />
+<div class="simplebox highlight">
+{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}
+{tr}Page shared{/tr}:<br />
 {if isset($emailSent)} 
 <div>{tr}The link was sent via e-Mail to the following addresses:{/tr} {$addresses|escape}</div>
 {/if}
@@ -35,7 +37,7 @@
 </div>
 {/if}
 
-<form method="post" action="tiki-promote.php" id="promote-form">
+<form method="post" action="tiki-share.php" id="share-form">
   <input type="hidden" name="url" value="{$url|escape:url}" />
   <table class="normal">
     <tr class="formcolor">
@@ -56,7 +58,7 @@
       <td class="formcolor">
         {tr}Your message{/tr}
         <br /><br />
-        {include file='textareasize.tpl' area_name='comment' formId='promote-form'}
+        {include file='textareasize.tpl' area_name='comment' formId='share-form'}
       </td>
       
       <td class="formcolor">
@@ -267,8 +269,8 @@
     <tr>
       <td class="formcolor"></td>
       <td class="formcolor">
-        <input type="submit" class="button" name="send" value="{tr}Send{/tr}" />
-		{if $prefs.auth_token_promote eq 'y'}
+        <input type="submit" class="button" name="send" value="{tr}Share{/tr}" />
+		{if $prefs.auth_token_share eq 'y'}
 			<input type="checkbox" name="share_access" value="1" id="share_access"/>
 			<label for="share_access">{tr}Share access rights{/tr}</label>
 		{/if}

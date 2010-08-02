@@ -66,9 +66,9 @@
 	{/if}
 {/if}
 
-{if $prefs.feature_promote_page eq 'y' && $tiki_p_promote_page eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}
-							<div class="tellafriend">
-								<a href="tiki-promote.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Promote this page{/tr}</a>
+{if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}
+							<div class="share">
+								<a href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Share this page{/tr}</a>
 							</div>
 {/if}
 {if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y' and (!isset($edit_page) or $edit_page ne 'y' and $prefs.feature_site_send_link ne 'y')}

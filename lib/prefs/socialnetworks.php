@@ -20,7 +20,6 @@ function prefs_socialnetworks_list() {
 			'keywords' => 'social networks',
 			'type' => 'text',
 			'size' => 60,
-			'filter' => 'description',
 		),
 		'socialnetworks_facebook_api_key' => array(
 			'name' => tra('API key'),
@@ -35,7 +34,6 @@ function prefs_socialnetworks_list() {
 			'keywords' => 'social networks',
 			'type' => 'text',
 			'size' => 60,
-			'filter' => 'description',
 		),
 		'socialnetworks_facebook_application_id' => array(
 			'name' => tra('Application ID'),
@@ -43,7 +41,26 @@ function prefs_socialnetworks_list() {
 			'keywords' => 'social networks',
 			'type' => 'text',
 			'size' => 60,
-			'filter' => 'description',
 		),
- 	);
+		'socialnetworks_bitly_login' => array(
+			'name' => tra('bit.ly Login'),
+			'description' => tra('Site wide login (username) for bit.ly'),
+			'keywords' => 'social networks',
+			'type' => 'text',
+			'size' => 60,
+		),
+		'socialnetworks_bitly_key' => array(
+			'name' => tra('bit.ly Login'),
+			'description' => tra('Site wide API key for bit.ly'),
+			'keywords' => 'social networks',
+			'type' => 'text',
+			'size' => 60,
+		),
+		'socialnetworks_bitly_sitewide' => array(
+			'name' => tra('Use site-wide account'),
+			'description' => tra('When setting this option to yes, only the site wide account will be used for all users'),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+		),
+	);
 }

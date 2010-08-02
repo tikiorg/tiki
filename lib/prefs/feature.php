@@ -217,9 +217,9 @@ function prefs_feature_list() {
 			'help' => 'Tell+a+Friend',
 			'type' => 'flag',
 		),
-		'feature_promote_page' => array(
-			'name' => tra('Promote this page'),
-			'description' => tra('Add a link "Promote this page" in all the pages'),
+		'feature_share' => array(
+			'name' => tra('Share a page'),
+			'description' => tra('Add a link "Share this page" in all the pages to send it via e-Mail, Twitter, Facebook, Message, Forums'),
 			'help' => 'Promote-Page',
 			'type' => 'flag',
 		),

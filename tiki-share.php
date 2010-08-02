@@ -6,12 +6,12 @@
 // $Id: tiki-tell_a_friend.php 27748 2010-06-23 03:01:50Z sampaioprimo $
 
 // To include a link in your tpl do
-//<a href="tiki-promote.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Promote this page{/tr}</a>
+//<a href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Share this page{/tr}</a>
 
 require_once ('tiki-setup.php');
 
-$access->check_feature('feature_promote_page');
-$access->check_permission('tiki_p_promote_page');
+$access->check_feature('feature_share');
+$access->check_permission('tiki_p_share');
 
 // email related:
 // include_once ('lib/registration/registrationlib.php'); // done in the email function
@@ -74,7 +74,7 @@ if (isset($prefs['feature_forums']) and $prefs['feature_forums']=='y') {
 }
 $smarty->assign('forums',$forums);
 
-$smarty->assign('headtitle', tra('Promote this page'));
+$smarty->assign('headtitle', tra('Share this page'));
 
 include_once ("textareasize.php");
 $errors = array();
@@ -95,21 +95,29 @@ if (empty($_REQUEST['url'])) {
 	die;
 }
 $_REQUEST['url'] = urldecode($_REQUEST['url']);
-if (strstr($_REQUEST['url'], 'tiki-promote.php')) {
-	$_REQUEST['url'] = preg_replace('/.*tiki-promote.php\?url=/', '', $_REQUEST['url']);
-	header('location: tiki-promote.php?url=' . $_REQUEST['url']);
+if (strstr($_REQUEST['url'], 'tiki-share.php')) {
+	$_REQUEST['url'] = preg_replace('/.*tiki-share.php\?url=/', '', $_REQUEST['url']);
+	header('location: tiki-share.php?url=' . $_REQUEST['url']);
 }
 $url_for_friend = $tikilib->httpPrefix( true ) . $_REQUEST['url'];
-if( $prefs['auth_token_promote'] == 'y' && $prefs['auth_token_access'] == 'y' && isset($_POST['share_access']) ) {
+if( $prefs['auth_token_share'] == 'y' && $prefs['auth_token_access'] == 'y' && isset($_POST['share_access']) ) {
 	require_once 'lib/auth/tokens.php';
 	$tokenlib = AuthTokens::build( $prefs );
 	$url_for_friend = $tokenlib->includeToken( $url_for_friend, $globalperms->getGroups() );
+}
+if (isset($_REQUEST['shorturl'])) {
+	$shorturl=$_REQUEST['shorturl'];
+} else {
+	$shorturl=$socialnetworkslib->bitlyShorten($user, $url_for_friend);
+	if ($shorturl==false) {
+		$shorturl=$url_for_friend;
+	}
 }
 
 $smarty->assign('url', $_REQUEST['url']);
 $smarty->assign('prefix', $tikilib->httpPrefix( true ));
 $smarty->assign( 'url_for_friend', $url_for_friend );
-$smarty->assign('shorturl', $url_for_friend);
+$smarty->assign('shorturl', $shorturl);
 
 if (isset($_REQUEST['send'])) {
 	
@@ -120,11 +128,11 @@ if (isset($_REQUEST['send'])) {
 		$subject = $_REQUEST['subject'];
 		$smarty->assign('subject', $subject);
 	} else {
-		$subject = $smarty->fetch('mail/promote_subject.tpl');
+		$subject = $smarty->fetch('mail/share_subject.tpl');
 	}
 	$smarty->assign('subject', $subject);
 
-	check_ticket('promote');
+	check_ticket('share');
 	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 		$errors[] = $captchalib->getErrors();
 	}
@@ -139,7 +147,7 @@ if (isset($_REQUEST['send'])) {
 		}
 		$smarty->assign('emailSent', $emailSent);
 		$ok = $ok && $emailSent;
-	} // do_ema$smarty->assignil
+	} // do_email
 	if (isset ($_REQUEST['do_tweet']) and $_REQUEST['do_tweet']==1) {
 		$tweet=substr($_REQUEST['tweet'],0,140);
 		if (strlen($tweet)==0) {
@@ -187,8 +195,8 @@ if (isset($_REQUEST['send'])) {
 	$smarty->assign_by_ref('name', $user);
 	$smarty->assign('email', $userlib->get_user_email($user));
 }
-ask_ticket('promote');
-$smarty->assign('mid', 'tiki-promote.tpl');
+ask_ticket('share');
+$smarty->assign('mid', 'tiki-share.tpl');
 $smarty->display('tiki.tpl');
 
 /**
@@ -230,7 +238,7 @@ function checkAddresses($recipients) {
  * @param string		$sender		Sender e-Mail address
  * @param string|array	$recipients	List of recipients either as array or comma/semi colon separated string
  * @param string		$subject	E-Mail subject
- * @param string		$url_for_friend		URL to promote
+ * @param string		$url_for_friend		URL to share
  * @return bool						true on success / false if the supplied parameters were incorrect/missing or an error occurred sending the mail
  */
 function sendMail($sender, $recipients, $subject) {
@@ -264,7 +272,7 @@ function sendMail($sender, $recipients, $subject) {
 	$mail->setHeader("Return-Path", "<$from>");
 	$mail->setHeader("Reply-To", "<$from>");
 
-	$txt = $smarty->fetch('mail/promote.tpl');
+	$txt = $smarty->fetch('mail/share.tpl');
 	$mail->setSubject($subject);
 	$mail->setText($txt);
 	$mail->buildMessage();
@@ -317,10 +325,10 @@ function sendMessage($recipients, $subject) {
 				$errors[] = tra("Invalid user: %s");
 				$ok=false;
 			}
-		}
-	}				
+		}	
+	}			
 	$users = array_unique($users);
-	$txt = $smarty->fetch('mail/promote.tpl');
+	$txt = $smarty->fetch('mail/share.tpl');
 	foreach($users as $a_user) {
 		$messulib->post_message($a_user, $user, $a_user, '', $subject, $txt, $_REQUEST['priority'], $_REQUEST['replyto_hash']);
 		if ($prefs['feature_score'] == 'y') {
@@ -355,7 +363,7 @@ function postForum($forumId, $subject) {
 	
 	$postErrors = array();
 	$feedbacks = array();
-	$txt = $smarty->fetch('mail/promote.tpl');
+	$txt = $smarty->fetch('mail/share.tpl');
 	$data=array('comments_title' => $subject,
 				'comments_data'  => $txt,
 				'password' => $_REQUEST['forum_password'],

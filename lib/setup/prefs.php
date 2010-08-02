@@ -1543,7 +1543,13 @@ function get_default_prefs() {
 		'feature_socialnetworks' => 'n',
 		'socialnetworks_twitter_consumer_key' =>'',
 		'socialnetworks_twitter_consumer_secret' => '',
-
+		'socialnetworks_facebook_api_key' =>'',
+		'socialnetworks_facebook_application_secr' => '',
+		'socialnetworks_facebook_application_id' => '',
+		'socialnetworks_bitly_login' => '',
+		'socialnetworks_bitly_key' => '',
+		'socialnetworks_bitly_sitewide' => 'n',
+	
 		'case_patched' => 'n',
 		'site_closed' => 'n',
 		'site_closed_msg' => 'Site is closed for maintenance; please come back later.',

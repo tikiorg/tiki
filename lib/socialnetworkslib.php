@@ -349,6 +349,79 @@ class SocialNetworksLib extends LogsLib
 			return false;
 		}
 	}
+	
+	/**
+	 * Talking to bit.ly api at "http://api.bit.ly/" using Zend
+	 * @param	string	$user		userId of the user to send the request for
+	 * @param	string	$action		directory/file part of the api URL
+	 * @param	array	$params		parameters for the api call, each entry is one element submitted in the request
+	 * @return	string				body of the response page (json encoded object)
+	 */
+	function bitlyApi($user, $action, $params) {
+		global $prefs;
+		
+		if ($prefs['socialnetworks_bitly_sitewide']!='y') {
+			$login=$this->get_user_preference($user, 'bitly_login', '');
+		}
+		if ($login=='') {
+			$login=$prefs['socialnetworks_bitly_login'];
+			if ($login=='') {
+				return false;
+			}
+			$key=$prefs['socialnetworks_bitly_key'];
+		} else {
+			$key=$this->get_user_preference($user, 'bitly_key', '');
+		}
+		if ($key=='') {
+			return false;
+		}
+		$httpclient = new Zend_Http_Client("http://api.bit.ly/$action");
+		
+		$params['login']=$login;
+		$params['apiKey']=$key;
+    	$httpclient->setParameterGet($params);
+
+		$response = $httpclient->request();
+    	if (!$response->isSuccessful() ) {
+    		return false;
+    	}
+    	return $response->getBody();
+	}	
+	
+	/**
+	 * 
+	 * Asks bit.ly to shorten an url for us
+	 * @param $user
+	 * @param $url
+	 */
+	function bitlyShorten($user,$url) {
+		$query="SELECT * FROM `tiki_url_shortener` WHERE `longurl_hash`=MD5(?)";
+		$result = $this->query($query, array($url));
+		while ($data=$result->fetchRow()) {
+			if ($url==$data['longurl']) {
+				return $data['shorturl'];
+			}
+		}		
+		
+		$params = array(
+			'version' => '2.0.1', 
+			'longUrl' => $url,
+			'history' => '1',
+    	);
+    	$ret=$this->bitlyApi($user, 'shorten', $params);
+    	if ($ret==false) {
+    		return false;
+    	}
+		$ret = json_decode($ret);
+		if ($ret->errorCode!=0) {
+            	return false;
+		}
+		$shorturl=$ret->{'results'}->{$url}->{'shortUrl'};
+		$query="INSERT INTO `tiki_url_shortener` SET `user`=?, `longurl`=?, `longurl_hash`=MD5(?), `service`=?,  `shorturl`=?";
+		$this->query($query,array($user, $url, $url, 'bit.ly', $shorturl));
+		
+		return $shorturl;    	
+	}
 }
 
 global $socialnetworkslib;

@@ -5,8 +5,8 @@
 		{if $prefs.feature_site_report eq 'y'}
 			<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to Webmaster{/tr}</a>
 		{/if}
-		{if $prefs.feature_promote_page eq 'y'}
-			<a href="tiki-promote.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Promote this page{/tr}</a>
+		{if $prefs.feature_share eq 'y'}
+			<a href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Share this page{/tr}</a>
 		{/if}
 		{if $prefs.feature_site_send_link eq 'y'}
 			<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
@@ -29,7 +29,7 @@
 {/if}
 {if $prefs.feature_bot_bar_rss eq 'y'}
 	<div id="rss">
-		{if $prefs.feature_wiki eq 'y' and $prefs.feed_wiki eq 'y' and $tiki_p_view eq 'y'}
+		{if $prefs.feature_wiki eq 'y' and $pr./templates/styles/fivealive/tiki-bot_bar.tpl:efs.feed_wiki eq 'y' and $tiki_p_view eq 'y'}
 				<a title="{tr}Wiki RSS{/tr}" href="tiki-wiki_rss.php?ver={$prefs.feed_default_version}">{icon style='vertical-align: text-bottom;' _id='feed' alt='{tr}RSS feed{/tr}'}</a>
 				<small>{tr}Wiki{/tr}</small>
 		{/if}

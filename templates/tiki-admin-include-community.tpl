@@ -31,7 +31,7 @@
 				{preference name=feature_groupalert}
 				{preference name=change_theme}
 				{preference name=auth_token_tellafriend}
-				{preference name=auth_token_promote}
+				{preference name=auth_token_share}
 			</div>
 		{/tab}
 

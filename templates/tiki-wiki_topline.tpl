@@ -55,8 +55,8 @@
 				<a title="{tr}Print{/tr}" href="tiki-print.php?{if !empty($page_ref_id)}page_ref_id={$page_ref_id}&amp;{/if}page={$page|escape:"url"}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
 	{/if}
 
-	{if $prefs.feature_promote_page eq 'y' && $tiki_p_promote_page eq 'y'}
-				<a title="{tr}Promote this page{/tr}" href="tiki-promote.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='promote_link' alt="{tr}Promote this page{/tr}"}</a>
+	{if $prefs.feature_share eq 'y' && $tiki_p_share eq 'y'}
+				<a title="{tr}Share this page{/tr}" href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='share_link' alt="{tr}Share this page{/tr}"}</a>
 	{/if}
 	{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
 				<a title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='email_link' alt="{tr}Send a link{/tr}"}</a>

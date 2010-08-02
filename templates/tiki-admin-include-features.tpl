@@ -49,7 +49,7 @@
 				{preference name=feature_gmap}
 				{preference name=feature_live_support}
 				{preference name=feature_tell_a_friend}
-				{preference name=feature_promote_page}
+				{preference name=feature_share}
 				{preference name=feature_minichat}
 				{preference name=feature_score}
 				{preference name=feature_fullscreen}

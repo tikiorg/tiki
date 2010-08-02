@@ -55,8 +55,8 @@ Disallow: /tiki-print_article.php
 Disallow: /tiki-print_blog_post.php
 Disallow: /tiki-print_multi_pages.php
 Disallow: /tiki-print_pages.php
-Disallow: /tiki-promote.php
 Disallow: /tiki-register.php
+Disallow: /tiki-share.php
 Disallow: /tiki-slideshow.php
 Disallow: /tiki-slideshow2.php
 Disallow: /tiki-tell_a_friend.php
