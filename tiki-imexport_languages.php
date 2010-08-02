@@ -87,6 +87,7 @@ if (isset($_REQUEST["export"])) {
 	$data = $data . ");\n?>";
 	header ("Content-type: application/unknown");
 	header ("Content-Disposition: inline; filename=language.php");
+	header ("Content-encoding: UTF-8");
 	echo $data;
 	exit (0);
 	$smarty->assign('expmsg', $expmsg);
