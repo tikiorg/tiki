@@ -577,6 +577,7 @@
 {/if}
 
 </div>
+{if $install_type eq 'update'}
 	{if $double_encode_fix_attempted eq 'y'}
 		<p>{tr}You can now access the site normally. Report back any issues that you might find (if any) to the Tiki forums or bug tracker{/tr}</p>
 	{else}
@@ -635,6 +636,7 @@
 		</form>
 	{/if}
 {/if}
+{/if}{* end elseif $install_step... *}
 </div>
 			</div>
 				</div>
