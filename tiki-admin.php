@@ -419,7 +419,7 @@ if (!empty($_GET['forcecheck'])) {
 	$smarty->assign('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 	// See if a major release is available.
 	if (!$TWV->isLatestMajorVersion()) {
-		add_feedback( null, tr('A new major release branch is available.'), 3 );
+		add_feedback( null, tr('A new %0 major release branch is available.', $TWV->branch.'('.$TWV->latestRelease.')'), 3 );
 	}
 	$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 	$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
@@ -439,7 +439,7 @@ if ($prefs['feature_version_checks'] == 'y') {
 			$tikilib->set_preference('tiki_release', $TWV->getLatestMinorRelease());
 			$smarty->assign('tiki_release', $TWV->getLatestMinorRelease());
 			if (!$TWV->isLatestMajorVersion()) {
-				add_feedback( null, tr('A new %0 major release branch is available.', $TWV->branch), 3, 1);
+				add_feedback( null, tr('A new %0 major release branch is available.', $TWV->branch.'('.$TWV->latestRelease.')'), 3, 1);
 			}
 		} else {
 			$prefs['tiki_needs_upgrade'] = 'n';

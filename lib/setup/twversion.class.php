@@ -12,7 +12,7 @@ class TWVersion
 	var $branch;		// Development cycle
 	var $version;		// This version
 	private $latestMinorRelease;		// Latest release in the same major version release series
-	private $latestRelease;		// Latest release
+	var $latestRelease;		// Latest release
 	private $isLatestMajorVersion; // Whether or not the current major version is the latest
 	var $releases;		// Array of all releases from website
 	var $star;			// Star being used for this version tree
