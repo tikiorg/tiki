@@ -1017,13 +1017,15 @@ if( isset( $_POST['fix_double_encoding'] ) && ! empty($_POST['previous_encoding'
 }
 
 if( $install_step == '4' ) {
-	$db = TikiDB::get();
-	$result = $db->fetchAll( 'show variables like "character_set_database"' );
-	$res = reset( $result );
-	$variable = array_shift( $res );
-	$value = array_shift( $res );
-
+	$value = '';
+	if ($db = TikiDB::get()) {
+		$result = $db->fetchAll( 'show variables like "character_set_database"' );
+		$res = reset( $result );
+		$variable = array_shift( $res );
+		$value = array_shift( $res );
+	}
 	$smarty->assign( 'database_charset', $value );
+	
 }
 
 $mid_data = $smarty->fetch('tiki-install.tpl');
