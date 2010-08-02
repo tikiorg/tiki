@@ -47,16 +47,18 @@
 			{/if}
 
 			<tr>
-				<td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
+				<td class="editblogform">{tr}Title:{/tr}</td><td class="editblogform">
 					<input type="text" size="80" name="title" value="{$post_info.title|escape}" />
 				</td>
 			</tr>
 
 			<tr>
-				<td class="editblogform">
-					{tr}Body{/tr}
+				<td colspan="2" class="editblogform">
+					{tr}Body:{/tr}
 				</td>
-				<td class="editblogform">
+			</tr>
+			<tr>	
+				<td colspan="2" class="editblogform">
 					{textarea id='blogedit' class="wikiedit" name="data"}{$data}{/textarea}
 				</td>
 			</tr>
