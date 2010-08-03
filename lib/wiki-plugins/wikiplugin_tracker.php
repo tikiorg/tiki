@@ -1075,20 +1075,8 @@ function wikiplugin_tracker($data, $params)
 			}
 			$backLength0 = strlen($back);
 			foreach ($flds['data'] as $f) {
-				if ($f['type'] == 'u' and $f['options_array'][0] == '1') {
-					if (!in_array($f['fieldId'], $outf)) {	// if not in fields list use a hidden input
-						$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
-					} else {
-						include_once $smarty->_get_plugin_filepath('function', 'user_selector');
-						$back .= '<tr><td>' . wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors) . '</td><td>';
-						$back .= smarty_function_user_selector(array(
-							'user' => $f['value'],
-							'name' => 'authorfieldid',
-							'id' => 'authorfieldid',
-							'editable' => $tiki_p_admin_trackers,
-						), $smarty);
-						$back .= '</td></tr>';
-					}
+				if ($f['type'] == 'u' && $f['options_array'][0] == '1' && !in_array($f['fieldId'], $outf)) {
+					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
 				} elseif ($f['type'] == 'I' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authoripid" value="'.$f['fieldId'].'" />';
 				} elseif ($f['type'] == 'g' and $f['options_array'][0] == '1') {
@@ -1113,17 +1101,20 @@ function wikiplugin_tracker($data, $params)
 							$f['name'] = "<i>".$f['name']."</i>";
 						}
 						if ($f['type'] != 'h') {
-						$back.= "<tr><td";
-						if (!empty($colwidth)){
-							$back .= " width='".$colwidth."'";
-						}
-						$back .= ">".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
-						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
-							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
-						}
-						$back.= "</td><td>";
+							$back.= "<tr><td";
+							if (!empty($colwidth)){
+								$back .= " width='".$colwidth."'";
+							}
+							$back .= ">".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
+							if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
+								$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
+							}
+							$back.= "</td><td>";
 						} else {
-						$back .= "<tr><th colspan='2'>".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
+							$back .= "<tr><th colspan='2'>".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
+						}
+						if ($f['type'] == 'u' && $f['options_array'][0] == '1') {
+							$f['ins_id'] = 'authorfieldid';
 						}
 						$smarty->assign_by_ref('field_value', $f);
 						if (isset($item)) {
