@@ -113,19 +113,21 @@ function wikiplugin_trackerfilter($data, $params) {
 		if (empty($export_action)) {
 			return tra('missing parameters').' filters';
 		} else {
+			$listfields = array();
 			$filters = array();
 			$formats = array();
 		}
-	}
+	} else {
 	
-	$listfields = wikiplugin_trackerFilter_split_filters($filters);
-	foreach ($listfields as $i=>$f) {
-		if (strchr($f, '/')) {
-			list($fieldId, $format) = explode('/',$f);
-			$listfields[$i] = $fieldId;
-			$formats[$fieldId] = $format;
-		} else {
-			$formats[$f] = '';
+		$listfields = wikiplugin_trackerFilter_split_filters($filters);
+		foreach ($listfields as $i=>$f) {
+			if (strchr($f, '/')) {
+				list($fieldId, $format) = explode('/',$f);
+				$listfields[$i] = $fieldId;
+				$formats[$fieldId] = $format;
+			} else {
+				$formats[$f] = '';
+			}
 		}
 	}
 	if (empty($trackerId) && !empty($_REQUEST['trackerId'])) {
@@ -182,9 +184,11 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 
 	$smarty->assign_by_ref('sortchoice', $sortchoice);
-	$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats, $status);
-	if (!is_array($filters)) {
-		return $filters;
+	if (empty($export_action)) {
+		$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats, $status);
+		if (!is_array($filters)) {
+			return $filters;
+		}
 	}
 	$smarty->assign_by_ref('filters', $filters);
 	//echo '<pre>';print_r($filters); echo '</pre>';
@@ -299,9 +303,6 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 	global $tiki_p_admin_trackers, $smarty, $tikilib;
 	global $trklib;	include_once('lib/trackers/trackerlib.php');
 	$filters = array();
-	if (empty($listfields)) {
-		return $filters;
-	}
 	if (empty($trackerId) && !empty($listfields[0])) {
 		$field = $trklib->get_tracker_field($listfields[0]);
 		$trackerId = $field['trackerId'];
