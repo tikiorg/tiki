@@ -90,7 +90,16 @@ function loadgmap{$gmapname|escape}() {literal}{{/literal}
   {/if}
   {if $pointx and $pointy and $pointz}
   	gmap{$gmapname|escape}map.setCenter(new GLatLng({$pointy|escape}, {$pointx|escape}), {$pointz|escape});
-  	var point = new GMarker(new GLatLng({$pointy|escape},{$pointx|escape}));
+	{if isset($pointicon) && isset($pointiconx) && isset($pointicony) && $pointicon && $pointiconx && $pointicony}
+		var markericon = new GIcon();
+		markericon.image = '{$pointicon}';
+		markericon.iconSize = new GSize({$pointiconx}, {$pointicony});
+		markericon.iconAnchor = new GPoint(5, {$pointicony} - 2);
+		markericon.infoWindowAnchor = new GPoint(5, 2);
+		var point = new GMarker(new GLatLng({$pointy|escape},{$pointx|escape}), {literal}{{/literal}icon:markericon{literal}}{/literal});
+	{else}
+		var point = new GMarker(new GLatLng({$pointy|escape},{$pointx|escape}));
+	{/if}
 	gmap{$gmapname|escape}map.addOverlay(point);
   {else}
   	gmap{$gmapname|escape}map.setCenter(new GLatLng({$gmap_defaulty|escape}, {$gmap_defaultx|escape}), {$gmap_defaultz|escape});
@@ -105,7 +114,16 @@ function loadgmap{$gmapname|escape}() {literal}{{/literal}
   geocoder = new GClientGeocoder();
 
 {foreach key=i item=u from=$gmapmarkers}
-	var marker{$i} = new GMarker(new GLatLng({$u[0]},{$u[1]}));
+	{if isset($u[3]) && isset($u[4]) && isset($u[5]) && $u[3] && $u[4] && $u[5]}
+		var markericon = new GIcon();
+		markericon.image = '{$u[3]}';
+		markericon.iconSize = new GSize({$u[4]}, {$u[5]});
+		markericon.iconAnchor = new GPoint(5, {$u[5]} - 2);
+		markericon.infoWindowAnchor = new GPoint(5, 2);
+		var marker{$i} = new GMarker(new GLatLng({$u[0]},{$u[1]}), {literal}{{/literal}icon:markericon{literal}}{/literal});    
+	{else}
+		var marker{$i} = new GMarker(new GLatLng({$u[0]},{$u[1]}));
+	{/if}
 	gmap{$gmapname|escape}map.addOverlay(marker{$i});
 	GEvent.addListener(marker{$i},"click", function() {literal}{{/literal}
 		marker{$i}.openInfoWindowHtml('{$u[2]}', {literal}{{/literal}maxWidth:{literal}}{/literal});

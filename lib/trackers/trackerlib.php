@@ -3317,11 +3317,12 @@ class TrackerLib extends TikiLib
 			'help'=>tra('<dl>
 				<dt>Function: Use Google Maps.
 				<dt>Will display a Google Maps around a point.
-				<dt>Usage: <strong>use_as_item_location,bubble_fieldId</strong>
-				<dt>Example: y,23
+				<dt>Usage: <strong>use_as_item_location,bubble_fieldId,icon</strong>
+				<dt>Example: y,23,img/icons2/icn_members.gif
 				<dt>Description:
 				<dd><strong>[use_as_item_location]</strong> if set to y, this google map field will be used as item location and object geo attributes are set when field value is changed.
 				<dd><strong>[bubble_fieldid]</strong> is the fieldId that contains the text that will be displayed in the bubble of the map marker.
+				<dd><strong>[icon]</strong> is the url of the default icon to use for markers of items on the map.
 				</dl>'));
 		$type['s'] = array(
 			'label'=>tra('system'),

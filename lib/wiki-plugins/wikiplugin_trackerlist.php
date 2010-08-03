@@ -288,6 +288,11 @@ function wikiplugin_trackerlist_info() {
 				'description' => 'y|n',
 				'filter' => 'alpha'
 			),
+			'googlemapicon' => array(
+				'required' => false,
+				'name' => tra('Url of default icon to use for markers on the map'),
+				'filter' => 'url'
+			),
 		),
 	);
 }
@@ -949,9 +954,15 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('trackerlistmapview', true);
 				$smarty->assign('trackerlistmapname', "trackerlistgmap_$iTRACKERLIST");
 				// Generate Google map plugin data
+				if (!empty($params["googlemapicon"])) {
+					$googlemapicon = $params["googlemapicon"];
+				} else {
+					$googlemapicon = '';
+				}
 				global $gmapobjectarray;
 				$gmapobjectarray = array();
 				foreach ($items["data"] as $i) {
+					
 					if (!empty($params["url"])) {
 						$href = str_replace('itemId', $i["itemId"], $params["url"]);
 					} else {
@@ -961,6 +972,7 @@ function wikiplugin_trackerlist($data, $params) {
 						'id' => $i["itemId"],
 						'title' => $i["value"],
 						'href' => $href,
+						'icon' => $googlemapicon,
 					);
 				}
 			} else {

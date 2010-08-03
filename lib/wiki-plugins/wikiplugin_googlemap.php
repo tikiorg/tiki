@@ -403,8 +403,23 @@ function wikiplugin_googlemap($data, $params) {
 			}
 			if (!empty($options_array[1]) && !empty($item[$options_array[1]])) {
 				$markertext = htmlspecialchars($item[$options_array[1]]);
-				$markers[] = array($pointy,$pointx,$markertext);
 			}
+			$icon = '';
+			$iconx = '';
+			$icony = '';
+			if (!empty($options_array[2]) && $iconsize = getimagesize($options_array[2])) {
+				if (isset($iconsize[0]) && isset($iconsize[1]) && $iconsize[0] && $iconsize[1]) {
+					$icon = $options_array[2];
+					$icon_x = $iconsize[0];
+					$icon_y = $iconsize[1];
+				}
+			}
+			if (!empty($markertext)) {
+				$markers[] = array($pointy,$pointx,$markertext,$icon,$icon_x,$icon_y);
+			}
+			$smarty->assign('pointicon', $icon);
+			$smarty->assign('pointiconx', $icon_x);
+			$smarty->assign('pointicony', $icon_y);
 		} else {
 			if ( isset($attributes['tiki.geo.lon']) && isset($attributes['tiki.geo.lat']) ) {
 				$pointx = $attributes['tiki.geo.lon'];
@@ -452,8 +467,19 @@ function wikiplugin_googlemap($data, $params) {
 				$popup .= '</a>';	
 			}
 			
+			$icon = '';
+			$icon_x = '';
+			$icon_y = '';           
+			if (!empty($obj['icon']) && $iconsize = getimagesize($obj['icon'])) {
+				if (isset($iconsize[0]) && isset($iconsize[1]) && $iconsize[0] && $iconsize[1]) {
+					$icon = $obj['icon'];
+					$icon_x = $iconsize[0];
+					$icon_y = $iconsize[1];
+				}
+			}
+		
 			if ($lat && $lon) { 
-				$markers[] = array($lat,$lon,$popup);
+				$markers[] = array($lat,$lon,$popup,$icon,$icon_x,$icon_y);
 			}
 		}
 		// free up memory
