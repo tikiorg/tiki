@@ -32,7 +32,7 @@ function module_last_modif_pages_info() {
 			),
 			'minor' => array(
 				'name' => tra('Include minor edits'),
-				'description' => tra('If set to "n", "minor" edits will NOT be included in the list of pages. This option applies only when using the Wiki Minor Edits option.') . " " . tr('Default: "y".')
+				'description' => tra('If set to "n", pages that were last saved as a "minor" edit will NOT be included in the list of pages. This option applies only when  the Wiki Minor Edits option is enabled.') . " " . tr('Default: "y".')
 			)
 		),
 		'common_params' => array('nonums', 'rows')
