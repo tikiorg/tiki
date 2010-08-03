@@ -41,16 +41,17 @@
 <th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='options'}{tr}Options{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isMandatory'}{tr}Mandatory{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isTblVisible' _title="{tr}Is column visible when listing tracker items?{/tr}"}{tr}Tbl vis{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isMain' _title="{tr}Column links to edit/view item?{/tr}"}{tr}isMain{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multilingual{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='isSearchable'}{tr}Searchable{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='position' _title="{tr}Position of field in list{/tr}"}{tr}Pos{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isMandatory' _title="{tr}Is mandatory/required?{/tr}"}{tr}Req.{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isTblVisible' _title="{tr}Is column visible when listing tracker items?{/tr}"}{tr}List{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isMain' _title="{tr}Column links to edit/view item?{/tr}"}{tr}Main{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multi-lingual{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='isSearchable' _title="{tr}Is column searchable?{/tr}"}{tr}Search{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isPublic' _title="{tr}Field is public? (viewed in trackerlist plugin){/tr}"}{tr}Public{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='isHidden'}{tr}Hidden{/tr}{/self_link}</th>
-<th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
-<th>{select_all checkbox_names='action[]'}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='description' _title="{tr}Description{/tr}"}{tr}Descr.{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='validation'}{tr}Validation{/tr}{/self_link}</th>
+<th style="text-align: right; padding-right: .5em">{select_all checkbox_names='action[]'}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -75,7 +76,8 @@
 {if !empty($channels[user].editableBy)}<br />{icon _id=page_edit width=10 height=10}{foreach from=$channels[user].editableBy item=g}{$g|escape} {/foreach}{/if}
 </td>
 <td>{$channels[user].description|truncate:14|escape}</td>
-<td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
+<td>{$channels[user].validation|escape}</td>
+<td style="white-space: nowrap;">{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
 {self_link trackerId=$trackerId fieldId=$channels[user].fieldId up=1 delta=-1}{icon _id='resultset_up'}{/self_link}
 {self_link trackerId=$trackerId fieldId=$channels[user].fieldId up=1}{icon _id='resultset_down'}{/self_link}
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $prefs.maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> 

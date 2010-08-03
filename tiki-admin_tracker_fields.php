@@ -229,6 +229,7 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		replace_tracker_from_request($tracker_info);
 	}
+	$cookietab = 1;
 }
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'position_asc';
