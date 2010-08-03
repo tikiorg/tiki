@@ -108,7 +108,7 @@ function loadgmap{$gmapname|escape}() {literal}{{/literal}
 	var marker{$i} = new GMarker(new GLatLng({$u[0]},{$u[1]}));
 	gmap{$gmapname|escape}map.addOverlay(marker{$i});
 	GEvent.addListener(marker{$i},"click", function() {literal}{{/literal}
-		marker{$i}.openInfoWindowHtml('{$u[2]}');
+		marker{$i}.openInfoWindowHtml('{$u[2]}', {literal}{{/literal}maxWidth:{literal}}{/literal});
 	{literal}});{/literal}
 {/foreach}
 
