@@ -497,7 +497,7 @@ function saveGmapDefaultxyz($feedback, $pointx, $pointy, $pointz) {
 }
 
 function saveGmapUser($feedback, $pointx, $pointy, $pointz, $u) {
-	global $tikilib, $ajaxlib, $user, $userlib, $tiki_p_admin_users;
+	global $prefs, $tikilib, $ajaxlib, $user, $userlib, $tiki_p_admin_users;
 	$objResponse = new xajaxResponse();
 	if (!($u == $user || $tiki_p_admin_users == 'y' && $u != $user && $userlib->user_exists($u))) {		
 		$objResponse->assign($feedback, "innerHTML", tra("You can only set your own location"));
@@ -510,7 +510,31 @@ function saveGmapUser($feedback, $pointx, $pointy, $pointz, $u) {
 	}
 	$tikilib->set_user_preference($u, 'lon', $pointx);
 	$tikilib->set_user_preference($u, 'lat', $pointy);
-	$tikilib->set_user_preference($u, 'zoom', $pointz);	
+	$tikilib->set_user_preference($u, 'zoom', $pointz);
+
+	if ($prefs["user_trackersync_geo"] == 'y') {
+		$userinfo = $userlib->get_user_info($u);
+		$re = $userlib->get_usertracker($userinfo["userId"]);
+		global $trklib;
+		if (!is_object($trklib)) {
+			include_once('lib/trackers/trackerlib.php');
+		} 
+		$itemId = $trklib->get_item_id($re['usersTrackerId'], $re['usersFieldId'], $u);                $item = $trklib->get_tracker_item($itemId);
+		$fields = $trklib->list_tracker_fields($item['trackerId']);
+		$fieldId = 0;
+		foreach ($fields["data"] as $f) {
+			if ($f["type"] == 'G' && $f["options_array"][0] == 'y') {
+				$options_array = $f["options_array"];
+				$fieldId = $f["fieldId"];
+				break;
+			}
+		}
+		if ($fieldId) {
+			$ins_fields["data"][$fieldId] = array('fieldId' => $fieldId, 'options_array' => $options_array, 'value' => "$pointx,$pointy,$pointz", 'type' => 'G');
+			$res = $trklib->replace_item($re['usersTrackerId'], $itemId, $ins_fields);
+		}
+	}
+        
 	$objResponse->assign($feedback, "innerHTML", tra("User location saved for ") . $u);
 	return $objResponse;
 }

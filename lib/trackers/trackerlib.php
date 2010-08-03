@@ -1263,9 +1263,16 @@ class TrackerLib extends TikiLib
 				if (!empty($geo[0]) && !empty($geo[1])) {
 					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lon', $geo[0]);
 					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.lat', $geo[1]);
+					if ($trackersync && $prefs["user_trackersync_geo"] == 'y') {
+						$trackersync_lon = $geo[0];
+						$trackersync_lat = $geo[1];
+					}
 				}
 				if (!empty($geo[2])) {
 					$attributelib->set_attribute('trackeritem', $itemId, 'tiki.geo.google.zoom', $geo[2]);
+					if ($trackersync && $prefs["user_trackersync_geo"] == 'y') {
+						$trackersync_zoom = $geo[2];
+					}
 				}
 			}				
 			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
@@ -1826,11 +1833,20 @@ class TrackerLib extends TikiLib
 					$trackersync_realname = $t_r;
 				}
 			}
+			if (empty($trackersync_user)) {
+				$trackersync_user = $user;
+			}
 			if (!empty($trackersync_realname)) {
-				if (empty($trackersync_user)) {
-					$trackersync_user = $user;
-				}
 				$tikilib->set_user_preference($trackersync_user, 'realName', $trackersync_realname);
+			}
+			if (!empty($trackersync_lon)) {
+				$tikilib->set_user_preference($trackersync_user, 'lon', $trackersync_lon);
+			}
+			if (!empty($trackersync_lat)) {
+				$tikilib->set_user_preference($trackersync_user, 'lat', $trackersync_lat);
+			}
+			if (!empty($trackersync_zoom)) {
+				$tikilib->set_user_preference($trackersync_user, 'zoom', $trackersync_zoom);
 			}
 		}
 		if (!empty($parsed)) {

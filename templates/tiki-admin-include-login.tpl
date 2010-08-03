@@ -67,6 +67,7 @@
 					</div>
 				{preference name=user_trackersync_trackers}
 				{preference name=user_trackersync_realname}
+				{preference name=user_trackersync_geo}
 				</div>
 				{preference name=groupTracker}
 				{preference name=email_due}

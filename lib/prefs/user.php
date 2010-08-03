@@ -125,6 +125,17 @@ function prefs_user_list() {
 				'user_trackersync_trackers',
 			),
 		),
+		'user_trackersync_geo' => array(
+			'name' => tra('Synchronize long/lat/zoom to google maps field'),
+			'description' => tra('Synchronize user geolocation prefs to main google maps field'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'userTracker',
+				'user_trackersync_trackers',
+				'feature_ajax',
+				'feature_gmap',
+			),
+		),
 		'user_selector_threshold' => array(
 			'name' => tra('Maximum number of users to show in drop down lists'),
 			'description' => tra('Prevents out of memory and performance issues when user list is very large by using a jQuery autocomplete text input box.'),

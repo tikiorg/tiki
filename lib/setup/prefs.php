@@ -730,6 +730,7 @@ function get_default_prefs() {
 		'user_register_prettytracker_tpl' => '',
 		'user_trackersync_trackers' => '',
 		'user_trackersync_realname' => '',
+		'user_trackersync_geo' => 'n',
 		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',
