@@ -160,7 +160,9 @@ if (isset($_REQUEST["upload"])) {
 	$batch_job = false;
 	$didFileReplace = false;
 	foreach($_FILES["userfile"]["error"] as $key => $error) {
-		print_progress('<?xml version="1.0" encoding="UTF-8"?>');
+		if (empty($_REQUEST['returnUrl'])) {
+			print_progress('<?xml version="1.0" encoding="UTF-8"?>');
+		}
 		$formId = $_REQUEST['formId'];
 		$smarty->assign("FormId", $_REQUEST['formId']);
 		if (empty($_REQUEST['galleryId'][$key])) {
@@ -427,7 +429,7 @@ if (isset($_REQUEST["upload"])) {
 					}
 					include_once ('categorize.php');
 					// Print progress
-					if ($prefs['javascript_enabled'] == 'y') {
+					if (empty($_REQUEST['returnUrl']) && $prefs['javascript_enabled'] == 'y') {
 						if (!empty($_REQUEST['filegals_manager'])) {
 							$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 						}
@@ -443,7 +445,7 @@ if (isset($_REQUEST["upload"])) {
 			}
 		}
 	}
-	if (count($errors)) {
+	if (empty($_REQUEST['returnUrl']) && count($errors)) {
 		foreach($errors as $error) {
 			print_msg($error, $formId);
 		}
@@ -476,6 +478,15 @@ if (isset($_REQUEST["upload"])) {
 	}
 	if (!empty($editFileId) and count($errors) == 0) {
 		header("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0]);
+		die;
+	}
+	if (!empty($_REQUEST['returnUrl'])) {
+		if (!empty($errors)) {
+			$smarty->assign('msg', implode($errors, '<br />'));
+			$smarty->display('error.tpl');
+			die;
+		}
+		header('location: '.$_REQUEST['returnUrl']);
 		die;
 	}
 } else {

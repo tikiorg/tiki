@@ -175,6 +175,12 @@ function wikiplugin_files_info() {
 				'name' => tra('Show only created by this user'),
 				'description' => tra('User Login'),
 			),
+			'showupload' => array(
+				'required' => false,
+				'name' => tra('Show a simple upload form to the gallery'),
+				'description' => 'y'|'n',
+				'filter' => 'alpha',
+			),
 	  )
 	 );
 }
@@ -184,7 +190,7 @@ function wikiplugin_files($data, $params) {
 		return('');
 	}
 	global $filegallib; include_once('lib/filegals/filegallib.php');
-	$default = array('showfind'=>'n', 'showtitle'=>'y');
+	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n');
 	$params = array_merge($default, $params);
 
 	$filter = '';
@@ -216,6 +222,9 @@ function wikiplugin_files($data, $params) {
 			if ($p_view_file_gallery != 'y')
 				return;
 			$p_download_files = $tikilib->user_has_perm_on_object($user, $galleryId, 'file gallery', 'tiki_p_download_files');
+			if ($showupload == 'y' && $tikilib->user_has_perm_on_object($user, $galleryId, 'file gallery', 'tiki_p_upload_files')) {
+				$params['showupload'] = 'y';
+			}
 			$p_admin_file_galleries = $tikilib->user_has_perm_on_object($user, $galleryId, 'file gallery', 'tiki_p_admin_file_galleries');
 			$p_edit_gallery_file = $tikilib->user_has_perm_on_object($user, $galleryId, 'file gallery', 'tiki_p_edit_gallery_file');
 		} else {
@@ -223,6 +232,9 @@ function wikiplugin_files($data, $params) {
 			$p_view_file_gallery = 'y';
 			$p_admin_file_galleries = 'y';
 			$p_edit_gallery_file = 'y';
+			if ($showupload == 'y') {
+				$params['showupload'] = 'y';
+			}
 		}
 		if (!empty($slideshow) && $slideshow == 'y') {
 			if ($prefs['javascript_enabled'] != 'y') return;
