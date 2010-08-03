@@ -62,7 +62,12 @@ class Validators
 					$validationjs .= 'data: { ';
 					$validationjs .= 'validator: "' .$field_value['validation'].'", ';
 					if ($field_value['validation'] == 'distinct' && empty($field_value['validationParam'])) {
-						$validationjs .= 'parameter: "trackerId=' .$field_value['trackerId'].'&fieldId=' .$field_value['fieldId'].'", ';
+						if (isset($_REQUEST['itemId']) && $_REQUEST['itemId'] > 0) {
+							$current_id = $_REQUEST['itemId'];
+						} else {
+							$current_id = 0;
+						}
+						$validationjs .= 'parameter: "trackerId=' .$field_value['trackerId'].'&fieldId=' .$field_value['fieldId'] . '&itemId=' . $current_id . '", ';
 					} else {
 						$validationjs .= 'parameter: "' .$field_value['validationParam'].'", ';
 					}
