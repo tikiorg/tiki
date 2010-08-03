@@ -49,26 +49,24 @@ function wikiplugin_author_info() {
 
 function wikiplugin_author($data, $params) {
 	global $smarty, $tikilib, $headerlib;
+	global $authors;
 	
-	static $authors;
-	static $color=0;
+	static $style=0;
 	static $id=0;
 	
 	$blocktags='/(<+\/?address.*?>|<+\/?blockcode.*?>|<+\/?blockquote.*?>|<+\/?div.*?>|<+\/?h1.*?>|<+\/?h2.*?>|<+\/?h3.*?>|<+\/?h4.*?>|<+\/?h5.*?>|<+\/?h6.*?>|<+\/?hr.*?>|<+\/?h.*?>|<+\/?li.*?>|<+\/?ol.*?>|<+\/?pre.*?>|<+\/?p.*?>|<+\/?section.*?>|<+\/?table.*?>|<+\/?td.*?>|<+\/?th.*?>|<+\/?tr.*?>|<+\/?ul.*?>)/';
 	$default = array('popup' => 0);
 	$params = array_merge($default, $params);
 	if(!is_array($authors)) $authors=array();
-//	if (!isset($color)) $color=0;
 	
 	$author=$params['author'];
 	if (!isset($authors[$author])) {
-		$colors =      array('black', 'blue',  'red',   'green', 'maroon', 'yellow', 'aqua', 'fuchsia', 'teal',  'purple', 'white', 'olive', 'gray',  'navy',  'silver', 'lime');
-		$backgrounds = array('white', 'white', 'white', 'white', 'white',  'gray',   'gray', 'gray',    'white', 'white',  'blue',  'white', 'white', 'white', 'navy',   'gray');
-		$authors[$author]=array(
-			'color' => $colors[$color %16],
-			'background' => $backgrounds[$color %16],
-		);
-		$color++;
+		$authors[$author]=array();
+	}
+	if (!isset($authors[$author]['style'])) {
+		$authors[$author]['style'] = "author$style";
+		$style++;
+		if($style>15) $style=0; // so far only 16 colors defined
 	}
 	
 	$content=preg_split($blocktags, $data, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -83,11 +81,9 @@ function wikiplugin_author($data, $params) {
 					$html.='<span id="author'.$id.'-link" ';
 				}
 				if ($params['visible']==1) {
-					$html.='style="color: ' . $authors[$author]['color'] . '; background-color: ' . $authors[$author]['background'] .';';
+					$html.='class="' . $authors[$author]['style'];
 					if (isset($params['deleted_by'])) {
-						$html.=' text-decoration: line-through;';
-					} else {
-						$html.=' text-decoration: none;';
+						$html.=' deleted';
 					}
 					$html.='"';
 				}

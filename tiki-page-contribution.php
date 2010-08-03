@@ -39,31 +39,37 @@ if (isset($_REQUEST['lastversion'])) {
 }
 $smarty->assign('lastversion', $lastversion);
 
-if(isset($_REQUEST['showstatistics'])) {
-	$showstatistics=$_REQUEST['showstatistics'];
-} else {
+if (!isset($_REQUEST['show'])) { //defaults
 	$showstatistics=1;
-}
-$smarty->assign('showstatistics', $showstatistics);
-
-if(isset($_REQUEST['showpage'])) {
-	$showpage=$_REQUEST['showpage'];
-} else {
 	$showpage=1;
+	$showpopups=0;
+	$escape=0;
+} else {
+	if(isset($_REQUEST['showstatistics'])) {
+		$showstatistics=$_REQUEST['showstatistics'];
+	} else {
+		$showstatistics=0;
+	}	
+	if(isset($_REQUEST['showpage'])) {
+		$showpage=$_REQUEST['showpage'];
+	} else {
+		$showpage=0;
+	}	
+	
+	if(isset($_REQUEST['showpopups'])) {
+		$showpopups=$_REQUEST['showpopups'];
+	} else {
+		$showpopups=0;
+	}
+	if(isset($_REQUEST['escape'])) {
+		$escape=$_REQUEST['escape'];
+	} else {
+		$escape=0;
+	}
 }
 $smarty->assign('showpage', $showpage);
-
-
-if(isset($_REQUEST['showpopups'])) {
-	$showpopups=$_REQUEST['showpopups'];
-}
+$smarty->assign('showstatistics', $showstatistics);
 $smarty->assign('showpopups', $showpopups);
-
-if(isset($_REQUEST['escape'])) {
-	$escape=$_REQUEST['escape'];
-} else {
-	$escape=0;
-}
 $smarty->assign('escape', $escape);
 $getOptions=array('showpopups' => ($showpopups==1),
 				  'escape' => ($escape==1),

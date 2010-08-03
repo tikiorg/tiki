@@ -24,7 +24,7 @@
  </tr>
  {foreach from=$authors item="stats" key="author" name="authors"}
  <tr>
-  <td class="{cycle values="odd,even" advance=false}" style="text-align: right;">{$author}</td>
+  <td class="{cycle values="odd,even" advance=false}" style="text-align: right;"><span class="{$stats.style}">{$author}</span></td>
   <td class="{cycle values="odd,even" advance=false}" style="text-align: right;">{$stats.words}</td>
   <td class="{cycle values="odd,even" advance=false}" style="text-align: right;">({$stats.words_percent|percent}%)</td>
   <td class="{cycle values="odd,even" advance=false}" style="text-align: right;">{$stats.deleted_words}</td>

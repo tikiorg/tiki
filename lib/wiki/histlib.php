@@ -625,6 +625,7 @@ class Document {
 	 * @return	array				array indexed by author containing arrays with statistics (words, deleted_words, whitespaces, deleted_whitespaces, characters, deleted_characters, printables, deleted_printables)
 	 */
 	function getStatistics($filter='/([[:blank:]]|[[:cntrl:]]|[[:punct:]]|[[:space:]])/') {
+		$style=0;
 		if ($this->_filter!=$filter) { //a new filter invalidates the statistics
 			$this->_statistics=false;
 			$this->_filter=$filter;
@@ -662,7 +663,10 @@ class Document {
 					'printables_percent' => 0,
 					'deleted_printables' => 0,
 					'deleted_printables_percent' => 0,
+					'style' => "author$style",
 				);
+				$style++;
+				if ($style>15) $style=0;
 			} //isset author
 			if ($word['deleted']) {
 				$prefix='deleted_';
@@ -911,6 +915,7 @@ class Document {
 		$author=$newauthor;
 		$deleted=false;
 		$deleted_by='';
+		$newdoc=array();
 		$page=preg_replace(array('/\{AUTHOR\(.+?\)\}/','/{AUTHOR\}/','/\{INCLUDE\(.+?\)\}\{INCLUDE\}/'), ' ~np~$0~/np~', $newpage);
 		if ($this->_parsed) {
 			$page=$tikilib->parse_data($page, array('suppress_icons'=>true));
