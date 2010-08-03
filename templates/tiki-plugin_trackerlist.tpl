@@ -42,12 +42,9 @@
 
 	{if $checkbox && $items|@count gt 0}<form method="post" action="{$checkbox.action}">{/if}
 
-{if $trackerlistmapview}
-<input type="hidden" name="trackerlistmapview" value="y" />
-{wikiplugin _name="googlemap" name=$trackerlistmapname type="objectlist" width="400" height="400"}{/wikiplugin}
-{else}
-<input type="hidden" name="trackerlistmapview" value="n" />
-{/if}
+	{if $trackerlistmapview}
+		{wikiplugin _name="googlemap" name=$trackerlistmapname type="objectlist" width="400" height="400"}{/wikiplugin}
+	{/if}
 
 	{if empty($tpl)}
 <table class="normal wikiplugin_trackerlist">
