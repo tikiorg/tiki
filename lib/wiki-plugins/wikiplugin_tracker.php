@@ -445,11 +445,11 @@ function wikiplugin_tracker($data, $params)
 						if (!isset($_REQUEST['track'][$fl['fieldId']])) {
 							$_REQUEST['track'][$fl['fieldId']] = 'n';
 						}	
-					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && empty($_REQUEST['track'][$fl['fieldId']])) {
-						if ($tiki_p_admin_trackers == 'y') {	// admins can override user fields
-							$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['authorfieldid'];
-							
-						} else if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
+					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') &&	// user/group/ip
+							  ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') &&	// create or modif
+							  ($tiki_p_admin_trackers != 'y' || (!isset($_REQUEST['track'][$fl['fieldId']]) && in_array($fl['fieldId'], $fields_plugin)))) {						// but admins can override
+						
+						if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
 							if ($flds['data'][$cpt]['type'] == 'u') {
 								$_REQUEST['track'][$fl['fieldId']] = empty($user)?(empty($_REQUEST['name'])? '':$_REQUEST['name']):$user;
 							} elseif ($flds['data'][$cpt]['type'] == 'g') {
@@ -1112,9 +1112,6 @@ function wikiplugin_tracker($data, $params)
 							$back.= "</td><td>";
 						} else {
 							$back .= "<tr><th colspan='2'>".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
-						}
-						if ($f['type'] == 'u' && $f['options_array'][0] == '1') {
-							$f['ins_id'] = 'authorfieldid';
 						}
 						$smarty->assign_by_ref('field_value', $f);
 						if (isset($item)) {
