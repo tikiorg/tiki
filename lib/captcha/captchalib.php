@@ -175,36 +175,6 @@ class Captcha {
 	}
 }
 
-/**
- * extending Zend_Captcha_Image to replace function _gc()
- * while the issue with the garbage collector is not fixed in
- * the Zend Framework itself (see issue http://framework.zend.com/issues/browse/ZF-10006)
- */
-class Zend_Captcha_Image_Tiki extends Zend_Captcha_Image {
-	
-	protected function _gc()
-	{
-		$expire = time() - $this->getExpiration();
-		$imgdir = $this->getImgDir();
-		if(!$imgdir || strlen($imgdir) < 2) {
-			// safety guard
-			return;
-		}
-		foreach (new DirectoryIterator($imgdir) as $file) {
-			if (!$file->isDot() && !$file->isDir()) {
-				if ($file->getMTime() < $expire) {
-					$len = strlen($this->_suffix);
-					// only deletes files ending with $this->_suffix
-					if (substr($file->getFilename(), -($len), $len) == $this->_suffix) {
-						unlink($file->getPathname());
-					}
-				}
-			}
-		}
-	}
-
-}
-
 global $captchalib;
 $captchalib = new Captcha;
 
