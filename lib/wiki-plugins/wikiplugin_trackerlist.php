@@ -758,6 +758,13 @@ function wikiplugin_trackerlist($data, $params) {
 								}
 							} elseif (preg_match('/(less|greater|lessequal|greaterequal)\((.+)\)/', $evs[$i], $matches)) {
 								$conv = array('less'=>'<', 'greater'=>'>', 'lessequal'=>'<=', 'greaterequal'=>'>=');
+								if ($field['type'] == 'f' || $field['type'] == 'j') {
+									if ($matches[2] == 'now') {
+										$matches[2] = $tikilib->now;
+									} elseif (($r = strtotime($matches[2])) !== false) {
+										$matches[2] = $r;
+									}
+								}
 								$exactvalue[] = array($conv[$matches[1]]=>$matches[2]);
 							} else {
 								$exactvalue[] = $evs[$i];
