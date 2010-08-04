@@ -1347,7 +1347,7 @@ function get_default_prefs() {
 
 		// tell a friend
 		'feature_tell_a_friend' => 'n',
-		'feature_promote_page' => 'n',
+		'feature_share' => 'n',
 
 		// copyright
 		'feature_copyright' => 'n',
@@ -1507,6 +1507,7 @@ function get_default_prefs() {
 		'feature_daily_report_watches' => 'n',
 		'feature_quick_object_perms' => 'n',
 		'feature_xmlrpc' => 'n',
+		'feature_watershed' => 'n',
 		'helpurl' => "http://doc.tikiwiki.org/",
 		'layout_section' => 'n',
 		'limitedGoGroupHome' => 'n',
