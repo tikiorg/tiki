@@ -185,6 +185,7 @@
 					{self_link max=$prefs.maxRecords}{tr}Pagination{/tr}{/self_link}
 			{/if}
 		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+			{tr}Records:{/tr} {$cant}
 			<table class="smallnormal">
 				<tr>
 					<th>
