@@ -580,6 +580,8 @@ function wikiplugin_trackerlist($data, $params) {
 				$check['tpl'] = $cb[5];
 			if (isset($cb[6]) && $cb[6] == 'radio')
 				$check['radio'] = 'y';
+			if (isset($cb[6]) && $cb[6] == 'dropdown')
+				$check['dropdown'] = 'y';
 			$smarty->assign_by_ref('checkbox', $check);
 		}	
 
@@ -950,7 +952,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign_by_ref('items', $items["data"]);
 			$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
 			
-			if ($params["googlemap"] == 'y') {
+			if (!empty($params['googlemap']) && $params['googlemap'] == 'y') {
 				$smarty->assign('trackerlistmapview', true);
 				$smarty->assign('trackerlistmapname', "trackerlistgmap_$iTRACKERLIST");
 				// Generate Google map plugin data
