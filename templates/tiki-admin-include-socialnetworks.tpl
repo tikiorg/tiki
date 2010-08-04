@@ -2,6 +2,12 @@
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="socialnetworksset" value="{tr}Change preferences{/tr}" />
 	</div>
+
+	<fieldset class="admin">
+	<legend>{tr}Activate the feature{/tr}</legend>
+		{preference name=feature_socialnetworks}
+	</fieldset>
+
 	<fieldset class="admin">
 		<legend>{tr}Twitter Settings{/tr}</legend>
 		{remarksbox type="note" title="{tr}Note{/tr}"}
