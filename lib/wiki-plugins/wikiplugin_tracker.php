@@ -446,7 +446,7 @@ function wikiplugin_tracker($data, $params)
 							$_REQUEST['track'][$fl['fieldId']] = 'n';
 						}	
 					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && empty($_REQUEST['track'][$fl['fieldId']])) {
-						if ($tiki_p_admin_trackers) {	// admins can override user fields
+						if ($tiki_p_admin_trackers == 'y') {	// admins can override user fields
 							$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['authorfieldid'];
 							
 						} else if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
