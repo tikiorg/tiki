@@ -214,17 +214,6 @@ class MultilingualLib extends TikiLib
 		return false;
 	}
 
-        function getSystemLanguage(){
-              
-              $query = "select `lang` from `tiki_languages`";
-              $result=$this->query($query);
-              $languages = array();
-              while ($row = $result->fetchRow())
-                      $languages[] = $row["lang"];
-              return $languages;
-        }
-
-
 	/* @brief : returns an ordered list of preferred languages
 	 * @param $langContext: optional the language the user comes from
 	 */
