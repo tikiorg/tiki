@@ -236,6 +236,43 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 		$smarty->assign_by_ref('translation', $translation);
 	}
 }
+
+// Lookup translated names for the languages
+$result = $tikilib->query('SELECT DISTINCT `lang` FROM `tiki_language`');
+while ($res = $result->fetchRow()) {
+	$exp_languages[] = $res['lang'];
+}
+$exp_languages = $tikilib->format_language_list($exp_languages);
+$smarty->assign_by_ref('exp_languages',$exp_languages);
+
+if (isset($_REQUEST["exp_language"])) {
+	$exp_language = $_REQUEST["exp_language"];
+	$smarty->assign('exp_language', $exp_language);
+}
+
+// Export
+if (isset($_REQUEST["export"])) {
+	check_ticket('import-lang');
+	$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
+	$result = $tikilib->query($query,array($exp_language));
+	$data = "<?php\n\$lang=Array(\n";
+
+	while ($res = $result->fetchRow()) {
+	    $source = str_replace('"', '\\"', $res['source']);
+	    $source = str_replace('$', '\\$', $source);
+	    $tran = str_replace('"', '\\"', $res['tran']);
+	    $tran = str_replace('$', '\\$', $tran);
+	    $data = $data . "\"" . $source . "\" => \"" . $tran . "\",\n";
+	}
+
+	$data = $data . ");\n?>";
+	header ("Content-type: application/unknown");
+	header ("Content-Disposition: inline; filename=language.php");
+	header ("Content-encoding: UTF-8");
+	echo $data;
+	exit (0);
+}
+
 ask_ticket('edit-languages');
 
 // disallow robots to index page:

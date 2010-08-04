@@ -1,8 +1,6 @@
 {title}{tr}Edit or ex/import Languages{/tr}{/title}
 
 <div class="navbar">
-	{button href="tiki-edit_languages.php" _text="{tr}Edit and create Languages{/tr}"}
-	{button href="tiki-imexport_languages.php" _text="{tr}Im-Export Languages{/tr}"}
 	{if $interactive_translation_mode eq 'on'}
 		{button href="tiki-edit_languages.php?interactive_translation_mode=off" _text="{tr}Toggle interactive translation off{/tr}"}
 	{else}
@@ -106,6 +104,28 @@
   {/if}
 
   {$dbgmsg}
+  </div>
+  </div>
+  <div class="cbox">
+  <div class="cbox-title">{tr}Export languages{/tr}</div>
+  <div class="cbox-data">
+  <div class="simplebox">
+  <table>
+  <tr><td align="center" colspan="2">{tr}Export{/tr}</td></tr>
+  <tr><td  class="form">{tr}Select the language to Export{/tr}:</td><td>
+        <select name="exp_language">
+        {section name=ix loop=$exp_languages}
+        <option value="{$exp_languages[ix].value|escape}"
+          {if $exp_language eq $exp_languages[ix].value}selected="selected"{/if}>
+          {$exp_languages[ix].name}
+        </option>
+        {/section}
+        </select></td></tr>
+  <tr><td align="center" colspan="2"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
+  {if isset($expmsg)}
+  <tr><td align="center" colspan="2">{$expmsg}</td></tr>
+  {/if}
+  </table>
   </div>
   </div>
   </form>
