@@ -1,4 +1,4 @@
-{title}{tr}Edit or ex/import Languages{/tr}{/title}
+{title}{tr}Edit or export Languages{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-edit_languages.php" _text="{tr}Edit and create Languages{/tr}"}
@@ -8,27 +8,9 @@
 <tr>
   <td valign="top" >
   <div class="cbox">
-  <div class="cbox-title">{tr}Im- Export languages{/tr}</div>
+  <div class="cbox-title">{tr}Export languages{/tr}</div>
   <div class="cbox-data">
-  <div class="simplebox">
   <form action="tiki-imexport_languages.php" method="post">
-  <table>
-  <tr><td align="center" colspan="2">Import</td></tr>
-  <tr><td  class="form">{tr}Select the language to Import{/tr}:</td><td>
-        <select name="imp_language">
-        {section name=ix loop=$languages_files}
-        <option value="{$languages_files[ix].value|escape}"
-          {if $imp_files eq $languages_files[ix].value}selected="selected"{/if}>
-          {$languages_files[ix].name}
-        </option>
-        {/section}
-        </select></td></tr>
-  <tr><td align="center" colspan="2"><input type="submit" name="import" value="{tr}Import{/tr}" /></td></tr>
-  {if isset($impmsg)}
-  <tr><td align="center" colspan="2">{$impmsg}</td></tr>
-  {/if}
-  </table>
-  </div>
   <div class="simplebox">
   <table>
   <tr><td align="center" colspan="2">{tr}Export{/tr}</td></tr>
