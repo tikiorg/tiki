@@ -122,16 +122,20 @@ html {
 		<title>$title</title>
 	</head>
 	<body class="tiki_wiki" style="text-align: center;">
-		<div id="header" style="background:url(styles/fivealive/options/blueberry/header.png) no-repeat scroll -300px 0; height: 204px;">
+		<div id="header" style="background:url(styles/fivealive/options/blueberry/headertile.png) no-repeat 900px 0; height: auto;">
 			<div id="siteheader">
-				<div id="sitelogo" style="text-align: left; padding-left: 30px; padding-top: 30px;">
-					<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" />
+			 	<div id="header-top" class="clearfix" style="background: url(styles/fivealive/options/blueberry/siteheader.jpg) no-repeat -252px 0; min-height: 170px; width: 990px">
+					<div id="sitelogo" style="text-align: left; padding-left: 0px; padding-top: 30px;">
+						<img alt="Site Logo" src="img/tiki/Tiki_WCG.png" />
+					</div>
 				</div>
+				<div id="tiki-top" class="clearfix">
+				</div>	
 			</div>
 		</div>
-		<div id="tiki-main">
-			<div id="tiki-center" style="text-align:center; padding-top: 60px;">
-				<h1 style="position: absolute; left: 50%; top: 80px;">$title</h1>
+		<div id="middle" style="display: table; margin: 0 auto; width: 990px;">
+			<div id="tiki-center" style="text-align:center; ">
+				<h1 style="position: absolute; left: 42%; top: 60px; color: #fff; text-shadow: 3px 2px 0 #781437;">$title</h1>
 				$content
 			</div>
 		</div>
