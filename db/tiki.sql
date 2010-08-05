@@ -1072,15 +1072,6 @@ CREATE TABLE `tiki_language` (
   PRIMARY KEY (`source`(255),`lang`)
 ) ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS `tiki_languages`;
-CREATE TABLE `tiki_languages` (
-  `lang` char(16) NOT NULL default '',
-  `language` varchar(255) default NULL,
-  PRIMARY KEY (`lang`)
-) ENGINE=MyISAM;
-
-INSERT INTO tiki_languages (lang, language) VALUES ('en','English');
-
 DROP TABLE IF EXISTS `tiki_link_cache`;
 CREATE TABLE `tiki_link_cache` (
   `cacheId` int(14) NOT NULL auto_increment,

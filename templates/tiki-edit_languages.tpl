@@ -1,4 +1,4 @@
-{title}{tr}Edit or ex/import Languages{/tr}{/title}
+{title}{tr}Edit or export languages{/tr}{/title}
 
 <div class="navbar">
 	{if $interactive_translation_mode eq 'on'}
@@ -13,19 +13,8 @@
 		<td valign="top" >
 			<form action="tiki-edit_languages.php" method="post">
 				<div class="cbox">
-					<div class="cbox-title">{tr}Edit and create languages{/tr}</div>
+					<div class="cbox-title">{tr}Edit languages{/tr}</div>
 					<div class="cbox-data">
-						<div class="simplebox">
-							<table>
-								<tr><td align="center" colspan=3>{tr}Create Language{/tr}</td></tr>
-								<tr><td class="form">{tr}Shortname{/tr}:</td><td><input name="cr_lang_short" size=6 maxlength=16 value="{$cr_lang_short|escape}" /></td><td>({tr}like{/tr} en)</td></tr>
-								<tr><td class="form">{tr}Longname{/tr}:</td><td><input name="cr_lang_long" size=20 maxlength=255 value="{$cr_lang_long|escape}" /></td><td>({tr}like{/tr} English)</td></tr>
-								<tr><td align="center"><input type="submit" name="createlang" value="{tr}Create{/tr}" /></td></tr>
-								{if $crmsg}
-									<tr><td align="center" colspan=3>{$crmsg}</td></tr>
-								{/if}
-							</table>
-						</div>
 						<div class="simplebox">
 							<table>
 								<tr>
