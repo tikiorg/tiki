@@ -209,8 +209,9 @@ function wikiplugin_trackerfilter($data, $params) {
 			for($i = 0; $i < count($filterfield); $i++) {
 				if (!empty($exactvalue[$i])) {
 					$f_fields['f_' . $filterfield[$i]] = $exactvalue[$i];
-				} else if (!empty($exactValues[$i])) {
+				} else if (!empty($filtervalue[$i])) {
 					$f_fields['f_' . $filterfield[$i]] = $filtervalue[$i];
+					$f_fields['x_' . $filterfield[$i]] = 't';	// x_ is for not exact?
 				}
 			}
 			$smarty->assign_by_ref('f_fields', $f_fields);
