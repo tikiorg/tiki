@@ -758,6 +758,7 @@ function wikiplugin_trackerlist($data, $params) {
 								}
 							} elseif (preg_match('/(less|greater|lessequal|greaterequal)\((.+)\)/', $evs[$i], $matches)) {
 								$conv = array('less'=>'<', 'greater'=>'>', 'lessequal'=>'<=', 'greaterequal'=>'>=');
+								$field = $trklib->get_tracker_field($filterfield[$i]);
 								if ($field['type'] == 'f' || $field['type'] == 'j') {
 									if ($matches[2] == 'now') {
 										$matches[2] = $tikilib->now;
