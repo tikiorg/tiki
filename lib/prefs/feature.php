@@ -218,9 +218,9 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_share' => array(
-			'name' => tra('Share a page'),
-			'description' => tra('Add a link "Share this page" in all the pages to send it via e-Mail, Twitter, Facebook, Message, Forums'),
-			'help' => 'Promote-Page',
+			'name' => tra('Share'),
+			'description' => tra('Add a "Share" link in all pages to send it via e-mail, Twitter, Facebook, message or forums'),
+			'help' => 'Share',
 			'type' => 'flag',
 		),
 		'feature_html_pages' => array(
