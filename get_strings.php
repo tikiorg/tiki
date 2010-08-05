@@ -250,7 +250,7 @@ function addToWordlist (&$wordlist, &$sentence) {
 
 
 function writeFile_and_User (&$fd, $outstring) {
-	global $verbose, $script_mode;
+	global $verbose;
 	if ( $verbose ) {
 		formatted_print($outstring);
 	}
