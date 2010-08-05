@@ -182,11 +182,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {tab name="{tr}Edit/Delete{/tr}"}
 <h2>{tr}Edit Item{/tr}</h2>
 
-{jq}
-$jq("#editItemForm").validate({
-	{{$validationjs}}
-});
-{/jq}
+{include file="tracker_validator.tpl"}
 
 {if  $tiki_p_admin_trackers eq 'y' and !empty($trackers)}	
 	<form>

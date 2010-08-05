@@ -909,7 +909,7 @@ function wikiplugin_tracker($data, $params)
 				$validationjs = $validatorslib->generateTrackerValidateJS( $flds['data'], "track_", $customvalidation, $customvalidation_m );
 
 				$smarty->assign('validationjs', $validationjs);
-				$back .= $smarty->fetch('wiki-plugins/tracker_validator.tpl');
+				$back .= $smarty->fetch('tracker_validator.tpl');
 			}
 			$back .= '<form name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
