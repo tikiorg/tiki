@@ -6,6 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
+require_once('lib/language/Language.php');
 
 $access->check_feature('lang_use_db');
 $access->check_permission('tiki_p_edit_languages');
@@ -51,13 +52,7 @@ else
 //Editing things
 
 // Get available languages from DB
-$query = "select `lang` from `tiki_languages`";
-$result = $tikilib->query($query,array());
-$languages = array();
-
-while ($res = $result->fetchRow()) {
-	$languages[] = $res["lang"];
-}
+$languages = Language::getLanguages();
 
 $smarty->assign_by_ref('languages', $languages);
 
@@ -237,40 +232,30 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	}
 }
 
-// Lookup translated names for the languages
-$result = $tikilib->query('SELECT DISTINCT `lang` FROM `tiki_language`');
-while ($res = $result->fetchRow()) {
-	$exp_languages[] = $res['lang'];
-}
+$exp_languages = Language::getDbTranslatedLanguages();
 $exp_languages = $tikilib->format_language_list($exp_languages);
 $smarty->assign_by_ref('exp_languages',$exp_languages);
 
 if (isset($_REQUEST["exp_language"])) {
 	$exp_language = $_REQUEST["exp_language"];
+	$lang = new Language($exp_language);
 	$smarty->assign('exp_language', $exp_language);
 }
 
 // Export
-if (isset($_REQUEST["export"])) {
+if (isset($_REQUEST['downloadFile'])) {
 	check_ticket('import-lang');
-	$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
-	$result = $tikilib->query($query,array($exp_language));
-	$data = "<?php\n\$lang=Array(\n";
+	$lang->downloadFile();
+}
 
-	while ($res = $result->fetchRow()) {
-	    $source = str_replace('"', '\\"', $res['source']);
-	    $source = str_replace('$', '\\$', $source);
-	    $tran = str_replace('"', '\\"', $res['tran']);
-	    $tran = str_replace('$', '\\$', $tran);
-	    $data = $data . "\"" . $source . "\" => \"" . $tran . "\",\n";
-	}
+// Write to custom.php
+if (isset($_REQUEST['exportToCustom'])) {
+	$lang->writeCustomFile();
+}
 
-	$data = $data . ");\n?>";
-	header ("Content-type: application/unknown");
-	header ("Content-Disposition: inline; filename=language.php");
-	header ("Content-encoding: UTF-8");
-	echo $data;
-	exit (0);
+// Write to language.php
+if (isset($_REQUEST['exportToLanguage'])) {
+	$lang->writeLanguageFile();
 }
 
 ask_ticket('edit-languages');

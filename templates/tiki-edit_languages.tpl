@@ -151,7 +151,13 @@
 											</select>
 										</td>
 									</tr>
-									<tr><td align="center" colspan="2"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
+									<tr>
+										<td align="center" colspan="2">
+											<input type="submit" name="downloadFile" value="{tr}Download{/tr}" />
+											<input type="submit" name="exportToLanguage" value="{tr}Write to language.php{/tr}" />
+											<input type="submit" name="exportToCustom" value="{tr}Write to custom.php{/tr}" />
+										</td>
+									</tr>
 									{if isset($expmsg)}
 										<tr><td align="center" colspan="2">{$expmsg}</td></tr>
 									{/if}
