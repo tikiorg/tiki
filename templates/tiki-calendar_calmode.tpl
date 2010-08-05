@@ -19,7 +19,7 @@
 		{else}
 			{cycle values="caldark" print=false advance=false}
 		{/if}
-	<td id="row_{$smarty.section.w.index}_{$smarty.section.d.index}" class="{cycle advance=false}{if $cell[w][d].day eq $today} calfocuson{/if}" style="padding:0px">
+	<td id="row_{$smarty.section.w.index}_{$smarty.section.d.index}" class="{cycle}{if $cell[w][d].day eq $today} calfocuson{/if}" style="padding:0px">
 	  <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
 		<tr valign="top">
 		  <td class="calfocus{if $cell[w][d].day eq $today}on{/if}" style="width:50%;text-align:left">
