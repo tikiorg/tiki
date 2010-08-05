@@ -114,6 +114,26 @@ class ObjectLib extends TikiLib
 			case 'view': case 'read': return 'tiki_p_read_comments';
 			case 'edit': return 'tiki_p_edit_comments';
 			}
+		case  'trackeritem':
+			switch ($action) {
+				case 'view': case 'read': return 'tiki_p_view_trackers';
+				case 'edit': return 'tiki_p_modify_tracker_items';
+			}
+		case  'trackeritem_closed':
+			switch ($action) {
+				case 'view': case 'read': return 'tiki_p_view_trackers';
+				case 'edit': return 'tiki_p_modify_tracker_items_closed';
+			}
+		case  'trackeritem_pending':
+			switch ($action) {
+				case 'view': case 'read': return 'tiki_p_view_trackers';
+				case 'edit': return 'tiki_p_modify_tracker_items_pending';
+			}
+		case  'tracker':
+			switch ($action) {
+				case 'view': case 'read': return 'tiki_p_list_trackers';
+				case 'edit': return 'tiki_p_admin_trackers';
+			}
 		default : return '';
 		}	
 	}
