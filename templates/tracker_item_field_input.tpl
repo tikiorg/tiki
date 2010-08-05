@@ -441,7 +441,7 @@
 			{wikiplugin _name=googlemap type=locator trackerinputid=`$field_value.ins_id` trackerfieldid=`$field_value.fieldId` locateitemtype=trackeritem locateitemid=0 name=locator_0_`$field_value.fieldId` in_form=1}{/wikiplugin}
 		{/if}	
 	{elseif isset($item.trackerId)}
-		{tr}You can use{/tr} <a href="tiki-gmap_locator.php?for=item&amp;itemId={$item.itemId}&amp;trackerId={$item.trackerId}&amp;fieldId={$field_value.fieldId}">{tr}Google Map Locator{/tr}</a>.
+		{tr}You can use{/tr} <a href="tiki-gmap_locator.php?for=item&amp;itemId={$item.itemId}&amp;trackerId={$item.trackerId}&amp;fieldId={$field_value.fieldId}{if !empty($page)}&amp;fromPage={$page}{/if}">{tr}Google Map Locator{/tr}</a>.
 	{/if}
 
 {* -------------------- country selector -------------------- *}

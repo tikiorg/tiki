@@ -25,6 +25,7 @@
 {if $watch}<input type="hidden" name="view_user" value="{$watch|escape}" />{/if}
 {if $itemId}<input type="hidden" name="itemId" value="{$itemId}" />{/if}
 {if $fieldId}<input type="hidden" name="fieldId" value="{$fieldId}" />{/if}
+{if $fromPage}<input type="hidden" name="fromPage" value="{$fromPage}" />{/if}
 <input type="submit" name="act" value="{tr}Save clicked point{/tr}" /><br /><br />
 <input type="submit" name="reset_default" value="{tr}Reset view to default{/tr}" />
 <input type="submit" name="set_default" value="{tr}Save current view as default{/tr}" />

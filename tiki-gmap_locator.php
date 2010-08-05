@@ -8,7 +8,7 @@
 include 'tiki-setup.php';
 include_once ('lib/trackers/trackerlib.php');
 $access->check_feature('feature_gmap');
-$auto_query_args = array('for', 'itemId', 'fieldId', 'trackerId', 'view_user');
+$auto_query_args = array('for', 'itemId', 'fieldId', 'trackerId', 'view_user', 'fromPage');
 
 if ($tiki_p_admin == 'y' and isset($_REQUEST['view_user']) and $userlib->user_exists($_REQUEST['view_user'])) {
 	$userwatch = $_REQUEST['view_user'];
@@ -69,15 +69,21 @@ if (isset($_REQUEST['set_default']) && ($user == $userwatch || $tiki_p_admin =='
 				if ( ($p['x'] > -180 and $p['x'] < 180) && ($p['y'] > -180 and $p['y'] < 180) && ($p['z'] >= 0 and $p['z'] < 20)      ){
 					$G_query="UPDATE `tiki_tracker_item_fields` SET `value`=? WHERE `itemId`=? AND `fieldId`=?";
 					$trklib->query($G_query,array($p['x'].','.$p['y'].','.$p['z'], (int)$_REQUEST['itemId'], (int)$_REQUEST['fieldId']));
-      				}
-    			}
+				}
+			}
   		}
 		$xyz = explode(',', $trklib->get_item_value($_REQUEST['trackerId'],$_REQUEST['itemId'],$_REQUEST['fieldId']));
   		$pointx = $xyz['0'];
   		$pointy = $xyz['1'];
   		$pointz = $xyz['2'];
   		$smarty->assign('extraquery','?for=item&amp;itemId='.$_REQUEST['itemId'].'&amp;trackerId='.$_REQUEST['trackerId'].'&amp;fieldId='.$_REQUEST['fieldId']);
-  		$smarty->assign('backurl','tiki-view_tracker_item.php?itemId='.$_REQUEST['itemId'].'&amp;trackerId='.$_REQUEST['trackerId']);
+		global $wikilib; include_once( 'lib/wiki/wikilib.php');
+  		if (!empty($_REQUEST['fromPage'])) {
+  			$smarty->assign('backurl', $wikilib->sefurl($_REQUEST['fromPage'], true) . 'itemId='.$_REQUEST['itemId'].'&amp;trackerId='.$_REQUEST['trackerId']);
+  			$smarty->assign('fromPage',  $_REQUEST['fromPage']);
+  		} else {
+	  		$smarty->assign('backurl','tiki-view_tracker_item.php?itemId='.$_REQUEST['itemId'].'&amp;trackerId='.$_REQUEST['trackerId']);
+  		}
   		$smarty->assign('backlink',tra('Back to item'));
 	}
 } elseif (isset($_REQUEST['for']) && $_REQUEST['for'] == 'item' && empty($_REQUEST['itemId']) && !empty($_REQUEST['fieldId']) && !empty($_REQUEST['trackerId'])) {
