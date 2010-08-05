@@ -150,16 +150,16 @@ if (count($status_types) == 0) {
 	$tracker_info["showStatus"] = 'n';
 }
 $filterFields = array('isSearchable'=>'y', 'isTblVisible'=>'y', 'type'=>array('q','u','g','I','C','n','j','f'));
+$sort_field = 0;
 if (!isset($_REQUEST["sort_mode"])) {
 	if (isset($tracker_info['defaultOrderKey'])) {
 		if ($tracker_info['defaultOrderKey'] == - 1) $sort_mode = 'lastModif';
 		elseif ($tracker_info['defaultOrderKey'] == - 2) $sort_mode = 'created';
 		elseif ($tracker_info['defaultOrderKey'] == - 3) $sort_mode = 'itemId';
-		elseif (isset($orderkey) && $orderkey) {
+		else {
+			$sort_field = $tracker_info['defaultOrderKey'];
 			$sort_mode = 'f_' . $tracker_info['defaultOrderKey'];
 			$filterFields['fieldId'] = $tracker_info['defaultOrderKey'];
-		} else {
-			$sort_mode = 'lastModif';
 		}
 		if (isset($tracker_info['defaultOrderDir'])) {
 			$sort_mode.= "_" . $tracker_info['defaultOrderDir'];
@@ -172,7 +172,8 @@ if (!isset($_REQUEST["sort_mode"])) {
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 	if (preg_match('/f_([0-9]+)_/', $sort_mode, $matches)) {
-			$filterFields['fieldId'] = $matches[1];
+		$sort_field = $matches[1];
+		$filterFields['fieldId'] = $matches[1];
 	}
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
@@ -201,7 +202,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	$xfields["data"][$i]["id"] = $fid;
 	$filter_id = 'filter_' . $fid;
 	$xfields["data"][$i]["filter_id"] = $filter_id;
-	if (!empty($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $xfields["data"][$i]['fieldId']) {
+	if (!empty($sort_field) and $sort_field == $xfields["data"][$i]['fieldId']) {
 		$orderkey = true;
 	}
 	if (($xfields['data'][$i]['type'] == 'u' || $xfields['data'][$i]['type'] == 'g' || $xfields['data'][$i]['type'] == 'I') && isset($xfields['data'][$i]['options_array'][0]) && $xfields['data'][$i]['options_array'][0] == 1) {
@@ -461,6 +462,9 @@ for ($i = 0; $i < $temp_max; $i++) {
 	if (empty($mainfield) and isset($fields['data'][$i]['isMain']) && $fields["data"][$i]["isMain"] == 'y' and !empty($fields["data"][$i]["value"])) {
 		$mainfield = $fields["data"][$i]["value"];
 	}
+}
+if (!$orderkey) {
+	$sort_mode = 'lastModif_asc';
 }
 if (!empty($_REQUEST['remove'])) {
 	$item_info = $trklib->get_item_info($_REQUEST['remove']);
