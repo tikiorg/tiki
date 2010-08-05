@@ -7252,14 +7252,16 @@ class TikiLib extends TikiDb_Bridge
 			$mid .= ', `lang`=? ';
 			$bindvars[] = $lang;
 		}
-		if (!empty($hash['lock_it']) && ($hash['lock_it'] == 'y' || $hash['lock_it'] == 'on')) {
-			$mid .= ', `flag`=?, `lockedby`=? ';
-			$bindvars[] = 'L';
-			$bindvars[] = $user;
-		} else if (empty($hash['lock_it']) || $hash['lock_it'] == 'n') {
-			$mid .= ', `flag`=?, `lockedby`=? ';
-			$bindvars[] = '';
-			$bindvars[] = '';
+		if ($hash !== null) {
+			if (!empty($hash['lock_it']) && ($hash['lock_it'] == 'y' || $hash['lock_it'] == 'on')) {
+				$mid .= ', `flag`=?, `lockedby`=? ';
+				$bindvars[] = 'L';
+				$bindvars[] = $user;
+			} else if (empty($hash['lock_it']) || $hash['lock_it'] == 'n') {
+				$mid .= ', `flag`=?, `lockedby`=? ';
+				$bindvars[] = '';
+				$bindvars[] = '';
+			}
 		}
 		if ($prefs['wiki_comments_allow_per_page'] != 'n') {
 			if (!empty($hash['comments_enabled']) && $hash['comments_enabled'] == 'y') {
