@@ -26,13 +26,11 @@ else
 
 // Get available languages from DB
 $languages = Language::getLanguages();
-
 $smarty->assign_by_ref('languages', $languages);
 
 // preserving variables
 if (isset($_REQUEST["edit_language"])) {
 	$smarty->assign('edit_language', $_REQUEST["edit_language"]);
-
 	$edit_language = $_REQUEST["edit_language"];
 }
 
@@ -236,5 +234,6 @@ ask_ticket('edit-languages');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
+$headerlib->add_cssfile('css/admin.css');
 $smarty->assign('mid', 'tiki-edit_languages.tpl');
 $smarty->display("tiki.tpl");
