@@ -1,4 +1,5 @@
-<h1>{$title|escape}</h1>
+{title help='Blogs'}{$title|escape}{/title}
+<div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}</div>
 {if $description neq ""}
   <div class="description">{$description|escape}</div>
 {/if}
