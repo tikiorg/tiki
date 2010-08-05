@@ -330,10 +330,24 @@ class WikiLib extends TikiLib
 		$res = $result->fetchRow();
 		return $res;
 	}
-	function get_parse($page, &$canBeRefreshed) {
+	function get_parse($page, &$canBeRefreshed, $suppress_icons = false) {
 		global $prefs, $user, $headerlib;
 		$content = '';
 		$canBeRefreshed = false;
+		
+		$info = $this->get_page_info($page);
+		if (!empty($info)) {
+			$parse_options = array(
+				'is_html' => $info['is_html'],
+				'language' => $info['lang'],
+			);
+			if ($suppress_icons || (!empty($info['lockedby']) && $info['lockedby'] != $user)) {
+				$parse_options['suppress_icons'] = true;
+			}
+		} else {
+			return $content;
+		}
+		
 		if ($prefs['wiki_cache'] > 0 && empty($user) ) {
 			$cache_info = $this->get_cache_info($page);
 			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $this->now) {
@@ -344,34 +358,20 @@ class WikiLib extends TikiLib
 				$content = preg_replace('/\s*<script.*javascript.*>.*\/script>\s*/Umis', '', $content);
 				$canBeRefreshed = true;
 			} else {
-				$info = $this->get_page_info($page);
-				if (!empty($info)) {
-					$parse_options = array(
-						'is_html' => $info['is_html'],
-						'language' => $info['lang'],
-					);
-					if (!empty($info['wiki_cache'])) {
-						$js1 = $headerlib->getJs();
-					}
-					$content = $this->parse_data($info['data'], $parse_options );
-					if (!empty($info['wiki_cache'])) {
-						// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
-						$js2 = $headerlib->getJs();
-						$js = array_diff( $js2, $js1 );
-						$js = $headerlib->wrap_js( implode( "\n", $js) );
-						$this->update_cache($page, $content . $js);
-					}
+				if (!empty($info['wiki_cache'])) {
+					$js1 = $headerlib->getJs();
+				}
+				$content = $this->parse_data($info['data'], $parse_options );
+				if (!empty($info['wiki_cache'])) {
+					// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
+					$js2 = $headerlib->getJs();
+					$js = array_diff( $js2, $js1 );
+					$js = $headerlib->wrap_js( implode( "\n", $js) );
+					$this->update_cache($page, $content . $js);
 				}
 			}
 		} else {
-			$info = $this->get_page_info($page);
-			if (!empty($info)) {
-				$parse_options = array(
-					'is_html' => $info['is_html'],
-					'language' => $info['lang'],
-				);
-				$content = $this->parse_data($info['data'], $parse_options );
-			}
+			$content = $this->parse_data($info['data'], $parse_options );
 		}
 		return $content;
 	}

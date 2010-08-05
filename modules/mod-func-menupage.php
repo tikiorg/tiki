@@ -31,7 +31,7 @@ function module_menupage( $mod_reference, $module_params ) {
 	
 	if (!empty($pagemenu)) {
 		global $wikilib; include_once('lib/wiki/wikilib.php');
-		$content = $wikilib->get_parse($pagemenu, $dummy);
+		$content = $wikilib->get_parse($pagemenu, $dummy, true);
 		$smarty->assign('tpl_module_title', $pagemenu);
 		$smarty->assign_by_ref('contentmenu',$content);
 		$smarty->assign('pagemenu', $pagemenu);
