@@ -37,7 +37,7 @@
 </div>
 {/if}
 
-<form method="post" action="tiki-share.php" id="share-form">
+<form method="post" action="tiki-share.php?url={$url|escape:url}" id="share-form">
   <input type="hidden" name="url" value="{$url|escape:url}" />
   <table class="normal">
     <tr class="formcolor">
@@ -97,25 +97,21 @@
       	</table>
       </td>
     </tr>
-    
+{if $twitterRegistered}    
     <tr class="formcolor">
      <td class="formcolor" rowspan="2">
       <img src="img/icons/twitter_t_logo_32.png" alt="Twitter" /><br />
       {tr}Tweet via Twitter{/tr}
      </td>
-     <td class="formcolor">{if !$twitterRegistered}
-		{remarksbox type="note" title="{tr}Note{/tr}"}
-		<p>{tr}To use Twitter integration, the site admin must register this site as an application at <a href="http://twitter.com/oauth_clients/" target="_blank">http://twitter.com/oauth_clients/</a> and allow write access for the application.{/tr}</p>
-		{/remarksbox}{else}
-		{if $twitter}
-		<input type="radio" name="do_tweet" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}/>{tr}Yes{/tr} 	
-		<input type="radio" name="do_tweet" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}/>{tr}No{/tr}		 
-		{else}
-		{remarksbox type="note" title="{tr}Note{/tr}"}
-		<p><a href="tiki-socialnetworks.php">{tr}Authorize with twitter first{/tr}</a>
-		{/remarksbox}
-		{/if}
-		{/if}
+     <td class="formcolor">
+	{if $twitter}
+	<input type="radio" name="do_tweet" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}/>{tr}Yes{/tr} 	
+	<input type="radio" name="do_tweet" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}/>{tr}No{/tr}		 
+	{else}
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+	<p><a href="tiki-socialnetworks.php">{tr}Authorize with twitter first{/tr}</a>
+	{/remarksbox}
+	{/if}
      </td>
     </tr>
     <tr class="formcolor" id="twitterrow">
@@ -131,24 +127,22 @@
      	{/if}
      </td>
     </tr>
+{/if}
+{if $facebookRegistered}
     <tr class="formcolor">
      <td class="formcolor" rowspan="2">
       <img src="img/icons/facebook-logo_32.png" alt="Facebook" /><br />
       {tr}Put on my facebook wall{/tr}
      </td>
-     <td class="formcolor">{if !$facebookRegistered}
-		{remarksbox type="note" title="{tr}Note{/tr}"}
-  <p>{tr}To use Facebook integration, the site admin must register this site as an application at <a href="http://developers.facebook.com/setup/" target="_blank">http://developers.facebook.com/setup/</a> first.{/tr}</p>
- {/remarksbox}{else}
-		{if $facebook}
-		<input type="radio" name="do_fb" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}/>{tr}Yes{/tr}
-		<input type="radio" name="do_fb" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}/>{tr}No{/tr}		
-		{else}
-		{remarksbox type="note" title="{tr}Note{/tr}"}
-		<p><a href="tiki-socialnetworks.php">{tr}Authorize with facebook first{/tr}</a>
-		{/remarksbox}
-		{/if}
-		{/if}
+     <td class="formcolor">
+	{if $facebook}
+	<input type="radio" name="do_fb" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}/>{tr}Yes{/tr}
+	<input type="radio" name="do_fb" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}/>{tr}No{/tr}		
+	{else}
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+	<p><a href="tiki-socialnetworks.php">{tr}Authorize with facebook first{/tr}</a>
+	{/remarksbox}
+	{/if}
      </td>
     </tr>
     <tr class="formcolor" id="fbrow">
@@ -167,6 +161,7 @@
       {/if}
      </td>
     </tr>
+{/if}
     <tr class="formcolor">
      <td class="formcolor" rowspan="2">
       <img src="pics/large/messages48x48.png" alt="{tr}Messages{/tr}" /><br />
@@ -270,8 +265,8 @@
       <td class="formcolor"></td>
       <td class="formcolor">
         <input type="submit" class="button" name="send" value="{tr}Share{/tr}" />
-		{if $prefs.auth_token_share eq 'y'}
-			<input type="checkbox" name="share_access" value="1" id="share_access"/>
+		{if $prefs.auth_tokens_share eq 'y' and $user!=''}
+			<input type="checkbox" name="share_access" value="1" id="share_access" {if $share_access}checked="checked" {/if}/>
 			<label for="share_access">{tr}Share access rights{/tr}</label>
 		{/if}
       </td>

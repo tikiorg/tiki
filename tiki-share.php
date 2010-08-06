@@ -104,6 +104,7 @@ if( $prefs['auth_token_share'] == 'y' && $prefs['auth_token_access'] == 'y' && i
 	require_once 'lib/auth/tokens.php';
 	$tokenlib = AuthTokens::build( $prefs );
 	$url_for_friend = $tokenlib->includeToken( $url_for_friend, $globalperms->getGroups() );
+	$smarty->assign('share_access',true);
 }
 if (isset($_REQUEST['shorturl'])) {
 	$shorturl=$_REQUEST['shorturl'];
@@ -188,7 +189,7 @@ if (isset($_REQUEST['send'])) {
 	$smarty->assign_by_ref('errors', $errors);
 	$smarty->assign('errortype', 'no_redirect_login');
 	if ($ok) {
-		//$access->redirect( $_REQUEST['url'], tra('Your link was sent.') );
+//		$access->redirect( $_REQUEST['url'], tra('Your link was sent.') );
 	}
 	$smarty->assign('sent',true);
 } else {
@@ -205,11 +206,11 @@ $smarty->display('tiki.tpl');
  * @param array|string	$recipients		list of recipients as an array or a comma/semicolon separated list	
  */
 function checkAddresses($recipients) {
-	global $errors;
+	global $errors, $prefs;
 	global $registrationlib; include_once ('lib/registration/registrationlib.php');
 	$e=array();
 	if (!is_array($recipients)) {
-		$recipients=preg_split('/[\s*?](,|;)[\s*?]/',$recipients);
+		$recipients=preg_split('/(,|;)/',$recipients);
 	}
 	$ok=true;
 	foreach($recipients as &$recipient) {
