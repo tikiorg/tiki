@@ -78,7 +78,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 }
 
 if (isset($_REQUEST["heading"]) and $tiki_p_edit_templates == 'y') {
-	// Sanatization cleanup
+	// Sanitization cleanup
 	$heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["heading"]);
 } elseif (!isset($data["heading"])) {
 	$n = $smarty->get_filename('blog-heading.tpl', 'r');
@@ -92,7 +92,23 @@ if (isset($_REQUEST["heading"]) and $tiki_p_edit_templates == 'y') {
 	$heading = $data["heading"];
 }
 
+if (isset($_REQUEST["post_heading"]) and $tiki_p_edit_templates == 'y') {
+	// Sanitization cleanup
+	$post_heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["post_heading"]);
+} elseif (!isset($data["post_heading"])) {
+	$n = $smarty->get_filename('blog-post-heading.tpl', 'r');
+	@$fp = fopen($n, 'r');
+	if ($fp) {
+		$post_heading = fread($fp, filesize($n));
+		@fclose($fp);
+	} else
+		$post_heading = '';
+} else {
+	$post_heading = $data["post_heading"];
+}
+
 $smarty->assign_by_ref('heading', $heading);
+$smarty->assign_by_ref('post_heading', $post_heading);
 $users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);
 
@@ -120,7 +136,7 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	    $_REQUEST["description"], $_REQUEST["creator"], $public,
 	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
 	    $heading, $use_title, $use_author, $add_date, $use_find,
-	    $allow_comments, $show_avatar, $alwaysOwner);
+	    $allow_comments, $show_avatar, $alwaysOwner, $post_heading);
 
 	$cat_type = 'blog';
 	$cat_objid = $bid;

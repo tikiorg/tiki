@@ -125,6 +125,7 @@ CREATE TABLE `tiki_articles` (
   `expireDate` int(14) default NULL,
   `created` int(14) default NULL,
   `heading` text,
+  `post_heading` text,
   `body` text,
   `hash` varchar(32) default NULL,
   `author` varchar(200) default NULL,

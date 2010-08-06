@@ -1,5 +1,8 @@
-{* $Id$ *}
-{include file='blog-post-heading.tpl'}
+{if strlen($blog_data.post_heading) > 0 and $prefs.feature_blog_heading eq 'y'}
+  {eval var=$blog_data.post_heading}
+{else}
+	{include file='blog-post-heading.tpl'}
+{/if}
 
 <div class="post post_single">
 	<div class="postbody">

@@ -126,6 +126,18 @@
               </td>
             </tr>
           {/if}
+
+          <tr class="editblogform">
+            <td>
+              <label for="blogs-post-heading">{tr}Blog post heading{/tr}</label>
+              <br />
+              {include file='textareasize.tpl' area_name='blogs-post-heading' formId='blog-post-edit-form'}
+            </td>
+            <td>
+              <textarea name="post_heading" id="blogs-post_heading" rows='10' cols='{$cols}'>{$post_heading|escape}</textarea>
+            </td>
+          </tr>
+
         {/if}
 
       </table>
