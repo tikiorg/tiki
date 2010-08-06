@@ -22,17 +22,39 @@ require_once 'lib/toolbars/toolbarslib.php';
 $access->check_permission('tiki_p_admin');
 $access->check_feature('javascript_enabled');
 
-$sections = array( 'global', 'wiki page', 'trackers', 'blogs', 'calendar', 'cms', 'faqs', 'newsletters', 'forums', 'maps', 'admin', 'sheet');
+$sections = array( 'global' => tra('Global'), 'admin' => tra('Admin'));
+$sections2 = array();
 
-if( isset($_REQUEST['section']) && in_array($_REQUEST['section'], $sections) ) {
+if ($prefs['feature_wiki'] == 'y') { $sections2['wiki page'] = tra('Wiki Pages'); }
+if ($prefs['feature_trackers'] == 'y') { $sections2['trackers'] = tra('Trackers'); }
+if ($prefs['feature_blogs'] == 'y') { $sections2['blogs'] = tra('Blogs'); }
+if ($prefs['feature_calendar'] == 'y') { $sections2['calendar'] = tra('Calendars'); }
+if ($prefs['feature_articles'] == 'y') { $sections2['cms'] = tra('Articles'); }
+if ($prefs['feature_faqs'] == 'y') { $sections2['faqs'] = tra('FAQs'); }
+if ($prefs['feature_newsletters'] == 'y') { $sections2['newsletters'] = tra('Newsletters'); }
+if ($prefs['feature_forums'] == 'y') { $sections2['forums'] = tra('Forums'); }
+if ($prefs['feature_maps'] == 'y') { $sections2['maps'] = tra('Maps'); }
+if ($prefs['feature_sheet'] == 'y') { $sections2['sheet'] = tra('Spreadsheets'); }
+
+asort($sections2);
+$sections = array_merge($sections, $sections2);
+
+
+if( isset($_REQUEST['section']) && in_array($_REQUEST['section'], array_keys($sections)) ) {
 	$section = $_REQUEST['section'];
 } else {
-	$section = reset($sections);
+	$section = reset(array_keys($sections));
 }
 if( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
 	$comments = true;
 } else {
 	$comments = false;
+}
+
+foreach($sections as $skey => $sval) {
+	if (!empty($prefs['toolbar_' . $skey . ($comments ? '_comments' : '')])) {
+		$sections[$skey] = $sval . ' *';
+	}
 }
 
 $smarty->assign('view_mode', isset($_REQUEST['view_mode']) ? $_REQUEST['view_mode'] : '');

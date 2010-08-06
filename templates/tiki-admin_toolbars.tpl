@@ -13,8 +13,8 @@
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel"><label for="section">{tr}Section{/tr}:</label>
 				<select id="section" name="section" onchange="javascript:toolbars_autoreload()">
-					{foreach from=$sections item=name}
-						<option{if $name eq $loaded} selected="selected"{/if}>{$name|escape}</option>
+					{foreach from=$sections item=name key=skey}
+						<option value="{$skey}"{if $skey eq $loaded} selected="selected"{/if}>{$name|escape}</option>
 					{/foreach}
 				</select>
 				</div>
