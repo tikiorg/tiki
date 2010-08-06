@@ -28,6 +28,10 @@ else
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
 
+$db_languages = Language::getDbTranslatedLanguages();
+$db_languages = $tikilib->format_language_list($db_languages);
+$smarty->assign_by_ref('db_languages', $db_languages);
+
 // preserving variables
 if (isset($_REQUEST["edit_language"])) {
 	$smarty->assign('edit_language', $_REQUEST["edit_language"]);
@@ -204,13 +208,9 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	}
 }
 
-$exp_languages = Language::getDbTranslatedLanguages();
-$exp_languages = $tikilib->format_language_list($exp_languages);
-$smarty->assign_by_ref('exp_languages',$exp_languages);
-
 if (isset($_REQUEST["exp_language"])) {
 	$exp_language = $_REQUEST["exp_language"];
-	$lang = new Language($exp_language);
+	$language = new Language($exp_language);
 	$smarty->assign('exp_language', $exp_language);
 } else {
 	$smarty->assign('exp_language', '');
@@ -223,7 +223,6 @@ if (isset($_REQUEST["imp_language"])) {
 // Import
 if (isset($_REQUEST["import"])) {
 	check_ticket('import-lang');
-	// TODO: check if the lang to import to db is not the same as the currently used one, otherwise the import fails with PHP error "Variable passed to each() is not an array or object"
 	
 	// first delete each record from language db table where the lang matches (if any)
 	$query = "select `source` from `tiki_language` where `lang`=?";
@@ -234,11 +233,13 @@ if (isset($_REQUEST["import"])) {
 	}
 	
 	// now we can start the import
-	include_once ('lang/' . $imp_language . '/language.php');
+	if (!isset(${"lang_$imp_language"})) {
+		init_language($imp_language);
+	}
 
 	$impmsg = tra("Imported:")." lang/$imp_language/language.php";
 
-	while (list($key, $val) = each($lang)) {
+	while (list($key, $val) = each(${"lang_$imp_language"})) {
 		$query = "insert into `tiki_language` values (?,?,?)";
 		$result = $tikilib->query($query, array($key,$imp_language,$val), -1, -1, false);
 	}
@@ -249,17 +250,17 @@ if (isset($_REQUEST["import"])) {
 // Export
 if (isset($_REQUEST['downloadFile'])) {
 	check_ticket('import-lang');
-	$lang->downloadFile();
+	$language->downloadFile();
 }
 
 // Write to custom.php
 if (isset($_REQUEST['exportToCustom'])) {
-	$lang->writeCustomFile();
+	$language->writeCustomFile();
 }
 
 // Write to language.php
 if (isset($_REQUEST['exportToLanguage'])) {
-	$lang->writeLanguageFile();
+	$language->writeLanguageFile();
 }
 
 ask_ticket('edit-languages');

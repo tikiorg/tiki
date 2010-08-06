@@ -14,8 +14,8 @@
 			<div class="adminoptionbox">
 				<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
 				<select id="edit_language" name="edit_language">
-					{section name=ix loop=$languages}
-						<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
+					{section name=ix loop=$db_languages}
+						<option value="{$db_languages[ix].value|escape}" {if $edit_language eq $db_languages[ix].value}selected="selected"{/if}>{$db_languages[ix].name}</option>
 					{/section}
 				</select>
 			</div>
@@ -112,10 +112,10 @@
 			<div class="adminoptionbox">
 				<label for="exp_language">{tr}Select the language to Export{/tr}:</label>
 				<select id="exp_language" name="exp_language">
-					{section name=ix loop=$exp_languages}
-						<option value="{$exp_languages[ix].value|escape}"
-							{if $exp_language eq $exp_languages[ix].value}selected="selected"{/if}>
-							{$exp_languages[ix].name}
+					{section name=ix loop=$db_languages}
+						<option value="{$db_languages[ix].value|escape}"
+							{if $exp_language eq $db_languages[ix].value}selected="selected"{/if}>
+							{$db_languages[ix].name}
 						</option>
 					{/section}
 				</select>
