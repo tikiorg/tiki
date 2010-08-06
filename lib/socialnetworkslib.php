@@ -351,6 +351,18 @@ class SocialNetworksLib extends LogsLib
 	}
 	
 	/**
+	 * 
+	 * like an object on facebook
+	 * @param string	$user		userId of the user to send for
+	 * @param string	$facebookId	id of the object to like
+	 * @return	string|bool			false on error, object Id of the message on success
+	 */
+	function facebookLike($user, $id) {
+		$params=array();
+		$ret=$this->facebookGraph($user, "$id/likes/", $params);
+		return json_decode($ret);
+	}
+	/**
 	 * Talking to bit.ly api at "http://api.bit.ly/" using Zend
 	 * @param	string	$user		userId of the user to send the request for
 	 * @param	string	$action		directory/file part of the api URL

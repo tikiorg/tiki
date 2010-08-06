@@ -166,6 +166,13 @@
          <br /><em>{tr}This will be the title for the URL{/tr}</em>
         </td>
        </tr>
+       <tr class="formcolor">
+        <td class="formcolor">{tr}Like this post{/tr}</td>
+        <td class="formcolor">
+	 <input type="radio" name="fblike" value="1" {if $fblike==1}checked="checked" {/if}/>{tr}Yes{/tr}
+	 <input type="radio" name="fblike" value="0" {if $fblike==0}checked="checked" {/if}/>{tr}No{/tr}		
+        </td>
+       </tr>
       </table>
       {else}&nbsp;
       {/if}

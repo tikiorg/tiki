@@ -35,6 +35,7 @@ if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 		$smarty->assign('facebook', ($facebook_token!=''));
 		$smarty->assign('do_tweet', (isset($_REQUEST['do_tweet'])?$_REQUEST['do_tweet']:true));
 		$smarty->assign('do_fb', (isset($_REQUEST['do_fb'])?$_REQUEST['do_fb']:true));
+		$smarty->assign('fblike', (isset($_REQUEST['fblike'])?$_REQUEST['fblike']:1));
 	} else {
 		$smarty->assign('twitterRegistered',false);
 		$smarty->assign('twitter',false);
@@ -200,6 +201,12 @@ if (isset($_REQUEST['send'])) {
 			$facebookId=$socialnetworkslib->facebookWallPublish($user, $msg, $url_for_friend, $linktitle, $_REQUEST['subject']);
 			$smarty->assign('facebookId', $facebookId);
 			$ok=$ok && ($facebookId!=false);
+			if ($_REQUEST['fblike']==1) {
+				if ($facebookId!=false) {
+					$like=$socialnetworkslib->facebookLike($user, $facebookId);
+					$ok=$ok && ($like!=false);
+				}
+			}
 		} // do_fb
 	
 		if (isset($_REQUEST['do_message']) and $_REQUEST['do_message']==1) {
