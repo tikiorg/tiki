@@ -1094,7 +1094,7 @@ function wikiplugin_img_info() {
 			if (!empty($titleonly)) {
 				$repl .= ' title="' . $titleonly . '"';
 			}
-			$repl .= ">\r\t\t\t\t" . '<img class="magnify" src="./pics/icons/magnifier.png" alt="Enlarge" /></a>' . "\r\t\t\t</div>";
+			$repl .= ">\r\t\t\t\t" . '<img class="magnify" src="./pics/icons/magnifier.png" alt="'.tra('Enlarge').'" /></a>' . "\r\t\t\t</div>";
 		}	
 		//Add description based on user setting (use $desconly from above) and close divs
 		isset($desconly) ? $repl .= $desconly : '';

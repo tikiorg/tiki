@@ -87,7 +87,7 @@
 					{if $show_image_caption eq 'y' and $image_caption || $image_x > 0}
 						<div class="mini thumbcaption">
 						{if $image_x > 0}<div class="magnify"><a class="internal cboxElement" rel="box" href="article_image.php?image_type=article&amp;id={$articleId}">{icon _id='magnifier' title=$smarty.capture.imgTitle}</a></div>{/if}
-						{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{/if}
+						{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{else}&nbsp;{/if}
 						</div>
 					{/if}
 					</div>
@@ -115,7 +115,7 @@
 
 	{if $prefs.art_trailer_pos eq 'between'}{include file='article_trailer.tpl}{/if}
 
-	<div class="articlebody">
+	<div class="articlebody clearfix">
 		{if $tiki_p_read_article eq 'y'}
 			{$parsed_body}
 		{else}
@@ -156,6 +156,7 @@
 		</p>
 	{/if}
 </div>
+{wikipluginsubmit}{/wikipluginsubmit}{*droit-inc*}
 
 {if $prefs.feature_article_comments == 'y' && 
 		(($tiki_p_read_comments == 'y' && $comments_cant != 0) || $tiki_p_post_comments == 'y' || $tiki_p_edit_comments == 'y')}
