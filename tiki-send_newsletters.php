@@ -276,7 +276,14 @@ $smarty->assign('emited', 'n');
 if (!empty($_REQUEST['datatxt'])) { $txt = $_REQUEST['datatxt']; }
 if (empty($txt) && !empty($_REQUEST["data"])) {
 	//No txt message is explicitely provided -> Create one with the html Version & remove Wiki tags
-	$txt = strip_tags(str_replace(array("\r\n", "&nbsp;"), array("\n", " "), $_REQUEST["data"]));
+	$txt = $_REQUEST["data"];
+	//Add line breaks if none before stripping headers, paras, and br
+	$txt =  preg_replace('/(<\/h[1-6]>) *([^\r\n])/', "$1\n\n$2", $txt);
+	$txt =  preg_replace('/(<\/div>) *([^\r\n])/', "$1\n\n$2", $txt);
+	$txt =  preg_replace('/(<\/p>) *([^\r\n])/', "$1\n\n$2", $txt);
+	$txt =  str_replace('/(<br *\/?>)/', "\n", $txt);
+	// start stripping tags
+	$txt = strip_tags(str_replace(array("\r\n", "&nbsp;"), array("\n", " "), $txt));
 	$txt = preg_replace('/^!!!(.*?)$/m', "\n$1\n", $txt);
 	$txt = preg_replace('/^!!(.*?)$/m', "\n$1\n", $txt);
 	$txt = preg_replace('/^!(.*?)$/m', "\n$1\n", $txt);
