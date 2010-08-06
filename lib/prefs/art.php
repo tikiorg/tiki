@@ -105,7 +105,7 @@ function prefs_art_list() {
 		),
 		'art_header_text_pos' => array(
 			'name' => tra('Header text position'),
-			'description' => tra('Header text position'). tra('Requeires a smaller image for list view'),
+			'description' => tra('Header text position'). tra('Requires a smaller image for list view'),
 			'type' => 'list',
 			'options' => array(
 				'next' => tra('Next image'),
