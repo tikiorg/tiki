@@ -10,7 +10,7 @@
 
 <form action="tiki-edit_languages.php" method="post">
 	{tabset}
-		{tab name='Edit languages'}
+		{tab name='{tr}Edit languages{/tr}'}
 			<div class="adminoptionbox">
 				<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
 				<select id="edit_language" name="edit_language">
@@ -108,7 +108,7 @@
 			{/if}
 		{/tab}
 
-		{tab name='Export languages'}
+		{tab name='{tr}Export languages{/tr}'}
 			<div class="adminoptionbox">
 				<label for="exp_language">{tr}Select the language to Export{/tr}:</label>
 				<select id="exp_language" name="exp_language">
@@ -130,7 +130,7 @@
 			{/if}
 		{/tab}
 		
-		{tab name='Import languages'}
+		{tab name='{tr}Import languages{/tr}'}
 			{if isset($impmsg)}
 				{$impmsg}
 			{/if}
