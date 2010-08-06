@@ -232,16 +232,11 @@ if (isset($_REQUEST["import"])) {
 		$query = "delete from `tiki_language` where `lang`=?";
 		$result = $tikilib->query($query, array($imp_language));
 	}
-	// delete also record for the lang from the languages db table
-	$query = "delete from `tiki_languages` where `lang`=?";
-	$result = $tikilib->query($query, array($imp_language));
 	
 	// now we can start the import
 	include_once ('lang/' . $imp_language . '/language.php');
 
 	$impmsg = tra("Imported:")." lang/$imp_language/language.php";
-	$query = "insert into `tiki_languages` values (?,?)";
-	$result = $tikilib->query($query, array($imp_language,''), -1, -1, false);
 
 	while (list($key, $val) = each($lang)) {
 		$query = "insert into `tiki_language` values (?,?,?)";
