@@ -7,7 +7,7 @@
 		{tr}by{/tr} {$listpages[ix].user|userlink} 
 	{/if}
 	{if $add_date eq 'y'}
-		{$listpages[ix].created|tiki_short_datetime}
+		{tr}on{/tr} {$listpages[ix].created|tiki_short_date}
 	{/if}
 	{if $show_avatar eq 'y'}
 		{$listpages[ix].avatar}
