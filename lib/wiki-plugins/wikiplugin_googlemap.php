@@ -406,10 +406,10 @@ function wikiplugin_googlemap($data, $params) {
 				$markerfields = explode('+', $options_array[1]);
 				foreach ($markerfields as $k => $m) {
 					if (!empty($item[$m])) {
-						$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($item[$m]));
-						if ($k < count($markerfields) - 1) {
+						if ($markertext) {
 							$markertext .= '<br /><br />';	
-						}					
+						}
+						$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($item[$m]));					
 					}
 				}
 			}
