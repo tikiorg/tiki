@@ -1,5 +1,7 @@
 {* $Id$ *}
-{title}{tr}Share this page{/tr}{/title}
+{title}
+{if $report != 'y'}{tr}Share this page{/tr}{else}{tr}Report this page{/tr}{/if}
+{/title}
 
 {if isset($sent)}
 <div class="simplebox highlight">
@@ -39,16 +41,18 @@
 
 <form method="post" action="tiki-share.php?url={$url|escape:url}" id="share-form">
   <input type="hidden" name="url" value="{$url|escape:url}" />
+  <input type="hidden" name="report" value="{$report}" />
   <table class="normal">
     <tr class="formcolor">
       <td>{tr}Link{/tr}</td>
       <td><a href="{$prefix}{$url}">{$prefix}{$url}</a></td>
     </tr>
+{if $report != 'y'}
     <tr class="formcolor">
       <td>{tr}Short link{/tr}</td>
       <td>{$shorturl}</td>
     </tr>
-    
+{/if}    
     <tr class="formcolor">
       <td class="formcolor">{tr}Subject{/tr}</td>
       <td class="formcolor"><input style="width:95%;" type="text" name="subject" value="{$subject|escape|default:'{tr}Have a look at this page{/tr}'}" /></td>
@@ -72,13 +76,18 @@
        {tr}Send via e-Mail{/tr}
       </td>
       <td class="formcolor">
+{if $report !='y'}
 		<input type="radio" name="do_email" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}/>{tr}Yes{/tr}
 		<input type="radio" name="do_email" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}/>{tr}No{/tr}
+{else}
+		<input type="hidden" name="do_email" value="1" />&nbsp;
+{/if}
 	  </td>
 	</tr>
 	<tr class="formcolor" id="emailrow">
 	 <td class="formcolor">
 	 	<table class="normal"  id="emailtable">
+{if $report!='y'}
 	 	 <tr class="formcolor">
 	 	  <td class="formcolor">{tr}Recipient(s){/tr}</td>
 	 	  <td class="formcolor">
@@ -86,6 +95,7 @@
 	 	    <br /><em>{tr}Separate multiple email addresses with a comma.{/tr}</em>
 	 	  </td>
 	 	 </tr>
+{/if}
 	 	 <tr class="formcolor">
 	 	  <td class="formcolor">{tr}Your name{/tr}</td>
 	 	  <td class="formcolor"><input style="width:95%;" type="text" name="name" value="{$name}" /></td>
@@ -162,24 +172,21 @@
      </td>
     </tr>
 {/if}
+{if $prefs.feature_messages=='y' && $report != 'y'}
     <tr class="formcolor">
      <td class="formcolor" rowspan="2">
       <img src="pics/large/messages48x48.png" alt="{tr}Messages{/tr}" /><br />
       {tr}Send message{/tr}
      </td>
-     <td class="formcolor">{if $prefs.feature_messages!='y'}
-		{remarksbox type="note" title="{tr}Note{/tr}"}
-		<p>{tr}To use Messages, the admin must enable the feature.{/tr}</p>
-		{/remarksbox}{else}
-		{if $send_msg=='y'}
-		<input type="radio" name="do_message" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}/>{tr}Yes{/tr} 	
-		<input type="radio" name="do_message" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}/>{tr}No{/tr}
-		{else}
-		{remarksbox type="note" title="{tr}Note{/tr}"}
-		<p>{tr}You do not have the permission to send messages or you did not allow other users to send you messages.{/tr}
-		{/remarksbox}
-		{/if}		 
-		{/if}
+     <td class="formcolor">
+	{if $send_msg=='y'}
+	<input type="radio" name="do_message" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}/>{tr}Yes{/tr} 	
+	<input type="radio" name="do_message" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}/>{tr}No{/tr}
+	{else}
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+	<p>{tr}You do not have the permission to send messages or you did not allow other users to send you messages.{/tr}
+	{/remarksbox}
+	{/if}		 
      </td>
     </tr>
     <tr class="formcolor" id="messagerow">
@@ -209,15 +216,14 @@
       	{else}&nbsp;{/if}     
      </td>
     </tr>
+{/if}
+{if $prefs.feature_forums!='y' && $report != 'y'}
     <tr class="formcolor">
      <td class="formcolor" rowspan="2">
       <img src="pics/large/stock_index48x48.png" alt="{tr}Forums{/tr}" /><br />
       {tr}Post on forum{/tr}
      </td>
-     <td class="formcolor">{if $prefs.feature_forums!='y'}
-		{remarksbox type="note" title="{tr}Note{/tr}"}
-		<p>{tr}To post on forums, the admin must enable the feature.{/tr}</p>
-		{/remarksbox}{else}
+     <td class="formcolor">
 		{if count($forums)>0}
 		<input type="radio" name="do_forum" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}/>{tr}Yes{/tr} 	
 		<input type="radio" name="do_forum" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}/>{tr}No{/tr}
@@ -226,7 +232,6 @@
 		<p>{tr}There is no forum where you can post a message.{/tr}
 		{/remarksbox}
 		{/if}		 
-		{/if}
      </td>
     </tr>
     <tr class="formcolor" id="forumrow">
@@ -257,7 +262,7 @@
       	{else}&nbsp;{/if}     
      </td>
     </tr>
-
+{/if}
 	{if $prefs.feature_antibot eq 'y' && $user eq ''}
 		{include file='antibot.tpl' td_style="formcolor"}
 	{/if}
@@ -265,7 +270,7 @@
       <td class="formcolor"></td>
       <td class="formcolor">
         <input type="submit" class="button" name="send" value="{tr}Share{/tr}" />
-		{if $prefs.auth_tokens_share eq 'y' and $user!=''}
+		{if $prefs.auth_tokens_share eq 'y' and $user!='' and $report !='y'}
 			<input type="checkbox" name="share_access" value="1" id="share_access" {if $share_access}checked="checked" {/if}/>
 			<label for="share_access">{tr}Share access rights{/tr}</label>
 		{/if}

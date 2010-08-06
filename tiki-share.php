@@ -9,72 +9,85 @@
 //<a href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Share this page{/tr}</a>
 
 require_once ('tiki-setup.php');
-
-$access->check_feature('feature_share');
-$access->check_permission('tiki_p_share');
+if (empty($_REQUEST['report'])) {
+	$access->check_feature('feature_share');
+	$access->check_permission('tiki_p_share');
+} else {
+	if ($_REQUEST['report'] == 'y') {
+		$access->check_feature('feature_site_report', '', 'look');
+		$access->check_permission('tiki_p_site_report');
+	}
+}
 
 // email related:
 // include_once ('lib/registration/registrationlib.php'); // done in the email function
 //include_once ('lib/webmail/tikimaillib.php'); // done in the email function
 $smarty->assign('do_email', (isset($_REQUEST['do_email'])?$_REQUEST['do_email']:true));
-
-// twitter/facebook related
-if (isset($prefs['feature_socialnetworks']) and $prefs['feature_socialnetworks']=='y') {
-	require_once ('lib/socialnetworkslib.php');
-	$smarty->assign('twitterRegistered',$socialnetworkslib->twitterRegistered());
-	$smarty->assign('facebookRegistered',$socialnetworkslib->facebookRegistered());
-	$twitter_token=$tikilib->get_user_preference($user, 'twitter_token', '');
-	$smarty->assign('twitter', ($twitter_token!=''));
-	$facebook_token=$tikilib->get_user_preference($user, 'facebook_token', '');
-	$smarty->assign('facebook', ($facebook_token!=''));
-	$smarty->assign('do_tweet', (isset($_REQUEST['do_tweet'])?$_REQUEST['do_tweet']:true));
-	$smarty->assign('do_fb', (isset($_REQUEST['do_fb'])?$_REQUEST['do_fb']:true));
-} else {
-	$smarty->assign('twitterRegistered',false);
-	$smarty->assign('twitter',false);
-	$smarty->assign('facebookRegistered',false);
-	$smarty->assign('facebook',false);
-}
-
-// message related
-if (isset($prefs['feature_messages']) and $prefs['feature_messages']=='y') {
-	include_once ('lib/messu/messulib.php');
-	include_once ('lib/logs/logslib.php');
-	$smarty->assign('priority', (isset($_REQUEST['priority'])?$_REQUEST['priority']:3));
-	$smarty->assign('do_message', (isset($_REQUEST['do_message'])?$_REQUEST['do_message']:true));
-	$send_msg = ($tiki_p_messages=='y');
-	if ($prefs['allowmsg_is_optional'] == 'y') {
-		if ($tikilib->get_user_preference($user, 'allowMsgs', 'y') != 'y') {
-			$send_msg=false;
-		}
+if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
+	// twitter/facebook related
+	if (isset($prefs['feature_socialnetworks']) and $prefs['feature_socialnetworks']=='y') {
+		require_once ('lib/socialnetworkslib.php');
+		$smarty->assign('twitterRegistered',$socialnetworkslib->twitterRegistered());
+		$smarty->assign('facebookRegistered',$socialnetworkslib->facebookRegistered());
+		$twitter_token=$tikilib->get_user_preference($user, 'twitter_token', '');
+		$smarty->assign('twitter', ($twitter_token!=''));
+		$facebook_token=$tikilib->get_user_preference($user, 'facebook_token', '');
+		$smarty->assign('facebook', ($facebook_token!=''));
+		$smarty->assign('do_tweet', (isset($_REQUEST['do_tweet'])?$_REQUEST['do_tweet']:true));
+		$smarty->assign('do_fb', (isset($_REQUEST['do_fb'])?$_REQUEST['do_fb']:true));
+	} else {
+		$smarty->assign('twitterRegistered',false);
+		$smarty->assign('twitter',false);
+		$smarty->assign('facebookRegistered',false);
+		$smarty->assign('facebook',false);
 	}
-	$smarty->assign('send_msg',$send_msg);	
-} else {
-	$smarty->assign('send_msg',false);
-}
-$smarty->assign('messageto', (isset($_REQUEST['messageto'])?$_REQUEST['messageto']:''));
 
-if (isset($prefs['feature_forums']) and $prefs['feature_forums']=='y') {
-	include_once ("lib/commentslib.php");
-	$commentslib = new Comments($dbTiki); // not done in commentslib
-	$sort_mode = $prefs['forums_ordering'];
-	$channels = $commentslib->list_forums(0, -1, $sort_mode, '');
-	Perms::bulk( array( 'type' => 'forum' ), 'object', $channels['data'], 'forumId' );
-	$forums=array();
-	$temp_max = count($channels["data"]);
-	for ($i = 0; $i < $temp_max; $i++) {
-		$forumperms = Perms::get( array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ) );
-		if (($forumperms->forum_post and $forumperms->forum_post_topic) or $forumperms->admin_forum) {
-			$forums[]=$channels['data'][$i];
+	// message related
+	if (isset($prefs['feature_messages']) and $prefs['feature_messages']=='y') {
+		include_once ('lib/messu/messulib.php');
+		include_once ('lib/logs/logslib.php');
+		$smarty->assign('priority', (isset($_REQUEST['priority'])?$_REQUEST['priority']:3));
+		$smarty->assign('do_message', (isset($_REQUEST['do_message'])?$_REQUEST['do_message']:true));
+		$send_msg = ($tiki_p_messages=='y');
+		if ($prefs['allowmsg_is_optional'] == 'y') {
+			if ($tikilib->get_user_preference($user, 'allowMsgs', 'y') != 'y') {
+				$send_msg=false;
+			}
 		}
+		$smarty->assign('send_msg',$send_msg);	
+	} else {
+		$smarty->assign('send_msg',false);
 	}
-	$smarty->assign('forumId', (isset($_REQUEST['forumId'])?$_REQUEST['forumId']:0));
-} else {
-	$forums=array();
-}
-$smarty->assign('forums',$forums);
+	$smarty->assign('messageto', (isset($_REQUEST['messageto'])?$_REQUEST['messageto']:''));
 
-$smarty->assign('headtitle', tra('Share this page'));
+	if (isset($prefs['feature_forums']) and $prefs['feature_forums']=='y') {
+		include_once ("lib/commentslib.php");
+		$commentslib = new Comments($dbTiki); // not done in commentslib
+		$sort_mode = $prefs['forums_ordering'];
+		$channels = $commentslib->list_forums(0, -1, $sort_mode, '');
+		Perms::bulk( array( 'type' => 'forum' ), 'object', $channels['data'], 'forumId' );
+		$forums=array();
+		$temp_max = count($channels["data"]);
+		for ($i = 0; $i < $temp_max; $i++) {
+			$forumperms = Perms::get( array( 'type' => 'forum', 'object' => $channels['data'][$i]['forumId'] ) );
+			if (($forumperms->forum_post and $forumperms->forum_post_topic) or $forumperms->admin_forum) {
+				$forums[]=$channels['data'][$i];
+			}
+		}
+		$smarty->assign('forumId', (isset($_REQUEST['forumId'])?$_REQUEST['forumId']:0));
+	} else {
+		$forums=array();
+	}
+	$smarty->assign('forums',$forums);
+	$report='n';
+	$smarty->assign('headtitle', tra('Share this page'));
+} else {
+	$report='y';
+	$smarty->assign('headtitle', tra('Report this page'));
+
+}
+$smarty->assign('report',$_REQUEST['report']);
+
 
 include_once ("textareasize.php");
 $errors = array();
@@ -106,36 +119,50 @@ if( $prefs['auth_token_share'] == 'y' && $prefs['auth_token_access'] == 'y' && i
 	$url_for_friend = $tokenlib->includeToken( $url_for_friend, $globalperms->getGroups() );
 	$smarty->assign('share_access',true);
 }
-if (isset($_REQUEST['shorturl'])) {
-	$shorturl=$_REQUEST['shorturl'];
-} else {
-	$shorturl=$socialnetworkslib->bitlyShorten($user, $url_for_friend);
-	if ($shorturl==false) {
-		$shorturl=$url_for_friend;
+if ($report != 'y') {
+	if (isset($_REQUEST['shorturl'])) {
+		$shorturl=$_REQUEST['shorturl'];
+	} else {
+		$shorturl=$socialnetworkslib->bitlyShorten($user, $url_for_friend);
+		if ($shorturl==false) {
+			$shorturl=$url_for_friend;
+		}
 	}
+	$smarty->assign('shorturl', $shorturl);
 }
-
 $smarty->assign('url', $_REQUEST['url']);
 $smarty->assign('prefix', $tikilib->httpPrefix( true ));
 $smarty->assign( 'url_for_friend', $url_for_friend );
-$smarty->assign('shorturl', $shorturl);
+
+if (!empty($_REQUEST['subject'])) {
+	$subject = $_REQUEST['subject'];
+	$smarty->assign('subject', $subject);
+} else {
+	if ($report=='y') {
+		$subject = tra('Report to the webmaster', $prefs['site_language']);
+	} else {
+		$subject = $smarty->fetch('mail/share_subject.tpl');
+	}
+}
+$smarty->assign('subject', $subject);
 
 if (isset($_REQUEST['send'])) {
 	
 	if (!empty($_REQUEST['comment'])) {
 		$smarty->assign('comment', $_REQUEST['comment']);	
 	}
-	if (!empty($_REQUEST['subject'])) {
-		$subject = $_REQUEST['subject'];
-		$smarty->assign('subject', $subject);
-	} else {
-		$subject = $smarty->fetch('mail/share_subject.tpl');
-	}
-	$smarty->assign('subject', $subject);
 
 	check_ticket('share');
 	if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
 		$errors[] = $captchalib->getErrors();
+	}
+	if ($report == 'y') {
+		$email = !empty($prefs['feature_site_report_email']) ? $prefs['feature_site_report_email'] : (!empty($prefs['sender_email']) ? $prefs['sender_email'] : '');
+		if (empty($email)) {
+			$errors[] = tra("The mail can't be sent. Contact the administrator");
+		}
+		$_REQUEST['addresses'] = $email;
+		$_REQUEST['do_email']=1;
 	}
 	if (isset ($_REQUEST['do_email']) and $_REQUEST['do_email']==1) {
 		$emailSent = sendMail($_REQUEST['email'], $_REQUEST['addresses'], $subject);
@@ -149,47 +176,49 @@ if (isset($_REQUEST['send'])) {
 		$smarty->assign('emailSent', $emailSent);
 		$ok = $ok && $emailSent;
 	} // do_email
-	if (isset ($_REQUEST['do_tweet']) and $_REQUEST['do_tweet']==1) {
-		$tweet=substr($_REQUEST['tweet'],0,140);
-		if (strlen($tweet)==0) {
-			$ok=false;
-			$errors[]=tra("No text given for tweet");
-		} else {
-			$tweetId=$socialnetworkslib->tweet($tweet, $user);
-			if ($tweetId>0) {
-				$smarty->assign('tweetId',$tweetId);
-			} else {
+
+	if ($report != 'y') {
+		if (isset ($_REQUEST['do_tweet']) and $_REQUEST['do_tweet']==1) {
+			$tweet=substr($_REQUEST['tweet'],0,140);
+			if (strlen($tweet)==0) {
 				$ok=false;
-				$tweetId=-$tweetId;
-				$errors[]=tra("Error sending tweet:")." $tweetId";
+				$errors[]=tra("No text given for tweet");
+			} else {
+				$tweetId=$socialnetworkslib->tweet($tweet, $user);
+				if ($tweetId>0) {
+					$smarty->assign('tweetId',$tweetId);
+				} else {
+					$ok=false;
+					$tweetId=-$tweetId;
+					$errors[]=tra("Error sending tweet:")." $tweetId";
+				}
 			}
-		}
-	} // do_tweet
-	if (isset ($_REQUEST['do_fb']) and $_REQUEST['do_fb']==1) {
-		$msg=$_REQUEST['comment'];
-		$linktitle=$_REQUEST['fblinktitle'];
-		$facebookId=$socialnetworkslib->facebookWallPublish($user, $msg, $url_for_friend, $linktitle, $_REQUEST['subject']);
-		$smarty->assign('facebookId', $facebookId);
-		$ok=$ok && ($facebookId!=false);
-	} // do_fb
+		} // do_tweet
+		if (isset ($_REQUEST['do_fb']) and $_REQUEST['do_fb']==1) {
+			$msg=$_REQUEST['comment'];
+			$linktitle=$_REQUEST['fblinktitle'];
+			$facebookId=$socialnetworkslib->facebookWallPublish($user, $msg, $url_for_friend, $linktitle, $_REQUEST['subject']);
+			$smarty->assign('facebookId', $facebookId);
+			$ok=$ok && ($facebookId!=false);
+		} // do_fb
 	
-	if (isset($_REQUEST['do_message']) and $_REQUEST['do_message']==1) {
-		$messageSent=sendMessage($_REQUEST['messageto'], $subject);
-		$smarty->assign('messageSent', $messageSent);
-		$ok = $ok && $messageSent;
-	} // do_message
-	if (isset($_REQUEST['do_forum']) and $_REQUEST['do_forum']==1) {
-		if (isset($_REQUEST['forumId'])) {
-			$threadId=postForum($_REQUEST['forumId'], $subject);
-			$smarty->assign('threadId',$threadId);
-			$ok=$ok && ($threadId!=0);
-		}
-	} // do_forum
-	
+		if (isset($_REQUEST['do_message']) and $_REQUEST['do_message']==1) {
+			$messageSent=sendMessage($_REQUEST['messageto'], $subject);
+			$smarty->assign('messageSent', $messageSent);
+			$ok = $ok && $messageSent;
+		} // do_message
+		if (isset($_REQUEST['do_forum']) and $_REQUEST['do_forum']==1) {
+			if (isset($_REQUEST['forumId'])) {
+				$threadId=postForum($_REQUEST['forumId'], $subject);
+				$smarty->assign('threadId',$threadId);
+				$ok=$ok && ($threadId!=0);
+			}
+		} // do_forum
+	} //report != y
 	$smarty->assign_by_ref('errors', $errors);
 	$smarty->assign('errortype', 'no_redirect_login');
-	if ($ok) {
-//		$access->redirect( $_REQUEST['url'], tra('Your link was sent.') );
+	if ($ok && $report=='y') {
+		$access->redirect( $_REQUEST['url'], tra('Your link was sent.') );
 	}
 	$smarty->assign('sent',true);
 } else {
