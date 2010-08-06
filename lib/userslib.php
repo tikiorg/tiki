@@ -261,15 +261,15 @@ class UsersLib extends TikiLib
 		}
 		if (SID) $url.= '?' . SID;
 
-		if ($phpcas_enabled == 'y' && $prefs['auth_method'] == 'cas' && $user != 'admin' && $user != '') {
-			require_once ('lib/phpcas/source/CAS/CAS.php');
+		if ($phpcas_enabled === 'y' && $prefs['auth_method'] === 'cas' && $user !== 'admin' && $user !== '') {
+			require_once ('lib/phpcas/CAS/CAS.php');
 			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path']);
 			phpCAS::logoutWithRedirectServiceAndUrl($url,$url);
 		}
 		unset($_SESSION[$user_cookie_site]);
 		session_destroy();
 		
-		if ($prefs['auth_method'] == 'ws') {
+		if ($prefs['auth_method'] === 'ws') {
 			header('Location: '.str_replace('//', '//admin:@', $url)); // simulate a fake login to logout the user
 		} else {
 			header('Location: ' . $url);
