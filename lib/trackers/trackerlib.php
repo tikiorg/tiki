@@ -3472,6 +3472,23 @@ class TrackerLib extends TikiLib
 		return $ret;
 	}
 
+	/* tests if a value exists in a field
+	 */
+	function check_field_value_exists($value, $fieldId, $exceptItemId = 0) {
+		$bindvars[] = (int) $fieldId;
+
+		$mid = ' AND ttif.`value`=?';
+		$bindvars[] = $value;
+		
+		if ($exceptItemId > 0) {
+			$mid .= ' AND ttif.`itemId` != ? ';
+			$bindvars[] = (int) $exceptItemId;
+		}
+		$query = "SELECT COUNT(*) FROM `tiki_tracker_item_fields` ttif WHERE ttif.`fieldId`=? $mid";
+		$result = $this->getOne($query, $bindvars);
+		return $result > 0;
+	}
+
 	function is_multilingual($fieldId){
 	         if ($fieldId<1)
 	           return 'n';

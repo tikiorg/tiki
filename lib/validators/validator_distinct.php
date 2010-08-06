@@ -15,7 +15,7 @@ function validator_distinct($input, $parameter = '', $message = '') {
 		return tra("Edit field: (Parameter needs to be 'trackerId=XX&fileId=YY' or be empty to use the current field).");
 	}
 	if (!isset($arr['itemId']) || $arr['itemId'] < 1) {
-		$arr['itemId'] = '';
+		$arr['itemId'] = 0;
 	}
 	
 	$info = $trklib->get_tracker_field($arr['fieldId']);
@@ -24,9 +24,7 @@ function validator_distinct($input, $parameter = '', $message = '') {
 		return tra("Edit field: (Incorrect validation parameter).");
 	}
 	
-	$vals = $trklib->list_tracker_field_values($arr['trackerId'], $arr['fieldId'], 'opc', 'y', '', $arr['itemId']);
-	
-	if (in_array($input, $vals)) {
+	if ($trklib->check_field_value_exists($input, $arr['trackerId'], $arr['fieldId'], $arr['itemId'])) {
 		return tra(empty($message) ? "Value already exists" : $message);
 	}
 	
