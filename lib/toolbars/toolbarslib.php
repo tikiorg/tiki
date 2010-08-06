@@ -1031,13 +1031,20 @@ class ToolbarHelptool extends Toolbar
 	function getWikiHtml( $areaName ) // {{{
 	{
 
-		global $wikilib, $smarty, $plugins;
+		global $wikilib, $smarty, $plugins, $section;
 		if (!isset($plugins)) {
 			include_once ('lib/wiki/wikilib.php');
 			$plugins = $wikilib->list_plugins(true);
 		}
+		if ($section == 'sheet') {
+			$sheethelp = $smarty->fetch('tiki-edit_help_sheet.tpl');
+		} else {
+			$sheethelp = '';
+		}
 		$smarty->assign_by_ref('plugins', $plugins);
-		return $smarty->fetch("tiki-edit_help.tpl") . $smarty->fetch("tiki-edit_help_plugins.tpl");
+		return  $smarty->fetch('tiki-edit_help.tpl') .
+				$smarty->fetch('tiki-edit_help_plugins.tpl') .
+				$sheethelp;
 		
 	} // }}}
 
