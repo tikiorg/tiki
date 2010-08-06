@@ -15,7 +15,7 @@
 				<label for="edit_language">{tr}Select the language to edit{/tr}:</label>
 				<select id="edit_language" name="edit_language">
 					{section name=ix loop=$languages}
-						<option value="{$languages[ix]|escape}" {if $edit_language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
+						<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
 					{/section}
 				</select>
 			</div>
@@ -128,6 +128,26 @@
 			{if isset($expmsg)}
 				{$expmsg}
 			{/if}
+		{/tab}
+		
+		{tab name='Import languages'}
+			{if isset($impmsg)}
+				{$impmsg}
+			{/if}
+			<div class="adminoptionbox">
+				<label for="imp_language">{tr}Select the language to import{/tr}:</label>
+				<select id="imp_language" name="imp_language">
+					{section name=ix loop=$languages}
+						<option value="{$languages[ix].value|escape}">
+							{$languages[ix].name}
+						</option>
+					{/section}
+				</select>
+			</div>
+			<div class="adminoptionbox">
+				<input type="submit" name="import" value="{tr}Import{/tr}" />
+			</div>
+
 		{/tab}
 	{/tabset}
 </form>
