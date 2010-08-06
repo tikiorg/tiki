@@ -43,7 +43,7 @@ function module_quick_edit_info() {
 			),
 			'addcategId' => array(
 				'name' => tra('Category to preselect'),
-				'description' => tra('Iok, f set, pages created through the module have this category prechecked to be categorized in.') . " " . tra('Not set by default.')
+				'description' => tra('If set, pages created through the module have this category prechecked to be categorized in.') . " " . tra('Not set by default.')
 			),
 			'customTip' => array(
 				'name' => tra('Tip to be shown'),
@@ -59,16 +59,16 @@ function module_quick_edit_info() {
 			),
 			'pastetext' => array(
 				'name' => tra('input field for copy/paste'),
-				'description' => tra('Add a text area for copy/paste page content'),
+				'description' => tra('If set to 1 , a text area for copy/paste page content is shown') . " " . tra('Default:') . ' 0',
 				'filter' => 'int',
 			),
 			'enterdescription' => array(
 				'name' => tra('show description field'),
-				'description' => tra('Add a text field to enter the page description (requires feature_wiki_description'),
+				'description' => tra('If set to 1, a text field to enter the page description is shown (requires feature_wiki_description)') . " " . tra('Default:') . ' 0',
 			),
 			'chooseCateg' => array(
 				'name' => tra('choose category'),
-				'description' => tra('Allows the user to choose a category instead of preselecting one'),
+				'description' => tra('If set to 1, this allows the user to choose a category instead of preselecting one') . " " . tra('Default:') . ' 0',
 			),
 		)
 	);
