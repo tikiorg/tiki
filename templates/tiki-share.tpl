@@ -1,4 +1,4 @@
-{* $Id: $ *}
+{* $Id$ *}
 {title}{tr}Share this page{/tr}{/title}
 
 {if isset($sent)}

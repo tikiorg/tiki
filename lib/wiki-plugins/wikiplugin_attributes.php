@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_proposal.php 27683 2010-06-17 18:19:50Z lphuberdeau $
+// $Id$
 
 
 function wikiplugin_attributes_info() {

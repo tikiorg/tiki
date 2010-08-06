@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: paymentlib.php 27790 2010-06-28 20:38:30Z sylvieg $
+// $Id$
 
 class DiscountLib extends TikiDb_Bridge
 {

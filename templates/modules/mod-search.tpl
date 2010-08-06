@@ -1,4 +1,4 @@
-{* $Id: mod-search_box.tpl 24586 2010-01-21 02:16:26Z chealer $ *}
+{* $Id$ *}
 {*strip TODO*}
 {if $tiki_p_search eq 'y'}
 {tikimodule error=$module_error title=$tpl_module_title name="search" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}

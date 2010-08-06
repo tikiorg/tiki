@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: transitionlib.php 27986 2010-07-14 15:56:08Z sylvieg $
+// $Id$
 
 class TodoLib
 {
