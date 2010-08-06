@@ -32,14 +32,15 @@ $smarty->assign_by_ref('languages', $languages);
 if (isset($_REQUEST["edit_language"])) {
 	$smarty->assign('edit_language', $_REQUEST["edit_language"]);
 	$edit_language = $_REQUEST["edit_language"];
-}
-
-if (!isset($edit_language)) {
+} else {
+	$smarty->assign('edit_language', $prefs['language']);
 	$edit_language = $prefs['language'];
 }
 
 if (isset($_REQUEST["whataction"])) {
 	$smarty->assign('whataction', $_REQUEST["whataction"]);
+} else {
+	$smarty->assign('whataction', '');
 }
 
 // Adding strings
@@ -211,6 +212,8 @@ if (isset($_REQUEST["exp_language"])) {
 	$exp_language = $_REQUEST["exp_language"];
 	$lang = new Language($exp_language);
 	$smarty->assign('exp_language', $exp_language);
+} else {
+	$smarty->assign('exp_language', '');
 }
 
 // Export
