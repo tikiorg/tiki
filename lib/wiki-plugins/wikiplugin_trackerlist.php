@@ -999,6 +999,7 @@ function wikiplugin_trackerlist($data, $params) {
 									}
 									$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($f["value"]));
 								}
+								break;
 							}
 						}
 					}
