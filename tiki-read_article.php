@@ -85,6 +85,7 @@ $smarty->assign('image_name', $article_data["image_name"]);
 $smarty->assign('image_type', $article_data["image_type"]);
 $smarty->assign('image_size', $article_data["image_size"]);
 $smarty->assign('image_x', $article_data["image_x"]);
+$smarty->assign('list_image_x', $article_data["list_image_x"]);
 $smarty->assign('image_y', $article_data["image_y"]);
 $smarty->assign('image_data', urlencode($article_data["image_data"]));
 $smarty->assign('reads', $article_data["nbreads"]);
@@ -95,6 +96,13 @@ $smarty->assign('use_ratings', $article_data["use_ratings"]);
 if (strlen($article_data["image_data"]) > 0) {
 	$smarty->assign('hasImage', 'y');
 	$hasImage = 'y';
+}
+if ($article_data['image_x'] > 0) {
+	$smarty->assign('width', $article_data['image_x']);
+} else {
+	require_once('lib/images/images.php');
+	$img = new Image($article_data['image_x'], false);
+	$smarty->assign('width', $img->get_width()+2);
 }
 $smarty->assign('heading', $article_data["heading"]);
 if( $prefs['article_paginate'] == 'y' ) {
@@ -147,6 +155,12 @@ $smarty->assign('parsed_body', $tikilib->parse_data($body));
 $smarty->assign('parsed_heading', $tikilib->parse_data($heading));
 //}
 $topics = $artlib->list_topics();
+foreach ($topics as $topic) {
+	if ($topic['topicId'] == $article_data['topicId']) {
+		$smarty->assign('topicName', $topic['name']);
+		break;
+	}
+}
 $smarty->assign_by_ref('topics', $topics);
 if ($prefs['feature_article_comments'] == 'y') {
 	$smarty->assign('comment_can_rate_article', $article_data["comment_can_rate_article"]);

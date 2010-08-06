@@ -109,12 +109,9 @@
 				{preference name=art_list_img}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Articles plugin{/tr} - {tr}Articles Home{/tr}</legend>
-				{preference name=art_view_img_width}
-			</fieldset>
-			<fieldset>
 				<legend>{tr}Article View{/tr}</legend>
 				{preference name=art_trailer_pos}
+				{preference name=art_header_text_pos}
 			</fieldset>
 		{/tab}
 	{/tabset}

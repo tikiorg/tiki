@@ -691,6 +691,7 @@ function get_default_prefs() {
 		'art_view_img' => 'y',
 		'art_list_lang' => 'n',
 		'art_trailer_pos' => 'top',
+		'art_header_text_pos' => 'next',
 		'feature_article_comments' => 'n',
 		'article_comments_default_ordering' => 'points_desc',
 		'article_comments_per_page' => 10,

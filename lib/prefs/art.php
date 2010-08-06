@@ -103,5 +103,16 @@ function prefs_art_list() {
 			),
 			'default' => 'top'
 		),
+		'art_header_text_pos' => array(
+			'name' => tra('Header text position'),
+			'description' => tra('Header text position'). tra('Requeires a smaller image for list view'),
+			'type' => 'list',
+			'options' => array(
+				'next' => tra('Next image'),
+				'below' => tra('Below image'),
+			),
+			'default' => 'next'
+		),
+
 	);
 }

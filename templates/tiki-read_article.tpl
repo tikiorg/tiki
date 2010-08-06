@@ -48,42 +48,66 @@
 	{/if}
 
 	{if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl}{/if}
+
 	<div class="articleheading">
-		<table cellpadding="0" cellspacing="0">
+		<table cellpadding="0" cellspacing="0" width="100%">
 			<tr>
-				{if $isfloat eq 'n'}
-					<td valign="top">
-				{else}
-					<td valign="top">
+				<td valign="top">
+				{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif $topicName}{tr}{$topicName}{/tr}{/if}{/capture}
+				{if $topicId}
+					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic{/tr}: {tr}{$topicName}{/tr}{/if}">
 				{/if}
-				
-					{if $useImage eq 'y'}
-						{if $hasImage eq 'y'}
-							<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}List all articles of this same topic{/tr}: {$topics[$topicId].name|escape}{/if}"><img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}List all articles of this same topic{/tr}{/if}" src="article_image.php?image_type=article&amp;id={$articleId}"{if $image_x > 0} width="{$image_x}"{/if}{if $image_y > 0 } height="{$image_y}"{/if} /></a>
-						{else}
-								<a class="link" href="tiki-view_articles.php?topic={$topicId}" title="{tr}List all articles of this same topic{/tr}">{$topics[$topicId].name|escape}</a>
+				{if $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
+					{assign var="big_image" value=y}
+					 <div class="imgbox" style="margin:auto; width:{$width}px">
+				{/if}
+				{if $useImage eq 'y'}
+					{if $hasImage eq 'y'} {* display article image *}
+						<img 
+							 {if $big_image eq 'y'}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
+							 alt="{$smarty.capture.imgTitle}" 
+							 src="article_image.php?image_type=article&amp;id={$articleId}"
+							 {if $image_x > 0}width="{$image_x}"{/if}
+							 {if $image_y > 0}height="{$image_y}"{/if} />
+					{elseif $topicId}
+							{tr}{$topics[$topicId].name}{/tr}
+					{/if}
+				{else}
+					{section name=it loop=$topics}
+						{if ($topics[it].topicId eq $topicId) and ($topics[it].image_size > 0)}
+							<img 
+								 {if $big_image eq 'y'}class="cboxElement"{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if}
+								 alt="{tr}{$topicName}{/tr}"
+								 src="article_image.php?image_type=topic&amp;id={$topicId}" />
 						{/if}
-					{else}
-						{section name=it loop=$topics}
-							{if ($topics[it].topicId eq $topicId) and ($topics[it].image_size > 0)}
-								<a class="link" href="tiki-view_articles.php?topic={$topics[it].topicId}" title="{tr}List all articles of this same topic{/tr}"><img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{$topicName}" src="article_image.php?image_type=topic&amp;id={$topicId}" /></a>
-							{/if}
-						{/section}
+					{/section}
+				{/if}
+				{if $topicId}</a>{/if}
+				{if $big_image eq 'y'}
+					{if $show_image_caption eq 'y' and $image_caption || $image_x > 0}
+						<div class="mini thumbcaption">
+						{if $image_x > 0}<div class="magnify"><a class="internal cboxElement" rel="box" href="article_image.php?image_type=article&amp;id={$articleId}">{icon _id='magnifier' title=$smarty.capture.imgTitle}</a></div>{/if}
+						{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{/if}
+						</div>
 					{/if}
-					{if $isfloat eq 'n'}
-						</td>
-						<td valign="top">
-					{/if}
-					<div class="articleheadingtext">
-						{if $article_attributes}
+					</div>
+				{/if}
+				{if  $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
+					 </td></tr><tr><td valign="top">
+				{elseif $isfloat eq 'n'}
+					</td>
+					<td valign="top" width="100%">
+				{/if}
+				<div class="articleheadingtext">
+					{if $article_attributes}
 						<div class="articleattributes">
 							{foreach from=$article_attributes key=attname item=attvalue}
 							{tr}{$attname|escape}{/tr}: {$attvalue|escape}<br />
 							{/foreach}
 						</div>
-						{/if}
-						{$parsed_heading}
-					</div>
+					{/if}
+					{$parsed_heading}
+				</div>
 				</td>
 			</tr>
 		</table>

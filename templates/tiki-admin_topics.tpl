@@ -33,7 +33,8 @@
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Image{/tr}</th>
 		<th>{tr}Active{/tr}</th>
-		<th>{tr}Articles (subs){/tr}</th>
+		<th>{tr}Articles{/tr}</th>
+		{if $prefs.feature_submissions eq 'y'}<th>{tr}Submissions{/tr}</th>{/if}
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	{cycle print=false values="even,odd"}
@@ -51,7 +52,8 @@
 				{/if}
 			</td>
 			<td class="{cycle advance=false}">{$topics[user].active}</td>
-			<td class="{cycle advance=false}">{$topics[user].arts} ({$topics[user].subs})</td>
+			<td class="{cycle advance=false}">{$topics[user].arts}</td>
+			{if $prefs.feature_submissions eq 'y'}<td class="{cycle advance=false}">{$topics[user].subs}</td>{/if}
 			<td class="{cycle}">
 				 <a class="link" href="tiki-edit_topic.php?topicid={$topics[user].topicId}">{icon _id='page_edit'}</a>
 				{if $topics[user].individual eq 'y'}
@@ -70,7 +72,7 @@
 		</tr>
 	{sectionelse}
 		<tr>
-			<td colspan="5" class="odd">{tr}No records found{/tr}</td>
+			<td colspan="{if $prefs.feature_submissions eq 'y'}7{else}6{/if}" class="odd">{tr}No records found{/tr}</td>
 		</tr>
 	{/section}
 </table>
