@@ -1782,7 +1782,9 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
 			{
 				$width = $height = '';
-				extract( $sheet->cellInfo[$i][$j] );
+				if (!empty($sheet->cellInfo[$i][$j])) {
+					extract( $sheet->cellInfo[$i][$j] );
+				}
 				$append = '';
 
 				if( empty( $width ) || empty( $height ) || $width == 0 || $height == 0 )
