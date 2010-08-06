@@ -401,8 +401,17 @@ function wikiplugin_googlemap($data, $params) {
 					break;
 				}
 			}
-			if (!empty($options_array[1]) && !empty($item[$options_array[1]])) {
-				$markertext = htmlspecialchars($item[$options_array[1]]);
+			if (!empty($options_array[1])) {
+				$markertext = '';
+				$markerfields = explode('+', $options_array[1]);
+				foreach ($markerfields as $k => $m) {
+					if (!empty($item[$m])) {
+						$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($item[$m]));
+						if ($k < count($markerfields) - 1) {
+							$markertext .= '<br /><br />';	
+						}					
+					}
+				}
 			}
 			$icon = '';
 			$iconx = '';
@@ -440,7 +449,7 @@ function wikiplugin_googlemap($data, $params) {
 	}	
 	
 	if ($type == 'objectlist') {
-		// An global array of objects with type, id, title, href is read  
+		// An global array of objects with type, id, title, href, text is read  
 		// This assumes the objects have already been filtered for permissions
 		global $gmapobjectarray;
 		foreach ($gmapobjectarray as $obj) {
@@ -465,6 +474,10 @@ function wikiplugin_googlemap($data, $params) {
 			$popup .= htmlspecialchars($obj['title']);
 			if (!empty($obj['href'])) {
 				$popup .= '</a>';	
+			}
+			if (!empty($obj['text'])) {
+				$popup .= '<br /><br />';
+				$popup .= $obj['text'];
 			}
 			
 			$icon = '';

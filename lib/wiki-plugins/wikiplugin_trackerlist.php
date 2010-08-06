@@ -963,6 +963,15 @@ function wikiplugin_trackerlist($data, $params) {
 			if (!empty($params['googlemap']) && $params['googlemap'] == 'y') {
 				$smarty->assign('trackerlistmapview', true);
 				$smarty->assign('trackerlistmapname', "trackerlistgmap_$iTRACKERLIST");
+				// Check for custom bubble text
+				$unlimitedallfields = $trklib->list_tracker_fields($trackerId);
+				$markerfields = array();
+				foreach ($unlimitedallfields["data"] as $f) {
+					if ($f["type"] == 'G' && $f["options_array"][0] == 'y' && !empty($f["options_array"][1])) {
+						$markerfields = explode('+', $f["options_array"][1]);
+						break;
+					}
+				}
 				// Generate Google map plugin data
 				if (!empty($params["googlemapicon"])) {
 					$googlemapicon = $params["googlemapicon"];
@@ -972,17 +981,34 @@ function wikiplugin_trackerlist($data, $params) {
 				global $gmapobjectarray;
 				$gmapobjectarray = array();
 				foreach ($items["data"] as $i) {
-					
 					if (!empty($params["url"])) {
 						$href = str_replace('itemId', $i["itemId"], $params["url"]);
 					} else {
 						$href = 'tiki-view_tracker_item.php?itemId=' . $i["itemId"];
 					}
+					$markertext = '';
+					$markertitle = $i["value"];
+					foreach ($markerfields as $k => $m) {
+						foreach ($i["field_values"] as $f) {
+							if ($f["fieldId"] == $m) {								
+								if ($k == 0 && !empty($f["value"])) {
+									$markertitle = preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($f["value"]));
+								} elseif (!empty($f["value"])) {
+									if ($markertext) {
+										$markertext .= '<br /><br />';
+									}
+									$markertext .= preg_replace("/[\r\n|\r|\n]/", "<br />", htmlspecialchars($f["value"]));
+								}
+							}
+						}
+					}
+					
 					$gmapobjectarray[] = array('type' => 'trackeritem',
 						'id' => $i["itemId"],
-						'title' => $i["value"],
+						'title' => $markertitle,
 						'href' => $href,
 						'icon' => $googlemapicon,
+						'text' => $markertext,
 					);
 				}
 			} else {
