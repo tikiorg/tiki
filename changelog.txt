@@ -23,6 +23,37 @@ Version 5.1
 ------------------
 
 ----------------------------------------------
+r28336 | sept_7 | 2010-08-06 13:21:44 +0100 (Fri, 06 Aug 2010) | 2 lines
+
+[FIX/bp28335] Fix include path for CAS, repported by chealer.
+
+----------------------------------------------
+r28316 | ricks99 | 2010-08-05 16:14:39 +0100 (Thu, 05 Aug 2010) | 1 line
+
+[UI] Updated 'powered by' buttons and demo logo to reflect the new tiki branding logo. Backport of  28314 from. OK'd by jonnyb (tx!)
+----------------------------------------------
+r28298 | sept_7 | 2010-08-04 14:38:51 +0100 (Wed, 04 Aug 2010) | 2 lines
+
+[FIX/bp28297] Use external SVN for PHPCAS, so updates follow upstream
+
+----------------------------------------------
+r28292 | chibaguy | 2010-08-04 05:18:52 +0100 (Wed, 04 Aug 2010) | 1 line
+
+[FIX] Corrected background image paths. Thanks to Chealer for spotting and reminding.
+----------------------------------------------
+r28278 | marclaporte | 2010-08-03 01:57:05 +0100 (Tue, 03 Aug 2010) | 1 line
+
+[KIL] saving a meg
+----------------------------------------------
+r28273 | jonnybradley | 2010-08-02 22:40:53 +0100 (Mon, 02 Aug 2010) | 2 lines
+
+[FIX] Release script: Trap smarty template errors and ignore the one in tiki-mods.lib (can't see how to fix it, or why).
+Also do chdir() so it runs in the debugger as well.
+----------------------------------------------
+r28272 | jonnybradley | 2010-08-02 21:16:21 +0100 (Mon, 02 Aug 2010) | 1 line
+
+[FIX] Installer: Don't show form to fix encoding on last page if it's a clean install.
+----------------------------------------------
 r28257 | luciash | 2010-08-02 15:22:41 +0100 (Mon, 02 Aug 2010) | 1 line
 
 [FIX] import/export lang: add the UTF-8 encoding to the header for the exported language
