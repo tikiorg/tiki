@@ -14,3 +14,12 @@
 	{include file='blog_post_footer.tpl'}
 </div>
 
+{if $prefs.feature_blogposts_comments == 'y'
+		&& ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 'c')
+		&& (($tiki_p_read_comments == 'y'
+		&& $comments_cant != 0)
+		|| $tiki_p_post_comments == 'y'
+		|| $tiki_p_edit_comments == 'y')}
+	{assign var='show_comzone' value='y'}
+	{include file='comments.tpl'}
+{/if}
