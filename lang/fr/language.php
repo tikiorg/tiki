@@ -5575,7 +5575,7 @@ $lang=Array(
 // "Edit this assigned module" => "Edit this assigned module",
 // "The" => "The",
 // "Because <a class=\"rbox-link\" href=\"tiki-admin.php?page=module\">Users can Configure Modules</a>, select either" => "Because <a class=\"rbox-link\" href=\"tiki-admin.php?page=module\">Users can Configure Modules</a>, select either",
-// "Module Options" => "Module Options",
+"Module Options" => "Options de modules",
 // "Edit this user module" => "Edit this user module",
 // "Available polls" => "Available polls",
 // "Dynamic content blocks" => "Dynamic content blocks",
