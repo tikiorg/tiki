@@ -32,6 +32,11 @@
 				{preference name=change_theme}
 				{preference name=auth_token_tellafriend}
 				{preference name=auth_token_share}
+				{preference name=feature_wiki_userpage}
+				<div class="adminoptionboxchild" id="feature_wiki_userpage_childcontainer">
+					{preference name=feature_wiki_userpage_prefix}
+				</div>
+
 			</div>
 		{/tab}
 
