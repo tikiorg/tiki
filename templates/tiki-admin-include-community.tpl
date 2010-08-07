@@ -36,7 +36,7 @@
 				<div class="adminoptionboxchild" id="feature_wiki_userpage_childcontainer">
 					{preference name=feature_wiki_userpage_prefix}
 				</div>
-
+				{preference name=feature_group_transition}
 			</div>
 		{/tab}
 

@@ -20,6 +20,7 @@
 			{preference name=categorypath_excluded}
 		</div>
 		{preference name=feature_categoryobjects}
+		{preference name=feature_category_transition}
 		{preference name=feature_category_use_phplayers}
 		<div class="adminoptionlabel" style="margin-left:40px">
 		{remarksbox type="note" title="{tr}Note{/tr}"}

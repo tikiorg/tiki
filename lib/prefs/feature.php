@@ -865,10 +865,12 @@ function prefs_feature_list() {
 		),
 		'feature_categorypath' => array(
 			'name' => tra('Category Path'),
+			'description' => tra('Show category tree, above wiki pages'),
 			'type' => 'flag',
 		),
 		'feature_categoryobjects' => array(
 			'name' => tra('Show category objects'),
+			'description' => tra('Show objects sharing the same category, below wiki pages'),
 			'type' => 'flag',
 		),
 		'feature_category_use_phplayers' => array(
@@ -1735,9 +1737,13 @@ function prefs_feature_list() {
 		),
 		'feature_webdav' => array(
 			'name' => tra('WebDAV access to Tiki'),
-			'help' => tra('Allow to acces File Galleries with WebDAV'),
-			'description' => tra('use tiki-webdav.php as the URI of the WebDAV repository'),
+			'description' => tra('Allow to access File Galleries with WebDAV'),
+			'hint' => tra('use tiki-webdav.php as the URI of the WebDAV repository'),
+			'help' => 'WebDAV',
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_file_galleries',
+			),
 		),
 		'feature_fixed_width' => array(
 			'name' => tra('Fixed width'),
@@ -1755,16 +1761,19 @@ function prefs_feature_list() {
 			'name' => tra('Group Transition'),
 			'description' => tra('Enables transitions for users between different groups. Transitions will create a user approval workflow.'),
 			'type' => 'flag',
+			'help' => 'Group+Transitions',
 		),
 		'feature_category_transition' => array(
 			'name' => tra('Category Transition'),
 			'description' => tra('Enables transitions on objects between different categories. Transitions will create a document workflow.'),
 			'type' => 'flag',
+			'help' => 'Category+Transitions',
 		),
 		'feature_watershed' => array(
 			'name' => tra('Ustream Watershed'),
 			'description' => tra('Integration to Ustream Watershed live video streaming.'),
 			'type' => 'flag',
+			'help' => 'Watershed',
 		),
 	);
 }
