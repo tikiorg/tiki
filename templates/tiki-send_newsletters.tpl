@@ -102,7 +102,7 @@
 
 	{if $allowTxt eq 'y' }
 		<h3>{tr}Text version{/tr}</h3>
-		{if $info.datatxt}<div class="simplebox wikitext" >{$datatxt|escape|nl2br}</div>{/if}
+		{if $info.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
 		{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
 	{/if}
 	
@@ -232,7 +232,7 @@
 						{include file='textareasize.tpl' area_name='editwikitxt' formId='editpageform'}
 					</td>
 					<td class="formcolor" id="txtcol2" >
-						<textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
+						<textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$datatxt|escape}</textarea>
 					</td>
 				</tr>
 

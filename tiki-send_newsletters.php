@@ -221,6 +221,8 @@ if (isset($_REQUEST["preview"])) {
 	$previewdata = $info['dataparsed'];
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
+		$txtArticleClip = generateTxtVersion($articleClip);
+		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
 		$previewdata = str_replace("~~~articleclip~~~", $articleClip, $previewdata);
 	}
 	$smarty->assign('info', $info);
@@ -259,6 +261,8 @@ if (isset($_REQUEST["save"])) {
 	$previewdata = $parsed;
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
+		$txtArticleClip = generateTxtVersion($articleClip);
+		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
 		$previewdata = str_replace("~~~articleclip~~~", $articleClip, $previewdata);
 	}
 	$smarty->assign('previewdata', $previewdata);
@@ -277,17 +281,16 @@ if (!empty($_REQUEST['datatxt'])) { $txt = $_REQUEST['datatxt']; }
 if (empty($txt) && !empty($_REQUEST["data"])) {
 	//No txt message is explicitely provided -> Create one with the html Version & remove Wiki tags
 	$txt = $_REQUEST["data"];
-	//Add line breaks if none before stripping headers, paras, and br
-	$txt =  preg_replace('/(<\/h[1-6]>) *([^\r\n])/', "$1\n\n$2", $txt);
-	$txt =  preg_replace('/(<\/div>) *([^\r\n])/', "$1\n\n$2", $txt);
-	$txt =  preg_replace('/(<\/p>) *([^\r\n])/', "$1\n\n$2", $txt);
-	$txt =  str_replace('/(<br *\/?>)/', "\n", $txt);
-	// start stripping tags
-	$txt = strip_tags(str_replace(array("\r\n", "&nbsp;"), array("\n", " "), $txt));
-	$txt = preg_replace('/^!!!(.*?)$/m', "\n$1\n", $txt);
-	$txt = preg_replace('/^!!(.*?)$/m', "\n$1\n", $txt);
-	$txt = preg_replace('/^!(.*?)$/m', "\n$1\n", $txt);
+	$txt = generateTxtVersion($txt);
 	$info["datatxt"] = $txt;
+	$smarty->assign('datatxt', $txt);
+	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
+		if (!isset($txtArticleClip)) {
+			$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
+			$txtArticleClip = generateTxtVersion($articleClip);
+		}
+		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
+	}
 }
 
 if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
@@ -316,6 +319,8 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
 	}
 	if ($nl_info["allowArticleClip"] == 'y' && $nl_info["autoArticleClip"] == 'y') {
 		$articleClip = $nllib->clip_articles($_REQUEST["nlId"]);
+		$txtArticleClip = generateTxtVersion($articleClip);
+		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
 		$html = str_replace("~~~articleclip~~~", $articleClip, $html);
 	}
 	if (stristr($html, '<base') === false) {
@@ -570,3 +575,18 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-send_newsletters.tpl');
 $smarty->display("tiki.tpl");
+
+function generateTxtVersion($txt) {
+	//Add line breaks if none before stripping headers, paras, and br
+	$txt =  preg_replace('/(<\/h[1-6]>) *([^\r\n])/', "$1\n\n$2", $txt);
+	$txt =  preg_replace('/(<\/div>) *([^\r\n])/', "$1\n\n$2", $txt);
+	$txt =  preg_replace('/(<\/p>) *([^\r\n])/', "$1\n\n$2", $txt);
+	$txt =  str_replace('/(<br *\/?>)/', "\n", $txt);
+	// start stripping tags
+	$txt = strip_tags(str_replace(array("\r\n", "&nbsp;"), array("\n", " "), $txt));
+	$txt = preg_replace('/^!!!(.*?)$/m', "\n$1\n", $txt);
+	$txt = preg_replace('/^!!(.*?)$/m', "\n$1\n", $txt);
+	$txt = preg_replace('/^!(.*?)$/m', "\n$1\n", $txt);
+	$txt = html_entity_decode($txt);
+	return $txt;
+}
