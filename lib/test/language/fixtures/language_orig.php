@@ -3,7 +3,6 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
 // Parameters:
 
 // lang=xx    : only translates language 'xx',
@@ -119,3 +118,4 @@ $lang=Array(
 "The page is empty" => "A página está vazia",
 "You do not have permissions to view the maps" => "Você não possui permissões para ver os mapas",
 "###end###"=>"###end###");
+

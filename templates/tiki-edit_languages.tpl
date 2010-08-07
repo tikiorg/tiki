@@ -122,8 +122,10 @@
 			</div>
 			<div class="adminoptionbox">
 				<input type="submit" name="downloadFile" value="{tr}Download{/tr}" />
-				<input type="submit" name="exportToLanguage" value="{tr}Write to language.php{/tr}" />
-				<input type="submit" name="exportToCustom" value="{tr}Write to custom.php{/tr}" />
+				{if $tiki_p_admin eq 'y' and $langIsWritable}
+					<input type="submit" name="exportToLanguage" value="{tr}Write to language.php{/tr}" />
+					<input type="submit" name="exportToCustom" value="{tr}Write to custom.php{/tr}" />
+				{/if}
 			</div>
 			{if isset($expmsg)}
 				{$expmsg}

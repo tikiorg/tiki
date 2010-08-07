@@ -22,8 +22,6 @@ if (!isset($_SESSION['interactive_translation_mode']))
 else
 	$smarty->assign('interactive_translation_mode',$_SESSION['interactive_translation_mode']);
 
-//Editing things
-
 // Get available languages
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
@@ -31,6 +29,14 @@ $smarty->assign_by_ref('languages', $languages);
 $db_languages = Language::getDbTranslatedLanguages();
 $db_languages = $tikilib->format_language_list($db_languages);
 $smarty->assign_by_ref('db_languages', $db_languages);
+
+// check if is possible to write to lang/
+// TODO: check if each language file is writable instead of the whole lang/ dir
+if (is_writable('lang/')) {
+	$smarty->assign('langIsWritable', true);
+} else {
+	$smarty->assign('langIsWritable', false);
+}
 
 // preserving variables
 if (isset($_REQUEST["edit_language"])) {
@@ -250,7 +256,12 @@ if (isset($_REQUEST["import"])) {
 // Export
 if (isset($_REQUEST['downloadFile'])) {
 	check_ticket('import-lang');
-	$language->downloadFile();
+	$data = $language->createCustomFile();
+	header ("Content-type: application/unknown");
+	header ("Content-Disposition: inline; filename=language.php");
+	header ("Content-encoding: UTF-8");
+	echo $data;
+	exit (0);
 }
 
 // Write to custom.php

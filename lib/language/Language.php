@@ -32,7 +32,7 @@ class Language extends TikiDb_Bridge {
 		} else {
 			global $prefs;
 			$this->lang = $prefs['language'];
-		}	
+		}
 	}
 
 	/**
@@ -91,38 +91,24 @@ class Language extends TikiDb_Bridge {
 	}
 
 	/**
-	 * Generate a new language.php file based only
-	 * on the translations in the database and give the user the
-	 * option to download it
-	 *
-	 * @return void
-	 */
-	public function downloadFile() {
-		$data = $this->_createCustomFile();
-		header ("Content-type: application/unknown");
-		header ("Content-Disposition: inline; filename=language.php");
-		header ("Content-encoding: UTF-8");
-		echo $data;
-		exit (0);
-	}
-
-	/**
 	 * Write the new custom.php file to the filesystem
 	 */
 	public function writeCustomFile() {
-		$data = $this->_createCustomFile();
+		$data = $this->createCustomFile();
 		
 		// TODO: generate an error if not possible to write to file
 		if (is_writable("lang/{$this->lang}/")) {
 			$f = fopen("lang/{$this->lang}/custom.php", 'w');
 			fwrite($f, $data);
 			fclose($f);
+			$this->deleteTranslations();
 		}
 	}
 
 	/**
 	 * Write the new translated strings to the actual
-	 * language.php file
+	 * language.php file and remove the translations
+	 * from the database
 	 */
 	public function writeLanguageFile() {
 		$filePath = "lang/{$this->lang}/language.php";
@@ -154,9 +140,10 @@ class Language extends TikiDb_Bridge {
 			foreach ($dbTrans as $orig => $trans) {
 				$newTrans[] = '"' . $orig . '" => "' . $trans . "\",\n";
 			}
-			
+
 			// add new strings to the language.php
-			array_splice($langFile, -1, 0, $newTrans);
+			$lastStr = array_search("\"###end###\"=>\"###end###\");\n", $langFile);
+			array_splice($langFile, $lastStr, 0, $newTrans);
 
 			// write the new language.php file
 			$f = fopen($filePath, 'w');
@@ -166,6 +153,7 @@ class Language extends TikiDb_Bridge {
 			}
 
 			fclose($f);
+			$this->deleteTranslations();
 		}
 	}
 
@@ -183,11 +171,19 @@ class Language extends TikiDb_Bridge {
 	}
 
 	/**
+	 * Delete all the translations from the current language
+	 */
+	public function deleteTranslations() {
+		$this->query('DELETE FROM `tiki_language` WHERE `lang`=?', array($this->lang));
+	}
+
+	/**
 	 * Create a custom.php file for the current language
+	 * and remove the translations from the database
 	 *
 	 * @return string the content of the new custom.php file
 	 */
-	protected function _createCustomFile() {
+	protected function createCustomFile() {
 		$strings = $this->_getTranslations();
 
 		$data = "<?php\n\$lang=";

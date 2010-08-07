@@ -99,5 +99,10 @@ class LanguageTest extends TikiTestCase {
 		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/language_modif.php'), file_get_contents($this->langDir . '/language.php'));
 	}
 
+	public function testDeleteTranslations() {
+		$this->obj->deleteTranslations();
+		$this->assertFalse(TikiDb::get()->getOne('SELECT * FROM `tiki_language` WHERE `lang` = ?', array($this->obj->lang)));
+	}
+
 }
 ?>
