@@ -968,7 +968,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$markerfields = array();
 				foreach ($unlimitedallfields["data"] as $f) {
 					if ($f["type"] == 'G' && $f["options_array"][0] == 'y' && !empty($f["options_array"][1])) {
-						$markerfields = explode('+', $f["options_array"][1]);
+						$markerfields = explode('|', $f["options_array"][1]);
 						break;
 					}
 				}

@@ -403,7 +403,7 @@ function wikiplugin_googlemap($data, $params) {
 			}
 			if (!empty($options_array[1])) {
 				$markertext = '';
-				$markerfields = explode('+', $options_array[1]);
+				$markerfields = explode('|', $options_array[1]);
 				foreach ($markerfields as $k => $m) {
 					if (!empty($item[$m])) {
 						if ($markertext) {
