@@ -651,6 +651,9 @@ class SearchLib extends TikiLib
 		$retFinal = array();
 		$itemFinal = array();
 		foreach ($ret['data'] as $i=>$res) {
+			global $smarty;
+			include_once('tiki-sefurl.php');
+			$res['href'] = filter_out_sefurl($res['href'], $smarty, 'trackeritem', $res['name']);
 			if (($j = array_search($res['name'], $itemFinal)) === false) {
 				$res['pageName'] = '(#'.$res['pageName'].') '.$trklib->get_isMain_value($res['hits'], $res['pageName']);
 				$res['hits'] = 'Unknown'; 
