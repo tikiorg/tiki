@@ -79,6 +79,28 @@
 		
 		{tab name="{tr}General Layout options{/tr}"}
 			{preference name=feature_custom_html_head_content}
+			<div class="adminoptionboxchild">
+				{self_link _onclick="toggle_brosho();return false;" _ajax="n"}{icon _id="bricks"} Experimental: CSS assistant (work in progress - reload page to remove){/self_link}
+			</div>
+			{jq}
+var brosho_loaded = false;
+toggle_brosho = function() {
+	if (!brosho_loaded) {
+		$jq.getScript('lib/jquery/brosho/jquery.brosho.js', function() {
+			$jq.fn.brosho({                           //call to the brosho plugin
+				stylesheet:         "lib/jquery_tiki/brosho/tiki.brosho.css", //path of custom brosho stylesheet
+				position:           "left",           //initial position of the editor ("top", "bottom", "left", "right")
+				elementHoverClass:  "custom-hover",   //a custom hover class
+				editorOpacity:      0.8                 //full opacity on editor
+			});
+		});
+	} else {	// doesn't work as brosho absorbs all the clicks
+		$jq('#brosho-wrapper, #brosho-overlay-wrapper').remove(); //remove old stuff
+		$jq('body *').unbind(); //unbind the previous hover event handler on every element within the body
+	}
+	return false;
+};
+			{/jq}
 			{preference name=feature_fixed_width}
 			{preference name=feature_secondary_sitemenu_custom_code}
 			{preference name=feature_sitemycode}
