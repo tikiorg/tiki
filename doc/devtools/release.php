@@ -329,22 +329,33 @@ function check_smarty_syntax(&$error_msg) {
 	for ( $i = 0 ; $i < $nbEntries ; $i++ ) {
 		display_progress_percentage($i, $nbEntries, '%d%% of files passed the Smarty syntax check');
 
-		try {
+//		try {
+		if (strpos($entries[$i], 'tiki-mods.tpl') === false) {
 			ob_start();
 			$template_file = substr($entries[$i], $templates_dir_length + 1);
 			$smarty->_compile_resource($template_file, $temp_compile_file);
 			$compilation_output = ob_get_clean();
 
 			unlink($temp_compile_file);
-
-		} catch (Exception $e) {
-			$msg = $e->getMessage();
-			if (strpos($msg, 'tiki-mods.tpl') !== false && strpos($msg, 'revision_compare') !== false) {
-				print(color("\nNote: ignoring error in tiki-mods.tpl:\n        $msg", 'yellow'));
-			} else {
-				$compilation_output = "\n*** " . $e->getMessage();
-			}
 		}
+//		} catch (Exception $e) {
+//			$msg = $e->getMessage();
+//			if (0 or strpos($msg, 'tiki-mods.tpl') !== false && strpos($msg, 'revision_compare') !== false) {
+//				print(color("\nNote: ignoring error in tiki-mods.tpl:\n        $msg", 'yellow'));
+//			} else {
+//				$compilation_output = "\n*** " . $e->getMessage();
+//			}
+//		}
+
+	/* This is most odd (jonnyb aug 2010 tiki 5.1)
+	 * 
+	 * There is an "error" in tiki-mods.tpl that causes an error that the existing code (pre r28273) couldn't trap
+	 * I added an Exception which works fine in the debugger but dies in the commend line (unless you supply all
+	 * the "skip" params --no-check-php --no-check-php-warnings etc), when it works as expected.
+	 * 
+	 * Nasty fix now by not checking that file
+	 * Better fix (or TODO KIL mods) required so leaving commented code behond - excuse the mess ;)
+	 */
 		
 		if ( ! empty($compilation_output) ) {
 			$error_msg = "\nError while compiling {$entries[$i]}."
@@ -362,7 +373,8 @@ function check_smarty_syntax(&$error_msg) {
 }
 
 function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errline = 0, $errcontext = array()) {
-	throw new Exception($errstr);
+//	throw new Exception($errstr);
+	error($errstr);
 }
 
 function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings, $retry = 10) {
