@@ -89,21 +89,6 @@ class TikiInit
 		return true;
 	}
 
-/** Return ';' if windows otherwise ':'
-  * \static
-  */
-	static function pathSeparator() {
-		static $separator;
-		if (!isset($separator)) {
-			if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
-				$separator = ';';
-			} else {
-				$separator = ':';
-			}
-		}
-		return $separator;
-	}
-
 
 /** Prepend $path to the include path
   * \static
