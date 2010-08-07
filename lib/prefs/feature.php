@@ -382,13 +382,6 @@ function prefs_feature_list() {
 			'help' => 'Print+Indexed',
 			'type' => 'flag',
 		),
-		'feature_sefurl' => array(
-			'name' => tra('Search engine friendly url'),
-			'description' => tra('If you are using Apache, you can rename _htaccess to .htaccess to get Short URLs'),
-			'help' => 'Rewrite+Rules',
-			'perspective' => false,
-			'type' => 'flag',
-		),
 		'feature_sheet' => array(
 			'name' => tra('SpreadSheet'),
 			'description' => tra('Datasheets with calculations and charts'),
@@ -602,7 +595,7 @@ function prefs_feature_list() {
 		),
 		'feature_version_checks' => array(
 			'name' => tra('Check for updates automatically'),
-			'description' => tra('TikiWiki will check for updates when you access the main Administration page'),
+			'description' => tra('Tiki will check for updates when you access the main Administration page'),
 			'type' => 'flag',
 			'perspective' => false,
 		),
@@ -790,10 +783,12 @@ function prefs_feature_list() {
 		),	
 		'feature_sefurl' => array(
 			'name' => tra('Search engine friendly url'),
-			'help' => 'Rewrite+Rules',
-			'type' => 'flag',
+			'description' => tra('If you are using Apache, you can rename _htaccess to .htaccess to get Short URLs'),
+			'help' => 'Clean+URLs',
 			'perspective' => false,
-		),	
+			'type' => 'flag',
+			'keywords' => 'sefurl sefurls seo rewrite rules short urls',
+		),
 		'feature_sefurl_filter' => array(
 			'name' => tra('Search engine friendly url Postfilter'),
 			'help' => 'Rewrite+Rules',
@@ -1753,7 +1748,8 @@ function prefs_feature_list() {
 		),
 		'feature_socialnetworks' => array(
 			'name' => tra('Social networks'),
-			'description' => tra('Integration with different social networks like twitter or facebook'),
+			'description' => tra('Integration with different social networks like Twitter or Facebook'),
+			'help' => 'Social+Networks',
 			'type' => 'flag',
 			'keywords' => 'social networks',
 		),
@@ -1773,7 +1769,7 @@ function prefs_feature_list() {
 			'name' => tra('Ustream Watershed'),
 			'description' => tra('Integration to Ustream Watershed live video streaming.'),
 			'type' => 'flag',
-			'help' => 'Watershed',
+			'help' => 'Ustream+Watershed',
 		),
 	);
 }
