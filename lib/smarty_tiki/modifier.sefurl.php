@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_langs='' ) {
-	global $prefs, $wikilib, $smarty;
+	global $prefs, $tikilib, $wikilib, $smarty;
 	include_once('lib/wiki/wikilib.php');
 
 	switch($type){
@@ -52,7 +52,15 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 	case 'tracker item':
 		$type = 'trackeritem';
 	case 'trackeritem':
-		$href = 'tiki-view_tracker_item.php?itemId='. $source;
+		$replacementpage = '';
+		if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y') {
+			$replacementpage = $tikilib->get_trackeritem_pagealias($source);
+		}
+		if ($replacementpage) {
+			return $wikilib->sefurl($replacementpage, $with_next, $all_langs);
+		} else {
+			$href = 'tiki-view_tracker_item.php?itemId='. $source;
+		}
 		break;
 	case 'tracker':
 		$href = 'tiki-view_tracker.php?trackerId='.$source;

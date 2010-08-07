@@ -8470,6 +8470,30 @@ JS;
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->rename_wiki_page($old, $new);
 	}
+	
+	// This function gets the prefix alias page name e.g. Org:230 for the pretty tracker
+	// wiki page corresponding to a tracker item (230 in the example) using prefix aliases
+	// Returns false if no such page is found.
+	function get_trackeritem_pagealias($itemId) {
+		$query = "select `trackerId` from `tiki_tracker_items` where `itemId` = ?";
+		$trackerId = $this->getOne($query, array($itemId));
+
+		global $semanticlib; require_once('lib/wiki/semanticlib.php');
+		$t_links = $semanticlib->getLinksUsing('trackerid', array( 'toPage' => $trackerId ) );
+
+		if (count($t_links)) {
+			$p_links = $semanticlib->getLinksUsing('prefixalias', array( 'fromPage' => $t_links[0]['fromPage'] ) );
+			if (count($p_links)) {
+				$ret = $p_links[0]['toPage'] . $itemId;
+				return $ret;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+        
 }
 // end of class ------------------------------------------------------
 

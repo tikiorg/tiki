@@ -34,6 +34,7 @@
 
 		{preference name=feature_sefurl_title_article}
 		{preference name=feature_sefurl_title_blog}
+		{preference name=feature_sefurl_tracker_prefixalias}
 
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center;padding:1em;">

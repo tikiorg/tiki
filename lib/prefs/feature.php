@@ -809,6 +809,14 @@ function prefs_feature_list() {
 			'name' => tra('Display blog title in the sefurl'),
 			'type' => 'flag',
 			'perspective' => false,
+		),
+		'feature_sefurl_tracker_prefixalias' => array(
+			'name' => tra('Redirect tiki-view_tracker.php?itemId=yyy to Prefixyyy page'),
+			'description' => tra('This redirection uses the wiki prefix alias feature'),
+			'help' => 'Page+Alias',
+			'perspective' => false,
+			'type' => 'flag',
+			'require' => array('feature_sefurl', 'wiki_prefixalias_tokens'),
 		),	
 		'feature_modulecontrols' => array(
 			'name' => tra('Show module controls'),
