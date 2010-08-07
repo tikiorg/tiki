@@ -1067,9 +1067,9 @@ CREATE TABLE `tiki_images_data` (
 
 DROP TABLE IF EXISTS `tiki_language`;
 CREATE TABLE `tiki_language` (
-  `source` tinyblob NOT NULL,
+  `source` tinytext NOT NULL,
   `lang` char(16) NOT NULL default '',
-  `tran` tinyblob,
+  `tran` tinytext,
   PRIMARY KEY (`source`(255),`lang`)
 ) ENGINE=MyISAM;
 
