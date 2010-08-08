@@ -262,7 +262,7 @@ class UsersLib extends TikiLib
 		if (SID) $url.= '?' . SID;
 
 		if ($phpcas_enabled === 'y' && $prefs['auth_method'] === 'cas' && $user !== 'admin' && $user !== '') {
-			require_once ('lib/phpcas/CAS/CAS.php');
+			require_once ('lib/phpcas/CAS.php');
 			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path']);
 			phpCAS::logoutWithRedirectServiceAndUrl($url,$url);
 		}
