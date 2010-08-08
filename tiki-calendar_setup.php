@@ -48,14 +48,7 @@ list($focus_day, $focus_month, $focus_year) = array(
 $focuscell = $tikilib->make_time(0,0,0,$focus_month,$focus_day,$focus_year);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
-
-//set today unix stamp for today focus
-$now = $tikilib->now;
-$mtoday = TikiLib::date_format("%m", $now);
-$dtoday = TikiLib::date_format("%d", $now);
-$ytoday = TikiLib::date_format("%Y", $now);
-$today = $tikilib->make_time(0,0,0,$mtoday,$dtoday,$ytoday);
-$smarty->assign('today', $today);
+$smarty->assign('today', $tikilib->make_time(0,0,0, $tikilib->date_format('%m'), $tikilib->date_format('%d'), $tikilib->date_format('%Y')));
 
 // Get viewmode from URL, session or prefs if it has not already been defined by the calling script (for example by modules, to force a month view)
 if ( ! isset($calendarViewMode) ) {
