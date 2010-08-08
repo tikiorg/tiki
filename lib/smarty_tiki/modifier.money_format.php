@@ -27,12 +27,28 @@
  * @return formatted number
  */
 
-function smarty_modifier_money_format($number, $local = 'en_US', $format = '%(#10n', $all) 
+function smarty_modifier_money_format($number, $local, $currency, $format = '%(#10n', $all) 
 { 
+		
+	if (empty($local)) {
+		if (setlocale(LC_MONETARY, 0) == 'C') { 
+        	setlocale(LC_MONETARY, '');
+		}
+	} else {
+		setlocale(LC_MONETARY, $local);
+	} 
+	
+	$locale = localeconv();
+	
+	if (!empty($currency)) {
+		$locale['int_curr_symbol'] = $currency;
+	}
+	
+	//regex for format string
     $regex  = '/%((?:[\^!\-]|\+|\(|\=.)*)([0-9]+)?'. 
               '(?:#([0-9]+))?(?:\.([0-9]+))?([in%])/'; 
-	setlocale(LC_MONETARY, $local);
-    $locale = localeconv(); 
+    
+    
     preg_match_all($regex, $format, $matches, PREG_SET_ORDER); 
     foreach ($matches as $fmatch) { 
         $value = floatval($number); 

@@ -11,15 +11,16 @@
 		 {/if}
 </div>
 	{/if}
-
-	{if $user_watching_tracker eq 'n'}
-		<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}" class="trackerlistwatch">
-			{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}
-		</a>
-	{elseif $user_watching_tracker eq 'y'}
-		<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}" class="trackerlistwatch">
-		   {icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}
-		</a>
+	{if isset($user_watching_tracker)}
+		{if $user_watching_tracker eq 'n'}
+			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}" class="trackerlistwatch">
+				{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}
+			</a>
+		{elseif $user_watching_tracker eq 'y'}
+			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}" class="trackerlistwatch">
+			   {icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}
+			</a>
+		{/if}
 	{/if}
 	{if $showrss eq 'y'}
 			<a href="tiki-tracker_rss.php?trackerId={$trackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
@@ -96,6 +97,7 @@
 	{/if}
 
 	{cycle values="odd,even" print=false}
+	{assign var=itemoff value=0}
 	{section name=user loop=$items}
 
 {* ------- popup ---- *}

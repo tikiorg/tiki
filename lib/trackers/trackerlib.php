@@ -3029,6 +3029,7 @@ class TrackerLib extends TikiLib
 				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
 				<dd><strong>[append]</strong> is text that will be displayed just after the field;
 				<dd><strong>[locale]</strong> set locale for currency formatting, for example en_US or en_US.UTF-8 or en_US.ISO-8559-1 (default=en_US);
+				<dd><strong>[currency]</strong> The 3-letter ISO 4217 currency code indicating the currency to use (default=USD);
 				<dd><strong>[symbol]</strong> i for international symbol, n for local (default=n);
 				<dd><strong>[all_symbol]</strong> set to 1 to show symbol for every item (default only shows currency symbol on first item in a list) ;
 				<br/><br/>
