@@ -626,6 +626,9 @@ function wikiplugin_img_info() {
 				$imageObj = new Image($dbinfo['data'], false);
 			} elseif (!empty($dbinfo['path'])) {
 				$imageObj = new Image($basepath . $dbinfo['path'], true);	
+			} elseif (strpos($src,'http://') !== false) {
+				//Image class doesn't seem to work well for external images - no height or width
+				$imagesize = getimagesize($src);
 			} else {
 				$imageObj = new Image($src, true);
 			}
@@ -633,10 +636,10 @@ function wikiplugin_img_info() {
 		//Set the variables for height, width and iptc data
 		$fwidth = '';
 		$fheight = '';
-		//set to null because Image class will place exif_thumbnail dimensions here if thumbnail exists
-		$imageObj->height = NULL;
-		$imageObj->width = NULL;
 		if (is_object($imageObj)) {
+			//set to null first because Image class will place exif_thumbnail dimensions here if thumbnail exists
+			$imageObj->height = NULL;
+			$imageObj->width = NULL;
 			$fwidth = $imageObj->get_width();
 			$fheight = $imageObj->get_height();
 		} else {  
@@ -1176,7 +1179,7 @@ function wikiplugin_img_info() {
 	if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 		$repl = '{img src=' . $src . "\"}\n<p>" . $imgdata['desc'] . '</p>'; 
 	}
-	return '~np~'.$repl.'~/np~';
+	return '~np~' . $repl. '~/np~';
 }
 
 /////////////////////////////////////////Function for getting image data from raw file (no filename)////////////////////////////////
