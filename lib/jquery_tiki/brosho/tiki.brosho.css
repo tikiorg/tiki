@@ -4,6 +4,7 @@
   color: #212121;
   font-family: Helvetica, Arial, serif;
   font-size: 13px;
+  z-index: 999;
 }
 
 #brosho-wrapper a {
