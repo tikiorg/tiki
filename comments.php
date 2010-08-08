@@ -281,7 +281,7 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 	}
 }
 
-if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')) || ($tiki_p_forum_vote == 'y' && isset($forum_mode) && $forum_mode == 'y')) {
+if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')) || (isset($forum_mode) && $forum_mode == 'y' && $tiki_p_forum_vote == 'y')) {
 	// Process a vote here
 	$smarty->assign( 'rating_is_enabled', 'y' );
 } else {
