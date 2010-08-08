@@ -254,6 +254,7 @@ function get_default_prefs() {
 		'wikiplugin_img' => 'y',
 		'wikiplugin_image' => 'n',    // Experimental, intended to be phased out with new img
 		'wikiplugin_include' => 'y',
+		'wikiplugin_randominclude' => 'n',
 		'wikiplugin_invite' => 'y',
 		'wikiplugin_jabber' => 'n',
 		'wikiplugin_js' => 'n',
