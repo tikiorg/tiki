@@ -327,7 +327,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 	}
 
 	$iField = 0;
-	foreach ($listfields as $iField=>$fieldId) {
+	foreach ($listfields as $fieldId) {
 		if (!is_numeric($fieldId)) { // composite field
 			$filter = array('name'=> 'Text', 'fieldId'=> $fieldId, 'format'=>'sqlsearch');
 			If (!empty($_REQUEST['f_'.$fieldId])) {
@@ -346,41 +346,41 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 		}
 		$fieldId = $field['fieldId'];
 		$res = array();
-		if (empty($formats[$iField])) { // default format depends on field type
+		if (empty($formats[$fieldId])) { // default format depends on field type
 			switch ($field['type']){
 			case 'e':// category
 				global $categlib; include_once('lib/categories/categlib.php');
 				$res = $categlib->get_child_categories($field['options_array'][0]);
-				$formats[$iField] = (count($res) >= 6)? 'd': 'r';
+				$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
 				break;
 			case 'd': // drop down list
 			case 'y': // country
-				$formats[$iField] = 'd';
+				$formats[$fieldId] = 'd';
 				break;
 			case 'R': // radio
-				$formats[$iField] = 'r';
+				$formats[$fieldId] = 'r';
 				break;
 			case '*': //rating
-				$formats[$iField] = '*';
+				$formats[$fieldId] = '*';
 				break;
 			case 'f':
 			case 'j':
-				$formats[$iField] = $field['type'];
+				$formats[$fieldId] = $field['type'];
 				break;
 			default:
-				$formats[$iField] = 't';
+				$formats[$fieldId] = 't';
 				break;
 			}
 		}
-		if ($field['type'] == 'e' && ($formats[$iField] == 't' || $formats[$iField] == 'T' || $formats[$iField] == 'i')) { // do not accept a format text for a categ for the moment
+		if ($field['type'] == 'e' && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T' || $formats[$fieldId] == 'i')) { // do not accept a format text for a categ for the moment
 			if (empty($res)) {
 				global $categlib; include_once('lib/categories/categlib.php');
 				$res = $categlib->get_child_categories($field['options_array'][0]);
 			}
-			$formats[$iField] = (count($res) >= 6)? 'd': 'r';
+			$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
 		}
 		$opts = array();
-		if ($formats[$iField] == 't' || $formats[$iField] == 'T' || $formats[$iField] == 'i') {
+		if ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T' || $formats[$fieldId] == 'i') {
 			$selected = empty($_REQUEST['f_'.$fieldId])? '': $_REQUEST['f_'.$fieldId];
 		} else {
 			$selected = false;
@@ -441,7 +441,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 					$opt['selected'] = 'n';
 				}
 				$opts[] = $opt;
-				$formats[$iField] = 'r';
+				$formats[$fieldId] = 'r';
 				break;
 			case 'n': // numeric
 			case 'D': // drop down + other
@@ -485,7 +485,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				return tra('tracker field type not processed yet').' '.$field['type'];
 			}
 		}
-		$filters[] = array('name' => $field['name'], 'fieldId' => $fieldId, 'format'=>$formats[$iField], 'opts' => $opts, 'selected'=>$selected, 'field' => $field);
+		$filters[] = array('name' => $field['name'], 'fieldId' => $fieldId, 'format'=>$formats[$fieldId], 'opts' => $opts, 'selected'=>$selected, 'field' => $field);
 	}
 	//echo '<pre>FILTERS'; print_r($filters); echo '</pre>';
 	return $filters;
