@@ -24,7 +24,7 @@ function validator_distinct($input, $parameter = '', $message = '') {
 		return tra("Edit field: (Incorrect validation parameter).");
 	}
 	
-	if ($trklib->check_field_value_exists($input, $arr['trackerId'], $arr['fieldId'], $arr['itemId'])) {
+	if ($trklib->check_field_value_exists($input, $arr['fieldId'], $arr['itemId'])) {
 		return tra(empty($message) ? "Value already exists" : $message);
 	}
 	
