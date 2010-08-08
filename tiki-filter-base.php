@@ -20,21 +20,18 @@ $tiki_script_filename = str_replace('\\','/',getcwd());
 if ($tiki_script_filename !== false) {
 	$tiki_script_filename .= '/index.php';
 } else {
-	// Note: need to susbsitute \ for / for windows.
-	$tiki_script_filename = $_SERVER['SCRIPT_FILENAME'];
-
 	// On some systems, SCRIPT_FILENAME contains the full path to the cgi script
 	// that calls the script we are looking for. In this case, we have to
 	// fallback to PATH_TRANSLATED. This one may be wrong on some systems, this
 	// is why SCRIPT_FILENAME is tried first.
-	//
-	// Note that PATH_TRANSLATED is not always set on PHP5, so try to get first value of get_included_files() in this case
-	//
-	if ( substr($tiki_script_filename, 0, strlen($tiki_setup_dir)) != $tiki_setup_dir ) {
-		// Note: need to susbsitute \ for / for windows.
+	if ( substr($_SERVER['SCRIPT_FILENAME'], 0, strlen($tiki_setup_dir)) != $tiki_setup_dir ) {
+		// PATH_TRANSLATED is not always set on PHP5, so try to get first value of get_included_files() in this case	
 		$tiki_script_filename = empty($_SERVER['PATH_TRANSLATED']) ? current(get_included_files()) : $_SERVER['PATH_TRANSLATED'];
+	} else {
+		$tiki_script_filename = $_SERVER['SCRIPT_FILENAME'];
 	}
-
+	
+	// Note: need to substitute \ for / for Windows.
 	$tiki_script_filename = str_replace('\\', '/', realpath($tiki_script_filename));
 }
 $tmp = dirname(str_replace($tiki_setup_dir,'',$tiki_script_filename));
@@ -58,7 +55,7 @@ $unallowed_uri_chars = array_merge($unallowed_uri_chars, array('#', '[', ']'));
 $unallowed_uri_chars_encoded = array_merge($unallowed_uri_chars_encoded, array_map('urlencode', array('#', '[', ']')));
 $_SERVER['PHP_SELF'] = str_replace($unallowed_uri_chars, $unallowed_uri_chars_encoded, $_SERVER['PHP_SELF']);
 
-// Note: need to susbsitute \ for / for windows.
+// Note: need to substitute \ for / for Windows.
 $tikiroot = str_replace('\\','/',dirname($_SERVER['PHP_SELF']));
 $tikipath = dirname($tiki_script_filename);
 $tikiroot_relative = '';
