@@ -449,7 +449,7 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 			selectionStart = $textarea.attr("selectionStartSaved");
 			selectionEnd = $textarea.attr("selectionEndSaved");
 		} else {
-			selectionStart = getCaretPos(textarea[0]);
+			selectionStart = getCaretPos($textarea[0]);
 			selectionEnd = selectionStart;
 		}
 	}
