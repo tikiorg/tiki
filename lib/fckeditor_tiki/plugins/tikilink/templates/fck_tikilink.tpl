@@ -136,11 +136,11 @@ title="{if $page.description}{$page.description}{else}{$page.pageName|escape}{/i
 						</tr>
 						<tr>
 							<td nowrap>{tr}Page name{/tr}&nbsp;</td>
-							<td width="100%" style="align:right;"><input id="txtPage" style="WIDTH: 98%" type="text" name="txtPage" onChange="if ( document.getElementById('txtTitle').value == '' ) document.getElementById('txtTitle').value = getElementById('txtPage').value;"></td>
+							<td width="100%" style="align:right;"><input id="txtPage" style="WIDTH: 98%" type="text" name="txtPage" onChange="if ( document.getElementById('txtTitle').value == '' ) document.getElementById('txtTitle').value = document.getElementById('txtPage').value;"></td>
 						</tr>
 						<tr>
 							<td nowrap>{tr}Link name{/tr}&nbsp;</td>
-							<td width="100%" style="align:right;"><input id="txtTitle" style="WIDTH: 98%" type="text" name="txtTitle" onChange="if ( document.getElementById('txtPage').value == '' ) document.getElementById('txtPage').value = getElementById('txtTitle').value;"></td>
+							<td width="100%" style="align:right;"><input id="txtTitle" style="WIDTH: 98%" type="text" name="txtTitle" onChange="if ( document.getElementById('txtPage').value == '' ) document.getElementById('txtPage').value = document.getElementById('txtTitle').value;"></td>
 						</tr>
 					</table>
 				</td>
