@@ -49,13 +49,13 @@
 	<p>
 		{tr}Add a tilde ( ~ ) before a term to reduce its value indicate to the ranking of the results.{/tr}&nbsp;
 		{tr}Objects that contain the term will appear lower than other objects (unlike the <a href="#excluding" title="{tr}Excluding terms{/tr}">minus sign</a>	which will completely exclude a term).{/tr}&nbsp;
-		{tr}Example: <strong>+wiki ~forum</strong> will rate better an object with only wiki that an object with <strong>wiki</strong> and <strong>forum</strong>.{/tr}
+		{tr}Example: <strong>+wiki ~forum</strong> will rate an object with only <strong>wiki</strong> higher that an object with <strong>wiki</strong> and  <strong>forum</strong>.{/tr}
 	</p>
 
 	<h4>{tr}Changing relevance value{/tr}</h4>
 	<p>
 		{tr}Add a less than ( &lt; ) or greater than ( &gt; ) sign before a term to change the term's contribution to the overall relevance value assigned to a object.{/tr}&nbsp;
-			{tr}Example: <strong>+wiki +(&gt;forum &lt; blog)</strong> will find objects that contain <strong>wiki</strong> and <strong>forum</strong> or <strong>wiki</strong> and <strong>blog</strong> in any order. <strong>wiki forum</strong> will be rated better.{/tr}</p>
+			{tr}Example: <strong>+wiki +(&gt;forum &lt; blog)</strong> will find objects that contain <strong>wiki</strong> and <strong>forum</strong> or <strong>wiki</strong> and <strong>blog</strong> in any order. <strong>wiki forum</strong> will be rated higher.{/tr}</p>
 	</p>
 </div>
 {/strip}
