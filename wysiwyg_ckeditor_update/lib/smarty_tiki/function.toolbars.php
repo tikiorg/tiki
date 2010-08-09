@@ -41,8 +41,8 @@ function smarty_function_toolbars($params, &$smarty)
 		$hidden[] = 'switcheditor';
 	}
 	
-	if( ! isset( $params['area_name'] ) ) {
-		$params['area_name'] = 'edit';
+	if( ! isset( $params['area_id'] ) ) {
+		$params['area_id'] = 'editwiki';
 	}
 
 	include_once( 'lib/toolbars/toolbarslib.php' );
@@ -50,7 +50,7 @@ function smarty_function_toolbars($params, &$smarty)
 	if ( isset($params['_wysiwyg']) && $params['_wysiwyg'] == 'y') {
 		return $list->getWysiwygArray();
 	} else {
-		return $list->getWikiHtml( $params['area_name'] );
+		return $list->getWikiHtml( $params['area_id'] );
 	}
 }
 

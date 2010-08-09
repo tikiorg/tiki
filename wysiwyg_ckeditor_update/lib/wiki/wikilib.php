@@ -773,21 +773,21 @@ class WikiLib extends TikiLib
 		return $parent_pages;
 	}
 
-	function list_plugins($with_help = false, $area_name = 'wikiedit') {
+	function list_plugins($with_help = false, $area_id = 'editwiki') {
 		if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
 			// disable all plugin insert help functions
-			$area_name = '';	
+			$area_id = '';	
 		}	
 		if ($with_help) {
 			global $cachelib, $headerlib, $prefs;
 			if (empty($_REQUEST['xjxfun'])) { $headerlib->add_jsfile( 'tiki-jsplugin.php?language='.$prefs['language'], 'dynamic' ); }
-			$cachetag = 'plugindesc' . $this->get_language() . $area_name . '_js=' . $prefs['javascript_enabled'];
+			$cachetag = 'plugindesc' . $this->get_language() . $area_id . '_js=' . $prefs['javascript_enabled'];
 			if (! $plugins = $cachelib->getSerialized( $cachetag ) ) {
 				$list = $this->plugin_get_list();
 
 				$plugins = array();
 				foreach ($list as $name) {
-					$pinfo["help"] = $this->get_plugin_description($name, $enabled, $area_name);
+					$pinfo["help"] = $this->get_plugin_description($name, $enabled, $area_id);
 					$pinfo["name"] = strtoupper($name);
 
 					if( $enabled )
@@ -818,7 +818,7 @@ class WikiLib extends TikiLib
 	//
 	// Call 'wikiplugin_.*_description()' from given file
 	//
-	function get_plugin_description($name, &$enabled, $area_name = 'wikiedit') {
+	function get_plugin_description($name, &$enabled, $area_id = 'editwiki') {
 		global $tikilib;
 		$data = '';
 
@@ -857,7 +857,7 @@ class WikiLib extends TikiLib
 				$ret['documentation'] = "http://doc.tikiwiki.org/{$ret['documentation']}";
 			}
 
-			$smarty->assign( 'area_name', $area_name );
+			$smarty->assign( 'area_id', $area_id );
 			$smarty->assign( 'plugin', $ret );
 			$smarty->assign( 'plugin_name', strtoupper( $name ) );
 			return $smarty->fetch( 'tiki-plugin_help.tpl' );

@@ -41,24 +41,6 @@ function browser() {
 	this.docom = (this.ie56||this.ns||this.iewin||this.op||this.iemac||this.safari||this.moz||this.oldmoz||this.ns6);
 }
 
-function getElementById(id) {	// actually gets element by name too...
-	if (typeof document.getElementById == "function") {
-		var el = document.getElementById(id);
-		if (el) {
-			return el;
-		}
-	}
-	if (typeof document.getElementsByName == "function") {
-		var arr = document.getElementsByName(id);
-		if (arr.length > 0) {
-			return arr[0];
-		}
-	}
-	for (i=0;i<document.forms.length;i++) {
-		if (document.forms[i].elements[id]) {return document.forms[i].elements[id]; }
-	}
-}
-
 /* toggle CSS (tableless) layout columns */
 function toggleCols(id,zeromargin,maincol) {
 	var showit = 'show_' + escape(id);
@@ -389,12 +371,15 @@ function getTASelection( textarea ) {
  */
 
 function saveTASelection( elem ) {
+	var $el;
 	if (typeof elem === 'string') {
-		elem = getElementById(elem);
+		$el = $('#' + elem);
+	} else {
+		$el = $(elem);
 	}
-	if (elem && typeof elem.selectionStart != 'undefined') {
-        $(elem).attr("selectionStartSaved", elem.selectionStart);
-        $(elem).attr("selectionEndSaved", elem.selectionEnd);
+	if ($el.length && $el.attr("selectionStart")) {
+        $el.attr("selectionStartSaved", $el.attr("selectionStart"))
+			.attr("selectionEndSaved", $el.attr("selectionEnd"));
 	}
 }
 
@@ -404,16 +389,18 @@ function saveTASelection( elem ) {
  */
 
 function restoreTASelection( elem ) {
+	var $el;
 	if (typeof elem === 'string') {
-		elem = getElementById(elem);
+		$el = $('#' + elem);
+	} else {
+		$el = $(elem);
 	}
-	if (elem && $(elem).attr("selectionStartSaved")) {
-		if (elem.selectionStart != $(elem).attr("selectionStartSaved")) {
-			elem.selectionStart = $(elem).attr("selectionStartSaved");
-			elem.selectionEnd = $(elem).attr("selectionEndSaved");
+	if ($el.length && $el.attr("selectionStartSaved")) {
+		if ($el.attr("selectionStart") != $el.attr("selectionStartSaved")) {
+			$el.attr("selectionStart", $el.attr("selectionStartSaved"))
+				.attr("selectionEnd",   $el.attr("selectionEndSaved"));
 		}
-        $(elem).removeAttr("selectionStartSaved");
-        $(elem).removeAttr("selectionEndSaved");
+        $el.removeAttr("selectionStartSaved").removeAttr("selectionEndSaved");
 	}
 }
 
@@ -444,24 +431,25 @@ function getCaretPos (textarea) {
 
 function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelection) {
 	// inserts given text at selection or cursor position
-	textarea = getElementById(elementId);
-	var toBeReplaced = /text|page|area_name/g; //substrings in replaceString to be replaced by the selection if a selection was done
-	var hiddenParents = $(textarea).parents('fieldset:hidden:last');
+	$textarea = $('#' + elementId);
+	var toBeReplaced = /text|page|area_id/g; //substrings in replaceString to be replaced by the selection if a selection was done
+	var hiddenParents = $textarea.parents('fieldset:hidden:last');
 	if (hiddenParents.length) { hiddenParents.show(); }
 
-	textarea.focus();
-	var selection = $(textarea).selection();
+	$textarea[0].focus();
+	var val = $textarea.val();
+	var selection = $textarea.selection();
 
 	var selectionStart = selection.start;
 	var selectionEnd = selection.end;
-	var scrollTop=textarea.scrollTop;
+	var scrollTop=$textarea[0].scrollTop;
 
-	if (selectionStart < 0 || (selectionStart == textarea.value.length && selectionStart == selectionEnd)) {	// couldn't get textarea selection via jq
-		if (typeof $(textarea).attr("selectionStartSaved") === 'string' && $(textarea).attr("selectionStartSaved")) {	// forgetful firefox
-			selectionStart = $(textarea).attr("selectionStartSaved");
-			selectionEnd = $(textarea).attr("selectionEndSaved");
+	if (selectionStart < 0 || (selectionStart == val.length && selectionStart == selectionEnd)) {	// couldn't get textarea selection via jq
+		if (typeof $textarea.attr("selectionStartSaved") === 'string' && $textarea.attr("selectionStartSaved")) {	// forgetful firefox
+			selectionStart = $textarea.attr("selectionStartSaved");
+			selectionEnd = $textarea.attr("selectionEndSaved");
 		} else {
-			selectionStart = getCaretPos(textarea);
+			selectionStart = getCaretPos(textarea[0]);
 			selectionEnd = selectionStart;
 		}
 	}
@@ -470,17 +458,17 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 		// Block level operations apply to entire lines
 
 		// +1 and -1 to handle end of line caret position correctly
-		selectionStart = textarea.value.lastIndexOf( "\n", selectionStart - 1 ) + 1;
-		selectionEnd = textarea.value.indexOf( "\n", selectionEnd );
+		selectionStart = val.lastIndexOf( "\n", selectionStart - 1 ) + 1;
+		selectionEnd = val.indexOf( "\n", selectionEnd );
 		if (selectionEnd < 0) {
-			selectionEnd = textarea.value.length;
+			selectionEnd = val.length;
 		}
 	}
 
 	if (selectionStart != selectionEnd) { // has there been a selection
 		var newString = '';
 		if( perLine ) {
-			var lines = textarea.value.substring(selectionStart, selectionEnd).split("\n");
+			var lines = val.substring(selectionStart, selectionEnd).split("\n");
 			for( k = 0; lines.length > k; ++k ) {
 				if( lines[k].length !== 0 ) {
 					newString += replaceString.replace(toBeReplaced, lines[k]);
@@ -493,22 +481,24 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 			if (replaceSelection) {
 				newString = replaceString;
 			} else if (replaceString.match(toBeReplaced)) {
-				newString = replaceString.replace(toBeReplaced, textarea.value.substring(selectionStart, selectionEnd));
+				newString = replaceString.replace(toBeReplaced, val.substring(selectionStart, selectionEnd));
 			} else {
-				newString = replaceString + '\n' + textarea.value.substring(selectionStart, selectionEnd);
+				newString = replaceString + '\n' + val.substring(selectionStart, selectionEnd);
 			}
 		}
-		textarea.value = textarea.value.substring(0, selectionStart)
-		+ newString
-		+ textarea.value.substring(selectionEnd);
-		setSelectionRange(textarea, selectionStart, selectionStart + newString.length);
+		$textarea.val(val.substring(0, selectionStart)
+						+ newString
+						+ val.substring(selectionEnd)
+					);
+		setSelectionRange($textarea[0], selectionStart, selectionStart + newString.length);
 	} else { // insert at caret
-		textarea.value = textarea.value.substring(0, selectionStart)
-		+ replaceString
-		+ textarea.value.substring(selectionEnd);
-		setCaretToPos(textarea, selectionStart + replaceString.length);
+		$textarea.val(val.substring(0, selectionStart)
+						+ replaceString
+						+ val.substring(selectionEnd)
+					);
+		setCaretToPos($textarea[0], selectionStart + replaceString.length);
 	}
-	textarea.scrollTop=scrollTop;
+	$textarea[0].scrollTop=scrollTop;
 
 	if (hiddenParents.length) { hiddenParents.hide(); }
 	if (typeof auto_save_id != "undefined" && auto_save_id.length > 0 && typeof auto_save == 'function') {  auto_save(); }
@@ -998,10 +988,10 @@ function confirmTheLink(theLink, theMsg)
  * 
  */
 function insertImgFile(elementId, fileId, oldfileId,type,page,attach_comment) {
-	textarea = getElementById(elementId);
-	fileup   = getElementById(fileId);
-	oldfile  = getElementById(oldfileId);
-	prefixEl = getElementById("prefix");
+	textarea = $('#' + elementId)[0];
+	fileup   = $('#' + fileId)[0];
+	oldfile  = $('#' + oldfileId)[0];
+	prefixEl = $('#' + "prefix")[0];
 	prefix   = "img/wiki_up/";
 
 	if (!textarea || ! fileup) {
@@ -1033,7 +1023,7 @@ function insertImgFile(elementId, fileId, oldfileId,type,page,attach_comment) {
 	// replace with dyn. variable once in a while to respect the tikidomain
 	if (type == "file") {
 		str = "{file name=\""+filename + "\"";
-		var desc = getElementById(attach_comment).value;
+		var desc = $('#' + attach_comment).val();
 		if (desc) {
 			str = str + " desc=\"" + desc + "\"";
 		}
@@ -1107,7 +1097,7 @@ function SetMyUrl(area,url) {
 if (typeof fgals_window == "undefined") {
 	fgals_window = null;
 }
-function openFgalsWindow(filegal_manager_url, area_name) {
+function openFgalsWindow(filegal_manager_url, area_id) {
 	if(fgals_window && typeof fgals_window.document != "undefined" && typeof fgals_window.document != "unknown" && !fgals_window.closed) {
 		fgals_window.focus();
 	} else {
@@ -1149,14 +1139,14 @@ function show_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 }
 
 /* wikiplugin editor */
-function popup_plugin_form( area_name, type, index, pageName, pluginArgs, bodyContent, edit_icon )
+function popup_plugin_form(area_id, type, index, pageName, pluginArgs, bodyContent, edit_icon )
 {
 	if ($.ui) {
-		return popupPluginForm( area_name, type, index, pageName, pluginArgs, bodyContent, edit_icon );
+		return popupPluginForm( area_id, type, index, pageName, pluginArgs, bodyContent, edit_icon );
 	}
 	var container = document.createElement( 'div' );
 	container.className = 'plugin-form-float';
-	var textarea = getElementById(area_name);
+	var textarea = $('#' + area_id)[0];
 
 	var minimize = document.createElement( 'a' );
 	var icon = document.createElement( 'img' );
@@ -1221,7 +1211,7 @@ function popup_plugin_form( area_name, type, index, pageName, pluginArgs, bodyCo
 		if (edit) {
 			return true;
 		} else {
-			insertAt( area_name, blob );
+			insertAt( area_id, blob );
 			document.body.removeChild( container );
 		}
 		return false;

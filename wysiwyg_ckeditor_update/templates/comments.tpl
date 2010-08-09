@@ -417,7 +417,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	        <tr>
 	    		<td class="formcolor"></td>
 	            <td class="formcolor">
-	            	{toolbars area_name='editpost2' comments='y'}
+	            	{toolbars area_id='editpost2' comments='y'}
 	            </td>
 	        </tr>
 		{/if}

@@ -207,7 +207,7 @@
 <textarea style="width:95%;" rows="4" name="description">{$description|escape}</textarea></div>
 <div id='zStaticText' {if $type neq 'S'}style="display:none;"{/if}>
 <div id="zStaticTextToolbars" {if $type neq 'S'}style="display:none;"{/if}>
-	{toolbars qtnum="staticText" area_name="staticTextArea"}
+	{toolbars qtnum="staticText" area_id="staticTextArea"}
 </div>
 <textarea id="staticTextArea" name="descriptionStaticText" rows="20" cols="80" >{$description|escape}</textarea></div></td></tr>
 <tr class="formcolor"><td>{tr}Error message:{/tr}</td><td><input type="text" name="errorMsg" value="{$errorMsg|escape}" /></td></tr>

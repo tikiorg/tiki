@@ -507,9 +507,10 @@ function parseAutoJSON(data) {
 /// TODO refactor for 4.n
 
 /* wikiplugin editor */
-function popupPluginForm(area_name, type, index, pageName, pluginArgs, bodyContent, edit_icon){
+function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent, edit_icon){
     if (!$.ui) {
-        return popup_plugin_form(area_name, type, index, pageName, pluginArgs, bodyContent, edit_icon); // ??
+		alert("dev notice: no jq.ui here?");
+        return popup_plugin_form(area_id, type, index, pageName, pluginArgs, bodyContent, edit_icon); // ??
     }
     var container = $('<div class="plugin"></div>');
 
@@ -519,17 +520,17 @@ function popupPluginForm(area_name, type, index, pageName, pluginArgs, bodyConte
     if (!pageName) {
         pageName = '';
     }
-	var textarea = getElementById(area_name);	// use weird version of getElementById in tiki-js.js (also gets by name)
+	var textarea = $('#' + area_id)[0];
 	var replaceText = false;
 	
 	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
-	saveTASelection(area_name);
+	saveTASelection(area_id);
 
    if (!pluginArgs && !bodyContent) {
 	    pluginArgs = {};
 	    bodyContent = "";
 		
-		dialogSelectElement( area_name, '{' + type.toUpperCase(), '{' + type.toUpperCase() + '}' ) ;
+		dialogSelectElement( area_id, '{' + type.toUpperCase(), '{' + type.toUpperCase() + '}' ) ;
 		var sel = getTASelection( textarea );
 		if (sel.length > 0) {
 			sel = sel.replace(/^\s\s*/, "").replace(/\s\s*$/g, "");	// trim
@@ -621,14 +622,14 @@ function popupPluginForm(area_name, type, index, pageName, pluginArgs, bodyConte
         if (edit) {
             container.children('form').submit();
         } else {
-//			getElementById(area_name).focus(); // unsuccesfull attempt to get Fx3.5/win to keep selection info
-            insertAt(area_name, blob, false, false, replaceText);
+//			$('#' + area_id).focus(); // unsuccesfull attempt to get Fx3.5/win to keep selection info
+            insertAt(area_id, blob, false, false, replaceText);
         }
 		$(this).dialog("close");
 		$('div.plugin input[name="type"][value="' + type + '"]').parent().parent().remove();
 	        
 		// 2nd version fix for Firefox 3.5 losing selection on changes to popup
-		restoreTASelection(area_name);
+		restoreTASelection(area_id);
 
 		return false;
     };
@@ -644,14 +645,14 @@ function popupPluginForm(area_name, type, index, pageName, pluginArgs, bodyConte
 			$('div.plugin input[name="type"][value="' + type + '"]').parent().parent().remove();		
 
 			// 2nd version fix for Firefox 3.5 losing selection on changes to popup
-			restoreTASelection(area_name);
+			restoreTASelection(area_id);
 
-			var ta = getElementById(area_name);
+			var ta = $('#' + area_id);
 			if (ta) { ta.focus(); }
 		}
 	}).dialog('option', 'buttons', btns).dialog("open");
    
-	restoreTASelection(area_name);
+	restoreTASelection(area_id);
 }
 
 /*
@@ -680,71 +681,63 @@ $(document).ready(function() {	// if in translation-diff-mode go fullscreen auto
 	}
 });
 
-function toggleFullScreen(area_name) {
-	var $ta = $("#" + area_name);
+function toggleFullScreen(area_id) {
+	var $ta = $("#" + area_id);
 	var $diff = $("#diff_outer"), $edit_form, $edit_form_innards;	// vars for translation diff elements if present
 
-	if (!$ta.length) {
-		$ta = $(getElementById(area_name));	// use the cursed getElementById() func from tiki-js.js
-		area_name = $ta.attr("id");				// as some textareas use name instead of id still
-		if (!area_name) {
-			return;			// may be accidentally called in wysiwyg mode and it all goes wrong
-		}
-	}
-	
-	if (fullScreenState[area_name]) {	// leave full screen - fullScreenState[area_name] contains info about previous page DOM state when fullscreen
+	if (fullScreenState[area_id]) {	// leave full screen - fullScreenState[area_id] contains info about previous page DOM state when fullscreen
 		if ($diff.length) {
-			$("#fs_grippy_" + area_name).remove();
-			$diff.css("float", fullScreenState[area_name]["diff"]["float"]).width(fullScreenState[area_name]["diff"]["width"]).height(fullScreenState[area_name]["diff"]["height"]);
-			$("#diff_history").height(fullScreenState[area_name]["diff_history"]["height"])
-								.width(fullScreenState[area_name]["diff_history"]["width"]);
-			for(var i = 0; i < fullScreenState[area_name]["edit_form_innards"].length; i++) {
-				$(fullScreenState[area_name]["edit_form_innards"][i]["el"])
-						.css("left", fullScreenState[area_name]["edit_form_innards"][i]["left"])
-						.width(fullScreenState[area_name]["edit_form_innards"][i]["width"])
-						.height(fullScreenState[area_name]["edit_form_innards"][i]["height"]);
+			$("#fs_grippy_" + area_id).remove();
+			$diff.css("float", fullScreenState[area_id]["diff"]["float"]).width(fullScreenState[area_id]["diff"]["width"]).height(fullScreenState[area_id]["diff"]["height"]);
+			$("#diff_history").height(fullScreenState[area_id]["diff_history"]["height"])
+								.width(fullScreenState[area_id]["diff_history"]["width"]);
+			for(var i = 0; i < fullScreenState[area_id]["edit_form_innards"].length; i++) {
+				$(fullScreenState[area_id]["edit_form_innards"][i]["el"])
+						.css("left", fullScreenState[area_id]["edit_form_innards"][i]["left"])
+						.width(fullScreenState[area_id]["edit_form_innards"][i]["width"])
+						.height(fullScreenState[area_id]["edit_form_innards"][i]["height"]);
 			}	
-			$edit_form = $(fullScreenState[area_name]["edit_form"]["el"]);	// hmmm?
-			$edit_form.css("position", fullScreenState[area_name]["edit_form"]["position"])
-						.css("left", fullScreenState[area_name]["edit_form"]["left"])
-						.width(fullScreenState[area_name]["edit_form"]["width"]).height(fullScreenState[area_name]["edit_form"]["height"]);
+			$edit_form = $(fullScreenState[area_id]["edit_form"]["el"]);	// hmmm?
+			$edit_form.css("position", fullScreenState[area_id]["edit_form"]["position"])
+						.css("left", fullScreenState[area_id]["edit_form"]["left"])
+						.width(fullScreenState[area_id]["edit_form"]["width"]).height(fullScreenState[area_id]["edit_form"]["height"]);
 		}
-		$ta.css("float", fullScreenState[area_name]["ta"]["float"]).width(fullScreenState[area_name]["ta"]["width"]).height(fullScreenState[area_name]["ta"]["height"]);
-		$ta.resizable({minWidth: fullScreenState[area_name]["resizable"]["minWidth"], minHeight: fullScreenState[area_name]["resizable"]["minHeight"]});
+		$ta.css("float", fullScreenState[area_id]["ta"]["float"]).width(fullScreenState[area_id]["ta"]["width"]).height(fullScreenState[area_id]["ta"]["height"]);
+		$ta.resizable({minWidth: fullScreenState[area_id]["resizable"]["minWidth"], minHeight: fullScreenState[area_id]["resizable"]["minHeight"]});
 		
-		for(i = 0; i < fullScreenState[area_name]["hidden"].length; i++) {
-			fullScreenState[area_name]["hidden"][i].show();
+		for(i = 0; i < fullScreenState[area_id]["hidden"].length; i++) {
+			fullScreenState[area_id]["hidden"][i].show();
 		}
 		
-		for (i = 0; i < fullScreenState[area_name]["changed"].length; i++) {
-			var $el = $(fullScreenState[area_name]["changed"][i]["el"]);
-			$el.css("margin-left", fullScreenState[area_name]["changed"][i]["margin-left"])
-				.css("margin-right", fullScreenState[area_name]["changed"][i]["margin-right"])
-				.css("margin-top", fullScreenState[area_name]["changed"][i]["margin-top"])
-				.css("margin-bottom", fullScreenState[area_name]["changed"][i]["margin-bottom"])
-				.css("padding-left", fullScreenState[area_name]["changed"][i]["padding-left"])
-				.css("padding-right", fullScreenState[area_name]["changed"][i]["padding-right"])
-				.css("padding-top", fullScreenState[area_name]["changed"][i]["padding-top"])
-				.css("padding-bottom", fullScreenState[area_name]["changed"][i]["padding-bottom"])
-				.width(fullScreenState[area_name]["changed"][i]["width"])
-				.height(fullScreenState[area_name]["changed"][i]["height"]);
+		for (i = 0; i < fullScreenState[area_id]["changed"].length; i++) {
+			var $el = $(fullScreenState[area_id]["changed"][i]["el"]);
+			$el.css("margin-left", fullScreenState[area_id]["changed"][i]["margin-left"])
+				.css("margin-right", fullScreenState[area_id]["changed"][i]["margin-right"])
+				.css("margin-top", fullScreenState[area_id]["changed"][i]["margin-top"])
+				.css("margin-bottom", fullScreenState[area_id]["changed"][i]["margin-bottom"])
+				.css("padding-left", fullScreenState[area_id]["changed"][i]["padding-left"])
+				.css("padding-right", fullScreenState[area_id]["changed"][i]["padding-right"])
+				.css("padding-top", fullScreenState[area_id]["changed"][i]["padding-top"])
+				.css("padding-bottom", fullScreenState[area_id]["changed"][i]["padding-bottom"])
+				.width(fullScreenState[area_id]["changed"][i]["width"])
+				.height(fullScreenState[area_id]["changed"][i]["height"]);
 		}
 		
 		$(".fs_clones").remove();
 		$(document.documentElement).css("overflow","auto");
 		
-		fullScreenState[area_name] = false;
+		fullScreenState[area_id] = false;
 		
 	} else {		// go full screen
 		$(window).scrollTop(0);
 		$(document.documentElement).css("overflow","hidden");
 		
-		fullScreenState[area_name] = [];
-		fullScreenState[area_name]["hidden"] = [];
-		fullScreenState[area_name]["changed"] = [];
-		fullScreenState[area_name]["resizable"] = [];
-		fullScreenState[area_name]["resizable"]["minWidth"] = $ta.resizable("option", "minWidth");
-		fullScreenState[area_name]["resizable"]["minHeight"] = $ta.resizable("option", "minHeight");
+		fullScreenState[area_id] = [];
+		fullScreenState[area_id]["hidden"] = [];
+		fullScreenState[area_id]["changed"] = [];
+		fullScreenState[area_id]["resizable"] = [];
+		fullScreenState[area_id]["resizable"]["minWidth"] = $ta.resizable("option", "minWidth");
+		fullScreenState[area_id]["resizable"]["minHeight"] = $ta.resizable("option", "minHeight");
 		
 		$ta.resizable("destroy");
 		var h = $(window).height();
@@ -755,12 +748,12 @@ function toggleFullScreen(area_name) {
 		}
 		
 		// store & hide anything not in col1 
-		fullScreenState[area_name]["hidden"].push($("#header, #col2, #col3, #footer"));
+		fullScreenState[area_id]["hidden"].push($("#header, #col2, #col3, #footer"));
 		$("#header, #col2, #col3, #footer").hide();
 		
 		// store & reset margins, padding and size for all the textarea parents, and hide siblings
 		$ta.parents().each(function() {
-			fullScreenState[area_name]["hidden"].push($(this).siblings(":visible:not('#diff_outer, .translation_message')"));
+			fullScreenState[area_id]["hidden"].push($(this).siblings(":visible:not('#diff_outer, .translation_message')"));
 			var ob = [];
 			ob["el"] = this;
 			ob["margin-left"] = $(this).css("margin-left");	// this is for IE - it fails using margin or padding as a single setting
@@ -773,7 +766,7 @@ function toggleFullScreen(area_name) {
 			ob["padding-bottom"] = $(this).css("padding-bottom");
 			ob["width"] = $(this).css("width");
 			ob["height"] = $(this).css("height");
-			fullScreenState[area_name]["changed"].push(ob);
+			fullScreenState[area_id]["changed"].push(ob);
 		});
 		$ta.parents().each(function() {
 			$(this).siblings(":visible:not('#diff_outer, .translation_message')").hide();
@@ -782,29 +775,29 @@ function toggleFullScreen(area_name) {
 		
 		// store & resize translation diff divs etc
 		if ($diff.length) {
-			fullScreenState[area_name]["diff"] = [];
-			fullScreenState[area_name]["diff"]["width"] = $diff.width();
-			fullScreenState[area_name]["diff"]["height"] = $diff.height();
-			fullScreenState[area_name]["diff"]["float"] = $diff.css("float");
-			fullScreenState[area_name]["diff_history"] = [];
-			fullScreenState[area_name]["diff_history"]["height"] = $("#diff_history").height();
-			fullScreenState[area_name]["diff_history"]["width"] = $("#diff_history").width();
+			fullScreenState[area_id]["diff"] = [];
+			fullScreenState[area_id]["diff"]["width"] = $diff.width();
+			fullScreenState[area_id]["diff"]["height"] = $diff.height();
+			fullScreenState[area_id]["diff"]["float"] = $diff.css("float");
+			fullScreenState[area_id]["diff_history"] = [];
+			fullScreenState[area_id]["diff_history"]["height"] = $("#diff_history").height();
+			fullScreenState[area_id]["diff_history"]["width"] = $("#diff_history").width();
 			$edit_form = $diff.next();
 			$edit_form_innards = $edit_form.find("#edit-zone, table.normal, textarea, fieldset");
-			fullScreenState[area_name]["edit_form"] = [];
-			fullScreenState[area_name]["edit_form"]["el"] = $edit_form[0];	// store this element for easy access later
-			fullScreenState[area_name]["edit_form"]["height"] = $edit_form.height();
-			fullScreenState[area_name]["edit_form"]["width"] = $edit_form.width();
-			fullScreenState[area_name]["edit_form"]["left"] = $edit_form.css("left") !== 'auto' ? $edit_form.css("left") : 0;
-			fullScreenState[area_name]["edit_form"]["position"] = $edit_form.css("position");
-			fullScreenState[area_name]["edit_form_innards"] = [];
+			fullScreenState[area_id]["edit_form"] = [];
+			fullScreenState[area_id]["edit_form"]["el"] = $edit_form[0];	// store this element for easy access later
+			fullScreenState[area_id]["edit_form"]["height"] = $edit_form.height();
+			fullScreenState[area_id]["edit_form"]["width"] = $edit_form.width();
+			fullScreenState[area_id]["edit_form"]["left"] = $edit_form.css("left") !== 'auto' ? $edit_form.css("left") : 0;
+			fullScreenState[area_id]["edit_form"]["position"] = $edit_form.css("position");
+			fullScreenState[area_id]["edit_form_innards"] = [];
 			$edit_form_innards.each(function() {
 				var ob = [];
 				ob["el"] = this;
 				ob["width"] = $(this).css("width");
 				ob["height"] = $(this).css("height");
 				ob["left"] = $(this).css("left");
-				fullScreenState[area_name]["edit_form_innards"].push(ob);
+				fullScreenState[area_id]["edit_form_innards"].push(ob);
 			});
 			
 			$diff.parents().each(function() {			// shares some parents with the textarea
@@ -813,10 +806,10 @@ function toggleFullScreen(area_name) {
 		}
 		
 		// resize the actual textarea
-		fullScreenState[area_name]["ta"] = [];
-		fullScreenState[area_name]["ta"]["width"] = $ta.width();
-		fullScreenState[area_name]["ta"]["height"] = $ta.height();
-		fullScreenState[area_name]["ta"]["float"] = $ta.css("float");
+		fullScreenState[area_id]["ta"] = [];
+		fullScreenState[area_id]["ta"]["width"] = $ta.width();
+		fullScreenState[area_id]["ta"]["height"] = $ta.height();
+		fullScreenState[area_id]["ta"]["float"] = $ta.css("float");
 		
 		var b = 0;
 		if ($ta.css("border-left-width")) {
@@ -837,7 +830,7 @@ function toggleFullScreen(area_name) {
 			$("#diff_history").height(h - vh).width(w).css("left", w + grippy_width);
 			$edit_form.css("position","absolute").css("left", w + grippy_width).width(w - grippy_width);
 			
-			$grippy = $("<div id='fs_grippy_" + area_name +"' />").css({"background-image": "url(pics/icons/shading.png)",
+			$grippy = $("<div id='fs_grippy_" + area_id +"' />").css({"background-image": "url(pics/icons/shading.png)",
 											"background-repeat": "repeat-y",
 											"background-position": -3,
 											"position": "absolute",
@@ -1087,7 +1080,7 @@ function displayPicker( closeTo, list, areaname ) {
 		pickerDiv = false;
 		return;
 	}
-	textarea = getElementById( areaname);
+	textarea = $('#' +  areaname);
 	saveTASelection(textarea);
 	
 	pickerDiv = document.createElement('div');
@@ -1110,7 +1103,7 @@ function displayPicker( closeTo, list, areaname ) {
 		link.onclick = function() {
 			insertAt( areaname, ins );
 	
-			textarea = getElementById( areaname);	
+			textarea = $('#' +  areaname);	
 			// quick fix for Firefox 3.5 losing selection on changes to popup
 			if (typeof textarea.selectionStart != 'undefined') {
 				var tempSelectionStart = textarea.selectionStart;
@@ -1146,11 +1139,11 @@ function displayPicker( closeTo, list, areaname ) {
 function dialogSelectElement( areaname, elementStart, elementEnd ) {
 	restoreTASelection( areaname );
 	
-	var $textarea = $(getElementById(areaname));
+	var $textarea = $('#' + areaname);
 	var val = $textarea.val();
 	var pairs = [], pos = 0, s = 0, e = 0;
 	
-	while (s > -1) {	// positions of start/end markers
+	while (s > -1 && e > -1) {	// positions of start/end markers
 		s = val.indexOf(elementStart, e);
 		if (s > -1) {
 			e = val.indexOf(elementEnd, s + elementStart.length);
@@ -1189,7 +1182,7 @@ function dialogSharedClose( areaname, dialog ) {
 function dialogInternalLinkOpen( areaname ) {
 	$("#tbWLinkPage").tiki("autocomplete", "pagename");
 	dialogSelectElement( areaname, '((', '))' ) ;
-	var s = getTASelection($(getElementById(areaname))[0]);
+	var s = getTASelection($('#' + areaname)[0]);
 	var m = /\((.*)\(([^\|]*)\|?([^\|]*)\|?([^\|]*)\|?\)\)/g.exec(s);
 	if (m && m.length > 4) {
 		if ($("#tbWLinkRel")) {
@@ -1238,7 +1231,7 @@ function dialogInternalLinkInsert( areaname, dialog ) {
 function dialogExternalLinkOpen( areaname ) {
 	$("#tbWLinkPage").tiki("autocomplete", "pagename");
 	dialogSelectElement( areaname, '[', ']' ) ;
-	var s = getTASelection($(getElementById(areaname))[0]);
+	var s = getTASelection($('#' + areaname)[0]);
 	var m = /\[([^\|]*)\|?([^\|]*)\|?([^\|]*)\]/g.exec(s);
 	if (m && m.length > 3) {
 		$("#tbLinkURL").val(m[1]);
@@ -1291,7 +1284,7 @@ function dialogTableOpen(areaname, dialog) {
 
 	dialogSelectElement( areaname, '||', '||' ) ;
 
-	var s = getTASelection($(getElementById(areaname))[0]);
+	var s = getTASelection($('#' + areaname)[0]);
 	var m = /\|\|([\s\S]*?)\|\|/mg.exec(s);
 	var vals = [], rows = 3, cols = 3, c, r, i, j;
 	if (m) {
@@ -1429,7 +1422,7 @@ function dialogTableInsert(areaname, dialog) {
 
 function dialogFindOpen(areaname) {
 	
-	var s = getTASelection($(getElementById(areaname))[0]);
+	var s = getTASelection($('#' + areaname)[0]);
 	$("#tbFindSearch").val(s).focus();			  
 }
 
@@ -1441,7 +1434,7 @@ function dialogFindFind( areaname ) {
 	if ($("#tbFindCase").attr("checked")) {
 		opt += "i";
 	}
-	ta = $(getElementById(areaname));
+	ta = $('#' + areaname);
 	str = ta.val();
 	re = new RegExp(s,opt);
 	p = getCaretPos(ta[0]);
@@ -1466,7 +1459,7 @@ function dialogFindFind( areaname ) {
 
 function dialogReplaceOpen(areaname) {
 
-	var s = getTASelection($(getElementById(areaname))[0]);
+	var s = getTASelection($('#' + areaname)[0]);
 	$("#tbReplaceSearch").val(s).focus();
 	  		  
 }
@@ -1482,9 +1475,9 @@ function dialogReplaceReplace( areaname ) {
 	if ($("#tbReplaceCase").attr("checked")) {
 		opt += "i";
 	}
-	var str = $(getElementById(areaname)).val();
+	var str = $('#' + areaname).val();
 	var re = new RegExp(s,opt);
-	$(getElementById(areaname)).val(str.replace(re,r));
+	$('#' + areaname).val(str.replace(re,r));
 
 }
 

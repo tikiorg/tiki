@@ -4,8 +4,6 @@
 {popup_init src="lib/overlib.js"}
 {include file='tiki-articles-js.tpl'}
 
-{assign var=area_name value="body"}
-
 {title help="Articles"}
 	{if $articleId}
 		{tr}Edit:{/tr} {$title|escape}

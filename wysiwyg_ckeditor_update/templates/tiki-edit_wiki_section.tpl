@@ -16,7 +16,7 @@
   <td>{tr}Edit{/tr}:
   </td>
   <td>
-    {toolbars area_name='editwiki'}
+    {toolbars area_id='editwiki'}
     <textarea class="wikiedit" id="editwiki" name="data" rows="{$rows}" cols="{$cols}">{$data|escape}</textarea>
     <input type="hidden" name="rows" value="{$rows}"/>
     <input type="hidden" name="cols" value="{$cols}"/>
