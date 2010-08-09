@@ -432,6 +432,7 @@ function get_default_prefs() {
 		'wikiplugininline_proposal' => 'n',
 		'wikiplugininline_quote' => 'n',
 		'wikiplugininline_rcontent' => 'n',
+		'wikiplugininline_randominclude' => 'n',
 		'wikiplugininline_realnamelist' => 'n',
 		'wikiplugininline_redirect' => 'n',
 		'wikiplugininline_regex' => 'n',
