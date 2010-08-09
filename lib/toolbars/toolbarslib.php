@@ -1034,7 +1034,7 @@ class ToolbarHelptool extends Toolbar
 		global $wikilib, $smarty, $plugins, $section;
 		if (!isset($plugins)) {
 			include_once ('lib/wiki/wikilib.php');
-			$plugins = $wikilib->list_plugins(true);
+			$plugins = $wikilib->list_plugins(true, $areaName);
 		}
 		if ($section == 'sheet') {
 			$sheethelp = $smarty->fetch('tiki-edit_help_sheet.tpl');
