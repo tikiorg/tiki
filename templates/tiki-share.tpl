@@ -61,8 +61,6 @@
     <tr class="formcolor">
       <td class="formcolor">
         {tr}Your message{/tr}
-        <br /><br />
-        {include file='textareasize.tpl' area_name='comment' formId='share-form'}
       </td>
       
       <td class="formcolor">

@@ -751,8 +751,6 @@ include_once ('tiki-section_options.php');
 setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);
 
-include_once("textareasize.php");
-
 ask_ticket('calendar');
 
 include_once('tiki-jscalendar.php');

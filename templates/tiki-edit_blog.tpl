@@ -35,8 +35,6 @@
         <tr class="editblogform">
           <td>
             <label for="blog-desc">{tr}Description{/tr}</label>
-            <br />
-            {include file='textareasize.tpl' area_name='blog-desc' formId='blog-edit-form'}
           </td>
           <td>
             <textarea class="wikiedit" name="description" id="blog-desc" rows="{$rows}" cols="{$cols}" wrap="virtual">{$description|escape}</textarea>
@@ -107,8 +105,6 @@
           <tr class="editblogform">
             <td>
               <label for="blogs-heading">{tr}Blog heading{/tr}</label>
-              <br />
-              {include file='textareasize.tpl' area_name='blogs-heading' formId='blog-edit-form'}
             </td>
             <td>
               <textarea name="heading" id="blogs-heading" rows='10' cols='{$cols}'>{$heading|escape}</textarea>
@@ -130,8 +126,6 @@
           <tr class="editblogform">
             <td>
               <label for="blogs-post-heading">{tr}Blog post heading{/tr}</label>
-              <br />
-              {include file='textareasize.tpl' area_name='blogs-post-heading' formId='blog-post-edit-form'}
             </td>
             <td>
               <textarea name="post_heading" id="blogs-post_heading" rows='10' cols='{$cols}'>{$post_heading|escape}</textarea>

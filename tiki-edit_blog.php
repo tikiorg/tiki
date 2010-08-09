@@ -174,7 +174,6 @@ $cat_objid = $blogId;
 include_once ("categorize_list.php");
 
 $defaultRows = 5;
-include_once("textareasize.php");
 
 ask_ticket('edit-blog');
 

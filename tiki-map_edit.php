@@ -221,8 +221,6 @@ if ($prefs['feature_user_watches'] == 'y') {
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-map_edit.php", "tiki-map.php", $foo["path"]);
 $smarty->assign('url_browse', $tikilib->httpPrefix() . $foo1);
-include_once ("textareasize.php");
-$smarty->assign('toolbarscant', $toolbars["cant"]);
 ask_ticket('edit-map');
 $section = 'maps';
 include_once ('tiki-section_options.php');

@@ -31,7 +31,7 @@
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}"/></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:<br />{include file='textareasize.tpl' area_name='gal-desc' formId='gal-edit-form'}</td><td class="formcolor"><textarea   rows="{$rows}" cols="{$cols}" name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea   rows="{$rows}" cols="{$cols}" name="description" id="gal-desc">{$description|escape}</textarea></td></tr>
 {if $tiki_p_admin_galleries eq 'y'}
 <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>
 {* If a user can create a gallery, but doesn't have tiki_p_admin_galleries the new gallery needs to be visible. *}

@@ -53,12 +53,10 @@
 			</tr>
 
 			<tr>
-				<td colspan="2" class="editblogform">
+				<td class="editblogform">
 					{tr}Body:{/tr}
 				</td>
-			</tr>
-			<tr>	
-				<td colspan="2" class="editblogform">
+				<td class="editblogform">
 					{textarea id='blogedit' class="wikiedit" name="data"}{$data}{/textarea}
 				</td>
 			</tr>

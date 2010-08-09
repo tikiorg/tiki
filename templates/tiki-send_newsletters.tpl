@@ -228,8 +228,6 @@
 				<tr class="formcolor">
 					<td class="formcolor" id="txtcol1">
 						{tr}Data Txt:{/tr}
-						<br /><br />
-						{include file='textareasize.tpl' area_name='editwikitxt' formId='editpageform'}
 					</td>
 					<td class="formcolor" id="txtcol2" >
 						<textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$datatxt|escape}</textarea>
@@ -240,8 +238,6 @@
 					<td class="formcolor" id="clipcol1">
 						{tr}Article Clip (read only):{/tr}
 						<input type="submit" name="clipArticles" value="{tr}Clip Now{/tr}" class="wikiaction tips" title="{tr}Clip Articles{/tr}" onclick="needToConfirm=false" />
-						<br /><br />
-						{include file='textareasize.tpl' area_name='articlecliptxt' formId='editpageform'}
 					</td>
 					<td class="formcolor" id="clipcol2" >
 						{tr}To include the article clipping into your newsletter, cut and paste it into the contents.{/tr}

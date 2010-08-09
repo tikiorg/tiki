@@ -420,7 +420,6 @@ include_once ("categorize_list.php");
 include_once ("freetag_list.php");
 
 $defaultRows = 5;
-include_once("textareasize.php");
 
 include_once ('tiki-section_options.php');
 ask_ticket('galleries');

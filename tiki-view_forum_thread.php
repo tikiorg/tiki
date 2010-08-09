@@ -301,7 +301,6 @@ if (isset($_SESSION['feedbacks'])) {
 	unset($_SESSION['feedbacks']);
 }
 $defaultRows = $prefs['default_rows_textarea_forumthread'];
-include_once ("textareasize.php");
 $smarty->assign('forum_mode', 'y');
 if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
