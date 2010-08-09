@@ -9,7 +9,6 @@ require_once ('tiki-setup.php');
 include_once ('lib/htmlpages/htmlpageslib.php');
 $access->check_feature('feature_html_pages');
 $access->check_permission('tiki_p_edit_html_pages');
-include_once ("textareasize.php");
 if (!isset($_REQUEST["pageName"])) {
 	$_REQUEST["pageName"] = '';
 }

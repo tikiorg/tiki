@@ -380,11 +380,6 @@
 </tr>
 <tr class="formcolor">
 <td>{tr}Description{/tr}
-{if $edit}
-  <br /><br />
-  {include file='textareasize.tpl' area_name="editwiki" formId="editcalitem"}<br /><br />
-{/if}
-
 </td><td>
 {if $edit}
   {toolbars area_name="save[description]"}

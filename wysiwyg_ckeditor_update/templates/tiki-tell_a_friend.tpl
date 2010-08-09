@@ -65,8 +65,6 @@
     <tr class="formcolor">
       <td class="formcolor">
         {tr}Your comment{/tr}
-        <br /><br />
-        {include file='textareasize.tpl' area_name='comment' formId='tellafriend'}
       </td>
       
       <td class="formcolor">

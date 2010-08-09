@@ -175,7 +175,6 @@ $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 // wysiwyg decision
 include 'lib/setup/editmode.php';
 $smarty->assign_by_ref('channels', $channels["data"]);
-include_once ("textareasize.php");
 ask_ticket('admin-content-templates');
 global $wikilib;
 include_once ('lib/wiki/wikilib.php');

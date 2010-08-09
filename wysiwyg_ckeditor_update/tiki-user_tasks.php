@@ -34,7 +34,6 @@ $smarty->assign('comp_array_p', $comp_array_p);
 if (!isset($_REQUEST['taskId'])) {
 	$_REQUEST['taskId'] = 0;
 }
-$smarty->assign('toolbarscant', $toolbars["cant"]);
 //default values for show options
 if (!isset($_SESSION['show_trash'])) $_SESSION['show_trash'] = false;
 if (!isset($_SESSION['show_completed'])) $_SESSION['show_completed'] = true;

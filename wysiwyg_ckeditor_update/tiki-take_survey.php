@@ -47,8 +47,6 @@ if (isset($_REQUEST["ans"])) {
 	if ($error_msg == '') header('Location: tiki-list_surveys.php');
 }
 include_once ('tiki-section_options.php');
-include_once ('textareasize.php');
-$smarty->assign('toolbarscant', $toolbars["cant"]);
 ask_ticket('take-survey');
 // Display the template
 $smarty->assign('error_msg', $error_msg);

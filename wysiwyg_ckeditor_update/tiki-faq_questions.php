@@ -115,7 +115,6 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '', $_REQUEST["faqId"]);
 $smarty->assign_by_ref('suggested', $suggested["data"]);
 
-include_once("textareasize.php");
 include_once ('tiki-section_options.php');
 ask_ticket('faq-questions');
 

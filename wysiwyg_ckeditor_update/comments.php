@@ -478,7 +478,6 @@ if ($comments_offset > 0) {
 
 if (!isset($forum_mode) || $forum_mode == 'n') {
 	$defaultRows = $prefs['default_rows_textarea_comment'];
-	include_once("textareasize.php");
 }
 
 if ( ! isset($forum_mode) || $forum_mode == 'n' ) {

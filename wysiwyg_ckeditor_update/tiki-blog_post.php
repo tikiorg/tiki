@@ -230,7 +230,6 @@ if ($contribution_needed) {
 }
 
 include_once ('tiki-section_options.php');
-include_once ("textareasize.php");
 
 if ($prefs['feature_contribution'] == 'y') {
 	include_once ('contribution.php');

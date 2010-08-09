@@ -487,8 +487,6 @@ if ($prefs['feature_theme_control'] == 'y') {
 
 $headerlib->add_cssfile('css/calendar.css',20);
 
-include_once("textareasize.php");
-
 $smarty->assign('referer', empty($_SERVER['HTTP_REFERER']) ? 'tiki-calendar.php' : $_SERVER['HTTP_REFERER']);
 $smarty->assign('myurl', 'tiki-calendar_edit_item.php');
 $smarty->assign('id', $id);

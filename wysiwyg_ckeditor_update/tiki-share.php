@@ -89,8 +89,6 @@ if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 }
 $smarty->assign('report',$_REQUEST['report']);
 
-
-include_once ("textareasize.php");
 $errors = array();
 $ok=true;
 

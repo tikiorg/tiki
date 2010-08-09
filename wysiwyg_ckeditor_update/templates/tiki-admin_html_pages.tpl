@@ -60,8 +60,7 @@
 
     <tr class="formcolor">
       <td>
-        {tr}Content{/tr}:<br />
-{include file='textareasize.tpl' area_name='htmlcode' formId='editpageform'} 
+        {tr}Content{/tr}:
       </td>
       <td>
         <textarea name="content" id="htmlcode" rows="25" style="width:95%;">{$info.content|escape}</textarea>

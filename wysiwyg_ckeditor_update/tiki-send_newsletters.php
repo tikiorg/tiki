@@ -561,7 +561,6 @@ $tpls = $nllib->list_tpls();
 if (count($tpls) > 0) {
 	$smarty->assign_by_ref('tpls', $tpls);
 }
-include_once ("textareasize.php");
 include_once ('tiki-section_options.php');
 setcookie('tab', $_REQUEST['cookietab']);
 $smarty->assign('cookietab', $_REQUEST['cookietab']);

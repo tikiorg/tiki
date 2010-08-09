@@ -142,8 +142,7 @@
 <input type="hidden" name="commentId" value="{$commentId|escape}" />
 <table class="normal">
 <tr class="formcolor"><td>{tr}Title:{/tr}</td><td><input type="text" name="comment_title" value="{$comment_title|escape}"/></td></tr>
-<tr class="formcolor"><td>{tr}Comment{/tr}:<br />
-{include file='textareasize.tpl' area_name='comment_data' formId='commentform' ToolbarSet='Tiki'}</td>
+<tr class="formcolor"><td>{tr}Comment{/tr}:</td>
 <td><textarea rows="{if empty($rows)}4{else}{$rows}{/if}" cols="{if empty($cols)}50{else}{$cols}{/if}" name="comment_data" id="comment_data">{$comment_data|escape}</textarea>
 </td></tr>
 {if !$user and $prefs.feature_antibot eq 'y'}
