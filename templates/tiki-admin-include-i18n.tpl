@@ -88,14 +88,19 @@
 		<input type="submit" name="custom" value="{tr}Edit{/tr}" />
 	{else}
 		{if !empty($custom_error)}
-			{remarksbox type="error"}
+			{remarksbox title="{tr}Error{/tr}" type="error"}
 				{if $custom_error eq 'param'}
 					{tr}Incorrect param{/tr}
 				{elseif $custom_error eq 'parse'}
 					{tr}Syntax error{/tr}
 				{else}
-					{tr}Cannot open this file:{/tr} {$custom_file}
+					{tr}Cannot open/write this file:{/tr} {$custom_file}. {tr}Custom translation will not be saved. Ask your administration to change the permission.{/tr}
 				{/if}
+			{/remarksbox}
+		{/if}
+		{if !empty($custom_ok)}
+			{remarksbox title="{tr}ok{/tr}" }
+				{tr}The file has been saved{/tr}
 			{/remarksbox}
 		{/if}
 		<h2>
@@ -104,8 +109,17 @@
 		{/section}
 		</h2>
 		<input type="hidden" name="custom_lang" value="{$custom_lang|escape}" />
-		<textarea rows="40" cols="80" name="custom_translation">{$custom_translation|escape}</textarea>
-		<br />
+		<table class="normal">
+		<tr><th>{tr}English{/tr}</th><th>{tr}Translation{/tr}</th></tr>
+		{if !empty($custom_translation)}
+			{foreach from=$custom_translation key=cfrom item=cto}
+				<tr><td><input type="text" name="from[]" value="{$cfrom|escape}"/></td><td><input type="text" name="to[]" value="{$cto|escape}"/></td></tr>
+			{/foreach}
+		{/if}
+		{foreach from=$from key=i item=fr}
+			<tr><td><input type="text" name="from[]" value="{$fr|escape}"/></td><td><input type="text" name="to[]" value="{$to.$i|escape}"/></td></tr>
+		{/foreach}
+		</table>
 		<input type="submit" name="custom_save" value="{tr}Save{/tr}" />
 	{/if}
 </div>

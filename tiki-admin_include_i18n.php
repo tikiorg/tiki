@@ -14,19 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 $languages = array();
 $languages = $tikilib->list_languages(false, null, true);
 $smarty->assign_by_ref("languages", $languages);
-if (!empty($_REQUEST['custom']) && !empty($_REQUEST['custom_lang'])) {
-	ask_ticket('admin-inc-i18n');
-	$custom_file = 'lang/' . $_REQUEST['custom_lang'] . '/';
-	if (!empty($tikidomain)) $custom_file.= "$tikidomain/";
-	$custom_file.= "custom.php";
-	$custom_translation = file_get_contents($custom_file);
-	if (empty($custom_translation)) {
-		$custom_translation = file_get_contents('lang/fr/custom.php_example');
-	}
-	$smarty->assign_by_ref('custom_translation', $custom_translation);
-	$smarty->assign_by_ref('custom_lang', $_REQUEST['custom_lang']);
-}
-if (!empty($_REQUEST['custom_save']) && !empty($_REQUEST['custom_lang'])) {
+
+$ok = true;
+if (!empty($_REQUEST['custom_save'])) {
 	ask_ticket('admin-inc-i18n');
 	$ok = false;
 	foreach($languages as $l) {
@@ -37,28 +27,58 @@ if (!empty($_REQUEST['custom_save']) && !empty($_REQUEST['custom_lang'])) {
 	}
 	if (!$ok) {
 		$smarty->assign('custom_error', 'param');
-	} elseif (eval(str_replace(array(
-		'<?php',
-		'?>'
-	) , '', $_REQUEST['custom_translation'])) === false) {
-		$smarty->assign_by_ref('custom_lang', $_REQUEST['custom_lang']);
-		$smarty->assign_by_ref('custom_translation', $_REQUEST['custom_translation']);
-		$smarty->assign('custom_error', 'parse');
 	} else {
+		$smarty->assign_by_ref('custom_lang', $_REQUEST['custom_lang']);
 		$custom_file = 'lang/' . $_REQUEST['custom_lang'] . '/';
 		if (!empty($tikidomain)) $custom_file.= "$tikidomain/";
 		$custom_file.= "custom.php";
 		$smarty->assign('custom_file', $custom_file);
+		$custom_code = "<?php\r\n\$lang_custom = array(\r\n";
+		foreach ($_REQUEST['from'] as $i=>$from) {
+			if (!empty($from)) {
+				$custom_code .= '"'.str_replace('"','\\"', $from).'" => "'.str_replace('"','\\"', $_REQUEST['to'][$i])."\",\r\n";
+			}
+		}
+		$custom_code .= ");\r\n";
+		$custom_code .= '$lang = $lang_custom + $lang;';
 		if (!($fp = fopen($custom_file, 'w+'))) {
+			$ok = false;
 			$smarty->assign('custom_error', 'file');
 		} else {
-			if (!fwrite($fp, $_REQUEST['custom_translation'])) {
+			if (!fwrite($fp, $custom_code)) {
+				$ok = false;
 				$smarty->assign('custom_error', 'file');
 			}
 			fclose($fp);
 			global $cachelib;
 			include_once ('lib/cache/cachelib.php');
 			$cachelib->erase_dir_content("templates_c/$tikidomain");
+			$smarty->assign('custom_ok', 'y');
 		}
 	}
+	if (!$ok) {
+		$smarty->assign_by_ref('to', $_REQUEST['to']);
+		$smarty->assign_by_ref('from', $_REQUEST['from']);
+	}
 }
+if (!empty($_REQUEST['custom_lang'])) {
+	ask_ticket('admin-inc-i18n');
+	$custom_file = 'lang/' . $_REQUEST['custom_lang'] . '/';
+	if (!empty($tikidomain)) $custom_file.= "$tikidomain/";
+	$custom_file.= "custom.php";
+	if (file_exists($custom_file)) {
+		$lang = array();
+		include ($custom_file);
+		$smarty->assign_by_ref('custom_translation', $lang_custom);
+	} elseif (!is_writable($custom_file)) {
+		$smarty->assign('custom_error', 'file');
+		$smarty->assign('custom_file', $custom_file);
+	}
+	$smarty->assign_by_ref('custom_lang', $_REQUEST['custom_lang']);
+	if ($ok) {
+		$to = array('', '', '', '','','','','','','','');
+		$smarty->assign('to', $to);
+		$smarty->assign('from', $to);
+	}
+}
+
