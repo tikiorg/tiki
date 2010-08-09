@@ -32,9 +32,10 @@
 				{if $listpages[ix].comments == 1}
 					{tr}comment{/tr}
 				{else}
-					{tr}comments{/tr}</a>
+					{tr}comments{/tr}
 				{/if}
 			{/if}
+			</a>
 		{/if}
 	</div>
 </div> <!--postfooter-->
