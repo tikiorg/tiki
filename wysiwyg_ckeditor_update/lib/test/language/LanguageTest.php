@@ -76,16 +76,6 @@ class LanguageTest extends TikiTestCase {
 		$this->assertFalse($result);
 	}
 
-	public function testWriteCustomShouldCreateFile() {
-		$this->obj->writeCustomFile();
-		$this->assertFileExists("{$this->tikiroot}lang/{$this->lang}/custom.php");
-	}
-
-	public function testWriteCustomCheckFileData() {
-		$this->obj->writeCustomFile();
-		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/custom.php'), file_get_contents($this->langDir . '/custom.php'));
-	}
-
 	public function testWriteLanguageFile() {
 		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
 		$this->obj->writeLanguageFile();
