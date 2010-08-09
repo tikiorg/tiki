@@ -17,11 +17,11 @@
 
 {foreach from=$p.options key=value item=label name=loop}
 	{jq}
-if( ! $jq('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').attr('checked') ) {
-	$jq('#{{$p.preference|escape}}_childcontainer_{{$smarty.foreach.loop.index}}').hide();
+if( ! $('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').attr('checked') ) {
+	$('#{{$p.preference|escape}}_childcontainer_{{$smarty.foreach.loop.index}}').hide();
 }
-$jq('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').change( function() {
-	if( $jq('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').attr('checked') ) {
+$('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').change( function() {
+	if( $('#{{$p.id|cat:'_'|cat:$smarty.foreach.loop.index|escape}}').attr('checked') ) {
 		show('#{{$p.preference|escape}}_childcontainer_{{$smarty.foreach.loop.index}}');
 	}
 } );

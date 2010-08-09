@@ -237,9 +237,9 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			};
 		})($jq);
 
-		$jq('.postbody dt:contains("note")')
+		$('.postbody dt:contains("note")')
 			.closest('.postbody')
-			.addnotes( $jq('#top') );
+			.addnotes( $('#top') );
 	{/jq}
 </form>
 
@@ -317,7 +317,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{if $comment_preview eq 'y'}
 	<div class="clearfix post_preview" id="preview_comment">
 		{jq}
-			$jq(window).attr('location','#preview_comment');
+			$(window).attr('location','#preview_comment');
 		{/jq}
 		{if $forum_mode neq 'y'}<b>{tr}Preview{/tr}</b>{/if}
 		<div class="post"><div class="inner"><span class="corners-top"><span></span></span><div class="postbody">
@@ -430,19 +430,19 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
 				{jq}
-					var annote = $jq('<a href="">{tr}Comment{/tr}</a>')
+					var annote = $('<a href="">{tr}Comment{/tr}</a>')
 						.css('background','white')
 						.click( function( e ) {
 							e.preventDefault();
-							var annotation = $jq(this).attr('annotation');
-							$jq(this).hide();
+							var annotation = $(this).attr('annotation');
+							$(this).hide();
 
-							$jq('#editpostform').parents().show();
-							$jq('#editpostform textarea').val(';note:' + annotation + "\n\n").focus().scroll();
+							$('#editpostform').parents().show();
+							$('#editpostform textarea').val(';note:' + annotation + "\n\n").focus().scroll();
 						} )
 						.appendTo(document.body);
 
-					$jq('#top').mouseup( function( e ) {
+					$('#top').mouseup( function( e ) {
 						var range;
 						if( window.getSelection && window.getSelection().rangeCount ) {
 							range = window.getSelection().getRangeAt(0);
@@ -451,7 +451,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 						}
 
 						if( range ) {
-							var string = $jq.trim( range.toString() );
+							var string = $.trim( range.toString() );
 
 							if( string.length && -1 === string.indexOf( "\n" ) ) {
 								annote.attr('annotation', string);
@@ -506,7 +506,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			</td>
 
 			<td class="formcolor">
-				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',$jq('#anonymous_name').val());"{/if} />
+				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',$('#anonymous_name').val());"{/if} />
 				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
 				{/if}
@@ -515,10 +515,10 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					{assign var='file_preview_warning' value="{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}"}
 					onclick="
 					{if empty($user)}
-						setCookie('anonymous_name',$jq('#anonymous_name').val());
+						setCookie('anonymous_name',$('#anonymous_name').val());
 					{/if}
 					{if isset($can_attach_file) && $can_attach_file eq 'y'}
-						if ($jq('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
+						if ($('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
 					{/if}
 					"
 				{/strip}{/if} />
@@ -555,6 +555,6 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 {if empty($user) and $prefs.javascript_enabled eq "y"}
 	{jq}
 		var js_anonymous_name = getCookie('anonymous_name');
-		if (js_anonymous_name) $jq('#anonymous_name').val( js_anonymous_name );
+		if (js_anonymous_name) $('#anonymous_name').val( js_anonymous_name );
 	{/jq}
 {/if}

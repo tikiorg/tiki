@@ -35,7 +35,7 @@
 			{* since autocomplete allows blank entry it can't be used for mandatory selection. *}
 			<input id="user_selector_{$field_value.fieldId}" type="text" size="20" name="{$field_value.ins_id}" value="{if $field_value.options_array[0] eq '2'}{$user}{else}{$field_value.value}{/if}" />
 			{jq}
-				$jq("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "username", {mustMatch: true});
+				$("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "username", {mustMatch: true});
 			{/jq}
 		{else}
 		<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
@@ -177,7 +177,7 @@
 		{*append*}{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
 		{if $field_value.options_array[5] eq 'y' && $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 			{jq}
-			$jq("#{{$field_value.ins_id|replace:'[':'_'|replace:']':''}}")
+			$("#{{$field_value.ins_id|replace:'[':'_'|replace:']':''}}")
 				.autocomplete('list-tracker_field_values_ajax.php?trackerId={{$item.trackerId}}&fieldId={{$field_value.fieldId}}',
 					{extraParams: {'httpaccept': 'text/javascript'},
 					 dataType: "json",
@@ -195,7 +195,7 @@
         	{*append*}{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
 			{if $field_value.options_array[5] eq 'y' && $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 				{jq}
-				$jq("#{{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}}")
+				$("#{{$field_value.ins_id|replace:'[':'_'|replace:']':''}_{$ling.lang}}")
 					.autocomplete('list-tracker_field_values_ajax.php?trackerId={{$item.trackerId}}&fieldId={{$field_value.fieldId}}&lang={{$ling.lang}}',
 					{extraParams: {'httpaccept': 'text/javascript'},
 					 dataType: "json",
@@ -214,7 +214,7 @@
 		<input type="text" id="page_selector_{$field_value.fieldId}" name="{$field_value.ins_id}" {if $field_value.options_array[1] gt 0}size="{$field_value.options_array[1]}"{/if} value="{if $field_value.value}{$field_value.value|escape}{else}{$field_value.defaultvalue|escape}{/if}" />
 		{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $field_value.isMandatory ne 'y'} {* since autocomplete allows blank entry it can't be used for mandatory selection. *}     
 			{jq}
-			$jq("#page_selector_{{$field_value.fieldId}}").tiki("autocomplete", "pagename" );
+			$("#page_selector_{{$field_value.fieldId}}").tiki("autocomplete", "pagename" );
 			{/jq}
 		{/if}
 	{else}

@@ -130,7 +130,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 			
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 			
-			$headerlib->add_jq_onready('$jq(".fckeditzone").resizable({ minWidth: $jq("#'.$as_id.'").width(), minHeight: 50 });');
+			$headerlib->add_jq_onready('$(".fckeditzone").resizable({ minWidth: $("#'.$as_id.'").width(), minHeight: 50 });');
 
 		} else {									// new ckeditor implementation 2010
 
@@ -168,7 +168,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 			
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 			$headerlib->add_jq_onready('
-$jq( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
+$( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	toolbar_Tiki: '.$cktools.',
 	toolbar: "Tiki",
 	language: "'.$prefs['language'].'"
@@ -243,12 +243,12 @@ function editTimerTick() {
 	} else {
 		window.status = '".addslashes(tra('Your edit session will expire in:'))."' + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
 	}
-	if (seconds % 60 == 0 && \$jq('#edittimeout')) {
-		\$jq('#edittimeout').text(Math.floor(seconds / 60));
+	if (seconds % 60 == 0 && \$('#edittimeout')) {
+		\$('#edittimeout').text(Math.floor(seconds / 60));
 	}
 }
 
-\$jq('document').ready( function() {
+\$('document').ready( function() {
 	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
 } );
 var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
@@ -277,12 +277,12 @@ function confirmExit() {
 
 window.onbeforeunload = confirmExit;
 
-\$jq('document').ready( function() {
+\$('document').ready( function() {
 	// attach dirty function to all relevant inputs etc
 	if ('$as_id' != 'editwiki') {	// modules admin exception
-		\$jq('#$as_id').change( function () { if (!editorDirty) { editorDirty = true; } });
+		\$('#$as_id').change( function () { if (!editorDirty) { editorDirty = true; } });
 	} else {
-		\$jq(\$jq('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
+		\$(\$('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
 	}
 });
 
@@ -296,11 +296,11 @@ function switchEditor(mode, form) {
 	window.needToConfirm=false;
 	var w;
 	if (mode=="wysiwyg") {
-		$jq(form).find("input[name=mode_wysiwyg]").val("y");
-		$jq(form).find("input[name=wysiwyg]").val("y");
+		$(form).find("input[name=mode_wysiwyg]").val("y");
+		$(form).find("input[name=wysiwyg]").val("y");
 	} else {
-		$jq(form).find("input[name=mode_normal]").val("y");
-		$jq(form).find("input[name=wysiwyg]").val("n");
+		$(form).find("input[name=mode_normal]").val("y");
+		$(form).find("input[name=wysiwyg]").val("n");
 	}
 	form.submit();
 }';
@@ -308,9 +308,9 @@ function switchEditor(mode, form) {
 		
 		if ( $prefs['feature_jquery_ui'] == 'y' && $params['_wysiwyg'] != 'y') {	// show hidden parent before applying resizable
 			$js_editconfirm .= "
-var hiddenParents = \$jq('#$as_id').parents('fieldset:hidden:last');
+var hiddenParents = \$('#$as_id').parents('fieldset:hidden:last');
 if (hiddenParents.length) { hiddenParents.show(); }
-\$jq('#$as_id').resizable( { minWidth: \$jq('#$as_id').width(), minHeight: 50 });
+\$('#$as_id').resizable( { minWidth: \$('#$as_id').width(), minHeight: 50 });
 if (hiddenParents.length) { hiddenParents.hide(); }
 ";
 		}

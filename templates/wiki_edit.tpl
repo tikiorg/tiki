@@ -26,7 +26,7 @@
 {include file='wiki_edit_actions.tpl'}
 </div>
 {jq}
-$jq('#{{$textarea_id|default:editwiki}}').height($jq(window).height() - $jq('#{{$textarea_id|default:editwiki}}_toolbar').height() - $jq('#{{$textarea_id|default:editwiki}}_actions').height() - 15);
+$('#{{$textarea_id|default:editwiki}}').height($(window).height() - $('#{{$textarea_id|default:editwiki}}_toolbar').height() - $('#{{$textarea_id|default:editwiki}}_actions').height() - 15);
 {/jq}
 </form>
 {/if}

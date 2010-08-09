@@ -887,7 +887,7 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= 'data: { ';
 					$customvalidation .= 'validator: "password", ';
 					$customvalidation .= 'input: function() { ';
-					$customvalidation .= 'return $jq("#pass1").val(); ';
+					$customvalidation .= 'return $("#pass1").val(); ';
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
 					// password repeat validation
@@ -902,7 +902,7 @@ function wikiplugin_tracker($data, $params)
 					$customvalidation .= 'data: { ';
 					$customvalidation .= 'validator: "username", ';
 					$customvalidation .= 'input: function() { ';
-					$customvalidation .= 'return $jq("#name").val(); ';
+					$customvalidation .= 'return $("#name").val(); ';
 					$customvalidation .= '} } } ';
 					$customvalidation .= '}, ';
 				}

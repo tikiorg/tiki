@@ -103,7 +103,7 @@ function wikiplugin_datachannel( $data, $params )
 					$moreparts[1] = $parts[0];	// no fieldname supplied so use same as fieldid
 				}
 				$fields[ $parts[0] ] = $moreparts[0];
-				$js .= "\n".'$jq("input[name=\'' . $parts[0] . '\']").val( unescape($jq("#' . $moreparts[1] . '").val()));';
+				$js .= "\n".'$("input[name=\'' . $parts[0] . '\']").val( unescape($("#' . $moreparts[1] . '").val()));';
 				$inputfields[ $parts[0] ] = 'external';
 			} else {
 				$fields[ $parts[0] ] = $parts[1];

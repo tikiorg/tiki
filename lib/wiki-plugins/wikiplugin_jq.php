@@ -12,7 +12,7 @@
  * data is the JQuery javascript code
  */
 function wikiplugin_jq_help() {
-	return tra("Insert JQuery javascript code.")."<br />~np~{JQ(nojquery='<p>You need JQuery for this!</p>')}".tra("jquery code e.g. \$jq(\"img\").click(function() {\n  \$jq(this).hide(\"slow\").show(\"fast\");\n});")."{JQ}~/np~";
+	return tra("Insert JQuery javascript code.")."<br />~np~{JQ(nojquery='<p>You need JQuery for this!</p>')}".tra("jquery code e.g. \$(\"img\").click(function() {\n  \$(this).hide(\"slow\").show(\"fast\");\n});")."{JQ}~/np~";
 }
 
 function wikiplugin_jq_info() {

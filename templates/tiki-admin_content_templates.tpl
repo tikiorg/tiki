@@ -123,10 +123,10 @@
 		</tr>
 	</table>
 	{jq}
-		$jq('.type-selector').change( function( e ) {
-			$jq('.type-cond').hide();
-			var val = $jq('.type-selector').val();
-			$jq('.for-' + val).show();
+		$('.type-selector').change( function( e ) {
+			$('.type-cond').hide();
+			var val = $('.type-selector').val();
+			$('.for-' + val).show();
 		} ).trigger('change');
 	{/jq}
 </form>

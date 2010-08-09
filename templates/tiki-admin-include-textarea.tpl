@@ -126,63 +126,63 @@
 			{/if}
 
 		{* JQuery JS to set up page *}{jq}
-$jq('#content3 legend').click(function(event, hidefirst) {
-	var im = $jq(this).contents("img");
+$('#content3 legend').click(function(event, hidefirst) {
+	var im = $(this).contents("img");
 	if (im.length > 0) { im = im[0]; }
 	if (!typeof this.showing == 'undefined' || !this.showing) {
-		if ($jq(im).length > 0) { $jq(im).attr("src", $jq(im).attr("src").replace("/omodule.", "/module.")); }
+		if ($(im).length > 0) { $(im).attr("src", $(im).attr("src").replace("/omodule.", "/module.")); }
 		this.showing = true;
 		if (hidefirst) {
-			$jq(this).nextAll(":not(.hidefirst)").show('fast')
+			$(this).nextAll(":not(.hidefirst)").show('fast')
 		} else {
-			$jq(this).nextAll().show('fast')
+			$(this).nextAll().show('fast')
 		}
 	} else {
-		if ($jq(im).length > 0) { $jq(im).attr("src", $jq(im).attr("src").replace("/module.", "/omodule.")); }
+		if ($(im).length > 0) { $(im).attr("src", $(im).attr("src").replace("/module.", "/omodule.")); }
 		this.showing = false;
-		$jq(this).nextAll(":not(.stayopen)").hide('fast')
+		$(this).nextAll(":not(.stayopen)").hide('fast')
 	}
 	return false;
 }).css("cursor", "pointer").nextAll(":not(.stayopen)").hide();
 {{if $plugin_admin}{* show gen info and simple params if plugin_admin selected *}}
-$jq('#pluginalias_general legend').trigger('click');
-$jq('#pluginalias_simple_args legend').trigger('click'{{if isset($plugin_admin.params)}, true{/if}});
-$jq('#pluginalias_body legend').trigger('click'{{if isset($plugin_admin.body.params)}, true{/if}});
-$jq('#pluginalias_add').click(function() {
+$('#pluginalias_general legend').trigger('click');
+$('#pluginalias_simple_args legend').trigger('click'{{if isset($plugin_admin.params)}, true{/if}});
+$('#pluginalias_body legend').trigger('click'{{if isset($plugin_admin.body.params)}, true{/if}});
+$('#pluginalias_add').click(function() {
 	window.location.href = window.location.href.replace(/plugin_alias=[^&]*/, 'plugin_alias_new=true');
 });
 {{elseif $plugins_alias}{* or if no plugin_admin and a nice list *}}
-$jq('#pluginalias_general').hide();
-$jq('#pluginalias_simple_args').hide();
-$jq('#pluginalias_doc').hide();
-$jq('#pluginalias_body').hide();
-$jq('#pluginalias_composed_args').hide();
-$jq('#pluginalias_add').click(function() {
-	$jq('#pluginalias_general legend')[0].showing = false;
-	$jq('#pluginalias_general legend').trigger('click');
-	$jq('#pluginalias_simple_args legend')[0].showing = false;
-	$jq('#pluginalias_simple_args legend').trigger('click');
-	$jq('#pluginalias_body legend')[0].showing = false;
-	$jq('#pluginalias_body legend').trigger('click');
+$('#pluginalias_general').hide();
+$('#pluginalias_simple_args').hide();
+$('#pluginalias_doc').hide();
+$('#pluginalias_body').hide();
+$('#pluginalias_composed_args').hide();
+$('#pluginalias_add').click(function() {
+	$('#pluginalias_general legend')[0].showing = false;
+	$('#pluginalias_general legend').trigger('click');
+	$('#pluginalias_simple_args legend')[0].showing = false;
+	$('#pluginalias_simple_args legend').trigger('click');
+	$('#pluginalias_body legend')[0].showing = false;
+	$('#pluginalias_body legend').trigger('click');
 
-	$jq('#pluginalias_general').show();
-	$jq('#pluginalias_simple_args').show();
-	$jq('#pluginalias_doc').show();
-	$jq('#pluginalias_body').show();
-	$jq('#pluginalias_composed_args').show();
+	$('#pluginalias_general').show();
+	$('#pluginalias_simple_args').show();
+	$('#pluginalias_doc').show();
+	$('#pluginalias_body').show();
+	$('#pluginalias_composed_args').show();
 
-	$jq('#pluginalias_available legend')[0].showing = true;
-	$jq('#pluginalias_available legend').trigger('click');
+	$('#pluginalias_available legend')[0].showing = true;
+	$('#pluginalias_available legend').trigger('click');
 
 	return false;
 });
 {{else}{* or new view if no plugin_admin and no list *}}
-	$jq('#pluginalias_general legend').trigger('click');
-	$jq('#pluginalias_simple_args legend').trigger('click');
-	$jq('#pluginalias_body legend').trigger('click');
+	$('#pluginalias_general legend').trigger('click');
+	$('#pluginalias_simple_args legend').trigger('click');
+	$('#pluginalias_body legend').trigger('click');
 {{/if}}
 if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
-	$jq('#pluginalias_add').trigger('click');
+	$('#pluginalias_add').trigger('click');
 }
 	{/jq}
 		{* from tiki-admin-include-plugins.tpl *}
@@ -201,7 +201,7 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					</div>
 				</div>
 			</fieldset>
-			{jq}$jq('#pluginalias_available legend').trigger('click');{/jq}
+			{jq}$('#pluginalias_available legend').trigger('click');{/jq}
 		{/if}
 		<fieldset id="pluginalias_general">
 			<legend>{tr}General Information{/tr}{icon _id="omodule"}</legend>
@@ -257,10 +257,10 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 		<fieldset id="pluginalias_simple_args">
 			<legend>{tr}Simple Plugin Arguments{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_simple_add"}</legend>
 			{jq}
-$jq('#pluginalias_simple_add').click(function() { $jq('#pluginalias_simple_new').toggle("fast"); return false; });
+$('#pluginalias_simple_add').click(function() { $('#pluginalias_simple_new').toggle("fast"); return false; });
 {{if $plugin_admin.params}}
-$jq('#pluginalias_doc legend').trigger('click'{{if isset($plugin_admin.description.params)}, true{/if}});
-$jq('#pluginalias_simple_new').hide();
+$('#pluginalias_doc legend').trigger('click'{{if isset($plugin_admin.description.params)}, true{/if}});
+$('#pluginalias_simple_new').hide();
 {{/if}}
 			{/jq}
 			{foreach from=$plugin_admin.params key=token item=value}
@@ -284,7 +284,7 @@ $jq('#pluginalias_simple_new').hide();
 		</fieldset>
 		<fieldset id="pluginalias_doc">
 			<legend>{tr}Plugin Parameter Documentation{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_doc_add"}</legend>
-			{jq}$jq('#pluginalias_doc_add').click(function() { $jq('#pluginalias_doc_new').toggle("fast"); return false; });{/jq}
+			{jq}$('#pluginalias_doc_add').click(function() { $('#pluginalias_doc_new').toggle("fast"); return false; });{/jq}
 			
 			{foreach from=$plugin_admin.description.params key=token item=detail}
 				<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_doc_new{/if}">
@@ -328,7 +328,7 @@ $jq('#pluginalias_simple_new').hide();
 				<div class="q234">
 					<fieldset class="stayopen">
 						<legend>{tr}Parameters{/tr}{icon _id="omodule"}{icon _id="add" id="pluginalias_body_add"}</legend>
-						{jq}$jq('#pluginalias_body_add').click(function() { $jq('#pluginalias_body_new').toggle("fast"); return false; });{/jq}
+						{jq}$('#pluginalias_body_add').click(function() { $('#pluginalias_body_new').toggle("fast"); return false; });{/jq}
 						
 						{foreach from=$plugin_admin.body.params key=token item=detail}
 							<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_body_new{/if}">
@@ -359,7 +359,7 @@ $jq('#pluginalias_simple_new').hide();
 		</fieldset>
 		<fieldset id="pluginalias_composed_args">
 			<legend>{tr}Composed Plugin Arguments{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_composed_add"}</legend>
-			{jq}$jq('#pluginalias_composed_add').click(function() { $jq('#pluginalias_composed_new').toggle("fast"); return false; });{/jq}
+			{jq}$('#pluginalias_composed_add').click(function() { $('#pluginalias_composed_new').toggle("fast"); return false; });{/jq}
 
 			{foreach from=$plugin_admin.params key=token item=detail}
 				{if $detail|is_array}
@@ -374,7 +374,7 @@ $jq('#pluginalias_simple_new').hide();
 							</div>
 							<fieldset class="stayopen">
 								<legend>{tr}Parameters{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_composed_addparam"}</legend>
-								{jq}$jq('#pluginalias_composed_addparam').click(function() { $jq('#pluginalias_composed_newparam').toggle("fast"); return false; });{/jq}
+								{jq}$('#pluginalias_composed_addparam').click(function() { $('#pluginalias_composed_newparam').toggle("fast"); return false; });{/jq}
 								{foreach from=$detail.params key=t item=d}
 									<div class="clearfix admingroup adminoptionbox{if $t eq '__NEW__'} hidefirst" id="pluginalias_composed_newparam{/if}">
 										<div class="q1">
@@ -403,7 +403,7 @@ $jq('#pluginalias_simple_new').hide();
 					</div>
 				{/if}
 			{/foreach}
-			{if $plugin_admin}{jq}$jq('#pluginalias_composed_args legend').trigger('click'{{if isset($composed_args)}, true{/if}});{/jq}{/if}
+			{if $plugin_admin}{jq}$('#pluginalias_composed_args legend').trigger('click'{{if isset($composed_args)}, true{/if}});{/jq}{/if}
 		</fieldset>
 		{/tab}
 	{/tabset}

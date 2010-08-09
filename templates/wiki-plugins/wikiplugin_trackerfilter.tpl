@@ -14,9 +14,9 @@
 		{jq notonready=true}
 function tf_export_submit(fm) {
 //	setTimeout(function(){
-//		$jq(fm).hide(400);
+//		$(fm).hide(400);
 //	}, 5000);
-	$jq("input[name=export_filter]").attr("disabled", "disabled").css("opacity", 0.5);
+	$("input[name=export_filter]").attr("disabled", "disabled").css("opacity", 0.5);
 	return true;
 }
 		{/jq}

@@ -14,11 +14,11 @@
 	{/if}
 	{include file=prefs/shared-dependencies.tpl}
 	{jq}
-if ($jq('.{{$p.preference|escape}}_childcontainer').length) {
-	$jq('#{{$p.id|escape}}').change( function( e ) {
-		$jq('.{{$p.preference|escape}}_childcontainer').hide();
-		if( $jq(this).val().length ) {
-			$jq('.{{$p.preference|escape}}_childcontainer.' + $jq(this).val()).show();
+if ($('.{{$p.preference|escape}}_childcontainer').length) {
+	$('#{{$p.id|escape}}').change( function( e ) {
+		$('.{{$p.preference|escape}}_childcontainer').hide();
+		if( $(this).val().length ) {
+			$('.{{$p.preference|escape}}_childcontainer.' + $(this).val()).show();
 		}
 	} ).change();
 }

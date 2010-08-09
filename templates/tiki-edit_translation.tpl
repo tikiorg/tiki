@@ -90,7 +90,7 @@ document.getElementById("translation_name").focus();
 
 function validate_translation_request() {
    var success = true;
-   var language_of_translation = $jq("#language_list").val();
+   var language_of_translation = $("#language_list").val();
   
    if (language_of_translation == "unspecified") {
 {/literal}
@@ -99,9 +99,9 @@ function validate_translation_request() {
       alert(message);
       success = false;
    } else {
-      var page_list = $jq("#existing-page-src");
-	  var page_name = $jq('#translation_name').val();
-      var matching_options = $jq('#existing-page-src option[value="' + page_name + '"]').attr( 'selected', true );
+      var page_list = $("#existing-page-src");
+	  var page_name = $('#translation_name').val();
+      var matching_options = $('#existing-page-src option[value="' + page_name + '"]').attr( 'selected', true );
 
 	  if( matching_options.length > 0 ) {
           var message = {tr}"The page already exists. It was selected in the list below."{/tr};

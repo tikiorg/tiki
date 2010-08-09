@@ -104,7 +104,7 @@ function showAddress(address) {literal}{{/literal}
   {literal}}{/literal}
 {literal}}{/literal}
 
-{literal}$jq("input[name=address]").focus(function () { if ($jq(this).val() == "{/literal}{tr}enter address{/tr}{literal}") {$jq(this).val("");}}){/literal}
+{literal}$("input[name=address]").focus(function () { if ($(this).val() == "{/literal}{tr}enter address{/tr}{literal}") {$(this).val("");}}){/literal}
 
 window.onload=load;
 {/jq}

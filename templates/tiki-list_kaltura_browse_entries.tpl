@@ -22,16 +22,16 @@
 </style>
 <script language="javascript">
 	function loadMedia(entryId) {
-		$jq('#mykdp').get(0).insertMedia("-1",entryId,'true');
+		$('#mykdp').get(0).insertMedia("-1",entryId,'true');
 	}
 </script>
 
 <script>
 // execute your scripts when the DOM is ready. this is a good habit
-$jq(document).ready( function() {
+$(document).ready( function() {
 
 	// initialize scrollable
-	$jq("div.scrollable").scrollable().find("a");
+	$("div.scrollable").scrollable().find("a");
 
 });
 </script>

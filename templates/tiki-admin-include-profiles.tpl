@@ -312,17 +312,17 @@ function showDetails( id, domain, profile ) { // {{{
 										</div>
 										<input type="hidden" name="page" value="profiles"/>
 										{jq}
-if ($jq("#profile-0").length > 0) {
-	$jq(".quickmode_notes").hide();
-	$jq(window).scrollTop($jq("a[name=step2]").offset().top);
+if ($("#profile-0").length > 0) {
+	$(".quickmode_notes").hide();
+	$(window).scrollTop($("a[name=step2]").offset().top);
 } else {
-	$jq(".quickmode_notes").show();
+	$(".quickmode_notes").show();
 }
-$jq("#repository, #categories").change(function(){
-	if ($jq(this).val()) {
-		$jq(".quickmode_notes").hide(400);
+$("#repository, #categories").change(function(){
+	if ($(this).val()) {
+		$(".quickmode_notes").hide(400);
 	} else {
-		$jq(".quickmode_notes").show(400);
+		$(".quickmode_notes").show(400);
 	}
 });
 										{/jq}

@@ -52,20 +52,20 @@
 	</form>
 </div>
 {jq}
-$jq('form.config').submit( function( e ) {
-	return ! $jq(this).find('input[type=submit]').attr('disabled');
+$('form.config').submit( function( e ) {
+	return ! $(this).find('input[type=submit]').attr('disabled');
 } );
-$jq('form.config .error').hide();
-$jq('form.config textarea').change( function( e ) {
+$('form.config .error').hide();
+$('form.config textarea').change( function( e ) {
 	var text = this;
 	e.preventDefault();
-	var submit = $jq(this).closest('form').find('input[type=submit]').attr('disabled', true);
-	$jq.getJSON( window.location.href, { test: $jq(this).val() }, function( data ) {
+	var submit = $(this).closest('form').find('input[type=submit]').attr('disabled', true);
+	$.getJSON( window.location.href, { test: $(this).val() }, function( data ) {
 		submit.attr( 'disabled', ! data.valid );
 		if( data.valid ) {
-			$jq(text).closest('form').find('.error').hide();
+			$(text).closest('form').find('.error').hide();
 		} else {
-			$jq(text).closest('form').find('.error').show().text( data.message );
+			$(text).closest('form').find('.error').show().text( data.message );
 		}
 	} );
 } );

@@ -7,7 +7,7 @@
     <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> 
 	{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $prefs.search_autocomplete eq 'y'}
 		{jq}
-			$jq("#fuser").tiki("autocomplete", "pagename");
+			$("#fuser").tiki("autocomplete", "pagename");
 		{/jq}
 	{/if}	
  	{if $prefs.feature_search_show_object_filter eq 'y'}

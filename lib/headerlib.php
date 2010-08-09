@@ -66,7 +66,7 @@ class HeaderLib
 	}
 
 	/**
-	 * Adds lines or blocks of JQuery JavaScript to $jq(document).ready handler
+	 * Adds lines or blocks of JQuery JavaScript to $(document).ready handler
 	 * @param $script = Script to execute
 	 * @param $rank   = Execution order (default=0)
 	 * @return nothing
@@ -76,7 +76,7 @@ class HeaderLib
 			$this->jq_onready[$rank][] = $script;
 		}
 		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
-			return $this->wrap_js("\$jq(document).ready(function(){".$script."});\n");
+			return $this->wrap_js("\$(document).ready(function(){".$script."});\n");
 		} else {
 			return '';
 		}
@@ -292,7 +292,7 @@ class HeaderLib
 		}
 
 		if (count($this->jq_onready)) {
-			$b = '$jq(document).ready(function(){'."\n";
+			$b = '$(document).ready(function(){'."\n";
 			foreach ($this->jq_onready as $x=>$js) {
 				$b.= "// jq_onready $x \n";
 				foreach ($js as $j) {
@@ -329,7 +329,7 @@ class HeaderLib
 			}
 		}
 		if (count($this->jq_onready)) {
-			$b = '$jq(document).ready(function(){'."\n";
+			$b = '$(document).ready(function(){'."\n";
 			foreach ($this->jq_onready as $x=>$js) {
 				$b.= "// jq_onready $x \n";
 				foreach ($js as $j) {

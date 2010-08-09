@@ -171,14 +171,14 @@
 				<td class="formcolor">{tr}Moderator user:{/tr}</td>
 				<td class="formcolor">
 					<input id="moderator_user" type="text" name="moderator" value="{$moderator|escape}"/>
-					{jq}$jq('#moderator_user').tiki('autocomplete', 'username');{/jq}
+					{jq}$('#moderator_user').tiki('autocomplete', 'username');{/jq}
 				</td>
 			</tr>
 			<tr>
 				<td class="formcolor">{tr}Moderator group:{/tr}</td>
 				<td class="formcolor">
 					<input id="moderator_group" type="text" name="moderator_group" value="{$moderator_group|escape}"/>
-					{jq}$jq('#moderator_group').tiki('autocomplete', 'groupname');{/jq}
+					{jq}$('#moderator_group').tiki('autocomplete', 'groupname');{/jq}
 				</td>
 			</tr>
 			<tr>

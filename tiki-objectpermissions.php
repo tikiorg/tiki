@@ -416,7 +416,7 @@ $smarty->assign_by_ref('perms', $masterPerms);
 $smarty->assign_by_ref('features', $features);
 
 // Create JS to set up checkboxs (showing group inheritance)
-$js = '$jq("#perms_busy").show();
+$js = '$("#perms_busy").show();
 ';
 $i = 0;
 foreach( $groupNames as $groupName ) {
@@ -430,7 +430,7 @@ foreach( $groupNames as $groupName ) {
 	}
 
 	$js .= <<< JS
-\$jq('input[name="perm[$groupName][]"]').eachAsync({
+\$('input[name="perm[$groupName][]"]').eachAsync({
 			delay: 10,
 			bulk: 0,
 JS;
@@ -438,7 +438,7 @@ JS;
 		$js .= <<< JS
 
 			end: function () {
-				\$jq('#perms_busy').hide();
+				\$('#perms_busy').hide();
 			},
 JS;
 	}
@@ -446,22 +446,22 @@ JS;
 
 			loop: function() { 		// each one of this group
 
-	if (\$jq(this).attr('checked')) {
-		\$jq('input[value="'+\$jq(this).val()+'"]').					// other checkboxes of same value (perm)
+	if (\$(this).attr('checked')) {
+		\$('input[value="'+\$(this).val()+'"]').					// other checkboxes of same value (perm)
 			filter('$beneficiaries').									// which inherit from this
-			attr('checked',\$jq(this).attr('checked')).					// check and disable
-			attr('disabled',\$jq(this).attr('checked') ? 'disabled' : '');
+			attr('checked',\$(this).attr('checked')).					// check and disable
+			attr('disabled',\$(this).attr('checked') ? 'disabled' : '');
 	}
 		
-	\$jq(this).change( function() {									// bind click event
+	\$(this).change( function() {									// bind click event
 	
-		if (\$jq(this).attr('checked')) {
-			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
+		if (\$(this).attr('checked')) {
+			\$('input[value="'+\$(this).val()+'"]').			// same...
 				filter('$beneficiaries').
 				attr('checked','checked').							// check?
 				attr('disabled','disabled');						// disable
 		} else {
-			\$jq('input[value="'+\$jq(this).val()+'"]').			// same...
+			\$('input[value="'+\$(this).val()+'"]').			// same...
 				filter('$beneficiaries').
 				attr('checked','').									// check?
 				attr('disabled','');								// disable
@@ -476,8 +476,8 @@ JS;
 
 if (!empty($_REQUEST['textFilter'])) {
 	$js .= '
-$jq("#treetable_1_filter").val("'.$_REQUEST['textFilter'].'");
-setTimeout(function(){$jq("#treetable_1_filter").keyup();}, 500);';
+$("#treetable_1_filter").val("'.$_REQUEST['textFilter'].'");
+setTimeout(function(){$("#treetable_1_filter").keyup();}, 500);';
 }
 
 $headerlib->add_jq_onready($js);

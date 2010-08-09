@@ -44,33 +44,33 @@
 			</p>
 		</form>
 		{jq}
-			var blocks = $jq('#transition-group-selection, #transition-category-selection');
-			$jq(':radio[name=transition_mode]').change( function( e ) {
-				if( $jq(this).attr('checked') ) {
+			var blocks = $('#transition-group-selection, #transition-category-selection');
+			$(':radio[name=transition_mode]').change( function( e ) {
+				if( $(this).attr('checked') ) {
 					blocks.hide();
-					blocks.filter( '#transition-' + $jq(this).val() + '-selection' ).show();
+					blocks.filter( '#transition-' + $(this).val() + '-selection' ).show();
 				}
 			} ).change();
 
-			$jq('#transition-group-auto')
+			$('#transition-group-auto')
 				.tiki('autocomplete','groupname')
 				.keypress( function( e ) {
 					if( e.which !== 13 ) {
 						return;
 					}
 					e.preventDefault();
-					if( $jq(this).val() === '' ) {
+					if( $(this).val() === '' ) {
 						return;
 					}
-					$jq('#transition-group-list').append( 
-						$jq('<li/>').text( $jq(this).val() )
-							.append( $jq('<input type="hidden" name="groups[]"/>').val( $jq(this).val() ) )
-							.append( $jq('{{icon _id=cross class="removeitem"}}') )
+					$('#transition-group-list').append( 
+						$('<li/>').text( $(this).val() )
+							.append( $('<input type="hidden" name="groups[]"/>').val( $(this).val() ) )
+							.append( $('{{icon _id=cross class="removeitem"}}') )
 					);
-					$jq(this).val('');
+					$(this).val('');
 				} );
-			$jq('#transition-group-list .removeitem').live( 'click', function( e ) {
-				$jq(this).parent().remove();
+			$('#transition-group-list .removeitem').live( 'click', function( e ) {
+				$(this).parent().remove();
 			} );
 		{/jq}
 	{/tab}
@@ -79,10 +79,10 @@
 		<div id="graph-canvas"></div>
 		<a href="#" id="graph-draw" class="button">{tr}Draw Transition Diagram{/tr}</a>
 		{jq}
-		$jq('#graph-draw').click( function( e ) {
+		$('#graph-draw').click( function( e ) {
 			e.preventDefault();
-			$jq(this).hide();
-			var width = $jq('#graph-canvas').width();
+			$(this).hide();
+			var width = $('#graph-canvas').width();
 			var height = Math.ceil( width * 9 / 16 );
 			var nodes = {{$graph_nodes}};
 			var edges = {{$graph_edges}};

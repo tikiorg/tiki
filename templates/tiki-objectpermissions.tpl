@@ -66,8 +66,8 @@
 				<input type="checkbox" id="propagate_category" name="propagate_category" value="1"/>
 				<label for="propagate_category">{tr}Assign or remove permissions on <em>all</em> child categories{/tr}</label>
 			</p>
-			{jq}$jq("input[name='assign'],input[name='remove']").click(function(){
-if ($jq("#propagate_category").attr("checked")) {
+			{jq}$("input[name='assign'],input[name='remove']").click(function(){
+if ($("#propagate_category").attr("checked")) {
 	return confirm("{tr}Are you sure you want to effect all child categories?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}
@@ -75,8 +75,8 @@ if ($jq("#propagate_category").attr("checked")) {
 		{if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}
 			<input name="assignstructure" id="assignstructure" type="checkbox" />
 			<label for="assignstructure">{tr}Assign or remove permissions on all pages of the sub-structure{/tr}</label>
-			{jq}$jq("input[name='assign'],input[name='remove']").click(function(){
-if ($jq("#assignstructure").attr("checked")) {
+			{jq}$("input[name='assign'],input[name='remove']").click(function(){
+if ($("#assignstructure").attr("checked")) {
 	return confirm("{tr}Are you sure you want to effect all pages in this sub-structure?\nThere is no undo.{/tr}");
 } }); {/jq}
 		{/if}

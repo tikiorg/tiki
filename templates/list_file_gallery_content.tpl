@@ -353,4 +353,4 @@
 	{/if}
 
 </table>
-{jq}$jq('a.fgalbacklink').cluetip({showTitle:false, sticky:true});{/jq}
+{jq}$('a.fgalbacklink').cluetip({showTitle:false, sticky:true});{/jq}

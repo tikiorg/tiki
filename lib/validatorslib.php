@@ -74,9 +74,9 @@ class Validators
 					$validationjs .= 'message: "' .$field_value['validationMessage'].'", ';
 					$validationjs .= 'input: function() { ';
 					if ( $prefix == 'ins_' && $field_value['type'] == 'a') {
-						$validationjs .= 'return $jq("#area_'.$field_value['fieldId'].'").val(); ';
+						$validationjs .= 'return $("#area_'.$field_value['fieldId'].'").val(); ';
 					} else {
-						$validationjs .= 'return $jq("#'.$prefix.$field_value['fieldId'].'").val(); ';
+						$validationjs .= 'return $("#'.$prefix.$field_value['fieldId'].'").val(); ';
 					}
 					$validationjs .= '} } } ';
 				} else {

@@ -12,36 +12,36 @@
 {if $prefs.generate_password eq 'y'}
 {if $userTrackerData}
 {jq}		
-		$jq("#genPass span").click(function () {
+		$("#genPass span").click(function () {
 			genPass('genepass','pass1','pass2');
 			runPassword(document.editItemForm{{$trackerEditFormId}}.genepass.value, 'mypassword');
 			checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');
-			$jq('#pass1, #pass2').val('');
-			$jq('#mypassword_text, #mypassword2_text').hide();
-			$jq("#genepass").show();
+			$('#pass1, #pass2').val('');
+			$('#mypassword_text, #mypassword2_text').hide();
+			$("#genepass").show();
 		});
 
-		$jq("#pass1, #pass2").change(function () {
-			$jq('#mypassword_text, #mypassword2_text').show();
+		$("#pass1, #pass2").change(function () {
+			$('#mypassword_text, #mypassword2_text').show();
 			document.editItemForm{{$trackerEditFormId}}.genepass.value='';
-			$jq("#genepass").hide();
+			$("#genepass").hide();
 		});
 {/jq}
 {else}
 {jq}		
-		$jq("#genPass span").click(function () {
+		$("#genPass span").click(function () {
 			genPass('genepass','pass1','pass2');
 			runPassword(document.RegForm.genepass.value, 'mypassword');
 			checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');
-			$jq('#pass1, #pass2').val('');
-			$jq('#mypassword_text, #mypassword2_text').hide();
-			$jq("#genepass").show();
+			$('#pass1, #pass2').val('');
+			$('#mypassword_text, #mypassword2_text').hide();
+			$("#genepass").show();
 		});
 
-		$jq("#pass1, #pass2").change(function () {
-			$jq('#mypassword_text, #mypassword2_text').show();
+		$("#pass1, #pass2").change(function () {
+			$('#mypassword_text, #mypassword2_text').show();
 			document.RegForm.genepass.value='';
-			$jq("#genepass").hide();
+			$("#genepass").hide();
 		});
 {/jq}
 {/if}

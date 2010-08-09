@@ -53,7 +53,7 @@
 		{/if}
 	</div>
 	<textarea class="wikiedit readonly" style="width:100%;height:400px" readonly="readonly" id="page_source">{$sourced}</textarea>
-	{if $prefs.feature_jquery_ui eq "y"}{jq}$jq("#page_source").resizable();{/jq}{/if}
+	{if $prefs.feature_jquery_ui eq "y"}{jq}$("#page_source").resizable();{/jq}{/if}
 {/if}
 
 {include file='pagehistory.tpl'}
@@ -70,19 +70,19 @@
 				<div style=" text-align:right;">
 					{if $prefs.javascript_enabled eq "y"}{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n"}
 					{jq}
-$jq("#toggle_diffs a").click(function(){
-	if ($jq(this).text() == "{tr}Advanced{/tr}") {
-		$jq(this).text("{tr}Simple{/tr}");
-		$jq("#diff_style_all").show().attr("name", "diff_style");
-		$jq("#diff_style_simple").hide().attr("name", "");
+$("#toggle_diffs a").click(function(){
+	if ($(this).text() == "{tr}Advanced{/tr}") {
+		$(this).text("{tr}Simple{/tr}");
+		$("#diff_style_all").show().attr("name", "diff_style");
+		$("#diff_style_simple").hide().attr("name", "");
 	} else {
-		$jq(this).text("{tr}Advanced{/tr}");
-		$jq("#diff_style_all").hide().attr("name", "");
-		$jq("#diff_style_simple").show().attr("name", "diff_style");
+		$(this).text("{tr}Advanced{/tr}");
+		$("#diff_style_all").hide().attr("name", "");
+		$("#diff_style_simple").show().attr("name", "diff_style");
 	}
 	return false;
 });
-{{if $diff_style neq "htmldiff" and $diff_style neq "sidediff"}$jq("#toggle_diffs a").click();{/if}}
+{{if $diff_style neq "htmldiff" and $diff_style neq "sidediff"}$("#toggle_diffs a").click();{/if}}
 					{/jq}{/if}
 					<select name="diff_style" id="diff_style_all"{if $prefs.javascript_enabled eq "y"} style="display: none"{/if}>
 						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>

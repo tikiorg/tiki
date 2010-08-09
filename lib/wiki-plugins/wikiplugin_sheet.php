@@ -165,7 +165,7 @@ EOF;
 		if (!isset($simple) || $simple != 'y') {
 			global $headerlib;
 			$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") { ajaxLoadingShow("role_main"); }
-setTimeout (function () { $jq("#tiki_sheet' . $sheet->instance . '").tiki("sheet", "",{editable:false'. ( isset($url) ? ',urlGet: "'.$url.'",buildSheet: false': '' ) .'});}, 0);', 500 + $sheet->instance);
+setTimeout (function () { $("#tiki_sheet' . $sheet->instance . '").tiki("sheet", "",{editable:false'. ( isset($url) ? ',urlGet: "'.$url.'",buildSheet: false': '' ) .'});}, 0);', 500 + $sheet->instance);
 		} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
 			return $ret;	// return a single cell raw
 		}

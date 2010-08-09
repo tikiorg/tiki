@@ -411,7 +411,7 @@ FORM;
 		$form = '';
 
 	$js = <<<JS
-\$jq(document).ready( function() {
+\$(document).ready( function() {
 	var toCreate = $annotations;
 	for( k = 0; k < toCreate.length; ++k ) {
 		createAnnotation( toCreate[k], '$cid' );

@@ -293,7 +293,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {* this is jquery entry field for performance enhancement - since it allows blank entry it can't be used for mandatory user selection. *}
 <input id="user_selector_{$cur_field.id}" type="text" size="20" name="ins_{$cur_field.id}" value="{if $cur_field.options_array[0] eq '2'}{$user}{else}{$cur_field.value}{/if}" />
 {jq}
-$jq("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatch: true});
+$("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatch: true});
 {/jq}
 
 	{else}
@@ -381,7 +381,7 @@ $jq("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMa
         <input type="text" id="page_selector_{$cur_field.id}" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}"{/if} />
         {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $cur_field.isMandatory ne 'y'} {* since autocomplete allows blank entry it can't be used for mandatory selection. *}
 			{jq}
-			$jq("#page_selector_{{$cur_field.id}}").tiki("autocomplete", "pagename" );
+			$("#page_selector_{{$cur_field.id}}").tiki("autocomplete", "pagename" );
 			{/jq}
         {/if}
         

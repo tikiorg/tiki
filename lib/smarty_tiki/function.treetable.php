@@ -189,23 +189,23 @@ function smarty_function_treetable($params, &$smarty) {
 				'title' => tra('Toggle sections')),	$smarty);
 		
 		$headerlib->add_jq_onready('
-$jq("#'.$id.'_openall").click( function () {
+$("#'.$id.'_openall").click( function () {
 	if (this.src.indexOf("ofolder.png") > -1) {
 		
-		$jq(".expanded .expander").eachAsync({
+		$(".expanded .expander").eachAsync({
 			delay: 20,
 			bulk: 0,
 			loop: function () {
-				$jq(this).click();
+				$(this).click();
 			}
 		});
 		this.src = this.src.replace("ofolder", "folder");
 	} else {
-		$jq(".collapsed .expander").eachAsync({
+		$(".collapsed .expander").eachAsync({
 			delay: 20,
 			bulk: 0,
 			loop: function () {
-				$jq(this).click();
+				$(this).click();
 			}
 		});
 		this.src = this.src.replace("folder", "ofolder");
@@ -345,16 +345,16 @@ $jq("#'.$id.'_openall").click( function () {
 	// add jq code to initial treeetable
 	$expanable = empty($_sortColumnDelimiter) ? 'true' : 'false';	// when nested, clickableNodeNames is really annoying
 	if (count($treeSectionsAdded) < $_collapseMaxSections) {
-		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "expanded"});');
+		$headerlib->add_jq_onready('$("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "expanded"});');
 	} else {
-		$headerlib->add_jq_onready('$jq("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "collapsed"});');
+		$headerlib->add_jq_onready('$("#'.$id.'").treeTable({clickableNodeNames:'.$expanable.',initialState: "collapsed"});');
 	}
 	// TODO refilter when .parent is opened - seems to prevent the click propagating
-//		$headerlib->add_jq_onready('$jq("tr.parent").click(function(event) {
-//if ($jq("#'.$id.'_filter").val()) {
-//	$jq("#'.$id.'_filter").trigger("keyup");
+//		$headerlib->add_jq_onready('$("tr.parent").click(function(event) {
+//if ($("#'.$id.'_filter").val()) {
+//	$("#'.$id.'_filter").trigger("keyup");
 //	if (event.isPropagationStopped() || event.isImmediatePropagationStopped()) {
-//		$jq(this).trigger("click");
+//		$(this).trigger("click");
 //	}
 //}
 //		});');

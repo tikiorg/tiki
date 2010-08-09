@@ -80,7 +80,7 @@
 				</td>
 			</tr>
 		</table>
-		{jq}$jq("#find").tiki("autocomplete", "username"){/jq}
+		{jq}$("#find").tiki("autocomplete", "username"){/jq}
 
 		<div id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
 			<table class="findtable">
@@ -407,15 +407,15 @@
 						<tr><td>&nbsp;</td><td>
 							<input id='genepass' name="genepass" type="text" tabindex="0" style="display: none" />
 							{jq}
-								$jq("#genPass span").click(function () {
-									$jq('#pass1, #pass2').val('');
-									$jq('#mypassword_text, #mypassword2_text').hide();
-									$jq("#genepass").show();
+								$("#genPass span").click(function () {
+									$('#pass1, #pass2').val('');
+									$('#mypassword_text, #mypassword2_text').hide();
+									$("#genepass").show();
 								});
-								$jq("#pass1, #pass2").change(function () {
-									$jq('#mypassword_text, #mypassword2_text').show();
+								$("#pass1, #pass2").change(function () {
+									$('#mypassword_text, #mypassword2_text').show();
 									document.RegForm.genepass.value='';
-									$jq("#genepass").hide();
+									$("#genepass").hide();
 								});
 							{/jq}
 							<span id="genPass">{button href="#" _onclick="genPass('genepass');runPassword(document.RegForm.genepass.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');return false;" _text="{tr}Generate a password{/tr}"}</div>

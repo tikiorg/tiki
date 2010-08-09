@@ -71,7 +71,7 @@
 			</select>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 		</div>
-		{jq}$jq("input[name=which]").change(function(){ if ($jq(this).val() == "these") { $jq("#fields_list").slideDown("fast"); } else { $jq("#fields_list").slideUp("fast"); } });{/jq}
+		{jq}$("input[name=which]").change(function(){ if ($(this).val() == "these") { $("#fields_list").slideDown("fast"); } else { $("#fields_list").slideUp("fast"); } });{/jq}
 	</td>
 </tr>
 <tr class="formcolor">
@@ -104,52 +104,52 @@
 {if $prefs.feature_ajax eq 'y'}{jq}
 
 // setup for AJAX export
-$jq("#export_form").submit( function () { return exportStart(this); });
+$("#export_form").submit( function () { return exportStart(this); });
 
-if (!$jq.ui) { $jq("#export_prog").hide(); }
+if (!$.ui) { $("#export_prog").hide(); }
 
 exportStart = function (el) {
 	
-	if ($jq.ui) {
-		$jq("#export_prog").progressbar("destroy").progressbar({ value: 1 });
+	if ($.ui) {
+		$("#export_prog").progressbar("destroy").progressbar({ value: 1 });
 	}
-	$jq("#export_button").hide();
+	$("#export_button").hide();
 	
 	var fm = el;
-	$jq(fm).attr('target', 'dl_frame');
-	var $dl_frame = $jq('<iframe id="dl_frame" name="dl_frame"></iframe>');
+	$(fm).attr('target', 'dl_frame');
+	var $dl_frame = $('<iframe id="dl_frame" name="dl_frame"></iframe>');
 	$dl_frame.css({position:'absolute',top:'-500px',left:'-500px'}).appendTo('body');
 	fm.submit();
 	
-//	$jq.post("tiki-export_tracker_ajax.php", $jq(el).serialize(), function (data) {
+//	$.post("tiki-export_tracker_ajax.php", $(el).serialize(), function (data) {
 //		//alert("done the post");
 //	});
 
-	$jq("#export_msg").text("Starting export...");
+	$("#export_msg").text("Starting export...");
 	setTimeout(function () { exportProgress(); }, 2000);
 	return false;
 }
 exportProgress = function () {
 	//console.debug("exportProgress");
-	$jq.getJSON("tiki-export_tracker_monitor.php", { trackerId: {{$trackerId}}, xuser: "{{$user}}" }, function (res) {
+	$.getJSON("tiki-export_tracker_monitor.php", { trackerId: {{$trackerId}}, xuser: "{{$user}}" }, function (res) {
 		//console.debug(res);
 		if (res) {
 			if (res.status == "finish") {
-				$jq("#dl_frame").remove();
-				$jq("#export_msg").text("Exported: " + res.current + " records");
-				if ($jq.ui) { $jq("#export_prog").progressbar('option', 'value', 100); }
-				$jq("#export_button").show();
+				$("#dl_frame").remove();
+				$("#export_msg").text("Exported: " + res.current + " records");
+				if ($.ui) { $("#export_prog").progressbar('option', 'value', 100); }
+				$("#export_button").show();
 			} else {
 				if (res.msg) {
-					$jq("#export_msg").text("Message: " + res.msg);
+					$("#export_msg").text("Message: " + res.msg);
 				} else if (res.current) {
 					var pc = parseInt((res.current / res.total) * 100, 10);
-					$jq("#export_msg").text("Exported: " + res.current + "/" + res.total + " (" + pc + "%)");
-					if ($jq.ui) {
-						$jq("#export_prog").progressbar('option', 'value', pc);
+					$("#export_msg").text("Exported: " + res.current + "/" + res.total + " (" + pc + "%)");
+					if ($.ui) {
+						$("#export_prog").progressbar('option', 'value', pc);
 					}
 				} else if (res.status) {
-					$jq("#export_msg").text("Status: " + res.status);
+					$("#export_msg").text("Status: " + res.status);
 				}
 				setTimeout(function () { exportProgress(); }, 1000);
 			}

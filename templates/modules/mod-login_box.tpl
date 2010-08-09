@@ -27,7 +27,7 @@ function capLock(e){
 		  {/if}
           <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
           <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
-		  {jq}$jq("#login-switchuser").tiki("autocomplete", "username"){/jq}
+		  {jq}$("#login-switchuser").tiki("autocomplete", "username"){/jq}
          </fieldset>
         </form>
       {/if}

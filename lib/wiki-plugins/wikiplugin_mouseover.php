@@ -203,12 +203,12 @@ function wikiplugin_mouseover( $data, $params ) {
 		$closeDelayStr = '';
 	}
 
-	$js = "\$jq('#$id-link').mouseover(function(event) {
-	\$jq('#$id').css('left', event.pageX + $offsetx).css('top', event.pageY + $offsety); showJQ('#$id', '$effect', '$speed'); $closeDelayStr });";
+	$js = "\$('#$id-link').mouseover(function(event) {
+	\$('#$id').css('left', event.pageX + $offsetx).css('top', event.pageY + $offsety); showJQ('#$id', '$effect', '$speed'); $closeDelayStr });";
 	if ($sticky) {
-		$js .= "\$jq('#$id').click(function(event) { hideJQ('#$id', '$effect', '$speed'); }).css('cursor','pointer');\n";
+		$js .= "\$('#$id').click(function(event) { hideJQ('#$id', '$effect', '$speed'); }).css('cursor','pointer');\n";
 	} else {
-		$js .= "\$jq('#$id-link').mouseout(function(event) { setTimeout(function() {hideJQ('#$id', '$effect', '$speed')}, ".($closeDelay * 1000)."); });";
+		$js .= "\$('#$id-link').mouseout(function(event) { setTimeout(function() {hideJQ('#$id', '$effect', '$speed')}, ".($closeDelay * 1000)."); });";
 	}
 	$headerlib->add_jq_onready($js);
 	

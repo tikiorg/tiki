@@ -516,43 +516,43 @@ if ($_REQUEST['locSection'] == 'settings') {
 		$js = <<< END
 
 // validate edit/add form
-\$jq('[name=settings]').submit(function() {
-	if (!\$jq('[name=account]').val()) {
-		\$jq('[name=account]').css('background-color', '#fcc').focus();
+\$('[name=settings]').submit(function() {
+	if (!\$('[name=account]').val()) {
+		\$('[name=account]').css('background-color', '#fcc').focus();
 		return false;
 	}
-	if (!\$jq('[name=imap]').val() && !\$jq('[name=pop]').val() && !\$jq('[name=mbox]').val() && !\$jq('[name=maildir]').val()) {
-		\$jq('[name=imap]').css('background-color', '#fcc').focus();
-		\$jq('[name=pop]').css('background-color', '#fcc');
-		\$jq('[name=mbox]').css('background-color', '#fcc');
-		\$jq('[name=maildir]').css('background-color', '#fcc');
+	if (!\$('[name=imap]').val() && !\$('[name=pop]').val() && !\$('[name=mbox]').val() && !\$('[name=maildir]').val()) {
+		\$('[name=imap]').css('background-color', '#fcc').focus();
+		\$('[name=pop]').css('background-color', '#fcc');
+		\$('[name=mbox]').css('background-color', '#fcc');
+		\$('[name=maildir]').css('background-color', '#fcc');
 		return false;
 	}
 });
 // set port for imap
-\$jq('[name=imap]').change(function() {
-	if (\$jq('[name=imap]').val()) {
-		\$jq('[name=port]').val(\$jq('[name=useSSL]').attr('checked')? '993' : '143');
+\$('[name=imap]').change(function() {
+	if (\$('[name=imap]').val()) {
+		\$('[name=port]').val(\$('[name=useSSL]').attr('checked')? '993' : '143');
 	}
 });
 // set port for pop
-\$jq('[name=pop]').change(function() {
-	if (\$jq('[name=pop]').val() && !\$jq('[name=imap]').val()) {
-		\$jq('[name=port]').val(\$jq('[name=useSSL]').attr('checked')? '995' : '110');
+\$('[name=pop]').change(function() {
+	if (\$('[name=pop]').val() && !\$('[name=imap]').val()) {
+		\$('[name=port]').val(\$('[name=useSSL]').attr('checked')? '995' : '110');
 	}
 });
 // set ports for ssl
-\$jq('[name=useSSL]').change(function(v,a) {
-	if (\$jq('[name=useSSL]').attr('checked')) {
-		\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '993' : '995');
-		\$jq('[name=smtpPort]').val('465');
+\$('[name=useSSL]').change(function(v,a) {
+	if (\$('[name=useSSL]').attr('checked')) {
+		\$('[name=port]').val(\$('[name=imap]').val() ? '993' : '995');
+		\$('[name=smtpPort]').val('465');
 	} else {
-		\$jq('[name=port]').val(\$jq('[name=imap]').val() ? '143' : '110');
-		\$jq('[name=smtpPort]').val('25');
+		\$('[name=port]').val(\$('[name=imap]').val() ? '143' : '110');
+		\$('[name=smtpPort]').val('25');
 	}
 });
 // confirm deletes
-\$jq('a[title=$deleteTitle]').click(function() {
+\$('a[title=$deleteTitle]').click(function() {
 	return confirm('$deleteConfirm');
 });
 
@@ -600,7 +600,7 @@ END;
 	}
 	
 //	if (empty($_REQUEST['accountId']) || isset($_REQUEST['new_acc']) && $webmaillib->count_webmail_accounts($user) > 0) {
-//		$headerlib->add_jq_onready('$jq("#settingsFormDiv").hide();');
+//		$headerlib->add_jq_onready('$("#settingsFormDiv").hide();');
 //	}
 	// The red cross was pressed
 	if (isset($_REQUEST['remove'])) {

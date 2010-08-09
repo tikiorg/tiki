@@ -97,9 +97,9 @@ $tpl_sel
 </form>");
 
 $headerlib->add_jq_onready(<<<JS
-\$jq('#page-bar, .navbar, .titletips, h2').hide();
-\$jq('a.pagetitle').text('$tpl (tpl)').parent().after(
-	\$jq("$form")
+\$('#page-bar, .navbar, .titletips, h2').hide();
+\$('a.pagetitle').text('$tpl (tpl)').parent().after(
+	\$("$form")
 );
 JS
 );

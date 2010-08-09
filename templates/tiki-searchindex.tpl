@@ -18,7 +18,7 @@
 			</label>
 			{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $prefs.search_autocomplete eq 'y'}
 				{jq}
-					$jq("#highlight{{$iSearch}}").tiki("autocomplete", "pagename");
+					$("#highlight{{$iSearch}}").tiki("autocomplete", "pagename");
 				{/jq}
 			{/if}			
 			{if $prefs.feature_search_show_object_filter eq 'y'}

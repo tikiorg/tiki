@@ -4848,9 +4848,9 @@ class TikiLib extends TikiDb_Bridge
 					
 							if ($prefs['feature_jquery'] == 'y') {
 								$headerlib->add_js( "
-\$jq(document).ready( function() {
-	if( \$jq('#$id') ) {
-		\$jq('#$id').click( function(event) {
+\$(document).ready( function() {
+	if( \$('#$id') ) {
+		\$('#$id').click( function(event) {
 			popup_plugin_form("
 				. json_encode('editwiki')
 				. ', '

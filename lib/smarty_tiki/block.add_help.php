@@ -50,8 +50,8 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 var openEditHelp = function() {
 	var opts, edithelp_pos = getCookie("edithelp_position");
 	opts = { width: 460, height: 500, title: "' . $title . '", autoOpen: false, beforeclose: function(event, ui) {
-		var off = $jq(this).offsetParent().offset();
-   		setCookie("edithelp_position", parseInt(off.left) + "," + parseInt(off.top) + "," + $jq(this).offsetParent().width() + "," + $jq(this).offsetParent().height());
+		var off = $(this).offsetParent().offset();
+   		setCookie("edithelp_position", parseInt(off.left) + "," + parseInt(off.top) + "," + $(this).offsetParent().width() + "," + $(this).offsetParent().height());
 	}}
 	if (edithelp_pos) {edithelp_pos = edithelp_pos.split(",");}
 	if (edithelp_pos && edithelp_pos.length) {
@@ -59,7 +59,7 @@ var openEditHelp = function() {
 		opts["width"] = parseInt(edithelp_pos[2]);
 		opts["height"] = parseInt(edithelp_pos[3]);
 	}
-	$jq("#help_sections").dialog("destroy").dialog(opts).dialog("open");
+	$("#help_sections").dialog("destroy").dialog(opts).dialog("open");
 	
 };');
 		$self_link_params['_onclick'] = 'openEditHelp();return false;';

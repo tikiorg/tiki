@@ -30,10 +30,10 @@
 				{preference name=freetags_browse_amount_tags_suggestion}
 				{preference name=freetags_normalized_valid_chars}
 				<div class="adminoptionboxchild">
-					<a class="button" href='#Browsing' onclick="$jq('input[name=freetags_normalized_valid_chars]').val('a-zA-Z0-9');return false;">{tr}Alphanumeric ASCII characters only{/tr}</a>
+					<a class="button" href='#Browsing' onclick="$('input[name=freetags_normalized_valid_chars]').val('a-zA-Z0-9');return false;">{tr}Alphanumeric ASCII characters only{/tr}</a>
 					({tr}No accents or special characters{/tr}.)
 					<br />
-					<a class="button" href='#Browsing' onclick="$jq('input[name=freetags_normalized_valid_chars]').val('');return false;">{tr}Accept all characters{/tr}</a>
+					<a class="button" href='#Browsing' onclick="$('input[name=freetags_normalized_valid_chars]').val('');return false;">{tr}Accept all characters{/tr}</a>
 				</div>
 				{preference name=freetags_lowercase_only}
 				{preference name=freetags_multilingual}

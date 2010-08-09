@@ -36,7 +36,7 @@
 </form>
 {if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
 {jq}
-	$jq("#{{$qefield}}").tiki("autocomplete", "pagename");
+	$("#{{$qefield}}").tiki("autocomplete", "pagename");
 {/jq}
 {/if}
 {/tikimodule}

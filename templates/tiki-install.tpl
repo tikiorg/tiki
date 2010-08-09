@@ -185,7 +185,7 @@
 			<input type="submit" value=" {tr}Use Existing Connection{/tr} " />
 		</form>
 		or<br />
-		<a href="#" onclick="$jq('#installer_3_new_db_form').toggle();return false;" class="button">{tr}Modify database connection{/tr}</a>
+		<a href="#" onclick="$('#installer_3_new_db_form').toggle();return false;" class="button">{tr}Modify database connection{/tr}</a>
 	</div>
 {/if}		
 	

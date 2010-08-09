@@ -13,7 +13,7 @@
 {/if}
 
 {if (!$sent) or ((strstr($message, "{tr}ERROR{/tr}")) or (strstr($message, "{tr}Invalid{/tr}")))}
-{jq}$jq(".username").tiki("autocomplete", "username", {multiple: true, multipleSeparator: ";"});{/jq}
+{jq}$(".username").tiki("autocomplete", "username", {multiple: true, multipleSeparator: ";"});{/jq}
 <form action="messu-compose.php" method="post">
 <table class="normal" >
   <tr>

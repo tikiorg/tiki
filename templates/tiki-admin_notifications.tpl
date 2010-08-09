@@ -32,7 +32,7 @@
 			<td class="formcolor"><label for="flogin">{tr}User:{/tr}</label></td>
 			<td class="formcolor">
 				<input type="text" id="flogin" name="login" />
-				{jq}$jq("#flogin").tiki("autocomplete", "username"){/jq}
+				{jq}$("#flogin").tiki("autocomplete", "username"){/jq}
 			</td>
 		</tr>
 		<tr>

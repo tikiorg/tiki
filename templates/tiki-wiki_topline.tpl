@@ -27,19 +27,19 @@
 	{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang == '' or $canEditStaging eq 'y' }
 		{if $prefs.wiki_edit_icons_toggle eq 'y' and ($prefs.wiki_edit_plugin eq 'y' or $prefs.wiki_edit_section eq 'y')}
 			{jq}
-			$jq("#wiki_plugin_edit_view").click( function () {
-				var src = $jq("#wiki_plugin_edit_view img").attr("src");
+			$("#wiki_plugin_edit_view").click( function () {
+				var src = $("#wiki_plugin_edit_view img").attr("src");
 				if (src.indexOf("wiki_plugin_edit_view") > -1) {
-					$jq(".editplugin, .icon_edit_section").show();
-					$jq("#wiki_plugin_edit_view img").attr("src", src.replace("wiki_plugin_edit_view", "wiki_plugin_edit_hide"));
+					$(".editplugin, .icon_edit_section").show();
+					$("#wiki_plugin_edit_view img").attr("src", src.replace("wiki_plugin_edit_view", "wiki_plugin_edit_hide"));
 					setCookieBrowser("wiki_plugin_edit_view", true);
 				} else {
-					$jq(".editplugin, .icon_edit_section").hide();
-					$jq("#wiki_plugin_edit_view img").attr("src", src.replace("wiki_plugin_edit_hide", "wiki_plugin_edit_view"));
+					$(".editplugin, .icon_edit_section").hide();
+					$("#wiki_plugin_edit_view img").attr("src", src.replace("wiki_plugin_edit_hide", "wiki_plugin_edit_view"));
 					deleteCookie("wiki_plugin_edit_view");
 				}
 			});
-			if (!getCookie("wiki_plugin_edit_view")) {$jq(".editplugin, .icon_edit_section").hide(); } else { $jq("#wiki_plugin_edit_view").click(); }
+			if (!getCookie("wiki_plugin_edit_view")) {$(".editplugin, .icon_edit_section").hide(); } else { $("#wiki_plugin_edit_view").click(); }
 			{/jq}
 		<a title="{tr}View edit icons{/tr}" href="#" id="wiki_plugin_edit_view">{icon _id='wiki_plugin_edit_view' title="{tr}View edit icons{/tr}"}</a>
 		{/if}

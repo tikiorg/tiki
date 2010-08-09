@@ -11,13 +11,13 @@
 	</div>
 	{include file=prefs/shared-dependencies.tpl}
 	{jq}
-if( ! $jq('#{{$p.id|escape}}').attr('checked') || $jq('#{{$p.id|escape}}').attr('disabled') ) {
-	$jq('#{{$p.preference|escape}}_childcontainer').hide();
+if( ! $('#{{$p.id|escape}}').attr('checked') || $('#{{$p.id|escape}}').attr('disabled') ) {
+	$('#{{$p.preference|escape}}_childcontainer').hide();
 }
-if ($jq('#{{$p.preference|escape}}_childcontainer').length) {
-	$jq('#{{$p.id|escape}}').change( function() {
+if ($('#{{$p.preference|escape}}_childcontainer').length) {
+	$('#{{$p.id|escape}}').change( function() {
 		var id = '{{$p.preference|escape}}_childcontainer';
-		if( $jq('#{{$p.id|escape}}').attr('checked') || $jq('#{{$p.id|escape}}').attr('disabled') ) {
+		if( $('#{{$p.id|escape}}').attr('checked') || $('#{{$p.id|escape}}').attr('disabled') ) {
 			{{if $mode eq 'invert'}}hide(id);{{else}}show(id);{{/if}}
 		} else {
 			{{if $mode eq 'invert'}}show(id);{{else}}hide(id);{{/if}}

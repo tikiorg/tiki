@@ -920,11 +920,11 @@ if (isset($_REQUEST['save']) && $prefs['wiki_mandatory_edit_summary'] === 'y' &&
 }
 if ($prefs['wiki_mandatory_edit_summary'] === 'y') {
 	$headerlib->add_jq_onready('
-$jq("input[name=save],input[name=minor]").click(function(){
-	if (!$jq("#comment").val()) {
+$("input[name=save],input[name=minor]").click(function(){
+	if (!$("#comment").val()) {
 		var s = prompt("'.tra('Describe the change you made').'");
 		if (!s) return false;
-		$jq("#comment").val(s);
+		$("#comment").val(s);
 	}
 	return true;
 })

@@ -258,7 +258,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 			$headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
 			//$headerlib->add_cssfile( 'lib/jquery/jqs5/theme/staticfree/style.css' );
 			$headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
-			$headerlib->add_jq_onready('$jq("body > div > div > div").tiki("s5", "", {});', 20);	// late, and tell jqs5 where the page is in tiki
+			$headerlib->add_jq_onready('$("body > div > div > div").tiki("s5", "", {});', 20);	// late, and tell jqs5 where the page is in tiki
 			$prefs['feature_wiki_description'] = 'n';
 			$prefs['wiki_authors_style'] = 'none';
 			$prefs['feature_page_title'] = 'n';

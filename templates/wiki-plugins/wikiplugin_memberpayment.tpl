@@ -26,6 +26,6 @@
 		<input type="submit" value="{tr}Continue{/tr}"/>
 	</p>
 	{jq}
-		$jq('#user{{$wp_member_offset|escape}}').tiki("autocomplete", "username", {multiple: true, multipleSeparator: "|"});
+		$('#user{{$wp_member_offset|escape}}').tiki("autocomplete", "username", {multiple: true, multipleSeparator: "|"});
 	{/jq}
 </form>

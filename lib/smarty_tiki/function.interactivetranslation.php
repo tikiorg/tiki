@@ -32,49 +32,49 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 	$jq = <<<JS
 	var data = $strings;
 
-	\$jq('.intertrans').find('*').addClass('intertrans');
-	\$jq('#intertrans-form :reset').click( function() {
-		\$jq('#intertrans-form').hide();
+	\$('.intertrans').find('*').addClass('intertrans');
+	\$('#intertrans-form :reset').click( function() {
+		\$('#intertrans-form').hide();
 		return false;
 	} );
-	\$jq('body').css('padding-top', 50 );
+	\$('body').css('padding-top', 50 );
 
-	\$jq('#intertrans-form form').submit( function( e ) {
+	\$('#intertrans-form form').submit( function( e ) {
 		e.preventDefault();
 
-		\$jq('#intertrans-form').hide();
-		\$jq.post( \$jq(this).attr('action'), \$jq(this).serialize() );
+		\$('#intertrans-form').hide();
+		\$.post( \$(this).attr('action'), \$(this).serialize() );
 
 		return false;
 	} );
 	
-	\$jq(document).find('body *:not(.intertrans)').click( function( e ) {
-		if( \$jq('#intertrans-active:checked').length == 0 ) {
+	\$(document).find('body *:not(.intertrans)').click( function( e ) {
+		if( \$('#intertrans-active:checked').length == 0 ) {
 			return;
 		}
 
-		var text = \$jq(this).text();
-		var val = \$jq(this).val();
-		var alt = \$jq(this).attr('alt');
-		var title = \$jq(this).attr('title');
-		var applicable = \$jq(data).filter( function( k ) {
+		var text = \$(this).text();
+		var val = \$(this).val();
+		var alt = \$(this).attr('alt');
+		var title = \$(this).attr('title');
+		var applicable = \$(data).filter( function( k ) {
 			return ( text && text.length && text.indexOf( this[1] ) != -1 )
 				|| ( val && val.length && val.indexOf( this[1] ) != -1 )
 				|| ( alt && alt.length && alt.indexOf( this[1] ) != -1 )
 				|| ( title && title.length && title.indexOf( this[1] ) != -1 );
 		} );
 
-		\$jq('#intertrans-form table')
+		\$('#intertrans-form table')
 			.empty()
 			.append( applicable.map( function() {
-				var r = \$jq('<tr><td class="original"></td><td><input type="text" name="trans[]"/><input type="hidden" name="source[]"/></td></tr>');
+				var r = \$('<tr><td class="original"></td><td><input type="text" name="trans[]"/><input type="hidden" name="source[]"/></td></tr>');
 				r.find('td.original').html( this[0] );
 				r.find(':hidden').val( this[0] );
 				r.find(':text').val( this[1] );
 				return r[0];
 			} ) );
 		
-		\$jq('#intertrans-form').show();
+		\$('#intertrans-form').show();
 		return false;
 	} );
 JS;

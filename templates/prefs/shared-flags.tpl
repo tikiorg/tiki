@@ -19,18 +19,18 @@
 {/if}
 
 {jq}
-$jq('.pref-reset')
+$('.pref-reset')
 	.change( function() {
-		var $el = $jq(this).closest('.adminoptionbox').find('input:not(:hidden),select,textarea')
-			.not('.system').attr( 'disabled', $jq(this).attr('checked') ? "disabled" : "" )
-			.css("opacity", $jq(this).attr('checked') ? .6 : 1 );
-		var defval = $jq("#" + $jq(this).val() + "_default").val();
+		var $el = $(this).closest('.adminoptionbox').find('input:not(:hidden),select,textarea')
+			.not('.system').attr( 'disabled', $(this).attr('checked') ? "disabled" : "" )
+			.css("opacity", $(this).attr('checked') ? .6 : 1 );
+		var defval = $("#" + $(this).val() + "_default").val();
 		if ($el.attr("type") == "checkbox") {
-			$el.attr('checked', $jq(this).attr('checked') ? (defval == "y" ? "checked" : "") : ($el.attr('checked') ? "" : "checked" ));
+			$el.attr('checked', $(this).attr('checked') ? (defval == "y" ? "checked" : "") : ($el.attr('checked') ? "" : "checked" ));
 		} else {
-			var temp = $jq("[name=" + $jq(this).val() + "]").val();
+			var temp = $("[name=" + $(this).val() + "]").val();
 			$el.val( defval );
-			$jq("#" + $jq(this).val() + "_default").val( temp );
+			$("#" + $(this).val() + "_default").val( temp );
 		}
 		$el.change();
 	} )
@@ -39,9 +39,9 @@ $jq('.pref-reset')
 		.append('{{icon _id=arrow_undo alt="{tr}Reset to default{/tr}" href=#}}')
 		.find('a')
 			.click( function() {
-				var box = $jq(this).closest('span').find(':checkbox');
+				var box = $(this).closest('span').find(':checkbox');
 				box.attr('checked', box.filter(':checked').length == 0).change();
-				var $i = $jq(this).find("img");
+				var $i = $(this).find("img");
 				$i.attr("src", $i.attr("src").indexOf("undo") > -1 ? $i.attr("src").replace("undo", "redo") :  $i.attr("src").replace("redo", "undo"));
 				return false;
 			} );

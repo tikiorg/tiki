@@ -37,7 +37,7 @@ if (isset($_REQUEST['editor_id']) && isset($_REQUEST['data'])) {
 function get_new_preview() {
 	location.replace("' . $tikiroot . 'tiki-auto_save.php?editor_id=' . $_REQUEST['editor_id'] . '&autoSaveId=' . $_REQUEST['autoSaveId'] . '");
 }
-$jq(window).load(function(){
+$(window).load(function(){
 		if (typeof opener != "undefined") {
 			opener.ajaxPreviewWindow = this;
 		}

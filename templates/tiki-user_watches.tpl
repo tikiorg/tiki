@@ -97,19 +97,19 @@
 	</table>
 	</form>
 	{jq}
-		$jq('#type_selector').change( function() {
-			var type = $jq(this).val();
+		$('#type_selector').change( function() {
+			var type = $(this).val();
 	
-			$jq('#lang_list').hide();
-			$jq('#categ_list').hide();
+			$('#lang_list').hide();
+			$('#categ_list').hide();
 	
 			if( type == 'wiki_page_in_lang_created' ) {
-				$jq('#lang_list').show();
+				$('#lang_list').show();
 			}
 	
 			if( type == 'category_changed_in_lang' ) {
-				$jq('#lang_list').show();
-				$jq('#categ_list').show();
+				$('#lang_list').show();
+				$('#categ_list').show();
 			}
 		} ).trigger('change');
 	{/jq}

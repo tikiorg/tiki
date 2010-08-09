@@ -341,37 +341,37 @@ $current_version = $info["version"];
 $not_comparing = empty($_REQUEST['compare']) ? 'true' : 'false';
 
 $headerlib->add_jq_onready(<<<JS
-\$jq("input[name=oldver], input[name=newver]").change(function () {
-	var ver = \$jq(this).val(), ver2;
+\$("input[name=oldver], input[name=newver]").change(function () {
+	var ver = \$(this).val(), ver2;
 	if (ver == 0) { ver = $current_version; }
-	if (\$jq(this).attr("name") == "oldver") {
-		\$jq("input[name=newver]").each(function () {
-			ver2 = \$jq(this).val();
+	if (\$(this).attr("name") == "oldver") {
+		\$("input[name=newver]").each(function () {
+			ver2 = \$(this).val();
 			if (ver2 == 0) { ver2 = $current_version; }
 			if (ver2 <= ver) {
-				\$jq(this).attr("disabled", "disabled");
+				\$(this).attr("disabled", "disabled");
 			} else {
-				\$jq(this).attr("disabled", "");
+				\$(this).attr("disabled", "");
 			}
 		});
-	} else if (\$jq(this).attr("name") == "newver") {
-		\$jq("input[name=oldver]").each(function () {
-			ver2 = \$jq(this).val();
+	} else if (\$(this).attr("name") == "newver") {
+		\$("input[name=oldver]").each(function () {
+			ver2 = \$(this).val();
 			if (ver2 == 0) { ver2 = $current_version; }
 			if (ver2 >= ver) {
-				\$jq(this).attr("disabled", "disabled");
+				\$(this).attr("disabled", "disabled");
 			} else {
-				\$jq(this).attr("disabled", "");
+				\$(this).attr("disabled", "");
 			}
 		});
 	}
 });
-if (\$jq("input[name=newver][checked=checked]").length) {
-	\$jq("input[name=newver][checked=checked]").change();
-	\$jq("input[name=oldver][checked=checked]").change();
+if (\$("input[name=newver][checked=checked]").length) {
+	\$("input[name=newver][checked=checked]").change();
+	\$("input[name=oldver][checked=checked]").change();
 } else if ($not_comparing) {
-	\$jq("input[name=newver]:eq(0)").attr("checked", "checked").change();
-	\$jq("input[name=oldver]:eq(1)").attr("checked", "checked").change();
+	\$("input[name=newver]:eq(0)").attr("checked", "checked").change();
+	\$("input[name=oldver]:eq(1)").attr("checked", "checked").change();
 }
 JS
 );

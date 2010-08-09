@@ -50,10 +50,10 @@
 				</div>
 			</div>
 		{jq}
-if ($jq.ui) {
-	var idx = $jq("select[name=payment_system]").attr("selectedIndex");
-	$jq("#payment_systems").tiki("accordion", {heading: "h2"});
-	if (idx > 0) { $jq("#payment_systems").accordion("option", "active", idx); }
+if ($.ui) {
+	var idx = $("select[name=payment_system]").attr("selectedIndex");
+	$("#payment_systems").tiki("accordion", {heading: "h2"});
+	if (idx > 0) { $("#payment_systems").accordion("option", "active", idx); }
 }{/jq}
 		</div>
 	</fieldset>

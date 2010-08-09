@@ -31,7 +31,7 @@ function doTakeWebmail(messageID) {
 	xajax.config.waitCursor = false;
 	xajax_takeGroupMail('$divId', messageID);
 	showWebmailMessage('".tra('Taking')."...');
-	\$jq('#$divId .webmail_refresh_message').show();
+	\$('#$divId .webmail_refresh_message').show();
 }
 
 function doPutBackWebmail(messageID) {
@@ -41,14 +41,14 @@ function doPutBackWebmail(messageID) {
 	xajax.config.waitCursor = false;
 	xajax_putBackGroupMail('$divId', messageID);
 	showWebmailMessage('".tra('Putting back')."...');
-	\$jq('#$divId .webmail_refresh_message').show();
+	\$('#$divId .webmail_refresh_message').show();
 }
 
 var refreshWebmailRequest;
 
 function doRefreshWebmail(start, reload) {
-	if (\$jq('.box-webmail_inbox .box-data').css('display') != 'none') {
-		if (\$jq('#$divId .webmail_refresh_busy').css('display') == 'none') {
+	if (\$('.box-webmail_inbox .box-data').css('display') != 'none') {
+		if (\$('#$divId .webmail_refresh_busy').css('display') == 'none') {
 			xajax.config.requestURI = 'tiki-webmail_ajax.php';	// tell it where to send the request
 			xajax.config.statusMessages = true;
 			xajax.config.waitCursor = false;
@@ -81,34 +81,34 @@ function cancelRefreshWebmail() {
 
 function initWebmail() {
 	clearWebmailMessage();
-	\$jq('#$divId .mod_webmail_list').show('slow');
+	\$('#$divId .mod_webmail_list').show('slow');
 	if (jqueryTiki.tooltips) {
-		//\$jq('a.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400});
-		\$jq('a.tips300').cluetip({splitTitle: '|', showTitle: false, width: '300px', cluezIndex: 400});
-		//\$jq('a.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
+		//\$('a.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400});
+		\$('a.tips300').cluetip({splitTitle: '|', showTitle: false, width: '300px', cluezIndex: 400});
+		//\$('a.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
 	}
 }
 
 function clearWebmailMessage() {
-	\$jq('#$divId .webmail_refresh_busy').hide();
-	\$jq('#$divId .webmail_refresh_icon').show();
-	\$jq('#$divId .webmail_refresh_message').hide();
-	\$jq('#$divId .webmail_refresh_message').text('');
+	\$('#$divId .webmail_refresh_busy').hide();
+	\$('#$divId .webmail_refresh_icon').show();
+	\$('#$divId .webmail_refresh_message').hide();
+	\$('#$divId .webmail_refresh_message').text('');
 }
 
 function showWebmailMessage(inMsg) {
-	\$jq('#$divId .webmail_refresh_icon').hide();
-	\$jq('#$divId .webmail_refresh_busy').show();
-	\$jq('#$divId .webmail_refresh_message').text(inMsg);
-	\$jq('#$divId .webmail_refresh_message').show();
+	\$('#$divId .webmail_refresh_icon').hide();
+	\$('#$divId .webmail_refresh_busy').show();
+	\$('#$divId .webmail_refresh_message').text(inMsg);
+	\$('#$divId .webmail_refresh_message').show();
 }
 
-\$jq('document').ready( function() {
+\$('document').ready( function() {
 	clearWebmailMessage();
-	\$jq('#$divId .mod_webmail_list').hide();
+	\$('#$divId .mod_webmail_list').hide();
 });
 
-\$jq(window).unload( function() {
+\$(window).unload( function() {
 	// doesn't seem to help - gets processed after doRefreshWebmail anyway
 	cancelRefreshWebmail();
 });

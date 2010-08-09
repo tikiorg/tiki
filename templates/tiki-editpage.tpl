@@ -115,11 +115,11 @@
 						<li>
 							{tr}Version:{/tr} {$diff.version|escape} - {$diff.comment|escape|default:"<em>{tr}No comment{/tr}</em>"}
 							{if count($diff_summaries) gt 1}
-								{icon _id="arrow_right"  onclick="\$jq('input[name=oldver]').val(`$diff.version`);\$jq('#editpageform').submit();return false;"  _text="{tr}View{/tr}" style="cursor: pointer"}
+								{icon _id="arrow_right"  onclick="\$('input[name=oldver]').val(`$diff.version`);\$('#editpageform').submit();return false;"  _text="{tr}View{/tr}" style="cursor: pointer"}
 							{/if}
 						</li>
 					{/foreach}
-					{button  _onclick="\$jq('input[name=oldver]').val(1);\$jq('#editpageform').submit();return false;"  _text="{tr}All Versions{/tr}" _ajax="n"}
+					{button  _onclick="\$('input[name=oldver]').val(1);\$('#editpageform').submit();return false;"  _text="{tr}All Versions{/tr}" _ajax="n"}
 				</ul>
 			</div>
 		{/if}

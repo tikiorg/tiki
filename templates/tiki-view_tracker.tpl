@@ -230,7 +230,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {tab name="{tr}Insert New Item{/tr}"}
 {* --------------------------------------------------------------------------------- tab with edit --- *}
 {jq}
-$jq("#newItemForm").validate({
+$("#newItemForm").validate({
 	{{$validationjs}}
 });
 {/jq}
@@ -289,7 +289,7 @@ $jq("#newItemForm").validate({
 {* since autocomplete allows blank entry it can't be used for mandatory selection. *}
 	<input id="user_selector_{$field_value.fieldId}" type="text" size="20" name="{$field_value.ins_id}" value="{if $field_value.options_array[0] eq '2'}{$user}{else}{$field_value.value}{/if}" />
 	{jq}
-		$jq("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "username", {mustMatch: true});
+		$("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "username", {mustMatch: true});
 	{/jq}
 {else}
 <select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>

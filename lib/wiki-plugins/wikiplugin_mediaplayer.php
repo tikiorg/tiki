@@ -130,7 +130,7 @@ function wikiplugin_mediaplayer($data, $params) {
 	if (!empty($params['src'])) {
 		global $headerlib; include_once('lib/headerlib.php');
 		extract ($params,EXTR_SKIP);
-		$js = "\$jq('#$id').media( {width: $width, height: $height} );";
+		$js = "\$('#$id').media( {width: $width, height: $height} );";
 		$headerlib->add_jq_onready($js);
 		return "~np~<a href=\"$src\" id=\"$id\"></a>~/np~";
 	}

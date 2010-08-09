@@ -48,7 +48,7 @@ function smarty_function_user_selector($params, &$smarty) {
 	
 	if ($prefs['feature_jquery_autocomplete'] == 'y' && $ucant > $prefs['user_selector_threshold']) {
 		$ret .= '<input id="' . $params['id'] . '" type="text" name="' . $params['name'] . '" value="' . $params['user'] . '"' . $sz . $ed . ' />';
-		$headerlib->add_jq_onready('$jq("#' . $params['id'] . '").tiki("autocomplete", "username", {mustMatch: true});');
+		$headerlib->add_jq_onready('$("#' . $params['id'] . '").tiki("autocomplete", "username", {mustMatch: true});');
 	} else {
 		if ($params['group'] == 'all') {
 			$usrs = $tikilib->list_users(0, -1, 'login_asc');

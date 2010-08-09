@@ -6,7 +6,7 @@
 
 {jq}
 setTimeout(function(){	// have to wait otherwise this one also gets id=0
-	$jq('#jQuerySheet_help').sheet({
+	$('#jQuerySheet_help').sheet({
 		title: 'Enduser Documentation',
 		editable: false,
 		urlGet: 'lib/jquery/jquery.sheet/sheets/enduser.documentation.html',

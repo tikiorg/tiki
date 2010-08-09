@@ -48,8 +48,8 @@
 	{include file=tiki-list_kaltura_media_entries.tpl}
 	</form>
 	{jq}
-$jq("#videoAction").submit(function () {
-	if ($jq(this).find("input[name='mediaId[]']:checked").length === 0) {
+$("#videoAction").submit(function () {
+	if ($(this).find("input[name='mediaId[]']:checked").length === 0) {
 		alert("{tr}Please select some media entries to use{/tr}");
 		return false;
 	} else {

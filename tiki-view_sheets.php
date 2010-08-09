@@ -48,13 +48,13 @@ if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit' && $prefs['feature
 if (typeof ajaxLoadingShow == "function") {
 	ajaxLoadingShow("role_main");
 }
-setTimeout (function () { $jq("#edit_button").click(); }, 500);
+setTimeout (function () { $("#edit_button").click(); }, 500);
 ', 500);
 } else if ((!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') && $prefs['feature_jquery_sheet'] == 'y') {
 	$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") {
 	ajaxLoadingShow("role_main");
 }
-setTimeout (function () { $jq("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 500);
+setTimeout (function () { $("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 500);
 ', 500);
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
@@ -166,44 +166,44 @@ if ($prefs['feature_jquery_sheet'] == 'y') {
 	} else {
 		$smarty->assign('editReload', false);
 		$headerlib->add_jq_onready('
-$jq("#edit_button").click( function () {
-	var $a = $jq(this).find("a");
+$("#edit_button").click( function () {
+	var $a = $(this).find("a");
 	if ($a.text() != editSheetButtonLabel2) {
 
-		if ($jq.sheet.instance && $jq.sheet.instance.length > 0) {
-			$jq.sheet.instance = [];
+		if ($.sheet.instance && $.sheet.instance.length > 0) {
+			$.sheet.instance = [];
 		}
-		var options = {title: $jq("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
-		$jq("div.tiki_sheet").tiki("sheet", "", options);
+		var options = {title: $("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
+		$("div.tiki_sheet").tiki("sheet", "", options);
 
 		$a.attr("temp", $a.text());
 		$a.text(editSheetButtonLabel2);
-		$jq("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
-		$jq("#save_button").show();
+		$("#edit_button").parent().find(".button:not(#edit_button), .rbox").hide();
+		$("#save_button").show();
 		if (typeof ajaxLoadingHide == "function") {
 			ajaxLoadingHide();
 		}
 	} else {
-		if (!$jq.sheet.instance[0].isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
+		if (!$.sheet.instance[0].isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
 			window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
 		}
 	}
 	return false;
 });
-$jq("#save_button").click( function () {
-	$jq.sheet.instance[0].evt.cellEditDone();
-	$jq.sheet.saveSheet(0, true);
+$("#save_button").click( function () {
+	$.sheet.instance[0].evt.cellEditDone();
+	$.sheet.saveSheet(0, true);
 	return false;
 }).hide();
 
 window.toggleFullScreen = function(areaname) {
-	$jq.sheet.instance[0].toggleFullScreen();
+	$.sheet.instance[0].toggleFullScreen();
 }
 
 window.showFeedback = function(message, delay, redirect) {
 	if (typeof delay == "undefined") { delay = 5000; }
 	if (typeof redirect == "undefined") { redirect = false; }
-	$fbsp = $jq("#feedback span");
+	$fbsp = $("#feedback span");
 	$fbsp.html(message).show();
 	window.setTimeout( function () { $fbsp.fadeOut("slow", function () { $fbsp.html("&nbsp;"); }); }, delay);
 	// if called from save button via saveSheet:success, then exit edit page mode
@@ -214,14 +214,14 @@ window.showFeedback = function(message, delay, redirect) {
 };
 
 window.setEditable = function(isEditable) {
-	$jq.sheet.instance[0].s.editable = isEditable;
+	$.sheet.instance[0].s.editable = isEditable;
 	if (isEditable) {
-		$jq("#save_button").show();
-		//$jq("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
+		$("#save_button").show();
+		//$("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
 	} else {
-		setTimeout( function(){ $jq("#jSheetControls").hide(); }, 200);
-		$jq("#save_button").hide();
-		$jq("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
+		setTimeout( function(){ $("#jSheetControls").hide(); }, 200);
+		$("#save_button").hide();
+		$("#edit_button a").click( function () { window.location.replace(window.location.href); return false; } );
 	}
 };
 ');

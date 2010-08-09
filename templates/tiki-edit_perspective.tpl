@@ -62,19 +62,19 @@
 				<fieldset id="resultzone" class="dropzone" style="text-align: left;"></fieldset>
 			</form>
 			{jq}
-				$jq('#preferences')
+				$('#preferences')
 					.droppable( {
 						activeClass: 'ui-state-highlight',
 						drop: function( e, ui ) {
-							$jq('#preferences').append( ui.draggable );
-							$jq(ui.draggable)
+							$('#preferences').append( ui.draggable );
+							$(ui.draggable)
 								.draggable('destroy')
 								.draggable( {
 									distance: 50,
 									handle: 'label',
 									axis: 'x',
 									stop: function( e, ui ) {
-										$jq(this).remove();
+										$(this).remove();
 									}
 								} );
 						}
@@ -84,14 +84,14 @@
 						handle: 'label',
 						axis: 'x',
 						stop: function( e, ui ) {
-							$jq(this).remove();
+							$(this).remove();
 						}
 					} );
-				$jq('#searchform').submit( function(e) {
+				$('#searchform').submit( function(e) {
 					e.preventDefault();
 					if (typeof ajaxLoadingShow == 'function') { ajaxLoadingShow('resultzone'); }
-					$jq('#resultzone').load( this.action, $jq(this).serialize(), function() {
-						$jq('#resultzone div.adminoptionbox').draggable( {
+					$('#resultzone').load( this.action, $(this).serialize(), function() {
+						$('#resultzone div.adminoptionbox').draggable( {
 							handle: 'label',
 							axis: 'y',
 							helper: 'clone'
