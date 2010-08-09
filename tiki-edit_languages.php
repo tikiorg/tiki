@@ -264,11 +264,6 @@ if (isset($_REQUEST['downloadFile'])) {
 	exit (0);
 }
 
-// Write to custom.php
-if (isset($_REQUEST['exportToCustom'])) {
-	$language->writeCustomFile();
-}
-
 // Write to language.php
 if (isset($_REQUEST['exportToLanguage'])) {
 	$language->writeLanguageFile();

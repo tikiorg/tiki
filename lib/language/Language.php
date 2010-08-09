@@ -91,21 +91,6 @@ class Language extends TikiDb_Bridge {
 	}
 
 	/**
-	 * Write the new custom.php file to the filesystem
-	 */
-	public function writeCustomFile() {
-		$data = $this->createCustomFile();
-		
-		// TODO: generate an error if not possible to write to file
-		if (is_writable("lang/{$this->lang}/")) {
-			$f = fopen("lang/{$this->lang}/custom.php", 'w');
-			fwrite($f, $data);
-			fclose($f);
-			$this->deleteTranslations();
-		}
-	}
-
-	/**
 	 * Write the new translated strings to the actual
 	 * language.php file and remove the translations
 	 * from the database
