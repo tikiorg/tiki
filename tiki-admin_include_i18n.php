@@ -70,9 +70,9 @@ if (!empty($_REQUEST['custom_lang'])) {
 		$lang = array();
 		include ($custom_file);
 		$smarty->assign_by_ref('custom_translation', $lang_custom);
-	} elseif (!is_writable($custom_file)) {
-		$smarty->assign('custom_error', 'file');
-		$smarty->assign('custom_file', $custom_file);
+	//} elseif (!is_writable($custom_file)) {
+		//$smarty->assign('custom_error', 'file');
+		//$smarty->assign('custom_file', $custom_file);
 	}
 	$smarty->assign_by_ref('custom_lang', $_REQUEST['custom_lang']);
 	if ($ok) {
