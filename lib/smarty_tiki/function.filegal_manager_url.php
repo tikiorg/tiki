@@ -19,8 +19,8 @@ function smarty_function_filegal_manager_url($params, &$smarty) {
 
 	$return = $tikiroot_relative . 'tiki-upload_file.php?galleryId='.$prefs['home_file_gallery'].'&view=browse';
 
-	if ( ! empty($params['area_name']) ) {
-		$return .= '&filegals_manager=' . $params['area_name'];
+	if ( ! empty($params['area_id']) ) {
+		$return .= '&filegals_manager=' . $params['area_id'];
 	}
 
 	return $return;

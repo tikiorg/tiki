@@ -30,8 +30,8 @@
               	&nbsp;
               </td>
               <td valign="top">
-                {toolbars area_name=question_$area qtnum='2'}
-                <textarea id='editwiki' name="question_{$questions[ix].questionId}" rows="{$rows}" cols="{$cols}"></textarea>
+                {toolbars area_id=question_$area qtnum='2'}
+                <textarea id="question_{$questions[ix].questionId}" name="question_{$questions[ix].questionId}" rows="{$rows}" cols="{$cols}"></textarea>
               </td>
             </tr>
           </table>

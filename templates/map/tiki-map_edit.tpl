@@ -80,7 +80,6 @@
 {if $mode eq 'editing'}
 <a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br /><br />
 <form enctype="multipart/form-data" action="tiki-map_edit.php" method="post" id='editpageform'>
-{assign var=area_name value="mapdata"}
 <a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing">{tr}Reload{/tr}</a>&nbsp;&nbsp;
 <a class="link" href="tiki-map_history.php?mapfile={$mapfile}">{tr}History{/tr}</a><br />
 
@@ -89,7 +88,7 @@
 <td>
 <div id='edit-zone'>
 	<div id='textarea-toolbar' style='padding:3px; font-size:10px;'>
-		{toolbars area_name='mapdata'}
+		{toolbars area_id='mapdata'}
 	</div>
 	<textarea id='mapdata' class='wikiedit' name='pagedata' rows='{$rows}' wrap='virtual' cols='{$cols}' style='width:99%'>{$pagedata|escape}</textarea>
 	<input type="hidden" name="rows" value="{$rows}"/>

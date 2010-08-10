@@ -91,13 +91,12 @@
 			<tr class="type-cond for-static">
 				<td class="formcolor"><label>{tr}Toolbars{/tr}</label></td>
 				<td class="formcolor">
-					{toolbars area_name='editwiki'}
+					{toolbars area_id='editwiki'}
 				</td>
 			</tr>
 		{/if}
 
 		<tr class="type-cond for-static">
-			{assign var=area_name value="editwiki"}
 			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
 				<td class="formcolor">
 					<label for="editwiki">{tr}Template{/tr}:</label>

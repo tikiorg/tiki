@@ -110,7 +110,7 @@
 					{tr}Description text is wiki-parsed:{/tr} 
 					<input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" />
 					<div id="trackerDesc" style="display:none;" >
-						{toolbars qtnum="trackerDesc" area_name="trackerDescription"}
+						{toolbars qtnum="trackerDesc" area_id="trackerDescription"}
 						{if $descriptionIsParsed eq 'y'}
 							{jq}toggleBlock('trackerDesc');{/jq}
 						{/if}
@@ -674,7 +674,7 @@ categories = {$catsdump}
 					{tr}Description text is wiki-parsed:{/tr} 
 					<input type="checkbox" name="duplicateDescriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('duplicateTrackerDesc');" />
 					<div id="duplicateTrackerDesc" style="display:none;" >
-						{toolbars qtnum="duplicateTrackerDesc" area_name="duplicateTrackerDescription"}
+						{toolbars qtnum="duplicateTrackerDesc" area_id="duplicateTrackerDescription"}
 						{if $descriptionIsParsed eq 'y'}
 							{jq}toggleBlock('duplicateTrackerDesc');{/jq}
 						{/if}

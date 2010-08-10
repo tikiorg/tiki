@@ -2,8 +2,8 @@
 
 <strong>{$plugin.name|escape}</strong>
 
-{if $prefs.javascript_enabled eq 'y' && $area_name}
-	<a href="javascript:void(0);{if $prefs.feature_shadowbox eq 'y' and $prefs.feature_jquery eq 'y'}javascript:void(0);{/if}" onclick="needToConfirm=false;$('#help_sections').dialog('close');popup_plugin_form('{$area_name}','{$plugin_name|lower|@addslashes}');return false;">
+{if $prefs.javascript_enabled eq 'y' && $area_id}
+	<a href="javascript:void(0);" onclick="needToConfirm=false;$('#help_sections').dialog('close');popup_plugin_form('{$area_id}','{$plugin_name|lower|@addslashes}');return false;">
 		{icon _id=$plugin.icon|default:"plugin_add" _text="{tr}Insert{/tr}"}
 	</a>
 {/if}

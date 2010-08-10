@@ -256,7 +256,7 @@
 {elseif $field_value.type eq 'a'}
 	{if $field_value.isMultilingual ne 'y'}
 		{if $field_value.options_array[0] eq 1}
-    		{toolbars qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId section="trackers"}
+    		{toolbars qtnum=$field_value.fieldId area_id="area_"|cat:$field_value.fieldId section="trackers"}
 		{/if}
 		{if $field_value.options_array[2] == 1}
 				<input type="text" id="area_{$field_value.fieldId}" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if} {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} />
@@ -285,7 +285,7 @@
 		{foreach from=$field_value.lingualvalue item=ling}
 			<label for="area_{$field_value.fieldId}_{$ling.lang}">{$ling.lang|langname}</label><br />
 				{if $field_value.options_array[0] eq 1}
-        			{toolbars qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
+        			{toolbars qtnum=$field_value.id area_id=area_`$field_value.id`_`$ling.lang`}
         		{/if}
 				<textarea id="area_{$field_value.fieldId}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5] > 0} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 					{$ling.value|escape}

@@ -382,7 +382,7 @@
 <td>{tr}Description{/tr}
 </td><td>
 {if $edit}
-  {toolbars area_name="save[description]"}
+  {toolbars area_id="save[description]"}
   <textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" style="width:98%">{$calitem.description|escape}</textarea>
   <input type="hidden" name="rows" value="{$rows}"/>
   <input type="hidden" name="cols" value="{$cols}"/>

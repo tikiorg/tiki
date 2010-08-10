@@ -7,8 +7,6 @@
 	{include file='tiki-preview_article.tpl'}
 {/if}
 
-{assign var=area_name value="body"}
-
 {if $subId}
 	{title help="Articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$title|escape}{/title}
 {else}
@@ -216,7 +214,7 @@
 				{tr}Heading{/tr}
 			</td>
 			<td>
-				{toolbars area_name='heading' qtnum='1'}
+				{toolbars area_id='subheading' qtnum='1'}
 				<textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea>
 			</td>
 		</tr>
@@ -226,7 +224,7 @@
 				{tr}Body{/tr}
 			</td>
 			<td>
-				{toolbars area_name='body' qtnum='2'}
+				{toolbars area_id='body' qtnum='2'}
 				<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />

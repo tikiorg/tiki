@@ -287,7 +287,7 @@ abstract class Toolbar
 		return $tag;
 	}	// {{{
 
-	abstract function getWikiHtml( $areaName );
+	abstract function getWikiHtml( $areaId );
 
 	function isAccessible() // {{{
 	{
@@ -397,7 +397,7 @@ class ToolbarSeparator extends Toolbar
 				->setType('Separator');
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		return '|';
 	} // }}}
@@ -479,7 +479,7 @@ class ToolbarFckOnly extends Toolbar
 		}
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		return null;
 	} // }}}
@@ -553,13 +553,13 @@ class ToolbarInline extends Toolbar
 		return $this;
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		if ($this->syntax == '~np~text~/np~') {	// closing ~/np~ tag breaks toolbar when inside nested plugins
-			return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'~np~text~\'+\'/np~\');',
+			return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'~np~text~\'+\'/np~\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-inline');
 		} else {
-			return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\');',
+			return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-inline');
 		}
 
@@ -631,9 +631,9 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		return $tag;
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
-		return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);',
+		return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-block');
 	} // }}}
 }
@@ -671,9 +671,9 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 		return $tag;
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
-		return $this->getSelfLink('insertAt(\'' . $areaName . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true, true);',
+		return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true, true);',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-line');
 	} // }}}
 }
@@ -805,8 +805,8 @@ class ToolbarPicker extends Toolbar
 		return $this;
 	} // }}}
 	
-	public function getSyntax( $areaName = '$areaName' ) {
-		return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaName . '\')';	// is enclosed in double quotes later
+	public function getSyntax( $areaId = '$areaId' ) {
+		return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaId . '\')';	// is enclosed in double quotes later
 	}
 	
 	static private function setupJs() {
@@ -819,7 +819,7 @@ class ToolbarPicker extends Toolbar
 		}
 	}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		global $headerlib, $prefs;
 		$headerlib->add_js( "window.pickerData['$this->name'] = " . str_replace('\/', '/', json_encode($this->list)) . ";" );
@@ -828,7 +828,7 @@ class ToolbarPicker extends Toolbar
 			$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
 		}
 		
-		return $this->getSelfLink($this->getSyntax($areaName),
+		return $this->getSelfLink($this->getSyntax($areaId),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
 	} // }}}
 }
@@ -971,8 +971,8 @@ class ToolbarDialog extends Toolbar
 		return $this;
 	} // }}}
 	
-	public function getSyntax( $areaName = '$areaName' ) {
-		return 'displayDialog( this, ' . $this->index . ', \'' . $areaName . '\')';
+	public function getSyntax( $areaId = '$areaId' ) {
+		return 'displayDialog( this, ' . $this->index . ', \'' . $areaId . '\')';
 	}
 	
 	static private function setupJs() {
@@ -985,12 +985,12 @@ class ToolbarDialog extends Toolbar
 		}
 	}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		global $headerlib;
 		$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
 		
-		return $this->getSelfLink($this->getSyntax($areaName),
+		return $this->getSelfLink($this->getSyntax($areaId),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
 	} // }}}
 }
@@ -1005,10 +1005,10 @@ class ToolbarFullscreen extends Toolbar
 				->setType('Fullscreen');
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		
-		return $this->getSelfLink('toggleFullScreen(\''.$areaName.'\');return false;',
+		return $this->getSelfLink('toggleFullScreen(\''.$areaId.'\');return false;',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-fullscreen');
 		
 		
@@ -1028,13 +1028,13 @@ class ToolbarHelptool extends Toolbar
 				->setType('Helptool');
 	} // }}}
 	
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 
 		global $wikilib, $smarty, $plugins, $section;
 		if (!isset($plugins)) {
 			include_once ('lib/wiki/wikilib.php');
-			$plugins = $wikilib->list_plugins(true, $areaName);
+			$plugins = $wikilib->list_plugins(true, $areaId);
 		}
 		if ($section == 'sheet') {
 			$sheethelp = $smarty->fetch('tiki-edit_help_sheet.tpl');
@@ -1067,12 +1067,12 @@ class ToolbarFileGallery extends Toolbar
 						->addRequiredPreference('feature_filegals_manager');
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		global $smarty;
 		
 		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
-		return $this->getSelfLink('openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_name'=>$areaName), $smarty)).'\');',
+		return $this->getSelfLink('openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-filegal');
 	} // }}}
 
@@ -1093,7 +1093,7 @@ class ToolbarSwitchEditor extends Toolbar
 						->addRequiredPreference('feature_wysiwyg');
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		global $smarty;
 		
@@ -1168,9 +1168,9 @@ class ToolbarWikiplugin extends Toolbar
 		}
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
-		return $this->getSelfLink('popup_plugin_form(\'' . $areaName . '\',\'' . $this->pluginName . '\')',
+		return $this->getSelfLink('popup_plugin_form(\'' . $areaId . '\',\'' . $this->pluginName . '\')',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-plugin');
 	} // }}}
 }
@@ -1263,7 +1263,7 @@ class ToolbarSheet extends Toolbar
 		return $this;
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		return $this->getSelfLink(addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-sheet');
@@ -1395,7 +1395,7 @@ class ToolbarsList
 		return $lines;
 	} // }}}
 
-	function getWikiHtml( $areaName ) // {{{
+	function getWikiHtml( $areaId ) // {{{
 	{
 		global $tiki_p_admin, $tiki_p_admin_toolbars, $smarty, $section, $prefs, $headerlib;
 		$html = '';
@@ -1428,7 +1428,7 @@ class ToolbarsList
 				foreach( $line[$bitx] as $group ) {
 					$groupHtml = '';
 					foreach( $group as $tag ) {
-						$groupHtml .= $tag->getWikiHtml( $areaName );
+						$groupHtml .= $tag->getWikiHtml( $areaId );
 					}
 					
 					if( !empty($groupHtml) ) {

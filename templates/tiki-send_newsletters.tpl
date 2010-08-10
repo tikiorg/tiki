@@ -20,7 +20,6 @@
 	{/remarksbox}
 {/if}
 
-{assign var=area_name value="editwiki"}
 {if $emited eq 'y'}
 	{remarksbox type="note" title="{tr}Notice{/tr}" icon="lock"}
 		{tr}The newsletter was sent to {$sent} email addresses{/tr}

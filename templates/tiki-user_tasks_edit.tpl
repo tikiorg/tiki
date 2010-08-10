@@ -119,7 +119,7 @@
       <td class="formcolor">{tr}Description{/tr}<br /><br />
       </td>
       <td colspan="3" class="formcolor">
-        {toolbars area_name='description'}
+        {toolbars area_id='edittask'}
         <textarea id='edittask' style="width:98%;" rows="15" cols="80" name="description">{$info.description|escape}</textarea>
       </td>
     </tr>

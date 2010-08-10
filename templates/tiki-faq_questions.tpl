@@ -26,7 +26,7 @@
     <td class="formcolor">{tr}Answer{/tr}:
     </td>
     <td class="formcolor" >
-      {toolbars area_name="faqans"}
+      {toolbars area_id="faqans"}
       <textarea id='faqans' type="text" rows="8" cols="80" name="answer">{$answer|escape}</textarea>
     </td>
   </tr>
