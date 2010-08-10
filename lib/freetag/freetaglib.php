@@ -71,7 +71,7 @@ class FreetagLib extends ObjectLib
 	 * @access private
 	 * @param int The maximum length of a tag.
 	 */
-	var $_MAX_TAG_LENGTH = 30;
+	var $_MAX_TAG_LENGTH = 50;
 	/**
 	 * @access public
 	 * @param int The number of size degrees for tags in cloud. There should be correspondent classes in css.
@@ -929,7 +929,7 @@ class FreetagLib extends ObjectLib
 		foreach($tagArray as $tag) {
 			$tag = trim($tag);
 			if (($tag != '') && (strlen($tag) <= $this->_MAX_TAG_LENGTH)) {
-				if (get_magic_quotes_gpc()) {
+				if (!get_magic_quotes_gpc()) {
 					$tag = addslashes($tag);
 				}
 				$this->safe_tag($user, $itemId, $type, $tag, $lang);
