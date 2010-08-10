@@ -34,7 +34,8 @@ class LanguageTest extends TikiTestCase {
 		TikiDb::get()->query('INSERT INTO `tiki_language` VALUES (?, ?, ?)', array('Approved Status', $this->lang, 'Aprovado'));
 		TikiDb::get()->query('INSERT INTO `tiki_language` VALUES (?, ?, ?)', array('Something', $this->lang, 'Algo'));
 		TikiDb::get()->query('INSERT INTO `tiki_language` VALUES (?, ?, ?)', array('Trying to insert malicious PHP code back to the language.php file', $this->lang, 'asff"); echo \'teste\'; $dois = array(\'\',"'));
-   }
+		TikiDb::get()->query('INSERT INTO `tiki_language` VALUES (?, ?, ?)', array('Should escape "double quotes" in the source string', $this->lang, 'Deve escapar "aspas duplas" na string original'));
+	}
 
 	protected function tearDown() {
 		if (file_exists($this->langDir . '/language.php')) {
@@ -53,6 +54,18 @@ class LanguageTest extends TikiTestCase {
 	// TODO: We need a way to create a Tiki database just for the tests
 	/*public function testGetDbTranslatedLanguages() {
 	}*/
+
+	public function testAddPhpSlashes() {
+		$string = "\n \t \r " . '\\ $ "';
+		$expectedResult = '\n \t \r \\\\ \$ \"';
+		$this->assertEquals($expectedResult, Language::addPhpSlashes($string));
+	}
+
+	public function testRemovePhpSlashes() {
+		$string = '\n \t \r \\\\ \$ \"';
+		$expectedResult = "\n \t \r " . '\\ $ "';
+		$this->assertEquals($expectedResult, Language::removePhpSlashes($string));
+	}
 
 	public function testUpdateTransShouldInsertNewTranslation() {
 		$this->obj->updateTrans('New string', 'New translation');
@@ -91,7 +104,7 @@ class LanguageTest extends TikiTestCase {
 
 	public function testWriteLanguageShouldReturnTheNumberOfNewStringsInLanguageFile() {
 		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
-		$expectedResult = array('modif' => 2, 'new' => 3);
+		$expectedResult = array('modif' => 2, 'new' => 4);
 		$return = $this->obj->writeLanguageFile();
 		$this->assertEquals($expectedResult, $return);
 	}

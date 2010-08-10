@@ -6,7 +6,12 @@
 // $Id$
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
+	header("location: index.php");
+	exit;
+}
+
+require_once('lib/core/lib/TikiDb/Bridge.php');
 
 /**
  * Handles languages translations
@@ -63,6 +68,60 @@ class Language extends TikiDb_Bridge {
 	}
 
 	/**
+	 * Translate as in "Table 7-1 Escaped characters" in the PHP manual
+	 * $string = str_replace ("\n", '\n',   $string);
+	 * $string = str_replace ("\r", '\r',   $string);
+	 * $string = str_replace ("\t", '\t',   $string);
+	 * $string = str_replace ('\\', '\\\\', $string);
+	 * $string = str_replace ('$',  '\$',   $string);
+	 * $string = str_replace ('"',  '\"',   $string);
+	 * We skip the exotic regexps for octal an hexadecimal
+	 * notation - \{0-7]{1,3} and \x[0-9A-Fa-f]{1,2} -
+	 * since they should not apper in english strings.
+	 *
+	 * @param string $string
+	 * @return string modified string;
+	 */
+	public static function addPhpSlashes($string) {
+		$addPHPslashes = array(
+			"\n" => '\n',
+			"\r" => '\r',
+			"\t" => '\t',
+			'\\' => '\\\\',
+			'$'  => '\$',
+			'"'  => '\"'
+		);
+
+		return strtr($string, $addPHPslashes);
+	}
+
+	/**
+	 * $string = str_replace ('\n',   "\n", $string); 
+	 * $string = str_replace ('\r',   "\r", $string);
+	 * $string = str_replace ('\t',   "\t", $string);
+	 * $string = str_replace ('\\\\', '\\', $string);
+	 * $string = str_replace ('\$',   '$',  $string);
+	 * $string = str_replace ('\"',   '"',  $string);
+	 * We skip the exotic regexps for octal an hexadecimal
+	 * notation - \{0-7]{1,3} and \x[0-9A-Fa-f]{1,2} - since they 
+	 * should not apper in english strings.
+	 */
+	public static function removePhpSlashes ($string) {
+		$removePHPslashes = Array ('\n'   => "\n",
+				   '\r'   => "\r",
+				   '\t'   => "\t",
+				   '\\\\' => '\\',
+				   '\$'   => '$',
+				   '\"'   => '"');
+	  
+		if (preg_match ('/\{0-7]{1,3}|\x[0-9A-Fa-f]{1,2}/', $string, $match)) {
+			trigger_error ("Octal or hexadecimal string '".$match[1]."' not supported", E_WARNING);
+		}
+
+		return strtr ($string, $removePHPslashes);
+	}
+
+	/**
 	 * Update a translation
 	 * If $originalStr is not found, a new entry is added. Otherwise, 
 	 * if $translatedStr is empty the entry is deleted or if $translatedStr is
@@ -77,14 +136,14 @@ class Language extends TikiDb_Bridge {
 		$result = $this->query($query, array($this->lang, $originalStr));
 
 		if (!$result->numRows()) {
-			$query = 'insert into `tiki_language` values(binary ?,?,binary ? )';
+			$query = 'insert into `tiki_language` values(?,?,?)';
 			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr));
 		} else {
 			if (strlen($translatedStr) == 0) {
-				$query = 'delete from `tiki_language` where `source`=binary ? and `lang`=?';
+				$query = 'delete from `tiki_language` where `source`=? and `lang`=?';
 				$result = $this->query($query, array($originalStr, $this->lang));
 			} else {
-				$query = 'update `tiki_language` set `tran`=binary ? where `source`=binary ? and `lang`=?';
+				$query = 'update `tiki_language` set `tran`=? where `source`=? and `lang`=?';
 				$result = $this->query($query,array($translatedStr,$originalStr,$this->lang));
 			}
 		}
@@ -104,15 +163,12 @@ class Language extends TikiDb_Bridge {
 		// TODO: generate an error if not possible to write to file
 		if (is_writable($filePath)) {
 			$langFile = file($filePath);
-			$dbTrans = $this->_getTranslations();
+			$dbTrans = $this->_getTranslationsEscaped();
 			$stats = array('modif' => 0, 'new' => 0);
 
 			// foreach translation in the database check each string in the language.php file
 			// if the original string is present and the translation is diferent replace it
 			foreach ($dbTrans as $dbOrig => $dbNewStr) {
-				// scape double quotes
-				$dbTrans[$dbOrig] = $dbNewStr = str_replace('"', '\"', $dbNewStr);
-
 				foreach ($langFile as $key => $line) {
 					if (preg_match('|^/?/?\s*?"(.+)"\s*=>\s*"(.+)".*|', $line, $matches) && $matches[1] == $dbOrig) {
 						if ($matches[2] != $dbNewStr) {
@@ -168,6 +224,23 @@ class Language extends TikiDb_Bridge {
 	}
 
 	/**
+	 * Return all the custom translations in the database with
+	 * special characters escaped
+	 *
+	 * @return array
+	 */
+	protected function _getTranslationsEscaped() {
+		$trans = $this->_getTranslations();
+		$escapedTrans = array();
+
+		foreach ($trans as $key => $value) {
+			$escapedTrans[$this->addPhpSlashes($key)] = $this->addPhpSlashes($value);
+		}
+
+		return $escapedTrans;
+	}
+
+	/**
 	 * Delete all the translations from the current language
 	 */
 	public function deleteTranslations() {
@@ -181,7 +254,7 @@ class Language extends TikiDb_Bridge {
 	 * @return string the content of the new custom.php file
 	 */
 	protected function createCustomFile() {
-		$strings = $this->_getTranslations();
+		$strings = $this->_getTranslationsEscaped();
 
 		$data = "<?php\n\$lang=";
 		$data .= $this->_removeSpaces(var_export($strings, true));
