@@ -292,22 +292,42 @@ if (empty($txt) && !empty($_REQUEST["data"])) {
 		$info['datatxt'] = str_replace("~~~articleclip~~~", $txtArticleClip, $info['datatxt']);
 	}
 }
+if (!empty($_REQUEST['resendEditionId'])) {
+	if (($info = $nllib->get_edition($_REQUEST['resendEditionId'])) !== false && $info['nlId'] == $_REQUEST['nlId'] && ($_REQUEST['editionId'] = $nllib->replace_edition($info['nlId'], $info['subject'], $info['data'], 0, 0, false, $info['datatxt'], $info['files'], $info['wysiwyg']))) {
+		$_REQUEST['data'] = $info['data'];
+		$_REQUEST['subject'] = $info['subject'];
+		$_REQUEST['datatxt'] = $info['datatxt'];
+		$_REQUEST['wysiwyg'] = $info['wysiwyg'];
+		$_REQUEST['dataparsed'] = $info['data'];
+		$resend = 'y';
+	} else {
+		$smarty->assign('msg', tra('Incorrect param'));
+		$smarty->display('error.tpl');
+		die;
+	}
+} else {
+	$resend = 'n';
+}
 
-if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) ) {
+if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend == 'y' ) {
 	include_once ('lib/webmail/tikimaillib.php');
 	$editionId = $_REQUEST['editionId'];
 	check_ticket('send-newsletter');
 	@set_time_limit(0);
 
-	if ( ! is_array($_SESSION["sendingUniqIds"]) )
-		$_SESSION["sendingUniqIds"] = array();
+	if ($resend != 'y') {
+		if ( ! is_array($_SESSION["sendingUniqIds"]) )
+			$_SESSION["sendingUniqIds"] = array();
 
-	if ( isset( $_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ] ) ) {
+		if ( isset( $_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ] ) ) {
 		// Avoid sending the same newsletter again if the user reload the page
-		print tra('Error: You can\'t send the same newsletter by refreshing this frame content.');
-		die;
+			print tra('Error: You can\'t send the same newsletter by refreshing this frame content.');
+			die;
+		} else {
+			$_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ] = 1;
+		}
 	} else {
-		$_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ] = 1;
+		
 	}
 
 	$mail = new TikiMail();
