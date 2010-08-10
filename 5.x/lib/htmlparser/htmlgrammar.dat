@@ -1,0 +1,1176 @@
+/*
+Описание параметров грамматики
+The grammar parameters description.
+
+endtag= "present | canabsent | absent"
+	present - закрытие тега обязательно должно присутствовать
+		- close tag must present
+
+	canabsent - закрытие тега может отсутствовать, но может и присутствовать
+		  - close tag can absent
+
+	absent  - закрытие тега всегда отсутствует
+		- close tag always absent
+
+nohavesametag 	- тэг не может содержать в себе себя самого, если внутри тэга встречается
+		он сам, то тег закрывается
+		- tag can't contains itself inside. If it has itself inside then it must
+		be closed before itself
+
+nohavetags 	- тег содержит только текст. Даже если внутри него встречаются тэги, то
+		они трактуются как текст.
+		- tag can has text only. If it has tags inside then these tags will be to interpret
+		as text.
+
+closeon = 	- "tagname|...|!tagname|..." - 	принудительное закрытие тэга при встрече открытия 
+		другого тега. можно делать перечисления множества тегов или отрицание множества
+		тегов, например closeon="a|b|i|!form" то есть закрывать тег при встрече открытия
+		тегов A,B,I и если это к тому же не тег FORM
+		- "tagname|...|!tagname|..." - rules for closing tag. |tagname|... list says
+		that tag must to be closed before first tagname if it exist inside it.
+		|!tagname|!.... list says then tag must to be closed if it has not a tagname
+		tag inside. You must combine these lists into one closeon part. For example:
+		closeon="a|b|i|!form" or closeon="a" or closeon="!form".
+
+Вы также можете добавлять свои параметры в грамматику если Вам надо использовать их в дальнейшем.
+Например, Вам надо указать какой функцией вы будете обрабатывать тег уже после парсинга
+тогда пишите, например, function="MyFunction".
+А после процесса парсинга кода, пробегая по дереву тэгов заглядываете в грамматику этого тега
+и, например, вызываете для него функцию с этим именем.
+Точно так же можно добавлять параметры в описание параметров тегов.
+
+You can add your own parameters into grammar if it needs. For example, you need walk
+through parsed grammar tree and if you meet someone tag you need process it by someone function.
+In this case you can add special parameter for this tag, for example: function="MyFunction" and
+after HTML parse process you will be walk through HTML tree and see into
+grammar when you meet tag, and if it has function field you will call function by name in this field for this tag.
+Using the same method you can add own parameter fields on tag parameters into grammar.
+
+I used this grammar in my HTML tag visualizer and you can see my additional parameter
+"editmethod" for this with function names which I called in my visualizer.
+you can see my additional parameter "pictureforedit" too. It needs for the pictogram for each tag.
+I used so "width" and "height" additional parameters for visualize fields of tag with certain
+width and height.
+
+BUT THESE ADDITIONAL PARAMETERS NOT NEEDS FOR HTML PARSER! IT WILL NEED AFTER ONLY! FOR
+MY SPECIAL NEEDS.
+
+Прекомпиленая грамматика имеет следующую структуру:
+structure of precompiled grammar is:
+
+array(
+ "tagname"=>array(
+	"internal parameter name"=>value,
+        .....
+        "pars"=>array(
+		"parname"=>array(
+				"parparameter name"=>value,
+				.....
+				),
+                .....
+ 		)
+        )
+ ....
+)
+например, у вас в отпарсеном дереве есть тег <a ...>. Его полный набор параметров 
+в прекомпиленой грамматике $grammar можно посмотреть следующим образом
+
+For example, if you have tag A into parsed tree, then you can see the
+grammar for A tag as
+
+PrintArray($grammar["a"])
+
+а только набор параметров тега, например так
+
+and parameters only for tag A as
+
+PrintArray($grammar["a"]["pars"])
+*/
+
+<tag="pre"
+  endtag="present"
+  nohavetags
+>
+<tag="hr"
+  endtag="absent"
+  [ par="color" ]
+  [ par="width" ]
+  [ par="noshade" single editmethod="_Translator_edit_standart_single_control"]
+>
+
+<tag="noframes"
+  endtag="present"
+>
+
+<tag="frameset"
+  endtag="canabsent"
+  pictureforedit="tags/tag.gif"
+  [ par=rows ]
+  [ par=cols ]
+  [ par=frameborder ]
+  [ par=border ]
+  [ par=framespacing ]
+  [ par=marginheight ]
+  [ par=marginwidth ]
+  [ par=noresize ]
+>
+
+<tag="frame"
+  endtag="absent"
+  pictureforedit="tags/tag_frame2.gif"
+  [ par=name ]
+  [ par=target ]
+  [ par=scrolling ]
+  [ par=border ]
+  [ par=frameborder ]
+  [ par=framespacing ]
+  [ par=marginheight ]
+  [ par=marginwidth ]
+  [ par=noresize ]
+  [ par=src width="40" height="3" ]
+>
+
+<tag="iframe"
+  pictureforedit="tags/tag_iframe2.gif"
+>
+
+<tag="html"
+  endtag="present"
+  edittagsafter="body"
+  comment="Html"
+  pictureforedit="tags/tag.gif"
+>
+
+<tag="meta"
+  endtag="absent"
+  edittagsafter="body"
+>
+
+<tag="script"
+  nohavetags
+  endtag="present"
+  pictureforedit="tags/tag_script.gif"
+  edittagsbefore="script"
+  [ par="language" ]
+  [ par="src" width="40" height="3" ]
+>
+
+<tag="nobr"
+  closeon="!strong|!sup|!center|!font|!i|!b|!u|!tt|!s|!big|!small|!strike|!br|!script"
+  endtag="present"
+>
+
+<tag="p"
+closeon="!a|!map|!area|!strong|!sup|!font|!i|!b|!u|!tt|!img|!s|!big|!small|!strike|!nobr|!br|!script|!input|!select|!textarea|!option|!button"
+  endtag="canabsent"
+  pictureforedit="tags/tag_p2.gif"
+  [ par="align" editmethod="_Translator_edit_p_align"]
+>
+
+<tag="th"
+  endtag="absent"
+  [ par="align" editmethod="_Translator_edit_th_align"]
+>
+
+<tag="noscript"
+  endtag="present"
+>
+
+<tag="style"
+  nohavetags
+  endtag="present"
+>
+
+<tag="head"
+  endtag="present"
+  edittagsafter="body"
+>
+
+<tag="center"
+  endtag="present"
+  comment="Center"
+  pictureforedit="tags/tag.gif"
+>
+
+<tag="img"
+  endtag="absent"
+  comment="Picture"
+  pictureforedit="tags/tag_img.gif"
+  [ par="src" width="40" height="3" ]
+
+  [ par="alt" ]
+  [ par="width"]
+  [ par="height"]
+  [ par="border"]
+  [ par="name"]
+  [ par="align" editmethod="_Translator_edit_img_align"]
+  [ par="vspace" ]
+  [ par="hspace" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmouseover" ]
+  [ par="onmouseout" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="usemap" editmethod="_Translator_edit_standart_usemap"]
+>
+<tag="a"
+  nohavesametag 
+  endtag="present" 
+  edittagsbefore="a"
+  comment="Url"
+  pictureforedit="tags/tag_a.gif"
+  closeon="!strong|!sup|!center|!font|!i|!b|!u|!tt|!img|!s|!big|!small|!strike|!nobr|!br|!script|!li|!ol|!ul"
+  [ par="href" width="40" height="3" ]
+  [ par="name" ]
+  [ par="hreflang" ]
+  [ par="rel" ]
+  [ par="rev" ]
+
+  [ par="id"] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="accesskey" ]
+  [ par="shape" ]
+  [ par="onfocus" ]
+  [ par="onblur" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+  [ par="tabindex" ]
+  [ par="target"]
+>
+
+<tag="ul"
+  endtag="present"
+  comment="Unsequence list"
+  pictureforedit="tags/tag.gif"
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!br|!nobr|!script|!li|!ol|table|tr|td"
+
+  [ par="id" ]
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir"]
+  [ par="title" ]
+  [ par="style" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypressed" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+  [ par="type" ]
+>
+
+<tag="li"
+  endtag="present"
+  comment="List element"
+  pictureforedit="tags/tag.gif"
+  nohavesametag
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!br|!nobr|!script|!ol|!ul"
+
+  [ par="value" ]
+  [ par="id" ]
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypressed" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+  [ par="type" ]
+>
+
+<tag="ol"
+  endtag="present"
+  comment="Sequence list"
+  pictureforedit="tags/tag.gif"
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!br|!nobr|!script|!ol|!ul"
+  nohavesametag
+
+  [ par="start" ]
+  [ par="id" ]
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypressed" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+  [ par="type" ]
+>
+
+<tag="title"
+  endtag="present"
+  comment="Page header"
+  pictureforedit="tags/tag.gif"
+>
+
+<tag="textarea"
+  nohavetags
+  endtag="present"
+  comment="Textarea"
+  pictureforedit="tags/tag_textarea.gif"
+
+  [ par="disabled" single editmethod="_Translator_edit_standart_single_control"]
+  [ par="name" ]
+  [ par="rows" ]
+  [ par="cols" ]
+  [ par="accesskey" ]
+  [ par="wrap" ]
+
+  [ par="id" ]
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+
+  [ par="onfocus" ]
+  [ par="onblur" ]
+  [ par="onselect" ]
+  [ par="onchange" ]
+
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypressed" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="tr"
+  endtag="present"
+  comment="Table row"
+  pictureforedit="tags/tag_tr.gif"
+  edittagsafter="td"
+
+  [ par="align" editmethod="_Translator_edit_td_align"]
+  [ par="valign" editmethod="_Translator_edit_td_valign"]
+
+  [ par="id" ]
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+  [ par="bgcolor" ]
+  [ par="background" ]
+
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypressed" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="td"
+  endtag="present"
+  comment="Table cell"
+  pictureforedit="tags/tag_td.gif"
+  edittagsafter="td"
+
+  [ par="colspan" ]
+  [ par="rowspan" ]
+  [ par="width" ]
+  [ par="height" ]
+  [ par="bgcolor"  ]
+  [ par="background" ]
+  [ par="align"  editmethod="_Translator_edit_td_align" ]
+  [ par="valign" editmethod="_Translator_edit_td_valign" ]
+
+  [ par="id" ]
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypressed" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+  [ par="nowrap" single editmethod="_Translator_edit_standart_single_control" ]
+>
+
+<tag="table" 
+  endtag="present"
+  comment="Table"
+  pictureforedit="tags/tag_table.gif"
+
+  [ par="width" ]
+  [ par="height" ]
+  [ par="bgcolor" ]
+  [ par="background" ]
+  [ par="cellspacing" ]
+  [ par="cellpadding" ]
+  [ par="border" ]
+  [ par="bordercolor" ]
+  [ par="summary" ]
+  [ par="align" editmethod="_Translator_edit_table_align" ]
+
+  [ par="id" ]
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypressed" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="area" endtag="absent"
+  pictureforedit="tags/tag.gif"
+  comment="Map region"
+ 
+  [ par="href" width="40" height="3" ]
+  [ par="shape" editmethod="_Translator_edit_standart_shape" ] 
+  [ par="coords" ]
+  [ par="usemap" ]
+  [ par="alt" ]
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="accesskey" ]
+  [ par="onfocus" ]
+  [ par="onblur" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+  [ par="tabindex" ]
+>
+
+<tag="span"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="Span"
+  [ par="id" ] 
+  [ par="class"]
+  [ par="lang" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="b"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag_b2.gif"
+  comment="B"
+  [ par="id" ] 
+  [ par="class"]
+  [ par="lang" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="tt"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="TT"
+  [ par="id"] 
+  [ par="class" ]
+  [ par="lang"  ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="i"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag_i2.gif"
+  comment="I"
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang"  ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="big"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="Big"
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="small"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="Small"
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang"  ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="strike"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="Strike"
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="s"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="S"
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang"  ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="u"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag_u2.gif"
+  comment="U"
+  [ par="id"] 
+  [ par="class" ]
+  [ par="lang"  ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="map"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="Map"
+  closeon="!area"
+ [ par="name" ]
+>
+
+<tag="br"
+  edit="0"
+  endtag="absent"
+  [ par="clear" ]
+  [ par="id" ]
+  [ par="title" ]
+  [ par="class" ]
+  [ par="style" ]
+>
+<tag="base"
+  endtag="absent"
+  pictureforedit="tags/tag.gif"
+  comment="Base"
+  [ par="href" width="40" height="3" ]
+  [ par="target" ]
+>
+
+<tag="basefont"
+  endtag="absent" 
+  pictureforedit="tags/tag.gif"
+  comment="Basefont"
+  [ par="id" ]
+  [ par="size" ]
+  [ par="color" ]
+  [ par="face" ]
+  [ par="class" ]
+  [ par="title" ]
+  [ par="style" ]
+>
+
+<tag="body"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag_body.gif"
+  edittagsafter="body"
+  comment="Page body"
+
+  [ par="background" ]
+  [ par="text" ]
+  [ par="link" ]
+  [ par="vlink" ]
+  [ par="alink" ]
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="bgcolor" ]
+  [ par="style" ]
+  [ par="title" ]  
+  [ par="lang" ]
+  [ par="style" ]
+  [ par="topmargin"]
+  [ par="leftmargin"]
+  [ par="marginwidth"]
+  [ par="marginheight"]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+  [ par="onload" ]
+  [ par="onunload" ]
+>
+
+<tag="button"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag_button.gif"
+  comment="Button"
+  closeon="!center|!font|!i|!b|!u|!tt|!a|!img|!s|!big|!small|!strike|!nobr|!br|!script"
+
+  [ par="name" ]
+  [ par="value" ]
+  [ par="type" ]
+  [ par="disabled" single editmethod="_Translator_edit_standart_single_control"]
+  [ par="accesskey" ]
+  [ par="usemap" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+  [ par="onfocus" ]
+  [ par="onblur" ]
+>
+
+<tag="div"
+  endtag="present"
+  pictureforedit="tags/tag_div.gif"
+  comment="Division"
+  
+  [ par="id" ] 
+  [ par="name" ] 
+  [ par="class" ]
+  [ par="align" editmethod="_Translator_edit_div_align"]
+  [ par="lang" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="span" 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="span"
+  
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="font"
+  endtag="present"
+  pictureforedit="tags/tag_font2.gif"
+  comment="Font"
+  closeon="!i|!b|!u|!tt|!a|!img|!s|!big|!small|!strike|!nobr|!br|!script"
+
+  [ par="id" ]
+  [ par="size" ]
+  [ par="color" ]
+  [ par="face" ]
+  [ par="class" ]
+  [ par="title" ]
+  [ par="style" ]
+  [ par="lang" ]
+  [ par="dir" ]
+>
+
+<tag="form"
+  endtag="present"
+  pictureforedit="tags/tag_form.gif"
+  comment="Form"
+
+  [ par="action" width="40" height="3"]
+  [ par="method" ]
+  [ par="enctype" ]
+  [ par="accept-charset" ]
+  [ par="accept" ]
+ 
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="style" ]
+  [ par="title" ]
+  [ par="target" ]
+  [ par="onsubmit" ]
+  [ par="onreset" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="h1"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="hl"
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!nobr|!br|!script"
+  [ par="id" ] 
+  [ par="class"]
+  [ par="lang"]
+  [ par="dir"]
+  [ par="style"]
+  [ par="title"]
+  [ par="align"]
+  [ par="onclick"]
+  [ par="ondblclick"]
+  [ par="onmousedown"]
+  [ par="onmouseup"]
+  [ par="onmouseover"]
+  [ par="onmousemove"]
+  [ par="onmouseout"]
+  [ par="onkeypress"]
+  [ par="onkeydown"]
+  [ par="onkeyup"]
+>
+<tag="h2"
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!nobr|!br|!script"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="h2"
+  [ par="id" ] 
+  [ par="class"]
+  [ par="lang"]
+  [ par="dir"]
+  [ par="style"]
+  [ par="title"]
+  [ par="align"]
+  [ par="onclick"]
+  [ par="ondblclick"]
+  [ par="onmousedown"]
+  [ par="onmouseup"]
+  [ par="onmouseover"]
+  [ par="onmousemove"]
+  [ par="onmouseout"]
+  [ par="onkeypress"]
+  [ par="onkeydown"]
+  [ par="onkeyup"]
+>
+<tag="h3"
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!nobr|!br|!script"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="h3"
+  [ par="id" ] 
+  [ par="class"]
+  [ par="lang"]
+  [ par="dir"]
+  [ par="style"]
+  [ par="title"]
+  [ par="align"]
+  [ par="onclick"]
+  [ par="ondblclick"]
+  [ par="onmousedown"]
+  [ par="onmouseup"]
+  [ par="onmouseover"]
+  [ par="onmousemove"]
+  [ par="onmouseout"]
+  [ par="onkeypress"]
+  [ par="onkeydown"]
+  [ par="onkeyup"]
+>
+<tag="h4"
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!nobr|!br|!script"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="h4"
+  [ par="id" ] 
+  [ par="class"]
+  [ par="lang"]
+  [ par="dir"]
+  [ par="style"]
+  [ par="title"]
+  [ par="align"]
+  [ par="onclick"]
+  [ par="ondblclick"]
+  [ par="onmousedown"]
+  [ par="onmouseup"]
+  [ par="onmouseover"]
+  [ par="onmousemove"]
+  [ par="onmouseout"]
+  [ par="onkeypress"]
+  [ par="onkeydown"]
+  [ par="onkeyup"]
+>
+<tag="h5"
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!nobr|!br|!script"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="h5"
+  [ par="id" ] 
+  [ par="class"]
+  [ par="lang"]
+  [ par="dir"]
+  [ par="style"]
+  [ par="title"]
+  [ par="align"]
+  [ par="onclick"]
+  [ par="ondblclick"]
+  [ par="onmousedown"]
+  [ par="onmouseup"]
+  [ par="onmouseover"]
+  [ par="onmousemove"]
+  [ par="onmouseout"]
+  [ par="onkeypress"]
+  [ par="onkeydown"]
+  [ par="onkeyup"]
+>
+<tag="h6"
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!nobr|!br|!script"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="h6"
+  [ par="id" ] 
+  [ par="class"]
+  [ par="lang"]
+  [ par="dir"]
+  [ par="style"]
+  [ par="title"]
+  [ par="align"]
+  [ par="onclick"]
+  [ par="ondblclick"]
+  [ par="onmousedown"]
+  [ par="onmouseup"]
+  [ par="onmouseover"]
+  [ par="onmousemove"]
+  [ par="onmouseout"]
+  [ par="onkeypress"]
+  [ par="onkeydown"]
+  [ par="onkeyup"]
+>
+
+<tag="input"
+  endtag="absent"
+  pictureforedit="tags/tag_input.gif"
+  comment="Form input element"
+
+  [ par="type" editmethod="_Translator_edit_input_type" ]
+  [ par="name" ]
+  [ par="value" ]
+  [ par="checked" single editmethod="_Translator_edit_standart_single_control" ]
+  [ par="disabled" single editmethod="_Translator_edit_standart_single_control" ]
+  [ par="readonly" single editmethod="_Translator_edit_standart_single_control" ]
+  [ par="size" ]
+  [ par="maxlength" ]
+  [ par="src" width="40" height="3" ]
+  [ par="width"]
+  [ par="height"]
+  [ par="alt" ]
+  [ par="border"]
+  [ par="tabindex"]
+  [ par="accesskey"]
+  [ par="onfocus" ]
+  [ par="onblur" ]
+  [ par="onselect"]
+  [ par="onchange"]
+  [ par="accept" ]
+
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+  [ par="align" ]
+  [ par="shape" ]
+  [ par="onfocus" ]
+  [ par="onblur" ]
+  [ par="onclick" ]
+  [ par="onselect" ]
+  [ par="onchange" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="label"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="Label"
+
+  [ par="for" ]
+  [ par="accesskey" ]
+  [ par="onfocus" ]
+  [ par="onblur" ]
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="select"
+  nohavesametag 
+  endtag="present"
+  edittagsbefore="select"
+  pictureforedit="tags/tag_select.gif"
+  comment="Select"
+  closeon="!option"
+
+  [ par="disabled" single editmethod="_Translator_edit_standart_single_control" ]
+  [ par="multiple" single editmethod="_Translator_edit_standart_single_control" ]
+  [ par="name" ]
+  [ par="size" ]
+  [ par="width" ]
+  [ par="accesskey" ]
+  [ par="onfocus" ]
+  [ par="onblur" ]
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+>
+
+<tag="option"
+  closeon="!strong|!sup|!font|!i|!b|!u|!tt|!a|!s|!big|!small|!strike|!br|!nobr|!script|option"
+  nohavesametag 
+  endtag="present"
+  pictureforedit="tags/tag.gif"
+  comment="Option"
+
+  [ par="name" ]
+  [ par="value" ]
+  [ par="accesskey" ]
+  [ par="id" ] 
+  [ par="class" ]
+  [ par="lang" ]
+  [ par="dir" ]
+  [ par="title" ]
+  [ par="style" ]
+  [ par="onclick" ]
+  [ par="ondblclick" ]
+  [ par="onmousedown" ]
+  [ par="onmouseup" ]
+  [ par="onmouseover" ]
+  [ par="onmousemove" ]
+  [ par="onmouseout" ]
+  [ par="onkeypress" ]
+  [ par="onkeydown" ]
+  [ par="onkeyup" ]
+  [ par="selected" single editmethod="_Translator_edit_standart_single_control"]
+>
+
+<tag="link"
+  endtag="absent"
+  pictureforedit="tags/tag_link.gif"
+  [ par=rel ]
+  [ par=rev ]
+  [ par=href ]
+  [ par=target ]
+  [ par=media ]
+  [ par=hreflang ]
+  [ par=charset ]
+  [ par=title ]
+  [ par=dir ]
+  [ par=lang ]
+  [ par=style ]
+  [ par=id ]
+  [ par=class ]
+>
