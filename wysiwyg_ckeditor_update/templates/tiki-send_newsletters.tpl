@@ -332,7 +332,7 @@
 	{/tabset}
 {/if}
 
-{jq}
+{jq notonready=true}
 {{if $allowTxt eq 'n'}
 document.getElementById('txtcol1').style.display='none';
 document.getElementById('txtcol2').style.display='none';
