@@ -31,6 +31,14 @@ function smarty_function_toolbars($params, &$smarty)
 		$comments = false;
 	}
 	
+	// some non-converted <textareas> expect $rows and $cols set in smarty (transitional for 6)
+	if (!isset($smarty->_tpl_vars['rows'])) {
+		$smarty->assign('rows', 20);
+	}
+	if (!isset($smarty->_tpl_vars['cols'])) {
+		$smarty->assign('cols', 80);
+	}
+	
 	// some tool filters to help roll out textarea & toolbars to more sections quickly (for 4.0)
 
 	$hidden = array();
