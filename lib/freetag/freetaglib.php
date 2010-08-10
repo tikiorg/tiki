@@ -71,7 +71,7 @@ class FreetagLib extends ObjectLib
 	 * @access private
 	 * @param int The maximum length of a tag.
 	 */
-	var $_MAX_TAG_LENGTH = 50;
+	var $_MAX_TAG_LENGTH = 30;
 	/**
 	 * @access public
 	 * @param int The number of size degrees for tags in cloud. There should be correspondent classes in css.
