@@ -94,6 +94,9 @@ class Language extends TikiDb_Bridge {
 	 * Write the new translated strings to the actual
 	 * language.php file and remove the translations
 	 * from the database
+	 *
+	 * @return array number of modified strings (key 'modif') and new 
+	 * strings (key 'new') or null if not possible to write to file
 	 */
 	public function writeLanguageFile() {
 		$filePath = "lang/{$this->lang}/language.php";
@@ -102,6 +105,7 @@ class Language extends TikiDb_Bridge {
 		if (is_writable($filePath)) {
 			$langFile = file($filePath);
 			$dbTrans = $this->_getTranslations();
+			$stats = array('modif' => 0, 'new' => 0);
 
 			// foreach translation in the database check each string in the language.php file
 			// if the original string is present and the translation is diferent replace it
@@ -113,6 +117,11 @@ class Language extends TikiDb_Bridge {
 					if (preg_match('|^/?/?\s*?"(.+)"\s*=>\s*"(.+)".*|', $line, $matches) && $matches[1] == $dbOrig) {
 						if ($matches[2] != $dbNewStr) {
 							$langFile[$key] = '"' . $matches[1] . '" => "' . $dbNewStr . "\",\n";
+							if (strpos($line, '//') === 0) {
+								$stats['new']++;
+							} else {
+								$stats['modif']++;
+							}
 						}
 						unset($dbTrans[$dbOrig]);
 					}
@@ -124,6 +133,7 @@ class Language extends TikiDb_Bridge {
 			$newTrans = array();
 			foreach ($dbTrans as $orig => $trans) {
 				$newTrans[] = '"' . $orig . '" => "' . $trans . "\",\n";
+				$stats['new']++;
 			}
 
 			// add new strings to the language.php
@@ -139,6 +149,8 @@ class Language extends TikiDb_Bridge {
 
 			fclose($f);
 			$this->deleteTranslations();
+
+			return $stats;
 		}
 	}
 

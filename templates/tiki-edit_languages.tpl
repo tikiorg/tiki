@@ -115,6 +115,11 @@
 		{/tab}
 
 		{tab name='{tr}Export languages{/tr}'}
+			{if isset($expmsg)}
+			    {remarksbox type="note" title="{tr}Note:{/tr}"}
+					{$expmsg}
+				{/remarksbox}
+			{/if}
 			{if (empty($db_languages))}
 			    {remarksbox type="note" title="{tr}Note:{/tr}"}
 					{tr}No translations in the database. First import a language, translate strings using interactive translation or enable "Record untranslated strings" in Admin -> i18n.{/tr}
@@ -137,15 +142,17 @@
 						{tr}If you click "Write to language.php", the translations in the database will be merged with the other translations in language.php. Note that after writing translations to language.php they are removed from the database.{/tr}
 					{/if}
 				{/remarksbox}
+				{if !$langIsWritable}
+					{remarksbox type="note" title="{tr}Note:{/tr}"}
+						{tr}To be able to write your translations back to language.php make sure that the web server has write permission in the lang/ directory.{/tr}
+					{/remarksbox}
+				{/if}
 				<div class="adminoptionbox">
 					<input type="submit" name="downloadFile" value="{tr}Download database translations{/tr}" />
 					{if $tiki_p_admin eq 'y' and $langIsWritable}
 						<input type="submit" name="exportToLanguage" value="{tr}Write to language.php{/tr}" />
 					{/if}
 				</div>
-				{if isset($expmsg)}
-					{$expmsg}
-				{/if}
 			{/if}
 		{/tab}
 		
