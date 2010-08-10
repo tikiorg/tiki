@@ -7780,7 +7780,6 @@ $lang=Array(
 "For you to vote, cookies must be allowed" => "Les cookies doivent être autorisés pour pouvoir voter",
 "This poll is closed." => "Ce sondage est fermé.",
 "Advanced" => "Avancé",
-"_HOMEPAGE_CONTENT_" => "\n!Félicitations !\nCeci est la \"page d'accueil\" de votre Tiki. Si vous voyez cette page, votre installation est un succès.\n\nVous pouvez changer cette page après vous être authentifié. Veuillez consulter la [http://doc.tikiwiki.org/wiki+syntax|syntaxe wiki] pour les détails relatifs à l'édition.\n\n\n!!{img src=pics/icons/star.png alt=\"Démarrage\"} Mise en route.\nPour commencer la configuration de votre site:\n{FANCYLIST()}\n1) Connectez-vous en tant que __admin__ avec le mot de passe __admin__.\n2) Changez le mot de passe de l'utilisateur admin.\n3) Activez des fonctionnalités spécifiques de Tiki.\n4) Configurez les fonctionnalités.\n{FANCYLIST}\n\n!!{img src=pics/icons/help.png alt=\"Aide\"} Besoin d'aide ?\nPour plus d'informations:\n*[http://info.tikiwiki.org/Learn+More|Apprenez plus au sujet de TikiWiki].\n*[http://info.tikiwiki.org/Help+Others|Obtenez de l'aide], incluant la [http://doc.tikiwiki.org|documentation officielle] et [http://www.tikiwiki.org/forums|forums de support].\n*[http://info.tikiwiki.org/Join+the+community|Rejoignez la communauté TikiWiki].\n",
 "Link" => "Lien",
 "Click for Help" => "Aide",
 "Help" => "Aide",
