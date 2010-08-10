@@ -253,7 +253,7 @@ class Language extends TikiDb_Bridge {
 	 *
 	 * @return string the content of the new custom.php file
 	 */
-	protected function createCustomFile() {
+	public function createCustomFile() {
 		$strings = $this->_getTranslationsEscaped();
 
 		$data = "<?php\n\$lang=";
