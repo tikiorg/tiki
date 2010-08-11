@@ -70,7 +70,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
 
-		if (empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') {
+		if ((empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') && (!isset($_REQUEST['mode_wysiwyg']) || $_REQUEST['mode_wysiwyg'] !== 'y')) {
 			if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?
 				$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $auto_save_referrer));
 				
