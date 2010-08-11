@@ -49,7 +49,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_html_select_date($params, &$smarty)
 {
-	global $tikilib;
+	global $tikilib; // TIKI
 	require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
     require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
     require_once $smarty->_get_plugin_filepath('function','html_options');
@@ -154,7 +154,7 @@ function smarty_function_html_select_date($params, &$smarty)
     if (preg_match('/^(\d{0,4}-\d{0,2}-\d{0,2})/', $time, $found)) {
         $time = $found[1];
     } else {
-        // use tikilib make_time to get an unix timestamp and
+        // TIKI: use tikilib make_time to get an unix timestamp and
         // strftime to make yyyy-mm-dd
         $time = strftime('%Y-%m-%d', $tikilib->make_time(0,0,0, $tikilib->date_format('%m'), $tikilib->date_format('%d'), $tikilib->date_format('%Y')));
     }
@@ -201,7 +201,9 @@ function smarty_function_html_select_date($params, &$smarty)
             $month_values[''] = '';
         }
         for ($i = 1; $i <= 12; $i++) {
-            $month_names[$i] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2000));
+			// TIKI: translation
+			//tra('January') tra('February') tra('March') tra('April') tra('May') tra('June') tra('July') tra('August') tra('September') tra('October') tra('November') tra('December')
+            $month_names[$i] = ucfirst(tra(strftime($month_format, mktime(0, 0, 0, $i, 1, 2000))));
             $month_values[$i] = strftime($month_value_format, mktime(0, 0, 0, $i, 1, 2000));
         }
 
