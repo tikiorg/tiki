@@ -1093,6 +1093,8 @@ class ToolbarHelptool extends Toolbar
 
 class ToolbarFileGallery extends Toolbar
 {
+	private $name;
+	
 	function __construct() // {{{
 	{
 		$this->setLabel( tra('Choose or upload images') )
@@ -1101,16 +1103,51 @@ class ToolbarFileGallery extends Toolbar
 					->setType('FileGallery')
 						->addRequiredPreference('feature_filegals_manager');
 	} // }}}
+	
+	function getSyntax( $areaId ) {
+		global $smarty;
+		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
+		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\');';
+	}
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		global $smarty;
-		
-		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
-		return $this->getSelfLink('openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\');',
-							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-filegal');
+		return $this->getSelfLink($this->getSyntax( $areaId ), htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-filegal');
 	} // }}}
 
+	function getWysiwygToken( $areaId ) // {{{
+	{
+		if (!empty($this->wysiwyg)) {
+			$this->name = $this->wysiwyg;	// temp
+			$exec_js = str_replace('&amp;', '&', $this->getSyntax( $areaId ));	// odd?
+			
+			global $headerlib;
+			$headerlib->add_jq_onready(<<< JS
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+CKEDITOR.plugins.add( '{$this->name}', {
+	init : function( editor ) {
+		var command = editor.addCommand( '{$this->name}', new CKEDITOR.command( editor , {
+			modes: { wysiwyg:1 },
+			exec: function(elem, editor, data) {
+				{$exec_js}
+			},
+			canUndo: false
+		}));
+		editor.ui.addButton( '{$this->name}', {
+			label : '{$this->label}',
+			command : '{$this->name}',
+			icon: editor.config._TikiRoot + '{$this->icon}'
+		});
+
+	}
+});
+JS
+, 10);		
+			
+		}
+		return $this->wysiwyg;
+	} // }}}
+	
 	function isAccessible() // {{{
 	{
 		return parent::isAccessible() && ! isset($_REQUEST['zoom']);

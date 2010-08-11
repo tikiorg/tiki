@@ -448,11 +448,30 @@ function getCaretPos (textarea) {
 }
 
 function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelection) {
+	
 	// inserts given text at selection or cursor position
 	$textarea = $('#' + elementId);
 	var toBeReplaced = /text|page|area_id/g; //substrings in replaceString to be replaced by the selection if a selection was done
 	var hiddenParents = $textarea.parents('fieldset:hidden:last');
 	if (hiddenParents.length) { hiddenParents.show(); }
+
+	// get ckeditor handling out of the way - can only be simple text insert for now
+	if ($('#cke_contents_' + elementId).length !== 0) {
+		// get selection from ckeditor
+		cked = CKEDITOR.instances[elementId];
+		if (cked) {
+			var sel = cked.getSelection();
+			if (sel.getType() === CKEDITOR.SELECTION_TEXT) { // why so fiddly?
+				r = sel.getRanges();
+				if (r.length && !r[0].collapsed) { // selected over more than on element - wa?  && r.startContainer == r.endContainer
+					var t = r[0].startContainer.$.textContent;
+					//return t.substring(r[0].startOffset, r[0].endOffset);
+				}
+				cked.insertText( replaceString );
+			}
+		}
+		return;
+	}
 
 	$textarea[0].focus();
 	var val = $textarea.val();

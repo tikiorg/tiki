@@ -189,7 +189,7 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 });
 ', 20);	// after dialog tools init (10)
 
-			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden; width: '.$params['width'].'; height: '.$params['height'].';">'.htmlspecialchars($content).'</textarea>';
+			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;" rows="'.$params['rows'].'"; cols="'.$params['cols'].'">'.htmlspecialchars($content).'</textarea>';
 			
 			$headerlib->add_js('
 var fckEditorInstances = new Array();
