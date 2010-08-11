@@ -1024,8 +1024,6 @@ CKEDITOR.plugins.add( '{$this->name}', {
 JS
 , 10);		
 			
-			$this->getWikiHtml( $areaId );		// TODO refactor, this just does the headerlib->add_js
-			$wikilink = $this->getSyntax( $areaId );
 		}
 		return $this->wysiwyg;
 	} // }}}
@@ -1121,6 +1119,7 @@ class ToolbarFileGallery extends Toolbar
 
 class ToolbarSwitchEditor extends Toolbar
 {
+	private $name;
 	function __construct() // {{{
 	{
 		$this->setLabel( tra('Switch Editor (wiki or WYSIWYG)') )
@@ -1138,6 +1137,38 @@ class ToolbarSwitchEditor extends Toolbar
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-switcheditor');
 	} // }}}
 
+	function getWysiwygToken( $areaId ) // {{{
+	{
+		if (!empty($this->wysiwyg)) {
+			$this->name = $this->wysiwyg;	// temp
+			
+			global $headerlib;
+			$headerlib->add_jq_onready(<<< JS
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+CKEDITOR.plugins.add( '{$this->name}', {
+	init : function( editor ) {
+		var command = editor.addCommand( '{$this->name}', new CKEDITOR.command( editor , {
+			modes: { wysiwyg:1 },
+			exec: function(elem, editor, data) {
+				switchEditor('wiki', $('#$areaId').parents('form')[0]);
+			},
+			canUndo: false
+		}));
+		editor.ui.addButton( '{$this->name}', {
+			label : '{$this->label}',
+			command : '{$this->name}',
+			icon: editor.config._TikiRoot + '{$this->icon}'
+		});
+
+	}
+});
+JS
+, 10);		
+			
+		}
+		return $this->wysiwyg;
+	} // }}}
+	
 	function isAccessible() // {{{
 	{
 		return parent::isAccessible() && ! isset($_REQUEST['zoom']) && ! isset($_REQUEST['hdr']);	// no switch editor if zoom of section edit
