@@ -31,6 +31,8 @@ function smarty_modifier_duration($string, $long=true)
 	foreach ($values as $i=>$value) {
 		if ($string >= $value) {
 			$nb = floor($string / $value);
+			// add a zero before seconds or minutes with just one digit if $long == false
+			$nb = (!$long && !empty($result) && ($i == 5 || $i == 6) && strlen($nb) == 1) ? 0 . $nb : $nb;
 			$s = ($nb > 1)?$ouputs[$i]: $output[$i];
 			$s = $long? " $s": substr($s, 0, 1);
 			$string = $string % $value;
