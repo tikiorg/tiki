@@ -19,7 +19,7 @@
 	 {if $numrows ne $prefs.maxRecords and $numrows}<input type="hidden" name="numrows" value="{$numrows|escape}" />{/if}
 	<table class="normal">
 		<tr>
-			<td class="formcolor"><label for="event">{tr}Event{/tr}:</label></td>
+			<td class="formcolor"><label for="event">{tr}Event:{/tr}</label></td>
 			<td class="formcolor">
 				<select id="event" name="event">
 					{foreach from=$watches key=key item=watch}
@@ -96,7 +96,7 @@
 					{else}
 						{icon _id='user'}
 					{/if}
-					{$channels[user].user}
+					{$channels[user].user|escape}
 				</td>
 				<td><a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
 			</tr>
