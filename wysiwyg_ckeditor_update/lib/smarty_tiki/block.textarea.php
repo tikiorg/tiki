@@ -172,9 +172,14 @@ function FCKeditor_OnComplete( editorInstance ) {
 			global $tikiroot;
 			$headerlib->add_jq_onready('
 CKEDITOR.config._TikiRoot = "'.$tikiroot.'";
-//CKEDITOR.plugins.addExternal( "tikilink", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikilink/");
-//CKEDITOR.config.extraPlugins = (CKEDITOR.config.extraPlugins ? ",tikilink" : "tikilink" );
+');	// before all
+		
+		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+			$headerlib->add_jq_onready('
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
+CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");
 ', 5);	// before dialog tools init (10)
+		}
 			$headerlib->add_jq_onready('
 $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	toolbar_Tiki: '.$cktools.',
