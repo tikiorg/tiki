@@ -35,6 +35,7 @@ if (isset($_REQUEST['editor_id']) && isset($_REQUEST['data'])) {
 	if (!empty($user)) {
 		$headerlib->add_js('
 function get_new_preview() {
+	$("body").css("opacity", 0.6);
 	location.replace("' . $tikiroot . 'tiki-auto_save.php?editor_id=' . $_REQUEST['editor_id'] . '&autoSaveId=' . $_REQUEST['autoSaveId'] . '");
 }
 $(window).load(function(){
