@@ -145,14 +145,6 @@ function FCKeditor_OnComplete( editorInstance ) {
 //				$cked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
 //				$cked->Config['autoSaveEditorId'] = $as_id;
 //			}
-//			if (isset($params['ToolbarSet'])) {
-//				$cked->ToolbarSet = $params['ToolbarSet'];
-//			} else {
-//				$cked->ToolbarSet = 'Tiki';
-//			}
-//			$headerlib->add_jq_onready(<<< JS
-//JS
-//);
 			include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
 			$cktools = smarty_function_toolbars($params, $smarty);
 			$cktools = json_encode($cktools);
