@@ -1,2 +1,1 @@
-{* -*- coding:utf-8 -*- *}
-{tr}User Account Activated{/tr}
+{* -*- coding:utf-8 -*- *}{tr}User Account Activated{/tr}

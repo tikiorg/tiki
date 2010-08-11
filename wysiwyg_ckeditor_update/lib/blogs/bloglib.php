@@ -535,9 +535,9 @@ class BlogLib extends TikiDb_Bridge
 	 * @return void
 	 */
 	function list_blog_post_comments($approved = 'y', $maxRecords = -1, $ref='') {
-		global $user, $tikilib;
+		global $user, $tikilib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post;
 
-		$query = "SELECT b.`title`, b.`postId`, c.`threadId`, c.`title` as commentTitle, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b WHERE `objectType`='post' AND b.`postId`=c.`object`";
+		$query = "SELECT b.`title`, b.`postId`, b.`priv`, blog.`user`, blog.`public`, c.`threadId`, c.`title` as commentTitle, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b, `tiki_blogs` blog WHERE `objectType`='post' AND b.`postId`=c.`object` AND blog.`blogId`=b.`blogId`";
 
 		$bindvars = array();
 		$globalperms = Perms::get();
@@ -555,10 +555,14 @@ class BlogLib extends TikiDb_Bridge
 		while ( $res = $result->fetchRow() ) {
 			if ( $tikilib->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_read_blog') || ($ref == 'post' && $tikilib->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_blog_post_view_ref'))) {
 
-				/// check if the blog post is marked private
-				$priv = ( $res2 = $this->get_post($res['postId']) ) ? $res2['priv'] : '';
-
-				if ( $priv != 'y' || ( $user && $user == $res2["user"] ) || $tiki_p_blog_admin == 'y' ) {
+				// Private posts can be accessed on the following conditions:
+				// user has tiki_p_admin or tiki_p_blog_admin or has written the post
+				// If blog is configured with 'Allow other user to post in this blog', then also if user has tiki_p_blog_post or is owner of this blog
+				if ( ($res['priv'] != 'y')
+						or ($tiki_p_admin == 'y' )
+						or ($tiki_p_blog_admin == 'y')
+						or ( ($res["public"] == 'y') && ($user && $user == $res["user"]) )
+						or ( ($res["public"] == 'y') && ($tiki_p_blog_post == 'y') ) ) {
 					$ret[] = $res;
 				}
 			}

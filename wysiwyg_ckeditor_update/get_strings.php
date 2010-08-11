@@ -40,7 +40,7 @@
 
  */
 
-
+require_once('lib/language/Language.php');
 
 ////////////////////////////////////////////////////////////////////////////
 /// functions
@@ -52,13 +52,6 @@
 $script_mode = ! isset( $_SERVER['REQUEST_METHOD'] ) && isset($_SERVER['argc']);
 
 $punctuations = array(':', '!', ';', '.', ',', '?'); // Modify lib/init/tra.php accordingly
-$addPHPslashes = Array ("\n" => '\n',
-			"\r" => '\r',
-			"\t" => '\t',
-			'\\' => '\\\\',
-			'$'  => '\$',
-			'"'  => '\"');
-
 
 /**
   * Reads all the permission descriptions in tikiwiki database and writes
@@ -146,50 +139,6 @@ function collect_prefs_names($file) {
   fclose($pstr);
 }
 
-function addphpslashes ($string) {
-  // Translate as in "Table 7-1 Escaped characters" in the PHP manual
-  // $string = str_replace ("\n", '\n',   $string);
-  // $string = str_replace ("\r", '\r',   $string);
-  // $string = str_replace ("\t", '\t',   $string);
-  // $string = str_replace ('\\', '\\\\', $string);
-  // $string = str_replace ('$',  '\$',   $string);
-  // $string = str_replace ('"',  '\"',   $string);
-  // We skip the exotic regexps for octal an hexadecimal
-  // notation - \{0-7]{1,3} and \x[0-9A-Fa-f]{1,2} -
-  // since they should not apper in english strings.
-  // return $string;
-  global $addPHPslashes;
-  return strtr ($string, $addPHPslashes);
-}
-
-
-$removePHPslashes = Array ('\n'   => "\n",
-			   '\r'   => "\r",
-			   '\t'   => "\t",
-			   '\\\\' => '\\',
-			   '\$'   => '$',
-			   '\"'   => '"');
-
-function removephpslashes ($string) {
-  // $string = str_replace ('\n',   "\n", $string); 
-  // $string = str_replace ('\r',   "\r", $string);
-  // $string = str_replace ('\t',   "\t", $string);
-  // $string = str_replace ('\\\\', '\\', $string);
-  // $string = str_replace ('\$',   '$',  $string);
-  // $string = str_replace ('\"',   '"',  $string);
-  // We skip the exotic regexps for octal an hexadecimal
-  // notation - \{0-7]{1,3} and \x[0-9A-Fa-f]{1,2} - since they 
-  // should not apper in english strings.
-  if (preg_match ('/\{0-7]{1,3}|\x[0-9A-Fa-f]{1,2}/', $string, $match)) {
-    trigger_error ("Octal or hexadecimal string '".$match[1]."' not supported",
-		   E_WARNING);
-
-  }
-  // return $string;
-  global $removePHPslashes;
-  return strtr ($string, $removePHPslashes);
-}
-
 function hardwire_file ($file) {
 	global $files, $completion, $script_mode, $quiet;
 	$files[] = $file;
@@ -259,8 +208,8 @@ function writeFile_and_User (&$fd, $outstring) {
 
 function writeTranslationPair (&$fd, &$key, &$val) {
   writeFile_and_User ($fd, 
-		      '"' . addphpslashes ($key) . '"' . " => " .
-		      '"' . addphpslashes ($val) . '",');
+		      '"' . Language::addPhpSlashes ($key) . '"' . " => " .
+		      '"' . Language::addPhpSlashes ($val) . '",');
 }
 
 /* \brief: give the closest translation
@@ -631,7 +580,7 @@ foreach ($languages as $ksel => $sel) {
 	// Strip the extracted strings from escapes
 	// (these will be reinserted during generation)
 	
-	$word = removephpslashes ($dqword);
+	$word = Language::removePhpSlashes ($dqword);
 	$words["$word"] = "$word";                               
       }
     }
@@ -771,8 +720,8 @@ foreach ($languages as $ksel => $sel) {
 	  }
 	  
 	  if ($dist < 1 + strlen ($key)/5) {
-	    $closeText = ' // ## CLOSE: "' . addphpslashes ($closeEnglish) .
-	                 '" => "' . addphpslashes ($closeTrans) . '",';
+	    $closeText = ' // ## CLOSE: "' . Language::addPhpSlashes ($closeEnglish) .
+	                 '" => "' . Language::addPhpSlashes ($closeTrans) . '",';
 	  }
 	}
 

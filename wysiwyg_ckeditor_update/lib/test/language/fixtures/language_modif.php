@@ -117,7 +117,8 @@ $lang=Array(
 "Error deleting the file" => "Erro ao deletar o arquivo",
 "The page is empty" => "A página está vazia",
 "You do not have permissions to view the maps" => "Você não possui permissões para ver os mapas",
+"Should escape \"double quotes\" in the source string" => "Deve escapar \"aspas duplas\" na string original",
 "Something" => "Algo",
-"Trying to insert malicious PHP code back to the language.php file" => "asff\"); echo 'teste'; $dois = array('',\"",
+"Trying to insert malicious PHP code back to the language.php file" => "asff\"); echo 'teste'; \$dois = array('',\"",
 "###end###"=>"###end###");
 

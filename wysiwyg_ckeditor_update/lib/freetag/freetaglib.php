@@ -928,11 +928,15 @@ class FreetagLib extends ObjectLib
 
 		foreach($tagArray as $tag) {
 			$tag = trim($tag);
-			if (($tag != '') && (strlen($tag) <= $this->_MAX_TAG_LENGTH)) {
-				if (get_magic_quotes_gpc()) {
+			if($tag != '') {
+				if (!get_magic_quotes_gpc()) {
 					$tag = addslashes($tag);
 				}
-				$this->safe_tag($user, $itemId, $type, $tag, $lang);
+				if( function_exists('mb_strlen') && (mb_strlen($tag) <= $this->_MAX_TAG_LENGTH)) {
+					$this->safe_tag($user, $itemId, $type, $tag, $lang);
+				} elseif(strlen($tag) <= $this->_MAX_TAG_LENGTH) {
+					$this->safe_tag($user, $itemId, $type, $tag, $lang);
+				}
 			}
 		}
 	}

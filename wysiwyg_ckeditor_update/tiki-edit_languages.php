@@ -266,7 +266,12 @@ if (isset($_REQUEST['downloadFile'])) {
 
 // Write to language.php
 if (isset($_REQUEST['exportToLanguage'])) {
-	$language->writeLanguageFile();
+	if ($stats = $language->writeLanguageFile()) {
+		$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $language->lang);
+	} else {
+		$expmsg = sprintf(tra('ERROR: unable to write to lang/%s/language.php'), $language->lang);
+	}
+	$smarty->assign('expmsg', $expmsg);
 }
 
 ask_ticket('edit-languages');
