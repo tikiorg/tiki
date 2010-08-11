@@ -46,7 +46,7 @@ if ($_REQUEST["optionId"]) {
 	$info["userlevel"] = '';
 	$info["type"] = 'o';
 	$info["icon"] = '';
-	$info["position"] = $maxPos + 2;
+	$info["position"] = $maxPos + 10;
 }
 $smarty->assign('name', $info["name"]);
 $smarty->assign('url', $info["url"]);
@@ -61,7 +61,7 @@ if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$menulib->remove_menu_option($_REQUEST["remove"]);
 	$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
-	$smarty->assign('position', $maxPos + 1);
+	$smarty->assign('position', $maxPos + 10);
 	$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
 }
 if (isset($_REQUEST["up"])) {
@@ -79,7 +79,7 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 		$menulib->remove_menu_option($id);
 	}
 	$maxPos = $menulib->get_max_option($_REQUEST['menuId']);
-	$smarty->assign('position', $maxPos + 1);
+	$smarty->assign('position', $maxPos + 10);
 	$smarty->clear_cache(null, 'menu' . $_REQUEST['menuId']);
 }
 if (isset($_REQUEST["save"])) {
@@ -91,7 +91,7 @@ if (isset($_REQUEST["save"])) {
 	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level'], $_REQUEST['icon']);
 	$modlib->clear_cache();
 	$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
-	$smarty->assign('position', $_REQUEST["position"] + 1);
+	$smarty->assign('position', $_REQUEST["position"] + 10);
 	$smarty->assign('name', '');
 	$smarty->assign('optionId', 0);
 	$smarty->assign('url', '');
