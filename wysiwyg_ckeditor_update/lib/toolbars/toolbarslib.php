@@ -837,6 +837,7 @@ class ToolbarDialog extends Toolbar
 {
 	private $list;
 	private $index;
+	private $name;
 	
 	public static function fromName( $tagName ) // {{{
 	{
@@ -857,9 +858,9 @@ class ToolbarDialog extends Toolbar
 						$prefs['wikiplugin_alink'] == 'y' ? '<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
 						$prefs['feature_semantic'] == 'y' ? '<label for="tbWLinkRel">Semantic relation:</label>' : '',
 						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />' : '',
-						'{"open": function () { dialogInternalLinkOpen(areaname); },
-						"buttons": { "Cancel": function() { dialogSharedClose(areaname,this); },'.
-									'"Insert": function() { dialogInternalLinkInsert(areaname,this); }}}'
+						'{"open": function () { dialogInternalLinkOpen(area_id); },
+						"buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
+									'"Insert": function() { dialogInternalLinkInsert(area_id,this); }}}'
 					);
 
 			break;
@@ -876,26 +877,26 @@ class ToolbarDialog extends Toolbar
 						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" style="width: 100%" />',
 						$prefs['cachepages'] == 'y' ? '<br /><label for="tbLinkNoCache" style="display:inline;">No cache:</label>' : '',
 						$prefs['cachepages'] == 'y' ? '<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />' : '',
-						'{"width": 300, "open": function () { dialogExternalLinkOpen( areaname ) },
-						"buttons": { "Cancel": function() { dialogSharedClose(areaname,this); },'.
-									'"Insert": function() { dialogExternalLinkInsert(areaname,this) }}}'
+						'{"width": 300, "open": function () { dialogExternalLinkOpen( area_id ) },
+						"buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
+									'"Insert": function() { dialogExternalLinkInsert(area_id,this) }}}'
 					);
 			break;
 
 		case 'table':
 			$icon = tra('pics/icons/table.png');
-			$wysiwyg = 'Table';
+			$wysiwyg = '';
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
-						'{"open": function () { dialogTableOpen(areaname,this); },
-						"width": 320, "buttons": { "Cancel": function() { dialogSharedClose(areaname,this); },'.
-												  '"Insert": function() { dialogTableInsert(areaname,this); }}}'
+						'{"open": function () { dialogTableOpen(area_id,this); },
+						"width": 320, "buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
+												  '"Insert": function() { dialogTableInsert(area_id,this); }}}'
 					);
 			break;
 
 		case 'find':
 			$icon = tra('pics/icons/find.png');
-			$wysiwyg = 'Find';
+			$wysiwyg = '';
 			$label = tra('Find Text');
 			$list = array('Find Text',
 						'<label>Search:</label>',
@@ -903,16 +904,16 @@ class ToolbarDialog extends Toolbar
 						'<label for="tbLinkNoCache" style="display:inline;">Case Insensitivity:</label>',
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'<p class="description">Note: Uses regular expressions</p>',	// TODO add option to not
-						'{"open": function() { dialogFindOpen(areaname); },'.
-						 '"buttons": { "Close": function() { dialogSharedClose(areaname,this); },'.
-									  '"Find": function() { dialogFindFind(areaname); }}}'
+						'{"open": function() { dialogFindOpen(area_id); },'.
+						 '"buttons": { "Close": function() { dialogSharedClose(area_id,this); },'.
+									  '"Find": function() { dialogFindFind(area_id); }}}'
 					);
 
 			break;
 
 		case 'replace':
 			$icon = tra('pics/icons/text_replace.png');
-			$wysiwyg = 'Replace';
+			$wysiwyg = '';
 			$label = tra('Text Replace');
 			$tool_prefs[] = 'feature_wiki_replace';
 			
@@ -926,9 +927,9 @@ class ToolbarDialog extends Toolbar
 						'<br /><label for="tbLinkNoCache" style="display:inline;">Replace All:</label>',
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
 						'<p class="description">Note: Uses regular expressions</p>',	// TODO add option to not
-						'{"open": function() { dialogReplaceOpen(areaname); },'.
-						 '"buttons": { "Close": function() { dialogSharedClose(areaname,this); },'.
-									  '"Replace": function() { dialogReplaceReplace(areaname); }}}'
+						'{"open": function() { dialogReplaceOpen(area_id); },'.
+						 '"buttons": { "Close": function() { dialogSharedClose(area_id,this); },'.
+									  '"Replace": function() { dialogReplaceReplace(area_id); }}}'
 					);
 
 			break;
@@ -938,6 +939,7 @@ class ToolbarDialog extends Toolbar
 		}
 
 		$tag = new self;
+		$tag->name = $tagName;
 		$tag->setWysiwygToken( $wysiwyg )
 			->setLabel( $label )
 				->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
@@ -993,6 +995,41 @@ class ToolbarDialog extends Toolbar
 		return $this->getSelfLink($this->getSyntax($areaId),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
 	} // }}}
+
+	function getWysiwygToken( $areaId ) // {{{
+	{
+		if (!empty($this->wysiwyg) && $this->name != 'link') {	// hmm, ckeditor's link should be fine
+			
+			global $headerlib;
+			$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
+			$headerlib->add_jq_onready(<<< JS
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+CKEDITOR.plugins.add( '{$this->name}', {
+	init : function( editor ) {
+		var command = editor.addCommand( '{$this->name}', new CKEDITOR.command( editor , {
+			modes: { wysiwyg:1 },
+			exec: function(elem, editor, data) {
+				{$this->getSyntax( $areaId )}
+			},
+			canUndo: false
+		}));
+		editor.ui.addButton( '{$this->name}', {
+			label : '{$this->label}',
+			command : '{$this->name}',
+			icon: editor.config._TikiRoot + '{$this->icon}'
+		});
+
+	}
+});
+JS
+, 10);		
+			
+			$this->getWikiHtml( $areaId );		// TODO refactor, this just does the headerlib->add_js
+			$wikilink = $this->getSyntax( $areaId );
+		}
+		return $this->wysiwyg;
+	} // }}}
+	
 }
 
 class ToolbarFullscreen extends Toolbar
@@ -1368,7 +1405,7 @@ class ToolbarsList
 			$this->lines[] = $elements;
 	} // }}}
 
-	function getWysiwygArray() // {{{
+	function getWysiwygArray( $areaId ) // {{{
 	{
 		$lines = array();
 		foreach( $this->lines as $line ) {
@@ -1378,7 +1415,7 @@ class ToolbarsList
 				foreach( $bit as $group) {
 					foreach( $group as $tag ) {
 	
-						if( $token = $tag->getWysiwygToken() )
+						if( $token = $tag->getWysiwygToken( $areaId ) )
 							$lineOut[] = $token;
 					}
 	

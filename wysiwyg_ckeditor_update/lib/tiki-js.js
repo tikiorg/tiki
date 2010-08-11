@@ -355,13 +355,29 @@ function setSelectionRange(textarea, selectionStart, selectionEnd) {
 }
 
 function getTASelection( textarea ) {
-	if (typeof $(textarea).attr("selectionStartSaved") === 'string' && $(textarea).attr("selectionStartSaved")) {	// forgetful firefox
-		return textarea.value.substring($(textarea).attr("selectionStartSaved"), $(textarea).attr("selectionEndSaved"));
-	} else if (typeof textarea.selectionStart != 'undefined') {
-		return textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
-	} else {	// IE
-		var r = document.selection.createRange();
-		return r.text;
+	var ta_id = $(textarea).attr("id"), r, cked;
+	if ($('#cke_contents_' + ta_id).length !== 0) {
+		// get selection from ckeditor
+		cked = CKEDITOR.instances[ta_id];
+		if (cked) {
+			var sel = cked.getSelection();
+			if (sel.getType() === CKEDITOR.SELECTION_TEXT) {	// why so fiddly?
+				r = sel.getRanges();
+				if (r.length && !r[0].collapsed) {	// selected over more than on element - wa?  && r.startContainer == r.endContainer
+					var t = r[0].startContainer.$.textContent;
+					return t.substring(r[0].startOffset, r[0].endOffset);
+				}
+			}
+		}
+	} else {
+		if (typeof $(textarea).attr("selectionStartSaved") === 'string' && $(textarea).attr("selectionStartSaved")) { // forgetful firefox
+			return textarea.value.substring($(textarea).attr("selectionStartSaved"), $(textarea).attr("selectionEndSaved"));
+		} else if (typeof textarea.selectionStart != 'undefined') {
+			return textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
+		} else { // IE
+			r = document.selection.createRange();
+			return r.text;
+		}
 	}
 }
 
@@ -373,6 +389,7 @@ function getTASelection( textarea ) {
 function saveTASelection( elem ) {
 	var $el;
 	if (typeof elem === 'string') {
+		if ($('#cke_contents_' + elem).length !== 0) { return; }	// may need another method for ckeditor
 		$el = $('#' + elem);
 	} else {
 		$el = $(elem);
@@ -391,6 +408,7 @@ function saveTASelection( elem ) {
 function restoreTASelection( elem ) {
 	var $el;
 	if (typeof elem === 'string') {
+		if ($('#cke_contents_' + elem).length !== 0) { return; }	// may need another method for ckeditor
 		$el = $('#' + elem);
 	} else {
 		$el = $(elem);

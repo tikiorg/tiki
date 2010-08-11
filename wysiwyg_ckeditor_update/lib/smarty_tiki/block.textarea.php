@@ -62,11 +62,11 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	
 	$auto_save_referrer = '';
 	$auto_save_warning = '';
-	if ($params['_wysiwyg'] != 'y') {
+//	if ($params['_wysiwyg'] != 'y') {
 		$as_id = $params['id'];
-	} else {
-		$as_id = $params['name'];
-	}
+//	} else {
+//		$as_id = $params['name'];
+//	}
 	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
 
@@ -138,19 +138,21 @@ function FCKeditor_OnComplete( editorInstance ) {
 			if (!isset($params['name'])) { $params['name'] = 'edit'; }
 			//$cked = new TikiCK($params['name']);
 		
-			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js');
+			$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
 			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js');
 		
-			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-				$cked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
-				$cked->Config['autoSaveEditorId'] = $as_id;
-			}
+//			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
+//				$cked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
+//				$cked->Config['autoSaveEditorId'] = $as_id;
+//			}
 //			if (isset($params['ToolbarSet'])) {
 //				$cked->ToolbarSet = $params['ToolbarSet'];
 //			} else {
 //				$cked->ToolbarSet = 'Tiki';
 //			}
-			
+//			$headerlib->add_jq_onready(<<< JS
+//JS
+//);
 			include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
 			$cktools = smarty_function_toolbars($params, $smarty);
 			$cktools = json_encode($cktools);
@@ -167,14 +169,22 @@ function FCKeditor_OnComplete( editorInstance ) {
 			//$html .= $cked->CreateHtml();
 			
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+			global $tikiroot;
+			$headerlib->add_jq_onready('
+CKEDITOR.config._TikiRoot = "'.$tikiroot.'";
+//CKEDITOR.plugins.addExternal( "tikilink", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikilink/");
+//CKEDITOR.config.extraPlugins = (CKEDITOR.config.extraPlugins ? ",tikilink" : "tikilink" );
+', 5);	// before dialog tools init (10)
 			$headerlib->add_jq_onready('
 $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	toolbar_Tiki: '.$cktools.',
 	toolbar: "Tiki",
-	language: "'.$prefs['language'].'"
+	language: "'.$prefs['language'].'",
+	customConfig : ""
 });
-', 4);
-			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="display:none; width: '.$params['width'].'; height: '.$params['height'].';">'.htmlspecialchars($content).'</textarea>';
+', 20);	// after dialog tools init (10)
+
+			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden; width: '.$params['width'].'; height: '.$params['height'].';">'.htmlspecialchars($content).'</textarea>';
 			
 			$headerlib->add_js('
 var fckEditorInstances = new Array();
