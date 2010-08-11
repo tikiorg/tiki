@@ -19,21 +19,29 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * Purpose:  formats a duration from seconds
  * -------------------------------------------------------------
  */
-function smarty_modifier_duration($string, $long=true)
+function smarty_modifier_duration($string, $long=true, $maxLevel=false)
 {
 	if (!is_numeric($string)) {
 		return $string;
 	}
 	$values = array(31536000, 2628000, 604800, 86400, 3600, 60, 1);
 	$output = array(tra('year'), tra('month'), tra('week'), tra('day'), tra('hour'), tra('minute'), tra('second'));
-	$ouputs = array(tra('years'), tra('months'), tra('weeks'), tra('days'), tra('hours'), tra('minutes'), tra('seconds'));
+	$outputs = array(tra('years'), tra('months'), tra('weeks'), tra('days'), tra('hours'), tra('minutes'), tra('seconds'));
 	$result = array();
+
+	// maxLevel defines the maximum unit to be consider (e.g. $maxLevel = 'hour')
+	if (is_string($maxLevel) && $level = array_search($maxLevel, $output)) {
+		$values = array_slice($values, $level);
+		$output = array_slice($output, $level);
+		$outputs = array_slice($outputs, $level);
+	}
+
 	foreach ($values as $i=>$value) {
 		if ($string >= $value) {
 			$nb = floor($string / $value);
 			// add a zero before seconds or minutes with just one digit if $long == false
-			$nb = (!$long && !empty($result) && ($i == 5 || $i == 6) && strlen($nb) == 1) ? 0 . $nb : $nb;
-			$s = ($nb > 1)?$ouputs[$i]: $output[$i];
+			$nb = (!$long && !empty($result) && ($output[$i] == 'minute' || $output[$i] == 'second') && strlen($nb) == 1) ? 0 . $nb : $nb;
+			$s = ($nb == 1) ? $output[$i] : $outputs[$i];
 			$s = $long? " $s": substr($s, 0, 1);
 			$string = $string % $value;
 			$result[] = "$nb$s";

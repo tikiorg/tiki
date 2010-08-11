@@ -263,7 +263,11 @@
 {* -------------------- duration -------------------- *}
 {elseif $field_value.type eq 'duration' or $field_value.computedtype eq 'duration'}
 	{if $field_value.value}
-		{$field_value.value|duration:false}
+		{if isset($field_value.operator) and $field_value.operator eq 'sum'}
+			{$field_value.value|duration:false:'hour'}
+		{else}
+			{$field_value.value|duration:false}
+		{/if}
 	{else}&nbsp;{/if}
 
 {* -------------------- checkbox -------------------- *}
