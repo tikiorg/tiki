@@ -70,7 +70,21 @@ var AutoSaveManager = function(an_editor, a_plugin) {
 	
 	// Registering change on every document recreation.(#3844)
 	this.editor.on('selectionChange', function(event) {
-		this.plugins.ajaxAutoSave.autoSaveManager.onSelectionChange(this);
+		
+	});
+	
+	var plugs = this.plugin;
+	this.editor.on( 'contentDom', function() {
+		this.document.on('keydown', function(event) {
+			// Do not capture CTRL hotkeys.
+			if (!event.data.$.ctrlKey && !event.data.$.metaKey) {
+				plugs.autoSaveManager.onSelectionChange(this);
+			}
+		});
+	});
+
+	this.editor.on('blur', function(event) {
+		this.plugins.ajaxAutoSave.autoSaveManager.exec();
 	});
 };
 
@@ -108,23 +122,35 @@ AutoSaveManager.prototype = {
 	
 	// what to do when the fckeditor content is changed
 	onSelectionChange: function() {
-	
+		
+		var asm;
 		this.init();
-		this.changeIcon( "ajaxAutoSaveDirty.gif");
-		//this.plugin.button.label = FCKLang.ajaxAutoSaveButtonTitle;
 		
-		setTimeout(function() {
-			CKEDITOR.plugins.get("ajaxAutoSave").autoSaveManager.exec();
-		}, CKEDITOR.config.ajaxAutoSaveRefreshTime * 1000);
-		
-		this.ajaxAutoSaveIsDirty = true;
+		if (!this.ajaxAutoSaveIsDirty) {
+			this.changeIcon("ajaxAutoSaveDirty.gif");
+			//this.plugin.button.label = FCKLang.ajaxAutoSaveButtonTitle;
+			
+			this.ajaxAutoSaveCounter++;
+			
+			if (this.ajaxAutoSaveCounter > CKEDITOR.config.ajaxAutoSaveSensitivity) {
+				if (!asm) {
+					asm = this;
+					setTimeout(function() {
+						asm.exec();
+						asm = null;
+					}, CKEDITOR.config.ajaxAutoSaveRefreshTime * 1000);
+					
+					this.ajaxAutoSaveIsDirty = true;
+				}
+			}
+		}
 		return true;
 	},
 	
 	changeIcon: function( fileName ) {
 		// use of jquery - must be a better ck-way of doing this
-		var $img = jQuery("#" + this.plugin.button._.id + " span");
-		$img.css( "background-image", $img.css( "background-image" ).replace(/[^\/]*$/, fileName));
+		var $img = jQuery("#" + this.plugin.button._.id + " span:first");
+		$img.css( "background-image", $img.css( "background-image" ).replace(/[^\/\)]*\)$/, fileName + ")"));
 	}
 	
 };
@@ -136,15 +162,6 @@ AutoSaveManager.prototype = {
 //	return FCK_TRISTATE_OFF;
 //};
 
-
-//function callOnSelectionChange(editorInstance){
-//
-//	ajaxAutoSaveCounter++;
-//
-//	if (ajaxAutoSaveCounter > FCKConfig.ajaxAutoSaveSensitivity) {
-//		AutoSaveManager.prototype.onSelectionChange();
-//	}
-//}
 
 // previously was ajaxAutoSave.js separate file - now combined
 
@@ -182,7 +199,7 @@ var AxpObject = function (editorInstance) {
 // initialize
 AxpObject.prototype.initialize = function () {
 	
-	this.asManager = CKEDITOR.instances.editwiki.plugins.ajaxAutoSave.autoSaveManager;
+	this.asManager = this.editorInstance.plugins.ajaxAutoSave.autoSaveManager;
 
 	// create requestObject
 	if (window.XMLHttpRequest) // Mozilla, Safari, IE7, ...
@@ -271,8 +288,6 @@ AxpObject.prototype.feedback = function (errorNumber, errorData)
 				mins = "0" + mins;
 			}
 			this.setMessage("ajaxAutoSaveSaveCompleted  " + hours + ":" + mins);
-			this.resetDirty();
-			this.editorInstance.ajaxAutoSaveDraftSaved = true;
 			break;
 		case 101:
 			this.setMessage("ajaxAutoSaveNoContentReceived", errorData);
@@ -294,11 +309,13 @@ AxpObject.prototype.feedback = function (errorNumber, errorData)
 			break;
 	}
 
-	
-	if (this.asManager) {
-		var delay = (parseInt(errorNumber, 10) > 0) ? 12000 : 5000;
-		setTimeout( function() { AxpObject.resetAjaxAutoSaveTool(); }, delay);
-	}
+	var asm = this.asManager;
+	var delay = (parseInt(errorNumber, 10) > 0) ? 8000 : 2000;
+	setTimeout( function() {
+		if (asm) {
+			asm.ajaxAutoSaveObject.resetAjaxAutoSaveTool();
+		}
+	}, delay);
 };
 
 // set message
@@ -307,29 +324,14 @@ AxpObject.prototype.setMessage = function(errorMessage, errorData) {
 	
 	message = errorMessage + (errorData ? ' ' + errorData : '');
 	if (this.asManager) {
-		this.asManager.button.label = message;
+		this.asManager.plugin.button.label = message;
 	} else {
 		//alert(message);
 		window.status = message;
 	}
 };
 
-AxpObject.prototype.resetDirty = function() {
-	this.editorInstance.ajaxAutoSaveIsDirty = false;
-};
-
-AxpObject.prototype.setDirty = function() {
-	if (!this.isDirty) {
-		this.isDirty = true;
-		
-		this.asManager.changeIcon( "ajaxAutoSaveDirty.gif" );
-	}
-};
-
 AxpObject.prototype.resetAjaxAutoSaveTool = function() {
-	if (!this.editorInstance.ajaxAutoSaveIsDirty) {
-		this.asManager.changeIcon( "ajaxAutoSaveClean.gif" );
-		this.asManager.plugin.button.label = "Auto Save";
-	}
-
+	this.asManager.changeIcon( "ajaxAutoSaveClean.gif" );
+	this.asManager.plugin.button.label = "Auto Save";
 };

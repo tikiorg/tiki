@@ -178,7 +178,7 @@ CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugin
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",ajaxAutoSave" : "ajaxAutoSave" );
 CKEDITOR.plugins.addExternal( "ajaxAutoSave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/ajaxAutoSave/");
 CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to
-CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;								// RefreshTime
+CKEDITOR.config.ajaxAutoSaveRefreshTime = 15 ;								// RefreshTime
 CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strokes
 ', 5);	// before dialog tools init (10)
 		}
@@ -195,9 +195,9 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;" rows="'.$params['rows'].'"; cols="'.$params['cols'].'">'.htmlspecialchars($content).'</textarea>';
 			
 			$headerlib->add_js('
-//var fckEditorInstances = new Array();
+var ckEditorInstances = new Array();
 function CKeditor_OnComplete() {
-//	fckEditorInstances[fckEditorInstances.length] = this;
+	ckEditorInstances[ckEditorInstances.length] = this;
 	this.resetDirty();
 };');
 			

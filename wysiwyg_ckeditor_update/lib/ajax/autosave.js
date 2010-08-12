@@ -47,6 +47,9 @@ function ajax_preview(id) {
 	if (typeof fckEditorInstances !== 'undefined' && fckEditorInstances.length > id) {
 		auto_save_id[id] = fckEditorInstances.id.Config.autoSaveEditorId;
 		autoSaveId = fckEditorInstances.id.Config.autoSaveSelf;
+	} else if (typeof ckEditorInstances !== 'undefined' && ckEditorInstances.length > id) {
+		auto_save_id[id] = ckEditorInstances[0].name;
+		autoSaveId = ckEditorInstances[0].config.autoSaveSelf;
 	}
 	
 	if (auto_save_id.length > id) {
