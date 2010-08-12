@@ -33,7 +33,7 @@
 	{section name=changes loop=$listpages}
 		<tr>
 			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].postId}&nbsp;</td>
-			<td class="{cycle advance=false}"><a class="link" href="tiki-blog_post.php?postId{$listpages[changes].postId}">{$listpages[changes].title}</a></td>
+			<td class="{cycle advance=false}"><a class="link" href="tiki-view_blog_post.php?postId={$listpages[changes].postId}">{$listpages[changes].title}</a></td>
 			<td class="{cycle advance=false}">
 				&nbsp;
 				<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true|escape}</a>
