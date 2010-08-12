@@ -11204,6 +11204,7 @@ $lang=Array(
 "Other Polls" => "Altri Sondaggi",
 "votes" => "voti",
 "on:" => "il:",
+"On:" => "Il:",
 "Viewing blog post" => "post del blog",
 "Return to blog" => "Ritorna al blog",
 "Print multiple pages" => "Stampa più pagine",

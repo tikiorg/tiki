@@ -9686,6 +9686,7 @@ $lang=Array(
 "Own image size y" => "Own image size y",
 "col" => "col",
 "on:" => "on:",
+"On:" => "On:",
 "Weblogs" => "Weblogs",
 "#" => "#",
 "act" => "act",

@@ -11637,6 +11637,7 @@ $lang=Array(
 "votes" => "راي",
 "Note: Remember that this is only a preview, and has not yet been saved!" => "نكته: به‌خاطر داشته‌باشيد كه اين تنها يك پيش‌نمايش است و وظيفه دخيره نشده است",
 "on:" => "در:",
+"On:" => "در:",
 "Topic image" => "تصوير سرفصل",
 "Viewing blog post" => "مشاهده‌ي الصاقات بلاگ",
 "Return to blog" => "بازگشت به بلاگ",

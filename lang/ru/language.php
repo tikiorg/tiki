@@ -11161,6 +11161,7 @@ $lang=Array(
 "Other Polls" => "Другие опросы",
 "votes" => "голоса",
 "on:" => "в:",
+"On:" => "в:",
 "Viewing blog post" => "Просмотр сообщения в блоге",
 "Return to blog" => "Вернуться в блог",
 "Print multiple pages" => "Печать нескольких страниц",

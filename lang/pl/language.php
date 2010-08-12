@@ -11164,6 +11164,7 @@ $lang=Array(
 "Pick user Avatar" => "Wybierz własny emblemat",
 "votes" => "głosy",
 "on:" => "dnia:",
+"On:" => "Dnia:",
 "Return to blog" => "Powróć do bloga",
 "Print multiple pages" => "Drukuj wiele stron",
 "Remove Page" => "Usuń stronę",

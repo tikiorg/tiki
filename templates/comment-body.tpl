@@ -16,7 +16,7 @@
 					{tr}Published by{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
 				{/if}
 				{if $comment.commentDate > 0}
-					{tr}on{/tr} <span class="author_post_info_on">{$comment.commentDate|tiki_short_datetime}</span>
+					<span class="author_post_info_on">{$comment.commentDate|tiki_short_datetime:on}</span>
 				{/if}
 			</span>
 		{if $thread_style != 'commentStyle_headers'}

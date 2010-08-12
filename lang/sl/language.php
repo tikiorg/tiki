@@ -10314,6 +10314,7 @@ $lang=Array(
 "Average" => "Povprečje",
 "Note: Remember that this is only a preview, and has not yet been saved!" => "Opozorilo: Vedi, da je to samo predogled in ni bil shranjen!",
 "on:" => "na:",
+"On:" => "Na:",
 "Topic image" => "Slika teme",
 "Viewing blog post" => "Gledanje zapisa na blogu",
 "Return to blog" => "Nazaj na blog",

@@ -10159,6 +10159,7 @@ $lang=Array(
 "Other Polls" => "Ostatní ankety",
 "votes" => "hlas(y/ů)",
 "on:" => "v: ",
+"On:" => "V: ",
 "Topic image" => "Obrázek k tématu",
 "Viewing blog post" => "Viewing blog záznam",
 "Return to blog" => "Zpět na blog",

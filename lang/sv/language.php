@@ -11380,6 +11380,7 @@ $lang=Array(
 "Other Polls" => "Andra omröstningar",
 "votes" => "röster",
 "on:" => "den:",
+"On:" => "Den:",
 "Topic image" => "Ämnesbild",
 "Viewing blog post" => "Visa bloginlägg",
 "Return to blog" => "Återvänd till bloggen",

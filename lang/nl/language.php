@@ -11477,6 +11477,7 @@ $lang=Array(
 "votes" => "stemmen",
 "Note: Remember that this is only a preview, and has not yet been saved!" => "Opmerking: Deze voorbeeldversie werd nog niet opgeslagen!",
 "on:" => "op:",
+"On:" => "Op:",
 "Topic image" => "Afbeelding onderwerp",
 "Viewing blog post" => "Blog-bijdrage bekijken",
 "Return to blog" => "Terug naar blog",

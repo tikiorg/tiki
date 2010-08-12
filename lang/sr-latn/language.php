@@ -11240,6 +11240,7 @@ $lang=Array(
 "Other Polls" => "Ostali upitnici",
 "votes" => "glasova",
 "on:" => "u:",
+"On:" => "U:",
 "Topic image" => "Slika teme",
 "Viewing blog post" => "Gledanje blog poruke",
 "Return to blog" => "Nazad na blog",
