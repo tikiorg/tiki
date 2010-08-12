@@ -1036,7 +1036,7 @@ class ToolbarFullscreen extends Toolbar
 	{
 		$this->setLabel( tra('Full Screen Edit') )
 			->setIcon( 'pics/icons/application_get.png' )
-			->setWysiwygToken( 'FitWindow' )
+			->setWysiwygToken( 'Maximize' )
 				->setType('Fullscreen');
 	} // }}}
 
