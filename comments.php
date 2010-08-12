@@ -381,6 +381,7 @@ if (isset($_REQUEST["comments_previewComment"]) || !empty($errors)) {
 	$smarty->assign('comment_title', $_REQUEST["comments_title"]);
 	$smarty->assign('comment_rating', $_REQUEST["comment_rating"]);		
 	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
+	$smarty->assign('comment_preview_date', $tikilib->now);
 	if (isset($_REQUEST["anonymous_name"])) {
 		$smarty->assign('comments_preview_anonymous_name', $_REQUEST["anonymous_name"]);
 	}

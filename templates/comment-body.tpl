@@ -12,11 +12,11 @@
 		<span class="author_info">
 
 			<span class="author_post_info">
-				{if $comment.commentDate > 0}
-					{tr}on{/tr} <span class="author_post_info_on">{$comment.commentDate|tiki_short_datetime}</span>{if $comment.userName},{/if}
-				{/if}
 				{if $comment.userName}
-					{tr}by{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
+					{tr}Published by{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
+				{/if}
+				{if $comment.commentDate > 0}
+					{tr}on{/tr} <span class="author_post_info_on">{$comment.commentDate|tiki_short_datetime}</span>
 				{/if}
 			</span>
 		{if $thread_style != 'commentStyle_headers'}
