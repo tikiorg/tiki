@@ -97,8 +97,17 @@
           <td><input type="checkbox" name="add_date" id="blogs-date" {if $add_date eq 'y'}checked='checked'{/if}/></td>	 
         </tr>	
         <tr class="editblogform">
-          <td>{tr}Show user avatar{/tr}</td>
-          <td><input type="checkbox" name="show_avatar" {if $show_avatar eq 'y'}checked='checked'{/if} /></td>
+          <td><label for="blogs-avatar">{tr}Show user avatar{/tr}</label></td>
+          <td><input type="checkbox" name="show_avatar" id="blogs-avatar" {if $show_avatar eq 'y'}checked='checked'{/if} /></td>
+        </tr>
+        <tr class="editblogform">
+          <td><label for="blogs-post-related">{tr}Show post related content{/tr}</label></td>
+          <td>
+		    <input type="checkbox" name="show_related" id="blogs-post-related" {if $show_related eq 'y'}checked='checked'{/if} {if $prefs.feature_freetags ne 'y'}disabled="disabled"{/if}/>
+  		    {if $prefs.feature_freetags neq 'y'}
+		  	  <em>{tr}The checkbox is disabled because feature_freetags is disabled globally.{/tr}</em>
+	    	{/if}
+		  </td>
         </tr>
 
         {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
