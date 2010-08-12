@@ -38,7 +38,7 @@
 		{else}
 			<div class="antibot3">
 		{/if}
-			<label for="antibotcode">{tr}Enter the code you see above{/tr}{if $showmandatory eq 'y'}<span class="attention"> *</span>{/if}</label><br />
+			<br /><label for="antibotcode">{tr}Enter the code you see above{/tr}{if $showmandatory eq 'y'}<span class="attention"> *</span>{/if}</label>
 		{if $antibot_table ne 'y'}
 			</td>
 			<td{if !empty($td_style)} class="{$td_style}"{/if}>

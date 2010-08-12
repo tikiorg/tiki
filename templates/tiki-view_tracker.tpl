@@ -1,4 +1,5 @@
 {* $Id$ *}
+AAAA{$sort_mode}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -460,7 +461,7 @@ $("#newItemForm").validate({
 
 {* -------------------- antibot code -------------------- *}
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
-{include file='antibot.tpl' tr_style="formcolor"}
+{include file='antibot.tpl' tr_style="formcolor" showmandatory=y}
 {/if}
 
 {if $groupforalert ne ''}
