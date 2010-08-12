@@ -9463,7 +9463,7 @@ $lang=Array(
 "Home Page" => "Page d'accueil",
 "Redirects" => "Redirections",
 "Site Access" => "Accès au site",
-"Date and Time Formats" => "Format des dates et heure",
+"Date and Time Formats" => "Format des dates et heures",
 "Date and Time Format Help" => "Aide sur le format des dates et heures",
 "Change admin password" => "Modifier le mot de passe de l'administrateur",
 "Change the <strong>Admin</strong> password" => "Changer le mot de passe <strong>Admin</strong>",
@@ -12407,5 +12407,6 @@ $lang=Array(
 "Text showing on the link" => "Texte montré sur le lien",
 "File link" => "Lien vers un fichier",
 "Pick a file." => "Choisir un fichier.",
+"Try another code' => Essayer un autre code",
 "###end###"=>"###end###");
 

@@ -39,9 +39,6 @@
 			<div class="antibot3">
 		{/if}
 			<label for="antibotcode">{tr}Enter the code you see above{/tr}{if $showmandatory eq 'y'}<span class="attention"> *</span>{/if}</label><br />
-			{if $captchalib->type eq 'default'}
-				<a id="captchaRegenerate" href="#antibot">{tr}(try another code){/tr}</a>
-			{/if}
 		{if $antibot_table ne 'y'}
 			</td>
 			<td{if !empty($td_style)} class="{$td_style}"{/if}>
@@ -50,6 +47,9 @@
 			<div class="antibot4">
 		{/if}
 				<input type="text" maxlength="8" size="22" name="captcha[input]" id="antibotcode" />
+			{if $captchalib->type eq 'default'}
+				{button _id='captchaRegenerate' href='#antibot' _text='{tr}Try another code{/tr}'}
+			{/if}
 		{if $antibot_table ne 'y'}
 			</td>
 		</tr>

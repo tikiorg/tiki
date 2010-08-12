@@ -177,6 +177,7 @@ div#debugconsole {
 	color: #ddd;
 }
 
+.cachedStatus,
 .mini {
 	font-size: .9em;
 }
@@ -1175,4 +1176,7 @@ dl.note-list {
 	background: white;
 	color: black;
 	border: solid thin black;
+}
+#captchaImg {
+	border: 1px solid black;
 }
