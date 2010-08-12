@@ -137,7 +137,9 @@
       </table>
     {/tab}
   {/tabset}
-  <input type="submit" class="wikiaction" name="preview" value="{tr}Heading preview{/tr}" />
+  {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
+    <input type="submit" class="wikiaction" name="preview" value="{tr}Heading preview{/tr}" />
+  {/if}
   <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 </form>
 <br />
