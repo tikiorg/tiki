@@ -66,19 +66,16 @@ var AutoSaveManager = function(an_editor, a_plugin) {
 	// instantiate ajaxAutoSave Object
 	this.ajaxAutoSaveObject = new AxpObject(this.editor);
 	
-	this.editor.element.$.form.onsubmit = this.onSave;
+	this.editor.element.$.form.onsubmit = function() {
+		a_plugin.autoSaveManager.onSave( an_editor );
+	};
 	
-	// Registering change on every document recreation.(#3844)
-	this.editor.on('selectionChange', function(event) {
-		
-	});
-	
-	var plugs = this.plugin;
+	//var plugs = this.plugin;
 	this.editor.on( 'contentDom', function() {
 		this.document.on('keydown', function(event) {
 			// Do not capture CTRL hotkeys.
 			if (!event.data.$.ctrlKey && !event.data.$.metaKey) {
-				plugs.autoSaveManager.onSelectionChange(this);
+				a_plugin.autoSaveManager.onSelectionChange(this);
 			}
 		});
 	});
@@ -109,12 +106,12 @@ AutoSaveManager.prototype = {
 		return true;
 	},
 	
-	onSave: function() {
+	onSave: function( editor ) {
 		this.ajaxAutoSaveIsDirty = false;
 		// added by jonnyb for tiki 4 - remove draft when page saved
 		//var n = ajaxAutoSaveObject.editorInstance.Name;
 		if (parent && typeof parent.xajax_remove_save === 'function') {
-			parent.xajax_remove_save(this.editor.name, this.editor.config.autoSaveSelf);
+			parent.xajax_remove_save(editor.name, editor.config.autoSaveSelf);
 		}
 		return true;
 		
