@@ -5,7 +5,7 @@
 */
 
 /***** XHTML Elements *****/
-/* print mode only */
+/* print mode only - to make sure print templates will use and print on seamless white bg color */
 html#print {
 	background: #fff;
 	color: #000;
@@ -16,6 +16,7 @@ body.fullscreen {
 	background: #fff;
 }
 
+/* FCKeditor contrast */
 body.wikitext {
 	background: #fff;
 	color: #000;
@@ -26,6 +27,7 @@ fieldset {
 	padding: 0.3em;
 }
 
+/* margin and padding for span surrounding the "button" links, same definition for button form element */
 button,
 span.button,
 span.button.highlight {
@@ -55,16 +57,20 @@ input[type=submit]:hover {
 	margin-right: 1px;
 }
 
+/* highlight on interface text to draw attention; also
+highlight on "button" links, e.g. if there are some comments it highlights the "button" link in #page-bar under the content of the wiki pages */
 .highlight,
 span.button.highlight a {
 	background: #FC0;
 	color: #000;
 }
 
+/* Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state . */
 span.button.highlight {
 	background: inherit;
 }
 
+/* Highlight effect is just visual distinction, so no need for block element. */
 div.highlight {
 	padding: 0 .3em;
 }
@@ -191,6 +197,7 @@ div#debugconsole {
 	font-size: 1em;
 }
 
+/* For correct styling when RSS feed is put in botbar custom code */
 #footer .rsslist {
 	width: 190px;
 	text-align: left;
@@ -249,6 +256,7 @@ ul.categories li {
 	padding: 0;
 }
 
+/* Todo: additional font family and bg color. */
 .inline_syntax {
 	font-family: "Lucida Console";
 	color: brown;
@@ -313,6 +321,7 @@ div.help_section {
 	font-size: smaller;
 }
 
+/* default look for editplugin icon links */
 .editplugin {
 	/*background: #fff; color: #000;*/
 }
@@ -363,6 +372,7 @@ div.help_section {
 	padding: 0 1em;
 }
 
+/* To display content without module-style background and border. */
 .halffloat > div.box,
 .wikitext .halffloat > div.box,
 .thirdfloat > div.box,
@@ -446,6 +456,7 @@ div.help_section {
 	padding: 3px;
 }
 
+/* odd and even classes for tr, td, and li */
 .odd {
 	background: #f0f0f0;
 	color: #000;
@@ -756,6 +767,7 @@ div.multiselect div.selection {
 	background: #fff;
 }
 
+/* transparent border added to keep content from shifting on hover */
 div.multiselect,
 div.multiselect div.selection {
 	border: 1px solid transparent;
@@ -1002,6 +1014,7 @@ div.messureadbody {
 	background: #666;
 }
 
+/* Bullet on list items look inappropriate here. */
 .tiki_admin .note .rbox-data li.even,
 .tiki_admin .note .rbox-data li.odd {
 	list-style: none;
@@ -1018,6 +1031,9 @@ td.mods_update {
 	background:#dcdeac;
 	color: #000;
 }
+
+/* Cluetip - JQuery tooltips
+   =cluetipClass: 'default' */
 
 .cluetip-default {
 	background: #bed8f1;
@@ -1052,6 +1068,7 @@ div#cluetip-close {
 	padding: 0;
 }
 
+/* webmail & groupmail */
 .webmail_item {
 	font-size: .9em;
 	border: #999 solid 1px;
@@ -1108,6 +1125,8 @@ table.webmail_message_headers th {
 	background: transparent;
 }
 
+/* treeTable definitions - used in object-perms so far */
+
 table.treeTable .checkBoxHeader {
 	font-size: .8em;
 }
@@ -1120,6 +1139,7 @@ table.treeTable .parent td {
 	font-style: italic;
 }
 
+/* jq tablesorter */
 .fancysort th.headerSortUp {
 	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset_up.png) !important;
 }
@@ -1130,6 +1150,7 @@ table.treeTable .parent td {
 	background-repeat: no-repeat; background-position: right; background-image: url(../../pics/icons/resultset.png);
 }
 
+ /* wikiplugin_tracker */
 .mandatory_note {
 	font-style: italic;
 	color: red;
