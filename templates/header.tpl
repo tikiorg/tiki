@@ -3,7 +3,7 @@
 	<base href="{$base_url|escape}" />
 {/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Tiki Wiki CMS Groupware - http://TikiWiki.org" />
+<meta name="generator" content="Tiki Wiki CMS Groupware - http://Tiki.org" />
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}
 	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}" />
 {elseif isset($galleryId) && $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}
@@ -41,7 +41,7 @@
 	<meta name="revisit-after" content="{$prefs.metatag_revisitafter|escape}" />
 {/if}
 
-{* --- tikiwiki block --- *}
+{* --- tiki block --- *}
 <title>
 	{if $prefs.site_title_location eq 'before'}
 		{$prefs.browsertitle|escape} : 
