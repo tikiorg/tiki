@@ -156,7 +156,7 @@ function smarty_function_html_select_date($params, &$smarty)
     } else {
         // TIKI: use tikilib make_time to get an unix timestamp and
         // strftime to make yyyy-mm-dd
-        $time = strftime('%Y-%m-%d', $tikilib->make_time(0,0,0, $tikilib->date_format('%m'), $tikilib->date_format('%d'), $tikilib->date_format('%Y')));
+        $time = strftime('%Y-%m-%d', $tikilib->make_time(0,0,0, $tikilib->date_format('%m', $time), $tikilib->date_format('%d', $time), $tikilib->date_format('%Y', $time)));
     }
     // Now split this in pieces, which later can be used to set the select
     $time = explode("-", $time);

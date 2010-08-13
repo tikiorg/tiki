@@ -11154,6 +11154,7 @@ $lang=Array(
 "Other Polls" => "その他のアンケート",
 "votes" => "投票",
 "on:" => "作成日:",
+"On:" => "作成日:",
 "Viewing blog post" => "ブログ・ポストの表示",
 "Return to blog" => "ブログへ戻る",
 "The original document is available at" => "The original document is\navailable at",

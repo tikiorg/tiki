@@ -11529,6 +11529,7 @@ $lang=Array(
 "votes" => "votos",
 "Note: Remember that this is only a preview, and has not yet been saved!" => "Nota: Lembre que isto é só unha previsualización, aínda non foi gardada!",
 "on:" => "en:",
+"On:" => "En:",
 "Topic image" => "Imaxe do tema",
 "Viewing blog post" => "Leyendo post de blog",
 "Return to blog" => "Volver al blog",

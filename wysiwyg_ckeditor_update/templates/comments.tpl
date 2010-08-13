@@ -323,9 +323,14 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		<div class="post"><div class="inner"><span class="corners-top"><span></span></span><div class="postbody">
 			<div class="postbody-title"><div class="title">{$comments_preview_title|escape}</div></div>
 			<div class="content">
-				<div class="author"><span class="author_info"><span class="author_post_info">
-				{tr}by{/tr} <span class="author_post_info_by">{if $user}{$user|userlink}{else}{$comments_preview_anonymous_name}{/if}</span>
-	  			</span></span></div>
+				<div class="clearfix author">
+					<span class="author_post_info">
+						{tr}Published by{/tr} <span class="author_post_info_by">{if $user}{$user|userlink}{else}{$comments_preview_anonymous_name}{/if}</span>
+						{if $comment_preview_date > 0}
+							{tr}on{/tr} <span class="author_post_info_on">{$comment_preview_date|tiki_short_datetime}</span>
+						{/if}
+					</span>
+				</div>
 				{$comments_preview_data}
 	  		</div>
 		</div><span class="corners-bottom"><span></span></span></div></div>

@@ -52,7 +52,7 @@ if (!isset($_REQUEST["fieldId"])) {
 }
 $smarty->assign('fieldId', $_REQUEST["fieldId"]);
 if (!isset($_REQUEST['position'])) {
-	$_REQUEST['position'] = $trklib->get_last_position($_REQUEST["trackerId"]) + 1;
+	$_REQUEST['position'] = $trklib->get_last_position($_REQUEST["trackerId"]) + 10;
 }
 if (!isset($_REQUEST['options'])) {
 	$_REQUEST['options'] = '';
@@ -63,7 +63,7 @@ if ($_REQUEST["fieldId"]) {
 	$info = array();
 	$info["name"] = '';
 	$info["options"] = '';
-	$info["position"] = $trklib->get_last_position($_REQUEST["trackerId"]) + 1;
+	$info["position"] = $trklib->get_last_position($_REQUEST["trackerId"]) + 10;
 	$info["type"] = 't';
 	$info["isMain"] = 'n';
 	$info["isMultilingual"] = 'n';
@@ -203,7 +203,7 @@ function replace_tracker_from_request($tracker_info) {
 	$smarty->assign('itemChoices', '');
 	$smarty->assign('visibleBy', array());
 	$smarty->assign('editableBy', array());
-	$smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"]) + 1);
+	$smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"]) + 10);
 	$smarty->assign('validation', '');
 	$smarty->assign('validationParam', '');
 	$smarty->assign('validationMessage', '');

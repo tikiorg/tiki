@@ -60,6 +60,17 @@ if(isset($post_info['priv']) && ($post_info['priv'] == 'y')) {
 	$post_info['title'] .= ' (' . tra("private") . ')';
 }
 
+if ($prefs['feature_freetags'] == 'y') {
+	// Get Tags
+	include_once ('lib/freetag/freetaglib.php');
+	$tags = $freetaglib->get_tags_on_object($postId, "blog post");
+	$smarty->assign('tags', $tags);
+
+	if ($blog_data['show_related'] == 'y' && !empty($tags)) {
+		$post_info['related_posts'] = $bloglib->get_related_posts($postId);
+	}
+}
+
 $smarty->assign('ownsblog', $ownsblog);
 $post_info['data'] = TikiLib::htmldecode($post_info['data']);
 $smarty->assign('post_info', $post_info);
@@ -123,12 +134,7 @@ if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mo
 	include_once ("lib/hawhaw/hawtikilib.php");
 	HAWTIKI_view_blog_post($post_info);
 }
-if ($prefs['feature_freetags'] == 'y') {
-	// Get Tags
-	include_once ('lib/freetag/freetaglib.php');
-	$tags = $freetaglib->get_tags_on_object($postId, "blog post");
-	$smarty->assign('tags', $tags);
-}
+
 ask_ticket('view-blog-post');
 // Display the template
 $smarty->assign('mid', 'tiki-view_blog_post.tpl');

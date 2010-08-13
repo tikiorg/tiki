@@ -303,6 +303,7 @@ CREATE TABLE `tiki_blogs` (
   `allow_comments` char(1) default NULL,
   `show_avatar` char(1) default NULL,
   `always_owner` char(1) default NULL,
+  `show_related` char(1) default NULL,
   PRIMARY KEY (`blogId`),
   KEY `title` (`title`),
   KEY `description` (`description`(255)),

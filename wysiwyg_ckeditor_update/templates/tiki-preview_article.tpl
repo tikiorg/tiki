@@ -3,7 +3,7 @@
 <div class="article">
 	<div class="articletitle">
 		<h2>{$title|escape}</h2>
-		<span class="titleb">{tr}By:{/tr} {$authorName|escape} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}Reads{/tr})</span>
+		<span class="titleb">{tr}By:{/tr} {$authorName|escape} {$publishDate|tiki_short_datetime:'On:'} ({$reads} {tr}Reads{/tr})</span>
 	</div>
 
 	{if $type eq 'Review'}

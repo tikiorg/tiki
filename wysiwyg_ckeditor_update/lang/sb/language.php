@@ -10083,6 +10083,7 @@ $lang=Array(
 "Average" => "Average",
 "Vote poll" => "Vote poll",
 "on:" => "on:",
+"On:" => "On:",
 "Quiz result stats" => "Quiz result stats",
 "Top 10" => "Top 10",
 "Top 20" => "Top 20",

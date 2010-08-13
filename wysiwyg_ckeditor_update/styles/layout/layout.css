@@ -1,6 +1,5 @@
-/* $Id$ 
-	This file (layout.css) is to be imported
-	by theme stylesheets. */
+/* $Id$
+	This file (layout.css) is to be imported by theme stylesheets. */
 
 /***** XHTML Elements *****/
 body {
@@ -28,6 +27,7 @@ span.button {
 	display: inline-block;
 }
 
+/* Links in buttons */
 span.button a,
 span.button a:visited,
 button,
@@ -38,6 +38,7 @@ span.button input,
 	cursor: pointer;
 }
 
+/* Definitions below are the same as above, but are separated to make those above work in IE6 */
 input[type=reset],
 input[type=submit] {
 	text-decoration: none;
@@ -357,7 +358,7 @@ li#logout_link a {
 	width: auto;
 } 
 
-.mdksubframe {
+.mdksubframe { /*decorate*/
 	z-index: 1000;
 	position: relative;
 	display: block;
@@ -729,6 +730,7 @@ img.icon {
 	white-space: nowrap;
 }
 
+/** Find form **/
 .findtable {
   text-align: center;
   margin-bottom: 10px;
@@ -764,14 +766,14 @@ img.icon {
 	margin: 1px 3px;
 }
 
-.helptool-admin {
+.helptool-admin {	/* right justified section of toolbars */
 	float: right;
 	padding-left: 8px;
 	margin-left: 8px;
 	border-left: medium double #bfbfbf;
 }
 
-a.toolbar {
+a.toolbar {			/* each tool button */
 	padding: 4px 2px;
 	display: inline-block;
 }
@@ -782,7 +784,7 @@ span.toolbar-list {
 	border-left: medium double #bfbfbf;
 }
 
-.toolbars-picker {
+.toolbars-picker {	/* colours, smilies etc */
 	position: absolute;
 	width: 288px;
 	z-index: 300;
@@ -801,6 +803,7 @@ span.toolbar-list {
 	border: #f00 1px solid;
 }
 
+/* To ensure that full width of wysiwyg toolbar displays in narrow themes. */
 .fckeditzone {
 	min-width: 510px;
 }
@@ -813,7 +816,7 @@ div#tikihelp {
 
 div.help_sections {
 	width: 360px;
-	overflow: hidden !important;
+	overflow: hidden !important;	/* override jq-ui's scroll bar as we use one on the div inside so the tabs stay in view */
 	height: 500px;
 }
 
@@ -856,7 +859,7 @@ div.help_sections > div {
 h3.box-title {
 	display: block;
 	padding-top: 0;
-	position: relative;
+	position: relative; /* Needed for module shading icon to work. */
 }
 
 span.moduleflip,
@@ -906,6 +909,7 @@ span.moduleflip,
 	height: 16px;
 }
 	
+/* MiniChat  */
 .box-minichat {
 	width: 100%;
 }
@@ -916,6 +920,7 @@ span.moduleflip,
 	overflow: auto;
 }
 
+/* mod-switch_lang */
 .box-switch_lang .box-data img {
 	padding: .2em;
 	vertical-align: middle;
@@ -928,6 +933,7 @@ span.moduleflip,
 	overflow: hidden;
 }
 
+/* remarks boxes */
 .rbox-title {
 	display: inline-block;
 	width: auto;
@@ -951,6 +957,9 @@ span.moduleflip,
 	cursor: pointer;
 }
 
+/* For wikitext or custom code areas, editors can add, for example, a div class="halffloat"
+and put two modules or other divs between its tags;, each of these will use just under half of the width of the 
+wikitext or custom content area. Similarly for three or four modules (or divs) across the page. */
 .halffloat div.box,
 .wikitext .halffloat div.box {
 	float: left !important;
@@ -1160,7 +1169,6 @@ ul.floatleft li {
 }
 
 /* mouseover plugin */
-
 .plugin-mouseover {
 	position: absolute;
 	z-index: 500;
@@ -1215,6 +1223,7 @@ div.tocnav {
 	list-style-image: url(../../img/icons/footprint.gif);
 }
 
+/* TOC */
 ul.toc * {
 	list-style: none;
 }
@@ -1279,6 +1288,7 @@ div.article .actions {
 	white-space: nowrap;
 }
 
+/* To keep language form and actions icons on one line */
 div.article .actions form {
 	display: inline;
 }
@@ -1495,6 +1505,7 @@ body.tiki_forums table.normal {
 	margin-bottom: 15px;
 }
 
+/* Comments */
 #comzone {
 	display: none;
 	margin: 5px 0;
@@ -1512,6 +1523,7 @@ span.commentstitle {
 	font-size: 1.2em;
 }
 
+/* Comments moderation */
 .post-approved-n {
 	border-left: 3px dotted blue;
 }
@@ -1584,6 +1596,8 @@ div#browse_image {
 	width: 100%
 }
 
+/* Random image module - top and bottom margin better
+when module used without decorations. */
 div#random_image {
 	text-align: center;
 	margin: 1em auto;
@@ -1618,6 +1632,7 @@ opaque .box-title,
 	vertical-align: middle;
 }
 	
+/* also for categorize.tpl */
 div.multiselect {
 	vertical-align: middle;
 	padding: 0;
@@ -1753,7 +1768,7 @@ a.categpath {
 }
 
 a.freetag,
-a.freetag:hover {
+a.freetag:hover {{/* freetags.css (line 8)*/
 	margin: auto;
 }
 
@@ -1825,7 +1840,6 @@ table.pollresults {
 }
 
 /***** FAQs *****/
-
 /***** Quizzes *****/
 /***** Shoutbox *****/
 
@@ -1837,7 +1851,7 @@ table.pollresults {
 /***** Messages *****/
 
 /***** TikiSheets *****/
-.tiki_sheet table td {
+.tiki_sheet table td { /* override .tabcontent table td */
 	padding: 0;
 }
 
@@ -1855,6 +1869,9 @@ table.pollresults {
 }
 
 /***** Calendar *****/
+/* Properties are in css/calendar.css, 
+	which can be overridden
+	in theme stylesheets.  */
 
 /***** Admin *****/
 

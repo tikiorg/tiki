@@ -10613,6 +10613,7 @@ $lang=Array(
 "Other Polls" => "סקרים אחרים",
 "votes" => "קולות",
 "on:" => "מתאריך:",
+"On:" => "מתאריך:",
 "Viewing blog post" => "צפיה בהודעת בלוג",
 "Return to blog" => "חזרה לבלוג",
 "Print multiple pages" => "הדפסת מספר עמודים",

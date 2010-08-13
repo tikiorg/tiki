@@ -29,7 +29,7 @@
 							{tr}By:{/tr} {$listpages[ix].authorName|escape}&nbsp;
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
-							{tr}on:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}&nbsp;
+							{$listpages[ix].publishDate|tiki_short_datetime:'On:'}&nbsp;
 						{/if}
 						{if $listpages[ix].show_expdate eq 'y'}
 							{tr}expires:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;

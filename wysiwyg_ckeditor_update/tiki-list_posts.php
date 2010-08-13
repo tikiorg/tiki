@@ -9,22 +9,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
 $access->check_feature('feature_blogs');
 $access->check_permission('tiki_p_blog_admin');
-/*
-if($prefs['feature_listPages'] != 'y') {
-$smarty->assign('msg',tra("This feature is disabled"));
-$smarty->display("error.tpl");
-die;
-}
-*/
-/*
-// Now check permissions to access this page
-if($tiki_p_view != 'y') {
-$smarty->assign('errortype', 401);
-$smarty->assign('msg',tra("Permission denied. You cannot view pages"));
-$smarty->display("error.tpl");
-die;
-}
-*/
+
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$bloglib->remove_post($_REQUEST["remove"]);

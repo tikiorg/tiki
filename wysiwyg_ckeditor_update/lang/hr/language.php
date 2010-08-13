@@ -11075,6 +11075,7 @@ $lang=Array(
 "Other Polls" => "Ostali upitnici",
 "votes" => "glasova",
 "on:" => "na:",
+"On:" => "Na:",
 "Viewing blog post" => "Gledanje blog poruke",
 "Return to blog" => "Nazad na blog",
 "The original document is available at" => "Originalan dokument možete naći na",

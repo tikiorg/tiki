@@ -1158,6 +1158,8 @@ function wikiplugin_tracker($data, $params)
 			}
 			if ($prefs['feature_antibot'] == 'y' && empty($user) && $registration != 'y') {
 				// in_tracker session var checking is for tiki-register.php
+				$smarty->assign('showmandatory', $showmandatory);
+				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
 				$back .= $smarty->fetch('antibot.tpl');
 			}
 			if (empty($tpl) && empty($wiki)) {

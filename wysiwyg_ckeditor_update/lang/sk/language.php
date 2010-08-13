@@ -11007,6 +11007,7 @@ $lang=Array(
 "Other Polls" => "Ostatné ankety",
 "votes" => "hlasy",
 "on:" => "v(e)",
+"On:" => "V(e)",
 "Viewing blog post" => "Prezeranie záznamu",
 "Return to blog" => "Späť na blog",
 "The original document is available at" => "Pôvodný dokument je k dispozícii na",

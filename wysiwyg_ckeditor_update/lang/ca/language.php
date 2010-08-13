@@ -12692,6 +12692,7 @@ $lang=Array(
 "Average:" => "Mitjana:",
 "Note: Remember that this is only a preview, and has not yet been saved!" => "Avís: Recorda que això és només una previsualització, i que no ha estat gravat encara!",
 "on:" => "a:",
+"On:" => "A:",
 "Topic image" => "Imatge del tòpic",
 "Viewing blog post" => "Visualitzant la publicació de la bitàcola",
 "Return to blog" => "Retorna a la bitàcola",

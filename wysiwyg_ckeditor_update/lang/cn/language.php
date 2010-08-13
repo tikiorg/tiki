@@ -11969,6 +11969,7 @@ $lang=Array(
 "Other Polls" => "其他投票",
 "votes" => "票数",
 "on:" => "在:",
+"On:" => "在:",
 "Topic image" => "主题图片",
 "Viewing blog post" => "查看博客帖子",
 "Return to blog" => "返回博客",

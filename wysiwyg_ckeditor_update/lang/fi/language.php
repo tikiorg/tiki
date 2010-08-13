@@ -11861,6 +11861,7 @@ $lang=Array(
 "votes" => "ääniä",
 "Note: Remember that this is only a preview, and has not yet been saved!" => "Huomaa: Muista, että tämä on vasta esikatselu, ja sitä ei ole tallennettu!",
 "on:" => ":",
+"On:" => ":",
 "Topic image" => "Aiheen kuva",
 "Viewing blog post" => "Näyttää blogilähetyksiä",
 "Return to blog" => "Palaa blogiin",

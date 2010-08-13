@@ -39,7 +39,7 @@
 			{* This form tag is needed when placed in a popup box through the popup function.
 			If placed in a column, there is already a form tag around the whole table *}
 
-			<form class="upform" name="form{$files[changes].fileId}" method="post" action="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data">
+			<form class="upform" name="form{$files[changes].fileId}" method="post" action="tiki-list_file_gallery.php?galleryId={$gal_info.galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data">
 
 		{/if}
 		{if $menu_text neq 'y'}

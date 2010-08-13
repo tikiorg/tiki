@@ -11186,6 +11186,7 @@ $lang=Array(
 "Other Polls" => "Andre Meningsmålinger",
 "votes" => "stemmer",
 "on:" => "den:",
+"On:" => "Den:",
 "Topic image" => "Billede for emne",
 "Viewing blog post" => "Se blog poster",
 "Return to blog" => "Retur til blog",
