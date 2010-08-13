@@ -1,6 +1,6 @@
 {strip}
 {* $Id$ *}
-<form action="tiki-index.php?page={$params.page|escape:url}" method="post">
+<form action="tiki-index.php?page={$params.page|escape:url}{$params.urlparams}" method="post">
 	{capture name=prefills}
 	{foreach from=$prefills item=field name=foo}
 		{if !$smarty.foreach.foo.first}:{/if}

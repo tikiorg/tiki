@@ -28,6 +28,11 @@ function wikiplugin_trackerprefill_info() {
 				'name' => tra('Label'),
 				'description' => tra('Button label.'),
 			),
+			'urlparams' => array(
+				'required' => false,
+				'name' => tra('URL parameters'),
+				'description' => tra('Parameters to pass in the url, e.g. &my_parameter1=123&my_parameter2=q'),
+			),
 			'field1' => array(
 				'required' => true,
 				'name' => tra('Field 1'),
