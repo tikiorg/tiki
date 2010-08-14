@@ -138,7 +138,10 @@ function FCKeditor_OnComplete( editorInstance ) {
 			if (!isset($params['name'])) { $params['name'] = 'edit'; }
 			//$cked = new TikiCK($params['name']);
 		
-			$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
+			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
+			//// note, this breaks ajax page load via wikitopline edit icon
+			//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
+			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js');
 			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js');
 		
 //			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
@@ -172,7 +175,7 @@ CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiwiki" : "t
 CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");
 ', 5);	// before dialog tools init (10)
 		}
-		if ($prefs['feature_ajax_autosave'] === 'y') {
+		if ($prefs['feature_ajax'] === 'y' && $prefs['feature_ajax_autosave'] === 'y') {
 			$headerlib->add_jq_onready('
 // --- config settings for the ajaxAutoSave plugin ---
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",ajaxAutoSave" : "ajaxAutoSave" );
@@ -180,6 +183,8 @@ CKEDITOR.plugins.addExternal( "ajaxAutoSave", "'.$tikiroot.'lib/ckeditor_tiki/pl
 CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to
 CKEDITOR.config.ajaxAutoSaveRefreshTime = 15 ;								// RefreshTime
 CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strokes
+
+ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
 		}
 		$headerlib->add_jq_onready('
@@ -197,6 +202,7 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 			$headerlib->add_js('
 var ckEditorInstances = new Array();
 function CKeditor_OnComplete() {
+	if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
 	ckEditorInstances[ckEditorInstances.length] = this;
 	this.resetDirty();
 };');
