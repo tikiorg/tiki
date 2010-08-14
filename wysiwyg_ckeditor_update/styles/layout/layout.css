@@ -1768,7 +1768,7 @@ a.categpath {
 }
 
 a.freetag,
-a.freetag:hover {{/* freetags.css (line 8)*/
+a.freetag:hover {/* freetags.css (line 8)*/
 	margin: auto;
 }
 
