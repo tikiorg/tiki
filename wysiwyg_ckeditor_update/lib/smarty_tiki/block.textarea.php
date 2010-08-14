@@ -181,7 +181,7 @@ CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugin
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to
-CKEDITOR.config.ajaxAutoSaveRefreshTime = 15 ;								// RefreshTime
+CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;								// RefreshTime
 CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strokes
 
 ajaxLoadingShow("'.$as_id.'");

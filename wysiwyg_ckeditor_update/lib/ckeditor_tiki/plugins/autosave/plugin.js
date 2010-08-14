@@ -2,7 +2,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id:  $
+// $Id$
 
 CKEDITOR.plugins.add( 'autosave',
 {
@@ -69,6 +69,7 @@ CKEDITOR.plugins.add( 'autosave',
 			jQuery.ajax({
 				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
 				data: 'script=' + editor.config.autoSaveSelf + '&editor_id=' + editor.name + '&data=' + encodeURIComponent(editor.getData()),
+				type: "POST",
 				// good callback
 				success: function(data) {
 				
