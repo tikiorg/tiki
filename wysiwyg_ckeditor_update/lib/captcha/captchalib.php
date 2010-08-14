@@ -14,7 +14,8 @@ require_once('lib/core/lib/Zend/Captcha/Image.php');
  * A simple class to switch between Zend_Captcha_Image and
  * Zend_Captcha_ReCaptcha based on admin preference
  */
-class Captcha {
+class Captcha 
+{
 
 	/**
 	 * The type of the captch ('default' when using Zend_Captcha_Image

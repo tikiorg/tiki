@@ -5,16 +5,16 @@
 {/if}
 
 <div class="post post_single">
-	<div class="postbody">
+	<div class="postbody clearfix">
 		{include file='blog_post_actions.tpl'}
 		{include file='blog_post_postbody_title.tpl'}
 		{include file='blog_post_author_info.tpl'}
 		{include file='blog_post_postbody_content.tpl'}
+		{include file='blog_post_footer.tpl'}
 		{if isset($post_info.related_posts)}
 			{include file='blog_post_related_content.tpl'}
 		{/if}
 	</div>
-	{include file='blog_post_footer.tpl'}
 </div>
 
 {if $prefs.feature_blogposts_comments == 'y'
