@@ -474,7 +474,7 @@ class ToolbarFckOnly extends Toolbar
 		case 'source':
 			return new self( 'Source' );
 		case 'autosave':
-			return new self( 'ajaxAutoSave', 'lib/fckeditor_tiki/plugins/ajaxAutoSave/images/ajaxAutoSaveDirty.gif' );
+			return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif' );
 		case 'sub':
 			return new self( 'Subscript' );
 		case 'sup':

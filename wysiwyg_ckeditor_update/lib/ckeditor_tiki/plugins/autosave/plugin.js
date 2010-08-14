@@ -17,27 +17,27 @@
  *  
  * */
 
-CKEDITOR.plugins.add( 'ajaxAutoSave',
+CKEDITOR.plugins.add( 'autosave',
 {
 	init : function( editor )
 	{
 		this.button = {
 				label : 'Auto Save',
-				command : 'ajaxAutoSave',
+				command : 'autosave',
 				icon: this.path + 'images/ajaxAutoSaveClean.gif'
 
 			};
-		editor.ui.addButton( 'ajaxAutoSave', this.button );
+		editor.ui.addButton( 'autosave', this.button );
 		
-		this.command = editor.addCommand( 'ajaxAutoSave', new CKEDITOR.command( editor ,
+		this.command = editor.addCommand( 'autosave', new CKEDITOR.command( editor ,
 			{
 				modes: { wysiwyg:1, source:1 },
+				canUndo: false,
 				exec: function(elem, editor, data) {
 					//if (!confirm("cancel=debug")){debugger;}
 					
-					editor.plugins.ajaxAutoSave.autoSaveManager.exec();
-				},
-				canUndo: false
+					editor.plugins.autosave.autoSaveManager.exec();
+				}
 			} ));
 
 		this.autoSaveManager = new AutoSaveManager( editor, this );
@@ -63,7 +63,7 @@ var AutoSaveManager = function(an_editor, a_plugin) {
 	var tempNode = new Image();
 	tempNode.src = this.plugin.path + "images/loadingSmall.gif";
 	
-	// instantiate ajaxAutoSave Object
+	// instantiate autosave Object
 	this.ajaxAutoSaveObject = new AxpObject(this.editor);
 	
 	this.editor.element.$.form.onsubmit = function() {
@@ -81,14 +81,14 @@ var AutoSaveManager = function(an_editor, a_plugin) {
 	});
 
 	this.editor.on('blur', function(event) {
-		this.plugins.ajaxAutoSave.autoSaveManager.exec();
+		this.plugins.autosave.autoSaveManager.exec();
 	});
 };
 
 AutoSaveManager.prototype = {
 
 	init: function () {
-		this.plugin.button = this.editor.getCommand("ajaxAutoSave").uiItems[0];
+		this.plugin.button = this.editor.getCommand("autosave").uiItems[0];
 	},
 	// what do we do when the button is clicked
 	exec: function() {
@@ -196,7 +196,7 @@ var AxpObject = function (editorInstance) {
 // initialize
 AxpObject.prototype.initialize = function () {
 	
-	this.asManager = this.editorInstance.plugins.ajaxAutoSave.autoSaveManager;
+	this.asManager = this.editorInstance.plugins.autosave.autoSaveManager;
 
 	// create requestObject
 	if (window.XMLHttpRequest) // Mozilla, Safari, IE7, ...
