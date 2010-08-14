@@ -119,6 +119,7 @@ abstract class Toolbar
 			'style',
 			'fontname',
 			'fontsize',
+			'format',
 			'source',
 			'fullscreen',
 			'help',
@@ -463,11 +464,13 @@ class ToolbarFckOnly extends Toolbar
 		case 'unlink':
 			return new self( 'Unlink' );
 		case 'style':
-			return new self( 'Style' );
+			return new self( 'Styles' );
 		case 'fontname':
-			return new self( 'FontName' );
+			return new self( 'Font' );
 		case 'fontsize':
 			return new self( 'FontSize' );
+		case 'format':
+			return new self( 'Format' );
 		case 'source':
 			return new self( 'Source' );
 		case 'autosave':
@@ -476,6 +479,8 @@ class ToolbarFckOnly extends Toolbar
 			return new self( 'Subscript' );
 		case 'sup':
 			return new self( 'Superscript' );
+		case 'showblocks':
+			return new self( 'ShowBlocks' );
 		}
 	} // }}}
 
@@ -588,7 +593,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'rule':
 			$label = tra('Horizontal Bar');
 			$icon = tra('pics/icons/page.png');
-			$wysiwyg = 'Rule';
+			$wysiwyg = 'HorizontalRule';
 			$syntax = '---';
 			break;
 		case 'pagebreak':
