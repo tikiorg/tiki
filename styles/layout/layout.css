@@ -189,7 +189,7 @@ li#register_link {
 
 #siteloginbar_popup #siteloginbar {
 	bottom: auto;
-	font-size: auto;
+	font-size: inherit;
 	position: static;
 	right: auto;
 	text-align: left;
@@ -201,7 +201,7 @@ li#register_link {
 
 #siteloginbar_popup .cssmenu_horiz ul li {
 	width: 100%;
-	font-size: auto;
+	font-size: inherit;
 }
 
 #siteloginbar_popup form {
@@ -1986,7 +1986,7 @@ table.treeTable .parent td {
 	font-style: italic;
 }
 
-.thumbnailcontener { border: solid 1px lightgrey; margin: 1px; padding: 2px; text-align: center;}
+.thumbnailcontener { border: solid 1px #d3d3d3; margin: 1px; padding: 2px; text-align: center;}
 
 /* jquery-ui dialogs help */
 
@@ -2089,7 +2089,7 @@ table.treeTable .parent td {
 }
 
 .author13 {
-	',  color: navy;
+	color: navy;
 }
 
 .author14 {
