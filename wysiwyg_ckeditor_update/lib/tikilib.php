@@ -5745,10 +5745,11 @@ class TikiLib extends TikiDb_Bridge
 			$data = str_replace( "((".$anchor_line."))", $repl, $data);
 		}
 
-		if (!$noparseplugins) {
-			$this->parse_first($data, $preparsed, $noparsed, $options);
+		if ($noparseplugins) {
+			$data = preg_replace('/\{(.*?)\}/', '~np~{$1}~/np~', $data);
 		}
-
+		$this->parse_first($data, $preparsed, $noparsed, $options);
+		
 		// Handle ~pre~...~/pre~ sections
 		$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
 
@@ -6367,6 +6368,9 @@ class TikiLib extends TikiDb_Bridge
 		// Now tokenize the expression and process the tokens
 		// Use tab and newline as tokenizing characters as well  ////
 		$lines = explode("\n", $data);
+		if (empty($lines[count($lines)-1]) && empty($lines[count($lines)-2])) {
+			array_pop($lines);
+		}
 		$data = '';
 		$listbeg = array();
 		$divdepth = array();
@@ -6760,7 +6764,7 @@ class TikiLib extends TikiDb_Bridge
 									// A normal in-paragraph line or a consecutive blank line.
 									// Leave it as is.
 								}
-							} elseif (empty($options['is_html']) || !$options['is_html']) {
+							} elseif ($prefs['wysiwyg_htmltowiki'] == 'y' || empty($options['is_html']) || !$options['is_html']) {
 								$line .= '<br />';
 							}
 						}
