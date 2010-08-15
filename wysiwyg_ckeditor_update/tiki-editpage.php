@@ -840,9 +840,9 @@ if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
 		$smarty->assign('allowhtml','y');
 	} elseif ($prefs['wysiwyg_htmltowiki'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y' && isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
 		if ($edit_data != 'ajax error') {
-			$parsed = $editlib->parseToWysiwyg($edit_data);
+			//$parsed = $editlib->parseToWysiwyg($edit_data);
 		} else {
-			$edit_data = '';
+//			$edit_data = '';
 			unset($_REQUEST['save']);
 		}
 	}
