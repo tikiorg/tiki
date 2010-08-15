@@ -27,7 +27,7 @@
  * @return formatted number
  */
 
-function smarty_modifier_money_format($number, $local, $currency, $format = '%(#10n', $all) 
+function smarty_modifier_money_format($number, $local, $currency, $format = '%(#10n', $display) 
 { 
 		
 	if (empty($local)) {
@@ -35,7 +35,11 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
         	setlocale(LC_MONETARY, '');
 		}
 	} else {
-		setlocale(LC_MONETARY, $local);
+		$ret = setlocale(LC_MONETARY, $local);
+		if ($ret===FALSE) {
+			echo "'$local' is not supported by this system.\n";
+			return;
+    	}
 	} 
 	
 	$locale = localeconv();
@@ -74,7 +78,6 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
         $letter = $positive ? 'p' : 'n'; 
 
         $prefix = $suffix = $cprefix = $csuffix = $signal = ''; 
-
         $signal = $positive ? $locale['positive_sign'] : $locale['negative_sign']; 
         switch (true) { 
             case $locale["{$letter}_sign_posn"] == 1 && $flags['usesignal'] == '+': 
@@ -94,9 +97,10 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
             	if ($positive == false) {
                 	$prefix = '('; 
                 	$suffix = ')';
-            	} 
+             	}
                 break; 
         } 
+
         if (!$flags['nosimbol']) { 
             $currency = $cprefix . 
                         ($conversion == 'i' ? $locale['int_curr_symbol'] : $locale['currency_symbol']) . 
@@ -104,7 +108,7 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
         } else { 
             $currency = ''; 
         } 
-        $space  = $locale["{$letter}_sep_by_space"] ? ' ' : ''; 
+        $space  = $locale["{$letter}_sep_by_space"] && !empty($currency) ? ' ' : ''; 
 
         $value = number_format($value, $right, $locale['mon_decimal_point'], 
                  $flags['nogroup'] ? '' : $locale['mon_thousands_sep']); 
@@ -114,31 +118,23 @@ function smarty_modifier_money_format($number, $local, $currency, $format = '%(#
         if ($left > 0 && $left > $n) { 
             $value[0] = str_repeat($flags['fillchar'], $left - $n) . $value[0]; 
         } 
-        $value = implode($locale['mon_decimal_point'], $value); 
+        $value = implode($locale['mon_decimal_point'], $value);
+
         if ($locale["{$letter}_cs_precedes"]) { 
             $value = $prefix . $currency . $space . $value . $suffix; 
-        } else { 
-            $value = $prefix . $value . $space . $currency . $suffix; 
-        } 
-        if ($all == 0 && $locale["{$letter}_cs_precedes"] == FALSE) {
-        	if ($locale["{$letter}_sep_by_space"] == TRUE && $positive) {
-        		$value .= '&nbsp;&nbsp;';
-        	} else {
-        		$value .= '&nbsp;';
-        	}
-        	if ($conversion == 'i' || strlen($locale['currency_symbol']) > 1) {
-        		$value .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-        	}
+            //create right pad for alignment
+            $rightpad = empty($suffix) && $flags['usesignal'] == '(' ? ')' : '';
+        } else {	
+            $value = $prefix . $value . $space . $currency . $suffix;
+            //create right pad for alignment
+            $rightpad = $locale['n_sep_by_space'] == true && $locale['n_cs_precedes'] == false && strlen($space) == 0 ? ' ' : '';
+        	$currpad = $conversion == 'i' ? $locale['int_curr_symbol'] : $locale['currency_symbol'];
+            $rightpad .= ($locale['p_cs_precedes'] == false || $locale['n_cs_precedes'] == false) && empty($currency) ? $currpad : '';
+            $rightpad .= empty($suffix) && $flags['usesignal'] == '(' ? ')' : '';
         }
-        if ($positive) {
-			$value .= '&nbsp;';       	
-        }
-/*        if ($width > 0) { 
-            $value = str_pad($value, $width, $flags['fillchar'], $flags['isleft'] ? 
-                     STR_PAD_RIGHT : STR_PAD_LEFT); 
-        } */
-
+ 
         $format = str_replace($fmatch[0], $value, $format); 
+        $format = !empty($rightpad) ? $format .= '<span style="visibility:hidden">' . $rightpad .  '</span>' : $format;
     } 
     return $format; 
 }
