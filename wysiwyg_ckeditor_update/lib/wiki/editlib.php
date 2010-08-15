@@ -211,12 +211,12 @@ class EditLib
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-			$parsed = $tikilib->parse_data($parsed,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => 'y'));
+			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => 'y'));
 		} else {
-			$parsed = $tikilib->parse_data($parsed,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
+			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
 		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
-		$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
+		$parsed = preg_replace("/src=\"img\/smiles\//im","src=\".*img/smiles/", $parsed);	// fix smiley src's
 		$parsed = str_replace( 
 				array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
 				array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
@@ -272,14 +272,14 @@ class EditLib
 								&& $c[$i]['pars']['style']['value'] == 'text-align: center;' ) {
 									if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 										$src .= $this->startNewLine($src) .":::";
-										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n");
+										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n\n");
 									} else {
 										$src .= $this->startNewLine($src) . "::";
-										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n");
+										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n\n");
 									}
 							} else {
 								$src .= $this->startNewLine($src);
-								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n"); 
+								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n"); 
 							}
 							break;
 						case "span":
@@ -337,7 +337,7 @@ class EditLib
 						case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}"); break;
 						// Table parser
 						case "table": $src .= $this->startNewLine($src) . '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true; break;
-						case "tr": $src .= $p['first_tr'] ? '' : "\n"; $p['first_tr'] = false; $p['first_td'] = true; break;
+						case "tr": $src .= $p['first_tr'] ? '' : $this->startNewLine($src); $p['first_tr'] = false; $p['first_td'] = true; break;
 						case "td": $src .= $p['first_td'] ? '' : '|'; $p['first_td'] = false; break;
 						// Lists parser
 						case "ul": $p['listack'][] = '*'; break;

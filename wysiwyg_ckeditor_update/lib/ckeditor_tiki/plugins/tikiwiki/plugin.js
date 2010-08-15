@@ -25,6 +25,7 @@ CKEDITOR.plugins.add('tikiwiki',{
 	toWikiFormat: function ( editor, html, fixForBody ) {
 		// try ajax
 		var output = "";
+		ajaxLoadingShow( "cke_contents_" + editor.name);
 		jQuery.ajax({
 			async: false,	// wait for this one
 			url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
@@ -44,12 +45,14 @@ CKEDITOR.plugins.add('tikiwiki',{
 				output = "ajax error";
 			}
 		});
+		ajaxLoadingHide();
 		return output;
 	},
 	
 	toHtmlFormat: function ( editor, data ) {
 		// deal with plugins here?
 		var output = "";
+		ajaxLoadingShow( "cke_contents_" + editor.name);
 		jQuery.ajax({
 			async: false,	// wait for this one
 			url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
@@ -69,6 +72,7 @@ CKEDITOR.plugins.add('tikiwiki',{
 				output = "ajax error";
 			}
 		});
+		ajaxLoadingHide();
 		return output;
 	}
  
