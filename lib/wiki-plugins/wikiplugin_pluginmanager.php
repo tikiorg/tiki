@@ -199,9 +199,9 @@ class WikiPluginPluginManager extends PluginsLib
         			$rows .= "\n\t" . '<tr class="' . $class . '">' . $cellbegin;
         			//Parameters column
         			if (isset($paraminfo['required']) && $paraminfo['required'] == true) {
-        				$rows .= '<b>' . $paramname . '</b>';
+        				$rows .= '<b><em>' . $paramname . '</em></b>';
         			} else {
-        				$rows .= $paramname;
+        				$rows .= '<em>' . $paramname . '</em>' ;
         			}
         			$rows .= '</td>';
         			$rows .= $cellbegin;
@@ -259,7 +259,11 @@ class WikiPluginPluginManager extends PluginsLib
         		$rows .= "\n\t" . '<tr class="odd">' . $cellbegin . '<em>no parameters</em></td>';
         	}
         	$header .= "\n\t" . '</tr>';
-        	$sOutput = $title . '<em>Required parameters are in</em> <b>bold</b><br /><table class="normal">' . $header . $rows . '</table>' . "\n";
+        	if (!empty($infoPlugin['prefs'])) {
+        		$pluginprefs = '<em>Preferences required:</em> ' . implode(', ', $infoPlugin['prefs']);
+        	}
+        	$sOutput = $title . '<em>Required parameters are in</em> <b>bold</b><br />' . 
+        				$pluginprefs . '<br/>' . '<table class="normal">' . $header . $rows . '</table>' . "\n";
         	return $sOutput;
         }
     }
@@ -274,7 +278,7 @@ class WikiPluginPluginManager extends PluginsLib
 function wikiplugin_pluginmanager_info() {
     return array(
     	'name' => tra('Plugin Manager'),
-    	'documentation' => 'PluginManager',
+    	'documentation' => 'PluginPluginManager',
     	'description' => tra("Displays a list of plugins available in this wiki."),
     	'prefs' => array( 'wikiplugin_pluginmanager' ),
     	'introduced' => 3,

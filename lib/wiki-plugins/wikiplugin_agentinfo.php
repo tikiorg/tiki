@@ -14,7 +14,7 @@ function wikiplugin_agentinfo_help() {
 
 function wikiplugin_agentinfo_info() {
 	return array(
-		'name' => tra( 'User-Agent Info' ),
+		'name' => tra( 'User Agent Info' ),
 		'documentation' => 'PluginAgentinfo',
 		'description' => tra( 'Displays various information about the client.' ),
 		'prefs' => array('wikiplugin_agentinfo'),
@@ -22,7 +22,15 @@ function wikiplugin_agentinfo_info() {
 			'info' => array(
 				'required' => false,
 				'name' => tra('Info'),
-				'description' => tra('Info required - IP|SVRSW|BROWSER'),
+				'description' => tra('Display\'s the visitor\'s IP address (IP or default), browser information (BROWSER), or server software (SVRSW).'),
+				'default' => 'IP',
+				'filter' => 'alpha',
+    			'options' => array(
+					array('text' => tra('IP address'), 'value' => 'IP'), 
+					array('text' => tra('Server software'), 'value' => 'SVRSW'), 
+					array('text' => tra('Browser'), 'value' => 'BROWSER'), 
+				),  		
+				
 			),
 		),
 	);
