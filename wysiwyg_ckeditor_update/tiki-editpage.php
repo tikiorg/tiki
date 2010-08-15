@@ -838,8 +838,13 @@ if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
 		}
 		$info['wysiwyg'] = true;
 		$smarty->assign('allowhtml','y');
-	} elseif (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
-		$parsed = $tikilib->parse_data($parsed, array('is_html' => true, 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
+	} elseif ($prefs['wysiwyg_htmltowiki'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y' && isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
+		if ($edit_data != 'ajax error') {
+			$parsed = $editlib->parseToWysiwyg($edit_data);
+		} else {
+			$edit_data = '';
+			unset($_REQUEST['save']);
+		}
 	}
 }
 

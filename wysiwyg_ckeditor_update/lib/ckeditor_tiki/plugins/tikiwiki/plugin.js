@@ -1,68 +1,76 @@
-﻿/*
- * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2007 Frederico Caldeira Knabben
- * Copyright (C) 2008-2009 Stéphane Casset for the Tikiwiki Team
- * Adapted for ckeditor by jonnyb for tiki
- *
- * == BEGIN LICENSE ==
- *
- * Licensed under the terms of any of the following licenses at your
- * choice:
- *
- *  - GNU General Public License Version 2 or later (the "GPL")
- *    http://www.gnu.org/licenses/gpl.html
- *
- *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
- *    http://www.gnu.org/licenses/lgpl.html
- *
- *  - Mozilla Public License Version 1.1 or later (the "MPL")
- *    http://www.mozilla.org/MPL/MPL-1.1.html
- *
- * == END LICENSE ==
- *
- * Main TikiWiki integration plugin.
- * Based on work done by the MediaWiki Team, big thanx to them
- */
-
-
-/* from: http://mediawiki.fckeditor.net/index.php/Talk:Main_Page#CKEditor
+﻿/* (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
  * 
- * This plugin allows custom output for CKEditor
- * It could be used for any language type such as for a wiki or BBCode
- * @author Juan Valencia
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ * $Id$
+ *
+ * Main Tiki Wiki markup integration plugin.
+ * 
+ * Based on work done by the MediaWiki Team for FCKEditor, big thanx to them
+ *
+ * Initial clues from: http://mediawiki.fckeditor.net/index.php/Talk:Main_Page#CKEditor
+ * (author Juan Valencia, thanks also)
  */
  
 CKEDITOR.plugins.add('tikiwiki',{    
 	init: function(editor)    {  
-		//alert("It Loaded!" + CKEDITOR.timestamp);		
-		editor.dataProcessor.toDataFormat = function (html, fixForBody) { return transform(html); };
-//		editor.dataProcessor.toHtml = function (data, fixForBody) { return reform(data); };
+		var twplugin = this;
+			
+		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return twplugin.toWikiFormat( editor, html ); };
+		editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return twplugin.toHtmlFormat( editor, data ); };
 		
 		// button stuff goes here?
+	},
+	
+	toWikiFormat: function ( editor, html, fixForBody ) {
+		// try ajax
+		var output = "";
+		jQuery.ajax({
+			async: false,	// wait for this one
+			url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
+			type: "POST",
+			data: {
+				script: editor.config.autoSaveSelf,
+				editor_id: editor.name,
+				data: encodeURIComponent(html),
+				command: "toWikiFormat"
+			},
+			// good callback
+			success: function(data) {
+				output = unescape(jQuery(data).find('data').text());
+			},
+			// bad callback - no good info in the params :(
+			error: function(req, status, error) {
+				output = "ajax error";
+			}
+		});
+		return output;
+	},
+	
+	toHtmlFormat: function ( editor, data ) {
+		// deal with plugins here?
+		var output = "";
+		jQuery.ajax({
+			async: false,	// wait for this one
+			url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
+			type: "POST",
+			data: {
+				script: editor.config.autoSaveSelf,
+				editor_id: editor.name,
+				data: encodeURIComponent(data),
+				command: "toHtmlFormat"
+			},
+			// good callback
+			success: function(data) {
+				output = unescape(jQuery(data).find('data').text());
+			},
+			// bad callback - no good info in the params :(
+			error: function(req, status, error) {
+				output = "ajax error";
+			}
+		});
+		return output;
 	}
  
 });
  
-/*
- * transform takes the html that is in the editor window and changes it 
- * to the output data format.
- * @param {String} html The html to convert to the new format
- * return the new output String.
- */
- 
-function transform(html) {
-	debugger;
-	return html;
-}
- 
-/*
- * reform takes the data format that you are outputing to and reforms it back into
- * good html
- * @param {String} data The data string to convert back to html
- */
- 
-function reform(data) {
-	debugger;
-	return data;
-}
-
