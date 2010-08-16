@@ -1,4 +1,4 @@
-﻿/* (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+﻿﻿/* (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
  * 
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -25,7 +25,7 @@ CKEDITOR.plugins.add('tikiwiki',{
 	toWikiFormat: function ( editor, html, fixForBody ) {
 		// try ajax
 		var output = "";
-		ajaxLoadingShow( "cke_contents_" + editor.name);
+		//ajaxLoadingShow( "cke_contents_" + editor.name); eats keystrokes
 		jQuery.ajax({
 			async: false,	// wait for this one
 			url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
@@ -45,7 +45,7 @@ CKEDITOR.plugins.add('tikiwiki',{
 				output = "ajax error";
 			}
 		});
-		ajaxLoadingHide();
+		//ajaxLoadingHide();
 		return output;
 	},
 	
