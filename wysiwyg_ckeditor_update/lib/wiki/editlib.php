@@ -267,9 +267,8 @@ class EditLib
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
 						case "p":
 						case "div": // Wiki parsing creates divs for center
-							if( isset($c[$i]['pars']) 
-								&& isset($c[$i]['pars']['style']) 
-								&& $c[$i]['pars']['style']['value'] == 'text-align: center;' ) {
+							if(isset($c[$i]['pars']['style']['value'])) {
+								if ( strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
 									if ($prefs['feature_use_three_colon_centertag'] == 'y') {
 										$src .= $this->startNewLine($src) .":::";
 										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n\n");
@@ -277,7 +276,11 @@ class EditLib
 										$src .= $this->startNewLine($src) . "::";
 										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n\n");
 									}
-							} else {
+								} else if ( strpos($c[$i]['pars']['style']['value'],'text-align: right;') !== false ){
+										$src .= $this->startNewLine($src) .'{DIV(type="p",align="right")}';
+										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "{DIV}\n\n");
+								}
+							} else {	// normal para or div
 								$src .= $this->startNewLine($src);
 								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n"); 
 							}
@@ -311,7 +314,7 @@ class EditLib
 						case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
 						case "em": $src .= "''"; $p['stack'][] = array('tag' => 'em', 'string' => "''"); break;
 						case "strong": $src .= '__'; $p['stack'][] = array('tag' => 'strong', 'string' => '__'); break;
-						case "u": $src .= "=="; $p['stack'][] = array('tag' => 'u', 'string' => "=="); break;
+						case "u": $src .= "==="; $p['stack'][] = array('tag' => 'u', 'string' => "==="); break;
 						case "strike": $src .= "--"; $p['stack'][] = array('tag' => 'strike', 'string' => "--"); break;
 						case "del": $src .= "--"; $p['stack'][] = array('tag' => 'del', 'string' => "--"); break;
 						case "center":
@@ -344,10 +347,7 @@ class EditLib
 						case "ol": $p['listack'][] = '#'; break;
 						case "li":
 							// Generate wiki list item according to current list depth.
-							// (ensure '*/#' starts from begining of line)
-							$temp_max = count($p['listack']);
-							for ($l = ''; strlen($l) < $temp_max; $l .= end($p['listack']));	// needs strlen function in 2nd for loop argument
-							$src .= "\n$l ";
+							$src .=  $this->startNewLine($src) . str_repeat( end($p['listack']), count($p['listack']));
 							break;
 						case "font":
 							// If color attribute present in <font> tag
