@@ -7589,6 +7589,10 @@ class TikiLib extends TikiDb_Bridge
 
 	function make_time($hour,$minute,$second,$month,$day,$year) {
 		global $tikidate, $tikilib, $prefs;
+		if (!is_object($tikidate)) {
+			require_once('lib/tikidate.php');
+			$tikidate = new TikiDate();
+		}
 		$display_tz = $tikilib->get_display_timezone();
 		if ( $display_tz == '' ) $display_tz = 'UTC';
 		$tikidate->setTZbyID($display_tz);
