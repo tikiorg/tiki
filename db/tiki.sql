@@ -304,6 +304,7 @@ CREATE TABLE `tiki_blogs` (
   `show_avatar` char(1) default NULL,
   `always_owner` char(1) default NULL,
   `show_related` char(1) default NULL,
+  `related_max` int(4) default 5,
   PRIMARY KEY (`blogId`),
   KEY `title` (`title`),
   KEY `description` (`description`(255)),

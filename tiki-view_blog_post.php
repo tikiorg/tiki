@@ -67,7 +67,7 @@ if ($prefs['feature_freetags'] == 'y') {
 	$smarty->assign('tags', $tags);
 
 	if ($blog_data['show_related'] == 'y' && !empty($tags)) {
-		$post_info['related_posts'] = $bloglib->get_related_posts($postId);
+		$post_info['related_posts'] = $bloglib->get_related_posts($postId, $blog_data['related_max']);
 	}
 }
 
