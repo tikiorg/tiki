@@ -4841,7 +4841,7 @@ class TikiLib extends TikiDb_Bridge
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 						global $headerlib;
 						$headerlib->add_jsfile( 'tiki-jsplugin.php?language='.$prefs['language'], 'dynamic' );
-						if( $options['fck'] !== 'y' && $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) && !$options['suppress_icons'] ) {
+						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) && !$options['suppress_icons'] ) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $page;
 							$id = 'plugin-edit-' . $plugin_name . $current_index;
@@ -5612,7 +5612,7 @@ class TikiLib extends TikiDb_Bridge
 		$closed = 0;	// Set to non-zero if something has been closed out
 		// Close the paragraph if inside one.
 		if ($close_paragraph && $in_paragraph) {
-			$data .= "</p>";
+			$data .= "</p>\n";
 			$in_paragraph = 0;
 			$closed++;
 		}
@@ -5633,9 +5633,6 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		if ($closed) {
-			$data .= "\n";
-		}
 		return $closed;
 	}
 
@@ -5745,10 +5742,11 @@ class TikiLib extends TikiDb_Bridge
 			$data = str_replace( "((".$anchor_line."))", $repl, $data);
 		}
 
-		if (!$noparseplugins) {
-			$this->parse_first($data, $preparsed, $noparsed, $options);
+		if ($noparseplugins) {
+			$data = preg_replace('/\{(.*?)\}/', '~np~{$1}~/np~', $data);
 		}
-
+		$this->parse_first($data, $preparsed, $noparsed, $options);
+		
 		// Handle ~pre~...~/pre~ sections
 		$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
 
@@ -5815,24 +5813,14 @@ class TikiLib extends TikiDb_Bridge
 		if (!$simple_wiki) {
 			// Replace boxes
 			$data = preg_replace("/\^([^\^]+)\^/", "<div class=\"simplebox\">$1</div>", $data);
-			if ( $options['fck'] === 'y' ) {
-				// Underlined text
-				$data = preg_replace("/===(.+?)===/", "<u>$1</u>", $data);
-				// Center text
-				if ($prefs['feature_use_three_colon_centertag'] == 'y') {
-					$data = preg_replace("/:::(.+?):::/", "<center>$1</center>", $data);
-				} else {
-					$data = preg_replace("/::(.+?)::/", "<center>$1</center>", $data);
-				}
+
+			// Underlined text
+			$data = preg_replace("/===(.+?)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
+			// Center text
+			if ($prefs['feature_use_three_colon_centertag'] == 'y') {
+				$data = preg_replace("/:::(.+?):::/", "<div style=\"text-align: center;\">$1</div>", $data);
 			} else {
-				// Underlined text
-				$data = preg_replace("/===(.+?)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
-				// Center text
-				if ($prefs['feature_use_three_colon_centertag'] == 'y') {
-					$data = preg_replace("/:::(.+?):::/", "<div style=\"text-align: center;\">$1</div>", $data);
-				} else {
-					$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
-				}
+				$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
 			}
 		}
 
@@ -6367,6 +6355,9 @@ class TikiLib extends TikiDb_Bridge
 		// Now tokenize the expression and process the tokens
 		// Use tab and newline as tokenizing characters as well  ////
 		$lines = explode("\n", $data);
+		if (empty($lines[count($lines)-1]) && empty($lines[count($lines)-2])) {
+			array_pop($lines);
+		}
 		$data = '';
 		$listbeg = array();
 		$divdepth = array();
@@ -6690,7 +6681,10 @@ class TikiLib extends TikiDb_Bridge
 										);
 						//}
 						global $tiki_p_edit, $section;
-						if ($options['fck'] !== 'y' && $prefs['wiki_edit_section'] === 'y' && $section === 'wiki page' && $tiki_p_edit === 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) && (empty($options['print']) || !$options['print']) && !$options['suppress_icons'] ){
+						if ($prefs['wiki_edit_section'] === 'y' && $section === 'wiki page' && $tiki_p_edit === 'y' &&
+								( $prefs['wiki_edit_section_level'] == 0 || $hdrlevel <= $prefs['wiki_edit_section_level']) &&
+								(empty($options['print']) || !$options['print']) && !$options['suppress_icons'] ) {
+
 							global $smarty;
 							include_once('lib/smarty_tiki/function.icon.php');
 							$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
@@ -6743,25 +6737,29 @@ class TikiLib extends TikiDb_Bridge
 						 */
 						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 &&  $inScript == 0
 								// Don't put newlines at comments' end!
-								&& ! substr_count(strtolower($line), "-->")
+								&& strpos($line, "-->") === false
 							 ) {
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								if ($in_paragraph && ( 0 == strcmp("", trim($line)) || substr(trim($line),0,5) == '</div' || substr(trim($line),0,4) == '<div')) {
+								$tline = trim($line);
+								if ($in_paragraph && (empty($line) || preg_match('/<[\/]?div/', $tline))) {
 									// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 									$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-								} elseif (!$in_paragraph && (0 != strcmp("", trim($line))) && substr(trim($line),0,4) != '<div' && substr(trim($line),0,5) != '</div' && !preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $line)) {	// and not noparse guid
+								} elseif (!$in_paragraph && !preg_match('/<[\/]?div/', $tline) && !preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $tline)) {	// and not noparse guid -  && !empty($line)
 									// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 									$data .= "<p>";
+									if (empty($line)) {
+										$line = '&nbsp;';
+									}
 									$in_paragraph = 1;
-								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && substr(trim($line),0,5) != '</div' && substr(trim($line),0,4) != '<div') {
+								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !preg_match('/<[\/]?div/', trim($line))) {
 									// A normal in-paragraph line if not close of div created by plugins
-									$line = '<br />' . $line;
+									$line = "<br />\n" . $line;
 								} else {
 									// A normal in-paragraph line or a consecutive blank line.
 									// Leave it as is.
 								}
-							} elseif (empty($options['is_html']) || !$options['is_html']) {
-								$line .= '<br />';
+							} elseif ($prefs['wysiwyg_htmltowiki'] === 'y' || strpos($line, '<br />') === false || empty($options['is_html']) || !$options['is_html']) {
+								$line .= "<br />\n";
 							}
 						}
 					}
@@ -6920,7 +6918,9 @@ class TikiLib extends TikiDb_Bridge
 		}
 		$data = $new_data.$data;
 		// Add icon to edit the text before the first section (if there is some)
-		if ($options['fck'] !== 'y' && $prefs['wiki_edit_section'] === 'y' && isset($section) && $section === 'wiki page' && $tiki_p_edit === 'y' && (empty($options['print']) || !$options['print'])  && strpos($data, '<div class="icon_edit_section">') != 0 && !$options['suppress_icons']){
+		if ($prefs['wiki_edit_section'] === 'y' && isset($section) && $section === 'wiki page' && $tiki_p_edit === 'y' && (empty($options['print']) ||
+				!$options['print'])  && strpos($data, '<div class="icon_edit_section">') != 0 && !$options['suppress_icons']) {
+					
 			global $smarty;
 			include_once('lib/smarty_tiki/function.icon.php');
 			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
