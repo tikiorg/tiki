@@ -725,8 +725,12 @@ function wikiplugin_tracker($data, $params)
 								break;
 							}
 						}
-						if (strstr($url[$key], 'itemId')) {
-							$url[$key] = str_replace('itemId', 'itemId='.$rid, $url[$key]);
+						$itemIdPos = strpos($url[$key], 'itemId');
+						if ($itemIdPos !== false) {
+							// replace by the itemId if in the end (or -1: for backward compatibility so that "&itemId=" also works) or if it is followed by an '&'
+							if (($itemIdPos+strlen('itemId') >= strlen($url[$key])-1) || (substr($url[$key],$itemIdPos+strlen('itemId'),1) == "&")) {
+								$url[$key] = str_replace('itemId', 'itemId='.$rid, $url[$key]);
+							}
 						}
 						header('Location: '.$url[$key]);
 						die;
