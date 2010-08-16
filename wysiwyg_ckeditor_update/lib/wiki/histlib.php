@@ -331,7 +331,8 @@ class HistLib extends TikiLib
  * @author cdrwhite
  * @since 6.0
  */
-class Document {
+class Document
+{
 	
 	/**
 	 * @var	array	a list of words and whitespaces represented by an array(word,author,deleted,diffid,[deleted_by])

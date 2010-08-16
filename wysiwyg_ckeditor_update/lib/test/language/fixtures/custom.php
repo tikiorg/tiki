@@ -6,4 +6,3 @@ $lang=array (
 'Something' => 'Algo',
 'Trying to insert malicious PHP code back to the language.php file' => 'asff"); echo \'teste\'; $dois = array(\'\',"',
 );
-?>

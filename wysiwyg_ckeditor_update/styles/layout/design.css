@@ -259,7 +259,7 @@ ul.categories li {
 /* Todo: additional font family and bg color. */
 .inline_syntax {
 	font-family: "Lucida Console";
-	color: brown;
+	color: #a52a2a;
 }
 
 /* New Toolbars */
@@ -624,7 +624,7 @@ ul.toc * {
 .diffadded {
 	background: #ccffcc;
 	color: #000;
-	word-wrap:break-word;
+	/*word-wrap:break-word;*/
 	max-width: 400px;
 }
 
@@ -632,7 +632,7 @@ ul.toc * {
 	background: #ffcccc;
 	color: #000;
 	text-decoration: line-through;
-	word-wrap:break-word;
+	/*word-wrap:break-word;*/
 	max-width: 400px;
 }
 

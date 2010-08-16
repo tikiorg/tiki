@@ -725,8 +725,12 @@ function wikiplugin_tracker($data, $params)
 								break;
 							}
 						}
-						if (strstr($url[$key], 'itemId')) {
-							$url[$key] = str_replace('itemId', 'itemId='.$rid, $url[$key]);
+						$itemIdPos = strpos($url[$key], 'itemId');
+						if ($itemIdPos !== false) {
+							// replace by the itemId if in the end (or -1: for backward compatibility so that "&itemId=" also works) or if it is followed by an '&'
+							if (($itemIdPos+strlen('itemId') >= strlen($url[$key])-1) || (substr($url[$key],$itemIdPos+strlen('itemId'),1) == "&")) {
+								$url[$key] = str_replace('itemId', 'itemId='.$rid, $url[$key]);
+							}
 						}
 						header('Location: '.$url[$key]);
 						die;
@@ -1023,7 +1027,11 @@ function wikiplugin_tracker($data, $params)
 							// we prentended it was an item link
 							$bindingValue = $trklib->get_item_value($trackerId, $itemId, $f['options_array'][2]);
 							$bindingItemLinkField = $trklib->get_tracker_field($f['options_array'][2]);
-							$bindingValueIndex = $trklib->get_item_id($bindingItemLinkField['options_array'][0], $bindingItemLinkField['options_array'][3], $bindingValue);
+							if ($bindingItemLinkField['type'] != 'r') {
+								$bindingValueIndex = $trklib->get_item_id($trackerId, $f['options_array'][2], $bindingValue);
+							} else {
+								$bindingValueIndex = $trklib->get_item_id($bindingItemLinkField['options_array'][0], $bindingItemLinkField['options_array'][3], $bindingValue);
+							}
 							$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValueIndex, $f['options_array'][3]);
 						}
 					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {

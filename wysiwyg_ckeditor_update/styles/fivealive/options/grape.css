@@ -252,7 +252,7 @@ div.quotebody {
 }
 
 .postbody-title {
-	background: #97286e url(grape/header.png) -650px -90px;
+	background: #97286e url(grape/siteheader.png) -550px -90px no-repeat;
 }
 
 .post .author,
