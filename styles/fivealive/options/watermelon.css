@@ -247,7 +247,7 @@ div.quotebody {
 }
 
 .postbody-title {
-	background: #e31e40;
+	background: #e31e40 url(watermelon/siteheader.png) -550px -90px no-repeat;
 }
 
 .post .author,

@@ -237,7 +237,7 @@ div.quotebody {
 }
 
 .postbody-title {
-	background: #ffc506;
+	background: #ffc506 url(lemon/siteheader.png) -550px -90px no-repeat;
 }
 
 .post .author,
