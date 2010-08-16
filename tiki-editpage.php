@@ -825,20 +825,10 @@ if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
 		$info['is_html'] = false;
 		$info['wysiwyg'] = false;
 		$smarty->assign('allowhtml','n');
-	} elseif ( (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') || (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y') ) {
+	} elseif (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y') {
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$smarty->assign('msg', "Parsing wiki to html");
-		$secedit = $prefs['wiki_edit_section'];
-		$prefs['wiki_edit_section'] = 'n';		// get rid of the section edit icons
-		$exticons = $prefs['feature_wiki_ext_icon'];
-		$prefs['feature_wiki_ext_icon'] = 'n';		// and the external link icons
-		$editplugin = $prefs['wiki_edit_plugin'];
-		$prefs['wiki_edit_plugin'] = 'n';		// and the external link icons
 		$parsed = $editlib->parseToWysiwyg($edit_data);
-		$smarty->assign('pagedata', $parsed);
-		$prefs['wiki_edit_section'] = $secedit;
-		$prefs['feature_wiki_ext_icon'] = $exticons;
-		$prefs['wiki_edit_plugin'] = $editplugin;
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
 			$is_html = false;
 			$info['is_html'] = false;
@@ -848,6 +838,13 @@ if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
 		}
 		$info['wysiwyg'] = true;
 		$smarty->assign('allowhtml','y');
+	} elseif ($prefs['wysiwyg_htmltowiki'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y' && isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
+		if ($edit_data != 'ajax error') {
+			//$parsed = $editlib->parseToWysiwyg($edit_data);
+		} else {
+//			$edit_data = '';
+			unset($_REQUEST['save']);
+		}
 	}
 }
 

@@ -62,15 +62,20 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	
 	$auto_save_referrer = '';
 	$auto_save_warning = '';
-	if ($params['_wysiwyg'] != 'y') {
-		$as_id = $params['id'];
-	} else {
-		$as_id = $params['name'];
+	$as_id = $params['id'];
+	
+	// fix for Firefox 3.5 and newer. *lite.css defined the document body as display:table, which seems to upset Firefox
+	// and makes it lose it's selection info when the DOM changes (like when a picker or menu is generated)
+	// this fixes it but apparently (according to *lite.css author Luci) will cause some layout issues:
+	// He says: "it's necessary for expanding content (pushing right column) to the right properly"
+	// but it looks fine to me
+	if (preg_match('/Firefox\/(\d)+\.(\d)+/i', $_SERVER['HTTP_USER_AGENT'], $m) &&count($m) > 2 && $m[1] >=3 && ($m[2] >=5 || $m[1] > 3)) {
+		$headerlib->add_css('body {display: block; }', 10);
 	}
 	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
 
-		if (empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') {
+		if ((empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') && (!isset($_REQUEST['mode_wysiwyg']) || $_REQUEST['mode_wysiwyg'] !== 'y')) {
 			if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?
 				$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $auto_save_referrer));
 				
@@ -130,7 +135,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 			
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 			
-			$headerlib->add_jq_onready('$(".fckeditzone").resizable({ minWidth: $("#'.$as_id.'").width(), minHeight: 50 });');
+			//$headerlib->add_jq_onready('$(".fckeditzone").resizable({ minWidth: $("#'.$as_id.'").width(), minHeight: 50 });');
 
 		} else {									// new ckeditor implementation 2010
 
@@ -138,17 +143,15 @@ function FCKeditor_OnComplete( editorInstance ) {
 			if (!isset($params['name'])) { $params['name'] = 'edit'; }
 			//$cked = new TikiCK($params['name']);
 		
+			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
+			//// note, this breaks ajax page load via wikitopline edit icon
+			//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
 			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js');
 			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js');
 		
-			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-				$cked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
-				$cked->Config['autoSaveEditorId'] = $as_id;
-			}
-//			if (isset($params['ToolbarSet'])) {
-//				$cked->ToolbarSet = $params['ToolbarSet'];
-//			} else {
-//				$cked->ToolbarSet = 'Tiki';
+//			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
+//				$cked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
+//				$cked->Config['autoSaveEditorId'] = $as_id;
 //			}
 			
 			include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
@@ -167,19 +170,46 @@ function FCKeditor_OnComplete( editorInstance ) {
 			//$html .= $cked->CreateHtml();
 			
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+			global $tikiroot;
 			$headerlib->add_jq_onready('
+CKEDITOR.config._TikiRoot = "'.$tikiroot.'";
+');	// before all
+		
+		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+			$headerlib->add_jq_onready('
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
+CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");
+', 5);	// before dialog tools init (10)
+		}
+		if ($prefs['feature_ajax'] === 'y' && $prefs['feature_ajax_autosave'] === 'y') {
+			$headerlib->add_jq_onready('
+// --- config settings for the autosave plugin ---
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
+CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
+CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to
+CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;								// RefreshTime
+CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strokes
+
+ajaxLoadingShow("'.$as_id.'");
+', 5);	// before dialog tools init (10)
+		}
+		$headerlib->add_jq_onready('
 $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	toolbar_Tiki: '.$cktools.',
 	toolbar: "Tiki",
-	language: "'.$prefs['language'].'"
+	language: "'.$prefs['language'].'",
+	customConfig: "",
+	autoSaveSelf: "'.$auto_save_referrer.'"		// unique reference for each page set up in ensureReferrer()
 });
-', 4);
-			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="display:none; width: '.$params['width'].'; height: '.$params['height'].';">'.htmlspecialchars($content).'</textarea>';
+', 20);	// after dialog tools init (10)
+
+			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;" rows="'.$params['rows'].'"; cols="'.$params['cols'].'">'.htmlspecialchars($content).'</textarea>';
 			
 			$headerlib->add_js('
-var fckEditorInstances = new Array();
+var ckEditorInstances = new Array();
 function CKeditor_OnComplete() {
-	fckEditorInstances[fckEditorInstances.length] = this;
+	if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
+	ckEditorInstances[ckEditorInstances.length] = this;
 	this.resetDirty();
 };');
 			

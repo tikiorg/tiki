@@ -192,30 +192,31 @@ class EditLib
 		
 	}
 
-	function parseToWiki(&$inData) {
+	function parseToWiki( $inData ) {
 		global $prefs;
-		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-			$parsed = $inData;
-		} else {
+//		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+//			$parsed = $inData;
+//		} else {
 			// Parsing page data as first time seeing html page in normal editor
 			$parsed = $this->parse_html($inData);
-		}
+//		}
 		$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
+		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);													// newlines
 		return $parsed;
 	}
 	
-	function parseToWysiwyg(&$inData) {
+	function parseToWysiwyg( $inData ) {
 		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-			$parsed = $tikilib->parse_data($parsed,array('absolute_links'=>true, 'noparseplugins'=>false,'noheaderinc'=>true, 'fck' => 'y'));
+			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => 'y'));
 		} else {
-			$parsed = $tikilib->parse_data($parsed,array('absolute_links'=>true, 'parseimgonly'=>true,'noheaderinc'=>true));
+			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
 		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
-		$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
+		$parsed = preg_replace("/src=\"img\/smiles\//im","src=\".*img/smiles/", $parsed);	// fix smiley src's
 		$parsed = str_replace( 
 				array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
 				array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
@@ -260,24 +261,28 @@ class EditLib
 						// Tags we don't want at all.
 						case "meta": $c[$i]["content"] = ''; break;
 						
-						case "br": $src .= '%%%'; break;
-						case "hr": $src .= '---'; break;
+						// others we do want
+						case "br": $src .= "\n"; break;
+						case "hr": $src .= $this->startNewLine($src) . '---'; break;
 						case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
 						case "p":
 						case "div": // Wiki parsing creates divs for center
-							if( isset($c[$i]['pars']) 
-								&& isset($c[$i]['pars']['style']) 
-								&& $c[$i]['pars']['style']['value'] == 'text-align: center;' ) {
+							if(isset($c[$i]['pars']['style']['value'])) {
+								if ( strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
 									if ($prefs['feature_use_three_colon_centertag'] == 'y') {
-										$src .= "\n:::";
-										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n");
+										$src .= $this->startNewLine($src) .":::";
+										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n\n");
 									} else {
-										$src .= "\n::";
-										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n");
+										$src .= $this->startNewLine($src) . "::";
+										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n\n");
 									}
-							} else {
-								$src .= "\n";
-								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n"); 
+								} else if ( strpos($c[$i]['pars']['style']['value'],'text-align: right;') !== false ){
+										$src .= $this->startNewLine($src) .'{DIV(type="p",align="right")}';
+										$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "{DIV}\n\n");
+								}
+							} else {	// normal para or div
+								$src .= $this->startNewLine($src);
+								$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n\n"); 
 							}
 							break;
 						case "span":
@@ -309,7 +314,7 @@ class EditLib
 						case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
 						case "em": $src .= "''"; $p['stack'][] = array('tag' => 'em', 'string' => "''"); break;
 						case "strong": $src .= '__'; $p['stack'][] = array('tag' => 'strong', 'string' => '__'); break;
-						case "u": $src .= "=="; $p['stack'][] = array('tag' => 'u', 'string' => "=="); break;
+						case "u": $src .= "==="; $p['stack'][] = array('tag' => 'u', 'string' => "==="); break;
 						case "strike": $src .= "--"; $p['stack'][] = array('tag' => 'strike', 'string' => "--"); break;
 						case "del": $src .= "--"; $p['stack'][] = array('tag' => 'del', 'string' => "--"); break;
 						case "center":
@@ -324,30 +329,25 @@ class EditLib
 						case "code": $src .= '-+'; $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
 						case "dd": $src .= ':'; $p['stack'][] = array('tag' => 'dd', 'string' => "\n"); break;
 						case "dt": $src .= ';'; $p['stack'][] = array('tag' => 'dt', 'string' => ''); break;
-						// headers detection looks like real suxx code...
-						// but possible it run faster :) I don't know where is profiler in PHP...
-						case "h1": $src .= "\n!"; $p['stack'][] = array('tag' => 'h1', 'string' => "\n"); break;
-						case "h2": $src .= "\n!!"; $p['stack'][] = array('tag' => 'h2', 'string' => "\n"); break;
-						case "h3": $src .= "\n!!!"; $p['stack'][] = array('tag' => 'h3', 'string' => "\n"); break;
-						case "h4": $src .= "\n!!!!"; $p['stack'][] = array('tag' => 'h4', 'string' => "\n"); break;
-						case "h5": $src .= "\n!!!!!"; $p['stack'][] = array('tag' => 'h5', 'string' => "\n"); break;
-						case "h6": $src .= "\n!!!!!!"; $p['stack'][] = array('tag' => 'h6', 'string' => "\n"); break;
+						case "h1": $src .= $this->startNewLine($src) . "!"; $p['stack'][] = array('tag' => 'h1', 'string' => "\n"); break;
+						case "h2": $src .= $this->startNewLine($src) . "!!"; $p['stack'][] = array('tag' => 'h2', 'string' => "\n"); break;
+						case "h3": $src .= $this->startNewLine($src) . "!!!"; $p['stack'][] = array('tag' => 'h3', 'string' => "\n"); break;
+						case "h4": $src .= $this->startNewLine($src) . "!!!!"; $p['stack'][] = array('tag' => 'h4', 'string' => "\n"); break;
+						case "h5": $src .= $this->startNewLine($src) . "!!!!!"; $p['stack'][] = array('tag' => 'h5', 'string' => "\n"); break;
+						case "h6": $src .= $this->startNewLine($src) . "!!!!!!"; $p['stack'][] = array('tag' => 'h6', 'string' => "\n"); break;
 						case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
 						case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
 						case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}"); break;
 						// Table parser
-						case "table": $src .= '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true; break;
-						case "tr": $src .= $p['first_tr'] ? '' : "\n"; $p['first_tr'] = false; $p['first_td'] = true; break;
+						case "table": $src .= $this->startNewLine($src) . '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true; break;
+						case "tr": $src .= $p['first_tr'] ? '' : $this->startNewLine($src); $p['first_tr'] = false; $p['first_td'] = true; break;
 						case "td": $src .= $p['first_td'] ? '' : '|'; $p['first_td'] = false; break;
 						// Lists parser
 						case "ul": $p['listack'][] = '*'; break;
 						case "ol": $p['listack'][] = '#'; break;
 						case "li":
 							// Generate wiki list item according to current list depth.
-							// (ensure '*/#' starts from begining of line)
-							$temp_max = count($p['listack']);
-							for ($l = ''; strlen($l) < $temp_max; $l .= end($p['listack']));	// needs strlen function in 2nd for loop argument
-							$src .= "\n$l ";
+							$src .=  $this->startNewLine($src) . str_repeat( end($p['listack']), count($p['listack']));
 							break;
 						case "font":
 							// If color attribute present in <font> tag
@@ -412,6 +412,12 @@ class EditLib
 			}
 		}
 	}	// end walk_and_parse
+	
+	function startNewLine(&$str) {
+		if (strlen($str) && substr($str, -1) != "\n") {
+			$str .=  "\n"; 
+		}
+	}
 	/**
 	 * wrapper around zaufi's HTML sucker code just to use the html to wiki bit
 	 *
@@ -435,6 +441,10 @@ class EditLib
 		}
 		$grammar = unserialize(fread($fp, filesize($grammarfile)));
 		fclose($fp);
+		
+		// process a few ckeditor artifacts
+		$inHtml = str_replace('<p></p>', '', $inHtml);	// empty p tags are invisible
+		
 		// create parser object, insert html code and parse it
 		$htmlparser = new HtmlParser($inHtml, $grammar, '', 0);
 		$htmlparser->Parse();
