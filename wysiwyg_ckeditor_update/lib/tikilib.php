@@ -6741,12 +6741,15 @@ class TikiLib extends TikiDb_Bridge
 							 ) {
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
 								$tline = trim($line);
-								if ($in_paragraph && empty($line) && !preg_match('/<[\/]?div/', $tline)) {
+								if ($in_paragraph && (empty($line) || preg_match('/<[\/]?div/', $tline))) {
 									// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 									$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-								} elseif (!$in_paragraph && !empty($line) && !preg_match('/<[\/]?div/', $tline)) {	// and not noparse guid -  && !preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $tline)
+								} elseif (!$in_paragraph && !preg_match('/<[\/]?div/', $tline) && !preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $tline)) {	// and not noparse guid -  && !empty($line)
 									// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 									$data .= "<p>";
+									if (empty($line)) {
+										$line = '&nbsp;';
+									}
 									$in_paragraph = 1;
 								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !preg_match('/<[\/]?div/', trim($line))) {
 									// A normal in-paragraph line if not close of div created by plugins
