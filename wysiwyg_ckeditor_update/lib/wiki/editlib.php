@@ -441,6 +441,10 @@ class EditLib
 		}
 		$grammar = unserialize(fread($fp, filesize($grammarfile)));
 		fclose($fp);
+		
+		// process a few ckeditor artifacts
+		$inHtml = str_replace('<p></p>', '', $inHtml);	// empty p tags are invisible
+		
 		// create parser object, insert html code and parse it
 		$htmlparser = new HtmlParser($inHtml, $grammar, '', 0);
 		$htmlparser->Parse();
