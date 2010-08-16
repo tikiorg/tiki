@@ -236,7 +236,7 @@ div.quotebody {
 }
 
 .postbody-title {
-	background: #e1d518 url(kiwi/header.png) -650px -90px;
+	background: #e1d518 url(kiwi/siteheader.png) -550px -90px no-repeat;
 }
 
 .post .author,
