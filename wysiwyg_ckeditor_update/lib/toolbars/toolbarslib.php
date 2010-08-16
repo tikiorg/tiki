@@ -456,7 +456,7 @@ class ToolbarFckOnly extends Toolbar
 		case 'right':
 			return new self( 'JustifyRight' );
 		case 'full':
-			return new self( 'JustifyFull' );
+			return new self( 'JustifyBlock' );
 		case 'indent':
 			return new self( 'Indent' );
 		case 'outdent':
@@ -523,7 +523,7 @@ class ToolbarInline extends Toolbar
 		case 'strike':
 			$label = tra('Strikethrough');
 			$icon = tra('pics/icons/text_strikethrough.png');
-			$wysiwyg = 'StrikeThrough';
+			$wysiwyg = 'Strike';
 			$syntax = '--text--';
 			break;
 		case 'nonparsed':
