@@ -38,7 +38,9 @@
 			<input type="hidden" name="save[calitemId]" value="{$id}" />
 		{/if}
 {/if}
-
+{if $prefs.calendar_addtogooglecal == 'y'}
+	{wikiplugin _name="addtogooglecal" calitemid=$id}{/wikiplugin}
+{/if}
 <table class="normal{if !$edit} vevent{/if}">
 <tr class="formcolor">
 	<td>{tr}Calendar{/tr}</td>

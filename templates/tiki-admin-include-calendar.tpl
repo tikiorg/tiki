@@ -44,6 +44,7 @@
 		{preference name=calendar_firstDayofWeek}
 		{preference name=calendar_timespan}
 		{preference name=feature_cal_manual_time}
+		{preference name=calendar_addtogooglecal}
 
 	<div class="adminoptionbox">
 		<div class="adminoption">

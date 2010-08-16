@@ -194,6 +194,7 @@ function get_default_prefs() {
 		'wiki_mandatory_edit_summary' => 'n',
 
 		'wikiplugin_addtocart' => 'n',
+		'wikiplugin_addtogooglecal' => 'n',
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',
 		'wikiplugin_aname' => 'n',
@@ -342,6 +343,7 @@ function get_default_prefs() {
 
 		// Inline wiki plugins have their edit plugin icon disabled
 		'wikiplugininline_addtocart' => 'n',
+		'wikiplugininline_addtogooglecal' => 'n',
 		'wikiplugininline_agentinfo' => 'n',
 		'wikiplugininline_alink' => 'n',
 		'wikiplugininline_aname' => 'n',
@@ -935,6 +937,7 @@ function get_default_prefs() {
 		'calendar_list_begins_focus' => 'n',
 		'feature_cal_manual_time' => 'n',
 		'calendar_view_days' => array(0,1,2,3,4,5,6),
+		'calendar_addtogooglecal' => 'n',
 
 		// dates
 		'server_timezone' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',
