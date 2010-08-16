@@ -351,7 +351,7 @@
 			<option value="">&nbsp;</option>
 		{/if}
 		{section name=jx loop=$field_value.options_array}
-			<option value="{$field_value.options_array[jx]|escape}" {if !empty($item.itemId) && $field_value.value eq $field_value.options_array[jx]}{assign var=otherValue value=''}selected="selected"{elseif empty($item.itemId) && $field_value.defaultvalue eq $field_value.options_array[jx]}selected="selected"{/if}>{$field_value.options_array[jx]|tr_if}</option>
+			<option value="{$field_value.options_array[jx]|escape}" {if !empty($item.itemId) && $field_value.value eq $field_value.options_array[jx]}{assign var=otherValue value=''}selected="selected"{elseif (empty($item.itemId) || !isset($field_value.value)) && $field_value.defaultvalue eq $field_value.options_array[jx]}selected="selected"{/if}>{$field_value.options_array[jx]|tr_if}</option>
 		{/section}
 	</select>
 	{if $field_value.type eq 'D'}
