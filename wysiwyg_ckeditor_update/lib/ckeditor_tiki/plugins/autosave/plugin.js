@@ -34,6 +34,7 @@ CKEDITOR.plugins.add( 'autosave',
 				canUndo: false,
 				// button clicked or timer
 				exec: function(elem, editor, data) {
+					asplugin.ajaxAutoSaveIsDirty = true;	// force
 					return asplugin.doAjaxSave(editor);
 				}
 			} ));
@@ -62,13 +63,14 @@ CKEDITOR.plugins.add( 'autosave',
 	},	// end init
 
 	doAjaxSave: function (editor) {
-		if (this.ajaxAutoSaveIsDirty) {
+		var data = editor.getData();
+		if (this.ajaxAutoSaveIsDirty && data != "ajax error") {
 			this.changeIcon("loadingSmall.gif");
 			
 			var asplugin = this;
 			jQuery.ajax({
 				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
-				data: 'script=' + editor.config.autoSaveSelf + '&editor_id=' + editor.name + '&data=' + encodeURIComponent(editor.getData()),
+				data: 'script=' + editor.config.autoSaveSelf + '&editor_id=' + editor.name + '&data=' + encodeURIComponent(data),
 				type: "POST",
 				// good callback
 				success: function(data) {
