@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Wysiwyg means What You See Is What You Get, and is handled in Tikiwiki by <a href="http://fckeditor.net">FCKeditor</a>{/tr}.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}WYSIWYG means What You See Is What You Get, and is handled in Tiki by <a href="http://ckeditor.com/">CKEditor</a>{/tr}.{/remarksbox}
 <div class="navbar">
 {button href="tiki-admin_toolbars.php" _text="{tr}Toolbars{/tr}"}
 </div>
@@ -24,6 +24,11 @@
 		{preference name=wysiwyg_htmltowiki}
 		{preference name=wysiwyg_toolbar_skin}
 		{preference name="wysiwyg_fonts"}
+
+		{preference name=feature_wiki_paragraph_formatting}
+		<div class="adminoptionboxchild" id="feature_wiki_paragraph_formatting_childcontainer">
+			{preference name=feature_wiki_paragraph_formatting_add_br}
+		</div>
 		
 		<div class="adminoptionbox">
 			<div class="adminoptionlabel">
