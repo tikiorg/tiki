@@ -1027,13 +1027,7 @@ function wikiplugin_tracker($data, $params)
 						if ($flds['data'][$i]['type'] == 'r') {
 							// we prentended it was an item link
 							$bindingValue = $trklib->get_item_value($trackerId, $itemId, $f['options_array'][2]);
-							$bindingItemLinkField = $trklib->get_tracker_field($f['options_array'][2]);
-							if ($bindingItemLinkField['type'] != 'r') {
-								$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValue, $f['options_array'][3]);
-							} else {
-								$bindingValueIndex = $trklib->get_item_id($bindingItemLinkField['options_array'][0], $bindingItemLinkField['options_array'][3], $bindingValue);
-								$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValueIndex, $f['options_array'][3]);
-							}
+							$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValue, $f['options_array'][3]);
 						}
 					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {
 						$flds['data'][$i]['value'] = $tikilib->now;
