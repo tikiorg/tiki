@@ -1023,7 +1023,11 @@ function wikiplugin_tracker($data, $params)
 							// we prentended it was an item link
 							$bindingValue = $trklib->get_item_value($trackerId, $itemId, $f['options_array'][2]);
 							$bindingItemLinkField = $trklib->get_tracker_field($f['options_array'][2]);
-							$bindingValueIndex = $trklib->get_item_id($bindingItemLinkField['options_array'][0], $bindingItemLinkField['options_array'][3], $bindingValue);
+							if ($bindingItemLinkField['type'] != 'r') {
+								$bindingValueIndex = $trklib->get_item_id($trackerId, $f['options_array'][2], $bindingValue);
+							} else {
+								$bindingValueIndex = $trklib->get_item_id($bindingItemLinkField['options_array'][0], $bindingItemLinkField['options_array'][3], $bindingValue);
+							}
 							$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValueIndex, $f['options_array'][3]);
 						}
 					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {
