@@ -62,11 +62,17 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	
 	$auto_save_referrer = '';
 	$auto_save_warning = '';
-//	if ($params['_wysiwyg'] != 'y') {
-		$as_id = $params['id'];
-//	} else {
-//		$as_id = $params['name'];
-//	}
+	$as_id = $params['id'];
+	
+	// fix for Firefox 3.5 and newer. *lite.css defined the document body as display:table, which seems to upset Firefox
+	// and makes it lose it's selection info when the DOM changes (like when a picker or menu is generated)
+	// this fixes it but apparently (according to *lite.css author Luci) will cause some layout issues:
+	// He says: "it's necessary for expanding content (pushing right column) to the right properly"
+	// but it looks fine to me
+	if (preg_match('/Firefox\/(\d)+\.(\d)+/i', $_SERVER['HTTP_USER_AGENT'], $m) &&count($m) > 2 && $m[1] >=3 && $m[2] >=5) {
+		$headerlib->add_css('body {display: block; }', 10);
+	}
+	
 	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
 
@@ -130,7 +136,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 			
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 			
-			$headerlib->add_jq_onready('$(".fckeditzone").resizable({ minWidth: $("#'.$as_id.'").width(), minHeight: 50 });');
+			//$headerlib->add_jq_onready('$(".fckeditzone").resizable({ minWidth: $("#'.$as_id.'").width(), minHeight: 50 });');
 
 		} else {									// new ckeditor implementation 2010
 
@@ -140,8 +146,8 @@ function FCKeditor_OnComplete( editorInstance ) {
 		
 			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 			//// note, this breaks ajax page load via wikitopline edit icon
-			//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
-			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js');
+			$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
+			//$headerlib->add_jsfile('lib/ckeditor/ckeditor.js');
 			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js');
 		
 //			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
