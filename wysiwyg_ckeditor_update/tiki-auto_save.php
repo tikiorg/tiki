@@ -24,7 +24,7 @@ if ($prefs['feature_ajax'] != 'y' || $prefs['feature_ajax_autosave'] != 'y') {
 require_once('lib/ajax/ajaxlib.php');
 
 if (isset($_REQUEST['editor_id'])) {
-	if (isset($_REQUEST['command']) && isset($_REQUEST['data'])) {
+	if (isset($_REQUEST['command']) && isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {
 		if ($_REQUEST['command'] == 'toWikiFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
 				
@@ -46,7 +46,7 @@ if (isset($_REQUEST['editor_id'])) {
 			echo '<data><![CDATA[' .  $res . ']]></data>';
 			echo '</adapter>';
 		}
-	} else if (isset($_REQUEST['data'])) {	// autosave
+	} else if (isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {	// autosave
 
 		auto_save($_REQUEST['editor_id'],$_REQUEST['data'],$_REQUEST['script']);
 		header( 'Content-Type:text/xml; charset=UTF-8' ) ;
