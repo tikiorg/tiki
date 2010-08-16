@@ -261,31 +261,6 @@
 								</fieldset>
 							{/if}
 				
-							{if $prefs.feature_wiki_replace eq 'y' and $wysiwyg neq 'y'}
-{jq}
-	function searchrep() {
-		c = document.getElementById('caseinsens')
-		s = document.getElementById('search')
-		r = document.getElementById('replace')
-		t = document.getElementById('editwiki')
-		var opt = 'g';
-		if (c.checked == true) {
-			opt += 'i'
-		}
-		var str = t.value
-		var re = new RegExp(s.value,opt)
-		t.value = str.replace(re,r.value)
-	}
-{/jq}
-								<fieldset>
-									<legend>{tr}Regex search:{/tr}</legend>
-									<input style="width:100;" class="wikiedit" type="text" id="search" />
-									<label>{tr}Replace with:{/tr}
-									<input style="width:100;" class="wikiedit" type="text" id="replace" /></label>
-									<label><input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}</label>
-									<input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();" />
-								</fieldset>
-							{/if}
 							{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 								<fieldset>
 									<legend>{tr}Allow HTML:{/tr}</legend>
