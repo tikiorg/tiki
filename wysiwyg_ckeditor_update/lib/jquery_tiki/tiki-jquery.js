@@ -4,7 +4,7 @@
 // Tiki 6 - $ is now initialised in jquery.js
 // but let's keep $jq available too for legacy custom code
 
-$jq = $;
+var $jq = $;
 
 // Check / Uncheck all Checkboxes - overriden from tiki-js.js
 function switchCheckboxes (tform, elements_name, state) {

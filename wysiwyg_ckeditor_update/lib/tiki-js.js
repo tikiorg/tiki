@@ -1105,7 +1105,7 @@ function SetMyUrl(area,url) {
 	var str, myurl = url.replace(/.*\/([^\/]*)$/, '$1'); /* make relative path from the absolute url */
 	if (area == 'fgal_picker' ) {
 		str = myurl;
-		getElementById(area).value = str;
+		document.getElementById(area).value = str;
 		window.focus();
 		return true;
 	} else {
@@ -1115,7 +1115,7 @@ function SetMyUrl(area,url) {
 		}
 		if ( area == 'fgal_picker_id' ) {
 			str = fileId[1];
- 			getElementById(area).value = str;
+ 			document.getElementById(area).value = str;
 			window.focus();
 			return true;
 		} else {
