@@ -424,6 +424,8 @@ class ToolbarFckOnly extends Toolbar
 	
 	public static function fromName( $name ) // {{{
 	{
+		global $prefs;
+		
 		switch( $name ) {
 		case 'templates':
 			return new self( 'Templates' );
@@ -456,7 +458,7 @@ class ToolbarFckOnly extends Toolbar
 		case 'right':
 			return new self( 'JustifyRight' );
 		case 'full':
-			return new self( 'JustifyBlock' );
+			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'JustifyBlock' : 'JustifyFull' );
 		case 'indent':
 			return new self( 'Indent' );
 		case 'outdent':
@@ -464,9 +466,9 @@ class ToolbarFckOnly extends Toolbar
 		case 'unlink':
 			return new self( 'Unlink' );
 		case 'style':
-			return new self( 'Styles' );
+			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Styles'  : 'Style' );
 		case 'fontname':
-			return new self( 'Font' );
+			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Font' : 'FontName' );
 		case 'fontsize':
 			return new self( 'FontSize' );
 		case 'format':
@@ -474,7 +476,11 @@ class ToolbarFckOnly extends Toolbar
 		case 'source':
 			return new self( 'Source' );
 		case 'autosave':
-			return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif' );
+			if ($prefs['wysiwyg_ckeditor'] == 'y') {
+				return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
+			} else {
+				return new self( 'ajaxAutoSave', 'lib/fckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
+			}
 		case 'sub':
 			return new self( 'Subscript' );
 		case 'sup':
@@ -501,6 +507,7 @@ class ToolbarInline extends Toolbar
 
 	public static function fromName( $tagName ) // {{{
 	{
+		global $prefs;
 		switch( $tagName ) {
 		case 'bold':
 			$label = tra('Bold');
@@ -523,7 +530,7 @@ class ToolbarInline extends Toolbar
 		case 'strike':
 			$label = tra('Strikethrough');
 			$icon = tra('pics/icons/text_strikethrough.png');
-			$wysiwyg = 'Strike';
+			$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'Strike' : 'StrikeThrough';
 			$syntax = '--text--';
 			break;
 		case 'nonparsed':
@@ -593,7 +600,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'rule':
 			$label = tra('Horizontal Bar');
 			$icon = tra('pics/icons/page.png');
-			$wysiwyg = 'HorizontalRule';
+			$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'HorizontalRule' : 'Rule';
 			$syntax = '---';
 			break;
 		case 'pagebreak':
@@ -1041,7 +1048,7 @@ class ToolbarFullscreen extends Toolbar
 	{
 		$this->setLabel( tra('Full Screen Edit') )
 			->setIcon( 'pics/icons/application_get.png' )
-			->setWysiwygToken( 'Maximize' )
+			->setWysiwygToken( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Maximize' : 'FitWindow' )
 				->setType('Fullscreen');
 	} // }}}
 
