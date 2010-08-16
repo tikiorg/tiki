@@ -109,6 +109,12 @@
 	    	{/if}
 		  </td>
         </tr>
+        <tr class="editblogform">
+          <td><label for="blogs-post-max-related">{tr}Maximum number of related posts to display{/tr}</label></td>
+          <td>
+		    <input type="text" name="related_max" id="blogs-post-max-related" value="{$related_max|escape}"/>
+		  </td>
+        </tr>
 
         {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
           <tr class="editblogform">

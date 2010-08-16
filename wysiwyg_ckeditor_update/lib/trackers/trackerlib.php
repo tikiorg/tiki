@@ -975,7 +975,9 @@ class TrackerLib extends TikiLib
 			if (empty($fopt['fieldId'])) // to accept listfield as a simple table
 				$fopt['fieldId'] = $fieldId;
 			$fieldId = $fopt['fieldId'];
-			$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
+			if (isset($fil[$fieldId])) {
+				$fopt['value'] = $fil[$fieldId];
+			}
 			if ($tiki_p_admin_trackers != 'y') {
 				if ($fopt['isHidden'] == 'y') {
 					$fopt['value'] = '';

@@ -219,6 +219,7 @@ function wikiplugin_tracker($data, $params)
 	include_once('lib/trackers/trackerlib.php');
 	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'registration' => 'n');
 	$params = array_merge($default, $params);
+	$item = array();
 	
 	//var_dump($_REQUEST);
 	extract ($params, EXTR_SKIP);
@@ -1026,13 +1027,7 @@ function wikiplugin_tracker($data, $params)
 						if ($flds['data'][$i]['type'] == 'r') {
 							// we prentended it was an item link
 							$bindingValue = $trklib->get_item_value($trackerId, $itemId, $f['options_array'][2]);
-							$bindingItemLinkField = $trklib->get_tracker_field($f['options_array'][2]);
-							if ($bindingItemLinkField['type'] != 'r') {
-								$bindingValueIndex = $trklib->get_item_id($trackerId, $f['options_array'][2], $bindingValue);
-							} else {
-								$bindingValueIndex = $trklib->get_item_id($bindingItemLinkField['options_array'][0], $bindingItemLinkField['options_array'][3], $bindingValue);
-							}
-							$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValueIndex, $f['options_array'][3]);
+							$flds['data'][$i]['list'] = $trklib->get_filtered_item_values($f['options_array'][1], $bindingValue, $f['options_array'][3]);
 						}
 					} elseif ($f['type'] == 'f' && empty($itemId) && empty($f['options_array'][3])) {
 						$flds['data'][$i]['value'] = $tikilib->now;
