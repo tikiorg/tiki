@@ -69,7 +69,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	// this fixes it but apparently (according to *lite.css author Luci) will cause some layout issues:
 	// He says: "it's necessary for expanding content (pushing right column) to the right properly"
 	// but it looks fine to me
-	if (preg_match('/Firefox\/(\d)+\.(\d)+/i', $_SERVER['HTTP_USER_AGENT'], $m) &&count($m) > 2 && $m[1] >=3 && $m[2] >=5) {
+	if (preg_match('/Firefox\/(\d)+\.(\d)+/i', $_SERVER['HTTP_USER_AGENT'], $m) &&count($m) > 2 && $m[1] >=3 && ($m[2] >=5 || $m[1] > 3)) {
 		$headerlib->add_css('body {display: block; }', 10);
 	}
 	
