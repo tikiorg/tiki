@@ -24,6 +24,8 @@
 
 {self_link page="security" _class="security tips" _title="{tr}Security{/tr}|{tr}Site security settings{/tr}"}{icon _id="pics/large/gnome-lockscreen48x48.png" alt="{tr}Security{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
+{self_link page="comments" _class="comments tips" _title="{tr}Comments{/tr}|{tr}Comments settings{/tr}"}{icon _id="pics/icons/comments.png" alt="{tr}Comments{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+
 {self_link page="rss" _class="icon tips" _title="{tr}Feeds{/tr}|{tr}Web feeds{/tr}"}{icon _id="pics/large/feed-icon.png" alt="{tr}Feeds{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {self_link page="connect" _class="icon tips" _title="{tr}Connect{/tr}|{tr}Connect{/tr}"}{icon _id="pics/large/gnome-globe.png" alt="{tr}Connect{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}

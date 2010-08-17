@@ -58,16 +58,6 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>{tr}Comments{/tr}</legend>
-
-			<div class="admin featurelist">
-				{preference name=feature_comments_moderation}
-				{preference name=feature_comments_locking}
-				{preference name=feature_comments_post_as_anonymous}				
-			</div>
-		</fieldset>		
-
-		<fieldset>
 			<legend>{tr}Watches{/tr}</legend>
 
 			<div class="admin featurelist">
