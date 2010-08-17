@@ -398,7 +398,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 				else {	
 					$fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][1]);	
 				}
-				if (isset($fields["data"][$i]["options_array"][3])) $fields["data"][$i]["listdisplay"] = array_unique($trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][3], isset($fields['data'][$i]['options_array'][4])?$fields['data'][$i]['options_array'][4]:'poc'));
+				if (!empty($fields["data"][$i]["options_array"][3])) $fields["data"][$i]["listdisplay"] = array_unique($trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0], $fields["data"][$i]["options_array"][3], !empty($fields['data'][$i]['options_array'][4])?$fields['data'][$i]['options_array'][4]:'poc'));
 			} elseif (($fields["data"][$i]["type"] == 'M') && ($fields["data"][$i]["options_array"][0] >= '3')) {
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
 					$fp = fopen($_FILES["$ins_id"]['tmp_name'], 'rb');
