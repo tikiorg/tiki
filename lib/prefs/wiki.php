@@ -181,11 +181,6 @@ function prefs_wiki_list() {
 			'description' => tra('Provide a javascript alert before the user\'s lock on a page times out.'),
 			'type' => 'flag',
 		),
-		'wiki_comments_notitle' => array(
-			'name' => tra('Disable titles for wiki comments'),
-			'description' => tra('Hide the title field on wiki comments and their replies.'),
-			'type' => 'flag',
-		),
 		'wiki_dynvar_style' => array(
 			'name' => tra('Dynamic variables'),
 			'description' => tra('Global snippets of text that can be included in wiki pages and edited in place.'),

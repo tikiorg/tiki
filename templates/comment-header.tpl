@@ -90,7 +90,7 @@
 	<div class="title">
 	{if $first eq 'y'}
 		<h2>{$comment.title|escape}</h2>
-	{elseif ( $forum_mode neq 'y' and $prefs.wiki_comments_notitle neq 'y' ) or $prefs.forum_reply_notitle neq 'y'}
+	{elseif ( $forum_mode neq 'y' and $prefs.comments_notitle neq 'y' ) or $prefs.forum_reply_notitle neq 'y'}
 		{if $comments_reply_threadId == $comment.threadId}
 		{icon _id='flag_blue'}<span class="highlight">
 		{/if}

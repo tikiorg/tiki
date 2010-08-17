@@ -368,7 +368,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			{/if}
 		{/if}
 
-		{if ( $forum_mode != 'y' and $prefs.wiki_comments_notitle neq 'y' ) or $prefs.forum_reply_notitle neq 'y' && $forum_mode == 'y'}
+		{if ( $forum_mode != 'y' and $prefs.comments_notitle neq 'y' ) or $prefs.forum_reply_notitle neq 'y' && $forum_mode == 'y'}
 			<tr>
 				<td class="formcolor">
 					<label for="comments-title">{tr}Title{/tr} <span class="attention">*</span> </label>

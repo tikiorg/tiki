@@ -117,7 +117,6 @@ function get_default_prefs() {
 		'wiki_comments_default_ordering' => 'points_desc',
 		'wiki_comments_displayed_default' => 'n',
 		'wiki_comments_per_page' => 10,
-		'wiki_comments_notitle' => 'n',
 		'wiki_comments_allow_per_page' => 'n',
 		'wiki_creator_admin' => 'n',
 		'wiki_feature_copyrights' => 'n',
@@ -1609,9 +1608,6 @@ function get_default_prefs() {
 		'wiki_3d_autoload' => '',
 		'javascript_enabled' => 'n',
 		'javascript_cdn' => 'none',
-		'feature_comments_post_as_anonymous' => 'n',
-		'feature_comments_moderation' => 'n',
-		'feature_comments_locking' => 'n',
 		'feature_template_zoom' => 'y',
 		'menus_items_icons' => 'n',
 		'menus_items_icons_path' => 'pics/large',
@@ -1764,6 +1760,12 @@ function get_default_prefs() {
 		'cas_path' => '',
 		'cas_extra_param' => '',
 		'cas_authentication_timeout' => '0',
+
+		// Comments
+		'feature_comments_post_as_anonymous' => 'n',
+		'feature_comments_moderation' => 'n',
+		'feature_comments_locking' => 'n',
+		'comments_notitle' => 'n',
 	);
 
 

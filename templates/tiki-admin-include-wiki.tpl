@@ -82,7 +82,6 @@
 			<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
 				<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=comment&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 				{preference name=wiki_comments_displayed_default}
-				{preference name=wiki_comments_notitle}
 				{preference name=wiki_comments_per_page}
 				{preference name=wiki_comments_default_ordering}
 				{preference name=wiki_comments_allow_per_page}

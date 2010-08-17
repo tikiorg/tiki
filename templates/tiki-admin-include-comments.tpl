@@ -22,7 +22,7 @@
 				<legend>{tr}Display options{/tr}</legend>
 
 				<div class="admin featurelist">
-					{preference name=wiki_comments_notitle}
+					{preference name=comments_notitle}
 				</div>
 			</fieldset>
 
