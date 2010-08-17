@@ -13,6 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 require_once('lib/core/lib/TikiDb/Bridge.php');
 
+//TODO: split this class into two. One for language stuff and other for translations (updateTrans(), writeLanguageFile() etc)
+//TODO: move language functions (like $tikilib->list_languages()) from $tikilib to this class
 /**
  * Handles languages translations
  */
@@ -125,14 +127,23 @@ class Language extends TikiDb_Bridge
 	/**
 	 * Update a translation
 	 * If $originalStr is not found, a new entry is added. Otherwise, 
-	 * if $translatedStr is empty the entry is deleted or if $translatedStr is
-	 * not empty the entry is updated with the new translation.
+	 * if $translatedStr is empty the entry is deleted, if $translatedStr
+	 * is not empty but is equal to the actual translation nothing is done or if
+	 * $translatedStr is not empty and different from the actual translation
+	 * the entry is updated with the new translation.
 	 *
 	 * @param string $originalStr the original string
 	 * @param string $translatedStr the translated string
 	 * @return void
 	 */
 	public function updateTrans($originalStr, $translatedStr) {
+		global ${"lang_$this->lang"};
+
+		// don't insert anything in the database if the translation hasn't been changed	
+		if (isset(${"lang_$this->lang"}[$originalStr]) && ${"lang_$this->lang"}[$originalStr] == $translatedStr) {
+			return;
+		}
+
 		$query = 'select * from `tiki_language` where `lang`=? and `source` = ?';
 		$result = $this->query($query, array($this->lang, $originalStr));
 

@@ -90,6 +90,20 @@ class LanguageTest extends TikiTestCase
 		$this->assertFalse($result);
 	}
 
+	public function testUpdateTransShouldNotInsertStringsThatWereNotChanged() {
+		global ${"lang_$this->lang"};
+
+		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
+
+		if (!isset(${"lang_$this->lang"})) {
+			require_once('lib/init/tra.php');
+			init_language($this->lang);
+		}
+
+		$this->obj->updateTrans('last modification time', 'data da última modificação');
+		$this->assertFalse(TikiDb::get()->getOne('SELECT `tran` FROM `tiki_language` WHERE `lang` = ? AND `source` = ?', array($this->lang, 'last modification time')));
+	}
+
 	public function testWriteLanguageFile() {
 		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
 		$this->obj->writeLanguageFile();
