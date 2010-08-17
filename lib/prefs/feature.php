@@ -1771,5 +1771,11 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Ustream+Watershed',
 		),
+		'feature_credits' => array(
+			'name' => tra('Tiki User Credits'),
+			'description' => tra('Tiki User Credits'),
+			'type' => 'flag',
+			'help' => 'Tiki+User+Credits',
+		),
 	);
 }

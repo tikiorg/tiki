@@ -1460,6 +1460,7 @@ function get_default_prefs() {
 		'feature_contribution_mandatory_blog' => 'n',
 		'feature_contribution_mandatory_comment' => 'n',
 		'feature_contribution_mandatory_forum' => 'n',
+		'feature_credits' => 'n',
 		'feature_debug_console' => 'n',
 		'feature_debugger_console' => 'n',
 		'feature_display_my_to_others' => 'n',

@@ -134,6 +134,10 @@ if ($prefs['feature_antibot'] == 'y' && is_null($user)) {
 	$smarty->assign_by_ref('captchalib', $captchalib);
 }
 
+if ($prefs['feature_credits'] == 'y') {
+	require_once('lib/setup/credits.php');
+}
+
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);
 $smarty->assign_by_ref('elapsed_in_db', $elapsed_in_db);
