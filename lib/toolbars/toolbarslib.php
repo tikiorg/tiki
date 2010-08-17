@@ -1046,6 +1046,7 @@ class ToolbarFullscreen extends Toolbar
 {
 	function __construct() // {{{
 	{
+		global $prefs;
 		$this->setLabel( tra('Full Screen Edit') )
 			->setIcon( 'pics/icons/application_get.png' )
 			->setWysiwygToken( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Maximize' : 'FitWindow' )
