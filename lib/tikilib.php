@@ -6753,13 +6753,13 @@ class TikiLib extends TikiDb_Bridge
 									$in_paragraph = 1;
 								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !preg_match('/<[\/]?div/', trim($line))) {
 									// A normal in-paragraph line if not close of div created by plugins
-									$line = "<br />\n" . $line;
+									$line = "<br />" . $line;
 								} else {
 									// A normal in-paragraph line or a consecutive blank line.
 									// Leave it as is.
 								}
-							} elseif ($prefs['wysiwyg_htmltowiki'] === 'y' || strpos($line, '<br />') === false || empty($options['is_html']) || !$options['is_html']) {
-								$line .= "<br />\n";
+							} elseif (($prefs['wysiwyg_htmltowiki'] === 'y' && !empty($line) && strpos($line, '<br />') === false) || !$options['is_html']) {
+								$line .= "<br />";
 							}
 						}
 					}
