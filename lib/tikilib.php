@@ -577,7 +577,7 @@ class TikiLib extends TikiDb_Bridge
 
 					// If a forum post was changed, check the categories of the forum.  
 					if ( $event == "forum_post_thread" ) {
-						include_once ("lib/commentslib.php");
+						include_once ("lib/comments/commentslib.php");
 						global $commentslib;            	
 						$object = $commentslib->get_comment_forum_id($object);
 					}
@@ -1721,7 +1721,7 @@ class TikiLib extends TikiDb_Bridge
 		$query = "select * from `tiki_comments` where `object`=?  and `objectType`=?";
 		$result = $this->fetchAll($query, array( $id, $type ));
 		if ( !empty($result) ) {		
-			include_once ("lib/commentslib.php");
+			include_once ("lib/comments/commentslib.php");
 			$commentslib = new Comments($dbTiki);
 		}
 		foreach ( $result as $res ) {
@@ -4192,7 +4192,7 @@ class TikiLib extends TikiDb_Bridge
 	 **/
 	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='', $minor=0, $created='') {
 		global $smarty, $prefs, $dbTiki, $quantifylib;
-		include_once ("lib/commentslib.php");
+		include_once ("lib/comments/commentslib.php");
 
 		$commentslib = new Comments($dbTiki);
 
@@ -7179,7 +7179,7 @@ class TikiLib extends TikiDb_Bridge
 	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $edit_minor = 0, $lang='', $is_html=null, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style='') {
 		global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 		include_once ("lib/wiki/histlib.php");
-		include_once ("lib/commentslib.php");
+		include_once ("lib/comments/commentslib.php");
 
 		$commentslib = new Comments($dbTiki);
 

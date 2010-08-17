@@ -53,7 +53,7 @@ function list_perms($objectId, $objectType, $objectName) {
 	return array('objectId' => $objectId, 'special' => $ret);
 }
 $types = array('wiki page', 'file gallery', 'tracker', 'forum', 'group');
-include_once ("lib/commentslib.php"); global $commentslib; $commentslib = new Comments($dbTiki);
+include_once ("lib/comments/commentslib.php"); global $commentslib; $commentslib = new Comments($dbTiki);
 $all_groups = $userlib->list_all_groups();
 $res = array();
 foreach($types as $type) {

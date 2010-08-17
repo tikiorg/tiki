@@ -168,7 +168,7 @@ if (!isset($_REQUEST["comments_reply_threadId"])) {
 $smarty->assign("comments_reply_threadId", $_REQUEST["comments_reply_threadId"]);
 
 // Include the library for comments (if not included)
-include_once ("lib/commentslib.php");global $dbTiki;
+include_once ("lib/comments/commentslib.php");global $dbTiki;
 $commentslib = new Comments($dbTiki);
 
 if (!isset($comments_prefix_var)) {

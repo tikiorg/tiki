@@ -1332,7 +1332,7 @@ class FileGalLib extends TikiLib
 
 		$query = 'select `objectType`, `object`, `threadId`,`title`, `data` from `tiki_comments`';
 		$result = $this->query($query, array());
-		include_once ('lib/commentslib.php');global $dbTiki; $commentslib = new Comments($dbTiki);
+		include_once ('lib/comments/commentslib.php');global $dbTiki; $commentslib = new Comments($dbTiki);
 		while ($res = $result->fetchRow()) {
 			if ($res['objectType'] == 'forum') {
 				$type = 'forum post';

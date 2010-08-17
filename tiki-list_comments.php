@@ -6,7 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/commentslib.php');
+include_once ('lib/comments/commentslib.php');
 $auto_query_args = array('types_section', 'types', 'show_types', 'sort_mode', 'offset', 'find', 'findfilter_approved');
 
 if (isset($_REQUEST['blogId'])) {

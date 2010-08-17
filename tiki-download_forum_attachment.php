@@ -8,7 +8,7 @@
 $force_no_compression = true;
 require_once ('tiki-setup.php');
 
-include_once ('lib/commentslib.php');
+include_once ('lib/comments/commentslib.php');
 
 // roysinn: shouldn't need attach permission for download . . .
 //if ($tiki_p_forum_attach != 'y') {

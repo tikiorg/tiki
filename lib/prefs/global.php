@@ -406,7 +406,7 @@ function feature_home_pages()
 	
 	// Forum
 	if ( $prefs['feature_forums'] == 'y' ) {
-		require_once ('lib/commentslib.php');
+		require_once ('lib/comments/commentslib.php');
 		if (!isset($commentslib)) {
 			$commentslib = new Comments;
 		}

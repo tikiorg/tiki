@@ -39,7 +39,7 @@ $auto_query_args = array(
 			'find',
 );
 
-include_once ("lib/commentslib.php");
+include_once ("lib/comments/commentslib.php");
 $commentslib = new Comments($dbTiki);
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();

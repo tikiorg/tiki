@@ -31,7 +31,7 @@ $auto_query_args = array(
 	'filter_type',
 	'reply_state'
 );
-include_once ("lib/commentslib.php");
+include_once ("lib/comments/commentslib.php");
 $commentslib = new Comments($dbTiki);
 if (!isset($_REQUEST["forumId"]) || !($forum_info = $commentslib->get_forum($_REQUEST["forumId"]))) {
 	$smarty->assign('errortype', 'no_redirect_login');

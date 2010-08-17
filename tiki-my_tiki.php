@@ -73,7 +73,7 @@ if ($prefs['feature_trackers'] == 'y') {
 if ($prefs['feature_forums'] == 'y') {
 	$mytiki_forum_replies = $tikilib->get_user_preference($user, 'mytiki_forum_replies', 'y');
 	if ($mytiki_forum_replies == 'y') {
-		include_once ("lib/commentslib.php");
+		include_once ("lib/comments/commentslib.php");
 		$commentslib = new Comments($dbTiki);
 		$user_forum_replies = $commentslib->get_user_forum_comments($userwatch, -1, 'replies');
 		$smarty->assign_by_ref('user_forum_replies', $user_forum_replies);
@@ -81,7 +81,7 @@ if ($prefs['feature_forums'] == 'y') {
 	}
 	$mytiki_forum_topics = $tikilib->get_user_preference($user, 'mytiki_forum_topics', 'y');
 	if ($mytiki_forum_topics == 'y') {
-		include_once ("lib/commentslib.php");
+		include_once ("lib/comments/commentslib.php");
 		$commentslib = new Comments($dbTiki);
 		$user_forum_topics = $commentslib->get_user_forum_comments($userwatch, -1, 'topics');
 		$smarty->assign_by_ref('user_forum_topics', $user_forum_topics);

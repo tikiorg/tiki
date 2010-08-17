@@ -46,7 +46,7 @@ switch ($_REQUEST['type']) {
 		break;
 
 	case 'forum':
-		require_once ('lib/commentslib.php');
+		require_once ('lib/comments/commentslib.php');
 		if (!isset($commentslib)) {
 			$commentslib = new Comments($dbTiki);
 		}

@@ -178,7 +178,7 @@ if ($prefs['feature_trackers'] == 'y') {
 	$smarty->assign_by_ref('trackers', $trackers);
 }
 if ($prefs['feature_forums'] == 'y') {
-	include_once ('lib/commentslib.php');
+	include_once ('lib/comments/commentslib.php');
 	$commentslib = new Comments($dbTiki);
 	$forums = $commentslib->get_outbound_emails();
 	$smarty->assign_by_ref('forums', $forums);

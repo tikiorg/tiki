@@ -8,7 +8,7 @@
 $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
-include_once ("lib/commentslib.php");
+include_once ("lib/comments/commentslib.php");
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
 }

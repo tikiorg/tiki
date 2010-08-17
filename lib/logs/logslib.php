@@ -1314,7 +1314,7 @@ class LogsLib extends TikiLib
 				$action['link'] = 'tiki-view_forum_thread.php?forumId='.$action['object'].'&'.$action['comment'];
 			}
 			if (!isset($forumNames)) {
-				global $commentslib; include_once('lib/commentslib.php');
+				global $commentslib; include_once('lib/comments/commentslib.php');
 				$objects = $commentslib->list_forums(0, -1, 'name_asc', '');
 				$forumNames = array();
 				foreach ($objects['data'] as $object) {

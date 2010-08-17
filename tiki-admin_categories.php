@@ -342,7 +342,7 @@ if( $prefs['feature_file_galleries'] == 'y' ) {
 }
 
 if( $prefs['feature_forums'] == 'y' ) {
-	include_once ('lib/commentslib.php');
+	include_once ('lib/comments/commentslib.php');
 	if (!isset($commentslib)) {
 		$commentslib = new Comments($dbTiki);
 	}

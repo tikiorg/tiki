@@ -179,7 +179,7 @@ function wikiplugin_articles($data, $params)
 	$smarty->assign('largefirstimage', $largefirstimage);
 	if (!isset($overrideDates))	$overrideDates = 'n';
 	
-	include_once("lib/commentslib.php");
+	include_once("lib/comments/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
 	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'));

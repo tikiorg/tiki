@@ -181,7 +181,7 @@ class WikiLib extends TikiLib
 				//$data=addslashes(str_replace($oldName,$newName,$info['data']));
 				$data = $info['data'];
 			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
-				include_once ("lib/commentslib.php");
+				include_once ("lib/comments/commentslib.php");
 				global $dbTiki;
 				$commentslib = new Comments($dbTiki);
 				$comment_info = $commentslib->get_comment($objectId);

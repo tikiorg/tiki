@@ -2148,7 +2148,7 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler // {
 	function _install()
 	{
 		global $dbTiki;
-		require_once 'lib/commentslib.php';
+		require_once 'lib/comments/commentslib.php';
 		$comments = new Comments( $dbTiki );
 
 		$data = $this->getData();
