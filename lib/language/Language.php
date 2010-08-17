@@ -218,7 +218,7 @@ class Language extends TikiDb_Bridge
 	 * @return array
 	 */
 	protected function _getTranslations() {
-		$query = "SELECT `source`, `tran` FROM `tiki_language` WHERE `lang`=? ORDER BY `source` asc";
+		$query = "SELECT `source`, `tran` FROM `tiki_language` WHERE `lang`=? AND `source` != '' ORDER BY `source` asc";
 		$result = $this->fetchMap($query,array($this->lang));
 
 		return $result;

@@ -110,6 +110,13 @@ class LanguageTest extends TikiTestCase
 		$this->assertEquals($expectedResult, $return);
 	}
 
+	public function testWriteLanguageShouldIgnoreEmptyStrings() {
+		TikiDb::get()->query('INSERT INTO `tiki_language` VALUES (?, ?, ?)', array('', $this->lang, ''));
+		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
+		$this->obj->writeLanguageFile();
+		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/language_modif.php'), file_get_contents($this->langDir . '/language.php'));
+	}
+
 	public function testDeleteTranslations() {
 		$this->obj->deleteTranslations();
 		$this->assertFalse(TikiDb::get()->getOne('SELECT * FROM `tiki_language` WHERE `lang` = ?', array($this->obj->lang)));
