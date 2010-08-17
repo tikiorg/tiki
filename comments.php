@@ -375,18 +375,24 @@ if ($_REQUEST["comments_threadId"] > 0) {
 $smarty->assign('comment_preview', 'n');
 
 if (isset($_REQUEST["comments_previewComment"]) || !empty($errors)) {
-	$smarty->assign('comments_preview_title', $_REQUEST["comments_title"]);
-	$comments_show = 'y';
-	$smarty->assign('comments_preview_data', $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"])));
-	$smarty->assign('comment_title', $_REQUEST["comments_title"]);
-	$smarty->assign('comment_rating', $_REQUEST["comment_rating"]);		
-	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
-	$smarty->assign('comment_preview_date', $tikilib->now);
+	$comment_preview = array();
+
+	$comment_preview['title'] = $_REQUEST["comments_title"];
+	$comment_preview['parsed'] = $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"]));
+	$comment_preview['rating'] = $_REQUEST["comment_rating"];
+	$comment_preview['commentDate'] = $tikilib->now;
+
 	if (isset($_REQUEST["anonymous_name"])) {
-		$smarty->assign('comments_preview_anonymous_name', $_REQUEST["anonymous_name"]);
+		$comment_preview['userName'] = $_REQUEST["anonymous_name"];
 	}
-	if (isset($_REQUEST["comments_previewComment"]))
+
+	$smarty->assign('comment_preview_data', $comment_preview);
+
+	if (isset($_REQUEST["comments_previewComment"])) {
 		$smarty->assign('comment_preview', 'y');
+	}
+	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
+	$comments_show = 'y';
 }
 
 // Always show comments when a display setting has been explicitely specified
@@ -541,6 +547,6 @@ if ($section == 'wiki page') {
 	}
 }
 
-
+$headerlib->add_jsfile('lib/comments/commentslib.js');
 $smarty->assign('comments_objectId', $comments_objectId);
 $smarty->assign('comments_show', $comments_show);

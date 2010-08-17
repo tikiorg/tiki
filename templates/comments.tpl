@@ -315,27 +315,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	</div>
 
 	{if $comment_preview eq 'y'}
-	<div class="clearfix post_preview" id="preview_comment">
-		{jq}
-			$(window).attr('location','#preview_comment');
-		{/jq}
-		{if $forum_mode neq 'y'}<b>{tr}Preview{/tr}</b>{/if}
-		<div class="post"><div class="inner"><span class="corners-top"><span></span></span><div class="postbody">
-			<div class="postbody-title"><div class="title">{$comments_preview_title|escape}</div></div>
-			<div class="content">
-				<div class="clearfix author">
-					<span class="author_post_info">
-						{tr}Published by{/tr} <span class="author_post_info_by">{if $user}{$user|userlink}{else}{$comments_preview_anonymous_name}{/if}</span>
-						{if $comment_preview_date > 0}
-							{tr}on{/tr} <span class="author_post_info_on">{$comment_preview_date|tiki_short_datetime}</span>
-						{/if}
-					</span>
-				</div>
-				{$comments_preview_data}
-	  		</div>
-		</div><span class="corners-bottom"><span></span></span></div></div>
-	</div>
-{*	<br class="clear" />*}
+		{include file='comment.tpl' comment=$comment_preview_data}
 	{/if}
 
 	<form enctype="multipart/form-data" method="post" action="{$comments_father}#comments" id='editpostform'>
@@ -358,7 +338,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{if !$user}
 			<tr>
 				<td class="formcolor"><label for="anonymous_name">{tr}Name{/tr}</span></label></td>
-				<td class="formcolor"><input type="text" maxlength="50" id="anonymous_name" name="anonymous_name" /></td>
+				<td class="formcolor"><input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name"  value="{$comment_preview_data.name|escape}"/></td>
 			</tr>
 			{if $forum_mode eq 'y'}
 				<tr>
@@ -387,7 +367,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				   
 				   But I don't know how else to deal with this issue.
 				 *}
-					<input type="text" name="comments_title" id="comments-title" value="{$comment_title|escape}" /> 
+					<input type="text" name="comments_title" id="comments-title" value="{$comment_preview_data.title|escape}" />
 
 				</td>
 			</tr>
@@ -515,7 +495,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
 				{/if}
-				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"
+				<input type="submit" name="comments_previewComment" id="comments_previewComment" value="{tr}Preview{/tr}"
 				{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
 					{assign var='file_preview_warning' value="{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}"}
 					onclick="
