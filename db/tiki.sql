@@ -983,8 +983,7 @@ CREATE TABLE `tiki_group_watches` (
   `title` varchar(250) default NULL,
   `type` varchar(200) default NULL,
   `url` varchar(250) default NULL,
-  KEY `watchId` (`watchId`),
-  PRIMARY KEY (`group`(50),event,object(100))
+  PRIMARY KEY (`watchId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_history`;
@@ -2519,8 +2518,7 @@ CREATE TABLE `tiki_user_watches` (
   `type` varchar(200) default NULL,
   `url` varchar(250) default NULL,
   `email` varchar(200) default NULL,
-  KEY `watchId` (`watchId`),
-  PRIMARY KEY (`user`(50),event,object(100),email(50))
+  PRIMARY KEY (`watchId`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_userfiles`;
@@ -3594,7 +3592,7 @@ CREATE TABLE `tiki_payment_requests` (
     `description` VARCHAR(100) NOT NULL,
     `actions` TEXT,
     `detail` TEXT,
-	`userId` int(8),
+    `userId` int(8),
     PRIMARY KEY( `paymentRequestId` )
 );
 
@@ -3606,19 +3604,19 @@ CREATE TABLE `tiki_payment_received` (
     `amount` DECIMAL(7,2),
     `type` VARCHAR(15),
     `details` TEXT,
-	`userId` int(8),
+    `userId` int(8),
     PRIMARY KEY(`paymentReceivedId`),
     KEY `payment_request_ix` (`paymentRequestId`)
 );
 DROP TABLE IF EXISTS `tiki_discount`;
 CREATE TABLE `tiki_discount`( 
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`code` VARCHAR(255),
-	`value` VARCHAR(255),
-	`max` INT,
-	`comment` TEXT,
-	PRIMARY KEY(`id`),
-	KEY `code` (`code`)
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(255),
+    `value` VARCHAR(255),
+    `max` INT,
+    `comment` TEXT,
+    PRIMARY KEY(`id`),
+    KEY `code` (`code`)
 );
 DROP TABLE IF EXISTS `tiki_translations_in_progress`;
 CREATE TABLE IF NOT EXISTS `tiki_translations_in_progress` (
@@ -3689,24 +3687,24 @@ CREATE TABLE `tiki_object_relations` (
 
 DROP TABLE IF EXISTS `tiki_todo`;
 CREATE TABLE `tiki_todo` (
-	`todoId` INT(12) NOT NULL auto_increment,
-	`after` INT(12) NOT NULL,
-	`event` ENUM('creation', 'modification', 'upload'),
-	`objectType` VARCHAR(50),
-	`objectId` VARCHAR(255) default NULL,
-	`from` VARCHAR(255) default NULL,
-	`to` VARCHAR(255) default NULL,
-	PRIMARY KEY (`todoId`),
-	KEY `what` (`objectType`, `objectId`),
-	KEY `after` (`after`)
+    `todoId` INT(12) NOT NULL auto_increment,
+    `after` INT(12) NOT NULL,
+    `event` ENUM('creation', 'modification', 'upload'),
+    `objectType` VARCHAR(50),
+    `objectId` VARCHAR(255) default NULL,
+    `from` VARCHAR(255) default NULL,
+    `to` VARCHAR(255) default NULL,
+    PRIMARY KEY (`todoId`),
+    KEY `what` (`objectType`, `objectId`),
+    KEY `after` (`after`)
 );
 DROP TABLE IF EXISTS `tiki_todo_notif`;
 CREATE TABLE `tiki_todo_notif` (
-	`todoId` INT(12) NOT NULL,
-	`objectType` VARCHAR(50),
-	`objectId` VARCHAR(255) default NULL,
-	KEY `todoId` (`todoId`),
-	KEY `objectId` (`objectId`)
+    `todoId` INT(12) NOT NULL,
+    `objectType` VARCHAR(50),
+    `objectId` VARCHAR(255) default NULL,
+    KEY `todoId` (`todoId`),
+    KEY `objectId` (`objectId`)
 );
 
 DROP TABLE IF EXISTS `tiki_url_shortener`;
