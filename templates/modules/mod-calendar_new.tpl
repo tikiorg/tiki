@@ -32,9 +32,7 @@
 						{if isset($cell[w][d].items[0])}
 							{assign var=over value=$cell[w][d].items[0].over}{else}{assign var=over value=""}
 						{/if}
-						{if $month_cursor neq $focusmonth }
-							<span style="color:lightgrey">{$day_cursor}</span>
-						{elseif isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" || $cell[w][d].items[0].visible eq 'y')}
+						{if isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" || $cell[w][d].items[0].visible eq 'y')}
 							<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$cell[w][d].day}&amp;viewmode={$viewmodelink}" 
 							{if $prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[0].calitemId}
 									{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
