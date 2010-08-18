@@ -18,5 +18,5 @@
 {/capture}
 {* When copyright section is not empty show it *}
 {if $smarty.capture.copyright_section neq ''}
-	<p class="editdate">{$smarty.capture.copyright_section}</p>
+	<div class="editdate">{$smarty.capture.copyright_section}</div>
 {/if}
