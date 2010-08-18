@@ -1350,6 +1350,15 @@ body.tiki_blogs div.author_actions {
 	text-align: right;
 }
 
+/* Related content */
+.related_posts {
+	margin-top: 3em;
+}
+
+.related_posts h4 {
+	margin: 0;
+}
+
 /***** Forums *****/
 body.tiki_forums table.normal {
 	margin: auto;
