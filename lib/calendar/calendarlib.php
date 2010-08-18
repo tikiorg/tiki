@@ -738,7 +738,7 @@ class CalendarLib extends TikiLib
 		$previous['day'] -= $nbDays[$view];
 		// $tikilib->make_time() used with timezones doesn't support month = 0
 		if ($previous['month'] - $nbMonths[$view] <= 0) { // need to change year
-			$previous['month'] = ($previous['month'] - 1 - $nbMonths[$view]) % 12 + 1;
+			$previous['month'] = ($previous['month'] +11 - $nbMonths[$view]) % 12 + 1;
 			$previous['year'] -= 1;
 		} else {
 			$previous['month'] -= $nbMonths[$view];
@@ -793,7 +793,6 @@ class CalendarLib extends TikiLib
 		// echo '<br/>VIEWSTART'; print_r($viewStart);
 		// end of the period
 		$cell = array();
-		print_r($viewStart);echo $nbBackDays;
 
 		for ($ilign = 0, $icol = 0, $loop = $viewStart, $weekDay = $viewStart['weekDay']; ; ) {
 			if ($loop['date'] >= $startNext['date'] && $icol == 0) {
