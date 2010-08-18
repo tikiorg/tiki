@@ -58,7 +58,35 @@
 						{/remarksbox}
 					{/if}
 				{/if}
+			{elseif $prefs.payment_system eq 'tikicredits'}
+				<form action="{query _type='relative'}" method="post">
+					{tr}Pay with Tiki User Credits:{/tr} 
+					<table class="normal">
+						<tr>
+							<th>{tr}Credit type{/tr}</th>
+							<th>{tr}Credits left{/tr}</th>
+							<th>{tr}Amount to pay{/tr}</th>
+							<th>{tr}Pay using{/tr}</th>
+						</tr>
+						{foreach key=id item=data from=$userpaycredits}
+						<tr>
+							<td>{$data.display_text|escape}</td>
+							<td>{$data.remain|escape}</td>
+							<td>{$data.price|escape}</td>
+							<td><input type="radio" name="tiki_credit_type" value="{$id|escape}" {if !$data.enough}disabled="disabled"{/if} /></td>
+						</tr>
+						{/foreach}
+						<tr>
+							<td colspan="4">
+								<input type="hidden" name="invoice" value="{$payment_info.paymentRequestId|escape}" />
+								<input type="hidden" name="tiki_credit_amount" value="{$payment_info.amount_remaining|escape}" />
+								<input type="submit" name="tiki_credit_pay" value="{tr}Pay with Tiki User Credits{/tr}" />
+							</td>
+						</tr>
+					</table>
+				</form>
 			{/if}
+			
 			{if !empty($prefs.payment_manual)}
 				{capture name=wp_payment_manual}wiki:{$prefs.payment_manual}{/capture}
 				{include file=$smarty.capture.wp_payment_manual}
@@ -76,6 +104,8 @@
 						{include file=tiki-payment-paypal.tpl payment=$payment}
 					{elseif $payment.type eq 'cclite'}
 						{include file=tiki-payment-cclite.tpl payment=$payment}
+					{elseif $payment.type eq 'tikicredits'}
+						{include file=tiki-payment-tikicredits.tpl payment=$payment}
 					{/if}
 				</li>
 			{/foreach}

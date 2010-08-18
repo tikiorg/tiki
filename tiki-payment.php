@@ -26,6 +26,9 @@ $inputConfiguration = array( array(
 		'note' => 'striptags',
 		'detail' => 'wikicontent',
 		'cclite_payment_amount' => 'text',	// params for cart module
+		'tiki_credit_amount' => 'text',
+		'tiki_credit_pay' => 'text',
+		'tiki_credit_type' => 'text',
 		'checkout' => 'text',
 		'update' => 'word',
 		'daconfirm' => 'word',				// ticketlib
@@ -48,6 +51,13 @@ $auto_query_args = array(
 	'offset_canceled',
 );
 
+if ( isset($_POST['tiki_credit_pay']) && isset($_POST['tiki_credit_amount']) && isset($_POST['tiki_credit_type']) && isset($_POST['invoice'])) {
+	require_once 'lib/payment/creditspaylib.php';
+	$userpaycredits = new UserPayCredits;
+	$userpaycredits->payAmount($_POST['tiki_credit_type'], $_POST['tiki_credit_amount'], $_POST['invoice']);
+	
+}
+			
 if( isset( $ipn_data ) ) {
 	$access->check_feature( 'payment_paypal_ipn' );
 	require_once 'lib/payment/paypallib.php';

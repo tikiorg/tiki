@@ -8,9 +8,10 @@
 		{preference name=payment_feature}
 		
 		{remarksbox title="{tr}Choose payment system{/tr}"}
-			{tr}You can only use one payment Paypal or Cclite{/tr}<br />
-			{tr}Only PayPal is working at the moment. See PayPal.com{/tr}<br />
-			{tr}Cclite: Community currency accounting for local exchange trading systems (LETS). See {/tr}<a href="http://sourceforge.net/projects/cclite/">{tr}sourceforge.net{/tr}</a>
+			{tr}You can only use one payment Paypal or Cclite or Tiki User Credits{/tr}<br />
+			{tr}PayPal is working at the moment. See PayPal.com{/tr}<br />
+			{tr}Cclite: Community currency accounting for local exchange trading systems (LETS). See {/tr}<a href="http://sourceforge.net/projects/cclite/">{tr}sourceforge.net{/tr}</a><br />
+			{tr}Tiki User Credits: Requires this other feature to be configured{/tr}
 		{/remarksbox}
 		
 		<div class="adminoptionboxchild" id="payment_feature_childcontainer">
@@ -47,6 +48,11 @@
 						{preference name=payment_cclite_hashing_algorithm}
 						{preference name=payment_cclite_notify}
 					</div>
+				</div>
+				<h2>{tr}Tiki User Credits{/tr}</h2>
+				<div class="admin payment">
+					{preference name=payment_tikicredits_types}
+					{preference name=payment_tikicredits_xcrates}
 				</div>
 			</div>
 		{jq}
