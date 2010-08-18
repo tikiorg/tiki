@@ -99,11 +99,11 @@ class CreditsLib extends TikiLib
 		}
 		
 		// set zero for creditTypes that user does not have
-		foreach($creditTypes as $c) {
-			if (!array_key_exists($c, $credits)) {
-				$credits[$type]['used'] = 0;
-				$credits[$type]['remain'] = 0;
-				$credits[$type]['total'] = 0;
+		foreach($creditTypes as $k => $c) {
+			if (!array_key_exists($k, $credits)) {
+				$credits[$k]['used'] = 0;
+				$credits[$k]['remain'] = 0;
+				$credits[$k]['total'] = 0;
 			}			
 		}
 		return $credits;
