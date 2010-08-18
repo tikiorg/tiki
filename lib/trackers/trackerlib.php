@@ -1815,8 +1815,10 @@ class TrackerLib extends TikiLib
 		foreach($ins_fields["data"] as $i=>$array) {
 			if ($ins_fields['data'][$i]['type'] == 'a') {
 				$parsed .= $ins_fields['data'][$i]['value']."\n";
-				foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue) {
-					$parsed .= $linvalue['value']."\n";
+				if (!empty($ins_fields["data"][$i]['lingualvalue'])) {
+					foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue) {
+						$parsed .= $linvalue['value']."\n";
+					}
 				}
 			}
 		}
@@ -4191,6 +4193,37 @@ class TrackerLib extends TikiLib
 			}
 		}
 		return true;
+	}
+	/* fill a calendar structure with items
+	 * fieldIds contains one date or 2 dates
+	 */
+	function fillTableViewCell($items, $fieldIds, &$cell) {
+		if (empty($items)) {
+			return;
+		}
+		foreach ($items[0]['field_values'] as $i => $field) {
+			if ($field['fieldId'] == $fieldIds[0]) {
+				$iStart = $i;
+			} elseif (count($fieldIds) > 1 && $field['fieldId'] == $fieldIds[1]) {
+				$iEnd = $i;
+			}
+		}
+		foreach ($cell as $i => $line) {
+			foreach ($line as $j => $day) {
+				if (!$day['focus']) {
+					continue;
+				}
+				foreach ($items as $item) {
+					$endDay = TikiLib::make_time(0,0,0, $day['month'], $day['day']+1, $day['year']);
+					if ((count($fieldIds) == 1 && $item['field_values'][$iStart]['value'] >= $day['date'] && $item['field_values'][$iStart]['value'] < $endDay)
+						|| (count($fieldIds) > 1 && $item['field_values'][$iStart]['value'] <= $endDay && $item['field_values'][$iEnd]['value'] > $day['date'])) {
+						if ($day['month'] == 9 && $day['day']==1) {echo '<br>TILT'.$item['itemId'];}
+							$cell[$i][$j]['items'][] = $item;
+					}
+				}
+			}
+		}
+		//echo '<pre>'; print_r($cell); echo '</pre>';
 	}
 
 }

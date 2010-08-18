@@ -24,6 +24,8 @@ if ( ! ($prefs['feature_calendar'] == 'y' || $prefs['feature_action_calendar'] =
   die;
 }
 
+global $calendarlib; include_once('lib/calendar/calendarlib.php');
+
 $trunc = "20"; // put in a pref, number of chars displayed in cal cells
 
 if (!empty($_REQUEST['focus'])) {
@@ -45,6 +47,7 @@ list($focus_day, $focus_month, $focus_year) = array(
 	TikiLib::date_format("%m", $focusdate),
 	TikiLib::date_format("%Y", $focusdate)
 );
+$focus = array('day'=>$focus_day, 'month'=>$focus_month, 'year'=>$focus_year);
 $focuscell = $tikilib->make_time(0,0,0,$focus_month,$focus_day,$focus_year);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
@@ -108,44 +111,11 @@ $smarty->assign('short_format_day', tra('%m/%d'));
 
 $focus_day_limited = min($focus_day, 28); // To make "previous month" work if the current focus is on, for example, the last day of march.
 
-$focus_prevday = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
-$focus_prevweek = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day - 7, $focus_year);
-$focus_prevmonth = $tikilib->make_time(0, 0, 0,
-	(($focus_month == 1) ? 12 : $focus_month - 1), // $tikilib->make_time() used with timezones doesn't support month = 0
-	$focus_day_limited,
-	(($focus_month == 1) ? $focus_year - 1 : $focus_year)
-);
-$focus_prevquarter = $tikilib->make_time(0, 0, 0,
-	(($focus_month == 3) ? 12 : $focus_month - 3),
-	$focus_day_limited,
-	(($focus_month == 3) ? $focus_year - 1 : $focus_year)
-);
-$focus_prevsemester = $tikilib->make_time(0, 0, 0,
-	(($focus_month == 6) ? 12 : $focus_month - 6),
-	$focus_day_limited,
-	(($focus_month == 6) ? $focus_year - 1 : $focus_year)
-);
-$focus_prevyear = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day, $focus_year - 1);
+$focus_prev = $calendarlib->focusPrevious($focus, $calendarViewMode);
+$focus_next = $calendarlib->focusNext($focus, $calendarViewMode);
 
-$focus_nextday = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
-$focus_nextweek = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day + 7, $focus_year);
-$focus_nextmonth = $tikilib->make_time(0, 0, 0, $focus_month + 1, $focus_day_limited, $focus_year);
-$focus_nextquarter = $tikilib->make_time(0, 0, 0, $focus_month + 3, $focus_day_limited, $focus_year);
-$focus_nextsemester = $tikilib->make_time(0, 0, 0, $focus_month + 6, $focus_day_limited, $focus_year);
-$focus_nextyear = $tikilib->make_time(0, 0, 0, $focus_month, $focus_day, $focus_year + 1);
-
-$smarty->assign('daybefore', $focus_prevday);
-$smarty->assign('weekbefore', $focus_prevweek);
-$smarty->assign('monthbefore', $focus_prevmonth);
-$smarty->assign('quarterbefore', $focus_prevquarter);
-$smarty->assign('semesterbefore', $focus_prevsemester);
-$smarty->assign('yearbefore', $focus_prevyear);
-$smarty->assign('dayafter', $focus_nextday);
-$smarty->assign('weekafter', $focus_nextweek);
-$smarty->assign('monthafter', $focus_nextmonth);
-$smarty->assign('quarterafter', $focus_nextquarter);
-$smarty->assign('semesterafter', $focus_nextsemester);
-$smarty->assign('yearafter', $focus_nextyear);
+$smarty->assign('focus_prev', $focus_prev['date']);
+$smarty->assign('focus_next', $focus_next['date']);
 
 $smarty->assign('focusday', $focus_day);
 $smarty->assign('focusmonth', $focus_month);
@@ -343,33 +313,8 @@ $smarty->assign('numberofweeks', $numberofweeks);
 $smarty->assign('daystart', $daystart);
 $smarty->assign('dayend', $dayend);
 
-$daysnames = array();
-$daysnames_abr = array();
-if ($firstDayofWeek == 0) {
-	$daysnames[] = tra("Sunday");
-	$daysnames_abr[] = tra('Su');
-}
+$calendarlib->getDayNames($firstDayofWeek, $daysnames, $daysnames_abr);
 
-array_push($daysnames, 
-	tra("Monday"),
-	tra("Tuesday"),
-	tra("Wednesday"),
-	tra("Thursday"),
-	tra("Friday"),
-	tra("Saturday")
-);
-array_push($daysnames_abr, 
-	tra("Mo"),
-	tra("Tu"),
-	tra("We"),
-	tra("Th"),
-	tra("Fr"),
-	tra("Sa")
-);
-if ($firstDayofWeek != 0) {
-	$daysnames[] = tra("Sunday");
-	$daysnames_abr[] = tra('Su');
-}
 $weeks = array();
 $cell = array();
 

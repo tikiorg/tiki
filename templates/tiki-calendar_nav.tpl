@@ -1,3 +1,4 @@
+{strip}
 {if !isset($ajax)}
 	{assign var='ajax' value='y'}
 {/if}
@@ -25,17 +26,17 @@
 {*previous*}
 		<div>
 		{if $viewmode eq "day"}
-			{self_link _ajax=$ajax _class="next" todate=$daybefore _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "week"}
-			{self_link _ajax=$ajax _class="next" todate=$weekbefore _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "month"}
-			{self_link _ajax=$ajax _class="next" todate=$monthbefore _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "quarter"}
-			{self_link _ajax=$ajax _class="next" todate=$quarterbefore _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "semester"}
-			{self_link _ajax=$ajax _class="next" todate=$semesterbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax _class="next" todate=$yearbefore _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_prev _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_previous"}{/self_link}
 		{/if}
 		</div>
 
@@ -64,17 +65,17 @@
 {*next*}
 		<div>
 		{if $viewmode eq "day"}
-			{self_link _ajax=$ajax _class="next" todate=$dayafter _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "week"}
-			{self_link _ajax=$ajax _class="next" todate=$weekafter _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "month"}
-			{self_link _ajax=$ajax _class="next" todate=$monthafter _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "quarter"}
-			{self_link _ajax=$ajax _class="next" todate=$quarterafter _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "semester"}
-			{self_link _ajax=$ajax _class="next" todate=$semesterafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax _class="next" todate=$yearafter _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_next"}{/self_link}
 		{/if}
 		</div>
 		{/strip}</span>
@@ -88,17 +89,17 @@
 {*previous*}
 	 {if !empty($module_params.viewnavbar) && $module_params.viewnavbar eq 'partial'}
 		{if $viewmode eq "day"}
-			{self_link _ajax=$ajax todate=$daybefore _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "week"}
-			{self_link _ajax=$ajax todate=$weekbefore _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "month"}
-			{self_link _ajax=$ajax todate=$monthbefore _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "quarter"}
-			{self_link _ajax=$ajax todate=$quarterbefore _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "semester"}
-			{self_link _ajax=$ajax todate=$semesterbefore _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_previous"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax todate=$yearbefore _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_previous"}{/self_link}
+			{self_link _ajax=$ajax todate=$focus_prev _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_previous"}{/self_link}
 		{/if}
 	{/if}
 
@@ -121,18 +122,19 @@
 {*next*}
 	{if !empty($module_params.viewnavbar) && $module_params.viewnavbar eq 'partial'}
 		{if $viewmode eq "day"}
-			{self_link _ajax=$ajax _class="next" todate=$dayafter _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Day{/tr}" _alt="{tr}Day{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "week"}
-			{self_link _ajax=$ajax _class="next" todate=$weekafter _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Week{/tr}" _alt="{tr}Week{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "month"}
-			{self_link _ajax=$ajax _class="next" todate=$monthafter _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Month{/tr}" _alt="{tr}Month{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "quarter"}
-			{self_link _ajax=$ajax _class="next" todate=$quarterafter _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Quarter{/tr}" _alt="{tr}Quarter{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "semester"}
-			{self_link _ajax=$ajax _class="next" todate=$semesterafter _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Semester{/tr}" _alt="{tr}Semester{/tr}" _icon=resultset_next"}{/self_link}
 		{elseif $viewmode eq "year"}
-			{self_link _ajax=$ajax _class="next" todate=$yearafter _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_next"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title="{tr}Year{/tr}" _alt="{tr}Year{/tr}" _icon=resultset_next"}{/self_link}
 		{/if}
 	{/if}
 </div>
 {/if}
+{/strip}
