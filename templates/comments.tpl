@@ -340,10 +340,27 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<td class="formcolor"><label for="anonymous_name">{tr}Name{/tr}</span></label></td>
 				<td class="formcolor"><input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name"  value="{$comment_preview_data.name|escape}"/></td>
 			</tr>
-			{if $forum_mode eq 'y'}
+			{if $forum_mode eq 'y' or $prefs.comments_field_email eq 'y'}
 				<tr>
-					<td class="formcolor"><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}</label></td>
-					<td class="formcolor"><input type="text" size="30" id="anonymous_email" name="anonymous_email" /></td>
+					<td class="formcolor">
+						<label for="anonymous_email">
+							{if $forum_mode eq 'y'}
+								{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}
+							{else}
+								{tr}Email{/tr}	
+							{/if}
+						</label>
+					</td>
+					<td class="formcolor"><input type="text" size="30" id="anonymous_email" name="anonymous_email" value="{$comment_preview_data.email|escape}"/></td>
+				</tr>
+			{/if}
+
+			{if $forum_mode neq 'y' and $prefs.comments_field_website eq 'y'}
+				<tr>
+					<td class="formcolor">
+						<label for="anonymous_website">{tr}Website{/tr}</label>
+					</td>
+					<td class="formcolor"><input type="text" size="30" id="anonymous_website" name="anonymous_website"  value="{$comment_preview_data.website|escape}" /></td>
 				</tr>
 			{/if}
 		{/if}
@@ -367,7 +384,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				   
 				   But I don't know how else to deal with this issue.
 				 *}
-					<input type="text" name="comments_title" id="comments-title" value="{$comment_preview_data.title|escape}" />
+					<input type="text" name="comments_title" id="comments-title" value="{$comment_preview_data.title|escape}" /> 
 
 				</td>
 			</tr>

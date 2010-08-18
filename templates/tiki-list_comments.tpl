@@ -59,9 +59,11 @@
 					<div class='box-data'>
 						<div>
 							{foreach from=$more_info_headers key=headerKey item=headerName}
-								{assign var=val value=$comments[ix].$headerKey}
-								<b>{tr}{$headerName}{/tr}</b>: {$val}
-								<br />
+								{if (isset($comments[ix].$headerKey))}
+									{assign var=val value=$comments[ix].$headerKey}
+									<b>{tr}{$headerName}{/tr}</b>: {$val}
+									<br />
+								{/if}
 							{/foreach}
 						</div>
 					</div>

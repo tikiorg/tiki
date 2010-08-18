@@ -1838,6 +1838,11 @@ class Comments extends TikiLib
 			} else {
 				$ret[$key]["isEmpty"] = 'n';
 			}
+
+			// to be able to distinct between a tiki user and a anonymous name
+			if (!$userlib->user_exists($ret[$key]['userName'])) {
+				$ret[$key]['anonymous_name'] = $ret[$key]['userName'];
+			}
 		}
 
 		if ($old_sort_mode == 'replies_asc') {
@@ -2123,7 +2128,7 @@ class Comments extends TikiLib
 	function post_new_comment($objectId, $parentId, $userName,
 		$title, $data, &$message_id, $in_reply_to = '', $type = 'n',
 		$summary = '', $smiley = '', $contributions = '', $anonymous_name = '',
-		$postDate = ''
+		$postDate = '', $anonymous_email, $anonymous_website
 	)
 	{
 		global $prefs, $tiki_p_admin_comments;
@@ -2229,15 +2234,15 @@ class Comments extends TikiLib
 			$query = "insert into
 				`tiki_comments`(`objectType`, `object`,
 						`commentDate`, `userName`, `title`, `data`, `votes`,
-						`points`, `hash`, `parentId`, `average`, `hits`,
+						`points`, `hash`, `email`, `website`, `parentId`, `average`, `hits`,
 						`type`, `summary`, `smiley`, `user_ip`,
 						`message_id`, `in_reply_to`, `approved`, `locked`)
 				values ( ?, ?, ?, ?, ?, ?,
-						0, 0, ?, ?, 0, 0, ?, ?, 
+						0, 0, ?, ?, ?, ?, 0, 0, ?, ?, 
 						?, ?, ?, ?, ?, 'n')";
 			$result = $this->query($query, 
 					array( $object[0], (string) $object[1],(int) $postDate, $userName,
-						$title, $data, $hash, (int) $parentId, $type,
+						$title, $data, $hash, $anonymous_email, $anonymous_website, (int) $parentId, $type,
 						$summary, $smiley, $this->get_ip_address(),
 						$message_id, (string) $in_reply_to, $approved)
 					);
@@ -2713,6 +2718,9 @@ class Comments extends TikiLib
 		if (!isset($params['anonymous_email'])) {
 			$params['anonymous_email'] = '';
 		}
+		if (!isset($params['anonymous_website'])) {
+			$params['anonymous_website'] = '';
+		}
 
 		if ( isset($params['comments_reply_threadId']) && ! empty($params['comments_reply_threadId']) ) {
 			$reply_info = $this->get_comment($params['comments_reply_threadId']);
@@ -2728,7 +2736,7 @@ class Comments extends TikiLib
 			$message_id = '';
 
 			$threadId =	$this->post_new_comment($comments_objectId, $parent_id, $user, $params['comments_title'], $params['comments_data'], $message_id, $in_reply_to,
-					'n', '', '', isset($params['contributions'])? $params['contributions']: '',	$params['anonymous_name']	);
+				'n', '', '', isset($params['contributions'])? $params['contributions']: '',	$params['anonymous_name'], '', $params['anonymous_email'], $params['anonymous_website']);
 
 		} elseif ($tiki_p_edit_comments == 'y' || $this->user_can_edit_post($user, $params['comments_threadId'])) {
 			$threadId = $params['comments_threadId'];

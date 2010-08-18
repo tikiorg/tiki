@@ -12,5 +12,15 @@ function prefs_comments_list() {
 			'description' => tra('Hide the title field on comments and their replies.'),
 			'type' => 'flag',
 		),
+		'comments_field_email' => array(
+			'name' => tra('Email field'),
+			'description' => tra('Email field for comments (only for anonymous users).'),
+			'type' => 'flag',
+		),
+		'comments_field_website' => array(
+			'name' => tra('Website field'),
+			'description' => tra('Website field for comments (only for anonymous users).'),
+			'type' => 'flag',
+		),
 	);
 }

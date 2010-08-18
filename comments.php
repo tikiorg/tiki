@@ -383,7 +383,13 @@ if (isset($_REQUEST["comments_previewComment"]) || !empty($errors)) {
 	$comment_preview['commentDate'] = $tikilib->now;
 
 	if (isset($_REQUEST["anonymous_name"])) {
-		$comment_preview['userName'] = $_REQUEST["anonymous_name"];
+		$comment_preview['anonymous_name'] = $_REQUEST["anonymous_name"];
+	}
+	if (isset($_REQUEST["anonymous_email"])) {
+		$comment_preview['email'] = $_REQUEST["anonymous_email"];
+	}
+	if (isset($_REQUEST["anonymous_website"])) {
+		$comment_preview['website'] = $_REQUEST["anonymous_website"];
 	}
 
 	$smarty->assign('comment_preview_data', $comment_preview);

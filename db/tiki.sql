@@ -528,6 +528,8 @@ CREATE TABLE `tiki_comments` (
   `title` varchar(255) default NULL,
   `data` text,
   `hash` varchar(32) default NULL,
+  `email` varchar(200) default NULL,
+  `website` varchar(200) default NULL,
   `user_ip` varchar(15) default NULL,
   `summary` varchar(240) default NULL,
   `smiley` varchar(80) default NULL,

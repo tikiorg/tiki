@@ -1767,6 +1767,8 @@ function get_default_prefs() {
 		'feature_comments_moderation' => 'n',
 		'feature_comments_locking' => 'n',
 		'comments_notitle' => 'n',
+		'comments_field_email' => 'n',
+		'comments_field_website' => 'n',
 	);
 
 
