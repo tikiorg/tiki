@@ -983,7 +983,8 @@ CREATE TABLE `tiki_group_watches` (
   `title` varchar(250) default NULL,
   `type` varchar(200) default NULL,
   `url` varchar(250) default NULL,
-  PRIMARY KEY (`watchId`)
+  PRIMARY KEY (`watchId`),
+  INDEX `event-object-group` ( `event` , `object` ( 100 ) , `group` ( 50 ) ) 
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_history`;
@@ -2518,7 +2519,8 @@ CREATE TABLE `tiki_user_watches` (
   `type` varchar(200) default NULL,
   `url` varchar(250) default NULL,
   `email` varchar(200) default NULL,
-  PRIMARY KEY (`watchId`)
+  PRIMARY KEY (`watchId`),
+  INDEX `event-object-user` ( `event` , `object` ( 100 ) , `user` ( 50 ) )
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_userfiles`;
