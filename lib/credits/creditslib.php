@@ -3,8 +3,6 @@
 // TODO: product_id is meant for storing some information about the product
 // purchased that led to the credits being added.
 
-// TODO: usage reporting
-
 class CreditsLib extends TikiLib {
 	
 	function getRawCredits( $userId ) // {{{

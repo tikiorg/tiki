@@ -72,7 +72,7 @@
 </table>
 
 
-<h2>{tr}Test Using of User Credits{/tr}</h2>
+<h2>{tr}Use User Credits{/tr}</h2>
 <form method="post" action="tiki-admin_credits.php">
 	{tr}Use:{/tr} <select name="use_credit_type">
 	{foreach key=id item=data from=$credit_types}
@@ -85,7 +85,7 @@
 	<input type="submit" name="use_credit" value="{tr}Use{/tr}"/>
 </form>
 
-<h2>{tr}Test Restoring of User Level Credits{/tr}</h2>
+<h2>{tr}Restore User Level Credits{/tr}</h2>
 <form method="post" action="tiki-admin_credits.php">
 	{tr}Restore:{/tr} <select name="restore_credit_type">
 	{foreach key=id item=data from=$static_credit_types}
