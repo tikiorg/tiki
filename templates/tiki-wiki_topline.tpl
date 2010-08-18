@@ -13,7 +13,7 @@
 
 {breadcrumbs type="desc" loc="page" crumbs=$crumbs}
 
-{if $cached_page eq 'y'}<small>({tr}Cached{/tr})</small>{/if}
+{if $cached_page eq 'y'}<span class="cachedStatus'>({tr}Cached{/tr})</span>{/if}
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y'}
 	{$display_catpath}
 {/if}
