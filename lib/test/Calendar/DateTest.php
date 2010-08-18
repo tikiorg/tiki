@@ -47,7 +47,7 @@ class Calendar_DateTest extends TikiTestCase
 		$firstWeekDay = 1; // monday
 		$cell = $calendarlib->getTableViewCells($start, $startNext, $view, $firstWeekDay);
 		$this->assertEquals( '2010-07-26', TikiLib::date_format('%Y-%m-%d', $cell[0][0]['date']) );
-		$this->assertEquals( '2010-09-05', TikiLib::date_format('%Y-%m-%d', $cell[4][7]['date']) );
+		$this->assertEquals( '2010-09-05', TikiLib::date_format('%Y-%m-%d', $cell[5][6]['date']) );
 	}
 	function testPrevious() {
 		global $calendarlib; include_once('lib/calendar/calendarlib.php');
