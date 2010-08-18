@@ -540,7 +540,7 @@
 					</select>
 					<fieldset>
 						<legend>{tr}Notification{/tr}</legend>
-						{tr}Notify creator the change{/tr}{html_select_duration prefix='todo_notif'}{tr}before change{/tr}<br />
+						{tr}Warn creator of an upcoming status change{/tr}{html_select_duration prefix='todo_notif'}{tr}before{/tr}<br />
 						<label>{tr}Mail subject text{/tr}<input type="text" name="todo_subject" /></label><br />
 						<label>{tr}Mail body ressource{/tr}<input type="text" name="todo_body" /></label><em>{tr}wiki:pageName for a wiki page or tplName.tpl for a template{/tr}</em>
 					</fieldset>
