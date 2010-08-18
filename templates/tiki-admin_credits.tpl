@@ -1,6 +1,7 @@
 {if isset($msg)}{$msg|escape}{/if}
 
-<h1>{tr}Manage Credits{/tr}</h1>
+{title help="Credits"}{tr}Manage Credits{/tr}{/title}
+
 <form method="get" action="tiki-admin_credits.php">
 	<p>
 		{tr}Username{/tr}:
