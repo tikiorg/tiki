@@ -1380,7 +1380,6 @@ body.tiki_forums table.normal {
 }
 	
 .post .postbody .content {
-	float: left;
 	padding: 0 3px 3px 3px;
 	margin: 0;
 	text-align: left;
@@ -1428,6 +1427,10 @@ body.tiki_forums table.normal {
 }
 
 .postbody-content {
+	padding: 3px;
+}
+
+.postbody .content {
 	margin: 5px;
 }
 
