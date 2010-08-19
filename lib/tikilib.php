@@ -6739,26 +6739,35 @@ class TikiLib extends TikiDb_Bridge
 								// Don't put newlines at comments' end!
 								&& strpos($line, "-->") === false
 							 ) {
-							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								$tline = trim($line);
-								if ($in_paragraph && (empty($line) || preg_match('/<[\/]?div/', $tline))) {
+							 	
+							$tline = trim($line);
+							// keeping this as separate regexps for now to ease understanding - should be optimised later
+							$contains_block = preg_match('/<[\/]?div/', $tline) ||					// open/close div
+									preg_match('/<[\/]?h\d/', $tline) ||							// open/close h1 etc
+									preg_match('/<[\/]?li/', $tline) ||								// open/close list items
+									preg_match('/<[\/]?ol/', $tline) ||								// open/close ordered list
+									preg_match('/<[\/]?ul/', $tline) ||								// open/close unordered list
+									preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $tline);	// noparse guid for plugins
+							
+							 if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
+								if ($in_paragraph && (empty($line) || $contains_block)) {
 									// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 									$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-								} elseif (!$in_paragraph && !preg_match('/<[\/]?div/', $tline) && !preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $tline)) {	// and not noparse guid -  && !empty($line)
+								} elseif (!$in_paragraph && !$contains_block) {
 									// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 									$data .= "<p>";
 									if (empty($line)) {
 										$line = '&nbsp;';
 									}
 									$in_paragraph = 1;
-								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !preg_match('/<[\/]?div/', trim($line))) {
+								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !$contains_block) {
 									// A normal in-paragraph line if not close of div created by plugins
 									$line = "<br />" . $line;
 								} else {
 									// A normal in-paragraph line or a consecutive blank line.
 									// Leave it as is.
 								}
-							} elseif (($prefs['wysiwyg_htmltowiki'] === 'y' && !empty($line) && strpos($line, '<br />') === false) || !$options['is_html']) {
+							} elseif (($prefs['wysiwyg_htmltowiki'] === 'y' && !empty($tline) && strpos($tline, '<br />') === false) || !$options['is_html']) {
 								$line .= "<br />";
 							}
 						}
