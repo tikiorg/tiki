@@ -411,15 +411,12 @@ class TrackerLib extends TikiLib
 	}
 
 	/* experimental shared */
+	/* trackerId is useless */
 	function get_item_value($trackerId,$itemId,$fieldId) {
 		global $prefs;
-		if (empty($trackerId)) {
-			$query = "select ttif.`value`, ttif.`lang` from `tiki_tracker_item_fields` ttif where ttif.`fieldId`=? and ttif.`itemId`=? ";
-			$result = $this->query($query, array((int)$fieldId, (int)$itemId));
-		} else {
-			$query = "select ttif.`value`, ttf.`type`, ttif.`lang` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=? ";
-			$result = $this->query($query, array((int)$trackerId,(int)$fieldId,(int)$itemId));
-		}
+		$query = "select ttif.`value`, ttif.`lang` from `tiki_tracker_item_fields` ttif where ttif.`fieldId`=? and ttif.`itemId`=? ";
+		$result = $this->query($query, array((int)$fieldId, (int)$itemId));
+
 		if (!$result->numRows()) {
 			return false;
 		}
