@@ -38,7 +38,9 @@
 					<td class="{cycle advance=false}{if $date eq $today} calfocuson{/if}{if isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" 
 								|| $cell[w][d].items[0].visible eq 'y')} focus{/if}" width="14%" style="text-align:center; font-size:0.8em;">
 
-						{if isset($cell[w][d].items[0])}
+						{if isset($cell[w][d].over)}
+							{assign var=over value=$cell[w][d].over}
+						{elseif isset($cell[w][d].items[0])}
 							{assign var=over value=$cell[w][d].items[0].over}{else}{assign var=over value=""}
 						{/if}
 						{if isset($cell[w][d].items[0]) and ($cell[w][d].items[0].modifiable eq "y" || $cell[w][d].items[0].visible eq 'y')}

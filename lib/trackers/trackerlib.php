@@ -4195,6 +4195,7 @@ class TrackerLib extends TikiLib
 	 * fieldIds contains one date or 2 dates
 	 */
 	function fillTableViewCell($items, $fieldIds, &$cell) {
+		global $smarty;
 		if (empty($items)) {
 			return;
 		}
@@ -4210,13 +4211,18 @@ class TrackerLib extends TikiLib
 				if (!$day['focus']) {
 					continue;
 				}
+				$overs = array();
 				foreach ($items as $item) {
 					$endDay = TikiLib::make_time(0,0,0, $day['month'], $day['day']+1, $day['year']);
 					if ((count($fieldIds) == 1 && $item['field_values'][$iStart]['value'] >= $day['date'] && $item['field_values'][$iStart]['value'] < $endDay)
 						|| (count($fieldIds) > 1 && $item['field_values'][$iStart]['value'] <= $endDay && $item['field_values'][$iEnd]['value'] > $day['date'])) {
-						if ($day['month'] == 9 && $day['day']==1) {echo '<br>TILT'.$item['itemId'];}
 							$cell[$i][$j]['items'][] = $item;
+							$overs[] = preg_replace('|(<br /> *)*$|m', '', $item['over']);
 					}
+				}
+				if (!empty($overs)) {
+					$smarty->assign_by_ref('overs', $overs);
+					$cell[$i][$j]['over'] = $smarty->fetch('tracker_calendar_over.tpl');
 				}
 			}
 		}
