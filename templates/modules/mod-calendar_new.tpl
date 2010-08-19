@@ -17,7 +17,7 @@
 			<tr>
 				{section name=d loop=$daysnames_abr}
 					{if empty($cell[w][d].date)}{assign var=date value=$cell[w][d].day}{else}{assign var=date value=$cell[w][d].date}{/if}
-					{if in_array($viewmode, array('trimester', 'quarter', 'semester', 'year'))}
+					{if in_array($viewmode, array('bimester', 'trimester', 'quarter', 'semester', 'year'))}
 						{if in_array($prefs.display_field_order, array('DMY', 'DYM', 'YDM'))}
 							{assign var=day_cursor value=$date|tiki_date_format:"%d-%m"}
 						{else}

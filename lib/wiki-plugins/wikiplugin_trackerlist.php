@@ -302,7 +302,7 @@ function wikiplugin_trackerlist_info() {
 			),
 			'calendarviewmode' => array(
 				'required' => false,
-				'name' => tra('Length of the view'),
+				'name' => tra('Calendar view type time span'),
 				'description' => 'month|bimester|trimester|quarter|semester|year',
 				'filter' => 'word',
 				'default' => 'month'
@@ -321,6 +321,19 @@ function wikiplugin_trackerlist_info() {
 				'filter' => 'alpha',
 				'default' => 'y'
 			),
+			'calendarviewnavbar' => array(
+				'required' => false,
+				'name' => tra('View navigation bar'),
+				'description' => 'y|n|partial',
+				'filter' => 'word',
+				'default' => 'y'
+			),
+			'calendartitle' => array(
+				'required' => false,
+				'name' => tra('Calendar title'),
+				'filter' => 'text',
+				'default' => ''
+			),
 		),
 	);
 }
@@ -332,7 +345,7 @@ function wikiplugin_trackerlist($data, $params) {
 	static $iTRACKERLIST = 0;
 	++$iTRACKERLIST;
 	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
-	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n', 'calendarbeginmonth' => 'y');
+	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n', 'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'');
 	$params = array_merge($default, $params);
 	
 	extract ($params,EXTR_SKIP);
@@ -1008,7 +1021,8 @@ function wikiplugin_trackerlist($data, $params) {
 				$calendarlib->getDayNames($calendarlib->firstDayofWeek($user), $daysnames, $daysnames_abr);
 				$smarty->assign('daysnames_abr', $daysnames_abr);
 				$smarty->assign('focusmonth', TikiLib::date_format("%m", $focusDate));
-				$smarty->assign('module_params', array('viewmode'=>'n', 'showaction'=>'n'));
+				$smarty->assign('module_params', array('viewmode'=>'n', 'showaction'=>'n', 'notitle'=>empty($calendartitle)?'y':'n', 'title'=>$calendartitle, 'viewnavbar' => $calendarviewnavbar));
+				$smarty->assign('tpl_module_title', tra($calendartitle));
 				$smarty->assign('now', $tikilib->now);
 				$smarty->assign('calendarViewMode', $calendarviewmode);
 				$smarty->assign('viewmodelink', $calendarviewmode);
@@ -1022,6 +1036,8 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('dayend', $dayend['date']);
 				$smarty->assign('today', TikiLib::make_time(0,0,0, TikiLib::date_format('%m'), TikiLib::date_format('%d'), TikiLib::date_format('%Y')));
 				$smarty->assign('sticky_popup', $calendarstickypopup);
+				global $headerlib; include_once('lib/headerlib.php');
+				$headerlib->add_cssfile('css/calendar.css',20);
 				return '~np~'.$smarty->fetch('modules/mod-calendar_new.tpl').'~/np~';
 			}
 			if (!isset($tpl) && !empty($wiki)) {
