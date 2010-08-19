@@ -142,6 +142,10 @@ function wikiplugin_trackeritemfield($data, $params) {
 		$memoStatus = $info['status'];
 		$memoItemId = $itemId;
 		$memoTrackerId = $info['trackerId'];
+		if (isset($_REQUEST['itemId']) && $_REQUEST['itemId'] != $itemId) {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Viewed', $itemId, 'trackeritem', $_SERVER['REQUEST_URI'].'&trackeritemfield');
+		}
 	}
 	if (!isset($data)) {
 		$data = $dataelse = '';
