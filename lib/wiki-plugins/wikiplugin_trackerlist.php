@@ -1022,7 +1022,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('dayend', $dayend['date']);
 				$smarty->assign('today', TikiLib::make_time(0,0,0, TikiLib::date_format('%m'), TikiLib::date_format('%d'), TikiLib::date_format('%Y')));
 				$smarty->assign('sticky_popup', $calendarstickypopup);
-				return $smarty->fetch('modules/mod-calendar_new.tpl');
+				return '~np~'.$smarty->fetch('modules/mod-calendar_new.tpl').'~/np~';
 			}
 			if (!isset($tpl) && !empty($wiki)) {
 				$tpl = "wiki:$wiki";
