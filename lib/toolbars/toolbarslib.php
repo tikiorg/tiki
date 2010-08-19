@@ -656,17 +656,18 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 
 	public static function fromName( $tagName ) // {{{
 	{
+		global $prefs;
 		switch( $tagName ) {
 		case 'list':
 			$label = tra('Unordered List');
 			$icon = tra('pics/icons/text_list_bullets.png');
-			$wysiwyg = 'UnorderedList';
+			$wysiwyg =  $prefs['wysiwyg_ckeditor'] == 'y' ? 'BulletedList' : 'UnorderedList';
 			$syntax = '*text';
 			break;
 		case 'numlist':
 			$label = tra('Ordered List');
 			$icon = tra('pics/icons/text_list_numbers.png');
-			$wysiwyg = 'OrderedList';
+			$wysiwyg =  $prefs['wysiwyg_ckeditor'] == 'y' ? 'NumberedList' : 'OrderedList';
 			$syntax = '#text';
 			break;
 		default:
