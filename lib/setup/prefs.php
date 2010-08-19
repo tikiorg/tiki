@@ -14,6 +14,9 @@ if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
   exit;
 }
 
+$user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
+initialize_prefs();
+
 function get_default_prefs() {
 	static $prefs;
 	if( is_array($prefs) )
@@ -1771,7 +1774,6 @@ function get_default_prefs() {
 		'comments_field_website' => 'n',
 	);
 
-
 	// Special default values
 
 	global $tikidomain;
@@ -1796,79 +1798,82 @@ function get_default_prefs() {
 	return $prefs;
 }
 
-// Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
-// ( this is also used in tikilib, not only when reloading prefs )
-$user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
 
-// Check if prefs needs to be reloaded
-if (isset($_SESSION['s_prefs'])) {
+function initialize_prefs() {
+	// Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
+	// ( this is also used in tikilib, not only when reloading prefs )
+	
+	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs;
+		
 
-	// lastUpdatePrefs pref is retrived in tiki-setup_base
-	$lastUpdatePrefs = $prefs['lastUpdatePrefs'];
+	// Check if prefs needs to be reloaded
+	if (isset($_SESSION['s_prefs'])) {
 
-	// Reload if there was an update of some prefs
-	if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
-		$_SESSION['need_reload_prefs'] = true;
+		// lastUpdatePrefs pref is retrived in tiki-setup_base
+		$lastUpdatePrefs = $prefs['lastUpdatePrefs'];
+
+		// Reload if there was an update of some prefs
+		if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
+			$_SESSION['need_reload_prefs'] = true;
+		} else {
+			$_SESSION['need_reload_prefs'] = false;
+		}
+
+		// Reload if the virtual host or tikiroot has changed
+		if (!isset($_SESSION['lastPrefsSite'])) $_SESSION['lastPrefsSite'] = '';
+		//   (this is needed when using the same php sessions for more than one tiki)
+		if ( $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
+			$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;
+			$_SESSION['need_reload_prefs'] = true;
+		}
+
 	} else {
-		$_SESSION['need_reload_prefs'] = false;
-	}
-
-	// Reload if the virtual host or tikiroot has changed
-	if (!isset($_SESSION['lastPrefsSite'])) $_SESSION['lastPrefsSite'] = '';
-	//   (this is needed when using the same php sessions for more than one tiki)
-	if ( $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
-		$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;
 		$_SESSION['need_reload_prefs'] = true;
 	}
 
-} else {
-	$_SESSION['need_reload_prefs'] = true;
-}
+	$defaults = get_default_prefs();
+	// Set default prefs only if needed
+	if ( ! $_SESSION['need_reload_prefs'] ) {
+		$modified = $_SESSION['s_prefs'];
+	} else {
 
-$defaults = get_default_prefs();
-// Set default prefs only if needed
-if ( ! $_SESSION['need_reload_prefs'] ) {
-	$modified = $_SESSION['s_prefs'];
-} else {
-
-	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
-	if ( ! isset($_SESSION['serialized_prefs']) ) {
-		$_SESSION['serialized_prefs'] = array();
-		foreach ( $defaults as $p => $v )
+		// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
+		if ( ! isset($_SESSION['serialized_prefs']) ) {
+			$_SESSION['serialized_prefs'] = array();
+			foreach ( $defaults as $p => $v )
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
+		}
+
+		// Override default prefs with values specified in database
+		$modified = $tikilib->get_db_preferences();
+
+		// Unserialize serialized preferences
+		if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
+			foreach ( $_SESSION['serialized_prefs'] as $p ) {
+				if ( isset($modified[$p]) && ! is_array($modified[$p]) ) $modified[$p] = unserialize($modified[$p]);
+			}
+		}
+
+		// Keep some useful sites values available before overriding with user prefs
+		// (they could be used in templates, so we need to set them even for Anonymous)
+		foreach ( $user_overrider_prefs as $uop ) {
+			$modified['site_'.$uop] = isset($modified[$uop])?$modified[$uop]:$defaults[$uop];
+		}
+
+		// Assign prefs to the session
+		$_SESSION['s_prefs'] = $modified;
 	}
 
-	// Override default prefs with values specified in database
-	$modified = $tikilib->get_db_preferences();
-
-	// Unserialize serialized preferences
-	if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
-		foreach ( $_SESSION['serialized_prefs'] as $p ) {
-			if ( isset($modified[$p]) && ! is_array($modified[$p]) ) $modified[$p] = unserialize($modified[$p]);
+	// Disabled by default so it has to be modified
+	if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' ) {
+		if( ! isset( $section ) || $section != 'admin' ) {
+			require_once 'lib/perspectivelib.php';
+			if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
+				$changes = $perspectivelib->get_preferences( $persp );
+				$modified = array_merge( $modified, $changes );
+			}
 		}
 	}
 
-	// Keep some useful sites values available before overriding with user prefs
-	// (they could be used in templates, so we need to set them even for Anonymous)
-	global $user_overrider_prefs;
-	foreach ( $user_overrider_prefs as $uop ) {
-		$modified['site_'.$uop] = isset($modified[$uop])?$modified[$uop]:$defaults[$uop];
-	}
-
-	// Assign prefs to the session
-	$_SESSION['s_prefs'] = $modified;
+	$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
 }
-
-// Disabled by default so it has to be modified
-if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' ) {
-	if( ! isset( $section ) || $section != 'admin' ) {
-		require_once 'lib/perspectivelib.php';
-		if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
-			$changes = $perspectivelib->get_preferences( $persp );
-			$modified = array_merge( $modified, $changes );
-		}
-	}
-}
-
-$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
-
