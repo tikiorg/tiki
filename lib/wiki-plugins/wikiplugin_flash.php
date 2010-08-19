@@ -31,16 +31,19 @@ function wikiplugin_flash_info() {
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Default width: 425'),
+				'advanced' => true,
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Default height: 350'),
+				'advanced' => true,
 			),
 			'quality' => array(
 				'required' => false,
 				'name' => tra('Quality'),
 				'description' => tra('Flash video quality. Default value: high'),
+				'advanced' => true,
 			),
 		),
 	);
