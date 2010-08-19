@@ -1553,7 +1553,7 @@ body.tiki_blogs .post .postbody {
 	border: 1px solid #8cacbb;
 	color: #000;
 	font-size: 0.95em;
-	padding: 10px;
+	padding: 0;
 	margin: 5px 0;
 }
 
@@ -1640,6 +1640,7 @@ body.tiki_blogs .postfooter .actions {
 	width: 100% !important;
 }
 
+.tiki_blogs .post div.author_info,
 .post .author {
 	float: left;
 	text-align: left;
