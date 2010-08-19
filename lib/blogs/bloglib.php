@@ -529,17 +529,18 @@ class BlogLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * list_blog_post_comments List all the comments for a post
+	 * list_blog_post_comments List all the comments in posts for all the blogs 
 	 *
 	 * @param string $approved
 	 * @param int $maxRecords
 	 * @access public
 	 * @return void
 	 */
-	function list_blog_post_comments($approved = 'y', $maxRecords = -1, $ref='') {
-		global $user, $tikilib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post;
+	function list_blog_post_comments($approved = 'y', $maxRecords = -1) {
+		global $user, $tikilib, $userlib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post;
 
-		$query = "SELECT b.`title`, b.`postId`, b.`priv`, blog.`user`, blog.`public`, c.`threadId`, c.`title` as commentTitle, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b, `tiki_blogs` blog WHERE `objectType`='post' AND b.`postId`=c.`object` AND blog.`blogId`=b.`blogId`";
+		// TODO: use commentslib instead of querying database directly
+		$query = "SELECT b.`title`, b.`postId`, b.`priv`, blog.`user`, blog.`public`, c.`threadId`, c.`title` as commentTitle, c.`website`, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b, `tiki_blogs` blog WHERE `objectType`='post' AND b.`postId`=c.`object` AND blog.`blogId`=b.`blogId`";
 
 		$bindvars = array();
 		$globalperms = Perms::get();
@@ -555,7 +556,7 @@ class BlogLib extends TikiDb_Bridge
 
 		$ret = array();
 		while ( $res = $result->fetchRow() ) {
-			if ( $tikilib->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_read_blog') || ($ref == 'post' && $tikilib->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_blog_post_view_ref'))) {
+			if ( $tikilib->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_read_blog') || $tikilib->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_blog_post_view_ref')) {
 
 				// Private posts can be accessed on the following conditions:
 				// user has tiki_p_admin or tiki_p_blog_admin or has written the post
@@ -567,6 +568,13 @@ class BlogLib extends TikiDb_Bridge
 						or ( ($res["public"] == 'y') && ($tiki_p_blog_post == 'y') ) ) {
 					$ret[] = $res;
 				}
+			}
+		}
+
+		// just to distinct between user and anonymous (should be done in commentslib and not here)
+		foreach ($ret as $key => $comment) {
+			if (!$userlib->user_exists($comment['userName'])) {
+				$ret[$key]['anonymous_name'] = $comment['userName'];
 			}
 		}
 

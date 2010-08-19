@@ -4,13 +4,18 @@
 {modules_list list=$comments nonums=$nonums}
 	{section name=ix loop=$comments}
 		<li>
-			<a class="linkmodule" href="tiki-view_blog_post.php?postId={$comments[ix].postId}&amp;comzone=show#threadId{$comments[ix].threadId}" title="{$comments[ix].commentDate|tiki_short_datetime}, {tr}by{/tr} {$comments[ix].userName|escape}{if $moretooltips eq 'y'} {tr}on blogpost{/tr} {$comments[ix].title|escape}{/if}">
-				{if $moretooltips ne 'y'}<b>{$comments[ix].title|escape}{if $comments[ix].priv eq 'y'} ({tr}private{/tr}){/if}</b>:{/if}
-				{$comments[ix].commentTitle|escape}
-				{if $nodate neq 'y'}
-					<div class="date">{$comments[ix].commentDate|tiki_short_datetime}</div>
+			{if isset($comments[ix].anonymous_name)}
+				{if !empty($comments[ix].website)}
+					<a class="linkmodule" href="{$comments[ix].website}">
 				{/if}
-			</a>
+				{$comments[ix].anonymous_name}
+				{if !empty($comments[ix].website)}
+					</a> 
+				{/if}
+			{else}
+				{$comments[ix].userName|userlink} 
+			{/if}
+			{tr}on{/tr} <a class="linkmodule" href="tiki-view_blog_post.php?postId={$comments[ix].postId}&amp;comzone=show#threadId{$comments[ix].threadId}" title="{tr} Published on{/tr} {$comments[ix].commentData|tiki_short_date}">{$comments[ix].title|escape}{if $comments[ix].priv eq 'y'} ({tr}private{/tr}){/if}</a>
 		</li>
 	{/section}
 {/modules_list}
