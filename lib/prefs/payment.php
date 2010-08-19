@@ -148,14 +148,14 @@ function prefs_payment_list() {
 			'name' => tra('Types of credit to use'),
 			'description' => tra('This is a list of the types of Tiki user credits to accept to pay with, separated by ,'),
 			'type' => 'text',
-			'dependencies' => array( 'feature_payment, feature_credits' ),
+			'dependencies' => array( 'payment_feature', 'feature_credits' ),
 			'separator' => ',',
 		),
 		'payment_tikicredits_xcrates' => array(
 			'name' => tra('Exchange rate for types of credit to use'),
 			'description' => tra('This is a corresponding list of amount of credits equivalent to 1 of the payment currency, separated by ,'),
 			'type' => 'text',
-			'dependencies' => array( 'feature_payment, feature_credits' ),
+			'dependencies' => array( 'payment_feature', 'feature_credits' ),
 			'separator' => ',',
 		),
 		
