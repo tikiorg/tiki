@@ -88,7 +88,7 @@ $smarty->assign('find', $_REQUEST["find"]);
 $offset = $_REQUEST["offset"];
 $sort_mode = $_REQUEST["sort_mode"];
 $find = $_REQUEST["find"];
-$parsed_data = $tikilib->parse_data($post_info["data"]);
+$parsed_data = $tikilib->parse_data($post_info["data"], array('is_html' => ($post_info["wysiwyg"]=='y'?TRUE:FALSE)));
 if (!isset($_REQUEST['page'])) $_REQUEST['page'] = 1;
 $pages = $bloglib->get_number_of_pages($parsed_data);
 $parsed_data = $bloglib->get_page($parsed_data, $_REQUEST['page']);
