@@ -18,8 +18,8 @@ if ($argc != 2) {
 	die("Missing argument. USAGE: $argv[0] <dump_filename>");
 }
  
-$test_TikiAcceptanceTestDBRestorer = new TikiAcceptanceTestDBRestorer();
-$test_TikiAcceptanceTestDBRestorer->restoreDBFromScratch($argv[1]);
+$test_TikiAcceptanceTestDBRestorer = new TikiAcceptanceTestDBRestorerSQLDumps();
+$test_TikiAcceptanceTestDBRestorer->restoreDB($argv[1]);
 
 $local_php = 'db/local.php';
 
