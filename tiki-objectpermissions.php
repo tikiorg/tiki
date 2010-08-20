@@ -187,13 +187,15 @@ if (isset($_REQUEST['group'])) {
 // Process the form to assign a new permission to this object
 if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	check_ticket('object-perms');
-	foreach($_REQUEST['perm'] as $group => $gperms) {
-		foreach($gperms as $perm) {
-			if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
-				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra('Permission denied'));
-				$smarty->display('error.tpl');
-				die;
+	if (isset($_REQUEST['perm']) && !empty($_REQUEST['perm'])) {
+		foreach($_REQUEST['perm'] as $group => $gperms) {
+			foreach($gperms as $perm) {
+				if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
+					$smarty->assign('errortype', 401);
+					$smarty->assign('msg', tra('Permission denied'));
+					$smarty->display('error.tpl');
+					die;
+				}
 			}
 		}
 	}
@@ -506,7 +508,7 @@ function get_assign_permissions() {
 	$currentPermissions = $currentObject->getDirectPermissions();
 
 	// set any checked ones
-	if( isset( $_REQUEST['perm'] ) ) {
+	if( isset( $_REQUEST['perm'] ) && !empty($_REQUEST['perm'])) {
 		foreach( $_REQUEST['perm'] as $group => $gperms ) {
 			foreach( $gperms as $perm ) {
 				$currentPermissions->add( $group, $perm );
