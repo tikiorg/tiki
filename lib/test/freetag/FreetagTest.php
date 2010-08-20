@@ -29,7 +29,7 @@ class FreetagTest extends TikiTestCase
 				0 => array('tag' => 'first'),
 				1 => array('tag' => 'multiple word tag'),
 				2 => array('tag' => 'third'),
-				3 => array('tag' => 'another multiple word tag')
+				3 => array('tag' => 'another Multiple Word tag')
 			),
 			'cant' => 4,
 		);
