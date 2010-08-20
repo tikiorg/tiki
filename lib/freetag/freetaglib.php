@@ -695,11 +695,10 @@ class FreetagLib extends ObjectLib
 	 * @param int The unique ID of the person who tagged the object with this tag.
 	 * @param int The ID of the object in question.
 	 * @param string The raw string or the string form of the tag to delete.
-	 * @param bool The tag is the raw or the normalized form
 	 *
 	 * @return string Returns the tag in normalized form.
 	 */
-	function delete_object_tag($itemId, $type, $tag, $user = false, $raw = false)
+	function delete_object_tag($itemId, $type, $tag, $user = false)
 	{
 		if (!isset($itemId) || !isset($type) || !isset($tag) ||
 				empty($itemId) || empty($type) || empty($tag)) {

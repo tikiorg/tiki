@@ -4168,7 +4168,7 @@ class TikiLib extends TikiDb_Bridge
 		return ( $page_info !== false && ( ! $casesensitive || $page_info['pageName'] == $pageName ) ) ? 1 : 0;
 	}
 
-	function page_exists_desc( &$pageName, $searchAlias = false ) {
+	function page_exists_desc( &$pageName ) {
 	
 		$page_info = $this->get_page_info($pageName, false);
 		
