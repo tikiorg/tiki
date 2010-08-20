@@ -65,7 +65,7 @@ Add a value in first check when you create a new admin page. *}
 {/if}
 
 {if $prefs.tiki_needs_upgrade eq 'y'}
-<div class="simplebox highlight">{tr}A new version of Tikiwiki, <b>{$prefs.tiki_release}</b>, is available. You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tikiwiki.org/Download">http://tikiwiki.org/Download</a>.{/tr}</div>
+<div class="simplebox highlight">{tr}A new version of Tiki, <b>{$prefs.tiki_release}</b>, is available. You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tikiwiki.org/Download">http://tikiwiki.org/Download</a>.{/tr}</div>
 {/if}
 
 {if $tikifeedback}
