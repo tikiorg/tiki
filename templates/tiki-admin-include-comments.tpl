@@ -1,5 +1,10 @@
 {* $Id$ *}
 
+<div class="navbar">
+	{button href="tiki-list_comments.php" _text="{tr}List comments{/tr}"}
+</div>
+
+
 <form action="tiki-admin.php?page=comments" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="commentssetprefs" value="{tr}Change preferences{/tr}" />

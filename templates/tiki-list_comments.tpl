@@ -1,6 +1,6 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
-{title help="comments"}{$title}{/title}
+{title help="comments" admpage="comments"}{$title}{/title}
 
 {if $comments or ($find ne '') or count($show_types) gt 0 or isset($smarty.request.findfilter_approved)}
 	{include file='find.tpl' types=$show_types find_type=$selected_types types_tag='checkbox' filters=$filters filter_names=$filter_names filter_values=$filter_values}
