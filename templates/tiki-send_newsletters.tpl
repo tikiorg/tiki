@@ -107,7 +107,7 @@
 	
 	<h3>{tr}Files{/tr}</h3>
 	<div class="simplebox wikitext">
-		{if $info.file|@count gt 0}
+		{if $info.files|@count gt 0}
 			<ul>
 				{foreach from=$info.files item=newsletterfile key=fileid}
 					<li>
