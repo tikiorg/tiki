@@ -1308,7 +1308,7 @@ a.admbox.off:active {
 }
 
 body.fixed_width {
-	background: #424242 url(mono/body-bg_fw.png) repeat-x !important
+	background: #424242 url(mono/body-bg_fw.gif) repeat-x !important
 }
 
 body.fixed_width #c1c2 #col2 {
