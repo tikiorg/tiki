@@ -80,6 +80,7 @@ abstract class Toolbar
 			'sup',
 			'tikilink',
 			'link',
+			'anchor',
 			'color',
 			'bgcolor',
 			'center',
@@ -438,7 +439,7 @@ class ToolbarFckOnly extends Toolbar
 		case 'pastetext':
 			return new self( 'PasteText' );
 		case 'pasteword':
-			return new self( 'PasteWord' );
+			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'PasteFromWord' : 'PasteWord' );
 		case 'print':
 			return new self( 'Print' );
 		case 'spellcheck':
@@ -487,6 +488,10 @@ class ToolbarFckOnly extends Toolbar
 			return new self( 'Superscript' );
 		case 'showblocks':
 			return new self( 'ShowBlocks' );
+		case 'table':
+			return new self( 'Table' );
+		case 'anchor':
+			return new self( 'Anchor' );
 		}
 	} // }}}
 
