@@ -488,8 +488,6 @@ class ToolbarFckOnly extends Toolbar
 			return new self( 'Superscript' );
 		case 'showblocks':
 			return new self( 'ShowBlocks' );
-		case 'table':
-			return new self( 'Table' );
 		case 'anchor':
 			return new self( 'Anchor' );
 		}
@@ -903,7 +901,7 @@ class ToolbarDialog extends Toolbar
 
 		case 'table':
 			$icon = tra('pics/icons/table.png');
-			$wysiwyg = '';
+			$wysiwyg = 'Table';
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
 						'{"open": function () { dialogTableOpen(area_id,this); },
@@ -1016,7 +1014,7 @@ class ToolbarDialog extends Toolbar
 
 	function getWysiwygToken( $areaId ) // {{{
 	{
-		if (!empty($this->wysiwyg) && $this->name != 'link') {	// hmm, ckeditor's link should be fine
+		if (!empty($this->wysiwyg) && $this->name == 'tikilink') {	// TODO remove when ckeditor can handle tikilinks
 			
 			global $headerlib;
 			$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
