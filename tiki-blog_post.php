@@ -201,7 +201,7 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
 	
 	if ($postId > 0) {
-		$bloglib->update_post($postId, $_REQUEST["blogId"], $edit_data, $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $data['data'], $blogpriv, $publishDate, $is_wysiwyg);
+		$bloglib->update_post($postId, $_REQUEST["blogId"], $edit_data, $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate, $is_wysiwyg);
 	} else {
 		if ($blog_data['always_owner'] == 'y') {
 			$author = $blog_data['user'];
