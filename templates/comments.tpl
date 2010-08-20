@@ -508,7 +508,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			</td>
 
 			<td class="formcolor">
-				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',$('#anonymous_name').val());"{/if} />
+				<input type="submit" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" />
 				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
 				{/if}
@@ -516,9 +516,6 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
 					{assign var='file_preview_warning' value="{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}"}
 					onclick="
-					{if empty($user)}
-						setCookie('anonymous_name',$('#anonymous_name').val());
-					{/if}
 					{if isset($can_attach_file) && $can_attach_file eq 'y'}
 						if ($('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
 					{/if}
@@ -553,10 +550,3 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 {* End of Post dialog *}
 
 {if $forum_mode neq 'y'}</div><!-- comzone end -->{/if}
-{*</div>  now this tag causes problems instead of fixing (was added earlier to prevent side columns in *litecss themes from not appearing *}
-{if empty($user) and $prefs.javascript_enabled eq "y"}
-	{jq}
-		var js_anonymous_name = getCookie('anonymous_name');
-		if (js_anonymous_name) $('#anonymous_name').val( js_anonymous_name );
-	{/jq}
-{/if}
