@@ -1,4 +1,3 @@
-{popup_init src="lib/overlib.js"}
 <table  border="0">
 <tr>
 <td >

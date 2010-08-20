@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-{popup_init src="lib/overlib.js"}
-
 {title help="File+Galleries" admpage="fgal"}
 	{strip}
 		{if $edit_mode eq 'y'}

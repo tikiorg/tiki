@@ -1,5 +1,4 @@
 {* $Id$ *}
-{popup_init src="lib/overlib.js"}
 
 {title help="Groups+Management" admpage="login"}{tr}Admin groups{/tr}{/title}
 

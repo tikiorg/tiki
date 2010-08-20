@@ -1,9 +1,6 @@
 {* $Id$ *}
 AAAA{$sort_mode}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
-{if !empty($tracker_info.showPopup)}
-{popup_init src="lib/overlib.js"}
-{/if}
 
 {title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name|escape}{/title}
 

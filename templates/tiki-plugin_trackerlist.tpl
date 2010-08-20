@@ -1,6 +1,5 @@
-{strip}
 {* $Id$ *}
-	{if !empty($popupfields)}{popup_init src="lib/overlib.js"}{/if}
+{strip}
 	{if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 	{if $showdesc eq 'y'}
 <div class="wikitext">

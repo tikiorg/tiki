@@ -1,5 +1,4 @@
 {* $Id$ *}
-{popup_init src="lib/overlib.js"}
 
 {title help="Users+Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
 

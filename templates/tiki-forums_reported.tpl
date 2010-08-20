@@ -1,5 +1,3 @@
-{popup_init src="lib/overlib.js"}
-
 {title help="Forums" admpage="forums"}{tr}Reported messages for forum{/tr}&nbsp;{$forum_info.name|escape}{/title}
 
 <div class="navbar">

@@ -1,7 +1,6 @@
 {* $Id$ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_article.tpl *}
 
-{popup_init src="lib/overlib.js"}
 {include file='tiki-articles-js.tpl'}
 {if $preview}
 	{include file='tiki-preview_article.tpl'}

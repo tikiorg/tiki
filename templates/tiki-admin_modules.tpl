@@ -1,5 +1,5 @@
 {* $Id$ *}
-{popup_init src="lib/overlib.js"}
+
 {strip}
 {title help="Modules" admpage="module"}{tr}Admin Modules{/tr}{/title}
 

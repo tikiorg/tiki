@@ -1,6 +1,4 @@
 {* $Id$ *}
-{popup_init src="lib/overlib.js"}
-
 {title help="Categories+Admin" admpage="category"}{tr}Admin Categories{/tr}{/title}
 
 <div class="navbar">

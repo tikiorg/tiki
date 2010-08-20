@@ -1,4 +1,3 @@
-{popup_init src="lib/overlib.js"}
 
 {title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name|escape}{/title}
 

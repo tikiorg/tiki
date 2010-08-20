@@ -56,4 +56,3 @@
 
 <body{html_body_attributes}>
 
-{if $prefs.feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}

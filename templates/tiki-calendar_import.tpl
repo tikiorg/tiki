@@ -1,5 +1,3 @@
-{popup_init src="lib/overlib.js"}
-
 {title}{tr}Calendar import{/tr}{/title}
 
 <div class="navbar">
