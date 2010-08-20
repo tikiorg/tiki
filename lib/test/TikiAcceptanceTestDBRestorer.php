@@ -79,7 +79,9 @@ class TikiAcceptanceTestDBRestorer
 		$this->create_start_schema_files();
 	}
 
-	function restoreDB($tiki_test_db_dump) {
+	function restoreDB($tiki_test_db_dump, $save_schema = false) {
+		$begTime = microtime(true);
+		
 		global $last_restored;
 		$error_msg = null;
 		chdir($this->mysql_data_dir);
@@ -138,18 +140,17 @@ class TikiAcceptanceTestDBRestorer
 			//				$begTime = microtime(true);
 
 			//RESTORE THE ORIGINAL DATABASE
-			$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $this->tiki_restore_db_file_name";
-			shell_exec($mysql_restore_db_command);
+			$installer = new Installer();
+			$installer->runFile( $this->tiki_restore_db_file_name );	
+			
 			//		    	echo (microtime(true) -$begTime)." sec"; 
 			$last_restored = $tiki_test_db_dump;
 			$this->reinitialize_internal_values_and_clear_caches();
 		} else {
-			//restore the whole database				
-			$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $tiki_test_db_dump";
-			shell_exec($mysql_restore_db_command);
-			$this->create_testdb_dump_and_start_schema_files();
-			$last_restored = $tiki_test_db_dump;
-			$this->reinitialize_internal_values_and_clear_caches();			
+			//restore the whole database	
+			$this->restoreDBFromScratch($tiki_test_db_dump);	
+			$last_restored = $tiki_test_db_dump;			
+			$this->create_start_schema_files();
 		}
 		chdir($this->current_dir);
 		
