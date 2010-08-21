@@ -41,6 +41,14 @@
 	</fieldset>
 
 	<fieldset>
+		<legend>
+			{tr}Plugins{/tr}{help url="Plugins"}
+		</legend>
+		{preference name=wikiplugin_category}
+		{preference name=wikiplugin_catpath}
+	</fieldset>
+
+	<fieldset>
 		<legend>{tr}Permissions{/tr}</legend>
 		{preference name=feature_search_show_forbidden_cat}
 	</fieldset>
