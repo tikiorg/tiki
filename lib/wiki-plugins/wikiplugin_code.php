@@ -28,37 +28,66 @@ function wikiplugin_code_info() {
 			'wrap' => array(
 				'required' => false,
 				'name' => tra('Word Wrap'),
-				'description' => tra('0|1, Enable word wrapping on the code to avoid breaking the layout.'),
+				'description' => tra('Enable word wrapping on the code to avoid breaking the layout.'),
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('Yes'), 'value' => '1'),
+				),
 			),
 			'colors' => array(
 				'required' => false,
 				'name' => tra('Colors'),
-				'description' => tra('Syntax highlighting to use. May not be used with line numbers. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
+				'description' => tra('Syntax highlighting to use. May not be used with line numbers. GeSHi - Generic Syntax Highlighter must be installed. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
+				'advanced' => true,
 			),
 			'ln' => array(
 				'required' => false,
 				'name' => tra('Line numbers'),
-				'description' => tra('0|1, may not be used with colors.'),
+				'description' => tra('May not be used with colors.'),
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('Yes'), 'value' => '1'),
+				),
+				'advanced' => true,
 			),
 			'wiki' => array(
 				'required' => false,
 				'name' => tra('Wiki syntax'),
-				'description' => tra('0|1, parse wiki syntax within the code snippet.'),
+				'description' => tra('Parse wiki syntax within the code snippet.'),
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('Yes'), 'value' => '1'),
+				),
+				'advanced' => true,
 			),
 			'rtl' => array(
 				'required' => false,
 				'name' => tra('Right to left'),
-				'description' => tra('0|1, switch the text display from left to right to right to left'),
+				'description' => tra('Switch the text display from left to right to right to left'),
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('Yes'), 'value' => '1'),
+				),
+				'advanced' => true,
 			),
 			'ishtml' => array(
 				'required' => false,
 				'name' => tra('Content is HTML'),
-				'description' => tra('0|1, display the content as is instead of escaping HTML special chars'),
+				'description' => tra('Display the content as is instead of escaping HTML special chars'),
+				'options' => array(
+					array('text' => tra('Show HTML'), 'value' => '0'),
+					array('text' => tra('Interpret HTML'), 'value' => '1'),
+				),
 			),
 			'cpy' => array(
 				'required' => false,
 				'name' => tra('Copy To Clipboard'),
-				'description' => tra('0|1, copy the contents of the code box to the clipboard'),
+				'description' => tra('Copy the contents of the code box to the clipboard'),
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('Yes'), 'value' => '1'),
+				),
+				'advanced' => true,
 			),
 		),
 	);
