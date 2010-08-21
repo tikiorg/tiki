@@ -120,6 +120,7 @@ function wikiplugin_img_info() {
 				'name' => tra('Align image'),
 				'description' => tra('Aligns the image itself. If the image is inside a box (because of other settings), use the align parameter to align the box.'),
 				'filter' => 'alpha',
+				'advanced' => true,
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
@@ -139,6 +140,7 @@ function wikiplugin_img_info() {
 				'name' => tra('Align image block'),
 				'description' => tra('Aligns the box containing the image.'),
 				'filter' => 'alpha',
+				'advanced' => true,
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
@@ -165,6 +167,7 @@ function wikiplugin_img_info() {
 				'name' => tra('Wrapping control'),
 				'description' => tra('Control how other items wrap around the image.'),
 				'filter' => 'alpha',
+				'advanced' => true,
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Top'), 'value' => 'top'), 

@@ -17,7 +17,7 @@ function wikiplugin_code_info() {
 		'documentation' => 'PluginCode',
 		'description' => tra('Displays a snippet of code'),
 		'prefs' => array('wikiplugin_code'),
-		'body' => tra('code'),
+		'body' => tra('Code'),
 		'icon' => 'pics/icons/page_white_code.png',
 		'params' => array(
 			'caption' => array(
