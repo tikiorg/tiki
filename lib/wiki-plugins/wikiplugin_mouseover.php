@@ -6,7 +6,7 @@
 // $Id$
 
 /*
- * PLugin mouseover - See documentation http://www.bosrup.com/web/overlib/?Documentation
+ * Plugin mouseover
  */
 function wikiplugin_mouseover_help() {
 	return tra("Create a mouseover feature on some text").":<br />~np~{MOUSEOVER(url=url,text=text,parse=y,width=300,height=300)}".tra('text')."{MOUSEOVER}~/np~";
