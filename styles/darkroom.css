@@ -1478,6 +1478,7 @@ body.tiki_blogs .postfooter .actions {
 	font-weight: bold;
 	font-size: 1.1em;
 	margin-left: 5px;
+	height: 26px;
 }
 
 .post .postbody-title .title h2 {
@@ -1490,9 +1491,17 @@ body.tiki_blogs .postfooter .actions {
 }
 
 .post .author {
+	float: left;
 	background: #575757;
 	color: #d8d8d8;
 	margin-left: 4px;
+	margin-bottom: 6px;
+	margin-top: 6px;
+	width: 99%;
+	min-height: 22px;
+	_height: 22px; /*for IE6*/
+	text-align: left;
+	font-size: 90%;
 }
 
 .post .author_post_info {
