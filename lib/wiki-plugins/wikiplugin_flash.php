@@ -25,7 +25,7 @@ function wikiplugin_flash_info() {
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('fileId'),
-				'description' => tra('Id of a file from a podcast sgllery - will work only with podcast gallery'),
+				'description' => tra('Id of a file from a podcast gallery - will work only with podcast gallery'),
 			),
 			'width' => array(
 				'required' => false,
