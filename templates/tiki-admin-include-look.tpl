@@ -115,7 +115,6 @@
 					{preference name=feature_sitemenu_custom_code}
 					{preference name=feature_topbar_id_menu}
 				</div>
-				{preference name=feature_topbar_version}
 				{preference name=feature_sitesearch}
 				{preference name=feature_topbar_custom_code}
 			</div>
@@ -145,6 +144,9 @@
 				{preference name=feature_bot_bar_debug}
 				{preference name=feature_bot_bar_rss}
 				{preference name=feature_bot_bar_power_by_tw}
+				<div class="adminoptionboxchild" id="feature_bot_bar_power_by_tw_childcontainer">
+					{preference name=feature_topbar_version}
+				</div>
 			</div>
 
 			<div class="adminoptionbox">

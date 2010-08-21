@@ -1112,6 +1112,9 @@ function prefs_feature_list() {
 		'feature_topbar_version' => array(
 			'name' => tra('Display current Tiki version'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_bot_bar_power_by_tw',
+			),
 		),
 		'feature_sitemenu' => array(
 			'name' => tra('Site menu bar'),
