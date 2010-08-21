@@ -623,6 +623,11 @@ class Comments extends TikiLib
 		if (!$threadId) {
 			return null;
 		}
+		// Deal with mail notifications
+		include_once('lib/notifications/notificationemaillib.php');
+		$forum_info = $this->get_forum($info['forumId']);
+		sendForumEmailNotification(empty($info['in_reply_to'])?'forum_post_topic':'forum_post_thread', $info['forumId'], $forum_info, $info['title'], $info['data'], $info['user'], $info['title'], $message_id, $info['in_reply_to'], isset($info['parentId'])?$info['parentId']: $threadId, isset($info['parentId'])?$info['parentId']: 0, $threadId);
+		
 		if ($info['email']) {
 			$tikilib->add_user_watch($w, 'forum_post_thread', $threadId, 'forum topic', '' . ':' . $info['title'], 'tiki-view_forum_thread.php?forumId=' . $info['forumId'] . '&amp;comments_parentId=' . $threadId, $info['email']);
 		}
