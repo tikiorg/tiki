@@ -137,26 +137,38 @@ function wikiplugin_backlinks_info()
 				'required' => false,
 				'name' => tra('Page'),
 				'description' => tra('The page links will point to. Default value is the current page.'),
+				'advanced' => true,
 			),
 			'info' => array(
 				'required' => false,
 				'name' => tra('Displayed information'),
 				'description' => tra('Pipe separated list of fields to display. ex: hits|user'),
+				'advanced' => true,
 			),
 			'exclude' => array(
 				'required' => false,
 				'name' => tra('Excluded pages'),
 				'description' => tra('Pipe separated list of pages to be excluded from the listing. ex: HomePage|Sandbox'),
+				'advanced' => true,
 			),
 			'include_self' => array(
 				'required' => false,
 				'name' => tra('Include Self'),
-				'description' => tra('1|0'),
+				'description' => tra('With or without self-link'),
+				'advanced' => true,
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'), 
+					array('text' => tra('Yes'), 'value' => '1'), 
+				),
 			),
 			'noheader' => array(
 				'required' => false,
-				'name' => tra('No Header'),
-				'description' => tra('1|0'),
+				'name' => tra('Header'),
+				'description' => tra('With or without header'),
+				'options' => array(
+					array('text' => tra('With header'), 'value' => '0'), 
+					array('text' => tra('Without header'), 'value' => '1'), 
+				),
 			),
 		),
 	);
