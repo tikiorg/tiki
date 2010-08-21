@@ -133,8 +133,21 @@ class RSSLib extends TikiDb_Bridge
 		, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId
 		, $fromcache=false
 	) {
-		global $tikilib, $prefs, $userlib, $prefs, $smarty;
+		global $tikilib, $tiki_p_admin, $prefs, $userlib, $prefs, $smarty;
 		require_once('lib/core/lib/Zend/Feed/Writer/Feed.php');
+
+		// both title and description fields cannot be null
+		if (empty($title) || empty($desc)) {
+			$msg = tra('The fields title and description are mandatory to generate a feed.');
+			if ($tiki_p_admin) {
+				$msg .= ' ' . tra('To fix this error go to Admin -> Feeds.');
+			} else {
+				$msg .= ' ' . tra('Please contact the site administrator and ask him to fix this error');
+			}
+			$smarty->assign('msg', $msg);
+			$smarty->display('error.tpl');
+			die;
+		}
 
 		$feed_format = $this->get_current_feed_format();
 		$feed_format_name = $this->get_current_feed_format_name();
