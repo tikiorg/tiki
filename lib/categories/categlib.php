@@ -887,11 +887,13 @@ class CategLib extends ObjectLib
 				$length = count($ids_array);
 				$ids_array = array_slice($ids_array, 1, $length, true);
 				$ids_string = implode(", ", $ids_array); 
-				$query = "select * from `tiki_categories` where `categId` in (" . $ids_string . ") order by name";		
+				$query = "select * from `tiki_categories` where `categId` in (" . $ids_string . ") order by name";
+				$bindvars = array();		
 			} else {
 				$query = "select * from `tiki_categories` where `parentId`=? order by name";
+				$bindvars = array($categId);
 			}
-				$ret = $this->fetchAll($query,array($categId));
+			$ret = $this->fetchAll($query,$bindvars);
 			foreach ( $ret as &$res ) {
 				$id = $res["categId"];
 				$query = "select count(*) from `tiki_categories` where `parentId`=?";
