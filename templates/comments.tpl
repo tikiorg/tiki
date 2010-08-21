@@ -428,7 +428,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">*</span>{/if}</label>
 			</td>
 			<td class="formcolor">
-				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
+				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
 				{jq}
