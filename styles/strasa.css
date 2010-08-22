@@ -564,6 +564,7 @@ a.flip:hover {
 /* Also is .content */
 #tiki-center {
 	clear: both;
+	background-color: #fff;
 }
 
 .error,
