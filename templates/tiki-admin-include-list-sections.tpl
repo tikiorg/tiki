@@ -1,6 +1,6 @@
 {* $Id$ *}
 {*
- * If you want to change this page, check http://tikiwiki.org/tiki-index.php?page=AdministrationDev
+ * If you want to change this page, check http://tiki.org/AdministrationDev
  * there you"ll find attached a gimp image containing this page with icons in separated layers
  *}
 

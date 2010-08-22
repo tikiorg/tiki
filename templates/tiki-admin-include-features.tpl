@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/Features'>evaluation of each feature</a> on Tiki's developer site.{/tr}{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tiki.org/Features'>evaluation of each feature</a> on Tiki's developer site.{/tr}{/remarksbox}
 
 	<form class="admin" id="features" name="features" action="tiki-admin.php?page=features" method="post">
 		<div class="heading input_submit_container" style="text-align: right">

@@ -1,6 +1,6 @@
 {title help="Security+Admin"}{tr}Security Admin{/tr}{/title}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To <a class="rbox-link" target="tikihelp" href="http://security.tikiwiki.org/tiki-contact.php">report any security issues</a>.{/tr}{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To <a class="rbox-link" target="tikihelp" href="http://security.tiki.org/tiki-contact.php">report any security issues</a>.{/tr}{/remarksbox}
 
 <h2>{tr}PHP settings{/tr}</h2>
 <table class="normal">

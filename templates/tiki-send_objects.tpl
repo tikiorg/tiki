@@ -112,7 +112,7 @@
 					<td class="form">
 						<input type="text" name="site" value="{$site|escape}" />
 						<br />
-						<i>{tr}Ex: http://tikiwiki.org or localhost{/tr}</i>
+						<i>{tr}Ex: http://tiki.org or localhost{/tr}</i>
 					</td>
 				</tr>
 				<tr>
@@ -120,7 +120,7 @@
 					<td class="form">
 						<input type="text" name="path" value="{$path|escape}" />
 						<br />
-						<i>{tr}Use /commxmlrpc.php if your tikiwiki site is installed at the root, otherwise adapt /tiki to your need{/tr}</i>
+						<i>{tr}Use /commxmlrpc.php if your Tiki site is installed at the root, otherwise adapt /tiki to your need{/tr}</i>
 					</td>
 				</tr>
 				<tr>

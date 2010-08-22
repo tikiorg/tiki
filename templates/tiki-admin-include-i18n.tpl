@@ -1,4 +1,4 @@
-{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://doc.tikiwiki.org/Internationalization">{tr}Internationalization{/tr}</a>{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://doc.tiki.org/i18n">{tr}Internationalization{/tr}</a>{/remarksbox}
 
 {jq}
 	function updateList( active )

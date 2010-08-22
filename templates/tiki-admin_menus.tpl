@@ -105,7 +105,7 @@
 		<li>{literal}{phplayers id=X type=horiz}{/literal}</li>
 		<li>{literal}{phplayers id=X type=vert}{/literal}</li>
 	</ul>
-	{tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
+	{tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tiki.org">themes</a>{/tr}<br />
 	{/if}
 	{tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}<br />
 	{if $prefs.feature_cssmenus eq 'y'}

@@ -1,12 +1,12 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-		{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr} <a href="http://info.tikiwiki.org/Join+the+community">{tr}Join the community!{/tr}</a>
+		{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr} <a href="http://info.tiki.org/Join+the+community">{tr}Join the community!{/tr}</a>
 {/remarksbox}
 
 <div class="adminoptionbox">
 
 		<fieldset>
 			<legend>{tr}Promote your site{/tr}</legend>
-				{tr}To submit your site to TikiWiki.org:{/tr} <a href="tiki-register_site.php">{tr}Submit site{/tr}</a>
+				{tr}To submit your site to Tiki.org:{/tr} <a href="tiki-register_site.php">{tr}Submit site{/tr}</a>
 		</fieldset>
 
 
@@ -19,7 +19,7 @@
 
 		<fieldset>
                         <legend>{tr}Help improve Tiki{/tr}</legend>
-                        {tr}To submit a feature request or to report a bug:{/tr} <a href="http://dev.tikiwiki.org/Report+a+Bug">{tr}Click here to go to our development site{/tr}</a> 
+                        {tr}To submit a feature request or to report a bug:{/tr} <a href="http://dev.tiki.org/Report+a+Bug">{tr}Click here to go to our development site{/tr}</a> 
                 </fieldset>
 
 		<div class="heading input_submit_container" style="text-align: center;">

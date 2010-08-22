@@ -1,6 +1,6 @@
 {* $Id$ *}
 {strip}
-{title help="mods"}{tr}Tikiwiki Mods{/tr}{/title}
+{title help="mods"}{tr}Tiki Mods{/tr}{/title}
 <div class="navbar">
 	{button href="tiki-mods_admin.php" _text="{tr}Mods Configuration{/tr}"}
 	{button href="tiki-mods.php?reload=1$findarg$typearg$versionarg" _text="{tr}Update remote index{/tr}"}
@@ -13,12 +13,12 @@
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}Tiki "mods" are additional features not included in the public release. Learn more at <a target="tikihelp" href="http://mods.tikiwiki.org">mods.tikiwiki.org</a>.{/tr}
+	{tr}Tiki "mods" are additional features not included in the public release. Learn more at <a target="tikihelp" href="http://mods.tiki.org">mods.tiki.org</a>.{/tr}
 {/remarksbox}
 {remarksbox type="note" title="{tr}Note{/tr}"}
 	<p><strong>{tr}Tiki "mods" are undergoing refurbishment.{/tr}</strong></p>
 	<p>{tr}You will probably some find mods shown as being compatible with older versions of Tiki will work with later versions with little or no modification.{/tr}</p>
-	<p><em>{tr}Your help is needed! Please visit <a href="http://dev.tikiwiki.org/Mods">dev.tikiwiki.org</a> to find out more.{/tr}</em></p>
+	<p><em>{tr}Your help is needed! Please visit <a href="http://dev.tiki.org/Mods">dev.tiki.org</a> to find out more.{/tr}</em></p>
 {/remarksbox}
 
 {if $iswritable}

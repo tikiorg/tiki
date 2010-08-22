@@ -29,13 +29,13 @@
   {tr}Please register.{/tr}
   </div>
   {else}
-  {tr}Register this site at tikiwiki.org{/tr}
+  {tr}Register this site at Tiki.org{/tr}
   </div>
   <div class="cbox-data">
   <table><tr><td>
     <div class="simplebox">
     <b>{tr}Read this first!{/tr}</b><br /><br />
-    {tr}On this page you can make your tiki site known to tikiwiki.org. It will get shown there in a list of known tiki sites.{/tr}
+    {tr}On this page you can make your tiki site known to Tiki.org. It will get shown there in a list of known tiki sites.{/tr}
     <ul>
     <li>{tr}Registering is voluntary.{/tr}</li>
     <li>{tr}Registering does not give you any benefits except one more link to your site.{/tr}</li>
@@ -45,15 +45,15 @@
     <b>{tr}If your site is private or inside your intranet, you should not register!{/tr}</b><br /><br />
     </div>
   </td><td align="center" width="30%"><br /><br /><br />
-  <a href="http://tikiwiki.org/" target="_tikiwiki"><img src="img/tiki/Tiki_WCG.png" /></a><br />
+  <a href="http://tiki.org/" target="_tikiwiki"><img src="img/tiki/Tiki_WCG.png" /></a><br />
   <br />
-  {tr}tikiwiki.org{/tr}
+  {tr}tiki.org{/tr}
   </td></tr>
   </table>
 
   <br /><br />
   <b>{tr}Information about your site{/tr}:</b><br />
-  <form action="http://tikiwiki.org/tiki-directory_add_tiki_site.php" method="post">
+  <form action="http://tiki.org/tiki-directory_add_tiki_site.php" method="post">
   <input type="hidden" name="registertiki" value="true" />
   <table class="normal">
   <tr>

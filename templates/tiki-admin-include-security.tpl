@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://dev.tikiwiki.org/Security'>Security page</a> on Tiki's developer site.{/tr}
+	{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://dev.tiki.org/Security'>Security page</a> on Tiki's developer site.{/tr}
 	{tr}See <a href="tiki-admin_security.php" title="Security"><strong>Admin &gt; Security Admin</strong></a> for additional security settings{/tr}.
 {/remarksbox}
 

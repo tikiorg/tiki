@@ -218,7 +218,7 @@ function showDetails( id, domain, profile ) { // {{{
 {/literal}
 {/jq}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}Tiki Profiles{/tr}</a>{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tiki.org">{tr}Tiki Profiles{/tr}</a>{/remarksbox}
 
 {if $profilefeedback}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -259,7 +259,7 @@ function showDetails( id, domain, profile ) { // {{{
 									<br/>
 									{assign var=profilesFilterUrlStart value='tiki-admin.php?profile=&categories%5B%5D='}
 									{assign var=profilesFilterUrlMid value='x&categories%5B%5D='}
-									{assign var=profilesFilterUrlEnd value='&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2'}
+									{assign var=profilesFilterUrlEnd value='&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2'}
 									
 									<p>
 										{assign var=profilesFilterUrlFeaturedProfiles value='Featured+profiles'}
@@ -404,7 +404,7 @@ $("#repository, #categories").change(function(){
 	<div class="adminoptionlabel"><label for="profile_channels">{tr}Data Channels{/tr}</label>:</div>
 	<div><textarea id="profile_channels" name="profile_channels" rows="5" cols="80" style="width:95%;">{$prefs.profile_channels|escape}</textarea>
 	<br /><em>{tr}Data channels create a named pipe to run profiles from user space. One channel per line. Each line is comma delimited and contain <strong>channel name, domain, profile, allowed groups</strong>. {/tr}</em>
-	<small><a href="http://profiles.tikiwiki.org/Data+Channels">{tr}More information{/tr}</a></small>
+	<small><a href="http://profiles.tiki.org/Data+Channels">{tr}More information{/tr}</a></small>
 	</div>
 </div>
 
