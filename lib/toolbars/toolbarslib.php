@@ -1100,12 +1100,46 @@ class ToolbarHelptool extends Toolbar
 		
 	} // }}}
 
-/* Useless
-	function isAccessible() // {{{
+	function getWysiwygToken( $areaId ) // {{{
 	{
-		return parent::isAccessible();
-	} // }}}
-*/
+
+		global $wikilib, $smarty, $plugins, $section;
+		//if (!isset($plugins)) {
+			include_once ('lib/wiki/wikilib.php');
+			$plugins = $wikilib->list_plugins(true, $areaId);
+		//}
+		$smarty->assign_by_ref('plugins', $plugins);
+		$exec_js = $smarty->fetch('tiki-edit_help_wysiwyg.tpl') .
+				$smarty->fetch('tiki-edit_help_plugins.tpl');
+		
+		$name = 'tikihelp';
+		$this->setLabel( tra('Wysiwyg Help') );
+		
+		global $headerlib;
+		$headerlib->add_jq_onready(<<< JS
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
+CKEDITOR.plugins.add( '{$name}', {
+	init : function( editor ) {
+		var command = editor.addCommand( '{$name}', new CKEDITOR.command( editor , {
+			modes: { wysiwyg:1 },
+			exec: function(elem, editor, data) {
+				openEditHelp();
+				return false;
+			},
+			canUndo: false
+		}));
+		editor.ui.addButton( '{$name}', {
+			label : '{$this->label}',
+			command : '{$name}',
+			icon: editor.config._TikiRoot + '{$this->icon}'
+		});
+
+	}
+});
+JS
+, 10);
+		return $name;
+	}
 }
 
 class ToolbarFileGallery extends Toolbar

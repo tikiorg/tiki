@@ -4800,6 +4800,14 @@ class TikiLib extends TikiDb_Bridge
 
 								$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
 							}
+							
+							if ($options['fck'] === 'y') {
+								$ret = '<span class="cke_tiki_plugin" plugin="' . $plugin_name .
+										'" args="' . urlencode(http_build_query($arguments)) .
+										'" body="' . str_replace('"', '\"', $key) . '">'.
+										'~np~' . $plugin_start . $plugin_data . $plugin_end . '~/np~<div style="display:none;">'.$ret.'</div></span>';
+								
+							}
 
 						} else {
 							
@@ -5317,7 +5325,8 @@ class TikiLib extends TikiDb_Bridge
 			$plugin_result =  $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
 			if ($prefs['wysiwyg_htmltowiki'] === 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] === 'y' ) {
 				return '<span class="cke_tiki_plugin" plugin="' . $name .
-						'"  args="' . urlencode(http_build_query($args)) .'" contentEditable="true">'.
+						'" args="' . urlencode(http_build_query($args)) .
+						'" body="' . str_replace('"', '\"', $data) . '">'.
 						'~np~' . $fck_editor_plugin . '~/np~<div style="display:none;">'.$plugin_result.'</div></span>';
 			} else {
 				return $plugin_result;
