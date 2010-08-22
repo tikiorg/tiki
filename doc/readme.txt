@@ -4,7 +4,7 @@ from a separate package from SourceForge.
 
 Our SourceForge project URL is https://sourceforge.net/projects/tikiwiki.  We
 also have a Tikiwiki site for the documentation, which is currently a work
-in progress available for reference at http://doc.tikiwiki.org
+in progress available for reference at http://doc.tiki.org
 
 It is highly recommended to read the docs to understand all the Tiki features
 and how to configure them.
