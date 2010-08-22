@@ -27,7 +27,7 @@ if (isset($_REQUEST['save'])) {
 	if (isset($_REQUEST['mods_server'])) {
 		$tikilib->set_preference('mods_server', $_REQUEST['mods_server']);
 	} else {
-		$tikilib->set_preference('mods_server', 'http://mods.tikiwiki.org');
+		$tikilib->set_preference('mods_server', 'http://mods.tiki.org');
 	}
 }
 $smarty->assign('tikifeedback', $tikifeedback);

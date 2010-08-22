@@ -54,7 +54,7 @@ $script_mode = ! isset( $_SERVER['REQUEST_METHOD'] ) && isset($_SERVER['argc']);
 $punctuations = array(':', '!', ';', '.', ',', '?'); // Modify lib/init/tra.php accordingly
 
 /**
-  * Reads all the permission descriptions in tikiwiki database and writes
+  * Reads all the permission descriptions in tiki database and writes
   *   it to the file $file. All the strings will be surrounded by smarty translate tags
   *     ex: {tr}perm description{/tr}
   *
@@ -103,7 +103,7 @@ function collect_perms_desc($file)
 }
 
 /**
-  * Get all preferences names from get_default_prefs() function or reads them all from tikiwiki database
+  * Get all preferences names from get_default_prefs() function or reads them all from tiki database
   * and writes it to the file $file. All the strings will be surrounded by smarty translate tags
   *     ex: {tr}preference name{/tr}
   *
@@ -499,7 +499,7 @@ foreach ($languages as $ksel => $sel) {
 		writeFile_and_User ($fw, "// ###\n");
 		writeFile_and_User ($fw, "// ### Technical justification:\n");
 		writeFile_and_User ($fw, "// ### If a string ending with colon needs translating (like \"{tr}Login:{/tr}\")\n");
-		writeFile_and_User ($fw, "// ### then TikiWiki tries to translate 'Login' and ':' separately.\n");
+		writeFile_and_User ($fw, "// ### then Tiki tries to translate 'Login' and ':' separately.\n");
 		writeFile_and_User ($fw, "// ### This allows to have only one translation for \"{tr}Login{/tr}\" and \"{tr}Login:{/tr}\"\n");
 		writeFile_and_User ($fw, "// ### and it still allows to translate \":\" as \"&nbsp;:\" for languages that\n");
 		writeFile_and_User ($fw, "// ### need it (like french)\n");
@@ -674,7 +674,7 @@ foreach ($languages as $ksel => $sel) {
       writeFile_and_User ($fw, "// ### Please remove manually!\n");
       writeFile_and_User ($fw, "// ### N.B. Legitimate strings may be marked");
       writeFile_and_User ($fw, "// ### as unused!\n");
-      writeFile_and_User ($fw, "// ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for further info\n");
+      writeFile_and_User ($fw, "// ### Please see http://tiki.org/UnusedWords for further info\n");
     }
     foreach ($unused as $key => $val) {
       writeTranslationPair ($fw, $key, $val);

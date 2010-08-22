@@ -1340,7 +1340,7 @@ function get_default_prefs() {
 		// mods
 		'feature_mods_provider' => 'n',
 		'mods_dir' => 'mods',
-		'mods_server' => 'http://mods.tikiwiki.org',
+		'mods_server' => 'http://mods.tiki.org',
 
 		// dev
 		'feature_experimental' => 'n',
@@ -1519,7 +1519,7 @@ function get_default_prefs() {
 		'feature_quick_object_perms' => 'n',
 		'feature_xmlrpc' => 'n',
 		'feature_watershed' => 'n',
-		'helpurl' => "http://doc.tikiwiki.org/",
+		'helpurl' => "http://doc.tiki.org/",
 		'layout_section' => 'n',
 		'limitedGoGroupHome' => 'n',
 		'minical_reminders' => 0,
@@ -1654,7 +1654,7 @@ function get_default_prefs() {
 		'feature_tikitests' => 'n',
 
 		// Tiki Profiles
-		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',
+		'profile_sources' => 'http://profiles.tiki.org/profiles',
 		'profile_channels' => '',
 
 		// Minichat

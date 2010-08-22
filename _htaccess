@@ -10,7 +10,7 @@
 # 2- add the content of this file to your httpd.conf
 #
 # Please find more info here
-# http://doc.tikiwiki.org/Rewrite+Rules
+# http://doc.tiki.org/Rewrite+Rules
 #
 # This prevents reading of files with certain extensions.
 <FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
@@ -53,7 +53,7 @@ RewriteRule (.*) - [L]
 
 # Rewrite rule to make this Tiki a profiles repository (uncomment to enable)
 # Set the parentId (here set as 1) to the Id of the category containing your profile pages
-# See http://doc.tikiwiki.org/Profiles for more
+# See http://doc.tiki.org/Profiles for more
 # Note: you need to allow tiki_p_view_category and tiki_p_export_wiki for anonymous to be a repository
 #       and enable feature_wiki_export (as well as feature_wiki and feature_categories)
 #RewriteRule ^profiles$             tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=1&sort_mode=name_asc&plain&maxRecords=1000000 [L]

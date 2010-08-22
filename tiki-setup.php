@@ -19,7 +19,7 @@ require_once 'lib/setup/third_party.php';
 require_once 'tiki-filter-base.php';
 // Enable Versioning
 // Please update the specified class below at release time, as well as
-// adding new release to http://tikiwiki.org/{$branch}.version file
+// adding new release to http://tiki.org/{$branch}.version file
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
 $num_queries = 0;
