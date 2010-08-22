@@ -55,7 +55,7 @@
 	<h4>{tr}Changing relevance value{/tr}</h4>
 	<p>
 		{tr}Add a less than ( &lt; ) or greater than ( &gt; ) sign before a term to change the term's contribution to the overall relevance value assigned to a object.{/tr}&nbsp;
-			{tr}Example: <strong>+wiki +(&gt;forum &lt; blog)</strong> will find objects that contain <strong>wiki</strong> and <strong>forum</strong> or <strong>wiki</strong> and <strong>blog</strong> in any order. <strong>wiki forum</strong> will be rated higher.{/tr}</p>
+			{tr}Example: <strong>+wiki +(&gt;forum &lt; blog)</strong> will find objects that contain <strong>wiki</strong> and <strong>forum</strong> or <strong>wiki</strong> and <strong>blog</strong> in any order. <strong>wiki forum</strong> will be rated higher.{/tr}
 	</p>
 </div>
 {/strip}
