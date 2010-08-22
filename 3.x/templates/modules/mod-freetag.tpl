@@ -13,7 +13,7 @@
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
 <table>{include file="antibot.tpl"}</table>
 {/if}
-<input type="submit" name="Add" value="Add" />
+<input type="submit" name="Add" value="{tr}Add{/tr}" />
 </form>
 {/if}
 
