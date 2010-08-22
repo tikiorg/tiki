@@ -5316,7 +5316,9 @@ class TikiLib extends TikiDb_Bridge
 
 			$plugin_result =  $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
 			if ($prefs['wysiwyg_htmltowiki'] === 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] === 'y' ) {
-				return '<span plugin="'.$func_name.'"  _plugin="'.urlencode($fck_editor_plugin).'">'.$plugin_result.'</span>';
+				return '<span class="cke_tiki_plugin" plugin="' . $name .
+						'"  args="' . urlencode(http_build_query($args)) .'" contentEditable="true">'.
+						'~np~' . $fck_editor_plugin . '~/np~<div style="display:none;">'.$plugin_result.'</div></span>';
 			} else {
 				return $plugin_result;
 			}

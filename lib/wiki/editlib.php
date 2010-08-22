@@ -193,13 +193,8 @@ class EditLib
 	}
 
 	function parseToWiki( $inData ) {
-		global $prefs;
-//		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-//			$parsed = $inData;
-//		} else {
-			// Parsing page data as first time seeing html page in normal editor
-			$parsed = $this->parse_html($inData);
-//		}
+		
+		$parsed = $this->parse_html($inData);
 		$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
 		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);													// newlines
@@ -211,7 +206,7 @@ class EditLib
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => 'y'));
+			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => 'y'));
 		} else {
 			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
 		}
@@ -286,28 +281,56 @@ class EditLib
 							}
 							break;
 						case "span":
-							if( isset($c[$i]['pars']) 
-								&& isset($c[$i]['pars']['style']) 
-								&& preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
-								$src .= "~~#"
-									. str_pad( dechex( 255-$parts[2] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( 255-$parts[3] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( 255-$parts[4] ), 2, '0', STR_PAD_LEFT )
-									. ',#'
-									. str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( $parts[4] ), 2, '0', STR_PAD_LEFT )
-									. ':';
-								$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
-							} elseif( isset($c[$i]['pars']) 
-								&& isset($c[$i]['pars']['style']) 
-								&& preg_match( "/color: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
-								$src .= "~~#"
-									. str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
-									. ':';
-								$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
+							if( isset($c[$i]['pars'])) {
+								if (isset($c[$i]['pars']['plugin'])) {	// handling for tiki plugins
+									$more_spans = 1;
+									$other_elements = 0;
+									$j = $i + 1;
+									while ($j < $c['contentpos']) {	// loop through contents of this span and discard all but the Text node
+										if ($c[$j]['data']['name'] == 'span' && $c[$j]['data']['type'] == 'close') {
+											$more_spans--;
+											if ($more_spans === 0) {
+												break;
+											}
+										} else if ($c[$j]['data']['name'] == 'span' && $c[$j]['data']['type'] == 'open') {
+											$more_spans++;
+										} else if ($c[$j]['data']['type'] == 'open') {
+											$other_elements++;
+										} else if ($c[$j]['data']['type'] == 'close') {
+											$other_elements--;
+										} else {
+											if ($c[$j]['type'] == 'text' && $other_elements === 0) {
+												$src .= $c[$j]['data'];
+											}
+										}
+										$j++;
+									}
+									$i = $j;	// skip everything that was inside this span
+									
+								} else if (isset($c[$i]['pars']['style'])) {	// colours
+									$contrast = '000000';
+									if (preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$bgcol = str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[4] ), 2, '0', STR_PAD_LEFT );
+										
+									} else if (preg_match( "/background(\-color)?:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$bgcol = $parts[2];
+									}
+									if (preg_match( "/\bcolor: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$fgcol = str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT );
+									} else if (preg_match( "/^color:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$fgcol = $parts[1];
+									}
+									if (!empty($bgcol) || !empty($fgcol)) {
+										$src .= "~~#" . (!empty($fgcol) ? $fgcol : $contrast);
+										$src .= (empty($bgcol) ? '' : ',#' . $bgcol);
+										$src .= ':';
+										$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
+									}
+								}
 							}
 							break;
 						case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;

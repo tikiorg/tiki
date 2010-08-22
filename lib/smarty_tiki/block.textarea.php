@@ -173,6 +173,9 @@ function FCKeditor_OnComplete( editorInstance ) {
 			global $tikiroot;
 			$headerlib->add_jq_onready('
 CKEDITOR.config._TikiRoot = "'.$tikiroot.'";
+
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
+CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");
 ');	// before all
 		
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
