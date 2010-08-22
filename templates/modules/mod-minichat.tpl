@@ -1,6 +1,10 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="minichat" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 
+{if $module_params.nochannelbar && $module_params.nochannelbar != "n"}
+<div id='minichatchans' class='minichatchans' style="height:0em;visibility:hidden"></div>
+{else}
 <div id='minichatchans' class='minichatchans'></div>
+{/if}
 <div id='minichat' class='minichat' style='overflow-x: hidden; overflow-y: scroll; width: 100%; height: {$module_rows}em;'>
 </div>
 

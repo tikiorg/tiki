@@ -6,6 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
+require_once ('lib/smarty_tiki/modifier.username.php');
 $access->check_feature('feature_minichat');
 header("Pragma: public");
 header("Pragma: no-cache");
@@ -72,7 +73,7 @@ if (substr($msg, 0, 1) == '/') {
 						break;
 					}
 				} else {
-					$tikilib->query("INSERT INTO tiki_minichat (nick,user,ts,channel,msg) VALUES (?,?,?,?,?)", array($user, $user, $tikilib->now, $channel, $msg));
+					$tikilib->query("INSERT INTO tiki_minichat (nick,user,ts,channel,msg) VALUES (?,?,?,?,?)", array(smarty_modifier_username($user), $user, $tikilib->now, $channel, $msg));
 					$lastid = 0;
 				}
 				$lasttimeout = $timeout_min;
