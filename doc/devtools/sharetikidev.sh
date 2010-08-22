@@ -10,11 +10,11 @@
 # 
 # mose@tw.o
 
-RHOST="dev.tikiwiki.org"
+RHOST="dev.tiki.org"
 RTIKI="/usr/local/tikidev"
 RTMPDIR="/tmp"
 ARCHDIR="/usr/local/tikidev/duplidev"
-VIRTUAL="dev.tikiwiki.org"
+VIRTUAL="dev.tiki.org"
 
 OLDIR=`pwd`
 
@@ -25,8 +25,8 @@ RDBUSER=${user_tiki:-'root'}
 RDBPASS=${pass_tiki:-''}
 
 DATE=`date +%Y-%m-%d`
-DUMP="dev.tikiwiki.org.$DATE.sql"
-DUMPLIGHT="dev.tikiwiki.org_light.$DATE.sql"
+DUMP="dev.tiki.org.$DATE.sql"
+DUMPLIGHT="dev.tiki.org_light.$DATE.sql"
 cd $ARCHDIR
 
 mysqldump -e -f --add-drop-table -h$RDBHOST -u$RDBUSER -p$RDBPASS $RDBNAME tiki_pages > $DUMPLIGHT

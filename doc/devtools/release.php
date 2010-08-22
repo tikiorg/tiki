@@ -829,11 +829,11 @@ Version $releaseVersion
 
 DOCUMENTATION
 
-* The documentation for $mainVersion version is ever evolving at http://doc.tikiwiki.org.
+* The documentation for $mainVersion version is ever evolving at http://doc.tiki.org.
   You're encouraged to contribute.
 
 * It is highly recommended that you refer to the online documentation:
-* http://doc.tikiwiki.org/Installation for a setup guide
+* http://doc.tiki.org/Installation for a setup guide
 
 * Notes about this release are accessible from $release_notes_url
 * Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
@@ -841,11 +841,11 @@ DOCUMENTATION
 INSTALLATION
 
 * There is a file INSTALL in this directory with notes on how to setup and
-  configure Tiki. Again, see http://doc.tikiwiki.org/Installation for the latest install help.
+  configure Tiki. Again, see http://doc.tiki.org/Installation for the latest install help.
 
 UPGRADES
 
-* Read the online instructions if you want to upgrade your Tiki from a previous release http://doc.tikiwiki.org/Upgrade
+* Read the online instructions if you want to upgrade your Tiki from a previous release http://doc.tiki.org/Upgrade
 
 COPYRIGHT
 
@@ -903,7 +903,7 @@ function display_howto() {
 0/ When branching for 5.x, name it branches/5.x to be 
    clearer than branches/3.0, because branches/5.x is 
    indeed 5.1, 5.2, etc.
-   http://dev.tikiwiki.org/SVNTips#Handling_branches
+   http://dev.tiki.org/SVNTips#Handling_branches
    
 1/ Preliminary manual tasks
    - Check that all JavaScript can be safely minified with [http://www.jslint.com/|JSLint]
