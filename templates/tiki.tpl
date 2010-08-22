@@ -112,13 +112,14 @@
 					<h2 class="hidden">Sidebar</h2>
 					<div class="content">
 		{if $module_pref_errors}
-			{remarksbox  type="warning" title="{tr}Module errors{/tr}"}
+			{remarksbox type="warning" title="{tr}Module errors{/tr}"}
 				{tr}The following modules could not be loaded{/tr}
 				<p>
 				{foreach from=$module_pref_errors key=index item=pref_error}
-					<b>{$pref_error.mod_name}:</b><br>
-					{tr}Preference was not set{/tr}: '{$pref_error.pref_name}'<br>
+					<b>{$pref_error.mod_name}:</b><br />
+					{tr}Preference was not set:{/tr} '{$pref_error.pref_name}'<br />
 				{/foreach}
+				</p>
 			{/remarksbox}
 		{/if}
 		{section name=homeix loop=$right_modules}
