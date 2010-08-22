@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{if !empty($post_info.related_posts)}
+{if isset($post_info.related_posts) && !empty($post_info.related_posts)}
 	<div class="related_posts">
 		<h4>{tr}Related content:{/tr}</h4>
 		<ul>	
