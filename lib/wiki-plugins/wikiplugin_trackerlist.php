@@ -345,6 +345,13 @@ function wikiplugin_trackerlist_info() {
 				'filter' => 'text',
 				'default' => ''
 			),
+			'calendardelta' => array(
+				'required' => false,
+				'name' => tra('Calendar delta'),
+				'description' => '+month|-month|+bimester|-bimester',
+				'filter' => 'text',
+				'default' => ''
+			),
 		),
 	);
 }
@@ -356,7 +363,7 @@ function wikiplugin_trackerlist($data, $params) {
 	static $iTRACKERLIST = 0;
 	++$iTRACKERLIST;
 	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
-	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n', 'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'');
+	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n', 'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'', 'calendardelta' => '');
 	$params = array_merge($default, $params);
 	
 	extract ($params,EXTR_SKIP);
@@ -942,6 +949,13 @@ function wikiplugin_trackerlist($data, $params) {
 			global $calendarlib; include_once('lib/calendar/calendarlib.php');
 			$focusDate = empty($_REQUEST['todate'])? $tikilib->now: $_REQUEST['todate'];
 			$focus = $calendarlib->infoDate($focusDate);
+			if (!empty($calendardelta)) {
+				if ($calendardelta[0] == '-') {
+					$focus = $calendarlib->focusPrevious($focus, str_replace('-', '', $calendardelta));
+				} else {
+					$focus = $calendarlib->focusNext($focus, str_replace('+', '', $calendardelta));
+				}
+			}
 			$calendarlib->focusStartEnd($focus, $calendarviewmode, $calendarbeginmonth, $startPeriod, $startNextPeriod);
 			$cell = $calendarlib->getTableViewCells($startPeriod, $startNextPeriod, $calendarviewmode, $calendarlib->firstDayofWeek($user));
 			$filterfield[] = $calendarfielddate[0];
@@ -1032,7 +1046,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$calendarlib->getDayNames($calendarlib->firstDayofWeek($user), $daysnames, $daysnames_abr);
 				$smarty->assign('daysnames_abr', $daysnames_abr);
 				$smarty->assign('focusmonth', TikiLib::date_format("%m", $focusDate));
-				$smarty->assign('module_params', array('viewmode'=>'n', 'showaction'=>'n', 'notitle'=>empty($calendartitle)?'y':'n', 'title'=>$calendartitle, 'viewnavbar' => $calendarviewnavbar));
+				$smarty->assign('module_params', array('viewmode'=>'n', 'showaction'=>'n', 'notitle'=>empty($calendartitle)?'y':'n', 'title'=>$calendartitle, 'viewnavbar' => $calendarviewnavbar, 'decorations'=> empty($calendartitle)?'n':'y'));
 				$smarty->assign('tpl_module_title', tra($calendartitle));
 				$smarty->assign('now', $tikilib->now);
 				$smarty->assign('calendarViewMode', $calendarviewmode);
