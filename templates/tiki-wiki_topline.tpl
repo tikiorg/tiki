@@ -38,6 +38,7 @@
 					$("#wiki_plugin_edit_view img").attr("src", src.replace("wiki_plugin_edit_hide", "wiki_plugin_edit_view"));
 					deleteCookie("wiki_plugin_edit_view");
 				}
+				return false;
 			});
 			if (!getCookie("wiki_plugin_edit_view")) {$(".editplugin, .icon_edit_section").hide(); } else { $("#wiki_plugin_edit_view").click(); }
 			{/jq}
