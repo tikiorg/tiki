@@ -40,13 +40,6 @@ function wikiplugin_trackerfilter_info() {
 			'name' => tra("Don't show filters switch"),
 			'description' => 'y|n - ' . tra('Always displays the window without flip flop'),
 		),
-		'other_filters' => array(
-			'required' => false,
-			'name' => tra('Other Trackerfilters'),
-			'description' => tra('List of colon separated tracker id\'s to also POST data for so multiple trackerfilers can be used on one page.' .
-								 ' Each trackerfilter is assigned an id, e.g. "#iTrackerFilter1" onwards, as the page is rendered. (requires javascript)'),
-			'advanced' => true,
-		),
 		'export_action' => array(
 			'required' => false,
 			'name' => tra('Export CSV.'),
@@ -73,7 +66,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n', 'other_filters' => '', 'export_action' => '',
+	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n', 'export_action' => '',
 					 'export_itemid' => 'y', 'export_status' => 'n', 'export_created' => 'n', 'export_modif' => 'n', 'export_charset' => 'UTF-8', 'status' => 'opc');
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
@@ -84,23 +77,29 @@ function wikiplugin_trackerfilter($data, $params) {
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
 	}
 	
-	if (!empty($other_filters)) {
-		$other_filters = explode(':', $other_filters);
-		global $headerlib; include_once 'lib/headerlib.php';
-		foreach($other_filters as $of) {
-			$headerlib->add_jq_onready("maintain_trackerfilter_state( $iTrackerFilter, $of );");
+	global $headerlib; include_once 'lib/headerlib.php';
+	$headerlib->add_jq_onready('
+/* Maintain state of other trackerfilter plugin forms */
+$(".trackerfilter-result > div > form").submit( function () {
+	var current_tracker = this;
+	$(current_tracker).append("<input type=\"hidden\" name=\"tracker_filters[]\" value=\"" + $(current_tracker).serialize() + "\" />")
+	$(".trackerfilter-result > div > form").each( function() {
+		if (current_tracker !== this && $("input[name=count_item]", this).val() > 0) {
+			$(current_tracker).append("<input type=\"hidden\" name=\"tracker_filters[]\" value=\"" + $(this).serialize() + "\" />")
 		}
-	}
-	
-	if (!empty($_REQUEST['other_filters']) && count($_REQUEST['other_filters']) > 0) {
-		foreach ($_REQUEST['other_filters'] as $of_vals) {
-			parse_str(urldecode($of_vals), $vals);
+	});
+	return true;
+});');
+
+	if (!empty($_REQUEST['tracker_filters']) && count($_REQUEST['tracker_filters']) > 0) {
+		foreach ($_REQUEST['tracker_filters'] as $tf_vals) {
+			parse_str(urldecode($tf_vals), $vals);
 			foreach( $vals as $k => $v) {
 				// if it's me and i had some items
 				if ($k == 'iTrackerFilter' && $v == $iTrackerFilter && isset($vals['count_item']) && $vals['count_item'] > 0) {
 					// unset request params for all the plugins (my one will be array_merged below)
-					foreach($_REQUEST['other_filters'] as $of_vals2) {
-						parse_str(urldecode($of_vals2), $vals2);
+					foreach($_REQUEST['tracker_filters'] as $tf_vals2) {
+						parse_str(urldecode($tf_vals2), $vals2);
 						foreach( $vals2 as $k2 => $v2) {
 							unset($GLOBALS['_REQUEST'][$k2]);
 						}
