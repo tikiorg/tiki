@@ -1074,10 +1074,11 @@ function displayDialog( ignored, list, area_id, isSub ) {
 	if (isSub) {
 		$(dialogDivSub).dialog('destroy').dialog(obj).dialog('option', 'title', tit);
 		$(dialogDivSub).load(isSub);
-		$(dialogDivSub).dialog('open');
-
+		$(dialogDivSub).dialog({modal : true}).dialog('open');
 	} else {
-		$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
+//		$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
+///		$(dialogDiv).dialog({modal : true}).dialog(obj).dialog('open');
+		$(dialogDiv).dialog(obj).dialog('open'); // TODO: the parent should be modal too
 	}
 
 	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
