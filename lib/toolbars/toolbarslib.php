@@ -473,7 +473,7 @@ class ToolbarFckOnly extends Toolbar
 		case 'fontsize':
 			return new self( 'FontSize' );
 		case 'format':
-			return new self( 'Format' );
+			return 	$prefs['wysiwyg_ckeditor'] === 'y' ? new self( 'Format' ) : null;
 		case 'source':
 			return new self( 'Source' );
 		case 'autosave':
@@ -629,7 +629,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'toc':
 			$label = tra('Table of contents');
 			$icon = tra('pics/icons/book.png');
-			$wysiwyg = 'TOC';
+			$wysiwyg = $prefs['wysiwyg_ckeditor'] === 'y' ? 'TOC' : '';
 			$syntax = '{maketoc}';
 			break;
 		default:
@@ -1103,11 +1103,15 @@ class ToolbarHelptool extends Toolbar
 	function getWysiwygToken( $areaId ) // {{{
 	{
 
-		global $wikilib, $smarty, $plugins, $section;
-		//if (!isset($plugins)) {
-			include_once ('lib/wiki/wikilib.php');
-			$plugins = $wikilib->list_plugins(true, $areaId);
-		//}
+		global $wikilib, $smarty, $plugins, $section, $prefs;
+		
+		if ($prefs['wysiwyg_ckeditor'] !== 'y') {
+			return '';
+		}
+		
+		include_once ('lib/wiki/wikilib.php');
+		$plugins = $wikilib->list_plugins(true, $areaId);
+		
 		$smarty->assign_by_ref('plugins', $plugins);
 		$exec_js = $smarty->fetch('tiki-edit_help_wysiwyg.tpl') .
 				$smarty->fetch('tiki-edit_help_plugins.tpl');
