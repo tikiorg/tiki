@@ -178,14 +178,14 @@ CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiplugin" : 
 CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");
 ');	// before all
 		
-		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-			$headerlib->add_jq_onready('
+			if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+				$headerlib->add_jq_onready('
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
 CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");
 ', 5);	// before dialog tools init (10)
-		}
-		if ($prefs['feature_ajax'] === 'y' && $prefs['feature_ajax_autosave'] === 'y') {
-			$headerlib->add_jq_onready('
+			}
+			if ($prefs['feature_ajax'] === 'y' && $prefs['feature_ajax_autosave'] === 'y') {
+				$headerlib->add_jq_onready('
 // --- config settings for the autosave plugin ---
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
@@ -195,8 +195,8 @@ CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strok
 
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
-		}
-		$headerlib->add_jq_onready('
+			}
+			$headerlib->add_jq_onready('
 $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	toolbar_Tiki: '.$cktools.',
 	toolbar: "Tiki",
@@ -215,7 +215,6 @@ function CKeditor_OnComplete() {
 	ckEditorInstances[ckEditorInstances.length] = this;
 	this.resetDirty();
 };');
-			
 		}	// end both wysiwyg setups
 
 	} else {
