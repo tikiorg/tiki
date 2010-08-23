@@ -36,7 +36,7 @@
 										{/remarksbox}
 									{/if}
 									<div role="main" id="role_main">
-										{$mid_data}
+										{$mid_data}  {* You can modify mid_data using tiki-show_page.tpl *}
 									</div>
 									{show_help}
 								</div>
