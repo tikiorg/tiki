@@ -169,12 +169,14 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Checkbox'),
 				'description' => tra('Adds a checkbox on each line to be able to do an action.'),
+				'advanced' => true,
 			),
 			'goIfOne' => array(
 				'required' => false,
 				'name' => tra('goIfOne'),
 				'description' => 'Go directly to tiki-view_tracker_item.php if only one item is found',
-				'filter' => 'alpha'
+				'filter' => 'alpha',
+				'advanced' => true,
 			),
 			'more' => array(
 				'required' => false,
@@ -192,18 +194,21 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('View'),
 				'description' => 'user|page '.tra('Display automatically the item of the current user or the current page name'),
-				'filter' => 'alpha'
+				'filter' => 'alpha',
+				'advanced' => true,
 			),
 			'tpl' => array(
 				'required' => false,
 				'name' => tra('Template File'),
 				'description' => tra('Use content of the tpl file as template to display the item'),
+				'advanced' => true,
 			),
 			'wiki' => array(
 				'required' => false,
 				'name' => tra('Wiki Page'),
 				'description' => tra('Use content of the wiki page as template to display the item'),
-				'filter' => 'pagename'
+				'filter' => 'pagename',
+				'advanced' => true,
 			),
 			'view_user' => array(
 				'required' => false,
@@ -223,6 +228,7 @@ function wikiplugin_trackerlist_info() {
 				'description' => 'y|n',
 				'filter' => 'alpha',
 				'default' => 'n',
+				'advanced' => true,
 			),
 			'url' => array(
 				'required' => false,
@@ -234,15 +240,17 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Left Deliminator'),
 				'description' => tra('Smarty left delimiter'),
+				'advanced' => true,
 			),
 			'rdelim' => array(
 				'required' => false,
 				'name' => tra('Right Deliminator'),
 				'description' => tra('Smarty right delimiter'),
+				'advanced' => true,
 			),
 			'list_mode' => array(
 				'required' => false,
-				'name' => tra('Mode'),
+				'name' => tra('List Mode'),
 				'description' => 'y|n'.' '.tra('If y, value will be truncated'),
 				'filter' => 'alpha'
 			),
@@ -250,13 +258,15 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Export Button'),
 				'description' => 'y|n',
-				'filter' => 'alpha'
+				'filter' => 'alpha',
+				'advanced' => true,
 			),
 			'compute' => array(
 				'required' => false,
 				'name' => tra('Compute'),
 				'description' => tra('Sum or average all the values of a field  and displays it at the bottom of the table.').' '.tra('fieldId').'/sum:'.tra('fieldId').'/avg',
-				'filter' => 'text'
+				'filter' => 'text',
+				'advanced' => true,
 			),
 			'silent' => array(
 				'required' => false,

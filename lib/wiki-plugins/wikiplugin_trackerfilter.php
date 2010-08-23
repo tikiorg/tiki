@@ -14,7 +14,7 @@ function wikiplugin_trackerfilter_help() {
 function wikiplugin_trackerfilter_info() {
 	require_once 'lib/wiki-plugins/wikiplugin_trackerlist.php';
 	$list = wikiplugin_trackerlist_info();
-	$params = array_merge( $list['params'], array(
+	$params = array_merge( array(
 		'filters' => array(
 			'required' => true,
 			'name' => tra('Filters'),
@@ -28,30 +28,32 @@ function wikiplugin_trackerfilter_info() {
 		'displayList' => array(
 			'required' => false,
 			'name' => tra('Display List'),
-			'description' => 'y|n',
+			'description' => 'y|n - ' . tra('Show the full list initially'),
 		),
 		'line' => array(
 			'required' => false,
 			'name' => tra('Line'),
-			'description' => 'y|n - displays all the filter on the same line',
+			'description' => 'y|n - ' . tra('Displays all the filter on the same line'),
 		),
 		'noflipflop' => array(
 			'required' => false,
-			'name' => tra('Always displays the window without flip flop'),
-			'description' => 'y|n',
+			'name' => tra("Don't show filters switch"),
+			'description' => 'y|n - ' . tra('Always displays the window without flip flop'),
 		),
 		'other_filters' => array(
 			'required' => false,
 			'name' => tra('Other Trackerfilters'),
 			'description' => tra('List of colon separated tracker id\'s to also POST data for so multiple trackerfilers can be used on one page.' .
 								 ' Each trackerfilter is assigned an id, e.g. "#iTrackerFilter1" onwards, as the page is rendered. (requires javascript)'),
+			'advanced' => true,
 		),
 		'export_action' => array(
 			'required' => false,
 			'name' => tra('Export CSV.'),
 			'description' => 'Label for an export button. Leave blank to show the usual "Filter" button instead.',
+			'advanced' => true,
 		),
-	) );
+	), $list['params'] );
 
 return array(
 		'name' => tra('Tracker Filter'),
