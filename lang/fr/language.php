@@ -12407,7 +12407,7 @@ $lang=Array(
 "Text showing on the link" => "Texte montré sur le lien",
 "File link" => "Lien vers un fichier",
 "Pick a file." => "Choisir un fichier.",
-"Try another code' => Essayer un autre code",
+"Try another code" => "Essayer un autre code",
 "Export languages" => "Exporter les \"langues\"",
 "###end###"=>"###end###");
 
