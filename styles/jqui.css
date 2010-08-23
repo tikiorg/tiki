@@ -19,16 +19,6 @@ body {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-#fixedwidth {
-	display: table;
-	margin: auto;
-	margin-top: 0;
-	margin-bottom: 0;
-	width: 990px;
-}
-#fixedwidth[id] {
-	height: auto;
-}
 							    
 #main {
 	text-align: left

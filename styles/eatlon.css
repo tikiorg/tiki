@@ -25,25 +25,27 @@ html>body {font-size: 76% !important}
 body.fullscreen {padding: 3em}
 
 /* next two: fixed-width: 960px */
-div#fixedwidth {
-	display: table; 
-	margin: auto; 
+body.fixed_width div#fixedwidth {
 	margin-bottom: 20px;
 	width: 900px;
 	background: #fff;
 } 
 
-*:first-child+html #c1c2 {
+body.fixed_width *:first-child+html #c1c2 {
 	margin-left: 0;
 	padding-left: 0} 
 	
-#main[id] {
+body.fixed_width #main[id] {
 	margin-bottom:0;
 	margin-top: 0;
 }
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
+#main {
+		background: #fff;
+}
+
 #middle {
 	text-align: left;
 	min-height: 450px/*;
