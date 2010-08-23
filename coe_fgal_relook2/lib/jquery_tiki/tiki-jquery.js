@@ -1020,8 +1020,9 @@ $.fn.tiki = function(func, type, options) {
 
 window.dialogData = [];
 var dialogDiv;
+var dialogDivSub;
 
-function displayDialog( ignored, list, area_id ) {
+function displayDialog( ignored, list, area_id, isSub ) {
 	var i, item, el, obj, tit = "";
 
 	$is_cked =  $('#cke_contents_' + area_id).length !== 0;
@@ -1029,26 +1030,38 @@ function displayDialog( ignored, list, area_id ) {
 	// 2nd version fix for Firefox 3.5 losing selection on changes to DOM
 	saveTASelection(area_id);
 
-	if (!dialogDiv) {
-		dialogDiv = document.createElement('div');
-		document.body.appendChild( dialogDiv );
+	if (isSub) {
+		if (!dialogDivSub) {
+			dialogDivSub = document.createElement('div');
+			document.body.appendChild( dialogDivSub );
+		}
+		$(dialogDivSub).empty();
+	} else {
+		if (!dialogDiv) {
+			dialogDiv = document.createElement('div');
+			document.body.appendChild( dialogDiv );
+		}
+		$(dialogDiv).empty();
 	}
-	$(dialogDiv).empty();
-	
-	for( i = 0; i < window.dialogData[list].length; i++ ) {
-		item = window.dialogData[list][i];
-		if (item.indexOf("<") === 0) {	// form element
-			el = $(item);
-			$(dialogDiv).append( el );
-		} else if (item.indexOf("{") === 0) {
-			try {
-				//obj = JSON.parse(item);	// safer, but need json2.js lib
-				obj = eval("("+item+")");
-			} catch (e) {
-				alert(e.name + ' - ' + e.message);
+
+//	$(dialogDiv).empty();
+
+	if ( ! isSub ) {	
+		for( i = 0; i < window.dialogData[list].length; i++ ) {
+			item = window.dialogData[list][i];
+			if (item.indexOf("<") === 0) {	// form element
+				el = $(item);
+				$(dialogDiv).append( el );
+			} else if (item.indexOf("{") === 0) {
+				try {
+					//obj = JSON.parse(item);	// safer, but need json2.js lib
+					obj = eval("("+item+")");
+				} catch (e) {
+					alert(e.name + ' - ' + e.message);
+				}
+			} else if (item.length > 0) {
+				tit = item;
 			}
-		} else if (item.length > 0) {
-			tit = item;
 		}
 	}
 	
@@ -1056,7 +1069,16 @@ function displayDialog( ignored, list, area_id ) {
 	if (!obj.width) { obj.width = 210; }
 	obj.bgiframe = true;
 	obj.autoOpen = false;
-	$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
+//	$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
+
+	if (isSub) {
+		$(dialogDivSub).dialog('destroy').dialog(obj).dialog('option', 'title', tit);
+		$(dialogDivSub).load(isSub);
+		$(dialogDivSub).dialog('open');
+
+	} else {
+		$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
+	}
 
 	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
 	//restoreTASelection(area_id);

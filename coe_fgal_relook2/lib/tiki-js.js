@@ -1148,7 +1148,8 @@ function openFgalsWindow(filegal_manager_url, area_id) {
 	if(fgals_window && typeof fgals_window.document != "undefined" && typeof fgals_window.document != "unknown" && !fgals_window.closed) {
 		fgals_window.focus();
 	} else {
-		fgals_window=window.open(filegal_manager_url,'_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
+/*		fgals_window=window.open(filegal_manager_url,'_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50'); */
+		alert('test');
 	}
 }
 

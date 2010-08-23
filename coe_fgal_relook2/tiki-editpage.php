@@ -862,12 +862,30 @@ $smarty->assign('pagedata', $parsed);
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"])) {
 	$parsed = $tikilib->apply_postedit_handlers($parsed);
-	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
+//error_reporting(E_ALL);
+//	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
+
+	/* SPELLCHECKING INITIAL ATTEMPT */
+	//This nice function does all the job!
+	if ($prefs['wiki_spellcheck'] === 'y') {
+		if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] === 'on') {
+			$parsed = $tikilib->spellcheckreplace($edit_data, $parsed, $prefs['language'], 'editwiki');
+			$smarty->assign('spellcheck', 'y');
+		} else {
+			$smarty->assign('spellcheck', 'n');
+		}
+	}
+
+	require_once ("lib/wiki/renderlib.php");
+	$pageRenderer = new WikiRenderer( array(), $user, $parsed);
+	$pageRenderer->runSetups();
+
 } else {
 	$parsed = "";
 }
 
-$smarty->assign_by_ref('parsed', $parsed);
+///$smarty->assign_by_ref('parsed', $parsed);
+
 $smarty->assign('preview',0);
 // If we are in preview mode then preview it!
 if(isset($_REQUEST["preview"])) {

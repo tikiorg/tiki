@@ -950,6 +950,29 @@ class ToolbarDialog extends Toolbar
 
 			break;
 
+		case 'tikiimage':
+			$icon = tra('pics/icons/pictures.png');
+			$label = tra('Choose or upload images');
+			$tool_prefs[] = 'feature_filegals_manager';
+
+///			$headerlib->add_jsfile('lib/filegal/file_gallery.js');
+			
+			$list = array(
+				tra('Quick upload and insert'),
+				'<script type="text/javascript" src="lib/filegals/file_gallery.js"></script><div id="tbFilegalManager" /><div id="tbFilegalManagerSub" />',
+				'{"width": 700, "open": function() {
+					FileGallery.open("/trunk_filegal_manager/tiki-list_file_gallery2.php");
+				}}'
+/* FIXME */
+/*				'{"width": 700, "height": 633, "open": function() {
+					$jq("#tbFilegalManager").load("/trunk_filegal_manager/tiki-list_file_gallery2.php");
+				}}'
+*/
+			);
+
+			break;
+
+
 		default:
 			return;
 		}
@@ -1159,16 +1182,94 @@ class ToolbarFileGallery extends Toolbar
 						->addRequiredPreference('feature_filegals_manager');
 	} // }}}
 	
+/*
 	function getSyntax( $areaId ) {
 		global $smarty;
 		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
 		return 'openFgalsWindow(\''.htmlentities(smarty_function_filegal_manager_url(array('area_id'=>$areaId), $smarty)).'\');';
 	}
+*/
+	protected function setSyntax( $syntax ) // {{{
+	{
+		$this->syntax = $syntax;
+
+		return $this;
+	} // }}}
+	
+	public function getSyntax( $areaId = '$areaId' ) {
+		return 'displayFgalManager( this, \'' . $this->name . '\', \'' . $areaId . '\')';	// is enclosed in double quotes later
+	}
+
+	static private function setupJs() {
+		
+		static $fgalManagerAdded = false;
+		global $headerlib, $prefs;
+
+		if( ! $fgalManagerAdded ) {
+			if ($prefs['feature_jquery_ui'] != 'y') {
+				$headerlib->add_jsfile('lib/jquery/jquery-ui/ui/jquery-ui.js');
+				$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
+			}
+
+			$fgalManagerAdded = true;
+	//		$headerlib->add_jsfile('lib/filegals/file_gallery.js');
+			$headerlib->add_js( <<<JS
+var fgalManagerDiv, displayFgalManager;
+
+displayFgalManager = function( closeTo, list, areaname ) {
+	if (fgalManagerDiv) {
+		\$jq('div.toolbars-fgalManager').remove();	// simple toggle
+		fgalManagerDiv = false;
+		return;
+	}
+	textarea = getElementById( areaname);
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (typeof textarea.selectionStart != 'undefined') {
+		var tempSelectionStart = textarea.selectionStart;
+		var tempSelectionEnd = textarea.selectionEnd;
+	}		
+	fgalManagerDiv = document.createElement('div');
+	document.body.appendChild( fgalManagerDiv );
+
+	var coord = \$jq(closeTo).offset();
+	coord.bottom = coord.top + \$jq(closeTo).height();
+
+	fgalManagerDiv.className = 'toolbars-fgalManager';
+	fgalManagerDiv.style.left = coord.left + 'px';
+	fgalManagerDiv.style.top = (coord.bottom + 8) + 'px';
+
+	// quick fix for Firefox 3.5 losing selection on changes to popup
+	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+		textarea.selectionStart = tempSelectionStart;
+	}
+	if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
+		textarea.selectionEnd = tempSelectionEnd;
+	}  
+}
+
+JS
+, 0 );
+		}
+	}
 
 	function getWikiHtml( $areaId ) // {{{
 	{
+		global $headerlib;
+		ToolbarFileGallery::setupJs();
+		
+		return $this->getSelfLink($this->getSyntax($areaId),
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-filegal');
+	} // }}}
+
+/*
+	function getWikiHtml( $areaId ) // {{{
+	{
+		global $smarty;
+		
+		require_once $smarty->_get_plugin_filepath('function','filegal_manager_url');
 		return $this->getSelfLink($this->getSyntax( $areaId ), htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-filegal');
 	} // }}}
+*/
 
 	function getWysiwygToken( $areaId ) // {{{
 	{
