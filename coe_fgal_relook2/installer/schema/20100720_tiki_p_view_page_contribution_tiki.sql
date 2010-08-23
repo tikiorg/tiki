@@ -1,0 +1,2 @@
+
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_page-contribution_view', 'Can view contributions to a page', 'basic', 'wiki', NULL, 'feature_wiki');
