@@ -2,7 +2,7 @@
 
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
-// Copyright (C) 2005 Norbert Huffschmid & Tikiwiki community
+// Copyright (C) 2005 Norbert Huffschmid & Tiki community
 // Last modified: 28. June 2005
 //
 // This library is free software; you can redistribute it and/or modify it under the

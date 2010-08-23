@@ -289,7 +289,7 @@ function prefs_feature_list() {
 		'feature_phplayers' => array(
 			'name' => tra('PHPLayers'),
 			'description' => tra('PhpLayers Dynamic menus.'),
-			'help' => 'http://themes.tikiwiki.org/PhpLayersMenu',
+			'help' => 'http://themes.tiki.org/PhpLayersMenu',
 			'type' => 'flag',
 			'warning' => tra('Will eventually be removed from Tiki. Use CSS menus instead.'),
 		),
@@ -342,7 +342,7 @@ function prefs_feature_list() {
 		'feature_mobile' => array(
 			'name' => tra('Mobile'),
 			'description' => tra('Mobile'),
-			'help' => 'http://mobile.tikiwiki.org',
+			'help' => 'http://mobile.tiki.org',
 			'type' => 'flag',
 		),
 		'feature_morcego' => array(

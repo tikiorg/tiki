@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // $Id$
 
-// HAWHAW function library for Tikiwiki
+// HAWHAW function library for Tiki
 
 require_once("lib/hawhaw/hawhaw.inc");
 require_once("lib/hawhaw/hawiki_cfg.inc");
@@ -564,8 +564,8 @@ function HAWTIKI_deck_init(&$deck)
   if (isset($_SESSION['haw_skin']))
     $deck->use_simulator("lib/hawhaw/skin/" . $_SESSION['haw_skin'] . "/skin.css");
 
-  $banner = new HAW_banner("img/tiki/tikibutton2.png",
-"http://mobile.tikiwiki.org/", "Powered by MobileTiki");
+  $banner = new HAW_banner("img/poweredbyhawhaw.gif","http://mobile.tiki.org/HawHaw", "MobileTiki is powered by HAWHAW");
+
   $deck->add_banner($banner);
   
   $deck->set_width(HAWIKI_DISP_WIDTH);
