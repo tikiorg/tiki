@@ -33,7 +33,7 @@ or (!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.w_displayed_d
  <table class="normal">
  <caption> {tr}List of attached files{/tr} </caption>
  <tr>
-  <th>&nbsp;</th><th><a href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'attId_desc'}attId_asc{else}attId_desc{/if}&amp;atts_show=y#attachments">{tr}id{/tr}</a></th>
+  <th>&nbsp;</th><th><a href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'attId_desc'}attId_asc{else}attId_desc{/if}&amp;atts_show=y#attachments">{tr}ID{/tr}</a></th>
   <th>
    <a href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}&amp;atts_show=y#attachments">{tr}Name{/tr}</a>
   </th><th>&nbsp;
