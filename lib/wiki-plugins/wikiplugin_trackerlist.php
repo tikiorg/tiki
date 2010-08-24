@@ -169,6 +169,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Checkbox'),
 				'description' => tra('Adds a checkbox on each line to be able to do an action.') . '<br />' .
+								tra('e.g. fieldId/postName/Title/Submit/ActionUrl/tpl/radio|dropdown') . '<br />' .
 								tra('More info at http://doc.tiki.org/PluginTrackerList#checkbox'),
 				'advanced' => true,
 			),

@@ -40,7 +40,7 @@
 		{initials_filter_links _initial='tr_initial'}
 	{/if}
 
-	{if $checkbox && $items|@count gt 0}<form method="post" action="{$checkbox.action}">{/if}
+	{if $checkbox && $items|@count gt 0 && empty($tpl)}<form method="post" action="{if empty($checkbox.action)}#{else}$checkbox.action{/if}">{/if}
 
 	{if $trackerlistmapview}
 		{wikiplugin _name="googlemap" name=$trackerlistmapname type="objectlist" width="400" height="400"}{/wikiplugin}
@@ -220,9 +220,12 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		{if $items|@count eq 0}
 			{tr}No records found{/tr}
 		{elseif $checkbox}
-<br />
 			{if $checkbox.tpl}{include file="$checkbox.tpl"}{/if}
-<input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" /></form>
+			{if !empty($checkbox.submit) and !empty($checkbox.title)}
+				<br />
+				<input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" />
+			{/if}
+			</form>
 		{/if}
 	{/if}
 
