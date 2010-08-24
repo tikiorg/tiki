@@ -75,6 +75,7 @@ function wikiplugin_datachannel_info()
 				'description' => '(y | n) '.tra('Be careful, if debug is on, the page will not be refreshed and previous modules can be obsolete'),
 				'default' => 'n',
 				'filter' => 'word',
+				'advanced' => true,
 			),
 		),
 	);
@@ -98,12 +99,17 @@ function wikiplugin_datachannel( $data, $params )
 
 		if( count($parts) == 2 ) {
 			if (strpos( $parts[1], 'external') === 0) {	// e.g. "fieldid,external=fieldname"
-				$moreparts = explode('=', trim($parts[1]));
+				$moreparts = explode('=', trim($parts[1]), 2);
 				if (count($moreparts) < 2) {
 					$moreparts[1] = $parts[0];	// no fieldname supplied so use same as fieldid
 				}
 				$fields[ $parts[0] ] = $moreparts[0];
-				$js .= "\n".'$("input[name=\'' . $parts[0] . '\']").val( unescape($("#' . $moreparts[1] . '").val()));';
+				if (preg_match('/[\[\]\.#\=]/', $moreparts[1])) {	// check for [ ] = or . which would be a jQuery selector
+					// might select multiple inputs
+					$js .= "\n".'$("input[name=\'' . $parts[0] . '\']").val( unescape($("' . $moreparts[1] . '").serialize()));';
+				} else {	// otherwise it's an id
+					$js .= "\n".'$("input[name=\'' . $parts[0] . '\']").val( unescape($("#' . $moreparts[1] . '").val()));';
+				}
 				$inputfields[ $parts[0] ] = 'external';
 			} else {
 				$fields[ $parts[0] ] = $parts[1];
@@ -173,8 +179,8 @@ function wikiplugin_datachannel( $data, $params )
 		$smarty->assign( 'form_class_attr', !empty($params['class']) ? ' class="' . $params['class'] . '"' : '');
 		
 		if (!empty($js)) {
-			$headerlib->add_js( 'function datachannel_form_submit' . $execution .'() {' . $js .'return true;}');
-			$smarty->assign( 'datachannel_form_onsubmit', ' onsubmit="return datachannel_form_submit' . $execution .'()"' );
+			$headerlib->add_js( "function datachannel_form_submit{$execution}() {{$js}\nreturn true;\n}");
+			$smarty->assign( 'datachannel_form_onsubmit', ' onsubmit="return datachannel_form_submit' . $execution .'();"' );
 		} else {
 			$smarty->assign( 'datachannel_form_onsubmit', '');
 		}
