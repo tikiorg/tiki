@@ -285,6 +285,7 @@ if (!isset($item_info)) {
 		die;
 	}
 }
+$item_info['logs'] = $trklib->get_item_history($item_info, 0, '', 0, 1);
 $smarty->assign_by_ref('item_info', $item_info);
 $smarty->assign('item', array(
 	'itemId' => $_REQUEST['itemId'],
