@@ -1162,7 +1162,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$save_fc = $smarty->force_compile;
 					$smarty->force_compile = true;
 				}
-				$str = $smarty->fetch('tiki-plugin_trackerlist.tpl');
+				$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');
 				if (!empty($wiki)) {
 					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
 				}
