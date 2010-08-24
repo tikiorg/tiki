@@ -133,8 +133,12 @@ function wikiplugin_datachannel( $data, $params )
 
 			$input = array_intersect_key( $_POST, $inputfields );
 			$static = $params;
-			unset( $static['channel'] );
-
+			$unsets = wikiplugin_datachannel_info();	// get defined params
+			$unsets = array_keys($unsets['params']);
+			foreach ($unsets as $un) {					// remove defined params leaving user supplied ones
+				unset( $static[$un] );
+			}
+			
 			if (!empty($params['price'])) {
 				global $paymentlib; require_once 'lib/payment/paymentlib.php';
 				$desc = empty($params['paymentlabel'])? tr( 'Datachannel:', $prefs['site_language'] ) . ' ' . $params['channel'] : $params['paymentlabel'];
@@ -146,8 +150,8 @@ function wikiplugin_datachannel( $data, $params )
 				$id = $paymentlib->request_payment( $desc, $params['price'], $prefs['payment_default_delay'] );
 				$paymentlib->register_behavior( $id, 'complete', 'execute_datachannel', array( $data, $params, $posts, $executionId ) );
 				require_once 'lib/smarty_tiki/function.payment.php';
-			return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
 				
+				return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
 			}
 
 			$userInput = array_merge( $input, $static );
@@ -156,6 +160,8 @@ function wikiplugin_datachannel( $data, $params )
 			$installer = new Tiki_Profile_Installer;
 			//TODO: What is the following line for? Future feature to limit capabilities of data channels?
 			//$installer->limitGlobalPreferences( array() );
+			// jb tiki6: looks like if set to an empty array it would prevent any prefs being set
+			// i guess the idea is to be able to restrict the settable prefs to only harmless ones for security
 
 			$profiles = $config->getProfiles( array( $params['channel'] ) );
 			$profile = reset($profiles);
