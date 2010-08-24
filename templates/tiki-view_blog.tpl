@@ -61,7 +61,7 @@
 
 {section name=ix loop=$listpages}
 	<div class="post{if !empty($container_class)} {$container_class}{/if}">
-		{include file='blog_wrapper.tpl'}
+		{include file='blog_wrapper.tpl' post_list='y'}
 	</div>
 {/section}
 

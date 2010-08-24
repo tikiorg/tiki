@@ -59,6 +59,17 @@
 				</td>
 			</tr>
 
+			{if $blog_data.use_excerpt eq 'y'}
+				<tr>
+					<td class="editblogform">
+						{tr}Excerpt:{/tr}
+					</td>
+					<td class="editblogform">
+						{textarea id='post_excerpt' class="wikiedit" name="excerpt"}{$post_info.excerpt}{/textarea}
+					</td>
+				</tr>
+			{/if}
+
 			{if $postId > 0 && $wysiwyg ne 'y'}
 				{if count($post_images) > 0}
 					<tr>

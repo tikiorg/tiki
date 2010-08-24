@@ -172,6 +172,7 @@ if (isset($_REQUEST["preview"])) {
 
 	$post_info = array();
 	$post_info['title'] = $_REQUEST['title'];
+	$post_info['excerpt'] = $_REQUEST['excerpt'];
 	$post_info['user'] = isset($data) ? $data['user'] : $user;
 	$post_info['created'] = $publishDate;
 	$post_info['avatar'] = isset($data) ? $data['avatar'] : '';
@@ -201,14 +202,14 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
 	
 	if ($postId > 0) {
-		$bloglib->update_post($postId, $_REQUEST["blogId"], $edit_data, $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate, $is_wysiwyg);
+		$bloglib->update_post($postId, $_REQUEST["blogId"], $edit_data, $_REQUEST['excerpt'], $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate, $is_wysiwyg);
 	} else {
 		if ($blog_data['always_owner'] == 'y') {
 			$author = $blog_data['user'];
 		} else {
 			$author = $user;
 		}
-		$postId = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $author, $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate, $is_wysiwyg);
+		$postId = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $_REQUEST['excerpt'], $author, $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate, $is_wysiwyg);
 		$smarty->assign('postId', $postId);
 	}
 

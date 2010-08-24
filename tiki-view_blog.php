@@ -68,6 +68,7 @@ $smarty->assign('public', $blog_data["public"]);
 $smarty->assign('hits', $blog_data["hits"]);
 $smarty->assign('creator', $blog_data["user"]);
 $smarty->assign('activity', $blog_data["activity"]);
+$smarty->assign('use_excerpt', $blog_data["use_excerpt"]);
 if (isset($_REQUEST["remove"])) {
 	$data = $bloglib->get_post($_REQUEST["remove"]);
 	if ($user && $blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post')) {

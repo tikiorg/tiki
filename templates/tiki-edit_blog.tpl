@@ -115,6 +115,12 @@
 		    <input type="text" name="related_max" id="blogs-post-max-related" value="{$related_max|escape}"/>
 		  </td>
         </tr>
+        <tr class="editblogform">
+          <td><label for="blogs-post-use-excerpt">{tr}Use post excerpt{/tr}</label></td>
+          <td>
+		    <input type="checkbox" name="use_excerpt" id="blogs-post-use-excerpt" {if $use_excerpt eq 'y'}checked='checked'{/if}/>
+		  </td>
+        </tr>
 
         {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
           <tr class="editblogform">
