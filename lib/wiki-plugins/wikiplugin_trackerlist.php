@@ -627,7 +627,9 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->right_delimiter = $rdelim;
 
 		if (isset($checkbox)) {
+			$check = array('ix' => -1, 'type' => 'checkbox');
 			$cb = explode('/', $checkbox);
+			
 			if (isset($cb[0]))
 				$check['fieldId'] = $cb[0];
 			if (isset($cb[1]))
@@ -640,10 +642,13 @@ function wikiplugin_trackerlist($data, $params) {
 				$check['action'] = $cb[4];
 			if (isset($cb[5]))
 				$check['tpl'] = $cb[5];
-			if (isset($cb[6]) && $cb[6] == 'radio')
+			if (isset($cb[6]) && $cb[6] == 'radio') {
 				$check['radio'] = 'y';
+				$check['type'] = 'radio';
+			}
 			if (isset($cb[6]) && $cb[6] == 'dropdown')
-				$check['dropdown'] = 'y';
+				$check['dropdown'] = 'y';				// is this actually used?
+			
 			$smarty->assign_by_ref('checkbox', $check);
 		}	
 

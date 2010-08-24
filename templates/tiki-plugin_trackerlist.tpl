@@ -123,7 +123,7 @@
 
 	<tr class="{cycle}">
 			{if $checkbox}
-		<td><input type={if $checkbox.radio eq 'y'}"radio"{else}"checkbox"{/if} name="{$checkbox.name}[]" value="{if isset($items[user].field_values[$checkbox.ix])}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}" /></td>
+		<td><input type="{$checkbox.type}" name="{$checkbox.name}[]" value="{if $checkbox.ix > -1}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}" /></td>
 			{/if}
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 		<td class="auto" style="width:20px;">
