@@ -24,6 +24,120 @@
 	</tr>
 </table>
 
+{tabset name='tabs_newsletter_subscriptions'}
+
+{tab name="{tr}Subscriptions{/tr}"}
+{* groups------------------------------------ *}
+{if $nb_groups > 0}
+	<table class="normal">
+		<tr>
+			<th>
+				<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_g={if $sort_mode_g eq 'groupName_asc'}groupName_desc{else}groupName_asc{/if}">{tr}Group{/tr}</a>
+			</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle values="odd,even" print=false}
+		{section name=ix loop=$groups_g}
+			<tr>
+				<td class="{cycle advance=false}">{$groups_g[ix].groupName|escape}</td>
+				<td class="{cycle}">
+					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$groups_g[ix].nlId|urlencode}&amp;group={$groups_g[ix].groupName|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+				</td>
+			</tr>
+		{/section}
+	</table>
+{/if}
+{* /groups------------------------------------ *}
+
+{* included------------------------------------ *}
+{if $nb_included > 0}
+	<table class="normal">
+		<tr>
+			<th>
+				<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_i={if $sort_mode_i eq 'name_asc'}name_desc{else}name_asc{/if}">{tr}Newsletter{/tr}</a>
+			</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle values="odd,even" print=false}
+		{foreach key=incId item=incName from=$included_n}
+			<tr>
+				<td class="{cycle advance=false}">
+					<a href="tiki-admin_newsletter_subscriptions.php?nlId={$incId|urlencode}">{$incName|escape}</a>
+				</td>
+				<td class="{cycle}">
+					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$nlId|urlencode}&amp;included={$incId|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+				</td>
+			</tr>
+		{/foreach}
+	</table>
+{/if}
+{* /included------------------------------------ *}
+
+{* pages------------------------------------ *}
+{if $nb_pages > 0}
+	<table class="normal">
+		<tr>
+			<th>{tr}Wiki Page Name{/tr}</th>
+			<th>{tr}Validate Addresses{/tr}</th>
+			<th>{tr}Add To List{/tr}</th>
+			<th>{tr}Action{/tr}</th>
+		</tr>
+		{cycle values="odd,even" print=false}
+		{section name=ix loop=$pages}
+			<tr>
+				<td class="{cycle advance=false}"><a href="{$pages[ix].wikiPageName|sefurl}">{$pages[ix].wikiPageName|escape}</a></td>
+				<td class="{cycle advance=false}">{$pages[ix].validateAddrs|escape}</td>
+				<td class="{cycle advance=false}">{$pages[ix].addToList|escape}</td>
+				<td class="{cycle}">
+					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;remove={$pages[ix].nlId|urlencode}&amp;page={$pages[ix].wikiPageName|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+				</td>
+			</tr>
+		{/section}
+	</table>
+{/if}
+{* /pages------------------------------------ *}
+
+{include file='find.tpl'}
+
+<table class="normal">
+	<tr>
+		<th>
+			<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}eMail{/tr} - {tr}User{/tr}</a>
+		</th>
+		<th>
+			<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'valid_desc'}valid_asc{else}valid_desc{/if}">{tr}Valid{/tr}</a>
+		</th>
+		<th>
+			<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'subscribed_desc'}subscribed_asc{else}subscribed_desc{/if}">{tr}Subscribed{/tr}</a>
+		</th>
+		<th>{tr}Action{/tr}</th>
+	</tr>
+	{cycle values="odd,even" print=false}
+	{section name=user loop=$channels}
+		<tr>
+			<td class="{cycle advance=false}">
+				{if $channels[user].isUser == "y"}{$channels[user].email|userlink}{else}{$channels[user].email|escape}{/if}
+			</td>
+			<td class="{cycle advance=false}">
+				{if $channels[user].valid == "n"}
+					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;valid={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email|escape:"url"}" title="{tr}Valid{/tr}">{tr}No{/tr}</a>
+				{else}
+					{tr}Yes{/tr}
+				{/if}
+			</td>
+			<td class="{cycle advance=false}">{$channels[user].subscribed|tiki_short_datetime}</td>
+			<td class="{cycle}">
+				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}subuser{else}email{/if}={$channels[user].email|escape:"url"}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+			</td>
+		</tr>
+	{/section}
+</table>
+
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{/tab}
+
+{tab name="{tr}Add subscribers{/tr}"}
+
 <h2>{tr}Add subscribers{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 	<input type="hidden" name="nlId" value="{$nlId|escape}" />
@@ -255,117 +369,11 @@
 		</tr>
 	</table>
 </form>
+{/tab}
 
-<h2>{tr}Subscriptions{/tr}</h2>
-{* groups------------------------------------ *}
-{if $nb_groups > 0}
-	<table class="normal">
-		<tr>
-			<th>
-				<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_g={if $sort_mode_g eq 'groupName_asc'}groupName_desc{else}groupName_asc{/if}">{tr}Group{/tr}</a>
-			</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle values="odd,even" print=false}
-		{section name=ix loop=$groups_g}
-			<tr>
-				<td class="{cycle advance=false}">{$groups_g[ix].groupName|escape}</td>
-				<td class="{cycle}">
-					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$groups_g[ix].nlId|urlencode}&amp;group={$groups_g[ix].groupName|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-				</td>
-			</tr>
-		{/section}
-	</table>
-{/if}
-{* /groups------------------------------------ *}
 
-{* included------------------------------------ *}
-{if $nb_included > 0}
-	<table class="normal">
-		<tr>
-			<th>
-				<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_i={if $sort_mode_i eq 'name_asc'}name_desc{else}name_asc{/if}">{tr}Newsletter{/tr}</a>
-			</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle values="odd,even" print=false}
-		{foreach key=incId item=incName from=$included_n}
-			<tr>
-				<td class="{cycle advance=false}">
-					<a href="tiki-admin_newsletter_subscriptions.php?nlId={$incId|urlencode}">{$incName|escape}</a>
-				</td>
-				<td class="{cycle}">
-					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$nlId|urlencode}&amp;included={$incId|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-				</td>
-			</tr>
-		{/foreach}
-	</table>
-{/if}
-{* /included------------------------------------ *}
+{tab name="{tr}Export Subscriber Emails{/tr}"}
 
-{* pages------------------------------------ *}
-{if $nb_pages > 0}
-	<table class="normal">
-		<tr>
-			<th>{tr}Wiki Page Name{/tr}</th>
-			<th>{tr}Validate Addresses{/tr}</th>
-			<th>{tr}Add To List{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle values="odd,even" print=false}
-		{section name=ix loop=$pages}
-			<tr>
-				<td class="{cycle advance=false}"><a href="{$pages[ix].wikiPageName|sefurl}">{$pages[ix].wikiPageName|escape}</a></td>
-				<td class="{cycle advance=false}">{$pages[ix].validateAddrs|escape}</td>
-				<td class="{cycle advance=false}">{$pages[ix].addToList|escape}</td>
-				<td class="{cycle}">
-					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;remove={$pages[ix].nlId|urlencode}&amp;page={$pages[ix].wikiPageName|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-				</td>
-			</tr>
-		{/section}
-	</table>
-{/if}
-{* /pages------------------------------------ *}
-
-{include file='find.tpl'}
-
-<table class="normal">
-	<tr>
-		<th>
-			<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}eMail{/tr} - {tr}User{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'valid_desc'}valid_asc{else}valid_desc{/if}">{tr}Valid{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'subscribed_desc'}subscribed_asc{else}subscribed_desc{/if}">{tr}Subscribed{/tr}</a>
-		</th>
-		<th>{tr}Action{/tr}</th>
-	</tr>
-	{cycle values="odd,even" print=false}
-	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">
-				{if $channels[user].isUser == "y"}{$channels[user].email|userlink}{else}{$channels[user].email|escape}{/if}
-			</td>
-			<td class="{cycle advance=false}">
-				{if $channels[user].valid == "n"}
-					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;valid={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email|escape:"url"}" title="{tr}Valid{/tr}">{tr}No{/tr}</a>
-				{else}
-					{tr}Yes{/tr}
-				{/if}
-			</td>
-			<td class="{cycle advance=false}">{$channels[user].subscribed|tiki_short_datetime}</td>
-			<td class="{cycle}">
-				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}subuser{else}email{/if}={$channels[user].email|escape:"url"}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-			</td>
-		</tr>
-	{/section}
-</table>
-
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
-
-<h2>{tr}Export Subscriber Emails{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 	<input type="hidden" name="nlId" value="{$nlId|escape}" /> 
 	<table class="normal">
@@ -377,4 +385,5 @@
 		</tr>
 	</table>
 </form>
-
+{/tab}
+{/tabset}
