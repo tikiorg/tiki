@@ -137,7 +137,6 @@ function wikiplugin_mediaplayer($data, $params) {
 			$js .= "$param: $value,";
 		}
 		$js .= "} );";
-		echo htmlspecialchars($js);
 		$headerlib->add_jq_onready($js);
 		return "~np~<a href=\"".$params['src']."\" id=\"$id\"></a>~/np~";
 	}
