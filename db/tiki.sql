@@ -1074,10 +1074,12 @@ CREATE TABLE `tiki_images_data` (
 
 DROP TABLE IF EXISTS `tiki_language`;
 CREATE TABLE `tiki_language` (
+  `id` int(14) NOT NULL auto_increment,
   `source` tinytext NOT NULL,
   `lang` char(16) NOT NULL default '',
   `tran` tinytext,
-  PRIMARY KEY (`source`(255),`lang`)
+  `changed` bool,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_link_cache`;

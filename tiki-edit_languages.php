@@ -66,8 +66,8 @@ if (isset($_REQUEST["add_tran"])) {
 		$add_tran_tran = strip_tags($add_tran_tran);
 		$query = "delete from `tiki_language` where `source` = ? and `lang` = ?";
 		$tikilib->query($query,array($add_tran_source,$edit_language));
-		$query = "insert into `tiki_language` values (?,?,?)";
-		$tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran));
+		$query = "insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values (?,?,?,?)";
+		$tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran,1));
 		// remove from untranslated Table
 		$query = "delete from `tiki_untranslated` where `source`=? and `lang`=?";
 		$tikilib->query($query,array($add_tran_source,$edit_language));
@@ -90,8 +90,8 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			// Handle edits in translate recorded
 			if (isset($_REQUEST["edit_rec_$i"])) {
 				if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
-					$query = "insert into `tiki_language` values(?,?,?)";
-					$result = $tikilib->query($query,array($_REQUEST["edit_rec_source_$i"],$edit_language,$_REQUEST["edit_rec_tran_$i"]));
+					$query = "insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values(?,?,?,?)";
+					$result = $tikilib->query($query,array($_REQUEST["edit_rec_source_$i"],$edit_language,$_REQUEST["edit_rec_tran_$i"],1));
 					$query = "delete from `tiki_untranslated` where `source`=? and lang=?";
 					$result = $tikilib->query($query,array($_REQUEST["edit_rec_source_$i"],$edit_language));
 				// No error checking necessary
@@ -100,13 +100,13 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 				// Handle edits in edit translations
 				if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
 #					$_REQUEST["edit_edt_tran_$i"] = strip_tags($_REQUEST["edit_edt_tran_$i"]); // yes, we even don't want striptags() for existing translations as some already have html tags included and we want to keep them, right ?
-					$query = "update `tiki_language` set `tran`=? where `source`=binary ? and `lang`=?";
-					$result = $tikilib->query($query,array($_REQUEST["edit_edt_tran_$i"],$_REQUEST["edit_edt_source_$i"],$edit_language));
+					$query = "update `tiki_language` set `tran`=?, `changed`=? where `source`=? and `lang`=?";
+					$result = $tikilib->query($query,array($_REQUEST["edit_edt_tran_$i"],1,$_REQUEST["edit_edt_source_$i"],$edit_language));
 
 					//if ($result->numRows()== 0 ) 
 					if (!isset($result)) {
-						$query = "insert into `tiki_language` values(binary ?,binary ?,?)";
-						$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language,$_REQUEST["edit_edt_tran_$i"]));
+						$query = "insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values(?,?,?,?)";
+						$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language,$_REQUEST["edit_edt_tran_$i"],1));
 					}
 				}
 			} elseif (isset($_REQUEST["del_tran_$i"])) {
@@ -246,7 +246,7 @@ if (isset($_REQUEST["import"])) {
 	$impmsg = tra("Imported:")." lang/$imp_language/language.php";
 
 	while (list($key, $val) = each(${"lang_$imp_language"})) {
-		$query = "insert into `tiki_language` values (?,?,?)";
+		$query = "insert into `tiki_language` (`source`, `lang`, `tran`) values (?,?,?)";
 		$result = $tikilib->query($query, array($key,$imp_language,$val), -1, -1, false);
 	}
 
