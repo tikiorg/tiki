@@ -189,7 +189,6 @@ $(".trackerfilter-result > div > form").submit( function () {
 		$params['max'] = $prefs['maxRecords'];
 		include_once('lib/wiki-plugins/wikiplugin_trackerlist.php');
 		$dataRes .= wikiplugin_trackerlist($data, $params);
-		$dataRes .= '<br />';
 	} else {
 		$data = '';
 	}
@@ -236,6 +235,7 @@ $(".trackerfilter-result > div > form").submit( function () {
 	$smarty->assign_by_ref('open', $open);
 	$smarty->assign_by_ref('action', $action);
 	$smarty->assign_by_ref('noflipflop', $noflipflop);
+	$smarty->assign_by_ref('dataRes', $dataRes);
 	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
 
 	static $first = true;
@@ -251,7 +251,7 @@ $(".trackerfilter-result > div > form").submit( function () {
 		} );' );
 	}
 
-	return '<div class="trackerfilter-result">' . $data.$dataF.$dataRes . '</div>';
+	return $data . $dataF;
 }
 
 function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$ffs, &$values, &$exactValues) {
