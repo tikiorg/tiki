@@ -1446,6 +1446,7 @@ body.tiki_forums table.normal {
 .post .postfooter {
 	float: right;
 	text-align: right;
+	width: 100%;
 }
 .post .postfooter .rating {
 	display: inline;
@@ -1468,6 +1469,22 @@ body.tiki_forums table.normal {
 	margin-bottom: 5px;
 	margin-left: 4px;
 	padding: 3px
+}
+
+.postfooter .postfooter-nav {
+	display: block;
+	margin-top: 1em;
+}
+
+.postfooter .postfooter-nav .postfooter-nav-prev {
+	text-align: left;
+	float: left;
+	width: 50%;
+}
+
+.postfooter .postfooter-nav .postfooter-nav-next {
+	float: right;
+	width: 50%;
 }
 
 .sub_comment {

@@ -30,7 +30,7 @@ if (empty($_REQUEST["postId"])) {
 	$postId = $_REQUEST['postId'];
 }
 
-$post_info = $bloglib->get_post($postId);
+$post_info = $bloglib->get_post($postId, true);
 $blogId = $post_info['blogId'];
 $blog_data = $bloglib->get_blog($blogId);
 

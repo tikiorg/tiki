@@ -26,4 +26,16 @@
  			[<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}View Comments{/tr}</a>]
 		{/if}
 	</div>
+	<div class="postfooter-nav">
+		{if $post_info.adjacent.prev}
+			<div class="postfooter-nav-prev">
+				{self_link postId=$post_info.adjacent.prev.postId _title='{tr}Previous post{/tr}'}&larr; {$post_info.adjacent.prev.title|truncate:45}{/self_link}
+			</div>
+		{/if}
+		{if $post_info.adjacent.next}
+			<div class="postfooter-nav-next">
+				{self_link postId=$post_info.adjacent.next.postId _title='{tr}Next post{/tr}'}{$post_info.adjacent.next.title|truncate:45} &rarr;{/self_link}
+			</div>
+		{/if}
+	</div>
 </div>

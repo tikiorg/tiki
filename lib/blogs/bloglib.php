@@ -792,17 +792,22 @@ class BlogLib extends TikiDb_Bridge
 	 *		Returns false if the post does not exist
 	 *
 	 * @param mixed $postId
+	 * @param bool $adjacent wheter to return or not adjacent posts
 	 * @access public
 	 * @return The post
 	 */
-	function get_post($postId) {
+	function get_post($postId, $adjacent = false) {
 		global $tikilib;
 
 		$query = "select * from `tiki_blog_posts` where `postId`=?";
 		$result = $this->query($query, array((int) $postId));
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
-			$res['avatar'] = $tikilib->get_user_avatar($res['user']);		
+			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
+
+			if ($adjacent) {
+				$res['adjacent'] = $this->_get_adjacent_posts($res['blogId'], $res['created']);
+			}
 		} else {
 			return false;
 		}
@@ -826,6 +831,27 @@ class BlogLib extends TikiDb_Bridge
 		}
 
 		return $related_posts;
+	}
+
+	/**
+	 * Get adjacent posts (previous and next by created date)
+	 *
+	 * @param int $blogId which blog the post belongs to
+	 * @param int $created when the post was created
+	 * @return array
+	 */
+	function _get_adjacent_posts($blogId, $created) {
+		$res = array();
+
+		$next_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` > ? ORDER BY created ASC';
+		$result = $this->fetchAll($next_query, array($blogId, $created), 1);
+		$res['next'] = !empty($result[0]) ? $result[0] : null;
+
+		$prev_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` < ? ORDER BY created DESC';
+		$result = $this->fetchAll($prev_query, array($blogId, $created), 1);
+		$res['prev'] = !empty($result[0]) ? $result[0] : null;
+
+		return $res;
 	}
 
 	/**
