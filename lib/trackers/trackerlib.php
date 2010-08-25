@@ -1853,7 +1853,6 @@ class TrackerLib extends TikiLib
 		if (!empty($parsed)) {
 			$this->object_post_save( array('type'=>'trackeritem', 'object'=>$itemId, 'name' => "Tracker Item $itemId", 'href'=>"tiki-view_tracker_item.php?itemId=$itemId"), array( 'content' => $parsed ));
 		}
-		$logslib->add_action('Modified', $itemId, 'trackeritem', $version);
 
 		return $itemId;
 	}
