@@ -117,11 +117,11 @@
 <option value="">{tr}...{/tr}</option>
 <option value="delete">{tr}Delete{/tr}</option>
 <option value="delete_with_page">{tr}Delete with the pages{/tr}</option>
-{/if}
 </select>
 <input type="submit" name="act" value="{tr}OK{/tr}" />
 </form>
 </div>
+{/if}
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 {/tab}
