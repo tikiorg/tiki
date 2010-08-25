@@ -28,7 +28,6 @@ $smarty->assign('title', '');
 $smarty->assign('description', '');
 $smarty->assign('public', 'n');
 $smarty->assign('use_find', 'y');
-$smarty->assign('use_title', 'y');
 $smarty->assign('add_date', 'y');
 $smarty->assign('use_author', 'y');
 $smarty->assign('allow_comments', 'y');
@@ -68,7 +67,6 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('title', $data["title"]);
 	$smarty->assign('description', $data["description"]);
 	$smarty->assign('public', $data["public"]);
-	$smarty->assign('use_title', $data["use_title"]);
 	$smarty->assign('add_date', $data["add_date"]);
 	$smarty->assign('use_author', $data["use_author"]);
 	$smarty->assign('allow_comments', $data["allow_comments"]);
@@ -130,7 +128,6 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 		$public = 'n';
 	}
 
-	$use_title = isset($_REQUEST['use_title']) ? 'y' : 'n';
 	$allow_comments = isset($_REQUEST["allow_comments"]) ? 'y' : 'n';
 	$show_avatar = isset($_REQUEST['show_avatar']) ? 'y' : 'n';	
 	$show_related = isset($_REQUEST['show_related']) ? 'y' : 'n';	
@@ -144,7 +141,7 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$bid = $bloglib->replace_blog($_REQUEST["title"],
 	    $_REQUEST["description"], $_REQUEST["creator"], $public,
 	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
-	    $heading, $use_title, $use_author, $add_date, $use_find,
+	    $heading, $use_author, $add_date, $use_find,
 	    $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt);
 
 	$cat_type = 'blog';
@@ -164,7 +161,6 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('description', $_REQUEST["description"]);
 	$smarty->assign('public', isset($_REQUEST["public"]) ? 'y' : 'n');
 	$smarty->assign('use_find', isset($_REQUEST["use_find"]) ? 'y' : 'n');
-	$smarty->assign('use_title', isset($_REQUEST["use_title"]) ? 'y' : 'n');
 	$smarty->assign('use_author', isset($_REQUEST["use_author"]) ? 'y' : 'n');
 	$smarty->assign('show_avatar', isset($_REQUEST["show_avatar"]) ? 'y' : 'n');
 	$smarty->assign('show_related', isset($_REQUEST["show_related"]) ? 'y' : 'n');

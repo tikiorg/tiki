@@ -108,7 +108,6 @@ function wikiplugin_bloglist($data, $params) {
 			}
 		}
 		$smarty->assign('show_heading', 'n');
-		$smarty->assign('use_title', 'y');	// TODO should be refactored from tiki-view_blog.php into bloglib
 		$smarty->assign('use_author', 'y');
 		$smarty->assign('add_date', 'y');
 		$smarty->assign_by_ref('listpages', $blogItems['data']);

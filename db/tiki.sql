@@ -298,7 +298,6 @@ CREATE TABLE `tiki_blogs` (
   `activity` decimal(4,2) default NULL,
   `heading` text,
   `use_find` char(1) default NULL,
-  `use_title` char(1) default NULL,
   `use_author` char(1) default NULL,
   `use_excerpt` char(1) default NULL,
   `add_date` char(1) default NULL,

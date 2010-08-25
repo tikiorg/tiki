@@ -54,7 +54,6 @@ $smarty->assign('blogId', $_REQUEST["blogId"]);
 $smarty->assign('title', $blog_data["title"]);
 $smarty->assign('headtitle', $blog_data['title'] . ' : ' . $blog_data['description']);
 $smarty->assign('heading', $blog_data["heading"]);
-$smarty->assign('use_title', $blog_data["use_title"]);
 $smarty->assign('use_author', $blog_data["use_author"]);
 $smarty->assign('add_date', $blog_data["add_date"]);
 $smarty->assign('use_find', $blog_data["use_find"]);

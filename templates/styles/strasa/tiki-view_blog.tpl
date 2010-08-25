@@ -71,15 +71,13 @@
 			
 	<div class="clearfix postbody">
 		<div class="clearfix postbody-title">
-		{if $show_avatar eq 'y'}
-			{$listpages[ix].avatar}
-		{/if}
-		
-		{if $use_title eq 'y'}
+			{if $show_avatar eq 'y'}
+				{$listpages[ix].avatar}
+			{/if}
+			
 			<div class="title">
 				<h2><a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{$listpages[ix].title|escape}</a></h2>
 			</div>	
-		{/if}		
 		</div><!-- postbody-title -->
 
 		<div class="author_actions clearfix">

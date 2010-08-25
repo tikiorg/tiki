@@ -84,10 +84,6 @@
           <td><label for="blogs-number">{tr}Number of posts to show per page{/tr}</label></td>
           <td><input type="text" name="maxPosts" id="blogs-number" value="{$maxPosts|escape}" /></td>
         </tr>
-        <tr class="editblogform">
-          <td><label for="blogs-titles">{tr}Display titles in blog posts{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_title" id="blogs-titles" {if $use_title eq 'y'}checked='checked'{/if}/></td>	 
-        </tr>	 
     	<tr class="editblogform">
           <td><label for="blogs-author">{tr}Display author in blog posts{/tr}</label></td>	 
           <td><input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}/></td>	 

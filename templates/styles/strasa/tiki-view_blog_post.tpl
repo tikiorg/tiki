@@ -18,11 +18,9 @@
 			{$post_info.avatar}
 		{/if}
 		
-		{if $blog_data.use_title eq 'y'}
 		<div class="title">		
-				<h2>{$post_info.title|escape}</h2>
+			<h2>{$post_info.title|escape}</h2>
 		</div>
-		{/if}
 	</div>
 	<div class="content">
 		<div class="author_actions clearfix">
