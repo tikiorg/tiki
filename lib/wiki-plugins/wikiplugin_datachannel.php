@@ -77,6 +77,14 @@ function wikiplugin_datachannel_info()
 				'filter' => 'word',
 				'advanced' => true,
 			),
+			'array_values' => array(
+				'required' => false,
+				'name' => tra('Multiple values'),
+				'description' => '(y | n) '.tra('Accept arrays of multiple values in the POST. e.g. itemId[]=42&itemId=43 etc.'),
+				'default' => 'n',
+				'filter' => 'alpha',
+				'advanced' => true,
+			),
 		),
 	);
 }
@@ -93,7 +101,8 @@ function wikiplugin_datachannel( $data, $params )
 	$lines = array_map( 'trim', $lines );
 	$lines = array_filter( $lines );
 	$js = '';
-
+	if (!isset($params['array_values'])) { $params['array_values'] = 'n'; }
+	
 	foreach( $lines as $line ) {
 		$parts = explode( ',', $line, 2 );
 
@@ -104,7 +113,7 @@ function wikiplugin_datachannel( $data, $params )
 					$moreparts[1] = $parts[0];	// no fieldname supplied so use same as fieldid
 				}
 				$fields[ $parts[0] ] = $moreparts[0];
-				if (preg_match('/[\[\]\.#\=]/', $moreparts[1])) {	// check for [ ] = or . which would be a jQuery selector
+				if ($params['array_values'] === 'y' && preg_match('/[\[\]\.#\=]/', $moreparts[1])) {	// check for [ ] = or . which would be a jQuery selector
 					// might select multiple inputs
 					$js .= "\n".'$("input[name=\'' . $parts[0] . '\']").val( unescape($("' . $moreparts[1] . '").serialize()));';
 				} else {	// otherwise it's an id
@@ -132,6 +141,56 @@ function wikiplugin_datachannel( $data, $params )
 			&& $_POST['datachannel_execution'] == $executionId ) {
 
 			$input = array_intersect_key( $_POST, $inputfields );
+			
+			$itemIds = array();					// process possible arrays in post
+			if ($params['array_values'] === 'y') {
+				foreach($input as $key => $val) {
+					if (!empty($val)) {
+						parse_str($val, $vals);
+						if (is_array($vals)) {							// serialized collection of inputs
+							$arr = array();
+							if ($key == 'itemId') {
+								foreach($vals as $v) {					// itemId[x,y,z]
+									if (is_array($v)) {
+										$arr = array_merge($arr, $v);
+									}
+								}
+								$itemIds = $arr;
+							} else {
+								foreach($vals as $v) {					// fieldname[x=>a,y=>b,z=>c]
+									if (is_array($v)) {
+										foreach($v as $k => $kv) {
+											if (in_array($k, $itemIds)) {	// check if sent in itemIds array
+												$arr[] = $kv;				// (e.g. from trackerlist checkboxes)
+											}
+										}
+									} else {
+										$arr = $val;	// not an array, so use the initial string val
+									}
+								}
+							}
+							$input[$key] = $arr;
+						}
+					}
+				}
+			}
+			$inputs = array();
+			if ($params['array_values'] === 'y' && !empty($itemIds)) {
+				$cid = count($itemIds);
+				for($i = 0; $i < $cid; $i++) {	// reorganise array
+					$arr = array();
+					foreach(array_keys($input) as $k) {
+						if (isset($input[$k]) && is_array($input[$k])) {
+							$arr[$k] = $input[$k][$i];
+						} else {
+							$arr[$k] = $input[$k];
+						}
+					}
+					$inputs[] = $arr;
+				}
+			} else {
+				$inputs[] = $input;
+			}
 			$static = $params;
 			$unsets = wikiplugin_datachannel_info();	// get defined params
 			$unsets = array_keys($unsets['params']);
@@ -154,25 +213,29 @@ function wikiplugin_datachannel( $data, $params )
 				return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
 			}
 
-			$userInput = array_merge( $input, $static );
-
-			Tiki_Profile::useUnicityPrefix(uniqid());
-			$installer = new Tiki_Profile_Installer;
-			//TODO: What is the following line for? Future feature to limit capabilities of data channels?
-			//$installer->limitGlobalPreferences( array() );
-			// jb tiki6: looks like if set to an empty array it would prevent any prefs being set
-			// i guess the idea is to be able to restrict the settable prefs to only harmless ones for security
-
-			$profiles = $config->getProfiles( array( $params['channel'] ) );
-			$profile = reset($profiles);
-
-			$installer->setUserData( $userInput );
-			if (empty($params['debug']) || $params['debug'] != 'y') {
-				$installer->setDebug();
+			foreach($inputs as $input) {
+				$userInput = array_merge( $input, $static );
+	
+				Tiki_Profile::useUnicityPrefix(uniqid());
+				$profiles = $config->getProfiles( array( $params['channel'] ) );
+				$profile = reset($profiles);
+				$profile->removeSymbols();
+	
+				Tiki_Profile::useUnicityPrefix(uniqid());
+				$installer = new Tiki_Profile_Installer;
+				//TODO: What is the following line for? Future feature to limit capabilities of data channels?
+				//$installer->limitGlobalPreferences( array() );
+				// jb tiki6: looks like if set to an empty array it would prevent any prefs being set
+				// i guess the idea is to be able to restrict the settable prefs to only harmless ones for security
+	
+				$installer->setUserData( $userInput );
+				if (!empty($params['debug']) && $params['debug'] === 'y') {
+					$installer->setDebug();
+				}
+				$params['emptyCache'] = isset($params['emptyCache']) ? $params['emptyCache'] : 'all';
+				$installer->install( $profile, $params['emptyCache'] );
 			}
-			$params['emptyCache'] = isset($params['emptyCache']) ? $params['emptyCache'] : 'all';
-			$installer->install( $profile, $params['emptyCache'] );
-
+			
 			if (empty($params['returnURI'])) { $params['returnURI'] = $_SERVER['HTTP_REFERER']; }	// default to return to same page
 			if (empty($params['debug']) || $params['debug'] != 'y') {
 				header( 'Location: ' . $params['returnURI'] );
