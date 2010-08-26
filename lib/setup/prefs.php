@@ -81,7 +81,7 @@ function get_default_prefs() {
 		'feature_wiki_make_structure' => 'n',
 		'feature_wiki_open_as_structure' => 'n',
 		'feature_wiki_pageid' => 'n',
-		'feature_wiki_paragraph_formatting' => 'n',
+		'feature_wiki_paragraph_formatting' => 'y',
 		'feature_wiki_paragraph_formatting_add_br' => 'n',
 		'feature_wiki_pictures' => 'y',
 		'feature_wiki_plurals' => 'y',
