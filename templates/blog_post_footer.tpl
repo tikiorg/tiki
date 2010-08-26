@@ -1,6 +1,15 @@
 {* $Id$ *}
 <div class="postfooter">
 	<div class="actions">
+		{if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
+			<a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}">{icon _id='page_edit'}</a>
+			<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+		{/if}
+		{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+			<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1">{icon _id='disk' alt='{tr}Save to notepad{/tr}'}</a>
+		{/if}
+
+		<a class="link" href="{$postId|sefurl:blogpost}">{icon _id='page_link' alt='{tr}Permalink{/tr}'}</a>
 		<a href='tiki-print_blog_post.php?postId={$postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
 		{if $prefs.feature_blog_sharethis eq "y"}
 			{capture name=shared_title}{tr}Share This{/tr}{/capture}
@@ -17,13 +26,6 @@
 				var element{/literal}{$postId}{literal} = document.getElementById("share{/literal}{$postId}{literal}");
 				object{/literal}{$postId}{literal}.attachButton(element{/literal}{$postId}{literal});
 			</script>{/literal}{/wiki}
-		{/if}
-	</div>
-	<div class="status">
-		<a class="link" href="{$postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
-		{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y' && $tiki_p_read_comments eq 'y'}
-			{$listpages[ix].comments} {tr}comments{/tr}
- 			[<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}View Comments{/tr}</a>]
 		{/if}
 	</div>
 	<div class="postfooter-nav">

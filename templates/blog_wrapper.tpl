@@ -1,6 +1,5 @@
 {* $Id$ *}
 <div class="clearfix postbody">
-	{include file='blog_actions.tpl'}
 	<a name="postId{$listpages[ix].postId}"></a>
 	{include file='blog_postbody_title.tpl'}
 	{include file='blog_author_info.tpl'}

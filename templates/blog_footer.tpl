@@ -1,6 +1,14 @@
 {* $Id$ *}
 <div class="postfooter">
 	<div class="actions">
+		{if ($ownsblog eq 'y') or ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
+			<a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}">{icon _id='page_edit'}</a>&nbsp;<a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+		{/if}
+		{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+			<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{icon _id='disk' alt='{tr}Save to notepad{/tr}'}</a>
+		{/if}
+
+		<a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{icon _id='page_link' alt='{tr}Permalink{/tr}'}</a>
 		<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
 		{if $prefs.feature_blog_sharethis eq "y"}
 			{capture name=shared_title}{tr}Share This{/tr}{/capture}
@@ -22,9 +30,8 @@
 	</div>
 
 	<div class="status">
-		<a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
 		{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y' && $tiki_p_read_comments eq 'y'}
-			| <a class="link linkcomments" href="tiki-view_blog_post.php?find={$find|escape:url}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}#comments">
+			<a class="link linkcomments" href="tiki-view_blog_post.php?find={$find|escape:url}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}#comments">
 			{if $listpages[ix].comments == 0 && $tiki_p_post_comments eq 'y'}
 				{tr}Leave a comment{/tr}
 			{else}
