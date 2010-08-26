@@ -1722,6 +1722,11 @@ div.multiselect div.selection {
 	padding: 0;
 }
 
+div.trackerfilter-result {
+	max-height: 50ex;
+	overflow: auto;
+}
+
 /***** Categories, Tags *****/
 span.categpath {
 	display: block;
