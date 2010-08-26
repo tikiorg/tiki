@@ -85,7 +85,7 @@ if (isset($_REQUEST["heading"]) and $tiki_p_edit_templates == 'y') {
 	// Sanitization cleanup
 	$heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["heading"]);
 } elseif (!isset($data["heading"])) {
-	$n = $smarty->get_filename('blog-heading.tpl', 'r');
+	$n = $smarty->get_filename('blog_heading.tpl', 'r');
 	@$fp = fopen($n, 'r');
 	if ($fp) {
 		$heading = fread($fp, filesize($n));
@@ -100,7 +100,7 @@ if (isset($_REQUEST["post_heading"]) and $tiki_p_edit_templates == 'y') {
 	// Sanitization cleanup
 	$post_heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["post_heading"]);
 } elseif (!isset($data["post_heading"])) {
-	$n = $smarty->get_filename('blog-post-heading.tpl', 'r');
+	$n = $smarty->get_filename('blog_post_heading.tpl', 'r');
 	@$fp = fopen($n, 'r');
 	if ($fp) {
 		$post_heading = fread($fp, filesize($n));

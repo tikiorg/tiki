@@ -4,7 +4,7 @@
 	{if strlen($heading) > 0 and $prefs.feature_blog_heading eq 'y'}
 		{eval var=$heading}
 	{else}
-		{include file="blog-heading.tpl"}
+		{include file="blog_heading.tpl"}
 	{/if}
 	<div class="bloginfo" align="right" >
 	<span class="blogactions">
