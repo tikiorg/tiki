@@ -1491,6 +1491,7 @@ body.tiki_blogs .author_info img {
 
 body.tiki_blogs .postbody-title {
 	border: 0;
+	color: #fff;
 }
 	
 body.tiki_blogs .postbody .postfooter {
@@ -1500,6 +1501,14 @@ body.tiki_blogs .postbody .postfooter {
 
 body.tiki_blogs .post .postfooter .actions {
 	float: left;
+}
+
+.postbody-title a.freetag {
+	color: #5ae0ff;
+}
+
+.postbody-title a.freetag:hover {
+	color: #fff;
 }
 
 /***** Forums *****/
@@ -1569,9 +1578,11 @@ body.tiki_blogs .post .postfooter .actions {
 	float: right;
 	font-size: 90%;
 	font-style: italic;
+	text-align: right;
 	min-height: 24px;
 	padding-left: 60px;
-	padding-top: 1px;
+	padding-top: 4px;
+	padding-right: 4px;
 	color: #fff;
 	background: url(strasa/login.jpg) 0 0 no-repeat;
 }
