@@ -160,14 +160,16 @@
 		
 		<tr class="formcolor">
 			<td colspan="2">
-				{if $page_badchars_display}
-					{remarksbox type=tip title="{tr}Tip{/tr}"}
-						{if $prefs.wiki_badchar_prevent eq 'y'}
+				{if isset($page_badchars_display)}
+					{if $prefs.wiki_badchar_prevent eq 'y'}
+						{remarksbox type=errors title="{tr}Invalid page name{/tr}"}
 							{tr 0=$page_badchars_display|escape}The page name specified contains unallowed characters. It will not be possible to save the page until those are removed: <strong>%0</strong>{/tr}
+						{/remarksbox}
 						{else}
+						{remarksbox type=tip title="{tr}Tip{/tr}"}
 							{tr 0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
-						{/if}
-					{/remarksbox}
+						{/remarksbox}
+					{/if}
 					<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}" /></p>
 				{else}
 					<input type="hidden" name="page" value="{$page|escape}" /> 
