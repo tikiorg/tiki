@@ -80,10 +80,10 @@ function wikiplugin_trackerfilter($data, $params) {
 	global $headerlib; include_once 'lib/headerlib.php';
 	$headerlib->add_jq_onready('
 /* Maintain state of other trackerfilter plugin forms */
-$(".trackerfilter-result > div > form").submit( function () {
+$(".trackerfilter form").submit( function () {
 	var current_tracker = this;
 	$(current_tracker).append("<input type=\"hidden\" name=\"tracker_filters[]\" value=\"" + $(current_tracker).serialize() + "\" />")
-	$(".trackerfilter-result > div > form").each( function() {
+	$(".trackerfilter form").each( function() {
 		if (current_tracker !== this && $("input[name=count_item]", this).val() > 0) {
 			$(current_tracker).append("<input type=\"hidden\" name=\"tracker_filters[]\" value=\"" + $(this).serialize() + "\" />")
 		}
