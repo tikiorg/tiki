@@ -1774,7 +1774,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawRows( &$sheet, $begin, $end )
 	{
-		for( $i = $begin; $end > $i; $i++ )
+		for( $i = $begin; ($end - 1) > $i; $i++ )
 		{
 			echo "		<tr>\n";
 
