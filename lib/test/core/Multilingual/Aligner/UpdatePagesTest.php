@@ -5,8 +5,8 @@
  * 
  */
 
-//include_once "lib/core/lib/Multilingual/Aligner/SentenceAlignments.php";
-//include_once "lib/core/lib/Multilingual/Aligner/UpdateSentences.php";
+//include_once "lib/core/Multilingual/Aligner/SentenceAlignments.php";
+//include_once "lib/core/Multilingual/Aligner/UpdateSentences.php";
 //include_once "lib/test/TikiTestCase.php";
 class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 {

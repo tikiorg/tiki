@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-require_once('lib/core/lib/TikiDb/Bridge.php');
+require_once('lib/core/TikiDb/Bridge.php');
 
 //TODO: split this class into two. One for language stuff and other for translations (updateTrans(), writeLanguageFile() etc)
 //TODO: move language functions (like $tikilib->list_languages()) from $tikilib to this class

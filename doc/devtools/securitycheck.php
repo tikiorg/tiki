@@ -26,7 +26,7 @@ $thirdpartyLibs = array(
 	'\./lib/pdflib.*',
 	'\./lib/fckeditor/.*',
 	'\./lib/graph-engine/.*',
-	'\./lib/core/lib/Zend.*',
+	'\./lib/core/Zend.*',
 	'\./lib/htmlparser/,*',
 	'\./lib/htmlpurifier/,*',
 	'\./lib/hawhaw.*',
@@ -36,13 +36,13 @@ $thirdpartyLibs = array(
 	'\./lib/sheet.*',
 	'\./lib/Horde/Yaml.*',
 	'\./lib/ajax/xajax/.*',
-	'\./lib/core/lib/DeclFilter.*',
-	'\./lib/core/lib/JitFilter.*',
-	'\./lib/core/lib/Multilingual.*',
-        '\./lib/core/lib/TikiFilter.*',
-	'\./lib/core/lib/WikiParser.*',
+	'\./lib/core/DeclFilter.*',
+	'\./lib/core/JitFilter.*',
+	'\./lib/core/Multilingual.*',
+        '\./lib/core/TikiFilter.*',
+	'\./lib/core/WikiParser.*',
 	'\./lib/core/test/.*',
-	'\./lib/core/lib/WikiParser.*',
+	'\./lib/core/WikiParser.*',
 	'\./lib.*', /* as per NKO 4:18 19-MAY-09 */
 );
 

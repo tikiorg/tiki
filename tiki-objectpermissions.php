@@ -82,8 +82,8 @@ if( $_REQUEST['objectType'] == 'wiki' ) {
 	$_REQUEST['objectType'] = 'wiki page';
 }
 
-require_once 'lib/core/lib/Perms/Applier.php';
-require_once 'lib/core/lib/Perms/Reflection/Factory.php';
+require_once 'lib/core/Perms/Applier.php';
+require_once 'lib/core/Perms/Reflection/Factory.php';
 
 $objectFactory = Perms_Reflection_Factory::getDefaultFactory();
 $currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
@@ -268,7 +268,7 @@ if (isset($_REQUEST['used_groups'])) {
 //Quickperms {{{
 //Test to map permissions of ile galleries into read write admin admin levels.
 if( $prefs['feature_quick_object_perms'] == 'y' ) {
-	require_once 'lib/core/lib/Perms/Reflection/Quick.php';
+	require_once 'lib/core/Perms/Reflection/Quick.php';
 
 	$qperms = quickperms_get_data();
 	$smarty->assign('quickperms', $qperms);

@@ -10,8 +10,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-require_once ('lib/core/lib/Zend/Oauth/Consumer.php');
-require_once ('lib/core/lib/Zend/Service/Twitter.php');
+require_once ('lib/core/Zend/Oauth/Consumer.php');
+require_once ('lib/core/Zend/Service/Twitter.php');
 require_once ('lib/logs/logslib.php');
 
 

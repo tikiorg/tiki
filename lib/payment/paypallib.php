@@ -58,7 +58,7 @@ class PaypalLib extends TikiDb_Bridge
 	private function confirmed_by_paypal( $ipn_data ) {
 		global $prefs;
 
-		require_once 'lib/core/lib/Zend/Http/Client.php';
+		require_once 'lib/core/Zend/Http/Client.php';
 		$client = new Zend_Http_Client( $prefs['payment_paypal_environment'] );
 
 		$base = array( 'cmd' => '_notify-validate' );  

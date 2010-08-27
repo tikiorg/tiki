@@ -279,7 +279,7 @@ class RatingLib extends TikiDb_Bridge
 	private function get_runner() {
 		require_once 'Math/Formula/Runner.php';
 		return new Math_Formula_Runner( array(
-			'Math_Formula_Function_' => 'lib/core/lib/Math/Formula/Function',
+			'Math_Formula_Function_' => 'lib/core/Math/Formula/Function',
 			'Tiki_Formula_Function_' => dirname(__FILE__) . '/formula',
 		) );
 	}

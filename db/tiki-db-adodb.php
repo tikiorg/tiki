@@ -64,5 +64,5 @@ if( ! function_exists( 'close_connection' ) ) {
 	}
 }
 
-require_once 'lib/core/lib/TikiDb/Adodb.php';
+require_once 'lib/core/TikiDb/Adodb.php';
 TikiDb::set( new TikiDb_Adodb( $dbTiki ) );

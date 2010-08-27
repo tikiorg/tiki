@@ -1606,7 +1606,7 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 			}
 		}
 
-		require_once 'lib/core/lib/Category/Manipulator.php';
+		require_once 'lib/core/Category/Manipulator.php';
 		$manip = new Category_Manipulator( $objType, $objId );
 		$manip->setNewCategories( $categories ? $categories : array() );
 

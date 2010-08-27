@@ -515,7 +515,7 @@ function generate_machine_translated_content($pageContent, $pageInfo, $targetLan
 
 
 function translate_text($text, $sourceLang, $targetLang, $html) {
-	require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
+	require_once('lib/core/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
 	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang,$targetLang,$html);
 	$translatedText = $translator->translateText($text);
 	return $translatedText;	

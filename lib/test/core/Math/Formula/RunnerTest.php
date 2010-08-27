@@ -11,7 +11,7 @@ class Math_Formula_RunnerTest extends TikiTestCase
 
 	function setUp() {
 		$this->runner = new Math_Formula_Runner( array(
-			'Math_Formula_Function_' => realpath( dirname(__FILE__) . '/../../../../core/lib/Math/Formula/Function' ),
+			'Math_Formula_Function_' => realpath( dirname(__FILE__) . '/../../../../core/Math/Formula/Function' ),
 			'Math_Formula_DummyFunction_' => realpath( dirname(__FILE__) . '/DummyFunction' ),
 		) );
 	}

@@ -23,7 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // * shared functions (marked as /*shared*/) are functions that are
 //   called from Tiki modules.
 
-require_once('lib/core/lib/TikiDb/Bridge.php');
+require_once('lib/core/TikiDb/Bridge.php');
 
 class TikiLib extends TikiDb_Bridge
 {
@@ -160,11 +160,11 @@ class TikiLib extends TikiDb_Bridge
 					require_once ('lib/adodb/adodb.inc.php');
 					$dbsqlplugin = ADONewConnection($dbdriver);
 					if( $dbsqlplugin->NConnect( $dbhost, $dbuserid, $dbpassword, $database ) ) {
-						require_once ('lib/core/lib/TikiDb/Adodb.php');
+						require_once ('lib/core/TikiDb/Adodb.php');
 						$connectionMap[$name] = new TikiDb_AdoDb( $dbsqlplugin );
 					}
 				} else {
-					require_once ('lib/core/lib/TikiDb/Pdo.php');
+					require_once ('lib/core/TikiDb/Pdo.php');
 					$dbsqlplugin = new PDO("$dbdriver:host=$dbhost;dbname=$database", $dbuserid, $dbpassword);
 					$connectionMap[$name] = new TikiDb_Pdo( $dbsqlplugin );
 				}
@@ -5094,7 +5094,7 @@ class TikiLib extends TikiDb_Bridge
 					$missing[] = $pref;
 		
 		if( count( $missing ) > 0 ) {
-			require_once 'lib/core/lib/WikiParser/PluginOutput.php';
+			require_once 'lib/core/WikiParser/PluginOutput.php';
 			$output = WikiParser_PluginOutput::disabled( $name, $missing );
 			return false;
 		}
@@ -5295,7 +5295,7 @@ class TikiLib extends TikiDb_Bridge
 			$trklib->replace_pretty_tracker_refs($args);
 		}
 		
-		require_once 'lib/core/lib/WikiParser/PluginOutput.php';
+		require_once 'lib/core/WikiParser/PluginOutput.php';
 
 		$func_name = 'wikiplugin_' . $name;
 		
@@ -8577,7 +8577,7 @@ function detect_browser_language() {
 
 function validate_email($email) {
 	global $prefs;
-	require_once 'lib/core/lib/Zend/Validate/EmailAddress.php';
+	require_once 'lib/core/Zend/Validate/EmailAddress.php';
 	$validate = new Zend_Validate_EmailAddress( Zend_Validate_Hostname::ALLOW_ALL );
 	
 	return $validate->isValid( $email );
