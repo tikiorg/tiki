@@ -19,6 +19,10 @@
 			<input type="hidden" name="badname" value="{$newname|escape}" />
 			<input type="submit" name="confirm" value='{tr}Use this name anyway{/tr}' />
 		{/if}
+	{elseif isset($msg)}		
+		{remarksbox type=errors}
+			{$msg}
+		{/remarksbox}		
 	{/if}
   <table class="normal">
     <tr>
