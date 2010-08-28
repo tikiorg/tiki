@@ -196,13 +196,35 @@ CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strok
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
 			}
+			
+			// work out current theme/option (surely in tikilib somewhere?)
+			global $tikilib, $tc_theme, $tc_theme_option;
+			$ckstyleoption = '';
+			if (!empty($tc_theme)) {
+				$ckstyle = $tikilib->get_style_path('', '', $tc_theme);
+				if (!empty($tc_theme_option)) {
+					$ckstyleoption = $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
+				}
+			} else {
+				$ckstyle = $tikilib->get_style_path('', '', $prefs['style']);
+				if (!empty($prefs['style_option'])) {
+					$ckstyleoption = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
+				}
+			}
+
 			$headerlib->add_jq_onready('
 $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	toolbar_Tiki: '.$cktools.',
 	toolbar: "Tiki",
 	language: "'.$prefs['language'].'",
 	customConfig: "",
-	autoSaveSelf: "'.$auto_save_referrer.'"		// unique reference for each page set up in ensureReferrer()
+	autoSaveSelf: "'.$auto_save_referrer.'",		// unique reference for each page set up in ensureReferrer()
+	font_names: "' . $prefs['wysiwyg_fonts'] . '",
+	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
+	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
+	contentsCss: ["' . $tikiroot . $ckstyle . '","' . $tikiroot . $ckstyleoption . '"],
+	skin: "' . $prefs['wysiwyg_toolbar_skin'] . '"
+	
 });
 ', 20);	// after dialog tools init (10)
 

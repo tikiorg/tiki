@@ -6,6 +6,8 @@
 // $Id$
 
 function prefs_wysiwyg_list() {
+	global $prefs;
+	
 	return array(
 		'wysiwyg_optional' => array(
 			'name' => tra('Wysiwyg Editor is optional'),
@@ -36,10 +38,14 @@ function prefs_wysiwyg_list() {
 		'wysiwyg_toolbar_skin' => array(
 			'name' => tra('Toolbar skin'),
 			'type' => 'list',
-			'options' => array(
+			'options' => $prefs['wysiwyg_ckeditor'] != 'y' ? array(
 				'default' => tra('Default'),
 				'office2003' => tra('Office 2003'),
 				'silver' => tra('Silver'),
+			) : array(
+				'kama' => tra('Kama (Default)'),
+				'office2003' => tra('Office 2003'),
+				'v2' => tra('V2 (FCKEditor appearance)'),
 			),
 		),
 		'wysiwyg_ckeditor' => array(
