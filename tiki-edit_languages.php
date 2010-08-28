@@ -219,7 +219,7 @@ if (isset($_REQUEST["exp_language"])) {
 	$language = new Language($exp_language);
 	$smarty->assign('exp_language', $exp_language);
 } else {
-	$smarty->assign('exp_language', '');
+	$smarty->assign('exp_language', $prefs['language']);
 }
 
 if (isset($_REQUEST["imp_language"])) {
