@@ -130,6 +130,15 @@ class WikiLib extends TikiLib
 
 	}
 
+	// Returns a string containing all characters considered bad in page names
+	function get_badchars($name) {
+		return ":/?#[]@!$&'()*+,;=<>";
+	}
+	
+	// Returns a boolean indicating whether the given page name contains "bad characters"
+	function contains_badchars($name) {
+		return preg_match("/[:\/?#\[\]@!$&'()*+,;=<>]/", $name);		
+	}
 
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong
@@ -139,9 +148,13 @@ class WikiLib extends TikiLib
 		$newName = trim($newName);
 		if ($this->page_exists($newName)) {
 			// if it is a case change of same page: allow it, else stop here
-			if (strcasecmp(trim($oldName), $newName) <> 0 ) return false;
+			if (strcasecmp(trim($oldName), $newName) <> 0 ) throw new Exception("Page already exists", 2);
 		}
 
+		if ($this->contains_badchars($newName) && $prefs['wiki_badchar_prevent'] == 'y') {
+			throw new Exception("Bad characters", 1);
+		}
+		
 		$tmpName = "TmP".$newName."TmP";
 
 		// 1st rename the page in tiki_pages, using a tmpname inbetween for

@@ -165,7 +165,7 @@
 						{remarksbox type=errors title="{tr}Invalid page name{/tr}"}
 							{tr 0=$page_badchars_display|escape}The page name specified contains unallowed characters. It will not be possible to save the page until those are removed: <strong>%0</strong>{/tr}
 						{/remarksbox}
-						{else}
+					{else}
 						{remarksbox type=tip title="{tr}Tip{/tr}"}
 							{tr 0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
 						{/remarksbox}
