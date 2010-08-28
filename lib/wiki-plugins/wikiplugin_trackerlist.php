@@ -399,7 +399,11 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		global $trklib; require_once("lib/trackers/trackerlib.php");
-		$limit = $fields;
+		if (!empty($fields)) {
+			$limit = $fields;
+		} else {
+			$limit = '';
+		}
 		if (!empty($filterfield) && !empty($limit)) {
 			$limit = array_unique(array_merge($limit, $filterfield));
 		}
