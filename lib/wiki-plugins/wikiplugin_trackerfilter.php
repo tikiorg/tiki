@@ -157,6 +157,12 @@ $(".trackerfilter form").submit( function () {
 	if (empty($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
+	if (empty($export_action)) {
+		$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats, $status);
+		if (!is_array($filters)) {
+			return $filters;
+		}
+	}
 	if (($displayList == 'y' || isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) &&
 				(!isset($_REQUEST['iTrackerFilter']) || $_REQUEST['iTrackerFilter'] == $iTrackerFilter)) {
 	  
@@ -194,12 +200,6 @@ $(".trackerfilter form").submit( function () {
 	}
 
 	$smarty->assign_by_ref('sortchoice', $sortchoice);
-	if (empty($export_action)) {
-		$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats, $status);
-		if (!is_array($filters)) {
-			return $filters;
-		}
-	}
 	$smarty->assign_by_ref('filters', $filters);
 	//echo '<pre>';print_r($filters); echo '</pre>';
 	$smarty->assign_by_ref('trackerId', $trackerId);
@@ -311,7 +311,7 @@ function wikiplugin_trackerFilter_split_filters($filters) {
 	return $list;
 }
 
-function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $formats='', $status='opc') {
+function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$formats, $status='opc') {
 	global $tiki_p_admin_trackers, $smarty, $tikilib;
 	global $trklib;	include_once('lib/trackers/trackerlib.php');
 	$filters = array();
