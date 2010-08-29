@@ -1250,6 +1250,11 @@ div.imgbox {
     background-color: transparent;
 }
 
+/* wikiplugin edit */
+form.wikiplugin_edit div {
+	color: #292929;
+}
+
 /** Wiki tocs **/
 div.tocnav {
 	background: #474747;
