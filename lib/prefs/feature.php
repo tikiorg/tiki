@@ -64,6 +64,7 @@ function prefs_feature_list() {
 			'description' => tra('Database & form generator'),
 			'help' => 'Trackers',
 			'type' => 'flag',
+			'keywords' => 'CRUD',
 		),
 		'feature_forums' => array(
 			'name' => tra('Forums'),
