@@ -814,6 +814,15 @@ a.tikihelp:hover {
 	color: orange;
 }
 
+/** Jquery autocomplete **/
+.ac_even, .ac_odd {
+	color: #292929;
+}
+
+.ac_over {
+	color: white;
+}
+
 /**** Boxes *****/
 /** Modules **/
 
