@@ -789,6 +789,9 @@ function prefs_feature_list() {
 			'perspective' => false,
 			'type' => 'flag',
 			'keywords' => 'sefurl sefurls seo rewrite rules short urls',
+			'dependencies' => array(
+				'wiki_badchar_prevent',
+			),
 		),
 		'feature_sefurl_filter' => array(
 			'name' => tra('Search engine friendly url Postfilter'),
