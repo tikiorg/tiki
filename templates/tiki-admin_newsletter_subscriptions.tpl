@@ -99,8 +99,13 @@
 
 {include file='find.tpl'}
 
+<form method="post" action="tiki-admin_newsletter_subscriptions.php">
+	<input type="hidden" name="nlId" value="{$nlId|escape}" />
 <table class="normal">
 	<tr>
+		<th>
+			{select_all checkbox_names='checked[]'}
+		</th>
 		<th>
 			<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}eMail{/tr} - {tr}User{/tr}</a>
 		</th>
@@ -114,24 +119,40 @@
 	</tr>
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">
-				{if $channels[user].isUser == "y"}{$channels[user].email|userlink}{else}{$channels[user].email|escape}{/if}
+		<tr class="{cycle}">
+			<td style="text-align:center">
+				<input type="checkbox" name="checked[]" value="{$channels[user].code}" {if $smarty.request.checked and in_array($channels[user].code, $smarty.request.checked) }checked="checked"{/if} />
 			</td>
-			<td class="{cycle advance=false}">
+			<td>
+				{if $channels[user].isUser == "y"}
+					{$channels[user].email|userlink}
+				{else}
+					{$channels[user].email|escape}
+				{/if}
+			</td>
+			<td>
 				{if $channels[user].valid == "n"}
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;valid={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email|escape:"url"}" title="{tr}Valid{/tr}">{tr}No{/tr}</a>
 				{else}
 					{tr}Yes{/tr}
 				{/if}
 			</td>
-			<td class="{cycle advance=false}">{$channels[user].subscribed|tiki_short_datetime}</td>
-			<td class="{cycle}">
+			<td>{$channels[user].subscribed|tiki_short_datetime}</td>
+			<td>
 				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}subuser{else}email{/if}={$channels[user].email|escape:"url"}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 			</td>
 		</tr>
 	{/section}
 </table>
+
+{if $channels}
+	<div align="left">
+		{tr}Perform action with checked:{/tr}
+		<input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+	</div>
+{/if}
+
+</form>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 {/tab}
@@ -233,12 +254,14 @@
 				</td>
 			</tr> 	 
 			{if $nl_info.validateAddr eq "y"}
-				<td class="formcolor" width="30%">
-					{tr}Don't send confirmation mails{/tr}
-				</td>
-				<td colspan="2" class="formcolor">
-					<input type="checkbox" name="confirmEmail" />
-				</td>
+				<tr>
+					<td class="formcolor" width="30%">
+						{tr}Don't send confirmation mails{/tr}
+					</td>
+					<td colspan="2" class="formcolor">
+						<input type="checkbox" name="confirmEmail" />
+					</td>
+				</tr>
 			{/if}
 			<tr>
 				<td class="formcolor">&nbsp;</td>

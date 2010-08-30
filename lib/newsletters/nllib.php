@@ -293,10 +293,32 @@ class NlLib extends TikiLib
 		return $return;
 	}
 
-	function remove_newsletter_subscription($nlId, $email, $isUser) {
+	/**
+	 * Removes newsletters subscriptions 
+	 * 
+	 * @param integer $nlId 
+	 * @param string $email 
+	 * @param boolean $isUser 
+	 * @access public
+	 * @return void
+	 */
+	function remove_newsletter_subscription($nlId, $email, $isUser)
+	{
 		$query = "delete from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=? and `isUser`=?";
-		$result = $this->query($query, array((int)$nlId,$email, $isUser),-1, -1, false);
-		/*$this->update_users($nlId);*/
+		$result = $this->query($query, array((int)$nlId, $email, $isUser), -1, -1, false);
+	}
+
+	/**
+	 * Removes newsletters subscriptions with only the code as parameter
+	 * 
+	 * @param string $code 
+	 * @access public
+	 * @return void
+	 */
+	function remove_newsletter_subscription_code($code)
+	{
+		$query = 'delete from `tiki_newsletter_subscriptions` where `code`=?';
+		$result = $this->query($query, array($code), -1, -1, false);
 	}
 
 	function remove_newsletter_group($nlId, $group) {
