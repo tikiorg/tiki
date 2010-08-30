@@ -139,9 +139,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 
 		} else {									// new ckeditor implementation 2010
 
-			//include_once 'lib/tiki_ckeditor.php';
 			if (!isset($params['name'])) { $params['name'] = 'edit'; }
-			//$cked = new TikiCK($params['name']);
 		
 			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 			//// note, this breaks ajax page load via wikitopline edit icon
@@ -149,25 +147,11 @@ function FCKeditor_OnComplete( editorInstance ) {
 			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js');
 			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js');
 		
-//			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-//				$cked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
-//				$cked->Config['autoSaveEditorId'] = $as_id;
-//			}
-			
 			include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
 			$cktools = smarty_function_toolbars($params, $smarty);
 			$cktools = json_encode($cktools);
 			$cktools = substr($cktools, 1, strlen($cktools) - 2);	// remove surrouding [ & ]
 			$cktools = str_replace(']],[[', '],"/",[', $cktools);	// add new row chars - done here so as not to break existing fck
-						
-//			if ($prefs['feature_detect_language'] == 'y') {
-//				$cked->Config['AutoDetectLanguage'] = true;
-//			} else {
-//				$cked->Config['AutoDetectLanguage'] = false;
-//			}
-			//$cked->Config['DefaultLanguage'] = $prefs['language'];
-			//$cked->Config['CustomConfigurationsPath'] = $url_path.'setup_ckeditor.php'.(isset($params['_section']) ? '?section='.urlencode($params['_section']) : '');
-			//$html .= $cked->CreateHtml();
 			
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 			global $tikiroot;
@@ -196,13 +180,37 @@ CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strok
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
 			}
+			
+			// work out current theme/option (surely in tikilib somewhere?)
+			global $tikilib, $tc_theme, $tc_theme_option;
+			$ckstyleoption = '';
+			if (!empty($tc_theme)) {
+				$ckstyle = $tikilib->get_style_path('', '', $tc_theme);
+				if (!empty($tc_theme_option)) {
+					$ckstyleoption = $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
+				}
+			} else {
+				$ckstyle = $tikilib->get_style_path('', '', $prefs['style']);
+				if (!empty($prefs['style_option'])) {
+					$ckstyleoption = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
+				}
+			}
+
 			$headerlib->add_jq_onready('
 $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	toolbar_Tiki: '.$cktools.',
 	toolbar: "Tiki",
 	language: "'.$prefs['language'].'",
 	customConfig: "",
-	autoSaveSelf: "'.$auto_save_referrer.'"		// unique reference for each page set up in ensureReferrer()
+	autoSaveSelf: "'.$auto_save_referrer.'",		// unique reference for each page set up in ensureReferrer()
+	font_names: "' . $prefs['wysiwyg_fonts'] . '",
+	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
+	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
+	contentsCss: ["' . $tikiroot . $ckstyle . '","' . $tikiroot . $ckstyleoption . '"],
+	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
+	defaultLanguage: "' . $prefs['language'] . '",
+	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
+	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
 });
 ', 20);	// after dialog tools init (10)
 

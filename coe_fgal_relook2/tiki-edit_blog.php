@@ -28,7 +28,6 @@ $smarty->assign('title', '');
 $smarty->assign('description', '');
 $smarty->assign('public', 'n');
 $smarty->assign('use_find', 'y');
-$smarty->assign('use_title', 'y');
 $smarty->assign('add_date', 'y');
 $smarty->assign('use_author', 'y');
 $smarty->assign('allow_comments', 'y');
@@ -36,6 +35,7 @@ $smarty->assign('show_avatar', 'n');
 $smarty->assign('show_related', 'n');
 $smarty->assign('related_max', 5);
 $smarty->assign('maxPosts', 10);
+$smarty->assign('use_excerpt', 'n');
 $smarty->assign('creator', $user);
 
 
@@ -67,7 +67,6 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('title', $data["title"]);
 	$smarty->assign('description', $data["description"]);
 	$smarty->assign('public', $data["public"]);
-	$smarty->assign('use_title', $data["use_title"]);
 	$smarty->assign('add_date', $data["add_date"]);
 	$smarty->assign('use_author', $data["use_author"]);
 	$smarty->assign('allow_comments', $data["allow_comments"]);
@@ -76,6 +75,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('related_max',$data["related_max"]);
 	$smarty->assign('use_find', $data["use_find"]);
 	$smarty->assign('maxPosts', $data["maxPosts"]);
+	$smarty->assign('use_excerpt', $data["use_excerpt"]);
 	$smarty->assign('creator', $data["user"]);
 	$smarty->assign('alwaysOwner', $data["always_owner"]);
 
@@ -85,7 +85,7 @@ if (isset($_REQUEST["heading"]) and $tiki_p_edit_templates == 'y') {
 	// Sanitization cleanup
 	$heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["heading"]);
 } elseif (!isset($data["heading"])) {
-	$n = $smarty->get_filename('blog-heading.tpl', 'r');
+	$n = $smarty->get_filename('blog_heading.tpl', 'r');
 	@$fp = fopen($n, 'r');
 	if ($fp) {
 		$heading = fread($fp, filesize($n));
@@ -100,7 +100,7 @@ if (isset($_REQUEST["post_heading"]) and $tiki_p_edit_templates == 'y') {
 	// Sanitization cleanup
 	$post_heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["post_heading"]);
 } elseif (!isset($data["post_heading"])) {
-	$n = $smarty->get_filename('blog-post-heading.tpl', 'r');
+	$n = $smarty->get_filename('blog_post_heading.tpl', 'r');
 	@$fp = fopen($n, 'r');
 	if ($fp) {
 		$post_heading = fread($fp, filesize($n));
@@ -128,11 +128,11 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 		$public = 'n';
 	}
 
-	$use_title = isset($_REQUEST['use_title']) ? 'y' : 'n';
 	$allow_comments = isset($_REQUEST["allow_comments"]) ? 'y' : 'n';
 	$show_avatar = isset($_REQUEST['show_avatar']) ? 'y' : 'n';	
 	$show_related = isset($_REQUEST['show_related']) ? 'y' : 'n';	
 	$related_max = isset($_REQUEST['related_max']) ? $_REQUEST['related_max'] : 5;	
+	$use_excerpt = isset($_REQUEST['use_excerpt']) ? 'y' : 'n';	
 	$use_find = isset($_REQUEST['use_find']) ? 'y' : 'n';
 	$use_author = isset($_REQUEST['use_author']) ? 'y' : 'n';
 	$add_date = isset($_REQUEST['add_date']) ? 'y' : 'n';
@@ -141,8 +141,8 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$bid = $bloglib->replace_blog($_REQUEST["title"],
 	    $_REQUEST["description"], $_REQUEST["creator"], $public,
 	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
-	    $heading, $use_title, $use_author, $add_date, $use_find,
-	    $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max);
+	    $heading, $use_author, $add_date, $use_find,
+	    $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt);
 
 	$cat_type = 'blog';
 	$cat_objid = $bid;
@@ -161,11 +161,11 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('description', $_REQUEST["description"]);
 	$smarty->assign('public', isset($_REQUEST["public"]) ? 'y' : 'n');
 	$smarty->assign('use_find', isset($_REQUEST["use_find"]) ? 'y' : 'n');
-	$smarty->assign('use_title', isset($_REQUEST["use_title"]) ? 'y' : 'n');
 	$smarty->assign('use_author', isset($_REQUEST["use_author"]) ? 'y' : 'n');
 	$smarty->assign('show_avatar', isset($_REQUEST["show_avatar"]) ? 'y' : 'n');
 	$smarty->assign('show_related', isset($_REQUEST["show_related"]) ? 'y' : 'n');
 	$smarty->assign('related_max', isset($_REQUEST['related_max']) ? $_REQUEST['related_max'] : 5);
+	$smarty->assign('use_excerpt', isset($_REQUEST['use_excerpt']) ? 'y' : 'n');
 	$smarty->assign('add_date', isset($_REQUEST["add_date"]) ? 'y' : 'n');
 	$smarty->assign('allow_comments', isset($_REQUEST["allow_comments"]) ? 'y' : 'n');
 	$smarty->assign('maxPosts', $_REQUEST["maxPosts"]);

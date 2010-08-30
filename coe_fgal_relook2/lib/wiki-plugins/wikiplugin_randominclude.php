@@ -6,13 +6,13 @@
 // $Id$
 
 /**
- * INCLUDERANDOM plugin
+ * RANDOMINCLUDE plugin
  * Includes a random wiki page in another.
  *
  * Usage:
- * {INCLUDERANDOM()}{INCLUDERANDOM}
+ * {RANDOMINCLUDE()}{RANDOMINCLUDE}
  *
- * @package Tikiwiki
+ * @package Tiki
  * @subpackage TikiPlugins
  * @version $Revision: 1.00 $
  */
@@ -24,7 +24,7 @@ function wikiplugin_randominclude_help() {
 function wikiplugin_randominclude_info() {
 	return array(
 		'name' => tra('RandomInclude'),
-		'documentation' => 'PluginIncludeRandom',
+		'documentation' => 'PluginRandomInclude',
 		'description' => tra('Include a random page\'s content.'),
 		'prefs' => array('wikiplugin_randominclude'),
 		'params' => array(),

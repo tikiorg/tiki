@@ -202,14 +202,7 @@ $smarty->assign('nb_included', count($included_n));
 $pages = $nllib->list_newsletter_pages($_REQUEST["nlId"], 0, -1);
 $smarty->assign('pages', $pages['data']);
 $smarty->assign('nb_pages', $pages['cant']);
-// Fill array with possible number of questions per page
-$freqs = array();
-for ($i = 0; $i < 90; $i++) {
-	$aux["i"] = $i;
-	$aux["t"] = $i * 24 * 60 * 60;
-	$freqs[] = $aux;
-}
-$smarty->assign('freqs', $freqs);
+
 $groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('groups', $groups);
 $users = $userlib->list_all_users();
@@ -218,8 +211,10 @@ $newsletters = $nllib->list_newsletters(0, -1, "created_desc", false, '', '', 'n
 $smarty->assign_by_ref('newsletters', $newsletters['data']);
 include_once ('tiki-section_options.php');
 ask_ticket('admin-nl-subsriptions');
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 // Display the template
 $smarty->assign('mid', 'tiki-admin_newsletter_subscriptions.tpl');
 $smarty->display("tiki.tpl");

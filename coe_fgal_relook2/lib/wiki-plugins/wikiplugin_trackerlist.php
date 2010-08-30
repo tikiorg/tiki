@@ -169,6 +169,7 @@ function wikiplugin_trackerlist_info() {
 				'required' => false,
 				'name' => tra('Checkbox'),
 				'description' => tra('Adds a checkbox on each line to be able to do an action.') . '<br />' .
+								tra('e.g. fieldId/postName/Title/Submit/ActionUrl/tpl/radio|dropdown') . '<br />' .
 								tra('More info at http://doc.tiki.org/PluginTrackerList#checkbox'),
 				'advanced' => true,
 			),
@@ -345,6 +346,13 @@ function wikiplugin_trackerlist_info() {
 				'filter' => 'text',
 				'default' => ''
 			),
+			'calendardelta' => array(
+				'required' => false,
+				'name' => tra('Calendar delta'),
+				'description' => '+month|-month|+bimester|-bimester',
+				'filter' => 'text',
+				'default' => ''
+			),
 		),
 	);
 }
@@ -356,7 +364,7 @@ function wikiplugin_trackerlist($data, $params) {
 	static $iTRACKERLIST = 0;
 	++$iTRACKERLIST;
 	$smarty->assign('iTRACKERLIST', $iTRACKERLIST);
-	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n', 'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'');
+	$default = array('calendarfielddate' => '', 'wiki' => '', 'calendarviewmode' => 'month', 'calendarstickypopup' => 'n', 'calendarbeginmonth' => 'y', 'calendarviewnavbar' => 'y', 'calendartitle'=>'', 'calendardelta' => '');
 	$params = array_merge($default, $params);
 	
 	extract ($params,EXTR_SKIP);
@@ -391,7 +399,11 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		global $trklib; require_once("lib/trackers/trackerlib.php");
-		$limit = $fields;
+		if (!empty($fields)) {
+			$limit = $fields;
+		} else {
+			$limit = '';
+		}
 		if (!empty($filterfield) && !empty($limit)) {
 			$limit = array_unique(array_merge($limit, $filterfield));
 		}
@@ -619,7 +631,9 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->right_delimiter = $rdelim;
 
 		if (isset($checkbox)) {
+			$check = array('ix' => -1, 'type' => 'checkbox');
 			$cb = explode('/', $checkbox);
+			
 			if (isset($cb[0]))
 				$check['fieldId'] = $cb[0];
 			if (isset($cb[1]))
@@ -632,10 +646,13 @@ function wikiplugin_trackerlist($data, $params) {
 				$check['action'] = $cb[4];
 			if (isset($cb[5]))
 				$check['tpl'] = $cb[5];
-			if (isset($cb[6]) && $cb[6] == 'radio')
+			if (isset($cb[6]) && $cb[6] == 'radio') {
 				$check['radio'] = 'y';
+				$check['type'] = 'radio';
+			}
 			if (isset($cb[6]) && $cb[6] == 'dropdown')
-				$check['dropdown'] = 'y';
+				$check['dropdown'] = 'y';				// is this actually used?
+			
 			$smarty->assign_by_ref('checkbox', $check);
 		}	
 
@@ -942,6 +959,13 @@ function wikiplugin_trackerlist($data, $params) {
 			global $calendarlib; include_once('lib/calendar/calendarlib.php');
 			$focusDate = empty($_REQUEST['todate'])? $tikilib->now: $_REQUEST['todate'];
 			$focus = $calendarlib->infoDate($focusDate);
+			if (!empty($calendardelta)) {
+				if ($calendardelta[0] == '-') {
+					$focus = $calendarlib->focusPrevious($focus, str_replace('-', '', $calendardelta));
+				} else {
+					$focus = $calendarlib->focusNext($focus, str_replace('+', '', $calendardelta));
+				}
+			}
 			$calendarlib->focusStartEnd($focus, $calendarviewmode, $calendarbeginmonth, $startPeriod, $startNextPeriod);
 			$cell = $calendarlib->getTableViewCells($startPeriod, $startNextPeriod, $calendarviewmode, $calendarlib->firstDayofWeek($user));
 			$filterfield[] = $calendarfielddate[0];
@@ -1032,7 +1056,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$calendarlib->getDayNames($calendarlib->firstDayofWeek($user), $daysnames, $daysnames_abr);
 				$smarty->assign('daysnames_abr', $daysnames_abr);
 				$smarty->assign('focusmonth', TikiLib::date_format("%m", $focusDate));
-				$smarty->assign('module_params', array('viewmode'=>'n', 'showaction'=>'n', 'notitle'=>empty($calendartitle)?'y':'n', 'title'=>$calendartitle, 'viewnavbar' => $calendarviewnavbar));
+				$smarty->assign('module_params', array('viewmode'=>'n', 'showaction'=>'n', 'notitle'=>empty($calendartitle)?'y':'n', 'title'=>$calendartitle, 'viewnavbar' => $calendarviewnavbar, 'decorations'=> empty($calendartitle)?'n':'y'));
 				$smarty->assign('tpl_module_title', tra($calendartitle));
 				$smarty->assign('now', $tikilib->now);
 				$smarty->assign('calendarViewMode', $calendarviewmode);
@@ -1142,7 +1166,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$save_fc = $smarty->force_compile;
 					$smarty->force_compile = true;
 				}
-				$str = $smarty->fetch('tiki-plugin_trackerlist.tpl');
+				$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');
 				if (!empty($wiki)) {
 					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
 				}

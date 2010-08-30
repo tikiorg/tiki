@@ -1,4 +1,4 @@
-{title}{tr}Edit or export languages{/tr}{/title}
+{title}{tr}Edit or export/import languages{/tr}{/title}
 
 <div class="navbar">
 	{if $interactive_translation_mode eq 'on'}

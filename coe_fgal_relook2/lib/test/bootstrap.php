@@ -10,7 +10,7 @@ error_reporting( CUSTOM_ERROR_LEVEL );
 $paths = array(
 	ini_get('include_path'),
 	realpath('.'),
-	realpath('../core/lib'),
+	realpath('../core'),
 	realpath('../..'),
 	realpath('core'),
 	realpath('../pear'),

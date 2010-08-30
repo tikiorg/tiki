@@ -1,10 +1,8 @@
 {* $Id$ *}
 <div class="clearfix postbody-title">
-	{if $blog_data.use_title eq 'y'}
-		<div class="title">
-			<h2>{$post_info.title|escape}</h2>
-		</div>
-	{/if}
+	<div class="title">
+		<h2>{$post_info.title|escape}</h2>
+	</div>
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 		{if $tags.data|@count >0}
 			<div class="freetaglist">

@@ -39,8 +39,8 @@ session_set_cookie_params($session_params['lifetime'], $tikiroot);
 unset($session_params);
 session_start();
 
-require_once 'lib/core/lib/TikiDb/Adodb.php';
-require_once 'lib/core/lib/TikiDb/Pdo.php';
+require_once 'lib/core/TikiDb/Adodb.php';
+require_once 'lib/core/TikiDb/Pdo.php';
 
 /**
  * 

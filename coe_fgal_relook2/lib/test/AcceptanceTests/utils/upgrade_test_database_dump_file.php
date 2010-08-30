@@ -24,7 +24,7 @@ $test_TikiAcceptanceTestDBRestorer->restoreDB($argv[1]);
 $local_php = 'db/local.php';
 
 require_once('installer/installlib.php');
-require_once('lib/core/lib/TikiDb.php');
+require_once('lib/core/TikiDb.php');
 include_once ('lib/adodb/adodb.inc.php');
 
 include $local_php;

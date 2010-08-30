@@ -430,11 +430,13 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 					count = 0;
 					jQuery(this).find('td').each(function(){
 						count++;
-						
-						var id = jQuery(this).attr('id');
-						var txt = jQuery.trim(jQuery(this).text());
+						var td = jQuery(this);
+						var id = td.attr('id');
+						var txt = jQuery.trim(td.text());
 						var pos = id.search(/cell_c/i);
 						var pos2 = id.search(/_r/i);
+						var stl = td.attr('style'); //we don't use 'style' or 'class', they are reserved variables in IE 
+						var cl = td.attr('class');
 						
 						if (pos !== -1 && pos2 !== -1) {
 							cur_column = parseInt(id.substr(pos+6, pos2-(pos+6)), 10);
@@ -450,16 +452,24 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 							
 							doc.data['r'+cur_row]['c'+cur_column].value = txt;
 							
-							formula = jQuery(this).attr('formula');
+							if (stl) {
+								doc.data['r'+cur_row]['c'+cur_column].stl = stl; 
+							}
+							
+							if (cl) {
+								doc.data['r'+cur_row]['c'+cur_column].cl = cl; 
+							}
+							
+							formula = td.attr('formula');
 							if (formula !== undefined) {
 								doc.data['r'+cur_row]['c'+cur_column].formula = formula;
 							}
 							
-							var sp = jQuery(this).attr('colSpan');
+							var sp = td.attr('colSpan');
 							if (sp > 1) {
 								doc.data['r'+cur_row]['c'+cur_column].width = sp;
 							}
-							sp = jQuery(this).attr('rowSpan');	// TODO in .sheet
+							sp = td.attr('rowSpan');	// TODO in .sheet
 							if (sp > 1) {
 								doc.data['r'+cur_row]['c'+cur_column].height = sp;
 							}
@@ -919,7 +929,9 @@ $.fn.tiki = function(func, type, options) {
 							urlTheme: 		sheet_theme,
 							urlMenu: 		"lib/jquery_tiki/jquery.sheet/menu.html",	/* not working currently due to missing menu plugin */
 							urlGet: "",
-							buildSheet: true
+							buildSheet: true,
+							autoFiller: true,
+							colMargin: 20 //beefed up colMargin because the default size was too small for font
 				}, options);
 				
 		 		return this.each(function() {

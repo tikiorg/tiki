@@ -1150,7 +1150,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 	} else {
 		$url = $wikilib->sefurl($page);
 	}
-	if ($prefs['feature_best_language'] === 'y' || isset($_REQUEST['save'])) {
+	if ($prefs['feature_multilingual'] === 'y' && ($prefs['feature_best_language'] === 'y' || isset($_REQUEST['save']))) {
 		$url .= '&no_bl=y';
 	}
 	$_SESSION['saved_msg'] = $_REQUEST["page"];

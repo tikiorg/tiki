@@ -912,7 +912,7 @@ class ToolbarDialog extends Toolbar
 
 		case 'find':
 			$icon = tra('pics/icons/find.png');
-			$wysiwyg = '';
+			$wysiwyg = 'Find';
 			$label = tra('Find Text');
 			$list = array('Find Text',
 						'<label>Search:</label>',
@@ -929,7 +929,7 @@ class ToolbarDialog extends Toolbar
 
 		case 'replace':
 			$icon = tra('pics/icons/text_replace.png');
-			$wysiwyg = '';
+			$wysiwyg = 'Replace';
 			$label = tra('Text Replace');
 			$tool_prefs[] = 'feature_wiki_replace';
 			

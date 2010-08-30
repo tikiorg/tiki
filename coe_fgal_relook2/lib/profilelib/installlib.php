@@ -1369,7 +1369,6 @@ class Tiki_Profile_InstallHandler_Blog extends Tiki_Profile_InstallHandler // {{
 			'max_posts' => 10,
 			'heading' => '',
 			'post_heading' => '',
-			'use_title' => 'y',
 			'use_find' => 'y',
 			'comments' => 'n',
 			'show_avatar' => 'n',
@@ -1403,7 +1402,7 @@ class Tiki_Profile_InstallHandler_Blog extends Tiki_Profile_InstallHandler // {{
 
 		$this->replaceReferences( $data );
 
-		$blogId = $bloglib->replace_blog( $data['title'], $data['description'], $data['user'], $data['public'], $data['max_posts'], 0, $data['heading'], $data['use_title'], $data['use_author'], $data['add_date'], $data['use_find'], $data['allow_comments'], $data['show_avatar'], $data['post_heading'] );
+		$blogId = $bloglib->replace_blog( $data['title'], $data['description'], $data['user'], $data['public'], $data['max_posts'], 0, $data['heading'], $data['use_author'], $data['add_date'], $data['use_find'], $data['allow_comments'], $data['show_avatar'], $data['post_heading'] );
 		
 		return $blogId;
 	}

@@ -75,6 +75,15 @@ function wikiplugin_datachannel_info()
 				'description' => '(y | n) '.tra('Be careful, if debug is on, the page will not be refreshed and previous modules can be obsolete'),
 				'default' => 'n',
 				'filter' => 'word',
+				'advanced' => true,
+			),
+			'array_values' => array(
+				'required' => false,
+				'name' => tra('Multiple values'),
+				'description' => '(y | n) '.tra('Accept arrays of multiple values in the POST. e.g. itemId[]=42&itemId=43 etc.'),
+				'default' => 'n',
+				'filter' => 'alpha',
+				'advanced' => true,
 			),
 		),
 	);
@@ -92,18 +101,24 @@ function wikiplugin_datachannel( $data, $params )
 	$lines = array_map( 'trim', $lines );
 	$lines = array_filter( $lines );
 	$js = '';
-
+	if (!isset($params['array_values'])) { $params['array_values'] = 'n'; }
+	
 	foreach( $lines as $line ) {
 		$parts = explode( ',', $line, 2 );
 
 		if( count($parts) == 2 ) {
 			if (strpos( $parts[1], 'external') === 0) {	// e.g. "fieldid,external=fieldname"
-				$moreparts = explode('=', trim($parts[1]));
+				$moreparts = explode('=', trim($parts[1]), 2);
 				if (count($moreparts) < 2) {
 					$moreparts[1] = $parts[0];	// no fieldname supplied so use same as fieldid
 				}
 				$fields[ $parts[0] ] = $moreparts[0];
-				$js .= "\n".'$("input[name=\'' . $parts[0] . '\']").val( unescape($("#' . $moreparts[1] . '").val()));';
+				if ($params['array_values'] === 'y' && preg_match('/[\[\]\.#\=]/', $moreparts[1])) {	// check for [ ] = or . which would be a jQuery selector
+					// might select multiple inputs
+					$js .= "\n".'$("input[name=\'' . $parts[0] . '\']").val( unescape($("' . $moreparts[1] . '").serialize()));';
+				} else {	// otherwise it's an id
+					$js .= "\n".'$("input[name=\'' . $parts[0] . '\']").val( unescape($("#' . $moreparts[1] . '").val()));';
+				}
 				$inputfields[ $parts[0] ] = 'external';
 			} else {
 				$fields[ $parts[0] ] = $parts[1];
@@ -126,9 +141,63 @@ function wikiplugin_datachannel( $data, $params )
 			&& $_POST['datachannel_execution'] == $executionId ) {
 
 			$input = array_intersect_key( $_POST, $inputfields );
+			
+			$itemIds = array();					// process possible arrays in post
+			if ($params['array_values'] === 'y') {
+				foreach($input as $key => $val) {
+					if (!empty($val)) {
+						parse_str($val, $vals);
+						if (is_array($vals)) {							// serialized collection of inputs
+							$arr = array();
+							if ($key == 'itemId') {
+								foreach($vals as $v) {					// itemId[x,y,z]
+									if (is_array($v)) {
+										$arr = array_merge($arr, $v);
+									}
+								}
+								$itemIds = $arr;
+							} else {
+								foreach($vals as $v) {					// fieldname[x=>a,y=>b,z=>c]
+									if (is_array($v)) {
+										foreach($v as $k => $kv) {
+											if (in_array($k, $itemIds)) {	// check if sent in itemIds array
+												$arr[] = $kv;				// (e.g. from trackerlist checkboxes)
+											}
+										}
+									} else {
+										$arr = $val;	// not an array, so use the initial string val
+									}
+								}
+							}
+							$input[$key] = $arr;
+						}
+					}
+				}
+			}
+			$inputs = array();
+			if ($params['array_values'] === 'y' && !empty($itemIds)) {
+				$cid = count($itemIds);
+				for($i = 0; $i < $cid; $i++) {	// reorganise array
+					$arr = array();
+					foreach(array_keys($input) as $k) {
+						if (isset($input[$k]) && is_array($input[$k])) {
+							$arr[$k] = $input[$k][$i];
+						} else {
+							$arr[$k] = $input[$k];
+						}
+					}
+					$inputs[] = $arr;
+				}
+			} else {
+				$inputs[] = $input;
+			}
 			$static = $params;
-			unset( $static['channel'] );
-
+			$unsets = wikiplugin_datachannel_info();	// get defined params
+			$unsets = array_keys($unsets['params']);
+			foreach ($unsets as $un) {					// remove defined params leaving user supplied ones
+				unset( $static[$un] );
+			}
+			
 			if (!empty($params['price'])) {
 				global $paymentlib; require_once 'lib/payment/paymentlib.php';
 				$desc = empty($params['paymentlabel'])? tr( 'Datachannel:', $prefs['site_language'] ) . ' ' . $params['channel'] : $params['paymentlabel'];
@@ -140,27 +209,33 @@ function wikiplugin_datachannel( $data, $params )
 				$id = $paymentlib->request_payment( $desc, $params['price'], $prefs['payment_default_delay'] );
 				$paymentlib->register_behavior( $id, 'complete', 'execute_datachannel', array( $data, $params, $posts, $executionId ) );
 				require_once 'lib/smarty_tiki/function.payment.php';
-			return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
 				
+				return '^~np~' . smarty_function_payment( array( 'id' => $id ), $smarty ) . '~/np~^';
 			}
 
-			$userInput = array_merge( $input, $static );
-
-			Tiki_Profile::useUnicityPrefix(uniqid());
-			$installer = new Tiki_Profile_Installer;
-			//TODO: What is the following line for? Future feature to limit capabilities of data channels?
-			//$installer->limitGlobalPreferences( array() );
-
-			$profiles = $config->getProfiles( array( $params['channel'] ) );
-			$profile = reset($profiles);
-
-			$installer->setUserData( $userInput );
-			if (empty($params['debug']) || $params['debug'] != 'y') {
-				$installer->setDebug();
+			foreach($inputs as $input) {
+				$userInput = array_merge( $input, $static );
+	
+				Tiki_Profile::useUnicityPrefix(uniqid());
+				$profiles = $config->getProfiles( array( $params['channel'] ) );
+				$profile = reset($profiles);
+				$profile->removeSymbols();
+	
+				Tiki_Profile::useUnicityPrefix(uniqid());
+				$installer = new Tiki_Profile_Installer;
+				//TODO: What is the following line for? Future feature to limit capabilities of data channels?
+				//$installer->limitGlobalPreferences( array() );
+				// jb tiki6: looks like if set to an empty array it would prevent any prefs being set
+				// i guess the idea is to be able to restrict the settable prefs to only harmless ones for security
+	
+				$installer->setUserData( $userInput );
+				if (!empty($params['debug']) && $params['debug'] === 'y') {
+					$installer->setDebug();
+				}
+				$params['emptyCache'] = isset($params['emptyCache']) ? $params['emptyCache'] : 'all';
+				$installer->install( $profile, $params['emptyCache'] );
 			}
-			$params['emptyCache'] = isset($params['emptyCache']) ? $params['emptyCache'] : 'all';
-			$installer->install( $profile, $params['emptyCache'] );
-
+			
 			if (empty($params['returnURI'])) { $params['returnURI'] = $_SERVER['HTTP_REFERER']; }	// default to return to same page
 			if (empty($params['debug']) || $params['debug'] != 'y') {
 				header( 'Location: ' . $params['returnURI'] );
@@ -173,8 +248,8 @@ function wikiplugin_datachannel( $data, $params )
 		$smarty->assign( 'form_class_attr', !empty($params['class']) ? ' class="' . $params['class'] . '"' : '');
 		
 		if (!empty($js)) {
-			$headerlib->add_js( 'function datachannel_form_submit' . $execution .'() {' . $js .'return true;}');
-			$smarty->assign( 'datachannel_form_onsubmit', ' onsubmit="return datachannel_form_submit' . $execution .'()"' );
+			$headerlib->add_js( "function datachannel_form_submit{$execution}() {{$js}\nreturn true;\n}");
+			$smarty->assign( 'datachannel_form_onsubmit', ' onsubmit="return datachannel_form_submit' . $execution .'();"' );
 		} else {
 			$smarty->assign( 'datachannel_form_onsubmit', '');
 		}

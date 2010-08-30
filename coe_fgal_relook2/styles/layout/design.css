@@ -693,15 +693,15 @@ small.description {
 	display: block;
 }
 
-body.tiki_blogs .post .title {
+/*body.tiki_blogs*/ .post .title {
 	margin-top: 0;
 }
 
-body.tiki_blogs .post .postfooter {
+/*body.tiki_blogs .post*/ .postfooter {
 	margin-bottom: 2em;
 }
 
-body.tiki_blogs div.author_info {
+/*body.tiki_blogs div*/.author_info {
 	padding: 5px 0px 15px 0px;
 }
 

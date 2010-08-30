@@ -88,7 +88,7 @@ array_unshift($inputConfiguration,array(
 
 require_once('lib/init/initlib.php');
 TikiInit::prependIncludePath($tikipath.'lib/pear');
-TikiInit::appendIncludePath($tikipath.'lib/core/lib');
+TikiInit::appendIncludePath($tikipath.'lib/core');
 TikiInit::appendIncludePath($tikipath);
-require_once('lib/core/lib/DeclFilter.php');
-require_once('lib/core/lib/JitFilter.php');
+require_once('lib/core/DeclFilter.php');
+require_once('lib/core/JitFilter.php');

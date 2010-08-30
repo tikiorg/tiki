@@ -222,7 +222,7 @@ class WikiRenderer
 			return;
 
 		include_once('lib/multilingual/multilinguallib.php');
-		require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
+		require_once('lib/core/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
 		
 		if( !empty($this->info['lang'])) { 
 			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);

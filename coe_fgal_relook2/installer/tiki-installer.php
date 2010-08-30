@@ -853,7 +853,7 @@ if ($install_step == '2') {
 			}
 
 			// check email address format
-			include_once('lib/core/lib/Zend/Validate/EmailAddress.php');
+			include_once('lib/core/Zend/Validate/EmailAddress.php');
 			$validator = new Zend_Validate_EmailAddress();
 			if (!$validator->isValid($email_test_to)) {
 				$smarty->assign('email_test_err', tra('Email address not valid, test mail not sent'));

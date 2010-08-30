@@ -25,7 +25,7 @@
 	{if count($uploads) > 0}
 		{button href="#upload" _text="{tr}Upload File{/tr}"}
 	{/if}
-	{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}" _ajax="n"}{/if}
+	{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}" _ajax="n"}{else}{button galleryId=$galleryId href="" _text="{tr}Simple mode{/tr}" _ajax="n"}{/if}
 </div>
 {/if}
 
@@ -191,17 +191,11 @@
 				<input type="hidden" name="galleryId" value="{$galleryId}"/>
 			{/if}
 		{/if}
-		{if $tiki_p_admin_file_galleries eq 'y'}
-			<tr><td>
-				<label for="user">{tr}Creator:{/tr}</label>
-			</td><td width="80%">
-				<select id="user" name="user[]">
-				{section name=ix loop=$users}
-					<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username}</option>
-				{/section}
-				</select>
-			</td></tr>
-		{/if}
+		<tr><td>
+			<label for="user">{tr}Creator:{/tr}</label>
+		</td><td width="80%">
+			{user_selector id='user' name='user' editable=$tiki_p_admin_file_galleries}
+		</td></tr>
 
 		{if $prefs.feature_file_galleries_author eq 'y'}
 			<tr><td>

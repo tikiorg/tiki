@@ -1,10 +1,8 @@
 {* $Id$ *}
 <div class="clearfix postbody-title">
-	{if $use_title eq 'y'}
-		<div class="title"> {* because used in forums, but I don't know purpose *}
-			<h2><a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{$listpages[ix].title|escape}</a></h2>
-		</div>
-	{/if}
+	<div class="title"> {* because used in forums, but I don't know purpose *}
+		<h2><a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{$listpages[ix].title|escape}</a></h2>
+	</div>
 
 	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 		{if $listpages[ix].freetags.data|@count >0}

@@ -134,7 +134,7 @@ class RSSLib extends TikiDb_Bridge
 		, $fromcache=false
 	) {
 		global $tikilib, $tiki_p_admin, $prefs, $userlib, $prefs, $smarty;
-		require_once('lib/core/lib/Zend/Feed/Writer/Feed.php');
+		require_once('lib/core/Zend/Feed/Writer/Feed.php');
 
 		// both title and description fields cannot be null
 		if (empty($title) || empty($desc)) {

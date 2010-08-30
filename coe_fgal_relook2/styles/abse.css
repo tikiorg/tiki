@@ -455,6 +455,14 @@ a.flip:hover,
 .tellafriend {margin-bottom: 4px}
 
 /****** Misc. Global Classes (layout and style) ****/
+/** Jquery autocomplete **/
+.ac_even, .ac_odd {
+	color: #415D44;
+}
+
+.ac_over {
+	color: white;
+}
 
 /***** Boxes *****/
 /** Modules **/

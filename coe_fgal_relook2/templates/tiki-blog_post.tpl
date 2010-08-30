@@ -1,6 +1,10 @@
 {title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}New Post{/tr}{/if}{if !empty($blog_data.title)} - {$blog_data.title|escape}{/if}{/title}
 
 <div class="navbar">
+	{if $postId > 0}
+		{button href=$postId|sefurl:blogpost _text="{tr}View post{/tr}"}
+	{/if}
+
 	{if $blogId gt 0 }
 		{assign var=thisblog value=$blogId|sefurl:blog}
 		{button href=$thisblog _text="{tr}View Blog{/tr}"}
@@ -58,6 +62,17 @@
 					{textarea id='blogedit' class="wikiedit" name="data"}{$data}{/textarea}
 				</td>
 			</tr>
+
+			{if $blog_data.use_excerpt eq 'y'}
+				<tr>
+					<td class="editblogform">
+						{tr}Excerpt:{/tr}
+					</td>
+					<td class="editblogform">
+						{textarea id='post_excerpt' class="wikiedit" name="excerpt"}{$post_info.excerpt}{/textarea}
+					</td>
+				</tr>
+			{/if}
 
 			{if $postId > 0 && $wysiwyg ne 'y'}
 				{if count($post_images) > 0}

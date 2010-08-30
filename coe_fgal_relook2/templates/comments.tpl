@@ -360,7 +360,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					<td class="formcolor">
 						<label for="anonymous_website">{tr}Website{/tr}</label>
 					</td>
-					<td class="formcolor"><input type="text" size="30" id="anonymous_website" name="anonymous_website"  value="{$comment_preview_data.website|escape}" /></td>
+					<td class="formcolor"><input type="text" size="30" id="anonymous_website" name="anonymous_website"  value="{if !empty($comment_preview_data.website)}{$comment_preview_data.website|escape}{else}http://{/if}" /></td>
 				</tr>
 			{/if}
 		{/if}

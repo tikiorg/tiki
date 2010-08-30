@@ -354,12 +354,27 @@ class EditLib
 						case "code": $src .= '-+'; $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
 						case "dd": $src .= ':'; $p['stack'][] = array('tag' => 'dd', 'string' => "\n"); break;
 						case "dt": $src .= ';'; $p['stack'][] = array('tag' => 'dt', 'string' => ''); break;
-						case "h1": $src .= $this->startNewLine($src) . "!"; $p['stack'][] = array('tag' => 'h1', 'string' => "\n"); break;
-						case "h2": $src .= $this->startNewLine($src) . "!!"; $p['stack'][] = array('tag' => 'h2', 'string' => "\n"); break;
-						case "h3": $src .= $this->startNewLine($src) . "!!!"; $p['stack'][] = array('tag' => 'h3', 'string' => "\n"); break;
-						case "h4": $src .= $this->startNewLine($src) . "!!!!"; $p['stack'][] = array('tag' => 'h4', 'string' => "\n"); break;
-						case "h5": $src .= $this->startNewLine($src) . "!!!!!"; $p['stack'][] = array('tag' => 'h5', 'string' => "\n"); break;
-						case "h6": $src .= $this->startNewLine($src) . "!!!!!!"; $p['stack'][] = array('tag' => 'h6', 'string' => "\n"); break;
+						
+						case "h1":
+						case "h2":
+						case "h3":
+						case "h4":
+						case "h5":
+						case "h6":
+							$hlevel = (int) $c[$i]["data"]["name"]{1};
+							if (isset($c[$i]['pars']['style']['value']) && strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
+								if ($prefs['feature_use_three_colon_centertag'] == 'y') {
+									$src .= $this->startNewLine($src) . str_repeat('!', $hlevel) . ':::';
+									$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n");
+								} else {
+									$src .= $this->startNewLine($src) . str_repeat('!', $hlevel) . '::';
+									$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n");
+								}
+							} else {	// normal para or div
+								$src .= $this->startNewLine($src) . str_repeat('!', $hlevel);
+								$p['stack'][] = array('tag' => $c[$i]["data"]["name"], 'string' => "\n");
+							}
+							break;
 						case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
 						case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
 						case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}"); break;

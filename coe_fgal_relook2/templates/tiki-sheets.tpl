@@ -29,14 +29,10 @@
 <tr><td class="formcolor">{tr}Footer Rows{/tr}:</td><td class="formcolor"><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Wiki Parse Values{/tr}:</td><td class="formcolor"><input type="checkbox" name="parseValues"{if $parseValues eq 'y'} checked="checked"{/if}/></td></tr>
 {include file='categorize.tpl'}
-{if $tiki_p_admin eq 'y' or $tiki_p_admin_sheet eq 'y'}
 <tr><td class="formcolor">{tr}Creator{/tr}:</td><td class="formcolor">
-		<select name="creator">
-		<option value=""></option>
-		{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login} selected="selected"{/if}>{$users[ix].login|username}</option>{/section}
-		</select>
+	{user_selector name="creator" editable=$tiki_p_admin_sheet}
 </td></tr>
-{/if}
+
 <tr><td class="formcolor">{tr}Parent SheetId{/tr}:</td><td class="formcolor">
 		<select name="parentSheetId">
 		<option value="">{tr}None{/tr}</option>

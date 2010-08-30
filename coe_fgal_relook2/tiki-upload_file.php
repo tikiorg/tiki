@@ -515,10 +515,6 @@ if (empty($_REQUEST['fileId'])) {
 	$galleries['data'] = Perms::filter(array('file gallery'), 'object', $galleries['data'], array('object'=>'id'), 'upload_files');
 	$smarty->assign_by_ref('galleries', $galleries["data"]);
 }
-if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
-	$users = $tikilib->list_users(0, -1, 'login_asc', '', false);
-	$smarty->assign_by_ref('users', $users['data']);
-}
 if ($prefs['fgal_limit_hits_per_file'] == 'y') {
 	$smarty->assign('hit_limit', $filegallib->get_download_limit($_REQUEST['fileId']));
 }

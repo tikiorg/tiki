@@ -23,7 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // * shared functions (marked as /*shared*/) are functions that are
 //   called from Tiki modules.
 
-require_once('lib/core/lib/TikiDb/Bridge.php');
+require_once('lib/core/TikiDb/Bridge.php');
 
 class TikiLib extends TikiDb_Bridge
 {
@@ -160,11 +160,11 @@ class TikiLib extends TikiDb_Bridge
 					require_once ('lib/adodb/adodb.inc.php');
 					$dbsqlplugin = ADONewConnection($dbdriver);
 					if( $dbsqlplugin->NConnect( $dbhost, $dbuserid, $dbpassword, $database ) ) {
-						require_once ('lib/core/lib/TikiDb/Adodb.php');
+						require_once ('lib/core/TikiDb/Adodb.php');
 						$connectionMap[$name] = new TikiDb_AdoDb( $dbsqlplugin );
 					}
 				} else {
-					require_once ('lib/core/lib/TikiDb/Pdo.php');
+					require_once ('lib/core/TikiDb/Pdo.php');
 					$dbsqlplugin = new PDO("$dbdriver:host=$dbhost;dbname=$database", $dbuserid, $dbpassword);
 					$connectionMap[$name] = new TikiDb_Pdo( $dbsqlplugin );
 				}
@@ -5094,7 +5094,7 @@ class TikiLib extends TikiDb_Bridge
 					$missing[] = $pref;
 		
 		if( count( $missing ) > 0 ) {
-			require_once 'lib/core/lib/WikiParser/PluginOutput.php';
+			require_once 'lib/core/WikiParser/PluginOutput.php';
 			$output = WikiParser_PluginOutput::disabled( $name, $missing );
 			return false;
 		}
@@ -5295,7 +5295,7 @@ class TikiLib extends TikiDb_Bridge
 			$trklib->replace_pretty_tracker_refs($args);
 		}
 		
-		require_once 'lib/core/lib/WikiParser/PluginOutput.php';
+		require_once 'lib/core/WikiParser/PluginOutput.php';
 
 		$func_name = 'wikiplugin_' . $name;
 		
@@ -5326,7 +5326,7 @@ class TikiLib extends TikiDb_Bridge
 			if ($prefs['wysiwyg_htmltowiki'] === 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] === 'y' ) {
 				return '<span class="cke_tiki_plugin" plugin="' . $name .
 						'" args="' . urlencode(http_build_query($args)) .
-						'" body="' . str_replace('"', '\"', $data) . '">'.
+						'" body="~np~' . str_replace('"', '\"', $data) . '~/np~">'.
 						'~np~' . $fck_editor_plugin . '~/np~<div style="display:none;">'.$plugin_result.'</div></span>';
 			} else {
 				return $plugin_result;
@@ -6033,82 +6033,6 @@ class TikiLib extends TikiDb_Bridge
 		// Handle double square brackets.  -rlpowell
 		$data = str_replace( "[[", "[", $data );
 
-		// *****
-		// This section handles external links of the form [url] and such.
-		// *****
-
-		$links = $this->get_links($data);
-		$notcachedlinks = $this->get_links_nocache($data);
-		$cachedlinks = array_diff($links, $notcachedlinks);
-		$this->cache_links($cachedlinks);
-
-		// Note that there're links that are replaced
-		foreach ($links as $link) {
-			$target = '';
-			$class = 'class="wiki"';
-			$ext_icon = '';
-			$rel='';
-
-			if ($prefs['popupLinks'] == 'y') {
-				$target = 'target="_blank"';
-			}
-
-			if (!isset($_SERVER['SERVER_NAME']) && isset($_SERVER['HTTP_HOST'])) {
-				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
-			}
-			if (empty($_SERVER['SERVER_NAME']) || strstr($link, $_SERVER["SERVER_NAME"]) || !strstr($link, '://')) {
-				$target = '';
-			} else {
-				$class = 'class="wiki external"';
-				if ($prefs['feature_wiki_ext_icon'] == 'y' && !$options['suppress_icons']) {
-					global $smarty;
-					include_once('lib/smarty_tiki/function.icon.php');
-					$ext_icon = smarty_function_icon(array('_id'=>'external_link', 'alt'=>tra('(external link)'), '_class' => 'externallink', '_extension' => 'gif', '_defaultdir' => 'img/icons', 'width' => 15, 'height' => 14), $smarty);
-				}
-				$rel='external';
-				if ($prefs['feature_wiki_ext_rel_nofollow'] == 'y') {
-					$rel .= ' nofollow';
-				}
-			}
-
-			// The (?<!\[) stuff below is to give users an easy way to
-			// enter square brackets in their output; things like [[foo]
-			// get rendered as [foo]. -rlpowell
-
-			if ($prefs['cachepages'] == 'y' && $this->is_cached($link)) {
-				//use of urlencode for using cached versions of dynamic sites
-				$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
-
-				$link2 = str_replace("/", "\/", preg_quote($link));
-				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; //< last param expected here is always nocache
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
-				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is used for relation (rel) attribute (e.g. shadowbox) or nocache
-				preg_match($pattern, $data, $matches);
-				if (isset($matches[2]) && $matches[2]=='nocache') {
-					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
-				} else {
-					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
-				}
-				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
-				$pattern = "/(?<!\[)\[$link2\]/";
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
-			} else {
-				$link2 = str_replace("/", "\/", preg_quote($link));
-				$data = str_replace("|nocache", "", $data);
-
-				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
-				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
-				$pattern = "/(?<!\[)\[$link2\]/";
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon", $data);
-			}
-		}
-
-		// Handle double square brackets.  -rlpowell
-		$data = str_replace( "[[", "[", $data );
-
 		return $data;
 	}
 
@@ -6386,6 +6310,7 @@ class TikiLib extends TikiDb_Bridge
 
 		// loop: process all lines
 		$in_paragraph = 0;
+		$in_empty_paragraph = 0;
 		foreach ($lines as $line) {
 			$current_title_num = '';
 			$numbering_remove = 0;
@@ -6761,7 +6686,7 @@ class TikiLib extends TikiDb_Bridge
 									preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $tline);	// noparse guid for plugins
 							
 							 if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								if ($in_paragraph && (empty($line) || $contains_block)) {
+								if ($in_paragraph && ((empty($line) && $in_empty_paragraph === 0) || $contains_block)) {
 									// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 									$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
 								} elseif (!$in_paragraph && !$contains_block) {
@@ -6769,10 +6694,14 @@ class TikiLib extends TikiDb_Bridge
 									$data .= "<p>";
 									if (empty($line)) {
 										$line = '&nbsp;';
+										$in_empty_paragraph = 1;
 									}
 									$in_paragraph = 1;
 								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !$contains_block) {
 									// A normal in-paragraph line if not close of div created by plugins
+									if (!empty($line)) {
+										$in_empty_paragraph = 0;
+									}
 									$line = "<br />" . $line;
 								} else {
 									// A normal in-paragraph line or a consecutive blank line.
@@ -8648,7 +8577,7 @@ function detect_browser_language() {
 
 function validate_email($email) {
 	global $prefs;
-	require_once 'lib/core/lib/Zend/Validate/EmailAddress.php';
+	require_once 'lib/core/Zend/Validate/EmailAddress.php';
 	$validate = new Zend_Validate_EmailAddress( Zend_Validate_Hostname::ALLOW_ALL );
 	
 	return $validate->isValid( $email );

@@ -401,7 +401,8 @@ if ($_REQUEST["trackerId"]) {
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 	$smarty->assign('action', '');
 	include_once ('lib/wiki-plugins/wikiplugin_trackerfilter.php');
-	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId']);
+	$formats = '';
+	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId'], '', $formats);
 	$smarty->assign_by_ref('filters', $filters);
 	
 	$smarty->assign('recordsMax', $info['items']);

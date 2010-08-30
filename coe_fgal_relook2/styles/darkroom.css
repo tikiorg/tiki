@@ -814,6 +814,15 @@ a.tikihelp:hover {
 	color: orange;
 }
 
+/** Jquery autocomplete **/
+.ac_even, .ac_odd {
+	color: #292929;
+}
+
+.ac_over {
+	color: white;
+}
+
 /**** Boxes *****/
 /** Modules **/
 
@@ -1239,6 +1248,11 @@ div.quotebody {
 div.imgbox {
 	border: 1px solid #818181;
     background-color: transparent;
+}
+
+/* wikiplugin edit */
+form.wikiplugin_edit div {
+	color: #292929;
 }
 
 /** Wiki tocs **/

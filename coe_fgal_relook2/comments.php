@@ -449,7 +449,7 @@ if (empty($thread_sort_mode)) {
 	}
 }
 
-$comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
+$comments_coms = $commentslib->get_comments($comments_objectId, null,
 		$comments_offset, $comments_per_page, $thread_sort_mode, $_REQUEST["comments_commentFind"],
 		$_REQUEST['comments_threshold'], $thread_style, $threadId_if_reply);
 
