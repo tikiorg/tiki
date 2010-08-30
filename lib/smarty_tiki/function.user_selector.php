@@ -25,7 +25,7 @@ function smarty_function_user_selector($params, &$smarty) {
 	static $iUserSelector = 0;
 	$iUserSelector++;
 	
-	$defaults = array( 'user' => $user, 'group' => 'all', name => 'user', id => 'user_selector_' . $iUserSelector, 'editable' => $tiki_p_admin);
+	$defaults = array( 'user' => $user, 'group' => 'all', 'name' => 'user', 'id' => 'user_selector_' . $iUserSelector, 'editable' => $tiki_p_admin);
 	$params = array_merge($defaults, $params);
 	if (isset($params['size'])) {
 		$sz = ' size="' . $params['size'] . '"';
