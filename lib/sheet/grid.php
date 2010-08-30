@@ -1967,6 +1967,15 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 				$format = $sheet->cellInfo[$i][$j]['format'];
 				if( !empty( $format ) )
 					$data = TikiSheetDataFormat::$format( $data );
+					
+				$style = $sheet->cellInfo[$i][$j]['style'];
+				if( !empty( $style ) )
+					$append .= " style='{$style}'";
+					
+				$class = $sheet->cellInfo[$i][$j]['class'];
+				if( !empty( $class ) )
+					$append .= " class='{$class}'";
+					
 				echo "			<td$append>$data</td>\n";
 			}
 			
