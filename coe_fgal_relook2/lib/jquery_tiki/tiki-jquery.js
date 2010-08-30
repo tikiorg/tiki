@@ -147,7 +147,7 @@ function convertOverlib(element, tip, params) {	// process modified overlib even
 	
 	options.splitTitle = '|';
 	options.showTitle = false;
-	options.cluezIndex = 400;
+	options.cluezIndex = 1500;
 	options.dropShadow = true;
 	options.fx = {open: 'fadeIn', openSpeed: 'fast'};
 	options.closeText = 'x';
@@ -203,7 +203,7 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 	// tooltip functions and setup
 	if (jqueryTiki.tooltips) {	// apply "cluetips" to all .tips class anchors
 		
-		var ctOptions = { splitTitle: '|', cluezIndex: 400, width: 'auto', fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true };
+		var ctOptions = { splitTitle: '|', cluezIndex: 1500, width: 'auto', fx: {open: 'fadeIn', openSpeed: 'fast'}, clickThrough: true };
 		$.cluetip.setup( { insertionType: 'insertBefore', insertionElement: '#main' } );
 		
 		$('.tips[title!=""]').cluetip($.extend( ctOptions, {}));

@@ -1,7 +1,5 @@
 {* $Id: tiki-list_file_gallery.tpl 26930 2010-05-05 23:16:15Z nyloth $ *}
 
-{popup_init src="lib/overlib.js"}
-
 <link rel="stylesheet" type="text/css" href="css/file_gallery.css"/>
 <!--[if lte IE 7]>
 <link rel="stylesheet" type="text/css" href="css/file_gallery_ie6.css"/>
@@ -32,9 +30,9 @@
   {/if}
   {if $view eq 'browse'}
     {if $show_details eq 'y'}
-      <a onclick="FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&view={$view}&filegals_manager={$filegals_manager}&show_details=n')">{icon _id='no_information' class='fg-info-icon' align='right'}</a>
+      <a onclick="FileGallery.open('tiki-list_file_gallery2.php?galleryId={$galleryId}&view={$view}&filegals_manager={$filegals_manager}&show_details=n')">{icon _id='no_information' class='fg-info-icon' align='right'}</a>
     {else}
-      <a onclick="FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&view={$view}&filegals_manager={$filegals_manager}&show_details=y')">{icon _id='information' class='fg-info-icon' align='right'}</a>
+      <a onclick="FileGallery.open('tiki-list_file_gallery2.php?galleryId={$galleryId}&view={$view}&filegals_manager={$filegals_manager}&show_details=y')">{icon _id='information' class='fg-info-icon' align='right'}</a>
     {/if}
   {/if}
 
@@ -50,11 +48,11 @@
 		<div class="fg-pane">{tr}Galleries{/tr}</div>
 		<div class="fg-toolbar">
 			<div class="fg-toolbar-left">
-				<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?filegals_manager={$filegals_manager}&view={$view}')"><img src="images/file_gallery/icon-home.gif" border="0" alt="{tr}Home{/tr}" title="{tr}Home{/tr}"/></a>
+				<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery2.php?filegals_manager={$filegals_manager}&view={$view}')"><img src="images/file_gallery/icon-home.gif" border="0" alt="{tr}Home{/tr}" title="{tr}Home{/tr}"/></a>
 				{if $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y'}
-					<a class="fg-toolbar-icon" onclick="FileGallery.editGallery('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId={$galleryId}&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-edit-folder.gif" border="0" alt="{tr}Edit gallery{/tr}" title="{tr}Edit gallery{/tr}"/></a>
+					<a class="fg-toolbar-icon" onclick="FileGallery.editGallery('tiki-list_file_gallery2.php?edit_mode=1&parentId={$galleryId}&galleryId={$galleryId}&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-edit-folder.gif" border="0" alt="{tr}Edit gallery{/tr}" title="{tr}Edit gallery{/tr}"/></a>
 					<!--a class="fg-toolbar-icon"><img src="images/file_gallery/icon-delete-folder.gif" border="0"/></a-->
-					<a class="fg-toolbar-icon" onclick="FileGallery.editGallery('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId=0&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-create-folder.gif" border="0" alt="{tr}Create gallery{/tr}" title="{tr}Create gallery{/tr}"/></a>
+					<a class="fg-toolbar-icon" onclick="FileGallery.editGallery('tiki-list_file_gallery2.php?edit_mode=1&parentId={$galleryId}&galleryId=0&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-create-folder.gif" border="0" alt="{tr}Create gallery{/tr}" title="{tr}Create gallery{/tr}"/></a>
 				{/if}
 			</div>
 			<div class="fg-toolbar-right">

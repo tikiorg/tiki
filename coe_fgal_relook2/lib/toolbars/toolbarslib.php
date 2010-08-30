@@ -960,7 +960,7 @@ class ToolbarDialog extends Toolbar
 			$list = array(
 				tra('Quick upload and insert'),
 				'<script type="text/javascript" src="lib/filegals/file_gallery.js"></script><div id="tbFilegalManager" /><div id="tbFilegalManagerSub" />',
-				'{"width": 700, "open": function() {
+				'{"width": 700, "modal": true, "open": function() {
 					FileGallery.open("tiki-list_file_gallery2.php");
 				}}'
 			);
