@@ -248,10 +248,6 @@ if (isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode']) {
 		include_once ('categorize_list.php');
 	}
 	
-	if ($tiki_p_admin_file_galleries == 'y') {
-		$users = $tikilib->list_users(0, -1, 'login_asc', '', false);
-		$smarty->assign_by_ref('users', $users['data']);
-	}
 	if ($prefs['feature_groupalert'] == 'y') {
 		$smarty->assign('groupforAlert', isset($_REQUEST['groupforAlert']) ? $_REQUEST['groupforAlert'] : '');
 		$all_groups = $userlib->list_all_groups();
