@@ -652,9 +652,8 @@ class TikiSheet
 	 * cell.
 	 * @param $style The value to set.
 	 */
-	function setStyle( $style )
+	function setStyle( $style = '' )
 	{
-		if( empty( $style ) ) $style = '';
 		$this->cellInfo[$this->usedRow][$this->usedCol]['style'] = $style;
 	}
 	
@@ -663,9 +662,8 @@ class TikiSheet
 	 * cell.
 	 * @param $class The value to set.
 	 */
-	function setClass( $class )
+	function setClass( $class = '')
 	{
-		if( empty( $class ) ) $class = '';
 		$this->cellInfo[$this->usedRow][$this->usedCol]['class'] = $class;
 	}
 
@@ -2045,14 +2043,14 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 						$sheet->setCalculation($formula);
 					}
 				}
-				if (isset($d->data->$ri->$ci->style)) {
-					$style = substr($d->data->$ri->$ci->style, 1, strlen($d->data->$ri->$ci->style)-1);
+				if (isset($d->data->$ri->$ci->stl)) {
+					$style = $d->data->$ri->$ci->stl;
 					if (!empty($style)) {
 						$sheet->setStyle($style);
 					}
 				}
-				if (isset($d->data->$ri->$ci->class)) {
-					$class = substr($d->data->$ri->$ci->class, 1, strlen($d->data->$ri->$ci->class)-1);
+				if (isset($d->data->$ri->$ci->cl)) {
+					$class = $d->data->$ri->$ci->cl;
 					if (!empty($class)) {
 						$sheet->setClass($class);
 					}
