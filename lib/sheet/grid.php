@@ -2250,6 +2250,6 @@ function getAttrFromCssString($style, $attr, $includeAttrType) {
 		$attrW = explode(":", $css[$pos].":"); //ensure it has an ":"
 		$attr = trim($attrW[1]);
 	}
-	echo "<script type='text/javascript'>alert('$attr');</script>";
+	//echo "<script type='text/javascript'>alert('$attr');</script>";
 	return $attr;
 }
