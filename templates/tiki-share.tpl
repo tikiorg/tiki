@@ -52,41 +52,41 @@
 <form method="post" action="tiki-share.php?url={$url|escape:url}" id="share-form">
 	<input type="hidden" name="url" value="{$url|escape:url}" />
 	<input type="hidden" name="report" value="{$report}" />
-	<table class="normal">
-		<tr class="formcolor">
+	<table class="formcolor">
+		<tr>
 			<td>{tr}Link{/tr}</td>
 			<td><a href="{$prefix}{$url}">{$prefix}{$url}</a></td>
 		</tr>
 		{if $report != 'y'}
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Short link{/tr}</td>
 				<td>{$shorturl}</td>
 			</tr>
 		{/if}
-		<tr class="formcolor">
-			<td class="formcolor">{tr}Subject{/tr}</td>
-			<td class="formcolor">
+		<tr>
+			<td>{tr}Subject{/tr}</td>
+			<td>
 				<input style="width:95%;" type="text" name="subject" value="{$subject|escape|default:'{tr}Have a look at this page{/tr}'}" />
 			</td>
 		</tr>
 
-		<tr class="formcolor">
-			<td class="formcolor">
+		<tr>
+			<td>
 				{tr}Your message{/tr}
 			</td>
 
-			<td class="formcolor">
+			<td>
 				<textarea name="comment" style="width:95%;" rows="10" cols='{$cols}' id='comment'>{$comment|escape|@default:"{tr}I found an interesting page that I thought you would like.{/tr}"}</textarea>
 			</td>
 		</tr>
 
-		<tr class="formcolor">
-			<td class="formcolor" rowspan="2">
+		<tr>
+			<td rowspan="2">
 				<img src="pics/large/evolution48x48.png" alt="{tr}e-Mail{/tr}"/>
 				<br />
 				{tr}Send via e-Mail{/tr}
 			</td>
-			<td class="formcolor">
+			<td>
 				{if $report !='y'}
 					<input type="radio" name="do_email" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}/>
 					{tr}Yes{/tr}
@@ -97,30 +97,30 @@
 				{/if}
 			</td>
 		</tr>
-		<tr class="formcolor" id="emailrow">
-			<td class="formcolor">
-				<table class="normal" id="emailtable">
+		<tr id="emailrow">
+			<td>
+				<table class="formcolor" id="emailtable">
 					{if $report!='y'}
-						<tr class="formcolor">
-							<td class="formcolor">{tr}Recipient(s){/tr}</td>
-							<td class="formcolor">
+						<tr>
+							<td>{tr}Recipient(s){/tr}</td>
+							<td>
 								<input style="width:95%;" type="text" size="60" name="addresses" value="{$addresses|escape}"/>
 								<br />
 								<em>{tr}Separate multiple email addresses with a comma.{/tr}</em>
 							</td>
 						</tr>
 					{/if}
-					<tr class="formcolor">
-						<td class="formcolor">{tr}Your name{/tr}</td>
-						<td class="formcolor">
+					<tr>
+						<td>{tr}Your name{/tr}</td>
+						<td>
 							<input style="width:95%;" type="text" name="name" value="{$name}" />
 						</td>
 					</tr>
-					<tr class="formcolor">
-						<td class="formcolor">
+					<tr>
+						<td>
 							{tr}Your email{/tr}{if empty($email)} <strong class="mandatory_star">*</strong>{/if}
 						</td>
-						<td class="formcolor">
+						<td>
 							<div class="mandatory_field">
 								<input style="width:95%;" type="text" name="email" value="{$email}" />
 							</div>
@@ -130,13 +130,13 @@
 			</td>
 		</tr>
 		{if $twitterRegistered}
-			<tr class="formcolor">
-				<td class="formcolor" rowspan="2">
+			<tr>
+				<td rowspan="2">
 					<img src="img/icons/twitter_t_logo_32.png" alt="Twitter" />
 					<br />
 					{tr}Tweet via Twitter{/tr}
 				</td>
-				<td class="formcolor">
+				<td>
 					{if $twitter}
 						<input type="radio" name="do_tweet" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}/>
 						{tr}Yes{/tr} 	
@@ -144,18 +144,18 @@
 						{tr}No{/tr}
 					{else}
 						{remarksbox type="note" title="{tr}Note{/tr}"}
-							<p><a href="tiki-socialnetworks.php">{tr}Authorize with twitter first{/tr}</a>
+							<p><a href="tiki-socialnetworks.php">{tr}Authorize with twitter first{/tr}</a></p>
 						{/remarksbox}
 					{/if}
 				</td>
 			</tr>
-			<tr class="formcolor" id="twitterrow">
-				<td class="formcolor">
+			<tr id="twitterrow">
+				<td>
 					{if $twitter}
-						<table class="normal" id="twittertable">
-							<tr class="formcolor">
-								<td class="formcolor">{tr}Tweet{/tr}</td>
-								<td class="formcolor">
+						<table class="formcolor" id="twittertable">
+							<tr>
+								<td>{tr}Tweet{/tr}</td>
+								<td>
 									<input type="text" name="tweet" maxlength="140" style="width:95%;" id="tweet" value="{$subject|escape|default:"{tr}Have a look at {/tr}"} {$shorturl}" />
 								</td>
 							</tr>
@@ -168,13 +168,13 @@
 		{/if}
 
 		{if $facebookRegistered}
-			<tr class="formcolor">
-				<td class="formcolor" rowspan="2">
+			<tr>
+				<td rowspan="2">
 					<img src="img/icons/facebook-logo_32.png" alt="Facebook" />
 					<br />
 						{tr}Put on my facebook wall{/tr}
 				</td>
-				<td class="formcolor">
+				<td>
 					{if $facebook}
 						<input type="radio" name="do_fb" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}/>
 						{tr}Yes{/tr}
@@ -182,26 +182,26 @@
 						{tr}No{/tr}
 					{else}
 						{remarksbox type="note" title="{tr}Note{/tr}"}
-							<p><a href="tiki-socialnetworks.php">{tr}Authorize with facebook first{/tr}</a>
+							<p><a href="tiki-socialnetworks.php">{tr}Authorize with facebook first{/tr}</a></p>
 						{/remarksbox}
 					{/if}
 				</td>
 			</tr>
-			<tr class="formcolor" id="fbrow">
-				<td class="formcolor">
+			<tr id="fbrow">
+				<td>
 					{if $facebook}
-						<table class="normal" id="fbtable">
-							<tr class="formcolor">
-								<td class="formcolor">{tr}Link text{/tr}</td>
-								<td class="formcolor">
+						<table class="formcolor" id="fbtable">
+							<tr>
+								<td>{tr}Link text{/tr}</td>
+								<td>
 									<input type="text" name="fblinktitle" id="fblinktitle" value="{$fblinktitle|escape}" style="width: 95%;" />
 									<br />
 									<em>{tr}This will be the title for the URL{/tr}</em>
 								</td>
 							</tr>
-							<tr class="formcolor">
-								<td class="formcolor">{tr}Like this post{/tr}</td>
-								<td class="formcolor">
+							<tr>
+								<td>{tr}Like this post{/tr}</td>
+								<td>
 									<input type="radio" name="fblike" value="1" {if $fblike==1}checked="checked" {/if}/>
 									{tr}Yes{/tr}
 									<input type="radio" name="fblike" value="0" {if $fblike==0}checked="checked" {/if}/>
@@ -216,13 +216,13 @@
 			</tr>
 		{/if}
 		{if $prefs.feature_messages=='y' && $report != 'y'}
-			<tr class="formcolor">
-				<td class="formcolor" rowspan="2">
+			<tr>
+				<td rowspan="2">
 					<img src="pics/large/messages48x48.png" alt="{tr}Messages{/tr}" />
 					<br />
 					{tr}Send message{/tr}
 				</td>
-				<td class="formcolor">
+				<td>
 					{if $send_msg=='y'}
 						<input type="radio" name="do_message" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}/>
 						{tr}Yes{/tr}
@@ -230,26 +230,26 @@
 						{tr}No{/tr}
 					{else}
 						{remarksbox type="note" title="{tr}Note{/tr}"}
-							<p>{tr}You do not have the permission to send messages or you did not allow other users to send you messages.{/tr}
+							<p>{tr}You do not have the permission to send messages or you did not allow other users to send you messages.{/tr}</p>
 						{/remarksbox}
 					{/if}
 				</td>
 			</tr>
-			<tr class="formcolor" id="messagerow">
-				<td class="formcolor">
+			<tr id="messagerow">
+				<td>
 					{if $send_msg}
-						<table class="normal" id="messagetable">
-							<tr class="formcolor">
-								<td class="formcolor">{tr}Recipient(s){/tr}</td>
-								<td class="formcolor">
+						<table class="formcolor" id="messagetable">
+							<tr>
+								<td>{tr}Recipient(s){/tr}</td>
+								<td>
 									<input style="width:95%;" type="text" size="60" name="messageto" value="{$messageto|escape}"/>
 									<br />
 									<em>{tr}Separate multiple recipients with a comma.{/tr}</em>
 								</td>
 							</tr>
 							<tr>
-								<td class="formcolor">{tr}Priority{/tr}</td>
-								<td class="formcolor">
+								<td>{tr}Priority{/tr}</td>
+								<td>
 									<select name="priority" id="mess-prio">
 										<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
 										<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
@@ -267,13 +267,13 @@
 			</tr>
 		{/if}
 		{if $prefs.feature_forums!='y' && $report != 'y'}
-			<tr class="formcolor">
-				<td class="formcolor" rowspan="2">
+			<tr>
+				<td rowspan="2">
 					<img src="pics/large/stock_index48x48.png" alt="{tr}Forums{/tr}" />
 					<br />
 					{tr}Post on forum{/tr}
 				</td>
-				<td class="formcolor">
+				<td>
 					{if count($forums)>0}
 						<input type="radio" name="do_forum" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}/>
 						{tr}Yes{/tr}
@@ -281,18 +281,18 @@
 						{tr}No{/tr}
 					{else}
 						{remarksbox type="note" title="{tr}Note{/tr}"}
-							<p>{tr}There is no forum where you can post a message.{/tr}
+							<p>{tr}There is no forum where you can post a message.{/tr}</p>
 						{/remarksbox}
 					{/if}
 				</td>
 			</tr>
-			<tr class="formcolor" id="forumrow">
-				<td class="formcolor">
+			<tr id="forumrow">
+				<td>
 					{if count($forums)>0}
-						<table class="normal" id="forumtable">
-							<tr class="formcolor">
-								<td class="formcolor">{tr}Forum{/tr}</td>
-								<td class="formcolor">
+						<table class="formcolor" id="forumtable">
+							<tr>
+								<td>{tr}Forum{/tr}</td>
+								<td>
 									<select name="forumId" id="forumId" style="width:95%;">
 										{foreach from=$forums item="forum"}
 											<option value="{$forum.forumId}"{if $forum.forumId==$forumId} selected="selected"{/if}>
@@ -302,9 +302,9 @@
 									</select>
 								</td>
 							</tr>
-							<tr class="formcolor">
-								<td class="formcolor">{tr}Password{/tr}</td>
-								<td class="formcolor">
+							<tr>
+								<td>{tr}Password{/tr}</td>
+								<td>
 									<input type="password" name="forum_password" style="width:95%;"/>
 								</td>
 							</tr>
@@ -322,8 +322,8 @@
 			{include file='antibot.tpl' td_style="formcolor"}
 		{/if}
 		<tr>
-			<td class="formcolor"></td>
-			<td class="formcolor">
+			<td></td>
+			<td>
 				<input type="submit" class="button" name="send" value="{tr}Share{/tr}" />
 				{if $prefs.auth_tokens_share eq 'y' and $user!='' and $report !='y'}
 					<input type="checkbox" name="share_access" value="1" id="share_access" {if $share_access}checked="checked" {/if}/>
