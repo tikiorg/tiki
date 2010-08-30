@@ -62,6 +62,7 @@ function prefs_tiki_list() {
 			'name' => tra('Content Delivery Network'),
 			'description' => tra('Use an alternate domain name to serve static files from tikiwiki to avoid sending cookies, improve local caching and generally improve user experience performance.'),
 			'hint' => tra('Prefix to include before the static files, for example: http://cdn.example.com'),
+			'help' => 'Content+Delivery+Network',
 			'type' => 'text',
 			'size' => 40,
 			'filter' => 'url',
