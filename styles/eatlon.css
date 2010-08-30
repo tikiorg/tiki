@@ -507,12 +507,16 @@ a.phplmselected:hover {color: #d7e5f3}
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {color: #ADBAC3}
+.share a,
+.tellafriend a:visited,
+.share a:visited {color: #ADBAC3}
 
 a.flip:hover,
-.tellafriend a:hover {color: #505050}
+.tellafriend a:hover,
+.share a:hover {color: #505050}
 
-.tellafriend {padding-right: 6px}
+.tellafriend,
+.share {padding-right: 6px}
 #tiki-center {font-size: 1.1em}
 
 /****** Misc. Global ****/

@@ -464,13 +464,16 @@ a.phplmselected:hover {color: #aaa}
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {
+.share a,
+.tellafriend a:visited,
+.share a:visited {
 	font-size: 87%;
 	color: #999;
 	text-decoration: none}
 
 a.flip:hover,
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	color: #393e51;
 	text-decoration: none}
 

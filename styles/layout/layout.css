@@ -531,7 +531,8 @@ span.moduleflip-vert {
 
 /* centercolumn */
 	
-.fullscreen .tellafriend {
+.fullscreen .tellafriend,
+.fullscreen .share {
 	margin-right: 100px;
 	margin-top: 2px;
 }
