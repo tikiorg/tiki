@@ -38,13 +38,13 @@
     </span>
 {/if}
 {/if}
-<table class="normal">
+<table class="formcolor">
 <colgroup><col width="25%" span="4" /></colgroup>
   <tr>
   	{if ($saved)} 
 	<td colspan="4" class="highlight"><div align="center"><h3>{tr}Task saved{/tr}</h3></div></td>
 	{else}
-  	<td colspan="4" class="formcolor">
+  	<td colspan="4">
 	<div align="center">
 		<h3>
 		{if ($info.taskId > 0)}
@@ -62,8 +62,8 @@
   {/if}
   </tr>
   <tr>
-	<td class="formcolor">{tr}Created by{/tr}</td> 
-	<td class="formcolor" colspan="2" >
+	<td>{tr}Created by{/tr}</td> 
+	<td colspan="2">
 		<b>{$info.creator|escape}</b>
 		&nbsp;&nbsp; <b>{$info.created|date_format:"%d/%m/%Y -- %H:%M"}</b>
 		&nbsp;&nbsp; 
@@ -79,17 +79,17 @@
 		
 		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.last_version}">{tr}Last Version{/tr}: {$info.last_version+1}</a>
 	</td>
-	<td class="formcolor" colspan="2" >
+	<td colspan="2">
 		<div align="right">{tr}taskId{/tr}:
 		<b>{$info.taskId|escape}</b>
 		</div>
 	</td>
 	</tr>
   <tr>
-  	<td class="formcolor">{tr}Task user{/tr}</td> 
-  		<td colspan="3" class="formcolor">
+  	<td>{tr}Task user{/tr}</td> 
+  		<td colspan="3">
 			{if ($receive_users)} 
-				<select name="task_user" {if ($info.taskId > 0 and !$admin_mode) } disabled="disabled" > <option value="{$info.user}">{$info.user}</option></select><input type="hidden" name="task_user" value="{$info.user}" />{else}>
+				<select name="task_user" {if ($info.taskId > 0 and !$admin_mode) } disabled="disabled"> <option value="{$info.user}">{$info.user}</option></select><input type="hidden" name="task_user" value="{$info.user}" />{else}>
 				{section name=user_i loop=$receive_users} 
 					<option value="{$receive_users[user_i].login|escape}" 
 						{if ( $receive_users[user_i].login eq $info.user) } selected="selected" {/if}>
@@ -110,21 +110,21 @@
 		</td>
     </tr>
 	<tr>
-		<td class="formcolor">{tr}Title{/tr}</td>
-		<td colspan="3" class="formcolor">
+		<td>{tr}Title{/tr}</td>
+		<td colspan="3">
 			<input  style="width:98%;" type="text" name="title" value="{$info.title|escape}" />
 		</td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Description{/tr}<br /><br />
+      <td>{tr}Description{/tr}<br /><br />
       </td>
-      <td colspan="3" class="formcolor">
+      <td colspan="3">
         {toolbars area_id='edittask'}
         <textarea id='edittask' style="width:98%;" rows="15" cols="80" name="description">{$info.description|escape}</textarea>
       </td>
     </tr>
-    <tr><td  class="formcolor">{tr}Start{/tr}</td>
-		<td colspan="3" class="formcolor">
+    <tr><td>{tr}Start{/tr}</td>
+		<td colspan="3">
 			{html_select_date time=$start_date prefix="start_" end_year="+4" field_order=$prefs.display_field_order}
 			&nbsp;-&nbsp;
 			{html_select_time minute_interval=10 time=$start_date prefix="start_" display_seconds=false use_24_hours=true}
@@ -132,8 +132,8 @@
 			&nbsp;{tr}Use start date and time{/tr}
 		</td>
 	</tr>
-	<tr><td  class="formcolor">{tr}End{/tr}</td>
-		<td colspan="3" class="formcolor">
+	<tr><td>{tr}End{/tr}</td>
+		<td colspan="3">
 			{html_select_date time=$end_date prefix="end_" end_year="+4" field_order=$prefs.display_field_order}
 			&nbsp;-&nbsp;
 			{html_select_time minute_interval=10 time=$end_date prefix="end_" display_seconds=false use_24_hours=true}
@@ -141,8 +141,8 @@
 			&nbsp;{tr}Use end date and time{/tr}
 		</td>
 	</tr>
-	<tr><td class="formcolor">{tr}Status{/tr}</td>
-		<td colspan="3" class="formcolor">
+	<tr><td>{tr}Status{/tr}</td>
+		<td colspan="3">
 		{if $info.status eq 'o'}{tr}Open / In Process{/tr}
 		{else} {if $info.status eq 'o'}{tr}Open / In Process{/tr}
 		{else} {tr}Waiting / Not Started{/tr}
@@ -154,8 +154,8 @@
 	</tr>  
 	
 	<tr>
-		<td class="formcolor">{tr}Priority{/tr}</td>
-		<td colspan="3"  class="formcolor">
+		<td>{tr}Priority{/tr}</td>
+		<td colspan="3">
 		<select name="priority">
 			<option value="1" {if $info.priority eq 1} selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
 			<option value="2" {if $info.priority eq 2} selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
@@ -166,8 +166,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td class="formcolor">{tr}Percentage completed{/tr}</td>
-		<td colspan="3"  class="formcolor">  
+		<td>{tr}Percentage completed{/tr}</td>
+		<td colspan="3">  
 			 <select name="percentage">
 					<option value="w" {if $info.percentage_null } selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
 				{section name=zz loop=$percs}
@@ -176,8 +176,8 @@
       		</select>
 		</td>
 	</tr>
-	<tr><td  class="formcolor">{tr}Shared for Group{/tr}</td>
-		<td colspan="3" class="formcolor">
+	<tr><td>{tr}Shared for Group{/tr}</td>
+		<td colspan="3">
 		<select name="public_for_group">
 			<option></option>
 		{section name=groups_i loop=$receive_groups} 
@@ -190,14 +190,14 @@
 		</td>
 	</tr> 
 	{if (($info.taskId > 0) and ($info.user ne $info.creator))}
-	<tr><td class="formcolor">{tr}Accepted by User{/tr}</td>
-		<td class="formcolor">
+	<tr><td>{tr}Accepted by User{/tr}</td>
+		<td>
 			{if $info.accepted_user eq 'y'} {tr}Yes{/tr}
 			{else} {if $info.accepted_user eq 'n'} {tr}No / Rejected{/tr}
 			{else} {tr}Waiting{/tr}{/if}{/if}
 		</td>
-		<td class="formcolor">{tr}Accepted by Creator{/tr}</td>
-		<td class="formcolor">
+		<td>{tr}Accepted by Creator{/tr}</td>
+		<td>
 			{if $info.accepted_creator eq 'y'} {tr}Yes{/tr}
 			{else} {if $info.accepted_creator eq 'n'} {tr}No / Rejected{/tr}
 			{else} {tr}Waiting{/tr}{/if}{/if}
@@ -206,8 +206,8 @@
 	{/if} 
 	{if ($info.user ne $info.creator and ($info.task_version eq $info.last_version))}
 	<tr>
-		<td class="formcolor">{tr}Info{/tr}</td>
-		<td colspan="3" class="formcolor">
+		<td>{tr}Info{/tr}</td>
+		<td colspan="3">
 			{tr}This message will be send to users if you are makeing changes of assigned tasks{/tr}<br />
 			<textarea style="width:98%;" rows="2" cols="80" name="task_info_message">{$info.info|escape}</textarea>
 			<input checked="checked" type="checkbox" name="task_send_changes_message" />{tr}Send message with changes{/tr}
@@ -216,8 +216,8 @@
 	{/if} 
 	{if $info.task_version > 0}
 	<tr>
-		<td class="formcolor">{tr}Modified by{/tr}</td>
-		<td colspan="3" class="formcolor">
+		<td>{tr}Modified by{/tr}</td>
+		<td colspan="3">
 			<b>{$info.lasteditor}</b>
 			&nbsp;&nbsp;<b>{$info.changes|date_format:"%d/%m/%Y -- %H:%M"}</b>
 		</td>
@@ -225,14 +225,14 @@
 	{/if}
 	
 	{if $info.deleted}
-	<tr><td class="formcolor">{tr}Marked as deleted{/tr}</td>
-		<td colspan="3" class="formcolor"><b>{$info.deleted|date_format:"%d/%m/%Y -- %H:%M"}</b></td>
+	<tr><td>{tr}Marked as deleted{/tr}</td>
+		<td colspan="3"><b>{$info.deleted|date_format:"%d/%m/%Y -- %H:%M"}</b></td>
 	</tr> 
 	{/if}
 	<tr>
 	{if (($info.creator eq $user) or ($info.user eq $user) or $admin_mode) and ($info.task_version eq $info.last_version) }
 {if $info.taskId eq 0 }
-	<td class="formcolor" colspan="4" >
+	<td colspan="4">
         <div align="center">
 			<input checked="checked" type="checkbox" name="send_email_newtask" />{tr}Inform task user by email{/tr}
         </div>
@@ -240,7 +240,7 @@
 	</tr>
     <tr>
 	{/if}
-	<td class="formcolor" colspan="4" >
+	<td colspan="4">
 		<div align="center">
 			<input type="submit" name="save" value="{tr}Save{/tr}" />
 			<input type="submit" name="preview" value="{tr}Preview{/tr}" /> 
@@ -248,7 +248,7 @@
 		</div>
 	</td>
 	{else}
-		<td class="formcolor" colspan="4" >
+		<td colspan="4">
 			<div align="center">
 				{tr}You can only view this task{/tr}
 			</div>

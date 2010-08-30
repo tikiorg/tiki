@@ -89,8 +89,8 @@
 	<h2>{$tabaddeditgroup_admgrp}</h2>
 
 	<form action="tiki-admingroups.php" method="post">
-		<table class="normal">
-			<tr class="formcolor">
+		<table class="formcolor">
+			<tr>
 				<td><label for="groups_group">{tr}Group:{/tr}</label></td>
 				<td>
 					{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}
@@ -100,13 +100,13 @@
 					{/if}
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td><label for="groups_desc">{tr}Description:{/tr}</label></td>
 				<td>
 					<textarea rows="5" name="desc" id="groups_desc" style="width:95%">{$groupdesc|escape}</textarea>
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>
 					<label for="groups_inc">{tr}Inherit permissions directly from following groups.{/tr}</label>
 				</td>
@@ -128,7 +128,7 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>
 					<label for="indirectly_inherited_groups">{tr}Also inheriting permissions from the following groups (indirect inheritance through the groups selected above).{/tr}</label>
 				</td>
@@ -145,7 +145,7 @@
 			</tr>
 
 			{if $prefs.useGroupHome eq 'y'}
-				<tr class="formcolor">
+				<tr>
 					<td>
 						<label for="groups_home">{tr}Group Homepage or Url:{/tr}</label>
 					</td>
@@ -158,7 +158,7 @@
 				</tr>
 			{/if}
 			{if $prefs.feature_categories eq 'y'}
-				<tr class="formcolor">
+				<tr>
 					<td>
 						<label for="groups_defcat">{tr}Default category assigned to uncategorized objects edited by a user with this default group:{/tr}</label>
 					</td>
@@ -173,7 +173,7 @@
 				</tr>
 			{/if}
 			{if $prefs.useGroupTheme eq 'y'}
-				<tr class="formcolor">
+				<tr>
 					<td><label for="groups_theme">{tr}Group Theme:{/tr}</label></td>
 					<td>
 						<select name="theme" id="groups_theme" multiple="multiple" size="4">
@@ -187,7 +187,7 @@
 			{/if}
 			
 			{if $prefs.groupTracker eq 'y'}
-				<tr class="formcolor">
+				<tr>
 					<td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td>
 					<td>
 						<select name="groupstracker">
@@ -216,7 +216,7 @@
 			{/if}
 
 			{if $prefs.userTracker eq 'y'}
-				<tr class="formcolor">
+				<tr>
 					<td><label for="userstracker">{tr}Users Information Tracker{/tr}</label></td>
 					<td>
 						<select name="userstracker">
@@ -242,28 +242,28 @@
 						{/if}
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Users Information Tracker Fields Asked at Registration Time<br />(fieldIds separated with :){/tr}</td>
 					<td><input type="text" style="width:95%" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td>
 				</tr>
 			{/if}
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}User can assign to the group himself{/tr}</td>
 				<td><input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}/></td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Users are automatically unassigned from the group after{/tr}</td>
 				<td><input type="text" name="expireAfter" value="{$group_info.expireAfter|escape}" />{tr}Days{/tr}<br /><i>{tr}0 or empty for never{/tr}</i></td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Users are automatically assigned at registration in the group if their emails match the pattern{/tr}</td>
 				<td><input type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}" /> {tr}Example: {/tr}/@tw\.org$/ {tr}Example:{/tr} /@(tw.org$)|(tw\.com$)/</td>
 			</tr>
 
 			{if $group ne ''}
-				<tr class="formcolor">
+				<tr>
 					<td>
 						{tr}Assign group <em>management</em> permissions:{/tr}
 					</td>
@@ -271,7 +271,7 @@
 						{icon href="tiki-objectpermissions.php?objectType=group&objectId=$groupname&objectName=$groupname&permType=group" _text="{tr}Assign Permissions{/tr}" _id="key"}
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>
 						&nbsp;
 						<input type="hidden" name="olgroup" value="{$group|escape}" />
@@ -279,7 +279,7 @@
 					<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 				</tr>
 			{else}
-				<tr class="formcolor">
+				<tr>
 					<td >&nbsp;</td>
 					<td><input type="submit" name="newgroup" value="{tr}Add{/tr}" /></td>
 				</tr>

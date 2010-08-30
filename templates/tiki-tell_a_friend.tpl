@@ -35,16 +35,16 @@
 
 <form method="post" action="tiki-tell_a_friend.php" id="tellafriend">
   <input type="hidden" name="url" value="{$url|escape:url}" />
-  <table class="normal">
-    <tr class="formcolor">
+  <table class="formcolor">
+    <tr>
       <td>{tr}Link{/tr}</td>
       <td><a href={$prefix}{$url}>{$prefix}{$url}</a></td>
     </tr>
     
 	{if $report ne 'y'}
-    <tr class="formcolor">
-      <td class="formcolor">{tr}Friend's email{/tr}</td>
-      <td class="formcolor"><input style="width:95%;" type="text" size="60" name="addresses" value="{$addresses|escape}"/>
+    <tr>
+      <td>{tr}Friend's email{/tr}</td>
+      <td><input style="width:95%;" type="text" size="60" name="addresses" value="{$addresses|escape}"/>
 	  <br /><em>{tr}Separate multiple email addresses with a comma.{/tr}</em>
 	  </td>
     </tr>
@@ -52,22 +52,22 @@
       <input type="hidden" name="report" value="y" />
 	{/if}
   
-    <tr class="formcolor">
-      <td class="formcolor">{tr}Your name{/tr}</td>
-      <td class="formcolor"><input style="width:95%;" type="text" name="name" value="{$name}" /></td>
+    <tr>
+      <td>{tr}Your name{/tr}</td>
+      <td><input style="width:95%;" type="text" name="name" value="{$name}" /></td>
     </tr>
 
-    <tr class="formcolor">
-      <td class="formcolor">{tr}Your email{/tr}{if empty($email)} <strong class="mandatory_star">*</strong>{/if}</td>
-      <td class="formcolor"><div class="mandatory_field"><input style="width:95%;" type="text" name="email" value="{$email}" /></div></td>
+    <tr>
+      <td>{tr}Your email{/tr}{if empty($email)} <strong class="mandatory_star">*</strong>{/if}</td>
+      <td><div class="mandatory_field"><input style="width:95%;" type="text" name="email" value="{$email}" /></div></td>
     </tr>
 
-    <tr class="formcolor">
-      <td class="formcolor">
+    <tr>
+      <td>
         {tr}Your comment{/tr}
       </td>
       
-      <td class="formcolor">
+      <td>
         <textarea name="comment" style="width:95%;" rows="10" cols='{$cols}' id='comment'>{$comment|escape|@default:"{tr}I found an interesting page that I thought you would like.{/tr}"}</textarea>
       </td>
     </tr>
@@ -77,8 +77,8 @@
 
     
     <tr>
-      <td class="formcolor"></td>
-      <td class="formcolor">
+      <td></td>
+      <td>
         <input type="submit" name="send" value="{tr}Send{/tr}" />
 		{if $prefs.auth_token_tellafriend eq 'y'}
 			<input type="checkbox" name="share_access" value="1" id="share_access"/>

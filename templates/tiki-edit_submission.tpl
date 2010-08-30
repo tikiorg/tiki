@@ -36,33 +36,33 @@
 		{if $types.$type.show_linkto eq 'y'}, {tr}<b>Source</b>=URL to article source{/tr}{/if}
 	</div>
 	<br />
-	<table class="normal">
-		<tr class="formcolor" id='show_topline' {if $types.$type.show_topline eq 'y'}style="display:;"{else}style="display:none;"{/if}>
+	<table class="formcolor">
+		<tr id='show_topline' {if $types.$type.show_topline eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Topline{/tr} *</td>
 			<td>
 				<input type="text" name="topline" value="{$topline|escape}" size="60" />
 			</td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Title{/tr}</td>
 			<td>
 				<input type="text" name="title" value="{$title|escape}" maxlength="255" size="80" />
 			</td>
 		</tr>
-		<tr class="formcolor" id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}>
+		<tr id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Subtitle{/tr} *</td>
 			<td>
 				<input type="text" name="subtitle" value="{$subtitle|escape}" size="60" />
 			</td>
 		</tr>
-		<tr class="formcolor" id='show_linkto' {if $types.$type.show_linkto eq 'y'}style="display:;"{else}style="display:none;"{/if}>
+		<tr id='show_linkto' {if $types.$type.show_linkto eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Source{/tr} ({tr}URL{/tr}) *</td>
 			<td>
 				<input type="text" name="linkto" value="{$linkto|escape}" size="60" />
 			</td>
 		</tr>
 		{if $prefs.feature_multilingual eq 'y'}
-			<tr class="formcolor" id='show_lang' {if $types.$type.show_lang eq 'y'}style="display:;"{else}style="display:none;"{/if}>
+			<tr id='show_lang' {if $types.$type.show_lang eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 				<td>{tr}Language{/tr}</td>
 				<td>
 					<select name="lang">
@@ -74,13 +74,13 @@
 				</td>
 			</tr>
 		{/if}
-		<tr class="formcolor" id='show_author' {if $types.$type.show_author eq 'y'}style="display:;"{else}style="display:none;"{/if}>
+		<tr id='show_author' {if $types.$type.show_author eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Author Name{/tr}</td>
 			<td>
 				<input type="text" name="authorName" value="{$authorName|escape}" />
 			</td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Topic{/tr}</td>
 			<td>
 				<select name="topicId">
@@ -94,7 +94,7 @@
 				{/if}
 			</td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Type{/tr}</td>
 			<td>
 				<select id='articletype' name='type' onchange='javascript:chgArtType();'>
@@ -107,7 +107,7 @@
 				{/if}
 			</td>
 		</tr>
-		<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Rating{/tr}</td>
 			<td>
 				<select name='rating'>
@@ -134,7 +134,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr id='show_image_1' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='show_image_1' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Own Image{/tr} *</td>
 			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
@@ -142,11 +142,11 @@
 			</td>
 		</tr>
 		{if $hasImage eq 'y'}
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Own Image{/tr}</td>
 				<td>{$image_name} [{$image_type}] ({$image_size} {tr}bytes{/tr})</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Own Image{/tr}</td>
 				{if $imageIsChanged eq 'y'}
 					<td>
@@ -159,33 +159,33 @@
 				{/if}
 			</tr>
 		{/if}
-		<tr id='show_image_2' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='show_image_2' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Use own image{/tr} *</td>
 			<td>
 				<input type="checkbox" name="useImage" id="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
 			</td>
 		</tr>
-		<tr id='show_image_3' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='show_image_3' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Float text around image{/tr} *</td>
 			<td>
 				<input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}/>
 			</td>
 		</tr>
-		<tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Own image size x{/tr} *</td>
 			<td>
 				<input type="text" name="image_x" value="{$image_x|escape}" />
 				{tr}pixels{/tr}
 			</td>
 		</tr>
-		<tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Own image size y{/tr} *</td>
 			<td>
 				<input type="text" name="image_y" value="{$image_y|escape}" />
 				{tr}pixels{/tr}
 			</td>
 		</tr>
-		<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Image caption{/tr} *</td>
 			<td>
 				<input type="text" name="image_caption" value="{$image_caption|escape}" size="80" />
@@ -193,7 +193,7 @@
 		</tr>
 
 		{if $prefs.feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Apply template{/tr} *</td>
 				<td>
 					<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
@@ -208,7 +208,7 @@
 
 		{include file='categorize.tpl'}
 
-		<tr class="formcolor">
+		<tr>
 			<td>
 				{tr}Heading{/tr}
 			</td>
@@ -218,7 +218,7 @@
 			</td>
 		</tr>
 
-		<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:table-row;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:table-row;"{else}style="display:none;"{/if}>
 			<td>
 				{tr}Body{/tr}
 			</td>
@@ -230,7 +230,7 @@
 			</td>
 		</tr>
 
-		<tr id='show_pubdate' {if $types.$type.show_pubdate eq 'y' || $types.$type.show_pre_publ ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='show_pubdate' {if $types.$type.show_pubdate eq 'y' || $types.$type.show_pre_publ ne 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Publish Date{/tr}</td>
 			<td>
 				{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
@@ -243,7 +243,7 @@
 			</td>
 		</tr>
 
-		<tr id='show_expdate' {if $types.$type.show_expdate eq 'y' || $types.$type.show_post_expire ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+		<tr id='show_expdate' {if $types.$type.show_expdate eq 'y' || $types.$type.show_post_expire ne 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Expiration Date{/tr}</td>
 			<td>
 				{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
@@ -260,7 +260,7 @@
 			{foreach from=$all_attributes item=att key=attname}
 			{assign var='attid' value=$att.itemId|replace:'.':'_'}
 			{assign var='attfullname' value=$att.itemId}
-			<tr id={$attid} {if $types.$type.$attid eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+			<tr id={$attid} {if $types.$type.$attid eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 				<td>{$attname|escape}</td>
 				<td><input type="text" name="{$attfullname}" value="{$article_attributes.$attfullname|escape}" size="80" /></td>
 			</tr>
