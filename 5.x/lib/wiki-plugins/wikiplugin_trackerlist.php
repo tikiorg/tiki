@@ -325,6 +325,9 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!empty($filterfield) && !empty($limit)) {
 			$limit = array_unique(array_merge($limit, $filterfield));
 		}
+		if (!empty($popup)) {
+			$limit = array_unique(array_merge($limit, $popup));
+		}
 		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
 			$limit = '';
 		}
