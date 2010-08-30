@@ -28,16 +28,40 @@ function module_since_last_visit_new_info() {
 				'name' => tra('Calendar focus'),
 				'description' => tra('Unless set to "ignore", the module changes the reference point in time from the user\'s last login date and time to a day where users browse to using the calendar.')
 			),
+			'date_as_link' => array(
+				'name' => tra('Show date as a calendar link'),
+				'description' => tra('If set to "n", do not add a link to tiki calendar on the date in the header (even if feature calendar is set)') . ' ' . tra('Default:') . ' "y"'
+			),
+			'fold_sections' => array(
+				'name' => tra('Fold sections by default'),
+				'description' => tra('If set to "y", fold automatically sections and show only the title (user has to click on each section in order to see the details of modifications)') . ' ' . tra('Default:') . ' "n"'
+			),
 		),
 		'common_params' => array( 'nonums', 'rows' ),
 	);
 }
 
-function module_since_last_visit_new($mod_reference, $params = null) {
+function module_since_last_visit_new($mod_reference, $params = null)
+{
 	global $smarty, $user;
 	include_once('tiki-sefurl.php');
 	if (!$user) return false;
 
+	if (!isset($params['date_as_link']) || $params['date_as_link'] != 'n') {
+		$smarty->assign('date_as_link', 'y');
+	} else {
+		$smarty->assign('date_as_link', 'n');
+	}
+
+	if (!isset($params['fold_sections']) || $params['fold_sections'] != 'y') {
+		$smarty->assign('default_folding', 'block');
+		$smarty->assign('opposite_folding', 'none');
+	} else {
+		$smarty->assign('default_folding', 'none');
+		$smarty->assign('opposite_folding', 'block');
+	}
+
+	
 	$resultCount = $mod_reference['rows'];
 
 	global $tikilib, $userlib, $prefs;
