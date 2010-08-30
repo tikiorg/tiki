@@ -77,18 +77,18 @@
 		<br />
 		<form action="tiki-view_faq.php" method="post">
 			<input type="hidden" name="faqId" value="{$faqId|escape}" />
-			<table class="normal">
+			<table class="formcolor">
 				<tr>
-					<td class="formcolor">{tr}Question{/tr}:</td>
-					<td class="formcolor">
+					<td>{tr}Question{/tr}:</td>
+					<td>
 						<textarea rows="2" cols="80" name="suggested_question" style="width:95%;">{if $pendingquestion}{$pendingquestion}{/if}</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td class="formcolor">
+					<td>
 						{tr}Answer{/tr}:
 					</td>
-					<td class="formcolor">
+					<td>
 						<textarea rows="2" cols="80" name="suggested_answer" style="width:95%;">{if $pendinganswer}{$pendinganswer}{/if}</textarea>
 					</td>
 				</tr>
@@ -96,8 +96,8 @@
 					{include file='antibot.tpl' td_style="formcolor"}
 				{/if}
 				<tr>
-					<td class="formcolor">&nbsp;</td>
-					<td class="formcolor">
+					<td>&nbsp;</td>
+					<td>
 						<input type="submit" name="sugg" value="{tr}Add{/tr}" />
 					</td>
 				</tr>

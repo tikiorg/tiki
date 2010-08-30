@@ -132,10 +132,10 @@
 		{elseif !empty($moduleId)}
 			<input type="hidden" name="moduleId" value="{$moduleId}" />
 		{/if}
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor"><label for="assign_name">{tr}Module Name{/tr}</label></td>
-				<td class="formcolor">
+				<td><label for="assign_name">{tr}Module Name{/tr}</label></td>
+				<td>
 					<select id="assign_name" name="assign_name" onchange="needToConfirm=false;this.form.preview.click()">
 						<option value=""></option>
 						{foreach key=name item=info from=$all_modules_info}
@@ -148,8 +148,8 @@
 {if !empty($assign_name)}
 {* because changing the module name willl auto-submit the form, no reason to display these fields until a module is selected *}
 			<tr>
-				<td class="formcolor"><label for="assign_position">{tr}Position{/tr}</label></td>
-				<td class="formcolor">
+				<td><label for="assign_position">{tr}Position{/tr}</label></td>
+				<td>
 					<select id="assign_position" name="assign_position">
 						<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Left{/tr}</option>
 						<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}Right{/tr}</option>
@@ -157,8 +157,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor"><label for="assign_order">{tr}Order{/tr}</label></td>
-				<td class="formcolor">
+				<td><label for="assign_order">{tr}Order{/tr}</label></td>
+				<td>
 					<select id="assign_order" name="assign_order">
 						{section name=ix loop=$orders}
 							<option value="{$orders[ix]|escape}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
@@ -167,15 +167,15 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor"><label for="assign_cache">{tr}Cache Time{/tr} ({tr}secs{/tr})</label></td>
-				<td class="formcolor">
+				<td><label for="assign_cache">{tr}Cache Time{/tr} ({tr}secs{/tr})</label></td>
+				<td>
 					<input type="text" id="assign_cache" name="assign_cache" value="{$assign_cache|escape}" />
 				</td>
 			</tr>
 			{if !isset($assign_info.type) or $assign_info.type neq 'function'}
 				<tr>
-						<td class="formcolor"><label for="assign_rows">{tr}Rows{/tr}</label></td>
-						<td class="formcolor">
+						<td><label for="assign_rows">{tr}Rows{/tr}</label></td>
+						<td>
 								<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" />
 						</td>
 				</tr>
@@ -183,8 +183,8 @@
 			{if isset($assign_info.type) and $assign_info.type eq 'function'}
 				{foreach from=$assign_info.params key=name item=param}
 					<tr>
-						<td class="formcolor"><label for="assign_params[{$name|escape}]">{$param.name|escape}{if $param.required} <span class="attention">({tr}required{/tr})</span>{/if}</label></td>
-						<td class="formcolor">
+						<td><label for="assign_params[{$name|escape}]">{$param.name|escape}{if $param.required} <span class="attention">({tr}required{/tr})</span>{/if}</label></td>
+						<td>
 							<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"/>
 							<div class="description">
 								{$param.description}
@@ -195,18 +195,18 @@
 				{/foreach}
 			{else}
 				<tr>
-					<td class="formcolor">
+					<td>
 						<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}><label for="assign_params">{tr}Parameters{/tr}</label></a>
 					</td>
-					<td class="formcolor">
+					<td>
 						<textarea id="assign_params" name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
 						{help url="Module+Parameters"}
 					</td>
 				</tr>
 			{/if}
 			<tr>
-				<td class="formcolor"><label for="groups">{tr}Groups{/tr}</label></td>
-				<td class="formcolor">
+				<td><label for="groups">{tr}Groups{/tr}</label></td>
+				<td>
 					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 					<select multiple="multiple" id="groups" name="groups[]">
 						{section name=ix loop=$groups}
@@ -223,8 +223,8 @@
 			</tr>
 			{if $prefs.user_assigned_modules eq 'y'}
 				<tr>
-					<td class="formcolor">{tr}Visibility{/tr}</td>
-					<td class="formcolor">
+					<td>{tr}Visibility{/tr}</td>
+					<td>
 						<select name="assign_type">
 							<option value="D" {if $assign_type eq 'D'}selected="selected"{/if}>
 								{tr}Displayed now for all eligible users even with personal assigned modules{/tr}
@@ -246,16 +246,16 @@
 				</tr>
 			{/if}
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor">
+				<td>&nbsp;</td>
+				<td>
 					<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 					<input type="submit" name="assign" value="{tr}Assign{/tr}" onclick="needToConfirm=false;" />
 				</td>
 			</tr>
 {else}
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor">
+				<td>&nbsp;</td>
+				<td>
 					<input type="submit" name="preview" value="{tr}Module Options{/tr}" onclick="needToConfirm=false;" />
 				</td>
 			</tr>

@@ -17,23 +17,23 @@
 <h2>{tr}Add or edit a rule{/tr}</h2>
 <form action="tiki-admin_banning.php" name="banningform" method="post">
 <input type="hidden" name="banId" value="{$banId|escape}" />
-<table class="normal">
+<table class="formcolor">
 <tr>
-	<td class="formcolor"><label for="banning-title">{tr}Rule title{/tr}</label></td>
-	<td class="formcolor">
+	<td><label for="banning-title">{tr}Rule title{/tr}</label></td>
+	<td>
 		<input type="text" name="title" id="banning-title" value="{$info.title|escape}" maxlength="200" />
 	</td>
 </tr>
 <tr>
-	<td class="formcolor"><label for="banning-userregex">{tr}Username regex matching{/tr}:</label></td>
-	<td class="formcolor">
+	<td><label for="banning-userregex">{tr}Username regex matching{/tr}:</label></td>
+	<td>
 		<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if} />
 		<input type="text" name="userreg" id="banning-userregex" value="{$info.user|escape}" />
 	</td>
 </tr>
 <tr>
-	<td class="formcolor"><label for="banning-ipregex">{tr}IP regex matching{/tr}:</label></td>
-	<td class="formcolor">
+	<td><label for="banning-ipregex">{tr}IP regex matching{/tr}:</label></td>
+	<td>
 		<input type="radio" name="mode" value="ip" {if $info.mode eq 'ip'}checked="checked"{/if} />
 		<input type="text" name="ip1" id="banning-ipregex" value="{$info.ip1|escape}" size="3" />.
 		<input type="text" name="ip2" value="{$info.ip2|escape}" size="3" />.
@@ -42,8 +42,8 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Banned from sections{/tr}:</td>
-	<td class="formcolor">
+	<td>{tr}Banned from sections{/tr}:</td>
+	<td>
 		<div class="toggle">
 			<input type="checkbox" name="checkall" onclick="CheckAll();" />
 			<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label>
@@ -51,7 +51,7 @@
 
 		<table><tr>
 		{foreach key=sec name=ix item=it from=$sections}
-        <td class="formcolor">
+        <td>
 			<input type="checkbox" name="section[{$sec}]" id="banning-section" {if in_array($sec,$info.sections)}checked="checked"{/if} /> <label for="banning-section">{tr}{$sec}{/tr}</label>
         </td>
         {if $smarty.foreach.ix.index mod 2}
@@ -62,32 +62,32 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor"><label for="banning-actdates">{tr}Rule activated by dates{/tr}</label></td>
-	<td class="formcolor">
+	<td><label for="banning-actdates">{tr}Rule activated by dates{/tr}</label></td>
+	<td>
 		<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} />
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Rule active from{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Rule active from{/tr}</td>
+	<td>
 		{html_select_date prefix="date_from" time="$info.date_from" field_order=$prefs.display_field_order}
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Rule active until{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Rule active until{/tr}</td>
+	<td>
 		{html_select_date prefix="date_to" time="$info.date_to" field_order=$prefs.display_field_order}
 	</td>
 </tr>
 <tr>
-	<td class="formcolor"><label for="banning-mess">{tr}Custom message to the user{/tr}</label></td>
-	<td class="formcolor">
+	<td><label for="banning-mess">{tr}Custom message to the user{/tr}</label></td>
+	<td>
 		<textarea rows="4" cols="40" name="message">{$info.message|escape}</textarea>
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">&nbsp;</td>
-	<td class="formcolor">
+	<td>&nbsp;</td>
+	<td>
 		<input type="submit" name="save" value="{tr}Save{/tr}" />
 	</td>
 </tr>

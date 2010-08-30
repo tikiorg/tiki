@@ -313,7 +313,7 @@
 			<tr>
 				{cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 				{section name=ix loop=$memberslist}
-					<td class="formcolor auto">
+					<td class="auto">
 						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 						{$memberslist[ix]|userlink}
@@ -354,10 +354,10 @@
 			{/if}
 
 			<h2>{tr}Download CSV export{/tr}</h2>
-			<table class="normal">
+			<table class="formcolor">
 				<tr>
-					<td class="formcolor auto">{tr}Charset encoding:{/tr}</td>
-					<td class="formcolor auto">
+					<td class="auto">{tr}Charset encoding:{/tr}</td>
+					<td class="auto">
 						<select name="encoding">
 							<option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option>
 							<option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option>
@@ -365,8 +365,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="formcolor auto">{tr}Fields:{/tr}</td>
-					<td class="formcolor auto">
+					<td class="auto">{tr}Fields:{/tr}</td>
+					<td class="auto">
 						<input type="checkbox" name="username" checked="checked" />
 						{tr}Username{/tr}
 						<br />
@@ -376,8 +376,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="formcolor auto"></td>
-					<td class="formcolor auto"><input type="submit" name="export" value="{tr}Export{/tr}" /></td>
+					<td class="auto"></td>
+					<td class="auto"><input type="submit" name="export" value="{tr}Export{/tr}" /></td>
 				</tr>
 			</table>
 
@@ -386,16 +386,16 @@
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
 				{tr}Each user in the file must already exist.{/tr}<br />{tr}To create users or/and assign them to groups, got to <a href="tiki-adminusers.php">admin->users</a>{/tr}
 			{/remarksbox}
-			<table class="normal">
+			<table class="formcolor">
 				<tr>
-					<td class="formcolor auto">
+					<td class="auto">
 						{tr}CSV File{/tr}<a {popup text='user<br />user1<br />user2'}>{icon _id='help'}</a>
 					</td>
-					<td class="formcolor auto"><input name="csvlist" type="file" /></td>
+					<td class="auto"><input name="csvlist" type="file" /></td>
 				</tr>
 				<tr>
-					<td class="formcolor auto"></td>
-					<td class="formcolor auto"><input type="submit" name="import" value="{tr}Import{/tr}" /></td>
+					<td class="auto"></td>
+					<td class="auto"><input type="submit" name="import" value="{tr}Import{/tr}" /></td>
 				</tr>
 			</table>
 		</form>

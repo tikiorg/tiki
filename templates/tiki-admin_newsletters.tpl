@@ -71,70 +71,70 @@
 <form action="tiki-admin_newsletters.php" method="post">
 	<input type="hidden" name="nlId" value="{$info.nlId|escape}" />
 	<input type="hidden" name="author" value="{$user|escape}" />
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Name:{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Name:{/tr}</td>
+			<td>
 				<input type="text" name="name" value="{$info.name|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Description:{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Description:{/tr}</td>
+			<td>
 				<textarea name="description" rows="4" cols="40">{$info.description|escape}</textarea>
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Users can subscribe/unsubscribe to this list{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Users can subscribe/unsubscribe to this list{/tr}</td>
+			<td>
 				<input type="checkbox" name="allowUserSub" {if $info.allowUserSub eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Users can subscribe any email address{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Users can subscribe any email address{/tr}</td>
+			<td>
 				<input type="checkbox" name="allowAnySub" {if $info.allowAnySub eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Add unsubscribe instructions to each newsletter{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Add unsubscribe instructions to each newsletter{/tr}</td>
+			<td>
 				<input type="checkbox" name="unsubMsg" {if $info.unsubMsg eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Validate email addresses{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Validate email addresses{/tr}</td>
+			<td>
 				<input type="checkbox" name="validateAddr" {if $info.validateAddr eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Allow customized text message to be sent with the html version{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Allow customized text message to be sent with the html version{/tr}</td>
+			<td>
 				<input type="checkbox" name="allowTxt" {if $info.allowTxt eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Allow clipping of articles into newsletter{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Allow clipping of articles into newsletter{/tr}</td>
+			<td>
 				<input type="checkbox" name="allowArticleClip" {if $info.allowArticleClip eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Automatically clip articles into newsletter{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Automatically clip articles into newsletter{/tr}</td>
+			<td>
 				<input type="checkbox" name="autoArticleClip" {if $info.autoArticleClip eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Clip articles published in the past number of days{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Clip articles published in the past number of days{/tr}</td>
+			<td>
 				<input type="text" size="4" name="articleClipRangeDays" value="{$info.articleClipRangeDays|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Article types to clip{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Article types to clip{/tr}</td>
+			<td>
 				<select name="articleClipTypes[]" size="5" multiple="multiple">
 					{section name=type loop=$articleTypes}
       					<option value="{$articleTypes[type]}" {if in_array($articleTypes[type], $info.articleClipTypes)}selected="selected"{/if}>{$articleTypes[type]|escape}</option>
@@ -143,8 +143,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor">
+			<td>&nbsp;</td>
+			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />
 			</td>
 		</tr>
