@@ -1980,6 +1980,8 @@ CREATE TABLE `tiki_sheet_values` (
   `height` int(4) NOT NULL default '1',
   `format` varchar(255) default NULL,
   `user` varchar(200) default '',
+  `style` varchar( 255 ) default '',
+  `class` varchar( 255 ) default '',
   UNIQUE KEY `sheetId` (`sheetId`,begin,`rowIndex`,`columnIndex`),
   KEY `sheetId_2` (`sheetId`,`rowIndex`,`columnIndex`)
 ) ENGINE=MyISAM;

@@ -219,7 +219,7 @@ class TikiSheet
 	
 	/** configureLayout {{{2
 	 * Assigns the different parameters for the output
-	 * @param $className	The clas that will be assigned
+	 * @param $className	The class that will be assigned
 	 *						to the table tag of the output.
 	 *						If used for an other output than
 	 *						HTML, it can be used as an identifier
@@ -298,7 +298,9 @@ class TikiSheet
 			&& $this->calcGrid[$rowIndex][$columnIndex] == $sheet->calcGrid[$rowIndex][$columnIndex]
 			&& $this->cellInfo[$rowIndex][$columnIndex]['width'] == $sheet->cellInfo[$rowIndex][$columnIndex]['width']
 			&& $this->cellInfo[$rowIndex][$columnIndex]['height'] == $sheet->cellInfo[$rowIndex][$columnIndex]['height']
-			&& $this->cellInfo[$rowIndex][$columnIndex]['format'] == $sheet->cellInfo[$rowIndex][$columnIndex]['format'];
+			&& $this->cellInfo[$rowIndex][$columnIndex]['format'] == $sheet->cellInfo[$rowIndex][$columnIndex]['format']
+			&& $this->cellInfo[$rowIndex][$columnIndex]['style'] == $sheet->cellInfo[$rowIndex][$columnIndex]['style']
+			&& $this->cellInfo[$rowIndex][$columnIndex]['class'] == $sheet->cellInfo[$rowIndex][$columnIndex]['class'];
 	}
 	
 	/** export {{{2
@@ -358,7 +360,7 @@ class TikiSheet
 		$this->rowCount = $maxRow + 1;
 		$this->columnCount = $maxCol + 1;
 
-		$base = array( 'width' => 1, 'height' => 1, 'format' => null );
+		$base = array( 'width' => 1, 'height' => 1, 'format' => null, 'style' => '', 'class' => '' );
 		for( $y = 0; $this->rowCount > $y; $y++ )
 			for( $x = 0; $this->columnCount > $x; $x++ )
 			{
@@ -627,7 +629,7 @@ class TikiSheet
 	 */
 	function setSize( $width, $height )
 	{
-		$this->cellInfo[$this->usedRow][$this->usedCol] = array( "width" => $width, "height" => $height );
+		$this->cellInfo[$this->usedRow][$this->usedCol] = array( "width" => $width, "height" => $height, "style" => "", "class" => "");
 
 		for( $y = $this->usedRow; $this->usedRow + $height > $y; $y++ )
 			for( $x = $this->usedCol; $this->usedCol + $width > $x; $x++ )
@@ -644,6 +646,28 @@ class TikiSheet
 	{
 		$this->dataGrid[$this->usedRow][$this->usedCol] = $value;
 	}
+	
+	/** setStyle {{{2
+	 * Sets html style,if any, to the currently initialized
+	 * cell.
+	 * @param $style The value to set.
+	 */
+	function setStyle( $style )
+	{
+		if( empty( $style ) ) $style = '';
+		$this->cellInfo[$this->usedRow][$this->usedCol]['style'] = $style;
+	}
+	
+	/** setClass {{{2
+	 * Sets html class, if any, to the currently initialized
+	 * cell.
+	 * @param $class The value to set.
+	 */
+	function setClass( $class )
+	{
+		if( empty( $class ) ) $class = '';
+		$this->cellInfo[$this->usedRow][$this->usedCol]['class'] = $class;
+	}
 
 	/** createDeadCell {{{2
 	 * Assigns the cell as overlapped by a wide cell.
@@ -653,7 +677,7 @@ class TikiSheet
 	function createDeadCell( $x, $y )
 	{
 		$this->dataGrid[$y][$x] = null;
-		$this->cellInfo[$y][$x] = array( "width" => 0, "height" => 0, "format" => null );
+		$this->cellInfo[$y][$x] = array( "width" => 0, "height" => 0, "format" => null, "style" => "", "class" => "" );
 	}
 
 	/** getColumnNumber {{{2
@@ -780,11 +804,13 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 		{
 			if( $sheet->initCell( $key ) )
 			{
-				$this->convert( $value, $v, $c, $w, $h, $f );
+				$this->convert( $value, $v, $c, $w, $h, $f, $stl, $cl );
 				$sheet->setValue( $v );
 				$sheet->setCalculation( $c );
 				$sheet->setSize( $w, $h );
 				$sheet->setFormat( $f );
+				$sheet->setStyle( $stl );
+				$sheet->setClass( $cl );
 			}
 		}
 
@@ -823,7 +849,9 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 				$width = $sheet->cellInfo[$y][$x]['width'];
 				$height = $sheet->cellInfo[$y][$x]['height'];
 				$format = $sheet->cellInfo[$y][$x]['format'];
-
+				$style = $sheet->cellInfo[$y][$x]['style'];
+				$class = $sheet->cellInfo[$y][$x]['class'];
+				
 				$calc = addslashes( $calc );
 				$value = addslashes( $value );
 
@@ -841,6 +869,8 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 				$js .= "		cell.value = '{$calc}';\n";
 				$js .= "		cell.endValue = '{$value}';\n";
 				$js .= "		cell.format = {$format};\n";
+				$js .= "		cell.style = {$style};\n";
+				$js .= "		cell.class = {$class};\n";
 
 				if( !empty( $width ) && !empty( $height ) && ($width != 1 || $height != 1) )
 					$js .= "		cell.changeSize( {$height}, {$width} );\n";
@@ -878,9 +908,12 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 	 * @param $height Will contain the rowspan.
 	 * @param $format The format to be used to render the cell
 	 *			indicates there is no limit.
+	 * @param $style The cells html styles.
+	 * @param $class The cells html classes.
+	 * 
 	 * @return False on error.
 	 */
-	function convert( $formString, &$value, &$calc, &$width, &$height, &$format )
+	function convert( $formString, &$value, &$calc, &$width, &$height, &$format, &$style, &$class )
 	{
 		$value = "";
 		$calc = "";
@@ -894,6 +927,8 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 			$width = $parts[3];
 			$height = $parts[4];
 			$format = $parts[5];
+			$style = $parts[6];
+			$class = $parts[7];
 
 			return true;
 		}
@@ -1280,7 +1315,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	{
 		global $tikilib;
 		
-		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `style`, `class`, `user` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		while( $row = $result->fetchRow() )
 		{
@@ -1290,6 +1325,8 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			$sheet->setCalculation( $calculation );
 			$sheet->setSize( $width, $height );
 			$sheet->setFormat( $format );
+			$sheet->setStyle( $style );
+			$sheet->setClass( $class );
 		}
 
 		// Fetching the layout informations.
@@ -1343,12 +1380,14 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$width = $sheet->cellInfo[$row][$col]['width'];
 				$height = $sheet->cellInfo[$row][$col]['height'];
 				$format = $sheet->cellInfo[$row][$col]['format'];
-
+				$style = $sheet->cellInfo[$row][$col]['style'];
+				$class = $sheet->cellInfo[$row][$col]['class'];
+				
 				$updates[] = $row;
 				$updates[] = $col;
 
 				if( !$sheet->isEmpty( $row, $col ) )
-					$inserts[] = array( (int)$this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height, $format, $user );
+					$inserts[] = array( (int)$this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height, $format, $style, $class, $user );
 
 			}
 		}
@@ -1358,11 +1397,13 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 
 		$conditions = str_repeat( "( rowIndex = ? AND columnIndex = ? ) OR ", ( count($updates) - 4 ) / 2 );
 		if ($prefs['feature_actionlog'] == 'y') { // must keep the previous value to do the difference
-			$query = "SELECT `rowIndex`, `columnIndex`, `value` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND  `end` IS NULL";
+			$query = "SELECT `rowIndex`, `columnIndex`, `value`, `style`, `class` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND  `end` IS NULL";
 			$result = $tikilib->query($query, array($this->sheetId));
 			$old = array();
 			while( $row = $result->fetchRow() ) {
 				$old[$row['rowIndex'].'-'.$row['columnIndex']] = $row['value'];
+				$old[$row['rowIndex'].'-'.$row['columnIndex']]['style'] = $row['style'];
+				$old[$row['rowIndex'].'-'.$row['columnIndex']]['class'] = $row['class'];
 			}
 		}
 			
@@ -1371,7 +1412,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		if( count( $inserts ) > 0 )
 			foreach( $inserts as $values )
 			{
-				$tikilib->query( "INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )", $values );
+				$tikilib->query( "INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `style`, `class`, `user` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )", $values );
 			}
 
 		if ($prefs['feature_actionlog'] == 'y') {
@@ -1811,6 +1852,14 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				if( !empty( $format ) )
 					$data = TikiSheetDataFormat::$format( $data );
 				
+				$style = $sheet->cellInfo[$i][$j]['style'];
+				if( !empty( $style ) )
+					$append .= ' style="'.$style.'"';
+					
+				$class = $sheet->cellInfo[$i][$j]['class'];
+				if( !empty( $class ) )
+					$append .= ' class="'.$class.'"';
+				
 				if ($this->parseOutput && $sheet->parseValues == 'y') {
 					global $tikilib;
 					// only parse if we have non-alphanumeric or space chars
@@ -1985,6 +2034,18 @@ class TikiSheetHTMLTableHandler extends TikiSheetDataHandler
 					$formula = substr($d->data->$ri->$ci->formula, 1, strlen($d->data->$ri->$ci->formula)-1);
 					if (!empty($formula)) {
 						$sheet->setCalculation($formula);
+					}
+				}
+				if (isset($d->data->$ri->$ci->style)) {
+					$style = substr($d->data->$ri->$ci->style, 1, strlen($d->data->$ri->$ci->style)-1);
+					if (!empty($style)) {
+						$sheet->setStyle($style);
+					}
+				}
+				if (isset($d->data->$ri->$ci->class)) {
+					$class = substr($d->data->$ri->$ci->class, 1, strlen($d->data->$ri->$ci->class)-1);
+					if (!empty($class)) {
+						$sheet->setClass($class);
 					}
 				}
 				
