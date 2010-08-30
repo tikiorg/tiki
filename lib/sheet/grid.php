@@ -1815,8 +1815,10 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	{
 		for( $i = $begin; ($end - 1) > $i; $i++ )
 		{
-			echo "		<tr>\n";
-
+			$td = "";
+			$trStyleHeight = "";
+			$trHeight = "";
+			
 			$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol() + 1;
 			for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
 			{
@@ -1851,9 +1853,12 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 					$data = TikiSheetDataFormat::$format( $data );
 				
 				$style = $sheet->cellInfo[$i][$j]['style'];
-				if( !empty( $style ) )
+				if( !empty( $style ) ) {
 					$append .= ' style="'.$style.'"';
 					
+					$trHeight = getAttrFromCssString($style, "height");
+				}
+				
 				$class = $sheet->cellInfo[$i][$j]['class'];
 				if( !empty( $class ) )
 					$append .= ' class="'.$class.'"';
@@ -1871,9 +1876,10 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 						}
 					}
 				}
-				echo "			<td$append>$data</td>\n";
+				$td .= "			<td$append>$data</td>\n";
 			}
-			
+			echo "		<tr".($trHeight ? " style='height: $trHeight;' height='$trHeight'" : ""). ">\n";
+			echo $td;
 			echo "		</tr>\n";
 		}
 	}
@@ -1940,8 +1946,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	{
 		for( $i = $begin; $end > $i; $i++ )
 		{
-			echo "		<tr><th>" . ($i + 1) . "</th>\n";
-
+			$trHeight = "";
 			for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
 			{
 				$width = $height = "";
@@ -1967,20 +1972,27 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 					$data = TikiSheetDataFormat::$format( $data );
 					
 				$style = $sheet->cellInfo[$i][$j]['style'];
-				if( !empty( $style ) )
+				if( !empty( $style ) ) {
 					$append .= " style='{$style}'";
+					
+					$trHeight = getAttrFromCssString($style, "height");
+				}
 					
 				$class = $sheet->cellInfo[$i][$j]['class'];
 				if( !empty( $class ) )
 					$append .= " class='{$class}'";
 					
-				echo "			<td$append>$data</td>\n";
+				$td .= "			<td$append>$data</td>\n";
 			}
 			
-			echo "		</tr>\n";
+			$tr = "		<tr  style='height: $trHeight;' height='$trHeight'><th>" . ($i + 1) . "</th>\n";
+			$tr .= $td;
+			$tr .= "	</tr>\n";
+			
+			echo $tr;
 		}
 	}
-
+	
 	// supports {{{2
 	function supports( $type )
 	{
@@ -2229,3 +2241,15 @@ class SheetLib extends TikiLib
 	
 } // }}}1
 $sheetlib = new SheetLib;
+
+function getAttrFromCssString($style, $attr, $includeAttrType) {
+	$css = explode(';', strtolower($style));
+	$pos = array_search($attr, $css); 
+	$attr = "";
+	if ( isset($pos) ) {
+		$attrW = explode(":", $css[$pos].":"); //ensure it has an ":"
+		$attr = trim($attrW[1]);
+	}
+	echo "<script type='text/javascript'>alert('$attr');</script>";
+	return $attr;
+}
