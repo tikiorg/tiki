@@ -961,13 +961,8 @@ class ToolbarDialog extends Toolbar
 				tra('Quick upload and insert'),
 				'<script type="text/javascript" src="lib/filegals/file_gallery.js"></script><div id="tbFilegalManager" /><div id="tbFilegalManagerSub" />',
 				'{"width": 700, "open": function() {
-					FileGallery.open("/trunk_filegal_manager/tiki-list_file_gallery2.php");
+					FileGallery.open("tiki-list_file_gallery2.php");
 				}}'
-/* FIXME */
-/*				'{"width": 700, "height": 633, "open": function() {
-					$jq("#tbFilegalManager").load("/trunk_filegal_manager/tiki-list_file_gallery2.php");
-				}}'
-*/
 			);
 
 			break;

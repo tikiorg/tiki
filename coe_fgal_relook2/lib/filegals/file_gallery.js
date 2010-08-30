@@ -163,7 +163,7 @@ var FileGallery = {
 		});
 */
 		jQuery("#tbFilegalManagerSub").dialog('open');
-		displayDialog('http://localhost/trunk_filegal_manager/tiki-editpage.php?page=HomePage',2,'edit',url);
+		displayDialog('',2,'edit',url);
 /*		jQuery("#fg-jquery-gallery-dialog").dialog({
 			autoOpen: false,
 			width: 500,
