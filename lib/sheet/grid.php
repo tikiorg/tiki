@@ -1823,6 +1823,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			$td = "";
 			$trStyleHeight = "";
 			$trHeight = "20px";
+			$trHeightIsSet = false;
 			
 			$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol() + 1;
 			for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
@@ -1859,9 +1860,23 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				
 				$style = $sheet->cellInfo[$i][$j]['style'];
 				if( !empty( $style ) ) {
-					$append .= ' style="'.$style.'"';
+					//we have to sanitize the css style here
+					$tdStyle = "";
+					$color = getAttrFromCssString($style, "color", "");
+					$bgColor = getAttrFromCssString($style, "background-color", "");
+					if ($color) {
+						$tdStyle .= "color:$color;";
+					}
+					if ($bgColor) {
+						$tdStyle .= "background-color:$bgColor;";
+					}
 					
-					$trHeight = getAttrFromCssString($style, "height", "20px");
+					$append .= ' style="'.$tdStyle.'"';					
+					
+					if ($trHeightIsSet == false) {
+						$trHeight = getAttrFromCssString($style, "height", "20px");
+						$trHeightIsSet = true;
+					}
 				}
 				
 				$class = $sheet->cellInfo[$i][$j]['class'];
@@ -1897,8 +1912,8 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	 */
 	function drawCols( &$sheet, $begin, $end )
 	{
-		$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol() + 1;
-		for( $j = $sheet->getRangeBeginCol() + 1; $endCol > $j; $j++ )
+		$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol();
+		for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
 		{
 			$style = $sheet->cellInfo[$begin][$j]['style'];
 			$width = getAttrFromCssString($style, "width", "118px");
@@ -2280,15 +2295,15 @@ function getAttrFromCssString($style, $attr, $default) {
 		$v = explode(':', $v);
 	}
 	
-	//print_r($cssAttrs);
 	$key = array_searchRecursive($attr, $cssAttrs);
-	//echo "robert".$key[0];
-	
+	$result;
 	if ($key === false) {
-		return $default;
+		$result = $default;
 	} else {
-		return $cssAttrs[$key[0]][$key[1] + 1];
+		$result = $cssAttrs[$key[0]][$key[1] + 1];
 	}
+	
+	return ($result != 'auto' ? $result : $default);
 }
 
 // array_search with recursive searching, optional partial matches and optional search by key
