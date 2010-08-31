@@ -1787,7 +1787,12 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			$this->drawRows( $sheet, 0, $sheet->headerRow );
 			echo "	</thead>\n";
 		}
-
+		
+		echo "	<colgroup>\n";
+		$this->drawCols( $sheet, $sheet->getRangeBeginRow() < 0 ? $sheet->headerRow : $sheet->getRangeBeginRow(),
+								 $sheet->getRangeEndRow() < 0 ? $sheet->getRowCount() - $sheet->footerRow : $sheet->getRangeEndRow() + 1 );
+		echo "	</colgroup>\n";
+		
 		echo "	<tbody>\n";
 		$this->drawRows( $sheet, $sheet->getRangeBeginRow() < 0 ? $sheet->headerRow : $sheet->getRangeBeginRow(),
 								 $sheet->getRangeEndRow() < 0 ? $sheet->getRowCount() - $sheet->footerRow : $sheet->getRangeEndRow() + 1 );
@@ -1817,7 +1822,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		{
 			$td = "";
 			$trStyleHeight = "";
-			$trHeight = "";
+			$trHeight = "20px";
 			
 			$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol() + 1;
 			for( $j = $sheet->getRangeBeginCol(); $endCol > $j; $j++ )
@@ -1856,7 +1861,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				if( !empty( $style ) ) {
 					$append .= ' style="'.$style.'"';
 					
-					$trHeight = getAttrFromCssString($style, "height");
+					$trHeight = getAttrFromCssString($style, "height", "20px");
 				}
 				
 				$class = $sheet->cellInfo[$i][$j]['class'];
@@ -1878,12 +1883,29 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				}
 				$td .= "			<td$append>$data</td>\n";
 			}
-			echo "		<tr".($trHeight ? " style='height: $trHeight;' height='$trHeight'" : ""). ">\n";
+			echo "		<tr style='height: $trHeight;' height='$trHeight'>\n";
 			echo $td;
 			echo "		</tr>\n";
 		}
 	}
-
+	
+	/** drawCols {{{2
+	 * Draws out a defined set of rows from the sheet.
+	 * @param $sheet The data container.
+	 * @param $begin The index of the begining row. (included)
+	 * @param $end The index of the end row (excluded)
+	 */
+	function drawCols( &$sheet, $begin, $end )
+	{
+		$endCol = $sheet->getRangeEndCol() < 0 ? $sheet->getColumnCount() : $sheet->getRangeEndCol() + 1;
+		for( $j = $sheet->getRangeBeginCol() + 1; $endCol > $j; $j++ )
+		{
+			$style = $sheet->cellInfo[$begin][$j]['style'];
+			$width = getAttrFromCssString($style, "width", "118px");
+			echo "<col style='width: $width;' width='$width'></col>\n";
+		}
+	}
+	
 	// supports {{{2
 	function supports( $type )
 	{
@@ -1926,7 +1948,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 			
 		echo "		</tr>\n";
 		echo "	</thead>\n";
-
+		
 		echo "	<tbody>\n";
 		$this->drawRows( $sheet, 0, $sheet->getRowCount() );
 		echo "	</tbody>\n";
@@ -1946,7 +1968,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 	{
 		for( $i = $begin; $end > $i; $i++ )
 		{
-			$trHeight = "";
+			$trHeight = "20px";
 			for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
 			{
 				$width = $height = "";
@@ -1975,7 +1997,7 @@ class TikiSheetLabeledOutputHandler extends TikiSheetDataHandler
 				if( !empty( $style ) ) {
 					$append .= " style='{$style}'";
 					
-					$trHeight = getAttrFromCssString($style, "height");
+					$trHeight = getAttrFromCssString($style, "height", "20px");
 				}
 					
 				$class = $sheet->cellInfo[$i][$j]['class'];
@@ -2242,14 +2264,48 @@ class SheetLib extends TikiLib
 } // }}}1
 $sheetlib = new SheetLib;
 
-function getAttrFromCssString($style, $attr, $includeAttrType) {
-	$css = explode(';', strtolower($style));
-	$pos = array_search($attr, $css); 
-	$attr = "";
-	if ( isset($pos) ) {
-		$attrW = explode(":", $css[$pos].":"); //ensure it has an ":"
-		$attr = trim($attrW[1]);
+/** getAttrFromCssString {{{2
+ * Grabs a css setting from a string
+ * @param $style A simple css style string used with an html dom object
+ * @param $attr The name of the css attribute you'd like to extract from $style
+ */
+function getAttrFromCssString($style, $attr, $default) {
+	$style = strtolower($style);
+	$style = str_replace(' ', '', $style);
+	
+	$attr = strtolower($attr);
+	
+	$cssAttrs = explode(';', $style);
+	foreach($cssAttrs as &$v) {
+		$v = explode(':', $v);
 	}
-	//echo "<script type='text/javascript'>alert('$attr');</script>";
-	return $attr;
+	
+	//print_r($cssAttrs);
+	$key = array_searchRecursive($attr, $cssAttrs);
+	//echo "robert".$key[0];
+	
+	if ($key === false) {
+		return $default;
+	} else {
+		return $cssAttrs[$key[0]][$key[1] + 1];
+	}
+}
+
+// array_search with recursive searching, optional partial matches and optional search by key
+function array_searchRecursive( $needle, $haystack, $strict=false, $path=array() )
+{
+    if( !is_array($haystack) ) {
+        return false;
+    }
+ 
+    foreach( $haystack as $key => $val ) {
+        if( is_array($val) && $subPath = array_searchRecursive($needle, $val, $strict, $path) ) {
+            $path = array_merge($path, array($key), $subPath);
+            return $path;
+        } elseif ( (!$strict && $val == $needle) || ($strict && $val === $needle) ) {
+            $path[] = $key;
+            return $path;
+        }
+    }
+    return false;
 }
