@@ -980,6 +980,39 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if (count($passfields)) {
+			// Optimization: Group category fields using AND logic indicated by sub-array
+			$catfilters = array();
+			$catfiltervalue = array();
+			$catfilternotvalue = array();
+			foreach ($filterfield as $k => $ff) {
+				$filterfieldinfo = $trklib->get_tracker_field($ff);
+				if ($filterfieldinfo['type'] == 'e') {
+					$catfilters[] = $k;
+					if (array_key_exists('not', $exactvalue[$k])) {
+						$catfilternotfield[0] = $ff;
+						$catfilternotvalue[] = array($exactvalue[$k]);
+					} else {
+						$catfilterfield[0] = $ff;
+						$catfiltervalue[] = array($exactvalue[$k]);
+					}
+				}
+			}
+			if ($catfilters) {
+				foreach ($catfilters as $cf) {
+					unset($filterfield[$cf]);
+					unset($exactvalue[$cf]);
+				}
+				if ($catfiltervalue) {
+					// array_merge is used because it reindexes
+					$filterfield = array_merge($filterfield, $catfilterfield);
+					$exactvalue = array_merge($exactvalue, array($catfiltervalue));
+				}
+				if ($catfilternotvalue) {
+					$filterfield = array_merge($filterfield, $catfilternotfield);
+					$exactvalue[] = array('not' => $catfilternotvalue);
+				}
+			}
+			// End Optimization
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter, $allfields);
 			if (isset($silent) && $silent == 'y' && empty($items['cant'])) {
 				return;

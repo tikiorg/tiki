@@ -791,13 +791,46 @@ class TrackerLib extends TikiLib
 						$mid .= " AND tob$ff.`type` = 'trackeritem' AND tco$ff.`categId` NOT IN ( ";
 					}
 					$first = true;
-					foreach ( $value as $catId ) {
-						$bindvars[] = $catId;
-						if ($first)
-							$first = false;
-						else
-							$mid .= ',';
-						$mid .= '?';
+					foreach ( $value as $k => $catId ) {
+						if (is_array($catId)) {
+							// this is a grouped AND logic for optimization indicated by the value being array 
+							$innerfirst = true;
+							foreach ( $catId as $c ) {
+								if (is_array($c)) {
+									$innerfirst = true;
+									foreach ($c as $d) {
+										$bindvars[] = $d; 
+										if ($innerfirst)  
+											$innerfirst = false;
+										else
+											$mid .= ','; 
+										$mid .= '?';
+									}
+								} else {
+									$bindvars[] = $c;
+									$mid .= '?';
+								} 
+							}
+							if ($k < count($value) - 1 ) {
+								$mid .= " ) AND ";
+								if (empty($not)) {
+									$ff2 = $ff . '_' . $k;
+									$cat_table .= " INNER JOIN `tiki_category_objects` tco$ff2 ON (tob$ff.`objectId` = tco$ff2.`catObjectId`)";
+									$mid .= "tco$ff2.`categId` IN ( ";
+								} else {
+									$ff2 = $ff . '_' . $k;
+									$cat_table .= " left JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
+									$mid .= "tco$ff2.`categId` NOT IN ( ";
+								}
+							}
+						} else {
+							$bindvars[] = $catId;
+							if ($first)
+								$first = false;
+							else
+								$mid .= ',';
+							$mid .= '?';
+						}
 					}
 					$mid .= " ) ";
 					if (!empty($not)) {
