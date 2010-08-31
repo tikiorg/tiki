@@ -30,10 +30,10 @@
 	{js_maxlength textarea=message maxlength=255}
 	<form action="tiki-shoutbox.php" method="post" onsubmit="return verifyForm(this);">
 		<input type="hidden" name="msgId" value="{$msgId|escape}" />
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor">{tr}Message{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Message{/tr}:</td>
+				<td>
 					<textarea rows="4" cols="60" name="message">{$message|escape}</textarea>
 					{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}
 						{if $prefs.socialnetworks_twitter_consumer_key neq ''}
@@ -49,8 +49,8 @@
 				{include file='antibot.tpl' td_style="formcolor"}
 			{/if}
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor">
+				<td>&nbsp;</td>
+				<td>
 					<input type="submit" name="save" value="{tr}Save{/tr}" />
 				</td>
 			</tr>
