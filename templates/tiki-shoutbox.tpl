@@ -35,14 +35,14 @@
 				<td class="formcolor">{tr}Message{/tr}:</td>
 				<td class="formcolor">
 					<textarea rows="4" cols="60" name="message">{$message|escape}</textarea>
-				{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}
-					{if $prefs.socialnetworks_twitter_consumer_key neq ''}
-					<div><input type="checkbox" name="tweet" id="tweet" value='1' /> {tr}Tweet with twitter{/tr}<br /></div>
+					{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}
+						{if $prefs.socialnetworks_twitter_consumer_key neq ''}
+							<div><input type="checkbox" name="tweet" id="tweet" value='1' /> {tr}Tweet with twitter{/tr}<br /></div>
+						{/if}
+						{if $prefs.socialnetworks_facebook_application_id neq ''}
+							<div><input type="checkbox" name="facebook" id="facebook" value='1' /> {tr}Post on my facebook wall{/tr}</div>
+						{/if}
 					{/if}
-					{if $prefs.socialnetworks_facebook_application_id neq ''}
-					<div><input type="checkbox" name="facebook" id="facebook" value='1' /> {tr}Post on my facebook wall{/tr}</div>
-					{/if}
-				{/if}
 				</td>
 			</tr>
 			{if $prefs.feature_antibot eq 'y' && $user eq ''}
@@ -67,8 +67,12 @@
 		<b><a href="tiki-user_information.php?view_user={$channels[user].user}">{$channels[user].user}</a></b>, {$channels[user].timestamp|tiki_long_date}, {$channels[user].timestamp|tiki_long_time}
 
 		{if $tiki_p_admin_shoutbox eq 'y' || $channels[user].user == $user }
-			<a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].msgId}" class="link">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-			<a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;msgId={$channels[user].msgId}" class="link">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+			<a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].msgId}" class="link">
+				{icon _id='cross' alt="{tr}Delete{/tr}"}
+			</a>
+			<a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;msgId={$channels[user].msgId}" class="link">
+				{icon _id='page_edit' alt="{tr}Edit{/tr}"}
+			</a>
 		{/if}
 		<br />
 		{$channels[user].message}
