@@ -547,7 +547,7 @@ class SearchLib extends TikiLib
 		global $user, $smarty;
 		include_once('tiki-sefurl.php');
 		foreach ($res['data'] as $i=>$r) {
-			$res['data'][$i]['href'] = filter_out_sefurl($r['href'], $smarty, 'blog', $res['pageName']);
+			$res['data'][$i]['href'] = filter_out_sefurl($r['href'], $smarty, 'blog', $r['pageName']);
 		}
 
 		return $res;
