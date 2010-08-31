@@ -22,25 +22,26 @@
 		{/if}
 		<form action="tiki-sheets.php" method="post">
 			<input type="hidden" name="sheetId" value="{$sheetId|escape}" />
-			<table class="normal">
-				<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}"/></td></tr>
-				<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-				<tr><td class="formcolor">{tr}Class Name{/tr}:</td><td class="formcolor"><input type="text" name="className" value="{$className|escape}"/></td></tr>
-				<tr><td class="formcolor">{tr}Header Rows{/tr}:</td><td class="formcolor"><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
-				<tr><td class="formcolor">{tr}Footer Rows{/tr}:</td><td class="formcolor"><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
+			<table class="formcolor">
+				<tr><td>{tr}Title{/tr}:</td><td><input type="text" name="title" value="{$title|escape}"/></td></tr>
+				<tr><td>{tr}Description{/tr}:</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+				<tr><td>{tr}Class Name{/tr}:</td><td><input type="text" name="className" value="{$className|escape}"/></td></tr>
+				<tr><td>{tr}Header Rows{/tr}:</td><td><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
+				<tr><td>{tr}Footer Rows{/tr}:</td><td><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
 				<tr>
-					<td class="formcolor">{tr}Wiki Parse Values{/tr}:</td><td class="formcolor">
+					<td>{tr}Wiki Parse Values{/tr}:</td><td>
 						<input type="checkbox" name="parseValues"{if $parseValues eq 'y'} checked="checked"{/if}/>
 					</td>
 				</tr>
 				{include file='categorize.tpl'}
 				<tr>
-					<td class="formcolor">{tr}Creator{/tr}:</td><td class="formcolor">
+					<td>{tr}Creator{/tr}:</td><td>
 						{user_selector name="creator" editable=$tiki_p_admin_sheet}
 					</td>
 				</tr>
 				<tr>
-					<td class="formcolor">{tr}Parent SheetId{/tr}:</td><td class="formcolor">
+					<td>{tr}Parent SheetId{/tr}:</td>
+					<td>
 						<select name="parentSheetId">
 							<option value="">{tr}None{/tr}</option>
 							{section name=sheet loop=$sheets}
@@ -52,7 +53,7 @@
 						<em>{tr}Makes this sheet a "child" sheet of a multi-sheet set{/tr}</em>
 					</td>
 				</tr>
-				<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
+				<tr><td>&nbsp;</td><td><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
 			</table>
 		</form>
 		<br />
