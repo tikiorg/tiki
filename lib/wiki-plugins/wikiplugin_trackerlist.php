@@ -988,6 +988,15 @@ function wikiplugin_trackerlist($data, $params) {
 				$filterfieldinfo = $trklib->get_tracker_field($ff);
 				if ($filterfieldinfo['type'] == 'e') {
 					$catfilters[] = $k;
+					if (!empty($filtervalue[$k]) && empty($exactvalue[$k]) ) {
+						// Some people use filtervalue instead of exactvalue for category filters
+						$exactvalue[$k] = $filtervalue[$k];
+						for ($i = 0; $i < $k; $i++) {
+							if (!isset($exactvalue[$i])) {
+								$exactvalue[$i] = '';
+							}
+						} 
+					} 
 					if (array_key_exists('not', $exactvalue[$k])) {
 						$catfilternotfield[0] = $ff;
 						$catfilternotvalue[] = array($exactvalue[$k]);
