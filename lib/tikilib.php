@@ -8216,6 +8216,7 @@ function get_wiki_section($data, $hdr) {
 						  'height' => 350,
 						  'quality' => 'high',
 						  'version' => '9.0.0',
+						  'wmode' => 'transparent',
 						  );
 		$params = array_merge( $defaults, $params );
 		if (preg_match('/^(\/|https?:)/', $params['movie'])) {
