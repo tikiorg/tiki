@@ -6030,7 +6030,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		// Handle double square brackets.  -rlpowell
+		// Handle double square brackets. to display [foo] use [[foo] -rlpowell
 		$data = str_replace( "[[", "[", $data );
 
 		return $data;
