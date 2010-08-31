@@ -819,7 +819,7 @@ class TrackerLib extends TikiLib
 									$mid .= "tco$ff2.`categId` IN ( ";
 								} else {
 									$ff2 = $ff . '_' . $k;
-									$cat_table .= " left JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
+									$cat_table .= " left JOIN `tiki_category_objects` tco$ff2 ON (tob$ff.`objectId` = tco$ff2.`catObjectId`)";
 									$mid .= "tco$ff2.`categId` NOT IN ( ";
 								}
 							}
