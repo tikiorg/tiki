@@ -3197,8 +3197,8 @@ INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Vi
 DROP TABLE IF EXISTS `tiki_freetags`;
 CREATE TABLE `tiki_freetags` (
   `tagId` int(10) unsigned NOT NULL auto_increment,
-  `tag` varchar(30) NOT NULL default '',
-  `raw_tag` varchar(50) NOT NULL default '',
+  `tag` varchar(128) NOT NULL default '',
+  `raw_tag` varchar(150) NOT NULL default '',
   `lang` varchar(16) NULL,
   PRIMARY KEY (`tagId`)
 ) ENGINE=MyISAM;
