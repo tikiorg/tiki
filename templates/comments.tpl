@@ -9,6 +9,7 @@
 {else}
 	{assign var=cookie_key value="show_comzone"}
 {/if}
+
 {*Debug:<br />
 comments_show: {$comments_show}<br />
 show_comzone: {$show_comzone}<br />
@@ -16,6 +17,7 @@ prefs.wiki_comments_displayed_default: {$prefs.wiki_comments_displayed_default}<
 prefs.show_comzone: {$prefs.show_comzone}<br />
 cookie_key: {$cookie_key}<br />
 smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$cookie_key}<br />*}
+
 <div {*do not missed up with the space*}
 {if $pagemd5}
 	id="comzone{$pagemd5}"
@@ -371,26 +373,11 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					<label for="comments-title">{tr}Title{/tr} <span class="attention">*</span> </label>
 				</td>
 				<td class="formcolor">
-				{* 
-				   Alain Désilets: This used to have a size="50" attribute, but I deleted it
-				   because in the Collaborative_Multilingual_Terminology, we may need to view 
-				   two different languages of the same page side by side. And the text length of
-				   50 was causing the language displayed on the right side to be squished into a 
-				   very narrow column, if comments were opened on the left side language
-				   but not on the right side language.
-				   
-				   Unfortunately, without a size specification, the comments box looks 
-				   a bit weird when we only view one language at a time.
-				   
-				   But I don't know how else to deal with this issue.
-				 *}
 					<input type="text" name="comments_title" id="comments-title" value="{$comment_preview_data.title|escape}" /> 
-
 				</td>
 			</tr>
 		{/if}
 
-		{* Start: Xenfasa adding and testing article ratings in comments here. Not fully functional yet *}
 		{if $comment_can_rate_article eq 'y'}
 		<tr>
 			<td class="formcolor"><label for="comments-rating">{tr}Rating{/tr} </label></td>
@@ -408,11 +395,10 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					<option value="8" {if $comment_rating eq 8}selected="selected"{/if}>8</option>
 					<option value="9" {if $comment_rating eq 9}selected="selected"{/if}>9</option>
 					<option value="10" {if $comment_rating eq 10}selected="selected"{/if}>10</option>
-				</select> Rate this Article (10=best, 0=worse)
+				</select>{tr}Rate this Article (10=best, 0=worse){/tr}
 			</td>
 		</tr>
 		{/if}
-		{* End: Xenfasa adding and testing article ratings in comments here *}
 
 		{if $prefs.section_comments_parse eq 'y' && $forum_mode neq 'y' || $prefs.feature_forum_parse eq 'y' && $forum_mode eq 'y'}
 	        {assign var=toolbars_html value=true}{* can't find where this gets set in ui-revamp project *}
