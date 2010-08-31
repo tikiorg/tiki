@@ -778,6 +778,11 @@ class BlogLib extends TikiDb_Bridge
 			$result = $this->query($query, array((int) $blogId));
 		}
 
+		// When a post is deleted, all freetags asociated must also be deleted
+		$objectId = $objectlib->get_object_id('blog post', $postId);
+		$query = "DELETE FROM `tiki_freetagged_objects` WHERE `objectId` = ?";
+		$this->query($query,array((int) $objectId));
+
 		$query = "delete from `tiki_blog_posts_images` where `postId`=?";
 		$this->query($query, array((int) $postId));
 
