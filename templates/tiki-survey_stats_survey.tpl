@@ -1,7 +1,7 @@
 {title}{tr}Stats for survey:{/tr} {$survey_info.name|escape}{/title}
 
 <div class="navbar">
-	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt='{tr}Print{/tr}'}{/self_link}
+	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
 	{button href="tiki-list_surveys.php" _text="{tr}List Surveys{/tr}"}
 	{button href="tiki-survey_stats.php" _text="{tr}Survey Stats{/tr}"}
 	{if $tiki_p_admin_surveys eq 'y'}

@@ -59,7 +59,7 @@
 				{preference name=feature_wiki_ext_icon}
 				{preference name=feature_wiki_ext_rel_nofollow}
 				{preference name=popupLinks}
-				{remarksbox type='tip' title='{tr}Tip{/tr}'}
+				{remarksbox type='tip' title="{tr}Tip{/tr}"}
 					<em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
 				{/remarksbox}
 			</fieldset>

@@ -48,7 +48,7 @@
    <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">
    {icon _id='page_edit'}</a> &nbsp;
    <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" >
-   {icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+   {icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}

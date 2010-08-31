@@ -71,7 +71,7 @@
     	{/if}
     	
     	<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title|escape}</a>
-    	<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">{icon _id='cross' alt='{tr}Remove{/tr}' style="vertical-align:middle;"}</a>
+    	<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">{icon _id='cross' alt="{tr}Remove{/tr}" style="vertical-align:middle;"}</a>
     	<br />
     	{/section}
     	</td>

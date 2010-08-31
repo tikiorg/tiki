@@ -8,15 +8,15 @@
 		{if !empty($allGroups.$gr.groupHome)}<a href="{$allGroups.$gr.groupHome|escape:url}">{/if}
 		{if $type eq 'included'}<i>{$gr|escape}</i>{else}{$gr|escape}{/if}
 		{if !empty($allGroups.$gr.groupHome)}</a>{/if}
-		{if $showdefault eq 'y' and $default_group eq $gr}{icon _id='group' alt='{tr}Your default group{/tr}'}{/if}
+		{if $showdefault eq 'y' and $default_group eq $gr}{icon _id='group' alt="{tr}Your default group{/tr}"}{/if}
 		{if $showgroupdescription eq 'y'}<div style="margin-left:10px">{$allGroups.$gr.groupDesc|escape}</div>{/if}
 	</td>
 	<td class="{cycle}">
 		{if $type ne 'included' and $allGroups.$gr.userChoice eq 'y'}
-			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}unassign={$gr|escape:'url'}">{icon _id='cross' alt='{tr}Unsubscribe{/tr}'}</a>
+			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}unassign={$gr|escape:'url'}">{icon _id='cross' alt="{tr}Unsubscribe{/tr}"}</a>
 		{/if}
 		{if $showdefault eq 'y' and ($default_group ne $gr or !empty($defaulturl))}
-			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}default={$gr|escape:'url'}" title="{tr}Change default group{/tr}">{icon _id='group' alt='{tr}Change default group{/tr}'}</a>
+			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}default={$gr|escape:'url'}" title="{tr}Change default group{/tr}">{icon _id='group' alt="{tr}Change default group{/tr}"}</a>
 		{/if}
 	</td>
 	</tr>

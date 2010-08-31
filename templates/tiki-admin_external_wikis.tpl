@@ -6,7 +6,7 @@
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_external_wikis.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin external wikis template{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
+{icon _id='shape_square_edit' alt="{tr}Edit template{/tr}"}</a>
 {/if}</h1>
 
 <h2>{tr}Create/Edit External Wiki{/tr}</h2>
@@ -38,7 +38,7 @@
    <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;extwikiId={$channels[user].extwikiId}">
    {icon _id='page_edit'}</a> &nbsp;
    <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].extwikiId}" >
-   {icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+   {icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}

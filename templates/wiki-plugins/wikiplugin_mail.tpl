@@ -1,6 +1,6 @@
 <form method="post">
 {if !empty($sents)}
-{remarksbox type='feedback' title='{tr}Message sent to{/tr}'}
+{remarksbox type='feedback' title="{tr}Message sent to{/tr}"}
 	{tr}Email sent to:{/tr}
 	<ul>
 	{foreach from=$sents item=sent}
@@ -10,7 +10,7 @@
 {/remarksbox}
 {/if}
 {if !empty($mail_error)}
-{remarksbox type='errors' title='{tr}Errors{/tr}'}
+{remarksbox type='errors' title="{tr}Errors{/tr}"}
 	{tr}Error{/tr}
 {/remarksbox}
 {/if}
@@ -37,7 +37,7 @@
 					{/foreach}
     		</select>
 		{/if}
-		{remarksbox type='tip'  title='{tr}Tip{/tr}'}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+		{remarksbox type='tip'  title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 	</td>
 	</tr>
 	<tr>
@@ -47,7 +47,7 @@
 	<td>
 		{if $params.showuser eq 'y'}
 			<input type="text" size="80" name="mail_user" />
-			{remarksbox type='tip' title='{tr}Tip{/tr}'}{tr}Email separated by comma{/tr}{/remarksbox}
+			{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Email separated by comma{/tr}{/remarksbox}
 		{/if}
 	</td>
 	</tr>
@@ -73,7 +73,7 @@
 						{/if}
 					{/foreach}
     		</select>
-			{remarksbox type='tip' title='{tr}Tip{/tr}'}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+			{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 		{/if}
 	</td>
 	</tr>

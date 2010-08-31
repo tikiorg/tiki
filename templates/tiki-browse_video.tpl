@@ -19,19 +19,19 @@
 
 {* --- first image --- *}
 	<a href="{$url_base}{$firstId}"
-		class="gallink"{if $videoId eq $firstId} style="display: none;"{/if}>{icon _id='resultset_first' alt='{tr}First Video{/tr}'}</a>
+		class="gallink"{if $videoId eq $firstId} style="display: none;"{/if}>{icon _id='resultset_first' alt="{tr}First Video{/tr}"}</a>
 
 {* --- previous image --- *}
 	<a href="{$url_base}{$previmg}"
-    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{icon _id='resultset_previous' alt='{tr}Prev Video{/tr}'}</a>
+    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{icon _id='resultset_previous' alt="{tr}Prev Video{/tr}"}</a>
 
 {* --- next image --- *}
 	<a href="{$url_base}{$nextimg}"
-    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{icon _id='resultset_next' alt='{tr}Next Video{/tr}'}</a>
+    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{icon _id='resultset_next' alt="{tr}Next Video{/tr}"}</a>
 
 {* --- last image --- *}
 	<a href="{$url_base}{$lastId}"
-		class="gallink"{if $videoId eq $lastId} style="display: none;"{/if}>{icon _id='resultset_last' alt='{tr}Last Video{/tr}'}</a>    
+		class="gallink"{if $videoId eq $lastId} style="display: none;"{/if}>{icon _id='resultset_last' alt="{tr}Last Video{/tr}"}</a>    
   </div>
 
 {/capture}

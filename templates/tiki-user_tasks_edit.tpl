@@ -19,11 +19,11 @@
 {if ($info.creator eq $user or $info.user eq $user or $admin_mode) and ($info.task_version eq $info.last_version)}
 { if ($info.taskId > 0 and $info.creator ne $info.user) }
     <span class="tabbut">
-    {html_image file='img/icons2/tick.gif' width='15' height='15' alt='{tr}Accept{/tr}'}
+    {html_image file='img/icons2/tick.gif' width='15' height='15' alt="{tr}Accept{/tr}"}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">{tr}Accept{/tr}</a>
     </span>
     <span class="tabbut">
-    {html_image file='img/icons2/error.gif' width='14' height='14' alt='{tr}Red{/tr}'}
+    {html_image file='img/icons2/error.gif' width='14' height='14' alt="{tr}Red{/tr}"}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink">{tr}NOT accept{/tr}</a>
     </span>
 {/if}
@@ -33,7 +33,7 @@
     </span>
 {else}
     <span class="tabbut">
-	{html_image file='img/icons/trash.gif' width='16' height='16' alt='{tr}Trash{/tr}'}
+	{html_image file='img/icons/trash.gif' width='16' height='16' alt="{tr}Trash{/tr}"}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">{tr}Move into Trash{/tr}</a>
     </span>
 {/if}

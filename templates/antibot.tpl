@@ -48,7 +48,7 @@
 		{/if}
 				<input type="text" maxlength="8" size="22" name="captcha[input]" id="antibotcode" />
 			{if $captchalib->type eq 'default'}
-				{button _id='captchaRegenerate' href='#antibot' _text='{tr}Try another code{/tr}'}
+				{button _id='captchaRegenerate' href='#antibot' _text="{tr}Try another code{/tr}"}
 			{/if}
 		{if $antibot_table ne 'y'}
 			</td>

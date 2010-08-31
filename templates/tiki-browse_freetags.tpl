@@ -169,7 +169,7 @@
 				<h3>
 					<a href="{$objects[ix].href}">{$objects[ix].name|escape}</a>
 					{if $tiki_p_unassign_freetags eq 'y' or $tiki_p_admin eq 'y'}
-						<a href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+						<a href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 					{/if}
 				</h3>
 				<div class="type">

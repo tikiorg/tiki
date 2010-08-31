@@ -15,7 +15,7 @@
     <tr>
       <td class="{cycle advance=false}" align="middle">
         <a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}#add">{icon _id='page_edit'}</a> &nbsp;
-        <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" >{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+        <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
       </td>
       <td class="{cycle advance=false}">{$accounts[ix].account}</td>
       <td class="{cycle}">{tr}{$accounts[ix].type}{/tr}</td>

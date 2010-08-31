@@ -177,7 +177,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 			{if $showdelete eq 'y' && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y')}
 		<td>
 				{if $tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c')}
-					{self_link delete=`$items[user].itemId`}{icon _id=cross alt='{tr}Remove{/tr}'}{/self_link}
+					{self_link delete=`$items[user].itemId`}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
 				{/if}
 		</td>
 			{/if}

@@ -29,7 +29,7 @@
 <td class="{cycle advance=false}">{$words[user].url}</td>
 <td class="{cycle advance=true}">
 <a class="link" href="tiki-admin_hotwords.php?remove={$words[user].word|escape:"url"}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}" 
-title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}

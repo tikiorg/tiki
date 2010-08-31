@@ -126,9 +126,9 @@
 
 		<br />
 		{if $installask.wanted}
-			<input type='submit' id='button_install' name='button-install' value='{tr}Install{/tr}'{if $installask.unavailable} style='display: none;'{/if} />
+			<input type='submit' id='button_install' name='button-install' value="{tr}Install{/tr}"{if $installask.unavailable} style='display: none;'{/if} />
 		{elseif $installask.wantedtoremove}
-			<input type='submit' id='button_install' name='button-remove' value='{tr}Remove{/tr}'{if $installask.unavailable} style='display: none;'{/if} />
+			<input type='submit' id='button_install' name='button-remove' value="{tr}Remove{/tr}"{if $installask.unavailable} style='display: none;'{/if} />
 		{/if}
 {jq}
 function update_button_install() {

@@ -63,7 +63,7 @@
 						<a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
 					{/if}
 					<a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}" title="{tr}Move to Right Column{/tr}">{icon _id='arrow_right'}</a>
-					<a class="link" href="tiki-admin_modules.php?unassign={$left[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a>
+					<a class="link" href="tiki-admin_modules.php?unassign={$left[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
 				</td>
 			</tr>
 		{sectionelse}
@@ -104,7 +104,7 @@
 						<a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
 					{/if}
 					<a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}" title="{tr}Move to Left Column{/tr}">{icon _id='arrow_left'}</a>
-					<a class="link" href="tiki-admin_modules.php?unassign={$right[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a>
+					<a class="link" href="tiki-admin_modules.php?unassign={$right[user].moduleId}" title="{tr}Unassign{/tr}">{icon _id='cross' alt="{tr}x{/tr}"}</a>
 				</td>
 			</tr>
 		{sectionelse}
@@ -285,8 +285,8 @@
 				<td class="{cycle advance=false}">{$user_modules[user].title|escape}</td>
 				<td class="{cycle}">
 					<a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					<a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=1#assign" title="{tr}Assign{/tr}">{icon _id='add' alt='{tr}Assign{/tr}'}</a>
-					<a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+					<a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=1#assign" title="{tr}Assign{/tr}">{icon _id='add' alt="{tr}Assign{/tr}"}</a>
+					<a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 				</td>
 			</tr>
 		{sectionelse}
@@ -349,7 +349,7 @@
 									</select>
 								</td>
 								<td class="form">
-									<a class="link" href="javascript:setUserModuleFromCombo('list_polls', 'um_data');" title="{tr}Use Poll{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+									<a class="link" href="javascript:setUserModuleFromCombo('list_polls', 'um_data');" title="{tr}Use Poll{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td class="form">
 									<a {popup text="Params: id= rate=" width=100 center=true}>{icon _id='help'}</a>
@@ -370,7 +370,7 @@
 									</select>
 								</td>
 								<td class="form">
-									<a class="link" href="javascript:setUserModuleFromCombo('list_galleries', 'um_data');" title="{tr}Use Gallery{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+									<a class="link" href="javascript:setUserModuleFromCombo('list_galleries', 'um_data');" title="{tr}Use Gallery{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td class="form">
 									<a {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}>{icon _id='help'}</a>
@@ -390,7 +390,7 @@
 									</select>
 								</td>
 								<td class="form">
-									<a class="link" href="javascript:setUserModuleFromCombo('list_contents', 'um_data');" title="{tr}Use Dynamic Content{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+									<a class="link" href="javascript:setUserModuleFromCombo('list_contents', 'um_data');" title="{tr}Use Dynamic Content{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td class="form">
 									<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
@@ -410,7 +410,7 @@
 									</select>
 								</td>
 								<td class="form">
-									<a class="link" href="javascript:setUserModuleFromCombo('list_rsss', 'um_data');" title="{tr}Use RSS Module{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+									<a class="link" href="javascript:setUserModuleFromCombo('list_rsss', 'um_data');" title="{tr}Use RSS Module{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td class="form">
 									<a {popup text="Params: id= max= skip=x,y " width=100 center=true}>{icon _id='help'}</a>
@@ -431,7 +431,7 @@
 									</select>
 								</td>
 								<td class="form">
-									<a class="link" href="javascript:setUserModuleFromCombo('list_menus', 'um_data');" title="{tr}Use Menu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+									<a class="link" href="javascript:setUserModuleFromCombo('list_menus', 'um_data');" title="{tr}Use Menu{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td class="form">
 									<a {popup text="Params:<br />id=<br />structureId=<br />css=<br />link_on_section=y <i>or</i> n<br />type=vert <i>or</i> horiz<br />translate=y <i>or</i> n<br />menu_cookie=y <i>or</i> n" width=120 center=true}>{icon _id='help'}</a>
@@ -450,7 +450,7 @@
 										</select>
 									</td>
 									<td class="form">
-										<a class="link" href="javascript:setUserModuleFromCombo('list_cssmenus', 'um_data');" title="{tr}Use CSS menu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+										<a class="link" href="javascript:setUserModuleFromCombo('list_cssmenus', 'um_data');" title="{tr}Use CSS menu{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 									</td>
 									<td class="form">
 										<a {popup text="Params:<br />id=<br />type=horiz <i>or</i> vert<br />sectionLevel=<br />toLevel= " width=100 center=true}>{icon _id='help'}</a>
@@ -470,7 +470,7 @@
 										</select>
 									</td>
 									<td class="form">
-										<a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus', 'um_data');" title="{tr}Use phplayermenu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+										<a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus', 'um_data');" title="{tr}Use phplayermenu{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 									</td>
 									<td class="form">
 										<a {popup text="Params:<br />id=<br />type=tree <i>or</i> phptree <i>or</i> plain <i>or</i> horiz <i>or</i> vert<br />file=<br />sectionLevel=" width=100 center=true}>{icon _id='help'}</a>
@@ -491,7 +491,7 @@
 									</select>
 								</td>
 								<td class="form">
-									<a class="link" href="javascript:setUserModuleFromCombo('list_banners', 'um_data');" title="{tr}Use Banner Zone{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+									<a class="link" href="javascript:setUserModuleFromCombo('list_banners', 'um_data');" title="{tr}Use Banner Zone{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td class="form">
 									<a {popup text="Params: zone= target=_blank|_self|" width=100 center=true}>{icon _id='help'}</a>
@@ -511,7 +511,7 @@
 									</select>
 								</td>
 								<td class="form">
-									<a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures', 'um_data');" title="{tr}Use Wiki Structure{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+									<a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures', 'um_data');" title="{tr}Use Wiki Structure{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
 								<td class="form">
 									<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>

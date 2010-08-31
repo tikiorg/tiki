@@ -3,7 +3,7 @@
 
 {if $tiki_p_admin eq 'y'}
 	<div class="navbar">
-		{button href='tiki-import_xml_zip.php' _text='{tr}XML Zip Import{/tr}'}
+		{button href='tiki-import_xml_zip.php' _text="{tr}XML Zip Import{/tr}"}
 	</div>
 {/if}
 
@@ -16,9 +16,9 @@
 {if $askremove eq 'y'}
 {remarksbox type='confirm' title="{tr}Please Confirm{/tr}"}
 {tr}You will remove structure{/tr}: {$removename|escape}<br />
-{button href="?rremove=$remove&amp;page=$removename" _text='{tr}Destroy the structure leaving the wiki pages{/tr}'}
+{button href="?rremove=$remove&amp;page=$removename" _text="{tr}Destroy the structure leaving the wiki pages{/tr}"}
 {if $tiki_p_remove == 'y'}
-{button href="?rremovex=$remove&amp;page=$removename" _text='{tr}Destroy the structure and remove the pages{/tr}'}
+{button href="?rremovex=$remove&amp;page=$removename" _text="{tr}Destroy the structure and remove the pages{/tr}"}
 {/if}
 {/remarksbox}
 {/if}

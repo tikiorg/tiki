@@ -36,9 +36,9 @@
 		<a href="{$smarty.server.PHP_SELF}?{query display="print_all"}" title="{tr}Print all pages{/tr}">{icon _id='printer_add' alt="{tr}Print all pages{/tr}"}</a>
 		{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
 			{if $thread_info.archived eq 'y'}
-		<a href="{$smarty.server.PHP_SELF}?{query archive="n"}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt='{tr}Unarchive{/tr}'}</a>
+		<a href="{$smarty.server.PHP_SELF}?{query archive="n"}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt="{tr}Unarchive{/tr}"}</a>
 			{else}
-		<a href="{$smarty.server.PHP_SELF}?{query archive="y"}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
+		<a href="{$smarty.server.PHP_SELF}?{query archive="y"}" title="{tr}Archive{/tr}">{icon _id='package' alt="{tr}Archive{/tr}"}</a>
 			{/if}
 		{/if}
 
@@ -129,7 +129,7 @@
 		<td><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{$att.filename|escape}</a></td>
 		<td>{$att.filesize|kbsize}</td>
 		<td>{$att.created|tiki_short_datetime}</td>
-		<td><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{icon _id='disk' alt='{tr}Download{/tr}'}</a></td>
+		<td><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a></td>
 	</tr>
 	{/foreach} 
 </table>

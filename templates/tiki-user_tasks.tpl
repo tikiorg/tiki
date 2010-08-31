@@ -62,7 +62,7 @@
 {/if}
 <tr>
 	<td>
-		<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}Accepted by Task User and Creator{/tr}' alt='{tr}Accepted User and Creator{/tr}' />
+		<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title="{tr}Accepted by Task User and Creator{/tr}" alt="{tr}Accepted User and Creator{/tr}" />
 	</td>
 	<td>
 		{tr}Task is accepted by user and creator{/tr}.
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>
-		<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}Not Accepted by One User{/tr}' alt='{tr}Not Accepted User{/tr}' />
+		<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title="{tr}Not Accepted by One User{/tr}" alt="{tr}Not Accepted User{/tr}" />
 	</td>
 	<td>
 		{tr}Task is rejected by one user{/tr}.

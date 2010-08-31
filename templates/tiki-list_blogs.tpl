@@ -93,23 +93,23 @@
 	{if $tiki_p_blog_post eq 'y'}
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_post eq 'y' ) }
 			{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y') or ($listpages[changes].public eq 'y')}
-				<a class="icon" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}">{icon _id='pencil_add' alt='{tr}Post{/tr}'}</a>
+				<a class="icon" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}">{icon _id='pencil_add' alt="{tr}Post{/tr}"}</a>
 			{/if}
 		{/if}
 	{/if}
 	{if $tiki_p_blog_admin eq 'y' and $listpages[changes].allow_comments eq 'y'}
-		<a class='icon' href='tiki-list_comments.php?types_section=blogs&blogId={$listpages[changes].blogId}'>{icon _id='comments' alt='{tr}List all comments{/tr}' title='{tr}List all comments{/tr}'}</a>
+		<a class='icon' href='tiki-list_comments.php?types_section=blogs&blogId={$listpages[changes].blogId}'>{icon _id='comments' alt="{tr}List all comments{/tr}" title="{tr}List all comments{/tr}"}</a>
 	{/if}
 	{if $tiki_p_admin eq 'y' || $tiki_p_assign_perm_blog eq 'y'}
 	    {if $listpages[changes].individual eq 'y'}
-		<a class="icon" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
+		<a class="icon" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}">{icon _id='key_active' alt="{tr}Active Perms{/tr}"}</a>
 	    {else}
-		<a class="icon" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
+		<a class="icon" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}">{icon _id='key' alt="{tr}Perms{/tr}"}</a>
 	    {/if}
 	{/if}
         {if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
                 {if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' ) }
-                        &nbsp;&nbsp;<a class="icon" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+                        &nbsp;&nbsp;<a class="icon" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
                 {/if}
         {/if}
 	

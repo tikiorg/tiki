@@ -11,15 +11,15 @@
 				<tr>
 					<td>{$persp.name|escape}</td>
 					<td>
-						<a href="tiki-switch_perspective.php?perspective={$persp.perspectiveId|escape:url}">{icon _id=arrow_right alt='{tr}Switch to{/tr}'}</a>
+						<a href="tiki-switch_perspective.php?perspective={$persp.perspectiveId|escape:url}">{icon _id=arrow_right alt="{tr}Switch to{/tr}"}</a>
 						{if $persp.can_edit}
 							{self_link _icon=page_edit action=edit _ajax='y' id=$persp.perspectiveId cookietab=3}{tr}Edit{/tr}{/self_link}
 						{/if}
 						{if $persp.can_remove}
-							{self_link action=remove id=$persp.perspectiveId}{icon _id=cross alt='{tr}Delete{/tr}'}{/self_link}
+							{self_link action=remove id=$persp.perspectiveId}{icon _id=cross alt="{tr}Delete{/tr}"}{/self_link}
 						{/if}
 						{if $persp.can_perms}
-							<a href="tiki-objectpermissions.php?objectName={$persp.name|escape:"url"}&objectType=perspective&permType=perspective&objectId={$persp.perspectiveId|escape:"url"}">{icon _id=key alt='{tr}Permissions{/tr}'}</a>
+							<a href="tiki-objectpermissions.php?objectName={$persp.name|escape:"url"}&objectType=perspective&permType=perspective&objectId={$persp.perspectiveId|escape:"url"}">{icon _id=key alt="{tr}Permissions{/tr}"}</a>
 						{/if}
 					</td>
 				</tr>

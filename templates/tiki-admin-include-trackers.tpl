@@ -94,7 +94,7 @@
           <td>{if $attachements[x].path}file{else}db{/if}</td>
           <td>{$attachements[x].created|tiki_short_date}</td>
           <td>
-            <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{icon _id='arrow_refresh' title='{tr}Switch storage{/tr}'}</a>
+            <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{icon _id='arrow_refresh' title="{tr}Switch storage{/tr}"}</a>
           </td>
         </tr>
 {sectionelse}

@@ -126,15 +126,15 @@
 	
 		{if $pages > 1}
 			<div align="center">
-				<a href="{$articleId|sefurl:article:with_next}page={$first_page}"><img src='pics/icons/resultset_first.png' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' width='16' height='16' /></a>
+				<a href="{$articleId|sefurl:article:with_next}page={$first_page}"><img src='pics/icons/resultset_first.png' alt="{tr}First page{/tr}" title="{tr}First page{/tr}" width='16' height='16' /></a>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$prev_page}">{icon _id='resultset_previous' alt='{tr}Previous page{/tr}'}</a>
+				<a href="{$articleId|sefurl:article:with_next}page={$prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
 
 				<small>{tr}page:{/tr}{$pagenum}/{$pages}</small>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$next_page}">{icon _id='resultset_next' alt='{tr}Next page{/tr}'}</a>
+				<a href="{$articleId|sefurl:article:with_next}page={$next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$last_page}"><img src='pics/icons/resultset_last.png' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>
+				<a href="{$articleId|sefurl:article:with_next}page={$last_page}"><img src='pics/icons/resultset_last.png' alt="{tr}Last page{/tr}" title="{tr}Last page{/tr}" width='16' height='16' ></a>
 			</div>
 		{/if}
 	</div>

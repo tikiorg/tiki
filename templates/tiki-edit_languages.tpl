@@ -10,7 +10,7 @@
 
 <form action="tiki-edit_languages.php" method="post">
 	{tabset}
-		{tab name='{tr}Edit languages{/tr}'}
+		{tab name="{tr}Edit languages{/tr}"}
 			{if (empty($db_languages))}
 			    {remarksbox type="note" title="{tr}Note:{/tr}"}
 					{tr}No translations in the database. First import a language, translate strings using interactive translation or enable "Record untranslated strings" in Admin -> i18n.{/tr}
@@ -114,7 +114,7 @@
 			{/if}
 		{/tab}
 
-		{tab name='{tr}Export languages{/tr}'}
+		{tab name="{tr}Export languages{/tr}"}
 			{if isset($expmsg)}
 			    {remarksbox type="note" title="{tr}Note:{/tr}"}
 					{$expmsg}
@@ -156,7 +156,7 @@
 			{/if}
 		{/tab}
 		
-		{tab name='{tr}Import languages{/tr}'}
+		{tab name="{tr}Import languages{/tr}"}
 			{if isset($impmsg)}
 				{$impmsg}
 			{/if}

@@ -29,56 +29,56 @@
 
 {* --- first image --- *}
 	<a href="{$url_base}{$firstId}{$same_scale}"
-		class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{icon _id='resultset_first' alt='{tr}First Image{/tr}'}</a>
+		class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{icon _id='resultset_first' alt="{tr}First Image{/tr}"}</a>
 
 {* --- previous image --- *}
 	<a href="{$url_base}{$previmg}{$same_scale}"
-    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{icon _id='resultset_previous' alt='{tr}Prev Image{/tr}'}</a>
+    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{icon _id='resultset_previous' alt="{tr}Prev Image{/tr}"}</a>
 
 {* --- previous scale --- *}
 	{if $scaleinfo.prevscale}
-   	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.prevscale}" class="gallink">{html_image file='img/icons/zoom-.gif' border='none' alt='{tr}Smaller{/tr}' title='{tr}Smaller{/tr}'}</a>
+   	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.prevscale}" class="gallink">{html_image file='img/icons/zoom-.gif' border='none' alt="{tr}Smaller{/tr}" title="{tr}Smaller{/tr}"}</a>
 	{/if}
 
 {* --- original size --- *}
 	{if $resultscale}
-	  <a href="{$url_base}{$imageId}&amp;scalesize=0" class="gallink">{html_image file='img/icons/zoom_equal.gif' border='none' alt='{tr}Original Size{/tr}' title='{tr}Original Size{/tr}'}</a>
+	  <a href="{$url_base}{$imageId}&amp;scalesize=0" class="gallink">{html_image file='img/icons/zoom_equal.gif' border='none' alt="{tr}Original Size{/tr}" title="{tr}Original Size{/tr}"}</a>
 	{/if}
 
 {* --- next scale --- *}
 	{if $scaleinfo.nextscale}
-	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.nextscale}" class="gallink">{html_image file='img/icons/zoom+.gif' border='none' alt='{tr}Bigger{/tr}' title='{tr}Bigger{/tr}'}</a>
+	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.nextscale}" class="gallink">{html_image file='img/icons/zoom+.gif' border='none' alt="{tr}Bigger{/tr}" title="{tr}Bigger{/tr}"}</a>
 	{/if}
 	    
 {* --- popup launch --- *}
 	{if !$popup}
 	  <a {jspopup height="$winy" width="$winx" href="$url_base$imageId&amp;popup=1&amp;scalesize=$defaultscale"} class="gallink">
-        {icon _id='layers' alt='{tr}Popup window{/tr}'}</a>
+        {icon _id='layers' alt="{tr}Popup window{/tr}"}</a>
 	{/if}
 
 {* --- next image --- *}
 	<a href="{$url_base}{$nextimg}{$same_scale}"
-    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{icon _id='resultset_next' alt='{tr}Next Image{/tr}'}</a>
+    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{icon _id='resultset_next' alt="{tr}Next Image{/tr}"}</a>
 
 {* --- launch slideshow --- *}
 	{if $listImgId}
-	  <a href="javascript:thepix.toggle('start')">{html_image file='img/icons2/cycle_next.gif' border='none' alt='{tr}Slideshow Forward{/tr}' title='{tr}Slideshow Forward{/tr}'}</a>
+	  <a href="javascript:thepix.toggle('start')">{html_image file='img/icons2/cycle_next.gif' border='none' alt="{tr}Slideshow Forward{/tr}" title="{tr}Slideshow Forward{/tr}"}</a>
 	{/if}
 
 {* --- last image --- *}
 	<a href="{$url_base}{$lastId}{$same_scale}"
-		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{icon _id='resultset_last' alt='{tr}Last Image{/tr}'}</a>    
+		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{icon _id='resultset_last' alt="{tr}Last Image{/tr}"}</a>    
   </div>
 
 {***** when sliding buttons *****}
   <div class="slideshow" style="display: none;" align="center">
 
 {* --- stop --- *}
-	<a href="javascript:thepix.toggle('stop')">{html_image file='img/icons2/admin_delete.gif' border='none' alt='{tr}Stop{/tr}' title='{tr}Stop{/tr}'}</a>
+	<a href="javascript:thepix.toggle('stop')">{html_image file='img/icons2/admin_delete.gif' border='none' alt="{tr}Stop{/tr}" title="{tr}Stop{/tr}"}</a>
 {* --- toggle cyclic --- *}
-	<a href="javascript:thepix.toggle('toTheEnd')">{html_image file='img/icons/ico_redo.gif' border='none' alt='{tr}Cyclic{/tr}' title='{tr}Cyclic{/tr}'}</a>
+	<a href="javascript:thepix.toggle('toTheEnd')">{html_image file='img/icons/ico_redo.gif' border='none' alt="{tr}Cyclic{/tr}" title="{tr}Cyclic{/tr}"}</a>
 {* --- toggle back/forward --- *}
-	<a href="javascript:thepix.toggle('backward')">{html_image file='img/icons/ico_mode.gif' border='none' alt='{tr}Direction{/tr}' title='{tr}Direction{/tr}'}</a>
+	<a href="javascript:thepix.toggle('backward')">{html_image file='img/icons/ico_mode.gif' border='none' alt="{tr}Direction{/tr}" title="{tr}Direction{/tr}"}</a>
   </div>
 {/capture}
 {$smarty.capture.buttons}

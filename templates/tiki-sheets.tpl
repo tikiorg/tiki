@@ -77,27 +77,27 @@
   <td class="{cycle advance=false}">{$sheets[changes].author}</td>
   <td class="{cycle}">
   {if $chart_enabled eq 'y'}
-    <a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheets[changes].sheetId}"><img src='pics/icons/chart_curve.png' width='16' height='16' alt='{tr}Graph{/tr}' title='{tr}Graph{/tr}' /></a>
+    <a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheets[changes].sheetId}"><img src='pics/icons/chart_curve.png' width='16' height='16' alt="{tr}Graph{/tr}" title="{tr}Graph{/tr}" /></a>
   {/if}
   {if $tiki_p_view_sheet_history eq 'y'}
-    <a class="gallink" href="tiki-history_sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">{icon _id='application_form_magnify' alt='{tr}History{/tr}'}</a>
+    <a class="gallink" href="tiki-history_sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">{icon _id='application_form_magnify' alt="{tr}History{/tr}"}</a>
   {/if}
-    <a class="gallink" href="tiki-export_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">{icon _id='disk' alt='{tr}Export{/tr}'}</a>
+    <a class="gallink" href="tiki-export_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">{icon _id='disk' alt="{tr}Export{/tr}"}</a>
   {if $sheets[changes].tiki_p_edit_sheet eq 'y'}
-    <a class="gallink" href="tiki-import_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">{icon _id='folder_add' alt='{tr}Import{/tr}'}</a>
+    <a class="gallink" href="tiki-import_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">{icon _id='folder_add' alt="{tr}Import{/tr}"}</a>
   {/if}
   {if $tiki_p_admin_sheet eq 'y'}
      <a class="gallink" href="tiki-objectpermissions.php?objectName={$sheets[changes].title|escape:"url"}&amp;objectType=sheet&amp;permType=sheet&amp;objectId={$sheets[changes].sheetId}">
     {if $sheets[changes].individual eq 'y'}
-	{icon _id='key_active' alt='{tr}Active Perms{/tr}'}
+	{icon _id='key_active' alt="{tr}Active Perms{/tr}"}
     {else}
-	{icon _id='key' alt='{tr}Perms{/tr}'}
+	{icon _id='key' alt="{tr}Perms{/tr}"}
     {/if}
     </a>
   {/if}
   {if $sheets[changes].tiki_p_edit_sheet eq 'y'}
-    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheets[changes].sheetId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
-    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet=y&amp;sheetId={$sheets[changes].sheetId}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheets[changes].sheetId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet=y&amp;sheetId={$sheets[changes].sheetId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
   {/if}
   </td>
 </tr>

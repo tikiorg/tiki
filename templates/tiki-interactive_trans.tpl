@@ -34,7 +34,7 @@
 					<input type="hidden" name='src' value='{$entries[ix].urlsource|escape}'>{$entries[ix].source|escape}
 				</td><td>
 					<input type="text" name='dst' value='{$entries[ix].trans|escape}' style='width:190px;' />
-					<input type="submit" name='submit' value='{tr}Submit{/tr}' />
+					<input type="submit" name='submit' value="{tr}Submit{/tr}" />
 			   	</td></tr>
 		{/section}
 			</table></form>

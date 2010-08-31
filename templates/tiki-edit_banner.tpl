@@ -107,7 +107,7 @@
   </tr>
   {if $hasImage eq 'y'}
   <tr><td class="form">{tr}Current Image{/tr}</td><td>
-  {$imageName}: <img src="{$tempimg}" alt='{tr}Current Image{/tr}'/>
+  {$imageName}: <img src="{$tempimg}" alt="{tr}Current Image{/tr}"/>
   </td></tr>   
   {/if}
   </table>
@@ -174,7 +174,7 @@
 {section name=ix loop=$zones}
 <tr>
 <td class="{cycle advance=false}">{$zones[ix].zone|escape}</td>
-<td class="{cycle}"><a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone|escape:url}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
+<td class="{cycle}"><a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone|escape:url}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a></td>
 </tr>
 {/section}
 </table>

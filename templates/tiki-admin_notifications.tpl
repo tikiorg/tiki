@@ -98,7 +98,7 @@
 					{/if}
 					{$channels[user].user|escape}
 				</td>
-				<td><a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
+				<td><a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a></td>
 			</tr>
 		{sectionelse}
 			<tr class="odd"><td colspan="6"><b>{tr}No records found.{/tr}</b></td></tr>
@@ -107,7 +107,7 @@
 	{if $channels}
 		<br />
 		{tr}Perform action with checked:{/tr}
-		<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+		<input type="image" name="delsel" src='pics/icons/cross.png' alt="{tr}Delete{/tr}" title="{tr}Delete{/tr}" />
 	{/if}
 </form>
 

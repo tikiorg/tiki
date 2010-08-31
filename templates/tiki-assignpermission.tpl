@@ -33,7 +33,7 @@
 			{section name=grp loop=$group_info.perms}
 				{$group_info.perms[grp]}
 				{if $group_info.perms[grp] != "Anonymous"}
-					<a class="link" href="tiki-assignpermission.php?type={$type}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group|escape:url}&amp;action=remove">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+					<a class="link" href="tiki-assignpermission.php?type={$type}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group|escape:url}&amp;action=remove">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 				{/if}
 				<br />
 			{/section}

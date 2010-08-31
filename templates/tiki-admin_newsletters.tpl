@@ -30,7 +30,7 @@
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		<tr>
-			<td class="{cycle advance=false}">{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title='{tr}Edit{/tr}'}{$channels[user].nlId}{/self_link}</td>
+			<td class="{cycle advance=false}">{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].nlId}{/self_link}</td>
 			<td class="{cycle advance=false}">
 				{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].name|escape}{/self_link}
 				<div class="subcomment">{$channels[user].description|escape|nl2br}</div>
@@ -47,7 +47,7 @@
 					</a>
 				{/if}
 				{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId}{tr}Edit{/tr}{/self_link}
-				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt='{tr}Subscriptions{/tr}'}</a>
+				<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt="{tr}Subscriptions{/tr}"}</a>
 				<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
 				<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a>
 				{self_link _icon='cross' remove=$channels[user].nlId}{tr}Remove{/tr}{/self_link}

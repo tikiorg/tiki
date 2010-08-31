@@ -140,13 +140,13 @@
 						<a class="icon" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
 					{/if}
 					{if $prefs.feature_cms_print eq 'y'}
-						<a class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt='{tr}Print{/tr}'}</a>
+						<a class="icon" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
 					{/if}
 					{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-						<a class="icon" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article">{icon _id='world' alt='{tr}Translation{/tr}'}</a>
+						<a class="icon" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article">{icon _id='world' alt="{tr}Translation{/tr}"}</a>
 					{/if}
 					{if $tiki_p_remove_article eq 'y'}
-						<a class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+						<a class="icon" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					{/if}
 				</div>
 			</div>

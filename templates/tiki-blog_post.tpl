@@ -17,7 +17,7 @@
 </div>
 
 {if $contribution_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 		<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
@@ -90,7 +90,7 @@
 											<textarea rows="1" cols="40">{$post_images[ix].absolute|escape}</textarea>
 										</td>
 										<td>
-											<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img src='img/icons/trash.gif' alt='{tr}Trash{/tr}'/></a>
+											<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img src='img/icons/trash.gif' alt="{tr}Trash{/tr}"/></a>
 										</td>
 									</tr>
 								{/section}

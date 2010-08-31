@@ -23,7 +23,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<input type='submit' name='prefs' value='{tr}Change preferences{/tr}' />
+								<input type='submit' name='prefs' value="{tr}Change preferences{/tr}" />
 							</td>
 						</tr>
 					</table>
@@ -62,16 +62,16 @@
 											<td class="{cycle advance=false}">{tr}{$ext.fieldname|escape}{/tr}</td>
 											<td class="{cycle advance=true}">
 												{if $ext.flagsPublic eq 'y'}
-													<a href="?ext_private={$ext.fieldId}" style="margin-left:20px;" title="{tr}Private{/tr}">{icon _id='user' alt='{tr}Private{/tr}'}</a>
+													<a href="?ext_private={$ext.fieldId}" style="margin-left:20px;" title="{tr}Private{/tr}">{icon _id='user' alt="{tr}Private{/tr}"}</a>
 												{else}
-													<a href="?ext_public={$ext.fieldId}" style="margin-left:20px;" title="{tr}Public{/tr}">{icon _id='group' alt='{tr}Public{/tr}'}</a>
+													<a href="?ext_public={$ext.fieldId}" style="margin-left:20px;" title="{tr}Public{/tr}">{icon _id='group' alt="{tr}Public{/tr}"}</a>
 												{/if}
 												{if $ext.show eq 'y'}
-													<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}Hide{/tr}">{icon _id='no_eye' alt='{tr}Hide{/tr}'}</a>
+													<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}Hide{/tr}">{icon _id='no_eye' alt="{tr}Hide{/tr}"}</a>
 												{else}
-													<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}Show{/tr}">{icon _id='eye' alt='{tr}Show{/tr}'}</a>
+													<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}Show{/tr}">{icon _id='eye' alt="{tr}Show{/tr}"}</a>
 												{/if}
-												<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+												<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 											</td>
 										</tr>
 									{/foreach}
@@ -80,7 +80,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								{tr}Add{/tr}: <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value='{tr}Add{/tr}' />
+								{tr}Add{/tr}: <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value="{tr}Add{/tr}" />
 							</td>
 						</tr>
 					</table>

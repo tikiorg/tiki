@@ -80,7 +80,7 @@
 {if $groupname}
 	{capture assign=tabaddeditgroup_admgrp}{tr}Edit group{/tr} <i>{$groupname|escape}</i>{/capture}
 {else}
-	{assign var=tabaddeditgroup_admgrp value='{tr}Add a New Group{/tr}'}
+	{assign var=tabaddeditgroup_admgrp value="{tr}Add a New Group{/tr}"}
 {/if}
 
 {tab name=$tabaddeditgroup_admgrp}
@@ -314,7 +314,7 @@
 				{cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 				{section name=ix loop=$memberslist}
 					<td class="auto">
-						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 						{$memberslist[ix]|userlink}
 					</td>

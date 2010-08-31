@@ -35,15 +35,15 @@
 				</td>
 				<td class="{cycle}">
 					{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
-						<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">{icon _id='page_edit' alt='{tr}Edit this Survey{/tr}'}</a>
+						<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">{icon _id='page_edit' alt="{tr}Edit this Survey{/tr}"}</a>
 					{/if}
 					
 					{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
-						<a href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">{icon _id='control_play' alt='{tr}Take Survey{/tr}'}</a>
+						<a href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">{icon _id='control_play' alt="{tr}Take Survey{/tr}"}</a>
 					{/if}
 
 					{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
-						<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{icon _id='chart_curve' alt='{tr}Stats{/tr}'}</a>
+						<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{icon _id='chart_curve' alt="{tr}Stats{/tr}"}</a>
 					{/if}
 				</td>
 			</tr>

@@ -51,7 +51,7 @@
 						</a>
 						[&nbsp;&nbsp;
 						<a class="link" href="tiki-webmail_contacts.php?element={$element}&amp;section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" title="{tr}Delete{/tr}">
-							{icon _id='cross' alt='{tr}Delete{/tr}'}
+							{icon _id='cross' alt="{tr}Delete{/tr}"}
 						</a>
 						&nbsp;&nbsp;]
 					</td>

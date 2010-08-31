@@ -66,7 +66,7 @@
 		<tr>
 			<td>{tr}Subject{/tr}</td>
 			<td>
-				<input style="width:95%;" type="text" name="subject" value="{$subject|escape|default:'{tr}Have a look at this page{/tr}'}" />
+				<input style="width:95%;" type="text" name="subject" value="{$subject|escape|default:"{tr}Have a look at this page{/tr}"}" />
 			</td>
 		</tr>
 

@@ -14,7 +14,7 @@
 </div>
 
 {if $category_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}A category is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
@@ -26,7 +26,7 @@
 <form method="post" action="tiki-edit_blog.php" id="blog-edit-form">
   <input type="hidden" name="blogId" value="{$blogId|escape}" />
   {tabset name='tabs_editblog'}
-    {tab name='{tr}General Settings{/tr}'}
+    {tab name="{tr}General Settings{/tr}"}
       <table class="normal">
         <tr class="editblogform">
           <td><label for="blog-title">{tr}Title{/tr}</label></td>
@@ -78,7 +78,7 @@
 
       </table>
     {/tab}
-    {tab name='{tr}Display Options{/tr}'}
+    {tab name="{tr}Display Options{/tr}"}
       <table class="normal">
         <tr class="editblogform">
           <td><label for="blogs-number">{tr}Number of posts to show per page{/tr}</label></td>

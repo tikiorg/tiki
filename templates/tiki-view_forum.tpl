@@ -37,7 +37,7 @@
 			
 			<td style="text-align:right;">
 				{if $prefs.feed_forum eq 'y'}
-					<a href="tiki-forum_rss.php?forumId={$forumId}" title='{tr}RSS feed{/tr}'>{icon _id="feed" alt='{tr}RSS feed{/tr}'}</a>
+					<a href="tiki-forum_rss.php?forumId={$forumId}" title="{tr}RSS feed{/tr}">{icon _id="feed" alt="{tr}RSS feed{/tr}"}</a>
 				{/if}
 
 				{if $tiki_p_forum_lock eq 'y'}
@@ -50,24 +50,24 @@
 
 				{if $user and $prefs.feature_user_watches eq 'y'}
 					{if $user_watching_forum eq 'n'}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics of this Forum{/tr}'>{icon _id='eye' alt='{tr}Monitor Topics of this Forum{/tr}'}</a>
+						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics of this Forum{/tr}">{icon _id='eye' alt="{tr}Monitor Topics of this Forum{/tr}"}</a>
 					{else}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics of this Forum{/tr}'>{icon _id='no_eye' alt='{tr}Stop Monitoring Topics of this Forum{/tr}'}</a>
+						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics of this Forum{/tr}"}</a>
 					{/if}			
 				{/if}
 
 				{if $user and $prefs.feature_user_watches eq 'y'}
 					{if $user_watching_forum_topic_and_thread eq 'n'}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics and Threads of this Forum{/tr}'>{icon _id='eye_magnifier' alt='{tr}Monitor Topics and Threads of this Forum{/tr}'}</a>
+						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics and Threads of this Forum{/tr}">{icon _id='eye_magnifier' alt="{tr}Monitor Topics and Threads of this Forum{/tr}"}</a>
 					{else}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'>{icon _id='no_eye' alt='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'}</a>
+						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}"}</a>
 					{/if}
 				{/if}
 				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics of this Forum{/tr}'}</a>
+					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics of this Forum{/tr}"}</a>
 				{/if}
 				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics and Threads of this Forum{/tr}'}</a>
+					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics and Threads of this Forum{/tr}"}</a>
 				{/if}
 
 				<div class="categbar" align="right" >
@@ -305,12 +305,12 @@
 			<tr>	
 				<td class="odd" colspan="3">
 					{if $all_forums|@count > 1}
-						<input type="image" name="movesel" src="pics/icons/task_submitted.png" alt='{tr}Move{/tr}' title='{tr}Move Selected Topics{/tr}' />
+						<input type="image" name="movesel" src="pics/icons/task_submitted.png" alt="{tr}Move{/tr}" title="{tr}Move Selected Topics{/tr}" />
 					{/if}
-					<input type="image" name="unlocksel" src="pics/icons/lock_break.png" alt='{tr}Unlock{/tr}' title='{tr}Unlock Selected Topics{/tr}' />
-					<input type="image" name="locksel" src="pics/icons/lock_add.png" alt='{tr}Lock{/tr}' title='{tr}Lock Selected Topics{/tr}' />
-					<input type="image" name="delsel" src="pics/icons/cross.png" alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
-					<input type="image" name="splitsel" src="pics/icons/arrow_merge.png" alt='{tr}Merge{/tr}' title='{tr}Merge Selected Topics{/tr}' />
+					<input type="image" name="unlocksel" src="pics/icons/lock_break.png" alt="{tr}Unlock{/tr}" title="{tr}Unlock Selected Topics{/tr}" />
+					<input type="image" name="locksel" src="pics/icons/lock_add.png" alt="{tr}Lock{/tr}" title="{tr}Lock Selected Topics{/tr}" />
+					<input type="image" name="delsel" src="pics/icons/cross.png" alt="{tr}Delete{/tr}" title="{tr}Delete Selected Topics{/tr}" />
+					<input type="image" name="splitsel" src="pics/icons/arrow_merge.png" alt="{tr}Merge{/tr}" title="{tr}Merge Selected Topics{/tr}" />
 				</td>
 				<td style="text-align:right;" class="odd" colspan="10">
 					{if $reported > 0}
@@ -331,7 +331,7 @@
 								{/if}
 							{/section}
 						</select>
-						<input type='submit' name='movesel' value='{tr}Move{/tr}' />
+						<input type='submit' name='movesel' value="{tr}Move{/tr}" />
 					</td>
 				</tr>
 			{/if}
@@ -505,14 +505,14 @@
 
 					{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
 						{if $comments_coms[ix].archived eq 'y'}
-							<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt='{tr}Unarchive{/tr}'}</a>
+							<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt="{tr}Unarchive{/tr}"}</a>
 						{else}
-							<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
+							<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{icon _id='package' alt="{tr}Archive{/tr}"}</a>
 						{/if}
 					{/if}
 
 					{if $tiki_p_admin_forum eq 'y' }
-						<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+						<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					{/if}
 				</td>
 			</tr>

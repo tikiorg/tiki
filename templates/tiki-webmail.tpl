@@ -35,7 +35,7 @@
 </table>
 
 {if !empty($conmsg)}
-	{remarksbox type='warning' title='{tr}Error{/tr}'}{$conmsg}{/remarksbox}
+	{remarksbox type='warning' title="{tr}Error{/tr}"}{$conmsg}{/remarksbox}
 {/if}
 
 <hr/>
@@ -66,7 +66,7 @@
 							</td>
 							<td class="{cycle advance=false}">
 								{if !$active}
-									{self_link current=$accounts[ix].accountId _title='{tr}Activate{/tr}'}{$accounts[ix].account}{/self_link}
+									{self_link current=$accounts[ix].accountId _title="{tr}Activate{/tr}"}{$accounts[ix].account}{/self_link}
 								{else}
 									<strong>{$accounts[ix].account|escape}</strong>
 								{/if}
@@ -120,7 +120,7 @@
 								</td>
 								<td class="{cycle advance=false}">
 									{if !$active}
-										{self_link current=$pubAccounts[ixp].accountId _title='{tr}Activate{/tr}'}{$pubAccounts[ixp].account}{/self_link}
+										{self_link current=$pubAccounts[ixp].accountId _title="{tr}Activate{/tr}"}{$pubAccounts[ixp].account}{/self_link}
 									{else}
 										<strong>{$pubAccounts[ixp].account|escape}</strong>
 									{/if}
@@ -369,20 +369,20 @@
 					</td>
 					<td class="{$class}">
 						{if $list[ix].isFlagged eq 'y'}
-							<a href="javascript: submit_form('{$list[ix].realmsgid|escape}','n')"><img src="img/webmail/flagged.gif" alt='{tr}Flagged{/tr}'></a>
+							<a href="javascript: submit_form('{$list[ix].realmsgid|escape}','n')"><img src="img/webmail/flagged.gif" alt="{tr}Flagged{/tr}"></a>
 						{else}
 							{if $prefs.webmail_quick_flags eq 'y'}
-								<a href="javascript: submit_form('{$list[ix].realmsgid|escape}','y')"><img src="img/webmail/unflagged.gif" alt='{tr}unFlagged{/tr}'></a>
+								<a href="javascript: submit_form('{$list[ix].realmsgid|escape}','y')"><img src="img/webmail/unflagged.gif" alt="{tr}unFlagged{/tr}"></a>
 							{/if}
 						{/if}
 						{if $list[ix].isReplied eq 'y'}
-							<img src="img/webmail/replied.gif" alt='{tr}Replied{/tr}'/>
+							<img src="img/webmail/replied.gif" alt="{tr}Replied{/tr}"/>
 						{/if}
 					</td>
 					<td class="{$class}">{$list[ix].sender.name}</td>
 					<td class="{$class}">
 						{self_link msgid=$list[ix].msgid locSection='read'}{$list[ix].subject}{/self_link}
-						{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt='{tr}Clip{/tr}'/>{/if}
+						{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt="{tr}Clip{/tr}"/>{/if}
 					</td>
 					<td class="{$class}">{$list[ix].timestamp|tiki_short_datetime}</td>
 					<td align="right" class="{$class}">{$list[ix].size|kbsize}</td>
@@ -508,14 +508,14 @@
 			{assign var='wmclass' value='webmail_message'}
 		{/if}
 		<div>
-			{button _flip_id=$wmid _text='{tr}Part{/tr}: '|cat:$bodies[ix].contentType _flip_default_open=$wmopen}
+			{button _flip_id=$wmid _text="{tr}Part{/tr}: '|cat:$bodies[ix].contentType _flip_default_open=$wmopen}
 		</div>
 		<div id="{$wmid}" class="{$wmclass}" {if $wmopen eq 'n'}style="display:none"{/if}>
 {$bodies[ix].body}
 		</div>
 	{/section}
 	<div>
-		{button _flip_id='webmail_message_source_'|cat:$msgid _text='{tr}Source{/tr}: ' _flip_default_open='n'}
+		{button _flip_id='webmail_message_source_'|cat:$msgid _text="{tr}Source{/tr}: ' _flip_default_open='n'}
 	</div>
 	<div id="webmail_message_source_{$msgid}" class="webmail_message webmail_mono" style="display:none">
 {$allbodies|nl2br}

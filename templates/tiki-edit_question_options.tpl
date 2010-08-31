@@ -38,8 +38,8 @@
 <td class="{cycle advance=false}">{$channels[user].optionText|escape}</td>
 <td class="{cycle advance=false}">{$channels[user].points}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
-   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 </td>
 </tr>
 {/section}

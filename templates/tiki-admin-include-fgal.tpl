@@ -179,7 +179,7 @@
 					</div>
 
 					{if !empty($missingHandlers)}
-						{remarksbox type=warning title='{tr}Missing Handlers{/tr}'}
+						{remarksbox type=warning title="{tr}Missing Handlers{/tr}"}
 							{foreach from=$missingHandlers item=mime}
 								{$mime|escape}
 								<br />

@@ -75,7 +75,7 @@
 			<tr>
 				<td colspan="2"></td>
 				<td colspan="3">
-					<a href="javascript:toggleBlock('search')" class="link">{icon _id='add' alt='{tr}more{/tr}'}&nbsp;{tr}More Criteria{/tr}</a>
+					<a href="javascript:toggleBlock('search')" class="link">{icon _id='add' alt="{tr}more{/tr}"}&nbsp;{tr}More Criteria{/tr}</a>
 				</td>
 			</tr>
 		</table>
@@ -156,7 +156,7 @@
 							<td>{$users[user].email}</td>
 						{/if}
 						{if $prefs.auth_method eq 'openid'}
-							<td>{$users[user].openid_url|default:'{tr}N{/tr}'}</td>
+							<td>{$users[user].openid_url|default:"{tr}N{/tr}"}</td>
 						{/if}	
 						<td>
 							{if $users[user].currentLogin eq ''}
@@ -211,7 +211,7 @@
 							{/if}
 		
 							{if $users[user].user ne 'admin'}
-								<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+								<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 								{if $users[user].valid && $users[user].waiting eq 'a'}
 									<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user:{/tr} {$users[user].user|username}">{icon _id='accept' alt="{tr}Validate user:{/tr} `$username`"}</a>
 								{/if}
@@ -312,7 +312,7 @@
 {if $userinfo.userId}
 	{capture assign=add_edit_user_tablabel}{tr}Edit user{/tr} <i>{$userinfo.login|escape}</i>{/capture}
 {else}
-	{assign var=add_edit_user_tablabel value='{tr}Add a New User{/tr}'}
+	{assign var=add_edit_user_tablabel value="{tr}Add a New User{/tr}"}
 {/if}
 
 {tab name=$add_edit_user_tablabel}

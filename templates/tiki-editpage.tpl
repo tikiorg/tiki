@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if $page|lower neq 'sandbox'}
-	{remarksbox type='tip' title='{tr}Tip{/tr}'}
+	{remarksbox type='tip' title="{tr}Tip{/tr}"}
 	{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
 	{if $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_mandatory eq 'y'}
 		<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>
@@ -55,22 +55,22 @@
 	{/if}
 {/if}
 {if $page|lower eq 'sandbox'}
-	{remarksbox type='tip' title='{tr}Tip{/tr}'}
+	{remarksbox type='tip' title="{tr}Tip{/tr}"}
 		{tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
 	{/remarksbox}
 {/if}
 {if $category_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}A category is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
 {if $contribution_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
 {if $summary_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}An edit summary is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
@@ -186,7 +186,7 @@
 						{textarea}{$pagedata}{/textarea}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
-								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc='{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}'}</label>
+								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
 								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" />
 								{if $show_watch eq 'y'}
 									<label for="watch">{tr}Monitor this page:{/tr}</label>

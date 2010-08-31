@@ -25,7 +25,7 @@
 							</td>
 							{if !isset($module_params.del) or $module_params.del eq 'y'}
 								<td class="{cycle}">
-									{self_link remove=$i.categId}{icon _id=cross alt='{tr}Delete{/tr}'}{/self_link}
+									{self_link remove=$i.categId}{icon _id=cross alt="{tr}Delete{/tr}"}{/self_link}
 								</td>
 							{/if}
 						</tr>

@@ -2,7 +2,7 @@
 <div class="description">{$faq_info.description|escape}</div>
 
 <div class="navbar">
-	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt='{tr}Print{/tr}'}{/self_link}
+	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
 	{button href="tiki-list_faqs.php" _text="{tr}List FAQs{/tr}"}
 	
 	{if $tiki_p_admin_faqs eq 'y'}

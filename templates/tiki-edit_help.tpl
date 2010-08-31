@@ -26,7 +26,7 @@
 {cycle values="odd,even" print=false}
 {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 <tr><td width="20%" class="{cycle}"><img src='pics/icons/text_bold.png' alt='' /> <strong>{tr}Bold text{/tr}</strong> &nbsp;&nbsp;&nbsp; __{tr}text{/tr}__ </td></tr>
-<tr><td width="20%" class="{cycle}"><img src='pics/icons/text_italic.png' alt='' /> <strong>{tr}Italic text{/tr}</strong> &nbsp;&nbsp;&nbsp; 2 {tr}single quotes{/tr} ('). &nbsp;&nbsp;&nbsp; ''{tr}text{/tr}'' </td></tr>
+<tr><td width="20%" class="{cycle}"><img src='pics/icons/text_italic.png' alt='' /> <strong>{tr}Italic text{/tr}</strong> &nbsp;&nbsp;&nbsp; 2 {tr}single quotes{/tr} ('). &nbsp;&nbsp;&nbsp; '"{tr}text{/tr}"' </td></tr>
 <tr><td class="{cycle}"><img src='pics/icons/text_underline.png' alt='' /> <strong>{tr}Underlined text{/tr}</strong> &nbsp;&nbsp;&nbsp; ==={tr}text{/tr}===</td></tr>
 <tr><td class="{cycle}"><img src='pics/icons/palette.png' alt='' /> <strong>{tr}Colored text{/tr}</strong> <br/> ~~#FFEE33:{tr}text{/tr}~~ {tr}or{/tr}  ~~yellow:{tr}text{/tr}~~. {tr}Will display using the indicated HTML color or color name. Color name can contain two colors separated by a comma. In this case, the first color would be the foreground and the second one the background.{/tr}</td></tr>
 <tr><td class="{cycle}"><img src='pics/icons/text_strikethrough.png' alt='' /> <strong>{tr}Deleted text{/tr}</strong> &nbsp;&nbsp;&nbsp; {tr}2 dashes{/tr} "-". &nbsp;&nbsp;&nbsp; --{tr}text{/tr}--</td></tr>

@@ -32,8 +32,8 @@
 				<td>{if $plugin.added_by}{$plugin.added_by|userlink}{else}{tr}Unknown{/tr}{/if}
 				</td>
 				<td>
-					<a href="tiki-plugins.php?approveone={$plugin.fingerprint}">{icon _id='accept' alt='{tr}Approve{/tr}'}</a>
-					<a href="tiki-plugins.php?clearone={$plugin.fingerprint}">{icon _id='delete' alt='{tr}Clear{/tr}'}</a>
+					<a href="tiki-plugins.php?approveone={$plugin.fingerprint}">{icon _id='accept' alt="{tr}Approve{/tr}"}</a>
+					<a href="tiki-plugins.php?clearone={$plugin.fingerprint}">{icon _id='delete' alt="{tr}Clear{/tr}"}</a>
 {if $plugin.last_objectType eq 'wiki page'}
 {tr 0=$plugin.last_objectId|sefurl:'wiki page' 1=$plugin.last_objectId|escape }<a href="%0#{$plugin.fingerprint}" title="{tr}View this page{/tr}.">{icon _id='page'}</a>{/tr}	
 {/if}	
