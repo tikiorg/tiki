@@ -1070,8 +1070,11 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 				$edit .= "\r\n";
 			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
 		}
-		if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {//take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
+		if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {
+			// take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
 			$edit = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $edit);
+			// remove the wysiwyg plugin elements leaving the syntax only remaining
+			$edit = preg_replace('/<div[^>]*syntax="(.*)".*end cke_tiki_plugin -->/Umis', "$1", $edit);
 		}
 		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg'], $wiki_authors_style);
 		create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user);
