@@ -5324,10 +5324,21 @@ class TikiLib extends TikiDb_Bridge
 
 			$plugin_result =  $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
 			if ($prefs['wysiwyg_htmltowiki'] === 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] === 'y' ) {
-				return '<span class="cke_tiki_plugin" plugin="' . $name .
-						'" args="' . urlencode(http_build_query($args)) .
-						'" body="~np~' . str_replace('"', '\"', $data) . '~/np~">'.
-						'~np~' . $fck_editor_plugin . '~/np~<div style="display:none;">'.$plugin_result.'</div></span>';
+				// remove hrefs and onclicks
+				$plugin_result = preg_replace('/href\=["\']([^"\']*)["\']/i', 'tiki_href="$1"', $plugin_result);
+				$plugin_result = preg_replace('/onclick\=["\']([^"\']*)["\']/i', 'tiki_onclick="$1"', $plugin_result);
+				
+				if (preg_match('/(:?div|p)/i', $plugin_result)) {
+					$elem = 'div';
+				} else {
+					$elem = 'span';
+				}
+				
+				return '<'.$elem.' class="cke_tiki_plugin" plugin="' . $name . '"' .
+						' syntax="~np~' . htmlentities( $fck_editor_plugin ) . '~/np~"' .
+						' args="' . urlencode(http_build_query($args)) . '"' .
+						' body="~np~' . str_replace('"', '\"', $data) . '~/np~">'.
+						'<'.$elem.' class="plugin_contents" contenteditable="false">' . $plugin_result.'</'.$elem.'></'.$elem.'>';
 			} else {
 				return $plugin_result;
 			}

@@ -252,6 +252,34 @@ class EditLib
 			} elseif ($c[$i]["type"] == "tag") {
 				if ($c[$i]["data"]["type"] == "open") {
 					// Open tag type
+					
+					// deal with plugins - could be either span of div so process before the switch statement
+					if (isset($c[$i]['pars']['plugin']) && isset($c[$i]['pars']['syntax'])) {	// handling for tiki plugins
+						$src .= html_entity_decode($c[$i]['pars']['syntax']['value']);
+						$more_spans = 1;
+						$elem_type = $c[$i]["data"]["name"];
+						$other_elements = 0;
+						$j = $i + 1;
+						while ($j < $c['contentpos']) {	// loop through contents of this span and discard everything
+							if ($c[$j]['data']['name'] == $elem_type && $c[$j]['data']['type'] == 'close') {
+								$more_spans--;
+								if ($more_spans === 0) {
+									break;
+								}
+							} else if ($c[$j]['data']['name'] == 'br' && $more_spans === 1 && $other_elements === 0) {
+							} else if ($c[$j]['data']['name'] == $elem_type && $c[$j]['data']['type'] == 'open') {
+								$more_spans++;
+							} else if ($c[$j]['data']['type'] == 'open') {
+								$other_elements++;
+							} else if ($c[$j]['data']['type'] == 'close') {
+								$other_elements--;
+							}
+							$j++;
+						}
+						$i = $j;	// skip everything that was inside this span
+						
+					}
+					
 					switch ($c[$i]["data"]["name"]) {
 						// Tags we don't want at all.
 						case "meta": $c[$i]["content"] = ''; break;
@@ -282,34 +310,7 @@ class EditLib
 							break;
 						case "span":
 							if( isset($c[$i]['pars'])) {
-								if (isset($c[$i]['pars']['plugin'])) {	// handling for tiki plugins
-									$more_spans = 1;
-									$other_elements = 0;
-									$j = $i + 1;
-									while ($j < $c['contentpos']) {	// loop through contents of this span and discard all but the Text node
-										if ($c[$j]['data']['name'] == 'span' && $c[$j]['data']['type'] == 'close') {
-											$more_spans--;
-											if ($more_spans === 0) {
-												break;
-											}
-										} else if ($c[$j]['data']['name'] == 'br' && $more_spans === 1 && $other_elements === 0) {
-											$src .= "\n";
-										} else if ($c[$j]['data']['name'] == 'span' && $c[$j]['data']['type'] == 'open') {
-											$more_spans++;
-										} else if ($c[$j]['data']['type'] == 'open') {
-											$other_elements++;
-										} else if ($c[$j]['data']['type'] == 'close') {
-											$other_elements--;
-										} else {
-											if ($c[$j]['type'] == 'text' && $other_elements === 0) {
-												$src .= $c[$j]['data'];
-											}
-										}
-										$j++;
-									}
-									$i = $j;	// skip everything that was inside this span
-									
-								} else if (isset($c[$i]['pars']['style'])) {	// colours
+								if (isset($c[$i]['pars']['style'])) {	// colours
 									$contrast = '000000';
 									if (preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
 										$bgcol = str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
