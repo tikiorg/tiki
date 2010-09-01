@@ -70,37 +70,37 @@
 
 	<form action="tiki-list_faqs.php" method="post">
 		<input type="hidden" name="faqId" value="{$faqId|escape}" />
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor">
+				<td>
 					{tr}Title{/tr}:
 				</td>
-				<td class="formcolor">
+				<td>
 					<input type="text" name="title" value="{$title|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">
+				<td>
 					{tr}Description{/tr}:
 				</td>
-				<td class="formcolor">
+				<td>
 					<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
 				</td>
 			</tr>
 			{include file='categorize.tpl'}
 			<tr>
-				<td class="formcolor">
+				<td>
 					{tr}Users can suggest questions{/tr}:
 				</td>
-				<td class="formcolor">
+				<td>
 					<input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">
+				<td>
 					&nbsp;
 				</td>
-				<td class="formcolor">
+				<td>
 					<input type="submit" name="save" value="{tr}Save{/tr}" />
 				</td>
 			</tr>

@@ -115,10 +115,10 @@
 <h2>{tr}Add an operator to the system{/tr}</h2>
 <small>{tr}Operators must be tiki users{/tr}</small>
 <form method="post" action="tiki-live_support_admin.php">
-<table class="normal">
+<table class="formcolor">
 	<tr>
-		<td class="formcolor">{tr}User{/tr}</td>
-		<td class="formcolor">
+		<td>{tr}User{/tr}</td>
+		<td>
 			<select name="user">
 				{section name=ix loop=$users}
 					<option value="{$users[ix].user|escape}">{$users[ix].user|escape}</option>
@@ -127,8 +127,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td class="formcolor">&nbsp;</td>
-		<td class="formcolor">
+		<td>&nbsp;</td>
+		<td>
 			<input type="submit" name="adduser" value="{tr}Set as Operator{/tr}" />
 		</td>
 	</tr>

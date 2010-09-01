@@ -14,19 +14,19 @@
 
 {if $showfrm eq 'y'}
   <form action="tiki-remind_password.php" method="post">
-  <table class="form">
+  <table class="formcolor">
   {if $prefs.login_is_email ne 'y'}
   <tr>
-    <td class="formcolor"><label for="name">{tr}Username{/tr}:</label></td>
-	<td class="formcolor"><input type="text" name="name" id="name" /></td>
+    <td><label for="name">{tr}Username{/tr}:</label></td>
+	<td><input type="text" name="name" id="name" /></td>
   </tr>
-  <tr><td class="formcolor" colspan="2">{tr}or{/tr}</td></tr>
+  <tr><td colspan="2">{tr}or{/tr}</td></tr>
   {/if}
   <tr>
-    <td class="formcolor"><label for="email">{tr}Email{/tr}:</label></td>
-    <td class="formcolor">{if $prefs.login_is_email ne 'y'}<input type="text" name="email" id="email" />{else}<input type="text" name="name" />{/if}</td>
+    <td><label for="email">{tr}Email{/tr}:</label></td>
+    <td>{if $prefs.login_is_email ne 'y'}<input type="text" name="email" id="email" />{else}<input type="text" name="name" />{/if}</td>
   </tr><tr>
-    <td class="formcolor" colspan="2"><input type="submit" name="remind" value="{if $prefs.feature_clear_passwords eq 'y'}{tr}Send me my Password{/tr}{else}{tr}Request Password Reset{/tr}{/if}" /></td>
+    <td colspan="2"><input type="submit" name="remind" value="{if $prefs.feature_clear_passwords eq 'y'}{tr}Send me my Password{/tr}{else}{tr}Request Password Reset{/tr}{/if}" /></td>
   </tr>  
   </table>
   </form>

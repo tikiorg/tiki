@@ -20,28 +20,28 @@
 	<h2>{tr}Edit Received Page{/tr}</h2>
 	<form action="tiki-received_pages.php" method="post">
 		<input type="hidden" name="receivedPageId" value="{$receivedPageId|escape}" />
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor">{tr}Name{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Name{/tr}:</td>
+				<td>
 					<input type="text" name="pageName" value="{$pageName|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Data{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Data{/tr}:</td>
+				<td>
 					<textarea name="data" rows="10" cols="60">{$data|escape}</textarea>
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Comment{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Comment{/tr}:</td>
+				<td>
 					<input type="text" name="comment" value="{$comment|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor">
+				<td>&nbsp;</td>
+				<td>
 					<input type="submit" name="preview" value="{tr}Preview{/tr}" />
 					&nbsp;
 					<input type="submit" name="save" value="{tr}Save{/tr}" />

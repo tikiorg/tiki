@@ -70,9 +70,9 @@ function subavt() {
 <form action="tiki-pick_avatar.php" method="post">
 <input id="avatar" type="hidden" name="avatar" value="{$yours|escape}" />
 {if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
-<table class="normal">
+<table class="formcolor">
 <tr>
- <td class="formcolor">
+ <td>
  <div align="center">
 <a class="link" href="javascript:subavt();">{tr}Prev{/tr}</a>
 <img id='avtimg' src="{$yours}" alt="{tr}Avatar Image{/tr}"/>
@@ -81,7 +81,7 @@ function subavt() {
  </td>
 </tr>
 <tr>
- <td class="formcolor">
+ <td>
    <div align="center">
 	 <input type="submit" name="rand" value="{tr}random{/tr}" />
 	 <input type="submit" name="uselib" value="{tr}Use{/tr}" /> 

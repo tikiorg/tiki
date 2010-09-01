@@ -12,10 +12,10 @@
 
 <h2>{tr}Preferences{/tr}</h2>
 <form action="tiki-minical_prefs.php" method="post">
-<table class="normal">
+<table class="formcolor">
 <tr>
-	<td class="formcolor">{tr}Calendar Interval in daily view{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Calendar Interval in daily view{/tr}</td>
+	<td>
 	<select name="minical_interval">
 	<option value="300" {if $minical_interval eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
 	<option value="600" {if $minical_interval eq 600}selected="selected"{/if}>10 {tr}minutes{/tr}</option>
@@ -26,32 +26,32 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Start hour for days{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Start hour for days{/tr}</td>
+	<td>
 	<select name="minical_start_hour">
 	{html_options output=$hours values=$hours selected=$minical_start_hour}
 	</select>
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}End hour for days{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}End hour for days{/tr}</td>
+	<td>
 	<select name="minical_end_hour">
 	{html_options output=$hours values=$hours selected=$minical_end_hour}
 	</select>
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Upcoming events{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Upcoming events{/tr}</td>
+	<td>
 	<select name="minical_upcoming">
 	{html_options output=$upcoming values=$upcoming selected=$minical_upcoming}
 	</select>
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Reminders{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Reminders{/tr}</td>
+	<td>
 	<select name="minical_reminders">
     <option value="0" {if $prefs.minical_reminders eq 0}selected="selected"{/if}>{tr}no reminders{/tr}</option>
     <option value="60" {if $prefs.minical_reminders eq 60}selected="selected"{/if}>1 {tr}min{/tr}</option>
@@ -64,8 +64,8 @@
 </tr>
 
 <tr>
-	<td class="formcolor">&nbsp;</td>
-	<td class="formcolor">
+	<td>&nbsp;</td>
+	<td>
 		<input type="submit" name="save" value="{tr}Save{/tr}" />
 	</td>
 </tr>	
@@ -74,9 +74,9 @@
 <a name="import"></a>
 <h2>{tr}Import CSV file{/tr}</h2>
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
-<table class="normal">
+<table class="formcolor">
 <tr>
-  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input type="submit" name="import" value="{tr}import{/tr}" /></td>
+  <td>{tr}Upload file{/tr}:</td><td><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input type="submit" name="import" value="{tr}import{/tr}" /></td>
 </tr>
 </table>
 </form>
@@ -85,24 +85,24 @@
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
 <table class="normal">
 <tr>
-  <td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td>
+  <td>{tr}Name{/tr}:</td><td><input type="text" name="name" /></td>
 </tr>
 <tr>
-  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /></td>
+  <td>{tr}Upload file{/tr}:</td><td><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /></td>
 </tr>
 <tr>
-  <td class="formcolor">{tr}Or enter path or URL{/tr}:</td><td class="formcolor"><input type="text" name="path" /></td>
+  <td>{tr}Or enter path or URL{/tr}:</td><td><input type="text" name="path" /></td>
 </tr>
 <tr>
-  <td class="formcolor">&nbsp;</td>
-  <td class="formcolor">
+  <td>&nbsp;</td>
+  <td>
 	<input type="submit" name="addtopic" value="{tr}Add Topic{/tr}" />
   </td>
 </tr></table>
 </form>
 {if count($topics) > 0}
 <div class="simplebox">
-<table >
+<table>
 <tr>
 {section name=numloop loop=$topics}
         <td>

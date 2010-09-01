@@ -24,10 +24,10 @@
 			{$msg}
 		{/remarksbox}		
 	{/if}
-  <table class="normal">
+  <table class="formcolor">
     <tr>
-      <td class='formcolor'><label for='newpage'>{tr}New name:{/tr}</label></td>
-      <td class='formcolor'>
+      <td><label for='newpage'>{tr}New name:{/tr}</label></td>
+      <td>
         <input type='text' id='newpage' name='newpage' size='40' value='{$newname|escape}'/>
         <input type="submit" name="rename" value="{tr}Rename{/tr}" />
       </td>

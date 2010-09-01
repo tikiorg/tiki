@@ -19,22 +19,22 @@
 <form action="tiki-list_contents.php" method="post">
   {query _type='form_input'}
   <input type="hidden" name="contentId" value="{$contentId|escape}" />
-  <table class="normal">
+  <table class="formcolor">
     <tr>
-      <td class="formcolor">{tr}Label{/tr}:</td>
-      <td class="formcolor">
+      <td>{tr}Label{/tr}:</td>
+      <td>
         <input type="text" name="contentLabel" style="width:40%" value="{$contentLabel|escape}" />
       </td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Description{/tr}:</td>
-      <td class="formcolor">
+      <td>{tr}Description{/tr}:</td>
+      <td>
         <textarea rows="5" cols="40" name="description" style="width:95%">{$description|escape}</textarea>
       </td>
     </tr>
     <tr>
-      <td class="formcolor">&nbsp;</td>
-      <td class="formcolor">
+      <td>&nbsp;</td>
+      <td>
         <input type="submit" name="save" value="{tr}Save{/tr}" />
       </td>
     </tr>

@@ -148,19 +148,19 @@
 			<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 			<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 			<input type="hidden" name="forumId" value="{$forumId|escape}" />
-			<table class="normal">
-				<tr class="formcolor">
+			<table class="formcolor">
+				<tr>
 					<td>{tr}Title{/tr}</td>
 					<td><input type="text" name="comments_title" value="{$comment_title|escape}" size="80" /></td>
 				</tr>
 				{if $forum_info.forum_use_password ne 'n'}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Password{/tr}</td>
 						<td><input type="password" name="password" /></td>
 					</tr>
 				{/if}
 				{if $tiki_p_admin_forum eq 'y' or $forum_info.topic_smileys eq 'y'}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Type{/tr}</td>
 						<td>
 							{if $tiki_p_admin_forum eq 'y'}
@@ -179,7 +179,7 @@
 									<option value="icon_idea.gif" {if $comment_topicsmiley eq 'icon_idea.gif'}selected="selected"{/if}>{tr}idea{/tr}</option>
 									<option value="icon_mad.gif" {if $comment_topicsmiley eq 'icon_mad.gif'}selected="selected"{/if}>{tr}mad{/tr}</option>
 									<option value="icon_neutral.gif" {if $comment_topicsmiley eq 'icon_neutral.gif'}selected="selected"{/if}>{tr}neutral{/tr}</option>
-										<option value="icon_question.gif" {if $comment_topicsmiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>
+									<option value="icon_question.gif" {if $comment_topicsmiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>
 									<option value="icon_sad.gif" {if $comment_topicsmiley eq 'icon_sad.gif'}selected="selected"{/if}>{tr}sad{/tr}</option>
 									<option value="icon_smile.gif" {if $comment_topicsmiley eq 'icon_smile.gif'}selected="selected"{/if}>{tr}happy{/tr}</option>
 									<option value="icon_wink.gif" {if $comment_topicsmiley eq 'icon_wink.gif'}selected="selected"{/if}>{tr}wink{/tr}</option>
@@ -190,7 +190,7 @@
 				{/if}
 
 				{if $forum_info.topic_summary eq 'y'}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Summary{/tr}</td>
 						<td>
 							<input type="text" size="60" name="comment_topicsummary" value="{$comment_topicsummary|escape}" maxlength="240" />
@@ -198,7 +198,7 @@
 					</tr>
 				{/if}
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Edit{/tr}
 				</td>
 				<td>
@@ -210,7 +210,7 @@
 				</td>
 			</tr>
 				{if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_forum eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Attach file{/tr}</td>
 						<td>
 							<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
@@ -231,7 +231,7 @@
 				{/if}
 
 				{if $user and $prefs.feature_user_watches eq 'y' and (!isset($comments_threadId) or $comments_threadId eq 0)}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Watch for replies{/tr}</td>
 						<td>
 							<input type="radio" name="set_thread_watch" value="y" id="thread_watch_yes" checked="checked" />
@@ -249,7 +249,7 @@
 					</tr>
 				{/if}
 
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Post{/tr}</td>
 					<td>
 						{if empty($user)}
