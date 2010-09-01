@@ -16,15 +16,15 @@
 
 <h2>{tr}Assign themes to categories{/tr}</h2>
 <form action="tiki-theme_control.php" method="post">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Category{/tr}</td>
-			<td class="formcolor">{tr}Theme{/tr}</td>
-			<td class="formcolor">{tr}Option{/tr}</td>
-			<td class="formcolor">&nbsp;</td>
+			<td>{tr}Category{/tr}</td>
+			<td>{tr}Theme{/tr}</td>
+			<td>{tr}Option{/tr}</td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<select name="categId">
 					{section name=ix loop=$categories}
 						<option value="{$categories[ix].categId|escape}" {if $categId eq $categories[ix].categId}selected="selected"{/if}>
@@ -33,14 +33,14 @@
 					{/section}
 				</select>
 			</td>
-			<td class="formcolor">
+			<td>
 				<select name="theme" onchange="this.form.submit();">
 					{section name=ix loop=$styles}
 						<option value="{$styles[ix]|escape}" {if $a_style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
 					{/section}
 				</select>
 			</td>
-			<td class="formcolor">
+			<td>
 				<select name="theme-option">
 					<option value="">{tr}None{/tr}</option>
 					{section name=ix loop=$style_options}
@@ -48,7 +48,7 @@
 					{/section}
 				</select>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="submit" name="assigcat" value="{tr}Assign{/tr}" />
 			</td>
 		</tr>
