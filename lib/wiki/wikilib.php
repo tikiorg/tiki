@@ -991,6 +991,16 @@ class WikiLib extends TikiLib
 			}
 		}
 	}
+	
+	function get_pages_contains($searchtext, $offset = 0, $maxRecords = -1, $sort_mode = 'pageName_asc') {
+		$query = "select * from `tiki_pages` where `data` like ? order by ".$this->convertSortMode($sort_mode);
+		$bindvars = array('%' . $searchtext . '%');
+		$results = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
+		$ret["data"] = $results;
+		$query_cant = "select count(*) from `tiki_pages` where `data` like ?";
+		$ret["cant"] = $this->getOne($query_cant, $bindvars);
+		return $ret;
+	}
 
 }
 
