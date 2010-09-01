@@ -22,29 +22,29 @@
 		{/section}
 	</select>
 <!--<input type="submit" name="settype" value="{tr}Set{/tr}" />-->
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Object{/tr}</td>
-			<td class="formcolor">{tr}Theme{/tr}</td>
-			<td class="formcolor">{tr}Option{/tr}</td>
-			<td class="formcolor">&nbsp;</td>
+			<td>{tr}Object{/tr}</td>
+			<td>{tr}Theme{/tr}</td>
+			<td>{tr}Option{/tr}</td>
+			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<select name="objdata">
 					{section name=ix loop=$objects}
 						<option value="{$objects[ix].objId|escape}|{$objects[ix].objName}" {if $a_object eq $objects[ix].objId|cat:'|'|cat:$objects[ix].objName}selected="selected"{/if}>{$objects[ix].objName}</option>
 					{/section}
 				</select>
 			</td>
-			<td class="formcolor">
+			<td>
 				<select name="theme" onchange="this.form.submit();">
 					{section name=ix loop=$styles}
 						<option value="{$styles[ix]|escape}" {if $a_style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
 					{/section}
 				</select>
 			</td>
-			<td class="formcolor">
+			<td>
 				<select name="theme-option">
 					<option value="">{tr}None{/tr}</option>
 					{section name=ix loop=$style_options}
@@ -52,7 +52,7 @@
 					{/section}
 				</select>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 			</td>
 		</tr>
