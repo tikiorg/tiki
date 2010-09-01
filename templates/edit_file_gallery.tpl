@@ -16,12 +16,12 @@
 			</div>
 			{tabset name="list_file_gallery"}
 				{tab name="{tr}Properties{/tr}"}
-					<table class="normal">
+					<table class="formcolor">
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="name">{tr}Name{/tr}:</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								{if $galleryId eq $prefs.fgal_root_id}
 									<b>{tr}File Galleries{/tr}</b>
 									<input type="hidden" name="name" value="{$gal_info.name|escape}" />
@@ -33,10 +33,10 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="fgal_type">{tr}Type{/tr}:</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								{if $galleryId eq $prefs.fgal_root_id}
 									{tr}System{/tr}
 									<input type="hidden" name="fgal_type" value="system" />
@@ -50,55 +50,55 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="description">{tr}Description{/tr}:</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								<textarea rows="5" cols="40" id="description" name="description" style="width:100%">{$gal_info.description|escape}</textarea>
 								<br/>
 								<em>{tr}Required for podcasts{/tr}.</em>
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="visible">{tr}Gallery is visible to non-admin users{/tr}.<label>
 							</td>
-							<td class="formcolor">
+							<td>
 								<input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} />
 							</td>
 						</tr>
 
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="public">{tr}Gallery is public{/tr}.</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								<input type="checkbox" id="public" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/>
 								<br />
 								<em>{tr}Any user with permission (not only the gallery owner) can upload files{/tr}.</em>
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="backlinkPerms">{tr}Perms of the backlinks are checked to view a file{/tr}</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								<input type="checkbox" id="backlinkPerms" name="backlinkPerms" {if $gal_info.backlinkPerms eq 'y'}checked="checked"{/if}/>
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="lockable">{tr}Files can be locked at download{/tr}.</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								<input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/>
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="archives">{tr}Maximum number of archives for each file{/tr}:</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" />
 								<br />
 								<em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
@@ -106,10 +106,10 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="parentId">{tr}Parent gallery{/tr}:</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								<select name="parentId" id="parentId">
 									<option value="{$prefs.fgal_root_id}"{if $parentId eq $prefs.fgal_root_id} selected="selected"{/if}>{tr}none{/tr}</option>
 									{foreach from=$all_galleries key=key item=item}
@@ -126,16 +126,16 @@
 
 						{if $tiki_p_admin eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
 							<tr>
-								<td class="formcolor"><label for="user">{tr}Owner of the gallery{/tr}:</label></td>
-								<td class="formcolor">
+								<td><label for="user">{tr}Owner of the gallery{/tr}:</label></td>
+								<td>
 									{user_selector user=$creator id='user'}
 								</td>
 							</tr>
 
 							{if $prefs.fgal_quota_per_fgal eq 'y'}
 								<tr>
-									<td class="formcolor">{tr}Quota{/tr}</td>
-									<td class="formcolor">
+									<td>{tr}Quota{/tr}</td>
+									<td>
 										<input type="text" id="quota" name="quota" value="{$gal_info.quota}" size="5" />{tr}Mb{/tr} <i>{tr}(0 for unlimited){/tr}</i>
 										{if $gal_info.usedSize}<br />{tr}Used:{/tr} {$gal_info.usedSize|kbsize}{/if}
 										{if !empty($gal_info.quota)}
@@ -152,8 +152,8 @@
 
 							{if $prefs.feature_groupalert eq 'y'}
 								<tr>
-									<td class="formcolor">{tr}Group of users alerted when file gallery is modified{/tr}</td>
-									<td class="formcolor">
+									<td>{tr}Group of users alerted when file gallery is modified{/tr}</td>
+									<td>
 										<select id="groupforAlert" name="groupforAlert">
 											<option value="">&nbsp;</option>
 											{foreach key=k item=i from=$groupforAlertList}
@@ -164,28 +164,28 @@
 								</tr>
 
 								<tr>
-									<td class="formcolor">{tr}Allows to select each user for small groups{/tr}</td>
-									<td class="formcolor"><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}/ ></td>
+									<td>{tr}Allows to select each user for small groups{/tr}</td>
+									<td><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}/ ></td>
 								</tr>
 							{/if}
 
 						{/if}
 
 						<tr>
-							<td class="formcolor">
+							<td>
 								{tr}Maximum width for images in gallery{/tr}:
 							</td>
-							<td class="formcolor">
+							<td>
 								<input size="5" type="text" name="image_max_size_x" value="{$gal_info.image_max_size_x|escape}" /> px
 								<br />
 								<i>{tr}If an image is wider than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</i>
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">
+							<td>
 								{tr}Maximum height for images in gallery{/tr}:
 							</td>
-							<td class="formcolor">
+							<td>
 								<input size="5" type="text" name="image_max_size_y" value="{$gal_info.image_max_size_y|escape}" /> px
 								<br />
 								<i>{tr}If an image is higher than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</i>
@@ -199,10 +199,10 @@
 
 <!-- display properties -->
 				{tab name="{tr}Display Properties{/tr}"}
-					<table class="normal">
+					<table class="formcolor">
 						<tr>
-							<td class="formcolor"><label for="sortorder">{tr}Default sort order{/tr}:</label></td>
-							<td class="formcolor">
+							<td><label for="sortorder">{tr}Default sort order{/tr}:</label></td>
+							<td>
 								<select name="sortorder" id="sortorder">
 									{foreach from=$options_sortorder key=key item=item}
 										<option value="{$item|escape}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
@@ -217,21 +217,21 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="formcolor">
+							<td>
 								<label for="max_desc">{tr}Max description display size{/tr}:</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								<input type="text" id="max_desc" name="max_desc" value="{$max_desc|escape}" />
 							</td>
-							<td class="formcolor">
+							<td>
 								<label for="maxRows">{tr}Max rows per page{/tr}:</label>
 							</td>
-							<td class="formcolor">
+							<td>
 								<input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}" />
 							</td>
 						</tr>
 						<tr
-							<td class="formcolor" colspan="2">{tr}Select which items to display when listing galleries{/tr}:
+							<td colspan="2">{tr}Select which items to display when listing galleries{/tr}:
 								<table>
 									{include file='fgal_listing_conf.tpl'}
 								</table>

@@ -336,15 +336,15 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	<input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
 	{/section}
 
-	<table class="normal">
+	<table class="formcolor">
 		{if !$user}
 			<tr>
-				<td class="formcolor"><label for="anonymous_name">{tr}Name{/tr}</span></label></td>
-				<td class="formcolor"><input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name"  value="{$comment_preview_data.name|escape}"/></td>
+				<td><label for="anonymous_name">{tr}Name{/tr}</span></label></td>
+				<td><input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name"  value="{$comment_preview_data.name|escape}"/></td>
 			</tr>
 			{if $forum_mode eq 'y' or $prefs.comments_field_email eq 'y'}
 				<tr>
-					<td class="formcolor">
+					<td>
 						<label for="anonymous_email">
 							{if $forum_mode eq 'y'}
 								{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}
@@ -353,26 +353,26 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 							{/if}
 						</label>
 					</td>
-					<td class="formcolor"><input type="text" size="30" id="anonymous_email" name="anonymous_email" value="{$comment_preview_data.email|escape}"/></td>
+					<td><input type="text" size="30" id="anonymous_email" name="anonymous_email" value="{$comment_preview_data.email|escape}"/></td>
 				</tr>
 			{/if}
 
 			{if $forum_mode neq 'y' and $prefs.comments_field_website eq 'y'}
 				<tr>
-					<td class="formcolor">
+					<td>
 						<label for="anonymous_website">{tr}Website{/tr}</label>
 					</td>
-					<td class="formcolor"><input type="text" size="30" id="anonymous_website" name="anonymous_website"  value="{if !empty($comment_preview_data.website)}{$comment_preview_data.website|escape}{else}http://{/if}" /></td>
+					<td><input type="text" size="30" id="anonymous_website" name="anonymous_website"  value="{if !empty($comment_preview_data.website)}{$comment_preview_data.website|escape}{else}http://{/if}" /></td>
 				</tr>
 			{/if}
 		{/if}
 
 		{if ( $forum_mode != 'y' and $prefs.comments_notitle neq 'y' ) or $prefs.forum_reply_notitle neq 'y' && $forum_mode == 'y'}
 			<tr>
-				<td class="formcolor">
+				<td>
 					<label for="comments-title">{tr}Title{/tr} <span class="attention">*</span> </label>
 				</td>
-				<td class="formcolor">
+				<td>
 					<input type="text" name="comments_title" id="comments-title" value="{$comment_preview_data.title|escape}" /> 
 				</td>
 			</tr>
@@ -380,8 +380,8 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 
 		{if $comment_can_rate_article eq 'y'}
 		<tr>
-			<td class="formcolor"><label for="comments-rating">{tr}Rating{/tr} </label></td>
-			<td class="formcolor">
+			<td><label for="comments-rating">{tr}Rating{/tr} </label></td>
+			<td>
 				<select name="comment_rating" id="comments-rating">
 					<option value="" {if $comment_rating eq ''}selected="selected"{/if}>No</option>
 					<option value="0" {if $comment_rating eq 0}selected="selected"{/if}>0</option>
@@ -403,17 +403,17 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{if $prefs.section_comments_parse eq 'y' && $forum_mode neq 'y' || $prefs.feature_forum_parse eq 'y' && $forum_mode eq 'y'}
 	        {assign var=toolbars_html value=true}{* can't find where this gets set in ui-revamp project *}
 	        <tr>
-	    		<td class="formcolor"></td>
-	            <td class="formcolor">
+	    		<td></td>
+	            <td>
 	            	{toolbars area_id='editpost2' comments='y'}
 	            </td>
 	        </tr>
 		{/if}
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">*</span>{/if}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
@@ -468,8 +468,8 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{if $forum_mode == "y" and (($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y'  or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y'))}
 		{assign var='can_attach_file' value='y'}
 		<tr>
-			<td class="formcolor">{tr}Attach file{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Attach file{/tr}</td>
+			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input id="userfile1" name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
 			</td>
 		</tr>
@@ -485,7 +485,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{/if}
 
 		<tr>
-			<td class="formcolor">
+			<td>
 			{if $parent_coms}
 				{tr}Reply to parent post{/tr}
 			{else}
@@ -493,7 +493,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			{/if}
 			</td>
 
-			<td class="formcolor">
+			<td>
 				<input type="submit" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" />
 				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />

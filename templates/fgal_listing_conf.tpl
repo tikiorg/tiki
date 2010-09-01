@@ -3,7 +3,7 @@
 {if is_array($fgal_options) and count($fgal_options) gt 0}
 	{foreach key=key item=item from=$fgal_options}
 		{if $key eq 'default_view'}
-<tr class="formcolor">
+<tr>
 	<td><label for="fgal_{$key}">{$item.name}:<label></td>
 	<td>
 		<select id="fgal_{$key}" name="fgal_{$key}">
@@ -13,7 +13,7 @@
 	</td>
 </tr>
 		{else}
-<tr class="formcolor">
+<tr>
 	<td><label for="fgal_{$key}{$fgal_ext}">{$item.name}:</label></td>
 	{assign var='pref_name' value="fgal_$key"}
 	<td><input type="checkbox" id="fgal_{$key}" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}{if $edit_mode eq 'y' and $prefs.$pref_name neq 'y'} disabled="disabled"{/if} />
@@ -33,7 +33,7 @@
 
 {if is_array($fgal_listing_conf) and count($fgal_listing_conf) gt 0}
 	{foreach key=key item=item from=$fgal_listing_conf}
-<tr class="formcolor">
+<tr>
 	<td><label for="fgal_list_{$key}">{$item.name}:</label></td>
 	<td>
 		<select id="fgal_list_{$key}" name="fgal_list_{$key}">
