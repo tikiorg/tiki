@@ -81,8 +81,8 @@
 			{if $page_ref_id}
 				<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 			{/if}
-			<table class="normal">
-				<tr class="formcolor">
+			<table class="formcolor">
+				<tr>
 					<td>
 						<label for="attach-upload">{tr}Upload file{/tr}:</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 						<input size="16 " name="userfile1" type="file" id="attach-upload" />
