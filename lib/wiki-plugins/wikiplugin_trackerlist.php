@@ -208,7 +208,7 @@ function wikiplugin_trackerlist_info() {
 			'wiki' => array(
 				'required' => false,
 				'name' => tra('Wiki Page'),
-				'description' => tra('Use content of the wiki page as template to display the item'),
+				'description' => tra('Use content of the wiki page as template to display the item. The page should have the permission tiki_p_use_as_template set, and that page should be only open for edition to fully trusted users such as other site admins'),
 				'filter' => 'pagename',
 				'advanced' => true,
 			),
