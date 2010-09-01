@@ -984,6 +984,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$catfilters = array();
 			$catfiltervalue = array();
 			$catfilternotvalue = array();
+			if (!empty($filterfield)) {
 			foreach ($filterfield as $k => $ff) {
 				$filterfieldinfo = $trklib->get_tracker_field($ff);
 				if ($filterfieldinfo['type'] == 'e') {
@@ -1005,6 +1006,7 @@ function wikiplugin_trackerlist($data, $params) {
 						$catfiltervalue[] = array($exactvalue[$k]);
 					}
 				}
+			}
 			}
 			if ($catfilters) {
 				foreach ($catfilters as $cf) {
