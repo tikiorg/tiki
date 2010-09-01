@@ -92,10 +92,10 @@
 <br />
 	<form action="tiki-user_assigned_modules.php" method="post">
 		<h2>{tr}Assign module{/tr}</h2>
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor">{tr}Module{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Module{/tr}:</td>
+				<td>
 					<select name="module">
 						{section name=ix loop=$assignables}
 							<option value="{$assignables[ix].moduleId|escape}">{$assignables[ix].name}</option>
@@ -104,8 +104,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Column{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Column{/tr}:</td>
+				<td>
 					<select name="position">
 						{if $prefs.feature_left_column ne 'n'}<option value="l">{tr}Left{/tr}</option>{/if}
 						{if $prefs.feature_right_column ne 'n'}<option value="r">{tr}Right{/tr}</option>{/if}
@@ -113,8 +113,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Order{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Order{/tr}:</td>
+				<td>
 					<select name="order">
 						{section name=ix loop=$orders}
 							<option value="{$orders[ix]|escape}">{$orders[ix]}</option>
@@ -123,8 +123,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor"><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td>
+				<td>&nbsp;</td>
+				<td><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td>
 			</tr>
 		</table>
 	</form>

@@ -9,22 +9,22 @@
 <h2>{tr}Add or edit an item{/tr}</h2>
 <form action="tiki-usermenu.php" method="post">
 	<input type="hidden" name="menuId" value="{$menuId|escape}" />
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Name{/tr}</td>
-			<td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
+			<td>{tr}Name{/tr}</td>
+			<td><input type="text" name="name" value="{$info.name|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}URL{/tr}</td>
-			<td class="formcolor"><input type="text" name="url" value="{$info.url|escape}" /></td>
+			<td>{tr}URL{/tr}</td>
+			<td><input type="text" name="url" value="{$info.url|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Position{/tr}</td>
-			<td class="formcolor"><input type="text" name="position" value="{$info.position|escape}" /></td>
+			<td>{tr}Position{/tr}</td>
+			<td><input type="text" name="position" value="{$info.position|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Mode{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Mode{/tr}</td>
+			<td>
 				<select name="mode">
 					<option value="n" {if $info.mode eq 'n'}selected="selected"{/if}>{tr}New Window{/tr}</option>
 					<option value="w" {if $info.mode eq 'w'}selected="selected"{/if}>{tr}replace window{/tr}</option>
@@ -32,8 +32,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+			<td>&nbsp;</td>
+			<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 		</tr>
 	</table>
 </form>
