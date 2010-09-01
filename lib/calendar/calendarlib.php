@@ -758,7 +758,7 @@ class CalendarLib extends TikiLib
 		$next = $focus;
 		$next['day'] += $nbDays[$view];
 		if ($next['month'] + $nbMonths[$view] > 12) {
-			$next['month'] = ($next['previous'] -1 + $nbMonths[$view]) % 12 + 1;
+			$next['month'] = ($next['month'] -1 + $nbMonths[$view]) % 12 + 1;
 			$next['year'] += 1;
 		} else {
 			$next['month'] += $nbMonths[$view];

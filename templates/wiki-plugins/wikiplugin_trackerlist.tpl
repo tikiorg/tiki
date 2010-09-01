@@ -103,13 +103,13 @@
 		{if !empty($popupfields)}
 			{capture name=popup}
 <div class="cbox">
-	<table>
+	<table style="width:100%">
 				{cycle values="odd,even" print=false}
 				{foreach from=$items[user].field_values item=f}
 					{if in_array($f.fieldId, $popupfields)}
 						{capture name=popupl}{include file='tracker_item_field_value.tpl' field_value=$f item=$items[user]}{/capture}
 						{if !empty($smarty.capture.popupl) }
-							<tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{$smarty.capture.popupl}</td></tr>
+							<tr>{if count($popupfields) > 1}<th class="{cycle advance=false}">{$f.name}</th>{/if}<td class="{cycle}">{$smarty.capture.popupl}</td></tr>
 						{/if}
 					{/if}
 				{/foreach}

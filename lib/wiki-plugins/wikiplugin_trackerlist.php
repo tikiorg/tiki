@@ -410,6 +410,9 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!empty($popup)) {
 			$limit = array_unique(array_merge($limit, $popup));
 		}
+		if (!empty($calendarfielddate)) {
+			$limit = array_unique(array_merge($limit, $calendarfielddate));
+		}
 		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
 			$limit = '';
 		}
@@ -1118,6 +1121,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('dayend', $dayend['date']);
 				$smarty->assign('today', TikiLib::make_time(0,0,0, TikiLib::date_format('%m'), TikiLib::date_format('%d'), TikiLib::date_format('%Y')));
 				$smarty->assign('sticky_popup', $calendarstickypopup);
+				$smarty->assign('showpopup', 'n');
 				global $headerlib; include_once('lib/headerlib.php');
 				$headerlib->add_cssfile('css/calendar.css',20);
 				return '~np~'.$smarty->fetch('modules/mod-calendar_new.tpl').'~/np~';
