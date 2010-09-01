@@ -5303,16 +5303,6 @@ class TikiLib extends TikiDb_Bridge
 			$this->plugin_apply_filters( $name, $data, $args );
 		}
 
-		if ($prefs['wysiwyg_htmltowiki'] === 'y' && $parseOptions['fck'] ) {
-			$fck_editor_plugin = '{'.strtoupper($name).'(';
-			if (!empty($args)) {
-				foreach( $args as $argKey => $argValue ) {
-					$fck_editor_plugin .= $argKey.'="'.$argValue.'" ';
-				}
-			}
-			$fck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
-		}
-
 		if( function_exists( $func_name ) ) {
 			$pluginFormat = 'wiki';
 			$info = $this->plugin_info( $name );
@@ -5323,7 +5313,16 @@ class TikiLib extends TikiDb_Bridge
 			$output = $func_name( $data, $args, $offset, $parseOptions );
 
 			$plugin_result =  $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
-			if ($prefs['wysiwyg_htmltowiki'] === 'y' && $parseOptions['fck'] ) {
+			if ($parseOptions['fck'] ) {
+				
+				$fck_editor_plugin = '{'.strtoupper($name).'(';
+				if (!empty($args)) {
+					foreach( $args as $argKey => $argValue ) {
+						$fck_editor_plugin .= $argKey.'="'.$argValue.'" ';
+					}
+				}
+				$fck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
+
 				// remove hrefs and onclicks
 				$plugin_result = preg_replace('/href\=["\']([^"\']*)["\']/i', 'tiki_href="$1"', $plugin_result);
 				$plugin_result = preg_replace('/onclick\=["\']([^"\']*)["\']/i', 'tiki_onclick="$1"', $plugin_result);
@@ -5333,10 +5332,14 @@ class TikiLib extends TikiDb_Bridge
 				} else {
 					$elem = 'span';
 				}
+				$arg_str = '';		// not using http_build_query() as it converts spaces into +
+				foreach ($args as $key=>$value) 
+				    $arg_str .= $key.'='.$value.'&'; 
+				$arg_str = rtrim($arg_str, '&'); 
 				
 				return '<'.$elem.' class="cke_tiki_plugin" plugin="' . $name . '"' .
 						' syntax="~np~' . htmlentities( $fck_editor_plugin ) . '~/np~"' .
-						' args="' . urlencode(http_build_query($args)) . '"' .
+						' args="' . htmlentities($arg_str) . '"' .
 						' body="~np~' . str_replace('"', '\"', $data) . '~/np~">'.
 						'<'.$elem.' class="plugin_contents" contenteditable="false">' . $plugin_result.'</'.$elem.'></'.$elem.'>';
 			} else {

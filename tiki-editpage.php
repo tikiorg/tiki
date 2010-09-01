@@ -838,12 +838,16 @@ if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
 		}
 		$info['wysiwyg'] = true;
 		$smarty->assign('allowhtml','y');
-	} elseif ($prefs['wysiwyg_htmltowiki'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y' && isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
-		if ($edit_data != 'ajax error') {
-			//$parsed = $editlib->parseToWysiwyg($edit_data);
+	} elseif ($prefs['wysiwyg_ckeditor'] === 'y' && isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
+		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+			if ($edit_data != 'ajax error') {
+				//$parsed = $editlib->parseToWysiwyg($edit_data);
+			} else {
+	//			$edit_data = '';
+				unset($_REQUEST['save']);	// why?
+			}
 		} else {
-//			$edit_data = '';
-			unset($_REQUEST['save']);
+		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true, 'parsetoc' => false));
 		}
 	}
 }
