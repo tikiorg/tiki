@@ -4801,7 +4801,7 @@ class TikiLib extends TikiDb_Bridge
 								$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
 							}
 							
-							if ($options['fck'] === 'y') {
+							if ($options['fck']) {
 								$ret = '<span class="cke_tiki_plugin" plugin="' . $plugin_name .
 										'" args="' . urlencode(http_build_query($arguments)) .
 										'" body="' . str_replace('"', '\"', $key) . '">'.
@@ -5303,7 +5303,7 @@ class TikiLib extends TikiDb_Bridge
 			$this->plugin_apply_filters( $name, $data, $args );
 		}
 
-		if ($prefs['wysiwyg_htmltowiki'] === 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] === 'y' ) {
+		if ($prefs['wysiwyg_htmltowiki'] === 'y' && $parseOptions['fck'] ) {
 			$fck_editor_plugin = '{'.strtoupper($name).'(';
 			if (!empty($args)) {
 				foreach( $args as $argKey => $argValue ) {
@@ -5323,7 +5323,7 @@ class TikiLib extends TikiDb_Bridge
 			$output = $func_name( $data, $args, $offset, $parseOptions );
 
 			$plugin_result =  $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
-			if ($prefs['wysiwyg_htmltowiki'] === 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] === 'y' ) {
+			if ($prefs['wysiwyg_htmltowiki'] === 'y' && $parseOptions['fck'] ) {
 				// remove hrefs and onclicks
 				$plugin_result = preg_replace('/href\=["\']([^"\']*)["\']/i', 'tiki_href="$1"', $plugin_result);
 				$plugin_result = preg_replace('/onclick\=["\']([^"\']*)["\']/i', 'tiki_onclick="$1"', $plugin_result);
@@ -5686,7 +5686,7 @@ class TikiLib extends TikiDb_Bridge
 		$options['suppress_icons'] = isset($options['suppress_icons']) ? (bool)$options['suppress_icons'] : false;
 		$options['parsetoc'] = isset($options['parsetoc']) ? (bool)$options['parsetoc'] : true;
 		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
-		if (empty($options['fck'])) $options['fck'] = 'n';
+		if (empty($options['fck'])) $options['fck'] = false;
 		
 		
 		// if simple_wiki is true, disable some wiki syntax
@@ -6277,7 +6277,7 @@ class TikiLib extends TikiDb_Bridge
 
 		global $prefs;
 
-		if ( $options['fck'] === 'y' ) {
+		if ( $options['fck'] ) {
 			$need_maketoc = false ;
 		} else {
 			$need_maketoc = strpos($data, "{maketoc");
@@ -6439,10 +6439,10 @@ class TikiLib extends TikiDb_Bridge
 								$listate = substr($line, $listlevel, 1);
 								if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
 									$thisid = 'id' . microtime() * 1000000;
-									if ( $options['fck'] !== 'y' ) {
+									if ( !$options['fck'] ) {
 										$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
 									}
-									$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['fck'] === 'y' ? 'block' : 'none') . ';"';
+									$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['fck'] ? 'block' : 'none') . ';"';
 									$addremove = 1;
 								}
 							}
@@ -6456,10 +6456,10 @@ class TikiLib extends TikiDb_Bridge
 						$listate = substr($line, $listlevel, 1);
 						if (($listate == '+' || $listate == '-')) {
 							$thisid = 'id' . microtime() * 1000000;
-							if ( $options['fck'] !== 'y' ) {
+							if ( !$options['fck'] ) {
 								$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
 							}
-							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['fck'] === 'y' ? 'block' : 'none') . ';"';
+							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['fck'] ? 'block' : 'none') . ';"';
 							$addremove = 1;
 						}
 						$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
@@ -6580,14 +6580,14 @@ class TikiLib extends TikiDb_Bridge
 						if ($divstate == '+' || $divstate == '-') {
 							// OK. Must insert flipper after HEADER, and then open new div...
 							$thisid = 'id' . preg_replace('/[^a-zA-z0-9]/', '',urlencode($options['page'])) .$nb_hdrs;
-							if ($options['fck'] !== 'y') {
+							if (!$options['fck']) {
 								$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
 								global $headerlib;
 								$headerlib->add_jq_onready( "setheadingstate('$thisid');" );
 							} else {
 								$aclose = '';
 							}
-							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' || $options['fck'] !== 'y' ? 'block' : 'none') . ';">';
+							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' || !$options['fck'] ? 'block' : 'none') . ';">';
 							array_unshift($divdepth, $hdrlevel);
 							$addremove += 1;
 						}
@@ -6753,7 +6753,7 @@ class TikiLib extends TikiDb_Bridge
 		 */
 		$new_data = '';
 		$search_start = 0;
-		if ( $options['fck'] !== 'y') {
+		if ( !$options['fck']) {
 			while ( ($maketoc_start = strpos($data, "{maketoc", $search_start)) !== false ) {
 				$maketoc_length = strpos($data, "}", $maketoc_start) + 1 - $maketoc_start;
 				$maketoc_string = substr($data, $maketoc_start, $maketoc_length);
