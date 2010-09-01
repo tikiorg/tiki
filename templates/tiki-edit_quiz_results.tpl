@@ -15,34 +15,34 @@
 <form action="tiki-edit_quiz_results.php" method="post">
 	<input type="hidden" name="quizId" value="{$quizId|escape}" />
 	<input type="hidden" name="resultId" value="{$resultId|escape}" />
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}From Points:{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}From Points:{/tr}</td>
+			<td>
 				<input type="text" name="fromPoints" value="{$fromPoints|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				{tr}To Points:{/tr}
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="text" name="toPoints" value="{$toPoints|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				{tr}Answer:{/tr}
 			</td>
-			<td class="formcolor">
+			<td>
 				<textarea name="answer" rows="10" cols="40">{$answer|escape}</textarea>
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				&nbsp;
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />
 			</td>
 		</tr>

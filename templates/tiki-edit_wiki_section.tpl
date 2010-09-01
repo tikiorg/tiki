@@ -11,8 +11,8 @@
   <br />
 {/if}
 <form method="post" action="tiki-edit_wiki_section.php" id='editwikiform'>
-<table class="normal">
-<tr class="formcolor">
+<table class="formcolor">
+<tr>
   <td>{tr}Edit{/tr}:
   </td>
   <td>
@@ -22,7 +22,7 @@
     <input type="hidden" name="cols" value="{$cols}"/>
   </td>
 </tr>
-<tr><td class="formcolor" colspan="3">
+<tr><td colspan="3">
 <input type="hidden" name="referer" value="{$referer}" />
 <input type="hidden" name="title" value="{$title}" />
 <input type="hidden" name="object" value="{$object}" />

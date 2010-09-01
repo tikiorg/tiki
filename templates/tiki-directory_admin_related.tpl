@@ -21,10 +21,10 @@
 <h2>{tr}Add a related directory category{/tr}</h2>
 <form action="tiki-directory_admin_related.php" method="post">
   <input type="hidden" name="parent" value="{$parent|escape}" />
-  <table class="normal">
+  <table class="formcolor">
     <tr>
-      <td class="formcolor">{tr}Directory Category{/tr}:</td>
-      <td class="formcolor"><select name="categId">
+      <td>{tr}Directory Category{/tr}:</td>
+      <td><select name="categId">
           
     {section name=ix loop=$categs}
       
@@ -36,12 +36,12 @@
       </td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Mutual{/tr}:</td>
-      <td class="formcolor"><input type="checkbox" name="mutual" /></td>
+      <td>{tr}Mutual{/tr}:</td>
+      <td><input type="checkbox" name="mutual" /></td>
     </tr>
     <tr>
-      <td class="formcolor">&nbsp;</td>
-      <td class="formcolor"><input type="submit" name="add" value="{tr}Save{/tr}" /></td>
+      <td>&nbsp;</td>
+      <td><input type="submit" name="add" value="{tr}Save{/tr}" /></td>
     </tr>
   </table>
 </form>

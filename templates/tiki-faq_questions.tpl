@@ -14,26 +14,26 @@
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
 
 {* begin table *}
-<table class="normal">
-  <tr class="formcolor">
-    <td class="formcolor">{tr}Question{/tr}:</td>
-    <td class="formcolor" >
+<table class="formcolor">
+  <tr>
+    <td>{tr}Question{/tr}:</td>
+    <td >
       <textarea type="text" rows="2" cols="80" name="question">{$question|escape}</textarea>
     </td>
   </tr>
 
-  <tr class="formcolor">
-    <td class="formcolor">{tr}Answer{/tr}:
+  <tr>
+    <td>{tr}Answer{/tr}:
     </td>
-    <td class="formcolor" >
+    <td >
       {toolbars area_id="faqans"}
       <textarea id='faqans' type="text" rows="8" cols="80" name="answer">{$answer|escape}</textarea>
     </td>
   </tr>
 
-  <tr class="formcolor">
-    <td  class="formcolor">&nbsp;</td>
-    <td class="formcolor" >
+  <tr>
+    <td >&nbsp;</td>
+    <td >
       <input type="submit" name="save" value="{tr}Save{/tr}" />
       {* set your changes and save 'em *}
     </td>
@@ -48,17 +48,17 @@
 <form action="tiki-faq_questions.php" method="post">
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
-<table class="normal">
+<table class="formcolor">
 <tr>
-<td class="formcolor">{tr}Filter{/tr}</td>
-<td class="formcolor">
+<td>{tr}Filter{/tr}</td>
+<td>
 <input type="text" name="filter" value="{$filter|escape}" />
 <input type="submit" name="filteruseq" value="{tr}Filter{/tr}" />
 </td>
 </tr>
 <tr>
-<td class="formcolor">{tr}Question{/tr}:</td>
-<td class="formcolor" >
+<td>{tr}Question{/tr}:</td>
+<td >
 <select name="usequestionId">
 {section name=ix loop=$allq}
 {* Ok, here's where you change the truncation field for this field *}
@@ -68,8 +68,8 @@
 </td>
 </tr>
 <tr>
-<td class="formcolor">&nbsp;</td>
-<td class="formcolor">
+<td>&nbsp;</td>
+<td>
 <input type="submit" name="useq" value="{tr}Use{/tr}" />
 </td>
 </tr>

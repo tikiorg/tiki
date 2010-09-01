@@ -12,10 +12,10 @@
 <form action="tiki-edit_question_options.php" method="post">
 <input type="hidden" name="optionId" value="{$optionId|escape}" />
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Option{/tr}:</td><td class="formcolor"><textarea name="optionText" rows="5" cols="40">{$optionText|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Points{/tr}:</td><td class="formcolor"><input type="text" name="points" value="{$points|escape}" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<table class="formcolor">
+<tr><td>{tr}Option{/tr}:</td><td><textarea name="optionText" rows="5" cols="40">{$optionText|escape}</textarea></td></tr>
+<tr><td>{tr}Points{/tr}:</td><td><input type="text" name="points" value="{$points|escape}" /></td></tr>
+<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 

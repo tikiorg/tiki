@@ -27,18 +27,18 @@
 <form action="tiki-directory_admin_categories.php" method="post">
   <input type="hidden" name="parent" value="{$parent|escape}" />
   <input type="hidden" name="categId" value="{$categId|escape}" />
-  <table class="normal">
+  <table class="formcolor">
     <tr>
-      <td class="formcolor">{tr}Name{/tr}:</td>
-      <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" />
+      <td>{tr}Name{/tr}:</td>
+      <td><input type="text" name="name" value="{$info.name|escape}" />
     </tr>
     <tr>
-      <td class="formcolor">{tr}Description{/tr}:</td>
-      <td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
+      <td>{tr}Description{/tr}:</td>
+      <td><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Children type{/tr}:</td>
-      <td class="formcolor"><select name="childrenType">
+      <td>{tr}Children type{/tr}:</td>
+      <td><select name="childrenType">
           <option value='c' {if $info.childrenType eq 'c'}selected="selected"{/if}>{tr}Most visited directory sub-categories{/tr}</option>
           <option value='d' {if $info.childrenType eq 'd'}selected="selected"{/if}>{tr}Directory Category description{/tr}</option>
           <option value='r' {if $info.childrenType eq 'r'}selected="selected"{/if}>{tr}Random directory sub-categories{/tr}</option>
@@ -46,8 +46,8 @@
       </td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Maximum number of children to show{/tr}:</td>
-      <td class="formcolor"><select name="viewableChildren">
+      <td>{tr}Maximum number of children to show{/tr}:</td>
+      <td><select name="viewableChildren">
           <option value="0" {if $info.viewableChildren eq 0}selected="selected"{/if}>{tr}none{/tr}</option>
           <option value="1" {if $info.viewableChildren eq 1}selected="selected"{/if}>1</option>
           <option value="2" {if $info.viewableChildren eq 2}selected="selected"{/if}>2</option>
@@ -58,16 +58,16 @@
       </td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Allow sites in this directory category{/tr}:</td>
-      <td class="formcolor"><input name="allowSites" type="checkbox" {if $info.allowSites eq 'y'}checked="checked"{/if} /></td>
+      <td>{tr}Allow sites in this directory category{/tr}:</td>
+      <td><input name="allowSites" type="checkbox" {if $info.allowSites eq 'y'}checked="checked"{/if} /></td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Show number of sites in this directory category{/tr}:</td>
-      <td class="formcolor"><input name="showCount" type="checkbox" {if $info.showCount eq 'y'}checked="checked"{/if} /></td>
+      <td>{tr}Show number of sites in this directory category{/tr}:</td>
+      <td><input name="showCount" type="checkbox" {if $info.showCount eq 'y'}checked="checked"{/if} /></td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Editor group{/tr}:</td>
-      <td class="formcolor"><select name="editorGroup">
+      <td>{tr}Editor group{/tr}:</td>
+      <td><select name="editorGroup">
           <option value="">{tr}None{/tr}</option>
           
         {section name=ux loop=$groups}
@@ -81,8 +81,8 @@
     </tr>
     {include file='categorize.tpl'}
     <tr>
-      <td class="formcolor">&nbsp;</td>
-      <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" />
+      <td>&nbsp;</td>
+      <td><input type="submit" name="save" value="{tr}Save{/tr}" />
     </tr>
   </table>
 </form>

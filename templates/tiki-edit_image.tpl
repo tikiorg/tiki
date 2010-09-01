@@ -19,17 +19,17 @@
 <input type="hidden" name="edit" value="{$imageId|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Image Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Image Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+<table class="formcolor">
+<tr><td>{tr}Image Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td>{tr}Image Description{/tr}:</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
 {if $prefs.feature_maps eq 'y' and $gal_info.geographic eq 'y'}
-<tr><td class="formcolor">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
+<tr><td>{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
+<tr><td>{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
 {/if}
 {include file='categorize.tpl'}
-<tr><td class="formcolor">{tr}Upload from disk to change the image:{/tr}</td><td class="formcolor">{$filename}<br /><input name="userfile" type="file" />
+<tr><td>{tr}Upload from disk to change the image:{/tr}</td><td>{$filename}<br /><input name="userfile" type="file" />
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="editimage" value="{tr}Save{/tr}" />&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}" />&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="editimage" value="{tr}Save{/tr}" />&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}" />&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a></td></tr>
 </table>
 </form>
 <br />
