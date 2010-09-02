@@ -475,7 +475,13 @@ class ToolbarFckOnly extends Toolbar
 		case 'format':
 			return 	$prefs['wysiwyg_ckeditor'] === 'y' ? new self( 'Format' ) : null;
 		case 'source':
-			return new self( 'Source' );
+			global $tikilib, $user, $page;
+			$p = $prefs['wysiwyg_htmltowiki'] == 'y' ? 'tiki_p_wiki_view_source'  : 'tiki_p_use_HTML';
+			if ($tikilib->user_has_perm_on_object( $user, $page, 'wiki page',$p )) {
+				return new self( 'Source' );
+			} else {
+				return null;
+			}
 		case 'autosave':
 			if ($prefs['wysiwyg_ckeditor'] == 'y') {
 				return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
