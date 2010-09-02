@@ -103,7 +103,8 @@
 						<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
 							{preference name=bigbluebutton_server_location}
 							{preference name=bigbluebutton_server_salt}
-						</div>						
+						</div>
+						{preference name=feature_invit}
 
 				</fieldset>
 			</div>
