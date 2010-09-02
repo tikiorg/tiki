@@ -204,45 +204,13 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{include file='comment.tpl' comment=$comments_coms[rep]}
 		{if $thread_style != 'commentStyle_plain'}<br />{/if}
 	{/section}
-	{jq}
-		(function($) {
-			$.fn.addnotes = function( container ) {
-				return this.each(function(){
-					var comment = this;
-					var text = $('dt:contains("note")', comment).next('dd').text();
-					var author = $('.author_info', comment).clone();
-					var body = $('.postbody-content', comment).clone();
-					body.find('dt:contains("note")').closest('dl').remove();
-
-					if( text.length > 0 ) {
-						var parents = container.find(':contains("' + text + '")').parent();
-						var node = container.find(':contains("' + text + '")').not(parents)
-							.addClass('highlight')
-							.each( function() {
-								var child = $('dl.note-list',this);
-								if( ! child.length ) {
-									child = $('<dl class="note-list"/>')
-										.appendTo(this)
-										.hide();
-
-									$(this).click( function() {
-										child.toggle();
-									} );
-								}
-
-								child.append( $('<dt/>')
-									.append(author) )
-									.append( $('<dd/>').append(body) );
-							} );
-					}
-				});
-			};
-		})($jq);
-
-		$('.postbody dt:contains("note")')
-			.closest('.postbody')
-			.addnotes( $('#top') );
-	{/jq}
+	{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
+		{jq}
+			$('.postbody dt:contains("note")')
+				.closest('.postbody')
+				.addnotes( $('#top') );
+		{/jq}
+	{/if}
 </form>
 
 <div class="thread_pagination">
@@ -417,44 +385,12 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
-				{jq}
-					var annote = $('<a href="">{tr}Comment{/tr}</a>')
-						.css('background','white')
-						.click( function( e ) {
-							e.preventDefault();
-							var annotation = $(this).attr('annotation');
-							$(this).hide();
-
-							$('#editpostform').parents().show();
-							$('#editpostform textarea').val(';note:' + annotation + "\n\n").focus().scroll();
-						} )
-						.appendTo(document.body);
-
-					$('#top').mouseup( function( e ) {
-						var range;
-						if( window.getSelection && window.getSelection().rangeCount ) {
-							range = window.getSelection().getRangeAt(0);
-						} else if( window.selection ) {
-							range = window.selection.getRangeAt(0);
-						}
-
-						if( range ) {
-							var string = $.trim( range.toString() );
-
-							if( string.length && -1 === string.indexOf( "\n" ) ) {
-								annote.attr('annotation', string);
-								annote.show().position( {
-									of: e,
-									at: 'bottom left',
-									my: 'top left',
-									offset: '10 10'
-								} );
-							} else {
-								annote.hide();
-							}
-						}
-					} );
-				{/jq}
+				{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
+					<a id="note-editor-comment" href="">{tr}Comment{/tr}</a>
+					{jq}
+						$('#top').noteeditor('#editpostform textarea', '#note-editor-comment');
+					{/jq}
+				{/if}
 
 				{if $forum_mode eq 'y' and $user and $prefs.feature_user_watches eq 'y'}
 					<div id="watch_thread_on_reply">
