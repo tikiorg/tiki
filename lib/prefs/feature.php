@@ -1789,5 +1789,10 @@ function prefs_feature_list() {
 			'description' => tra('Allow users to invite new users by mail to register on this tiki'),
 			'type' => 'flag',
 		),
+        'feature_loadbalancer' => array(
+            'name' => tra('Load Balancer'),
+            'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
+            'type' => 'flag',
+        ),
 	);
 }

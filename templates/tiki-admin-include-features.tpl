@@ -153,6 +153,7 @@
 					{preference name=feature_socialnetworks}
 					{preference name=feature_watershed}
 					{preference name=feature_credits}
+					{preference name=feature_loadbalancer}
 				</fieldset>
 
 			</div>
