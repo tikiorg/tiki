@@ -307,7 +307,7 @@
 	{/remarksbox}
 
 	<form name='editusr' method="post" action="tiki-admin_modules.php">
-		<table class="normal">
+		<table class="formcolor">
 			<tr valign="top">
 				<td valign="top" class="odd">
 					{if $um_name ne ''}
@@ -315,16 +315,16 @@
 					{/if}
 					<table>
 						<tr>
-							<td class="form"><label for="um_name">{tr}Name{/tr}</label></td>
+							<td><label for="um_name">{tr}Name{/tr}</label></td>
 							<td><input type="text" id="um_name" name="um_name" value="{$um_name|escape}" /></td>
 						</tr>
 						<tr>
-							<td class="form"><label for="um_title">{tr}Title{/tr}</label></td>
+							<td><label for="um_title">{tr}Title{/tr}</label></td>
 							<td><input type="text" id="um_title" name="um_title" value="{$um_title|escape}" /></td>
 						</tr>
 						<tr>
-							<td class="form"></td>
-							<td class="form">
+							<td></td>
+							<td>
 								<label><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if} /> {tr}Must be wiki parsed{/tr}.</label>
 							</td>
 						</tr>
@@ -336,7 +336,7 @@
 					<table>
 						{if $polls}
 							<tr>
-								<td class="form">
+								<td>
 									<label for="list_polls">{tr}Available polls:{/tr}</label>
 								</td>
 								<td>
@@ -348,17 +348,17 @@
 										{/section}
 									</select>
 								</td>
-								<td class="form">
+								<td>
 									<a class="link" href="javascript:setUserModuleFromCombo('list_polls', 'um_data');" title="{tr}Use Poll{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
-								<td class="form">
+								<td>
 									<a {popup text="Params: id= rate=" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}
 						{if $galleries}
 							<tr>
-								<td class="form">
+								<td>
 									<label for="list_galleries">{tr}Random image from:{/tr}</label>
 								</td>
 								<td>
@@ -369,17 +369,17 @@
 										{/section}
 									</select>
 								</td>
-								<td class="form">
+								<td>
 									<a class="link" href="javascript:setUserModuleFromCombo('list_galleries', 'um_data');" title="{tr}Use Gallery{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
-								<td class="form">
+								<td>
 									<a {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}
 						{if $contents}
 							<tr>
-								<td class="form">
+								<td>
 									<label for="list_contents">{tr}Dynamic content blocks:{/tr}</label>
 								</td>
 								<td>
@@ -389,17 +389,17 @@
 										{/section}
 									</select>
 								</td>
-								<td class="form">
+								<td>
 									<a class="link" href="javascript:setUserModuleFromCombo('list_contents', 'um_data');" title="{tr}Use Dynamic Content{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
-								<td class="form">
+								<td>
 									<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}
 						{if $rsss}
 							<tr>
-								<td class="form">
+								<td>
 									<label for="list_rsss">{tr}External feeds:{/tr}</label>
 								</td>
 								<td>
@@ -409,10 +409,10 @@
 										{/section}
 									</select>
 								</td>
-								<td class="form">
+								<td>
 									<a class="link" href="javascript:setUserModuleFromCombo('list_rsss', 'um_data');" title="{tr}Use RSS Module{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
-								<td class="form">
+								<td>
 									<a {popup text="Params: id= max= skip=x,y " width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
@@ -420,7 +420,7 @@
 
 						{if $menus}
 							<tr>
-								<td class="form">
+								<td>
 									<label for="list_menus">{tr}Default Tiki menus:{/tr}</label>
 								</td>
 								<td>
@@ -430,16 +430,16 @@
 										{/section}
 									</select>
 								</td>
-								<td class="form">
+								<td>
 									<a class="link" href="javascript:setUserModuleFromCombo('list_menus', 'um_data');" title="{tr}Use Menu{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
-								<td class="form">
+								<td>
 									<a {popup text="Params:<br />id=<br />structureId=<br />css=<br />link_on_section=y <i>or</i> n<br />type=vert <i>or</i> horiz<br />translate=y <i>or</i> n<br />menu_cookie=y <i>or</i> n" width=120 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 							{if $prefs.feature_cssmenus eq "y"}
 								<tr>
-									<td class="form">
+									<td>
 										<label for="list_cssmenus">{tr}CSS menus:{/tr}</label>
 									</td>
 									<td>
@@ -449,17 +449,17 @@
 											{/section}
 										</select>
 									</td>
-									<td class="form">
+									<td>
 										<a class="link" href="javascript:setUserModuleFromCombo('list_cssmenus', 'um_data');" title="{tr}Use CSS menu{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 									</td>
-									<td class="form">
+									<td>
 										<a {popup text="Params:<br />id=<br />type=horiz <i>or</i> vert<br />sectionLevel=<br />toLevel= " width=100 center=true}>{icon _id='help'}</a>
 									</td>
 								</tr>
 							{/if}							
 							{if $prefs.feature_phplayers eq "y"}
 								<tr>
-									<td class="form">
+									<td>
 										<label for="list_phpmenus">{tr}PHP Layers menus:{/tr}</label>
 									</td>
 									<td>
@@ -469,10 +469,10 @@
 											{/section}
 										</select>
 									</td>
-									<td class="form">
+									<td>
 										<a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus', 'um_data');" title="{tr}Use phplayermenu{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 									</td>
-									<td class="form">
+									<td>
 										<a {popup text="Params:<br />id=<br />type=tree <i>or</i> phptree <i>or</i> plain <i>or</i> horiz <i>or</i> vert<br />file=<br />sectionLevel=" width=100 center=true}>{icon _id='help'}</a>
 									</td>
 								</tr>
@@ -480,7 +480,7 @@
 						{/if}
 						{if $banners}
 							<tr>
-								<td class="form">
+								<td>
 									<label for="list_banners">{tr}Banner zones:{/tr}</label>
 								</td>
 								<td>
@@ -490,17 +490,17 @@
 										{/section}
 									</select>
 								</td>
-								<td class="form">
+								<td>
 									<a class="link" href="javascript:setUserModuleFromCombo('list_banners', 'um_data');" title="{tr}Use Banner Zone{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
-								<td class="form">
+								<td>
 									<a {popup text="Params: zone= target=_blank|_self|" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
 						{/if}
 						{if $wikistructures}
 							<tr>
-								<td class="form">
+								<td>
 									<label for="list_wikistructures">{tr}Wiki{/tr} {tr}Structures:{/tr}</label>
 								</td>
 								<td>
@@ -510,10 +510,10 @@
 										{/section}
 									</select>
 								</td>
-								<td class="form">
+								<td>
 									<a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures', 'um_data');" title="{tr}Use Wiki Structure{/tr}">{icon _id='add' alt="{tr}Use{/tr}"}</a>
 								</td>
-								<td class="form">
+								<td>
 									<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
 								</td>
 							</tr>
