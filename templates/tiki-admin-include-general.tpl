@@ -217,7 +217,7 @@
 			</fieldset>
 		{/tab}
 	
-		{tab name="{tr}Date and Time Formats{/tr}"}
+		{tab name="{tr}Date and Time{/tr}"}
 			{preference name=server_timezone}
 			{preference name=users_prefs_display_timezone}
 			{preference name=long_date_format}
@@ -243,7 +243,7 @@
 
 		{tab name="{tr}Change admin password{/tr}"}
 			<div style="padding:1em;" align="left">
-				<p>{tr}Change the <strong>Admin</strong> password{/tr}: <a href="tiki-adminusers.php?find=admin">{tr}User administration{/tr}</a></p>
+				<p>{tr}Change the <strong>Admin</strong> password:{/tr} <a href="tiki-adminusers.php?find=admin">{tr}User administration{/tr}</a></p>
 			</div>
 		{/tab}
 	{/tabset}
