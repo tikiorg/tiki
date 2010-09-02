@@ -39,7 +39,7 @@
 {/if}
 </tr>
 {sectionelse}
-<tr><td colspan="5" class="odd">{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</td></tr>
+<tr><td colspan="5" class="odd"><strong>{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</strong></td></tr>
 {/section}
 </table>
 <!-- Beginning of the prev/next advance buttons found at bottom of page -->

@@ -37,7 +37,6 @@
   </table>
 {/if}
 {/if}
-<br />
 <table class="normal">
   <tr>
     <th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
@@ -139,7 +138,7 @@
 
 </tr>
 {sectionelse}
-<td class="odd" colspan="6"><strong>{tr}No records found.{/tr}</strong></td>
+<tr><td class="odd" colspan="6"><strong>{tr}No records found.{/tr}</strong></td></tr>
 {/section}
 </table>
 
