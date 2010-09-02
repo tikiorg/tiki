@@ -33,12 +33,12 @@
 
 {if $sent ne '1' and $preview ne '1'}
 	<form action="messu-broadcast.php" method="post">
-		<table class="normal" >
+		<table class="formcolor" >
 			<tr>
-				<td class="formcolor">
+				<td>
 					<label for="broadcast-group">{tr}Group{/tr}:</label>
 				</td>
-				<td class="formcolor">
+				<td>
 					<select name="groupbr" id="broadcast-group">
 						<option value=""{if $groupbr eq ''} selected="selected"{/if} />
 						{if $tiki_p_broadcast_all eq 'y'}
@@ -53,10 +53,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">
+				<td>
 					<label for="broadcast-priority">{tr}Priority{/tr}:</label>
 				</td>
-				<td class="formcolor">
+				<td>
 					<select name="priority" id="broadcast-priority">
 						<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
 						<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
@@ -68,10 +68,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">
+				<td>
 					<label for="broadcast-subject">{tr}Subject{/tr}:</label>
 				</td>
-				<td class="formcolor">
+				<td>
 					<input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255"/>
 				</td>
 			</tr>
@@ -79,7 +79,7 @@
 		<br />
 		<table class="normal" >
 			<tr>
-				<td style="text-align: center;" class="formcolor">
+				<td style="text-align: center;">
 					<textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br /><input type="submit" name="preview" value="{tr}Send{/tr}" />
 				</td>
 			</tr>

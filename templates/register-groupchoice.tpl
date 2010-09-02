@@ -23,8 +23,8 @@
 		<input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
 	{elseif isset($listgroups)}
 		<tr>
-			<td class="formcolor">{tr}Group{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Group{/tr}</td>
+			<td>
 				{foreach item=gr from=$listgroups}
 					{if $gr.registrationChoice eq 'y'}
 						<div class="registergroup">

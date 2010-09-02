@@ -3,11 +3,11 @@
 {else}
 	{if $prefs.login_is_email ne 'y'}
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="email">{tr}Email:{/tr}</label>
 				{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="text" id="email" name="email" {if $prefs.feature_ajax eq 'y' && !$userTrackerData}onkeyup="return check_mail()" onblur="return check_mail()"{/if}/>
 				{if $prefs.feature_ajax eq 'y'}
 					<span id="ajax_msg_mail" style="vertical-align: middle;"></span>

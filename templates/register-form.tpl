@@ -7,8 +7,8 @@
 {section name=ir loop=$customfields}
 	{if $customfields[ir].show}
 			<tr>
-				<td class="form"><label for="{$customfields[ir].prefName}">{tr}{$customfields[ir].label}:{/tr}</label></td>
-				<td class="form"><input type="{$customfields[ir].type}" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" size="{$customfields[ir].size}" id="{$customfields[ir].prefName}" /></td>
+				<td><label for="{$customfields[ir].prefName}">{tr}{$customfields[ir].label}:{/tr}</label></td>
+				<td><input type="{$customfields[ir].type}" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" size="{$customfields[ir].size}" id="{$customfields[ir].prefName}" /></td>
 			</tr>
 	{/if}
 {/section}
