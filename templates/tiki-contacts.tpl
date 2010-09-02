@@ -19,9 +19,9 @@
 	<input type="hidden" name="locSection" value="contacts" />
 	<input type="hidden" name="contactId" value="{$contactId|escape}" />
 	
-	<table class="normal">
+	<table class="formcolor">
 		<tbody id='tbody_editcontact'>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}First Name{/tr}:</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" />
@@ -36,25 +36,25 @@
 					</select>
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Last Name{/tr}:</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" />
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Email{/tr}:</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" />
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Nickname{/tr}:</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" />
 				</td>
 			</tr>
-			<tr class="formcolor" id='tr_exts'>
+			<tr id='tr_exts'>
 				<td>
 					<select id='select_exts' onchange='ext_select();'>
 						<option>{tr}More...{/tr}</option>
@@ -63,7 +63,7 @@
 				<td>
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>
 				</td>
 				<td>

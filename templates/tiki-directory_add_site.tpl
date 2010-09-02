@@ -11,23 +11,23 @@
 	{if $save eq 'y'}
         <h2>{tr}Site added{/tr}</h2>
         {icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"} {tr}The following site was added, but may require validation by the admin before appearing on the lists.{/tr}
-        <table class="normal">
+        <table class="formcolor">
   <tr>
-            <td class="formcolor">{tr}Name{/tr}:</td>
-            <td class="formcolor">{$info.name}</td>
+            <td>{tr}Name{/tr}:</td>
+            <td>{$info.name}</td>
           </tr>
   <tr>
-            <td class="formcolor">{tr}Description{/tr}:</td>
-            <td class="formcolor">{$info.description}</td>
+            <td>{tr}Description{/tr}:</td>
+            <td>{$info.description}</td>
           </tr>
   <tr>
-            <td class="formcolor">{tr}URL{/tr}:</td>
-            <td class="formcolor">{$info.url}</td>
+            <td>{tr}URL{/tr}:</td>
+            <td>{$info.url}</td>
           </tr>
   {if $prefs.directory_country_flag eq 'y'}
   <tr>
-            <td class="formcolor">{tr}Country{/tr}:</td>
-            <td class="formcolor">{$info.country}</td>
+            <td>{tr}Country{/tr}:</td>
+            <td>{$info.country}</td>
           </tr>
   {/if}
 </table>
@@ -41,25 +41,25 @@
         <form action="tiki-directory_add_site.php" method="post">
   <input type="hidden" name="parent" value="{$parent|escape}" />
   <input type="hidden" name="siteId" value="{$siteId|escape}" />
-  <table class="normal">
+  <table class="formcolor">
             <tr>
-      <td class="formcolor"><label for="name">{tr}Name{/tr}:</label></td>
-      <td class="formcolor"><input type="text" id="name" name="name" value="{$info.name|escape}" />
+      <td><label for="name">{tr}Name{/tr}:</label></td>
+      <td><input type="text" id="name" name="name" value="{$info.name|escape}" />
               </td>
     </tr>
             <tr>
-      <td class="formcolor"><label for="description">{tr}Description:{/tr}</label></td>
-      <td class="formcolor"><textarea rows="5" cols="60" id="description" name="description">{$info.description|escape}</textarea>
+      <td><label for="description">{tr}Description:{/tr}</label></td>
+      <td><textarea rows="5" cols="60" id="description" name="description">{$info.description|escape}</textarea>
               </td>
     </tr>
             <tr>
-      <td class="formcolor"><label for="url">{tr}URL:{/tr}</label></td>
-      <td class="formcolor"><input type="text" size="60" id="url" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" />
+      <td><label for="url">{tr}URL:{/tr}</label></td>
+      <td><input type="text" size="60" id="url" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" />
               </td>
     </tr>
             <tr>
-      <td class="formcolor"><label for="siteCats">{tr}Directory Categories:{/tr}</label></td>
-      <td class="formcolor"><select id="siteCats" name="siteCats[]" multiple="multiple" size="4">
+      <td><label for="siteCats">{tr}Directory Categories:{/tr}</label></td>
+      <td><select id="siteCats" name="siteCats[]" multiple="multiple" size="4">
           
 					    {section name=ix loop=$categs}
 					      
@@ -76,8 +76,8 @@
     </tr>
             {if $prefs.directory_country_flag eq 'y'}
             <tr>
-      <td class="formcolor"><label for="country">{tr}Country{/tr}:</label></td>
-      <td class="formcolor"><select id="country" name="country">
+      <td><label for="country">{tr}Country{/tr}:</label></td>
+      <td><select id="country" name="country">
           
 				        {section name=ux loop=$countries}
 					        
@@ -96,8 +96,8 @@
             {include file='antibot.tpl' td_style="formcolor"}
             {/if}
             <tr>
-      <td class="formcolor">&nbsp;</td>
-      <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+      <td>&nbsp;</td>
+      <td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
     </tr>
           </table>
 </form>

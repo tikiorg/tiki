@@ -11,9 +11,9 @@
 
 <form action="tiki-calendar_export_ical.php" method="post" name="f" id="editcalitem">
 <input type="hidden" name="export" value="y"/>
-<table class="normal">
-  <tr class="formcolor"><td colspan="2">{tr}Calendars to be exported{/tr}</td></tr>
-  <tr class="formcolor">
+<table class="formcolor">
+  <tr><td colspan="2">{tr}Calendars to be exported{/tr}</td></tr>
+  <tr>
     <td>{tr}Calendars{/tr}</td>
     <td>
 {foreach item=k from=$listcals}
@@ -22,7 +22,7 @@
 {/foreach}
 	</td>
   </tr>
-  <tr class="formcolor">
+  <tr>
     <td>{tr}Start{/tr}</td>
 	<td>
 	  <input type="hidden" name="tstart" />
@@ -44,7 +44,7 @@
   	  </table>
     </td>
   </tr>
-  <tr class="formcolor">
+  <tr>
 	<td>{tr}End{/tr}</td>
 		<td>
 	      <table cellpadding="0" cellspacing="0" border="0">
@@ -65,7 +65,7 @@
 	  	  </table>
 </td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td><input type="submit" name="ical" value="{tr}Export calendars iCal{/tr}"/></td>
 	<td><input type="submit" name="csv" value="{tr}Export calendars CSV{/tr}"/></td>
 </tr>

@@ -96,15 +96,15 @@
 	{/if}
 	<form action="tiki-admin_trackers.php" method="post" name="editpageform" id="editpageform">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-		<table class="normal">
-			<tr class="formcolor">
+		<table class="formcolor">
+			<tr>
 				<td>{tr}Name{/tr}:</td>
 				<td>
 					<input type="text" name="name" value="{$name|escape}" />
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Description{/tr}:</td>
 				<td>
 					{tr}Description text is wiki-parsed:{/tr} 
@@ -121,7 +121,7 @@
 
 			{if $prefs.feature_categories eq 'y'}
 				{include file='categorize.tpl' colsCategorize=2}
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Auto create corresponding categories{/tr}</td>
 					<td>
 						<input type="checkbox" name="autoCreateCategories" {if $autoCreateCategories eq 'y' }checked="checked"{/if} />
@@ -130,14 +130,14 @@
 			{/if}
 
 			{if $prefs.groupTracker eq 'y'}
-				<tr class="formcolor">
+				<tr>
 					<td>
 						<label for="autoCreateGroup">{tr}Create a group for each item{/tr}</label>
 					</td>
 					<td>
 						<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $info.autoCreateGroup eq 'y' }checked="checked"{/if} onclick="toggleTrTd('autoCreateGroupOptions');toggleTrTd('autoCreateGroupOptions2');toggleTrTd('autoCreateGroupOptions3');toggleTrTd('autoCreateGroupOptions4');"/>
 					</td>
-				<tr class="formcolor" id="autoCreateGroupOptions"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+				<tr id="autoCreateGroupOptions"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 					<td></td>
 					<td>
 						<label for="autoCreateGroupInc">{tr}Groups will include{/tr}</label>
@@ -149,28 +149,28 @@
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor" id="autoCreateGroupOptions2"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+				<tr id="autoCreateGroupOptions2"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 					<td></td>
 					<td>
 						<label for="autoAssignCreatorGroup">{tr}Creator is assigned to the group{/tr}</label>
 						<input type="checkbox" name="autoAssignCreatorGroup" id="autoAssignCreatorGroup" {if $info.autoAssignCreatorGroup eq 'y'}checked="checked"{/if} />
 					</td>
 				</tr>
-				<tr class="formcolor" id="autoCreateGroupOptions3"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+				<tr id="autoCreateGroupOptions3"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 					<td></td>
 					<td>
 						<label for="autoAssignCreatorGroupDefault">{tr}and it becomes his default group{/tr}</label>
 						<input type="checkbox" name="autoAssignCreatorGroupDefault" id="autoAssignCreatorGroupDefault" {if $info.autoAssignCreatorGroupDefault eq 'y'}checked="checked"{/if} />
 					</td>
 				</tr>
-				<tr class="formcolor" id="autoCreateGroupOptions4"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+				<tr id="autoCreateGroupOptions4"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 					<td></td>
 					<td>
 						<label for="autoAssignGroupItem">{tr}and it becomes the new item group creator{/tr}</label>
 						<input type="checkbox" name="autoAssignGroupItem" id="autoAssignGroupItem" {if $info.autoAssignGroupItem eq 'y'}checked="checked"{/if} onclick="toggleTrTd('autoCreateGroupOptions5');"/>
 					</td>
 				</tr>
-				<tr class="formcolor" id="autoCreateGroupOptions5"{if ($info.autoCreateGroup ne 'y' or $info.autoAssignGroupItem ne 'y') and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+				<tr id="autoCreateGroupOptions5"{if ($info.autoCreateGroup ne 'y' or $info.autoAssignGroupItem ne 'y') and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 					<td></td>
 					<td>
 						<label for="autoCopyGroup">{tr}But copy the default group in this fiedlId before updating the group{/tr}</label>
@@ -179,12 +179,12 @@
 				</tr>
 			{/if}
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Show status{/tr}</td>
 				<td><input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Default status displayed in list mode{/tr}</td>
 				<td>
 					{foreach key=st item=stdata from=$status_types}
@@ -195,14 +195,14 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Show status to tracker admin only{/tr}</td>
 				<td>
 					<input type="checkbox" name="showStatusAdminOnly" {if $showStatusAdminOnly eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Send copies of all activity in this tracker to this e-mail address{/tr}</td>
 				<td>
 					<input type="text" size="60" name="outboundEmail" value="{$outboundEmail|escape}" />
@@ -211,7 +211,7 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Use simplified e-mail format{/tr}</td>
 				<td>
 					<input type="checkbox" name="simpleEmail" {if $simpleEmail eq 'y'}checked="checked"{/if} />
@@ -220,7 +220,7 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}New items are created with status{/tr}</td>
 				<td>
 					<select name="newItemStatus">
@@ -231,7 +231,7 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Authoritative status for modified items{/tr}</td>
 				<td>
 					<select name="modItemStatus">
@@ -243,7 +243,7 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Item creator can modify his items?{/tr}</td>
 				<td>
 					<input type="checkbox" name="writerCanModify" {if $writerCanModify eq 'y'}checked="checked"{/if} />
@@ -253,7 +253,7 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Only one item per user or IP{/tr}</td>
 				<td>
 					<input type="checkbox" name="oneUserItem" {if $oneUserItem eq 'y'}checked="checked"{/if} />
@@ -262,7 +262,7 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Member of the creator group can modify items?{/tr}</td>
 				<td>
 					<input type="checkbox" name="writerGroupCanModify" {if $writerGroupCanModify eq 'y'}checked="checked"{/if} />
@@ -271,13 +271,13 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Show creation date when listing tracker items?{/tr}</td>
 				<td>
 					<input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} onclick="toggleTrTd('showCreatedOptions')" />
 				</td>
 			</tr>
-			<tr id="showCreatedOptions" class="formcolor" {if $showCreated ne 'y'}style="display:none;"{/if}>
+			<tr id="showCreatedOptions" {if $showCreated ne 'y'}style="display:none;"{/if}>
 				<td class="sub" colspan="2">
 					{tr}Format if not the default short one:{/tr}
 					<input type="text" name="showCreatedFormat" value="{$showCreatedFormat}"/>
@@ -285,26 +285,26 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Show creation date when viewing tracker item?{/tr}</td>
 				<td>
 					<input type="checkbox" name="showCreatedView" {if $showCreatedView eq 'y'}checked="checked"{/if} onclick="toggleTrTd('showCreatedUser') "/>
 				</td>
 			</tr>
-			<tr class="formcolor" id="showCreatedUser" {if $showCreatedView ne 'y'}style="display:none;"{/if}>
+			<tr id="showCreatedUser" {if $showCreatedView ne 'y'}style="display:none;"{/if}>
 				<td class="sub" colspan="2">
 					{tr}Identify creation user in tracker item?{/tr}
-					<input type="checkbox" name="showCreatedBy" {if $showCreatedBy eq 'y'}checked="checked"{/if} "/>
+					<input type="checkbox" name="showCreatedBy" {if $showCreatedBy eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Show lastModif date when listing tracker items?{/tr}</td>
 				<td>
 					<input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} onclick="toggleTrTd('showLastModifOptions') "/>
 				</td>
 			</tr>
-			<tr class="formcolor" id="showLastModifOptions" {if $showLastModif ne 'y'}style="display:none;"{/if}>
+			<tr id="showLastModifOptions" {if $showLastModif ne 'y'}style="display:none;"{/if}>
 				<td class="sub" colspan="2">
 					{tr}Format if not the default short one:{/tr}
 					<input type="text" name="showLastModifFormat" value="{$showLastModifFormat}"/>
@@ -312,19 +312,19 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Show lastModif date when viewing tracker item?{/tr}</td>
 				<td>
 					<input type="checkbox" name="showLastModifView" {if $showLastModifView eq 'y'}checked="checked"{/if} onclick="toggleTrTd('showLastModifUser') "/>
 				</td>
 			</tr>
-			<tr class="formcolor" id="showLastModifUser" {if $showLastModifView ne 'y'}style="display:none;"{/if}>
+			<tr id="showLastModifUser" {if $showLastModifView ne 'y'}style="display:none;"{/if}>
 				<td class="sub" colspan="2">
 					{tr}Identify lastModif user in tracker item?{/tr}
 					<input type="checkbox" name="showLastModifBy" {if $showLastModifBy eq 'y'}checked="checked"{/if}>
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}What field is used for default sort?{/tr}</td>
 				<td>
 					<select name="defaultOrderKey">
@@ -338,7 +338,7 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}What is default sort order in list?{/tr}</td>
 				<td>
 					<select name="defaultOrderDir">
@@ -348,56 +348,56 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Tracker items allow ratings?{/tr}</td>
 				<td>
 					<input type="checkbox" name="useRatings" {if $useRatings eq 'y'}checked="checked"{/if} onclick="toggleTrTd('ratingoptions');toggleTrTd('ratinginlisting');" />
 				</td>
 			</tr>
-			<tr class="formcolor" id="ratingoptions" {if $useRatings ne 'y'}style="display:none;"{/if}>
+			<tr id="ratingoptions" {if $useRatings ne 'y'}style="display:none;"{/if}>
 				<td class="sub">{tr}with values{/tr}</td>
 				<td>
 					<input type="text" name="ratingOptions" value="{if $ratingOptions}{$ratingOptions}{else}-2,-1,0,1,2{/if}" />
 				</td>
 			</tr>
-			<tr class="formcolor" id="ratinginlisting" {if $useRatings ne 'y'}style="display:none;"{/if}>
+			<tr id="ratinginlisting" {if $useRatings ne 'y'}style="display:none;"{/if}>
 				<td class="sub">{tr}and display rating results in listing?{/tr}</td>
 				<td>
 					<input type="checkbox" name="showRatings" {if $showRatings eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Tracker items allow comments?{/tr}</td>
 				<td>
 					<input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} onclick="toggleTrTd('commentsoptions');toggleTrTd('commentsoptions2');" />
 				</td>
 			</tr>
-			<tr class="formcolor" id="commentsoptions" {if $useComments ne 'y'and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
+			<tr id="commentsoptions" {if $useComments ne 'y'and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 				<td class="sub">{tr}and display comments in listing?{/tr}</td>
 				<td>
 					<input type="checkbox" name="showComments" {if $showComments eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
-			<tr class="formcolor" id="commentsoptions2" {if $useComments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
+			<tr id="commentsoptions2" {if $useComments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 				<td class="sub">{tr}and display last comment user/date?{/tr}</td>
 				<td>
 					<input type="checkbox" name="showLastComment" {if $showLastComment eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Tracker items allow attachments?{/tr}</td>
 				<td>
 					<input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} onclick="toggleTrTd('attachmentsoptions');toggleTrTd('attachmentsconf');" />
 				</td>
 			</tr>
-			<tr class="formcolor" id="attachmentsoptions" {if $useAttachments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
+			<tr id="attachmentsoptions" {if $useAttachments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 				<td class="sub">{tr}and display attachments in listing?{/tr}</td>
 				<td>
 					<input type="checkbox" name="showAttachments" {if $showAttachments eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
-			<tr class="formcolor" id="attachmentsconf" {if $useAttachments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
+			<tr id="attachmentsconf" {if $useAttachments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 				<td class="sub" colspan="5">
 					{tr}Attachment display options (Use numbers to order items, 0 will not be displayed, and negative values display in popups){/tr}
 					<table class="normal">
@@ -427,7 +427,7 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Items can be created only during a certain time{/tr}</td>
 				<td>
 					{tr}After:{/tr} 
@@ -444,20 +444,20 @@
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Do not show empty fields in item view?{/tr}</td>
 				<td>
 					<input type="checkbox" name="doNotShowEmptyField" {if $doNotShowEmptyField eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Show these fields (ID comma separated) in a popup on item link when listing tracker items?{/tr}</td>
 				<td><input type="text" name="showPopup" value="{$showPopup|escape}" /></td>
 			</tr>
 
 			{if $prefs.feature_groupalert eq 'y'}
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Group of users alerted when tracker is modified{/tr}</td>
 					<td>
 						<select id="groupforAlert" name="groupforAlert">
@@ -469,7 +469,7 @@
 					</td>
 				</tr>
 
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Allows to select each user for small groups{/tr}</td>
 					<td>
 						<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if} />
@@ -477,14 +477,14 @@
 				</tr>
 			{/if}
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Wiki page to display an item{/tr}</td>
 				<td><input type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}" />
 				<br /><em>{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}</em></td>
 			</tr>
 
 			{if !empty($info.todos)}
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Status changes list{/tr}</td>
 					<td>
 						{cycle values="odd,even" print=false}
@@ -512,7 +512,7 @@
 					</td>
 				</tr>
 			{/if}
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Status changes{/tr}</td>
 				<td>			
 					<label>
@@ -546,7 +546,7 @@
 					</fieldset>
 			</tr>
 				
-			<tr class="formcolor">
+			<tr>
 				<td></td>
 				<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 			</tr>
@@ -606,12 +606,12 @@ categories = {$catsdump}
 		<h2>{tr}Import CSV data{/tr}</h2>
 		<div>
 		<form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
-			<table class="normal">
-				<tr class="formcolor">
+			<table class="formcolor">
+				<tr>
 					<td>{tr}File{/tr}</td>
 					<td><input name="importfile" type="file" /></td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Date Format{/tr}</td>
 					<td>
 						<input type="radio" name="dateFormat" value="mm/dd/yyyy" checked="checked"/>
@@ -623,7 +623,7 @@ categories = {$catsdump}
 						<input type="radio" name="dateFormat" value="" />{tr}timestamp{/tr}
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Charset encoding{/tr}</td>
 					<td>
 						<select name="encoding">
@@ -632,15 +632,15 @@ categories = {$catsdump}
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Separator{/tr}</td>
 					<td><input type="text" name="separator" value="," size="2" /></td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Add as new items:{/tr}</td>
 					<td><input type="checkbox" name="add_items" /></td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>&nbsp;</td>
 					<td><input type="submit" name="save" value="{tr}Import{/tr}" /></td>
 				</tr>
@@ -663,12 +663,12 @@ categories = {$catsdump}
 	<h2>{tr}Duplicate Tracker{/tr}</h2>
 
 	<form action="tiki-admin_trackers.php" method="post">
-		<table class="normal">
-			<tr class="formcolor">
+		<table class="formcolor">
+			<tr>
 				<td>{tr}Name{/tr}</td>
 				<td><input type="text" name="name" /></td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Description{/tr}</td>
 				<td colspan="2">
 					{tr}Description text is wiki-parsed:{/tr} 
@@ -683,7 +683,7 @@ categories = {$catsdump}
 					<textarea id="duplicateTrackerDescription" name="description" rows="4" cols="40">{$description|escape}</textarea>
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Tracker{/tr}</td>
 				<td>
 					{section name=ix loop=$trackers}
@@ -697,15 +697,15 @@ categories = {$catsdump}
 					{/section}
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Duplicate categories{/tr}</td>
 				<td><input type="checkbox" name="dupCateg" /></td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Duplicate perms{/tr}</td>
 				<td><input type="checkbox" name="dupPerms" /></td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td></td>
 				<td><input type="submit" name="duplicate" value="{tr}Duplicate Tracker{/tr}" /></td>
 			</tr>
