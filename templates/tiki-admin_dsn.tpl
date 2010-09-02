@@ -7,22 +7,22 @@
 <h2>{tr}Create/edit dsn{/tr}</h2>
 <form action="tiki-admin_dsn.php" method="post">
 	<input type="hidden" name="dsnId" value="{$dsnId|escape}" />
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-		<td class="formcolor">{tr}Name{/tr}:</td>
-		 <td class="formcolor">
+		<td>{tr}Name{/tr}:</td>
+		 <td>
 			<input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}DSN{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}DSN{/tr}:</td>
+			<td>
 				<input type="text" maxlength="255" size="40" name="dsn" value="{$info.dsn|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor">
+			<td>&nbsp;</td>
+			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />
 			</td>
 		</tr>

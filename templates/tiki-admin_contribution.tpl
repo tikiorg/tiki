@@ -6,22 +6,22 @@
 	<h2>{tr}Edit the contribution:{/tr} {$contribution.name|escape}</h2>
 	<form enctype="multipart/form-data" action="tiki-admin_contribution.php" method="post">
 		<input type="hidden" name="contributionId" value="{$contribution.contributionId}" />
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor">{tr}Name{/tr}</td>
-				<td class="formcolor">
+				<td>{tr}Name{/tr}</td>
+				<td>
 					<input type="text" name="name"{if $contribution.name} value="{$contribution.name|escape}"{/if} />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Description{/tr}</td>
-				<td class="formcolor">
+				<td>{tr}Description{/tr}</td>
+				<td>
 					<input type="text" name="description" size="80" maxlength="250"{if $contribution.description} value="{$contribution.description|escape}"{/if} />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor">
+				<td>&nbsp;</td>
+				<td>
 					<input type="submit" name="replace" value="{tr}Save{/tr}" />
 				</td>
 			</tr>
@@ -93,20 +93,20 @@
 <h2>{tr}Create a new contribution{/tr}</h2>
 
 <form enctype="multipart/form-data" action="tiki-admin_contribution.php" method="post">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Name{/tr}</td>
-			<td class="formcolor"><input type="text" name="name" /></td>
+			<td>{tr}Name{/tr}</td>
+			<td><input type="text" name="name" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Description{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Description{/tr}</td>
+			<td>
 				<input type="text" name="description" size="80" maxlength="250" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor">
+			<td>&nbsp;</td>
+			<td>
 				<input type="submit" name="add" value="{tr}Add{/tr}" />
 			</td>
 		</tr>

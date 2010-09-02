@@ -14,14 +14,14 @@
 	<form action="tiki-admin_html_page_content.php" method="post">
 		<input type="hidden" name="pageName" value="{$pageName|escape}" />
 		<input type="hidden" name="zone" value="{$zone|escape}" />
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor">{tr}Zone{/tr}:</td>
-				<td class="formcolor">{$zone}</td>
+				<td>{tr}Zone{/tr}:</td>
+				<td>{$zone}</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Content{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Content{/tr}:</td>
+				<td>
 					{if $type eq 'ta'}
 						<textarea rows="5" cols="60" name="content">{$content|escape}</textarea>
 					{else}
@@ -30,8 +30,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+				<td>&nbsp;</td>
+				<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 			</tr>
 		</table>
 	</form>

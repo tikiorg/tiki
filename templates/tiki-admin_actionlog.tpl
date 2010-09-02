@@ -12,8 +12,8 @@
 		{else}
 		<fieldset>
 			<legend>{tr}Date{/tr}</legend>
-			<table class="smallnormal" width="100%">
-				<tr class="formcolor">
+			<table>
+				<tr>
 					<td>{tr}Start:{/tr}</td>
 					<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order}</td>
 					<td>{tr}End:{/tr}</td>
@@ -24,8 +24,8 @@
 				{if $tiki_p_admin eq 'y'}
 			<fieldset>
 				<legend>{tr}Users and Groups{/tr}</legend>
-				<table class="smallnormal" width="100%">
-					<tr class="formcolor">
+				<table class="formcolor">
+					<tr>
 						<td>{tr}User:{/tr}</td>
 						<td>
 							<select multiple="multiple" size="{if $users|@count > 5}5{else}{math equation=x+y x=$users|@count y=2}{/if}" name="selectedUsers[]">
@@ -57,8 +57,8 @@
 
 			<fieldset>
 				<legend>{tr}Category:{/tr}</legend>
-				<table class="smallnormal" width="100%">
-				<tr class="formcolor">
+				<table class="formcolor">
+				<tr>
 					<td>
 						<select name="categId">
 							<option value="" {if $reportCateg eq '' or $reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>
@@ -73,8 +73,8 @@
 
 				<fieldset>
 				<legend>{tr}Misc.{/tr}</legend>
-				<table class="smallnormal" width="100%">
-					<tr class="formcolor">
+				<table class="formcolor">
+					<tr>
 						<th>{tr}Units{/tr}</th>
 						<td>
 							{tr}bytes{/tr}
@@ -82,7 +82,7 @@
 							<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if} />
 						</td>
 					</tr>
-					<tr class="formcolor">
+					<tr>
 						<th>{tr}Contibution Time{/tr}</th>
 						<td>
 							{tr}Week{/tr}
@@ -91,7 +91,7 @@
 							<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if} />
 						</td>
 					</tr>
-					<tr class="formcolor">
+					<tr>
 						<th>{tr}Search{/tr}</th>
 						<td>
 							<input type="text" name="find" value="{$find}" /> 
@@ -99,7 +99,7 @@
 					</tr>
 				
 					{if $prefs.feature_contribution eq 'y'}
-						<tr class="formcolor">
+						<tr>
 							<td colspan="2">
 								<input type="submit" name="graph" value="{tr}Graph Contributions{/tr}" />
 								{if $prefs.feature_jpgraph eq 'y'}
@@ -186,7 +186,7 @@
 			{/if}
 		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 			{tr}Records:{/tr} {$cant}
-			<table class="smallnormal">
+			<table class="normal">
 				<tr>
 					<th>
 						<a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=user_{if $sort_mode eq 'user_desc'}asc{else}desc{/if}{$url}">{tr}User{/tr}</a>
@@ -308,8 +308,8 @@
 						{include file='categorize.tpl'}
 					{/if}
 					<tr>
-						<td class="formcolor">&nbsp;</td>
-						<td class="formcolor">
+						<td>&nbsp;</td>
+						<td>
 							<input type="submit" name="saveAction" value="{tr}Save Action{/tr}" />
 						</td>
 					</tr>
@@ -346,7 +346,7 @@
 		<i>{tr}Volumes are equally distributed on each contributors/author{/tr}</i>
 
  		{if $showLogin eq 'y' and $logTimes|@count ne 0}
-			<table class="smallnormal">
+			<table class="normal">
 				<caption>{tr}Log in{/tr}</caption>
 				<tr>
 					{if $selectedUsers|@count gt 0}<th>{tr}User{/tr}</th>{/if}
@@ -370,7 +370,7 @@
 		{/if}
 
 		{if $showCateg eq 'y' and $volCateg|@count ne 0 and $tiki_p_admin eq 'y'}
-			<table class="smallnormal">
+			<table class="normal">
 				<caption>{tr}Volumn per category{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
@@ -395,7 +395,7 @@
 		{/if}
 
 		{if $showCateg eq 'y' and $volUserCateg|@count ne 0}
-			<table class="smallnormal">
+			<table class="normal">
 				<caption>{tr}Volumn per category and per user{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
@@ -638,7 +638,7 @@
 			<input type="submit" name="save" value="{tr}Set{/tr}" />
 		</span>
 				<br class="clearfix" />
-		<table class="smallnormal">
+		<table class="formcolor">
 			<tr>
 				{if $tiki_p_admin eq 'y'}
 					<th>{tr}Recorded{/tr}</th>

@@ -5,18 +5,18 @@
 <h2>{tr}Add Hotword{/tr}</h2>
 
 <form method="post" action="tiki-admin_hotwords.php">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Word{/tr}</td>
-			<td class="formcolor"><input type="text" name="word" /></td>
+			<td>{tr}Word{/tr}</td>
+			<td><input type="text" name="word" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}URL{/tr}</td>
-			<td class="formcolor"><input type="text" name="url" /></td>
+			<td>{tr}URL{/tr}</td>
+			<td><input type="text" name="url" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor">
+			<td>&nbsp;</td>
+			<td>
 				<input type="submit" name="add" value="{tr}Add{/tr}" />
 			</td>
 		</tr>

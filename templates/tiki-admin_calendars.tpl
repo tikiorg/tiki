@@ -102,11 +102,11 @@
 
 		<form action="tiki-admin_calendars.php" method="post">
 			<input type="hidden" name="calendarId" value="{$calendarId|escape}" />
-			<table class="normal">
+			<table class="formcolor">
 				{if $tiki_p_modify_object_categories eq 'y'}
 					{include file='categorize.tpl'}
 				{/if}
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Name{/tr}:</td>
 					<td>
 						<input type="text" name="name" value="{$name|escape}" />
@@ -114,7 +114,7 @@
 						<input type="checkbox" name="show[calname]" value="on"{if $show_calname eq 'y'} checked="checked"{/if} />
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Description{/tr}:</td>
 					<td>
 						<textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea>
@@ -123,7 +123,7 @@
 						<input type="checkbox" name="show[description]" value="on"{if $show_description eq 'y'} checked="checked"{/if} />
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Custom Locations{/tr}:</td>
 					<td>
 						<select name="customlocations">
@@ -134,7 +134,7 @@
 						<input type="checkbox" name="show[location]" value="on"{if $show_location eq 'y'} checked="checked"{/if} />
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Custom Participants{/tr}:</td>
 					<td>
 						<select name="customparticipants">
@@ -145,7 +145,7 @@
 						<input type="checkbox" name="show[participants]" value="on"{if $show_participants eq 'y'} checked="checked"{/if} />
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Custom Classifications{/tr}:</td>
 					<td>
 						<select name="customcategories">
@@ -156,7 +156,7 @@
 						<input type="checkbox" name="show[category]" value="on"{if $show_category eq 'y'} checked="checked"{/if} />
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Custom Languages{/tr}:</td>
 					<td>
 						<select name="customlanguages">
@@ -167,7 +167,7 @@
 						<input type="checkbox" name="show[language]" value="on"{if $show_language eq 'y'} checked="checked"{/if} />
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Custom URL{/tr}:</td>
 					<td>
 						<select name="options[customurl]">
@@ -179,7 +179,7 @@
 					</td>
 				</tr>
 				{if $prefs.feature_newsletters eq 'y'}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Custom Subscription List{/tr}:</td>
 						<td>
 							<select name="customsubscription">
@@ -189,7 +189,7 @@
 						</td>
 					</tr>
 				{/if}
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Custom Priorities{/tr}:</td>
 					<td>
 						<select name="custompriorities">
@@ -198,7 +198,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Personal Calendar{/tr}:</td>
 					<td>
 						<select name="personal">
@@ -207,7 +207,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Start of day{/tr}:</td>
 					<td>
 						<select name="startday_Hour">
@@ -217,7 +217,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}End of day{/tr}:</td>
 					<td>
 						<select name="endday_Hour">
@@ -227,7 +227,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Days to display{/tr}:</td>
 					<td>
 						{section name="viewdays" start=0 loop=7}
@@ -235,7 +235,7 @@
 						{/section}
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Standard Colors{/tr}:</td>
 					<td>
 						<select name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
@@ -250,19 +250,19 @@
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Custom foreground color{/tr}:</td>
 					<td>
 						<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6" /><i>{tr}Ex:{/tr} FFFFFF</i>
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Custom background color{/tr}:</td>
 					<td>
 						<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6" /><i>{tr}Ex:{/tr} 000000</i>
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Status{/tr}</td>
 					<td>
 						<select name="customstatus">
@@ -278,7 +278,7 @@
 					</td>
 				</tr>
 				{if $prefs.feature_groupalert eq 'y'}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Group of users alerted when calendar event is modified{/tr}</td>
 						<td>
 							<select id="groupforAlert" name="groupforAlert">
@@ -289,14 +289,14 @@
 							</select>
 						</td>
 					</tr>
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Allows to select each user for small groups{/tr}</td>
 						<td>
 							<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if} />
 						</td>
 					</tr>
 				{/if}
-				<tr class="formcolor">
+				<tr>
 					<td>&nbsp;</td>
 					<td>
 						<input type="submit" name="save" value="{tr}Save{/tr}" />

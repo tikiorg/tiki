@@ -21,18 +21,18 @@
 
 <form action="tiki-admin_html_pages.php" method="post" id='editpageform'>
 	<input type="hidden" name="pageName" value="{$pageName|escape}" />
-	<table class="normal">
-		<tr class="formcolor">
-			<td class="formcolor" style="width:150px;">{tr}Page name{/tr}:</td>
-			<td class="formcolor">
+	<table class="formcolor">
+		<tr>
+			<td style="width:150px;">{tr}Page name{/tr}:</td>
+			<td>
 				<input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}" />
 			</td>
 		</tr>
 
 		{if $tiki_p_use_content_templates eq 'y'}
-			<tr class="formcolor">
-				<td class="formcolor">{tr}Apply template{/tr}:</td>
-				<td class="formcolor">
+			<tr>
+				<td>{tr}Apply template{/tr}:</td>
+				<td>
 					<select name="templateId"{if !$templates} disabled="disabled"{/if} onchange="javascript:document.getElementById('editpageform').submit();">
 						<option value="0">{tr}none{/tr}</option>
 						{section name=ix loop=$templates}
@@ -43,7 +43,7 @@
 			</tr>
 		{/if}
 
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Type{/tr}:</td>
 			<td>
 				<select name="type">
@@ -52,14 +52,14 @@
 				</select>
 			</td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Refresh rate (if dynamic){/tr}:</td>
 			<td>
 				<input type="text" size="5" name="refresh" value="{$info.refresh|escape}" /> {tr}seconds{/tr}
 			</td>
 		</tr>
 
-		<tr class="formcolor">
+		<tr>
 			<td>
 				{tr}Content{/tr}:
 			</td>
@@ -67,7 +67,7 @@
 				<textarea name="content" id="htmlcode" rows="25" style="width:95%;">{$info.content|escape}</textarea>
 			</td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td></td>
 			<td>
 				<input type="submit" name="preview" value="{tr}Preview{/tr}" /> 

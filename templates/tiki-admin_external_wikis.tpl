@@ -12,24 +12,24 @@
 <h2>{tr}Create/Edit External Wiki{/tr}</h2>
 <form action="tiki-admin_external_wikis.php" method="post">
 	<input type="hidden" name="extwikiId" value="{$extwikiId|escape}" />
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Name{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}Name{/tr}:</td>
+			<td>
 				<input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				{tr}URL (use $page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=$page){/tr}:
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="text" maxlength="255" size="40" name="extwiki" value="{$info.extwiki|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor">
+			<td>&nbsp;</td>
+			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />
 			</td>
 		</tr>

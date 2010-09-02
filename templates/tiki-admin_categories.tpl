@@ -75,10 +75,10 @@
 	<div class="cbox-data">
 		<form action="tiki-admin_categories.php" method="post">
 			<input type="hidden" name="categId" value="{$categId|escape}" />
-			<table class="normal">
-				<tr class="formcolor">
-					<td class="form">{tr}Parent{/tr}:</td>
-					<td class="form">
+			<table class="formcolor">
+				<tr>
+					<td>{tr}Parent{/tr}:</td>
+					<td>
 						<select name="parentId">
 							<option value="0">{tr}Top{/tr}</option>
 							{section name=ix loop=$catree}
@@ -87,16 +87,16 @@
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor">
-					<td class="form">{tr}Name{/tr}:</td>
-					<td class="form"><input type="text" size="40" name="name" value="{$name|escape}" /></td>
+				<tr>
+					<td>{tr}Name{/tr}:</td>
+					<td><input type="text" size="40" name="name" value="{$name|escape}" /></td>
 				</tr>
-				<tr class="formcolor">
-					<td class="form">{tr}Description{/tr}:</td>
-					<td class="form"><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td>
+				<tr>
+					<td>{tr}Description{/tr}:</td>
+					<td><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td>
 				</tr>
-				<tr class="formcolor">
-					<td class="form" align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+				<tr>
+					<td align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 				</tr>
 			</table>
 		</form>
@@ -222,18 +222,18 @@
 				{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 				<form action="tiki-admin_categories.php" method="post">
 					<input type="hidden" name="parentId" value="{$parentId|escape}" />
-					<table>
+					<table class="formcolor">
 						{if $prefs.feature_wiki eq 'y' and $pages}
 							<tr>
-								<td class="form">{tr}page:{/tr}</td>
-								<td class="form">
+								<td>{tr}page:{/tr}</td>
+								<td>
 									<select name="pageName[]" multiple="multiple" size="5">
 										{section name=ix loop=$pages}
 											<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form">
+								<td>
 									<input type="submit" name="addpage" value="{tr}Add{/tr}" />
 								</td>
 							</tr>
@@ -241,92 +241,92 @@
 						
 						{if $prefs.feature_articles eq 'y' and $articles}
 							<tr>
-								<td class="form">{tr}Article:{/tr}</td>
-								<td class="form">
+								<td>{tr}Article:{/tr}</td>
+								<td>
 									<select name="articleId">
 										{section name=ix loop=$articles}
 											<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="addarticle" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="addarticle" value="{tr}Add{/tr}" /></td>
 							</tr>
 						{/if}
 						
 						{if $prefs.feature_blogs eq 'y' and $blogs}
 							<tr>
-								<td class="form">{tr}Blog:{/tr}</td>
-								<td class="form">
+								<td>{tr}Blog:{/tr}</td>
+								<td>
 									<select name="blogId">
 										{section name=ix loop=$blogs}
 											<option value="{$blogs[ix].blogId|escape}">{$blogs[ix].title|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="addblog" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="addblog" value="{tr}Add{/tr}" /></td>
 							</tr>
 						{/if}
 						
 						{if $prefs.feature_directory eq 'y'and $directories}
 							<tr>
-								<td class="form">{tr}Directory:{/tr}</td>
-								<td class="form">
+								<td>{tr}Directory:{/tr}</td>
+								<td>
 									<select name="directoryId">
 										{section name=ix loop=$directories}
 											<option value="{$directories[ix].categId|escape}">{$directories[ix].name|truncate:40:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="adddirectory" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="adddirectory" value="{tr}Add{/tr}" /></td>
 							</tr>
 						{/if}
 
 						{if $prefs.feature_galleries eq 'y' and $galleries}
 							<tr>
-								<td class="form">{tr}image gal:{/tr}</td>
-								<td class="form">
+								<td>{tr}image gal:{/tr}</td>
+								<td>
 									<select name="galleryId">
 										{section name=ix loop=$galleries}
 											<option value="{$galleries[ix].galleryId|escape}">{$galleries[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="addgallery" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="addgallery" value="{tr}Add{/tr}" /></td>
 							</tr>
 						{/if}
 				
 						{if $prefs.feature_file_galleries eq 'y' and $file_galleries}
 							<tr>
-								<td class="form">{tr}file gal:{/tr}</td>
-								<td class="form">
+								<td>{tr}file gal:{/tr}</td>
+								<td>
 									<select name="file_galleryId">
 										{section name=ix loop=$file_galleries}
 											<option value="{$file_galleries[ix].id|escape}">{$file_galleries[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="addfilegallery" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="addfilegallery" value="{tr}Add{/tr}" /></td>
 							</tr>
 						{/if}
 				
 						{if $prefs.feature_forums eq 'y' and $forums}
 							<tr>
-								<td class="form">{tr}Forum:{/tr}</td>
-								<td class="form">
+								<td>{tr}Forum:{/tr}</td>
+								<td>
 									<select name="forumId">
 										{section name=ix loop=$forums}
 											<option value="{$forums[ix].forumId|escape}">{$forums[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="addforum" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="addforum" value="{tr}Add{/tr}" /></td>
 							</tr>
 						{/if}
 				
 						{if $prefs.feature_polls eq 'y' and $polls}
 							<tr>
-								<td class="form">{tr}Poll:{/tr}</td>
-								<td class="form">
+								<td>{tr}Poll:{/tr}</td>
+								<td>
 									<select name="pollId">
 										{section name=ix loop=$polls}
 											<option value="{$polls[ix].pollId|escape}">{$polls[ix].title|truncate:80:"(...)":true|escape}</option>
@@ -339,43 +339,43 @@
 						
 						{if $prefs.feature_faqs eq 'y and $faqs'}
 							<tr>
-								<td class="form">{tr}FAQ:{/tr}</td>
-								<td class="form">
+								<td>{tr}FAQ:{/tr}</td>
+								<td>
 									<select name="faqId">
 										{section name=ix loop=$faqs}
 											<option value="{$faqs[ix].faqId|escape}">{$faqs[ix].title|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="addfaq" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="addfaq" value="{tr}Add{/tr}" /></td>
 							</tr> 
 						{/if}
 				
 						{if $prefs.feature_trackers eq 'y' and $trackers}
 							<tr>
-								<td class="form">{tr}Tracker:{/tr}</td>
-								<td class="form">
+								<td>{tr}Tracker:{/tr}</td>
+								<td>
 									<select name="trackerId">
 										{section name=ix loop=$trackers}
 											<option value="{$trackers[ix].trackerId|escape}">{$trackers[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="addtracker" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="addtracker" value="{tr}Add{/tr}" /></td>
 							</tr>
 						{/if}
 						
 						{if $prefs.feature_quizzes eq 'y' and $quizzes}
 							<tr>
-								<td class="form">{tr}quiz:{/tr}</td>
-								<td class="form">
+								<td>{tr}quiz:{/tr}</td>
+								<td>
 									<select name="quizId">
 										{section name=ix loop=$quizzes}
 											<option value="{$quizzes[ix].quizId|escape}">{$quizzes[ix].name|truncate:80:"(...)":true|escape}</option>
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="addquiz" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="addquiz" value="{tr}Add{/tr}" /></td>
 							</tr>
 						{/if}
 
