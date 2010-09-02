@@ -81,22 +81,22 @@
 
 <form action="tiki-admin_rssmodules.php" method="post">
 	<input type="hidden" name="rssId" value="{$rssId|escape}" />
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Name:{/tr}</td>
-			<td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td>
+			<td>{tr}Name:{/tr}</td>
+			<td><input type="text" name="name" value="{$name|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Description:{/tr}</td>
-			<td class="formcolor"><textarea name="description" rows="4" cols="40" style="width:95%">{$description|escape}</textarea></td>
+			<td>{tr}Description:{/tr}</td>
+			<td><textarea name="description" rows="4" cols="40" style="width:95%">{$description|escape}</textarea></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}URL:{/tr}</td>
-			<td class="formcolor"><input size="47" type="text" name="url" value="{$url|escape}" /></td>
+			<td>{tr}URL:{/tr}</td>
+			<td><input size="47" type="text" name="url" value="{$url|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Refresh rate:{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Refresh rate:{/tr}</td>
+			<td>
 				<select name="refresh">
 					<option value="1" {if $refresh eq 60}selected="selected"{/if}>{60|duration}</option>
 					<option value="5" {if $refresh eq 300}selected="selected"{/if}>{300|duration}</option>
@@ -115,16 +115,16 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}show feed title:{/tr}</td>
-			<td class="formcolor"><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if} /></td>
+			<td>{tr}show feed title:{/tr}</td>
+			<td><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if} /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}show publish date:{/tr}</td>
-			<td class="formcolor"><input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if} /></td>
+			<td>{tr}show publish date:{/tr}</td>
+			<td><input type="checkbox" name="showPubDate" {if $showPubDate eq 'y'}checked="checked"{/if} /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+			<td>&nbsp;</td>
+			<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 		</tr>
 	</table>
 </form>

@@ -13,9 +13,9 @@
 {tab name=$title}
 <form action="tiki-admin_polls.php" method="post">
 <input type="hidden" name="pollId" value="{$pollId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Active{/tr}:</td><td class="formcolor">
+<table class="formcolor">
+<tr><td>{tr}Title{/tr}:</td><td><input type="text" name="title" value="{$info.title|escape}" /></td></tr>
+<tr><td>{tr}Active{/tr}:</td><td>
 <select name="active">
 <option value='a' {if $info.active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
 <option value='c' {if $info.active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
@@ -25,7 +25,7 @@
 </select>
 </td></tr>
 <tr>
-<td class="formcolor">{tr}Options:{/tr}</td>
+<td>{tr}Options:{/tr}</td>
 <td>
 	<div><a href="javascript://toggle quick options" onclick="pollsToggleQuickOptions()">{tr}Toggle Quick Options{/tr}</a></div>
 	<div id="tikiPollsQuickOptions" style="display: none">
@@ -43,14 +43,14 @@
 </td>
 </tr>
 {include file='categorize.tpl'}
-<tr><td class="formcolor">{tr}PublishDate{/tr}:</td><td class="formcolor">
+<tr><td>{tr}PublishDate{/tr}:</td><td>
 {html_select_date time=$info.publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$info.publishDate display_seconds=false}
 </td></tr>
 <tr>
 	<td><label id="voteConsiderationSpan">{tr}Votes older than these days are no more considered{/tr}</label></td>
 	<td><input type="text" id="voteConsiderationSpan" name="voteConsiderationSpan" size="5" value="{$info.voteConsiderationSpan|escape}"/><br /><i>{tr}0 for no limit{/tr}</i></td>
 </tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 {/tab}
@@ -103,9 +103,9 @@
 
 {tab name="{tr}Add poll to pages{/tr}"}
 <form action="tiki-admin_polls.php" method="post">
-<table class="normal">
-<tr><td class="formcolor">
-{tr}Poll{/tr}</td><td class="formcolor">
+<table class="formcolor">
+<tr><td>
+{tr}Poll{/tr}</td><td>
 <select name="poll_template">
 {section name=ix loop=$channels}
 {if $channels[ix].active eq 't'}
@@ -115,9 +115,9 @@
 </select>
 {remarksbox type="tip" title="Tip"}{tr}This menu shows only Polls with 'status': "template"{/tr}{/remarksbox}
 </td></tr>
-<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="poll_title" /></td></tr>
-<tr><td class="formcolor">
-{tr}Wiki pages{/tr}</td><td class="formcolor">
+<tr><td>{tr}Title{/tr}</td><td><input type="text" name="poll_title" /></td></tr>
+<tr><td>
+{tr}Wiki pages{/tr}</td><td>
 <select name="pages[]" multiple="multiple" size="20">
 {section name=ix loop=$listPages}
 <option value="{$listPages[ix].pageName|escape}">{tr}{$listPages[ix].pageName|escape}{/tr}</option>
@@ -125,8 +125,8 @@
 </select>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
 </td></tr>
-<tr><td class="formcolor">{tr}Lock the pages{/tr}</td><td class="formcolor"><input type="checkbox" name="locked" /></td></tr>
-<tr><td class="formcolor"></td><td class="formcolor"><input type="submit" name="addPoll" value="{tr}Add{/tr}" /></td></tr></table>
+<tr><td>{tr}Lock the pages{/tr}</td><td><input type="checkbox" name="locked" /></td></tr>
+<tr><td></td><td><input type="submit" name="addPoll" value="{tr}Add{/tr}" /></td></tr></table>
 </form>
 {/tab}
 {/tabset}

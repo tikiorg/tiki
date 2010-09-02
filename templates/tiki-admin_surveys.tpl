@@ -86,17 +86,17 @@
 
 <form action="tiki-admin_surveys.php" method="post">
 	<input type="hidden" name="surveyId" value="{$info.surveyId|escape}" />
-	<table class="normal">
-		<tr class="formcolor">
+	<table class="formcolor">
+		<tr>
 			<td>{tr}Name{/tr}:</td>
 			<td><input type="text" name="name" size="80" value="{$info.name|escape}" /></td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Description{/tr}:</td>
 			<td>{textarea name="description" rows="6" cols="80" _toolbars='y' _zoom='n' _simple='y' comments='y'}{$info.description}{/textarea}</td>
 		</tr>
 		{include file='categorize.tpl'}
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Status{/tr}</td>
 			<td>
 				<select name="status">
@@ -105,7 +105,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td>&nbsp;</td>
 			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />

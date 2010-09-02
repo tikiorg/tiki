@@ -5,21 +5,21 @@
 <h2>{tr}Create a new topic{/tr}</h2>
 
 <form enctype="multipart/form-data" action="tiki-admin_topics.php" method="post">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Topic Name{/tr}</td>
-			<td class="formcolor"><input type="text" name="name" /></td>
+			<td>{tr}Topic Name{/tr}</td>
+			<td><input type="text" name="name" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Upload Image{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Upload Image{/tr}</td>
+			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 				<input name="userfile1" type="file" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor">
+			<td>&nbsp;</td>
+			<td>
 				<input type="submit" name="addtopic" value="{tr}Add{/tr}" />
 			</td>
 		</tr>

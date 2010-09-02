@@ -53,10 +53,10 @@
 
 <form action="tiki-admin_menus.php?cookietab=1" method="post">
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
-<table class="normal">
-<tr><td class="formcolor"><label for="menus_name">{tr}Name{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="menus_name" value="{$info.name|escape}" style="width:95%" /></td></tr>
-<tr><td class="formcolor"><label for="menus_desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea name="description" id="menus_desc" rows="4" cols="40" style="width:95%">{$info.description|escape}</textarea></td></tr>
-<tr><td class="formcolor"><label for="menus_type">{tr}Type{/tr}:</label></td><td class="formcolor">
+<table class="formcolor">
+<tr><td><label for="menus_name">{tr}Name{/tr}:</label></td><td><input type="text" name="name" id="menus_name" value="{$info.name|escape}" style="width:95%" /></td></tr>
+<tr><td><label for="menus_desc">{tr}Description{/tr}:</label></td><td><textarea name="description" id="menus_desc" rows="4" cols="40" style="width:95%">{$info.description|escape}</textarea></td></tr>
+<tr><td><label for="menus_type">{tr}Type{/tr}:</label></td><td>
 <select name="type" id="menus_type">
 <option value="d" {if $info.type eq 'd'}selected="selected"{/if}>{tr}dynamic collapsed{/tr} (d)</option>
 <option value="e" {if $info.type eq 'e'}selected="selected"{/if}>{tr}dynamic extended{/tr} (e)</option>
@@ -65,7 +65,7 @@
 </td></tr>
 {if $prefs.feature_menusfolderstyle eq 'y'}
 <tr>
-	<td class="formcolor" rowspan="2"><label for="icon">{tr}Icons:{/tr}</label></td>
+	<td rowspan="2"><label for="icon">{tr}Icons:{/tr}</label></td>
 	<td>
 		<div>{tr}Folder Icon{/tr}</div>
 		<input type="text" id="icon" name="icon" value="{$info.icon}" style="width:95%" /><br /><em>{tr}Path and filename of closed folder icon{/tr}</em>.
@@ -79,7 +79,7 @@
 {/if}
 {if $prefs.menus_items_icons eq 'y'}
 <tr>
-	<td class="formcolor">
+	<td>
 		<label for="use_items_icons">
 			<input type="checkbox" id="use_items_icons" name="use_items_icons"{if $info.use_items_icons eq 'y'} checked="checked"{/if}/>
 			{tr}Configure icons for menu entries{/tr}
@@ -88,8 +88,8 @@
 </tr>
 {/if}
 <tr>
-	<td class="formcolor">&nbsp;</td>
-	<td class="formcolor">
+	<td>&nbsp;</td>
+	<td>
 		<input type="submit" name="save" value="{tr}Save{/tr}" />
 		{if $prefs.menus_items_icons neq 'y'}<input type="hidden" name="use_items_icons" value="{$info.use_items_icons}" />{/if}
 	</td>

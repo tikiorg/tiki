@@ -33,35 +33,35 @@
 							<input type="hidden" name="menuId" value="{$menuId|escape}" />
 							<input type="hidden" name="offset" value="{$offset|escape}" />
 							{if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}" />{/if}
-							<table>
-								<tr class="formcolor">
+							<table class="formcolor">
+								<tr>
 									<td>{tr}Name:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" />
 									</td>
 								</tr>
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}URL:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" />
 										<br /><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
 									</td>
 								</tr>
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Sections:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br />
 										<em>{tr}Separate multiple sections with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 									</td>
 								</tr>
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Permissions:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br />
 										<em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 									</td>
 								</tr>
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Group:{/tr}</td>
 									<td colspan="3">
 										<select id="menu_groupname" name="groupname[]" size="4" multiple>
@@ -74,7 +74,7 @@
 									</td>
 								</tr>
 {if $prefs.feature_userlevels eq 'y'}
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Level:{/tr}</td>
 									<td colspan="3">
 										<select name="level">
@@ -84,7 +84,7 @@
 									</td>
 								</tr>
 {/if}
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Type:{/tr}</td>
 									<td>
 										<select name="type">
@@ -105,7 +105,7 @@
 {if $prefs.menus_items_icons eq 'y'}
 							 	<tr><td>{tr}Icon:{/tr}</td><td colspan="3"><input type="text" name="icon" value="{$icon|escape}" size="20" /></td></tr>
 {/if}
-								<tr class="formcolor">
+								<tr>
 									<td>&nbsp;</td>
 									<td colspan="3">
 										<input type="submit" name="save" value="{tr}Save{/tr}" />

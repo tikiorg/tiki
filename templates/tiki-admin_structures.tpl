@@ -129,24 +129,24 @@
 {if $tiki_p_edit_structures == 'y'}
 {tab name="{tr}Create New structure{/tr}"}
 <form action="tiki-admin_structures.php" method="post">
-<table class="normal">
+<table class="formcolor">
 <tr>
-   <td class="formcolor"><label for="name">{tr}Structure ID{/tr}:</label></td>
-   <td class="formcolor"><input type="text" name="name" id="name" /></td>
+   <td><label for="name">{tr}Structure ID{/tr}:</label></td>
+   <td><input type="text" name="name" id="name" /></td>
 </tr>
 <tr>
-   <td class="formcolor"><label for="alias">{tr}Alias{/tr}:</label></td>
-   <td class="formcolor"><input type="text" name="alias" id="alias" /></td>
+   <td><label for="alias">{tr}Alias{/tr}:</label></td>
+   <td><input type="text" name="alias" id="alias" /></td>
 </tr>    
 <tr>
-   <td class="formcolor"><label for="tree">{tr}Tree{/tr}:</label><br />(optional)</td>
-   <td colspan="2" class="formcolor"><textarea rows="5" cols="60" id="tree" name="tree" style="width:95%"></textarea>
+   <td><label for="tree">{tr}Tree{/tr}:</label><br />(optional)</td>
+   <td colspan="2"><textarea rows="5" cols="60" id="tree" name="tree" style="width:95%"></textarea>
 		{remarksbox type="tip" title="{tr}Note{/tr}"}{tr}Use single spaces to indent structure levels{/tr}{/remarksbox}
    </td>
 </tr>    
 {include file='categorize.tpl'}
 <tr>
-   <td class="formcolor">&nbsp;</td>
+   <td>&nbsp;</td>
    <td colspan="2" class="formcolor"><input type="submit" value="{tr}Create New Structure{/tr}" name="create" /></td>
 </tr>
 </table>
