@@ -50,7 +50,7 @@
 		<tr><td><input type="checkbox" name="subToDesc" value="true" id="subToDesc" /></td><td>{tr}Use the last sub directory name as description{/tr}</td></tr>
 		<tr><td/><td>{tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}</td></tr>
 	</table>
-	<table class="formcolor" border="1">
+	<table class="formcolor">
 		<tr>
 			<td>{tr}Select a File Gallery{/tr}</td>
 			<td>
