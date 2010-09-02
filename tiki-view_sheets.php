@@ -173,7 +173,7 @@ $("#edit_button").click( function () {
 		if ($.sheet.instance && $.sheet.instance.length > 0) {
 			$.sheet.instance = [];
 		}
-		var options = {title: $("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
+		var options = {inlineMenu: $("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
 		$("div.tiki_sheet").tiki("sheet", "", options);
 
 		$a.attr("temp", $a.text());

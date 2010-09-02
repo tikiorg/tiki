@@ -26,7 +26,11 @@ abstract class Toolbar
 
 	public static function getTag( $tagName ) // {{{
 	{
-		if( $tag = Toolbar::getCustomTool( $tagName ) )
+		global $section;
+		//we detect sheet first because it has unique buttons
+		if ( $section == 'sheet' && $tag = ToolbarSheet::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = Toolbar::getCustomTool( $tagName ) )
 			return $tag;
 		elseif( $tag = ToolbarInline::fromName( $tagName ) )
 			return $tag;
@@ -52,8 +56,7 @@ abstract class Toolbar
 			return new ToolbarSwitchEditor;
 		elseif( $tagName == '-' )
 			return new ToolbarSeparator;
-		elseif( $tag = ToolbarSheet::fromName( $tagName ) )
-			return $tag;
+		
 	} // }}}
 
 	public static function getList( $include_custom = true ) // {{{
@@ -711,14 +714,15 @@ class ToolbarPicker extends Toolbar
 	{
 		global $headerlib;
 		$prefs = array();
-
+		$styleType = '';
+		
 		switch( $tagName ) {
 		case 'specialchar':
 			$wysiwyg = 'SpecialChar';
 			$label = tra('Special Characters');
 			$icon = tra('lib/fckeditor_tiki/fckeditor-icons/Specialchar.gif');
 			// Line taken from DokuWiki
-            $list = explode(' ','À à Á á Â â Ã ã Ä ä Ǎ ǎ Ă ă Å å Ā ā Ą ą Æ æ Ć ć Ç ç Č č Ĉ ĉ Ċ ċ Ð đ ð Ď ď È è É é Ê ê Ë ë Ě ě Ē ē Ė ė Ę ę Ģ ģ Ĝ ĝ Ğ ğ Ġ ġ Ĥ ĥ Ì ì Í í Î î Ï ï Ǐ ǐ Ī ī İ ı Į į Ĵ ĵ Ķ ķ Ĺ ĺ Ļ ļ Ľ ľ Ł ł Ŀ ŀ Ń ń Ñ ñ Ņ ņ Ň ň Ò ò Ó ó Ô ô Õ õ Ö ö Ǒ ǒ Ō ō Ő ő Œ œ Ø ø Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ş ş Š š Ŝ ŝ Ţ ţ Ť ť Ù ù Ú ú Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ů ů ǖ ǘ ǚ ǜ Ų ų Ű ű Ŵ ŵ Ý ý Ÿ ÿ Ŷ ŷ Ź ź Ž ž Ż ż Þ þ ß Ħ ħ ¿ ¡ ¢ £ ¤ ¥ € ¦ § ª ¬ ¯ ° ± ÷ ‰ ¼ ½ ¾ ¹ ² ³ µ ¶ † ‡ · • º ∀ ∂ ∃ Ə ə ∅ ∇ ∈ ∉ ∋ ∏ ∑ ‾ − ∗ √ ∝ ∞ ∠ ∧ ∨ ∩ ∪ ∫ ∴ ∼ ≅ ≈ ≠ ≡ ≤ ≥ ⊂ ⊃ ⊄ ⊆ ⊇ ⊕ ⊗ ⊥ ⋅ ◊ ℘ ℑ ℜ ℵ ♠ ♣ ♥ ♦ 𝛼 𝛽 𝛤 𝛾 𝛥 𝛿 𝜀 𝜁 𝛨 𝜂 𝛩 𝜃 𝜄 𝜅 𝛬 𝜆 𝜇 𝜈 𝛯 𝜉 𝛱 𝜋 𝛳 𝜍 𝛴 𝜎 𝜏 𝜐 𝛷 𝜑 𝜒 𝛹 𝜓 𝛺 𝜔 𝛻 𝜕 ★ ☆ ☎ ☚ ☛ ☜ ☝ ☞ ☟ ☹ ☺ ✔ ✘ × „ “ ” ‚ ‘ ’ « » ‹ › — – … ← ↑ → ↓ ↔ ⇐ ⇑ ⇒ ⇓ ⇔ © ™ ® ′ ″');
+            $list = explode(' ','� � � � � � � � � � A a A a � � A a A a � � C c � � C c C c C c � d � D d � � � � � � � � E e E e E e E e G g G g G g G g H h � � � � � � � � I i I i I i I i J j K k L l L l L l L l ? ? N n � � N n N n � � � � � � � � � � O o O o O o � � � � R r R r R r S s S s � � S s T t T t � � � � � � � � U u U u U u U u u u u u U u U u W w � � � � Y y Z z � � Z z � � � H h � � � � � � � � � � � � � � � � � � � � � � � � � � � � � ? ? ? ? ? � ? ? ? ? ? ? ? - * v ? 8 ? ? ? n ? ? ? ~ ? � ? = = = ? ? ? ? ? ? ? ? � ? P I R ? ? ? ? ? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ? ? ? ? ? ? ? ? ? ? ? ? ? � � � � � � � � � � � � � � ? ? ? ? ? ? ? ? ? ? � � � ?');
 			$list = array_combine( $list, $list );
 			break;
 		case 'smiley':
@@ -740,6 +744,7 @@ class ToolbarPicker extends Toolbar
 			$label = tra('Foreground color');
 			$icon = tra('pics/icons/palette.png');
 			$rawList = array();
+			$styleType = 'color';
 			
 			$hex = array('0', '3', '6', '9', 'C', 'F');
 			$count_hex = count($hex);
@@ -763,7 +768,8 @@ class ToolbarPicker extends Toolbar
 			$label = tra('Background Color');
 			$icon = tra('pics/icons/palette_bg.png');
 			$wysiwyg = 'BGColor';
-
+			$styleType = 'background-color';
+			
 			$hex = array('0', '3', '6', '9', 'C', 'F');
 			$count_hex = count($hex);
 
@@ -792,7 +798,8 @@ class ToolbarPicker extends Toolbar
 				->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
 					->setList( $list )
 						->setType('Picker')
-							->setName($tagName);
+							->setName($tagName)
+								->setStyleType($styleType);
 		
 		foreach( $prefs as $pref ) {
 			$tag->addRequiredPreference( $pref );
@@ -828,7 +835,13 @@ class ToolbarPicker extends Toolbar
 	} // }}}
 	
 	public function getSyntax( $areaId = '$areaId' ) {
-		return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaId . '\')';	// is enclosed in double quotes later
+		global $section;
+		if ( $section == 'sheet' )
+		{
+			return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaId . '\', true, \'' . $this->styleType . '\' )';	// is enclosed in double quotes later
+		} else {
+			return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaId . '\' )';	// is enclosed in double quotes later
+		}
 	}
 	
 	static private function setupJs() {
@@ -852,6 +865,13 @@ class ToolbarPicker extends Toolbar
 		
 		return $this->getSelfLink($this->getSyntax($areaId),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
+	} // }}}
+	
+	protected function setStyleType( $type ) // {{{
+	{
+		$this->styleType = $type;
+
+		return $this;
 	} // }}}
 }
 
@@ -1403,7 +1423,35 @@ class ToolbarSheet extends Toolbar
 				$icon = tra('pics/icons/close.png');
 				$syntax = '$("#edit_button").click();';	// temporary workaround TODO properly
 				break;
-				
+			case 'bold':
+				$label = tra('Bold');
+				$icon = tra('pics/icons/text_bold.png');
+				$wysiwyg = 'Bold';
+				$syntax = '$.sheet.instance[0].cellStyleToggle("styleBold");';
+				break;
+			case 'italic':
+				$label = tra('Italic');
+				$icon = tra('pics/icons/text_italic.png');
+				$wysiwyg = 'Italic';
+				$syntax = '$.sheet.instance[0].cellStyleToggle("styleItalics");';
+				break;
+			case 'underline':
+				$label = tra('Underline');
+				$icon = tra('pics/icons/text_underline.png');
+				$wysiwyg = 'Underline';
+				$syntax = '$.sheet.instance[0].cellStyleToggle("styleUnderline");';
+				break;
+			case 'strike':
+				$label = tra('Strikethrough');
+				$icon = tra('pics/icons/text_strikethrough.png');
+				$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'Strike' : 'StrikeThrough';
+				$syntax = '$.sheet.instance[0].cellStyleToggle("styleLineThrough");';
+				break;
+			case 'center':
+				$label = tra('Align Center');
+				$icon = tra('pics/icons/text_align_center.png');
+				$syntax = '$.sheet.instance[0].cellStyleToggle("styleCenter");';
+				break;
 			default:
 				return;
 		}
