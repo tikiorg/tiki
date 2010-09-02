@@ -50,16 +50,18 @@
 		<tr><td><input type="checkbox" name="subToDesc" value="true" id="subToDesc" /></td><td>{tr}Use the last sub directory name as description{/tr}</td></tr>
 		<tr><td/><td>{tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}</td></tr>
 	</table>
-	<table class="formcolor">
+	<table class="formcolor" border="1">
 		<tr>
 			<td>{tr}Select a File Gallery{/tr}</td>
-			<select name="galleryId">
-				{section name=idx loop=$galleries}
-					{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_batch_upload_file_dir eq 'y')}
-						<option value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
-					{/if}
-				{/section}
-			</select>
+			<td>
+				<select name="galleryId">
+					{section name=idx loop=$galleries}
+						{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_batch_upload_file_dir eq 'y')}
+							<option value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
+						{/if}
+					{/section}
+				</select>
+			</td>
 			<td><input type="submit" name="batch_upload" value="{tr}Process files{/tr}" /></td>
 		</tr>
 	</table>
