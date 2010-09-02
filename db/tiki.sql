@@ -2955,6 +2955,7 @@ CREATE TABLE `users_usergroups` (
   `userId` int(8) NOT NULL default '0',
   `groupName` varchar(255) NOT NULL default '',
   `created` int(14) default NULL,
+  `expire` int(14) default NULL,
   PRIMARY KEY (`userId`,`groupName`(30))
 ) ENGINE=MyISAM;
 

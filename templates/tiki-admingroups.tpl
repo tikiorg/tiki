@@ -311,16 +311,24 @@
 		<h2>{tr}Members List:{/tr} {$groupname|escape}</h2>
 		<table class="normal">
 			<tr>
-				{cycle name=table values=',,,,</tr><tr>' print=false advance=false}
-				{section name=ix loop=$memberslist}
-					<td class="auto">
-						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-						<a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-						{$memberslist[ix]|userlink}
-					</td>
-					{cycle name=table}
-				{/section}
+				<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
+				<th>{self_link _sort_arg='sort_mode_member' _sort_field='created'}{tr}Assign{/tr}{/self_link}</th>
+				<th>{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expire{/tr}{/self_link}</th>
+				<th>{tr}Action{/tr}</th>
 			</tr>
+			{cycle values="even,odd" print=false}
+			<tr>
+				{foreach from=$memberslist item=member}
+					<tr class="{cycle}">
+					<td>{$member.login|userlink}</td>
+					<td>{$member.created|tiki_short_datetime}</td>
+					<td>{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
+					<td>
+						<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+					</td>
+					</tr>
+				{/foreach}
 		</table>
 		{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 		<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
