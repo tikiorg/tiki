@@ -139,7 +139,7 @@
 
 </tr>
 {sectionelse}
-<td class="odd" colspan="6"><strong>{tr}No records found.{/tr}</strong><td>
+<td class="odd" colspan="6"><strong>{tr}No records found.{/tr}</strong></td>
 {/section}
 </table>
 
