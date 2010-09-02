@@ -189,8 +189,8 @@
 
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">
-							<table class="normal">
-								<tr class="formcolor">
+							<table class="formcolor">
+								<tr>
 									<th>{tr}MIME Type{/tr}</th>
 									<th>{tr}System Command{/tr}</th>
 								</tr>
