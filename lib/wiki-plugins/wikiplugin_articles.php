@@ -128,6 +128,11 @@ function wikiplugin_articles_info()
 				'description' => 'y|n',
 				'filter' => 'alpha',
 			),
+			'urlparam' => array(
+				'required' => false,
+				'name' => tra('Additional url param'),
+				'filter' => 'string',
+			),
 		),
 	);
 }
@@ -136,7 +141,7 @@ function wikiplugin_articles($data, $params)
 {
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 	global $artlib; require_once 'lib/articles/artlib.php';
-	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n');
+	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '');
 	$params = array_merge($default, $params);
 
 	extract($params, EXTR_SKIP);
@@ -161,6 +166,7 @@ function wikiplugin_articles($data, $params)
 	}
 
 	$smarty->assign_by_ref('quiet', $quiet);
+	$smarty->assign_by_ref('urlparam', $urlparam);
 	
 	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
 	$smarty->assign('container_class', $containerClass);

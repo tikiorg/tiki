@@ -6,6 +6,7 @@
 	{/title}
 {/if}
 {section name=ix loop=$listpages}
+	{capture name=href}{if empty($urlparam)}{$listpages[ix].articleId|sefurl:article}{else}{$listpages[ix].articleId|sefurl:article:with_next}{$urlparam}{/if}{/capture}
 	{if $listpages[ix].disp_article eq 'y'}
 		{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $listpages[ix].freetags.data|@count >0}
 			<div class="freetaglist">
@@ -18,7 +19,7 @@
 		<div class="article{if !empty($container_class)} {$container_class}{/if}">
 			{if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline|escape}</div>{/if}
 			<div class="articletitle">
-				<h2><a href="{$listpages[ix].articleId|sefurl:article}">{$listpages[ix].title|escape}</a></h2>
+				<h2><a href="{$smarty.capture.href}">{$listpages[ix].title|escape}</a></h2>
 				{if $listpages[ix].show_subtitle eq 'y' and $listpages[ix].subtitle}<div class="articlesubtitle">{$listpages[ix].subtitle|escape}</div>{/if}
 				{if ($listpages[ix].show_author eq 'y')
 				 or ($listpages[ix].show_pubdate eq 'y')
@@ -59,7 +60,7 @@
 							{if $listpages[ix].show_image eq 'y'}
 								{if $listpages[ix].useImage eq 'y'}
 									{if $listpages[ix].hasImage eq 'y'}
-										<a href="{$listpages[ix].articleId|sefurl:article}"
+										<a href="{$smarty.capture.href}"
 												title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{else}{tr}Read More{/tr}{/if}">
 											<img  {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 													alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else$listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{/if}"
@@ -83,7 +84,7 @@
 								{else}
 									{section name=it loop=$topics}
 										{if ($topics[it].topicId eq $listpages[ix].topicId) and ($topics[it].image_size > 0)}
-											<a href="{$listpages[ix].articleId|sefurl:article}"
+											<a href="{$smarty.capture.href}"
 													title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}">
 												<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 														alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}"
@@ -112,7 +113,7 @@
 					{if ($tiki_p_read_article eq 'y' and $listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
 						{if ($listpages[ix].size > 0)}
 							<div class="status"> {* named to be similar to forum/blog item *}
-								<a href="{$listpages[ix].articleId|sefurl:article}" class="more">{tr}Read More{/tr}</a>
+								<a href="{$smarty.capture.href}" class="more">{tr}Read More{/tr}</a>
 							</div>
 							{if ($listpages[ix].show_size eq 'y')}
 								<span>
@@ -123,7 +124,7 @@
 					{/if}
 					{if ($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y') and ($listpages[ix].allow_comments eq 'y')}
 						<span>
-							<a href="{$listpages[ix].articleId|sefurl:article:with_next}show_comzone=y#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
+							<a href="{$listpages[ix].articleId|sefurl:article:with_next}show_comzone=y{if !empty($urlparam)}&amp;{$urlparam}{/if}#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
 								{if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
 									{tr}Add Comment{/tr}
 								{elseif $listpages[ix].comments_cant == 1}
