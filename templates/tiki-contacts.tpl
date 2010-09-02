@@ -2,13 +2,12 @@
 
 <div class="navbar">
 	<div style="float:right;margin:5px;">
-			{if $view eq 'list'}
-				{button href="?view=group" _text="{tr}Group View{/tr}"}
-			{else}
-				{button href="?view=list" _text="{tr}List View{/tr}"}
-			{/if}
+		{if $view eq 'list'}
+			{button href="?view=group" _text="{tr}Group View{/tr}"}
+		{else}
+			{button href="?view=list" _text="{tr}List View{/tr}"}
+		{/if}
 	</div>
-
 	<div style="float:left;margin:5px;">
 		{button href="#" _onclick="flip('editform');return false;" _text="{tr}Create/edit contacts{/tr}"}
 		{button href="tiki-user_contacts_prefs.php" _text="{tr}Preferences{/tr}"}
@@ -120,10 +119,14 @@
 			{section name=user loop=$channels}
 				<tr>
 					<td class="{cycle advance=false}">
-						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].firstName}</a>
+						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
+							{$channels[user].firstName}
+						</a>
 					</td>
 					<td class="{cycle advance=false}">
-						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].lastName}</a>
+						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
+							{$channels[user].lastName}
+						</a>
 					</td>
 					<td class="{cycle advance=false}">
 						{if $prefs.feature_webmail eq 'y'}
@@ -155,7 +158,9 @@
 					
 					<td class="{cycle advance=false}">&nbsp;
 						{if $channels[user].user eq $user}
-							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">
+								{icon _id='page_edit'}
+							</a>
 							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 						{elseif $tiki_p_admin eq 'y'}
 							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:36px;" title="{tr}Delete{/tr}">{icon _id='cross_admin' alt="{tr}Delete{/tr}"}</a>
