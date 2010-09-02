@@ -58,7 +58,9 @@
 		</form>
 		<br />
 	{else}
-		<div class="navbar"><a href="tiki-sheets.php?edit_mode=edit&sheetId=0">{tr}Create New Sheet{/tr}</a></div>
+		<div class="navbar">
+			{button href="tiki-sheets.php?edit_mode=1&amp;sheetId=0" _text="{tr}Create New Sheet{/tr}"}
+		</div>
 	{/if}
 {/if}
 	
