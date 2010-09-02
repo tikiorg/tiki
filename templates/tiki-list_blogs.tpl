@@ -13,28 +13,37 @@
 {/if}
 
 <table class="normal">
+{assign var=numbercol value=1}
 <tr>
 {if $prefs.blog_list_title eq 'y' or $prefs.blog_list_description eq 'y'}
+	{assign var=numbercol value=`$numbercol+1`}
 	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Blog{/tr}</a></th>
 {/if}
 {if $prefs.blog_list_created eq 'y'}
+	{assign var=numbercol value=`$numbercol+1`}
 	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
 {/if}
 {if $prefs.blog_list_lastmodif eq 'y'}
+	{assign var=numbercol value=`$numbercol+1`}
 	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last post{/tr}</a></th>
 {/if}
 {if $prefs.blog_list_user ne 'disabled'}
+	{assign var=numbercol value=`$numbercol+1`}
 	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></th>
 {/if}
 {if $prefs.blog_list_posts eq 'y'}
+	{assign var=numbercol value=`$numbercol+1`}
 	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'posts_desc'}posts_asc{else}posts_desc{/if}">{tr}Posts{/tr}</a></th>
 {/if}
 {if $prefs.blog_list_visits eq 'y'}
+	{assign var=numbercol value=`$numbercol+1`}
 	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></th>
 {/if}
 {if $prefs.blog_list_activity eq 'y'}
+	{assign var=numbercol value=`$numbercol+1`}
 	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'activity_desc'}activity_asc{else}activity_desc{/if}">{tr}Activity{/tr}</a></th>
 {/if}
+{assign var=numbercol value=`$numbercol+1`}
 <th>{tr}Action{/tr}</th>
 </tr>
 
@@ -116,7 +125,7 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td class="odd" colspan="7"><strong>{tr}No records found.{/tr}</strong></td></tr>
+<tr><td class="odd" colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td></tr>
 {/section}
 </table>
 
