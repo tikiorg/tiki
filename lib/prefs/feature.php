@@ -388,6 +388,7 @@ function prefs_feature_list() {
 			'description' => tra('Datasheets with calculations and charts'),
 			'help' => 'SpreadSheet',
 			'type' => 'flag',
+			'keywords' => 'sheet calculation calculations stats stat graph graphs',
 		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
