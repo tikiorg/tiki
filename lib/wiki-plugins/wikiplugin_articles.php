@@ -231,7 +231,7 @@ function wikiplugin_articles($data, $params)
 		$smarty->assign_by_ref('offset', $start);
 		$smarty->assign_by_ref('cant', $listpages['cant']);
 	}
-	
+	$marty->assign('usePagination', $usePagination);
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 
 	if (isset($titleonly) && $titleonly == 'y') {
