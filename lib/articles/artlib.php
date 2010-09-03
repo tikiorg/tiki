@@ -401,6 +401,7 @@ class ArtLib extends TikiLib
 													, $emails = ''
 													, $from = ''
 													, $list_image_x = ''
+													, $ispublished='y'
 												)
 	{
 		
@@ -421,7 +422,7 @@ class ArtLib extends TikiLib
 			$query	= 'update `tiki_articles` set `title` = ?, `authorName` = ?, `topicId` = ?, `topicName` = ?, `size` = ?, `useImage` = ?, `image_name` = ?, ';
 			$query .= ' `image_type` = ?, `image_size` = ?, `image_data` = ?, `isfloat` = ?, `image_x` = ?, `image_y` = ?, `list_image_x` = ?, `heading` = ?, `body` = ?, ';
 			$query .= ' `publishDate` = ?, `expireDate` = ?, `created` = ?, `author` = ?, `type` = ?, `rating` = ?, `topline`=?, `subtitle`=?, `linkto`=?, ';
-			$query .= ' `image_caption`=?, `lang`=? where `articleId` = ?';
+			$query .= ' `image_caption`=?, `lang`=?, `ispublished`=? where `articleId` = ?';
 
 			$result = $this->query($query, array( $title
 																					, $authorName
@@ -450,6 +451,7 @@ class ArtLib extends TikiLib
 																					, $linkto
 																					, $image_caption
 																					, $lang
+																					, $ispublished
 																					, (int) $articleId
 																				)
 																			);
@@ -465,8 +467,8 @@ class ArtLib extends TikiLib
 			// Insert the article
 			$query	= 'insert into `tiki_articles` (`title`, `authorName`, `topicId`, `useImage`, `image_name`, `image_size`, `image_type`, `image_data`, ';
 			$query .= ' `publishDate`, `expireDate`, `created`, `heading`, `body`, `hash`, `author`, `nbreads`, `votes`, `points`, `size`, `topicName`, ';
-			$query .= ' `image_x`, `image_y`, `list_image_x`, `type`, `rating`, `isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`) ';
-			$query .= ' values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+			$query .= ' `image_x`, `image_y`, `list_image_x`, `type`, `rating`, `isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`, `ispublished`) ';
+			$query .= ' values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 	
 			$result = $this->query($query, array( $title
 																					, $authorName
@@ -499,6 +501,8 @@ class ArtLib extends TikiLib
 																					, $linkto
 																					, $image_caption
 																					, $lang
+																					, $ispublished
+																					
 																				)
 																			);
 
@@ -1017,6 +1021,7 @@ class ArtLib extends TikiLib
 												, $min_rating = ''
 												, $max_rating = ''
 												, $override_dates = false
+												, $ispublished = ''
 												)
 		{
 
@@ -1137,6 +1142,12 @@ class ArtLib extends TikiLib
 			$mid .= ($mid)? ' and ': ' where ';
 			$mid .= $condition.' ';
 			$bindvars[] = $lang;
+		}
+		if (!empty($ispublished)) {
+			$condition = '`tiki_articles`.`ispublished`=?';
+			$mid .= ($mid)? ' and ': ' where ';
+			$mid .= $condition.' ';
+			$bindvars[] = $ispublished;
 		}
 		if ($mid)
 			$mid2 = ' and 1 = 1 ';

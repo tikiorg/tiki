@@ -83,6 +83,7 @@ $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
 $smarty->assign('emails', '');
 $smarty->assign('userEmail', $userlib->get_user_email($user));
+$smarty->assign('ispublished', 'y');
 
 // If the articleId is passed then get the article data
 // GGG - You have to check for the actual value of the articleId because it
@@ -127,6 +128,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$smarty->assign('author', $article_data["author"]);
 	$smarty->assign('creator_edit', $article_data["creator_edit"]);
 	$smarty->assign('rating', $article_data["rating"]);
+	$smarty->assign('ispublished', $article_data["ispublished"]);
 
 	if (strlen($article_data["image_data"]) > 0) {
 		$smarty->assign('hasImage', 'y');
@@ -247,6 +249,7 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	$smarty->assign_by_ref('from', $_REQUEST['from']);
 	$imgname = $_REQUEST["image_name"];
 	$data = urldecode($_REQUEST["image_data"]);
+	$smarty->assign('ispublished', $_REQUEST["ispublished"]);
 
 	// Parse the information of an uploaded file and use it for the preview
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
@@ -390,7 +393,11 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 			die;
 		}
 	}
-	
+	if($_REQUEST['ispublished'])
+		$ispublished = 'y';
+	else
+		$ispublished = 'n';
+		
 	$artid = $artlib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>')
 																	, $_REQUEST["authorName"]
 																		, $_REQUEST["topicId"]
@@ -418,6 +425,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 																		, $emails
 																		, $_REQUEST['from']
 																		, $_REQUEST['list_image_x']
+																		, $ispublished
 																		);
 
 	$cat_type = 'article';

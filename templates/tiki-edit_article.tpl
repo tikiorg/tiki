@@ -305,6 +305,12 @@
 			</tr>
 			{/foreach}
 		{/if}
+		<tr class="formcolor">
+				<td>{tr}Published{/tr}</td>
+				<td>
+					<input type="checkbox" name="ispublished" {if $ispublished eq 'y'}checked="checked"{/if}/>
+				</td>
+		</tr>
 	</table>
 	
 	<div align="center">

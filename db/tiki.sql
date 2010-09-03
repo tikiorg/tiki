@@ -134,6 +134,7 @@ CREATE TABLE `tiki_articles` (
   `type` varchar(50) default NULL,
   `rating` decimal(3,2) default NULL,
   `isfloat` char(1) default NULL,
+  `ispublished` char(1) NOT NULL DEFAULT 'y',
   PRIMARY KEY (`articleId`),
   KEY `title` (`title`),
   KEY `heading` (`heading`(255)),

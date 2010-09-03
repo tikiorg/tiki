@@ -1430,7 +1430,7 @@ class Comments extends TikiLib
 		if ($type == 'article') {
 			if ($prefs['feature_articles'] != 'y')
 				return false;
-			$query = "SELECT count(*),`tiki_articles`.`articleId`,`tiki_articles`.`title` FROM `tiki_comments` INNER JOIN `tiki_articles` ON `tiki_comments`.`object`=`tiki_articles`.`articleId` WHERE `tiki_comments`.`objectType`='article' and `tiki_comments`.`approved`='y'";
+			$query = "SELECT count(*),`tiki_articles`.`articleId`,`tiki_articles`.`title` FROM `tiki_comments` INNER JOIN `tiki_articles` ON `tiki_comments`.`object`=`tiki_articles`.`articleId` WHERE `tiki_comments`.`objectType`='article' and `tiki_comments`.`approved`='y' and `tiki_articles`.`ispublished`='y'";
 		
 			if($lang != ''){
 				$query = $query. " and `tiki_articles`.`lang`=?";

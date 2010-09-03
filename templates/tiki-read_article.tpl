@@ -1,5 +1,11 @@
 {* $Id$ *}
 
+{if $ispublished eq 'n' && $tiki_p_edit_article eq 'y'}
+	{remarksbox type='errors' title='Not Published'}
+	{tr}This Article is currently not published and only visible by Editors{/tr}
+	{/remarksbox}
+{/if}
+
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y'}
 	<div align="right">{$display_catpath}</div>
 {/if}

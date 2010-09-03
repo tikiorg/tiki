@@ -76,6 +76,7 @@
 			{assign var=numbercol value=`$numbercol+1`}
 			<th>{tr}Img{/tr}</th>
 		{/if}
+		<th>{self_link _sort_arg='sort_mode' _sort_field='ispublished'}{tr}IsPublished{/tr}{/self_link}</th>
 		{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage) or $tiki_p_read_article}
 			{assign var=numbercol value=`$numbercol+1`}
 			<th>{tr}Action{/tr}</th>
@@ -132,6 +133,7 @@
 			{if $prefs.art_list_img eq 'y'}
 				<td class="{cycle advance=false}">{tr}{$listpages[changes].hasImage}{/tr}/{tr}{$listpages[changes].useImage}{/tr}</td>
 			{/if}
+			<td style="text-align:center;" class="{cycle advance=false}">{$listpages[changes].ispublished}</td>
 			<td class="{cycle}">
 				{if $tiki_p_read_article eq 'y'}
 					<a href="{$listpages[changes].articleId|sefurl:article}" title="{$listpages[changes].title|escape}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>

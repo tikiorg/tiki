@@ -33,6 +33,12 @@ if (($article_data['publishDate'] > $tikilib->now) && ($article_data['author'] !
 	die;
 }
 
+if($article_data['ispublished'] == 'n' && $tiki_p_edit_article != 'y'){
+	$smarty->assign('msg', tra("Article is not published yet"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($article_data["lang"])) {
 	$_SESSION['s_prefs']['language'] = $article_data["lang"];
 	$prefs['language'] = $article_data["lang"];

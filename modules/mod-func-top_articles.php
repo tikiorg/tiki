@@ -29,7 +29,7 @@ function module_top_articles( $mod_reference, $module_params ) {
 	if(isset($module_params['lang'])){
 		$lang = $module_params['lang'];
 	}
-	$ranking = $artlib->list_articles(0, $mod_reference['rows'], 'nbreads_desc', '', '', '', $user,'','','','','','','',$lang,'','','');
+	$ranking = $artlib->list_articles(0, $mod_reference['rows'], 'nbreads_desc', '', '', '', $user,'','','','','','','',$lang,'','','','y');
 	
 	$smarty->assign('modTopArticles', $ranking["data"]);
 }
