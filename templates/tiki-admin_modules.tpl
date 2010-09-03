@@ -68,7 +68,7 @@
 			</tr>
 		{sectionelse}
 			<tr>
-				<td colspan="6"><b>{tr}No records found{/tr}</b></td>
+				<td colspan="7"><b>{tr}No records found{/tr}</b></td>
 			</tr>
 		{/section}
 	</table>
@@ -109,7 +109,7 @@
 			</tr>
 		{sectionelse}
 			<tr>
-				<td colspan="6"><b>{tr}No records found{/tr}</b></td>
+				<td colspan="7"><b>{tr}No records found{/tr}</b></td>
 			</tr>
 		{/section}
 	</table>
