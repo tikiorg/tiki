@@ -174,14 +174,25 @@ class TrackerLib extends TikiLib
 		return $res;
 	}
 
-	function remove_item_attachment($attId) {
+	function remove_item_attachment($attId=0, $itemId=0) {
 		global $prefs;
-		$path = $this->getOne("select `path` from `tiki_tracker_item_attachments` where `attId`=?",array((int) $attId));
-		if ($path) @unlink ($prefs['t_use_dir'] . $path);
-		$query = "delete from `tiki_tracker_item_attachments` where `attId`=?";
-		$result = $this->query($query,array((int) $attId));
-		$query = 'update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`=\'\' where ttif.`value`=? and ttf.`type`=?';
-		$this->query($query, array((int)$attId, 'A'));
+		if (empty($attId)) {
+			$paths = $this->fetchAll('select `path` from `tiki_tracker_item_attachments` where `itemId`=?', array($itemId));
+			foreach ($paths as $path) {
+				if (!empty($path['path'])) {
+					@unlink ($prefs['t_use_dir'] . $path['path']);
+				}
+			}
+			$this->query('delete from `tiki_tracker_item_attachments` where `itemId`=?', array($itemId));
+			$this->query('update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`=? where ttif.`itemId`=? and ttf.`type`=?', array('', $itemId, 'A'));
+		} else {
+			$path = $this->getOne("select `path` from `tiki_tracker_item_attachments` where `attId`=?",array((int) $attId));
+			if ($path) @unlink ($prefs['t_use_dir'] . $path);
+			$query = "delete from `tiki_tracker_item_attachments` where `attId`=?";
+			$result = $this->query($query,array((int) $attId));
+			$query = 'update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`=\'\' where ttif.`value`=? and ttf.`type`=?';
+			$this->query($query, array((int)$attId, 'A'));
+		}
 	}
 
 	function replace_item_attachment($attId, $filename, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc, $trackerId=0, $itemId=0,$options='', $notif=true) {
