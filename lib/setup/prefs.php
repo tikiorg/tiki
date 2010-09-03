@@ -1165,6 +1165,7 @@ function get_default_prefs() {
 		'desactive_login_autocomplete' => 'n',
 		'permission_denied_login_box' => 'n',
 		'permission_denied_url' => '',
+		'feature_loadbalancer' => 'n',
 
 		// intertiki
 		'feature_intertiki' => 'n',
