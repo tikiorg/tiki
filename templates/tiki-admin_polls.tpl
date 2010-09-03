@@ -87,11 +87,12 @@
 			{include file='find.tpl'}
 		{/if}
 		<table class="normal">
+			{assign var=numbercol value=8}
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='pollId' title="{tr}ID{/tr}"}{tr}ID{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='title' title="{tr}Title{/tr}"}{tr}Title{/tr}{/self_link}</th>
-				{if $prefs.poll_list_categories eq 'y'}<th>{tr}Categories{/tr}</th>{/if}
-				{if $prefs.poll_list_objects eq 'y'}<th>{tr}Objects{/tr}</th>{/if}
+				{if $prefs.poll_list_categories eq 'y'}<th>{tr}Categories{/tr}</th>{assign var=numbercol value=`$numbercol+1`}{/if}
+				{if $prefs.poll_list_objects eq 'y'}<th>{tr}Objects{/tr}</th>{assign var=numbercol value=`$numbercol+1`}{/if}
 				<th>{self_link _sort_arg='sort_mode' _sort_field='active' title="{tr}Active{/tr}"}{tr}Active{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='votes' title="{tr}Votes{/tr}"}{tr}Votes{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='publishDate' title="{tr}Publish{/tr}"}{tr}Publish{/tr}{/self_link}</th>
@@ -140,7 +141,7 @@
 				</tr>
 			{sectionelse}
 				<tr>
-					<td colspan="{if $prefs.feature_poll_categories eq 'y'}8{else}7{/if}" class="odd">{tr}No records found{/tr}</td>
+					<td colspan="{$numbercol}" class="odd">{tr}No records found{/tr}</td>
 				</tr>
 			{/section}
 		</table>
