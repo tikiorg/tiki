@@ -71,7 +71,7 @@ function wikiplugin_articles_info()
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
-				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")'),
+				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")').' '.tra('Use random to have random items.'),
 				'filter' => 'word',
 			),
 			'quiet' => array(
@@ -131,7 +131,7 @@ function wikiplugin_articles_info()
 			'urlparam' => array(
 				'required' => false,
 				'name' => tra('Additional url param'),
-				'filter' => 'string',
+				'filter' => 'striptags',
 			),
 		),
 	);
