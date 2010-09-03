@@ -12,7 +12,7 @@
 	{if $pollId eq '0'}
 		{assign var='title' value="{tr}Create poll{/tr}"}
 	{else}
-		{assign var='title' value="{tr}Edit poll{/tr}'}
+		{assign var='title' value="{tr}Edit poll{/tr}"}
 	{/if}
 	{tab name=$title}
 		<form action="tiki-admin_polls.php" method="post">
