@@ -82,7 +82,7 @@
   </tr>
 {sectionelse}
   <tr>
-    <td colspan="8" class="odd">
+    <td colspan="7" class="odd">
       <b>{tr}No records found{/tr}</b>
     </td>
   </tr>
