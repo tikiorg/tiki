@@ -51,7 +51,7 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td class="odd" colspan="11">
+<tr><td class="odd" colspan="12">
 {tr}No records found{/tr}
 </td></tr>
 {/section}
