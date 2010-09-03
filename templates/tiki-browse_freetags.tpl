@@ -158,10 +158,11 @@
 	{/capture}
 </form>
 
-{if $cpt > 1}{$smarty.capture.browse}{/if}
+{if $cpt > 1}
+	<div class="freetagsbrowse">{$smarty.capture.browse}</div>{/if}
 
 <div class="freetagresult">
-	{if $tagString}<h2>{$cantobjects} {tr}results found{/tr}</h2>{/if}
+	{if $tagString}<h2>{$cantobjects} {if $cantobjects eq '1'}{tr}result found{/tr}{else}{tr}results found{/tr}{/if}</h2>{/if}
 	{if $cantobjects > 0}
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$objects}
