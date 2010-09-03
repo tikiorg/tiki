@@ -42,11 +42,11 @@
 				{if $whataction eq 'add_tran_sw'}
 					<div class="simplebox">
 						{tr}Add a translation{/tr}:<br />
-						<table>
+						<table class="formcolor">
 							<tr>
-								<td class="form">{tr}Original{/tr}:</td>
+								<td>{tr}Original{/tr}:</td>
 								<td><input name="add_tran_source" size=20 maxlength=255></td>
-								<td class="form">{tr}Translation{/tr}:</td>
+								<td>{tr}Translation{/tr}:</td>
 								<td><input name="add_tran_tran" size=20 maxlength=255></td>
 								<td align="center"><input type="submit" name="add_tran" value="{tr}Add{/tr}" /></td>
 							</tr>
@@ -56,16 +56,16 @@
 				{if $whataction eq 'edit_rec_sw'}
 					<div class="simplebox">
 						{tr}Translate recorded{/tr}:<br />
-						<table>
+						<table class="formcolor">
 							<tr>
 								<td align="right"><input name="tran_search" value="{$tran_search|escape}" size=10	maxlength=255></td>
 								<td align="center"><input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" /></td>
 							</tr>
 							{section name=it loop=$untranslated}
 								<tr>
-									<td class="form">{tr}Original{/tr}:</td>
+									<td>{tr}Original{/tr}:</td>
 									<td><input name="edit_rec_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=20 maxlength=255 disabled="disabled"></td>
-									<td class="form">{tr}Translation{/tr}:</td>
+									<td>{tr}Translation{/tr}:</td>
 									<td><input name="edit_rec_tran_{$smarty.section.it.index}" size=20 maxlength=255></td>
 									<td align="center"><input type="submit" name="edit_rec_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
 								</tr>
@@ -84,7 +84,7 @@
 				{if $whataction eq 'edit_tran_sw'}
 					<div class="simplebox">
 						{tr}Edit translations{/tr}:<br />
-						<table>
+						<table class="formcolor">
 							<tr>
 								<td align="left" colspan=4>
 									<input name="tran_search" value="{$tran_search|escape}" size=10 maxlength=255 />
@@ -93,9 +93,9 @@
 							</tr>
 							{section name=it loop=$untranslated}
 								<tr>
-									<td class="form">{tr}Original{/tr}:</td>
+									<td>{tr}Original{/tr}:</td>
 									<td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=30 maxlength=255 disabled="disabled"/></td>
-									<td class="form">{tr}Translation{/tr}:</td>
+									<td>{tr}Translation{/tr}:</td>
 									<td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]|escape}" size=42 maxlength=255 /></td>
 									<td align="center"><input type="submit" name="edt_tran_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
 									<td align="center"><input type="submit" name="del_tran_{$smarty.section.it.index}" value="{tr}Delete{/tr}" /></td>

@@ -18,7 +18,7 @@
 		 				<div class="floatleft">
 		 					<h2>{$userinfo.login|userlink}</h2>
 		 				</div>
-						<div class="form floatright">
+						<div class="floatright">
 		{if $tiki_p_admin eq 'y' or $userinfo.login eq $user}
 			{if $tiki_p_admin eq 'y'}
 							<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title="{tr}Assign Group{/tr}">{icon _id='key' align="right" alt="{tr}Assign Group{/tr}"}</a>
@@ -38,69 +38,69 @@
 						<div>
 		{if $avatar}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Avatar{/tr} ({tr}User Icon{/tr}):</div>
-								<div class="form floatright">{if $userinfo.login eq $user}<a href="tiki-pick_avatar.php">{/if}{$avatar}{if $userinfo.login eq $user}</a>{/if}</div>
+								<div class="floatleft">{tr}Avatar{/tr} ({tr}User Icon{/tr}):</div>
+								<div class="floatright">{if $userinfo.login eq $user}<a href="tiki-pick_avatar.php">{/if}{$avatar}{if $userinfo.login eq $user}</a>{/if}</div>
 							</div>
 		{/if}
 							
 		{cycle values="even,odd" print=false}
 		{if $realName }
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Real Name{/tr}:</div>
-								<div class="form floatright">{$realName}</div>
+								<div class="floatleft">{tr}Real Name{/tr}:</div>
+								<div class="floatright">{$realName}</div>
 							</div>
 		{/if}
 		{if $prefs.feature_community_gender eq 'y' and $gender neq 'Hidden' and $gender}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Gender{/tr}:</div>
-								<div class="form floatright">{tr}{$gender}{/tr}</div>
+								<div class="floatleft">{tr}Gender{/tr}:</div>
+								<div class="floatright">{tr}{$gender}{/tr}</div>
 							</div>
 		{/if}
 		{if $email_isPublic neq 'n' and $userinfo.email neq ''}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Email{/tr}:</div>
-								<div class="form floatright">{mailto address=$userinfo.email encode="javascript"}</div>
+								<div class="floatleft">{tr}Email{/tr}:</div>
+								<div class="floatright">{mailto address=$userinfo.email encode="javascript"}</div>
 							</div>
 		{elseif $email_isPublic eq 'n' and $userinfo.email neq '' and $tiki_p_admin eq 'y'}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Email{/tr}:</div>
-								<div class="form floatright">{mailto address=$userinfo.email encode="javascript"} <i>{tr}(non public){/tr}</i></div>
+								<div class="floatleft">{tr}Email{/tr}:</div>
+								<div class="floatright">{mailto address=$userinfo.email encode="javascript"} <i>{tr}(non public){/tr}</i></div>
 							</div>
 		{/if}
 		{if !empty($country) and $country != 'Other'}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Country{/tr}:</div>
-								<div class="form floatright">{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</div>
+								<div class="floatleft">{tr}Country{/tr}:</div>
+								<div class="floatright">{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</div>
 							</div>
 		{/if}
 		{if $prefs.change_theme ne 'n'}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Theme{/tr}:</div>
-								<div class="form floatright">{$user_style}</div>
+								<div class="floatleft">{tr}Theme{/tr}:</div>
+								<div class="floatright">{$user_style}</div>
 							</div>
 		{/if}
 		{if $prefs.change_language eq 'y'}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Language{/tr}:</div>
-								<div class="form floatright">{$user_language}</div>
+								<div class="floatleft">{tr}Language{/tr}:</div>
+								<div class="floatright">{$user_language}</div>
 							</div>
 		{/if}
 		{if $homepage}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Homepage{/tr}:</div>
-								<div class="form floatright">{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</div>
+								<div class="floatleft">{tr}Homepage{/tr}:</div>
+								<div class="floatright">{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</div>
 							</div>
 		{/if}
 		{if $prefs.feature_score eq 'y'}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Score{/tr}:</div>
-								<div class="form floatright">{$userinfo.score|star}{$userinfo.score}</div>
+								<div class="floatleft">{tr}Score{/tr}:</div>
+								<div class="floatright">{$userinfo.score|star}{$userinfo.score}</div>
 							</div>
 		{/if}
 		{if $prefs.feature_wiki eq 'y' && $prefs.feature_wiki_userpage eq 'y' && ($userPage_exists or $user == $userinfo.login)}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Personal Wiki Page{/tr}:</div>
-								<div class="form floatright">
+								<div class="floatleft">{tr}Personal Wiki Page{/tr}:</div>
+								<div class="floatright">
 			{if $userPage_exists}
 									<a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}">{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}</a>
 			{elseif $user == $userinfo.login}
@@ -111,23 +111,17 @@
 		{/if}
 		
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Last login{/tr}:</div>
-								<div class="form floatright">{$userinfo.lastLogin|tiki_short_datetime}</div>
+								<div class="floatleft">{tr}Last login{/tr}:</div>
+								<div class="floatright">{$userinfo.lastLogin|tiki_short_datetime}</div>
 							</div>
 		
-		
-							{*<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}Displayed time zone{/tr}:</div>
-								<div class="form floatright">{$user_prefs.display_timezone|default:"{tr}System{/tr}"}</div>
-							</div>*}
-
 		{* Custom database fields *}
 		{section name=ir loop=$customfields}
 			{cycle values="even,odd" print=false}
 			{if $customfields[ir].show}
 							<div class="clearfix {cycle}">
-								<div class="form floatleft">{tr}{$customfields[ir].label}{/tr}:</div>
-								<div class="form floatright">{$customfields[ir].value}</div>
+								<div class="floatleft">{tr}{$customfields[ir].label}{/tr}:</div>
+								<div class="floatright">{$customfields[ir].value}</div>
 							</div>
 			{/if}
 		{/section}
@@ -140,22 +134,22 @@
 			<div class="cbox-data">
 			{if $friend}
 							<div class="clearfix">
-								<div class="form">{icon _id='user'} <a class="link" href="tiki-friends.php">{tr}This user is your friend !{/tr}</a></div>
+								<div class="">{icon _id='user'} <a class="link" href="tiki-friends.php">{tr}This user is your friend !{/tr}</a></div>
 							</div>  
 			{elseif $friend_pending}
 							<div class="clearfix">
-								<div class="form">{icon _id='user_delete'} {tr}The user requested friendship with you{/tr} <br /><a class="link" href="tiki-friends.php?accept={$userinfo.login}">{tr}Accept friendship from this user{/tr}</a> <br /><a class="link" href="tiki-friends.php?refuse={$userinfo.login}">{tr}Refuse friendship from this user{/tr}</a>
+								<div class="">{icon _id='user_delete'} {tr}The user requested friendship with you{/tr} <br /><a class="link" href="tiki-friends.php?accept={$userinfo.login}">{tr}Accept friendship from this user{/tr}</a> <br /><a class="link" href="tiki-friends.php?refuse={$userinfo.login}">{tr}Refuse friendship from this user{/tr}</a>
  								</div>
 							</div>
 			{elseif $friend_waiting}
 							<div class="clearfix">
-								<div class="form">{icon _id='user_delete'} {tr}Currently waiting for user approval{/tr} <br />
+								<div class="">{icon _id='user_delete'} {tr}Currently waiting for user approval{/tr} <br />
 									<a class="link" href="tiki-friends.php?cancel_waiting_friendship={$userinfo.login}">{tr}Cancel friendship request towards this user{/tr}</a>
 								</div>
 							</div>  
 			{else}
 							<div class="clearfix">
-								<div class="form">{icon _id='user_delete'} <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
+								<div class="">{icon _id='user_delete'} <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
 								</div>
 							</div>
 			{/if}
@@ -173,8 +167,8 @@
 			{foreach item=itemField from=$userItem.field_values}
 				{if $itemField.value ne '' or !empty($itemField.categs) or !empty($itemField.links)}
 		<div class="clearfix {cycle}">
-			<div class="form floatleft" style="width: 25%">{tr}{$itemField.name}{/tr}:</div>
-			<div class="form floatright" style="width: 75%">{include file="tracker_item_field_value.tpl" field_value=$itemField item=$itemField}</div>
+			<div class="floatleft" style="width: 25%">{tr}{$itemField.name}{/tr}:</div>
+			<div class="floatright" style="width: 75%">{include file="tracker_item_field_value.tpl" field_value=$itemField item=$itemField}</div>
 		</div>
 				{/if}
 			{/foreach}
@@ -314,8 +308,8 @@
 					<div class="normalnoborder">
 						<p>{tr}The following message will be sent to user{/tr} {$userinfo.login|userlink}&hellip;</p>
 						<div class="clearfix">
-							<div class="form floatleft" style="width: 25%"><label for="priority"><span>{tr}Priority{/tr}</span></label>:</div>
-							<div class="form floatleft" style="width: 50%">
+							<div class="floatleft" style="width: 25%"><label for="priority"><span>{tr}Priority{/tr}</span></label>:</div>
+							<div class="floatleft" style="width: 50%">
 								<select name="priority" id="priority">
 									<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
 									<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
@@ -324,7 +318,7 @@
 									<option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
 								</select>
 							</div>
-							<div class="form floatright input_submit_container">
+							<div class="floatright input_submit_container">
 								<input type="submit" name="send" value="{tr}Send{/tr}" />
 							</div>
 						</div>
