@@ -65,7 +65,7 @@
 			</tr>
 		{sectionelse}
 			<tr class="odd">
-				<td colspan="6"><strong>{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</strong></td>
+				<td colspan="7"><strong>{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</strong></td>
 			</tr>
 		{/section}
 	</table>
