@@ -796,7 +796,7 @@ if (
 	//   - there is already an existing .htaccess (that is not necessarily the one that comes from TikiWiki),
 	//   - the rename does not work (e.g. due to filesystem permissions)
 	//
-	if ( !file_exists('.htaccess') && ! @rename('_htaccess', '.htaccess') ) {
+	if ( strpos($_SERVER['SERVER_SOFTWARE'],'Apache') !== false && !file_exists('.htaccess') && ! @rename('_htaccess', '.htaccess') ) {
 		$smarty->assign('htaccess_error', 'y');
 	}
 }
