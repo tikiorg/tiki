@@ -216,7 +216,7 @@ $(".trackerfilter form").submit( function () {
 		
 		if (empty($filters) && !empty($filterfield)) {	// convert param filters to export params
 			$f_fields = array();
-			for($i = 0; $i < count($filterfield); $i++) {
+			for($i = 0, $cfilterfield = count($filterfield); $i < $cfilterfield ; $i++) {
 				if (!empty($exactvalue[$i])) {
 					$f_fields['f_' . $filterfield[$i]] = $exactvalue[$i];
 				} else if (!empty($filtervalue[$i])) {

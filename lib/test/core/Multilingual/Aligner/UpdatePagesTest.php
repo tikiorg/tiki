@@ -233,7 +233,7 @@ class  Multilingual_Aligner_UpdatePagesTest extends TikiTestCase
 	function insertSentenceAtIndex($index, $sentenceToAdd, $sentenceList) {
 		$modifiedSentenceList = array();
 		$ii;
-		for ($ii=0; $ii < count($sentenceList); $ii++) {
+		for ($ii=0, $csentenceList = count($sentenceList); $ii < $csentenceList ; $ii++) {
 			if ($ii == $index) {
 				$modifiedSentenceList[] = $sentenceToAdd;
 			}

@@ -11,7 +11,7 @@ class UserPayCredits extends CreditsLib
 		$uc = $this->getScaledCredits($userId);
 
 		$ret = array();
-		for ($i = 0; $i < count($valid_credits); $i++) {
+		for ($i = 0, $cvalid_credits = count($valid_credits); $i < $cvalid_credits ; $i++) {
 			$one = array();
 			$k = $valid_credits[$i];
 			if (!empty($credits_xcrates[$i])) {
