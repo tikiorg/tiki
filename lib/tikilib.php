@@ -5546,7 +5546,7 @@ class TikiLib extends TikiDb_Bridge
 			$sep_encode .= '%' . bin2hex($sep[$x]);
 		}
 		$mt = "mailto:";
-		for ($x=0; $cmt = strlen($mt); $x < $cmt ; $x++) {
+		for ($x=0, $cmt = strlen($mt); $x < $cmt ; $x++) {
 			$mt_encode .= '%' . bin2hex($mt[$x]);
 		}
 		return "<script language=\"Javascript\" type=\"text/javascript\">document.write('<a class=\"wiki\" href=\"'+unescape('$mt_encode')+'$name'+unescape('$sep_encode')+'$domain\">$name'+unescape('$sep_encode')+'$domain</a>');</script><noscript>$name ".tra("at","",true)." $domain</noscript>";
