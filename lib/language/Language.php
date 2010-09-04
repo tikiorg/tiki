@@ -18,7 +18,7 @@ require_once('lib/core/TikiDb/Bridge.php');
 /**
  * Handles languages translations
  */
-class Language extends TikiDb_Bridge 
+class Language extends TikiDb_Bridge
 {
 
 	/**

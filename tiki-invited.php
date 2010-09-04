@@ -66,5 +66,3 @@ function tiki_invited() {
 }
 
 tiki_invited();
-
-?>
