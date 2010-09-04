@@ -37,7 +37,7 @@
 			<div class="cbox-title">{tr}Manage Fields{/tr}</div>
 			<div class="cbox-data">
 				<form method='post' action='tiki-user_contacts_prefs.php'>
-					<table class="admin">
+					<table class="normal">
 						<tr>
 							<td>
 								<table class="normal">
