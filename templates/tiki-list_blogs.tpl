@@ -13,7 +13,7 @@
 {/if}
 
 <table class="normal">
-{assign var=numbercol value=1}
+{assign var=numbercol value=0}
 <tr>
 {if $prefs.blog_list_title eq 'y' or $prefs.blog_list_description eq 'y'}
 	{assign var=numbercol value=`$numbercol+1`}
