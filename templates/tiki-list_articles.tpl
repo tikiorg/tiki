@@ -17,7 +17,7 @@
 	{include file='find.tpl' find_show_languages='y' find_show_categories_multi='y' find_show_num_rows='y' find_show_date_range='y'}
 {/if}
 
-{assign var=numbercol value=0}
+{assign var=numbercol value=1}
 <table class="normal">
 	<tr>
 		{if $prefs.art_list_title eq 'y'}
