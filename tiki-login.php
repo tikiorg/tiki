@@ -311,7 +311,7 @@ if ($isvalid) {
 				unset($_SESSION['loginfrom']);
 				// No sense in sending user to registration page or no page at all
 				// This happens if the user has just registered and it's first login
-				if ($url == '' || preg_match('(tiki-register|tiki-login_validate|tiki-login_scr)\.php', $url)) $url = $prefs['tikiIndex'];
+				if ($url == '' || preg_match('/(tiki-register|tiki-login_validate|tiki-login_scr)\.php/', $url)) $url = $prefs['tikiIndex'];
 				// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
 				if ($prefs['rememberme'] != 'disabled' && isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
 						$userInfo = $userlib->get_user_info($user);
