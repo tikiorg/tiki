@@ -30,7 +30,7 @@ function parsemails_all($bloc) {
 	$bloc=str_replace("\r\n", "\n", $bloc);
 	$bloc=str_replace("\n\r", "\n", $bloc);
 	$bloc=str_replace("\r", "\n", $bloc);
-	$mails = split('[^a-zA-Z0-9@._-]', $bloc);
+	$mails = preg_split('/[^a-zA-Z0-9@._-]/', $bloc);
 
 	$results=array();
 	foreach($mails as $m) {
