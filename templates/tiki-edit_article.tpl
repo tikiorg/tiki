@@ -66,7 +66,7 @@
 		<tr id='show_linkto' {if $types.$type.show_linkto eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 			<td>{tr}Source{/tr} ({tr}URL{/tr}) *</td>
 			<td>
-				<input type="text" name="linkto" value="{$linkto|escape}" size="60" />
+				<input type="text" name="linkto" value="{$linkto|escape}" size="60" />{if $linkto neq ''}<a href="{$linkto|escape}" target="_blank">{tr}View{/tr}</a>{/if}
 			</td>
 		</tr>
 		{if $prefs.feature_multilingual eq 'y'}
