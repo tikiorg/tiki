@@ -26,12 +26,14 @@
 
 <form action="#">
 	<table class="normal">
+		{assign var=numbercol value=8}
 		<tr>
-			<th style="text-align:center">
-				{if $channels}
+			{if $channels}
+				{assign var=numbercol value=`$numbercol+1`}
+				<th style="text-align:center">
 					{select_all checkbox_names='checked[]'}
-				{/if}
-			</th>
+				</th>
+			{/if}
 			<th>
 				{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}
 			</th>
@@ -89,7 +91,7 @@
 			</tr>
 		{sectionelse}
 			<tr>
-				<td class="odd" colspan="8">{tr}No records found.{/tr}</td>
+				<td class="odd" colspan="{$numbercol}">{tr}No records found.{/tr}</td>
 			</tr>
 		{/section}
 	</table>
