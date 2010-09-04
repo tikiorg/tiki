@@ -19,77 +19,73 @@
 		    <th>{self_link _sort_arg='sort_mode' _sort_field='future'}{tr}Future vers{/tr}{/self_link}</th>
 		    <th>{tr}Action{/tr}</th>
 		  </tr>
-		{cycle values="odd,even" print=false}
-		{section name=changes loop=$listpages}
-		  <tr>
-		    <td class="{cycle advance=false}">{$listpages[changes].contentId}</td>
-		    <td class="{cycle advance=false}">
-		      {if $listpages[changes].contentLabel neq ''}
-		         <b>{$listpages[changes].contentLabel}</b>
-		      {/if}
-		      {if $listpages[changes].description neq ''}
-		        <div class="subcomment">{$listpages[changes].description}</div>
-		      {/if}
-		    </td>
-		    <td class="{cycle advance=false}">{$listpages[changes].data|escape:'html'|nl2br}</td>
-		    <td class="{cycle advance=false}">{$listpages[changes].actual|tiki_short_datetime}</td>
-		    <td class="{cycle advance=false}">{$listpages[changes].next|tiki_short_datetime}</td>
-		    <td class="{cycle advance=false}">{$listpages[changes].future}</td>
-		    <td class="{cycle advance=true}">
-		      {self_link _class='link' _icon='page_edit' edit=$listpages[changes].contentId}{tr}Edit{/tr}{/self_link}
-		      <a class="link" href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}" title="{tr}Program{/tr}">{icon _id=wrench alt="{tr}Program{/tr}"}</a>
-		      {self_link _class='link' _icon='cross' _template='confirm.tpl' remove=$listpages[changes].contentId}{tr}Remove{/tr}{/self_link}
-		    </td>
-		  </tr>
-		{sectionelse}
-		  <tr>
-		    <td colspan="7" class="odd">
-		      <b>{tr}No records found{/tr}</b>
-		    </td>
-		  </tr>
-		{/section}
+			{cycle values="odd,even" print=false}
+			{section name=changes loop=$listpages}
+			  <tr>
+			    <td class="{cycle advance=false}">{$listpages[changes].contentId}</td>
+			    <td class="{cycle advance=false}">
+			      {if $listpages[changes].contentLabel neq ''}
+			         <b>{$listpages[changes].contentLabel}</b>
+			      {/if}
+			      {if $listpages[changes].description neq ''}
+			        <div class="subcomment">{$listpages[changes].description}</div>
+			      {/if}
+			    </td>
+			    <td class="{cycle advance=false}">{$listpages[changes].data|escape:'html'|nl2br}</td>
+			    <td class="{cycle advance=false}">{$listpages[changes].actual|tiki_short_datetime}</td>
+			    <td class="{cycle advance=false}">{$listpages[changes].next|tiki_short_datetime}</td>
+			    <td class="{cycle advance=false}">{$listpages[changes].future}</td>
+			    <td class="{cycle advance=true}">
+			      {self_link _class='link' _icon='page_edit' edit=$listpages[changes].contentId}{tr}Edit{/tr}{/self_link}
+			      <a class="link" href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}" title="{tr}Program{/tr}">{icon _id=wrench alt="{tr}Program{/tr}"}</a>
+			      {self_link _class='link' _icon='cross' _template='confirm.tpl' remove=$listpages[changes].contentId}{tr}Remove{/tr}{/self_link}
+			    </td>
+			  </tr>
+			{sectionelse}
+			  <tr>
+			    <td colspan="7" class="odd">
+		   	   <b>{tr}No records found{/tr}</b>
+			    </td>
+			  </tr>
+			{/section}
 		</table>
-		
 		{pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
 	{tab name="Create/Edit content block"}
-	<h2>
-	{if $contentId}
-	  {tr}Edit content block{/tr}
-	{else}
-	  {tr}Create content block{/tr}
-	{/if}
-	</h2>
+		<h2>
+		{if $contentId}
+		  {tr}Edit content block{/tr}
+		{else}
+		  {tr}Create content block{/tr}
+		{/if}
+		</h2>
 	
-	{if $contentId ne ''}
-		<div class="navbar">
-			{button href="tiki-list_contents.php" _text="{tr}Create New Block{/tr}"}
-		</div>
-	{/if}
-	
-			<form action="tiki-list_contents.php" method="post">
-			  {query _type='form_input'}
-			  <input type="hidden" name="contentId" value="{$contentId|escape}" />
-			  <table class="formcolor">
-			    <tr>
-			      <td>{tr}Label{/tr}:</td>
-			      <td>
-			        <input type="text" name="contentLabel" style="width:40%" value="{$contentLabel|escape}" />
-			      </td>
-			    </tr>
-			    <tr>
-			      <td>{tr}Description{/tr}:</td>
-			      <td>
-			        <textarea rows="5" cols="40" name="description" style="width:95%">{$description|escape}</textarea>
-			      </td>
-			    </tr>
-			    <tr>
-			      <td>&nbsp;</td>
-			      <td>
-			        <input type="submit" name="save" value="{tr}Save{/tr}" />
-			      </td>
-			    </tr>
-			  </table>
-			</form>
+		{if $contentId ne ''}
+			<div class="navbar">{button href="tiki-list_contents.php" _text="{tr}Create New Block{/tr}"}</div>
+		{/if}
+		<form action="tiki-list_contents.php" method="post">
+		  {query _type='form_input'}
+		  <input type="hidden" name="contentId" value="{$contentId|escape}" />
+		  <table class="formcolor">
+		    <tr>
+		      <td>{tr}Label{/tr}:</td>
+		      <td>
+		        <input type="text" name="contentLabel" style="width:40%" value="{$contentLabel|escape}" />
+		      </td>
+		    </tr>
+		    <tr>
+		      <td>{tr}Description{/tr}:</td>
+		      <td>
+		        <textarea rows="5" cols="40" name="description" style="width:95%">{$description|escape}</textarea>
+		      </td>
+		    </tr>
+		    <tr>
+		      <td>&nbsp;</td>
+		      <td>
+		        <input type="submit" name="save" value="{tr}Save{/tr}" />
+		      </td>
+		    </tr>
+		  </table>
+		</form>
 	{/tab}
 {/tabset}
