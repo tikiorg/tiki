@@ -131,5 +131,3 @@ if (isset($_REQUEST['send'])) {
 
 $smarty->assign('mid', 'tiki-invit.tpl');
 $smarty->display("tiki.tpl");
-
-?>
