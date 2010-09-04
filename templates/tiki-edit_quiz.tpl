@@ -65,6 +65,8 @@
 				<a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
+	{sectionelse}
+		<tr><td class="odd" colspan="7"><strong>{tr}No records found.{/tr}</strong></td></tr>
 	{/section}
 </table>
 
