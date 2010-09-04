@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: FreetagTest.php 28224 2010-07-30 20:09:42Z sampaioprimo $
+// $Id$
 class Calendar_DateTest extends TikiTestCase
 {
 	function testMake_time() {
