@@ -227,7 +227,7 @@ class SocialNetworksLib extends LogsLib
 		}                                        
 		$status=$response->getStatus();
 		if ($status!=200) {
-			$this->add_log('tweet','twitter response ' & $status);
+			$this->add_log('tweet','twitter response ' . $status);
 			return -$status;
 		} else {
 			$id=(string)$response->id;
