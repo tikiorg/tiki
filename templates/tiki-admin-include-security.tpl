@@ -11,8 +11,9 @@
 		<input type="reset" name="securityreset" value="{tr}Reset{/tr}" />
 	</div>
 
-		<fieldset>
-			<legend>{tr}Security{/tr}</legend>
+{tabset}
+
+		{tab name="{tr}General Security{/tr}"}
 			{preference name=smarty_security}
 			{preference name=feature_purifier}
 			{preference name=feature_htmlpurifier_output}
@@ -24,9 +25,9 @@
 			{preference name=feature_ticketlib}
 			{preference name=feature_ticketlib2}
 		</fieldset>
+		{/tab}
 	
-		<fieldset>
-			<legend>{tr}Spam protection{/tr}</legend>
+		{tab name="{tr}Spam protection{/tr}"}
 			{preference name=feature_antibot}
 			<div class="adminoptionboxchild" id="feature_antibot_childcontainer">
 				{preference name=recaptcha_enabled}
@@ -38,16 +39,14 @@
 			{preference name=feature_wiki_protect_email}
 			{preference name=feature_wiki_ext_rel_nofollow}
 			{preference name=feature_banning}
-		</fieldset>		
+		{/tab}
 	
-		<fieldset>
-			<legend>{tr}Search results{/tr}</legend>
+		{tab name="{tr}Search results{/tr}"}
 				{preference name=feature_search_show_forbidden_cat}
 				{preference name=feature_search_show_forbidden_obj}
-		</fieldset>		
+		{/tab}
 
-		<fieldset>
-			<legend>{tr}Site Access{/tr}</legend>
+		{tab name="{tr}Site Access{/tr}"}
 				{preference name=site_closed}
 				<div class="adminoptionboxchild" id="site_closed_childcontainer">
 					{preference name=site_closed_msg}
@@ -58,17 +57,16 @@
 					{preference name=load_threshold}
 					{preference name=site_busy_msg}
 				</div>
-		</fieldset>
+		{/tab}
 
-		<fieldset>
-			<legend>{tr}Tokens{/tr}</legend>
+		{tab name="{tr}Tokens{/tr}"}
 				{preference name=auth_token_access}
 				{preference name=auth_token_access_maxtimeout}
 				{preference name=auth_token_access_maxhits}
 				{preference name=auth_token_tellafriend}
 				{preference name=auth_token_share}
-		</fieldset>
-		
+		{/tab}
+{/tabset}	
 	
 	<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 		<input type="submit" name="security" value="{tr}Apply{/tr}" />
