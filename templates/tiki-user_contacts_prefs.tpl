@@ -11,10 +11,10 @@
 			<div class="cbox-title">{tr}Options{/tr}</div>
 			<div class="cbox-data">
 				<form method='post' action='tiki-user_contacts_prefs.php'>
-					<table class="admin">
+					<table class="formcolor">
 						<tr>
-							<td class="form">{tr}Default View{/tr}:</td>
-							<td class="form">
+							<td>{tr}Default View{/tr}:</td>
+							<td>
 								<input type='radio' name='user_contacts_default_view' value='list' {if $user_contacts_default_view eq 'list'}checked="checked"{/if}/>
 								{tr}List View{/tr}
 								<input type='radio' name='user_contacts_default_view' value='group' {if $user_contacts_default_view neq 'list'}checked="checked"{/if}/>

@@ -333,7 +333,7 @@
 										{/section}
 									</select>
 								</td>
-								<td class="form"><input type="submit" name="addpoll" value="{tr}Add{/tr}" /></td>
+								<td><input type="submit" name="addpoll" value="{tr}Add{/tr}" /></td>
 							</tr>
 						{/if}
 						

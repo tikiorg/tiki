@@ -21,13 +21,13 @@
 <form action="tiki-admin_poll_options.php" method="post">
 	<input type="hidden" name="optionId" value="{$optionId|escape}" />
 	<input type="hidden" name="pollId" value="{$pollId|escape}" />
-	<table>
+	<table class="formcolor">
 		<tr>
-			<td class="form">{tr}Option:{/tr}</td>
+			<td>{tr}Option:{/tr}</td>
 			<td>
 				<input type="text" name="title" value="{$title|escape}" size=40/>
 			</td>
-			<td class="form">{tr}Position:{/tr}</td>
+			<td>{tr}Position:{/tr}</td>
 			<td>
 				<input type="text" name="position" value="{$position|escape}" size="4" />
 			</td>

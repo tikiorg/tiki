@@ -14,7 +14,7 @@
     <form action="tiki-admin.php?page=trackers" method="post">
       <table class="admin">
         <tr>
-          <td class="form">
+          <td>
             {tr}Use database to store files{/tr}:
           </td>
           <td>
@@ -23,7 +23,7 @@
         </tr>
 
         <tr>
-          <td class="form">
+          <td>
             {tr}Use a directory to store files{/tr}:</td>
           <td>
             <input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:

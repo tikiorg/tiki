@@ -232,7 +232,7 @@
 			{/section}
 		
 			<tr>
-				<td class="form" colspan="18">
+				<td colspan="18">
 					<a name="multiple"></a>
 					{if $users}
 						<p align="left"> {*on the left to have it close to the checkboxes*}
