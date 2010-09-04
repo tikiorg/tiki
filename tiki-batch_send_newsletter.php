@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: nllib.php 28104 2010-07-22 22:00:15Z sylvieg $
+// $Id$
 if (empty($argv)) { // can only be used in a cron or line command
 	return;
 }
