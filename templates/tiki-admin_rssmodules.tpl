@@ -30,6 +30,12 @@
 			<input id="article_active" type="checkbox" name="enable" value="1"{if $articleConfig.active} checked="checked"{/if}/>
 			<label for="article_active">{tr}Enable{/tr}</label>
 		</p>
+		{if $prefs.feature_submissions eq 'y'}
+		<p>
+			<input id="article_submission" type="checkbox" name="submission" value="1"{if $articleConfig.submission} checked="checked"{/if}/>
+			<label for="article_submission">{tr}Use Article Submission System{/tr}</label>
+		</p>
+		{/if}
 		<p>
 			<label for="article_expiry">{tr}Expiration{/tr}</label>
 			<input type="text" name="expiry" id="article_expiry" value="{$articleConfig.expiry|escape}" size="3"/> {tr}days{/tr}
