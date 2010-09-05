@@ -47,7 +47,7 @@
 		{/foreach}
 	{else}
 		<tr>
-			<td colspan="6" class="odd"><b>{tr}No records found{/tr}</b></td>
+			<td colspan="5" class="odd"><b>{tr}No records found{/tr}</b></td>
 		</tr>
 	{/if}
 </table>
@@ -74,7 +74,7 @@
 		{/foreach}
 	{else}
 		<tr>
-			<td colspan="6" class="odd"><b>{tr}No records found{/tr}</b></td>
+			<td colspan="3" class="odd"><b>{tr}No records found{/tr}</b></td>
 		</tr>
 	{/if}
 </table>
@@ -101,7 +101,7 @@
 		{/foreach}
 	{else}
 		<tr>
-			<td colspan="6" class="odd"><b>{tr}No records found{/tr}</b></td>
+			<td colspan="3" class="odd"><b>{tr}No records found{/tr}</b></td>
 		</tr>
 	{/if}
 </table>
