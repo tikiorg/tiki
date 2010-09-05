@@ -725,7 +725,8 @@ function prefs_feature_list() {
 		'feature_wiki_ext_rel_nofollow' => array(
 			'name' => tra('Add "rel=nofollow" on external links'),
 			'description' => tra("nofollow is used to instruct some search engines that links should not influence search engines. It can reduce search engine spam and prevent 'spamdexing'"),
-		'type' => 'flag',
+			'type' => 'flag',
+			'keywords' => 'no follow spam',
 		),
 		'feature_semantic' => array(
 			'name' => tra('Semantic links'),
