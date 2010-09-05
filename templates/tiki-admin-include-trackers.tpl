@@ -98,7 +98,7 @@
           </td>
         </tr>
 {sectionelse}
-	<tr class="odd"><td colspan="9">{tr}No records{/tr}</td></tr>
+	<tr class="odd"><td colspan="10">{tr}No records{/tr}</td></tr>
         {/section}
       </table>
       
