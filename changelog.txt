@@ -17,6 +17,7 @@ The following tags can be used to distinguish changes:
 * [KIL] for removals of unused or obsolete files (has been used in the sense of [REM] prior to Tiki 6)
 
 
+* [REF] for refactoring; changes the structure of the code (to make it cleaner or clearer), without changing its actual behaviour. 
 * [REL] for the release process
 
 When possible, it's also nice to indicate what feature is concerned by the change.
