@@ -39,7 +39,6 @@ function module_adsense_info() {
 			'client' => array(
 				'name' => 'client',
 				'description' => tra('As provided by Google. Format: "pub-xxxxxxxxxxxxxxxx"'),
-				'filter' => 'alpha',
 				'required' => true,
 			),
 			'display' => array(
