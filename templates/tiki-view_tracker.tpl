@@ -236,10 +236,10 @@ $("#newItemForm").validate({
 
 <h2>{tr}Insert New Item{/tr}</h2>
 {remarksbox type="note"}<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>{/remarksbox}
-<table class="normal">
+<table class="formcolor">
 
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
-<tr class="formcolor"><td>{tr}Status{/tr}</td>
+<tr><td>{tr}Status{/tr}</td>
 <td>
 {include file='tracker_status_input.tpl' tracker=$tracker_info form_status=status}
 </td></tr>
@@ -253,14 +253,14 @@ $("#newItemForm").validate({
 {if $field_value.type eq 'h'}
 </table>
 <h2>{$field_value.name|escape}</h2>
-<table class="normal">
+<table class="formcolor">
 {else}
 {if ($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'b') and $field_value.options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td class="formcontent">
+<tr><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td class="formcontent">
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}
+<tr><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}
 </td><td colspan="3" class="formcontent" >
 {/if}
 {/if}
@@ -348,7 +348,7 @@ $("#newItemForm").validate({
 	</select>
 {else}
 {* {assign var=onePerLine value="y"} *}
-<table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
+<table class="formcolor" width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$field_value.categories name=eforeach}
 {assign var=fcat value=$iu.categId }
 <td{if $onePerLine ne 'y'} width="50%"{/if}>
@@ -462,7 +462,7 @@ $("#newItemForm").validate({
 
 {if $groupforalert ne ''}
 {if $showeachuser eq 'y' }
-<tr class="formcolor">
+<tr>
 <td>{tr}Choose users to alert{/tr}</td>
 <td>
 {/if}
@@ -478,7 +478,7 @@ $("#newItemForm").validate({
 {/if}
 
 
-<tr class="formcolor">
+<tr>
 	<td class="formlabel">&nbsp;</td>
 	<td colspan="3" class="formcontent">
 		<input type="submit" name="save" value="{tr}Save{/tr}" /> 

@@ -121,7 +121,7 @@
 
 <form method="post" action="tiki-admin_metrics.php#assign">
 	<input type="hidden" name="assigned_id" value="{$assigned_id}" />
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
 			<td class="{cycle advance=false}">{tr}Metric Name{/tr}</td>
 			<td class="{cycle}">
@@ -143,8 +143,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor"><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td>
+			<td>&nbsp;</td>
+			<td><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td>
 		</tr>
 	</table>
 </form>
@@ -169,13 +169,13 @@
 <br/>
 
 <form name="editmetric" method="post" action="tiki-admin_metrics.php#editcreate">
-	<table id="admin_metrics_add">
+	<table id="admin_metrics_add" class="formcolor">
 		<tr>
-			<td class="form odd">{tr}Name (must be unique){/tr}</td>
+			<td class="odd">{tr}Name (must be unique){/tr}</td>
 			<td class="odd"><input type="text" name="metric_name" value="{$metric_name|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="form even">{tr}Range{/tr}</td>
+			<td class="even">{tr}Range{/tr}</td>
 			<td class="even">
 				<select name="metric_range">
 					{foreach from=$metric_range_all key=rangeid item=rangename}
@@ -185,7 +185,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="form {cycle advance=false}">{tr}Data Type{/tr}</td>
+			<td class="{cycle advance=false}">{tr}Data Type{/tr}</td>
 			<td class="{cycle}">
 				<select name="metric_datatype">
 				{foreach from=$metric_datatype_all key=datatypeid item=datatypename}
@@ -195,7 +195,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="form {cycle advance=false}">{tr}DSN{/tr}</td>
+			<td class="{cycle advance=false}">{tr}DSN{/tr}</td>
 			<td class="{cycle}">
 				<select name="metric_dsn">
 					<option value="local" {if isset($metric_dsn) && $metric_dsn eq 'local'}selected="selected"{/if}>{tr}Local (Tiki database){/tr}</option>
@@ -206,7 +206,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="form {cycle advance=false}">{tr}Query{/tr}</td>
+			<td class="{cycle advance=false}">{tr}Query{/tr}</td>
 			<td class="{cycle}">
 				<textarea id="metric_query" name="metric_query" rows="10">{$metric_query|escape}</textarea>
 			</td>
@@ -229,17 +229,17 @@
 </h2>
 
 <form name="edittab" method="post" action="tiki-admin_metrics.php#editcreatetab">
-	<table id="admin_metrics_add_tab">
+	<table id="admin_metrics_add_tab" class="formcolor">
 		<tr>
-			<td class="form {cycle advance=false}">{tr}Name (must be unique){/tr}</td>
+			<td class="{cycle advance=false}">{tr}Name (must be unique){/tr}</td>
 			<td class="{cycle}"><input type="text" name="tab_name" value="{$tab_name|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="form {cycle advance=false}">{tr}Weight (must be integer){/tr}</td>
+			<td class="{cycle advance=false}">{tr}Weight (must be integer){/tr}</td>
 			<td class="{cycle}"><input type="text" name="tab_order" value="{$tab_order|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="form {cycle advance=false}">{tr}Content{/tr}</td>
+			<td class="{cycle advance=false}">{tr}Content{/tr}</td>
 			<td class="{cycle}">
 				<textarea id="tab_content" name="tab_content" rows="10">{$tab_content|escape}</textarea>
 			</td>

@@ -155,10 +155,8 @@
 		</div>
 	{/if}
 
-	<table class="normal">
-		
-		
-		<tr class="formcolor">
+	<table class="formcolor">
+		<tr>
 			<td colspan="2">
 				{if isset($page_badchars_display)}
 					{if $prefs.wiki_badchar_prevent eq 'y'}
@@ -312,19 +310,19 @@
 								{if $prefs.wiki_feature_copyrights  eq 'y'}
 									<fieldset>
 										<legend>{tr}Copyright:{/tr}</legend>
-										<table border="0">
-											<tr class="formcolor">
+										<table class="formcolor" border="0">
+											<tr>
 												<td><label for="copyrightTitle">{tr}Title:{/tr}</label></td>
 												<td><input size="40" class="wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td>
 												{if !empty($copyrights)}
 													<td rowspan="3"><a href="copyrights.php?page={$page|escape}">{tr}To edit the copyright notices{/tr}</a></td>
 												{/if}
 											</tr>
-											<tr class="formcolor">
+											<tr>
 												<td><label for="copyrightYear">{tr}Year:{/tr}</label></td>
 												<td><input size="4" class="wikiedit" type="text" id="copyrightYear" name="copyrightYear" value="{$copyrightYear|escape}" /></td>
 											</tr>
-											<tr class="formcolor">
+											<tr>
 												<td><label for="copyrightAuthors">{tr}Authors:{/tr}</label></td>
 												<td><input size="40" class="wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td>
 											</tr>
@@ -487,7 +485,7 @@
 		{/if}{* sandbox *}
 		
 		{if $prefs.wiki_actions_bar neq 'top'}
-			<tr class="formcolor">
+			<tr>
 				<td colspan="2" style="text-align:center;">
 					{include file='wiki_edit_actions.tpl'}
 				</td>

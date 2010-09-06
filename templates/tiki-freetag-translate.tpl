@@ -35,7 +35,7 @@
 	<a class="neatlink" href="{$next|escape}">{tr}Next{/tr} &raquo;</a>
 </div>
 
-<table id="tagtranslationtable">
+<table class="formcolor" id="tagtranslationtable">
 	<thead>
 		<tr>
 		{foreach item=lang from=$languageList}
@@ -54,7 +54,7 @@
 		</tr>
 	{/if}
 	{foreach item=tag key=group from=$tagList}
-		<tr class="formcolor">
+		<tr>
 		{if $tag[$blank] eq ''}
 		{foreach item=lang from=$languageList}
 		{if $lang neq ''}

@@ -13,8 +13,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor">
+				<td>&nbsp;</td>
+				<td>
 					<input type="submit" name="shoutbox_admin" value="{tr}Save{/tr}" />
 				</td>
 			</tr>
@@ -46,7 +46,7 @@
 				</td>
 			</tr>
 			{if $prefs.feature_antibot eq 'y' && $user eq ''}
-				{include file='antibot.tpl' td_style="formcolor"}
+				{include file='antibot.tpl'}
 			{/if}
 			<tr>
 				<td>&nbsp;</td>

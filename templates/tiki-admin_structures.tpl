@@ -159,7 +159,7 @@
 					{include file='categorize.tpl'}
 					<tr>
 						<td>&nbsp;</td>
-						<td colspan="2" class="formcolor">
+						<td colspan="2">
 							<input type="submit" value="{tr}Create New Structure{/tr}" name="create" />
 						</td>
 					</tr>

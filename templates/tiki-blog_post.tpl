@@ -104,7 +104,7 @@
 				<td class="editblogform">{tr}Mark entry as private:{/tr}</td>
 				<td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td>
 			</tr>
-			<tr id='show_pubdate' class="formcolor">
+			<tr id='show_pubdate' class="editblogform">
 				<td>{tr}Publish Date{/tr}</td>
 				<td>
 					{html_select_date prefix="publish_" time=$post_info.created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 

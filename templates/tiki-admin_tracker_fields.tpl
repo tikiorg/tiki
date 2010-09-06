@@ -2,7 +2,7 @@
 
 {title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name|escape}{/title}
 
-<div  class="navbar">
+<div class="navbar">
 	{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
 	
 	{if $tiki_p_admin_trackers eq 'y'}
@@ -122,7 +122,7 @@
 	{/if}
 	{tab name=$title}
 		{if $error}
-			{remarksbox  type="warning" title="{tr}Errors{/tr}"}{tr}{$error}{/tr}{/remarksbox}
+			{remarksbox type="warning" title="{tr}Errors{/tr}"}{tr}{$error}{/tr}{/remarksbox}
 		{/if}
 		<form action="tiki-admin_tracker_fields.php" method="post">
 			{if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
@@ -131,9 +131,9 @@
 			{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 			<input type="hidden" name="fieldId" value="{$fieldId|escape}" />
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-			<table class="normal">
-				<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
-				<tr class="formcolor">
+			<table class="formcolor">
+				<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+				<tr>
 					<td>{tr}Type{/tr}:
 						{assign var=fld value="z"}
 						{foreach key=fk item=fi from=$field_types name=foreachname}
@@ -147,7 +147,7 @@
 						<select name="type" id='trkfldtype' onchange='javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkLingual(this.options[selectedIndex].value);'>
 							{sortlinks case=false}
 								{foreach key=fk item=fi from=$field_types}
-									<option value="{$fk}" {if $type eq $fk}selected="selected"{/if}{if $fi.opt and ($type eq $fk or $type  eq 'o' or $type eq '')}{assign var=showit value=true}{/if}>{$fi.label}</option>
+									<option value="{$fk}" {if $type eq $fk}selected="selected"{/if}{if $fi.opt and ($type eq $fk or $type eq 'o' or $type eq '')}{assign var=showit value=true}{/if}>{$fi.label}</option>
 								{/foreach}
 							{/sortlinks}
 						</select>
@@ -164,7 +164,7 @@
 		
 		{* Section that allows to reduce the user list item choices through a multiselect list of all list items of this field type (if supported by this fieldtype) *}
 		
-				<tr class="formcolor" id='itemChoicesRow' {if empty($field_types.$type.itemChoicesList)}style="display:none;"{/if}>
+				<tr id='itemChoicesRow' {if empty($field_types.$type.itemChoicesList)}style="display:none;"{/if}>
 					<td>{tr}Select list items that will be displayed:{/tr}</td>
 					<td>
 						{foreach key=fk item=fi from=$field_types name=foreachname}
@@ -182,7 +182,7 @@
 						{/foreach}
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Validation{/tr}:</td>
 					<td>
 						<select name="validation">
@@ -193,33 +193,33 @@
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor"><td>{tr}Validation parameter{/tr}:</td><td><input type="text" size="30" name="validationParam" value="{$validationParam}" /></td></tr>
-				<tr class="formcolor"><td>{tr}Validation error message{/tr}:</td><td><input type="text" size="40" name="validationMessage" value="{$validationMessage}" /></td></tr>
-				<tr class="formcolor"><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
-				<tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
-				<tr class="formcolor">
+				<tr><td>{tr}Validation parameter{/tr}:</td><td><input type="text" size="30" name="validationParam" value="{$validationParam}" /></td></tr>
+				<tr><td>{tr}Validation error message{/tr}:</td><td><input type="text" size="40" name="validationMessage" value="{$validationMessage}" /></td></tr>
+				<tr><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
+				<tr><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
+				<tr>
 					<td>{tr}Is column visible when listing tracker items?{/tr}</td>
 					<td><input type="checkbox" name="isTblVisible" {if empty($fieldId) || $isTblVisible eq 'y'}checked="checked"{/if} /></td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td colspan="2">{remarksbox type="info" title="{tr}Important note{/tr}"}{tr}The first field in the tracker to have column links to edit/view item (i.e. isMain) will be what is shown as the name of the item in category and search listings{/tr}{/remarksbox}</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Column links to edit/view item?{/tr}</td>
 					<td><input type="checkbox" name="isMain" {if empty($fieldId) ||$isMain eq 'y'}checked="checked"{/if} /></td>
 				</tr>
-				<tr class="formcolor" id='multilabelRow'{if $type neq 'a' && $type neq 't' && $type neq 'o' && $type neq '' && $type neq 'C'} style="display:none;"{/if}>
+				<tr id='multilabelRow'{if $type neq 'a' && $type neq 't' && $type neq 'o' && $type neq '' && $type neq 'C'} style="display:none;"{/if}>
 					<td>{tr}Multilingual content{/tr}:</td><td><input type="checkbox" name="isMultilingual" {if $isMultilingual eq 'y'}checked="checked"{/if} /></td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Column is searchable?{/tr}</td>
 					<td><input type="checkbox" name="isSearchable" {if $isSearchable eq 'y'}checked="checked"{/if} /></td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Field is public? (viewed in trackerlist plugin){/tr}</td>
 					<td><input type="checkbox" name="isPublic" {if empty($fieldId) || $isPublic eq 'y'}checked="checked"{/if} /></td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Field is hidden?{/tr}</td>
 					<td>
 						<select name="isHidden">
@@ -244,7 +244,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Description{/tr}:</td>
 					<td>
 						<div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" >
@@ -260,8 +260,8 @@
 						</div>
 					</td>
 				</tr>
-				<tr class="formcolor"><td>{tr}Error message:{/tr}</td><td><input type="text" name="errorMsg" value="{$errorMsg|escape}" /></td></tr>
-				<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+				<tr><td>{tr}Error message:{/tr}</td><td><input type="text" name="errorMsg" value="{$errorMsg|escape}" /></td></tr>
+				<tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 			</table>
 		</form>
 	{/tab}

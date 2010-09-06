@@ -14,7 +14,7 @@
 
 <table class="normal" >
 	<tr>
-		<td class="formcolor">
+		<td>
 			<b>{tr}Upcoming events{/tr}</b>
 			<br />
 			<table class="normal">
@@ -38,7 +38,7 @@
 				{/section}	
 			</table>
 		</td>
-		<td width="180" class="formcolor">
+		<td width="180">
 			{include file="modules/mod-calendar.tpl"}
 		</td>
 	</tr>
