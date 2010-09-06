@@ -208,7 +208,7 @@ $("#save_button").click( function () {
 }).hide();
 
 window.toggleFullScreen = function(areaname) {
-	$.sheet.instance[0].toggleFullScreen();
+	$.sheet.instance[$.sheet.instance.length - 1].toggleFullScreen();
 }
 
 window.showFeedback = function(message, delay, redirect) {

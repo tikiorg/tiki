@@ -73,10 +73,10 @@
 					{assign var="uWarning" value=""}
 				{/if}
 				{if $editReload}
-					{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _class="" parse="edit" editSheet="y" _auto_args="*" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
+					{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _class="" parse="edit" editSheet="y" _auto_args="*" _title="{tr}New jQuery.sheet based editing{/tr}"|cat:$uWarning}
 				{else}
 					{button _id="save_button" _text="{tr}Save{/tr}" _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Tiki Sheet{/tr} | {tr}Save current spreadsheet{/tr}"}
-					{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}Warning{/tr} | {tr}New jQuery.sheet based editing - experimental feature!{/tr}"|cat:$uWarning}
+					{button _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" _template="tiki-view-sheets.tpl" sheetId="$sheetId" _class="" _title="{tr}New jQuery.sheet based editing{/tr}"|cat:$uWarning}
 					{jq notonready=true}var editSheetButtonLabel2="{tr}Cancel{/tr}";{/jq}
 					{if $prefs.feature_contribution eq 'y'}
 						{include file='contribution.tpl'}
