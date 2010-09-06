@@ -2,7 +2,7 @@
 
 {* start ************ Task list ***************}
 <form action="tiki-user_tasks.php" method="post">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
 			<td colspan="6" class="normal">
 				<div align="right">
@@ -124,7 +124,7 @@
 			</tr>
 		{/section}
 		<tr>
-			<td class="formcolor" colspan="3" style="text-align:left; vertical-align:bottom;">
+			<td colspan="3" style="text-align:left; vertical-align:bottom;">
 				<img src="img/icons2/arrow.gif" width="16" height="24" style="border:0" alt="arrow" />
 				<select name="action" style="vertical-align:bottom;">
 					<option value="" >{tr}Select One{/tr}</option>
@@ -136,13 +136,13 @@
 				</select>
 				<input type="submit" name="update_tasks" value="{tr}Go{/tr}" style="vertical-align:bottom;" />
 			</td>
-			<td class="formcolor" colspan="3" style="text-align:right;">
+			<td colspan="3" style="text-align:right;">
 				<input type="submit" name="update_percentage" value="{tr}Go{/tr}" style="vertical-align:bottom;" />
 				<img src="img/icons2/arrow_fliped.gif" width="16" height="24" style="border:0" alt="arrow" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor" colspan="6" style="text-align:center;">
+			<td colspan="6" style="text-align:center;">
 				&nbsp;&nbsp;{tr}Show:{/tr}
 				&nbsp;<input  name="show_private" {if $show_private} checked="checked" {/if} type="checkbox" />{tr}Private{/tr}
 			{if $tiki_p_tasks_receive eq 'y'}&nbsp;<input  name="show_received" {if $show_received} checked="checked" {/if} type="checkbox" />{tr}Received{/tr}{/if}
@@ -159,7 +159,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor" colspan="6" style="text-align:center;">
+			<td colspan="6" style="text-align:center;">
 				<input type="submit" name="reload" value="{tr}Reload{/tr}" />
 			</td>
 		</tr>
