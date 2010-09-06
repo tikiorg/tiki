@@ -37,8 +37,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
 	}
 	
-	$params['rows'] = isset($params['rows']) ? $params['rows'] : 20;
-	$params['cols'] = isset($params['cols']) ? $params['cols'] : 80;
+	$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
+	$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
