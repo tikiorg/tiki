@@ -1094,17 +1094,12 @@ function displayDialog( ignored, list, area_id, isSub ) {
 	}
 
 	alert('Removing this alert makes the code below not working'); ///FIXME
-	
-	$( 'a.fgalname', dialogDiv ).each(
-		function() {
-			this.href = 'javascript:void(0);'
-			$( this ).bind('click', function() {
-				insertAt( area_id, 'IMAGEURL' );
-				dialogSharedClose( area_id, dialogDiv );
-				return false;
-			} );
-		}
-	);
+	$('a.fgalname' , dialogDiv ).click(function(event) {
+		event.preventDefault();
+		insertAt( area_id, 'IMAGEURL' );
+		dialogSharedClose( area_id, dialogDiv );
+		return false;
+	});
 
 	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
 	//restoreTASelection(area_id);
