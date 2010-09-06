@@ -81,8 +81,8 @@ function get_default_prefs() {
 		'feature_wiki_make_structure' => 'n',
 		'feature_wiki_open_as_structure' => 'n',
 		'feature_wiki_pageid' => 'n',
-		'feature_wiki_paragraph_formatting' => 'y',
-		'feature_wiki_paragraph_formatting_add_br' => 'y',
+		'feature_wiki_paragraph_formatting' => 'n',
+		'feature_wiki_paragraph_formatting_add_br' => 'n',
 		'feature_wiki_pictures' => 'y',
 		'feature_wiki_plurals' => 'y',
 		'feature_wiki_print' => 'n',
@@ -1165,6 +1165,7 @@ function get_default_prefs() {
 		'desactive_login_autocomplete' => 'n',
 		'permission_denied_login_box' => 'n',
 		'permission_denied_url' => '',
+		'feature_loadbalancer' => 'n',
 
 		// intertiki
 		'feature_intertiki' => 'n',
@@ -1618,6 +1619,7 @@ function get_default_prefs() {
 		'feature_iepngfix' => 'n',
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
+		'feature_invit' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled

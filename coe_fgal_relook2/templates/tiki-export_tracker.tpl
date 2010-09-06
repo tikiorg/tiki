@@ -3,8 +3,8 @@
 <h2>{tr}Export Tracker Items{/tr}</h2>
 <div>
 <form action="tiki-view_tracker.php?trackerId={$trackerId}&cookietab=3" method="post">
-<table class="normal">
-<tr class="formcolor">
+<table class="formcolor">
+<tr>
 	<td><label for="tracker">{tr}Tracker{/tr}</label></td>
 	<td>
 	<select name="trackerId" onchange="this.form.submit();" id="tracker">
@@ -19,32 +19,32 @@
 </table>
 </form>
 <form action="tiki-export_tracker{if $prefs.feature_ajax eq 'y'}_ajax{/if}.php" method="post" id="export_form">
-<table class="normal">
-<tr class="formcolor">
+<table class="formcolor">
+<tr>
 	<td>{tr}File{/tr}</td>
 	<td>{tr}Tracker{/tr}_{$trackerId}.csv</td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td><label for="encoding">{tr}Charset encoding{/tr}</label></td>
 	<td><select name="encoding" id="emcoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td><label for="separator">{tr}Separator{/tr}</label></td>
 	<td><input type="text" name="separator" id="separator" value="," size="2" /></td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td><label for="delimitorL">{tr}Delimitors{/tr}</label></td>
 	<td><input type="text" name="delimitorL" id="delimitorL" value='"' size="2" /><input type="text" name="delimitorR" value='"' size="2" /></td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td><label for="CR">{tr}Carriage Return inside Field Value{/tr}</label></td>
 	<td><input type="text" name="CR" id="CR" value='%%%' size="4" /></td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td><label for="parse">{tr}Parse as Wiki Text{/tr}</label></td>
 	<td><input type="checkbox" name="parse" id="parse" /></td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td>{tr}Info{/tr}</td>
 	<td>
 		<input name="showItemId" id="showItemId" type="checkbox" checked="checked" /><label for="showItemId">{tr}itemId{/tr}</label>
@@ -53,7 +53,7 @@
 		<input type="checkbox" name="showLastModif" id="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if} /><label for="lastModif">{tr}lastModif{/tr}</label>
 	</td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td>{tr}Fields{/tr}</td>
 	<td>
 		<input type="radio" name="which" id="list" value="list"/> <label for="list">{tr}Fields visible in items list{/tr}</label>
@@ -74,11 +74,11 @@
 		{jq}$("input[name=which]").change(function(){ if ($(this).val() == "these") { $("#fields_list").slideDown("fast"); } else { $("#fields_list").slideUp("fast"); } });{/jq}
 	</td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td>{tr}Filter{/tr}</td>
 	<td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y" inForm="y"}</td></tr>
 {if $prefs.feature_ajax eq 'y'}
-	<tr class="formcolor">
+	<tr>
 		<td><label for="recordsMax">{tr}Number of records{/tr}</label></td>
 		<td>
 			<input type="text" name="recordsMax" id="recordsMax" value="{$recordsMax}" size="6" />
@@ -94,7 +94,7 @@
 		</td>
 	</tr>
 {/if}
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" id="export_button" value="{tr}Export{/tr}" /> <input type="submit" name="zip" id="zip_button" value="{if $info.useAttachmnet eq 'y'}{tr}Zip export with attachments{/tr}{else}{tr}Zip Export{/tr}{/if}" /></td>
+<tr><td>&nbsp;</td><td><input type="submit" name="export" id="export_button" value="{tr}Export{/tr}" /> <input type="submit" name="zip" id="zip_button" value="{if $info.useAttachmnet eq 'y'}{tr}Zip export with attachments{/tr}{else}{tr}Zip Export{/tr}{/if}" /></td>
 </tr>
 </table>
 </form>
@@ -164,8 +164,8 @@ exportProgress = function () {
 	<h2>{tr}Dump All Tracker Items{/tr}</h2>
 	<div>
 		<form action="{$smarty.server.PHP_SELF}" method="post">
-			<table class="normal">
-				<tr class="formcolor">
+			<table class="formcolor">
+				<tr>
 					<td width="20%"><label for="tracker">{tr}Tracker{/tr}</label></td>
 					<td>
 					<select name="trackerId" onchange="this.form.submit();" id="dumpTrackerId">
@@ -181,8 +181,8 @@ exportProgress = function () {
 			</table>
 		</form>
 		<form action="tiki-export_tracker.php?trackerId={$trackerId}" method="post" id="dump_form">
-			<table>
-				<tr class="formcolor">
+			<table class="formcolor">
+				<tr>
 					<td width="20%">&nbsp;</td>
 					<td>
 						<input type="submit" name="dump_tracker" id="dump_tracker" value="{tr}Dump{/tr}" />
@@ -192,4 +192,3 @@ exportProgress = function () {
 		</form>
 	</div>
 {/if}
-

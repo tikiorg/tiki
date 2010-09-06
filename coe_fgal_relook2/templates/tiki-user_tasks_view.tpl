@@ -9,13 +9,13 @@
  		{icon _id='page_edit'}
 	</a>&nbsp;
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">
-    	{html_image file='img/icons2/tick.gif' width='15' height='15' title='{tr}Accept{/tr}' alt='{tr}Accept{/tr}'}
+    	{html_image file='img/icons2/tick.gif' width='15' height='15' title="{tr}Accept{/tr}" alt="{tr}Accept{/tr}"}
 	</a>&nbsp;
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink">
-    	{html_image file='img/icons2/error.gif' width='14' height='14' title='{tr}NOT accept{/tr}' alt='{tr}NOT accept{/tr}'}
+    	{html_image file='img/icons2/error.gif' width='14' height='14' title="{tr}NOT accept{/tr}" alt="{tr}NOT accept{/tr}"}
 	</a>&nbsp;
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">
-		{html_image file='img/icons/trash.gif' width='16' height='16' title='{tr}Trash{/tr}' alt='{tr}Trash{/tr}'}
+		{html_image file='img/icons/trash.gif' width='16' height='16' title="{tr}Trash{/tr}" alt="{tr}Trash{/tr}"}
 	</a>&nbsp;
 {/if}
 <br /><br />

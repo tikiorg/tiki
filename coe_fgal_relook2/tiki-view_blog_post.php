@@ -63,17 +63,15 @@ if(isset($post_info['priv']) && ($post_info['priv'] == 'y')) {
 if ($prefs['feature_freetags'] == 'y') {
 	// Get Tags
 	include_once ('lib/freetag/freetaglib.php');
-	$tags = $freetaglib->get_tags_on_object($postId, "blog post");
-	$smarty->assign('tags', $tags);
+	$post_info['freetags'] = $freetaglib->get_tags_on_object($postId, "blog post");
 
-	if ($blog_data['show_related'] == 'y' && !empty($tags)) {
+	if ($blog_data['show_related'] == 'y' && !empty($post_info['freetags'])) {
 		$post_info['related_posts'] = $bloglib->get_related_posts($postId, $blog_data['related_max']);
 	}
 }
 
 $smarty->assign('ownsblog', $ownsblog);
 $post_info['data'] = TikiLib::htmldecode($post_info['data']);
-$smarty->assign('post_info', $post_info);
 $smarty->assign('postId', $postId);
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);
@@ -91,22 +89,22 @@ $find = $_REQUEST["find"];
 $parsed_data = $tikilib->parse_data($post_info["data"], array('is_html' => ($post_info["wysiwyg"]=='y'?TRUE:FALSE)));
 if (!isset($_REQUEST['page'])) $_REQUEST['page'] = 1;
 $pages = $bloglib->get_number_of_pages($parsed_data);
-$parsed_data = $bloglib->get_page($parsed_data, $_REQUEST['page']);
-$smarty->assign('pages', $pages);
+$post_info['parsed_data'] = $bloglib->get_page($parsed_data, $_REQUEST['page']);
+$post_info['pages'] = $pages;
 if ($pages > $_REQUEST['page']) {
-	$smarty->assign('next_page', $_REQUEST['page'] + 1);
+	$post_info['next_page'] = $_REQUEST['page'] + 1;
 } else {
-	$smarty->assign('next_page', $_REQUEST['page']);
+	$post_info['next_page'] = $_REQUEST['page'];
 }
 if ($_REQUEST['page'] > 1) {
-	$smarty->assign('prev_page', $_REQUEST['page'] - 1);
+	$post_info['prev_page'] = $_REQUEST['page'] - 1;
 } else {
-	$smarty->assign('prev_page', 1);
+	$post_info['prev_page'] = 1;
 }
-$smarty->assign('first_page', 1);
-$smarty->assign('last_page', $pages);
-$smarty->assign('pagenum', $_REQUEST['page']);
-$smarty->assign('parsed_data', $parsed_data);
+$post_info['first_page'] = 1;
+$post_info['last_page'] = $pages;
+$post_info['pagenum'] = $_REQUEST['page'];
+$smarty->assign('post_info', $post_info);
 
 if ($prefs['feature_blogposts_comments'] == 'y') {
 	$comments_per_page = $prefs['blog_comments_per_page'];

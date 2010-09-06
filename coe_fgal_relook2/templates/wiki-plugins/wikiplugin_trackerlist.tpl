@@ -103,11 +103,14 @@
 		{if !empty($popupfields)}
 			{capture name=popup}
 <div class="cbox">
-	<table>
+	<table style="width:100%">
 				{cycle values="odd,even" print=false}
 				{foreach from=$items[user].field_values item=f}
 					{if in_array($f.fieldId, $popupfields)}
-		<tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file='tracker_item_field_value.tpl' field_value=$f item=$items[user]}</td></tr>
+						{capture name=popupl}{include file='tracker_item_field_value.tpl' field_value=$f item=$items[user]}{/capture}
+						{if !empty($smarty.capture.popupl) }
+							<tr>{if count($popupfields) > 1}<th class="{cycle advance=false}">{$f.name}</th>{/if}<td class="{cycle}">{$smarty.capture.popupl}</td></tr>
+						{/if}
 					{/if}
 				{/foreach}
 	</table>
@@ -174,7 +177,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 			{if $showdelete eq 'y' && ($tiki_p_admin_trackers eq 'y' or $perms.tiki_p_modify_tracker_items eq 'y')}
 		<td>
 				{if $tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c')}
-					{self_link delete=`$items[user].itemId`}{icon _id=cross alt='{tr}Remove{/tr}'}{/self_link}
+					{self_link delete=`$items[user].itemId`}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
 				{/if}
 		</td>
 			{/if}

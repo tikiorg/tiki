@@ -1,13 +1,25 @@
 <?php
 /* $Id$
  * 
- * simple script to convert html anchors in smarty templates to self_links for ajax (tiki 6)
+ * Simple script to convert html anchors in smarty templates to self_links for ajax (tiki 6)
  * couldn't work out a clever enough regexp so trying in php
  *
- * ***** N.B. Move into root of tiki and run in a browser  ******
+ * *****                  INSTRUCTIONS                     ******
+ * 
+ * Move into root of your tiki and open in a browser
+ * 		e.g. http://localhost/trunk/convert_tpl_ajax.php
+ * 
+ * Select a tpl from the drop down and check the "Show replacements" checkbox
+ * Copy the resulting source into your favourite text editor and
+ * compare with the original (and test lots, obviously) before committing
  * 
  * ***** N.B. 2: {if} statements inside anchor attributes  ******
  * ***** will be commented out for later manual correction ******
+ * 
+ * ***** N.B. 3: Nested quote marks in Smarty syntax       ******
+ * I found one tpl (tiki-pagehistory.tpl) that had links with nested quotes in the hrefs (ik!)
+ * e.g. <a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a>
+ * so i had to "manually" replace the "url" params with 'url' before running the script.
  */
 
 // just in case
@@ -16,17 +28,20 @@ $access->check_permission('tiki_p_admin');
 $access->check_feature('javascript_enabled');
 
 $tpl = $_GET['tpl'];
+$count_r = 0;
 
 //if (empty($tpl)) {
 //	$access->display_error('', 'no tpl');
 //}
 
 function replace_with_self_links($original, $template_base) {
+	global $count_r;
 
 	preg_match_all('/<a.*?\s*href=[^\.]*\.php[^>]*?>(.*?)<\/a>/mi', $original, $phplinks);
 	$replacements = array();
 
-	for($j = 0; $j < count($phplinks[0]); $j++) {
+	$count_r = count($phplinks[0]);
+	for($j = 0; $j < $count_r; $j++) {
 		$ahref = $phplinks[0][$j];
 		preg_match_all('/([^=\s]*?)="([^"]*?)"/i', $ahref, $attrs);
 		
@@ -91,7 +106,7 @@ $tpl_sel .= '</select>';
 
 // cheating - lazy ;)
 $form = str_replace("\n", '', "<form action='#'>
-<label for='toggle'>Show replacements:</label>
+<label for='toggle'>" . (empty($_REQUEST['toggle']) ? 'Show replacements' : "Showing $count_r replacements" ) . ":</label>
 <input type='checkbox' id='toggle' name='toggle' onclick='this.form.submit();'$checked />
 $tpl_sel
 </form>");

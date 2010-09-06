@@ -3,7 +3,7 @@
 	{tr}Select <a href="tiki-list_banners.php" title="Banners">Admin &gt; Banners</a> from the menu to create and edit banner zones.{/tr}
 {/remarksbox}
 
-<form action="tiki-admin.php?page=ads" onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
+<form action="tiki-admin.php?page=ads" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>

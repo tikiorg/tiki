@@ -72,6 +72,7 @@ if( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 			'future_publish' => $jitPost->future_publish->int(),
 			'categories' => (array) $jitPost->cat_categories->int(),
 			'rating' => $jitPost->rating->int(),
+			'submission' => isset( $_POST['submission'] ),
 		) );
 	}
 

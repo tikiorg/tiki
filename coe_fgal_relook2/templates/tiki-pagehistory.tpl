@@ -20,7 +20,7 @@
 	</h2>
 	{if $info.version ne $preview and $tiki_p_rollback eq 'y'}
 		<div class="navbar">
-			<a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a>
+			{self_link  _script="tiki-rollback.php" page=$page version=$preview _title="{tr}Rollback{/tr}"}{tr}Rollback to this version{/tr}{/self_link}
 		</div>
 	{/if}
 	<div>
@@ -41,7 +41,7 @@
 		{if $info.version eq $source}<small><small>{tr}(current){/tr}</small></small>{/if}
 	</h2>
 	{if $info.version ne $source and $tiki_p_rollback eq 'y'}
-		<div class="navbar"><a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$source}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a></div>
+		<div class="navbar">{self_link  _script="tiki-rollback.php" page=$page version=$source _title="{tr}Rollback{/tr}"}{tr}Rollback to this version{/tr}{/self_link}</div>
 	{/if}
 	<div>
 		{if !isset($noHistory)}
@@ -121,7 +121,7 @@ $("#toggle_diffs a").click(function(){
 					{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 					{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
 					<th>{tr}Version{/tr}</th>
-					<th>{tr}Action{/tr}</th>
+					<th>&nbsp;{tr}Action{/tr}&nbsp;</th>
 					{if $prefs.default_wiki_diff_style != "old" and $history}
 						<th colspan="2">
 							<input type="submit" name="compare" value="{tr}Compare{/tr}" />
@@ -141,14 +141,14 @@ $("#toggle_diffs a").click(function(){
 							{if $translation_sources[$info.version]}
 								{foreach item=source from=$translation_sources[$info.version]}
 									<div>
-										{tr}Updated from:{/tr} <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}
+										{tr}Updated from:{/tr} {self_link  _script="tiki-index.php" page=$source.page|escape}{$source.page}{/self_link} at version {$source.version}
 									</div>
 								{/foreach}
 							{/if}
 							{if $translation_targets[$info.version]}
 								{foreach item=target from=$translation_targets[$info.version]}
 								<div>
-									{tr}Used to update:{/tr} <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}
+									{tr}Used to update:{/tr} {self_link  _script="tiki-index.php" page=$target.page|escape}{$target.page}{/self_link} to version {$target.version}
 								</div>
 								{/foreach}
 							{/if}
@@ -162,9 +162,9 @@ $("#toggle_diffs a").click(function(){
 							</td>
 						{/if}
 						<td class="odd button">{if $current eq $info.version}<strong>{/if}{$info.version}<br />{tr}Current{/tr}{if $current eq $info.version}</strong>{/if}</td>
-						<td class="odd button">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$info.version}" title="{tr}View{/tr}">v</a>
+						<td class="odd button">{self_link page=$page preview=$info.version _title="{tr}View{/tr}"}v{/self_link}
 						{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-							&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$info.version}" title="{tr}Source{/tr}">s</a>
+							&nbsp;{self_link page=$page source=$info.version _title="{tr}Source{/tr}"}s{/self_link}
 						{/if}
 						</td>
 						{if $prefs.default_wiki_diff_style ne "old" and $history}
@@ -191,14 +191,14 @@ $("#toggle_diffs a").click(function(){
 							{if $translation_sources[$element.version]}
 								{foreach item=source from=$translation_sources[$element.version]}
 								<div>
-									{tr}Updated from:{/tr} <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}
+									{tr}Updated from:{/tr} {self_link  _script="tiki-index.php" page=$source.page|escape}{$source.page}{/self_link} at version {$source.version}
 								</div>
 								{/foreach}
 							{/if}
 							{if $translation_targets[$element.version]}
 								{foreach item=target from=$translation_targets[$element.version]}
 								<div>
-									{tr}Used to update:{/tr} <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}
+									{tr}Used to update:{/tr} {self_link  _script="tiki-index.php" page=$target.page|escape}{$target.page}{/self_link} to version {$target.version}
 								</div>
 								{/foreach}
 							{/if}
@@ -223,18 +223,17 @@ $("#toggle_diffs a").click(function(){
 							{if $current eq $element.version}</strong>{/if}
 						</td>
 						<td class="{cycle advance=false} button">
-							&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$element.version}" title="{tr}View{/tr}">v</a>
+							{self_link page=$page preview=$element.version _title="{tr}View{/tr}"}v{/self_link}
 							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-								&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$element.version}" title="{tr}Source{/tr}">s</a>
+								&nbsp;{self_link page=$page source=$element.version _title="{tr}Source{/tr}"}s{/self_link}
 							{/if}
 							{if $prefs.default_wiki_diff_style eq "old"}
-								&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$element.version}&amp;diff_style=sideview" title="{tr}Compare{/tr}">c</a>
-								&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$element.version}&amp;diff_style=unidiff" title="{tr}Diff{/tr}">d</a>
+								&nbsp;{self_link page=$page diff2=$element.version diff_style="sideview" _title="{tr}Compare{/tr}"}c{/self_link}
+								&nbsp;{self_link page=$page diff2=$element.version diff_style="unidiff" _title="{tr}Diff{/tr}"}d{/self_link}
 							{/if}
 							{if $tiki_p_rollback eq 'y' && $lock neq true}
-								&nbsp;<a class="link" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$element.version}" title="{tr}Rollback{/tr}">b</a>
+								&nbsp;{self_link  _script="tiki-rollback.php" page=$page version=$element.version _title="{tr}Rollback{/tr}"}b{/self_link}
 							{/if}
-							&nbsp;
 						</td>
 						{if $prefs.default_wiki_diff_style ne "old"}
 						<td class="{cycle advance=false} button">

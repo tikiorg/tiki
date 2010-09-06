@@ -22,22 +22,22 @@
 <form action="tiki-directory_admin_sites.php" method="post">
   <input type="hidden" name="parent" value="{$parent|escape}" />
   <input type="hidden" name="siteId" value="{$siteId|escape}" />
-  <table class="normal">
+  <table class="formcolor">
     <tr>
-      <td class="formcolor">{tr}Name{/tr}:</td>
-      <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
+      <td>{tr}Name{/tr}:</td>
+      <td><input type="text" name="name" value="{$info.name|escape}" /></td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Description{/tr}:</td>
-      <td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
+      <td>{tr}Description{/tr}:</td>
+      <td><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}URL{/tr}:</td>
-      <td class="formcolor"><input type="text" name="url" value="{$info.url|escape}" /></td>
+      <td>{tr}URL{/tr}:</td>
+      <td><input type="text" name="url" value="{$info.url|escape}" /></td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Directory Categories{/tr}:</td>
-      <td class="formcolor"><select name="siteCats[]" multiple="multiple" size="4">
+      <td>{tr}Directory Categories{/tr}:</td>
+      <td><select name="siteCats[]" multiple="multiple" size="4">
           
 			    {section name=ix loop=$categs}
 			      
@@ -52,8 +52,8 @@
     </tr>
     {if $prefs.directory_country_flag eq 'y'}
     <tr>
-      <td class="formcolor">{tr}Country{/tr}:</td>
-      <td class="formcolor"><select name="country">
+      <td>{tr}Country{/tr}:</td>
+      <td><select name="country">
           
 						{section name=ux loop=$countries}
 							
@@ -66,12 +66,12 @@
     </tr>
     {/if}
     <tr>
-      <td class="formcolor">{tr}Is valid{/tr}:</td>
-      <td class="formcolor"><input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if} /></td>
+      <td>{tr}Is valid{/tr}:</td>
+      <td><input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if} /></td>
     </tr>
     <tr>
-      <td class="formcolor">&nbsp;</td>
-      <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+      <td>&nbsp;</td>
+      <td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
     </tr>
   </table>
 </form>
@@ -103,7 +103,7 @@
       {/if}
       <td class="{cycle advance=false}">{$items[user].hits}</td>
       <td class="{cycle advance=false}">{$items[user].isValid}</td>
-      <td class="{cycle advance=false}"><a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}">{icon _id='page_edit'}</a> <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a> </td>
+      <td class="{cycle advance=false}"><a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}">{icon _id='page_edit'}</a> <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> </td>
     </tr>
     <tr>
       <td class="{cycle advance=false}">&nbsp;</td>

@@ -41,18 +41,18 @@
 		<input type="hidden" name="created" value="{$created|escape}" />
 		<input type="hidden" name="image_name" value="{$image_name|escape}" />
 		<input type="hidden" name="image_size" value="{$image_size|escape}" />
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor">{tr}Title{/tr}:</td>
-				<td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td>
+				<td>{tr}Title{/tr}:</td>
+				<td><input type="text" name="title" value="{$title|escape}" /></td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Author Name{/tr}:</td>
-				<td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td>
+				<td>{tr}Author Name{/tr}:</td>
+				<td><input type="text" name="authorName" value="{$authorName|escape}" /></td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Type{/tr}</td>
-				<td class="formcolor">
+				<td>{tr}Type{/tr}</td>
+				<td>
 					<select id='articletype' name='type' onchange='javascript:chgArtType();'>
 						{section name=t loop=$types}
 							<option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
@@ -64,8 +64,8 @@
 				</td>
 			</tr>
 			<tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}>
-				<td class="formcolor">{tr}Rating{/tr}</td>
-				<td class="formcolor">
+				<td>{tr}Rating{/tr}</td>
+				<td>
 					<select name='rating'>
 						<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
 						<option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
@@ -91,8 +91,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Use Image{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Use Image{/tr}:</td>
+				<td>
 					<select name="useImage">
 						<option value="y" {if $useImage eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
 						<option value="n" {if $useImage eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
@@ -100,62 +100,62 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Image x size{/tr}:</td>
-				<td class="formcolor"><input type="text" name="image_x" value="{$image_x|escape}" /></td>
+				<td>{tr}Image x size{/tr}:</td>
+				<td><input type="text" name="image_x" value="{$image_x|escape}" /></td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Image y size{/tr}:</td>
-				<td class="formcolor"><input type="text" name="image_y" value="{$image_y|escape}" /></td>
+				<td>{tr}Image y size{/tr}:</td>
+				<td><input type="text" name="image_y" value="{$image_y|escape}" /></td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Image name{/tr}:</td>
-				<td class="formcolor">{$image_name}</td>
+				<td>{tr}Image name{/tr}:</td>
+				<td>{$image_name}</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Image size{/tr}:</td>
-				<td class="formcolor">{$image_size}</td>
+				<td>{tr}Image size{/tr}:</td>
+				<td>{$image_size}</td>
 			</tr>
 			{if $useImage eq 'y'}
 				<tr>
-					<td class="formcolor">{tr}Image{/tr}:</td>
-					<td class="formcolor">
+					<td>{tr}Image{/tr}:</td>
+					<td>
 						<img alt="article image" width="{$image_x}" height="{$image_y}" src="received_article_image.php?id={$receivedArticleId}" />
 					</td>
 				</tr>
 			{/if}
 			<tr>
-				<td class="formcolor">{tr}Created{/tr}:</td>
-				<td class="formcolor">{$created|tiki_short_datetime}</td>
+				<td>{tr}Created{/tr}:</td>
+				<td>{$created|tiki_short_datetime}</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Publishing date{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Publishing date{/tr}:</td>
+				<td>
 					{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} at {html_select_time time=$publishDate display_seconds=false}
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Heading{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Heading{/tr}:</td>
+				<td>
 					<textarea rows="5" cols="40" name="heading">{$heading|escape}</textarea>
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Heading{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Heading{/tr}:</td>
+				<td>
 					<textarea rows="25" cols="40" name="body">{$body|escape}</textarea>
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor">
+				<td>&nbsp;</td>
+				<td>
 					<input type="submit" name="preview" value="{tr}Preview{/tr}" />
 					&nbsp;
 					<input type="submit" name="save" value="{tr}Save{/tr}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Accept Article{/tr}</td>
-				<td class="formcolor">
+				<td>{tr}Accept Article{/tr}</td>
+				<td>
 					{tr}Topic{/tr}:
 					<select name="topic">
 						{section name=t loop=$topics}
@@ -206,7 +206,7 @@
 				<td class="{cycle advance=true}">
 					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}">{icon _id='page_edit'}</a> 
 					&nbsp;
-					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
 			</tr>
 		{sectionelse}

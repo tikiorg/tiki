@@ -17,19 +17,19 @@
 				{tr 0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
 			{/remarksbox}
 			<input type="hidden" name="badname" value="{$newname|escape}" />
-			<input type="submit" name="confirm" value='{tr}Use this name anyway{/tr}' />
+			<input type="submit" name="confirm" value="{tr}Use this name anyway{/tr}" />
 		{/if}
 	{elseif isset($msg)}		
 		{remarksbox type=errors}
 			{$msg}
 		{/remarksbox}		
 	{/if}
-  <table class="normal">
+  <table class="formcolor">
     <tr>
-      <td class='formcolor'><label for='newpage'>{tr}New name:{/tr}</label></td>
-      <td class='formcolor'>
+      <td><label for='newpage'>{tr}New name:{/tr}</label></td>
+      <td>
         <input type='text' id='newpage' name='newpage' size='40' value='{$newname|escape}'/>
-        <input type="submit" name="rename" value='{tr}Rename{/tr}' />
+        <input type="submit" name="rename" value="{tr}Rename{/tr}" />
       </td>
     </tr>
   </table>

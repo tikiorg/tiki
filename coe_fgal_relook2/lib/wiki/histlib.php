@@ -987,7 +987,7 @@ class Document
 		$newdoc=array();
 		$author='';
 		$deleted_by='';
-		for($index=0; $index<count($this->_document); $index++) {
+		for($index=0, $cdoc = count($this->_document); $index < $cdoc; $index++) {
 			$word=$this->_document[$index];
 			if (preg_match('/\{AUTHOR\(.+?\)\}/',$word['word'])) {
 				$params=$this->retrieveParams($word['word']);

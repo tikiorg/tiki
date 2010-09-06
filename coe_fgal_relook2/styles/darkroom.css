@@ -413,18 +413,22 @@ input[id="sl-login-pass"] {
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {
+.share a,
+.tellafriend a:visited,
+.share a:visited {
 	font-size: .7em;
 	color: #6c6c6c;
 }
 
 a.flip:hover,
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	font-size: .7em;
 	color: #b2b2b2;
 }
 
-.tellafriend {
+.tellafriend,
+.share {
 	padding: 0 10px;
 }
 

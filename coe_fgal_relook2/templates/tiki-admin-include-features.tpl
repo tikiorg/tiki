@@ -87,7 +87,7 @@
 {tab name="{tr}New{/tr}"}
 			<div class="admin featurelist">
 				<fieldset>
-					<legend class="heading">{icon _id="accept"}<span>{tr}New{/tr}</span></legend>
+					<legend class="heading">{icon _id="star"} <span>{tr}New{/tr}</span></legend>
 					<span class="description">{tr}These features are relatively new, or recently underwent major renovations. You should expect growing pains and possibly a lack of up to date documentation, as you would of a version 1.0 application{/tr}</span>
 						{preference name=feature_perspective}
 						{preference name=feature_quick_object_perms}
@@ -103,7 +103,8 @@
 						<div class="adminoptionboxchild" id="bigbluebutton_feature_childcontainer">
 							{preference name=bigbluebutton_server_location}
 							{preference name=bigbluebutton_server_salt}
-						</div>						
+						</div>
+						{preference name=feature_invit}
 
 				</fieldset>
 			</div>
@@ -116,7 +117,7 @@
 			<div class="admin featurelist">
 
 				<fieldset>
-					<legend class="heading">{icon _id="information_gray"}<span>{tr}Will be phased out{/tr}</span></legend>
+					<legend class="heading">{icon _id="information_gray"} <span>{tr}Will be phased out{/tr}</span></legend>
 					<p class="description">{tr}These features generally work but will probably be phased out in the future, because they are superseded by other features or because of evolution in Web technology.{/tr}</p>
 						{preference name=feature_html_pages}
 						{preference name=feature_galleries}
@@ -124,7 +125,7 @@
 				</fieldset>
 
 				<fieldset>
-					<legend class="heading">{icon _id="accept"}<span>{tr}Seem ok but...{/tr}</span></legend>
+					<legend class="heading">{icon _id="accept"} <span>{tr}Seem ok but...{/tr}</span></legend>
 					<p class="description">{tr}These features are not reported to be broken, but they are not actively developed and/or widely used.{/tr}</p>
 						{preference name=feature_mobile}
 						{preference name=feature_morcego}
@@ -139,19 +140,22 @@
 				</fieldset>
 
 				<fieldset>
-					<legend class="heading">{icon _id="error"}<span>{tr}Need polish{/tr}</span></legend>
-					<p class="description">{tr}These features are generally known to have issues, and/or need admin help and/or user patience to work.{/tr}</p>
-						{preference name=feature_ajax}
+					<legend class="heading">{icon _id="bricks"} <span>{tr}Getting there...{/tr}</span></legend>
+					<p class="description">{tr}Most of these features are hoped to make it into the "new" section for Tiki 6.{/tr}</p>
+					{preference name=feature_ajax}
+					<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
 						{preference name=feature_ajax_autosave}
-						{preference name=feature_wysiwyg}
 						{preference name=feature_wiki_save_draft}
+					</div>
+					{preference name=feature_wysiwyg}
 				</fieldset>
 
 				<fieldset>
-					<legend class="heading">{icon _id="new"}<span>{tr}Fresh out of the oven{/tr}</span></legend>
+					<legend class="heading">{icon _id="new"} <span>{tr}Fresh out of the oven{/tr}</span></legend>
 					{preference name=feature_socialnetworks}
 					{preference name=feature_watershed}
 					{preference name=feature_credits}
+					{preference name=feature_loadbalancer}
 				</fieldset>
 
 			</div>

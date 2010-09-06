@@ -134,7 +134,7 @@
 				<td class="{cycle}" colspan="2">
 				<center>
 					{if $types[user].article_cnt eq 0}
-						<a class="link" href="tiki-article_types.php?remove_type={$types[user].type|escape:url}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+						<a class="link" href="tiki-article_types.php?remove_type={$types[user].type|escape:url}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					{else}
 						&nbsp;
 					{/if}
@@ -153,7 +153,7 @@
 		{foreach from=$types[user].attributes item=att key=attname}
 		<tr>
 		<td class="{cycle advance=false}" >{$attname|escape}</td>
-		<td class="{cycle}" ><a class="link" href="tiki-article_types.php?att_type={$types[user].type|escape:url}&att_remove={$att.relationId|escape:url}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
+		<td class="{cycle}" ><a class="link" href="tiki-article_types.php?att_type={$types[user].type|escape:url}&att_remove={$att.relationId|escape:url}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a></td>
 		</tr>
 		{/foreach}
 		<tr>

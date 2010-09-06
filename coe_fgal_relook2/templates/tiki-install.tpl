@@ -306,7 +306,7 @@
 				{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
 				{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
 	  <br />
-<table class="admin">
+<table class="formcolor">
 	<tr>
 		<td valign="top">
 			<fieldset><legend>{tr}Install{/tr}</legend>

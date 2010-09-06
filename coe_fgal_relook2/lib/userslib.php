@@ -1640,6 +1640,9 @@ class UsersLib extends TikiLib
 			$this->query("update `tiki_freetagged_objects` set `user`=? where `user`=?", array($to,$from));
 
 			$this->query("update `tiki_tracker_item_comments` set `user`=? where `user`=?", array($to,$from));
+			$this->query('update `tiki_tracker_item_fields`ttif left join `tiki_tracker_fields` ttf on (ttif.`fieldId`=ttf.`fieldId`) set `value`=? where ttif.`value`=? and ttf.`type`=?', array($to, $from, 'u'));
+			$this->query('update `tiki_tracker_items` set `createdBy`=? where `createdBy`=?', array($to, $from));
+			$this->query('update `tiki_tracker_items` set `lastModifBy`=? where `lastModifBy`=?', array($to, $from));
 
 			$result = $this->query("select `fieldId`, `itemChoices` from `tiki_tracker_fields` where `type`='u'");
 
@@ -1810,13 +1813,14 @@ class UsersLib extends TikiLib
 		return $ret;
 	}
 
-	function get_group_users($group, $offset = 0, $max=-1, $what='login') {
+	function get_group_users($group, $offset = 0, $max=-1, $what='login', $sort_mode='login_asc') {
 		global $prefs;
-		$query = "select uu.`$what` from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=?";
-		$result = $this->query($query,$group, $max, $offset);
+		$w = $what=='*'? 'uu.*, ug.`created`, ug.`expire` ': "uu.`$what`"; 
+		$query = "select $w from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=? order by ".$this->convertSortMode($sort_mode);
+		$result = $this->fetchAll($query,$group, $max, $offset);
 		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res[$what];
+		foreach ($result as $res) {
+			$ret[] = ($what == '*') ? $res: $res[$what];
 		}
 		return $ret;
 	}
@@ -3282,8 +3286,8 @@ class UsersLib extends TikiLib
 	}
 	function update_expired_groups() {
 		global $tikilib;
-		$query = 'SELECT uu.* FROM `users_usergroups` uu, `users_groups` ug WHERE uu.`groupName`= ug.`groupName` AND ug.`expireAfter` > 0 AND uu.`created` IS NOT NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?';
-		$result = $this->query($query, array($tikilib->now));
+		$query = 'SELECT uu.* FROM `users_usergroups` uu, `users_groups` ug WHERE ( uu.`groupName`= ug.`groupName` AND ug.`expireAfter` > ? AND uu.`created` IS NOT NULL AND uu.`expire` is NULL AND uu.`created` + ug.`expireAfter`*24*60*60 < ?) OR (ug.`expireAfter` = ? AND uu.`expire` < ?)';
+		$result = $this->query($query, array(0, $tikilib->now, 0, $tikilib->now ));
 		$query = 'DELETE FROM `users_usergroups` WHERE `groupName`=? AND `userId`=?';
 		while ($res = $result->fetchrow()) {
 			$this->query($query, array($res['groupName'], $res['userId']));
@@ -3291,6 +3295,7 @@ class UsersLib extends TikiLib
 	}
 
 	function extend_membership( $user, $group, $periods = 1 ) {
+		global $tikilib;
 		$this->update_expired_groups();
 
 		if( ! $this->user_is_in_group( $user, $group ) ) {
@@ -3298,11 +3303,15 @@ class UsersLib extends TikiLib
 		}
 
 		$info = $this->get_group_info( $group );
-		$userId = $this->get_user_id( $user );
+		$userInfo = $this->get_user_info( $user );
+		$date = $this->getOne( 'SELECT `expire` FROM `users_usergroups` where `userId` = ? AND `groupName` = ?', array($userInfo['userId'], $group));
+		if ($date <= 0)
+			$date = $tikilib->now;
+		$date += $periods * 24 * 3600;
 
-		$this->query( 'UPDATE `users_usergroups` SET `created` = `created` + ? WHERE `userId` = ? AND `groupName` = ?', array(
-			( $periods - 1 ) * $info['expireAfter'] * 24 * 3600,
-			$userId,
+		$this->query( 'UPDATE `users_usergroups` SET `expire` = ? WHERE `userId` = ? AND `groupName` = ?', array(
+																												 $date,
+			$userInfo['userId'],
 			$group,
 		) );
 	}

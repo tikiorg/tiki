@@ -5,7 +5,7 @@
 {/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-file_galleries.tpl{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}File Galleries tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
+{icon _id='shape_square_edit' alt="{tr}Edit template{/tr}"}</a>
 {/if}
 {if $tiki_p_admin eq 'y' and $filegals_manager eq ''}
 <a href="tiki-admin.php?page=fgal">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>

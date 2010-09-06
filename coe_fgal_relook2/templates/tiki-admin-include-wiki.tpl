@@ -381,6 +381,10 @@
 			</fieldset>
 		{/tab}
 	{/if}
+	
+	{tab name="{tr}Tools{/tr}"}
+		<a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a>
+	{/tab}
 {/tabset}
 
 <div class="heading input_submit_container" style="text-align: center">

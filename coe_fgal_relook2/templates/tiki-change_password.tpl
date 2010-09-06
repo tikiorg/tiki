@@ -46,10 +46,10 @@
 {/if}
 <fieldset>{if $new_user_validation neq 'y'}<legend>{tr}Change your password{/tr}</legend>{/if}
 	<div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
-<table class="form">
+<table class="formcolor">
 <tr>
-  <td class="formcolor"><label for="user">{tr}Username:{/tr}</label></td>
-  <td class="formcolor">
+  <td><label for="user">{tr}Username:{/tr}</label></td>
+  <td>
   	{if empty($userlogin)}
 		<input type="text" id="user" name="user"/ >
 	{else}
@@ -60,13 +60,13 @@
 </tr>
 {if empty($smarty.request.actpass) and $new_user_validation neq 'y'}
 <tr>
-  <td class="formcolor"><label for="oldpass">{tr}Old password:{/tr}</label></td>
-  <td class="formcolor"><input type="password" name="oldpass" id="oldpass" value="{$oldpass|escape}" /></td>
+  <td><label for="oldpass">{tr}Old password:{/tr}</label></td>
+  <td><input type="password" name="oldpass" id="oldpass" value="{$oldpass|escape}" /></td>
 </tr>
 {/if}     
 <tr>
-  <td class="formcolor"><label for="pass1">{tr}New password:{/tr}</label></td>
-  <td class="formcolor">
+  <td><label for="pass1">{tr}New password:{/tr}</label></td>
+  <td>
 						<div style="float:right;width:175px;margin-left:5px;">
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
@@ -82,18 +82,18 @@
   </td>
 </tr>
 <tr>
-  <td class="formcolor"><label for="pass2">{tr}Repeat password:{/tr}</label></td>
-  <td class="formcolor"><input type="password" name="pass2" id="pass2" /></td>
+  <td><label for="pass2">{tr}Repeat password:{/tr}</label></td>
+  <td><input type="password" name="pass2" id="pass2" /></td>
 </tr>
 {if empty($email)}
 <tr>
-  <td class="formcolor"><label for="email">{tr}Email:{/tr}</label></td>
-  <td class="formcolor"><input type="text" name="email" id="email" /></td>
+  <td><label for="email">{tr}Email:{/tr}</label></td>
+  <td><input type="text" name="email" id="email" /></td>
 </tr>
 {/if}
 <tr>
-  <td class="formcolor">&nbsp;</td>
-  <td class="formcolor"><input type="submit" name="change" value="{tr}Change{/tr}" onclick="return match_pass();"/><span id="validate"></span></td>
+  <td>&nbsp;</td>
+  <td><input type="submit" name="change" value="{tr}Change{/tr}" onclick="return match_pass();"/><span id="validate"></span></td>
 </tr>
 </table>
 </fieldset>

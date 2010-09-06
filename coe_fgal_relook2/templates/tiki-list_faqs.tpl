@@ -40,8 +40,8 @@
 			{if $tiki_p_admin_faqs eq 'y'}
 				<td style="text-align:right">
 					<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}">{icon _id='page_edit'}</a>
-					<a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{icon _id='help' alt='{tr}Questions{/tr}'}</a>
-					<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+					<a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{icon _id='help' alt="{tr}Questions{/tr}"}</a>
+					<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
 			{/if}
 		</tr>
@@ -70,37 +70,37 @@
 
 	<form action="tiki-list_faqs.php" method="post">
 		<input type="hidden" name="faqId" value="{$faqId|escape}" />
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor">
+				<td>
 					{tr}Title{/tr}:
 				</td>
-				<td class="formcolor">
+				<td>
 					<input type="text" name="title" value="{$title|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">
+				<td>
 					{tr}Description{/tr}:
 				</td>
-				<td class="formcolor">
+				<td>
 					<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
 				</td>
 			</tr>
 			{include file='categorize.tpl'}
 			<tr>
-				<td class="formcolor">
+				<td>
 					{tr}Users can suggest questions{/tr}:
 				</td>
-				<td class="formcolor">
+				<td>
 					<input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if} />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">
+				<td>
 					&nbsp;
 				</td>
-				<td class="formcolor">
+				<td>
 					<input type="submit" name="save" value="{tr}Save{/tr}" />
 				</td>
 			</tr>

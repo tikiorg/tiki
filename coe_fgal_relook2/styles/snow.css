@@ -166,7 +166,7 @@ input[type="text"],
 input[type="password"] {
 	font-size: 0.9em;
 	border: solid 1px #aaa;
-	background: #ECEEF2;
+	background-color: #ECEEF2;
 	color: #000;
 	width: 120px;
 	cursor: text}
@@ -464,13 +464,16 @@ a.phplmselected:hover {color: #aaa}
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {
+.share a,
+.tellafriend a:visited,
+.share a:visited {
 	font-size: 87%;
 	color: #999;
 	text-decoration: none}
 
 a.flip:hover,
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	color: #393e51;
 	text-decoration: none}
 

@@ -45,13 +45,13 @@
 <td class="{cycle}">
 {if $tiki_p_admin_banners eq 'y'}
 <a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{icon _id='page_edit'}</a>
-<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 {/if}
-<a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{icon _id='chart_curve' alt='{tr}Stats{/tr}'}</a>
+<a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{icon _id='chart_curve' alt="{tr}Stats{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}
-<tr><td class="odd" colspan="11">
+<tr><td class="odd" colspan="12">
 {tr}No records found{/tr}
 </td></tr>
 {/section}

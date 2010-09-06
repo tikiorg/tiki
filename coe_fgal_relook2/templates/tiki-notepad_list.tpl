@@ -55,7 +55,7 @@
 						<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 						<a href="tiki-notepad_write.php?noteId={$channels[user].noteId}" class="link">{icon _id='page_edit'}</a>
 						<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1" class="link">{icon _id='disk' alt="{tr}Save{/tr}"}</a>
-						<a style="margin-left:10px;" class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+						<a style="margin-left:10px;" class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 					</td>
 				</tr>
 			{sectionelse}
@@ -77,10 +77,10 @@
 
 <h2>{tr}Upload file{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Upload file{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}Upload file{/tr}:</td>
+			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" />
 				<input size="16" name="userfile1" type="file" />
 				<input style="font-size:9px;" type="submit" name="upload" value="{tr}Upload{/tr}" />

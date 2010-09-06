@@ -443,16 +443,20 @@ div.option a.linkmenu:hover {
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {
+.share a,
+.tellafriend a:visited,
+.share a:visited {
 	font-size: 80%;
 	color: #689156}
 
 a.flip:hover,
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	color: #fff;
 	text-decoration: none}
 
-.tellafriend {margin-bottom: 4px}
+.tellafriend,
+.share {margin-bottom: 4px}
 
 /****** Misc. Global Classes (layout and style) ****/
 /** Jquery autocomplete **/

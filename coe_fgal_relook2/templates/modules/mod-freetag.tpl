@@ -13,7 +13,7 @@
 <table>{include file="antibot.tpl"}</table>
 {/if}
 <input type="submit" name="Add" value="{tr}Add{/tr}" />
-{help url="Tags" desc='{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes{/tr}'}
+{help url="Tags" desc="{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together or enclose them with double quotes{/tr}"}
 </form>
 {jq}
 	$(':text[name=addtags]').tiki('autocomplete', 'tag', {multiple: true, multipleSeparator: " "} );

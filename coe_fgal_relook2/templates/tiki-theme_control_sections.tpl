@@ -16,61 +16,69 @@
 
 <h2>{tr}Assign themes to sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
-<table class="normal">
-<tr>
-  <td class="formcolor">{tr}Section{/tr}</td>
-  <td class="formcolor">{tr}Theme{/tr}</td>
-  <td class="formcolor">{tr}Option{/tr}</td>
-  <td class="formcolor">&nbsp;</td>
-</tr>
-<tr>
-  <td class="formcolor">
-    <select name="section">
-      {foreach key=sec item=ix from=$sections}
-      <option value="{$sec|escape}" {if $a_section eq $sec}selected="selected"{/if}>{$sec}</option>
-      {/foreach}
-    </select>
-  </td>
-  <td class="formcolor">
-    <select name="theme" onchange="this.form.submit();">
-      {section name=ix loop=$styles}
-      <option value="{$styles[ix]|escape}" {if $a_style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
-      {/section}
-    </select>
-  </td>
-  <td class="formcolor">
-    <select name="theme-option">
-	  <option value="">{tr}None{/tr}</option>
-      {section name=ix loop=$style_options}
-      <option value="{$style_options[ix]|escape}">{$style_options[ix]}</option>
-      {/section}
-    </select>
-  </td>
-  <td class="formcolor">
-    <input type="submit" name="assign" value="{tr}Assign{/tr}" />
-  </td>
-</tr>
-</table>
+	<table class="formcolor">
+		<tr>
+			<td>{tr}Section{/tr}</td>
+			<td>{tr}Theme{/tr}</td>
+			<td>{tr}Option{/tr}</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+				<select name="section">
+					{foreach key=sec item=ix from=$sections}
+						<option value="{$sec|escape}" {if $a_section eq $sec}selected="selected"{/if}>{$sec}</option>
+					{/foreach}
+				</select>
+			</td>
+			<td>
+				<select name="theme" onchange="this.form.submit();">
+					{section name=ix loop=$styles}
+						<option value="{$styles[ix]|escape}" {if $a_style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
+					{/section}
+				</select>
+			</td>
+			<td>
+				<select name="theme-option">
+					<option value="">{tr}None{/tr}</option>
+					{section name=ix loop=$style_options}
+						<option value="{$style_options[ix]|escape}">{$style_options[ix]}</option>
+					{/section}
+				</select>
+			</td>
+			<td>
+				<input type="submit" name="assign" value="{tr}Assign{/tr}" />
+			</td>
+		</tr>
+	</table>
 </form> 
 
 <h2>{tr}Assigned sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
-<table class="normal">
-<tr>
-<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>
-<th><a href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">{tr}Section{/tr}</a></th>
-<th><a href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}Theme{/tr}</a></th>
-</tr>
+	<table class="normal">
+		<tr>
+			<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>
+			<th>
+				<a href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">
+					{tr}Section{/tr}
+				</a>
+			</th>
+			<th>
+				<a href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">
+					{tr}Theme{/tr}
+				</a>
+			</th>
+		</tr>
 {cycle values="odd,even" print=false}
-{section name=user loop=$channels}
-<tr>
-<td class="{cycle advance=false}">
-<input type="checkbox" name="sec[{$channels[user].section}]" />
-</td>
-<td class="{cycle advance=false}">{$channels[user].section}</td>
-<td class="{cycle}">{$channels[user].theme}</td>
-</tr>
-{/section}
-</table>
+		{section name=user loop=$channels}
+			<tr>
+				<td class="{cycle advance=false}">
+					<input type="checkbox" name="sec[{$channels[user].section}]" />
+				</td>
+				<td class="{cycle advance=false}">{$channels[user].section}</td>
+				<td class="{cycle}">{$channels[user].theme}</td>
+			</tr>
+		{/section}
+	</table>
 </form>
 <br /> <br /> <br /> 

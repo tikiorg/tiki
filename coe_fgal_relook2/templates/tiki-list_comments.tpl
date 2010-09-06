@@ -10,26 +10,27 @@
 	{query _type='form_input'}
 {/if}
 
-{assign var='cntcol' value=2}
+{assign var=numbercol value=2}
 <table class="normal">
 	<tr>
-		<th>
-			{if $comments}
+		{if $comments}
+			<th>
 				{select_all checkbox_names='checked[]'}
-			{/if}
-		</th>
+				{assign var=numbercol value=`$numbercol+1`}
+			</th>
+		{/if}
 		<th></th>
 	
 		{foreach key=headerKey item=headerName from=$headers}
 			<th>
-				{assign var='cntcol' value=$cntcol+1}
+				{assign var=numbercol value=`$numbercol+1`}
 				{self_link _sort_arg="sort_mode" _sort_field=$headerKey}{tr}{$headerName}{/tr}{/self_link}
 			</th>
 		{/foreach}
 
 		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 			<th>
-				{assign var='cntcol' value=$cntcol+1}
+				{assign var=numbercol value=`$numbercol+1`}
 				{self_link _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
 			</th>
 		{/if}
@@ -118,7 +119,7 @@
 			{cycle print=false}
 		</tr>
 	{sectionelse}
-		<tr><td class="odd" colspan="{$cntcol}">{tr}No records found.{/tr}</td></tr>
+		<tr><td class="odd" colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td></tr>
 	{/section}
 </table>
 

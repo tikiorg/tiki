@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-wiki_rss.php 27976 2010-07-14 05:47:14Z sampaioprimo $
+// $Id$
 
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');

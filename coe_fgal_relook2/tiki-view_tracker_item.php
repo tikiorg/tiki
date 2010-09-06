@@ -393,7 +393,7 @@ foreach($xfields["data"] as $i => $array) {
 					if (isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
 						$tracker_info["authorfield"] = $fid;
 					}
-					if ($tracker_info['userCanTakeOwnership'] == 'y' && empty($ins_fields['data'][$i]['value'])) {
+					if (isset($tracker_info['userCanTakeOwnership']) && $tracker_info['userCanTakeOwnership'] == 'y' && empty($ins_fields['data'][$i]['value'])) {
 						$ins_fields['data'][$i]['value'] = $user; // the user appropiate the item
 					} elseif ($tiki_p_admin_trackers != 'y') {
 						unset($ins_fields['data'][$i]['fieldId']);

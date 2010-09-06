@@ -37,7 +37,7 @@ $smarty->assign_by_ref('customfields', $customfields);
 if (count($registrationlib->merged_prefs['choosable_groups'])) {
     $smarty->assign('listgroups', $registrationlib->merged_prefs['choosable_groups']);
     if (count($registrationlib->merged_prefs['choosable_groups']) == 1) {
-	$smarty->assign_by_ref('theChoiceGroup', $registrationlib->merged_prefs['choosable_groups'][0]['groupName']);
+        $smarty->assign_by_ref('theChoiceGroup', $registrationlib->merged_prefs['choosable_groups'][0]['groupName']);
     }
 }
 
@@ -85,6 +85,12 @@ if ($registrationlib->merged_prefs['userTracker'] == 'y') {
 
 $smarty->assign('email_valid', $email_valid);
 ask_ticket('register');
+
+if (isset($redirect) && !empty($redirect)) {
+	header('Location: '.$redirect);
+	exit;
+}
+
 $_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");
 $smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $registrationlib->merged_prefs['min_username_length'], "0-9,a-z,A-Z"));
 $smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $registrationlib->merged_prefs['min_pass_length'], "0-9,a-z,A-Z"));

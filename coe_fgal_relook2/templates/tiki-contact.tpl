@@ -9,9 +9,10 @@
 	<h2>{tr}Send a message to us{/tr}</h2>
 		<form method="post" action="tiki-contact.php">
 			<input type="hidden" name="to" value="{$prefs.contact_user|escape}" />
-			<table class="normalnoborder">
+			<table class="formcolor">
 				<tr>
-					<td class="form">{tr}Priority{/tr}:</td><td class="form" style="width:99%">
+					<td>{tr}Priority{/tr}:</td>
+					<td style="width:99%">
 						<select name="priority">
 							<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
 							<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
@@ -21,25 +22,24 @@
 						</select>
 					</td>
 				</tr>
-
 				
 				{if $user eq ''}
 				<tr>
-					<td class="form">{tr}From{/tr}:</td>
-					<td class="form">
+					<td>{tr}From{/tr}:</td>
+					<td>
 						<input type="text" name="from" value="{$from}" maxlength="255" style="width:25%" />
 					</td>
 				</tr>
 				{/if}
 				<tr>
-					<td class="form">{tr}Subject{/tr}:</td>
-					<td class="form">
+					<td>{tr}Subject{/tr}:</td>
+					<td>
 						<input type="text" name="subject" value="{$subject}" maxlength="255" style="width:99%" />
 					</td>
 				</tr>
 				<tr>
-					<td class="form">{tr}Message{/tr}:</td>
-					<td class="form">
+					<td>{tr}Message{/tr}:</td>
+					<td>
 						{textarea rows="20" name="body" cols="80" _simple='y'}{$body}{/textarea}
 					</td>
 				</tr>
@@ -47,8 +47,8 @@
 					{include file='antibot.tpl' td_style="form"}
 				{/if}
 				<tr>
-					<td class="form"></td>
-					<td class="form">
+					<td></td>
+					<td>
 						<input type="submit" name="send" value="{tr}Send{/tr}" />
 					</td>
 				</tr>

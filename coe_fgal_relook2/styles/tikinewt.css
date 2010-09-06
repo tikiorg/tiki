@@ -603,19 +603,22 @@ a.flip:hover {
 	color: #225566;
 }
 
-.tellafriend {
+.tellafriend,
+.share {
 	font-size: 80%;
 	text-align: right;
 	margin-right: 1em;
 	margin: 3px 1em -1px 3px;
 }
 
-.tellafriend a {
+.tellafriend a,
+.share a {
 	text-decoration: none;
 	color: #a9b8c2;
 }
 
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	color: #225566;
 }
 

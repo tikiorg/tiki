@@ -61,7 +61,7 @@
 <td>
 {if $tiki_p_wiki_view_history eq 'y'} 
 {if $lastchanges[changes].version}
-<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt='{tr}History{/tr}'}</a>{tr}v{/tr}{$lastchanges[changes].version}
+<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt="{tr}History{/tr}"}</a>{tr}v{/tr}{$lastchanges[changes].version}
 &nbsp;<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version|escape:"url"}' title="{tr}View{/tr}">v</a>&nbsp;
 {if $tiki_p_rollback eq 'y'}
 <a class="link" href='tiki-rollback.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;version={$lastchanges[changes].version|escape:"url"}' title="{tr}Rollback{/tr}">b</a>&nbsp;
@@ -71,7 +71,7 @@
 {if $tiki_p_wiki_view_source eq 'y'}
 <a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;source={$lastchanges[changes].version|escape:"url"}' title="{tr}Source{/tr}">s</a>{/if}
 {elseif $lastchanges[changes].versionlast}
-<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt='{tr}History{/tr}'}</a>
+<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt="{tr}History{/tr}"}</a>
 {/if}
 {/if}
 </td>

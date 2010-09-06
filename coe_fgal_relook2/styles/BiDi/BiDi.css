@@ -84,7 +84,8 @@ td.imageinfo {
 td.tdchatform {
 	text-align: right !important
 }
-.tellafriend {text-align:right;}
+.tellafriend,
+.share {text-align:right;}
 
 .highlight_word_0{color:black;background-color: #ffff66;}
 .highlight_word_1{color:black;background-color: #ff9999;}

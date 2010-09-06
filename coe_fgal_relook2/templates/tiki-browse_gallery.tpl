@@ -40,7 +40,7 @@
 	{/if}
 	
 	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-		<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=image_gallery_changed&amp;objectType=image+gallery&amp;objectName={$name|escape:"url"}&amp;objectHref={'tiki-browse_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}' align='right' hspace="1"}</a>
+		<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=image_gallery_changed&amp;objectType=image+gallery&amp;objectName={$name|escape:"url"}&amp;objectHref={'tiki-browse_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace="1"}</a>
 	{/if}
 	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_gal eq 'n'}
@@ -149,17 +149,17 @@
 	  <br />
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 	    		{if $nextx!=0}
-            		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0" title="{tr}Original Size{/tr}"><img src='img/icons2/nav_dot.gif' width='8' height='11' alt='{tr}Original Size{/tr}' title='{tr}Original Size{/tr}' /></a>
+            		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0" title="{tr}Original Size{/tr}"><img src='img/icons2/nav_dot.gif' width='8' height='11' alt="{tr}Original Size{/tr}" title="{tr}Original Size{/tr}" /></a>
 	    		{/if}
             	{if $imagerotate}
-            		<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' width='11' height='11' alt='{tr}rotate{/tr}' title='{tr}rotate{/tr}' /></a>
+            		<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' width='11' height='11' alt="{tr}rotate{/tr}" title="{tr}rotate{/tr}" /></a>
             	{/if}
-            	<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}remove={$item.imageId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+            	<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}remove={$item.imageId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
             	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
           {/if}
-          <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>{icon _id='magnifier' alt='{tr}Details{/tr}'}</a>
+          <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>{icon _id='magnifier' alt="{tr}Details{/tr}"}</a>
           <a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;imageId=`$item.imageId`&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
-{icon _id='layers' alt='{tr}popup{/tr}'}</a>
+{icon _id='layers' alt="{tr}popup{/tr}"}</a>
           <br />
 	</small>
          </td>

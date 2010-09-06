@@ -75,7 +75,7 @@
 			<tr>
 				<td colspan="2"></td>
 				<td colspan="3">
-					<a href="javascript:toggleBlock('search')" class="link">{icon _id='add' alt='{tr}more{/tr}'}&nbsp;{tr}More Criteria{/tr}</a>
+					<a href="javascript:toggleBlock('search')" class="link">{icon _id='add' alt="{tr}more{/tr}"}&nbsp;{tr}More Criteria{/tr}</a>
 				</td>
 			</tr>
 		</table>
@@ -156,7 +156,7 @@
 							<td>{$users[user].email}</td>
 						{/if}
 						{if $prefs.auth_method eq 'openid'}
-							<td>{$users[user].openid_url|default:'{tr}N{/tr}'}</td>
+							<td>{$users[user].openid_url|default:"{tr}N{/tr}"}</td>
 						{/if}	
 						<td>
 							{if $users[user].currentLogin eq ''}
@@ -211,7 +211,7 @@
 							{/if}
 		
 							{if $users[user].user ne 'admin'}
-								<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+								<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 								{if $users[user].valid && $users[user].waiting eq 'a'}
 									<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user:{/tr} {$users[user].user|username}">{icon _id='accept' alt="{tr}Validate user:{/tr} `$username`"}</a>
 								{/if}
@@ -232,7 +232,7 @@
 			{/section}
 		
 			<tr>
-				<td class="form" colspan="18">
+				<td colspan="18">
 					<a name="multiple"></a>
 					{if $users}
 						<p align="left"> {*on the left to have it close to the checkboxes*}
@@ -312,7 +312,7 @@
 {if $userinfo.userId}
 	{capture assign=add_edit_user_tablabel}{tr}Edit user{/tr} <i>{$userinfo.login|escape}</i>{/capture}
 {else}
-	{assign var=add_edit_user_tablabel value='{tr}Add a New User{/tr}'}
+	{assign var=add_edit_user_tablabel value="{tr}Add a New User{/tr}"}
 {/if}
 
 {tab name=$add_edit_user_tablabel}
@@ -327,8 +327,8 @@
 	{/if}
 	{if $userinfo.editable}
 		<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data" name="RegForm" autocomplete="off">
-			<table class="normal">
-				<tr class="formcolor">
+			<table class="formcolor">
+				<tr>
 					<td><label for="name">
 						{if $prefs.login_is_email eq 'y'}
 							{tr}Email:{/tr}
@@ -368,7 +368,7 @@
 					--> AND Tiki won't create the user in the ldap 
 				*}
 				{if $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' and $userinfo.login neq 'admin' and $auth_ldap_permit_tiki_users eq 'n'}
-					<tr class="formcolor">
+					<tr>
 						<td colspan="2">
 							<b>{tr}No password is required{/tr}</b>
 							<br />
@@ -376,7 +376,7 @@
 						</td>
 					</tr>
 				{else}
-					<tr class="formcolor">
+					<tr>
 						<td><label for="pass1">{tr}Password:{/tr}</label>{if !$userinfo.userId}<br />({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass" id="pass1" onkeyup="runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
@@ -393,7 +393,7 @@
 							{/if}
 						</td>
 					</tr>
-					<tr class="formcolor">
+					<tr>
 						<td><label for="pass2">{tr}Repeat Password:{/tr}</label>{if !$userinfo.userId}<br />({tr}required{/tr}){/if}</td>
 						<td>
 							<input type="password" name="pass2" id="pass2" onkeyup="checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text')" />
@@ -421,7 +421,7 @@
 						</td></tr>
 					{/if}
 					{if $userinfo.login neq 'admin'}
-						<tr class="formcolor">
+						<tr>
 							<td>&nbsp;</td>
 							<td>
 								<label><input type="checkbox" name="pass_first_login"{if $userinfo.pass_confirm eq '0'} checked="checked"{/if} /> 
@@ -432,7 +432,7 @@
 				{/if}
 				
 				{if $prefs.login_is_email neq 'y'}
-					<tr class="formcolor">
+					<tr>
 						<td><label for="email">{tr}Email:{/tr}</label></td>
 						<td>
 							<input type="text" id="email" name="email" size="30" value="{$userinfo.email|escape}" />
@@ -440,7 +440,7 @@
 					</tr>
 				{/if}
 				{if $userinfo.login neq 'admin' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')}
-					<tr class="formcolor">
+					<tr>
 						<td>&nbsp;</td>
 						<td>
 							<label><input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}/> 
@@ -452,17 +452,17 @@
 					</tr>
 				{/if}
 				{if $userinfo.userId != 0}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Created:{/tr}</td>
 						<td>{$userinfo.created|tiki_long_datetime}</td>
 					</tr>
 					{if $userinfo.login neq 'admin'}
-						<tr class="formcolor">
+						<tr>
 							<td>{tr}Registered:{/tr}</td>
 							<td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td>
 						</tr>
 					{/if}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Last Login:{/tr}</td>
 						<td>
 							{if $userinfo.lastLogin}
@@ -471,7 +471,7 @@
 						</td>
 					</tr>
 				{/if}
-				<tr class="formcolor">
+				<tr>
 					<td>&nbsp;</td>
 					<td>
 						{if $userinfo.userId}
@@ -506,8 +506,8 @@
 	<h2>{tr}Batch upload (CSV file):{/tr}</h2>
 
 	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
-		<table class="normal">
-			<tr class="formcolor">
+		<table class="formcolor">
+			<tr>
 				<td>
 					<label for="csvlist">
 						{tr}CSV File:{/tr}
@@ -532,7 +532,7 @@
                     <label>{tr}Send an email to the user in order to allow him to validate his account.{/tr} <input type="checkbox" name="notification" /></label>
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>&nbsp;</td>
 				<td>
 					<input type="submit" name="batch" value="{tr}Add{/tr}" />

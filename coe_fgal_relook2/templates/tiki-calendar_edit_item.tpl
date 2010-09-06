@@ -41,8 +41,8 @@
 {if $prefs.calendar_addtogooglecal == 'y'}
 	{wikiplugin _name="addtogooglecal" calitemid=$id}{/wikiplugin}
 {/if}
-<table class="normal{if !$edit} vevent{/if}">
-<tr class="formcolor">
+<table class="formcolor{if !$edit} vevent{/if}">
+<tr>
 	<td>{tr}Calendar{/tr}</td>
 	<td style="background-color:#{$calendar.custombgcolor};color:#{$calendar.customfgcolor};">
 {if $edit}
@@ -74,7 +74,7 @@
 	</td>
 </tr>
 
-<tr class="formcolor">
+<tr>
 <td>{tr}Title{/tr}</td>
 <td>
 {if $edit}
@@ -84,7 +84,7 @@
 {/if}
 </td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td>{tr}Recurrence{/tr}</td>
 	<td>
 {if $edit}
@@ -99,7 +99,7 @@
 {/if}
 	</td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td>&nbsp;</td>
 	<td style="padding:5px 10px">
 {if $edit}
@@ -221,7 +221,7 @@
 {/if}
 	</td>
 </tr>
-<tr class="formcolor">
+<tr>
 <td>{tr}Start{/tr}</td>
 <td>
 {if $edit}
@@ -293,7 +293,7 @@
 {/if}
 </td>
 </tr>
-<tr class="formcolor">
+<tr>
 	<td>{tr}End{/tr}</td><td>
 	{if $edit}
 		<input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration" />
@@ -380,7 +380,7 @@
 {/if}
 </td>
 </tr>
-<tr class="formcolor">
+<tr>
 <td>{tr}Description{/tr}
 </td><td>
 {if $edit}
@@ -394,7 +394,7 @@
 </td></tr>
 
 {if $calendar.customstatus ne 'n'}
-<tr class="formcolor"><td>{tr}Status{/tr}</td><td>
+<tr><td>{tr}Status{/tr}</td><td>
 
 <div class="statusbox{if $calitem.status eq 0} status0{/if}">
 {if $edit}
@@ -424,7 +424,7 @@
 {/if}
 
 {if $calendar.custompriorities eq 'y'}
-<tr class="formcolor"><td>
+<tr><td>
 {tr}Priority{/tr}</td><td>
 {if $edit}
 <select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;"
@@ -439,7 +439,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 
 </td></tr>
 {/if}
-<tr class="formcolor" style="display:{if $calendar.customcategories eq 'y'}tablerow{else}none{/if};" id="calcat">
+<tr style="display:{if $calendar.customcategories eq 'y'}tablerow{else}none{/if};" id="calcat">
 <td>{tr}Classification{/tr}</td>
 <td>
 {if $edit}
@@ -457,7 +457,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {/if}
 </td>
 </tr>
-<tr class="formcolor" style="display:{if $calendar.customlocations eq 'y'}tablerow{else}none{/if};" id="calloc">
+<tr style="display:{if $calendar.customlocations eq 'y'}tablerow{else}none{/if};" id="calloc">
 <td>{tr}Location{/tr}</td>
 <td>
 {if $edit}
@@ -475,7 +475,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {/if}
 </td>
 </tr>
-<tr class="formcolor">
+<tr>
 <td>{tr}URL{/tr}</td>
 <td>
 {if $edit}
@@ -485,7 +485,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {/if}
 </td>
 </tr>
-<tr class="formcolor" style="display:{if $calendar.customlanguages eq 'y'}tablerow{else}none{/if};" id="callang">
+<tr style="display:{if $calendar.customlanguages eq 'y'}tablerow{else}none{/if};" id="callang">
 <td>{tr}Language{/tr}</td>
 <td>
 {if $edit}
@@ -503,7 +503,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 
 {if $groupforalert ne ''}
 {if $showeachuser eq 'y' }
-<tr class="formcolor">
+<tr>
 <td>{tr}Choose users to alert{/tr}</td>
 <td>
 {/if}
@@ -520,10 +520,10 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 
 
 {if $calendar.customparticipants eq 'y'}
-	<tr class="formcolor"><td colspan="2">&nbsp;</td></tr>
+	<tr><td colspan="2">&nbsp;</td></tr>
 {/if}
 
-<tr class="formcolor" style="display:{if $calendar.customparticipants eq 'y'}tablerow{else}none{/if};" id="calorg">
+<tr style="display:{if $calendar.customparticipants eq 'y'}tablerow{else}none{/if};" id="calorg">
 <td>{tr}Organized by{/tr}</td>
 <td>
 {if $edit}
@@ -540,7 +540,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </td>
 </tr>
 
-<tr class="formcolor" style="display:{if $calendar.customparticipants eq 'y'}tablerow{else}none{/if};" id="calpart">
+<tr style="display:{if $calendar.customparticipants eq 'y'}tablerow{else}none{/if};" id="calpart">
 <td>{tr}Participants{/tr}
 {if $edit}
 <a href="#" onclick="flip('calparthelp');">{icon _id='help'}</a>
@@ -568,7 +568,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {if $tiki_p_calendar_add_guest_particip eq 'y'}
 	<form action="tiki-calendar_edit_item.php" method="post">
 	<input type ="hidden" name="viewcalitemId" value="{$id}" />
-	<input type="text" name="guests" />{help desc='{tr}Format{/tr}: {tr}Participant names separated by comma{/tr}' url='calendar'}
+	<input type="text" name="guests" />{help desc="{tr}Format{/tr}: {tr}Participant names separated by comma{/tr}" url='calendar'}
 	<input type="submit" name="add_guest" value="Add guests" />
 	</form>
 {/if}
@@ -611,7 +611,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </td></tr>
 {/if}
 {if !$user and $prefs.feature_antibot eq 'y'}
-	{include file='antibot.tpl' tr_style="formcolor"}
+	{include file='antibot.tpl'}
 {/if}
 <tr><td><input type="submit" name="act" value="{tr}Save{/tr}" />
 {if $id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y";return false;' value="{tr}Delete event{/tr}"/>{/if}

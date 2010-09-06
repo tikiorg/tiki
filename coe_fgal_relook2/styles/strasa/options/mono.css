@@ -219,16 +219,20 @@ a.flip:hover {
 	text-decoration: none}
 
 .tellafriend a,
-.tellafriend a:visited {
+.share a,
+.tellafriend a:visited,
+.share a:visited {
 	background: transparent url('mono/fold-topright.jpg') 0 0 no-repeat;
 	color: #fff;
 }
 
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	color: #fff;
 }
 
-.tellafriend {
+.tellafriend,
+.share {
 	border-bottom: solid 1px #e5e5e5;
 }
 

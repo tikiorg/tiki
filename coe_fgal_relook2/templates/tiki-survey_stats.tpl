@@ -29,6 +29,8 @@
 <td class="{cycle advance=false}">{$channels[user].lastTaken|tiki_short_datetime}</td>
 </tr>
 {/if}
+{sectionelse}
+<tr><td class="odd" colspan="4"><strong>{tr}No records found.{/tr}</strong></td></tr>
 {/section}
 </table>
 

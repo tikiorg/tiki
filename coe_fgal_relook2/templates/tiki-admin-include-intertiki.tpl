@@ -2,13 +2,13 @@
 {tabset name="admin_interwiki"}
 	{tab name="{tr}Intertiki client{/tr}"}
 		<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
-			<table class="admin">
+			<table class="formcolor">
 				<tr>
-					<td class="form">{tr}Tiki Unique key{/tr}</td>
+					<td>{tr}Tiki Unique key{/tr}</td>
 					<td><input type="text" name="tiki_key" value="{$prefs.tiki_key}" size="32" /></td>
 				</tr>
 				<tr>
-					<td class="form">
+					<td>
 						{tr}InterTiki Slave mode{/tr}
 						<br />
 						<small>{tr}Warning: overrides manually registered local users{/tr}</small>
@@ -48,7 +48,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="form">
+					<td>
 						{tr}Intertiki shared cookie for sliding auth under same domain{/tr}:
 					</td>
 					<td>
@@ -64,23 +64,23 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="form">{tr}Name{/tr}</td>
+							<td>{tr}Name{/tr}</td>
 							<td><input type="text" name="interlist[{$k}][name]" value="{$i.name}" /></td>
 						</tr>
 						<tr>
-							<td class="form">{tr}host{/tr}</td>
+							<td>{tr}host{/tr}</td>
 							<td><input type="text" name="interlist[{$k}][host]" value="{$i.host}" /></td>
 						</tr>
 						<tr>
-							<td class="form">{tr}port{/tr}</td>
+							<td>{tr}port{/tr}</td>
 							<td><input type="text" name="interlist[{$k}][port]" value="{$i.port}" /></td>
 						</tr>
 						<tr>
-							<td class="form">{tr}Path{/tr}</td>
+							<td>{tr}Path{/tr}</td>
 							<td><input type="text" name="interlist[{$k}][path]" value="{$i.path}" /></td>
 						</tr>
 						<tr>
-							<td class="form">{tr}Groups{/tr}</td>
+							<td>{tr}Groups{/tr}</td>
 							<td>
 								<input type="text" name="interlist[{$k}][groups]" value="{foreach item=g from=$i.groups name=f}{$g}{if !$smarty.foreach.f.last},{/if}{/foreach}" />
 							</td>
@@ -91,23 +91,23 @@
 					<td colspan="2">{tr}Add new server{/tr}</td>
 				</tr>
 				<tr>
-					<td class="form">{tr}Name{/tr}</td>
+					<td>{tr}Name{/tr}</td>
 					<td><input type="text" name="new[name]" value="" /></td>
 				</tr>
 				<tr>
-					<td class="form">{tr}host{/tr}</td>
+					<td>{tr}host{/tr}</td>
 					<td><input type="text" name="new[host]" value="" /></td>
 				</tr>
 				<tr>
-					<td class="form">{tr}port{/tr}</td>
+					<td>{tr}port{/tr}</td>
 					<td><input type="text" name="new[port]" value="" /></td>
 				</tr>
 				<tr>
-					<td class="form">{tr}Path{/tr}</td>
+					<td>{tr}Path{/tr}</td>
 					<td><input type="text" name="new[path]" value="" /></td>
 				</tr>
 				<tr>
-					<td class="form">{tr}Groups{/tr}</td>
+					<td>{tr}Groups{/tr}</td>
 					<td><input type="text" name="new[groups]" value="" /></td>
 				</tr>
 			</table>
@@ -122,14 +122,14 @@
 			<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
 				<table class="admin">
 					<tr>
-						<td class="form">
+						<td>
 							{tr}Intertiki shared cookie for sliding auth under same domain{/tr}:</td>
 						<td>
 							<input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 					<tr>
-						<td class="form">
+						<td>
 							{tr}Intertiki Server enabled{/tr}:
 						</td>
 						<td>
@@ -137,7 +137,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="form">
+						<td>
 							{tr}Access Log file{/tr}:
 						</td>
 						<td>
@@ -145,7 +145,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="form">
+						<td>
 							{tr}Errors Log file{/tr}:
 						</td>
 						<td>
@@ -158,7 +158,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="form">
+						<td colspan="2">
 							<table>
 								<tr>
 									<td>&nbsp;</td>
@@ -173,7 +173,7 @@
 											<td>
 												<a href="tiki-admin.php?page=intertiki&amp;delk={$k|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 											</td>
-											<td class="form">
+											<td>
 												<input type="text" name="known_hosts[{$k}][name]" value="{$i.name}" size="12" />
 											</td>
 											<td>

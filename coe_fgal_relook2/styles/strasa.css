@@ -544,7 +544,9 @@ a.flip:hover {
 }
 
 .tellafriend a,
-.tellafriend a:visited {
+.share a,
+.tellafriend a:visited,
+.share a:visited {
 	background: transparent url(strasa/fold-topright.jpg) 0 0 no-repeat;
 	display: block;
 	float: right;
@@ -555,11 +557,13 @@ a.flip:hover {
 	width: 16em;
 }
 
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	color: #fff;
 }
 
-.tellafriend {
+.tellafriend,
+.share {
 	border-bottom: solid 1px #cce5ff;
 	margin: 4px 0;
 	min-height: 24px;

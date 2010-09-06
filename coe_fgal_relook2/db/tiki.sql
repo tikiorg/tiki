@@ -134,6 +134,7 @@ CREATE TABLE `tiki_articles` (
   `type` varchar(50) default NULL,
   `rating` decimal(3,2) default NULL,
   `isfloat` char(1) default NULL,
+  `ispublished` char(1) NOT NULL DEFAULT 'y',
   PRIMARY KEY (`articleId`),
   KEY `title` (`title`),
   KEY `heading` (`heading`(255)),
@@ -2955,6 +2956,7 @@ CREATE TABLE `users_usergroups` (
   `userId` int(8) NOT NULL default '0',
   `groupName` varchar(255) NOT NULL default '',
   `created` int(14) default NULL,
+  `expire` int(14) default NULL,
   PRIMARY KEY (`userId`,`groupName`(30))
 ) ENGINE=MyISAM;
 
@@ -3197,8 +3199,8 @@ INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Vi
 DROP TABLE IF EXISTS `tiki_freetags`;
 CREATE TABLE `tiki_freetags` (
   `tagId` int(10) unsigned NOT NULL auto_increment,
-  `tag` varchar(30) NOT NULL default '',
-  `raw_tag` varchar(50) NOT NULL default '',
+  `tag` varchar(128) NOT NULL default '',
+  `raw_tag` varchar(150) NOT NULL default '',
   `lang` varchar(16) NULL,
   PRIMARY KEY (`tagId`)
 ) ENGINE=MyISAM;
@@ -3727,3 +3729,32 @@ CREATE TABLE `tiki_url_shortener` (
   UNIQUE KEY `shorturl` (`shorturl`),
   KEY `longurl_hash` (`longurl_hash`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `tiki_invit`;
+CREATE TABLE `tiki_invit` (
+  `id` int(11) NOT NULL auto_increment,
+  `inviter` varchar(200) NOT NULL,
+  `groups` varchar(255) default NULL,
+  `ts` int(11) NOT NULL,
+  `emailsubject` varchar(255) NOT NULL,
+  `emailcontent` text NOT NULL,
+  `wikicontent` text,
+  `wikipageafter` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+);
+
+DROP TABLE IF EXISTS `tiki_invited`;
+CREATE TABLE `tiki_invited` (
+  `id` int(11) NOT NULL auto_increment,
+  `id_invit` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `firstname` varchar(24) NOT NULL,
+  `lastname` varchar(24) NOT NULL,
+  `used` enum('no','registered','logged') NOT NULL,
+  `used_on_user` varchar(200) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `id_invit` (`id_invit`),
+  KEY `used_on_user` (`used_on_user`)
+);
+
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES ('tiki_p_invit', 'Can invit users by email, and include them in groups', 'registered', 'tiki', NULL, 'feature_invit');

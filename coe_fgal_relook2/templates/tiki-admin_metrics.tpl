@@ -8,7 +8,7 @@
 	{/if}
 
 	{if $prefs.feature_view_tpl eq 'y'}
-		<a href="tiki-edit_templates.php?template=tiki-admin_metrics.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Metrics Template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
+		<a href="tiki-edit_templates.php?template=tiki-admin_metrics.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Metrics Template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 	{/if}
 </h1>
 
@@ -39,15 +39,15 @@
 				<td class="{cycle advance=false}">{$metric.metric_datatype|escape}</td>
 				<td class="{cycle advance=false}">{$metric.metric_query|escape}</td>
 				<td class="{cycle}">
-					<a class="link" href="tiki-admin_metrics.php?metric_edit={$i|escape:'url'}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
-					<a class="link" href="tiki-admin_metrics.php?assign_metric_new={$i|escape:'url'}#assign" title="{tr}Assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}Assign{/tr}' /></a>
-					<a class="link" href="tiki-admin_metrics.php?metric_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}Delete{/tr}' /></a>
+					<a class="link" href="tiki-admin_metrics.php?metric_edit={$i|escape:'url'}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?assign_metric_new={$i|escape:'url'}#assign" title="{tr}Assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt="{tr}Assign{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?metric_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt="{tr}Delete{/tr}" /></a>
 				</td>
 			</tr>
 		{/foreach}
 	{else}
 		<tr>
-			<td colspan="6" class="odd"><b>{tr}No records found{/tr}</b></td>
+			<td colspan="5" class="odd"><b>{tr}No records found{/tr}</b></td>
 		</tr>
 	{/if}
 </table>
@@ -67,14 +67,14 @@
 				<td class="{cycle advance=false} first">{$tab.tab_name|escape}</td>
 				<td class="{cycle advance=false}">{$tab.tab_order|escape}</td>
 				<td class="{cycle}">
-					<a class="link" href="tiki-admin_metrics.php?tab_edit={$i|escape:'url'}#editcreatetab" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
-					<a class="link" href="tiki-admin_metrics.php?tab_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}Delete{/tr}' /></a>
+					<a class="link" href="tiki-admin_metrics.php?tab_edit={$i|escape:'url'}#editcreatetab" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?tab_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt="{tr}Delete{/tr}" /></a>
 				</td>
 			</tr>
 		{/foreach}
 	{else}
 		<tr>
-			<td colspan="6" class="odd"><b>{tr}No records found{/tr}</b></td>
+			<td colspan="3" class="odd"><b>{tr}No records found{/tr}</b></td>
 		</tr>
 	{/if}
 </table>
@@ -94,14 +94,14 @@
 				<td class="{cycle advance=false} first">{$metrics_list[$assigned_item.metric_id].metric_name|escape}</td>
 				<td class="{cycle advance=false}">{$tabs_list[$assigned_item.tab_id].tab_name|escape}</td>
 				<td class="{cycle}">
-					<a class="link" href="tiki-admin_metrics.php?assign_metric_edit={$i|escape:'url'}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
-					<a class="link" href="tiki-admin_metrics.php?assign_remove={$i|escape:'url'}" title="{tr}Unassign{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}Delete{/tr}' /></a>
+					<a class="link" href="tiki-admin_metrics.php?assign_metric_edit={$i|escape:'url'}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
+					<a class="link" href="tiki-admin_metrics.php?assign_remove={$i|escape:'url'}" title="{tr}Unassign{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt="{tr}Delete{/tr}" /></a>
 				</td>
 			</tr>
 		{/foreach}
 	{else}
 		<tr>
-			<td colspan="6" class="odd"><b>{tr}No records found{/tr}</b></td>
+			<td colspan="3" class="odd"><b>{tr}No records found{/tr}</b></td>
 		</tr>
 	{/if}
 </table>

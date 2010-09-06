@@ -15,10 +15,10 @@
 <form action="tiki-admin_survey_questions.php" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea name="question" rows="5" cols="40">{$info.question|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Position{/tr}:</td><td class="formcolor"><select name="position">{html_options values=$positions output=$positions selected=$info.position}</select></td></tr>
-<tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
+<table class="formcolor">
+<tr><td>{tr}Question{/tr}:</td><td><textarea name="question" rows="5" cols="40">{$info.question|escape}</textarea></td></tr>
+<tr><td>{tr}Position{/tr}:</td><td><select name="position">{html_options values=$positions output=$positions selected=$info.position}</select></td></tr>
+<tr><td>{tr}Type{/tr}:</td><td>
 <select name="type">
 <option value='c' {if $info.type eq 'c'}selected=selected{/if}>{tr}One choice{/tr}</option>
 <option value='m' {if $info.type eq 'm'}selected=selected{/if}>{tr}Multiple choices{/tr}</option>
@@ -29,20 +29,20 @@
 <option value='s' {if $info.type eq 's'}selected=selected{/if}>{tr}Rate (1..10){/tr}</option>
 <option value='r' {if $info.type eq 'r'}selected=selected{/if}>{tr}Rate{/tr}</option>
 </select></td></tr>
-<tr><td class="formcolor">{tr}Answer is mandatory:{/tr}</td><td class="formcolor"><input type="checkbox" name="mandatory" {if $info.mandatory eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="formcolor">{tr}Number of required answers (for multiple choices):{/tr}</td><td class="formcolor">
+<tr><td>{tr}Answer is mandatory:{/tr}</td><td><input type="checkbox" name="mandatory" {if $info.mandatory eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td>{tr}Number of required answers (for multiple choices):{/tr}</td><td>
 	{tr}Min:{/tr}<input type="text" name="min_answers" size="4" value="{$info.min_answers}" />
 	{tr}Max:{/tr}<input type="text" name="max_answers" size="4" value="{$info.max_answers}" />
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor">
+<tr><td>&nbsp;</td><td>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}For a multiple answer question put the answers into the following field, separated by a comma. Example: one,two,many,lots{/tr}.
 	<br />{tr}For a rate, you can give the maximum value.{/tr}
 	<br />{tr}For the 'multiple choices of thumbnail from a file gallery' type, options are: Gallery ID. Example: 4{/tr}
 {/remarksbox}
 </td></tr>
-<tr><td class="formcolor">{tr}Options (if apply){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$info.options|escape}" size="80" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td>{tr}Options (if apply){/tr}:</td><td><input type="text" name="options" value="{$info.options|escape}" size="80" /></td></tr>
+<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Questions{/tr}</h2>

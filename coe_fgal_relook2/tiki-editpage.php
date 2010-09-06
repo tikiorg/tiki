@@ -838,12 +838,16 @@ if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
 		}
 		$info['wysiwyg'] = true;
 		$smarty->assign('allowhtml','y');
-	} elseif ($prefs['wysiwyg_htmltowiki'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y' && isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
-		if ($edit_data != 'ajax error') {
-			//$parsed = $editlib->parseToWysiwyg($edit_data);
+	} elseif ($prefs['wysiwyg_ckeditor'] === 'y' && isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
+		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+			if ($edit_data != 'ajax error') {
+				//$parsed = $editlib->parseToWysiwyg($edit_data);
+			} else {
+	//			$edit_data = '';
+				unset($_REQUEST['save']);	// why?
+			}
 		} else {
-//			$edit_data = '';
-			unset($_REQUEST['save']);
+		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true, 'parsetoc' => false));
 		}
 	}
 }
@@ -1084,8 +1088,16 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 				$edit .= "\r\n";
 			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
 		}
-		if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {//take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
+		if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {
+			// take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
 			$edit = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $edit);
+			// remove the wysiwyg plugin elements leaving the syntax only remaining
+			// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
+			$edit2 = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end cke_tiki_plugin --><\/(?:div|span)>/Umis', "$1", $edit);
+			if (!empty($edit2)) {
+				$edit = $edit2;
+				unset($edit2);
+			}
 		}
 		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg'], $wiki_authors_style);
 		create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user);

@@ -208,7 +208,7 @@ function wikiplugin_trackerlist_info() {
 			'wiki' => array(
 				'required' => false,
 				'name' => tra('Wiki Page'),
-				'description' => tra('Use content of the wiki page as template to display the item'),
+				'description' => tra('Use content of the wiki page as template to display the item. The page should have the permission tiki_p_use_as_template set, and that page should be only open for edition to fully trusted users such as other site admins'),
 				'filter' => 'pagename',
 				'advanced' => true,
 			),
@@ -374,7 +374,8 @@ function wikiplugin_trackerlist($data, $params) {
 	} else {
 
 		global $auto_query_args;
-		$auto_query_args = array_merge($auto_query_args, array('itemId','tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user'));
+		$auto_query_args_local = array('itemId','tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user');
+		$auto_query_args = empty($auto_query_args)? $auto_query_args_local: array_merge($auto_query_args, $auto_query_args_local);
 		$smarty->assign('trackerId', $trackerId);
 		$tracker_info = $trklib->get_tracker($trackerId);
 		if ($t = $trklib->get_tracker_options($trackerId)) {
@@ -406,6 +407,12 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		if (!empty($filterfield) && !empty($limit)) {
 			$limit = array_unique(array_merge($limit, $filterfield));
+		}
+		if (!empty($popup)) {
+			$limit = array_unique(array_merge($limit, $popup));
+		}
+		if (!empty($calendarfielddate)) {
+			$limit = array_unique(array_merge($limit, $calendarfielddate));
 		}
 		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
 			$limit = '';
@@ -977,6 +984,50 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if (count($passfields)) {
+			// Optimization: Group category fields using AND logic indicated by sub-array
+			$catfilters = array();
+			$catfiltervalue = array();
+			$catfilternotvalue = array();
+			if (!empty($filterfield)) {
+			foreach ($filterfield as $k => $ff) {
+				$filterfieldinfo = $trklib->get_tracker_field($ff);
+				if ($filterfieldinfo['type'] == 'e') {
+					$catfilters[] = $k;
+					if (!empty($filtervalue[$k]) && empty($exactvalue[$k]) ) {
+						// Some people use filtervalue instead of exactvalue for category filters
+						$exactvalue[$k] = $filtervalue[$k];
+						for ($i = 0; $i < $k; $i++) {
+							if (!isset($exactvalue[$i])) {
+								$exactvalue[$i] = '';
+							}
+						} 
+					} 
+					if (array_key_exists('not', $exactvalue[$k])) {
+						$catfilternotfield[0] = $ff;
+						$catfilternotvalue[] = array($exactvalue[$k]);
+					} else {
+						$catfilterfield[0] = $ff;
+						$catfiltervalue[] = array($exactvalue[$k]);
+					}
+				}
+			}
+			}
+			if ($catfilters) {
+				foreach ($catfilters as $cf) {
+					unset($filterfield[$cf]);
+					unset($exactvalue[$cf]);
+				}
+				if ($catfiltervalue) {
+					// array_merge is used because it reindexes
+					$filterfield = array_merge($filterfield, $catfilterfield);
+					$exactvalue = array_merge($exactvalue, array($catfiltervalue));
+				}
+				if ($catfilternotvalue) {
+					$filterfield = array_merge($filterfield, $catfilternotfield);
+					$exactvalue[] = array('not' => $catfilternotvalue);
+				}
+			}
+			// End Optimization
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter, $allfields);
 			if (isset($silent) && $silent == 'y' && empty($items['cant'])) {
 				return;
@@ -1071,6 +1122,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->assign('dayend', $dayend['date']);
 				$smarty->assign('today', TikiLib::make_time(0,0,0, TikiLib::date_format('%m'), TikiLib::date_format('%d'), TikiLib::date_format('%Y')));
 				$smarty->assign('sticky_popup', $calendarstickypopup);
+				$smarty->assign('showpopup', 'n');
 				global $headerlib; include_once('lib/headerlib.php');
 				$headerlib->add_cssfile('css/calendar.css',20);
 				return '~np~'.$smarty->fetch('modules/mod-calendar_new.tpl').'~/np~';

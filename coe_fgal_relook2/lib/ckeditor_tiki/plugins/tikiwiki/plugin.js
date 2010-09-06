@@ -11,9 +11,16 @@
  * (author Juan Valencia, thanks also)
  */
  
-CKEDITOR.plugins.add('tikiwiki',{    
+CKEDITOR.plugins.add('tikiwiki',{
+	ckToHtml: null,
+	editor: null,
+	dataFilter: null,
+	
 	init: function(editor)    {  
 		var twplugin = this;
+		this.editor = editor;
+		this.ckToHtml = editor.dataProcessor.toHtml;
+		this.dataFilter = editor.dataProcessor.dataFilter;
 			
 		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return twplugin.toWikiFormat( editor, html ); };
 		editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return twplugin.toHtmlFormat( editor, data ); };
@@ -51,6 +58,8 @@ CKEDITOR.plugins.add('tikiwiki',{
 	toHtmlFormat: function ( editor, data ) {
 		// deal with plugins here?
 		var output = "";
+		var twplugin = this;
+		
 		ajaxLoadingShow( "cke_contents_" + editor.name);
 		jQuery.ajax({
 			async: false,	// wait for this one
@@ -65,6 +74,9 @@ CKEDITOR.plugins.add('tikiwiki',{
 			// good callback
 			success: function(data) {
 				output = unescape(jQuery(data).find('data').text());
+				//var fragment = CKEDITOR.htmlParser.fragment.fromHtml( output, false );	// fixForBody?
+				//editor.dataProcessor.htmlFilter.onFragment(fragment);
+				twplugin.ckToHtml.call(twplugin, output);
 			},
 			// bad callback - no good info in the params :(
 			error: function(req, status, error) {

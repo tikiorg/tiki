@@ -384,116 +384,104 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 	if (jqueryTiki.sheet) {
 		
 		// override saveSheet on jQuery.sheet for tiki specific export
-		$.sheet.saveSheet = function( index, redirect ) {
-			if (typeof redirect === 'undefined') { redirect = false; }
-			if (typeof index === 'undefined') { index = this.instance.length - 1; }
-			// not set to 0 by default in case AJAX has caused a spurious one to appear
-
-			var sheetInstance = this.instance[ index ];
-			sheetInstance.evt.cellEditDone();
-			
-			var s = this.get_sheet_json(sheetInstance);
-			
-			s = "s=" + $.toJSON(s)	// convert to JSON
-				.replace(/\+/g,"%2B")	// replace +'s with 0x2B hex value
-				.replace(/\&/g,"%26");	// and replace &'s with 0x26
-			
-			jQuery.ajax({
-				url: sheetInstance.s.urlSave,
-				type: "POST",
-				data: s,
-				//contentType: "application/json; charset=utf-8",
-				dataType: 'html',
-				beforeSend: function() { window.showFeedback("Saving", 10000); }, 
-				success: function(data) {
-					sheetInstance.setDirty(false);
-					window.showFeedback(data, 2000, redirect);
-				}
+		$.sheet.saveSheet = function( redirect ) {
+			$( $.sheet.instance ).each( function( i ){
+				if (typeof redirect === 'undefined') { redirect = false; }
+				// not set to 0 by default in case AJAX has caused a spurious one to appear
+	
+				this.evt.cellEditDone();
+				
+				var s = $.sheet.get_sheet_json(this);
+				
+				s = "s=" + $.toJSON(s)	// convert to JSON
+					.replace(/\+/g,"%2B")	// replace +'s with 0x2B hex value
+					.replace(/\&/g,"%26");	// and replace &'s with 0x26
+				
+				var setDirty = this.setDirty;
+				
+				$.ajax({
+					url: this.s.urlSave,
+					type: "POST",
+					data: s,
+					//contentType: "application/json; charset=utf-8",
+					dataType: 'html',
+					beforeSend: function() { window.showFeedback("Saving", 10000); }, 
+					success: function(data) {
+						setDirty(false);
+						window.showFeedback(data, 2000, redirect);
+					}
+				});
 			});
 		};
 		
 		$.sheet.get_sheet_json = function(sheetInstance) {	// diverged from jQuery.sheet 1.1 / Tiki 6
-			
 			var sheetClone = sheetInstance.sheetDecorateRemove(true);
-			var docs = []; //documents
+			var documents = []; //documents
 			
 			jQuery(sheetClone).each(function() {
-				var doc = { //document
-					metadata:{},
-					data:{}
-				};
-
-				var count = 0;
-				var cur_column = 0, cur_row = 0;
-				var max_column = 0, max_row = 0;
-				jQuery(this).find('tr').each(function(){
-					count = 0;
-					jQuery(this).find('td').each(function(){
-						count++;
+				var document = {}; //document
+				document.metadata = {};
+				document.data = {};
+				
+				var table = jQuery(this);
+				
+				var trs = table.find('tr');
+				var rowCount = trs.length;
+				var colCount = 0;
+				var col_widths = '';
+				
+				trs.each(function(i) {
+					var tr = jQuery(this);
+					var tds = tr.find('td');
+					colCount = tds.length;
+					
+					document.data['r' + i] = {};
+					document.data['r' + i].height = tr.attr('height');
+					
+					tds.each(function(j) {
 						var td = jQuery(this);
-						var id = td.attr('id');
-						var txt = jQuery.trim(td.text());
-						var pos = id.search(/cell_c/i);
-						var pos2 = id.search(/_r/i);
-						var stl = td.attr('style'); //we don't use 'style' or 'class', they are reserved variables in IE 
-						var cl = td.attr('class');
+						var colSpan = td.attr('colspan');
+						colSpan = (colSpan > 1 ? colSpan : null);
+
+						document.data['r' + i]['c' + j] = {
+							value: td.text(),
+							formula: td.attr('formula'),
+							stl: td.attr('style'),
+							colspan: colSpan,
+							cl: td.attr('class')
+						};
 						
-						if (pos !== -1 && pos2 !== -1) {
-							cur_column = parseInt(id.substr(pos+6, pos2-(pos+6)), 10);
-							cur_row = parseInt(id.substr(pos2+2), 10);
-							
-							if (max_column < cur_column) { max_column = cur_column; }
-							
-							if (max_row < cur_row) { max_row = cur_row; }
-							
-							if (count === 1) { doc.data['r' + cur_row] = {}; }
-							
-							doc.data['r'+cur_row]['c'+cur_column] = {};
-							
-							doc.data['r'+cur_row]['c'+cur_column].value = txt;
-							
-							if (stl) {
-								doc.data['r'+cur_row]['c'+cur_column].stl = stl; 
-							}
-							
-							if (cl) {
-								doc.data['r'+cur_row]['c'+cur_column].cl = cl; 
-							}
-							
-							formula = td.attr('formula');
-							if (formula !== undefined) {
-								doc.data['r'+cur_row]['c'+cur_column].formula = formula;
-							}
-							
-							var sp = td.attr('colSpan');
-							if (sp > 1) {
-								doc.data['r'+cur_row]['c'+cur_column].width = sp;
-							}
-							sp = td.attr('rowSpan');	// TODO in .sheet
-							if (sp > 1) {
-								doc.data['r'+cur_row]['c'+cur_column].height = sp;
-							}
+						var sp = td.attr('colSpan');
+						if (sp > 1) {
+							doc.data['r' + i]['c' + j].width = sp;
+						}
+						sp = td.attr('rowSpan');	// TODO in .sheet
+						if (sp > 1) {
+							doc.data['r' + i]['c' + j].height = sp;
 						}
 					});
-					
-					cur_column = cur_row = 0;
 				});
-				
-				var id = jQuery(this).attr('rel');
+					
+				var id = table.attr('rel');
 				id = id ? id.match(/sheetId(\d+)/) : null;
 				id = id && id.length > 0 ? id[1] : 0;
-				doc.metadata = {
-					"columns": parseInt(max_column, 10) + 1, //length is 1 based, index is 0 based
-					"rows": parseInt(max_row, 10) + 1, //length is 1 based, index is 0 based
-					"title": jQuery(this).attr('title'),
-					"sheetId" : id
-				};
-				docs.push(doc); //append to documents
-			});
-			return docs;
-		};
 
-	
+				document.metadata = {
+					"columns": parseInt(colCount, 10), //length is 1 based, index is 0 based
+					"rows": parseInt(rowCount, 10), //length is 1 based, index is 0 based
+					"title": table.attr('title'),
+					"col_widths": {},
+					"sheetId": id
+				};
+				
+				table.find('colgroup').children().each(function(i) {
+					document.metadata.col_widths['c' + i] = (jQuery(this).attr('width') + '').replace('px', '');
+				});
+				
+				documents.push(document); //append to documents
+			});
+			return documents;
+		};	
 	}
 	
 });		// end $(document).ready
@@ -636,7 +624,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
     		// only used in ckeditor to insert new plugins, but needs reparsing afterwards
         	if ($('#cke_contents_' + area_id).length !== 0) {
         		cked = CKEDITOR.instances[area_id];
-        		if (cked) {
+        		if (cked && typeof cked.reParse == 'function') {
         			cked.reParse();
         		}
         	}
@@ -655,6 +643,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 	container.dialog('destroy').dialog({
 		width: $(window).width() * 0.6,
 		height: $(window).height() * pfc,
+		zIndex: 10000,
 		title: heading.text(),
 		autoOpen: false,
 		close: function() {
@@ -923,14 +912,28 @@ $.fn.tiki = function(func, type, options) {
 		case "sheet":
 			if (jqueryTiki.sheet) {
 				options = options || {};	// some default options for sheets in tiki
-				var sheet_theme = jqueryTiki.ui ? "lib/jquery/jquery-ui/themes/" + jqueryTiki.ui_theme + "/jquery-ui.css" : "lib/jquery/jquery.sheet/theme/jquery-ui-1.8.1.custom.css";
-
-				opts = $.extend({urlBaseCss: 	"lib/jquery/jquery.sheet/jquery.sheet.css",
-							urlTheme: 		sheet_theme,
+				
+				//ensure that sheet instance exists, otherwise problems getting current instance number;
+				var I = 0;
+				if ( $.sheet.instance ) {
+					I = $.sheet.instance.length; //we use length here because we haven't yet created sheet, it will append 1 to this number thus making this the effective instance number
+				} else {
+					$.sheet.instance = [];
+				}				
+				
+				var inlineMenu =  $("#sheetTools").html();
+				inlineMenu = jQuery(
+							(inlineMenu ? inlineMenu : "").replace(/sheetInstance/g, "jQuery.sheet.instance[" + I + "]")
+				);
+				
+				inlineMenu.find('.qt-picker').attr('instance', I);
+				
+				opts = $.extend({
 							urlMenu: 		"lib/jquery_tiki/jquery.sheet/menu.html",	/* not working currently due to missing menu plugin */
 							urlGet: "",
 							buildSheet: true,
 							autoFiller: true,
+							inlineMenu: inlineMenu,
 							colMargin: 20 //beefed up colMargin because the default size was too small for font
 				}, options);
 				
@@ -1081,6 +1084,7 @@ function displayDialog( ignored, list, area_id, isSub ) {
 	if (!obj.width) { obj.width = 210; }
 	obj.bgiframe = true;
 	obj.autoOpen = false;
+//	obj.zIndex = 10000;
 //	$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
 
 	if (isSub) {
@@ -1111,7 +1115,7 @@ function displayDialog( ignored, list, area_id, isSub ) {
 window.pickerData = [];
 var pickerDiv;
 
-function displayPicker( closeTo, list, area_id ) {
+function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 	if (pickerDiv) {
 		$('div.toolbars-picker').remove();	// simple toggle
 		pickerDiv = false;
@@ -1137,29 +1141,44 @@ function displayPicker( closeTo, list, area_id ) {
 		
 		link.innerHTML = disp.replace('\/', '/');
 		link.href = 'javascript:void(0)';
-		link.onclick = function() {
-			insertAt( area_id, ins );
+		
+		if ( isSheet ) {
+			link.onclick = function() {
+				var o = $(link);
+				var I = $(closeTo).attr('instance');
+				I = parseInt( I ? I : 0 );
+				$.sheet.instance[ I ].cellChangeStyle(styleType, o.children().first().css('background-color'));
+				
+				$('div.toolbars-picker').remove();
+				pickerDiv = false;
+				
+				return false;
+			};
+		} else {
+			link.onclick = function() {
+				insertAt( area_id, ins );
+		
+				textarea = $('#' +  area_id);	
+				// quick fix for Firefox 3.5 losing selection on changes to popup
+				if (typeof textarea.selectionStart != 'undefined') {
+					var tempSelectionStart = textarea.selectionStart;
+					var tempSelectionEnd = textarea.selectionEnd;	
+				}
 	
-			textarea = $('#' +  area_id);	
-			// quick fix for Firefox 3.5 losing selection on changes to popup
-			if (typeof textarea.selectionStart != 'undefined') {
-				var tempSelectionStart = textarea.selectionStart;
-				var tempSelectionEnd = textarea.selectionEnd;	
-			}
-
-			$('div.toolbars-picker').remove();
-			pickerDiv = false;
-
-			// quick fix for Firefox 3.5 losing selection on changes to popup
-        	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
-                textarea.selectionStart = tempSelectionStart;
-     		}
-			if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
-            	textarea.selectionEnd = tempSelectionEnd;
-       		}
-
-			return false;
-		};
+				$('div.toolbars-picker').remove();
+				pickerDiv = false;
+	
+				// quick fix for Firefox 3.5 losing selection on changes to popup
+	        	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+	                textarea.selectionStart = tempSelectionStart;
+	     		}
+				if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
+	            	textarea.selectionEnd = tempSelectionEnd;
+	       		}
+	
+				return false;
+			};
+		}
 	};
 
 	for( var i in window.pickerData[list] ) {
@@ -1521,6 +1540,86 @@ function dialogReplaceReplace( area_id ) {
 }
 
 
+(function($) {
+	/**
+	 * Adds annotations to the content of text in ''container'' based on the
+	 * content found in selected dts.
+	 *
+	 * Used in comments.tpl
+	 */
+	$.fn.addnotes = function( container ) {
+		return this.each(function(){
+			var comment = this;
+			var text = $('dt:contains("note")', comment).next('dd').text();
+			var author = $('.author_info', comment).clone();
+			var body = $('.postbody-content', comment).clone();
+			body.find('dt:contains("note")').closest('dl').remove();
 
+			if( text.length > 0 ) {
+				var parents = container.find(':contains("' + text + '")').parent();
+				var node = container.find(':contains("' + text + '")').not(parents)
+					.addClass('highlight')
+					.each( function() {
+						var child = $('dl.note-list',this);
+						if( ! child.length ) {
+							child = $('<dl class="note-list"/>')
+								.appendTo(this)
+								.hide();
+
+							$(this).click( function() {
+								child.toggle();
+							} );
+						}
+
+						child.append( $('<dt/>')
+							.append(author) )
+							.append( $('<dd/>').append(body) );
+					} );
+			}
+		});
+	};
+
+	/**
+	 * Convert a zone to a note editor by attaching handlers on mouse events.
+	 */
+	$.fn.noteeditor = function (textarea, link) {
+		var annote = $(link)
+			.css('background','white')
+			.click( function( e ) {
+				e.preventDefault();
+				var annotation = $(this).attr('annotation');
+				$(this).hide();
+
+				$(textarea).parents().show();
+				$(textarea).val(';note:' + annotation + "\n\n").focus().scroll();
+			} )
+			.appendTo(document.body);
+
+			$(this).mouseup(function( e ) {
+				var range;
+				if( window.getSelection && window.getSelection().rangeCount ) {
+					range = window.getSelection().getRangeAt(0);
+				} else if( window.selection ) {
+					range = window.selection.getRangeAt(0);
+				}
+
+				if( range ) {
+					var string = $.trim( range.toString() );
+
+					if( string.length && -1 === string.indexOf( "\n" ) ) {
+						annote.attr('annotation', string);
+						annote.show().position( {
+							of: e,
+							at: 'bottom left',
+							my: 'top left',
+							offset: '10 10'
+						} );
+					} else {
+						annote.hide();
+					}
+				}
+			});
+		};
+})($jq);
 
 

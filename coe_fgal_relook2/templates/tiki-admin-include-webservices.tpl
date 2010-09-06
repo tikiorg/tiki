@@ -20,14 +20,14 @@
 	{/if}
 	{if $url and $params|@count}
 		<h3>{tr}Parameters{/tr}</h3>
-		<table class="normal">
+		<table class="formcolor">
 			{foreach from=$params key=name item=value}
-				<tr class="formcolor">
+				<tr>
 					<td>{$name|escape}</td>
 					<td><input type="text" name="params[{$name|escape}]" value="{$value|escape}" /></td>
 				</tr>
 			{/foreach}
-			<tr class="formcolor">
+			<tr>
 				<td colspan="2">
 					<input type="submit" name="test" value="{tr}Test Input{/tr}" />
 				</td>
@@ -88,7 +88,7 @@
 			</p>
 		{else}
 			<h3>{tr}Registered Templates{/tr}</h3>
-			<table class="normal">
+			<table class="formcolor">
 				<tr>
 					<th>{tr}Name{/tr}</th>
 					<th>{tr}Engine{/tr}</th>
@@ -107,16 +107,16 @@
 					</tr>
 					<tr><td colspan="4"><pre>{$template->content|escape}</pre></td></tr>
 					{if $preview eq $template->name}
-						<tr class="formcolor"><td colspan="4">{$preview_output}</td></tr>
+						<tr><td colspan="4">{$preview_output}</td></tr>
 					{/if}
 				{/foreach}
-				<tr class="formcolor">
+				<tr>
 					<td><input type="text" name="nt_name" value="{$nt_name|escape}"/></td>
 					<td><input type="text" name="nt_engine" value="{$nt_engine|escape}"/></td>
 					<td><input type="text" name="nt_output" value="{$nt_output|escape}"/></td>
 				</tr>
-				<tr class="formcolor"><td colspan="4"><textarea name="nt_content" rows="10">{$nt_content|escape}</textarea></td></tr>
-				<tr class="formcolor"><td colspan="4"><input type="submit" name="create_template" value="{tr}Register Template{/tr}"/></td></tr>
+				<tr><td colspan="4"><textarea name="nt_content" rows="10">{$nt_content|escape}</textarea></td></tr>
+				<tr><td colspan="4"><input type="submit" name="create_template" value="{tr}Register Template{/tr}"/></td></tr>
 			</table>
 		{/if}
 	{/if}

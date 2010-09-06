@@ -44,12 +44,12 @@
 			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].user}&nbsp;</td>
 			<td class="{cycle}">
 				<a class="link" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}&postId={$listpages[changes].postId}">{icon _id='page_edit'}</a>
-				<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+				<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
 	{sectionelse}
 		<tr>
-			<td colspan="6" class="odd">
+			<td colspan="7" class="odd">
 				<b>{tr}No records found{/tr}</b>
 			</td>
 		</tr>

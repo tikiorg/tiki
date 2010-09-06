@@ -34,12 +34,12 @@
 <input type="hidden" name="edit" value="{$videoId|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Video Title{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Tags{/tr}:</td><td class="formcolor"><input typr="text" name="tags" size="80" value="{$tags}" /></td></tr>
+<table class="formcolor">
+<tr><td>{tr}Video Title{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td>{tr}Description{/tr}:</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+<tr><td>{tr}Tags{/tr}:</td><td><input typr="text" name="tags" size="80" value="{$tags}" /></td></tr>
 {include file=categorize.tpl}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="editvideo" value="{tr}Save{/tr}" />&nbsp;&nbsp;{button href="tiki-browse_video.php?videoId=$videoId" _text="{tr}Cancel Edit{/tr}"}</td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="editvideo" value="{tr}Save{/tr}" />&nbsp;&nbsp;{button href="tiki-browse_video.php?videoId=$videoId" _text="{tr}Cancel Edit{/tr}"}</td></tr>
 </table>
 </form>
 

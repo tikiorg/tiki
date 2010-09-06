@@ -20,28 +20,28 @@
 	<h2>{tr}Edit Received Page{/tr}</h2>
 	<form action="tiki-received_pages.php" method="post">
 		<input type="hidden" name="receivedPageId" value="{$receivedPageId|escape}" />
-		<table class="normal">
+		<table class="formcolor">
 			<tr>
-				<td class="formcolor">{tr}Name{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Name{/tr}:</td>
+				<td>
 					<input type="text" name="pageName" value="{$pageName|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Data{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Data{/tr}:</td>
+				<td>
 					<textarea name="data" rows="10" cols="60">{$data|escape}</textarea>
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">{tr}Comment{/tr}:</td>
-				<td class="formcolor">
+				<td>{tr}Comment{/tr}:</td>
+				<td>
 					<input type="text" name="comment" value="{$comment|escape}" />
 				</td>
 			</tr>
 			<tr>
-				<td class="formcolor">&nbsp;</td>
-				<td class="formcolor">
+				<td>&nbsp;</td>
+				<td>
 					<input type="submit" name="preview" value="{tr}Preview{/tr}" />
 					&nbsp;
 					<input type="submit" name="save" value="{tr}Save{/tr}" />
@@ -94,9 +94,9 @@
 				<td class="{cycle advance=false}">{$channels[user].receivedFromUser}</td>
 				<td class="{cycle advance=false}">
 					<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}">{icon _id='page_edit'}</a>
-					<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}">{icon _id='magnifier' alt='{tr}View{/tr}'}</a>
+					<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}">{icon _id='accept'}</a> &nbsp;
-					<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+					<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
 			</tr>
 		{/section}
@@ -146,7 +146,7 @@
 					<td class="{cycle advance=false}">
 						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$structures[user].receivedPageId}">{icon _id='accept'}</a> 
 						&nbsp;
-						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$structures[user].receivedPageId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$structures[user].receivedPageId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					</td>
 				</tr>
 				{section name=ix loop=$structures}
@@ -169,7 +169,7 @@
 							<td class="{cycle advance=false}">{$structures[ix].receivedFromUser}</td>
 							<td class="{cycle advance=false}">
 								<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$structures[ix].receivedPageId}">{icon _id='page_edit'}</a>
-								<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$structures[ix].receivedPageId}">{icon _id='magnifier' alt='{tr}View{/tr}'}</a>
+								<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$structures[ix].receivedPageId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 							</td>
 						</tr>
 					{/if}

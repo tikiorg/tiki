@@ -71,7 +71,7 @@
     	{/if}
     	
     	<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title|escape}</a>
-    	<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">{icon _id='cross' alt='{tr}Remove{/tr}' style="vertical-align:middle;"}</a>
+    	<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">{icon _id='cross' alt="{tr}Remove{/tr}" style="vertical-align:middle;"}</a>
     	<br />
     	{/section}
     	</td>
@@ -169,21 +169,21 @@
 <input type="hidden" name="eventId" value="{$eventId|escape}" />
 <input type="hidden" name="view" value="{$view|escape}" />
 <input type="hidden" name="duration" value="60*60" />
-<table class="normal">
-  <tr><td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" style="width:95%"/>
+<table class="formcolor">
+  <tr><td>{tr}Title{/tr}</td>
+      <td><input type="text" name="title" value="{$info.title|escape}" style="width:95%"/>
       </td>
   </tr>
   <tr>
-  	  <td class="formcolor">{tr}Start{/tr}</td>
-  	  <td class="formcolor">
+  	  <td>{tr}Start{/tr}</td>
+  	  <td>
   	  {html_select_date time=$ev_pdate end_year="+4" field_order=$prefs.display_field_order} {tr}at{/tr}
   	  {html_select_time minute_interval=5 time=$ev_pdate_h display_seconds=false use_24_hours=true}
   	  </td>
   </tr>
   <tr>
-  	  <td class="formcolor">{tr}Duration{/tr}</td>
-  	  <td class="formcolor">
+  	  <td>{tr}Duration{/tr}</td>
+  	  <td>
 	  <select name="duration_hours">
 	  {html_options output=$hours values=$hours selected=$duration_hours}
 	  </select> {if $duration_hours>1}{tr}hours{/tr}{else}{tr}hour{/tr}{/if}
@@ -195,8 +195,8 @@
   	  
   </tr>
   <tr>
-  	  <td class="formcolor">{tr}Topic{/tr}</td>
-  	  <td class="formcolor">
+  	  <td>{tr}Topic{/tr}</td>
+  	  <td>
   	  <select name="topicId">
   	  <option value="0" {if $info.topicId eq $topics[ix].topicId}selected="selected"{/if}>{tr}None{/tr}</option>
   	  {section name=ix loop=$topics}
@@ -206,8 +206,8 @@
   	  </td>
   </tr>
   <tr>
-  	  <td class="formcolor">{tr}Description{/tr}</td>
-  	  <td class="formcolor">
+  	  <td>{tr}Description{/tr}</td>
+  	  <td>
   	  <textarea name="description" rows="5" cols="80" style="width:95%">{$info.description|escape}</textarea>
       </td>
   </tr>

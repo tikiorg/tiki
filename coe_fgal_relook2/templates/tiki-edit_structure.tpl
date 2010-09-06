@@ -74,9 +74,9 @@
 		{/if}
 		{if $tiki_p_watch_structure eq 'y'}
 			{if !$subtree[ix].event}
-				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=add&amp;page={$subtree[ix].pageName|escape:"url"}">{icon _id='eye_arrow_down' alt='{tr}Monitor the Sub-Structure{/tr}'}</a>
+				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=add&amp;page={$subtree[ix].pageName|escape:"url"}">{icon _id='eye_arrow_down' alt="{tr}Monitor the Sub-Structure{/tr}"}</a>
 			{else}
-				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=remove">{icon _id='no_eye_arrow_down' alt='{tr}Stop Monitoring the Sub-Structure{/tr}'}</a>
+				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=remove">{icon _id='no_eye_arrow_down' alt="{tr}Stop Monitoring the Sub-Structure{/tr}"}</a>
 			{/if}
 		{/if}
 	</th>
@@ -99,12 +99,12 @@
 		{/if}
 		{if $tiki_p_watch_structure eq 'y'}
 			{if !$subtree[ix].event}
-				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=add&amp;page={$subtree[ix].pageName|escape:"url"}">{icon _id='eye_arrow_down' alt='{tr}Monitor the Sub-Structure{/tr}'}</a>
+				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=add&amp;page={$subtree[ix].pageName|escape:"url"}">{icon _id='eye_arrow_down' alt="{tr}Monitor the Sub-Structure{/tr}"}</a>
 			{else}
-				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=remove">{icon _id='no_eye_arrow_down' alt='{tr}Stop Monitoring the Sub-Structure{/tr}'}</a>
+				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=remove">{icon _id='no_eye_arrow_down' alt="{tr}Stop Monitoring the Sub-Structure{/tr}"}</a>
 			{/if}
 		{/if}
-		{if $editable == 'y'}<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;remove={$subtree[ix].page_ref_id}'>{icon _id='cross' style="margin-right:20px;" alt='{tr}Delete{/tr}'}</a>{/if}
+		{if $editable == 'y'}<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;remove={$subtree[ix].page_ref_id}'>{icon _id='cross' style="margin-right:20px;" alt="{tr}Delete{/tr}"}</a>{/if}
 	</td>
 	<td {if $page_ref_id eq $subtree[ix].page_ref_id}style="border-style:dotted; border-width:1px; border-color:gray;"{/if}>
 		{if $page_ref_id eq $subtree[ix].page_ref_id}<b>{/if}
@@ -122,20 +122,20 @@
 <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 
 <h2>{tr}Current Node{/tr}: {$pageName}</h2>
-<table class="normal">
+<table class="formcolor">
   <tr>
-  <td class="formcolor"><label for="pageAlias">{tr}Page alias{/tr}:</label></td>
-  <td class="formcolor">
+  <td><label for="pageAlias">{tr}Page alias{/tr}:</label></td>
+  <td>
   <input type="text" name="pageAlias" id="pageAlias" value="{$pageAlias}" />  <input type="submit" name="create" value="{tr}Update{/tr}" />
   </td>
   </tr>
   <tr>
-  <td class="formcolor">{tr}Move in this structure{/tr}</td>
-  <td class="formcolor">
+  <td>{tr}Move in this structure{/tr}</td>
+  <td>
   <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=1'>{icon _id='resultset_previous' alt="{tr}Promote{/tr}"}</a><a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=4'>{icon _id='resultset_next' alt="{tr}Demote{/tr}"}</a><a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=2'>{icon _id='resultset_up' alt="{tr}Previous{/tr}"}</a><a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=3'>{icon _id='resultset_down' style="margin-right:10px;" alt="{tr}Next{/tr}"}</a>
 </td></tr>
-<tr><td class="formcolor"><label for="structure_id">{tr}Move to another structure{/tr}:</label></td>
-<td class="formcolor">
+<tr><td><label for="structure_id">{tr}Move to another structure{/tr}:</label></td>
+<td>
 <select name="structure_id" id="structure_id"{if $structures|@count eq '1'} disabled="disabled"{/if}>
 {section name=ix loop=$structures}
 {if $structures[ix].page_ref_id ne $page_ref_id}
@@ -152,12 +152,12 @@
   </tr>
 </table>
 <h3>{tr}Add pages to current node{/tr}:</h3>
-<table class="normal">
+<table class="formcolor">
   <tr>
-  <td class="formcolor">
+  <td>
   <label for="after_ref_id">{tr}After page{/tr}:</label>
   </td>
-  <td class="formcolor">
+  <td>
   <select name="after_ref_id" id="after_ref_id">
   {section name=ix loop=$subpages}
   <option value="{$subpages[ix].page_ref_id}" {if $insert_after eq $subpages[ix].page_ref_id}selected="selected"{/if}>{$subpages[ix].pageName}</option>
@@ -166,15 +166,15 @@
   </td>
   </tr>
   <tr>
-  <td class="formcolor">
+  <td>
   <label for="name">{tr}Create Page{/tr}:</label>
   </td>
-  <td class="formcolor">
+  <td>
   <input type="text" name="name" id="name" />
   </td>
   </tr>
   <tr>
-  <td class="formcolor">
+  <td>
   <label for="name2">{tr}Use pre-existing page{/tr}:</label><br /><br />
         <input type="text" name="find_objects" id="find_objects" value="{$find_objects|escape}" />
         <input type="submit" value="{tr}Filter{/tr}" name="search_objects" />
@@ -187,7 +187,7 @@
 		</select>
 		{/if}
   </td>
-  <td class="formcolor">
+  <td>
   <select id="name2" name="name2[]" multiple="multiple" size="8">
   {section name=list loop=$listpages}
   <option value="{$listpages[list].pageName|escape}">{$listpages[list].pageName|truncate:40:"(...)":true}</option>
@@ -196,8 +196,8 @@
   </td>
   </tr>
   <tr>
-  <td class="formcolor">&nbsp;</td>
-  <td class="formcolor">
+  <td>&nbsp;</td>
+  <td>
   <input type="submit" name="create" value="{tr}Update{/tr}" />
   </td>
 </tr>

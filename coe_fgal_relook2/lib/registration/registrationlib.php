@@ -289,13 +289,14 @@ class RegistrationLib extends TikiLib
 		} else {
 			$openid_url = '';
 		}
+
 		$newPass = $registration['pass'] ? $registration['pass'] : $registration["genepass"];
 		if ($this->merged_prefs['validateUsers'] == 'y' || (isset($this->merged_prefs['validateRegistration']) && $this->merged_prefs['validateRegistration'] == 'y')) {
 			$apass = addslashes(md5($tikilib->genPass()));
 			$userlib->send_validation_email($registration['name'], $apass, $registration['email'], '', '', isset($registration['chosenGroup']) ? $registration['chosenGroup'] : '');
 			$userlib->add_user($registration['name'], $newPass, $registration["email"], '', false, $apass, $openid_url , $this->merged_prefs['validateRegistration'] == 'y'?'a':'u');
 			$logslib->add_log('register', 'created account ' . $registration['name']);
-			$result="";
+			$result=tra('You will receive an email with information to login for the first time into this site');
 		} else {
 			$userlib->add_user($registration['name'], $newPass, $registration["email"], '', false, NULL, $openid_url);
 			$logslib->add_log('register', 'created account ' . $registration['name']);
@@ -393,10 +394,26 @@ class RegistrationLib extends TikiLib
 	 */
 	/*public*/
 	function register_new_user($registration, $from_intertiki=false) {
-		global $prefs;
+		global $prefs, $tikilib;
 
 		$result=$this->local_check_registration($registration, $from_intertiki);
 		if ($result !== null) return $result;
+
+        if ($prefs['feature_invit'] == 'y') {
+            unset($registration['invitedid']);
+            $invit=0;
+            if (!$from_intertiki && array_key_exists('invit', $registration)) {
+                $invit=(int)$registration['invit'];
+                $res=$tikilib->query("SELECT * FROM tiki_invited WHERE id_invit=? AND email=? AND used=?",
+                                     array($invit, $registration['email'], "no"));
+                $invited=$res->fetchRow();
+                if (!is_array($invited)) {
+                    return new RegistrationError('invit', tra("This invitation does not exist or is deprecated or wrong email"));
+                } else {
+                    $registration['invitedid']=$invited['id'];
+                }
+            } else unset($registration['invit']);        
+        }
 
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
 			// register to main
@@ -404,6 +421,19 @@ class RegistrationLib extends TikiLib
 		} else {
 			$result=$this->register_new_user_local($registration, $from_intertiki);
 		}
+
+        if ($prefs['feature_invit'] == 'y') {
+            if ($invit > 0) {
+                $res=$tikilib->query("SELECT * FROM tiki_invit WHERE id=?", array($invit));
+                $invitrow=$res->fetchRow();
+                if (!is_array($invitrow)) die("(bug) This invitation does not exist or is deprecated");
+                $tikilib->query("UPDATE tiki_invited SET used=? , used_on_user=? WHERE id=?", array("registered", $registration['name'], $registration['invitedid']));
+                
+                if (!empty($invitrow['wikipageafter']))
+                    $GLOBALS['redirect']=str_replace('tiki-register.php', 'tiki-index.php?page=', $_SERVER['SCRIPT_URI']).urlencode($invitrow['wikipageafter']);
+            }
+        }
+
 
 		return $result;
 	}
@@ -492,7 +522,7 @@ class RegistrationLib extends TikiLib
 		return $this->merged_prefs;
 	}
     
-    }
+}
     
 class RegistrationError
 {

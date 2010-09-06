@@ -388,6 +388,7 @@ function prefs_feature_list() {
 			'description' => tra('Datasheets with calculations and charts'),
 			'help' => 'SpreadSheet',
 			'type' => 'flag',
+			'keywords' => 'sheet calculation calculations stats stat graph graphs',
 		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
@@ -724,7 +725,8 @@ function prefs_feature_list() {
 		'feature_wiki_ext_rel_nofollow' => array(
 			'name' => tra('Add "rel=nofollow" on external links'),
 			'description' => tra("nofollow is used to instruct some search engines that links should not influence search engines. It can reduce search engine spam and prevent 'spamdexing'"),
-		'type' => 'flag',
+			'type' => 'flag',
+			'keywords' => 'no follow spam',
 		),
 		'feature_semantic' => array(
 			'name' => tra('Semantic links'),
@@ -1784,5 +1786,15 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Tiki+User+Credits',
 		),
+		'feature_invit' => array(
+			'name' => tra('Invite users'),
+			'description' => tra('Allow users to invite new users by mail to register on this tiki'),
+			'type' => 'flag',
+		),
+        'feature_loadbalancer' => array(
+            'name' => tra('Load Balancer'),
+            'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
+            'type' => 'flag',
+        ),
 	);
 }

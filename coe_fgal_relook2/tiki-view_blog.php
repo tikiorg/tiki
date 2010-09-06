@@ -51,8 +51,10 @@ if (!$blog_data) {
 }
 $bloglib->add_blog_hit($_REQUEST["blogId"]);
 $smarty->assign('blogId', $_REQUEST["blogId"]);
+$blog_data["blogId"] = $_REQUEST["blogId"];
 $smarty->assign('title', $blog_data["title"]);
 $smarty->assign('headtitle', $blog_data['title'] . ' : ' . $blog_data['description']);
+$blog_data["headtitle"] = $blog_data['title'] . ' : ' . $blog_data['description'];
 $smarty->assign('heading', $blog_data["heading"]);
 $smarty->assign('use_author', $blog_data["use_author"]);
 $smarty->assign('add_date', $blog_data["add_date"]);
@@ -68,6 +70,7 @@ $smarty->assign('hits', $blog_data["hits"]);
 $smarty->assign('creator', $blog_data["user"]);
 $smarty->assign('activity', $blog_data["activity"]);
 $smarty->assign('use_excerpt', $blog_data["use_excerpt"]);
+$smarty->assign('blog_data', $blog_data);
 if (isset($_REQUEST["remove"])) {
 	$data = $bloglib->get_post($_REQUEST["remove"]);
 	if ($user && $blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post')) {

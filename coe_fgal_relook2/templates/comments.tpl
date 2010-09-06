@@ -9,6 +9,7 @@
 {else}
 	{assign var=cookie_key value="show_comzone"}
 {/if}
+
 {*Debug:<br />
 comments_show: {$comments_show}<br />
 show_comzone: {$show_comzone}<br />
@@ -16,6 +17,7 @@ prefs.wiki_comments_displayed_default: {$prefs.wiki_comments_displayed_default}<
 prefs.show_comzone: {$prefs.show_comzone}<br />
 cookie_key: {$cookie_key}<br />
 smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$cookie_key}<br />*}
+
 <div {*do not missed up with the space*}
 {if $pagemd5}
 	id="comzone{$pagemd5}"
@@ -202,45 +204,13 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{include file='comment.tpl' comment=$comments_coms[rep]}
 		{if $thread_style != 'commentStyle_plain'}<br />{/if}
 	{/section}
-	{jq}
-		(function($) {
-			$.fn.addnotes = function( container ) {
-				return this.each(function(){
-					var comment = this;
-					var text = $('dt:contains("note")', comment).next('dd').text();
-					var author = $('.author_info', comment).clone();
-					var body = $('.postbody-content', comment).clone();
-					body.find('dt:contains("note")').closest('dl').remove();
-
-					if( text.length > 0 ) {
-						var parents = container.find(':contains("' + text + '")').parent();
-						var node = container.find(':contains("' + text + '")').not(parents)
-							.addClass('highlight')
-							.each( function() {
-								var child = $('dl.note-list',this);
-								if( ! child.length ) {
-									child = $('<dl class="note-list"/>')
-										.appendTo(this)
-										.hide();
-
-									$(this).click( function() {
-										child.toggle();
-									} );
-								}
-
-								child.append( $('<dt/>')
-									.append(author) )
-									.append( $('<dd/>').append(body) );
-							} );
-					}
-				});
-			};
-		})($jq);
-
-		$('.postbody dt:contains("note")')
-			.closest('.postbody')
-			.addnotes( $('#top') );
-	{/jq}
+	{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
+		{jq}
+			$('.postbody dt:contains("note")')
+				.closest('.postbody')
+				.addnotes( $('#top') );
+		{/jq}
+	{/if}
 </form>
 
 <div class="thread_pagination">
@@ -334,15 +304,15 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	<input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
 	{/section}
 
-	<table class="normal">
+	<table class="formcolor">
 		{if !$user}
 			<tr>
-				<td class="formcolor"><label for="anonymous_name">{tr}Name{/tr}</span></label></td>
-				<td class="formcolor"><input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name"  value="{$comment_preview_data.name|escape}"/></td>
+				<td><label for="anonymous_name">{tr}Name{/tr}</span></label></td>
+				<td><input type="text" maxlength="50" size="30" id="anonymous_name" name="anonymous_name"  value="{$comment_preview_data.name|escape}"/></td>
 			</tr>
 			{if $forum_mode eq 'y' or $prefs.comments_field_email eq 'y'}
 				<tr>
-					<td class="formcolor">
+					<td>
 						<label for="anonymous_email">
 							{if $forum_mode eq 'y'}
 								{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}
@@ -351,50 +321,35 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 							{/if}
 						</label>
 					</td>
-					<td class="formcolor"><input type="text" size="30" id="anonymous_email" name="anonymous_email" value="{$comment_preview_data.email|escape}"/></td>
+					<td><input type="text" size="30" id="anonymous_email" name="anonymous_email" value="{$comment_preview_data.email|escape}"/></td>
 				</tr>
 			{/if}
 
 			{if $forum_mode neq 'y' and $prefs.comments_field_website eq 'y'}
 				<tr>
-					<td class="formcolor">
+					<td>
 						<label for="anonymous_website">{tr}Website{/tr}</label>
 					</td>
-					<td class="formcolor"><input type="text" size="30" id="anonymous_website" name="anonymous_website"  value="{if !empty($comment_preview_data.website)}{$comment_preview_data.website|escape}{else}http://{/if}" /></td>
+					<td><input type="text" size="30" id="anonymous_website" name="anonymous_website"  value="{if !empty($comment_preview_data.website)}{$comment_preview_data.website|escape}{else}http://{/if}" /></td>
 				</tr>
 			{/if}
 		{/if}
 
 		{if ( $forum_mode != 'y' and $prefs.comments_notitle neq 'y' ) or $prefs.forum_reply_notitle neq 'y' && $forum_mode == 'y'}
 			<tr>
-				<td class="formcolor">
+				<td>
 					<label for="comments-title">{tr}Title{/tr} <span class="attention">*</span> </label>
 				</td>
-				<td class="formcolor">
-				{* 
-				   Alain Désilets: This used to have a size="50" attribute, but I deleted it
-				   because in the Collaborative_Multilingual_Terminology, we may need to view 
-				   two different languages of the same page side by side. And the text length of
-				   50 was causing the language displayed on the right side to be squished into a 
-				   very narrow column, if comments were opened on the left side language
-				   but not on the right side language.
-				   
-				   Unfortunately, without a size specification, the comments box looks 
-				   a bit weird when we only view one language at a time.
-				   
-				   But I don't know how else to deal with this issue.
-				 *}
+				<td>
 					<input type="text" name="comments_title" id="comments-title" value="{$comment_preview_data.title|escape}" /> 
-
 				</td>
 			</tr>
 		{/if}
 
-		{* Start: Xenfasa adding and testing article ratings in comments here. Not fully functional yet *}
 		{if $comment_can_rate_article eq 'y'}
 		<tr>
-			<td class="formcolor"><label for="comments-rating">{tr}Rating{/tr} </label></td>
-			<td class="formcolor">
+			<td><label for="comments-rating">{tr}Rating{/tr} </label></td>
+			<td>
 				<select name="comment_rating" id="comments-rating">
 					<option value="" {if $comment_rating eq ''}selected="selected"{/if}>No</option>
 					<option value="0" {if $comment_rating eq 0}selected="selected"{/if}>0</option>
@@ -408,67 +363,34 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					<option value="8" {if $comment_rating eq 8}selected="selected"{/if}>8</option>
 					<option value="9" {if $comment_rating eq 9}selected="selected"{/if}>9</option>
 					<option value="10" {if $comment_rating eq 10}selected="selected"{/if}>10</option>
-				</select> Rate this Article (10=best, 0=worse)
+				</select>{tr}Rate this Article (10=best, 0=worse){/tr}
 			</td>
 		</tr>
 		{/if}
-		{* End: Xenfasa adding and testing article ratings in comments here *}
 
 		{if $prefs.section_comments_parse eq 'y' && $forum_mode neq 'y' || $prefs.feature_forum_parse eq 'y' && $forum_mode eq 'y'}
 	        {assign var=toolbars_html value=true}{* can't find where this gets set in ui-revamp project *}
 	        <tr>
-	    		<td class="formcolor"></td>
-	            <td class="formcolor">
+	    		<td></td>
+	            <td>
 	            	{toolbars area_id='editpost2' comments='y'}
 	            </td>
 	        </tr>
 		{/if}
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">*</span>{/if}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
-				{jq}
-					var annote = $('<a href="">{tr}Comment{/tr}</a>')
-						.css('background','white')
-						.click( function( e ) {
-							e.preventDefault();
-							var annotation = $(this).attr('annotation');
-							$(this).hide();
-
-							$('#editpostform').parents().show();
-							$('#editpostform textarea').val(';note:' + annotation + "\n\n").focus().scroll();
-						} )
-						.appendTo(document.body);
-
-					$('#top').mouseup( function( e ) {
-						var range;
-						if( window.getSelection && window.getSelection().rangeCount ) {
-							range = window.getSelection().getRangeAt(0);
-						} else if( window.selection ) {
-							range = window.selection.getRangeAt(0);
-						}
-
-						if( range ) {
-							var string = $.trim( range.toString() );
-
-							if( string.length && -1 === string.indexOf( "\n" ) ) {
-								annote.attr('annotation', string);
-								annote.show().position( {
-									of: e,
-									at: 'bottom left',
-									my: 'top left',
-									offset: '10 10'
-								} );
-							} else {
-								annote.hide();
-							}
-						}
-					} );
-				{/jq}
+				{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
+					<a id="note-editor-comment" href="">{tr}Comment{/tr}</a>
+					{jq}
+						$('#top').noteeditor('#editpostform textarea', '#note-editor-comment');
+					{/jq}
+				{/if}
 
 				{if $forum_mode eq 'y' and $user and $prefs.feature_user_watches eq 'y'}
 					<div id="watch_thread_on_reply">
@@ -482,8 +404,8 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{if $forum_mode == "y" and (($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y'  or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y'))}
 		{assign var='can_attach_file' value='y'}
 		<tr>
-			<td class="formcolor">{tr}Attach file{/tr}</td>
-			<td class="formcolor">
+			<td>{tr}Attach file{/tr}</td>
+			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input id="userfile1" name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
 			</td>
 		</tr>
@@ -499,7 +421,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 		{/if}
 
 		<tr>
-			<td class="formcolor">
+			<td>
 			{if $parent_coms}
 				{tr}Reply to parent post{/tr}
 			{else}
@@ -507,7 +429,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 			{/if}
 			</td>
 
-			<td class="formcolor">
+			<td>
 				<input type="submit" id="comments_postComment" name="comments_postComment" value="{tr}Post{/tr}" />
 				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />

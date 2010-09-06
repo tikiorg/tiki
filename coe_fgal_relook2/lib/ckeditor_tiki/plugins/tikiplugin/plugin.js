@@ -48,7 +48,8 @@
 						data = sel.getCommonAncestor().getParent();	// this will need more checking
 					}
 					var args = {};
-					var pairs = unescape(data.getAttribute("args")).split("&");
+					var str = $('<div/>').html(unescape(data.getAttribute("args"))).text();	// decode html entities
+					var pairs = str.split("&");	//unescape().replace(/&amp;/gi, "&").split("&");
 					for (var i = 0; i < pairs.length; i++) {
 						if (pairs[i].indexOf("=") > -1) {
 							args[pairs[i].substring(0, pairs[i].indexOf("="))] = pairs[i].substring((pairs[i].indexOf("=") + 1));
@@ -86,19 +87,40 @@
 					}
 				});
 			}
+			
+			editor.on('contentDom', function() {	// re-apply the doubleclick event when wysiwyg mode happens
+				editor.on( 'doubleclick', function(evt) {
+					var element = evt.data.element;
 
-			editor.on( 'doubleclick', function(evt) {
-				var element = evt.data.element;
-
-				if (element.is('span') && element.getAttribute('plugin')) {
-					this.plugins.tikiplugin.command.exec(element);
-				}
+					while (element.getParent()) {
+						element = element.getParent();
+						if ((element.is('span') || element.is('div')) && element.getAttribute('plugin')) {
+							break;
+						}
+					}
+					
+					if ((element.is('span') || element.is('div')) && element.getAttribute('plugin')) {
+						evt.cancel();
+						evt.stop();
+						//evt.removeListener();
+						evt.data.dialog = null;
+						//evt.preventDefault();
+						this.plugins.tikiplugin.command.exec(element);
+					}
+				});
 			});
 
 			// If the "contextmenu" plugin is loaded, register the listeners.
 			if (editor.contextMenu) {
 				editor.contextMenu.addListener(function(element, selection) {
-					//element = $(element.$).parents('[_plugin]');
+					
+					while (element.getParent()) {
+						element = element.getParent();
+						if ((element.is('span') || element.is('div')) && element.getAttribute('plugin')) {
+							break;
+						}
+					}
+					
 					if (element && element.getAttribute('plugin')) {
 						return {
 							tikiplugin : CKEDITOR.TRISTATE_OFF
@@ -111,30 +133,19 @@
 		afterInit : function(editor) {
 			var dataProcessor = editor.dataProcessor;
 			var dataFilter = dataProcessor && dataProcessor.dataFilter;
-			var htmlFilter = dataProcessor && dataProcessor.htmlFilter;
 			if (dataFilter) {
 				dataFilter.addRules( {
 					elements : {
 						'span' : function( element ) {
-debugger;
-							var attributes = element.attributes;
-							if (attributes.plugin) {
-								return createFakeElement( editor, element );
-							} else {
-								return null;
-							}
-						}
-					}
-				}, 1);
-			}
-			if (htmlFilter) {
-				htmlFilter.addRules( {
-					elements : {
-						'span' : function( element ) {
-debugger;
-							var attributes = element.attributes;
-							if (attributes.plugin) {
-								return createFakeElement( editor, element );
+							if (element.attributes && element.attributes.plugin) {
+								//element.attributes.contenteditable = "false";
+								for (var c = 0; c < element.children.length; c++) {
+									if (!element.children[c].attributes) {
+										element.children[c].attributes = {};
+									}
+									element.children[c].attributes.contenteditable = "false";
+								}
+								return element;
 							} else {
 								return null;
 							}

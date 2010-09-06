@@ -14,7 +14,7 @@
     <form action="tiki-admin.php?page=trackers" method="post">
       <table class="admin">
         <tr>
-          <td class="form">
+          <td>
             {tr}Use database to store files{/tr}:
           </td>
           <td>
@@ -23,7 +23,7 @@
         </tr>
 
         <tr>
-          <td class="form">
+          <td>
             {tr}Use a directory to store files{/tr}:</td>
           <td>
             <input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:
@@ -94,11 +94,11 @@
           <td>{if $attachements[x].path}file{else}db{/if}</td>
           <td>{$attachements[x].created|tiki_short_date}</td>
           <td>
-            <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{icon _id='arrow_refresh' title='{tr}Switch storage{/tr}'}</a>
+            <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{icon _id='arrow_refresh' title="{tr}Switch storage{/tr}"}</a>
           </td>
         </tr>
 {sectionelse}
-	<tr class="odd"><td colspan="9">{tr}No records{/tr}</td></tr>
+	<tr class="odd"><td colspan="10">{tr}No records{/tr}</td></tr>
         {/section}
       </table>
       

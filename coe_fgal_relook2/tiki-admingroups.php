@@ -208,8 +208,15 @@ if (!empty($_REQUEST["group"])) {
 		}
 	}
 	if (!isset($_REQUEST['membersOffset'])) $_REQUEST['membersOffset'] = 0;
-	$memberslist = $userlib->get_group_users($_REQUEST['group'], $_REQUEST['membersOffset'], $prefs['maxRecords']
-);
+	if (empty($_REQUEST['sort_mode_member'])) $_REQUEST['sort_mode_member'] = 'login_asc';
+	$memberslist = $userlib->get_group_users($_REQUEST['group'], $_REQUEST['membersOffset'], $prefs['maxRecords'], '*', $_REQUEST['sort_mode_member']);
+	if ($re['expireAfter'] > 0) {
+		foreach ($memberslist as $i=>$member) {
+			if (empty($member['expire'])) {
+				$memberslist[$i]['expire'] = $member['created'] + ($re['expireAfter'] * 24*60*60);
+			}
+		}
+	}
 	$smarty->assign('membersCount', $userlib->count_users($_REQUEST['group']));
 	$smarty->assign('membersOffset', $_REQUEST['membersOffset']);
 	if ($cookietab == '1') $cookietab = "2";

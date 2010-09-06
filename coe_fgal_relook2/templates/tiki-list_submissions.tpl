@@ -10,35 +10,43 @@
 {include file='find.tpl'}
 
 <table class="normal">
+	{assign var=numbercol value=0}
 	<tr>
 		{if $prefs.art_list_title eq 'y'}
+			{assign var=numbercol value=`$numbercol+1`}
 			<th>
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a>
 			</th>
 		{/if}
 		{if $prefs.art_list_topic eq 'y'}
+			{assign var=numbercol value=`$numbercol+1`}
 			<th>
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a>
 			</th>
 		{/if}
 		{if $prefs.art_list_date eq 'y'}
+			{assign var=numbercol value=`$numbercol+1`}
 			<th>
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a>
 			</th>
 		{/if}
 		{if $prefs.art_list_size eq 'y'}
+			{assign var=numbercol value=`$numbercol+1`}
 			<th style="text-align:right;">
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a>
 			</th>
 		{/if}
 		{if $prefs.art_list_img eq 'y'}
+			{assign var=numbercol value=`$numbercol+1`}
 			<th>{tr}Img{/tr}</th>
 		{/if}
 		{if $prefs.art_list_author eq 'y'}
+			{assign var=numbercol value=`$numbercol+1`}
 			<th>
 				<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}User{/tr}</a>
 			</th>
 		{/if}
+		{assign var=numbercol value=`$numbercol+1`}
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	{cycle values="odd,even" print=false}
@@ -69,19 +77,15 @@
 					<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{icon _id='page_edit'}</a>
 				{/if}
 				{if $tiki_p_approve_submission eq 'y'}
-					<a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}"><img src='img/icons2/post.gif' alt='{tr}Approve{/tr}' title='{tr}Approve{/tr}' /></a>
+					<a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}"><img src='img/icons2/post.gif' alt="{tr}Approve{/tr}" title="{tr}Approve{/tr}' /></a>
 				{/if}
 				{if $tiki_p_remove_submission eq 'y'}
-					<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+					<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				{/if}
 			</td>
 		</tr>
 	{sectionelse}
-		<tr>
-			<td colspan="6">
-				<b>{tr}No records found{/tr}</b>
-			</td>
-		</tr>
+		<tr><td class="odd" colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td></tr>
 	{/section}
 </table>
 

@@ -110,7 +110,7 @@ ul.cssmenu_vert ul {
 	position: absolute;
 	display: block;
 	right: .75em;
-	top: 1.05em; /* IE6 only */
+	bottom: 1.05em; /* IE6 only */
 	width: 10px;
 	height: 10px;
 	text-indent: -999em;
@@ -119,7 +119,7 @@ ul.cssmenu_vert ul {
 }
 
 a > .sf-sub-indicator {  /* give all except IE6 the correct values */
-	top: .8em;
+	bottom: .8em;
 	background-position: 0 -100px; /* use translucent arrow for modern browsers*/
 }
 /* apply hovers to modern browsers */

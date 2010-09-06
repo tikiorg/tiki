@@ -9,26 +9,26 @@
 <table class="admin">
 <tr>
   <td style="padding-left:5px"></td>
-  <td class="form"></td>
-  <td class="form"><b>{tr}Points{/tr}</b></td>
-  <td class="form"><b>{tr}Expiration{/tr}</b></td>
+  <td></td>
+  <td><b>{tr}Points{/tr}</b></td>
+  <td><b>{tr}Expiration{/tr}</b></td>
 </tr>
 
 {section name=e loop=$events}
 {if $events[e].category != $categ}
   {assign var=categ value=$events[e].category}
 <tr>
-  <td colspan="4" class="form"><b>{tr}{$events[e].category}{/tr}</b></td>
+  <td colspan="4"><b>{tr}{$events[e].category}{/tr}</b></td>
 </tr>
 {/if}
 
 <tr>
   <td></td>
-  <td class="form">{tr}{$events[e].description}{/tr}</td>
-  <td class="form">
+  <td>{tr}{$events[e].description}{/tr}</td>
+  <td>
     <input type="text" size="3" name="events[{$events[e].event}][score]" value="{$events[e].score}" />
   </td>
-  <td class="form">
+  <td>
     <input type="text" size="4" name="events[{$events[e].event}][expiration]" value="{$events[e].expiration}" />
   </td>
 </tr>
