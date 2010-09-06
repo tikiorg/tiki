@@ -50,8 +50,7 @@
 				{preference name='feature_file_galleries_rankings'}
 				{preference name='feature_file_galleries_comments'}
 				<div class="adminoptionboxchild" id="feature_file_galleries_comments_childcontainer">
-					{preference name='file_galleries_comments_per_page'}
-					{preference name='file_galleries_comments_default_ordering'}
+					<a class="link" href="tiki-admin.php?page=comments">{tr}Manage comment settings{/tr}</a>
 				</div>
 
 				{preference name='fgal_limit_hits_per_file'}

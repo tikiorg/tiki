@@ -77,17 +77,13 @@
 		{tab name="{tr}Features{/tr}"}
 			<input type="hidden" name="wikifeatures" />    	
 			{preference name=feature_sandbox}
-			
+
 			{preference name=feature_wiki_comments}
 			<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
-				<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=comment&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
-				{preference name=wiki_comments_displayed_default}
-				{preference name=wiki_comments_per_page}
-				{preference name=wiki_comments_default_ordering}
-				{preference name=wiki_comments_allow_per_page}
-
+				<a class="link" href="tiki-admin.php?page=comments">{tr}Manage comment settings{/tr}</a>
 			</div>
 
+			
 			{preference name=feature_wiki_attachments}
 			<div class="adminoptionboxchild" id="feature_wiki_attachments_childcontainer">
 				<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=attach&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>

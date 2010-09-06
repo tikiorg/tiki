@@ -47,7 +47,7 @@ function prefs_default_list() {
 			'filter' => 'digits',
 		),
 		'default_rows_textarea_comment' => array(
-			'name' => tra('Comments '),
+			'name' => tra('Default number of rows for comment box'),
 			'type' => 'text',
 			'size' => '3',
 			'shorthint' => tra('rows'),

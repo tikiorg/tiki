@@ -30,6 +30,39 @@
 					{preference name=comments_notitle}
 					{preference name=comments_field_email}
 					{preference name=comments_field_website}
+					{preference name=default_rows_textarea_comment}
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Using comments below wiki pages{/tr}</legend>
+
+				{preference name=feature_wiki_comments}
+				<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
+					<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=comment&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
+					{preference name=wiki_comments_displayed_default}
+					{preference name=wiki_comments_per_page}
+					{preference name=wiki_comments_default_ordering}
+					{preference name=wiki_comments_allow_per_page}
+					{preference name=wiki_comments_per_page}
+					{preference name=wiki_watch_comments}
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Using comments in various features{/tr}</legend>
+
+				<div class="admin">
+					{preference name=feature_article_comments}
+					{preference name=feature_blogposts_comments}
+					{preference name=feature_file_galleries_comments}
+					<div class="adminoptionboxchild" id="feature_file_galleries_comments_childcontainer">
+						{preference name='file_galleries_comments_per_page'}
+						{preference name='file_galleries_comments_default_ordering'}
+					</div>
+					{preference name=feature_poll_comments}
+					{preference name=feature_faq_comments}
+					{preference name=wikiplugin_trackercomments}
 				</div>
 			</fieldset>
 

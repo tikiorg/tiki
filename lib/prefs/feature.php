@@ -244,7 +244,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_comments_moderation' => array(
-			'name' => tra('Comments Moderation '),
+			'name' => tra('Comments Moderation'),
 			'description' => tra('An admin must validate a comment before it is visible'),
 			'help' => 'Comments',
 			'type' => 'flag',
@@ -777,11 +777,11 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),	
 		'feature_poll_comments' => array(
-			'name' => tra('Comments'),
+			'name' => tra('Comments for polls'),
 			'type' => 'flag',
 		),	
 		'feature_faq_comments' => array(
-			'name' => tra('Comments'),
+			'name' => tra('Comments for FAQs'),
 			'type' => 'flag',
 		),	
 		'feature_sefurl' => array(
@@ -847,7 +847,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_article_comments' => array(
-			'name' => tra('Comments'),
+			'name' => tra('Comments for articles'),
 			'type' => 'flag',
 		),
 		'feature_cms_templates' => array(
@@ -956,7 +956,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_blogposts_comments' => array(
-			'name' => tra('Post-level'),
+			'name' => tra('Comments on blog posts'),
 			'type' => 'flag',
 		),
 		'feature_blog_sharethis' => array(
@@ -970,7 +970,7 @@ function prefs_feature_list() {
 			'help' => 'File+Gallery+Config',
 		),
 		'feature_file_galleries_comments' =>array(
-			'name' => tra('Comments'),
+			'name' => tra('File Gallery Comments'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 		),
@@ -1417,7 +1417,7 @@ function prefs_feature_list() {
 			'description' => tra('A special wiki page for testing. Users can edit, but not save the Sandbox.'),
 		),
 		'feature_wiki_comments' => array(
-			'name' => tra('Comments'),
+			'name' => tra('Comments below wiki pages'),
 			'type' => 'flag',
 			'help' => 'Comments',
 			'description' => tra('Allow users (with permission) to post threaded comments to a page.'),
