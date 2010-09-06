@@ -243,8 +243,10 @@ class EditLib
 			// If content type 'text' output it to destination...
 			if ($c[$i]["type"] == "text") {
 				if( ! ctype_space( $c[$i]["data"] ) ) {
-					$add = ltrim( $c[$i]["data"] );
-					$add = str_replace( array("\r","\n"), ' ', $add );
+					$add = $c[$i]["data"];
+					$add = str_replace( array("\r","\n"), '', $add );
+					$add = str_replace( '&nbsp;', ' ', $add );
+					$add = ltrim( $add );
 					$src .= $add;
 				}
 			} elseif ($c[$i]["type"] == "comment") {
@@ -269,7 +271,7 @@ class EditLib
 							} else if ($c[$j]['data']['name'] == 'br' && $more_spans === 1 && $other_elements === 0) {
 							} else if ($c[$j]['data']['name'] == $elem_type && $c[$j]['data']['type'] == 'open') {
 								$more_spans++;
-							} else if ($c[$j]['data']['type'] == 'open') {
+							} else if ($c[$j]['data']['type'] == 'open' && $c[$j]['data']['name'] != 'br' && $c[$j]['data']['name'] != 'img' && $c[$j]['data']['name'] != 'input') {
 								$other_elements++;
 							} else if ($c[$j]['data']['type'] == 'close') {
 								$other_elements--;
@@ -451,6 +453,9 @@ class EditLib
 	//			if (substr($src, -1) != " ") $src .= " ";
 				$this->walk_and_parse($c[$i]["content"], $src, $p, $head_url );
 			}
+		}
+		if (substr($src, -2) == "\n\n") {	// seem to always get too many line ends
+			$src = substr($src, 0, -2);
 		}
 	}	// end walk_and_parse
 	

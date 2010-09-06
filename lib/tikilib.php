@@ -5322,7 +5322,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 	}
 	
-	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data ) {
+	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $icon = 'pics/icons/wiki_plugin_edit.png' ) {
 		$fck_editor_plugin = '{'.strtoupper($name).'(';
 		if (!empty($args)) {
 			foreach( $args as $argKey => $argValue ) {
@@ -5335,22 +5335,25 @@ class TikiLib extends TikiDb_Bridge
 		$plugin_result = preg_replace('/href\=["\']([^"\']*)["\']/i', 'tiki_href="$1"', $plugin_result);
 		$plugin_result = preg_replace('/onclick\=["\']([^"\']*)["\']/i', 'tiki_onclick="$1"', $plugin_result);
 		
-		if (preg_match('/(:?div|p)/i', $plugin_result)) {
+		if (preg_match('/(:?<div|<p)/i', $plugin_result)) {
 			$elem = 'div';
 		} else {
 			$elem = 'span';
 		}
 		$arg_str = '';		// not using http_build_query() as it converts spaces into +
-		foreach ($args as $key=>$value) 
-		    $arg_str .= $key.'='.$value.'&'; 
-		$arg_str = rtrim($arg_str, '&'); 
+		foreach ($args as $key=>$value) { 
+		    $arg_str .= $key.'='.$value.'&';
+		}
+		$arg_str = rtrim($arg_str, '&');
 		
-		return '<'.$elem.' class="cke_tiki_plugin" plugin="' . $name . '"' .
+		$ret = '<'.$elem.' class="cke_tiki_plugin" plugin="' . $name . '" contenteditable="false"' .
 				' syntax="~np~' . htmlentities( $fck_editor_plugin ) . '~/np~"' .
 				' args="' . htmlentities($arg_str) . '"' .
 				' body="~np~' . str_replace('"', '\"', $data) . '~/np~">'.
-				'<'.$elem.' class="plugin_contents" contenteditable="false">' . $plugin_result.'</'.$elem.'></'.$elem.'>' . 
-				'<!-- end cke_tiki_plugin -->';
+				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:relative;left:0px;top:0px;z-index:10001;" />' .
+				$plugin_result.'<!-- end cke_tiki_plugin --></'.$elem.'>';
+		
+		return 	$ret;
 	}
 
 	private function plugin_apply_filters( $name, & $data, & $args ) {
@@ -5864,7 +5867,7 @@ class TikiLib extends TikiDb_Bridge
 		$data = $this->parse_data_tables( $data, $simple_wiki );
 
 		if (!$simple_wiki && $options['parsetoc']) {
-			$this->parse_data_process_maketoc( $data, $options);
+			$this->parse_data_process_maketoc( $data, $options, $noparsed);
 
 		} // closing if ($simple_wiki)
 
@@ -6279,7 +6282,7 @@ class TikiLib extends TikiDb_Bridge
 		return $value;
 	}
 
-	private function parse_data_process_maketoc( &$data, $options) {
+	private function parse_data_process_maketoc( &$data, $options, $noparsed) {
 
 		global $prefs;
 
@@ -6690,33 +6693,64 @@ class TikiLib extends TikiDb_Bridge
 						 */
 						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 &&  $inScript == 0
 								// Don't put newlines at comments' end!
-								&& strpos($line, "-->") === false
-							 ) {
+								&& strpos($line, "-->") !== (strlen($line) - 3)) {
 							 	
-							$tline = trim($line);
-							// keeping this as separate regexps for now to ease understanding - should be optimised later
-							$contains_block = preg_match('/<[\/]?div/', $tline) ||					// open/close div
-									preg_match('/<[\/]?h\d/', $tline) ||							// open/close h1 etc
-									preg_match('/<[\/]?li/', $tline) ||								// open/close list items
-									preg_match('/<[\/]?ol/', $tline) ||								// open/close ordered list
-									preg_match('/<[\/]?ul/', $tline) ||								// open/close unordered list
-									preg_match('/^\xc2\xa7[\dabcdef\xc2\xa7]+\xc2\xa7$/', $tline);	// noparse guid for plugins
+							$tline = trim(str_replace('&nbsp;', '', $line));
 							
-							 if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								if ($in_paragraph && ((empty($line) && $in_empty_paragraph === 0) || $contains_block)) {
+							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
+								// keeping this as separate regexps for now to ease understanding - should be optimised later
+								$contains_block = preg_match('/<[\/]?div/', $tline) ||					// open/close div
+										preg_match('/<[\/]?p/', $tline) ||								// open/close paragraph
+										preg_match('/<[\/]?table/', $tline) ||							// open/close h1 etc
+										preg_match('/<[\/]?h\d/', $tline) ||							// open/close h1 etc
+										preg_match('/<[\/]?li/', $tline) ||								// open/close list items
+										preg_match('/<[\/]?ol/', $tline) ||								// open/close ordered list
+										preg_match('/<[\/]?ul/', $tline);								// open/close unordered list
+								
+								if (!$contains_block) {	// check inside plugins etc for block elements
+									preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins 
+									if (count($m) > 0) {
+										$m_count = count($m[0]);
+										$nop_ix = false;
+										for ($i = 0; $i < $m_count; $i++) {
+											//$nop_ix = array_search( $m[0][$i], $noparsed['key'] ); 	// array_search doesn't seem to work here - why? no "keys"?
+											foreach ($noparsed['key'] as $k => $s) {
+												if ($m[0][$i] == $s) {
+													$nop_ix = $k;
+													break;
+												}
+											}
+											if ($nop_ix !== false) {
+												$nop_str = $noparsed['data'][$nop_ix];
+												$contains_block = preg_match('/<[\/]?div/', $nop_str) ||	// open/close div	 - TODO refactor
+														preg_match('/<[\/]?p/', $nop_str) ||				// open/close paragraph
+														preg_match('/<[\/]?table/', $nop_str) ||			// open/close paragraph
+														preg_match('/<[\/]?h\d/', $nop_str) ||				// open/close h1 etc
+														preg_match('/<[\/]?li/', $nop_str) ||				// open/close list items
+														preg_match('/<[\/]?ol/', $nop_str) ||				// open/close ordered list
+														preg_match('/<[\/]?ul/', $nop_str);					// open/close unordered list
+												if ($contains_block) {
+													break;
+												}
+											}
+										}
+									}
+								}
+								
+							 	if ($in_paragraph && ((empty($tline) && $in_empty_paragraph === 0) || $contains_block)) {
 									// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 									$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
 								} elseif (!$in_paragraph && !$contains_block) {
 									// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 									$data .= "<p>";
-									if (empty($line)) {
+									if (empty($tline)) {
 										$line = '&nbsp;';
 										$in_empty_paragraph = 1;
 									}
 									$in_paragraph = 1;
 								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !$contains_block) {
 									// A normal in-paragraph line if not close of div created by plugins
-									if (!empty($line)) {
+									if (!empty($tline)) {
 										$in_empty_paragraph = 0;
 									}
 									$line = "<br />" . $line;

@@ -1075,7 +1075,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 			$edit = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $edit);
 			// remove the wysiwyg plugin elements leaving the syntax only remaining
 			// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
-			$edit2 = preg_replace('/<div[^>]*syntax="(.*)".*end cke_tiki_plugin -->/Umis', "$1", $edit);
+			$edit2 = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end cke_tiki_plugin --><\/(?:div|span)>/Umis', "$1", $edit);
 			if (!empty($edit2)) {
 				$edit = $edit2;
 				unset($edit2);
