@@ -13,12 +13,12 @@
 </h1>
 
 <div class="navbar">
-	<a class="linkbut" href="#metrics">{tr}Metrics{/tr}</a>
-	<a class="linkbut" href="#tabs">{tr}Tabs{/tr}</a>
-	<a class="linkbut" href="#assign">{tr}Assign Metric{/tr}</a>
-	<a class="linkbut" href="#assigned">{tr}Assigned Metrics{/tr}</a>
-	<a class="linkbut" href="#editcreate">{tr}Edit/Create Metric{/tr}</a>
-	<a class="linkbut" href="#editcreatetab">{tr}Edit/Create Tab{/tr}</a>
+	{button href="#metrics" _text="{tr}Metrics{/tr}"}
+	{button href="#tabs" _text="{tr}Tabs{/tr}"}
+	{button href="#assign" _text="{tr}Assign Metrics{/tr}"}
+	{button href="#assigned" _text="{tr}Assigned Metrics{/tr}"}
+	{button href="#editcreate" _text="{tr}Edit/Create Metrics{/tr}"}
+	{button href="#editcreatetab" _text="{tr}Edit/Create Tab{/tr}"}
 </div>
 
 <h2>{tr}Metrics{/tr}</h2>
