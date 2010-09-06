@@ -199,7 +199,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'external' );
 	} else {
-		$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.min.js' );
 	}
 
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
@@ -216,7 +216,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 		if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js', 'external' );
 		} else {
-			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js' );
 		}
 		$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
 	}

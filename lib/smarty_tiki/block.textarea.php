@@ -144,8 +144,9 @@ function FCKeditor_OnComplete( editorInstance ) {
 			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 			//// note, this breaks ajax page load via wikitopline edit icon
 			//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
-			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js');
-			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js');
+			$headerlib->add_js_config('CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";');
+			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js', 'minified');
+			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 'minified');
 		
 			include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
 			$cktools = smarty_function_toolbars($params, $smarty);
