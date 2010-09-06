@@ -9,7 +9,31 @@
 	</div>
 {tabset}
 
-{tab name="{tr}Bytecode Cache{/tr}"}
+		{tab name="{tr}Performance{/tr}"}
+			{preference name=tiki_minify_javascript}
+			{preference name=javascript_cdn}
+			{preference name=tiki_cdn}
+			{preference name=tiki_minify_css}
+			<div class="adminoptionboxchild" id="tiki_minify_css_childcontainer">
+				{preference name=tiki_minify_css_single_file}
+			</div>
+			{preference name=feature_obzip}
+			{preference name=users_serve_avatar_static}
+			<div class="adminoptionboxchild">
+				{if $gzip_handler ne 'none'}
+					<div class="highlight" style="margin-left:30px;">
+						{tr}Output compression is active.{/tr}
+						<br />
+						{tr}Compression is handled by{/tr}: {$gzip_handler}.
+					</div>
+				{/if}
+			</div>
+			{preference name=tiki_cachecontrol_session}
+			{preference name=smarty_compilation}
+			{preference name=feature_bot_bar_debug}
+		{/tab}
+		
+		{tab name="{tr}Bytecode Cache{/tr}"}
 			{if $opcode_cache}
 				<p>{tr 0=$opcode_cache}Using <strong>%0</strong>.These stats affect all PHP applications running on the server.{/tr}</p>
 
@@ -49,31 +73,6 @@
 			{else}
 				{tr}Bytecode cache is not used. Using a bytecode cache (APC, XCache) is highly recommended for production environments.{/tr}
 			{/if}
-		{/tab}
-		
-
-		{tab name="{tr}Performance{/tr}"}
-			{preference name=feature_bot_bar_debug}
-			{preference name=tiki_minify_javascript}
-			{preference name=javascript_cdn}
-			{preference name=tiki_cdn}
-			{preference name=tiki_minify_css}
-			<div class="adminoptionboxchild" id="tiki_minify_css_childcontainer">
-				{preference name=tiki_minify_css_single_file}
-			</div>
-			{preference name=feature_obzip}
-			{preference name=users_serve_avatar_static}
-			<div class="adminoptionboxchild">
-				{if $gzip_handler ne 'none'}
-					<div class="highlight" style="margin-left:30px;">
-						{tr}Output compression is active.{/tr}
-						<br />
-						{tr}Compression is handled by{/tr}: {$gzip_handler}.
-					</div>
-				{/if}
-			</div>
-			{preference name=tiki_cachecontrol_session}
-			{preference name=smarty_compilation}
 		{/tab}
 		
 		{tab name="{tr}Wiki{/tr}"}
