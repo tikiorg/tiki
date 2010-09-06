@@ -35,11 +35,16 @@
 			</fieldset>
 
 			<fieldset>
+				<legend>{tr}Permissions{/tr}</legend>
+					<a class="link" href="tiki-objectpermissions.php?textFilter=comment&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{tr}Permissions{/tr} {icon _id="key" alt="{tr}Permission{/tr}"}</a>
+			</fieldset>
+
+
+			<fieldset>
 				<legend>{tr}Using comments below wiki pages{/tr}</legend>
 
 				{preference name=feature_wiki_comments}
 				<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
-					<a class="link" href="tiki-objectpermissions.php?permType=wiki&amp;textFilter=comment&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 					{preference name=wiki_comments_displayed_default}
 					{preference name=wiki_comments_per_page}
 					{preference name=wiki_comments_default_ordering}
