@@ -135,8 +135,10 @@ abstract class Toolbar
 			'sheetsave',	// spreadsheet ones
 			'addrow',
 			'addrowmulti',
+			'addrowbefore',
 			'deleterow',
 			'addcolumn',
+			'addcolumnbefore',
 			'deletecolumn',
 			'addcolumnmulti',
 			'sheetgetrange',
@@ -1376,13 +1378,18 @@ class ToolbarSheet extends Toolbar
 			case 'addrow':
 				$label = tra('Add Row After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_row_add.png');
-				$syntax = 'sheetInstance.controlFactory.addRow(null, null, ":last");';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
+				$syntax = 'sheetInstance.controlFactory.addRow();';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
 				break;														// TODO fix properly for 5.1
 			case 'addrowmulti':
 				$label = tra('Add Multiple Rows After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_row_add_multi.png');
 				$syntax = 'sheetInstance.controlFactory.addRowMulti();';
 				break;
+			case 'addrowbefore':
+				$label = tra('Add Row Before Selection Or To End If No Selection');
+				$icon = tra('pics/icons/sheet_row_add.png');
+				$syntax = 'sheetInstance.controlFactory.addRow(null, true);';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
+				break;	
 			case 'deleterow':
 				$label = tra('Delete Selected Row');
 				$icon = tra('pics/icons/sheet_row_delete.png');
@@ -1391,7 +1398,7 @@ class ToolbarSheet extends Toolbar
 			case 'addcolumn':
 				$label = tra('Add Column After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_col_add.png');
-				$syntax = 'sheetInstance.controlFactory.addColumn(true);';	// add col after current or at end if none selected
+				$syntax = 'sheetInstance.controlFactory.addColumn();';	// add col before current or at end if none selected
 				break;
 			case 'deletecolumn':
 				$label = tra('Delete Selected Column');
@@ -1402,6 +1409,11 @@ class ToolbarSheet extends Toolbar
 				$label = tra('Add Multiple Columns After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_col_add_multi.png');
 				$syntax = 'sheetInstance.controlFactory.addColumnMulti();';
+				break;
+			case 'addcolumnbefore':
+				$label = tra('Add Column Before Selection Or To End If No Selection');
+				$icon = tra('pics/icons/sheet_col_add.png');
+				$syntax = 'sheetInstance.controlFactory.addColumn(null, true);';	// add col before current or at end if none selected
 				break;
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');

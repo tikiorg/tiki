@@ -1388,7 +1388,7 @@ function get_default_prefs() {
 		'toolbar_global_comments' => '
 			bold, italic, underline, strike , - , link, smiley | help
 		',
-		'toolbar_sheet' => 'addrow,addrowmulti,deleterow,-,addcolumn,addcolumnmulti,deletecolumn,-,
+		'toolbar_sheet' => 'addrow,addrowbefore,addrowmulti,deleterow,-,addcolumn,addcolumnbefore,addcolumnmulti,deletecolumn,-,
 							sheetgetrange,sheetrefresh,-,sheetfind,-|sheetsave,sheetclose/
 							bold,italic,underline,strike,center,-,color,bgcolor,-,tikilink,nonparsed,-|fullscreen/',
 
