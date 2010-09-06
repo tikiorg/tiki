@@ -1384,8 +1384,9 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$updates[] = $row;
 				$updates[] = $col;
 
-				if( !$sheet->isEmpty( $row, $col ) )
-					$inserts[] = array( (int)$this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height, $format, $style, $class, $user );
+				//Now that sheets have styles, many things can change and the cell not have a value.
+				//if( !$sheet->isEmpty( $row, $col ) )
+				$inserts[] = array( (int)$this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height, $format, $style, $class, $user );
 
 			}
 		}

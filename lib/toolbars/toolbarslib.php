@@ -1374,49 +1374,49 @@ class ToolbarSheet extends Toolbar
 				$syntax = '$.sheet.saveSheet();';
 				break;
 			case 'addrow':
-				$label = tra('Add Row');
+				$label = tra('Add Row After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_row_add.png');
-				$syntax = '$.sheet.instance[0].controlFactory.addRow(null, null, ":last");';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
+				$syntax = 'sheetInstance.controlFactory.addRow(null, null, ":last");';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
 				break;														// TODO fix properly for 5.1
 			case 'addrowmulti':
-				$label = tra('Add Multi-Rows');
+				$label = tra('Add Multiple Rows After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_row_add_multi.png');
-				$syntax = '$.sheet.instance[0].controlFactory.addRowMulti();';
+				$syntax = 'sheetInstance.controlFactory.addRowMulti();';
 				break;
 			case 'deleterow':
-				$label = tra('Delete Row');
+				$label = tra('Delete Selected Row');
 				$icon = tra('pics/icons/sheet_row_delete.png');
-				$syntax = '$.sheet.instance[0].deleteRow();';
+				$syntax = 'sheetInstance.deleteRow();';
 				break;
 			case 'addcolumn':
-				$label = tra('Add Column');
+				$label = tra('Add Column After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_col_add.png');
-				$syntax = '$.sheet.instance[0].controlFactory.addColumn(true);';	// add col after current or at end if none selected
+				$syntax = 'sheetInstance.controlFactory.addColumn(true);';	// add col after current or at end if none selected
 				break;
 			case 'deletecolumn':
-				$label = tra('Delete Column');
+				$label = tra('Delete Selected Column');
 				$icon = tra('pics/icons/sheet_col_delete.png');
-				$syntax = '$.sheet.instance[0].deleteColumn();';
+				$syntax = 'sheetInstance.deleteColumn();';
 				break;
 			case 'addcolumnmulti':
-				$label = tra('Add Multi-Columns');
+				$label = tra('Add Multiple Columns After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_col_add_multi.png');
-				$syntax = '$.sheet.instance[0].controlFactory.addColumnMulti();';
+				$syntax = 'sheetInstance.controlFactory.addColumnMulti();';
 				break;
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');
 				$icon = tra('pics/icons/sheet_get_range.png');
-				$syntax = '$.sheet.instance[0].appendToFormula($.sheet.instance[0].getTdRange());';
+				$syntax = 'sheetInstance.appendToFormula(sheetInstance.getTdRange());';
 				break;
 			case 'sheetfind':
 				$label = tra('Find');
 				$icon = tra('pics/icons/find.png');
-				$syntax = '$.sheet.instance[0].cellFind();';
+				$syntax = 'sheetInstance.cellFind();';
 				break;
 			case 'sheetrefresh':
 				$label = tra('Refresh Calculations');
 				$icon = tra('pics/icons/arrow_refresh.png');
-				$syntax = '$.sheet.instance[0].calc($.sheet.instance[0].obj.tableBody());';
+				$syntax = 'sheetInstance.calc(sheetInstance.obj.tableBody());';
 				break;
 			case 'sheetclose':
 				$label = tra('Finish Editing');
@@ -1427,30 +1427,30 @@ class ToolbarSheet extends Toolbar
 				$label = tra('Bold');
 				$icon = tra('pics/icons/text_bold.png');
 				$wysiwyg = 'Bold';
-				$syntax = '$.sheet.instance[0].cellStyleToggle("styleBold");';
+				$syntax = 'sheetInstance.cellStyleToggle("styleBold");';
 				break;
 			case 'italic':
 				$label = tra('Italic');
 				$icon = tra('pics/icons/text_italic.png');
 				$wysiwyg = 'Italic';
-				$syntax = '$.sheet.instance[0].cellStyleToggle("styleItalics");';
+				$syntax = 'sheetInstance.cellStyleToggle("styleItalics");';
 				break;
 			case 'underline':
 				$label = tra('Underline');
 				$icon = tra('pics/icons/text_underline.png');
 				$wysiwyg = 'Underline';
-				$syntax = '$.sheet.instance[0].cellStyleToggle("styleUnderline");';
+				$syntax = 'sheetInstance.cellStyleToggle("styleUnderline");';
 				break;
 			case 'strike':
 				$label = tra('Strikethrough');
 				$icon = tra('pics/icons/text_strikethrough.png');
 				$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'Strike' : 'StrikeThrough';
-				$syntax = '$.sheet.instance[0].cellStyleToggle("styleLineThrough");';
+				$syntax = 'sheetInstance.cellStyleToggle("styleLineThrough");';
 				break;
 			case 'center':
 				$label = tra('Align Center');
 				$icon = tra('pics/icons/text_align_center.png');
-				$syntax = '$.sheet.instance[0].cellStyleToggle("styleCenter");';
+				$syntax = 'sheetInstance.cellStyleToggle("styleCenter");';
 				break;
 			default:
 				return;

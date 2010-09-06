@@ -170,11 +170,12 @@ $("#edit_button").click( function () {
 	var $a = $(this).find("a");
 	if ($a.text() != editSheetButtonLabel2) {
 
-		if ($.sheet.instance && $.sheet.instance.length > 0) {
+		/*if ($.sheet.instance && $.sheet.instance.length > 0) {
 			$.sheet.instance = [];
-		}
-		var options = {inlineMenu: $("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
-		$("div.tiki_sheet").tiki("sheet", "", options);
+		}*/
+		
+		
+		$("div.tiki_sheet").tiki("sheet", "", {urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"});
 
 		$a.attr("temp", $a.text());
 		$a.text(editSheetButtonLabel2);
@@ -184,15 +185,25 @@ $("#edit_button").click( function () {
 			ajaxLoadingHide();
 		}
 	} else {
-		if (!$.sheet.instance[0].isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
+		var isDirty = false;
+		$($.sheet.instance).each( function(i){
+			if (this.isDirty) {
+				isDirty = true;
+			}
+		});
+		
+		if (!isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
 			window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
 		}
 	}
 	return false;
 });
 $("#save_button").click( function () {
-	$.sheet.instance[0].evt.cellEditDone();
-	$.sheet.saveSheet(0, true);
+	$($.sheet.instance).each( function(i){
+		$.sheet.instance[i].evt.cellEditDone();
+	});
+	$.sheet.saveSheet(true);
+	
 	return false;
 }).hide();
 
