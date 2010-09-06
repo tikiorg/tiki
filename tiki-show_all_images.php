@@ -65,7 +65,7 @@ if (!isset($_REQUEST['view'])) {
 	$square = 80;
 	$width = $numcols * $square + ($numcols + 1) * $gap;
 	$height = ((ceil($numrows / $numcols)) * ($square + $gap)) + $heading;
-	//var_dump($numrows); var_dump(ceil($numrows/$numcols)); die;
+
 	$im = imagecreatetruecolor($width, $height);
 	$text_color = imagecolorallocate($im, 0, 0, 0);
 	$wh_color = imagecolorallocate($im, 255, 255, 255);

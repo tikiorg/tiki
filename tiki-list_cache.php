@@ -25,9 +25,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-// If offset is set use it if not then use offset =0
-// use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
+
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
@@ -44,7 +42,7 @@ $smarty->assign('find', $find);
 $listpages = $tikilib->list_cache($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant_pages', $listpages["cant"]);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
-//print_r($listpages["data"]);
+
 ask_ticket('list-cache');
 // Display the template
 $smarty->assign('mid', 'tiki-list_cache.tpl');

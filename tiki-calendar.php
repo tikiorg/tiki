@@ -604,7 +604,6 @@ if ($calendarViewMode == 'day') {
 			}
 		}
 	}
-	//print("<pre>");print_r($concurrencies);exit;
 	foreach(array_keys($concurrencies) as $wd) {
 		foreach(array_keys($concurrencies[$wd]) as $key)
 			$concurrencies[$wd][$key]['offset'] = $zoom * 13 * ($concurrencies[$wd][$key]['offset'] / $concurrencies[$wd][$key]['value']);

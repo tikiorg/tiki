@@ -53,7 +53,6 @@ if (count($preferred_langs) == 1) {
    // preferences, and logged in, they can limit the displayed languages
    // to only those that they want.  
    $preferred_langs = $prefs['available_languages'];
-//   print "-- tiki-all_languages: after replacing it by all site languages, \$preferred_langs=";var_dump($preferred_langs);print "<br>\n";
 }
 
 // Sort languages according to user's prefences

@@ -5,11 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//TODO: add permission, sea surfing controlling, add new object type
-//TODO: list_articles must be replaced by something lighter
-//TODO: list languages must used browser preferences
-//QUESTION: can we translated all the objects or only those the user can see - if yes filter list_pages
-
 $tracesOn = false;
 
 require_once('tiki-setup.php');
@@ -60,12 +55,7 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 
 	$edit_data = $info['data'];
 	$smarty->assign('pagedata', TikiLib::htmldecode($edit_data));
-	#
-	# AD (2009-10-14): This message used to say "Translation in progress". But
-	# I observed that translators were confused by it, because they thought
-	# it meant someone else was translating it and that they should not
-	# touch it.
-	#
+	
 	if ($prefs['feature_translation_incomplete_notice'] == 'y') {
 		$smarty->assign('translate_message', "^".tra("Translation of this page is incomplete.")."^\n\n");
 	}

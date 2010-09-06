@@ -44,9 +44,6 @@ if (!empty($_REQUEST['itemId'])) {
 	}
 	$smarty->assign_by_ref('item_info', $item_info);
 	$smarty->assign_by_ref('field_option', $field_option);
-	
-	//echo 'HIST<pre>'; print_r($history);print_r($field_option);echo '</pre>';
-
 }
 $smarty->assign('mid', 'tiki-tracker_view_history.tpl');
 $smarty->display('tiki.tpl');

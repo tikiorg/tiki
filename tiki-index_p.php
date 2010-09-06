@@ -77,8 +77,6 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 	array_push($_SESSION["breadCrumb"], $page);
 }
 
-//print_r($_SESSION["breadCrumb"]);
-
 // Now increment page hits since we are visiting this page
 if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);

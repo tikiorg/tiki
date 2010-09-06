@@ -114,7 +114,6 @@ if ($get) {
 	$channels['cant']=1;
 } else {
 	$channels = $shoutboxlib->list_shoutbox($offset, $maxRecords, $sort_mode, $find);
-	print_r($channels);
 }
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
