@@ -5346,12 +5346,12 @@ class TikiLib extends TikiDb_Bridge
 		}
 		$arg_str = rtrim($arg_str, '&');
 		
-		$ret = '<'.$elem.' class="cke_tiki_plugin" plugin="' . $name . '" contenteditable="false"' .
+		$ret = '<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false"' .
 				' syntax="~np~' . htmlentities( $fck_editor_plugin ) . '~/np~"' .
 				' args="' . htmlentities($arg_str) . '"' .
 				' body="~np~' . str_replace('"', '\"', $data) . '~/np~">'.
-				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:relative;left:0px;top:0px;z-index:10001;" />' .
-				$plugin_result.'<!-- end cke_tiki_plugin --></'.$elem.'>';
+				'<img src="'.$icon.'" width="16" height="16" style="float:left;" />' .
+				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>';
 		
 		return 	$ret;
 	}

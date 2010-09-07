@@ -203,7 +203,8 @@ class EditLib
 	
 	function parseToWysiwyg( $inData ) {
 		global $tikilib, $tikiroot, $prefs;
-		// Parsing page data as first time seeing wiki page in wysiwyg editor
+		// Parsing page data for wysiwyg editor
+		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
 		if ($prefs['wysiwyg_ckeditor'] === 'y') {
 			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true));
@@ -227,7 +228,7 @@ class EditLib
 	 */
 	function partialParseWysiwygToWiki( $inData ) {
 		// remove the wysiwyg plugin elements leaving the syntax only remaining
-		$ret = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end cke_tiki_plugin --><\/(?:div|span)>/Umis', "$1", $inData);
+		$ret = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end tiki_plugin --><\/(?:div|span)>/Umis', "$1", $inData);
 		// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
 		if (!$ret) { $ret = $inData; }
 		

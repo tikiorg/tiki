@@ -869,7 +869,7 @@ if (isset($_REQUEST["preview"])) {
 	
 	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
 		$parsed = $editlib->partialParseWysiwygToWiki( $parsed );
-		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true, 'preview_mode'=>true));
+		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'preview_mode'=>true));
 	} else {
 		$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
 	}

@@ -161,6 +161,7 @@ CKEDITOR.config._TikiRoot = "'.$tikiroot.'";
 
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
 CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");
+CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
 ');	// before all
 		
 			if ($prefs['wysiwyg_htmltowiki'] === 'y') {
@@ -174,7 +175,6 @@ CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugin
 // --- config settings for the autosave plugin ---
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
-CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to
 CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;								// RefreshTime
 CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strokes
 
