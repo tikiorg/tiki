@@ -232,7 +232,7 @@ function CKeditor_OnComplete() {
 		
 		$textarea_attributes = '';
 		foreach ( $params as $k => $v ) {
-			if ( $k == 'id' || $k == 'name' || $k == 'class' ) {
+			if ( $k == 'id' || $k == 'name' || $k == 'class' || $k == '_toolbars' ) {
 				$smarty->assign('textarea_'.$k, $v);
 			} elseif ( $k[0] != '_' ) {
 				$textarea_attributes .= ' '.$k.'="'.$v.'"';

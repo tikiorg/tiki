@@ -6,10 +6,8 @@
 
 {if !empty($smarty.session.trackerhelp_text)}
 	{tr}ID:{/tr} {$smarty.session.trackerhelp_id}<br />
-	{* {textarea _toolbars='n' _simple='y' cols=$module_params.cols rows=$module_params.rows}*}
-	<textarea cols={$module_params.cols} rows={$module_params.rows}>{foreach from=$smarty.session.trackerhelp_text item=line}{$line|escape}
+	{textarea _wysiwyg=n  _toolbars='n' cols=$module_params.cols rows=$module_params.rows}{foreach from=$smarty.session.trackerhelp_text item=line}{$line|escape}
 {/foreach}
-	</textarea>
-	{*{/textarea}*}
+	{/textarea}
 {/if}
 {/tikimodule}
