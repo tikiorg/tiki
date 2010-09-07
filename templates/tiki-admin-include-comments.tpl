@@ -39,7 +39,6 @@
 					<a class="link" href="tiki-objectpermissions.php?textFilter=comment&amp;show_disabled_features=y" title="{tr}Permission{/tr}">{tr}Permissions{/tr} {icon _id="key" alt="{tr}Permission{/tr}"}</a>
 			</fieldset>
 
-
 			<fieldset>
 				<legend>{tr}Using comments below wiki pages{/tr}</legend>
 
@@ -52,6 +51,14 @@
 					{preference name=wiki_comments_per_page}
 					{preference name=wiki_watch_comments}
 				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>{tr}Inline comments{/tr}</legend>
+					<a class="link" href="{$prefs.helpurl}Inline+comments">{tr}Inline comments{/tr}</a>
+
+				{tr}The feature below must be activated for this feature to work.{/tr}
+				{preference name=feature_wiki_paragraph_formatting}
 			</fieldset>
 
 			<fieldset>
