@@ -852,7 +852,7 @@ class TrackerLib extends TikiLib
 					$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttifu ON (tti.`itemId`=ttifu.`itemId`) INNER JOIN `users_users` uu ON (ttifu.`value`=uu.`login`) INNER JOIN `users_usergroups` uug ON (uug.`userId`=uu.`userId`)";
 					$mid .= ' AND ttifu.`fieldId`=? AND  uug.`groupName`=? ';
 					$bindvars[] = $userFieldId;
-					$bindvars[] = $ev;
+					$bindvars[] = empty($ev)?$fv: $ev;
 				} elseif ( $filter['type'] == '*') { // star
 					$mid .= " AND ttif$i.`value`*1>=? ";
 					$bindvars[] = $ev;
@@ -1103,7 +1103,7 @@ class TrackerLib extends TikiLib
 				}
 				if (!empty($itemUser)) {
 					global $tikilib;
-					$fopt['value'] = $tikilib->get_user_groups($itemUser);
+					$fopt['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
 				}
 				break;
 			case 'p':
