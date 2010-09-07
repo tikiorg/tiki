@@ -197,7 +197,7 @@ class EditLib
 		$parsed = $this->parse_html($inData);
 		$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
-		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);													// newlines
+		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
 		return $parsed;
 	}
 	
@@ -205,7 +205,7 @@ class EditLib
 		global $tikilib, $tikiroot, $prefs;
 		// Parsing page data as first time seeing wiki page in wysiwyg editor
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
-		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+		if ($prefs['wysiwyg_ckeditor'] === 'y') {
 			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true));
 		} else {
 			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
@@ -217,6 +217,24 @@ class EditLib
 				array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
 				$parsed );
 		return $parsed;
+	}
+	
+	/**
+	 * Converts wysiwyg plugins into wiki.
+	 * Also processes headings by removing surrounding <p> (possibly for wysiwyg_wiki_semi_parsed but not tested)  
+	 * 
+	 * @param string $inData (page data - mostly html but can have a bit of wiki in it)
+	 */
+	function partialParseWysiwygToWiki( $inData ) {
+		// remove the wysiwyg plugin elements leaving the syntax only remaining
+		$ret = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end cke_tiki_plugin --><\/(?:div|span)>/Umis', "$1", $inData);
+		// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
+		if (!$ret) { $ret = $inData; }
+		
+		// take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
+		$ret = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $ret);
+		
+		return $ret;
 	}
 	
 	// parse HTML functions

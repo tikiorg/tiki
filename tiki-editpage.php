@@ -816,7 +816,7 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
-if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
+if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && (!isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' )) {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
@@ -838,16 +838,15 @@ if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
 		}
 		$info['wysiwyg'] = true;
 		$smarty->assign('allowhtml','y');
-	} elseif ($prefs['wysiwyg_ckeditor'] === 'y' && isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
+	} elseif ($prefs['wysiwyg_ckeditor'] === 'y' && $_SESSION['wysiwyg'] === 'y') {
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
 			if ($edit_data != 'ajax error') {
 				//$parsed = $editlib->parseToWysiwyg($edit_data);
 			} else {
-	//			$edit_data = '';
-				unset($_REQUEST['save']);	// why?
+				unset($_REQUEST['save']);	// don't save an ajax error
 			}
 		} else {
-		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true, 'parsetoc' => false));
+		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true));
 		}
 	}
 }
@@ -864,19 +863,24 @@ if (empty($parsed)) {
 $smarty->assign('pagedata', $parsed);
 
 // apply the optional post edit filters before preview
-if(isset($_REQUEST["preview"])) {
+if (isset($_REQUEST["preview"])) {
+
 	$parsed = $tikilib->apply_postedit_handlers($parsed);
-	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
+	
+	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
+		$parsed = $editlib->partialParseWysiwygToWiki( $parsed );
+		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true, 'preview_mode'=>true));
+	} else {
+		$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
+	}
+	// If we are in preview mode then preview it!
+	$smarty->assign('preview',1);
 } else {
-	$parsed = "";
+	$parsed = '';
+	$smarty->assign('preview',0);
 }
 
 $smarty->assign_by_ref('parsed', $parsed);
-$smarty->assign('preview',0);
-// If we are in preview mode then preview it!
-if(isset($_REQUEST["preview"])) {
-	$smarty->assign('preview',1);
-}
 
 function parse_output(&$obj, &$parts,$i) {
 	if(!empty($obj['parts'])) {
@@ -941,7 +945,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 	if(!isset($_REQUEST["wiki_authors_style"])) $_REQUEST["wiki_authors_style"]='';
 	if(!isset($_REQUEST["comment"])) $_REQUEST["comment"]='';
 	if(!isset($_REQUEST["lang"])) $_REQUEST["lang"]='';
-	if(!isset($_REQUEST['wysiwyg'])) $_REQUEST['wysiwyg'] = '';
+	if(!isset($_REQUEST['wysiwyg'])) $_REQUEST['wysiwyg'] = 'n';
 	if(isset($_REQUEST['wiki_cache'])) {
 		$wikilib->set_page_cache($_REQUEST['page'],$_REQUEST['wiki_cache']);
 	}
@@ -1070,16 +1074,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 				$edit .= "\r\n";
 			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
 		}
-		if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {
-			// take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
-			$edit = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $edit);
-			// remove the wysiwyg plugin elements leaving the syntax only remaining
-			// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
-			$edit2 = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end cke_tiki_plugin --><\/(?:div|span)>/Umis', "$1", $edit);
-			if (!empty($edit2)) {
-				$edit = $edit2;
-				unset($edit2);
-			}
+		if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
+			$edit = $editlib->partialParseWysiwygToWiki( $edit );
 		}
 		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg'], $wiki_authors_style);
 		create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user);
