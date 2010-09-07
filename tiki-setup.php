@@ -256,6 +256,11 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.json-2.2.js' );
+		
+		if( $prefs['tikiIndex'] == 'tiki-index.php' ) {
+			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
+		}
+		
 		// plugins
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/plugins/menu.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/mbMenu.min.js' );

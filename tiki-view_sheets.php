@@ -128,16 +128,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 	$smarty->assign('grid_content', $grid->getTableHtml());
 } else {
 	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-	$date = time();
+	
+	//We make $date an array so that we can load multi sheets
+	$dates = array(time());
 	if (!empty($_REQUEST['readdate'])) {
-		$date = $_REQUEST['readdate'];
-		if (!is_numeric($date)) $date = strtotime($date);
-		if ($date == - 1) $date = time();
+		$i = 0;
+		foreach ( explode("|", $_REQUEST['readdate'] ) as $dateStr ) {
+			if ( $dateStr ) {
+				$dates[$i] = $dateStr;
+				if (!is_numeric($dates[$i])) $dates[$i] = strtotime($dates[$i]);
+				if ($dates[$i] == - 1) $dates[$i] = time();
+			}
+			$i++;
+		}
 	}
-	$smarty->assign('read_date', $date);
-	$handler->setReadDate($date);
-	$grid->import($handler);
+	
+	//If in edit mode, force singe date to show up
 	if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit') {
+		$smarty->assign('read_date', $dates[0]);
+		$handler->setReadDate($dates[0]);
+		$grid->import($handler);
 		$handler = new TikiSheetFormHandler;
 		ob_start();
 		$grid->export($handler);
@@ -149,8 +159,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 			include_once ('contribution.php');
 		}
 	} else {
-		$html = $grid->getTableHtml( true, $date );
-		$smarty->assign('grid_content', $html);
+		//In view mode, we can show all of them if we want :)
+		
+		$tableHtml = array();
+		$i = 0;
+		
+		foreach ( $dates as $date ) {
+			$smarty->assign('read_date', $date);
+			$handler->setReadDate($date);
+			$grid->import($handler);
+			$tableHtml[$i] = $grid->getTableHtml( true, $date );
+			$i++;
+		}
+		
+		$smarty->assign('grid_content', $tableHtml);
 		$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 		$grid->import($handler);
 	}
