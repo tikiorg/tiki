@@ -1369,6 +1369,7 @@ class ToolbarSheet extends Toolbar
 
 	public static function fromName( $tagName ) // {{{
 	{
+		global $prefs;
 		switch( $tagName ) {
 			case 'sheetsave':
 				$label = tra('Save Sheet');
