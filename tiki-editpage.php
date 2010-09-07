@@ -1255,8 +1255,6 @@ if ($prefs['feature_categories'] === 'y') {
 }
 
 $is_staging_article = ($prefs['wikiapproval_staging_category'] > 0) && (in_array($prefs['wikiapproval_staging_category'], $cats));
-$page_badchars_display = ":/?#[]@!$&'()*+,;=<>";
-$page_badchars = "/[:\/?#\[\]@!$&'()*+,;=<>]/";
 if ($is_staging_article && $approved = $tikilib->get_approved_page($page) ) {
 	$page_name = $approved;
 }
@@ -1264,9 +1262,8 @@ else {
 	$page_name = $page;
 }
 
-$matches = preg_match($page_badchars, $page_name);
-if ($matches && ! $tikilib->page_exists($page) ) {
-	$smarty->assign('page_badchars_display', $page_badchars_display);
+if ($wikilib->contains_badchars($page) && ! $tikilib->page_exists($page) ) {
+	$smarty->assign('page_badchars_display', $wikilib->get_badchars());
 }
 
 $plugins = $wikilib->list_plugins(true, 'editwiki');
