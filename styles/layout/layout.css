@@ -1553,6 +1553,49 @@ span.commentstitle {
 	font-size: 1.2em;
 }
 
+/* Comment Annotations */
+
+dl.note-list {
+	margin: .5em;
+	background: #fff;
+	color: #000;
+	border: solid thin black;
+}
+
+#note-editor-comment {
+	background-color: #fff;
+	color: #000;
+	border: #999 1px solid;
+	padding: .5em;
+}
+
+.note-editor-text {
+	background-color: #eee;
+	color: #000;
+}
+
+.note-list .postbody-title {
+	background-color: #ccc;
+	color: #000;
+	padding: .5em;
+}
+
+.note-list .title a {
+	color: #000;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.note-list .actions {
+	float: right;
+}
+
+
+.note-list .author {
+	font-size: smaller;
+	text-align: right;
+}
+
 /* Comments moderation */
 .post-approved-n {
 	border-left: 3px dotted blue;
