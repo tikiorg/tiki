@@ -121,7 +121,7 @@ $("#toggle_diffs a").click(function(){
 					{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 					{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
 					<th>{tr}Version{/tr}</th>
-					<th>&nbsp;{tr}Action{/tr}&nbsp;</th>
+					<th>{tr}Action{/tr}</th>
 					{if $prefs.default_wiki_diff_style != "old" and $history}
 						<th colspan="2">
 							<input type="submit" name="compare" value="{tr}Compare{/tr}" />
