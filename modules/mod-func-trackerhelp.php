@@ -50,7 +50,10 @@ function module_trackerhelp( $mod_reference, &$module_params ) {
 				$_REQUEST['trackerhelp_name'] = $tracker_info['name'];
 			}
 		}
-		if (empty($trackerId)) {
+		if (!empty($trackerId)) {
+			$objectperms = Perms::get(array('type' => 'tracker', 'object' => $trackerId));
+		}
+		if (empty($trackerId) || !$objectperms->view_trackers) {
 			$_SESSION['trackerhelp_name'] = '';
 			$_SESSION['trackerhelp_id'] = 0;
 			$_SESSION['trackerhelp_text'] = array();
