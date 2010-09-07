@@ -257,7 +257,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.json-2.2.js' );
 		
-		if( $prefs['tikiIndex'] == 'tiki-index.php' ) {
+		if( strpos($_SERVER['SCRIPT_NAME'], 'tiki-history_sheets.php') !== false ) {
 			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
 		}
 		
