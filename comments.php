@@ -374,7 +374,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 
 $smarty->assign('comment_preview', 'n');
 
-if (isset($_REQUEST["comments_previewComment"]) || !empty($errors)) {
+if (isset($_REQUEST["comments_previewComment"]) || isset($_REQUEST["comments_postComment"])) {
 	$comment_preview = array();
 
 	$comment_preview['title'] = $_REQUEST["comments_title"];

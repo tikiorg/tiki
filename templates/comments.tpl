@@ -36,23 +36,6 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 >
 {/if}
 
-{if !empty($errors)}
-	{remarksbox type="warning" title="{tr}Errors{/tr}"}
-		{foreach from=$errors item=error name=error}
-			{if !$smarty.foreach.error.first}<br />{/if}
-			{$error|escape}
-		{/foreach}
-	{/remarksbox}
-{/if}
-{if !empty($feedbacks)}
-	{remarksbox type="feedback"}
-		{foreach from=$feedbacks item=feedback name=feedback}
-			{$feedback|escape}
-			{if !$smarty.foreach.feedback.first}<br />{/if}
-		{/foreach}
-	{/remarksbox}
-{/if}
-
 {if ($tiki_p_read_comments eq 'y' and $forum_mode ne 'y') or ($tiki_p_forum_read eq 'y' and $forum_mode eq 'y')}
 
   {* This section (comment) is only displayed * }
@@ -250,6 +233,23 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 
 {/if} {* end read comment *}
 
+{if !empty($errors)}
+	{remarksbox type="warning" title="{tr}Errors{/tr}"}
+		{foreach from=$errors item=error name=error}
+			{if !$smarty.foreach.error.first}<br />{/if}
+			{$error|escape}
+		{/foreach}
+	{/remarksbox}
+{/if}
+{if !empty($feedbacks)}
+	{remarksbox type="feedback"}
+		{foreach from=$feedbacks item=feedback name=feedback}
+			{$feedback|escape}
+			{if !$smarty.foreach.feedback.first}<br />{/if}
+		{/foreach}
+	{/remarksbox}
+{/if}
+
 {* Post dialog *}
 {if ($tiki_p_forum_post eq 'y' and $forum_mode eq 'y') or ($tiki_p_post_comments eq 'y' and $forum_mode ne 'y')}
   {if ( $forum_mode eq 'y' or $prefs.feature_comments_locking eq 'y' ) and $thread_is_locked eq 'y'}
@@ -382,7 +382,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">*</span>{/if}</label>
 			</td>
 			<td>
-				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea> 
+				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if ($forum_mode eq 'y' && $prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || ($forum_mode neq 'y' && $post_reply > 0) || $comment_preview eq 'y' || !empty($errors)}{$comment_data|escape}{/if}</textarea> 
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
 				{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
