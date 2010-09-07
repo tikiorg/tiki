@@ -6701,10 +6701,11 @@ class TikiLib extends TikiDb_Bridge
 								// keeping this as separate regexps for now to ease understanding - should be optimised later
 								$contains_block = preg_match('/<[\/]?div/', $tline) ||					// open/close div
 										preg_match('/<[\/]?p/', $tline) ||								// open/close paragraph
-										preg_match('/<[\/]?table/', $tline) ||							// open/close h1 etc
+										preg_match('/<[\/]?table/', $tline) ||							// open/close table
 										preg_match('/<[\/]?h\d/', $tline) ||							// open/close h1 etc
 										preg_match('/<[\/]?li/', $tline) ||								// open/close list items
 										preg_match('/<[\/]?ol/', $tline) ||								// open/close ordered list
+										preg_match('/<[\/]?dl/', $tline) ||								// open/close definition list
 										preg_match('/<[\/]?ul/', $tline);								// open/close unordered list
 								
 								if (!$contains_block) {	// check inside plugins etc for block elements
@@ -6724,10 +6725,11 @@ class TikiLib extends TikiDb_Bridge
 												$nop_str = $noparsed['data'][$nop_ix];
 												$contains_block = preg_match('/<[\/]?div/', $nop_str) ||	// open/close div	 - TODO refactor
 														preg_match('/<[\/]?p/', $nop_str) ||				// open/close paragraph
-														preg_match('/<[\/]?table/', $nop_str) ||			// open/close paragraph
+														preg_match('/<[\/]?table/', $nop_str) ||			// open/close table
 														preg_match('/<[\/]?h\d/', $nop_str) ||				// open/close h1 etc
 														preg_match('/<[\/]?li/', $nop_str) ||				// open/close list items
 														preg_match('/<[\/]?ol/', $nop_str) ||				// open/close ordered list
+														preg_match('/<[\/]?dl/', $nop_str) ||								// open/close definition list
 														preg_match('/<[\/]?ul/', $nop_str);					// open/close unordered list
 												if ($contains_block) {
 													break;
