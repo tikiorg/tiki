@@ -147,6 +147,9 @@
 		{/if}
 	{/if}
 
+{* -------------------- user groups -------------------- *}
+{elseif $field_value.type eq 'usergroups'}
+	
 {* -------------------- preference --------------------- *}
 {elseif $field_value.type eq 'p'}
 	{if $field_value.options_array[0] eq 'password'}

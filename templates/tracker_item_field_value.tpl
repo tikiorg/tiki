@@ -208,12 +208,22 @@
 		{/if}
 	{/if}
 
+{* -------------------- user groups ------------------ *}
+{elseif $field_value.type eq 'usergroups'}
+	{foreach from=$field_value.value item=val name=ix}
+		{$val|escape}{if !$smarty.foreach.ix.last}<br />{/if}
+	{/foreach}
+
 {* -------------------- preference -------------------- *}
 {elseif $field_value.type eq 'p'}
 	{if $list_mode eq 'csv'}
 		{$field_value.value}
 	{elseif $field_value.options_array[0] == 'language'}
 		{$field_value.value|langname} ({$field_value.value|escape})
+	{elseif is_array($field_value.value)}
+		{foreach from=$field_value.value item=val name=ix}
+			{$val|escape}{if !$smarty.foreach.ix.last}, {/if}
+		{/foreach}
 	{else}
 		{$field_value.value|escape}
 	{/if}

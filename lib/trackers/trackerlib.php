@@ -847,6 +847,12 @@ class TrackerLib extends TikiLib
 					if (!empty($not)) {
 						$mid .= " OR tco$ff.`categId` IS NULL ";
 					}
+				} elseif ( $filter['type'] == 'usergroups' ) {
+					$userFieldId = $this->get_field_id_from_type($trackerId, 'u', '1%'); // user creator field;
+					$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttifu ON (tti.`itemId`=ttifu.`itemId`) INNER JOIN `users_users` uu ON (ttifu.`value`=uu.`login`) INNER JOIN `users_usergroups` uug ON (uug.`userId`=uu.`userId`)";
+					$mid .= ' AND ttifu.`fieldId`=? AND  uug.`groupName`=? ';
+					$bindvars[] = $userFieldId;
+					$bindvars[] = $ev;
 				} elseif ( $filter['type'] == '*') { // star
 					$mid .= " AND ttif$i.`value`*1>=? ";
 					$bindvars[] = $ev;
@@ -872,7 +878,7 @@ class TrackerLib extends TikiLib
 						$bindvars[] = $ev;
 					} else {
 						$mid.= " AND ttif$i.`value`=? ";
-						$bindvars[] = $ev;
+						$bindvars[] = empty($ev)? $fv: $ev;
 					}
 
 				} elseif ( $fv ) {
@@ -927,7 +933,7 @@ class TrackerLib extends TikiLib
 			.$mid
 			.' GROUP BY tti.`itemId`'
 			.' ORDER BY '.$this->convertSortMode('sortvalue_'.$corder);
-		// echo htmlentities($query); print_r($bindvars);
+		//echo htmlentities($query); print_r($bindvars);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
 
 		$ret1 = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
@@ -1089,6 +1095,15 @@ class TrackerLib extends TikiLib
 			case 'u':
 				if ($fopt['options_array'][0] == 1) {
 					$itemUser = $fopt['value'];
+				}
+				break;
+			case 'usergroups':
+				if (empty($itemUser)) {
+					$itemUser = $this->get_item_creator($trackerId, $itemId);
+				}
+				if (!empty($itemUser)) {
+					global $tikilib;
+					$fopt['value'] = $tikilib->get_user_groups($itemUser);
 				}
 				break;
 			case 'p':
@@ -3399,6 +3414,12 @@ class TrackerLib extends TikiLib
 				<dt>Description:
 				<dd><strong>[type]</strong> if value is password, will allow to change the user password, if value is email, will display/allow to change the user email, other values possible: language;
 				</dl>'));
+		$type['usergroups'] = array(
+			'label'=>tra('user groups'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Allows to display the user groups.
+				</dl>'));
 		$type['A'] = array(
 			'label'=>tra('attachment'),
 			'opt'=>true,
@@ -4270,6 +4291,9 @@ class TrackerLib extends TikiLib
 			}
 		}
 		//echo '<pre>'; print_r($cell); echo '</pre>';
+	}
+	function get_tracker_by_name($name) {
+		return $this->getOne('select `trackerId` from `tiki_trackers` where `name`=?', array($name));
 	}
 
 }
