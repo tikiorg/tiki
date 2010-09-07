@@ -341,7 +341,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 					<label for="comments-title">{tr}Title{/tr} <span class="attention">*</span> </label>
 				</td>
 				<td>
-					<input type="text" name="comments_title" id="comments-title" value="{$comment_preview_data.title|escape}" /> 
+					<input type="text" name="comments_title" id="comments-title" value="{$comment_title|escape}" /> 
 				</td>
 			</tr>
 		{/if}
