@@ -77,5 +77,12 @@ function prefs_tiki_list() {
 				'force' => tra('Add the www'),
 			),
 		),
+		'tiki_domain_redirects' => array(
+			'name' => tra('Domain redirects'),
+			'description' => tra('When the site is accessed through specific domain names, redirect to an alternate domain preserving the URL. Useful for domain name transitions, like tikiwiki.org to tiki.org.'),
+			'type' => 'textarea',
+			'hint' => tra('One entry per line. Comma separated list: old, new'),
+			'size' => 8,
+		),
 	);
 }

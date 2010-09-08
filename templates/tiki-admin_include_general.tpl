@@ -185,6 +185,7 @@
 			<fieldset>
 				<legend>{tr}Redirects{/tr}</legend>
 				{preference name=tiki_domain_prefix}
+				{preference name=tiki_domain_redirects}
 				{preference name=feature_redirect_on_error}
 				{preference name='feature_wiki_1like_redirection'}
 				{preference name='permission_denied_login_box' mode='invert'}

@@ -38,6 +38,7 @@ function get_default_prefs() {
 		'lastUpdatePrefs' => 1,
 
 		'tiki_domain_prefix' => 'unchanged',
+		'tiki_domain_redirects' => '',
 
 		'feature_print_indexed' => 'n', 
 

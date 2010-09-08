@@ -42,24 +42,29 @@ if (($prefs['feature_wysiwyg'] != 'n' && $prefs['feature_wysiwyg'] != 'y') || $p
 require_once ('lib/setup/sections.php');
 require_once ('lib/headerlib.php');
 
-if( $prefs['tiki_domain_prefix'] == 'strip' ) {
-	if( substr( $_SERVER['HTTP_HOST'], 0, 4 ) == 'www.' ) {
-		$prefix = $tikilib->httpPrefix();
-		$prefix = str_replace( '://www.', '://', $prefix );
-		$url = $prefix . $_SERVER['REQUEST_URI'];
+$domain_map = array();
+$host = $_SERVER['HTTP_HOST'];
 
-		$access->redirect( $url );
-		exit;
-	}
-} elseif( $prefs['tiki_domain_prefix'] == 'force' ) {
-	if( substr( $_SERVER['HTTP_HOST'], 0, 4 ) != 'www.' ) {
-		$prefix = $tikilib->httpPrefix();
-		$prefix = str_replace( '://', '://www.', $prefix );
-		$url = $prefix . $_SERVER['REQUEST_URI'];
+if( $prefs['tiki_domain_prefix'] == 'strip' && substr( $host, 0, 4 ) == 'www.' ) {
+	$domain_map[$host] = substr( $host, 4 );
+} elseif( $prefs['tiki_domain_prefix'] == 'force' && substr( $_SERVER['HTTP_HOST'], 0, 4 ) != 'www.' ) {
+	$domain_map[$host] = 'www.' . $host;
+}
 
-		$access->redirect( $url, null, 301 );
-		exit;
+if( !empty($prefs['tiki_domain_redirects']) ) {
+	foreach( explode("\n", $prefs['tiki_domain_redirects']) as $row ) {
+		list($old, $new) = array_map('trim', explode(',', $row, 2));
+		$domain_map[$old] = $new;
 	}
+}
+
+if( isset($domain_map[$host]) ) {
+	$prefix = $tikilib->httpPrefix();
+	$prefix = str_replace( "://$host", "://{$domain_map[$host]}", $prefix );
+	$url = $prefix . $_SERVER['REQUEST_URI'];
+
+	$access->redirect( $url, null, 301 );
+	exit;
 }
 
 if (isset($_REQUEST['PHPSESSID'])) $tikilib->setSessionId($_REQUEST['PHPSESSID']);
