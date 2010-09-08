@@ -50,6 +50,7 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 	$langpage = $info['lang'];
 	$fullLangName = $langmapping[$langpage][0];
 	$smarty->assign( 'languageName', $fullLangName );
+	$smarty->assign( 'source_page', $name );
 	$cat_type = 'wiki page';
 	$cat_objid = $name;
 
@@ -96,6 +97,10 @@ else if ($_REQUEST['id']) {
 		$smarty->assign('articles', $articles["data"]);
 		$cat_type = 'article';
 		$cat_objid = $objId;
+		$fullLangName = $langmapping[$langpage][0];
+		$smarty->assign( 'languageName', $fullLangName );
+		$smarty->assign( 'source_page', $name );
+
 	}
 }
 
