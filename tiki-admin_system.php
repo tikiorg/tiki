@@ -14,30 +14,7 @@ $buf = '';
 global $cachelib;
 include_once ('lib/cache/cachelib.php');
 if (isset($_GET['do'])) {
-	if ($_GET['do'] == 'all') {
-		$cachelib->erase_dir_content("templates_c/$tikidomain");
-		$cachelib->erase_dir_content("temp/public/$tikidomain");
-		$cachelib->erase_dir_content("temp/cache/$tikidomain");
-		$cachelib->erase_dir_content("modules/cache/$tikidomain");
-		$cachelib->flush_opcode_cache();
-		$tikilib->set_lastUpdatePrefs();
-		$logslib->add_log('system', 'erased all Tiki cache content');
-	} elseif ($_GET['do'] == 'templates_c') {
-		$cachelib->erase_dir_content("templates_c/$tikidomain");
-		$cachelib->flush_opcode_cache();
-		$logslib->add_log('system', 'erased templates_c content');
-	} elseif ($_GET['do'] == 'temp_cache') {
-		$cachelib->erase_dir_content("temp/cache/$tikidomain");
-		$logslib->add_log('system', 'erased temp/cache content');
-	} elseif ($_GET['do'] == 'temp_public') {
-		$cachelib->erase_dir_content("temp/public/$tikidomain");
-		$logslib->add_log('system', 'erased temp/public content');
-	} elseif ($_GET['do'] == 'modules_cache') {
-		$cachelib->erase_dir_content("modules/cache/$tikidomain");
-		$logslib->add_log('system', 'erased modules/cache content');
-	} elseif ($_GET['do'] == 'prefs') {
-		$tikilib->set_lastUpdatePrefs();
-	}
+	$cachelib->empty_cache($_GET['do']);
 }
 if (isset($_GET['compiletemplates'])) {
 	$ctempl = 'templates';
@@ -50,20 +27,20 @@ if (isset($_GET['compiletemplates'])) {
 }
 $languages = array();
 $languages = $tikilib->list_languages();
-$templates_c = $cachelib->du("templates_c/$tikidomain");
+$templates_c = $cachelib->count_cache_files("templates_c/$tikidomain");
 $smarty->assign('templates_c', $templates_c);
-$tempcache = $cachelib->du("temp/cache/$tikidomain");
+$tempcache = $cachelib->count_cache_files("temp/cache/$tikidomain");
 $smarty->assign('tempcache', $tempcache);
-$temppublic = $cachelib->du("temp/public/$tikidomain");
+$temppublic = $cachelib->count_cache_files("temp/public/$tikidomain");
 $smarty->assign('temppublic', $temppublic);
-$modules = $cachelib->du("modules/cache/$tikidomain");
+$modules = $cachelib->count_cache_files("modules/cache/$tikidomain");
 $smarty->assign('modules', $modules);
 $templates = array();
 foreach($languages as $clang) {
 	if ($smarty->use_sub_dirs) { // was if(is_dir("templates_c/$tikidomain/")) ppl with tikidomains should test. redflo
-		$templates[$clang["value"]] = $cachelib->du("templates_c/$tikidomain/" . $clang["value"] . "/");
+		$templates[$clang["value"]] = $cachelib->count_cache_files("templates_c/$tikidomain/" . $clang["value"] . "/");
 	} else {
-		$templates[$clang["value"]] = $cachelib->du("templates_c/", $tikidomain . $clang["value"]);
+		$templates[$clang["value"]] = $cachelib->count_cache_files("templates_c/", $tikidomain . $clang["value"]);
 	}
 }
 $smarty->assign_by_ref('templates', $templates);
