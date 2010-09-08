@@ -282,29 +282,10 @@
       <td class="{cycle}">
         <select name="user_information">
           <option value='private' {if $user_prefs.user_information eq 'private'}selected="selected"{/if}>{tr}Private{/tr}</option>
-          <option value='public' {if $user_prefs.user_information eq 'public'}selected="selected"{/if}>{tr}public{/tr}</option>
+          <option value='public' {if $user_prefs.user_information eq 'public'}selected="selected"{/if}>{tr}Public{/tr}</option>
         </select>
       </td>
     </tr>
-  
-    {if $prefs.feature_wiki eq 'y'}
-      <tr>
-        <td class="{cycle advance=false}">{tr}Use double-click to edit pages:{/tr}</td>
-        <td class="{cycle}">
-          <input type="checkbox" name="user_dbl" {if $user_prefs.user_dbl eq 'y'}checked="checked"{/if} />
-        </td>
-      </tr>
-      {* not used 
-        {if $prefs.feature_history eq 'y'}
-          <tr>
-            <td class="{cycle advance=false}">Use new diff any version interface:</td>
-            <td class="{cycle}">
-              <input type="checkbox" name="diff_versions" {if $user_prefs.diff_versions eq 'y'}checked="checked"{/if} />
-            </td>
-          </tr>
-        {/if} 
-      *}
-    {/if}
   
     {if $prefs.feature_community_mouseover eq 'y'}
       <tr>
@@ -315,6 +296,15 @@
       </tr>
     {/if}
 
+    {if $prefs.feature_wiki eq 'y'}
+      <tr>
+        <td class="{cycle advance=false}">{tr}Use double-click to edit pages:{/tr}</td>
+        <td class="{cycle}">
+          <input type="checkbox" name="user_dbl" {if $user_prefs.user_dbl eq 'y'}checked="checked"{/if} />
+        </td>
+      </tr>
+    {/if}
+  
     {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
       <tr>
         <th colspan="2">{tr}User Messages{/tr}</th>
