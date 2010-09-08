@@ -392,6 +392,7 @@
 	</form>
 {/if}
 
+
 {if $locSection eq 'read'}
 	{if $prev}{self_link msgid=$prev}{tr}Prev{/tr}{/self_link} |{/if}
 	{if $next}{self_link msgid=$next}{tr}Next{/tr}{/self_link} |{/if}
@@ -508,14 +509,14 @@
 			{assign var='wmclass' value='webmail_message'}
 		{/if}
 		<div>
-			{button _flip_id=$wmid _text="{tr}Part{/tr}: '|cat:$bodies[ix].contentType _flip_default_open=$wmopen}
+			{button _flip_id=$wmid _text="{tr}Part{/tr}: "|cat:$bodies[ix].contentType _flip_default_open=$wmopen}
 		</div>
 		<div id="{$wmid}" class="{$wmclass}" {if $wmopen eq 'n'}style="display:none"{/if}>
 {$bodies[ix].body}
 		</div>
 	{/section}
 	<div>
-		{button _flip_id='webmail_message_source_'|cat:$msgid _text="{tr}Source{/tr}: ' _flip_default_open='n'}
+		{button _flip_id='webmail_message_source_'|cat:$msgid _text="{tr}Source{/tr}: " _flip_default_open='n'}
 	</div>
 	<div id="webmail_message_source_{$msgid}" class="webmail_message webmail_mono" style="display:none">
 {$allbodies|nl2br}
@@ -527,7 +528,6 @@
 		</div>
 	{/section}
 {/if}
-
 {if $locSection eq 'compose'}
 	{if $attaching eq 'n'}
 		{if $sent eq 'n'}
