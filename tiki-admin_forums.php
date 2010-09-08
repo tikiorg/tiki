@@ -13,8 +13,8 @@ if (!isset($_REQUEST['forumId'])) {
 }
 $access->check_feature('feature_forums');
 
-$objectperms = Perms::get( 'forum', $_REQUEST['forumId']);
-if ($objectperms->admin_forum != 'y') {
+$tikilib->get_perm_object($_REQUEST['forumId'], 'forum');
+if ($tiki_p_admin_forum != 'y') {
 	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_forum', '403');
 }
 
