@@ -98,9 +98,6 @@
 </tr>
 </table>
 </form>
-<style type="text/css">
-	.ui-progressbar-value {ldelim} background-image: url(lib/jquery/jquery-ui/themes/{$prefs.feature_jquery_ui_theme}/images/pbar-ani.gif); {rdelim}
-</style>
 {if $prefs.feature_ajax eq 'y'}{jq}
 
 // setup for AJAX export
