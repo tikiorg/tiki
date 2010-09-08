@@ -386,7 +386,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 				<input type="hidden" name="rows" value="{$rows}" />
 				<input type="hidden" name="cols" value="{$cols}" />
 				{if $prefs.feature_wiki_paragraph_formatting eq 'y'}
-					<a id="note-editor-comment" href="">{tr}Add Comment{/tr}</a>
+					<a id="note-editor-comment" href="" style="display:none;">{tr}Add Comment{/tr}</a>
 					{jq}
 						$('#top').noteeditor('#editpostform textarea', '#note-editor-comment');
 					{/jq}
