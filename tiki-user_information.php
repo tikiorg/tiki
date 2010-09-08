@@ -63,8 +63,13 @@ if ($user) {
 			$smarty->display("tiki.tpl");
 			die;
 		}
-		$message = tra('Message sent to') . ':' . $userwatch . '<br />';
-		$messulib->post_message($userwatch, $user, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+		$sent = $messulib->post_message($userwatch, $user, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], '',
+								isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : '');
+		if ($sent) {
+			$message = tra('Message sent to') . ':' . $userwatch . '<br />';
+		} else {
+			$message = tra('An error occurred, please check your mail settings and try again');
+		}
 		$smarty->assign('message', $message);
 	}
 }

@@ -338,6 +338,17 @@
 								<textarea rows="20" cols="80" name="body" style="border: solid 1px #000; width: 100%;"></textarea>
 							</label>
 						</div>
+						<input type="checkbox" name="replytome" id="replytome" />
+						<label for="replytome">
+							{tr}Reply-to my email{/tr}
+							{help url="User+Information" desc="{tr}Reply-to my email{/tr}:{tr}The user will be able to reply to you directly via email.{/tr}"}
+						</label>
+						<input type="checkbox" name="bccme" id="bccme" />
+						<label for="bccme">
+							{tr}Send me a copy{/tr}
+							{help url="User+Information" desc="{tr}Send me a copy{/tr}:{tr}You will be sent a copy of this email.{/tr}"}
+						</label>
+						
 					</div>
 
 				</form>

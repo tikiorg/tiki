@@ -38,7 +38,7 @@ class Messu extends TikiLib
 	/**
 	 * Send a message to a user
 	 */
-	function post_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash='') {
+	function post_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash='', $replyto_email='', $bcc_sender = '') {
 		global $smarty, $userlib, $prefs;
 
 		$subject = strip_tags($subject);
@@ -77,13 +77,21 @@ class Messu extends TikiLib
 				$mail->setSubject(sprintf($s, $_SERVER["SERVER_NAME"]));
 				$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');
 				$mail->setText($mail_data);
-
-				if ($userlib->get_user_preference($from,'email is public','n') == 'y') {
-					$prefs['sender_email'] = $userlib->get_user_email($from);
+				
+				$from_email = $userlib->get_user_email($from);
+				if ($bcc_sender === 'y' && !empty($from_email)) {
+					$mail->setHeader("Bcc", $from_email);
 				}
-				if (strlen( $prefs['sender_email'] ) > 1 ) {
-					$mail->setHeader("Reply-To", $prefs['sender_email']);
+				if ($replyto_email !== 'y' && $userlib->get_user_preference($from,'email is public','n') !== 'y') {
+					$from_email = '';	// empty $from_email if not to be used - saves getting it twice
+				}
+				if (!empty($from_email)) {
+					$mail->setHeader("Reply-To", $from_email);
+				}
+				if (!empty($prefs['sender_email'])) {
 					$mail->setHeader("From", $prefs['sender_email']);
+				} else if (!empty($from_email)) {
+					$mail->setHeader("From", $from_email);
 				}
 
 				if (!$mail->send(array($email), 'mail'))

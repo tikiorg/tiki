@@ -141,14 +141,19 @@ if (isset($_REQUEST['send'])) {
 	}
 	// Insert the message in the inboxes of each user
 	foreach($users as $a_user) {
-		$messulib->post_message($a_user, $user, $_REQUEST['to'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], $_REQUEST['replyto_hash']);
-		if ($prefs['feature_score'] == 'y') {
-			$tikilib->score_event($user, 'message_send');
-			$tikilib->score_event($a_user, 'message_receive');
-		}
-		// if this is a reply flag the original messages replied to
-		if ($_REQUEST['replyto_hash'] <> '') {
-			$messulib->mark_replied($a_user, $_REQUEST['replyto_hash']);
+		$result = $messulib->post_message($a_user, $user, $_REQUEST['to'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], $_REQUEST['replyto_hash'],
+								isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : '');
+		if ($result) {
+			if ($prefs['feature_score'] == 'y') {
+				$tikilib->score_event($user, 'message_send');
+				$tikilib->score_event($a_user, 'message_receive');
+			}
+			// if this is a reply flag the original messages replied to
+			if ($_REQUEST['replyto_hash'] <> '') {
+				$messulib->mark_replied($a_user, $_REQUEST['replyto_hash']);
+			}
+		} else {
+			$message = tra('An error occurred, please check your mail settings and try again');
 		}
 	}
 	// Insert a copy of the message in the sent box of the sender
