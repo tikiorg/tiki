@@ -311,11 +311,11 @@
 							<div class="floatleft" style="width: 25%"><label for="priority"><span>{tr}Priority{/tr}</span></label>:</div>
 							<div class="floatleft" style="width: 50%">
 								<select name="priority" id="priority">
-									<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
-									<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
-									<option value="3" {if $priority eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
-									<option value="4" {if $priority eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
-									<option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
+									<option value="1" {if $priority eq 1}selected="selected"{/if}>1: {tr}Lowest{/tr}</option>
+									<option value="2" {if $priority eq 2}selected="selected"{/if}>2: {tr}Low{/tr}</option>
+									<option value="3" {if $priority eq 3}selected="selected"{/if}>3: {tr}Normal{/tr}</option>
+									<option value="4" {if $priority eq 4}selected="selected"{/if}>4: {tr}High{/tr}</option>
+									<option value="5" {if $priority eq 5}selected="selected"{/if}>5: {tr}Very High{/tr}</option>
 								</select>
 							</div>
 							<div class="floatright input_submit_container">
