@@ -162,7 +162,6 @@
 		</p>
 	{/if}
 </div>
-{wikipluginsubmit}{/wikipluginsubmit}{*droit-inc*}
 
 {if $prefs.feature_article_comments == 'y' && 
 		(($tiki_p_read_comments == 'y' && $comments_cant != 0) || $tiki_p_post_comments == 'y' || $tiki_p_edit_comments == 'y')}
