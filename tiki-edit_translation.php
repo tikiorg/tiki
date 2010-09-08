@@ -300,6 +300,10 @@ function execute_module_translation() {
 	global $smarty;
 	$module_reference = array(
 		'name' => 'translation',
+		'params' => '',
+		'position' => 'r',
+		'ord' => 1,
+		'moduleId' => 0
 	);
 
 	global $modlib; require_once 'lib/modules/modlib.php';	
