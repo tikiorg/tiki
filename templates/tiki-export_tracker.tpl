@@ -2,7 +2,7 @@
 
 <h2>{tr}Export Tracker Items{/tr}</h2>
 <div>
-<form action="tiki-view_tracker.php?trackerId={$trackerId}&cookietab=3" method="post">
+<form action="tiki-view_tracker.php?trackerId={$trackerId}&amp;cookietab=3" method="post">
 <table class="formcolor">
 <tr>
 	<td><label for="tracker">{tr}Tracker{/tr}</label></td>
@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td><label for="encoding">{tr}Charset encoding{/tr}</label></td>
-	<td><select name="encoding" id="emcoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td>
+	<td><select name="encoding" id="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td>
 </tr>
 <tr>
 	<td><label for="separator">{tr}Separator{/tr}</label></td>
@@ -50,7 +50,7 @@
 		<input name="showItemId" id="showItemId" type="checkbox" checked="checked" /><label for="showItemId">{tr}itemId{/tr}</label>
 		<input type="checkbox" name="showStatus" id="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if} /><label for="showStatus">{tr}status{/tr}</label>
 		<input type="checkbox" name="showCreated" id="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if} /><label for="showCreated">{tr}created{/tr}</label>
-		<input type="checkbox" name="showLastModif" id="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if} /><label for="lastModif">{tr}lastModif{/tr}</label>
+		<input type="checkbox" name="showLastModif" id="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if} /><label for="showLastModif">{tr}lastModif{/tr}</label>
 	</td>
 </tr>
 <tr>
@@ -60,7 +60,7 @@
 		<br /><input type="radio" name="which" id="ls" value="ls"/> <label for="ls">{tr}Fields searchable or visible in items list{/tr}</label>
 		<br /><input type="radio" name="which" id="item" value="item"/> <label for="item">{tr}Fields visible in an item view{/tr}</label>
 		<br /><input type="radio" name="which" id="all" value="all"{if empty($displayedFields)} checked="checked"{/if} /> <label for="all">{tr}All fields{/tr}</label>
-		<br /><input type="radio" name="which" id="these" value="these"{if !empty($displayedFields)} checked="checked"{/if}> <label for="these">{tr}These fields{/tr}</label>
+		<br /><input type="radio" name="which" id="these" value="these"{if !empty($displayedFields)} checked="checked"{/if} /> <label for="these">{tr}These fields{/tr}</label>
 		<div id="fields_list"{if empty($displayedFields)} style="display:none"{/if}>
 			<select multiple="multiple" name="listfields[]" id="listfields">
 				{foreach from=$fields item=ix}
