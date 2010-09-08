@@ -121,6 +121,6 @@ function tf_export_submit(fm) {
 {if $line ne 'y' and $action}</tr>{/if}
 </table>
 {if empty($inForm)}</form>{/if}
-{if !empty($dataRes)}<div class="trackerfilter-result">{$dataRes}</div>{/if}
 </div>
+{if !empty($dataRes)}<div class="trackerfilter-result">{$dataRes}</div>{/if}
 {/strip}
