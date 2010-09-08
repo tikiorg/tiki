@@ -173,7 +173,7 @@
 			{if $where_forum}
 				{tr}{$where|escape}:{/tr} {$where_forum|escape}
 			{else}
-				{$cant} {tr}{$where|escape}{/tr}
+				{$cant} {tr}{$where_label|escape}{/tr}
 			{/if}
 	</div><!--nohighlight-->
 {/if}

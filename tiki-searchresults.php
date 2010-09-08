@@ -45,6 +45,12 @@ if (empty($_REQUEST["where"])) {
 }
 $find_where = 'find_' . $where;
 $smarty->assign('where', $where);
+if ($where == 'wikis') {
+	$where_label = 'wiki pages';	
+} else {
+	$where_label = $where;
+}
+$smarty->assign('where_label', $where_label);
 $filter = array();
 
 if ($where == 'wikis') {
