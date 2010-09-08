@@ -162,7 +162,7 @@ if( count( $available_states ) > 0 ) {
 	$smarty->assign( 'graph_edges', json_encode( $edges ) );
 }
 
-$smarty->assign( 'mid', 'tiki-admin-transitions.tpl' );
+$smarty->assign( 'mid', 'tiki-admin_transitions.tpl' );
 $smarty->display( 'tiki.tpl' );
 
 function transition_label_finder( $state ) {
