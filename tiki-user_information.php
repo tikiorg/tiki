@@ -44,14 +44,12 @@ if ($prefs['feature_friends'] == 'y') {
 	$smarty->assign('friend_pending', $tikilib->verify_friendship_request($userwatch, $user));
 	$smarty->assign('friend_waiting', $tikilib->verify_friendship_request($user, $userwatch));
 }
+$smarty->assign('infoPublic', 'y');
 if ($tiki_p_admin != 'y') {
 	$user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
 	// If the user is trying to pull info on themselves, allow it.
 	if ($user_information == 'private' && $userwatch != $user) {
-		$smarty->assign('errortype', 'no_redirect_login');
-		$smarty->assign('msg', tra("The user has chosen to make his information private"));
-		$smarty->display("error.tpl");
-		die;
+		$smarty->assign('infoPublic', 'n');
 	}
 }
 if ($user) {
