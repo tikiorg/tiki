@@ -37,10 +37,10 @@
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
 				<td>
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&show=mod" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod" title="{tr}Edit{/tr}">{$channels[user].trackerId}</a>
 				</td>
 				<td>
-					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&show=mod" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
+					<a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 				</td>
 				{if $channels[user].descriptionIsParsed eq 'y' }
 					<td>{wiki}{$channels[user].description}{/wiki}</td>
@@ -51,7 +51,7 @@
 				<td>{$channels[user].lastModif|tiki_short_date}</td>
 				<td style="text-align:right;" >{$channels[user].items}</td>
 				<td class="auto">
-					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&show=mod">{icon _id='page_edit'}</a>
+					<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}&amp;show=mod">{icon _id='page_edit'}</a>
 					<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 					<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 					{if $channels[user].individual eq 'y'}
@@ -288,20 +288,20 @@
 			<tr>
 				<td>{tr}Show creation date when viewing tracker item?{/tr}</td>
 				<td>
-					<input type="checkbox" name="showCreatedView" {if $showCreatedView eq 'y'}checked="checked"{/if} onclick="toggleTrTd('showCreatedUser') "/>
+					<input type="checkbox" name="showCreatedView" {if $showCreatedView eq 'y'}checked="checked" {/if}onclick="toggleTrTd('showCreatedUser')" />
 				</td>
 			</tr>
 			<tr id="showCreatedUser" {if $showCreatedView ne 'y'}style="display:none;"{/if}>
 				<td class="sub" colspan="2">
 					{tr}Identify creation user in tracker item?{/tr}
-					<input type="checkbox" name="showCreatedBy" {if $showCreatedBy eq 'y'}checked="checked"{/if} />
+					<input type="checkbox" name="showCreatedBy"{if $showCreatedBy eq 'y'} checked="checked"{/if} />
 				</td>
 			</tr>
 
 			<tr>
 				<td>{tr}Show lastModif date when listing tracker items?{/tr}</td>
 				<td>
-					<input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} onclick="toggleTrTd('showLastModifOptions') "/>
+					<input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked" {/if}onclick="toggleTrTd('showLastModifOptions')" />
 				</td>
 			</tr>
 			<tr id="showLastModifOptions" {if $showLastModif ne 'y'}style="display:none;"{/if}>
@@ -315,13 +315,13 @@
 			<tr>
 				<td>{tr}Show lastModif date when viewing tracker item?{/tr}</td>
 				<td>
-					<input type="checkbox" name="showLastModifView" {if $showLastModifView eq 'y'}checked="checked"{/if} onclick="toggleTrTd('showLastModifUser') "/>
+					<input type="checkbox" name="showLastModifView" {if $showLastModifView eq 'y'}checked="checked" {/if}onclick="toggleTrTd('showLastModifUser')" />
 				</td>
 			</tr>
 			<tr id="showLastModifUser" {if $showLastModifView ne 'y'}style="display:none;"{/if}>
 				<td class="sub" colspan="2">
 					{tr}Identify lastModif user in tracker item?{/tr}
-					<input type="checkbox" name="showLastModifBy" {if $showLastModifBy eq 'y'}checked="checked"{/if}>
+					<input type="checkbox" name="showLastModifBy" {if $showLastModifBy eq 'y'}checked="checked" {/if}/>
 				</td>
 			</tr>
 			<tr>
@@ -544,6 +544,7 @@
 						<label>{tr}Mail subject text{/tr}<input type="text" name="todo_subject" /></label><br />
 						<label>{tr}Mail body ressource{/tr}<input type="text" name="todo_body" /></label><em>{tr}wiki:pageName for a wiki page or tplName.tpl for a template{/tr}</em>
 					</fieldset>
+				</td>
 			</tr>
 				
 			<tr>
@@ -567,8 +568,8 @@
 {if $trackerId}
 [TRACKER]
 trackerId = {$trackerId}
-name = {$name}
-description = {$description}
+name = {$name|escape}
+description = {$description|escape}
 descriptionIsParsed = {$descriptionIsParsed}
 useExplicitNames = {$useExplicitNames}
 showStatus = {$showStatus}
