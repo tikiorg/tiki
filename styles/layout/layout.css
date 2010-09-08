@@ -2183,4 +2183,38 @@ table.treeTable .parent td {
 .deleted {
 	text-decoration: line-through;
 }
+
+/* interactive translations */
+
+#intertrans-indicator {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 40px;
+	background-color: #ade;
+	padding: 1em;
+}
+
+#intertrans-form {
+	position: fixed;
+	top: 10%;
+	bottom: 10%;
+	left: 10%;
+	right: 10%;
+	overflow: auto;
+	background-color: #eff;
+	display: none;
+	z-index: 2000;
+	padding: 1em;
+	border: #799 solid 2px;
+}
+#intertrans-form table {
+	width: 98%;
+	padding: 1em;
+}
+#intertrans-form table input {
+	width: 100%;
+}
+
 /* End of File */

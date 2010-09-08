@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 // Param: 'id' or 'label'
 function smarty_function_interactivetranslation($params, &$smarty) {
-	global $headerlib;
+	global $headerlib, $smarty;
 
 	$strings = get_collected_strings();
 	if( count( $strings ) == 0 ) {
@@ -25,7 +25,16 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 	$strings = json_encode( $strings );
 
 	$text = tra('Interactive Translation');
-	$help = tra('Once checked, click on any string to translate it.');
+	$help = tra('Once checked, click on any string to translate it.') . ' ';
+	
+	// add wrench icon link
+	require_once $smarty->_get_plugin_filepath('block', 'self_link');
+	$help .= smarty_block_self_link(
+		array( '_icon'=>'wrench',
+			   '_script'=>'tiki-edit_languages.php',
+			   '_title'=>tra('Click here to go to Edit Languages')),
+		'', $smarty);
+	
 	$save = tra('Save translations');
 	$note = tra('Changes will be applied on next page load only.');
 	$cancel = tra('Cancel');
@@ -39,20 +48,39 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 	} );
 	\$('body').css('padding-top', 50 );
 
+	var interTransDone = false;
 	\$('#intertrans-form form').submit( function( e ) {
 		e.preventDefault();
 
 		\$('#intertrans-form').hide();
 		\$.post( \$(this).attr('action'), \$(this).serialize() );
-
+		interTransDone = true;
+		
 		return false;
 	} );
 	
-	\$(document).find('body *:not(.intertrans)').click( function( e ) {
-		if( \$('#intertrans-active:checked').length == 0 ) {
-			return;
+	var canTranslateIt = function( e ) {
+		if( \$('#intertrans-active:checked').length == 0 ||
+				e.currentTarget.id.indexOf('intertrans-') === 0 ||
+				\$(e.currentTarget).parents("form.intertrans, #intertrans-form").length > 0 ) {
+			return false;
+		} else {
+			return true;
 		}
-
+	}
+	
+	var interTransDeepestElement = -1;
+	
+	\$("#intertrans-active").click( function( e ) {
+		if (interTransDone && !\$(this).attr("checked")) {
+			history.go(0);
+		}
+	});
+	
+	\$(document).find('body *').click( function( e ) {
+		if( !canTranslateIt( e ) ) { return; }
+		
+		e.preventDefault();
 		var text = \$(this).text();
 		var val = \$(this).val();
 		var alt = \$(this).attr('alt');
@@ -63,20 +91,44 @@ function smarty_function_interactivetranslation($params, &$smarty) {
 				|| ( alt && alt.length && alt.indexOf( this[1] ) != -1 )
 				|| ( title && title.length && title.indexOf( this[1] ) != -1 );
 		} );
+		if (applicable.length === 0) {
+			applicable = \$([[ text, "", true ]]);
+		}
 
 		\$('#intertrans-form table')
 			.empty()
 			.append( applicable.map( function() {
 				var r = \$('<tr><td class="original"></td><td><input type="text" name="trans[]"/><input type="hidden" name="source[]"/></td></tr>');
-				r.find('td.original').html( this[0] );
+				r.find('td.original').text( this[0] );
+				if (this[2]) {	// new ones in italic
+					r.find('td.original').css("font-style", 'italic');
+				}
 				r.find(':hidden').val( this[0] );
 				r.find(':text').val( this[1] );
 				return r[0];
 			} ) );
 		
-		\$('#intertrans-form').show();
+		\$('#intertrans-form').show().keydown(function (e) {
+                if (e.keyCode === 27) {
+                    e.preventDefault();
+                    \$(this).hide();
+                }
+            }).find("input:first").focus();
 		return false;
-	} );
+	} ).mouseover(function( e ) {
+		if( !canTranslateIt( e ) ) { return; }
+		var myparents = \$(this).parents();
+		if ( myparents.length > interTransDeepestElement ) {	// trying to only highlight one element at a time
+			var shad = "black 0 0 5px";
+			\$(this).css({"box-shadow":shad, "-moz-box-shadow":shad, "-webkit-box-shadow":shad});
+			\$(myparents[interTransDeepestElement]).css({"box-shadow":"", "-moz-box-shadow":"", "-webkit-box-shadow":""});
+			interTransDeepestElement = myparents.length;
+		}
+	}).mouseout(function( e ) {
+		if( !canTranslateIt( e ) ) { return; }
+		\$(this).css({"box-shadow":"", "-moz-box-shadow":"", "-webkit-box-shadow":""});
+		interTransDeepestElement = -1;
+	});
 JS;
 	$headerlib->add_jq_onready($jq);
 
@@ -90,11 +142,11 @@ JS;
 	<form method="post" action="tiki-interactive_trans.php">
 		<table>
 		</table>
-		<p>
+		<p class="center">
 			<input type="submit" value="$save"/>
 			<input type="reset" value="$cancel"/>
 		</p>
-		<p>$note</p>
+		<p class="description center">$note</p>
 	</form>
 </div>
 HTML;
