@@ -545,7 +545,7 @@ $tikidomainslash = (!empty($tikidomain) ? $tikidomain . '/' : '');
 $title = tra('Tiki Installer');
 
 include 'lib/cache/cachelib.php';
-$cachelib->empty_full_cache();
+$cachelib->empty_cache();
 
 $_SESSION["install-logged-$multi"] = 'y';
 
@@ -819,7 +819,7 @@ if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
 		session_destroy();
 	}
 	include_once 'tiki-setup.php';
-	$cachelib->empty_full_cache();
+	$cachelib->empty_cache();
 	if ($install_type == 'scratch') {
 		$u = 'tiki-change_password.php?user=admin&oldpass=admin';
 	} else {
