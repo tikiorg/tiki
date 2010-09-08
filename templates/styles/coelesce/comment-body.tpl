@@ -1,10 +1,10 @@
 {* $Id$ *}
 {*<div class="clearfix content">*}
 {if $thread_style != 'commentStyle_headers'}
-{*<div class="clearfix postbody-content">*}
+<div class="clearfix postbody-content">
 	{$comment.parsed}
 	{* <span class="signature"><!-- SIGNATURE --></span> *}
-{*</div>*}
+</div>
 {/if}
 
 {*</div>*}
