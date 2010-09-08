@@ -54,15 +54,11 @@ class Cachelib
 		return $this->implementation->invalidate( $key, $type );
 	}
 
+	/**
+	 * Deprecated - use empty_cache()
+	 */
 	function empty_full_cache() {
-		global $tikidomain,$logslib;
-		$this->erase_dir_content("templates_c/$tikidomain");
-		$this->erase_dir_content("temp/public/$tikidomain");
-		$this->erase_dir_content("temp/cache/$tikidomain");
-		$this->erase_dir_content("modules/cache/$tikidomain");
-		if (is_object($logslib)) {
-			$logslib->add_log('system','erased full cache');
-		}
+		$this->empty_cache();
 	}
 	
 	/**

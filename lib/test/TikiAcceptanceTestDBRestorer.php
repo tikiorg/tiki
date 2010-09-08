@@ -71,7 +71,7 @@ abstract class TikiAcceptanceTestDBRestorer
 		global $cachelib, $prefs, $tikilib;
 		initialize_prefs();			
 		$tikilib->cache_page_info = array();	
-		$cachelib->empty_full_cache();
+		$cachelib->empty_cache();
 	}
 	
 	

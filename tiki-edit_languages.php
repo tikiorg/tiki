@@ -15,7 +15,7 @@ if (!empty ($_REQUEST['interactive_translation_mode']) && $tiki_p_edit_languages
 	require_once("lib/multilingual/multilinguallib.php");
 	$_SESSION['interactive_translation_mode']=$_REQUEST['interactive_translation_mode'];	
 	if ($_REQUEST['interactive_translation_mode']=='off')  
-		$cachelib->empty_full_cache();
+		$cachelib->empty_cache('templates_c');
 }
 if (!isset($_SESSION['interactive_translation_mode']))
 	$smarty->assign('interactive_translation_mode','off');

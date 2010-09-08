@@ -198,7 +198,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 					// Erase cache to update displayed user info
 					//   Do not just invalidate cache for 'user_details_'.$user and 'userslist',
 					//   since userlink smarty modifier is also using cache with multiple possibilities of keys.
-					$cachelib->erase_dir_content("temp/cache/$tikidomain");
+					$cachelib->empty_cache('temp_cache', 'login');
 				}
 			}
 		}
