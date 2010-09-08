@@ -48,7 +48,7 @@ Set the names of the table headings to reflect the names of the db
   <td class="{cycle advance=false}">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
   <td class="{cycle advance=false}">
     {if $tiki_p_view_user_results eq 'y'}
-      <a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{icon _id='application_form_magnify' alt="{tr}Results{/tr}" title="{tr}Results{/tr}'}</a>
+      <a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{icon _id='application_form_magnify' alt="{tr}Results{/tr}" title="{tr}Results{/tr}"}</a>
       {if $channels[user].hasDetails eq 'y'}({tr}Details{/tr}){/if}
     {/if}
     

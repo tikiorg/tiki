@@ -7,7 +7,7 @@
 			<th width="100"><a href="tiki-list_kaltura_entries.php?list={$entryType}offset={$offset}&amp;sort_mode={if $sort_mode eq '-created_at'}asc_created_at{else}desc_created_at{/if}">{tr}Created{/tr}</a></th>
 			<th><a>{tr}Tags{/tr}</a></th>
 			<th width="100"><a href="tiki-list_kaltura_entries.php?list={$entryType}offset={$offset}&amp;sort_mode={if $sort_mode eq '-modified_at'}asc_modified{else}desc_modified_at{/if}">{tr}Modified{/tr}</a></th>
-			<th width="20"><a href='#'{popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.other_sorts|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">{icon _id='timeline_marker' alt="{tr}Other Sorts{/tr}' title=''}</a></th>
+			<th width="20"><a href='#'{popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.other_sorts|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">{icon _id='timeline_marker' alt="{tr}Other Sorts{/tr}" title=''}</a></th>
 		</tr>
 		
 		{foreach from=$klist key=key item=item}
