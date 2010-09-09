@@ -174,12 +174,12 @@ End hiding of unfinished section... *}
 
 	{cycle values="odd,even" print=false}
 	{section name=fforum loop=$fromForums}
-	<tr>
-	<td class="{cycle advance=false}">
+	<tr class="{cycle}">
+	<td>
           <input type="radio" name="fForumid" value="{$fromForums[fforum].id}" />
         </td>
-	<td class="{cycle advance=false}">{$fromForums[fforum].name}</td>
-	<td class="{cycle advance=true}">{$fromForums[fforum].comments}</td>
+	<td>{$fromForums[fforum].name}</td>
+	<td>{$fromForums[fforum].comments}</td>
 	</tr>
 	{/section}
 	</table>
@@ -198,12 +198,12 @@ End hiding of unfinished section... *}
 
 	{cycle values="odd,even" print=false}
 	{section name=tforum loop=$toForums}
-	<tr>
-	<td class="{cycle advance=false}">
+	<tr class="{cycle}">
+	<td>
           <input type="radio" name="tForumid" value="{$toForums[tforum].forumId}" />
         </td>
-	<td class="{cycle advance=false}">{$toForums[tforum].name}</td>
-	<td class="{cycle advance=true}">{$toForums[tforum].comments}</td>
+	<td>{$toForums[tforum].name}</td>
+	<td>{$toForums[tforum].comments}</td>
 	</tr>
 	{/section}
 	</table>

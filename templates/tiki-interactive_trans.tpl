@@ -29,7 +29,7 @@
 				<tr><td colspan='2'>&nbsp;</td></tr>
 				<tr><td colspan=2 class='heading'><b>{tr}Language{/tr}:<i> {$entries[ix].lang|escape}</i></b></td></tr>
 			{/if}
-				<tr class="{cycle advance=true}"><td width='40%'>
+				<tr class="{cycle}"><td width='40%'>
 				   	<input type="hidden" name='lang' value='{$entries[ix].lang|escape}'>
 					<input type="hidden" name='src' value='{$entries[ix].urlsource|escape}'>{$entries[ix].source|escape}
 				</td><td>

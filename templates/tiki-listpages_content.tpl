@@ -158,21 +158,21 @@
 		{assign var='pagefound' value='y'}
 	{/if}
 
-	<tr>
+	<tr class="{cycle}">
 		{if $checkboxes_on eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				<input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/>
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_id eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				<a href="{$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">{$listpages[changes].page_id}</a>
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_name eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				<a href="{$listpages[changes].pageName|sefurl:'wiki':'':$all_langs}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">
 					{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}
 				</a>
@@ -188,7 +188,7 @@
 		{/if}
 
 		{foreach from=$wplp_used key=lc item=ln}
-			<td class="{cycle advance=false}">
+			<td>
 				{if $listpages[changes].translations[$lc]}
 					<a href="{$listpages[changes].translations[$lc]|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].translations[$lc]|escape}">
 						{$listpages[changes].translations[$lc]|escape}
@@ -198,13 +198,13 @@
 		{/foreach}
 
 		{if $prefs.wiki_list_hits eq 'y'}	
-			<td style="text-align:right;" class="{cycle advance=false}">
+			<td style="text-align:right;">
 				{$listpages[changes].hits}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_lastmodif eq 'y' or $prefs.wiki_list_comment eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				{if $prefs.wiki_list_lastmodif eq 'y'}
 					<div>{$listpages[changes].lastModif|tiki_short_datetime}</div>
 				{/if}
@@ -217,25 +217,25 @@
 		{/if}
 
 		{if $prefs.wiki_list_creator eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				{$listpages[changes].creator|userlink}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_user eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				{$listpages[changes].user|userlink}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_lastver eq 'y'}
-			<td style="text-align:right;" class="{cycle advance=false}">
+			<td style="text-align:right;">
 				{$listpages[changes].version}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_status eq 'y'}
-			<td style="text-align:center;" class="{cycle advance=false}">
+			<td style="text-align:center;">
 				{if $listpages[changes].flag eq 'locked'}
 					{icon _id='lock' alt="{tr}Locked{/tr}"}
 				{else}
@@ -246,48 +246,48 @@
 
 		{if $prefs.wiki_list_versions eq 'y'}
 			{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
-				<td style="text-align:right;" class="{cycle advance=false}">
+				<td style="text-align:right;">
 					<a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">
 						{$listpages[changes].versions}
 					</a>
 				</td>
 			{else}
-				<td style="text-align:right;" class="{cycle advance=false}">
+				<td style="text-align:right;">
 					{$listpages[changes].versions}
 				</td>
 			{/if}
 		{/if}
 
 		{if $prefs.wiki_list_links eq 'y'}
-			<td style="text-align:right;" class="{cycle advance=false}">
+			<td style="text-align:right;">
 				{$listpages[changes].links}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_backlinks eq 'y'}
 			{if $prefs.feature_backlinks eq 'y'}
-				<td style="text-align:right;" class="{cycle advance=false}">
+				<td style="text-align:right;">
 					<a class="link" href="tiki-backlinks.php?page={$listpages[changes].pageName|escape:"url"}">
 						{$listpages[changes].backlinks}
 					</a>
 				</td>
 			{else}
-				<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].backlinks}</td>
+				<td style="text-align:right;">{$listpages[changes].backlinks}</td>
 			{/if}
 		{/if}
 
 		{if $prefs.wiki_list_size eq 'y'}
-			<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].len|kbsize}</td>
+			<td style="text-align:right;">{$listpages[changes].len|kbsize}</td>
 		{/if}
 
 		{if $prefs.wiki_list_language eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				{$listpages[changes].lang}
 			</td>
 		{/if}
 
 		{if $prefs.wiki_list_categories eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				{foreach item=categ from=$listpages[changes].categname name=categ}
 					{if !$smarty.foreach.categ.first}<br />{/if}
 					{$categ|escape}
@@ -296,7 +296,7 @@
 		{/if}
 
 		{if $prefs.wiki_list_categories_path eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				{foreach item=categpath from=$listpages[changes].categpath}
 					{if !$smarty.foreach.categpath.first}<br />{/if}
 					{$categpath|escape}
@@ -305,7 +305,7 @@
 		{/if}
 
 		{if $show_actions eq 'y'}
-			<td class="{cycle advance=false}">
+			<td>
 				{if $listpages[changes].perms.tiki_p_edit eq 'y'}
 					<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_edit'}</a>
 				{/if}

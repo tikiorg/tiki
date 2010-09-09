@@ -55,8 +55,8 @@
 
 	<table clas="normal" width="100%">
 		{section name=ix loop=$slots}
-			<tr>
-				<td class="{cycle}">
+			<tr class="{cycle}">
+				<td>
 					<table>
 						<tr>
 							<td>
@@ -92,8 +92,8 @@
 	<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|tiki_date_format:"%d"}&amp;mon={$next_week_start|tiki_date_format:"%m"}&amp;year={$next_week_start|tiki_date_format:"%Y"}">{icon _id='resultset_next'}</a>
 	<table class="normal">
 		{section name=ix loop=$slots}
-			<tr>
-				<td class="{cycle}">
+			<tr class="{cycle}">
+				<td>
 					<table >
 						<tr>
 							<td >
@@ -147,18 +147,18 @@
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=user loop=$channels}
-				<tr>
-					<td style="text-align:center;" class="{cycle advance=false}">
+				<tr class="{cycle}">
+					<td style="text-align:center;">
 						<input type="checkbox" name="event[{$channels[user].eventId}]" />
 					</td>
-					<td class="{cycle advance=false}">
+					<td>
 						<a class="link" href="tiki-minical.php?view={$view}&amp;eventId={$channels[user].eventId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}#add">{$channels[user].title}</a>
 					</td>
-					<td class="{cycle advance=false}">{$channels[user].start|tiki_short_datetime}</td>
-					<td class="{cycle advance=false}">
+					<td>{$channels[user].start|tiki_short_datetime}</td>
+					<td>
 						{math equation="x / 3600" x=$channels[user].duration format="%d"} {tr}h{/tr} {math equation="(x % 3600) / 60" x=$channels[user].duration} {tr}mins{/tr}
 					</td>
-					<td style="text-align:center;" class="{cycle advance=false}">
+					<td style="text-align:center;">
 						{if $channels[user].topicId}
 							{if $channels[user].topic.isIcon eq 'y'}
 								<img title="{$channels[user].topic.name}" src="{$channels[user].topic.path}" alt="{tr}topic image{/tr}" />

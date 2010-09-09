@@ -230,12 +230,12 @@
 		{section name=changes loop=$galleries}
 			{if ($filter eq 'topgal' and $galleries[changes].parentgallery eq -1) or ($filter eq 'parentgal' and $galleries[changes].parentgal eq 'y') or ($filter eq '')}
 				{if $galleries[changes].visible eq 'y' or $tiki_p_admin_galleries eq 'y'}
-					<tr>
+					<tr class="{cycle}">
 						{if $prefs.gal_list_name eq 'y'}
-							<td class="{cycle advance=false}"><a class="galname" href="{$galleries[changes].galleryId|sefurl:gallery}">{$galleries[changes].name}</a></td>
+							<td><a class="galname" href="{$galleries[changes].galleryId|sefurl:gallery}">{$galleries[changes].name}</a></td>
 						{/if}
 						{if $prefs.gal_list_parent eq 'y'}
-							<td class="{cycle advance=false}">
+							<td>
 							{if $galleries[changes].parentgallery ne -1 }
 								<a class="galname" href="{$galleries[changes].parentgallery|sefurl:gallery}">{$galleries[changes].parentgalleryName}</a>
 							{/if}
@@ -243,24 +243,24 @@
 							</td>
 						{/if}
 						{if $prefs.gal_list_description eq 'y'}
-							<td class="{cycle advance=false}">{$galleries[changes].description}</td>
+							<td>{$galleries[changes].description}</td>
 						{/if}
 						{if $prefs.gal_list_created eq 'y'}
-							<td class="{cycle advance=false}">{$galleries[changes].created|tiki_short_datetime}</td>
+							<td>{$galleries[changes].created|tiki_short_datetime}</td>
 						{/if}
 						{if $prefs.gal_list_lastmodif eq 'y'}
-							<td class="{cycle advance=false}">{$galleries[changes].lastModif|tiki_short_datetime}</td>
+							<td>{$galleries[changes].lastModif|tiki_short_datetime}</td>
 						{/if}
 						{if $prefs.gal_list_user eq 'y'}
-							<td class="{cycle advance=false}">{$galleries[changes].user|userlink}</td>
+							<td>{$galleries[changes].user|userlink}</td>
 						{/if}
 						{if $prefs.gal_list_imgs eq 'y'}
-							<td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].images}</td>
+							<td style="text-align:right;">{$galleries[changes].images}</td>
 						{/if}
 						{if $prefs.gal_list_visits eq 'y'}
-							<td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].hits}</td>
+							<td style="text-align:right;">{$galleries[changes].hits}</td>
 						{/if}
-						<td class="{cycle}" nowrap="nowrap">
+						<td nowrap="nowrap">
 							{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_view_image_gallery eq 'y' }
 								<a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}">{icon _id='table' alt="{tr}List{/tr}"}</a>
 							{/if}

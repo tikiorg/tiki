@@ -46,12 +46,12 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
-<tr>
-<td class="{cycle advance=false}">{$items[ix].chat_started|tiki_short_datetime}</td><!--date_format:"%d %b [%H:%M]"-->
-<td class="{cycle advance=false}">{if $items[ix].tiki_user ne ""}{$items[ix].tiki_user}{else}{$items[ix].user|escape}{/if}</td>
-<td class="{cycle advance=false}">{$items[ix].reason}</td>
-<td class="{cycle advance=false}">{$items[ix].operator|escape}</td>
-<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}&amp;view={$items[ix].reqId}">{$items[ix].msgs}<a>&nbsp;</td>
+<tr class="{cycle}">
+<td>{$items[ix].chat_started|tiki_short_datetime}</td><!--date_format:"%d %b [%H:%M]"-->
+<td>{if $items[ix].tiki_user ne ""}{$items[ix].tiki_user}{else}{$items[ix].user|escape}{/if}</td>
+<td>{$items[ix].reason}</td>
+<td>{$items[ix].operator|escape}</td>
+<td style="text-align:right;"><a class="link" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}&amp;view={$items[ix].reqId}">{$items[ix].msgs}<a>&nbsp;</td>
 </tr>
 {sectionelse}
 <tr><td class="odd" colspan="5">{tr}No records found{/tr}</td></tr>
@@ -75,4 +75,3 @@
 {/section}
 </table>
 {/if}
- 

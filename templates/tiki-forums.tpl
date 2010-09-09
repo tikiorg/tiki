@@ -88,9 +88,9 @@
 	{/if}
 {/if}
 
-<tr>
+<tr class="{cycle}">
 
-<td class="{cycle advance=false}">
+<td>
 	<span style="float:left">
 		{if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
 			<a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name|escape}</a>
@@ -112,16 +112,16 @@
 {/if}
 </td>
 {if $prefs.forum_list_topics eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
+	<td style="text-align:right;">{$channels[user].threads}</td>
 {/if}
 {if $prefs.forum_list_posts eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
+	<td style="text-align:right;">{$channels[user].comments}</td>
 {/if}
 {if $prefs.forum_list_ppd eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
+	<td style="text-align:right;">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 {/if}
 {if $prefs.forum_list_lastpost eq 'y'}	
-<td class="{cycle advance=false}">
+<td>
 {if isset($channels[user].lastPost)}
 {$channels[user].lastPost|tiki_short_datetime}<br />
   {if $prefs.forum_reply_notitle neq 'y'}
@@ -132,10 +132,10 @@
 </td>
 {/if}
 {if $prefs.forum_list_visits eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
+	<td style="text-align:right;">{$channels[user].hits}</td>
 {/if}	
 
-<td style="text-align:right;" class="{cycle advance=false}">
+<td style="text-align:right;">
 	<a class="admlink" title="{tr}View{/tr}" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{icon _id='table' alt="{tr}View{/tr}"}</a>
 	{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 		<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&cookietab=2">{icon _id='page_edit'}</a>
@@ -149,4 +149,3 @@
 </table>
 
 {pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}
-

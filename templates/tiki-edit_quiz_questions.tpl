@@ -99,13 +99,13 @@
 	</tr>
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].questionId}</td>
-			<td class="{cycle advance=false}">{$channels[user].position}</td>
-			<td class="{cycle advance=false}">{$channels[user].question|escape}</td>
-			<td class="{cycle advance=false}">{$channels[user].options}</td>
-			<td class="{cycle advance=false}">{$channels[user].maxPoints}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td>{$channels[user].questionId}</td>
+			<td>{$channels[user].position}</td>
+			<td>{$channels[user].question|escape}</td>
+			<td>{$channels[user].options}</td>
+			<td>{$channels[user].maxPoints}</td>
+			<td>
 				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
 				<a class="link" href="tiki-edit_question_options.php?quizId={$quizId}&amp;questionId={$channels[user].questionId}">{icon _id='bricks' alt="{tr}Options{/tr}"}</a>
 				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
