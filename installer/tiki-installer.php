@@ -192,53 +192,6 @@ class Smarty_Tikiwiki_Installer extends Smarty
 	}
 }
 
-function kill_script() {
-	$remove = 'no';
-	if (isset($_REQUEST['remove'])) {
-		$remove = 'yes';
-	}
-	$removed = false;
-	
-	if (is_writable("installer/tiki-installer.php")) {
-		/* first try to delete the file if requested */
-		if ( ($remove == 'yes') && @unlink("installer/tiki-installer.php")) {
-			$removed = true;
-		}
-		/* if it fails, then try to rename it */
-		elseif (@rename("installer/tiki-installer.php", "installer/tiki-installer.done")) {
-			$removed = true;
-		}
-		/* otherwise here's an attempt to change the content of the file to prevent execution */
-		else {
-			$fh = fopen('installer/tiki-installer.php', 'rb');
-			$data = fread($fh, filesize('installer/tiki-installer.php'));
-			fclose($fh);
-			$data = preg_replace('/\/\/stopinstall:/', '', $data);
-			$fh = fopen('installer/tiki-installer.php', 'wb');
-			if (fwrite($fh, $data) > 0) {
-				$removed = true;
-			}
-			fclose($fh);
-		}
-	}
-
-	if ($removed == true) {
-		header ('location: tiki-index.php');
-	} else {
-		// TODO: display this via translantable error msg template
-		print "<html><head><title>Ooops !</title></head><body>
-<h1 style='color: red'>Ooops !</h1>
-<p>Tikiwiki installer failed to rename the <b>installer/tiki-installer.php</b> file.</p>
-<p style='border: solid 1px red; margin: 0 10% 0 10%; text-align: center; width: 80%'>Leaving this file on a publicly accessible site is a <strong>security risk</strong>.</p>
-<p>Please remove or rename the <b>installer/tiki-installer.php</b> from your Tiki installation folder 'manually' (e.g. using SSH or FTP).
-<strong>Somebody else could be potentially able to wipe out your Tikiwiki database if you do not remove or rename this file !</strong></p>
-<p><a href='index.php'>Proceed to your site</a> after you have removed or renamed <b>installer/tiki-installer.php</b>.</p>
-<p style='text-align: right'>Thank you</p>
-</body></html>";
-	}
-	exit();
-}
-
 function check_session_save_path() {
 	global $errors;
 	if (ini_get('session.save_handler') == 'files') {
@@ -493,13 +446,6 @@ function fix_double_encoding( $dbname, $previous ) {
 
 // -----------------------------------------------------------------------------
 // end of functions .. now starts the processing
-
-// TODO: check that this is no longer in use (using lock-file now) and remove this and function
-// After install, this should remove this script.
-if (isset($_REQUEST['kill'])) {
-	kill_script();
-	exit();
-}
 
 // If using multiple Tikis
 if (is_file('db/virtuals.inc')) {
