@@ -67,10 +67,8 @@
 	    <th>{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
     {/if}	
 		
-		{if ($tiki_p_admin eq 'y' or $tiki_p_admin_forum eq 'y')}
-		{assign var=numbercol value=`$numbercol+1`}
-			<th>{tr}Actions{/tr}</th>
-		{/if}
+	{assign var=numbercol value=`$numbercol+1`}
+	<th>{tr}Actions{/tr}</th>
   </tr>
 
 {assign var=section_old value=""}
@@ -137,11 +135,12 @@
 	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 {/if}	
 
-{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-	<td style="text-align:right;" class="{cycle advance=false}">
+<td style="text-align:right;" class="{cycle advance=false}">
+	<a class="admlink" title="{tr}View{/tr}" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{icon _id='table' alt="{tr}View{/tr}"}</a>
+	{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 		<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&cookietab=2">{icon _id='page_edit'}</a>
-	</td>
-{/if}
+	{/if}
+</td>
 
 </tr>
 {sectionelse}

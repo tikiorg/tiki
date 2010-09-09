@@ -13,9 +13,12 @@ if (!isset($_REQUEST['forumId'])) {
 }
 $access->check_feature('feature_forums');
 
-$tikilib->get_perm_object($_REQUEST['forumId'], 'forum');
-if ($tiki_p_admin_forum != 'y') {
+$objectperms = Perms::get( 'forum', $_REQUEST['forumId']);
+if (!$objectperms->admin_forum) {
 	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_forum', '403');
+}
+if ($userlib->object_has_one_permission($_REQUEST['forumId'], 'forum')) {
+	$smarty->assign('individual', 'y');
 }
 
 $auto_query_args = array(
@@ -204,6 +207,8 @@ for ($i = 0; $i < $max; $i++) {
 		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $channels["data"][$i]["forumId"], 'forum', 'tiki_p_admin_forum')) {
 			$channels["data"][$i]["individual_tiki_p_admin_forum"] = 'y';
 		}
+	} elseif ($userlib->user_has_perm_on_object($user, $channels["data"][$i]["forumId"], 'forum', 'tiki_p_admin_forum')) {
+		$channels["data"][$i]["individual_tiki_p_admin_forum"] = 'y';
 	} else {
 		$channels["data"][$i]["individual"] = 'n';
 	}
