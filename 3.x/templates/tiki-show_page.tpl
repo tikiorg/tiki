@@ -49,16 +49,14 @@
 {remarksbox type="note" title="{tr}Note{/tr}"}{$saved_msg}{/remarksbox}
 {/if}
 
-<div class="categbar" style="clear: both; text-align: right">
-    {if $user and $prefs.feature_user_watches eq 'y'}
-        {if $category_watched eq 'y'}
-            {tr}Watched by categories{/tr}:
-            {section name=i loop=$watching_categories}
-			    <a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
-            {/section}
-        {/if}			
-    {/if}
-</div>
+{if $user and $prefs.feature_user_watches eq 'y' and $category_watched eq 'y'}
+	<div class="categbar" style="clear: both; text-align: right">
+		{tr}Watched by categories{/tr}:
+		{section name=i loop=$watching_categories}
+			<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+		{/section}
+	</div>
+{/if}
 
 {if $prefs.feature_urgent_translation eq 'y'}
 	{section name=i loop=$translation_alert}
