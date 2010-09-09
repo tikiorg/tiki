@@ -1,7 +1,7 @@
-This directory contains source code to TikiWiki CMS/Groupware
+This directory contains source code to Tiki Wiki CMS/Groupware
 
 
-TikiWiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project. 
+Tiki Wiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project. 
 It exists and improves by the participation of people just like YOU.
 
 
@@ -9,7 +9,7 @@ INSTALLATION
 ------------
 The rest of this document includes parts of the online documentation that
 might be enough to get you running Tiki. For more details, please see:
- http://doc.tikiwiki.org/Install
+ http://doc.tiki.org/Install
 
 
 Before you get started, it is a good idea to know:
@@ -29,7 +29,7 @@ Unpack the Tiki files to the document root of where you want it installed,
 e.g. /var/www/tiki/ 
 
 To unpack the bz2 file, use:
-tar xjf tikiwiki-[version].tar.bz2
+tar xjf tiki-[version].tar.bz2
 
 
 
@@ -49,7 +49,7 @@ Step three: create the database
 * create a database for Tiki
   - either using PhpMyAdmin and MySQL
   - or on the command line "mysqladmin create dbname"
-    the database name is usually called "tikiwiki" 
+    the database name is usually called "tiki" 
 
 Be sure to record the following items:
 	- The database name 
@@ -81,38 +81,38 @@ Next you can configure Tiki to suit your needs:
 * Assign appropriate permissions 
 
 
-Good luck and have fun with TikiWiki CMS/Groupware!
+Good luck and have fun with Tiki Wiki CMS/Groupware!
 
 --------------------------------------------------------------------------------
 
 IMPORTANT LINKS
 ---------------
 * General information & overview
-  http://info.tikiwiki.org
+  http://info.tiki.org
 
-* Official TikiWiki documentation website
-  http://doc.tikiwiki.org
+* Official Tiki documentation website
+  http://doc.tiki.org
 
 * Forums & community
-  http://tikiwiki.org/tiki-forums.php
+  http://tiki.org/tiki-forums.php
 
 * Developers
-  http://dev.tikiwiki.org
+  http://dev.tiki.org
 
 * Themes & styling
-  http://themes.tikiwiki.org
+  http://themes.tiki.org
 
 * Profiles
-  http://profiles.tikiwiki.org
+  http://profiles.tiki.org
   
 * Security
-  http://security.tikiwiki.org
+  http://security.tiki.org
 
 * IRC chat channel: #tikiwiki on irc.freenode.net
-  http://irc.tikiwiki.org/
+  http://irc.tiki.org/
 
 
 
 ps:
-Now you may want to come to http://tikiwiki.org and join the community!
+Now you may want to come to http://tiki.org and join the community!
 
