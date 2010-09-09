@@ -60,13 +60,13 @@
 </tr>
 {cycle print=false values="odd,even"}
 {section name=user loop=$channels}
-<tr>
-<td class="{cycle advance=false}">{$channels[user].questionId}</td>
-<td class="{cycle advance=false}">{$channels[user].position}</td>
-<td class="{cycle advance=false}">{$channels[user].question|escape|nl2br}</td>
-<td class="{cycle advance=false}">{$channels[user].type}</td>
-<td class="{cycle advance=false}">{$channels[user].options}</td>
-<td class="{cycle advance=false}">
+<tr class="{cycle}">
+<td>{$channels[user].questionId}</td>
+<td>{$channels[user].position}</td>
+<td>{$channels[user].question|escape|nl2br}</td>
+<td>{$channels[user].type}</td>
+<td>{$channels[user].options}</td>
+<td>
 	{self_link _icon='page_edit' questionId=$channels[user].questionId}{tr}Edit{/tr}{/self_link}
 	{self_link _icon='cross' remove=$channels[user].questionId}{tr}Delete{/tr}{/self_link}
 </td>

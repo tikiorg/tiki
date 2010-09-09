@@ -18,13 +18,13 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$links}
-<tr>
-<td class="{cycle advance=false}">{$links[user].url}</td>
-<td class="{cycle advance=false}">{$links[user].title|escape}</td>
-<td class="{cycle advance=false}">{$links[user].hits}</td>
-<td class="{cycle advance=false}">{$links[user].position}</td>
-<td class="{cycle advance=false}">{$links[user].type}</td>
-<td class="{cycle}">
+<tr class="{cycle}">
+<td>{$links[user].url}</td>
+<td>{$links[user].title|escape}</td>
+<td>{$links[user].hits}</td>
+<td>{$links[user].position}</td>
+<td>{$links[user].type}</td>
+<td>
  <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}">{icon _id='page_edit'}</a> &nbsp;
  <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 </td>

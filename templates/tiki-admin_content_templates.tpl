@@ -150,10 +150,10 @@
 	</tr>
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].name|escape}</td>
-			<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
-			<td class="{cycle advance=false}">
+		<tr class="{cycle}">
+			<td>{$channels[user].name|escape}</td>
+			<td>{$channels[user].created|tiki_short_datetime}</td>
+			<td>
 				{if count($channels[user].sections) == 0}{tr}Visible in no sections{/tr}{/if}
 				{section name=ix loop=$channels[user].sections}
 					{$channels[user].sections[ix]} 
@@ -163,7 +163,7 @@
 					&nbsp;&nbsp;
 				{/section}
 			</td>
-			<td class="{cycle advance=true}">
+			<td>
 				&nbsp;&nbsp;
 				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
 					{icon _id='page_edit'}

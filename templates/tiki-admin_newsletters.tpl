@@ -29,18 +29,18 @@
 	
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].nlId}{/self_link}</td>
-			<td class="{cycle advance=false}">
+		<tr class="{cycle}">
+			<td>{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].nlId}{/self_link}</td>
+			<td>
 				{self_link cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId _title="{tr}Edit{/tr}"}{$channels[user].name|escape}{/self_link}
 				<div class="subcomment">{$channels[user].description|escape|nl2br}</div>
 			</td>
-			<td class="{cycle advance=false}">{$channels[user].author}</td>
-			<td class="{cycle advance=false}">{$channels[user].users} ({$channels[user].confirmed})</td>
-			<td class="{cycle advance=false}">{$channels[user].editions}</td>
-			<td class="{cycle advance=false}">{$channels[user].drafts}</td>
-			<td class="{cycle advance=false}">{$channels[user].lastSent|tiki_short_datetime}</td>
-			<td class="{cycle}">
+			<td>{$channels[user].author}</td>
+			<td>{$channels[user].users} ({$channels[user].confirmed})</td>
+			<td>{$channels[user].editions}</td>
+			<td>{$channels[user].drafts}</td>
+			<td>{$channels[user].lastSent|tiki_short_datetime}</td>
+			<td>
 				{if ($channels[user].tiki_p_admin eq 'y') or ($channels[user].tiki_p_assign_perm_newsletters eq 'y')}
 					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}">
 						<img width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" />

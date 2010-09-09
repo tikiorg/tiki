@@ -195,9 +195,9 @@
 								</tr>
 								{cycle values="odd,even" print=false}
 								{foreach key=mime item=cmd from=$fgal_handlers}
-									<tr>
-										<td class="{cycle advance=false}">{$mime}</td>
-										<td class="{cycle advance=true}">
+									<tr class="{cycle}">
+										<td>{$mime}</td>
+										<td>
 											<input name="mimes[{$mime}]" type="text" value="{$cmd|escape:html}" size="30"/>
 										</td>
 									</tr>

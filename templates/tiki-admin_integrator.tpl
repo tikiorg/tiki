@@ -79,16 +79,16 @@
   </tr>
   {cycle values="odd,even" print=false}
   {section name=rep loop=$repositories}
-    <tr>
-      <td class="{cycle advance=false}"{if (strlen($repositories[rep].description) > 0)} rowspan="2"{/if}>
+    <tr class="{cycle}">
+      <td{if (strlen($repositories[rep].description) > 0)} rowspan="2"{/if}>
         <a href="tiki-admin_integrator_rules.php?repID={$repositories[rep].repID|escape}" title="{tr}Edit rules{/tr}">
           {$repositories[rep].name}
         </a>
       </td>
-      <td class="{cycle advance=false}">{$repositories[rep].path}</td>
-      <td class="{cycle advance=false}">{$repositories[rep].start_page}</td>
-      <td class="{cycle advance=false}">{$repositories[rep].css_file}</td>
-      <td class="{if (strlen($repositories[rep].description) > 0)}{cycle advance=false}{else}{cycle}{/if}">
+      <td>{$repositories[rep].path}</td>
+      <td>{$repositories[rep].start_page}</td>
+      <td>{$repositories[rep].css_file}</td>
+      <td>
         <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repositories[rep].repID|escape}" title="{tr}Edit{/tr}">
             {icon _id='wrench' alt="{tr}Edit{/tr}"}
         </a>
@@ -98,8 +98,8 @@
 
     {* Show description as colspaned row if it is not an empty *}
     {if (strlen($repositories[rep].description) > 0)}
-    </tr><tr>
-      <td class="{cycle}" colspan="4">{$repositories[rep].description}</td>
+    </tr><tr class="{cycle}">
+      <td colspan="4">{$repositories[rep].description}</td>
     {/if}
     </tr>
   {/section}

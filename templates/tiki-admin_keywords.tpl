@@ -48,10 +48,10 @@
 			</tr>	
 			{cycle values="even,odd" print=false}
 			{section name=i loop=$existing_keywords}
-				<tr>
-					<td class="{cycle advance=false}"><a href="{$existing_keywords[i].page|sefurl}">{$existing_keywords[i].page|escape}</a></td>
-					<td class="{cycle advance=false}">{$existing_keywords[i].keywords|escape}</td>
-					<td class="{cycle}"><a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}">{icon _id=page_edit}</a> <a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}&amp;remove_keywords=1">{icon _id=cross}</a></td>	
+				<tr class="{cycle}">
+					<td><a href="{$existing_keywords[i].page|sefurl}">{$existing_keywords[i].page|escape}</a></td>
+					<td>{$existing_keywords[i].keywords|escape}</td>
+					<td><a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}">{icon _id=page_edit}</a> <a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}&amp;remove_keywords=1">{icon _id=cross}</a></td>	
 				</tr>
 			{/section}
 		</tbody>

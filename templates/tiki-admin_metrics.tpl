@@ -33,12 +33,12 @@
 	{if !empty($metrics_list)}
 		{cycle print=false values="odd,even"}
 		{foreach from=$metrics_list key=i item=metric}
-			<tr>
-				<td class="{cycle advance=false} first">{$metric.metric_name|escape}</td>
-				<td class="{cycle advance=false}">{$metric.metric_range|escape}</td>
-				<td class="{cycle advance=false}">{$metric.metric_datatype|escape}</td>
-				<td class="{cycle advance=false}">{$metric.metric_query|escape}</td>
-				<td class="{cycle}">
+			<tr class="{cycle}">
+				<td class="first">{$metric.metric_name|escape}</td>
+				<td>{$metric.metric_range|escape}</td>
+				<td>{$metric.metric_datatype|escape}</td>
+				<td>{$metric.metric_query|escape}</td>
+				<td>
 					<a class="link" href="tiki-admin_metrics.php?metric_edit={$i|escape:'url'}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 					<a class="link" href="tiki-admin_metrics.php?assign_metric_new={$i|escape:'url'}#assign" title="{tr}Assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt="{tr}Assign{/tr}" /></a>
 					<a class="link" href="tiki-admin_metrics.php?metric_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt="{tr}Delete{/tr}" /></a>
@@ -63,10 +63,10 @@
 	{if !empty($tabs_list)}
 		{cycle print=false values="odd,even"}
 		{foreach from=$tabs_list key=i item=tab}
-			<tr>
-				<td class="{cycle advance=false} first">{$tab.tab_name|escape}</td>
-				<td class="{cycle advance=false}">{$tab.tab_order|escape}</td>
-				<td class="{cycle}">
+			<tr class="{cycle}">
+				<td class="first">{$tab.tab_name|escape}</td>
+				<td>{$tab.tab_order|escape}</td>
+				<td>
 					<a class="link" href="tiki-admin_metrics.php?tab_edit={$i|escape:'url'}#editcreatetab" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 					<a class="link" href="tiki-admin_metrics.php?tab_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt="{tr}Delete{/tr}" /></a>
 				</td>
@@ -90,10 +90,10 @@
 	{if !empty($metrics_assigned_list)}
 		{cycle print=false values="odd,even"}
 		{foreach from=$metrics_assigned_list key=i item=assigned_item}
-			<tr>
-				<td class="{cycle advance=false} first">{$metrics_list[$assigned_item.metric_id].metric_name|escape}</td>
-				<td class="{cycle advance=false}">{$tabs_list[$assigned_item.tab_id].tab_name|escape}</td>
-				<td class="{cycle}">
+			<tr class="{cycle}">
+				<td class="first">{$metrics_list[$assigned_item.metric_id].metric_name|escape}</td>
+				<td>{$tabs_list[$assigned_item.tab_id].tab_name|escape}</td>
+				<td>
 					<a class="link" href="tiki-admin_metrics.php?assign_metric_edit={$i|escape:'url'}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 					<a class="link" href="tiki-admin_metrics.php?assign_remove={$i|escape:'url'}" title="{tr}Unassign{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt="{tr}Delete{/tr}" /></a>
 				</td>
@@ -122,9 +122,9 @@
 <form method="post" action="tiki-admin_metrics.php#assign">
 	<input type="hidden" name="assigned_id" value="{$assigned_id}" />
 	<table class="formcolor">
-		<tr>
-			<td class="{cycle advance=false}">{tr}Metric Name{/tr}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td>{tr}Metric Name{/tr}</td>
+			<td>
 				<select name="assign_metric">
 					{foreach from=$metrics_list key=i item=metric}
 						<option value="{$i|escape}" {if $assign_metric eq $i}selected="selected"{/if}>{$metric.metric_name}</option>
@@ -132,9 +132,9 @@
 				</select>
 			</td>
 		</tr>
-		<tr>
-			<td class="{cycle advance=false}">{tr}Tab for metric{/tr}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td>{tr}Tab for metric{/tr}</td>
+			<td>
 				<select name="assign_tab">
 					{foreach from=$tabs_list key=i item=tab}
 						<option value="{$i|escape}" {if $assign_tab eq $i}selected="selected"{/if}>{$tab.tab_name}</option>
@@ -170,13 +170,13 @@
 
 <form name="editmetric" method="post" action="tiki-admin_metrics.php#editcreate">
 	<table id="admin_metrics_add" class="formcolor">
-		<tr>
-			<td class="odd">{tr}Name (must be unique){/tr}</td>
-			<td class="odd"><input type="text" name="metric_name" value="{$metric_name|escape}" /></td>
+		<tr class="{cycle}">
+			<td>{tr}Name (must be unique){/tr}</td>
+			<td><input type="text" name="metric_name" value="{$metric_name|escape}" /></td>
 		</tr>
-		<tr>
-			<td class="even">{tr}Range{/tr}</td>
-			<td class="even">
+		<tr class="{cycle}">
+			<td>{tr}Range{/tr}</td>
+			<td>
 				<select name="metric_range">
 					{foreach from=$metric_range_all key=rangeid item=rangename}
 						<option value="{$rangeid}" {if (isset($metric_range) && ($metric_range eq $rangename))}selected="selected"{/if}>{$rangename}</option>
@@ -184,9 +184,9 @@
 				</select>
 			</td>
 		</tr>
-		<tr>
-			<td class="{cycle advance=false}">{tr}Data Type{/tr}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td>{tr}Data Type{/tr}</td>
+			<td>
 				<select name="metric_datatype">
 				{foreach from=$metric_datatype_all key=datatypeid item=datatypename}
 					<option value="{$datatypeid}" {if (isset($metric_datatype) && ($metric_datatype eq $datatypename))}selected="selected"{/if}>{$datatypename}</option>
@@ -194,9 +194,9 @@
 				</select>
 			</td>
 		</tr>
-		<tr>
-			<td class="{cycle advance=false}">{tr}DSN{/tr}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td>{tr}DSN{/tr}</td>
+			<td>
 				<select name="metric_dsn">
 					<option value="local" {if isset($metric_dsn) && $metric_dsn eq 'local'}selected="selected"{/if}>{tr}Local (Tiki database){/tr}</option>
 					{foreach from=$dsn_list key=datatypeid item=dsn}
@@ -205,9 +205,9 @@
 				</select>
 			</td>
 		</tr>
-		<tr>
-			<td class="{cycle advance=false}">{tr}Query{/tr}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td>{tr}Query{/tr}</td>
+			<td>
 				<textarea id="metric_query" name="metric_query" rows="10">{$metric_query|escape}</textarea>
 			</td>
 		</tr>
@@ -230,17 +230,17 @@
 
 <form name="edittab" method="post" action="tiki-admin_metrics.php#editcreatetab">
 	<table id="admin_metrics_add_tab" class="formcolor">
-		<tr>
-			<td class="{cycle advance=false}">{tr}Name (must be unique){/tr}</td>
-			<td class="{cycle}"><input type="text" name="tab_name" value="{$tab_name|escape}" /></td>
+		<tr class="{cycle}">
+			<td>{tr}Name (must be unique){/tr}</td>
+			<td><input type="text" name="tab_name" value="{$tab_name|escape}" /></td>
 		</tr>
-		<tr>
-			<td class="{cycle advance=false}">{tr}Weight (must be integer){/tr}</td>
-			<td class="{cycle}"><input type="text" name="tab_order" value="{$tab_order|escape}" /></td>
+		<tr class="{cycle}">
+			<td>{tr}Weight (must be integer){/tr}</td>
+			<td><input type="text" name="tab_order" value="{$tab_order|escape}" /></td>
 		</tr>
-		<tr>
-			<td class="{cycle advance=false}">{tr}Content{/tr}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td>{tr}Content{/tr}</td>
+			<td>
 				<textarea id="tab_content" name="tab_content" rows="10">{$tab_content|escape}</textarea>
 			</td>
 		</tr>
@@ -251,4 +251,3 @@
 	</table>
 	<input type="hidden" name="tab_id" value="{$tab_id|escape}">
 </form>
-

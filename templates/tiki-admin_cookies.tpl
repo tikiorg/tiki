@@ -67,10 +67,10 @@
 	</tr>
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].cookieId}</td>
-			<td class="{cycle advance=false}">{$channels[user].cookie|escape}</td>
-			<td class="{cycle advance=true}">
+		<tr class="{cycle}">
+			<td>{$channels[user].cookieId}</td>
+			<td>{$channels[user].cookie|escape}</td>
+			<td>
 				&nbsp;&nbsp;
 				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">{icon _id='page_edit'}</a>
 				&nbsp;

@@ -115,27 +115,27 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
-<tr>
-<td class="{cycle advance=false}">
+<tr class="{cycle}">
+<td>
 <input type="checkbox" name="delsec[{$items[user].banId}]" />
 </td>
-<td class="{cycle advance=false}">
+<td>
 <a href="tiki-admin_banning.php?banId={$items[user].banId}" class="link">
 {$items[user].title|escape}</a>
 </td>
-<td style="text-align:right;" class="{cycle advance=false}">
+<td style="text-align:right;">
 {if $items[user].mode eq 'user'}
 	{$items[user].user|escape}
 {else}
 	{$items[user].ip1}.{$items[user].ip2}.{$items[user].ip3}.{$items[user].ip4}
 {/if}
 </td>
-<td style="text-align:right;" class="{cycle advance=false}">
+<td style="text-align:right;">
 {section name=ix loop=$items[user].sections}
 	{$items[user].sections[ix].section}{if not $smarty.section.ix.last},{/if}
 {/section}
 </td>
-<td class="{cycle}">
+<td>
 &nbsp;&nbsp;<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
 >{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 </td>
