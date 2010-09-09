@@ -1094,6 +1094,7 @@ function wikiplugin_trackerlist($data, $params) {
 						$smarty->assign('fields', $item['field_values']);
 						$smarty->assign('item', $item);
 						$smarty->assign('wiki', "wiki:$wiki");
+						$smarty->assign('showpopup', 'n');
 						$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
 					}
 					if (empty($items['data'][$i]['over'])) {
