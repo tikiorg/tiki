@@ -64,6 +64,8 @@ class Cachelib
 	/**
 	 * Empty one or more caches
 	 * 
+	 * Checks for existance of libs because it's called from the installer
+	 * 
 	 * @param mixed $dir_names		all|templates_c|temp_cache|temp_public|modules_cache|prefs (default all)
 	 * @param string $log_section	Type of log message. Default 'system'
 	 */
@@ -79,28 +81,28 @@ class Cachelib
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			$this->erase_dir_content("modules/cache/$tikidomain");
 			$this->flush_opcode_cache();
-			$tikilib->set_lastUpdatePrefs();
-			$logslib->add_log( $log_section, 'erased all cache content');
+			if (is_object($tikilib)) { $tikilib->set_lastUpdatePrefs(); }
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased all cache content'); }
 		}
 		if (in_array( 'templates_c', $dir_names )) {
 			$this->erase_dir_content("templates_c/$tikidomain");
 			$this->flush_opcode_cache();
-			$logslib->add_log( $log_section, 'erased templates_c content' );
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased templates_c content' ); }
 		}
 		if (in_array( 'temp_cache', $dir_names)) {
 			$this->erase_dir_content("temp/cache/$tikidomain");
-			$logslib->add_log( $log_section, 'erased temp/cache content' );
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased temp/cache content' ); }
 		}
 		if (in_array( 'temp_public', $dir_names)) {
 			$this->erase_dir_content("temp/public/$tikidomain");
-			$logslib->add_log( $log_section, 'erased temp/public content' );
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased temp/public content' ); }
 		}
 		if (in_array( 'modules_cache', $dir_names)) {
 			$this->erase_dir_content("modules/cache/$tikidomain");
-			$logslib->add_log( $log_section, 'erased modules/cache content' );
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased modules/cache content' ); }
 		}
 		if (in_array( 'prefs', $dir_names)) {
-			$tikilib->set_lastUpdatePrefs();
+			if (is_object($tikilib)) { $tikilib->set_lastUpdatePrefs(); }
 		}
 	}
 
