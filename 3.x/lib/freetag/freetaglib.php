@@ -554,6 +554,15 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 	    die("safe_tag argument missing");
 	    return false;
 	}
+
+			// To be sure that the tag lenght is correct.
+			// If multibyte string functions are available, it's preferable to use them.
+			if ((function_exists('mb_strlen') && (mb_strlen($tag) >= $this->_MAX_TAG_LENGTH))
+					|| (strlen($tag) >= $this->_MAX_TAG_LENGTH)
+			) {
+				return false;
+			}
+
 	    
 	$normalized_tag = $this->normalize_tag($tag);
 	$bindvals = array($itemId, $type, $normalized_tag);
@@ -840,7 +849,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 
 	foreach($tagArray as $tag) {
 	    $tag = trim($tag);
-	    if(($tag != '') && (strlen($tag) <= $this->_MAX_TAG_LENGTH)) {
+	    if ($tag != '') {
 		if(get_magic_quotes_gpc()) {
 		    $tag = addslashes($tag);
 		}
