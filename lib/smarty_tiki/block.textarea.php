@@ -140,6 +140,25 @@ function FCKeditor_OnComplete( editorInstance ) {
 
 		} else {									// new ckeditor implementation 2010
 
+			if ($prefs['feature_ajax'] !== 'y' || $prefs['feature_ajax_autosave'] !== 'y' ||
+					$prefs['feature_wiki_paragraph_formatting'] !== 'y' || $prefs['feature_wiki_paragraph_formatting_add_br'] !== 'y' ||
+					$prefs['wysiwyg_wiki_parsed'] !== 'y') {
+				
+				// show dev notice
+				include_once('lib/smarty_tiki/block.remarksbox.php');
+				$msg = tra('<strong>Thank you for trying the new ckeditor implementation for Tiki 6</strong><br /><br />');
+				
+				if ($tiki_p_admin) {
+					$msg .= tra('Some of your preferences should be set differently for this to work best. Please click this to apply the recommended profile:') .
+					   ' <a href="tiki-admin.php?profile=WYSIWYG_6x&repository=&page=profiles&list=List">WYSIWYG_6x</a>';
+				} else {
+					$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
+				}
+				
+				$html .= smarty_block_remarksbox( array( 'type'=>'info', 'icon'=>'bricks', 'title'=>tra('Ckeditor Development Notice')), $msg, $smarty)."\n";
+			}
+
+			// set up ckeditor
 			if (!isset($params['name'])) { $params['name'] = 'edit'; }
 		
 			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
