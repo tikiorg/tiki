@@ -920,7 +920,7 @@ class MultilingualLib extends TikiLib
 	function deleteTranslationInProgressFlags($page_id, $language) {
 		$query = 
 			"DELETE FROM `tiki_translations_in_progress`\n".
-			"   WHERE (`page_id`, `language`) = ('$page_id', '$language')";	
+			"   WHERE (`page_id`, `language`) = (?, ?)";	
 		$results = $this->query($query, array($page_id, $language));
 	}
 
