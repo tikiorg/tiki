@@ -2587,7 +2587,7 @@ DROP TABLE IF EXISTS `tiki_wiki_attachments`;
 CREATE TABLE `tiki_wiki_attachments` (
   `attId` int(12) NOT NULL auto_increment,
   `page` varchar(200) NOT NULL default '',
-  `filename` varchar(80) default NULL,
+  `filename` varchar(255) default NULL,
   `filetype` varchar(80) default NULL,
   `filesize` int(14) default NULL,
   `user` varchar(200) NOT NULL default '',
