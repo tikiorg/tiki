@@ -451,6 +451,7 @@ class BlogLib extends TikiDb_Bridge
 		$mid = array();
 		$bindvars = array();
 
+		$ownsblog = 'n';
 		if ( $blogId > 0 ) {
 			$mid[] = "tbp.`blogId`=?";
 			$bindvars[] = (int)$blogId;
@@ -471,7 +472,7 @@ class BlogLib extends TikiDb_Bridge
 			if ( ($tiki_p_admin != 'y')
 				  and ($tiki_p_blog_admin != 'y')
 				  and ( (! isset($blog_data["public"])) || $blog_data["public"] != 'y' || $tiki_p_blog_post != 'y')
-				  and ($blog_data["public"] != 'y' || $ownsblog != 'y') ) {
+				  and ( !isset($blog_data["public"]) || $blog_data["public"] != 'y' || $ownsblog != 'y') ) {
 				if ( isset($user) ) {
 					$mid[] = "(tbp.`priv`!='y' or tbp.`user`=?)";
 					$bindvars[] = "$user";
