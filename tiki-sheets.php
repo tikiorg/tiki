@@ -18,6 +18,7 @@ if (!isset($_REQUEST["sheetId"])) {
 	$info = array();
 	$smarty->assign('headtitle', tra('Spreadsheets'));
 } else {
+	$cookietab = 2;
 	$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
 	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) $tiki_p_view_sheet = 'y';
 	else $tiki_p_view_sheet = 'n';
