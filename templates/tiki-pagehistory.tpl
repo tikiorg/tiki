@@ -179,14 +179,14 @@ $("#toggle_diffs a").click(function(){
 				</tr>
 				{cycle values="odd,even" print=false}
 				{foreach name=hist item=element from=$history}
-					<tr>
+					<tr class="{cycle}">
 						{if $tiki_p_remove eq 'y'}
-							<td class="{cycle advance=false} button"><input type="checkbox" name="hist[{$element.version}]" /></td>
+							<td class="button"><input type="checkbox" name="hist[{$element.version}]" /></td>
 						{/if}
-						<td class="{cycle advance=false}">{$element.lastModif|tiki_short_datetime}</td>
-						{if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$element.user|userlink}</td>{/if}
-						{if $prefs.feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$element.ip}</td>{/if}
-						<td class="{cycle advance=false}">
+						<td>{$element.lastModif|tiki_short_datetime}</td>
+						{if $tiki_p_wiki_view_author ne 'n'}<td>{$element.user|userlink}</td>{/if}
+						{if $prefs.feature_wiki_history_ip ne 'n'}<td>{$element.ip}</td>{/if}
+						<td>
 							{if $element.comment}{$element.comment|escape}{else}&nbsp;{/if}
 							{if $translation_sources[$element.version]}
 								{foreach item=source from=$translation_sources[$element.version]}
@@ -204,16 +204,16 @@ $("#toggle_diffs a").click(function(){
 							{/if}
 						</td>
 						{if $prefs.feature_contribution eq 'y'}
-							<td class="{cycle advance=false}">
+							<td>
 								{section name=ix loop=$element.contributions}{if !$smarty.section.ix.first}&nbsp;{/if}{$element.contributions[ix].name|escape}{/section}
 							</td>
 						{/if}
 						{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}
-							<td class="{cycle advance=false}">
+							<td>
 								{section name=ix loop=$element.contributors}{if !$smarty.section.ix.first},{/if}{$element.contributors[ix].login|username}{/section}
 							</td>
 						{/if}
-						<td class="{cycle advance=false} button">
+						<td class="button">
 							{if $current eq $element.version}<strong>{/if}
 							{if $show_all_versions eq "n" and not empty($element.session)}
 								<em>{$element.session} - {$element.version}</em>
@@ -222,7 +222,7 @@ $("#toggle_diffs a").click(function(){
 							{/if}
 							{if $current eq $element.version}</strong>{/if}
 						</td>
-						<td class="{cycle advance=false} button">
+						<td class="button">
 							{self_link page=$page preview=$element.version _title="{tr}View{/tr}"}v{/self_link}
 							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 								&nbsp;{self_link page=$page source=$element.version _title="{tr}Source{/tr}"}s{/self_link}
@@ -236,7 +236,7 @@ $("#toggle_diffs a").click(function(){
 							{/if}
 						</td>
 						{if $prefs.default_wiki_diff_style ne "old"}
-						<td class="{cycle advance=false} button">
+						<td class="button">
 							{if $show_all_versions eq 'n' and not empty($element.session)}
 								<input type="radio" name="oldver" value="{$element.session}"
 									title="{tr}Older Version{/tr}" {if $old.version == $element.session or (!$smarty.request.diff_style and $smarty.foreach.hist.first)}checked="checked"{/if}/>
@@ -245,7 +245,7 @@ $("#toggle_diffs a").click(function(){
 									title="{tr}Older Version{/tr}" {if $old.version == $element.version or (!$smarty.request.diff_style and $smarty.foreach.hist.first)}checked="checked"{/if}/>
 							{/if}
 						</td>
-						<td class="{cycle} button">
+						<td class="button">
 							{* if $smarty.foreach.hist.last &nbsp; *}
 							<input type="radio" name="newver" value="{$element.version}" title="Select a newer version for comparison" {if $new.version == $element.version}checked="checked"{/if} />
 						</td>

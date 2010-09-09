@@ -57,12 +57,12 @@
 	</tr>
 	{cycle print=false values="odd,even"}
 	{section name=ix loop=$questions}
-		<tr>
-			<td class="{cycle advance=false}">{$questions[ix].question}</td>
-			<td class="{cycle advance=false}">{$questions[ix].options[0].optionText}</td>
-			<td class="{cycle}">{$questions[ix].options[0].points}</td>
+		<tr class="{cycle}">
+			<td>{$questions[ix].question}</td>
+			<td>{$questions[ix].options[0].optionText}</td>
+			<td>{$questions[ix].options[0].points}</td>
 			{if $questions[ix].options[0].filename}
-				<td class="{cycle}">
+				<td>
 					<a href="tiki-quiz_download_answer.php?answerUploadId={$questions[ix].options[0].answerUploadId}">{$questions[ix].options[0].filename}</a>
 				</td>
 			{/if}

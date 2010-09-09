@@ -28,14 +28,12 @@
 					<td class="odd"><strong>{$info.user|userlink}</strong></td>
 				</tr>
 {cycle values="odd,even" print=false}{foreach name=hist item=element from=$history}
-				<tr>
-					<td class="{cycle values="odd,even" advance=false}"><label><input type="radio" name="lastversion" value="{$element.version}"{if $lastversion==$element.version} checked="checked"{/if}  title="{tr}Version{/tr} {$info.version}" /> {$element.version}</label></td>
-					<td class="{cycle values="odd,even" advance=false}">{$element.lastModif|tiki_short_datetime}</td>
-					<td class="{cycle values="odd,even"}">{$element.user|userlink}</td>
+				<tr class="{cycle}">
+					<td><label><input type="radio" name="lastversion" value="{$element.version}"{if $lastversion==$element.version} checked="checked"{/if}  title="{tr}Version{/tr} {$info.version}" /> {$element.version}</label></td>
+					<td>{$element.lastModif|tiki_short_datetime}</td>
+					<td>{$element.user|userlink}</td>
 				</tr>{/foreach}
 			</table>
 	</fieldset>
-
 	<div><input type="submit" name="show" value="{tr}Show contributions{/tr}" /></div>
-	
 </form>
