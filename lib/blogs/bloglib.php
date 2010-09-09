@@ -517,7 +517,12 @@ class BlogLib extends TikiDb_Bridge
 			$cant_com = $this->getOne($cant_com_query, $cant_com_vars);
 			$res["comments"] = $cant_com;
 			$res['pages'] = $this->get_number_of_pages($res['data']);
-			$res['avatar'] = $tikilib->get_user_avatar($res['user']);		
+			$res['avatar'] = $tikilib->get_user_avatar($res['user']);
+
+			if (isset($res['excerpt'])) {
+				$res['excerpt'] = $tikilib->parse_data($res['excerpt']);
+			}
+
 			$ret[] = $res;
 		}
 
