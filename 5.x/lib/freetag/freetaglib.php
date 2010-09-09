@@ -937,7 +937,7 @@ class FreetagLib extends ObjectLib
 		foreach($tagArray as $tag) {
 			$tag = trim($tag);
 			if ($tag != '') {
-				if (get_magic_quotes_gpc()) {
+				if (!get_magic_quotes_gpc()) {
 					$tag = addslashes($tag);
 				}
 				$this->safe_tag($user, $itemId, $type, $tag, $lang);
