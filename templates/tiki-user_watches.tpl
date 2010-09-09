@@ -153,13 +153,13 @@
 	</tr>
 	{cycle values="odd,even" print=false}
 	{foreach item=w from=$watches}
-		<tr>
+		<tr class="{cycle}">
 			{if $watches}
-				<td style="text-align:center;" class="{cycle advance=false}">
+				<td style="text-align:center;">
 					<input type="checkbox" name="watch[{$w.watchId}]" />
 				</td>
 			{/if}
-			<td class="{cycle advance=false}">
+			<td>
 				{if $w.event eq 'article_submitted'}
 					{tr}A user submits an article{/tr}
 				{elseif $w.event eq 'article_edited'}
@@ -181,7 +181,7 @@
 				{/if}
 				({$w.event})
 			</td>
-			<td class="{cycle}"><a class="link" href="{$w.url}">{tr}{$w.type}{/tr}: {$w.title}</a></td>
+			<td><a class="link" href="{$w.url}">{tr}{$w.type}{/tr}: {$w.title}</a></td>
 		</tr>
 	{foreachelse}
 		<tr><td class="odd" colspan="2">{tr}No records found.{/tr}</td></tr>

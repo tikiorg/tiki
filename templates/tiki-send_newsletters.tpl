@@ -35,10 +35,10 @@
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section loop=$errors name=ix}
-					<tr>
-					<td class="{cycle advance=false}">{$errors[ix].user|escape}</td>
-					<td class="{cycle advance=false}">{$errors[ix].email|escape}</td>
-					<td class="{cycle}">{$errors[ix].msg|escape}</td>
+				<tr class="{cycle}">
+					<td>{$errors[ix].user|escape}</td>
+					<td>{$errors[ix].email|escape}</td>
+					<td>{$errors[ix].msg|escape}</td>
 				</tr>
 			{/section}
 		</table>
@@ -83,10 +83,10 @@
 				</tr>
 				{cycle values="even,odd" print=false}
 				{foreach from=$subscribers_list item=sub key=ix}
-					<tr>
-						<td class="{cycle advance=false}">{$sub.email|escape}</td>
-						<td class="{cycle advance=false}">{$sub.valid}</td>
-						<td class="{cycle}">{$sub.isUser}</td>
+					<tr class="{cycle}">
+						<td>{$sub.email|escape}</td>
+						<td>{$sub.valid}</td>
+						<td>{$sub.isUser}</td>
 					</tr>
 				{/foreach}
 			</table>

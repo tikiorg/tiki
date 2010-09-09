@@ -158,7 +158,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 								{cycle values="odd,even" print=false}
 								{foreach from=$items[user].field_values item=f}
 									{if in_array($f.fieldId, $popupFields)}
-										 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file='tracker_item_field_value.tpl' field_value=$f}</th></tr>
+										 <tr class="{cycle}"><th>{$f.name}</th><td>{include file='tracker_item_field_value.tpl' field_value=$f}</th></tr>
 									{/if}
 								{/foreach}
 							</table>

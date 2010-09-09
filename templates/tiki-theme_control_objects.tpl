@@ -83,15 +83,15 @@
 					{tr}Theme{/tr}</a>
 			</th>
 		</tr>
-{cycle values="odd,even" print=false}
+		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
-			<tr>
-				<td class="{cycle advance=false}">
+			<tr class="{cycle}">
+				<td>
 					<input type="checkbox" name="obj[{$channels[user].objId}]" />
 				</td>
-				<td class="{cycle advance=false}">{$channels[user].type}</td>
-				<td class="{cycle advance=false}">{$channels[user].name}</td>
-				<td class="{cycle}">{$channels[user].theme}</td>
+				<td>{$channels[user].type}</td>
+				<td>{$channels[user].name}</td>
+				<td>{$channels[user].theme}</td>
 			</tr>
 		{/section}
 	</table>

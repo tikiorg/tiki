@@ -29,11 +29,11 @@
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_quiz_stats eq 'y') or ($channels[user].individual_tiki_p_view_quiz_stats eq 'y')}
-			<tr>
-				<td class="{cycle advance=false}"><a class="tablename" href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}">{$channels[user].quizName|escape}</a></td>
-				<td class="{cycle advance=false}">{$channels[user].timesTaken}</td>
-				<td class="{cycle advance=false}">{$channels[user].avgavg}%</td>
-				<td class="{cycle}">{$channels[user].avgtime} secs</td>
+			<tr class="{cycle}">
+				<td><a class="tablename" href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}">{$channels[user].quizName|escape}</a></td>
+				<td>{$channels[user].timesTaken}</td>
+				<td>{$channels[user].avgavg}%</td>
+				<td>{$channels[user].avgtime} secs</td>
 			</tr>
 		{/if}
 	{sectionelse}

@@ -18,11 +18,11 @@
 	</tr>
 {cycle values="odd,even" print=false}
 	{section name=changes loop=$sheets}
-		<tr>
-			<td class="{cycle advance=false}"><a class="galname" href="tiki-view_sheets.php?sheetId={$sheets[changes].sheetId}">{$sheets[changes].title}</a></td>
-			<td class="{cycle advance=false}">{$sheets[changes].description}</td>
-			<td class="{cycle advance=false}">{$sheets[changes].author}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td><a class="galname" href="tiki-view_sheets.php?sheetId={$sheets[changes].sheetId}">{$sheets[changes].title}</a></td>
+			<td>{$sheets[changes].description}</td>
+			<td>{$sheets[changes].author}</td>
+			<td>
 				{if $chart_enabled eq 'y'}
 					<a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheets[changes].sheetId}">
 						<img src='pics/icons/chart_curve.png' width='16' height='16' alt="{tr}Graph{/tr}" title="{tr}Graph{/tr}" />

@@ -37,12 +37,12 @@
 			<a href="{$results[search].pageName|sefurl}" target="_blank">{$results[search].pageName|escape}</a>
 			</th></tr>
 			{section name=snippet loop=$results[search].beforeSnippet}
-			<tr>
-				<td class="{cycle advance=false}" style="border: 1px solid">
+			<tr class="{cycle}">
+				<td style="border: 1px solid">
 					{* note that non-escaping is intentional *}
 					{$results[search].beforeSnippet[snippet]}
 				</td>
-				<td class="{cycle advance=true}" style="border: 1px solid">
+				<td style="border: 1px solid">
 					{* note that non-escaping is intentional *}
 					{$results[search].afterSnippet[snippet]}
 				</td>

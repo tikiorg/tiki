@@ -12,11 +12,11 @@
 		</tr>
 {cycle values="odd,even" print=false}
 		{section name=ix loop=$folders}
-			<tr>
-				<td class="{cycle advance=false}"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}">
+			<tr class="{cycle}">
+				<td><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}">
 					{icon _id='folder' alt="{tr}Folder in{/tr}"}</a>&nbsp;{$folders[ix].name|escape} ({$folders[ix].urls})
 				</td>
-				<td class="{cycle}">
+				<td>
 					<a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}">
 						{icon _id='page_edit'}
 					</a> &nbsp;
@@ -40,14 +40,14 @@
 	</tr>
 {cycle values="odd,even" print=false}
 	{section name=ix loop=$urls}
-		<tr>
-			<td class="{cycle advance=false}"><a class="link" target="_blank" href="{$urls[ix].url}">{$urls[ix].name|escape}</a>
+		<tr class="{cycle}">
+			<td><a class="link" target="_blank" href="{$urls[ix].url}">{$urls[ix].name|escape}</a>
 				{if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
 					(<a href="tiki-user_cached_bookmark.php?urlid={$urls[ix].urlId}" class="link" target="_blank">{tr}Cache{/tr}</a>)
 				{/if}
 			</td>
-			<td class="{cycle advance=false}">{textformat wrap="60" wrap_cut=true wrap_char="<br />"}{$urls[ix].url}{/textformat}</td>
-			<td class="{cycle}">
+			<td>{textformat wrap="60" wrap_cut=true wrap_char="<br />"}{$urls[ix].url}{/textformat}</td>
+			<td>
 				<a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}">{icon _id='page_edit'}</a>
 				{if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
 					<a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}">

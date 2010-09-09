@@ -20,10 +20,10 @@
   </tr>
   {cycle values="odd,even" print=false}
   {section name=user loop=$channels}
-    <tr>
-      <td class="{cycle advance=false}">{$channels[user].referer}</td>
-      <td class="{cycle advance=false}">{$channels[user].hits}</td>
-      <td class="{cycle}">{$channels[user].last|tiki_short_datetime}</td>
+    <tr class="{cycle}">
+      <td>{$channels[user].referer}</td>
+      <td>{$channels[user].hits}</td>
+      <td>{$channels[user].last|tiki_short_datetime}</td>
     </tr>
   {sectionelse}<tr><td colspan="3">{tr}No records{/tr}</td></tr>	
   {/section}

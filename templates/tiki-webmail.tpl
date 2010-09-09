@@ -56,31 +56,31 @@
 					{cycle values="odd,even" print=false}
 					{section name=ix loop=$accounts}
 						{if $accounts[ix].current eq 'y' and $accounts[ix].user eq $user or $accounts[ix].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
-						<tr>
-							<td class="{cycle advance=false}">
+						<tr class="{cycle}">
+							<td>
 								{if !$active}
 									{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
 								{else}
 									{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 								{/if}
 							</td>
-							<td class="{cycle advance=false}">
+							<td>
 								{if !$active}
 									{self_link current=$accounts[ix].accountId _title="{tr}Activate{/tr}"}{$accounts[ix].account}{/self_link}
 								{else}
 									<strong>{$accounts[ix].account|escape}</strong>
 								{/if}
 							</td>
-							<td class="{cycle advance=false}">
+							<td>
 								{if !empty($accounts[ix].imap)}{tr}IMAP{/tr}: {$accounts[ix].imap} ({$accounts[ix].port})
 								{elseif !empty($accounts[ix].mbox)}{tr}Mbox{/tr}: {$accounts[ix].mbox}
 								{elseif !empty($accounts[ix].maildir)}{tr}Maildir{/tr}: {$accounts[ix].maildir}
 								{elseif !empty($accounts[ix].pop)}{tr}POP3{/tr}: {$accounts[ix].pop} ({$accounts[ix].port}){/if}
 							</td>
-							<td class="{cycle advance=false}">
+							<td>
 								{$accounts[ix].username}
 							</td>
-							<td class="{cycle}">
+							<td>
 								{self_link _icon='cross' remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
 								{self_link _icon='page_edit' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
 								{if !$active}
@@ -110,29 +110,29 @@
 						{cycle values="odd,even" print=false}
 						{section name=ixp loop=$pubAccounts}
 							{if $pubAccounts[ixp].current eq 'y' and $pubAccounts[ixp].user eq $user or $pubAccounts[ixp].accountId eq $mailCurrentAccount}{assign var=active value=true}{else}{assign var=active value=false}{/if}
-							<tr>
-								<td class="{cycle advance=false}">
+							<tr class="{cycle}">
+								<td>
 									{if !$active}
 										{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 									{else}
 										{icon _id='star' alt="{tr}This is the active account.{/tr}"}
 									{/if}
 								</td>
-								<td class="{cycle advance=false}">
+								<td>
 									{if !$active}
 										{self_link current=$pubAccounts[ixp].accountId _title="{tr}Activate{/tr}"}{$pubAccounts[ixp].account}{/self_link}
 									{else}
 										<strong>{$pubAccounts[ixp].account|escape}</strong>
 									{/if}
 								</td>
-								<td class="{cycle advance=false}">
+								<td>
 									{if !empty($pubAccounts[ixp].imap)}{tr}IMAP{/tr}: {$pubAccounts[ixp].imap} ({$pubAccounts[ixp].port})
 									{elseif !empty($pubAccounts[ixp].mbox)}{tr}Mbox{/tr}: {$pubAccounts[ixp].mbox}
 									{elseif !empty($pubAccounts[ixp].maildir)}{tr}Maildir{/tr}: {$pubAccounts[ixp].maildir}
 									{elseif !empty($pubAccounts[ixp].pop)}{tr}POP3{/tr}: {$pubAccounts[ixp].pop} ({$pubAccounts[ixp].port}){/if}
 								</td>
-								<td class="{cycle advance=false}">{$pubAccounts[ixp].username}</td>
-								<td class="{cycle}">
+								<td>{$pubAccounts[ixp].username}</td>
+								<td>
 									{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
 										{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
 										{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}

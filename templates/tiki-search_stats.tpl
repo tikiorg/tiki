@@ -22,9 +22,9 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-  <tr>
-    <td class="{cycle advance=false}">{$channels[user].term}</td>
-    <td class="{cycle}">{$channels[user].hits}</td>
+  <tr class="{cycle}">
+    <td>{$channels[user].term}</td>
+    <td>{$channels[user].hits}</td>
   </tr>
 {/section}
 </table>

@@ -111,8 +111,8 @@
 				</tr>
 				{cycle values="odd,even" print=false}
 				{section name=ix loop=$suggested}
-					<tr>
-						<td class="{cycle}">{$suggested[ix].question}</td>
+					<tr class="{cycle}">
+						<td>{$suggested[ix].question}</td>
 					</tr>
 				{/section}
 			</table>
