@@ -6698,17 +6698,9 @@ class TikiLib extends TikiDb_Bridge
 							$tline = trim(str_replace('&nbsp;', '', $line));
 							
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								// keeping this as separate regexps for now to ease understanding - should be optimised later
-								$contains_block = preg_match('/<[\/]?div/', $tline) ||					// open/close div
-										preg_match('/<[\/]?p/', $tline) ||								// open/close paragraph
-										preg_match('/<[\/]?table/', $tline) ||							// open/close table
-										preg_match('/<[\/]?hr/', $tline) ||								// open/close hr
-										preg_match('/<[\/]?blockquote/', $tline) ||						// open/close blockquote
-										preg_match('/<[\/]?h\d/', $tline) ||							// open/close h1 etc
-										preg_match('/<[\/]?li/', $tline) ||								// open/close list items
-										preg_match('/<[\/]?ol/', $tline) ||								// open/close ordered list
-										preg_match('/<[\/]?dl/', $tline) ||								// open/close definition list
-										preg_match('/<[\/]?ul/', $tline);								// open/close unordered list
+								// detect all block elements as defined on http://www.w3.org/2007/07/xhtml-basic-ref.html
+								$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|ol|p|pre|table|ul)/i';
+								$contains_block = preg_match( $block_detect_regexp, $tline);
 								
 								if (!$contains_block) {	// check inside plugins etc for block elements
 									preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins 
@@ -6725,16 +6717,7 @@ class TikiLib extends TikiDb_Bridge
 											}
 											if ($nop_ix !== false) {
 												$nop_str = $noparsed['data'][$nop_ix];
-												$contains_block = preg_match('/<[\/]?div/', $nop_str) ||	// open/close div	 - TODO refactor
-														preg_match('/<[\/]?p/', $nop_str) ||				// open/close paragraph
-														preg_match('/<[\/]?table/', $nop_str) ||			// open/close table
-														preg_match('/<[\/]?hr/', $nop_str) ||				// open/close hr
-														preg_match('/<[\/]?blockquote/', $nop_str) ||		// open/close blockquote
-														preg_match('/<[\/]?h\d/', $nop_str) ||				// open/close h1 etc
-														preg_match('/<[\/]?li/', $nop_str) ||				// open/close list items
-														preg_match('/<[\/]?ol/', $nop_str) ||				// open/close ordered list
-														preg_match('/<[\/]?dl/', $nop_str) ||				// open/close definition list
-														preg_match('/<[\/]?ul/', $nop_str);					// open/close unordered list
+												$contains_block = preg_match( $block_detect_regexp, $nop_str );
 												if ($contains_block) {
 													break;
 												}
