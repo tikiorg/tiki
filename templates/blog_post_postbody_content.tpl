@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if $post_list eq 'y' && $use_excerpt eq 'y' && !empty($post_info.excerpt)}
+{if $blog_post_context eq 'view_blog' && $use_excerpt eq 'y' && !empty($post_info.excerpt)}
 	<div class="postbody-content postbody-excerpt">
 	{$post_info.excerpt}
 	</div>
@@ -12,7 +12,7 @@
 
 {if $post_info.pages > 1}
 	<div class="postbody-pagination">
-		{if $post_list eq 'y'}
+		{if $blog_post_context eq 'view_blog'}
 			<a class="link more" href="{$post_info.postId|sefurl:blogpost}">
 			{tr}More...{/tr} ({$post_info.pages} {tr}pages{/tr})</a>
 		{else}

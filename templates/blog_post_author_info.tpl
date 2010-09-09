@@ -7,7 +7,7 @@
 		{tr}by{/tr} {$post_info.user|userlink} 
 	{/if}
 	{if $blog_data.add_date eq 'y'}
-		{tr}on{/tr} {$listpages[ix].created|tiki_short_date}
+		{tr}on{/tr} {$post_info.created|tiki_short_date}
 	{/if}
 	{if $blog_data.show_avatar eq 'y'}
 		{$post_info.avatar}

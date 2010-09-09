@@ -165,24 +165,25 @@ if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
 }
 
 if (isset($_REQUEST["preview"])) {
+	$post_info = array();
 	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
 	$parsed_data = $tikilib->parse_data($parsed_data, array('is_html' => $is_wysiwyg));
 	$smarty->assign('data', $edit_data);
-	$smarty->assign('parsed_data', $parsed_data);
+	$post_info['parsed_data'] = $parsed_data;
 
-	$post_info = array();
 	$post_info['title'] = $_REQUEST['title'];
 	$post_info['excerpt'] = $_REQUEST['excerpt'];
 	$post_info['user'] = isset($data) ? $data['user'] : $user;
 	$post_info['created'] = $publishDate;
 	$post_info['avatar'] = isset($data) ? $data['avatar'] : '';
-	$smarty->assign('post_info', $post_info);
 
 	if ($prefs['feature_freetags'] == 'y' && isset($_REQUEST['freetag_string'])) {
 		$tags = $freetaglib->dumb_parse_tags($_REQUEST['freetag_string']);
 		$smarty->assign('tags', $tags);
+		$post_info['freetags'] = $tags;
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
 	}
+	$smarty->assign('post_info', $post_info);
 
 	$smarty->assign('preview', 'y');
 }

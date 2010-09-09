@@ -6,7 +6,7 @@
 			<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 		{/if}
 		{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-			{if $post_list eq 'y'}
+			{if $blog_post_context eq 'view_blog'}
 				<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;savenotepad={$post_info.postId}">{icon _id='disk' alt="{tr}Save to notepad{/tr}"}</a>
 			{else}
 				<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1">{icon _id='disk' alt="{tr}Save to notepad{/tr}"}</a>
@@ -32,29 +32,24 @@
 			</script>{/literal}{/wiki}
 		{/if}
 	</div>
-	{if $post_list eq 'y'}
+	{if $blog_post_context eq 'view_blog'}
 		<div class="status">
 			{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y' && $tiki_p_read_comments eq 'y'}
-				{if $post_list eq 'y'}
-	 				<a class="link linkcomments" href="tiki-view_blog_post.php?find={$find|escape:url}&amp;blogId={$post_info.blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$post_info.postId}#comments">
-						{if $post_info.comments == 0 && $tiki_p_post_comments eq 'y'}
-							{tr}Leave a comment{/tr}
+	 			<a class="link linkcomments" href="tiki-view_blog_post.php?find={$find|escape:url}&amp;blogId={$post_info.blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$post_info.postId}#comments">
+					{if $post_info.comments == 0 && $tiki_p_post_comments eq 'y'}
+						{tr}Leave a comment{/tr}
+					{else}
+						{$post_info.comments}
+						{if $post_info.comments == 1}
+							{tr}comment{/tr}
 						{else}
-							{$post_info.comments}
-							{if $post_info.comments == 1}
-								{tr}comment{/tr}
-							{else}
-								{tr}comments{/tr}
-							{/if}
+							{tr}comments{/tr}
 						{/if}
-					</a>
-				{else}
-					| {$post_info.comments} {tr}comments{/tr}
-	 				[<a class="link linkcomments" href="tiki-view_blog_post.php?find={$find|escape:url}&amp;blogId={$post_info.blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$post_info.postId}">{tr}View Comments{/tr}</a>]
-				{/if}
+					{/if}
+				</a>
 			{/if}
 		</div>
-	{else}
+	{elseif $blog_post_context eq 'view_blog_post' }
 		<div class="postfooter-nav">
 			{if $post_info.adjacent.prev}
 				<div class="postfooter-nav-prev">
