@@ -70,7 +70,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	// He says: "it's necessary for expanding content (pushing right column) to the right properly"
 	// but it looks fine to me
 	if (preg_match('/Firefox\/(\d)+\.(\d)+/i', $_SERVER['HTTP_USER_AGENT'], $m) &&count($m) > 2 && $m[1] >=3 && ($m[2] >=5 || $m[1] > 3)) {
-		$headerlib->add_css('body {display: block; }', 10);
+		//$headerlib->add_css('body {display: block; }', 10);	// xajax/loadComponent() doesn't re-parse CSS on AJAX loads (yet), so use JS instead
+		$headerlib->add_jq_onready('$("body").css("display", "block")');
 	}
 	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
