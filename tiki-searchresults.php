@@ -129,7 +129,13 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
-$searchLang = isset($_REQUEST['searchLang'])? $_REQUEST['searchLang']: '';
+if (isset($_REQUEST['searchLang'])) {
+	$searchLang = $_REQUEST['searchLang'];
+} elseif($prefs['search_default_interface_language'] == 'y') {
+	$searchLang = $prefs['language'];
+} else {
+	$searchLang = '';
+}
 $smarty->assign_by_ref('searchLang', $searchLang);
 $smarty->assign_by_ref('offset', $offset);
 $fulltext = $prefs['feature_search_fulltext'] == 'y';

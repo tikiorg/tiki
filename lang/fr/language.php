@@ -6408,6 +6408,8 @@ $lang=Array(
 // ### end of possibly untranslated words
 // ###
 
+'Restrict search language by default' => 'Restreindre la langue de recherche par défaut',
+'If enabled, only search content in the interface language, by default.' => "Si activé, ne cherche que le contenu dans la langue de l'interface, par défaut.",
 "This forum is flat and doesn't allow replies to other replies" => "Ce Forum ne permet répondre individuellement aux réponses.",
 "This script cannot be called directly" => "Ce script ne peut pas être appelé directement",
 "Copyright management" => "Gestion du copyright",

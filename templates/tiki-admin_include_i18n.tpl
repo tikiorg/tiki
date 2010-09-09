@@ -40,6 +40,7 @@
 
 	{preference name=show_available_translations}
 	{preference name=feature_sync_language}
+	{preference name=search_default_interface_language}
 	{preference name=feature_translation}
 	{preference name=feature_urgent_translation}
 	<div class="adminoptionboxchild" id="feature_urgent_translation_childcontainer">
