@@ -2656,9 +2656,7 @@ class Comments extends TikiLib
 	function post_in_object($comments_objectId, &$params, &$feedbacks, &$errors) {
 		global $smarty, $tiki_p_admin, $tiki_p_admin_comments, $tiki_p_post_comments, $tiki_p_edit_comments, $prefs, $user, $captchalib;
 
-		if (!empty($params['comments_grandParentId'])) {
-			$parent_id = $params['comments_grandParentId'];
-		} elseif (!empty($params['comments_parentId'])) {
+		if (!empty($params['comments_parentId'])) {
 			$parent_id = $params['comments_parentId'];
 		} else {
 			$parent_id = 0;

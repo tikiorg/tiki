@@ -44,7 +44,7 @@
 			or ( $forum_mode eq 'y' and $tiki_p_forum_post eq 'y' and ( $forum_is_locked neq 'y' or $prefs.feature_comments_locking neq 'y' ) ) )
 		}
 			{if $forum_mode neq 'y'}
-				{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment.parentId`&comments_parentId=`$comment.threadId`&thread_style=`$thread_style`#form"
+				{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_parentId=`$comment.threadId`&thread_style=`$thread_style`#form"
 								_auto_args='*'
 								_text="{tr}Reply{/tr}"
 				}
