@@ -25,11 +25,15 @@ if (!isset($_REQUEST['sheetId'])) {
 	die;
 }
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
-	$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
+$objectperms = Perms::get( 'sheet', $_REQUEST['sheetId']);
+
+if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$objectperms->view_sheet) {
+	$smarty->assign('msg', tra('Permission denied') . ": feature_sheet");
 	$smarty->display("error.tpl");
 	die;
 }
+$smarty->assign('objectperms', $objectperms);
+
 if (!isset($_REQUEST['parse'])) {
 	$_REQUEST['parse'] = 'y';
 }
