@@ -27,7 +27,6 @@ if (empty($info)) {
 }
 
 $objectperms = Perms::get( 'sheet', $_REQUEST['sheetId']);
-var_dump($objectperms->admin_sheet);var_dump($objectperms->view_sheet);
 if ($user && $user == $info['author']) {
 	$objectperms->view_sheet = 1;
 	$objectperms->edit_sheet = 1;
