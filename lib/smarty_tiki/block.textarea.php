@@ -37,8 +37,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
 	}
 	
-	$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
-	$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
+	$params['rows'] = !empty($params['rows']) || $prefs['wysiwyg_ckeditor'] === 'y' ? $params['rows'] : 20;
+	$params['cols'] = !empty($params['cols']) || $prefs['wysiwyg_ckeditor'] === 'y' ? $params['cols'] : 80;
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
@@ -231,11 +231,21 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
 	defaultLanguage: "' . $prefs['language'] . '",
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
+	'. (empty($params['cols']) ? 'height: 400,' : '') .'
 	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
 });
 ', 20);	// after dialog tools init (10)
 
-			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;" rows="'.$params['rows'].'"; cols="'.$params['cols'].'">'.htmlspecialchars($content).'</textarea>';
+			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+			if (empty($params['cols'])) {	
+				$html .= 'width:100%;'. (empty($params['cols']) ? 'height:500px;' : '') .'"';
+			} else {
+				$html .= '" cols="'.$params['cols'].'"';
+			}
+			if (!empty($params['rows'])) {	
+				$html .= ' rows="'.$params['rows'].'"';
+			}
+			$html .= '>'.htmlspecialchars($content).'</textarea>';
 			
 			$headerlib->add_js('
 var ckEditorInstances = new Array();
