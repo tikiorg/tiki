@@ -32,10 +32,11 @@ if (!$blog_data) {
 }
 
 $parsed_data = $tikilib->parse_data($post_info["data"]);
+$parsed_data = preg_replace('/...page.../','<hr />',$parsed_data);
 
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $blogId);
-$smarty->assign('parsed_data', $parsed_data);
+$post_info['parsed_data'] = $parsed_data;
 $smarty->assign('post_info', $post_info);
 $smarty->assign('postId', $postId);
 

@@ -1,5 +1,6 @@
 {* $Id$ *}
 <div class="postfooter">
+	{if $blog_post_context ne 'print'}
 	<div class="actions">
 		{if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
 			<a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}">{icon _id='page_edit'}</a>
@@ -62,5 +63,6 @@
 				</div>
 			{/if}
 		</div>
+	{/if}
 	{/if}
 </div>
