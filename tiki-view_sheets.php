@@ -19,15 +19,23 @@ $auto_query_args = array(
 );
 $access->check_feature('feature_sheet');
 
-if (!isset($_REQUEST['sheetId'])) {
-	$smarty->assign('msg', tra("A SheetId is required."));
-	$smarty->display("error.tpl");
+$info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
+if (empty($info)) {
+	$smarty->assign('Incorrect parameter');
+	$smarty->display('error.tpl');
 	die;
 }
 
 $objectperms = Perms::get( 'sheet', $_REQUEST['sheetId']);
+var_dump($objectperms->admin_sheet);var_dump($objectperms->view_sheet);
+if ($user && $user == $info['author']) {
+	$objectperms->view_sheet = 1;
+	$objectperms->edit_sheet = 1;
+	$objectperms->tiki_p_view_sheet = 1;
+	$objectperms->tiki_p_edit_sheet = 1;
+}
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$objectperms->view_sheet) {
+if ($tiki_p_admin != 'y' && !$objectperms->view_sheet) {
 	$smarty->assign('msg', tra('Permission denied') . ": feature_sheet");
 	$smarty->display("error.tpl");
 	die;
@@ -46,7 +54,7 @@ if ( $tiki_sheet_div_style) {
 	$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);
 }
 
-if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit' && $prefs['feature_jquery_sheet'] == 'y') {	// edit button clicked in parse mode
+if ($objectperms->edit_sheet && $_REQUEST['parse'] == 'edit' && $prefs['feature_jquery_sheet'] == 'y') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
 if (typeof ajaxLoadingShow == "function") {
@@ -63,23 +71,18 @@ setTimeout (function () { $("div.tiki_sheet").tiki("sheet", "",{editable:false})
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
-// Individual permissions are checked because we may be trying to edit the sheet
-$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
-if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) $tiki_p_edit_sheet = 'y';
-else $tiki_p_edit_sheet = 'n';
-$smarty->assign('tiki_p_edit_sheet', $tiki_p_edit_sheet);
 $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 $smarty->assign('page_mode', 'view');
 // Process the insertion or modification of a gallery here
 $grid = new TikiSheet($_REQUEST["sheetId"]);
-if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && $tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && !$objectperms->edit_sheet && $tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
 	$smarty->display("error.tpl");
 	die;
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
-	if ($tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
+	if (!$objectperms->edit_sheet && $tiki_p_admin != 'y') {
 		$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
 		$smarty->display("error.tpl");
 		die;
