@@ -5783,6 +5783,7 @@ class TikiLib extends TikiDb_Bridge
 
 		// Strike-deleted text --text-- (but not in the context <!--[if IE]><--!> or <!--//--<!CDATA[//><!--
 		if (!$simple_wiki) {
+			// FIXME produces false positive for strings contining html comments. e.g: --some text<!-- comment -->
 			$data = preg_replace("#(?<!<!|//)--([^\s>].+?)--#", "<del>$1</del>", $data);
 		}
 
