@@ -74,6 +74,7 @@
 			{/if}
 
 			{preference name=log_tpl}
+			{preference name=smarty_compilation}
 			{preference name=categories_used_in_tpl}
 		{/tab}
 		
