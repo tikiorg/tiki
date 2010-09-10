@@ -2217,4 +2217,8 @@ table.treeTable .parent td {
 	width: 100%;
 }
 
+table.intertrans td {
+	width: 50%;
+}
+
 /* End of File */
