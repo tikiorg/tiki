@@ -70,10 +70,10 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('creator', $user);
 		$smarty->assign('parentSheetId', 0);
 	}
-	$cat_type = 'sheet';
-	$cat_objid = $_REQUEST['sheetId'];
-	include_once ('categorize_list.php');
 }
+$cat_type = 'sheet';
+$cat_objid = $_REQUEST['sheetId'];
+include_once ('categorize_list.php');
 // Process the insertion or modification of a sheet here
 if (isset($_REQUEST["edit"])) {
 	$access->check_permission('tiki_p_edit_sheet');
