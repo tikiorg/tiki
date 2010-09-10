@@ -155,7 +155,7 @@
 		</div>
 	{/if}
 
-	<table class="formcolor">
+	<table class="formcolor" width="100%">
 		<tr>
 			<td colspan="2">
 				{if isset($page_badchars_display)}
