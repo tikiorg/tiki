@@ -144,8 +144,12 @@ EOF;
 	}
 
 	if (!empty($id)) {
+		$info = $sheetlib->get_sheet_info($id);
+		if (empty($info)) {
+			return ("<b>missing id parameter for plugin</b><br />");
+		}
 		$objectperms = Perms::get('sheet', $id);
-		if (!$objectperms->view_sheet) {
+		if (!$objectperms->view_sheet  && !($user && $info['author'] == $user)) {
 			return (tra('Permission denied'));
 		}
 	}

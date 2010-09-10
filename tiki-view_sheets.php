@@ -36,7 +36,7 @@ if ($user && $user == $info['author']) {
 }
 
 if ($tiki_p_admin != 'y' && !$objectperms->view_sheet) {
-	$smarty->assign('msg', tra('Permission denied') . ": feature_sheet");
+	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -77,13 +77,13 @@ $smarty->assign('page_mode', 'view');
 // Process the insertion or modification of a gallery here
 $grid = new TikiSheet($_REQUEST["sheetId"]);
 if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && !$objectperms->edit_sheet && $tiki_p_admin != 'y') {
-	$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
+	$smarty->assign('msg', tra("Permission denied") . ": feature_sheet");
 	$smarty->display("error.tpl");
 	die;
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 	if (!$objectperms->edit_sheet && $tiki_p_admin != 'y') {
-		$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
+		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display("error.tpl");
 		die;
 	}
