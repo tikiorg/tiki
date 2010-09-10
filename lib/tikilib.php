@@ -6698,7 +6698,7 @@ class TikiLib extends TikiDb_Bridge
 							$tline = trim(str_replace('&nbsp;', '', $line));
 							
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								$block_detect_regexp = $this->contains_html_block( $tline );
+								$contains_block = $this->contains_html_block( $tline );
 								
 								if (!$contains_block) {	// check inside plugins etc for block elements
 									preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins 
