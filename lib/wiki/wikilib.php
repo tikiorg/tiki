@@ -788,7 +788,7 @@ class WikiLib extends TikiLib
 
 	function list_plugins($with_help = false, $area_id = 'editwiki') {
 		global $prefs;
-		if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y' && $prefs['wysiwyg_htmltowiki'] != 'y') {
+		if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y' && $prefs['wysiwyg_ckeditor'] != 'y') {
 			// disable all plugin insert help functions
 			$area_id = '';	
 		}	
