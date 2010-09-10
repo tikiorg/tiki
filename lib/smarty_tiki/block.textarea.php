@@ -148,6 +148,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 				include_once('lib/smarty_tiki/block.remarksbox.php');
 				$msg = tra('<strong>Thank you for trying the new ckeditor implementation for Tiki 6</strong><br /><br />');
 				
+				global $tiki_p_admin;
 				if ($tiki_p_admin) {
 					$msg .= tra('Some of your preferences should be set differently for this to work best. Please click this to apply the recommended profile:') .
 					   ' <a href="tiki-admin.php?profile=WYSIWYG_6x&repository=&page=profiles&list=List">WYSIWYG_6x</a>';
