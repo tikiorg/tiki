@@ -3,7 +3,7 @@
 	<div class="postbody-content postbody-excerpt">
 	{$post_info.excerpt}
 	</div>
-	{self_link _script='tiki-view_blog_post.php' postId=$post_info.postId}{tr}Read more{/tr}{/self_link}
+	<a href="{$post_info.postId|sefurl:blogpost}">{tr}Read more{/tr}</a>
 {else}
 	<div class="postbody-content">
 		{$post_info.parsed_data}
