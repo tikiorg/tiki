@@ -29,6 +29,10 @@ $smarty->assign('description', '');
 $smarty->assign('public', 'n');
 $smarty->assign('use_find', 'y');
 $smarty->assign('add_date', 'y');
+$smarty->assign('use_title', 'y');
+$smarty->assign('use_title_in_post', 'y');
+$smarty->assign('use_description', 'y');
+$smarty->assign('use_breadcrumbs', 'n');
 $smarty->assign('use_author', 'y');
 $smarty->assign('allow_comments', 'y');
 $smarty->assign('show_avatar', 'n');
@@ -68,6 +72,10 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('description', $data["description"]);
 	$smarty->assign('public', $data["public"]);
 	$smarty->assign('add_date', $data["add_date"]);
+	$smarty->assign('use_title', $data["use_title"]);
+	$smarty->assign('use_title_in_post', $data["use_title_in_post"]);
+	$smarty->assign('use_description', $data["use_description"]);
+	$smarty->assign('use_breadcrumbs', $data["use_breadcrumbs"]);
 	$smarty->assign('use_author', $data["use_author"]);
 	$smarty->assign('allow_comments', $data["allow_comments"]);
 	$smarty->assign('show_avatar',$data["show_avatar"]);
@@ -134,6 +142,10 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$related_max = isset($_REQUEST['related_max']) ? $_REQUEST['related_max'] : 5;	
 	$use_excerpt = isset($_REQUEST['use_excerpt']) ? 'y' : 'n';	
 	$use_find = isset($_REQUEST['use_find']) ? 'y' : 'n';
+	$use_title = isset($_REQUEST['use_title']) ? 'y' : 'n';
+	$use_title_in_post = isset($_REQUEST['use_title_in_post']) ? 'y' : 'n';
+	$use_description = isset($_REQUEST['use_description']) ? 'y' : 'n';
+	$use_breadcrumbs = isset($_REQUEST['use_breadcrumbs']) ? 'y' : 'n';
 	$use_author = isset($_REQUEST['use_author']) ? 'y' : 'n';
 	$add_date = isset($_REQUEST['add_date']) ? 'y' : 'n';
 	$alwaysOwner = isset($_REQUEST['alwaysOwner']) ? 'y' : 'n';
@@ -141,7 +153,7 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$bid = $bloglib->replace_blog($_REQUEST["title"],
 	    $_REQUEST["description"], $_REQUEST["creator"], $public,
 	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
-	    $heading, $use_author, $add_date, $use_find,
+	    $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find,
 	    $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt);
 
 	$cat_type = 'blog';
@@ -161,6 +173,10 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('description', $_REQUEST["description"]);
 	$smarty->assign('public', isset($_REQUEST["public"]) ? 'y' : 'n');
 	$smarty->assign('use_find', isset($_REQUEST["use_find"]) ? 'y' : 'n');
+	$smarty->assign('use_title', isset($_REQUEST["use_title"]) ? 'y' : 'n');
+	$smarty->assign('use_title_in_post', isset($_REQUEST["use_title_in_post"]) ? 'y' : 'n');
+	$smarty->assign('use_description', isset($_REQUEST["use_description"]) ? 'y' : 'n');
+	$smarty->assign('use_breadcrumbs', isset($_REQUEST["use_breadcrumbs"]) ? 'y' : 'n');
 	$smarty->assign('use_author', isset($_REQUEST["use_author"]) ? 'y' : 'n');
 	$smarty->assign('show_avatar', isset($_REQUEST["show_avatar"]) ? 'y' : 'n');
 	$smarty->assign('show_related', isset($_REQUEST["show_related"]) ? 'y' : 'n');

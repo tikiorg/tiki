@@ -85,6 +85,22 @@
           <td><input type="text" name="maxPosts" id="blogs-number" value="{$maxPosts|escape}" /></td>
         </tr>
     	<tr class="editblogform">
+          <td><label for="blogs-title">{tr}Display blog title in posts list page{/tr}</label></td>	 
+          <td><input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}/></td>	 
+        </tr>
+    	<tr class="editblogform">
+          <td><label for="blogs-title-post">{tr}Display blog title in post page{/tr}</label></td>	 
+          <td><input type="checkbox" name="use_title_in_post" id="blogs-title-post" {if $use_title_in_post eq 'y'}checked='checked'{/if}/></td>	 
+        </tr>
+    	<tr class="editblogform">
+          <td><label for="blogs-description">{tr}Display blog description{/tr}</label></td>	 
+          <td><input type="checkbox" name="use_description" id="blogs-description" {if $use_description eq 'y'}checked='checked'{/if}/></td>	 
+        </tr>
+    	<tr class="editblogform">
+          <td><label for="blogs-breadcrumbs">{tr}Display breadcrumbs{/tr}</label></td>	 
+          <td><input type="checkbox" name="use_breadcrumbs" id="blogs-breadcrumbs" {if $use_breadcrumbs eq 'y'}checked='checked'{/if}/></td>	 
+        </tr>
+    	<tr class="editblogform">
           <td><label for="blogs-author">{tr}Display author in blog posts{/tr}</label></td>	 
           <td><input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}/></td>	 
         </tr>
