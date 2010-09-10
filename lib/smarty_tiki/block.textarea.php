@@ -150,7 +150,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 				
 				global $tiki_p_admin;
 				if ($tiki_p_admin) {
-					$msg .= tra('Some of your preferences should be set differently for this to work best. Please click this to apply the recommended profile:') .
+					$msg .= tra("Some of your preferences should be set differently for this to work at it's best. Please click this to apply the recommended profile:") .
 					   ' <a href="tiki-admin.php?profile=WYSIWYG_6x&repository=&page=profiles&list=List">WYSIWYG_6x</a>';
 				} else {
 					$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
@@ -196,9 +196,9 @@ CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugin
 // --- config settings for the autosave plugin ---
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
-CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;								// RefreshTime
-CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strokes
-
+CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
+CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
+register_id("'.$as_id.'"); auto_save();					// Register auto_save so it gets removed on submit
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
 			}
