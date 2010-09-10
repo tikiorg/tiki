@@ -311,17 +311,20 @@ function editTimerTick() {
 		editTimerWarnings++;
 	} else if (seconds <= 0) {
 		clearInterval(editTimeoutIntervalId);
+		editTimeoutIntervalId = 0;
 		window.status = '".addslashes(tra('Your edit session has expired'))."';
-	} else {
-		window.status = '".addslashes(tra('Your edit session will expire in:'))."' + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
-	}
-	if (seconds % 60 == 0 && \$('#edittimeout')) {
-		\$('#edittimeout').text(Math.floor(seconds / 60));
+	} else if (seconds < 600) {		// don't bother until 5 minutes to go
+		\$('#edittimeout').parents('.rbox:first').fadeIn();
+		window.status = '".addslashes(tra('Your edit session will expire in:'))."' +\" \" + + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
+		if (seconds % 60 == 0 && \$('#edittimeout')) {
+			\$('#edittimeout').text(Math.floor(seconds / 60));
+		}
 	}
 }
 
 \$('document').ready( function() {
 	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
+	\$('#edittimeout').parents('.rbox:first').hide();
 } );
 var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
 var editTimeElapsedSoFar = 0;
