@@ -48,14 +48,14 @@
 			</tr>
 			{cycle values="odd,even" print=false advance=false}
 			{section name=ix loop=$atts}
-				<tr>
-					<td class="{cycle advance=false}">{$smarty.section.ix.index_next}</td>
-					<td class="{cycle advance=false}">{$atts[ix].attId}</td>
-					<td class="{cycle advance=false}">
+				<tr class="{cycle}">
+					<td>{$smarty.section.ix.index_next}</td>
+					<td>{$atts[ix].attId}</td>
+					<td>
 						{$atts[ix].filename|iconify}
 						<a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;page={$page|escape:"url"}&amp;download=y">{$atts[ix].filename}</a>
 					</td>
-					<td class="{cycle advance=false}">
+					<td>
 						<a title="{tr}View{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}" target="_blank">{icon _id='monitor' alt="{tr}View{/tr}"}</a>
 						<a title="{tr}Download{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
 						&nbsp;
@@ -63,12 +63,12 @@
 							<a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}{if !empty($sort_mode)}&amp;sort_mode={$sort_mode}{/if}"{if !empty($target)} target="{$target}"{/if}>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 						{/if}
 					</td>
-					<td class="{cycle advance=false}"><small>{$atts[ix].comment}</small></td>
-					<td class="{cycle advance=false}">
+					<td><small>{$atts[ix].comment}</small></td>
+					<td>
 						<small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user|userlink}{/if}</small>
 					</td>
-					<td style="text-align:right;" class="{cycle advance=false}">{$atts[ix].filesize|kbsize}</td>
-					<td style="text-align:right;" class="{cycle}">{$atts[ix].hits}</td>
+					<td style="text-align:right;">{$atts[ix].filesize|kbsize}</td>
+					<td style="text-align:right;">{$atts[ix].hits}</td>
 				</tr>
 			{/section}
 		</table>

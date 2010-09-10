@@ -60,8 +60,8 @@
 
 	<table border="0" cellspacing="4" cellpadding="4">
 	{section name=ix loop=$uploads}
-		<tr>
-			<td class="{cycle values="odd,even"}" style="text-align: center">
+		<tr class="{cycle values="odd,even"}">
+			<td style="text-align: center">
 				<img src="{$uploads[ix].fileId|sefurl:thumbnail}" />
 			</td>
 			<td>

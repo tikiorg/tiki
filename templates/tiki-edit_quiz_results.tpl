@@ -68,11 +68,11 @@
 	</tr>
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].fromPoints}</td>
-			<td class="{cycle advance=false}">{$channels[user].toPoints}</td>
-			<td class="{cycle advance=false}">{$channels[user].answer|truncate:230:"(...)":true|escape|nl2br}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td>{$channels[user].fromPoints}</td>
+			<td>{$channels[user].toPoints}</td>
+			<td>{$channels[user].answer|truncate:230:"(...)":true|escape|nl2br}</td>
+			<td>
 				<a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;resultId={$channels[user].resultId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
 				<a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].resultId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>

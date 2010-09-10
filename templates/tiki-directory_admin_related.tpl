@@ -59,8 +59,8 @@
     </tr>
     {cycle values="odd,even" print=false}
     {section name=user loop=$items}
-    <tr>
-      <td class="{cycle advance=false}"><select name="categId">
+    <tr class="{cycle}">
+      <td><select name="categId">
           
 {section name=ix loop=$categs}
       
@@ -70,7 +70,7 @@
 
         </select>
       </td>
-      <td class="{cycle}"><input type="submit" name="remove" value="{tr}Remove{/tr}" />
+      <td><input type="submit" name="remove" value="{tr}Remove{/tr}" />
         <input type="submit" name="update" value="{tr}Update{/tr}" />
       </td>
     </tr>

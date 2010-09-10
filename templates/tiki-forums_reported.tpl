@@ -55,8 +55,8 @@
 
 </tr>
 {sectionelse}
-<tr>
-	<td class="{cycle advance=false}" colspan="2">
+<tr class="{cycle}">
+	<td colspan="2">
 	{tr}No records to display{/tr}
 	</td>
 </tr>	
