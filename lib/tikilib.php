@@ -5335,7 +5335,7 @@ class TikiLib extends TikiDb_Bridge
 		$plugin_result = preg_replace('/href\=["\']([^"\']*)["\']/i', 'tiki_href="$1"', $plugin_result);
 		$plugin_result = preg_replace('/onclick\=["\']([^"\']*)["\']/i', 'tiki_onclick="$1"', $plugin_result);
 		
-		if (preg_match('/(:?<div|<p)/i', $plugin_result)) {
+		if ($this->contains_html_block($plugin_result)) {
 			$elem = 'div';
 		} else {
 			$elem = 'span';
@@ -6698,9 +6698,7 @@ class TikiLib extends TikiDb_Bridge
 							$tline = trim(str_replace('&nbsp;', '', $line));
 							
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								// detect all block elements as defined on http://www.w3.org/2007/07/xhtml-basic-ref.html
-								$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|li|ol|p|pre|table|ul)/i';
-								$contains_block = preg_match( $block_detect_regexp, $tline);
+								$block_detect_regexp = $this->contains_html_block( $tline );
 								
 								if (!$contains_block) {	// check inside plugins etc for block elements
 									preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins 
@@ -6717,7 +6715,7 @@ class TikiLib extends TikiDb_Bridge
 											}
 											if ($nop_ix !== false) {
 												$nop_str = $noparsed['data'][$nop_ix];
-												$contains_block = preg_match( $block_detect_regexp, $nop_str );
+												$contains_block = $this->contains_html_block( $nop_str );
 												if ($contains_block) {
 													break;
 												}
@@ -6919,6 +6917,12 @@ class TikiLib extends TikiDb_Bridge
 			$button .= 'hdr=0">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 			$data = $button.$data;
 		}
+	}
+	
+	function contains_html_block($inHtml) {
+		// detect all block elements as defined on http://www.w3.org/2007/07/xhtml-basic-ref.html
+		$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|li|ol|p|pre|table|ul)/i';
+		return  (preg_match( $block_detect_regexp, $inHtml) > 0);
 	}
 
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
