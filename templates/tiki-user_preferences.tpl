@@ -553,7 +553,7 @@
  <table class="normal">
   <tr class="{cycle}">
    <td></td>
-   <td><input type='checkbox' name='deleteaccountconfirm' value='1'> {tr}Check this box if you really want to delete your account{/tr}</td>
+   <td><input type='checkbox' name='deleteaccountconfirm' value='1' /> {tr}Check this box if you really want to delete your account{/tr}</td>
   </tr>
     <tr>
       <td colspan="2"  class="input_submit_container"><input type="submit" name="deleteaccount" value="{tr}Delete my account{/tr}" /></td>

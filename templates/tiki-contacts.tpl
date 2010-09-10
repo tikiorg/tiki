@@ -201,7 +201,7 @@
 </div>
 
 {literal}
-<script lang='JavaScript'>
+<script type="text/javascript">
 	function newelem(type, vals) {
 		var elem=document.createElement(type);
 
