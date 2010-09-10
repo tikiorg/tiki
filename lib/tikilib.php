@@ -6699,7 +6699,7 @@ class TikiLib extends TikiDb_Bridge
 							
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
 								// detect all block elements as defined on http://www.w3.org/2007/07/xhtml-basic-ref.html
-								$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|ol|p|pre|table|ul)/i';
+								$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|li|ol|p|pre|table|ul)/i';
 								$contains_block = preg_match( $block_detect_regexp, $tline);
 								
 								if (!$contains_block) {	// check inside plugins etc for block elements
