@@ -1692,6 +1692,10 @@ opaque .box-title,
 	white-space: nowrap;
 }
 
+body.filegal_popup #tiki-center {
+	margin: 0 1em;
+}
+
 /***** Trackers (etc.) *****/
 .statuson {
 	padding: 1px;
