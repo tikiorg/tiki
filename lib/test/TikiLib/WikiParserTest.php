@@ -56,6 +56,8 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
           array('[foo|bar]', '<a class="wiki"  href="foo" rel="">bar</a><br />' . "\n"), // link
           
 			array('[[foo', '[foo<br />' . "\n"), // Square brackets
+		  array('[[foo]]', '[[foo]]<br />' . "\n"), // Square brackets
+		  array('[[foo]', '[foo]<br />' . "\n"), // Square brackets
 					
 			array('-+foo+- ', '<code>foo</code><br />'. "\n"), // Monospace font
 			array('-+ foo +- ', '<code> foo </code><br />'. "\n"), // Monospace font

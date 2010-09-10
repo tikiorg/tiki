@@ -6052,6 +6052,7 @@ class TikiLib extends TikiDb_Bridge
 
 		// Handle double square brackets. to display [foo] use [[foo] -rlpowell. Improved by sylvieg to avoid replacing them in [[code]] cases.
 		$data = preg_replace( "/\[\[([^\]]*)\](?!\])/", "[$1]", $data );
+		$data = preg_replace( "/\[\[([^\]]*)$/", "[$1", $data );
 
 		return $data;
 	}
