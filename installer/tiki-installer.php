@@ -99,6 +99,8 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$filetowrite .= "// \$client_charset='latin1';\n";
 		$filetowrite .= "// \$client_charset='utf8';\n";
 		$filetowrite .= "// See http://tikiwiki.org/ReleaseNotes5.0#Known_Issues and http://doc.tikiwiki.org/UTF-8 for more info\n\n";
+		$filetowrite .= "// If your php installation does not not have pdo extension\n";
+		$filetowrite .= "// \$api_tiki == 'adodb';\n";
 		fwrite($fw, $filetowrite);
 		fclose($fw);
 	}
