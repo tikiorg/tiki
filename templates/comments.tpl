@@ -242,7 +242,7 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 	{/remarksbox}
 {/if}
 {if !empty($feedbacks)}
-	{remarksbox type="feedback"}
+	{remarksbox type="note"}
 		{foreach from=$feedbacks item=feedback name=feedback}
 			{$feedback|escape}
 			{if !$smarty.foreach.feedback.first}<br />{/if}

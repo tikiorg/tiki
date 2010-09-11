@@ -8,7 +8,7 @@
 	{/remarksbox}
 {/if}
 {if !empty($feedbacks)}
-	{remarksbox type="comment" title="{tr}Feedbacks{/tr}"}
+	{remarksbox type="note" title="{tr}Feedback{/tr}"}
 		{foreach from=$feedbacks item=feedback}
 			{$feedback|escape}
 			<br />
