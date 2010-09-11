@@ -193,25 +193,21 @@ class EditLib
 	}
 
 	function parseToWiki( $inData ) {
-		global $prefs;
-//		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-//			$parsed = $inData;
-//		} else {
-			// Parsing page data as first time seeing html page in normal editor
-			$parsed = $this->parse_html($inData);
-//		}
+		
+		$parsed = $this->parse_html($inData);
 		$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
-		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);													// newlines
+		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
 		return $parsed;
 	}
 	
 	function parseToWysiwyg( $inData ) {
 		global $tikilib, $tikiroot, $prefs;
-		// Parsing page data as first time seeing wiki page in wysiwyg editor
+		// Parsing page data for wysiwyg editor
+		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
-		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => 'y'));
+		if ($prefs['wysiwyg_ckeditor'] === 'y') {
+			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true));
 		} else {
 			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
 		}
@@ -222,6 +218,24 @@ class EditLib
 				array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
 				$parsed );
 		return $parsed;
+	}
+	
+	/**
+	 * Converts wysiwyg plugins into wiki.
+	 * Also processes headings by removing surrounding <p> (possibly for wysiwyg_wiki_semi_parsed but not tested)  
+	 * 
+	 * @param string $inData (page data - mostly html but can have a bit of wiki in it)
+	 */
+	function partialParseWysiwygToWiki( $inData ) {
+		// remove the wysiwyg plugin elements leaving the syntax only remaining
+		$ret = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end tiki_plugin --><\/(?:div|span)>/Umis', "$1", $inData);
+		// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
+		if (!$ret) { $ret = $inData; }
+		
+		// take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
+		$ret = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $ret);
+		
+		return $ret;
 	}
 	
 	// parse HTML functions
@@ -248,8 +262,10 @@ class EditLib
 			// If content type 'text' output it to destination...
 			if ($c[$i]["type"] == "text") {
 				if( ! ctype_space( $c[$i]["data"] ) ) {
-					$add = ltrim( $c[$i]["data"] );
-					$add = str_replace( array("\r","\n"), ' ', $add );
+					$add = $c[$i]["data"];
+					$add = str_replace( array("\r","\n"), '', $add );
+					$add = str_replace( '&nbsp;', ' ', $add );
+					$add = ltrim( $add );
 					$src .= $add;
 				}
 			} elseif ($c[$i]["type"] == "comment") {
@@ -257,6 +273,34 @@ class EditLib
 			} elseif ($c[$i]["type"] == "tag") {
 				if ($c[$i]["data"]["type"] == "open") {
 					// Open tag type
+					
+					// deal with plugins - could be either span of div so process before the switch statement
+					if (isset($c[$i]['pars']['plugin']) && isset($c[$i]['pars']['syntax'])) {	// handling for tiki plugins
+						$src .= html_entity_decode($c[$i]['pars']['syntax']['value']);
+						$more_spans = 1;
+						$elem_type = $c[$i]["data"]["name"];
+						$other_elements = 0;
+						$j = $i + 1;
+						while ($j < $c['contentpos']) {	// loop through contents of this span and discard everything
+							if ($c[$j]['data']['name'] == $elem_type && $c[$j]['data']['type'] == 'close') {
+								$more_spans--;
+								if ($more_spans === 0) {
+									break;
+								}
+							} else if ($c[$j]['data']['name'] == 'br' && $more_spans === 1 && $other_elements === 0) {
+							} else if ($c[$j]['data']['name'] == $elem_type && $c[$j]['data']['type'] == 'open') {
+								$more_spans++;
+							} else if ($c[$j]['data']['type'] == 'open' && $c[$j]['data']['name'] != 'br' && $c[$j]['data']['name'] != 'img' && $c[$j]['data']['name'] != 'input') {
+								$other_elements++;
+							} else if ($c[$j]['data']['type'] == 'close') {
+								$other_elements--;
+							}
+							$j++;
+						}
+						$i = $j;	// skip everything that was inside this span
+						
+					}
+					
 					switch ($c[$i]["data"]["name"]) {
 						// Tags we don't want at all.
 						case "meta": $c[$i]["content"] = ''; break;
@@ -286,28 +330,31 @@ class EditLib
 							}
 							break;
 						case "span":
-							if( isset($c[$i]['pars']) 
-								&& isset($c[$i]['pars']['style']) 
-								&& preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
-								$src .= "~~#"
-									. str_pad( dechex( 255-$parts[2] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( 255-$parts[3] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( 255-$parts[4] ), 2, '0', STR_PAD_LEFT )
-									. ',#'
-									. str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( $parts[4] ), 2, '0', STR_PAD_LEFT )
-									. ':';
-								$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
-							} elseif( isset($c[$i]['pars']) 
-								&& isset($c[$i]['pars']['style']) 
-								&& preg_match( "/color: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
-								$src .= "~~#"
-									. str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
-									. str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
-									. ':';
-								$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
+							if( isset($c[$i]['pars'])) {
+								if (isset($c[$i]['pars']['style'])) {	// colours
+									$contrast = '000000';
+									if (preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$bgcol = str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[4] ), 2, '0', STR_PAD_LEFT );
+										
+									} else if (preg_match( "/background(\-color)?:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$bgcol = $parts[2];
+									}
+									if (preg_match( "/\bcolor: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$fgcol = str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
+											   . str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT );
+									} else if (preg_match( "/^color:\s*#(\w{3,6})/", $c[$i]['pars']['style']['value'], $parts ) ) {
+										$fgcol = $parts[1];
+									}
+									if (!empty($bgcol) || !empty($fgcol)) {
+										$src .= "~~#" . (!empty($fgcol) ? $fgcol : $contrast);
+										$src .= (empty($bgcol) ? '' : ',#' . $bgcol);
+										$src .= ':';
+										$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
+									}
+								}
 							}
 							break;
 						case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
@@ -329,12 +376,27 @@ class EditLib
 						case "code": $src .= '-+'; $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
 						case "dd": $src .= ':'; $p['stack'][] = array('tag' => 'dd', 'string' => "\n"); break;
 						case "dt": $src .= ';'; $p['stack'][] = array('tag' => 'dt', 'string' => ''); break;
-						case "h1": $src .= $this->startNewLine($src) . "!"; $p['stack'][] = array('tag' => 'h1', 'string' => "\n"); break;
-						case "h2": $src .= $this->startNewLine($src) . "!!"; $p['stack'][] = array('tag' => 'h2', 'string' => "\n"); break;
-						case "h3": $src .= $this->startNewLine($src) . "!!!"; $p['stack'][] = array('tag' => 'h3', 'string' => "\n"); break;
-						case "h4": $src .= $this->startNewLine($src) . "!!!!"; $p['stack'][] = array('tag' => 'h4', 'string' => "\n"); break;
-						case "h5": $src .= $this->startNewLine($src) . "!!!!!"; $p['stack'][] = array('tag' => 'h5', 'string' => "\n"); break;
-						case "h6": $src .= $this->startNewLine($src) . "!!!!!!"; $p['stack'][] = array('tag' => 'h6', 'string' => "\n"); break;
+						
+						case "h1":
+						case "h2":
+						case "h3":
+						case "h4":
+						case "h5":
+						case "h6":
+							$hlevel = (int) $c[$i]["data"]["name"]{1};
+							if (isset($c[$i]['pars']['style']['value']) && strpos($c[$i]['pars']['style']['value'],'text-align: center;') !== false ) {
+								if ($prefs['feature_use_three_colon_centertag'] == 'y') {
+									$src .= $this->startNewLine($src) . str_repeat('!', $hlevel) . ':::';
+									$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => ":::\n");
+								} else {
+									$src .= $this->startNewLine($src) . str_repeat('!', $hlevel) . '::';
+									$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n");
+								}
+							} else {	// normal para or div
+								$src .= $this->startNewLine($src) . str_repeat('!', $hlevel);
+								$p['stack'][] = array('tag' => $c[$i]["data"]["name"], 'string' => "\n");
+							}
+							break;
 						case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
 						case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
 						case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}"); break;
@@ -410,6 +472,9 @@ class EditLib
 	//			if (substr($src, -1) != " ") $src .= " ";
 				$this->walk_and_parse($c[$i]["content"], $src, $p, $head_url );
 			}
+		}
+		if (substr($src, -2) == "\n\n") {	// seem to always get too many line ends
+			$src = substr($src, 0, -2);
 		}
 	}	// end walk_and_parse
 	

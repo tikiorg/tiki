@@ -126,7 +126,7 @@
 		<br />
 		<img src="{$field_value.value}" alt="" width="{$field_value.options_array[2]}" height="{$field_value.options_array[3]}" />
 		{if $field_value.isMandatory ne 'y'}
-			<a href="{$smarty.server.PHP_SELF}?{query removeImage='y' fieldId=`$field_value.fieldId` itemId=`$item.itemId` trackerId=`$item.trackerId` fieldName=`$field_value.name`}">{icon _id='cross' alt='{tr}Remove Image{/tr}'}</a>
+			<a href="{$smarty.server.PHP_SELF}?{query removeImage='y' fieldId=`$field_value.fieldId` itemId=`$item.itemId` trackerId=`$item.trackerId` fieldName=`$field_value.name`}">{icon _id='cross' alt="{tr}Remove Image{/tr}"}</a>
 		{/if}
    {/if}
 
@@ -143,10 +143,13 @@
 		{$field_value.info.filename}&nbsp;
 		<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
 		{if ($tiki_p_admin_trackers eq 'y' or $field_value.info.user eq $user) and $field_value.isMandatory ne 'y'}
-			<a href="{$smarty.server.PHP_SELF}?{query removeattach=$field_value.value}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+			<a href="{$smarty.server.PHP_SELF}?{query removeattach=$field_value.value}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 		{/if}
 	{/if}
 
+{* -------------------- user groups -------------------- *}
+{elseif $field_value.type eq 'usergroups'}
+	
 {* -------------------- preference --------------------- *}
 {elseif $field_value.type eq 'p'}
 	{if $field_value.options_array[0] eq 'password'}
@@ -259,7 +262,7 @@
     		{toolbars qtnum=$field_value.fieldId area_id="area_"|cat:$field_value.fieldId section="trackers"}
 		{/if}
 		{if $field_value.options_array[2] == 1}
-				<input type="text" id="area_{$field_value.fieldId}" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if} {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} />
+				<input type="text" id="area_{$field_value.fieldId}" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', "{tr}Word Limit Exceeded{/tr}")"{/if} {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', "{tr}Character Limit Exceeded{/tr}")"{/if} />
 		{else}
 			<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}  {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} >
 				{$field_value.value}

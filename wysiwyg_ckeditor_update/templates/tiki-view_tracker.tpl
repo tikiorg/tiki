@@ -1,15 +1,11 @@
 {* $Id$ *}
-AAAA{$sort_mode}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
-{if !empty($tracker_info.showPopup)}
-{popup_init src="lib/overlib.js"}
-{/if}
 
 {title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name|escape}{/title}
 
 <div class="navbar">
 	 {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-	 	 <a href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}' align='right' hspace="1"}</a>
+	 	 <a href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace="1"}</a>
 	{/if}
 	{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
 		{if $user_watching_tracker ne 'y'}
@@ -162,7 +158,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 								{cycle values="odd,even" print=false}
 								{foreach from=$items[user].field_values item=f}
 									{if in_array($f.fieldId, $popupFields)}
-										 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file='tracker_item_field_value.tpl' field_value=$f}</th></tr>
+										 <tr class="{cycle}"><th>{$f.name}</th><td>{include file='tracker_item_field_value.tpl' field_value=$f}</th></tr>
 									{/if}
 								{/foreach}
 							</table>
@@ -196,7 +192,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 {if $tiki_p_admin_trackers eq 'y'}
   <td>
     <a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}{if $sort_mode ne ''}&amp;sort_mode={$sort_mode}{/if}&amp;remove={$items[user].itemId}"
-title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 	<a class="link" href="tiki-tracker_view_history.php?itemId={$items[user].itemId}" title="{tr}History{/tr}">{icon _id='database' alt="{tr}History{/tr}"}</a>
   </td>
 {/if}
@@ -240,10 +236,10 @@ $("#newItemForm").validate({
 
 <h2>{tr}Insert New Item{/tr}</h2>
 {remarksbox type="note"}<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>{/remarksbox}
-<table class="normal">
+<table class="formcolor">
 
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
-<tr class="formcolor"><td>{tr}Status{/tr}</td>
+<tr><td>{tr}Status{/tr}</td>
 <td>
 {include file='tracker_status_input.tpl' tracker=$tracker_info form_status=status}
 </td></tr>
@@ -253,18 +249,18 @@ $("#newItemForm").validate({
 {assign var=fid value=$field_value.fieldId}
 {* -------------------- header and others -------------------- *}
 {if $field_value.isHidden eq 'n' or $field_value.isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
-{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and (($field_value.type ne 'u' and $field_value.type ne 'g' and $field_value.type ne 'I') or !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')and (empty($field_value.editableBy) or in_array($default_group, $field_value.editableBy) or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and !($field_value.type eq 's' and $field_value.name eq 'Rating')}
+{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and (($field_value.type ne 'u' and $field_value.type ne 'g' and $field_value.type ne 'I') or !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')and (empty($field_value.editableBy) or in_array($default_group, $field_value.editableBy) or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'A' or $tiki_p_attach_trackers eq 'y') and $field_value.type ne 'N' and $field_value.type ne '*' and !($field_value.type eq 's' and $field_value.name eq 'Rating') and $field_value.type ne 'usergroups'}
 {if $field_value.type eq 'h'}
 </table>
 <h2>{$field_value.name|escape}</h2>
-<table class="normal">
+<table class="formcolor">
 {else}
 {if ($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'b') and $field_value.options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td class="formcontent">
+<tr><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td class="formcontent">
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}
+<tr><td class="formlabel" >{$field_value.name|escape}{if $field_value.isMandatory eq 'y'}<strong class='mandatory_star'> *</strong>{/if}
 </td><td colspan="3" class="formcontent" >
 {/if}
 {/if}
@@ -352,7 +348,7 @@ $("#newItemForm").validate({
 	</select>
 {else}
 {* {assign var=onePerLine value="y"} *}
-<table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
+<table class="formcolor" width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$field_value.categories name=eforeach}
 {assign var=fcat value=$iu.categId }
 <td{if $onePerLine ne 'y'} width="50%"{/if}>
@@ -466,7 +462,7 @@ $("#newItemForm").validate({
 
 {if $groupforalert ne ''}
 {if $showeachuser eq 'y' }
-<tr class="formcolor">
+<tr>
 <td>{tr}Choose users to alert{/tr}</td>
 <td>
 {/if}
@@ -482,7 +478,7 @@ $("#newItemForm").validate({
 {/if}
 
 
-<tr class="formcolor">
+<tr>
 	<td class="formlabel">&nbsp;</td>
 	<td colspan="3" class="formcontent">
 		<input type="submit" name="save" value="{tr}Save{/tr}" /> 

@@ -10,7 +10,7 @@
     <b>{tr}Tiki Debugger Console{/tr}</b>
     </td>
     <td align="right" valign="top">
-      {icon _id='img/icons/close.gif' onclick='toggle("debugconsole");' _title='{tr}Close{/tr}' width=13 height=13}
+      {icon _id='img/icons/close.gif' onclick='toggle("debugconsole");' _title="{tr}Close{/tr}" width=13 height=13}
   </td></tr>
   <tr>
     <td class="formcolor"><small>{tr}Current URL{/tr}:</small></td>

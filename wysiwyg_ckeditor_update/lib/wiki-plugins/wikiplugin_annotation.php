@@ -21,7 +21,7 @@ function wikiplugin_annotation_info() {
 			'src' => array(
 				'required' => true,
 				'name' => tra('Location'),
-				'description' => tra('Absolute URL to the image or relative path from tikiwiki root.'),
+				'description' => tra('Absolute URL to the image or relative path from tiki root.'),
 				'filter' => 'url',
 			),
 			'width' => array(
@@ -41,6 +41,7 @@ function wikiplugin_annotation_info() {
 				'name' => tra('Alignment'),
 				'description' => tra('Image alignment. Possible values: left, right, center.'),
 				'filter' => 'alpha',
+				'advanced' => true,
 			),
 		)
 	);

@@ -461,13 +461,27 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 		cked = CKEDITOR.instances[elementId];
 		if (cked) {
 			var sel = cked.getSelection();
+			var com = sel.getCommonAncestor();
+			// special handling for plugin form inserts
+			if (!com.getAttribute) {
+				com = com.getParent();
+			}
+			if (com.getAttribute && com.getAttribute("plugin")) {
+				com.$.innerText = replaceString;
+				cked.reParse();
+				return;
+			}
 			if (sel.getType() === CKEDITOR.SELECTION_TEXT) { // why so fiddly?
-				r = sel.getRanges();
+				var r = sel.getRanges();
 				if (r.length && !r[0].collapsed) { // selected over more than on element - wa?  && r.startContainer == r.endContainer
 					var t = r[0].startContainer.$.textContent;
 					//return t.substring(r[0].startOffset, r[0].endOffset);
 				}
 				cked.insertText( replaceString );
+				if (replaceString.match(/^\s?\{.*?\}\s?$/) ||		// simple {plugin} match
+					replaceString.match(/^\s?\(\(.*?\)\)\s?$/)) {	// ((wiki links))
+					cked.reParse();
+				}
 			}
 		}
 		return;
@@ -1140,6 +1154,9 @@ function openFgalsWindow(filegal_manager_url, area_id) {
 	} else {
 		fgals_window=window.open(filegal_manager_url,'_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
 	}
+	$(window).unload(function(){	// tidy
+		fgals_window.close();
+	});
 }
 
 /* Count the number of words (spearated with space) */
@@ -1306,17 +1323,49 @@ function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 
 	var table = document.createElement( 'table' );
 	table.className = 'normal';
+	table.id = 'plugin_params';
 	form.appendChild( table );
+
+	for (param in meta.params) {
+		if (meta.params[param].advanced) {
+			var br = document.createElement( 'br' );
+			form.appendChild( br );
+
+			var span_advanced_button = document.createElement( 'span' );
+			span_advanced_button.className = 'button';
+			form.appendChild( span_advanced_button );
+
+			var advanced_button = document.createElement( 'a' );
+			advanced_button.innerHTML = 'Advanced options';
+			advanced_button.onclick = function() { flip('plugin_params_advanced');};
+			span_advanced_button.appendChild(advanced_button);
+
+			var table_advanced = document.createElement( 'table' );
+			table_advanced.className = 'normal';
+			table_advanced.style.display = 'none';
+			table_advanced.id = 'plugin_params_advanced';
+			form.appendChild( table_advanced );
+
+			break;
+		}
+	}
 
 	var potentiallyExtraPluginArgs = pluginArgs;
 
 	var rowNumber = 0;
+	var rowNumberAdvanced = 0;
 	for( param in meta.params )
 	{
 		if( typeof(meta.params[param]) != 'object' || meta.params[param].name == 'array' ) {
 			continue;
 		}
-		var row = table.insertRow( rowNumber++ );
+
+		if (meta.params[param].advanced && !meta.params[param].required) {
+			var row = table_advanced.insertRow( rowNumberAdvanced++ );
+		} else {
+			var row = table.insertRow( rowNumber++ );
+		}
+
 		build_plugin_form_row(row, param, meta.params[param].name, meta.params[param].required, pluginArgs[param], meta.params[param].description, meta.params[param]);
 
 		delete potentiallyExtraPluginArgs[param];
@@ -1374,6 +1423,7 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 	row.className = 'formcolor';
 
 	label.innerHTML = label_name;
+	label.style.width = '130px';
 	switch ( requiredOrSpecial ) {
 	case (true):  // required flag
 		label.style.fontWeight = 'bold';

@@ -18,7 +18,7 @@ if (!isset($_REQUEST["forumId"])) {
 }
 
 $smarty->assign('forumId', $_REQUEST["forumId"]);
-include_once ("lib/commentslib.php");
+include_once ("lib/comments/commentslib.php");
 $commentslib = new Comments($dbTiki);
 $forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
 

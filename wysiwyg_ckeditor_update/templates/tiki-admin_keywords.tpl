@@ -12,15 +12,15 @@
 		<h2>{tr}Edit page keywords{/tr} ({$edit_keywords_page|escape})</h2>
 		<form action="tiki-admin_keywords.php" method="post">
 			<input name="page" value="{$edit_keywords_page|escape}" type="hidden">
-			<table class="normal">
+			<table class="formcolor">
 				<tbody>
 					<tr>
-						<td style="padding-right: 25px;" class="formcolor">{tr}Keywords{/tr}:</td>
-						<td class="formcolor"><input name="new_keywords" size="65" value="{$edit_keywords|escape}"/></td>
+						<td style="padding-right: 25px;">{tr}Keywords{/tr}:</td>
+						<td><input name="new_keywords" size="65" value="{$edit_keywords|escape}"/></td>
 					</tr>
 					<tr>
-						<td class="formcolor"></td>
-						<td class="formcolor"><input type="submit" name="save_keywords" value="{tr}Save{/tr}"/></td>
+						<td></td>
+						<td><input type="submit" name="save_keywords" value="{tr}Save{/tr}"/></td>
 					</tr>
 				</tbody>
 			</table>
@@ -48,10 +48,10 @@
 			</tr>	
 			{cycle values="even,odd" print=false}
 			{section name=i loop=$existing_keywords}
-				<tr>
-					<td class="{cycle advance=false}"><a href="{$existing_keywords[i].page|sefurl}">{$existing_keywords[i].page|escape}</a></td>
-					<td class="{cycle advance=false}">{$existing_keywords[i].keywords|escape}</td>
-					<td class="{cycle}"><a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}">{icon _id=page_edit}</a> <a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}&amp;remove_keywords=1">{icon _id=cross}</a></td>	
+				<tr class="{cycle}">
+					<td><a href="{$existing_keywords[i].page|sefurl}">{$existing_keywords[i].page|escape}</a></td>
+					<td>{$existing_keywords[i].keywords|escape}</td>
+					<td><a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}">{icon _id=page_edit}</a> <a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}&amp;remove_keywords=1">{icon _id=cross}</a></td>	
 				</tr>
 			{/section}
 		</tbody>

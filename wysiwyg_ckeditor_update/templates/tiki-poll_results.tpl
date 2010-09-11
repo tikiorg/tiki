@@ -76,13 +76,13 @@
 {cycle values="even,odd" print=false}
 <table class="pollresults">
 {section name=ix loop=$poll_info_arr[x].options}
-<tr><td class="pollr {cycle advance=false}">
+<tr class="{cycle}"><td class="pollr">
 {if $smarty.section.x.total > 1}<a href="tiki-poll_results.php?{if !empty($scoresort_desc)}scoresort_asc{else}scoresort_desc{/if}={$smarty.section.ix.index}">{/if}
 {$poll_info_arr[x].options[ix].title|escape}
 {if $smarty.section.x.total > 1}</a>{/if}
 
 </td>
-    <td class="pollr {cycle}">{quotabar length=$poll_info_arr[x].options[ix].width}  {$poll_info_arr[x].options[ix].percent}% ({$poll_info_arr[x].options[ix].votes})
+    <td class="pollr">{quotabar length=$poll_info_arr[x].options[ix].width}  {$poll_info_arr[x].options[ix].percent}% ({$poll_info_arr[x].options[ix].votes})
     </td>
     </tr>
 {/section}
@@ -125,11 +125,11 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list_votes}
-<tr>
-	<td class="{cycle advance=false}">{$list_votes[ix].user|userlink}</td>
-	<td class="{cycle advance=false}">{$list_votes[ix].ip|escape}</td>
-	<td class="{cycle advance=false}">{$list_votes[ix].title|escape}</td>
-	<td class="{cycle}">{$list_votes[ix].time|tiki_short_date}</td>
+<tr class="{cycle}">
+	<td>{$list_votes[ix].user|userlink}</td>
+	<td>{$list_votes[ix].ip|escape}</td>
+	<td>{$list_votes[ix].title|escape}</td>
+	<td>{$list_votes[ix].time|tiki_short_date}</td>
 </tr>
 {sectionelse}
 <tr>

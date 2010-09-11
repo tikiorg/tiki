@@ -37,34 +37,38 @@
   </table>
 {/if}
 {/if}
-<br />
 <table class="normal">
   <tr>
+	{assign var=numbercol value=1}
     <th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
     
     {if $prefs.forum_list_topics eq 'y'}
+		{assign var=numbercol value=`$numbercol+1`}
 	    <th>{self_link _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</th>
     {/if}	
 
     {if $prefs.forum_list_posts eq 'y'}
+		{assign var=numbercol value=`$numbercol+1`}
 	    <th>{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</th>
     {/if}	
 
     {if $prefs.forum_list_ppd eq 'y'}
+		{assign var=numbercol value=`$numbercol+1`}
 	    <th>{tr}PPD{/tr}</th>
     {/if}	
 
     {if $prefs.forum_list_lastpost eq 'y'}	
+		{assign var=numbercol value=`$numbercol+1`}
 	    <th>{self_link _sort_arg='sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.forum_list_visits eq 'y'}
+		{assign var=numbercol value=`$numbercol+1`}
 	    <th>{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
     {/if}	
 		
-		{if ($tiki_p_admin eq 'y' or $tiki_p_admin_forum eq 'y')}
-			<th>{tr}Actions{/tr}</th>
-		{/if}
+	{assign var=numbercol value=`$numbercol+1`}
+	<th>{tr}Actions{/tr}</th>
   </tr>
 
 {assign var=section_old value=""}
@@ -84,9 +88,9 @@
 	{/if}
 {/if}
 
-<tr>
+<tr class="{cycle}">
 
-<td class="{cycle advance=false}">
+<td>
 	<span style="float:left">
 		{if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
 			<a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name|escape}</a>
@@ -108,16 +112,16 @@
 {/if}
 </td>
 {if $prefs.forum_list_topics eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
+	<td style="text-align:right;">{$channels[user].threads}</td>
 {/if}
 {if $prefs.forum_list_posts eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
+	<td style="text-align:right;">{$channels[user].comments}</td>
 {/if}
 {if $prefs.forum_list_ppd eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
+	<td style="text-align:right;">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 {/if}
 {if $prefs.forum_list_lastpost eq 'y'}	
-<td class="{cycle advance=false}">
+<td>
 {if isset($channels[user].lastPost)}
 {$channels[user].lastPost|tiki_short_datetime}<br />
   {if $prefs.forum_reply_notitle neq 'y'}
@@ -128,20 +132,20 @@
 </td>
 {/if}
 {if $prefs.forum_list_visits eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
+	<td style="text-align:right;">{$channels[user].hits}</td>
 {/if}	
 
-{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-	<td style="text-align:right;" class="{cycle advance=false}">
+<td style="text-align:right;">
+	<a class="admlink" title="{tr}View{/tr}" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{icon _id='table' alt="{tr}View{/tr}"}</a>
+	{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 		<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&cookietab=2">{icon _id='page_edit'}</a>
-	</td>
-{/if}
+	{/if}
+</td>
 
 </tr>
 {sectionelse}
-<td class="odd" colspan="6"><strong>{tr}No records found.{/tr}</strong><td>
+<tr><td class="odd" colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td></tr>
 {/section}
 </table>
 
 {pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}
-

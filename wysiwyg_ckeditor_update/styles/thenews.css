@@ -342,19 +342,23 @@ a.flip:hover {
 	color: #505050;
 }
 
-.tellafriend {
+.tellafriend,
+.share {
 	margin-right: 2px;
 }
 
-.tellafriend a {
+.tellafriend a,
+.share a {
 	color: #adbac3;
 }
 
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	color: #505050;
 }
 
-.fullscreen .tellafriend {
+.fullscreen .tellafriend,
+.fullscreen .share {
 	margin-top: 2px;
 }
 

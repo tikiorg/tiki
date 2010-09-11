@@ -59,7 +59,6 @@ if (count($assignables) > 0) {
 } else {
 	$smarty->assign('canassign', 'n');
 }
-//print_r($assignables);
 $modules = $usermoduleslib->get_user_assigned_modules($user);
 $smarty->assign('modules_l', $usermoduleslib->get_user_assigned_modules_pos($user, 'l'));
 $smarty->assign('modules_r', $usermoduleslib->get_user_assigned_modules_pos($user, 'r'));

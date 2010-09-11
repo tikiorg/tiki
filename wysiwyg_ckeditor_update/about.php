@@ -14,31 +14,31 @@
 \mainpage
 
 
-TikiWiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.
+Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.
 
 
 IMPORTANT LINKS
 ---------------
 * General information & overview
-  http://info.tikiwiki.org
+  http://info.tiki.org
 
-* Official TikiWiki documentation website
-  http://doc.tikiwiki.org
+* Official documentation
+  http://doc.tiki.org
 
 * Forums & community
-  http://tikiwiki.org/tiki-forums.php
+  http://tiki.org/tiki-forums.php
 
 * Developers
-  http://dev.tikiwiki.org
+  http://dev.tiki.org
 
 * Themes & styling
-  http://themes.tikiwiki.org
+  http://themes.tiki.org
 
 * Security
-  http://security.tikiwiki.org
+  http://security.tiki.org
 
 * IRC chat channel: #tikiwiki on irc.freenode.net
-  http://irc.tikiwiki.org/
+  http://irc.tiki.org/
 
 
 
@@ -46,7 +46,7 @@ INSTALLATION
 ------------
 Please see the INSTALL file in this folder for basic installation instructions.
 For more details, please see:
-http://doc.tikiwiki.org/Installation
+http://doc.tiki.org/Installation
 
 
 

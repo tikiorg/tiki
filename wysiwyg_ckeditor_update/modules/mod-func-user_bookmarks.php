@@ -109,7 +109,7 @@ function module_user_bookmarks( $mod_reference, $module_params ) {
 	
 				// Check if we are bookmarking a forum
 				if (strstr($_SERVER["REQUEST_URI"], 'tiki-view_forum')) {
-					require_once('lib/commentslib.php'); global $commentslib;
+					require_once('lib/comments/commentslib.php'); global $commentslib;
 					if (!isset($commentslib)) {
 						$commentslib = new Comments($dbTiki);
 					}

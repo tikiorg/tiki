@@ -1,16 +1,16 @@
-{title}{tr}Edit or export languages{/tr}{/title}
+{title}{tr}Edit or export/import languages{/tr}{/title}
 
 <div class="navbar">
 	{if $interactive_translation_mode eq 'on'}
-		{button href="tiki-edit_languages.php?interactive_translation_mode=off" _text="{tr}Toggle interactive translation off{/tr}"}
+		{button href="tiki-edit_languages.php?interactive_translation_mode=off" _text="{tr}Toggle interactive translation off{/tr}" _ajax="n"}
 	{else}
-		{button href="tiki-edit_languages.php?interactive_translation_mode=on" _text="{tr}Toggle interactive translation on{/tr}"}
+		{button href="tiki-edit_languages.php?interactive_translation_mode=on" _text="{tr}Toggle interactive translation on{/tr}" _ajax="n"}
 	{/if}
 </div>
 
 <form action="tiki-edit_languages.php" method="post">
 	{tabset}
-		{tab name='{tr}Edit languages{/tr}'}
+		{tab name="{tr}Edit languages{/tr}"}
 			{if (empty($db_languages))}
 			    {remarksbox type="note" title="{tr}Note:{/tr}"}
 					{tr}No translations in the database. First import a language, translate strings using interactive translation or enable "Record untranslated strings" in Admin -> i18n.{/tr}
@@ -42,11 +42,11 @@
 				{if $whataction eq 'add_tran_sw'}
 					<div class="simplebox">
 						{tr}Add a translation{/tr}:<br />
-						<table>
+						<table class="formcolor">
 							<tr>
-								<td class="form">{tr}Original{/tr}:</td>
+								<td>{tr}Original{/tr}:</td>
 								<td><input name="add_tran_source" size=20 maxlength=255></td>
-								<td class="form">{tr}Translation{/tr}:</td>
+								<td>{tr}Translation{/tr}:</td>
 								<td><input name="add_tran_tran" size=20 maxlength=255></td>
 								<td align="center"><input type="submit" name="add_tran" value="{tr}Add{/tr}" /></td>
 							</tr>
@@ -56,16 +56,16 @@
 				{if $whataction eq 'edit_rec_sw'}
 					<div class="simplebox">
 						{tr}Translate recorded{/tr}:<br />
-						<table>
+						<table class="formcolor">
 							<tr>
 								<td align="right"><input name="tran_search" value="{$tran_search|escape}" size=10	maxlength=255></td>
 								<td align="center"><input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" /></td>
 							</tr>
 							{section name=it loop=$untranslated}
 								<tr>
-									<td class="form">{tr}Original{/tr}:</td>
+									<td>{tr}Original{/tr}:</td>
 									<td><input name="edit_rec_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=20 maxlength=255 disabled="disabled"></td>
-									<td class="form">{tr}Translation{/tr}:</td>
+									<td>{tr}Translation{/tr}:</td>
 									<td><input name="edit_rec_tran_{$smarty.section.it.index}" size=20 maxlength=255></td>
 									<td align="center"><input type="submit" name="edit_rec_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
 								</tr>
@@ -84,7 +84,7 @@
 				{if $whataction eq 'edit_tran_sw'}
 					<div class="simplebox">
 						{tr}Edit translations{/tr}:<br />
-						<table>
+						<table class="formcolor">
 							<tr>
 								<td align="left" colspan=4>
 									<input name="tran_search" value="{$tran_search|escape}" size=10 maxlength=255 />
@@ -93,9 +93,9 @@
 							</tr>
 							{section name=it loop=$untranslated}
 								<tr>
-									<td class="form">{tr}Original{/tr}:</td>
+									<td>{tr}Original{/tr}:</td>
 									<td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=30 maxlength=255 disabled="disabled"/></td>
-									<td class="form">{tr}Translation{/tr}:</td>
+									<td>{tr}Translation{/tr}:</td>
 									<td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]|escape}" size=42 maxlength=255 /></td>
 									<td align="center"><input type="submit" name="edt_tran_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
 									<td align="center"><input type="submit" name="del_tran_{$smarty.section.it.index}" value="{tr}Delete{/tr}" /></td>
@@ -114,7 +114,7 @@
 			{/if}
 		{/tab}
 
-		{tab name='{tr}Export languages{/tr}'}
+		{tab name="{tr}Export languages{/tr}"}
 			{if isset($expmsg)}
 			    {remarksbox type="note" title="{tr}Note:{/tr}"}
 					{$expmsg}
@@ -156,7 +156,7 @@
 			{/if}
 		{/tab}
 		
-		{tab name='{tr}Import languages{/tr}'}
+		{tab name="{tr}Import languages{/tr}"}
 			{if isset($impmsg)}
 				{$impmsg}
 			{/if}

@@ -42,20 +42,20 @@
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=user loop=$channels}
-				<tr>
-					<td class="{cycle advance=false}">{$channels[user].firstName}</td>
-					<td class="{cycle advance=false}">{$channels[user].lastName}</td>
-					<td class="{cycle advance=false}">
+				<tr class="{cycle}">
+					<td>{$channels[user].firstName}</td>
+					<td>{$channels[user].lastName}</td>
+					<td>
 						<a class="link" href="#" onclick="javascript:window.opener.document.getElementById('{$element}').value=window.opener.document.getElementById('{$element}').value + '{$channels[user].email}' + ' ';">
 							{$channels[user].email}
 						</a>
 						[&nbsp;&nbsp;
 						<a class="link" href="tiki-webmail_contacts.php?element={$element}&amp;section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" title="{tr}Delete{/tr}">
-							{icon _id='cross' alt='{tr}Delete{/tr}'}
+							{icon _id='cross' alt="{tr}Delete{/tr}"}
 						</a>
 						&nbsp;&nbsp;]
 					</td>
-					<td class="{cycle advance=false}">{$channels[user].nickname}</td>
+					<td>{$channels[user].nickname}</td>
 				</tr>
 			{/section}
 		</table>

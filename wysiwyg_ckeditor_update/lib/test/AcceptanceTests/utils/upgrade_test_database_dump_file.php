@@ -6,6 +6,10 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
  
+set_include_path( get_include_path() .PATH_SEPARATOR . "../.." );
+set_include_path( get_include_path() .PATH_SEPARATOR . "../../.." );
+set_include_path( get_include_path() .PATH_SEPARATOR . "../../../.." );
+
 require_once 'TikiAcceptanceTestDBRestorer.php';
 
 //die ("WARNING: This script will destroy the current Tiki db. Comment out this line in the script to proceed.");
@@ -14,13 +18,13 @@ if ($argc != 2) {
 	die("Missing argument. USAGE: $argv[0] <dump_filename>");
 }
  
-$test_TikiAcceptanceTestDBRestorer = new TikiAcceptanceTestDBRestorer();
-$test_TikiAcceptanceTestDBRestorer->restoreDBFromScratch($argv[1]);
+$test_TikiAcceptanceTestDBRestorer = new TikiAcceptanceTestDBRestorerSQLDumps();
+$test_TikiAcceptanceTestDBRestorer->restoreDB($argv[1]);
 
 $local_php = 'db/local.php';
 
 require_once('installer/installlib.php');
-require_once('lib/core/lib/TikiDb.php');
+require_once('lib/core/TikiDb.php');
 include_once ('lib/adodb/adodb.inc.php');
 
 include $local_php;

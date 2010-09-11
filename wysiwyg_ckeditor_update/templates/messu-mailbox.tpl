@@ -83,7 +83,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'
     <td  style="text-align:right;{if $items[user].isRead eq 'n'}font-weight:bold;{/if}" class="prio{$items[user].priority}">{$items[user].len|kbsize}</td>
   </tr>
   {sectionelse}
-  <tr><td colspan="7" class="odd">{tr}No messages to display{/tr}<td></tr>
+  <tr><td colspan="7" class="odd">{tr}No messages to display{/tr}</td></tr>
   {/section}
 </table>
 {if $items}

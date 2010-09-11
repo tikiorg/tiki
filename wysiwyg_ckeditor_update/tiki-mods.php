@@ -146,9 +146,7 @@ $remote = $modslib->read_list($prefs['mods_dir'] . "/Packages/00_list." . urlenc
 $smarty->assign('remote', $remote);
 $installed = $modslib->read_list($prefs['mods_dir'] . "/Installed/00_list.txt", 'installed', $type, $find, false);
 $smarty->assign('installed', $installed);
-//var_dump($local);
-// var_dump($remote);
-// var_dump($installed);
+
 if ($prefs['feature_mods_provider'] == 'y') {
 	$public = $modslib->read_list($prefs['mods_dir'] . "/Packages/00_list.public.txt", 'public', $type, $find, false);
 	$smarty->assign('public', $public);

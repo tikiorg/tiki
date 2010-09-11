@@ -33,7 +33,7 @@
 			{section name=grp loop=$group_info.perms}
 				{$group_info.perms[grp]}
 				{if $group_info.perms[grp] != "Anonymous"}
-					<a class="link" href="tiki-assignpermission.php?type={$type}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group|escape:url}&amp;action=remove">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+					<a class="link" href="tiki-assignpermission.php?type={$type}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group|escape:url}&amp;action=remove">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 				{/if}
 				<br />
 			{/section}
@@ -87,8 +87,8 @@
 		<tbody>
 			{cycle values="odd,even" print=false}
 			{section name=user loop=$perms}
-				<tr>
-					<td class="{cycle advance=false}">
+				<tr class="{cycle}">
+					<td>
 						<input type="hidden" name="permName[{$perms[user].permName}]" />
 						<input type="checkbox" name="perm[{$perms[user].permName}]"
 						{assign var=has_inherited_one_perm value='n'}
@@ -99,14 +99,14 @@
 						{if $perms[user].hasPerm eq 'y' or $inherited_from_anon[user].hasPerm eq 'y'or $inherited_from_reg[user].hasPerm eq 'y' or $has_inherited_one_perm eq 'y'}checked="checked" {/if}
 						{if $inherited_from_anon[user].hasPerm eq 'y' or $inherited_from_reg[user].hasPerm eq 'y' or $has_inherited_one_perm eq 'y' or $perms[user].from_admin eq 'y'}disabled="disabled" {/if}/>
 					</td>
-					<td class="{cycle advance=false}">{$perms[user].permName}</td>
+					<td>{$perms[user].permName}</td>
 					{if $advanced_features eq 'y'}
-						<td class="{cycle advance=false}">
+						<td>
 						<select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select>
 						</td>
 					{/if}
-					<td class="{cycle advance=false}">{tr}{$perms[user].type}{/tr}</td>
-					<td class="{cycle}">
+					<td>{tr}{$perms[user].type}{/tr}</td>
+					<td>
 						{if $perms[user].from_admin eq 'y'}
 							<span  style="float:right;font-size:80%;padding:1px 5px;border:1px solid #999;color:#258;background-color:#ace;">{tr}Admin{/tr}</span>
 						{/if}

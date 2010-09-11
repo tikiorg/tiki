@@ -11,21 +11,19 @@ require_once ('lib/sheet/grid.php');
 
 $access->check_feature('feature_sheet');
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
-	$smarty->assign('msg', tra("Access Denied").": feature_sheet");
-
-	$smarty->display("error.tpl");
+$info = $sheetlib->get_sheet_info( $_REQUEST['sheetId'] );
+if (empty($info)) {
+	$smarty->assign('Incorrect parameter');
+	$smarty->display('error.tpl');
 	die;
 }
 
-$smarty->assign('sheetId', $_REQUEST["sheetId"]);
-
-// Individual permissions are checked because we may be trying to edit the gallery
-
-// Init smarty variables to blank values
-//$smarty->assign('theme','');
-
-$info = $sheetlib->get_sheet_info( $_REQUEST["sheetId"] );
+$objectperms = Perms::get( 'sheet', $_REQUEST['sheetId'] );
+if ($tiki_p_admin != 'y' && !$objectperms->view_sheet && !($user && $info['author'] == $user)) {
+	$smarty->assign('msg', tra('Permission denied'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 $encoding = new Encoding ();
 $charsetList = $encoding->get_input_supported_encodings();

@@ -149,8 +149,8 @@ if ($_REQUEST['debug']) {
 	$fp = fopen($temp_filename, 'w');
 }
 
-include_once 'lib/core/lib/Zend/Log.php';
-include_once 'lib/core/lib/Zend/Log/Writer/Stream.php';
+include_once 'lib/core/Zend/Log.php';
+include_once 'lib/core/Zend/Log/Writer/Stream.php';
 
 $writer = new Zend_Log_Writer_Stream($prefs['tmpDir'].'/tracker_export.log');
 $logger = new Zend_Log($writer);

@@ -1,6 +1,5 @@
 {* $Id$ *}
 {if $tiki_p_view_shoutbox eq 'y'}
-{popup_init src="lib/overlib.js"}
   {tikimodule title=$tpl_module_title name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $tiki_p_post_shoutbox eq 'y'}
       {if $prefs.feature_ajax == 'y'}{literal}

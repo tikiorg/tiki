@@ -335,7 +335,7 @@ anyword -1  2  3  3  5  3 -1  8 -1
         case 2:// got any word as tagname, waiting '/' or '>' or any word as parameter name
           $this->tagname=$w;
           $xmlclose=0;
-          if (!ereg("^[a-zA-Z0-9!_-]+$",$this->tagname) || strlen($this->skipto)) {
+          if (!preg_match("/^[a-zA-Z0-9!_-]+$/",$this->tagname) || strlen($this->skipto)) {
             $parcount=$state=$this->processpar=$this->processparvalue=$this->processtag=0;
             $this->quottype="";
             $this->quotstate=-1;
@@ -345,7 +345,7 @@ anyword -1  2  3  3  5  3 -1  8 -1
           break;
         case 3:// got any word as parameter name, waiting '/' or '>' or '=' or any word as parameter name
           $this->parname=$w;
-          if (!ereg("^[a-zA-Z0-9!_-]+$",$this->parname) || strlen($this->skipto)) {
+          if (!preg_match("/^[a-zA-Z0-9!_-]+$/",$this->parname) || strlen($this->skipto)) {
             $parcount=$state=$this->processpar=$this->processparvalue=$this->processtag=0;
             $this->quottype="";
             $this->quotstate=-1;

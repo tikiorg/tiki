@@ -154,7 +154,7 @@ class reportsLib extends TikiLib
 					$body .= "<u>".$change['data']['user']."</u> ".tra("created the topic")." <a href=\"$tikiUrl/tiki-view_forum_thread.php?comments_parentId=".$change['data']['topicId']."&forumId=".$change['data']['forumId']."\">".$change['data']['threadName']."</a> ".tra("at forum")." <a href=\"$tikiUrl/tiki-view_forum.php?forumId=".$change['data']['forumId']."\">".$change['data']['forumName']."</a>.";
 				} elseif ($change['event']=="forum_post_thread") {
 					global $dbTiki;
-					include_once ("lib/commentslib.php");
+					include_once ("lib/comments/commentslib.php");
 					$commentslib = new Comments($dbTiki);
 					$parent_topic = $commentslib->get_comment($change['data']['topicId']);
 					

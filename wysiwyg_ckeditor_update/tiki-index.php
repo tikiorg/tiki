@@ -464,9 +464,11 @@ if ($prefs['feature_user_watches'] == 'y') {
 
 $sameurl_elements=Array('pageName','page');
 
-if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
-    include_once('lib/hawhaw/hawtikilib.php');
-    HAWTIKI_index($info);
+if ($prefs['feature_mobile'] == 'y') {
+	if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
+	include_once('lib/hawhaw/hawtikilib.php');
+	HAWTIKI_index($info);
+	}
 }
 
 ask_ticket('index');
@@ -513,7 +515,7 @@ function generate_machine_translated_content($pageContent, $pageInfo, $targetLan
 
 
 function translate_text($text, $sourceLang, $targetLang, $html) {
-	require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
+	require_once('lib/core/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
 	$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($sourceLang,$targetLang,$html);
 	$translatedText = $translator->translateText($text);
 	return $translatedText;	

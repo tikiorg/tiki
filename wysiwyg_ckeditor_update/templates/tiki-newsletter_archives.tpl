@@ -49,7 +49,7 @@
 
 {if $edition_errors}
   <h2>{tr}Errors:{/tr} {$edition_info.subject} / {$edition_info.sent|tiki_short_datetime}</h2>
-  <a href="tiki-newsletter_archives.php?deleteError={$edition_info.editionId}" title="{tr}Delete errors{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+  <a href="tiki-newsletter_archives.php?deleteError={$edition_info.editionId}" title="{tr}Delete errors{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
   <table class="normal">
     <tr>
       <th>{tr}Email{/tr}</th>
@@ -58,10 +58,10 @@
     </tr>
     {cycle values="odd,even" print=false}
     {section name=ix loop=$edition_errors}
-      <tr>
-        <td class="{cycle advance=false}">{$edition_errors[ix].email}</td>
-        <td class="{cycle advance=false}">{$edition_errors[ix].login}</td>
-        <td class="{cycle}">{if {$edition_errors[ix].error eq 'y'}{tr}Error{/tr}{else}{tr}Not sent{/tr}{/if}</td>
+      <tr class="{cycle}">
+        <td>{$edition_errors[ix].email}</td>
+        <td>{$edition_errors[ix].login}</td>
+        <td>{if {$edition_errors[ix].error eq 'y'}{tr}Error{/tr}{else}{tr}Not sent{/tr}{/if}</td>
       </tr>
     {/section}
   </table>

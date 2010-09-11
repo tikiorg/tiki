@@ -116,7 +116,7 @@ class XmlLib extends TikiLib
 			return false;
 		}
 		if ($prefs['feature_wiki_comments'] == 'y' && $this->config['comments']) {
-			global $dbTiki; include_once('lib/commentslib.php'); $commentslib = new Comments($dbTiki);
+			global $dbTiki; include_once('lib/comments/commentslib.php'); $commentslib = new Comments($dbTiki);
 			$comments = $commentslib->get_comments('wiki page:'.$page, 0, 0, 0, 'commentDate_asc', '', 0, 'commentStyle_plain');
 			if (!empty($comments['cant'])) {
 				$smarty->assign_by_ref('comments', $comments['data']);
@@ -287,7 +287,7 @@ class XmlLib extends TikiLib
 
 		if ($prefs['feature_wiki_comments'] == 'y' && $tiki_p_edit_comments == 'y' && !empty($info['comments'])) {
 			foreach ($info['comments'] as $comment) {
-				global $commentslib; include_once('lib/commentslib.php'); $commentslib = new Comments($dbTiki);
+				global $commentslib; include_once('lib/comments/commentslib.php'); $commentslib = new Comments($dbTiki);
 				$parentId = empty($comment['parentId']) ? 0: $newThreadIds[$comment['parentId']];
 				if ($parentId) {
 					$reply_info = $commentslib->get_comment($parentd);

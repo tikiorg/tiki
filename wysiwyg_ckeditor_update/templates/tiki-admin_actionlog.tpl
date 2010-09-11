@@ -12,8 +12,8 @@
 		{else}
 		<fieldset>
 			<legend>{tr}Date{/tr}</legend>
-			<table class="smallnormal" width="100%">
-				<tr class="formcolor">
+			<table>
+				<tr>
 					<td>{tr}Start:{/tr}</td>
 					<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order}</td>
 					<td>{tr}End:{/tr}</td>
@@ -24,8 +24,8 @@
 				{if $tiki_p_admin eq 'y'}
 			<fieldset>
 				<legend>{tr}Users and Groups{/tr}</legend>
-				<table class="smallnormal" width="100%">
-					<tr class="formcolor">
+				<table class="formcolor">
+					<tr>
 						<td>{tr}User:{/tr}</td>
 						<td>
 							<select multiple="multiple" size="{if $users|@count > 5}5{else}{math equation=x+y x=$users|@count y=2}{/if}" name="selectedUsers[]">
@@ -57,8 +57,8 @@
 
 			<fieldset>
 				<legend>{tr}Category:{/tr}</legend>
-				<table class="smallnormal" width="100%">
-				<tr class="formcolor">
+				<table class="formcolor">
+				<tr>
 					<td>
 						<select name="categId">
 							<option value="" {if $reportCateg eq '' or $reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>
@@ -73,8 +73,8 @@
 
 				<fieldset>
 				<legend>{tr}Misc.{/tr}</legend>
-				<table class="smallnormal" width="100%">
-					<tr class="formcolor">
+				<table class="formcolor">
+					<tr>
 						<th>{tr}Units{/tr}</th>
 						<td>
 							{tr}bytes{/tr}
@@ -82,7 +82,7 @@
 							<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if} />
 						</td>
 					</tr>
-					<tr class="formcolor">
+					<tr>
 						<th>{tr}Contibution Time{/tr}</th>
 						<td>
 							{tr}Week{/tr}
@@ -91,7 +91,7 @@
 							<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if} />
 						</td>
 					</tr>
-					<tr class="formcolor">
+					<tr>
 						<th>{tr}Search{/tr}</th>
 						<td>
 							<input type="text" name="find" value="{$find}" /> 
@@ -99,7 +99,7 @@
 					</tr>
 				
 					{if $prefs.feature_contribution eq 'y'}
-						<tr class="formcolor">
+						<tr>
 							<td colspan="2">
 								<input type="submit" name="graph" value="{tr}Graph Contributions{/tr}" />
 								{if $prefs.feature_jpgraph eq 'y'}
@@ -186,7 +186,7 @@
 			{/if}
 		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 			{tr}Records:{/tr} {$cant}
-			<table class="smallnormal">
+			<table class="normal">
 				<tr>
 					<th>
 						<a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=user_{if $sort_mode eq 'user_desc'}asc{else}desc{/if}{$url}">{tr}User{/tr}</a>
@@ -227,20 +227,20 @@
 				
 				{cycle values="even,odd" print=false}
 				{foreach from=$actionlogs item=actionlog}
-					<tr>
-						<td class="{cycle advance=false}">
+					<tr class="{cycle}">
+						<td>
 							{if $actionlog.user}{$actionlog.user}{else}{tr}Anonymous{/tr}{/if}
 						</td>
-						<td class="{cycle advance=false}">
+						<td>
 							{$actionlog.lastModif|tiki_short_datetime}
 						</td>
-						<td class="{cycle advance=false}">
+						<td>
 							{tr}{$actionlog.action}{/tr}
 						</td>
-						<td class="{cycle advance=false}">
+						<td>
 							{tr}{$actionlog.objectType}{/tr}
 						</td>
-						<td class="{cycle advance=false}">
+						<td>
 							{if $actionlog.link}
 								<a href="{$actionlog.link}" target="_blank" title="{tr}View{/tr}">{$actionlog.object|escape}</a>
 							{else}
@@ -248,25 +248,25 @@
 							{/if}
 						</td>
 						{if !$reportCateg and $showCateg eq 'y'}
-							<td class="{cycle advance=false}">
+							<td>
 								{assign var=ic value=$actionlog.categId}{$categNames[$ic]|escape}
 							</td>
 						{/if}
-						<td class="{cycle advance=false}{if $actionlog.add} diffadded{/if}">
+						<td class="{if $actionlog.add} diffadded{/if}">
 							{if $actionlog.add or $actionlog.add eq '0'}{$actionlog.add}{else}&nbsp;{/if}
 						</td>
-						<td class="{cycle advance=false}{if $actionlog.del} diffdeleted{/if}">
+						<td class="{if $actionlog.del} diffdeleted{/if}">
 							{if $actionlog.del or $actionlog.del eq '0'}{$actionlog.del}{else}&nbsp;{/if}
 						</td>
 						{if $prefs.feature_contribution eq 'y'}
-							<td class="{cycle advance=false}">
+							<td>
 								{foreach name=contribution from=$actionlog.contributions item=contribution}
 									{if !$smarty.foreach.contribution.first}, {/if}
 									{$contribution.name}
 								{/foreach}
 							</td>
 							{if $prefs.feature_contributor_wiki eq 'y'}
-								<td class="{cycle advance=false}">
+								<td>
 									{foreach name=contributor from=$actionlog.contributors item=contributor}
 										{if !$smarty.foreach.contributor.first}, {/if}
 										{$contributor.login}
@@ -274,7 +274,7 @@
 								</td>
 							{/if}
 							{if $tiki_p_admin eq 'y' and ($prefs.feature_contribution eq 'y' or $prefs.feature_categories eq 'y')}
-								<td class="{cycle advance=false}">
+								<td>
 									{if $actionlog.actionId}
 										<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlog.actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 										{self_link _class='link' remove='y' actionId=$actionlog.actionId _icon='cross' _title="{tr}Remove{/tr}"}{/self_link}
@@ -308,8 +308,8 @@
 						{include file='categorize.tpl'}
 					{/if}
 					<tr>
-						<td class="formcolor">&nbsp;</td>
-						<td class="formcolor">
+						<td>&nbsp;</td>
+						<td>
 							<input type="submit" name="saveAction" value="{tr}Save Action{/tr}" />
 						</td>
 					</tr>
@@ -346,7 +346,7 @@
 		<i>{tr}Volumes are equally distributed on each contributors/author{/tr}</i>
 
  		{if $showLogin eq 'y' and $logTimes|@count ne 0}
-			<table class="smallnormal">
+			<table class="normal">
 				<caption>{tr}Log in{/tr}</caption>
 				<tr>
 					{if $selectedUsers|@count gt 0}<th>{tr}User{/tr}</th>{/if}
@@ -355,22 +355,22 @@
 					<th>{tr}Log in{/tr}</th>
 				</tr>
 				{foreach key=auser item=time from=$logTimes}
-					<tr>
+					<tr class="{cycle}">
 						{if $selectedUsers|@count gt 0}
-							<td class="{cycle advance=false}">{$auser}</td>
+							<td>{$auser}</td>
 						{/if}
-						<td class="{cycle advance=false}">
+						<td>
 							{$time.days} {tr}days{/tr} {$time.hours} {tr}hours{/tr} {$time.mins} {tr}mns{/tr}
 						</td>
-						<td class="{cycle advance=false}">{$time.time}</td>
-						<td class="{cycle}">{$time.nbLogins}</td>
+						<td>{$time.time}</td>
+						<td>{$time.nbLogins}</td>
 					</tr>
 				{/foreach}
 			</table>
 		{/if}
 
 		{if $showCateg eq 'y' and $volCateg|@count ne 0 and $tiki_p_admin eq 'y'}
-			<table class="smallnormal">
+			<table class="normal">
 				<caption>{tr}Volumn per category{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
@@ -381,21 +381,20 @@
 					{/foreach}
 				</tr>
 				{foreach key=categId item=vol from=$volCateg}
-					<tr>
-						<td class="{cycle advance=false}">{$vol.category}</td>
+					<tr class="{cycle}">
+						<td>{$vol.category}</td>
 						{foreach item=type from=$typeVol} 
-							<td class="{cycle advance=false}{if $vol[$type].add} diffadded{/if}">{if $vol[$type].add}{$vol[$type].add}{else}0{/if}</td>
-							<td class="{cycle advance=false}{if $vol[$type].del} diffdeleted{/if}">{if $vol[$type].del}{$vol[$type].del}{else}0{/if}</td>
-							<td class="{cycle advance=false}{if $vol[$type].dif > 0} diffadded{elseif $vol[$type].dif < 0} diffdeleted{/if}">{if $vol[$type].dif}{$vol[$type].dif}{else}0{/if}</td>
+							<td class="{if $vol[$type].add} diffadded{/if}">{if $vol[$type].add}{$vol[$type].add}{else}0{/if}</td>
+							<td class="{if $vol[$type].del} diffdeleted{/if}">{if $vol[$type].del}{$vol[$type].del}{else}0{/if}</td>
+							<td class="{if $vol[$type].dif > 0} diffadded{elseif $vol[$type].dif < 0} diffdeleted{/if}">{if $vol[$type].dif}{$vol[$type].dif}{else}0{/if}</td>
 						{/foreach}
-						<!-- {cycle} -->
 					</tr>
 				{/foreach}
 			</table>
 		{/if}
 
 		{if $showCateg eq 'y' and $volUserCateg|@count ne 0}
-			<table class="smallnormal">
+			<table class="normal">
 				<caption>{tr}Volumn per category and per user{/tr}</caption>
 				<tr>
 					<th>{tr}Category{/tr}</th>
@@ -407,15 +406,14 @@
 					{/foreach}
 				</tr>
 				{foreach key=categId item=vol from=$volUserCateg}
-					<tr>
-						<td class="{cycle advance=false}">{$vol.category}</td>
-						<td class="{cycle advance=false}">{$vol.user}</td>
+					<tr class="{cycle}">
+						<td>{$vol.category}</td>
+						<td>{$vol.user}</td>
 						{foreach item=type from=$typeVol} 
-							<td class="{cycle advance=false}{if $vol[$type].add} diffadded{/if}">{if $vol[$type].add}{$vol[$type].add}{else}0{/if}</td>
-							<td class="{cycle advance=false}{if $vol[$type].del} diffdeleted{/if}">{if $vol[$type].del}{$vol[$type].del}{else}0{/if}</td>
-							<td class="{cycle advance=false}{if $vol[$type].dif > 0} diffadded{elseif $vol[$type].dif < 0} diffdeleted{/if}">{if $vol[$type].dif}{$vol[$type].dif}{else}0{/if}</td>
+							<td class="{if $vol[$type].add} diffadded{/if}">{if $vol[$type].add}{$vol[$type].add}{else}0{/if}</td>
+							<td class="{if $vol[$type].del} diffdeleted{/if}">{if $vol[$type].del}{$vol[$type].del}{else}0{/if}</td>
+							<td class="{if $vol[$type].dif > 0} diffadded{elseif $vol[$type].dif < 0} diffdeleted{/if}">{if $vol[$type].dif}{$vol[$type].dif}{else}0{/if}</td>
 						{/foreach}
-						<!-- {cycle} -->
 					</tr>
 				{/foreach}
 			</table>
@@ -432,12 +430,11 @@
 				</tr>
 				{cycle values="even,odd" print=false}
 				{foreach item=stat from=$userActions name=userActions}
-					<tr>
-						<td class="{cycle advance=false}">{$stat.user}</td>
+					<tr class="{cycle}">
+						<td>{$stat.user}</td>
 						{foreach key=a item=nb from=$stat}
-							{if $a ne 'user'}<td class="{cycle advance=false}">{$nb}</td>{/if}
+							{if $a ne 'user'}<td>{$nb}</td>{/if}
 						{/foreach}
-						<!-- {cycle} -->
 					</tr>
 				{/foreach}
 			</table>
@@ -455,14 +452,13 @@
 				</tr>
 				{cycle values="even,odd" print=false}
 				{foreach item=stat from=$objectActions name=objectActions}
-					<tr>
-						<td class="{cycle advance=false}">
+					<tr class="{cycle}">
+						<td>
 							{if $stat.link}<a href="{$stat.link}" target="_blank" title="{tr}View{/tr}">{$stat.object|escape}</a>{else}{$stat.object|escape}{/if}
 						</td>
 						{foreach key=a item=nb from=$stat}
-							{if $a ne 'object' and $a ne 'link'}<td class="{cycle advance=false}">{$nb}</td>{/if}
+							{if $a ne 'object' and $a ne 'link'}<td>{$nb}</td>{/if}
 						{/foreach}
-						<!-- {cycle} -->
 					</tr>
 				{/foreach}
 			</table>
@@ -479,10 +475,10 @@
 					{/foreach}
 				</tr>
 				{foreach key=categId item=stat from=$statCateg}
-					<tr>
-						<td class="{cycle advance=false}">{$stat.category}</td>
+					<tr class="{cycle}">
+						<td>{$stat.category}</td>
 						{foreach key=a item=nb from=$statCateg[$categId]}
-							{if $a ne 'category'}<td class="{cycle advance=false}">{$nb}</td>{/if}
+							{if $a ne 'category'}<td>{$nb}</td>{/if}
 						{/foreach}
 						<!-- {cycle} -->
 					</tr>
@@ -501,15 +497,14 @@
 					{/foreach}
 				</tr>
 				{foreach key=categUser item=stat from=$statUserCateg}
-					<tr>
-						<td class="{cycle advance=false}">{$stat.category}</td>
-						<td class="{cycle advance=false}">{$stat.user}</td>
+					<tr class="{cycle}">
+						<td>{$stat.category}</td>
+						<td>{$stat.user}</td>
 						{foreach key=a item=nb from=$stat}
 							{if $a ne 'category' and $a ne 'user'}
-								<td class="{cycle advance=false}">{$nb}</td>
+								<td>{$nb}</td>
 							{/if}
 						{/foreach}
-						<!-- {cycle} -->
 					</tr>
 				{/foreach}
 			</table>
@@ -532,13 +527,12 @@
 				</tr>
 				{foreach from=$groupContributions key=group item=contributions}
 					{foreach from=$contributions key=contribution item=stat}
-						<tr>
-							<td class="{cycle advance=false}">{$group}</td>
-							<td class="{cycle advance=false}">{$contribution}</td>
-							<td class="{cycle advance=false}">{$stat.add}</td>
-							<td class="{cycle advance=false}">{$stat.del}</td>
+						<tr class="{cycle}">
+							<td>{$group}</td>
+							<td>{$contribution}</td>
+							<td>{$stat.add}</td>
+							<td>{$stat.del}</td>
 						</tr>
-						<!-- {cycle} -->
 					{/foreach}
 				{/foreach}
 			</table>
@@ -555,13 +549,12 @@
 				</tr>
 				{foreach from=$userContributions key=user item=contributions}
 					{foreach from=$contributions key=contribution item=stat}
-						<tr>
-							<td class="{cycle advance=false}">{$user}</td>
-							<td class="{cycle advance=false}">{$stat.name}</td>
-							<td class="{cycle advance=false}">{$stat.stat.add}</td>
-							<td class="{cycle advance=false}">{$stat.stat.del}</td>
+						<tr class="{cycle}">
+							<td>{$user}</td>
+							<td>{$stat.name}</td>
+							<td>{$stat.stat.add}</td>
+							<td>{$stat.stat.del}</td>
 						</tr>
-						<!-- {cycle} -->
 					{/foreach}
 				{/foreach}
 			</table>
@@ -581,10 +574,10 @@
 					{/section}
 				</tr>
 				{foreach from=$contributionStat key=contributionId item=contribution}
-					<tr>
-						<td class="{cycle advance=false}">{$contribution.name}</td>
+					<tr class="{cycle}">
+						<td>{$contribution.name}</td>
 						{foreach from=$contribution.stat item=stat}
-							<td class="{cycle advance=false}">
+							<td>
 								{if !empty($stat.add)}<span class="diffadded">{$stat.add}</span>{/if}
 							<br />
 								{if !empty($stat.del)}<span class="diffdeleted">{$stat.del}</span>{/if}
@@ -593,7 +586,6 @@
 								<br />
 							</td>
 						{/foreach}
-						<!--{cycle}--> 
 					</tr>
 				{/foreach}
 			</table>
@@ -638,7 +630,7 @@
 			<input type="submit" name="save" value="{tr}Set{/tr}" />
 		</span>
 				<br class="clearfix" />
-		<table class="smallnormal">
+		<table class="formcolor">
 			<tr>
 				{if $tiki_p_admin eq 'y'}
 					<th>{tr}Recorded{/tr}</th>
@@ -649,18 +641,18 @@
 			</tr>
 			{cycle values="even,odd" print=false}
 			{foreach from=$action_log_conf_selected item=actionlog}
-				<tr>
+				<tr class="{cycle}">
 					{if $tiki_p_admin eq 'y'}
-						<td class="{cycle advance=false}">
+						<td>
 							<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if} />
 						</td>
 					{/if}
 					{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
-						<td class="{cycle advance=false}">
+						<td>
 							<input type="checkbox" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if} />
 						</td>
-						<td class="{cycle advance=false}">{tr}{$actionlog.action}{/tr}</td>
-						<td class="{cycle}">{tr}{$actionlog.objectType}{/tr}</td>
+						<td>{tr}{$actionlog.action}{/tr}</td>
+						<td>{tr}{$actionlog.objectType}{/tr}</td>
 					{/if}
 				</tr>
 			{/foreach}
@@ -671,6 +663,5 @@
 			</tr>
 		</table>
 	</form>
-
 	{/tab}
 {/tabset}

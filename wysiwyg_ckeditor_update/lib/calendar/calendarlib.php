@@ -690,48 +690,118 @@ class CalendarLib extends TikiLib
 		$query = "delete from `tiki_calendar_items` where ".implode(' and ', $mid);
 		$tikilib->query($query, $bindvars);
 	}
-	// Compute a table view of dates (one line per week)
-	// $firstWeekDay = 0 (Synday), 1 (Monday)
-	function getTableViewCells($focusDate, $view='month', $firstWeekDay = 0) {
+	function firstDayofWeek($user) {
+		global $prefs;
+		if ($prefs['calendar_firstDayofWeek'] == 'user') {
+			$firstDayofWeek = (int)tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!');
+			if ( $firstDayofWeek < 1 || $firstDayofWeek > 6 ) {
+				$firstDayofWeek = 0;
+			}
+		} else {
+			$firstDayofWeek = $prefs['calendar_firstDayofWeek'];
+		} 
+	}
+	// return detail on a date
+	function infoDate($focusDate) {
 		$focus = array (
 			'day' => intval(TikiLib::date_format('%d', $focusDate)),
 			'month' => intval(TikiLib::date_format('%m', $focusDate)),
 			'year' => TikiLib::date_format('%Y', $focusDate),
-			'date' => $focusDate
+			'date' => $focusDate,
+			'weekDay' => TikiLib::date_format('%w', $focusDate) // in (0, 6)
 		);
+		$focus['daysInMonth'] = Date_Calc::daysInMonth($focus['month'], $focus['year']);
+		return $focus;
+	}
+	// Compute the start date (the 1 first of the month of the focus date or the day) and the next start date from the period around a focus date
+	function focusStartEnd($focus, $view='month', $beginMonth='y', &$start, &$startNext) {
+		$nbMonths = array('month' => 1, 'bimester' => 2, 'trimester' => 3, 'quarter' => 4, 'semester' => 6, 'year' => 12);
 		// start of the period
-		$start = array(
-			'day' => 1,
-			'month' => $focus['month'],
-			'year' => $focus['year'],
-		);
+		$start = $focus;
+		if ($beginMonth == 'y') {
+			$start['day'] = 1;
+		}
 		$start['date'] =  TikiLib::make_time(0, 0, 0, $start['month'], $start['day'], $start['year']);
 		$start['weekDay'] = TikiLib::date_format('%w', $start['date']); // in (0, 6)
+		// start of the next period - just shift some months
+		$startNext['date'] = TikiLib::make_time(0, 0, 0, $start['month'] + $nbMonths[$view], $start['day'], $start['year']);
+		$startNext['day'] = TikiLib::date_format('%d', $startNext['date']);
+		$startNext['month'] = TikiLib::date_format('%m', $startNext['date']);
+		$startNext['year'] = TikiLib::date_format('%Y', $startNext['date']);
+		$startNext['weekDay'] = TikiLib::date_format('%w', $startNext['date']);
+	}
+	// Compute the date just $view from the focus
+	function focusPrevious($focus, $view='month') {
+		$nbMonths = array('day' => 0, 'week' => 0, 'month' => 1, 'bimester' => 2, 'trimester' => 3, 'quarter' => 4, 'semester' => 6, 'year' => 12);
+		$nbDays = array('day' => 1, 'week' => 7, 'month' => 0, 'bimester' => 0, 'trimester' => 0, 'quarter' => 0, 'semester' => 0, 'year' => 0);
+		$previous = $focus;
+		$previous['day'] -= $nbDays[$view];
+		// $tikilib->make_time() used with timezones doesn't support month = 0
+		if ($previous['month'] - $nbMonths[$view] <= 0) { // need to change year
+			$previous['month'] = ($previous['month'] +11 - $nbMonths[$view]) % 12 + 1;
+			$previous['year'] -= 1;
+		} else {
+			$previous['month'] -= $nbMonths[$view];
+		}
+		$previous['daysInMonth'] = Date_Calc::daysInMonth($previous['month'], $previous['year']);
+		if ($previous['day'] > $previous['daysInMonth']) {
+			$previous['day'] = $previous['daysInMonth'];
+		}
+		$previous['date'] =  Tikilib::make_time(0, 0, 0, $previous['month'], $previous['day'], $previous['year']);
+		$previous = $this->infoDate($previous['date']); // get back real day, month, year
+		return $previous;
+	}
+	// Compute the date just $view after the focus
+	function focusNext($focus, $view='month') {
+		$nbMonths = array('day' => 0, 'week' => 0, 'month' => 1, 'bimester' => 2, 'trimester' => 3, 'quarter' => 4, 'semester' => 6, 'year' => 12);
+		$nbDays = array('day' => 1, 'week' => 7, 'month' => 0, 'bimester' => 0, 'trimester' => 0, 'quarter' => 0, 'semester' => 0, 'year' => 0);
+		$next = $focus;
+		$next['day'] += $nbDays[$view];
+		if ($next['month'] + $nbMonths[$view] > 12) {
+			$next['month'] = ($next['month'] -1 + $nbMonths[$view]) % 12 + 1;
+			$next['year'] += 1;
+		} else {
+			$next['month'] += $nbMonths[$view];
+		}
+		$next['daysInMonth'] = Date_Calc::daysInMonth($next['month'], $next['year']);
+		if ($next['day'] > $next['daysInMonth']) {
+			$next['day'] = $next['daysInMonth'];
+		}
+		$next['date'] = Tikilib::make_time(0, 0, 0, $next['month'], $next['day'], $next['year']);
+		$next = $this->infoDate($next['date']); // get back real day, month, year
+		return $next;
+	}
+	// Compute a table view of dates (one line per week)
+	// $firstWeekDay = 0 (Sunday), 1 (Monday)
+	function getTableViewCells($start, $startNext, $view='month', $firstWeekDay = 0) {
 		// start of the view
+		$viewStart = $start;
 		$nbBackDays = $start['weekDay'] < $firstWeekDay? 6: $start['weekDay'] - $firstWeekDay;
 		if ($nbBackDays == 0) {
-			$viewStart = $start;
-		} else {
-			$viewStart = array(
-				'month' => $start['month'] == 1? 12: $start['month'] - 1,
-				'year' => $start['month'] == 1? $start['year'] -1 : $start['year']
-			);
-			$d = Date_Calc::daysInMonth($viewStart['month'], $viewStart['year']);
-			$viewStart['day'] = $d - $nbBackDays + 1;
+			$viewStart['daysInMonth'] = Date_Calc::daysInMonth($viewStart['month'], $viewStart['year']);
+		} elseif ($start['day'] - $nbBackDays < 0) {
+			$viewStart['month'] = $start['month'] == 1? 12: $start['month'] - 1;
+			$viewStart['year'] = $start['month'] == 1? $start['year'] -1 : $start['year'];
+			$viewStart['daysInMonth'] = Date_Calc::daysInMonth($viewStart['month'], $viewStart['year']);
+			$viewStart['day'] = $viewStart['daysInMonth'] - $nbBackDays + 1;
 			$viewStart['date'] = TikiLib::make_time(0, 0, 0, $viewStart['month'], $viewStart['day'], $viewStart['year']);
-			$viewStart['daysInMonth'] = $d;
+		} else {
+			$viewStart['daysInMonth'] = Date_Calc::daysInMonth($viewStart['month'], $viewStart['year']);
+			$viewStart['day'] = $viewStart['day'] - $nbBackDays;
+			$viewStart['date'] = TikiLib::make_time(0, 0, 0, $viewStart['month'], $viewStart['day'], $viewStart['year']);
 		}
-		//echo '<br/>VIEWSTART'; print_r($viewStart);
+		// echo '<br/>VIEWSTART'; print_r($viewStart);
 		// end of the period
-		$nbMonths = array('month' => 1, 'trimester' => 3, 'quarter' => 4, 'semester' => 6, 'year' => 12);
-		$end['date'] = TikiLib::make_time(0, 0, 0, $start['month'] + $nbMonths[$view], $start['day'], $start['year']);
 		$cell = array();
-		for ($ilign = 0, $icol = 0, $loop = $viewStart; ; ) {
-			if ($loop['date'] >= $end['date'] && $icol == 0) {
+
+		for ($ilign = 0, $icol = 0, $loop = $viewStart, $weekDay = $viewStart['weekDay']; ; ) {
+			if ($loop['date'] >= $startNext['date'] && $icol == 0) {
 				break;
 			}
 			$cell[$ilign][$icol] = $loop;
-			$cell[$ilign][$icol]['focus'] = $loop['date'] < $start['date'] || $loop['date'] >= $end['date']? false: true;
+			$cell[$ilign][$icol]['focus'] = $loop['date'] < $start['date'] || $loop['date'] >= $startNext['date']? false: true;
+			$cell[$ilign][$icol]['weekDay'] = $weekDay;
+			$weekDay = ($weekDay + 1) % 7;
 			if ($icol >= 6) {
 				++$ilign;
 				$icol = 0;
@@ -752,8 +822,36 @@ class CalendarLib extends TikiLib
 			}
 			$loop['date'] = TikiLib::make_time(0, 0, 0, $loop['month'], $loop['day'], $loop['year']);
 		}
-		// echo '<pre>CELL'; print_r($cell); echo '<pre>';
+		//echo '<pre>CELL'; print_r($cell); echo '</pre>';
 		return $cell;
+	}
+	function getDayNames($firstDayofWeek = 0, &$daysnames, &$daysnames_abr) {
+		$daysnames = array();
+		$daysnames_abr = array();
+		if ($firstDayofWeek == 0) {
+			$daysnames[] = tra('Sunday');
+			$daysnames_abr[] = tra('Su');
+		}
+		array_push($daysnames, 
+			tra('Monday'),
+			tra('Tuesday'),
+			tra('Wednesday'),
+			tra('Thursday'),
+			tra('Friday'),
+			tra('Saturday')
+		);
+		array_push($daysnames_abr, 
+			tra('Mo'),
+			tra('Tu'),
+			tra('We'),
+			tra('Th'),
+			tra('Fr'),
+			tra('Sa')
+		);
+		if ($firstDayofWeek != 0) {
+			$daysnames[] = tra('Sunday');
+			$daysnames_abr[] = tra('Su');
+		}
 	}
 	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'events') {
 		global $user, $prefs, $smarty;

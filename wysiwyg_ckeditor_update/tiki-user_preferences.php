@@ -21,6 +21,8 @@ if ($prefs['feature_userPreferences'] != 'y' && $prefs['change_password'] != 'y'
 }
 $access->check_user($user);
 
+$auto_query_args = array();
+
 // Make sure user preferences uses https if set
 if (!$https_mode && isset($https_login) && $https_login == 'required') {
 	header('Location: ' . $base_url_https . 'tiki-user_preferences.php');

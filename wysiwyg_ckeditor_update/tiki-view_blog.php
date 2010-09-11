@@ -51,10 +51,11 @@ if (!$blog_data) {
 }
 $bloglib->add_blog_hit($_REQUEST["blogId"]);
 $smarty->assign('blogId', $_REQUEST["blogId"]);
+$blog_data["blogId"] = $_REQUEST["blogId"];
 $smarty->assign('title', $blog_data["title"]);
 $smarty->assign('headtitle', $blog_data['title'] . ' : ' . $blog_data['description']);
+$blog_data["headtitle"] = $blog_data['title'] . ' : ' . $blog_data['description'];
 $smarty->assign('heading', $blog_data["heading"]);
-$smarty->assign('use_title', $blog_data["use_title"]);
 $smarty->assign('use_author', $blog_data["use_author"]);
 $smarty->assign('add_date', $blog_data["add_date"]);
 $smarty->assign('use_find', $blog_data["use_find"]);
@@ -68,6 +69,8 @@ $smarty->assign('public', $blog_data["public"]);
 $smarty->assign('hits', $blog_data["hits"]);
 $smarty->assign('creator', $blog_data["user"]);
 $smarty->assign('activity', $blog_data["activity"]);
+$smarty->assign('use_excerpt', $blog_data["use_excerpt"]);
+$smarty->assign('blog_data', $blog_data);
 if (isset($_REQUEST["remove"])) {
 	$data = $bloglib->get_post($_REQUEST["remove"]);
 	if ($user && $blog_data['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post')) {
@@ -112,7 +115,7 @@ $date_max = isset($_REQUEST['date_max']) ? $_REQUEST['date_max'] : $tikilib->now
 $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], true, $offset, $blog_data["maxPosts"], $sort_mode, $find, $date_min, $date_max);
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1));
+	$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1), array('is_html' => ($listpages["data"][$i]["wysiwyg"]=='y'?TRUE:FALSE)));
 	if ($prefs['feature_freetags'] == 'y') { // And get the Tags for the posts
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
 	}

@@ -27,15 +27,15 @@
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$batchRes}
-			<tr>
-				<td class="{cycle advance=false}">{$batchRes[ix].filename}</td>
+			<tr class="{cycle}">
+				<td>{$batchRes[ix].filename}</td>
 				{if $batchRes[ix].msg}
-					<td class="{cycle advance=true}" colspan="3">
+					<td colspan="3">
 						{icon _id=exclamation alt="{tr}Errors detected{/tr}" style="vertical-align:middle"} {$batchRes[ix].msg}
 					</td>
 				{else}
-					<td class="{cycle advance=false}">
-						{icon _id=accept alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td class="{cycle advance=false}">{$batchRes[ix].imageId}</td><td class="{cycle}"><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}" />
+					<td>
+						{icon _id=accept alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td>{$batchRes[ix].imageId}</td><td><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}" />
 					</td>
 				{/if}
 			</tr>
@@ -73,10 +73,10 @@
 			<h2>Upload File</h2>
 		{/if}
 		<form enctype="multipart/form-data" action="tiki-upload_image.php" method="post">
-			<table class="normal">
+			<table class="formcolor">
 				<tr>
-					<td class="formcolor">{tr}Image Name{/tr}:</td>
-					<td class="formcolor">
+					<td>{tr}Image Name{/tr}:</td>
+					<td>
 						<input type="text" size ="50" name="name" />
 						<br />
 						{tr}or use filename{/tr}: <input type="checkbox" name="use_filename" />
@@ -84,30 +84,30 @@
 				</tr>
 				{if $prefs.feature_maps eq 'y' && $geogallery eq 'y'}
 					<tr>
-						<td class="formcolor">{tr}Latitude (WGS84/decimal degrees){/tr}:</td>
-						<td class="formcolor">
+						<td>{tr}Latitude (WGS84/decimal degrees){/tr}:</td>
+						<td>
 							<input type="text" name="lat" value="{$lat|escape}" />
 						</td>
 					</tr>
 					<tr>
-						<td class="formcolor">
+						<td>
 							{tr}Longitude (WGS84/decimal degrees){/tr}:
 						</td>
-						<td class="formcolor">
+						<td>
 							<input type="text" name="lon" value="{$lon|escape}" />
 						</td>
 					</tr>
 				{/if}
 				<tr>
-					<td class="formcolor">{tr}Image Description{/tr}:</td>
-					<td class="formcolor">
+					<td>{tr}Image Description{/tr}:</td>
+					<td>
 						<textarea rows="5" cols="50" name="description"></textarea>
 					</td>
 				</tr>
 				{if $tiki_p_list_image_galleries eq 'y'}
 					<tr>
-						<td class="formcolor">{tr}Gallery{/tr}:</td>
-						<td class="formcolor">
+						<td>{tr}Gallery{/tr}:</td>
+						<td>
 							<select name="galleryId">
 								{section name=idx loop=$galleries}
 									{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_images eq 'y')}
@@ -121,33 +121,33 @@
 					<input type="hidden" name="galleryId" value="{$galleryId}" />
 				{/if}
 				{include file='categorize.tpl'}
-				<tr class="formcolor">
-					<td class="formcolor" colspan="2">
+				<tr>
+					<td colspan="2">
 						<b>{tr}Now enter the image URL{/tr} {tr}or upload a local image from your disk{/tr}</b>
 					</td>
 				</tr>
 				<tr>
-					<td class="formcolor">URL:</td>
-					<td class="formcolor">
+					<td>URL:</td>
+					<td>
 						<input size="50" type="text" name="url" />
 					</td>
 				</tr>
 				<tr>
-					<td class="formcolor">{tr}Upload From Disk{/tr} / {tr}Batch Upload{/tr}:</td>
-					<td class="formcolor">
+					<td>{tr}Upload From Disk{/tr} / {tr}Batch Upload{/tr}:</td>
+					<td>
 						<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 						<input size="50" name="userfile1" type="file" />
 					</td>
 				</tr>
 				<tr>
-					<td class="formcolor">{tr}Thumbnail (optional, overrides automatic thumbnail generation){/tr}:</td>
-					<td class="formcolor">
+					<td>{tr}Thumbnail (optional, overrides automatic thumbnail generation){/tr}:</td>
+					<td>
 						<input name="userfile2" size ="50" type="file" />
 					</td>
 				</tr>
 				<tr>
-					<td class="formcolor">{tr}Upload From Disk{/tr}:</td>
-					<td class="formcolor">
+					<td>{tr}Upload From Disk{/tr}:</td>
+					<td>
 						<input name="userfile3" type="file" />
 						<input name="userfile4" type="file" />
 						<br />
@@ -162,8 +162,8 @@
 					{include file='antibot.tpl' td_style="formcolor"}
 				{/if}
 				<tr>
-					<td class="formcolor">&nbsp;</td>
-					<td class="formcolor">
+					<td>&nbsp;</td>
+					<td>
 						<input type="submit" name="upload" value="{tr}Upload{/tr}" />
 					</td>
 				</tr>

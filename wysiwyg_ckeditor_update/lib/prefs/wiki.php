@@ -137,7 +137,7 @@ function prefs_wiki_list() {
 			),
 		),
 		'wiki_comments_allow_per_page' => array(
-			'name' => tra('Allow comments per page'),
+			'name' => tra('Allow comments per wiki page'),
 			'description' => tra('Enable control for comments on wiki pages individually.'),
 			'type' => 'list',
 			'options' => array(
@@ -179,11 +179,6 @@ function prefs_wiki_list() {
 		'wiki_timeout_warning' => array(
 			'name' => tra('Warn before page lock timeout'),
 			'description' => tra('Provide a javascript alert before the user\'s lock on a page times out.'),
-			'type' => 'flag',
-		),
-		'wiki_comments_notitle' => array(
-			'name' => tra('Disable titles for wiki comments'),
-			'description' => tra('Hide the title field on wiki comments and their replies.'),
 			'type' => 'flag',
 		),
 		'wiki_dynvar_style' => array(

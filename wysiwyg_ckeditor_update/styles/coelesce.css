@@ -442,16 +442,20 @@ input[name="search"] {
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {
+.share a,
+.tellafriend a:visited,
+.share a:visited, {
 	color: silver;
 }
 
 a.flip:hover,
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover, {
 	color: #517ea7;
 }
 
-.tellafriend {
+.tellafriend,
+.share {
 	padding: 0 30px;
 }
 

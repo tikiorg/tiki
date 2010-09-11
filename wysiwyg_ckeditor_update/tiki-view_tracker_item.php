@@ -285,6 +285,7 @@ if (!isset($item_info)) {
 		die;
 	}
 }
+$item_info['logs'] = $trklib->get_item_history($item_info, 0, '', 0, 1);
 $smarty->assign_by_ref('item_info', $item_info);
 $smarty->assign('item', array(
 	'itemId' => $_REQUEST['itemId'],
@@ -392,7 +393,7 @@ foreach($xfields["data"] as $i => $array) {
 					if (isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
 						$tracker_info["authorfield"] = $fid;
 					}
-					if ($tracker_info['userCanTakeOwnership'] == 'y' && empty($ins_fields['data'][$i]['value'])) {
+					if (isset($tracker_info['userCanTakeOwnership']) && $tracker_info['userCanTakeOwnership'] == 'y' && empty($ins_fields['data'][$i]['value'])) {
 						$ins_fields['data'][$i]['value'] = $user; // the user appropiate the item
 					} elseif ($tiki_p_admin_trackers != 'y') {
 						unset($ins_fields['data'][$i]['fieldId']);
@@ -900,6 +901,8 @@ if ($_REQUEST["itemId"]) {
 						$ins_fields["data"][$i]["value"] = $info["$fid"];
 						$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
 					}
+				} elseif ($fields['data'][$i]['type'] == 'usergroups' && !empty($itemUser)) {
+					$ins_fields['data'][$i]['value'] = $tikilib->get_user_groups($itemUser);
 				} elseif ($fields['data'][$i]['type'] == 'p' && !empty($itemUser)) {
 					if ($fields['data'][$i]['options_array'][0] == 'email') {
 						$ins_fields['data'][$i]['value'] = $userlib->get_user_email($itemUser);

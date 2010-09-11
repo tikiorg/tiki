@@ -1,5 +1,4 @@
 {* $Id$ *}
-{popup_init src="lib/overlib.js"}
 
 {if !( $searchStyle eq "menu" )}
 	{title admpage="search" help="Search"}{tr}Search{/tr}{/title}
@@ -22,7 +21,7 @@
 	{if $prefs.feature_search_show_search_box eq 'y' or  $searchStyle eq "menu"}
 		<form action="tiki-searchresults.php" method="get" id="search-form" class="findtable" role="search">
 			<label class="findtitle">
-				{tr}Find{/tr} <input id="highlight{$iSearch}" name="highlight" size="14" type="text" accesskey="s" value="{$words|escape}" />
+				{tr}Find{/tr} <input id="highlight{$iSearch}" name="words" size="14" type="text" accesskey="s" value="{$words|escape}" />
 			</label>
 			{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $prefs.search_autocomplete eq 'y'}
 				{jq}
@@ -174,7 +173,7 @@
 			{if $where_forum}
 				{tr}{$where|escape}:{/tr} {$where_forum|escape}
 			{else}
-				{$cant} {tr}{$where|escape}{/tr}
+				{$cant} {tr}{$where_label|escape}{/tr}
 			{/if}
 	</div><!--nohighlight-->
 {/if}

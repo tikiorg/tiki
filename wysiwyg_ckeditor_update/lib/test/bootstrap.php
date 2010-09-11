@@ -10,7 +10,7 @@ error_reporting( CUSTOM_ERROR_LEVEL );
 $paths = array(
 	ini_get('include_path'),
 	realpath('.'),
-	realpath('../core/lib'),
+	realpath('../core'),
 	realpath('../..'),
 	realpath('core'),
 	realpath('../pear'),
@@ -45,6 +45,7 @@ require_once 'lib/userslib.php';
 require_once 'lib/headerlib.php';
 require_once 'lib/init/tra.php';
 
+global $tikilib;
 $tikilib = new TikiLib;
 $userlib = new UsersLib;
 $_SESSION = array(

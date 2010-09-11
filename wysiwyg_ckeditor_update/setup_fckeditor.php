@@ -36,7 +36,6 @@ if (!empty($tc_theme)) {
 }
 
 $toolbars = ToolbarsList::fromPreference( $section );
-//file_put_contents('temp/cache/foo', print_r($toolbars->getWysiwygArray(), true));
 
 if ( $prefs['wysiwyg_htmltowiki'] === 'y' ) {
 	$toolbars->addTag('source', true);

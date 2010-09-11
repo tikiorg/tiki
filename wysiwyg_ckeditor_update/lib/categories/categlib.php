@@ -816,7 +816,7 @@ class CategLib extends ObjectLib
 
 			global $commentslib;
 			if (!is_object($commentslib)) {
-				require_once('lib/commentslib.php');
+				require_once('lib/comments/commentslib.php');
 				$commentslib = new Comments;
 			}
 			// The page is not cateorized
@@ -887,11 +887,13 @@ class CategLib extends ObjectLib
 				$length = count($ids_array);
 				$ids_array = array_slice($ids_array, 1, $length, true);
 				$ids_string = implode(", ", $ids_array); 
-				$query = "select * from `tiki_categories` where `categId` in (" . $ids_string . ") order by name";		
+				$query = "select * from `tiki_categories` where `categId` in (" . $ids_string . ") order by name";
+				$bindvars = array();		
 			} else {
 				$query = "select * from `tiki_categories` where `parentId`=? order by name";
+				$bindvars = array($categId);
 			}
-				$ret = $this->fetchAll($query,array($categId));
+			$ret = $this->fetchAll($query,$bindvars);
 			foreach ( $ret as &$res ) {
 				$id = $res["categId"];
 				$query = "select count(*) from `tiki_categories` where `parentId`=?";
@@ -1604,7 +1606,7 @@ function group_watch_category_and_descendants($group, $categId, $categName, $top
 			}
 		}
 
-		require_once 'lib/core/lib/Category/Manipulator.php';
+		require_once 'lib/core/Category/Manipulator.php';
 		$manip = new Category_Manipulator( $objType, $objId );
 		$manip->setNewCategories( $categories ? $categories : array() );
 

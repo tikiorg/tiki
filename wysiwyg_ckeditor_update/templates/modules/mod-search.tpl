@@ -41,7 +41,7 @@
 				{capture name=advanced_search_help}
 					{include file='advanced_search_help.tpl'}
 				{/capture}
-				{add_help show='y' title="{tr}Advanced Search Help{/tr}" id="advanced_search_help"}
+				{add_help show='y' title="{tr}Search Help{/tr}" id="advanced_search_help"}
 					{$smarty.capture.advanced_search_help}
 				{/add_help}
 			{/if}

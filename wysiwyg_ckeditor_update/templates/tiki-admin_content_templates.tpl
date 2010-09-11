@@ -29,16 +29,16 @@
 {/if}
 
 <input type="hidden" name="templateId" value="{$templateId|escape}" />
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor"><label for="name">{tr}Name{/tr}:</label></td>
-			<td class="formcolor">
+			<td><label for="name">{tr}Name{/tr}:</label></td>
+			<td>
 				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Use in{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}Use in{/tr}:</td>
+			<td>
 				{if $prefs.feature_cms_templates eq 'y'}
 					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> 
 					{tr}CMS{/tr} ({tr}Articles{/tr}
@@ -71,8 +71,8 @@
 		</tr>
 
 		<tr>
-			<td class="formcolor">{tr}Template Type{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}Template Type{/tr}:</td>
+			<td>
 				<select name="template_type" class="type-selector">
 					<option value="static"{if $info.template_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
 					<option value="page"{if $info.template_type eq 'page'} selected="selected"{/if}>{tr}Wiki Page{/tr}</option>
@@ -81,16 +81,16 @@
 		</tr>
 		
 		<tr class="type-cond for-page">
-			<td class="formcolor">{tr}Page Name{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}Page Name{/tr}:</td>
+			<td>
 				<input type="text" name="page_name" value="{$info.page_name}"/>
 			</td>
 		</tr>
 
 		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
 			<tr class="type-cond for-static">
-				<td class="formcolor"><label>{tr}Toolbars{/tr}</label></td>
-				<td class="formcolor">
+				<td><label>{tr}Toolbars{/tr}</label></td>
+				<td>
 					{toolbars area_id='editwiki'}
 				</td>
 			</tr>
@@ -98,10 +98,10 @@
 
 		<tr class="type-cond for-static">
 			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-				<td class="formcolor">
+				<td>
 					<label for="editwiki">{tr}Template{/tr}:</label>
 				</td>
-				<td class="formcolor">
+				<td>
 					<textarea id='editwiki' class="wikiedit" name="content" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$info.content|escape}</textarea>
 					<input type="hidden" name="rows" value="{$rows}"/>
 					<input type="hidden" name="cols" value="{$cols}"/>
@@ -114,8 +114,8 @@
 		</tr>
 
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor">
+			<td>&nbsp;</td>
+			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />
 				<input type="submit" name="preview" value="{tr}Preview{/tr}" />
 			</td>
@@ -150,10 +150,10 @@
 	</tr>
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].name|escape}</td>
-			<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
-			<td class="{cycle advance=false}">
+		<tr class="{cycle}">
+			<td>{$channels[user].name|escape}</td>
+			<td>{$channels[user].created|tiki_short_datetime}</td>
+			<td>
 				{if count($channels[user].sections) == 0}{tr}Visible in no sections{/tr}{/if}
 				{section name=ix loop=$channels[user].sections}
 					{$channels[user].sections[ix]} 
@@ -163,7 +163,7 @@
 					&nbsp;&nbsp;
 				{/section}
 			</td>
-			<td class="{cycle advance=true}">
+			<td>
 				&nbsp;&nbsp;
 				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
 					{icon _id='page_edit'}

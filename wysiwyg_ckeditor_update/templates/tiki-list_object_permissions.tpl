@@ -2,9 +2,6 @@
 
 <div class="navbar">
 {button href="tiki-objectpermissions.php" _text="{tr}Manage Permissions{/tr}"}
-{foreach from=$res key=type item=content}
-	{button href="#$type" _text="{tr}$type{/tr}"}	 
-{/foreach}
 </div>
 
 {tabset name='tabs_list_object_permissions'}

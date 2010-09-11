@@ -130,6 +130,15 @@ class WikiLib extends TikiLib
 
 	}
 
+	// Returns a string containing all characters considered bad in page names
+	function get_badchars($name) {
+		return ":/?#[]@!$&'()*+,;=<>";
+	}
+	
+	// Returns a boolean indicating whether the given page name contains "bad characters"
+	function contains_badchars($name) {
+		return preg_match("/[:\/?#\[\]@!$&'()*+,;=<>]/", $name);		
+	}
 
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong
@@ -139,9 +148,13 @@ class WikiLib extends TikiLib
 		$newName = trim($newName);
 		if ($this->page_exists($newName)) {
 			// if it is a case change of same page: allow it, else stop here
-			if (strcasecmp(trim($oldName), $newName) <> 0 ) return false;
+			if (strcasecmp(trim($oldName), $newName) <> 0 ) throw new Exception("Page already exists", 2);
 		}
 
+		if ($this->contains_badchars($newName) && $prefs['wiki_badchar_prevent'] == 'y') {
+			throw new Exception("Bad characters", 1);
+		}
+		
 		$tmpName = "TmP".$newName."TmP";
 
 		// 1st rename the page in tiki_pages, using a tmpname inbetween for
@@ -181,7 +194,7 @@ class WikiLib extends TikiLib
 				//$data=addslashes(str_replace($oldName,$newName,$info['data']));
 				$data = $info['data'];
 			} elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
-				include_once ("lib/commentslib.php");
+				include_once ("lib/comments/commentslib.php");
 				global $dbTiki;
 				$commentslib = new Comments($dbTiki);
 				$comment_info = $commentslib->get_comment($objectId);
@@ -774,7 +787,8 @@ class WikiLib extends TikiLib
 	}
 
 	function list_plugins($with_help = false, $area_id = 'editwiki') {
-		if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y') {
+		global $prefs;
+		if (isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] == 'y' && $prefs['wysiwyg_ckeditor'] != 'y') {
 			// disable all plugin insert help functions
 			$area_id = '';	
 		}	
@@ -976,6 +990,16 @@ class WikiLib extends TikiLib
 				}
 			}
 		}
+	}
+	
+	function get_pages_contains($searchtext, $offset = 0, $maxRecords = -1, $sort_mode = 'pageName_asc') {
+		$query = "select * from `tiki_pages` where `data` like ? order by ".$this->convertSortMode($sort_mode);
+		$bindvars = array('%' . $searchtext . '%');
+		$results = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
+		$ret["data"] = $results;
+		$query_cant = "select count(*) from `tiki_pages` where `data` like ?";
+		$ret["cant"] = $this->getOne($query_cant, $bindvars);
+		return $ret;
 	}
 
 }

@@ -56,6 +56,8 @@
  * _emptyDataMessage = {treetable}: '.tra('No rows found')	: message if there are no rows
  * 
  * _openall					: show folder button to open all areas (y/n default=n)
+ * 
+ * _showSelected			: checkbox to show only selected (y/n default=n)
  */
 
 //this script may only be included - so its better to die if called directly.
@@ -77,6 +79,7 @@ function smarty_function_treetable($params, &$smarty) {
 	$_checkbox = empty($_checkbox) ? '' : $_checkbox;
 	$_checkboxTitles = empty($_checkboxTitles) ? '' : $_checkboxTitles;
 	$_openall = isset($_openall) ? $_openall : 'n';
+	$_showSelected = isset($_showSelected) ? $_showSelected : 'n';
 	
 	if (is_string($_checkbox) && strpos($_checkbox, ',') !== false) {
 		$_checkbox = preg_split('/,/', trim($_checkbox));
@@ -186,7 +189,8 @@ function smarty_function_treetable($params, &$smarty) {
 		$html .= '&nbsp;' . smarty_function_icon(
 			array('_id' => 'folder',
 				'id' => $id.'_openall',
-				'title' => tra('Toggle sections')),	$smarty);
+				'title' => tra('Toggle sections')),	$smarty) .
+			' ' . tra('Toggle sections');
 		
 		$headerlib->add_jq_onready('
 $("#'.$id.'_openall").click( function () {
@@ -209,6 +213,23 @@ $("#'.$id.'_openall").click( function () {
 			}
 		});
 		this.src = this.src.replace("folder", "ofolder");
+	}
+	return false;
+});');
+	}
+	
+	if ($_showSelected == 'y') {
+		require_once($smarty->_get_plugin_filepath('function', 'icon'));
+		$html .= ' <input type="checkbox" id="'.$id.'_showSelected" title="'.tra('Show only selected').'" />';
+		$html .= ' ' . tra('Show only selected');
+				
+		$headerlib->add_jq_onready('
+$("#'.$id.'_showSelected").click( function () {
+	if (!$(this).attr("checked")) {
+		$("#treetable_1 tr td.checkBoxCell input:checkbox").parent().parent().show()
+	} else {
+		$("#treetable_1 tr td.checkBoxCell input:checkbox").parent().parent().hide()
+		$("#treetable_1 tr td.checkBoxCell input:checked").parent().parent().show()
 	}
 });');
 	}

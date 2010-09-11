@@ -64,6 +64,7 @@ function prefs_feature_list() {
 			'description' => tra('Database & form generator'),
 			'help' => 'Trackers',
 			'type' => 'flag',
+			'keywords' => 'CRUD',
 		),
 		'feature_forums' => array(
 			'name' => tra('Forums'),
@@ -243,7 +244,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_comments_moderation' => array(
-			'name' => tra('Comments Moderation '),
+			'name' => tra('Comments Moderation'),
 			'description' => tra('An admin must validate a comment before it is visible'),
 			'help' => 'Comments',
 			'type' => 'flag',
@@ -289,7 +290,7 @@ function prefs_feature_list() {
 		'feature_phplayers' => array(
 			'name' => tra('PHPLayers'),
 			'description' => tra('PhpLayers Dynamic menus.'),
-			'help' => 'http://themes.tikiwiki.org/PhpLayersMenu',
+			'help' => 'http://themes.tiki.org/PhpLayersMenu',
 			'type' => 'flag',
 			'warning' => tra('Will eventually be removed from Tiki. Use CSS menus instead.'),
 		),
@@ -342,7 +343,7 @@ function prefs_feature_list() {
 		'feature_mobile' => array(
 			'name' => tra('Mobile'),
 			'description' => tra('Mobile'),
-			'help' => 'http://mobile.tikiwiki.org',
+			'help' => 'http://mobile.tiki.org',
 			'type' => 'flag',
 		),
 		'feature_morcego' => array(
@@ -387,6 +388,7 @@ function prefs_feature_list() {
 			'description' => tra('Datasheets with calculations and charts'),
 			'help' => 'SpreadSheet',
 			'type' => 'flag',
+			'keywords' => 'sheet calculation calculations stats stat graph graphs',
 		),
 		'feature_wysiwyg' => array(
 			'name' => tra('Wysiwyg editor'),
@@ -723,7 +725,8 @@ function prefs_feature_list() {
 		'feature_wiki_ext_rel_nofollow' => array(
 			'name' => tra('Add "rel=nofollow" on external links'),
 			'description' => tra("nofollow is used to instruct some search engines that links should not influence search engines. It can reduce search engine spam and prevent 'spamdexing'"),
-		'type' => 'flag',
+			'type' => 'flag',
+			'keywords' => 'no follow spam',
 		),
 		'feature_semantic' => array(
 			'name' => tra('Semantic links'),
@@ -774,11 +777,11 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),	
 		'feature_poll_comments' => array(
-			'name' => tra('Comments'),
+			'name' => tra('Comments for polls'),
 			'type' => 'flag',
 		),	
 		'feature_faq_comments' => array(
-			'name' => tra('Comments'),
+			'name' => tra('Comments for FAQs'),
 			'type' => 'flag',
 		),	
 		'feature_sefurl' => array(
@@ -788,6 +791,9 @@ function prefs_feature_list() {
 			'perspective' => false,
 			'type' => 'flag',
 			'keywords' => 'sefurl sefurls seo rewrite rules short urls',
+			'dependencies' => array(
+				'wiki_badchar_prevent',
+			),
 		),
 		'feature_sefurl_filter' => array(
 			'name' => tra('Search engine friendly url Postfilter'),
@@ -841,7 +847,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_article_comments' => array(
-			'name' => tra('Comments'),
+			'name' => tra('Comments for articles'),
 			'type' => 'flag',
 		),
 		'feature_cms_templates' => array(
@@ -950,7 +956,7 @@ function prefs_feature_list() {
 			'type' => 'flag',
 		),
 		'feature_blogposts_comments' => array(
-			'name' => tra('Post-level'),
+			'name' => tra('Comments on blog posts'),
 			'type' => 'flag',
 		),
 		'feature_blog_sharethis' => array(
@@ -964,7 +970,7 @@ function prefs_feature_list() {
 			'help' => 'File+Gallery+Config',
 		),
 		'feature_file_galleries_comments' =>array(
-			'name' => tra('Comments'),
+			'name' => tra('File Gallery Comments'),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
 		),
@@ -1112,6 +1118,9 @@ function prefs_feature_list() {
 		'feature_topbar_version' => array(
 			'name' => tra('Display current Tiki version'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_bot_bar_power_by_tw',
+			),
 		),
 		'feature_sitemenu' => array(
 			'name' => tra('Site menu bar'),
@@ -1408,7 +1417,7 @@ function prefs_feature_list() {
 			'description' => tra('A special wiki page for testing. Users can edit, but not save the Sandbox.'),
 		),
 		'feature_wiki_comments' => array(
-			'name' => tra('Comments'),
+			'name' => tra('Comments below wiki pages'),
 			'type' => 'flag',
 			'help' => 'Comments',
 			'description' => tra('Allow users (with permission) to post threaded comments to a page.'),
@@ -1771,5 +1780,21 @@ function prefs_feature_list() {
 			'type' => 'flag',
 			'help' => 'Ustream+Watershed',
 		),
+		'feature_credits' => array(
+			'name' => tra('Tiki User Credits'),
+			'description' => tra('Tiki User Credits'),
+			'type' => 'flag',
+			'help' => 'Tiki+User+Credits',
+		),
+		'feature_invit' => array(
+			'name' => tra('Invite users'),
+			'description' => tra('Allow users to invite new users by mail to register on this tiki'),
+			'type' => 'flag',
+		),
+        'feature_loadbalancer' => array(
+            'name' => tra('Load Balancer'),
+            'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
+            'type' => 'flag',
+        ),
 	);
 }

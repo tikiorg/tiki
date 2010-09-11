@@ -41,22 +41,22 @@ Set the names of the table headings to reflect the names of the db
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-<tr>
-  <td class="{cycle advance=false}">{$channels[user].user|userlink}</td>
-  <td class="{cycle advance=false}">{$channels[user].timestamp|tiki_short_datetime}</td>
-  <td class="{cycle advance=false}">{$channels[user].timeTaken} secs</td>
-  <td class="{cycle advance=false}">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
-  <td class="{cycle advance=false}">
+<tr class="{cycle}">
+  <td>{$channels[user].user|userlink}</td>
+  <td>{$channels[user].timestamp|tiki_short_datetime}</td>
+  <td>{$channels[user].timeTaken} secs</td>
+  <td>{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
+  <td>
     {if $tiki_p_view_user_results eq 'y'}
-      <a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{icon _id='application_form_magnify' alt='{tr}Results{/tr}' title='{tr}Results{/tr}'}</a>
+      <a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{icon _id='application_form_magnify' alt="{tr}Results{/tr}" title="{tr}Results{/tr}"}</a>
       {if $channels[user].hasDetails eq 'y'}({tr}Details{/tr}){/if}
     {/if}
     
     {if $tiki_p_admin_quizzes eq 'y'}
-      <a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+      <a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
     {/if}
   </td>
-  <td class="{cycle}">{if $channels[user].ispassing}{tr}Passed{/tr}{else}{tr}Failed{/tr}{/if}</td>
+  <td>{if $channels[user].ispassing}{tr}Passed{/tr}{else}{tr}Failed{/tr}{/if}</td>
 </tr>
 {/section}
 </table>

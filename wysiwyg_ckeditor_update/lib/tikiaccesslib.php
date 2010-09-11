@@ -132,7 +132,7 @@ class TikiAccessLib extends TikiLib
 			}
 		}
 		if ( !$allowed ) {
-			if ($permission_name) { $permission = $permission_name; }
+			if ($permission_name) { $permission = $permission_name; } else $permission = implode(', ', $permissions);
 			$this->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
 		}
 	}

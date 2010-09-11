@@ -37,7 +37,7 @@
 			
 			<td style="text-align:right;">
 				{if $prefs.feed_forum eq 'y'}
-					<a href="tiki-forum_rss.php?forumId={$forumId}" title='{tr}RSS feed{/tr}'>{icon _id="feed" alt='{tr}RSS feed{/tr}'}</a>
+					<a href="tiki-forum_rss.php?forumId={$forumId}" title="{tr}RSS feed{/tr}">{icon _id="feed" alt="{tr}RSS feed{/tr}"}</a>
 				{/if}
 
 				{if $tiki_p_forum_lock eq 'y'}
@@ -50,24 +50,24 @@
 
 				{if $user and $prefs.feature_user_watches eq 'y'}
 					{if $user_watching_forum eq 'n'}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics of this Forum{/tr}'>{icon _id='eye' alt='{tr}Monitor Topics of this Forum{/tr}'}</a>
+						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics of this Forum{/tr}">{icon _id='eye' alt="{tr}Monitor Topics of this Forum{/tr}"}</a>
 					{else}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics of this Forum{/tr}'>{icon _id='no_eye' alt='{tr}Stop Monitoring Topics of this Forum{/tr}'}</a>
+						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics of this Forum{/tr}"}</a>
 					{/if}			
 				{/if}
 
 				{if $user and $prefs.feature_user_watches eq 'y'}
 					{if $user_watching_forum_topic_and_thread eq 'n'}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics and Threads of this Forum{/tr}'>{icon _id='eye_magnifier' alt='{tr}Monitor Topics and Threads of this Forum{/tr}'}</a>
+						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{tr}Monitor Topics and Threads of this Forum{/tr}">{icon _id='eye_magnifier' alt="{tr}Monitor Topics and Threads of this Forum{/tr}"}</a>
 					{else}
-						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'>{icon _id='no_eye' alt='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'}</a>
+						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring Topics and Threads of this Forum{/tr}"}</a>
 					{/if}
 				{/if}
 				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics of this Forum{/tr}'}</a>
+					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics of this Forum{/tr}"}</a>
 				{/if}
 				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics and Threads of this Forum{/tr}'}</a>
+					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor Topics and Threads of this Forum{/tr}"}</a>
 				{/if}
 
 				<div class="categbar" align="right" >
@@ -148,19 +148,19 @@
 			<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
 			<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 			<input type="hidden" name="forumId" value="{$forumId|escape}" />
-			<table class="normal">
-				<tr class="formcolor">
+			<table class="formcolor">
+				<tr>
 					<td>{tr}Title{/tr}</td>
 					<td><input type="text" name="comments_title" value="{$comment_title|escape}" size="80" /></td>
 				</tr>
 				{if $forum_info.forum_use_password ne 'n'}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Password{/tr}</td>
 						<td><input type="password" name="password" /></td>
 					</tr>
 				{/if}
 				{if $tiki_p_admin_forum eq 'y' or $forum_info.topic_smileys eq 'y'}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Type{/tr}</td>
 						<td>
 							{if $tiki_p_admin_forum eq 'y'}
@@ -179,7 +179,7 @@
 									<option value="icon_idea.gif" {if $comment_topicsmiley eq 'icon_idea.gif'}selected="selected"{/if}>{tr}idea{/tr}</option>
 									<option value="icon_mad.gif" {if $comment_topicsmiley eq 'icon_mad.gif'}selected="selected"{/if}>{tr}mad{/tr}</option>
 									<option value="icon_neutral.gif" {if $comment_topicsmiley eq 'icon_neutral.gif'}selected="selected"{/if}>{tr}neutral{/tr}</option>
-										<option value="icon_question.gif" {if $comment_topicsmiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>
+									<option value="icon_question.gif" {if $comment_topicsmiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>
 									<option value="icon_sad.gif" {if $comment_topicsmiley eq 'icon_sad.gif'}selected="selected"{/if}>{tr}sad{/tr}</option>
 									<option value="icon_smile.gif" {if $comment_topicsmiley eq 'icon_smile.gif'}selected="selected"{/if}>{tr}happy{/tr}</option>
 									<option value="icon_wink.gif" {if $comment_topicsmiley eq 'icon_wink.gif'}selected="selected"{/if}>{tr}wink{/tr}</option>
@@ -190,7 +190,7 @@
 				{/if}
 
 				{if $forum_info.topic_summary eq 'y'}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Summary{/tr}</td>
 						<td>
 							<input type="text" size="60" name="comment_topicsummary" value="{$comment_topicsummary|escape}" maxlength="240" />
@@ -198,7 +198,7 @@
 					</tr>
 				{/if}
 
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Edit{/tr}
 				</td>
 				<td>
@@ -210,7 +210,7 @@
 				</td>
 			</tr>
 				{if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_forum eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Attach file{/tr}</td>
 						<td>
 							<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
@@ -231,7 +231,7 @@
 				{/if}
 
 				{if $user and $prefs.feature_user_watches eq 'y' and (!isset($comments_threadId) or $comments_threadId eq 0)}
-					<tr class="formcolor">
+					<tr>
 						<td>{tr}Watch for replies{/tr}</td>
 						<td>
 							<input type="radio" name="set_thread_watch" value="y" id="thread_watch_yes" checked="checked" />
@@ -249,7 +249,7 @@
 					</tr>
 				{/if}
 
-				<tr class="formcolor">
+				<tr>
 					<td>{tr}Post{/tr}</td>
 					<td>
 						{if empty($user)}
@@ -305,12 +305,12 @@
 			<tr>	
 				<td class="odd" colspan="3">
 					{if $all_forums|@count > 1}
-						<input type="image" name="movesel" src="pics/icons/task_submitted.png" alt='{tr}Move{/tr}' title='{tr}Move Selected Topics{/tr}' />
+						<input type="image" name="movesel" src="pics/icons/task_submitted.png" alt="{tr}Move{/tr}" title="{tr}Move Selected Topics{/tr}" />
 					{/if}
-					<input type="image" name="unlocksel" src="pics/icons/lock_break.png" alt='{tr}Unlock{/tr}' title='{tr}Unlock Selected Topics{/tr}' />
-					<input type="image" name="locksel" src="pics/icons/lock_add.png" alt='{tr}Lock{/tr}' title='{tr}Lock Selected Topics{/tr}' />
-					<input type="image" name="delsel" src="pics/icons/cross.png" alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
-					<input type="image" name="splitsel" src="pics/icons/arrow_merge.png" alt='{tr}Merge{/tr}' title='{tr}Merge Selected Topics{/tr}' />
+					<input type="image" name="unlocksel" src="pics/icons/lock_break.png" alt="{tr}Unlock{/tr}" title="{tr}Unlock Selected Topics{/tr}" />
+					<input type="image" name="locksel" src="pics/icons/lock_add.png" alt="{tr}Lock{/tr}" title="{tr}Lock Selected Topics{/tr}" />
+					<input type="image" name="delsel" src="pics/icons/cross.png" alt="{tr}Delete{/tr}" title="{tr}Delete Selected Topics{/tr}" />
+					<input type="image" name="splitsel" src="pics/icons/arrow_merge.png" alt="{tr}Merge{/tr}" title="{tr}Merge Selected Topics{/tr}" />
 				</td>
 				<td style="text-align:right;" class="odd" colspan="10">
 					{if $reported > 0}
@@ -331,7 +331,7 @@
 								{/if}
 							{/section}
 						</select>
-						<input type='submit' name='movesel' value='{tr}Move{/tr}' />
+						<input type='submit' name='movesel' value="{tr}Move{/tr}" />
 					</td>
 				</tr>
 			{/if}
@@ -395,13 +395,13 @@
 			{else}
 				{assign var="newtopic" value=""}
 			{/if}
-			<tr>
+			<tr class="{cycle}">
 				{if $tiki_p_admin_forum eq 'y'}
-					<td class="{cycle advance=false}">
+					<td>
 						<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId|escape}" {if $smarty.request.forumtopic and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if} />
 					</td>
 				{/if}	
-				<td style="text-align:center;" class="{cycle advance=false}">
+				<td style="text-align:center;">
 					{if $newtopic neq ''}
 						{assign var=nticon value=$newtopic}
 						{assign var=ntalt value="-{tr}New{/tr}"}
@@ -425,7 +425,7 @@
 					{/if}
 				</td>
 				{if $forum_info.topic_smileys eq 'y'}
-					<td style="text-align:center;" class="{cycle advance=false}">
+					<td style="text-align:center;">
 						{if strlen($comments_coms[ix].smiley) > 0}
 							<img src='img/smiles/{$comments_coms[ix].smiley}' alt=''/>
 						{else}
@@ -434,7 +434,7 @@
 					</td>
 				{/if}
 
-				<td class="{cycle advance=false}">
+				<td>
 					<a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if} href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}{if $comments_threshold}&amp;topics_threshold={$comments_threshold}{/if}{if $comments_offset or $smarty.section.ix.index}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}{/if}{if $thread_sort_mode ne 'commentDate_desc'}&amp;topics_sort_mode={$thread_sort_mode}{/if}{if $topics_find}&amp;topics_find={$comments_find}{/if}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title|escape}</a>
 					{if $forum_info.topic_summary eq 'y'}
 						<div class="subcomment">
@@ -443,16 +443,16 @@
 					{/if}
 				</td>
 				{if $forum_info.topics_list_replies eq 'y'}
-					<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].replies}</td>
+					<td style="text-align:right;">{$comments_coms[ix].replies}</td>
 				{/if}
 				{if $forum_info.topics_list_reads eq 'y'}
-					<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].hits}</td>
+					<td style="text-align:right;">{$comments_coms[ix].hits}</td>
 				{/if}
 				{if $forum_info.topics_list_pts eq 'y'}
-					<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].average|string_format:"%.2f"}</td>
+					<td style="text-align:right;">{$comments_coms[ix].average|string_format:"%.2f"}</td>
 				{/if}
 				{if $forum_info.topics_list_lastpost eq 'y'}
-					<td class="{cycle advance=false}">
+					<td>
 						{if $forum_info.topics_list_lastpost_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
 							<div style="float:left;padding-right:2px"><img src="tiki-show_user_avatar.php?user={$comments_coms[ix].lastPostData.userName|escape:"url"}&amp;always" title="{$comments_coms[ix].lastPostData.userName|username}" /></div>
 						{/if}
@@ -465,12 +465,12 @@
 						</div>
 					</td>
 				{elseif $forum_info.topics_list_lastpost_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
-					<td class="{cycle advance=false}">
+					<td>
 						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].lastPostData.userName|escape:"url"}$amp;always" title="{$comments_coms[ix].lastPostData.userName|username}" />
 					</td>
 				{/if}
 				{if $forum_info.topics_list_author eq 'y'}
-					<td class="{cycle advance=false}">
+					<td>
 						{if $forum_info.topics_list_author_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
 							<div style="float:left;padding-right:2px"><img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}" /></div>
 						{/if}
@@ -478,19 +478,19 @@
 							{$comments_coms[ix].userName|userlink}</td>
 						</div>
 				{elseif $forum_info.topics_list_author_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
-					<td class="{cycle advance=false}">
+					<td>
 						<img src="tiki-show_user_avatar.php?user={$comments_coms[ix].userName|escape:"url"}" title="{$comments_coms[ix].userName|username}" />
 					</td>
 				{/if}
 				
 				{if $forum_info.att_list_nb eq 'y'}
-					<td style="text-align:center;" class="{cycle advance=false}">
+					<td style="text-align:center;">
 						{if !empty($comments_coms[ix].nb_attachments)}<a href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;view_atts=y#attachments" title="{tr}Attachments{/tr}">{/if}
 						{$comments_coms[ix].nb_attachments}
 						{if !empty($comments_coms[ix].nb_attachments)}</a>{/if}
 					</td>
 				{/if}
-				<td style="text-align:right;" nowrap="nowrap" class="{cycle}">
+				<td style="text-align:right;" nowrap="nowrap">
 					{if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}
 						{if count($comments_coms[ix].attachments)}
 							<img src='img/icons/attachment.gif' alt='attachments' />
@@ -505,14 +505,14 @@
 
 					{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
 						{if $comments_coms[ix].archived eq 'y'}
-							<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt='{tr}Unarchive{/tr}'}</a>
+							<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt="{tr}Unarchive{/tr}"}</a>
 						{else}
-							<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
+							<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{icon _id='package' alt="{tr}Archive{/tr}"}</a>
 						{/if}
 					{/if}
 
 					{if $tiki_p_admin_forum eq 'y' }
-						<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+						<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					{/if}
 				</td>
 			</tr>
@@ -534,8 +534,8 @@
 			<th>{tr}Last{/tr} {$forum_info.forum_last_n} {tr}posts in this forum{/tr}</th>
 		</tr>
 		{section name=ix loop=$last_comments}
-			<tr>
-				<td class="{cycle}">
+			<tr class="{cycle}">
+				<td>
 					{if $last_comments[ix].parentId eq 0}
 						{assign var="idt" value=$last_comments[ix].threadId}
 					{else}

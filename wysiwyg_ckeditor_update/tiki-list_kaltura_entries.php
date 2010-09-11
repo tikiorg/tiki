@@ -76,7 +76,7 @@ if (isset($_REQUEST['action'])) {
 				$kmixEntry->name = 'Remix of ' . $kentry->name;
 				$kmixEntry->editorType = 1;
 				$kmixEntry = $kclient->mixing->add($kmixEntry);		
-				for ($i=0; $i < count($videoId); $i++) {
+				for ($i=0, $cvideoId = count($videoId); $i < $cvideoId ; $i++) {
 					$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id, $videoId[0]);
 				}
 			}

@@ -43,7 +43,7 @@ function smarty_function_breadcrumbs($params, &$smarty)
             break;
     }
     if(!empty($machine_translate)) {
-    	require_once('lib/core/lib/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
+    	require_once('lib/core/Multilingual/MachineTranslation/GoogleTranslateWrapper.php');
 		$translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($source_lang,$target_lang);
 		$text_to_display = $translator->translateText($text_to_display);	
     }

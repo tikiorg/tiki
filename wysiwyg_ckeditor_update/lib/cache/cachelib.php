@@ -54,14 +54,55 @@ class Cachelib
 		return $this->implementation->invalidate( $key, $type );
 	}
 
+	/**
+	 * Deprecated - use empty_cache()
+	 */
 	function empty_full_cache() {
-		global $tikidomain,$logslib;
-		$this->erase_dir_content("templates_c/$tikidomain");
-		$this->erase_dir_content("temp/public/$tikidomain");
-		$this->erase_dir_content("temp/cache/$tikidomain");
-		$this->erase_dir_content("modules/cache/$tikidomain");
-		if (is_object($logslib)) {
-			$logslib->add_log('system','erased full cache');
+		$this->empty_cache();
+	}
+	
+	/**
+	 * Empty one or more caches
+	 * 
+	 * Checks for existance of libs because it's called from the installer
+	 * 
+	 * @param mixed $dir_names		all|templates_c|temp_cache|temp_public|modules_cache|prefs (default all)
+	 * @param string $log_section	Type of log message. Default 'system'
+	 */
+	function empty_cache( $dir_names = array('all'), $log_section = 'system' ) {
+		global $tikidomain, $logslib, $tikilib;
+		
+		if (!is_array($dir_names)) {
+			$dir_names = array($dir_names);
+		}
+		if (in_array( 'all', $dir_names )) {
+			$this->erase_dir_content("templates_c/$tikidomain");
+			$this->erase_dir_content("temp/public/$tikidomain");
+			$this->erase_dir_content("temp/cache/$tikidomain");
+			$this->erase_dir_content("modules/cache/$tikidomain");
+			$this->flush_opcode_cache();
+			if (is_object($tikilib)) { $tikilib->set_lastUpdatePrefs(); }
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased all cache content'); }
+		}
+		if (in_array( 'templates_c', $dir_names )) {
+			$this->erase_dir_content("templates_c/$tikidomain");
+			$this->flush_opcode_cache();
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased templates_c content' ); }
+		}
+		if (in_array( 'temp_cache', $dir_names)) {
+			$this->erase_dir_content("temp/cache/$tikidomain");
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased temp/cache content' ); }
+		}
+		if (in_array( 'temp_public', $dir_names)) {
+			$this->erase_dir_content("temp/public/$tikidomain");
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased temp/public content' ); }
+		}
+		if (in_array( 'modules_cache', $dir_names)) {
+			$this->erase_dir_content("modules/cache/$tikidomain");
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased modules/cache content' ); }
+		}
+		if (in_array( 'prefs', $dir_names)) {
+			if (is_object($tikilib)) { $tikilib->set_lastUpdatePrefs(); }
 		}
 	}
 
@@ -69,15 +110,26 @@ class Cachelib
 		return $this->implementation->empty_type_cache( $type );
 	}
 
-	function du($path, $begin=null) {
+	function count_cache_files($path, $begin=null) {
+		global $tikidomain;
+		
 		if (!$path or !is_dir($path)) return (array('total' => 0,'cant' =>0));
 		$total = 0; 
 		$cant = 0;
 		$back = array();
 		$all = opendir($path);
+		
+		// If using multiple Tikis but flushing cache on default install...
+		if (empty($tikidomain) && is_file('db/virtuals.inc')) {
+			$virtuals = array_map('trim', file('db/virtuals.inc'));
+		} else {
+			$virtuals = false;
+		}
+
 		while ($file = readdir($all)) {
+			if (substr($file,0,1) == "." or $file == 'CVS' or $file == '.svn' or $file == "index.php" or $file == "README" or $file == "web.config" or ($virtuals && in_array($file, $virtuals)) ) continue;
 			if (is_dir($path.'/'.$file) and $file <> ".." and $file <> "." and $file <> "CVS" and $file <> ".svn" ) {
-				$du = $this->du($path.'/'.$file);
+				$du = $this->count_cache_files($path.'/'.$file);
 				$total+= $du['total'];
 				$cant+= $du['cant'];
 				unset($file);

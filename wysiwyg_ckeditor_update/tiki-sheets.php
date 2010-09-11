@@ -18,6 +18,7 @@ if (!isset($_REQUEST["sheetId"])) {
 	$info = array();
 	$smarty->assign('headtitle', tra('Spreadsheets'));
 } else {
+	$cookietab = 2;
 	$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
 	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) $tiki_p_view_sheet = 'y';
 	else $tiki_p_view_sheet = 'n';
@@ -51,10 +52,6 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 	check_ticket('sheet');
 	// Get information about this sheetId and fill smarty variables
 	$smarty->assign('edit_mode', 'y');
-	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y') {
-		$users = $tikilib->list_users(0, -1, 'login_asc', '', false);
-		$smarty->assign_by_ref('users', $users['data']);
-	}
 	if ($_REQUEST["sheetId"] > 0) {
 		$smarty->assign('title', $info["title"]);
 		$smarty->assign('description', $info["description"]);
@@ -73,10 +70,10 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('creator', $user);
 		$smarty->assign('parentSheetId', 0);
 	}
-	$cat_type = 'sheet';
-	$cat_objid = $_REQUEST['sheetId'];
-	include_once ('categorize_list.php');
 }
+$cat_type = 'sheet';
+$cat_objid = $_REQUEST['sheetId'];
+include_once ('categorize_list.php');
 // Process the insertion or modification of a sheet here
 if (isset($_REQUEST["edit"])) {
 	$access->check_permission('tiki_p_edit_sheet');

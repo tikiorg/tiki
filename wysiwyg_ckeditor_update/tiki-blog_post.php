@@ -54,6 +54,9 @@ if ($postId > 0) {
 			die;
 		}
 	}
+	if(isset($data['wysiwyg']) && !isset($_REQUEST['wysiwyg'])) {
+		$_REQUEST['wysiwyg'] = $data['wysiwyg'];
+	}
 }
 
 $smarty->assign('headtitle', tra('Edit Post'));
@@ -77,12 +80,6 @@ if ($prefs['feature_freetags'] == 'y') {
 	}
 }
 
-if ($prefs['feature_wysiwyg'] == 'y' && ($prefs['wysiwyg_default'] == 'y' && !isset($_REQUEST['wysiwyg'])) || (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y')) {
-	$smarty->assign('wysiwyg', 'y');
-} else {
-	$smarty->assign('wysiwyg', 'n');
-}
-
 // Exit edit mode (without javascript)
 if (isset($_REQUEST['cancel'])) {
 	header("location: tiki-view_blog.php?blogId=$blogId");
@@ -96,12 +93,20 @@ if (isset($_REQUEST['remove_image'])) {
 	$bloglib->remove_post_image($_REQUEST['remove_image']);
 }
 
+if ($prefs['feature_wysiwyg'] == 'y' && ($prefs['wysiwyg_default'] == 'y' && !isset($_REQUEST['wysiwyg'])) || (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y')) {
+	$smarty->assign('wysiwyg', 'y');
+	$is_wysiwyg = TRUE;
+} else {
+	$smarty->assign('wysiwyg', 'n');
+	$is_wysiwyg = FALSE;
+}
+
 if ($postId > 0) {
 	if (empty($data["data"])) $data["data"] = '';
 
 	$smarty->assign('post_info', $data);
 	$smarty->assign('data', $data['data']);
-	$smarty->assign('parsed_data', $tikilib->parse_data($data['data']));
+	$smarty->assign('parsed_data', $tikilib->parse_data($data['data']), array('is_html' => $is_wysiwyg));
 	$smarty->assign('blogpriv', $data['priv']);
 
 	check_ticket('blog');
@@ -160,23 +165,25 @@ if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
 }
 
 if (isset($_REQUEST["preview"])) {
-	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
-	$parsed_data = $tikilib->parse_data($parsed_data);
-	$smarty->assign('data', $edit_data);
-	$smarty->assign('parsed_data', $parsed_data);
-
 	$post_info = array();
+	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
+	$parsed_data = $tikilib->parse_data($parsed_data, array('is_html' => $is_wysiwyg));
+	$smarty->assign('data', $edit_data);
+	$post_info['parsed_data'] = $parsed_data;
+
 	$post_info['title'] = $_REQUEST['title'];
+	$post_info['excerpt'] = $_REQUEST['excerpt'];
 	$post_info['user'] = isset($data) ? $data['user'] : $user;
 	$post_info['created'] = $publishDate;
 	$post_info['avatar'] = isset($data) ? $data['avatar'] : '';
-	$smarty->assign('post_info', $post_info);
 
 	if ($prefs['feature_freetags'] == 'y' && isset($_REQUEST['freetag_string'])) {
 		$tags = $freetaglib->dumb_parse_tags($_REQUEST['freetag_string']);
 		$smarty->assign('tags', $tags);
+		$post_info['freetags'] = $tags;
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
 	}
+	$smarty->assign('post_info', $post_info);
 
 	$smarty->assign('preview', 'y');
 }
@@ -196,14 +203,14 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
 	
 	if ($postId > 0) {
-		$bloglib->update_post($postId, $_REQUEST["blogId"], $edit_data, $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $data['data'], $blogpriv, $publishDate);
+		$bloglib->update_post($postId, $_REQUEST["blogId"], $edit_data, $_REQUEST['excerpt'], $data["user"], $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate, $is_wysiwyg);
 	} else {
 		if ($blog_data['always_owner'] == 'y') {
 			$author = $blog_data['user'];
 		} else {
 			$author = $user;
 		}
-		$postId = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $author, $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate);
+		$postId = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $_REQUEST['excerpt'], $author, $title, isset($_REQUEST['contributions']) ? $_REQUEST['contributions'] : '', $blogpriv, $publishDate, $is_wysiwyg);
 		$smarty->assign('postId', $postId);
 	}
 
@@ -222,7 +229,7 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 
 if ($contribution_needed) {
 	$smarty->assign('title', $_REQUEST["title"]);
-	$smarty->assign('parsed_data', $tikilib->parse_data($_REQUEST['data']));
+	$smarty->assign('parsed_data', $tikilib->parse_data($_REQUEST['data'], array('is_html' => $is_wysiwyg)));
 	$smarty->assign('data', $_REQUEST['data']);
 	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);

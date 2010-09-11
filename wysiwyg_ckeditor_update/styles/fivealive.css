@@ -365,7 +365,7 @@ input[type="file"],
 input#login-pass,
 textarea,
 .adminoptionbox option {
-	background: #d6f3fa;
+	background-color: #d6f3fa;
 	color: #000;
 	border: 1px solid;
 	border-color: #9ae8fa #e3f7fb #e3f7fb #9ae8fa;
@@ -1032,7 +1032,6 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: 0}
 /***** Forums *****/
 
 .post .postbody {
-	border: 1px solid #aaa;
 	padding: 6px;
 }
 

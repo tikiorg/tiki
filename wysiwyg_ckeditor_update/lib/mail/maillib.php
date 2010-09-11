@@ -57,11 +57,11 @@ function tiki_mail_setup() {
 		return;
 	}
 
-	require_once 'lib/core/lib/Zend/Mail.php';
+	require_once 'lib/core/Zend/Mail.php';
 
 	global $prefs;
 	if( $prefs['zend_mail_handler'] == 'smtp' ) {
-		require_once 'lib/core/lib/Zend/Mail/Transport/Smtp.php';
+		require_once 'lib/core/Zend/Mail/Transport/Smtp.php';
 		$options = array();
 
 		if( $prefs['zend_mail_smtp_auth'] ) {

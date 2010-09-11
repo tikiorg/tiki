@@ -15,12 +15,13 @@ function prefs_payment_list() {
 		),
 		'payment_system' => array(
 			'name' => tra('Payment System'),
-			'description' => tra('Currently a choice between PayPal, and Cclite (in development).'),
+			'description' => tra('Currently a choice between PayPal, and Cclite (in development), or Tiki User Credits.'),
 			'hint' => tra('PayPal: see PayPal.com - Cclite: Community currency'),
 			'type' => 'list',
 			'options' => array(
 				'paypal' => tra('PayPal'),
 				'cclite' => tra('Cclite'),
+				'tikicredits' => tra('Tiki User Credits'),
 			),
 			'dependencies' => array( 'payment_feature' ),
 		),
@@ -143,6 +144,21 @@ function prefs_payment_list() {
 			'dependencies' => array( 'payment_feature' ),
 			'default' => '',
 		),
+		'payment_tikicredits_types' => array(
+			'name' => tra('Types of credit to use'),
+			'description' => tra('This is a list of the types of Tiki user credits to accept to pay with, separated by ,'),
+			'type' => 'text',
+			'dependencies' => array( 'payment_feature', 'feature_credits' ),
+			'separator' => ',',
+		),
+		'payment_tikicredits_xcrates' => array(
+			'name' => tra('Exchange rate for types of credit to use'),
+			'description' => tra('This is a corresponding list of amount of credits equivalent to 1 of the payment currency, separated by ,'),
+			'type' => 'text',
+			'dependencies' => array( 'payment_feature', 'feature_credits' ),
+			'separator' => ',',
+		),
+		
 	);
 }
 

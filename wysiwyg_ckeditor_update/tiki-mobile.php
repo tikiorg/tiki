@@ -15,7 +15,7 @@ if (isset($_REQUEST['content']) && $_REQUEST['content'] == "about") {
 	$title = new HAW_text(hawtra("Welcome at Hawiki"), HAW_TEXTFORMAT_BOLD);
 	$title->set_br(2);
 	$TikiPage->add_text($title);
-	$text1 = new HAW_text(hawtra("This Tikiwiki site is prepared for access from a lot of mobile devices, e.g. WAP phones, PDA's, i-mode devices and much more."));
+	$text1 = new HAW_text(hawtra("This Tiki site is prepared for access from a lot of mobile devices, e.g. WAP phones, PDA's, i-mode devices and much more."));
 	$text1->set_br(2);
 	$TikiPage->add_text($text1);
 	$text2 = new HAW_text(hawtra("You can browse this site on your mobile device by directing your device's browser towards the following URL here on this site:"));

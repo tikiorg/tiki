@@ -29,7 +29,7 @@ function module_most_commented( $mod_reference, $module_params ) {
 	global $smarty;
 	global $commentslib;
 	if(!isset($commentslib)){
-		include_once ('lib/commentslib.php');
+		include_once ('lib/comments/commentslib.php');
 		$commentslib = new Comments();
 	}
 	$type = 'wiki';

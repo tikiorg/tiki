@@ -40,31 +40,31 @@
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=user loop=$channels}
-				<tr>
-					<td style="text-align:center;" class="{cycle advance=false}">
+				<tr class="{cycle}">
+					<td style="text-align:center;">
 						<input type="checkbox" name="note[{$channels[user].noteId}]" />
 					</td>
-					<td class="{cycle advance=false}">
+					<td>
 						<a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}">{$channels[user].name|escape}</a>
 					</td>
-					<td class="{cycle advance=false}">{$channels[user].parse_mode}</td>
-					<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
-					<td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
-					<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].size|kbsize}</td>
-					<td style="text-align:center;" class="{cycle}">
+					<td>{$channels[user].parse_mode}</td>
+					<td>{$channels[user].created|tiki_short_datetime}</td>
+					<td>{$channels[user].lastModif|tiki_short_datetime}</td>
+					<td style="text-align:right;">{$channels[user].size|kbsize}</td>
+					<td style="text-align:center;">
 						<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 						<a href="tiki-notepad_write.php?noteId={$channels[user].noteId}" class="link">{icon _id='page_edit'}</a>
 						<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1" class="link">{icon _id='disk' alt="{tr}Save{/tr}"}</a>
-						<a style="margin-left:10px;" class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+						<a style="margin-left:10px;" class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 					</td>
 				</tr>
 			{sectionelse}
 				<tr>
-					<td class="formcolor" colspan="4">{tr}No notes yet{/tr}</td>
+					<td colspan="4">{tr}No notes yet{/tr}</td>
 				</tr>
 			{/section}
 			<tr>
-				<td class="formcolor" colspan="4">
+				<td colspan="4">
 					<input type="submit" name="merge" value="{tr}Merge selected notes into{/tr}" />
 					<input type="text" name="merge_name" size="20" />
 				</td>
@@ -77,10 +77,10 @@
 
 <h2>{tr}Upload file{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Upload file{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}Upload file{/tr}:</td>
+			<td>
 				<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" />
 				<input size="16" name="userfile1" type="file" />
 				<input style="font-size:9px;" type="submit" name="upload" value="{tr}Upload{/tr}" />

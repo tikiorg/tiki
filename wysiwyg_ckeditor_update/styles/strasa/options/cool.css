@@ -214,16 +214,20 @@ a.flip:visited {color: #b5dde9}
 a.flip:hover {color: #006699}
 
 .tellafriend a,
-.tellafriend a:visited {
+.share a,
+.tellafriend a:visited,
+.share a:visited {
 	background: transparent url(cool/fold-topright.jpg) 0 0 no-repeat;
 	color: #fff;
 }
 
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	color: #fff;
 }
 
-.tellafriend {
+.tellafriend,
+.share {
 	border-bottom: solid 1px #cce5ff;
 }
 

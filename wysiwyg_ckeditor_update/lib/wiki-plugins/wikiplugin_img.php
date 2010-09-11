@@ -39,6 +39,7 @@ function wikiplugin_img_info() {
 				'name' => tra('Gallery ID'),
 				'description' => tra('Numeric ID of a File Gallery. Displays a random image from that gallery.'),
 				'filter' => 'int',
+				'advanced' => true,
 			),
 			'attId' => array(
 				'required' => false,
@@ -87,12 +88,14 @@ function wikiplugin_img_info() {
 				'name' => tra('Link relation'),
 				'filter' => 'striptags',
 				'description' => tra('Enter "box" for colorbox effect (like shadowbox and lightbox) or appropriate syntax for link relation.'),
+				'advanced' => true,
 			),
 			'usemap' => array(
 				'required' => false,
 				'name' => tra('Image map'),
 				'filter' => 'striptags',
 				'description' => tra('Name of the image map to use for the image.'),
+				'advanced' => true,
 			),
 			'height' => array(
 				'required' => false,
@@ -117,6 +120,7 @@ function wikiplugin_img_info() {
 				'name' => tra('Align image'),
 				'description' => tra('Aligns the image itself. If the image is inside a box (because of other settings), use the align parameter to align the box.'),
 				'filter' => 'alpha',
+				'advanced' => true,
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
@@ -129,12 +133,14 @@ function wikiplugin_img_info() {
 				'name' => tra('Image style'),
 				'description' => tra('Enter "border" to place a dark gray border around the image. Otherwise enter CSS styling syntax for other style effects.'),
 				'filter' => 'striptags',
+				'advanced' => true,
 			),
 			'align' => array(
 				'required' => false,
 				'name' => tra('Align image block'),
 				'description' => tra('Aligns the box containing the image.'),
 				'filter' => 'alpha',
+				'advanced' => true,
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Right'), 'value' => 'right'), 
@@ -147,18 +153,21 @@ function wikiplugin_img_info() {
 				'name' => tra('Image block style'),
 				'filter' => 'striptags',
 				'description' => tra('Enter "border" to place a dark gray border frame around the image. Otherwise enter CSS styling syntax for other style effects.'),
+				'advanced' => true,
 			),
 			'styledesc' => array(
 				'required' => false,
 				'name' => tra('Description style'),
 				'filter' => 'striptags',
 				'description' => tra('Enter "right" or "left" to align text accordingly. Otherwise enter CSS styling syntax for other style effects.'),
+				'advanced' => true,
 			),
 			'block' => array(
 				'required' => false,
 				'name' => tra('Wrapping control'),
 				'description' => tra('Control how other items wrap around the image.'),
 				'filter' => 'alpha',
+				'advanced' => true,
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''), 
 					array('text' => tra('Top'), 'value' => 'top'), 
@@ -171,6 +180,7 @@ function wikiplugin_img_info() {
 				'name' => tra('CSS Class'),
 				'filter' => 'striptags',
 				'description' => tra('CSS class to apply to the image.'),
+				'advanced' => true,
 			),
 			'desc' => array(
 				'required' => false,
@@ -183,6 +193,7 @@ function wikiplugin_img_info() {
 				'name' => tra('Link title'),
 				'filter' => 'text',
 				'description' => tra('Title text. "desc" or "name" or "namedesc", otherwise enter your own title.'),
+				'advanced' => true,
 			),
 			'alt' => array(
 				'required' => false,
@@ -194,11 +205,13 @@ function wikiplugin_img_info() {
 				'required' => false,
 				'name' => tra('Default config settings'),
 				'description' => tra('Default configuration settings (usually set by admin in the source code or through Plugin Alias).'),
+				'advanced' => true,
 			),
 			'mandatory' => array(
 				'required' => false,
 				'name' => tra('Mandatory admin setting'),
 				'description' => tra('Mandatory configuration settings (usually set by admin in the source code or through Plugin Alias).'),
+				'advanced' => true,
 			),
 		),
 	);

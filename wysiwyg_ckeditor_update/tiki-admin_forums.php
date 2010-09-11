@@ -8,29 +8,18 @@
 $section = 'forums';
 require_once ('tiki-setup.php');
 $smarty->assign('headtitle', tra('Admin Forums'));
-if (!isset($_REQUEST["forumId"])) {
-	$_REQUEST["forumId"] = 0;
+if (!isset($_REQUEST['forumId'])) {
+	$_REQUEST['forumId'] = 0;
 }
 $access->check_feature('feature_forums');
 
-$smarty->assign('individual', 'n');
-if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
-	$smarty->assign('individual', 'y');
-	if ($tiki_p_admin != 'y') {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'forums');
-		foreach($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-			if ($userlib->object_has_permission($user, $_REQUEST["forumId"], 'forum', $permName)) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
+$objectperms = Perms::get( 'forum', $_REQUEST['forumId']);
+if (!$objectperms->admin_forum) {
+	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_forum', '403');
 }
-$access->check_permission('tiki_p_admin_forum');
+if ($userlib->object_has_one_permission($_REQUEST['forumId'], 'forum')) {
+	$smarty->assign('individual', 'y');
+}
 
 $auto_query_args = array(
 			'forumId',
@@ -39,7 +28,7 @@ $auto_query_args = array(
 			'find',
 );
 
-include_once ("lib/commentslib.php");
+include_once ("lib/comments/commentslib.php");
 $commentslib = new Comments($dbTiki);
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
@@ -218,6 +207,8 @@ for ($i = 0; $i < $max; $i++) {
 		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $channels["data"][$i]["forumId"], 'forum', 'tiki_p_admin_forum')) {
 			$channels["data"][$i]["individual_tiki_p_admin_forum"] = 'y';
 		}
+	} elseif ($userlib->user_has_perm_on_object($user, $channels["data"][$i]["forumId"], 'forum', 'tiki_p_admin_forum')) {
+		$channels["data"][$i]["individual_tiki_p_admin_forum"] = 'y';
 	} else {
 		$channels["data"][$i]["individual"] = 'n';
 	}

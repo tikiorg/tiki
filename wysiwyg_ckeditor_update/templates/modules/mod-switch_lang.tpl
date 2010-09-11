@@ -21,9 +21,6 @@
 	{/if}
 {/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="switch_lang" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-{if $prefs.feature_multilingual ne 'y'}
-	{tr}This feature is disabled{/tr}
-{elseif $prefs.change_language ne 'n' or $user eq ''}
 {if $mode eq 'flags'}
 	{section name=ix loop=$languages}
 		{assign var='val' value=$languages[ix].value|escape}
@@ -57,9 +54,6 @@
         {/section}
         </select>
 </form>
-{/if}
-{else}
-	{tr}Permission denied{/tr}
 {/if}
 {/tikimodule}
 {/strip}

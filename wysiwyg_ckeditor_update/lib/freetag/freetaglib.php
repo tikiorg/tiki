@@ -71,7 +71,7 @@ class FreetagLib extends ObjectLib
 	 * @access private
 	 * @param int The maximum length of a tag.
 	 */
-	var $_MAX_TAG_LENGTH = 30;
+	var $_MAX_TAG_LENGTH = 128;
 	/**
 	 * @access public
 	 * @param int The number of size degrees for tags in cloud. There should be correspondent classes in css.
@@ -602,6 +602,14 @@ class FreetagLib extends ObjectLib
 			throw new Exception('Missing safe_tag argument.');
 		}
 
+		// To be sure that the tag lenght is correct.
+		// If multibyte string functions are available, it's preferable to use them.
+		if ((function_exists('mb_strlen') && (mb_strlen($tag) >= $this->_MAX_TAG_LENGTH))
+				|| (strlen($tag) >= $this->_MAX_TAG_LENGTH)
+		) {
+			return false;
+		}
+
 		$normalized_tag = $this->normalize_tag($tag);
 		$bindvals = array($itemId, $type, $normalized_tag);
 
@@ -695,11 +703,10 @@ class FreetagLib extends ObjectLib
 	 * @param int The unique ID of the person who tagged the object with this tag.
 	 * @param int The ID of the object in question.
 	 * @param string The raw string or the string form of the tag to delete.
-	 * @param bool The tag is the raw or the normalized form
 	 *
 	 * @return string Returns the tag in normalized form.
 	 */
-	function delete_object_tag($itemId, $type, $tag, $user = false, $raw = false)
+	function delete_object_tag($itemId, $type, $tag, $user = false)
 	{
 		if (!isset($itemId) || !isset($type) || !isset($tag) ||
 				empty($itemId) || empty($type) || empty($tag)) {
@@ -928,15 +935,11 @@ class FreetagLib extends ObjectLib
 
 		foreach($tagArray as $tag) {
 			$tag = trim($tag);
-			if($tag != '') {
+			if ($tag != '') {
 				if (!get_magic_quotes_gpc()) {
 					$tag = addslashes($tag);
 				}
-				if( function_exists('mb_strlen') && (mb_strlen($tag) <= $this->_MAX_TAG_LENGTH)) {
-					$this->safe_tag($user, $itemId, $type, $tag, $lang);
-				} elseif(strlen($tag) <= $this->_MAX_TAG_LENGTH) {
-					$this->safe_tag($user, $itemId, $type, $tag, $lang);
-				}
+				$this->safe_tag($user, $itemId, $type, $tag, $lang);
 			}
 		}
 	}

@@ -79,7 +79,7 @@ if ($output["data"]=="EMPTY") {
 	$tmp = $prefs['feed_'.$feed.'_desc'];
 	if ($desc<>'') $desc = $tmp;
 
-	$changes = $artlib -> list_articles(0, $prefs['feed_articles_max'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', '', '', '', $articleLang);
+	$changes = $artlib -> list_articles(0, $prefs['feed_articles_max'], $dateId.'_desc', '', 0, $tikilib->now, $user, $type, $topic, 'y', '', '', '', '', $articleLang, '', '', false, 'y');
 	$tmp = array();
 	include_once('tiki-sefurl.php');
 	foreach ($changes["data"] as $data)  {

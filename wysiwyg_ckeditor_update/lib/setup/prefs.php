@@ -14,6 +14,9 @@ if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
   exit;
 }
 
+$user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
+initialize_prefs();
+
 function get_default_prefs() {
 	static $prefs;
 	if( is_array($prefs) )
@@ -35,6 +38,7 @@ function get_default_prefs() {
 		'lastUpdatePrefs' => 1,
 
 		'tiki_domain_prefix' => 'unchanged',
+		'tiki_domain_redirects' => '',
 
 		'feature_print_indexed' => 'n', 
 
@@ -79,7 +83,7 @@ function get_default_prefs() {
 		'feature_wiki_open_as_structure' => 'n',
 		'feature_wiki_pageid' => 'n',
 		'feature_wiki_paragraph_formatting' => 'n',
-		'feature_wiki_paragraph_formatting_add_br' => 'n',
+		'feature_wiki_paragraph_formatting_add_br' => 'y',
 		'feature_wiki_pictures' => 'y',
 		'feature_wiki_plurals' => 'y',
 		'feature_wiki_print' => 'n',
@@ -117,7 +121,6 @@ function get_default_prefs() {
 		'wiki_comments_default_ordering' => 'points_desc',
 		'wiki_comments_displayed_default' => 'n',
 		'wiki_comments_per_page' => 10,
-		'wiki_comments_notitle' => 'n',
 		'wiki_comments_allow_per_page' => 'n',
 		'wiki_creator_admin' => 'n',
 		'wiki_feature_copyrights' => 'n',
@@ -194,6 +197,7 @@ function get_default_prefs() {
 		'wiki_mandatory_edit_summary' => 'n',
 
 		'wikiplugin_addtocart' => 'n',
+		'wikiplugin_addtogooglecal' => 'n',
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'n',
 		'wikiplugin_aname' => 'n',
@@ -342,6 +346,7 @@ function get_default_prefs() {
 
 		// Inline wiki plugins have their edit plugin icon disabled
 		'wikiplugininline_addtocart' => 'n',
+		'wikiplugininline_addtogooglecal' => 'n',
 		'wikiplugininline_agentinfo' => 'n',
 		'wikiplugininline_alink' => 'n',
 		'wikiplugininline_aname' => 'n',
@@ -872,6 +877,7 @@ function get_default_prefs() {
 		'search_refresh_index_mode' => 'normal',
 		'search_parsed_snippet' => 'y',
 		'search_default_where' => '',
+		'search_default_interface_language' => 'n',
 		'search_autocomplete' => 'n',
 
 		// webmail
@@ -935,6 +941,7 @@ function get_default_prefs() {
 		'calendar_list_begins_focus' => 'n',
 		'feature_cal_manual_time' => 'n',
 		'calendar_view_days' => array(0,1,2,3,4,5,6),
+		'calendar_addtogooglecal' => 'n',
 
 		// dates
 		'server_timezone' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',
@@ -1160,6 +1167,7 @@ function get_default_prefs() {
 		'desactive_login_autocomplete' => 'n',
 		'permission_denied_login_box' => 'n',
 		'permission_denied_url' => '',
+		'feature_loadbalancer' => 'n',
 
 		// intertiki
 		'feature_intertiki' => 'n',
@@ -1335,7 +1343,7 @@ function get_default_prefs() {
 		// mods
 		'feature_mods_provider' => 'n',
 		'mods_dir' => 'mods',
-		'mods_server' => 'http://mods.tikiwiki.org',
+		'mods_server' => 'http://mods.tiki.org',
 
 		// dev
 		'feature_experimental' => 'n',
@@ -1382,7 +1390,7 @@ function get_default_prefs() {
 		'toolbar_global_comments' => '
 			bold, italic, underline, strike , - , link, smiley | help
 		',
-		'toolbar_sheet' => 'addrow,addrowmulti,deleterow,-,addcolumn,addcolumnmulti,deletecolumn,-,
+		'toolbar_sheet' => 'addrow,addrowbefore,addrowmulti,deleterow,-,addcolumn,addcolumnbefore,addcolumnmulti,deletecolumn,-,
 							sheetgetrange,sheetrefresh,-,sheetfind,-|sheetsave,sheetclose/
 							bold,italic,underline,strike,center,-,color,bgcolor,-,tikilink,nonparsed,-|fullscreen/',
 
@@ -1458,6 +1466,7 @@ function get_default_prefs() {
 		'feature_contribution_mandatory_blog' => 'n',
 		'feature_contribution_mandatory_comment' => 'n',
 		'feature_contribution_mandatory_forum' => 'n',
+		'feature_credits' => 'n',
 		'feature_debug_console' => 'n',
 		'feature_debugger_console' => 'n',
 		'feature_display_my_to_others' => 'n',
@@ -1513,7 +1522,7 @@ function get_default_prefs() {
 		'feature_quick_object_perms' => 'n',
 		'feature_xmlrpc' => 'n',
 		'feature_watershed' => 'n',
-		'helpurl' => "http://doc.tikiwiki.org/",
+		'helpurl' => "http://doc.tiki.org/",
 		'layout_section' => 'n',
 		'limitedGoGroupHome' => 'n',
 		'minical_reminders' => 0,
@@ -1606,15 +1615,13 @@ function get_default_prefs() {
 		'wiki_3d_autoload' => '',
 		'javascript_enabled' => 'n',
 		'javascript_cdn' => 'none',
-		'feature_comments_post_as_anonymous' => 'n',
-		'feature_comments_moderation' => 'n',
-		'feature_comments_locking' => 'n',
 		'feature_template_zoom' => 'y',
 		'menus_items_icons' => 'n',
 		'menus_items_icons_path' => 'pics/large',
 		'feature_iepngfix' => 'n',
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
+		'feature_invit' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Default JS lib for - now "hard-wired" on if javascript_enabled
@@ -1651,7 +1658,7 @@ function get_default_prefs() {
 		'feature_tikitests' => 'n',
 
 		// Tiki Profiles
-		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',
+		'profile_sources' => 'http://profiles.tiki.org/profiles',
 		'profile_channels' => '',
 
 		// Minichat
@@ -1761,8 +1768,15 @@ function get_default_prefs() {
 		'cas_path' => '',
 		'cas_extra_param' => '',
 		'cas_authentication_timeout' => '0',
-	);
 
+		// Comments
+		'feature_comments_post_as_anonymous' => 'n',
+		'feature_comments_moderation' => 'n',
+		'feature_comments_locking' => 'n',
+		'comments_notitle' => 'n',
+		'comments_field_email' => 'n',
+		'comments_field_website' => 'n',
+	);
 
 	// Special default values
 
@@ -1788,79 +1802,82 @@ function get_default_prefs() {
 	return $prefs;
 }
 
-// Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
-// ( this is also used in tikilib, not only when reloading prefs )
-$user_overrider_prefs = array('language', 'style', 'style_option', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
 
-// Check if prefs needs to be reloaded
-if (isset($_SESSION['s_prefs'])) {
+function initialize_prefs() {
+	// Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
+	// ( this is also used in tikilib, not only when reloading prefs )
+	
+	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs;
+		
 
-	// lastUpdatePrefs pref is retrived in tiki-setup_base
-	$lastUpdatePrefs = $prefs['lastUpdatePrefs'];
+	// Check if prefs needs to be reloaded
+	if (isset($_SESSION['s_prefs'])) {
 
-	// Reload if there was an update of some prefs
-	if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
-		$_SESSION['need_reload_prefs'] = true;
+		// lastUpdatePrefs pref is retrived in tiki-setup_base
+		$lastUpdatePrefs = $prefs['lastUpdatePrefs'];
+
+		// Reload if there was an update of some prefs
+		if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
+			$_SESSION['need_reload_prefs'] = true;
+		} else {
+			$_SESSION['need_reload_prefs'] = false;
+		}
+
+		// Reload if the virtual host or tikiroot has changed
+		if (!isset($_SESSION['lastPrefsSite'])) $_SESSION['lastPrefsSite'] = '';
+		//   (this is needed when using the same php sessions for more than one tiki)
+		if ( $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
+			$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;
+			$_SESSION['need_reload_prefs'] = true;
+		}
+
 	} else {
-		$_SESSION['need_reload_prefs'] = false;
-	}
-
-	// Reload if the virtual host or tikiroot has changed
-	if (!isset($_SESSION['lastPrefsSite'])) $_SESSION['lastPrefsSite'] = '';
-	//   (this is needed when using the same php sessions for more than one tiki)
-	if ( $_SESSION['lastPrefsSite'] != $_SERVER['SERVER_NAME'].'|'.$tikiroot ) {
-		$_SESSION['lastPrefsSite'] = $_SERVER['SERVER_NAME'].'|'.$tikiroot;
 		$_SESSION['need_reload_prefs'] = true;
 	}
 
-} else {
-	$_SESSION['need_reload_prefs'] = true;
-}
+	$defaults = get_default_prefs();
+	// Set default prefs only if needed
+	if ( ! $_SESSION['need_reload_prefs'] ) {
+		$modified = $_SESSION['s_prefs'];
+	} else {
 
-$defaults = get_default_prefs();
-// Set default prefs only if needed
-if ( ! $_SESSION['need_reload_prefs'] ) {
-	$modified = $_SESSION['s_prefs'];
-} else {
-
-	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
-	if ( ! isset($_SESSION['serialized_prefs']) ) {
-		$_SESSION['serialized_prefs'] = array();
-		foreach ( $defaults as $p => $v )
+		// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
+		if ( ! isset($_SESSION['serialized_prefs']) ) {
+			$_SESSION['serialized_prefs'] = array();
+			foreach ( $defaults as $p => $v )
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
+		}
+
+		// Override default prefs with values specified in database
+		$modified = $tikilib->get_db_preferences();
+
+		// Unserialize serialized preferences
+		if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
+			foreach ( $_SESSION['serialized_prefs'] as $p ) {
+				if ( isset($modified[$p]) && ! is_array($modified[$p]) ) $modified[$p] = unserialize($modified[$p]);
+			}
+		}
+
+		// Keep some useful sites values available before overriding with user prefs
+		// (they could be used in templates, so we need to set them even for Anonymous)
+		foreach ( $user_overrider_prefs as $uop ) {
+			$modified['site_'.$uop] = isset($modified[$uop])?$modified[$uop]:$defaults[$uop];
+		}
+
+		// Assign prefs to the session
+		$_SESSION['s_prefs'] = $modified;
 	}
 
-	// Override default prefs with values specified in database
-	$modified = $tikilib->get_db_preferences();
-
-	// Unserialize serialized preferences
-	if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
-		foreach ( $_SESSION['serialized_prefs'] as $p ) {
-			if ( isset($modified[$p]) && ! is_array($modified[$p]) ) $modified[$p] = unserialize($modified[$p]);
+	// Disabled by default so it has to be modified
+	if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' ) {
+		if( ! isset( $section ) || $section != 'admin' ) {
+			require_once 'lib/perspectivelib.php';
+			if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
+				$changes = $perspectivelib->get_preferences( $persp );
+				$modified = array_merge( $modified, $changes );
+			}
 		}
 	}
 
-	// Keep some useful sites values available before overriding with user prefs
-	// (they could be used in templates, so we need to set them even for Anonymous)
-	global $user_overrider_prefs;
-	foreach ( $user_overrider_prefs as $uop ) {
-		$modified['site_'.$uop] = isset($modified[$uop])?$modified[$uop]:$defaults[$uop];
-	}
-
-	// Assign prefs to the session
-	$_SESSION['s_prefs'] = $modified;
+	$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
 }
-
-// Disabled by default so it has to be modified
-if( isset($modified['feature_perspective']) && $modified['feature_perspective'] == 'y' ) {
-	if( ! isset( $section ) || $section != 'admin' ) {
-		require_once 'lib/perspectivelib.php';
-		if( $persp = $perspectivelib->get_current_perspective( $modified ) ) {
-			$changes = $perspectivelib->get_preferences( $persp );
-			$modified = array_merge( $modified, $changes );
-		}
-	}
-}
-
-$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
-

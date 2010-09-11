@@ -44,14 +44,12 @@ if ($prefs['feature_friends'] == 'y') {
 	$smarty->assign('friend_pending', $tikilib->verify_friendship_request($userwatch, $user));
 	$smarty->assign('friend_waiting', $tikilib->verify_friendship_request($user, $userwatch));
 }
+$smarty->assign('infoPublic', 'y');
 if ($tiki_p_admin != 'y') {
 	$user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
 	// If the user is trying to pull info on themselves, allow it.
 	if ($user_information == 'private' && $userwatch != $user) {
-		$smarty->assign('errortype', 'no_redirect_login');
-		$smarty->assign('msg', tra("The user has chosen to make his information private"));
-		$smarty->display("error.tpl");
-		die;
+		$smarty->assign('infoPublic', 'n');
 	}
 }
 if ($user) {
@@ -65,8 +63,13 @@ if ($user) {
 			$smarty->display("tiki.tpl");
 			die;
 		}
-		$message = tra('Message sent to') . ':' . $userwatch . '<br />';
-		$messulib->post_message($userwatch, $user, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+		$sent = $messulib->post_message($userwatch, $user, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], '',
+								isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : '');
+		if ($sent) {
+			$message = tra('Message sent to') . ':' . $userwatch . '<br />';
+		} else {
+			$message = tra('An error occurred, please check your mail settings and try again');
+		}
 		$smarty->assign('message', $message);
 	}
 }
@@ -137,7 +140,7 @@ if ($prefs['feature_display_my_to_others'] == 'y') {
 		$smarty->assign_by_ref('user_articles', $user_articles);
 	}
 	if ($prefs['feature_forums'] == 'y') {
-		include_once ("lib/commentslib.php");
+		include_once ("lib/comments/commentslib.php");
 		$commentslib = new Comments($dbTiki);
 		$user_forum_comments = $commentslib->get_user_forum_comments($userwatch, -1);
 		$smarty->assign_by_ref('user_forum_comments', $user_forum_comments);

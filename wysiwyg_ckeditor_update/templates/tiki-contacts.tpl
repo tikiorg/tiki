@@ -2,13 +2,12 @@
 
 <div class="navbar">
 	<div style="float:right;margin:5px;">
-			{if $view eq 'list'}
-				{button href="?view=group" _text="{tr}Group View{/tr}"}
-			{else}
-				{button href="?view=list" _text="{tr}List View{/tr}"}
-			{/if}
+		{if $view eq 'list'}
+			{button href="?view=group" _text="{tr}Group View{/tr}"}
+		{else}
+			{button href="?view=list" _text="{tr}List View{/tr}"}
+		{/if}
 	</div>
-
 	<div style="float:left;margin:5px;">
 		{button href="#" _onclick="flip('editform');return false;" _text="{tr}Create/edit contacts{/tr}"}
 		{button href="tiki-user_contacts_prefs.php" _text="{tr}Preferences{/tr}"}
@@ -19,9 +18,9 @@
 	<input type="hidden" name="locSection" value="contacts" />
 	<input type="hidden" name="contactId" value="{$contactId|escape}" />
 	
-	<table class="normal">
+	<table class="formcolor">
 		<tbody id='tbody_editcontact'>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}First Name{/tr}:</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" />
@@ -36,25 +35,25 @@
 					</select>
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Last Name{/tr}:</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" />
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Email{/tr}:</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" />
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>{tr}Nickname{/tr}:</td>
 				<td>
 					<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" />
 				</td>
 			</tr>
-			<tr class="formcolor" id='tr_exts'>
+			<tr id='tr_exts'>
 				<td>
 					<select id='select_exts' onchange='ext_select();'>
 						<option>{tr}More...{/tr}</option>
@@ -63,7 +62,7 @@
 				<td>
 				</td>
 			</tr>
-			<tr class="formcolor">
+			<tr>
 				<td>
 				</td>
 				<td>
@@ -80,6 +79,7 @@
 
 <table class="normal">
 	<tr>
+		{assign var=numbercol value=4}
 		<th>
 			<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a>
 		</th>
@@ -95,15 +95,18 @@
 		{foreach from=$exts item=ext key=k}
 			{if $ext.show eq 'y'}
 				<th>
+					{assign var=numbercol value=`$numbercol+1`}
 					<a>{$ext.tra}</a>
 				</th>
 			{/if}
 		{/foreach}
 		
 		{if $view eq 'list'}
+			{assign var=numbercol value=`$numbercol+1`}
 			<th>{tr}Groups{/tr}</th>
 		{/if}
 		
+		{assign var=numbercol value=`$numbercol+1`}
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	
@@ -118,30 +121,34 @@
 				</tr>
 			{/if}
 			{section name=user loop=$channels}
-				<tr>
-					<td class="{cycle advance=false}">
-						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].firstName}</a>
+				<tr class="{cycle}">
+					<td>
+						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
+							{$channels[user].firstName}
+						</a>
 					</td>
-					<td class="{cycle advance=false}">
-						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].lastName}</a>
+					<td>
+						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
+							{$channels[user].lastName}
+						</a>
 					</td>
-					<td class="{cycle advance=false}">
+					<td>
 						{if $prefs.feature_webmail eq 'y'}
 							{self_link _script='tiki-webmail.php' locSection='compose' to=$channels[user].email}{$channels[user].email}{/self_link}
 						{else}
 							<a class="link" href="mailto:{$channels[user].email}">{$channels[user].email}</a>
 						{/if}
 					</td>
-					<td class="{cycle advance=false}">
+					<td>
 						{$channels[user].nickname}
 					</td>
 					{foreach from=$exts item=ext key=e}
 						{if $ext.show eq 'y'}
-							<td class="{cycle advance=false}">{$channels[user].ext[$e]}</td>
+							<td>{$channels[user].ext[$e]}</td>
 						{/if}
 					{/foreach}
 					{if $view eq 'list'}
-						<td class="{cycle advance=false}">
+						<td>
 							{if isset($channels[user].groups)}
 								{foreach item=it name=gr from=$channels[user].groups}
 									{$it}
@@ -153,19 +160,21 @@
 						</td>
 					{/if}
 					
-					<td class="{cycle advance=false}">&nbsp;
+					<td>&nbsp;
 						{if $channels[user].user eq $user}
-							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">
+								{icon _id='page_edit'}
+							</a>
+							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 						{elseif $tiki_p_admin eq 'y'}
-							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:36px;" title="{tr}Delete{/tr}">{icon _id='cross_admin' alt='{tr}Delete{/tr}'}</a>
+							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:36px;" title="{tr}Delete{/tr}">{icon _id='cross_admin' alt="{tr}Delete{/tr}"}</a>
 						{/if}
 					</td>
 				</tr>
 			{/section}
 		{else}
 			<tr class="odd">
-				<td>{tr}No records found.{/tr}</td>
+				<td colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td>
 			</tr>
 		{/if}
 	{/foreach}
@@ -192,7 +201,7 @@
 </div>
 
 {literal}
-<script lang='JavaScript'>
+<script type="text/javascript">
 	function newelem(type, vals) {
 		var elem=document.createElement(type);
 

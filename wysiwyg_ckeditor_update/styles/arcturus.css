@@ -631,7 +631,7 @@ div.articletrailer span {
 .forum_actions {
 	background: #333;
 	color: #fff;
-	padding: 3px;
+/*	padding: 3px;*/
 }
 .forum_actions span.title {
 	font-weight: bold;

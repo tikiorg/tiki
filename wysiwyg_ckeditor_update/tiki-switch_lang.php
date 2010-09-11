@@ -7,7 +7,7 @@
 
 require_once ('tiki-setup.php');
 
-$access->check_feature('feature_multilingual');
+$access->check_feature('change_language');
 
 if (isset($_GET['from'])) $orig_url = $_GET['from'];
 elseif (isset($_SERVER['HTTP_REFERER'])) $orig_url = $_SERVER['HTTP_REFERER'];

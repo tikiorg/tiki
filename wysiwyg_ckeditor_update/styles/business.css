@@ -540,18 +540,18 @@ span.highlight {
 /** Modules **/
 .box {
 	margin: 0 25px 25px 25px;
-	background: url(business/title_bg.png) no-repeat 100% 0;
+	background: #3475c6 url(business/title_bg.png) no-repeat 100% 0;
 }
 
 h3.box-title {
 	padding: 9px 0 0 16px;
 	margin: 0 5px 0 0;
-	background: url(business/title_bg.png) no-repeat 0 0;
+	background: #3475c6 url(business/title_bg.png) no-repeat 0 0;
 	border-bottom: none;
 	font-size: 0.9em;
 	font-weight: bold;
 	color: #fff;
-	height: 20px;
+	min-height: 20px;
 	text-transform: uppercase;
 }
 
@@ -562,6 +562,7 @@ h3.box-title a:visited {
 
 .box-data {
 	border: 1px solid #dddddd;
+	background: #fff;
 	border-top: none;
 	padding: 15px 15px 10px;
 }

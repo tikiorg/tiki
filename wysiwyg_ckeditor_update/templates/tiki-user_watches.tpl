@@ -55,10 +55,10 @@
 {if $add_options|@count > 0}
 	<h3>{tr}Add Watch{/tr}</h3>
 	<form action="tiki-user_watches.php" method="post">
-	<table class="normal">
+	<table class="formcolor">
 	<tr>
-		<td class="formcolor">{tr}Event{/tr}:</td>
-		<td class="formcolor">
+		<td>{tr}Event{/tr}:</td>
+		<td>
 			<select name="event" id="type_selector">
 				<option>{tr}Select event type{/tr}</option>
 				{foreach key=event item=label from=$add_options}
@@ -69,8 +69,8 @@
 	</tr>
 	{if $prefs.feature_categories eq 'y'}
 	<tr id="categ_list">
-		<td class="formcolor">{tr}Category{/tr}</td>
-		<td class="formcolor">
+		<td>{tr}Category{/tr}</td>
+		<td>
 			<select class="categwatch-select" name="categwatch" id="langwatch_categ">
 				{foreach item=c from=$categories}
 					<option value="{$c.categId|escape}">{$c.name|escape}</option>
@@ -81,8 +81,8 @@
 	{/if}
 	{if $prefs.feature_multilingual eq 'y'}
 	<tr id="lang_list">
-		<td class="formcolor">{tr}Language{/tr}</td>
-		<td class="formcolor">
+		<td>{tr}Language{/tr}</td>
+		<td>
 			<select name="langwatch">
 				{foreach item=l from=$languages}
 					<option value="{$l.value|escape}">{$l.name|escape}</option>
@@ -91,8 +91,8 @@
 		</td>
 	</tr>
 	{/if}
-	<tr><td class="formcolor">&nbsp;</td>
-	<td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
+	<tr><td>&nbsp;</td>
+	<td><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
 	</tr>
 	</table>
 	</form>
@@ -153,13 +153,13 @@
 	</tr>
 	{cycle values="odd,even" print=false}
 	{foreach item=w from=$watches}
-		<tr>
+		<tr class="{cycle}">
 			{if $watches}
-				<td style="text-align:center;" class="{cycle advance=false}">
+				<td style="text-align:center;">
 					<input type="checkbox" name="watch[{$w.watchId}]" />
 				</td>
 			{/if}
-			<td class="{cycle advance=false}">
+			<td>
 				{if $w.event eq 'article_submitted'}
 					{tr}A user submits an article{/tr}
 				{elseif $w.event eq 'article_edited'}
@@ -181,7 +181,7 @@
 				{/if}
 				({$w.event})
 			</td>
-			<td class="{cycle}"><a class="link" href="{$w.url}">{tr}{$w.type}{/tr}: {$w.title}</a></td>
+			<td><a class="link" href="{$w.url}">{tr}{$w.type}{/tr}: {$w.title}</a></td>
 		</tr>
 	{foreachelse}
 		<tr><td class="odd" colspan="2">{tr}No records found.{/tr}</td></tr>

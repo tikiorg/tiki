@@ -17,8 +17,8 @@
 <tr>
  <th colspan="2"><img src="img/icons/twitter_t_logo_32.png" alt="Twitter" width="16" height="16" /> Twitter</th>
 </tr>
-<tr>
- <td colspan="2" class="{cycle}">
+<tr class="{cycle}">
+ <td colspan="2">
  {if $twitterRegistered==0}{remarksbox type="note" title="{tr}Note{/tr}"}
   {tr}To use Twitter integration, the site admin must register this site as an application at <a href="http://twitter.com/oauth_clients/" target="_blank">http://twitter.com/oauth_clients/</a> and allow write access for the application.{/tr}
  {/remarksbox}{else}
@@ -38,8 +38,8 @@
 <tr>
  <th colspan="2"><img src="img/icons/facebook-logo_32.png" alt="Facebook" width="16" height="16" /> Facebook</th>
 </tr>
-<tr>
- <td colspan="2" class="{cycle}">
+<tr class="{cycle}">
+ <td colspan="2">
  {if $facebookRegistered==0}{remarksbox type="note" title="{tr}Note{/tr}"}
   {tr}To use Facebook integration, the site admin must register this site as an application at <a href="http://developers.facebook.com/setup/" target="_blank">http://developers.facebook.com/setup/</a> first.{/tr}
  {/remarksbox}{else}
@@ -58,20 +58,20 @@
 </tr>
 <tr><th colspan="2">bit.ly</th>
 </tr>
-<tr>
+<tr class="{cycle}">
 {if $prefs.socialnetworks_bitly_sitewide=='y'}
-<td colspan="2" class="{cycle}">
+<td colspan="2">
 {remarksbox type="note" title="{tr}Note{/tr}"}
   <p>{tr}The site admin has set up a global account which will be used for this site{/tr}.</p>
  {/remarksbox}
  </td>
 {else}
-<td class="{cycle advance=false}">{tr}bit.ly Login{/tr}</td>
-<td class="{cycle}"><input type="text" name="bitly_login" value="{$bitly_login}" style="width:95%;" /></td>
+<td>{tr}bit.ly Login{/tr}</td>
+<td><input type="text" name="bitly_login" value="{$bitly_login}" style="width:95%;" /></td>
 </tr>
-<tr>
-<td class="{cycle advance=false}">{tr}bit.ly Key{/tr}</td>
-<td class="{cycle}"><input type="text" name="bitly_key" value="{$bitly_key}" style="width:95%;" /></td>
+<tr class="{cycle}">
+<td>{tr}bit.ly Key{/tr}</td>
+<td><input type="text" name="bitly_key" value="{$bitly_key}" style="width:95%;" /></td>
 {/if}
 </tr>
 <tr>

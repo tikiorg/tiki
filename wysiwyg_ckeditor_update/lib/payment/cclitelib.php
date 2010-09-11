@@ -177,7 +177,7 @@ class CCLiteLib extends TikiDb_Bridge
 
 		return true;	// for now TODO
 
-		require_once 'lib/core/lib/Zend/Http/Client.php';
+		require_once 'lib/core/Zend/Http/Client.php';
 		$client = new Zend_Http_Client( $prefs['payment_cclite_environment'] );
 
 		$base = array( 'cmd' => '_notify-validate' );
@@ -350,6 +350,8 @@ class CCLiteLib extends TikiDb_Bridge
 				$cookies = implode("; ", $results[1]);
 				return array($logon, $cookies);
 			}
+		} else {
+			$err_msg = 'No result from cclite server.';
 		}
 		if ($ch) {
 			curl_close($ch);

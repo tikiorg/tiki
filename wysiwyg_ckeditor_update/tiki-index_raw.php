@@ -18,8 +18,6 @@ if ($prefs['feature_wiki'] != 'y') {
 	die;
 }
 
-//print($GLOBALS["HTTP_REFERER"]);
-
 // Create the HomePage if it doesn't exist
 if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
 	$tikilib->create_page($prefs['wikiHomePage'], 0, '', date("U"), 'Tiki initialization');
@@ -75,8 +73,6 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 	unset ($_SESSION["breadCrumb"][$pos]);
 	array_push($_SESSION["breadCrumb"], $page);
 }
-
-//print_r($_SESSION["breadCrumb"]);
 
 // Now increment page hits since we are visiting this page
 if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {

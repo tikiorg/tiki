@@ -1,4 +1,3 @@
-{popup_init src="lib/overlib.js"}
 
 {title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name|escape}{/title}
 
@@ -12,17 +11,17 @@
 <input type="hidden" name="forumId" value="{$forumId|escape}" />
 <input type="hidden" name="in_reply_to" value="{$msg_info.in_reply_to|escape}" />
 <input type="hidden" name="qId" value="{$smarty.request.qId|escape}" />
-<table class="normal">
+<table class="formcolor">
 <tr>
-	<td class="formcolor">{tr}Title{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Title{/tr}</td>
+	<td>
 		<input type="text" name="title" value="{$msg_info.title|escape}" />
 	</td>
 </tr>
 {if $msg_info.parentId > 0}
 <tr>
-	<td class="formcolor">{tr}Topic{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Topic{/tr}</td>
+	<td>
 		<select name="parentId">
 			{section name=ix loop=$topics}
 			<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title|escape}</option>
@@ -32,8 +31,8 @@
 </tr>
 {else}
 <tr>
-	<td class="formcolor">{tr}make this a thread of{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}make this a thread of{/tr}</td>
+	<td>
 		<select name="parentId">
 			<option value="0" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{tr}None, this is a thread message{/tr}</option>
 			{section name=ix loop=$topics}
@@ -45,16 +44,16 @@
 {/if}
 {if $msg_info.parentId eq 0 and $forum_info.topic_summary eq 'y'}
 	<tr>
-		<td class="formcolor">{tr}summary{/tr}</td>
-		<td class="formcolor">
+		<td>{tr}summary{/tr}</td>
+		<td>
 			<input type="text" name="summary" value="{$msg_info.summary|escape}" />
 		</td>
 	</tr>
 {/if}
 {if $msg_info.parentId eq 0}
 <tr>
-	<td class="formcolor">{tr}Type{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Type{/tr}</td>
+	<td>
       <select name="type">
       <option value="n" {if $msg_info.type eq 'n'}selected="selected"{/if}>{tr}Normal{/tr}</option>
       <option value="a" {if $msg_info.type eq 'a'}selected="selected"{/if}>{tr}Announce{/tr}</option>
@@ -80,14 +79,14 @@
 </tr>
 {/if}
 <tr>
-	<td class="formcolor">{tr}data{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}data{/tr}</td>
+	<td>
 		<textarea rows="6" cols="60" name="data">{$msg_info.data|escape}</textarea>
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">&nbsp;</td>
-	<td class="formcolor">
+	<td>&nbsp;</td>
+	<td>
 		<input type="submit" name="save" value="{tr}Save{/tr}" />
 		<input type="submit" name="saveapp" value="{tr}Save and Approve{/tr}" />
 		<input type="submit" name="remove" value="{tr}Remove{/tr}" />
@@ -133,12 +132,12 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
-<tr>
-	<td style="text-align:center;" class="{cycle advance=false}">
+<tr class="{cycle}">
+	<td style="text-align:center;">
 	  <input type="checkbox" name="msg[{$items[ix].qId}]" />
 	</td>
   
-	<td class="{cycle}" style="text-align:left;">
+	<td style="text-align:left;">
 		{if $items[ix].parentId > 0}
 			[{tr}Topic:{/tr} {$items[ix].topic_title|escape}]
 		{else}
@@ -160,9 +159,9 @@
 		    <br />
 			{section name=iz loop=$items[ix].attachments}
 				<a class="link" href="tiki-download_forum_attachment.php?attId={$items[ix].attachments[iz].attId}">
-				<img src="img/icons/attachment.gif" width="10" height= "13" alt='{tr}Attachment{/tr}' />
+				<img src="img/icons/attachment.gif" width="10" height= "13" alt="{tr}Attachment{/tr}" />
 				{$items[ix].attachments[iz].filename} ({$items[ix].attachments[iz].filesize|kbsize})</a>
-				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>				
+				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>				
 				<br />
 			{/section}
   		  {/if}
@@ -171,8 +170,8 @@
 	</td>
 </tr>
 {sectionelse}
-<tr>
-	<td class="{cycle advance=false}" colspan="2">
+<tr class="{cycle advance=false}">
+	<td colspan="2">
 	{tr}No messages queued yet{/tr}
 	</td>
 </tr>	

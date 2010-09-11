@@ -17,10 +17,10 @@
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      {if $offset}<input type="hidden" name="offset" value="{$offset|escape}" />{/if}
 	 {if $numrows ne $prefs.maxRecords and $numrows}<input type="hidden" name="numrows" value="{$numrows|escape}" />{/if}
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor"><label for="event">{tr}Event:{/tr}</label></td>
-			<td class="formcolor">
+			<td><label for="event">{tr}Event:{/tr}</label></td>
+			<td>
 				<select id="event" name="event">
 					{foreach from=$watches key=key item=watch}
 						<option value="{$key}">{$watch.label|escape}</option>
@@ -29,15 +29,15 @@
 			</td>
 		</tr> 
 		<tr>
-			<td class="formcolor"><label for="flogin">{tr}User:{/tr}</label></td>
-			<td class="formcolor">
+			<td><label for="flogin">{tr}User:{/tr}</label></td>
+			<td>
 				<input type="text" id="flogin" name="login" />
 				{jq}$("#flogin").tiki("autocomplete", "username"){/jq}
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor"><label for="femail">{tr}Email:{/tr}</label></td>        
-			<td class="formcolor">
+			<td><label for="femail">{tr}Email:{/tr}</label></td>        
+			<td>
 				<input type="text" id='femail' name="email" />
 				{if $admin_mail neq ''}
 					<a href="#" onclick="javascript:document.getElementById('femail').value='{$admin_mail}';document.getElementById('flogin').value='admin'" class="link">{tr}Preload Admin Account{/tr}</a>
@@ -45,8 +45,8 @@
 			</td>
 		</tr> 
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
+			<td>&nbsp;</td>
+			<td><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
 		</tr>
 	</table>
 </form>
@@ -98,7 +98,7 @@
 					{/if}
 					{$channels[user].user|escape}
 				</td>
-				<td><a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
+				<td><a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a></td>
 			</tr>
 		{sectionelse}
 			<tr class="odd"><td colspan="6"><b>{tr}No records found.{/tr}</b></td></tr>
@@ -107,7 +107,7 @@
 	{if $channels}
 		<br />
 		{tr}Perform action with checked:{/tr}
-		<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+		<input type="image" name="delsel" src='pics/icons/cross.png' alt="{tr}Delete{/tr}" title="{tr}Delete{/tr}" />
 	{/if}
 </form>
 

@@ -413,18 +413,22 @@ input[id="sl-login-pass"] {
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {
+.share a,
+.tellafriend a:visited,
+.share a:visited {
 	font-size: .7em;
 	color: #6c6c6c;
 }
 
 a.flip:hover,
-.tellafriend a:hover {
+.tellafriend a:hover,
+.share a:hover {
 	font-size: .7em;
 	color: #b2b2b2;
 }
 
-.tellafriend {
+.tellafriend,
+.share {
 	padding: 0 10px;
 }
 
@@ -812,6 +816,15 @@ a.tikihelp:hover {
 
 .inline_syntax {
 	color: orange;
+}
+
+/** Jquery autocomplete **/
+.ac_even, .ac_odd {
+	color: #292929;
+}
+
+.ac_over {
+	color: white;
 }
 
 /**** Boxes *****/
@@ -1241,6 +1254,11 @@ div.imgbox {
     background-color: transparent;
 }
 
+/* wikiplugin edit */
+form.wikiplugin_edit div {
+	color: #292929;
+}
+
 /** Wiki tocs **/
 div.tocnav {
 	background: #474747;
@@ -1384,10 +1402,10 @@ div.posthead {
 body.tiki_blogs .post {
 	margin-bottom: 20px;
 }
-
+/*
 body.tiki_blogs .post .title {
 	width: 100%;
-}
+}*/
 
 body.tiki_blogs .post .title h2 {
 	background: #343434 url(darkroom/button.png) repeat-x;
@@ -1424,13 +1442,13 @@ body.tiki_blogs .author_info {
 	background: none;
 	border: 0;
 }
-
+/*
 body.tiki_blogs .postbody-title {
 	float: none;
 	width: 100%;
 	background: none;
 	border: 0;
-}
+}*/
 
 body.tiki_blogs .postfooter {
 	width: 100%;
@@ -1465,10 +1483,11 @@ body.tiki_blogs .postfooter .actions {
 	margin: 5px 10px;
 }
 
-.post .postbody-title {
+.postbody-title {
 	background: #343434 url(darkroom/button.png) repeat-x;
 	border-bottom: 0;
 	color: #d8d8d8;
+	line-height: 1.4;
 }
 
 .post .postbody-title .title {
@@ -1477,7 +1496,7 @@ body.tiki_blogs .postfooter .actions {
 	font-weight: bold;
 	font-size: 1.1em;
 	margin-left: 5px;
-	margin-top: 3px
+	height: 26px;
 }
 
 .post .postbody-title .title h2 {
@@ -1486,13 +1505,21 @@ body.tiki_blogs .postfooter .actions {
 
 .post .postbody-title .title a.link {
 	font-size: 90%;
-	line-height: 90%;
+	padding-top: 8px;
 }
 
 .post .author {
+	float: left;
 	background: #575757;
 	color: #d8d8d8;
 	margin-left: 4px;
+	margin-bottom: 6px;
+	margin-top: 6px;
+	width: 99%;
+	min-height: 22px;
+	_height: 22px; /*for IE6*/
+	text-align: left;
+	font-size: 90%;
 }
 
 .post .author_post_info {

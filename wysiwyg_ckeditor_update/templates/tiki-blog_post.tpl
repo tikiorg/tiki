@@ -1,28 +1,32 @@
-{popup_init src="lib/overlib.js"}
-
 {title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}New Post{/tr}{/if}{if !empty($blog_data.title)} - {$blog_data.title|escape}{/if}{/title}
 
 <div class="navbar">
+	{if $postId > 0}
+		{button href=$postId|sefurl:blogpost _text="{tr}View post{/tr}"}
+	{/if}
+
 	{if $blogId gt 0 }
 		{assign var=thisblog value=$blogId|sefurl:blog}
 		{button href=$thisblog _text="{tr}View Blog{/tr}"}
 	{/if}
 
 	{if $blogs|@count gt 1 }
-		{* No need for users to go to log list if they are already looking at the only blog *}
+		{* No need for users to go to blog list if they are already looking at the only blog *}
 		{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
 	{/if}
 </div>
 
 {if $contribution_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 		<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
 
 {if $preview eq 'y'}
 	<div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
-	{include file='tiki-view_blog_post_content.tpl'}
+	<div class="blogpost post post_single">
+		{include file='blog_wrapper.tpl' blog_post_context='preview'}
+	</div>
 {/if}
 
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
@@ -61,6 +65,17 @@
 				</td>
 			</tr>
 
+			{if $blog_data.use_excerpt eq 'y'}
+				<tr>
+					<td class="editblogform">
+						{tr}Excerpt:{/tr}
+					</td>
+					<td class="editblogform">
+						{textarea id='post_excerpt' class="wikiedit" name="excerpt"}{$post_info.excerpt}{/textarea}
+					</td>
+				</tr>
+			{/if}
+
 			{if $postId > 0 && $wysiwyg ne 'y'}
 				{if count($post_images) > 0}
 					<tr>
@@ -77,7 +92,7 @@
 											<textarea rows="1" cols="40">{$post_images[ix].absolute|escape}</textarea>
 										</td>
 										<td>
-											<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img src='img/icons/trash.gif' alt='{tr}Trash{/tr}'/></a>
+											<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img src='img/icons/trash.gif' alt="{tr}Trash{/tr}"/></a>
 										</td>
 									</tr>
 								{/section}
@@ -91,7 +106,7 @@
 				<td class="editblogform">{tr}Mark entry as private:{/tr}</td>
 				<td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td>
 			</tr>
-			<tr id='show_pubdate' class="formcolor">
+			<tr id='show_pubdate' class="editblogform">
 				<td>{tr}Publish Date{/tr}</td>
 				<td>
 					{html_select_date prefix="publish_" time=$post_info.created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 

@@ -6,16 +6,13 @@
 {if $line ne 'y' and $prefs.javascript_enabled eq 'y' and $noflipflop ne 'y'}
 {button _text="{tr}Filters{/tr}" _flip_id="trackerFilter$iTrackerFilter"}
 {/if}
-<div id="trackerFilter{$iTrackerFilter}" style="display:{if $open eq 'y' or $line eq 'y' or $prefs.javascript_enabled ne 'y' and $noflipflop ne 'y'}block{else}none{/if}">
+<div id="trackerFilter{$iTrackerFilter}" class="trackerfilter" style="display:{if $open eq 'y' or $line eq 'y' or $prefs.javascript_enabled ne 'y' and $noflipflop ne 'y'}block{else}none{/if}">
 {if empty($inForm)}
 	{if empty($export_action)}
 		<form action="{$smarty.server.PHP_SELF}?{query}" method="post">
 	{else}
 		{jq notonready=true}
 function tf_export_submit(fm) {
-//	setTimeout(function(){
-//		$(fm).hide(400);
-//	}, 5000);
 	$("input[name=export_filter]").attr("disabled", "disabled").css("opacity", 0.5);
 	return true;
 }
@@ -125,4 +122,5 @@ function tf_export_submit(fm) {
 </table>
 {if empty($inForm)}</form>{/if}
 </div>
+{if !empty($dataRes)}<div class="trackerfilter-result">{$dataRes}</div>{/if}
 {/strip}

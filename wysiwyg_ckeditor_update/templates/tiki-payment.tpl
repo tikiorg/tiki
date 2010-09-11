@@ -1,4 +1,4 @@
-{title}Payments{/title}
+{title help="Payment" admpage="payment"}{tr}Payment{/tr}{/title}
 
 {if $invoice}
 	{payment id=$invoice}

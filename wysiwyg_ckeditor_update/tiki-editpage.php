@@ -816,7 +816,7 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
-if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
+if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && (!isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' )) {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
@@ -838,12 +838,15 @@ if ( !isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' ) {
 		}
 		$info['wysiwyg'] = true;
 		$smarty->assign('allowhtml','y');
-	} elseif ($prefs['wysiwyg_htmltowiki'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y' && isset($_SESSION['wysiwyg']) && $_SESSION['wysiwyg'] === 'y') {
-		if ($edit_data != 'ajax error') {
-			//$parsed = $editlib->parseToWysiwyg($edit_data);
+	} elseif ($prefs['wysiwyg_ckeditor'] === 'y' && $_SESSION['wysiwyg'] === 'y') {
+		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+			if ($edit_data != 'ajax error') {
+				//$parsed = $editlib->parseToWysiwyg($edit_data);
+			} else {
+				unset($_REQUEST['save']);	// don't save an ajax error
+			}
 		} else {
-//			$edit_data = '';
-			unset($_REQUEST['save']);
+		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true, 'is_html' => true));
 		}
 	}
 }
@@ -860,19 +863,24 @@ if (empty($parsed)) {
 $smarty->assign('pagedata', $parsed);
 
 // apply the optional post edit filters before preview
-if(isset($_REQUEST["preview"])) {
+if (isset($_REQUEST["preview"])) {
+
 	$parsed = $tikilib->apply_postedit_handlers($parsed);
-	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
+	
+	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
+		$parsed = $editlib->partialParseWysiwygToWiki( $parsed );
+		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'preview_mode'=>true, 'is_html' => $is_html));
+	} else {
+		$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
+	}
+	// If we are in preview mode then preview it!
+	$smarty->assign('preview',1);
 } else {
-	$parsed = "";
+	$parsed = '';
+	$smarty->assign('preview',0);
 }
 
 $smarty->assign_by_ref('parsed', $parsed);
-$smarty->assign('preview',0);
-// If we are in preview mode then preview it!
-if(isset($_REQUEST["preview"])) {
-	$smarty->assign('preview',1);
-}
 
 function parse_output(&$obj, &$parts,$i) {
 	if(!empty($obj['parts'])) {
@@ -937,7 +945,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 	if(!isset($_REQUEST["wiki_authors_style"])) $_REQUEST["wiki_authors_style"]='';
 	if(!isset($_REQUEST["comment"])) $_REQUEST["comment"]='';
 	if(!isset($_REQUEST["lang"])) $_REQUEST["lang"]='';
-	if(!isset($_REQUEST['wysiwyg'])) $_REQUEST['wysiwyg'] = '';
+	if(!isset($_REQUEST['wysiwyg'])) $_REQUEST['wysiwyg'] = 'n';
 	if(isset($_REQUEST['wiki_cache'])) {
 		$wikilib->set_page_cache($_REQUEST['page'],$_REQUEST['wiki_cache']);
 	}
@@ -1066,8 +1074,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 				$edit .= "\r\n";
 			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
 		}
-		if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {//take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
-			$edit = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $edit);
+		if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
+			$edit = $editlib->partialParseWysiwygToWiki( $edit );
 		}
 		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg'], $wiki_authors_style);
 		create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user);
@@ -1132,7 +1140,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 	} else {
 		$url = $wikilib->sefurl($page);
 	}
-	if ($prefs['feature_best_language'] === 'y' || isset($_REQUEST['save'])) {
+	if ($prefs['feature_multilingual'] === 'y' && ($prefs['feature_best_language'] === 'y' || isset($_REQUEST['save']))) {
 		$url .= '&no_bl=y';
 	}
 	$_SESSION['saved_msg'] = $_REQUEST["page"];
@@ -1243,8 +1251,6 @@ if ($prefs['feature_categories'] === 'y') {
 }
 
 $is_staging_article = ($prefs['wikiapproval_staging_category'] > 0) && (in_array($prefs['wikiapproval_staging_category'], $cats));
-$page_badchars_display = ":/?#[]@!$&'()*+,;=<>";
-$page_badchars = "/[:\/?#\[\]@!$&'()*+,;=<>]/";
 if ($is_staging_article && $approved = $tikilib->get_approved_page($page) ) {
 	$page_name = $approved;
 }
@@ -1252,9 +1258,8 @@ else {
 	$page_name = $page;
 }
 
-$matches = preg_match($page_badchars, $page_name);
-if ($matches && ! $tikilib->page_exists($page) ) {
-	$smarty->assign('page_badchars_display', $page_badchars_display);
+if ($wikilib->contains_badchars($page) && ! $tikilib->page_exists($page) ) {
+	$smarty->assign('page_badchars_display', $wikilib->get_badchars());
 }
 
 $plugins = $wikilib->list_plugins(true, 'editwiki');

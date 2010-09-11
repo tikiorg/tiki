@@ -50,9 +50,8 @@ if (!empty($_REQUEST['custom_save'])) {
 				$smarty->assign('custom_error', 'file');
 			}
 			fclose($fp);
-			global $cachelib;
-			include_once ('lib/cache/cachelib.php');
-			$cachelib->erase_dir_content("templates_c/$tikidomain");
+			global $cachelib; include_once ('lib/cache/cachelib.php');
+			$cachelib->empty_cache('templates_c');
 			$smarty->assign('custom_ok', 'y');
 		}
 	}

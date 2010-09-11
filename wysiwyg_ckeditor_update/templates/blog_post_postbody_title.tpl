@@ -1,23 +1,15 @@
 {* $Id$ *}
 <div class="clearfix postbody-title">
-	{if $blog_data.use_title eq 'y'}
-		<div class="title">
+	<div class="title">
+		{if $blog_post_context eq 'view_blog'}
+			<h2><a class="link" href="{$post_info.postId|sefurl:blogpost}">{$post_info.title|escape}</a></h2>
+		{else}
 			<h2>{$post_info.title|escape}</h2>
-		</div>
-	{/if}
-	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
-		{if $tags.data|@count >0}
-			<div class="freetaglist">
-				{tr}Tags:{/tr}&nbsp;
-    		{foreach from=$tags.data item=tag}
-					{if isset($preview) and $preview eq 'y'}
-						<a class="freetag" href="#">{$tag.tag}</a>
-					{else}
-						{capture name=tagurl}{if (strstr($tag.tag, ' '))}"{$tag.tag}"{else}{$tag.tag}{/if}{/capture}
-						<a class="freetag" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$tag.tag}</a>
-					{/if}
-				{/foreach}
-			</div>
 		{/if}
+	</div>
+	{if $blog_post_context eq 'preview' }
+		{include file='freetag_list.tpl' freetags=$post_info.freetags links_inactive='y'}
+	{else}
+		{include file='freetag_list.tpl' freetags=$post_info.freetags}
 	{/if}
 </div>

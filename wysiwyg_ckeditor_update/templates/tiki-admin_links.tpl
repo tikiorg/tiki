@@ -18,13 +18,13 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$links}
-<tr>
-<td class="{cycle advance=false}">{$links[user].url}</td>
-<td class="{cycle advance=false}">{$links[user].title|escape}</td>
-<td class="{cycle advance=false}">{$links[user].hits}</td>
-<td class="{cycle advance=false}">{$links[user].position}</td>
-<td class="{cycle advance=false}">{$links[user].type}</td>
-<td class="{cycle}">
+<tr class="{cycle}">
+<td>{$links[user].url}</td>
+<td>{$links[user].title|escape}</td>
+<td>{$links[user].hits}</td>
+<td>{$links[user].position}</td>
+<td>{$links[user].type}</td>
+<td>
  <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}">{icon _id='page_edit'}</a> &nbsp;
  <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 </td>
@@ -43,23 +43,23 @@
 <a href="tiki-admin_links.php">{tr}Create new Featured Link{/tr}</a>
 {/if}
 <form action="tiki-admin_links.php" method="post">
-<table class="normal">
+<table class="formcolor">
 {if $editurl eq 'n'}
-<tr class="formcolor"><td>URL</td><td><input type="text" name="url" /></td></tr>
+<tr><td>URL</td><td><input type="text" name="url" /></td></tr>
 {else}
-<tr class="formcolor"><td>URL</td><td>{$editurl}
+<tr><td>URL</td><td>{$editurl}
 <input type="hidden" name="url" value="{$editurl|escape}" />
 </td></tr>
 {/if}
-<tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Position{/tr}</td><td><input type="text" size="3" name="position" value="{$position|escape}" /> (0 {tr}disables the link{/tr})</td></tr>
-<tr class="formcolor"><td>{tr}Link type{/tr}</td><td>
+<tr><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td>{tr}Position{/tr}</td><td><input type="text" size="3" name="position" value="{$position|escape}" /> (0 {tr}disables the link{/tr})</td></tr>
+<tr><td>{tr}Link type{/tr}</td><td>
 <select name="type">
 <option value="r" {if $type eq 'r'}selected="selected"{/if}>{tr}replace current page{/tr}</option>
 <option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}framed{/tr}</option>
 <option value="n" {if $type eq 'n'}selected="selected"{/if}>{tr}open new window{/tr}</option>
 </select>
 </td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="add" value="{tr}Save{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="add" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

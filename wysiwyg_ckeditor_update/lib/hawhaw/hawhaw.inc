@@ -2260,7 +2260,7 @@ class HAW_deck
                   $signature = sprintf("<small>%s</small>\n", $haw_sig_text);
           }
           else
-            $signature = sprintf("<a href=\"http://info.hawhaw.de/index.htm?host=%s\" target=\"_blank\"><small>Powered by HAWHAW (C)</small></a>\n", $this->waphome);
+            $signature = sprintf("<a href=\"%s\"><small>Go to non-mobile site</small></a>", $this->waphome);
 
           echo $signature;
         }

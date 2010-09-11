@@ -149,7 +149,7 @@
 		<br />
 	{/section}
 {/if}
-<table class="admin">
+<table class="formcolor">
 	<tr>
 		<td>{$tree}</td>
 		<td width="20">&nbsp;</td>

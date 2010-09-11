@@ -71,7 +71,7 @@ function wikiplugin_articles_info()
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
-				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")'),
+				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format. Defaults to "publishDate_desc" (other column examples are "title", "lang", "authorName" & "topicName")').' '.tra('Use random to have random items.'),
 				'filter' => 'word',
 			),
 			'quiet' => array(
@@ -128,6 +128,11 @@ function wikiplugin_articles_info()
 				'description' => 'y|n',
 				'filter' => 'alpha',
 			),
+			'urlparam' => array(
+				'required' => false,
+				'name' => tra('Additional url param'),
+				'filter' => 'striptags',
+			),
 		),
 	);
 }
@@ -136,7 +141,7 @@ function wikiplugin_articles($data, $params)
 {
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 	global $artlib; require_once 'lib/articles/artlib.php';
-	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n');
+	$default = array('max' => -1, 'start' => 0, 'usePagination' => 'n', 'topicId' => '', 'topic' => '', 'sort' => 'publishDate_desc', 'type' => '', 'lang' => '', 'quiet' => 'n', 'categId' => '', 'largefirstimage' => 'n', 'urlparam' => '');
 	$params = array_merge($default, $params);
 
 	extract($params, EXTR_SKIP);
@@ -161,6 +166,7 @@ function wikiplugin_articles($data, $params)
 	}
 
 	$smarty->assign_by_ref('quiet', $quiet);
+	$smarty->assign_by_ref('urlparam', $urlparam);
 	
 	if(!isset($containerClass)) {$containerClass = 'wikiplugin_articles';}
 	$smarty->assign('container_class', $containerClass);
@@ -179,10 +185,10 @@ function wikiplugin_articles($data, $params)
 	$smarty->assign('largefirstimage', $largefirstimage);
 	if (!isset($overrideDates))	$overrideDates = 'n';
 	
-	include_once("lib/commentslib.php");
+	include_once("lib/comments/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'));
+	$listpages = $artlib->list_articles($start, $max, $sort, '', $dateStartTS, $dateEndTS, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang, '', '', ($overrideDates == 'y'), 'y');
  	if ($prefs['feature_multilingual'] == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
@@ -225,7 +231,7 @@ function wikiplugin_articles($data, $params)
 		$smarty->assign_by_ref('offset', $start);
 		$smarty->assign_by_ref('cant', $listpages['cant']);
 	}
-	
+	$smarty->assign('usePagination', $usePagination);
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 
 	if (isset($titleonly) && $titleonly == 'y') {

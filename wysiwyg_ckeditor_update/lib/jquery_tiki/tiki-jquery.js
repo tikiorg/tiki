@@ -384,106 +384,104 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 	if (jqueryTiki.sheet) {
 		
 		// override saveSheet on jQuery.sheet for tiki specific export
-		$.sheet.saveSheet = function( index, redirect ) {
-			if (typeof redirect === 'undefined') { redirect = false; }
-			if (typeof index === 'undefined') { index = this.instance.length - 1; }
-			// not set to 0 by default in case AJAX has caused a spurious one to appear
-
-			var sheetInstance = this.instance[ index ];
-			sheetInstance.evt.cellEditDone();
-			
-			var s = this.get_sheet_json(sheetInstance);
-			
-			s = "s=" + $.toJSON(s)	// convert to JSON
-				.replace(/\+/g,"%2B")	// replace +'s with 0x2B hex value
-				.replace(/\&/g,"%26");	// and replace &'s with 0x26
-			
-			jQuery.ajax({
-				url: sheetInstance.s.urlSave,
-				type: "POST",
-				data: s,
-				//contentType: "application/json; charset=utf-8",
-				dataType: 'html',
-				beforeSend: function() { window.showFeedback("Saving", 10000); }, 
-				success: function(data) {
-					sheetInstance.setDirty(false);
-					window.showFeedback(data, 2000, redirect);
-				}
+		$.sheet.saveSheet = function( redirect ) {
+			$( $.sheet.instance ).each( function( i ){
+				if (typeof redirect === 'undefined') { redirect = false; }
+				// not set to 0 by default in case AJAX has caused a spurious one to appear
+	
+				this.evt.cellEditDone();
+				
+				var s = $.sheet.get_sheet_json(this);
+				
+				s = "s=" + $.toJSON(s)	// convert to JSON
+					.replace(/\+/g,"%2B")	// replace +'s with 0x2B hex value
+					.replace(/\&/g,"%26");	// and replace &'s with 0x26
+				
+				var setDirty = this.setDirty;
+				
+				$.ajax({
+					url: this.s.urlSave,
+					type: "POST",
+					data: s,
+					//contentType: "application/json; charset=utf-8",
+					dataType: 'html',
+					beforeSend: function() { window.showFeedback("Saving", 10000); }, 
+					success: function(data) {
+						setDirty(false);
+						window.showFeedback(data, 2000, redirect);
+					}
+				});
 			});
 		};
 		
 		$.sheet.get_sheet_json = function(sheetInstance) {	// diverged from jQuery.sheet 1.1 / Tiki 6
-			
 			var sheetClone = sheetInstance.sheetDecorateRemove(true);
-			var docs = []; //documents
+			var documents = []; //documents
 			
 			jQuery(sheetClone).each(function() {
-				var doc = { //document
-					metadata:{},
-					data:{}
-				};
+				var document = {}; //document
+				document.metadata = {};
+				document.data = {};
+				
+				var table = jQuery(this);
+				
+				var trs = table.find('tr');
+				var rowCount = trs.length;
+				var colCount = 0;
+				var col_widths = '';
+				
+				trs.each(function(i) {
+					var tr = jQuery(this);
+					var tds = tr.find('td');
+					colCount = tds.length;
+					
+					document.data['r' + i] = {};
+					document.data['r' + i].height = tr.attr('height');
+					
+					tds.each(function(j) {
+						var td = jQuery(this);
+						var colSpan = td.attr('colspan');
+						colSpan = (colSpan > 1 ? colSpan : null);
 
-				var count = 0;
-				var cur_column = 0, cur_row = 0;
-				var max_column = 0, max_row = 0;
-				jQuery(this).find('tr').each(function(){
-					count = 0;
-					jQuery(this).find('td').each(function(){
-						count++;
+						document.data['r' + i]['c' + j] = {
+							value: td.text(),
+							formula: td.attr('formula'),
+							stl: td.attr('style'),
+							colspan: colSpan,
+							cl: td.attr('class')
+						};
 						
-						var id = jQuery(this).attr('id');
-						var txt = jQuery.trim(jQuery(this).text());
-						var pos = id.search(/cell_c/i);
-						var pos2 = id.search(/_r/i);
-						
-						if (pos !== -1 && pos2 !== -1) {
-							cur_column = parseInt(id.substr(pos+6, pos2-(pos+6)), 10);
-							cur_row = parseInt(id.substr(pos2+2), 10);
-							
-							if (max_column < cur_column) { max_column = cur_column; }
-							
-							if (max_row < cur_row) { max_row = cur_row; }
-							
-							if (count === 1) { doc.data['r' + cur_row] = {}; }
-							
-							doc.data['r'+cur_row]['c'+cur_column] = {};
-							
-							doc.data['r'+cur_row]['c'+cur_column].value = txt;
-							
-							formula = jQuery(this).attr('formula');
-							if (formula !== undefined) {
-								doc.data['r'+cur_row]['c'+cur_column].formula = formula;
-							}
-							
-							var sp = jQuery(this).attr('colSpan');
-							if (sp > 1) {
-								doc.data['r'+cur_row]['c'+cur_column].width = sp;
-							}
-							sp = jQuery(this).attr('rowSpan');	// TODO in .sheet
-							if (sp > 1) {
-								doc.data['r'+cur_row]['c'+cur_column].height = sp;
-							}
+						var sp = td.attr('colSpan');
+						if (sp > 1) {
+							doc.data['r' + i]['c' + j].width = sp;
+						}
+						sp = td.attr('rowSpan');	// TODO in .sheet
+						if (sp > 1) {
+							doc.data['r' + i]['c' + j].height = sp;
 						}
 					});
-					
-					cur_column = cur_row = 0;
 				});
-				
-				var id = jQuery(this).attr('rel');
+					
+				var id = table.attr('rel');
 				id = id ? id.match(/sheetId(\d+)/) : null;
 				id = id && id.length > 0 ? id[1] : 0;
-				doc.metadata = {
-					"columns": parseInt(max_column, 10) + 1, //length is 1 based, index is 0 based
-					"rows": parseInt(max_row, 10) + 1, //length is 1 based, index is 0 based
-					"title": jQuery(this).attr('title'),
-					"sheetId" : id
-				};
-				docs.push(doc); //append to documents
-			});
-			return docs;
-		};
 
-	
+				document.metadata = {
+					"columns": parseInt(colCount, 10), //length is 1 based, index is 0 based
+					"rows": parseInt(rowCount, 10), //length is 1 based, index is 0 based
+					"title": table.attr('title'),
+					"col_widths": {},
+					"sheetId": id
+				};
+				
+				table.find('colgroup').children().each(function(i) {
+					document.metadata.col_widths['c' + i] = (jQuery(this).attr('width') + '').replace('px', '');
+				});
+				
+				documents.push(document); //append to documents
+			});
+			return documents;
+		};	
 	}
 	
 });		// end $(document).ready
@@ -532,7 +530,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 		
 		dialogSelectElement( area_id, '{' + type.toUpperCase(), '{' + type.toUpperCase() + '}' ) ;
 		var sel = getTASelection( textarea );
-		if (sel.length > 0) {
+		if (sel && sel.length > 0) {
 			sel = sel.replace(/^\s\s*/, "").replace(/\s\s*$/g, "");	// trim
 			//alert(sel.length);
 			if (sel.length > 0 && sel.substring(0, 1) === '{') { // whole plugin selected
@@ -622,8 +620,14 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
         if (edit) {
             container.children('form').submit();
         } else {
-//			$('#' + area_id).focus(); // unsuccesfull attempt to get Fx3.5/win to keep selection info
             insertAt(area_id, blob, false, false, replaceText);
+    		// only used in ckeditor to insert new plugins, but needs reparsing afterwards
+        	if ($('#cke_contents_' + area_id).length !== 0) {
+        		cked = CKEDITOR.instances[area_id];
+        		if (cked && typeof cked.reParse == 'function') {
+        			cked.reParse();
+        		}
+        	}
         }
 		$(this).dialog("close");
 		$('div.plugin input[name="type"][value="' + type + '"]').parent().parent().remove();
@@ -639,6 +643,7 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 	container.dialog('destroy').dialog({
 		width: $(window).width() * 0.6,
 		height: $(window).height() * pfc,
+		zIndex: 10000,
 		title: heading.text(),
 		autoOpen: false,
 		close: function() {
@@ -653,20 +658,6 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 	}).dialog('option', 'buttons', btns).dialog("open");
    
 	restoreTASelection(area_id);
-}
-
-/*
- * Maintain state of other trackerfilter plugin forms
- */
-
-function maintain_trackerfilter_state( myId, otherId ) {
-	
-	$("#trackerFilter" + myId + " form").submit( function () {
-		var oform = $("#trackerFilter" + otherId + " form").serialize();
-		$(this).append("<input type='hidden' name='other_filters[]' value='" + $(this).serialize() + "' />")
-				 .append("<input type='hidden' name='other_filters[]' value='" + oform + "' />");
-		return true;
-	});
 }
 
 /*
@@ -921,13 +912,29 @@ $.fn.tiki = function(func, type, options) {
 		case "sheet":
 			if (jqueryTiki.sheet) {
 				options = options || {};	// some default options for sheets in tiki
-				var sheet_theme = jqueryTiki.ui ? "lib/jquery/jquery-ui/themes/" + jqueryTiki.ui_theme + "/jquery-ui.css" : "lib/jquery/jquery.sheet/theme/jquery-ui-1.8.1.custom.css";
-
-				opts = $.extend({urlBaseCss: 	"lib/jquery/jquery.sheet/jquery.sheet.css",
-							urlTheme: 		sheet_theme,
+				
+				//ensure that sheet instance exists, otherwise problems getting current instance number;
+				var I = 0;
+				if ( $.sheet.instance ) {
+					I = $.sheet.instance.length; //we use length here because we haven't yet created sheet, it will append 1 to this number thus making this the effective instance number
+				} else {
+					$.sheet.instance = [];
+				}				
+				
+				var inlineMenu =  $("#sheetTools").html();
+				inlineMenu = jQuery(
+							(inlineMenu ? inlineMenu : "").replace(/sheetInstance/g, "jQuery.sheet.instance[" + I + "]")
+				);
+				
+				inlineMenu.find('.qt-picker').attr('instance', I);
+				
+				opts = $.extend({
 							urlMenu: 		"lib/jquery_tiki/jquery.sheet/menu.html",	/* not working currently due to missing menu plugin */
 							urlGet: "",
-							buildSheet: true
+							buildSheet: true,
+							autoFiller: true,
+							inlineMenu: inlineMenu,
+							colMargin: 20 //beefed up colMargin because the default size was too small for font
 				}, options);
 				
 		 		return this.each(function() {
@@ -1064,6 +1071,7 @@ function displayDialog( ignored, list, area_id ) {
 	if (!obj.width) { obj.width = 210; }
 	obj.bgiframe = true;
 	obj.autoOpen = false;
+	obj.zIndex = 10000;
 	$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
 
 	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
@@ -1076,7 +1084,7 @@ function displayDialog( ignored, list, area_id ) {
 window.pickerData = [];
 var pickerDiv;
 
-function displayPicker( closeTo, list, area_id ) {
+function displayPicker( closeTo, list, area_id, isSheet, styleType ) {
 	if (pickerDiv) {
 		$('div.toolbars-picker').remove();	// simple toggle
 		pickerDiv = false;
@@ -1102,29 +1110,44 @@ function displayPicker( closeTo, list, area_id ) {
 		
 		link.innerHTML = disp.replace('\/', '/');
 		link.href = 'javascript:void(0)';
-		link.onclick = function() {
-			insertAt( area_id, ins );
+		
+		if ( isSheet ) {
+			link.onclick = function() {
+				var o = $(link);
+				var I = $(closeTo).attr('instance');
+				I = parseInt( I ? I : 0 );
+				$.sheet.instance[ I ].cellChangeStyle(styleType, o.children().first().css('background-color'));
+				
+				$('div.toolbars-picker').remove();
+				pickerDiv = false;
+				
+				return false;
+			};
+		} else {
+			link.onclick = function() {
+				insertAt( area_id, ins );
+		
+				textarea = $('#' +  area_id);	
+				// quick fix for Firefox 3.5 losing selection on changes to popup
+				if (typeof textarea.selectionStart != 'undefined') {
+					var tempSelectionStart = textarea.selectionStart;
+					var tempSelectionEnd = textarea.selectionEnd;	
+				}
 	
-			textarea = $('#' +  area_id);	
-			// quick fix for Firefox 3.5 losing selection on changes to popup
-			if (typeof textarea.selectionStart != 'undefined') {
-				var tempSelectionStart = textarea.selectionStart;
-				var tempSelectionEnd = textarea.selectionEnd;	
-			}
-
-			$('div.toolbars-picker').remove();
-			pickerDiv = false;
-
-			// quick fix for Firefox 3.5 losing selection on changes to popup
-        	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
-                textarea.selectionStart = tempSelectionStart;
-     		}
-			if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
-            	textarea.selectionEnd = tempSelectionEnd;
-       		}
-
-			return false;
-		};
+				$('div.toolbars-picker').remove();
+				pickerDiv = false;
+	
+				// quick fix for Firefox 3.5 losing selection on changes to popup
+	        	if (typeof textarea.selectionStart != 'undefined' && textarea.selectionStart != tempSelectionStart) {
+	                textarea.selectionStart = tempSelectionStart;
+	     		}
+				if (typeof textarea.selectionEnd != 'undefined' && textarea.selectionEnd != tempSelectionEnd) {
+	            	textarea.selectionEnd = tempSelectionEnd;
+	       		}
+	
+				return false;
+			};
+		}
 	};
 
 	for( var i in window.pickerData[list] ) {
@@ -1486,6 +1509,108 @@ function dialogReplaceReplace( area_id ) {
 }
 
 
+(function($) {
+	/**
+	 * Adds annotations to the content of text in ''container'' based on the
+	 * content found in selected dts.
+	 *
+	 * Used in comments.tpl
+	 */
+	$.fn.addnotes = function( container ) {
+		return this.each(function(){
+			var comment = this;
+			var text = $('dt:contains("note")', comment).next('dd').text();
+			var title = $('.postbody-title', comment).clone();
+			var author = $('.author', comment).clone();
+			var body = $('.postbody-content', comment).clone();
+			body.find('dt:contains("note")').closest('dl').remove();
 
+			if( text.length > 0 ) {
+				var parents = container.find(':contains("' + text + '")').parent();
+				var node = container.find(':contains("' + text + '")').not(parents)
+					.addClass('note-editor-text')
+					.each( function() {
+						var child = $('dl.note-list',this);
+						if( ! child.length ) {
+							child = $('<dl class="note-list"/>')
+								.appendTo(this)
+								.hide();
+
+							$(this).click( function() {
+								child.toggle();
+							} );
+						}
+
+						child.append( title.append(author) )
+							.append( $('<dd/>').append(body) );
+					} );
+			}
+		});
+	};
+
+	/**
+	 * Convert a zone to a note editor by attaching handlers on mouse events.
+	 */
+	$.fn.noteeditor = function (textarea, link) {
+		var hiddenParents = null;
+		var annote = $(link)
+			.click( function( e ) {
+				e.preventDefault();
+				var annotation = $(this).attr('annotation');
+				$(this).fadeOut(100);
+				$("form.comments").hide();
+				$(textarea).parent().find(".comment-info").remove();
+				var msg = "";
+				if (annotation.length < 20) {
+					msg = tr("The text you have selected is quite short. Select a longer piece to ensure the note is associated with the correct text.") + "<br />";
+				}
+				msg = "<p class='description comment-info'>" + msg + tr("Tip: Leave the first line as it is, starting with \";note:\". This is required") + "</p>";
+				$(textarea).parent().append($(msg));
+				
+				hiddenParents = $(textarea).parents(":hidden");
+				$(textarea).parents().fadeIn(100);
+				$(textarea).val(';note:' + annotation + "\n\n").focus().scroll();
+				if (typeof $(textarea).selection == 'function') {	// only there if autocomplete enabled
+					var len = $(textarea).val().length;
+					$(textarea).selection(len, len);
+				}
+			} )
+			.appendTo(document.body);
+
+			$(this).mouseup(function( e ) {
+				var range;
+				if( window.getSelection && window.getSelection().rangeCount ) {
+					range = window.getSelection().getRangeAt(0);
+				} else if( window.selection ) {
+					range = window.selection.getRangeAt(0);
+				}
+
+				if( range ) {
+					var string = $.trim( range.toString() );
+
+					if( string.length && -1 === string.indexOf( "\n" ) ) {
+						annote.attr('annotation', string);
+						annote.fadeIn(100).position( {
+							of: e,
+							at: 'bottom left',
+							my: 'top left',
+							offset: '20 20'
+						} );
+					} else {
+						if (annote.css("display") != "none") {
+							annote.fadeOut(100);
+						}
+						if ($("form.comments").css("display") == "none") {
+							$("form.comments").show();
+						}
+						if (hiddenParents) {
+							hiddenParents.hide();
+							hiddenParents = null;
+						}
+					}
+				}
+			});
+		};
+})($jq);
 
 

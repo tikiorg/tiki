@@ -25,22 +25,25 @@ function wikiplugin_flash_info() {
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('fileId'),
-				'description' => tra('Id of a file from a podcast sgllery - will work only with podcast gallery'),
+				'description' => tra('Id of a file from a podcast gallery - will work only with podcast gallery'),
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Default width: 425'),
+				'advanced' => true,
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Default height: 350'),
+				'advanced' => true,
 			),
 			'quality' => array(
 				'required' => false,
 				'name' => tra('Quality'),
 				'description' => tra('Flash video quality. Default value: high'),
+				'advanced' => true,
 			),
 		),
 	);

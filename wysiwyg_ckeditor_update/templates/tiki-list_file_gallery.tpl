@@ -1,7 +1,5 @@
 {* $Id$ *}
 
-{popup_init src="lib/overlib.js"}
-
 {title help="File+Galleries" admpage="fgal"}
 	{strip}
 		{if $edit_mode eq 'y'}
@@ -35,7 +33,7 @@
 	{if $galleryId gt 0}
 
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=file_gallery_changed&amp;objectType=File+Gallery&amp;objectName={$gal_info.name|escape:"url"}&amp;objectHref={'tiki-list_file_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}' align='right' hspace="1"}</a>
+			<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=file_gallery_changed&amp;objectType=File+Gallery&amp;objectName={$gal_info.name|escape:"url"}&amp;objectHref={'tiki-list_file_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace="1"}</a>
 		{/if}
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
@@ -134,7 +132,7 @@
 {if $filegals_manager neq ''}
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Be careful to set the right permissions on the files you link to{/tr}.{/remarksbox}
 	<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
-	<input type="checkbox" name="keepOpenCbx" id="keepOpenCbx" onchange="keepOpenChanged(this);">
+	<input type="checkbox" name="keepOpenCbx" id="keepOpenCbx" checked="checked" onchange="keepOpenChanged(this);">
 	{jq notonready=true}
 		function keepOpenChanged(cbx) {
 			if (cbx.checked) {

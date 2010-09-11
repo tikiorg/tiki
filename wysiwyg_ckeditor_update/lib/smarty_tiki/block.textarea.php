@@ -37,8 +37,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
 	}
 	
-	$params['rows'] = isset($params['rows']) ? $params['rows'] : 20;
-	$params['cols'] = isset($params['cols']) ? $params['cols'] : 80;
+	$params['rows'] = !empty($params['rows']) || ($prefs['wysiwyg_ckeditor'] === 'y' && $params['_wysiwyg'] === 'y') ? $params['rows'] : 20;
+	$params['cols'] = !empty($params['cols']) || ($prefs['wysiwyg_ckeditor'] === 'y' && $params['_wysiwyg'] === 'y') ? $params['cols'] : 80;
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
@@ -70,9 +70,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	// He says: "it's necessary for expanding content (pushing right column) to the right properly"
 	// but it looks fine to me
 	if (preg_match('/Firefox\/(\d)+\.(\d)+/i', $_SERVER['HTTP_USER_AGENT'], $m) &&count($m) > 2 && $m[1] >=3 && ($m[2] >=5 || $m[1] > 3)) {
-		$headerlib->add_css('body {display: block; }', 10);
+		//$headerlib->add_css('body {display: block; }', 10);	// xajax/loadComponent() doesn't re-parse CSS on AJAX loads (yet), so use JS instead
+		$headerlib->add_jq_onready('$("body").css("display", "block")');
 	}
-	
 	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
 
@@ -140,70 +140,113 @@ function FCKeditor_OnComplete( editorInstance ) {
 
 		} else {									// new ckeditor implementation 2010
 
-			//include_once 'lib/tiki_ckeditor.php';
+			if ($prefs['feature_ajax'] !== 'y' || $prefs['feature_ajax_autosave'] !== 'y' ||
+					$prefs['feature_wiki_paragraph_formatting'] !== 'y' || $prefs['feature_wiki_paragraph_formatting_add_br'] !== 'y' ||
+					$prefs['wysiwyg_wiki_parsed'] !== 'y') {
+				
+				// show dev notice
+				include_once('lib/smarty_tiki/block.remarksbox.php');
+				$msg = tra('<strong>Thank you for trying the new ckeditor implementation for Tiki 6</strong><br /><br />');
+				
+				global $tiki_p_admin;
+				if ($tiki_p_admin) {
+					$msg .= tra("Some of your preferences should be set differently for this to work at it's best. Please click this to apply the recommended profile:") .
+					   ' <a href="tiki-admin.php?profile=WYSIWYG_6x&repository=&page=profiles&list=List">WYSIWYG_6x</a>';
+				} else {
+					$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
+				}
+				
+				$html .= smarty_block_remarksbox( array( 'type'=>'info', 'icon'=>'bricks', 'title'=>tra('Ckeditor Development Notice')), $msg, $smarty)."\n";
+			}
+
+			// set up ckeditor
 			if (!isset($params['name'])) { $params['name'] = 'edit'; }
-			//$cked = new TikiCK($params['name']);
 		
 			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 			//// note, this breaks ajax page load via wikitopline edit icon
 			//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
-			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js');
-			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js');
+			$headerlib->add_js_config('CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";');
+			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js', 'minified');
+			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 'minified');
 		
-//			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
-//				$cked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
-//				$cked->Config['autoSaveEditorId'] = $as_id;
-//			}
 			include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
 			$cktools = smarty_function_toolbars($params, $smarty);
 			$cktools = json_encode($cktools);
 			$cktools = substr($cktools, 1, strlen($cktools) - 2);	// remove surrouding [ & ]
 			$cktools = str_replace(']],[[', '],"/",[', $cktools);	// add new row chars - done here so as not to break existing fck
-						
-//			if ($prefs['feature_detect_language'] == 'y') {
-//				$cked->Config['AutoDetectLanguage'] = true;
-//			} else {
-//				$cked->Config['AutoDetectLanguage'] = false;
-//			}
-			//$cked->Config['DefaultLanguage'] = $prefs['language'];
-			//$cked->Config['CustomConfigurationsPath'] = $url_path.'setup_ckeditor.php'.(isset($params['_section']) ? '?section='.urlencode($params['_section']) : '');
-			//$html .= $cked->CreateHtml();
 			
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
 			global $tikiroot;
 			$headerlib->add_jq_onready('
 CKEDITOR.config._TikiRoot = "'.$tikiroot.'";
+
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
+CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiplugin/");
+CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
 ');	// before all
 		
-		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-			$headerlib->add_jq_onready('
+			if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+				$headerlib->add_jq_onready('
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
 CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");
 ', 5);	// before dialog tools init (10)
-		}
-		if ($prefs['feature_ajax'] === 'y' && $prefs['feature_ajax_autosave'] === 'y') {
-			$headerlib->add_jq_onready('
+			}
+			if ($prefs['feature_ajax'] === 'y' && $prefs['feature_ajax_autosave'] === 'y') {
+				$headerlib->add_jq_onready('
 // --- config settings for the autosave plugin ---
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
-CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to
-CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;								// RefreshTime
-CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;								// Sensitivity to key strokes
-
+CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
+CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
+register_id("'.$as_id.'"); auto_save();					// Register auto_save so it gets removed on submit
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
-		}
-		$headerlib->add_jq_onready('
+			}
+			
+			// work out current theme/option (surely in tikilib somewhere?)
+			global $tikilib, $tc_theme, $tc_theme_option;
+			$ckstyleoption = '';
+			if (!empty($tc_theme)) {
+				$ckstyle = $tikilib->get_style_path('', '', $tc_theme);
+				if (!empty($tc_theme_option)) {
+					$ckstyleoption = $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
+				}
+			} else {
+				$ckstyle = $tikilib->get_style_path('', '', $prefs['style']);
+				if (!empty($prefs['style_option'])) {
+					$ckstyleoption = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
+				}
+			}
+
+			$headerlib->add_jq_onready('
 $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	toolbar_Tiki: '.$cktools.',
 	toolbar: "Tiki",
 	language: "'.$prefs['language'].'",
 	customConfig: "",
-	autoSaveSelf: "'.$auto_save_referrer.'"		// unique reference for each page set up in ensureReferrer()
+	autoSaveSelf: "'.$auto_save_referrer.'",		// unique reference for each page set up in ensureReferrer()
+	font_names: "' . $prefs['wysiwyg_fonts'] . '",
+	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
+	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
+	contentsCss: ["' . $tikiroot . $ckstyle . '","' . $tikiroot . $ckstyleoption . '"],
+	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
+	defaultLanguage: "' . $prefs['language'] . '",
+	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",
+	'. (empty($params['cols']) ? 'height: 400,' : '') .'
+	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '"
 });
 ', 20);	// after dialog tools init (10)
 
-			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;" rows="'.$params['rows'].'"; cols="'.$params['cols'].'">'.htmlspecialchars($content).'</textarea>';
+			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+			if (empty($params['cols'])) {	
+				$html .= 'width:100%;'. (empty($params['cols']) ? 'height:500px;' : '') .'"';
+			} else {
+				$html .= '" cols="'.$params['cols'].'"';
+			}
+			if (!empty($params['rows'])) {	
+				$html .= ' rows="'.$params['rows'].'"';
+			}
+			$html .= '>'.htmlspecialchars($content).'</textarea>';
 			
 			$headerlib->add_js('
 var ckEditorInstances = new Array();
@@ -212,7 +255,6 @@ function CKeditor_OnComplete() {
 	ckEditorInstances[ckEditorInstances.length] = this;
 	this.resetDirty();
 };');
-			
 		}	// end both wysiwyg setups
 
 	} else {
@@ -221,7 +263,7 @@ function CKeditor_OnComplete() {
 		
 		$textarea_attributes = '';
 		foreach ( $params as $k => $v ) {
-			if ( $k == 'id' || $k == 'name' || $k == 'class' ) {
+			if ( $k == 'id' || $k == 'name' || $k == 'class' || $k == '_toolbars' ) {
 				$smarty->assign('textarea_'.$k, $v);
 			} elseif ( $k[0] != '_' ) {
 				$textarea_attributes .= ' '.$k.'="'.$v.'"';
@@ -269,17 +311,20 @@ function editTimerTick() {
 		editTimerWarnings++;
 	} else if (seconds <= 0) {
 		clearInterval(editTimeoutIntervalId);
+		editTimeoutIntervalId = 0;
 		window.status = '".addslashes(tra('Your edit session has expired'))."';
-	} else {
-		window.status = '".addslashes(tra('Your edit session will expire in:'))."' + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
-	}
-	if (seconds % 60 == 0 && \$('#edittimeout')) {
-		\$('#edittimeout').text(Math.floor(seconds / 60));
+	} else if (seconds < 600) {		// don't bother until 5 minutes to go
+		\$('#edittimeout').parents('.rbox:first').fadeIn();
+		window.status = '".addslashes(tra('Your edit session will expire in:'))."' +\" \" + + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
+		if (seconds % 60 == 0 && \$('#edittimeout')) {
+			\$('#edittimeout').text(Math.floor(seconds / 60));
+		}
 	}
 }
 
 \$('document').ready( function() {
 	editTimeoutIntervalId = setInterval(editTimerTick, 1000);
+	\$('#edittimeout').parents('.rbox:first').hide();
 } );
 var editTimeoutSeconds = ".ini_get('session.gc_maxlifetime').";
 var editTimeElapsedSoFar = 0;

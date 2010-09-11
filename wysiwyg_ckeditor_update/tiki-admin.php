@@ -216,6 +216,11 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Webmail";
 		$description = "Webmail";
 		include_once ('tiki-admin_include_webmail.php');
+	} else if ($adminPage == "comments") {
+		$admintitle = "Comments"; //get_strings tra("Comments")
+		$helpUrl = "Comments";
+		$description = "Comments settings"; //get_strings tra("Comments settings")
+		include_once ('tiki-admin_include_comments.php');
 	} else if ($adminPage == "rss") {
 		$admintitle = "Feeds"; //get_strings tra("Feeds")
 		$helpUrl = "Feeds User";

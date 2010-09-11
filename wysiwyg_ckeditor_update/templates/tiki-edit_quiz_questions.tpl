@@ -20,29 +20,29 @@
 	<input type="hidden" name="quizId" value="{$quizId|escape}" />
 	<input type="hidden" name="questionId" value="{$questionId|escape}" />
 
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">{tr}Question{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}Question{/tr}:</td>
+			<td>
 				<textarea name="question" rows="5" cols="80">{$question|escape}</textarea>
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Position{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}Position{/tr}:</td>
+			<td>
 				<select name="position">{html_options values=$positions output=$positions selected=$position}</select>
 			</td>
 		</tr>
 
 		<tr>
-			<td class="formcolor">{tr}Question Type{/tr}:</td>
-			<td class="formcolor">
+			<td>{tr}Question Type{/tr}:</td>
+			<td>
 				<select name="questionType">{html_options options=$questionTypes selected=$type}</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+			<td>&nbsp;</td>
+			<td><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 		</tr>
 	</table>
 </form>
@@ -57,17 +57,17 @@
 
 <!-- begin form area for importing questions -->
 <form enctype="multipart/form-data" method="post" action="tiki-edit_quiz_questions.php?quizId={$quiz_info.quizId}">
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor" colspan="2">
+			<td colspan="2">
 				{tr}Instructions: Type, or paste, your multiple choice questions below.  One line for the question, then start answer choices on subsequent lines.  Separate additional questions with a blank line.  Indicate correct answers by starting them with a "*" (without the quotes) character.{/tr}
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				{tr}Input{/tr}
 			</td>
-			<td class="formcolor">
+			<td>
 				<textarea class="wikiedit" name="input_data" rows="30" cols="80" id='subheading'></textarea>
 			</td>
 		</tr>
@@ -99,16 +99,16 @@
 	</tr>
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].questionId}</td>
-			<td class="{cycle advance=false}">{$channels[user].position}</td>
-			<td class="{cycle advance=false}">{$channels[user].question|escape}</td>
-			<td class="{cycle advance=false}">{$channels[user].options}</td>
-			<td class="{cycle advance=false}">{$channels[user].maxPoints}</td>
-			<td class="{cycle}">
-				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
-				<a class="link" href="tiki-edit_question_options.php?quizId={$quizId}&amp;questionId={$channels[user].questionId}">{icon _id='bricks' alt='{tr}Options{/tr}'}</a>
-				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+		<tr class="{cycle}">
+			<td>{$channels[user].questionId}</td>
+			<td>{$channels[user].position}</td>
+			<td>{$channels[user].question|escape}</td>
+			<td>{$channels[user].options}</td>
+			<td>{$channels[user].maxPoints}</td>
+			<td>
+				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+				<a class="link" href="tiki-edit_question_options.php?quizId={$quizId}&amp;questionId={$channels[user].questionId}">{icon _id='bricks' alt="{tr}Options{/tr}"}</a>
+				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
 	{/section}

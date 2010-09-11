@@ -78,6 +78,7 @@ if ($_REQUEST["fieldId"]) {
 	$info['itemChoices'] = array();
 	$info['visibleBy'] = array();
 	$info['editableBy'] = array();
+	$info['validation'] = $info['validationParam'] = $info['validationMessage'] = '';
 }
 if (isset($_REQUEST['up']) && $_REQUEST['fieldId']) {
 	if (empty($_REQUEST['delta'])) $_REQUEST['delta'] = 1;

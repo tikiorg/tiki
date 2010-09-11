@@ -19,17 +19,28 @@ $auto_query_args = array(
 );
 $access->check_feature('feature_sheet');
 
-if (!isset($_REQUEST['sheetId'])) {
-	$smarty->assign('msg', tra("A SheetId is required."));
-	$smarty->display("error.tpl");
+$info = $sheetlib->get_sheet_info($_REQUEST['sheetId']);
+if (empty($info)) {
+	$smarty->assign('Incorrect parameter');
+	$smarty->display('error.tpl');
 	die;
 }
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
-	$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
+$objectperms = Perms::get( 'sheet', $_REQUEST['sheetId']);
+if ($user && $user == $info['author']) {
+	$objectperms->view_sheet = 1;
+	$objectperms->edit_sheet = 1;
+	$objectperms->tiki_p_view_sheet = 1;
+	$objectperms->tiki_p_edit_sheet = 1;
+}
+
+if ($tiki_p_admin != 'y' && !$objectperms->view_sheet) {
+	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display("error.tpl");
 	die;
 }
+$smarty->assign('objectperms', $objectperms);
+
 if (!isset($_REQUEST['parse'])) {
 	$_REQUEST['parse'] = 'y';
 }
@@ -42,7 +53,7 @@ if ( $tiki_sheet_div_style) {
 	$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);
 }
 
-if ($tiki_p_edit_sheet == 'y' && $_REQUEST['parse'] == 'edit' && $prefs['feature_jquery_sheet'] == 'y') {	// edit button clicked in parse mode
+if ($objectperms->edit_sheet && $_REQUEST['parse'] == 'edit' && $prefs['feature_jquery_sheet'] == 'y') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
 if (typeof ajaxLoadingShow == "function") {
@@ -59,24 +70,19 @@ setTimeout (function () { $("div.tiki_sheet").tiki("sheet", "",{editable:false})
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');
-// Individual permissions are checked because we may be trying to edit the sheet
-$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
-if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet')) $tiki_p_edit_sheet = 'y';
-else $tiki_p_edit_sheet = 'n';
-$smarty->assign('tiki_p_edit_sheet', $tiki_p_edit_sheet);
 $smarty->assign('title', $info['title']);
 $smarty->assign('description', $info['description']);
 $smarty->assign('page_mode', 'view');
 // Process the insertion or modification of a gallery here
 $grid = new TikiSheet($_REQUEST["sheetId"]);
-if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && $tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
-	$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && !$objectperms->edit_sheet && $tiki_p_admin != 'y') {
+	$smarty->assign('msg', tra("Permission denied") . ": feature_sheet");
 	$smarty->display("error.tpl");
 	die;
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
-	if ($tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
-		$smarty->assign('msg', tra("Access Denied") . ": feature_sheet");
+	if (!$objectperms->edit_sheet && $tiki_p_admin != 'y') {
+		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -128,16 +134,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 	$smarty->assign('grid_content', $grid->getTableHtml());
 } else {
 	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-	$date = time();
+	
+	//We make $date an array so that we can load multi sheets
+	$dates = array(time());
 	if (!empty($_REQUEST['readdate'])) {
-		$date = $_REQUEST['readdate'];
-		if (!is_numeric($date)) $date = strtotime($date);
-		if ($date == - 1) $date = time();
+		$i = 0;
+		foreach ( explode("|", $_REQUEST['readdate'] ) as $dateStr ) {
+			if ( $dateStr ) {
+				$dates[$i] = $dateStr;
+				if (!is_numeric($dates[$i])) $dates[$i] = strtotime($dates[$i]);
+				if ($dates[$i] == - 1) $dates[$i] = time();
+			}
+			$i++;
+		}
 	}
-	$smarty->assign('read_date', $date);
-	$handler->setReadDate($date);
-	$grid->import($handler);
+	
+	//If in edit mode, force singe date to show up
 	if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit') {
+		$smarty->assign('read_date', $dates[0]);
+		$handler->setReadDate($dates[0]);
+		$grid->import($handler);
 		$handler = new TikiSheetFormHandler;
 		ob_start();
 		$grid->export($handler);
@@ -149,8 +165,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 			include_once ('contribution.php');
 		}
 	} else {
-		$html = $grid->getTableHtml( true, $date );
-		$smarty->assign('grid_content', $html);
+		//In view mode, we can show all of them if we want :)
+		
+		$tableHtml = array();
+		$i = 0;
+		
+		foreach ( $dates as $date ) {
+			$smarty->assign('read_date', $date);
+			$handler->setReadDate($date);
+			$grid->import($handler);
+			$tableHtml[$i] = $grid->getTableHtml( true, $date );
+			$i++;
+		}
+		
+		$smarty->assign('grid_content', $tableHtml);
 		$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 		$grid->import($handler);
 	}
@@ -170,11 +198,12 @@ $("#edit_button").click( function () {
 	var $a = $(this).find("a");
 	if ($a.text() != editSheetButtonLabel2) {
 
-		if ($.sheet.instance && $.sheet.instance.length > 0) {
+		/*if ($.sheet.instance && $.sheet.instance.length > 0) {
 			$.sheet.instance = [];
-		}
-		var options = {title: $("#sheetTools").html(), urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"};
-		$("div.tiki_sheet").tiki("sheet", "", options);
+		}*/
+		
+		
+		$("div.tiki_sheet").tiki("sheet", "", {urlSave: "tiki-view_sheets.php?sheetId='.$_REQUEST['sheetId'].'"});
 
 		$a.attr("temp", $a.text());
 		$a.text(editSheetButtonLabel2);
@@ -184,20 +213,30 @@ $("#edit_button").click( function () {
 			ajaxLoadingHide();
 		}
 	} else {
-		if (!$.sheet.instance[0].isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
+		var isDirty = false;
+		$($.sheet.instance).each( function(i){
+			if (this.isDirty) {
+				isDirty = true;
+			}
+		});
+		
+		if (!isDirty ? true : confirm("Are you sure you want to finish editing?  All unsaved changes will be lost.")) {
 			window.location.replace(window.location.href.replace("parse=edit", "parse=y"));
 		}
 	}
 	return false;
 });
 $("#save_button").click( function () {
-	$.sheet.instance[0].evt.cellEditDone();
-	$.sheet.saveSheet(0, true);
+	$($.sheet.instance).each( function(i){
+		$.sheet.instance[i].evt.cellEditDone();
+	});
+	$.sheet.saveSheet(true);
+	
 	return false;
 }).hide();
 
 window.toggleFullScreen = function(areaname) {
-	$.sheet.instance[0].toggleFullScreen();
+	$.sheet.instance[$.sheet.instance.length - 1].toggleFullScreen();
 }
 
 window.showFeedback = function(message, delay, redirect) {

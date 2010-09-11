@@ -51,22 +51,20 @@
 			<td style="text-align:center;">{$channels[user].questions}</td>
 			<td style="text-align:right;">
 				{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' surveyId=$channels[user].surveyId}{tr}Edit{/tr}{/self_link}
-				<a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">{icon _id='help' alt='{tr}Questions{/tr}' title='{tr}Questions{/tr}'}</a>
-				<a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+				<a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">{icon _id='help' alt="{tr}Questions{/tr}" title="{tr}Questions{/tr}"}</a>
+				<a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				{if $channels[user].individual eq 'y'}
-					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
+					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{icon _id='key_active' alt="{tr}Active Perms{/tr}"}</a>
 				{else}
-					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
+					<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{icon _id='key' alt="{tr}Perms{/tr}"}</a>
 				{/if}
 				{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
-					<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{icon _id='chart_curve' alt='{tr}Stats{/tr}'}</a>
+					<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{icon _id='chart_curve' alt="{tr}Stats{/tr}"}</a>
 				{/if}
 			</td>
 		</tr>
 	{sectionelse}
-		<tr class="odd">
-			<tdcolspan="6">{tr}No records found.{/tr}</td>
-		</tr>
+		<tr><td class="odd" colspan="5"><strong>{tr}No records found.{/tr}</strong></td></tr>
 	{/section}
 </table>
 
@@ -86,17 +84,17 @@
 
 <form action="tiki-admin_surveys.php" method="post">
 	<input type="hidden" name="surveyId" value="{$info.surveyId|escape}" />
-	<table class="normal">
-		<tr class="formcolor">
+	<table class="formcolor">
+		<tr>
 			<td>{tr}Name{/tr}:</td>
 			<td><input type="text" name="name" size="80" value="{$info.name|escape}" /></td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Description{/tr}:</td>
 			<td>{textarea name="description" rows="6" cols="80" _toolbars='y' _zoom='n' _simple='y' comments='y'}{$info.description}{/textarea}</td>
 		</tr>
 		{include file='categorize.tpl'}
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Status{/tr}</td>
 			<td>
 				<select name="status">
@@ -105,7 +103,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td>&nbsp;</td>
 			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />

@@ -14,7 +14,7 @@
 </div>
 
 {if $category_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}A category is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
@@ -26,7 +26,7 @@
 <form method="post" action="tiki-edit_blog.php" id="blog-edit-form">
   <input type="hidden" name="blogId" value="{$blogId|escape}" />
   {tabset name='tabs_editblog'}
-    {tab name='{tr}General Settings{/tr}'}
+    {tab name="{tr}General Settings{/tr}"}
       <table class="normal">
         <tr class="editblogform">
           <td><label for="blog-title">{tr}Title{/tr}</label></td>
@@ -78,16 +78,28 @@
 
       </table>
     {/tab}
-    {tab name='{tr}Display Options{/tr}'}
+    {tab name="{tr}Display Options{/tr}"}
       <table class="normal">
         <tr class="editblogform">
           <td><label for="blogs-number">{tr}Number of posts to show per page{/tr}</label></td>
           <td><input type="text" name="maxPosts" id="blogs-number" value="{$maxPosts|escape}" /></td>
         </tr>
-        <tr class="editblogform">
-          <td><label for="blogs-titles">{tr}Display titles in blog posts{/tr}</label></td>	 
-          <td><input type="checkbox" name="use_title" id="blogs-titles" {if $use_title eq 'y'}checked='checked'{/if}/></td>	 
-        </tr>	 
+    	<tr class="editblogform">
+          <td><label for="blogs-title">{tr}Display blog title in posts list page{/tr}</label></td>	 
+          <td><input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}/></td>	 
+        </tr>
+    	<tr class="editblogform">
+          <td><label for="blogs-title-post">{tr}Display blog title in post page{/tr}</label></td>	 
+          <td><input type="checkbox" name="use_title_in_post" id="blogs-title-post" {if $use_title_in_post eq 'y'}checked='checked'{/if}/></td>	 
+        </tr>
+    	<tr class="editblogform">
+          <td><label for="blogs-description">{tr}Display blog description{/tr}</label></td>	 
+          <td><input type="checkbox" name="use_description" id="blogs-description" {if $use_description eq 'y'}checked='checked'{/if}/></td>	 
+        </tr>
+    	<tr class="editblogform">
+          <td><label for="blogs-breadcrumbs">{tr}Display breadcrumbs{/tr}</label></td>	 
+          <td><input type="checkbox" name="use_breadcrumbs" id="blogs-breadcrumbs" {if $use_breadcrumbs eq 'y'}checked='checked'{/if}/></td>	 
+        </tr>
     	<tr class="editblogform">
           <td><label for="blogs-author">{tr}Display author in blog posts{/tr}</label></td>	 
           <td><input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}/></td>	 
@@ -113,6 +125,12 @@
           <td><label for="blogs-post-max-related">{tr}Maximum number of related posts to display{/tr}</label></td>
           <td>
 		    <input type="text" name="related_max" id="blogs-post-max-related" value="{$related_max|escape}"/>
+		  </td>
+        </tr>
+        <tr class="editblogform">
+          <td><label for="blogs-post-use-excerpt">{tr}Use post excerpt{/tr}</label></td>
+          <td>
+		    <input type="checkbox" name="use_excerpt" id="blogs-post-use-excerpt" {if $use_excerpt eq 'y'}checked='checked'{/if}/>
 		  </td>
         </tr>
 

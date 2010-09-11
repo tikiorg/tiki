@@ -19,7 +19,7 @@ function smarty_function_poll($params, &$smarty) {
 	if (!is_object($polllib)) {
 		include_once('lib/polls/polllib_shared.php');
 	}
-	include_once('lib/commentslib.php');
+	include_once('lib/comments/commentslib.php');
 
     if (isset($rate)) {
 			if (!$tikilib->page_exists($rate)) {

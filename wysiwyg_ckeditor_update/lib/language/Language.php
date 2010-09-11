@@ -11,12 +11,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	exit;
 }
 
-require_once('lib/core/lib/TikiDb/Bridge.php');
+require_once('lib/core/TikiDb/Bridge.php');
 
+//TODO: split this class into two. One for language stuff and other for translations (updateTrans(), writeLanguageFile() etc)
+//TODO: move language functions (like $tikilib->list_languages()) from $tikilib to this class
 /**
  * Handles languages translations
  */
-class Language extends TikiDb_Bridge 
+class Language extends TikiDb_Bridge
 {
 
 	/**
@@ -125,27 +127,36 @@ class Language extends TikiDb_Bridge
 	/**
 	 * Update a translation
 	 * If $originalStr is not found, a new entry is added. Otherwise, 
-	 * if $translatedStr is empty the entry is deleted or if $translatedStr is
-	 * not empty the entry is updated with the new translation.
+	 * if $translatedStr is empty the entry is deleted, if $translatedStr
+	 * is not empty but is equal to the actual translation nothing is done or if
+	 * $translatedStr is not empty and different from the actual translation
+	 * the entry is updated with the new translation.
 	 *
 	 * @param string $originalStr the original string
 	 * @param string $translatedStr the translated string
 	 * @return void
 	 */
 	public function updateTrans($originalStr, $translatedStr) {
+		global ${"lang_$this->lang"};
+
+		// don't insert anything in the database if the translation hasn't been changed	
+		if (isset(${"lang_$this->lang"}[$originalStr]) && ${"lang_$this->lang"}[$originalStr] == $translatedStr) {
+			return;
+		}
+
 		$query = 'select * from `tiki_language` where `lang`=? and `source` = ?';
 		$result = $this->query($query, array($this->lang, $originalStr));
 
 		if (!$result->numRows()) {
-			$query = 'insert into `tiki_language` values(?,?,?)';
-			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr));
+			$query = 'insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values (?,?,?,?)';
+			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr, 1));
 		} else {
 			if (strlen($translatedStr) == 0) {
 				$query = 'delete from `tiki_language` where `source`=? and `lang`=?';
 				$result = $this->query($query, array($originalStr, $this->lang));
 			} else {
-				$query = 'update `tiki_language` set `tran`=? where `source`=? and `lang`=?';
-				$result = $this->query($query,array($translatedStr,$originalStr,$this->lang));
+				$query = 'update `tiki_language` set `tran`=?, changed=? where `source`=? and `lang`=?';
+				$result = $this->query($query,array($translatedStr, 1, $originalStr, $this->lang));
 			}
 		}
 	}
@@ -169,6 +180,7 @@ class Language extends TikiDb_Bridge
 
 			// foreach translation in the database check each string in the language.php file
 			// if the original string is present and the translation is diferent replace it
+			//TODO: improve the algorithm (it interact over each entry in language.php file for each entry in the database)
 			foreach ($dbTrans as $dbOrig => $dbNewStr) {
 				foreach ($langFile as $key => $line) {
 					if (preg_match('|^/?/?\s*?"(.+)"\s*=>\s*"(.+)".*|', $line, $matches) && $matches[1] == $dbOrig) {
@@ -218,7 +230,7 @@ class Language extends TikiDb_Bridge
 	 * @return array
 	 */
 	protected function _getTranslations() {
-		$query = "SELECT `source`, `tran` FROM `tiki_language` WHERE `lang`=? ORDER BY `source` asc";
+		$query = "SELECT `source`, `tran` FROM `tiki_language` WHERE `lang`=? AND `source` != '' AND `changed` = 1 ORDER BY `source` asc";
 		$result = $this->fetchMap($query,array($this->lang));
 
 		return $result;

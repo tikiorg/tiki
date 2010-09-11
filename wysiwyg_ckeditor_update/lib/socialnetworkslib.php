@@ -10,8 +10,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-require_once ('lib/core/lib/Zend/Oauth/Consumer.php');
-require_once ('lib/core/lib/Zend/Service/Twitter.php');
+require_once ('lib/core/Zend/Oauth/Consumer.php');
+require_once ('lib/core/Zend/Service/Twitter.php');
 require_once ('lib/logs/logslib.php');
 
 
@@ -227,7 +227,7 @@ class SocialNetworksLib extends LogsLib
 		}                                        
 		$status=$response->getStatus();
 		if ($status!=200) {
-			$this->add_log('tweet','twitter response ' & $status);
+			$this->add_log('tweet','twitter response ' . $status);
 			return -$status;
 		} else {
 			$id=(string)$response->id;

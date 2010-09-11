@@ -5,37 +5,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-/**
- * @class NotificationLib
- *
- * This class provides an events notification
- *
- * @license GNU LGPL
- * @copyright Tiki Community
- * @date created:
- */
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-// callback_type is 1, 3 or 5 - all other values are reserved
-define ("TIKI_CALLBACK_EARLY", 1);
-define ("TIKI_CALLBACK_STANDARD", 3);
-define ("TIKI_CALLBACK_LATE", 5);
-if (!isset($Debug)) $Debug = false;
-/**
- * This class provides an events notification
- *
- * If an object wishes to register early, standard and
- * callbacks for the smae event, it must use different
- * function names.  Any attempt to use the same
- * combination of object, function and event name will
- * simply cause the previously-registered callback to
- * be cancelled and the new one to be registered.
- * 
- * @since 1.x
- */
+
 class NotificationLib extends TikiLib
 {
 	function list_mail_events($offset, $maxRecords, $sort_mode, $find) {

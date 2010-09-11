@@ -531,7 +531,8 @@ span.moduleflip-vert {
 
 /* centercolumn */
 	
-.fullscreen .tellafriend {
+.fullscreen .tellafriend,
+.fullscreen .share {
 	margin-right: 100px;
 	margin-top: 2px;
 }
@@ -1350,6 +1351,15 @@ body.tiki_blogs div.author_actions {
 	text-align: right;
 }
 
+/* Related content */
+.related_posts {
+	margin-top: 3em;
+}
+
+.related_posts h4 {
+	margin: 0;
+}
+
 /***** Forums *****/
 body.tiki_forums table.normal {
 	margin: auto;
@@ -1371,7 +1381,6 @@ body.tiki_forums table.normal {
 }
 	
 .post .postbody .content {
-	float: left;
 	padding: 0 3px 3px 3px;
 	margin: 0;
 	text-align: left;
@@ -1419,6 +1428,10 @@ body.tiki_forums table.normal {
 }
 
 .postbody-content {
+	padding: 3px;
+}
+
+.postbody .content {
 	margin: 5px;
 }
 
@@ -1434,6 +1447,7 @@ body.tiki_forums table.normal {
 .post .postfooter {
 	float: right;
 	text-align: right;
+	width: 100%;
 }
 .post .postfooter .rating {
 	display: inline;
@@ -1456,6 +1470,22 @@ body.tiki_forums table.normal {
 	margin-bottom: 5px;
 	margin-left: 4px;
 	padding: 3px
+}
+
+.postfooter .postfooter-nav {
+	display: block;
+	margin-top: 1em;
+}
+
+.postfooter .postfooter-nav .postfooter-nav-prev {
+	text-align: left;
+	float: left;
+	width: 50%;
+}
+
+.postfooter .postfooter-nav .postfooter-nav-next {
+	float: right;
+	width: 50%;
 }
 
 .sub_comment {
@@ -1521,6 +1551,49 @@ body.tiki_forums table.normal {
 span.commentstitle {
 	font-weight: bold;
 	font-size: 1.2em;
+}
+
+/* Comment Annotations */
+
+dl.note-list {
+	margin: .5em;
+	background: #fff;
+	color: #000;
+	border: solid thin black;
+}
+
+#note-editor-comment {
+	background-color: #fff;
+	color: #000;
+	border: #999 1px solid;
+	padding: .5em;
+}
+
+.note-editor-text {
+	background-color: #eee;
+	color: #000;
+}
+
+.note-list .postbody-title {
+	background-color: #ccc;
+	color: #000;
+	padding: .5em;
+}
+
+.note-list .title a {
+	color: #000;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.note-list .actions {
+	float: right;
+}
+
+
+.note-list .author {
+	font-size: smaller;
+	text-align: right;
 }
 
 /* Comments moderation */
@@ -1619,6 +1692,10 @@ opaque .box-title,
 	white-space: nowrap;
 }
 
+body.filegal_popup #tiki-center {
+	margin: 0 1em;
+}
+
 /***** Trackers (etc.) *****/
 .statuson {
 	padding: 1px;
@@ -1691,6 +1768,11 @@ div.multiselect div.selection {
 	float: left;
 	margin: 0;
 	padding: 0;
+}
+
+div.trackerfilter-result {
+	max-height: 50ex;
+	overflow: auto;
 }
 
 /***** Categories, Tags *****/
@@ -2105,4 +2187,42 @@ table.treeTable .parent td {
 .deleted {
 	text-decoration: line-through;
 }
+
+/* interactive translations */
+
+#intertrans-indicator {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 40px;
+	background-color: #ade;
+	padding: 1em;
+}
+
+#intertrans-form {
+	position: fixed;
+	top: 10%;
+	bottom: 10%;
+	left: 10%;
+	right: 10%;
+	overflow: auto;
+	background-color: #eff;
+	display: none;
+	z-index: 2000;
+	padding: 1em;
+	border: #799 solid 2px;
+}
+#intertrans-form table {
+	width: 98%;
+	padding: 1em;
+}
+#intertrans-form table input {
+	width: 100%;
+}
+
+table.intertrans td {
+	width: 50%;
+}
+
 /* End of File */

@@ -33,9 +33,9 @@
 {if $prefs.feature_community_list_country eq 'y'}
 	<td class="odd">
 	{if $listuserscountry[changes] == "None" || $listuserscountry[changes] == "Other" || $listuserscountry[changes] == ""}
-  {html_image file='img/flags/Other.gif' hspace='4' vspace='1' alt='{tr}Flag{/tr}' title='{tr}Flag{/tr}'}
+  {html_image file='img/flags/Other.gif' hspace='4' vspace='1' alt="{tr}Flag{/tr}" title="{tr}Flag{/tr}"}
   {else}
-  {html_image file="img/flags/$listuserscountry[changes].gif" hspace='4' vspace='1' alt='{tr}Flag{/tr}' title='{tr}Flag{/tr}'}
+  {html_image file="img/flags/$listuserscountry[changes].gif" hspace='4' vspace='1' alt="{tr}Flag{/tr}" title="{tr}Flag{/tr}"}
   &nbsp;{tr}{$listuserscountry[changes]}{/tr}
   {/if}
 	&nbsp;</td>

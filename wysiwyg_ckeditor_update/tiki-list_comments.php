@@ -6,7 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/commentslib.php');
+include_once ('lib/comments/commentslib.php');
 $auto_query_args = array('types_section', 'types', 'show_types', 'sort_mode', 'offset', 'find', 'findfilter_approved');
 
 if (isset($_REQUEST['blogId'])) {
@@ -65,7 +65,7 @@ foreach($sections_enabled as $k => $info) {
 if (count($show_types) == 1 && count($selected_types) == 1) $show_types = array();
 
 $headers = array('title' => 'Title', 'objectType' => 'Type', 'object' => 'Object', 'userName' => 'Author', 'commentDate' => 'Date', 'data' => 'Comment',);
-$more_info_headers = array('user_ip' => 'IP');
+$more_info_headers = array('user_ip' => tra('IP'), 'email' => tra('Email'), 'website' => tra('Website'));
 
 if (count($selected_types) == 1) {
 	unset($headers['objectType']);

@@ -26,7 +26,11 @@ abstract class Toolbar
 
 	public static function getTag( $tagName ) // {{{
 	{
-		if( $tag = Toolbar::getCustomTool( $tagName ) )
+		global $section;
+		//we detect sheet first because it has unique buttons
+		if ( $section == 'sheet' && $tag = ToolbarSheet::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = Toolbar::getCustomTool( $tagName ) )
 			return $tag;
 		elseif( $tag = ToolbarInline::fromName( $tagName ) )
 			return $tag;
@@ -52,8 +56,7 @@ abstract class Toolbar
 			return new ToolbarSwitchEditor;
 		elseif( $tagName == '-' )
 			return new ToolbarSeparator;
-		elseif( $tag = ToolbarSheet::fromName( $tagName ) )
-			return $tag;
+		
 	} // }}}
 
 	public static function getList( $include_custom = true ) // {{{
@@ -80,6 +83,7 @@ abstract class Toolbar
 			'sup',
 			'tikilink',
 			'link',
+			'anchor',
 			'color',
 			'bgcolor',
 			'center',
@@ -131,8 +135,10 @@ abstract class Toolbar
 			'sheetsave',	// spreadsheet ones
 			'addrow',
 			'addrowmulti',
+			'addrowbefore',
 			'deleterow',
 			'addcolumn',
+			'addcolumnbefore',
 			'deletecolumn',
 			'addcolumnmulti',
 			'sheetgetrange',
@@ -424,6 +430,8 @@ class ToolbarFckOnly extends Toolbar
 	
 	public static function fromName( $name ) // {{{
 	{
+		global $prefs;
+		
 		switch( $name ) {
 		case 'templates':
 			return new self( 'Templates' );
@@ -436,7 +444,7 @@ class ToolbarFckOnly extends Toolbar
 		case 'pastetext':
 			return new self( 'PasteText' );
 		case 'pasteword':
-			return new self( 'PasteWord' );
+			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'PasteFromWord' : 'PasteWord' );
 		case 'print':
 			return new self( 'Print' );
 		case 'spellcheck':
@@ -456,7 +464,7 @@ class ToolbarFckOnly extends Toolbar
 		case 'right':
 			return new self( 'JustifyRight' );
 		case 'full':
-			return new self( 'JustifyBlock' );
+			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'JustifyBlock' : 'JustifyFull' );
 		case 'indent':
 			return new self( 'Indent' );
 		case 'outdent':
@@ -464,23 +472,35 @@ class ToolbarFckOnly extends Toolbar
 		case 'unlink':
 			return new self( 'Unlink' );
 		case 'style':
-			return new self( 'Styles' );
+			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Styles'  : 'Style' );
 		case 'fontname':
-			return new self( 'Font' );
+			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Font' : 'FontName' );
 		case 'fontsize':
 			return new self( 'FontSize' );
 		case 'format':
-			return new self( 'Format' );
+			return 	$prefs['wysiwyg_ckeditor'] === 'y' ? new self( 'Format' ) : null;
 		case 'source':
-			return new self( 'Source' );
+			global $tikilib, $user, $page;
+			$p = $prefs['wysiwyg_htmltowiki'] == 'y' ? 'tiki_p_wiki_view_source'  : 'tiki_p_use_HTML';
+			if ($tikilib->user_has_perm_on_object( $user, $page, 'wiki page',$p )) {
+				return new self( 'Source' );
+			} else {
+				return null;
+			}
 		case 'autosave':
-			return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif' );
+			if ($prefs['wysiwyg_ckeditor'] == 'y') {
+				return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
+			} else {
+				return new self( 'ajaxAutoSave', 'lib/fckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
+			}
 		case 'sub':
 			return new self( 'Subscript' );
 		case 'sup':
 			return new self( 'Superscript' );
 		case 'showblocks':
 			return new self( 'ShowBlocks' );
+		case 'anchor':
+			return new self( 'Anchor' );
 		}
 	} // }}}
 
@@ -501,6 +521,7 @@ class ToolbarInline extends Toolbar
 
 	public static function fromName( $tagName ) // {{{
 	{
+		global $prefs;
 		switch( $tagName ) {
 		case 'bold':
 			$label = tra('Bold');
@@ -523,7 +544,7 @@ class ToolbarInline extends Toolbar
 		case 'strike':
 			$label = tra('Strikethrough');
 			$icon = tra('pics/icons/text_strikethrough.png');
-			$wysiwyg = 'Strike';
+			$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'Strike' : 'StrikeThrough';
 			$syntax = '--text--';
 			break;
 		case 'nonparsed':
@@ -593,7 +614,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'rule':
 			$label = tra('Horizontal Bar');
 			$icon = tra('pics/icons/page.png');
-			$wysiwyg = 'HorizontalRule';
+			$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'HorizontalRule' : 'Rule';
 			$syntax = '---';
 			break;
 		case 'pagebreak':
@@ -619,7 +640,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'toc':
 			$label = tra('Table of contents');
 			$icon = tra('pics/icons/book.png');
-			$wysiwyg = 'TOC';
+			$wysiwyg = $prefs['wysiwyg_ckeditor'] === 'y' ? 'TOC' : '';
 			$syntax = '{maketoc}';
 			break;
 		default:
@@ -649,17 +670,18 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 
 	public static function fromName( $tagName ) // {{{
 	{
+		global $prefs;
 		switch( $tagName ) {
 		case 'list':
 			$label = tra('Unordered List');
 			$icon = tra('pics/icons/text_list_bullets.png');
-			$wysiwyg = 'UnorderedList';
+			$wysiwyg =  $prefs['wysiwyg_ckeditor'] == 'y' ? 'BulletedList' : 'UnorderedList';
 			$syntax = '*text';
 			break;
 		case 'numlist':
 			$label = tra('Ordered List');
 			$icon = tra('pics/icons/text_list_numbers.png');
-			$wysiwyg = 'OrderedList';
+			$wysiwyg =  $prefs['wysiwyg_ckeditor'] == 'y' ? 'NumberedList' : 'OrderedList';
 			$syntax = '#text';
 			break;
 		default:
@@ -694,7 +716,8 @@ class ToolbarPicker extends Toolbar
 	{
 		global $headerlib;
 		$prefs = array();
-
+		$styleType = '';
+		
 		switch( $tagName ) {
 		case 'specialchar':
 			$wysiwyg = 'SpecialChar';
@@ -723,6 +746,7 @@ class ToolbarPicker extends Toolbar
 			$label = tra('Foreground color');
 			$icon = tra('pics/icons/palette.png');
 			$rawList = array();
+			$styleType = 'color';
 			
 			$hex = array('0', '3', '6', '9', 'C', 'F');
 			$count_hex = count($hex);
@@ -746,7 +770,8 @@ class ToolbarPicker extends Toolbar
 			$label = tra('Background Color');
 			$icon = tra('pics/icons/palette_bg.png');
 			$wysiwyg = 'BGColor';
-
+			$styleType = 'background-color';
+			
 			$hex = array('0', '3', '6', '9', 'C', 'F');
 			$count_hex = count($hex);
 
@@ -775,7 +800,8 @@ class ToolbarPicker extends Toolbar
 				->setIcon( !empty($icon) ? $icon : 'pics/icons/shading.png' )
 					->setList( $list )
 						->setType('Picker')
-							->setName($tagName);
+							->setName($tagName)
+								->setStyleType($styleType);
 		
 		foreach( $prefs as $pref ) {
 			$tag->addRequiredPreference( $pref );
@@ -811,7 +837,13 @@ class ToolbarPicker extends Toolbar
 	} // }}}
 	
 	public function getSyntax( $areaId = '$areaId' ) {
-		return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaId . '\')';	// is enclosed in double quotes later
+		global $section;
+		if ( $section == 'sheet' )
+		{
+			return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaId . '\', true, \'' . $this->styleType . '\' )';	// is enclosed in double quotes later
+		} else {
+			return 'displayPicker( this, \'' . $this->name . '\', \'' . $areaId . '\' )';	// is enclosed in double quotes later
+		}
 	}
 	
 	static private function setupJs() {
@@ -835,6 +867,13 @@ class ToolbarPicker extends Toolbar
 		
 		return $this->getSelfLink($this->getSyntax($areaId),
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-picker');
+	} // }}}
+	
+	protected function setStyleType( $type ) // {{{
+	{
+		$this->styleType = $type;
+
+		return $this;
 	} // }}}
 }
 
@@ -890,7 +929,7 @@ class ToolbarDialog extends Toolbar
 
 		case 'table':
 			$icon = tra('pics/icons/table.png');
-			$wysiwyg = '';
+			$wysiwyg = 'Table';
 			$label = tra('Table Builder');
 			$list = array('Table Builder',
 						'{"open": function () { dialogTableOpen(area_id,this); },
@@ -901,7 +940,7 @@ class ToolbarDialog extends Toolbar
 
 		case 'find':
 			$icon = tra('pics/icons/find.png');
-			$wysiwyg = '';
+			$wysiwyg = 'Find';
 			$label = tra('Find Text');
 			$list = array('Find Text',
 						'<label>Search:</label>',
@@ -918,7 +957,7 @@ class ToolbarDialog extends Toolbar
 
 		case 'replace':
 			$icon = tra('pics/icons/text_replace.png');
-			$wysiwyg = '';
+			$wysiwyg = 'Replace';
 			$label = tra('Text Replace');
 			$tool_prefs[] = 'feature_wiki_replace';
 			
@@ -1003,7 +1042,7 @@ class ToolbarDialog extends Toolbar
 
 	function getWysiwygToken( $areaId ) // {{{
 	{
-		if (!empty($this->wysiwyg) && $this->name != 'link') {	// hmm, ckeditor's link should be fine
+		if (!empty($this->wysiwyg) && $this->name == 'tikilink') {	// TODO remove when ckeditor can handle tikilinks
 			
 			global $headerlib;
 			$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
@@ -1039,9 +1078,10 @@ class ToolbarFullscreen extends Toolbar
 {
 	function __construct() // {{{
 	{
+		global $prefs;
 		$this->setLabel( tra('Full Screen Edit') )
 			->setIcon( 'pics/icons/application_get.png' )
-			->setWysiwygToken( 'Maximize' )
+			->setWysiwygToken( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Maximize' : 'FitWindow' )
 				->setType('Fullscreen');
 	} // }}}
 
@@ -1088,12 +1128,50 @@ class ToolbarHelptool extends Toolbar
 		
 	} // }}}
 
-/* Useless
-	function isAccessible() // {{{
+	function getWysiwygToken( $areaId ) // {{{
 	{
-		return parent::isAccessible();
-	} // }}}
-*/
+
+		global $wikilib, $smarty, $plugins, $section, $prefs;
+		
+		if ($prefs['wysiwyg_ckeditor'] !== 'y') {
+			return '';
+		}
+		
+		include_once ('lib/wiki/wikilib.php');
+		$plugins = $wikilib->list_plugins(true, $areaId);
+		
+		$smarty->assign_by_ref('plugins', $plugins);
+		$exec_js = $smarty->fetch('tiki-edit_help_wysiwyg.tpl') .
+				$smarty->fetch('tiki-edit_help_plugins.tpl');
+		
+		$name = 'tikihelp';
+		$this->setLabel( tra('Wysiwyg Help') );
+		
+		global $headerlib;
+		$headerlib->add_jq_onready(<<< JS
+CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
+CKEDITOR.plugins.add( '{$name}', {
+	init : function( editor ) {
+		var command = editor.addCommand( '{$name}', new CKEDITOR.command( editor , {
+			modes: { wysiwyg:1 },
+			exec: function(elem, editor, data) {
+				openEditHelp();
+				return false;
+			},
+			canUndo: false
+		}));
+		editor.ui.addButton( '{$name}', {
+			label : '{$this->label}',
+			command : '{$name}',
+			icon: editor.config._TikiRoot + '{$this->icon}'
+		});
+
+	}
+});
+JS
+, 10);
+		return $name;
+	}
 }
 
 class ToolbarFileGallery extends Toolbar
@@ -1291,6 +1369,7 @@ class ToolbarSheet extends Toolbar
 
 	public static function fromName( $tagName ) // {{{
 	{
+		global $prefs;
 		switch( $tagName ) {
 			case 'sheetsave':
 				$label = tra('Save Sheet');
@@ -1298,56 +1377,94 @@ class ToolbarSheet extends Toolbar
 				$syntax = '$.sheet.saveSheet();';
 				break;
 			case 'addrow':
-				$label = tra('Add Row');
+				$label = tra('Add Row After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_row_add.png');
-				$syntax = '$.sheet.instance[0].controlFactory.addRow(null, null, ":last");';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
+				$syntax = 'sheetInstance.controlFactory.addRow();';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
 				break;														// TODO fix properly for 5.1
 			case 'addrowmulti':
-				$label = tra('Add Multi-Rows');
+				$label = tra('Add Multiple Rows After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_row_add_multi.png');
-				$syntax = '$.sheet.instance[0].controlFactory.addRowMulti();';
+				$syntax = 'sheetInstance.controlFactory.addRowMulti();';
 				break;
+			case 'addrowbefore':
+				$label = tra('Add Row Before Selection Or To End If No Selection');
+				$icon = tra('pics/icons/sheet_row_add.png');
+				$syntax = 'sheetInstance.controlFactory.addRow(null, true);';	// add row after end to workaround bug in jquery.sheet.js 1.0.2
+				break;	
 			case 'deleterow':
-				$label = tra('Delete Row');
+				$label = tra('Delete Selected Row');
 				$icon = tra('pics/icons/sheet_row_delete.png');
-				$syntax = '$.sheet.instance[0].deleteRow();';
+				$syntax = 'sheetInstance.deleteRow();';
 				break;
 			case 'addcolumn':
-				$label = tra('Add Column');
+				$label = tra('Add Column After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_col_add.png');
-				$syntax = '$.sheet.instance[0].controlFactory.addColumn(true);';	// add col after current or at end if none selected
+				$syntax = 'sheetInstance.controlFactory.addColumn();';	// add col before current or at end if none selected
 				break;
 			case 'deletecolumn':
-				$label = tra('Delete Column');
+				$label = tra('Delete Selected Column');
 				$icon = tra('pics/icons/sheet_col_delete.png');
-				$syntax = '$.sheet.instance[0].deleteColumn();';
+				$syntax = 'sheetInstance.deleteColumn();';
 				break;
 			case 'addcolumnmulti':
-				$label = tra('Add Multi-Columns');
+				$label = tra('Add Multiple Columns After Selection Or To End If No Selection');
 				$icon = tra('pics/icons/sheet_col_add_multi.png');
-				$syntax = '$.sheet.instance[0].controlFactory.addColumnMulti();';
+				$syntax = 'sheetInstance.controlFactory.addColumnMulti();';
+				break;
+			case 'addcolumnbefore':
+				$label = tra('Add Column Before Selection Or To End If No Selection');
+				$icon = tra('pics/icons/sheet_col_add.png');
+				$syntax = 'sheetInstance.controlFactory.addColumn(null, true);';	// add col before current or at end if none selected
 				break;
 			case 'sheetgetrange':
 				$label = tra('Get Cell Range');
 				$icon = tra('pics/icons/sheet_get_range.png');
-				$syntax = '$.sheet.instance[0].appendToFormula($.sheet.instance[0].getTdRange());';
+				$syntax = 'sheetInstance.appendToFormula(sheetInstance.getTdRange());';
 				break;
 			case 'sheetfind':
 				$label = tra('Find');
 				$icon = tra('pics/icons/find.png');
-				$syntax = '$.sheet.instance[0].cellFind();';
+				$syntax = 'sheetInstance.cellFind();';
 				break;
 			case 'sheetrefresh':
 				$label = tra('Refresh Calculations');
 				$icon = tra('pics/icons/arrow_refresh.png');
-				$syntax = '$.sheet.instance[0].calc($.sheet.instance[0].obj.tableBody());';
+				$syntax = 'sheetInstance.calc(sheetInstance.obj.tableBody());';
 				break;
 			case 'sheetclose':
 				$label = tra('Finish Editing');
 				$icon = tra('pics/icons/close.png');
 				$syntax = '$("#edit_button").click();';	// temporary workaround TODO properly
 				break;
-				
+			case 'bold':
+				$label = tra('Bold');
+				$icon = tra('pics/icons/text_bold.png');
+				$wysiwyg = 'Bold';
+				$syntax = 'sheetInstance.cellStyleToggle("styleBold");';
+				break;
+			case 'italic':
+				$label = tra('Italic');
+				$icon = tra('pics/icons/text_italic.png');
+				$wysiwyg = 'Italic';
+				$syntax = 'sheetInstance.cellStyleToggle("styleItalics");';
+				break;
+			case 'underline':
+				$label = tra('Underline');
+				$icon = tra('pics/icons/text_underline.png');
+				$wysiwyg = 'Underline';
+				$syntax = 'sheetInstance.cellStyleToggle("styleUnderline");';
+				break;
+			case 'strike':
+				$label = tra('Strikethrough');
+				$icon = tra('pics/icons/text_strikethrough.png');
+				$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'Strike' : 'StrikeThrough';
+				$syntax = 'sheetInstance.cellStyleToggle("styleLineThrough");';
+				break;
+			case 'center':
+				$label = tra('Align Center');
+				$icon = tra('pics/icons/text_align_center.png');
+				$syntax = 'sheetInstance.cellStyleToggle("styleCenter");';
+				break;
 			default:
 				return;
 		}

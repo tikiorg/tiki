@@ -55,7 +55,7 @@ function wikiplugin_module_info() {
 	return array(
 		'name' => tra('Insert Module'),
 		'documentation' => 'PluginModule',
-		'description' => tra("Displays a module inline in a wiki page. More parameters can be added, not supported by UI."),
+		'description' => tra("Displays a module inline in a wiki page. More parameters can be added, not supported by User Interface."),
 		'prefs' => array( 'wikiplugin_module' ),
 		'validate' => 'all',
 		'icon' => 'pics/icons/module.png',
@@ -64,38 +64,59 @@ function wikiplugin_module_info() {
 			'module' => array(
 				'required' => true,
 				'name' => tra('Module Name'),
-				'description' => tra('Module name as known in Tikiwiki.'),
+				'description' => tra('Module name as known in Tiki'),
 				'options' => $modules_options
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float'),
 				'description' => 'left|right|none',
+				'advanced' => true,
 			),
 			'decoration' => array(
 				'required' => false,
 				'name' => tra('Decoration'),
-				'description' => 'y|n',
+				'description' => 'Show decorations',
+				'advanced' => true,
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'), 
+					array('text' => tra('Yes'), 'value' => '1'), 
+				),
 			),
 			'flip' => array(
 				'required' => false,
 				'name' => tra('Flip'),
-				'description' => 'y|n',
+				'description' => 'To make a module shadeable',
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'), 
+					array('text' => tra('Yes'), 'value' => '1'), 
+				),
+				'advanced' => true,
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Max'),
-				'description' => 'y|n',
+				'description' => 'Number of rows. Default: 10',
+				'advanced' => true,
 			),
 			'np' => array(
 				'required' => false,
-				'name' => tra('np'),
-				'description' => '0|1',
+				'name' => tra('Parse'),
+				'description' => 'Parse wiki syntax',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => '0'), 
+					array('text' => tra('No'), 'value' => '1'), 
+				),
+				'advanced' => true,
 			),
 			'notitle' =>array(
 				'required' => false,
-				'name' => tra('notitle'),
-				'description' => 'y|n',
+				'name' => tra('Title'),
+				'description' => 'Show/hide',
+				'options' => array(
+					array('text' => tra('Show title'), 'value' => 'n'), 
+					array('text' => tra('Hide title'), 'value' => 'y'), 
+				),
 			),
 		),
 	);

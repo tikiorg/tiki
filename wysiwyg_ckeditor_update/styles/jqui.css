@@ -19,16 +19,6 @@ body {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-#fixedwidth {
-	display: table;
-	margin: auto;
-	margin-top: 0;
-	margin-bottom: 0;
-	width: 990px;
-}
-#fixedwidth[id] {
-	height: auto;
-}
 							    
 #main {
 	text-align: left
@@ -139,7 +129,6 @@ span.button input,
 }
 
 span.button a:hover,
-.button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
@@ -393,13 +382,11 @@ div.errors {
 	border:1px solid #cd0a0a;
 }
 
-/*
-div.simplebox {
-	color: ;
-	background: ;
-	border: ;
+.simplebox {
+	border: 1px solid #666;
+	background-color: #eee;
+	color: #333;
 }
-*/
 
 div.errors {
 	color: #cd0a0a;
@@ -692,6 +679,7 @@ span.button input,
 .box,
 .cbox,
 h3.box-title,
+.simplebox,
 .cbox-title,
 .post .postbody,
 body.tiki_admin .simplebox,

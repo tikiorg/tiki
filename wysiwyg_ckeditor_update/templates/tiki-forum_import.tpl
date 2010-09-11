@@ -19,8 +19,8 @@
 	<form action="tiki-forum_import.php" method="post">
 	<input type="hidden" name="step1" value="true" />
 	<input type="hidden" name="import" value="same" />
-	<table class="normal">
-		<tr><td class="formcolor">{tr}Forum Type{/tr}:</td><td class="formcolor">
+	<table class="formcolor">
+		<tr><td>{tr}Forum Type{/tr}:</td><td>
 		<select name="forum">
 		
 		{cycle values="odd,even" print=false}
@@ -30,7 +30,7 @@
 
 		</select>
 		</td></tr>
-		<tr><td class="formcolor">{tr}DB Prefix{/tr}:</td><td class="formcolor">
+		<tr><td>{tr}DB Prefix{/tr}:</td><td>
 		<input type="text" name="prefix" value="{$fi_prefixes[0]}" />
 		</td></tr>
 	</table>
@@ -49,22 +49,22 @@
 	<form action="tiki-forum_import.php" method="post">
 	<input type="hidden" name="step1" value="true" />
 	<input type="hidden" name="import" value="other" />
-	<table class="normal">
-		<tr><td class="formcolor">{tr}Server{/tr}:</td><td class="formcolor">
+	<table class="formcolor">
+		<tr><td>{tr}Server{/tr}:</td><td>
 		<input type="text" name="server" />
-		</td><td class="formcolor">{tr}DB Name{/tr}:</td><td class="formcolor">
+		</td><td>{tr}DB Name{/tr}:</td><td>
 		<input type="text" name="dbname" />
                 </td></tr>
-		<tr><td class="formcolor">{tr}Forum Type{/tr}:</td><td class="formcolor">
+		<tr><td>{tr}Forum Type{/tr}:</td><td>
 		<select name="forum">
 
 		</select>
-		</td><td class="formcolor">{tr}DB Prefix{/tr}:</td><td class="formcolor">
+		</td><td>{tr}DB Prefix{/tr}:</td><td>
 		<input type="text" name="prefix" />
 		</td></tr>
-		<tr><td class="formcolor">{tr}Username{/tr}:</td><td class="formcolor">
+		<tr><td>{tr}Username{/tr}:</td><td>
 		<input type="text" name="username" />
-		</td><td class="formcolor">{tr}Password{/tr}:</td><td class="formcolor">
+		</td><td>{tr}Password{/tr}:</td><td>
 		<input type="text" name="password" />
                 </td></tr>
 	</table>
@@ -88,8 +88,8 @@ End hiding of unfinished section... *}
 	<form action="tiki-forum_import.php" method="post">
 	<input type="hidden" name="step1" value="true" />
 	<input type="hidden" name="import" value="sql" />
-	<table class="normal">
-		<tr><td class="formcolor">{tr}Forum Type{/tr}:</td><td class="formcolor">
+	<table class="formcolor">
+		<tr><td>{tr}Forum Type{/tr}:</td><td>
 		<select name="ftype">
 		
 		{* List all forums that are supported. *}
@@ -100,11 +100,11 @@ End hiding of unfinished section... *}
 
 		</select>
 		</td></tr>
-		<tr><td class="formcolor">{tr}DB Prefix{/tr}:</td><td class="formcolor">
+		<tr><td>{tr}DB Prefix{/tr}:</td><td>
 		<input type="text" name="prefix" value="{$fi_prefixes[0]}" />
 		</td></tr>
-		<tr><td class="formcolor">{tr}Local SQL Filename on Server (path will be stripped){/tr}:<br />
-		<i>{tr}Must be in tikiroot/{$tmpdir} or tikiroot/img/wiki_up{/tr}</i></td><td class="formcolor">
+		<tr><td>{tr}Local SQL Filename on Server (path will be stripped){/tr}:<br />
+		<i>{tr}Must be in tikiroot/{$tmpdir} or tikiroot/img/wiki_up{/tr}</i></td><td>
 		<input type="text" name="server" />
 	</td></tr>
 	</table>
@@ -174,12 +174,12 @@ End hiding of unfinished section... *}
 
 	{cycle values="odd,even" print=false}
 	{section name=fforum loop=$fromForums}
-	<tr>
-	<td class="{cycle advance=false}">
+	<tr class="{cycle}">
+	<td>
           <input type="radio" name="fForumid" value="{$fromForums[fforum].id}" />
         </td>
-	<td class="{cycle advance=false}">{$fromForums[fforum].name}</td>
-	<td class="{cycle advance=true}">{$fromForums[fforum].comments}</td>
+	<td>{$fromForums[fforum].name}</td>
+	<td>{$fromForums[fforum].comments}</td>
 	</tr>
 	{/section}
 	</table>
@@ -198,12 +198,12 @@ End hiding of unfinished section... *}
 
 	{cycle values="odd,even" print=false}
 	{section name=tforum loop=$toForums}
-	<tr>
-	<td class="{cycle advance=false}">
+	<tr class="{cycle}">
+	<td>
           <input type="radio" name="tForumid" value="{$toForums[tforum].forumId}" />
         </td>
-	<td class="{cycle advance=false}">{$toForums[tforum].name}</td>
-	<td class="{cycle advance=true}">{$toForums[tforum].comments}</td>
+	<td>{$toForums[tforum].name}</td>
+	<td>{$toForums[tforum].comments}</td>
 	</tr>
 	{/section}
 	</table>

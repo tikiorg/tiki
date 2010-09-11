@@ -1,6 +1,6 @@
 {if $style eq 'tr'}
 <tr{if isset($tr_class)} class="{$tr_class}"{/if}>
-  <td class="form"><label for="wiki_authors_style">{tr}List authors:{/tr}</label></td>
+  <td><label for="wiki_authors_style">{tr}List authors:{/tr}</label></td>
   <td>
     <select id="wiki_authors_style" name="wiki_authors_style">
       {if isset($wiki_authors_style_site) && $wiki_authors_style_site eq 'y'}

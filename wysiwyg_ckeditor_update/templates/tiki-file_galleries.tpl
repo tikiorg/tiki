@@ -1,12 +1,11 @@
 {* $Id$ *}
-{popup_init src="lib/overlib.js"}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php{if $galleryId}?galleryId={$galleryId}{if isset($edit_mode) and $edit_mode ne 'n'}&amp;edit_mode=1{/if}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}{else}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}{/if}">{tr}File Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}File+Galleries" target="tikihelp" class="tikihelp" title="{tr}File Galleries{/tr}">{icon _id='help'}</a>
 {/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-file_galleries.tpl{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}File Galleries tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
+{icon _id='shape_square_edit' alt="{tr}Edit template{/tr}"}</a>
 {/if}
 {if $tiki_p_admin eq 'y' and $filegals_manager eq ''}
 <a href="tiki-admin.php?page=fgal">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>

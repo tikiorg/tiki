@@ -1,5 +1,3 @@
-{popup_init src="lib/overlib.js"}
-
 {title help="Forums" admpage="forums"}{tr}Reported messages for forum{/tr}&nbsp;{$forum_info.name|escape}{/title}
 
 <div class="navbar">
@@ -42,23 +40,23 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
-<tr>
-	<td style="text-align:center;" class="{cycle advance=false}">
+<tr class="{cycle}">
+	<td style="text-align:center;">
 	  <input type="checkbox" name="msg[{$items[ix].threadId}]" />
 	</td>
   
-	<td class="{cycle advance=false}" style="text-align:left;">
+	<td style="text-align:left;">
 		<a class="link" href="tiki-view_forum_thread.php?topics_offset=0&amp;topics_sort_mode=commentDate_desc&amp;topics_threshold=0&amp;topics_find=&amp;forumId={$items[ix].forumId}&amp;comments_parentId={$items[ix].parentId}">{$items[ix].title|escape}</a>
 	</td>
 	
-	<td class="{cycle}" style="text-align:left;">
+	<td style="text-align:left;">
 		{$items[ix].user|username}
 	</td>
 
 </tr>
 {sectionelse}
-<tr>
-	<td class="{cycle advance=false}" colspan="2">
+<tr class="{cycle}">
+	<td colspan="2">
 	{tr}No records to display{/tr}
 	</td>
 </tr>	

@@ -36,12 +36,12 @@
 	</tr>
 {cycle values='odd,even' print=false}	
 {section name=ix loop=$online_operators}
-<tr>
-		<td  class="{cycle advance=false}" style="text-align:center;">
+<tr class="{cycle}">
+		<td style="text-align:center;">
 			{$online_operators[ix].user|avatarize}<br />	
 			<b>{$online_operators[ix].user|escape}</b>
 		</td>
-		<td class="{cycle advance=false}">
+		<td>
 			<table>
 				<tr>
 					<td>{tr}Accepted requests:{/tr}</td>
@@ -56,10 +56,10 @@
 				</tr>
 			</table>
 		</td>
-		<td class="{cycle}" style="text-align:right;">
+		<td style="text-align:right;">
 		{if $tiki_p_live_support_admin eq 'y'}
-			<a href='tiki-live_support_admin.php?removeuser={$online_operators[ix].user|escape}'><img src='img/icons/trash.gif' alt='{tr}Del{/tr}' title='{tr}Del{/tr}' /></a>
-<a href='tiki-live_support_admin.php?offline={$online_operators[ix].user|escape}'><img src='img/icons/icon_unwatch.png' alt='{tr}offline{/tr}' title='{tr}offline{/tr}' /></a>
+			<a href='tiki-live_support_admin.php?removeuser={$online_operators[ix].user|escape}'><img src='img/icons/trash.gif' alt="{tr}Del{/tr}" title="{tr}Del{/tr}" /></a>
+<a href='tiki-live_support_admin.php?offline={$online_operators[ix].user|escape}'><img src='img/icons/icon_unwatch.png' alt="{tr}offline{/tr}" title="{tr}offline{/tr}" /></a>
 		{else}
 			&nbsp;
 		{/if}
@@ -82,12 +82,12 @@
 		</th>		
 	</tr>
 {section name=ix loop=$offline_operators}
-	<tr>
-		<td  class="{cycle advance=false}" style="text-align:center;">
+	<tr class="{cycle}">
+		<td style="text-align:center;">
 			{$offline_operators[ix].user|avatarize}<br />	
 			<b>{$offline_operators[ix].user|escape}</b>
 		</td>
-		<td class="{cycle advance=false}">
+		<td>
 			<table >
 				<tr>
 					<td>{tr}Accepted requests:{/tr}</td>
@@ -99,9 +99,9 @@
 				</tr>
 			</table>
 		</td>
-		<td class="{cycle}" style="text-align:right;">
+		<td style="text-align:right;">
 		{if $tiki_p_live_support_admin eq 'y'}
-			<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user|escape}'><img src='img/icons/trash.gif' alt='{tr}Del{/tr}' title='{tr}Del{/tr}' /></a>
+			<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user|escape}'><img src='img/icons/trash.gif' alt="{tr}Del{/tr}" title="{tr}Del{/tr}" /></a>
 		{else}
 			&nbsp;
 		{/if}
@@ -115,10 +115,10 @@
 <h2>{tr}Add an operator to the system{/tr}</h2>
 <small>{tr}Operators must be tiki users{/tr}</small>
 <form method="post" action="tiki-live_support_admin.php">
-<table class="normal">
+<table class="formcolor">
 	<tr>
-		<td class="formcolor">{tr}User{/tr}</td>
-		<td class="formcolor">
+		<td>{tr}User{/tr}</td>
+		<td>
 			<select name="user">
 				{section name=ix loop=$users}
 					<option value="{$users[ix].user|escape}">{$users[ix].user|escape}</option>
@@ -127,8 +127,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td class="formcolor">&nbsp;</td>
-		<td class="formcolor">
+		<td>&nbsp;</td>
+		<td>
 			<input type="submit" name="adduser" value="{tr}Set as Operator{/tr}" />
 		</td>
 	</tr>

@@ -31,25 +31,25 @@
 
 	{cycle values="odd,even" print=false}
 	{section name=changes loop=$listpages}
-		<tr>
-			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].postId}&nbsp;</td>
-			<td class="{cycle advance=false}"><a class="link" href="tiki-view_blog_post.php?postId={$listpages[changes].postId}">{$listpages[changes].title}</a></td>
-			<td class="{cycle advance=false}">
+		<tr class="{cycle}">
+			<td>&nbsp;{$listpages[changes].postId}&nbsp;</td>
+			<td><a class="link" href="tiki-view_blog_post.php?postId={$listpages[changes].postId}">{$listpages[changes].title}</a></td>
+			<td>
 				&nbsp;
 				<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true|escape}</a>
 				&nbsp;
 			</td>
-			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
-			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].size}&nbsp;</td>
-			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].user}&nbsp;</td>
-			<td class="{cycle}">
-				<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{icon _id='page_edit'}</a>
-				<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+			<td>&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
+			<td>&nbsp;{$listpages[changes].size}&nbsp;</td>
+			<td>&nbsp;{$listpages[changes].user}&nbsp;</td>
+			<td>
+				<a class="link" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}&postId={$listpages[changes].postId}">{icon _id='page_edit'}</a>
+				<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
 	{sectionelse}
 		<tr>
-			<td colspan="6" class="odd">
+			<td colspan="7" class="odd">
 				<b>{tr}No records found{/tr}</b>
 			</td>
 		</tr>

@@ -197,6 +197,12 @@ class Tiki_Profile_Installer
 		return $final;
 	} // }}}
 
+	/**
+	 * Install a profile
+	 * 
+	 * @param Tiki_Profile $profile		Profile object
+	 * @param string $empty_cache		all|templates_c|temp_cache|temp_public|modules_cache|prefs (default all)
+	 */
 	function install( Tiki_Profile $profile, $empty_cache = 'all' ) // {{{
 	{
 		global $cachelib, $tikidomain, $tikilib;
@@ -212,19 +218,7 @@ class Tiki_Profile_Installer
 			if (count($this->getFeedback()) == count($profiles)) {
 				$this->setFeedback(tra('Nothing was changed, please check profile for errors'));
 			}
-			if ($empty_cache == 'all') {
-				$cachelib->empty_full_cache();
-			} elseif ($empty_cache == 'templates_c') {
-				$cachelib->erase_dir_content("templates_c/$tikidomain");
-			} elseif ($empty_cache == 'temp_cache') {
-				$cachelib->erase_dir_content("temp/cache/$tikidomain");
-			} elseif ($empty_cache == 'temp_public') {
-				$cachelib->erase_dir_content("temp/public/$tikidomain");
-			} elseif ($empty_cache == 'modules_cache') {
-				$cachelib->erase_dir_content("modules/cache/$tikidomain");
-			} elseif ($empty_cache == 'prefs') {
-				$tikilib->set_lastUpdatePrefs();
-			}
+			$cachelib->empty_cache($empty_cache, 'profile');
 			return true;
 		
 		} catch(Exception $e) {
@@ -1369,7 +1363,6 @@ class Tiki_Profile_InstallHandler_Blog extends Tiki_Profile_InstallHandler // {{
 			'max_posts' => 10,
 			'heading' => '',
 			'post_heading' => '',
-			'use_title' => 'y',
 			'use_find' => 'y',
 			'comments' => 'n',
 			'show_avatar' => 'n',
@@ -1403,7 +1396,7 @@ class Tiki_Profile_InstallHandler_Blog extends Tiki_Profile_InstallHandler // {{
 
 		$this->replaceReferences( $data );
 
-		$blogId = $bloglib->replace_blog( $data['title'], $data['description'], $data['user'], $data['public'], $data['max_posts'], 0, $data['heading'], $data['use_title'], $data['use_author'], $data['add_date'], $data['use_find'], $data['allow_comments'], $data['show_avatar'], $data['post_heading'] );
+		$blogId = $bloglib->replace_blog( $data['title'], $data['description'], $data['user'], $data['public'], $data['max_posts'], 0, $data['heading'], $data['use_author'], $data['add_date'], $data['use_find'], $data['allow_comments'], $data['show_avatar'], $data['post_heading'] );
 		
 		return $blogId;
 	}
@@ -2148,7 +2141,7 @@ class Tiki_Profile_InstallHandler_Forum extends Tiki_Profile_InstallHandler // {
 	function _install()
 	{
 		global $dbTiki;
-		require_once 'lib/commentslib.php';
+		require_once 'lib/comments/commentslib.php';
 		$comments = new Comments( $dbTiki );
 
 		$data = $this->getData();

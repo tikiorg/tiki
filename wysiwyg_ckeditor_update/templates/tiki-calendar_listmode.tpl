@@ -30,7 +30,7 @@
 </td>
 <td>
 {if $event.modifiable eq "y"}<a class="link" href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-<a class="link" href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}&amp;delete=1" title="{tr}Remove{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>{/if}
+<a class="link" href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}&amp;delete=1" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>{/if}
 </td></tr>
 {/foreach}
 </table>

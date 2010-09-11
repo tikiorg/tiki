@@ -16,7 +16,7 @@
 						</ul>
 					</li>
 				{else}
-					<li class="tabmark" id="login_link"><a href="tiki-login.php" class="login_link"><span>{tr}Log in{/tr}</span></a>
+					<li class="tabmark" id="login_link"><a href="tiki-login_scr.php" class="login_link"><span>{tr}Log in{/tr}</span></a>
 						<ul>
 							<li>
 								<div class="cbox">{include file='tiki-site_header_login.tpl'}</div>

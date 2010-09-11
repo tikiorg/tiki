@@ -12,7 +12,7 @@ function prefs_categories_list() {
 			'description' => tra('Permits to show alternate content depending on category of current object'),
 			'type' => 'flag',
 			'perspective' => false,
-			'help' => 'http://themes.tikiwiki.org/Template+Tricks',
+			'help' => 'http://themes.tiki.org/Template+Tricks',
 			'dependencies' => array(
 				'feature_categories',
 			),

@@ -82,8 +82,8 @@ if( $_REQUEST['objectType'] == 'wiki' ) {
 	$_REQUEST['objectType'] = 'wiki page';
 }
 
-require_once 'lib/core/lib/Perms/Applier.php';
-require_once 'lib/core/lib/Perms/Reflection/Factory.php';
+require_once 'lib/core/Perms/Applier.php';
+require_once 'lib/core/Perms/Reflection/Factory.php';
 
 $objectFactory = Perms_Reflection_Factory::getDefaultFactory();
 $currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
@@ -187,13 +187,15 @@ if (isset($_REQUEST['group'])) {
 // Process the form to assign a new permission to this object
 if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	check_ticket('object-perms');
-	foreach($_REQUEST['perm'] as $group => $gperms) {
-		foreach($gperms as $perm) {
-			if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
-				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra('Permission denied'));
-				$smarty->display('error.tpl');
-				die;
+	if (isset($_REQUEST['perm']) && !empty($_REQUEST['perm'])) {
+		foreach($_REQUEST['perm'] as $group => $gperms) {
+			foreach($gperms as $perm) {
+				if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
+					$smarty->assign('errortype', 401);
+					$smarty->assign('msg', tra('Permission denied'));
+					$smarty->display('error.tpl');
+					die;
+				}
 			}
 		}
 	}
@@ -266,7 +268,7 @@ if (isset($_REQUEST['used_groups'])) {
 //Quickperms {{{
 //Test to map permissions of ile galleries into read write admin admin levels.
 if( $prefs['feature_quick_object_perms'] == 'y' ) {
-	require_once 'lib/core/lib/Perms/Reflection/Quick.php';
+	require_once 'lib/core/Perms/Reflection/Quick.php';
 
 	$qperms = quickperms_get_data();
 	$smarty->assign('quickperms', $qperms);
@@ -384,20 +386,26 @@ foreach ($candidates['data'] as $perm) {
 		$perm[$groupName . '_hasPerm'] = $p;
 		$perm[$groupIndices[$index]] = $p;
 	}
+	
+	// work out if specific feature is on
+	$pref_feature = false;
+	if (isset($perm['feature_check'])) {
+		foreach(explode(',', $perm['feature_check']) as $fchk) {
+			if ($prefs[$fchk] == 'y') {
+				$pref_feature = true;
+				break;
+			}
+		}
+	} else {	// if no feature check you can't turn them off (?)
+		$pref_feature = true;
+	}
 
-	if (($feature_filter === false || in_array( $perm['type'], $feature_filter)) && ($restrictions === false || in_array( $perm['permName'], $restrictions ))) {
+	if (($feature_filter === false || in_array( $perm['type'], $feature_filter)) && ($restrictions === false || in_array( $perm['permName'], $restrictions )) && $pref_feature) {
 		$masterPerms[] = $perm;
 	}
 	if ($show_disabled_features != 'y' && !in_array($perm['type'], $features_enabled)) {
 		// perms can be dependant on multiple features
-		if (isset($perm['feature_check'])) {
-			foreach(explode(',', $perm['feature_check']) as $fchk) {
-				if ($prefs[$fchk] == 'y') {
-					$features_enabled[] = $perm['type'];
-					break;
-				}
-			}
-		} else {	// if no feature check you can't turn them off (?)
+		if ($pref_feature) {
 			$features_enabled[] = $perm['type'];
 		}
 	}
@@ -506,7 +514,7 @@ function get_assign_permissions() {
 	$currentPermissions = $currentObject->getDirectPermissions();
 
 	// set any checked ones
-	if( isset( $_REQUEST['perm'] ) ) {
+	if( isset( $_REQUEST['perm'] ) && !empty($_REQUEST['perm'])) {
 		foreach( $_REQUEST['perm'] as $group => $gperms ) {
 			foreach( $gperms as $perm ) {
 				$currentPermissions->add( $group, $perm );

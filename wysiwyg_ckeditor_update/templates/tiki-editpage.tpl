@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if $page|lower neq 'sandbox'}
-	{remarksbox type='tip' title='{tr}Tip{/tr}'}
+	{remarksbox type='tip' title="{tr}Tip{/tr}"}
 	{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
 	{if $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_mandatory eq 'y'}
 		<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>
@@ -55,22 +55,22 @@
 	{/if}
 {/if}
 {if $page|lower eq 'sandbox'}
-	{remarksbox type='tip' title='{tr}Tip{/tr}'}
+	{remarksbox type='tip' title="{tr}Tip{/tr}"}
 		{tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
 	{/remarksbox}
 {/if}
 {if $category_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}A category is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
 {if $contribution_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}A contribution is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
 {if $summary_needed eq 'y'}
-	{remarksbox type='Warning' title='{tr}Warning{/tr}'}
+	{remarksbox type='Warning' title="{tr}Warning{/tr}"}
 	<div class="highlight"><em class='mandatory_note'>{tr}An edit summary is mandatory{/tr}</em></div>
 	{/remarksbox}
 {/if}
@@ -155,19 +155,19 @@
 		</div>
 	{/if}
 
-	<table class="normal">
-		
-		
-		<tr class="formcolor">
+	<table class="formcolor" width="100%">
+		<tr>
 			<td colspan="2">
-				{if $page_badchars_display}
-					{remarksbox type=tip title="{tr}Tip{/tr}"}
-						{if $prefs.wiki_badchar_prevent eq 'y'}
+				{if isset($page_badchars_display)}
+					{if $prefs.wiki_badchar_prevent eq 'y'}
+						{remarksbox type=errors title="{tr}Invalid page name{/tr}"}
 							{tr 0=$page_badchars_display|escape}The page name specified contains unallowed characters. It will not be possible to save the page until those are removed: <strong>%0</strong>{/tr}
-						{else}
+						{/remarksbox}
+					{else}
+						{remarksbox type=tip title="{tr}Tip{/tr}"}
 							{tr 0=$page_badchars_display|escape}The page name specified contains characters that may render the page hard to access. You may want to consider removing those: <strong>%0</strong>{/tr}
-						{/if}
-					{/remarksbox}
+						{/remarksbox}
+					{/if}
 					<p>{tr}Page name:{/tr} <input type="text" name="page" value="{$page|escape}" /></p>
 				{else}
 					<input type="hidden" name="page" value="{$page|escape}" /> 
@@ -184,7 +184,7 @@
 						{textarea}{$pagedata}{/textarea}
 						{if $page|lower neq 'sandbox'}
 							<fieldset>
-								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc='{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}'}</label>
+								<label for="comment">{tr}Describe the change you made:{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
 								<input style="width:98%;" class="wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}" />
 								{if $show_watch eq 'y'}
 									<label for="watch">{tr}Monitor this page:{/tr}</label>
@@ -310,19 +310,19 @@
 								{if $prefs.wiki_feature_copyrights  eq 'y'}
 									<fieldset>
 										<legend>{tr}Copyright:{/tr}</legend>
-										<table border="0">
-											<tr class="formcolor">
+										<table class="formcolor" border="0">
+											<tr>
 												<td><label for="copyrightTitle">{tr}Title:{/tr}</label></td>
 												<td><input size="40" class="wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td>
 												{if !empty($copyrights)}
 													<td rowspan="3"><a href="copyrights.php?page={$page|escape}">{tr}To edit the copyright notices{/tr}</a></td>
 												{/if}
 											</tr>
-											<tr class="formcolor">
+											<tr>
 												<td><label for="copyrightYear">{tr}Year:{/tr}</label></td>
 												<td><input size="4" class="wikiedit" type="text" id="copyrightYear" name="copyrightYear" value="{$copyrightYear|escape}" /></td>
 											</tr>
-											<tr class="formcolor">
+											<tr>
 												<td><label for="copyrightAuthors">{tr}Authors:{/tr}</label></td>
 												<td><input size="40" class="wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td>
 											</tr>
@@ -485,7 +485,7 @@
 		{/if}{* sandbox *}
 		
 		{if $prefs.wiki_actions_bar neq 'top'}
-			<tr class="formcolor">
+			<tr>
 				<td colspan="2" style="text-align:center;">
 					{include file='wiki_edit_actions.tpl'}
 				</td>

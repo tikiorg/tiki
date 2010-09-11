@@ -9,11 +9,14 @@ require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/groupalert/groupalertlib.php');
 $access->check_feature('feature_trackers');
-$access->check_permission('tiki_p_admin_trackers');
 $auto_query_args = array('trackerId');
 
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
+}
+$objectperms = Perms::get( 'tracker', $_REQUEST['trackerId']);
+if (!$objectperms->admin_trackers) {
+	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');
 }
 $smarty->assign('individual', 'n');
 if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
@@ -401,7 +404,8 @@ if ($_REQUEST["trackerId"]) {
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 	$smarty->assign('action', '');
 	include_once ('lib/wiki-plugins/wikiplugin_trackerfilter.php');
-	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId']);
+	$formats = '';
+	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId'], '', $formats);
 	$smarty->assign_by_ref('filters', $filters);
 	
 	$smarty->assign('recordsMax', $info['items']);

@@ -431,6 +431,10 @@ function wikiplugin_tracker($data, $params)
 				if (isset($fields)) {
 					$fields_plugin = preg_split('/:/', $fields);
 				}
+				if (!isset($itemId) && $tracker['oneUserItem'] == 'y') {
+					$itemId = $trklib->get_user_item($trackerId, $tracker);
+				}
+
 				foreach ($flds['data'] as $fl) {
 					// store value to display it later if form
 					// isn't fully filled.
@@ -541,12 +545,12 @@ function wikiplugin_tracker($data, $params)
 									$data .= fread($fp, 8192 * 16);
 								}
 								fclose ($fp);
-								if (!empty($itemId) && $fl['type'] == 'A') {
-									$files[$fld]['old_value'] = $trklib->get_item_value($trackerId, $itemId, $fld);
-								}
 								$files[$fld]['value'] = $data;
 							} else {
 								$files[$fld]['file_'.$label] = $val;
+							}
+							if (!empty($itemId) && $fl['type'] == 'A') {
+								$files[$fld]['old_value'] = $trklib->get_item_value($trackerId, $itemId, $fld);
 							}
 						}
 					}
@@ -608,9 +612,6 @@ function wikiplugin_tracker($data, $params)
 				}
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && empty($field_errors['err_outputwiki']) && !isset($_REQUEST['tr_preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
-					if (!isset($itemId) && $tracker['oneUserItem'] == 'y') {
-						$itemId = $trklib->get_user_item($trackerId, $tracker);
-					}
 					if (isset($_REQUEST['status'])) {
 						$status = $_REQUEST['status'];
 					} elseif (isset($newstatus) && ($newstatus == 'o' || $newstatus == 'c'|| $newstatus == 'p')) {

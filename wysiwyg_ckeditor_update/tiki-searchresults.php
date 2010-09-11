@@ -12,7 +12,6 @@ $inputConfiguration = array(
 				'highlight' => 'xss',
 				'where' => 'word',
 				'find' => 'xss',
-				'lang' => 'word',
 				'words' =>'xss',
 				'boolean' =>'word',
 		)
@@ -23,7 +22,7 @@ $section = 'search';
 require_once ('tiki-setup.php');
 require_once ('lib/ajax/ajaxlib.php');
 require_once ('lib/search/searchlib-mysql.php');
-$auto_query_args = array('highlight', 'where', 'initial', 'maxRecords', 'sort_mode', 'find', 'lang', 'words', 'boolean');
+$auto_query_args = array('highlight', 'where', 'initial', 'maxRecords', 'sort_mode', 'find', 'searchLang', 'words', 'boolean', 'categId' );
 $searchlib = new SearchLib;
 $smarty->assign('headtitle', tra('Search'));
 
@@ -45,6 +44,12 @@ if (empty($_REQUEST["where"])) {
 }
 $find_where = 'find_' . $where;
 $smarty->assign('where', $where);
+if ($where == 'wikis') {
+	$where_label = 'wiki pages';	
+} else {
+	$where_label = $where;
+}
+$smarty->assign('where_label', $where_label);
 $filter = array();
 
 if ($where == 'wikis') {
@@ -67,7 +72,7 @@ if ($where == 'forums') {
 	if (!empty($_REQUEST['forumId'])) {
 		$filter['forumId'] = $_REQUEST['forumId'];
 		global $commentslib;
-		include ('lib/commentslib.php');
+		include ('lib/comments/commentslib.php');
 		if (!isset($commentslib)) $commentslib = new Comments($dbTiki);
 		$forum_info = $commentslib->get_forum($_REQUEST['forumId']);
 		$where = 'forum';
@@ -123,7 +128,13 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
-$searchLang = isset($_REQUEST['searchLang'])? $_REQUEST['searchLang']: '';
+if (isset($_REQUEST['searchLang'])) {
+	$searchLang = $_REQUEST['searchLang'];
+} elseif($prefs['search_default_interface_language'] == 'y') {
+	$searchLang = $prefs['language'];
+} else {
+	$searchLang = '';
+}
 $smarty->assign_by_ref('searchLang', $searchLang);
 $smarty->assign_by_ref('offset', $offset);
 $fulltext = $prefs['feature_search_fulltext'] == 'y';

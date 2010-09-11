@@ -3,8 +3,8 @@
 {else}
 	{if $openid_associate neq 'y'}
 				<tr>
-					<td class="formcolor"><label for="pass1">{tr}Password:{/tr}</label>{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}</td>
-					<td class="formcolor">
+					<td><label for="pass1">{tr}Password:{/tr}</label>{if $trackerEditFormId}&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;{/if}</td>
+					<td>
 						<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="{if $prefs.feature_ajax neq 'y' && !$userTrackerData}runPassword(this.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');{elseif !$userTrackerData}check_pass();{/if}" />
 						<div style="float:right;margin-left:5px;">
 							<div id="mypassword_text"></div>

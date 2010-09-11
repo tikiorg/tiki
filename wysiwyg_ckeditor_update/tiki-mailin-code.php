@@ -5,11 +5,9 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
 require_once ('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 include_once ('lib/mailin/mailinlib.php');
-// require_once ("lib/webmail/pop3.php");
 require_once ("lib/webmail/net_pop3.php");
 include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/mail/mimelib.php");
@@ -19,7 +17,6 @@ function mailin_check_attachments(&$output, &$out, $page, $user) {
 	global $wikilib;
 	$cnt = 0;
 	if (!isset($output["parts"])) return;
-
 	
 	for ($it = 0, $count_outputparts = count($output['parts']); $it < $count_outputparts; $it++) {
 		if (isset($output["parts"][$it]["d_parameters"]["filename"])) {
@@ -63,8 +60,7 @@ foreach($accs['data'] as $acc) {
 	$content.= "Account :" . $acc['account'] . "<br />";
 	$content.= "Type    :" . $acc['type'] . "<br />";
 	$content.= "--------------------------<br />";
-	//$pop3 = new POP3($acc["pop"], $acc["username"], $acc["pass"]);
-	//$pop3->Open();
+
 	$pop3 = new Net_Pop3();
 	$content.= "Connecting...";
 	if ($pop3->connect($acc["pop"], $acc["port"])) {
@@ -89,14 +85,13 @@ foreach($accs['data'] as $acc) {
 				$debugger->msg("dump of pop3:");
 				$debugger->var_dump('$pop3');
 			}
-		} else { // else $mailsum not FALSE
+		} else {
 			$content.= "Messages:" . $mailsum . "<br />";
 			for ($i = 1; $i <= $mailsum; $i++) {
 				$aux = $pop3->getParsedHeaders($i);
 				if ($aux === FALSE) {
 					$content.= "Headers not parsed.<br />";
 				} else { // else $aux not FALSE
-					// var_dump($aux);
 					if (!isset($aux["From"])) $aux['From'] = $aux['Return-path'];
 					preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/', $aux["From"], $mail);
 					$email_from = $mail[1];
@@ -104,7 +99,7 @@ foreach($accs['data'] as $acc) {
 					$aux["realmsgid"] = preg_replace('/[<>]/', '', $aux["Message-ID"]);
 					$message = $pop3->getMsg($i);
 					$output = mime::decode($message);
-					//mailin_parse_output($output, $parts, 0);
+
 					$content.= "Reading a request.<br />From: " . $aux["From"] . "<br />Subject: " . $output['header']['subject'] . "<br />";
 					$content.= "sender email: " . $email_from . "<br />";
 					$aux["sender"]["user"] = $userlib->get_user_by_email($email_from);
@@ -242,7 +237,7 @@ foreach($accs['data'] as $acc) {
 									}
 								}
 								mailin_check_attachments($output, $content, $page, $aux["sender"]["user"]);
-							} //end elseif ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki-prepend' || ($acc['type'] == 'wiki' && $method == "APPEND") || ($acc['type'] == 'wiki' && $method == "PREPEND"))
+							}
 							else {
 								$mail = new TikiMail();
 								$mail->setFrom($acc["account"]);
@@ -258,21 +253,20 @@ foreach($accs['data'] as $acc) {
 								$mail->setText($mail_data);
 								$res = $mail->send(array($email_from), 'mail');
 							}
-						} //end if ($acc['type'] == 'article-put')
+						}
 						
-					} //end if($cantUseMailIn)
+					}
 					// Remove the email from the pop3 server
 					$pop3->deleteMsg($i);
-				} // else $aux not FALSE
+				}
 				
-			} //end for ($i = 1; $i <= $mailsum; $i++)
+			}
 			
-		} // else $mailsum not FALSE
+		}
 		
 	} else {
 		$content.= "FAILED.<br />";
-	} // end else if( $pop3->connect($acc["pop"],$acc["port"]) )
+	}
 	$pop3->disconnect();
-	//echo $content;
 	
-} //end foreach ($accs['data'] as $acc) {
+}

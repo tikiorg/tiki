@@ -1,5 +1,5 @@
 <div class="navbar">
-  {self_link print='y'}{icon _id='printer' align='right' hspace='1' alt='{tr}Print{/tr}'}{/self_link}
+  {self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
 
   {if $mid ne "tiki-directory_browse.tpl"}
   {button href="tiki-directory_browse.php" _text="{tr}Browse{/tr}"}

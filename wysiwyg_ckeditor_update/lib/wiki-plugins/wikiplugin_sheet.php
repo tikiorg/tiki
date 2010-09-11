@@ -143,6 +143,17 @@ EOF;
 		}
 	}
 
+	if (!empty($id)) {
+		$info = $sheetlib->get_sheet_info($id);
+		if (empty($info)) {
+			return ("<b>missing id parameter for plugin</b><br />");
+		}
+		$objectperms = Perms::get('sheet', $id);
+		if (!$objectperms->view_sheet  && !($user && $info['author'] == $user)) {
+			return (tra('Permission denied'));
+		}
+	}
+
 	// Build required objects
 	$sheet = new TikiSheet($id);
 	$db = new TikiSheetDatabaseHandler( $id );
@@ -172,7 +183,7 @@ setTimeout (function () { $("#tiki_sheet' . $sheet->instance . '").tiki("sheet",
 	
 		$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
 		
-		if( $editable && ($tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y')) {
+		if( $editable && ($objectperms->edit_sheet  || $objectperms->admin_sheet || $tiki_p_admin == 'y')) {
 			require_once $smarty->_get_plugin_filepath('function','button');
 			
 			//If you've given the sheet a url, you can't edit it, disable if not possible
@@ -183,7 +194,7 @@ setTimeout (function () { $("#tiki_sheet' . $sheet->instance . '").tiki("sheet",
 			$ret .= smarty_function_button( $button_params, $smarty);
 		}
 	} else {	// non jQuery.sheet behaviour
-		if( $tiki_p_edit_sheet == 'y' || $tiki_p_admin_sheet == 'y' || $tiki_p_admin == 'y') {
+		if( $objectperms->edit_sheet || $objectperm->admin_sheet || $tiki_p_admin == 'y') {
 			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&readdate=" . time() . "&mode=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
 		}
 	}

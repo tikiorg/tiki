@@ -46,6 +46,8 @@ function wikiplugin_tabs($data, $params) {
 	global $tikilib, $smarty;
 	if (!empty($params['name'])) {
 		$tabsetname = $params['name'];
+	} else {
+		$tabsetname = '';
 	}
 	
 	$tabs = array();

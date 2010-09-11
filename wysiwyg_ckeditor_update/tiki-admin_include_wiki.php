@@ -20,7 +20,7 @@ if (isset($_REQUEST["dump"])) {
 	$adminlib->dump();
 }
 // Included for the forum dropdown
-include_once ("lib/commentslib.php");
+include_once ("lib/comments/commentslib.php");
 if (isset($_REQUEST["createtag"])) {
 	check_ticket('admin-inc-wiki');
 	// Check existance

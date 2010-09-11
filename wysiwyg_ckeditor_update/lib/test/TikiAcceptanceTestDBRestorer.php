@@ -5,19 +5,37 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
- 
-class TikiAcceptanceTestDBRestorer
+
+require_once('installer/installlib.php');
+
+abstract class TikiAcceptanceTestDBRestorer
+/*
+ * This class is invoked between automated tests, in order to restore the Tiki DB
+ * to a given starting state. This avoids side effects between tests, which could
+ * happen if a given test put data into the DB which would affect the success/failure 
+ * of subsequent tests.
+ *
+ * There are currently two subclasses that use different approaches for dumping the DB
+ * and restoring it. We keep both of them for now, until we decide which of the two
+ * is most appropriate.
+ *
+ * The SQLDumps approach uses files containing SQL statements that can be used to restore 
+ * the DB. It is slower, but possibly more reliable.
+ * 
+ * The BinaryDumps approach uses the actual binary files of the DB. It is faster, but possibly
+ * less reliable.
+ */
 {
 
-	private $host = "localhost";
-	private $tiki_test_db = "tiki_db_for_acceptance_tests";
-	private $tiki_test_db_dump = "tiki_db_for_acceptance_tests_dump.sql";
-	private $tiki_test_db_user = "tikiadmin";
-	private $tiki_test_db_pwd = "tiki";
-	private $mysql_data_dir = "";
-	private $tiki_schema_file_start = "dump_schema_tiki_start.txt";
-	private $tiki_restore_db_file_name = "tiki_testdb_restore_file.sql";
-	private $tiki_bare_bones_db_dump = "bareBonesDBDump.sql"; 
+	protected $host = "localhost";
+	protected $tiki_test_db = "tiki_db_for_acceptance_tests";
+	protected $tiki_test_db_dump = "tiki_db_for_acceptance_tests_dump.sql";
+	protected $tiki_test_db_user = "tikiadmin";
+	protected $tiki_test_db_pwd = "tiki";
+	protected $mysql_data_dir = "";
+	protected $tiki_schema_file_start = "dump_schema_tiki_start.txt";
+	protected $tiki_restore_db_file_name = "tiki_testdb_restore_file.sql";
+	protected $tiki_bare_bones_db_dump = "bareBonesDBDump.sql"; 
 
 
 	function __construct() {
@@ -25,6 +43,10 @@ class TikiAcceptanceTestDBRestorer
 		$this->mysql_data_dir = $this->set_mysql_data_dir();
 	}
 
+	//This method can be called to create any dump file from a db.
+	//Useful for creating dumps for diffent test db configurations
+	abstract function create_dump_file($dump_file);
+	
 	function set_mysql_data_dir() {
 		mysql_connect($this->host, $this->tiki_test_db_user, $this->tiki_test_db_pwd) or die(mysql_error());
 		$result = mysql_query("select @@datadir;");
@@ -34,14 +56,63 @@ class TikiAcceptanceTestDBRestorer
 		return $datadir; 
 	}
 
+	abstract function check_if_dump_exists($dump_file);
+
+	function restoreDB($tiki_test_db_dump, $save_schema = false) {
+		$begTime = microtime(true);
+		$this->restoreDBDump($tiki_test_db_dump, $save_schema);
+		$this->reinitialize_internal_values_and_clear_caches();
+		echo "<pre>". __METHOD__ . " DB restored in ".(microtime(true) -$begTime)." seconds</pre>\n";	
+	}
+
+	abstract function restoreDBDump($tiki_test_db_dump, $save_schema = false);
+	
+	function reinitialize_internal_values_and_clear_caches() {
+		global $cachelib, $prefs, $tikilib;
+		initialize_prefs();			
+		$tikilib->cache_page_info = array();	
+		$cachelib->empty_cache();
+	}
+	
+	
+	function printCallStack() {
+		// Can't believe this is not standard in PHP!
+		$backtrace = debug_backtrace();
+
+		// Remove printCallStack() element from the stack, and print just the rest.
+		array_shift($backtrace);
+		foreach ($backtrace as $backtraceElement) {
+			$line = "In File: ".$backtraceElement['file'].", at line: ".$backtraceElement['line']."\n";
+			if (isset($backtraceElement['class'])) {
+				$line .= $backtraceElement['class']."::";
+			}
+			$line .= $backtraceElement['function']."\n";
+			echo $line;
+		}		
+	}
+}
+
+
+class TikiAcceptanceTestDBRestorerSQLDumps extends TikiAcceptanceTestDBRestorer
+{
+	/*
+	 * This subclass uses SQL dumps of the DB to create DB snapshots and restore them.
+	 * It tries to only restore those tables that have changed since the last time 
+	 * the snapshot was restored.
+	 */
+
+	function __construct() {
+		parent::__construct();
+	}
+
 	function check_if_dump_and_schema_start_files_exist($dump_file) {
-		if (check_if_dump_file_exists($dump_file) && 
-				check_if_dump_file_exists($dump_file."_".$this->tiki_schema_file_start)) {
+		if (check_if_dump_exists($dump_file) && 
+				check_if_dump_exists($dump_file."_".$this->tiki_schema_file_start)) {
 			return true;
 		}
 	}
 
-	function check_if_dump_file_exists($dump_file){
+	function check_if_dump_exists($dump_file){
 		chdir($this->mysql_data_dir);
 		if (file_exists($dump_file)) {
 			return true;
@@ -79,7 +150,9 @@ class TikiAcceptanceTestDBRestorer
 		$this->create_start_schema_files();
 	}
 
-	function restoreDB($tiki_test_db_dump) {
+	function restoreDBDump($tiki_test_db_dump, $save_schema = false) {
+		$begTime = microtime(true);
+		
 		global $last_restored;
 		$error_msg = null;
 		chdir($this->mysql_data_dir);
@@ -138,18 +211,20 @@ class TikiAcceptanceTestDBRestorer
 			//				$begTime = microtime(true);
 
 			//RESTORE THE ORIGINAL DATABASE
-			$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $this->tiki_restore_db_file_name";
-			shell_exec($mysql_restore_db_command);
+			$installer = new Installer();
+			$installer->runFile( $this->tiki_restore_db_file_name );	
+			
 			//		    	echo (microtime(true) -$begTime)." sec"; 
 			$last_restored = $tiki_test_db_dump;
+//			$this->reinitialize_internal_values_and_clear_caches();
 		} else {
-			//restore the whole database				
-			$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $tiki_test_db_dump";
-			shell_exec($mysql_restore_db_command);
-			$this->create_testdb_dump_and_start_schema_files();
-			$last_restored = $tiki_test_db_dump;
+			//restore the whole database	
+			$this->restoreDBDumpFromScratch($tiki_test_db_dump);	
+			$last_restored = $tiki_test_db_dump;			
+			$this->create_start_schema_files();
 		}
 		chdir($this->current_dir);
+		
 		return null;
 	}
 
@@ -165,26 +240,73 @@ class TikiAcceptanceTestDBRestorer
 		chdir($this->current_dir);
 	}
 
-	function restoreDBFromScratch($dump_file) {
-		chdir($this->mysql_data_dir);
-		$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $dump_file";
-		shell_exec($mysql_restore_db_command);
-		chdir($this->current_dir);
+	function restoreDBDumpFromScratch($dump_file) {
+		$dump_file_with_path = $this->mysql_data_dir . $dump_file;
+		$installer = new Installer();
+		$installer->runFile( $dump_file_with_path );	
+	}
+}
+
+class TikiAcceptanceTestDBRestorerBinaryDumps extends TikiAcceptanceTestDBRestorer
+{
+	/*
+	 * This subclass uses binary files of the SQL database, instead of
+	 * files containing SQL statements to restore the DB.
+	 * It is faster, but possibly less robust than the SQLDumps approach.
+	 * We keep both approaches for now, until we decide which of the
+	 * two makes most sense.
+	 */
+	
+	private $dump_file_extension = 'binary';
+
+	function __construct() {
+		parent::__construct();
 	}
 
-	function printCallStack() {
-		// Can't believe this is not standard in PHP!
-		$backtrace = debug_backtrace();
+	function create_dump_file($dump_name) {
+		$tiki_test_db_data_directory = 
+			$this->mysql_data_dir . DIRECTORY_SEPARATOR . 
+			$this->tiki_test_db;
+		$this->copy_dir($tiki_test_db_data_directory, $this->dump_file_path($dump_name));
+	}
+	
+	private function dump_file_path($dump_name) {
+		$dump_fpath = 
+			$this->mysql_data_dir . DIRECTORY_SEPARATOR . 
+			$dump_name.
+			".".$this->dump_file_extension;
+		return $dump_fpath;
+	}
+	
+	function check_if_dump_exists($dump_file) {
+		
+	}
 
-		// Remove printCallStack() element from the stack, and print just the rest.
-		array_shift($backtrace);
-		foreach ($backtrace as $backtraceElement) {
-			$line = "In File: ".$backtraceElement['file'].", at line: ".$backtraceElement['line']."\n";
-			if (isset($backtraceElement['class'])) {
-				$line .= $backtraceElement['class']."::";
+	function restoreDBDump($tiki_test_db_dump, $save_schema = false) {
+		
+	}
+
+	private function copy_dir( $source, $target ) {
+		if ( is_dir( $source ) ) {
+			@mkdir( $target );
+			$d = dir( $source );
+			while ( FALSE !== ( $entry = $d->read() ) ) {
+				if ( $entry == '.' || $entry == '..' ) {
+					continue;
+				}
+				$Entry = $source . '/' . $entry;
+				if ( is_dir( $Entry ) ) {
+					full_copy( $Entry, $target . '/' . $entry );
+					continue;
+				}
+				copy( $Entry, $target . '/' . $entry );
 			}
-			$line .= $backtraceElement['function']."\n";
-			echo $line;
-		}		
+
+			$d->close();
+		}else {
+			copy( $source, $target );
+		}
 	}
+	
+	
 }

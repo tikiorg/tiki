@@ -8,7 +8,7 @@
 $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
-include_once ("lib/commentslib.php");
+include_once ("lib/comments/commentslib.php");
 if ($prefs['feature_freetags'] == 'y') {
 	include_once ('lib/freetag/freetaglib.php');
 }
@@ -95,7 +95,7 @@ if (!isset($_REQUEST['lang'])) {
 	$_REQUEST['lang'] = '';
 }
 // Get a list of last changes to the Wiki database
-$listpages = $artlib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $date_min, $date_max, $user, $type, $topic, 'y', $topicName, $categId, '', '', $_REQUEST['lang'], $min_rating, $max_rating);
+$listpages = $artlib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $date_min, $date_max, $user, $type, $topic, 'y', $topicName, $categId, '', '', $_REQUEST['lang'], $min_rating, $max_rating, false, 'y');
 if ($prefs['feature_multilingual'] == 'y') {
 	include_once ("lib/multilingual/multilinguallib.php");
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);

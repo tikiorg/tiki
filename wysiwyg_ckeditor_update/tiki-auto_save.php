@@ -6,6 +6,10 @@
 // $Id$
 
 // Called by FCKEditor and defined in setup_fckeditor.tpl - FCKConfig.ajaxAutoSaveTargetUrl
+// also now CKEDITOR.config.ajaxAutoSaveTargetUrl defined in block.textarea.php
+
+// Used by ckeditor tikiwiki plugin and to reparse plugins in html mode
+// possibly should be renamed?
 
 $inputConfiguration = array( array(
 	'staticKeyFilters' => array(
@@ -17,7 +21,7 @@ $inputConfiguration = array( array(
 
 require_once('tiki-setup.php');
 
-if ($prefs['feature_ajax'] != 'y' || $prefs['feature_ajax_autosave'] != 'y') {
+if ($prefs['feature_ajax'] != 'y' || ($prefs['feature_ajax_autosave'] != 'y' && $prefs['wysiwyg_ckeditor'] != 'y')) {
 	return;
 }
 

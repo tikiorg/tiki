@@ -183,7 +183,7 @@ class RankLib extends TikiLib
 	
 	function forums_ranking_last_posts($limit, $toponly=false, $forumId='')
 	{
-		global $user, $commentslib; require_once 'lib/commentslib.php';
+		global $user, $commentslib; require_once 'lib/comments/commentslib.php';
 		if (! $commentslib) {
 			$commentslib = new Comments;
 		}
@@ -216,7 +216,7 @@ class RankLib extends TikiLib
 	{
 		global $commentslib;
 		if (! $commentslib) {
-			require_once 'lib/commentslib.php';
+			require_once 'lib/comments/commentslib.php';
 			$commentslib = new Comments;
 		}
 
@@ -259,7 +259,7 @@ class RankLib extends TikiLib
 	{
 		global $commentslib;
 		if (! $commentslib) {
-			require_once 'lib/commentslib.php';
+			require_once 'lib/comments/commentslib.php';
 			$commentslib = new Comments;
 		}
 
@@ -285,7 +285,7 @@ class RankLib extends TikiLib
 	{
 		global $commentslib;
 		if (! $commentslib) {
-			require_once 'lib/commentslib.php';
+			require_once 'lib/comments/commentslib.php';
 			$commentslib = new Comments;
 		}
 
@@ -310,7 +310,7 @@ class RankLib extends TikiLib
 	{
 		global $commentslib;
 		if (! $commentslib) {
-			require_once 'lib/commentslib.php';
+			require_once 'lib/comments/commentslib.php';
 			$commentslib = new Comments;
 		}
 

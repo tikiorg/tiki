@@ -1,5 +1,11 @@
 {* $Id$ *}
 
+{if $ispublished eq 'n' && $tiki_p_edit_article eq 'y'}
+	{remarksbox type='errors' title='Not Published'}
+	{tr}This Article is currently not published and only visible by Editors{/tr}
+	{/remarksbox}
+{/if}
+
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y'}
 	<div align="right">{$display_catpath}</div>
 {/if}
@@ -126,15 +132,15 @@
 	
 		{if $pages > 1}
 			<div align="center">
-				<a href="{$articleId|sefurl:article:with_next}page={$first_page}"><img src='pics/icons/resultset_first.png' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' width='16' height='16' /></a>
+				<a href="{$articleId|sefurl:article:with_next}page={$first_page}"><img src='pics/icons/resultset_first.png' alt="{tr}First page{/tr}" title="{tr}First page{/tr}" width='16' height='16' /></a>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$prev_page}">{icon _id='resultset_previous' alt='{tr}Previous page{/tr}'}</a>
+				<a href="{$articleId|sefurl:article:with_next}page={$prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
 
 				<small>{tr}page:{/tr}{$pagenum}/{$pages}</small>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$next_page}">{icon _id='resultset_next' alt='{tr}Next page{/tr}'}</a>
+				<a href="{$articleId|sefurl:article:with_next}page={$next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$last_page}"><img src='pics/icons/resultset_last.png' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>
+				<a href="{$articleId|sefurl:article:with_next}page={$last_page}"><img src='pics/icons/resultset_last.png' alt="{tr}Last page{/tr}" title="{tr}Last page{/tr}" width='16' height='16' ></a>
 			</div>
 		{/if}
 	</div>
@@ -156,7 +162,6 @@
 		</p>
 	{/if}
 </div>
-{wikipluginsubmit}{/wikipluginsubmit}{*droit-inc*}
 
 {if $prefs.feature_article_comments == 'y' && 
 		(($tiki_p_read_comments == 'y' && $comments_cant != 0) || $tiki_p_post_comments == 'y' || $tiki_p_edit_comments == 'y')}

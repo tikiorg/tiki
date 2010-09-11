@@ -129,10 +129,23 @@ function wikiplugin_mediaplayer($data, $params) {
 	}
 	if (!empty($params['src'])) {
 		global $headerlib; include_once('lib/headerlib.php');
-		extract ($params,EXTR_SKIP);
-		$js = "\$('#$id').media( {width: $width, height: $height} );";
+		$js = "\n var media_$id = $('#$id').media( {";
+		foreach ($params as $param => $value) {
+			if ($param == 'src') {
+				continue;
+			}
+			
+			if (is_numeric($value) == false &&
+				strtolower($value) != 'true' && 
+				strtolower($value) != 'false') {
+				$value = "\"" . $value . "\"";
+			}
+			
+			$js .= "$param: $value,";
+		}
+		$js .= "} );";
 		$headerlib->add_jq_onready($js);
-		return "~np~<a href=\"$src\" id=\"$id\"></a>~/np~";
+		return "<a href=\"".$params['src']."\" id=\"$id\"></a>";
 	}
 	$styles = array('normal', 'mini', 'maxi', 'multi');
 	if (empty($params['style']) || $params['style'] == 'normal' || !in_array($params['style'], $styles)) {

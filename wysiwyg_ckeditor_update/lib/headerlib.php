@@ -15,6 +15,7 @@ class HeaderLib
 	var $title;
 	var $jsfiles;
 	var $js;
+	var $js_config;
 	var $jq_onready;
 	var $cssfiles;
 	var $css;
@@ -26,6 +27,7 @@ class HeaderLib
 		$this->title = '';
 		$this->jsfiles = array();
 		$this->js = array();
+		$this->js_config = array();
 		$this->jq_onready = array();
 		$this->cssfiles = array();
 		$this->css = array();
@@ -51,6 +53,17 @@ class HeaderLib
 	function add_jsfile($file,$rank=0) {
 		if (empty($this->jsfiles[$rank]) or !in_array($file,$this->jsfiles[$rank])) {
 			$this->jsfiles[$rank][] = $file;
+		}
+	}
+
+	function add_js_config($script,$rank=0) {
+		if (empty($this->js_config[$rank]) or !in_array($script,$this->js_config[$rank])) {
+			$this->js_config[$rank][] = $script;
+		}
+		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
+			return $this->wrap_js($script);
+		} else {
+			return '';
 		}
 	}
 
@@ -237,22 +250,32 @@ class HeaderLib
 		global $tikidomainslash;
 		$hash = md5( serialize( $this->jsfiles ) );
 		$file = 'temp/public/'.$tikidomainslash."minified_$hash.js";
+		$minified_files = array();
 
 		if( ! file_exists( $file ) ) {
-			$complete = $this->getJavascript();
-
 			require_once 'lib/minify/JSMin.php';
 			$minified = '/* ' . print_r( $this->jsfiles, true ) . ' */';
-			$minified .= JSMin::minify( $complete );
+			foreach( $this->jsfiles as $x => $files ) {
+				foreach( $files as $f ) {
+					$content = file_get_contents( $f );
+					if ( ! preg_match('/min\.js$/', $f) and $x !== 'minified') {
+						$minified .= JSMin::minify( $content );
+					} else {
+						//$minified_files[] = $f;
+						$minified .= "\n// skipping minification for $f \n" . $content;
+					}
+				}
+			}
 
 			file_put_contents( $file, $minified );
 			chmod($file, 0644);
 		}
 
+		$minified_files[] = $file;
 		return array(
 			'external' => array(),
 			'dynamic' => array(),
-			array( $file ),
+			$minified_files,
 		);
 	}
 
@@ -268,6 +291,27 @@ class HeaderLib
 		return $content;
 	}
 
+	function output_js_config($wrap = true) {
+		if (count($this->js_config)) {
+			ksort($this->js_config);
+			$back = "\n<!-- js_config before loading JSfile -->\n";
+			$b = "";
+			foreach ($this->js_config as $x=>$js) {
+        $b.= "// js $x \n";
+        foreach ($js as $j) {
+          $b.= "$j\n";
+        }
+      }
+      if ( $wrap === true ) {
+        $back .= $this->wrap_js($b);
+      } else {
+        $back .= $b;
+      }
+    }
+
+		return $back;
+
+	}
 	function output_js($wrap = true) {	// called in tiki.tpl - JS output at end of file now (pre 5.0)
 		global $prefs;
 

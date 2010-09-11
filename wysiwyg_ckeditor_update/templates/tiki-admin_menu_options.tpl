@@ -33,35 +33,35 @@
 							<input type="hidden" name="menuId" value="{$menuId|escape}" />
 							<input type="hidden" name="offset" value="{$offset|escape}" />
 							{if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}" />{/if}
-							<table>
-								<tr class="formcolor">
+							<table class="formcolor">
+								<tr>
 									<td>{tr}Name:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" />
 									</td>
 								</tr>
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}URL:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" />
 										<br /><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
 									</td>
 								</tr>
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Sections:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br />
 										<em>{tr}Separate multiple sections with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 									</td>
 								</tr>
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Permissions:{/tr}</td>
 									<td colspan="3">
 										<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br />
 										<em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
 									</td>
 								</tr>
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Group:{/tr}</td>
 									<td colspan="3">
 										<select id="menu_groupname" name="groupname[]" size="4" multiple>
@@ -74,7 +74,7 @@
 									</td>
 								</tr>
 {if $prefs.feature_userlevels eq 'y'}
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Level:{/tr}</td>
 									<td colspan="3">
 										<select name="level">
@@ -84,7 +84,7 @@
 									</td>
 								</tr>
 {/if}
-								<tr class="formcolor">
+								<tr>
 									<td>{tr}Type:{/tr}</td>
 									<td>
 										<select name="type">
@@ -105,7 +105,7 @@
 {if $prefs.menus_items_icons eq 'y'}
 							 	<tr><td>{tr}Icon:{/tr}</td><td colspan="3"><input type="text" name="icon" value="{$icon|escape}" size="20" /></td></tr>
 {/if}
-								<tr class="formcolor">
+								<tr>
 									<td>&nbsp;</td>
 									<td colspan="3">
 										<input type="submit" name="save" value="{tr}Save{/tr}" />
@@ -285,30 +285,38 @@
 				<input type="hidden" name="menuId" value="{$menuId}" />
 				<input type="hidden" name="offset" value="{$offset}" />
 				<table class="normal">
+					{assign var=numbercol value=0}
 					<tr>
 						<th>
+							{assign var=numbercol value=`$numbercol+1`}
 							{if $channels}
 								{select_all checkbox_names='checked[]'}
 							{/if}
 						</th>
+						{assign var=numbercol value=`$numbercol+1`}
 						<th>{self_link _sort_arg='sort_mode' _sort_field='optionId'}{tr}ID{/tr}{/self_link}</th>
+						{assign var=numbercol value=`$numbercol+1`}
 						<th>{self_link _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</th>
+						{assign var=numbercol value=`$numbercol+1`}
 						<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
+						{assign var=numbercol value=`$numbercol+1`}
 						<th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
 						{if $prefs.feature_userlevels eq 'y'}
+						{assign var=numbercol value=`$numbercol+1`}
 							<th>{self_link _sort_arg='sort_mode' _sort_field='userlevel'}{tr}Level{/tr}{/self_link}</th>
 						{/if}
+						{assign var=numbercol value=`$numbercol+1`}
 						<th>{tr}Action{/tr}</th>
 					</tr>
 					{cycle values="odd,even" print=false}
 					{section name=user loop=$channels}
-						<tr>
-							<td class="{cycle advance=false}">
+						<tr class="{cycle}">
+							<td>
 								<input type="checkbox" name="checked[]" value="{$channels[user].optionId|escape}"  {if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if} />
 							</td>
-							<td class="{cycle advance=false}">{$channels[user].optionId}</td>
-							<td class="{cycle advance=false}">{$channels[user].position}</td>
-							<td class="{cycle advance=false}">
+							<td>{$channels[user].optionId}</td>
+							<td>{$channels[user].position}</td>
+							<td>
 								<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 								<div style="margin-left:10px;">
 									{if $channels[user].url}
@@ -319,14 +327,14 @@
 									{if $channels[user].groupname}<br />{tr}Groups:{/tr} {$channels[user].groupname|escape}{/if}
 								</div>
 							</td>
-							<td class="{cycle advance=false}">{$channels[user].type_description}</td>
+							<td>{$channels[user].type_description}</td>
 			
 							{if $prefs.feature_userlevels eq 'y'}
 								{assign var=it value=$channels[user].userlevel}
-								<td class="{cycle advance=false}">{$prefs.userlevels.$it}</td>
+								<td>{$prefs.userlevels.$it}</td>
 							{/if}
 							
-							<td class="{cycle advance=true}">
+							<td>
 								<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 								{if !$smarty.section.user.first}
 									<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options" title="{tr}switch with previous option{/tr}">{icon _id='resultset_up'}</a>
@@ -334,22 +342,18 @@
 								{if !$smarty.section.user.last}
 									<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options" title="{tr}switch with next option{/tr}">{icon _id='resultset_down'}</a>
 								{/if}
-								<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+								<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 							</td>
 						</tr>
 					{sectionelse}
-						<tr>
-							<td class="odd" colspan="11">
-								<strong>{tr}No records found.{/tr}</strong>
-							</td>
-						</tr>
+						<tr><td class="odd" colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td></tr>
 					{/section}
 				</table>
 				
 				{if $channels}
 					<div align="left">
 						{tr}Perform action with checked:{/tr}
-						<input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+						<input type="image" name="delsel" src='pics/icons/cross.png' alt="{tr}Delete{/tr}" title="{tr}Delete{/tr}" />
 					</div>
 				{/if}
 			</form>

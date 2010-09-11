@@ -30,28 +30,28 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
-<tr>
-<td class="{cycle advance=false}">{if $tiki_p_admin_banners eq 'y'}<a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{/if}{$listpages[changes].bannerId}{if $tiki_p_admin_banners eq 'y'}</a>{/if}</td>
-<td class="{cycle advance=false}">{$listpages[changes].client|username}</td>
-<td class="{cycle advance=false}">{$listpages[changes].url}</td>
-<td class="{cycle advance=false}">{$listpages[changes].zone|escape}</td>
-<td class="{cycle advance=false}">{$listpages[changes].created|tiki_short_date}</td>
-<td class="{cycle advance=false}">{$listpages[changes].which}</td>
-<td class="{cycle advance=false}">{$listpages[changes].useDates}</td>
-<td class="{cycle advance=false}">{$listpages[changes].maxImpressions}</td>
-<td class="{cycle advance=false}">{$listpages[changes].impressions}</td>
-<td class="{cycle advance=false}">{$listpages[changes].maxClicks}</td>
-<td class="{cycle advance=false}">{$listpages[changes].clicks}</td>
-<td class="{cycle}">
+<tr class="{cycle}">
+<td>{if $tiki_p_admin_banners eq 'y'}<a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{/if}{$listpages[changes].bannerId}{if $tiki_p_admin_banners eq 'y'}</a>{/if}</td>
+<td>{$listpages[changes].client|username}</td>
+<td>{$listpages[changes].url}</td>
+<td>{$listpages[changes].zone|escape}</td>
+<td>{$listpages[changes].created|tiki_short_date}</td>
+<td>{$listpages[changes].which}</td>
+<td>{$listpages[changes].useDates}</td>
+<td>{$listpages[changes].maxImpressions}</td>
+<td>{$listpages[changes].impressions}</td>
+<td>{$listpages[changes].maxClicks}</td>
+<td>{$listpages[changes].clicks}</td>
+<td>
 {if $tiki_p_admin_banners eq 'y'}
 <a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{icon _id='page_edit'}</a>
-<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 {/if}
-<a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{icon _id='chart_curve' alt='{tr}Stats{/tr}'}</a>
+<a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{icon _id='chart_curve' alt="{tr}Stats{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}
-<tr><td class="odd" colspan="11">
+<tr><td class="odd" colspan="12">
 {tr}No records found{/tr}
 </td></tr>
 {/section}

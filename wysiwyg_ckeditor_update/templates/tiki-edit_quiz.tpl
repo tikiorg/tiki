@@ -53,18 +53,20 @@
 			<td style="text-align: right;">
 
 			{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' quizId=$channels[user].quizId}{tr}Edit{/tr}{/self_link}
-				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{icon _id='help' alt='{tr}Questions{/tr}' title='{tr}Questions{/tr}'}</a>
-				<a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{icon _id='application_form_magnify' alt='{tr}Results{/tr}' title='{tr}Results{/tr}'}</a>
+				<a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{icon _id='help' alt="{tr}Questions{/tr}" title="{tr}Questions{/tr}"}</a>
+				<a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{icon _id='application_form_magnify' alt="{tr}Results{/tr}" title="{tr}Results{/tr}"}</a>
 				<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">
 					{if $channels[user].individual eq 'y'}
-						{icon _id='key_active' alt='{tr}Active Perms{/tr}'}
+						{icon _id='key_active' alt="{tr}Active Perms{/tr}"}
 					{else}
-						{icon _id='key' alt='{tr}Perms{/tr}'}
+						{icon _id='key' alt="{tr}Perms{/tr}"}
 					{/if}
 				</a>
-				<a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+				<a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 			</td>
 		</tr>
+	{sectionelse}
+		<tr><td class="odd" colspan="7"><strong>{tr}No records found.{/tr}</strong></td></tr>
 	{/section}
 </table>
 
@@ -82,25 +84,25 @@
 
 <form action="tiki-edit_quiz.php" method="post">
 	<input type="hidden" name="quizId" value="{$quizId|escape}" />
-	<table class="normal">
+	<table class="formcolor">
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="quiz-name">{tr}Name{/tr}:</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="text" size ="80" name="name" id="quiz-name" value="{$name|escape}" />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="quiz-desc">{tr}Description{/tr}:</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<textarea name="description" id="quiz-desc" rows="4" cols="75">{$description|escape}</textarea>
 			</td>
 		</tr>
 		{include file='categorize.tpl'}
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Publish Date{/tr}</td>
 			<td>
 				{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
@@ -112,7 +114,7 @@
 				</span>
 			</td>
 		</tr>
-		<tr class="formcolor">
+		<tr>
 			<td>{tr}Expiration Date{/tr}</td>
 			<td>
 				{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
@@ -123,82 +125,82 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="quiz-repeat">{tr}Quiz can be repeated{/tr}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="checkbox" name="canRepeat" id="quiz-repeat" {if $canRepeat eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="quiz-results">{tr}Store quiz results{/tr}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="checkbox" name="storeResults" id="quiz-results" {if $storeResults eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="immediate-feedback">{tr}Immediate feedback{/tr}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="checkbox" name="immediateFeedback" id="immediate-feedback" {if $immediateFeedback eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="show-answers">{tr}Show correct answers{/tr}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="checkbox" name="showAnswers" id="show-answers" {if $showAnswers eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="shuffle-questions">{tr}Shuffle questions{/tr}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="checkbox" name="shuffleQuestions" id="shuffle-questions" {if $shuffleQuestions eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="shuffle-answers">{tr}Shuffle answers{/tr}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="checkbox" name="shuffleAnswers" id="shuffle-answers" {if $shuffleAnswers eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="quiz-timelimit">{tr}Quiz is time limited{/tr}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="checkbox" name="timeLimited" id="quiz-timelimit" {if $timeLimited eq 'y'}checked="checked"{/if} />
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="quiz-maxtime">{tr}Maximum time{/tr}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<select name="timeLimit" id="quiz-maxtime">{html_options values=$mins selected=$timeLimit output=$mins}</select>
 				&nbsp;{tr}minutes{/tr}
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">
+			<td>
 				<label for="quiz-passingperct">{tr}Passing Percentage{/tr}</label>
 			</td>
-			<td class="formcolor">
+			<td>
 				<input type="text" name="passingperct" id="quiz-passingperct" size='3' maxlength='3' value="{$passingperct}" />
 				{tr}%{/tr}
 			</td>
 		</tr>
 		<tr>
-			<td class="formcolor">&nbsp;</td>
-			<td class="formcolor">
+			<td>&nbsp;</td>
+			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />
 			</td>
 		</tr>

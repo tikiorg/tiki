@@ -19,7 +19,7 @@ require_once 'lib/setup/third_party.php';
 require_once 'tiki-filter-base.php';
 // Enable Versioning
 // Please update the specified class below at release time, as well as
-// adding new release to http://tikiwiki.org/{$branch}.version file
+// adding new release to http://tiki.org/{$branch}.version file
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
 $num_queries = 0;
@@ -42,24 +42,29 @@ if (($prefs['feature_wysiwyg'] != 'n' && $prefs['feature_wysiwyg'] != 'y') || $p
 require_once ('lib/setup/sections.php');
 require_once ('lib/headerlib.php');
 
-if( $prefs['tiki_domain_prefix'] == 'strip' ) {
-	if( substr( $_SERVER['HTTP_HOST'], 0, 4 ) == 'www.' ) {
-		$prefix = $tikilib->httpPrefix();
-		$prefix = str_replace( '://www.', '://', $prefix );
-		$url = $prefix . $_SERVER['REQUEST_URI'];
+$domain_map = array();
+$host = $_SERVER['HTTP_HOST'];
 
-		$access->redirect( $url );
-		exit;
-	}
-} elseif( $prefs['tiki_domain_prefix'] == 'force' ) {
-	if( substr( $_SERVER['HTTP_HOST'], 0, 4 ) != 'www.' ) {
-		$prefix = $tikilib->httpPrefix();
-		$prefix = str_replace( '://', '://www.', $prefix );
-		$url = $prefix . $_SERVER['REQUEST_URI'];
+if( $prefs['tiki_domain_prefix'] == 'strip' && substr( $host, 0, 4 ) == 'www.' ) {
+	$domain_map[$host] = substr( $host, 4 );
+} elseif( $prefs['tiki_domain_prefix'] == 'force' && substr( $_SERVER['HTTP_HOST'], 0, 4 ) != 'www.' ) {
+	$domain_map[$host] = 'www.' . $host;
+}
 
-		$access->redirect( $url, null, 301 );
-		exit;
+if( !empty($prefs['tiki_domain_redirects']) ) {
+	foreach( explode("\n", $prefs['tiki_domain_redirects']) as $row ) {
+		list($old, $new) = array_map('trim', explode(',', $row, 2));
+		$domain_map[$old] = $new;
 	}
+}
+
+if( isset($domain_map[$host]) ) {
+	$prefix = $tikilib->httpPrefix();
+	$prefix = str_replace( "://$host", "://{$domain_map[$host]}", $prefix );
+	$url = $prefix . $_SERVER['REQUEST_URI'];
+
+	$access->redirect( $url, null, 301 );
+	exit;
 }
 
 if (isset($_REQUEST['PHPSESSID'])) $tikilib->setSessionId($_REQUEST['PHPSESSID']);
@@ -117,7 +122,7 @@ if (isset($_REQUEST['comzone'])) require_once ('lib/setup/comments_zone.php');
 if ($prefs['feature_lastup'] == 'y') require_once ('lib/setup/last_update.php');
 if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive_translation_mode'] == 'on')) {
 	include_once ('lib/multilingual/multilinguallib.php');
-	$cachelib->empty_full_cache();
+	$cachelib->empty_cache('templates_c');
 }
 if ($prefs['feature_freetags'] == 'y') require_once ('lib/setup/freetags.php');
 if ($prefs['feature_categories'] == 'y') require_once ('lib/setup/categories.php');
@@ -132,6 +137,10 @@ if ($prefs['feature_phplayers'] == 'y') require_once ('lib/setup/phplayers.php')
 if ($prefs['feature_antibot'] == 'y' && is_null($user)) {
 	require_once('lib/captcha/captchalib.php');
 	$smarty->assign_by_ref('captchalib', $captchalib);
+}
+
+if ($prefs['feature_credits'] == 'y') {
+	require_once('lib/setup/credits.php');
 }
 
 $smarty->assign_by_ref('phpErrors', $phpErrors);
@@ -195,7 +204,11 @@ if ($prefs['javascript_enabled'] != 'n') {
 	if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 		$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', 'external' );
 	} else {
-		$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
+		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
+			$headerlib->add_jsfile( 'lib/jquery/jquery.min.js' );
+		} else {
+			$headerlib->add_jsfile( 'lib/jquery/jquery.js' );
+		}
 	}
 
 	$headerlib->add_jsfile( 'lib/jquery_tiki/tiki-jquery.js' );
@@ -212,7 +225,11 @@ if ($prefs['javascript_enabled'] != 'n') {
 		if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 			$headerlib->add_jsfile( 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js', 'external' );
 		} else {
-			$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+			if ( $prefs['tiki_minify_javascript'] === 'y' ) {
+				$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js' );
+			} else {
+				$headerlib->add_jsfile( 'lib/jquery/jquery-ui/ui/jquery-ui.js' );
+			}
 		}
 		$headerlib->add_cssfile( 'lib/jquery/jquery-ui/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css' );
 	}
@@ -244,6 +261,11 @@ if ($prefs['javascript_enabled'] != 'n') {
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.json-2.2.js' );
+		
+		if( strpos($_SERVER['SCRIPT_NAME'], 'tiki-history_sheets.php') !== false ) {
+			$headerlib->add_jsfile( 'lib/sheet/tiki-history_sheets.js' );
+		}
+		
 		// plugins
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/plugins/menu.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/plugins/mbMenu.min.js' );

@@ -133,8 +133,21 @@ class RSSLib extends TikiDb_Bridge
 		, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId
 		, $fromcache=false
 	) {
-		global $tikilib, $prefs, $userlib, $prefs, $smarty;
-		require_once('lib/core/lib/Zend/Feed/Writer/Feed.php');
+		global $tikilib, $tiki_p_admin, $prefs, $userlib, $prefs, $smarty;
+		require_once('lib/core/Zend/Feed/Writer/Feed.php');
+
+		// both title and description fields cannot be null
+		if (empty($title) || empty($desc)) {
+			$msg = tra('The fields title and description are mandatory to generate a feed.');
+			if ($tiki_p_admin) {
+				$msg .= ' ' . tra('To fix this error go to Admin -> Feeds.');
+			} else {
+				$msg .= ' ' . tra('Please contact the site administrator and ask him to fix this error');
+			}
+			$smarty->assign('msg', $msg);
+			$smarty->display('error.tpl');
+			die;
+		}
 
 		$feed_format = $this->get_current_feed_format();
 		$feed_format_name = $this->get_current_feed_format_name();
@@ -235,7 +248,7 @@ class RSSLib extends TikiDb_Bridge
 				$item->setLink(sprintf($read, urlencode($data["$id"])));
 			}
 
-			if (isset($data[$descId])) {			
+			if (isset($data[$descId]) && $data[$descId] != '') {
 				$item->setDescription($data[$descId]); 
 			}
 
@@ -528,21 +541,38 @@ class RSSLib extends TikiDb_Bridge
 		}
 
 		$expire = $publication + 3600*24*$configuration['expiry'];
+		
+		if($configuration['submission'] == true) {
+			$subid = $artlib->replace_submission( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
+
+			if( count( $configuration['categories'] ) ) {
+				global $categlib; require_once 'lib/categories/categlib.php';
+				$objectId = $categlib->add_categorized_object( 'submission', $subid, $data['title'], $data['title'], 'tiki-edit_submission.php?subId=' . $subid );
+
+				foreach( $configuration['categories'] as $categId ) {
+					$categlib->categorize( $objectId, $categId );
+				}
+			}
+		}
+		else {
 
 		$id = $artlib->replace_article( $data['title'], $data['author'], $configuration['topic'], 'n', '', 0, '', '', $data['description'], '~np~' . $data['content'] . '~/np~', $publication, $expire, 'admin', 0, 0, 0, $configuration['atype'], '', '', $data['url'], '', '', $configuration['rating'] );
 
-		if( count( $configuration['categories'] ) ) {
-			global $categlib; require_once 'lib/categories/categlib.php';
-			$objectId = $categlib->add_categorized_object( 'article', $id, $data['title'], $data['title'], 'tiki-read_article.php?articleId=' . $id );
+			if( count( $configuration['categories'] ) ) {
+				global $categlib; require_once 'lib/categories/categlib.php';
+				$objectId = $categlib->add_categorized_object( 'article', $id, $data['title'], $data['title'], 'tiki-read_article.php?articleId=' . $id );
 
-			foreach( $configuration['categories'] as $categId ) {
-				$categlib->categorize( $objectId, $categId );
+				foreach( $configuration['categories'] as $categId ) {
+					$categlib->categorize( $objectId, $categId );
+				}
 			}
 		}
 	}
 
 	function set_article_generator( $rssId, $configuration ) {
+	
 		$configuration['type'] = 'article';
+		
 
 		if( $module['actions'] ) {
 			$actions = json_decode( $module['actions'], true );

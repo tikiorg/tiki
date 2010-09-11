@@ -19,7 +19,7 @@
 header('content-type: application/x-javascript');
 
 // Apply filters on the body
-include 'lib/core/lib/TikiFilter.php';
+include 'lib/core/TikiFilter.php';
 $filter = TikiFilter::get('xss');
 $_REQUEST['plugin'] = isset($_GET['plugin']) ? $filter->filter($_GET['plugin']) : '';
 $_REQUEST['language'] = isset($_GET['language']) ? $filter->filter($_GET['language']) : '';

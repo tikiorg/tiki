@@ -12,7 +12,9 @@
 		<span class="author_info">
 
 			<span class="author_post_info">
-				{if $comment.userName}
+				{if $comment.anonymous_name}
+					{tr}Published by{/tr} <span class="author_post_info_by">{if $comment.website}<a href="{$comment.website}" target="_blank">{/if}{$comment.anonymous_name}{if $comment.website}</a>{/if}</span>
+				{elseif $comment.userName}
 					{tr}Published by{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
 				{/if}
 				{if $comment.commentDate > 0}
@@ -27,7 +29,7 @@
 			{/if}
 			{if $forum_info.ui_level eq 'y' and $comment.user_level}
 			<span class="author_stars">
-				<img src="img/icons/{$comment.user_level}stars.gif" alt='{$comment.user_level} {tr}stars{/tr}' title="{tr}User Level{/tr}" />
+				<img src="img/icons/{$comment.user_level}stars.gif" alt="{$comment.user_level} {tr}stars{/tr}" title="{tr}User Level{/tr}" />
 			</span>
 			{/if}
 

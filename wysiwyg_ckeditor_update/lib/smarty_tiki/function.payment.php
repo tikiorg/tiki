@@ -36,6 +36,11 @@ function smarty_function_payment( $params, $smarty ) {
 			} else {
 				$smarty->assign('ccresult', tr('Payment sent but verification not currently available. (Work in progress)'));
 			}
+		} else if ( $prefs['payment_system'] == 'tikicredits') {
+			require_once 'lib/payment/creditspaylib.php';
+			$userpaycredits = new UserPayCredits;
+			$userpaycredits->setPrice($info['amount_remaining']);
+			$smarty->assign('userpaycredits',$userpaycredits->credits);
 		}
 
 		

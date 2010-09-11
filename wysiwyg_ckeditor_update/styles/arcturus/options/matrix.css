@@ -66,6 +66,7 @@ h3,
 h4 {
 	font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	text-transform: small-caps;
+	color: #00f000;
 }
 
 h1 {
@@ -569,6 +570,10 @@ td.eventhumb,
 
 .post .postbody {
 	font-size: 11px;
+}
+
+.postbody-title {
+	color: #00e000;
 }
 
 .dirfooter {

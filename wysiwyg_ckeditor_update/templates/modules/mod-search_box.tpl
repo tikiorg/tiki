@@ -50,12 +50,12 @@
 		<input type="hidden" name="where" value="{$prefs.search_default_where|escape}" />
     {/if}
 	{if $type eq 'fulltext'}
-		<br/><label for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if !isset($boolean) or $boolean ne 'n'} checked="checked"{/if} /></label>
+		<br/><label for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" id="boolean" name="boolean"{if !isset($boolean) or $boolean ne 'n'} checked="checked"{/if} /></label>
 
 		{capture name=advanced_search_help}
 			{include file='advanced_search_help.tpl'}
 		{/capture}
-		{add_help show='y' title="{tr}Advanced Search Help{/tr}" id="advanced_search_help"}
+		{add_help show='y' title="{tr}Search Help{/tr}" id="advanced_search_help"}
 			{$smarty.capture.advanced_search_help}
 		{/add_help}<br/>
 	{/if}

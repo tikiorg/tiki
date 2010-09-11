@@ -42,7 +42,7 @@
 			{if empty($menu_info.icon)}
 				{icon _id="ofolder" alt='Toggle' name="$icon_name"}
 			{else}
-				<img src="{$menu_info.oicon}" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
+				<img src="{$menu_info.oicon}" alt="{tr}Toggle{/tr}" name="{$icon_name}" />
 			{/if}
 		{else}
 			{if empty($menu_info.icon)}
@@ -53,9 +53,9 @@
 				{/if}
 			{else}
 				{if isset($chdata.open) and $chdata.open}
-					<img src="{$menu_info.oicon}" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
+					<img src="{$menu_info.oicon}" alt="{tr}Toggle{/tr}" name="{$icon_name}" />
 				{else}
-					<img src="{$menu_info.icon}" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
+					<img src="{$menu_info.icon}" alt="{tr}Toggle{/tr}" name="{$icon_name}" />
 				{/if}
 			{/if}
 		{/if}
