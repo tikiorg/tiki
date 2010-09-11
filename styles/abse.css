@@ -600,6 +600,12 @@ table.normal td.heading {font-size: 1em}
 td.heading {
 	background: #495149;
 	text-align: center}
+	
+table.xdebug-error tr th,
+table.xdebug-error tr td {
+	color: black;
+}
+
 
 /** Tabs **/
 /** Tabs **/

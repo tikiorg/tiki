@@ -428,6 +428,13 @@ a.flip:hover,
 	color: orange;
 }
 
+/****** Jquery ******/
+/**help**/
+a.tikihelp:hover {
+	color: #fd0006;
+}
+
+
 /***** Boxes *****/
 /** Modules **/
 div.box {
