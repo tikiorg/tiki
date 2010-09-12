@@ -20,7 +20,6 @@
 				{preference name=articles_feature_copyrights}
 				{preference name=blogues_feature_copyrights}
 				{preference name=faqs_feature_copyrights}
-
 			</div>
 		</div>
 	</fieldset>
