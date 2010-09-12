@@ -4,23 +4,50 @@ var auto_save_id = [];
 var auto_save_data = [];
 var submit = 0;
    
-function remove_save() {
+function remove_save(editorId, autoSaveId) {
 	submit = 1;
 	if (typeof autoSaveId === 'undefined') { autoSaveId = ''; }
 	for (var id = 0; id < auto_save_id.length; id++) {
-		xajax_remove_save(auto_save_id[id], autoSaveId);
+		if (document.getElementById(auto_save_id[id]) && (!editorId || editorId === auto_save_id[id])) {
+			$.ajax({
+				url: 'tiki-auto_save.php',
+				data: 'command=auto_remove&editor_id=' + auto_save_id[id] + '&data=&referer=' + autoSaveId,
+				type: "POST",
+				// good callback
+				success: function(data) {
+					// act casual?
+				},
+				// bad callback - no good info in the params :(
+				error: function(req, status, error) {
+					alert(tr("Auto Save removal returned an error: ") + error);
+				}
+			});
+		}
 	}
 }
 
-function auto_save() {
+function auto_save( editorId, autoSaveId ) {
 	if (submit === 0) {
 		if (typeof autoSaveId === 'undefined') { autoSaveId = ''; }
 		for (var id = 0; id < auto_save_id.length; id++) {
-			if (document.getElementById(auto_save_id[id])) {
+			if (document.getElementById(auto_save_id[id]) && (!editorId || editorId === auto_save_id[id]) ) {
 				var data = $('#' + auto_save_id[id]).val();
 				if (auto_save_data[auto_save_id[id]] !== data) {
 					auto_save_data[auto_save_id[id]] = data;
-					xajax_auto_save(auto_save_id[id], encodeURIComponent(data), autoSaveId);
+					$.ajax({
+						url: 'tiki-auto_save.php',
+						data: 'command=auto_save&editor_id=' + auto_save_id[id] + '&data=' + encodeURIComponent(data) + '&referer=' + autoSaveId,
+						type: "POST",
+						// good callback
+						success: function(data) {
+							// update button when it's there (TODO)
+							//alert(tr("here! "));
+						},
+						// bad callback - no good info in the params :(
+						error: function(req, status, error) {
+							alert(tr("Auto Save an error: ") + error);
+						}
+					});
 				}
 			}
 		}
