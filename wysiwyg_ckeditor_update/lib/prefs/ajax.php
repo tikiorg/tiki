@@ -9,6 +9,15 @@ function prefs_ajax_list() {
 
 	return array(
 
+		'ajax_xajax' => array(
+			'name' => tra('Ajax Xajax'),
+			'description' => tra('Use "xajax" library to "ajaxify" most Tiki pages.'),
+			'help' => 'Ajax',
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_ajax',
+			),
+		),
 		'ajax_autosave' => array(
 			'name' => tra('Ajax auto-save'),
 			'description' => tra('Saves your edits as you go along enabling you to recover your work after an "interruption". Also enables "Live" preview and is required for wysiwyg plugin processing.'),
@@ -18,6 +27,6 @@ function prefs_ajax_list() {
 				'feature_ajax',
 			),
 		),
-
+		
 	);
 }

@@ -77,6 +77,7 @@
 				<legend> {tr}AJAX{/tr} </legend>	
 				{preference name=feature_ajax}
 				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
+					{preference name=ajax_xajax}
 					{preference name=ajax_autosave}
 					{preference name=feature_wiki_save_draft}
 				</div>

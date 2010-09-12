@@ -1456,6 +1456,7 @@ function get_default_prefs() {
 		'feature_htmlpurifier_output' => 'n',
 		'feature_ajax' => 'n',
 		'ajax_autosave' => 'n',
+		'ajax_xajax' => 'y',
 		'feature_antibot' => 'y',
 		'feature_banners' => 'n',
 		'feature_banning' => 'n',
