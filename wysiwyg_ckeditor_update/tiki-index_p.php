@@ -7,9 +7,13 @@
 
 $section = 'wiki page';
 require_once('tiki-setup.php');
-if ($prefs['feature_ajax'] == "y") {
-include_once('lib/ajax/ajaxlib.php');
-require_once ("lib/wiki/wiki-ajax.php");
+if ($prefs['feature_ajax'] === 'y') {
+	if ($prefs['ajax_xajax'] === 'y') {
+		require_once ("lib/ajax/ajaxlib.php");
+	}
+	if ($prefs['feature_wiki_save_draft'] === 'y') {
+		require_once ("lib/wiki/wiki-ajax.php");
+	}
 }
 
 include_once('lib/structures/structlib.php');
@@ -210,7 +214,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 	include('tiki-tc.php');
 }
 ask_ticket('index-p');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 
 function wiki_ajax() {
     global $ajaxlib, $xajax;

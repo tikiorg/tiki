@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * params are the same as smarty 'query' function + some special params starting with an underscore:
  *   _sort_field : name of the field used for sorting,
  *   _sort_arg : name of the URL argument that contains the field to use for sorting. Defaults to 'sort',
- *   _ajax : if set to 'n', will force disabling AJAX even if the ajax feature is enabled,
+ *   _ajax : if set to 'n', will force disabling AJAX even if the ajax_xajax feature is enabled,
  *   _tag : if set to 'n', will only return an URL, not the full A tag + text (AJAX and sorting features are not available in this case),
  *   _class : CSS class to use for the A tag
  *   _template : (see smarty query function 'template' param)
@@ -86,14 +86,14 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 			}
 
 			$params['_type'] = $default_type;
-			if ( $prefs['feature_ajax'] == 'y' && $params['_ajax'] == 'y') unset ($params['_anchor']);
+			if ( $prefs['ajax_xajax'] === 'y' && $params['_ajax'] === 'y') { unset ($params['_anchor']); }
 			$ret = smarty_function_query($params, $smarty);
 		}
 
 		if ( $params['_tag'] == 'y' ) {
 
 			if ( empty($params['_disabled']) ) {
-				if ( $params['_ajax'] == 'y' && $params['_script'] == '' ) {
+				if ( $params['_ajax'] === 'y' && $params['_script'] === '' ) {
 					require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
 					if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
 					if ( ! isset($params['_onclick']) ) $params['_onclick'] = '';
@@ -111,7 +111,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 							$smarty,
 							false
 							);
-					if ($prefs['feature_ajax'] == 'y') {
+					if ($prefs['ajax_xajax'] === 'y' || empty($params['_onclick'])) {
 						unset($params['_onclick']);
 					}
 				} else {
