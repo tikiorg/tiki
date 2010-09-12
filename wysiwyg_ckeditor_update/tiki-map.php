@@ -53,7 +53,7 @@ if (!function_exists('ms_newMapObj')) {
 	$smarty->display('error.tpl');
 	die;
 }
-$access->check_feature(array('feature_maps','feature_ajax'));
+$access->check_feature(array('feature_maps','ajax_xajax'));
 $access->check_permission('tiki_p_map_view');
 //setting up xajax
 require_once ("lib/ajax/xajax/xajax_core/xajaxAIO.inc.php");

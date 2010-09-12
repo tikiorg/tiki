@@ -98,7 +98,7 @@ function processShout($formValues, $destDiv = 'mod-shoutbox') {
 	$objResponse->assign($destDiv, "innerHTML", $data);
 	return $objResponse;
 }
-if ($prefs['feature_ajax'] == 'y') {
+if ($prefs['ajax_xajax'] == 'y') {
 	global $ajaxlib;
 	include_once ('lib/ajax/ajaxlib.php');
 	$ajaxlib->registerFunction('processShout');

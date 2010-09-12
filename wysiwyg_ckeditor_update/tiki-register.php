@@ -101,7 +101,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // xajax
 
 
-if ($prefs['feature_ajax'] == 'y') {
+if ($prefs['ajax_xajax'] == 'y') {
 	global $ajaxlib;
 	include_once ('lib/ajax/ajaxlib.php');
 //	include_once ('tiki-regsiter_ajax.php');
