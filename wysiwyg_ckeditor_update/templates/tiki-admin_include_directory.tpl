@@ -18,4 +18,3 @@
 		<input type="submit" name="directory" value="{tr}Change preferences{/tr}" />
 	</div>
 </form>
-
