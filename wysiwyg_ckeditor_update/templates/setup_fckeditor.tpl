@@ -10,7 +10,7 @@ FCKConfig.BodyClass = 'wikitext';
 FCKConfig.FontNames =  '{$prefs.wysiwyg_fonts}';
 
 FCKConfig.ToolbarSets["Tiki"] = [ 
-{if $prefs.feature_ajax == 'y' and $prefs.feature_ajax_autosave eq 'y'}
+{if $prefs.feature_ajax == 'y' and $prefs.ajax_autosave eq 'y'}
 	['ajaxAutoSave'],
 {/if}
 {foreach item=it from=$toolbar name=lines}
@@ -63,7 +63,7 @@ FCKConfig.Plugins.Add( 'CleanHTML', null, _TikiRoot + 'lib/fckeditor_tiki/plugin
 
 FCKConfig.Plugins.Add( 'dragresizetable' );
 
-{if $prefs.feature_ajax_autosave eq 'y'}
+{if $prefs.ajax_autosave eq 'y'}
    //----------------------------------------------------
    // ajaxAutoSave plugin
    FCKConfig.Plugins.Add('ajaxAutoSave','en', _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;

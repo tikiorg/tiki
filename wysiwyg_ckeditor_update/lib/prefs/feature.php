@@ -396,15 +396,6 @@ function prefs_feature_list() {
 			'help' => 'Wysiwyg',
 			'type' => 'flag',
 		),
-		'feature_ajax_autosave' => array(
-			'name' => tra('Ajax auto-save'),
-			'description' => tra('Ajax auto-save'),
-			'help' => 'Lost+Edit+Protection',
-			'dependencies' => array(
-				'feature_ajax',
-			),
-		'type' => 'flag',
-		),
 		'feature_wiki_save_draft' => array(
 			'name' => tra('Save draft'),
 			'warning' => tra('Requires AJAX (experimental)'),

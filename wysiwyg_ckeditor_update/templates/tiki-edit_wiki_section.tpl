@@ -30,7 +30,7 @@
 {if isset($pos)}<input type="hidden" name="pos" value="{$pos}" />{/if}
 {if isset($cell)}<input type="hidden" name="cell" value="{$cell}" />{/if}
 {if isset($hdr)}<input type="hidden" name="hdr" value="{$hdr}" />{/if}
-{if $prefs.feature_ajax_autosave eq "y"}
+{if $prefs.ajax_autosave eq "y"}
 	{button _title="{tr}Preview your changes in a separate window.{/tr}" _class="wikiaction tips" _text="{tr}Live Preview{/tr}" _ajax="n" _onclick="ajax_preview(); return false;"}&nbsp;&nbsp;
 {/if}
 <input type="submit" title="{tr}Preview your changes.{/tr}" class="wikiaction tips" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;

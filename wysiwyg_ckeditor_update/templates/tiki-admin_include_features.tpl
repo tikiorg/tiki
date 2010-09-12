@@ -77,7 +77,7 @@
 				<legend> {tr}AJAX{/tr} </legend>	
 				{preference name=feature_ajax}
 				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
-					{preference name=feature_ajax_autosave}
+					{preference name=ajax_autosave}
 					{preference name=feature_wiki_save_draft}
 				</div>
 			</fieldset>
@@ -88,8 +88,8 @@
 				{preference name=feature_jquery_superfish}
 				{preference name=feature_jquery_reflection}
 				{preference name=feature_jquery_ui}
-				{preference name=feature_jquery_ui_theme}
 				{preference name=feature_jquery_validation}
+				{preference name=feature_jquery_ui_theme}
 				{preference name=feature_jquery_media}
 				{preference name=feature_jquery_sheet}
 

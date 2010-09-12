@@ -122,5 +122,5 @@ JS
 }
 
 if ($prefs['feature_ajax'] != 'y') {
-	$prefs['feature_ajax_autosave'] = 'n';
+	$prefs['ajax_autosave'] = 'n';
 }

@@ -58,7 +58,7 @@ function prefs_wysiwyg_list() {
 			'description' => tra('Experimental, new : Allow to keep the wiki syntax with the WYSIWYG editor. WARNING: plugin edit is not working in that case in WYSIWYG mode, use the Source mode instead '),
 			'type' => 'flag',
 			'dependencies' => array(
-				'feature_ajax_autosave',
+				'ajax_autosave',
 			),
 		),
 		'wysiwyg_fonts' => array(
