@@ -1010,7 +1010,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
-						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f["options_array"][0]);
+						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f["options_array"][0], true);
 					} elseif ($f['type'] == 'A') {
 						if (!empty($f['value'])) {
 							$flds['data'][$i]['info'] = $trklib->get_item_attachment($f['value']);
@@ -1109,13 +1109,15 @@ function wikiplugin_tracker($data, $params)
 							if (!empty($colwidth)){
 								$back .= " width='".$colwidth."'";
 							}
-							$back .= ">".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
+							$back .= '><label for="' . $f['ins_id'] . '">' 
+										. wikiplugin_tracker_name($f['fieldId'], tra($f['name'] . ':'), $field_errors) . '</label>';
 							if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 								$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
 							}
-							$back.= "</td><td>";
+							$back.= '</td><td>';
 						} else {
-							$back .= "<tr><th colspan='2'>".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
+							$back .= '<tr><th colspan="2"><label for="' . $f['ins_id'] . '">' 
+										. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors) . '</label>';
 						}
 						$smarty->assign_by_ref('field_value', $f);
 						if (isset($item)) {
