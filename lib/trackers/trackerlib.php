@@ -1061,7 +1061,7 @@ class TrackerLib extends TikiLib
 			case 'e':
 				global $categlib;
 				include_once('lib/categories/categlib.php');
-				$mycats = $categlib->get_child_categories($fopt['options']);
+				$mycats = $categlib->get_child_categories($fopt['options'], true);
 				if (empty($zcatItemId) || $zcatItemId != $itemId) {
 					$zcatItemId = $itemId;
 					$zcats = $categlib->get_object_categories('trackeritem', $itemId);
