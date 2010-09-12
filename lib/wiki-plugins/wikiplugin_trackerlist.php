@@ -1072,16 +1072,16 @@ function wikiplugin_trackerlist($data, $params) {
 						foreach ($item['field_values'] as $field) {
 							if ($field['fieldId'] == $fieldId) {
 								if (preg_match('/^ *$/', $field['value']) || !is_numeric($field['value']))
-									$l[$i] = '0';
+									$amount[$i] = '0';
 								else
-									$l[$i] = $field['value'];
+									$amount[$i] = $field['value'];
 								break;
 							}
 						}
 					}
-					eval('$value='.implode('+', $l).';');
+					eval('$value='.implode('+', $amount).';');
 					if ($oper == 'avg')
-						$value = round($value / count($l));
+						$value = round($value / count($amount));
 					$computedFields[$fieldId][] = array_merge(array('computedtype' => 'n', 'operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
 				}
 				$smarty->assign_by_ref('computedFields', $computedFields);
