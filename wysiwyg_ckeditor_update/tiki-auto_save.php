@@ -16,7 +16,7 @@ $inputConfiguration = array( array(
 		'editor_id' => 'alpha',
 //		'data' => 'alpha',
 //		'script' => 'alpha',
-),
+	),
 ) );
 
 require_once('tiki-setup.php');
