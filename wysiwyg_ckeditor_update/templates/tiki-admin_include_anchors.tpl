@@ -10,7 +10,7 @@
 
 {self_link page="profiles" _class="icon tips" _title="{tr}Profiles{/tr}|{tr}Repository configuration, browse and apply profiles{/tr}"}{icon _id="pics/large/profiles.png" alt="{tr}Profiles{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
-{self_link page="look" _class="icon tips" _title="{tr}Look & Feel{/tr}|{tr}Theme selection, layout settings and UI effect controls{/tr}"}{icon _id="pics/large/gnome-settings-background.png" alt="{tr}Look & Feel{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
+{self_link page="look" _class="icon tips" _title="{tr}Look &amp; Feel{/tr}|{tr}Theme selection, layout settings and UI effect controls{/tr}"}{icon _id="pics/large/gnome-settings-background.png" alt="{tr}Look &amp; Feel{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 
 {self_link page="i18n" _class="icon tips" _title="{tr}i18n{/tr}|{tr}Internationalization and localization - mulitlingual features{/tr}"}{icon _id="pics/large/i18n.png" alt="{tr}i18n{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}{/self_link}
 

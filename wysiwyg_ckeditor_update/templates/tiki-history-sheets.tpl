@@ -39,3 +39,17 @@
 		<td></td>
 	</tr>
 </table>
+
+<table style="width: 100%;" id="tiki_sheet_container">
+	<tr>
+		{foreach from=$grid_content item=thisGrid}
+			<td style="width: 50%;">
+				<div class="tiki_sheet" {if !empty($tiki_sheet_div_style)} 
+						style="{$tiki_sheet_div_style}"
+					{/if}>
+					{$thisGrid}
+				</div>
+			</td>
+		{/foreach}
+	</tr>
+</table>

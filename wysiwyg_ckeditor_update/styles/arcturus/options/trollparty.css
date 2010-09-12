@@ -254,6 +254,24 @@ div.separator {
 	color: #fff;
 }
 
+/**** Jquery ****/ 
+/**autocomplete **/
+.ac_even, .ac_odd {
+	color: #47C;
+}
+
+/**infinite carousel**/
+
+#carousel {
+        color: #122232;
+}
+
+#carousel a {
+        color: #122232;
+}
+
+/**** Boxes *****/
+
 div.box {
 	padding-top: 3px;
 	margin-top: 13px;
@@ -312,6 +330,8 @@ div.simplebox {
 	color: #fff;
 }
 
+/***** Tables, Tabs and Lists ****/
+/** Tables **/
 .normal {
 	border: 1px solid #777750;
 }
@@ -350,7 +370,11 @@ tr.even:hover {
 	border: 1px dashed #2255aa;
 }
 
+table.xdebug-error tr td {
+	color: #47C;
+}
 
+/** Tabs **/
 .tabs {
 	background: #000;
 	border: 1px solid #777750;
@@ -475,7 +499,23 @@ a.admbox:active {
 	text-decoration: underline;
 }
 
-.calHeadingOn a, .calfocuson, .calfocuson a {
+.daterow {
+	color: #262626;
+}
+
+.caleven, .calodd {
+	color: black;
+}
+
+.calHeadingOn a, .calfocuson, .calfocuson a, .focus a {
 	color: #4477cc;
+}
+
+.Cal1 a {
+	color: #27408B;
+}
+
+.focus a:hover, .Cal1 a:hover {
+	color: white;
 }
 
