@@ -82,7 +82,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			$smarty)."\n";
 	}
 
-	if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
+	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		$auto_save_referrer = ensureReferrer();
 
 		if ((empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') && (!isset($_REQUEST['mode_wysiwyg']) || $_REQUEST['mode_wysiwyg'] !== 'y')) {
@@ -110,7 +110,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			if (isset($params['Width']))	$fcked->Width = $params['Width'];
 			if (isset($params['Height']))	$fcked->Height = $params['Height'];
 			
-			if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y') {
+			if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y') {
 				$fcked->Config['autoSaveSelf'] = $auto_save_referrer;		// this doesn't need to be the 'self' URI - just a unique reference for each page set up in ensureReferrer();
 				$fcked->Config['autoSaveEditorId'] = $as_id;
 			}
@@ -145,7 +145,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 
 		} else {									// new ckeditor implementation 2010
 
-			if ($prefs['feature_ajax'] !== 'y' || $prefs['feature_ajax_autosave'] !== 'y' ||
+			if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||
 					$prefs['feature_wiki_paragraph_formatting'] !== 'y' || $prefs['feature_wiki_paragraph_formatting_add_br'] !== 'y' ||
 					$prefs['wysiwyg_wiki_parsed'] !== 'y') {
 				
@@ -197,7 +197,7 @@ CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",tikiwiki" : "t
 CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");
 ', 5);	// before dialog tools init (10)
 			}
-			if ($prefs['feature_ajax'] === 'y' && $prefs['feature_ajax_autosave'] === 'y') {
+			if ($prefs['feature_ajax'] === 'y' && $prefs['ajax_autosave'] === 'y') {
 				$headerlib->add_jq_onready('
 // --- config settings for the autosave plugin ---
 CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
@@ -283,7 +283,7 @@ function CKeditor_OnComplete() {
 			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
 		}
 		
-		if ($prefs['feature_ajax'] == 'y' && $prefs['feature_ajax_autosave'] == 'y' && $params['_simple'] == 'n') {
+		if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {
 			$headerlib->add_jq_onready("register_id('$textarea_id'); auto_save();");
 			$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");	// onready is too late...
 		}

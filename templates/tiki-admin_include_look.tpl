@@ -200,37 +200,6 @@
 		{/tab}
 		
 		{tab name="{tr}UI Effects{/tr}"}
-			<div class="adminoptionbox">	
-				<fieldset class="admin">
-					<legend>{tr}JQuery plugins and add-ons{/tr}</legend>	
-					{if $prefs.feature_jquery eq 'n'}
-						{remarksbox type="warning" title="{tr}Warning{/tr}"}
-							{tr}Requires jquery feature{/tr}</em>{icon _id="arrow_right" href="tiki-admin.php?page=features"}{/remarksbox}
-					{/if}
-
-					{preference name=feature_jquery_tooltips}
-					{preference name=feature_jquery_autocomplete}
-					{preference name=feature_jquery_superfish}
-					{preference name=feature_jquery_reflection}
-					{preference name=feature_jquery_ui}
-					{preference name=feature_jquery_ui_theme}
-					{preference name=feature_jquery_validation}
-					{preference name=feature_jquery_media}
-					{preference name=feature_jquery_sheet}
-
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<em>{tr}Experimental{/tr}:</em> {icon _id=bug_error}
-							<div class="adminoptionboxchild">	
-								{preference name=feature_jquery_tablesorter}
-								{preference name=feature_jquery_carousel}
-								{preference name=feature_jquery_jqs5}
-							</div>
-						</div>
-					</div>
-				</fieldset>
-			</div>
-
 			<div class="adminoptionbox">
 				<fieldset class="admin">
 					<legend>{tr}Standard UI effects{/tr}</legend>

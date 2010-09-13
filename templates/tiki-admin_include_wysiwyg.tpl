@@ -47,7 +47,7 @@
 		<p class="description">
 			{preference name=feature_ajax}
 			<div class="adminoptionboxchild" id="feature_ajax_childcontainer">
-			{preference name=feature_ajax_autosave}
+			{preference name=ajax_autosave}
 			</div>
 	</fieldset>
 

@@ -281,14 +281,14 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	}
 	$objResponse->includeScript($tmp_jsfile);
 	
-	if ($prefs['feature_ajax_autosave'] == 'y') {
+	if ($prefs['ajax_autosave'] == 'y') {
 		$objResponse->call("auto_save");
 	}
 	
 	return $objResponse;
 }
 
-if ($prefs['feature_ajax_autosave'] === 'y') {
+if ($prefs['ajax_autosave'] === 'y') {
 	require_once("lib/ajax/autosave.php");
 }
 

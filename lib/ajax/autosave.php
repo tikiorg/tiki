@@ -12,7 +12,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 global $prefs, $smarty;
-if ($prefs['feature_ajax'] !== 'y' || $prefs['feature_ajax_autosave'] !== 'y') {
+if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y') {
 	return;
 }
 

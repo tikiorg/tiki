@@ -1,6 +1,6 @@
 {* $Id$ *}
 <input type="hidden" name="no_bl" value="y" />
-{if $prefs.feature_ajax_autosave eq "y"}
+{if $prefs.ajax_autosave eq "y"}
 	{button _title="{tr}Preview your changes in a separate window.{/tr}" _class="wikiaction tips" _text="{tr}Live Preview{/tr}" _ajax="n" _onclick="ajax_preview(); return false;"}&nbsp;&nbsp;
 {/if}
 <input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />

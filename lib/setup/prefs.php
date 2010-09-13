@@ -1455,7 +1455,7 @@ function get_default_prefs() {
 		'smarty_compilation' => 'modified',
 		'feature_htmlpurifier_output' => 'n',
 		'feature_ajax' => 'n',
-		'feature_ajax_autosave' => 'n',
+		'ajax_autosave' => 'n',
 		'feature_antibot' => 'y',
 		'feature_banners' => 'n',
 		'feature_banning' => 'n',

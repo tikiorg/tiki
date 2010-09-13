@@ -72,6 +72,41 @@
 		
 {/tab}
 			
+{tab name="{tr}Interface{/tr}"}
+			<fieldset class="admin featurelist">
+				<legend> {tr}AJAX{/tr} </legend>	
+				{preference name=feature_ajax}
+				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
+					{preference name=ajax_autosave}
+					{preference name=feature_wiki_save_draft}
+				</div>
+			</fieldset>
+			<fieldset class="admin featurelist">
+				<legend> {tr}jQuery plugins and add-ons{/tr} </legend>	
+				{preference name=feature_jquery_tooltips}
+				{preference name=feature_jquery_autocomplete}
+				{preference name=feature_jquery_superfish}
+				{preference name=feature_jquery_reflection}
+				{preference name=feature_jquery_ui}
+				{preference name=feature_jquery_validation}
+				{preference name=feature_jquery_ui_theme}
+				{preference name=feature_jquery_media}
+				{preference name=feature_jquery_sheet}
+
+				<div class="adminoptionbox">
+					<div class="adminoptionlabel">
+						<em>{tr}Experimental{/tr}:</em> {icon _id=bug_error}
+						<div class="adminoptionboxchild">	
+							{preference name=feature_jquery_tablesorter}
+							{preference name=feature_jquery_carousel}
+							{preference name=feature_jquery_jqs5}
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+{/tab}
+
 {tab name="{tr}Programmer{/tr}"}
 			<div class="admin featurelist">
 				{preference name=feature_integrator}
@@ -142,11 +177,6 @@
 				<fieldset>
 					<legend class="heading">{icon _id="bricks"} <span>{tr}Getting there...{/tr}</span></legend>
 					<p class="description">{tr}Most of these features are hoped to make it into the "new" section for Tiki 6.{/tr}</p>
-					{preference name=feature_ajax}
-					<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
-						{preference name=feature_ajax_autosave}
-						{preference name=feature_wiki_save_draft}
-					</div>
 					{preference name=feature_wysiwyg}
 				</fieldset>
 
