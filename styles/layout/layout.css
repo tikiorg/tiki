@@ -1346,11 +1346,6 @@ body.tiki_blogs .post .postfooter {
 	float: right;
 }
 
-body.tiki_blogs div.author_actions {
-	width: 100%;
-	text-align: right;
-}
-
 /* Related content */
 .related_posts {
 	margin-top: 3em;
@@ -1453,8 +1448,8 @@ body.tiki_forums table.normal {
 	display: inline;
 }
 
-
 .post .postfooter .actions,
+.post .postfooter .author_actions,
 .post .postfooter .status {
 	display: inline;
 	margin-left: 5px;
