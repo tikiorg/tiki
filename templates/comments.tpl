@@ -271,7 +271,7 @@
 				{include file='comment.tpl' comment=$comment_preview_data}
 			{/if}
 
-			<form enctype="multipart/form-data" method="post" action="{$comments_father}#comments" id='editpostform'>
+			<form enctype="multipart/form-data" method="post" action="{$comments_complete_father}#comments" id='editpostform'>
 				<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
 				<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
 				<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
