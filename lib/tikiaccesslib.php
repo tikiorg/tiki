@@ -439,7 +439,7 @@ class TikiAccessLib extends TikiLib
 
 	function is_xajax_request() {
 		global $prefs;
-		return ( $prefs['feature_ajax'] == 'y' && isset($_POST['xajaxargs']) );
+		return ( $prefs['ajax_xajax'] === 'y' && isset($_POST['xajaxargs']) );
 	}
 
 	function is_machine_request() {

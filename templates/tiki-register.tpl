@@ -62,7 +62,7 @@
 {/if}	
 <div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 
-{if $prefs.feature_ajax eq 'y'}
+{if $prefs.ajax_xajax eq 'y'}
 		<script src="lib/registration/register_ajax.js" type="text/javascript"></script>
 {/if}
 

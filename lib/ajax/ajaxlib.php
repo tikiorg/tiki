@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 global $prefs;
-if ($prefs['feature_ajax'] == 'y') {
+if ($prefs['ajax_xajax'] === 'y') {
 	require_once("lib/ajax/xajax/xajax_core/xajaxAIO.inc.php");
 	if (!defined ('XAJAX_GET')) define ('XAJAX_GET', 0);
 

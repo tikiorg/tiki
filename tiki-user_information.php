@@ -6,7 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/messu/messulib.php');
@@ -195,7 +195,7 @@ if ($prefs['user_tracker_infos']) {
 	$smarty->assign_by_ref('userItem', $items['data'][0]);
 }
 ask_ticket('user-information');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 	function user_information_ajax() {
 		global $ajaxlib, $xajax;
 		$ajaxlib->registerTemplate("tiki-user_information.tpl");

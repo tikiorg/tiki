@@ -12,7 +12,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 global $prefs;
-if ($prefs['feature_ajax'] !== 'y' or $prefs['wysiwyg_htmltowiki'] !== 'y' ) {
+if ($prefs['ajax_xajax'] !== 'y' or $prefs['wysiwyg_htmltowiki'] !== 'y' ) {
 	return;
 }
 

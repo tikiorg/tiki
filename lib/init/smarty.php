@@ -131,7 +131,7 @@ class Smarty_Tikiwiki extends Smarty
 			}
 
 			// Enable AJAX
-			if ( $prefs['feature_ajax'] == 'y' && $_smarty_display ) {
+			if ( $prefs['ajax_xajax'] === 'y' && $_smarty_display ) {
 				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
 				$ajaxlib->registerTemplate('tiki-site_header_login.tpl');
 				$ajaxlib->registerTemplate($tpl);
@@ -144,14 +144,14 @@ class Smarty_Tikiwiki extends Smarty
 			$this->assign('mid_data', $data);
 			if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y')
 				include_once('tiki-modules.php');
-			if ($prefs['feature_ajax'] == 'y' && $_smarty_display ) {
+			if ( $prefs['ajax_xajax'] === 'y' && $_smarty_display ) {
 				$ajaxlib->processRequests();
 			}
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'information.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			include_once('tiki-modules.php');
 
 			// Enable AJAX
-			if ( $prefs['feature_ajax'] == 'y' && $_smarty_display ) {
+			if ( $prefs['ajax_xajax'] === 'y' && $_smarty_display ) {
 				$_POST['xajaxargs'][0] = $_smarty_tpl_file;
 				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
 				$ajaxlib->registerTemplate('tiki-site_header_login.tpl');
