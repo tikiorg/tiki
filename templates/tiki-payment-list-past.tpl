@@ -1,4 +1,4 @@
-<table class="data">
+<table class="normal">
 	<tr>
 		<th>{tr}ID{/tr}</th>
 		<th>{tr}Description{/tr}</th>
