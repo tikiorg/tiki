@@ -1062,6 +1062,10 @@ tr.diffheader {
 	background: transparent;
 }
 
+.tabcontent table.normal {
+	width: 100%;
+}
+
 .tabcontent table td {
 	padding: 5px;
 }
