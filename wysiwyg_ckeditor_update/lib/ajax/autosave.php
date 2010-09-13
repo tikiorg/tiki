@@ -70,19 +70,23 @@ function get_autosave($id, $referer = '') {
 	}
 }
 
-function ensureReferrer($referer = '') {	
-// should be page name, but use URI if not?
+function ensureReferrer($referer = '') {
 	
+	// should be page name, but use URI if not?
 	if (empty($referer)) {
-		global $section;
+		global $section,  $user, $tikilib;
+		$referer .= empty($user) ? $tikilib->get_ip_address() : $user;
+		$referer .= ':';
 		if ($section == 'wiki page') {
 			if (isset($_REQUEST['page'])) {
-				$referer = 'wiki_page:' . $_REQUEST['page'];
+				$referer .= 'wiki_page:' . $_REQUEST['page'];
 			}
 		} else if ($section == 'blogs') {
 			if (isset($_REQUEST['postId'])) {
-				$referer = 'blog:' . $_REQUEST['postId'];
+				$referer .= 'blog:' . $_REQUEST['postId'];
 			}
+		} else {
+			$referer .= $section;	// better than nothing?
 		}
 	}
 	if (empty($referer)) {
