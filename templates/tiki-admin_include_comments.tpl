@@ -20,6 +20,7 @@
 					{preference name=feature_comments_moderation}
 					{preference name=feature_comments_locking}
 					{preference name=feature_comments_post_as_anonymous}				
+					{preference name=comments_vote}				
 				</div>
 			</fieldset>
 

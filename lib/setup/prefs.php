@@ -1776,6 +1776,7 @@ function get_default_prefs() {
 		'comments_notitle' => 'n',
 		'comments_field_email' => 'n',
 		'comments_field_website' => 'n',
+		'comments_vote' => 'n',
 	);
 
 	// Special default values
