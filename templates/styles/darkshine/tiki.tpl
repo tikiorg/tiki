@@ -77,7 +77,7 @@
 								{if $display_msg}
 									{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
 								{/if}
-								<div role="main">
+								<div>
 									{$mid_data}
 								</div>
 								{show_help}							</div>
