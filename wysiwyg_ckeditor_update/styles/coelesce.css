@@ -1301,8 +1301,8 @@ a.blogt:hover {
 	border-bottom: 1px dotted #fff;
 }
 
-.postinfo {
-	font-size: 1.2em;
+div.author_actions_status {
+	background: #E6EDF5;
 }
 
 .postinfo a {
@@ -1320,7 +1320,12 @@ a.blogt:hover {
 .post .postbody {
 	background: #fff;
 	font-size: 1.1em;
+	border-left: solid #EEFDFF;
+	border-right: solid #EEFDFF;
+	border-top: solid 1px #C3D3E5;
 }
+	
+* html .post .postbody {font-size: 11px}
 
 .top_post .post .postbody {
 	background: #e6edf5;
@@ -1335,7 +1340,8 @@ a.blogt:hover {
 
 .postbody-title {
 	color: #000;
-	background: inherit;
+	background: #EEFDFF;
+	padding: 1px 10px 0;
 }
 
 .top_post .post .postbody-title {
@@ -1348,25 +1354,18 @@ a.blogt:hover {
 	margin: auto;
 }
 
-.postbody-title .title a.link {
-	color: #2d2d2d;
-}
-
 .postbody-title .title br.clear {
 	height: 1px;
 }
 
 .post .author_actions {
 	position: relative;
-	background: #c3d3e5;
 	color: #000;
-	margin-bottom: 2px;
 	font-size: 11px;
 	font-weight: bold;
-	line-height: 1;
-	height: 21px;
+	line-height: 21px;
 	vertical-align: middle;
-	min-width: 100%;
+	float: right;
 }
 
 .author_actions .author {
@@ -1382,33 +1381,20 @@ a.blogt:hover {
 	vertical-align: middle;
 }
 
-.author_actions > .actions {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 21px;
-	line-height: 21px;
-	text-align: right;
-	background: #446793;
-	color: #fff;
-	border-left: 2px solid #fff;
-}
-
 .post .author_info {
 	background: inherit;
 	display: inline-block;
-	color: #000;
+	color: #999999;
 	text-align: left;
-	line-height: 21px;
 	vertical-align: middle;
-	padding-top: 0;
+	padding: 0 5px ;
 	margin-top: 0;
-	height: 21px;
+	line-height: 21px;
+	font-size: 11px;
+	font-weight: bold;
 }
 
 .post .author_info img {
-	height: 21px;
-	width: 21px;
 	vertical-align: middle;
 }
 
@@ -1465,21 +1451,21 @@ a.blogt:hover {
 	text-align: left;
 	clear: both;
 	margin-top: 3px;
+	margin-bottom: 0px;
 	background: #e6edf5;
 	color: #ebf1f7;
 }
 
-.postfooter .actions {
-	width: 200px;
-}
-
 .postfooter .status {
-	float: right;
+	float: left;
 	clear: none;
-	width: 200px;
-	text-align: right;
 	margin-right: 5px;
 	font-size: 10px;
+}
+
+a.linkcomments {
+	background: none repeat scroll 0 0 #FFFF99;
+	padding: 0 3px;
 }
 
 .post .contribution {

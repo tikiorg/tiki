@@ -9,31 +9,34 @@
 
 {if $templateId > 0}
 	<h2>{tr}Edit this template:{/tr} {$info.name|escape}</h2>
-	<a href="tiki-admin_content_templates.php">{tr}Create new template{/tr}</a>
+	{button href="tiki-admin_content_templates.php" _text="{tr}Create new template{/tr}"}
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
 {if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-<form action="tiki-admin_content_templates.php?&wysiwyg=n" method="post">
+	<form action="tiki-admin_content_templates.php?wysiwyg=n" method="post">
 {else} 
-<form action="tiki-admin_content_templates.php?&wysiwyg=y" method="post">
+	<form action="tiki-admin_content_templates.php?wysiwyg=y" method="post">
 {/if}
-{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
-	<div class="navbar">
-		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-			{button href="?templateId=$templateId&amp;wysiwyg=y" _text="{tr}Use wysiwyg editor{/tr}"}
-		{else}
-			{button href="?templateId=$templateId&amp;wysiwyg=n" _text="{tr}Use normal editor{/tr}"}
-		{/if}
-	</div>
-{/if}
+	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
+		<div class="navbar">
+			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
+				{button href="?templateId=$templateId&amp;wysiwyg=y" _text="{tr}Use wysiwyg editor{/tr}"}
+			{else}
+				{button href="?templateId=$templateId&amp;wysiwyg=n" _text="{tr}Use normal editor{/tr}"}
+			{/if}
+		</div>
+	{/if}
 
-<input type="hidden" name="templateId" value="{$templateId|escape}" />
+	<input type="hidden" name="templateId" value="{$templateId|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td><label for="name">{tr}Name{/tr}:</label></td>
+			<td><label for="name">{tr}Name:{/tr} (*)</label></td>
 			<td>
-				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}" />
+				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}" /> 
+				{if $emptyname}
+					<span class="attention">{tr}Name field is mandatory{/tr}</span>
+				{/if}
 			</td>
 		</tr>
 		<tr>
@@ -41,7 +44,7 @@
 			<td>
 				{if $prefs.feature_cms_templates eq 'y'}
 					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> 
-					{tr}CMS{/tr} ({tr}Articles{/tr}
+					{tr}CMS{/tr} ({tr}Articles{/tr})
 					<br />
 				{/if}
 				{if $prefs.feature_wiki_templates eq 'y'}
@@ -114,7 +117,7 @@
 		</tr>
 
 		<tr>
-			<td>&nbsp;</td>
+			<td/>
 			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />
 				<input type="submit" name="preview" value="{tr}Preview{/tr}" />
@@ -160,15 +163,12 @@
 					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" >
 						{icon _id='cross' alt="{tr}Remove section{/tr}"}
 					</a>
-					&nbsp;&nbsp;
 				{/section}
 			</td>
 			<td>
-				&nbsp;&nbsp;
 				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
 					{icon _id='page_edit'}
 				</a> 
-				&nbsp;
 				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
 					{icon _id='cross' alt="{tr}Delete{/tr}"}
 				</a>

@@ -258,15 +258,20 @@
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
 	{if $field_value.isMultilingual ne 'y'}
-		{if $field_value.options_array[0] eq 1}
-    		{toolbars qtnum=$field_value.fieldId area_id="area_"|cat:$field_value.fieldId section="trackers"}
-		{/if}
 		{if $field_value.options_array[2] == 1}
-				<input type="text" id="area_{$field_value.fieldId}" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', "{tr}Word Limit Exceeded{/tr}")"{/if} {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', "{tr}Character Limit Exceeded{/tr}")"{/if} />
+			{if $field_value.options_array[0] eq 1}
+    			{toolbars qtnum=$field_value.fieldId area_id="area_"|cat:$field_value.fieldId section="trackers"}
+			{/if}
+			<input type="text" id="area_{$field_value.fieldId}" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', "{tr}Word Limit Exceeded{/tr}")"{/if} {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', "{tr}Character Limit Exceeded{/tr}")"{/if} />
 		{else}
-			<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}  {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} >
+			{capture name=textarea_id}area_{$field_value.fieldId}{/capture}
+			{capture name=textarea_toolbars}{if $field_value.options_array[0] eq 1}y{else}n{/if}{/capture}
+			{capture name=textarea_cols}{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}{/capture}
+			{capture name=textarea_rows}{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}{/capture}
+			{capture name=textarea_onkeyup}{if $field_value.options_array[5]}wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}'){elseif $field_value.options_array[3]}charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}'){/if}{/capture}
+			{textarea id=$smarty.capture.textarea_id name=$field_value.ins_id _toolbars=$smarty.capture.textarea_toolbars cols=$smarty.capture.textarea_cols rows=$smarty.capture.rows onkeyup=$smarty.capture.textarea_onkeyup}
 				{$field_value.value}
-			</textarea>
+			{/textarea}
 		{/if}
 		{if $field_value.options_array[3]}
 			<div class="charCount">

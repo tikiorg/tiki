@@ -1182,7 +1182,7 @@ function wikiplugin_tracker($data, $params)
 				$back .= "<input class='button submit preview' type='submit' name='tr_preview' value='".tra($preview)."' />";
 			}
 			foreach ($action as $key=>$act) {
-				$back .= "	<input class='button submit' type='submit' name='action$key' value='".tra($act)."' />";
+				$back .= "	<input class='button submit' type='submit' name='action$key' value='".tra($act)."' onclick='needToConfirm=false' />";
 			}
 			$back .= '</div>';
 			if ($showmandatory == 'y' and $onemandatory) {
