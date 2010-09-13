@@ -183,8 +183,7 @@ function wikiplugin_mouseover( $data, $params ) {
 	}
 
 	if( $parse ) {
-		// Default output of the plugin is in ~np~, so escape it if content has to be parsed.
-		$text = "~/np~$text~np~";
+		$text = $tikilib->parse_data($text);
 	}
 	if( $params['parselabel'] == 'y' ) {
 		$label = "~/np~$label~np~";
