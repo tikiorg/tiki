@@ -17,9 +17,7 @@ $objectperms = Perms::get( 'forum', $_REQUEST['forumId']);
 if (!$objectperms->admin_forum) {
 	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_forum', '403');
 }
-if ($userlib->object_has_one_permission($_REQUEST['forumId'], 'forum')) {
-	$smarty->assign('individual', 'y');
-}
+$smarty->assign('permsType', $objectperms->from());
 
 $auto_query_args = array(
 			'forumId',

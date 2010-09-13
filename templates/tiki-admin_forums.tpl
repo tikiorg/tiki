@@ -123,12 +123,9 @@
 {if $dup_mode != 'y'}
 	{if $forumId > 0}
 		<h2>{tr}Edit this Forum:{/tr} {$name|escape}</h2>
+		{include file='object_perms_summary.tpl' objectName=$name objectType='forum' objectId=$forumId permType=$permsType}
 	{else}
 		<h2>{tr}Create New Forum{/tr}</h2>
-	{/if}
-
-	{if $individual eq 'y'}
-		<a class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=forum&amp;permType=forums&amp;objectId={$forumId}">{tr}There are individual permissions set for this forum{/tr}</a>
 	{/if}
 
 	<form action="tiki-admin_forums.php" method="post">

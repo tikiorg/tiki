@@ -85,19 +85,7 @@
 <a name="mod"></a>
 	<h2>{tr}Create/Edit Tracker{/tr}</h2>
 	{if $trackerId}
-		<div class="simplebox">
-			<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$trackerId}">
-				{if $permsType eq 'category'}
-					{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
-					{tr}No individual permissions, category permissions apply{/tr}
-				{elseif $permsType eq 'object'}
-					{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
-					{tr}There are individual permissions set for this tracker{/tr}
-				{else}
-					{icon _id='key_active' alt="{tr}Active Perms{/tr}"}</a>
-					{tr}No individual permissions. Global permissions apply.{/tr}
-				{/if}
-		</div>
+		{include file='object_perms_summary.tpl' objectName=$name objectType='tracker' objectId=$trackerId permType=$permsType}
 	{/if}
 	<form action="tiki-admin_trackers.php" method="post" name="editpageform" id="editpageform">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
