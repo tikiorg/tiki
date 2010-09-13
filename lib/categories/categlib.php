@@ -502,7 +502,7 @@ class CategLib extends ObjectLib
 
 		foreach( $result as $res ) {
 			if (!in_array($res['catObjectId'].'-'.$res['categId'], $objs)) { // same object and same category
-				if (preg_match('/tracker/',$res['type'])&&$res['description']=='') {
+				if (preg_match('/trackeritem/',$res['type'])&&$res['description']=='') {
 					$trackerId=preg_replace('/^.*trackerId=([0-9]+).*$/','$1',$res['href']);
 					$res['name']=$trklib->get_isMain_value($trackerId,$res['itemId']);
 					$filed=$trklib->get_field_id($trackerId,"description");
