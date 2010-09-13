@@ -321,7 +321,12 @@ smarty.session.tiki_cookie_jar.{$cookie_key}: {$smarty.session.tiki_cookie_jar.$
 							{/if}
 						</label>
 					</td>
-					<td><input type="text" size="30" id="anonymous_email" name="anonymous_email" value="{$comment_preview_data.email|escape}"/></td>
+					<td>
+						<input type="text" size="30" id="anonymous_email" name="anonymous_email" value="{$comment_preview_data.email|escape}"/>
+						{if $forum_mode neq 'y'}
+							<span>{tr}(your email address will not be published){/tr}</span>
+						{/if}
+					</td>
 				</tr>
 			{/if}
 
