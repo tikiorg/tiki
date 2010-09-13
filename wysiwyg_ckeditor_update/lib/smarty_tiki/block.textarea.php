@@ -73,6 +73,15 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		//$headerlib->add_css('body {display: block; }', 10);	// xajax/loadComponent() doesn't re-parse CSS on AJAX loads (yet), so use JS instead
 		$headerlib->add_jq_onready('$("body").css("display", "block")');
 	}
+	include_once('lib/smarty_tiki/block.remarksbox.php');
+	if ($params['_simple'] === 'n' || isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
+		$html .= smarty_block_remarksbox( array( 'type'=>'tip', 'title'=>tra('Tip')),
+			tra('This edit session will expire in') .
+				' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '.
+				tra('<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer'),
+			$smarty)."\n";
+	}
+
 	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		require_once("lib/ajax/autosave.php");
 		$auto_save_referrer = ensureReferrer();
@@ -83,9 +92,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 				
 				if ( strcmp($auto_saved, $content) != 0 ) {
 					$content = $auto_saved;
-					include_once('lib/smarty_tiki/block.self_link.php');
-					include_once('lib/smarty_tiki/block.remarksbox.php');
-					$msg = tra('If you want the saved version instead of this autosaved one').'&nbsp;'.smarty_block_self_link( array( 'noautosave'=>'y', '_ajax'=>'n'), tra('Click Here'), $smarty);
+					$msg = "<div class='mandatory_star'>".tra('If you want the saved version instead of this autosaved one').'&nbsp;'.smarty_block_self_link( array( 'noautosave'=>'y', '_ajax'=>'n'), tra('Click Here'), $smarty)."</div>";
 					$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
 				}
 			}
@@ -93,8 +100,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	} else {
 		$auto_save_referrer = '';
 	}
-
-
 
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
 		
@@ -153,8 +158,9 @@ function FCKeditor_OnComplete( editorInstance ) {
 				
 				global $tiki_p_admin;
 				if ($tiki_p_admin) {
+					$profile_link = 'tiki-admin.php?profile=WYSIWYG_6x&repository=http%3A%2F%2Fprofiles.tikiwiki.org%2Fprofiles&page=profiles&list=List';
 					$msg .= tra("Some of your preferences should be set differently for this to work at it's best. Please click this to apply the recommended profile:") .
-					   ' <a href="tiki-admin.php?profile=WYSIWYG_6x&repository=&page=profiles&list=List">WYSIWYG_6x</a>';
+					   ' <a href="'.$profile_link.'">WYSIWYG_6x</a>';
 				} else {
 					$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
 				}
@@ -316,12 +322,12 @@ function editTimerTick() {
 		clearInterval(editTimeoutIntervalId);
 		editTimeoutIntervalId = 0;
 		window.status = '".addslashes(tra('Your edit session has expired'))."';
-	} else if (seconds < 600) {		// don't bother until 5 minutes to go
+	} else if (seconds < 300) {		// don't bother until 5 minutes to go
 		\$('#edittimeout').parents('.rbox:first').fadeIn();
-		window.status = '".addslashes(tra('Your edit session will expire in:'))."' +\" \" + + Math.floor(seconds / 60) + ': ' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
 		if (seconds % 60 == 0 && \$('#edittimeout')) {
 			\$('#edittimeout').text(Math.floor(seconds / 60));
 		}
+		window.status = '".addslashes(tra('Your edit session will expire in:'))."' +\" \" + + Math.floor(seconds / 60) + ':' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
 	}
 }
 
@@ -356,11 +362,11 @@ function confirmExit() {
 window.onbeforeunload = confirmExit;
 
 \$('document').ready( function() {
-	// attach dirty function to all relevant inputs etc
-	if ('$as_id' != 'editwiki') {	// modules admin exception
-		\$('#$as_id').change( function () { if (!editorDirty) { editorDirty = true; } });
-	} else {
+	// attach dirty function to all relevant inputs etc for wiki/newsletters, blog, article and trackers (trackers need {teaxtarea} implementing)
+	if ('$as_id' === 'editwiki' || '$as_id' === 'blogedit' || '$as_id' === 'body' || '$as_id'.indexOf('area_') > -1) {
 		\$(\$('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
+	} else {	// modules admin exception, only attach to this textarea, although these should be using _simple mode
+		\$('#$as_id').change( function () { if (!editorDirty) { editorDirty = true; } });
 	}
 });
 

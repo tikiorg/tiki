@@ -173,7 +173,7 @@ function wikiplugin_mouseover( $data, $params ) {
 	$height = isset( $params['height'] ) ? (int) $params['height'] : 200;
 	$offsetx = isset( $params['offsetx'] ) ? (int) $params['offsetx'] : 5;
 	$offsety = isset( $params['offsety'] ) ? (int) $params['offsety'] : 0;
-	$parse = ! isset($params['parse']) || $params['parse'] != 'n';
+	$parse = ! isset($params['parse']) || (strcasecmp($params['parse'], 'n') != 0);
 	$sticky = isset($params['sticky']) && $params['sticky'] == 'y';
 	$padding = isset( $params['padding'] ) ? 'padding: '.$params['padding'].'px;' : '';
 	$effect = !isset( $params['effect'] ) || $params['effect'] == 'Default' ? '' : strtolower($params['effect']);
@@ -198,8 +198,7 @@ function wikiplugin_mouseover( $data, $params ) {
 	}
 
 	if( $parse ) {
-		// Default output of the plugin is in ~np~, so escape it if content has to be parsed.
-		$text = "~/np~$text~np~";
+		$text = $tikilib->parse_data($text);
 	}
 	if( $params['parselabel'] == 'y' ) {
 		$label = "~/np~$label~np~";
