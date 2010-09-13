@@ -22,5 +22,10 @@ function prefs_comments_list() {
 			'description' => tra('Website field for comments (only for anonymous users).'),
 			'type' => 'flag',
 		),
+		'comments_vote' => array(
+			'name' => tra('Use vote system for comments'),
+			'description' => tra('Allows users with permission tiki_p_vote_comments to vote comments.'),
+			'type' => 'flag',
+		),
 	);
 }
