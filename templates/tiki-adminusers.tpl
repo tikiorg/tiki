@@ -134,7 +134,7 @@
 				{if $users[user].editable}
 					{capture assign=username}{$users[user].user|escape}{/capture}
 					<tr class="{cycle}">
-						<td class="thin">
+						<td>
 							{if $users[user].user ne 'admin'}
 								<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}/>
 							{/if}
@@ -171,7 +171,7 @@
 							{/if}
 						</td>
 	
-						<td class="thin">
+						<td>
 							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{icon _id='group_key' alt="{tr}Assign{/tr} `$username` {tr}to groups{/tr} "}</a>
 						</td>
 	
