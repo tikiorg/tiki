@@ -1096,7 +1096,7 @@ function wikiplugin_tracker($data, $params)
 					}
 					if (!empty($tpl) || !empty($wiki)) {
 						$smarty->assign_by_ref('field_value', $f);
-						if (isset($item)) {
+						if (!empty($item)) {
 							$smarty->assign_by_ref('item', $item);
 						}
 						$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
@@ -1120,7 +1120,7 @@ function wikiplugin_tracker($data, $params)
 										. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors) . '</label>';
 						}
 						$smarty->assign_by_ref('field_value', $f);
-						if (isset($item)) {
+						if (!empty($item)) {
 							$smarty->assign_by_ref('item', $item);
 						}
 						$back .= $smarty->fetch('tracker_item_field_input.tpl');
