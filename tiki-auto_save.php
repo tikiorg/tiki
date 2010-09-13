@@ -49,6 +49,12 @@ if (isset($_REQUEST['editor_id'])) {
 			echo '<adapter command="toWikiFormat">';
 			echo '<data><![CDATA[' .  $res . ']]></data>';
 			echo '</adapter>';
+		} else if ($_REQUEST['command'] == 'auto_save') {
+			include_once 'lib/ajax/autosave.php';
+			auto_save( $_REQUEST['editor_id'], $_REQUEST['data'], $_REQUEST['referer'] );
+		} else if ($_REQUEST['command'] == 'auto_remove') {
+			include_once 'lib/ajax/autosave.php';
+			remove_save($_REQUEST['editor_id'], $_REQUEST['referer'] );
 		}
 	} else if (isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {	// autosave
 

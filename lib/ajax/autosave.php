@@ -15,9 +15,6 @@ global $prefs, $smarty;
 if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y') {
 	return;
 }
-
-$ajaxlib->registerFunction('auto_save');
-$ajaxlib->registerFunction('remove_save');
 if ( isset($_REQUEST['noautosave']) === true ) {
 	$smarty->assign('noautosave', $_REQUEST['noautosave'] === 'y');
 }
@@ -34,8 +31,14 @@ function auto_save_log($id, $referer = '', $action = '') {
 
 function auto_save($id, $data, $referer = '') {
 //	auto_save_log($id, $referer, 'auto_save');
-	file_put_contents(auto_save_name($id, $referer), rawurldecode($data));
-	return new xajaxResponse();
+	$result = file_put_contents(auto_save_name($id, $referer), rawurldecode($data));
+//	return new xajaxResponse();
+	header( 'Content-Type:text/xml; charset=UTF-8' );	// TODO refactor
+	echo '<?xml version="1.0" encoding="UTF-8"?>';
+	echo '<adapter command="auto_save">';
+	echo '<data><![CDATA[' .  $result . ']]></data>';
+	echo '</adapter>';
+	exit;
 }
 
 function remove_save($id, $referer = '') {
@@ -43,9 +46,15 @@ function remove_save($id, $referer = '') {
 //	auto_save_log($id, $referer, 'remove_save');
 	$file_name = auto_save_name($id, $referer);
 	if (file_exists($file_name)) {
-		unlink($file_name);
+		$result = unlink($file_name);
 	}
-	return new xajaxResponse();
+//	return new xajaxResponse();
+	header( 'Content-Type:text/xml; charset=UTF-8' );	// TODO refactor
+	echo '<?xml version="1.0" encoding="UTF-8"?>';
+	echo '<adapter command="auto_remove">';
+	echo '<data><![CDATA[' .  $result  . ']]></data>';
+	echo '</adapter>';
+	exit;
 }
 
 function has_autosave($id, $referer = '') {
@@ -61,19 +70,23 @@ function get_autosave($id, $referer = '') {
 	}
 }
 
-function ensureReferrer($referer = '') {	
-// should be page name, but use URI if not?
+function ensureReferrer($referer = '') {
 	
+	// should be page name, but use URI if not?
 	if (empty($referer)) {
-		global $section;
+		global $section,  $user, $tikilib;
+		$referer .= empty($user) ? $tikilib->get_ip_address() : $user;
+		$referer .= ':';
 		if ($section == 'wiki page') {
 			if (isset($_REQUEST['page'])) {
-				$referer = 'wiki_page:' . $_REQUEST['page'];
+				$referer .= 'wiki_page:' . $_REQUEST['page'];
 			}
 		} else if ($section == 'blogs') {
 			if (isset($_REQUEST['postId'])) {
-				$referer = 'blog:' . $_REQUEST['postId'];
+				$referer .= 'blog:' . $_REQUEST['postId'];
 			}
+		} else {
+			$referer .= $section;	// better than nothing?
 		}
 	}
 	if (empty($referer)) {

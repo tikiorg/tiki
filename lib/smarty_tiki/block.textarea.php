@@ -83,6 +83,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	}
 
 	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
+		require_once("lib/ajax/autosave.php");
 		$auto_save_referrer = ensureReferrer();
 
 		if ((empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') && (!isset($_REQUEST['mode_wysiwyg']) || $_REQUEST['mode_wysiwyg'] !== 'y')) {
@@ -96,6 +97,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 				}
 			}
 		}
+	} else {
+		$auto_save_referrer = '';
 	}
 
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
