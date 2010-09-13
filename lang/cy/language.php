@@ -1,3 +1,11 @@
+"Edit languages" => "Golygu ieithoedd",
+"Edit or export/import languages" => "Golygu neu allbynnu/mewnbynnu ieithoedd",
+"Export languages" => "Allbynnu ieithoedd",
+"Import languages" => "Mewnbynnu ieithoedd",
+"Nothing has changed" => "Does dim byd wedi newid",
+"Since your last visit" => "Ers eich ymweliad diwethaf",
+"Toolbars" => "Bariau offer",
+"Wrote" => "A transcrit",
 <?php
 $lang=Array(
 "About" => "Amdan",
