@@ -155,8 +155,9 @@ function FCKeditor_OnComplete( editorInstance ) {
 				
 				global $tiki_p_admin;
 				if ($tiki_p_admin) {
+					$profile_link = 'tiki-admin.php?profile=WYSIWYG_6x&repository=http%3A%2F%2Fprofiles.tikiwiki.org%2Fprofiles&page=profiles&list=List';
 					$msg .= tra("Some of your preferences should be set differently for this to work at it's best. Please click this to apply the recommended profile:") .
-					   ' <a href="tiki-admin.php?profile=WYSIWYG_6x&repository=&page=profiles&list=List">WYSIWYG_6x</a>';
+					   ' <a href="'.$profile_link.'">WYSIWYG_6x</a>';
 				} else {
 					$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
 				}
