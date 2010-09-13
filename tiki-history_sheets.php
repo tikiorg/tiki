@@ -84,11 +84,14 @@ if (empty($_REQUEST['readdate'])) {
 		'if (typeof ajaxLoadingShow == "function") {
 			ajaxLoadingShow("role_main");
 		}
-		setTimeout (function () { $("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 500);
+		setTimeout (function () {
+			$("div.tiki_sheet").tiki("sheet", "",{
+				editable: false,
+				fnPaneScroll: scrollLocker,
+				fnSwitchSheet: tabLocker
+			});
+		}, 500);
 		instanceCount = ' . count($readdates) . ';
-		$("#tiki_sheet_container").one("mousedown", function() {
-			lockSheetTogether();		
-		});
 		'
 	, 500);
 	
