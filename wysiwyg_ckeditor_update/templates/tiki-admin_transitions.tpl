@@ -106,7 +106,7 @@
 			renderer.draw();
 		} );
 		{/jq}
-		<table class="data">
+		<table class="normal">
 			<thead>
 				<tr>
 					<th>{tr}Label{/tr}</th>
@@ -189,7 +189,7 @@
 
 	{if $selected_transition}
 		{tab name="{tr}Guards{/tr}"}
-			<table class="data">
+			<table class="normal">
 				<thead>
 					<tr>
 						<th>{tr}Type{/tr}</th>

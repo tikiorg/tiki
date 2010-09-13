@@ -46,6 +46,9 @@ class Perms_Accessor implements ArrayAccess
 	function getResolver() {
 		return $this->resolver;
 	}
+	function from() {
+		return $this->resolver->from();
+	}
 
 	function setContext( array $context ) {
 		$this->context = $context;
