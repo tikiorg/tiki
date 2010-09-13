@@ -14,26 +14,29 @@
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
 {if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-<form action="tiki-admin_content_templates.php?&wysiwyg=n" method="post">
+	<form action="tiki-admin_content_templates.php?wysiwyg=n" method="post">
 {else} 
-<form action="tiki-admin_content_templates.php?&wysiwyg=y" method="post">
+	<form action="tiki-admin_content_templates.php?wysiwyg=y" method="post">
 {/if}
-{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
-	<div class="navbar">
-		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-			{button href="?templateId=$templateId&amp;wysiwyg=y" _text="{tr}Use wysiwyg editor{/tr}"}
-		{else}
-			{button href="?templateId=$templateId&amp;wysiwyg=n" _text="{tr}Use normal editor{/tr}"}
-		{/if}
-	</div>
-{/if}
+	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
+		<div class="navbar">
+			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
+				{button href="?templateId=$templateId&amp;wysiwyg=y" _text="{tr}Use wysiwyg editor{/tr}"}
+			{else}
+				{button href="?templateId=$templateId&amp;wysiwyg=n" _text="{tr}Use normal editor{/tr}"}
+			{/if}
+		</div>
+	{/if}
 
-<input type="hidden" name="templateId" value="{$templateId|escape}" />
+	<input type="hidden" name="templateId" value="{$templateId|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td><label for="name">{tr}Name{/tr}:</label></td>
+			<td><label for="name">{tr}Name:{/tr} (*)</label></td>
 			<td>
-				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}" />
+				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}" /> 
+				{if $emptyname}
+					<span class="attention">{tr}Name field is mandatory{/tr}</span>
+				{/if}
 			</td>
 		</tr>
 		<tr>
