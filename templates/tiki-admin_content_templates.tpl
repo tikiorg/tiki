@@ -117,7 +117,7 @@
 		</tr>
 
 		<tr>
-			<td>&nbsp;</td>
+			<td/>
 			<td>
 				<input type="submit" name="save" value="{tr}Save{/tr}" />
 				<input type="submit" name="preview" value="{tr}Preview{/tr}" />
@@ -163,15 +163,12 @@
 					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" >
 						{icon _id='cross' alt="{tr}Remove section{/tr}"}
 					</a>
-					&nbsp;&nbsp;
 				{/section}
 			</td>
 			<td>
-				&nbsp;&nbsp;
 				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
 					{icon _id='page_edit'}
 				</a> 
-				&nbsp;
 				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
 					{icon _id='cross' alt="{tr}Delete{/tr}"}
 				</a>
