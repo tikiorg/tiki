@@ -9,7 +9,7 @@
 
 {if $templateId > 0}
 	<h2>{tr}Edit this template:{/tr} {$info.name|escape}</h2>
-	<a href="tiki-admin_content_templates.php">{tr}Create new template{/tr}</a>
+	{button href="tiki-admin_content_templates.php" _text="{tr}Create new template{/tr}"}
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
@@ -41,7 +41,7 @@
 			<td>
 				{if $prefs.feature_cms_templates eq 'y'}
 					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> 
-					{tr}CMS{/tr} ({tr}Articles{/tr}
+					{tr}CMS{/tr} ({tr}Articles{/tr})
 					<br />
 				{/if}
 				{if $prefs.feature_wiki_templates eq 'y'}
