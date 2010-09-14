@@ -988,6 +988,7 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 .wikipreview {
 	height: 30ex;
 	overflow-y: auto;
+	overflow-x: hidden;
 	border-bottom: 6px solid #ccc;
 }
 
