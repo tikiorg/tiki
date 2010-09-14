@@ -985,6 +985,12 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 	margin: 0 2% 0 0;
 }
 
+.wikipreview {
+	height: 30ex;
+	overflow-y: auto;
+	border-bottom: 6px solid #ccc;
+}
+
 /***** Tables, Tabs ****/
 /** Tables **/
 

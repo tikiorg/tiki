@@ -38,6 +38,7 @@ function send_ajax_response($command, $data ) {
 
 if (isset($_REQUEST['editor_id'])) {
 	if (isset($_REQUEST['command']) && isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {
+		$_REQUEST['referer'] = urldecode($_REQUEST['referer']);
 		if ($_REQUEST['command'] == 'toWikiFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
 			$res = $editlib->parseToWiki(urldecode($_REQUEST['data']));
@@ -63,7 +64,13 @@ if (isset($_REQUEST['editor_id'])) {
 	} else if (isset($_REQUEST['autoSaveId'])) {
 		// do better some security here
 		if (!empty($user)) {
-			$headerlib->add_js('
+			$editlib; include_once 'lib/wiki/editlib.php';
+			$_REQUEST['autoSaveId'] = urldecode($_REQUEST['autoSaveId']);
+			if (isset($_REQUEST['inPage'])) {
+				$data .= $tikilib->parse_data_raw($editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])));
+				echo $data;
+			} else {
+				$headerlib->add_js('
 function get_new_preview() {
 $("body").css("opacity", 0.6);
 location.replace("' . $tikiroot . 'tiki-auto_save.php?editor_id=' . $_REQUEST['editor_id'] . '&autoSaveId=' . $_REQUEST['autoSaveId'] . '");
@@ -78,22 +85,23 @@ $(window).load(function(){
 	}
 });
 ');
-			$smarty->assign('headtitle', tra('Preview'));
-			$data = '<div id="c1c2"><div id="wrapper"><div id="col1"><div id="tiki-center" class="wikitext">';
-			if (has_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])) {
-				$data .= $tikilib->parse_data_raw(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId']));
-			} else {
-				$arr = explode(':', $_REQUEST['autoSaveId']);
-				if (count($arr) > 0 && $arr[0] == 'wiki_page') {
-					global $wikilib; include_once('lib/wiki/wikilib.php');
-					$canBeRefreshed = false;
-					$data .= $wikilib->get_parse($arr[1], $canBeRefreshed);
+				$smarty->assign('headtitle', tra('Preview'));
+				$data = '<div id="c1c2"><div id="wrapper"><div id="col1"><div id="tiki-center" class="wikitext">';
+				if (has_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])) {
+					$data .= $tikilib->parse_data_raw($editlib->partialParseWysiwygToWiki(get_autosave($_REQUEST['editor_id'], $_REQUEST['autoSaveId'])));
+				} else {
+					$arr = explode(':', $_REQUEST['autoSaveId']);
+					if (count($arr) > 0 && $arr[0] == 'wiki_page') {
+						global $wikilib; include_once('lib/wiki/wikilib.php');
+						$canBeRefreshed = false;
+						$data .= $wikilib->get_parse($arr[1], $canBeRefreshed);
+					}
 				}
+				$data .= '</div></div></div></div>';
+				$smarty->assign_by_ref( 'mid_data', $data);
+				$smarty->assign( 'mid', '');
+				$smarty->display("tiki_full.tpl");
 			}
-			$data .= '</div></div></div></div>';
-			$smarty->assign_by_ref( 'mid_data', $data);
-			$smarty->assign( 'mid', '');
-			$smarty->display("tiki_full.tpl");
 		}
 	}
 }
