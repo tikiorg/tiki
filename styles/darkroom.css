@@ -2164,6 +2164,15 @@ div.messureadbody {
 
 /***** Ajax *****/
 
+/* Ajax Loading Overlay */
+div#ajaxLoadingBG {
+	background: transparent url(../img/overlay-85.png);
+}
+div#ajaxLoading {
+	background: transparent url(../img/loading.gif) no-repeat 50% 50%;
+	color: #ccc;
+}
+
 /***** TikiSheet *****/
 table.default thead td,
 table.default tfoot td {
