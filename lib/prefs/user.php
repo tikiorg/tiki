@@ -142,7 +142,19 @@ function prefs_user_list() {
 			'type' => 'text',
 			'size' => '5',
 			'dependencies' => array('feature_jquery_autocomplete'),
-		)
+		),
+		'user_selector_realnames_tracker' => array(
+			'name' => tra('Show user\'s real name instead of login in autocomplete selector in trackers feature'),
+			'description' => tra('Use user\'s real name instead of login in autocomplete selector in trackers feature'),
+			'type' => 'flag',
+			'dependencies' => array('feature_jquery_autocomplete', 'user_show_realnames', 'feature_trackers'),
+		),
+		'user_selector_realnames_messu' => array(
+			'name' => tra('Show user\'s real name instead of login in autocomplete selector in messaging feature'),
+			'description' => tra('Use user\'s real name instead of login in autocomplete selector in messaging feature'),
+			'type' => 'flag',
+			'dependencies' => array('feature_jquery_autocomplete', 'user_show_realnames', 'feature_messages'),
+		),
 	);
 }
 

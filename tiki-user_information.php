@@ -66,7 +66,7 @@ if ($user) {
 		$sent = $messulib->post_message($userwatch, $user, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], '',
 								isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : '');
 		if ($sent) {
-			$message = tra('Message sent to') . ':' . $userwatch . '<br />';
+			$message = tra('Message sent to') . ':' . $userlib->clean_user($userwatch) . '<br />';
 		} else {
 			$message = tra('An error occurred, please check your mail settings and try again');
 		}

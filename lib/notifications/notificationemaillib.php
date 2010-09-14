@@ -22,6 +22,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 	// Per-forum From address overrides global default.
 	if( $forum_info['outbound_from'] )
 	{
+		$author = $userlib->clean_user($author);
 	    $my_sender = '"' . "$author" . '" <' . $forum_info['outbound_from'] . '>';
 	} else {
 	    $my_sender = $prefs['sender_email'];

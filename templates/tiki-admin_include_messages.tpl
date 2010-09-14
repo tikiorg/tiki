@@ -15,6 +15,7 @@
 		{preference name=messu_mailbox_size}
 		{preference name=messu_archive_size}
 		{preference name=messu_sent_size}
+		{preference name=user_selector_realnames_messu}
 
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center">

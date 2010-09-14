@@ -68,10 +68,8 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 
 	if ( $fullname != '' ) {
 		$ou = $fullname;
-	} elseif ( $prefs['user_show_realnames'] == 'y' ) {
-		$user_details = $userlib->get_user_details($other_user);
-		$ou = $user_details['info']['realName'];
-		unset($user_details);
+	} else {
+		$ou = $userlib->clean_user($other_user);
 	}
 	if ( empty($ou) || $ou == '' ) {
 		$ou = $other_user;

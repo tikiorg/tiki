@@ -48,6 +48,38 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 			}
 		}
 		$access->output_serialized($usrs);
+	} elseif ($_REQUEST['listonly'] == 'userrealnames') {
+		$groups = '';
+		$listusers = $userlib->get_users_light(0, -1, 'login_asc', '', $groups);
+		$done = array();
+		$finalusers = array();
+		foreach($listusers as $usrId => $usr) {
+			if (isset($_REQUEST['q'])) {
+				$longusr = $usr . ' (' . $usrId . ')';
+				if (array_key_exists($usr, $done)) {
+					// disambiguate duplicates
+					if (stripos($longusr, $_REQUEST['q']) !== false) {
+						$oldkey = array_search($usr, $finalusers);
+						if ($oldkey !== false) {
+							$finalusers[$oldkey] = $done[$usr];
+						}
+					}
+					if (stripos($longusr, $_REQUEST['q']) !== false) {
+						$finalusers[] = $longusr;
+					}
+				} else {
+					if (stripos($longusr, $_REQUEST['q']) !== false) {
+						$finalusers[] = $usr;
+					}
+				}
+				$done[$usr] = $longusr;
+			}
+		}
+		
+		// TODO also - proper perms checking
+		// tricker for users? Check the group they're in, then tiki_p_group_view_members
+				
+		$access->output_serialized($finalusers);
 	} elseif( $_REQUEST['listonly'] == 'tags' ) {
 		global $freetaglib; require_once 'lib/freetag/freetaglib.php';
 

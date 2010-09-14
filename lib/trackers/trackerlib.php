@@ -1311,6 +1311,12 @@ class TrackerLib extends TikiLib
 					}
 				}
 			}
+			if ($prefs['user_selector_realnames_tracker'] == 'y' && $ins_fields['data'][$i]['type'] == 'u') {
+				if (!$userlib->user_exists($ins_fields['data'][$i]['value'])) {
+					$finalusers = $userlib->find_best_user(array($ins_fields['data'][$i]['value']), '' , 'login');
+					$ins_fields['data'][$i]['value'] = $finalusers[0];
+				}
+			}
 			if ($ins_fields['data'][$i]['type'] == 'G' && isset($ins_fields['data'][$i]['options_array'][0]) && $ins_fields['data'][$i]['options_array'][0] == 'y') {
 				// Set geo attributes if google map field is set as item
 				global $attributelib;
