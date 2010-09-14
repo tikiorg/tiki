@@ -103,6 +103,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 				$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
 			}
 		}
+		$headerlib->add_jq_onready("register_id('$as_id','$auto_save_referrer');");
+		$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");
 	}
 
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
@@ -290,11 +292,6 @@ function CKeditor_OnComplete() {
 			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
 		}
 		
-		if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {
-			$headerlib->add_jq_onready("register_id('$textarea_id','$auto_save_referrer');");
-			$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");	// onready is too late...
-		}
-
 		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
 		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : 'n');
 		$html .= $smarty->fetch('wiki_edit.tpl');
