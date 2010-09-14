@@ -24,7 +24,7 @@ require_once( "lib/sheet/ole.php" );
 require_once( "lib/sheet/excel/writer.php" );
 //require_once( "lib/sheet/conf/config.inc.php" );
 require_once( "lib/encoding/lib-encoding.php" );
-
+include_once 'lib/diff/Diff.php';
 // Constants {{{1
 
 /*
@@ -331,10 +331,7 @@ class TikiSheet
 			$subsheets = $sheetlib->get_sheet_subsheets($this->sheetId);
 			if (count($subsheets) > 0) {
 				foreach ($subsheets as $sub) {
-					$handler = new TikiSheetDatabaseHandler($sub['sheetId']);
-					if ($date) {
-						$handler->setReadDate($date);
-					}
+					$handler = new TikiSheetDatabaseHandler($sub['sheetId'], $date );
 					$subsheet = new TikiSheet($sub['sheetId'], true);
 					$subsheet->import($handler);
 					$data .= $subsheet->getTableHtml( false );
@@ -1302,10 +1299,10 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	 * @param $sheetId The ID of the sheet in the database.
 	 * @param $db The database link to use.
 	 */
-	function TikiSheetDatabaseHandler( $sheetId )
+	function TikiSheetDatabaseHandler( $sheetId , $date )
 	{
 		$this->sheetId = $sheetId;
-		$this->readDate = time();
+		$this->readDate = ( $date ? $date : time() );
 	}
 
 	// _load {{{2
@@ -2324,4 +2321,90 @@ function array_searchRecursive( $needle, $haystack, $strict=false, $path=array()
         }
     }
     return false;
+}
+
+
+function diffSheetsAsHTML( $id, $dates = null )
+{
+	global $prefs, $sheetlib;
+		
+	function countLongest( $array1, $array2 )
+	{
+		return (count($array1) > count($array2) ? count($array1) : count($array2));
+	}
+	
+	function joinWithSubGrids( $id, $date )
+	{
+		global $prefs, $sheetlib;
+		$result1 = "";
+		$result2 = "";
+		
+		$handler = new TikiSheetDatabaseHandler($id, $date);
+		$handler->setReadDate($date);
+		$grid = new TikiSheet($id, true);
+		$grid->import($handler);
+		
+		$subgrids = $sheetlib->get_sheet_subsheets($grid->sheetId);
+		$i = 0;
+		$grids = array($grid);
+		foreach ($subgrids as $sub) {
+			$handler = new TikiSheetDatabaseHandler($sub['sheetId'], $date);
+			$handler->setReadDate($date);
+			$subsheet = new TikiSheet($sub['sheetId'], true);
+			$subsheet->import($handler);
+			array_push($grids, $subsheet);
+			$i++;
+		}
+		return $grids;
+	}
+	
+	$grids1 = joinWithSubGrids($_REQUEST["sheetId"], $dates[0]);
+	$grids2 = joinWithSubGrids($_REQUEST["sheetId"], $dates[1]);
+	
+	for ( $i = 0; $i < countLongest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
+		$result1 .= "<table>";
+		$result2 .= "<table>";
+		for ( $row = 0; $row < countLongest($grids1[$i]->dataGrid, $grids2[$i]->dataGrid); $row++ ) { //cycle through rows
+			$result1 .= "<tr>";
+			$result2 .= "<tr>";
+			for ( $col = 0; $col < countLongest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
+				$diff = new Text_Diff($grids1[$i]->dataGrid[$row][$col], $grids2[$i]->dataGrid[$row][$col]);
+				$changes = $diff->getDiff();
+				//print_r($changes);
+				$class1 = '';
+				$class2 = '';
+				//print_r($changes);
+				switch ( get_class($changes[0]) ) {
+					case 'Text_Diff_Op_copy':
+						$class1 = '';
+						$class2 = '';
+						break;
+					case 'Text_Diff_Op_change':
+						$class1 = 'diffadded';
+						$class2 = 'diffadded';
+						break;
+					case 'Text_Diff_Op_delete':
+						$class1 = 'diffdeleted';
+						$class2 = 'diffdeleted';
+						break;
+					case 'Text_Diff_Op_add':
+						$class1 = 'diffadded';
+						$class2 = 'diffadded';
+						break;
+					default:
+						$class1 = 'diffnotspecified';
+						$class2 = 'diffnotspecified';
+						//echo get_class($changes[0]);
+				}
+				$result1 .= "<td class='$class1'>".$grids1[$i]->dataGrid[$row][$col]."</td>";
+				$result2 .= "<td class='$class2'>".$grids2[$i]->dataGrid[$row][$col]."</td>";
+			}
+			$result1 .= "</tr>";
+			$result2 .= "</tr>";
+		}
+		$result1 .= "</table>";
+		$result2 .= "</table>";
+	}
+		
+	return array($result1, $result2);
 }
