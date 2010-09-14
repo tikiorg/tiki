@@ -84,21 +84,30 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 
 	if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {	// retrieve autosaved content
 		require_once("lib/ajax/autosave.php");
+		include_once('lib/smarty_tiki/block.self_link.php');
 		$auto_save_referrer = ensureReferrer();
-
-		if ((empty($_REQUEST['noautosave']) || $_REQUEST['noautosave'] != 'y') && (!isset($_REQUEST['mode_wysiwyg']) || $_REQUEST['mode_wysiwyg'] !== 'y')) {
-			if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?
-				$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $auto_save_referrer));
-				
-				if ( strcmp($auto_saved, $content) != 0 ) {
+		if (empty($_REQUEST['autosave'])) {
+			$_REQUEST['autosave'] = 'n';
+		}
+		if (has_autosave($as_id, $auto_save_referrer)) {		//  and $params['preview'] == 0 -  why not?
+			$auto_saved = str_replace("\n","\r\n", get_autosave($as_id, $auto_save_referrer));
+			if ( strcmp($auto_saved, $content) === 0 ) {
+				$auto_saved = '';
+			}
+			if (empty($auto_saved) || isset($_REQUEST['mode_wysiwyg']) || $_REQUEST['mode_wysiwyg'] === 'y') {	// switching modes, ignore auto save
+				remove_save($as_id, $auto_save_referrer);
+			} else {
+				if ($_REQUEST['autosave'] === 'y') {
 					$content = $auto_saved;
-					$msg = "<div class='mandatory_star'>".tra('If you want the saved version instead of this autosaved one').'&nbsp;'.smarty_block_self_link( array( 'noautosave'=>'y', '_ajax'=>'n'), tra('Click Here'), $smarty)."</div>";
-					$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
+					$msg = "<div class='mandatory_star'>".tra('If you want the saved version instead of this autosaved draft').'&nbsp;'.
+							smarty_block_self_link( array( 'autosave'=>'n', '_ajax'=>'n'), tra('click here'), $smarty)."</div>";
+				} else {
+					$msg = "<div class='mandatory_star'>".tra('There is an autosaved version of this content, to use it instead of this saved one').'&nbsp;'.
+							smarty_block_self_link( array( 'autosave'=>'y', '_ajax'=>'n'), tra('click here'), $smarty)."</div>";
 				}
+				$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
 			}
 		}
-	} else {
-		$auto_save_referrer = '';
 	}
 
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
