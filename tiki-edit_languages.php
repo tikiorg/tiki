@@ -266,11 +266,15 @@ if (isset($_REQUEST['downloadFile'])) {
 
 // Write to language.php
 if (isset($_REQUEST['exportToLanguage'])) {
-	if ($stats = $language->writeLanguageFile()) {
-		$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $language->lang);
-	} else {
-		$expmsg = sprintf(tra('ERROR: unable to write to lang/%s/language.php'), $language->lang);
+	try {
+		$stats = $language->writeLanguageFile();
+	} catch (Exception $e) {
+		$smarty->assign('msg', $e->getMessage());
+		$smarty->display('error.tpl');
+		die;
 	}
+
+	$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $language->lang);
 	$smarty->assign('expmsg', $expmsg);
 }
 

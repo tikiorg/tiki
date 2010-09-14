@@ -172,7 +172,6 @@ class Language extends TikiDb_Bridge
 	public function writeLanguageFile() {
 		$filePath = "lang/{$this->lang}/language.php";
 
-		// TODO: generate an error if not possible to write to file
 		if (is_writable($filePath)) {
 			$langFile = file($filePath);
 			$dbTrans = $this->_getTranslationsEscaped();
@@ -207,6 +206,12 @@ class Language extends TikiDb_Bridge
 
 			// add new strings to the language.php
 			$lastStr = array_search("\"###end###\"=>\"###end###\");\n", $langFile);
+
+			if ($lastStr === FALSE) {
+				// file has no line with "###end###\"=>\"###end###\") marking the end of the array
+				throw new Exception(tra("The file lang/$this->lang/language.php is not well formated. Run get_strings.php?lang=$this->lang and then try to export the translations again."));
+			}
+
 			array_splice($langFile, $lastStr, 0, $newTrans);
 
 			// write the new language.php file
@@ -220,6 +225,8 @@ class Language extends TikiDb_Bridge
 			$this->deleteTranslations();
 
 			return $stats;
+		} else {
+			throw new Exception(sprintf(tra('ERROR: unable to write to lang/%s/language.php'), $this->lang));
 		}
 	}
 

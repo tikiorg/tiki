@@ -146,6 +146,12 @@ class LanguageTest extends TikiTestCase
 		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/language_modif.php'), file_get_contents($this->langDir . '/language.php'));
 	}
 
+	public function testWriteLanguageShouldRaiseExceptionForInvalidLanguagePhp() {
+		$this->setExpectedException('Exception');
+		copy(dirname(__FILE__) . '/fixtures/language_invalid.php', $this->langDir . '/language.php');
+		$this->obj->writeLanguageFile();
+	}
+
 	public function testDeleteTranslations() {
 		$this->obj->deleteTranslations();
 		$this->assertFalse(TikiDb::get()->getOne('SELECT * FROM `tiki_language` WHERE `lang` = ?', array($this->obj->lang)));
