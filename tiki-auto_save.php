@@ -25,37 +25,36 @@ if ($prefs['feature_ajax'] != 'y' || ($prefs['ajax_autosave'] != 'y' && $prefs['
 	return;
 }
 
-require_once('lib/ajax/ajaxlib.php');
+require_once('lib/ajax/autosave.php');
+
+function send_ajax_response($command, $data ) {
+	header( 'Content-Type:text/xml; charset=UTF-8' );	// TODO refactor
+	echo '<?xml version="1.0" encoding="UTF-8"?>';
+	echo '<adapter command="' . $command . '">';
+	echo '<data><![CDATA[' .  $data . ']]></data>';
+	echo '</adapter>';
+	exit;
+}
 
 if (isset($_REQUEST['editor_id'])) {
 	if (isset($_REQUEST['command']) && isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {
 		if ($_REQUEST['command'] == 'toWikiFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
-				
 			$res = $editlib->parseToWiki(urldecode($_REQUEST['data']));
-			
-			header( 'Content-Type:text/xml; charset=UTF-8' ) ;
-			echo '<?xml version="1.0" encoding="UTF-8"?>';
-			echo '<adapter command="toWikiFormat">';
-			echo '<data><![CDATA[' .  $res . ']]></data>';
-			echo '</adapter>';
 		} else if ($_REQUEST['command'] == 'toHtmlFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
-				
 			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']));
-				
-			header( 'Content-Type:text/xml; charset=UTF-8' ) ;
-			echo '<?xml version="1.0" encoding="UTF-8"?>';
-			echo '<adapter command="toWikiFormat">';
-			echo '<data><![CDATA[' .  $res . ']]></data>';
-			echo '</adapter>';
 		} else if ($_REQUEST['command'] == 'auto_save') {
 			include_once 'lib/ajax/autosave.php';
-			auto_save( $_REQUEST['editor_id'], $_REQUEST['data'], $_REQUEST['referer'] );
+			$res = auto_save( $_REQUEST['editor_id'], $_REQUEST['data'], $_REQUEST['referer'] );
 		} else if ($_REQUEST['command'] == 'auto_remove') {
 			include_once 'lib/ajax/autosave.php';
 			remove_save($_REQUEST['editor_id'], $_REQUEST['referer'] );
+		} else if ($_REQUEST['command'] == 'auto_get') {
+			include_once 'lib/ajax/autosave.php';
+			$res = get_autosave($_REQUEST['editor_id'], $_REQUEST['referer'] );
 		}
+		send_ajax_response( $_REQUEST['command'], $res );
 	} else if (isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {	// autosave
 
 		auto_save($_REQUEST['editor_id'],$_REQUEST['data'],$_REQUEST['script']);

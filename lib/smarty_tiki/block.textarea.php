@@ -97,14 +97,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			if (empty($auto_saved) || isset($_REQUEST['mode_wysiwyg']) || $_REQUEST['mode_wysiwyg'] === 'y') {	// switching modes, ignore auto save
 				remove_save($as_id, $auto_save_referrer);
 			} else {
-				if ($_REQUEST['autosave'] === 'y') {
-					$content = $auto_saved;
-					$msg = "<div class='mandatory_star'>".tra('If you want the saved version instead of this autosaved draft').'&nbsp;'.
-							smarty_block_self_link( array( 'autosave'=>'n', '_ajax'=>'n'), tra('click here'), $smarty)."</div>";
-				} else {
-					$msg = "<div class='mandatory_star'>".tra('There is an autosaved version of this content, to use it instead of this saved one').'&nbsp;'.
-							smarty_block_self_link( array( 'autosave'=>'y', '_ajax'=>'n'), tra('click here'), $smarty)."</div>";
-				}
+				$msg = '<div class="mandatory_star"><span class="autosave_message">'.tra('There is an autosaved version of this content, to use it instead of this saved one').'</span>&nbsp;' .
+							'<span class="autosave_message_2" style="display:none;">'.tra('If you want the saved version instead of this autosaved draft').'</span>' .
+							smarty_block_self_link( array( '_ajax'=>'n', '_onclick' => 'toggle_autosaved(\''.$as_id.'\',\''.$auto_save_referrer.'\');return false;'), tra('click here'), $smarty)."</div>";
 				$auto_save_warning = smarty_block_remarksbox( array( 'type'=>'info', 'title'=>tra('AutoSave')), $msg, $smarty)."\n";
 			}
 		}
