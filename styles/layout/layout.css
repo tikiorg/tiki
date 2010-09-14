@@ -1966,36 +1966,26 @@ table.pollresults {
 /* admin boxes etc (.admbox) now defined in css/admin.css */
 
 /***** Ajax, jquery. etc. *****/
-/***** Ajax *****/
-div#ajaxLoading {
-	z-index: 10000;
-	color: #fff !important;
+
+/* Ajax Loading Overlay */
+div#ajaxLoadingBG {
 	display: none;
+	z-index: 9999;
+	position: absolute;
+	background: transparent url(../../img/overlay-light.png);
+}
+div#ajaxLoading {
+	display: none;
+	z-index: 10000;
 	font-size: 2em;
 	font-weight: bold;
-	position: fixed !important;
-	top: 50% !important;
-	left: 50% !important;
-	padding: 3px;
+	position: absolute;
 	color: #333;
 	text-align: center;
 	vertical-align: top;
 	background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
-	height: 80px !important;
-	width: 100px !important;
-	margin-left: -50px;
-	margin-top: -40px;
-}
-
-div#ajaxLoadingBG {
-	z-index: 9999;
-	display: none;
-	position: fixed !important;
-	left: 0 !important;
-	top: 0 !important;
-	background: transparent url(../../img/overlay-light.png);
-	width: 100% !important;
-	height: 100% !important;
+	height: 80px;
+	width: 220px;
 }
 
 /* ColorBox */
