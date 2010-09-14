@@ -52,6 +52,8 @@ function remove_save($id, $referer = '') {
 	$file_name = auto_save_name($id, $referer);
 	if (file_exists($file_name)) {
 		$result = unlink($file_name);
+	} else {
+		$result = false;
 	}
 	return $result;
 }

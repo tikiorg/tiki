@@ -57,12 +57,8 @@ if (isset($_REQUEST['editor_id'])) {
 		send_ajax_response( $_REQUEST['command'], $res );
 	} else if (isset($_REQUEST['data']) && $_REQUEST['data'] != 'ajax error') {	// autosave
 
-		auto_save($_REQUEST['editor_id'],$_REQUEST['data'],$_REQUEST['script']);
-		header( 'Content-Type:text/xml; charset=UTF-8' ) ;
-		echo '<?xml version="1.0" encoding="UTF-8"?>';
-		echo '<adapter command="draft">';
-		echo '<result message="success" />';
-		echo '</adapter>';
+		$res = auto_save($_REQUEST['editor_id'],$_REQUEST['data'],$_REQUEST['script']);
+		send_ajax_response( 'draft', $res );
 
 	} else if (isset($_REQUEST['autoSaveId'])) {
 		// do better some security here

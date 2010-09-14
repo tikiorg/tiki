@@ -211,7 +211,7 @@ CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ",autosave" : "a
 CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
 CKEDITOR.config.ajaxAutoSaveRefreshTime = 30 ;			// RefreshTime
 CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key strokes
-register_id("'.$as_id.'"); auto_save();					// Register auto_save so it gets removed on submit
+register_id("'.$as_id.'","'.$auto_save_referrer.'");	// Register auto_save so it gets removed on submit
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
 			}
@@ -291,7 +291,7 @@ function CKeditor_OnComplete() {
 		}
 		
 		if ($prefs['feature_ajax'] == 'y' && $prefs['ajax_autosave'] == 'y' && $params['_simple'] == 'n') {
-			$headerlib->add_jq_onready("register_id('$textarea_id'); auto_save();");
+			$headerlib->add_jq_onready("register_id('$textarea_id','$auto_save_referrer');");
 			$headerlib->add_js("var autoSaveId = '$auto_save_referrer';");	// onready is too late...
 		}
 
