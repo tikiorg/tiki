@@ -184,7 +184,7 @@ class BlogLib extends TikiDb_Bridge
 
 		//FIXME Perm:filter ?
 		foreach ( $result as $res ) {
-			if( (!empty($user) and $user == $res['user']) || $tiki_p_blog_admin == 'y' || ($res['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post'))) 
+			if( (!empty($user) and $user == $res['user']) || $tiki_p_blog_admin == 'y' || $tikilib->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_admin') || ($res['public'] == 'y' && $tikilib->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post'))) 
 				$ret[] = $res;
 		}
 		return $ret;
