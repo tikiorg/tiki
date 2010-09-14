@@ -48,7 +48,7 @@ function wikiplugin_file_info()
 			'date' => array(
 				'required' => false,
 				'name' => tra('Date'),
-				'description' => tra('Pick the archive if exists created just before teh date'),
+				'description' => tra('Pick the archive if exists created just before the date'),
 			),
 		),
 	);
