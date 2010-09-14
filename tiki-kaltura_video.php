@@ -30,7 +30,7 @@ $ksession = $kclient->session->start($secret,$kuser,$SESSION_USER,$partner_id,nu
 }
 
 try {
-$smarty->assign('headtitle', tra('Kalture Video'));
+$smarty->assign('headtitle', tra('Kaltura Video'));
 $kclient->setKs($ksession);
 
 $kentryType = "";

@@ -24,7 +24,7 @@ if (empty($partner_id) || !is_numeric($partner_id) || empty($secret) || empty($a
 	$smarty->display('error.tpl');
 	die;
 }
-$smarty->assign('headtitle', tra('Kalture Upload'));
+$smarty->assign('headtitle', tra('Kaltura Upload'));
 
 try {
 	$kconf = new KalturaConfiguration($partner_id);
