@@ -263,7 +263,12 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 	}
 
-	$objResponse->script('xajax.config.requestURI="'.$ajaxlib->getRequestURI().'";');
+	if ($prefs['wysiwyg_ckeditor'] && strpos($content, '<input type="hidden" name="wysiwyg" value="y" />') !== false) {
+		$ck_reset = "window.CKEDITOR = null;$.getScript('lib/ckeditor/ckeditor.js');";
+	} else {
+		$ck_reset = '';
+	}
+	$objResponse->script('xajax.config.requestURI="'.$ajaxlib->getRequestURI().'";' . $ck_reset);
 	
 	$max_tikitabs = (int)$max_tikitabs;
 	if ( $max_tikitabs > 0 && $prefs['feature_tabs'] == 'y' ) {
