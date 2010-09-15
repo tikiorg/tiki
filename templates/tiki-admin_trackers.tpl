@@ -548,7 +548,6 @@
 	</form>
 {/tab}
 
-{if $trackerId}
 {jq}if ($.ui && $(".tabs").length) { $("#content3").tiki("accordion", {heading: "h2"});}{/jq}
 {tab name="{tr}Import/Export{/tr}"}
 {* --- tab with raw form --- *}
@@ -650,7 +649,6 @@ categories = {$catsdump}
 		</div>
 	{/if}
 {/tab}
-{/if}
 
 {tab name="{tr}Duplicate Tracker{/tr}"}
 {* --- tab with raw form --- *}
