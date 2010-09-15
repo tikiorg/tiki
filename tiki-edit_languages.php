@@ -95,12 +95,12 @@ if (isset($_REQUEST["add_tran"])) {
 		$add_tran_source = strip_tags($add_tran_source);
 #		$add_tran_tran = htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES, "UTF-8"); // we don't want htmlentities() here (converts e.g. é to &eauml;) -- luci
 		$add_tran_tran = strip_tags($add_tran_tran);
-		$query = "delete from `tiki_language` where `source` = ? and `lang` = ?";
+		$query = "delete from `tiki_language` where binary `source` = ? and `lang` = ?";
 		$tikilib->query($query,array($add_tran_source,$edit_language));
 		$query = "insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values (?,?,?,?)";
 		$tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran,1));
 		// remove from untranslated Table
-		$query = "delete from `tiki_untranslated` where `source`=? and `lang`=?";
+		$query = "delete from `tiki_untranslated` where binary `source`=? and `lang`=?";
 		$tikilib->query($query,array($add_tran_source,$edit_language));
 	}
 }
@@ -123,7 +123,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 				if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
 					$query = "insert into `tiki_language` (`source`, `lang`, `tran`, `changed`) values(?,?,?,?)";
 					$result = $tikilib->query($query,array($_REQUEST["edit_rec_source_$i"],$edit_language,$_REQUEST["edit_rec_tran_$i"],1));
-					$query = "delete from `tiki_untranslated` where `source`=? and lang=?";
+					$query = "delete from `tiki_untranslated` where binary `source`=? and lang=?";
 					$result = $tikilib->query($query,array($_REQUEST["edit_rec_source_$i"],$edit_language));
 				// No error checking necessary
 				}
@@ -131,7 +131,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 				// Handle edits in edit translations
 				if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
 #					$_REQUEST["edit_edt_tran_$i"] = strip_tags($_REQUEST["edit_edt_tran_$i"]); // yes, we even don't want striptags() for existing translations as some already have html tags included and we want to keep them, right ?
-					$query = "update `tiki_language` set `tran`=?, `changed`=? where `source`=? and `lang`=?";
+					$query = "update `tiki_language` set `tran`=?, `changed`=? where binary `source`=? and `lang`=?";
 					$result = $tikilib->query($query,array($_REQUEST["edit_edt_tran_$i"],1,$_REQUEST["edit_edt_source_$i"],$edit_language));
 
 					//if ($result->numRows()== 0 ) 
@@ -143,7 +143,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			} elseif (isset($_REQUEST["del_tran_$i"])) {
 				// Handle deletes here
 				if (strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
-					$query = "delete from `tiki_language` where `source`=? and `lang`=?";
+					$query = "delete from `tiki_language` where binary `source`=? and `lang`=?";
 					$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language));
 				}
 			}

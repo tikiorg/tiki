@@ -144,7 +144,7 @@ class Language extends TikiDb_Bridge
 			return;
 		}
 
-		$query = 'select * from `tiki_language` where `lang`=? and `source` = ?';
+		$query = 'select * from `tiki_language` where `lang`=? and binary `source` = ?';
 		$result = $this->query($query, array($this->lang, $originalStr));
 
 		if (!$result->numRows()) {
@@ -152,10 +152,10 @@ class Language extends TikiDb_Bridge
 			$result = $this->query($query, array($originalStr, $this->lang, $translatedStr, 1));
 		} else {
 			if (strlen($translatedStr) == 0) {
-				$query = 'delete from `tiki_language` where `source`=? and `lang`=?';
+				$query = 'delete from `tiki_language` where binary `source`=? and `lang`=?';
 				$result = $this->query($query, array($originalStr, $this->lang));
 			} else {
-				$query = 'update `tiki_language` set `tran`=?, changed=? where `source`=? and `lang`=?';
+				$query = 'update `tiki_language` set `tran`=?, changed=? where binary `source`=? and `lang`=?';
 				$result = $this->query($query,array($translatedStr, 1, $originalStr, $this->lang));
 			}
 		}
