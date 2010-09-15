@@ -552,7 +552,7 @@ function update_changelog_file($newVersion) {
 		error('The changelog file "' . CHANGELOG . '" is not readable or writable.');
 	
 	$isNewMajorVersion = substr($newVersion, -1) == 0;
-	$releaseNotesURL = '<http://tikiwiki.org/ReleaseNotes'.str_replace('.', '', $newVersion).'>';
+	$releaseNotesURL = '<http://tiki.org/ReleaseNotes'.str_replace('.', '', $newVersion).'>';
 	$parseLogs = $sameFinalVersion = $skipBuffer = false;
 	$lastReleaseMajorNumber = -1;
 	$minRevision = $currentParsedRevision = 0;
@@ -666,7 +666,7 @@ Please note that even more people contributed on various other aspects (document
 bug reporting, testing, etc.)
 
 This is how we implement the Tiki Social Contract.
-http://tikiwiki.org/Social+Contract
+http://tiki.org/Social+Contract
 
 List of members of the Community
 As of $now, the community has:
@@ -819,8 +819,8 @@ function update_readme_file($releaseVersion, $mainVersion) {
 	$copyrights_file = COPYRIGHTS_FILENAME;
 	$license_file = LICENSE_FILENAME;
 
-	$release_notes_url = 'http://tikiwiki.org/ReleaseNotes' . str_replace('.', '', $mainVersion);
-	// For example, Tiki 3.x release notes are on http://tikiwiki.org/ReleaseNotes30
+	$release_notes_url = 'http://tiki.org/ReleaseNotes' . str_replace('.', '', $mainVersion);
+	// For example, Tiki 3.x release notes are on http://tiki.org/ReleaseNotes30
 
 	$readme = <<<EOF
 Tiki! The wiki with a lot of features!
@@ -947,10 +947,10 @@ function display_howto() {
 
 7/ Announce the good news on devel mailing-list
    and ask the Communications Team to launch the announce-spreading process as described on
-   http://tikiwiki.org/Communications+Team+Release
+   http://tiki.org/Communications+Team+Release
 
 post/
-   Update appropriate http://tikiwiki.org/stable.version file with new release version
+   Update appropriate http://tiki.org/stable.version file with new release version
    (or ask the TAG to do this)
    Increment/update lib/setup/twversion.class.php (depending if major or minor release)
 
