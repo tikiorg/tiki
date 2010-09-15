@@ -2,7 +2,12 @@
 <input type="hidden" name="no_bl" value="y" />
 {if $prefs.ajax_autosave eq "y"}
 	{button _title="{tr}Preview your changes.{/tr}" _class="wikiaction tips" _text="{tr}Preview{/tr}" _ajax="n" _id="previewBtn"}
-	{jq} $("#previewBtn").click(function(){$('.wikipreview').slideToggle('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});return false;}){/jq}
+	{jq} $("#previewBtn").click(function(){
+auto_save_data['editwiki'] = "";
+auto_save('editwiki', autoSaveId);
+$('#autosave_preview').slideToggle('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
+return false;
+}){/jq}
 {else}
 	<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 {/if}
