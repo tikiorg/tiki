@@ -327,7 +327,7 @@
 				document.getElementById('file_'+n).submit();
 				document.getElementById('file_'+n).reset();
 			} else {
-				progress(n,"{tr}No File to Upload...{/tr}");
+				progress(n,"{tr}No File to Upload...{/tr} <span class='button'><a href='#' onclick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
 			}
 		}
 
