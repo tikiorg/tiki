@@ -8,7 +8,6 @@
 require_once ('tiki-setup.php');
 require_once('lib/language/Language.php');
 
-$access->check_feature('lang_use_db');
 $access->check_permission('tiki_p_edit_languages');
 
 if (!empty ($_REQUEST['interactive_translation_mode']) && $tiki_p_edit_languages == 'y'){
