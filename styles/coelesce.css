@@ -35,7 +35,6 @@ h1 {
 	font-weight: bold;
 	font-size: 1.8em;
 	margin: 0;
-	padding-left: 14px;
 }
 
 h2 {
@@ -1003,7 +1002,12 @@ body.tiki_wiki_page #comments {
 	padding: 1em;
 }
 
+.pagetitle {
+	padding-left: 14px;
+}
+
 h1.pagetitle a,
+div.titlebar,
 h1.pagetitle a:visited,
 h1.pagetitle a:hover,
 a.pagetitle,
@@ -1012,6 +1016,7 @@ a.pagetitle:hover {
 	line-height: 36px;
 	font-size: 20px;
 	color: #2d2d2d;
+	font-weight: bold;
 }
 
 h1 a,
@@ -1045,41 +1050,46 @@ div#description,
 	display: inline;
 }
 
-.titlebar {
-	padding: 0.1em;
-	background: #c3d3e5;
-	color: #607993;
-	font-weight: bold;
-	text-align: center;
-	margin: 10px 0;
+div.titlebar {
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	line-height: 36px;
+	color: #2d2d2d;
+	padding-left: 10px;
 }
 
+.postbody-content .showhide_heading .link,
 .wikitext .showhide_heading .link {
 	font-weight: normal;
 	font-size: 80%;
 	vertical-align: top;
 }
 
+.postbody-content h1,
 .wikitext h1 {
 	margin: 20px 0 15px 0;
 }
 
+.postbody-content h2,
 .wikitext h2 {
 	margin: 10px 0 10px 0;
 }
 
+.postbody-content h3,
 .wikitext h3 {
 	margin: 10px 0 5px 0;
 }
 
+.postbody-content h4,
 .wikitext h4 {
 	margin: 10px 0 5px 0;
 }
 
+.postbody-content h5,
 .wikitext h5 {
 	margin: 10px 0 5px 0;
 }
 
+.postbody-content h6,
 .wikitext h6 {
 	margin: 10px 0 5px 0;
 }
@@ -1099,7 +1109,7 @@ h1.pagetitle {
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	line-height: 36px;
 	color: #2d2d2d;
-	padding-left: 2px;
+	padding-left: 10px;
 }
 
 div.split {
@@ -1339,7 +1349,6 @@ div.author_actions_status {
 }
 
 .postbody-title {
-	color: #000;
 	background: #EEFDFF;
 	padding: 1px 10px 0;
 }
@@ -1349,7 +1358,7 @@ div.author_actions_status {
 }
 
 .post .postbody-title .title {
-	color: #2d2d2d;
+	color: #295C8E;
 	float: none;
 	margin: auto;
 }
@@ -1384,6 +1393,7 @@ div.author_actions_status {
 .post .author_info {
 	background: inherit;
 	display: inline-block;
+	float: left;
 	color: #999999;
 	text-align: left;
 	vertical-align: middle;
