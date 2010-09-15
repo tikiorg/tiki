@@ -7,7 +7,7 @@
 
 /**
  * Abstract class to provide basic functionalities to wiki importers.
- * Based on the work done on http://dev.tikiwiki.org/MediaWiki+to+TikiWiki+converter  
+ * Based on the work done on http://dev.tiki.org/MediaWiki+to+TikiWiki+converter  
  * 
  * @author Rodrigo Sampaio Primo <rodrigo@utopia.org.br>
  * @package tikiimporter
@@ -17,7 +17,7 @@ require_once('tikiimporter.php');
 
 /**
  * Abstract class to provide basic functionalities to wiki importers.
- * Based on the work done on http://dev.tikiwiki.org/MediaWiki+to+TikiWiki+converter
+ * Based on the work done on http://dev.tiki.org/MediaWiki+to+TikiWiki+converter
  * 
  * Child classes must implement the functions validateInput(), parseData()
  *

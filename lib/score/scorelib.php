@@ -9,7 +9,7 @@
 // It's been implemented before and now it's being coded in v1.9.
 // This code is provided here for you to check this implementation
 // and make comments, please see
-// http://tikiwiki.org/tiki-index.php?page=ScoringSystemIdea
+// http://tiki.org/tiki-index.php?page=ScoringSystemIdea
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

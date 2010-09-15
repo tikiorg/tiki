@@ -159,7 +159,7 @@ $PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
 <hr>
 
-<a href='http://doc.tikiwiki.org/Installation' target='_blank'>Consult the tikiwiki.org installation guide</a> if you need more help or <a href='http://tikiwiki.org/tiki-forums.php' target='_blank'>visit the forums</a>
+<a href='http://doc.tiki.org/Installation' target='_blank'>Consult the tiki.org installation guide</a> if you need more help or <a href='http://tiki.org/tiki-forums.php' target='_blank'>visit the forums</a>
 
 </pre></body></html>";
 

@@ -18,7 +18,7 @@
  * @license		LGPL - See license.txt for details.
  * @version		SVN $Rev: 25023 $
  * @filesource
- * @link		http://dev.tikiwiki.org/Trackers
+ * @link		http://dev.tiki.org/Trackers
  * @since		Always
  */
 /**

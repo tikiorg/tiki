@@ -166,7 +166,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 				
 				global $tiki_p_admin;
 				if ($tiki_p_admin) {
-					$profile_link = 'tiki-admin.php?profile=WYSIWYG_6x&repository=http%3A%2F%2Fprofiles.tikiwiki.org%2Fprofiles&page=profiles&list=List';
+					$profile_link = 'tiki-admin.php?profile=WYSIWYG_6x&repository=http%3A%2F%2Fprofiles.tiki.org%2Fprofiles&page=profiles&list=List';
 					$msg .= tra("Some of your preferences should be set differently for this to work at it's best. Please click this to apply the recommended profile:") .
 					   ' <a href="'.$profile_link.'">WYSIWYG_6x</a>';
 				} else {

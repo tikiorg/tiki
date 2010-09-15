@@ -12,7 +12,7 @@
  * {VERSIONS(nav=>y| n, title=>y| n, default=>)}text{VERSIONS}
  * 
  * Documentation
- * http://doc.tikiwiki.org/PluginVersions
+ * http://doc.tiki.org/PluginVersions
  */
 function wikiplugin_versions_help()
 {

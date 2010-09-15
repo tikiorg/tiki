@@ -11,7 +11,7 @@ require_once('Text/Wiki/Mediawiki.php');
 /**
  * Parses a MediaWiki-style XML dump to import it into TikiWiki.
  * Requires PHP5 DOM extension.
- * Based on the work done on http://dev.tikiwiki.org/MediaWiki+to+TikiWiki+converter  
+ * Based on the work done on http://dev.tiki.org/MediaWiki+to+TikiWiki+converter  
  *
  * @package    tikiimporter
  */

@@ -16,7 +16,7 @@ function wikiplugin_profile_info() {
 			'domain' => array(
 				'required' => false,
 				'name' => tra('Domain'),
-				'description' => tra('Profile repository domain. Default value is profiles.tikiwiki.org'),
+				'description' => tra('Profile repository domain. Default value is profiles.tiki.org'),
 			),
 			'name' => array(
 				'required' => true,
@@ -38,7 +38,7 @@ function wikiplugin_profile( $data, $params ) {
 	}
 
 	$params = array_merge( array(
-		'domain' => 'profiles.tikiwiki.org',
+		'domain' => 'profiles.tiki.org',
 	), $params );
 
 	if( !isset( $params['name'] ) ) {

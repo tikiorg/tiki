@@ -70,7 +70,7 @@ $lang=Array(
 // ### Start of unused words
 // ### Please remove manually!
 // ### N.B. Legitimate strings may be marked// ### as unused!
-// ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for further info
+// ### Please see http://tiki.org/tiki-index.php?page=UnusedWords for further info
 "categorize" => "categorizar",
 "Set prefs" => "Definir preferências",
 "creation date" => "data de criação",

@@ -868,7 +868,7 @@ class WikiLib extends TikiLib
 			}
 
 			if( isset( $ret['documentation'] ) && ctype_alnum( $ret['documentation'] ) ) {
-				$ret['documentation'] = "http://doc.tikiwiki.org/{$ret['documentation']}";
+				$ret['documentation'] = "http://doc.tiki.org/{$ret['documentation']}";
 			}
 
 			$smarty->assign( 'area_id', $area_id );

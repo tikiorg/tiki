@@ -4769,7 +4769,7 @@ class TikiLib extends TikiDb_Bridge
 					$arguments = $plugins['arguments'];
 
 					if (count($arguments) == 0) {
-                        //TODO HACK: See bug 2499 http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2499
+                        //TODO HACK: See bug 2499 http://dev.tiki.org/tiki-view_tracker_item.php?itemId=2499
 						$arguments = array('' => '');
 					}
 
