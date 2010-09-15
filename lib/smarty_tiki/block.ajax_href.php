@@ -38,7 +38,7 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     }
     $url = $content;
     $template = $params['template'];
-	if { !empty($params['htmlelement']) }
+	if ( !empty($params['htmlelement']) ) {
 		$htmlelement = $params['htmlelement'];
 	} else {
 		$htmlelement = 'role_main';
