@@ -95,7 +95,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 			if ( empty($params['_disabled']) ) {
 				if ( $params['_ajax'] === 'y' && $params['_script'] === '' ) {
 					require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
-					if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
+					if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'role_main';
 					if ( ! isset($params['_onclick']) ) $params['_onclick'] = '';
 					if ( ! isset($params['_template']) ) {
 						$params['_template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
