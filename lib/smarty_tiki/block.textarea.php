@@ -296,6 +296,7 @@ function CKeditor_OnComplete() {
 		
 		$smarty->assign_by_ref('pagedata', htmlspecialchars($content));
 		$smarty->assign('comments', isset($params['comments']) ? $params['comments'] : 'n');
+		$smarty->assign('switcheditor', isset($params['switcheditor']) ? $params['switcheditor'] : 'n');
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'
@@ -348,17 +349,26 @@ var editTimerWarnings = 0;
 
 		$js_editconfirm .= "
 function confirmExit() {
-	if (window.needToConfirm && typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
-		var version2 = (typeof CKeditor_OnComplete == 'undefined');
-		for(var ed = 0; ed < fckEditorInstances.length; ed++) {
-			if ((version2 && fckEditorInstances[ed].IsDirty()) || (!version2 && fckEditorInstances[ed].checkDirty())) {
-				window.editorDirty = true;
-				break;
+	if (window.needToConfirm) {
+		if (typeof fckEditorInstances != 'undefined' && fckEditorInstances.length > 0) {
+			var version2 = (typeof CKeditor_OnComplete == 'undefined');
+			for(var ed = 0; ed < fckEditorInstances.length; ed++) {
+				if ((version2 && fckEditorInstances[ed].IsDirty()) || (!version2 && fckEditorInstances[ed].checkDirty())) {
+					window.editorDirty = true;
+					break;
+				}
 			}
 		}
-	}
-	if (window.needToConfirm && window.editorDirty) {
-		return '".tra('You are about to leave this page. Changes since your last save will be lost. Are you sure you want to exit this page?')."';
+		if (typeof window.ckEditorInstances != 'undefined' && window.ckEditorInstances) {
+			for( var e = 0; e < window.ckEditorInstances.length; e++ ) {
+				if (window.ckEditorInstances[e].mayBeDirty && window.ckEditorInstances[e].checkDirty()) {
+					window.editorDirty = true;
+				}
+			}
+		}
+		if (window.editorDirty) {
+			return '".tra('You are about to leave this page. Changes since your last save will be lost. Are you sure you want to exit this page?')."';
+		}
 	}
 }
 
@@ -367,9 +377,9 @@ window.onbeforeunload = confirmExit;
 \$('document').ready( function() {
 	// attach dirty function to all relevant inputs etc for wiki/newsletters, blog, article and trackers (trackers need {teaxtarea} implementing)
 	if ('$as_id' === 'editwiki' || '$as_id' === 'blogedit' || '$as_id' === 'body' || '$as_id'.indexOf('area_') > -1) {
-		\$(\$('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!editorDirty) { editorDirty = true; } });
+		\$(\$('#$as_id').attr('form')).find('input, textarea, select').change( function () { if (!window.editorDirty) { window.editorDirty = true; } });
 	} else {	// modules admin exception, only attach to this textarea, although these should be using _simple mode
-		\$('#$as_id').change( function () { if (!editorDirty) { editorDirty = true; } });
+		\$('#$as_id').change( function () { if (!window.editorDirty) { window.editorDirty = true; } });
 	}
 });
 
