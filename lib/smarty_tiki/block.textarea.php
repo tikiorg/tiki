@@ -37,8 +37,10 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
 	}
 	
-	$params['rows'] = !empty($params['rows']) || ($prefs['wysiwyg_ckeditor'] === 'y' && $params['_wysiwyg'] === 'y') ? $params['rows'] : 20;
-	$params['cols'] = !empty($params['cols']) || ($prefs['wysiwyg_ckeditor'] === 'y' && $params['_wysiwyg'] === 'y') ? $params['cols'] : 80;
+	if ($prefs['wysiwyg_ckeditor'] !== 'y' || $params['_wysiwyg'] !== 'y') {
+		$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
+		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
+	}
 	$params['name'] = isset($params['name']) ? $params['name'] : 'edit';
 	$params['id'] = isset($params['id']) ? $params['id'] : 'editwiki';
 	$params['class'] = isset($params['class']) ? $params['class'] : 'wikiedit';
@@ -180,6 +182,7 @@ function FCKeditor_OnComplete( editorInstance ) {
 			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 			//// note, this breaks ajax page load via wikitopline edit icon
 			//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
+			global $tikiroot;
 			$headerlib->add_js_config('CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";');
 			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js', 'minified');
 			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 'minified');
@@ -191,7 +194,6 @@ function FCKeditor_OnComplete( editorInstance ) {
 			$cktools = str_replace(']],[[', '],"/",[', $cktools);	// add new row chars - done here so as not to break existing fck
 			
 			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
-			global $tikiroot;
 			$headerlib->add_jq_onready('
 CKEDITOR.config._TikiRoot = "'.$tikiroot.'";
 
