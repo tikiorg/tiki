@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /*
  * smarty_block_ajax_href creates the href for a link in Smarty accoring to AJAX prefs
  * 
- * Prams:
+ * Params:
  * 
  * 	template	-	template to load (e.g. tiki-admin.tpl)
  * 	htmlelement	-	destination div (usually) to load request into
@@ -38,7 +38,11 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     }
     $url = $content;
     $template = $params['template'];
-    $htmlelement = $params['htmlelement'];
+	if { !empty($params['htmlelement']) }
+		$htmlelement = $params['htmlelement'];
+	} else {
+		$htmlelement = 'role_main';
+	}
 	$def_func = (isset($params['scrollTo']) ? 'window.scrollTo('.$params['scrollTo'].');' : '') . 'loadComponent';
     $func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
     $last_user = htmlspecialchars($user);
