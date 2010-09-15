@@ -158,7 +158,7 @@
 		
 		{tab name="{tr}Import languages{/tr}"}
 			{if isset($impmsg)}
-				{$impmsg}
+				{remarksbox type="note" title="{tr}Note:{/tr}"}{$impmsg}{/remarksbox}
 			{/if}
 			<div class="adminoptionbox">
 				<label for="imp_language">{tr}Select the language to import{/tr}:</label>
@@ -170,6 +170,9 @@
 					{/section}
 				</select>
 			</div>
+			{remarksbox type="warning" title="{tr}Warning:{/tr}"}
+				{tr}Beware that when importing a language, all translations in the database for that language are deleted.{/tr}
+			{/remarksbox}
 			<div class="adminoptionbox">
 				<input type="submit" name="import" value="{tr}Import{/tr}" />
 			</div>
