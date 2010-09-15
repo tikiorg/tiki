@@ -17,7 +17,7 @@
            				 <a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}&action=dupl"><div class ="iconmenu" ><img src="pics/icons/layers.png" class="icon"/>Duplicate</div></a>
 						{/if}
           			{/if}
-          			{if $tiki_p_delete_kaltura_entry eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}
+          			{if $tiki_p_delete_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}
            				 <a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}&action=delete"><div class ="iconmenu" ><img src="pics/icons/cross.png" class="icon"/>Delete</div></a>
            			{/if}
           			
