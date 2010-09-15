@@ -64,7 +64,7 @@
 							{section name=it loop=$untranslated}
 								<tr>
 									<td>{tr}Original{/tr}:</td>
-									<td><input name="edit_rec_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=20 maxlength=255 disabled="disabled"></td>
+									<td><input name="edit_rec_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=20 maxlength=255 readonly="readonly"></td>
 									<td>{tr}Translation{/tr}:</td>
 									<td><input name="edit_rec_tran_{$smarty.section.it.index}" size=20 maxlength=255></td>
 									<td align="center"><input type="submit" name="edit_rec_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
@@ -94,7 +94,7 @@
 							{section name=it loop=$untranslated}
 								<tr>
 									<td>{tr}Original{/tr}:</td>
-									<td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=30 maxlength=255 disabled="disabled"/></td>
+									<td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=30 maxlength=255 readonly="readonly"/></td>
 									<td>{tr}Translation{/tr}:</td>
 									<td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]|escape}" size=42 maxlength=255 /></td>
 									<td align="center"><input type="submit" name="edt_tran_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
