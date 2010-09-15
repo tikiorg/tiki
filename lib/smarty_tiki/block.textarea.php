@@ -54,9 +54,9 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
 		$prefs['feature_template_zoom'] = 'n';
 	}
-	if ( ! isset($params['_section']) ) {
+	if ( ! isset($params['section']) ) {
 		global $section;
-		$params['_section'] = $section ? $section: 'wiki page';
+		$params['section'] = $section ? $section: 'wiki page';
 	}
 	if ( ! isset($params['style']) ) $params['style'] = 'width:99%';
 	$html = '';
@@ -137,7 +137,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			}
 			$fcked->Config['DefaultLanguage'] = $prefs['language'];
 			$fcked->Config['CustomConfigurationsPath'] = $url_path.'setup_fckeditor.php?page=' . $_REQUEST['page']
-						.(isset($params['_section']) ? '&section='.urlencode($params['_section']) : '');
+						.(isset($params['section']) ? '&section='.urlencode($params['section']) : '');
 			
 			// this JS needs to be there before the iframe always - at end of page is too late
 			
