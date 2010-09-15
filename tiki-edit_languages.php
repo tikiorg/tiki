@@ -21,6 +21,37 @@ if (!isset($_SESSION['interactive_translation_mode']))
 else
 	$smarty->assign('interactive_translation_mode',$_SESSION['interactive_translation_mode']);
 
+if (isset($_REQUEST["imp_language"])) {
+	$imp_language = preg_replace('/\.\./','',$_REQUEST['imp_language']);
+}
+
+// Import
+if (isset($_REQUEST["import"])) {
+	check_ticket('import-lang');
+	
+	// first delete each record from language db table where the lang matches (if any)
+	$query = "select `source` from `tiki_language` where `lang`=?";
+	$result = $tikilib->query($query, array($imp_language));
+	while ($res = $result->fetchRow()) {
+		$query = "delete from `tiki_language` where `lang`=?";
+		$result = $tikilib->query($query, array($imp_language));
+	}
+	
+	// now we can start the import
+	if (!isset(${"lang_$imp_language"})) {
+		init_language($imp_language);
+	}
+
+	$impmsg = tra("Imported:")." lang/$imp_language/language.php";
+
+	while (list($key, $val) = each(${"lang_$imp_language"})) {
+		$query = "insert into `tiki_language` (`source`, `lang`, `tran`) values (?,?,?)";
+		$result = $tikilib->query($query, array($key,$imp_language,$val), -1, -1, false);
+	}
+
+	$smarty->assign('impmsg', $impmsg);
+}
+
 // Get available languages
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
@@ -219,37 +250,6 @@ if (isset($_REQUEST["exp_language"])) {
 	$smarty->assign('exp_language', $exp_language);
 } else {
 	$smarty->assign('exp_language', $prefs['language']);
-}
-
-if (isset($_REQUEST["imp_language"])) {
-	$imp_language = preg_replace('/\.\./','',$_REQUEST['imp_language']);
-}
-
-// Import
-if (isset($_REQUEST["import"])) {
-	check_ticket('import-lang');
-	
-	// first delete each record from language db table where the lang matches (if any)
-	$query = "select `source` from `tiki_language` where `lang`=?";
-	$result = $tikilib->query($query, array($imp_language));
-	while ($res = $result->fetchRow()) {
-		$query = "delete from `tiki_language` where `lang`=?";
-		$result = $tikilib->query($query, array($imp_language));
-	}
-	
-	// now we can start the import
-	if (!isset(${"lang_$imp_language"})) {
-		init_language($imp_language);
-	}
-
-	$impmsg = tra("Imported:")." lang/$imp_language/language.php";
-
-	while (list($key, $val) = each(${"lang_$imp_language"})) {
-		$query = "insert into `tiki_language` (`source`, `lang`, `tran`) values (?,?,?)";
-		$result = $tikilib->query($query, array($key,$imp_language,$val), -1, -1, false);
-	}
-
-	$smarty->assign('impmsg', $impmsg);
 }
 
 // Export
