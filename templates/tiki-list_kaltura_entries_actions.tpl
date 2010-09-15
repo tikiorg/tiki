@@ -1,4 +1,4 @@
-{* $Id $ *}
+{* $Id: $ *}
 	{capture name=actions}{strip}
 		<div class='opaque'>
 			<div class='box-title'><b>{tr}Actions{/tr}</b></div>
