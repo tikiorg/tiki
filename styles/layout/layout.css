@@ -985,7 +985,7 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 	margin: 0 2% 0 0;
 }
 
-.wikipreview {
+#autosave_preview {
 	height: 30ex;
 	overflow-y: auto;
 	overflow-x: hidden;
