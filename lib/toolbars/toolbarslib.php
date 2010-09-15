@@ -1058,7 +1058,7 @@ CKEDITOR.plugins.add( '{$this->name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$this->name}', {
-			label : '{${addcslashes($this->label, "'")}}',
+			label : '{$this->label}',
 			command : '{$this->name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
@@ -1161,7 +1161,7 @@ CKEDITOR.plugins.add( '{$name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$name}', {
-			label : '{${addcslashes($this->label, "'")}}',
+			label : '{$this->label}',
 			command : '{$name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
@@ -1217,7 +1217,7 @@ CKEDITOR.plugins.add( '{$this->name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$this->name}', {
-			label : '{${addcslashes($this->label, "'")}}',
+			label : '{$this->label}',
 			command : '{$this->name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
@@ -1275,7 +1275,7 @@ CKEDITOR.plugins.add( '{$this->name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$this->name}', {
-			label : '{${addcslashes($this->label, "'")}}',
+			label : '{$this->label}',
 			command : '{$this->name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
