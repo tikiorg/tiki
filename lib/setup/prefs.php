@@ -743,6 +743,8 @@ function get_default_prefs() {
 		'user_trackersync_trackers' => '',
 		'user_trackersync_realname' => '',
 		'user_trackersync_geo' => 'n',
+		'user_trackersync_groups' => 'n',
+		'user_trackersync_parentgroup' => -1,
 		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',

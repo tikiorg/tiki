@@ -6,6 +6,25 @@
 // $Id$
 
 function prefs_user_list() {
+	
+	global $prefs;
+	
+	$catree = array();
+
+	if ($prefs['feature_categories'] == 'y') {
+		global $categlib;
+
+		include_once ('lib/categories/categlib.php');
+		$all_categs = $categlib->get_all_categories();
+
+		$catree['-1'] = tra('None');
+		$catree['0'] = tra('All');
+
+		foreach ($all_categs as $categ) {
+			$catree[$categ['categId']] = $categ['categpath'];
+		}
+	}
+	
 	return array(
 		'user_show_realnames' => array(
 			'name' => tra('Show user\'s real name instead of login (when possible)'),
@@ -134,6 +153,27 @@ function prefs_user_list() {
 				'user_trackersync_trackers',
 				'feature_ajax',
 				'feature_gmap',
+			),
+		),
+		'user_trackersync_groups' => array(
+			'name' => tra('Synchronize categories of user tracker item to user groups'),
+			'description' => tra('Will add the user tracker item to the category of the same name as the user groups and vice versa'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'userTracker',
+				'user_trackersync_trackers',
+				'feature_categories',
+			),
+		),
+		'user_trackersync_parentgroup' => array(
+			'name' => tra('Put user in group only if categorized within'),
+			'type' => 'list',
+			'options' => $catree,
+			'dependencies' => array(
+				'userTracker',
+				'user_trackersync_trackers',
+				'user_trackersync_groups',
+				'feature_categories',
 			),
 		),
 		'user_selector_threshold' => array(

@@ -1915,6 +1915,27 @@ class TrackerLib extends TikiLib
 				$tikilib->set_user_preference($trackersync_user, 'zoom', $trackersync_zoom);
 			}
 		}
+		if ($trackersync && $prefs['user_trackersync_groups'] == 'y') {
+			if (empty($trackersync_user)) {
+				$trackersync_user = $user;
+			}
+			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup'], true);
+			$sig_add = array_intersect($sig_catids, $new_categs);
+			$sig_del = array_intersect($sig_catids, $del_categs);
+			$groupList = $userlib->list_all_groups();
+			foreach ($sig_add as $c) {
+				$groupName = $categlib->get_category_name($c, true);
+				if (in_array($groupName, $groupList)) {
+					$userlib->assign_user_to_group($trackersync_user, $groupName);
+				}
+			}
+			foreach ($sig_del as $c) {
+				$groupName = $categlib->get_category_name($c, true);
+				if (in_array($groupName, $groupList)) {
+					$userlib->remove_user_from_group($trackersync_user, $groupName);
+				}
+			}
+		}
 		if (!empty($parsed)) {
 			$this->object_post_save( array('type'=>'trackeritem', 'object'=>$itemId, 'name' => "Tracker Item $itemId", 'href'=>"tiki-view_tracker_item.php?itemId=$itemId"), array( 'content' => $parsed ));
 		}
