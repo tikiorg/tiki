@@ -1084,6 +1084,8 @@ function get_default_prefs() {
 		'gmap_defaulty' => '0',
 		'gmap_defaultz' => '1',
 		'gmap_key' => '',
+		'gmap_article_list' => 'n',
+		'gmap_page_list' => 'n',
 
 		// auth
 		'allowRegister' => 'n',

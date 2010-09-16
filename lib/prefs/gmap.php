@@ -52,5 +52,19 @@ function prefs_gmap_list() {
 				20 => tra('max zoom'),
 			)
 		),
+		'gmap_article_list' => array(
+			'name' => tra('Show map mode buttons in articles list'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_gmap',
+			),
+		),
+		'gmap_page_list' => array(
+			'name' => tra('Show map mode buttons in page list'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_gmap',
+			),
+		),
 	);	
 }
