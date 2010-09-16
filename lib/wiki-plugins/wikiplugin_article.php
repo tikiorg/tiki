@@ -60,7 +60,7 @@ function wikiplugin_article($data, $params) {
 	} 
 
 	if ($tiki_p_admin_cms == 'y' || $tikilib->user_has_perm_on_object($user, $articleId, 'article', 'tiki_p_edit_article') || ($article_data["author"] == $user && $article_data["creator_edit"] == 'y')) {
-	      $add="&nbsp;<a href='tiki-edit_article.php?articleId=$Id'><img src='/pics/icons/page_edit.png' style='border:0px;'></a>";
+	      $add="&nbsp;<a href='tiki-edit_article.php?articleId=$Id'><img src='pics/icons/page_edit.png' style='border:0px;'></a>";
 	} else {
 	      $add="";
 	}
