@@ -45,6 +45,10 @@ if (isset($_REQUEST['editor_id'])) {
 		} else if ($_REQUEST['command'] == 'toHtmlFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
 			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']));
+		} else if ($_REQUEST['command'] == 'toHTMLSource') {
+			global $editlib; include_once 'lib/wiki/editlib.php';
+			$res = $editlib->partialParseWysiwygToWiki(urldecode($_REQUEST['data']));
+			$res = html_entity_decode($res, ENT_COMPAT, 'UTF-8');
 		} else if ($_REQUEST['command'] == 'auto_save') {
 			include_once 'lib/ajax/autosave.php';
 			$res = auto_save( $_REQUEST['editor_id'], $_REQUEST['data'], $_REQUEST['referer'] );
