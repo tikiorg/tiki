@@ -44,8 +44,6 @@ RewriteEngine On
 #If your website is a checkout
 RewriteRule	^\.svn/	-	[F,L]
 
-RewriteRule fr\/toto.php	http://localhost/test/tikiwikitrunk/tiki-index.php [QSA,L]
-RewriteRule fr/promo/soiree_info_carrieres.asp	http://localhost/test/tikiwikitrunk/Soirees+info [QSA,L]
 # If the URL points to a file then do nothing
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
