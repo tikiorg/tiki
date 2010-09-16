@@ -66,6 +66,16 @@ function wikiplugin_include_info() {
 				'name' => tra('Stop'),
 				'description' => tra('When only a portion of the page should be included, specify the marker at which inclusion should end.'),
 			),
+			'nopage_text' => array(
+				'required' => false,
+				'name' => tra('Nopage Text'),
+				'description' => tra('Text to show when no page is found.'),
+			),
+			'pagedenied_text' => array(
+				'required' => false,
+				'name' => tra('Page Denied Text'),
+				'description' => tra('Text to show when the page exists but is denied to the user.'),
+			),
 		),
 	);
 }
@@ -75,7 +85,8 @@ function wikiplugin_include($data, $params) {
     static $included_pages, $data;
 
 	$max_times = 5;
-    extract ($params,EXTR_SKIP);
+	$params = array_merge( array( 'nopage_text' => '', 'pagedenied_text' => '' ), $params );
+	extract ($params,EXTR_SKIP);
 	if (!isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br />");
 	}
@@ -92,12 +103,13 @@ function wikiplugin_include($data, $params) {
         // only evaluate permission the first time round
         // evaluate if object or system permissions enables user to see the included page
     	$data = $tikilib->get_page_info($page);
-	$perms = $tikilib->get_perm_object($page, 'wiki page', $data, false);
+    	if (!$data) {
+    		return $nopage_text;
+    	}
+		$perms = $tikilib->get_perm_object($page, 'wiki page', $data, false);
         if ($perms['tiki_p_view'] != 'y') {
             $included_pages[$memo] = $max_times;
-    //		I think is safer to show nothing instead of a message saying that a page can't be accessed
-    //		$text="<b>User $user has no permission to access $page</b><br />";
-            $text="";
+            $text = $pagedenied_text;
             return($text);
         }
     }
