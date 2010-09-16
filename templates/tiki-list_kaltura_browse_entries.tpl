@@ -1,5 +1,5 @@
 {* $Id$ *}
-{jq}
+{jq notonready=true}
 	function loadMedia(entryId) {
 		$('#mykdp').get(0).insertMedia("-1",entryId,'true');
 	}
