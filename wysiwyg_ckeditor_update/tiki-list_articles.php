@@ -10,6 +10,17 @@ include_once ('lib/articles/artlib.php');
 $smarty->assign('headtitle', tra('List Articles'));
 $access->check_feature('feature_articles');
 $access->check_permission('tiki_p_read_article');
+if ($prefs["gmap_article_list"] == 'y') {
+	$smarty->assign('gmapbuttons', true);
+} else {
+	$smarty->assign('gmapbuttons', false);
+}
+if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'y' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"])) {
+	$smarty->assign('mapview', true);
+}
+if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'n' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchlist"]) && !isset($_REQUEST["searchmap"]) ) {
+	$smarty->assign('mapview', false);
+}
 if (isset($_REQUEST["remove"])) {
 	$artperms = Perms::get( array( 'type' => 'article', 'object' => $_REQUEST['remove'] ) );
 
@@ -119,6 +130,19 @@ $listpages = $artlib->list_articles($offset, $maxRecords, $sort_mode, $find, $da
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('cant', $listpages['cant']);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
+
+if ($prefs["gmap_article_list"] == 'y') {
+	// Generate Google map plugin data
+	global $gmapobjectarray;
+	$gmapobjectarray = array();
+	foreach ($listpages["data"] as $art) {
+		$gmapobjectarray[] = array('type' => 'article',
+			'id' => $art["articleId"],
+			'title' => $art["title"],
+			'href' => 'tiki-read_article.php?articleId=' . $art["articleId"],
+		);
+	}
+}
 
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);

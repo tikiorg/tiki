@@ -17,6 +17,10 @@
 	{include file='find.tpl' find_show_languages='y' find_show_categories_multi='y' find_show_num_rows='y' find_show_date_range='y'}
 {/if}
 
+{if $mapview}
+{wikiplugin _name="googlemap" type="objectlist" width="400" height="400"}{/wikiplugin}
+{/if}
+
 {assign var=numbercol value=1}
 <table class="normal">
 	<tr>

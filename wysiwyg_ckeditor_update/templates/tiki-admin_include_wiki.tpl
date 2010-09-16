@@ -298,6 +298,7 @@
 		{preference name=feature_lastChanges}
 		{preference name=feature_listorphanPages}
 		{preference name=feature_listorphanStructure}
+		{preference name=gmap_page_list}
 
 		<div class="adminoptionbox">
 			<fieldset>

@@ -66,6 +66,16 @@ function wikiplugin_include_info() {
 				'name' => tra('Stop'),
 				'description' => tra('When only a portion of the page should be included, specify the marker at which inclusion should end.'),
 			),
+			'nopage_text' => array(
+				'required' => false,
+				'name' => tra('Nopage Text'),
+				'description' => tra('Text to show when no page is found.'),
+			),
+			'pagedenied_text' => array(
+				'required' => false,
+				'name' => tra('Page Denied Text'),
+				'description' => tra('Text to show when the page exists but is denied to the user.'),
+			),
 		),
 	);
 }
@@ -75,7 +85,8 @@ function wikiplugin_include($data, $params) {
     static $included_pages, $data;
 
 	$max_times = 5;
-    extract ($params,EXTR_SKIP);
+	$params = array_merge( array( 'nopage_text' => '', 'pagedenied_text' => '' ), $params );
+	extract ($params,EXTR_SKIP);
 	if (!isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br />");
 	}
@@ -92,65 +103,81 @@ function wikiplugin_include($data, $params) {
         // only evaluate permission the first time round
         // evaluate if object or system permissions enables user to see the included page
     	$data = $tikilib->get_page_info($page);
-	$perms = $tikilib->get_perm_object($page, 'wiki page', $data, false);
+    	if (!$data) {
+    		$text = $nopage_text;
+    	}
+		$perms = $tikilib->get_perm_object($page, 'wiki page', $data, false);
         if ($perms['tiki_p_view'] != 'y') {
             $included_pages[$memo] = $max_times;
-    //		I think is safer to show nothing instead of a message saying that a page can't be accessed
-    //		$text="<b>User $user has no permission to access $page</b><br />";
-            $text="";
+            $text = $pagedenied_text;
             return($text);
         }
     }
 
-
-	$text = $data['data'];
-	if (isset($start) || isset($stop)) {
-		$explText = explode("\n", $text);
-		if (isset($start) && isset($stop)) {
-			$state = 0;
-			foreach ($explText as $i => $line) {
-				if ($state == 0) {
-					// Searching for start marker, dropping lines until found
-					unset($explText[$i]);	// Drop the line
+	if ($data) {
+		$text = $data['data'];
+		if (isset($start) || isset($stop)) {
+			$explText = explode("\n", $text);
+			if (isset($start) && isset($stop)) {
+				$state = 0;
+				foreach ($explText as $i => $line) {
+					if ($state == 0) {
+						// Searching for start marker, dropping lines until found
+						unset($explText[$i]);	// Drop the line
+						if (0 == strcmp($start, trim($line))) {
+							$state = 1;	// Start retaining lines and searching for stop marker
+						}
+					} else {
+						// Searching for stop marker, retaining lines until found
+						if (0 == strcmp($stop, trim($line))) {
+							unset($explText[$i]);	// Stop marker, drop the line
+							$state = 0; 		// Go back to looking for start marker
+						}
+					}
+				}
+			} else if (isset($start)) {
+				// Only start marker is set. Search for it, dropping all lines until
+				// it is found.
+				foreach ($explText as $i => $line) {
+					unset($explText[$i]); // Drop the line
 					if (0 == strcmp($start, trim($line))) {
-						$state = 1;	// Start retaining lines and searching for stop marker
-					}
-				} else {
-					// Searching for stop marker, retaining lines until found
-					if (0 == strcmp($stop, trim($line))) {
-						unset($explText[$i]);	// Stop marker, drop the line
-						$state = 0; 		// Go back to looking for start marker
+						break;
 					}
 				}
-			}
-		} else if (isset($start)) {
-			// Only start marker is set. Search for it, dropping all lines until
-			// it is found.
-			foreach ($explText as $i => $line) {
-				unset($explText[$i]); // Drop the line
-				if (0 == strcmp($start, trim($line))) {
-					break;
-				}
-			}
-		} else {
-			// Only stop marker is set. Search for it, dropping all lines after
-			// it is found.
-			$state = 1;
-			foreach ($explText as $i => $line) {
-				if ($state == 0) {
-					// Dropping lines
-					unset($explText[$i]);
-				} else {
-					// Searching for stop marker, retaining lines until found
-					if (0 == strcmp($stop, trim($line))) {
-						unset($explText[$i]);	// Stop marker, drop the line
-						$state = 0; 		// Start dropping lines
+			} else {
+				// Only stop marker is set. Search for it, dropping all lines after
+				// it is found.
+				$state = 1;
+				foreach ($explText as $i => $line) {
+					if ($state == 0) {
+						// Dropping lines
+						unset($explText[$i]);
+					} else {
+						// Searching for stop marker, retaining lines until found
+						if (0 == strcmp($stop, trim($line))) {
+							unset($explText[$i]);	// Stop marker, drop the line
+							$state = 0; 		// Start dropping lines
+						}
 					}
 				}
-			}
-		}	
-		$text = implode("\n", $explText);
+			}	
+			$text = implode("\n", $explText);
+		}
 	}
-	$tikilib->parse_wiki_argvariable($text);
-	return $text;
+	$text = $tikilib->parse_data($text, array('suppress_icons' => true));	// don't show edit icons (they don't work on included pages - yet)
+	// append an edit button
+	if ($perms['tiki_p_edit'] === 'y') {
+		global $smarty;
+		require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
+		require_once $smarty->_get_plugin_filepath('function', 'icon');
+		$text .= '<a class="editplugin" title="'.tra('Edit this page').'" '.	// ironically smarty_block_self_link doesn't work for this! ;)
+				smarty_block_ajax_href( array('template' => 'tiki-editpage.tpl'), 'tiki-editpage.php?page='.urlencode($page).'&returnto='.urlencode($GLOBALS['page']),$smarty) .
+				smarty_function_icon(array( '_id' => 'page_edit', 'alt' => tra('Edit this page')), $smarty) . '</a>';
+	}
+	if ($tikilib->contains_html_block($text)) {	// add an identifying wrapper element
+		$text = '<div class="wikiplugin_include" id="plugin_include_' . $offset . '">' . $text . '</div>';
+	} else {
+		$text = '<span class="wikiplugin_include" id="plugin_include_' . $offset . '">' . $text . '</span>';
+	} 
+	return '~np~' . $text . '~/np~';			// wrap in noparse tags as it already has been
 }

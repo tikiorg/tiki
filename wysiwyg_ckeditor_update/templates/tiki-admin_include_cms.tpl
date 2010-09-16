@@ -107,6 +107,8 @@
 				{preference name=art_list_reads}
 				{preference name=art_list_size}
 				{preference name=art_list_img}
+				
+				{preference name=gmap_article_list}
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Article View{/tr}</legend>

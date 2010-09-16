@@ -22,6 +22,11 @@
 				{preference name=gmap_defaulty}
 				{preference name=gmap_defaultz}
 		</fieldset>	
+		<fieldset>
+			<legend>{tr}Map mode in listings{/tr}</legend>
+				{preference name=gmap_article_list}
+				{preference name=gmap_page_list}
+		</fieldset>	
 	</fieldset>	
 	<div class="heading input_submit_container" style="text-align: center">
 		<input type="submit" value="{tr}Change preferences{/tr}" />

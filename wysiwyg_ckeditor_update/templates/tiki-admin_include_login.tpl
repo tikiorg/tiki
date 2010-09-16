@@ -68,6 +68,8 @@
 				{preference name=user_trackersync_trackers}
 				{preference name=user_trackersync_realname}
 				{preference name=user_trackersync_geo}
+				{preference name=user_trackersync_groups}
+				{preference name=user_trackersync_parentgroup}
 				</div>
 				{preference name=groupTracker}
 				{preference name=email_due}

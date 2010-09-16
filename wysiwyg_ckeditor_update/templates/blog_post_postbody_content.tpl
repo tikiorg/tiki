@@ -3,7 +3,7 @@
 	<div class="postbody-content postbody-excerpt">
 	{$post_info.excerpt}
 	</div>
-	<a href="{$post_info.postId|sefurl:blogpost}">{tr}Read more{/tr}</a>
+	{self_link _script=$post_info.postId|sefurl:blogpost _noauto='y'}{tr}Read more{/tr}{/self_link}
 {else}
 	<div class="postbody-content">
 		{$post_info.parsed_data}

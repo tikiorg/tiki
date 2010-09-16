@@ -30,7 +30,7 @@ function smarty_modifier_duration($string, $long=true, $maxLevel=false)
 	$result = array();
 
 	// maxLevel defines the maximum unit to be consider (e.g. $maxLevel = 'hour')
-	if (is_string($maxLevel) && $level = array_search($maxLevel, $output)) {
+	if (is_string($maxLevel) && $level = array_search(tra($maxLevel), $output)) {
 		$values = array_slice($values, $level);
 		$output = array_slice($output, $level);
 		$outputs = array_slice($outputs, $level);
