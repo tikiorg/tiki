@@ -103,6 +103,7 @@
 			<fieldset>
 				<legend>{tr}Username{/tr}</legend>
 				{preference name=login_is_email mode=invert}
+				{preference name=login_is_email_obscure}
 				<div class="adminoptionboxchild" id="login_is_email_childcontainer">
 					{preference name=min_username_length}
 					{preference name=max_username_length}

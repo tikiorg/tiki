@@ -29,32 +29,33 @@ function auto_save_log($id, $referer = '', $action = '') {
 	file_put_contents('temp/cache/auto_save-log-'.(auto_save_name($id, $referer, true)), $user.' : '.ensureReferrer($referer)." : $id : $action\n", FILE_APPEND);
 }
 
+/**
+ * @param string $id		editor id
+ * @param string $data		content to save
+ * @param string $referer	textarea specifier (user:section:item)
+ * @return number			bytes that were written to the file, or false on failure
+ */
 function auto_save($id, $data, $referer = '') {
 //	auto_save_log($id, $referer, 'auto_save');
 	$result = file_put_contents(auto_save_name($id, $referer), rawurldecode($data));
-//	return new xajaxResponse();
-	header( 'Content-Type:text/xml; charset=UTF-8' );	// TODO refactor
-	echo '<?xml version="1.0" encoding="UTF-8"?>';
-	echo '<adapter command="auto_save">';
-	echo '<data><![CDATA[' .  $result . ']]></data>';
-	echo '</adapter>';
-	exit;
+	return $result;
 }
 
+/**
+ * @param string $id		editor id
+ * @param string $referer	textarea specifier (user:section:item)
+ * @return bool				true on success or false on failure
+ */
 function remove_save($id, $referer = '') {
 	$referer = ensureReferrer($referer);
 //	auto_save_log($id, $referer, 'remove_save');
 	$file_name = auto_save_name($id, $referer);
 	if (file_exists($file_name)) {
 		$result = unlink($file_name);
+	} else {
+		$result = false;
 	}
-//	return new xajaxResponse();
-	header( 'Content-Type:text/xml; charset=UTF-8' );	// TODO refactor
-	echo '<?xml version="1.0" encoding="UTF-8"?>';
-	echo '<adapter command="auto_remove">';
-	echo '<data><![CDATA[' .  $result  . ']]></data>';
-	echo '</adapter>';
-	exit;
+	return $result;
 }
 
 function has_autosave($id, $referer = '') {

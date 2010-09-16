@@ -1,9 +1,16 @@
 {* $Id$ *}
 <input type="hidden" name="no_bl" value="y" />
 {if $prefs.ajax_autosave eq "y"}
-	{button _title="{tr}Preview your changes in a separate window.{/tr}" _class="wikiaction tips" _text="{tr}Live Preview{/tr}" _ajax="n" _onclick="ajax_preview(); return false;"}&nbsp;&nbsp;
+	{button _title="{tr}Preview your changes.{/tr}" _class="wikiaction tips" _text="{tr}Preview{/tr}" _ajax="n" _id="previewBtn"}
+	{jq} $("#previewBtn").click(function(){
+auto_save_data['editwiki'] = "";
+auto_save('editwiki', autoSaveId);
+$('#autosave_preview').slideToggle('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
+return false;
+}){/jq}
+{else}
+	<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 {/if}
-<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 	{if ! $page_badchars_display or $prefs.wiki_badchar_prevent neq 'y'}
 		{if $translation_mode eq 'y'}

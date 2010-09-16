@@ -151,7 +151,7 @@ class TWVersion
 		$upgrade = 0;
 		$major = 0;
 		$velements = explode('.', $this->version);
-		$body = $tikilib->httprequest("tikiwiki.org/" . $this->branch . '.version'); // .version contains an ordered list of release numbers, one per line. All minor releases from a same major release are grouped.
+		$body = $tikilib->httprequest("tiki.org/" . $this->branch . '.version'); // .version contains an ordered list of release numbers, one per line. All minor releases from a same major release are grouped.
 		$lines = explode("\n", $body);
 		$this->isLatestMajorVersion = true;
 		foreach ($lines as $line) {

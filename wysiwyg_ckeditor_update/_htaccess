@@ -148,6 +148,8 @@ RewriteRule ^(.+)$                 tiki-index.php?page=$1                   [QSA
 # to activate the error display, uncomment the following line
 #php_flag display_errors on
 
+# increase memory
+#php_value memory_limit 128M
 
 # if you want to use the Web Server Auth
 #AuthType Basic

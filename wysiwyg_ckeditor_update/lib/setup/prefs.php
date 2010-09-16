@@ -725,6 +725,8 @@ function get_default_prefs() {
 
 		// user
 		'user_selector_threshold' => 50,
+		'user_selector_realnames_tracker' => 'n',
+		'user_selector_realnames_messu' => 'n',
 		'feature_userlevels' => 'n',
 		'userlevels' => function_exists('tra') ? array('1'=>tra('Simple'),'2'=>tra('Advanced')) : array('1'=>'Simple','2'=>'Advanced'),
 		'userbreadCrumb' => 4,
@@ -775,6 +777,7 @@ function get_default_prefs() {
 		'change_language' => 'y',
 		'change_theme' => 'n',
 		'login_is_email' => 'n',
+		'login_is_email_obscure' => 'n',
 		'validateUsers' => 'y',
 		'validateEmail' => 'n',
 		'forgotPass' => 'y',

@@ -64,6 +64,12 @@ if (isset($_REQUEST['send'])) {
 	$arr_to = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['to']);
 	$arr_cc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['cc']);
 	$arr_bcc = preg_split('/\s*(?<!\\\);\s*/', $_REQUEST['bcc']);
+	if ($prefs['user_selector_realnames_messu'] == 'y') {
+		$groups = '';
+		$arr_to = $userlib->find_best_user($arr_to, $groups, 'login');
+		$arr_cc = $userlib->find_best_user($arr_cc, $groups);
+		$arr_bcc = $userlib->find_best_user($arr_bcc, $groups);
+	}
 	// Remove invalid users from the to, cc and bcc fields
 	$users = array();
 	foreach($arr_to as $a_user) {

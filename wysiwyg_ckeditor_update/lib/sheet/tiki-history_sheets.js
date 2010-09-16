@@ -1,15 +1,15 @@
-/**
- * TikiSheet Client-side grid manipulation for viewing history.
- * By Robert Plummer
- * 2010
- */
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id:
 
 $(function () {
 	$('#compareSheetsSubmit').click(function() {
 		var sheetId = $('#sheetId').val();
 		var sheetReadDates = '';
 		
-		$('input.compareSheet:checked').each(function() {
+		$('input.compareSheet1:checked,input.compareSheet2:checked').each(function() {
 			sheetReadDates += $(this).val() + '|';
 		});
 		
@@ -20,20 +20,4 @@ $(function () {
 		
 		return false;
 	});
-	
-	
 });
-
-function scrollLocker(obj, I) {
-	$($.sheet.instance).each(function(i) {
-		this.obj.pane()
-			.scrollLeft(obj.scrollLeft())
-			.scrollTop(obj.scrollTop());
-	});
-}
-
-function tabLocker(I) {
-	$($.sheet.instance).each(function(i) {
-		this.setActiveSheet(I);
-	});
-}

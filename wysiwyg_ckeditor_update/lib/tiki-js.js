@@ -358,7 +358,7 @@ function getTASelection( textarea ) {
 	var ta_id = $(textarea).attr("id"), r, cked;
 	if ($('#cke_contents_' + ta_id).length !== 0) {
 		// get selection from ckeditor
-		cked = CKEDITOR.instances[ta_id];
+		cked = typeof CKEDITOR !== 'undefined' ? CKEDITOR.instances[ta_id] : null;
 		if (cked) {
 			var sel = cked.getSelection();
 			if (sel.getType() === CKEDITOR.SELECTION_TEXT) {	// why so fiddly?
@@ -450,7 +450,7 @@ function getCaretPos (textarea) {
 function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelection) {
 	
 	// inserts given text at selection or cursor position
-	$textarea = $('#' + elementId);
+	var $textarea = $('#' + elementId);
 	var toBeReplaced = /text|page|area_id/g; //substrings in replaceString to be replaced by the selection if a selection was done
 	var hiddenParents = $textarea.parents('fieldset:hidden:last');
 	if (hiddenParents.length) { hiddenParents.show(); }
@@ -458,28 +458,54 @@ function insertAt(elementId, replaceString, blockLevel, perLine, replaceSelectio
 	// get ckeditor handling out of the way - can only be simple text insert for now
 	if ($('#cke_contents_' + elementId).length !== 0) {
 		// get selection from ckeditor
-		cked = CKEDITOR.instances[elementId];
+		var cked = typeof CKEDITOR !== 'undefined' ? CKEDITOR.instances[elementId] : null;
 		if (cked) {
-			var sel = cked.getSelection();
-			var com = sel.getCommonAncestor();
-			// special handling for plugin form inserts
-			if (!com.getAttribute) {
-				com = com.getParent();
+			var isPlugin = replaceString.match(/^\s?\{/m);		// do match in two halves due to multiline problems
+			if (isPlugin) {
+				isPlugin = replaceString.match(/\}\s?$/m);		// not so simple {plugin} match
 			}
-			if (com.getAttribute && com.getAttribute("plugin")) {
-				com.$.innerText = replaceString;
-				cked.reParse();
-				return;
+			isPlugin = isPlugin && isPlugin.length > 0;
+
+			var sel = cked.getSelection();
+			var plugin_el;
+			if (isPlugin) {
+				com = cked.getSelection().getStartElement();
+				while (com.$.nextSibling && !$(com.$).hasClass("tiki_plugin") && $(com.$).find(".tiki_plugin").length === 0) {
+					com = new CKEDITOR.dom.element(com.$.nextSibling);
+				}
+				if (!$(com.$).hasClass("tiki_plugin")) {	// not found it yet?
+					plugin_el = $(com.$).find(".tiki_plugin"); // using jQuery
+					if (plugin_el.length == 1) { // found descendant plugin
+						com = new CKEDITOR.dom.element(plugin_el[0]);
+					} else if (sel.getType() !== CKEDITOR.SELECTION_TEXT) {	// element selected, but we can't tell which one
+						plugin_el = $(com.$).parents(".tiki_plugin"); // try parents
+						if (plugin_el.length == 1) { // found p plugin
+							com = new CKEDITOR.dom.element(plugin_el[0]);
+							
+						} else {	// still not found it? sometimes Fx seems to get the editor body as the selection...
+							var plugin_type = replaceString.match(/^\s?\{([\w]+)/);
+							if (plugin_type.length > 1) { plugin_type = plugin_type[1].toLowerCase(); }
+							
+							plugin_el = $(com.$).find("[plugin=" + plugin_type + "].tiki_plugin");	// find all of them
+							if (plugin_el.length == 1) {	// good guess!
+								com = new CKEDITOR.dom.element(plugin_el[0]);
+							} else {
+								if (!confirm(tr("Development notice: Could not find plugin being edited, sorry. Choose cancel to debug."))) {
+									debugger;
+								}
+							}
+						}
+					}
+				}
+				if ($(com.$).hasClass("tiki_plugin")) {
+					$(com.$).replaceWith(document.createTextNode(replaceString));
+					cked.reParse();
+					return;
+				}
 			}
 			if (sel.getType() === CKEDITOR.SELECTION_TEXT) { // why so fiddly?
-				var r = sel.getRanges();
-				if (r.length && !r[0].collapsed) { // selected over more than on element - wa?  && r.startContainer == r.endContainer
-					var t = r[0].startContainer.$.textContent;
-					//return t.substring(r[0].startOffset, r[0].endOffset);
-				}
 				cked.insertText( replaceString );
-				if (replaceString.match(/^\s?\{.*?\}\s?$/) ||		// simple {plugin} match
-					replaceString.match(/^\s?\(\(.*?\)\)\s?$/)) {	// ((wiki links))
+				if (isPlugin || replaceString.match(/^\s?\(\(.*?\)\)\s?$/)) {	// also ((wiki links))
 					cked.reParse();
 				}
 			}
@@ -765,6 +791,9 @@ function setCookie(name, value, section, expires, path, domain, secure) {
 		expires = new Date();
 		expires.setFullYear(expires.getFullYear() + 1);
 	}
+	if (expires === "session") {
+		expires = "";
+	}
 	if (feature_no_cookie == 'y') {
 		var request = getHttpRequest( "GET", "tiki-cookie-jar.php?" + name + "=" + escape( value ) );
 		try {
@@ -977,7 +1006,7 @@ setCookie("local_tz", local_tz, null, expires, "/");
 //function added for use in navigation dropdown
 //example :
 //<select name="anything" onchange="go(this);">
-//<option value="http://tikiwiki.org">tikiwiki.org</option>
+//<option value="http://tiki.org">tiki.org</option>
 //</select>
 function go(o) {
 	if (o.options[o.selectedIndex].value !== "") {
@@ -1373,7 +1402,7 @@ function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 
 	for( extraArg in potentiallyExtraPluginArgs) {
 		if (extraArg === '') {
-			// TODO HACK: See bug 2499 http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2499
+			// TODO HACK: See bug 2499 http://dev.tiki.org/tiki-view_tracker_item.php?itemId=2499
 			continue;
 		}
 
@@ -1787,6 +1816,18 @@ function open_webdav(url) {
 		EditDocumentButton.EditDocument(url); 
 	} else {
 		alert('Sorry Works only in IE :(');
+	}
+}
+
+function ccsValueToInteger(str) {
+	var v = str.replace(/[^\d]*$/, "");
+	if (v) {
+		v = parseInt(v, 10);
+	}
+	if (isNaN(v)) {
+		return 0;
+	} else {
+		return v;
 	}
 }
 

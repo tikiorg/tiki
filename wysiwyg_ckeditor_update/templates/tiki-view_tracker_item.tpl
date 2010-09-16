@@ -218,10 +218,10 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 <td class="formcontent">&nbsp;</td>
 <td colspan="3" class="formcontent">
 {if count($fields) >= 5}
-<input type="submit" name="save" value="{tr}Save{/tr}" />
+<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
 {* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
-<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items list{/tr}" />
+<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items list{/tr}" onclick="needToConfirm=false" />
 {if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>{/if}
 {/if}
 {/if}
@@ -291,9 +291,16 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 	{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $users|@count > $prefs.user_selector_threshold and $cur_field.isMandatory ne 'y'}
 {* this is jquery entry field for performance enhancement - since it allows blank entry it can't be used for mandatory user selection. *}
 <input id="user_selector_{$cur_field.id}" type="text" size="20" name="ins_{$cur_field.id}" value="{if $cur_field.options_array[0] eq '2'}{$user}{else}{$cur_field.value}{/if}" />
+{if $prefs.user_selector_realnames_tracker == 'y'}
+{jq}
+$("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "userrealname", {mustMatch: true});
+{/jq}
+{else}
 {jq}
 $("#user_selector_{{$cur_field.id}}").tiki("autocomplete", "username", {mustMatch: true});
 {/jq}
+{/if}
+
 
 	{else}
 
@@ -527,10 +534,10 @@ or $cur_field.type eq 'i'}
 {include file='antibot.tpl'}
 {/if}
 <tr><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
-<input type="submit" name="save" value="{tr}Save{/tr}" />
+<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false" />
 {* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
-<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items List{/tr}" />
+<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items List{/tr}" onclick="needToConfirm=false" />
 {/if}
 {if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}
 	<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>

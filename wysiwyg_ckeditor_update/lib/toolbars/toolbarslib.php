@@ -1047,10 +1047,10 @@ class ToolbarDialog extends Toolbar
 			global $headerlib;
 			$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
 			$headerlib->add_jq_onready(<<< JS
-CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-CKEDITOR.plugins.add( '{$this->name}', {
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+window.CKEDITOR.plugins.add( '{$this->name}', {
 	init : function( editor ) {
-		var command = editor.addCommand( '{$this->name}', new CKEDITOR.command( editor , {
+		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
 			modes: { wysiwyg:1 },
 			exec: function(elem, editor, data) {
 				{$this->getSyntax( $areaId )}
@@ -1058,7 +1058,7 @@ CKEDITOR.plugins.add( '{$this->name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$this->name}', {
-			label : '{${addcslashes($this->label, "'")}}',
+			label : '{$this->label}',
 			command : '{$this->name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
@@ -1149,10 +1149,10 @@ class ToolbarHelptool extends Toolbar
 		
 		global $headerlib;
 		$headerlib->add_jq_onready(<<< JS
-CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
-CKEDITOR.plugins.add( '{$name}', {
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
+window.CKEDITOR.plugins.add( '{$name}', {
 	init : function( editor ) {
-		var command = editor.addCommand( '{$name}', new CKEDITOR.command( editor , {
+		var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 			modes: { wysiwyg:1 },
 			exec: function(elem, editor, data) {
 				openEditHelp();
@@ -1161,7 +1161,7 @@ CKEDITOR.plugins.add( '{$name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$name}', {
-			label : '{${addcslashes($this->label, "'")}}',
+			label : '{$this->label}',
 			command : '{$name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
@@ -1206,10 +1206,10 @@ class ToolbarFileGallery extends Toolbar
 			
 			global $headerlib;
 			$headerlib->add_jq_onready(<<< JS
-CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-CKEDITOR.plugins.add( '{$this->name}', {
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+window.CKEDITOR.plugins.add( '{$this->name}', {
 	init : function( editor ) {
-		var command = editor.addCommand( '{$this->name}', new CKEDITOR.command( editor , {
+		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
 			modes: { wysiwyg:1 },
 			exec: function(elem, editor, data) {
 				{$exec_js}
@@ -1217,7 +1217,7 @@ CKEDITOR.plugins.add( '{$this->name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$this->name}', {
-			label : '{${addcslashes($this->label, "'")}}',
+			label : '{$this->label}',
 			command : '{$this->name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
@@ -1264,10 +1264,10 @@ class ToolbarSwitchEditor extends Toolbar
 			
 			global $headerlib;
 			$headerlib->add_jq_onready(<<< JS
-CKEDITOR.config.extraPlugins += (CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
-CKEDITOR.plugins.add( '{$this->name}', {
+window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
+window.CKEDITOR.plugins.add( '{$this->name}', {
 	init : function( editor ) {
-		var command = editor.addCommand( '{$this->name}', new CKEDITOR.command( editor , {
+		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
 			modes: { wysiwyg:1 },
 			exec: function(elem, editor, data) {
 				switchEditor('wiki', $('#$areaId').parents('form')[0]);
@@ -1275,7 +1275,7 @@ CKEDITOR.plugins.add( '{$this->name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$this->name}', {
-			label : '{${addcslashes($this->label, "'")}}',
+			label : '{$this->label}',
 			command : '{$this->name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});

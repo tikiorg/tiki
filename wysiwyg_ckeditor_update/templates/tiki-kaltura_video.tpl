@@ -1,4 +1,4 @@
-{title help="Kaltura" admpage="kaltura"}
+{title help="Kaltura" admpage="video"}
 	{if $kmode eq 'edit'}{tr}Change Details:{/tr}{$videoInfo->name}
 	{elseif $kmode eq 'remix' || $kmode eq 'dupl'}{tr}Remix{/tr}
 	{elseif $kmode eq 'view'}{tr}View:{/tr}{$videoInfo->name}

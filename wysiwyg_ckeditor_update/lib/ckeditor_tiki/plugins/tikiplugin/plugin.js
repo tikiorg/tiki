@@ -15,6 +15,8 @@
 	CKEDITOR.plugins.add( 'tikiplugin', {
 		init : function(editor) {
 		
+			this.ckToHtml = editor.dataProcessor.toHtml;
+			
 			this.command = new CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(editor, data) {	// odd? elem param disappears from doubleclick
@@ -47,7 +49,6 @@
 //								label : 'Tiki Plugin',
 //								command : 'tikiplugin'
 //							});
-			// CKEDITOR.dialog.add( 'tikiplugin', this.path + 'dialogs/tikiplugin.js' );
 
 			editor.addCss('.tiki_plugin'
 							+ '{'
@@ -109,6 +110,66 @@
 					}
 				});
 			}
+			if (true) {	// sure there should be a test here
+				var asplugin = this;
+				editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return asplugin.toHTMLSource( editor, html ); };
+				editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return asplugin.toHtmlFormat( editor, data ); };
+			}
+		},
+		toHTMLSource: function( editor, html ) {
+			var output = "";
+			ajaxLoadingShow( "cke_contents_" + editor.name);
+			jQuery.ajax({
+				async: false,	// wait please
+				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
+				type: "POST",
+				data: {
+					script: editor.config.autoSaveSelf,
+					editor_id: editor.name,
+					data: encodeURIComponent(html),
+					command: "toHTMLSource"
+				},
+				// good callback
+				success: function(data) {
+					output = unescape(jQuery(data).find('data').text());
+				},
+				// bad callback - no good info in the params :(
+				error: function(req, status, error) {
+					output = "ajax error";
+				}
+			});
+			ajaxLoadingHide();
+			return output;
+			
+		},
+		toHtmlFormat: function( editor, data ) {
+			
+			var output = "";
+			var asplugin = this;
+			
+			ajaxLoadingShow( "cke_contents_" + editor.name);
+			jQuery.ajax({
+				async: false,	// wait for this one
+				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
+				type: "POST",
+				data: {
+					script: editor.config.autoSaveSelf,
+					editor_id: editor.name,
+					data: encodeURIComponent(data),
+					command: "toHtmlFormat"
+				},
+				// good callback
+				success: function(data) {
+					output = unescape(jQuery(data).find('data').text());
+					asplugin.ckToHtml.call(asplugin, output);
+				},
+				// bad callback - no good info in the params :(
+				error: function(req, status, error) {
+					output = "ajax error";
+				}
+			});
+			ajaxLoadingHide();
+			return output;
 		},
 
 		requires : [ 'fakeobjects' ]
@@ -117,11 +178,9 @@
 	if (typeof CKEDITOR.editor.prototype.reParse != 'function') {
 		CKEDITOR.editor.prototype.reParse = function() {
 	
-//			toHtmlFormat: function ( editor, data ) {
-			// deal with plugins here?
-			var output = "";
-//			var twplugin = this;
-			var data = this.getData();
+			// send the whole source off to the server to get reparsed?
+			var myoutput = "";
+			var mydata = this.getData();
 			
 			ajaxLoadingShow( "cke_contents_" + this.name);
 			jQuery.ajax({
@@ -131,27 +190,20 @@
 				data: {
 					script: this.config.autoSaveSelf,
 					editor_id: this.name,
-					data: encodeURIComponent(data),
+					data: encodeURIComponent(mydata),
 					command: "toHtmlFormat"
 				},
 				// good callback
 				success: function(data) {
-					output = unescape(jQuery(data).find('data').text());
-					//var fragment = CKEDITOR.htmlParser.fragment.fromHtml( output, false );	// fixForBody?
-					//editor.dataProcessor.htmlFilter.onFragment(fragment);
-					//twplugin.ckToHtml.call(twplugin, output);
+					myoutput = unescape(jQuery(data).find('data').text());
 				},
 				// bad callback - no good info in the params :(
 				error: function(req, status, error) {
-					output = "ajax error";
+					myoutput = "ajax error";
 				}
 			});
 			ajaxLoadingHide();
-//			return output;
-//		}
- 
-
-			this.setData(output);
+			this.setData(myoutput);
 		};
 	}
 })();

@@ -12,7 +12,7 @@
  * The TikiImporter was started as a Google Summer of Code project and
  * aim to provide a generic structure for importing content from other
  * softwares to TikiWiki
- * See http://dev.tikiwiki.org/gsoc2009rodrigo for more information
+ * See http://dev.tiki.org/gsoc2009rodrigo for more information
  * 
  * @author Rodrigo Sampaio Primo <rodrigo@utopia.org.br>
  * @package tikiimporter

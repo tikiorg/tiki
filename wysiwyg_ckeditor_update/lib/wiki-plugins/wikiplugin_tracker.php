@@ -504,8 +504,8 @@ function wikiplugin_tracker($data, $params)
 							}
 						}
 					}
-					if (!empty($_REQUEST['other_track'][$fl['fieldId']])) {
-						$flds['data'][$cpt]['value'] = $_REQUEST['other_track'][$fl['fieldId']];
+					if (!empty($_REQUEST['other_track_'.$fl['fieldId']])) {
+						$flds['data'][$cpt]['value'] = $_REQUEST['other_track_'.$fl['fieldId']];
 					}
 					if ($flds['data'][$cpt]['isMultilingual'] == 'y') {
 						foreach ($prefs['available_languages'] as $num=>$tmplang) {
@@ -528,8 +528,8 @@ function wikiplugin_tracker($data, $params)
 				if (isset($_REQUEST['track'])) {
 					foreach ($_REQUEST['track'] as $fld=>$val) {
 						//$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val, 'type' => 1);
-						if (!empty($_REQUEST['other_track'][$fld])) {
-							$val = $_REQUEST['other_track'][$fld];
+						if (!empty($_REQUEST['other_track_'.$fld])) {
+							$val = $_REQUEST['other_track_'.$fld];
 						}
 						$ins_fields["data"][] = array_merge(array('value' => $val), $full_fields[$fld]);
 					}

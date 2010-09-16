@@ -10,10 +10,10 @@
 		{tr}Select{/tr} <a class="link" href="tiki-admin.php" title="{tr}Admin Home{/tr}">{tr}Admin{/tr} &gt; {tr}Admin Home{/tr}</a> {tr}from the menu{/tr}.
 	</p>
 	<p>
-		{tr}Read the <a class="link" href="http://doc.tikiwiki.org/Configuration" title="Tikiwiki Documentation" target="_blank">configuration documentation</a>{/tr}.
+		{tr}Read the <a class="link" href="http://doc.tiki.org/Configuration" title="Tikiwiki Documentation" target="_blank">configuration documentation</a>{/tr}.
 	</p>
 	<p>
-		{tr}Watch the <a class="link" href="http://tikiwiki.org/TikiMovies" title="Demos" target="_blank">demo movies{/tr}</a>.
+		{tr}Watch the <a class="link" href="http://tiki.org/TikiMovies" title="Demos" target="_blank">demo movies{/tr}</a>.
 	</p>
 	<p>
 		<img src="pics/icons/arrow_small.png" alt="" style="border:0;margin-right:2px;vertical-align:middle" align="left" />
@@ -32,9 +32,9 @@
 	</p>
 	{/if}
 	<p>
-		<a href="http://tikiwiki.org" title="{tr}The Tikiwiki Community{/tr}" target="_blank"><img src="favicon.png" alt="{tr}The Tikiwiki Community{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To learn more, visit: <a href="http://tikiwiki.org" title="The Tikiwiki Community" target="_blank">http://tikiwiki.org</a>{/tr}.
+		<a href="http://tiki.org" title="{tr}The Tikiwiki Community{/tr}" target="_blank"><img src="favicon.png" alt="{tr}The Tikiwiki Community{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To learn more, visit: <a href="http://tiki.org" title="The Tikiwiki Community" target="_blank">http://tiki.org</a>{/tr}.
 	</p>
 	<p>
-		<a href="http://doc.tikiwiki.org" title="{tr}Tikiwiki Documentation{/tr}" target="_blank"><img src="pics/icons/help.png" alt="{tr}Tikiwiki Documentation{/tr}" style="border:0px;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}For help, visit <a href="http://doc.tikiwiki.org" title="Tikiwiki Documentation" target="_blank">http://doc.tikiwiki.org</a>{/tr}.
+		<a href="http://doc.tiki.org" title="{tr}Tikiwiki Documentation{/tr}" target="_blank"><img src="pics/icons/help.png" alt="{tr}Tikiwiki Documentation{/tr}" style="border:0px;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}For help, visit <a href="http://doc.tiki.org" title="Tikiwiki Documentation" target="_blank">http://doc.tiki.org</a>{/tr}.
 	</p>
 {/tikimodule}

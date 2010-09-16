@@ -1,7 +1,7 @@
 /*
  * The Darkroom theme for TikiWiki CMS/Groupware.
  * Released under the LGPL license. 
- * For more information on Darkroom, please visit http://themes.tikiwiki.org.
+ * For more information on Darkroom, please visit http://themes.tiki.org.
  */
  
  /* import *lite as the base: */
@@ -2163,6 +2163,15 @@ div.messureadbody {
 }
 
 /***** Ajax *****/
+
+/* Ajax Loading Overlay */
+div#ajaxLoadingBG {
+	background: transparent url(../img/overlay-85.png);
+}
+div#ajaxLoading {
+	background: transparent url(../img/loading.gif) no-repeat 50% 50%;
+	color: #ccc;
+}
 
 /***** TikiSheet *****/
 table.default thead td,

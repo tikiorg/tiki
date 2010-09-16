@@ -1,13 +1,40 @@
 <!-- templates/tiki-preview.tpl start -->
-<div class="wikipreview">
+<div class="wikipreview" {if $prefs.ajax_autosave eq "y"}style="display:none;" id="autosave_preview"{/if}>
+{if $prefs.ajax_autosave eq "y"}
+	<div style="float:right;">
+		<select name="diff_style" id="preview_diff_style">
+			<option value="" {if empty($diff_style)}selected="selected"{/if}>{tr}Preview{/tr}</option>
+			<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
+			<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
+		</select>
+		{jq}
+$("#preview_diff_style").change(function(){
+	ajaxLoadingShow($("#autosave_preview .wikitext"));
+	setCookie("preview_diff_style", $(this).val(), "", "session");
+	$.get("tiki-auto_save.php", {
+		editor_id: 'editwiki',
+		autoSaveId: escape(autoSaveId),
+		inPage: true,
+		diff_style: $(this).val()
+	}, function(data) {
+		$("#autosave_preview .wikitext").html(data);
+		ajaxLoadingHide();
+	});
+}).val(getCookie("preview_diff_style"));
+{/jq}
+		{self_link _icon="arrow_left" _ajax="n" _onclick="ajax_preview( 'editwiki', autoSaveId );$('#autosave_preview').hide();return false;"}{tr}Popup preview{/tr}{/self_link}
+		{self_link _icon="close" _ajax="n" _onclick="$('#autosave_preview').hide();return false;"}{tr}Close preview{/tr}{/self_link}
+	</div>
+{/if}
+{if $prefs.feature_jquery_ui eq "y"}{jq}$('#autosave_preview').resizable({handles:'s'});{/jq}{/if}
 <h2>{tr}Preview{/tr} {if $staging_preview eq 'y'}of current staging copy{/if}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}</h2>
 {if $prefs.feature_wiki_description eq 'y'}
 <small>{$description}</small>
 {/if}
-<div  class="wikitext">
 {if $staging_preview neq 'y'}
 <div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
 {/if}
+<div  class="wikitext">
 {$parsed}
 </div>
 {if $has_footnote and isset($parsed_footnote)}

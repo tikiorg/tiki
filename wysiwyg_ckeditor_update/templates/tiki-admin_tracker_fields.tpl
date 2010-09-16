@@ -286,32 +286,32 @@
 			{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 			<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 			<input type="hidden" name="import" value="1" />
-			<textarea name="rawmeat" cols="62" rows="32" wrap="soft">
-				{section name=user loop=$channels}
-					{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-						[FIELD{$channels[user].fieldId}]
-						{if $export_all eq 'y'}
-							fieldId = {$channels[user].fieldId}
-						{/if}
-						name = {$channels[user].name|escape}
-						position = {$channels[user].position}
-						type = {$channels[user].type}
-						options = {$channels[user].options}
-						isMain = {$channels[user].isMain}
-						isTblVisible = {$channels[user].isTblVisible}
-						isSearchable = {$channels[user].isSearchable}
-						isPublic = {$channels[user].isPublic}
-						isHidden = {$channels[user].isHidden}
-						isMandatory = {$channels[user].isMandatory}
-						{if $channels[user].type eq 'S'}
-							descriptionStaticText = {$channels[user].description}
-						{else}
-							description = {$channels[user].description}
-							descriptionIsParsed = {$channels[user].descriptionIsParsed}
-						{/if}
-					{/if}
-				{/section}
-			</textarea><br />
+			<textarea name="rawmeat" cols="62" rows="32" wrap="soft">{* please do not indent *}
+{section name=user loop=$channels}
+{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
+[FIELD{$channels[user].fieldId}]
+{if $export_all eq 'y'}
+fieldId = {$channels[user].fieldId}
+{/if}
+name = {$channels[user].name|escape}
+position = {$channels[user].position}
+type = {$channels[user].type}
+options = {$channels[user].options}
+isMain = {$channels[user].isMain}
+isTblVisible = {$channels[user].isTblVisible}
+isSearchable = {$channels[user].isSearchable}
+isPublic = {$channels[user].isPublic}
+isHidden = {$channels[user].isHidden}
+isMandatory = {$channels[user].isMandatory}
+{if $channels[user].type eq 'S'}
+descriptionStaticText = {$channels[user].description}
+{else}
+description = {$channels[user].description}
+descriptionIsParsed = {$channels[user].descriptionIsParsed}
+{/if}
+{/if}
+{/section}
+</textarea><br />
 			<input type="submit" name="save" value="{tr}Import{/tr}" />
 		</form>
 	{/tab}

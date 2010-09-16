@@ -202,7 +202,11 @@ function nd() {
 function ajaxLoadingShow(destName) {
 	var $dest, $loading, pos, x, y, w, h;
 	
-	$dest = $('#' + destName);
+	if (typeof destName === 'string') {
+		$dest = $('#' + destName);
+	} else {
+		$dest = $(destName);
+	}
 	if ($dest.length === 0) {
 		return;
 	}
@@ -210,8 +214,6 @@ function ajaxLoadingShow(destName) {
 
 	// find area of destination element
 	pos = $dest.offset();
-	pos.top = pos.top - $(window).scrollTop();
-	pos.left = pos.left - $(window).scrollLeft();
 	// clip to page
 	if (pos.left + $dest.width() > $(window).width()) {
 		w = $(window).width() - pos.left;
@@ -226,9 +228,15 @@ function ajaxLoadingShow(destName) {
 	x = pos.left + (w / 2) - ($loading.width() / 2);
 	y = pos.top + (h / 2) - ($loading.height() / 2);
 	
+
 	// position loading div
 	$loading.css('left', x).css('top', y);
-	$('#ajaxLoadingBG').css('left', pos.left).css('top', pos.top).width($dest.width()).height($dest.height()).fadeIn("fast");
+	// now BG
+	x = pos.left + ccsValueToInteger($dest.css("margin-left"));
+	y = pos.top + ccsValueToInteger($dest.css("margin-top"));
+	w = ccsValueToInteger($dest.css("padding-left")) + $dest.width() + ccsValueToInteger($dest.css("padding-right"));
+	h = ccsValueToInteger($dest.css("padding-top")) + $dest.height() + ccsValueToInteger($dest.css("padding-bottom"));
+	$('#ajaxLoadingBG').css('left', pos.left).css('top', pos.top).width(w).height(h).fadeIn("fast");
 	
 	show('ajaxLoading');
 
@@ -664,13 +672,6 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
             container.children('form').submit();
         } else {
             insertAt(area_id, blob, false, false, replaceText);
-    		// only used in ckeditor to insert new plugins, but needs reparsing afterwards
-        	if ($('#cke_contents_' + area_id).length !== 0) {
-        		cked = CKEDITOR.instances[area_id];
-        		if (cked && typeof cked.reParse == 'function') {
-        			cked.reParse();
-        		}
-        	}
         }
 		$(this).dialog("close");
 		$('div.plugin input[name="type"][value="' + type + '"]').parent().parent().remove();
@@ -929,6 +930,9 @@ $.fn.tiki = function(func, type, options) {
 						break;
 					case "username":
 						data = "tiki-ajax_services.php?listonly=users";
+						break;
+					case "userrealname":
+						data = "tiki-ajax_services.php?listonly=userrealnames";
 						break;
 					case "tag":
 						data = "tiki-ajax_services.php?listonly=tags&separator=+";

@@ -12,37 +12,25 @@ include_once ('lib/calendar/calendarlib.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
-$access->check_permission(array('tiki_p_admin_calendar'));
 $auto_query_args = array('calendarId', 'sort_mode', 'find', 'offset');
 if (!isset($_REQUEST["calendarId"])) {
-	$_REQUEST["calendarId"] = 0;
+	$access->check_permission(array('tiki_p_admin_calendar'));
+	$_REQUEST['calendarId'] = 0;
 } else {
-	// Check if calendar belongs to perspective
-	$category_jails = $categlib->get_jail();
-	if(!isset($filter['categId']) && !empty($category_jails))
-	{
-		$categories = $categlib->get_object_categories('calendar', $_REQUEST["calendarId"]);
-		if (empty ($categories))
-			$smarty->assign('individual', $userlib->object_has_one_permission($_REQUEST["calendarId"], 'calendar'));
-		else
-		{
-			$intersection = array_intersect($category, $category_jails);
-			if (!empty ($intersection))
-				$smarty->assign('individual', $userlib->object_has_one_permission($_REQUEST["calendarId"], 'calendar'));
-			else
-			{
-					$smarty->assign('errortype', 404);
-					$smarty->assign('msg',tra("Object doesn't exists"));
-					$smarty->display("error.tpl");
-					die;
-			}
-		}
+	$info = $calendarlib->get_calendar($_REQUEST['calendarId']);
+	if (empty($info)) {
+		$smarty->assign('msg', tra('Incorrect param'));
+		$smarty->display('error.tpl');
+		die;
 	}
-	
+	$objectperms = Perms::get( 'calendar', $_REQUEST['calendarId'] );
+	if (!$objectperms->admin_calendar) {
+		$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_calendar', '403');
+	}
 }
 if (isset($_REQUEST["drop"])) {
 	$access->check_authenticity();
-	$calendarlib->drop_calendar($_REQUEST["drop"]);
+	$calendarlib->drop_calendar($_REQUEST['calendarId']);
 	$_REQUEST["calendarId"] = 0;
 }
 if (isset($_REQUEST["save"])) {
@@ -86,7 +74,7 @@ if (isset($_REQUEST["save"])) {
 			$options["show_$ex"] = 'n';
 		}
 	}
-	$options['viewdays'] = $_REQUEST['viewdays'];
+	if (isset($_REQUEST['viewdays'])) $options['viewdays'] = $_REQUEST['viewdays'];
 	$_REQUEST["calendarId"] = $calendarlib->set_calendar($_REQUEST["calendarId"], $user, $_REQUEST["name"], $_REQUEST["description"], $customflags, $options);
 	if ($prefs['feature_groupalert'] == 'y') {
 		$groupalertlib->AddGroup('calendar', $_REQUEST["calendarId"], $_REQUEST['groupforAlert'], !empty($_REQUEST['showeachuser']) ? $_REQUEST['showeachuser'] : 'n');
@@ -124,7 +112,6 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 }
 if ($_REQUEST["calendarId"]) {
-	$info = $calendarlib->get_calendar($_REQUEST["calendarId"]);
 	$cookietab = 2;
 } else {
 	$info = array();

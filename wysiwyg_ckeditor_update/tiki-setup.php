@@ -264,6 +264,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	if( $prefs['feature_sheet'] == 'y' && $prefs['feature_jquery_sheet'] == 'y' ) {
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
+		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.json-2.2.js' );
 		
 		if( strpos($_SERVER['SCRIPT_NAME'], 'tiki-history_sheets.php') !== false ) {

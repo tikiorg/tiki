@@ -4769,7 +4769,7 @@ class TikiLib extends TikiDb_Bridge
 					$arguments = $plugins['arguments'];
 
 					if (count($arguments) == 0) {
-                        //TODO HACK: See bug 2499 http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2499
+                        //TODO HACK: See bug 2499 http://dev.tiki.org/tiki-view_tracker_item.php?itemId=2499
 						$arguments = array('' => '');
 					}
 
@@ -4805,7 +4805,7 @@ class TikiLib extends TikiDb_Bridge
 							}
 							
 							if ($options['fck']) {
-								$ret = $this->convert_plugin_for_ckeditor( $plugin_name, $arguments, $ret, $plugin_data );
+								$ret = $this->convert_plugin_for_ckeditor( $plugin_name, $arguments, $ret, $plugin_data, array('icon' => 'pics/icons/page_white_code.png') );
 							}
 
 						} else {
@@ -5313,7 +5313,7 @@ class TikiLib extends TikiDb_Bridge
 
 			$plugin_result =  $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
 			if ($parseOptions['fck'] ) {
-				return $this->convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data );
+				return $this->convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info );
 			} else {
 				return $plugin_result;
 			}
@@ -5322,15 +5322,25 @@ class TikiLib extends TikiDb_Bridge
 		}
 	}
 	
-	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $icon = 'pics/icons/wiki_plugin_edit.png' ) {
+	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info = array() ) {
 		$fck_editor_plugin = '{'.strtoupper($name).'(';
+		$arg_str = '';		// not using http_build_query() as it converts spaces into +
 		if (!empty($args)) {
 			foreach( $args as $argKey => $argValue ) {
-				$fck_editor_plugin .= $argKey.'="'.$argValue.'" ';
+				if (is_array($argValue)) {
+					if (isset($info['params'][$argKey]['separator'])) { $sep = $info['params'][$argKey]['separator']; } else { $sep = ','; }
+					$fck_editor_plugin .= $argKey.'="'.implode($sep, $argValue).'" ';	// process array
+					$arg_str .= $argKey.'='.implode($sep, $argValue).'&';
+				} else {
+					$fck_editor_plugin .= $argKey.'="'.$argValue.'" ';
+					$arg_str .= $argKey.'='.$argValue.'&';
+				}
 			}
 		}
 		$fck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
-
+		$arg_str = rtrim($arg_str, '&');
+		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
+		
 		// remove hrefs and onclicks
 		$plugin_result = preg_replace('/href\=["\']([^"\']*)["\']/i', 'tiki_href="$1"', $plugin_result);
 		$plugin_result = preg_replace('/onclick\=["\']([^"\']*)["\']/i', 'tiki_onclick="$1"', $plugin_result);
@@ -5340,12 +5350,6 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			$elem = 'span';
 		}
-		$arg_str = '';		// not using http_build_query() as it converts spaces into +
-		foreach ($args as $key=>$value) { 
-		    $arg_str .= $key.'='.$value.'&';
-		}
-		$arg_str = rtrim($arg_str, '&');
-		
 		$ret = '<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="position:relative;"' .
 				' syntax="~np~' . htmlentities( $fck_editor_plugin ) . '~/np~"' .
 				' args="' . htmlentities($arg_str) . '"' .

@@ -79,7 +79,7 @@ class reportsLib extends TikiLib
 	}
 	
 	public function makeHtmlEmailBody($report_cache, $report_preferences, $tikiUrl) {
-		global $tikilib;		
+		global $tikilib, $userlib;		
 		$change_array = $this->makeChangeArray($report_cache);
 		$somethingHasHappened = false;
 
@@ -112,6 +112,8 @@ class reportsLib extends TikiLib
 				}
 
 				$body .= $this->makeTime(strtotime($change['time'])).": ";
+				$change['data']['user'] = $userlib->clean_user($change['data']['user']);
+				
 				if ($change['event']=='image_gallery_changed' && empty($change['data']['action'])) {
 					$body .= $change['data']['user']." ".tra("changed the picture gallery")." <a href=\"$tikiUrl/tiki-browse_gallery.php?galleryId=".$change['data']['galleryId']."&offset=0&sort_mode=created_desc\">".$change['data']['galleryName']."</a>.";
 				} elseif ($change['event']=='image_gallery_changed' && $change['data']['action']=="upload image") {

@@ -55,6 +55,9 @@ CKEDITOR.plugins.add( 'autosave',
 					asplugin.onSelectionChange(editor);
 				}
 			});
+			// Also chgeck for autosave changes after toolbar commands.
+			editor.on( 'afterCommandExec', function(event) {asplugin.onSelectionChange(editor);} );
+
 		});
 	
 		editor.on('blur', function(event) {
@@ -78,6 +81,8 @@ CKEDITOR.plugins.add( 'autosave',
 					// update AJAX preview if there
 					if (parent.window.ajaxPreviewWindow && typeof parent.window.ajaxPreviewWindow.get_new_preview === 'function') {
 						parent.window.ajaxPreviewWindow.get_new_preview();
+					} else {
+						ajax_preview( editor.name, editor.config.autoSaveSelf, true );
 					}
 					// reset state
 					asplugin.ajaxAutoSaveIsDirty = false;

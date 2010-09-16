@@ -13,21 +13,7 @@
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
-{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-	<form action="tiki-admin_content_templates.php?wysiwyg=n" method="post">
-{else} 
-	<form action="tiki-admin_content_templates.php?wysiwyg=y" method="post">
-{/if}
-	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
-		<div class="navbar">
-			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-				{button href="?templateId=$templateId&amp;wysiwyg=y" _text="{tr}Use wysiwyg editor{/tr}"}
-			{else}
-				{button href="?templateId=$templateId&amp;wysiwyg=n" _text="{tr}Use normal editor{/tr}"}
-			{/if}
-		</div>
-	{/if}
-
+<form action="tiki-admin_content_templates.php" method="post">
 	<input type="hidden" name="templateId" value="{$templateId|escape}" />
 	<table class="formcolor">
 		<tr>
@@ -90,37 +76,20 @@
 			</td>
 		</tr>
 
-		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-			<tr class="type-cond for-static">
-				<td><label>{tr}Toolbars{/tr}</label></td>
-				<td>
-					{toolbars area_id='editwiki'}
-				</td>
-			</tr>
-		{/if}
-
 		<tr class="type-cond for-static">
-			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-				<td>
-					<label for="editwiki">{tr}Template{/tr}:</label>
-				</td>
-				<td>
-					<textarea id='editwiki' class="wikiedit" name="content" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$info.content|escape}</textarea>
-					<input type="hidden" name="rows" value="{$rows}"/>
-					<input type="hidden" name="cols" value="{$cols}"/>
-				</td>
-			{else}
-				<td colspan="2">
-					{editform Meat=$info.content InstanceName='content' ToolbarSet="Tiki"}
-				</td>
-			{/if}
+			<td>
+				<label for="editwiki">{tr}Template{/tr}:</label>
+			</td>
+			<td>
+				{textarea id="editwiki" name="content" switcheditor="y"}{$info.content}{/textarea}
+			</td>
 		</tr>
 
 		<tr>
 			<td/>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
-				<input type="submit" name="preview" value="{tr}Preview{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
+				<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 			</td>
 		</tr>
 	</table>
@@ -130,6 +99,7 @@
 			var val = $('.type-selector').val();
 			$('.for-' + val).show();
 		} ).trigger('change');
+		window.editorDirty = false;
 	{/jq}
 </form>
 

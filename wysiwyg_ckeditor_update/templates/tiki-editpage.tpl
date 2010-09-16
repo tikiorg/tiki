@@ -93,7 +93,7 @@
 	</div>
 {/if}
 
-{if $preview}
+{if $preview or $prefs.ajax_autosave eq "y"}
 	{include file='tiki-preview.tpl'}
 {/if}
 {if $diff_style}

@@ -98,7 +98,7 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		$filetowrite .= "// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters) \n";
 		$filetowrite .= "// \$client_charset='latin1';\n";
 		$filetowrite .= "// \$client_charset='utf8';\n";
-		$filetowrite .= "// See http://tikiwiki.org/ReleaseNotes5.0#Known_Issues and http://doc.tikiwiki.org/UTF-8 for more info\n\n";
+		$filetowrite .= "// See http://tiki.org/ReleaseNotes5.0#Known_Issues and http://doc.tiki.org/UTF-8 for more info\n\n";
 		$filetowrite .= "// If your php installation does not not have pdo extension\n";
 		$filetowrite .= "// \$api_tiki == 'adodb';\n";
 		fwrite($fw, $filetowrite);
@@ -298,7 +298,7 @@ $PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
 <hr>
 
-<a href='http://doc.tikiwiki.org/Installation' target='_blank'>Consult the tikiwiki.org installation guide</a> if you need more help or <a href='http://tikiwiki.org/tiki-forums.php' target='_blank'>visit the forums</a>
+<a href='http://doc.tiki.org/Installation' target='_blank'>Consult the tiki.org installation guide</a> if you need more help or <a href='http://tiki.org/tiki-forums.php' target='_blank'>visit the forums</a>
 
 ";
         }

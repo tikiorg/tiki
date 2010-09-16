@@ -56,7 +56,7 @@ class WikiPluginPluginManager extends PluginsLib
             return $this->error("No plugins directory defined");
         }
         if (empty($helpurl)) {
-        	$helpurl = 'http://doc.tikiwiki.org/';
+        	$helpurl = 'http://doc.tiki.org/';
         }
         
         $params = $this->getParams($params);

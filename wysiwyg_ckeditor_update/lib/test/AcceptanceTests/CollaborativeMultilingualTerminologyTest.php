@@ -4,7 +4,7 @@
 * Automated acceptance tests for the Collaborative Multilingual
 * Terminology Profile.
 *
-* See: http://profiles.tikiwiki.org/Collaborative_Multilingual_Terminology
+* See: http://profiles.tiki.org/Collaborative_Multilingual_Terminology
 *************************************************************/
 
 /**
@@ -24,7 +24,7 @@ class  AcceptanceTests_CollaborativeMultilingualTerminologyTest extends TikiSele
         $this->current_test_db = "multilingualTestDump.sql";
         $this->restoreDBforThisTest();
 #        $this->applyProfile('Collaborative_Multilingual_Terminology',
-#                            'http://profiles.tikiwiki.org/');
+#                            'http://profiles.tiki.org/');
     }
 
 	public function applyProfile($profileName, $profileRepositoryUrl) {

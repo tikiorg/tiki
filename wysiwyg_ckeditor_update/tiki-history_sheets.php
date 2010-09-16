@@ -49,9 +49,6 @@ if (empty($_REQUEST['readdate'])) {
 	include_once ('tiki-section_options.php');
 	ask_ticket('sheet');
 } else {
-	// Process the insertion or modification of a gallery here
-	$grid = new TikiSheet($_REQUEST["sheetId"]);
-	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	$dates = array(time());
 	
 	$i = 0;
@@ -65,35 +62,20 @@ if (empty($_REQUEST['readdate'])) {
 		$i++;
 	}
 	
-	$tableHtml = array();
-	$i = 0;
+	$smarty->assign('grid_content', diffSheetsAsHTML($_REQUEST["sheetId"], $dates));
 	
-	foreach ( $dates as $date ) {
-		$smarty->assign('read_date', $date);
-		$handler->setReadDate($date);
-		$grid->import($handler);
-		$tableHtml[$i] = $grid->getTableHtml( true, $date );
-		$i++;
-	}
-	
-	$smarty->assign('grid_content', $tableHtml);
-	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-	$grid->import($handler);
-	
-	$headerlib->add_jq_onready(
-		'if (typeof ajaxLoadingShow == "function") {
+	$headerlib->add_jq_onready('
+		if (typeof ajaxLoadingShow == "function") {
 			ajaxLoadingShow("role_main");
 		}
 		setTimeout (function () {
 			$("div.tiki_sheet").tiki("sheet", "",{
 				editable: false,
-				fnPaneScroll: scrollLocker,
-				fnSwitchSheet: tabLocker
+				fnPaneScroll: $.sheet.paneScrollLocker,
+				fnSwitchSheet: $.sheet.switchSheetLocker
 			});
 		}, 500);
-		instanceCount = ' . count($readdates) . ';
-		'
-	, 500);
+	', 500);
 	
 	if ( $tiki_sheet_div_style) {
 		$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);
