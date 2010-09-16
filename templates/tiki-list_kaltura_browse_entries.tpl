@@ -6,18 +6,6 @@
 {literal}	
 <style>
 
-/* remove margins from the image */ 
-.items img { 
-    margin:0; 
-} 
- 
-/* make A tags our floating scrollable items */ 
-.items a { 
-    display:block; 
-    float:left; 
-    margin:20px 15px; 
-}  
-
 
 </style>
 <script language="javascript">

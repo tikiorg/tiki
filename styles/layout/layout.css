@@ -2218,4 +2218,21 @@ table.intertrans td {
 	width: 50%;
 }
 
+/***** Kaltura *****/
+
+/* Kaltura browse entries */
+
+/* remove margins from the image */ 
+.items img { 
+    margin: 0; 
+}
+ 
+/* make A tags our floating scrollable items */ 
+.items a { 
+    display: block; 
+    float: left; 
+    margin: 20px 15px; 
+}
+
+
 /* End of File */
