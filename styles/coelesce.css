@@ -1019,6 +1019,14 @@ a.pagetitle:hover {
 	font-weight: bold;
 }
 
+a.titletop,
+a.titletop:hover,
+a.titletop:visited {
+	font-weight: bold;
+	color: #0066FF;
+	font-size: 12px;	
+}
+
 h1 a,
 h1 a:link,
 h1 a:visited {

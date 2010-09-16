@@ -1,8 +1,13 @@
 /* community option - released under LPGL license. For more information, visit http://themes.tiki.org. */
 
+#sitetitles {
+	height: auto;
+	line-height: 80px;
+}
+
 #sitetitle {
-	font-size: 40px !important;
-	font-weight: bold;
+	display: block;
+	margin: 0;
 }
 
 input#fuser {
@@ -11,6 +16,7 @@ input#fuser {
 }
 
 #sitesubtitle {
+	margin-left: 20px;
 	font-size: 25px !important;
 	font-weight: bold;
 }
