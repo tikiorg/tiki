@@ -79,7 +79,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	if ($params['_simple'] === 'n' || isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
 		$html .= smarty_block_remarksbox( array( 'type'=>'tip', 'title'=>tra('Tip')),
 			tra('This edit session will expire in') .
-				' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '.
+				' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
 				tra('<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer'),
 			$smarty)."\n";
 	}
@@ -96,7 +96,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 			if ( strcmp($auto_saved, $content) === 0 ) {
 				$auto_saved = '';
 			}
-			if (empty($auto_saved) || isset($_REQUEST['mode_wysiwyg']) || $_REQUEST['mode_wysiwyg'] === 'y') {	// switching modes, ignore auto save
+			if (empty($auto_saved) || (isset($_REQUEST['mode_wysiwyg']) && $_REQUEST['mode_wysiwyg'] === 'y')) {	// switching modes, ignore auto save
 				remove_save($as_id, $auto_save_referrer);
 			} else {
 				$msg = '<div class="mandatory_star"><span class="autosave_message">'.tra('There is an autosaved version of this content, to use it instead of this saved one').'</span>&nbsp;' .
