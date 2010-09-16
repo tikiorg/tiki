@@ -1478,18 +1478,23 @@ body.tiki_forums table.normal {
 	padding: 3px
 }
 
-.postfooter .postfooter-nav {
+.postfooter-nav {
+	width: 100%;
+}
+
+.postfooter-nav {
 	display: block;
 	margin-top: 1em;
 }
 
-.postfooter .postfooter-nav .postfooter-nav-prev {
+.postfooter-nav .postfooter-nav-prev {
 	text-align: left;
 	float: left;
 	width: 50%;
 }
 
-.postfooter .postfooter-nav .postfooter-nav-next {
+.postfooter-nav .postfooter-nav-next {
+	text-align: right;
 	float: right;
 	width: 50%;
 }
