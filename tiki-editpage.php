@@ -17,6 +17,7 @@ $tracesOn = false;
 $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
 		'page' => 'pagename',
+		'returnto' => 'pagename',
 		'watch' => 'digits',
 	) ),
 	array( 'staticKeyUnset' => array(
@@ -187,7 +188,7 @@ if ($translation_mode === 'n' && translationsToThisPageAreInProgress($info['page
 // wysiwyg decision
 include 'lib/setup/editmode.php';
 
-$auto_query_args = array('wysiwyg','page_id','page', 'lang', 'hdr');
+$auto_query_args = array('wysiwyg','page_id','page', 'returnto', 'lang', 'hdr');
 
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
 // Permissions
@@ -255,9 +256,13 @@ if (isset($_REQUEST['cancel_edit'])) {
 	}
 
 	$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
-	$url = "location:".$wikilib->sefurl($page);
-	if (!empty($_REQUEST['page_ref_id'])) {
-		$url .= '&page_ref_id='.$_REQUEST['page_ref_id'];
+	if (!empty($_REQUEST['returnto'])) {	// came from wikiplugin_include.php edit button
+		$url = "location:".$wikilib->sefurl($_REQUEST['returnto']);
+	} else {
+		$url = "location:".$wikilib->sefurl($page);
+		if (!empty($_REQUEST['page_ref_id'])) {
+			$url .= '&page_ref_id='.$_REQUEST['page_ref_id'];
+		}
 	}	
 
 	if ($prefs['feature_best_language'] === 'y') {
@@ -495,7 +500,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 		}
 	}
 
-	if (isset($_REQUEST["save"])) {
+	if (isset($_REQUEST["save"])) {					// jb tiki 6 - this block of code seems to be redundant and unused - TOKIL
 		unset ($_REQUEST["save"]);
 		if ($page_ref_id) {
 			$url = "tiki-index.php?page_ref_id=$page_ref_id";
@@ -1139,7 +1144,9 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) !== 'sandbox' || 
 		}
 	}
 
-	if ($page_ref_id) {
+	if (!empty($_REQUEST['returnto'])) {	// came from wikiplugin_include.php edit button
+		$url = $wikilib->sefurl($_REQUEST['returnto']);
+	} else if ($page_ref_id) {
 		$url = "tiki-index.php?page_ref_id=$page_ref_id";
 	} else {
 		$url = $wikilib->sefurl($page);
