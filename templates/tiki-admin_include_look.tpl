@@ -26,6 +26,8 @@
 					{remarksbox type="note" title="{tr}Note{/tr}}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
 				{/if}	
 			</div>
+
+			{preference name=feature_fixed_width}
 							
 			{if isset($thumbfile)}
 				<div class="adminoptionboxchild">
@@ -80,7 +82,6 @@
 		
 		{tab name="{tr}General Layout options{/tr}"}
 			{preference name=feature_custom_html_head_content}
-			{preference name=feature_fixed_width}
 			{preference name=feature_secondary_sitemenu_custom_code}
 			{preference name=feature_sitemycode}
 			<div class="adminoptionboxchild" id="feature_sitemycode_childcontainer">
