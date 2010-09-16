@@ -1,8 +1,9 @@
-<script src="http://cdn.jquerytools.org/1.0.2/jquery.tools.min.js"></script>
+{* $Id$ *}
+<!--script src="http://cdn.jquerytools.org/1.0.2/jquery.tools.min.js"></script>
 <script src="http://static.flowplayer.org/js/jquery.mousewheel.js"></script>
 
 <link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/scrollable-horizontal.css" />
-<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/scrollable-buttons.css" />	
+<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/scrollable-buttons.css" /-->	
 {literal}	
 <script type="text/javascript">
 	function loadMedia(entryId) {
