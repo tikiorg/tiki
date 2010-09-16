@@ -6700,7 +6700,8 @@ class TikiLib extends TikiDb_Bridge
 						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 &&  $inScript == 0
 								// Don't put newlines at comments' end!
 								&& strpos($line, "-->") !== (strlen($line) - 3)
-								&& !$options['is_html']) {
+								&& !$options['is_html']
+								&& count($lines) > 1) {
 							 	
 							$tline = trim(str_replace('&nbsp;', '', $line));
 							
