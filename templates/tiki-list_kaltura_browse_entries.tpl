@@ -4,10 +4,6 @@
 <link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/scrollable-horizontal.css" />
 <link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/scrollable-buttons.css" />	
 {literal}	
-<style>
-
-
-</style>
 <script language="javascript">
 	function loadMedia(entryId) {
 		$('#mykdp').get(0).insertMedia("-1",entryId,'true');
@@ -25,8 +21,6 @@ $(document).ready( function() {
 </script>
 {/literal}
 
-<br>
-<br>
 	{if $entryType eq "mix"}
 	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
 	{button _text="{tr}List{/tr}" href="tiki-list_kaltura_entries.php?list=mix" }
@@ -34,7 +28,6 @@ $(document).ready( function() {
 	{button _text="{tr}Mix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix" }
 	{button _text="{tr}List{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
 	{/if}
-	<br><br>	
 	<table>	
 	<tr><td>
 			<object name="mykdp" id="mykdp" type="application/x-shockwave-flash" height="365" width="685" data="http://www.kaltura.com/index.php/kwidget/wid/{$prefs.kdpWidget}/uiconf_id/{$prefs.kdpUIConf}/entry_id/{$videoInfo->id}">
