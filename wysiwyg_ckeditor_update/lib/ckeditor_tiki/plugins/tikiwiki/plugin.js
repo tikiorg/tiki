@@ -18,8 +18,8 @@ CKEDITOR.plugins.add('tikiwiki',{
 	
 	init: function(editor)    {  
 		var twplugin = this;
-		this.editor = editor;
-		this.ckToHtml = editor.dataProcessor.toHtml;
+		this.ckToHtml = editor.dataProcessor.toHtml;		// reference to original ckeditor dataProcessor
+		this.editor = editor;								// which expects these references too
 		this.dataFilter = editor.dataProcessor.dataFilter;
 			
 		editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return twplugin.toWikiFormat( editor, html ); };

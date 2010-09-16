@@ -41,11 +41,16 @@ function smarty_function_tree($params, &$smarty) {
 				'data' => '<a class="fgalname" href="' . $link . '">' . $icon . htmlspecialchars($name) .'</a>', 
 			)
 		);
+		require_once $smarty->_get_plugin_filepath('block', 'self_link');
 		foreach($params['data']['data'] as $d) {
+			$link_params = array('_script' => $link, $link_var => $d[$link_id], '_class' => 'fgalname');
+			if (!empty($_REQUEST['filegals_manager'])) {
+				$link_params['filegals_manager'] = $_REQUEST['filegals_manager'];
+			}
 			$tree_nodes[] = array(
 				'id' => $d['id'],
 				'parent' => $d['parentId'],
-				'data' => '<a class="fgalname" href="' . $link . '?' . $link_var . '=' . $d[$link_id] . '">' . $icon . htmlspecialchars($d['name']) .'</a>', 
+				'data' => smarty_block_self_link($link_params, $icon . htmlspecialchars($d['name']), $smarty), 
 			);
 		}
 		$tm = new CatBrowseTreeMaker('categ');

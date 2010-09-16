@@ -403,6 +403,10 @@ function prefs_feature_list() {
 				'feature_ajax',
 			),
 			'type' => 'flag',
+			'dependencies' => array(
+				'feature_ajax',
+				'ajax_xajax',
+      ),
 		),	
 		'feature_kaltura' => array(
 			'name' => tra('Kaltura'),

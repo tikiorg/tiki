@@ -17,8 +17,10 @@
 {/if}
 <div id="main">
 	<div id="tiki-center">
-		{$mid_data}
-		{show_help}
+		<div id="role_main">
+			{$mid_data}
+			{show_help}
+		</div>
 	</div>
 </div>
 			

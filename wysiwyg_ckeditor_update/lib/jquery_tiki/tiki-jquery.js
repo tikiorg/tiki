@@ -104,7 +104,7 @@ function hideJQ(selector, effect, speed, dir) {
 // override overlib
 function convertOverlib(element, tip, params) {	// process modified overlib event fn to cluetip from {popup} smarty func
 	
-	if (element.processed) { return false; }
+	if (element.processed || typeof $(element).cluetip != "function") { return false; }
 	if (typeof params == "undefined") { params = []; }
 	
 	var options = {};

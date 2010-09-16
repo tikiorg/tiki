@@ -6813,7 +6813,8 @@ class TikiLib extends TikiDb_Bridge
 							'title' => tra('Table of contents', $options['language'], true),
 							'showhide' => '',
 							'nolinks' => '',
-							'nums' => ''
+							'nums' => '',
+							'levels' => ''
 							);
 
 					// Build maketoc arguments list (and remove " chars if they are around the value)
@@ -6831,6 +6832,9 @@ class TikiLib extends TikiDb_Bridge
 					} else {
 						$maketoc_summary = '';
 						$maketoc_title = '';
+					}
+					if (!empty($maketoc_args['levels'])) {
+						$maketoc_args['levels'] = preg_split('/\s*,\s*/', $maketoc_args['levels']);
 					}
 
 					// Build maketoc
@@ -6852,7 +6856,9 @@ class TikiLib extends TikiDb_Bridge
 							if ( $maketoc_args['maxdepth'] > 0 && $tocentry['hdrlevel'] > $maketoc_args['maxdepth'] ) {
 								continue;
 							}
-
+							if (!empty($maketoc_args['levels']) && !in_array($tocentry['hdrlevel'], $maketoc_args['levels'])) {
+								continue;
+							}
 							// Generate the toc entry title (with nums)
 							if ( $maketoc_args['nums'] == 'n' ) {
 								$tocentry_title = '';
@@ -6873,12 +6879,19 @@ class TikiLib extends TikiDb_Bridge
 							}
 
 							if ( $maketoc != '' ) $maketoc.= "\n";
+							$shift = $tocentry['hdrlevel'];
+							if (!empty($maketoc_args['levels'])) {
+								for ($i = 1; $i <= $tocentry['hdrlevel']; ++$i) {
+									if (!in_array($i, $maketoc_args['levels']))
+										--$shift;
+								}
+							}
 							switch ( $maketoc_args['type'] ) {
 								case 'box':
-									$maketoc .= "<li class='toclevel-".$tocentry['hdrlevel']."'>".$tocentry_title."</li>";
+									$maketoc .= "<li class='toclevel-".$shift."'>".$tocentry_title."</li>";
 									break;
 								default:
-									$maketoc .= str_repeat('*', $tocentry['hdrlevel']).$tocentry_title;
+									$maketoc .= str_repeat('*', $shift).$tocentry_title;
 							}
 						}
 						$maketoc = $this->parse_data($maketoc);

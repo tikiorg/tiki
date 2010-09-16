@@ -17,7 +17,7 @@ function prefs_wysiwyg_list() {
 			),
 		),
 		'wysiwyg_default' => array(
-			'name' => tra('... and is displayed by default'),
+			'name' => tra('Wysiwyg Editor is displayed by default'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_optional',
@@ -29,14 +29,16 @@ function prefs_wysiwyg_list() {
 		),
 		'wysiwyg_wiki_parsed' => array(
 			'name' => tra('Content is parsed like wiki page'),
+			'description' => tra('This allows a mixture of wiki and html. All wiki syntax is parsed.'),
 			'type' => 'flag',
 		),
 		'wysiwyg_wiki_semi_parsed' => array(
-			'name' => tra('Content is partially parsed'),
+			'name' => tra('Content is partially wiki parsed'),
+			'description' => tra('This also allows a mixture of wiki and html. Only some wiki syntax is parsed, such as plugins (not inline character styles etc).'),
 			'type' => 'flag',
 		),
 		'wysiwyg_toolbar_skin' => array(
-			'name' => tra('Toolbar skin'),
+			'name' => tra('Wysiwyg editor skin'),
 			'type' => 'list',
 			'options' => $prefs['wysiwyg_ckeditor'] != 'y' ? array(
 				'default' => tra('Default'),
@@ -57,6 +59,7 @@ function prefs_wysiwyg_list() {
 			'name' => tra('Use Wiki syntax in WYSIWYG'),
 			'description' => tra('Experimental, new : Allow to keep the wiki syntax with the WYSIWYG editor. WARNING: plugin edit is not working in that case in WYSIWYG mode, use the Source mode instead '),
 			'type' => 'flag',
+			'warning' => tra('Experimental. This feature is still under development.'),
 			'dependencies' => array(
 				'ajax_autosave',
 			),

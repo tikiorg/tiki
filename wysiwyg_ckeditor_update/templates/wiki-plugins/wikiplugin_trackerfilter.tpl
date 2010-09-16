@@ -24,6 +24,11 @@ function tf_export_submit(fm) {
 			{/foreach}
 	{/if}
 {/if}
+{if $mapview}
+<input type="hidden" name="mapview" value="y" />
+{else}
+<input type="hidden" name="mapview" value="n" />
+{/if}
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <input type="hidden" name="iTrackerFilter" value="{$iTrackerFilter}" />
 {if !empty($count_item)}<input type="hidden" name="count_item" value="{$count_item}" />{/if}
@@ -109,6 +114,13 @@ function tf_export_submit(fm) {
 		<input class="button submit" type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" />
 	{else}
 		&nbsp;
+	{/if}
+	{if $googlemapButtons && $googlemapButtons eq 'y'}
+        {if $mapview}
+        <br /><input class="button submit" type="submit" name="searchlist" value="{tr}List View{/tr}" />
+        {else}
+        <br /><input class="button submit" type="submit" name="searchmap" value="{tr}Map View{/tr}" />
+        {/if}
 	{/if}
 </td>
 {/if}

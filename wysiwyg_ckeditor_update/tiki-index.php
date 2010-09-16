@@ -41,9 +41,9 @@ include_once('lib/stats/statslib.php');
 if ($prefs['feature_ajax'] === 'y') {
 	if ($prefs['ajax_xajax'] === 'y') {
 		require_once ("lib/ajax/ajaxlib.php");
-	}
-	if ($prefs['feature_wiki_save_draft'] === 'y') {
-		require_once ("lib/wiki/wiki-ajax.php");
+		if ($prefs['feature_wiki_save_draft'] === 'y') {
+			require_once ("lib/wiki/wiki-ajax.php");
+		}
 	}
 }
 require_once ("lib/wiki/renderlib.php");

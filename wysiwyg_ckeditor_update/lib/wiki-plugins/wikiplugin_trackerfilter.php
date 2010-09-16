@@ -46,6 +46,11 @@ function wikiplugin_trackerfilter_info() {
 			'description' => 'Label for an export button. Leave blank to show the usual "Filter" button instead.',
 			'advanced' => true,
 		),
+		'googlemapButtons' => array(
+			'required' => false,
+			'name' => tra('Google Map Buttons'),
+			'description' => 'y|n - Display Mapview and Listview buttons',
+		),
 	), $list['params'] );
 
 return array(
@@ -68,11 +73,18 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n', 'export_action' => '',
 					 'export_itemid' => 'y', 'export_status' => 'n', 'export_created' => 'n', 'export_modif' => 'n', 'export_charset' => 'UTF-8', 'status' => 'opc');
+	
+	if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'y' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"])) {
+		$params["googlemap"] = 'y';
+	}
+	if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'n' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchlist"]) && !isset($_REQUEST["searchmap"]) ) {
+		$params["googlemap"] = 'n';
+	}
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
 	$iTrackerFilter++;
-	
+
 	if (isset($_REQUEST['msgTrackerFilter'])) {
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
 	}
@@ -236,6 +248,11 @@ $(".trackerfilter form").submit( function () {
 	$smarty->assign_by_ref('action', $action);
 	$smarty->assign_by_ref('noflipflop', $noflipflop);
 	$smarty->assign_by_ref('dataRes', $dataRes);
+	
+	if (isset($googlemapButtons)) {
+		$smarty->assign('googlemapButtons', $googlemapButtons);
+	}
+	
 	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
 
 	static $first = true;
