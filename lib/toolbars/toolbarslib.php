@@ -1053,7 +1053,7 @@ window.CKEDITOR.plugins.add( '{$this->name}', {
 		var command = editor.addCommand( '{$this->name}', new window.CKEDITOR.command( editor , {
 			modes: { wysiwyg:1 },
 			exec: function(elem, editor, data) {
-				{$this->getSyntax( $areaId )}
+				{$this->getSyntax( $areaId )};
 			},
 			canUndo: false
 		}));

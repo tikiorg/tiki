@@ -7,7 +7,7 @@ auto_save_data['editwiki'] = "";
 auto_save('editwiki', autoSaveId);
 $('#autosave_preview').slideToggle('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
 return false;
-}){/jq}
+});{/jq}
 {else}
 	<input type="submit" class="wikiaction tips" title="{tr}Edit wiki page{/tr}|{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 {/if}

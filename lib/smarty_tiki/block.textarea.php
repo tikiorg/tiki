@@ -73,7 +73,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	// but it looks fine to me
 	if (preg_match('/Firefox\/(\d)+\.(\d)+/i', $_SERVER['HTTP_USER_AGENT'], $m) &&count($m) > 2 && $m[1] >=3 && ($m[2] >=5 || $m[1] > 3)) {
 		//$headerlib->add_css('body {display: block; }', 10);	// xajax/loadComponent() doesn't re-parse CSS on AJAX loads (yet), so use JS instead
-		$headerlib->add_jq_onready('$("body").css("display", "block")');
+		$headerlib->add_jq_onready('$("body").css("display", "block");');
 	}
 	include_once('lib/smarty_tiki/block.remarksbox.php');
 	if ($params['_simple'] === 'n' || isset($smarty->_tpl_vars['page']) && $smarty->_tpl_vars['page'] != 'sandbox') {
@@ -146,7 +146,7 @@ var fckEditorInstances = new Array();
 function FCKeditor_OnComplete( editorInstance ) {
 	fckEditorInstances[fckEditorInstances.length] = editorInstance;
 	editorInstance.ResetIsDirty();
-};');
+}');
 		
 			$html .= $fcked->CreateHtml();
 			
@@ -319,7 +319,7 @@ function editTimerTick() {
 	var seconds = editTimeoutSeconds - editTimeElapsedSoFar;
 	
 	if (editTimerWarnings == 0 && seconds <= 60 && window.editorDirty) {
-		alert('".addslashes(tra('Your edit session will expire in')).' 1 '.tra('minute').'.'.
+		alert('".addslashes(tra('Your edit session will expire in:')).' 1 '.tra('minute').'.'.
 				addslashes(tra('You must PREVIEW or SAVE your work now, to avoid losing your edits.'))."');
 		editTimerWarnings++;
 	} else if (seconds <= 0) {
@@ -331,7 +331,7 @@ function editTimerTick() {
 		if (seconds % 60 == 0 && \$('#edittimeout')) {
 			\$('#edittimeout').text(Math.floor(seconds / 60));
 		}
-		window.status = '".addslashes(tra('Your edit session will expire in:'))."' +\" \" + + Math.floor(seconds / 60) + ':' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
+		window.status = '".addslashes(tra('Your edit session will expire in:'))."' + \" \" + Math.floor(seconds / 60) + ':' + ((seconds % 60 < 10) ? '0' : '') + (seconds % 60);
 	}
 }
 
