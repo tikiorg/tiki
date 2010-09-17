@@ -5340,6 +5340,11 @@ class TikiLib extends TikiDb_Bridge
 		$ck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
 		$arg_str = rtrim($arg_str, '&');
 		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
+
+		// some plugins are just too flakey to do wysiwyg, so return the source for them ;(
+		if (in_array($name, array('sharethis', 'tabs', 'toc'))) {
+			return '~np~' . $ck_editor_plugin . '~/np~';
+		}
 		
 		// remove hrefs and onclicks
 		$plugin_result = preg_replace('/href\=["\']([^"\']*)["\']/i', 'tiki_href="$1"', $plugin_result);
@@ -5351,9 +5356,9 @@ class TikiLib extends TikiDb_Bridge
 			$elem = 'span';
 		}
 		$ret = '<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="position:relative;"' .
-				' syntax="~np~' . htmlentities( $ck_editor_plugin ) . '~/np~"' .
-				' args="' . htmlentities($arg_str) . '"' .
-				' body="~np~' . str_replace('"', '\"', $data) . '~/np~">'.
+				' syntax="~np~' . htmlentities( $ck_editor_plugin, ENT_QUOTES, 'UTF-8' ) . '~/np~"' .
+				' args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
+				' body="~np~' . htmlentities( $data, ENT_QUOTES, 'UTF-8') . '~/np~">'.
 				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:absolute;z-index:10001" />' .
 				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>';
 		
