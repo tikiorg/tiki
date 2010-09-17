@@ -2048,6 +2048,10 @@ table.webmail_message_headers th {
 	.tikihelp, .navbar, categbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
 }
 
+.tabstoggle {
+	font-size: .8em;
+}
+
 /* treeTable definitions - used in object-perms so far */
 
 table.treeTable {
