@@ -56,17 +56,23 @@ if ( $tiki_sheet_div_style) {
 if ($objectperms->edit_sheet && $_REQUEST['parse'] == 'edit' && $prefs['feature_jquery_sheet'] == 'y') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
-if (typeof ajaxLoadingShow == "function") {
-	ajaxLoadingShow("role_main");
-}
-setTimeout (function () { $("#edit_button").click(); }, 500);
-', 500);
+		if (typeof ajaxLoadingShow == "function") {
+			ajaxLoadingShow("role_main");
+		}
+		setTimeout (function () { $("#edit_button").click(); }, 500);
+	', 500);
 } else if ((!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') && $prefs['feature_jquery_sheet'] == 'y') {
-	$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") {
-	ajaxLoadingShow("role_main");
-}
-setTimeout (function () { $("div.tiki_sheet").tiki("sheet", "",{editable:false});}, 500);
-', 500);
+	$headerlib->add_jq_onready('
+		if (typeof ajaxLoadingShow == "function") {
+			ajaxLoadingShow("role_main");
+		}
+		
+		setTimeout (function () {
+			$("div.tiki_sheet").tiki("sheet", "",{
+				editable:false
+			});
+		}, 500);
+	', 500);
 }
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists('pdf_new')) ? 'y' : 'n');

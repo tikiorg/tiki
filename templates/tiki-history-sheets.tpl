@@ -40,19 +40,25 @@
 	</table>
 	
 {else}
-	<a href="tiki-history_sheets.php?sheetId={$sheetId}">Back</a>
 	<table style="width: 100%;" id="tiki_sheet_container">
 		<tr>
-			{foreach from=$grid_content item=thisGrid}
+			{section name=date loop=$readdate}
 				<td style="width: 50%;">
 					<div class="tiki_sheet" {if !empty($tiki_sheet_div_style)} 
 							style="{$tiki_sheet_div_style}"
 						{/if}>
-						{$thisGrid}
+						{$grid_content[$smarty.section.date.index]}
 					</div>
+					
+					{button href="tiki-view_sheets.php?sheetId=$sheetId&readdate=`$readdate[$smarty.section.date.index]`" _id="edit_button" _text="{tr}Edit{/tr}" _htmlelement="role_main" sheetId="$sheetId" _class="" parse="edit" editSheet="y" _auto_args="*" _title="{tr}Edit{/tr}"}
 				</td>
-			{/foreach}
+			{/section}
 		</tr>
 	</table>
 	
+	<div class="navbar">
+	
+		{button href="tiki-history_sheets.php?sheetId=$sheetId" _id="back_button" _text="{tr}Back{/tr}" _htmlelement="role_main" sheetId="$sheetId" _class="" parse="back" _title="{tr}Back{/tr}"}
+
+	</div>
 {/if}
