@@ -3,8 +3,6 @@
 {tikimodule error=$module_params.error title=$tpl_module_title name="last_modif_pages" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {modules_list list=$modLastModif nonums=$nonums}
 	{section name=ix loop=$modLastModif}
-	{if ($minor eq 'n') and ($modLastModif[ix].version_minor ge '1') and ($prefs.wiki_edit_minor eq 'y')}
-	{else}
 		<li>
 			<a class="linkmodule" 
 			{if $absurl eq 'y'}
@@ -20,7 +18,6 @@
 			{/if}
 			</a>
 		</li>
-	{/if}	
 	{/section}
 {/modules_list}
 <a class="linkmodule" style="margin-left: 20px" href="{$url}">...{tr}more{/tr}</a>

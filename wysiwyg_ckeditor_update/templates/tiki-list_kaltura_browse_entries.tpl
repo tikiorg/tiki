@@ -1,11 +1,9 @@
 {* $Id$ *}
-{literal}	
-<script type="text/javascript">
+{jq notonready=true}
 	function loadMedia(entryId) {
 		$('#mykdp').get(0).insertMedia("-1",entryId,'true');
 	}
-</script>
-{/literal}
+{/jq}
 
 {if $entryType eq "mix"}
 	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
