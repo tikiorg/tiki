@@ -207,7 +207,7 @@ class EditLib
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
 		if ($prefs['wysiwyg_ckeditor'] === 'y') {
-			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true));
+			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'ck_editor' => true));
 		} else {
 			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
 		}
@@ -232,7 +232,7 @@ class EditLib
 		// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
 		if (!$ret) { $ret = $inData; }
 		
-		// take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
+		// take away the <p> that f/ck introduces around wiki heading ! to have maketoc/edit section working
 		$ret = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $ret);
 		
 		return $ret;
