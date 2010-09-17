@@ -36,10 +36,6 @@ body.wikitext {
 	color: #000;
 }
 
-html[dir=ltr] {	/* for fck editor */
-	background-color: #fafafa;
-}
-
 input[type=text],
 input[type=password] {
 	background: #fafafa;

@@ -24,7 +24,7 @@ $thirdpartyLibs = array(
 	'\./lib/debug.*',
 	'\./lib/diff.*',
 	'\./lib/pdflib.*',
-	'\./lib/fckeditor/.*',
+	'\./lib/ckeditor/.*',
 	'\./lib/graph-engine/.*',
 	'\./lib/core/Zend.*',
 	'\./lib/htmlparser/,*',

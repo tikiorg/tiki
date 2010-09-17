@@ -40,7 +40,6 @@ if ($prefs['feature_ajax'] === 'y') {
 	}
 }
 require_once ("lib/wiki/editlib.php");
-require_once ("lib/ajax/tikitohtml.php");
 
 
 function create_staging($cats, $cat_type, $cat_name, $cat_objid, $edit, $description, $pageLang, $is_html, $hash, $page, $user) {
@@ -825,7 +824,7 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
-if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && (!isset($_POST['xjxfun']) || $_POST['xjxfun'] !== 'WikiToHTML' )) {
+if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 	if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal'] ==='y') {
 		// Parsing page data as first time seeing html page in normal editor
 		$smarty->assign('msg', "Parsing html to wiki");
@@ -855,7 +854,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && (!isset($_POST
 				unset($_REQUEST['save']);	// don't save an ajax error
 			}
 		} else {
-		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true, 'is_html' => true));
+		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'ck_editor' => true, 'is_html' => true));
 		}
 	}
 }
