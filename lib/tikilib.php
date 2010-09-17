@@ -5342,13 +5342,14 @@ class TikiLib extends TikiDb_Bridge
 		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
 
 		// some plugins are just too flakey to do wysiwyg, so return the source for them ;(
-		if (in_array($name, array('sharethis', 'tabs', 'toc'))) {
+		if (in_array($name, array())) {
 			return '~np~' . $ck_editor_plugin . '~/np~';
 		}
 		
 		// remove hrefs and onclicks
-		$plugin_result = preg_replace('/href\=["\']([^"\']*)["\']/i', 'tiki_href="$1"', $plugin_result);
-		$plugin_result = preg_replace('/onclick\=["\']([^"\']*)["\']/i', 'tiki_onclick="$1"', $plugin_result);
+		$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
+		$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
+		$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
 		
 		if ($this->contains_html_block($plugin_result)) {
 			$elem = 'div';
