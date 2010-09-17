@@ -24,7 +24,7 @@ function WikiToHTML($data) {
 	$options['absolute_links'] = true;
 	$options['noparseplugins'] = false;
 	$options['noheaderinc'] = true;
-	$options['fck'] = true;
+	$options['ck_editor'] = true;
 	$secedit = $prefs['wiki_edit_section'];
 	$prefs['wiki_edit_section'] = 'n';    // get rid of the section edit icons
 	$exticons = $prefs['feature_wiki_ext_icon'];

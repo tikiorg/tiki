@@ -855,7 +855,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) && (!isset($_POST
 				unset($_REQUEST['save']);	// don't save an ajax error
 			}
 		} else {
-		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true, 'is_html' => true));
+		 	$parsed = $tikilib->parse_data( $edit_data, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'ck_editor' => true, 'is_html' => true));
 		}
 	}
 }
