@@ -4041,9 +4041,21 @@ class TrackerLib extends TikiLib
 		}
 		/* the list of potential value is calculated by a javascript call to selectValues at the end of the tpl */
 	}
+	function flaten($fields) {
+		$new = array();
+		foreach ($fields as $field) {
+			if (is_array($field)) {
+				$new = array_merge($new, $this->flaten($field));
+			} else {
+				$new[] = $field;
+			}
+		}		
+		return $new;
+	}
 	function test_field_type($fields, $types) {
-		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($fields),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
-		return $this->getOne($query, array_merge($fields, $types));
+		$new = $this->flaten($fields);
+		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($new),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
+		return $this->getOne($query, array_merge($new, $types));
 	}
 	function get_computed_info($options, $trackerId=0, &$fields=null) {
 		preg_match_all('/#([0-9]+)/', $options, $matches);
