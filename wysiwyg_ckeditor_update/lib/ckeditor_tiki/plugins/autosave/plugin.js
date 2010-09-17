@@ -114,7 +114,7 @@ CKEDITOR.plugins.add( 'autosave',
 		return true;
 	},
 	
-	// what to do when the fckeditor content is changed
+	// what to do when the ckeditor content is changed
 	onSelectionChange: function( editor ) {
 		
 		var asplugin;

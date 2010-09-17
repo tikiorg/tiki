@@ -38,7 +38,7 @@ abstract class Toolbar
 			return $tag;
 		elseif( $tag = ToolbarLineBased::fromName( $tagName ) )
 			return $tag;
-		elseif( $tag = ToolbarFckOnly::fromName( $tagName ) )
+		elseif( $tag = ToolbarCkOnly::fromName( $tagName ) )
 			return $tag;
 		elseif( $tag = ToolbarWikiplugin::fromName( $tagName ) )
 			return $tag;
@@ -261,8 +261,8 @@ abstract class Toolbar
 			case 'Separator':
 				$tag = new ToolbarSeparator();
 				break;
-			case 'FckOnly':
-				$tag = new ToolbarFckOnly();
+			case 'CkOnly':
+				$tag = new ToolbarCkOnly();
 				break;
 			case 'Fullscreen':
 				$tag = new ToolbarFullscreen();
@@ -410,13 +410,12 @@ class ToolbarSeparator extends Toolbar
 	} // }}}
 }
 
-class ToolbarFckOnly extends Toolbar
+class ToolbarCkOnly extends Toolbar
 {
 	function __construct( $token, $icon = '' ) // {{{
 	{
-		$fck_icon_path = 'lib/fckeditor_tiki/fckeditor-icons/';
 		if (empty($icon)) {
-			$img_path = 'lib/fckeditor_tiki/fckeditor-icons/' . $token . '.gif';
+			$img_path = 'lib/ckeditor_tiki/ckeditor-icons/' . $token . '.gif';
 			if (is_file($img_path)) {
 				$icon = $img_path;
 			} else {
@@ -425,7 +424,7 @@ class ToolbarFckOnly extends Toolbar
 		}
 		$this->setWysiwygToken( $token )
 			->setIcon($icon)
-				->setType('FckOnly');
+				->setType('CkOnly');
 	} // }}}
 	
 	public static function fromName( $name ) // {{{
@@ -491,7 +490,7 @@ class ToolbarFckOnly extends Toolbar
 			if ($prefs['wysiwyg_ckeditor'] == 'y') {
 				return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
 			} else {
-				return new self( 'ajaxAutoSave', 'lib/fckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
+				return new self( 'ajaxAutoSave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
 			}
 		case 'sub':
 			return new self( 'Subscript' );
@@ -512,6 +511,19 @@ class ToolbarFckOnly extends Toolbar
 	function getLabel() // {{{
 	{
 		return $this->wysiwyg;
+	} // }}}
+
+	function getIconHtml() // {{{ for admin page
+	{
+		global $headerlib;
+		
+		$headerlib->add_cssfile('lib/ckeditor/skins/kama/editor.css');
+		$headerlib->add_css('span.cke_skin_kama {border: none;background: none;padding:0;margin:0;}'.
+							'.toolbars-admin .row li.toolbar > span.cke_skin_kama {display: inline-block;}');
+		return '<span class="cke_skin_kama"><span class="cke_button"><span class="cke_button_' . htmlentities(strtolower($this->wysiwyg), ENT_QUOTES, 'UTF-8') . '"' .
+						' title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '">'.
+						'<span class="cke_icon"> </span>'.
+					'</span></span></span>';
 	} // }}}
 }
 
@@ -619,7 +631,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			break;
 		case 'pagebreak':
 			$label = tra('Page Break');
-			$icon = tra('lib/fckeditor_tiki/fckeditor-icons/Pagebreak.gif');
+			$icon = tra('lib/ckeditor_tiki/ckeditor-icons/Pagebreak.gif');
 			$wysiwyg = 'PageBreak';
 			$syntax = '...page...';
 			break;
@@ -722,7 +734,7 @@ class ToolbarPicker extends Toolbar
 		case 'specialchar':
 			$wysiwyg = 'SpecialChar';
 			$label = tra('Special Characters');
-			$icon = tra('lib/fckeditor_tiki/fckeditor-icons/Specialchar.gif');
+			$icon = tra('lib/ckeditor_tiki/ckeditor-icons/Specialchar.gif');
 			// Line taken from DokuWiki
             $list = explode(' ','À à Á á Â â Ã ã Ä ä Ǎ ǎ Ă ă Å å Ā ā Ą ą Æ æ Ć ć Ç ç Č č Ĉ ĉ Ċ ċ Ð đ ð Ď ď È è É é Ê ê Ë ë Ě ě Ē ē Ė ė Ę ę Ģ ģ Ĝ ĝ Ğ ğ Ġ ġ Ĥ ĥ Ì ì Í í Î î Ï ï Ǐ ǐ Ī ī İ ı Į į Ĵ ĵ Ķ ķ Ĺ ĺ Ļ ļ Ľ ľ Ł ł Ŀ ŀ Ń ń Ñ ñ Ņ ņ Ň ň Ò ò Ó ó Ô ô Õ õ Ö ö Ǒ ǒ Ō ō Ő ő Œ œ Ø ø Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ş ş Š š Ŝ ŝ Ţ ţ Ť ť Ù ù Ú ú Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ů ů ǖ ǘ ǚ ǜ Ų ų Ű ű Ŵ ŵ Ý ý Ÿ ÿ Ŷ ŷ Ź ź Ž ž Ż ż Þ þ ß Ħ ħ ¿ ¡ ¢ £ ¤ ¥ € ¦ § ª ¬ ¯ ° ± ÷ ‰ ¼ ½ ¾ ¹ ² ³ µ ¶ † ‡ · • º ∀ ∂ ∃ Ə ə ∅ ∇ ∈ ∉ ∋ ∏ ∑ ‾ − ∗ √ ∝ ∞ ∠ ∧ ∨ ∩ ∪ ∫ ∴ ∼ ≅ ≈ ≠ ≡ ≤ ≥ ⊂ ⊃ ⊄ ⊆ ⊇ ⊕ ⊗ ⊥ ⋅ ◊ ℘ ℑ ℜ ℵ ♠ ♣ ♥ ♦ 𝛼 𝛽 𝛤 𝛾 𝛥 𝛿 𝜀 𝜁 𝛨 𝜂 𝛩 𝜃 𝜄 𝜅 𝛬 𝜆 𝜇 𝜈 𝛯 𝜉 𝛱 𝜋 𝛳 𝜍 𝛴 𝜎 𝜏 𝜐 𝛷 𝜑 𝜒 𝛹 𝜓 𝛺 𝜔 𝛻 𝜕 ★ ☆ ☎ ☚ ☛ ☜ ☝ ☞ ☟ ☹ ☺ ✔ ✘ × „ “ ” ‚ ‘ ’ « » ‹ › — – … ← ↑ → ↓ ↔ ⇐ ⇑ ⇒ ⇓ ⇔ © ™ ® ′ ″');
 			$list = array_combine( $list, $list );
