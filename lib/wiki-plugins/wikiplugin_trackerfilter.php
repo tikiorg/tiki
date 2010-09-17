@@ -239,8 +239,9 @@ $(".trackerfilter form").submit( function () {
 			$smarty->assign_by_ref('f_fields', $f_fields);
 		}
 	}
-	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y') {
+	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y' || $prefs['javascript_enabled'] != 'y' || (isset($_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"]) && $_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"] == 'y')) {
 		$open = 'y';
+		$_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"] = 'y';
 	} else {
 		$open = 'n';
 	}
