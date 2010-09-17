@@ -6,7 +6,6 @@
 // $Id$
 
 include_once ("tiki-setup.php");
-error_reporting(E_ALL);
 if (!empty($_REQUEST['objectType']) && $_REQUEST['objectType'] != 'global') {
 	if (!isset($_REQUEST['objectName']) || empty($_REQUEST['objectId'])) {
 		$smarty->assign('msg', tra("Not enough information to display this page"));
