@@ -127,6 +127,13 @@ $objectsIds = '';
 
 if (isset($blogId)) {
 	$objectsIds = $bloglib->get_blog_posts_ids($blogId);
+	
+	if (empty($objectsIds)) {
+		$smarty->assign('msg', tra('This blog has no posts.'));
+		$smarty->display('error.tpl');
+		die;
+	}
+
 	$smarty->assign('blogId', $blogId);
 }
 
