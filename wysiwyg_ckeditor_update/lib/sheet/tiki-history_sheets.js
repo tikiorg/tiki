@@ -14,8 +14,7 @@ $(function () {
 		});
 		
 		if (sheetReadDates) {
-			var newWindow = window.open("tiki-history_sheets.php?sheetId=" + sheetId + "&readdate=" + sheetReadDates, "_blank");
-			newWindow.focus();
+			window.location = "tiki-history_sheets.php?sheetId=" + sheetId + "&readdate=" + sheetReadDates;
 		}
 		
 		return false;

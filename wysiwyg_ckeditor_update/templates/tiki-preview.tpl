@@ -20,13 +20,13 @@ $("#preview_diff_style").change(function(){
 		$("#autosave_preview .wikitext").html(data);
 		ajaxLoadingHide();
 	});
-}).val(getCookie("preview_diff_style"));
+}).val(function(){return getCookie("preview_diff_style");});
 {/jq}
 		{self_link _icon="arrow_left" _ajax="n" _onclick="ajax_preview( 'editwiki', autoSaveId );$('#autosave_preview').hide();return false;"}{tr}Popup preview{/tr}{/self_link}
 		{self_link _icon="close" _ajax="n" _onclick="$('#autosave_preview').hide();return false;"}{tr}Close preview{/tr}{/self_link}
 	</div>
 {/if}
-{if $prefs.feature_jquery_ui eq "y"}{jq}$('#autosave_preview').resizable({handles:'s'});{/jq}{/if}
+{if $prefs.feature_jquery_ui eq "y"}{jq}$('#autosave_preview').resizable({handles:'s,sw'});{/jq}{/if}
 <h2>{tr}Preview{/tr} {if $staging_preview eq 'y'}of current staging copy{/if}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}</h2>
 {if $prefs.feature_wiki_description eq 'y'}
 <small>{$description}</small>

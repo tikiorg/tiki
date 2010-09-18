@@ -449,7 +449,6 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 					.replace(/\&/g,"%26");	// and replace &'s with 0x26
 				
 				var setDirty = this.setDirty;
-				
 				$.ajax({
 					url: this.s.urlSave,
 					type: "POST",
@@ -469,12 +468,22 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 			var sheetClone = sheetInstance.sheetDecorateRemove(true);
 			var documents = []; //documents
 			
-			jQuery(sheetClone).each(function() {
+			$(sheetClone).each(function() {
 				var document = {}; //document
 				document.metadata = {};
 				document.data = {};
 				
-				var table = jQuery(this);
+				//This preserves the width for postback, very important for styles
+				//<DO_NOT_REMOVE>
+				var table = $(this);
+				var trFirst = table.find('tr:first');
+				table.find('col').each(function(i){
+					var w = jQuery(this).css('width');
+					trFirst.find('td').eq(i)
+						.css('width', w)
+						.attr('width', w);
+				});
+				//</DO_NOT_REMOVE>
 				
 				var trs = table.find('tr');
 				var rowCount = trs.length;
@@ -482,12 +491,14 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 				var col_widths = '';
 				
 				trs.each(function(i) {
-					var tr = jQuery(this);
+					var tr = $(this);
 					var tds = tr.find('td');
 					colCount = tds.length;
 					
 					document.data['r' + i] = {};
-					document.data['r' + i].height = tr.attr('height');
+					
+					var h = tr.css('height');
+					document.data['r' + i].height = (h ? h : tr.attr('height'));
 					
 					tds.each(function(j) {
 						var td = jQuery(this);
@@ -495,7 +506,7 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 						colSpan = (colSpan > 1 ? colSpan : null);
 
 						document.data['r' + i]['c' + j] = {
-							value: td.text(),
+							value: td.html(),
 							formula: td.attr('formula'),
 							stl: td.attr('style'),
 							colspan: colSpan,
@@ -526,7 +537,7 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 				};
 				
 				table.find('colgroup').children().each(function(i) {
-					document.metadata.col_widths['c' + i] = (jQuery(this).attr('width') + '').replace('px', '');
+					document.metadata.col_widths['c' + i] = ($(this).attr('width') + '').replace('px', '');
 				});
 				
 				documents.push(document); //append to documents

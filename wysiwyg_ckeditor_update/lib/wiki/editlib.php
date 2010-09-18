@@ -195,7 +195,7 @@ class EditLib
 	function parseToWiki( $inData ) {
 		
 		$parsed = $this->parse_html($inData);
-		$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
+		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
 		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
 		return $parsed;
@@ -212,7 +212,7 @@ class EditLib
 			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
 		}
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
-		$parsed = preg_replace("/src=\"img\/smiles\//im","src=\".*img/smiles/", $parsed);	// fix smiley src's
+//		$parsed = preg_replace("/src=\"(.*)img\/smiles\//im","src=\"$1img/smiles/", $parsed);	// fix smiley src's
 		$parsed = str_replace( 
 				array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
 				array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
@@ -423,9 +423,9 @@ class EditLib
 							if (isset($c[$i]["pars"]["src"]["value"]))
 								// Note what it produce (img) not {img}! Will fix this below...
 								if( strstr( $c[$i]["pars"]["src"]["value"], "http:" ) ) {
-									$src .= '(img src='.$c[$i]["pars"]["src"]["value"].')';
+									$src .= '{img src="'.$c[$i]["pars"]["src"]["value"].'"}';
 								} else {
-									$src .= '(img src='.$head_url.$c[$i]["pars"]["src"]["value"].')';
+									$src .= '{img src="'.$head_url.$c[$i]["pars"]["src"]["value"].'"}';
 								}
 							break;
 						case "a":

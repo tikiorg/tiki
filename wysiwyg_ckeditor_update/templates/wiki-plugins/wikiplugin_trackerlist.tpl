@@ -151,9 +151,9 @@
 					{elseif isset($perms)}
 						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode
 						tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending 
-						tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
+						tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items reloff=$itemoff}
 					{else}
-						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode}
+						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode reloff=$itemoff}
 					{/if}
 		</td>
 				{/if}

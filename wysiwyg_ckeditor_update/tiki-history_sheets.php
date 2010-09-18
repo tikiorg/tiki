@@ -52,7 +52,17 @@ if (empty($_REQUEST['readdate'])) {
 	$dates = array(time());
 	
 	$i = 0;
-	$readdates = explode("|", $_REQUEST['readdate'] );
+	$readdates = array();
+	
+	foreach( explode("|", $_REQUEST['readdate'] ) as $date ) {
+		if ( $date ) {
+			array_push( $readdates , $date );
+		}
+	}
+	
+	sort($readdates);
+	
+	$smarty->assign( 'readdate', $readdates );
 	foreach ( $readdates as $dateStr ) {
 		if ( $dateStr ) {
 			$dates[$i] = $dateStr;
@@ -62,7 +72,7 @@ if (empty($_REQUEST['readdate'])) {
 		$i++;
 	}
 	
-	$smarty->assign('grid_content', diffSheetsAsHTML($_REQUEST["sheetId"], $dates));
+	$smarty->assign( 'grid_content', diffSheetsAsHTML($_REQUEST["sheetId"], $dates) );
 	
 	$headerlib->add_jq_onready('
 		if (typeof ajaxLoadingShow == "function") {

@@ -51,13 +51,13 @@ var openEditHelp = function() {
 	var opts, edithelp_pos = getCookie("edithelp_position");
 	opts = { width: 460, height: 500, title: "' . $title . '", autoOpen: false, beforeclose: function(event, ui) {
 		var off = $(this).offsetParent().offset();
-   		setCookie("edithelp_position", parseInt(off.left) + "," + parseInt(off.top) + "," + $(this).offsetParent().width() + "," + $(this).offsetParent().height());
-	}}
+   		setCookie("edithelp_position", parseInt(off.left,10) + "," + parseInt(off.top,10) + "," + $(this).offsetParent().width() + "," + $(this).offsetParent().height());
+	}};
 	if (edithelp_pos) {edithelp_pos = edithelp_pos.split(",");}
 	if (edithelp_pos && edithelp_pos.length) {
-		opts["position"] = [parseInt(edithelp_pos[0]), parseInt(edithelp_pos[1])];
-		opts["width"] = parseInt(edithelp_pos[2]);
-		opts["height"] = parseInt(edithelp_pos[3]);
+		opts["position"] = [parseInt(edithelp_pos[0],10), parseInt(edithelp_pos[1],10)];
+		opts["width"] = parseInt(edithelp_pos[2],10);
+		opts["height"] = parseInt(edithelp_pos[3],10);
 	}
 	$("#help_sections").dialog("destroy").dialog(opts).dialog("open");
 	

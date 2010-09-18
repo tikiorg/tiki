@@ -37,11 +37,6 @@
 						}
 					}
 					sel.selectElement( data );
-					//var r = sel.getRanges();	// ckeditor 3.4 seems to select some whitespace before the plugin element
-					//r[0].checkBoundaryOfElement(data.$);
-					//r[0].shrink();
-					//r[0].setStartAfter( r[0].startContainer );
-					//r[0].setStartBefore( data );	// nope - none of these do it - FIXME
 					popupPluginForm( editor.name, data.getAttribute("plugin"), 0, '', args, data.getAttribute("body"), '');
 				},
 				canUndo: false
@@ -170,8 +165,8 @@
 			});
 			return output;
 		},
-
-		requires : [ 'fakeobjects' ]
+		
+		requires : [ '' ]	// TODO check req - autosave? (really)
 	});
 	
 	if (typeof CKEDITOR.editor.prototype.reParse != 'function') {

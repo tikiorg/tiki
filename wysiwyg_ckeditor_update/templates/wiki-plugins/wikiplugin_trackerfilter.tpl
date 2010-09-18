@@ -6,7 +6,7 @@
 {if $line ne 'y' and $prefs.javascript_enabled eq 'y' and $noflipflop ne 'y'}
 {button _text="{tr}Filters{/tr}" _flip_id="trackerFilter$iTrackerFilter"}
 {/if}
-<div id="trackerFilter{$iTrackerFilter}" class="trackerfilter" style="display:{if $open eq 'y' or $line eq 'y' or $prefs.javascript_enabled ne 'y' and $noflipflop ne 'y'}block{else}none{/if}">
+<div id="trackerFilter{$iTrackerFilter}" class="trackerfilter" style="display:{if $open eq 'y'}block{else}none{/if}">
 {if empty($inForm)}
 	{if empty($export_action)}
 		<form action="{$smarty.server.PHP_SELF}?{query}" method="post">
