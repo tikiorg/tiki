@@ -331,7 +331,7 @@ div#sitelogo * {
 }
 
 #sitesearchbar {
-	float: none;
+	float: right;
 	margin: 3px 0 0 0;
 	padding: 0 0 0 15px;
 	height: 33px;
@@ -2033,6 +2033,16 @@ a.admbox.off:focus,
 .admbox a,
 a.admbox.off:active {
 	border: 1px solid #a9a9a9;
+}
+
+/* Make Register info more prominent than lost password */
+#siteloginbar .register {
+  padding-left: 20px;
+}
+
+#siteloginbar .pass {
+  float: right;
+  padding-left: 20px;
 }
 
 /* Fixed-width rules */
