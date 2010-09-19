@@ -197,7 +197,7 @@ class SurveyLib extends TikiLib
 
 			$questionId = $res["questionId"];
 			if ( ! empty($res['options']) ) {
-				if ($res['type'] == 'g') {
+				if (in_array($res['type'], array('g', 'x'))) {
 					$res['explode'] = $options;
 				} elseif (in_array($res['type'], array('r', 's')) ) {
 					$res['explode'] = array_fill(1, $res['options'], ' ');
