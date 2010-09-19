@@ -1,5 +1,5 @@
 <!-- templates/tiki-preview.tpl start -->
-<div class="wikipreview" {if $prefs.ajax_autosave eq "y"}style="display:none;" id="autosave_preview"{/if}>
+<div class="wikipreview" {if $prefs.ajax_autosave eq "y"}style="display:none;" id="autosave_preview"><div{/if}>
 {if $prefs.ajax_autosave eq "y"}
 	<div style="float:right;">
 		<select name="diff_style" id="preview_diff_style">
@@ -26,7 +26,7 @@ $("#preview_diff_style").change(function(){
 		{self_link _icon="close" _ajax="n" _onclick="$('#autosave_preview').hide();return false;"}{tr}Close preview{/tr}{/self_link}
 	</div>
 {/if}
-{if $prefs.feature_jquery_ui eq "y"}{jq}$('#autosave_preview').resizable({handles:'s,sw'});{/jq}{/if}
+{if $prefs.feature_jquery_ui eq "y"}{jq}$('#autosave_preview').resizable({handles:{'s':'#autosave_preview_grippy'},alsoResize:'#autosave_preview>div' });{/jq}{/if}
 <h2>{tr}Preview{/tr} {if $staging_preview eq 'y'}of current staging copy{/if}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}</h2>
 {if $prefs.feature_wiki_description eq 'y'}
 <small>{$description}</small>
@@ -39,6 +39,9 @@ $("#preview_diff_style").change(function(){
 </div>
 {if $has_footnote and isset($parsed_footnote)}
 <div  class="wikitext">{$parsed_footnote}</div>
+{/if}
+{if $prefs.ajax_autosave eq "y"}
+</div><span id="autosave_preview_grippy" class="ui-resizable-handle ui-resizable-s"> </span>
 {/if}
 </div>
 <hr style="clear:both; height:0px;"/> {* Information below the wiki content

@@ -987,11 +987,15 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 	margin: 0 2% 0 0;
 }
 
-#autosave_preview {
+#autosave_preview > div {
 	height: 30ex;
 	overflow-y: auto;
 	overflow-x: hidden;
-	border-bottom: 6px solid #ccc;
+}
+
+#autosave_preview_grippy {
+	background-color: #ccc;
+	background-image: url("../../pics/icons/shading.png");
 }
 
 /***** Tables, Tabs ****/
