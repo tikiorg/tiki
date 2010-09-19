@@ -1350,9 +1350,6 @@ if( $prefs['feature_multilingual'] === 'y' ) {
 	$smarty->assign('trads', $trads);
 }
 
-// Get edit session timeout in seconds
-$smarty->assign('edittimeout', ini_get('session.gc_maxlifetime'));
-
 // setup properties tab visibility
 if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates === 'y') ||
 	($prefs['feature_wiki_usrlock'] === 'y' && ($tiki_p_lock === 'y' || $tiki_p_admin_wiki === 'y')) ||
