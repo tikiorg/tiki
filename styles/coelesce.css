@@ -1049,6 +1049,10 @@ div#description,
 	font-style: italic;
 }
 
+body.tiki_surveys div.description {
+	font-style: normal;
+}
+
 .wikiactions .icons,
 .wikiactions form {
 	display: inline-block;
