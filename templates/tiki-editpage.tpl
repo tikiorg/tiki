@@ -230,8 +230,8 @@
 							{/if}
 						{/tab}
 					{/if}
-					{if !empty($showToolsTab)}
-						{tab name="{tr}Tools{/tr}"}
+					{if !empty($showPropertiesTab)}
+						{tab name="{tr}Properties{/tr}"}
 							{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 								<fieldset>
 									<legend>{tr}Apply template:{/tr}</legend>
@@ -300,10 +300,7 @@
 								{/if}
 	
 							{/if}
-						{/tab}
-					{/if}
-					{if !empty($showPropertiesTab)}
-						{tab name="{tr}Properties{/tr}"}
+							{* merged tool and property tabs for tiki 6 *}
 							{if $page|lower neq 'sandbox'}
 								{if $prefs.wiki_feature_copyrights  eq 'y'}
 									<fieldset>
@@ -468,6 +465,9 @@
 										{/if}
 									</fieldset>
 								{/if}
+							{/if}
+							{if $tiki_p_admin_wiki eq "y"}
+								<a href="tiki-admin.php?page=wiki">{tr}Admin wiki preferences{/tr} {icon _id='wrench'}</a>
 							{/if}
 						{/tab}
 					{/if}
