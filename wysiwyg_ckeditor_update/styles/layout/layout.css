@@ -18,9 +18,11 @@ body.db_error #tiki-main {
 	margin: 1em auto;
 }
 
+/* ckeditor body definition */
 html[dir=ltr]>body {
 	display: block;
 	padding: 1em;
+	width: auto;
 }
 
 span.button {

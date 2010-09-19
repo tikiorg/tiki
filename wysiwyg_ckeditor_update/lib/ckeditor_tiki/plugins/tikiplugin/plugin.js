@@ -116,33 +116,23 @@
 		},			// end of init()
 		
 		toHTMLSource: function( editor, html ) {
-			var output = "";
-			var asplugin = this;
-			jQuery.ajax({
-				async: false,	// wait please
-				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
-				type: "POST",
-				data: {
-					script: editor.config.autoSaveSelf,
-					editor_id: editor.name,
-					data: encodeURIComponent(html),
-					command: "toHTMLSource"
-				},
-				// good callback
-				success: function(data) {
-					output = unescape(jQuery(data).find('data').text());
-					return asplugin.ckToData.call(asplugin, html);
-				},
-				// bad callback - no good info in the params :(
-				error: function(req, status, error) {
-					output = "ajax error";
+			// replace visual plugins with syntax
+			var output = html.replace(/<(?:div|span)[^>]*syntax="([^"]*)"[\s\S]*?end tiki_plugin --><\/(?:div|span)>/mig, function() {
+				if (arguments.length > 0) {
+					return $("<span />").html(arguments[1]).text();	// decode html entities
+				} else {
+					alert("ckeditor: error parsing to html source");
+					return "";
 				}
 			});
-			return output;
+			return this.ckToData(output);
 		},
+
 		toHtmlFormat: function( editor, data ) {
 			var output = "";
 			var asplugin = this;
+			ajaxLoadingShow( "cke_contents_" + this.editor.name);
+			$("#ajaxLoading").show();		// FIXME safari/chrome refuse to show until ajax finished
 			jQuery.ajax({
 				async: false, // wait for this one
 				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
@@ -155,11 +145,13 @@
 				},
 				// good callback
 				success: function(data) {
+					ajaxLoadingHide();
 					output = unescape(jQuery(data).find('data').text());
 					return asplugin.ckToHtml.call(asplugin, output);
 				},
 				// bad callback - no good info in the params :(
 				error: function(req, status, error) {
+					ajaxLoadingHide();
 					output = "ajax error";
 				}
 			});

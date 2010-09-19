@@ -1349,11 +1349,7 @@ if( $prefs['feature_multilingual'] === 'y' ) {
 	$smarty->assign('trads', $trads);
 }
 
-// Get edit session timeout in seconds
-$smarty->assign('edittimeout', ini_get('session.gc_maxlifetime'));
-
-// setup tab showing flags (only avoiding empty tabs for now - regroup better of less than X features later)
-// tools tab
+// setup properties tab visibility
 if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates === 'y') ||
 	($prefs['feature_wiki_usrlock'] === 'y' && ($tiki_p_lock === 'y' || $tiki_p_admin_wiki === 'y')) ||
 	($prefs['feature_wiki_replace'] === 'y' && $_SESSION['wysiwyg'] !== 'y') ||
@@ -1361,21 +1357,20 @@ if (($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates =
 	$prefs['feature_wiki_import_html'] === 'y' ||
 	$prefs['wiki_comments_allow_per_page'] !== 'n' ||
 	($tiki_p_admin_wiki === 'y' && $prefs['feature_wiki_import_page'] === 'y') ||
-	($_SESSION['wysiwyg'] !== 'y' && ($prefs['feature_wiki_attachments'] === 'y' && ($tiki_p_wiki_attach_files === 'y' && $tiki_p_wiki_admin_attachments === 'y')))) {
-	$smarty->assign('showToolsTab', 'y');
-}
-if (strtolower($page) !== 'sandbox' &&
+	($_SESSION['wysiwyg'] !== 'y' && ($prefs['feature_wiki_attachments'] === 'y' && ($tiki_p_wiki_attach_files === 'y' && $tiki_p_wiki_admin_attachments === 'y'))) ||
+	strtolower($page) !== 'sandbox' &&
 			($prefs['wiki_feature_copyrights']  === 'y' ||
 			($prefs['feature_freetags'] === 'y' && $tiki_p_freetags_tag === 'y') ||
 			$prefs['feature_wiki_icache'] === 'y' ||
 			$prefs['feature_contribution'] === 'y' ||
 			$prefs['feature_wiki_structure'] === 'y' ||
 			$prefs['wiki_feature_copyrights']  === 'y' ||
-			($tiki_p_admin_wiki === 'y' && $prefs['wiki_authors_style_by_page'] === 'y')) ||
+			($tiki_p_admin_wiki === 'y' && $prefs['wiki_authors_style_by_page'] === 'y')) ||	// end not sandbox
 		($prefs['feature_wiki_description'] === 'y' || $prefs['metatag_pagedesc'] === 'y') ||
 		$prefs['feature_wiki_footnotes'] === 'y' ||
 		($prefs['feature_wiki_ratings'] === 'y' && $tiki_p_wiki_admin_ratings ==='y') ||
 		$prefs['feature_multilingual'] === 'y') {
+	
 	$smarty->assign('showPropertiesTab', 'y');
 }
 

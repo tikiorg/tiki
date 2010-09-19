@@ -1,8 +1,9 @@
 /* community option - released under LPGL license. For more information, visit http://themes.tiki.org. */
 
 #sitetitles {
+	margin-left: 10px;
 	height: auto;
-	line-height: 80px;
+	line-height: 60px;
 }
 
 #sitetitle {
@@ -19,6 +20,20 @@ input#fuser {
 	margin-left: 20px;
 	font-size: 25px !important;
 	font-weight: bold;
+}
+
+div#sitelogo {
+	padding: 0;
+}
+
+div#sitelogo img {
+	margin: 0;
+}
+
+div.floatleft {
+	float: left;
+	clear: none;
+	margin: 0;
 }
 
 /* Calendar enhancements (should be here, in option) */
