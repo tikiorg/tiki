@@ -20,7 +20,7 @@ $("#preview_diff_style").change(function(){
 		$("#autosave_preview .wikitext").html(data);
 		ajaxLoadingHide();
 	});
-}).val(function(){return getCookie("preview_diff_style");});
+});
 {/jq}
 		{self_link _icon="arrow_left" _ajax="n" _onclick="ajax_preview( 'editwiki', autoSaveId );$('#autosave_preview').hide();return false;"}{tr}Popup preview{/tr}{/self_link}
 		{self_link _icon="close" _ajax="n" _onclick="$('#autosave_preview').hide();return false;"}{tr}Close preview{/tr}{/self_link}
