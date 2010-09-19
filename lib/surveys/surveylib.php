@@ -353,7 +353,7 @@ class SurveyLib extends TikiLib
 				if ($question['max_answers'] < 1)
 					$question['max_answers'] = $nb_answers;
 			}
-			$q = empty($question['question']) ? '.' : ' "<b>'.htmlentities($question['question']).'</b>".';
+			$q = empty($question['question']) ? '.' : ' "<b>'.$question['question'].'</b>".';
 			if ($multiple_choice) {
 				if ($question['mandatory'] == 'y')
 					$question['min_answers'] = max(1, $question['min_answers']);
@@ -366,8 +366,7 @@ class SurveyLib extends TikiLib
 					$errors[] = sprintf(tra('You have to make less than %d choice(s) for the question'), $question['max_answers']).$q;
 				}
 			} elseif ($question['mandatory'] == 'y' && $nb_answers == 0) {
-				$errors[] = sprintf(tra('You have to choose at least %d choice(s) for the question'), 1).$q
-					.' "<b>'.htmlentities($question['question']).'</b>';
+				$errors[] = sprintf(tra('You have to choose at least %d choice(s) for the question'), 1).$q;
 			}
 		}
 	
