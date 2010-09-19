@@ -5,7 +5,7 @@
 <form name="aform" formId='editpageform' action="{$form_action|default:'tiki-take_survey.php'}" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="vote" value="yes" />
-  {if !isset($show_name) or $show_name eq 'y'}<h2>{$survey_info.name|escape}</h2>{/if}
+  {if !isset($show_name) or $show_name eq 'y'}{title}{$survey_info.name|escape}{/title}{/if}
     <div class="description">{wiki}{$survey_info.description|escape}{/wiki}</div>
     {section name=ix loop=$questions}
     <div class="questionblock">
