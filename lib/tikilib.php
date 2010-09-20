@@ -7679,7 +7679,7 @@ class TikiLib extends TikiDb_Bridge
 
 		// If user timezone is not also in UTC, convert the date
 		if ( $tz != 'UTC' ) {
-			$tikidate->convertTZByID($tz);
+			$tikidate->setTZbyID($tz);
 		}
 
 		return $tikidate->format($format, $is_strftime_format);
