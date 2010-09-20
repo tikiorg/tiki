@@ -130,6 +130,7 @@ function ajax_preview(editorId, autoSaveId, inPage) {
 								replace(/\sonclick/gi, " tiki_onclick").
 								replace(/<script[.\s\S]*?<\/script>/mgi, "");
 						$("#autosave_preview .wikitext").html(data);
+						$("#preview_diff_style").val(function(){return getCookie("preview_diff_style");});
 						ajaxLoadingHide();
 					});
 				}

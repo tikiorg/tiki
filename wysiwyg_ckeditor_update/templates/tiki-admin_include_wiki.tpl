@@ -171,6 +171,7 @@
 			{preference name=feature_wiki_history_ip}
 			{preference name=default_wiki_diff_style}
 			{preference name=feature_wiki_history_full}
+			{preference name=feature_page_contribution}
 		</div>
 
 		{preference name=feature_wiki_discuss}

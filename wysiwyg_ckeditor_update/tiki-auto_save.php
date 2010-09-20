@@ -86,8 +86,6 @@ if (isset($_REQUEST['editor_id'])) {
 						$data = diff2( $info['data'], html_entity_decode($data, ENT_COMPAT, 'UTF-8'), $_REQUEST["diff_style"]);
 						$smarty->assign_by_ref('diffdata', $data);
 						
-						//$smarty->assign( 'diff_oldver', (int) $info['version'] );
-						//$smarty->assign( 'diff_newver', (int) $info['version'] );
 						$smarty->assign( 'translation_mode', 'y' );
 						$data = $smarty->fetch('pagehistory.tpl');
 					}

@@ -590,6 +590,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 				'text_area' => 'a',
 				'checkbox' => 'c',
 				'numeric' => 'n',
+				'currency' => 'b',
 				'dropdown' => 'd',
 				'dropdown_other' => 'D',
 				'radio' => 'R',

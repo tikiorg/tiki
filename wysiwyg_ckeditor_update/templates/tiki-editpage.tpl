@@ -13,6 +13,11 @@
 	{include file="wiki:$wikiHeaderTpl"}
 {/if}
 	
+{if $prefs.ajax_autosave eq "y"}
+<div class="floatright">
+	{self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
+</div>
+{/if}
 {if $translation_mode eq 'n'}
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
 	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}{/title}

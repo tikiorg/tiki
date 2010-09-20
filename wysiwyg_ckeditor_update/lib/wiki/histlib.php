@@ -453,7 +453,7 @@ class Document
 		$source=$this->removeText($this->_data[$index]['data']);
 		$source=preg_replace(array('/\{AUTHOR\(.+?\)\}/','/{AUTHOR\}/','/\{INCLUDE\(.+?\)\}\{INCLUDE\}/'), ' ~np~$0~/np~', $source);
 		if ($this->_parsed) {
-			$source=$histlib->parse_data($source, array('suppress_icons'=>true));	
+			$source=$histlib->parse_data($source, array('suppress_icons'=>true));
 		}
 		if ($this->_nohtml) {
 			$source=strip_tags($source);
@@ -749,7 +749,7 @@ class Document
 						      preg_replace(array('/\~np\~/', '//\~\/np\~/'), array('&#126;np&#126;','&#126;/np&#126;;'), $text) . 
 						      '~/np~';
 					}
-					$text=preg_replace(array('/</','/>/'), array('&lt;','&gt;'), $text);
+					$text=preg_replace(array('/</','/>/'), array('&lt;','&gt;'), $text);					
 				}
 				break;
 			case 'wiki':
@@ -784,27 +784,26 @@ class Document
 						if ($options['escape']) {
 							$text.="~np~";
 						}
-					} else {
-						if (!$options['escape']) {
-							if ($this->_parsed and !$this->_nohtml) { // skipping popups for links
-								if (substr($w,0,3)=='<a ') {
-									$text.='{AUTHOR}';
-								}
-								if (substr($w,-4)=='</a>') {
-									$text.=$w . "{AUTHOR(author=\"$author\"" . 
-										   ($deleted?",deleted_by=\"$deleted_by\"":'') . 
-										   ',visible="1", ' .
-										   ($showpopups?', popup="1"':'') .
-										   ')}';
-									$skip=true;
-								}
+					}
+					if (!$options['escape']) {
+						if ($this->_parsed and !$this->_nohtml) { // skipping popups for links
+							if (substr($w,0,3)=='<a ') {
+								$text.='{AUTHOR}';
 							}
-						} else { //escape existing tags
-							if (!$this->_parsed) { 
-						      	$w=preg_replace(array('/\~np\~/', '/\~\/np\~/'), array('&#126;np&#126;','&#126;/np&#126;'), $w);
+							if (substr($w,-4)=='</a>') {
+								$text.=$w . "{AUTHOR(author=\"$author\"" . 
+									   ($deleted?",deleted_by=\"$deleted_by\"":'') . 
+									   ',visible="1", ' .
+									   ($showpopups?', popup="1"':'') .
+									   ')}';
+								$skip=true;
 							}
-							$w=preg_replace(array('/</','/>/'), array('&amp;lt;','&amp;gt;'), $w); //double encode!							
 						}
+					} else { //escape existing tags
+						if (!$this->_parsed) { 
+					      	$w=preg_replace(array('/\~np\~/', '/\~\/np\~/'), array('&#126;np&#126;','&#126;/np&#126;'), $w);
+						}
+						$w=preg_replace(array('/</','/>/'), array('&amp;lt;','&amp;gt;'), $w); //double encode!	
 					}
 					if (strlen($w)==0 and !$this->_parsed) {
 						$text.="\n";

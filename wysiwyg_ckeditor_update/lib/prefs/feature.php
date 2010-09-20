@@ -1453,6 +1453,14 @@ function prefs_feature_list() {
 			'name' => tra('History all instead of only page data, description, and change comment'),
 			'type' => 'flag',
 		),
+		'feature_page_contribution' => array(
+			'name' => tra('View page contributions by author'),
+			'type' => 'flag',
+			'dependencies' => array (
+				'feature_history'
+			),
+			'description' => tra('Visualize the contributions of different authors made to a wiki page'),
+		),
 		'feature_wiki_discuss' => array(
 			'name' => tra('Discuss pages on forums'),
 			'type' => 'flag',

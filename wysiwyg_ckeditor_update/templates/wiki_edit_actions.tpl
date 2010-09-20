@@ -1,8 +1,8 @@
 {* $Id$ *}
 <input type="hidden" name="no_bl" value="y" />
 {if $prefs.ajax_autosave eq "y"}
-	{button _title="{tr}Preview your changes.{/tr}" _class="wikiaction tips" _text="{tr}Preview{/tr}" _ajax="n" _id="previewBtn"}
-	{jq} $("#previewBtn").click(function(){
+	{button _title="{tr}Preview your changes.{/tr}" _class="wikiaction tips previewBtn" _text="{tr}Preview{/tr}" _ajax="n"}
+	{jq} $(".previewBtn").click(function(){
 auto_save_data['editwiki'] = "";
 auto_save('editwiki', autoSaveId);
 $('#autosave_preview').slideToggle('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});

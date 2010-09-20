@@ -1,5 +1,5 @@
 {* $Id$ *}
-<form method="post" action="tiki-page-contribution.php">
+<form method="post" action="tiki-page_contribution.php">
 	<input type="hidden" name="page" id="page" value="{$page}" />
 	<fieldset>
 		<legend>{tr}Process{/tr}</legend>
@@ -11,8 +11,8 @@
 		<legend>{tr}Options{/tr}</legend>
 		  <label><input type="checkbox" name="showstatistics" value="1"{if $showstatistics==1} checked="checked"{/if} title="{tr}Show statistics{/tr}" /> {tr}Show statistics{/tr}</label><br />
 		  <label><input type="checkbox" name="showpage" value="1"{if $showpage==1} checked="checked"{/if} title="{tr}Visualize page changes{/tr}" /> {tr}Visualize page changes{/tr}</label><br />		  
-		  <label><input type="checkbox" name="showpopups" value="1" {if $showpopups==1} checked="checked"{/if} title="{tr}Visualize page changes{/tr}" /> {tr}Show popups{/tr}</label><br />		  
-		  <label><input type="checkbox" name="escape" value="1" {if $escape==1} checked="checked"{/if} title="{tr}Escape HTML / Wiki syntax in page changes{/tr}" /> {tr}Escape HTML / Wiki syntax in page changes{/tr}</label><br />	
+		  <label><input type="checkbox" name="showpopups" value="1" {if $showpopups==1} checked="checked"{/if} title="{tr}Visualize page changes{/tr}" /> {tr}Show popups{/tr}</label><br />
+		  {if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}<label><input type="checkbox" name="escape" value="1" {if $escape==1} checked="checked"{/if} title="{tr}Escape HTML / Wiki syntax in page changes{/tr}" /> {tr}Escape HTML / Wiki syntax in page changes{/tr}</label><br />{/if}
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Version{/tr}</legend>
@@ -35,5 +35,8 @@
 				</tr>{/foreach}
 			</table>
 	</fieldset>
-	<div><input type="submit" name="show" value="{tr}Show contributions{/tr}" /></div>
+	<div>
+		<input type="submit" name="show" value="{tr}Show contributions{/tr}" />
+		{button href="tiki-index.php?page=$page" _text="{tr}View page{/tr}"}
+	</div>
 </form>
