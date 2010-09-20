@@ -5338,6 +5338,17 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 		$ck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
+		// work out if I'm a nested plugin and return empty if so
+		$stack = debug_backtrace(true);
+		$plugin_nest_level = 0;
+		foreach ($stack as $st) {
+			if ($st['function'] === 'parse_first') {
+				$plugin_nest_level ++;
+				if ($plugin_nest_level > 1) {
+					return '';
+				}
+			}
+		}
 		$arg_str = rtrim($arg_str, '&');
 		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
 
@@ -5345,7 +5356,8 @@ class TikiLib extends TikiDb_Bridge
 		if (in_array($name, array())) {
 			return '~np~' . $ck_editor_plugin . '~/np~';
 		}
-		
+		// pre-parse the output so nested plugins don't fall out all over the place
+		$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
 		// remove hrefs and onclicks
 		$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 		$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
@@ -5356,12 +5368,12 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			$elem = 'span';
 		}
-		$ret = '<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="position:relative;"' .
-				' syntax="~np~' . htmlentities( $ck_editor_plugin, ENT_QUOTES, 'UTF-8' ) . '~/np~"' .
+		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="position:relative;"' .
+				' syntax="' . htmlentities( $ck_editor_plugin, ENT_QUOTES, 'UTF-8' ) . '"' .
 				' args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
-				' body="~np~' . htmlentities( $data, ENT_QUOTES, 'UTF-8') . '~/np~">'.
+				' body="' . htmlentities( $data, ENT_QUOTES, 'UTF-8') . '">'.
 				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:absolute;z-index:10001" />' .
-				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>';
+				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>~/np~';
 		
 		return 	$ret;
 	}
