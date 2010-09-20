@@ -222,8 +222,9 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 	$cat_href = "tiki-view_blog_post.php?postId=" . urlencode($postId);
 	$cat_lang = $_REQUEST['lang'];
 	include_once ("freetag_apply.php");
-
-	header ("location: tiki-view_blog_post.php?postId=$postId");
+	
+	$url = filter_out_sefurl("tiki-view_blog_post.php?postId=$postId", $smarty, 'blogpost');
+	header ("location: $url");
 	die;
 }
 
