@@ -20,7 +20,7 @@ $inputConfiguration = array( array(
 
 require_once('tiki-setup.php');
 
-if ($prefs['feature_ajax'] != 'y' || ($prefs['ajax_autosave'] != 'y' && $prefs['wysiwyg_ckeditor'] != 'y')) {
+if ($prefs['feature_ajax'] != 'y' || ($prefs['ajax_autosave'] != 'y')) {
 	return;
 }
 

@@ -40,20 +40,11 @@ function prefs_wysiwyg_list() {
 		'wysiwyg_toolbar_skin' => array(
 			'name' => tra('Wysiwyg editor skin'),
 			'type' => 'list',
-			'options' => $prefs['wysiwyg_ckeditor'] != 'y' ? array(
-				'default' => tra('Default'),
-				'office2003' => tra('Office 2003'),
-				'silver' => tra('Silver'),
-			) : array(
+			'options' => array(
 				'kama' => tra('Kama (Default)'),
 				'office2003' => tra('Office 2003'),
 				'v2' => tra('V2 (FCKEditor appearance)'),
 			),
-		),
-		'wysiwyg_ckeditor' => array(
-			'name' => tra('Use CKEditor'),
-			'description' => tra('Experimental, new in Tiki 5: Use New CKEditor instead of previous FCKEditor'),
-			'type' => 'flag',
 		),
 		'wysiwyg_htmltowiki' => array(
 			'name' => tra('Use Wiki syntax in WYSIWYG'),

@@ -846,7 +846,7 @@ if ( !isset($_REQUEST['preview']) && !isset($_REQUEST['save']) ) {
 		}
 		$info['wysiwyg'] = true;
 		$smarty->assign('allowhtml','y');
-	} elseif ($prefs['wysiwyg_ckeditor'] === 'y' && $_SESSION['wysiwyg'] === 'y') {
+	} elseif ($_SESSION['wysiwyg'] === 'y') {
 		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
 			if ($edit_data != 'ajax error') {
 				//$parsed = $editlib->parseToWysiwyg($edit_data);
@@ -875,7 +875,7 @@ if (isset($_REQUEST["preview"])) {
 
 	$parsed = $tikilib->apply_postedit_handlers($parsed);
 	
-	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y' && $prefs['wysiwyg_ckeditor'] === 'y') {
+	if ($_SESSION['wysiwyg'] === 'y' && $prefs['wysiwyg_wiki_parsed'] === 'y') {
 		$parsed = $editlib->partialParseWysiwygToWiki( $parsed );
 		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'preview_mode'=>true, 'is_html' => $is_html));
 	} else {
