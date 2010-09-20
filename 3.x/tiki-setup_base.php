@@ -20,12 +20,12 @@ require_once 'tiki-filter-base.php';
 // xhtml compliance
 ini_set('arg_separator.output', '&amp;');
 
-// URL session handling is not safe or pretty 
+// URL session handling is not safe or pretty
 // better avoid using trans_sid for security reasons
-ini_set('session.use_only_cookies', 1);  
-// true, but you cannot change the url_rewriter.tags in safe mode ... 
+ini_set('session.use_only_cookies', 1);
+// true, but you cannot change the url_rewriter.tags in safe mode ...
 // its usually safe to leave it as is.
-//ini_set('url_rewriter.tags', ''); 
+//ini_set('url_rewriter.tags', '');
 
 // use shared memory for sessions (useful in shared space)
 // ini_set('session.save_handler', 'mm');
@@ -43,7 +43,7 @@ ini_set('allow_call_time_pass_reference','On');
 require_once("lib/setup/compat.php");
 require_once("lib/tikiticketlib.php");
 require_once("db/tiki-db.php");
-require_once("setup_smarty.php"); 
+require_once("setup_smarty.php");
 require_once("lib/tikilib.php");
 global $cachelib; require_once("lib/cache/cachelib.php");
 global $logslib; require_once("lib/logs/logslib.php");
@@ -128,7 +128,7 @@ function remove_gpc(&$var) {
 // mose : simulate strong var type checking for http vars
 $patterns['int']   = "/^[0-9]*$/"; // *Id
 $patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
-$patterns['char']  = "/^(pref:)?[-,_a-zA-Z0-9]*$/"; // sort_mode 
+$patterns['char']  = "/^(pref:)?[-,_a-zA-Z0-9]*$/"; // sort_mode
 $patterns['string']  = "/^<\/?(b|strong|small|br *\/?|ul|li|i)>|[^<>\";#]*$/"; // find, and such extended chars
 $patterns['stringlist']  = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like: user1;user2;user3)
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
@@ -249,7 +249,7 @@ function varcheck(&$array, $category) {
 
 				if ( is_array($rv) ) {
 					$tmp = varcheck($array[$rq], $category);
-					if ($tmp != "") {	
+					if ($tmp != "") {
 						$return[] = $tmp;
 					}
 				} else {
@@ -290,15 +290,24 @@ if (empty($_SERVER['SERVER_NAME'])) {
 	$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 }
 
+/*
+ * Clean variables past in _GET & _POST & _COOKIE
+ */
+$magic_quotes_gpc = get_magic_quotes_gpc();
+if ($magic_quotes_gpc) {
+	remove_gpc($_GET);
+	remove_gpc($_POST);
+	remove_gpc($_COOKIE);
+}
 
 // in the case of tikis on same domain we have to distinguish the realm
-// changed cookie and session variable name by a name made with browsertitle 
+// changed cookie and session variable name by a name made with browsertitle
 $cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $prefs['cookie_name']);
 $user_cookie_site = 'tiki-user-'.$cookie_site;
 
 // if remember me is enabled, check for cookie where auth hash is stored
 // user gets logged in as the first user in the db with a matching hash
-if (($prefs['rememberme'] != 'disabled') 
+if (($prefs['rememberme'] != 'disabled')
 	and (isset($_COOKIE["$user_cookie_site"]))
 	and (!isset($user) and !isset($_SESSION["$user_cookie_site"]))) {
 	if ($prefs['feature_intertiki'] == 'y' and !empty($prefs['feature_intertiki_mymaster']) and $prefs['feature_intertiki_sharedcookie'] == 'y') {
@@ -358,7 +367,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 
 } else {
 	$user = NULL;
-	
+
 	// if everything failed, check for user+pass params in the URL
 	// this is needed for access to things like RSS feeds that are configured to be
 	// be visible to registered users and/or certain groups
@@ -370,7 +379,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// that someone could try to break in with brute force attacks. So uncomment this only
 	// if you are in a trusted environment (maybe intranet) and want to ignore the risks.
 	// #####################################################################################
-	
+
 	// 	$isvalid = false;
 	// 	if (isset($_REQUEST["user"]) && isset($_REQUEST["pass"])) {
 	// 		$isvalid = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"], '', '');
@@ -378,7 +387,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// 			$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
 	// 			$user = $_REQUEST["user"];
 	// 			$smarty->assign_by_ref('user', $user);
-	// 			// Now since the user is valid we put the user provpassword as the password 
+	// 			// Now since the user is valid we put the user provpassword as the password
 	// 			$userlib->confirm_user($user);
 	// 		}
 	// }
@@ -433,7 +442,6 @@ unset($admin_perms);
 unset($allperms);
 
 // --------------------------------------------------------------
-$magic_quotes_gpc = get_magic_quotes_gpc();
 $clean_xss = ( $tiki_p_trust_input != 'y' );
 
 // deal with register_globals
@@ -458,12 +466,6 @@ if( $clean_xss ) {
 }
 $jitServer = new JitFilter( $_SERVER );
 $_SERVER = $serverFilter->filter( $_SERVER );
-
-if( $magic_quotes_gpc ) {
-	remove_gpc($_GET);
-	remove_gpc($_POST);
-	remove_gpc($_COOKIE);
-}
 
 // Rebuild request after gpc fix
 // _REQUEST should only contain GET and POST in the app
