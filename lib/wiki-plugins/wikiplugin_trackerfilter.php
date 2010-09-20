@@ -205,6 +205,7 @@ $(".trackerfilter form").submit( function () {
 			}
 		}
 		$params['max'] = $prefs['maxRecords'];
+		$smarty->assign('urlquery', wikiplugin_trackerFilter_build_urlquery($params));
 		include_once('lib/wiki-plugins/wikiplugin_trackerlist.php');
 		$dataRes .= wikiplugin_trackerlist($data, $params);
 	} else {
@@ -508,4 +509,28 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 	}
 	//echo '<pre>FILTERS'; print_r($filters); echo '</pre>';
 	return $filters;
+}
+function wikiplugin_trackerFilter_build_urlquery($params) {
+	if (empty($params['filterfield'])) 
+		return '';
+	$urlquery = '';
+	foreach ($params['filterfield'] as $key=>$filter) {
+		$filterfield[] = $filter;
+		if (!empty($params['exactvalue'][$key]) && empty($params['filtervalue'][$key])) {
+			$filtervalue[] = '';
+			$exactvalue[] = $params['exactvalue'][$key];
+		} else {
+			$filtervalue[] = $params['filtervalue'][$key];
+			$exactvalue[] = '';
+		}
+	}
+	if (!empty($filterfield)) {
+		$urlquery['filterfield'] = implode(':', $filterfield);
+		$urlquery['filtervalue'] = implode(':', $filtervalue);
+		$urlquery['exactvalue'] = implode(':', $exactvalue);
+	}
+	if (!empty($params['sort_mode'])) {
+		$urlquery['sort_mode'] = $params['sort_mode'];
+	}
+	return $urlquery;
 }

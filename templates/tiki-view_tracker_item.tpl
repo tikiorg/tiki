@@ -48,7 +48,7 @@
 {if $tiki_p_view_trackers eq 'y'}
 {pagination_links cant=$cant offset=$offset reloff=$smarty.request.reloff itemname="{tr}Item{/tr}"}
 	{* Do not specify an itemId in URL used for pagination, because it will use the specified itemId instead of moving to another item *}
-	{$smarty.server.php_self}?{query itemId=NULL}
+	{$smarty.server.php_self}?{query itemId=NULL trackerId=$trackerId}
 {/pagination_links}
 {/if}
 

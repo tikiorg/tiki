@@ -171,14 +171,20 @@ foreach(array(
 	'reloff'
 ) as $reqfld) {
 	$trynam = 'try' . $reqfld;
-	if (isset($_REQUEST[$reqfld]) && is_string($_REQUEST[$reqfld])) {
+	if (isset($_REQUEST[$reqfld])) {
 		$$trynam = $_REQUEST[$reqfld];
 	} else {
 		$$trynam = '';
 	}
 }
-if (isset($_REQUEST["filtervalue"]) and is_array($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$tryfilterfield"])) {
-	$tryfiltervalue = $_REQUEST["filtervalue"]["$tryfilterfield"];
+if (isset($_REQUEST['filterfield'])) {
+	if (is_array($_REQUEST['filtervalue']) and isset($_REQUEST['filtervalue'][$tryfilterfield])) {
+		$tryfiltervalue = $_REQUEST['filtervalue'][$tryfilterfield];
+	} else {
+		$tryfilterfield = split(':', $_REQUEST['filterfield']);
+		$tryfiltervalue = split(':', $_REQUEST['filtervalue']);
+		$tryexactvalue = split(':', $_REQUEST['exactvalue']);
+	}
 }
 //Management of the field type 'User subscribe' (U)
 //when user clic on (un)subscribe
@@ -263,6 +269,7 @@ if (isset($_REQUEST['reloff'])) {
 	if (isset($_REQUEST['cant'])) {
 		$cant = $_REQUEST['cant'];
 	} else {
+		$tryfiltervalue = array_values($tryfiltervalue);
 		$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, $listfields, $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
 		if (isset($trymove['data'][0]['itemId'])) {
 			// Autodetect itemId if not specified
