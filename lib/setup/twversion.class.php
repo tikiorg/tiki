@@ -26,7 +26,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '5.1';
+		$this->version 	= '5.2';
 		$this->star	= 'Vulpeculae';
 		$this->releases	= array();
 
@@ -109,6 +109,8 @@ class TWVersion
 				'3.3',
 				'3.4',
 				'3.5',
+				'3.6',
+				'3.7',
 				'4.0beta1',
 				'4.0RC1',
 				'4.0',
@@ -122,6 +124,7 @@ class TWVersion
 				'5.0',
 				'5.1RC1',
 				'5.1',
+				'5.2',
 				);
 	}
 
