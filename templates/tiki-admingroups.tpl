@@ -32,7 +32,7 @@
 
 {cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
 {* ----------------------- tab with list --------------------------------------- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 <h2>{tr}List of existing groups{/tr}</h2>
 
 {include file='find.tpl' find_show_num_rows='y'}
@@ -88,11 +88,11 @@ class="prevnext">{tr}All{/tr}</a>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 
-</div>
+</fieldset>
 
 {* ----------------------- tab with form --------------------------------------- *}
 <a name="2" ></a>
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 
 {if $groupname}
 	<h2>{tr}Edit group{/tr} {$groupname}</h2>
@@ -230,12 +230,12 @@ class="prevnext">{tr}All{/tr}</a>
 	{/if}
 	<br /><br />
 {/if}
-</div>
+</fieldset>
 
 {* ----------------------- tab with memberlist --------------------------------------- *}
 <a name="3" ></a>
 {if $groupname}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 <h2>{tr}Members List{/tr}: {$groupname}</h2>
 <table class="normal"><tr>
 {cycle name=table values=',,,,</tr><tr>' print=false advance=false}
@@ -257,13 +257,13 @@ class="prevnext">{tr}All{/tr}</a>
 		<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
 	</p>
 </form>
-</div>
+</fieldset>
 {/if}
 
 {* ----------------------- tab with import/export --------------------------------------- *}
 <a name="4" ></a>
 {if $groupname}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 <form method="post" action="tiki-admingroups.php"  enctype="multipart/form-data">
 <input type="hidden" name="group" value="{$groupname|escape}" />
 
@@ -303,5 +303,5 @@ class="prevnext">{tr}All{/tr}</a>
 </tr>
 </table>
 </form>
-</div>
+</fieldset>
 {/if}
