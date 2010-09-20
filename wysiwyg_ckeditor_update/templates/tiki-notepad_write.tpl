@@ -19,7 +19,7 @@
       <tr>
         <td>{tr}Data{/tr}</td>
         <td>
-          {textarea rows="20" cols="80" name="data"}{$info.data|escape}{/textarea}
+          {textarea rows="20" cols="80" name="data" _simple="y"}{$info.data|escape}{/textarea}
         </td>
       </tr>
     <tr>

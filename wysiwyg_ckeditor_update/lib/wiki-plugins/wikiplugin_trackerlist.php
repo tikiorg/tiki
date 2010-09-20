@@ -353,6 +353,13 @@ function wikiplugin_trackerlist_info() {
 				'filter' => 'text',
 				'default' => ''
 			),
+			'displaysheet' => array(
+				'required' => false,
+				'name' => tra('Display tracker as spreadsheet.'),
+				'description' => 'y|n',
+				'filter' => 'word',
+				'default' => 'n'
+			),
 		),
 	);
 }
@@ -1219,10 +1226,28 @@ function wikiplugin_trackerlist($data, $params) {
 					$save_fc = $smarty->force_compile;
 					$smarty->force_compile = true;
 				}
+				
+				if (!empty($displaysheet) && $displaysheet == 'y') {
+					global $headerlib;
+					$headerlib->add_jq_onready('
+						if (typeof ajaxLoadingShow == "function") {
+							ajaxLoadingShow("role_main");
+						}
+						setTimeout (function () {
+							$("div.trackercontainer").tiki("sheet", "",{
+								editable:false,
+								buildSheet: true,
+								minSize: {rows: 0, cols: 0}
+							});
+						}, 0);', 500);
+					$smarty->assign('displaysheet', 'true');
+				}
+				
 				$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');
 				if (!empty($wiki)) {
 					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
 				}
+				
 				return "~np~".$str."~/np~";
 			}
 		} else {

@@ -40,6 +40,7 @@
 	</table>
 	
 {else}
+	<a href="#" id="go_fullscreen">Full Screen</a>
 	<table style="width: 100%;" id="tiki_sheet_container">
 		<tr>
 			{section name=date loop=$readdate}

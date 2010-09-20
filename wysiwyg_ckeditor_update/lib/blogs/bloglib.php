@@ -765,6 +765,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function remove_post($postId) {
 		global $tikilib;
+		global $objectlib; require_once('lib/objectlib.php');
 
 		$query = "select `blogId`, `data` from `tiki_blog_posts` where `postId`=?";
 		$result = $this->query($query, array((int) $postId));
@@ -790,6 +791,10 @@ class BlogLib extends TikiDb_Bridge
 			$result = $this->query($query, array((int) $blogId));
 		}
 
+		/*
+		 * TODO: this should be a method in freetaglib or maybe even better $tikilib->remove_object() should
+		 * remove the relation between the object and the tags, no?
+		 */
 		// When a post is deleted, all freetags asociated must also be deleted
 		$objectId = $objectlib->get_object_id('blog post', $postId);
 		$query = "DELETE FROM `tiki_freetagged_objects` WHERE `objectId` = ?";

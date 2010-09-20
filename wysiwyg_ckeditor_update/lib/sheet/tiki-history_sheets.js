@@ -19,4 +19,20 @@ $(function () {
 		
 		return false;
 	});
+	
+	$('#go_fullscreen').toggle(function() {
+		$('<div id="tiki_sheet_container_fullscreen" />')
+			.css('position', 'absolute')
+			.width($(window).width())
+			.height($(window).height())
+			.css('left', '0px')
+			.css('top', '0px')
+			.html($('#tiki_sheet_container').children())
+			.css('z-index', '999999')
+			.prependTo($('body'));
+	}, function() {
+		$('#tiki_sheet_container')
+			.children($('#tiki_sheet_container_fullscreen').children());
+		$('#tiki_sheet_container_fullscreen').remove();
+	});
 });
