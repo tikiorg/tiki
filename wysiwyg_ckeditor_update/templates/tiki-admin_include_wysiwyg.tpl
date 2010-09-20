@@ -13,14 +13,6 @@
 
 	<fieldset class="admin">
 		<legend>{icon _id="text_dropcaps"} {tr}Wysiwyg Editor Features{/tr}</legend>
-		<div class="adminoptionbox">
-			<div class="adminoptionlabel">
-				<em>{tr}New{/tr}:</em> {icon _id="star"}
-				<div class="adminoptionboxchild">	
-					{preference name=wysiwyg_ckeditor}
-				</div>
-			</div>
-		</div>
 		{preference name=wysiwyg_optional}
 		<div class="adminoptionboxchild" id="wysiwyg_optional_childcontainer">
 			{preference name=wysiwyg_default}

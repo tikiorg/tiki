@@ -443,7 +443,7 @@ class ToolbarCkOnly extends Toolbar
 		case 'pastetext':
 			return new self( 'PasteText' );
 		case 'pasteword':
-			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'PasteFromWord' : 'PasteWord' );
+			return new self( 'PasteFromWord' );
 		case 'print':
 			return new self( 'Print' );
 		case 'spellcheck':
@@ -463,7 +463,7 @@ class ToolbarCkOnly extends Toolbar
 		case 'right':
 			return new self( 'JustifyRight' );
 		case 'full':
-			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'JustifyBlock' : 'JustifyFull' );
+			return new self( 'JustifyBlock' );
 		case 'indent':
 			return new self( 'Indent' );
 		case 'outdent':
@@ -471,13 +471,13 @@ class ToolbarCkOnly extends Toolbar
 		case 'unlink':
 			return new self( 'Unlink' );
 		case 'style':
-			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Styles'  : 'Style' );
+			return new self( 'Styles' );
 		case 'fontname':
-			return new self( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Font' : 'FontName' );
+			return new self( 'Font' );
 		case 'fontsize':
 			return new self( 'FontSize' );
 		case 'format':
-			return 	$prefs['wysiwyg_ckeditor'] === 'y' ? new self( 'Format' ) : null;
+			return 	new self( 'Format' );
 		case 'source':
 			global $tikilib, $user, $page;
 			$p = $prefs['wysiwyg_htmltowiki'] == 'y' ? 'tiki_p_wiki_view_source'  : 'tiki_p_use_HTML';
@@ -487,11 +487,7 @@ class ToolbarCkOnly extends Toolbar
 				return null;
 			}
 		case 'autosave':
-			if ($prefs['wysiwyg_ckeditor'] == 'y') {
-				return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
-			} else {
-				return new self( 'ajaxAutoSave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
-			}
+			return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
 		case 'sub':
 			return new self( 'Subscript' );
 		case 'sup':
@@ -556,7 +552,7 @@ class ToolbarInline extends Toolbar
 		case 'strike':
 			$label = tra('Strikethrough');
 			$icon = tra('pics/icons/text_strikethrough.png');
-			$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'Strike' : 'StrikeThrough';
+			$wysiwyg = 'Strike';
 			$syntax = '--text--';
 			break;
 		case 'nonparsed':
@@ -626,7 +622,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'rule':
 			$label = tra('Horizontal Bar');
 			$icon = tra('pics/icons/page.png');
-			$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'HorizontalRule' : 'Rule';
+			$wysiwyg = 'HorizontalRule';
 			$syntax = '---';
 			break;
 		case 'pagebreak':
@@ -652,7 +648,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 		case 'toc':
 			$label = tra('Table of contents');
 			$icon = tra('pics/icons/book.png');
-			$wysiwyg = $prefs['wysiwyg_ckeditor'] === 'y' ? 'TOC' : '';
+			$wysiwyg = 'TOC';
 			$syntax = '{maketoc}';
 			break;
 		default:
@@ -687,13 +683,13 @@ class ToolbarLineBased extends ToolbarInline // Will change in the future
 		case 'list':
 			$label = tra('Unordered List');
 			$icon = tra('pics/icons/text_list_bullets.png');
-			$wysiwyg =  $prefs['wysiwyg_ckeditor'] == 'y' ? 'BulletedList' : 'UnorderedList';
+			$wysiwyg =  'BulletedList';
 			$syntax = '*text';
 			break;
 		case 'numlist':
 			$label = tra('Ordered List');
 			$icon = tra('pics/icons/text_list_numbers.png');
-			$wysiwyg =  $prefs['wysiwyg_ckeditor'] == 'y' ? 'NumberedList' : 'OrderedList';
+			$wysiwyg =  'NumberedList';
 			$syntax = '#text';
 			break;
 		default:
@@ -1093,7 +1089,7 @@ class ToolbarFullscreen extends Toolbar
 		global $prefs;
 		$this->setLabel( tra('Full Screen Edit') )
 			->setIcon( 'pics/icons/application_get.png' )
-			->setWysiwygToken( $prefs['wysiwyg_ckeditor'] == 'y' ? 'Maximize' : 'FitWindow' )
+			->setWysiwygToken( 'Maximize' )
 				->setType('Fullscreen');
 	} // }}}
 
@@ -1144,10 +1140,6 @@ class ToolbarHelptool extends Toolbar
 	{
 
 		global $wikilib, $smarty, $plugins, $section, $prefs;
-		
-		if ($prefs['wysiwyg_ckeditor'] !== 'y') {
-			return '';
-		}
 		
 		include_once ('lib/wiki/wikilib.php');
 		$plugins = $wikilib->list_plugins(true, $areaId);
@@ -1469,7 +1461,7 @@ class ToolbarSheet extends Toolbar
 			case 'strike':
 				$label = tra('Strikethrough');
 				$icon = tra('pics/icons/text_strikethrough.png');
-				$wysiwyg = $prefs['wysiwyg_ckeditor'] == 'y' ? 'Strike' : 'StrikeThrough';
+				$wysiwyg = 'Strike';
 				$syntax = 'sheetInstance.cellStyleToggle("styleLineThrough");';
 				break;
 			case 'center':

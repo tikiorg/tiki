@@ -206,11 +206,7 @@ class EditLib
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
-		if ($prefs['wysiwyg_ckeditor'] === 'y') {
-			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'ck_editor' => true));
-		} else {
-			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
-		}
+		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'ck_editor' => true));
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 //		$parsed = preg_replace("/src=\"(.*)img\/smiles\//im","src=\"$1img/smiles/", $parsed);	// fix smiley src's
 		$parsed = str_replace( 

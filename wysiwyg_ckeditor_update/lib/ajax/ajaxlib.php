@@ -263,7 +263,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 	}
 
-	if ($prefs['wysiwyg_ckeditor'] && strpos($content, '<input type="hidden" name="wysiwyg" value="y" />') !== false) {
+	if (strpos($content, '<input type="hidden" name="wysiwyg" value="y" />') !== false) {
 		$ck_reset = "window.CKEDITOR = null;$.getScript('lib/ckeditor/ckeditor.js');";
 	} else {
 		$ck_reset = '';

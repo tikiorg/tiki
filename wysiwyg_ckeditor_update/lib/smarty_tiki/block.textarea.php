@@ -37,7 +37,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$params['_wysiwyg'] = $_SESSION['wysiwyg'];
 	}
 	
-	if ($prefs['wysiwyg_ckeditor'] !== 'y' || $params['_wysiwyg'] !== 'y') {
+	if ($params['_wysiwyg'] !== 'y') {
 		$params['rows'] = !empty($params['rows']) ? $params['rows'] : 20;
 		$params['cols'] = !empty($params['cols']) ? $params['cols'] : 80;
 	}
@@ -111,48 +111,46 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 
 	if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n') {
 		
-		if ($prefs['wysiwyg_ckeditor'] === 'y') {
-				// new ckeditor implementation 2010
-
-			if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||
-					$prefs['feature_wiki_paragraph_formatting'] !== 'y' || $prefs['feature_wiki_paragraph_formatting_add_br'] !== 'y' ||
-					$prefs['wysiwyg_wiki_parsed'] !== 'y') {
-				
-				// show dev notice
-				include_once('lib/smarty_tiki/block.remarksbox.php');
-				$msg = tra('<strong>Thank you for trying the new ckeditor implementation for Tiki 6</strong><br /><br />');
-				
-				global $tiki_p_admin;
-				if ($tiki_p_admin) {
-					$profile_link = 'tiki-admin.php?profile=WYSIWYG_6x&repository=http%3A%2F%2Fprofiles.tiki.org%2Fprofiles&page=profiles&list=List';
-					$msg .= tra("Some of your preferences should be set differently for this to work at it's best. Please click this to apply the recommended profile:") .
-					   ' <a href="'.$profile_link.'">WYSIWYG_6x</a>';
-				} else {
-					$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
-				}
-				
-				$html .= smarty_block_remarksbox( array( 'type'=>'info', 'icon'=>'bricks', 'title'=>tra('Ckeditor Development Notice')), $msg, $smarty)."\n";
-			}
-
-			// set up ckeditor
-			if (!isset($params['name'])) { $params['name'] = 'edit'; }
-		
-			global $tikiroot;
-			$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";');
-			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
-			//// note, this breaks ajax page load via wikitopline edit icon
-			//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
-			$headerlib->add_jsfile('lib/ckeditor/ckeditor.js', 'minified');
-			$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 'minified');
-		
-			include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
-			$cktools = smarty_function_toolbars($params, $smarty);
-			$cktools = json_encode($cktools);
-			$cktools = substr($cktools, 1, strlen($cktools) - 2);	// remove surrouding [ & ]
-			$cktools = str_replace(']],[[', '],"/",[', $cktools);	// add new row chars - done here so as not to break existing f/ck
+		// new ckeditor implementation 2010
+		if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y' ||
+				$prefs['feature_wiki_paragraph_formatting'] !== 'y' || $prefs['feature_wiki_paragraph_formatting_add_br'] !== 'y' ||
+				$prefs['wysiwyg_wiki_parsed'] !== 'y') {
 			
-			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
-			$headerlib->add_jq_onready('
+			// show dev notice
+			include_once('lib/smarty_tiki/block.remarksbox.php');
+			$msg = tra('<strong>Thank you for trying the new ckeditor implementation for Tiki 6</strong><br /><br />');
+			
+			global $tiki_p_admin;
+			if ($tiki_p_admin) {
+				$profile_link = 'tiki-admin.php?profile=WYSIWYG_6x&repository=http%3A%2F%2Fprofiles.tiki.org%2Fprofiles&page=profiles&list=List';
+				$msg .= tra("Some of your preferences should be set differently for this to work at it's best. Please click this to apply the recommended profile:") .
+				   ' <a href="'.$profile_link.'">WYSIWYG_6x</a>';
+			} else {
+				$msg .= tra('Some of the settings at this site should be set differently for this to work best. Please ask the administrator to try this.');
+			}
+			
+			$html .= smarty_block_remarksbox( array( 'type'=>'info', 'icon'=>'bricks', 'title'=>tra('Ckeditor Development Notice')), $msg, $smarty)."\n";
+		}
+
+		// set up ckeditor
+		if (!isset($params['name'])) { $params['name'] = 'edit'; }
+	
+		global $tikiroot;
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'lib/ckeditor/";');
+		//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
+		//// note, this breaks ajax page load via wikitopline edit icon
+		//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
+		$headerlib->add_jsfile('lib/ckeditor/ckeditor.js', 'minified');
+		$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 'minified');
+	
+		include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
+		$cktools = smarty_function_toolbars($params, $smarty);
+		$cktools = json_encode($cktools);
+		$cktools = substr($cktools, 1, strlen($cktools) - 2);	// remove surrouding [ & ]
+		$cktools = str_replace(']],[[', '],"/",[', $cktools);	// add new row chars - done here so as not to break existing f/ck
+		
+		$html .= '<input type="hidden" name="wysiwyg" value="y" />';
+		$headerlib->add_jq_onready('
 window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";
 
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
@@ -160,14 +158,14 @@ window.CKEDITOR.plugins.addExternal( "tikiplugin", "'.$tikiroot.'lib/ckeditor_ti
 window.CKEDITOR.config.ajaxAutoSaveTargetUrl = "'.$tikiroot.'tiki-auto_save.php";	// URL to post to (also used for plugin processing)
 ');	// before all
 		
-			if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-				$headerlib->add_jq_onready('
+		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
+			$headerlib->add_jq_onready('
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
 window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");
 ', 5);	// before dialog tools init (10)
-			}
-			if ($prefs['feature_ajax'] === 'y' && $prefs['ajax_autosave'] === 'y') {
-				$headerlib->add_jq_onready('
+		}
+		if ($prefs['feature_ajax'] === 'y' && $prefs['ajax_autosave'] === 'y') {
+			$headerlib->add_jq_onready('
 // --- config settings for the autosave plugin ---
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",autosave" : "autosave" );
 window.CKEDITOR.plugins.addExternal( "autosave", "'.$tikiroot.'lib/ckeditor_tiki/plugins/autosave/");
@@ -176,22 +174,22 @@ window.CKEDITOR.config.ajaxAutoSaveSensitivity = 2 ;			// Sensitivity to key str
 register_id("'.$as_id.'","'.$auto_save_referrer.'");	// Register auto_save so it gets removed on submit
 ajaxLoadingShow("'.$as_id.'");
 ', 5);	// before dialog tools init (10)
-			}
+		}
 			
-			// work out current theme/option (surely in tikilib somewhere?)
-			global $tikilib, $tc_theme, $tc_theme_option;
-			$ckstyleoption = '';
-			if (!empty($tc_theme)) {
-				$ckstyle = $tikilib->get_style_path('', '', $tc_theme);
-				if (!empty($tc_theme_option)) {
-					$ckstyleoption = $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
-				}
-			} else {
-				$ckstyle = $tikilib->get_style_path('', '', $prefs['style']);
-				if (!empty($prefs['style_option'])) {
-					$ckstyleoption = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
-				}
+		// work out current theme/option (surely in tikilib somewhere?)
+		global $tikilib, $tc_theme, $tc_theme_option;
+		$ckstyleoption = '';
+		if (!empty($tc_theme)) {
+			$ckstyle = $tikilib->get_style_path('', '', $tc_theme);
+			if (!empty($tc_theme_option)) {
+				$ckstyleoption = $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
 			}
+		} else {
+			$ckstyle = $tikilib->get_style_path('', '', $prefs['style']);
+			if (!empty($prefs['style_option'])) {
+				$ckstyleoption = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
+			}
+		}
 
 			$headerlib->add_jq_onready('
 $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
@@ -212,27 +210,26 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 });
 ', 20);	// after dialog tools init (10)
 
-			$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
-			if (empty($params['cols'])) {	
-				$html .= 'width:100%;'. (empty($params['cols']) ? 'height:500px;' : '') .'"';
-			} else {
-				$html .= '" cols="'.$params['cols'].'"';
-			}
-			if (!empty($params['rows'])) {	
-				$html .= ' rows="'.$params['rows'].'"';
-			}
-			$html .= '>'.htmlspecialchars($content).'</textarea>';
-			
-			$headerlib->add_js('
+		$html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
+		if (empty($params['cols'])) {	
+			$html .= 'width:100%;'. (empty($params['cols']) ? 'height:500px;' : '') .'"';
+		} else {
+			$html .= '" cols="'.$params['cols'].'"';
+		}
+		if (!empty($params['rows'])) {	
+			$html .= ' rows="'.$params['rows'].'"';
+		}
+		$html .= '>'.htmlspecialchars($content).'</textarea>';
+		
+		$headerlib->add_js('
 var ckEditorInstances = new Array();
 function CKeditor_OnComplete() {
 	if (typeof ajaxLoadingHide == "function") { ajaxLoadingHide(); }
 	ckEditorInstances[ckEditorInstances.length] = this;
 	this.resetDirty();
 };');
-		}	// end both wysiwyg setups
 
-	} else {
+	} else {		// end of if ( $params['_wysiwyg'] == 'y' && $params['_simple'] == 'n')
 		
 		// setup for wiki editor
 		

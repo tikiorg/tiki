@@ -29,7 +29,17 @@
 	</div>
 {/if}
 
-<form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
+{capture name=actionUrlParam}{strip}
+	{if $postId > 0 && $blogId > 0}
+		?blogId={$blogId}&postId={$postId}
+	{elseif $postId > 0}
+		?postId={$postId}
+	{elseif $blogId > 0}
+		?blogId={$blogId}
+	{/if}
+{/strip}{/capture}
+
+<form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php{$smarty.capture.actionUrlParam}" id ='editpageform'>
 	<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
 	<input type="hidden" name="postId" value="{$postId|escape}" />
 
