@@ -648,6 +648,7 @@ class FileGalLib extends TikiLib
 	}
 
 	function change_file_handler($mime_type,$cmd) {
+		$mime_type = trim($mime_type);
 		$found = $this->getOne("select `mime_type` from `tiki_file_handlers` where `mime_type`=?",array($mime_type));
 
 		if ($found) {
