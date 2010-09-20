@@ -5416,7 +5416,7 @@ class TikiLib extends TikiDb_Bridge
 					}
 
 					$vals = array_map( 'trim', $vals );
-					$vals = array_filter( $vals );
+					//$vals = array_filter( $vals );
 
 					$argValue = array_values( $vals );
 				} else {
