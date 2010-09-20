@@ -5,6 +5,9 @@
 
 <div class="navbar">
 {button href="tiki-admin_modules.php?clear_cache=1" _text="{tr}Clear Cache{/tr}"}
+	{if $tiki_p_edit_menu eq 'y'}
+		{button href="tiki-admin_menus.php" _text="{tr}Admin Menus{/tr}"}
+	{/if}
 </div>
 
 {if $prefs.feature_tabs eq 'y'}
