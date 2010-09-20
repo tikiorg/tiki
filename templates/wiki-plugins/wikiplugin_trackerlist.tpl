@@ -47,7 +47,14 @@
 	{/if}
 
 	{if empty($tpl)}
-<table class="normal wikiplugin_trackerlist">
+
+{if $displaysheet eq 'true'}
+<div class='trackercontainer' style='height: 250px ! important;'>
+{/if}
+
+<table class="normal wikiplugin_trackerlist"
+	{if $displaysheet eq 'true'}title="{$tracker_info.name}"{/if}
+	>
 
 		{if $showfieldname ne 'n' and empty($tpl)}
 	<tr>
@@ -220,6 +227,11 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		</tr>
 		{/if}
 </table>
+
+{if $displaysheet eq 'true'}
+</div>
+{/if}
+
 		{if $items|@count eq 0}
 			{tr}No records found{/tr}
 		{elseif $checkbox}

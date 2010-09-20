@@ -40,7 +40,7 @@ function wikiplugin_sheet_info() {
     			'accepted' => 'Sheet ID number',
 				'default' => 'none',
     			'since' => ''
-	),
+			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('Sheet Url Location'),
@@ -157,21 +157,21 @@ function wikiplugin_sheet($data, $params) {
 				$content = htmlentities($data);
 				$formId = "form$index";
 				return <<<EOF
-~np~
-<form id="$formId" method="post" action="tiki-wikiplugin_edit.php">
-<div>
-	<input type="hidden" name="page" value="$page"/>
-	<input type="hidden" name="content" value="$data"/>
-	<input type="hidden" name="index" value="$index"/>
-	<input type="hidden" name="type" value="sheet"/>
-	<input type="hidden" name="params[id]" value="$sheetId"/>
-</div>
-</form>
-<script type="text/javascript">
-document.getElementById('$formId').submit();
-</script>
-~/np~
-EOF;
+				~np~
+				<form id="$formId" method="post" action="tiki-wikiplugin_edit.php">
+				<div>
+					<input type="hidden" name="page" value="$page"/>
+					<input type="hidden" name="content" value="$data"/>
+					<input type="hidden" name="index" value="$index"/>
+					<input type="hidden" name="type" value="sheet"/>
+					<input type="hidden" name="params[id]" value="$sheetId"/>
+				</div>
+				</form>
+				<script type="text/javascript">
+				document.getElementById('$formId').submit();
+				</script>
+				~/np~
+				EOF;
 			} else {
 				$intro = tra('Incomplete call to plugin: No target sheet.');
 				$label = tra('Create New Sheet');
@@ -222,8 +222,18 @@ EOF;
 	if ($prefs['feature_jquery_sheet'] == 'y') {
 		if (!isset($simple) || $simple != 'y') {
 			global $headerlib;
-			$headerlib->add_jq_onready('if (typeof ajaxLoadingShow == "function") { ajaxLoadingShow("role_main"); }
-setTimeout (function () { $("#tiki_sheet' . $sheet->instance . '").tiki("sheet", "",{editable:false'. ( isset($url) ? ',urlGet: "'.$url.'",buildSheet: false': '' ) .'});}, 0);', 500 + $sheet->instance);
+			$headerlib->add_jq_onready('
+				if (typeof ajaxLoadingShow == "function") {
+					ajaxLoadingShow("role_main");
+				}
+				setTimeout (function () {
+					$("div.tiki_sheet").tiki("sheet", "",{
+						editable:false'. ( isset($url) ? ',
+						urlGet: "'.$url.'",
+						buildSheet: false': '' ) .'
+						});
+				}, 0);', 500);
+
 		} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
 			return $ret;	// return a single cell raw
 		}
