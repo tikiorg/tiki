@@ -602,6 +602,14 @@ class FreetagLib extends ObjectLib
 			throw new Exception('Missing safe_tag argument.');
 		}
 
+		// To be sure that the tag lenght is correct.
+		// If multibyte string functions are available, it's preferable to use them.
+		if ((function_exists('mb_strlen') && (mb_strlen($tag) >= $this->_MAX_TAG_LENGTH))
+				|| (strlen($tag) >= $this->_MAX_TAG_LENGTH)
+		) {
+			return false;
+		}
+
 		$normalized_tag = $this->normalize_tag($tag);
 		$bindvals = array($itemId, $type, $normalized_tag);
 
@@ -928,7 +936,7 @@ class FreetagLib extends ObjectLib
 
 		foreach($tagArray as $tag) {
 			$tag = trim($tag);
-			if (($tag != '') && (strlen($tag) <= $this->_MAX_TAG_LENGTH)) {
+			if ($tag != '') {
 				if (get_magic_quotes_gpc()) {
 					$tag = addslashes($tag);
 				}
