@@ -18,6 +18,110 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 3.7
+<http://tikiwiki.org/ReleaseNotes37>
+------------------
+
+----------------------------------------------
+r29413 | pkdille | 2010-09-20 21:44:07 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29066 | pkdille | 2010-09-09 18:11:23 +0200 (Thu, 09 Sep 2010) | 1 line
+[bp/r25344] [MOD] wiki page: the categbar div should only be in the html code if not empty
+
+
+----------------------------------------------
+r29412 | pkdille | 2010-09-20 21:43:50 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29052 | sdoh | 2010-09-09 09:56:41 +0200 (Thu, 09 Sep 2010) | 1 line
+[bp/r29050] [FIX] Fixes errors with strings multibyte, best test of the maximum size tags
+
+
+----------------------------------------------
+r29411 | pkdille | 2010-09-20 21:43:31 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29025 | sdoh | 2010-09-08 15:01:06 +0200 (Wed, 08 Sep 2010) | 1 line
+[bp/r29023] [FIX] Corrected vanishing bold chars bug
+
+
+----------------------------------------------
+r29410 | pkdille | 2010-09-20 21:42:36 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28799 | sdoh | 2010-08-31 09:51:41 +0200 (Tue, 31 Aug 2010) | 1 line
+[bp/r26921] [FIX] html tag
+
+
+----------------------------------------------
+r29409 | pkdille | 2010-09-20 21:42:09 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28660 | xavidp | 2010-08-22 14:01:50 +0200 (Sun, 22 Aug 2010) | 1 line
+[bp/r28657][FIX]Make 'add' button translatable
+
+
+----------------------------------------------
+r29408 | pkdille | 2010-09-20 21:41:47 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28522 | Jyhem | 2010-08-16 01:02:42 +0200 (Mon, 16 Aug 2010) | 1 line
+[FIX] Tabs were showing as blank for IE7
+
+
+----------------------------------------------
+r29407 | pkdille | 2010-09-20 21:41:07 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28470 | xavidp | 2010-08-12 10:33:48 +0200 (Thu, 12 Aug 2010) | 1 line
+[bp/r28454][MOD]Exporting and importing tracker fields now includes description text and the checkbox for parsing description, as well as the equivalent when the field is of type "StaticText". 
+
+
+----------------------------------------------
+r29406 | pkdille | 2010-09-20 21:40:44 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28417 | sylvieg | 2010-08-09 23:05:36 +0200 (Mon, 09 Aug 2010) | 1 line
+[bp/r 28416][FIX]imgal: descrption and categs are switcvhed around
+
+
+----------------------------------------------
+r29405 | pkdille | 2010-09-20 21:40:09 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28019 | pkdille | 2010-07-16 17:36:25 +0200 (Fri, 16 Jul 2010) | 1 line
+[bp/r23374] [FIX] newsletters: fix lastSent column in the list of newsletters (which was always returning the current time)
+
+
+----------------------------------------------
+r29404 | pkdille | 2010-09-20 21:39:39 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27944 | pkdille | 2010-07-12 16:53:53 +0200 (Mon, 12 Jul 2010) | 1 line
+[bp/r21225][MOD] Add admin modules button in admin menus, and admin menus button in admin modules
+
+
+----------------------------------------------
+r29403 | pkdille | 2010-09-20 21:37:52 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r27816 | pkdille | 2010-06-30 22:33:40 +0200 (Wed, 30 Jun 2010) | 1 line
+[bp/r 27815] [MOD] module since last visit new : Give the possibility to print last login date not as a link even if calendar is activated. Also give the possibility to have all sections folded by default
+
+
+----------------------------------------------
 Version 3.6
 <http://tikiwiki.org/ReleaseNotes36>
 ------------------
