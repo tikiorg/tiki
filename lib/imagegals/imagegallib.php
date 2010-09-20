@@ -1777,7 +1777,7 @@ $galleryimage='first',$parentgallery=-1,$showname='y',$showimageid='n',$showdesc
 			$query = "update `tiki_galleries` set `name`=?,`visible`=?, `geographic`=?,`maxRows`=? , `rowImages`=?, 
                 `thumbSizeX`=?, `thumbSizeY`=?, `description`=?, `theme`=?,
                 `lastModif`=?, `public`=?, `sortorder`=?, `sortdirection`=?, `galleryimage`=?,
-		`parentgallery`=?,`showname`=?,`showimageid`=?,`showcategories`=?,`showdescription`=?,
+		`parentgallery`=?,`showname`=?,`showimageid`=?,`showdescription`=?,`showcategories`=?,
 		`showcreated`=?,`showuser`=?,`showhits`=?,`showxysize`=?,`showfilesize`=?,
 		`showfilename`=?,`defaultscale`=?, `user`=?
 	       	where `galleryId`=?";
