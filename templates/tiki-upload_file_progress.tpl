@@ -38,7 +38,7 @@
 						{tr} Syntax tips:{/tr}
 					</div>
 					<span style="line-height: 150%">
-					{	tr}Link to file from a Wiki page{/tr}:
+					{tr}Link to file from a Wiki page{/tr}:
 					</span><br/>
 					<table>
 						<tr>
