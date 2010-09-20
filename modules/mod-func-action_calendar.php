@@ -25,7 +25,7 @@ function module_action_calendar_info() {
 	);
 }
 
-function module_action_calendar( $mod_reference, $module_params ) {
+function module_action_calendar( $mod_reference, &$module_params ) {
 	global $prefs, $tiki_p_view_tiki_calendar, $tikilib, $smarty;
 	$smarty->assign('show_calendar_module', 'n');
 	if ( $tiki_p_view_tiki_calendar == 'y' ) {
@@ -43,7 +43,10 @@ function module_action_calendar( $mod_reference, $module_params ) {
 		if ( isset($module_params['items']) ) {
 			$viewTikiCals = array_intersect(explode(',', strtolower(str_replace(' ', '', $module_params['items']))), $viewTikiCals);
 		}
-	
+
+		// Don't show "Add event" link below the calendar in action calendar context
+		$module_params['showaction'] = 'n';
+
 		$tc_infos = $tikicalendarlib->getCalendar($viewTikiCals, $viewstart, $viewend, $group_by);
 		foreach ( $tc_infos as $tc_key => $tc_val ) {
 				$smarty->assign($tc_key, $tc_val);
