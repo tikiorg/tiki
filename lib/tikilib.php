@@ -4831,18 +4831,22 @@ class TikiLib extends TikiDb_Bridge
 									$status = 'pending';
 								}
 
-								$smarty->assign( 'plugin_name', $plugin_name );
-								$smarty->assign( 'plugin_index', $current_index );
-
-								$smarty->assign( 'plugin_status', $status );
-								$smarty->assign( 'plugin_details', $details );
-								$smarty->assign( 'plugin_preview', $preview );
-								$smarty->assign( 'plugin_approve', $approve );
-
-								$smarty->assign( 'plugin_body', $plugin_data );
-								$smarty->assign( 'plugin_args', $arguments );
-
-								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
+								if ($options['ck_editor']) {
+									$ret = $this->convert_plugin_for_ckeditor( $plugin_name, $arguments, tra('Plugin execution pending approval'), $plugin_data, array('icon' => 'pics/icons/error.png') );
+								} else {
+									$smarty->assign( 'plugin_name', $plugin_name );
+									$smarty->assign( 'plugin_index', $current_index );
+	
+									$smarty->assign( 'plugin_status', $status );
+									$smarty->assign( 'plugin_details', $details );
+									$smarty->assign( 'plugin_preview', $preview );
+									$smarty->assign( 'plugin_approve', $approve );
+	
+									$smarty->assign( 'plugin_body', $plugin_data );
+									$smarty->assign( 'plugin_args', $arguments );
+	
+									$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
+								}
 							}
 						}
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
