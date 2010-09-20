@@ -806,11 +806,6 @@ span.toolbar-list {
 	border: #f00 1px solid;
 }
 
-/* To ensure that full width of wysiwyg toolbar displays in narrow themes. */
-.fckeditzone {
-	min-width: 510px;
-}
-
 /* New Help section */
 div#tikihelp {
 	position: absolute;

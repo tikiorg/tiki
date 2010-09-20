@@ -5,8 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-// Called by FCKEditor and defined in setup_fckeditor.tpl - FCKConfig.ajaxAutoSaveTargetUrl
-// also now CKEDITOR.config.ajaxAutoSaveTargetUrl defined in block.textarea.php
+// Called by CKEDITOR.config.ajaxAutoSaveTargetUrl defined in block.textarea.php
 
 // Used by ckeditor tikiwiki plugin and to reparse plugins in html mode
 // possibly should be renamed?

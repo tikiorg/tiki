@@ -95,10 +95,10 @@ textarea.wikiedit {
 }
 
 body.wikitext {
-	height: 100%;	/* for FCKEditor */
+	height: 100%;	/* for CKEditor */
 }
 
-html[dir=ltr] {	/* for fck editor */
+html[dir=ltr] {	/* for ck editor */
 	background-color: #F3FCFE;
 }
 
