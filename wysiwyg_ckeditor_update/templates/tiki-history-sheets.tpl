@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />
 
 {title help="Spreadsheet"}{$title}{/title}
 

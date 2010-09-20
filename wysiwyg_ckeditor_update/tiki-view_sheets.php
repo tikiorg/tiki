@@ -128,16 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 		die($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
 	}
 	
-	// Load data from the form
-	$handler = new TikiSheetFormHandler;
-	if (!$grid->import($handler)) $grid = new TikiSheet;
-	// Save the changes
-	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-	$grid->export($handler);
-	// Load the layout settings from the database
-	$grid = new TikiSheet;
-	$grid->import($handler);
-	$smarty->assign('grid_content', $grid->getTableHtml());
 } else {
 	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	
@@ -293,7 +283,6 @@ if ($prefs['feature_warn_on_edit'] == 'y') {
 		$editconflict = 'n';
 }
 $smarty->assign('editconflict', $editconflict);
-$headerlib->add_cssfile('lib/sheet/style.css', 10);
 //$cat_type = 'sheet';
 //$cat_objid = $_REQUEST["sheetId"];
 //include_once ("categorize_list.php");
