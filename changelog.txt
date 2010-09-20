@@ -18,6 +18,320 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 5.2
+<http://tikiwiki.org/ReleaseNotes52>
+------------------
+
+----------------------------------------------
+r29457 | pkdille | 2010-09-20 23:39:39 +0200 (Mon, 20 Sep 2010) | 2 lines
+
+[QT] Rollback rejected commit r28752
+
+----------------------------------------------
+r29448 | pkdille | 2010-09-20 22:28:10 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29397 | changi67 | 2010-09-20 19:09:42 +0200 (Mon, 20 Sep 2010) | 1 line
+[bp/29182] [MOD] table normal in tabcontent should be at 100%
+
+
+----------------------------------------------
+r29447 | pkdille | 2010-09-20 22:27:52 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29393 | sdoh | 2010-09-20 17:40:43 +0200 (Mon, 20 Sep 2010) | 1 line
+[bp/r29389] [FIX] r28807  was not defined
+
+
+----------------------------------------------
+r29445 | pkdille | 2010-09-20 22:25:18 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29245 | changi67 | 2010-09-15 09:22:28 +0200 (Wed, 15 Sep 2010) | 1 line
+[bp/28880] [FIX] Missing space between td and colspan + colspan should correspond to the number of th - The good one
+
+
+----------------------------------------------
+r29443 | pkdille | 2010-09-20 22:24:57 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29187 | pkdille | 2010-09-13 22:32:34 +0200 (Mon, 13 Sep 2010) | 1 line
+[bp/r29184][FIX] action calendar : don't show add event link below calendar in action calendar
+
+
+----------------------------------------------
+r29442 | pkdille | 2010-09-20 22:24:40 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29156 | chealer | 2010-09-13 04:31:22 +0200 (Mon, 13 Sep 2010) | 1 line
+[bp/r29155][FIX] MOUSEOVER: If plugin is in a list item / bullet, and body parsing is not disabled, do not interpret line breaks as the end of the list item.
+
+
+----------------------------------------------
+r29440 | pkdille | 2010-09-20 22:24:20 +0200 (Mon, 20 Sep 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r29138 | chealer | 2010-09-12 03:43:17 +0200 (Sun, 12 Sep 2010) | 2 lines
+[FIX] date_format() (r29089 regression)
+oops. thanks Lusserall
+
+
+----------------------------------------------
+r29439 | pkdille | 2010-09-20 22:24:00 +0200 (Mon, 20 Sep 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r29089 | chealer | 2010-09-10 00:48:30 +0200 (Fri, 10 Sep 2010) | 4 lines
+[bp/28847][FIX] date_format(): Times displayed in UTC when using PEAR::Date (affects PHP 5.1)
+Now in proper branch
+
+
+----------------------------------------------
+r29438 | pkdille | 2010-09-20 22:23:33 +0200 (Mon, 20 Sep 2010) | 1 line
+
+QT ROLLBACK: please do not commit directely in branch (same work is in proposal and will be backported)
+----------------------------------------------
+r29436 | pkdille | 2010-09-20 22:02:41 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29079 | chealer | 2010-09-09 22:05:56 +0200 (Thu, 09 Sep 2010) | 1 line
+[bp/r29077][FIX] MySQL search: language and category parameter values not kept when changing results pages
+
+
+----------------------------------------------
+r29435 | pkdille | 2010-09-20 22:00:34 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29057 | sdoh | 2010-09-09 14:57:58 +0200 (Thu, 09 Sep 2010) | 1 line
+[bp/r28434] [FIX] Correctly store freetags containing apostrophes
+
+
+----------------------------------------------
+r29434 | pkdille | 2010-09-20 21:59:49 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29051 | sdoh | 2010-09-09 09:35:42 +0200 (Thu, 09 Sep 2010) | 1 line
+[bp/r29050] [FIX] Fixes errors with strings multibyte, best test of the maximum size tags
+
+
+----------------------------------------------
+r29433 | pkdille | 2010-09-20 21:59:29 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29049 | chealer | 2010-09-09 03:55:45 +0200 (Thu, 09 Sep 2010) | 1 line
+[bp/r29048][FIX] deleteTranslationInProgressFlags(): fix query to use bindvars
+
+
+----------------------------------------------
+r29432 | pkdille | 2010-09-20 21:59:04 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29028 | chealer | 2010-09-08 15:53:50 +0200 (Wed, 08 Sep 2010) | 1 line
+[bp/r28857] (partial) [bp/r26873] [bp/r29026] (partial) [FIX] HTML (breaks display of "Format if not the default short one" in Internet Explorer)
+
+
+----------------------------------------------
+r29431 | pkdille | 2010-09-20 21:58:44 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29024 | sdoh | 2010-09-08 14:55:08 +0200 (Wed, 08 Sep 2010) | 1 line
+[bp/r29023] [FIX] Corrected vanishing bold chars bug
+
+
+----------------------------------------------
+r29430 | pkdille | 2010-09-20 21:58:22 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28967 | chealer | 2010-09-06 06:47:31 +0200 (Mon, 06 Sep 2010) | 2 lines
+[bp/r28965][FIX] over-restrictive filter on client parameter
+
+
+----------------------------------------------
+r29429 | pkdille | 2010-09-20 21:58:08 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28958 | xavidp | 2010-09-05 12:17:23 +0200 (Sun, 05 Sep 2010) | 1 line
+[bp/r28957][FIX]Allow javascript (and thus, JQuery tabs, etc.) to work when pages are displayed without header, footer nor side columns
+
+
+----------------------------------------------
+r29428 | pkdille | 2010-09-20 21:57:23 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28888 | changi67 | 2010-09-03 09:55:22 +0200 (Fri, 03 Sep 2010) | 1 line
+[bp/28879] [MOD] use dynamic value for colspan according to prefs
+
+
+----------------------------------------------
+r29427 | pkdille | 2010-09-20 21:56:58 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28887 | changi67 | 2010-09-03 09:37:17 +0200 (Fri, 03 Sep 2010) | 1 line
+[bp/28881] [MOD] Just give a message when no records found
+
+
+----------------------------------------------
+r29426 | pkdille | 2010-09-20 21:56:38 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28886 | changi67 | 2010-09-03 09:34:43 +0200 (Fri, 03 Sep 2010) | 1 line
+[bp/28880] [FIX] Missing space between td and colspan + colspan should correspond to the number of th
+
+
+----------------------------------------------
+r29425 | pkdille | 2010-09-20 21:56:06 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28808 | sdoh | 2010-08-31 16:53:04 +0200 (Tue, 31 Aug 2010) | 1 line
+[bp/r28807] - [FIX] Corrige les freetags orphelins apr?\195?\168s suppression du post parent.
+
+
+----------------------------------------------
+r29424 | pkdille | 2010-09-20 21:55:46 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28789 | pkdille | 2010-08-30 22:38:23 +0200 (Mon, 30 Aug 2010) | 1 line
+[bp/r27815] [MOD] module since last visit new : Give the possibility to print last login date not as a link even if calendar is activated. Also give the possibility to have all sections folded by default
+
+
+----------------------------------------------
+r29423 | pkdille | 2010-09-20 21:55:26 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28785 | sylvieg | 2010-08-30 21:48:45 +0200 (Mon, 30 Aug 2010) | 1 line
+[bp 28784] [FIX]TRACKERLIST: add also the popup fields to the list of fields to be fetched
+
+
+----------------------------------------------
+r29422 | pkdille | 2010-09-20 21:55:10 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28755 | sylvieg | 2010-08-30 00:07:00 +0200 (Mon, 30 Aug 2010) | 1 line
+[bp 27355][FIX]parsing: leave alone and do not add <br /> the is_html data
+
+
+----------------------------------------------
+r29421 | pkdille | 2010-09-20 21:54:45 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28710 | chibaguy | 2010-08-25 15:11:38 +0200 (Wed, 25 Aug 2010) | 1 line
+[bp/r28709][FIX] Closing div tag out of place (wrong place relative to closing select and if tags), causing column displacement for non-admin users (in branch 5 where non-admins can see this page; but making change here first). Reported by SusanHinton.
+
+
+----------------------------------------------
+r29420 | pkdille | 2010-09-20 21:54:07 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28659 | xavidp | 2010-08-22 14:00:18 +0200 (Sun, 22 Aug 2010) | 1 line
+[bp/r28657][FIX]Make 'add' button translatable
+
+
+----------------------------------------------
+r29419 | pkdille | 2010-09-20 21:53:44 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28528 | chibaguy | 2010-08-16 15:26:22 +0200 (Mon, 16 Aug 2010) | 2 lines
+[bp/r28523] Post title background image URL wasn't updated when site header's was (same image used for both). Thanks to changi for spotting problem.
+
+
+----------------------------------------------
+r29418 | pkdille | 2010-09-20 21:53:22 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28521 | lindonb | 2010-08-15 19:39:41 +0200 (Sun, 15 Aug 2010) | 1 line
+[bp/r28311] [FIX] - adding back odd/even formatting lost when fixing day focus. Thanks chibaguy.
+
+
+----------------------------------------------
+r29417 | pkdille | 2010-09-20 21:53:01 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28497 | marclaporte | 2010-08-14 03:20:22 +0200 (Sat, 14 Aug 2010) | 1 line
+[bp/r28495] [MOD] new badges, now 88x31px, colors changed to promote more the blue logo. Special Thanks to Rick Sapir for original design and Simon Lussier for update.
+
+
+----------------------------------------------
+r29416 | pkdille | 2010-09-20 21:52:07 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28455 | xavidp | 2010-08-11 19:09:28 +0200 (Wed, 11 Aug 2010) | 1 line
+[bp/r28454][FIX]Allow exporting and importing also Static Text fields
+
+
+----------------------------------------------
+r29415 | pkdille | 2010-09-20 21:51:32 +0200 (Mon, 20 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r28446 | xavidp | 2010-08-11 13:35:56 +0200 (Wed, 11 Aug 2010) | 1 line
+[bp/r28428][MOD]Exporting and importing tracker fields now includes description text and the checkbox for parsing description. Waiting for somebody to create the new BRANCH proposals/5x so that I can backport it to 5x
+
+
+----------------------------------------------
+r28885 | changi67 | 2010-09-03 09:30:13 +0200 (Fri, 03 Sep 2010) | 1 line
+
+[ROLLBACK] Wrong place
+----------------------------------------------
+r28884 | changi67 | 2010-09-03 09:27:30 +0200 (Fri, 03 Sep 2010) | 1 line
+
+[bp/28880] [FIX] Missing space between td and colspan + colspan should correspond to the number of th
+----------------------------------------------
+r28848 | chealer | 2010-09-02 10:00:56 +0200 (Thu, 02 Sep 2010) | 1 line
+
+[bp/28847][FIX] date_format(): Times displayed in UTC when using PEAR::Date (affects PHP 5.1)
+----------------------------------------------
+r28752 | ohertel | 2010-08-29 19:23:55 +0200 (Sun, 29 Aug 2010) | 1 line
+
+[fix] Temporary fix for tiki sheet editing. Sheets are broken for admins of sites with a large user base, because the complete user base is loaded and assigned to a variable, causing a memory error most often. Needs to get improvement.
+----------------------------------------------
+r28665 | xavidp | 2010-08-22 14:59:46 +0200 (Sun, 22 Aug 2010) | 1 line
+
+[ENH]New strings translated
+----------------------------------------------
+r28494 | marclaporte | 2010-08-14 02:49:49 +0200 (Sat, 14 Aug 2010) | 1 line
+
+[FIX] rollback changes made to the wrong branch
+----------------------------------------------
+r28493 | marclaporte | 2010-08-14 00:11:58 +0200 (Sat, 14 Aug 2010) | 1 line
+
+[DOC] updated doc links
+----------------------------------------------
+r28492 | marclaporte | 2010-08-14 00:10:53 +0200 (Sat, 14 Aug 2010) | 1 line
+
+[MOD] new badges, now 88x31px, colors changed to promote more the blue logo.
+----------------------------------------------
+r28395 | sept_7 | 2010-08-08 20:25:57 +0200 (Sun, 08 Aug 2010) | 2 lines
+
+[FIX/bp28394] typo in phpCAS library :(
+
+----------------------------------------------
 Version 5.1
 <http://tikiwiki.org/ReleaseNotes51>
 ------------------
