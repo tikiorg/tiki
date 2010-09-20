@@ -228,6 +228,12 @@ isSearchable = {$channels[user].isSearchable}
 isPublic = {$channels[user].isPublic}
 isHidden = {$channels[user].isHidden}
 isMandatory = {$channels[user].isMandatory}
+{if $channels[user].type eq 'S'}
+descriptionStaticText = {$channels[user].description}
+{else}
+description = {$channels[user].description}
+descriptionIsParsed = {$channels[user].descriptionIsParsed}
+{/if}
 {/if}
 {/section}
 </textarea><br />
