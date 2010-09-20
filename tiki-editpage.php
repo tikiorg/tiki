@@ -449,7 +449,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 						include_once("lib/multilingual/multilinguallib.php");
 						unset( $tikilib->cache_page_info );
 
-						if ( $approved = $this->get_approved_page($page) ) {
+						if ( $approved = $tikilib->get_approved_page($page) ) {
 							$oldpage = $approved;
 							$oldpageid = $tikilib->get_page_id_from_name($oldpage);
 							$oldtrads = $multilinguallib->getTrads('wiki page', $oldpageid);
@@ -504,7 +504,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 		if ($page_ref_id) {
 			$url = "tiki-index.php?page_ref_id=$page_ref_id";
 		} else {
-			$url = $wiki->sefurl($page);
+			$url = $wikilib->sefurl($page);
 		}
 		if ($prefs['feature_best_language'] === 'y') {
 			$url .= '&bl=n';
