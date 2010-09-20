@@ -15,11 +15,7 @@
 	{/if}
 
 	{if $tiki_p_edit_sheet eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}
-		{if $prefs.feature_jquery_sheet eq "y"}
-			{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;parse=edit" _text="{tr}Edit{/tr}"}
-		{else}
-			{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;mode=edit" _text="{tr}Edit{/tr}"}
-		{/if}
+		{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;parse=edit" _text="{tr}Edit{/tr}"}
 	{/if}
 	
 	{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_admin_sheet eq 'y' || $tiki_p_admin eq 'y'}

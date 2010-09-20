@@ -261,7 +261,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 	if( $prefs['feature_jquery_reflection'] == 'y' ) {
 		$headerlib->add_jsfile( 'lib/jquery/reflection-jquery/js/reflection.js' );
 	}
-	if( $prefs['feature_sheet'] == 'y' && $prefs['feature_jquery_sheet'] == 'y' ) {
+	if( $prefs['feature_sheet'] == 'y' ) {	// TODO once refactored these files only need to be included when on a page using them
 		$headerlib->add_cssfile( 'lib/jquery/jquery.sheet/jquery.sheet.css' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.js' );
 		$headerlib->add_jsfile( 'lib/jquery/jquery.sheet/jquery.sheet.advancedfn.js' );
