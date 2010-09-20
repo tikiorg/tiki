@@ -1054,7 +1054,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$items["data"][$itkey]['attachments']  = $res['attachments'];
 				}
 			}
-			if (!empty($compute)) {
+			if (!empty($compute) && !empty($items['data'])) {
 				$fs = preg_split('/ *: */', $compute);
 				foreach ($fs as $fieldId) {
 					if (strstr($fieldId, "/")) {
@@ -1078,7 +1078,7 @@ function wikiplugin_trackerlist($data, $params) {
 								break;
 							}
 						}
-					}
+					}						
 					eval('$value='.implode('+', $amount).';');
 					if ($oper == 'avg')
 						$value = round($value / count($amount));
