@@ -232,7 +232,7 @@ div.quotebody {
 }
 
 .postbody-title {
-	background: #169fb5 url(akebi/header.png) -650px -90px;
+	background: #169fb5 url(akebi/siteheader.png) -550px -90px no-repeat;
 }
 
 .post .author,
