@@ -3704,7 +3704,7 @@ DROP TABLE IF EXISTS `tiki_todo`;
 CREATE TABLE `tiki_todo` (
     `todoId` INT(12) NOT NULL auto_increment,
     `after` INT(12) NOT NULL,
-    `event` VARCHAR(50),
+    `event` VARCHAR(50) NOT NULL,
     `objectType` VARCHAR(50),
     `objectId` VARCHAR(255) default NULL,
     `from` VARCHAR(255) default NULL,
