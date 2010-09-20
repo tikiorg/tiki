@@ -396,7 +396,7 @@ class BlogLib extends TikiLib
 			$created = $this->now;	
 		}
 		
-		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
+		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre><strong>');
 		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?)";
 		$result = $this->query($query, array((int) $blogId, $data, (int) $created, $user, $title, $priv));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
