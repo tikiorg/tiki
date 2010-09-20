@@ -23,7 +23,7 @@ $section = 'search';
 require_once ('tiki-setup.php');
 require_once ('lib/ajax/ajaxlib.php');
 require_once ('lib/search/searchlib-mysql.php');
-$auto_query_args = array('highlight', 'where', 'initial', 'maxRecords', 'sort_mode', 'find', 'lang', 'words', 'boolean');
+$auto_query_args = array('highlight', 'where', 'initial', 'maxRecords', 'sort_mode', 'find', 'searchLang', 'words', 'boolean', 'categId');
 $searchlib = new SearchLib;
 $smarty->assign('headtitle', tra('Search'));
 
