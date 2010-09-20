@@ -53,6 +53,7 @@ function get_default_prefs() {
 		'backlinks_name_len' => '0',
 		'feature_dump' => 'n',
 		'feature_history' => 'y',
+		'feature_page_contribution' => 'n',
 		'feature_lastChanges' => 'y',
 		'feature_likePages' => 'n',
 		'feature_listPages' => 'y',
@@ -1723,7 +1724,7 @@ function get_default_prefs() {
 		'auth_token_access_maxtimeout' => 3600*24*7,
 		'auth_token_access_maxhits' => 10,
 		'auth_token_tellafriend' => 'n',
-		'auth_token_promote' => 'n',
+		'auth_token_share' => 'n',
 	
 		// PDF
 		'print_pdf_from_url' => 'none',
