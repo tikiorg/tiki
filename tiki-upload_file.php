@@ -441,6 +441,9 @@ if (isset($_REQUEST["upload"])) {
 						$smarty->assign("dllink", $aux['dllink']);
 						$smarty->assign("nextFormId", $_REQUEST['formId'] + 1);
 						$smarty->assign("feedback_message",$feedback_message);
+						$syntax = $filegallib->getWikiSyntax($_REQUEST["galleryId"][$key]);
+						$syntax = $tikilib->process_fgal_syntax($syntax, $aux);
+						$smarty->assign('syntax', $syntax);
 						print_progress($smarty->fetch("tiki-upload_file_progress.tpl"));
 					}
 				}

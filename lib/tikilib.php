@@ -2123,9 +2123,14 @@ class TikiLib extends TikiDb_Bridge
 	 * @param bool $keep_subgals_together do not mix files and subgals when sorting (if true, subgals will always be at the top)
 	 * @param bool $parent_is_file use $galleryId param as $fileId (to return only archives of the file)
 	 * @param array filter: creator, categId, lastModif, lastDownload, fileId
+	 * @param string wiki_syntax: text to be inserted in editor onclick (from fgal manager)
 	 * @return array of found files and subgals
 	 */
-	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='') {
+	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, 
+						$with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true,
+						$recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='',
+						$wiki_syntax = '') {
+
 		global $user, $tiki_p_admin_file_galleries;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
@@ -2392,6 +2397,11 @@ class TikiLib extends TikiDb_Bridge
 			if ($backlinkPerms[$res['galleryId']] == 'y' && $filegallib->hasOnlyPrivateBacklinks($res['id'])) {
 				continue;
 			}
+			// add markup to be inserted onclick
+			if ($object_type === 'file') {
+				$res['wiki_syntax'] = $this->process_fgal_syntax($wiki_syntax, $res);
+			}
+				
 			$n++;
 			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
 
@@ -2446,6 +2456,17 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		return array('data' => $ret, 'cant' => $cant);
+	}
+	
+	// convert markup to be inserted onclick - replace: %fileId%, %name%, %description% etc
+	function process_fgal_syntax($syntax, $file) {
+		$replace_keys = array('fileId', 'name', 'filename', 'description', 'hits', 'author', 'filesize', 'filetype');
+		foreach($replace_keys as $k) {
+			if (isset($file[$k])) {
+				$syntax = preg_replace("/%$k%/", $file[$k], $syntax);
+			}
+		}
+		return $syntax;
 	}
 
 	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1, $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {

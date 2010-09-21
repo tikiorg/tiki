@@ -363,6 +363,7 @@ if (isset($_REQUEST['edit'])) {
 											, 'quota'
 											, 'image_max_size_x'
 											, 'image_max_size_y'
+											, 'wiki_syntax'
 											);
 	foreach($request_vars as $v) {
 		if (isset($_REQUEST[$v])) {
@@ -439,7 +440,8 @@ if (isset($_REQUEST['edit'])) {
 											'image_max_size_x'	=> $_REQUEST['image_max_size_x'],
 											'image_max_size_y'	=> $_REQUEST['image_max_size_y'],
 											'backlinkPerms'			=> isset($_REQUEST['backlinkPerms'])? 'y': 'n',
-											'show_backlinks'		=> $_REQUEST['fgal_list_backlinks']
+											'show_backlinks'		=> $_REQUEST['fgal_list_backlinks'],
+											'wiki_syntax'			=> $_REQUEST['wiki_syntax']
 										);
 		
 		if ($prefs['fgal_show_slideshow'] != 'y') {
@@ -795,6 +797,11 @@ if (isset($_GET['slideshow'])) {
 	if (!isset($_REQUEST["edit_mode"]) && !isset($_REQUEST["edit"])) {
 		$recursive = (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') || $find_sub;
 		$with_subgals = !((isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') || $find_sub);
+		if (!empty($_REQUEST['filegals_manager'])) {	// get wiki syntax if needed
+			$syntax = $filegallib->getWikiSyntax($_REQUEST['galleryId']);
+		} else {
+			$syntax = '';
+		}
 		// Get list of files in the gallery
 		$files = $tikilib->get_files( $_REQUEST['offset']
 																, $_REQUEST['maxRecords']
@@ -814,6 +821,7 @@ if (isset($_GET['slideshow'])) {
 																, false
 																, ($gal_info['show_backlinks']!='n')
 																, $find
+																, $syntax
 																);
 		$smarty->assign_by_ref('files', $files['data']);
 		$smarty->assign('cant', $files['cant']);
