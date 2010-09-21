@@ -1054,6 +1054,7 @@ class ToolbarDialog extends Toolbar
 			
 			global $headerlib;
 			$headerlib->add_js( "window.dialogData[$this->index] = " . json_encode($this->list) . ";", 1 + $this->index );
+			$label = addcslashes($this->label, "'");
 			$headerlib->add_jq_onready(<<< JS
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
 window.CKEDITOR.plugins.add( '{$this->name}', {
@@ -1066,7 +1067,7 @@ window.CKEDITOR.plugins.add( '{$this->name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$this->name}', {
-			label : '{$this->label}',
+			label : '{$label}',
 			command : '{$this->name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
@@ -1152,6 +1153,7 @@ class ToolbarHelptool extends Toolbar
 		$this->setLabel( tra('Wysiwyg Help') );
 		
 		global $headerlib;
+		$label = addcslashes($this->label, "'");
 		$headerlib->add_jq_onready(<<< JS
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$name}' : '{$name}' );
 window.CKEDITOR.plugins.add( '{$name}', {
@@ -1165,7 +1167,7 @@ window.CKEDITOR.plugins.add( '{$name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$name}', {
-			label : '{$this->label}',
+			label : '{$label}',
 			command : '{$name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
@@ -1209,6 +1211,7 @@ class ToolbarFileGallery extends Toolbar
 			$exec_js = str_replace('&amp;', '&', $this->getSyntax( $areaId ));	// odd?
 			
 			global $headerlib;
+			$label = addcslashes($this->label, "'");
 			$headerlib->add_jq_onready(<<< JS
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
 window.CKEDITOR.plugins.add( '{$this->name}', {
@@ -1221,7 +1224,7 @@ window.CKEDITOR.plugins.add( '{$this->name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$this->name}', {
-			label : '{$this->label}',
+			label : '{$label}',
 			command : '{$this->name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
@@ -1267,6 +1270,7 @@ class ToolbarSwitchEditor extends Toolbar
 			$this->name = $this->wysiwyg;	// temp
 			
 			global $headerlib;
+			$label = addcslashes($this->label, "'");
 			$headerlib->add_jq_onready(<<< JS
 window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ',{$this->name}' : '{$this->name}' );
 window.CKEDITOR.plugins.add( '{$this->name}', {
@@ -1279,7 +1283,7 @@ window.CKEDITOR.plugins.add( '{$this->name}', {
 			canUndo: false
 		}));
 		editor.ui.addButton( '{$this->name}', {
-			label : '{$this->label}',
+			label : '{$label}',
 			command : '{$this->name}',
 			icon: editor.config._TikiRoot + '{$this->icon}'
 		});
