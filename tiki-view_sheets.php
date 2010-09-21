@@ -53,7 +53,7 @@ if ( $tiki_sheet_div_style) {
 	$smarty->assign('tiki_sheet_div_style',  $tiki_sheet_div_style);
 }
 
-if ($objectperms->edit_sheet && $_REQUEST['parse'] == 'edit' && $prefs['feature_jquery_sheet'] == 'y') {	// edit button clicked in parse mode
+if ($objectperms->edit_sheet && $_REQUEST['parse'] == 'edit') {	// edit button clicked in parse mode
 	$_REQUEST['parse'] = 'n';
 	$headerlib->add_jq_onready('
 		if (typeof ajaxLoadingShow == "function") {
@@ -61,7 +61,7 @@ if ($objectperms->edit_sheet && $_REQUEST['parse'] == 'edit' && $prefs['feature_
 		}
 		setTimeout (function () { $("#edit_button").click(); }, 500);
 	', 500);
-} else if ((!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') && $prefs['feature_jquery_sheet'] == 'y') {
+} else if (!isset($_REQUEST['simple']) || $_REQUEST['simple'] == 'n') {
 	$headerlib->add_jq_onready('
 		if (typeof ajaxLoadingShow == "function") {
 			ajaxLoadingShow("role_main");
@@ -128,16 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 		die($res ?  tra('Saved'). ': ' . $rc : tra('Save failed'));
 	}
 	
-	// Load data from the form
-	$handler = new TikiSheetFormHandler;
-	if (!$grid->import($handler)) $grid = new TikiSheet;
-	// Save the changes
-	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
-	$grid->export($handler);
-	// Load the layout settings from the database
-	$grid = new TikiSheet;
-	$grid->import($handler);
-	$smarty->assign('grid_content', $grid->getTableHtml());
 } else {
 	$handler = new TikiSheetDatabaseHandler($_REQUEST["sheetId"]);
 	
@@ -189,17 +179,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['xjxfun'])) {
 		$grid->import($handler);
 	}
 }
-if ($prefs['feature_jquery_sheet'] == 'y') {
-	if ($prefs['feature_contribution'] == 'y') {
-		$contributionItemId = $_REQUEST['sheetId'];
-		include_once ('contribution.php');
-	}
-	// need to be in non-parsed mode to edit the sheet
-	if ($_REQUEST['parse'] == 'y') {
-		$smarty->assign('editReload', true);
-	} else {
-		$smarty->assign('editReload', false);
-		$headerlib->add_jq_onready('
+if ($prefs['feature_contribution'] == 'y') {
+	$contributionItemId = $_REQUEST['sheetId'];
+	include_once ('contribution.php');
+}
+// need to be in non-parsed mode to edit the sheet
+if ($_REQUEST['parse'] == 'y') {
+	$smarty->assign('editReload', true);
+} else {
+	$smarty->assign('editReload', false);
+	$headerlib->add_jq_onready('
 $("#edit_button").click( function () {
 	var $a = $(this).find("a");
 	if ($a.text() != editSheetButtonLabel2) {
@@ -270,7 +259,6 @@ window.setEditable = function(isEditable) {
 	}
 };
 ');
-	}
 }
 
 $smarty->assign('parseValues', $grid->parseValues);
@@ -293,7 +281,6 @@ if ($prefs['feature_warn_on_edit'] == 'y') {
 		$editconflict = 'n';
 }
 $smarty->assign('editconflict', $editconflict);
-$headerlib->add_cssfile('lib/sheet/style.css', 10);
 //$cat_type = 'sheet';
 //$cat_objid = $_REQUEST["sheetId"];
 //include_once ("categorize_list.php");

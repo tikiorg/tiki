@@ -92,7 +92,6 @@
 				{preference name=feature_jquery_validation}
 				{preference name=feature_jquery_ui_theme}
 				{preference name=feature_jquery_media}
-				{preference name=feature_jquery_sheet}
 
 				<div class="adminoptionbox">
 					<div class="adminoptionlabel">

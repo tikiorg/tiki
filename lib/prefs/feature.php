@@ -1331,15 +1331,6 @@ function prefs_feature_list() {
 			'description' => tra('Provides various validation possibilities like in Trackers.'),
 			'help' => 'JQuery#Validation',
 		),
-		'feature_jquery_sheet' => array(
-			'name' => tra('JQuery Sheet'),
-			'type' => 'flag',
-			'help' => 'JQuery#Sheet',
-			'description' => tra('Experimental implementation of jQuery.sheet spreadsheet - data remains compatible with previous Tiki Sheets'),
-			'dependencies' => array(
-				'feature_sheet',
-			),
-		),
 		'feature_jquery_jqs5' => array(
 			'name' => tra('JQuery JQS5'),
 			'type' => 'flag',
