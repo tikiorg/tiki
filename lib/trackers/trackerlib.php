@@ -4043,6 +4043,8 @@ class TrackerLib extends TikiLib
 	}
 	function flaten($fields) {
 		$new = array();
+		if (empty($fields))
+			return $new;
 		foreach ($fields as $field) {
 			if (is_array($field)) {
 				$new = array_merge($new, $this->flaten($field));
