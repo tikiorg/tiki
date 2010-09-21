@@ -481,7 +481,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 					$res = $trklib->list_tracker_field_values($trackerId, $fieldId);
 				}
 				foreach ($res as $val) {
-					$sval = strip_tags($tikilib->parse_data($val));
+					$sval = strip_tags($tikilib->parse_data($val, array('parsetoc'=> false)));
 					$opt['id'] = $val;
 					$opt['name'] = $sval;
 					if ($field['type'] == 'y') { // country
