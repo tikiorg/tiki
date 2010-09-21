@@ -1300,7 +1300,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	 * @param $sheetId The ID of the sheet in the database.
 	 * @param $db The database link to use.
 	 */
-	function TikiSheetDatabaseHandler( $sheetId , $date )
+	function TikiSheetDatabaseHandler( $sheetId , $date = null )
 	{
 		$this->sheetId = $sheetId;
 		$this->readDate = ( $date ? $date : time() );
