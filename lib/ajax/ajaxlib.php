@@ -252,6 +252,12 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 
 	if( $prefs['tiki_minify_javascript'] == 'y' ) {
 		$hjsfiles = $headerlib->getMinifiedJs();
+		if( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
+			$hjsfiles[] = 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js';
+			if( $prefs['feature_jquery_ui'] == 'y' ) {
+				$hjsfiles[] = 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js';
+			}
+		}
 	} else {
 		$hjsfiles = $headerlib->getJsFilesList();
 	}
@@ -297,6 +303,3 @@ if ($prefs['ajax_autosave'] === 'y') {
 	require_once("lib/ajax/autosave.php");
 }
 
-if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-	require_once("lib/ajax/tikitohtml.php");
-}
