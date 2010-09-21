@@ -38,6 +38,19 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
+if (!empty($_REQUEST['categId'])) {
+	$categFilter = array($_REQUEST['categId']);
+	$smarty->assign('find_categId', $_REQUEST['categId']);
+} else {
+	$categFilter = array();
+	$smarty->assign('find_categId', '');
+}
+if ($prefs['feature_categories'] == 'y') {
+	global $categlib;
+	include_once ('lib/categories/categlib.php');
+	$categories = $categlib->get_all_categories();
+	$smarty->assign('categories', $categories);
+}
 if (isset($_REQUEST["maxRecords"])) {
 	$maxRecords = $_REQUEST["maxRecords"];
 }
@@ -55,7 +68,7 @@ if (isset($_REQUEST["casesensitive"]) && $_REQUEST["casesensitive"] == 'y') {
 $smarty->assign('casesensitive', $casesensitive);
 
 if (isset($_REQUEST['search']) && $searchtext) {
-	$results = $wikilib->get_pages_contains($searchtext, $offset, $maxRecords);
+	$results = $wikilib->get_pages_contains($searchtext, $offset, $maxRecords, 'pageName_asc', $categFilter);
 	$searchtextLength = strlen($searchtext);
 	foreach ($results["data"] as &$r) {
 		$pageLength = strlen($r["data"]);

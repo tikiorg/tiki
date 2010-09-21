@@ -988,12 +988,20 @@ class WikiLib extends TikiLib
 		}
 	}
 	
-	function get_pages_contains($searchtext, $offset = 0, $maxRecords = -1, $sort_mode = 'pageName_asc') {
-		$query = "select * from `tiki_pages` where `data` like ? order by ".$this->convertSortMode($sort_mode);
+	function get_pages_contains($searchtext, $offset = 0, $maxRecords = -1, $sort_mode = 'pageName_asc', $categFilter = array()) {
+		$jail_bind = array();
+		$jail_join = '';
+		$jail_where = '';
+		if ($categFilter) {
+			global $categlib; require_once( 'lib/categories/categlib.php' );
+			$categlib->getSqlJoin( $categFilter, 'wiki page', '`tiki_pages`.`pageName`', $jail_join, $jail_where, $jail_bind );
+		}
+		$query = "select * from `tiki_pages` $jail_join where `tiki_pages`.`data` like ? $jail_where order by ".$this->convertSortMode($sort_mode);
 		$bindvars = array('%' . $searchtext . '%');
+		$bindvars = array_merge($bindvars, $jail_bind);
 		$results = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
 		$ret["data"] = $results;
-		$query_cant = "select count(*) from `tiki_pages` where `data` like ?";
+		$query_cant = "select count(*) from `tiki_pages` $jail_join where `data` like ? $jail_where";
 		$ret["cant"] = $this->getOne($query_cant, $bindvars);
 		return $ret;
 	}
