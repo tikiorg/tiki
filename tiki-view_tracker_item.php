@@ -181,9 +181,9 @@ if (isset($_REQUEST['filterfield'])) {
 	if (is_array($_REQUEST['filtervalue']) and isset($_REQUEST['filtervalue'][$tryfilterfield])) {
 		$tryfiltervalue = $_REQUEST['filtervalue'][$tryfilterfield];
 	} else {
-		$tryfilterfield = split(':', $_REQUEST['filterfield']);
-		$tryfiltervalue = split(':', $_REQUEST['filtervalue']);
-		$tryexactvalue = split(':', $_REQUEST['exactvalue']);
+		$tryfilterfield = preg_split('/\s*:\s*/', $_REQUEST['filterfield']);
+		$tryfiltervalue = preg_split('/\s*:\s*/', $_REQUEST['filtervalue']);
+		$tryexactvalue = preg_split('/\s*:\s*/', $_REQUEST['exactvalue']);
 	}
 }
 //Management of the field type 'User subscribe' (U)
