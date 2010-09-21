@@ -26,6 +26,10 @@
 		{button href="#upload" _text="{tr}Upload File{/tr}"}
 	{/if}
 	{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}" _ajax="n"}{else}{button galleryId=$galleryId href="" _text="{tr}Simple mode{/tr}" _ajax="n"}{/if}
+	<span{if $simpleMode eq 'y'} style="display:none;"{/if}>
+		<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
+		<input type="checkbox" id="keepOpenCbx" checked="checked">
+	</span>
 </div>
 {/if}
 
@@ -66,10 +70,7 @@
 			</td>
 			<td>
 				{if $filegals_manager neq ''}
-					{assign var=seturl value=$uploads[ix].fileId|sefurl:display}
-					
-					{* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
-					<a href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
+					<a href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
 				{else}
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
 				{/if}

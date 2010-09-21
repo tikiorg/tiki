@@ -1071,6 +1071,11 @@ div.dirsite {
 	margin: 0;
 }
 
+.post .postfooter {
+	padding: 1px;
+	background: none repeat scroll 0 0 #E6EDF5;
+}
+
 /**** Image Galleries ****/
 /***** File Galleries *****/
 /***** Trackers *****/

@@ -132,30 +132,7 @@
 {if $filegals_manager neq ''}
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Be careful to set the right permissions on the files you link to{/tr}.{/remarksbox}
 	<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
-	<input type="checkbox" name="keepOpenCbx" id="keepOpenCbx" checked="checked" onchange="keepOpenChanged(this);">
-	{jq notonready=true}
-		function keepOpenChanged(cbx) {
-			if (cbx.checked) {
-				setCookie("fgalKeepOpen", "1");
-			} else {
-				setCookie("fgalKeepOpen", "");
-			}
-		}
-		function checkClose() {
-			var el = document.getElementById("keepOpenCbx");
-			if (el) {
-				if (!el.checked) {
-					window.close();
-				} else {
-					window.blur();
-				}
-			}
-		}
-
-		if (getCookie("fgalKeepOpen")) {
-			document.getElementById("keepOpenCbx").checked = "checked";
-		}
-	{/jq}
+	<input type="checkbox" id="keepOpenCbx" checked="checked">
 {/if}
 
 {if isset($fileChangedMessage) and $fileChangedMessage neq ''}

@@ -1452,9 +1452,9 @@ body.tiki_forums table.normal {
 }
 
 .post .postfooter {
-	float: right;
 	text-align: right;
 	width: 100%;
+	margin-top: 5px;
 }
 .post .postfooter .rating {
 	display: inline;
@@ -1464,8 +1464,23 @@ body.tiki_forums table.normal {
 .post .postfooter .author_actions,
 .post .postfooter .status {
 	display: inline;
-	margin-left: 5px;
 	vertical-align: top;
+}
+
+.post .postfooter .actions,
+.post .postfooter .author_actions {
+	float: left;
+	margin-left: 5px;
+}
+
+.post .postfooter .status {
+	float: right;
+	margin-right: 5px;
+}
+
+.post .postfooter .actions .share {
+	float: right;
+	margin: 1px 2px 2px 5px;
 }
 
 .post .inner > .postfooter {

@@ -2123,9 +2123,14 @@ class TikiLib extends TikiDb_Bridge
 	 * @param bool $keep_subgals_together do not mix files and subgals when sorting (if true, subgals will always be at the top)
 	 * @param bool $parent_is_file use $galleryId param as $fileId (to return only archives of the file)
 	 * @param array filter: creator, categId, lastModif, lastDownload, fileId
+	 * @param string wiki_syntax: text to be inserted in editor onclick (from fgal manager)
 	 * @return array of found files and subgals
 	 */
-	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='') {
+	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, 
+						$with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true,
+						$recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='',
+						$wiki_syntax = '') {
+
 		global $user, $tiki_p_admin_file_galleries;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
@@ -2392,6 +2397,11 @@ class TikiLib extends TikiDb_Bridge
 			if ($backlinkPerms[$res['galleryId']] == 'y' && $filegallib->hasOnlyPrivateBacklinks($res['id'])) {
 				continue;
 			}
+			// add markup to be inserted onclick
+			if ($object_type === 'file') {
+				$res['wiki_syntax'] = $this->process_fgal_syntax($wiki_syntax, $res);
+			}
+				
 			$n++;
 			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
 
@@ -2446,6 +2456,17 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		return array('data' => $ret, 'cant' => $cant);
+	}
+	
+	// convert markup to be inserted onclick - replace: %fileId%, %name%, %description% etc
+	function process_fgal_syntax($syntax, $file) {
+		$replace_keys = array('fileId', 'name', 'filename', 'description', 'hits', 'author', 'filesize', 'filetype');
+		foreach($replace_keys as $k) {
+			if (isset($file[$k])) {
+				$syntax = preg_replace("/%$k%/", $file[$k], $syntax);
+			}
+		}
+		return $syntax;
 	}
 
 	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1, $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {
@@ -4831,18 +4852,22 @@ class TikiLib extends TikiDb_Bridge
 									$status = 'pending';
 								}
 
-								$smarty->assign( 'plugin_name', $plugin_name );
-								$smarty->assign( 'plugin_index', $current_index );
-
-								$smarty->assign( 'plugin_status', $status );
-								$smarty->assign( 'plugin_details', $details );
-								$smarty->assign( 'plugin_preview', $preview );
-								$smarty->assign( 'plugin_approve', $approve );
-
-								$smarty->assign( 'plugin_body', $plugin_data );
-								$smarty->assign( 'plugin_args', $arguments );
-
-								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
+								if ($options['ck_editor']) {
+									$ret = $this->convert_plugin_for_ckeditor( $plugin_name, $arguments, tra('Plugin execution pending approval'), $plugin_data, array('icon' => 'pics/icons/error.png') );
+								} else {
+									$smarty->assign( 'plugin_name', $plugin_name );
+									$smarty->assign( 'plugin_index', $current_index );
+	
+									$smarty->assign( 'plugin_status', $status );
+									$smarty->assign( 'plugin_details', $details );
+									$smarty->assign( 'plugin_preview', $preview );
+									$smarty->assign( 'plugin_approve', $approve );
+	
+									$smarty->assign( 'plugin_body', $plugin_data );
+									$smarty->assign( 'plugin_args', $arguments );
+	
+									$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
+								}
 							}
 						}
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
@@ -5338,6 +5363,17 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 		$ck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
+		// work out if I'm a nested plugin and return empty if so
+		$stack = debug_backtrace(true);
+		$plugin_nest_level = 0;
+		foreach ($stack as $st) {
+			if ($st['function'] === 'parse_first') {
+				$plugin_nest_level ++;
+				if ($plugin_nest_level > 1) {
+					return '';
+				}
+			}
+		}
 		$arg_str = rtrim($arg_str, '&');
 		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
 
@@ -5345,7 +5381,8 @@ class TikiLib extends TikiDb_Bridge
 		if (in_array($name, array())) {
 			return '~np~' . $ck_editor_plugin . '~/np~';
 		}
-		
+		// pre-parse the output so nested plugins don't fall out all over the place
+		$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
 		// remove hrefs and onclicks
 		$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
 		$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
@@ -5356,12 +5393,12 @@ class TikiLib extends TikiDb_Bridge
 		} else {
 			$elem = 'span';
 		}
-		$ret = '<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="position:relative;"' .
-				' syntax="~np~' . htmlentities( $ck_editor_plugin, ENT_QUOTES, 'UTF-8' ) . '~/np~"' .
+		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="position:relative;"' .
+				' syntax="' . htmlentities( $ck_editor_plugin, ENT_QUOTES, 'UTF-8' ) . '"' .
 				' args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
-				' body="~np~' . htmlentities( $data, ENT_QUOTES, 'UTF-8') . '~/np~">'.
+				' body="' . htmlentities( $data, ENT_QUOTES, 'UTF-8') . '">'.
 				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:absolute;z-index:10001" />' .
-				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>';
+				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>~/np~';
 		
 		return 	$ret;
 	}
@@ -5400,7 +5437,7 @@ class TikiLib extends TikiDb_Bridge
 					}
 
 					$vals = array_map( 'trim', $vals );
-					$vals = array_filter( $vals );
+					//$vals = array_filter( $vals );
 
 					$argValue = array_values( $vals );
 				} else {

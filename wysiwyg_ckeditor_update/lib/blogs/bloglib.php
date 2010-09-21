@@ -679,7 +679,7 @@ class BlogLib extends TikiDb_Bridge
 		$result = $this->query($query, array((int) $created, (int) $blogId));
 		$this->add_blog_activity($blogId);
 
-		if ($prefs['feature_user_watches'] == 'y') {
+		if ($prefs['feature_user_watches'] == 'y' or $prefs['feature_group_watches'] == 'y' ) {
 			$nots = $tikilib->get_event_watches('blog_post', $blogId);
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];

@@ -936,6 +936,12 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('filterfield',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
+		if (!empty($filterfield)) {
+			$urlquery['filterfield'] = implode(':', $filterfield);
+			$urlquery['filtervalue'] = implode(':', $filtervalue);
+			$urlquery['exactvalue'] = implode(':', $exactvalue);
+			$smarty->assign('urlquery', $urlquery);
+		}
 		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
 			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";
 			if (!empty($fields)) 

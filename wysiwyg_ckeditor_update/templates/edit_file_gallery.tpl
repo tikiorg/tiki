@@ -191,6 +191,17 @@
 								<i>{tr}If an image is higher than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</i>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								{tr}Wiki markup to enter when image selected from "file gallery manager"{/tr}:
+							</td>
+							<td>
+								<input size="80" type="text" name="wiki_syntax" value="{$gal_info.wiki_syntax|escape}" />
+								<br />
+								<i>{tr}The default is {/tr}"{literal}{img fileId="%fileId%" thumb="y" rel="box[g]"}{/literal}")</i>
+								<i>{tr}Field names will be replaced when enclosed in % chars. e.g. %fileId%, %src%, %title%, %description%{/tr}</i>
+							</td>
+						</tr>
 
 		 				{include file='categorize.tpl'}
 
