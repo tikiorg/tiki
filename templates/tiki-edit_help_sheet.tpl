@@ -27,6 +27,8 @@ For a complete list of all the MS Excel style functions that jQuery.sheet suppor
 <div id="jQuerySheet_help" style="height: 450px !important; width: 400px !important"></div>
 <!-- (ugly) <iframe id="jQuerySheet_help" style="height: 450px; width: 100% !important" src="lib/jquery/jquery.sheet/sheets/enduser.documentation.html"></iframe>-->
 
+{include file="lib/jquery/jquery.sheet/sheets/enduser.documentation.html"}
+
 </div>
 
 {/add_help}
