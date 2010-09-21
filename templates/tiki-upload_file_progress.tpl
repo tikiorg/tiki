@@ -5,7 +5,7 @@
 {/if}
 {if !empty($filegals_manager)}
 	{assign var=seturl value=$fileId|sefurl:display}
-	{capture name=alink assign=alink}href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); if (typeof checkClose != 'undefined') checkClose(); else window.close();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}" class="tips"{/capture}
+	{capture name=alink assign=alink}href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}" class="tips"{/capture}
 {else}
 {assign var=alink value=''}
 {/if}
