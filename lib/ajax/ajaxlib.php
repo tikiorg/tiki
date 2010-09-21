@@ -297,6 +297,3 @@ if ($prefs['ajax_autosave'] === 'y') {
 	require_once("lib/ajax/autosave.php");
 }
 
-if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-	require_once("lib/ajax/tikitohtml.php");
-}
