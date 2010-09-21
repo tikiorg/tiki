@@ -1074,36 +1074,50 @@ function displayDialog( ignored, list, area_id, isSub ) {
 				} catch (e) {
 					alert(e.name + ' - ' + e.message);
 				}
+			} else if (item.indexOf("FileGallery") === 0) {
+				obj = ({"width": 700, "modal": true, "open": function() {
+					FileGallery.open("tiki-list_file_gallery2.php", area_id, dialogDiv);
+				}});
 			} else if (item.length > 0) {
 				tit = item;
 			}
 		}
 	}
-	
+
 	if (!obj) { obj = {}; }
 	if (!obj.width) { obj.width = 210; }
-	obj.bgiframe = true;
+//	obj.bgiframe = true; ///FIXME
 	obj.autoOpen = false;
+//	obj.stack = true; ///FIXME
 //	obj.zIndex = 10000;
 //	$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
 
 	if (isSub) {
-		$(dialogDivSub).dialog('destroy').dialog(obj).dialog('option', 'title', tit);
-		$(dialogDivSub).load(isSub);
-		$(dialogDivSub).dialog({modal : true}).dialog('open');
+///		$(dialogDivSub).dialog('destroy').dialog(obj).dialog('option', 'title', tit);
+///		$(dialogDivSub).load(isSub);
+///		$(dialogDivSub).dialog({modal : true}).dialog('open');
+/*N*/
+		$(dialogDivSub).dialog('destroy').load(isSub).dialog({
+			modal: true,
+			width: '700px',
+			autoOpen: true,
+			height: 400,
+			stack: true,
+			title: tit
+		});
+/*N*/
 	} else {
+/*N*/
+		obj.modal = true;
+		obj.width = '700px';
+		obj.title = tit;
+///		$(dialogDiv).dialog('destroy').dialog(obj);
+///		$(dialogDiv).dialog('open');
+/*N*/
 //		$(dialogDiv).dialog('destroy').dialog(obj).dialog('option', 'title', tit).dialog('open');
 ///		$(dialogDiv).dialog({modal : true}).dialog(obj).dialog('open');
 		$(dialogDiv).dialog(obj).dialog('open'); // TODO: the parent should be modal too
 	}
-
-	alert('Removing this alert makes the code below not working'); ///FIXME
-	$('a.fgalname' , dialogDiv ).click(function(event) {
-		event.preventDefault();
-		insertAt( area_id, 'IMAGEURL' );
-		dialogSharedClose( area_id, dialogDiv );
-		return false;
-	});
 
 	// 2nd version fix for Firefox 3.5 losing selection on changes to popup
 	//restoreTASelection(area_id);

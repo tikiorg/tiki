@@ -257,9 +257,9 @@
 						{if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
 							{* show the filename if only name should be displayed but is empty *}
 							{assign var=propval value=$files[changes].filename}
-							{assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
+							{assign var=propval value="<a class='fgalname namealias fgallink' $link>$propval</a>"}
 						{else}
-							{assign var=propval value="<a class='fgalname' $link>$propval</a>"}
+							{assign var=propval value="<a class='fgalname fgallink' $link>$propval</a>"}
 						{/if}
 					{elseif $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
 						{if empty($propval)}
@@ -300,7 +300,7 @@
 	
 					{if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
 						<td class="{cycle advance=false}">
-							{if $link neq ''}<a class='fgalname' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}
+							{if $link neq ''}<a class='fgalname{if preg_match('/tiki-download_file\.php/',$link)} fgalfile{else} fgalgal{/if}' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}
 						</td>
 					{/if}
 	
