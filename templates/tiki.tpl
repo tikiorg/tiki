@@ -10,12 +10,14 @@
 			<li><a href="#tiki-center" title="{tr}Jump to Content{/tr}">{tr}Jump to Content{/tr}</a></li>
 		</ul>
 
-{if $prefs.feature_fullscreen eq 'y' and empty($filegals_manager)  and $print_page ne 'y'}
+{if $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}
+		<div id="fullscreenbutton">
 	{if $smarty.session.fullscreen eq 'n'}
-		{self_link fullscreen="y" _class="fullscreenbutton" _ajax='n' _icon=application_get _title="{tr}Fullscreen{/tr}"}{/self_link}
+		{self_link fullscreen="y" _ajax='n' _icon=application_get _title="{tr}Fullscreen{/tr}"}{/self_link}
 	{else}
-		{self_link fullscreen="n" _class="fullscreenbutton" _ajax='n' _icon=application_put _title="{tr}Cancel Fullscreen{/tr}"}{/self_link}
+		{self_link fullscreen="n" _ajax='n' _icon=application_put _title="{tr}Cancel Fullscreen{/tr}"}{/self_link}
 	{/if}
+		</div>
 {/if}
 
 {* TikiTest ToolBar *}
