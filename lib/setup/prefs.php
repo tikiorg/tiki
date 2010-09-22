@@ -1305,7 +1305,7 @@ function get_default_prefs() {
 		'feature_sitedesc' => 'n',
 		'feature_bot_logo' => 'n',
 		'feature_endbody_code' => '',
-		'feature_custom_html_head_content' => '',
+		'feature_custom_html_head_content' => '{if $prefs.feature_secondary_sitemenu_custom_code ne ''}<style type="text/css">#sitelogo img {literal}{margin-top: 0; position: relative; top: -12px;}{/literal}</style>{/if}',
 		'feature_fixed_width' => 'y',
 
 		// layout

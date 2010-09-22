@@ -106,8 +106,8 @@ input[type=radio] {
 	padding-left: 10px;
 }
 
-div#sitelogo img {
-	margin: 1em;
+#sitelogo img {
+	margin-top: 10px;
 }
 
 #bannertopright {

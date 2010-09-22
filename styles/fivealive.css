@@ -479,8 +479,8 @@ select {
 	clear: right;
 }
 
-div#sitelogo img {
-	margin-top: 0;
+#sitelogo img {
+	margin-top: 16px;
 }
 
 #sitetitles {
