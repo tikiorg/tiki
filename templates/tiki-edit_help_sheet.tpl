@@ -14,5 +14,5 @@
 For a complete list of all the MS Excel style functions that jQuery.sheet supports, see below.{/tr}</p>
 
 <object id="jQuerySheet_help" style="height: 300px; width: 100% !important" data="lib/jquery/jquery.sheet/sheets/enduser.documentation.html"></object>
-
+</div>
 {/add_help}
