@@ -34,9 +34,15 @@
 		{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $field_value.list|@count > $prefs.user_selector_threshold and $field_value.isMandatory ne 'y'}
 			{* since autocomplete allows blank entry it can't be used for mandatory selection. *}
 			<input id="user_selector_{$field_value.fieldId}" type="text" size="20" name="{$field_value.ins_id}" value="{if $field_value.options_array[0] eq '2'}{$user}{else}{$field_value.value}{/if}" />
+			{if $prefs.user_selector_realnames_tracker == 'y'}
+			{jq}
+				$("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "userrealname", {mustMatch: true});
+			{/jq}
+			{else}
 			{jq}
 				$("#user_selector_{{$field_value.fieldId}}").tiki("autocomplete", "username", {mustMatch: true});
 			{/jq}
+			{/if}
 		{else}
 		<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 		{if $field_value.isMandatory ne 'y'}
@@ -147,6 +153,9 @@
 		{/if}
 	{/if}
 
+{* -------------------- user groups -------------------- *}
+{elseif $field_value.type eq 'usergroups'}
+	
 {* -------------------- preference --------------------- *}
 {elseif $field_value.type eq 'p'}
 	{if $field_value.options_array[0] eq 'password'}
@@ -255,15 +264,20 @@
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
 	{if $field_value.isMultilingual ne 'y'}
-		{if $field_value.options_array[0] eq 1}
-    		{toolbars qtnum=$field_value.fieldId area_id="area_"|cat:$field_value.fieldId section="trackers"}
-		{/if}
 		{if $field_value.options_array[2] == 1}
-				<input type="text" id="area_{$field_value.fieldId}" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', "{tr}Word Limit Exceeded{/tr}")"{/if} {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', "{tr}Character Limit Exceeded{/tr}")"{/if} />
+			{if $field_value.options_array[0] eq 1}
+    			{toolbars qtnum=$field_value.fieldId area_id="area_"|cat:$field_value.fieldId section="trackers"}
+			{/if}
+			<input type="text" id="area_{$field_value.fieldId}" name="{$field_value.ins_id}"{if $field_value.options_array[1] > 0} size="{$field_value.options_array[1]}"{/if}{if $field_value.options_array[3]>0} maxlength="{$field_value.options_array[3]}"{/if} value="{$field_value.value|escape}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', "{tr}Word Limit Exceeded{/tr}")"{/if} {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', "{tr}Character Limit Exceeded{/tr}")"{/if} />
 		{else}
-			<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}  {if $field_value.options_array[3]} onkeyup="charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}')"{/if} >
+			{capture name=textarea_id}area_{$field_value.fieldId}{/capture}
+			{capture name=textarea_toolbars}{if $field_value.options_array[0] eq 1}y{else}n{/if}{/capture}
+			{capture name=textarea_cols}{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}{/capture}
+			{capture name=textarea_rows}{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}{/capture}
+			{capture name=textarea_onkeyup}{if $field_value.options_array[5]}wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}'){elseif $field_value.options_array[3]}charCount({$field_value.options_array[3]}, this, 'cpt_{$field_value.fieldId}', '{tr}Character Limit Exceeded{/tr}'){/if}{/capture}
+			{textarea id=$smarty.capture.textarea_id name=$field_value.ins_id _toolbars=$smarty.capture.textarea_toolbars cols=$smarty.capture.textarea_cols rows=$smarty.capture.rows onkeyup=$smarty.capture.textarea_onkeyup}
 				{$field_value.value}
-			</textarea>
+			{/textarea}
 		{/if}
 		{if $field_value.options_array[3]}
 			<div class="charCount">

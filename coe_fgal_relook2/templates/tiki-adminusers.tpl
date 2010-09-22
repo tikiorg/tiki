@@ -134,7 +134,7 @@
 				{if $users[user].editable}
 					{capture assign=username}{$users[user].user|escape}{/capture}
 					<tr class="{cycle}">
-						<td class="thin">
+						<td>
 							{if $users[user].user ne 'admin'}
 								<input type="checkbox" name="checked[]" value="{$users[user].user|escape}" {if $users[user].checked eq 'y'}checked="checked" {/if}/>
 							{/if}
@@ -171,7 +171,7 @@
 							{/if}
 						</td>
 	
-						<td class="thin">
+						<td>
 							<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{icon _id='group_key' alt="{tr}Assign{/tr} `$username` {tr}to groups{/tr} "}</a>
 						</td>
 	
@@ -511,7 +511,7 @@
 				<td>
 					<label for="csvlist">
 						{tr}CSV File:{/tr}
-						{help url="Users+Management#Adding_new_users_in_bulk" desc='{tr}CSV file layout{/tr}: {tr}login,password,email,groups,default_group,realName<br />user1,pass1,email1,group1,group1<br />user2,pass2,email2,"group1,group2",group1{/tr}<br /><br />{tr}Only login, password, email are mandatory.Use an empty password for automatic password generation. Use same login and email if the login use email. Groups are separated by comma. With group name with comma, double the comma.{/tr}'}
+						{help url="Users+Management#Adding_new_users_in_bulk" desc="{tr}CSV file layout{/tr}: {tr}login,password,email,groups,default_group,realName<br />user1,pass1,email1,group1,group1<br />user2,pass2,email2,"group1,group2",group1{/tr}<br /><br />{tr}Only login, password, email are mandatory.Use an empty password for automatic password generation. Use same login and email if the login use email. Groups are separated by comma. With group name with comma, double the comma.{/tr}"}
 					</label>
 				</td>
 				<td>

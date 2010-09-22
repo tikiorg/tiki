@@ -12,6 +12,14 @@ function prefs_login_list() {
 			'description' => tra('Instead of creating new usernames, use the user\'s email address for authentication.'),
 			'type' => 'flag',
 		),
+		'login_is_email_obscure' => array(
+			'name' => tra('Obscure email when using email as username if possible (coverage will not be complete)'),
+			'description' => tra('This will attempt as much as possible to hide the email, showing the realname or the truncated email instead.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'login_is_email',
+			),
+		),
 	);
 }
 

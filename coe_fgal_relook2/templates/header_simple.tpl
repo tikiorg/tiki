@@ -53,6 +53,4 @@
 {if $headerlib}{$headerlib->output_headers()}{/if}
 
 </head>
-
 <body{html_body_attributes}>
-

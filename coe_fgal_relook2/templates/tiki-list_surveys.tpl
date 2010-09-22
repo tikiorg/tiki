@@ -21,8 +21,8 @@
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_take_survey eq 'y') or ($channels[user].individual_tiki_p_take_survey eq 'y')}
-			<tr>
-				<td class="{cycle advance=false}">
+			<tr class="{cycle}">
+				<td>
 					{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
 						<a class="tablename" href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name|escape}</a>
 					{else}
@@ -30,10 +30,10 @@
 					{/if}
 					<div class="subcomment">{wiki}{$channels[user].description|escape}{/wiki}</div>
 				</td>
-				<td class="{cycle advance=false}">
+				<td>
 					{$channels[user].questions}
 				</td>
-				<td class="{cycle}">
+				<td>
 					{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
 						<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">{icon _id='page_edit' alt="{tr}Edit this Survey{/tr}"}</a>
 					{/if}

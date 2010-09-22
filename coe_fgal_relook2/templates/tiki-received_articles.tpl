@@ -195,15 +195,15 @@
 		</tr>
 		{cycle values="even,odd" print=false}
 		{section name=user loop=$channels}
-			<tr>
-				<td class="odd">{$channels[user].receivedArticleId}</td>
-				<td class="odd">{$channels[user].title}
+			<tr class="{cycle}">
+				<td>{$channels[user].receivedArticleId}</td>
+				<td>{$channels[user].title}
 					{if $channels[user].type eq 'Review'}(r){/if}
 				</td>
-				<td class="{cycle advance=false}">{$channels[user].receivedDate|tiki_short_datetime}</td>
-				<td class="{cycle advance=false}">{$channels[user].receivedFromSite}</td>
-				<td class="{cycle advance=false}">{$channels[user].receivedFromUser}</td>
-				<td class="{cycle advance=true}">
+				<td>{$channels[user].receivedDate|tiki_short_datetime}</td>
+				<td>{$channels[user].receivedFromSite}</td>
+				<td>{$channels[user].receivedFromUser}</td>
+				<td>
 					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}">{icon _id='page_edit'}</a> 
 					&nbsp;
 					<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>

@@ -195,28 +195,43 @@ class EditLib
 	function parseToWiki( $inData ) {
 		
 		$parsed = $this->parse_html($inData);
-		$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
+		$parsed = preg_replace('/\{img\(? src=.*?img\/smiles\/icon_([\w\-]*?)\..*\}/im','(:$1:)', $parsed);	// "unfix" smilies
 		$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
-		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);													// newlines
+		$parsed = preg_replace('/&nbsp;/m',' ', $parsed);												// spaces
 		return $parsed;
 	}
 	
 	function parseToWysiwyg( $inData ) {
 		global $tikilib, $tikiroot, $prefs;
-		// Parsing page data as first time seeing wiki page in wysiwyg editor
+		// Parsing page data for wysiwyg editor
+		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
-		if ($prefs['wysiwyg_htmltowiki'] === 'y') {
-			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'fck' => true));
-		} else {
-			$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'suppress_icons' => true));
-		}
+		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'ck_editor' => true));
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
-		$parsed = preg_replace("/src=\"img\/smiles\//im","src=\".*img/smiles/", $parsed);	// fix smiley src's
+//		$parsed = preg_replace("/src=\"(.*)img\/smiles\//im","src=\"$1img/smiles/", $parsed);	// fix smiley src's
 		$parsed = str_replace( 
 				array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
 				array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
 				$parsed );
 		return $parsed;
+	}
+	
+	/**
+	 * Converts wysiwyg plugins into wiki.
+	 * Also processes headings by removing surrounding <p> (possibly for wysiwyg_wiki_semi_parsed but not tested)  
+	 * 
+	 * @param string $inData (page data - mostly html but can have a bit of wiki in it)
+	 */
+	function partialParseWysiwygToWiki( $inData ) {
+		// remove the wysiwyg plugin elements leaving the syntax only remaining
+		$ret = preg_replace('/<(?:div|span)[^>]*syntax="(.*)".*end tiki_plugin --><\/(?:div|span)>/Umis', "$1", $inData);
+		// preg_replace blows up here with a PREG_BACKTRACK_LIMIT_ERROR on pages with "corrupted" plugins
+		if (!$ret) { $ret = $inData; }
+		
+		// take away the <p> that f/ck introduces around wiki heading ! to have maketoc/edit section working
+		$ret = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $ret);
+		
+		return $ret;
 	}
 	
 	// parse HTML functions
@@ -404,9 +419,9 @@ class EditLib
 							if (isset($c[$i]["pars"]["src"]["value"]))
 								// Note what it produce (img) not {img}! Will fix this below...
 								if( strstr( $c[$i]["pars"]["src"]["value"], "http:" ) ) {
-									$src .= '(img src='.$c[$i]["pars"]["src"]["value"].')';
+									$src .= '{img src="'.$c[$i]["pars"]["src"]["value"].'"}';
 								} else {
-									$src .= '(img src='.$head_url.$c[$i]["pars"]["src"]["value"].')';
+									$src .= '{img src="'.$head_url.$c[$i]["pars"]["src"]["value"].'"}';
 								}
 							break;
 						case "a":

@@ -16,20 +16,12 @@
         <input type="text" name="name" size="40" value="{$info.name|escape}" />
       </td>
     </tr>
-    {if $prefs.feature_wysiwyg eq 'y' and $wysiwyg eq 'y'}
-      <tr>
-        <td colspan="2">
-          {editform InstanceName=data Meat=$info.data}
-        </td>
-      </tr>
-    {else}
       <tr>
         <td>{tr}Data{/tr}</td>
         <td>
-          <textarea rows="20" cols="80" name="data">{$info.data|escape}</textarea>
+          {textarea rows="20" cols="80" name="data" _simple="y"}{$info.data|escape}{/textarea}
         </td>
       </tr>
-    {/if}
     <tr>
       <td>&nbsp;</td>
       <td>

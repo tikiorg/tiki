@@ -353,6 +353,13 @@ function wikiplugin_trackerlist_info() {
 				'filter' => 'text',
 				'default' => ''
 			),
+			'displaysheet' => array(
+				'required' => false,
+				'name' => tra('Display tracker as spreadsheet.'),
+				'description' => 'y|n',
+				'filter' => 'word',
+				'default' => 'n'
+			),
 		),
 	);
 }
@@ -417,7 +424,7 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
 			$limit = '';
 		}
-		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $limit);
+		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $trklib->flaten($limit));
 		if (!empty($fields)) {
 			$listfields = $fields;
 			if ($sort == 'y') {
@@ -929,6 +936,12 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('filterfield',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
+		if (!empty($filterfield)) {
+			$urlquery['filterfield'] = implode(':', $filterfield);
+			$urlquery['filtervalue'] = implode(':', $filtervalue);
+			$urlquery['exactvalue'] = implode(':', $exactvalue);
+			$smarty->assign('urlquery', $urlquery);
+		}
 		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
 			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";
 			if (!empty($fields)) 
@@ -1054,7 +1067,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$items["data"][$itkey]['attachments']  = $res['attachments'];
 				}
 			}
-			if (!empty($compute)) {
+			if (!empty($compute) && !empty($items['data'])) {
 				$fs = preg_split('/ *: */', $compute);
 				foreach ($fs as $fieldId) {
 					if (strstr($fieldId, "/")) {
@@ -1072,16 +1085,16 @@ function wikiplugin_trackerlist($data, $params) {
 						foreach ($item['field_values'] as $field) {
 							if ($field['fieldId'] == $fieldId) {
 								if (preg_match('/^ *$/', $field['value']) || !is_numeric($field['value']))
-									$l[$i] = '0';
+									$amount[$i] = '0';
 								else
-									$l[$i] = $field['value'];
+									$amount[$i] = $field['value'];
 								break;
 							}
 						}
-					}
-					eval('$value='.implode('+', $l).';');
+					}						
+					eval('$value='.implode('+', $amount).';');
 					if ($oper == 'avg')
-						$value = round($value / count($l));
+						$value = round($value / count($amount));
 					$computedFields[$fieldId][] = array_merge(array('computedtype' => 'n', 'operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
 				}
 				$smarty->assign_by_ref('computedFields', $computedFields);
@@ -1094,6 +1107,7 @@ function wikiplugin_trackerlist($data, $params) {
 						$smarty->assign('fields', $item['field_values']);
 						$smarty->assign('item', $item);
 						$smarty->assign('wiki', "wiki:$wiki");
+						$smarty->assign('showpopup', 'n');
 						$items['data'][$i]['over'] = $smarty->fetch('tracker_pretty_item.tpl');
 					}
 					if (empty($items['data'][$i]['over'])) {
@@ -1218,10 +1232,28 @@ function wikiplugin_trackerlist($data, $params) {
 					$save_fc = $smarty->force_compile;
 					$smarty->force_compile = true;
 				}
+				
+				if (!empty($displaysheet) && $displaysheet == 'y') {
+					global $headerlib;
+					$headerlib->add_jq_onready('
+						if (typeof ajaxLoadingShow == "function") {
+							ajaxLoadingShow("role_main");
+						}
+						setTimeout (function () {
+							$("div.trackercontainer").tiki("sheet", "",{
+								editable:false,
+								buildSheet: true,
+								minSize: {rows: 0, cols: 0}
+							});
+						}, 0);', 500);
+					$smarty->assign('displaysheet', 'true');
+				}
+				
 				$str = $smarty->fetch('wiki-plugins/wikiplugin_trackerlist.tpl');
 				if (!empty($wiki)) {
 					$smarty->force_compile = $save_fc;	// presumably will be false but put it back anyway
 				}
+				
 				return "~np~".$str."~/np~";
 			}
 		} else {

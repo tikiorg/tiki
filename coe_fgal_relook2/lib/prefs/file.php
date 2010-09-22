@@ -13,7 +13,7 @@ function prefs_file_list() {
 			'size' => '5',
 		),
 		'file_galleries_comments_default_ordering' => array(
-			'name' => tra('Default number per page'),
+			'name' => tra('Default ordering'),
 			'type' => 'list',
 			'options' => array(
 				'commentDate_desc' => tra('Newest first'),

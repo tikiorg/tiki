@@ -299,6 +299,10 @@ CREATE TABLE `tiki_blogs` (
   `heading` text,
   `post_heading` text,
   `use_find` char(1) default NULL,
+  `use_title` char(1) default 'y',
+  `use_title_in_post` char(1) default 'y',
+  `use_description` char(1) default 'y',
+  `use_breadcrumbs` char(1) default 'n',
   `use_author` char(1) default NULL,
   `use_excerpt` char(1) default NULL,
   `add_date` char(1) default NULL,
@@ -1075,9 +1079,9 @@ CREATE TABLE `tiki_images_data` (
 DROP TABLE IF EXISTS `tiki_language`;
 CREATE TABLE `tiki_language` (
   `id` int(14) NOT NULL auto_increment,
-  `source` tinytext NOT NULL,
+  `source` text NOT NULL,
   `lang` char(16) NOT NULL default '',
-  `tran` tinytext,
+  `tran` text,
   `changed` bool,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
@@ -1399,6 +1403,7 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `s
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','External Pages Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Modules','tiki-admin_modules.php',1085,'','tiki_p_admin_modules','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Hotwords','tiki-admin_hotwords.php',1095,'feature_hotwords','tiki_p_admin','',0);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Edit languages','tiki-edit_languages.php',1098,'lang_use_db','tiki_p_edit_languages','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','External Feeds','tiki-admin_rssmodules.php',1100,'','tiki_p_admin_rssmodules','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_edit_menu','',0);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin_polls','',0);
@@ -2587,7 +2592,7 @@ DROP TABLE IF EXISTS `tiki_wiki_attachments`;
 CREATE TABLE `tiki_wiki_attachments` (
   `attId` int(12) NOT NULL auto_increment,
   `page` varchar(200) NOT NULL default '',
-  `filename` varchar(80) default NULL,
+  `filename` varchar(255) default NULL,
   `filetype` varchar(80) default NULL,
   `filesize` int(14) default NULL,
   `user` varchar(200) NOT NULL default '',
@@ -2949,7 +2954,7 @@ INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin
 INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_admin_socialnetworks', 'user can register this site with social networks', 'admin', 'socialnetworks', 'y', 'feature_socialnetworks');
 
 
-INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_page-contribution_view', 'Can view contributions to a page', 'basic', 'wiki', NULL, 'feature_wiki');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_page_contribution_view', 'Can view contributions to a page', 'basic', 'wiki', NULL, 'feature_wiki');
 
 DROP TABLE IF EXISTS `users_usergroups`;
 CREATE TABLE `users_usergroups` (
@@ -3699,7 +3704,7 @@ DROP TABLE IF EXISTS `tiki_todo`;
 CREATE TABLE `tiki_todo` (
     `todoId` INT(12) NOT NULL auto_increment,
     `after` INT(12) NOT NULL,
-    `event` ENUM('creation', 'modification', 'upload'),
+    `event` VARCHAR(50) NOT NULL,
     `objectType` VARCHAR(50),
     `objectId` VARCHAR(255) default NULL,
     `from` VARCHAR(255) default NULL,

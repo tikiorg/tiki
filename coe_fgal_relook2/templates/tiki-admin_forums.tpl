@@ -3,17 +3,21 @@
 {title help="Forums" admpage="forums"}{tr}Admin Forums{/tr}{/title}
 
 <div class="navbar">
-	{if $forumId > 0 or $dup_mode eq 'y'}
+	{if $tiki_p_admin_forum eq 'y' && $forumId > 0 or $dup_mode eq 'y'}
 		{button href="?" _text="{tr}Create New Forum{/tr}"}
 	{/if}
-	{if $dup_mode ne 'y'}
+	{if $tiki_p_admin_forum eq 'y' && $dup_mode ne 'y'}
 		{button href="tiki-admin_forums.php?dup_mode=y" _text="{tr}Duplicate Forum{/tr}"}
 	{/if}
 	{if $forumId > 0}
 		{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}View this forum{/tr}"}
 	{/if}
-	{button href="tiki-forum_import.php" _text="{tr}Import forums{/tr}"}
-	{button href="tiki-forums.php" _text="{tr}List forums{/tr}"}
+	{if $tiki_p_admin_forum eq 'y'}
+		{button href="tiki-forum_import.php" _text="{tr}Import forums{/tr}"}
+	{/if}
+	{if $tiki_p_forum_read eq 'y'}
+		{button href="tiki-forums.php" _text="{tr}List forums{/tr}"}
+	{/if}
 </div>
 
 {tabset}
@@ -119,12 +123,9 @@
 {if $dup_mode != 'y'}
 	{if $forumId > 0}
 		<h2>{tr}Edit this Forum:{/tr} {$name|escape}</h2>
+		{include file='object_perms_summary.tpl' objectName=$name objectType='forum' objectId=$forumId permType=$permsType}
 	{else}
 		<h2>{tr}Create New Forum{/tr}</h2>
-	{/if}
-
-	{if $individual eq 'y'}
-		<a class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=forum&amp;permType=forums&amp;objectId={$forumId}">{tr}There are individual permissions set for this forum{/tr}</a>
 	{/if}
 
 	<form action="tiki-admin_forums.php" method="post">

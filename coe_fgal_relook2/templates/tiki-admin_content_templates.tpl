@@ -9,31 +9,20 @@
 
 {if $templateId > 0}
 	<h2>{tr}Edit this template:{/tr} {$info.name|escape}</h2>
-	<a href="tiki-admin_content_templates.php">{tr}Create new template{/tr}</a>
+	{button href="tiki-admin_content_templates.php" _text="{tr}Create new template{/tr}"}
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
-{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-<form action="tiki-admin_content_templates.php?&wysiwyg=n" method="post">
-{else} 
-<form action="tiki-admin_content_templates.php?&wysiwyg=y" method="post">
-{/if}
-{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
-	<div class="navbar">
-		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-			{button href="?templateId=$templateId&amp;wysiwyg=y" _text="{tr}Use wysiwyg editor{/tr}"}
-		{else}
-			{button href="?templateId=$templateId&amp;wysiwyg=n" _text="{tr}Use normal editor{/tr}"}
-		{/if}
-	</div>
-{/if}
-
-<input type="hidden" name="templateId" value="{$templateId|escape}" />
+<form action="tiki-admin_content_templates.php" method="post">
+	<input type="hidden" name="templateId" value="{$templateId|escape}" />
 	<table class="formcolor">
 		<tr>
-			<td><label for="name">{tr}Name{/tr}:</label></td>
+			<td><label for="name">{tr}Name:{/tr} (*)</label></td>
 			<td>
-				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}" />
+				<input type="text" maxlength="255" size="40" id="name" name="name" value="{$info.name|escape}" /> 
+				{if $emptyname}
+					<span class="attention">{tr}Name field is mandatory{/tr}</span>
+				{/if}
 			</td>
 		</tr>
 		<tr>
@@ -41,7 +30,7 @@
 			<td>
 				{if $prefs.feature_cms_templates eq 'y'}
 					<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> 
-					{tr}CMS{/tr} ({tr}Articles{/tr}
+					{tr}CMS{/tr} ({tr}Articles{/tr})
 					<br />
 				{/if}
 				{if $prefs.feature_wiki_templates eq 'y'}
@@ -87,37 +76,20 @@
 			</td>
 		</tr>
 
-		{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-			<tr class="type-cond for-static">
-				<td><label>{tr}Toolbars{/tr}</label></td>
-				<td>
-					{toolbars area_id='editwiki'}
-				</td>
-			</tr>
-		{/if}
-
 		<tr class="type-cond for-static">
-			{if $wysiwyg eq 'n' or ($wysiwyg ne 'y' and $prefs.wysiwyg_default ne 'y')}
-				<td>
-					<label for="editwiki">{tr}Template{/tr}:</label>
-				</td>
-				<td>
-					<textarea id='editwiki' class="wikiedit" name="content" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$info.content|escape}</textarea>
-					<input type="hidden" name="rows" value="{$rows}"/>
-					<input type="hidden" name="cols" value="{$cols}"/>
-				</td>
-			{else}
-				<td colspan="2">
-					{editform Meat=$info.content InstanceName='content' ToolbarSet="Tiki"}
-				</td>
-			{/if}
+			<td>
+				<label for="editwiki">{tr}Template{/tr}:</label>
+			</td>
+			<td>
+				{textarea id="editwiki" name="content" switcheditor="y"}{$info.content}{/textarea}
+			</td>
 		</tr>
 
 		<tr>
-			<td>&nbsp;</td>
+			<td/>
 			<td>
-				<input type="submit" name="save" value="{tr}Save{/tr}" />
-				<input type="submit" name="preview" value="{tr}Preview{/tr}" />
+				<input type="submit" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
+				<input type="submit" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 			</td>
 		</tr>
 	</table>
@@ -127,6 +99,7 @@
 			var val = $('.type-selector').val();
 			$('.for-' + val).show();
 		} ).trigger('change');
+		window.editorDirty = false;
 	{/jq}
 </form>
 
@@ -150,25 +123,22 @@
 	</tr>
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].name|escape}</td>
-			<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
-			<td class="{cycle advance=false}">
+		<tr class="{cycle}">
+			<td>{$channels[user].name|escape}</td>
+			<td>{$channels[user].created|tiki_short_datetime}</td>
+			<td>
 				{if count($channels[user].sections) == 0}{tr}Visible in no sections{/tr}{/if}
 				{section name=ix loop=$channels[user].sections}
 					{$channels[user].sections[ix]} 
 					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" >
 						{icon _id='cross' alt="{tr}Remove section{/tr}"}
 					</a>
-					&nbsp;&nbsp;
 				{/section}
 			</td>
-			<td class="{cycle advance=true}">
-				&nbsp;&nbsp;
+			<td>
 				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
 					{icon _id='page_edit'}
 				</a> 
-				&nbsp;
 				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
 					{icon _id='cross' alt="{tr}Delete{/tr}"}
 				</a>

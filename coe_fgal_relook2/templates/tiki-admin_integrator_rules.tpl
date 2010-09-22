@@ -124,17 +124,17 @@
   </tr>
   {cycle values="odd,even" print=false}
   {section name=rule loop=$rules}
-    <tr>
-      <td class="{cycle advance=false}"{if (strlen($rules[rule].description) > 0)} rowspan="2"{/if}>
+    <tr class="{cycle}">
+      <td{if (strlen($rules[rule].description) > 0)} rowspan="2"{/if}>
         {if $rules[rule].enabled ne 'y'}<s>{$rules[rule].ord|escape}</s>
         {else}{$rules[rule].ord|escape}
         {/if}
       </td>
-      <td class="{cycle advance=false}">{$rules[rule].srch|escape}</td>
-      <td class="{cycle advance=false}">{$rules[rule].repl|escape}</td>
-      <td class="{cycle advance=false}">{$rules[rule].type|escape}</td>
-      <td class="{cycle advance=false}">{$rules[rule].casesense|escape}</td>
-      <td class="{if (strlen($rules[rule].description) > 0)}{cycle advance=false}{else}{cycle}{/if}">
+      <td>{$rules[rule].srch|escape}</td>
+      <td>{$rules[rule].repl|escape}</td>
+      <td>{$rules[rule].type|escape}</td>
+      <td>{$rules[rule].casesense|escape}</td>
+      <td>
         <a href="tiki-admin_integrator_rules.php?action=edit&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" title="{tr}Edit{/tr}">{icon _id='wrench' alt="{tr}Configure/Options{/tr}"}</a>
         &nbsp;&nbsp;<a href="tiki-admin_integrator_rules.php?action=rm&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}"
 		title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
@@ -142,8 +142,8 @@
 
     {* Show description as colspaned row if it is not an empty *}
     {if (strlen($rules[rule].description) > 0)}
-    </tr><tr>
-      <td class="{cycle}" colspan="5">{$rules[rule].description|escape}</td>
+    </tr><tr class="{cycle}">
+      <td colspan="5">{$rules[rule].description|escape}</td>
     {/if}
     </tr>
   {/section}

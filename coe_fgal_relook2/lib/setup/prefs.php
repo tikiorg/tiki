@@ -38,6 +38,7 @@ function get_default_prefs() {
 		'lastUpdatePrefs' => 1,
 
 		'tiki_domain_prefix' => 'unchanged',
+		'tiki_domain_redirects' => '',
 
 		'feature_print_indexed' => 'n', 
 
@@ -52,6 +53,7 @@ function get_default_prefs() {
 		'backlinks_name_len' => '0',
 		'feature_dump' => 'n',
 		'feature_history' => 'y',
+		'feature_page_contribution' => 'n',
 		'feature_lastChanges' => 'y',
 		'feature_likePages' => 'n',
 		'feature_listPages' => 'y',
@@ -82,7 +84,7 @@ function get_default_prefs() {
 		'feature_wiki_open_as_structure' => 'n',
 		'feature_wiki_pageid' => 'n',
 		'feature_wiki_paragraph_formatting' => 'n',
-		'feature_wiki_paragraph_formatting_add_br' => 'n',
+		'feature_wiki_paragraph_formatting_add_br' => 'y',
 		'feature_wiki_pictures' => 'y',
 		'feature_wiki_plurals' => 'y',
 		'feature_wiki_print' => 'n',
@@ -505,8 +507,7 @@ function get_default_prefs() {
 		'wysiwyg_memo' => 'y',
 		'wysiwyg_wiki_parsed' => 'y',
 		'wysiwyg_wiki_semi_parsed' => 'n',
-		'wysiwyg_toolbar_skin' => 'default',
-		'wysiwyg_ckeditor' => 'y',
+		'wysiwyg_toolbar_skin' => 'kama',
 		'wysiwyg_htmltowiki' => 'n',
 		'wysiwyg_fonts' => 'sans serif;serif;monospace;Arial;Century Gothic;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana',
 
@@ -724,6 +725,8 @@ function get_default_prefs() {
 
 		// user
 		'user_selector_threshold' => 50,
+		'user_selector_realnames_tracker' => 'n',
+		'user_selector_realnames_messu' => 'n',
 		'feature_userlevels' => 'n',
 		'userlevels' => function_exists('tra') ? array('1'=>tra('Simple'),'2'=>tra('Advanced')) : array('1'=>'Simple','2'=>'Advanced'),
 		'userbreadCrumb' => 4,
@@ -740,6 +743,8 @@ function get_default_prefs() {
 		'user_trackersync_trackers' => '',
 		'user_trackersync_realname' => '',
 		'user_trackersync_geo' => 'n',
+		'user_trackersync_groups' => 'n',
+		'user_trackersync_parentgroup' => -1,
 		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',
@@ -774,6 +779,7 @@ function get_default_prefs() {
 		'change_language' => 'y',
 		'change_theme' => 'n',
 		'login_is_email' => 'n',
+		'login_is_email_obscure' => 'n',
 		'validateUsers' => 'y',
 		'validateEmail' => 'n',
 		'forgotPass' => 'y',
@@ -876,6 +882,7 @@ function get_default_prefs() {
 		'search_refresh_index_mode' => 'normal',
 		'search_parsed_snippet' => 'y',
 		'search_default_where' => '',
+		'search_default_interface_language' => 'n',
 		'search_autocomplete' => 'n',
 
 		// webmail
@@ -1077,6 +1084,8 @@ function get_default_prefs() {
 		'gmap_defaulty' => '0',
 		'gmap_defaultz' => '1',
 		'gmap_key' => '',
+		'gmap_article_list' => 'n',
+		'gmap_page_list' => 'n',
 
 		// auth
 		'allowRegister' => 'n',
@@ -1388,7 +1397,7 @@ function get_default_prefs() {
 		'toolbar_global_comments' => '
 			bold, italic, underline, strike , - , link, smiley | help
 		',
-		'toolbar_sheet' => 'addrow,addrowmulti,deleterow,-,addcolumn,addcolumnmulti,deletecolumn,-,
+		'toolbar_sheet' => 'addrow,addrowbefore,addrowmulti,deleterow,-,addcolumn,addcolumnbefore,addcolumnmulti,deletecolumn,-,
 							sheetgetrange,sheetrefresh,-,sheetfind,-|sheetsave,sheetclose/
 							bold,italic,underline,strike,center,-,color,bgcolor,-,tikilink,nonparsed,-|fullscreen/',
 
@@ -1453,7 +1462,8 @@ function get_default_prefs() {
 		'smarty_compilation' => 'modified',
 		'feature_htmlpurifier_output' => 'n',
 		'feature_ajax' => 'n',
-		'feature_ajax_autosave' => 'n',
+		'ajax_autosave' => 'n',
+		'ajax_xajax' => 'y',
 		'feature_antibot' => 'y',
 		'feature_banners' => 'n',
 		'feature_banning' => 'n',
@@ -1713,7 +1723,7 @@ function get_default_prefs() {
 		'auth_token_access_maxtimeout' => 3600*24*7,
 		'auth_token_access_maxhits' => 10,
 		'auth_token_tellafriend' => 'n',
-		'auth_token_promote' => 'n',
+		'auth_token_share' => 'n',
 	
 		// PDF
 		'print_pdf_from_url' => 'none',
@@ -1771,9 +1781,10 @@ function get_default_prefs() {
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_comments_locking' => 'n',
-		'comments_notitle' => 'n',
+		'comments_notitle' => 'y',
 		'comments_field_email' => 'n',
 		'comments_field_website' => 'n',
+		'comments_vote' => 'n',
 	);
 
 	// Special default values

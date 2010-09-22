@@ -39,10 +39,10 @@
 	</tr>
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$words}
-		<tr>
-			<td class="{cycle advance=false}">{$words[user].word}</td>
-			<td class="{cycle advance=false}">{$words[user].url}</td>
-			<td class="{cycle advance=true}">
+		<tr class="{cycle}">
+			<td>{$words[user].word}</td>
+			<td>{$words[user].url}</td>
+			<td>
 				<a class="link" href="tiki-admin_hotwords.php?remove={$words[user].word|escape:"url"}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 			</td>
 		</tr>

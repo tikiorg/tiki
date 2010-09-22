@@ -19,18 +19,18 @@
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=user loop=$channels}
-				<tr>
-					<td class="{cycle advance=false}">{$channels[user].menuId}</td>
-					<td class="{cycle advance=false}">
+				<tr class="{cycle}">
+					<td>{$channels[user].menuId}</td>
+					<td>
 						{if $tiki_p_edit_menu_option eq 'y'}
 							<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{$channels[user].name|escape}</a>
 						{/if}
 						<br />
 						{$channels[user].description|escape|nl2br}
 					</td>
-					<td class="{cycle advance=false}" style="text-align:center">{$channels[user].type}</td>
-					<td class="{cycle advance=false}" style="text-align:right;">{$channels[user].options}&nbsp;</td>
-					<td class="{cycle advance=true}">
+					<td style="text-align:center">{$channels[user].type}</td>
+					<td style="text-align:right;">{$channels[user].options}&nbsp;</td>
+					<td>
 						{self_link menuId=$channels[user].menuId cookietab="2" _title="{tr}Edit{/tr}"}{icon _id='page_edit'}{/self_link}
 						{if $tiki_p_edit_menu_option eq 'y'}
 							<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{icon _id='table' alt="{tr}Configure/Options{/tr}"}</a>
@@ -155,5 +155,4 @@
 		{/remarksbox}
 		</form>
 	{/tab}
-
 {/tabset}

@@ -173,7 +173,7 @@
 	{elseif $field_value.value ne ''}
 		{if $list_mode ne 'n'}
 			{if !empty($field_value.options_array[5]) and $prefs.feature_shadowbox eq 'y'}
-				<a href="{$field_value.value}" rel="{if $field_value.options_array[5] eq 'item'}shadowbox[{$item.itemId}]{elseif $field_value.options_array[5]} eq 'individual'}shadowbox{else}shadowbox[{$field_value.options_array[5]}{/if};type=img">
+				<a href="{$field_value.value}" rel="{if $field_value.options_array[5] eq 'item'}shadowbox[{$item.itemId}]{elseif $field_value.options_array[5] eq 'individual'}shadowbox{else}shadowbox[{$field_value.options_array[5]}{/if};type=img">
 			{/if}
 			<img src="{$field_value.value}"{if $field_value.options_array[0]} width="{$field_value.options_array[0]}"{/if}{if $field_value.options_array[1]} height="{$field_value.options_array[1]}"{/if} alt="" />
 			{if $field_value.options_array[5] and $prefs.feature_shadowbox eq 'y'}</a>{/if}
@@ -208,12 +208,22 @@
 		{/if}
 	{/if}
 
+{* -------------------- user groups ------------------ *}
+{elseif $field_value.type eq 'usergroups'}
+	{foreach from=$field_value.value item=val name=ix}
+		{$val|escape}{if !$smarty.foreach.ix.last}<br />{/if}
+	{/foreach}
+
 {* -------------------- preference -------------------- *}
 {elseif $field_value.type eq 'p'}
 	{if $list_mode eq 'csv'}
 		{$field_value.value}
 	{elseif $field_value.options_array[0] == 'language'}
 		{$field_value.value|langname} ({$field_value.value|escape})
+	{elseif is_array($field_value.value)}
+		{foreach from=$field_value.value item=val name=ix}
+			{$val|escape}{if !$smarty.foreach.ix.last}, {/if}
+		{/foreach}
 	{else}
 		{$field_value.value|escape}
 	{/if}

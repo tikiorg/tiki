@@ -22,8 +22,8 @@
   {/foreach}
   
 
-  <input type='submit' name='confirm' value='{tr}Ok{/tr}'/>
-  <input type='submit' name='back' value='{tr}Go back{/tr}'/>
+  <input type='submit' name='confirm' value="{tr}Ok{/tr}"/>
+  <input type='submit' name='back' value="{tr}Go back{/tr}"/>
  </form>
  <ul>
   {foreach from=$emails item=mail}
@@ -89,6 +89,6 @@ You are here because you have just clicked on the link from my invitation email.
   <br />
   <div>Redirect to this wiki page after invitation acceptance (let it blank if unwanted) : <input type='text' name='wikipageafter' value='{$smarty.request.wikipageafter|escape}' /></div>
   <br />
-  <div><input type='submit' name='send' value='{tr}Send{/tr}' /></div>
+  <div><input type='submit' name='send' value="{tr}Send{/tr}" /></div>
  </form>
 {/if}

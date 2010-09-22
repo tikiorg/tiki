@@ -7,9 +7,13 @@
 
 $section = 'wiki page';
 require_once('tiki-setup.php');
-if ($prefs['feature_ajax'] == "y") {
-include_once('lib/ajax/ajaxlib.php');
-require_once ("lib/wiki/wiki-ajax.php");
+if ($prefs['feature_ajax'] === 'y') {
+	if ($prefs['ajax_xajax'] === 'y') {
+		require_once ("lib/ajax/ajaxlib.php");
+		if ($prefs['feature_wiki_save_draft'] === 'y') {
+			require_once ("lib/wiki/wiki-ajax.php");
+		}
+	}
 }
 
 include_once('lib/structures/structlib.php');
@@ -76,8 +80,6 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 	unset($_SESSION["breadCrumb"][$pos]);
 	array_push($_SESSION["breadCrumb"], $page);
 }
-
-//print_r($_SESSION["breadCrumb"]);
 
 // Now increment page hits since we are visiting this page
 if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
@@ -212,7 +214,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 	include('tiki-tc.php');
 }
 ask_ticket('index-p');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 
 function wiki_ajax() {
     global $ajaxlib, $xajax;

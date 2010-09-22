@@ -284,7 +284,7 @@ class PreferencesLib
 			$fp = opendir('templates/');
 			
 			while(false !== ($f = readdir($fp))) {
-				preg_match('/^tiki-admin-include-(.*)\.tpl$/', $f, $m);
+				preg_match('/^tiki-admin_include_(.*)\.tpl$/', $f, $m);
 				if (count($m) > 0) {
 					$page = $m[1];
 					$c = file_get_contents('templates/'.$f);

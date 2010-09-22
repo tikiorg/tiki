@@ -1,7 +1,11 @@
 {* $Id$ *}
 {strip}
 
-<h3>{tr}Search Help{/tr}</h3>
+<h3>{tr}Non Advanced Search or Natural Search{/tr}</h3>
+<div class="help_section">
+{tr}The documents are returned sorted on relevance depending on order, proximity, frequency of terms. {/tr}
+</div>
+<h3>{tr}Advanced Search or Boolean Search{/tr}</h3>
 <div class="help_section">
 	<h4>{tr}Default search behavior{/tr}</h4>
 	<p>

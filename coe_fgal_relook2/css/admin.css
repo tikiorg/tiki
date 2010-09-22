@@ -233,7 +233,7 @@ div.adminanchors a {float: left}
 	float: left;
 }
 
-.toolbars-admin .row li.toolbar span {
+.toolbars-admin .row li.toolbar > span {
 	display: none;
 }
 

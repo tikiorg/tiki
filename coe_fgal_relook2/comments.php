@@ -281,13 +281,6 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 	}
 }
 
-if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')) || (isset($forum_mode) && $forum_mode == 'y' && $tiki_p_forum_vote == 'y')) {
-	// Process a vote here
-	$smarty->assign( 'rating_is_enabled', 'y' );
-} else {
-	$smarty->assign( 'rating_is_enabled', 'n' );
-}
-
 // Comments Moderation
 global $tiki_p_admin_comments;
 if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST["comments_threadId"]) && !empty($_REQUEST['comments_approve']) ) {
@@ -374,7 +367,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 
 $smarty->assign('comment_preview', 'n');
 
-if (isset($_REQUEST["comments_previewComment"]) || !empty($errors)) {
+if (isset($_REQUEST["comments_previewComment"]) || isset($_REQUEST["comments_postComment"])) {
 	$comment_preview = array();
 
 	$comment_preview['title'] = $_REQUEST["comments_title"];

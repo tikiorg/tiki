@@ -504,8 +504,8 @@ function wikiplugin_tracker($data, $params)
 							}
 						}
 					}
-					if (!empty($_REQUEST['other_track'][$fl['fieldId']])) {
-						$flds['data'][$cpt]['value'] = $_REQUEST['other_track'][$fl['fieldId']];
+					if (!empty($_REQUEST['other_track_'.$fl['fieldId']])) {
+						$flds['data'][$cpt]['value'] = $_REQUEST['other_track_'.$fl['fieldId']];
 					}
 					if ($flds['data'][$cpt]['isMultilingual'] == 'y') {
 						foreach ($prefs['available_languages'] as $num=>$tmplang) {
@@ -528,8 +528,8 @@ function wikiplugin_tracker($data, $params)
 				if (isset($_REQUEST['track'])) {
 					foreach ($_REQUEST['track'] as $fld=>$val) {
 						//$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val, 'type' => 1);
-						if (!empty($_REQUEST['other_track'][$fld])) {
-							$val = $_REQUEST['other_track'][$fld];
+						if (!empty($_REQUEST['other_track_'.$fld])) {
+							$val = $_REQUEST['other_track_'.$fld];
 						}
 						$ins_fields["data"][] = array_merge(array('value' => $val), $full_fields[$fld]);
 					}
@@ -1010,7 +1010,7 @@ function wikiplugin_tracker($data, $params)
 						}
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
-						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f["options_array"][0]);
+						$flds['data'][$i]['list'] = $categlib->get_viewable_child_categories($f["options_array"][0], true);
 					} elseif ($f['type'] == 'A') {
 						if (!empty($f['value'])) {
 							$flds['data'][$i]['info'] = $trklib->get_item_attachment($f['value']);
@@ -1096,7 +1096,7 @@ function wikiplugin_tracker($data, $params)
 					}
 					if (!empty($tpl) || !empty($wiki)) {
 						$smarty->assign_by_ref('field_value', $f);
-						if (isset($item)) {
+						if (!empty($item)) {
 							$smarty->assign_by_ref('item', $item);
 						}
 						$smarty->assign('f_'.$f['fieldId'], $smarty->fetch('tracker_item_field_input.tpl'));
@@ -1109,16 +1109,18 @@ function wikiplugin_tracker($data, $params)
 							if (!empty($colwidth)){
 								$back .= " width='".$colwidth."'";
 							}
-							$back .= ">".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
+							$back .= '><label for="' . $f['ins_id'] . '">' 
+										. wikiplugin_tracker_name($f['fieldId'], tra($f['name'] . ':'), $field_errors) . '</label>';
 							if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 								$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
 							}
-							$back.= "</td><td>";
+							$back.= '</td><td>';
 						} else {
-							$back .= "<tr><th colspan='2'>".wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors);
+							$back .= '<tr><th colspan="2"><label for="' . $f['ins_id'] . '">' 
+										. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors) . '</label>';
 						}
 						$smarty->assign_by_ref('field_value', $f);
-						if (isset($item)) {
+						if (!empty($item)) {
 							$smarty->assign_by_ref('item', $item);
 						}
 						$back .= $smarty->fetch('tracker_item_field_input.tpl');
@@ -1160,7 +1162,7 @@ function wikiplugin_tracker($data, $params)
 				$smarty->security = true;
 				$back .= $smarty->fetch('wiki:'.$wiki);
 			}
-			if ($prefs['feature_antibot'] == 'y' && empty($user) && $registration != 'y') {
+			if ($prefs['feature_antibot'] == 'y' && empty($user)) {
 				// in_tracker session var checking is for tiki-register.php
 				$smarty->assign('showmandatory', $showmandatory);
 				$smarty->assign('antibot_table', empty($wiki) && empty($tpl)?'n': 'y');
@@ -1180,7 +1182,7 @@ function wikiplugin_tracker($data, $params)
 				$back .= "<input class='button submit preview' type='submit' name='tr_preview' value='".tra($preview)."' />";
 			}
 			foreach ($action as $key=>$act) {
-				$back .= "	<input class='button submit' type='submit' name='action$key' value='".tra($act)."' />";
+				$back .= "	<input class='button submit' type='submit' name='action$key' value='".tra($act)."' onclick='needToConfirm=false' />";
 			}
 			$back .= '</div>';
 			if ($showmandatory == 'y' and $onemandatory) {

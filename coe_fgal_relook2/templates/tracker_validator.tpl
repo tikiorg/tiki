@@ -15,5 +15,5 @@ process_submit = function(me) {
 	}
 	$(me).attr("is_validating", false);
 	me.submit();
-}
+};
 {/jq}

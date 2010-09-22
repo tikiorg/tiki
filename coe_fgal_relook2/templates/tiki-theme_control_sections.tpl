@@ -69,14 +69,14 @@
 				</a>
 			</th>
 		</tr>
-{cycle values="odd,even" print=false}
+		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
-			<tr>
-				<td class="{cycle advance=false}">
+			<tr class="{cycle}">
+				<td>
 					<input type="checkbox" name="sec[{$channels[user].section}]" />
 				</td>
-				<td class="{cycle advance=false}">{$channels[user].section}</td>
-				<td class="{cycle}">{$channels[user].theme}</td>
+				<td>{$channels[user].section}</td>
+				<td>{$channels[user].theme}</td>
 			</tr>
 		{/section}
 	</table>

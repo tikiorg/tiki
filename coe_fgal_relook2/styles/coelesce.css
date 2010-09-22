@@ -35,7 +35,6 @@ h1 {
 	font-weight: bold;
 	font-size: 1.8em;
 	margin: 0;
-	padding-left: 14px;
 }
 
 h2 {
@@ -332,7 +331,7 @@ div#sitelogo * {
 }
 
 #sitesearchbar {
-	float: none;
+	float: right;
 	margin: 3px 0 0 0;
 	padding: 0 0 0 15px;
 	height: 33px;
@@ -1003,7 +1002,12 @@ body.tiki_wiki_page #comments {
 	padding: 1em;
 }
 
+.pagetitle {
+	padding-left: 14px;
+}
+
 h1.pagetitle a,
+div.titlebar,
 h1.pagetitle a:visited,
 h1.pagetitle a:hover,
 a.pagetitle,
@@ -1012,6 +1016,15 @@ a.pagetitle:hover {
 	line-height: 36px;
 	font-size: 20px;
 	color: #2d2d2d;
+	font-weight: bold;
+}
+
+a.titletop,
+a.titletop:hover,
+a.titletop:visited {
+	font-weight: bold;
+	color: #0066FF;
+	font-size: 12px;	
 }
 
 h1 a,
@@ -1036,6 +1049,10 @@ div#description,
 	font-style: italic;
 }
 
+body.tiki_surveys div.description {
+	font-style: normal;
+}
+
 .wikiactions .icons,
 .wikiactions form {
 	display: inline-block;
@@ -1045,41 +1062,46 @@ div#description,
 	display: inline;
 }
 
-.titlebar {
-	padding: 0.1em;
-	background: #c3d3e5;
-	color: #607993;
-	font-weight: bold;
-	text-align: center;
-	margin: 10px 0;
+div.titlebar {
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	line-height: 36px;
+	color: #2d2d2d;
+	padding-left: 10px;
 }
 
+.postbody-content .showhide_heading .link,
 .wikitext .showhide_heading .link {
 	font-weight: normal;
 	font-size: 80%;
 	vertical-align: top;
 }
 
+.postbody-content h1,
 .wikitext h1 {
 	margin: 20px 0 15px 0;
 }
 
+.postbody-content h2,
 .wikitext h2 {
 	margin: 10px 0 10px 0;
 }
 
+.postbody-content h3,
 .wikitext h3 {
 	margin: 10px 0 5px 0;
 }
 
+.postbody-content h4,
 .wikitext h4 {
 	margin: 10px 0 5px 0;
 }
 
+.postbody-content h5,
 .wikitext h5 {
 	margin: 10px 0 5px 0;
 }
 
+.postbody-content h6,
 .wikitext h6 {
 	margin: 10px 0 5px 0;
 }
@@ -1099,7 +1121,7 @@ h1.pagetitle {
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	line-height: 36px;
 	color: #2d2d2d;
-	padding-left: 2px;
+	padding-left: 10px;
 }
 
 div.split {
@@ -1301,8 +1323,8 @@ a.blogt:hover {
 	border-bottom: 1px dotted #fff;
 }
 
-.postinfo {
-	font-size: 1.2em;
+div.author_actions_status {
+	background: #E6EDF5;
 }
 
 .postinfo a {
@@ -1320,7 +1342,12 @@ a.blogt:hover {
 .post .postbody {
 	background: #fff;
 	font-size: 1.1em;
+	border-left: solid #EEFDFF;
+	border-right: solid #EEFDFF;
+	border-top: solid 1px #C3D3E5;
 }
+	
+* html .post .postbody {font-size: 11px}
 
 .top_post .post .postbody {
 	background: #e6edf5;
@@ -1334,8 +1361,8 @@ a.blogt:hover {
 }
 
 .postbody-title {
-	color: #000;
-	background: inherit;
+	background: #EEFDFF;
+	padding: 1px 10px 0;
 }
 
 .top_post .post .postbody-title {
@@ -1343,13 +1370,9 @@ a.blogt:hover {
 }
 
 .post .postbody-title .title {
-	color: #2d2d2d;
+	color: #295C8E;
 	float: none;
 	margin: auto;
-}
-
-.postbody-title .title a.link {
-	color: #2d2d2d;
 }
 
 .postbody-title .title br.clear {
@@ -1358,15 +1381,12 @@ a.blogt:hover {
 
 .post .author_actions {
 	position: relative;
-	background: #c3d3e5;
 	color: #000;
-	margin-bottom: 2px;
 	font-size: 11px;
 	font-weight: bold;
-	line-height: 1;
-	height: 21px;
+	line-height: 21px;
 	vertical-align: middle;
-	min-width: 100%;
+	float: right;
 }
 
 .author_actions .author {
@@ -1382,33 +1402,21 @@ a.blogt:hover {
 	vertical-align: middle;
 }
 
-.author_actions > .actions {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 21px;
-	line-height: 21px;
-	text-align: right;
-	background: #446793;
-	color: #fff;
-	border-left: 2px solid #fff;
-}
-
 .post .author_info {
 	background: inherit;
 	display: inline-block;
-	color: #000;
+	float: left;
+	color: #999999;
 	text-align: left;
-	line-height: 21px;
 	vertical-align: middle;
-	padding-top: 0;
+	padding: 0 5px ;
 	margin-top: 0;
-	height: 21px;
+	line-height: 21px;
+	font-size: 11px;
+	font-weight: bold;
 }
 
 .post .author_info img {
-	height: 21px;
-	width: 21px;
 	vertical-align: middle;
 }
 
@@ -1465,21 +1473,21 @@ a.blogt:hover {
 	text-align: left;
 	clear: both;
 	margin-top: 3px;
+	margin-bottom: 0px;
 	background: #e6edf5;
 	color: #ebf1f7;
 }
 
-.postfooter .actions {
-	width: 200px;
-}
-
 .postfooter .status {
-	float: right;
+	float: left;
 	clear: none;
-	width: 200px;
-	text-align: right;
 	margin-right: 5px;
 	font-size: 10px;
+}
+
+a.linkcomments {
+	background: none repeat scroll 0 0 #FFFF99;
+	padding: 0 3px;
 }
 
 .post .contribution {
@@ -2029,6 +2037,16 @@ a.admbox.off:focus,
 .admbox a,
 a.admbox.off:active {
 	border: 1px solid #a9a9a9;
+}
+
+/* Make Register info more prominent than lost password */
+#siteloginbar .register {
+  padding-left: 20px;
+}
+
+#siteloginbar .pass {
+  float: right;
+  padding-left: 20px;
 }
 
 /* Fixed-width rules */

@@ -7,7 +7,7 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/wiki/wikilib.php');
@@ -117,7 +117,7 @@ if ($prefs['feature_articles'] == 'y') {
 	}
 }
 include_once ('tiki-section_options.php');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 	function mytiki_ajax() {
 		global $ajaxlib, $xajax;
 		$ajaxlib->registerTemplate("tiki-my_tiki.tpl");

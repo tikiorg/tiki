@@ -18,9 +18,11 @@ body.db_error #tiki-main {
 	margin: 1em auto;
 }
 
+/* ckeditor body definition */
 html[dir=ltr]>body {
 	display: block;
 	padding: 1em;
+	width: auto;
 }
 
 span.button {
@@ -804,11 +806,6 @@ span.toolbar-list {
 	border: #f00 1px solid;
 }
 
-/* To ensure that full width of wysiwyg toolbar displays in narrow themes. */
-.fckeditzone {
-	min-width: 510px;
-}
-
 /* New Help section */
 div#tikihelp {
 	position: absolute;
@@ -985,6 +982,17 @@ wikitext or custom content area. Similarly for three or four modules (or divs) a
 	margin: 0 2% 0 0;
 }
 
+#autosave_preview > div {
+	height: 30ex;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#autosave_preview_grippy {
+	background-color: #ccc;
+	background-image: url("../../pics/icons/shading.png");
+}
+
 /***** Tables, Tabs ****/
 /** Tables **/
 
@@ -1060,6 +1068,10 @@ tr.diffheader {
 	text-align: left;
 	width: auto;
 	background: transparent;
+}
+
+.tabcontent table.normal {
+	width: 100%;
 }
 
 .tabcontent table td {
@@ -1346,11 +1358,6 @@ body.tiki_blogs .post .postfooter {
 	float: right;
 }
 
-body.tiki_blogs div.author_actions {
-	width: 100%;
-	text-align: right;
-}
-
 /* Related content */
 .related_posts {
 	margin-top: 3em;
@@ -1445,20 +1452,35 @@ body.tiki_forums table.normal {
 }
 
 .post .postfooter {
-	float: right;
 	text-align: right;
 	width: 100%;
+	margin-top: 5px;
 }
 .post .postfooter .rating {
 	display: inline;
 }
 
-
 .post .postfooter .actions,
+.post .postfooter .author_actions,
 .post .postfooter .status {
 	display: inline;
-	margin-left: 5px;
 	vertical-align: top;
+}
+
+.post .postfooter .actions,
+.post .postfooter .author_actions {
+	float: left;
+	margin-left: 5px;
+}
+
+.post .postfooter .status {
+	float: right;
+	margin-right: 5px;
+}
+
+.post .postfooter .actions .share {
+	float: right;
+	margin: 1px 2px 2px 5px;
 }
 
 .post .inner > .postfooter {
@@ -1472,18 +1494,23 @@ body.tiki_forums table.normal {
 	padding: 3px
 }
 
-.postfooter .postfooter-nav {
+.postfooter-nav {
+	width: 100%;
+}
+
+.postfooter-nav {
 	display: block;
 	margin-top: 1em;
 }
 
-.postfooter .postfooter-nav .postfooter-nav-prev {
+.postfooter-nav .postfooter-nav-prev {
 	text-align: left;
 	float: left;
 	width: 50%;
 }
 
-.postfooter .postfooter-nav .postfooter-nav-next {
+.postfooter-nav .postfooter-nav-next {
+	text-align: right;
 	float: right;
 	width: 50%;
 }
@@ -1551,6 +1578,49 @@ body.tiki_forums table.normal {
 span.commentstitle {
 	font-weight: bold;
 	font-size: 1.2em;
+}
+
+/* Comment Annotations */
+
+dl.note-list {
+	margin: .5em;
+	background: #fff;
+	color: #000;
+	border: solid thin black;
+}
+
+#note-editor-comment {
+	background-color: #fff;
+	color: #000;
+	border: #999 1px solid;
+	padding: .5em;
+}
+
+.note-editor-text {
+	background-color: #eee;
+	color: #000;
+}
+
+.note-list .postbody-title {
+	background-color: #ccc;
+	color: #000;
+	padding: .5em;
+}
+
+.note-list .title a {
+	color: #000;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.note-list .actions {
+	float: right;
+}
+
+
+.note-list .author {
+	font-size: smaller;
+	text-align: right;
 }
 
 /* Comments moderation */
@@ -1647,6 +1717,10 @@ opaque .box-title,
 .opaque .iconmenu {
 	display: block;
 	white-space: nowrap;
+}
+
+body.filegal_popup #tiki-center {
+	margin: 0 1em;
 }
 
 /***** Trackers (etc.) *****/
@@ -1852,11 +1926,6 @@ div.freetagObjectName a {
 	margin: 10px 0 0;
 }
 
-.freetaglist {
-	padding: 0 20px;
-	text-align: right;
-}
-
 /*****  Polls  *****/
 table.pollresults {
 	width: 100%;
@@ -1925,34 +1994,26 @@ table.pollresults {
 /* admin boxes etc (.admbox) now defined in css/admin.css */
 
 /***** Ajax, jquery. etc. *****/
-/***** Ajax *****/
-div#ajaxLoading {
-	z-index: 10000;
-	color: #fff;
+
+/* Ajax Loading Overlay */
+div#ajaxLoadingBG {
 	display: none;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	padding: 3px;
+	z-index: 9999;
+	position: absolute;
+	background: transparent url(../../img/overlay-light.png);
+}
+div#ajaxLoading {
+	display: none;
+	z-index: 10000;
+	font-size: 2em;
+	font-weight: bold;
+	position: absolute;
 	color: #333;
 	text-align: center;
 	vertical-align: top;
 	background: transparent url(../../img/loading-light.gif) no-repeat 50% 50%;
 	height: 80px;
-	width: 100px;
-	margin-left: -50px;
-	margin-top: -40px;
-}
-
-div#ajaxLoadingBG {
-	z-index: 9999;
-	display: none;
-	position: fixed;
-	left: 0;
-	top: 0;
-	background: transparent url(../../img/overlay-light.png);
-	width: 100%;
-	height: 100%;
+	width: 220px;
 }
 
 /* ColorBox */
@@ -2001,6 +2062,10 @@ table.webmail_message_headers th {
 
 @media print {
 	.tikihelp, .navbar, categbar, .tabstoggle, .tabs, #show-errors-button {display:none;}
+}
+
+.tabstoggle {
+	font-size: .8em;
 }
 
 /* treeTable definitions - used in object-perms so far */
@@ -2140,4 +2205,59 @@ table.treeTable .parent td {
 .deleted {
 	text-decoration: line-through;
 }
+
+/* interactive translations */
+
+#intertrans-indicator {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 40px;
+	background-color: #ade;
+	padding: 1em;
+}
+
+#intertrans-form {
+	position: fixed;
+	top: 10%;
+	bottom: 10%;
+	left: 10%;
+	right: 10%;
+	overflow: auto;
+	background-color: #eff;
+	display: none;
+	z-index: 2000;
+	padding: 1em;
+	border: #799 solid 2px;
+}
+#intertrans-form table {
+	width: 98%;
+	padding: 1em;
+}
+#intertrans-form table input {
+	width: 100%;
+}
+
+table.intertrans td {
+	width: 50%;
+}
+
+/***** Kaltura *****/
+
+/* Kaltura browse entries */
+
+/* remove margins from the image */ 
+.items img { 
+    margin: 0; 
+}
+ 
+/* make A tags our floating scrollable items */ 
+.items a { 
+    display: block; 
+    float: left; 
+    margin: 20px 15px; 
+}
+
+
 /* End of File */

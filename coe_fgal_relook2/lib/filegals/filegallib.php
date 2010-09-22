@@ -245,7 +245,8 @@ class FileGalLib extends TikiLib
 			'show_userlink' => 'y',
 			'show_explorer' => $prefs['fgal_show_explorer'],
 			'show_path' => $prefs['fgal_show_path'],
-			'show_slideshow' => $prefs['fgal_show_slideshow']
+			'show_slideshow' => $prefs['fgal_show_slideshow'],
+			'wiki_syntax' => ''
 
 		);
 	}
@@ -273,7 +274,7 @@ class FileGalLib extends TikiLib
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
 			`show_path`=?, `show_slideshow`=?, `default_view`=?, `quota`=?,
 			`image_max_size_x`=?, `image_max_size_y`=?,
-			`backlinkPerms`=?, `show_backlinks`=? where `galleryId`=?";
+			`backlinkPerms`=?, `show_backlinks`=?, `wiki_syntax`=? where `galleryId`=?";
 
 			$bindvars=array(trim($fgal_info['name']), (int) $fgal_info['maxRows'],
 			$fgal_info['description'], (int) $this->now, $fgal_info['public'],
@@ -291,7 +292,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['show_path'], $fgal_info['show_slideshow'],
 			$fgal_info['default_view'], $fgal_info['quota'],
 			(int)$fgal_info['image_max_size_x'], (int)$fgal_info['image_max_size_y'],
-			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], (int)$fgal_info['galleryId']);
+			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['wiki_syntax'], (int)$fgal_info['galleryId']);
 
 			$result = $this->query($query,$bindvars);
 
@@ -310,8 +311,8 @@ class FileGalLib extends TikiLib
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
 			`show_explorer`, `show_path`, `show_slideshow`, `default_view`, `quota`,
-			`image_max_size_x`, `image_max_size_y`, `backlinkPerms`, `show_backlinks`)
-			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			`image_max_size_x`, `image_max_size_y`, `backlinkPerms`, `show_backlinks`, `wiki_syntax`)
+			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$bindvars=array($fgal_info['name'], $fgal_info['description'], (int)
 			$this->now, $fgal_info['user'], (int) $this->now, (int)
@@ -329,7 +330,7 @@ class FileGalLib extends TikiLib
 			$fgal_info['show_slideshow'], $fgal_info['default_view'],
 			$fgal_info['quota'],
 			(int)$fgal_info['image_max_size_x'], (int)$fgal_info['image_max_size_y'],
-			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks']);
+			$fgal_info['backlinkPerms'], $fgal_info['show_backlinks'], $fgal_info['wiki_syntax']);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from
@@ -648,6 +649,7 @@ class FileGalLib extends TikiLib
 	}
 
 	function change_file_handler($mime_type,$cmd) {
+		$mime_type = trim($mime_type);
 		$found = $this->getOne("select `mime_type` from `tiki_file_handlers` where `mime_type`=?",array($mime_type));
 
 		if ($found) {
@@ -1569,6 +1571,24 @@ class FileGalLib extends TikiLib
 			}
 			$this->remove_file($fileInfo, $galInfo, false);
 		}
+	}
+	// get the wiki_syntax - use parent's if none
+	function getWikiSyntax($galleryId=0) {
+		global $prefs;
+		
+		$syntax = $this->getOne('SELECT `wiki_syntax` FROM `tiki_file_galleries` WHERE `galleryId`=?', array($galleryId));
+		if (!empty($syntax)) {
+			return $syntax;
+		}
+		$list = $this->getGalleryParentsColumns($galleryId, array('wiki_syntax'));
+		foreach($list as $fgal) {
+			if (!empty($fgal['wiki_syntax'])) {
+				return $fgal['wiki_syntax'];
+			}
+		}
+		// and no syntax set, return default
+		$syntax = '{img fileId="%fileId%" thumb="n" rel="box[g]"}';	// should be a pref
+		return $syntax;
 	}
 }
 $filegallib = new FileGalLib;

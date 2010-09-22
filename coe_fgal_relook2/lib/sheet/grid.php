@@ -24,7 +24,8 @@ require_once( "lib/sheet/ole.php" );
 require_once( "lib/sheet/excel/writer.php" );
 //require_once( "lib/sheet/conf/config.inc.php" );
 require_once( "lib/encoding/lib-encoding.php" );
-
+include_once 'lib/diff/Diff.php';
+include_once 'lib/diff/Renderer.php';
 // Constants {{{1
 
 /*
@@ -331,10 +332,7 @@ class TikiSheet
 			$subsheets = $sheetlib->get_sheet_subsheets($this->sheetId);
 			if (count($subsheets) > 0) {
 				foreach ($subsheets as $sub) {
-					$handler = new TikiSheetDatabaseHandler($sub['sheetId']);
-					if ($date) {
-						$handler->setReadDate($date);
-					}
+					$handler = new TikiSheetDatabaseHandler($sub['sheetId'], $date );
 					$subsheet = new TikiSheet($sub['sheetId'], true);
 					$subsheet->import($handler);
 					$data .= $subsheet->getTableHtml( false );
@@ -1302,10 +1300,10 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	 * @param $sheetId The ID of the sheet in the database.
 	 * @param $db The database link to use.
 	 */
-	function TikiSheetDatabaseHandler( $sheetId )
+	function TikiSheetDatabaseHandler( $sheetId , $date )
 	{
 		$this->sheetId = $sheetId;
-		$this->readDate = time();
+		$this->readDate = ( $date ? $date : time() );
 	}
 
 	// _load {{{2
@@ -1865,6 +1863,13 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 					$tdStyle = "";
 					$color = getAttrFromCssString($style, "color", "");
 					$bgColor = getAttrFromCssString($style, "background-color", "");
+					$tdHeight = '';
+					
+					if ($trHeightIsSet == false) {
+						$trHeight = getAttrFromCssString($style, "height", "20px");
+						$trHeightIsSet = true;
+					}
+					
 					if ($color) {
 						$tdStyle .= "color:$color;";
 					}
@@ -1872,12 +1877,13 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 						$tdStyle .= "background-color:$bgColor;";
 					}
 					
-					$append .= ' style="'.$tdStyle.'"';					
-					
-					if ($trHeightIsSet == false) {
-						$trHeight = getAttrFromCssString($style, "height", "20px");
-						$trHeightIsSet = true;
+					$tdHeight = $trHeight;
+					if ($tdHeight) {
+						$tdStyle .= "height:$tdHeight;";
+						$append .= " height='".str_replace("px", "", $tdHeight)."'";
 					}
+					
+					$append .= " style='$tdStyle'";
 				}
 				
 				$class = $sheet->cellInfo[$i][$j]['class'];
@@ -1899,7 +1905,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				}
 				$td .= "			<td$append>$data</td>\n";
 			}
-			echo "		<tr style='height: $trHeight;' height='$trHeight'>\n";
+			echo "		<tr style='height: $trHeight;' height='".str_replace("px", "", $trHeight)."'>\n";
 			echo $td;
 			echo "		</tr>\n";
 		}
@@ -2324,4 +2330,135 @@ function array_searchRecursive( $needle, $haystack, $strict=false, $path=array()
         }
     }
     return false;
+}
+
+
+function diffSheetsAsHTML( $id, $dates = null )
+{
+	global $prefs, $sheetlib;
+		
+	function countLongest( $array1, $array2 )
+	{
+		return (count($array1) > count($array2) ? count($array1) : count($array2));
+	}
+	
+	function joinWithSubGrids( $id, $date )
+	{
+		global $prefs, $sheetlib;
+		$result1 = "";
+		$result2 = "";
+		
+		$handler = new TikiSheetDatabaseHandler($id, $date);
+		$handler->setReadDate($date);
+		$grid = new TikiSheet($id, true);
+		$grid->import($handler);
+		
+		$subgrids = $sheetlib->get_sheet_subsheets($grid->sheetId);
+		$i = 0;
+		$grids = array($grid);
+		foreach ($subgrids as $sub) {
+			$handler = new TikiSheetDatabaseHandler($sub['sheetId'], $date);
+			$handler->setReadDate($date);
+			$subsheet = new TikiSheet($sub['sheetId'], true);
+			$subsheet->import($handler);
+			array_push($grids, $subsheet);
+			$i++;
+		}
+		return $grids;
+	}
+	
+	function sanitizeForDiff($val)
+	{
+		$val = str_replace("<br/>", 	"<br>", $val);
+		$val = str_replace("<br />",	"<br>", $val);
+		$val = str_replace("<br  />", 	"<br>", $val);
+		$val = str_replace("<BR/>",		"<br>", $val);
+		$val = str_replace("<BR />", 	"<br>", $val);
+		$val = str_replace("<BR  />",	"<br>", $val);
+		
+		return explode("<br>", $val);
+	}
+	
+	function diffToHtml($changes)
+	{
+		$result = array("", "");
+		for ( $i = 0; $i < countLongest($changes->orig, $changes->final); $i++ )
+		{
+			$class = array("", "");
+			$char = array("", "");
+			$vals = array( trim( $changes->orig[$i] ), trim( $changes->final[$i] ) );
+			
+			if ($vals[0] && $vals[1]) {
+				if ( $vals[0] != $vals[1] ) {
+					$class[1] .= "diffadded";
+				}
+			} else if ($vals[0]) {
+				$class[0] .= "diffadded";
+				$class[1] .= "diffdeleted";
+				$vals[1] = $vals[0];
+				$char[1] = "-";
+			} else if ($vals[1]) {
+				$class[0] .= "diffdeleted";
+				$class[1] .= "diffadded";
+				$char[1] = "+";
+			}
+			
+			if ( $vals[0] ) {
+				$result[0] .= "<span class='$class[0]'>".$char[0].$vals[0]."</span><br />";
+			}
+			if ( $vals[1] ) {
+				$result[1] .= "<span class='$class[1]'>".$char[1].$vals[1]."</span><br />";
+			}
+		} 
+		return $result;
+	}
+	
+	sort($dates);
+	
+	$grids1 = joinWithSubGrids($_REQUEST["sheetId"], $dates[0]);
+	$grids2 = joinWithSubGrids($_REQUEST["sheetId"], $dates[1]);
+	
+	for ( $i = 0; $i < countLongest($grids1, $grids2); $i++ ) { //cycle through the sheets within a spreadsheet
+		$result1 .= "<table>";
+		$result2 .= "<table>";
+		for ( $row = 0; $row < countLongest($grids1[$i]->dataGrid, $grids2[$i]->dataGrid); $row++ ) { //cycle through rows
+			$result1 .= "<tr>";
+			$result2 .= "<tr>";
+			for ( $col = 0; $col < countLongest($grids1[$i]->dataGrid[$row], $grids2[$i]->dataGrid[$row]); $col++ ) { //cycle through columns
+				$diff = new Text_Diff( sanitizeForDiff( $grids1[$i]->dataGrid[$row][$col] ), sanitizeForDiff( $grids2[$i]->dataGrid[$row][$col] ) );
+				$changes = $diff->getDiff();
+					
+				//print_r($changes);
+				
+				$class = array('','');
+				$values = array('','');
+				
+				//I left this diff switch, but it really isn't being used as of now, in the future we may though.
+				switch ( get_class($changes[0]) ) {
+					case 'Text_Diff_Op_copy':
+						$values = diffToHtml($changes[0]);
+						break;
+					case 'Text_Diff_Op_change':
+						$values = diffToHtml($changes[0]);
+						break;
+					case 'Text_Diff_Op_delete':
+						$values = diffToHtml($changes[0]);
+						break;
+					case 'Text_Diff_Op_add':
+						$values = diffToHtml($changes[0]);
+						break;
+					default:
+						$values = diffToHtml($changes[0]);
+				}
+				$result1 .= "<td class='$class1'>".$values[0]."</td>";
+				$result2 .= "<td class='$class2'>".$values[1]."</td>";
+			}
+			$result1 .= "</tr>";
+			$result2 .= "</tr>";
+		}
+		$result1 .= "</table>";
+		$result2 .= "</table>";
+	}
+		
+	return array($result1, $result2);
 }

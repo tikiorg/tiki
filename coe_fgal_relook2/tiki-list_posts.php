@@ -14,19 +14,14 @@ if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$bloglib->remove_post($_REQUEST["remove"]);
 }
-// This script can receive the thresold
-// for the information as the number of
-// days to get in the log 1,3,4,etc
-// it will default to 1 recovering information for today
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-// If offset is set use it if not then use offset =0
-// use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
+
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
@@ -43,7 +38,7 @@ $smarty->assign('find', $find);
 $listpages = $bloglib->list_posts($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant', $listpages["cant"]);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
-//print_r($listpages["data"]);
+
 ask_ticket('list-posts');
 // Display the template
 $smarty->assign('mid', 'tiki-list_posts.tpl');

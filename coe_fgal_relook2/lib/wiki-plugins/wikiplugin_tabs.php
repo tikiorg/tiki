@@ -58,6 +58,9 @@ function wikiplugin_tabs($data, $params) {
 	}
 	if (!empty($data)) {
 		$tabData = explode('/////', $data);
+		foreach ($tabData as &$d) {
+			$d = '~np~' . $tikilib->parse_data($d) . '~/np~';
+		}
 	}
 	
 	$smarty->assign( 'tabsetname', $tabsetname );

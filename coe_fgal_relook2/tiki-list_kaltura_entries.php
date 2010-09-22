@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -68,7 +68,7 @@ if (isset($_REQUEST['action'])) {
 
 	switch ($_REQUEST['action']) {
 
-		case 'Create Remix':
+		case tra('Create Remix'):
 			$access->check_permission( array('tiki_p_remix_videos') );	
 			if ($kentryType == 'media') {
 				$kentry = $kclient->media->get($videoId[0]);
@@ -84,7 +84,7 @@ if (isset($_REQUEST['action'])) {
 			die;
 			break;
 
-		case 'Delete':
+		case tra('Delete'):
 			$access->check_permission( array('tiki_p_delete_videos') );
 			$access->check_authenticity();
 			if ($kentryType == 'media') {
@@ -237,6 +237,6 @@ $smarty->assign_by_ref('maxRecords', $page_size);
 $smarty->assign('mid', 'tiki-list_kaltura_entries.tpl');
 $smarty->display('tiki.tpl');
 } catch( Exception $e ) {
-	$access->display_error( '', tr('Communication error'), 500, true, tr('Invalid response provided by the kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>' );
+	$access->display_error( '', tra('Communication error'), 500, true, tra('Invalid response provided by the Kaltura server. Please retry.') . '<br /><em>' . $e->getMessage() . '</em>' );
 }
 

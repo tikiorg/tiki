@@ -137,7 +137,7 @@ function prefs_wiki_list() {
 			),
 		),
 		'wiki_comments_allow_per_page' => array(
-			'name' => tra('Allow comments per page'),
+			'name' => tra('Allow comments per wiki page'),
 			'description' => tra('Enable control for comments on wiki pages individually.'),
 			'type' => 'list',
 			'options' => array(

@@ -4,7 +4,7 @@
 <form action="tiki-user_tasks.php" method="post">
 	<table class="formcolor">
 		<tr>
-			<td colspan="6" class="normal">
+			<td colspan="6">
 				<div align="right">
 					{tr}Tasks per page{/tr}
 					<select name="tasks_maxRecords">

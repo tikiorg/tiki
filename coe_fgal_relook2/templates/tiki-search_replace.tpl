@@ -12,6 +12,14 @@
 <br />{tr}Max number of pages at a time{/tr}: <input type="text" size="5" name="maxRecords" value="{$maxRecords|escape}" />
 &nbsp;{tr}Number of surrounding chars to preview{/tr}: <input type="text" size="5" name="paddingLength" value="{$paddingLength|escape}" />
 <br />
+<select name="categId">
+	<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
+	{section name=ix loop=$categories}
+		<option value="{$categories[ix].categId|escape}" {if $find_categId eq $categories[ix].categId}selected="selected"{/if}>
+		{capture}{tr}{$categories[ix].categpath}{/tr}{/capture}{$smarty.capture.default|escape}
+		</option>
+	{/section}
+</select>
 <input type="submit" name="search" value="{tr}Search{/tr}" />
 </form>
 </div>
@@ -37,12 +45,12 @@
 			<a href="{$results[search].pageName|sefurl}" target="_blank">{$results[search].pageName|escape}</a>
 			</th></tr>
 			{section name=snippet loop=$results[search].beforeSnippet}
-			<tr>
-				<td class="{cycle advance=false}" style="border: 1px solid">
+			<tr class="{cycle}">
+				<td style="border: 1px solid">
 					{* note that non-escaping is intentional *}
 					{$results[search].beforeSnippet[snippet]}
 				</td>
-				<td class="{cycle advance=true}" style="border: 1px solid">
+				<td style="border: 1px solid">
 					{* note that non-escaping is intentional *}
 					{$results[search].afterSnippet[snippet]}
 				</td>

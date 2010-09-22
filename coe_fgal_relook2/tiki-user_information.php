@@ -6,7 +6,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/messu/messulib.php');
@@ -44,14 +44,12 @@ if ($prefs['feature_friends'] == 'y') {
 	$smarty->assign('friend_pending', $tikilib->verify_friendship_request($userwatch, $user));
 	$smarty->assign('friend_waiting', $tikilib->verify_friendship_request($user, $userwatch));
 }
+$smarty->assign('infoPublic', 'y');
 if ($tiki_p_admin != 'y') {
 	$user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
 	// If the user is trying to pull info on themselves, allow it.
 	if ($user_information == 'private' && $userwatch != $user) {
-		$smarty->assign('errortype', 'no_redirect_login');
-		$smarty->assign('msg', tra("The user has chosen to make his information private"));
-		$smarty->display("error.tpl");
-		die;
+		$smarty->assign('infoPublic', 'n');
 	}
 }
 if ($user) {
@@ -65,8 +63,13 @@ if ($user) {
 			$smarty->display("tiki.tpl");
 			die;
 		}
-		$message = tra('Message sent to') . ':' . $userwatch . '<br />';
-		$messulib->post_message($userwatch, $user, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+		$sent = $messulib->post_message($userwatch, $user, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority'], '',
+								isset($_REQUEST['replytome']) ? 'y' : '', isset($_REQUEST['bccme']) ? 'y' : '');
+		if ($sent) {
+			$message = tra('Message sent to') . ':' . $userlib->clean_user($userwatch) . '<br />';
+		} else {
+			$message = tra('An error occurred, please check your mail settings and try again');
+		}
 		$smarty->assign('message', $message);
 	}
 }
@@ -192,7 +195,7 @@ if ($prefs['user_tracker_infos']) {
 	$smarty->assign_by_ref('userItem', $items['data'][0]);
 }
 ask_ticket('user-information');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 	function user_information_ajax() {
 		global $ajaxlib, $xajax;
 		$ajaxlib->registerTemplate("tiki-user_information.tpl");

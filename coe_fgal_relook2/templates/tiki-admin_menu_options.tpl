@@ -310,13 +310,13 @@
 					</tr>
 					{cycle values="odd,even" print=false}
 					{section name=user loop=$channels}
-						<tr>
-							<td class="{cycle advance=false}">
+						<tr class="{cycle}">
+							<td>
 								<input type="checkbox" name="checked[]" value="{$channels[user].optionId|escape}"  {if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if} />
 							</td>
-							<td class="{cycle advance=false}">{$channels[user].optionId}</td>
-							<td class="{cycle advance=false}">{$channels[user].position}</td>
-							<td class="{cycle advance=false}">
+							<td>{$channels[user].optionId}</td>
+							<td>{$channels[user].position}</td>
+							<td>
 								<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 								<div style="margin-left:10px;">
 									{if $channels[user].url}
@@ -327,14 +327,14 @@
 									{if $channels[user].groupname}<br />{tr}Groups:{/tr} {$channels[user].groupname|escape}{/if}
 								</div>
 							</td>
-							<td class="{cycle advance=false}">{$channels[user].type_description}</td>
+							<td>{$channels[user].type_description}</td>
 			
 							{if $prefs.feature_userlevels eq 'y'}
 								{assign var=it value=$channels[user].userlevel}
-								<td class="{cycle advance=false}">{$prefs.userlevels.$it}</td>
+								<td>{$prefs.userlevels.$it}</td>
 							{/if}
 							
-							<td class="{cycle advance=true}">
+							<td>
 								<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 								{if !$smarty.section.user.first}
 									<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options" title="{tr}switch with previous option{/tr}">{icon _id='resultset_up'}</a>

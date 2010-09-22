@@ -171,14 +171,20 @@ foreach(array(
 	'reloff'
 ) as $reqfld) {
 	$trynam = 'try' . $reqfld;
-	if (isset($_REQUEST[$reqfld]) && is_string($_REQUEST[$reqfld])) {
+	if (isset($_REQUEST[$reqfld])) {
 		$$trynam = $_REQUEST[$reqfld];
 	} else {
 		$$trynam = '';
 	}
 }
-if (isset($_REQUEST["filtervalue"]) and is_array($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$tryfilterfield"])) {
-	$tryfiltervalue = $_REQUEST["filtervalue"]["$tryfilterfield"];
+if (isset($_REQUEST['filterfield'])) {
+	if (is_array($_REQUEST['filtervalue']) and isset($_REQUEST['filtervalue'][$tryfilterfield])) {
+		$tryfiltervalue = $_REQUEST['filtervalue'][$tryfilterfield];
+	} else {
+		$tryfilterfield = split(':', $_REQUEST['filterfield']);
+		$tryfiltervalue = split(':', $_REQUEST['filtervalue']);
+		$tryexactvalue = split(':', $_REQUEST['exactvalue']);
+	}
 }
 //Management of the field type 'User subscribe' (U)
 //when user clic on (un)subscribe
@@ -263,6 +269,7 @@ if (isset($_REQUEST['reloff'])) {
 	if (isset($_REQUEST['cant'])) {
 		$cant = $_REQUEST['cant'];
 	} else {
+		$tryfiltervalue = array_values($tryfiltervalue);
 		$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, $listfields, $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
 		if (isset($trymove['data'][0]['itemId'])) {
 			// Autodetect itemId if not specified
@@ -901,6 +908,8 @@ if ($_REQUEST["itemId"]) {
 						$ins_fields["data"][$i]["value"] = $info["$fid"];
 						$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
 					}
+				} elseif ($fields['data'][$i]['type'] == 'usergroups' && !empty($itemUser)) {
+					$ins_fields['data'][$i]['value'] = $tikilib->get_user_groups($itemUser);
 				} elseif ($fields['data'][$i]['type'] == 'p' && !empty($itemUser)) {
 					if ($fields['data'][$i]['options_array'][0] == 'email') {
 						$ins_fields['data'][$i]['value'] = $userlib->get_user_email($itemUser);
@@ -1177,7 +1186,7 @@ if (isset($_REQUEST['status'])) $smarty->assign_by_ref('status', $_REQUEST['stat
 include_once ('tiki-section_options.php');
 $smarty->assign('uses_tabs', 'y');
 ask_ticket('view-trackers-items');
-if ($prefs['feature_ajax'] == 'y') {
+if ($prefs['ajax_xajax'] == 'y') {
 	require_once ("lib/ajax/ajaxlib.php");
 	$ajaxlib->registerTemplate('tiki-view_tracker_item.tpl');
 }

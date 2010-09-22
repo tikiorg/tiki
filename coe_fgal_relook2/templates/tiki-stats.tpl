@@ -350,10 +350,10 @@
 		</tr>
 		{cycle values="odd,even" print=false advance=false}
 		{section name=i loop=$best_objects_stats_between}
-			<tr>
-				<td class="{cycle advance=false}">{$best_objects_stats_between[i]->object|escape}</td>
-				<td class="{cycle advance=false}">{tr}{$best_objects_stats_between[i]->type}{/tr}</td>
-				<td class="{cycle}">{$best_objects_stats_between[i]->hits}</td>
+			<tr class="{cycle}">
+				<td>{$best_objects_stats_between[i]->object|escape}</td>
+				<td>{tr}{$best_objects_stats_between[i]->type}{/tr}</td>
+				<td>{$best_objects_stats_between[i]->hits}</td>
 			</tr>
 		{/section}
 	</table>
@@ -369,10 +369,10 @@
 		</tr>
 		{cycle values="odd,even" print=false advance=false}
 		{section name=i loop=$best_objects_stats_lastweek}
-			<tr>
-				<td class="{cycle advance=false}">{$best_objects_stats_lastweek[i]->object|escape}</td>
-				<td class="{cycle advance=false}">{tr}{$best_objects_stats_lastweek[i]->type}{/tr}</td>
-				<td class="{cycle}">{$best_objects_stats_lastweek[i]->hits}</td>
+			<tr class="{cycle}">
+				<td>{$best_objects_stats_lastweek[i]->object|escape}</td>
+				<td>{tr}{$best_objects_stats_lastweek[i]->type}{/tr}</td>
+				<td>{$best_objects_stats_lastweek[i]->hits}</td>
 			</tr>
 		{/section}
 	</table>

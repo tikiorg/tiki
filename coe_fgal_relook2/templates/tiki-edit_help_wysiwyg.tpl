@@ -19,7 +19,7 @@
 	<th>{tr}Wysiwyg{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
-<tr><td width="20%" class="{cycle}">This needs writing</td></tr>
+<tr class="{cycle}"><td width="20%">This needs writing</td></tr>
 </table>
 
 </div>

@@ -11,40 +11,21 @@
 
 (function() {
 
-	var numberRegex = /^\d+(?:\.\d+)?$/;
-
-	function cssifyLength(length) {
-		if (numberRegex.test(length))
-			return length + 'px';
-		return length;
-	}
-
-	function createFakeElement(editor, realElement) {
-		var fakeElement = editor.createFakeParserElement(realElement, 'cke_tikiplugin', 'span', true);
-		var fakeStyle = fakeElement.attributes.style || '';
-
-		var width = realElement.attributes.width, height = realElement.attributes.height;
-
-		if (typeof width != 'undefined')
-			fakeStyle = fakeElement.attributes.style = fakeStyle + 'width:'
-					+ cssifyLength(width) + ';';
-
-		if (typeof height != 'undefined')
-			fakeStyle = fakeElement.attributes.style = fakeStyle + 'height:'
-					+ cssifyLength(height) + ';';
-
-		return fakeElement;
-	}
 
 	CKEDITOR.plugins.add( 'tikiplugin', {
 		init : function(editor) {
 		
+			this.ckToHtml = editor.dataProcessor.toHtml;		// reference to original ckeditor dataProcessor
+			this.ckToData = editor.dataProcessor.toDataFormat;
+			this.editor = editor;								// which expects these references too
+			this.dataFilter = editor.dataProcessor.dataFilter;
+			this.writer = new CKEDITOR.htmlWriter();
+			
 			this.command = new CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function(editor, data) {	// odd? elem param disappears from doubleclick
+					var sel = editor.getSelection();
 					if (data === editor) {
-						var sel = editor.getSelection();
-						//data = sel.getCommonAncestor().$.parentNode;	// this will need more checking
 						data = sel.getCommonAncestor().getParent();	// this will need more checking
 					}
 					var args = {};
@@ -55,7 +36,7 @@
 							args[pairs[i].substring(0, pairs[i].indexOf("="))] = pairs[i].substring((pairs[i].indexOf("=") + 1));
 						}
 					}
-					editor.getSelection().selectElement( data );
+					sel.selectElement( data );
 					popupPluginForm( editor.name, data.getAttribute("plugin"), 0, '', args, data.getAttribute("body"), '');
 				},
 				canUndo: false
@@ -66,9 +47,8 @@
 //								label : 'Tiki Plugin',
 //								command : 'tikiplugin'
 //							});
-			// CKEDITOR.dialog.add( 'tikiplugin', this.path + 'dialogs/tikiplugin.js' );
 
-			editor.addCss('.cke_tiki_plugin'
+			editor.addCss('.tiki_plugin'
 							+ '{'
 							+ 'display: inline-block;'
 							+ 'background-color: #eee;'
@@ -128,33 +108,88 @@
 					}
 				});
 			}
-		},
-
-		afterInit : function(editor) {
-			var dataProcessor = editor.dataProcessor;
-			var dataFilter = dataProcessor && dataProcessor.dataFilter;
-			if (dataFilter) {
-				dataFilter.addRules( {
-					elements : {
-						'span' : function( element ) {
-							if (element.attributes && element.attributes.plugin) {
-								//element.attributes.contenteditable = "false";
-								for (var c = 0; c < element.children.length; c++) {
-									if (!element.children[c].attributes) {
-										element.children[c].attributes = {};
-									}
-									element.children[c].attributes.contenteditable = "false";
-								}
-								return element;
-							} else {
-								return null;
-							}
-						}
-					}
-				}, 1);
+			if (true) {	// sure there should be a test here
+				var asplugin = this;
+				editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return asplugin.toHTMLSource( editor, html ); };
+				editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return asplugin.toHtmlFormat( editor, data ); };
 			}
+		},			// end of init()
+		
+		toHTMLSource: function( editor, html ) {
+			// replace visual plugins with syntax
+			var output = html.replace(/<(?:div|span)[^>]*syntax="([^"]*)"[\s\S]*?end tiki_plugin --><\/(?:div|span)>/mig, function() {
+				if (arguments.length > 0) {
+					return $("<span />").html(arguments[1]).text();	// decode html entities
+				} else {
+					alert("ckeditor: error parsing to html source");
+					return "";
+				}
+			});
+			return this.ckToData(output);
 		},
 
-		requires : [ 'fakeobjects' ]
+		toHtmlFormat: function( editor, data ) {
+			var output = "";
+			var asplugin = this;
+			ajaxLoadingShow( "cke_contents_" + this.editor.name);
+			$("#ajaxLoading").show();		// FIXME safari/chrome refuse to show until ajax finished
+			jQuery.ajax({
+				async: false, // wait for this one
+				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
+				type: "POST",
+				data: {
+					script: editor.config.autoSaveSelf,
+					editor_id: editor.name,
+					data: encodeURIComponent(data),
+					command: "toHtmlFormat"
+				},
+				// good callback
+				success: function(data) {
+					ajaxLoadingHide();
+					output = unescape(jQuery(data).find('data').text());
+					return asplugin.ckToHtml.call(asplugin, output);
+				},
+				// bad callback - no good info in the params :(
+				error: function(req, status, error) {
+					ajaxLoadingHide();
+					output = "ajax error";
+				}
+			});
+			return output;
+		},
+		
+		requires : [ '' ]	// TODO check req - autosave? (really)
 	});
+	
+	if (typeof CKEDITOR.editor.prototype.reParse != 'function') {
+		CKEDITOR.editor.prototype.reParse = function() {
+	
+			// send the whole source off to the server to get reparsed?
+			var myoutput = "";
+			var mydata = this.getData();
+			
+			ajaxLoadingShow( "cke_contents_" + this.name);
+			jQuery.ajax({
+				async: false,	// wait for this one
+				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
+				type: "POST",
+				data: {
+					script: this.config.autoSaveSelf,
+					editor_id: this.name,
+					data: encodeURIComponent(mydata),
+					command: "toHtmlFormat"
+				},
+				// good callback
+				success: function(data) {
+					myoutput = unescape(jQuery(data).find('data').text());
+				},
+				// bad callback - no good info in the params :(
+				error: function(req, status, error) {
+					myoutput = "ajax error";
+				}
+			});
+			ajaxLoadingHide();
+			this.setData(myoutput);
+		};
+	}
 })();

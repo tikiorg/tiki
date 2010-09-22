@@ -56,7 +56,7 @@ class WikiPluginPluginManager extends PluginsLib
             return $this->error("No plugins directory defined");
         }
         if (empty($helpurl)) {
-        	$helpurl = 'http://doc.tikiwiki.org/';
+        	$helpurl = 'http://doc.tiki.org/';
         }
         
         $params = $this->getParams($params);
@@ -145,10 +145,10 @@ class WikiPluginPluginManager extends PluginsLib
 		    					$paramblock = '~np~' . $infoPlugin['params'][$paramname]['description'] . '~/np~';
 		    				}
 		    				if (isset($param['options']) && is_array($param['options'])) {
-		    					$paramblock .= '<br /><br /><em>Options:</em> ';
+		    					$paramblock .= '<br /><em>Options:</em> ';
 		    					$i = 0;
 								foreach($param['options'] as $oplist => $opitem) {
-									if (!empty($opitem['value'])) {
+									if (isset($opitem['value'])) {
 										$paramblock .= $opitem['value'];
 									} else {
 										$paramblock .=  $opitem['text'];

@@ -55,6 +55,9 @@ CKEDITOR.plugins.add( 'autosave',
 					asplugin.onSelectionChange(editor);
 				}
 			});
+			// Also chgeck for autosave changes after toolbar commands.
+			editor.on( 'afterCommandExec', function(event) {asplugin.onSelectionChange(editor);} );
+
 		});
 	
 		editor.on('blur', function(event) {
@@ -78,6 +81,8 @@ CKEDITOR.plugins.add( 'autosave',
 					// update AJAX preview if there
 					if (parent.window.ajaxPreviewWindow && typeof parent.window.ajaxPreviewWindow.get_new_preview === 'function') {
 						parent.window.ajaxPreviewWindow.get_new_preview();
+					} else {
+						ajax_preview( editor.name, editor.config.autoSaveSelf, true );
 					}
 					// reset state
 					asplugin.ajaxAutoSaveIsDirty = false;
@@ -103,13 +108,13 @@ CKEDITOR.plugins.add( 'autosave',
 	onSave: function( editor ) {
 		this.ajaxAutoSaveIsDirty = false;
 		// remove draft when page saved
-		if (parent && typeof parent.xajax_remove_save === 'function') {
-			parent.xajax_remove_save(editor.name, editor.config.autoSaveSelf);
+		if (parent && typeof parent.remove_save === 'function') {
+			parent.remove_save(editor.name, editor.config.autoSaveSelf);
 		}
 		return true;
 	},
 	
-	// what to do when the fckeditor content is changed
+	// what to do when the ckeditor content is changed
 	onSelectionChange: function( editor ) {
 		
 		var asplugin;
@@ -138,25 +143,32 @@ CKEDITOR.plugins.add( 'autosave',
 		if (!this.button) {
 			this.button = this.editor.getCommand("autosave").uiItems[0];
 		}
+		return this.button;
 	},
 
 	changeIcon: function( fileName ) {
-		this.getButton();
-		// use of jquery - must be a better "ck-way" of doing this
-		var $img = jQuery("#" + this.button._.id + " span:first");
-		$img.css( "background-image", $img.css( "background-image" ).replace(/[^\/]*\.gif/i, fileName));
+		if (this.getButton()) {
+			// use of jquery - must be a better "ck-way" of doing this
+			var $img = jQuery("#" + this.button._.id + " span:first");
+			$img.css("background-image", $img.css("background-image").replace(/[^\/]*\.gif/i, fileName));
+		}
 	},
 	
 	setMessage: function(errorMessage, errorData) {
 		var message;
 		
 		message = errorMessage + (errorData ? ' ' + errorData : '');
-		this.button.label = message;	// doesn't seem to...
+		
+		if (this.getButton()) {
+			this.button.label = message; // doesn't seem to...
+		}
 	},
 	
 	resetAjaxAutoSaveTool: function() {
 		this.changeIcon( "ajaxAutoSaveClean.gif" );
-		this.button.label = "Auto Save";
+		if (this.getButton()) {
+			this.button.label = "Auto Save";
+		}
 	}
 
 	

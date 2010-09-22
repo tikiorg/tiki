@@ -1217,6 +1217,49 @@ class UsersLib extends TikiLib
 		return $status;
 	}
 
+	
+	function get_users_light($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $group = '') {
+		// This is a lighter version of get_users_names designed for ajax checking of userrealnames
+		global $prefs;
+		$mid = '';
+		$bindvars = array();
+		if(!empty($group)) {
+			if (!is_array($group)) {
+				$group = array($group);
+			}
+			$mid = ', `users_usergroups` uug where uu.`userId`=uug.`userId` and uug.`groupName` in ('.implode(',',array_fill(0, count($group),'?')).')';
+			$bindvars = $group;
+		}
+		if ($find) {
+			$findesc = '%' . $find . '%';
+			if (empty($mid)) {
+				$mid .= " where uu.`login` like ?";
+			} else {
+				$mid .= " and uu.`login` like ?";
+			}
+			$bindvars[] = array($findesc);
+		}
+		
+		$query = "select uu.`login` from `users_users` uu $mid order by ".$this->convertSortMode($sort_mode);
+		$result = $this->fetchAll($query,$bindvars,$maxRecords,$offset);
+		
+		$ret = array();
+		foreach ($result as $res) {
+			$ret[$res['login']] = $this->clean_user($res["login"]);
+		}
+		if (!empty($finddesc) && $prefs['user_show_realnames'] == 'y') {
+			$query = "select `user` from `tiki_user_preferences` where `prefName` = 'realName' and `value` like ?";
+			$result = $this->fetchAll($query,array($findesc),$maxRecords,$offset);
+			foreach ($result as $res) {
+				if (!isset($ret[$res['user']])) {
+					$ret[$res['user']] = $this->clean_user($res['user']);
+				}
+			}
+		}
+		asort($ret);
+		return($ret);
+	}
+	
 	function get_users_names($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '') {
 
 		// This function gets an array of user login names.
@@ -1384,7 +1427,7 @@ class UsersLib extends TikiLib
 
 	function remove_user_from_group($user, $group) {
 		global $cachelib; require_once("lib/cache/cachelib.php");
-		global $tikilib;
+		global $tikilib, $prefs;
 		$cachelib->invalidate('user_details_'.$user);
 		$tikilib->invalidate_usergroups_cache($user);
 
@@ -1395,10 +1438,22 @@ class UsersLib extends TikiLib
 		$result = $this->query($query, array($userid, $group));
 		$query = "update `users_users` set `default_group`=? where `login`=? and `default_group`=?";
 		$this->query($query, array('Registered', $user, $group));
+		
+		if ($prefs['user_trackersync_groups'] == 'y') {
+			$this->uncategorize_user_tracker_item($user, $group);	
+		}
+		
 		$_SESSION['u_info']['group'] = 'Registered';
 	}
 
 	function remove_user_from_all_groups($user) {
+		global $prefs;
+		if ($prefs['user_trackersync_groups'] == 'y') {
+			$groups = $this->get_user_groups($user);
+			foreach ($groups as $group) {
+				$this->uncategorize_user_tracker_item($user, $group);
+			}	
+		}
 		$userid = $this->get_user_id($user);
 		$query = "delete from `users_usergroups` where `userId` = ?";
 		$result = $this->query($query, array($userid));
@@ -2294,7 +2349,7 @@ class UsersLib extends TikiLib
 
 	function assign_user_to_group($user, $group) {
 		global $cachelib; require_once("lib/cache/cachelib.php");
-		global $tikilib;
+		global $tikilib, $prefs;
 		$cachelib->invalidate('user_details_'.$user);
 		$tikilib->invalidate_usergroups_cache($user);
 
@@ -2305,6 +2360,9 @@ class UsersLib extends TikiLib
 			$query = "insert into `users_usergroups`(`userId`,`groupName`, `created`) values(?,?,?)";
 			$result = $this->query($query, array($userid, $group, $tikilib->now), -1, -1, false);
 			$group_ret = true;
+			if ($prefs['user_trackersync_groups'] == 'y') {
+				$this->categorize_user_tracker_item($user, $group);	
+			}
 		}
 		return $group_ret;
 	}
@@ -3339,6 +3397,80 @@ class UsersLib extends TikiLib
 		} else {
 			$query = 'SELECT count(*) FROM `users_users`';
 			return $this->getOne($query, array());
+		}
+	}
+	
+	function find_best_user($usrs, $group = '', $key = 'login') {
+		$finalusers = array();
+		foreach ($usrs as $u) {
+			$u = trim($u);
+			if ($u == 'admin') {
+				$finalusers[] = $u;
+			} elseif ($key == 'userId' && preg_match('/\(([0-9]+)\)$/', $u, $matches)) {
+				$finalusers[] = $this->get_user_login($matches[1]);
+			} elseif ($key == 'login' && preg_match('/\((.+)\)$/', $u, $matches)) {
+				$finalusers[] = $matches[1];
+			} else {
+				$possibleusers = $this->get_users_light(0, -1, 'login_asc', '', $group);
+				$unames = array_keys($possibleusers, $u);
+				if (count($unames) == 1 && $unames[0]) {
+					$finalusers[] = $unames[0];
+				}
+			}
+		}
+		return $finalusers;	
+	}
+	
+	function clean_user($u, $force_check_realnames = false, $login_fallback = true) {
+		global $tikilib, $prefs;
+		if ( $prefs['user_show_realnames'] == 'y' || $force_check_realnames) {
+			$realname = $tikilib->get_user_preference($u, 'realName', '');
+		}
+		if (!empty($realname)) {
+			$u = trim($realname); // need to trim to prevent mustMatch failure
+		} elseif ($prefs['login_is_email_obscure'] == 'y' && $atsign = strpos($u, '@')) {
+			$u = substr($u, 0, $atsign);
+			if (!$login_fallback) {
+				$u = tra('Anonymous');
+			}
+		}
+		return $u;
+	}
+	
+	function categorize_user_tracker_item($user, $group) {
+		global $tikilib;
+		$userid = $this->get_user_id($user);
+		$tracker = $this->get_usertracker($userid);
+		if( $tracker && $tracker['usersTrackerId'] ) {
+			global $trklib;
+			if( ! $trklib ) {
+				require_once 'lib/trackers/trackerlib.php';	
+			}
+			global $categlib; include_once('lib/categories/categlib.php');
+			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
+			$cat = $categlib->get_object_categories('trackeritem', $itemid);
+			$categId = $this->getOne("select `categId` from `tiki_categories` where `name` = ?", array($group));
+			$cat[] = $categId;
+			$cat = array_unique($cat);
+			$trklib->categorized_item($tracker["trackerId"], $itemid, '', $cat);
+		}
+	}
+	
+ 	function uncategorize_user_tracker_item($user, $group) {
+		global $tikilib;
+		$userid = $this->get_user_id($user);
+		$tracker = $this->get_usertracker($userid);
+		if( $tracker && $tracker['usersTrackerId'] ) {
+			global $trklib;
+			if( ! $trklib ) {
+				require_once 'lib/trackers/trackerlib.php';
+			}
+			global $categlib; include_once('lib/categories/categlib.php');
+			$itemid = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
+			$cat = $categlib->get_object_categories('trackeritem', $itemid);
+			$categId = $this->getOne("select `categId` from `tiki_categories` where `name` = ?", array($group));
+			$cat = array_diff($cat, array($categId));
+			$trklib->categorized_item($tracker["trackerId"], $itemid, '', $cat);
 		}
 	}
 

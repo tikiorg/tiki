@@ -13,18 +13,18 @@
 {/if}
 <div id="tiki-main" class="simplebox">
 <h3>{tr}Details{/tr}</h3>
-<table class="normalnoborder">
+<table class="normal">
 {if $info.name}
-<tr class="formcolor"><td>{tr}Name{/tr}</td><td><b>{$info.name}</b></td></tr>
+<tr><td>{tr}Name{/tr}</td><td><b>{$info.name}</b></td></tr>
 {/if}
 {if $info.version}
-<tr class="formcolor"><td>{tr}Version{/tr}</td><td><b>{$info.version}</b></td></tr>
+<tr><td>{tr}Version{/tr}</td><td><b>{$info.version}</b></td></tr>
 {/if}
 {if $info.longdesc}
-<tr class="formcolor"><td colspan="2">{$info.longdesc}</td></tr>
+<tr><td colspan="2">{$info.longdesc}</td></tr>
 {/if}
 {if $info.hits}
-<tr class="formcolor"><td>{tr}Downloads{/tr}</td><td>{$info.hits}</td></tr>
+<tr><td>{tr}Downloads{/tr}</td><td>{$info.hits}</td></tr>
 {/if}
 </table>
 <div class="cbox">

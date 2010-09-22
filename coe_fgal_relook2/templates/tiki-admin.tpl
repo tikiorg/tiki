@@ -58,10 +58,10 @@ Add a value in first check when you create a new admin page. *}
 'sefurl', 'connect', 'metrics', 'payment', 'rating', 'socialnetworks'))}
   {assign var="include" value=$smarty.get.page}
 {else}
-  {assign var="include" value="list-sections"}
+  {assign var="include" value="list_sections"}
 {/if}
-{if $include != "list-sections"}
-  <div class="simplebox adminanchors clearfix" >{include file='tiki-admin-include-anchors.tpl'}</div>
+{if $include != "list_sections"}
+  <div class="simplebox adminanchors clearfix" >{include file='tiki-admin_include_anchors.tpl'}</div>
 {/if}
 
 {if $prefs.tiki_needs_upgrade eq 'y'}
@@ -100,7 +100,7 @@ if $pagetop_msg}
 	{/remarksbox}
 {/if*}
 
-{include file="tiki-admin-include-$include.tpl"}
+{include file="tiki-admin_include_$include.tpl"}
 
 <br style="clear:both" />
 {remarksbox type="tip" title="{tr}Crosslinks to other features and settings{/tr}"}

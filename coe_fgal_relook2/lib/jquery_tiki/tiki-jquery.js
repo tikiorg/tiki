@@ -104,7 +104,7 @@ function hideJQ(selector, effect, speed, dir) {
 // override overlib
 function convertOverlib(element, tip, params) {	// process modified overlib event fn to cluetip from {popup} smarty func
 	
-	if (element.processed) { return false; }
+	if (element.processed || typeof $(element).cluetip != "function") { return false; }
 	if (typeof params == "undefined") { params = []; }
 	
 	var options = {};
@@ -195,6 +195,57 @@ function convertOverlib(element, tip, params) {	// process modified overlib even
 
 function nd() {
 	$("#cluetip").hide();
+}
+
+// ajax loading fns moved from tiki-ajax.js as not only used with xajax
+
+function ajaxLoadingShow(destName) {
+	var $dest, $loading, pos, x, y, w, h;
+	
+	if (typeof destName === 'string') {
+		$dest = $('#' + destName);
+	} else {
+		$dest = $(destName);
+	}
+	if ($dest.length === 0) {
+		return;
+	}
+	$loading = $('#ajaxLoading');
+
+	// find area of destination element
+	pos = $dest.offset();
+	// clip to page
+	if (pos.left + $dest.width() > $(window).width()) {
+		w = $(window).width() - pos.left;
+	} else {
+		w = $dest.width();
+	}
+	if (pos.top + $dest.height() > $(window).height()) {
+		h = $(window).height() - pos.top;
+	} else {
+		h = $dest.height();
+	}
+	x = pos.left + (w / 2) - ($loading.width() / 2);
+	y = pos.top + (h / 2) - ($loading.height() / 2);
+	
+
+	// position loading div
+	$loading.css('left', x).css('top', y);
+	// now BG
+	x = pos.left + ccsValueToInteger($dest.css("margin-left"));
+	y = pos.top + ccsValueToInteger($dest.css("margin-top"));
+	w = ccsValueToInteger($dest.css("padding-left")) + $dest.width() + ccsValueToInteger($dest.css("padding-right"));
+	h = ccsValueToInteger($dest.css("padding-top")) + $dest.height() + ccsValueToInteger($dest.css("padding-bottom"));
+	$('#ajaxLoadingBG').css('left', pos.left).css('top', pos.top).width(w).height(h).fadeIn("fast");
+	
+	show('ajaxLoading');
+
+	
+}
+
+function ajaxLoadingHide() {
+	hide('ajaxLoading');
+	$('#ajaxLoadingBG').fadeOut("fast");
 }
 
 
@@ -398,7 +449,6 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 					.replace(/\&/g,"%26");	// and replace &'s with 0x26
 				
 				var setDirty = this.setDirty;
-				
 				$.ajax({
 					url: this.s.urlSave,
 					type: "POST",
@@ -418,12 +468,22 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 			var sheetClone = sheetInstance.sheetDecorateRemove(true);
 			var documents = []; //documents
 			
-			jQuery(sheetClone).each(function() {
+			$(sheetClone).each(function() {
 				var document = {}; //document
 				document.metadata = {};
 				document.data = {};
 				
-				var table = jQuery(this);
+				//This preserves the width for postback, very important for styles
+				//<DO_NOT_REMOVE>
+				var table = $(this);
+				var trFirst = table.find('tr:first');
+				table.find('col').each(function(i){
+					var w = jQuery(this).css('width');
+					trFirst.find('td').eq(i)
+						.css('width', w)
+						.attr('width', w);
+				});
+				//</DO_NOT_REMOVE>
 				
 				var trs = table.find('tr');
 				var rowCount = trs.length;
@@ -431,12 +491,14 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 				var col_widths = '';
 				
 				trs.each(function(i) {
-					var tr = jQuery(this);
+					var tr = $(this);
 					var tds = tr.find('td');
 					colCount = tds.length;
 					
 					document.data['r' + i] = {};
-					document.data['r' + i].height = tr.attr('height');
+					
+					var h = tr.css('height');
+					document.data['r' + i].height = (h ? h : tr.attr('height'));
 					
 					tds.each(function(j) {
 						var td = jQuery(this);
@@ -444,7 +506,7 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 						colSpan = (colSpan > 1 ? colSpan : null);
 
 						document.data['r' + i]['c' + j] = {
-							value: td.text(),
+							value: td.html(),
 							formula: td.attr('formula'),
 							stl: td.attr('style'),
 							colspan: colSpan,
@@ -475,14 +537,35 @@ $(document).ready( function() { // JQuery's DOM is ready event - before onload
 				};
 				
 				table.find('colgroup').children().each(function(i) {
-					document.metadata.col_widths['c' + i] = (jQuery(this).attr('width') + '').replace('px', '');
+					document.metadata.col_widths['c' + i] = ($(this).attr('width') + '').replace('px', '');
 				});
 				
 				documents.push(document); //append to documents
 			});
 			return documents;
 		};	
-	}
+	}	// end sheet
+	
+	// moved from tiki-list_file_gallery.tpl in tiki 6
+	checkClose = function() {
+		if (!$("#keepOpenCbx").attr("checked")) {
+			window.close();
+		} else {
+			window.blur();
+		}
+	};
+	$(document).ready( function() {
+		$("#keepOpenCbx").click(function() {
+			if (this.checked) {
+				setCookie("fgalKeepOpen", "1");
+			} else {
+				setCookie("fgalKeepOpen", "");
+			}
+		}).attr("checked", getCookie("fgalKeepOpen") ? "checked" : "");
+	});
+	// end fgal fns
+
+
 	
 });		// end $(document).ready
 
@@ -565,7 +648,13 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
 					replaceText = true;
 				}
 			} else { // not (this) plugin
-				bodyContent = sel;
+				if (type == 'mouseover') { // For MOUSEOVER, we want the selected text as label instead of body
+					bodyContent = '';
+					var pluginArgs = new Object();
+					pluginArgs['label'] = sel;
+				} else {
+					bodyContent = sel;
+				}
 				replaceText = true;
 			}
 		} else {	// no selection
@@ -621,13 +710,6 @@ function popupPluginForm(area_id, type, index, pageName, pluginArgs, bodyContent
             container.children('form').submit();
         } else {
             insertAt(area_id, blob, false, false, replaceText);
-    		// only used in ckeditor to insert new plugins, but needs reparsing afterwards
-        	if ($('#cke_contents_' + area_id).length !== 0) {
-        		cked = CKEDITOR.instances[area_id];
-        		if (cked && typeof cked.reParse == 'function') {
-        			cked.reParse();
-        		}
-        	}
         }
 		$(this).dialog("close");
 		$('div.plugin input[name="type"][value="' + type + '"]').parent().parent().remove();
@@ -886,6 +968,9 @@ $.fn.tiki = function(func, type, options) {
 						break;
 					case "username":
 						data = "tiki-ajax_services.php?listonly=users";
+						break;
+					case "userrealname":
+						data = "tiki-ajax_services.php?listonly=userrealnames";
 						break;
 					case "tag":
 						data = "tiki-ajax_services.php?listonly=tags&separator=+";
@@ -1565,14 +1650,15 @@ function dialogReplaceReplace( area_id ) {
 		return this.each(function(){
 			var comment = this;
 			var text = $('dt:contains("note")', comment).next('dd').text();
-			var author = $('.author_info', comment).clone();
+			var title = $('.postbody-title', comment).clone();
+			var author = $('.author', comment).clone();
 			var body = $('.postbody-content', comment).clone();
 			body.find('dt:contains("note")').closest('dl').remove();
 
 			if( text.length > 0 ) {
 				var parents = container.find(':contains("' + text + '")').parent();
 				var node = container.find(':contains("' + text + '")').not(parents)
-					.addClass('highlight')
+					.addClass('note-editor-text')
 					.each( function() {
 						var child = $('dl.note-list',this);
 						if( ! child.length ) {
@@ -1585,8 +1671,7 @@ function dialogReplaceReplace( area_id ) {
 							} );
 						}
 
-						child.append( $('<dt/>')
-							.append(author) )
+						child.append( title.append(author) )
 							.append( $('<dd/>').append(body) );
 					} );
 			}
@@ -1597,15 +1682,28 @@ function dialogReplaceReplace( area_id ) {
 	 * Convert a zone to a note editor by attaching handlers on mouse events.
 	 */
 	$.fn.noteeditor = function (textarea, link) {
+		var hiddenParents = null;
 		var annote = $(link)
-			.css('background','white')
 			.click( function( e ) {
 				e.preventDefault();
 				var annotation = $(this).attr('annotation');
-				$(this).hide();
-
-				$(textarea).parents().show();
+				$(this).fadeOut(100);
+				$("form.comments").hide();
+				$(textarea).parent().find(".comment-info").remove();
+				var msg = "";
+				if (annotation.length < 20) {
+					msg = tr("The text you have selected is quite short. Select a longer piece to ensure the note is associated with the correct text.") + "<br />";
+				}
+				msg = "<p class='description comment-info'>" + msg + tr("Tip: Leave the first line as it is, starting with \";note:\". This is required") + "</p>";
+				$(textarea).parent().append($(msg));
+				
+				hiddenParents = $(textarea).parents(":hidden");
+				$(textarea).parents().fadeIn(100);
 				$(textarea).val(';note:' + annotation + "\n\n").focus().scroll();
+				if (typeof $(textarea).selection == 'function') {	// only there if autocomplete enabled
+					var len = $(textarea).val().length;
+					$(textarea).selection(len, len);
+				}
 			} )
 			.appendTo(document.body);
 
@@ -1622,14 +1720,23 @@ function dialogReplaceReplace( area_id ) {
 
 					if( string.length && -1 === string.indexOf( "\n" ) ) {
 						annote.attr('annotation', string);
-						annote.show().position( {
+						annote.fadeIn(100).position( {
 							of: e,
 							at: 'bottom left',
 							my: 'top left',
-							offset: '10 10'
+							offset: '20 20'
 						} );
 					} else {
-						annote.hide();
+						if (annote.css("display") != "none") {
+							annote.fadeOut(100);
+						}
+						if ($("form.comments").css("display") == "none") {
+							$("form.comments").show();
+						}
+						if (hiddenParents) {
+							hiddenParents.hide();
+							hiddenParents = null;
+						}
 					}
 				}
 			});

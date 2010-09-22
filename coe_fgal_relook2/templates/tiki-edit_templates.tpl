@@ -21,11 +21,11 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$files}
-  <tr>
-    <td class="{cycle}"><a class="link" href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
+  <tr class="{cycle}">
+    <td><a class="link" href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
   </tr>
 {sectionelse}
-  <tr><td colspan="2" class="{cycle}">{tr}No records found{/tr}</td></tr>
+  <tr class="{cycle}"><td colspan="2">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 {/if}

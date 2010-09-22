@@ -135,13 +135,13 @@ class Perms_ResolverFactory_CategoryFactoryTest extends PHPUnit_Framework_TestCa
 		$expect = new Perms_Resolver_Static( array(
 			'Anonymous' => array( 'admin' ),
 			'Registered' => array( 'edit', 'view' ),
-		) );
+		) , 'category');
 
 		$this->assertEquals( $expect, $factory->getResolver( array( 'type' => 'wiki page', 'object' => 'HomePage' ) ) );
 
 		$expect = new Perms_Resolver_Static( array(
 			'Hello' => array( 'view' ),
-		) );
+		), 'category' );
 
 		$this->assertEquals( $expect, $factory->getResolver( array( 'type' => 'blog', 'object' => 4 ) ) );
 	}

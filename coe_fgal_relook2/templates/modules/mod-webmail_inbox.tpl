@@ -28,7 +28,7 @@
 			{/if}
 			{*icon _id='resultset_last' class=''*}
 		</div>
-		{if $prefs.feature_ajax}
+		{if $prefs.ajax_xajax}
 			<a title="{tr}Refresh{/tr}" onclick="doRefreshWebmail(0, true);return false;">
 				{icon _id='arrow_refresh' class='webmail_refresh_icon icon'}
 				{icon _id='img/spinner.gif' class='webmail_refresh_busy icon' style='display:none'}

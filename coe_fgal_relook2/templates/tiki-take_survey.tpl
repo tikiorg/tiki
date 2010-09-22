@@ -1,12 +1,11 @@
-{if $error_msg neq ''}
-	{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
-	<br />
-{/if}
 <form name="aform" formId='editpageform' action="{$form_action|default:'tiki-take_survey.php'}" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="vote" value="yes" />
-  {if !isset($show_name) or $show_name eq 'y'}<h2>{$survey_info.name|escape}</h2>{/if}
-    <div class="description">{wiki}{$survey_info.description|escape}{/wiki}</div>
+  {if !isset($show_name) or $show_name eq 'y'}{title}{$survey_info.name|escape}{/title}{/if}
+	{if $error_msg neq ''}
+		{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
+	{/if}
+    <div class="description">{wiki}{$survey_info.description}{/wiki}</div>
     {section name=ix loop=$questions}
     <div class="questionblock">
       <div class="quizquestion">{$questions[ix].question|escape|nl2br}</div>
@@ -23,6 +22,18 @@
       {elseif $questions[ix].type eq 'x'}
         {assign var='area' value=$questions[ix].questionId}
 
+				{if $questions[ix].explode.0 > 0}
+					{assign var='textrows' value=$questions[ix].explode.0}
+				{else}
+					{assign var='textrows' value=$rows}
+				{/if}
+
+				{if $questions[ix].explode.1 > 0}
+					{assign var='textcols' value=$questions[ix].explode.1}
+				{else}
+					{assign var='textcols' value=$cols}
+				{/if}
+
         <div class="quizoptions">
           <table class="normal">
             <tr>
@@ -31,7 +42,7 @@
               </td>
               <td valign="top">
                 {toolbars area_id=question_$area qtnum='2'}
-                <textarea id="question_{$questions[ix].questionId}" name="question_{$questions[ix].questionId}" rows="{$rows}" cols="{$cols}"></textarea>
+                <textarea id="question_{$questions[ix].questionId}" name="question_{$questions[ix].questionId}" rows="{$textrows}" cols="{$textcols}"></textarea>
               </td>
             </tr>
           </table>

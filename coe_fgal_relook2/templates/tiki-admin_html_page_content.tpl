@@ -56,16 +56,16 @@
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
-			<tr>
-				<td class="{cycle advance=false}">{$channels[user].zone}</td>
-				<td class="{cycle advance=false}">
+			<tr class="{cycle}">
+				<td>{$channels[user].zone}</td>
+				<td>
 					{if $channels[user].type eq 'ta'}
 						<textarea name="{$channels[user].zone|escape}" cols="20" rows="4">{$channels[user].content|escape}</textarea>
 					{else}
 						<input type="text" name="{$channels[user].zone|escape}" value="{$channels[user].content|escape}" />
 					{/if}
 				</td>
-				<td class="{cycle advance=true}">
+				<td>
 					<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">{icon _id='page_edit'}</a>
 				</td>
 			</tr>

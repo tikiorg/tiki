@@ -36,7 +36,7 @@ class RelationLib extends TikiDb_Bridge
 	
 	/**
 	 * NAMESPACE management and relation naming.
-	 * Please see http://dev.tikiwiki.org/Object+Attributes+and+Relations for guidelines on 
+	 * Please see http://dev.tiki.org/Object+Attributes+and+Relations for guidelines on 
 	 * relation naming, and document new tiki.*.* names that you add.
 	 * (also grep "add_relation" just in case there are undocumented names already used)
 	 */

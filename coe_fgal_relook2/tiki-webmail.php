@@ -7,7 +7,7 @@
 
 $section = 'webmail';
 require_once ('tiki-setup.php');
-if ($prefs['feature_ajax'] == 'y') {
+if ($prefs['ajax_xajax'] == 'y') {
 	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/webmail/webmaillib.php');
@@ -24,7 +24,7 @@ include_once ('lib/webmail/tikimaillib.php');
 function handleWebmailRedirect($inUrl) {		// TODO refactor into tikilib?
 	global $prefs;
 	
-	if ($prefs['feature_ajax'] != 'y' || empty($_REQUEST['xjxfun'])) {
+	if ($prefs['ajax_xajax'] != 'y' || empty($_REQUEST['xjxfun'])) {
 		header ('location: tiki-webmail.php?'.$inUrl);
 		die();
 	} else {
@@ -901,7 +901,7 @@ include_once ('tiki-mytiki_shared.php');
 include_once ('tiki-section_options.php');
 
 ask_ticket('webmail');
-if ($prefs['feature_ajax'] == 'y') {
+if ($prefs['ajax_xajax'] == 'y') {
     global $ajaxlib;
     $ajaxlib->registerTemplate('tiki-webmail.tpl');
     $ajaxlib->registerFunction('loadComponent');

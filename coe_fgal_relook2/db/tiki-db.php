@@ -170,7 +170,7 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 
 			header("Cache-Control: no-cache, pre-check=0, post-check=0");
 
-			if ($prefs['feature_ajax'] == 'y') {
+			if ($prefs['ajax_xajax'] === 'y') {
 				global $ajaxlib;
 				include_once('lib/ajax/xajax/xajax_core/xajaxAIO.inc.php');
 				if ($ajaxlib && $ajaxlib->canProcessRequest()) {

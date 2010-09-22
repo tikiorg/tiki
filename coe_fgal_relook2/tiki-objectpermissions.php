@@ -6,7 +6,6 @@
 // $Id$
 
 include_once ("tiki-setup.php");
-error_reporting(E_ALL);
 if (!empty($_REQUEST['objectType']) && $_REQUEST['objectType'] != 'global') {
 	if (!isset($_REQUEST['objectName']) || empty($_REQUEST['objectId'])) {
 		$smarty->assign('msg', tra("Not enough information to display this page"));
@@ -386,20 +385,26 @@ foreach ($candidates['data'] as $perm) {
 		$perm[$groupName . '_hasPerm'] = $p;
 		$perm[$groupIndices[$index]] = $p;
 	}
+	
+	// work out if specific feature is on
+	$pref_feature = false;
+	if (isset($perm['feature_check'])) {
+		foreach(explode(',', $perm['feature_check']) as $fchk) {
+			if ($prefs[$fchk] == 'y') {
+				$pref_feature = true;
+				break;
+			}
+		}
+	} else {	// if no feature check you can't turn them off (?)
+		$pref_feature = true;
+	}
 
-	if (($feature_filter === false || in_array( $perm['type'], $feature_filter)) && ($restrictions === false || in_array( $perm['permName'], $restrictions ))) {
+	if (($feature_filter === false || in_array( $perm['type'], $feature_filter)) && ($restrictions === false || in_array( $perm['permName'], $restrictions )) && $pref_feature) {
 		$masterPerms[] = $perm;
 	}
 	if ($show_disabled_features != 'y' && !in_array($perm['type'], $features_enabled)) {
 		// perms can be dependant on multiple features
-		if (isset($perm['feature_check'])) {
-			foreach(explode(',', $perm['feature_check']) as $fchk) {
-				if ($prefs[$fchk] == 'y') {
-					$features_enabled[] = $perm['type'];
-					break;
-				}
-			}
-		} else {	// if no feature check you can't turn them off (?)
+		if ($pref_feature) {
 			$features_enabled[] = $perm['type'];
 		}
 	}

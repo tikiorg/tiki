@@ -84,7 +84,7 @@
 {if $display_msg}
 	{remarksbox type="note" title="{tr}Notice{/tr}"}{$display_msg|escape}{/remarksbox}
 {/if}
-<div role="main" id="role_main">
+<div id="role_main">
 {$mid_data}  {* You can modify mid_data using tiki-show_page.tpl *}
 </div>
 {show_help}

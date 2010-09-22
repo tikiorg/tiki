@@ -46,6 +46,11 @@ function wikiplugin_trackerfilter_info() {
 			'description' => 'Label for an export button. Leave blank to show the usual "Filter" button instead.',
 			'advanced' => true,
 		),
+		'googlemapButtons' => array(
+			'required' => false,
+			'name' => tra('Google Map Buttons'),
+			'description' => 'y|n - Display Mapview and Listview buttons',
+		),
 	), $list['params'] );
 
 return array(
@@ -68,11 +73,18 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 	$default = array('noflipflop'=>'n', 'action'=>'Filter', 'line' => 'n', 'displayList' => 'n', 'export_action' => '',
 					 'export_itemid' => 'y', 'export_status' => 'n', 'export_created' => 'n', 'export_modif' => 'n', 'export_charset' => 'UTF-8', 'status' => 'opc');
+	
+	if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'y' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"])) {
+		$params["googlemap"] = 'y';
+	}
+	if (isset($_REQUEST["mapview"]) && $_REQUEST["mapview"] == 'n' && !isset($_REQUEST["searchmap"]) && !isset($_REQUEST["searchlist"]) || isset($_REQUEST["searchlist"]) && !isset($_REQUEST["searchmap"]) ) {
+		$params["googlemap"] = 'n';
+	}
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
 	$iTrackerFilter++;
-	
+
 	if (isset($_REQUEST['msgTrackerFilter'])) {
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
 	}
@@ -193,6 +205,7 @@ $(".trackerfilter form").submit( function () {
 			}
 		}
 		$params['max'] = $prefs['maxRecords'];
+		$smarty->assign('urlquery', wikiplugin_trackerFilter_build_urlquery($params));
 		include_once('lib/wiki-plugins/wikiplugin_trackerlist.php');
 		$dataRes .= wikiplugin_trackerlist($data, $params);
 	} else {
@@ -227,8 +240,9 @@ $(".trackerfilter form").submit( function () {
 			$smarty->assign_by_ref('f_fields', $f_fields);
 		}
 	}
-	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y') {
+	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y' || $prefs['javascript_enabled'] != 'y' || (isset($_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"]) && $_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"] == 'y')) {
 		$open = 'y';
+		$_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"] = 'y';
 	} else {
 		$open = 'n';
 	}
@@ -236,6 +250,11 @@ $(".trackerfilter form").submit( function () {
 	$smarty->assign_by_ref('action', $action);
 	$smarty->assign_by_ref('noflipflop', $noflipflop);
 	$smarty->assign_by_ref('dataRes', $dataRes);
+	
+	if (isset($googlemapButtons)) {
+		$smarty->assign('googlemapButtons', $googlemapButtons);
+	}
+	
 	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
 
 	static $first = true;
@@ -490,4 +509,28 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 	}
 	//echo '<pre>FILTERS'; print_r($filters); echo '</pre>';
 	return $filters;
+}
+function wikiplugin_trackerFilter_build_urlquery($params) {
+	if (empty($params['filterfield'])) 
+		return '';
+	$urlquery = '';
+	foreach ($params['filterfield'] as $key=>$filter) {
+		$filterfield[] = $filter;
+		if (!empty($params['exactvalue'][$key]) && empty($params['filtervalue'][$key])) {
+			$filtervalue[] = '';
+			$exactvalue[] = $params['exactvalue'][$key];
+		} else {
+			$filtervalue[] = $params['filtervalue'][$key];
+			$exactvalue[] = '';
+		}
+	}
+	if (!empty($filterfield)) {
+		$urlquery['filterfield'] = implode(':', $filterfield);
+		$urlquery['filtervalue'] = implode(':', $filtervalue);
+		$urlquery['exactvalue'] = implode(':', $exactvalue);
+	}
+	if (!empty($params['sort_mode'])) {
+		$urlquery['sort_mode'] = $params['sort_mode'];
+	}
+	return $urlquery;
 }

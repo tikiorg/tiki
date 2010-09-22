@@ -79,6 +79,7 @@
 
 <table class="normal">
 	<tr>
+		{assign var=numbercol value=4}
 		<th>
 			<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a>
 		</th>
@@ -94,15 +95,18 @@
 		{foreach from=$exts item=ext key=k}
 			{if $ext.show eq 'y'}
 				<th>
+					{assign var=numbercol value=`$numbercol+1`}
 					<a>{$ext.tra}</a>
 				</th>
 			{/if}
 		{/foreach}
 		
 		{if $view eq 'list'}
+			{assign var=numbercol value=`$numbercol+1`}
 			<th>{tr}Groups{/tr}</th>
 		{/if}
 		
+		{assign var=numbercol value=`$numbercol+1`}
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	
@@ -117,34 +121,34 @@
 				</tr>
 			{/if}
 			{section name=user loop=$channels}
-				<tr>
-					<td class="{cycle advance=false}">
+				<tr class="{cycle}">
+					<td>
 						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
 							{$channels[user].firstName}
 						</a>
 					</td>
-					<td class="{cycle advance=false}">
+					<td>
 						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
 							{$channels[user].lastName}
 						</a>
 					</td>
-					<td class="{cycle advance=false}">
+					<td>
 						{if $prefs.feature_webmail eq 'y'}
 							{self_link _script='tiki-webmail.php' locSection='compose' to=$channels[user].email}{$channels[user].email}{/self_link}
 						{else}
 							<a class="link" href="mailto:{$channels[user].email}">{$channels[user].email}</a>
 						{/if}
 					</td>
-					<td class="{cycle advance=false}">
+					<td>
 						{$channels[user].nickname}
 					</td>
 					{foreach from=$exts item=ext key=e}
 						{if $ext.show eq 'y'}
-							<td class="{cycle advance=false}">{$channels[user].ext[$e]}</td>
+							<td>{$channels[user].ext[$e]}</td>
 						{/if}
 					{/foreach}
 					{if $view eq 'list'}
-						<td class="{cycle advance=false}">
+						<td>
 							{if isset($channels[user].groups)}
 								{foreach item=it name=gr from=$channels[user].groups}
 									{$it}
@@ -156,7 +160,7 @@
 						</td>
 					{/if}
 					
-					<td class="{cycle advance=false}">&nbsp;
+					<td>&nbsp;
 						{if $channels[user].user eq $user}
 							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">
 								{icon _id='page_edit'}
@@ -170,7 +174,7 @@
 			{/section}
 		{else}
 			<tr class="odd">
-				<td>{tr}No records found.{/tr}</td>
+				<td colspan="{$numbercol}"><strong>{tr}No records found.{/tr}</strong></td>
 			</tr>
 		{/if}
 	{/foreach}
@@ -197,7 +201,7 @@
 </div>
 
 {literal}
-<script lang='JavaScript'>
+<script type="text/javascript">
 	function newelem(type, vals) {
 		var elem=document.createElement(type);
 

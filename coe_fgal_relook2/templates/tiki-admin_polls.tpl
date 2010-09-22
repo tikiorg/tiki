@@ -102,13 +102,13 @@
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=user loop=$channels}
-				<tr>
-					<td class="{cycle advance=false}">{$channels[user].pollId}</td>
-					<td class="{cycle advance=false}">
+				<tr class="{cycle}">
+					<td>{$channels[user].pollId}</td>
+					<td>
 						<a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title|escape}</a>
 					</td>
 					{if $prefs.poll_list_categories eq 'y'}
-						<td class="{cycle advance=false}">
+						<td>
 							{section name=cat loop=$channels[user].categories}
 								{$channels[user].categories[cat].name}
 								{if !$smarty.section.cat.last}
@@ -118,7 +118,7 @@
 						</td>
 					{/if}
 					{if $prefs.poll_list_objects eq 'y'}
-						<td class="{cycle advance=false}">
+						<td>
 							{section name=obj loop=$channels[user].objects}
 								<a href="{$channels[user].objects[obj].href}">{$channels[user].objects[obj].name}</a>
 								{if !$smarty.section.obj.last}
@@ -127,12 +127,12 @@
 							{/section}
 						</td>
 					{/if}
-					<td class="{cycle advance=false}">{$channels[user].active}</td>
-					<td class="{cycle advance=false}">{$channels[user].votes}</td>
-					<td class="{cycle advance=false}">{$channels[user].publishDate|tiki_short_datetime}</td>
-					<td class="{cycle advance=false}">{$channels[user].voteConsiderationSpan|escape}</td>
-					<td class="{cycle advance=false}">{$channels[user].options}</td>
-					<td class="{cycle}">
+					<td>{$channels[user].active}</td>
+					<td>{$channels[user].votes}</td>
+					<td>{$channels[user].publishDate|tiki_short_datetime}</td>
+					<td>{$channels[user].voteConsiderationSpan|escape}</td>
+					<td>{$channels[user].options}</td>
+					<td>
 						{self_link pollId=$channels[user].pollId}{icon _id=page_edit}{/self_link}
 						<a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}" title="{tr}Options{/tr}">{icon _id=table alt="{tr}Options{/tr}"}</a>
 						<a class="link" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{icon _id="chart_curve" alt="{tr}Results{/tr}"}</a>

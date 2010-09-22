@@ -51,33 +51,33 @@
 	</tr>
 	{cycle values="odd,even" print=false}
 	{section name=changes loop=$listpages}
-		<tr>
+		<tr class="{cycle}">
 			{if $prefs.art_list_title eq 'y'}
-				<td class="{cycle advance=false}">
+				<td>
 					<a class="link" title="{$listpages[changes].title|escape}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true|escape}</a>
 				</td>
 			{/if}
 			{if $prefs.art_list_topic eq 'y'}
-				<td class="{cycle advance=false}">{$listpages[changes].topicName|escape}</td>
+				<td>{$listpages[changes].topicName|escape}</td>
 			{/if}
 			{if $prefs.art_list_date eq 'y'}
-				<td class="{cycle advance=false}">{$listpages[changes].publishDate|tiki_short_datetime}</td>
+				<td>{$listpages[changes].publishDate|tiki_short_datetime}</td>
 			{/if}
 			{if $prefs.art_list_size eq 'y'}
-				<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].size|kbsize}</td>
+				<td style="text-align:right;">{$listpages[changes].size|kbsize}</td>
 			{/if}
 			{if $prefs.art_list_img eq 'y'}
-				<td class="{cycle advance=false}">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
+				<td>{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
 			{/if}
 			{if $prefs.art_list_author eq 'y'}
-				<td class="{cycle advance=false}">{$listpages[changes].author|escape}</td>
+				<td>{$listpages[changes].author|escape}</td>
 			{/if}
-			<td class="{cycle}" >
+			<td>
 				{if $tiki_p_edit_submission eq 'y' or ($listpages[changes].author eq $user and $user)}
 					<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{icon _id='page_edit'}</a>
 				{/if}
 				{if $tiki_p_approve_submission eq 'y'}
-					<a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}"><img src='img/icons2/post.gif' alt="{tr}Approve{/tr}" title="{tr}Approve{/tr}' /></a>
+					<a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}"><img src='img/icons2/post.gif' alt="{tr}Approve{/tr}" title="{tr}Approve{/tr}" /></a>
 				{/if}
 				{if $tiki_p_remove_submission eq 'y'}
 					<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>

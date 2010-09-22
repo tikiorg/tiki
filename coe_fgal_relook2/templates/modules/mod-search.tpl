@@ -3,7 +3,7 @@
 {if $tiki_p_search eq 'y'}
 {tikimodule error=$module_error title=$tpl_module_title name="search" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $module_params.tiki_search neq 'none'}
-    <form id="search-module-form{$search_mod_usage_counter}" method="get" role="search" action="#"{if $module_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
+    <form id="search-module-form{$search_mod_usage_counter}" method="get" action="#"{if $module_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
 	    <input id="search_mod_input_{$search_mod_usage_counter}" name="find"{if $module_params.use_autocomplete eq 'y'} class="pagename"{/if} size="{$input_size}" type="text" accesskey="s" value="{$module_params.input_value}" /> 
 		
 	 	{if $module_params.show_object_filter eq 'y'}
@@ -41,7 +41,7 @@
 				{capture name=advanced_search_help}
 					{include file='advanced_search_help.tpl'}
 				{/capture}
-				{add_help show='y' title="{tr}Advanced Search Help{/tr}" id="advanced_search_help"}
+				{add_help show='y' title="{tr}Search Help{/tr}" id="advanced_search_help"}
 					{$smarty.capture.advanced_search_help}
 				{/add_help}
 			{/if}

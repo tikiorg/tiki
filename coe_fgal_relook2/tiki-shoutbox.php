@@ -98,7 +98,7 @@ function processShout($formValues, $destDiv = 'mod-shoutbox') {
 	$objResponse->assign($destDiv, "innerHTML", $data);
 	return $objResponse;
 }
-if ($prefs['feature_ajax'] == 'y') {
+if ($prefs['ajax_xajax'] == 'y') {
 	global $ajaxlib;
 	include_once ('lib/ajax/ajaxlib.php');
 	$ajaxlib->registerFunction('processShout');
@@ -114,7 +114,6 @@ if ($get) {
 	$channels['cant']=1;
 } else {
 	$channels = $shoutboxlib->list_shoutbox($offset, $maxRecords, $sort_mode, $find);
-	print_r($channels);
 }
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);

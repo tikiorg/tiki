@@ -1,9 +1,9 @@
 {* $Id$ *}
-{if $post_list eq 'y' && $use_excerpt eq 'y' && !empty($post_info.excerpt)}
+{if $blog_post_context eq 'view_blog' && $use_excerpt eq 'y' && !empty($post_info.excerpt)}
 	<div class="postbody-content postbody-excerpt">
 	{$post_info.excerpt}
 	</div>
-	{self_link _script='tiki-view_blog_post.php' postId=$post_info.postId}{tr}Read more{/tr}{/self_link}
+	{self_link _script=$post_info.postId|sefurl:blogpost _noauto='y'}{tr}Read more{/tr}{/self_link}
 {else}
 	<div class="postbody-content">
 		{$post_info.parsed_data}
@@ -12,7 +12,7 @@
 
 {if $post_info.pages > 1}
 	<div class="postbody-pagination">
-		{if $post_list eq 'y'}
+		{if $blog_post_context eq 'view_blog'}
 			<a class="link more" href="{$post_info.postId|sefurl:blogpost}">
 			{tr}More...{/tr} ({$post_info.pages} {tr}pages{/tr})</a>
 		{else}

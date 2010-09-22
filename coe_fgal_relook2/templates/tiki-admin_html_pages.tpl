@@ -98,11 +98,11 @@
 
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].pageName}</td>
-			<td class="{cycle advance=false}">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
-			<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
-			<td class="{cycle advance=true}">
+		<tr class="{cycle}">
+			<td>{$channels[user].pageName}</td>
+			<td>{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
+			<td>{$channels[user].created|tiki_short_datetime}</td>
+			<td>
 				<a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 
 				<a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}" title="View">{icon _id='monitor' alt="{tr}View{/tr}"}</a>

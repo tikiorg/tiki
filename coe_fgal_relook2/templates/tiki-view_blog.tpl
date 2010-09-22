@@ -61,7 +61,7 @@
 
 {foreach from=$listpages item=post_info}
 	<div class="blogpost post{if !empty($container_class)} {$container_class}{/if}">
-		{include file='blog_wrapper.tpl' post_list='y'}
+		{include file='blog_wrapper.tpl' blog_post_context='view_blog'}
 	</div>
 {/foreach}
 

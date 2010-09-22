@@ -12,12 +12,9 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 global $prefs, $smarty;
-if ($prefs['feature_ajax'] !== 'y' || $prefs['feature_ajax_autosave'] !== 'y') {
+if ($prefs['feature_ajax'] !== 'y' || $prefs['ajax_autosave'] !== 'y') {
 	return;
 }
-
-$ajaxlib->registerFunction('auto_save');
-$ajaxlib->registerFunction('remove_save');
 if ( isset($_REQUEST['noautosave']) === true ) {
 	$smarty->assign('noautosave', $_REQUEST['noautosave'] === 'y');
 }
@@ -32,20 +29,33 @@ function auto_save_log($id, $referer = '', $action = '') {
 	file_put_contents('temp/cache/auto_save-log-'.(auto_save_name($id, $referer, true)), $user.' : '.ensureReferrer($referer)." : $id : $action\n", FILE_APPEND);
 }
 
+/**
+ * @param string $id		editor id
+ * @param string $data		content to save
+ * @param string $referer	textarea specifier (user:section:item)
+ * @return number			bytes that were written to the file, or false on failure
+ */
 function auto_save($id, $data, $referer = '') {
 //	auto_save_log($id, $referer, 'auto_save');
-	file_put_contents(auto_save_name($id, $referer), rawurldecode($data));
-	return new xajaxResponse();
+	$result = file_put_contents(auto_save_name($id, $referer), rawurldecode($data));
+	return $result;
 }
 
+/**
+ * @param string $id		editor id
+ * @param string $referer	textarea specifier (user:section:item)
+ * @return bool				true on success or false on failure
+ */
 function remove_save($id, $referer = '') {
 	$referer = ensureReferrer($referer);
 //	auto_save_log($id, $referer, 'remove_save');
 	$file_name = auto_save_name($id, $referer);
 	if (file_exists($file_name)) {
-		unlink($file_name);
+		$result = unlink($file_name);
+	} else {
+		$result = false;
 	}
-	return new xajaxResponse();
+	return $result;
 }
 
 function has_autosave($id, $referer = '') {
@@ -61,19 +71,23 @@ function get_autosave($id, $referer = '') {
 	}
 }
 
-function ensureReferrer($referer = '') {	
-// should be page name, but use URI if not?
+function ensureReferrer($referer = '') {
 	
+	// should be page name, but use URI if not?
 	if (empty($referer)) {
-		global $section;
+		global $section,  $user, $tikilib;
+		$referer .= empty($user) ? $tikilib->get_ip_address() : $user;
+		$referer .= ':';
 		if ($section == 'wiki page') {
 			if (isset($_REQUEST['page'])) {
-				$referer = 'wiki_page:' . $_REQUEST['page'];
+				$referer .= 'wiki_page:' . $_REQUEST['page'];
 			}
 		} else if ($section == 'blogs') {
 			if (isset($_REQUEST['postId'])) {
-				$referer = 'blog:' . $_REQUEST['postId'];
+				$referer .= 'blog:' . $_REQUEST['postId'];
 			}
+		} else {
+			$referer .= $section;	// better than nothing?
 		}
 	}
 	if (empty($referer)) {

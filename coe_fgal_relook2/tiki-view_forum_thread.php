@@ -123,8 +123,7 @@ $access->check_permission( array('tiki_p_forum_read') );
 
 $smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
 $smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
-//$end_time = microtime(true);
-//print "TIME2: ".($end_time - $start_time)."\n";
+
 $threads = $commentslib->get_forum_topics($_REQUEST['forumId'], $_REQUEST['topics_offset'] - 1, 3, $_REQUEST["topics_sort_mode"]);
 if (count($threads) == 3) {
 	$next_thread = $threads[2];
@@ -138,8 +137,7 @@ if (count($threads)) {
 } else {
 	$smarty->assign('prev_topic', false);
 }
-//$end_time = microtime(true);
-//print "TIME3: ".($end_time - $start_time)."\n";
+
 if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['delsel'])) {
 		if (isset($_REQUEST['forumthread'])) {
@@ -199,7 +197,7 @@ if ($tiki_p_admin_forum != 'y' && $thread_info['locked'] == 'y') {
 	$tiki_p_forum_post = 'n';
 	$smarty->assign('tiki_p_forum_post', 'n');
 }
-//print_r($thread_info);
+
 $smarty->assign_by_ref('thread_info', $thread_info);
 $comments_per_page = $forum_info['commentsPerPage'];
 $thread_sort_mode = $forum_info['threadOrdering'];
@@ -210,21 +208,18 @@ $comments_vars = array(
 $comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
 if (isset($forum_info["inbound_pop_server"]) && !empty($forum_info["inbound_pop_server"])) $commentslib->process_inbound_mail($_REQUEST['forumId']);
-//$end_time = microtime(true);
-//print "TIME1: ".($end_time - $start_time)."\n";
+
 if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'print_all') {
 	$_REQUEST['comments_per_page'] = 0; // unlimited
 	
 }
 $forum_mode = 'y';
 include_once ("comments.php");
-//$end_time = microtime(true);
-//print "TIME4: ".($end_time - $start_time)."\n";
+
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 include_once ('tiki-section_options.php');
-//$end_time = microtime(true);
-//print "TIME5: ".($end_time - $start_time)."\n";
+
 if ($user && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad']) && $tiki_p_notepad == 'y') {
 	check_ticket('view-forum');
 	$info = $commentslib->get_comment($_REQUEST['savenotepad'], null, $forum_info);

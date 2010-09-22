@@ -23,7 +23,7 @@ function prefs_bigbluebutton_list() {
 			'keywords' => 'big blue button',
 			'type' => 'text',
 			'size' => 40,
-			'filter' => 'description',
+			'filter' => 'text',
 		),
 	);
 }

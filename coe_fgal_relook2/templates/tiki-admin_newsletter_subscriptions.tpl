@@ -38,9 +38,9 @@
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$groups_g}
-			<tr>
-				<td class="{cycle advance=false}">{$groups_g[ix].groupName|escape}</td>
-				<td class="{cycle}">
+			<tr class="{cycle}">
+				<td>{$groups_g[ix].groupName|escape}</td>
+				<td>
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$groups_g[ix].nlId|urlencode}&amp;group={$groups_g[ix].groupName|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
 			</tr>
@@ -60,11 +60,11 @@
 		</tr>
 		{cycle values="odd,even" print=false}
 		{foreach key=incId item=incName from=$included_n}
-			<tr>
-				<td class="{cycle advance=false}">
+			<tr class="{cycle}">
+				<td>
 					<a href="tiki-admin_newsletter_subscriptions.php?nlId={$incId|urlencode}">{$incName|escape}</a>
 				</td>
-				<td class="{cycle}">
+				<td>
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$nlId|urlencode}&amp;included={$incId|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
 			</tr>
@@ -84,11 +84,11 @@
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$pages}
-			<tr>
-				<td class="{cycle advance=false}"><a href="{$pages[ix].wikiPageName|sefurl}">{$pages[ix].wikiPageName|escape}</a></td>
-				<td class="{cycle advance=false}">{$pages[ix].validateAddrs|escape}</td>
-				<td class="{cycle advance=false}">{$pages[ix].addToList|escape}</td>
-				<td class="{cycle}">
+			<tr class="{cycle}">
+				<td><a href="{$pages[ix].wikiPageName|sefurl}">{$pages[ix].wikiPageName|escape}</a></td>
+				<td>{$pages[ix].validateAddrs|escape}</td>
+				<td>{$pages[ix].addToList|escape}</td>
+				<td>
 					<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;remove={$pages[ix].nlId|urlencode}&amp;page={$pages[ix].wikiPageName|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 				</td>
 			</tr>

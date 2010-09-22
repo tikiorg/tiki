@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 global $prefs;
-if ($prefs['feature_ajax'] == 'y') {
+if ($prefs['ajax_xajax'] === 'y') {
 	require_once("lib/ajax/xajax/xajax_core/xajaxAIO.inc.php");
 	if (!defined ('XAJAX_GET')) define ('XAJAX_GET', 0);
 
@@ -263,7 +263,12 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 	}
 
-	$objResponse->script('xajax.config.requestURI="'.$ajaxlib->getRequestURI().'";');
+	if (strpos($content, '<input type="hidden" name="wysiwyg" value="y" />') !== false) {
+		$ck_reset = "window.CKEDITOR = null;$.getScript('lib/ckeditor/ckeditor.js');";
+	} else {
+		$ck_reset = '';
+	}
+	$objResponse->script('xajax.config.requestURI="'.$ajaxlib->getRequestURI().'";' . $ck_reset);
 	
 	$max_tikitabs = (int)$max_tikitabs;
 	if ( $max_tikitabs > 0 && $prefs['feature_tabs'] == 'y' ) {
@@ -281,14 +286,14 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	}
 	$objResponse->includeScript($tmp_jsfile);
 	
-	if ($prefs['feature_ajax_autosave'] == 'y') {
+	if ($prefs['ajax_autosave'] == 'y') {
 		$objResponse->call("auto_save");
 	}
 	
 	return $objResponse;
 }
 
-if ($prefs['feature_ajax_autosave'] === 'y') {
+if ($prefs['ajax_autosave'] === 'y') {
 	require_once("lib/ajax/autosave.php");
 }
 

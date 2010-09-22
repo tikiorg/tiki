@@ -151,21 +151,21 @@
 		</tr>
 		{cycle values="even,odd" print=false}
 		{section name=chan loop=$channels}
-			<tr>
-				<td class="{cycle advance=false}">{$channels[chan].rssId|escape}</td>
-				<td class="{cycle advance=false}">
+			<tr class="{cycle}">
+				<td>{$channels[chan].rssId|escape}</td>
+				<td>
 					<strong>{$channels[chan].name|escape}</strong><br />
 					{if $channels[chan].description}{$channels[chan].description|escape|nl2br}<br />{/if}
 					Site: <a href="{$channels[chan].siteurl|escape}">{$channels[chan].sitetitle|escape}</a><br />
 					Feed: <a class="link" href="{$channels[chan].url|escape}">{$channels[chan].url|truncate:50:"...":true}</a><br />
 				</td>
-				<td class="{cycle advance=false}">
+				<td>
 					{if $channels[chan].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[chan].lastUpdated|tiki_short_datetime}{/if}<br />
 					Refresh rate: {$channels[chan].refresh|duration}
 				</td>
-				<td class="{cycle advance=false}" style="text-align:center">{$channels[chan].showTitle|escape}</td>
-				<td class="{cycle advance=false}" style="text-align:center">{$channels[chan].showPubDate|escape}</td>
-				<td class="{cycle}">
+				<td style="text-align:center">{$channels[chan].showTitle|escape}</td>
+				<td style="text-align:center">{$channels[chan].showPubDate|escape}</td>
+				<td>
 					<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;remove={$channels[chan].rssId|escape}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
 					<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;rssId={$channels[chan].rssId|escape}" title="{tr}Edit{/tr}">{icon _id=page_edit}</a>
 					<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;view={$channels[chan].rssId|escape}" title="{tr}View{/tr}">{icon _id=feed alt="{tr}View feed{/tr}"}</a>

@@ -2,6 +2,7 @@
 
 /**
  * @group unit
+ * @group MultilingualAlignerUpdatePages
  * 
  */
 

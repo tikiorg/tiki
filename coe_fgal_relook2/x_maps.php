@@ -14,7 +14,7 @@ $xajax = new xajax("x_maps.php");
 $xajax->setFlag('debug',true);
 $xajax->configure('statusMessages',true);
 
-if($prefs['feature_maps'] != 'y' || $prefs['feature_ajax'] != 'y') {
+if($prefs['feature_maps'] != 'y' || $prefs['ajax_xajax'] != 'y') {
   $objResponse = new xajaxResponse();
   $objResponse->alert(tra("Feature disabled"));
   return $objResponse;

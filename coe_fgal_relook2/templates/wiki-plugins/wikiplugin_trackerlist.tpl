@@ -47,7 +47,14 @@
 	{/if}
 
 	{if empty($tpl)}
-<table class="normal wikiplugin_trackerlist">
+
+{if $displaysheet eq 'true'}
+<div class='trackercontainer' style='height: 250px ! important;'>
+{/if}
+
+<table class="normal wikiplugin_trackerlist"
+	{if $displaysheet eq 'true'}title="{$tracker_info.name}"{/if}
+	>
 
 		{if $showfieldname ne 'n' and empty($tpl)}
 	<tr>
@@ -151,9 +158,9 @@
 					{elseif isset($perms)}
 						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode
 						tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending 
-						tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
+						tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items reloff=$itemoff}
 					{else}
-						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode}
+						{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$items[user].field_values[ix] list_mode=$list_mode reloff=$itemoff}
 					{/if}
 		</td>
 				{/if}
@@ -203,7 +210,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 					{if isset($computedFields[$ix.fieldId])}
 						<td class="numeric" style="padding-right:2px">
 						{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
-							{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Sum{/tr}{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							{include file='tracker_item_field_value.tpl' item=$items[user] field_value=$computedField list_mode=$list_mode}<br />
 							{if !$smarty.foreach.computedField.last}{/if}
 						{/foreach}
@@ -220,6 +227,11 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		</tr>
 		{/if}
 </table>
+
+{if $displaysheet eq 'true'}
+</div>
+{/if}
+
 		{if $items|@count eq 0}
 			{tr}No records found{/tr}
 		{elseif $checkbox}

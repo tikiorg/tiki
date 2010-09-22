@@ -1,7 +1,7 @@
 #!/bin/bash
  
 # This script renames _htaccess files to .htaccess 
-# http://doc.tikiwiki.org/Clean+URLs
+# http://doc.tiki.org/Clean+URLs
 # 
 # This script was more useful before, because there were many files to rename. More recently, Tiki 
 # ships with already named .htaccess files in all subdirectories. Thus, only one file needs to be 

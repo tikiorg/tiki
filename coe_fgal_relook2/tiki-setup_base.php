@@ -320,6 +320,16 @@ if (empty($_SERVER['REQUEST_URI'])) {
 if (empty($_SERVER['SERVER_NAME'])) {
 	$_SERVER['SERVER_NAME'] = isset($_SERVER['HTTP_HOST'])?$_SERVER['HTTP_HOST']: '';
 }
+
+/*
+ * Clean variables past in _GET & _POST & _COOKIE
+ */
+$magic_quotes_gpc = get_magic_quotes_gpc();
+if ($magic_quotes_gpc) {
+	remove_gpc($_GET);
+	remove_gpc($_POST);
+	remove_gpc($_COOKIE);
+}
 // in the case of tikis on same domain we have to distinguish the realm
 // changed cookie and session variable name by a name made with browsertitle
 $cookie_site = preg_replace("/[^a-zA-Z0-9]/", "", $prefs['cookie_name']);
@@ -430,7 +440,6 @@ if (isset($_SESSION["$user_cookie_site"])) {
 }
 require_once ('lib/setup/perms.php');
 // --------------------------------------------------------------
-$magic_quotes_gpc = get_magic_quotes_gpc();
 // deal with register_globals
 if (ini_get('register_globals')) {
 	foreach(array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob) {
@@ -448,11 +457,6 @@ if ( $tiki_p_trust_input != 'y' ) {
 }
 $jitServer = new JitFilter($_SERVER);
 $_SERVER = $serverFilter->filter($_SERVER);
-if ($magic_quotes_gpc) {
-	remove_gpc($_GET);
-	remove_gpc($_POST);
-	remove_gpc($_COOKIE);
-}
 // Rebuild request after gpc fix
 // _REQUEST should only contain GET and POST in the app
 $_REQUEST = array_merge($_GET, $_POST);

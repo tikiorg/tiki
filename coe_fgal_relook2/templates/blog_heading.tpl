@@ -1,7 +1,11 @@
-{title help='Blogs'}{$title|escape}{/title}
-<div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}</div>
-{if $description neq ""}
-  <div class="description">{$description|escape}</div>
+{if $blog_data.use_title eq 'y'}
+	{title}{$title|escape}{/title}
+{/if}
+{if $blog_data.use_breadcrumbs eq 'y'}
+	<div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title|escape}</div>
+{/if}
+{if $blog_data.use_description eq 'y' && $description neq ""}
+	<div class="description">{$description|escape}</div>
 {/if}
 {* example code to add more info to the default blog heading if desired
  * remove the line above (starting curly bracket then asterisk) and the last line to enable

@@ -11,7 +11,7 @@
 	{/if}
 
 	{if $blogs|@count gt 1 }
-		{* No need for users to go to log list if they are already looking at the only blog *}
+		{* No need for users to go to blog list if they are already looking at the only blog *}
 		{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
 	{/if}
 </div>
@@ -24,10 +24,22 @@
 
 {if $preview eq 'y'}
 	<div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
-	{include file='tiki-view_blog_post_content.tpl'}
+	<div class="blogpost post post_single">
+		{include file='blog_wrapper.tpl' blog_post_context='preview'}
+	</div>
 {/if}
 
-<form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
+{capture name=actionUrlParam}{strip}
+	{if $postId > 0 && $blogId > 0}
+		?blogId={$blogId}&postId={$postId}
+	{elseif $postId > 0}
+		?postId={$postId}
+	{elseif $blogId > 0}
+		?blogId={$blogId}
+	{/if}
+{/strip}{/capture}
+
+<form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php{$smarty.capture.actionUrlParam}" id ='editpageform'>
 	<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
 	<input type="hidden" name="postId" value="{$postId|escape}" />
 
@@ -104,7 +116,7 @@
 				<td class="editblogform">{tr}Mark entry as private:{/tr}</td>
 				<td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td>
 			</tr>
-			<tr id='show_pubdate' class="formcolor">
+			<tr id='show_pubdate' class="editblogform">
 				<td>{tr}Publish Date{/tr}</td>
 				<td>
 					{html_select_date prefix="publish_" time=$post_info.created start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 

@@ -34,10 +34,10 @@
 					</tr>
 					{cycle values="odd,even" print=false}
 					{section name=ix loop=$modules_l}
-						<tr>
-							<td class="{cycle advance=false}">{$modules_l[ix].ord}</td>
-							<td class="{cycle advance=false}">{$modules_l[ix].name}</td>
-							<td class="{cycle}">
+						<tr class="{cycle}">
+							<td>{$modules_l[ix].ord}</td>
+							<td>{$modules_l[ix].name}</td>
+							<td>
 								<a class="link" href="tiki-user_assigned_modules.php?up={$modules_l[ix].moduleId}">{icon _id='resultset_up'}</a>
 								<a class="link" href="tiki-user_assigned_modules.php?down={$modules_l[ix].moduleId}">{icon _id='resultset_down'}</a>
 								{if $prefs.feature_right_column ne 'n'}
@@ -65,10 +65,10 @@
 					</tr>
 					{cycle values="odd,even" print=false}
 					{section name=ix loop=$modules_r}
-						<tr>
-							<td class="{cycle advance=false}">{$modules_r[ix].ord}</td>
-							<td class="{cycle advance=false}">{$modules_r[ix].name}</td>
-							<td class="{cycle}">
+						<tr class="{cycle}">
+							<td>{$modules_r[ix].ord}</td>
+							<td>{$modules_r[ix].name}</td>
+							<td>
 								<a class="link" href="tiki-user_assigned_modules.php?up={$modules_r[ix].moduleId}">{icon _id='resultset_up'}</a>
 								<a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].moduleId}">{icon _id='resultset_down'}</a>
 								{if $prefs.feature_left_column ne 'n'}

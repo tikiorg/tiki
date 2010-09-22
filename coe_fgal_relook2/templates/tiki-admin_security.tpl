@@ -14,10 +14,10 @@
 	</tr>
 	{cycle values="even,odd" print=false}
 	{foreach from=$phpsettings key=key item=item}
-		<tr>
-			<td class="{cycle advance=false}">{$key}</td>
-			<td class="{cycle advance=false}">{$item.setting}</td>
-			<td class="{cycle advance=false}">
+		<tr class="{cycle}">
+			<td>{$key}</td>
+			<td>{$item.setting}</td>
+			<td>
 				{if $item.risk eq 'safe'}
 					{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
 				{elseif $item.risk eq 'risky'}
@@ -29,7 +29,7 @@
 				{/if}
 				{$item.risk}
 			</td>
-			<td class="{cycle advance=true}">{$item.message}</td>
+			<td>{$item.message}</td>
 		</tr>
 	{/foreach}
 	{if !$phpsettings}
@@ -80,10 +80,10 @@
 	</tr>
 	{cycle values="even,odd" print=false}
 	{foreach from=$tikisettings key=key item=item}
-		<tr>
-			<td class="{cycle advance=false}">{$key}</td>
-			<td class="{cycle advance=false}">{$item.setting}</td>
-			<td class="{cycle advance=false}">
+		<tr class="{cycle}">
+			<td>{$key}</td>
+			<td>{$item.setting}</td>
+			<td>
 				{if $item.risk eq 'safe'}
 					{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
 				{elseif $item.risk eq 'risky'}
@@ -95,7 +95,7 @@
 				{/if}
 				{$item.risk}
 			</td>
-			<td class="{cycle}">{$item.message}</td>
+			<td>{$item.message}</td>
 		</tr>
 	{/foreach}
 	{if !$tikisettings}

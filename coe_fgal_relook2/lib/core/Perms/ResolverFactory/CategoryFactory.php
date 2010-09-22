@@ -188,7 +188,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		if( count( $perms ) === 0 ) {
 			return null;
 		} else {
-			return new Perms_Resolver_Static( $perms );
+			return new Perms_Resolver_Static( $perms, 'category' );
 		}
 	}
 

@@ -7,7 +7,7 @@
 
 $section = 'calendar';
 require_once ('tiki-setup.php');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/minical/minicallib.php');
@@ -166,7 +166,7 @@ $smarty->assign('topics', $topics['data']);
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('minical');
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['ajax_xajax'] == "y") {
 	function user_minical_ajax() {
 		global $ajaxlib, $xajax;
 		$ajaxlib->registerTemplate("tiki-minical.tpl");

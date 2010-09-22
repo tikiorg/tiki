@@ -398,7 +398,7 @@ div.help_section {
 /* remarks boxes */
 
 .rbox {
-	margin: 1em .3em 2em .3em;
+	margin: 1em .3em .3em .3em;
 }
 	
 .rbox-title,
@@ -1161,32 +1161,6 @@ table.treeTable .parent td {
 	margin-top: 10px;
 }
 
-#intertrans-indicator {
-	position: fixed;
-	left: 0;
-	right: 0;
-	top: 0;
-	height: 40px;
-	background-color: #add8e6;
-}
-
-#intertrans-form {
-	position: fixed;
-	top: 10%;
-	bottom: 10%;
-	left: 10%;
-	right: 10%;
-	overflow: auto;
-	background-color: #90ee90;
-	display: none;
-	z-index: 2000;
-}
-#intertrans-form table {
-	width: 98%;
-}
-#intertrans-form input {
-	width: 100%;
-}
 .popup-backlinks {
 	display: none;
 	width: 100px;
@@ -1195,13 +1169,6 @@ table.treeTable .parent td {
 .trackerCategoryName {white-space:nowrap;}
 /* End of file */
 
-dl.note-list {
-	padding: 5px;
-	margin: 5px;
-	background: white;
-	color: black;
-	border: solid thin black;
-}
 #captchaImg {
 	border: 1px solid black;
 }

@@ -1,10 +1,7 @@
 {* $Id$ *}
-{if $page|lower neq 'sandbox'}
+{if $page|lower neq 'sandbox' and $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_mandatory eq 'y'}
 	{remarksbox type='tip' title="{tr}Tip{/tr}"}
-	{tr}This edit session will expire in{/tr} <span id="edittimeout">{math equation='x / y' x=$edittimeout y=60}</span> {tr}minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
-	{if $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_mandatory eq 'y'}
 		<strong class='mandatory_note'>{tr}Fields marked with a * are mandatory.{/tr}</strong>
-	{/if}
 	{/remarksbox}
 {/if}
 {if $customTip}
@@ -16,6 +13,11 @@
 	{include file="wiki:$wikiHeaderTpl"}
 {/if}
 	
+{if $prefs.ajax_autosave eq "y"}
+<div class="floatright">
+	{self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
+</div>
+{/if}
 {if $translation_mode eq 'n'}
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
 	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}{/title}
@@ -96,7 +98,7 @@
 	</div>
 {/if}
 
-{if $preview}
+{if $preview or $prefs.ajax_autosave eq "y"}
 	{include file='tiki-preview.tpl'}
 {/if}
 {if $diff_style}
@@ -133,6 +135,7 @@
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
 
 	<input type="hidden" name="no_bl" value="y" />
+	{if !empty($smarty.request.returnto)}<input type="hidden" name="returnto" value="{$smarty.request.returnto}" />{/if}
 	{if $diff_style}
 		<select name="diff_style" class="wikiaction"title="{tr}Edit wiki page{/tr}|{tr}Select the style used to display differences to be translated.{/tr}">
 			<option value="htmldiff"{if $diff_style eq "htmldiff"} selected="selected"{/if}>{tr}html{/tr}</option>
@@ -155,10 +158,8 @@
 		</div>
 	{/if}
 
-	<table class="normal">
-		
-		
-		<tr class="formcolor">
+	<table class="formcolor" width="100%">
+		<tr>
 			<td colspan="2">
 				{if isset($page_badchars_display)}
 					{if $prefs.wiki_badchar_prevent eq 'y'}
@@ -234,8 +235,8 @@
 							{/if}
 						{/tab}
 					{/if}
-					{if !empty($showToolsTab)}
-						{tab name="{tr}Tools{/tr}"}
+					{if !empty($showPropertiesTab)}
+						{tab name="{tr}Properties{/tr}"}
 							{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 								<fieldset>
 									<legend>{tr}Apply template:{/tr}</legend>
@@ -304,27 +305,24 @@
 								{/if}
 	
 							{/if}
-						{/tab}
-					{/if}
-					{if !empty($showPropertiesTab)}
-						{tab name="{tr}Properties{/tr}"}
+							{* merged tool and property tabs for tiki 6 *}
 							{if $page|lower neq 'sandbox'}
 								{if $prefs.wiki_feature_copyrights  eq 'y'}
 									<fieldset>
 										<legend>{tr}Copyright:{/tr}</legend>
-										<table border="0">
-											<tr class="formcolor">
+										<table class="formcolor" border="0">
+											<tr>
 												<td><label for="copyrightTitle">{tr}Title:{/tr}</label></td>
 												<td><input size="40" class="wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td>
 												{if !empty($copyrights)}
 													<td rowspan="3"><a href="copyrights.php?page={$page|escape}">{tr}To edit the copyright notices{/tr}</a></td>
 												{/if}
 											</tr>
-											<tr class="formcolor">
+											<tr>
 												<td><label for="copyrightYear">{tr}Year:{/tr}</label></td>
 												<td><input size="4" class="wikiedit" type="text" id="copyrightYear" name="copyrightYear" value="{$copyrightYear|escape}" /></td>
 											</tr>
-											<tr class="formcolor">
+											<tr>
 												<td><label for="copyrightAuthors">{tr}Authors:{/tr}</label></td>
 												<td><input size="40" class="wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td>
 											</tr>
@@ -473,6 +471,9 @@
 									</fieldset>
 								{/if}
 							{/if}
+							{if $tiki_p_admin_wiki eq "y"}
+								<a href="tiki-admin.php?page=wiki">{tr}Admin wiki preferences{/tr} {icon _id='wrench'}</a>
+							{/if}
 						{/tab}
 					{/if}
 				{/tabset}
@@ -487,7 +488,7 @@
 		{/if}{* sandbox *}
 		
 		{if $prefs.wiki_actions_bar neq 'top'}
-			<tr class="formcolor">
+			<tr>
 				<td colspan="2" style="text-align:center;">
 					{include file='wiki_edit_actions.tpl'}
 				</td>

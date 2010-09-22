@@ -25,7 +25,7 @@ if (isset($_REQUEST["features"])) {
 	foreach($pref_byref_values as $britem) {
 		byref_set_value($britem);
 	}
-	$cachelib->empty_full_cache();
+	$cachelib->empty_cache();
 }
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
 ask_ticket('admin-inc-features');

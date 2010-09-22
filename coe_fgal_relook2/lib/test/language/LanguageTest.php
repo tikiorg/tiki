@@ -94,9 +94,9 @@ class LanguageTest extends TikiTestCase
 	}
 
 	public function testUpdateTransShouldNotUpdateTranslation() {
-		$this->obj->updateTrans('Not changed', 'Translation not changed');
-		$result = TikiDb::get()->getOne('SELECT `changed` FROM `tiki_language` WHERE `lang` = ? AND `source` = ?', array($this->lang, 'Not changed'));
-		$this->assertEquals(0, $result);
+		$this->assertEquals(null, $this->obj->updateTrans('Not changed', 'Translation not changed'));
+		$result = TikiDb::get()->getOne('SELECT `changed` FROM `tiki_language` WHERE `lang` = ? AND binary `source` = ?', array($this->lang, 'Not changed'));
+		$this->assertEquals(null, $result);
 	}
 
 	public function testUpdateTransShouldDeleteTranslation() {
@@ -144,6 +144,12 @@ class LanguageTest extends TikiTestCase
 		copy(dirname(__FILE__) . '/fixtures/language_orig.php', $this->langDir . '/language.php');
 		$this->obj->writeLanguageFile();
 		$this->assertEquals(file_get_contents(dirname(__FILE__) . '/fixtures/language_modif.php'), file_get_contents($this->langDir . '/language.php'));
+	}
+
+	public function testWriteLanguageShouldRaiseExceptionForInvalidLanguagePhp() {
+		$this->setExpectedException('Exception');
+		copy(dirname(__FILE__) . '/fixtures/language_invalid.php', $this->langDir . '/language.php');
+		$this->obj->writeLanguageFile();
 	}
 
 	public function testDeleteTranslations() {

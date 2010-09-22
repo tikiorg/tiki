@@ -6,6 +6,25 @@
 // $Id$
 
 function prefs_user_list() {
+	
+	global $prefs;
+	
+	$catree = array();
+
+	if ($prefs['feature_categories'] == 'y') {
+		global $categlib;
+
+		include_once ('lib/categories/categlib.php');
+		$all_categs = $categlib->get_all_categories();
+
+		$catree['-1'] = tra('None');
+		$catree['0'] = tra('All');
+
+		foreach ($all_categs as $categ) {
+			$catree[$categ['categId']] = $categ['categpath'];
+		}
+	}
+	
 	return array(
 		'user_show_realnames' => array(
 			'name' => tra('Show user\'s real name instead of login (when possible)'),
@@ -136,13 +155,46 @@ function prefs_user_list() {
 				'feature_gmap',
 			),
 		),
+		'user_trackersync_groups' => array(
+			'name' => tra('Synchronize categories of user tracker item to user groups'),
+			'description' => tra('Will add the user tracker item to the category of the same name as the user groups and vice versa'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'userTracker',
+				'user_trackersync_trackers',
+				'feature_categories',
+			),
+		),
+		'user_trackersync_parentgroup' => array(
+			'name' => tra('Put user in group only if categorized within'),
+			'type' => 'list',
+			'options' => $catree,
+			'dependencies' => array(
+				'userTracker',
+				'user_trackersync_trackers',
+				'user_trackersync_groups',
+				'feature_categories',
+			),
+		),
 		'user_selector_threshold' => array(
 			'name' => tra('Maximum number of users to show in drop down lists'),
 			'description' => tra('Prevents out of memory and performance issues when user list is very large by using a jQuery autocomplete text input box.'),
 			'type' => 'text',
 			'size' => '5',
 			'dependencies' => array('feature_jquery_autocomplete'),
-		)
+		),
+		'user_selector_realnames_tracker' => array(
+			'name' => tra('Show user\'s real name instead of login in autocomplete selector in trackers feature'),
+			'description' => tra('Use user\'s real name instead of login in autocomplete selector in trackers feature'),
+			'type' => 'flag',
+			'dependencies' => array('feature_jquery_autocomplete', 'user_show_realnames', 'feature_trackers'),
+		),
+		'user_selector_realnames_messu' => array(
+			'name' => tra('Show user\'s real name instead of login in autocomplete selector in messaging feature'),
+			'description' => tra('Use user\'s real name instead of login in autocomplete selector in messaging feature'),
+			'type' => 'flag',
+			'dependencies' => array('feature_jquery_autocomplete', 'user_show_realnames', 'feature_messages'),
+		),
 	);
 }
 

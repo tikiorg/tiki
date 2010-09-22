@@ -9,16 +9,17 @@ require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/groupalert/groupalertlib.php');
 $access->check_feature('feature_trackers');
-$access->check_permission('tiki_p_admin_trackers');
 $auto_query_args = array('trackerId');
 
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
 }
-$smarty->assign('individual', 'n');
-if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
-	$smarty->assign('individual', 'y');
+$objectperms = Perms::get( 'tracker', $_REQUEST['trackerId']);
+if (!$objectperms->admin_trackers) {
+	$access->display_error('', tra('Permission denied').": ". 'tiki_p_admin_trackers', '403');
 }
+$smarty->assign('permsType', $objectperms->from());
+
 if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['trackerId'])) {
 	$newTrackerId = $trklib->duplicate_tracker($_REQUEST['trackerId'], $_REQUEST['name'], isset($_REQUEST['description']) ? $_REQUEST['description'] : '', $_REQUEST["duplicateDescriptionIsParsed"] ? 'y' : '');
 	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $prefs['feature_categories'] == 'y') {

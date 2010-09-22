@@ -34,7 +34,7 @@
 {if $prefs.metatag_robots eq '' && $metatag_robots ne '' }
         <meta name="robots" content="{$metatag_robots|escape}" />
 {/if}
-{if $prefs.metatag_robots eq '' && $metatag_robots eq '' }
+{if $prefs.metatag_robots ne '' && $metatag_robots ne '' }
         <meta name="robots" content="{$prefs.metatag_robots|escape}, {$metatag_robots|escape}" />
 {/if}
 {if $prefs.metatag_revisitafter ne ''}

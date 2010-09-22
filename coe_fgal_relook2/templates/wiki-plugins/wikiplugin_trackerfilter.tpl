@@ -6,7 +6,7 @@
 {if $line ne 'y' and $prefs.javascript_enabled eq 'y' and $noflipflop ne 'y'}
 {button _text="{tr}Filters{/tr}" _flip_id="trackerFilter$iTrackerFilter"}
 {/if}
-<div id="trackerFilter{$iTrackerFilter}" class="trackerfilter" style="display:{if $open eq 'y' or $line eq 'y' or $prefs.javascript_enabled ne 'y' and $noflipflop ne 'y'}block{else}none{/if}">
+<div id="trackerFilter{$iTrackerFilter}" class="trackerfilter" style="display:{if $open eq 'y'}block{else}none{/if}">
 {if empty($inForm)}
 	{if empty($export_action)}
 		<form action="{$smarty.server.PHP_SELF}?{query}" method="post">
@@ -23,6 +23,11 @@ function tf_export_submit(fm) {
 				<input type="hidden" name="{$f_k}" value="{$f_v}" />
 			{/foreach}
 	{/if}
+{/if}
+{if $mapview}
+<input type="hidden" name="mapview" value="y" />
+{else}
+<input type="hidden" name="mapview" value="n" />
 {/if}
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <input type="hidden" name="iTrackerFilter" value="{$iTrackerFilter}" />
@@ -110,6 +115,13 @@ function tf_export_submit(fm) {
 	{else}
 		&nbsp;
 	{/if}
+	{if $googlemapButtons && $googlemapButtons eq 'y'}
+        {if $mapview}
+        <br /><input class="button submit" type="submit" name="searchlist" value="{tr}List View{/tr}" />
+        {else}
+        <br /><input class="button submit" type="submit" name="searchmap" value="{tr}Map View{/tr}" />
+        {/if}
+	{/if}
 </td>
 {/if}
 {if !empty($sortchoice)}
@@ -121,6 +133,6 @@ function tf_export_submit(fm) {
 {if $line ne 'y' and $action}</tr>{/if}
 </table>
 {if empty($inForm)}</form>{/if}
-{if !empty($dataRes)}<div class="trackerfilter-result">{$dataRes}</div>{/if}
 </div>
+{if !empty($dataRes)}<div class="trackerfilter-result">{$dataRes}</div>{/if}
 {/strip}

@@ -26,6 +26,10 @@
 		{button href="#upload" _text="{tr}Upload File{/tr}"}
 	{/if}
 	{if $simpleMode eq 'y'}{button simpleMode='n' galleryId=$galleryId href="" _text="{tr}Advanced mode{/tr}" _ajax="n"}{else}{button galleryId=$galleryId href="" _text="{tr}Simple mode{/tr}" _ajax="n"}{/if}
+	<span{if $simpleMode eq 'y'} style="display:none;"{/if}>
+		<label for="keepOpenCbx">{tr}Keep gallery window open{/tr}</label>
+		<input type="checkbox" id="keepOpenCbx" checked="checked">
+	</span>
 </div>
 {/if}
 
@@ -60,16 +64,13 @@
 
 	<table border="0" cellspacing="4" cellpadding="4">
 	{section name=ix loop=$uploads}
-		<tr>
-			<td class="{cycle values="odd,even"}" style="text-align: center">
+		<tr class="{cycle values="odd,even"}">
+			<td style="text-align: center">
 				<img src="{$uploads[ix].fileId|sefurl:thumbnail}" />
 			</td>
 			<td>
 				{if $filegals_manager neq ''}
-					{assign var=seturl value=$uploads[ix].fileId|sefurl:display}
-					
-					{* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
-					<a href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
+					<a href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}">{$uploads[ix].name} ({$uploads[ix].size|kbsize})</a>
 				{else}
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
 				{/if}
@@ -300,46 +301,46 @@
 {if $prefs.javascript_enabled neq 'y' || ! $editFileId}
 	{jq notonready=true}
 		var nb_upload = 1;
-		function add_upload_file() {literal}{{/literal}
+		function add_upload_file() {
 			tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
-			{if $filegals_manager neq ''}
+			{{if $filegals_manager neq ''}}
 			tmp += '<input type="hidden" name="filegals_manager" value="{$filegals_manager}"/>';
-			{/if}
+			{{/if}}
 			tmp += '<input type="hidden" name="formId" value="'+nb_upload+'"/>';
-			tmp += '{$upload_str|strip|escape:'javascript'}';
+			tmp += '{{$upload_str|strip|escape:'javascript'}}';
 			tmp += '</form><div id="multi_'+(nb_upload+1)+'"></div>';
 			//tmp += '<div id="multi_'+(nb_upload+1)+'"></div>';
 			document.getElementById('multi_'+nb_upload).innerHTML = tmp;
 			document.getElementById('progress').innerHTML += "<div id='progress_"+nb_upload+"'></div>";
 			document.getElementById('upload_progress').innerHTML += "<iframe id='upload_progress_"+nb_upload+"' name='upload_progress_"+nb_upload+"' height='1' width='1' style='border:0px none'></iframe>";
 			nb_upload += 1;
-		{literal}}{/literal}
+		}
 
-		function progress(id,msg) {literal}{{/literal}
+		function progress(id,msg) {
 //			alert ('progress_'+id);
 			document.getElementById('progress_'+id).innerHTML = msg;
-		{literal}}{/literal}
+		}
 
-		function do_submit(n) {literal}{{/literal}
+		function do_submit(n) {
 //				alert(document.getElementById('file_'+n).name);
-			if (document.forms['file_'+n].elements['userfile[]'].value != '') {literal}{{/literal}
+			if (document.forms['file_'+n].elements['userfile[]'].value != '') {
 				progress(n,"<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
 				document.getElementById('file_'+n).submit();
 				document.getElementById('file_'+n).reset();
-			{literal}}{/literal} else {literal}{{/literal}
-				progress(n,"{tr}No File to Upload...{/tr}");
-			{literal}}{/literal}
-		{literal}}{/literal}
+			} else {
+				progress(n,"{tr}No File to Upload...{/tr} <span class='button'><a href='#' onclick='location.replace(location.href);return false;'>{tr}Retry{/tr}</a></span>");
+			}
+		}
 
-		function upload_files(form, loader){literal}{{/literal}
+		function upload_files(form, loader){
 			//only do this if the form exists
 			n=0;
-			while (document.forms['file_'+n]){literal}{{/literal}
+			while (document.forms['file_'+n]){
 				do_submit(n);
 				n++;
-			{literal}}{/literal}
+			}
 			hide('form');
-		{literal}}{/literal}
+		}
 	{/jq}
 {/if}
 

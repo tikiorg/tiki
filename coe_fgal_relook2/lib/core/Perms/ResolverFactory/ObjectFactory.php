@@ -83,7 +83,7 @@ class Perms_ResolverFactory_ObjectFactory implements Perms_ResolverFactory
 			return null;
 		} else {
 			require_once 'lib/core/Perms/Resolver/Static.php';
-			return new Perms_Resolver_Static( $perms );
+			return new Perms_Resolver_Static( $perms, 'object' );
 		}
 	}
 

@@ -22,6 +22,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 	// Per-forum From address overrides global default.
 	if( $forum_info['outbound_from'] )
 	{
+		$author = $userlib->clean_user($author);
 	    $my_sender = '"' . "$author" . '" <' . $forum_info['outbound_from'] . '>';
 	} else {
 	    $my_sender = $prefs['sender_email'];
@@ -169,7 +170,7 @@ function testEmailInList($nots, $email) {
   * admin notification addresses + watching users addresses (except editor is configured)
   * \$event: 'wiki_page_created'|'wiki_page_changed'|wiki_page_deleted |wiki_file_attached
   */
-function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine='', $diff='', $minor=false, $contributions='', $structure_parent_id=0, $attId=0, $lang) {
+function sendWikiEmailNotification($wikiEvent, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine='', $diff='', $minor=false, $contributions='', $structure_parent_id=0, $attId=0, $lang='') {
 	global $tikilib, $prefs, $smarty, $userlib;
 	global $notificationlib; include_once('lib/notifications/notificationlib.php');
 	$nots = array();

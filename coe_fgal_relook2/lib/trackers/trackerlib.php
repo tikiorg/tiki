@@ -18,7 +18,7 @@
  * @license		LGPL - See license.txt for details.
  * @version		SVN $Rev: 25023 $
  * @filesource
- * @link		http://dev.tikiwiki.org/Trackers
+ * @link		http://dev.tiki.org/Trackers
  * @since		Always
  */
 /**
@@ -847,6 +847,12 @@ class TrackerLib extends TikiLib
 					if (!empty($not)) {
 						$mid .= " OR tco$ff.`categId` IS NULL ";
 					}
+				} elseif ( $filter['type'] == 'usergroups' ) {
+					$userFieldId = $this->get_field_id_from_type($trackerId, 'u', '1%'); // user creator field;
+					$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttifu ON (tti.`itemId`=ttifu.`itemId`) INNER JOIN `users_users` uu ON (ttifu.`value`=uu.`login`) INNER JOIN `users_usergroups` uug ON (uug.`userId`=uu.`userId`)";
+					$mid .= ' AND ttifu.`fieldId`=? AND  uug.`groupName`=? ';
+					$bindvars[] = $userFieldId;
+					$bindvars[] = empty($ev)?$fv: $ev;
 				} elseif ( $filter['type'] == '*') { // star
 					$mid .= " AND ttif$i.`value`*1>=? ";
 					$bindvars[] = $ev;
@@ -872,7 +878,7 @@ class TrackerLib extends TikiLib
 						$bindvars[] = $ev;
 					} else {
 						$mid.= " AND ttif$i.`value`=? ";
-						$bindvars[] = $ev;
+						$bindvars[] = empty($ev)? $fv: $ev;
 					}
 
 				} elseif ( $fv ) {
@@ -927,7 +933,7 @@ class TrackerLib extends TikiLib
 			.$mid
 			.' GROUP BY tti.`itemId`'
 			.' ORDER BY '.$this->convertSortMode('sortvalue_'.$corder);
-		// echo htmlentities($query); print_r($bindvars);
+		//echo htmlentities($query); print_r($bindvars);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
 
 		$ret1 = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
@@ -1055,7 +1061,7 @@ class TrackerLib extends TikiLib
 			case 'e':
 				global $categlib;
 				include_once('lib/categories/categlib.php');
-				$mycats = $categlib->get_child_categories($fopt['options']);
+				$mycats = $categlib->get_child_categories($fopt['options'], true);
 				if (empty($zcatItemId) || $zcatItemId != $itemId) {
 					$zcatItemId = $itemId;
 					$zcats = $categlib->get_object_categories('trackeritem', $itemId);
@@ -1089,6 +1095,15 @@ class TrackerLib extends TikiLib
 			case 'u':
 				if ($fopt['options_array'][0] == 1) {
 					$itemUser = $fopt['value'];
+				}
+				break;
+			case 'usergroups':
+				if (empty($itemUser)) {
+					$itemUser = $this->get_item_creator($trackerId, $itemId);
+				}
+				if (!empty($itemUser)) {
+					global $tikilib;
+					$fopt['value'] = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
 				}
 				break;
 			case 'p':
@@ -1294,6 +1309,12 @@ class TrackerLib extends TikiLib
 							}
 						}
 					}
+				}
+			}
+			if ($prefs['user_selector_realnames_tracker'] == 'y' && $ins_fields['data'][$i]['type'] == 'u') {
+				if (!$userlib->user_exists($ins_fields['data'][$i]['value'])) {
+					$finalusers = $userlib->find_best_user(array($ins_fields['data'][$i]['value']), '' , 'login');
+					$ins_fields['data'][$i]['value'] = $finalusers[0];
 				}
 			}
 			if ($ins_fields['data'][$i]['type'] == 'G' && isset($ins_fields['data'][$i]['options_array'][0]) && $ins_fields['data'][$i]['options_array'][0] == 'y') {
@@ -1892,6 +1913,27 @@ class TrackerLib extends TikiLib
 			}
 			if (!empty($trackersync_zoom)) {
 				$tikilib->set_user_preference($trackersync_user, 'zoom', $trackersync_zoom);
+			}
+		}
+		if ($trackersync && $prefs['user_trackersync_groups'] == 'y') {
+			if (empty($trackersync_user)) {
+				$trackersync_user = $user;
+			}
+			$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup'], true);
+			$sig_add = array_intersect($sig_catids, $new_categs);
+			$sig_del = array_intersect($sig_catids, $del_categs);
+			$groupList = $userlib->list_all_groups();
+			foreach ($sig_add as $c) {
+				$groupName = $categlib->get_category_name($c, true);
+				if (in_array($groupName, $groupList)) {
+					$userlib->assign_user_to_group($trackersync_user, $groupName);
+				}
+			}
+			foreach ($sig_del as $c) {
+				$groupName = $categlib->get_category_name($c, true);
+				if (in_array($groupName, $groupList)) {
+					$userlib->remove_user_from_group($trackersync_user, $groupName);
+				}
 			}
 		}
 		if (!empty($parsed)) {
@@ -3399,6 +3441,12 @@ class TrackerLib extends TikiLib
 				<dt>Description:
 				<dd><strong>[type]</strong> if value is password, will allow to change the user password, if value is email, will display/allow to change the user email, other values possible: language;
 				</dl>'));
+		$type['usergroups'] = array(
+			'label'=>tra('user groups'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Allows to display the user groups.
+				</dl>'));
 		$type['A'] = array(
 			'label'=>tra('attachment'),
 			'opt'=>true,
@@ -3993,9 +4041,21 @@ class TrackerLib extends TikiLib
 		}
 		/* the list of potential value is calculated by a javascript call to selectValues at the end of the tpl */
 	}
+	function flaten($fields) {
+		$new = array();
+		foreach ($fields as $field) {
+			if (is_array($field)) {
+				$new = array_merge($new, $this->flaten($field));
+			} else {
+				$new[] = $field;
+			}
+		}		
+		return $new;
+	}
 	function test_field_type($fields, $types) {
-		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($fields),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
-		return $this->getOne($query, array_merge($fields, $types));
+		$new = $this->flaten($fields);
+		$query = 'select count(*) from `tiki_tracker_fields` where `fieldId` in ('. implode(',', array_fill(0,count($new),'?')).') and `type` in ('. implode(',', array_fill(0,count($types),'?')).')';
+		return $this->getOne($query, array_merge($new, $types));
 	}
 	function get_computed_info($options, $trackerId=0, &$fields=null) {
 		preg_match_all('/#([0-9]+)/', $options, $matches);
@@ -4270,6 +4330,9 @@ class TrackerLib extends TikiLib
 			}
 		}
 		//echo '<pre>'; print_r($cell); echo '</pre>';
+	}
+	function get_tracker_by_name($name) {
+		return $this->getOne('select `trackerId` from `tiki_trackers` where `name`=?', array($name));
 	}
 
 }

@@ -32,7 +32,7 @@
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
 		{if $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
 
-		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL'}
+		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}
 
 	<label class="findtitle">
 		{if empty($whatlabel)}
@@ -220,6 +220,13 @@
 		<span class="button">
 			<a href="{$smarty.server.PHP_SELF}?{query find='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
 		</span>
+	{/if}
+	{if $gmapbuttons and $mapview}
+		<input type="submit" name="searchlist" value="{tr}List View{/tr}" />
+		<input type="hidden" name="mapview" value="y" />
+	{elseif $gmapbuttons}
+		<input type="submit" name="searchmap" value="{tr}Map View{/tr}" />
+		<input type="hidden" name="mapview" value="n" />
 	{/if}
 </label>
 

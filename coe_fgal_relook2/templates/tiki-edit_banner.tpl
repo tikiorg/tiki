@@ -258,9 +258,9 @@
 			</tr>
 			{cycle print=false values="even,odd"}
 			{section name=ix loop=$zones}
-				<tr>
-					<td class="{cycle advance=false}">{$zones[ix].zone|escape}</td>
-					<td class="{cycle}">
+				<tr class="{cycle}">
+					<td>{$zones[ix].zone|escape}</td>
+					<td>
 						<a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone|escape:url}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
 					</td>
 				</tr>

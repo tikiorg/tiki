@@ -189,10 +189,10 @@
 			{else}
 				{assign var=over_infos value=''}
 			{/if}
-		<tr>
+		<tr class="{cycle}">
 
 			{if $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
-				<td style="text-align:center;" class="{cycle advance=false}">
+				<td style="text-align:center;">
 					{if $files[changes].isgal eq 1}
 						{assign var='checkname' value='subgal'}
 					{else}
@@ -203,13 +203,13 @@
 			{/if}
 
 			{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
-				<td style="white-space: nowrap" class="{cycle advance=false}">
+				<td style="white-space: nowrap">
 					<a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt="{tr}Actions{/tr}"}</a>
 				</td>
 			{/if}
 
 			{if $show_parentName eq 'y'}
-				<td class="{cycle advance=false}">
+				<td>
 					<a href="tiki-list_file_gallery.php?galleryId={$files[changes].galleryId}">{$files[changes].parentName|escape}</a>
 				</td>
 			{/if}
@@ -232,10 +232,7 @@
 							{else}
 		
 								{if $filegals_manager neq ''}
-									{assign var=seturl value=$files[changes].id|sefurl:display}
-		
-									{* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
-									href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$tikiroot}{$seturl}'); checkClose();" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
+									href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
 		
 								{elseif $files[changes].perms.tiki_p_download_files eq 'y'}
 									{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
@@ -299,7 +296,7 @@
 					{/if}
 	
 					{if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
-						<td class="{cycle advance=false}">
+						<td>
 							{if $link neq ''}<a class='fgalname{if preg_match('/tiki-download_file\.php/',$link)} fgalfile{else} fgalgal{/if}' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}
 						</td>
 					{/if}
@@ -308,22 +305,22 @@
 						{assign var=other_columns_selected_val value=$propval}
 					{else}
 						{if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) }
-							<td class="{cycle advance=false}">{$propval}</td>
+							<td>{$propval}</td>
 						{/if}
 					{/if}
 				{/if}
 			{/foreach}
 
 			{if $other_columns_selected neq ''}
-				<td class="{cycle advance=false}">{$other_columns_selected_val}</td>
+				<td>{$other_columns_selected_val}</td>
 			{/if}
 
 			{if ( $prefs.use_context_menu_icon neq 'y' and $prefs.use_context_menu_text neq 'y' ) or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
-				<td class="{cycle advance=false}">{include file='fgal_context_menu.tpl'}</td>
+				<td>{include file='fgal_context_menu.tpl'}</td>
 			{/if}
 
 			{if ( $other_columns neq '' or $other_columns_selected neq '' ) and $prefs.javascript_enabled eq 'y'}
-				<td class="{cycle advance=false}">
+				<td>
 					{if $show_infos eq 'y'}
 						{if $over_infos eq ''}
 							{icon _id='information_gray' class='' alt="{tr}No information{/tr}"}

@@ -2123,9 +2123,14 @@ class TikiLib extends TikiDb_Bridge
 	 * @param bool $keep_subgals_together do not mix files and subgals when sorting (if true, subgals will always be at the top)
 	 * @param bool $parent_is_file use $galleryId param as $fileId (to return only archives of the file)
 	 * @param array filter: creator, categId, lastModif, lastDownload, fileId
+	 * @param string wiki_syntax: text to be inserted in editor onclick (from fgal manager)
 	 * @return array of found files and subgals
 	 */
-	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='') {
+	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, 
+						$with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true,
+						$recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false, $with_backlink=false, $filter='',
+						$wiki_syntax = '') {
+
 		global $user, $tiki_p_admin_file_galleries;
 		global $filegallib; require_once('lib/filegals/filegallib.php');
 
@@ -2392,6 +2397,11 @@ class TikiLib extends TikiDb_Bridge
 			if ($backlinkPerms[$res['galleryId']] == 'y' && $filegallib->hasOnlyPrivateBacklinks($res['id'])) {
 				continue;
 			}
+			// add markup to be inserted onclick
+			if ($object_type === 'file') {
+				$res['wiki_syntax'] = $this->process_fgal_syntax($wiki_syntax, $res);
+			}
+				
 			$n++;
 			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
 
@@ -2446,6 +2456,17 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		return array('data' => $ret, 'cant' => $cant);
+	}
+	
+	// convert markup to be inserted onclick - replace: %fileId%, %name%, %description% etc
+	function process_fgal_syntax($syntax, $file) {
+		$replace_keys = array('fileId', 'name', 'filename', 'description', 'hits', 'author', 'filesize', 'filetype');
+		foreach($replace_keys as $k) {
+			if (isset($file[$k])) {
+				$syntax = preg_replace("/%$k%/", $file[$k], $syntax);
+			}
+		}
+		return $syntax;
 	}
 
 	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1, $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {
@@ -4673,7 +4694,7 @@ class TikiLib extends TikiDb_Bridge
 
 			// print "<pre>plugin: :".htmlspecialchars( $plugin ) .":</pre>";
 
-			if ($plugin == 'img' || !$options['parseimgonly']) {	// parse images only for fckeditor switch to html
+			if ($plugin == 'img' || !$options['parseimgonly']) {	// parse images only for fckeditor switch to html (probably TOKIL)
 				$pos = strpos( $data, $plugins[0] ); // where the plugin starts
 	
 				// where the part after the plugin arguments starts
@@ -4769,7 +4790,7 @@ class TikiLib extends TikiDb_Bridge
 					$arguments = $plugins['arguments'];
 
 					if (count($arguments) == 0) {
-                        //TODO HACK: See bug 2499 http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2499
+                        //TODO HACK: See bug 2499 http://dev.tiki.org/tiki-view_tracker_item.php?itemId=2499
 						$arguments = array('' => '');
 					}
 
@@ -4804,8 +4825,8 @@ class TikiLib extends TikiDb_Bridge
 								$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
 							}
 							
-							if ($options['fck']) {
-								$ret = $this->convert_plugin_for_ckeditor( $plugin_name, $arguments, $ret, $plugin_data );
+							if ($options['ck_editor']) {
+								$ret = $this->convert_plugin_for_ckeditor( $plugin_name, $arguments, $ret, $plugin_data, array('icon' => 'pics/icons/page_white_code.png') );
 							}
 
 						} else {
@@ -4831,18 +4852,22 @@ class TikiLib extends TikiDb_Bridge
 									$status = 'pending';
 								}
 
-								$smarty->assign( 'plugin_name', $plugin_name );
-								$smarty->assign( 'plugin_index', $current_index );
-
-								$smarty->assign( 'plugin_status', $status );
-								$smarty->assign( 'plugin_details', $details );
-								$smarty->assign( 'plugin_preview', $preview );
-								$smarty->assign( 'plugin_approve', $approve );
-
-								$smarty->assign( 'plugin_body', $plugin_data );
-								$smarty->assign( 'plugin_args', $arguments );
-
-								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
+								if ($options['ck_editor']) {
+									$ret = $this->convert_plugin_for_ckeditor( $plugin_name, $arguments, tra('Plugin execution pending approval'), $plugin_data, array('icon' => 'pics/icons/error.png') );
+								} else {
+									$smarty->assign( 'plugin_name', $plugin_name );
+									$smarty->assign( 'plugin_index', $current_index );
+	
+									$smarty->assign( 'plugin_status', $status );
+									$smarty->assign( 'plugin_details', $details );
+									$smarty->assign( 'plugin_preview', $preview );
+									$smarty->assign( 'plugin_approve', $approve );
+	
+									$smarty->assign( 'plugin_body', $plugin_data );
+									$smarty->assign( 'plugin_args', $arguments );
+	
+									$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
+								}
 							}
 						}
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
@@ -5312,8 +5337,8 @@ class TikiLib extends TikiDb_Bridge
 			$output = $func_name( $data, $args, $offset, $parseOptions );
 
 			$plugin_result =  $this->convert_plugin_output( $output, $pluginFormat, $outputFormat, $parseOptions );
-			if ($parseOptions['fck'] ) {
-				return $this->convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data );
+			if ($parseOptions['ck_editor'] ) {
+				return $this->convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info );
 			} else {
 				return $plugin_result;
 			}
@@ -5322,36 +5347,58 @@ class TikiLib extends TikiDb_Bridge
 		}
 	}
 	
-	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $icon = 'pics/icons/wiki_plugin_edit.png' ) {
-		$fck_editor_plugin = '{'.strtoupper($name).'(';
+	private function convert_plugin_for_ckeditor( $name, $args, $plugin_result, $data, $info = array() ) {
+		$ck_editor_plugin = '{'.strtoupper($name).'(';
+		$arg_str = '';		// not using http_build_query() as it converts spaces into +
 		if (!empty($args)) {
 			foreach( $args as $argKey => $argValue ) {
-				$fck_editor_plugin .= $argKey.'="'.$argValue.'" ';
+				if (is_array($argValue)) {
+					if (isset($info['params'][$argKey]['separator'])) { $sep = $info['params'][$argKey]['separator']; } else { $sep = ','; }
+					$ck_editor_plugin .= $argKey.'="'.implode($sep, $argValue).'" ';	// process array
+					$arg_str .= $argKey.'='.implode($sep, $argValue).'&';
+				} else {
+					$ck_editor_plugin .= $argKey.'="'.$argValue.'" ';
+					$arg_str .= $argKey.'='.$argValue.'&';
+				}
 			}
 		}
-		$fck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
+		$ck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
+		// work out if I'm a nested plugin and return empty if so
+		$stack = debug_backtrace(true);
+		$plugin_nest_level = 0;
+		foreach ($stack as $st) {
+			if ($st['function'] === 'parse_first') {
+				$plugin_nest_level ++;
+				if ($plugin_nest_level > 1) {
+					return '';
+				}
+			}
+		}
+		$arg_str = rtrim($arg_str, '&');
+		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
 
+		// some plugins are just too flakey to do wysiwyg, so return the source for them ;(
+		if (in_array($name, array())) {
+			return '~np~' . $ck_editor_plugin . '~/np~';
+		}
+		// pre-parse the output so nested plugins don't fall out all over the place
+		$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
 		// remove hrefs and onclicks
-		$plugin_result = preg_replace('/href\=["\']([^"\']*)["\']/i', 'tiki_href="$1"', $plugin_result);
-		$plugin_result = preg_replace('/onclick\=["\']([^"\']*)["\']/i', 'tiki_onclick="$1"', $plugin_result);
+		$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
+		$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
+		$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
 		
-		if (preg_match('/(:?<div|<p)/i', $plugin_result)) {
+		if ($this->contains_html_block($plugin_result)) {
 			$elem = 'div';
 		} else {
 			$elem = 'span';
 		}
-		$arg_str = '';		// not using http_build_query() as it converts spaces into +
-		foreach ($args as $key=>$value) { 
-		    $arg_str .= $key.'='.$value.'&';
-		}
-		$arg_str = rtrim($arg_str, '&');
-		
-		$ret = '<'.$elem.' class="cke_tiki_plugin" plugin="' . $name . '" contenteditable="false"' .
-				' syntax="~np~' . htmlentities( $fck_editor_plugin ) . '~/np~"' .
-				' args="' . htmlentities($arg_str) . '"' .
-				' body="~np~' . str_replace('"', '\"', $data) . '~/np~">'.
-				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:relative;left:0px;top:0px;z-index:10001;" />' .
-				$plugin_result.'<!-- end cke_tiki_plugin --></'.$elem.'>';
+		$ret = '~np~<'.$elem.' class="tiki_plugin" plugin="' . $name . '" contenteditable="false" style="position:relative;"' .
+				' syntax="' . htmlentities( $ck_editor_plugin, ENT_QUOTES, 'UTF-8' ) . '"' .
+				' args="' . htmlentities($arg_str, ENT_QUOTES, 'UTF-8') . '"' .
+				' body="' . htmlentities( $data, ENT_QUOTES, 'UTF-8') . '">'.
+				'<img src="'.$icon.'" width="16" height="16" style="float:left;position:absolute;z-index:10001" />' .
+				$plugin_result.'<!-- end tiki_plugin --></'.$elem.'>~/np~';
 		
 		return 	$ret;
 	}
@@ -5390,7 +5437,7 @@ class TikiLib extends TikiDb_Bridge
 					}
 
 					$vals = array_map( 'trim', $vals );
-					$vals = array_filter( $vals );
+					//$vals = array_filter( $vals );
 
 					$argValue = array_values( $vals );
 				} else {
@@ -5695,7 +5742,7 @@ class TikiLib extends TikiDb_Bridge
 		$options['suppress_icons'] = isset($options['suppress_icons']) ? (bool)$options['suppress_icons'] : false;
 		$options['parsetoc'] = isset($options['parsetoc']) ? (bool)$options['parsetoc'] : true;
 		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
-		if (empty($options['fck'])) $options['fck'] = false;
+		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 		
 		
 		// if simple_wiki is true, disable some wiki syntax
@@ -5783,6 +5830,7 @@ class TikiLib extends TikiDb_Bridge
 
 		// Strike-deleted text --text-- (but not in the context <!--[if IE]><--!> or <!--//--<!CDATA[//><!--
 		if (!$simple_wiki) {
+			// FIXME produces false positive for strings contining html comments. e.g: --some text<!-- comment -->
 			$data = preg_replace("#(?<!<!|//)--([^\s>].+?)--#", "<del>$1</del>", $data);
 		}
 
@@ -6052,6 +6100,7 @@ class TikiLib extends TikiDb_Bridge
 
 		// Handle double square brackets. to display [foo] use [[foo] -rlpowell. Improved by sylvieg to avoid replacing them in [[code]] cases.
 		$data = preg_replace( "/\[\[([^\]]*)\](?!\])/", "[$1]", $data );
+		$data = preg_replace( "/\[\[([^\]]*)$/", "[$1", $data );
 
 		return $data;
 	}
@@ -6286,7 +6335,7 @@ class TikiLib extends TikiDb_Bridge
 
 		global $prefs;
 
-		if ( $options['fck'] ) {
+		if ( $options['ck_editor'] ) {
 			$need_maketoc = false ;
 		} else {
 			$need_maketoc = strpos($data, "{maketoc");
@@ -6448,10 +6497,10 @@ class TikiLib extends TikiDb_Bridge
 								$listate = substr($line, $listlevel, 1);
 								if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
 									$thisid = 'id' . microtime() * 1000000;
-									if ( !$options['fck'] ) {
+									if ( !$options['ck_editor'] ) {
 										$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
 									}
-									$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['fck'] ? 'block' : 'none') . ';"';
+									$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['ck_editor'] ? 'block' : 'none') . ';"';
 									$addremove = 1;
 								}
 							}
@@ -6465,10 +6514,10 @@ class TikiLib extends TikiDb_Bridge
 						$listate = substr($line, $listlevel, 1);
 						if (($listate == '+' || $listate == '-')) {
 							$thisid = 'id' . microtime() * 1000000;
-							if ( !$options['fck'] ) {
+							if ( !$options['ck_editor'] ) {
 								$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
 							}
-							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['fck'] ? 'block' : 'none') . ';"';
+							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['ck_editor'] ? 'block' : 'none') . ';"';
 							$addremove = 1;
 						}
 						$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
@@ -6589,14 +6638,14 @@ class TikiLib extends TikiDb_Bridge
 						if ($divstate == '+' || $divstate == '-') {
 							// OK. Must insert flipper after HEADER, and then open new div...
 							$thisid = 'id' . preg_replace('/[^a-zA-z0-9]/', '',urlencode($options['page'])) .$nb_hdrs;
-							if (!$options['fck']) {
+							if (!$options['ck_editor']) {
 								$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
 								global $headerlib;
 								$headerlib->add_jq_onready( "setheadingstate('$thisid');" );
 							} else {
 								$aclose = '';
 							}
-							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' || !$options['fck'] ? 'block' : 'none') . ';">';
+							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' || !$options['ck_editor'] ? 'block' : 'none') . ';">';
 							array_unshift($divdepth, $hdrlevel);
 							$addremove += 1;
 						}
@@ -6693,19 +6742,14 @@ class TikiLib extends TikiDb_Bridge
 						 */
 						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 &&  $inScript == 0
 								// Don't put newlines at comments' end!
-								&& strpos($line, "-->") !== (strlen($line) - 3)) {
+								&& strpos($line, "-->") !== (strlen($line) - 3)
+								&& !$options['is_html']
+								&& count($lines) > 1) {
 							 	
 							$tline = trim(str_replace('&nbsp;', '', $line));
 							
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								// keeping this as separate regexps for now to ease understanding - should be optimised later
-								$contains_block = preg_match('/<[\/]?div/', $tline) ||					// open/close div
-										preg_match('/<[\/]?p/', $tline) ||								// open/close paragraph
-										preg_match('/<[\/]?table/', $tline) ||							// open/close h1 etc
-										preg_match('/<[\/]?h\d/', $tline) ||							// open/close h1 etc
-										preg_match('/<[\/]?li/', $tline) ||								// open/close list items
-										preg_match('/<[\/]?ol/', $tline) ||								// open/close ordered list
-										preg_match('/<[\/]?ul/', $tline);								// open/close unordered list
+								$contains_block = $this->contains_html_block( $tline );
 								
 								if (!$contains_block) {	// check inside plugins etc for block elements
 									preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins 
@@ -6722,13 +6766,7 @@ class TikiLib extends TikiDb_Bridge
 											}
 											if ($nop_ix !== false) {
 												$nop_str = $noparsed['data'][$nop_ix];
-												$contains_block = preg_match('/<[\/]?div/', $nop_str) ||	// open/close div	 - TODO refactor
-														preg_match('/<[\/]?p/', $nop_str) ||				// open/close paragraph
-														preg_match('/<[\/]?table/', $nop_str) ||			// open/close paragraph
-														preg_match('/<[\/]?h\d/', $nop_str) ||				// open/close h1 etc
-														preg_match('/<[\/]?li/', $nop_str) ||				// open/close list items
-														preg_match('/<[\/]?ol/', $nop_str) ||				// open/close ordered list
-														preg_match('/<[\/]?ul/', $nop_str);					// open/close unordered list
+												$contains_block = $this->contains_html_block( $nop_str );
 												if ($contains_block) {
 													break;
 												}
@@ -6793,7 +6831,7 @@ class TikiLib extends TikiDb_Bridge
 		 */
 		$new_data = '';
 		$search_start = 0;
-		if ( !$options['fck']) {
+		if ( !$options['ck_editor']) {
 			while ( ($maketoc_start = strpos($data, "{maketoc", $search_start)) !== false ) {
 				$maketoc_length = strpos($data, "}", $maketoc_start) + 1 - $maketoc_start;
 				$maketoc_string = substr($data, $maketoc_start, $maketoc_length);
@@ -6819,7 +6857,8 @@ class TikiLib extends TikiDb_Bridge
 							'title' => tra('Table of contents', $options['language'], true),
 							'showhide' => '',
 							'nolinks' => '',
-							'nums' => ''
+							'nums' => '',
+							'levels' => ''
 							);
 
 					// Build maketoc arguments list (and remove " chars if they are around the value)
@@ -6837,6 +6876,9 @@ class TikiLib extends TikiDb_Bridge
 					} else {
 						$maketoc_summary = '';
 						$maketoc_title = '';
+					}
+					if (!empty($maketoc_args['levels'])) {
+						$maketoc_args['levels'] = preg_split('/\s*,\s*/', $maketoc_args['levels']);
 					}
 
 					// Build maketoc
@@ -6858,7 +6900,9 @@ class TikiLib extends TikiDb_Bridge
 							if ( $maketoc_args['maxdepth'] > 0 && $tocentry['hdrlevel'] > $maketoc_args['maxdepth'] ) {
 								continue;
 							}
-
+							if (!empty($maketoc_args['levels']) && !in_array($tocentry['hdrlevel'], $maketoc_args['levels'])) {
+								continue;
+							}
 							// Generate the toc entry title (with nums)
 							if ( $maketoc_args['nums'] == 'n' ) {
 								$tocentry_title = '';
@@ -6879,12 +6923,19 @@ class TikiLib extends TikiDb_Bridge
 							}
 
 							if ( $maketoc != '' ) $maketoc.= "\n";
+							$shift = $tocentry['hdrlevel'];
+							if (!empty($maketoc_args['levels'])) {
+								for ($i = 1; $i <= $tocentry['hdrlevel']; ++$i) {
+									if (!in_array($i, $maketoc_args['levels']))
+										--$shift;
+								}
+							}
 							switch ( $maketoc_args['type'] ) {
 								case 'box':
-									$maketoc .= "<li class='toclevel-".$tocentry['hdrlevel']."'>".$tocentry_title."</li>";
+									$maketoc .= "<li class='toclevel-".$shift."'>".$tocentry_title."</li>";
 									break;
 								default:
-									$maketoc .= str_repeat('*', $tocentry['hdrlevel']).$tocentry_title;
+									$maketoc .= str_repeat('*', $shift).$tocentry_title;
 							}
 						}
 						$maketoc = $this->parse_data($maketoc);
@@ -6930,6 +6981,12 @@ class TikiLib extends TikiDb_Bridge
 			$button .= 'hdr=0">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 			$data = $button.$data;
 		}
+	}
+	
+	function contains_html_block($inHtml) {
+		// detect all block elements as defined on http://www.w3.org/2007/07/xhtml-basic-ref.html
+		$block_detect_regexp = '/<[\/]?(?:address|blockquote|div|dl|fieldset|h\d|hr|li|ol|p|pre|table|ul)/i';
+		return  (preg_match( $block_detect_regexp, $inHtml) > 0);
 	}
 
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {

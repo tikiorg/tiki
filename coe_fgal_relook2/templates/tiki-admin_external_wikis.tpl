@@ -50,10 +50,10 @@
 	</tr>
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
-		<tr>
-			<td class="{cycle advance=false}">{$channels[user].name}</td>
-			<td class="{cycle advance=false}">{$channels[user].extwiki}</td>
-			<td class="{cycle}">
+		<tr class="{cycle}">
+			<td>{$channels[user].name}</td>
+			<td>{$channels[user].extwiki}</td>
+			<td>
 				&nbsp;&nbsp;
 				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;extwikiId={$channels[user].extwikiId}">{icon _id='page_edit'}</a>
 				&nbsp;

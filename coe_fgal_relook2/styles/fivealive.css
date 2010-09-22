@@ -1,6 +1,6 @@
 /* $Id$
 	FiveAlive theme (fivealive.css) for TikiWiki CMS/Groupware.
-	Visit http://themes.tikiwiki.org for more information.
+	Visit http://themes.tiki.org for more information.
 */
  
 /* Import foundation CSS files. */
@@ -1069,6 +1069,11 @@ div.dirsite {
 
 .postbody-content {
 	margin: 0;
+}
+
+.post .postfooter {
+	padding: 1px;
+	background: none repeat scroll 0 0 #E6EDF5;
 }
 
 /**** Image Galleries ****/

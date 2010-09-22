@@ -27,15 +27,15 @@
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$batchRes}
-			<tr>
-				<td class="{cycle advance=false}">{$batchRes[ix].filename}</td>
+			<tr class="{cycle}">
+				<td>{$batchRes[ix].filename}</td>
 				{if $batchRes[ix].msg}
-					<td class="{cycle advance=true}" colspan="3">
+					<td colspan="3">
 						{icon _id=exclamation alt="{tr}Errors detected{/tr}" style="vertical-align:middle"} {$batchRes[ix].msg}
 					</td>
 				{else}
-					<td class="{cycle advance=false}">
-						{icon _id=accept alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td class="{cycle advance=false}">{$batchRes[ix].imageId}</td><td class="{cycle}"><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}" />
+					<td>
+						{icon _id=accept alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td>{$batchRes[ix].imageId}</td><td><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}" />
 					</td>
 				{/if}
 			</tr>

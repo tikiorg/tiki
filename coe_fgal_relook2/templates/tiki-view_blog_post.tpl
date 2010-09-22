@@ -5,7 +5,7 @@
 {/if}
 
 <div class="blogpost post post_single">
-	{include file='blog_wrapper.tpl' }
+	{include file='blog_wrapper.tpl' blog_post_context='view_blog_post'}
 	{include file='blog_post_related_content.tpl'}
 </div>
 

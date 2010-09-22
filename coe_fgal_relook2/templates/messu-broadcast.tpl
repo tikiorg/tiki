@@ -4,7 +4,6 @@
 {include file='messu-nav.tpl'}
 <br /><br />
 
-
 {if $message}
 	<div class="simplebox highlight">
 		{if $preview eq '1'}
@@ -86,4 +85,3 @@
 		</table>
 	</form>
 {/if}
-

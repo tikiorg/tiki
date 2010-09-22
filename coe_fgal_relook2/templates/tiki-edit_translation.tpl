@@ -29,6 +29,7 @@
 {if $langpage}
 
 
+{if $type == 'wiki page'}
 <ul>
 	<li><a href="#translate_updates">{tr}Translate updates made on this page or one of its translations{/tr}</a></li>
 	<li><a href="#new_translation">{tr}Translate this page to a new language{/tr}</a></li>
@@ -49,11 +50,8 @@
 <hr>
 <br>
 
-
 <a name="#new_translation"></a>
 <h3>{tr}Translate this page to a new language{/tr}</h3>
-
-
 <form method="post" action="tiki-editpage.php" onsubmit="return validate_translation_request(this)">
 	<p>{tr}Select language to translate to:{/tr}
 		<select name="lang" id="language_list" size="1">
@@ -79,6 +77,7 @@
 	<input type="submit" value="{tr}Create translation{/tr}"/></p>
 	<textarea name="edit" style="display:none">{$translate_message}{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
+{/if}
 
 {jq}
 {literal}
