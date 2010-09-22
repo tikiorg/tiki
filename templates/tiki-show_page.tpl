@@ -208,7 +208,7 @@
 	<div class="wikitext" id="wikifootnote">{$footnote}</div>
 {/if}
 
-{capture name='editdate_section'}{strip}
+{capture name='editdate_section'}
 	{if isset($wiki_authors_style) && $wiki_authors_style neq 'none'}
 		{include file=wiki_authors.tpl}
 	{/if}
@@ -219,7 +219,7 @@
 		<br />
 		{tr}The original document is available at{/tr} <a href="{$base_url}{$page|sefurl}">{$base_url}{$page|sefurl}</a>
 	{/if}
-{/strip}{/capture}
+{/capture}
 
 {* When editdate (authors + copyright + print_page) section is not empty show it *}
 {if $smarty.capture.editdate_section neq ''}
