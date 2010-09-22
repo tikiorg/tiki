@@ -381,7 +381,7 @@ function wikiplugin_trackerlist($data, $params) {
 	} else {
 
 		global $auto_query_args;
-		$auto_query_args_local = array('itemId','tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user');
+		$auto_query_args_local = array('trackerId', 'tr_initial',"tr_sort_mode$iTRACKERLIST",'tr_user', 'filterfield', 'filtervalue', 'exactvalue');
 		$auto_query_args = empty($auto_query_args)? $auto_query_args_local: array_merge($auto_query_args, $auto_query_args_local);
 		$smarty->assign('trackerId', $trackerId);
 		$tracker_info = $trklib->get_tracker($trackerId);
@@ -475,6 +475,13 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 			if (!isset($filterfieldok)) {
 				return tra('incorrect filterfield');
+			}
+		}
+		if (isset($_REQUEST['reloff']) && empty($_REQUEST['itemId']) && !empty($_REQUEST['trackerId'])) { //coming from a pagination
+			$items = $trklib->list_items($_REQUEST['trackerId'], $_REQUEST['reloff'], 1, '', '', isset($_REQUEST['filterfield'])?preg_split('/\s*:\s*/',$_REQUEST['filterfield']):'', isset($_REQUEST['filtervalue'])? preg_split('/\s*:\s*/', $_REQUEST['filtervalue']):'', isset($_REQUEST['status'])? preg_split('/\s*:\s*/', $_REQUEST['status']):'', isset($_REQUEST['initial'])?$_REQUEST['initial']:'', isset($_REQUEST['exactvalue'])?preg_split('/\s*:\s*/', $_REQUEST['exactvalue']):'');
+			if (isset($items['data'][0]['itemId'])) {
+				$_REQUEST['cant'] = $items['cant'];
+				$_REQUEST['itemId'] = $items['data'][0]['itemId'];
 			}
 		}
 
@@ -940,6 +947,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$urlquery['filterfield'] = implode(':', $filterfield);
 			$urlquery['filtervalue'] = implode(':', $filtervalue);
 			$urlquery['exactvalue'] = implode(':', $exactvalue);
+			$urlquery['trackerId'] = $trackerId;
 			$smarty->assign('urlquery', $urlquery);
 		}
 		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
@@ -1150,8 +1158,17 @@ function wikiplugin_trackerlist($data, $params) {
 				$smarty->security = true;
 			$smarty->assign('tpl', $tpl);
 			
-			$smarty->assign_by_ref('max', $max);
-			$smarty->assign_by_ref('count_item', $items['cant']);
+			if (!empty($itemId) && $showpagination == 'y' && !empty($_REQUEST['cant'])) {
+				$smarty->assign('max', 1);
+				$smarty->assign('count_item', $_REQUEST['cant']);
+				$smarty->assign('offset_arg', 'reloff');
+				$smarty->assign('tr_offset', $_REQUEST['reloff']);
+			} else {
+				$smarty->assign_by_ref('max', $max);
+				$smarty->assign_by_ref('item_count', $items['cant']);
+				$smarty->assign_by_ref('count_item', $items['cant']);
+				$smarty->assign('offset_arg', 'tr_offset');
+			}
 			$smarty->assign_by_ref('items', $items["data"]);
 			$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
 			
