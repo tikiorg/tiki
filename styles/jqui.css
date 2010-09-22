@@ -2,14 +2,14 @@
 	Jqui (jqui.css) for Tikiwiki CMS/Groupware.
 	Visit http://themes.tiki.org for more information.
 */
- 
+
 /* Import foundation CSS files. */
 @import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
 /***** XHTML Elements (body tag here,
-			others follow Layout) *****/ 
+			others follow Layout) *****/
 body {
 	font: 76%/1.5em Verdana,Arial,sans-serif;
 	color: #000;
@@ -19,20 +19,20 @@ body {
 
  /***** Layout (overrides layout.css;
 		also styling of page layout divs)  *****/
-							    
+	 	 	 	
 #main {
 	text-align: left
 }
 
-#c1c2	#wrapper	#col1.marginleft  {
+#c1c2 #wrapper #col1.marginleft  {
 	margin-left: 200px;
 }
 
-#c1c2	#wrapper	#col1.marginright {
+#c1c2 #wrapper #col1.marginright {
 	margin-right: 200px;
 }
 
-#c1c2	#wrapper	#col1	.content {
+#c1c2 #wrapper #col1 .content {
 	background: transparent;
 }
 
@@ -72,7 +72,7 @@ a:visited {
 	color: #0001a6;
 	text-decoration: none;
 }
- 
+
 a:active, a:hover {
 	color: #6a6bd7;
 	text-decoration: none;
@@ -84,7 +84,7 @@ h1 {
 	
 h2 {
 	font-size: 160%;
-}	
+}
 
 h3 {
 	font-size: 140%;
@@ -125,7 +125,7 @@ span.button input,
 	background: #e6e6e6 url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
 	font-weight: normal;
 	color: #555555;
-	outline: none; 
+	outline: none;
 }
 
 span.button a:hover,
@@ -216,7 +216,7 @@ div.error {
 
 .cssmenu_horiz li ul li,
 .cssmenu_vert li ul li {
-	background:	#e2e2e2;
+	background: #e2e2e2;
 	border: 1px solid #aaa;
 	border-top: 0;
 	margin-bottom: -1px
@@ -235,7 +235,7 @@ div.error {
 	background: none;
 	border-right: 1px solid #aaa;
 }
- 
+
 #tiki-top .cssmenu_horiz li:hover a {
 	text-decoration: none;
 }
@@ -318,7 +318,7 @@ a .sf-sub-indicator {
 	padding: .2em;
 	margin: 0 .5em 10px;
 	background: #ffffff url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
-	color: #222222;	
+	color: #222222;
 	border: 1px solid #aaaaaa;
 }
 
@@ -348,9 +348,9 @@ h3.box-title,
 
 /** Other boxes **/
 
-.rbox-title, 
+.rbox-title,
 .rbox-data {
-/*	-moz-background-clip: border;
+/* -moz-background-clip: border;
 	-moz-background-inline-policy: continuous;
 	-moz-background-origin :padding;*/
 	background: #fbf9ee url(../lib/jquery/jquery-ui/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x scroll 50% 50%;
@@ -399,13 +399,13 @@ table.normal {
 	border: 1px solid #aaa;
 }
 /*
-table.normal a.link, 
+table.normal a.link,
 table.normal a,
 th a,
 th a:visited,
 td.heading a,
 td.heading a:visited {
-	color: ;	
+	color: ;
 }
 
 table.admin a.link,
@@ -509,7 +509,7 @@ div.articletrailer span {
 /*
 .post .author {}
 	
-.post .author_post_info:first-child {} 
+.post .author_post_info:first-child {}
 .post .postbody-title .title a.link {}
 */
 
@@ -610,7 +610,7 @@ div.freetagitemlist {
 }
 
 .caldark {
-/*	background: ;*/
+/* background: ;*/
 	border: 0;
 }
 
@@ -625,12 +625,12 @@ div.freetagitemlist {
 }
 
 .calfocuson {
-	font-size: 100%; 
+	font-size: 100%;
 	background: #f3e498;
 }
 
 .calfocuson a {
-	font-size: 90%; 
+	font-size: 90%;
 }
 
 .calHeadingOn, .calHeadingOn a {

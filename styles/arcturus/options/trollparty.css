@@ -199,7 +199,7 @@ input[type=submit]:hover {
 
 .cssmenu_horiz li ul li,
 .cssmenu_vert li ul li {
-	background:	#121212;
+	background: #121212;
 	border: 1px solid #003388;
 	border-top: 0;
 	margin-bottom: -1px
@@ -254,7 +254,7 @@ div.separator {
 	color: #fff;
 }
 
-/**** Jquery ****/ 
+/**** Jquery ****/
 /**autocomplete **/
 .ac_even, .ac_odd {
 	color: #47C;

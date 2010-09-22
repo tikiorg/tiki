@@ -50,7 +50,7 @@ div.tabrow {
 .viewmode div {
 	margin-right: 4px;
 }
-div.viewmode { 
+div.viewmode {
 	padding: 1px;
 }
 
@@ -88,9 +88,9 @@ div.viewmode {
 .wikitext h6 {
 }
 
-body.tiki_wiki_page h1.pagetitle a, 
-body.tiki_wiki_page h1.pagetitle a:link, 
-body.tiki_wiki_page h1.pagetitle a:visited, 
+body.tiki_wiki_page h1.pagetitle a,
+body.tiki_wiki_page h1.pagetitle a:link,
+body.tiki_wiki_page h1.pagetitle a:visited,
 body.tiki_wiki_page h1.pagetitle a:hover {
 	color: #0066FF;
 	font-size: 12px;
