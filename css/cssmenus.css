@@ -14,7 +14,7 @@ ul.cssmenu_vert ul {
 
 .cssmenu_horiz,
 .cssmenu_vert {
-	line-height: 1.0;
+	line-height: 1.0em;
 }
 
 .cssmenu_horiz ul,
