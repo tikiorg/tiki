@@ -1058,6 +1058,7 @@ tr.diffheader {
 	z-index: 1;
 	position: relative;
 	padding: 4px;
+	top: -3px;
 /*	padding-top: 21px;
 	margin-bottom: 25px;
 	margin-top: -1px;*/
