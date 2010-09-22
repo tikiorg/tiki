@@ -1387,19 +1387,19 @@ function get_default_prefs() {
 		// full list in lib/toolbars/toolbarslib.php Toolbar::getList()
 		// cannot contain spaces, commas, forward-slash or pipe chars
 		'toolbar_global' => '
-			bold, italic, underline, strike, - , color, - ,
-			wikiplugin_img, tikiimage , tikilink, link, unlink, -, undo, redo, - ,
-			find, replace,-,  removeformat, specialchar, smiley | help, switcheditor
-			/
-			templates, -, style, -,  h1, h2, h3, left, center, -, list, numlist, wikiplugin_flash, wikiplugin_mouseover, wikiplugin_module, wikiplugin_html, outdent, indent, 
-			- , table, -, wikiplugin_code, source, nonparsed, showblocks | fullscreen
+			bold,italic,underline,strike, sub, sup,-,color,-,wikiplugin_img,tikiimage,tikilink,link, unlink, anchor,-,
+			undo, redo,-,find,replace,-, removeformat,specialchar,smiley|help,switcheditor,autosave/
+			templates, cut, copy, paste, pastetext, pasteword,-,h1,h2,h3, left,center,-,
+			blockquote,list,numlist,wikiplugin_mouseover,wikiplugin_module,wikiplugin_html, outdent, indent,-,
+			pagebreak,rule,-,table,-,wikiplugin_code, source, showblocks,nonparsed|fullscreen/
+			format,style,-,fontname,fontsize/
 		',
 		'toolbar_global_comments' => '
 			bold, italic, underline, strike , - , link, smiley | help
 		',
 		'toolbar_sheet' => 'addrow,addrowbefore,addrowmulti,deleterow,-,addcolumn,addcolumnbefore,addcolumnmulti,deletecolumn,-,
-							sheetgetrange,sheetrefresh,-,sheetfind,-|sheetsave,sheetclose/
-							bold,italic,underline,strike,center,-,color,bgcolor,-,tikilink,nonparsed,-|fullscreen/',
+							sheetgetrange,sheetrefresh,-,sheetfind|sheetclose,sheetsave,help/
+							bold,italic,underline,strike,center,-,color,bgcolor,-,tikilink,nonparsed|fullscreen/',
 
 		// pagination
 		'direct_pagination' => 'y',
