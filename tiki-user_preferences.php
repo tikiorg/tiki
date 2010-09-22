@@ -304,8 +304,14 @@ if (isset($_REQUEST['deleteaccount']) && $tiki_p_delete_account == 'y') {
       $smarty->display("error.tpl");
       die;
    }
-   $userlib->remove_user($user);
-   header('Location: tiki-logout.php');
+   $userlib->remove_user($userwatch);
+   if ($user == $userwatch) {
+	   header('Location: tiki-logout.php');
+   } elseif ($tiki_p_admin_users == 'y') {
+	   header('Location: tiki-adminusers.php');
+   } else {
+	   header("Location: $base_url");
+   }
    die();
 } 
 $tikilib->get_user_preference($userwatch, 'mytiki_pages', 'y');

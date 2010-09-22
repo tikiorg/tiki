@@ -144,7 +144,7 @@ function smarty_function_icon($params, &$smarty) {
 
 	// default values for some params
 	if ( ! isset($params['border']) )
-		$params['border'] = '0';
+		$params['style'] = 'border: none';
 
 	if ( isset($params['path_prefix']) ) {
 		$params['basedir'] = $tikipath;

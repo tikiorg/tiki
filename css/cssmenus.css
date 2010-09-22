@@ -9,12 +9,12 @@ ul.cssmenu_vert ul {
 	padding: 0;
 	padding-left: 0;
 	padding-right: 0;
-	list-style:	none;
+	list-style: none;
 }
 
 .cssmenu_horiz,
 .cssmenu_vert {
-	line-height: 1.0;
+	line-height: 1.0em;
 }
 
 .cssmenu_horiz ul,
@@ -32,7 +32,7 @@ ul.cssmenu_vert ul {
 
 .cssmenu_horiz li:hover,
 .cssmenu_vert li:hover {
-	visibility:	inherit; /* fixes IE7 'sticky bug' */
+	visibility: inherit; /* fixes IE7 'sticky bug' */
 }
 
 .cssmenu_horiz li,
@@ -43,7 +43,7 @@ ul.cssmenu_vert ul {
 
 .cssmenu_horiz a,
 .cssmenu_vert a {
-	display:	block;
+	display: block;
 	position: relative;
 }
 
@@ -51,9 +51,9 @@ ul.cssmenu_vert ul {
 .cssmenu_horiz li.sfHover ul,
 .cssmenu_vert li:hover ul,
 .cssmenu_vert li.sfHover ul {
-	left:	0;
+	left: 0;
 	top: 2.5em; /* match top ul list item height */
-	z-index:	752;
+	z-index: 752;
 }
 
 .cssmenu_horiz li:hover li ul,
@@ -67,7 +67,7 @@ ul.cssmenu_vert ul {
 .cssmenu_horiz li li.sfHover ul,
 .cssmenu_vert li li:hover ul,
 .cssmenu_vert li li.sfHover ul {
-	left:	10em; /* match ul width */
+	left: 10em; /* match ul width */
 	top: 0;
 }
 
@@ -103,7 +103,7 @@ ul.cssmenu_vert ul {
 .cssmenu_horiz a.sf-with-ul,
 .cssmenu_vert a.sf-with-ul {
 	padding-right: 2.25em;
-	min-width:	1px; /* trigger IE7 hasLayout so spans position accurately */
+	min-width: 1px; /* trigger IE7 hasLayout so spans position accurately */
 }
 
 .sf-sub-indicator {
@@ -145,7 +145,7 @@ li.sfHover > a > .sf-sub-indicator {
 
 /*** shadows for all but IE6 ***/
 ul.sf-shadow ul {
-	background:	url(../lib/jquery/superfish/images/shadow.png) no-repeat bottom right;
+	background: url(../lib/jquery/superfish/images/shadow.png) no-repeat bottom right;
 	padding: 0 8px 9px 0;
 /*	-moz-border-radius-bottomleft: 17px;
 	-moz-border-radius-topright: 17px;
@@ -164,8 +164,8 @@ ul.sf-shadow ul.sf-shadow-off {
 
 .cssmenu_vert li:hover ul,
 .cssmenu_vert li.sfHover ul {
-	left:	10em; /* match ul width */
-	top:	0;
+	left: 10em; /* match ul width */
+	top: 0;
 }
 
 /*** alter arrow directions ***/
@@ -191,23 +191,23 @@ div.cssmenubox,
 
 /*** adding a parent div.sf-navbar to .cssmenu_horiz to create an all-horizontal nav-bar menu ***/
 div.navbar .cssmenu_horiz {
-	background:	#BDD2FF;
+	background: #BDD2FF;
 	height: 2.5em;
 	padding-bottom: 2.5em;
 	position: relative;
 }
 div.navbar .cssmenu_horiz li {
-	background:	#AABDE6;
+	background: #AABDE6;
 	position: static;
 }
 div.navbar .cssmenu_horiz a {
-	border-top:	none;
+	border-top: none;
 }
 div.navbar .cssmenu_horiz li ul {
 	width: 44em; /*IE6 soils itself without this*/
 }
 div.navbar .cssmenu_horiz li li {
-	background:	#BDD2FF;
+	background: #BDD2FF;
 	position: relative;
 }
 div.navbar .cssmenu_horiz li li ul {
@@ -225,7 +225,7 @@ div.navbar .cssmenu_horiz a:visited {
 	border: none;
 }
 div.navbar .cssmenu_horiz li.current {
-	background:	#BDD2FF;
+	background: #BDD2FF;
 }
 div.navbar .cssmenu_horiz li:hover,
 div.navbar .cssmenu_horiz li.sfHover,
@@ -233,7 +233,7 @@ div.navbar .cssmenu_horiz li li.current,
 div.navbar .cssmenu_horiz a:focus,
 div.navbar .cssmenu_horiz a:hover,
 div.navbar .cssmenu_horiz a:active {
-	background:	#BDD2FF;
+	background: #BDD2FF;
 }
 div.navbar .cssmenu_horiz ul li:hover,
 div.navbar .cssmenu_horiz ul li.sfHover,
@@ -242,18 +242,18 @@ uldiv.navbar .cssmenu_horiz ul li.sfHover li,
 div.navbar .cssmenu_horiz ul a:focus,
 div.navbar .cssmenu_horiz ul a:hover,
 div.navbar .cssmenu_horiz ul a:active {
-	background:	#D1DFFF;
+	background: #D1DFFF;
 }
 div.navbar ul.cssmenu_horiz li li li:hover,
 div.navbar ul.cssmenu_horiz li li li.sfHover,
 div.navbar .cssmenu_horiz li li.current li.current,
 div.navbar .cssmenu_horiz ul li li a:focus, div.navbar .cssmenu_horiz ul li li a:hover, div.navbar .cssmenu_horiz ul li li a:active {
-	background:		#E6EEFF;
+	background: #E6EEFF;
 }
 div.navbar ul.cssmenu_horiz .current ul,
 div.navbar ul.cssmenu_horiz ul li:hover ul,
 div.navbar ul.cssmenu_horiz ul li.sfHover ul {
-	left:	0;
+	left: 0;
 	top: 2.5em; /* match top ul list item height */
 }
 div.navbar ul.cssmenu_horiz .current ul ul {
@@ -261,7 +261,7 @@ div.navbar ul.cssmenu_horiz .current ul ul {
 }
 
 div.navbar .cssmenu_horiz li li.current > a {
-	font-weight:	bold;
+	font-weight: bold;
 }
 
 /*** point all arrows down ***/

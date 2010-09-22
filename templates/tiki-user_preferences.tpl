@@ -549,14 +549,15 @@
 
 {if $tiki_p_delete_account eq 'y'}
 {tab name="{tr}Account Deletion{/tr}"}
-<form action="tiki-user_preferences.php" method="post" onsubmit='return confirm("{tr}Are you really sure you want to delete your account ?{/tr}");'>
+<form action="tiki-user_preferences.php" method="post" onsubmit='return confirm("{tr 0=$userwatch|escape}Are you really sure you want to delete the account %0?{/tr}");'>
+{if !empty($userwatch)}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
  <table class="normal">
   <tr class="{cycle}">
    <td></td>
-   <td><input type='checkbox' name='deleteaccountconfirm' value='1' /> {tr}Check this box if you really want to delete your account{/tr}</td>
+   <td><input type='checkbox' name='deleteaccountconfirm' value='1' /> {tr}Check this box if you really want to delete the account{/tr}</td>
   </tr>
     <tr>
-      <td colspan="2"  class="input_submit_container"><input type="submit" name="deleteaccount" value="{tr}Delete my account{/tr}" /></td>
+      <td colspan="2"  class="input_submit_container"><input type="submit" name="deleteaccount" value="{if !empty($userwatch)}{tr}Delete the account:{/tr} {$userwatch|escape}{else}{tr}Delete my account{/tr}{/if}" /></td>
     </tr>
  </table>
 </form>
