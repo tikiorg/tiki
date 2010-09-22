@@ -26,10 +26,10 @@ $smarty->assign_by_ref('cookie', $_SESSION['tiki_cookie_jar']);
 
 // fix margins for hidden columns - css (still) doesn't work as it needs to know the "normal" margins FIXME
 if (isset($_SESSION['tiki_cookie_jar']['show_col2']) and $_SESSION['tiki_cookie_jar']['show_col2'] == 'n') {
-	$headerlib->add_js('$("#col1").css("marginLeft", 0);');
+	$headerlib->add_css('#c1c2 #wrapper #col1.marginleft { margin-left: 0; }', 100);
 }
 if (isset($_SESSION['tiki_cookie_jar']['show_col3']) and $_SESSION['tiki_cookie_jar']['show_col3'] == 'n') {
-	$headerlib->add_js('$("#col1").css("marginRight", 0);');
+	$headerlib->add_css('#c1c2 #wrapper #col1.marginright { margin-right: 0; }', 100);
 }
 
 function getCookie($name, $section=null, $default=null) {
