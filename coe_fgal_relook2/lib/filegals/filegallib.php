@@ -1587,7 +1587,7 @@ class FileGalLib extends TikiLib
 			}
 		}
 		// and no syntax set, return default
-		$syntax = '{img fileId="%fileId%" thumb="n" rel="box[g]"}';	// should be a pref
+		$syntax = '{img fileId="%fileId%" thumb="y" rel="box[g]"}';	// should be a pref
 		return $syntax;
 	}
 }

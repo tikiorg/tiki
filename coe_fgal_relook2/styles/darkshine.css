@@ -799,6 +799,7 @@ td.form {padding: 0.2em}
 }
 	
 .tabmark a {
+	display: block;
 	padding: 0.5em 1em;
 	color: #666;
 	font-weight: bold}
@@ -820,6 +821,8 @@ td.form {padding: 0.2em}
 	border: 1px solid #7c7b7d;
 	background: #ececec;
 	color: #000;
+	margin-left: 0;
+	top: 0;
 }
 
 table.admin tr td div#page-bar {

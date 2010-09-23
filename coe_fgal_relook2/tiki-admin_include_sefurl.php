@@ -13,17 +13,17 @@ if (isset($_REQUEST['save'])) {
 	simple_set_value('feature_sefurl_paths');
 }
 
+// Check if .htaccess is present and current
 $needtowarn = 1;
 $fp = fopen('.htaccess', "r");
 if ($fp) {
-	$fdata = '';
-	while(!feof($fp)) {
-      	 	$fdata .= fread($fp, filesize('.htaccess')); 
-	}
-	fclose ($fp);
-	if (strpos($fdata, 'TikiWiki Version: ' . $TWV->version) !== FALSE) {
+	$htCurrent = fopen('_htaccess', "r"); 
+	if (fgets($fp) == fgets($htCurrent)) { // Do not warn if the first line of each file is identical. First lines contain _htaccess revision
 		$needtowarn = 0;
-	} 
+	}
+	fclose($htCurrent);
+	fclose($fp);
 }
 $smarty->assign('needtowarn', $needtowarn);
+
 ask_ticket('admin-inc-sefurl');

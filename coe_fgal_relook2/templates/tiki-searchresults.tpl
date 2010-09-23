@@ -25,7 +25,7 @@
 		{/if}
 		
 			<label class="findtitle">
-				{tr}Find{/tr} <input id="highlight{$iSearch}" name="words" size="14" type="text" accesskey="s" value="{$words|escape}" />
+				{tr}Find{/tr} <input id="highlight{$iSearch}" name="words" style="width:300px" type="text" accesskey="s" value="{$words|escape}" />
 			</label>
 			{if $prefs.javascript_enabled eq 'y' and $prefs.feature_jquery_autocomplete eq 'y' and $prefs.search_autocomplete eq 'y'}
 				{jq}
@@ -36,7 +36,7 @@
 				<label class="searchboolean" for="boolean">
 					{tr}Advanced search:{/tr}<input type="checkbox" name="boolean" id="boolean" {if $boolean eq 'y'} checked="checked"{/if} />
 				</label>
-				{add_help show='y' title="{tr}Advanced Search Help{/tr}" id="advanced_search_help"}
+				{add_help show='y' title="{tr}Search Help{/tr}" id="advanced_search_help"}
 					{$smarty.capture.advanced_search_help}
 				{/add_help}
 				<label class="searchdate" for="date">
@@ -172,7 +172,7 @@
 	{* do not change the comment above, since smarty 'highlight' outputfilter is hardcoded to find exactly this... instead you may experience white pages as results *}
 
 {if $searchStyle ne 'menu' and ! $searchNoResults }
-	<div class="nohighlight simplebox">
+	<div class="nohighlight simplebox" style="width:300px">
 		 {tr}Found{/tr} "{$words|escape}" {tr}in{/tr} 
 			{if $where_forum}
 				{tr}{$where|escape}:{/tr} {$where_forum|escape}

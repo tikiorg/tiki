@@ -307,7 +307,7 @@ class ModLib extends TikiLib
 			return false;
 		}
 
-		if( isset( $params['section'] ) && ( ! isset($section) || $section != $params['section'] ) ) {
+		if( isset( $params['section'] ) && ( !isset($section)  || !in_array($section, (array) $params['section']))) {
 			return false;
 		}
 

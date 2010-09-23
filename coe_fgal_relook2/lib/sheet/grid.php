@@ -328,7 +328,7 @@ class TikiSheet
 		$data = ob_get_contents();
 		ob_end_clean();
 		
-		if ($incsubs && !$this->isSubSheet && $prefs['feature_jquery_sheet'] == 'y') {
+		if ($incsubs && !$this->isSubSheet) {
 			$subsheets = $sheetlib->get_sheet_subsheets($this->sheetId);
 			if (count($subsheets) > 0) {
 				foreach ($subsheets as $sub) {
@@ -1300,7 +1300,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	 * @param $sheetId The ID of the sheet in the database.
 	 * @param $db The database link to use.
 	 */
-	function TikiSheetDatabaseHandler( $sheetId , $date )
+	function TikiSheetDatabaseHandler( $sheetId , $date = null )
 	{
 		$this->sheetId = $sheetId;
 		$this->readDate = ( $date ? $date : time() );

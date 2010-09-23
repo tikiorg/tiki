@@ -1305,7 +1305,7 @@ function get_default_prefs() {
 		'feature_sitedesc' => 'n',
 		'feature_bot_logo' => 'n',
 		'feature_endbody_code' => '',
-		'feature_custom_html_head_content' => '',
+		'feature_custom_html_head_content' => '{if $prefs.feature_secondary_sitemenu_custom_code ne ""}<style type="text/css">#sitelogo img {literal}{margin-top: 0; position: relative; top: -12px;}{/literal}</style>{/if}',
 		'feature_fixed_width' => 'y',
 
 		// layout
@@ -1647,7 +1647,6 @@ function get_default_prefs() {
 		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
 		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus
 		'feature_jquery_reflection' => 'n',		// reflection effects on images
-		'feature_jquery_sheet' => 'y',			// spreadsheet
 		'feature_jquery_jqs5' => 'n',			// slide-show TODO: implement (more)
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
 		'feature_jquery_carousel' => 'n',		// slideshow/carousel for file gals etc

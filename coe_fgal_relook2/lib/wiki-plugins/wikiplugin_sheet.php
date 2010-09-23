@@ -219,41 +219,35 @@ EOF;
 	// Grab sheet output
 	$ret = $sheet->getTableHtml( $subsheets );
 	
-	if ($prefs['feature_jquery_sheet'] == 'y') {
-		if (!isset($simple) || $simple != 'y') {
-			global $headerlib;
-			$headerlib->add_jq_onready('
-				if (typeof ajaxLoadingShow == "function") {
-					ajaxLoadingShow("role_main");
-				}
-				setTimeout (function () {
-					$("div.tiki_sheet").tiki("sheet", "",{
-						editable:false'. ( isset($url) ? ',
-						urlGet: "'.$url.'",
-						buildSheet: false': '' ) .'
-						});
-				}, 0);', 500);
-
-		} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
-			return $ret;	// return a single cell raw
-		}
-	
-		$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
-		
-		if( $editable && ($objectperms->edit_sheet  || $objectperms->admin_sheet || $tiki_p_admin == 'y')) {
-			require_once $smarty->_get_plugin_filepath('function','button');
-			
-			//If you've given the sheet a url, you can't edit it, disable if not possible
-			if (!isset($url)) {
-				$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight");
+	if (!isset($simple) || $simple != 'y') {
+		global $headerlib;
+		$headerlib->add_jq_onready('
+			if (typeof ajaxLoadingShow == "function") {
+				ajaxLoadingShow("role_main");
 			}
-			
-			$ret .= smarty_function_button( $button_params, $smarty);
+			setTimeout (function () {
+				$("div.tiki_sheet").tiki("sheet", "",{
+					editable:false'. ( isset($url) ? ',
+					urlGet: "'.$url.'",
+					buildSheet: false': '' ) .'
+					});
+			}, 0);', 500);
+
+	} else if (preg_match('/^([A-Z]+[0-9]+):\1$/', strtoupper($range))) {
+		return $ret;	// return a single cell raw
+	}
+
+	$ret = '<div id="tiki_sheet' . $sheet->instance . '" class="tiki_sheet' . $class . '" style="overflow:hidden;' . $style . '">' . $ret . '</div>';
+	
+	if( $editable && ($objectperms->edit_sheet  || $objectperms->admin_sheet || $tiki_p_admin == 'y')) {
+		require_once $smarty->_get_plugin_filepath('function','button');
+		
+		//If you've given the sheet a url, you can't edit it, disable if not possible
+		if (!isset($url)) {
+			$button_params = array('_text' => tra("Edit Sheet"), '_script' => "tiki-view_sheets.php?sheetId=$id&parse=edit$urlHeight");
 		}
-	} else {	// non jQuery.sheet behaviour
-		if( $objectperms->edit_sheet || $objectperm->admin_sheet || $tiki_p_admin == 'y') {
-			$ret .= "<a href='tiki-view_sheets.php?sheetId=$id&readdate=" . time() . "&mode=edit' class='linkbut'>" . tra("Edit Sheet") . "</a>";
-		}
+		
+		$ret .= smarty_function_button( $button_params, $smarty);
 	}
 	return '~np~' . $ret . '~/np~';
 }
