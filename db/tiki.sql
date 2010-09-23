@@ -1,4 +1,4 @@
--- --------------------------------------------------------
+e- --------------------------------------------------------
 -- Database : tikiwiki
 -- --------------------------------------------------------
 
@@ -1101,7 +1101,6 @@ DROP TABLE IF EXISTS `tiki_links`;
 CREATE TABLE `tiki_links` (
   `fromPage` varchar(160) NOT NULL default '',
   `toPage` varchar(160) NOT NULL default '',
-  `reltype` varchar(50),
   PRIMARY KEY (`fromPage`,`toPage`),
   KEY `toPage` (`toPage`)
 ) ENGINE=MyISAM;
