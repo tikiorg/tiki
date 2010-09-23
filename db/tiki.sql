@@ -2510,7 +2510,7 @@ CREATE TABLE `tiki_user_tasks` (
 
 DROP TABLE IF EXISTS `tiki_user_votings`;
 CREATE TABLE `tiki_user_votings` (
-  `user` varchar(200) default '',
+  `user` varchar(200) NOT NULL default '',
   `ip` varchar(15) default NULL,
   `id` varchar(255) NOT NULL default '',
   `optionId` int(10) NOT NULL default 0,
@@ -3536,7 +3536,8 @@ CREATE TABLE `tiki_transitions` (
     `from` varchar(255) NOT NULL,
     `to` varchar(255) NOT NULL,
     `guards` text,
-    PRIMARY KEY(`transitionId`)
+    PRIMARY KEY(`transitionId`),
+	KEY `transition_lookup` (`type`, `from`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_auth_tokens`;
