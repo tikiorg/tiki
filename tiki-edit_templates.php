@@ -7,7 +7,7 @@
 
 require_once ('tiki-setup.php');
 
-$access->check_feature(array('feature_edit_templates','feature_view_tpl'));
+$access->check_feature('feature_view_tpl');
 
 // you have to have the perm view and edit to continue:
       // if view perm is set: continue
@@ -48,6 +48,7 @@ if (isset($_REQUEST["template"])) {
 // do editing stuff only if you have the permission to:
 if ($tiki_p_edit_templates == 'y') {
 	if ((isset($_REQUEST["save"]) || isset($_REQUEST['saveTheme'])) && !empty($_REQUEST['template'])) {
+		$access->check_feature('feature_edit_templates');
 		check_ticket('edit-templates');
 		if (isset($_REQUEST['saveTheme'])) {
 			if (!empty($tikidomain)) {
