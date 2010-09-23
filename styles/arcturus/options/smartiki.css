@@ -2,7 +2,7 @@
 	Smartiki theme option for Arcturus.css;
 	for TikiWiki CMS/Groupware.
 	Visit http://themes.tiki.org for more information.
-*/	
+*/
 
 /* reset arcturus values */
 body,
@@ -166,7 +166,7 @@ h1, .pagetitle {
 
 .cssmenu_horiz li ul li,
 .cssmenu_vert li ul li {
-	background:	#e2e2e2;
+	background: #e2e2e2;
 	border: 1px solid #003388;
 	border-top: 0;
 	margin-bottom: -1px
@@ -244,8 +244,8 @@ div.simplebox {
 	margin: 5px 1px;
 	padding: 2px;
 	color: black;
-	border: 1px solid #676767;  
-	background-color: #f0f0f0;  
+	border: 1px solid #676767;
+	background-color: #f0f0f0;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
@@ -255,7 +255,7 @@ td.heading,
 tr.diffheader {
   color: #000;
   font-size: 12px;
-  background: #f0ead8; 
+  background: #f0ead8;
   border: 1px solid #676767;
   padding-left: 2px;
   padding-right: 5px;
@@ -278,7 +278,7 @@ tr.even td,
 td.even,
 li.even,
 .forum_actions {
-	border: 1px solid #676767;  
+	border: 1px solid #676767;
 	font-size: 12px;
 	background-color: #e0e0e0;
 	color: #000;

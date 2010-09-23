@@ -2,8 +2,8 @@
 	Simple theme option for Arcturus.css;
 	for TikiWiki CMS/Groupware.
 	Visit http://themes.tiki.org for more information.
-*/	
- 
+*/
+
  /* reset arcturus values */
  body,
 #middle,
@@ -55,20 +55,20 @@ html>body {
 	
 #header,
 #c1c2,
-#c1c2	#wrapper,
-#c1c2	#wrapper	#col1,
-#c1c2 #wrapper	#col1 >.content,
+#c1c2 #wrapper,
+#c1c2 #wrapper #col1,
+#c1c2 #wrapper #col1 >.content,
 #c1c2 #wrapper #col1 #tiki-center,
-#c1c2	#col2,
+#c1c2 #col2,
 #col3 {background: transparent}
 
 #c1c2 #wrapper #col1 #tiki-center {border: 0}
 
-#c1c2	#wrapper	#col1.marginleft  {
+#c1c2 #wrapper #col1.marginleft  {
 	margin-left: 180px;
 }
 
-#c1c2	#wrapper	#col1.marginright {
+#c1c2 #wrapper #col1.marginright {
 	margin-right: 180px;
 }
 
@@ -204,13 +204,13 @@ textarea {
 
 #tiki-top label {
 	color: #000;
-}	
+}
 	
 .box {
 	background: #e1ebf0;
 	border: 0;
 	margin: 0.2em;
-	padding: 
+	padding:
 }
 
 h3.box-title {
@@ -311,7 +311,7 @@ div.cbox {
 	font-size: medium;
 	text-align: center;
 }
- 
+
 table {
 	background: #e1ebf0;
 	border: solid 1px #69c;
@@ -541,7 +541,7 @@ body.wikitext {
 
 .cssmenu_horiz li ul li,
 .cssmenu_vert li ul li {
-	background:	#def;
+	background: #def;
 	border: 1px solid #abcdef;
 	border-top: 0;
 	margin-bottom: -1px
@@ -578,7 +578,7 @@ body.wikitext {
 
 #page-bar {
 	border-bottom: solid 1px #000;
-} 
+}
 
 .tabs {
 	background: none;
@@ -607,8 +607,8 @@ body.wikitext {
 	
 .tabinactive:hover,
 .tabactive {
-	background: #f0f9ff;	
-}	
+	background: #f0f9ff;
+}
 
 .tabcontent {
 	border: 1px solid #000;

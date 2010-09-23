@@ -1924,7 +1924,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		{
 			$style = $sheet->cellInfo[$begin][$j]['style'];
 			$width = getAttrFromCssString($style, "width", "118px");
-			echo "<col style='width: $width;' width='$width'></col>\n";
+			echo "<col style='width: $width;' width='$width' />\n";
 		}
 	}
 	

@@ -78,7 +78,7 @@ body.wikitext {
 
 #footer a:link,
 #footer a:visited  {
-	color: #B8EC79;	
+	color: #B8EC79;
 }
 
 .cssmenu_horiz a,
@@ -91,7 +91,7 @@ body.wikitext {
 .cssmenu_vert li ul li,
 #secondary_site_menu .cssmenu_horiz li:hover ul li,
 #secondary_site_menu .cssmenu_horiz li.sfHover ul li {
-	background:	#4a4a4a;
+	background: #4a4a4a;
 	border: none;
 }
 
@@ -149,7 +149,7 @@ body.wikitext {
 }
 
 .box legend {
-	color: #f3fce8;	
+	color: #f3fce8;
 }
 
 .cbox a,
@@ -172,7 +172,7 @@ h3.box-title {
 .postbody a:link,
 .postbody a:visited,
 .headers a.link  {
-	color: #B8EC79;	
+	color: #B8EC79;
 }
 
 .post .postbody-title .title a.link {
@@ -181,7 +181,7 @@ h3.box-title {
 
 .box-data a:hover,
 .wikitext a:hover  {
-	color: #9fda58;	
+	color: #9fda58;
 }
 
 .rbox-title, 
@@ -260,7 +260,7 @@ li.even {
 }
 
 .postbody-title {
-/*	border: 1px solid #aaaaaa; */
+/* border: 1px solid #aaaaaa; */
 	background:#9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 	color: #222;
 }
@@ -276,7 +276,7 @@ li.even {
 .caleven a:visited,
 .calodd a:link,
 .calodd a:visited  {
-	color: #B8EC79;	
+	color: #B8EC79;
 }
 
 body.tiki_admin .simplebox,
