@@ -678,7 +678,7 @@
 				{tr}Go directly to the <strong>Install/Upgrade</strong> step.{/tr}
 				{if $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}
 					<a href="tiki-install.php?install_step=4{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Install/Upgrade{/tr}">
-							<img src="pics/icons/arrow_right.png" height="16" width="16" />
+							<img src="pics/icons/arrow_right.png" alt="{tr}Install/Upgrade{/tr}" height="16" width="16" />
 					</a>
 				{/if}
 				</div>
