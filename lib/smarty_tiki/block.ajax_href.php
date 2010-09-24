@@ -25,7 +25,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
-    global $prefs, $user;
+    global $prefs, $user, $info;
     if ( $repeat ) return;
 
 	if ( !empty($params['_onclick']) ) {
@@ -47,7 +47,8 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     $func = isset($params['function']) ? $params['function']: $def_func;	// preserve previous behaviour
     $last_user = htmlspecialchars($user);
 
-    if ( $prefs['ajax_xajax'] !== 'y' || $prefs['javascript_enabled'] == 'n' ) {
+    																		// temporary switch to not do ajax for ckeditor button - not reliable in tiki 6
+    if ( $prefs['ajax_xajax'] !== 'y' || $prefs['javascript_enabled'] == 'n' || ($template === 'tiki-editpage.tpl' && $info['wysiwyg'] === 'y')) {
 		return " href=\"$url\" ";
     } else {
 		$max_tikitabs = 50; // Same value as in header.tpl, <body> tag onload's param
