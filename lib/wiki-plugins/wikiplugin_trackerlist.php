@@ -949,6 +949,8 @@ function wikiplugin_trackerlist($data, $params) {
 			$urlquery['exactvalue'] = implode(':', $exactvalue);
 			$urlquery['trackerId'] = $trackerId;
 			$smarty->assign('urlquery', $urlquery);
+		} else {
+			$smarty->assign('urlquery', '');
 		}
 		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
 			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";

@@ -96,27 +96,13 @@ class TransitionLib
 
 		return array_map( array( $this, 'expandGuards' ), $result );
 	}
-	function listTransitionsObject( $objectId, $type = 'trackeritem' ) {
-		$db = TikiDb::get();
-
-		if( empty( $objectId ) ) {
-			return array();
-		}
-
-		$bindvars = array( $this->transitionType );
-		$query = "SELECT * FROM `tiki_transitions` WHERE `type` = ? AND `objectId` = ?";
-
-		$result = $db->fetchAll( $query, array($type, $objectId) );
-
-		return array_map( array( $this, 'expandGuards' ), $result );
-	}
 
 	// Database interaction
 
-	function addTransition( $from, $to, $name, $preserve = false, array $guards = array(), $objectId = null, $batch=null ) {
+	function addTransition( $from, $to, $name, $preserve = false, array $guards = array() ) {
 		$db = TikiDb::get();
 
-		$db->query( "INSERT INTO `tiki_transitions` ( `type`, `objectId`, `from`, `to`, `name`, `preserve`, `guards`, `batch` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ? )", array( $this->transitionType, $objectId, $from, $to, $name, (int) $preserve, json_encode( $guards ), $batch ) );
+		$db->query( "INSERT INTO `tiki_transitions` ( `type`, `from`, `to`, `name`, `preserve`, `guards`) VALUES( ?, ?, ?, ?, ?, ? )", array( $this->transitionType, $from, $to, $name, (int) $preserve, json_encode( $guards ) ) );
 
 		return $db->getOne( 'SELECT MAX(`transitionId`) FROM `tiki_transitions`' );
 	}

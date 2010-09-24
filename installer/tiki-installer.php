@@ -40,7 +40,7 @@ if (empty($_REQUEST['install_step'])) {
 		$db = fopen('db/local.php', 'a');
 		require_once 'lib/setup/twversion.class.php';
 		$TWV = new TWVersion();
-		fwrite($db, "\n\$dbversion_tiki='" . $TWV->getVersion() . "';\n");
+		fwrite($db, "\n\$dbversion_tiki='" . $TWV->getBaseVersion() . "';\n");
 		fclose($db);
 	}
 } else {
@@ -82,7 +82,7 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 		if ($dbversion_tiki == 'current') {
 			require_once 'lib/setup/twversion.class.php';
 			$twversion = new TWVersion();
-			$dbversion_tiki = $twversion->getVersion(); 
+			$dbversion_tiki = $twversion->getBaseVersion(); 
 		}
 		$filetowrite .= "\$dbversion_tiki='" . $dbversion_tiki . "';\n";
 		$filetowrite .= "\$host_tiki='" . $host_tiki . "';\n";

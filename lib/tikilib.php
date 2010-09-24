@@ -5744,7 +5744,10 @@ class TikiLib extends TikiDb_Bridge
 		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 		
-		
+		if ($options['ck_editor']) {
+			global $headerlib;
+			$headerlib->wysiwyg_parsing = true;
+		}
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
 		// everything between {}
@@ -5930,6 +5933,9 @@ class TikiLib extends TikiDb_Bridge
 		// Process pos_handlers here
 		foreach ($this->pos_handlers as $handler) {
 			$data = $handler($data);
+		}
+		if ($options['ck_editor']) {
+			$headerlib->wysiwyg_parsing = false;
 		}
 		return $data;
 	}
