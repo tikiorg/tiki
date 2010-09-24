@@ -484,7 +484,7 @@ JS;
 if (!empty($_REQUEST['textFilter'])) {
 	$js .= '
 $("#treetable_1_filter").val("'.$_REQUEST['textFilter'].'");
-setTimeout(function(){$("#treetable_1_filter").keyup();}, 500);';
+setTimeout(function(){$("#treetable_1_filter").keypress();}, 500);';
 }
 
 $headerlib->add_jq_onready($js);
