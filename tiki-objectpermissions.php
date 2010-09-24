@@ -663,12 +663,12 @@ function get_displayed_permissions() {
 
 	$currentObject = $objectFactory->get( $_REQUEST['objectType'], $_REQUEST['objectId'] );
 	$displayedPermissions = $currentObject->getDirectPermissions();
-
+	$globPerms = $objectFactory->get( 'global', null )->getDirectPermissions();	// global perms
+	
 	$comparator = new Perms_Reflection_PermissionComparator( $displayedPermissions, new Perms_Reflection_PermissionSet );
 
 	$smarty->assign('permissions_displayed', 'direct');
 	if( $comparator->equal() ) {
-		$globPerms = $objectFactory->get( 'global', null )->getDirectPermissions();	// global perms
 		$parent = $currentObject->getParentPermissions();							// inherited perms (could be category ones)
 		$comparator = new Perms_Reflection_PermissionComparator( $globPerms, $parent );
 		if( $comparator->equal() ) {												// parent == globals
@@ -677,6 +677,19 @@ function get_displayed_permissions() {
 			$smarty->assign('permissions_displayed', 'category');
 		}
 		$displayedPermissions = $parent;
+	} else {																		// direct object perms
+		$comparator = new Perms_Reflection_PermissionComparator( $globPerms, $displayedPermissions );
+		$permissions_added = ''; $permissions_removed = '';
+		foreach($comparator->getAdditions() as $p) {
+			$permissions_added .= empty($permissions_added) ? '' : ', ';
+			$permissions_added .= $p[0] . ':' . $p[1];
+		}
+		foreach($comparator->getRemovals() as $p) {
+			$permissions_removed .= empty($permissions_removed) ? '' : ', ';
+			$permissions_removed .= $p[0] . ':' . $p[1];
+		}
+		$smarty->assign('permissions_added',   $permissions_added);
+		$smarty->assign('permissions_removed', $permissions_removed);
 	}
 
 	return $displayedPermissions;
