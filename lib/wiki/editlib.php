@@ -206,13 +206,10 @@ class EditLib
 		// Parsing page data for wysiwyg editor
 		$inData = $this->partialParseWysiwygToWiki($inData);	// remove any wysiwyg plugins so they don't get double parsed
 		$parsed = preg_replace('/(!!*)[\+\-]/m','$1', $inData);		// remove show/hide headings
-		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true, 'ck_editor' => true));
+		$parsed = $tikilib->parse_data( $parsed, array( 'absolute_links'=>true, 'noheaderinc'=>true, 'suppress_icons' => true,
+														'ck_editor' => true, 'is_html' => ($prefs['wysiwyg_htmltowiki'] === 'n')));
+		
 		$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
-//		$parsed = preg_replace("/src=\"(.*)img\/smiles\//im","src=\"$1img/smiles/", $parsed);	// fix smiley src's
-		$parsed = str_replace( 
-				array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
-				array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
-				$parsed );
 		return $parsed;
 	}
 	
@@ -231,6 +228,8 @@ class EditLib
 		// take away the <p> that f/ck introduces around wiki heading ! to have maketoc/edit section working
 		$ret = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $ret);
 		
+		// strip totally empty <p> tags generated in ckeditor 3.4
+		$ret = preg_replace('/\s*<p>[\s]*<\/p>\s*/u', "!$1\n", $ret);
 		return $ret;
 	}
 	
