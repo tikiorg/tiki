@@ -7,18 +7,22 @@
 				<legend>{tr}Type{/tr}</legend>
 
 				<p>
+					{if $prefs.feature_categories eq 'y'}
 					<input type="radio" name="transition_mode" value="category" id="transition-mode-category"{if $transition_mode eq 'category'} checked="checked"{/if}/>
 					<label for="transition-mode-category">{tr}Category{/tr}</label>
+					{/if}
 
-					<input type="radio" name="transition_mode" value="group" id="transition-mode-group"{if $transition_mode eq 'group'} checked="checked"{/if}/>
+					<input type="radio" name="transition_mode" value="group" id="transition-mode-group"{if $transition_mode eq 'group' or $prefs.feature_categories ne 'y'} checked="checked"{/if}/>
 					<label for="transition-mode-group">{tr}Group{/tr}</label>
 				</p>
 			</fieldset>
 
+			{if $prefs.feature_categories eq 'y'}
 			<fieldset id="transition-category-selection">
 				<legend>{tr}Category Selection{/tr}</legend>
 				{$cat_tree}
 			</fieldset>
+			{/if}
 
 			<fieldset id="transition-group-selection">
 				<legend>{tr}Group Selection{/tr}</legend>
