@@ -323,7 +323,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 			$pageName = $pageInfo['objName'];
 		}
 		// Build URI / Redirect
-		$diff_style = isset($_REQUEST['diff_style']) ? rawurlencode($_REQUEST['diff_style']) : rawurlencode($prefs['default_wiki_diff_style']);
+		$diff_style = isset($_REQUEST['diff_style']) ? rawurlencode($_REQUEST['diff_style']) : rawurlencode($info['is_html'] === '1' ? 'htmldiff' : $prefs['default_wiki_diff_style']);
 		$comment = rawurlencode("Updating from $page at version {$info['version']}");
 		if ($newver == 0) {
 			$newver = $info['version'];
@@ -376,7 +376,7 @@ if (\$("input[name=newver][checked=checked]").length) {
 JS
 );
 if (isset($_REQUEST["compare"])) histlib_helper_setup_diff($page, $oldver, $newver);
-else $smarty->assign('diff_style', $prefs['default_wiki_diff_style']);
+else $smarty->assign('diff_style', $info['is_html'] === '1' ? 'htmldiff' : $prefs['default_wiki_diff_style']);
 if ($info["flag"] == 'L') $smarty->assign('lock', true);
 else $smarty->assign('lock', false);
 $smarty->assign('page_user', $info['user']);
