@@ -1411,8 +1411,7 @@ class Comments extends TikiLib
 	}
 
 	function count_comments($objectId, $approved = 'y') {
-		global $tiki_p_admin_comments;
-
+		global $tiki_p_admin_comments, $prefs;
 
 		$object = explode( ":", $objectId, 2);
 		$query = 'select count(*) from `tiki_comments` where `objectType`=?';
@@ -1429,8 +1428,11 @@ class Comments extends TikiLib
 		if ( $tiki_p_admin_comments != 'y' ) {
 			$query .= ' and `approved`=?';
 			$bindvars[] = $approved;
+		}
 
-
+		if ($prefs['comments_archive'] == 'y' && $tiki_p_admin_comments != 'y') {
+			$query .= ' AND `archived`=?';
+			$bindvars[] = 'n';
 		}
 
 		return $this->getOne($query, $bindvars);
@@ -1730,6 +1732,11 @@ class Comments extends TikiLib
 			$queue_cond = '';
 		}
 
+		if ($prefs['comments_archive'] == 'y' && $tiki_p_admin_comments != 'y') {
+			$queue_cond .= ' AND tc1.`archived`=?';
+			$bindvars[] = 'n';
+		}
+
 		$query = "select count(*) from `tiki_comments` as tc1 where
 			`objectType`=? and `object`=? and `average` < ? $time_cond $queue_cond";
 		$below = $this->getOne($query, $bindvars);
@@ -1748,6 +1755,10 @@ class Comments extends TikiLib
 		if ( $tiki_p_admin_comments != 'y' ) {
 			$mid .= ' '.$queue_cond;
 			$bind_mid[] = $approved;
+
+			if ($prefs['comments_archive'] == 'y') {
+				$bind_mid[] = 'n';
+			}
 		}
 
 		$initial_sort_mode = $sort_mode;
@@ -1889,6 +1900,20 @@ class Comments extends TikiLib
 		}
 
 		return $retval;
+	}
+
+	/**
+	 * Check if a object has any archived comments
+	 *
+	 * @param int|string $objectId
+	 * @param string $objectType
+	 * @return bool
+	 */
+	function object_has_archived_comments($objectId, $objectType) {
+		$query = 'SELECT * FROM `tiki_comments` WHERE `object` = ? AND `objectType` = ? AND `archived` = ?';
+		$result = $this->getOne($query, array($objectId, $objectType, 'y'));
+
+		return $result !== NULL;	
 	}
 
 	/* administrative functions to get all the comments of some types + enlarge find
@@ -2327,9 +2352,8 @@ class Comments extends TikiLib
 	}
 	function reject_comment($threadId) {
 		return $this->approve_comment($threadId, 'r');
-
 	}
-	
+
 	function remove_comment($threadId) {
 		if ($threadId == 0)
 			return false;
@@ -2462,6 +2486,15 @@ class Comments extends TikiLib
 		return $newForumId;		
 	}
 
+	/**
+	 * Archive thread or comment (only admins can archive
+	 * comments or see them). This is used both for forums
+	 * and comments.
+	 *
+	 * @param int $threadId the comment or thread id
+	 * @param int $parentId
+	 * @return bool
+	 */
 	function archive_thread($threadId, $parentId = 0) {
 		if ( $threadId > 0 && $parentId >= 0 ) {
 			$query = 'update `tiki_comments` set `archived`=? where `threadId`=? and `parentId`=?';
@@ -2470,6 +2503,14 @@ class Comments extends TikiLib
 		return false;
 	}
 
+	/**
+	 * Unarchive thread or comment (only admins can archive
+	 * comments or see them).
+	 * 
+	 * @param int $threadId the comment or thread id
+	 * @param int $parentId
+	 * @return bool
+	 */
 	function unarchive_thread($threadId, $parentId = 0) {
 		if ( $threadId > 0 && $parentId >= 0 ) {
 			$query = 'update `tiki_comments` set `archived`=? where `threadId`=? and `parentId`=?';

@@ -13,9 +13,19 @@
 		and ( $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 ) )
 	}
 	<div class="actions">
-		{if $forum_mode neq 'y' && $prefs.feature_comments_moderation eq 'y' && $tiki_p_admin_comments eq 'y' && $comment.approved eq 'n'}
-			{self_link comments_approve='y' comments_threadId=$comment.threadId _icon='comment_approve'}{tr}Approve{/tr}{/self_link}
-			{self_link comments_approve='n' comments_threadId=$comment.threadId _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
+		{if $forum_mode neq 'y' && $tiki_p_admin_comments eq 'y'}
+			{if $prefs.feature_comments_moderation eq 'y' && $comment.approved eq 'n'}
+				{self_link comments_approve='y' comments_threadId=$comment.threadId _icon='comment_approve'}{tr}Approve{/tr}{/self_link}
+				{self_link comments_approve='n' comments_threadId=$comment.threadId _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
+			{/if}
+			{if $prefs.comments_archive eq 'y'}
+				{assign var='anchor' value=$comment.threadId}
+				{if $comment.archived eq 'y'}
+					{self_link comment_archive='n' comments_threadId=$comment.threadId _anchor="threadId$anchor" _icon='ofolder'}{tr}Unarchive{/tr}{/self_link}
+				{else}
+					{self_link comment_archive='y' comments_threadId=$comment.threadId _anchor="threadId$anchor" _icon='folder'}{tr}Archive{/tr}{/self_link}
+				{/if}
+			{/if}
 		{/if}
 		{if	$forum_mode neq 'y' && (
 				$tiki_p_edit_comments eq 'y'

@@ -281,14 +281,29 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 	}
 }
 
-// Comments Moderation
 global $tiki_p_admin_comments;
-if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST["comments_threadId"]) && !empty($_REQUEST['comments_approve']) ) {
+if ((!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST["comments_threadId"])) {
+	// Comments Moderation
+    if (!empty($_REQUEST['comments_approve'])) {
+		if ( $_REQUEST['comments_approve'] == 'y' ) {
+			$commentslib->approve_comment($_REQUEST["comments_threadId"]);
+		} elseif ( $_REQUEST['comments_approve'] == 'n' ) {
+			$commentslib->reject_comment($_REQUEST["comments_threadId"]);
+		}
+	}
 
-	if ( $_REQUEST['comments_approve'] == 'y' ) {
-		$commentslib->approve_comment($_REQUEST["comments_threadId"]);
-	} elseif ( $_REQUEST['comments_approve'] == 'n' ) {
-		$commentslib->reject_comment($_REQUEST["comments_threadId"]);
+	// Comments archive
+	if ($prefs['comments_archive'] == 'y') {
+		if (!empty($_REQUEST['comment_archive'])) {
+			if ($_REQUEST['comment_archive'] == 'y') {
+				$commentslib->archive_thread($_REQUEST['comments_threadId']);
+			} else if ($_REQUEST['comment_archive'] == 'n') {
+				$commentslib->unarchive_thread($_REQUEST['comments_threadId']);
+			}
+		}
+		
+		$object = explode(':', $comments_objectId);
+		$smarty->assign('has_archived_comments', $commentslib->object_has_archived_comments($object[1], $object[0]));
 	}
 }
 
