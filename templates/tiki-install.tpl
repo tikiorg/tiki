@@ -269,7 +269,7 @@
 <h1>{if $tikidb_created}{tr}Install &amp; Upgrade{/tr}{else}{tr}Install{/tr}{/if}</h1>
 {if $max_exec_set_failed eq 'y'}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}
-{tr}Failed to set max_execution_time to 0 for PHP. You may experience problems when creating/upgrading the database on a slow system. This will manitest itself by a blank page.{/tr}
+{tr}Failed to set max_execution_time for PHP. You may experience problems when creating/upgrading the database using this installer on a slow system. This can manifest itself by a blank page.{/tr}
 {/remarksbox}
 {/if}
 <div class="clearfix">
@@ -724,8 +724,7 @@
 </div>
 <hr />
 
-{* Can be restored when we'll have a new http://branding.tiki.org/Badge
-<p align="center"><a href="http://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}" style="width:80px; height:31px; border:0" /></a></p>
-*}
+<p align="center"><a href="http://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}" style="width:88px; height:31px; border:0" /></a></p>
+
 		</div>{* -- END of main -- *}
 	</div> {* -- END of fixedwidth -- *}
