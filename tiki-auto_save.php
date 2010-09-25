@@ -27,7 +27,7 @@ if ($prefs['feature_ajax'] != 'y' || ($prefs['ajax_autosave'] != 'y')) {
 require_once('lib/ajax/autosave.php');
 
 function send_ajax_response($command, $data ) {
-	header( 'Content-Type:text/xml; charset=UTF-8' );	// TODO refactor
+	header( 'Content-Type:text/xml; charset=UTF-8' );
 	echo '<?xml version="1.0" encoding="UTF-8"?>';
 	echo '<adapter command="' . $command . '">';
 	echo '<data><![CDATA[' .  $data . ']]></data>';
@@ -44,7 +44,7 @@ if (isset($_REQUEST['editor_id'])) {
 		} else if ($_REQUEST['command'] == 'toHtmlFormat') {
 			global $editlib; include_once 'lib/wiki/editlib.php';
 			$res = $editlib->parseToWysiwyg(urldecode($_REQUEST['data']));
-		} else if ($_REQUEST['command'] == 'toHTMLSource') {
+		} else if ($_REQUEST['command'] == 'toHTMLSource') {		// TODO Remove as it's done in JS now (tiki6 freeze)
 			global $editlib; include_once 'lib/wiki/editlib.php';
 			$res = $editlib->partialParseWysiwygToWiki(urldecode($_REQUEST['data']));
 			$res = html_entity_decode($res, ENT_COMPAT, 'UTF-8');
