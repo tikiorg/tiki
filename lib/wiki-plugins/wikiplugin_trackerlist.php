@@ -945,6 +945,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('popupfields', $popupfields);
 		if (!empty($filterfield)) {
 			$urlquery['filterfield'] = implode(':', $filterfield);
+			if (!is_array($filtervalue)) { $filtervalue = array($filtervalue); }
 			$urlquery['filtervalue'] = implode(':', $filtervalue);
 			$urlquery['exactvalue'] = implode(':', $exactvalue);
 			$urlquery['trackerId'] = $trackerId;
