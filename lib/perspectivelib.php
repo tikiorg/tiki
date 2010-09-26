@@ -36,9 +36,10 @@ class PerspectiveLib
 
 		if (isset($prefs['multidomain_config'])) {
 			foreach( explode( "\n", $prefs['multidomain_config'] ) as $config ) {
-				list( $domain, $perspective ) = explode( ',', $config );
-	
-				$out[$domain] = trim($perspective);
+				if (substr_count($config, ',') == 1) { // Ignore lines which don't have exactly one comma, such as empty lines. TODO: make sure there are no such lines in the first place
+					list( $domain, $perspective ) = explode( ',', $config );
+					$out[$domain] = trim($perspective);
+				}
 			}
 		}
 
