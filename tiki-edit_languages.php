@@ -284,5 +284,13 @@ ask_ticket('edit-languages');
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $headerlib->add_cssfile('css/admin.css');
+
+$headtitle = tra('Edit languages');
+$description = tra('Edit or export/import languages');
+$crumbs[] = new Breadcrumb($headtitle, $description, '', '', '');
+$headtitle = breadcrumb_buildHeadTitle($crumbs);
+$smarty->assign('headtitle', $headtitle);
+$smarty->assign('trail', $crumbs);
+
 $smarty->assign('mid', 'tiki-edit_languages.tpl');
 $smarty->display("tiki.tpl");
