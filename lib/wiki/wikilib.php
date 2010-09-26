@@ -197,11 +197,12 @@ class WikiLib extends TikiLib
 			foreach( $semantics as $sem ) {
 				$data = str_replace( "($sem($oldName", "($sem($newName", $data );
 			}
-
-			if (strstr($newName, " "))
-				$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", "((".$newName."))", $data);
-			else
-				$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
+			if ($prefs['feature_wikiwords'] == 'y') {
+				if (strstr($newName, " "))
+					$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", "((".$newName."))", $data);
+				else
+					$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
+			}
 			$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/", $newName, $data);
 
 			if ($is_wiki_page) {
