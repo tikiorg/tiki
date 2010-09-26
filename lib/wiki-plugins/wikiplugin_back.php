@@ -43,5 +43,5 @@ function wikiplugin_back($data, $params) {
 
     $end = "</a>";
     
-    return $begin . $content  . $end;
+    return "~np~" . $begin . $content  . $end . "~/np~"; 
 }
