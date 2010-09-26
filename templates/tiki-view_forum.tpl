@@ -382,7 +382,7 @@
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
 			{/if}
 			{if $forum_info.att_list_nb eq 'y'}
-				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='nb_attachments'}{tr}Atts{/tr}{/self_link}</th>
+				<th>{tr}Atts{/tr}</th>
 			{/if}
 				
 			<th>{tr}Actions{/tr}</th>
