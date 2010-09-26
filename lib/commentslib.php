@@ -744,8 +744,21 @@ class Comments extends TikiLib
 		if ($reply_state == 'none') {
 			$query .= ' HAVING `replies` = 0 ';
 		}
-		if (strstr($sort_mode, 'commentDate')) {
+		// Prevent ambiguous field database errors
+		if (strpos($sort_mode, 'commentDate') !== false) {
 			$sort_mode = str_replace('commentDate', 'a.commentDate', $sort_mode);
+		}
+		if (strpos($sort_mode, 'hits') !== false) {
+			$sort_mode = str_replace('hits', 'a.hits', $sort_mode);
+		}
+		if (strpos($sort_mode, 'title') !== false) {
+			$sort_mode = str_replace('title', 'a.title', $sort_mode);
+		}
+		if (strpos($sort_mode, 'type') !== false) {
+			$sort_mode = str_replace('type', 'a.type', $sort_mode);
+		}
+		if (strpos($sort_mode, 'userName') !== false) {
+			$sort_mode = str_replace('userName', 'a.userName', $sort_mode);
 		}
 		$query .="order by `sticky` desc, ".$this->convertSortMode($sort_mode).", `threadId`";
 
