@@ -5,10 +5,10 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-if (isset($_REQUEST['type']))
-	$section = $_REQUEST['type'];
 require_once ('tiki-setup.php');
 global $objectlib; include_once('lib/objectlib.php');
+if (isset($_REQUEST['type']))
+	$section = $_REQUEST['type'];
 
 $access->check_feature('feature_wiki');
 
