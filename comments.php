@@ -442,9 +442,6 @@ if( isset( $_REQUEST["comments_grandParentId"] ) )
 	$smarty->assign('comments_grandParentId', $_REQUEST["comments_grandParentId"]);
 }
 
-if(!empty($forum_mode) && $forum_mode == 'y') {
-	$_REQUEST["comments_parentId"] > 0;
-}
 if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]))
 $threadId_if_reply = $_REQUEST["comments_reply_threadId"];
 else
