@@ -132,8 +132,8 @@ li.sfHover > a > .sf-sub-indicator {
 }
 
 /* point right for anchors in subs */
-.cssmenu_horiz ul .sf-sub-indicator { background-position:  -10px 0; }
-.cssmenu_horiz ul a > .sf-sub-indicator { background-position:  0 0; }
+.cssmenu_horiz ul .sf-sub-indicator { background-position: -10px 0; }
+.cssmenu_horiz ul a > .sf-sub-indicator { background-position: 0 0; }
 /* apply hovers to modern browsers */
 .cssmenu_horiz ul a:focus > .sf-sub-indicator,
 .cssmenu_horiz ul a:hover > .sf-sub-indicator,

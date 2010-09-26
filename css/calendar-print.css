@@ -6,7 +6,7 @@ div#errors,
 div#loadstats,
 span#show-errors-button,
 div.tabrow {
-  display : none !important;
+  display: none !important;
 } 
 
 #c1c2 #wrapper .marginleft {
