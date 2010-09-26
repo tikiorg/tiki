@@ -6,10 +6,10 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-if (isset($_REQUEST['type']))
-	$section = $_REQUEST['type'];
 require_once ('tiki-setup.php');
 global $objectlib; include_once('lib/objectlib.php');
+if (isset($_REQUEST['type']))
+	$section = $_REQUEST['type'];
 
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
