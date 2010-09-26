@@ -18,10 +18,15 @@
 
 header('content-type: application/x-javascript');
 
+require_once('lib/init/initlib.php');
+TikiInit::appendIncludePath($tikipath.'lib/core');
+TikiInit::appendIncludePath($tikipath);
+
 // Apply filters on the body
 include 'lib/core/TikiFilter.php';
 $filter = TikiFilter::get('xss');
 $_REQUEST['plugin'] = isset($_GET['plugin']) ? $filter->filter($_GET['plugin']) : '';
+$filter = TikiFilter::get('alpha');
 $_REQUEST['language'] = isset($_GET['language']) ? $filter->filter($_GET['language']) : '';
 
 $all = empty( $_REQUEST['plugin'] );
