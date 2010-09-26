@@ -52,7 +52,8 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 	// Get information about this sheetId and fill smarty variables
 	$smarty->assign('edit_mode', 'y');
 	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y') {
-		$users = $tikilib->list_users(0, -1, 'login_asc', '', false);
+		// TODO: fetch only data from user base that are really required, till then we only get 300 latest entries, cause -1 kills sheets for all site with a big user base
+		$users = $tikilib->list_users(0, 300, 'login_asc', '', false);
 		$smarty->assign_by_ref('users', $users['data']);
 	}
 	if ($_REQUEST["sheetId"] > 0) {
