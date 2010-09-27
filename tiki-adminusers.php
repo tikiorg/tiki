@@ -262,8 +262,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				);
 			}
         } 
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete' && isset($_REQUEST["user"]) && $_REQUEST["user"] != 'admin') {
@@ -295,8 +295,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$userlib->reset_email_due($_REQUEST['user']);
 	}
 	$_REQUEST["user"] = '';
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page') {
@@ -326,8 +326,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$email_mode = 'y';
 		$smarty->assign('email_mode', 'y');
 	}
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
@@ -343,8 +343,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			}
 		}
 	}
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'remove') {
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
@@ -360,8 +360,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			}
 		}
 	}
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST['set_default_groups']) && $_REQUEST['set_default_groups'] == 'y') {
 	if (!empty($_REQUEST["checked_group"]) && !empty($_REQUEST["checked"])) {
@@ -376,8 +376,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			}
 		}
 	}
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST['emailChecked']) && $_REQUEST['emailChecked'] == 'y' && !empty($_REQUEST['checked'])) {
 	if (empty($_REQUEST['wikiTpl']) || !($info = $tikilib->get_page_info($_REQUEST['wikiTpl']))) {
