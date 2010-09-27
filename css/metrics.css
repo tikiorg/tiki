@@ -9,10 +9,10 @@ textarea#metric_query, textarea#tab_content {
 	color: #26831D;
 }
 .trend-red {
-	color: #B71D2F;
+	color: #b71d2f;
 }
 .trend-gray {
-	color: #CCC;
+	color: #ccc;
 }
 
 .inlinesparkline {
@@ -28,25 +28,25 @@ textarea#metric_query, textarea#tab_content {
 
 .trend-table th {
 	font-weight: bold;
-	border-bottom: 1px solid #CCC;
+	border-bottom: 1px solid #ccc;
 	text-align: center;
 }
 .trend-table td, .trend-table th {
 	padding: 2px 5px;
 }
 .trend-table tr td:first-child {
-	border-right: 1px solid #CCC;
+	border-right: 1px solid #ccc;
 }
 .trend-table tr th:first-child {
-	border-right: 1px solid #CCC;
+	border-right: 1px solid #ccc;
 }
 .trend-table {
-	border: 1px solid #CCC;
+	border: 1px solid #ccc;
 	margin: 15px 10px;
 }
 .metricbox {
 	padding: 10px 0;
-	border-top: 1px solid #CCC;
+	border-top: 1px solid #ccc;
 }
 .metricbox:first-child {
 	border-top: none;

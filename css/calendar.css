@@ -44,7 +44,7 @@ div.tabrow {
 	text-align: center;
 	vertical-align: middle;
 /*	color: #483b3b;
-	border-bottom: 1px #CFD0D0 solid;*/
+	border-bottom: 1px #cfd0d0 solid;*/
 }
 .calHeading a,
 .calHeading a:visited {
@@ -63,20 +63,20 @@ div.tabrow {
 	vertical-align: middle;
 	text-align: center;
 	border-width: 1px 0 0 1px;
-	border-color: #CFD0D0 #E0E0E0;
+	border-color: #cfd0d0 #e0e0e0;
 	border-style: solid;
 }
 .calDay {
 	padding: 0;
 	border-width: 0 1px 1px 1px;
 /*	background-color: #fcfefd;
-	border-color: #CFD0D0 #a1a19f;*/
+	border-color: #cfd0d0 #a1a19f;*/
 	border-style: solid;
 }
 .calWeek {
 	border-width: 1px 1px 0 1px;
 /*	background-color: #fcfefd;*/
-	border-color: #CFD0D0 #E0E0E0;
+	border-color: #cfd0d0 #e0e0e0;
 	border-style: solid;
 }
 
@@ -106,7 +106,7 @@ div.tabrow {
 	color: #425262;
 }
 .calcheckbox {
-	background: #FFFFFF;
+	background: #ffffff;
 }
 .caltoggle {
 	font-size: 9px;
@@ -124,7 +124,7 @@ div.tabrow {
 }
 .calfocuson {
 	font-size: 9px;
-	background: #F3E498;
+	background: #f3e498;
 }
 .calfocuson a {
 	text-decoration: none;
@@ -141,49 +141,49 @@ div.tabrow {
 }
 
 .Calwiki a {
-	color: #443F39;
+	color: #443f39;
 	font-weight: normal;
 }
 .Calwiki:before {
 	content: "w";
 	font-family:  monospace;
-	background: #FFFFFF;
+	background: #ffffff;
 }
 .Calblog a {
-	color: #443F39;
+	color: #443f39;
 	font-weight: normal;
 }
 .Calblog:before {
 	content: "b";
 	font-family: monospace;
-	background: #FFFFFF;
+	background: #ffffff;
 }
 .Calgal a {
 	font-weight: normal;
-	color: #303F49;
+	color: #303f49;
 }
 .Calgal:before {
 	content: "i";
 	font-family: monospace;
-	background: #FFFFFF;
+	background: #ffffff;
 }
 .Calart a {
-	color: #304F30;
+	color: #304f30;
 	font-weight: normal;
 }
 .Calart:before {
 	content: "a";
 	font-family: monospace;
-	background: #FFFFFF;
+	background: #ffffff;
 }
 .Calforum a {
-	color: #304F30;
+	color: #304f30;
 	font-weight: normal;
 }
 .Calforum:before {
 	content: "fo";
 	font-family: monospace;
-	background: #FFFFFF;
+	background: #ffffff;
 }
 .Caldir a {
 	color: #304F30;
