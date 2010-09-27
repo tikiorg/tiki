@@ -1242,6 +1242,14 @@ ul.toc * {
 	list-style: none;
 }
 
+/* Wiki diff layout */
+.diff td {
+	overflow-x: auto;
+	overflow-y: visible;
+	white-space: normal;
+	
+}
+
 /***** Articles ****/
 div.article {
 	margin-bottom: 40px;

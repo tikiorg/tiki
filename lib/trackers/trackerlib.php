@@ -2033,6 +2033,12 @@ class TrackerLib extends TikiLib
 		if (($header = fgetcsv($csvHandle,100000,  $csvDelimiter)) === FALSE) {
 			return 'Illegal first line';
 		}
+		if ($encoding == 'UTF-8') {
+			// See en.wikipedia.org/wiki/Byte_order_mark
+			if (substr($header[0],0,3) == "\xef\xbb\xbf") {
+				$header[0] = substr($header[0],3);
+			}
+		}
 		$max = count($header);
 		for ($i = 0; $i < $max; $i++) {
 			if ($encoding == 'ISO-8859-1') {

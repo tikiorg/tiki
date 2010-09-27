@@ -10,11 +10,6 @@
 // Include literal HTML in a Wiki page
 // Jeremy Lee  2009-02-16
 
-
-function wikiplugin_html_help() {
-	return tra("Include literal HTML").":<br />~np~{HTML(wiki=0|1)}".tra("code")."{HTML}~/np~";
-}
-
 function wikiplugin_html_info() {
 	return array(
 		'name' => tra('HTML'),
@@ -41,21 +36,17 @@ function wikiplugin_html_info() {
 }
 
 function wikiplugin_html($data, $params) {
-	$ret = '';
-	//$wiki = '';
-	// extract parameters
-	extract ($params,EXTR_SKIP);
-	$wiki = ( isset($wiki) && $wiki == 1 );
-	// parse the report definition
-	$parse_fix = isset($_REQUEST['preview']) && ($_SESSION['s_prefs']['tiki_release']=='2.2');
-	if($parse_fix) {
-		$html =& $data;
+	global $tikilib;
+
+	// strip out sanitisation which may have occurred when using nested plugins
+	$html = str_replace('<x>', '', $data);
+	
+	// parse using is_html if wiki param set, or just decode html entities
+	if ( isset($params['wiki']) && $params['wiki'] === 1 ) {
+		$html = $tikilib->parse_data( $html, array('is_html' => true));
 	} else {
-		$html  =& html_entity_decode($data);
+		$html  = html_entity_decode( $html, ENT_NOQUOTES, 'UTF-8' );
 	}
-	if(!$wiki) $ret .= '~np~';
-	$ret .= $html;
-	if(!$wiki) $ret .= '~/np~';
-	// return the result
-	return $ret;
+
+	return '~np~' . $html . '~/np~';
 }

@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -93,6 +93,13 @@ if( $selectedId ) {
 }
 
 $headerlib->add_cssfile('css/admin.css');		// to display the prefs properly
+
+$headtitle = tra('Perspectives');
+$description = tra('Edit Perspectives');
+$crumbs[] = new Breadcrumb($headtitle, $description, '', '', '');
+$headtitle = breadcrumb_buildHeadTitle($crumbs);
+$smarty->assign('headtitle', $headtitle);
+$smarty->assign('trail', $crumbs);
 
 $smarty->assign( 'perspectives', $perspectives );
 $smarty->assign( 'mid', 'tiki-edit_perspective.tpl' );
