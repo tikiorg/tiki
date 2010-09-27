@@ -24,9 +24,9 @@ TikiInit::appendIncludePath(dirname(__FILE__) . '/lib/core');
 // Apply filters on the body
 include 'lib/core/TikiFilter.php';
 $filter = TikiFilter::get('xss');
-$_REQUEST['plugin'] = isset($_GET['plugin']) ? $filter->filter($_GET['plugin']) : '';
+$_REQUEST['plugin'] = isset($_GET['plugin']) ? $_GET['plugin'] = $filter->filter($_GET['plugin']) : '';
 $filter = TikiFilter::get('alpha');
-$_REQUEST['language'] = isset($_GET['language']) ? $filter->filter($_GET['language']) : '';
+$_REQUEST['language'] = isset($_GET['language']) ? $_GET['language'] = $filter->filter($_GET['language']) : '';
 
 $all = empty( $_REQUEST['plugin'] );
 
@@ -58,9 +58,9 @@ else
 		exit;
 	}
 
-    $saveP=$plugin;
+	$saveP=$plugin;
 	include 'tiki-setup.php';
- 	$plugins = array( $saveP );
+	$plugins = array( $saveP );
 }
 
 ob_start();
