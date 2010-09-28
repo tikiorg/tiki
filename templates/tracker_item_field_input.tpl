@@ -296,7 +296,7 @@
 			</div>
 		{/if}
 	{else}
-		{foreach from=$field_value.lingualvalue item=ling}
+		{foreach name=lg from=$field_value.lingualvalue item=ling}
 			<label for="area_{$field_value.fieldId}_{$ling.lang}">{$ling.lang|langname}</label><br />
 				{if $field_value.options_array[0] eq 1}
         			{toolbars qtnum=$field_value.id area_id=area_`$field_value.id`_`$ling.lang`}
@@ -304,7 +304,7 @@
 				<textarea id="area_{$field_value.fieldId}_{$ling.lang}" name="{$field_value.ins_id}[{$ling.lang}]" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5] > 0} onkeyup="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 					{$ling.value|escape}
 				</textarea>
-				{if $field_value.options_array[5]}<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}_{$ling.lang}" size="4" readOnly=true{if !empty($ling.value)} value="{$ling.value|count_words}"{/if} />{if $field_value.options_array[5] > 0}{tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>{/if}
+				{if $field_value.options_array[5]}<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}_{$ling.lang}" size="4" readOnly=true{if !empty($ling.value)} value="{$ling.value|count_words}"{/if} />{if $field_value.options_array[5] > 0}{tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>i{elseif !$smarty.foreach.lg.last}<br />{/if}
 		{/foreach}
 {/if}
 
