@@ -18,6 +18,200 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 5.3
+<http://tikiwiki.org/ReleaseNotes53>
+------------------
+
+----------------------------------------------
+r29707 | pkdille | 2010-09-28 22:33:59 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29689 | chealer | 2010-09-28 15:48:53 +0200 (Tue, 28 Sep 2010) | 2 lines
+Empty file on upgrades rather than delete for upgrades from Tiki 5 through overwriting
+
+
+----------------------------------------------
+r29706 | pkdille | 2010-09-28 22:33:35 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29684 | pkdille | 2010-09-28 09:50:55 +0200 (Tue, 28 Sep 2010) | 1 line
+Homogenize titles in tiki-view_forum_thread and in tiki-view_forum
+
+
+----------------------------------------------
+r29705 | pkdille | 2010-09-28 22:33:11 +0200 (Tue, 28 Sep 2010) | 7 lines
+
+[QT] Quality Team Backport
+
+r29682 | sept_7 | 2010-09-28 01:02:07 +0200 (Tue, 28 Sep 2010) | 3 lines
+[FIX/bp 29680] more sanitization of input variable to avoid varcheck error just
+after.
+
+
+----------------------------------------------
+r29704 | pkdille | 2010-09-28 22:32:35 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29679 | sept_7 | 2010-09-28 00:44:17 +0200 (Tue, 28 Sep 2010) | 2 lines
+[FIX/bp 29677] typo :(
+
+
+----------------------------------------------
+r29703 | pkdille | 2010-09-28 22:32:09 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29676 | changi67 | 2010-09-27 22:00:41 +0200 (Mon, 27 Sep 2010) | 1 line
+[bp/29672] ~FIX~ Fix missing column checking if they exist or not
+
+
+----------------------------------------------
+r29702 | pkdille | 2010-09-28 22:31:37 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29675 | chealer | 2010-09-27 21:52:46 +0200 (Mon, 27 Sep 2010) | 2 lines
+[FIX] tiki-jsplugin.php (reverts r29669)
+
+
+----------------------------------------------
+r29701 | pkdille | 2010-09-28 22:31:12 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29669 | sept_7 | 2010-09-27 21:08:37 +0200 (Mon, 27 Sep 2010) | 2 lines
+[FIX/bp 29667] PHP notice and absolute include path
+
+
+----------------------------------------------
+r29700 | pkdille | 2010-09-28 22:30:44 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29664 | chealer | 2010-09-27 19:34:25 +0200 (Mon, 27 Sep 2010) | 1 line
+[bp/r29663][FIX] undefined $tikipath breaking JS with display_errors and when showing notices
+
+
+----------------------------------------------
+r29699 | pkdille | 2010-09-28 22:30:18 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29659 | chealer | 2010-09-27 18:36:30 +0200 (Mon, 27 Sep 2010) | 2 lines
+[bp/r29656][FIX]edit section: obsolete files
+
+
+----------------------------------------------
+r29698 | pkdille | 2010-09-28 22:29:51 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29653 | chealer | 2010-09-27 09:39:25 +0200 (Mon, 27 Sep 2010) | 1 line
+[bp/r29651][SEC] Add authenticity checks and switch from ticketlib[1] to ticketlib2
+
+
+----------------------------------------------
+r29697 | pkdille | 2010-09-28 22:28:49 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29649 | chibaguy | 2010-09-27 06:02:18 +0200 (Mon, 27 Sep 2010) | 1 line
+[FIX] Fullscreen button wasn't displaying (commit restores r27353 change that got reverted at some point).
+
+
+----------------------------------------------
+r29696 | pkdille | 2010-09-28 22:27:55 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29630 | sept_7 | 2010-09-26 12:43:54 +0200 (Sun, 26 Sep 2010) | 2 lines
+[FIX/bp 29629] sanitize inputs...
+
+
+----------------------------------------------
+r29695 | pkdille | 2010-09-28 22:27:29 +0200 (Tue, 28 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29620 | sept_7 | 2010-09-26 04:48:59 +0200 (Sun, 26 Sep 2010) | 2 lines
+[FIX/bp 29618] Sanitize input
+
+
+----------------------------------------------
+r29645 | pkdille | 2010-09-26 17:26:08 +0200 (Sun, 26 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29590 | sdoh | 2010-09-24 08:47:37 +0200 (Fri, 24 Sep 2010) | 1 line
+[bp/r29589] [FIX] Solve bugs of variables 'undefined is null or not object' at unloading of the page with IE
+
+
+----------------------------------------------
+r29644 | pkdille | 2010-09-26 17:25:35 +0200 (Sun, 26 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29575 | nkoth | 2010-09-23 19:18:06 +0200 (Thu, 23 Sep 2010) | 1 line
+[bp/r29573][bp/r29574][FIX] Prevent ambiguous field database errors on clicking on headings in forum post listing
+
+
+----------------------------------------------
+r29643 | pkdille | 2010-09-26 17:25:13 +0200 (Sun, 26 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29570 | nkoth | 2010-09-23 18:57:38 +0200 (Thu, 23 Sep 2010) | 1 line
+[bp/r29569][FIX] Unable to sort by number of attachments (database error) so hide UI. Not useful anyway.
+
+
+----------------------------------------------
+r29642 | pkdille | 2010-09-26 17:24:52 +0200 (Sun, 26 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29566 | nkoth | 2010-09-23 18:06:59 +0200 (Thu, 23 Sep 2010) | 1 line
+[bp/r29565][FIX] Prevent non-link words from being changed when page is being renamedw hen page contains both links and non-links of that pagename being renamed
+
+
+----------------------------------------------
+r29641 | pkdille | 2010-09-26 17:24:32 +0200 (Sun, 26 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29558 | chealer | 2010-09-22 20:57:23 +0200 (Wed, 22 Sep 2010) | 1 line
+[bp/r29557][FIX] PHP notice "Undefined index: 1" when multidomain_config contains empty lines, breaking sites displaying PHP notices using gzip compression
+
+
+----------------------------------------------
+r29640 | pkdille | 2010-09-26 17:24:00 +0200 (Sun, 26 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29553 | pkdille | 2010-09-22 19:56:23 +0200 (Wed, 22 Sep 2010) | 1 line
+[bp/r29551][FIX] tiki-show_page: if not stripped, the content is never empty and the following test on the captured section fails
+
+
+----------------------------------------------
+r29639 | pkdille | 2010-09-26 17:23:30 +0200 (Sun, 26 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29480 | xavidp | 2010-09-21 12:51:35 +0200 (Tue, 21 Sep 2010) | 1 line
+[FIX][bp--] Adding r28752 in proposals/5x from ohertel (thanks Oliver). "Temporary fix for tiki sheet editing. Sheets are broken for admins of sites with a large user base, because the complete user base is loaded and assigned to a variable, causing a memory error most often. Needs to get improvement." There is no reference to backporting from trunk since tiki-sheets.php in trunk-r29121 seems not affected by this issue (please confirm; my php skills are very limited).
+
+
+----------------------------------------------
+r29552 | pkdille | 2010-09-22 19:53:08 +0200 (Wed, 22 Sep 2010) | 1 line
+
+Rollback r29492 which should not be here....
+----------------------------------------------
+r29492 | pkdille | 2010-09-21 18:13:50 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX] tiki-show_page: if not stripped, the content is never empty and the following test on the captured section fails
+----------------------------------------------
 Version 5.2
 <http://tikiwiki.org/ReleaseNotes52>
 ------------------
