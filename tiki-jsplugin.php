@@ -19,8 +19,7 @@
 header('content-type: application/x-javascript');
 
 require_once('lib/init/initlib.php');
-TikiInit::appendIncludePath($tikipath.'lib/core/lib');
-TikiInit::appendIncludePath($tikipath);
+TikiInit::appendIncludePath('lib/core/lib');
 
 // Apply filters on the body
 include 'lib/core/lib/TikiFilter.php';
