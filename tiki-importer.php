@@ -70,5 +70,6 @@ if (isset($_SESSION['tiki_importer_feedback'])) {
     $smarty->assign('chooseSoftware', true);
 }
 
+$smarty->assign('headtitle', tra('Tiki Importer'));
 $smarty->assign('mid', 'tiki-importer.tpl');
 $smarty->display('tiki.tpl');
