@@ -18,6 +18,64 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 3.8
+<http://tikiwiki.org/ReleaseNotes38>
+------------------
+
+----------------------------------------------
+r29726 | pkdille | 2010-09-29 18:10:35 +0200 (Wed, 29 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29690 | chealer | 2010-09-28 15:55:53 +0200 (Tue, 28 Sep 2010) | 2 lines
+Empty file on upgrades rather than delete for upgrades through overwriting
+
+
+----------------------------------------------
+r29725 | pkdille | 2010-09-29 18:10:13 +0200 (Wed, 29 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29685 | pkdille | 2010-09-28 09:54:10 +0200 (Tue, 28 Sep 2010) | 1 line
+[bp/r29658]Homogenize titles in tiki-view_forum_thread and in tiki-view_forum
+
+
+----------------------------------------------
+r29724 | pkdille | 2010-09-29 18:09:48 +0200 (Wed, 29 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29660 | chealer | 2010-09-27 18:41:51 +0200 (Mon, 27 Sep 2010) | 2 lines
+[bp/r29656][FIX]edit section: obsolete files
+
+
+----------------------------------------------
+r29723 | pkdille | 2010-09-29 18:09:25 +0200 (Wed, 29 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29654 | marclaporte | 2010-09-27 13:36:20 +0200 (Mon, 27 Sep 2010) | 1 line
+save disk space
+
+
+----------------------------------------------
+r29722 | pkdille | 2010-09-29 18:06:10 +0200 (Wed, 29 Sep 2010) | 6 lines
+
+[QT] Quality Team Backport
+
+r29633 | sept_7 | 2010-09-26 12:48:31 +0200 (Sun, 26 Sep 2010) | 2 lines
+[FIX/bp 29629] Sanitize inputs
+
+
+----------------------------------------------
+r29655 | marclaporte | 2010-09-27 13:41:54 +0200 (Mon, 27 Sep 2010) | 1 line
+
+save disk space
+----------------------------------------------
+r29481 | xavidp | 2010-09-21 12:59:18 +0200 (Tue, 21 Sep 2010) | 1 line
+
+[FIX][bp--] Adding r28752 in proposals/3x from ohertel (thanks Oliver). "Temporary fix for tiki sheet editing. Sheets are broken for admins of sites with a large user base, because the complete user base is loaded and assigned to a variable, causing a memory error most often. Needs to get improvement." There is no reference to backporting from trunk since tiki-sheets.php in trunk-r29121 seems not affected by this issue (please confirm; my php skills are very limited).
+----------------------------------------------
 Version 3.7
 <http://tikiwiki.org/ReleaseNotes37>
 ------------------
