@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {title help="forums" admpage="forums"}
-  {tr}Forum:{/tr}&nbsp;{$forum_info.name}
+  {$forum_info.name|escape}
   {if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}<em>({tr}Archived{/tr})</em>{/if}
 {/title}
 
