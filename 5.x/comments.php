@@ -43,20 +43,14 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 		foreach ( $handled_requests as $request_name )
 			if ( isset($_SESSION['forums_'.$request_name]) && ! isset($_REQUEST[$request_name]) )
 				$$request_name = $_SESSION['forums_'.$request_name];
-		if (empty($thread_sort_mode)) {
-			$thread_sort_mode = $prefs['forum_thread_sort_mode'];
-		}
-	} else {
-		// Fallback to global values if 'forum_thread_user_settings_keep' is disabled AND if :
-		//    - forum specific settings are set to empty (i.e. 'default')
-		// or - 'forum_thread_defaults_by_forum' is disabled (don't allow settings by forum)
-		//  !! Global value is not used when there is an explicit user request !!
-
-                foreach ( $handled_requests as $request_name )
-                        if ( ( ! isset($$request_name) || $$request_name == '' || $prefs['forum_thread_defaults_by_forum'] != 'y' )
-                                        && ! isset($_REQUEST[$request_name])
-                           ) $$request_name = $prefs['forum_'.$request_name];
+	}
+	foreach ( $handled_requests as $request_name ) {
+		if ( empty($$request_name) && empty($_REQUEST[$request_name]) ) {
+			$$request_name = $prefs['forum_'.$request_name];
+        } elseif ( empty($$request_name) && !empty($_REQUEST[$request_name]) ) {
+        	$$request_name = $_REQUEST[$request_name];
         }
+	}
 
 	if ( $forum_info['is_flat'] == 'y' ) {
 		// If we have a flat forum (i.e. we reply only to the first message / thread)
