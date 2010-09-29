@@ -30,7 +30,7 @@ class TWVersion {
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '3.7';
+		$this->version 	= '3.8';
 		$this->star	= 'Betelgeuse';
 		$this->release 	= $this->version;
 		$this->releases	= array();
@@ -106,6 +106,7 @@ class TWVersion {
 				31=>'3.5',
 				32=>'3.6',
 				33=>'3.7',
+				33=>'3.8',
 				);
 	}
 
