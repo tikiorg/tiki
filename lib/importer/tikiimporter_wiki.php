@@ -65,7 +65,8 @@ class TikiImporter_Wiki extends TikiImporter
         
         // child classes must implement those two methods
         $this->validateInput();
-        $parsedData = $this->parseData();
+		$parsedData = $this->parseData();
+
         $importFeedback = $this->insertData($parsedData);
 
         $this->saveAndDisplayLog("\nImportation completed!");

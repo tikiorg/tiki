@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . '/tikiimporter_testcase.php');
 require_once(dirname(__FILE__) . '/../../importer/tikiimporter.php');
 /** 
- * @group integration
+ * @group importer
  */
 class TikiImporter_Test extends TikiImporter_TestCase
 {

@@ -63,9 +63,12 @@ if (isset($_SESSION['tiki_importer_feedback'])) {
 } else {
     // first step: display the list of available software importers
 
-    // $availableSoftwares is an array thtat control the list of available software importers.
+    // $availableSoftwares is an array that control the list of available software importers.
     // The array key is the name of the importer class and the value is the name of the software
-    $availableSoftwares = array('tikiimporter_wiki_mediawiki' => 'Mediawiki');
+	$availableSoftwares = array(
+		'tikiimporter_wiki_mediawiki' => 'Mediawiki',
+		'tikiimporter_blog_wordpress' => 'Wordpress',
+	);
     $smarty->assign('availableSoftwares', $availableSoftwares);
     $smarty->assign('chooseSoftware', true);
 }
