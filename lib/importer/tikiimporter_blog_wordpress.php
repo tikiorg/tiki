@@ -226,8 +226,13 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 
 		// create revision key to reuse TikiImporter_Wiki::insertPage()
 		if ($data['type'] == 'page') {
-			$data['revisions'][] = $data['content'];
-			unset($data['content']);
+			$revision = array();
+			$revision['data'] = $data['content'];
+			$revision['lastModif'] = $data['created'];
+			$revision['user'] = $data['author'];
+			$revision['ip'] = '';
+			$revision['is_html'] = true;
+			$data['revisions'][] = $revision;
 		}
 
 		$msg = 'Item "' . $data['name'] . '" successfully extracted.' . "\n";

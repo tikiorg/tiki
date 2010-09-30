@@ -43,6 +43,12 @@ class TikiImporter_Blog extends TikiImporter
 	public $blogInfo = array();
 
 	/**
+	 * Instance of TikiImporter_Wiki
+	 * @var TikiImporter_Wiki
+	 */
+	public $importerWiki = '';
+
+	/**
 	 * The id of the blog created by the importer
 	 * @var int
 	 */
@@ -132,11 +138,22 @@ class TikiImporter_Blog extends TikiImporter
 	 */
 	function insertPage($page)
 	{
+		$this->instantiateImporterWiki();
+		return $this->importerWiki->insertPage($page);
+	}
+
+	/**
+	 * This function just create an instance of
+	 * TikiImporter_Wiki and set some default values
+	 *
+	 * @return void
+	 */
+	function instantiateImporterWiki()
+	{
 		require_once('tikiimporter_wiki.php');
-		$importer_wiki = new TikiImporter_Wiki;
-		$importer_wiki->alreadyExistentPageName = 'appendPrefix';
-		$importer_wiki->softwareName = $this->softwareName;
-		return $importer_wiki->insertPage($page);
+		$this->importerWiki = new TikiImporter_Wiki;
+		$this->importerWiki->alreadyExistentPageName = 'appendPrefix';
+		$this->importerWiki->softwareName = $this->softwareName;
 	}
 
 	/**

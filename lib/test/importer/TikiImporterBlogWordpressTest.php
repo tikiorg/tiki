@@ -118,16 +118,24 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 			'name' => 'Matéria sobre a viagem de bicicleta entre as chapadas',
 			'type' => 'page',
 			'author' => 'rodrigo',
-			'revisions' => array('Test'),
 			'excerpt' => '',
 			'created' => '1173647611',
+			'content' => 'Test',
+			'revisions' => array(
+				array(
+					'data' => 'Test',
+					'lastModif' => 1173647611,
+					'user' => 'rodrigo',
+					'ip' => '',
+					'is_html' => true,
+				)
+			),
 		);
 
 		$this->obj->dom = new DOMDocument;
 		$this->obj->dom->load(dirname(__FILE__) . '/fixtures/wordpress_page.xml');
 		$data = $this->obj->extractInfo($this->obj->dom->getElementsByTagName('item')->item(0));
 
-		$this->assertEquals(8, count($data));
 		$this->assertEquals($expectedResult, $data);
 	}
 

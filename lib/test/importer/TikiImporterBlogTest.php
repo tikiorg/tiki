@@ -81,7 +81,19 @@ class TikiImporter_Blog_Test extends TikiImporter_TestCase
         $expectedResult = array('totalPages' => 6, 'importedPages' => 4);
 
         $this->assertEquals($expectedResult, $countData);
-    }
+	}
+
+	public function testInsertPage()
+	{
+		$importerWiki = $this->getMock('TikiImporter_Wiki', array('insertPage'));
+		$importerWiki->expects($this->once())->method('insertPage');
+		$obj = $this->getMock('TikiImporter_Blog', array('instantiateImporterWiki'));
+		$obj->expects($this->once())->method('instantiateImporterWiki');
+
+		$obj->importerWiki = $importerWiki;
+
+		$obj->insertPage(array());
+	}
 }
 /*
 class TikiImporter_Wiki_InsertPage_Test extends TikiImporter_TestCase

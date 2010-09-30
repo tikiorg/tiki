@@ -154,7 +154,8 @@ class TikiImporter_Wiki extends TikiImporter
             foreach ($page['revisions'] as $rev) {
                 if ($first) {
                     $tikilib->create_page($page['name'], 0, $rev['data'], $rev['lastModif'],
-                        $rev['comment'], $rev['user'], $rev['ip']);
+						$rev['comment'], $rev['user'], $rev['ip'], '', '',
+						isset($rev['is_html']) ? $rev['is_html'] : false);
                 } else {
                     $tikilib->cache_page_info = null;
                     $tikilib->update_page($page['name'], $rev['data'], $rev['comment'], $rev['user'],
