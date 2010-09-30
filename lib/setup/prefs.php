@@ -27,7 +27,7 @@ function get_default_prefs() {
 		return $prefs;
 	}
 
-	global $tikidate, $tikilib;
+	global $tikidate, $tikilib, $url_host;
 	$prefs = array(
 		// tiki and version
 		'tiki_release' => '0',
@@ -1424,6 +1424,7 @@ function get_default_prefs() {
 		'kcwUIConf' => '36200',
 		'kseUIConf' => '36300',
 		'kaeUIConf' => '1000865',
+		'kuser' => $url_host,
 
 		// BigBlueButton
 		'bigbluebutton_feature' => 'n',

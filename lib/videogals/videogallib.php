@@ -19,7 +19,10 @@ $access->check_feature('feature_kaltura');
 
 $SESSION_ADMIN = 2;
 $SESSION_USER = 0;
-$kuser = $url_host;	// FIXME
+if (empty($prefs['kuser'])) {
+	$tikilib->set_preference('kuser', $url_host);
+}
+$kuser = $prefs['kuser'];
 
 if (empty($prefs['partnerId']) || !is_numeric($prefs['partnerId']) || empty($prefs['secret']) || empty($prefs['adminSecret'])) {
 	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=kaltura">' . tra('here') . '</a>');

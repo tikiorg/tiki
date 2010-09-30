@@ -10,6 +10,11 @@
 </fieldset>
 
 <fieldset class="admin">
+<legend>{tr}Kaltura / Tiki config{/tr}</legend>
+	{preference name=kuser}
+</fieldset>
+
+<fieldset class="admin">
 <legend>{tr}Kaltura Partner Settings{/tr}</legend>
 	{preference name=partnerId}
 	{preference name=secret}

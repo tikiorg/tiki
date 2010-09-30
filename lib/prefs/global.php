@@ -351,6 +351,11 @@ function prefs_global_list() {
 			'type' => 'text',
 			'size' => 20,
 		),
+		'kuser' => array(
+			'name' => tra('Kaltura "User": Owner of content shared by all Tiki users on this site'),
+			'type' => 'text',
+			'size' => 20,
+		),
 		// End Kaltura
 	);
 }
