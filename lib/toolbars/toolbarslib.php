@@ -673,8 +673,13 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);',
+		if ($this->syntax == '...page...') {	// for some reason breaks toolbar when inside nested plugins
+			return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'...\'+\'page\'+\'...\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-block');
+		} else {
+			return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);',
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-block');
+		}
 	} // }}}
 }
 
