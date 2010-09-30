@@ -759,7 +759,7 @@ if (!isset($install_type)) {
 
 if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
 	if (isset( $_GET['lockenter'])) {
-		touch( 'db/lock' );
+		touch( "db/$tikidomain/lock" );
 	}
 	
 	global $userlib, $cachelib;
