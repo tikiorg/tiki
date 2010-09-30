@@ -5,33 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-
-$access->check_feature('feature_kaltura');
-
-include_once ("lib/videogals/KalturaClient_v3.php");
-$secret = $prefs['secret'];
-$admin_secret = $prefs['adminSecret'];
-$partner_id = $prefs['partnerId'];
-$SESSION_ADMIN = 2;
-$SESSION_USER = 0;
-$kuser = $url_host;
-
-try {
-
-$kconf = new KalturaConfiguration($partner_id);
-$kclient = new KalturaClient($kconf);
-$ksession = $kclient->session->start($secret,$kuser,$SESSION_USER,$partner_id,null,"edit:*");
-
-} catch (Exception $e) {
-	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br /><em>' . $e->getMessage() . '</em>');
-	$smarty->display('error.tpl');
-	die;
-}
+require_once 'tiki-setup.php';
+require_once 'lib/videogals/videogallib.php';
 
 try {
 $smarty->assign('headtitle', tra('Kaltura Video'));
-$kclient->setKs($ksession);
 
 $kentryType = "";
 $videoId = array();
@@ -65,8 +43,8 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 		$access->check_permission(array('tiki_p_remix_videos'));
 		$seflashVars = 'uid=' .$kuser.
 			'&ks=' .$ksession. 
-			'&partner_id=' . $partner_id .
-			'&subp_id=' . $partner_id .'00'.
+			'&partner_id=' . $prefs['partnerId'] .
+			'&subp_id=' . $prefs['partnerId'] .'00'.
 			'&backF=CloseClick'.
 			'&saveF=SaveClick';
 		$editor = $_REQUEST['editor'];	
