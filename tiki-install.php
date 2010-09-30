@@ -20,7 +20,7 @@ if (version_compare(PHP_VERSION, '5.0.0', '<')) {
 include_once('db/tiki-db.php');	// to set up multitiki etc if there
 
 // if tiki installer is locked (probably after previous installation) display notice
-if (file_exists("db/$tikidomain/lock")) {
+if (file_exists('db/'.$tikidomainslash.'lock')) {
 	$title = 'Tiki Installer Disabled';
 	$td = empty($tikidomain)? '': '/'.$tikidomain;
 	$content = '
