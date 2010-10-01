@@ -222,6 +222,7 @@ if (isset($_REQUEST['save']) && !$contribution_needed) {
 	$cat_href = "tiki-view_blog_post.php?postId=" . urlencode($postId);
 	$cat_lang = $_REQUEST['lang'];
 	include_once ("freetag_apply.php");
+	include_once ("categorize.php");
 
 	require_once('tiki-sefurl.php');	
 	$url = filter_out_sefurl("tiki-view_blog_post.php?postId=$postId", $smarty, 'blogpost');
@@ -237,6 +238,10 @@ if ($contribution_needed) {
 		$smarty->assign('taglist', $_REQUEST["freetag_string"]);
 	}
 }
+
+$cat_type = 'blog post';
+$cat_objid = $postId;
+include_once ("categorize_list.php");
 
 include_once ('tiki-section_options.php');
 
