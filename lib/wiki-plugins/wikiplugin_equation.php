@@ -61,7 +61,7 @@ function wikiplugin_equation($data, $params) {
     $alt = "~np~" . $data . "~/np~";
 
     if ($url != false) {
-        $html = "<img src=\"$url\" alt=\"$alt\" align=\"absmiddle\">";
+        $html = "<img src=\"$url\" alt=\"$alt\" style=\"vertical-align:middle\">";
     } else {
         $html = "__~~#FF0000:Unparseable or potentially dangerous latex formula. Error {$latex->_errorcode} {$latex->_errorextra}~~__";
     }
