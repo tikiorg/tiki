@@ -8853,6 +8853,7 @@ $lang=Array(
 "New Reply" => "Nouvelle réponse",
 "Editing reply" => "Modifier la réponse",
 "Reply to the selected post" => "Répondre au message sélectionné",
+"Reply to the selected commwent" => "Répondre au commentaire sélectionné",
 "Post new message" => "Publier un nouveau message",
 "Editing comment" => "Modifier le commentaire sélectionné",
 "Comment on the selected post" => "Répondre au commentaire sélectionné",
