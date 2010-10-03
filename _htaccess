@@ -104,6 +104,7 @@ RewriteRule ^wml$                  tiki-mobile.php                          [L]
 RewriteRule ^sheets$               tiki-sheets.php                          [L]
 
 # access any object by its numeric identifier
+RewriteRule ^article([0-9]+)\-.*(&comzone=.*)$  article$1$2
 RewriteRule ^article([0-9]+)\-.*$  article$1
 RewriteRule ^blog([0-9]+)\-.*$     blog$1
 RewriteRule ^blogpost([0-9]+)\-.*$ blogpost$1
