@@ -1,4 +1,4 @@
-<?php
+s<?php
 // (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,6 +94,7 @@ abstract class Toolbar
 			'h1',
 			'h2',
 			'h3',
+			'titlebar',
 			'toc',
 			'list',
 			'numlist',
@@ -650,6 +651,12 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$icon = 'pics/icons/text_heading_' . $tagName{1} . '.png';
 			$wysiwyg = null;
 			$syntax = str_repeat('!', $tagName{1}) . 'text';
+			break;
+		case 'titlebar':
+			$label = tra('Title bar');
+			$icon = 'pics/icons/text_padding_top.png';
+			$wysiwyg = null;
+			$syntax = '-=text=-';
 			break;
 		case 'toc':
 			$label = tra('Table of contents');
