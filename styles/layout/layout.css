@@ -937,7 +937,7 @@ span.moduleflip,
 	width: auto;
 	z-index: 1;
 	position: relative;
-	bottom: -1px;
+	bottom: 0;
 }
 	
 .rbox-title .icon {
@@ -947,6 +947,7 @@ span.moduleflip,
 	
 .rbox-data {
 	position: relative;
+	top: -5px;
 	z-index: 0;
 }
 
