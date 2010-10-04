@@ -1450,6 +1450,10 @@ function get_default_prefs() {
 		'recaptcha_enabled' => 'n',
 		'recaptcha_pubkey' => '',
 		'recaptcha_privkey' => '',
+		// Captcha
+		'captcha_wordLen' => 6,
+		'captcha_width' => 180,
+		'captcha_noise' => 100,
 
 		// unsorted features
 		'anonCanEdit' => 'n',
