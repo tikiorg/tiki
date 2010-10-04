@@ -48,7 +48,7 @@ if (isset($_REQUEST['action'])) {
 				$kmixEntry->editorType = 1;
 				$kmixEntry = $kclient->mixing->add($kmixEntry);		
 				for ($i=0, $cvideoId = count($videoId); $i < $cvideoId ; $i++) {
-					$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id, $videoId[0]);
+					$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id, $videoId[$i]);
 				}
 			}
 			header ('Location: tiki-kaltura_video.php?action=remix&mixId=' . $kmixEntry->id);
@@ -87,7 +87,7 @@ $sort_mode = '';
 if ($_REQUEST['sort_mode']) {
 	$sort_mode = $_REQUEST['sort_mode'];
 } else {
-	$sort_mode = 'desc_created_at';
+	$sort_mode = 'desc_createdAt';
 }
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
@@ -112,7 +112,7 @@ if ($_REQUEST['offset']) {
 	$page = ($offset/$page_size) + 1;
 } else {
 	$offset = 0;
-	$page = 1;
+	$page = 0;
 }
 
 if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
@@ -175,6 +175,7 @@ if ($_REQUEST['list'] == 'media') {
 	$kfilter->userIdEqual = $kuser;
 	$kfilter->orderBy = $sort_mode;
 	$kfilter->nameMultiLikeOr = $find;
+	$kfilter->statusIn = '-1,-2,0,1,2';
 
 	$kpager = new KalturaFilterPager();
 	$kpager->pageIndex = $page;

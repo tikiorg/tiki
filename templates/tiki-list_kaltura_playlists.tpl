@@ -59,13 +59,13 @@
 {title}Kaltura Playlist{/title}
 <table class="noborder">
 <tr><td>
-<object height="350" width="800" type="application/x-shockwave-flash" data="http://www.kaltura.com/kwidget/cache_st/1255548761/wid/_23929/ui_conf_id/48306" id="kaltura_playlist">		
+<object height="350" width="800" type="application/x-shockwave-flash" data="{$prefs.kServiceUrl}kwidget/cache_st/1255548761/wid/_23929/ui_conf_id/48306" id="kaltura_playlist">		
 <param name="allowscriptaccess" value="always"/>
 <param name="allownetworking" value="all"/>
 <param name="bgcolor" value="#000000"/>
 <param name="wmode" value="opaque"/>
 <param name="allowfullscreen" value="true"/>
-<param name="movie" value="http://www.kaltura.com/kwidget/cache_st/1255548761/wid/_23929/ui_conf_id/48304"/>
+<param name="movie" value="{$prefs.kServiceUrl}kwidget/cache_st/1255548761/wid/_23929/ui_conf_id/48304"/>
 <param name="flashvars" value="layoutId=playlistLight&uid=0&partner_id=23929&subp_id=2392900&k_pl_autoContinue=true&k_pl_autoInsertMedia=true&k_pl_0_name={$kplaylist->name}&k_pl_0_url=http%3A%2F%2Fwww.kaltura.com%2Findex.php%2Fpartnerservices2%2Fexecuteplaylist%3Fuid%3D%26partner_id%3D23929%26subp_id%3D2392900%26format%3D8%26ks%3D%7Bks%7D%26playlist_id%3D{$kplaylist->id}"/></object>
 </td></tr>
 <tr><td>

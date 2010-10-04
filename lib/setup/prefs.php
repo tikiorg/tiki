@@ -1425,6 +1425,7 @@ function get_default_prefs() {
 		'kseUIConf' => '36300',
 		'kaeUIConf' => '1000865',
 		'kuser' => $url_host,
+		'kServiceUrl' => 'http://www.kaltura.com/',
 
 		// BigBlueButton
 		'bigbluebutton_feature' => 'n',

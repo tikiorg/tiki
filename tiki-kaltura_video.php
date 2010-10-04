@@ -46,7 +46,8 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 			'&partner_id=' . $prefs['partnerId'] .
 			'&subp_id=' . $prefs['partnerId'] .'00'.
 			'&backF=CloseClick'.
-			'&saveF=SaveClick';
+			'&saveF=SaveClick'.
+			'&jsDelegate=kaeCallbacksObj';
 		$editor = $_REQUEST['editor'];	
 		if($kentryType == "mix"){
 			$seflashVars = $seflashVars.

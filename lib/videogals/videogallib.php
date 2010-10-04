@@ -11,18 +11,23 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once ('lib/videogals/KalturaClient_v3.php');
+require_once ('lib/videogals/KalturaClient.php');
 
-global $prefs, $kconf, $kclient, $ksession, $kuser, $url_host;
+global $prefs, $kconf, $kclient, $ksession, $kuser, $url_host, $user, $tikilib, $smarty;
 
 $access->check_feature('feature_kaltura');
 
 $SESSION_ADMIN = 2;
 $SESSION_USER = 0;
-if (empty($prefs['kuser'])) {
-	$tikilib->set_preference('kuser', $url_host);
+if (!empty($prefs['kuser'])) {
+	$kuser = $prefs['kuser'];
+} else {
+	$kuser = $user;
 }
-$kuser = $prefs['kuser'];
+if (empty($prefs['kServiceUrl'])) {
+	$tikilib->set_preference('kServiceUrl', 'http://www.kaltura.com/');;
+}
+$smarty->assign('kServiceUrl', $prefs['kServiceUrl']);
 
 if (empty($prefs['partnerId']) || !is_numeric($prefs['partnerId']) || empty($prefs['secret']) || empty($prefs['adminSecret'])) {
 	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=kaltura">' . tra('here') . '</a>');
@@ -32,8 +37,9 @@ if (empty($prefs['partnerId']) || !is_numeric($prefs['partnerId']) || empty($pre
 	
 try {
 	$kconf = new KalturaConfiguration($prefs['partnerId']);
+	$kconf->serviceUrl = $prefs['kServiceUrl'];
 	$kclient = new KalturaClient($kconf);
-	$ksession = $kclient->session->start( $prefs['secret'], $kuser, $SESSION_USER );
+	$ksession = $kclient->session->start( $prefs['secret'], $kuser, $SESSION_USER,$prefs['partnerId'],86400,'edit:*' );
 	$kclient->setKs($ksession);
 	
 } catch (Exception $e) {
