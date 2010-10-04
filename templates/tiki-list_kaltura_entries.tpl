@@ -26,10 +26,11 @@
 
 	{if $view ne "browse"}
 <form action='tiki-list_kaltura_entries.php?list=mix' method="post">	
-	{button _text="{tr}Media Entries{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
-	{button _text="{tr}Browse{/tr}" href="tiki-list_kaltura_entries.php?list=mix&amp;view=browse" } 
+	{button _text="{tr}List Media Files{/tr}" href="tiki-list_kaltura_entries.php?list=media" }
+	{button _text="{tr}Browse Remixes{/tr}" href="tiki-list_kaltura_entries.php?list=mix&amp;view=browse" }
+	<div class="floatright"> 
 		{if $tiki_p_delete_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}<input type="submit" name="action" value="{tr}Delete{/tr}" />{/if}
-
+	</div>
 		{include file=tiki-list_kaltura_mix_entries.tpl}
 </form>
     {else}
@@ -38,11 +39,12 @@
 {else}
 	{if $view ne "browse"}
 <form action="tiki-list_kaltura_entries.php?list=media" method="post" class="normal" id="videoAction">
-	{button _text="{tr}Mix Entries{/tr}" href="tiki-list_kaltura_entries.php?list=mix" }
-	{button _text="{tr}Browse{/tr}" href="tiki-list_kaltura_entries.php?list=media&amp;view=browse" }
+	{button _text="{tr}List Remixes{/tr}" href="tiki-list_kaltura_entries.php?list=mix" }
+	{button _text="{tr}Browse Media Files{/tr}" href="tiki-list_kaltura_entries.php?list=media&amp;view=browse" }
+	<div class="floatright">
 	{if $tiki_p_remix_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}<input type="submit" name="action" value="{tr}Create Remix{/tr}" />{/if} 
 	{if $tiki_p_delete_videos eq 'y' or $tiki_p_admin_kaltura eq 'y' or $tiki_p_admin eq 'y'}<input type="submit" name="action" value="{tr}Delete{/tr}" />{/if}
-	
+	</div>
 		{include file=tiki-list_kaltura_media_entries.tpl}
 </form>
 	{jq}
