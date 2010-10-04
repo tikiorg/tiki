@@ -30,7 +30,7 @@ if (empty($prefs['kServiceUrl'])) {
 $smarty->assign('kServiceUrl', $prefs['kServiceUrl']);
 
 if (empty($prefs['partnerId']) || !is_numeric($prefs['partnerId']) || empty($prefs['secret']) || empty($prefs['adminSecret'])) {
-	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=kaltura">' . tra('here') . '</a>');
+	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=video">' . tra('here') . '</a>');
 	$smarty->display('error.tpl');
 	die;
 }
