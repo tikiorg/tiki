@@ -22,8 +22,12 @@
 			<td><a href="tiki-kaltura_video.php?{$entryType}Id={$item->id}"><img src="pics/icons/application_form_magnify.png" class="icon" /> {$item->name}</a></td>
 			<td>{$item->createdAt}</td>
 			<td>{$item->tags}</td>
-			<td>{$modifiedAt[$key]}<br/><br/>
-			{tr}Modified By:{/tr} {$modifiedBy[$key]}</td>
+			<td>{$modifiedAt[$key]}
+			{if !$prefs.kuser}
+			<br/><br/>
+			{tr}Modified By:{/tr} {$modifiedBy[$key]}
+			{/if}
+			</td>
 			{include file=tiki-list_kaltura_entries_add_info.tpl}
 			<td><a href="#" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title=''}</a></td>
 		</tr>
