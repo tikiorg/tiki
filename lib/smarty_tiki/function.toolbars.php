@@ -12,6 +12,8 @@
 function smarty_function_toolbars($params, &$smarty)
 {
 	global $prefs;
+	$default = array('comments' => '');
+	$params = array_merge($default, $params);
 	
 	if ($prefs['javascript_enabled'] != 'y') {
 		return '';
@@ -58,7 +60,7 @@ function smarty_function_toolbars($params, &$smarty)
 	if ( isset($params['_wysiwyg']) && $params['_wysiwyg'] == 'y') {
 		return $list->getWysiwygArray( $params['area_id'] );
 	} else {
-		return $list->getWikiHtml( $params['area_id'] );
+		return $list->getWikiHtml( $params['area_id'], $params['comments'] );
 	}
 }
 
