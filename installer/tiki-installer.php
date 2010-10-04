@@ -37,7 +37,7 @@ if (empty($_REQUEST['install_step'])) {
 	
 	if (isset($_REQUEST['setdbversion'])) {
 		// Sets dbversion_tiki when installing the WebDeploy package
-		$db = fopen('db/local.php', 'a');
+		$db = fopen('db/'.$tikidomainslash.'local.php', 'a');
 		require_once 'lib/setup/twversion.class.php';
 		$TWV = new TWVersion();
 		fwrite($db, "\n\$dbversion_tiki='" . $TWV->getBaseVersion() . "';\n");
@@ -759,7 +759,7 @@ if (!isset($install_type)) {
 
 if ( isset( $_GET['lockenter'] ) || isset( $_GET['nolockenter'] ) ) {
 	if (isset( $_GET['lockenter'])) {
-		touch( 'db/lock' );
+		touch( 'db/'.$tikidomainslash.'lock' );
 	}
 	
 	global $userlib, $cachelib;

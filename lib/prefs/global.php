@@ -6,7 +6,7 @@
 // $Id$
 
 function prefs_global_list() {
-	global $tikilib, $prefs;
+	global $tikilib, $prefs, $url_host;
 
 	$all_styles = $tikilib->list_styles();
 	$styles = array();
@@ -350,6 +350,19 @@ function prefs_global_list() {
 			'name' => tra('Kaltura Advanced Editor UI Configuration Id'),
 			'type' => 'text',
 			'size' => 20,
+		),
+		'kuser' => array(
+			'name' => tra('Kaltura "User"'),
+			'description' => tra('Owner of content shared by all Tiki users on this site. If empty then each Tiki user can only see their own media entries.'),
+			'hint' => tra("You could use your server name for this. e.g. $url_host"),
+			'type' => 'text',
+			'size' => 20,
+		),
+		'kServiceUrl' => array(
+			'name' => tra('Kaltura Service URL'),
+			'description' => tra('e.g. http://www.kaltura.com/'),
+			'type' => 'text',
+			'size' => 40,
 		),
 		// End Kaltura
 	);

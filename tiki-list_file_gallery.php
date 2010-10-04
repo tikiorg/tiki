@@ -779,13 +779,6 @@ if (isset($_GET['slideshow'])) {
 	$smarty->assign('cant', $files['cant']);
 	$smarty->assign_by_ref('file', $files['data']);
 
-	// These lines seem to do nothing, but there is a connection to 2 tpls (tiki-browse_image.tpl (2 matches) and tiki-browse_video.tpl (2 matches))
-	// but that must be broken - leaving for a little while just in case (jonnyb tiki5)
-	//	$i = 0;
-	//	$smarty->assign_by_ref('filesid', $filesid);
-	//	reset($filesid);
-	//	$smarty->assign('firstId', current($filesid));
-
 	$smarty->assign('show_find', 'n');
 	$smarty->assign('direct_pagination', 'y');
 	if (isset($_REQUEST['slideshow_noclose'])) {

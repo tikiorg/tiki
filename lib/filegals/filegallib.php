@@ -1576,6 +1576,17 @@ class FileGalLib extends TikiLib
 	function getWikiSyntax($galleryId=0) {
 		global $prefs;
 		
+		if (isset($_REQUEST['filegals_manager'])) {		// for use in plugin edit popup
+			if ($_REQUEST['filegals_manager'] === 'fgal_picker_id') {
+				return '%fileId%';		// for use in plugin edit popup
+			} else if ($_REQUEST['filegals_manager'] === 'fgal_picker') {
+				$href = 'tiki-download_file.php?fileId=123&amp;display';	// dummy id as sefurl expects a (/d+) pattern
+				global $smarty; include_once('tiki-sefurl.php');
+				$href = filter_out_sefurl($href, $smarty);
+				return str_replace('123', '%fileId%', $href);
+			}
+		}
+		
 		$syntax = $this->getOne('SELECT `wiki_syntax` FROM `tiki_file_galleries` WHERE `galleryId`=?', array($galleryId));
 		if (!empty($syntax)) {
 			return $syntax;

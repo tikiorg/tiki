@@ -28,7 +28,7 @@
 		<p>{tr}To use Facebook integration, you must register this site as an application at{/tr}
 		 <a href="http://developers.facebook.com/setup/" target="_blank">http://developers.facebook.com/setup/</a>
 		 {tr}and allow extended access for the application{/tr}.<br />
-		{tr}Enter &lt;your site URL&gt;tiki-socialnetworks.php as connect URL{/tr}.</p>
+		{tr}Enter &lt;your site URL&gt;tiki-socialnetworks.php?request_facebook as Site URL and &lt;your site&gt; as Site Domain{/tr}.</p>
 		{/remarksbox}
 		<div class="adminoptionbox">
 			{preference name=socialnetworks_facebook_api_key}

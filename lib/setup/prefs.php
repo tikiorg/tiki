@@ -27,7 +27,7 @@ function get_default_prefs() {
 		return $prefs;
 	}
 
-	global $tikidate, $tikilib;
+	global $tikidate, $tikilib, $url_host;
 	$prefs = array(
 		// tiki and version
 		'tiki_release' => '0',
@@ -1419,11 +1419,13 @@ function get_default_prefs() {
 		'partnerId' => '',
 		'secret' => '',
 		'adminSecret' => '',		
-		'kdpUIConf' => '48411',
+		'kdpUIConf' => '1913592',
 		'kdpWidget' => '',
-		'kcwUIConf' => '36200',
-		'kseUIConf' => '36300',
+		'kcwUIConf' => '1913682',
+		'kseUIConf' => '2434291',
 		'kaeUIConf' => '1000865',
+		'kuser' => $url_host,
+		'kServiceUrl' => 'http://www.kaltura.com/',
 
 		// BigBlueButton
 		'bigbluebutton_feature' => 'n',
@@ -1448,6 +1450,10 @@ function get_default_prefs() {
 		'recaptcha_enabled' => 'n',
 		'recaptcha_pubkey' => '',
 		'recaptcha_privkey' => '',
+		// Captcha
+		'captcha_wordLen' => 6,
+		'captcha_width' => 180,
+		'captcha_noise' => 100,
 
 		// unsorted features
 		'anonCanEdit' => 'n',

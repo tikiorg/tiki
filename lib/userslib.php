@@ -919,13 +919,25 @@ class UsersLib extends TikiLib
 		global $prefs;
 		global $logslib;
 
+		// First connection on the ldap server in anonymous, now we can search the real name of the $user
+		// It's required to pass in param the username & password because the username is used to determine the realname (dn)
 		$this->init_ldap($user, $pass);
 
 		$err = $this->ldap->bind();
 		if (is_int($err)) {
 			$err=Net_LDAP2::errorMessage($err);
 		}
+		
+		// Change the default bind_type to use the full, call get_user_attributes function to use the realname (dn) in the credentials test 
+		$this->ldap->setOption('bind_type', 'full');
+		$this->ldap->get_user_attributes();
 
+		// Credentials test! To test it we force the reconnection.
+		$err = $this->ldap->bind(true);
+		if (is_int($err)) {
+				$err=Net_LDAP2::errorMessage($err);
+		}
+		
 		switch($err) {
 		case 'LDAP_INVALID_CREDENTIALS':
 			return PASSWORD_INCORRECT;
@@ -1780,7 +1792,7 @@ class UsersLib extends TikiLib
 		if (!is_null($result)) {
 			$home = $this->get_group_home($result);
 			if ($home != '')
-				return $home;
+				return $this->best_multilingual_page($home);
 		}
 		$query = "select g.`groupHome`, g.`groupName` from `users_usergroups` as gu, `users_users` as u, `users_groups`as g where gu.`userId`= u.`userId` and u.`login`=? and gu.`groupName`= g.`groupName` and g.`groupHome` != '' and g.`groupHome` is not null";
 		$result = $this->query($query,array($user));
@@ -1796,7 +1808,20 @@ class UsersLib extends TikiLib
 			$home = $res["groupHome"];
 			$group = $res["groupName"];
 		}
-		return $home;
+		return $this->best_multilingual_page($home);
+	}
+	function best_multilingual_page($page) {
+		global $prefs;
+		if ($prefs['feature_multilingual'] != 'y') {
+			return ($page);
+		}
+		$info = $this->get_page_info($page);
+		global $multilinguallib; include_once ("lib/multilingual/multilinguallib.php");
+		$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id'], $prefs['language']);
+		if ($info['page_id'] == $bestLangPageId) {
+			return $page;
+		}
+		return $this->get_page_name_from_id($bestLangPageId);
 	}
 	function get_user_default_homepage2($user) {
 		global $prefs;

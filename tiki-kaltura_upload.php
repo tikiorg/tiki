@@ -5,41 +5,16 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-$access->check_feature('feature_kaltura');
-
-include_once ("lib/videogals/KalturaClient_v3.php");
+require_once 'tiki-setup.php';
+require_once 'lib/videogals/videogallib.php';
 
 $access->check_permission(array('tiki_p_upload_videos'));
 
-$secret = $prefs['secret'];
-$admin_secret = $prefs['adminSecret'];
-$partner_id = $prefs['partnerId'];
-$SESSION_ADMIN = 2;
-$SESSION_USER = 0;
-$kuser = $url_host;
-
-if (empty($partner_id) || !is_numeric($partner_id) || empty($secret) || empty($admin_secret)) {
-	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=kaltura">' . tra('here') . '</a>');
-	$smarty->display('error.tpl');
-	die;
-}
 $smarty->assign('headtitle', tra('Kaltura Upload'));
-
-try {
-	$kconf = new KalturaConfiguration($partner_id);
-	$kclient = new KalturaClient($kconf);
-	$ksession = $kclient->session->start($secret,$kuser,$SESSION_USER);
-} catch (Exception $e) {
-	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br /><em>' . $e->getMessage() . '</em>');
-	$smarty->display('error.tpl');
-	die;
-}
-$kclient->setKs($ksession);
 
 $cwflashVars = array();
 $cwflashVars["uid"]               = $kuser;
-$cwflashVars["partnerId"]         = $partner_id;
+$cwflashVars["partnerId"]         = $prefs['partnerId'];
 $cwflashVars["ks"]                = $ksession;
 $cwflashVars["afterAddEntry"]     = "afterAddEntry";
 $cwflashVars["close"]             = "onContributionWizardClose";

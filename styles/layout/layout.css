@@ -947,6 +947,7 @@ span.moduleflip,
 	
 .rbox-data {
 	position: relative;
+	top: -5px;
 	z-index: 0;
 }
 

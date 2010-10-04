@@ -8,6 +8,8 @@
 	{button href="#import" _text="{tr}Import{/tr}"}
 </div>
 
+{tabset name="mytiki_user_preference"}
+{tab name="{tr}Manage menu{/tr} $menuId"}
 <table>
 	<tr>
 		<td valign="top">
@@ -73,7 +75,7 @@
 										{/if}
 									</td>
 								</tr>
-{if $prefs.feature_userlevels eq 'y'}
+								{if $prefs.feature_userlevels eq 'y'}
 								<tr>
 									<td>{tr}Level:{/tr}</td>
 									<td colspan="3">
@@ -83,7 +85,7 @@
 										</select>
 									</td>
 								</tr>
-{/if}
+								{/if}
 								<tr>
 									<td>{tr}Type:{/tr}</td>
 									<td>
@@ -102,9 +104,9 @@
 										<input type="text" name="position" value="{$position|escape}" size="6" />
 									</td>
 								</tr>
-{if $prefs.menus_items_icons eq 'y'}
-							 	<tr><td>{tr}Icon:{/tr}</td><td colspan="3"><input type="text" name="icon" value="{$icon|escape}" size="20" /></td></tr>
-{/if}
+								{if $prefs.menus_items_icons eq 'y'}
+									<tr><td>{tr}Icon:{/tr}</td><td colspan="3"><input type="text" name="icon" value="{$icon|escape}" size="20" /></td></tr>
+								{/if}
 								<tr>
 									<td>&nbsp;</td>
 									<td colspan="3">
@@ -363,7 +365,9 @@
 		</td>
 	</tr>
 </table>
+{/tab}
 
+{tab name="{tr}Import/export menu{/tr}"}
 <a name="export"></a>
 <h2>{tr}Export CSV data{/tr}</h2>
 <form action="tiki-admin_menu_options.php" method="post">
@@ -380,3 +384,5 @@
 	{tr}File:{/tr} <input name="csvfile" type="file" />
 	<input type="submit" name="import" value="{tr}Import{/tr}" />
 </form>
+{/tab}
+{/tabset}

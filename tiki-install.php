@@ -20,13 +20,14 @@ if (version_compare(PHP_VERSION, '5.0.0', '<')) {
 include_once('db/tiki-db.php');	// to set up multitiki etc if there
 
 // if tiki installer is locked (probably after previous installation) display notice
-if (file_exists('db/lock')) {
+if (file_exists('db/'.$tikidomainslash.'lock')) {
 	$title = 'Tiki Installer Disabled';
+	$td = empty($tikidomain)? '': '/'.$tikidomain;
 	$content = '
 							<p>As a security precaution, the Tiki Installer has been disabled. To re-enable the installer:</p>
 							<div style="border: solid 1px #ccc; margin: 1em auto; width: 40%;">
 								<ol style="text-align: left">
-									<li>Use your file manager application to find the directory where you have unpacked your Tiki and remove the <strong><code>lock</code></strong> file which was created in the <strong><code>db</code></strong> folder.</li>
+									<li>Use your file manager application to find the directory where you have unpacked your Tiki and remove the <strong><code>lock</code></strong> file which was created in the <strong><code>db'.$td.'</code></strong> folder.</li>
 									<li>Re-run <strong><a href="tiki-install.php" title="Tiki Installer">tiki-install.php</a></strong>.</li>
 								</ol>
 							</div>';

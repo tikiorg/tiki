@@ -1,4 +1,4 @@
-<?php
+s<?php
 // (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,6 +94,7 @@ abstract class Toolbar
 			'h1',
 			'h2',
 			'h3',
+			'titlebar',
 			'toc',
 			'list',
 			'numlist',
@@ -651,6 +652,12 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$wysiwyg = null;
 			$syntax = str_repeat('!', $tagName{1}) . 'text';
 			break;
+		case 'titlebar':
+			$label = tra('Title bar');
+			$icon = 'pics/icons/text_padding_top.png';
+			$wysiwyg = null;
+			$syntax = '-=text=-';
+			break;
 		case 'toc':
 			$label = tra('Table of contents');
 			$icon = tra('pics/icons/book.png');
@@ -673,8 +680,13 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);',
+		if ($this->syntax == '...page...') {	// for some reason breaks toolbar when inside nested plugins
+			return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'...\'+\'page\'+\'...\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-block');
+		} else {
+			return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);',
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-block');
+		}
 	} // }}}
 }
 
