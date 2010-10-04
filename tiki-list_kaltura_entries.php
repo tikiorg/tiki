@@ -13,6 +13,19 @@ $mediaTypeAsString['2'] = 'Image';
 $mediaTypeAsString['1'] = 'Video';
 $mediaTypeAsString['5'] = 'Audio';
 
+$statusAsString  = array(
+	-2 => tra('Error importing'),
+ 	-1 => tra('Error converting'),
+	0 => tra('Importing'),
+	1 => tra('Processing'),
+	2 => tra('Ready'),
+	3 => tra('Deleted'),
+	4 => tra('Pending'),
+	5 => tra('Pending moderation'),
+	6 => tra('Blocked'),
+);
+
+
 try {
 
 if (isset($_REQUEST['action'])) {
@@ -125,7 +138,7 @@ if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
 	$kfilter->userIdEqual = $kuser;
 	$kfilter->orderBy = $sort_mode;
 	$kfilter->nameMultiLikeOr = $find;
-
+	
 	if ($_REQUEST['view'] != 'browse') {
 		// Get user's kaltura mix entries	
 		$kmixlist = $kclient->mixing->listAction($kfilter, $kpager);
@@ -187,6 +200,7 @@ if ($_REQUEST['list'] == 'media') {
 
 		for ($i =0 ; $i < $kmedialist->totalCount; $i++) {
 			$kmedialist->objects[$i]->mediaType = $mediaTypeAsString[$kmedialist->objects[$i]->mediaType];
+			$kmedialist->objects[$i]->statusString = $statusAsString[$kmedialist->objects[$i]->status];
 		}
 	} else {
 

@@ -20,7 +20,7 @@
 		<td><a href="{$item->downloadUrl}" title="{tr}Download{/tr}">{$item->name}</a></td>
 		<td>{$item->mediaType}</td>
 		<td>{$item->createdAt|tiki_short_datetime}</td>
-		<td>{$item->status}</td>	{* TODO use words *}
+		<td>{$item->statusString}</td>
 		<td>{$item->tags}</td>
 			{include file=tiki-list_kaltura_entries_add_info.tpl}	
 		<td><a href="#" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title='{tr}More Information{/tr}'}</a></td>
