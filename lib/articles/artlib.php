@@ -159,12 +159,11 @@ class ArtLib extends TikiLib
 				$machine = $tikilib->httpPrefix( true ). $foo['path'];
 				$smarty->assign('mail_machine', $machine);
 				$parts = explode('/', $foo['path']);
-				if (count($parts) > 1) {
+				if (count($parts) > 1)
 					unset ($parts[count($parts) - 1]);
+					$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ) . implode('/', $parts));
+					sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl');
 				}
-				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ) . implode('/', $parts));
-				sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl');
-			}
 
 			return true;
 		}
@@ -566,19 +565,18 @@ class ArtLib extends TikiLib
 			$machine = $tikilib->httpPrefix( true ). $foo['path'];
 			$smarty->assign('mail_machine', $machine);
 			$parts = explode('/', $foo['path']);
-			if (count($parts) > 1) {
+			if (count($parts) > 1)
 				unset ($parts[count($parts) - 1]);
+				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ). implode('/', $parts));
+				sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl');
+				if (is_array($emails) && !empty($from) && $from != $prefs['sender_email']) {
+					$nots = array();
+					foreach ($emails as $n) {
+						$nots[] = array('email' => $n);
+					}	
+					sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl', $from);
+				}
 			}
-			$smarty->assign('mail_machine_raw', $tikilib->httpPrefix( true ). implode('/', $parts));
-			sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl');
-			if (is_array($emails) && !empty($from) && $from != $prefs['sender_email']) {
-				$nots = array();
-				foreach ($emails as $n) {
-					$nots[] = array('email' => $n);
-				}	
-				sendEmailNotification($nots, 'watch', 'user_watch_article_post_subject.tpl', $_SERVER['SERVER_NAME'], 'user_watch_article_post.tpl', $from);
-			}
-		}
 
 
 		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
@@ -739,119 +737,25 @@ class ArtLib extends TikiLib
 										, $creator_edit
 										)
 	{
-		if ($use_ratings == 'on') {
-			$use_ratings = 'y';
-		} else {
-			$use_ratings = 'n';
-		}
-		
-		if ($show_pre_publ == 'on') {
-			$show_pre_publ = 'y';
-		} else {
-			$show_pre_publ = 'n';
-		}
-		
-		if ($show_post_expire == 'on') {
-			$show_post_expire = 'y';
-		} else {
-			$show_post_expire = 'n';
-		}
-		
-		if ($heading_only == 'on') {
-			$heading_only = 'y';
-		} else {
-			$heading_only = 'n';
-		}
-		
-		if ($allow_comments == 'on') {
-			$allow_comments = 'y';
-		} else {
-			$allow_comments = 'n';
-		}
-		
-		if ($comment_can_rate_article == 'on') {
-			$comment_can_rate_article = 'y';
-		} else {
-			$comment_can_rate_article = 'n';
-		}
-		
-		if ($show_image == 'on') {
-			$show_image = 'y';
-		} else {
-			$show_image = 'n';
-		}
-		
-		if ($show_avatar == 'on') {
-			$show_avatar = 'y';
-		} else {
-			$show_avatar = 'n';
-		}
-		
-		if ($show_author == 'on') {
-			$show_author = 'y';
-		} else {
-			$show_author = 'n';
-		}
-		
-		if ($show_pubdate == 'on') {
-			$show_pubdate = 'y';
-		} else {
-			$show_pubdate = 'n';
-		}
-		
-		if ($show_expdate == 'on') {
-			$show_expdate = 'y';
-		} else {
-			$show_expdate = 'n';
-		}
-		
-		if ($show_reads == 'on') {
-			$show_reads = 'y';
-		} else {
-			$show_reads = 'n';
-		}
-		
-		if ($show_size == 'on') {
-			$show_size = 'y';
-		} else {
-			$show_size = 'n';
-		}
-		
-		if ($show_topline == 'on') {
-			$show_topline = 'y';
-		} else {
-			$show_topline = 'n';
-		}
-		if ($show_subtitle == 'on')
-		{
-			$show_subtitle = 'y';
-		} else {
-			$show_subtitle = 'n';
-		}
-		
-		if ($show_linkto == 'on') {
-			$show_linkto = 'y';
-		} else {
-			$show_linkto = 'n';
-		}
-		
-		if ($show_image_caption == 'on') {
-			$show_image_caption = 'y';
-		} else {
-			$show_image_caption = 'n';
-		}
-		
-		if ($show_lang == 'on') {
-			$show_lang = 'y';
-		} else {
-			$show_lang = 'n';
-		}
-		
-		if ($creator_edit == 'on') {
-			$creator_edit = 'y';
-		} else {
-			$creator_edit = 'n';
-		}
+		if ($use_ratings == 'on') {$use_ratings = 'y';} else {$use_ratings = 'n';}
+		if ($show_pre_publ == 'on') {$show_pre_publ = 'y';} else {$show_pre_publ = 'n';}
+		if ($show_post_expire == 'on') {$show_post_expire = 'y';} else {$show_post_expire = 'n';}
+		if ($heading_only == 'on') {$heading_only = 'y';} else {$heading_only = 'n';}
+		if ($allow_comments == 'on') {$allow_comments = 'y';} else {$allow_comments = 'n';}
+		if ($comment_can_rate_article == 'on') {$comment_can_rate_article = 'y';} else {$comment_can_rate_article = 'n';}		
+		if ($show_image == 'on') {$show_image = 'y';} else {$show_image = 'n';}
+		if ($show_avatar == 'on') {$show_avatar = 'y';} else {$show_avatar = 'n';}
+		if ($show_author == 'on') {$show_author = 'y';} else {$show_author = 'n';}
+		if ($show_pubdate == 'on') {$show_pubdate = 'y';} else {$show_pubdate = 'n';}
+		if ($show_expdate == 'on') {$show_expdate = 'y';} else {$show_expdate = 'n';}
+		if ($show_reads == 'on') {$show_reads = 'y';} else {$show_reads = 'n';}
+		if ($show_size == 'on') {$show_size = 'y';} else {$show_size = 'n';}
+		if ($show_topline == 'on') {$show_topline = 'y';} else {$show_topline = 'n';}
+		if ($show_subtitle == 'on') {$show_subtitle = 'y';} else {$show_subtitle = 'n';}
+		if ($show_linkto == 'on') {$show_linkto = 'y';} else {$show_linkto = 'n';}
+		if ($show_image_caption == 'on') {$show_image_caption = 'y';} else {$show_image_caption = 'n';}
+		if ($show_lang == 'on') {$show_lang = 'y';} else {$show_lang = 'n';}
+		if ($creator_edit == 'on') {$creator_edit = 'y';} else {$creator_edit = 'n';}
 		$query = "update `tiki_article_types` set
 			`use_ratings` = ?,
 			`show_pre_publ` = ?,
@@ -1065,24 +969,22 @@ class ArtLib extends TikiLib
 		switch ($image_type) {
 			case 'article':
 				$image_cache_prefix = 'article';
-							break;
+				break;
 			case 'submission':
 				$image_cache_prefix = 'article_submission';
-							break;
+				break;
 			case 'preview':
 				$image_cache_prefix = 'article_preview';
-							break;
+				break;
 			default:
 				return false;
 		}
 		$article_image_cache = $prefs['tmpDir'];
-		if ($tikidomain) { 
-			$article_image_cache .= "/$tikidomain"; 
-		}
+		if ($tikidomain) { $article_image_cache.= "/$tikidomain"; }
 		$article_image_cache .= "/$image_cache_prefix.".$imageId;
 		if ( @unlink($article_image_cache) ) {
 			return true;
-		} else {
+		}else{
 			return false;
 		}
 	}
