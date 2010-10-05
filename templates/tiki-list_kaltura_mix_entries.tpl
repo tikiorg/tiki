@@ -36,5 +36,5 @@
 	</table>
 {else}
 	{remarksbox type="info" title="{tr}No entries{/tr}"}
-	{tr}No mix entries found.{/tr}<a href="tiki-list_kaltura_entries.php?list=media">{tr}Click here{/tr}</a>{tr}to create a new mix.{/tr}{/remarksbox}
+	{tr}No mix entries found.{/tr}<a href="tiki-list_kaltura_entries.php?list=media">{tr}Click here{/tr}</a> {tr}to create a new mix.{/tr}{/remarksbox}
 {/if}
