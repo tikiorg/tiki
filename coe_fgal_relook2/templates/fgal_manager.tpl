@@ -30,9 +30,9 @@
   {/if}
   {if $view eq 'browse'}
     {if $show_details eq 'y'}
-      <a onclick="FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&view={$view}&filegals_manager={$filegals_manager}&show_details=n')">{icon _id='no_information' class='fg-info-icon' align='right'}</a>
+      <a class="fgalaction" href="tiki-list_file_gallery.php?galleryId={$galleryId}&view={$view}&filegals_manager={$filegals_manager}&show_details=n">{icon _id='no_information' class='fg-info-icon' align='right'}</a>
     {else}
-      <a onclick="FileGallery.open('tiki-list_file_gallery.php?galleryId={$galleryId}&view={$view}&filegals_manager={$filegals_manager}&show_details=y')">{icon _id='information' class='fg-info-icon' align='right'}</a>
+      <a class="fgalaction" href="tiki-list_file_gallery.php?galleryId={$galleryId}&view={$view}&filegals_manager={$filegals_manager}&show_details=y">{icon _id='information' class='fg-info-icon' align='right'}</a>
     {/if}
   {/if}
 
@@ -48,7 +48,7 @@
 		<div class="fg-pane">{tr}Galleries{/tr}</div>
 		<div class="fg-toolbar">
 			<div class="fg-toolbar-left">
-				<a class="fg-toolbar-icon" onclick="FileGallery.open('tiki-list_file_gallery.php?filegals_manager={$filegals_manager}&view={$view}')"><img src="images/file_gallery/icon-home.gif" border="0" alt="{tr}Home{/tr}" title="{tr}Home{/tr}"/></a>
+				<a class="fg-toolbar-icon fgalaction" href="tiki-list_file_gallery.php?filegals_manager={$filegals_manager}&view={$view}"><img src="images/file_gallery/icon-home.gif" border="0" alt="{tr}Home{/tr}" title="{tr}Home{/tr}"/></a>
 				{if $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y'}
 					<a class="fg-toolbar-icon" onclick="FileGallery.editGallery('tiki-list_file_gallery.php?edit_mode=1&parentId={$galleryId}&galleryId={$galleryId}&filegals_manager={$filegals_manager}')"><img src="images/file_gallery/icon-edit-folder.gif" border="0" alt="{tr}Edit gallery{/tr}" title="{tr}Edit gallery{/tr}"/></a>
 					<!--a class="fg-toolbar-icon"><img src="images/file_gallery/icon-delete-folder.gif" border="0"/></a-->
@@ -83,7 +83,7 @@
 			</div>
 		</div>
 		<div class="fg-files-buttons">
-			<a class="fg-files-button-mode" onclick="FileGallery.open('{$altmode}')">
+			<a class="fg-files-button-mode fgalaction" href="{$altmode}">
 				{if $view eq 'browse'}
 					{tr}List files{/tr}
 				{else}
