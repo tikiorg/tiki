@@ -117,6 +117,11 @@
 
 	{cycle values="odd,even" print=false}
 	{section name=changes loop=$files}
+		{if $files[changes].isgal eq 1}
+			{assign var='linkclass' value='fgalgal'}
+		{else}
+			{assign var='linkclass' value='fgalfile'}
+		{/if}
 
 		{if ( ( ! isset($fileId) ) || $fileId == 0 ) || ( $fileId == $files[changes].id ) }
 			{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'y'}
@@ -232,7 +237,7 @@
 							{else}
 		
 								{if $filegals_manager neq ''}
-									href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
+									href="#" onclick="insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
 		
 								{elseif $files[changes].perms.tiki_p_download_files eq 'y'}
 									{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
@@ -254,9 +259,9 @@
 						{if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
 							{* show the filename if only name should be displayed but is empty *}
 							{assign var=propval value=$files[changes].filename}
-							{assign var=propval value="<a class='fgalname namealias fgallink' $link>$propval</a>"}
+							{assign var=propval value="<a class='fgalname namealias fgallink $linkclass' $link>$propval</a>"}
 						{else}
-							{assign var=propval value="<a class='fgalname fgallink' $link>$propval</a>"}
+							{assign var=propval value="<a class='fgalname fgallink $linkclass' $link>$propval</a>"}
 						{/if}
 					{elseif $propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload'}
 						{if empty($propval)}
@@ -297,7 +302,7 @@
 	
 					{if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
 						<td>
-							{if $link neq ''}<a class='fgalname{if preg_match('/tiki-download_file\.php/',$link)} fgalfile{else} fgalgal{/if}' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}
+							{if $link neq ''}<a class='fgalname {$linkclass}' {$link}>{/if}{$files[changes].filename|escape}{if $link neq ''}</a>{/if}
 						</td>
 					{/if}
 	

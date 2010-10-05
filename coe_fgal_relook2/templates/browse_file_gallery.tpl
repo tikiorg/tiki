@@ -1,12 +1,14 @@
 <div id="thumbnails" style="float:left">
 
   {section name=changes loop=$files}
-
+  
   {* Checkboxes *}
   {if $files[changes].isgal eq 1}
     {assign var=checkname value=$subgal_checkbox_name|default:'subgal'}
+    {assign var='linkclass' value='fgalgal'}
   {else}
     {assign var=checkname value=$file_checkbox_name|default:'file'}
+    {assign var='linkclass' value='fgalfile'}
   {/if}
   {if $gal_info.show_checked neq 'n' and $smarty.request.$checkname and in_array($files[changes].id,$smarty.request.$checkname)}
     {assign var=is_checked value='y'}
@@ -73,7 +75,7 @@
         href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}&amp;view=browse"
       {else}
         {if $filegals_manager neq ''}
-          href="#" onclick="window.opener.insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');checkClose();return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
+          href="#" onclick="insertAt('{$filegals_manager}','{$files[changes].wiki_syntax|escape}');return false;" title="{tr}Click Here to Insert in Wiki Syntax{/tr}"
         {elseif $tiki_p_download_files eq 'y'}
           {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
             href="{$prefs.fgal_podcast_dir}{$files[changes].path}"
@@ -115,9 +117,9 @@
               {if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
                 {* show the filename if only name should be displayed but is empty *}
                 {assign var=propval value=$files[changes].filename|truncate:$key_name_len}
-                {assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
+                {assign var=propval value="<a class='fgalname namealias $linkclass' $link>$propval</a>"}
               {else}
-                {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
+                {assign var=propval value="<a class='fgalname $linkclass' $link>$propval</a>"}
               {/if}
             {elseif $propname eq 'created' or $propname eq 'lastmodif'}
               {assign var=propval value=$propval|tiki_short_date}
@@ -136,7 +138,7 @@
             <div class="thumbname">
               <div class="thumbnamesub" style="width:{$thumbnail_size}px">
                 {if $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a' and $files[changes].name eq '')}
-                  <a class="fgalname" {$link} title="{$files[changes].filename}">{$files[changes].filename|truncate:$key_name_len}</a>
+                  <a class="fgalname {$linkclass}" {$link} title="{$files[changes].filename}">{$files[changes].filename|truncate:$key_name_len}</a>
                 {else}
                   {$propval}
                 {/if}

@@ -1161,7 +1161,7 @@ function displayDialog( ignored, list, area_id, isSub ) {
 				}
 			} else if (item.indexOf("FileGallery") === 0) {
 				obj = ({"width": 700, "modal": true, "open": function() {
-					FileGallery.open("tiki-list_file_gallery2.php", area_id, dialogDiv);
+					FileGallery.open("tiki-list_file_gallery.php?filegals_manager=" + area_id, area_id, dialogDiv);
 				}});
 			} else if (item.length > 0) {
 				tit = item;

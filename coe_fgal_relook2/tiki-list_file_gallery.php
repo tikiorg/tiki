@@ -983,11 +983,14 @@ $smarty->assign_by_ref('find_durations', $find_durations);
 $smarty->assign_by_ref('gal_info', $gal_info);
 
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value']);
+$other = (isset($_REQUEST['view'])&&$_REQUEST['view']=='browse'?'list':'browse');
+$smarty->assign('altmode', $_SERVER['PHP_SELF']."?view=".$other."&filegals_manager=".$_REQUEST["filegals_manager"].(isset($_REQUEST["galleryId"])?"&galleryId=".$_REQUEST["galleryId"]:""));
 
 // Display the template
 if (!empty($_REQUEST['filegals_manager'])) {
 	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
-	$smarty->display('tiki_full.tpl');
+	$smarty->display('fgal_manager.tpl');
+	///$smarty->display('tiki_full.tpl');
 } else {
 	$smarty->display('tiki.tpl');
 }

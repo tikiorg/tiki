@@ -39,11 +39,14 @@ var FileGallery = {
 			data = this.form(form);
 
 		jQuery('#tbFilegalManager').load(url, data, function() {
-//FIXME			$('fg-galleris-list a.fgalname, a.fgalgal').bind('click', function(e) { FileGallery.open(this.href, area_id, dialogDiv); return false; });
-			$('a.fgalname, a.fgalgal').bind('click', function(e) { FileGallery.open(this.href, area_id, dialogDiv); return false; });
+			$('fg-galleris-list a.fgalname, a.fgalgal').bind('click', function(e) {
+				e.preventDefault();
+				FileGallery.open(this.href, this.area_id, this.dialogDiv);
+				return false;
+			});
 			$('a.fgalfile').click(function(event) {
 				event.preventDefault();
-				insertAt(area_id, 'IMAGEURL' );
+//				insertAt(area_id, '{img src="' + event.target + '"}' );
 				dialogSharedClose( area_id, dialogDiv );
 				return false;
 			});
