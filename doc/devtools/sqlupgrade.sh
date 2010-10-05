@@ -9,8 +9,13 @@
 # It reads db/local.php to find proper mysql info
 # mose@tikiwiki.org
 
-# Usage: sh ./doc/devtools/sqlupgrade.sh
+# Usage: sh doc/devtools/sqlupgrade.sh
 # it has to be launched from tiki root dir
+#
+# 2010-10-04: If this script is not working for you, just use: 
+# php installer/shell.php
+# 
+
 FIND='/usr/bin/find'
 SED='/bin/sed'
 MYSQL='/usr/bin/mysql'
