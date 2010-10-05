@@ -36,16 +36,16 @@
 					<label for="login-remember">{tr}Remember me{/tr}</label><input type="checkbox" name="rme" id="login-remember" value="on" checked="checked" />
 				</span>
 			{/if}
-			{if $prefs.change_password eq 'y' and $prefs.forgotPass eq 'y'}
-				<span class="pass">
-					 <a href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>
-				</span>
-			{/if}
 			{if $prefs.allowRegister eq 'y'}
 				<span class="register">
 					&nbsp;<a href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>
 				</span>
 			{/if}		
+			{if $prefs.change_password eq 'y' and $prefs.forgotPass eq 'y'}
+				<span class="pass">
+					 <a href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>
+				</span>
+			{/if}
 			</div>
 		</form>
 	{/if}

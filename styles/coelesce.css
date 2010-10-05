@@ -378,6 +378,14 @@ input[name="search"] {
 	font-size: inherit;
 }
 
+#siteloginbar .register {
+  padding-left: 20px;
+}
+
+#siteloginbar .pass {
+  padding-left: 20px;
+}
+
 #sitelocbar {
 	float: left;
 }
@@ -2047,16 +2055,6 @@ a.admbox.off:focus,
 .admbox a,
 a.admbox.off:active {
 	border: 1px solid #a9a9a9;
-}
-
-/* Make Register info more prominent than lost password */
-#siteloginbar .register {
-  padding-left: 20px;
-}
-
-#siteloginbar .pass {
-  float: right;
-  padding-left: 20px;
 }
 
 /* Fixed-width rules */
