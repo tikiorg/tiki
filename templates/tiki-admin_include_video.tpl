@@ -2,7 +2,7 @@
 
 {tabset name="admin_video"}
 {tab name="{tr}Kaltura{/tr}"}
-{remarksbox type="info" title="{tr}Kaltura Registration{/tr}" }{tr}If you don't have a Kaltura Partner Id, {/tr}<a href="http://corp.kaltura.com/about/signup">{tr}click here{/tr}</a> {tr}to register.{/tr}{/remarksbox}
+{remarksbox type="info" title="{tr}Kaltura Registration{/tr}" }{tr}To get a Kaltura Partner ID:{/tr} {tr}Setup your own instance of Kaltura Community Edition (CE){/tr} or <a href="http://corp.kaltura.com/about/signup">{tr}get an account via Kaltura.com{/tr}</a> {/remarksbox}
 
 <fieldset class="admin">
 <legend>{tr}Activate the feature{/tr}</legend>
