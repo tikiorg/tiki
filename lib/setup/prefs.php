@@ -26,7 +26,6 @@ function get_default_prefs() {
 	if( $prefs = $cachelib->getSerialized("tiki_default_preferences_cache") ) {
 		return $prefs;
 	}
-
 	global $tikidate, $tikilib, $url_host;
 	$prefs = array(
 		// tiki and version
@@ -1823,7 +1822,6 @@ function initialize_prefs() {
 	
 	global $prefs, $tikiroot, $tikilib, $user_overrider_prefs;
 		
-
 	// Check if prefs needs to be reloaded
 	if (isset($_SESSION['s_prefs'])) {
 
@@ -1862,8 +1860,7 @@ function initialize_prefs() {
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
 		}
 
-		// Override default prefs with values specified in database
-		$modified = $tikilib->get_db_preferences();
+		$modified = isset($tikilib) ? $tikilib->get_db_preferences(): "";
 
 		// Unserialize serialized preferences
 		if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
