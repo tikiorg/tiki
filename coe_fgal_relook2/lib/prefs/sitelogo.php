@@ -27,9 +27,9 @@ function prefs_sitelogo_list() {
 			'name' => tra('Logo alignment'),
 			'type' => 'list',
 			'options' => array(
-				'left' => 'Left',
-				'center' => 'Center',
-				'right' => 'Right',
+				'left' => tra('Left'),
+				'center' => tra('Center'),
+				'right' => tra('Right'),
 			),
 		),
 		'sitelogo_title' => array(
@@ -44,4 +44,3 @@ function prefs_sitelogo_list() {
 		),
 	);	
 }
-	

@@ -113,7 +113,7 @@ if ( $re === false ) {
 	} else {
 		// we are in the installer don't redirect...
 		return ;
-  }
+	}
 }
 
 if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';

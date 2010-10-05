@@ -1080,7 +1080,7 @@ function prefs_feature_list() {
 		'feature_custom_html_head_content' => array(
 			'name' => tra('Custom HTML <head> Content'),
 			'hint' => tra('Example') . "{if \$page eq 'Slideshow'}{literal}<style type=\"text/css\">.slideshow { height: 232px; width: 232px; }</style>{/literal}{/if}",
-			'description' => tra('Use to inclue custom <meta> or <link> tags.'),
+			'description' => tra('Use to include custom &lt;meta&gt; or &lt;link&gt; tags.'),
 			'type' => 'textarea',
 			'size' => '6',
 			'filter' => 'rawhtml_unsafe',
@@ -1252,7 +1252,7 @@ function prefs_feature_list() {
 		),
 		'feature_site_send_link' => array(
 			'name' => tra('Email this page'),
-			'description' => tra('Add a link at the bottom is set, otherwise add a link at the top'),
+			'description' => tra('Add a link at the bottom if set, otherwise add a link at the top'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_tell_a_friend',

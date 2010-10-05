@@ -51,7 +51,9 @@ switch ($_REQUEST["image_type"]) {
 		die;
 }
 $cachefile = $prefs['tmpDir'];
-if ($tikidomain) { $cachefile.= "/$tikidomain"; }
+if ($tikidomain) { 
+	$cachefile .= "/$tikidomain";
+}
 $cachefile.= "/$image_cache_prefix.".$_REQUEST["id"];
 
 // If "reload" parameter is set, recreate the cached image file from database values.
