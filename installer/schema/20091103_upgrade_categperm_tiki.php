@@ -112,4 +112,4 @@ $installer->query($query, array('tiki_p_modify_object_categories', 'tiki_p_edit_
 // FINALLY: remove tiki_p_view_categorized and tiki_p_edit_categorized
 // Not done yet - before we are sure with have all the mapping
 
- }
+}

@@ -29,7 +29,11 @@ require_once ('tiki-setup.php');
 $access->check_feature('feature_banners');
 
 $bannercachefile = $prefs['tmpDir'];
-if ($tikidomain) { $bannercachefile.= "/$tikidomain"; }
+
+if ($tikidomain) { 
+	$bannercachefile .= "/$tikidomain"; 
+}
+
 $bannercachefile.= "/banner.". (int)$_REQUEST["id"];
 
 if (is_file($bannercachefile) and (!isset($_REQUEST["reload"]))) {
