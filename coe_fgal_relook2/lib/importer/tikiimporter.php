@@ -190,3 +190,7 @@ class TikiImporter
         flush();
     }
 }
+
+class ImporterParserException extends Exception
+{
+}

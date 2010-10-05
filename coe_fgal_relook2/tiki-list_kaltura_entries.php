@@ -5,44 +5,28 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once ('tiki-setup.php');
-$access->check_feature('feature_kaltura');
+require_once 'tiki-setup.php';
+require_once 'lib/videogals/videogallib.php';
 $access->check_permission( array('tiki_p_list_videos') );
-
-include_once ('lib/videogals/KalturaClient_v3.php');
-
-//global $user;
 
 $mediaTypeAsString['2'] = 'Image';
 $mediaTypeAsString['1'] = 'Video';
 $mediaTypeAsString['5'] = 'Audio';
 
-$secret = $prefs['secret'];
-$admin_secret = $prefs['adminSecret'];
-$partner_id = $prefs['partnerId'];
-$SESSION_ADMIN = 2;
-$SESSION_USER = 0;
-$kuser = $url_host;
+$statusAsString  = array(
+	-2 => tra('Error importing'),
+ 	-1 => tra('Error converting'),
+	0 => tra('Importing'),
+	1 => tra('Processing'),
+	2 => tra('Ready'),
+	3 => tra('Deleted'),
+	4 => tra('Pending'),
+	5 => tra('Pending moderation'),
+	6 => tra('Blocked'),
+);
 
-if (empty($partner_id) || !is_numeric($partner_id) || empty($secret) || empty($admin_secret)) {
-	$smarty->assign('msg', tra('You need to set your Kaltura account details: ') . '<a href="tiki-admin.php?page=kaltura">' . tra('here') . '</a>');
-	$smarty->display('error.tpl');
-	die;
-}
-
-try {
-	$kconf = new KalturaConfiguration($partner_id);
-	$kclient = new KalturaClient($kconf);
-	$ksession = $kclient->session->start($secret, $kuser, $SESSION_USER, $partner_id);
-	// Initialize kaltura session
-} catch (Exception $e) {
-	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br />' . $e->getMessage());
-	$smarty->display('error.tpl');
-	die;
-}
 
 try {
-$kclient->setKs($ksession);
 
 if (isset($_REQUEST['action'])) {
 	$videoId = array();
@@ -77,7 +61,7 @@ if (isset($_REQUEST['action'])) {
 				$kmixEntry->editorType = 1;
 				$kmixEntry = $kclient->mixing->add($kmixEntry);		
 				for ($i=0, $cvideoId = count($videoId); $i < $cvideoId ; $i++) {
-					$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id, $videoId[0]);
+					$kmixEntry = $kclient->mixing->appendMediaEntry($kmixEntry->id, $videoId[$i]);
 				}
 			}
 			header ('Location: tiki-kaltura_video.php?action=remix&mixId=' . $kmixEntry->id);
@@ -116,7 +100,7 @@ $sort_mode = '';
 if ($_REQUEST['sort_mode']) {
 	$sort_mode = $_REQUEST['sort_mode'];
 } else {
-	$sort_mode = 'desc_created_at';
+	$sort_mode = 'desc_createdAt';
 }
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
@@ -141,7 +125,7 @@ if ($_REQUEST['offset']) {
 	$page = ($offset/$page_size) + 1;
 } else {
 	$offset = 0;
-	$page = 1;
+	$page = 0;
 }
 
 if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
@@ -154,7 +138,7 @@ if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
 	$kfilter->userIdEqual = $kuser;
 	$kfilter->orderBy = $sort_mode;
 	$kfilter->nameMultiLikeOr = $find;
-
+	
 	if ($_REQUEST['view'] != 'browse') {
 		// Get user's kaltura mix entries	
 		$kmixlist = $kclient->mixing->listAction($kfilter, $kpager);
@@ -204,6 +188,7 @@ if ($_REQUEST['list'] == 'media') {
 	$kfilter->userIdEqual = $kuser;
 	$kfilter->orderBy = $sort_mode;
 	$kfilter->nameMultiLikeOr = $find;
+	$kfilter->statusIn = '-1,-2,0,1,2';
 
 	$kpager = new KalturaFilterPager();
 	$kpager->pageIndex = $page;
@@ -215,6 +200,7 @@ if ($_REQUEST['list'] == 'media') {
 
 		for ($i =0 ; $i < $kmedialist->totalCount; $i++) {
 			$kmedialist->objects[$i]->mediaType = $mediaTypeAsString[$kmedialist->objects[$i]->mediaType];
+			$kmedialist->objects[$i]->statusString = $statusAsString[$kmedialist->objects[$i]->status];
 		}
 	} else {
 

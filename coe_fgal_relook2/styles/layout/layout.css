@@ -947,6 +947,7 @@ span.moduleflip,
 	
 .rbox-data {
 	position: relative;
+	top: -5px;
 	z-index: 0;
 }
 
@@ -1240,6 +1241,14 @@ div.tocnav {
 /* TOC */
 ul.toc * {
 	list-style: none;
+}
+
+/* Wiki diff layout */
+.diff td {
+	overflow-x: auto;
+	overflow-y: visible;
+	white-space: normal;
+	
 }
 
 /***** Articles ****/

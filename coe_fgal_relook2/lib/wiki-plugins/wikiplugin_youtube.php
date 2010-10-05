@@ -75,7 +75,7 @@ function wikiplugin_youtube($data, $params) {
 		$fs = ' allowFullScreen="true" ';
 	}
 
-	$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" WIDTH=\"$width\" HEIGHT=\"$height\">";
+	$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" WIDTH=\"$width\" HEIGHT=\"$height\">";
 	$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";
 	$asetup .= "<PARAM NAME=\"quality\" VALUE=\"$quality\">";
 	$asetup .= "<PARAM NAME=\"wmode\" VALUE=\"transparent\">";

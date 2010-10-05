@@ -11,7 +11,6 @@ require_once 'lib/transitionlib.php';
 
 $auto_query_args = array();
 
-$access->check_feature( 'feature_categories' );
 $access->check_permission( 'tiki_p_admin' );
 
 // Init

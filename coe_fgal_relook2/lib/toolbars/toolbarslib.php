@@ -94,6 +94,7 @@ abstract class Toolbar
 			'h1',
 			'h2',
 			'h3',
+			'titlebar',
 			'toc',
 			'list',
 			'numlist',
@@ -415,7 +416,7 @@ class ToolbarCkOnly extends Toolbar
 	function __construct( $token, $icon = '' ) // {{{
 	{
 		if (empty($icon)) {
-			$img_path = 'lib/ckeditor_tiki/ckeditor-icons/' . $token . '.gif';
+			$img_path = 'lib/ckeditor_tiki/ckeditor-icons/' . strtolower($token) . '.gif';
 			if (is_file($img_path)) {
 				$icon = $img_path;
 			} else {
@@ -447,7 +448,7 @@ class ToolbarCkOnly extends Toolbar
 		case 'print':
 			return new self( 'Print' );
 		case 'spellcheck':
-			return new self( 'SpellCheck' );
+			return new self( 'SpellChecker' );
 		case 'undo':
 			return new self( 'Undo' );
 		case 'redo':
@@ -513,10 +514,16 @@ class ToolbarCkOnly extends Toolbar
 	{
 		global $headerlib;
 		
+		if ((!empty($this->icon) && $this->icon !== 'pics/icons/shading.png') || in_array($this->label, array('Autosave'))) {
+			return parent::getIconHtml();
+		}
+		
 		$headerlib->add_cssfile('lib/ckeditor/skins/kama/editor.css');
+		$cls = strtolower($this->wysiwyg);
+		$cls = str_replace(array('selectall', 'removeformat', 'spellchecker'), array('selectAll', 'removeFormat', 'checkspell'), $cls);	// work around some "features" in ckeditor icons.css
 		$headerlib->add_css('span.cke_skin_kama {border: none;background: none;padding:0;margin:0;}'.
 							'.toolbars-admin .row li.toolbar > span.cke_skin_kama {display: inline-block;}');
-		return '<span class="cke_skin_kama"><span class="cke_button"><span class="cke_button_' . htmlentities(strtolower($this->wysiwyg), ENT_QUOTES, 'UTF-8') . '"' .
+		return '<span class="cke_skin_kama"><span class="cke_button"><span class="cke_button_' . htmlentities($cls, ENT_QUOTES, 'UTF-8') . '"' .
 						' title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '">'.
 						'<span class="cke_icon"> </span>'.
 					'</span></span></span>';
@@ -627,7 +634,7 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			break;
 		case 'pagebreak':
 			$label = tra('Page Break');
-			$icon = tra('lib/ckeditor_tiki/ckeditor-icons/Pagebreak.gif');
+			$icon = tra('pics/icons/page_break.png');
 			$wysiwyg = 'PageBreak';
 			$syntax = '...page...';
 			break;
@@ -644,6 +651,12 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 			$icon = 'pics/icons/text_heading_' . $tagName{1} . '.png';
 			$wysiwyg = null;
 			$syntax = str_repeat('!', $tagName{1}) . 'text';
+			break;
+		case 'titlebar':
+			$label = tra('Title bar');
+			$icon = 'pics/icons/text_padding_top.png';
+			$wysiwyg = null;
+			$syntax = '-=text=-';
 			break;
 		case 'toc':
 			$label = tra('Table of contents');
@@ -667,8 +680,13 @@ class ToolbarBlock extends ToolbarInline // Will change in the future
 
 	function getWikiHtml( $areaId ) // {{{
 	{
-		return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);',
+		if ($this->syntax == '...page...') {	// for some reason breaks toolbar when inside nested plugins
+			return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'...\'+\'page\'+\'...\');',
 							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-block');
+		} else {
+			return $this->getSelfLink('insertAt(\'' . $areaId . '\', \'' . addslashes(htmlentities($this->syntax, ENT_COMPAT, 'UTF-8')) . '\', true);',
+							htmlentities($this->label, ENT_QUOTES, 'UTF-8'), 'qt-block');
+		}
 	} // }}}
 }
 
@@ -730,7 +748,7 @@ class ToolbarPicker extends Toolbar
 		case 'specialchar':
 			$wysiwyg = 'SpecialChar';
 			$label = tra('Special Characters');
-			$icon = tra('lib/ckeditor_tiki/ckeditor-icons/Specialchar.gif');
+			$icon = tra('lib/ckeditor_tiki/ckeditor-icons/specialchar.gif');
 			// Line taken from DokuWiki
             $list = explode(' ','À à Á á Â â Ã ã Ä ä Ǎ ǎ Ă ă Å å Ā ā Ą ą Æ æ Ć ć Ç ç Č č Ĉ ĉ Ċ ċ Ð đ ð Ď ď È è É é Ê ê Ë ë Ě ě Ē ē Ė ė Ę ę Ģ ģ Ĝ ĝ Ğ ğ Ġ ġ Ĥ ĥ Ì ì Í í Î î Ï ï Ǐ ǐ Ī ī İ ı Į į Ĵ ĵ Ķ ķ Ĺ ĺ Ļ ļ Ľ ľ Ł ł Ŀ ŀ Ń ń Ñ ñ Ņ ņ Ň ň Ò ò Ó ó Ô ô Õ õ Ö ö Ǒ ǒ Ō ō Ő ő Œ œ Ø ø Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ş ş Š š Ŝ ŝ Ţ ţ Ť ť Ù ù Ú ú Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ů ů ǖ ǘ ǚ ǜ Ų ų Ű ű Ŵ ŵ Ý ý Ÿ ÿ Ŷ ŷ Ź ź Ž ž Ż ż Þ þ ß Ħ ħ ¿ ¡ ¢ £ ¤ ¥ € ¦ § ª ¬ ¯ ° ± ÷ ‰ ¼ ½ ¾ ¹ ² ³ µ ¶ † ‡ · • º ∀ ∂ ∃ Ə ə ∅ ∇ ∈ ∉ ∋ ∏ ∑ ‾ − ∗ √ ∝ ∞ ∠ ∧ ∨ ∩ ∪ ∫ ∴ ∼ ≅ ≈ ≠ ≡ ≤ ≥ ⊂ ⊃ ⊄ ⊆ ⊇ ⊕ ⊗ ⊥ ⋅ ◊ ℘ ℑ ℜ ℵ ♠ ♣ ♥ ♦ 𝛼 𝛽 𝛤 𝛾 𝛥 𝛿 𝜀 𝜁 𝛨 𝜂 𝛩 𝜃 𝜄 𝜅 𝛬 𝜆 𝜇 𝜈 𝛯 𝜉 𝛱 𝜋 𝛳 𝜍 𝛴 𝜎 𝜏 𝜐 𝛷 𝜑 𝜒 𝛹 𝜓 𝛺 𝜔 𝛻 𝜕 ★ ☆ ☎ ☚ ☛ ☜ ☝ ☞ ☟ ☹ ☺ ✔ ✘ × „ “ ” ‚ ‘ ’ « » ‹ › — – … ← ↑ → ↓ ↔ ⇐ ⇑ ⇒ ⇓ ⇔ © ™ ® ′ ″');
 			$list = array_combine( $list, $list );

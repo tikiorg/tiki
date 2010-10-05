@@ -13,6 +13,6 @@
 <p>{tr}jQuery.sheet manages the sheet creation, viewing, and editing processes.  It can even be used like a datagrid, without calculations.
 For a complete list of all the MS Excel style functions that jQuery.sheet supports, see below.{/tr}</p>
 
-<!--<iframe id="jQuerySheet_help" style="height: 450px; width: 100% !important" src="lib/jquery/jquery.sheet/sheets/enduser.documentation.html"></iframe>-->
-
+<object id="jQuerySheet_help" style="height: 300px; width: 100% !important" data="lib/jquery/jquery.sheet/sheets/enduser.documentation.html"></object>
+</div>
 {/add_help}

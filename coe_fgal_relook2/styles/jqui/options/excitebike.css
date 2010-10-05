@@ -72,7 +72,7 @@ body.wikitext {
 	font-weight: bold;
 	color: #fff;
 	outline: none;
-	background:	#E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
+	background: #E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
 }
 
 #tiki-top a {
@@ -80,7 +80,7 @@ body.wikitext {
 }
 	
 #middle {
-/*	background: #9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) repeat-x;
+/* background: #9fda58 url(../../../lib/jquery/jquery-ui/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) repeat-x;
 */}
 
 .footerbgtrap {
@@ -95,7 +95,7 @@ body.wikitext {
 
 #footer a:link,
 #footer a:visited  {
-	color: #fff;	
+	color: #fff;
 }
 
 .cssmenu_horiz a,
@@ -114,13 +114,13 @@ body.wikitext {
 
 #secondary_site_menu .cssmenu_horiz li:hover ul li a {
 	text-decoration: none;
-} 
+}
 
 .cssmenu_horiz li ul li,
 .cssmenu_vert li ul li,
 #secondary_site_menu .cssmenu_horiz li:hover ul li,
 #secondary_site_menu .cssmenu_horiz li.sfHover ul li {
-	background:	#e8a119;
+	background: #e8a119;
 	border: none;
 }
 
@@ -182,7 +182,7 @@ h1.pagetitle a:hover {
 
 .cbox a,
 .box a {
-	 color: #fff;
+	color: #fff;
 }
 
 .cbox-title,
@@ -197,23 +197,23 @@ h3.box-title {
 .box-data a,
 .box-data a:visited,
 .wikitext a,
-.wikitext a:visited, 
+.wikitext a:visited,
 table.normal a.link,
 table.normal a {
 	color: #e69700;
 }
 
-.rbox-title, 
+.rbox-title,
 .rbox-data {
 	background: url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-small_25_c5ddfc_40x40.png) repeat scroll 50% 50%;
 	border: 1px solid #E69700;
 	color: #0086E4;
-}	
+}
 	
-.rbox-title a, 
+.rbox-title a,
 .rbox-data a {
 	color: #003564;
-}	
+}
 	
 .rbox-title {
 	border-bottom: none !important;
@@ -228,7 +228,7 @@ table.normal a {
 	font-weight: bold;
 	color: #fff;
 	outline: none;
-	background:	#E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
+	background: #E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
 }
 
 .errors a,
@@ -247,7 +247,7 @@ th, td.heading, tr.diffheader {
 	border: 1px solid #e69700;
 	font-weight: bold;
 	color: #fff;
-	background:	#E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
+	background: #E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
 }
 
 th a,
@@ -264,14 +264,14 @@ tr.odd td,
 td.odd,
 li.odd {
 	background: #eeeeee;
-/*	border-right: ; */
+/* border-right: ; */
 }
 
 tr.even td,
 td.even,
 li.even {
 	background: #f8f8f8;
-/*	border-right: ; */
+/* border-right: ; */
 }
 
 .tabs {
@@ -302,7 +302,7 @@ li.even {
 	font-weight: bold;
 	color: #ffffff !important;
 	outline: none;
-	background:	#E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
+	background: #E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
 }
 
 .tabactive a {
@@ -330,7 +330,7 @@ li.even {
 	font-weight: bold;
 	color: #fff;
 	outline: none;
-	background:	#E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
+	background: #E69700 url(../../../lib/jquery/jquery-ui/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png) repeat 50% 50%;
 }
 
 .forum_actions {
@@ -357,7 +357,7 @@ li.even {
 .caleven a:visited,
 .calodd a:link,
 .calodd a:visited  {
-	color: #B8EC79;	
+	color: #B8EC79;
 }
 
 .caldark {

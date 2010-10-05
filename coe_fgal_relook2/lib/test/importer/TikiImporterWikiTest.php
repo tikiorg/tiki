@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . '/../../importer/tikiimporter_wiki.php');
 require_once(dirname(__FILE__) . '/../../importer/tikiimporter_wiki_mediawiki.php');
 
 /** 
- * @group integration
+ * @group importer
  */
 class TikiImporter_Wiki_Test extends TikiImporter_TestCase
 {

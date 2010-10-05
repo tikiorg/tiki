@@ -23,10 +23,10 @@ class TWVersion
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   trunk     : Represents next generation development version.
-		$this->branch 	= 'stable';
+		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
-		$this->version 	= '6.0 SVN alpha 1';
+		$this->version 	= '7.0 SVN trunk';
 		$this->star	= '';
 		$this->releases	= array();
 
@@ -64,7 +64,8 @@ class TWVersion
 				13=>'Arcturus',
 				14=>'Betelgeuse',
 				15=>'Aldebaran',
-				16=>'Vulpeculae'
+				16=>'Vulpeculae',
+				17=>'Rigel'
 				);
 	}
 
@@ -111,6 +112,7 @@ class TWVersion
 				'3.5',
 				'3.6',
 				'3.7',
+				'3.8',
 				'4.0beta1',
 				'4.0RC1',
 				'4.0',
@@ -126,6 +128,7 @@ class TWVersion
 				'5.1RC1',
 				'5.1',
 				'5.2',
+				'5.3',
 				);
 	}
 
@@ -152,7 +155,7 @@ class TWVersion
 		global $tikilib;
 		$upgrade = 0;
 		$major = 0;
-		$velements = explode('.', $this->version);
+		$velements = explode('.', $this->getBaseVersion());
 		$body = $tikilib->httprequest("tiki.org/" . $this->branch . '.version'); // .version contains an ordered list of release numbers, one per line. All minor releases from a same major release are grouped.
 		$lines = explode("\n", $body);
 		$this->isLatestMajorVersion = true;

@@ -62,7 +62,7 @@
 	</div>
 
 {if $thread_style != 'commentStyle_headers'}
-<div class="clearfix postbody-content">
+<div class="postbody-content">
 	{$comment.parsed}
 	{* <span class="signature"><!-- SIGNATURE --></span> *}
 </div>

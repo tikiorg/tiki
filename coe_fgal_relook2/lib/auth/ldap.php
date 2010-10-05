@@ -55,6 +55,11 @@ class TikiLdapLib
 
 	protected $logslib=NULL;
 
+	/**
+	 * @var array The user attributes
+	 */
+	protected $user_attributes = null;
+
 	// Constructor
 	public function __construct($options) {
 
@@ -153,11 +158,21 @@ class TikiLdapLib
 	}
 
 	// Do a ldap bind
-	public function bind() {
+	public function bind( $reconnect = false ) {
 		global $prefs;
-		if($this->ldaplink instanceof Net_LDAP2) {
-			return (true); // do not try to reconnect since this may lead to huge timeouts
+	
+		// Force the reconnection	
+		if ($this->ldaplink instanceof Net_LDAP2) {
+				if ($reconnect === true) {
+						$this->ldaplink->disconnect();
+				} else {
+						return (true); // do not try to reconnect since this may lead to huge timeouts
+				}
 		}
+	
+		// Set the bindnpw with the options['password']	
+		$this->options['bindpw'] = $this->options['password'];
+
 		$user=$this->options['username'];
 		switch ($this->options['bind_type']) {
 			case 'ad': // active directory
@@ -182,20 +197,16 @@ class TikiLdapLib
 			case 'ol': // openldap
 				$this->options['binddn'] = 'cn='.$user.','.$prefs['auth_ldap_basedn'];
 				break;
+			case 'default':
+				// Anonymous binding	
+				$this->options['binddn'] = '';
+				$this->options['bindpw'] = '';
+				break;
 			default:
-				// Anonymous binding
-				$options_anonymous = $this->options;
-				$options_anonymous['binddn'] = '';
-				$options_anonymous['bindpw'] = '';
-				$this->ldaplink= Net_LDAP2::connect($options_anonymous);
-		    if(Net_LDAP2::isError($this->ldaplink)) {
-		      $this->add_log('ldap','Error: '.$this->ldaplink->getMessage().' at line '.__LINE__.' in '.__FILE__);
-				}
-		
-				self::get_user_attributes();
-				$this->options['binddn'] = $this->user_attributes['dn'];
-				$this->ldaplink->disconnect();
+				$this->add_log('ldap','Error: Invalid "bind_type" value "'.$this->options['bind_type'].'".');
+				die;
 		}
+
 		// attributes to fetch
 /*
         $options['attributes'] = array();
@@ -390,4 +401,39 @@ class TikiLdapLib
 			$this->logslib->add_log($facility,$message);
 	}
 
+	/**
+	 * Setter to set an otpion value
+	 * @param string $name The name of the option
+	 * @param mixed $value The value
+	 * @return void
+	 * @throw Exception
+	 */
+	public function setOption ($name, $value = null) {
+		try {
+			if (isset($this->options[$name])) {
+				$this->options[$name] = $value;
+			} else {
+				throw new Exception(sprintf("Undefined option: %s \n", $name), E_USER_WARNING);
+			}
+		} catch (Exception $e) { }
+	}
+
+	/**
+	 * Return the value of the attribue past in param
+	 * @param string $name The name of the attribute
+	 * @return mixed
+	 * @throw Exception
+	 */
+	public function getUserAttribute ($name) {
+		$value = '';
+		try {
+			$values = self::get_user_attributes();
+			if (isset($values[$name])) {
+				$value = $values[$name];
+			} else {
+				throw new Exception(sprintf("Undefined attribute %s \n", $name), E_USER_WARNING);
+			}
+		} catch (Exception $e) {} 
+		return $value;		
+	}
 }

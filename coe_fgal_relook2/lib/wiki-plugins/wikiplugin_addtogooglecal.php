@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 function wikiplugin_addtogooglecal_help() {
-	return tra("Create an icon for a user to add an event to Google Calendar").":<br />~np~{ADDTOGOOGLECAL(calitemid=1) /}~/np~";;
+	return tra('Create an icon for a user to add an event to Google Calendar').":<br />~np~{ADDTOGOOGLECAL(calitemid=1) /}~/np~";;
 }
 
 function wikiplugin_addtogooglecal_info() {
@@ -14,15 +14,30 @@ function wikiplugin_addtogooglecal_info() {
 		'documentation' => 'PluginAddToGoogleCal',
 		'description' => tra('Creates an icon for a user to add an event to a Google Calendar'),
 		'prefs' => array('wikiplugin_addtogooglecal'),
+    	'introduced' => 6,
 		'params' => array(
 			'calitemid' => array(
 				'required' => true,
 				'name' => 'Calendar item ID',
 				'description' => tra('The item ID of the calendar to add to Google calendar.'),
-			),
+    			'accepted' => 'A calendar item ID number',
+				'filter' => 'digits', 
+    			'default' => 'none',
+    			'since' => '6.0', 
+	),
 			'iconstyle' => array(
-				'name' => 'Icon style (1,2 or 3)',
-				'description' => 'Icon style (1,2 or 3)',
+				'required' => false,
+				'name' => 'Icon style',
+				'description' => 'Choose the icon style',
+    			'accepted' => 'Either 1, 2 or 3',
+				'filter' => 'digits', 
+    			'default' => 1,
+    			'since' => '6.0', 
+    			'options' => array(
+					array('text' => tra('One'), 'value' => 1), 
+					array('text' => tra('Two'), 'value' => 2), 
+					array('text' => tra('Three'), 'value' => 3),
+				), 
 			),
 		),
 	);
@@ -35,7 +50,7 @@ function wikiplugin_addtogooglecal($data, $params) {
 		include ('lib/calendar/calendarlib.php');
 	}
 	
-	$cal_item_id = $params["calitemid"];
+	$cal_item_id = $params['calitemid'];
 	$cal_id = $calendarlib->get_calendarid($cal_item_id);
 	$calperms = Perms::get( array( 'type' => 'calendar', 'object' => $cal_id ) );
 	if (!$calperms->view_events) {
@@ -46,22 +61,22 @@ function wikiplugin_addtogooglecal($data, $params) {
 		return '';
 	}
 	$gcal_action = 'TEMPLATE';
-	$gcal_text = urlencode(str_replace(array("\n","\r"),array('',''), strip_tags($calitem["parsedName"])));
-	$gcal_details = urlencode(str_replace(array("\n","\r"),array('',''),$calitem["parsed"]));
-	$gcal_location = urlencode(str_replace(array("\n","\r"),array('',''), strip_tags($calitem["locationName"])));
+	$gcal_text = urlencode(str_replace(array("\n","\r"),array('',''), strip_tags($calitem['parsedName'])));
+	$gcal_details = urlencode(str_replace(array("\n","\r"),array('',''),$calitem['parsed']));
+	$gcal_location = urlencode(str_replace(array("\n","\r"),array('',''), strip_tags($calitem['locationName'])));
 	$curtikidate = new TikiDate();
 	// Google requires date to be formatted in UTC
 	$old_tz = date_default_timezone_get();
 	date_default_timezone_set('UTC');
-	$date_from = date('Ymd', $calitem["start"]) . 'T' . date('His', $calitem["start"]) . 'Z';
-	$date_to = date('Ymd', $calitem["end"]) . 'T' . date('His', $calitem["end"]) . 'Z';
+	$date_from = date('Ymd', $calitem['start']) . 'T' . date('His', $calitem['start']) . 'Z';
+	$date_to = date('Ymd', $calitem['end']) . 'T' . date('His', $calitem['end']) . 'Z';
 	date_default_timezone_set($old_tz);
 	$gcal_dates = $date_from . '/' . $date_to;
-	if (isset($params["iconstyle"]) && $params["iconstyle"] == 1) {
+	if (isset($params['iconstyle']) && $params['iconstyle'] == 1) {
 		$gcal_icon = 'http://www.google.com/calendar/images/ext/gc_button6.gif';
-	} elseif (isset($params["iconstyle"]) && $params["iconstyle"] == 2) {
+	} elseif (isset($params['iconstyle']) && $params['iconstyle'] == 2) {
 		$gcal_icon = 'http://www.google.com/calendar/images/ext/gc_button2.gif';
-	} elseif (isset($params["iconstyle"]) && $params["iconstyle"] == 3) {
+	} elseif (isset($params['iconstyle']) && $params['iconstyle'] == 3) {
 		$gcal_icon = 'http://www.google.com/calendar/images/ext/gc_button1.gif';
 	} else {
 		$gcal_icon = 'http://www.google.com/calendar/images/ext/gc_button6.gif';

@@ -27,11 +27,6 @@ function module_last_files_info() {
 }
 
 function module_last_files( $mod_reference, $module_params ) {
-	if (!function_exists('mod_last_files_help')) {
-		function mod_last_files_help() {
-			return 'galleryId=id1:id2,nonums=y|n';
-		}
-	}
 	global $smarty, $tikilib;
 	if (isset($module_params["galleryId"])) {
 		if (strstr($module_params['galleryId'], ':')) {

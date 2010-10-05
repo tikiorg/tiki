@@ -2,7 +2,7 @@
 {* site identity options: logo, site title and subtitle, banner ad, custom code *}
 		
 {capture name=sitelogobg}
-	{if $prefs.sitelogo_bgcolor or $prefs.sitelogo_bgstyle ne ''} style="{if $prefs.sitelogo_bgcolor ne ''}background-color: {$prefs.sitelogo_bgcolor};{/if} {if strstr($prefs.sitelogo_bgstyle , 'background')===false}background:{/if}{$prefs.sitelogo_bgstyle};"{/if}
+	{if $prefs.sitelogo_bgcolor ne '' or $prefs.sitelogo_bgstyle ne ''} style="{if $prefs.sitelogo_bgcolor ne ''}background-color: {$prefs.sitelogo_bgcolor};{/if}{if $prefs.sitelogo_bgstyle ne ''}{if strstr($prefs.sitelogo_bgstyle, 'background')===false} background:{/if} {$prefs.sitelogo_bgstyle};{/if}"{/if}
 {/capture}
 {assign var=logohref value='./'}
 

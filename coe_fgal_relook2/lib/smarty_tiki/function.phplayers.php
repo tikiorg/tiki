@@ -1,18 +1,18 @@
 <?php
-// (c) Copyright 2002-2010 by authors of the Tiki Wiki/CMS/Groupware Project
+// (c) Copyright 2002-2010 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-//this script may only be included - so its better to die if called directly.
+// This script may only be included - so it's better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
 /*
-PhpLayers in tikiwiki !
+PHPLayersMenus in Tiki !
 
 That smarty function is mostly intended to be used in .tpl files
 syntax: {phplayers [type=tree|phptree|plain|hort|vert] [id=1] [file=/path/to/menufile]}
@@ -25,7 +25,7 @@ function smarty_function_phplayers($params, &$smarty) {
 	include_once('lib/phplayers_tiki/tiki-phplayers.php');
 
 	if ($prefs['feature_phplayers'] != 'y') {
-		return tra("phplayers are not available on this site");
+		return tra("PHPLayersMenus are not enabled on this site");
 	}
 
 	if (empty($params['type'])) {
@@ -55,5 +55,5 @@ function smarty_function_phplayers($params, &$smarty) {
 	$return = $tikiphplayers->mkMenu($params['output'], 'usermenu'.$params['id'], $params['type'], $params['file'], $params['curOption']);
 	if ( $use_items_icons ) $return = str_replace('class="mdkverbar"', 'class="mdkverbar mdkverbar-with-icons"', $return);
 
-	return '<div role="navigation">' . $return . '</div>';
+	return '<div class="role_navigation">' . $return . '</div>';
 }

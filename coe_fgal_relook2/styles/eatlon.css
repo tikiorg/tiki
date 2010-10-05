@@ -5,16 +5,16 @@
 	page footer to be in compliance with the terms of use. Because IE7
 	does not support display:table, minimal HTML tables are needed for
 	graphic treatment and column integrity. For more information, please visit
-	http://themes.tiki.org	or http://zukakakina.com.
+	http://themes.tiki.org or http://zukakakina.com.
 */
- 
+
 /* Import the default layout properties files: */
 @import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
- 
+
 /***** XHTML Elements (body tag here,
-			others follow Layout) *****/ 
+			others follow Layout) *****/
 body {
 	background: #9faec2 url(eatlon/body_bg.gif) repeat-x;
 	font-family: arial, sans-serif;
@@ -29,11 +29,11 @@ body.fixed_width div#fixedwidth {
 	margin-bottom: 20px;
 	width: 900px;
 	background: #fff;
-} 
+}
 
 body.fixed_width *:first-child+html #c1c2 {
 	margin-left: 0;
-	padding-left: 0} 
+	padding-left: 0}
 	
 body.fixed_width #main[id] {
 	margin-bottom:0;
@@ -58,11 +58,11 @@ body.fixed_width #main[id] {
 
 tr#midrow {background: #fff}
 
-#c1c2	#wrapper	#col1.marginleft  {
+#c1c2 #wrapper #col1.marginleft  {
 	margin-left: 180px;
 }
 
-#c1c2	#wrapper	#col1.marginright {
+#c1c2 #wrapper #col1.marginright {
 	margin-right: 180px;
 }
 #c1c2 #col2 {
@@ -89,8 +89,8 @@ tr#midrow {background: #fff}
 #footer .content {
 	background: url(eatlon/bottom_bg.png) no-repeat 0 100%;
 	min-height: 163px;
- 	text-align: center;
- 	font-size: .9em;
+	text-align: center;
+	font-size: .9em;
 	margin-right: 50px;
 	padding-bottom: 30px;
 }
@@ -278,7 +278,7 @@ input[id="sl-login-pass"] {background: #e1e1e2}
 
 #tiki-top {
 	background: url(eatlon/menu_bg.png) no-repeat right;
-	height: 78px;	
+	height: 78px;
 	min-height: 78px !important}
 
 #tiki-top .wrapper {
@@ -437,7 +437,7 @@ input#fuser,
 	color: white;
 	font-weight: bold;
 	border-bottom: none;
-	margin: 0} 
+	margin: 0}
 
 * html .horbaritem a,
 * html .horbaritem a:visited {font-size: 12px}
@@ -445,7 +445,7 @@ input#fuser,
 .horbaritem a:hover {
 	color: #d7e5f3 !important;
 	text-decoration: none;
-	border-bottom: none} 
+	border-bottom: none}
 
 .mdksubmenu {
 	background: #9faec2 url(eatlon/body_bg.gif) 0 -300px repeat-x;
@@ -456,11 +456,11 @@ input#fuser,
 .mdkitem a:visited {
 	padding: 4px 9px;
 	font-weight: normal;
-	color: #fff} 
+	color: #fff}
 
 .mdkitem a:hover {
 	color: #d7e5f3;
-	text-decoration: none} 
+	text-decoration: none}
 
 .box-data .mdkitem a,
 .box-data .mdkitem a:link,
@@ -654,7 +654,7 @@ td.form,
 	background: url(eatlon/menu_bg.png) 1000px 0;
 	color: #ececec}
 
-.tabactive a {color: #d7e5f3; font-weight: bold}	
+.tabactive a {color: #d7e5f3; font-weight: bold}
 
 .tabcontent {
 	border-left: 1px solid #a9a9a9;
@@ -685,9 +685,9 @@ div#description {
 
 .wikitext {line-height: 1.5em}
 
-.wikitext h1, 
-.wikitext h2, 
-.wikitext h3, 
+.wikitext h1,
+.wikitext h2,
+.wikitext h3,
 .wikitext h4 {
 	margin: 0 0 15px;
 	padding: 0}
@@ -703,7 +703,7 @@ div#description {
 table.wikitable {
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse}
- 
+
 td.wikicell {
 	padding: 3px;
 	border: 1px solid #999;
@@ -731,7 +731,7 @@ div.code {
 	background: #F5F5F5;
 	margin: 4px;
 	border: 1px dashed #ADACAF;
-	overflow: auto; 
+	overflow: auto;
    width: 500px}
 	
 * html .codelisting {padding-bottom: 20px}
@@ -776,14 +776,14 @@ div.articletopline {
 
 div.articletitle {
 	margin-top: 6px;
-	margin-bottom:	15px;
-	text-align:	left}
- 
+	margin-bottom: 15px;
+	text-align: left}
+
 div.articletitle h2 {
 	font-size: 1.5em;
 	font-weight: normal}
 
-span.titleb {font-size: 1.0em} 
+span.titleb {font-size: 1.0em}
 div.articlesubtitle {font-size: 0.9em}
 div.articleheading {margin: 6px 0}
 div.articlebody {margin-top: 1em}
@@ -802,7 +802,7 @@ div.bloginfo {
 	padding: 3px;
 	line-height: 150%;
 	text-transform: 0}
- 
+
 .postinfo a {
 	color: #9CF;
 	text-decoration: none;
@@ -817,9 +817,9 @@ a.blogt:hover {
 span.posthead {
 	font-weight: bold;
 	letter-spacing: .4pt}
- 
+
 div.posthead h3 {font-size:1.2em}
- 
+
 div.postbody {
 	margin-right: 8px;
 	line-height: inherit;
@@ -854,7 +854,7 @@ div.postbody {
 	color: #29677B;
 	text-decoration: none}
 
-.post .author {	
+.post .author {
 	float: left;
 	text-align: left;
 	width: 33%;
@@ -966,8 +966,8 @@ table.default tfoot td {
 table.default td {border: solid 1px #a9a9a9}
 
 /***** Calendar *****/
-.Cal0, 
-.Cal1, 
+.Cal0,
+.Cal1,
 .Cal2 {font-size: 90%}
 	
 .Calart,
@@ -1081,8 +1081,8 @@ Caltrack a:visited {color: #00BD02}
 .caltoggle {font-size: 90%}
 
 .opaque {
-   border-left: 1px solid #a9a9a9;
-  	border-top: 1px solid #a9a9a9;
+	border-left: 1px solid #a9a9a9;
+	border-top: 1px solid #a9a9a9;
 	border-right: 1px solid #696969;
 	border-bottom: 1px solid #696969}
 

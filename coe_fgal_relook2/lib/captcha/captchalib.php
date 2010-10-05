@@ -39,7 +39,7 @@ class Captcha
 	 *
 	 * @return null
 	 */
-	function __construct($wordLen = 6, $width = 180) {
+	function __construct() {
 		global $prefs;
 		
 		if ($prefs['recaptcha_enabled'] == 'y' && !empty($prefs['recaptcha_privkey']) && !empty($prefs['recaptcha_pubkey'])) {
@@ -55,12 +55,13 @@ class Captcha
 			$this->recaptchaCustomTranslations();
 		} else if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox')) {
 			$this->captcha = new Zend_Captcha_Image(array(
-				'wordLen' => $wordLen,
+				'wordLen' => $prefs['captcha_wordLen'],
 				'timeout' => 600,
 				'font' => dirname(__FILE__) . '/DejaVuSansMono.ttf',
 				'imgdir' => 'temp/public/',
 				'suffix' => '.captcha.png',
-				'width' => $width,
+				'width' => $prefs['captcha_width'],
+				'dotNoiseLevel' => $prefs['captcha_noise'],
 			));
 			$this->type = 'default';
 		} else {

@@ -921,6 +921,7 @@ function display_howto() {
      - update list of valid releases in getVersions()
 		- Make sure you add all Tiki versions (not just the one you are doing now). Ex.: when 5.0 is released, 4.2 will probably exist, and this was added to branches/4.x but not merged by script. 
      - change the version branch to "unstable", "stable", or "head" as explained in that file
+   - Delete tiki-secdb_x.y_mysql.sql files from previous versions
    - Commit your changes with this commit message (change \$VERSION by the version of the release):
 	[REL] Preparing \$VERSION release
 

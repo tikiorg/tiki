@@ -121,6 +121,7 @@ $("#toggle_diffs a").click(function(){
 					{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 					{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
 					<th>{tr}Version{/tr}</th>
+					<th>&nbsp;</th>
 					<th>{tr}Action{/tr}</th>
 					{if $prefs.default_wiki_diff_style != "old" and $history}
 						<th colspan="2">
@@ -162,6 +163,7 @@ $("#toggle_diffs a").click(function(){
 							</td>
 						{/if}
 						<td class="odd button">{if $current eq $info.version}<strong>{/if}{$info.version}<br />{tr}Current{/tr}{if $current eq $info.version}</strong>{/if}</td>
+						<td class="odd button">{if $current eq $info.version and $info.is_html eq "1"}{icon _id="html"}{/if}</td>
 						<td class="odd button">{self_link page=$page preview=$info.version _title="{tr}View{/tr}"}v{/self_link}
 						{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 							&nbsp;{self_link page=$page source=$info.version _title="{tr}Source{/tr}"}s{/self_link}
@@ -222,6 +224,7 @@ $("#toggle_diffs a").click(function(){
 							{/if}
 							{if $current eq $element.version}</strong>{/if}
 						</td>
+						<td class="button">{if $element.is_html eq "1"}{icon _id="html"}{/if}</td>
 						<td class="button">
 							{self_link page=$page preview=$element.version _title="{tr}View{/tr}"}v{/self_link}
 							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}

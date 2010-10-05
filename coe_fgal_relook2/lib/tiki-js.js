@@ -363,10 +363,29 @@ function getTASelection( textarea ) {
 			var sel = cked.getSelection();
 			if (sel.getType() === CKEDITOR.SELECTION_TEXT) {	// why so fiddly?
 				r = sel.getRanges();
-				if (r.length && !r[0].collapsed) {	// selected over more than on element - wa?  && r.startContainer == r.endContainer
-					var t = r[0].startContainer.$.textContent;
-					return t.substring(r[0].startOffset, r[0].endOffset);
+				// collect all included elements from ranges
+				var output = "", el;
+				if (r[0].startContainer.$ === r[0].endContainer.$) {
+					output += r[0].startContainer.$.textContent.substring(r[0].startOffset, r[0].endOffset);
+				} else {
+					el = sel.getStartElement();
+					if (el) {
+						if (!el.$.nextSibling) {
+							el = el.getChildren().getItem(0);	// for node lists
+						}
+						while (el.$.nextSibling) { // loop through selection if multiple elements
+							if (el.$ === r[0].startContainer.$) {
+								output += el.$.textContent.substring(r[0].startOffset);
+							} else if (el.$ === r[0].endContainer.$) {
+								output += el.$.textContent.substring(0, r[0].endOffset);
+							} else {
+								output += el.$.textContent;
+							}
+							el = new CKEDITOR.dom.element(el.$.nextSibling);
+						}
+					}
 				}
+				return output;
 			}
 		}
 	} else {
@@ -858,6 +877,7 @@ function getCookie(name, section, defval) {
 	}
 }
 function getCookieBrowser(name, section, defval) {
+	if (typeof defval === "undefined") { defval = null; }
 	if (section) {
 		var valSection = getCookieBrowser(section);
 		if (valSection) {
@@ -866,7 +886,7 @@ function getCookieBrowser(name, section, defval) {
 			if (val) {
 				return unescape(val[1]);
 			} else {
-				return null;
+				return defval;
 			}
 		} else {
 			return defval;
@@ -881,7 +901,7 @@ function getCookieBrowser(name, section, defval) {
 			begin = dc.indexOf(prefix);
 
 			if (begin !== 0) {
-				return null;
+				return defval;
 			}
 		} else { begin += 2; }
 
@@ -1148,11 +1168,13 @@ browser();
 //This was added to allow wiki3d to change url on tiki's window
 window.name = 'tiki';
 
-if (typeof fgals_window == "undefined") {
-	fgals_window = null;
-}
-function openFgalsWindow(filegal_manager_url, area_id) {
+var fgals_window = null;
+
+function openFgalsWindow(filegal_manager_url, reload) {
 	if(fgals_window && typeof fgals_window.document != "undefined" && typeof fgals_window.document != "unknown" && !fgals_window.closed) {
+		if (reload) {
+			fgals_window.location.replace(filegal_manager_url);
+		}
 		fgals_window.focus();
 	} else {
 /*		fgals_window=window.open(filegal_manager_url,'_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50'); */
@@ -1364,10 +1386,11 @@ function build_plugin_form( type, index, pageName, pluginArgs, bodyContent )
 			continue;
 		}
 
-		if (meta.params[param].advanced && !meta.params[param].required) {
-			var row = table_advanced.insertRow( rowNumberAdvanced++ );
+		var row;
+		if (meta.params[param].advanced && !meta.params[param].required && typeof pluginArgs[param] === "undefined") {
+			row = table_advanced.insertRow( rowNumberAdvanced++ );
 		} else {
-			var row = table.insertRow( rowNumber++ );
+			row = table.insertRow( rowNumber++ );
 		}
 
 		build_plugin_form_row(row, param, meta.params[param].name, meta.params[param].required, pluginArgs[param], meta.params[param].description, meta.params[param]);
@@ -1493,14 +1516,7 @@ function build_plugin_form_row(row, name, label_name, requiredOrSpecial, value, 
 }
 
 function openFgalsWindowArea(area) {
-	if (typeof fgals_window == "undefined") {
-		var fgals_window = null;
-	}
-	if(fgals_window && fgals_window.document) {
-		fgals_window.focus();
-	} else {
-		fgals_window=window.open('tiki-list_file_gallery.php?filegals_manager='+area,'_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
-	}
+	openFgalsWindow('tiki-list_file_gallery.php?filegals_manager='+area, true);	// reload
 }
 
 

@@ -11,27 +11,43 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-$secret = $prefs['secret'];
-$partner_id = $prefs['partnerId'];
-$subp_id = (int)$prefs['partnerId']*100;
-$admin_secret = $prefs['adminSecret'];
-$service_url = "http://www.kaltura.com";
+require_once ('lib/videogals/KalturaClient.php');
 
-require_once ( "KalturaClient_v3.php");
+global $prefs, $kconf, $kclient, $ksession, $kuser, $url_host, $user, $tikilib, $smarty;
 
-$mediaType = array("Any","Video","Image","Text","HTML","Audio","Video Remix","SHOW_XML","","Bubbles","XML","Document");
+$access->check_feature('feature_kaltura');
 
-function kaltura_init_config ()
-{
-global $partner_id,$subp_id ,$secret ,$admin_secret , $service_url ;
-	$conf = new KalturaConfiguration( $partner_id , $subp_id );
-	$conf->partnerId = $partner_id;
-	$conf->subPartnerId = $subp_id;
-	$conf->secret = $secret;
-	$conf->adminSecret = $admin_secret;
-	$conf->serviceUrl = "http://www.kaltura.com";
-	return $conf;
+$SESSION_ADMIN = 2;
+$SESSION_USER = 0;
+if (!empty($prefs['kuser'])) {
+	$kuser = $prefs['kuser'];
+} else {
+	$kuser = $user;
+}
+if (empty($prefs['kServiceUrl'])) {
+	$tikilib->set_preference('kServiceUrl', 'http://www.kaltura.com/');;
+}
+$smarty->assign('kServiceUrl', $prefs['kServiceUrl']);
+
+if (empty($prefs['partnerId']) || !is_numeric($prefs['partnerId']) || empty($prefs['secret']) || empty($prefs['adminSecret'])) {
+	$smarty->assign('msg', tra("You need to set your Kaltura account details: ") . '<a href="tiki-admin.php?page=video">' . tra('here') . '</a>');
+	$smarty->display('error.tpl');
+	die;
+}
+	
+try {
+	$kconf = new KalturaConfiguration($prefs['partnerId']);
+	$kconf->serviceUrl = $prefs['kServiceUrl'];
+	$kclient = new KalturaClient($kconf);
+	$ksession = $kclient->session->start( $prefs['secret'], $kuser, $SESSION_USER,$prefs['partnerId'],86400,'edit:*' );
+	$kclient->setKs($ksession);
+	
+} catch (Exception $e) {
+	$smarty->assign('msg', tra('Could not establish Kaltura session. Try again') . '<br /><em>' . $e->getMessage() . '</em>');
+	$smarty->display('error.tpl');
+	die;
 }
 
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+
+
+

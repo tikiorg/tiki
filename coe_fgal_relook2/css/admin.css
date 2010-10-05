@@ -48,7 +48,7 @@ a.admbox.off:active {
 
 a.admbox.off img {
 	border: none;
-	margin-top : 0px;
+	margin-top: 0px;
 	width: 100px;
 	height: 100px;
 	position: absolute;
@@ -72,13 +72,13 @@ a.admbox.off img {
 .adminoptionbox {
 /*overall box */
 	padding: 0.5em;
-	text-align:left;
-	}
+	text-align: left;
+}
 	
 .adminoptionbox label, .adminoptionlabel {
 /* text label and text field */
 	text-align: left;
-	}
+}
 
 .adminoptionbox label.above {
 	display: block;
@@ -87,9 +87,9 @@ a.admbox.off img {
 .adminoptionbox .checkbox, .adminoption {
 /*check box */
 	display: block;
-	float:left;
-	margin-right:1em;
-	}
+	float: left;
+	margin-right: 1em;
+}
 
 .adminoptionboxchild {
 /*sub options */
@@ -180,7 +180,7 @@ div.adminanchors a {float: left}
 
 .toolbars-admin .li {
 	display: block;
-	white-space:nowrap;
+	white-space: nowrap;
 }
 .toolbars-admin .full li {
 	white-space: nowrap;

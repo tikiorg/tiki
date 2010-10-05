@@ -174,13 +174,13 @@ $auto_query_args = array(
 );
 if (!isset($cookietab)) { $cookietab = '1'; }
 if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name'])) {
-	check_ticket('admin-users');
+	$access->check_authenticity();
 	batchImportUsers();
 	// Process the form to add a user here
 	
 } elseif (isset($_REQUEST["newuser"])) {
         $AddUser= true;;
-	check_ticket('admin-users');
+	$access->check_authenticity();
         // if email validation set check if email addr is set   
 	if ($prefs["login_is_email"] != 'y' && isset($_REQUEST['need_email_validation']) &&
 		 empty($_REQUEST['email'])) {
@@ -262,8 +262,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				);
 			}
         } 
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete' && isset($_REQUEST["user"]) && $_REQUEST["user"] != 'admin') {
@@ -295,8 +295,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$userlib->reset_email_due($_REQUEST['user']);
 	}
 	$_REQUEST["user"] = '';
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page') {
@@ -326,10 +326,11 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		$email_mode = 'y';
 		$smarty->assign('email_mode', 'y');
 	}
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
+	$access->check_authenticity();
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
 		foreach($_REQUEST['checked'] as $assign_user) {
 			foreach($_REQUEST["checked_groups"] as $group) {
@@ -343,10 +344,11 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			}
 		}
 	}
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'remove') {
+	$access->check_authenticity();
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
 		foreach($_REQUEST['checked'] as $assign_user) {
 			foreach($_REQUEST["checked_groups"] as $group) {
@@ -360,10 +362,11 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			}
 		}
 	}
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST['set_default_groups']) && $_REQUEST['set_default_groups'] == 'y') {
+	$access->check_authenticity();
 	if (!empty($_REQUEST["checked_group"]) && !empty($_REQUEST["checked"])) {
 		foreach($_REQUEST['checked'] as $assign_user) {
 			$group = $_REQUEST["checked_group"];
@@ -376,10 +379,11 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			}
 		}
 	}
-	if (isset($tikifeedback[0]['msg'])) {
-		$logslib->add_log('adminusers', '', $tikifeedback[0]['msg']);
+	if (isset($tikifeedback[0]['mes'])) {
+		$logslib->add_log('adminusers', '', $tikifeedback[0]['mes']);
 	}
 } elseif (!empty($_REQUEST['emailChecked']) && $_REQUEST['emailChecked'] == 'y' && !empty($_REQUEST['checked'])) {
+	$access->check_authenticity();
 	if (empty($_REQUEST['wikiTpl']) || !($info = $tikilib->get_page_info($_REQUEST['wikiTpl']))) {
 		$smarty->assign('msg', tra('Page cannot be found'));
 		$smarty->display('error.tpl');
@@ -479,6 +483,7 @@ list($username, $usermail, $usersTrackerId, $chlogin) = array(
 	false
 );
 if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
+	$access->check_authenticity();
 	if (!is_numeric($_REQUEST["user"])) {
 		$_REQUEST["user"] = $userlib->get_user_id($_REQUEST["user"]);
 	}
@@ -618,7 +623,6 @@ $smarty->assign('usermail', $usermail);
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 setcookie('tab', $cookietab);
 $smarty->assign('cookietab', $cookietab);
-ask_ticket('admin-users');
 $smarty->assign('uses_tabs', 'y');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

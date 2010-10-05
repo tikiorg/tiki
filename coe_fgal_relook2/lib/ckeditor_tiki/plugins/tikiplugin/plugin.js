@@ -15,11 +15,7 @@
 	CKEDITOR.plugins.add( 'tikiplugin', {
 		init : function(editor) {
 		
-			this.ckToHtml = editor.dataProcessor.toHtml;		// reference to original ckeditor dataProcessor
-			this.ckToData = editor.dataProcessor.toDataFormat;
-			this.editor = editor;								// which expects these references too
-			this.dataFilter = editor.dataProcessor.dataFilter;
-			this.writer = new CKEDITOR.htmlWriter();
+			var asplugin = this;
 			
 			this.command = new CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
@@ -108,16 +104,22 @@
 					}
 				});
 			}
-			if (true) {	// sure there should be a test here
-				var asplugin = this;
-				editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return asplugin.toHTMLSource( editor, html ); };
-				editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return asplugin.toHtmlFormat( editor, data ); };
+			if (jqueryTiki.autosave) {	// pref check
+				this.ckToHtml = editor.dataProcessor.toHtml;		// reference to original ckeditor dataProcessor
+				this.ckToData = editor.dataProcessor.toDataFormat;
+			
+				editor.dataProcessor.toDataFormat 	= function ( html, fixForBody ) { return asplugin.toHTMLSource( editor, html, fixForBody ); };
+				editor.dataProcessor.toHtml			= function ( data, fixForBody ) { return asplugin.toHtmlFormat( editor, data, fixForBody ); };
 			}
 		},			// end of init()
 		
-		toHTMLSource: function( editor, html ) {
+		toHTMLSource: function( editor, html, fixForBody ) {
+			// de-protect ck_protected comments
+			var output = html;
+			
+			output = output.replace(/<!--{cke_protected}{C}%3C!%2D%2D%20end%20tiki_plugin%20%2D%2D%3E-->/ig, "<!-- end tiki_plugin -->");
 			// replace visual plugins with syntax
-			var output = html.replace(/<(?:div|span)[^>]*syntax="([^"]*)"[\s\S]*?end tiki_plugin --><\/(?:div|span)>/mig, function() {
+			output = output.replace(/<(?:div|span)[^>]*syntax="([^"]*)"[\s\S]*?end tiki_plugin --><\/(?:div|span)>/mig, function() {
 				if (arguments.length > 0) {
 					return $("<span />").html(arguments[1]).text();	// decode html entities
 				} else {
@@ -125,13 +127,21 @@
 					return "";
 				}
 			});
-			return this.ckToData(output);
+			output = output.replace(/\s*<p>[\s]*<\/p>\s*/mgi, "");	// strip out empty <p> tags
+			
+			output = this.ckToData.call( editor.dataProcessor, output, fixForBody );
+			
+			return output;
 		},
 
-		toHtmlFormat: function( editor, data ) {
+		toHtmlFormat: function( editor, data, fixForBody ) {
+			if (!jqueryTiki.autosave) {
+				alert(tr("AJAX Autosave preference not enabled. Please go to admin/features/interface to enable it."));
+			}
 			var output = "";
 			var asplugin = this;
-			ajaxLoadingShow( "cke_contents_" + this.editor.name);
+			var orig_data = $("#editwiki").val();	// just in case
+			ajaxLoadingShow( "cke_contents_" + editor.name);
 			$("#ajaxLoading").show();		// FIXME safari/chrome refuse to show until ajax finished
 			jQuery.ajax({
 				async: false, // wait for this one
@@ -147,12 +157,14 @@
 				success: function(data) {
 					ajaxLoadingHide();
 					output = unescape(jQuery(data).find('data').text());
-					return asplugin.ckToHtml.call(asplugin, output);
+					output = asplugin.ckToHtml.call(editor.dataProcessor, output, fixForBody);
 				},
 				// bad callback - no good info in the params :(
 				error: function(req, status, error) {
 					ajaxLoadingHide();
-					output = "ajax error";
+					output = orig_data;	//"ajax error";
+					alert(tr("AJAX Error") + "\n" + tr("It may not be possible to edit this page reliably in WYSIWYG mode in this browser.") + "\n\n" + error.message);
+					debugger;	// TODO JB to remove before 6.0 b1, hopefully the alert too
 				}
 			});
 			return output;
@@ -167,28 +179,8 @@
 			// send the whole source off to the server to get reparsed?
 			var myoutput = "";
 			var mydata = this.getData();
+			myoutput = this.dataProcessor.toHtml(mydata);
 			
-			ajaxLoadingShow( "cke_contents_" + this.name);
-			jQuery.ajax({
-				async: false,	// wait for this one
-				url: CKEDITOR.config.ajaxAutoSaveTargetUrl,
-				type: "POST",
-				data: {
-					script: this.config.autoSaveSelf,
-					editor_id: this.name,
-					data: encodeURIComponent(mydata),
-					command: "toHtmlFormat"
-				},
-				// good callback
-				success: function(data) {
-					myoutput = unescape(jQuery(data).find('data').text());
-				},
-				// bad callback - no good info in the params :(
-				error: function(req, status, error) {
-					myoutput = "ajax error";
-				}
-			});
-			ajaxLoadingHide();
 			this.setData(myoutput);
 		};
 	}

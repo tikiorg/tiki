@@ -140,8 +140,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
 		//// note, this breaks ajax page load via wikitopline edit icon
 		//$headerlib->add_jsfile('lib/ckeditor/ckeditor_source.js');
-		$headerlib->add_jsfile('lib/ckeditor/ckeditor.js', 'minified');
-		$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 'minified');
+		$headerlib->add_jsfile('lib/ckeditor/ckeditor.js',0 , true);
+		$headerlib->add_jsfile('lib/ckeditor/adapters/jquery.js', 0, true);
 	
 		include_once( $smarty->_get_plugin_filepath('function', 'toolbars') );
 		$cktools = smarty_function_toolbars($params, $smarty);
@@ -180,14 +180,14 @@ ajaxLoadingShow("'.$as_id.'");
 		global $tikilib, $tc_theme, $tc_theme_option;
 		$ckstyleoption = '';
 		if (!empty($tc_theme)) {
-			$ckstyle = $tikilib->get_style_path('', '', $tc_theme);
+			$ckstyle = $tikiroot . $tikilib->get_style_path('', '', $tc_theme);
 			if (!empty($tc_theme_option)) {
-				$ckstyleoption = $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
+				$ckstyle .= '","' . $tikiroot . $tikilib->get_style_path($tc_theme, $tc_theme_option, $tc_theme_option);
 			}
 		} else {
-			$ckstyle = $tikilib->get_style_path('', '', $prefs['style']);
-			if (!empty($prefs['style_option'])) {
-				$ckstyleoption = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
+			$ckstyle = $tikiroot . $tikilib->get_style_path('', '', $prefs['style']);
+			if (!empty($prefs['style_option']) && $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option'])) {
+				$ckstyle .= '","' . $tikiroot . $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
 			}
 		}
 
@@ -201,7 +201,7 @@ $( "#'.$as_id.'" ).ckeditor(CKeditor_OnComplete, {
 	font_names: "' . $prefs['wysiwyg_fonts'] . '",
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
 	templates_files: "' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js",
-	contentsCss: ["' . $tikiroot . $ckstyle . '","' . $tikiroot . $ckstyleoption . '"],
+	contentsCss: ["' . $ckstyle . '"],
 	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'kama') . '",
 	defaultLanguage: "' . $prefs['language'] . '",
 	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '",

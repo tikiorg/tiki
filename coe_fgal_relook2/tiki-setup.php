@@ -84,7 +84,7 @@ if ($prefs['feature_sefurl'] == 'y') {
 	//TODO: implement support for types other than wiki page and blog
 	if ($prefs['tikiIndex'] == 'tiki-index.php' && $prefs['wikiHomePage']) {
 		include_once('lib/wiki/wikilib.php');
-		$prefs['tikiIndex'] = $wikilib->sefurl($prefs['wikiHomePage']);
+		$prefs['tikiIndex'] = $wikilib->sefurl($userlib->best_multilingual_page($prefs['wikiHomePage']));
 	} else if (substr($prefs['tikiIndex'], 0, strlen('tiki-view_blog.php')) == 'tiki-view_blog.php') {
 		include_once('tiki-sefurl.php');
 		$prefs['tikiIndex'] = filter_out_sefurl($prefs['tikiIndex'], $smarty, 'blog');
@@ -285,7 +285,7 @@ if ($prefs['javascript_enabled'] != 'n') {
 			$headerlib->add_cssfile( 'lib/jquery/jquery.s5/jquery.s5.css' );
 			//$headerlib->add_cssfile( 'lib/jquery/jqs5/theme/staticfree/style.css' );
 			$headerlib->add_jsfile( 'lib/jquery/jquery.s5/jquery.s5.js' );
-			$headerlib->add_jq_onready('$("body > div > div > div").tiki("s5", "", {});', 20);	// late, and tell jqs5 where the page is in tiki
+			$headerlib->add_jq_onready( '$("h1,h2,h3,h5,h6").first().parent().tiki("s5", "", {});', 20 );	// late, and tell jqs5 where the page is in tiki
 			$prefs['feature_wiki_description'] = 'n';
 			$prefs['wiki_authors_style'] = 'none';
 			$prefs['feature_page_title'] = 'n';

@@ -43,20 +43,14 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 		foreach ( $handled_requests as $request_name )
 			if ( isset($_SESSION['forums_'.$request_name]) && ! isset($_REQUEST[$request_name]) )
 				$$request_name = $_SESSION['forums_'.$request_name];
-		if (empty($thread_sort_mode)) {
-			$thread_sort_mode = $prefs['forum_thread_sort_mode'];
-		}
-	} else {
-		// Fallback to global values if 'forum_thread_user_settings_keep' is disabled AND if :
-		//    - forum specific settings are set to empty (i.e. 'default')
-		// or - 'forum_thread_defaults_by_forum' is disabled (don't allow settings by forum)
-		//  !! Global value is not used when there is an explicit user request !!
-
-                foreach ( $handled_requests as $request_name )
-                        if ( ( ! isset($$request_name) || $$request_name == '' || $prefs['forum_thread_defaults_by_forum'] != 'y' )
-                                        && ! isset($_REQUEST[$request_name])
-                           ) $$request_name = $prefs['forum_'.$request_name];
+	}
+	foreach ( $handled_requests as $request_name ) {
+		if ( empty($$request_name) && empty($_REQUEST[$request_name]) ) {
+			$$request_name = $prefs['forum_'.$request_name];
+        } elseif ( empty($$request_name) && !empty($_REQUEST[$request_name]) ) {
+        	$$request_name = $_REQUEST[$request_name];
         }
+	}
 
 	if ( $forum_info['is_flat'] == 'y' ) {
 		// If we have a flat forum (i.e. we reply only to the first message / thread)
@@ -281,14 +275,29 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 	}
 }
 
-// Comments Moderation
 global $tiki_p_admin_comments;
-if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST["comments_threadId"]) && !empty($_REQUEST['comments_approve']) ) {
+if ((!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST["comments_threadId"])) {
+	// Comments Moderation
+    if (!empty($_REQUEST['comments_approve'])) {
+		if ( $_REQUEST['comments_approve'] == 'y' ) {
+			$commentslib->approve_comment($_REQUEST["comments_threadId"]);
+		} elseif ( $_REQUEST['comments_approve'] == 'n' ) {
+			$commentslib->reject_comment($_REQUEST["comments_threadId"]);
+		}
+	}
 
-	if ( $_REQUEST['comments_approve'] == 'y' ) {
-		$commentslib->approve_comment($_REQUEST["comments_threadId"]);
-	} elseif ( $_REQUEST['comments_approve'] == 'n' ) {
-		$commentslib->reject_comment($_REQUEST["comments_threadId"]);
+	// Comments archive
+	if ($prefs['comments_archive'] == 'y') {
+		if (!empty($_REQUEST['comment_archive'])) {
+			if ($_REQUEST['comment_archive'] == 'y') {
+				$commentslib->archive_thread($_REQUEST['comments_threadId']);
+			} else if ($_REQUEST['comment_archive'] == 'n') {
+				$commentslib->unarchive_thread($_REQUEST['comments_threadId']);
+			}
+		}
+		
+		$object = explode(':', $comments_objectId);
+		$smarty->assign('has_archived_comments', $commentslib->object_has_archived_comments($object[1], $object[0]));
 	}
 }
 
@@ -427,9 +436,6 @@ if( isset( $_REQUEST["comments_grandParentId"] ) )
 	$smarty->assign('comments_grandParentId', $_REQUEST["comments_grandParentId"]);
 }
 
-if(!empty($forum_mode) && $forum_mode == 'y') {
-	$_REQUEST["comments_parentId"] > 0;
-}
 if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]))
 $threadId_if_reply = $_REQUEST["comments_reply_threadId"];
 else
@@ -442,7 +448,8 @@ if (empty($thread_sort_mode)) {
 	}
 }
 
-$comments_coms = $commentslib->get_comments($comments_objectId, null,
+$comments_coms = $commentslib->get_comments($comments_objectId,
+		(isset($forum_mode) && $forum_mode == 'y') ? $_REQUEST["comments_parentId"] : null,
 		$comments_offset, $comments_per_page, $thread_sort_mode, $_REQUEST["comments_commentFind"],
 		$_REQUEST['comments_threshold'], $thread_style, $threadId_if_reply);
 

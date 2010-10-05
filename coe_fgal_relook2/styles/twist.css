@@ -2,16 +2,16 @@
 	Twist for TikiWiki CMS/Broupware 1.9 was created by Gary Griffin and
 	contributed for downloading at http://themes.tiki.org.
 	The Twist theme has been updated and
-	committed to the Tiki Subversion repository by Gary Cunningham-Lee (chibaguy). 
+	committed to the Tiki Subversion repository by Gary Cunningham-Lee (chibaguy).
 */
 
 /* Import the default layout files: */
 @import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
- 
+
 /***** XHTML Elements (body tag here,
-			others follow Layout) *****/ 
+			others follow Layout) *****/
 body {
 	background: #0F1644 url(twist/background.gif);
 	font: 76%/1.4em black Verdana, Geneva, Arial, Helvetica, sans-serif}
@@ -21,7 +21,7 @@ body.fixed_width #fixedwidth {
 	margin-bottom: 20px;
 	width: 800px;
 	background: #fff;
-} 
+}
 
 #main[id] {
 	margin-top: 0;
@@ -29,7 +29,7 @@ body.fixed_width #fixedwidth {
 
 *:first-child+html #c1c2 {
 	margin-left: 0;
-	padding-left: 0} 
+	padding-left: 0}
 
 #middle {
 	
@@ -40,19 +40,19 @@ body.fixed_width #fixedwidth {
 	background: #fff;
 }
 
-#c1c2	#wrapper	#col1 {
+#c1c2 #wrapper #col1 {
 	border-top: 1px solid #ccc;
 }
 	
-#c1c2	#wrapper	#col1.marginleft  {
+#c1c2 #wrapper #col1.marginleft  {
 	margin-left: 190px;
 }
 
-#c1c2	#wrapper	#col1.marginright {
+#c1c2 #wrapper #col1.marginright {
 	margin-right: 150px;
 }
 
-#c1c2	#wrapper	#col1	.content {
+#c1c2 #wrapper #col1 .content {
 	background: transparent}
 
 #c1c2 #wrapper #col1 #tiki-center {
@@ -82,9 +82,9 @@ body.fixed_width #fixedwidth {
 
 #footer {
 	clear: both;
- 	text-align: center;
- 	font-size: .9em;
- 	background: #efefef;
+	text-align: center;
+	font-size: .9em;
+	background: #efefef;
 	margin-top: 0;
 	padding-bottom: 8px;
 	padding-top: 7px}
@@ -103,7 +103,7 @@ h1 {
 h2 {
 	width: 98%;
 	margin-top: 15px;
-	font-weight: bold; 
+	font-weight: bold;
 	font-size: 1.6em;
 	margin-bottom: 4px;
 	padding-bottom: 3px;
@@ -177,7 +177,7 @@ input[type="submit"]:hover,
 	color: #fff;
 	text-decoration: none}
 
-.button a:active,	
+.button a:active,
 button:active,
 input[type="reset"]:active,
 input[type="submit"]:active,
@@ -492,7 +492,7 @@ div.optionline {
 	padding-right: 1px;
 	border-top: #efefef 1px solid;
 	border-right: #efefef 1px dotted;
-	border-bottom: #fff 1px solid;	
+	border-bottom: #fff 1px solid;
 	border-left: #fff 1px dotted;
 	color: #003163}
 
@@ -575,7 +575,7 @@ div.box {
 
 #leftcolumn .box,
 #rightcolumn .box {
-	width: 150px;	
+	width: 150px;
 }
 
 h3.box-title {
@@ -660,7 +660,7 @@ div.cbox {
 .rbox-title,
 .warning .rbox-title {
 	font-size: 1em;
-	padding: 0 10px;   
+	padding: 0 10px;
 	margin: 0;
 	font-weight: bold}
 
@@ -679,7 +679,7 @@ div.cbox {
 .tip .rbox-title {
 	background: #ECECEF;
 	border: 1px solid #CCCCDD}
- 
+
 .comment .rbox-data,
 .tip .rbox-data {
 	background: #ECEFEC;
@@ -700,7 +700,7 @@ table.normal {
 	border: 0;
 	background: #fff}
 
-table.normal, 
+table.normal,
 table.admin {
 	border: #aaa 1px solid;
 	background: white;
@@ -885,9 +885,9 @@ div.description {
 	line-height: 15px;
 	font-family: "Lucida Grande", Verdana, Geneva, Arial,  sans-serif}
 
-.wikitext h1, 
-.wikitext h2, 
-.wikitext h3, 
+.wikitext h1,
+.wikitext h2,
+.wikitext h3,
 .wikitext h4 {
 	margin: 0 0 15px;
 	padding: 0}
@@ -906,12 +906,12 @@ div.description {
 table.wikitable {
 	border: 1px solid #a9a9a9;
 	border-collapse: collapse}
- 
+
 td.wikicell {
 	padding: 3px;
 	border: 1px solid #999;
 	border-collapse: collapse}
- 
+
 /* Wiki plugin styles * */
 /* code plugin  */
 div.code {
@@ -927,7 +927,7 @@ div.code {
 	background: #F5F5F5;
 	margin: 4px;
 	border: 1px dashed #ADACAF;
-	overflow: auto; 
+	overflow: auto;
    width: 500px}
 
 .codecaption {
@@ -963,15 +963,15 @@ div.articletopline {
 
 div.articletitle {
 	margin-top: 6px;
-	margin-bottom:	15px;
-	text-align:	left}
- 
+	margin-bottom: 15px;
+	text-align: left}
+
 div.articletitle h2 {
 	font-size: 1.5em;
 	font-weight: normal;
 	color: #990066}
 
-span.titleb {font-size: 1.0em} 
+span.titleb {font-size: 1.0em}
 div.articlesubtitle {font-size: 0.9em}
 div.articleheading {margin-top: 6px}
 div.articlebody {margin-top: 1em}
@@ -990,7 +990,7 @@ div.bloginfo {
 	padding: 3px;
 	line-height: 150%;
 	text-transform: 0}
- 
+
 .postinfo a {
 	color: #9CF;
 	text-decoration: none;
@@ -1015,7 +1015,7 @@ a.blogt:hover {
 span.posthead {
 	font-weight: bold;
 	letter-spacing: .4pt}
- 
+
 div.posthead h3 {font-size: 1.2em}
 
 body.tiki_blogs div.postbody {
@@ -1038,7 +1038,7 @@ body.tiki_blogs div.postbody {
 	
 .post .postbody-title {
 	display: block;
-	background: #eee; 
+	background: #eee;
 	border-bottom: 0;
 	margin-bottom: 0;
 	padding-top: 2px}
@@ -1053,7 +1053,7 @@ body.tiki_blogs div.postbody {
 
 .title a.link {color: #000}
 
-.post .author {	
+.post .author {
 	float: left;
 	text-align: left;
 	vertical-align: top;
@@ -1196,8 +1196,8 @@ div.messureadbody {background: #DEDEDE}
 /***** TikiSheets *****/
 
 /***** Calendar *****/
-.Cal0, 
-.Cal1, 
+.Cal0,
+.Cal1,
 .Cal2 {font-size: 90%}
 
 	
@@ -1336,7 +1336,7 @@ calodd {background: #efefef}
 }
 
 .calfocuson a {
-	font-size: 90%; 
+	font-size: 90%;
 }
 
 .calHeadingOn, .calHeadingOn a {

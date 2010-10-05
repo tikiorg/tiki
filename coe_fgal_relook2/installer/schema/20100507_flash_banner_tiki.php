@@ -19,7 +19,6 @@ function upgrade_20100507_flash_banner_tiki( $installer ) {
 			$movie['width'] = $matches[4];
 			$movie['height'] = $matches[5];
 			$movie['version'] = $matches[6];
-			echo 'eeee';
 			$installer->query( $query, array(serialize($movie), $res['bannerId']));
 		}
 	}

@@ -859,6 +859,8 @@ function wikiplugin_trackerlist($data, $params) {
 									}
 								}
 								$exactvalue[] = array($conv[$matches[1]]=>$matches[2]);
+							} elseif (preg_match('/not\((.+)\)/', $evs[$i], $matches)) {
+								$exactvalue[] = array('not' => $matches[1]);
 							} else {
 								$exactvalue[] = $evs[$i];
 							}
@@ -945,10 +947,13 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('popupfields', $popupfields);
 		if (!empty($filterfield)) {
 			$urlquery['filterfield'] = implode(':', $filterfield);
+			if (!is_array($filtervalue)) { $filtervalue = array($filtervalue); }
 			$urlquery['filtervalue'] = implode(':', $filtervalue);
 			$urlquery['exactvalue'] = implode(':', $exactvalue);
 			$urlquery['trackerId'] = $trackerId;
 			$smarty->assign('urlquery', $urlquery);
+		} else {
+			$smarty->assign('urlquery', '');
 		}
 		if (!empty($export) && $export != 'n' && $tiki_p_export_tracker == 'y') {
 			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";

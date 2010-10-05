@@ -28,7 +28,7 @@ function wikiplugin_code_info() {
 			'wrap' => array(
 				'required' => false,
 				'name' => tra('Word Wrap'),
-				'description' => tra('Enable word wrapping on the code to avoid breaking the layout.'),
+				'description' => tra('Enable word wrapping on the code to avoid breaking the layout. May not be used with line numbers if Geshi version 1.0.8.9+'),
 				'options' => array(
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -37,7 +37,7 @@ function wikiplugin_code_info() {
 			'colors' => array(
 				'required' => false,
 				'name' => tra('Colors'),
-				'description' => tra('Syntax highlighting to use. May not be used with line numbers. GeSHi - Generic Syntax Highlighter must be installed. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
+				'description' => tra('Syntax highlighting to use. GeSHi - Generic Syntax Highlighter must be installed. May not be used with line numbers if Geshi version < 1.0.8.9. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, rsplus...'),
 				'advanced' => true,
 			),
 			'ln' => array(

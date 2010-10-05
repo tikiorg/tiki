@@ -780,7 +780,7 @@ function wikiplugin_tracker($data, $params)
 					foreach ($filter as $f) {
 						$filter2[$f['fieldId']] = $f;
 					}
-					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter2, $itemUser);
+					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter2, $itemUser, true);
 				}
 				// todo: apply the values for fields with no values
 			} else {

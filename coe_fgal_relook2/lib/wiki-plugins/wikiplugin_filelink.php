@@ -34,5 +34,5 @@ function wikiplugin_filelink_info()
 
 function wikiplugin_filelink( $data, $params )
 {
-	return "[tiki-download_file.php?fileId=" . $params['fileId'] . "|" . $params['label'] . "]";
+	return "[tiki-download_file.php?fileId=" . $params['fileId'] . (isset($params['label']) ? ("|" . $params['label']) : '') . "]";
 }

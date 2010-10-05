@@ -5377,16 +5377,17 @@ class TikiLib extends TikiDb_Bridge
 		$arg_str = rtrim($arg_str, '&');
 		$icon = isset($info['icon']) ? $info['icon'] : 'pics/icons/wiki_plugin_edit.png';
 
-		// some plugins are just too flakey to do wysiwyg, so return the source for them ;(
-		if (in_array($name, array())) {
-			return '~np~' . $ck_editor_plugin . '~/np~';
+		// some plugins are just too flakey to do wysiwyg, so show the "source" for them ;(
+		if (in_array($name, array('trackerlist'))) {
+			$plugin_result = preg_replace('/[\{\}]/m', '', $ck_editor_plugin);
+		} else {
+			// pre-parse the output so nested plugins don't fall out all over the place
+			$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
+			// remove hrefs and onclicks
+			$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
+			$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
+			$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
 		}
-		// pre-parse the output so nested plugins don't fall out all over the place
-		$plugin_result = $this->parse_data($plugin_result, array('is_html' => false, 'suppress_icons' => true, 'ck_editor' => true, 'noparseplugins' => true));
-		// remove hrefs and onclicks
-		$plugin_result = preg_replace('/\shref\=/i', ' tiki_href=', $plugin_result);
-		$plugin_result = preg_replace('/\sonclick\=/i', ' tiki_onclick=', $plugin_result);
-		$plugin_result = preg_replace('/<script.*?<\/script>/mi', '', $plugin_result);
 		
 		if ($this->contains_html_block($plugin_result)) {
 			$elem = 'div';
@@ -5744,7 +5745,10 @@ class TikiLib extends TikiDb_Bridge
 		$options['inside_pretty'] = isset($options['inside_pretty']) ? $options['inside_pretty'] : false;
 		if (empty($options['ck_editor'])) $options['ck_editor'] = false;
 		
-		
+		if ($options['ck_editor']) {
+			global $headerlib;
+			$headerlib->wysiwyg_parsing = true;
+		}
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
 		// everything between {}
@@ -5930,6 +5934,9 @@ class TikiLib extends TikiDb_Bridge
 		// Process pos_handlers here
 		foreach ($this->pos_handlers as $handler) {
 			$data = $handler($data);
+		}
+		if ($options['ck_editor']) {
+			$headerlib->wysiwyg_parsing = false;
 		}
 		return $data;
 	}

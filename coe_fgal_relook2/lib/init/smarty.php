@@ -147,7 +147,7 @@ class Smarty_Tikiwiki extends Smarty
 			if ( $prefs['ajax_xajax'] === 'y' && $_smarty_display ) {
 				$ajaxlib->processRequests();
 			}
-		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'information.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
+		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			include_once('tiki-modules.php');
 
 			// Enable AJAX

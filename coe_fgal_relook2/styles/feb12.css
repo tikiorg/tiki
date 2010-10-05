@@ -2,11 +2,11 @@
  * See http://themes.tikwiki.org for more information. -- */
 
 /* import default layout and styles: */
-@import url("lite/lite.css"); 
+@import url("lite/lite.css");
 @import url("layout/layout.css");
 @import url("layout/design.css");
 
-/* XHTML Elements */ 
+/* XHTML Elements */
 body {
 	font: normal 75%/1.5em 'Trebuchet MS', sans-serif;
 	color: #333;
@@ -132,7 +132,7 @@ input[type=submit]:hover,
 	text-decoration: none;
 }
 
-.button a:active,	
+.button a:active,
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
@@ -181,7 +181,7 @@ ul span, ol span {
 	cursor: pointer;
 }
 
-/*** *litecss-based layout 
+/*** *litecss-based layout
 	(overrides lite.css) ***/
 #main {
 	font-size: 1.24em;
@@ -411,17 +411,17 @@ a.flip:hover,
 	color: #eee !important;
 	text-decoration: none;
 }
- 
+
 .mdksubmenu {
 	background: #FFFFFF;
 	margin-top: 0;
 }
- 
+
 .mdksubframe {
 	border: 1px solid #8CACBB;
 	background: #A8CCE2 url(feb12/columnbg.jpg) repeat-x;
 }
- 
+
 .mdkitem {
 	border-top: 1px solid #57A5D0;
 }
@@ -445,7 +445,7 @@ a.flip:hover,
 	font-weight: normal;
 	color: #487384;
 }
- 
+
 .mdksubmenu .mdkitem a {
 	font-size: 1.2em;
 }
@@ -454,16 +454,16 @@ a.flip:hover,
 	font-weight: normal;
 	text-decoration: none;
 }
- 
+
 .mdkitem a:visited {
 	text-decoration: none;
 }
- 
+
 .mdkitem a:hover {
 	color: #993300;
 	text-decoration: none;
 }
- 
+
 .treemenudiv {
 	background: #a8cce2;
 }
@@ -505,7 +505,7 @@ a.phplmselected:hover {
 	color: #006699;
 }
 
-.imgs	{
+.imgs {
 	border: 0;
 	width: 16px;
 	height: 18px;
@@ -514,7 +514,7 @@ a.phplmselected:hover {
 /** CSS (suckerfish) menus **/
 .cssmenu_horiz li,
 .cssmenu_vert li {
-	background:	inherit;
+	background: inherit;
 }
 
 .csmenu ul li,
@@ -528,7 +528,7 @@ a.phplmselected:hover {
 	background: #a8cce2;
 }
 
-.cssmenu ul a,	
+.cssmenu ul a,
 .cssmenu_horiz ul a,
 .cssmenu_vert ul a {
 	padding: 6px;
@@ -538,7 +538,7 @@ a.phplmselected:hover {
 cssmenu_horiz a,
 .cssmenu_vert a {
 	border-left: 0;
-	border-top:	0;
+	border-top: 0;
 	text-decoration: none;
 }
 
@@ -917,9 +917,9 @@ div#description,
 	line-height: 1.4em;
 }
 
-.wikitext h1, 
-.wikitext h2, 
-.wikitext h3, 
+.wikitext h1,
+.wikitext h2,
+.wikitext h3,
 .wikitext h4 {
 	margin: 0 0 15px;
 	padding: 0;
@@ -1070,7 +1070,7 @@ div.articletitle h2 {
 span.titleb {
 	font-size: 1.0em;
 }
- 
+
 div.articlesubtitle {
 	font-size: 0.9em;
 }
@@ -1237,7 +1237,7 @@ body.tiki_blogs .postfooter .actions {
 
 .post .postbody .content {
 	width: 100%;
-/*	height: 100%;*/
+/* height: 100%;*/
 	color: #000000;
 }
 
@@ -1325,8 +1325,8 @@ html>body .galtable {
 
 /***** Calendar *****/
 /* Overrides calendar.css, etc. */
-.cal0, 
-.cal1, 
+.cal0,
+.cal1,
 .cal2 {
 	color: #000;
 	font-size: 90%;

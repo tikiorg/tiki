@@ -4,7 +4,7 @@
 	<div id="siteheader" class="clearfix">
 		<div id="header-top">
 			<div id="sitelogo" style="padding-left:0; padding-top: 0px"><h1 style="margin: 0"><img style="border:medium none; vertical-align:middle" alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}" />
-				<span style="vertical-align:middle; margin-left:80px; color: #fff;">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
+				<span style="vertical-align:middle; margin-left:120px; color: #fff;">{tr}Tiki installer{/tr} {$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
 			</div>
 		</div>
 	</div>
@@ -269,7 +269,7 @@
 <h1>{if $tikidb_created}{tr}Install &amp; Upgrade{/tr}{else}{tr}Install{/tr}{/if}</h1>
 {if $max_exec_set_failed eq 'y'}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}
-{tr}Failed to set max_execution_time to 0 for PHP. You may experience problems when creating/upgrading the database on a slow system. This will manitest itself by a blank page.{/tr}
+{tr}Failed to set max_execution_time for PHP. You may experience problems when creating/upgrading the database using this installer on a slow system. This can manifest itself by a blank page.{/tr}
 {/remarksbox}
 {/if}
 <div class="clearfix">
@@ -450,7 +450,7 @@
 	<br />
 	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tiki.org/general+admin&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
 <div style="padding:5px; clear:both"><label for="browsertitle">{tr}Browser title:{/tr}</label>
-		<div style="margin-left:1em"><input type="text" size="40" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" />
+		<div style="margin-left:1em"><input type="text" size="40" name="browsertitle" id="browsertitle" onclick="this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}" />
 			<br /><em>{tr}This will appear in the browser title bar.{/tr}</em></div>
 		</div>
 		<div style="padding:5px; clear:both"><label for="sender_email">{tr}Sender email:{/tr}</label>
@@ -678,7 +678,7 @@
 				{tr}Go directly to the <strong>Install/Upgrade</strong> step.{/tr}
 				{if $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}
 					<a href="tiki-install.php?install_step=4{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" title="{tr}Install/Upgrade{/tr}">
-							<img src="pics/icons/arrow_right.png" height="16" width="16" />
+							<img src="pics/icons/arrow_right.png" alt="{tr}Install/Upgrade{/tr}" height="16" width="16" />
 					</a>
 				{/if}
 				</div>
@@ -724,8 +724,7 @@
 </div>
 <hr />
 
-{* Can be restored when we'll have a new http://branding.tiki.org/Badge
-<p align="center"><a href="http://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}" style="width:80px; height:31px; border:0" /></a></p>
-*}
+<p align="center"><a href="http://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}" style="width:88px; height:31px; border:0" /></a></p>
+
 		</div>{* -- END of main -- *}
 	</div> {* -- END of fixedwidth -- *}

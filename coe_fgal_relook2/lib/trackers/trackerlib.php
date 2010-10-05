@@ -992,17 +992,21 @@ class TrackerLib extends TikiLib
 		}
 	}
 	/* listfields fieldId=>ooptions */
-	function get_item_fields($trackerId, $itemId, $listfields, &$itemUser) {
+	function get_item_fields($trackerId, $itemId, $listfields, &$itemUser, $alllang=false) {
 		global $prefs, $user, $tiki_p_admin_trackers;
 		$fields = array();
 		$fil = array();
 		$kx = '';
 
-		$bindvars = array((string)$prefs['language'], (int)$itemId);
+		$bindvars = array((int)$itemId);
 
-		$query2 = 'SELECT ttf.`fieldId`, `value`, `isPublic`'
+		$query2 = 'SELECT ttf.`fieldId`, `value`, `isPublic`, `lang`, `isMultilingual` '
 			.' FROM `tiki_tracker_item_fields` ttif INNER JOIN `tiki_tracker_fields` ttf ON ttif.`fieldId` = ttf.`fieldId`'
-			." WHERE (`lang` = ? or `lang` is null or `lang` = '') AND `itemId` = ?";
+			." WHERE `itemId` = ?";
+		if (!$alllang) {
+			$query2 .= " AND (`lang` = ? or `lang` is null or `lang` = '') ";
+			$bindvars[] = (string)$prefs['language'];
+		}
 		if (!empty($listfields)) {
 			$query2 .= " AND " . $this->in('ttif.fieldId', array_keys($listfields), $bindvars);
 		}
@@ -1010,7 +1014,13 @@ class TrackerLib extends TikiLib
 		$result2 = $this->fetchAll($query2, $bindvars);
 
 		foreach( $result2 as $res1 ) {
-			$fil[$res1['fieldId']] = $res1['value'];
+			if ($alllang && $res1['isMultilingual'] == 'y') {
+				if ($prefs['language'] == $res1['lang'])
+					$fil[$res1['fieldId']] = $res1['value'];
+				$sup[$res1['fieldId']]['lingualvalue'][] = array('lang' => $res1['lang'], 'value' => $res1['value']);
+			} else {
+				$fil[$res1['fieldId']] = $res1['value'];
+			}
 		}
 
 		foreach ( $listfields as $fieldId =>$fopt ) { // be possible to need the userItem before this field
@@ -1024,6 +1034,10 @@ class TrackerLib extends TikiLib
 			$fieldId = $fopt['fieldId'];
 			if (isset($fil[$fieldId])) {
 				$fopt['value'] = $fil[$fieldId];
+			}
+			if (isset($sup[$fieldId]['lingualvalue'])) {
+				$fopt['lingualvalue'] = $sup[$fieldId]['lingualvalue'];
+				$fopt['isMultilingual'] = 'y';
 			}
 			if ($tiki_p_admin_trackers != 'y') {
 				if ($fopt['isHidden'] == 'y') {
@@ -2032,6 +2046,12 @@ class TrackerLib extends TikiLib
 		$tracker_info = $this->get_tracker_options($trackerId);
 		if (($header = fgetcsv($csvHandle,100000,  $csvDelimiter)) === FALSE) {
 			return 'Illegal first line';
+		}
+		if ($encoding == 'UTF-8') {
+			// See en.wikipedia.org/wiki/Byte_order_mark
+			if (substr($header[0],0,3) == "\xef\xbb\xbf") {
+				$header[0] = substr($header[0],3);
+			}
 		}
 		$max = count($header);
 		for ($i = 0; $i < $max; $i++) {

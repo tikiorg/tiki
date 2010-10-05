@@ -23,8 +23,17 @@
 				{/remarksbox}
 			{elseif $permissions_displayed eq 'direct'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}
-					{if $objectType neq 'category'}{tr}This object's direct permissions override any global permissions or category permissions affecting this object.{/tr}{else}{tr}This category's direct permissions override any global permissions affecting objects in it.{/tr}{/if}<br />
-					{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' objectId='' objectName='' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
+					{if $objectType neq 'category'}
+						{tr}This object's direct permissions override any global permissions or category permissions affecting this object.{/tr}
+					{else}
+						{tr}This category's direct permissions override any global permissions affecting objects in it.{/tr}
+					{/if}
+					<br />
+					{if $tiki_p_admin eq 'y'}
+						{if !empty($permissions_added)}<em>{tr}Permissions added:{/tr} {$permissions_added}</em><br />{/if}
+						{if !empty($permissions_removed)}<em>{tr}Permissions removed:{/tr} {$permissions_removed}</em><br />{/if}
+						{tr}To edit global permissions{/tr} {self_link objectType='global' objectId='' objectName='' permType=$permType}{tr}click here{/tr}{/self_link}.
+					{/if}
 				{/remarksbox}
 			{elseif  $permissions_displayed eq 'category'}
 				{remarksbox type="warning" title="{tr}Warning{/tr}"}

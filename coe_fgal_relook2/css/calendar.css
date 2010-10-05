@@ -2,7 +2,6 @@
 #calendar {
 }
 
-
 div.tabrow {
 	position: relative;
 	left: 0;
@@ -19,7 +18,7 @@ div.tabrow {
 	height: 24px !important;
 }
 .tabrowRight {
-	position:absolute;
+	position: absolute;
 	top: 0;
 	right: 0;
 	width: 30px;
@@ -27,17 +26,17 @@ div.tabrow {
 }
 
 .tabrow {
-	margin : 0;
-	font-size : 11px;
-	padding : 1px 10px 4px 10px;
+	margin: 0;
+	font-size: 11px;
+	padding: 1px 10px 4px 10px;
 	clear: both;
 }
 .tabrow a {
-	text-decoration : none;
+	text-decoration: none;
 }
 .tabrow .viewmode { float: left; }
 .tabrow .jscalrow { float: right; white-space: nowrap; cursor: pointer; }
-.tabrow .daterow { border : 1px #ddd; }
+.tabrow .daterow { border: 1px #ddd; }
 
 .calHeading,
 .calHeadingOn {
@@ -103,208 +102,208 @@ div.tabrow {
 }
 
 .caltitle {
-	font-weight : bold;
-	color : #425262;
+	font-weight: bold;
+	color: #425262;
 }
 .calcheckbox {
-	background : #FFFFFF;
+	background: #ffffff;
 }
 .caltoggle {
-	font-size : 9px;
-	margin-bottom : 7px;
+	font-size: 9px;
+	margin-bottom: 7px;
 }
 .calfocus {
-	font-size : 9px;
-	background : transparent;
+	font-size: 9px;
+	background: transparent;
 }
 .calfocus a,
 .calfocus a:visited {
-	text-decoration : none;
-	font-weight : normal;
-	color : #000000;
+	text-decoration: none;
+	font-weight: normal;
+	color: #000000;
 }
 .calfocuson {
-	font-size : 9px;
-	background : #F3E498;
+	font-size: 9px;
+	background: #f3e498;
 }
 .calfocuson a {
-	text-decoration : none;
-	font-weight : normal;
-	color : #000000;
+	text-decoration: none;
+	font-weight: normal;
+	color: #000000;
 }
 
 .Calwiki, .Calblog, .Calgal, .Calart, .Calforum, .Caldir, .Calfgal,
 .Calfaq, .Calquiz, .Caltrack, .Calsurv, .Calnl, .Calchart {
-	border-top : 1px dashed #CCCCCC;
-	font-size : 10px;
-	padding : 0 3px;
-	margin-top : 0;
+	border-top: 1px dashed #CCCCCC;
+	font-size: 10px;
+	padding: 0 3px;
+	margin-top: 0;
 }
 
 .Calwiki a {
-	color : #443F39;
-	font-weight : normal;
+	color: #443f39;
+	font-weight: normal;
 }
 .Calwiki:before {
-	content : "w";
+	content: "w";
 	font-family:  monospace;
-	background : #FFFFFF;
+	background: #ffffff;
 }
 .Calblog a {
-	color : #443F39;
-	font-weight : normal;
+	color: #443f39;
+	font-weight: normal;
 }
 .Calblog:before {
-	content : "b";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "b";
+	font-family: monospace;
+	background: #ffffff;
 }
 .Calgal a {
-	font-weight : normal;
-	color : #303F49;
+	font-weight: normal;
+	color: #303f49;
 }
 .Calgal:before {
-	content : "i";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "i";
+	font-family: monospace;
+	background: #ffffff;
 }
 .Calart a {
-	color: #304F30;
+	color: #304f30;
 	font-weight: normal;
 }
 .Calart:before {
-	content : "a";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "a";
+	font-family: monospace;
+	background: #ffffff;
 }
 .Calforum a {
-	color : #304F30;
-	font-weight : normal;
+	color: #304f30;
+	font-weight: normal;
 }
 .Calforum:before {
-	content : "fo";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "fo";
+	font-family: monospace;
+	background: #ffffff;
 }
 .Caldir a {
-	color : #304F30;
-	font-weight : normal;
+	color: #304F30;
+	font-weight: normal;
 }
 .Caldir:before {
-	content : "d";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "d";
+	font-family: monospace;
+	background: #FFFFFF;
 }
 .Calfgal a {
-	color : #304F30;
-	font-weight : normal;
+	color: #304F30;
+	font-weight: normal;
 }
 .Calfgal:before {
-	content : "fi";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "fi";
+	font-family: monospace;
+	background: #FFFFFF;
 }
 .Calfaq a {
-	color : #304F30;
-	font-weight : normal;
+	color: #304F30;
+	font-weight: normal;
 }
 .Calfaq:before {
-	content : "fq";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "fq";
+	font-family: monospace;
+	background: #FFFFFF;
 }
 .Calquiz a {
-	color : #304F30;
-	font-weight : normal;
+	color: #304F30;
+	font-weight: normal;
 }
 .Calquiz:before {
-	content : "q";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "q";
+	font-family: monospace;
+	background: #FFFFFF;
 }
 .Caltrack a {
-	color : #304F30;
-	font-weight : normal;
+	color: #304F30;
+	font-weight: normal;
 }
 .Caltrack:before {
-	content : "t";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "t";
+	font-family: monospace;
+	background: #FFFFFF;
 }
 .Calsurv a {
-	color : #304F30;
-	font-weight : normal;
+	color: #304F30;
+	font-weight: normal;
 }
 .Calsurv:before {
-	content : "s";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "s";
+	font-family: monospace;
+	background: #FFFFFF;
 }
 .Calnl a {
-	color : #304F30;
-	font-weight : normal;
+	color: #304F30;
+	font-weight: normal;
 }
 .Calnl:before {
-	content : "n";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "n";
+	font-family: monospace;
+	background: #FFFFFF;
 }
 .Calchart a {
-	color : #304F30;
-	font-weight : normal;
+	color: #304F30;
+	font-weight: normal;
 }
 .Calchart:before {
-	content : "ch";
-	font-family : monospace;
-	background : #FFFFFF;
+	content: "ch";
+	font-family: monospace;
+	background: #FFFFFF;
 }
 .calweb {
-	font-weight : bold;
-	font-size : 10px;
-	text-decoration : none;
-	padding-left : 3px;
-	padding-right : 3px;
-	color : #336699;
+	font-weight: bold;
+	font-size: 10px;
+	text-decoration: none;
+	padding-left: 3px;
+	padding-right: 3px;
+	color: #336699;
 }
 .calweb:hover {
-	color : #996633;
+	color: #996633;
 }
 #calprio {
-	margin-left : 7px;
-	padding : 0 5px;
-	color : black;
+	margin-left: 7px;
+	padding: 0 5px;
+	color: black;
 }
 .calprio1 {
-	background : #DAE0E0;
+	background: #DAE0E0;
 }
 .calprio2 {
-	background : #DADCDC;
+	background: #DADCDC;
 }
 .calprio3 {
-	background : #DAD0D0;
+	background: #DAD0D0;
 }
 .calprio4 {
-	background : #DACACA;
+	background: #DACACA;
 }
 .calprio5 {
-	background : #DAC0D0;
+	background: #DAC0D0;
 }
 .calprio6 {
-	background : #DABABA;
+	background: #DABABA;
 }
 .calprio7 {
-	background : #DAB0B0;
+	background: #DAB0B0;
 }
 .calprio8 {
-	background : #DAAAAA;
+	background: #DAAAAA;
 }
 .calprio9 {
-	background : #DA9A9A;
+	background: #DA9A9A;
 }
 .calprio1 a, .calprio2 a, .calprio3 a, .calprio4 a, .calprio5 a,
 .calprio6 a, .calprio7 a, .calprio8 a, .calprio9 a {
-	color : #000000;
-	font-weight : normal;
+	color: #000000;
+	font-weight: normal;
 }
 
 .calnavigation {
@@ -312,36 +311,36 @@ div.tabrow {
 	padding: 4px;
 	text-align: center;
 	font-size: 1.1em;
-	font-weight : bold;
+	font-weight: bold;
 	clear: both;
 	vertical-align: middle;
 	margin: 7px 0;
 }
 .calnavigation a {
-	padding : 0 20px 4px 20px;
-	line-height : 11px;
+	padding: 0 20px 4px 20px;
+	line-height: 11px;
 }
 .calnavigation a:hover {
-	background : #FE3;
+	background: #FE3;
 }
 .calnavigation a.prev {
-	float : left;
+	float: left;
 }
 .calnavigation a.next {
-	float : right;
+	float: right;
 }
 td.middle {
-	vertical-align : middle;
+	vertical-align: middle;
 }
 .mininotes {
-	font-size : 9px;
-	color : #666666;
+	font-size: 9px;
+	color: #666666;
 }
 .opaque {
 	background: #FFFFFF;
-	width : auto;
-	border : 1px solid #666666;
-	padding : 5px;
+	width: auto;
+	border: 1px solid #666666;
+	padding: 5px;
 }
 .opaque .box-title,
 .opaque .box-data {
@@ -359,55 +358,55 @@ td.middle {
 	height: 60px }
 
 .viewmodeon {
-	padding : 0;
+	padding: 0;
 }
 .viewmodeoff {
-	padding-left : 0;
+	padding-left: 0;
 }
 a.viewmodeon img {
-	margin : 0;
-	padding : 0;
-	padding-left : 3px;
-	border : 1px solid #900;
+	margin: 0;
+	padding: 0;
+	padding-left: 3px;
+	border: 1px solid #900;
 }
 
 * html a.viewmodeon img {
-	padding-left : 0;
+	padding-left: 0;
 }
 
 a.viewmodeoff img {
-	margin : 1px;
-	padding : 0;
-	padding-left : 3px;
-	border : 0;
+	margin: 1px;
+	padding: 0;
+	padding-left: 3px;
+	border: 0;
 }
 
 * html a.viewmodeoff img {
-	padding-left : 0;
+	padding-left: 0;
 }
 .caltable {
 	border-collapse: collapse;
-	border-bottom: 1px solid #cfd0d0;
+	border-bottom: 1px solid #CFD0D0;
 }
 .caltable .days {
 	height: 20px;
 	text-align: center;
-	border : 0;
-	border-bottom : 1px solid #999;
+	border: 0;
+	border-bottom: 1px solid #999;
 }
 .caltable .weeks {
-	border-right : 1px solid #999;
-	font-size : 8px;
-	color : #666;
-	vertical-align : middle;
+	border-right: 1px solid #999;
+	font-size: 8px;
+	color: #666;
+	vertical-align: middle;
 }
 .caltable .odd, .caltable .even {
-	margin : 1px !important;
-	border : 0 !important;
+	margin: 1px !important;
+	border: 0 !important;
 }
 .addevent {
 	padding: 0 5px;
-	float : right;
+	float: right;
 }
 
 .caldark,
@@ -417,16 +416,16 @@ a.viewmodeoff img {
 }
 
 .calodd {
-	background : #cde;
+	background: #CDE;
 }
 
 .caleven {
-	background : #def;
+	background: #DEF;
 }
 
 .caldark {
-	background: #e0e0e0; /* #eee */
-	border: 1px dotted #d6dbde;
+	background: #E0E0E0; /* #eee */
+	border: 1px dotted #D6DBDe;
 }
 
 .calodd,
@@ -462,19 +461,19 @@ a.viewmodeoff img {
 }
 
 #filtercal {
-	background : #FFF;
-	position : absolute;
-	z-index : 2 !important;
-	border : 1px solid #000;
-	right : 190px;
+	background: #FFF;
+	position: absolute;
+	z-index: 2 !important;
+	border: 1px solid #000;
+	right: 190px;
 }
 #filtercal .caltitle,
 #filtercal .caltoggle,
 #filtercal .calcheckbox {
-	padding : 0 10px;
+	padding: 0 10px;
 }
 #filtercal .calinput {
-	padding : 10px;
+	padding: 10px;
 }
 
 #exportcal {
@@ -496,24 +495,24 @@ a.viewmodeoff img {
 }
 
 .statusbox {
-	margin-bottom : 1px;
-	width : 120px;
-	padding : 0 3px;
-	font-weight : bold;
-	background : #eee;
-	border : 1px solid #aaa;
-	color : #999;
+	margin-bottom: 1px;
+	width: 120px;
+	padding: 0 3px;
+	font-weight: bold;
+	background: #eee;
+	border: 1px solid #AAA;
+	color: #999;
 }
-.status0     { background : #ff6; border : 1px solid #000; color : #000; }
-.status1     { background : #6f6; border : 1px solid #000; color : #000; }
-.status2     { background : #f66; border : 1px solid #000; color : #000; }
+.status0     { background: #FF6; border: 1px solid #000; color: #000; }
+.status1     { background: #6F6; border: 1px solid #000; color: #000; }
+.status2     { background: #F66; border: 1px solid #000; color: #000; }
 
 select[name=start_Hour], select[name=start_Minute], select[name=end_Hour], select[name=end_Minute] { min-width: 40px; }
 .caltable, #calscreen table.normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
 .caltable td { padding: 2px; }
 #calscreen td {vertical-align: top;}
 #calscreen td a {text-decoration: none;}
-.days { font-size : 11px; font-weight: bold; color: #555555; }
+.days { font-size: 11px; font-weight: bold; color: #555555; }
 .calodd, .caleven { border: 1px solid #8CACBB; }
 .calfocus a:hover { background: transparent; }
 .calfocuson a:hover { background: transparent; }
@@ -522,7 +521,7 @@ a.addevent:hover {}
 .calfocus { border-bottom: 1px dotted #8CACBB; background: #b4d0ec; }
 .caldark a { display: none; }
 .caldark { border: 1px dotted #8CACBB; background: transparent; }
-.caldark .calfocus { background: #def; }
+.caldark .calfocus { background: #DEF; }
 .calfocuson + .calcontent {background: none; }
 .html_select_time { white-space: nowrap; }
 

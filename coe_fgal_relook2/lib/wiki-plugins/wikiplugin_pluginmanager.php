@@ -190,6 +190,7 @@ class WikiPluginPluginManager extends PluginsLib
         	$headbegin = "\n\t\t" . '<td class="heading">';
         	$cellbegin = "\n\t\t" . '<td>';
         	$header =  "\n\t" . '<tr class="heading">' . $headbegin . 'Parameters</td>';
+        	$rows = '';
         	if (isset($numparams) && $numparams > 0) {
         		$header .= $headbegin . 'Accepted Values</td>';
  		       	$header .= $headbegin . 'Description</td>';

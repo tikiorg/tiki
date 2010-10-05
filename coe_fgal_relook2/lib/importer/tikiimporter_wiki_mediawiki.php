@@ -394,6 +394,3 @@ class TikiImporter_Wiki_Mediawiki extends TikiImporter_Wiki
     }
 }
 
-class ImporterParserException extends Exception
-{
-}

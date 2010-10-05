@@ -22,6 +22,8 @@ class HeaderLib
 	var $rssfeeds;
 	var $metatags;
 	var $hasDoneOutput;
+	var $minified;
+	var $wysiwyg_parsing;
 
 	function __construct() {
 		$this->title = '';
@@ -34,6 +36,8 @@ class HeaderLib
 		$this->rssfeeds = array();
 		$this->metatags = array();
 		$this->hasDoneOutput = false;
+		$this->minified = array();
+		$this->wysiwyg_parsing = false;
 	}
 
 	function convert_cdn( $file ) {
@@ -50,14 +54,17 @@ class HeaderLib
 		$this->title = urlencode($string);
 	}
 
-	function add_jsfile($file,$rank=0) {
-		if (empty($this->jsfiles[$rank]) or !in_array($file,$this->jsfiles[$rank])) {
+	function add_jsfile($file,$rank=0,$minified=false) {
+		if (!$this->wysiwyg_parsing && (empty($this->jsfiles[$rank]) or !in_array($file,$this->jsfiles[$rank]))) {
 			$this->jsfiles[$rank][] = $file;
+			if ($minified) {
+				$this->minified[$file] = $minified;
+			}
 		}
 	}
 
 	function add_js_config($script,$rank=0) {
-		if (empty($this->js_config[$rank]) or !in_array($script,$this->js_config[$rank])) {
+		if (!$this->wysiwyg_parsing && (empty($this->js_config[$rank]) or !in_array($script,$this->js_config[$rank]))) {
 			$this->js_config[$rank][] = $script;
 		}
 		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
@@ -68,7 +75,7 @@ class HeaderLib
 	}
 
 	function add_js($script,$rank=0) {
-		if (empty($this->js[$rank]) or !in_array($script,$this->js[$rank])) {
+		if (!$this->wysiwyg_parsing && (empty($this->js[$rank]) or !in_array($script,$this->js[$rank]))) {
 			$this->js[$rank][] = $script;
 		}
 		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
@@ -85,7 +92,7 @@ class HeaderLib
 	 * @return nothing
 	 */
 	function add_jq_onready($script,$rank=0) {
-		if (empty($this->jq_onready[$rank]) or !in_array($script,$this->jq_onready[$rank])) {
+		if (!$this->wysiwyg_parsing && (empty($this->jq_onready[$rank]) or !in_array($script,$this->jq_onready[$rank]))) {
 			$this->jq_onready[$rank][] = $script;
 		}
 		if ($this->hasDoneOutput) {	// if called after smarty parse header.tpl return the script so the caller can do something with it
@@ -258,10 +265,9 @@ class HeaderLib
 			foreach( $this->jsfiles as $x => $files ) {
 				foreach( $files as $f ) {
 					$content = file_get_contents( $f );
-					if ( ! preg_match('/min\.js$/', $f) and $x !== 'minified') {
+					if ( ! preg_match('/min\.js$/', $f) and $this->minified[$f] !== true) {
 						$minified .= JSMin::minify( $content );
 					} else {
-						//$minified_files[] = $f;
 						$minified .= "\n// skipping minification for $f \n" . $content;
 					}
 				}
