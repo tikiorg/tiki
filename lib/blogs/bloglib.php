@@ -34,7 +34,8 @@ class BlogLib extends TikiDb_Bridge
 	 *
 	 * @return array
 	 */
-	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $ref='', $with = '') {
+	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $ref='', $with = '')
+	{
 		global $tikilib, $categlib;
 		if (!$categlib) require_once 'lib/categories/categlib.php';
 		$bindvars = array();
@@ -51,7 +52,7 @@ class BlogLib extends TikiDb_Bridge
 			$bindvars = array_merge($bindvars, array($findesc, $findesc));
 		}
 		if (isset($with['showlastpost'])) {
-			$query = "SELECT tb.*, tbp.`postId`, tbp.`created` as postCreated,  tbp.`user` as postUser, tbp.`title` as postTitle, tbp.`data` as postData FROM `tiki_blogs` tb, `tiki_blog_posts` tbp  $join where tb.`blogId` = tbp.`blogId` and tbp.`created` = (select max(`created`) from `tiki_blog_posts` tbp2 where tbp2.`blogId`=tb.`blogId` order by `created` desc) $where order by tb.".$this->convertSortMode($sort_mode);
+			$query = "SELECT tb.*, tbp.`postId`, tbp.`created` as postCreated, tbp.`user` as postUser, tbp.`title` as postTitle, tbp.`data` as postData FROM `tiki_blogs` tb, `tiki_blog_posts` tbp $join where tb.`blogId` = tbp.`blogId` and tbp.`created` = (select max(`created`) from `tiki_blog_posts` tbp2 where tbp2.`blogId`=tb.`blogId` order by `created` desc) $where order by tb.".$this->convertSortMode($sort_mode);
 		} else {
 			$query = "select * from `tiki_blogs` $join WHERE 1=1 $where order by `tiki_blogs`." . $this->convertSortMode($sort_mode); 
 		}
@@ -66,13 +67,13 @@ class BlogLib extends TikiDb_Bridge
 			global $user;
 			if ($objperm = $tikilib->get_perm_object($res['blogId'], 'blog', '', false)) {
 				if ( $objperm['tiki_p_read_blog'] == 'y' || ($ref == 'post' && $objperm['tiki_p_blog_post_view_ref'] == 'y') || ($ref == 'blog' && $objperm['tiki_p_blog_view_ref'] == 'y')) {
-				  ++$cant;
-				  if ($maxRecords == - 1 || ($i >= $offset && $nb < $maxRecords)) {
-					$ret[] = $res;
-					++$nb;
-				  }
-				++$i;
-			  }
+					++$cant;
+					if ($maxRecords == - 1 || ($i >= $offset && $nb < $maxRecords)) {
+						$ret[] = $res;
+						++$nb;
+					}
+					++$i;
+				}
 			}
 		}
 		$retval = array();
@@ -88,7 +89,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $blogId
 	 * @return array
 	 */
-	function get_blog($blogId) {
+	function get_blog($blogId)
+	{
 		global $tikilib, $prefs, $user, $categlib; if (!$categlib) require_once 'lib/categories/categlib.php'; 
 
 		$bindvars = array();
@@ -123,7 +125,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @param string $blogTitle
 	 * @return array or false if no blog is found
 	 */
-	function get_blog_by_title($blogTitle) {
+	function get_blog_by_title($blogTitle)
+	{
 		global $prefs, $user;
 
 	 	// Avoiding select by name so as to avoid SQL injection problems.
@@ -149,7 +152,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @param bool $include_public wheter or include public blogs (that belongs to other users)
 	 * @return array
 	 */
-	function list_user_blogs($user, $include_public = false) {
+	function list_user_blogs($user, $include_public = false)
+	{
 		global $tikilib;
 
 		$query = "select * from `tiki_blogs` where `user`=? ";
@@ -176,7 +180,8 @@ class BlogLib extends TikiDb_Bridge
 	 *
 	 * @return array
 	 */
-	function list_blogs_user_can_post() {
+	function list_blogs_user_can_post()
+	{
 		global $tikilib, $tiki_p_blog_admin, $user;
 		$query = "select * from `tiki_blogs` order by `title` asc";
 		$result = $this->fetchAll($query);
@@ -204,7 +209,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $data_max
 	 * @return array
 	 */
-	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='', $ref='', $date_min = 0, $date_max = 0) {
+	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $filterByBlogId = -1, $author='', $ref='', $date_min = 0, $date_max = 0)
+	{
 		global $tikilib;
 
 		$authorized_blogs = $this->list_blogs(0, -1, 'created_desc', '', $ref);
@@ -269,7 +275,7 @@ class BlogLib extends TikiDb_Bridge
 			if ( ! in_array($blogId, $permit_blogs) ) {
 				continue;
 			}
-			$query = "select `title`  from `tiki_blogs` where `blogId`=?";
+			$query = "select `title` from `tiki_blogs` where `blogId`=?";
 			$cant_com = $this->getOne("select count(*) from
 					`tiki_comments` where `object`=? and `objectType` = ?",
 					array((string) $res["postId"],'blog'));
@@ -291,7 +297,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return int number of pages
 	 */
-	function get_number_of_pages($data) {
+	function get_number_of_pages($data)
+	{
 		$parts = explode("...page...", $data);
 		return count($parts);
 	}
@@ -304,7 +311,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return string the page $i of the post
 	 */
-	function get_page($data, $i) {
+	function get_page($data, $i)
+	{
 		$parts = explode("...page...", $data);
 
 		$ret = $parts[$i - 1];
@@ -321,7 +329,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return boolean unconditionnal true
 	 */
-	function add_blog_hit($blogId) {
+	function add_blog_hit($blogId)
+	{
 		global $prefs, $user;
 		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_blogs` set `hits` = `hits`+1 where `blogId`=?";
@@ -337,7 +346,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return array all fields that are associated with an image in tiki_blog_post_images database table
 	 */
-	function get_post_image($imgId) {
+	function get_post_image($imgId)
+	{
 		$query = "select * from `tiki_blog_posts_images` where `imgId`=?";
 		$result = $this->query($query, array($imgId));
 		$res = $result->fetchRow();
@@ -351,7 +361,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return array with the permalink and the absolute link for each image
 	 */
-	function get_post_images($postId) {
+	function get_post_images($postId)
+	{
 		global $tikilib;
 		$query = "select `postId`,`filename`,`filesize`,`imgId` from `tiki_blog_posts_images` where `postId`=?";
 
@@ -377,7 +388,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return void
 	 */
-	function remove_post_image($imgId) {
+	function remove_post_image($imgId)
+	{
 		$query = "delete from `tiki_blog_posts_images` where `imgId`=?";
 
 		$this->query($query, array($imgId));
@@ -408,7 +420,11 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return int blogId
 	 */
-	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, $heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, $use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, $post_heading, $show_related, $related_max, $use_excerpt) {
+	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, 
+						$heading, $use_title, $use_title_in_post, $use_description, $use_breadcrumbs, 
+						$use_author, $add_date, $use_find, $allow_comments, $show_avatar, $alwaysOwner, 
+						$post_heading, $show_related, $related_max, $use_excerpt
+	)  {
 		//TODO: all the display parameters can be one single array parameter
 		global $tikilib, $prefs;
 		if ($blogId) {
@@ -451,7 +467,10 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return array posts
 	 */
-	function list_blog_posts($blogId = 0, $allowDrafts = false, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date_min = '', $date_max = '', $approved = 'y') {
+	function list_blog_posts($blogId = 0, $allowDrafts = false, $offset = 0, 
+							$maxRecords = -1, $sort_mode = 'created_desc', $find = '', 
+							$date_min = '', $date_max = '', $approved = 'y'
+	)  {
 		global $tikilib, $tiki_p_admin_comments, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post, $user;
 
 		$mid = array();
@@ -548,7 +567,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return void
 	 */
-	function list_blog_post_comments($approved = 'y', $maxRecords = -1) {
+	function list_blog_post_comments($approved = 'y', $maxRecords = -1)
+	{
 		global $user, $tikilib, $userlib, $tiki_p_admin, $tiki_p_blog_admin, $tiki_p_blog_post;
 
 		// TODO: use commentslib instead of querying database directly
@@ -604,7 +624,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return void
 	 */
-	function list_all_blog_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '') {
+	function list_all_blog_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '')
+	{
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -661,7 +682,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return int postId
 	 */
-	function blog_post($blogId, $data, $excerpt, $user, $title = '', $contributions = '', $priv = 'n', $created = 0, $is_wysiwyg=FALSE) {
+	function blog_post($blogId, $data, $excerpt, $user, $title = '', $contributions = '', $priv = 'n', $created = 0, $is_wysiwyg=FALSE)
+	{
 		// update tiki_blogs and call activity functions
 		global $smarty, $tikilib, $prefs, $reportslib;
 
@@ -743,7 +765,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return boolean unconditionnal true
 	 */
-	function remove_blog($blogId) {
+	function remove_blog($blogId)
+	{
 		global $tikilib;
 
 		$query = "delete from `tiki_blogs` where `blogId`=?";
@@ -763,7 +786,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return boolean inconditionnal true
 	 */
-	function remove_post($postId) {
+	function remove_post($postId)
+	{
 		global $tikilib;
 		global $objectlib; require_once('lib/objectlib.php');
 
@@ -817,7 +841,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return The post
 	 */
-	function get_post($postId, $adjacent = false) {
+	function get_post($postId, $adjacent = false)
+	{
 		global $tikilib;
 
 		$query = "select * from `tiki_blog_posts` where `postId`=?";
@@ -842,7 +867,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $maxResults
 	 * @return array
 	 */
-	function get_related_posts($postId, $maxResults = 5) {
+	function get_related_posts($postId, $maxResults = 5)
+	{
 		global $freetaglib;
 		$related_posts = $freetaglib->get_similar('blog post', $postId, $maxResults);
 
@@ -861,7 +887,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $created when the post was created
 	 * @return array
 	 */
-	function _get_adjacent_posts($blogId, $created) {
+	function _get_adjacent_posts($blogId, $created)
+	{
 		$res = array();
 
 		$next_query = 'SELECT postId, title FROM `tiki_blog_posts` WHERE `blogId` = ? AND `created` > ? ORDER BY created ASC';
@@ -890,7 +917,9 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return void
 	 */
-	function update_post($postId, $blogId, $data, $excerpt, $user, $title = '', $contributions = '', $priv='n', $created = 0, $is_wysiwyg=FALSE) {
+	function update_post($postId, $blogId, $data, $excerpt, $user, $title = '', 
+						$contributions = '', $priv='n', $created = 0, $is_wysiwyg=FALSE
+	)  {
 		global $tikilib, $prefs;
 
 		$wysiwyg=$is_wysiwyg==TRUE?'y':'n';
@@ -921,7 +950,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return void
 	 */
-	function list_user_posts($user, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
+	function list_user_posts($user, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '')
+	{
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -956,7 +986,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return void
 	 */
-	function add_blog_activity($blogId) {
+	function add_blog_activity($blogId)
+	{
 		global $tikilib;
 
 		//Caclulate activity, update tiki_blogs and purge activity table
@@ -999,7 +1030,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @access public
 	 * @return string the title of the blog
 	 */
-	function get_title($blogId) {
+	function get_title($blogId)
+	{
 		$query = 'select `title` from `tiki_blogs` where `blogId`=?';
 		return $this->getOne($query, array((int)$blogId));
 	}
@@ -1010,7 +1042,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $blogId
 	 * @return bool true or false depending if blog exist or not
 	 */
-	function blog_exists($blogId) {
+	function blog_exists($blogId)
+	{
 		$query = 'SELECT `blogId` FROM `tiki_blogs` WHERE `blogId`=?';
 
 		if (is_null($this->getOne($query, array($blogId))))
@@ -1025,7 +1058,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $blogId
 	 * @return bool true or false if blog exists or not
 	 */
-	function check_blog_exists($blogId) {
+	function check_blog_exists($blogId)
+	{
 		global $smarty;
 
 		if (!$this->blog_exists($blogId)) {
@@ -1042,7 +1076,8 @@ class BlogLib extends TikiDb_Bridge
 	 * @param int $blogId
 	 * @return array list of post ids
 	 */
-	function get_blog_posts_ids($blogId) {
+	function get_blog_posts_ids($blogId)
+	{
 		$query = 'SELECT `postId` FROM `tiki_blog_posts` WHERE `blogId`=?';
 		$result = $this->fetchMap($query, array($blogId));
 
