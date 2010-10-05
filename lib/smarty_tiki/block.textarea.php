@@ -80,7 +80,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$html .= smarty_block_remarksbox( array( 'type'=>'tip', 'title'=>tra('Tip')),
 			tra('This edit session will expire in') .
 				' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
-				tra('<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer'),
+				tra('<strong>Preview</strong> (if available) or <strong>Save</strong> your work to restart the edit session timer'),
 			$smarty)."\n";
 	}
 
