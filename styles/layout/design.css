@@ -457,6 +457,7 @@ div.help_section {
 }
 
 .simplebox {
+	border: 1px solid #999;
 	padding: 3px;
 }
 
