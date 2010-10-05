@@ -58,7 +58,9 @@ class WikiParser_OutputLink
 				'class' => 'wiki external',
 			) );
 		} elseif( $info = $this->findWikiPage( $page ) ) {
-			$page = $info['pageName'];
+			if ($info['pageName']) {
+				$page = $info['pageName'];
+			}
 			$title = $page;
 			if( $info['description'] ) {
 				$title = $info['description'];
