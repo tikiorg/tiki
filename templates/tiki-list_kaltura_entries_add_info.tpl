@@ -38,7 +38,7 @@
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2"><pre style="margin:0;font-size:1.1em;">{ldelim}KALTURA(id="{$item->id}"){rdelim}</pre></td>
+				<td colspan="2"><pre style="margin:0;font-size:1.1em;">{ldelim}kaltura id="{$item->id}"{rdelim}</pre></td>
 			</tr>
 		</table>
 	</div>
