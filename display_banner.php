@@ -29,12 +29,12 @@ switch ($data["which"]) {
 case 'useHTML':
 	$raw = $data["HTMLData"];
 
-				break;
+	break;
 
 case 'useImage':
 	$raw = "<img border=\"0\" src=\"banner_image.php?id=" . $id . "\" />";
 
-				break;
+	break;
 
 case 'useFixedURL':
 	$fp = fopen($data["fixedURLData"], "r");
@@ -48,11 +48,11 @@ case 'useFixedURL':
 	}
 
 	fclose ($fp);
-				break;
+	break;
 
 case 'useText':
 	$raw = $data["textData"];
 
-				break;
+	break;
 }
 print ($raw);

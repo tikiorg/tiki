@@ -12,10 +12,7 @@ require_once("lib/tikilib.php");
 require_once("lib/categories/categlib.php");
 require_once("lib/structures/structlib.php");
 
-function tra($s)
-{ 
-	return $s; 
-}
+function tra($s) { return $s; }
 
 $tikilib = new TikiLib;
 

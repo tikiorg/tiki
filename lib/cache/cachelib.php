@@ -81,42 +81,28 @@ class Cachelib
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			$this->erase_dir_content("modules/cache/$tikidomain");
 			$this->flush_opcode_cache();
-			if (is_object($tikilib)) { 
-				$tikilib->set_lastUpdatePrefs();
-			}
-			if (is_object($logslib)) {
-				$logslib->add_log( $log_section, 'erased all cache content');
-			}
+			if (is_object($tikilib)) { $tikilib->set_lastUpdatePrefs(); }
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased all cache content'); }
 		}
 		if (in_array( 'templates_c', $dir_names )) {
 			$this->erase_dir_content("templates_c/$tikidomain");
 			$this->flush_opcode_cache();
-			if (is_object($logslib)) {
-				$logslib->add_log( $log_section, 'erased templates_c content' );
-			}
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased templates_c content' ); }
 		}
 		if (in_array( 'temp_cache', $dir_names)) {
 			$this->erase_dir_content("temp/cache/$tikidomain");
-			if (is_object($logslib)) {
-				$logslib->add_log( $log_section, 'erased temp/cache content' );
-			}
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased temp/cache content' ); }
 		}
 		if (in_array( 'temp_public', $dir_names)) {
 			$this->erase_dir_content("temp/public/$tikidomain");
-			if (is_object($logslib)) { 
-				$logslib->add_log( $log_section, 'erased temp/public content' );
-			}
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased temp/public content' ); }
 		}
 		if (in_array( 'modules_cache', $dir_names)) {
 			$this->erase_dir_content("modules/cache/$tikidomain");
-			if (is_object($logslib)) {
-				$logslib->add_log( $log_section, 'erased modules/cache content' );
-			}
+			if (is_object($logslib)) { $logslib->add_log( $log_section, 'erased modules/cache content' ); }
 		}
 		if (in_array( 'prefs', $dir_names)) {
-			if (is_object($tikilib)) {
-				$tikilib->set_lastUpdatePrefs();
-			}
+			if (is_object($tikilib)) { $tikilib->set_lastUpdatePrefs(); }
 		}
 	}
 

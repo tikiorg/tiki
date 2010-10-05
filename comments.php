@@ -47,9 +47,9 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 	foreach ( $handled_requests as $request_name ) {
 		if ( empty($$request_name) && empty($_REQUEST[$request_name]) ) {
 			$$request_name = $prefs['forum_'.$request_name];
-		} elseif ( empty($$request_name) && !empty($_REQUEST[$request_name]) ) {
-			$$request_name = $_REQUEST[$request_name];
-		}
+        } elseif ( empty($$request_name) && !empty($_REQUEST[$request_name]) ) {
+        	$$request_name = $_REQUEST[$request_name];
+        }
 	}
 
 	if ( $forum_info['is_flat'] == 'y' ) {

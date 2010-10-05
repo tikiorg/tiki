@@ -536,7 +536,7 @@ foreach( $files as $key=>$dummy )
 		if( $file['unsafeextract'] ) 
 			$unsafe[] = $file;
 
-					break;
+		break;
 	case 'public':
 	case 'include':
 	case 'script':
@@ -552,7 +552,7 @@ foreach( $files as $key=>$dummy )
 		if( ! $file['noweb'] && ! $file['includeonly'] && ! count( $file['features'] ) && ! count( $file['permissions'] ) ) 
 			$unsafe[] = $file;
 
-					break;
+		break;
 	}
 }
 
@@ -623,14 +623,13 @@ $fileType = $fileRecord['type'];
 	</tbody>
 </table>
 
-	<?php 
-		foreach($features as $featureKey => $featureValue) {
-			print "$featureKey :\n";
-			foreach ($featureValue as $file) {
-				print "<li>$file</li>";
-			}
-			print "<br/><br/>\n";
-		} ?>
+	<?php foreach($features as $featureKey => $featureValue) {
+	  print "$featureKey :\n";
+	  foreach ($featureValue as $file) {
+	    print "<li>$file</li>";
+	  }
+	  print "<br/><br/>\n";
+	} ?>
 
 </body>
 </html>
