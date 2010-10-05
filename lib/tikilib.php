@@ -5269,7 +5269,7 @@ class TikiLib extends TikiDb_Bridge
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
 		$validate = $meta['validate'];
 		if( $validate == 'all' || $validate == 'body' )
-			$validateBody = $data;
+			$validateBody = str_replace('<x>', '', $data);	// de-sanitize plugin body to make fingerprint consistant with 5.x
 		else
 			$validateBody = '';
 
