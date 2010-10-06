@@ -337,6 +337,10 @@ class FreetagLib extends ObjectLib
 				$ok = true;
 			}
 			if ($ok) {
+				global $tikilib;
+				if ( ! empty( $row['description'] ) ) {
+					$row['description'] = $tikilib->parse_data( $row['description'], array( 'absolute_links' => true ) );
+				}
 				if ($prefs['feature_sefurl'] == 'y') {
 					include_once('tiki-sefurl.php');
 					if ($row['type'] == 'blog post' && !empty($post_info)) {
