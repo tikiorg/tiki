@@ -261,12 +261,13 @@ class UsersLib extends TikiLib
 		}
 		if (SID) $url.= '?' . SID;
 
-		if ($phpcas_enabled === 'y' && $prefs['auth_method'] === 'cas' && $user !== 'admin' && $user !== '') {
+		if ( $prefs['auth_method'] === 'cas' && $user !== 'admin' && $user !== '' && $prefs['cas_force_logout'] === 'y' ) {
 			require_once ('lib/phpcas/CAS.php');
-			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path']);
+			phpCAS::client($prefs['cas_version'], '' . $prefs['cas_hostname'], (int)$prefs['cas_port'], '' . $prefs['cas_path'], false);
 			phpCAS::logoutWithRedirectServiceAndUrl($url,$url);
 		}
 		unset($_SESSION[$user_cookie_site]);
+		session_unset();
 		session_destroy();
 		
 		if ($prefs['auth_method'] === 'ws') {
@@ -819,7 +820,7 @@ class UsersLib extends TikiLib
 	}
 
 	// validate the user through CAS
-	function validate_user_cas(&$user) {
+        function validate_user_cas(&$user, $checkOnly = false) {
 		global $tikilib, $prefs, $base_url;
 
 		// just make sure we're supposed to be here
@@ -844,8 +845,10 @@ class UsersLib extends TikiLib
 
 		// check CAS authentication
 		phpCAS::setNoCasServerValidation();
-		if ( isset($_SESSION['cas_redirect']) ) {
-			unset($_SESSION['phpCAS']['auth_checked']);
+		if ( isset($_SESSION['cas_redirect']) || $checkOnly ) {
+			if ( ! $checkOnly ) {
+				unset($_SESSION['phpCAS']['auth_checked']);
+			}
 			$auth = phpCAS::checkAuthentication();
 		} else {
 			$auth = phpCAS::forceAuthentication();

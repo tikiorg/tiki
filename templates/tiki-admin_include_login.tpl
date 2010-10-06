@@ -255,6 +255,7 @@
 				{preference name='cas_create_user_tiki_ldap'}
 				{preference name='cas_skip_admin'}
 				{preference name='cas_show_alternate_login'}
+				{preference name='cas_force_logout'}
 				{preference name='cas_version'}
 
 				<fieldset>

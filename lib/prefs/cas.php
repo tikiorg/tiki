@@ -22,6 +22,11 @@ function prefs_cas_list() {
 				'type' => 'flag',
 				'perspective' => false,
 				),
+			'cas_force_logout' => array(
+				'name' => tra('Force CAS logout when the user logout from tiki'),
+				'type' => 'flag',
+				'perspective' => false,
+				),
 			'cas_show_alternate_login' => array(
 				'name' => tra('Show Alternate Login Method in Header'),
 				'type' => 'flag',

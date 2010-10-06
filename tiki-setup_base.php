@@ -387,15 +387,33 @@ if ($prefs['auth_method'] == 'shib' and isset($_SERVER['REMOTE_USER'])) {
 	}
 }
 
-// Check for CAS revalidation
-if ( !empty($_SESSION[$user_cookie_site]) and $_SESSION[$user_cookie_site] != 'admin' and $prefs['auth_method'] == 'cas' and basename($_SERVER["SCRIPT_NAME"]) != 'tiki-login.php' and basename($_SERVER["SCRIPT_NAME"]) != 'tiki-logout.php') {
-		if ( $prefs['cas_authentication_timeout'] and time()-$_SESSION['cas_validation_time'] > $prefs['cas_authentication_timeout'] ) {
-			$_SESSION['cas_redirect'] = $_SERVER['REQUEST_URI'];
-			header('Location: tiki-login.php?cas=y');
-			unset($_SESSION['phpCAS']['user']);
-		 	die();	
-		}
+// Check for CAS (re-)validation
+//  Only if :
+//   - using CAS auth method
+//   - not calling tiki-login.php nor tiki-logout.php
+//   - not using 'admin' user
+//   - either the request is not a POST ( which does not keep its params with CAS redirections ) or the CAS validation timed out
+//
+if (php_sapi_name() !== 'cli'
+		&& (isset($_SESSION[$user_cookie_site]))
+    && ($prefs['auth_method'] == 'cas' 
+        and basename($_SERVER["SCRIPT_NAME"]) != 'tiki-login.php' 
+        and basename($_SERVER["SCRIPT_NAME"]) != 'tiki-logout.php' 
+        and $_SESSION[$user_cookie_site] != 'admin') 
+    && empty($_POST) 
+    && (empty($_SESSION[$user_cookie_site])
+	|| ($prefs['cas_authentication_timeout']  
+            && time()-$_SESSION['cas_validation_time'] > $prefs['cas_authentication_timeout'])) 
+) {
+    unset($_SESSION["$user_cookie_site"]);
+    unset($_SESSION['phpCAS']['user']);
+    $cas_user = '';
+    $userlib->validate_user_cas($cas_user, true);
+    if ( ! empty($cas_user)) {
+        $_SESSION["$user_cookie_site"] = $cas_user;
+    }
 }
+
 // if the username is already saved in the session, pull it from there
 if (isset($_SESSION["$user_cookie_site"])) {
 	$user = $_SESSION["$user_cookie_site"];

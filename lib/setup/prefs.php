@@ -1780,6 +1780,7 @@ function get_default_prefs() {
 		'cas_path' => '',
 		'cas_extra_param' => '',
 		'cas_authentication_timeout' => '0',
+		'cas_force_logout' => 'n',
 
 		// Comments
 		'feature_comments_post_as_anonymous' => 'n',
