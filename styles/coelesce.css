@@ -286,7 +286,6 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 }
 
 div#sioptions {
-	width: 100%;
 	padding: 0;
 }
 
@@ -332,10 +331,11 @@ div#sitelogo * {
 }
 
 #sitesearchbar {
-	float: right;
-	margin: 3px 0 0 0;
+	float: none;
+	margin-top: 3px;
+	margin-right: 0;
+	margin-left: auto;
 	padding: 0 0 0 15px;
-	height: 33px;
 	min-width: 180px;
 	text-align: left;
 	background: url(coelesce/search_wide.jpg) no-repeat;
@@ -343,9 +343,9 @@ div#sitelogo * {
 }
 
 #sitesearchbar .wrapper {
-	height: 33px;
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
-	margin: 0;
+	margin-right: 0;
+	margin-left: auto;
 	padding: 0 35px 0 0;
 }
 
@@ -376,6 +376,8 @@ input[name="search"] {
 #siteloginbar {
 	position: relative;
 	font-size: inherit;
+	color: #FFFFFF;
+	margin-top: 20px;
 }
 
 #siteloginbar .register {
@@ -384,6 +386,10 @@ input[name="search"] {
 
 #siteloginbar .pass {
   padding-left: 20px;
+}
+
+#siteloginbar a {
+	color: #FFFFFF;
 }
 
 #sitelocbar {
