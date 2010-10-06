@@ -22,6 +22,7 @@ class HeaderLib
 	var $rssfeeds;
 	var $metatags;
 	var $hasDoneOutput;
+	var $minified;
 	var $wysiwyg_parsing;
 
 	function __construct() {
@@ -35,6 +36,7 @@ class HeaderLib
 		$this->rssfeeds = array();
 		$this->metatags = array();
 		$this->hasDoneOutput = false;
+		$this->minified = array();
 		$this->wysiwyg_parsing = false;
 	}
 
@@ -52,9 +54,12 @@ class HeaderLib
 		$this->title = urlencode($string);
 	}
 
-	function add_jsfile($file,$rank=0) {
+	function add_jsfile($file,$rank=0,$minified=false) {
 		if (!$this->wysiwyg_parsing && (empty($this->jsfiles[$rank]) or !in_array($file,$this->jsfiles[$rank]))) {
 			$this->jsfiles[$rank][] = $file;
+			if ($minified) {
+				$this->minified[$file] = $minified;
+			}
 		}
 	}
 
@@ -260,10 +265,9 @@ class HeaderLib
 			foreach( $this->jsfiles as $x => $files ) {
 				foreach( $files as $f ) {
 					$content = file_get_contents( $f );
-					if ( ! preg_match('/min\.js$/', $f) and $x !== 'minified') {
+					if ( ! preg_match('/min\.js$/', $f) and $this->minified[$f] !== true) {
 						$minified .= JSMin::minify( $content );
 					} else {
-						//$minified_files[] = $f;
 						$minified .= "\n// skipping minification for $f \n" . $content;
 					}
 				}
