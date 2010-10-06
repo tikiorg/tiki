@@ -167,11 +167,11 @@ span.button input,
 	color: #fff;
 	background: #1b5880 url(twist/header.jpg) -30px -40px no-repeat}
 
-.button a:hover,
+span.button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
+span.button input:hover,
 .submitbutton:hover {
 	background: #619cc4 url(twist/header.jpg) -400px -40px no-repeat;
 	color: #fff;

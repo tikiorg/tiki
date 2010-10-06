@@ -137,9 +137,9 @@ input[type=submit] {
 	padding: 1px 4px;
 }
 
-.button a:hover,
+span.button a:hover,
 button:hover,
-.button input:hover,
+span.button input:hover,
 .calbuttonbox a:hover {
 	background: white;
 }

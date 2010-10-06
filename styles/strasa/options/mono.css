@@ -80,7 +80,7 @@ span.button input,
 	border-color: #878787 #343434 #343434 #878787;
 }
 
-.button a:hover,
+span.button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,

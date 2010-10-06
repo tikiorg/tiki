@@ -126,7 +126,7 @@ input[type=password] {
 input.button,
 button,
 .button input,
-.button,
+span.button,
 input.wikiaction,
 .calbuttonbox {
 	background: #4e4e4e url(darkroom/button.png) top left repeat-x;
@@ -167,7 +167,7 @@ input.button:hover,
 button:hover,
 input[type=submit]:hover,
 .button input:hover,
-.button:hover,
+span.button:hover,
 .calbuttonbox a:hover {
 	border: 1px solid #b2b2b2;
 }
