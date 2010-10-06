@@ -12,7 +12,7 @@
  */
 
 body {
-	display: table;/* keep "display: table" here to push the right column to the right when some unwrappable stuff appears in the center column */
+	display: block;
 	font-family: sans-serif;
 	font-size: 80%;/* the body font-size must be in percents to scale the fonts in IE properly */
 	margin: 0; padding: 0;
