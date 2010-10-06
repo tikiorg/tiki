@@ -115,10 +115,11 @@ if (isset($_REQUEST['find'])) {
 }
 $smarty->assign('find', $find);
 
-$page_size = 10;
 if ($_REQUEST['maxRecords']) {
 	$page_size = $_REQUEST['maxRecords'];
-}	
+} else {
+	$page_size = $prefs['maxRecords'];
+}
 
 if ($_REQUEST['offset']) {
 	$offset = $_REQUEST['offset'];
@@ -167,7 +168,6 @@ if ( $_REQUEST['list'] == 'mix' or !isset($_REQUEST['list']) ) {
 
 	} else {
 		$offset = $_REQUEST['offset'];
-		$page_size = 25;
 		$kpager = new KalturaFilterPager();
 		$kpager->pageIndex = ($offset/$page_size) + 1;
 		$kpager->pageSize = $page_size;
@@ -205,7 +205,6 @@ if ($_REQUEST['list'] == 'media') {
 	} else {
 
 		$offset = $_REQUEST['offset'];
-		$page_size = 25;
 		$kpager = new KalturaFilterPager();
 		$kpager->pageIndex = ($offset/$page_size) + 1;
 		$kpager->pageSize = $page_size;

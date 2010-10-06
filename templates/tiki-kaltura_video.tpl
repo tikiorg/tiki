@@ -3,9 +3,6 @@
 	{elseif $kmode eq 'remix' || $kmode eq 'dupl'}{tr}Remix{/tr}
 	{elseif $kmode eq 'view'}{tr}View:{/tr}{$videoInfo->name}
 	{else}{tr}Kaltura Video{/tr}{/if}{/title}
-{if $editor eq ''}
-{assign var=editor value=$prefs.default_kaltura_editor}
-{/if}
 <div class="navbar">
 	{if $tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y'}
 	{button _text="{tr}List Entries{/tr}" href="tiki-list_kaltura_entries.php" }

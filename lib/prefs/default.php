@@ -67,5 +67,13 @@ function prefs_default_list() {
 			'shorthint' => tra('rows'),
 			'filter' => 'digits',
 		),
+		'default_kaltura_editor' => array(
+			'name' => tra('Default Editor'),
+			'type' => 'list',
+			'options' => array(
+				'kse' => tra('Simple'),
+				'kae' => tra('Advanced'),
+			),
+		),
 	);
 }

@@ -48,7 +48,12 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 			'&backF=CloseClick'.
 			'&saveF=SaveClick'.
 			'&jsDelegate=kaeCallbacksObj';
-		$editor = $_REQUEST['editor'];	
+		if (isset($_REQUEST['editor'])) {
+			$editor = $_REQUEST['editor'];
+		} else {
+			$editor = $prefs['default_kaltura_editor'];
+		}
+		
 		if($kentryType == "mix"){
 			$seflashVars = $seflashVars.
 				'&kshow_id=entry-' . $videoId[0].
@@ -63,6 +68,9 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 			$kclient->mixing->appendMediaEntry($knewmixEntry->id,$videoId[0]);
 
 			header("Location: tiki-kaltura_video.php?action=remix&mixId=".$knewmixEntry->id);
+		} else if (!isset($_REQUEST['editor'])) {
+			$kentry = $kclient->mixing->get($videoId[0]);
+			$editor = $kentry->editorType === 1 ? 'kse' : 'kae';	// not working - editor doesn't save editorType when you publish 
 		}
 		$smarty->assign_by_ref('seflashVars',$seflashVars);
 		$smarty->assign_by_ref('editor',$editor);
