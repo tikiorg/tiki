@@ -86,7 +86,7 @@
 			{preference name=feature_sitemycode}
 			<div class="adminoptionboxchild" id="feature_sitemycode_childcontainer">
 				{icon _id=information}
-				<em>{tr}The Custom Site Header will display for the Admin only. Select <strong>Publish</strong> to display the content for </em>all<em> users.{/tr}</em>
+				<em>{tr}The Custom Site Header will display for the Admin only. Select <strong>Publish</strong> to display the content for <em>all</em> users.{/tr}</em>
 				{preference name=sitemycode}
 				{preference name=sitemycode_publish}
 			</div>
@@ -232,7 +232,7 @@
 			<fieldset>
 				<legend>{tr}Custom CSS{/tr}</legend>
 				<div class="adminoptionboxchild">
-					{self_link _onclick="toggle_brosho();return false;" _ajax="n"}{icon _id="bricks"} Experimental: CSS assistant (work in progress - click the x to remove){/self_link}
+					{self_link _onclick="toggle_brosho();return false;" _ajax="n"}{icon _id="bricks"}{tr}Experimental: CSS assistant (work in progress - click the x to remove){/tr}{/self_link}
 				</div>
 				{$headerlib->add_jsfile('lib/jquery/brosho/jquery.brosho.js')}
 				{$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js')}
