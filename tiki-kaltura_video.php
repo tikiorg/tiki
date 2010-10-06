@@ -142,6 +142,7 @@ if(!empty($videoId) && isset($_REQUEST['action'])){
 				$kentry->name = $_REQUEST['name'];
 				$kentry->description = $_REQUEST['description'];
 				$kentry->tags = $_REQUEST['tags'];
+				$kentry->editorType = $_REQUEST['editor'] === 'kse' ? 1 : 2;
 				$kentry->adminTags = $_REQUEST['adminTags'];
 				$knewentry = $kclient->mixing->update($videoId[0],$kentry);
 			}
