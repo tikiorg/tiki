@@ -694,6 +694,8 @@ function wikiplugin_tracker($data, $params)
 							$tplSubject = array('tracker_changed_notification_subject.tpl');
 						}
 						$itpl = 0;
+						$smarty->assign('mail_date', $tikilib->now);
+						$smarty->assign('mail_itemId', $rid);
 						foreach ($emailOptions[1] as $ieo=>$ueo) {
 							@$mail_data = $smarty->fetch('mail/'.$tplSubject[$itpl]);
 							if (empty($mail_data))
