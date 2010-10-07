@@ -27,7 +27,7 @@ body.fullscreen {padding: 3em}
 /* next two: fixed-width: 960px */
 body.fixed_width div#fixedwidth {
 	margin-bottom: 20px;
-	width: 900px;
+	width: 900px !important;
 	background: #fff;
 }
 
