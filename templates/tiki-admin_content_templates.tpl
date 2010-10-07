@@ -77,10 +77,12 @@
 		</tr>
 
 		<tr class="type-cond for-static">
-			<td>
+			<td colspan="2">
 				<label for="editwiki">{tr}Template{/tr}:</label>
 			</td>
-			<td>
+		</tr>
+		<tr class="type-cond for-static">
+			<td colspan="2">
 				{textarea id="editwiki" name="content" switcheditor="y"}{$info.content}{/textarea}
 			</td>
 		</tr>
