@@ -386,7 +386,6 @@ function get_default_prefs() {
 		'wikiplugininline_fancylist' => 'n',
 		'wikiplugininline_fancytable' => 'n',
 		'wikiplugininline_file' => 'y',
-		'wikiplugininline_filelink' => 'y',
 		'wikiplugininline_files' => 'n',
 		'wikiplugininline_flash' => 'n',
 		'wikiplugininline_footnote' => 'n',
