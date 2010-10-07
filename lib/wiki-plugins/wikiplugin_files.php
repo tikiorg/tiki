@@ -21,6 +21,7 @@ function wikiplugin_files_info() {
 		'description' => tra("Displays a list of files from the File Gallery"),
 		'prefs' => array( 'feature_file_galleries', 'wikiplugin_files' ),
 		'body' => tra('Title'),
+		'icon' => 'pics/large/file-manager.png',
 		'params' => array(
 			'galleryId' => array(
 				'required' => false,
