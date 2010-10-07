@@ -31,10 +31,14 @@
 					<label for="only_db_translations">{tr}Show only database stored translations{/tr}</label>
 				</div>
 			</div>
-			<div class="adminoptionbox">
-				<input id="edit_rec_sw" align="right" type="radio" name="whataction" value="edit_rec_sw" {if $whataction eq 'edit_rec_sw'}checked="checked"{/if}/>
-				<label for="edit_rec_sw">{tr}Translate recorded{/tr}</label>
-			</div>
+
+			{if $prefs.record_untranslated eq 'y'}
+				<div class="adminoptionbox">
+					<input id="edit_rec_sw" align="right" type="radio" name="whataction" value="edit_rec_sw" {if $whataction eq 'edit_rec_sw'}checked="checked"{/if}/>
+					<label for="edit_rec_sw">{tr}Translate recorded{/tr}</label>
+				</div>
+			{/if}
+
 			<div class="adminoptionbox">
 				<input type="submit" name="langaction" value="{tr}Set{/tr}" />
 			</div>
