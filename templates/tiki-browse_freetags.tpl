@@ -162,13 +162,21 @@
 	<div class="freetagsbrowse">{$smarty.capture.browse}</div>{/if}
 
 <div class="freetagresult">
-	{if $tagString}<h2>{$cantobjects} {if $cantobjects eq '1'}{tr}result found{/tr}{else}{tr}results found{/tr}{/if}</h2>{/if}
+	{if $tagString}
+		{if $cantobjects == 0}
+			<h2>{tr}No result found{/tr}</h2>
+		{elseif $cantobjects == 1}
+			<h2>{$cantobjects} {tr}result found{/tr}</h2>
+		{elseif $cantobjects > 0}
+			<h2>{$cantobjects} {tr}results found{/tr}</h2>
+		{/if}
+	{/if}
 	{if $cantobjects > 0}
 		{cycle values="odd,even" print=false}
 		{section name=ix loop=$objects}
 			<div class="{cycle} freetagitemlist" >
 				<h3>
-					<a href="{$objects[ix].href}">{$objects[ix].name|escape}</a>
+					<a href="{$objects[ix].href}">{$objects[ix].name|strip_tags|escape}</a>
 					{if $tiki_p_unassign_freetags eq 'y' or $tiki_p_admin eq 'y'}
 						<a href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 					{/if}
@@ -177,7 +185,7 @@
 					{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}
 				</div>
 				<div class="description">
-					{$objects[ix].description|escape}&nbsp;
+					{$objects[ix].description|strip_tags|escape}&nbsp;
 				</div>
 			</div>
 		{/section}

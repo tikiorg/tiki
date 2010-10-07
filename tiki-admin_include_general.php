@@ -42,8 +42,8 @@ $smarty->assign('now', $tikilib->now);
 if (!empty($_REQUEST['testMail'])) {
 	include_once('lib/webmail/tikimaillib.php');
 	$mail = new TikiMail();
-	$mail->setSubject(tra('TikiWiki Email Test'));
-	$mail->setText(tra('TikiWiki Test email from:').' '.$_SERVER['SERVER_NAME']);
+	$mail->setSubject(tra('Tiki Email Test'));
+	$mail->setText(tra('Tiki Test email from:').' '.$_SERVER['SERVER_NAME']);
 	if (!$mail->send(array($_REQUEST['testMail']))) {
 		$msg = tra('Unable to send mail') ;
 		if ($tiki_p_admin == 'y') {

@@ -2096,7 +2096,25 @@ table.treeTable .parent td {
 	font-style: italic;
 }
 
-.thumbnailcontener { border: solid 1px #d3d3d3; margin: 1px; padding: 2px; text-align: center;}
+.thumbnailcontener {
+	border: solid 1px #d3d3d3;
+	margin: 1px;
+	padding: 2px;
+	text-align: center;
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* special workaround for IE 7 */
+*:first-child+html
+div.thumbnailcontener {
+	float: left;
+}
+
+/* special workaround for IE 6 */
+* html div.thumbnailcontener {
+	float: left;
+}
 
 /* jquery-ui dialogs help */
 

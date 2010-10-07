@@ -7,7 +7,10 @@
 
 $bypass_siteclose_check = 'y';
 require_once ('tiki-setup.php');
+$login_url_params = '';
+
 if (isset($_REQUEST['cas']) && $_REQUEST['cas'] == 'y' && $prefs['auth_method'] == 'cas') {
+	$login_url_params = '?cas=y';
 	$_REQUEST['user'] = '';
 } elseif (!(isset($_REQUEST['user']) or isset($_REQUEST['username']))) {
 	if (!$https_mode && $prefs['https_login'] == 'required') {
@@ -27,12 +30,12 @@ if (ini_get('session.use_cookies') == 1 && !isset($_COOKIE[ session_name() ]) &&
 
 // Redirect to HTTPS if we are not in HTTPS but we require HTTPS login
 if (!$https_mode && $prefs['https_login'] == 'required') {
-	header('location: ' . $base_url_https . $prefs['login_url']);
+	header( 'Location: ' . $base_url_https . $prefs['login_url'] . $login_url_params );
 	exit;
 }
 // Redirect to HTTP if we are in HTTPS but we doesn't allow HTTPS login
 if ($https_mode && $prefs['https_login'] == 'disabled') {
-	header('location: ' . $base_url_http . $prefs['login_url']);
+	header( 'Location: ' . $base_url_http . $prefs['login_url'] . $login_url_params );
 	exit;
 }
 
@@ -41,7 +44,7 @@ if( $prefs['session_silent'] == 'y' ) {
 }
 
 // Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
-// Note that loginfrom will always be a complete URL (http://...)
+// Note that login from will always be a complete URL (http://...)
 if (!isset($_SESSION['loginfrom'])) {
 	$_SESSION['loginfrom'] = (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $prefs['tikiIndex']);
 	if (!preg_match('/^http/', $_SESSION['loginfrom'])) {

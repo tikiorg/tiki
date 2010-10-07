@@ -161,11 +161,11 @@ span.button input,
 	border-bottom: 1px solid #474747}
 	
 
-.button a:hover,
+span.button a:hover,
 button:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
-.button input:hover,
+span.button input:hover,
 .calbuttonbox:hover {
 	padding: 1px 4px;
 	margin: 2px;

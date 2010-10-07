@@ -30,5 +30,5 @@
 </table>
 {else}
 {remarksbox type="info" title="{tr}No entries{/tr}"}
-{tr}No media entries found.{/tr}<a href="tiki-kaltura_upload.php">{tr}Click here{/tr}</a>{tr}to upload.{/tr}{/remarksbox}
+{tr}No media entries found.{/tr} <a href="tiki-kaltura_upload.php">{tr}Click here{/tr}</a> {tr}to upload.{/tr}{/remarksbox}
 {/if}

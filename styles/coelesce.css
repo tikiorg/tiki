@@ -137,9 +137,9 @@ input[type=submit] {
 	padding: 1px 4px;
 }
 
-.button a:hover,
+span.button a:hover,
 button:hover,
-.button input:hover,
+span.button input:hover,
 .calbuttonbox a:hover {
 	background: white;
 }
@@ -286,7 +286,6 @@ body.tiki_wiki_page.manage #c1c2 #wrapper #col1 #tiki-center {
 }
 
 div#sioptions {
-	width: 100%;
 	padding: 0;
 }
 
@@ -332,10 +331,11 @@ div#sitelogo * {
 }
 
 #sitesearchbar {
-	float: right;
-	margin: 3px 0 0 0;
+	float: none;
+	margin-top: 3px;
+	margin-right: 0;
+	margin-left: auto;
 	padding: 0 0 0 15px;
-	height: 33px;
 	min-width: 180px;
 	text-align: left;
 	background: url(coelesce/search_wide.jpg) no-repeat;
@@ -343,9 +343,9 @@ div#sitelogo * {
 }
 
 #sitesearchbar .wrapper {
-	height: 33px;
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
-	margin: 0;
+	margin-right: 0;
+	margin-left: auto;
 	padding: 0 35px 0 0;
 }
 
@@ -376,6 +376,20 @@ input[name="search"] {
 #siteloginbar {
 	position: relative;
 	font-size: inherit;
+	color: #FFFFFF;
+	margin-top: 20px;
+}
+
+#siteloginbar .register {
+  padding-left: 20px;
+}
+
+#siteloginbar .pass {
+  padding-left: 20px;
+}
+
+#siteloginbar a {
+	color: #FFFFFF;
 }
 
 #sitelocbar {
@@ -2047,16 +2061,6 @@ a.admbox.off:focus,
 .admbox a,
 a.admbox.off:active {
 	border: 1px solid #a9a9a9;
-}
-
-/* Make Register info more prominent than lost password */
-#siteloginbar .register {
-  padding-left: 20px;
-}
-
-#siteloginbar .pass {
-  float: right;
-  padding-left: 20px;
 }
 
 /* Fixed-width rules */

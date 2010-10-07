@@ -461,7 +461,7 @@ if ($prefs['feature_version_checks'] == 'y') {
 		// Normalize database if necessary.  Usually when an upgrade has
 		// actually been done, but for whatever reason the database has
 		// not had its version tracking info updated.
-		if ($tiki_needs_upgrade == 'y' && $tiki_release == $TWV->version) {
+		if ($tiki_needs_upgrade == 'y' && version_compare($TWV->version, $tiki_release, '>=')) {
 			$tiki_needs_upgrade = 'n';
 			$tikilib->set_preference('tiki_needs_upgrade', $tiki_needs_upgrade);
 			$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);

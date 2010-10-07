@@ -189,7 +189,7 @@ class TikiLib extends TikiDb_Bridge
     // Returns IP address or IP address forwarded by the proxy if feature load balancer is set
 	function get_ip_address() {
         global $prefs;
-        if ($prefs['feature_loadbalancer'] == "y") {
+        if (isset($prefs['feature_loadbalancer']) && $prefs['feature_loadbalancer'] == "y") {
             $ip = null;
 
             if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -5269,7 +5269,7 @@ class TikiLib extends TikiDb_Bridge
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
 		$validate = $meta['validate'];
 		if( $validate == 'all' || $validate == 'body' )
-			$validateBody = $data;
+			$validateBody = str_replace('<x>', '', $data);	// de-sanitize plugin body to make fingerprint consistant with 5.x
 		else
 			$validateBody = '';
 
@@ -6750,58 +6750,59 @@ class TikiLib extends TikiDb_Bridge
 						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 &&  $inScript == 0
 								// Don't put newlines at comments' end!
 								&& strpos($line, "-->") !== (strlen($line) - 3)
-								&& !$options['is_html']
-								&& count($lines) > 1) {
+								&& !$options['is_html']) {
 							 	
 							$tline = trim(str_replace('&nbsp;', '', $line));
 							
 							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-								$contains_block = $this->contains_html_block( $tline );
-								
-								if (!$contains_block) {	// check inside plugins etc for block elements
-									preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins 
-									if (count($m) > 0) {
-										$m_count = count($m[0]);
-										$nop_ix = false;
-										for ($i = 0; $i < $m_count; $i++) {
-											//$nop_ix = array_search( $m[0][$i], $noparsed['key'] ); 	// array_search doesn't seem to work here - why? no "keys"?
-											foreach ($noparsed['key'] as $k => $s) {
-												if ($m[0][$i] == $s) {
-													$nop_ix = $k;
-													break;
+								if (count($lines) > 1) {	// don't apply wiki para if only single line so you can have inline includes
+									$contains_block = $this->contains_html_block( $tline );
+									
+									if (!$contains_block) {	// check inside plugins etc for block elements
+										preg_match_all('/\xc2\xa7[^\xc2\xa7]+\xc2\xa7/', $tline, $m);	// noparse guid for plugins 
+										if (count($m) > 0) {
+											$m_count = count($m[0]);
+											$nop_ix = false;
+											for ($i = 0; $i < $m_count; $i++) {
+												//$nop_ix = array_search( $m[0][$i], $noparsed['key'] ); 	// array_search doesn't seem to work here - why? no "keys"?
+												foreach ($noparsed['key'] as $k => $s) {
+													if ($m[0][$i] == $s) {
+														$nop_ix = $k;
+														break;
+													}
 												}
-											}
-											if ($nop_ix !== false) {
-												$nop_str = $noparsed['data'][$nop_ix];
-												$contains_block = $this->contains_html_block( $nop_str );
-												if ($contains_block) {
-													break;
+												if ($nop_ix !== false) {
+													$nop_str = $noparsed['data'][$nop_ix];
+													$contains_block = $this->contains_html_block( $nop_str );
+													if ($contains_block) {
+														break;
+													}
 												}
 											}
 										}
 									}
-								}
-								
-							 	if ($in_paragraph && ((empty($tline) && $in_empty_paragraph === 0) || $contains_block)) {
-									// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
-									$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-								} elseif (!$in_paragraph && !$contains_block) {
-									// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
-									$data .= "<p>";
-									if (empty($tline)) {
-										$line = '&nbsp;';
-										$in_empty_paragraph = 1;
+									
+								 	if ($in_paragraph && ((empty($tline) && $in_empty_paragraph === 0) || $contains_block)) {
+										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
+										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+									} elseif (!$in_paragraph && !$contains_block) {
+										// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
+										$data .= "<p>";
+										if (empty($tline)) {
+											$line = '&nbsp;';
+											$in_empty_paragraph = 1;
+										}
+										$in_paragraph = 1;
+									} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !$contains_block) {
+										// A normal in-paragraph line if not close of div created by plugins
+										if (!empty($tline)) {
+											$in_empty_paragraph = 0;
+										}
+										$line = "<br />" . $line;
+									} else {
+										// A normal in-paragraph line or a consecutive blank line.
+										// Leave it as is.
 									}
-									$in_paragraph = 1;
-								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && !$contains_block) {
-									// A normal in-paragraph line if not close of div created by plugins
-									if (!empty($tline)) {
-										$in_empty_paragraph = 0;
-									}
-									$line = "<br />" . $line;
-								} else {
-									// A normal in-paragraph line or a consecutive blank line.
-									// Leave it as is.
 								}
 							} elseif (($prefs['wysiwyg_htmltowiki'] === 'y' && !empty($tline) && strpos($tline, '<br />') === false) || !$options['is_html']) {
 								$line .= "<br />";
@@ -7002,7 +7003,7 @@ class TikiLib extends TikiDb_Bridge
 		// Fetch all externals once
 		static $externals = false;
 		if( false === $externals ) {
-			$externals = $this->fetchMap( 'SELECT `name`, `extwiki` FROM `tiki_extwiki`' );
+			$externals = $this->fetchMap( 'SELECT LOWER(`name`), `extwiki` FROM `tiki_extwiki`' );
 		}
 		
 		$displayLink = $pageLink;

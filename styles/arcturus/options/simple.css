@@ -158,11 +158,11 @@ span.button input,
 	vertical-align: middle;
 }
 
-.button a:hover,
+span.button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-.button input:hover,
+span.button input:hover,
 .submitbutton:hover,
 .calbuttonBox:hover {
 	border: 1px solid #000;

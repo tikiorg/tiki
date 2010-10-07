@@ -3,9 +3,6 @@
 	{elseif $kmode eq 'remix' || $kmode eq 'dupl'}{tr}Remix{/tr}
 	{elseif $kmode eq 'view'}{tr}View:{/tr}{$videoInfo->name}
 	{else}{tr}Kaltura Video{/tr}{/if}{/title}
-{if $editor eq ''}
-{assign var=editor value=$prefs.default_kaltura_editor}
-{/if}
 <div class="navbar">
 	{if $tiki_p_remix_videos eq 'y' or $tiki_p_admin_video_galleries eq 'y' or $tiki_p_admin eq 'y'}
 	{button _text="{tr}List Entries{/tr}" href="tiki-list_kaltura_entries.php" }
@@ -57,7 +54,7 @@
 					<td class="even">{tr}Video Title{/tr}</td>
 					<td class="even">
 						{if $kmode eq 'edit'}
-						<input style="width:100%" type="text" name="name" {if $videoInfo->name}value="{$videoInfo->name}"{/if} size="40" />
+						<input style="width:99%" type="text" name="name" {if $videoInfo->name}value="{$videoInfo->name}"{/if} size="40" />
 						{else}
 						{$videoInfo->name}
 						{/if}
@@ -67,7 +64,7 @@
 					<td class="odd">{tr}Description{/tr}</td>
 					<td class="odd">
 						{if $kmode eq 'edit'}
-						<textarea style="width:100%" rows="2" cols="40" name="description">{if $videoInfo->description}{$videoInfo->description}{/if}</textarea>
+						<textarea style="width:99%" rows="2" cols="40" name="description">{if $videoInfo->description}{$videoInfo->description}{/if}</textarea>
 						{else}
 						{$videoInfo->description}
 						{/if}
@@ -77,13 +74,27 @@
 					<td class="even">{tr}Tags{/tr}</td>
 					<td class="even">
 						{if $kmode eq 'edit'}
-						<input style="width:100%" type="text" name="tags" {if $videoInfo->tags}value="{$videoInfo->tags}"{/if} size="40" />
+						<input style="width:99%" type="text" name="tags" {if $videoInfo->tags}value="{$videoInfo->tags}"{/if} size="40" />
 						{else}
 						{$videoInfo->tags}
 						{/if}
 					</td>
 				</tr>
-				
+				{if isset($smarty.request.mixId)}
+					<tr>
+						<td class="even">{tr}Editor{/tr}</td>
+						<td class="even">
+							{if $kmode eq 'edit'}
+								<select name="editor">
+									<option value="kse"{if $videoInfo->editorType eq 1}selected="selected"{/if}>{tr}Simple{/tr}</option>
+									<option value="kae"{if $videoInfo->editorType eq 2}selected="selected"{/if}>{tr}Advanced{/tr}</option>
+								</select>
+							{else}
+								{if $videoInfo->editorType eq 1}{tr}Simple{/tr}{else}{tr}Advanced{/tr}{/if}
+							{/if}
+						</td>
+					</tr>
+				{/if}
 				{if $kmode eq 'view'}
 				<tr>
 				<td class="odd">{tr}Duration{/tr}</td>

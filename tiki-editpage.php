@@ -169,6 +169,9 @@ if (isset($_REQUEST['copypaste']) and $_REQUEST['copypaste']!='') {
 	$_REQUEST['edit']=$info['data']."\n".$_REQUEST['copypaste'];
 }
 
+// String use to lock the page currently edit.
+$editLockPageId = 'edit_lock_' . (isset($info['page_id']) ? (int) $info['page_id'] : 0);
+
 // 2010-01-26: Keep in active until translation refactoring is done.
  if ($editlib->isNewTranslationMode() || $editlib->isUpdateTranslationMode()) {
  	$editlib->prepareTranslationData();
@@ -254,7 +257,7 @@ if (isset($_REQUEST['cancel_edit'])) {
 		$page = $approvedPageName;
 	}
 
-	$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
+	$tikilib->semaphore_unset($page, $_SESSION[$editLockPageId]);
 	if (!empty($_REQUEST['returnto'])) {	// came from wikiplugin_include.php edit button
 		$url = "location:".$wikilib->sefurl($_REQUEST['returnto']);
 	} else {
@@ -322,13 +325,13 @@ if ($prefs['feature_warn_on_edit'] === 'y') {
 			if ($tikilib->semaphore_is_set($page, $prefs['warn_on_edit_time'] * 60) && $tikilib->get_semaphore_user($page) !== $u) {
 				$editpageconflict = 'y';
 			} elseif ($tiki_p_edit === 'y') {
-				$_SESSION["edit_lock_$page"] = $tikilib->semaphore_set($page);
+				$_SESSION[$editLockPageId] = $tikilib->semaphore_set($page);
 			}
 			$semUser = $tikilib->get_semaphore_user($page);
 			$beingedited = 'y';
 		} else {
-			if (!empty($_SESSION["edit_lock_$page"])) {
-				$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
+			if (!empty($_SESSION[$editLockPageId])) {
+				$tikilib->semaphore_unset($page, $_SESSION[$editLockPageId]);
 			}
 		}
 	}

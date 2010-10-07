@@ -1,13 +1,4 @@
-{title}{tr}Admin external wikis{/tr}{/title}
-
-{if $prefs.feature_help eq 'y'}
-	<a href="{$prefs.helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}Admin External Wikis{/tr}">{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-	<a href="tiki-edit_templates.php?template=tiki-admin_external_wikis.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin external wikis template{/tr}">
-	{icon _id='shape_square_edit' alt="{tr}Edit template{/tr}"}</a>
-{/if}
+{title help="External+Wikis" admpage="textarea"}{tr}Admin External Wikis{/tr}{/title}
 
 <h2>{tr}Create/Edit External Wiki{/tr}</h2>
 <form action="tiki-admin_external_wikis.php" method="post">
