@@ -94,12 +94,13 @@ function collect_perms_desc($file)
 	$pstr = fopen($file,'w');
 	if (!$pstr) {
 		echo "The file $file can not be written";
+	} else {
+		foreach ($perm_strings as $strg)
+		{
+			fwrite ($pstr,  "{tr}" . $strg . "{/tr}" . "\n");
+		}
+		fclose($pstr);
 	}
-	foreach ($perm_strings as $strg)
-	{
-		fwrite ($pstr,  "{tr}" . $strg . "{/tr}" . "\n");
-	}
-	fclose($pstr);
 }
 
 /**
@@ -131,12 +132,13 @@ function collect_prefs_names($file) {
 	$pstr = fopen($file,'w');
 	if (!$pstr) {
 		echo "The file $file can not be written";
+	} else {
+		foreach ($prefs_strings as $strg)
+		{
+			fwrite ($pstr,  "{tr}" . str_replace('_',' ',$strg) . "{/tr}" . "\n");
+		}
+		fclose($pstr);
 	}
-	foreach ($prefs_strings as $strg)
-	{
-		fwrite ($pstr,  "{tr}" . str_replace('_',' ',$strg) . "{/tr}" . "\n");
-	}
-	fclose($pstr);
 }
 
 function hardwire_file ($file) {
@@ -158,9 +160,12 @@ function collect_files ($dir)
 		// that should not be translated (the directories normally contain
 		// temporary results etc.)
 		// Please note that these directories will be skipped on all levels
-		if ('.'   == $file || '..'          == $file || 
-				'lang' == $file || 'templates_c' == $file || 'dump'  == $file ||
-				'temp' == $file || 'img'         == $file || 'cache' == $file) {
+		if ('.'  === $file || '..' === $file || 'Zend' === $file || 
+				'htmlpurifier' === $file || 'adodb' === $file || 'smarty' === $file ||
+				'ezcomponents' === $file || 'phpcas' === $file || 
+				'phplayers' === $file || 'pear' === $file || 'lang' === $file || 
+				'templates_c' === $file || 'dump'  === $file || 'temp' === $file || 
+				'img' === $file || 'cache' === $file) {
 			continue;
 		}
 
@@ -240,6 +245,8 @@ function formatted_print($string) {
 }
 ////////////////////////////////////////////////////////////////////////////
 
+$quiet = isset ($_REQUEST['quiet']);
+
 if ( $script_mode ) {
 
 	if ( ! $quiet ) {
@@ -278,7 +285,6 @@ if ( ! $script_mode ) {
 		';
 }
 
-$quiet = isset ($_REQUEST['quiet']);
 $completion = isset($_REQUEST['completion']) && $_REQUEST['completion']=='y';
 if ( ! $completion && ! $quiet ) {
 	formatted_print("Initialization time: " . $tiki_timer->elapsed() . " seconds\n");
@@ -535,7 +541,7 @@ foreach ($languages as $ksel => $sel) {
 			// Only extract tra () and hawtra () in .php-files
 			// tr() function also exists for strings with arguments
 
-			// Extract from SINGLE qouted strings
+			// Extract from SINGLE quoted strings
 			preg_match_all ('!\W(?:haw)?tra?\s*\(\s*\'(.+?)\'\s*[\),]!s', $data, $sqwords);
 
 			// Extract from DOUBLE quoted strings
