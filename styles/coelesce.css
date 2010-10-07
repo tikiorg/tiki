@@ -331,7 +331,7 @@ div#sitelogo * {
 }
 
 #sitesearchbar {
-	float: none;
+	float: right;
 	margin-top: 3px;
 	margin-right: 0;
 	margin-left: auto;
