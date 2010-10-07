@@ -26,33 +26,6 @@ if (isset($_REQUEST["imp_language"])) {
 	$imp_language = preg_replace('/\.\./','',$_REQUEST['imp_language']);
 }
 
-// Import
-if (isset($_REQUEST["import"])) {
-	check_ticket('import-lang');
-	
-	// first delete each record from language db table where the lang matches (if any)
-	$query = "select `source` from `tiki_language` where `lang`=?";
-	$result = $tikilib->query($query, array($imp_language));
-	while ($res = $result->fetchRow()) {
-		$query = "delete from `tiki_language` where `lang`=?";
-		$result = $tikilib->query($query, array($imp_language));
-	}
-	
-	// now we can start the import
-	if (!isset(${"lang_$imp_language"})) {
-		init_language($imp_language);
-	}
-
-	$impmsg = tra("Imported:")." lang/$imp_language/language.php";
-
-	while (list($key, $val) = each(${"lang_$imp_language"})) {
-		$query = "insert into `tiki_language` (`source`, `lang`, `tran`) values (?,?,?)";
-		$result = $tikilib->query($query, array($key,$imp_language,$val), -1, -1, false);
-	}
-
-	$smarty->assign('impmsg', $impmsg);
-}
-
 // Get available languages
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
@@ -82,6 +55,10 @@ if (isset($_REQUEST["whataction"])) {
 	$smarty->assign('whataction', $_REQUEST["whataction"]);
 } else {
 	$smarty->assign('whataction', '');
+}
+
+if (isset($_REQUEST['only_db_translations'])) {
+	$smarty->assign('only_db_translations', 'y');
 }
 
 // Adding strings
@@ -200,49 +177,64 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	$aquery = sprintf(" order by source limit %d,%d", $tr_recnum, $maxRecords);
 	$sort_mode = "source_asc";
 
-	if ($whataction == "edit_tran_sw") {
-		$query = "select `source`, `tran` from `tiki_language` where `lang`=? $squeryedit order by ".$tikilib->convertSortMode($sort_mode);
-		$nquery = "select count(*) from `tiki_language` where `lang`=? $squeryedit";
-		$untr_numrows= $tikilib->getOne($nquery,$bindvars);
-	        $result = $tikilib->query($query,$bindvars,$maxRecords,$tr_recnum);
-	} elseif ($whataction == "edit_rec_sw") {
+	if ($whataction == "edit_rec_sw") {
 		$query = "select `source` from `tiki_untranslated` where `lang`=? $squeryrec order by ".$tikilib->convertSortMode($sort_mode);
 		$nquery = "select count(*) from `tiki_untranslated` where `lang`=? $squeryrec";
 		$untr_numrows= $tikilib->getOne($nquery,$bindvars2);
-	        $result = $tikilib->query($query,$bindvars2,$maxRecords,$tr_recnum);
-	}
+        $result = $tikilib->query($query,$bindvars2,$maxRecords,$tr_recnum);
 
-	$smarty->assign('untr_numrows', $untr_numrows);
-
-	//$i=$tr_recnum;
-	if ($whataction == "edit_rec_sw") {
 		$untranslated = array();
-
-		$i = 0;
 
 		while ($res = $result->fetchRow()) {
 			$untranslated[] = $res["source"];
-
-			$i++;
 		}
 
 		$smarty->assign_by_ref('untranslated', $untranslated);
 	} elseif ($whataction == "edit_tran_sw") {
-		$untranslated = array();
+		if (isset($_REQUEST['only_db_translations'])) {
+			// display only database stored translations
+			$query = "select `source`, `tran` from `tiki_language` where `lang`=? $squeryedit order by ".$tikilib->convertSortMode($sort_mode);
+			$nquery = "select count(*) from `tiki_language` where `lang`=? $squeryedit";
+			$untr_numrows= $tikilib->getOne($nquery,$bindvars);
+			$result = $tikilib->query($query,$bindvars,$maxRecords,$tr_recnum);
 
-		$translation = array();
-		$i = 0;
+			$translations = array();
 
-		while ($res = $result->fetchRow()) {
-			$untranslated[] = $res["source"];
+			while ($res = $result->fetchRow()) {
+				$translations[$res['source']] = $res['tran'];
+			}
+		} else {
+			// display all available translations (db + custom.php + language.php)
+			if (!isset(${"lang_$edit_language"})) {
+				init_language($edit_language);
+			}
 
-			$translation[] = $res["tran"];
-			$i++;
+			$all_translations = ${"lang_$edit_language"};
+
+			// display only translations that match the searched string
+			if (isset($tran_search) && strlen($tran_search) > 0) {
+				$pattern = "/.*$tran_search.*/i";
+	
+				// search source strings	
+				$keys = preg_grep($pattern, array_keys($all_translations));
+			    $sources = array();
+				foreach ($keys as $key) {
+					$sources[$key] = $all_translations[$key];
+				}
+
+				// search translation strings
+				$all_translations = preg_grep($pattern, $all_translations);
+
+				$all_translations = array_merge($all_translations, $sources);
+			}
+
+			$untr_numrows = count($all_translations);
+			$translations = array_slice($all_translations, $tr_recnum, $maxRecords);
 		}
 
-		$smarty->assign_by_ref('untranslated', $untranslated);
-		$smarty->assign_by_ref('translation', $translation);
+		$smarty->assign_by_ref('translations', $translations);
 	}
+	$smarty->assign('untr_numrows', $untr_numrows);
 }
 
 if (isset($_REQUEST["exp_language"])) {
